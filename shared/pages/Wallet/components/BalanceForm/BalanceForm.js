@@ -14,6 +14,7 @@ function BalanceForm({ usdBalance, currencyBalance, handleReceive, handleWithdra
 
   switch (currency) {
     case 'btc (sms-protected)': currency = 'BTC SMS'
+      break;
     case 'btc (multisig)': currency = 'BTC MULTISIG'
       break;
   }

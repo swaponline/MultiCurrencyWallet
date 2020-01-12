@@ -77,13 +77,11 @@
   background: rgba(229, 68, 68, 0.1);
 }
 .confirm.green {
-  color: #1fb105;
-  background: rgba(71, 229, 68, 0.1);
+  color: #EE5B51;
+  background: rgba(238, 91, 81, 0.1);
+  padding: 3px 7px;
 }
 
-.directionHeading {
-  position: relative;
-}
 
 .unconfirmed {
   color: #8E9AA3;
@@ -254,9 +252,17 @@ tr.historyRow {
   .historyInfo {
     margin-left: 0px;
     margin-top: 0px;
+    position: relative;
   }
   .circleIcon {
     display: none;
+  }
+  .confirm,
+  .unconfirmed {
+    top: auto;
+    position: absolute;
+    right: 0;
+    bottom: -3px;
   }
 }
 

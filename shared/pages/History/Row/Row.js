@@ -102,14 +102,24 @@ class Row extends React.PureComponent {
     this.toggleComment(false)
   }
 
-  parseFloat = (direction, value, directionType, type) => (
-    <Fragment>
+  parseFloat = (direction, value, directionType, type) => {
+
+    switch (type) {
+      case 'btc (sms-protected)': type = 'BTC PROTECTED'
+        break;
+      case 'btc (multisig)': type = 'BTC MULTISIG'
+        break;
+    }
+
+    return (
+      <Fragment>
       {direction === directionType ?
         <div styleName="amount">{`+ ${parseFloat(Number(value).toFixed(5))}`} {type.toUpperCase()}</div> :
         <div styleName="amount">{`- ${parseFloat(Number(value).toFixed(5))}`} {type.toUpperCase()}</div>
       }
-    </Fragment>
-  )
+    </Fragment> 
+    )
+}
 
   render() {
     const {
@@ -122,6 +132,10 @@ class Row extends React.PureComponent {
       onSubmit,
     } = this.props
 
+
+
+
+    console.log('sdfdsfdsfssd', type)
     const { ind } = this.state
 
     const { exCurrencyRate, isOpen, comment, cancelled, payed } = this.state
@@ -168,7 +182,7 @@ class Row extends React.PureComponent {
               </div>
             </div>
             <div styleName="historyInfo">
-              <div styleName='directionHeading'>
+              <div>
                 {txType === 'INVOICE' ?
                   <>
                     <FormattedMessage id="RowHistoryInvoce" defaultMessage="Инвойс #{number}" values={{number: `${invoiceData.id}-${invoiceData.invoiceNumber}`}}/>
