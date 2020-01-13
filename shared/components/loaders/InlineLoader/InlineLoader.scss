@@ -61,14 +61,3 @@
     transform: translate(19px, 0);
   }
 }
-
-td {
-  @include media-tablet-landscape-and-lower {
-    .ellipsis {
-      position: absolute;
-      top: 25px;
-      margin: 10px;
-      right: 10px;
-    }
-  }
-}
