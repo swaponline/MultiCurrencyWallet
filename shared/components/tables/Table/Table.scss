@@ -68,7 +68,6 @@ $walletPaddingTop: 41px;
   }
   td:first-child {
     display: table-cell;
-    padding-left: $borderPadding;
   }
   td:last-child {
     padding-right: $borderPadding - 10px;
@@ -85,7 +84,6 @@ $walletPaddingTop: 41px;
   thead tr th {
     &:first-child {
       border-top-left-radius: $borderRadius;
-      padding-left: $borderPadding;
     }
     &:last-child {
       border-top-right-radius: $borderRadius;
@@ -465,10 +463,6 @@ table.wallet {
 @include media-mobile {
   .table {
     margin-top: 15px;
-  }
-
-  td:first-child {
-    left: -1em;
   }
 
   .table.exchange {

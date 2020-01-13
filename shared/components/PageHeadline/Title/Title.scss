@@ -1,7 +1,6 @@
 .title {
   text-transform: uppercase;
-  @include ff-bold;
+  font-family: 'Inter-Bold', sans-serif;
   color: $color-brand;
   font-size: 16px;
-  font-family: Arial;
 }
