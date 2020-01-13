@@ -257,12 +257,18 @@ tr.historyRow {
   .circleIcon {
     display: none;
   }
+}
+
+
+@media all and (min-width: 320px) and (max-width: 400px) {
+  .historyInfo {
+    min-height: 60px;
+  }
   .confirm,
   .unconfirmed {
-    top: auto;
+    top: 47px;
     position: absolute;
     right: 0;
-    bottom: -3px;
   }
 }
 
