@@ -14,6 +14,7 @@
         z-index: 11111;
         button {
             margin-left: 10px;
+            white-space: nowrap;
             font-weight: bold;
         }
     }
@@ -95,10 +96,12 @@
         flex-direction: column;
         height: max-content;
         align-items: flex-start;
+        padding: 20px;
+        justify-content: space-between;
         > div {
             align-items: flex-start;
             button {
-                font-size: 11px;
+                font-size: 12px;
                 margin: 0;
             }
             button:first-child {
@@ -142,21 +145,21 @@
             font-size: 12px;
         }
     }
-}
-
-@media all and (min-width: 320px) and (max-width: 340px) {
     .notifyBlock {
+        height: 250px;
         > div {
-            align-items: flex-start;
+            flex-direction: column;
+            align-items: normal;
             button {
-                font-size: 10px;
+                font-size: 12px;
                 margin: 0;
+                flex-basis: 100%;
             }
             button:first-child {
-                margin-right: 10px;
+                margin-bottom: 10px;
+                margin-right: 0;
             }
         }
     }
 }
-
 

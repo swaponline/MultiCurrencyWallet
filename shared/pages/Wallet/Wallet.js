@@ -328,13 +328,16 @@ export default class Wallet extends Component {
     
     if (currencyBalance) {
       currencyBalance.forEach(item => {
-        if ((!isWidgetBuild || widgetCurrencies.includes(item.name)) && item.infoAboutCurrency) {
+        if ((!isWidgetBuild || widgetCurrencies.includes(item.name)) && item.infoAboutCurrency && item.balance !== 0) {
+          if (item.name === 'BTC') {
+            changePercent = item.infoAboutCurrency.percent_change_1h;
+          }
           btcBalance += item.balance * item.infoAboutCurrency.price_btc;
-          usdBalance = btcBalance * item.infoAboutCurrency.price_usd;
-          changePercent = item.infoAboutCurrency.percent_change_1h;
+          usdBalance += item.balance * item.infoAboutCurrency.price_usd;
         }
       })
     }
+
 
     return (
       <artical>
@@ -364,7 +367,7 @@ export default class Wallet extends Component {
                 !isFetching ? 
                   <BalanceForm 
                     usdBalance={usdBalance} 
-                    currencyBalance={btcBalance} 
+                    currencyBalance={btcBalance}
                     changePercent={changePercent}
                     handleReceive={this.handleModalOpen} 
                     handleWithdraw={this.handleModalOpen} 

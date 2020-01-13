@@ -517,7 +517,7 @@ export default class Row extends Component {
                       </span>
                     ) : (
                         <div styleName="loader">
-                          <InlineLoader />
+                          {!(balanceError && nodeDownErrorShow) && <InlineLoader />}
                         </div>
                       )
                   ) : (

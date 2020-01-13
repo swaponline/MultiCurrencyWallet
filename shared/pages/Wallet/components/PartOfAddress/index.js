@@ -12,12 +12,12 @@ export default ({ currency, contractAddress, address }) => {
         contractAddress={contractAddress}
         address={address}
       >
-        <span>
+        <p>
           &#183;
           &#183;
           &#183;
           {endOfAddress}
-        </span>
+        </p>
       </LinkAccount>
     </div>
   )

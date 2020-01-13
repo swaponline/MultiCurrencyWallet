@@ -8,9 +8,16 @@ import config from 'app-config'
 import { FormattedMessage } from 'react-intl'
 
 
-function BalanceForm({ usdBalance, currencyBalance, handleReceive, handleWithdraw, handleExchange, currency, infoAboutCurrency, changePercent }) {
+function BalanceForm({ usdBalance, currencyBalance, handleReceive, handleWithdraw, handleExchange, currency, changePercent }) {
   const [activeCurrency, setActiveCurrency] = useState('usd');
   const isWidgetBuild = (config && config.isWidget)
+
+  switch (currency) {
+    case 'btc (sms-protected)': currency = 'BTC SMS'
+      break;
+    case 'btc (multisig)': currency = 'BTC MULTISIG'
+      break;
+  }
 
   return (
     <div styleName={`yourBalance`}>
@@ -23,7 +30,7 @@ function BalanceForm({ usdBalance, currencyBalance, handleReceive, handleWithdra
             BigNumber(usdBalance).dp(2, BigNumber.ROUND_FLOOR).toString() : ''}</p> : 
             <p>
               {BigNumber(currencyBalance).dp(5, BigNumber.ROUND_FLOOR).toString()}
-              {changePercent ? <span styleName={changePercent > 0 ? 'green' : 'red'}>{`${changePercent > 0 ? `+${changePercent}` : `-${changePercent}`}`}%</span> : ''}
+              {changePercent ? <span styleName={changePercent > 0 ? 'green' : 'red'}>{`${changePercent > 0 ? `+${changePercent}` : `${changePercent}`}`}%</span> : ''}
             </p>
           }
         </div>
@@ -38,7 +45,7 @@ function BalanceForm({ usdBalance, currencyBalance, handleReceive, handleWithdra
         </div>
       </div>
       <div styleName="yourBalanceBottom">
-        <Fragment>
+        <Fragment>            
           <NewButton blue id="depositBtn" onClick={() => handleReceive('Deposit')}>
             <FormattedMessage id="YourtotalbalanceDeposit" defaultMessage="Пополнить" />
           </NewButton>
