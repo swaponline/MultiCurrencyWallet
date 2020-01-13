@@ -5,7 +5,7 @@ import * as bitcoin from 'bitcoinjs-lib'
 import bitcoinMessage from 'bitcoinjs-message'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
-import { btc, request, constants, api } from 'helpers'
+import { btc, apiLooper, constants, api } from 'helpers'
 import { Keychain } from 'keychain.js'
 import actions from 'redux/actions'
 
@@ -72,8 +72,14 @@ const loginWithKeychain = async () => {
 const getBalance = () => {
   const { user: { btcData: { address } } } = getState()
 
-  return request.get(`${api.getApiServer('bitpay')}/addr/${address}`)
-    .then(({ balance, unconfirmedBalance }) => {
+  return apiLooper.get('bitpay', `/addr/${address}`, {
+    checkStatus: (answer) => {
+      try {
+        if (answer && answer.balance !== undefined) return true
+      } catch (e) { /* */ }
+      return false
+    },
+  }).then(({ balance, unconfirmedBalance }) => {
       console.log('BTC Balance: ', balance)
       console.log('BTC unconfirmedBalance Balance: ', unconfirmedBalance)
       reducers.user.setBalance({ name: 'btcData', amount: balance, unconfirmedBalance })
@@ -85,12 +91,24 @@ const getBalance = () => {
 }
 
 const fetchBalance = (address) =>
-  request.get(`${api.getApiServer('bitpay')}/addr/${address}`)
-    .then(({ balance }) => balance)
+  apiLooper.get('bitpay', `/addr/${address}`, {
+    checkStatus: (answer) => {
+      try {
+        if (answer && answer.balance !== undefined) return true
+      } catch (e) { /* */ }
+      return false
+    },
+  }).then(({ balance }) => balance)
 
 const fetchTx = (hash) =>
-  request.get(`${api.getApiServer('bitpay')}/tx/${hash}`)
-    .then(({ fees, ...rest }) => ({
+  apiLooper.get('bitpay', `/tx/${hash}`, {
+    checkStatus: (answer) => {
+      try {
+        if (answer && answer.fees !== undefined) return true
+      } catch (e) { /* */ }
+      return false
+    },
+  }).then(({ fees, ...rest }) => ({
       fees: BigNumber(fees).multipliedBy(1e8),
       ...rest,
     }))
@@ -114,10 +132,16 @@ const getTransaction = () =>
   new Promise((resolve) => {
     const { user: { btcData: { address } } } = getState()
 
-    const url = `${api.getApiServer('bitpay')}/txs/?address=${address}`
+    const url = `/txs/?address=${address}`
 
-    return request.get(url)
-      .then((res) => {
+    return apiLooper.get('bitpay', url, {
+      checkStatus: (answer) => {
+        try {
+          if (answer && answer.txs !== undefined) return true
+        } catch (e) { /* */ }
+        return false
+      },
+    }).then((res) => {
         const transactions = res.txs.map((item) => {
           const direction = item.vin[0].addr !== address ? 'in' : 'out'
           const isSelf = direction === 'out'
@@ -197,10 +221,10 @@ const signAndBuildKeychain = async (transactionBuilder, unspents) => {
 }
 
 const fetchUnspents = (address) =>
-  request.get(`${api.getApiServer('bitpay')}/addr/${address}/utxo`, { cacheResponse: 5000 })
+  apiLooper.get('bitpay', `/addr/${address}/utxo`, { cacheResponse: 5000 })
 
 const broadcastTx = (txRaw) =>
-  request.post(`${api.getApiServer('bitpay')}/tx/send`, {
+  apiLooper.post('bitpay', `/tx/send`, {
     body: {
       rawtx: txRaw,
     },
@@ -220,7 +244,7 @@ const getReputation = () =>
     const { user: { btcData: { address, privateKey } } } = getState()
     const addressOwnerSignature = signMessage(address, privateKey)
 
-    request.post(`${api.getApiServer('swapsExplorer')}/reputation`, {
+    apiLooper.post('swapsExplorer', `/reputation`, {
       json: true,
       body: {
         address,
@@ -249,5 +273,5 @@ export default {
   fetchBalance,
   signMessage,
   getReputation,
-  getInvoices,
+  getInvoices
 }

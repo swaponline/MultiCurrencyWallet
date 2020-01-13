@@ -5,7 +5,7 @@ import * as bitcoin from 'bitcoinjs-lib'
 import bitcoinMessage from 'bitcoinjs-message'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
-import { request, constants, api } from 'helpers'
+import { apiLooper, constants, api } from 'helpers'
 import btc from 'helpers/btc'
 import { Keychain } from 'keychain.js'
 import actions from 'redux/actions'
@@ -325,7 +325,7 @@ const beginRegisterSMS = async (phone) => {
   const { user: { btcMultisigSMSData: { account, address, keyPair, publicKey } } } = getState()
   
   const sign = _getSign()
-  const result = await request.post(`${config.api.btc2FAProtected}/register/begin/`, {
+  const result = await apiLooper.post('btc2FAProtected', `/register/begin/`, {
     body: {
       phone,
       address,
@@ -342,7 +342,7 @@ const confirmRegisterSMS = async (phone, smsCode) => {
   const { user: { btcMultisigSMSData: { account, address, keyPair, publicKey } } } = getState()
   
   const sign = _getSign()
-  const result = await request.post(`${config.api.btc2FAProtected}/register/confirm/`, {
+  const result = await apiLooper.post('btc2FAProtected', `/register/confirm/`, {
     body: {
       phone,
       address,
@@ -369,8 +369,14 @@ const getBalance = (ownAddress, ownDataKey) => {
   const checkAddress = (ownAddress) ? ownAddress : address
   const dataKey = (ownDataKey) ? ownDataKey : 'btcMultisigSMSData'
   
-  return request.get(`${api.getApiServer('bitpay')}/addr/${checkAddress}`)
-    .then(({ balance, unconfirmedBalance }) => {
+  return apiLooper.get('bitpay', `/addr/${checkAddress}`, {
+    checkStatus: (answer) => {
+      try {
+        if (answer && answer.balance !== undefined) return true
+      } catch (e) { /* */ }
+      return false
+    },
+  }).then(({ balance, unconfirmedBalance }) => {
       reducers.user.setBalance({ name: dataKey, amount: balance, unconfirmedBalance })
       return balance
     })
@@ -384,16 +390,33 @@ const getBalanceUser = () => {
   return getBalance(address, 'btcMultisigUserData')
 }
 
+const getRate = async () => {
+  const exCurrencyRate = await actions.user.getExchangeRate('BTC', 'usd')
+  reducers.user.setCurrencyRate({ name: 'btcData', currencyRate: exCurrencyRate })
+}
+
 const getBalanceG2FA = () => {
 }
 
 const fetchBalance = (address) =>
-  request.get(`${api.getApiServer('bitpay')}/addr/${address}`)
-    .then(({ balance }) => balance)
+  apiLooper.get('bitpay', `/addr/${address}`, {
+    checkStatus: (answer) => {
+      try {
+        if (answer && answer.balance !== undefined) return true
+      } catch (e) { /* */ }
+      return false
+    },
+  }).then(({ balance }) => balance)
 
 const fetchTx = (hash) =>
-  request.get(`${api.getApiServer('bitpay')}/tx/${hash}`)
-    .then(({ fees, ...rest }) => ({
+  apiLooper.get('bitpay', `/tx/${hash}`, {
+    checkStatus: (answer) => {
+      try {
+        if (answer && answer.fees !== undefined) return true
+      } catch (e) { /* */ }
+      return false
+    },
+  }).then(({ fees, ...rest }) => ({
       fees: BigNumber(fees).multipliedBy(1e8),
       ...rest,
     }))
@@ -437,10 +460,16 @@ const getTransaction = (ownAddress, ownType) =>
     const { user: { btcMultisigSMSData: { address } } } = getState()
     const checkAddress = (ownAddress) ? ownAddress : address
     const type = (ownType) ? ownType : 'btc (sms-protected)'
-    const url = `${api.getApiServer('bitpay')}/txs/?address=${checkAddress}`
+    const url = `/txs/?address=${checkAddress}`
 
-    return request.get(url)
-      .then((res) => {
+    return apiLooper.get('bitpay', url, {
+      checkStatus: (answer) => {
+        try {
+          if (answer && answer.txs !== undefined) return true
+        } catch (e) { /* */ }
+        return false
+      },
+    }).then((res) => {
         const transactions = res.txs.map((item) => {
           const direction = item.vin[0].addr !== checkAddress ? 'in' : 'out'
           const isSelf = direction === 'out'
@@ -490,11 +519,11 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
   })
   const p2sh = bitcoin.payments.p2sh({ redeem: p2ms, network: btc.network })
   
-  console.log('P2SH Address:',p2sh.address)
-  console.log('P2SH Script')
-  console.log(bitcoin.script.toASM(p2sh.redeem.output))
-  console.log(publicKey.toString('Hex'))
-  console.log(bitcoin.ECPair.fromWIF(privateKey, btc.network).publicKey.toString('Hex'))
+  // console.log('P2SH Address:',p2sh.address)
+  // console.log('P2SH Script')
+  // console.log(bitcoin.script.toASM(p2sh.redeem.output))
+  // console.log(publicKey.toString('Hex'))
+  // console.log(bitcoin.ECPair.fromWIF(privateKey, btc.network).publicKey.toString('Hex'))
 
 
   let txb1 = new bitcoin.TransactionBuilder(btc.network)
@@ -511,12 +540,12 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
   })
 
   let txRaw = txb1.buildIncomplete()
-  console.log('Multisig transaction ready')
-  console.log('Your key:', publicKey.toString('Hex'))
-  console.log('TX Hash:', txRaw.toHex())
-  console.log('Send it to other owner for sign and broadcast')
+  // console.log('Multisig transaction ready')
+  // console.log('Your key:', publicKey.toString('Hex'))
+  // console.log('TX Hash:', txRaw.toHex())
+  // console.log('Send it to other owner for sign and broadcast')
   
-  const result = await request.post(`${config.api.btc2FAProtected}/push/`, {
+  const result = await apiLooper.post('btc2FAProtected', `/push/`, {
     body: {
       address,
       publicKey: publicKey.toString('hex'),
@@ -532,7 +561,7 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
 const confirmSMSProtected = async ( smsCode ) => {
   const { user: { btcMultisigSMSData: { address, privateKey, publicKeys, publicKey } } } = getState()
 
-  const result = await request.post(`${config.api.btc2FAProtected}/sign/`, {
+  const result = await apiLooper.post('btc2FAProtected', `/sign/`, {
     body: {
       address,
       publicKey: publicKey.toString('hex'),
@@ -562,11 +591,11 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
   })
   const p2sh = bitcoin.payments.p2sh({ redeem: p2ms, network: btc.network })
   
-  console.log('P2SH Address:',p2sh.address)
-  console.log('P2SH Script')
-  console.log(bitcoin.script.toASM(p2sh.redeem.output))
-  console.log(publicKey.toString('Hex'))
-  console.log(bitcoin.ECPair.fromWIF(privateKey, btc.network).publicKey.toString('Hex'))
+  // console.log('P2SH Address:',p2sh.address)
+  // console.log('P2SH Script')
+  // console.log(bitcoin.script.toASM(p2sh.redeem.output))
+  // console.log(publicKey.toString('Hex'))
+  // console.log(bitcoin.ECPair.fromWIF(privateKey, btc.network).publicKey.toString('Hex'))
 
 
   let txb1 = new bitcoin.TransactionBuilder(btc.network)
@@ -583,13 +612,11 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
   })
 
   let txRaw = txb1.buildIncomplete()
-  console.log('Multisig transaction ready')
-  console.log('Your key:', publicKey.toString('Hex'))
-  console.log('TX Hash:', txRaw.toHex())
-  console.log('Send it to other owner for sign and broadcast')
+  // console.log('Multisig transaction ready')
+  // console.log('Your key:', publicKey.toString('Hex'))
+  // console.log('TX Hash:', txRaw.toHex())
+  // console.log('Send it to other owner for sign and broadcast')
   return txRaw.toHex()
-  let tx1 = txb1.build()
-  return tx1.toHex()
 }
 
 const parseRawTX =  async ( txHash ) => {
@@ -643,22 +670,21 @@ const signMultiSign = async ( txHash ) => {
 
   const p2sh = bitcoin.payments.p2sh({ redeem: p2ms, network: btc.network })
   
-  console.log('P2SH Address' ,p2sh.address)
-  console.log('P2SH Script')
-  console.log(bitcoin.script.toASM(p2sh.redeem.output))
-  console.log(publicKey.toString('Hex'))
-  console.log(bitcoin.ECPair.fromWIF(privateKey, btc.network).publicKey.toString('Hex'))
+  // console.log('P2SH Address' ,p2sh.address)
+  // console.log('P2SH Script')
+  // console.log(bitcoin.script.toASM(p2sh.redeem.output))
+  // console.log(publicKey.toString('Hex'))
+  // console.log(bitcoin.ECPair.fromWIF(privateKey, btc.network).publicKey.toString('Hex'))
   // sign transaction with our key
   txb.__INPUTS.forEach((input, index) => {
     txb.sign(index, bitcoin.ECPair.fromWIF(privateKey, btc.network), p2sh.redeem.output)
   })
 
   let tx = await txb.build()
-  
-  window.multiSignTx = txb
+
   return tx.toHex()
 }
-window.MS_Sign = signMultiSign
+
 
 const signAndBuild = (transactionBuilder, p2sh) => {
   const { user: { btcData: { privateKey } } } = getState()
@@ -683,15 +709,15 @@ const signAndBuildKeychain = async (transactionBuilder, unspents) => {
 }
 
 const fetchUnspents = (address) =>
-  request.get(`${api.getApiServer('bitpay')}/addr/${address}/utxo`, { cacheResponse: 5000 })
+  apiLooper.get('bitpay', `/addr/${address}/utxo`, { cacheResponse: 5000 })
 
 const broadcastTx = (txRaw) =>
-  request.post(`${api.getApiServer('bitpay')}/tx/send`, {
+  apiLooper.post('bitpay', `/tx/send`, {
     body: {
       rawtx: txRaw,
     },
   })
-window.MS_broadcastTx = broadcastTx
+
 
 const signMessage = (message, encodedPrivateKey) => {
   const keyPair = bitcoin.ECPair.fromWIF(encodedPrivateKey, [bitcoin.networks.bitcoin, bitcoin.networks.testnet])
@@ -707,7 +733,7 @@ const getReputation = () =>
     const { user: { btcMultisigSMSData: { address, privateKey } } } = getState()
     const addressOwnerSignature = signMessage(address, privateKey)
 
-    request.post(`${api.getApiServer('swapsExplorer')}/reputation`, {
+    apiLooper.post('swapsExplorer', `/reputation`, {
       json: true,
       body: {
         address,

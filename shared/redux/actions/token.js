@@ -1,5 +1,5 @@
 import ERC20_ABI from 'human-standard-token-abi'
-import helpers, { request, constants, cacheStorageGet, cacheStorageSet } from 'helpers'
+import helpers, { apiLooper, constants, cacheStorageGet, cacheStorageSet } from 'helpers'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import web3 from 'helpers/web3'
@@ -7,6 +7,32 @@ import reducers from 'redux/core/reducers'
 import config from 'app-config'
 import { BigNumber } from 'bignumber.js'
 
+
+const AddCustomERC20 = (contract, symbol, decimals) => {
+  const configStorage = (process.env.MAINNET) ? 'mainnet' : 'testnet'
+
+  let tokensInfo = JSON.parse(localStorage.getItem(constants.localStorage.customERC))
+  if (!tokensInfo) {
+    tokensInfo = {
+      mainnet: {},
+      testnet: {},
+    }
+  }
+  tokensInfo[configStorage][contract] = {
+    address: contract,
+    symbol,
+    decimals,
+  }
+  localStorage.setItem(constants.localStorage.customERC, JSON.stringify(tokensInfo))
+}
+
+const GetCustromERC20 = () => {
+  const configStorage = (process.env.MAINNET) ? 'mainnet' : 'testnet'
+
+  let tokensInfo = JSON.parse(localStorage.getItem(constants.localStorage.customERC))
+  if (!tokensInfo || !tokensInfo[configStorage]) return {}
+  return tokensInfo[configStorage]
+}
 
 const login = (privateKey, contractAddress, nameContract, decimals, fullName) => {
   let data
@@ -38,6 +64,7 @@ const setupContract = (ethAddress, contractAddress, nameContract, decimals, full
     currency: nameContract.toUpperCase(),
     contractAddress,
     decimals,
+    currencyRate: 1
   }
 
   reducers.user.setTokenAuthData({ name: data.name, data })
@@ -91,14 +118,14 @@ const getTransaction = (currency) =>
     console.log('currency', address, contractAddress)
 
     const url = [
-      `${config.api.etherscan}?module=account&action=tokentx`,
+      `?module=account&action=tokentx`,
       `&contractaddress=${contractAddress}`,
       `&address=${address}`,
       `&startblock=0&endblock=99999999`,
       `&sort=asc&apikey=RHHFPNMAZMD6I4ZWBZBF6FA11CMW9AXZNM`,
     ].join('')
 
-    return request.get(url)
+    return apiLooper.get('etherscan', url)
       .then((res) => {
         const transactions = res.result
           .filter((item) => item.value > 0).map((item) => ({
@@ -229,4 +256,6 @@ export default {
   approve,
   setAllowanceForToken,
   fetchBalance,
+  AddCustomERC20,
+  GetCustromERC20,
 }

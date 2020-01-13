@@ -20,10 +20,11 @@
 a {
   font-size: 16px;
 }
-p {
-  font-size: 14px;
-  margin-bottom: 7px;
-}
+// p {
+//   font-size: 14px;
+//   color: #8E9AA3;
+//   margin-top: -5px;
+// }
 
 @include media-mobile {
   .subTitle {
@@ -38,7 +39,7 @@ p {
     margin: 7px auto;
   }
 
-  p {
-    font-size: 9.5px;
-  }
+  // p {
+  //   font-size: 12px;
+  // }
 }

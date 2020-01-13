@@ -4,7 +4,7 @@ import config from 'app-config'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import * as bitcoin from 'bitcoinjs-lib'
-import { btc, request, constants, api } from 'helpers'
+import { btc, apiLooper, constants, api } from 'helpers'
 
 
 const login = (privateKey) => {
@@ -52,7 +52,7 @@ const getBalance = async () => {
 }
 
 const fetchBalance = (address, assetId = 31) =>
-  request.post(`${config.api.usdt}v1/address/addr/`, {
+  apiLooper.post('usdt', `v1/address/addr/`, {
     body: `addr=${address}`,
   })
     .then(response => {
@@ -95,7 +95,7 @@ const getTransaction = () => {
   const { user: { usdtData: { address } } } = getState()
 
   return new Promise((resolve) => {
-    request.post(`${config.api.usdt}v1/address/addr/details/`, {
+    apiLooper.post('usdt', `v1/address/addr/details/`, {
       body: `addr=${address}`,
     })
       .then((res) => {
@@ -117,7 +117,7 @@ const getTransaction = () => {
 }
 
 const fetchUnspents = (address) =>
-  request.get(`${config.api.bitpay}/addr/${address}/utxo`)
+  apiLooper.get('bitpay', `/addr/${address}/utxo`)
 
 
 const send = ({ from, to, amount } = {}) => {
@@ -177,7 +177,7 @@ const createOmniScript = (amount) => {
 
 
 const broadcastTx = (txRaw) =>
-  request.post(`${api.getApiServer('bitpay')}/tx/send`, {
+  apiLooper.post('bitpay', `/tx/send`, {
     body: {
       rawtx: txRaw,
     },

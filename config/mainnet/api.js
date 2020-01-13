@@ -1,8 +1,14 @@
 export default {
   horizon: 'https://horizon.stellar.org',
   blocktrail: 'https://api.blocktrail.com/v1/BTC',
-  bitpay: 'https://invoices.swaponline.site/proxybitpay', //'https://insight.bitpay.com/api',
-  etherscan: 'https://api.etherscan.io/api',
+  bitpay: [
+    'https://insight.bitpay.com/api',
+    'https://invoices.swaponline.site/proxybitpay',
+  ],
+  etherscan: [
+    'https://api.etherscan.io/api',
+    'https://invoices.swaponline.site/proxyetherscan',
+  ],
   // usdTomni: 'https://api.omniexplorer.info/',
   bch: 'https://rest.bitcoin.com/v2',
   ltc: 'https://insight.litecore.io/api',

@@ -15,7 +15,7 @@ import PageHeadline from 'components/PageHeadline/PageHeadline'
 import InfiniteScrollTable from 'components/tables/InfiniteScrollTable/InfiniteScrollTable'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import EmptyTransactions from 'components/EmptyTransactions/EmptyTransactions'
+import ContentLoader from '../../components/loaders/ContentLoader/ContentLoader'
 
 
 const filterHistory = (items, filter) => {
@@ -92,6 +92,7 @@ export default class History extends Component {
     return (
       items ? (
         <section styleName="history">
+          <h3 styleName="historyHeading">Activity</h3>
           {
             items.length > 0 ? (
               <InfiniteScrollTable
@@ -104,15 +105,17 @@ export default class History extends Component {
                 rowRender={this.rowRender}
               /> 
             ) : (
-                <EmptyTransactions />
+              <div styleName="historyContent">
+                <ContentLoader rideSideContent empty />
+              </div>
             )
           }
         </section>
-      ) :
-        <div styleName="loader">
-          <FormattedMessage id="history107" defaultMessage="Loading" />
-          <InlineLoader />
+      ) : (
+        <div styleName="historyContent">
+          <ContentLoader rideSideContent />
         </div>
+      )
     )
   }
 }

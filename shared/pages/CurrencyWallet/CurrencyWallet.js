@@ -24,8 +24,7 @@ import { localisedUrl } from 'helpers/locale'
 import config from 'app-config'
 import BalanceForm from 'pages/Wallet/components/BalanceForm/BalanceForm'
 import { BigNumber } from 'bignumber.js'
-import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import EmptyTransactions from 'components/EmptyTransactions/EmptyTransactions'
+import ContentLoader from 'components/loaders/ContentLoader/ContentLoader'
 
 const isWidgetBuild = config && config.isWidget
 
@@ -48,6 +47,7 @@ const titles = [
     btcMultisigUserData,
     bchData,
     ltcData,
+    isFetching,
     tokensData, nimData/* usdtOmniData */ } }) => ({
       items: [
         ethData,
@@ -62,6 +62,7 @@ const titles = [
       hiddenCoinsList: core.hiddenCoinsList,
       txHistory: transactions,
       swapHistory,
+      isFetching
     }))
 
 @injectIntl
@@ -97,6 +98,7 @@ export default class CurrencyWallet extends Component {
         contractAddress,
         decimals,
         balance,
+        infoAboutCurrency
       } = itemCurrency
 
       return {
@@ -106,6 +108,7 @@ export default class CurrencyWallet extends Component {
         contractAddress,
         decimals,
         balance,
+        infoAboutCurrency,
         isBalanceEmpty: balance === 0,
       }
     }
@@ -123,7 +126,6 @@ export default class CurrencyWallet extends Component {
     }
 
     this.setLocalStorageItems();
-    this.getUsdBalance();
 
     actions.user.setTransactions()
     actions.core.getSwapHistory()
@@ -141,18 +143,6 @@ export default class CurrencyWallet extends Component {
       walletTitle,
       isPrivateKeysSaved
     })
-  }
-
-  getUsdBalance = async () => {
-    const { currency } = this.state;
-
-    const exCurrencyRate = await actions.user.getExchangeRate(currency, 'usd')
-
-    console.log('exCurrencyRate', exCurrencyRate)
-
-    this.setState(() => ({
-      exCurrencyRate
-    }))
   }
 
   handleReceive = () => {
@@ -198,7 +188,7 @@ export default class CurrencyWallet extends Component {
 
   render() {
 
-    let { swapHistory, txHistory, location, match: { params: { fullName } }, intl, hiddenCoinsList, isSigned } = this.props
+    let { swapHistory, txHistory, location, match: { params: { fullName } }, intl, hiddenCoinsList, isSigned, isFetching } = this.props
     const {
       currency,
       balance,
@@ -206,7 +196,8 @@ export default class CurrencyWallet extends Component {
       isClosedNotifyBlockSignUp,
       isPrivateKeysSaved,
       exCurrencyRate,
-      projectName
+      projectName,
+      infoAboutCurrency
     } = this.state
 
     if (txHistory) {
@@ -250,8 +241,15 @@ export default class CurrencyWallet extends Component {
       .map(item => item.toLowerCase())
       .includes(currency.toLowerCase())
 
+    let currencyUsdBalance;
+    let changePercent;
 
-    const currencyUsdBalance = BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * exCurrencyRate;
+    if(infoAboutCurrency) {
+      currencyUsdBalance = BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * infoAboutCurrency.price_usd;
+      changePercent = infoAboutCurrency.percent_change_1h;
+    } else {
+      currencyUsdBalance = 0;
+    }
 
     let settings = {
       infinite: true,
@@ -278,26 +276,34 @@ export default class CurrencyWallet extends Component {
         <Fragment>
           <div styleName="currencyWalletWrapper">
             <div styleName="currencyWalletBalance">
-              <BalanceForm currencyBalance={balance} usdBalance={currencyUsdBalance} handleReceive={this.handleReceive} handleWithdraw={this.handleWithdraw} currency={currency.toLowerCase()} />
+              {
+                !isFetching && txHistory ? 
+                  <BalanceForm 
+                  currencyBalance={balance} 
+                  usdBalance={currencyUsdBalance} 
+                  changePercent={changePercent}
+                  handleReceive={this.handleReceive} 
+                  handleWithdraw={this.handleWithdraw} 
+                  currency={currency.toLowerCase()} 
+                /> : <ContentLoader leftSideContent />
+              }
             </div>
             {swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} />}
-            <div styleName="currencyWalletActivity">
-              <h3>
-                <FormattedMessage id="historyActivity" defaultMessage="Активность" />
-              </h3>
-              {!txHistory ? (
-                <div styleName="loader">
-                  <FormattedMessage id="history107" defaultMessage="Loading" />
-                  <InlineLoader />
-                </div>
-              ) : (
-
-                  txHistory.length > 0 ? (
-                    <Table rows={txHistory} styleName="history" rowRender={this.rowRender} />
-                  ) : (
-                      <EmptyTransactions />
-                    )
-                )}
+            <div styleName="currencyWalletActivityWrapper">
+              {
+                !isFetching && txHistory ? (
+                  <div styleName="currencyWalletActivity">
+                    <h3>
+                      <FormattedMessage id="historyActivity" defaultMessage="Активность" />
+                    </h3>
+                    {
+                      txHistory.length > 0 ? (
+                          <Table rows={txHistory} styleName="history" rowRender={this.rowRender} />
+                      ) : <ContentLoader rideSideContent empty inner />
+                    }
+                  </div>
+                ) : <ContentLoader rideSideContent />
+              }
             </div>
           </div>
           {

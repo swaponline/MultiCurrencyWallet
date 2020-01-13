@@ -1,8 +1,29 @@
 .history {
     display: block;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08), 0px 1px 4px rgba(0, 0, 0, 0.08);
+    border-radius: 4px;
+    padding: 25px;
+    margin-top: 40px;
+    width: 100%;
 }
 
-.loader {
-  position: relative;
-  margin: 40% 40%;
+.historyHeading {
+  color: #1F2D48;
+  font-size: 24px;
+  line-height: 33px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
+
+@media all and (min-width: 320px) and (max-width: 767px) {
+  .history {
+    box-shadow: none;
+    padding: 0;
+    margin-top: 0;
+  }
+  .historyContent {
+    margin: -40px -20px;
+  }
+}
+

@@ -28,6 +28,7 @@ import { BigNumber } from 'bignumber.js'
 import dollar from '../images/dollar.svg'
 import PartOfAddress from '../components/PartOfAddress'
 
+
 @injectIntl
 @withRouter
 @connect(({
@@ -107,8 +108,6 @@ export default class Row extends Component {
   }
 
   componentDidMount() {
-    this.getUsdBalance()
-
     window.addEventListener('resize', this.handleSliceAddress)
   }
 
@@ -163,20 +162,6 @@ export default class Row extends Component {
       ...getComparableProps(this.props),
       ...this.state,
     })
-  }
-
-  getUsdBalance = async () => {
-    const { currency: { currency } } = this.props
-    let currencySymbol = currency
-    // BTC SMS Protected and BTC-Multisign
-    if (currencySymbol === 'BTC (SMS-Protected)') currencySymbol = 'BTC'
-    if (currencySymbol === 'BTC (Multisig)') currencySymbol = 'BTC'
-
-    const exCurrencyRate = await actions.user.getExchangeRate(currencySymbol, 'usd')
-
-    this.setState(() => ({
-      exCurrencyRate
-    }))
   }
 
   handleTouch = (e) => {
@@ -392,7 +377,6 @@ export default class Row extends Component {
     const {
       item,
       intl: { locale },
-      infoAboutCurrency,
     } = this.props
 
     const {
@@ -409,11 +393,14 @@ export default class Row extends Component {
 
     let inneedData = null
     let nodeDownErrorShow = true
+    let currencyUsdBalance = 0;
 
-    const currencyUsdBalance = BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * exCurrencyRate;
+    const isWidgetBuild = (config && config.isWidget)
 
-    if (infoAboutCurrency) {
-      inneedData = infoAboutCurrency.find(el => el.name === currency)
+    
+
+    if(item.infoAboutCurrency) {
+      currencyUsdBalance = BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * item.infoAboutCurrency.price_usd;
     }
 
     let dropDownMenuItems = [
@@ -436,12 +423,6 @@ export default class Row extends Component {
         disabled: false
       },
       {
-        id: 1011,
-        title: <FormattedMessage id='WalletRow_Menu_Hide' defaultMessage='Hide' />,
-        action: this.hideCurrency,
-        disabled: false
-      },
-      {
         id: 1012,
         title: <FormattedMessage id='WalletRow_Menu_Сopy' defaultMessage='Copy address' />,
         action: this.copy,
@@ -449,10 +430,19 @@ export default class Row extends Component {
       }
     ]
 
+    if (!isWidgetBuild) {
+      dropDownMenuItems.push({
+        id: 1011,
+        title: <FormattedMessage id='WalletRow_Menu_Hide' defaultMessage='Hide' />,
+        action: this.hideCurrency,
+        disabled: false
+      })
+    }
+
     if (currencyView == 'BTC (Multisig)') currencyView = 'BTC'
     if (currencyView == 'BTC (SMS-Protected)') currencyView = 'BTC'
 
-    if (['BTC','ETH'].includes(currencyView)) {
+    if (['BTC','ETH'].includes(currencyView) && !isWidgetBuild) {
       dropDownMenuItems.push({
         id: 1004,
         title: <FormattedMessage id='WalletRow_Menu_Invoice' defaultMessage='Выставить счет' />,
@@ -527,7 +517,7 @@ export default class Row extends Component {
                       </span>
                     ) : (
                         <div styleName="loader">
-                          <InlineLoader />
+                          {!(balanceError && nodeDownErrorShow) && <InlineLoader />}
                         </div>
                       )
                   ) : (
@@ -557,7 +547,7 @@ export default class Row extends Component {
             <div styleName="assetsTableValue">
               <img src={dollar} />
               <p>{currencyUsdBalance && currencyUsdBalance.toFixed(2) || '0.00'}</p>
-              {inneedData && <span>   {`${inneedData.change} %`} </span>}
+              {/* {inneedData && <span>   {`${inneedData.change} %`} </span>} */}
             </div>
           </div>
           <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">

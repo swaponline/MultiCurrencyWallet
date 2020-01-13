@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import cssModules from 'react-css-modules'
 import moment from 'moment-with-locales-es6'
@@ -29,4 +30,15 @@ const CommentRow = (props) => {
     <div styleName="date" onDoubleClick={() => toggleComment(true)}>{comment || `${moment(date).format('LLLL')}  ${label}`}</div>
 }
 
+
+CommentRow.defaultProps = {
+  label: '',
+}
+
+CommentRow.propTypes = {
+  label: PropTypes.string.isRequired,
+}
+
 export default cssModules(CommentRow, styles, { allowMultiple: true })
+
+

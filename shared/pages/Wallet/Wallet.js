@@ -22,7 +22,9 @@ import config from 'app-config'
 import { withRouter } from 'react-router'
 import BalanceForm from './components/BalanceForm/BalanceForm'
 import CurrenciesList from './CurrenciesList'
-import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
+import NewButton from 'components/controls/NewButton/NewButton'
+import ContentLoader from '../../components/loaders/ContentLoader/ContentLoader'
+
 
 const walletNav = [
   { key: 'My balances', text: <FormattedMessage id="MybalanceswalletNav" defaultMessage="Мой баланс" /> },
@@ -44,6 +46,7 @@ const walletNav = [
     // usdtOmniData,
     // nimData,
     // xlmData,
+    isFetching
   },
   currencies: { items: currencies },
   createWallet: { currencies: assets },
@@ -106,8 +109,9 @@ const walletNav = [
     // nimData,
     // xlmData,
   ]
-    .map(({ balance, currency }) => ({
+    .map(({ balance, currency, infoAboutCurrency }) => ({
       balance,
+      infoAboutCurrency,
       name: currency,
     }))
 
@@ -119,6 +123,7 @@ const walletNav = [
     currencyBalance,
     currencies,
     assets,
+    isFetching,
     hiddenCoinsList: config && config.isWidget ? [] : hiddenCoinsList,
     userEthAddress: ethData.address,
     tokensData: {
@@ -144,16 +149,18 @@ export default class Wallet extends Component {
 
   state = {
     activeView: 0,
-    isFetching: false,
     btcBalance: 0,
     activeCurrency: 'usd',
     exchangeForm: false,
     walletTitle: 'Wallet',
-    editTitle: false
+    editTitle: false,
   }
 
   componentWillMount() {
     actions.user.getBalances()
+    window.addERC20 = () => {
+      actions.modals.open(constants.modals.AddCustomERC20)
+    }
   }
 
   componentDidMount() {
@@ -162,10 +169,15 @@ export default class Wallet extends Component {
     if (url.includes('withdraw')) {
       this.handleWithdraw(params)
     }
-
-    this.showPercentChange1H();
-    this.getUsdBalance();
+    this.getInfoAboutCurrency();
     this.setLocalStorageItems();
+  }
+
+  getInfoAboutCurrency = async () => {
+    const { currencies } = this.props;
+    const currencyNames = currencies.map(({ name }) => name)
+
+    await actions.user.getInfoAboutCurrency(currencyNames);
   }
 
   handleNavItemClick = (index) => {
@@ -178,6 +190,18 @@ export default class Wallet extends Component {
     this.setState({
       activeView: index
     })
+  }
+
+  handleSaveKeys = () => {
+    actions.modals.open(constants.modals.PrivateKeys)
+  }
+
+  handleShowKeys = () => {
+    actions.modals.open(constants.modals.DownloadModal)
+  }
+
+  handleImportKeys = () => {
+    actions.modals.open(constants.modals.ImportKeys, {})
   }
 
   setLocalStorageItems = () => {
@@ -194,12 +218,12 @@ export default class Wallet extends Component {
     })
   }
 
-  getUsdBalance = async () => {
-    const exCurrencyRate = await actions.user.getExchangeRate('BTC', 'usd')
+  onLoadeOn = (fn) => {
+    this.setState({
+      isFetching: true
+    })
 
-    this.setState(() => ({
-      exCurrencyRate
-    }))
+    fn();
   }
 
   handleNotifyBlockClose = (state) => {
@@ -207,52 +231,6 @@ export default class Wallet extends Component {
       [state]: true
     })
     localStorage.setItem(constants.localStorage[state], 'true')
-  }
-
-  showPercentChange1H = () => {
-    const { currencies, currencyBalance } = this.props
-    let infoAboutCurrency = []
-
-    this.setState({
-      isFetching: true
-    })
-
-    fetch('https://noxon.io/cursAll.php')
-      .then(res => res.json())
-      .then(
-        (result) => {
-          const itemsName = currencies.map(({ name }) => name)
-          result.map(({ symbol, percent_change_1h, price_btc }) => {
-            const btcBalance = currencyBalance.find(({ name }) => name === res.symbol)
-            if (itemsName.includes(symbol)) {
-              try {
-                infoAboutCurrency.push({
-                  name: symbol,
-                  change: percent_change_1h,
-                  price_btc,
-                  balance: btcBalance.balance * price_btc
-                })
-                /* SMS Protected and Multisign */
-                if (res.symbol === 'BTC') {
-                  infoAboutCurrency.push({
-                    name: 'BTC (SMS-Protected)',
-                    change: percent_change_1h,
-                    price_btc,
-                    balance: btcBalance.balance * price_btc
-                  })
-                }
-              } catch (e) { }
-            }
-            this.setState({
-              infoAboutCurrency,
-              isFetching: false
-            })
-          })
-        },
-        (error) => {
-          console.log('error on fetch data from api')
-        }
-      )
   }
 
   handleWithdraw = (params) => {
@@ -267,6 +245,11 @@ export default class Wallet extends Component {
     const { history, intl: { locale } } = this.props
 
     history.push(localisedUrl(locale, '/createWallet'))
+  }
+
+  handleGoExchange = () => {
+    const { history, intl: { locale } } = this.props
+    history.push(localisedUrl(locale, links.exchange))
   }
 
   handleEditTitle = () => {
@@ -308,7 +291,6 @@ export default class Wallet extends Component {
     const {
       activeView,
       infoAboutCurrency,
-      exCurrencyRate,
       exchangeForm,
       editTitle,
       walletTitle,
@@ -318,6 +300,7 @@ export default class Wallet extends Component {
       hiddenCoinsList,
       isSigned,
       allData,
+      isFetching,
     } = this.props
 
 
@@ -331,21 +314,34 @@ export default class Wallet extends Component {
       slidesToScroll: 1
     };
 
-    let btcBalance = null;
+    let btcBalance = 0;
     let usdBalance = 0;
+    let changePercent = 0;
 
-    const tableRows = allData.filter(({ currency, balance }) => !hiddenCoinsList.includes(currency) || balance > 0)
+    const isWidgetBuild = (config && config.isWidget)
+    const widgetCurrencies = (isWidgetBuild) ? ['BTC', 'ETH', config.erc20token.toUpperCase()] : []
 
+    let tableRows = allData.filter(({ currency, balance }) => !hiddenCoinsList.includes(currency) || balance > 0)
+    if (isWidgetBuild) {
+      tableRows = allData.filter(({ currency }) => widgetCurrencies.includes(currency))
+    }
+    
     if (currencyBalance) {
       currencyBalance.forEach(item => {
-        btcBalance += item.balance
-        usdBalance = btcBalance * exCurrencyRate;
+        if ((!isWidgetBuild || widgetCurrencies.includes(item.name)) && item.infoAboutCurrency && item.balance !== 0) {
+          if (item.name === 'BTC') {
+            changePercent = item.infoAboutCurrency.percent_change_1h;
+          }
+          btcBalance += item.balance * item.infoAboutCurrency.price_btc;
+          usdBalance += item.balance * item.infoAboutCurrency.price_usd;
+        }
       })
     }
 
+
     return (
       <artical>
-        <section styleName="wallet">
+        <section styleName={(isWidgetBuild) ? 'wallet widgetBuild' : 'wallet'}>
           {(walletTitle === '' || editTitle) ? <input styleName="inputTitle" onChange={(e) => this.handleChangeTitle(e)} value={walletTitle} /> : <h3 styleName="walletHeading" onDoubleClick={this.handleEditTitle}>{walletTitle || 'Wallet'}</h3>}
           <Slider
             settings={settings}
@@ -353,7 +349,7 @@ export default class Wallet extends Component {
             handleNotifyBlockClose={this.handleNotifyBlockClose}
             {...this.state}
           />
-          {!isMobile && <ul styleName="walletNav">
+          <ul styleName="walletNav">
             {walletNav.map(({ key, text }, index) => (
               <li
                 key={key}
@@ -364,24 +360,52 @@ export default class Wallet extends Component {
                   {text}
                 </a>
               </li>))}
-          </ul>}
+          </ul>
           <div className="data-tut-store" styleName="walletContent" >
             <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
-              <BalanceForm usdBalance={usdBalance} currencyBalance={btcBalance} handleReceive={this.handleModalOpen} handleWithdraw={this.handleModalOpen} currency="btc" infoAboutCurrency={infoAboutCurrency} />
+              {
+                !isFetching ? 
+                  <BalanceForm 
+                    usdBalance={usdBalance} 
+                    currencyBalance={btcBalance}
+                    changePercent={changePercent}
+                    handleReceive={this.handleModalOpen} 
+                    handleWithdraw={this.handleModalOpen} 
+                    handleExchange={this.handleGoExchange}
+                    currency="btc" 
+                    infoAboutCurrency={infoAboutCurrency} 
+                /> : <ContentLoader leftSideContent />
+              }
               {exchangeForm &&
                 <div styleName="exchangeForm">
                   <ParticalClosure {...this.props} isOnlyForm />
                 </div>
               }
             </div>
-            <CurrenciesList tableRows={tableRows} {...this.state} {...this.props} goToСreateWallet={this.goToСreateWallet} />
+            <div styleName={`yourAssetsWrapper ${activeView === 0 ? 'active' : ''}`}>
+              {
+                !isFetching ? 
+                  <CurrenciesList 
+                    tableRows={tableRows} {...this.state} {...this.props} 
+                    goToСreateWallet={this.goToСreateWallet}
+                    getExCurrencyRate={(currencySymbol, rate) => this.getExCurrencyRate(currencySymbol, rate)}
+                  /> : <ContentLoader rideSideContent />
+              }
+            </div>
             <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
-              <h3 styleName="activityHeading">
-                <FormattedMessage id="walletHistoryActivity" defaultMessage="Активность" />
-              </h3>
-              <History></History>
+              <History />
             </div>
           </div>
+          {(isWidgetBuild && activeView === 0) &&
+            <div styleName="keysExportImport">
+              <NewButton gray onClick={this.handleShowKeys}>
+                <FormattedMessage id="WalletPage_ExportKeys" defaultMessage="Показать ключи" />
+              </NewButton>
+              <NewButton gray onClick={this.handleImportKeys}>
+                <FormattedMessage id="WalletPage_ImportKeys" defaultMessage="Импортировать ключи" />
+              </NewButton>
+            </div>
+          }
         </section>
       </artical >
     )

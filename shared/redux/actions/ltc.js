@@ -5,7 +5,7 @@ import * as bitcoin from 'bitcoinjs-lib'
 import bitcoinMessage from 'bitcoinjs-message'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
-import { ltc, request, constants, api } from 'helpers'
+import { ltc, apiLooper, constants, api } from 'helpers'
 
 
 const login = (privateKey) => {
@@ -49,7 +49,7 @@ const login = (privateKey) => {
 const getBalance = () => {
   const { user: { ltcData: { address } } } = getState()
 
-  return request.get(`${api.getApiServer('ltc')}/addr/${address}`)
+  return apiLooper.get('ltc', `/addr/${address}`)
     .then(({ balance, unconfirmedBalance }) => {
       console.log('LTC Balance: ', balance)
       console.log('LTC unconfirmedBalance Balance: ', unconfirmedBalance)
@@ -62,11 +62,11 @@ const getBalance = () => {
 }
 
 const fetchBalance = (address) =>
-  request.get(`${api.getApiServer('ltc')}/addr/${address}`)
+  apiLooper.get('ltc', `/addr/${address}`)
     .then(({ balance }) => balance)
 
 const fetchTx = (hash) =>
-  request.get(`${api.getApiServer('ltc')}/tx/${hash}`)
+  apiLooper.get('ltc', `/tx/${hash}`)
     .then(({ fees, ...rest }) => ({
       fees: BigNumber(fees).multipliedBy(1e8),
       ...rest,
@@ -83,7 +83,7 @@ const getTransaction = () =>
   new Promise((resolve) => {
     const { user: { ltcData: { address } } } = getState()
 
-    const url = `${api.getApiServer('ltc')}/txs/?address=${address}`
+    const url = `/txs/?address=${address}`
 
     function getValue(item) {
       if (item.vin.filter(item => item.addr === address).length
@@ -100,7 +100,7 @@ const getTransaction = () =>
       }
     }
 
-    return request.get(url)
+    return apiLooper.get('ltc', url)
       .then((res) => {
         const transactions = res.txs.map((item) => {
           const direction = item.vin[0].addr !== address ? 'in' : 'out'
@@ -165,10 +165,10 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
 }
 
 const fetchUnspents = (address) =>
-  request.get(`${api.getApiServer('ltc')}/addr/${address}/utxo`)
+  apiLooper.get('ltc', `/addr/${address}/utxo`)
 
 const broadcastTx = (txRaw) =>
-  request.post(`${api.getApiServer('ltc')}/tx/send`, {
+  apiLooper.post('ltc', `/tx/send`, {
     body: {
       rawtx: txRaw,
     },
@@ -188,7 +188,7 @@ const getReputation = () =>
     const { user: { ltcData: { address, privateKey } } } = getState()
     const addressOwnerSignature = signMessage(address, privateKey)
 
-    request.post(`${api.getApiServer('swapsExplorer')}/reputation`, {
+    apiLooper.post('swapsExplorer', `/reputation`, {
       json: true,
       body: {
         address,
@@ -215,5 +215,5 @@ export default {
   fetchTxInfo,
   fetchBalance,
   signMessage,
-  getReputation,
+  getReputation
 }

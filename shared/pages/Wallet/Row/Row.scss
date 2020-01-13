@@ -75,15 +75,17 @@
     display: flex;
     font-size: 13px;
     color: #6144E5;
+    a {
+      font-size: 13px;
+      color: #6144E5;
+    }
     div {
-      top: -2px;
-      position: relative;
-      margin-left: 10px;
-
-      span {
+      p {
         font-size: 10px;
         color: #919ca5;
         vertical-align: middle;
+        margin-left: 10px;
+        margin-top: 3px;
       }
 
       :hover {
@@ -455,6 +457,8 @@
         color: #1F2D48;
         + span {
           color: #8E9AA3;
+          font-size: 14px;
+          margin-left: 3px;
         }
     }
     strong {
@@ -470,12 +474,23 @@
       color: red;
       font-size: 13px;
       z-index: 5;
+      font-family: 'Manrope-Medium',sans-serif;
       span, a {
        font-size: 13px;
+      }
+      span {
+        position: absolute;
+        bottom: -20px;
+        left: 0;
+        font-size: 12px;
+        text-transform: capitalize;
+        color: #8E9AA3;
       }
       a {
         span {
           color: #007bff;
+          left: calc(100% + 80px);
+          top: 0;
         }
       }
     }
@@ -588,3 +603,32 @@
     }
   }
 }
+
+@media all and (min-width: 320px) and (max-width: 530px) {
+  .assetsTableInfo {
+    .errorMessage {
+      position: absolute;
+      background: #fff;
+      z-index: 111111111;
+      width: calc(100vw - 95px);
+      height: 40px;
+      > span {
+        font-size: 10px;
+        top: 20px;
+        width: 84%;
+        line-height: 1.6;
+        white-space: pre-line;
+      }
+      a {
+        span {
+          left: auto;
+          top: 0px;
+          font-size: 13px;
+          margin-left: 10px;
+          z-index: 1111111111;
+        }
+      }
+    }
+  }
+}
+

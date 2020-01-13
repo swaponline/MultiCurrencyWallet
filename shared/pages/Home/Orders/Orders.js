@@ -215,7 +215,7 @@ export default class Orders extends Component {
         <h3 styleName="ordersHeading">
           <FormattedMessage id="orders156" defaultMessage="BUY {buyCurrency} HERE" values={{ buyCurrency: `${buyCurrency}` }} />
         </h3>
-        <p>
+        <p styleName="subtitle">
           <FormattedMessage
             id="orders159"
             defaultMessage={`orders of those who {sell} {buyCurrency} to you`}
@@ -243,7 +243,7 @@ export default class Orders extends Component {
         <h3 styleName="ordersHeading">
           <FormattedMessage id="orders224" defaultMessage={`SELL {buyCurrency} HERE`} values={{ buyCurrency: `${buyCurrency}` }} />
         </h3>
-        <p>
+        <p styleName="subtitle">
           <FormattedMessage
             id="orders186"
             defaultMessage={`orders of those who {buy} {buyCurrency} from you`}

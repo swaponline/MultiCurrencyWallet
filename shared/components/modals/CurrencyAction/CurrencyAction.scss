@@ -240,12 +240,29 @@
   }
   .currenciesWrapper {
     flex-direction: column;;
+    margin: 0;
+    width: 100%;
   }
   .modal {
     overflow: scroll;
     min-width: 100%;
   }
   .card {
+    width: 100%;
+    position: relative;
+    display: flex;
+    height: auto;
+    .circle {
+      margin: 0 10px 0;
+    }
+    b {
+      margin-top: 2px;
+    }
+    span {
+      position: absolute;
+      left: 66px;
+      bottom: 11px;
+    }
     &:last-child {
       margin-bottom: 50px;
     }

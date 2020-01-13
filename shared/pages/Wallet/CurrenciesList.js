@@ -5,11 +5,12 @@ import styles from './Wallet.scss'
 import NewButton from 'components/controls/NewButton/NewButton'
 import Row from './Row/Row'
 import Table from 'components/tables/Table/Table'
+import config from 'app-config'
 import { FormattedMessage } from 'react-intl'
 
 
-const CurrenciesList = ({ activeView, isFetching, tableRows, currencies, infoAboutCurrency, hiddenCoinsList, goToСreateWallet }) => (
-  <div styleName={`yourAssets ${activeView === 0 ? 'active' : ''}`}>
+const CurrenciesList = ({ tableRows, currencies, infoAboutCurrency, hiddenCoinsList, goToСreateWallet, getExCurrencyRate }) => (
+  <div styleName="yourAssets">
     <h3 styleName="yourAssetsHeading">
       <FormattedMessage id="YourAssets" defaultMessage="Ваши валюты" />
     </h3>
@@ -31,15 +32,18 @@ const CurrenciesList = ({ activeView, isFetching, tableRows, currencies, infoAbo
           currency={row}
           currencies={currencies}
           infoAboutCurrency={infoAboutCurrency}
+          getExCurrencyRate={(currencySymbol, rate) => getExCurrencyRate(currencySymbol, rate)}
           hiddenCoinsList={hiddenCoinsList}
           selectId={selectId}
           handleSelectId={handleSelectId}
         />
       )}
     />
-    <NewButton onClick={goToСreateWallet} blue transparent fullWidth>
-      <FormattedMessage id="addAsset" defaultMessage="Добавить валюту" />
-    </NewButton>
+    {!(config && config.isWidget) &&
+      <NewButton onClick={goToСreateWallet} blue transparent fullWidth>
+        <FormattedMessage id="addAsset" defaultMessage="Добавить валюту" />
+      </NewButton>
+    }
   </div>
 )
 

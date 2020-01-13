@@ -72,6 +72,7 @@ const getReputation = async () => {
     })
 }
 
+
 const getBalances = () => {
   actions.eth.getBalance()
   actions.btc.getBalance()
@@ -90,6 +91,42 @@ const getBalances = () => {
   // actions.nimiq.getBalance()
 }
 
+const getExchangeRate = (sellCurrency, buyCurrency) => {
+  if (buyCurrency.toLowerCase() === 'usd') {
+    return new Promise((resolve, reject) => {
+      let dataKey = sellCurrency.toLowerCase()
+      switch (sellCurrency.toLowerCase()) {
+        case 'btc (sms-protected)':
+        case 'btc (multisig)':
+          dataKey = 'btc'
+          break
+        default:
+      }
+      const { user } = getState()
+      if (user[`${dataKey}Data`] && user[`${dataKey}Data`].infoAboutCurrency) {
+        const currencyData = user[`${dataKey}Data`]
+        resolve(currencyData.infoAboutCurrency.price_usd)
+      } else {
+        resolve(1)
+      }
+    })
+  }
+  return new Promise((resolve, reject) => {
+    const url = `https://api.cryptonator.com/api/full/${sellCurrency}-${buyCurrency}`
+
+    request.get(url, { cacheResponse: 60000 }).then(({ ticker: { price: exchangeRate } }) => {
+      resolve(exchangeRate)
+    })
+      .catch(() => {
+        if (constants.customEcxchangeRate[sellCurrency.toLowerCase()] !== undefined) {
+          resolve(constants.customEcxchangeRate[sellCurrency])
+        } else {
+          resolve(1)
+        }
+      })
+  })
+}
+
 const getDemoMoney = process.env.MAINNET ? () => { } : () => {
   // googe bitcoin (or rinkeby) faucet
   request.get('https://swap.wpmix.net/demokeys.php', {})
@@ -102,22 +139,34 @@ const getDemoMoney = process.env.MAINNET ? () => { } : () => {
     })
 }
 
-const getExchangeRate = (sellCurrency, buyCurrency) =>
-  new Promise((resolve, reject) => {
-    const url = `https://api.cryptonator.com/api/full/${sellCurrency}-${buyCurrency}`
 
-    request.get(url).then(({ ticker: { price: exchangeRate } }) => {
-      resolve(exchangeRate)
-    })
-      .catch(() => {
-        if (constants.customEcxchangeRate[sellCurrency.toLowerCase()] !== undefined) {
-          resolve(constants.customEcxchangeRate[sellCurrency])
-        } else {
-          resolve(1)
+const getInfoAboutCurrency = (currencyNames) => 
+
+  new Promise((resolve, reject) => {
+    const url = 'https://noxon.io/cursAll.php';
+    reducers.user.setIsFetching({ isFetching: true })
+
+    request.get(url).then((data) => {
+      data.map(currencyInfoItem => {
+        if (currencyNames.includes(currencyInfoItem.symbol)) {
+          switch(currencyInfoItem.symbol) {
+            case 'BTC': {
+              reducers.user.setInfoAboutCurrency({name: 'btcData', infoAboutCurrency: currencyInfoItem})
+              reducers.user.setInfoAboutCurrency({name: 'btcMultisigSMSData', infoAboutCurrency: currencyInfoItem})
+              reducers.user.setInfoAboutCurrency({name: 'btcMultisigUserData', infoAboutCurrency: currencyInfoItem})
+              reducers.user.setInfoAboutCurrency({name: 'btcMultisigG2FAData', infoAboutCurrency: currencyInfoItem})
+              break;
+            }
+            default: reducers.user.setInfoAboutCurrency({name: `${currencyInfoItem.symbol.toLowerCase()}Data`, infoAboutCurrency: currencyInfoItem})
+          }
         }
       })
+      reducers.user.setIsFetching({ isFetching: false })
+      resolve(true);
+    }).catch((error) => {
+      reject(error)
+    })
   })
-
 
 const pullTransactions = transactions => {
   let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date)
@@ -252,9 +301,10 @@ export default {
   sign,
   getBalances,
   getDemoMoney,
-  getExchangeRate,
   setTransactions,
   downloadPrivateKeys,
   getText,
+  getExchangeRate,
   getReputation,
+  getInfoAboutCurrency
 }

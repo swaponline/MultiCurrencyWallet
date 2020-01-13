@@ -24,4 +24,5 @@ export default {
   InvoiceModal: 'InvoiceModal',
   InvoiceLinkModal: 'InvoiceLinkModal',
   AlertModal: 'AlertModal',
+  AddCustomERC20: 'AddCustomERC20',
 }
