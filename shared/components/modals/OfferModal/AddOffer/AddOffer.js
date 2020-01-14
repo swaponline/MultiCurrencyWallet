@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
-import helpers, { constants, getSiteData } from 'helpers'
+import helpers, { constants } from 'helpers'
 
 import Link from 'sw-valuelink'
 import config from 'app-config'
@@ -44,8 +44,6 @@ export default class AddOffer extends Component {
   constructor({ items, tokenItems, initialData }) {
     super()
 
-    const { projectName } = getSiteData()
-
     if (config && config.isWidget) {
       minAmountOffer[config.erc20token] = 1
     }
@@ -53,7 +51,6 @@ export default class AddOffer extends Component {
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency } = initialData || {}
 
     this.state = {
-      projectName,
       balance: null,
       isTokenSell: false,
       isTokenBuy: false,
@@ -404,7 +401,7 @@ export default class AddOffer extends Component {
   render() {
     const { currencies, tokenItems, addSelectedItems } = this.props
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency, minimalestAmountForSell, minimalestAmountForBuy,
-      balance, ethBalance, manualRate, isPartial, isTokenSell, isTokenBuy, projectName } = this.state
+      balance, ethBalance, manualRate, isPartial, isTokenSell, isTokenBuy } = this.state
 
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
 
@@ -459,15 +456,7 @@ export default class AddOffer extends Component {
           switchBalanceFunc={this.switching}
           styleName="sellGroup"
           label={<FormattedMessage id="addoffer381" defaultMessage="Sell" />}
-          tooltip={
-            <FormattedMessage
-              id="partial464"
-              defaultMessage="The amount you have on {project} or an external wallet that you want to exchange"
-              values={{
-                project: projectName
-              }}
-            />
-          }
+          tooltip={<FormattedMessage id="partial462" defaultMessage="The amount you have on swap.online or an external wallet that you want to exchange" />}
           inputValueLink={linked.sellAmount.pipe(this.handleSellAmountChange)}
           dontDisplayError
           selectedValue={sellCurrency}

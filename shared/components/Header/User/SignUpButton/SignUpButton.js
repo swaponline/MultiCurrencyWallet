@@ -8,14 +8,11 @@ import styles from './SignUpButton.scss'
 
 import ReactTooltip from 'react-tooltip'
 import { FormattedMessage } from 'react-intl'
-import { getSiteData } from 'helpers'
 
 
 const handleSignUp = () => {
   actions.modals.open(constants.modals.SignUp, {})
 }
-
-const projectName = () => getSiteData().projectName
 
 const SignUpButton = ({ mobile }) => (
   <div styleName={mobile ? 'mobile' : ''}>
@@ -39,12 +36,7 @@ const SignUpButton = ({ mobile }) => (
             </button>
             <ReactTooltip id="sign-up" type="light" effect="solid">
               <span>
-                <FormattedMessage
-                  id="ADDoffer33"
-                  defaultMessage="Get subscribed for the {project} news"
-                  values={{
-                    project: projectName(),
-                  }} />
+                <FormattedMessage id="ADDoffer33" defaultMessage="Get subscribed for the Swap.Online news" />
               </span>
             </ReactTooltip>
           </Fragment>

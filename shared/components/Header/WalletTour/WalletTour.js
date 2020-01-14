@@ -4,7 +4,6 @@ import Joyride, { STATUS } from 'react-joyride'
 
 import { FormattedMessage } from 'react-intl'
 import Tooltip from 'components/TourWindow'
-import { getSiteData } from 'helpers'
 
 
 export default class WalletTour extends Component {
@@ -12,20 +11,14 @@ export default class WalletTour extends Component {
   constructor(props) {
     super(props)
 
-
-    const { projectName } = getSiteData()
-
     /* eslint-disable */
     this.state = {
       run: true,
       steps: [
         {
           content: <FormattedMessage
-            id="tour-step-0.1"
-            defaultMessage="Ваш {project} крипто-кошелек"
-            values={{
-              project: projectName
-            }} />,
+            id="tour-step-0"
+            defaultMessage="Ваш Swap.Online крипто-кошелек" />,
           placement: 'center',
           target: '.data-tut-preview',
         },
