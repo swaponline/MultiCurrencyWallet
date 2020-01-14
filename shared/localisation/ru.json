@@ -5266,7 +5266,7 @@
   },
   {
     "id": "createWalletButton3",
-    "message": "Создание Кошелька",
+    "message": "Создать кошелек",
     "files": [
       "shared/pages/CreateWallet/Steps/SecondStep.js"
     ]
