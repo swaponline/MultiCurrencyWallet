@@ -4,12 +4,15 @@ import Joyride, { STATUS } from 'react-joyride'
 
 import { FormattedMessage } from 'react-intl'
 import Tooltip from 'components/TourWindow'
+import { getSiteData } from 'helpers'
 
 
 export default class TourPartial extends Component {
 
   constructor(props) {
     super(props)
+
+    const { projectName } = getSiteData()
 
     /* eslint-disable */
     this.state = {
@@ -41,7 +44,13 @@ export default class TourPartial extends Component {
           target: '.data-tut-status',
         },
         {
-          content: <FormattedMessage id="partial-tour-5" defaultMessage="Переключите эту кнопку, чтобы получать средства после обмена на внутренний кошелек на Swap.online или на другой кошелек" />,
+          content: <FormattedMessage
+            id="partial-tour-5.1"
+            defaultMessage="Переключите эту кнопку, чтобы получать средства после обмена на внутренний кошелек {project} или на другой кошелек"
+            values={{
+              project: projectName
+            }}
+          />,
           floaterProps: {
             disableAnimation: true,
           },

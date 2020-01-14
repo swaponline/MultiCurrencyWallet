@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react'
 
 import { connect } from 'redaction'
-import { constants, links } from 'helpers'
+import { constants, links, getSiteData } from 'helpers'
+
 import { isMobile } from 'react-device-detect'
 import { withRouter } from 'react-router'
 import actions from 'redux/actions'
@@ -38,10 +39,13 @@ export default class Currency extends Component {
   constructor({ match: { params: { currency } }, items, tokens, history, intl: { locale } }) {
     super()
 
+    const { projectName } = getSiteData()
+
     this.state = {
       isBalanceFetching: false,
       isBalanceEmpty: true,
       balance: 0,
+      projectName
     }
 
     const item = items.map(item => item.currency.toLowerCase())
@@ -130,14 +134,15 @@ export default class Currency extends Component {
     const SeoValues = {
       fullName: currencyFullName,
       tickerName: currency.toUpperCase(),
+      project: projectName
     }
     const MetaDescriptionString = formatMessage({
       id: 'CurrencyMetaDescrTag1',
-      defaultMessage: 'Find out actual price of {fullName}, its ticker name is ({tickerName}). Swap.Online is the best way to safely store your cryptocurrecy.', // eslint-disable-line
+      defaultMessage: 'Find out actual price of {fullName}, its ticker name is ({tickerName}). {project} is the best way to safely store your cryptocurrecy.', // eslint-disable-line
     }, SeoValues)
     const TitleTagString = formatMessage({
       id: 'CurrencyTitleSeo1',
-      defaultMessage: '{fullName} ({tickerName}) Price, Description & Exchange Rates. Store & Exchange {fullName} ({tickerName}) Anonymously on Swap.Online.',
+      defaultMessage: '{fullName} ({tickerName}) Price, Description & Exchange Rates. Store & Exchange {fullName} ({tickerName}) Anonymously on {project}.',
     }, SeoValues)
 
     return (

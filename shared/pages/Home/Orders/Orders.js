@@ -7,6 +7,7 @@ import { isMobile } from 'react-device-detect'
 
 import constants from 'helpers/constants'
 import { localisedUrl } from 'helpers/locale'
+import { getSiteData } from 'helpers'
 
 import cssModules from 'react-css-modules'
 import styles from './Orders.scss'
@@ -55,10 +56,17 @@ const filterOrders = (orders, filter) => orders
 @cssModules(styles, { allowMultiple: true })
 export default class Orders extends Component {
 
-  state = {
-    buyOrders: [],
-    sellOrders: [],
-    isVisible: false,
+  constructor() {
+    super()
+
+    const { projectName } = getSiteData()
+
+    this.state = {
+      buyOrders: [],
+      sellOrders: [],
+      isVisible: false,
+      projectName,
+    }
   }
 
   static getDerivedStateFromProps({ orders }) {
@@ -114,7 +122,7 @@ export default class Orders extends Component {
   }
 
   render() {
-    const { sellOrders, buyOrders, isVisible } = this.state
+    const { sellOrders, buyOrders, isVisible, projectName } = this.state
     let { sellCurrency, buyCurrency, intl, decline } = this.props
     buyCurrency = buyCurrency.toUpperCase()
     sellCurrency = sellCurrency.toUpperCase()
@@ -153,7 +161,7 @@ export default class Orders extends Component {
       metaDescription: {
         id: 'Orders127',
         defaultMessage: `Best exchange rate for {buyCurrencyFullName} ({buyCurrency}) to {sellCurrencyFullName} ({sellCurrency}).
-         Swap.Online wallet provides instant exchange using Atomic Swap Protocol.`,
+         {projectName} wallet provides instant exchange using Atomic Swap Protocol.`,
       },
     })
 
@@ -173,7 +181,7 @@ export default class Orders extends Component {
           </Title>
           <CloseIcon styleName="closeButton" onClick={() => this.props.history.push(localisedUrl(intl.locale, links.home))} data-testid="CloseIcon" />
         </div>
-        { invalidPair &&
+        {invalidPair &&
           <p>
             <FormattedMessage id="Orders141" defaultMessage="No such ticker. Redirecting to USDT-BTC exchange..." />
           </p>
