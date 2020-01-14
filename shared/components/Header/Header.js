@@ -336,7 +336,7 @@ export default class Header extends Component {
           <LogoTooltip withLink isColored isExchange={isWalletPage} />
           <Nav menu={menuItems} />
           <Logo withLink mobile />
-          {isPartialTourOpen && isExchange && <TourPartial isTourOpen={isPartialTourOpen} closeTour={this.closePartialTour} {...this.props} />}
+          {isPartialTourOpen && isExchange && <TourPartial isTourOpen={isPartialTourOpen} closeTour={this.closePartialTour} />}
           <User
             openTour={isWalletPage ? this.openExchangeTour : this.openWalletTour}
             path={path}

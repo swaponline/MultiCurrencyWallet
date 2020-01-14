@@ -4,31 +4,25 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import { FormattedMessage } from 'react-intl'
 import Button from 'components/controls/Button/Button'
 import config from 'app-config'
-import { getSiteData } from 'helpers'
 
 
 const isWidgetBuild = config && config.isWidget
 
 export default class PreventMultiTabs extends Component {
-
+  
   constructor() {
     super()
 
-    const { projectName } = getSiteData()
-    this.state = {
-      projectName,
-    }
   }
 
-  handleSwitchClick = () => {
+  handleSwitchClick = () =>  {
     const { onSwitchTab } = this.props
     if (onSwitchTab instanceof Function) {
       onSwitchTab()
     }
   }
-
+  
   render() {
-    const { projectName } = this.state
     console.log(this.props)
     return (
       <WidthContainer>
@@ -46,11 +40,8 @@ export default class PreventMultiTabs extends Component {
         {
           !isWidgetBuild && (
             <FormattedMessage
-              id="PreventMultiTabs45"
-              defaultMessage="{project} supports only one active tab. Please reload this page to continue using this tab or close it"
-              values={{
-                project: projectName,
-              }}
+              id="PreventMultiTabs12"
+              defaultMessage="Swap.Online supports only one active tab. Please reload this page to continue using this tab or close it"
             />
           )
         }

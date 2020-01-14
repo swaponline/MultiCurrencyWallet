@@ -4,24 +4,16 @@ import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './styles.scss'
 
-import { getSiteData } from 'helpers'
-
-
 /* eslint-disable */
 const Quote = ({ }) => {
   const href = "https://blog.qtum.org/atomic-cross-chain-swap-on-qtum-7e756a890ed7"
-  const { projectName } = getSiteData()
-
   return (
     <div styleName="container">
       <div styleName="header">
         &#34;
       <FormattedMessage
           id="Quote"
-          defaultMessage="The {project} project realizes swaps among Bitcoin-like, Ethereum-like, and made a product for users to execute swaps"
-          values={{
-            project: projectName,
-          }}
+          defaultMessage="The swap.online project realizes swaps among Bitcoin-like, Ethereum-like, and made a product for users to execute swaps"
         />
         &#34;
     </div>
