@@ -17,7 +17,7 @@ import SwitchLang from './SwitchLang/SwitchLang'
 
 const Footer = (props) => (
   <Fragment>
-    {!config.isWidget && (
+    {(!config.isWidget || config.isFullBuild) && (
       <div styleName="footer">
         <WidthContainer styleName="container">
           <SwitchLang {...props} />

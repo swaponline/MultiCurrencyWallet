@@ -55,7 +55,7 @@ function BalanceForm({ usdBalance, currencyBalance, handleReceive, handleWithdra
             <FormattedMessage id="YourtotalbalanceSend" defaultMessage="Отправить" />
           </NewButton>
         </Fragment>
-        {isWidgetBuild &&
+        {isWidgetBuild && !config.isFullBuild &&
           <NewButton brand id="exchangeBtn" onClick={() => handleExchange()}>
             Exchange
           </NewButton>

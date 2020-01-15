@@ -137,9 +137,9 @@ export default class Orders extends Component {
     const isWidget = (config && config.isWidget)
 
     const buttonsRowStyleName = isMobile ?
-      (isWidget) ? 'buttonRow buttonRowMobile buttonRowWidget' : 'buttonRow buttonRowMobile'
+      (isWidget && !config.isFullBuild) ? 'buttonRow buttonRowMobile buttonRowWidget' : 'buttonRow buttonRowMobile'
       :
-      (isWidget) ? 'buttonRow buttonRowWidget' : 'buttonRow'
+      (isWidget && !config.isFullBuild) ? 'buttonRow buttonRowWidget' : 'buttonRow'
 
     const buyCurrencyFullName = (currencies.find(c => c.name === buyCurrency) || {}).fullTitle
     const sellCurrencyFullName = (currencies.find(c => c.name === sellCurrency) || {}).fullTitle
@@ -189,7 +189,7 @@ export default class Orders extends Component {
             <FormattedMessage id="orders128" defaultMessage="Create offer" />
           </Button>
           {
-            (isWidget) && (
+            (isWidget && !config.isFullBuild) && (
               <Button green styleName="button" onClick={this.handleWalletPush} >
                 <FormattedMessage id="OrdersWidgetModeShowWallet" defaultMessage="Wallet" />
               </Button>

@@ -341,7 +341,7 @@ export default class Wallet extends Component {
 
     return (
       <artical>
-        <section styleName={(isWidgetBuild) ? 'wallet widgetBuild' : 'wallet'}>
+        <section styleName={(isWidgetBuild && !config.isFullBuild) ? 'wallet widgetBuild' : 'wallet'}>
           {(walletTitle === '' || editTitle) ? <input styleName="inputTitle" onChange={(e) => this.handleChangeTitle(e)} value={walletTitle} /> : <h3 styleName="walletHeading" onDoubleClick={this.handleEditTitle}>{walletTitle || 'Wallet'}</h3>}
           <Slider
             settings={settings}
@@ -396,7 +396,7 @@ export default class Wallet extends Component {
               <History />
             </div>
           </div>
-          {(isWidgetBuild && activeView === 0) &&
+          {(isWidgetBuild && !config.isFullBuild && activeView === 0) &&
             <div styleName="keysExportImport">
               <NewButton gray onClick={this.handleShowKeys}>
                 <FormattedMessage id="WalletPage_ExportKeys" defaultMessage="Показать ключи" />

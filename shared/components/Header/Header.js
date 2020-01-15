@@ -290,7 +290,7 @@ export default class Header extends Component {
 
     const isExchange = pathname.includes(exchange);
 
-    if (config && config.isWidget) {
+    if (config && config.isWidget && !config.isFullBuild) {
       return (
         <User
           acceptRequest={this.acceptRequest}
