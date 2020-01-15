@@ -23,14 +23,29 @@ const translations = {
 export default class IntlProviderContainer extends Component {
   render() {
     const { children } = this.props
+
     return (
       <Switch>
         <Route
           path={localisePrefix}
           render={props => {
-            const currentLocale = props.match.params.locale || defaultLocale()
-            const messages = translations[currentLocale]
+            let currentLocale = defaultLocale()
+            if (props.match.params.locale !== undefined) {
+              currentLocale = props.match.params.locale
+            } else {
+              const hashParams = props.location.hash.split('/')
+              if (hashParams.length>1) {
+                if (hashParams[0] === '#') {
+                  const localeInHash = hashParams[1].toLowerCase()
+                  if (localeInHash === 'en' || localeInHash === 'ru') {
+                    currentLocale = localeInHash
+                  }
+                }
+              }
+            }
 
+            const messages = translations[currentLocale]
+            
             return (
               <IntlProvider {...props} key={currentLocale} locale={currentLocale} defaultLocale={defaultLocale()} messages={messages}>
                 {children}
