@@ -12,7 +12,7 @@
   },
   {
     "id": "menu.history",
-    "message": "Моя История",
+    "message": "Активность",
     "files": [
       "shared/components/Header/config.js"
     ]
@@ -2561,7 +2561,7 @@
   },
   {
     "id": "Amount68",
-    "message": "Моя История",
+    "message": "Активность",
     "files": [
       "shared/pages/History/History.js"
     ]
@@ -5217,7 +5217,7 @@
   },
   {
     "id": "createWalletHeader1",
-    "message": "Создайте кошелек  в три простых шага?",
+    "message": "Создайте кошелек в два простых шага",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
     ]
