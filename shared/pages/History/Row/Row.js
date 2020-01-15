@@ -105,7 +105,7 @@ class Row extends React.PureComponent {
   parseFloat = (direction, value, directionType, type) => {
 
     switch (type) {
-      case 'btc (sms-protected)': type = 'BTC PROTECTED'
+      case 'btc (sms-protected)': type = 'BTC 2'
         break;
       case 'btc (multisig)': type = 'BTC MULTISIG'
         break;
