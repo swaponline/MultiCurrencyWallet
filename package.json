@@ -53,7 +53,7 @@
     "messages:extract": "babel-node tools/run messages",
     "rename-assets-manifest-file": "rename-files ./build-chrome-extension/application/assets/ 'manifest.json' 'android-manifest.json'",
     "rename-assets-manifest-link": "replace 'assets/manifest.json' 'assets/android-manifest.json' ./build-chrome-extension/application/index.html",
-	"release":"git commit -am v%npm_package_version% && git tag v%npm_package_version% && git push && git push --tags" 
+    "release": "git commit -am v%npm_package_version% && git tag v%npm_package_version% && git push && git push --tags"
   },
   "keywords": [],
   "devDependencies": {
@@ -161,6 +161,7 @@
     "axios": "^0.18.1",
     "bchaddrjs": "^0.3.2",
     "bestzip": "^2.1.4",
+    "bip39": "^3.0.2",
     "bitcoincashjs-lib": "^3.3.3",
     "bitcoinjs-lib": "^5.1.6",
     "bitcoinjs-message": "^2.1.0",

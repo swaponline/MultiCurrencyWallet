@@ -2,6 +2,7 @@ import BigInteger from 'bigi'
 
 import { BigNumber } from 'bignumber.js'
 import * as bitcoin from 'bitcoinjs-lib'
+import * as bip39 from 'bip39'
 import bitcoinMessage from 'bitcoinjs-message'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
@@ -10,6 +11,13 @@ import { Keychain } from 'keychain.js'
 import actions from 'redux/actions'
 
 window.bitcoinjs = bitcoin
+window.bip39 = bip39
+
+
+const loginByWords = (words, walletIndex) => {
+  
+}
+
 
 const login = (privateKey) => {
   let keyPair
@@ -273,5 +281,6 @@ export default {
   fetchBalance,
   signMessage,
   getReputation,
-  getInvoices
+  getInvoices,
+  loginByWords,
 }
