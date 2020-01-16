@@ -116,6 +116,8 @@ export default class Orders extends Component {
   render() {
     const { sellOrders, buyOrders, isVisible } = this.state
     let { sellCurrency, buyCurrency, intl, decline } = this.props
+    const { history } = this.props
+
     buyCurrency = buyCurrency.toUpperCase()
     sellCurrency = sellCurrency.toUpperCase()
 
@@ -227,6 +229,7 @@ export default class Orders extends Component {
               orderId={orderId}
               row={row}
               decline={decline}
+              history={history}
               removeOrder={this.removeOrder}
             />
           )}
@@ -255,6 +258,7 @@ export default class Orders extends Component {
               orderId={orderId}
               row={row}
               decline={decline}
+              history={history}
               removeOrder={this.removeOrder}
             />
           )}

@@ -244,7 +244,7 @@ export default class Wallet extends Component {
   goToСreateWallet = () => {
     const { history, intl: { locale } } = this.props
 
-    history.push(localisedUrl(locale, '/createWallet'))
+    history.push(localisedUrl(locale, links.createWallet))
   }
 
   handleGoExchange = () => {
@@ -396,7 +396,7 @@ export default class Wallet extends Component {
               <History />
             </div>
           </div>
-          {(isWidgetBuild && !config.isFullBuild && activeView === 0) &&
+          {(isWidgetBuild && activeView === 0) &&
             <div styleName="keysExportImport">
               <NewButton gray onClick={this.handleShowKeys}>
                 <FormattedMessage id="WalletPage_ExportKeys" defaultMessage="Показать ключи" />

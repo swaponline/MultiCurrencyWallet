@@ -52,7 +52,7 @@ const CreateWallet = (props) => {
   const steps = [1, 2]
 
   const goHome = () => {
-    history.push(localisedUrl(locale, '/wallet'))
+    history.push(localisedUrl(locale, links.wallet))
   }
 
   const handleClick = () => {
@@ -70,7 +70,7 @@ const CreateWallet = (props) => {
   }
 
   const goToExchange = () => {
-    history.push(localisedUrl(locale, '/exchange'))
+    history.push(localisedUrl(locale, links.exchange))
   }
 
   const validate = () => {
