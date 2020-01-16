@@ -22,6 +22,7 @@ export default {
   publicPath: `http://localhost:${baseConfig.http.port}${baseConfig.publicPath}`,
 
   isWidget: true,
+  isFullBuild: (process.argv.length>=5 && process.argv[6] === 'full') ? true : false,
   ...config,
   erc20: newERC20,
   erc20token: process.argv[3],
