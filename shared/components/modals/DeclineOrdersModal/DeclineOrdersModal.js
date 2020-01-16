@@ -5,6 +5,8 @@ import { connect } from 'redaction'
 import actions from 'redux/actions'
 import { localisedUrl } from 'helpers/locale'
 
+import links from 'helpers/links'
+
 import cssModules from 'react-css-modules'
 import styles from './DeclineOrdersModal.scss'
 
@@ -31,7 +33,10 @@ export default class DeclineOrdersModal extends Component {
 
   goToDecline = () => {
     const { data: { declineSwap: { sellCurrency, buyCurrency, id } }, history } = this.props /* eslint-disable-line */
-    history.push(localisedUrl(`swaps/${sellCurrency}-${buyCurrency}/${id}`))
+
+    const { intl : { locale } } = this.props
+    
+    history.push(localisedUrl(locale, `${links.swap}/${sellCurrency}-${buyCurrency}/${id}`))
     actions.modals.close('DeclineOrdersModal')
   }
 
