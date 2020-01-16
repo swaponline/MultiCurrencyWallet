@@ -138,6 +138,12 @@ export default {
 
 
 
- 
+## how to update your version (fork) to latest version:
+0. Make backup and "git push" all your changes to your repository
+1. go here https://github.com/swaponline/swap.react/compare?expand=1
+2. select your repository in "base branch" (left)
+3. click "Create pull request" (enter any title)
+4. click "Merge pull request"
 
+if you have conflicts (if sources has been changed on your side) click "resolve conflicts".
 
