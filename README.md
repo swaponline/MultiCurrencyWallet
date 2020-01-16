@@ -9,22 +9,22 @@ Atomic swap cryptocurrency protocol. Live version here: https://swap.online. Ato
 ### Install
 
 #### Eng
-
-1) Clone repository with submodules (swap.core)
+1) Fork this repository (Click "Fork" on top of this page)
+2) Clone repository with submodules (swap.core)
 ```
 git clone --recurse-submodules https://github.com/swaponline/swap.react.git
 ```
 
-2) Do `npm i` <br />
+3) Do `npm i` <br />
 ```
 cd swap.react
 npm i
 ```
 
-3) Do `git submodule update` in swap.react directory
+4) Do `git submodule update` in swap.react directory
 
-4) For dev mode `npm run start`, for prod `npm run build`
-   > If you need to deploy it on your own origin - run build like: `npm run build:mainnet https://your.cool.origin/`
+5) For dev mode `npm run start`, for prod `npm run build`
+   > If you need to deploy it on your own (site) origin - run build like: `npm run build:mainnet https://yourcoolsite.com/`
 
 ```
 npm run start
@@ -57,43 +57,39 @@ npm run start
 
 example:
 ```
-npm run build:mainnet-widget 0x9E4AD79049282F942c1b4c9b418F0357A0637017 noxon 0 noxon
-tar czf my-widget.tar.gz build-mainnet-widget
+npm run build:mainnet-widget 0x4E12EB8e506Ccd1427F6b8F7faa3e88fB698EB28 jack 18 JACK full
 ```
 2. upoad to your domain (https://domain.com/build-mainnet-widget)
-3. embed via iframe like 
-```
-<iframe src="build-mainnet-widget/index.html" border=0 style="botder:0;width:800px;height:700px"></iframe>
-```
+3. open in browser
  
-## Как менять картинки и цвета
+## How to change images and colors
 
-### 1. как помененять логотип
+### 1. Logo
 swap.react/shared/components/Logo
-* в папке `images` перенести свои свг файлы
-* в файле index.js в объекте указать свой урл и присвоить ему изображение
+* copy svg logos to  `images`folder
+* in index.js set up your url and image
 ```
 export default {
   colored: {
-    свой урл: имя картинки,
+    yourUrl: imagename,
     localhost: base,
     'swap.online': swapOnlineColored,
   },
   common: {
-    свой урл: имя картинки,
+    сyourUrl: imageName,
     'swap.online': swapOnline,
   },
 }
 ```
-* для изменения прилодера в client/index.html заменить урл на урл своей картинки
+* For change preloader go to "client/index.html" and change url to tour image
 ```
   <div id="loader">
       <img src="https://wiki.swap.online/assets/swap-logo.png" />
   </div>
 ```
-* для изменения цвета иконки валюты нужно перейти в `swap.react/shared/components/ui/CurrencyIcon/images`
-    заменить на свою иконку, важно чтоб имя свг файла соответствовало имени валюты
-* для изменения свг файлов в слайдере валют, нужно изменить свг в файл в `/swap.react/shared/pages/PartialClosure/CurrencySlider/images`
+* change Cryptocurrency color `swap.react/shared/components/ui/CurrencyIcon/images`
+* change icon to your (with the same name, e.x. "bitcoin.svg") 
+* change cryptocurrency icon  `/swap.react/shared/pages/PartialClosure/CurrencySlider/images`
 
 ### 2. как поменять ссылки на соц сети
     `swap.react/shared/helpers/links.js`
