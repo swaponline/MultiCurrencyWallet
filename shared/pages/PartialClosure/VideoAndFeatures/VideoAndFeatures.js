@@ -34,7 +34,7 @@ const VideoAndFeatures = (props) => (
       </div>
       <div styleName="VidNdFeatures__item VidNdFeatures__item_video">
         <iframe
-          title="Swap.Online preview"
+          title="Preview"
           width="100%"
           height="300"
           src={props.intl.formatMessage({ id: 'VidLinkFrame', defaultMessage: 'https://www.youtube.com/embed/Jhrb7xOT_7s' })}
