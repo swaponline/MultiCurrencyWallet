@@ -141,7 +141,17 @@ export default class Row extends Component {
   }
 
   sendRequest = (orderId, currency) => {
-    const { row: { buyAmount, sellAmount, buyCurrency, sellCurrency }, intl } = this.props
+    const {
+      row: {
+        id,
+        buyAmount,
+        sellAmount,
+        buyCurrency,
+        sellCurrency,
+      },
+      intl,
+      history,
+    } = this.props
 
     const pair = Pair.fromOrder(this.props.row)
     const { price, amount, total, main, base, type } = pair
@@ -181,7 +191,9 @@ export default class Row extends Component {
           console.log(`user has ${isAccepted ? 'accepted' : 'declined'} your request`)
 
           if (isAccepted) {
-            this.setState({ redirect: true, isFetching: false })
+            this.setState({ isFetching: false }, () => {
+              history.push(localisedUrl(intl.locale, `${links.swap}/${buyCurrency}-${sellCurrency}/${id}`))
+            })
           }
           else {
             this.setState({ isFetching: false })
@@ -436,18 +448,7 @@ export default class Row extends Component {
 
   render() {
     let mobileBreakpoint = 800
-    const {
-      row: {
-        id,
-        buyCurrency,
-        sellCurrency,
-      },
-      intl: { locale },
-    } = this.props
 
-    if (this.state.redirect) {
-      return <Redirect push to={`${localisedUrl(locale, links.swap)}/${buyCurrency}-${sellCurrency}/${id}`} />
-    }
     if (this.state.windowWidth < mobileBreakpoint) {
       return this.renderMobileContent()
     } else {

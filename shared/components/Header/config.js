@@ -1,6 +1,7 @@
 import React from 'react'
 import { FormattedMessage, defineMessages } from 'react-intl'
 import links from 'helpers/links'
+import config from 'app-config'
 
 
 export const messages = defineMessages({
@@ -55,6 +56,7 @@ export const getMenuItems = (props, isWalletCreate) => {
   return (Number.isInteger(reputation) && reputation !== 0)
     || isSigned
     || localStorage.getItem('isWalletCreate') === 'true'
+    || (config && config.isWidget)
     ? ([
       {
         title: intl.formatMessage(wallet),

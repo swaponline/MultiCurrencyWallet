@@ -244,7 +244,7 @@ export default class Wallet extends Component {
   goToСreateWallet = () => {
     const { history, intl: { locale } } = this.props
 
-    history.push(localisedUrl(locale, '/createWallet'))
+    history.push(localisedUrl(locale, links.createWallet))
   }
 
   handleGoExchange = () => {
@@ -341,7 +341,7 @@ export default class Wallet extends Component {
 
     return (
       <artical>
-        <section styleName={(isWidgetBuild) ? 'wallet widgetBuild' : 'wallet'}>
+        <section styleName={(isWidgetBuild && !config.isFullBuild) ? 'wallet widgetBuild' : 'wallet'}>
           {(walletTitle === '' || editTitle) ? <input styleName="inputTitle" onChange={(e) => this.handleChangeTitle(e)} value={walletTitle} /> : <h3 styleName="walletHeading" onDoubleClick={this.handleEditTitle}>{walletTitle || 'Wallet'}</h3>}
           <Slider
             settings={settings}
