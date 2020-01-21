@@ -133,9 +133,6 @@ class Row extends React.PureComponent {
     } = this.props
 
 
-
-
-    console.log('sdfdsfdsfssd', type)
     const { ind } = this.state
 
     const { exCurrencyRate, isOpen, comment, cancelled, payed } = this.state

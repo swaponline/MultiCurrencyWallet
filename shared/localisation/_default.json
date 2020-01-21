@@ -6550,7 +6550,7 @@
   },
   {
     "id": "TransactionswalletNav",
-    "message": "Переводы",
+    "message": "Активность",
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]

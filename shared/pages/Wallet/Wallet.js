@@ -28,7 +28,7 @@ import ContentLoader from '../../components/loaders/ContentLoader/ContentLoader'
 
 const walletNav = [
   { key: 'My balances', text: <FormattedMessage id="MybalanceswalletNav" defaultMessage="Мой баланс" /> },
-  { key: 'Transactions', text: <FormattedMessage id="TransactionswalletNav" defaultMessage="Переводы" /> }
+  { key: 'Transactions', text: <FormattedMessage id="TransactionswalletNav" defaultMessage="Активность" /> }
 ];
 
 

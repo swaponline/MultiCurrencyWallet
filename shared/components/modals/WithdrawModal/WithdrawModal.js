@@ -306,8 +306,11 @@ export default class WithdrawModal extends React.Component {
 
   handleScan = data => {
     if (data) {
+      const address = data.split(':')[1].split('?')[0];
+      const amount = data.split('=')[1];
       this.setState(() => ({
-        address: data.includes(':') ? data.split(':')[1] : data,
+        address,
+        amount
       }))
       this.openScan()
     }

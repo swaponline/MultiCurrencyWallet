@@ -281,8 +281,10 @@ export default class CurrencyWallet extends Component {
                 /> : <ContentLoader leftSideContent />
               }
             </div>
-            {swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} />}
             <div styleName="currencyWalletActivityWrapper">
+              {/* <div styleName="currencyWalletActivity">
+                {swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} />}
+              </div> */}
               {
                 !isFetching && txHistory ? (
                   <div styleName="currencyWalletActivity">

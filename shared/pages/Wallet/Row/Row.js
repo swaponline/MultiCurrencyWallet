@@ -337,6 +337,11 @@ export default class Row extends Component {
     history.push(localisedUrl(locale, '/history'))
   }
 
+  goToExchange = () => {
+    const { history, intl: { locale } } = this.props
+    history.push(localisedUrl(locale, '/exchange'))
+  }
+
 
   deleteThisSwap = () => {
     actions.core.forgetOrders(this.props.decline[0])
@@ -415,6 +420,12 @@ export default class Row extends Component {
         title: <FormattedMessage id='WalletRow_Menu_Send' defaultMessage='Send' />,
         action: this.handleWithdraw,
         disabled: isBalanceEmpty,
+      },
+      {
+        id: 1004,
+        title: <FormattedMessage id='WalletRow_Menu_Exchange' defaultMessage='Exchange' />,
+        action: this.goToExchange,
+        disabled: false
       },
       {
         id: 1003,

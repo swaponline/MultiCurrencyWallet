@@ -6256,6 +6256,13 @@
     ]
   },
   {
+    "id": "WalletRow_Menu_Exchange",
+    "message": "Exchange",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
     "id": "WalletRow_Menu_Invoice",
     "message": "Выставить счет",
     "files": [
@@ -6558,7 +6565,7 @@
   },
   {
     "id": "TransactionswalletNav",
-    "message": "Переводы",
+    "message": "Активность",
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]

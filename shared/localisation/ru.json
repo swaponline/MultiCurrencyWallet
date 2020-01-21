@@ -6261,21 +6261,28 @@
   },
   {
     "id": "WalletRow_Menu_Deposit",
-    "message": "Deposit",
+    "message": "Пополнить",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
   },
   {
     "id": "WalletRow_Menu_Hide",
-    "message": "Hide",
+    "message": "Скрыть",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
   },
   {
     "id": "WalletRow_Menu_History",
-    "message": "History",
+    "message": "История",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "WalletRow_Menu_Exchange",
+    "message": "Обмен",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
@@ -6296,14 +6303,14 @@
   },
   {
     "id": "WalletRow_Menu_Send",
-    "message": "Send",
+    "message": "Отправить",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
   },
   {
     "id": "WalletRow_Menu_Сopy",
-    "message": "Copy address",
+    "message": "Скопировать адрес",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
@@ -6562,7 +6569,7 @@
   },
   {
     "id": "TransactionswalletNav",
-    "message": "Переводы",
+    "message": "Активность",
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
