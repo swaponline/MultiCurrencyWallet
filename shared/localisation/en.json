@@ -2742,7 +2742,7 @@
   },
   {
     "id": "partial243",
-    "message": "You have",
+    "message": "You send",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3061,6 +3061,13 @@
   {
     "id": "partial544",
     "message": "Order book",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial766",
+    "message": "From any wallet or exchange",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
