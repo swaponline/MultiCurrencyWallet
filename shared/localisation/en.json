@@ -2135,7 +2135,7 @@
   },
   {
     "id": "BtcToEthToken236",
-    "message": "Top up BTC Script"
+    "message": "Top-up BTC Script"
   },
   {
     "id": "Row277",
@@ -3891,7 +3891,7 @@
   },
   {
     "id": "BtcToEthToken123",
-    "message": "The swap is finished!!",
+    "message": "The swap is finish!!",
     "files": [
       "shared/pages/Swap/SwapList/steps/FourthStep.js"
     ]
@@ -4128,7 +4128,7 @@
   },
   {
     "id": "EthTokensToBtc20",
-    "message": "Waiting for BTC Owner to create a Secret Key, create BTC Script and charge it",
+    "message": "Waiting for BTC Owner to create Secret Key, create BTC Script and charge it",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]
@@ -5072,21 +5072,21 @@
   },
   {
     "id": "multiSignJoinLink",
-    "message": "Create BTC-Multisign wallet",
+    "message": "Создание BTC-Multisign кошелька",
     "files": [
       "shared/components/modals/MultisignJoinLink/MultisignJoinLink.js"
     ]
   },
   {
     "id": "multiSignJoinLinkMessage",
-    "message": "Send this link to the second owner of the wallet",
+    "message": "Отправьте эту ссылку второму владельцу кошелька",
     "files": [
       "shared/components/modals/MultisignJoinLink/MultisignJoinLink.js"
     ]
   },
   {
     "id": "multiSignJoinLinkReady",
-    "message": "Ready",
+    "message": "Готово",
     "files": [
       "shared/components/modals/MultisignJoinLink/MultisignJoinLink.js"
     ]
@@ -5121,71 +5121,71 @@
   },
   {
     "id": "BTCMS_WithdrawRequest",
-    "message": "Withdraw request from BTC-multisign wallet",
+    "message": "Запрос на отправку с кошелька BTC-multisign",
     "files": [
       "shared/components/notifications/BTCMultisignRequest/BTCMultisignRequest.js"
     ]
   },
   {
     "id": "BTCMS_WithdrawRequestInfo",
-    "message": "Send {amount} {currency} to wallet {address}",
+    "message": "Отправка {amount} {currency} на кошелек {address}",
     "files": [
       "shared/components/notifications/BTCMultisignRequest/BTCMultisignRequest.js"
     ]
   },
   {
     "id": "PreventMultiTabsSwitchApp",
-    "message": "Close other tabs and continue here",
+    "message": "Закрыть другие вкладки и продолжить тут",
     "files": [
       "shared/components/PreventMultiTabs/PreventMultiTabs.js"
     ]
   },
   {
     "id": "createWalletHeader1",
-    "message": "Create a wallet",
+    "message": "Создание кошелька",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
     ]
   },
   {
     "id": "createWalletButton1",
-    "message": "Continue",
+    "message": "Продолжить",
     "files": [
       "shared/pages/CreateWallet/Steps/FirstStep.js"
     ]
   },
   {
     "id": "createWalletButton2",
-    "message": "Import keys"
+    "message": "Импортировать ключи"
   },
   {
     "id": "createWalletButton4",
-    "message": "Exchange"
+    "message": "Обмен"
   },
   {
     "id": "createWalletCapture1",
-    "message": "Choose amonge Bitcoin, Ethereum, Swap",
+    "message": "На выбор Bitcoin, Ethereum, Swap",
     "files": [
       "shared/pages/CreateWallet/Steps/texts.js"
     ]
   },
   {
     "id": "createWalletCapture2",
-    "message": "No security, sms, google auth, multisig",
+    "message": "Без защиты, sms, google auth, мультисиг",
     "files": [
       "shared/pages/CreateWallet/Steps/texts.js"
     ]
   },
   {
     "id": "createWalletSubHeader1",
-    "message": "Choose your wallet's currency",
+    "message": "Укажите валюту кошелька",
     "files": [
       "shared/pages/CreateWallet/Steps/texts.js"
     ]
   },
   {
     "id": "createWalletSubHeader2",
-    "message": "Choose your wallet's security level",
+    "message": "Выберите уровень защиты вашего кошелька",
     "files": [
       "shared/pages/CreateWallet/Steps/texts.js"
     ]
@@ -5368,112 +5368,112 @@
   },
   {
     "id": "BTCMS_ConfirmTxGoToWallet",
-    "message": "Go to your wallet",
+    "message": "Перейти в кошелек",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_ConfirmTxInputs",
-    "message": "Transaction inputs",
+    "message": "Входы транзакции",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_ConfirmTxOutputs",
-    "message": "Transaction outputs",
+    "message": "Выходы транзакции",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_ConfirmTxReady",
-    "message": "Transaction is signed and sent to the blockchain",
+    "message": "Транзакция подписана и отправлена в блокчейн",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_ConfirmTxSign",
-    "message": "Sign the transaction",
+    "message": "Подписать транзакцию",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_ConfirmTxTitle",
-    "message": "Transaction confirmation",
+    "message": "Подтверждение транзакции",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_CreateWalletAdd",
-    "message": "Add this wallet",
+    "message": "Добавить этот кошелек",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_CreateWalletLinkReady",
-    "message": "The wallet is created. Send this link to the second owner for confirmation.",
+    "message": "Кошелек создан. Отправьте эту ссылку второму владельцу для подтверждения",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_CreateWalletLoading",
-    "message": "Loading... Please wait",
+    "message": "Загрузка... Подождите немного",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_CreateWalletReady",
-    "message": "Wallet is ready",
+    "message": "Кошелек создан",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_CreateWalletReadyButton",
-    "message": "Ready. Open the wallet",
+    "message": "Готово. Открыть кошелек",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_CreateWalletTitle",
-    "message": "Create BTC-multisignature wallet",
+    "message": "Создание BTC-multisignature кошелька",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_CreateWalletWait",
-    "message": "Creating wallet... Please wait",
+    "message": "Создание кошелька... Подождите немного",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_WaitOtherSide",
-    "message": "Waiting for the other party...",
+    "message": "Ожидание второй стороны...",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_WalletAddress",
-    "message": "Wallet address:",
+    "message": "Адрес кошелька:",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_WalletBalance",
-    "message": "Wallet balance",
+    "message": "Баланс",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
@@ -5655,11 +5655,11 @@
   },
   {
     "id": "depositBtn",
-    "message": "To deposit funds press the three dots button next to the currency"
+    "message": "Для пополнения валюты нажмите три точки напротив нужного актива"
   },
   {
     "id": "sendBtn",
-    "message": "To send funds press the three dots button next to the currency"
+    "message": "Для отправки валюты нажмите три точки напротив нужного актива"
   },
   {
     "id": "WithdrawModal2225",
@@ -5894,105 +5894,105 @@
   },
   {
     "id": "partial-tour-1",
-    "message": "A unique peer-to-peer exchange built on Atomic Swap technology.",
+    "message": "Уникальный peer-to-peer обменик, основанный на технологии Atomic Swap.",
     "files": [
       "shared/components/Header/TourPartial/TourPartial.js"
     ]
   },
   {
     "id": "partial-tour-2",
-    "message": "In this field choose the currency and enter the amount you want to sell. You also can sell the currency from an external wallet.",
+    "message": "В данное поле, введите сумму, которую вы хотите продать, выберите валюту для продажи. Вы также можете продать валюту с внешнего кошелька.",
     "files": [
       "shared/components/Header/TourPartial/TourPartial.js"
     ]
   },
   {
     "id": "partial-tour-3",
-    "message": "In this field choose the currency and enter the amount you want to buy.",
+    "message": "В данное поле, введите сумму, которую вы хотели бы купить, выберите валюту для покупки.",
     "files": [
       "shared/components/Header/TourPartial/TourPartial.js"
     ]
   },
   {
     "id": "partial-tour-4",
-    "message": "Here you can see the search status of exchange offers. When loading you'll see 'Searching orders...'. After finding an order, check the exchange rate here.",
+    "message": "Здесь вы можете увидеть статус поиска предложений по обмену. При загрузке будет отображаться «Поиск заказов ...». Когда заказ найден, проверьте курс обмена здесь",
     "files": [
       "shared/components/Header/TourPartial/TourPartial.js"
     ]
   },
   {
     "id": "partial-tour-5",
-    "message": "Switch this button to receive funds after the exchange to your internal Swap.online wallet or to any other wallet.",
+    "message": "Переключите эту кнопку, чтобы получать средства после обмена на внутренний кошелек на Swap.online или на другой кошелек",
     "files": [
       "shared/components/Header/TourPartial/TourPartial.js"
     ]
   },
   {
     "id": "partial-tour-6",
-    "message": "Switch this button to see a direct URL of the transaction. It is available when the button is pink.",
+    "message": "Переключите эту кнопку, чтобы увидеть прямой URL операции обмена. Это возможно, когда кнопка розовая.",
     "files": [
       "shared/components/Header/TourPartial/TourPartial.js"
     ]
   },
   {
     "id": "partial-tour-7",
-    "message": "Press this button to see the Order Book page. The orders will be shown for specific currencies. You can also create your own order on the Order Book page.",
+    "message": "Нажмите на эту кнопку, чтобы увидеть страницу с предложениями для обмена. Предложения будут представлены для конкретных валют. Также вы можете создать собственное предложение на странице предложений.",
     "files": [
       "shared/components/Header/TourPartial/TourPartial.js"
     ]
   },
   {
     "id": "tour-step-0",
-    "message": "Ваш Swap.Online крипто-кошелек",
+    "message": "Your Swap.Online crypto-wallet",
     "files": [
       "shared/components/Header/WalletTour/WalletTour.js"
     ]
   },
   {
     "id": "tour-step-1",
-    "message": "Баланс по выбранной валюте показывается в конце строки, напротив валюты. Вы можете закрыть браузер, перезагрузить компьютер. Ваш баланс не изменится, только не забудте сохранить ключи",
+    "message": "The Balance of the choosen currency is shown at the end of the field, opposite to the currency. You can close the browser and reload your computer. Your balance will remain the same. Please don't forget to save your keys",
     "files": [
       "shared/components/Header/WalletTour/WalletTour.js"
     ]
   },
   {
     "id": "tour-step-1.1",
-    "message": "Ваш совокупный баланс",
+    "message": "Your total balance",
     "files": [
       "shared/components/Header/WalletTour/WalletTour.js"
     ]
   },
   {
     "id": "tour-step-1.2",
-    "message": "Нажав на кнопку, вы сможете пополнить баланс",
+    "message": "By pressing the button you can top up your balance",
     "files": [
       "shared/components/Header/WalletTour/WalletTour.js"
     ]
   },
   {
     "id": "tour-step-2",
-    "message": "Вы можете хранить валюты разных блокчейнов, таких как: Bitcoin, Ethereum, Bitcoin Cash, Litecoin и различные токены",
+    "message": "You can store currencies of different blockchains like Bitcoin, Ethereum, Bitcoin Cash, Litecoin, and other tokens.",
     "files": [
       "shared/components/Header/WalletTour/WalletTour.js"
     ]
   },
   {
     "id": "tour-step-3",
-    "message": "Наша уникальная функция peer-to-peer обмена доступна в нашем кольке, основанном на технологии Atomic Swap. Вы можете разместить вашу криптовалюту в нашем кошельке.",
+    "message": "Our unique peer-to-peer exchange is available in our wallet that is built on Atomic Swap technology. You can list your cryptocurrency in our wallet.",
     "files": [
       "shared/components/Header/WalletTour/WalletTour.js"
     ]
   },
   {
     "id": "tour-step-4",
-    "message": "Вы будете получать уведомления об обновлениях с вашей учетной записью (заказы, транзакции) и ежемесячные обновления о нашем проекте",
+    "message": "You'll receive notifications about your account updates (orders, transactions) and monthly news about our project.",
     "files": [
       "shared/components/Header/WalletTour/WalletTour.js"
     ]
   },
   {
     "id": "alertDialogDefaultMessage",
-    "message": "Ставим перед фактом",
+    "message": "We notify you",
     "files": [
       "shared/components/modals/Alert/AlertModal.js"
     ]
@@ -6006,56 +6006,56 @@
   },
   {
     "id": "alertDialogDefaultTitle",
-    "message": "Информация",
+    "message": "Information",
     "files": [
       "shared/components/modals/Alert/AlertModal.js"
     ]
   },
   {
     "id": "InvoiceLinkCopied",
-    "message": "Ссылка скопирована",
+    "message": "Link copied",
     "files": [
       "shared/components/modals/InvoiceLinkModal/InvoiceLinkModal.js"
     ]
   },
   {
     "id": "InvoiceLinkCopy",
-    "message": "Скопировать ссылку",
+    "message": "Copy this link",
     "files": [
       "shared/components/modals/InvoiceLinkModal/InvoiceLinkModal.js"
     ]
   },
   {
     "id": "InvoiceLinkModalInfo",
-    "message": "Это ссылка для выставления счета.",
+    "message": "This is the invoice link.",
     "files": [
       "shared/components/modals/InvoiceLinkModal/InvoiceLinkModal.js"
     ]
   },
   {
     "id": "InvoiceLinkModal_Title",
-    "message": "Ссылка для выставления счета",
+    "message": "Invoice link",
     "files": [
       "shared/components/modals/InvoiceLinkModal/InvoiceLinkModal.js"
     ]
   },
   {
     "id": "createWalletCaptureOthers",
-    "message": "или другие",
+    "message": "or others",
     "files": [
       "shared/pages/CreateWallet/Steps/texts.js"
     ]
   },
   {
     "id": "invoiceModal_Address",
-    "message": "Адрес, на который выставляем счет",
+    "message": "Address for invoicing",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
   },
   {
     "id": "invoiceModal_Amount",
-    "message": "Сумма",
+    "message": "Amount",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
@@ -6069,84 +6069,84 @@
   },
   {
     "id": "invoiceModal_IncorrectAddress",
-    "message": "Вы ввели не коректный адрес",
+    "message": "Incorrect address",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
   },
   {
     "id": "invoiceModal_IncorrectDestiAddress",
-    "message": "Вы ввели не коректный адрес",
+    "message": "Incorrect address",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
   },
   {
     "id": "invoiceModal_Label",
-    "message": "Комментарий",
+    "message": "Comments",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
   },
   {
     "id": "invoiceModal_Processing",
-    "message": "Обработка ...",
+    "message": "Processing ...",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
   },
   {
     "id": "invoiceModal_Submit",
-    "message": "Выставить счет",
+    "message": "Submit the invoice",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
   },
   {
     "id": "invoiceModal_Title",
-    "message": "Выставление счета на пополнение",
+    "message": "Top up invoice",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
   },
   {
     "id": "invoiceModal_addressPlaceholder",
-    "message": "Введите адрес {currency} кошелька",
+    "message": "Enter {currency} wallet address",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
   },
   {
     "id": "invoiceModal_amountPlaceholder",
-    "message": "Введите сумму",
+    "message": "Enter the amount",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
   },
   {
     "id": "invoiceModal_destiAddress",
-    "message": "Адрес, куда будет произведена оплата",
+    "message": "Address where to send the payment",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
   },
   {
     "id": "invoiceModal_destiAddressPlaceholder",
-    "message": "Введите адрес {currency} кошелька",
+    "message": "Enter {currency} wallet address",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
   },
   {
     "id": "invoiceModal_labelPlaceholder",
-    "message": "Укажите комментарий к счету",
+    "message": "Comments for the invoice",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
   },
   {
     "id": "WithdrawModalInvoiceSaveTx",
-    "message": "Отметить как оплаченный",
+    "message": "Mark as paid",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
@@ -6155,7 +6155,7 @@
   },
   {
     "id": "WithdrowOwnTX",
-    "message": "Или укажите TX",
+    "message": "Or enter the link to the transaction (txid)",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
@@ -6164,7 +6164,7 @@
   },
   {
     "id": "withdrawOwnTxPlaceholder",
-    "message": "Если оплатили с другого источника",
+    "message": "If paid from another source",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
@@ -6173,56 +6173,56 @@
   },
   {
     "id": "RowHistoryCancelInvoice",
-    "message": "Отклонить",
+    "message": "Decline",
     "files": [
       "shared/pages/History/Row/Row.js"
     ]
   },
   {
     "id": "RowHistoryInvoce",
-    "message": "Инвойс #{number}",
+    "message": "Invoice #{number}",
     "files": [
       "shared/pages/History/Row/Row.js"
     ]
   },
   {
     "id": "RowHistoryInvoiceAddress",
-    "message": "Адрес для оплаты: {address}",
+    "message": "Payment address: {address}",
     "files": [
       "shared/pages/History/Row/Row.js"
     ]
   },
   {
     "id": "RowHistoryInvoiceCancelled",
-    "message": "Отклонен",
+    "message": "Declined",
     "files": [
       "shared/pages/History/Row/Row.js"
     ]
   },
   {
     "id": "RowHistoryInvoicePayed",
-    "message": "Оплачен",
+    "message": "Paid",
     "files": [
       "shared/pages/History/Row/Row.js"
     ]
   },
   {
     "id": "RowHistoryPayInvoice",
-    "message": "Оплатить",
+    "message": "Pay",
     "files": [
       "shared/pages/History/Row/Row.js"
     ]
   },
   {
     "id": "WalletRow_Action_Hidden",
-    "message": "Кошелек скрыт",
+    "message": "The wallet is hidden",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
   },
   {
     "id": "WalletRow_Action_HideNonZero_Message",
-    "message": "У этого кошелка положительный баланс. Его скрыть нельзя.",
+    "message": "This wallet has a positive balance. You can't hide it.",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
@@ -6264,14 +6264,14 @@
   },
   {
     "id": "WalletRow_Menu_Invoice",
-    "message": "Выставить счет",
+    "message": "Invoice",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
   },
   {
     "id": "WalletRow_Menu_InvoiceLink",
-    "message": "Получить ссылку для выставления счета",
+    "message": "Get the link for invoicing",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
@@ -6411,28 +6411,28 @@
   },
   {
     "id": "back",
-    "message": "Назад",
+    "message": "Back",
     "files": [
       "shared/components/TourWindow/index.js"
     ]
   },
   {
     "id": "closeTourWindow",
-    "message": "Закрыть",
+    "message": "Close",
     "files": [
       "shared/components/TourWindow/index.js"
     ]
   },
   {
     "id": "nextTourWindow",
-    "message": "Далее",
+    "message": "Next",
     "files": [
       "shared/components/TourWindow/index.js"
     ]
   },
   {
     "id": "skip",
-    "message": "Пропустить",
+    "message": "Skip",
     "files": [
       "shared/components/TourWindow/index.js"
     ]
@@ -6502,35 +6502,35 @@
   },
   {
     "id": "ImportKeysBtn",
-    "message": "Импортировать",
+    "message": "Import",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
     ]
   },
   {
     "id": "ExchangeBtn",
-    "message": "Обмен",
+    "message": "Exchange",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
     ]
   },
   {
     "id": "Yourtotalbalance",
-    "message": "Ваш общий баланс",
+    "message": "Your total balance",
     "files": [
       "shared/pages/Wallet/components/BalanceForm/BalanceForm.js"
     ]
   },
   {
     "id": "YourtotalbalanceDeposit",
-    "message": "Пополнить",
+    "message": "Deposit",
     "files": [
       "shared/pages/Wallet/components/BalanceForm/BalanceForm.js"
     ]
   },
   {
     "id": "YourtotalbalanceSend",
-    "message": "Отправить",
+    "message": "Send",
     "files": [
       "shared/pages/Wallet/components/BalanceForm/BalanceForm.js"
     ]
@@ -6544,28 +6544,28 @@
   },
   {
     "id": "YourAssetsDescription",
-    "message": "Здесь вы можете безопасно хранить и быстро обменивать Bitcoin, Ethereum, {br} USD, Tether, BCH и многочисленные токены ERC-20.",
+    "message": "Here you can safely store and quickly exchange  Bitcoin, Ethereum, {br} USD, Tether, BCH, and many other ERC-20 tokens.",
     "files": [
       "shared/pages/Wallet/CurrenciesList.js"
     ]
   },
   {
     "id": "addAsset",
-    "message": "Добавить валюту",
+    "message": "Add currency",
     "files": [
       "shared/pages/Wallet/CurrenciesList.js"
     ]
   },
   {
     "id": "MybalanceswalletNav",
-    "message": "Мой баланс",
+    "message": "My balance",
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
   },
   {
     "id": "TransactionswalletNav",
-    "message": "Переводы",
+    "message": "Transactions",
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
