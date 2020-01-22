@@ -23,10 +23,10 @@ jobs:
       uses: textbook/git-checkout-submodule-action@2.0.0
     - name: npm install, build, and test
       run: |
-        npm i
-        npm run build:mainnet
-        npm run validate
-        zip -r mainnet-build.zip ./mainnet-build
+        #npm i
+        #npm run build:mainnet
+        #npm run validate
+        zip -r mainnet-build.zip ./config
       env:
         CI: true
     - name: Create a Release
