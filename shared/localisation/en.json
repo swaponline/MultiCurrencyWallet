@@ -5943,56 +5943,56 @@
   },
   {
     "id": "tour-step-0",
-    "message": "Ваш Swap.Online крипто-кошелек",
+    "message": "Your Swap.Online crypto-wallet",
     "files": [
       "shared/components/Header/WalletTour/WalletTour.js"
     ]
   },
   {
     "id": "tour-step-1",
-    "message": "Баланс по выбранной валюте показывается в конце строки, напротив валюты. Вы можете закрыть браузер, перезагрузить компьютер. Ваш баланс не изменится, только не забудте сохранить ключи",
+    "message": "The Balance of the choosen currency is shown at the end of the field, opposite to the currency. You can close the browser and reload your computer. Your balance will remain the same. Please don't forget to save your keys",
     "files": [
       "shared/components/Header/WalletTour/WalletTour.js"
     ]
   },
   {
     "id": "tour-step-1.1",
-    "message": "Ваш совокупный баланс",
+    "message": "Your total balance",
     "files": [
       "shared/components/Header/WalletTour/WalletTour.js"
     ]
   },
   {
     "id": "tour-step-1.2",
-    "message": "Нажав на кнопку, вы сможете пополнить баланс",
+    "message": "By pressing the button you can top-up your balance",
     "files": [
       "shared/components/Header/WalletTour/WalletTour.js"
     ]
   },
   {
     "id": "tour-step-2",
-    "message": "Вы можете хранить валюты разных блокчейнов, таких как: Bitcoin, Ethereum, Bitcoin Cash, Litecoin и различные токены",
+    "message": "You can store currencies of different blockchains like Bitcoin, Ethereum, Bitcoin Cash, Litecoin, and other tokens",
     "files": [
       "shared/components/Header/WalletTour/WalletTour.js"
     ]
   },
   {
     "id": "tour-step-3",
-    "message": "Наша уникальная функция peer-to-peer обмена доступна в нашем кольке, основанном на технологии Atomic Swap. Вы можете разместить вашу криптовалюту в нашем кошельке.",
+    "message": "Our unique peer-to-peer exchange is available in our wallet that is built on Atomic Swap technology. You can list your cryptocurrency in our wallet.",
     "files": [
       "shared/components/Header/WalletTour/WalletTour.js"
     ]
   },
   {
     "id": "tour-step-4",
-    "message": "Вы будете получать уведомления об обновлениях с вашей учетной записью (заказы, транзакции) и ежемесячные обновления о нашем проекте",
+    "message": "You'll receive notifications about your account updates (orders, transactions) and monthly news about our project",
     "files": [
       "shared/components/Header/WalletTour/WalletTour.js"
     ]
   },
   {
     "id": "alertDialogDefaultMessage",
-    "message": "Ставим перед фактом",
+    "message": "We notify you",
     "files": [
       "shared/components/modals/Alert/AlertModal.js"
     ]
@@ -6006,56 +6006,56 @@
   },
   {
     "id": "alertDialogDefaultTitle",
-    "message": "Информация",
+    "message": "Information",
     "files": [
       "shared/components/modals/Alert/AlertModal.js"
     ]
   },
   {
     "id": "InvoiceLinkCopied",
-    "message": "Ссылка скопирована",
+    "message": "Link copied",
     "files": [
       "shared/components/modals/InvoiceLinkModal/InvoiceLinkModal.js"
     ]
   },
   {
     "id": "InvoiceLinkCopy",
-    "message": "Скопировать ссылку",
+    "message": "Copy this link",
     "files": [
       "shared/components/modals/InvoiceLinkModal/InvoiceLinkModal.js"
     ]
   },
   {
     "id": "InvoiceLinkModalInfo",
-    "message": "Это ссылка для выставления счета.",
+    "message": "This is the invoice link.",
     "files": [
       "shared/components/modals/InvoiceLinkModal/InvoiceLinkModal.js"
     ]
   },
   {
     "id": "InvoiceLinkModal_Title",
-    "message": "Ссылка для выставления счета",
+    "message": "Invoice link",
     "files": [
       "shared/components/modals/InvoiceLinkModal/InvoiceLinkModal.js"
     ]
   },
   {
     "id": "createWalletCaptureOthers",
-    "message": "или другие",
+    "message": "or others",
     "files": [
       "shared/pages/CreateWallet/Steps/texts.js"
     ]
   },
   {
     "id": "invoiceModal_Address",
-    "message": "Адрес, на который выставляем счет",
+    "message": "Address for invoicing",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
   },
   {
     "id": "invoiceModal_Amount",
-    "message": "Сумма",
+    "message": "Amount",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
@@ -6069,84 +6069,84 @@
   },
   {
     "id": "invoiceModal_IncorrectAddress",
-    "message": "Вы ввели не коректный адрес",
+    "message": "Incorrect address",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
   },
   {
     "id": "invoiceModal_IncorrectDestiAddress",
-    "message": "Вы ввели не коректный адрес",
+    "message": "Incorrect address",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
   },
   {
     "id": "invoiceModal_Label",
-    "message": "Комментарий",
+    "message": "Comments",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
   },
   {
     "id": "invoiceModal_Processing",
-    "message": "Обработка ...",
+    "message": "Processing ...",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
   },
   {
     "id": "invoiceModal_Submit",
-    "message": "Выставить счет",
+    "message": "Submit the invoice",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
   },
   {
     "id": "invoiceModal_Title",
-    "message": "Выставление счета на пополнение",
+    "message": "Invoice for depositing",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
   },
   {
     "id": "invoiceModal_addressPlaceholder",
-    "message": "Введите адрес {currency} кошелька",
+    "message": "Enter {currency} wallet address",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
   },
   {
     "id": "invoiceModal_amountPlaceholder",
-    "message": "Введите сумму",
+    "message": "Enter the amount",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
   },
   {
     "id": "invoiceModal_destiAddress",
-    "message": "Адрес, куда будет произведена оплата",
+    "message": "Address where to send the payment",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
   },
   {
     "id": "invoiceModal_destiAddressPlaceholder",
-    "message": "Введите адрес {currency} кошелька",
+    "message": "Enter {currency} wallet address",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
   },
   {
     "id": "invoiceModal_labelPlaceholder",
-    "message": "Укажите комментарий к счету",
+    "message": "Comments for the invoice",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
   },
   {
     "id": "WithdrawModalInvoiceSaveTx",
-    "message": "Отметить как оплаченный",
+    "message": "Mark as paid",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
@@ -6155,7 +6155,7 @@
   },
   {
     "id": "WithdrowOwnTX",
-    "message": "Или укажите TX",
+    "message": "Or enter the link to the transaction (txid)",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
@@ -6164,7 +6164,7 @@
   },
   {
     "id": "withdrawOwnTxPlaceholder",
-    "message": "Если оплатили с другого источника",
+    "message": "If paid from another source",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
@@ -6173,56 +6173,56 @@
   },
   {
     "id": "RowHistoryCancelInvoice",
-    "message": "Отклонить",
+    "message": "Decline",
     "files": [
       "shared/pages/History/Row/Row.js"
     ]
   },
   {
     "id": "RowHistoryInvoce",
-    "message": "Инвойс #{number}",
+    "message": "Invoice #{number}",
     "files": [
       "shared/pages/History/Row/Row.js"
     ]
   },
   {
     "id": "RowHistoryInvoiceAddress",
-    "message": "Адрес для оплаты: {address}",
+    "message": "Payment address: {address}",
     "files": [
       "shared/pages/History/Row/Row.js"
     ]
   },
   {
     "id": "RowHistoryInvoiceCancelled",
-    "message": "Отклонен",
+    "message": "Declined",
     "files": [
       "shared/pages/History/Row/Row.js"
     ]
   },
   {
     "id": "RowHistoryInvoicePayed",
-    "message": "Оплачен",
+    "message": "Paid",
     "files": [
       "shared/pages/History/Row/Row.js"
     ]
   },
   {
     "id": "RowHistoryPayInvoice",
-    "message": "Оплатить",
+    "message": "Pay",
     "files": [
       "shared/pages/History/Row/Row.js"
     ]
   },
   {
     "id": "WalletRow_Action_Hidden",
-    "message": "Кошелек скрыт",
+    "message": "The wallet is hidden",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
   },
   {
     "id": "WalletRow_Action_HideNonZero_Message",
-    "message": "У этого кошелка положительный баланс. Его скрыть нельзя.",
+    "message": "This wallet has a positive balance. You can't hide it.",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
@@ -6264,14 +6264,14 @@
   },
   {
     "id": "WalletRow_Menu_Invoice",
-    "message": "Выставить счет",
+    "message": "Invoice",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
   },
   {
     "id": "WalletRow_Menu_InvoiceLink",
-    "message": "Получить ссылку для выставления счета",
+    "message": "Get the link for invoicing",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
@@ -6411,28 +6411,28 @@
   },
   {
     "id": "back",
-    "message": "Назад",
+    "message": "Back",
     "files": [
       "shared/components/TourWindow/index.js"
     ]
   },
   {
     "id": "closeTourWindow",
-    "message": "Закрыть",
+    "message": "Close",
     "files": [
       "shared/components/TourWindow/index.js"
     ]
   },
   {
     "id": "nextTourWindow",
-    "message": "Далее",
+    "message": "Next",
     "files": [
       "shared/components/TourWindow/index.js"
     ]
   },
   {
     "id": "skip",
-    "message": "Пропустить",
+    "message": "Skip",
     "files": [
       "shared/components/TourWindow/index.js"
     ]
@@ -6502,35 +6502,35 @@
   },
   {
     "id": "ImportKeysBtn",
-    "message": "Импортировать",
+    "message": "Import",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
     ]
   },
   {
     "id": "ExchangeBtn",
-    "message": "Обмен",
+    "message": "Exchange",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
     ]
   },
   {
     "id": "Yourtotalbalance",
-    "message": "Ваш общий баланс",
+    "message": "Your total balance",
     "files": [
       "shared/pages/Wallet/components/BalanceForm/BalanceForm.js"
     ]
   },
   {
     "id": "YourtotalbalanceDeposit",
-    "message": "Пополнить",
+    "message": "Deposit",
     "files": [
       "shared/pages/Wallet/components/BalanceForm/BalanceForm.js"
     ]
   },
   {
     "id": "YourtotalbalanceSend",
-    "message": "Отправить",
+    "message": "Send",
     "files": [
       "shared/pages/Wallet/components/BalanceForm/BalanceForm.js"
     ]
@@ -6544,28 +6544,28 @@
   },
   {
     "id": "YourAssetsDescription",
-    "message": "Здесь вы можете безопасно хранить и быстро обменивать Bitcoin, Ethereum, {br} USD, Tether, BCH и многочисленные токены ERC-20.",
+    "message": "Here you can safely store and quickly exchange  Bitcoin, Ethereum, {br} USD, Tether, BCH, and many other ERC-20 tokens.",
     "files": [
       "shared/pages/Wallet/CurrenciesList.js"
     ]
   },
   {
     "id": "addAsset",
-    "message": "Добавить валюту",
+    "message": "Add currency",
     "files": [
       "shared/pages/Wallet/CurrenciesList.js"
     ]
   },
   {
     "id": "MybalanceswalletNav",
-    "message": "Мой баланс",
+    "message": "My balance",
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
   },
   {
     "id": "TransactionswalletNav",
-    "message": "Переводы",
+    "message": "Transactions",
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
