@@ -3891,7 +3891,7 @@
   },
   {
     "id": "BtcToEthToken123",
-    "message": "The swap is finish!!",
+    "message": "The swap is finished!!",
     "files": [
       "shared/pages/Swap/SwapList/steps/FourthStep.js"
     ]
@@ -4128,7 +4128,7 @@
   },
   {
     "id": "EthTokensToBtc20",
-    "message": "Waiting for BTC Owner to create Secret Key, create BTC Script and charge it",
+    "message": "Waiting for BTC Owner to create a Secret Key, create BTC Script and charge it",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]
@@ -5072,21 +5072,21 @@
   },
   {
     "id": "multiSignJoinLink",
-    "message": "Создание BTC-Multisign кошелька",
+    "message": "Create BTC-Multisign wallet",
     "files": [
       "shared/components/modals/MultisignJoinLink/MultisignJoinLink.js"
     ]
   },
   {
     "id": "multiSignJoinLinkMessage",
-    "message": "Отправьте эту ссылку второму владельцу кошелька",
+    "message": "Send this link to the second owner of the wallet",
     "files": [
       "shared/components/modals/MultisignJoinLink/MultisignJoinLink.js"
     ]
   },
   {
     "id": "multiSignJoinLinkReady",
-    "message": "Готово",
+    "message": "Ready",
     "files": [
       "shared/components/modals/MultisignJoinLink/MultisignJoinLink.js"
     ]
@@ -5121,71 +5121,71 @@
   },
   {
     "id": "BTCMS_WithdrawRequest",
-    "message": "Запрос на отправку с кошелька BTC-multisign",
+    "message": "Withdraw request from BTC-multisign wallet",
     "files": [
       "shared/components/notifications/BTCMultisignRequest/BTCMultisignRequest.js"
     ]
   },
   {
     "id": "BTCMS_WithdrawRequestInfo",
-    "message": "Отправка {amount} {currency} на кошелек {address}",
+    "message": "Send {amount} {currency} to wallet {address}",
     "files": [
       "shared/components/notifications/BTCMultisignRequest/BTCMultisignRequest.js"
     ]
   },
   {
     "id": "PreventMultiTabsSwitchApp",
-    "message": "Закрыть другие вкладки и продолжить тут",
+    "message": "Close other tabs and continue here",
     "files": [
       "shared/components/PreventMultiTabs/PreventMultiTabs.js"
     ]
   },
   {
     "id": "createWalletHeader1",
-    "message": "Создание кошелька",
+    "message": "Create a wallet",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
     ]
   },
   {
     "id": "createWalletButton1",
-    "message": "Продолжить",
+    "message": "Continue",
     "files": [
       "shared/pages/CreateWallet/Steps/FirstStep.js"
     ]
   },
   {
     "id": "createWalletButton2",
-    "message": "Импортировать ключи"
+    "message": "Import keys"
   },
   {
     "id": "createWalletButton4",
-    "message": "Обмен"
+    "message": "Exchange"
   },
   {
     "id": "createWalletCapture1",
-    "message": "На выбор Bitcoin, Ethereum, Swap",
+    "message": "Choose amonge Bitcoin, Ethereum, Swap",
     "files": [
       "shared/pages/CreateWallet/Steps/texts.js"
     ]
   },
   {
     "id": "createWalletCapture2",
-    "message": "Без защиты, sms, google auth, мультисиг",
+    "message": "No security, sms, google auth, multisig",
     "files": [
       "shared/pages/CreateWallet/Steps/texts.js"
     ]
   },
   {
     "id": "createWalletSubHeader1",
-    "message": "Укажите валюту кошелька",
+    "message": "Choose your wallet's currency",
     "files": [
       "shared/pages/CreateWallet/Steps/texts.js"
     ]
   },
   {
     "id": "createWalletSubHeader2",
-    "message": "Выберите уровень защиты вашего кошелька",
+    "message": "Choose your wallet's security level",
     "files": [
       "shared/pages/CreateWallet/Steps/texts.js"
     ]
@@ -5368,112 +5368,112 @@
   },
   {
     "id": "BTCMS_ConfirmTxGoToWallet",
-    "message": "Перейти в кошелек",
+    "message": "Go to your wallet",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_ConfirmTxInputs",
-    "message": "Входы транзакции",
+    "message": "Transaction inputs",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_ConfirmTxOutputs",
-    "message": "Выходы транзакции",
+    "message": "Transaction outputs",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_ConfirmTxReady",
-    "message": "Транзакция подписана и отправлена в блокчейн",
+    "message": "Transaction is signed and sent to the blockchain",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_ConfirmTxSign",
-    "message": "Подписать транзакцию",
+    "message": "Sign the transaction",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_ConfirmTxTitle",
-    "message": "Подтверждение транзакции",
+    "message": "Transaction confirmation",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_CreateWalletAdd",
-    "message": "Добавить этот кошелек",
+    "message": "Add this wallet",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_CreateWalletLinkReady",
-    "message": "Кошелек создан. Отправьте эту ссылку второму владельцу для подтверждения",
+    "message": "The wallet is created. Send this link to the second owner for confirmation.",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_CreateWalletLoading",
-    "message": "Загрузка... Подождите немного",
+    "message": "Loading... Please wait",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_CreateWalletReady",
-    "message": "Кошелек создан",
+    "message": "Wallet is ready",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_CreateWalletReadyButton",
-    "message": "Готово. Открыть кошелек",
+    "message": "Ready. Open the wallet",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_CreateWalletTitle",
-    "message": "Создание BTC-multisignature кошелька",
+    "message": "Create BTC-multisignature wallet",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_CreateWalletWait",
-    "message": "Создание кошелька... Подождите немного",
+    "message": "Creating wallet... Please wait",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_WaitOtherSide",
-    "message": "Ожидание второй стороны...",
+    "message": "Waiting for the other party...",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_WalletAddress",
-    "message": "Адрес кошелька:",
+    "message": "Wallet address:",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
   {
     "id": "BTCMS_WalletBalance",
-    "message": "Баланс",
+    "message": "Wallet balance",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
@@ -5655,11 +5655,11 @@
   },
   {
     "id": "depositBtn",
-    "message": "Для пополнения валюты нажмите три точки напротив нужного актива"
+    "message": "To deposit funds press the three dots button next to the currency"
   },
   {
     "id": "sendBtn",
-    "message": "Для отправки валюты нажмите три точки напротив нужного актива"
+    "message": "To send funds press the three dots button next to the currency"
   },
   {
     "id": "WithdrawModal2225",
@@ -5894,49 +5894,49 @@
   },
   {
     "id": "partial-tour-1",
-    "message": "Уникальный peer-to-peer обменик, основанный на технологии Atomic Swap.",
+    "message": "A unique peer-to-peer exchange built on Atomic Swap technology.",
     "files": [
       "shared/components/Header/TourPartial/TourPartial.js"
     ]
   },
   {
     "id": "partial-tour-2",
-    "message": "В данное поле, введите сумму, которую вы хотите продать, выберите валюту для продажи. Вы также можете продать валюту с внешнего кошелька.",
+    "message": "In this field choose the currency and enter the amount you want to sell. You also can sell the currency from an external wallet.",
     "files": [
       "shared/components/Header/TourPartial/TourPartial.js"
     ]
   },
   {
     "id": "partial-tour-3",
-    "message": "В данное поле, введите сумму, которую вы хотели бы купить, выберите валюту для покупки.",
+    "message": "In this field choose the currency and enter the amount you want to buy.",
     "files": [
       "shared/components/Header/TourPartial/TourPartial.js"
     ]
   },
   {
     "id": "partial-tour-4",
-    "message": "Здесь вы можете увидеть статус поиска предложений по обмену. При загрузке будет отображаться «Поиск заказов ...». Когда заказ найден, проверьте курс обмена здесь",
+    "message": "Here you can see the search status of exchange offers. When loading you'll see 'Searching orders...'. After finding an order, check the exchange rate here.",
     "files": [
       "shared/components/Header/TourPartial/TourPartial.js"
     ]
   },
   {
     "id": "partial-tour-5",
-    "message": "Переключите эту кнопку, чтобы получать средства после обмена на внутренний кошелек на Swap.online или на другой кошелек",
+    "message": "Switch this button to receive funds after the exchange to your internal Swap.online wallet or to any other wallet.",
     "files": [
       "shared/components/Header/TourPartial/TourPartial.js"
     ]
   },
   {
     "id": "partial-tour-6",
-    "message": "Переключите эту кнопку, чтобы увидеть прямой URL операции обмена. Это возможно, когда кнопка розовая.",
+    "message": "Switch this button to see a direct URL of the transaction. It is available when the button is pink.",
     "files": [
       "shared/components/Header/TourPartial/TourPartial.js"
     ]
   },
   {
     "id": "partial-tour-7",
-    "message": "Нажмите на эту кнопку, чтобы увидеть страницу с предложениями для обмена. Предложения будут представлены для конкретных валют. Также вы можете создать собственное предложение на странице предложений.",
+    "message": "Press this button to see the Order Book page. The orders will be shown for specific currencies. You can also create your own order on the Order Book page.",
     "files": [
       "shared/components/Header/TourPartial/TourPartial.js"
     ]
