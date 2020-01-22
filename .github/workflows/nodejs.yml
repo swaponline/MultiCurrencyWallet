@@ -26,7 +26,7 @@ jobs:
         npm i
         npm run build:mainnet
         npm run validate
-        zip -r mainnet-build.zip mainnet-build/*
+        zip -r mainnet-build.zip ./mainnet-build
       env:
         CI: true
     - name: Create a Release
