@@ -2828,7 +2828,7 @@
   },
   {
     "id": "partial243",
-    "message": "У вас есть",
+    "message": "Отдаете",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3143,6 +3143,13 @@
   {
     "id": "partial544",
     "message": "Предложения",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial766",
+    "message": "С любого кошелька или биржи",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
