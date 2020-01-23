@@ -6519,6 +6519,13 @@
     ]
   },
   {
+    "id": "partial2378",
+    "message": "кошелёк",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
     "id": "ImportKeysBtn",
     "message": "Импортировать",
     "files": [

@@ -1252,11 +1252,29 @@ export default class PartialClosure extends Component {
                 )
             }
             {
-              !ifHereIsKindaOrderBook && (
-                <Button className="data-tut-Orderbook" styleName="button buttonOrders" gray onClick={() => this.handlePush(isWidgetLink)} >
-                  <FormattedMessage id="partial544" defaultMessage="Order book" />
-                </Button>
-              )
+              !ifHereIsKindaOrderBook 
+                ? (
+                  <Button className="data-tut-Orderbook" styleName="button buttonOrders" gray onClick={() => this.handlePush(isWidgetLink)} >
+                    <FormattedMessage id="partial544" defaultMessage="Order book" />
+                  </Button>
+                )
+                : (
+                  <Button
+                    className="data-tut-Orderbook"
+                    styleName="button buttonOrders"
+                    gray
+                    onClick={
+                      () => 
+                        this.props.history.push(
+                          localisedUrl(locale, `/${this.props.allCurrencyies.find(i => i.value === getCurrency).fullTitle}-wallet`)
+                        )
+                    }
+                  >
+                    <span style={{ textTransform: 'capitalize' }}>{this.props.allCurrencyies.find(i => i.value === getCurrency).value}</span>
+                    {` `}
+                    <FormattedMessage id="partial2378" defaultMessage="wallet" />
+                  </Button>
+                )
             }
           </div>
           <a href="https://seven.swap.online/widget-service/generator/" target="_blank" rel="noopener noreferrer" styleName="widgetLink">

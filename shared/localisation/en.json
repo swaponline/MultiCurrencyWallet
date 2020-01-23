@@ -6515,6 +6515,13 @@
     ]
   },
   {
+    "id": "partial2378",
+    "message": "wallet",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
     "id": "ImportKeysBtn",
     "message": "Import",
     "files": [
