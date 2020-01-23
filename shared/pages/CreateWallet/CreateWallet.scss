@@ -283,13 +283,22 @@
   text-align: center;
 }
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 768px) {
   .secureSize {
     width: 100% !important;
   }
   .currencyChooserWrapperSecond {
     display: block;
     padding: 0;
+  }
+  .wrapper {
+    margin: 125px auto;
+    padding: 0;
+    position: relative;
+    transform: none;
+    left: auto;
+    top: auto;
+    box-shadow: none;
   }
 
   .currencyChooserWrapperSecond {
@@ -307,14 +316,7 @@
   }
 }
 
-@media screen and (max-width: 568px) {
-  .wrapper {
-    margin: 125px auto;
-    padding: 0;
-  }
-}
-
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 750px) {
   .flex {
     display: flex;
   }
@@ -432,8 +434,9 @@
   }
 
   .wrapper h2 {
-    padding-top: 100px;
-    margin-bottom: 80px;
+    padding-top: 90px;
+    margin-bottom: 65px;
+    font-size: 32px;
   }
 
   .secureSize,
