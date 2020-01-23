@@ -13,7 +13,7 @@ import { BigNumber } from 'bignumber.js'
 import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
-import Button from 'components/controls/Button/Button'
+import NewButton from 'components/controls/NewButton/NewButton'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import ReactTooltip from 'react-tooltip'
@@ -110,19 +110,16 @@ export default class RegisterSMSProtected extends React.Component {
         {(step === 'enterPhone') &&
           <Fragment>
             <div styleName="highLevel">
-              <FieldLabel inRow>
-                <span style={{ fontSize: '16px' }}>
-                  <FormattedMessage id="registerSMSModalPhone" defaultMessage="You phone " />
-                </span>
-              </FieldLabel>
-              <Input valueLink={linked.phone} focusOnInit placeholder={`Enter your phone`} />
+              <span style={{ marginBottom: '20px' }} >
+                <Input styleName="input inputMargin25" valueLink={linked.phone}  focusOnInit placeholder={`Enter your phone`} />
+              </span>
               {error &&
                 <div styleName="rednote">
                   `${error}`
                 </div>
               }
             </div>
-            <Button styleName="buttonFull" brand fullWidth disabled={isShipped} onClick={this.handleSendSMS}>
+            <NewButton styleName="button" blue fullWidth disabled={isShipped} onClick={this.handleSendSMS}>
               {isShipped
                 ? (
                   <Fragment>
@@ -135,17 +132,12 @@ export default class RegisterSMSProtected extends React.Component {
                   </Fragment>
                 )
               }
-            </Button>
+            </NewButton>
           </Fragment>
         }
         {(step === 'enterCode') &&
           <Fragment>
             <div styleName="highLevel">
-              <FieldLabel inRow>
-                <span style={{ fontSize: '16px' }}>
-                  <FormattedMessage id="registerSMSModalCode" defaultMessage="Code from SMS " />
-                </span>
-              </FieldLabel>
               <Input valueLink={linked.smsCode} focusOnInit placeholder={`Enter code from SMS`} />
               {error &&
                 <div styleName="rednote">

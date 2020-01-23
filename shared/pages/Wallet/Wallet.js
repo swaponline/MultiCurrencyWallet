@@ -169,7 +169,7 @@ export default class Wallet extends Component {
     if (url.includes('withdraw')) {
       this.handleWithdraw(params)
     }
-    this.getInfoAboutCurrency();
+    //this.getInfoAboutCurrency();
     this.setLocalStorageItems();
   }
 
@@ -177,7 +177,7 @@ export default class Wallet extends Component {
     const { currencies } = this.props;
     const currencyNames = currencies.map(({ name }) => name)
 
-    await actions.user.getInfoAboutCurrency(currencyNames);
+   await actions.user.getInfoAboutCurrency(currencyNames);
   }
 
   handleNavItemClick = (index) => {
@@ -363,8 +363,8 @@ export default class Wallet extends Component {
           </ul>
           <div className="data-tut-store" styleName="walletContent" >
             <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
-              {
-                !isFetching ? 
+              {/* {
+                !isFetching ?  */}
                   <BalanceForm 
                     usdBalance={usdBalance} 
                     currencyBalance={btcBalance}
@@ -374,8 +374,10 @@ export default class Wallet extends Component {
                     handleExchange={this.handleGoExchange}
                     currency="btc" 
                     infoAboutCurrency={infoAboutCurrency} 
-                /> : <ContentLoader leftSideContent />
-              }
+                /> 
+                
+                {/* : <ContentLoader leftSideContent /> */}
+              
               {exchangeForm &&
                 <div styleName="exchangeForm">
                   <ParticalClosure {...this.props} isOnlyForm />
@@ -383,14 +385,16 @@ export default class Wallet extends Component {
               }
             </div>
             <div styleName={`yourAssetsWrapper ${activeView === 0 ? 'active' : ''}`}>
-              {
-                !isFetching ? 
+              {/* {
+                !isFetching ?  */}
                   <CurrenciesList 
                     tableRows={tableRows} {...this.state} {...this.props} 
                     goToСreateWallet={this.goToСreateWallet}
                     getExCurrencyRate={(currencySymbol, rate) => this.getExCurrencyRate(currencySymbol, rate)}
-                  /> : <ContentLoader rideSideContent />
-              }
+                  /> 
+                
+                  {/* : <ContentLoader rideSideContent /> */}
+      
             </div>
             <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
               <History />
