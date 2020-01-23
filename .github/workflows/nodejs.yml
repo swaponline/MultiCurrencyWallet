@@ -23,10 +23,34 @@ jobs:
       uses: textbook/git-checkout-submodule-action@2.0.0
     - name: npm install, build, and test
       run: |
-        npm i
-        npm run build:mainnet
-        npm run validate
+        #npm i
+        #npm run build:mainnet
+        #npm run validate
+        zip -r mainnet-build.zip ./config
       env:
         CI: true
     - name: Create a Release
+      id: create_release
       uses: actions/create-release@v1
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      with:
+          tag_name: ${{ github.sha }}
+          release_name: Release ${{ github.sha }}
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+          draft: false
+          prerelease: false
+          allowUpdates: true
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+        asset_path: ./build-mainnet.zip
+        asset_name: build-mainnet.zip
+        asset_content_type: application/zip
