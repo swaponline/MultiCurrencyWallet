@@ -13,7 +13,7 @@
 .smallTooltip {
   > span {
     position: absolute;
-    right: 5px;
+    left: 100%;
     top: 5px;
     display: flex;
     justify-content: center;
@@ -40,7 +40,8 @@
   min-width: 0;
   flex: auto 1 1;
   input {
-    padding-right: 144px;
+    height: 68px;
+    font-size: 24px;
   }
 }
 
@@ -86,9 +87,8 @@ input:disabled {
   background: none;
   box-shadow: none;
   position: absolute;
-  right: 1px;
+  right: 0px;
   top: 6px;
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.3) 0%, white 6%);
 
   > div:nth-child(2) {
     margin-top: 10px;

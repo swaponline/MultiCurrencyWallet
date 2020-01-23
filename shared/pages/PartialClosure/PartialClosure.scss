@@ -94,7 +94,7 @@
 
 .switchButton {
   left: 22em;
-  top: 7em;
+  top: 155px;
   display: flex;
   width: 60px;
   align-items: right;
@@ -419,22 +419,20 @@
 .maxAmount {
   display: inline-block;
   position: absolute;
-  top: 40px;
+  top: 52px;
   background: #fff;
   font-size: 13px;
-  right: 50px;
-  font-family: 'Roboto Mono', monospace;
+  right: 30px;
   padding: 0 10px;
   color: #b5b5b5;
   margin-bottom: 0;
 }
 
 .widgetLink {
-  position: relative;
+  position: absolute;
   left: 16.8em;
   color: white;
-  bottom: -5em;
-  font-family: 'Roboto Mono', monospace;
+  bottom: -3em;
   text-decoration: underline;
 
   &:hover {
