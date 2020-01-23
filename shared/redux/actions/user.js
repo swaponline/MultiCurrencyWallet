@@ -161,11 +161,11 @@ const getInfoAboutCurrency = (currencyNames) =>
           }
         }
       })
-      reducers.user.setIsFetching({ isFetching: false })
+     
       resolve(true);
     }).catch((error) => {
       reject(error)
-    })
+    }).finally( () =>  reducers.user.setIsFetching({ isFetching: false }))
   })
 
 const pullTransactions = transactions => {
