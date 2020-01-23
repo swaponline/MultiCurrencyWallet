@@ -41,7 +41,7 @@ export default class PreventMultiTabs extends Component {
           !isWidgetBuild && (
             <FormattedMessage
               id="PreventMultiTabs12"
-              defaultMessage="Swap.Online supports only one active tab. Please reload this page to continue using this tab or close it"
+              defaultMessage="Our service Supports only one active tab. Please reload this page to continue using this tab or close it"
             />
           )
         }

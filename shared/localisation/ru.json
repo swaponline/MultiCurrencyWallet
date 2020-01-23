@@ -2233,7 +2233,7 @@
   },
   {
     "id": "ChromeExtension",
-    "message": "Swap.Online расширение для Chrome"
+    "message": "Наше расширение для Chrome"
   },
   {
     "id": "Concept",
@@ -3315,7 +3315,7 @@
   },
   {
     "id": "PreventMultiTabs12",
-    "message": "Swap.Online supports only one active tab.\n    Please reload this page to continue using this tab or close it",
+    "message": "Our service supports only one active tab.\n    Please reload this page to continue using this tab or close it",
     "files": [
       "shared/components/PreventMultiTabs/PreventMultiTabs.js"
     ]
@@ -3387,7 +3387,7 @@
   },
   {
     "id": "CurrencyWallet141",
-    "message": "Swap.Online - {fullName}({currency}) онлайн кошелек, работащюий на технологии Atomic Swap."
+    "message": "{fullName}({currency}) онлайн кошелек, работащюий на технологии Atomic Swap."
   },
   {
     "id": "CurrencyWallet167",
@@ -3620,7 +3620,7 @@
   },
   {
     "id": "CurrencyWallet154",
-    "message": "Swap.Online - это децентрализированный онлайн веб кошелек для криптовалюты {fullName} ({currency}) без регистрации. Легкий обмен криптовалют внутри кошелька",
+    "message": "Наш сервис - это децентрализированный онлайн веб кошелек для криптовалюты {fullName} ({currency}) без регистрации. Легкий обмен криптовалют внутри кошелька",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js"
     ]
@@ -3652,7 +3652,7 @@
   },
   {
     "id": "Wallet146",
-    "message": "Swap.Online - мультивалютный онлайн кошелек на базе технологии Атомарного Свопа с возможностью хранить и обменивать криптовалюту по лучшему курсу",
+    "message": "Наш сервис - мультивалютный онлайн кошелек на базе технологии Атомарного Свопа с возможностью хранить и обменивать криптовалюту по лучшему курсу",
     "files": [
       "shared/pages/OldWallet/Wallet.js"
     ]
@@ -3666,7 +3666,7 @@
   },
   {
     "id": "PartialClosure562",
-    "message": "Swap.online - это децентрализованный криптовалютный кошелек, работающий по технологии Atomic swap. Обмен Bitcoin, USD Tether, BCH в течение нескольких секунд. Без комиссии (только комиссия майнеров).{br}Обмен крипто-токенами в Swap.Online проводится по-настоящему децентрализованно, так как мы используем технологию атомных свопов однорангового взаимодействия между цепями. {br}{br}Swap.Online использует IPFS-сеть для всех рабочих процессов, а значит централизованного сервера просто нет. {br}Интерфейс обмена выглядит как крипто-брокер, а не как обычный DEX или CEX. За пару кликов пользователь может разместить и принять предложение, настроив цену отправляемого токена. {br}{br}Кроме того, пользователь может обменять заданный процент от своего количества доступных токенов (например, ½, ¼ и т. д.). {br}{br}Еще одним преимуществом службы обмена Swap.Online является использование одного ключа для всего диапазона токенов ERC-20. {br}Кстати, если вы не заинтересованы в обмене некоторыми токенами, вы можете скрыть их из списка. {br}Используйте Swap.Online в качестве основного обмена для каждого криптовалюты, которую вы держите и экономьте ваше время уже сегодня!"
+    "message": "Наш сервис - это децентрализованный криптовалютный кошелек, работающий по технологии Atomic swap. Обмен Bitcoin, USD Tether, BCH в течение нескольких секунд. Без комиссии (только комиссия майнеров).{br}Обмен крипто-токенами в Swap.Online проводится по-настоящему децентрализованно, так как мы используем технологию атомных свопов однорангового взаимодействия между цепями. {br}{br}Swap.Online использует IPFS-сеть для всех рабочих процессов, а значит централизованного сервера просто нет. {br}Интерфейс обмена выглядит как крипто-брокер, а не как обычный DEX или CEX. За пару кликов пользователь может разместить и принять предложение, настроив цену отправляемого токена. {br}{br}Кроме того, пользователь может обменять заданный процент от своего количества доступных токенов (например, ½, ¼ и т. д.). {br}{br}Еще одним преимуществом службы обмена Swap.Online является использование одного ключа для всего диапазона токенов ERC-20. {br}Кстати, если вы не заинтересованы в обмене некоторыми токенами, вы можете скрыть их из списка. {br}Используйте Swap.Online в качестве основного обмена для каждого криптовалюты, которую вы держите и экономьте ваше время уже сегодня!"
   },
   {
     "id": "RowWallet276",
@@ -4322,7 +4322,7 @@
   },
   {
     "id": "CurrencyWalletTitle",
-    "message": "Swap.Online - {fullName} ({currency}) онлайн кошелек, работащюий на технологии Atomic Swap",
+    "message": "{fullName} ({currency}) онлайн кошелек, работащюий на технологии Atomic Swap",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js"
     ]
@@ -6268,21 +6268,28 @@
   },
   {
     "id": "WalletRow_Menu_Deposit",
-    "message": "Deposit",
+    "message": "Пополнить",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
   },
   {
     "id": "WalletRow_Menu_Hide",
-    "message": "Hide",
+    "message": "Скрыть",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
   },
   {
     "id": "WalletRow_Menu_History",
-    "message": "History",
+    "message": "История",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "WalletRow_Menu_Exchange",
+    "message": "Обмен",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
@@ -6303,14 +6310,14 @@
   },
   {
     "id": "WalletRow_Menu_Send",
-    "message": "Send",
+    "message": "Отправить",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
   },
   {
     "id": "WalletRow_Menu_Сopy",
-    "message": "Copy address",
+    "message": "Скопировать адрес",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
@@ -6569,7 +6576,7 @@
   },
   {
     "id": "TransactionswalletNav",
-    "message": "Переводы",
+    "message": "Активность",
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
