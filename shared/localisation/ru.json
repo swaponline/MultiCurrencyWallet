@@ -3141,6 +3141,13 @@
     ]
   },
   {
+    "id": "partial5323",
+    "message": "Приобрести",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
     "id": "partial544",
     "message": "Предложения",
     "files": [
