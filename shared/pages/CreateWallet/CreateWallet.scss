@@ -1,8 +1,15 @@
 .wrapper {
-  padding-top: 30px;
   max-width: 800px;
   margin: 0 auto;
   position: relative;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 16px rgba(0,0,0,0.08), 0px 1px 4px rgba(0,0,0,0.08);
+  border-radius: 4px;
+  padding: 35px 25px 40px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
 }
 
 .isExist {
@@ -16,7 +23,7 @@
 
 .wrapper h2 {
   width: 450px;
-  margin-bottom: 60px;
+  margin-bottom: 30px;
   font-size: 40px;
   font-family: 'Inter-Bold', sans-serif;
   line-height: 120%;
@@ -165,8 +172,8 @@
 
 .buttonWrapper {
   position: absolute;
-  right: 0;
-  top: 45px;
+  right: 50px;
+  top: 40px;
   button {
     color: #6144E5;
     font-family: 'Inter-Bold', sans-serif;
@@ -276,13 +283,22 @@
   text-align: center;
 }
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 768px) {
   .secureSize {
     width: 100% !important;
   }
   .currencyChooserWrapperSecond {
     display: block;
     padding: 0;
+  }
+  .wrapper {
+    margin: 125px auto;
+    padding: 0;
+    position: relative;
+    transform: none;
+    left: auto;
+    top: auto;
+    box-shadow: none;
   }
 
   .currencyChooserWrapperSecond {
@@ -300,14 +316,7 @@
   }
 }
 
-@media screen and (max-width: 568px) {
-  .wrapper {
-    margin: 125px auto;
-    padding: 0;
-  }
-}
-
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 750px) {
   .flex {
     display: flex;
   }
@@ -425,8 +434,9 @@
   }
 
   .wrapper h2 {
-    padding-top: 100px;
-    margin-bottom: 80px;
+    padding-top: 90px;
+    margin-bottom: 65px;
+    font-size: 32px;
   }
 
   .secureSize,
