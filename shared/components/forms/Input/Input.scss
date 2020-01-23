@@ -5,6 +5,14 @@ input, textarea {
   border-radius: 0;
 }
 
+@mixin placeholder {
+  ::-webkit-input-placeholder {@content}
+  :-moz-placeholder           {@content}
+  ::-moz-placeholder          {@content}
+  :-ms-input-placeholder      {@content}  
+}
+
+
 .srollingForm {
   height: 100px !important;
   overflow-y: auto !important;;
@@ -52,27 +60,38 @@ input, textarea {
 
 .input {
   width: 100%;
-  height: 68px;
+  height: 48px;
   padding: 0 16px;
-  border-radius: 3px;
-  // TODO placeholder doesn't change. Check on Messages page in New Message textarea
-  //+input-placeholder()
+  border-radius: 2px;
   vertical-align: top;
   line-height: 14px;
   box-shadow: none;
-  font-size: 20px;
-  font-family: 'Roboto Mono', monospace;
-  padding-left: 20px;
-  color: $color-f-main;
-  appearance: textfield;
+  font-size: 15px;
+  font-family: 'Inter-Bold', sans-serif;
+  padding-left: 15px;
   border: 1px solid rgba(0,0,0,0.2);
   outline: none;
 
   &:focus {
-    border: 1px solid #1E2A4B;
+    border: 1px solid #6144E5;
     outline: none;
   }
+  
 }
+
+.input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: rgba(31, 45, 72, 0.3);
+}
+.input::-moz-placeholder { /* Firefox 19+ */
+  color: rgba(31, 45, 72, 0.3);
+}
+.input:-ms-input-placeholder { /* IE 10+ */
+  color: rgba(31, 45, 72, 0.3);
+}
+.input:-moz-placeholder { /* Firefox 18- */
+  color: rgba(31, 45, 72, 0.3);
+}
+
 
 .inputError {
   border: 1px solid red;
@@ -111,10 +130,6 @@ textarea.input {
 }
 
 @include media-mobile {
-  .input {
-    font-size: 14px !important;;
-    height: 60px;
-  }
 
   .root {
     width: 95%;
