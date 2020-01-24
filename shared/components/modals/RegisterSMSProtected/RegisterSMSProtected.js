@@ -110,8 +110,9 @@ export default class RegisterSMSProtected extends React.Component {
         {(step === 'enterPhone') &&
           <Fragment>
             <div styleName="highLevel">
+              <label styleName="label">Your phone:</label>
               <span style={{ marginBottom: '20px' }} >
-                <Input styleName="input inputMargin25" valueLink={linked.phone}  focusOnInit placeholder={`Enter your phone`} />
+                <Input styleName="input inputMargin25" valueLink={linked.phone} placeholder={`Enter your phone`} focusOnInit />
               </span>
               {error &&
                 <div styleName="rednote">
@@ -138,14 +139,15 @@ export default class RegisterSMSProtected extends React.Component {
         {(step === 'enterCode') &&
           <Fragment>
             <div styleName="highLevel">
-              <Input valueLink={linked.smsCode} focusOnInit placeholder={`Enter code from SMS`} />
+              <label>Enter code from SMS:</label>
+              <Input styleName="input inputMargin25" valueLink={linked.smsCode} focusOnInit placeholder={`Enter code from SMS`} />
               {error &&
                 <div styleName="rednote">
                   {error}
                 </div>
               }
             </div>
-            <Button styleName="buttonFull" brand fullWidth disabled={isShipped} onClick={this.handleCheckSMS}>
+            <NewButton styleName="button" blue fullWidth disabled={isShipped} onClick={this.handleCheckSMS}>
               {isShipped
                 ? (
                   <Fragment>
@@ -158,7 +160,7 @@ export default class RegisterSMSProtected extends React.Component {
                   </Fragment>
                 )
               }
-            </Button>
+            </NewButton>
           </Fragment>
         }
         {(step === 'ready') &&

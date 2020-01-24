@@ -5,7 +5,7 @@
 <!-- You have to tick all the boxes -->
 
 - [ ] I have read the [CONTRIBUTING](https://github.com/swaponline/swap.react/wiki/CONTRIBUTING) guide
-- [ ] branch rebased on `develop`
+- [ ] branch rebased on `master`
 - [ ] styleguide check `npm run validate`
 - [ ] good naming
 - [ ] keep simple

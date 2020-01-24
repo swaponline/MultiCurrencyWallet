@@ -16,6 +16,8 @@
   strong {
     font-weight: 500;
   }
+  position: relative;
+  display: inline-block;
   &:first-child {
     margin-top: 0;
   }

@@ -922,7 +922,7 @@ export default class PartialClosure extends Component {
   }
 
   render() {
-    const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage }, userEthAddress, isOnlyForm } = this.props
+    const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage }, userEthAddress, isOnlyForm, allOrders } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching, desclineOrders, openScanCam,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, exHaveRate, exGetRate,
       maxBuyAmount, getAmount, goodRate, isShowBalance, estimatedFeeValues, haveAmount,
@@ -985,7 +985,12 @@ export default class PartialClosure extends Component {
     }, SeoValues)
 
 
-    //console.log('usd', (maxAmount > 0 && isNonOffers) ? 0 : haveUsd)
+    const ifHereIsKindaOrderBook
+      = haveCurrency === 'btc'
+      && allOrders.filter(i => i.buyCurrency === 'btc' && i.sellCurrency === getCurrency).length > 0
+      && allOrders.filter(i => i.sellCurrency === 'btc' && i.buyCurrency === getCurrency).length === 0
+
+
 
     const Form = (
       <div styleName={`${isSingleForm ? '' : 'section'}`} className={(isWidgetLink) ? 'section' : ''} >
@@ -1030,9 +1035,13 @@ export default class PartialClosure extends Component {
               }
             </p>
           }
-          <div styleName="switchButton">
-            <Switching noneBorder onClick={this.handleFlipCurrency} />
-          </div>
+          {
+            !ifHereIsKindaOrderBook && (
+              <div styleName="switchButton">
+                <Switching noneBorder onClick={this.handleFlipCurrency} />
+              </div>
+            )
+          }
           <div className="data-tut-get" styleName="selectWrap">
             <SelectGroup
               dataTut="get"
@@ -1229,12 +1238,44 @@ export default class PartialClosure extends Component {
             )
           }
           <div styleName="rowBtn" className={isWidget ? 'rowBtn' : ''}>
-            <Button className="data-tut-Exchange" styleName="button" brand onClick={this.handleGoTrade} disabled={!canDoOrder}>
-              <FormattedMessage id="partial541" defaultMessage="Exchange now" />
-            </Button>
-            <Button className="data-tut-Orderbook" styleName="button buttonOrders" gray onClick={() => this.handlePush(isWidgetLink)} >
-              <FormattedMessage id="partial544" defaultMessage="Order book" />
-            </Button>
+            {
+              !ifHereIsKindaOrderBook 
+                ? (
+                  <Button className="data-tut-Exchange" styleName="button" brand onClick={this.handleGoTrade} disabled={!canDoOrder}>
+                    <FormattedMessage id="partial541" defaultMessage="Exchange now" />
+                  </Button>
+                )
+                : (
+                  <Button className="data-tut-Exchange" styleName="button" brand onClick={this.handleGoTrade} disabled={!canDoOrder}>
+                    <FormattedMessage id="partial5323" defaultMessage="Buy now" />
+                  </Button>
+                )
+            }
+            {
+              !ifHereIsKindaOrderBook 
+                ? (
+                  <Button className="data-tut-Orderbook" styleName="button buttonOrders" gray onClick={() => this.handlePush(isWidgetLink)} >
+                    <FormattedMessage id="partial544" defaultMessage="Order book" />
+                  </Button>
+                )
+                : (
+                  <Button
+                    className="data-tut-Orderbook"
+                    styleName="button buttonOrders"
+                    gray
+                    onClick={
+                      () => 
+                        this.props.history.push(
+                          localisedUrl(locale, `/${this.props.allCurrencyies.find(i => i.value === getCurrency).fullTitle}-wallet`)
+                        )
+                    }
+                  >
+                    <span style={{ textTransform: 'capitalize' }}>{this.props.allCurrencyies.find(i => i.value === getCurrency).value}</span>
+                    {` `}
+                    <FormattedMessage id="partial2378" defaultMessage="wallet" />
+                  </Button>
+                )
+            }
           </div>
           <a href="https://seven.swap.online/widget-service/generator/" target="_blank" rel="noopener noreferrer" styleName="widgetLink">
             <FormattedMessage id="partial1021" defaultMessage="Embed on website" />

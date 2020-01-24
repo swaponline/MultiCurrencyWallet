@@ -3059,6 +3059,13 @@
     ]
   },
   {
+    "id": "partial5323",
+    "message": "Buy now",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
     "id": "partial544",
     "message": "Order book",
     "files": [
@@ -6503,6 +6510,13 @@
   {
     "id": "partial1021",
     "message": "Embed on website",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial2378",
+    "message": "wallet",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]

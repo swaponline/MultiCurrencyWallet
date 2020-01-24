@@ -3141,6 +3141,13 @@
     ]
   },
   {
+    "id": "partial5323",
+    "message": "Приобрести",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
     "id": "partial544",
     "message": "Предложения",
     "files": [
@@ -6507,6 +6514,13 @@
   {
     "id": "partial1021",
     "message": "Вставить на сайт",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial2378",
+    "message": "кошелёк",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
