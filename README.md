@@ -15,7 +15,7 @@ Atomic swap cryptocurrency protocol. Live version here: https://swap.online. Ato
 git clone --recurse-submodules https://github.com/swaponline/swap.react.git
 ```
 
-3) Do `npm i` <br />
+3) Do `npm i` (windows? https://www.npmjs.com/package/windows-build-tools )<br />
 ```
 cd swap.react
 npm i
