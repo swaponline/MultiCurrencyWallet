@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html class="no-js" lang="ru-RU">
+<head>
+
+</head>
+<body>
+    <iframe src="http://magento2.loc/iframe/" width="468" height="60" align="left"></iframe>
+    </iframe>
+
+    <script>
+        window.onload = function() {
+
+            var iframe = document.getElementsByTagName('iframe')[0];
+            var win;
+            // some browser (don't remember which one) throw exception when you try to access
+            // contentWindow for the first time, it work when you do that second time
+            try {
+                win = iframe.contentWindow;
+            } catch(e) {
+                win = iframe.contentWindow;
+            }
+
+            // save obj in subdomain localStorage
+            //win.postMessage(JSON.stringify({key: 'storage', method: "set", data: obj}), "*");
+            window.onmessage = function(e) {
+
+                Object.keys(e.data).map(
+                    (key) => {
+                        localStorage.setItem(key, e.data[key]);
+                    }
+                )
+            };
+
+            // load previously saved data
+            win.postMessage(JSON.stringify({key: 'storage', method: "get"}), "*");
+        };
+    </script>
+</body>
+</html>
