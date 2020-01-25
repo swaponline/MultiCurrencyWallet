@@ -44,12 +44,13 @@ const sign = async () => {
   }
   // await actions.nimiq.login(_ethPrivateKey)
 
-  const getReputation = actions.user.getReputation()
+  // const getReputation = actions.user.getReputation()
 
   await getReputation()
 }
 
 const getReputation = async () => {
+  
   const btcReputationPromise = actions.btc.getReputation()
   const ethReputationPromise = actions.eth.getReputation()
 
