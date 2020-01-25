@@ -9,8 +9,8 @@ export const defaultLocale = () => navigator.language.split('-')[0]
 
 export const localisePrefix = '/:locale(en|ru)?'
 const prepareUrl = (locale, link = '') => {
-  const locLink = (locale.toLowerCase() === defaultLocale().toLowerCase()) ? `${link}` : `${locale}${link}`
-  return locLink.replace(/^\/|\/$/g, '')
+  // const locLink = (locale.toLowerCase() === defaultLocale().toLowerCase()) ? `${link}` : `${locale}${link}`
+  return link.replace(/^\/|\/$/g, '')
 }
 export const onChangelocalisedUrl = (locale, link = '') => `/${prepareUrl(locale, link)}`
 export const localisedUrl = (locale, link = '') => `/${prepareUrl(locale, link)}`
