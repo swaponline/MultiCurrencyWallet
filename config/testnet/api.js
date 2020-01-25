@@ -13,7 +13,6 @@ export default {
   // usdtOmni: 'https://api.omniexplorer.info/',
   bch: 'https://trest.bitcoin.com/v2',
   ltc: 'https://testnet.litecore.io/api',
-  swapsExplorer: 'https://seven.swap.online/swaps-testnet/state',
   faucet: 'https://faucet.swaponline.site/testnet/',
   btc2FAProtected: 'https://2fa.swaponline.site',
   invoiceApi: 'https://invoices.swaponline.site',
