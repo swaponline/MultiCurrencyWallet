@@ -149,11 +149,27 @@
     </div>
     <script>
 
+      function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for(var i = 0; i < ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      }
+
       var advice = document.getElementById('beforeJSTip');
-
-      const locale = navigator.language.split('-')[0]
-      const locationName = window.location.pathname.split('/')[1]
-
+      var lang = getCookie('mylang') ? getCookie('mylang') : 'en';
+  
+      const locale = lang.toLowerCase()
+      const locationName = lang.toUpperCase()
+      
       if (locationName === 'ru' || locale === 'ru' && locationName !== 'en') {
         advice.innerText = 'Не забудьте сохранить свои приватные ключи от кошелька!';
       }
