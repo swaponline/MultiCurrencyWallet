@@ -13,7 +13,7 @@ import { BigNumber } from 'bignumber.js'
 import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
-import NewButton from 'components/controls/NewButton/NewButton'
+import Button from 'components/controls/Button/Button'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import ReactTooltip from 'react-tooltip'
@@ -120,7 +120,7 @@ export default class RegisterSMSProtected extends React.Component {
                 </div>
               }
             </div>
-            <NewButton styleName="button" blue fullWidth disabled={isShipped} onClick={this.handleSendSMS}>
+            <Button styleName="button" blue fullWidth disabled={isShipped} onClick={this.handleSendSMS}>
               {isShipped
                 ? (
                   <Fragment>
@@ -133,13 +133,13 @@ export default class RegisterSMSProtected extends React.Component {
                   </Fragment>
                 )
               }
-            </NewButton>
+            </Button>
           </Fragment>
         }
         {(step === 'enterCode') &&
           <Fragment>
             <div styleName="highLevel">
-              <label>Enter code from SMS:</label>
+              <label styleName="label">Enter code from SMS:</label>
               <Input styleName="input inputMargin25" valueLink={linked.smsCode} focusOnInit placeholder={`Enter code from SMS`} />
               {error &&
                 <div styleName="rednote">
@@ -147,7 +147,7 @@ export default class RegisterSMSProtected extends React.Component {
                 </div>
               }
             </div>
-            <NewButton styleName="button" blue fullWidth disabled={isShipped} onClick={this.handleCheckSMS}>
+            <Button styleName="button" blue fullWidth disabled={isShipped} onClick={this.handleCheckSMS}>
               {isShipped
                 ? (
                   <Fragment>
@@ -160,7 +160,7 @@ export default class RegisterSMSProtected extends React.Component {
                   </Fragment>
                 )
               }
-            </NewButton>
+            </Button>
           </Fragment>
         }
         {(step === 'ready') &&

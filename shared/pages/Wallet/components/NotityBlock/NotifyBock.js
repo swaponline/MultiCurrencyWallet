@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 
 import CSSModules from 'react-css-modules'
-import NewButton from 'components/controls/NewButton/NewButton'
+import Button from 'components/controls/Button/Button'
 import styles from './NotifyBlock.scss'
 
 
@@ -19,14 +19,14 @@ const NotifyBlock = ({ className, icon, descr, tooltip, firstBtn, secondBtn, fir
     </div>
     <div>
       {
-        firstBtn && <NewButton white onClick={firstFunc}>
+        firstBtn && <Button white onClick={firstFunc}>
           {firstBtn}
-        </NewButton>
+        </Button>
       }
       {
-        secondBtn && <NewButton transparent onClick={secondFunc}>
+        secondBtn && <Button transparent onClick={secondFunc}>
           {secondBtn}
-        </NewButton>
+        </Button>
       }
  
     </div>

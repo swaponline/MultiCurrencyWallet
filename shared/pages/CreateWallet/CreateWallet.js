@@ -15,7 +15,7 @@ import links from 'helpers/links'
 import { localisedUrl } from 'helpers/locale'
 
 import check from './images/check'
-import NewButton from '../../components/controls/NewButton/NewButton'
+import Button from '../../components/controls/Button/Button'
 import FirstStep from './Steps/FirstStep'
 import SecondStep from './Steps/SecondStep'
 
