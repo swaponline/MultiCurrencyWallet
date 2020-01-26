@@ -96,18 +96,18 @@ export default {
 * change icon to your (with the same name, e.x. "bitcoin.svg") 
 * change cryptocurrency icon  `/swap.react/shared/pages/PartialClosure/CurrencySlider/images`
 
-### 2. как поменять ссылки на соц сети
+### 2. How to change links to social networks
     `swap.react/shared/helpers/links.js`
 * в папке `links` меняем ссылки на свои
 
-### 3.  как поменять текст
-   Для предотвращения любых конфликтов в будущем 
-   * находим в тексе интересующий нас текст, например: 
+### 3. How to change text
+   To prevent any conflicts in future (when you will update your source from our branch) 
+   * find in sourse text like this: 
         ``` <FormattedMessage id="Row313" defaultMessage="Deposit" />  ```
 
-   * в папке `swap.react/shared/localisation`
-     В зависимости от интересующего нас языка (если английский то в файле en) 
-     находим текст с интересующим нас id ("Row313")
+   * go to folder `swap.react/shared/localisation`
+     open en.js
+     find string with the same id ("Row313")
 
       ```
         {
@@ -121,20 +121,18 @@ export default {
         },
       ```
 
-   * меняем текст в `message`
+   * change text in `message` var 
 
-### 4. как добавить токен
+### 4. How to add new ERC20 token
 
-   * переходим в `swap.react/config/mainnet/erc20.js`
-   * добавляем все необходимые поля (адрес, количество знаков после запятой, название)
-   * переходим в `swap.react/swap.core/src/swap.app/constants/COINS.js` добавляем тот же токен
+   * go to `swap.react/config/mainnet/erc20.js`
+   * go to `swap.react/swap.core/src/swap.app/constants/COINS.js` and add token there too
+   * go to `shared/redux/reducers/currencies.js` and add token there too
 
-### 5. Добавление кошелька
+### 5. How to add token to "Create wallet" screen
 
-* если вы хотите, чтоб валюту нельзя было доабвить в кошелек, то 
-в `shared/redux/reducers/currencies.js` в объекте описывающем валюту ставим `addAssets: false,` или не ставим вовсе, 
-если хотите, чтоб можно было добавить то ставим тот же ключ со значением `true`
-все токены по дефолту добавляются в этот список
+* go to `shared/redux/reducers/currencies.js` and change `addAssets: false,` to `true`
+
 
 
 
