@@ -135,6 +135,7 @@ export default {
 
 * go to `shared/redux/reducers/currencies.js` and change `addAssets: false,` to `true`
 
+![](https://screenshots.wpmix.net/chrome_J9boBqgIfnB5OHeDUtnCYcZ3kPQ4oJtN.png)
 
 
 
