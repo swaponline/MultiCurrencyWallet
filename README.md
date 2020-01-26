@@ -19,8 +19,9 @@ important:
 git clone --recurse-submodules https://github.com/swaponline/swap.react.git
 ```
 
-3) Do `npm i` (windows? https://www.npmjs.com/package/windows-build-tools )<br />
+3) Do `npm i` (windows? https://www.npmjs.com/package/windows-build-tools )<br /> (node 10 required, not 12!)
 ```
+nvm use 10.18.1
 cd swap.react
 npm i
 ```
