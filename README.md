@@ -67,7 +67,7 @@ npm run build:mainnet-widget 0x4E12EB8e506Ccd1427F6b8F7faa3e88fB698EB28 jack 18 
 2. upoad to your domain (https://domain.com/build-mainnet-widget)
 3. open in browser
 
-Remember you MUST be online and you can not prosess more than one exchange at the same time. Otherwise you can use our custodian service for 1% fee and $100 setup. contact https://t.me/sashanoxon for details)
+Remember you MUST be online and you can not prosess more than one exchange at the same time. Otherwise you can use our custodian service for 1% fee and $50 setup. contact https://t.me/sashanoxon for details)
  
 ## How to change images and colors
 
