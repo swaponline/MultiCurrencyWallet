@@ -4,6 +4,7 @@ import { Switch } from 'react-router-dom'
 import { Route } from 'react-router'
 import localeEn from 'react-intl/locale-data/en'
 import localeRu from 'react-intl/locale-data/ru'
+import { getCookie } from 'helpers/utils'
 
 
 addLocaleData([...localeEn, ...localeRu])
@@ -33,15 +34,8 @@ export default class IntlProviderContainer extends Component {
             if (props.match.params.locale !== undefined) {
               currentLocale = props.match.params.locale
             } else {
-              const hashParams = props.location.hash.split('/')
-              if (hashParams.length>1) {
-                if (hashParams[0] === '#') {
-                  const localeInHash = hashParams[1].toLowerCase()
-                  if (localeInHash === 'en' || localeInHash === 'ru') {
-                    currentLocale = localeInHash
-                  }
-                }
-              }
+              var lang = getCookie('mylang') ? getCookie('mylang') : 'en';
+              currentLocale = lang.toLowerCase()
             }
 
             const messages = translations[currentLocale]
