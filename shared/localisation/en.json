@@ -6277,6 +6277,13 @@
     ]
   },
   {
+    "id": "WalletRow_Menu_Orderbook",
+    "message": "Orderbook",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
     "id": "WalletRow_Menu_Invoice",
     "message": "Invoice",
     "files": [

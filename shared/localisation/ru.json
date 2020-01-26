@@ -6302,6 +6302,13 @@
     ]
   },
   {
+    "id": "WalletRow_Menu_Orderbook",
+    "message": "Предложения",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
     "id": "WalletRow_Menu_Invoice",
     "message": "Выставить счет",
     "files": [
