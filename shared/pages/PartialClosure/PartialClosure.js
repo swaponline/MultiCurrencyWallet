@@ -1000,7 +1000,6 @@ export default class PartialClosure extends Component {
           && i.buyCurrency.toUpperCase() === getCurrency.toUpperCase()
         )
         .length === 0
-      && BigNumber(balance).isGreaterThan(0)
 
 
 
