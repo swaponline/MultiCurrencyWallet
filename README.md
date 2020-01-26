@@ -3,9 +3,9 @@
 Atomic swap cryptocurrency protocol. Live version here: https://swaponline.github.io . Atomic swap library at http://github.com/swaponline/swap.core.
 
 important: 
-1/ atomic swap feature works without backend. It means that if you place order and go offline your order go offline too (nobody see it). 
-2/ Your exchange takes 2 minutes, some mining fee (BTC and ETH).
-3/ If you want to create wallet for your token, create build and place it onto your site (as HTML) https://generator.swaponline.site/generator/ . (If you want to accept bitcoin in your crowdsale - remember you MUST be online and you can not prosess more than 1 exchange at the same time. Otherwise you can use our custodian service for 1% fee. contact https://t.me/sashanoxon for details)
+- 1/ atomic swap feature works without backend. It means that if you place order and go offline your order go offline too (nobody see it). 
+- 2/ Your exchange takes 2 minutes, some mining fee (BTC and ETH).
+- 3/ If you want to create wallet for your token, create build and place it onto your site (as HTML) https://generator.swaponline.site/generator/ . (If you want to accept bitcoin in your crowdsale - remember you MUST be online and you can not prosess more than 1 exchange at the same time. Otherwise you can use our custodian service for 1% fee. contact https://t.me/sashanoxon for details)
 
 
 ## Swap  React
