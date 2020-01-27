@@ -544,6 +544,10 @@
     "message": "Обмен"
   },
   {
+    "id": "CurrencyWallet423",
+    "message": "Купить токен"
+  },
+  {
     "id": "CurrencyWallet105",
     "message": "Активировать аккаунт"
   },
@@ -3142,7 +3146,7 @@
   },
   {
     "id": "partial5323",
-    "message": "Приобрести",
+    "message": "Приобрести токен",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -6297,6 +6301,13 @@
   {
     "id": "WalletRow_Menu_Exchange",
     "message": "Обмен",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "WalletRow_Menu_Buy",
+    "message": "Buy token",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]

@@ -1,0 +1,74 @@
+.HowItWorksTitle {
+  font-family: 'Inter-Bold', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 48px;
+  line-height: normal;
+  margin-bottom: 65px;
+  text-align: center;
+  color: #000;
+}
+
+.HowItWorksList {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.HowItWorksItem {
+  width: 250px;
+}
+
+.HowItWorksStep {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  margin-bottom: 15px;
+  display: block;
+  font-family: 'Inter-Bold', sans-serif;
+  line-height: 32px;
+}
+.HowItWorksInfo {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 23px;
+  opacity: 0.6;
+}
+.HowItWorksContainer {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 2%;
+}
+
+@include media-tablet-landscape-and-lower {
+  .HowItWorksList {
+    justify-content: center;
+  }
+  .HowItWorksItem {
+    margin: 20px 60px;
+  }
+  .HowItWorksContainer {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0;
+  }
+}
+
+@include media-mobile {
+  .HowItWorksList {
+    flex-direction: column;
+  }
+  .HowItWorksContainer {
+    width: 100%;
+  }
+  .HowItWorksTitle {
+    font-size: 36px;
+    margin-bottom: 30px;
+  }
+  .HowItWorksItem {
+    width: 100%;
+    padding: 20px;
+    margin: 10px 0;
+  }
+}

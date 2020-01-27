@@ -33,6 +33,7 @@ export default class DropDown extends Component {
     isToggleActive: PropTypes.bool.isRequired, // @toggle
     toggleOpen: PropTypes.func.isRequired, // @toggle
     toggleClose: PropTypes.func.isRequired, // @toggle
+    notIteractable: PropTypes.bool,
   }
 
   constructor({ initialValue, selectedValue }) {
@@ -128,7 +129,7 @@ export default class DropDown extends Component {
   }
 
   render() {
-    const { className, items, isToggleActive, selectedValue, name, placeholder, label, tooltip, id } = this.props
+    const { className, items, isToggleActive, selectedValue, name, placeholder, label, tooltip, id, notIteractable } = this.props
     const { inputValue, infoAboutCurrency, error } = this.state
 
     const dropDownStyleName = cx('dropDown', { 'active': isToggleActive })
@@ -153,8 +154,10 @@ export default class DropDown extends Component {
         }
       >
         <div styleName={dropDownStyleName} className={className}>
-          <div styleName="selectedItem" onClick={this.toggle}>
-            <div styleName="arrow arrowDropDown" />
+          <div styleName={notIteractable? "selectedItem selectedItem_disableIteract" : "selectedItem"} onClick={notIteractable ? () => null : this.toggle}>
+            {
+              !notIteractable && <div styleName="arrow arrowDropDown" />
+            }
             {isToggleActive ? (
               <Input
                 styleName="searchInput"

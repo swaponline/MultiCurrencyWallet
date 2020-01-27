@@ -14,6 +14,7 @@ import About from 'pages/About/About'
 import Wallet from 'pages/Wallet/Wallet'
 import Currency from 'pages/Currency/Currency'
 import PartialClosure from 'pages/PartialClosure/PartialClosure'
+import PointOfSell from 'pages/PointOfSell/PointOfSell'
 import CurrencyWallet from 'pages/CurrencyWallet/CurrencyWallet'
 import IEO from 'pages/IEO/IEO'
 import BtcMultisignProcessor from 'pages/Multisign/Btc/Btc'
@@ -33,8 +34,12 @@ const routes = (
 
       <Route path={`${localisePrefix}${links.home}:buy-:sell/:orderId`} component={Home} />
       <Route path={`${localisePrefix}${links.home}:buy-:sell`} component={Home} />
+
       <Route path={`${localisePrefix}${links.exchange}/:sell-to-:buy`} component={PartialClosure} />
       <Route path={`${localisePrefix}${links.exchange}`} component={PartialClosure} />
+
+      <Route path={`${localisePrefix}${links.pointOfSell}/:sell-to-:buy`} component={PointOfSell} />
+      <Route path={`${localisePrefix}${links.pointOfSell}`} component={PointOfSell} />
 
       <Route path={`${localisePrefix}${links.aboutUs}`} component={About} />
       <Route path={`${localisePrefix}${links.send}/:currency/:address/:amount`} component={Wallet} />

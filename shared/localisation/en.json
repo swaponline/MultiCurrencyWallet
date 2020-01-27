@@ -548,6 +548,10 @@
     "message": "Exchange"
   },
   {
+    "id": "CurrencyWallet423",
+    "message": "Buy TOKEN"
+  },
+  {
     "id": "CurrencyWallet105",
     "message": "Activate account"
   },
@@ -3060,7 +3064,7 @@
   },
   {
     "id": "partial5323",
-    "message": "Buy now",
+    "message": "Buy token",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -6277,6 +6281,13 @@
     ]
   },
   {
+    "id": "WalletRow_Menu_Buy",
+    "message": "Buy token",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
     "id": "WalletRow_Menu_Invoice",
     "message": "Invoice",
     "files": [
@@ -6516,7 +6527,7 @@
   },
   {
     "id": "partial2378",
-    "message": "wallet",
+    "message": "Wallet",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
