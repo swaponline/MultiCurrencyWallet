@@ -12,6 +12,7 @@
   border-radius: 2px;
   font-family: 'Inter-Bold', sans-serif;
   @include no-user-select;
+  white-space: nowrap;
   transition:
     background-color 0.23s ease,
     color 0.23s ease;

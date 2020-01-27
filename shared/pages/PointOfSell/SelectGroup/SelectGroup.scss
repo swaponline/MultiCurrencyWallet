@@ -1,0 +1,154 @@
+.groupField {
+  width: 100%;
+  display: inline-flex;
+  height: 68px;
+  margin-bottom: 30px;
+  vertical-align: center;
+  // box-shadow: rgba(#000, 0.08) 0 3px 9px 0;
+  border-radius: 6px;
+  text-align: center;
+  position: relative;
+}
+
+.smallTooltip {
+  > span {
+    position: absolute;
+    left: 100%;
+    top: 5px;
+    display: flex;
+    justify-content: center;
+    span {
+      font-size: 10px;
+    }
+  }
+}
+
+.textUsd {
+  color: #828795;
+  position: absolute;
+  left: 10px;
+  font-family: 'Roboto Mono', monospace;
+  bottom: -14px;
+  top: auto;
+  background: #fff;
+  right: auto;
+  padding: 0 10px;
+  font-size: 13px;
+}
+
+.inputRoot {
+  min-width: 0;
+  flex: auto 1 1;
+  input {
+    height: 68px;
+    font-size: 24px;
+  }
+}
+
+.textForNull {
+  display: none;
+}
+
+.inputContainer {
+  border-radius: 6px 0 0 6px !important;
+  box-shadow: none !important;
+}
+
+.textForNull {
+  font-size: 10px;
+  position: absolute;
+  left: -1px;
+  margin-top: 70px;
+  width: 350px;
+}
+
+.balance {
+  position: absolute;
+  left: -1px;
+  margin-top: 70px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.red {
+  color: red,
+}
+
+input:disabled {
+  background-color:#eee;
+}
+
+.selectGroupContainer {
+  position: relative;
+}
+
+.currencySelect {
+  border-radius: 0 6px 6px 0 !important;
+  background: none;
+  box-shadow: none;
+  position: absolute;
+  right: 0px;
+  top: 6px;
+
+  > div:nth-child(2) {
+    margin-top: 10px;
+    display: block;
+    position: absolute;
+    top: 75px;
+    border: none;
+    width: auto;
+    z-index: 1111112;
+    border-radius: 0;
+    box-shadow: none;
+    div {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+      border: none;
+    }
+  }
+  input {
+    border: none;
+    height: 69px;
+    border-bottom: 1px solid #000;
+    font-size: 16px;
+    padding-left: 2px;
+  }
+}
+
+.currencySelect.dropDown {
+  width: 100%;
+  border: 1px solid #000;
+  top: 0px;
+  z-index: 1;
+  background: #fff;
+  height: 375px;
+  border-radius: 3px;
+}
+
+@include media-mobile {
+  .currencySelect {
+    width: 130px;
+    height: 48px;
+    input {
+      font-size: 13px;
+    }
+  }
+  .textUsd {
+    font-size: 14px;
+  }
+  .groupField {
+    height: 60px;
+  }
+  .inputRoot {
+    input {
+      padding-left: 10px;
+      padding-right: 120px;
+    }
+  }
+  .textUsd {
+    font-size: 9px;
+    left: 10px;
+    bottom: -4px;
+  }
+}
