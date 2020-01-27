@@ -987,8 +987,19 @@ export default class PartialClosure extends Component {
 
     const ifHereIsKindaOrderBook
       = haveCurrency === 'btc'
-      && allOrders.filter(i => i.buyCurrency === 'btc' && i.sellCurrency === getCurrency).length > 0
-      && allOrders.filter(i => i.sellCurrency === 'btc' && i.buyCurrency === getCurrency).length === 0
+      && allOrders
+        .filter(i => 
+          i.buyCurrency.toUpperCase() === 'BTC' 
+          && i.sellCurrency.toUpperCase() === getCurrency.toUpperCase()
+          && i.isMy !== true
+        )
+        .length > 0
+      && allOrders
+        .filter(i => 
+          i.sellCurrency.toUpperCase() === 'BTC' 
+          && i.buyCurrency.toUpperCase() === getCurrency.toUpperCase()
+        )
+        .length === 0
 
 
 
