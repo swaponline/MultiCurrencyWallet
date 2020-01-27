@@ -254,6 +254,7 @@ export default class CurrencyWallet extends Component {
       slidesToScroll: 1
     };
 
+
     return (
       <div styleName="root">
         <PageSeo
@@ -270,23 +271,23 @@ export default class CurrencyWallet extends Component {
           <div styleName="currencyWalletWrapper">
             <div styleName="currencyWalletBalance">
               {
-                !isFetching && txHistory ? 
+                txHistory ? 
                   <BalanceForm 
-                  currencyBalance={balance} 
-                  usdBalance={currencyUsdBalance} 
-                  changePercent={changePercent}
-                  handleReceive={this.handleReceive} 
-                  handleWithdraw={this.handleWithdraw} 
-                  currency={currency.toLowerCase()} 
+                    currencyBalance={balance} 
+                    usdBalance={currencyUsdBalance} 
+                    changePercent={changePercent}
+                    handleReceive={this.handleReceive} 
+                    handleWithdraw={this.handleWithdraw} 
+                    currency={currency.toLowerCase()} 
                 /> : <ContentLoader leftSideContent />
               }
             </div>
             <div styleName="currencyWalletActivityWrapper">
-              {/* <div styleName="currencyWalletActivity">
+              <div styleName="currencyWalletActivity">
                 {swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} />}
-              </div> */}
+              </div>
               {
-                !isFetching && txHistory ? (
+                txHistory ? (
                   <div styleName="currencyWalletActivity">
                     <h3>
                       <FormattedMessage id="historyActivity" defaultMessage="Активность" />
