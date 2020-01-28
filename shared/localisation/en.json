@@ -6058,6 +6058,13 @@
     ]
   },
   {
+    "id": "invoiceModal_Contact",
+    "message": "Your contact (emain or @nickname)",
+    "files": [
+      "shared/components/modals/InvoiceModal/InvoiceModal.js"
+    ]
+  },
+  {
     "id": "invoiceModal_Address",
     "message": "Address for invoicing",
     "files": [
@@ -6067,6 +6074,20 @@
   {
     "id": "invoiceModal_Amount",
     "message": "Amount",
+    "files": [
+      "shared/components/modals/InvoiceModal/InvoiceModal.js"
+    ]
+  },
+  {
+    "id": "invoiceModal_Amount_Dollar",
+    "message": "Amount in USD",
+    "files": [
+      "shared/components/modals/InvoiceModal/InvoiceModal.js"
+    ]
+  },
+  {
+    "id": "invoiceModal_Amount_Rub",
+    "message": "Amount in RUB",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
@@ -6283,6 +6304,13 @@
   {
     "id": "WalletRow_Menu_Buy",
     "message": "Buy token",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "WalletRow_Menu_Orderbook",
+    "message": "Orderbook",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]

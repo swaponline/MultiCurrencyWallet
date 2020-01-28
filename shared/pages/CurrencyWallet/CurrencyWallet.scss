@@ -20,11 +20,12 @@
   margin-top: 40px;
 }
 
-.currencyWalletActivity {
+.currencyWalletActivity,
+.currencyWalletSwapHistory {
   background: #fff;
   box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08), 0px 1px 4px rgba(0, 0, 0, 0.08);
   border-radius: 4px;
-  padding: 20px;
+  padding: 25px;
   margin-top: 40px;
   width: 100%;
   padding-bottom: 70px;
@@ -35,6 +36,10 @@
     font-weight: bold;
     margin-bottom: 10px;
   }
+}
+
+.currencyWalletSwapHistory {
+  padding-bottom: 5px;
 }
 
 

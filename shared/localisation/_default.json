@@ -6046,6 +6046,20 @@
     ]
   },
   {
+    "id": "invoiceModal_Amount_Dollar",
+    "message": "Сумма в USD",
+    "files": [
+      "shared/components/modals/InvoiceModal/InvoiceModal.js"
+    ]
+  },
+  {
+    "id": "invoiceModal_Amount_Rub",
+    "message": "Сумма в RUB",
+    "files": [
+      "shared/components/modals/InvoiceModal/InvoiceModal.js"
+    ]
+  },
+  {
     "id": "invoiceModal_Error",
     "message": "{errorName} {currency}:{br}{errorMessage}",
     "files": [

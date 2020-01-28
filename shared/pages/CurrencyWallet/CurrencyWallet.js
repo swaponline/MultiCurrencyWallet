@@ -270,23 +270,27 @@ export default class CurrencyWallet extends Component {
           <div styleName="currencyWalletWrapper">
             <div styleName="currencyWalletBalance">
               {
-                !isFetching && txHistory ? 
+                txHistory ? 
                   <BalanceForm 
-                  currencyBalance={balance} 
-                  usdBalance={currencyUsdBalance} 
-                  changePercent={changePercent}
-                  handleReceive={this.handleReceive} 
-                  handleWithdraw={this.handleWithdraw} 
-                  currency={currency.toLowerCase()} 
+                    currencyBalance={balance} 
+                    usdBalance={currencyUsdBalance} 
+                    changePercent={changePercent}
+                    handleReceive={this.handleReceive} 
+                    handleWithdraw={this.handleWithdraw} 
+                    currency={currency.toLowerCase()} 
                 /> : <ContentLoader leftSideContent />
               }
             </div>
             <div styleName="currencyWalletActivityWrapper">
-              {/* <div styleName="currencyWalletActivity">
-                {swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} />}
-              </div> */}
               {
-                !isFetching && txHistory ? (
+                swapHistory.filter(item => item.step >= 4).length > 0 ? (
+                  <div styleName="currencyWalletSwapHistory">
+                    <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} />
+                  </div>
+                ) : ''
+              }
+              {
+                txHistory ? (
                   <div styleName="currencyWalletActivity">
                     <h3>
                       <FormattedMessage id="historyActivity" defaultMessage="Активность" />

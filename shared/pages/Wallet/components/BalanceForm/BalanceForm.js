@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react'
 import CSSModules from 'react-css-modules'
 
 import styles from 'pages/Wallet/Wallet.scss'
-import NewButton from 'components/controls/NewButton/NewButton'
+import Button from 'components/controls/Button/Button'
 import { BigNumber } from 'bignumber.js'
 import config from 'app-config'
 import { FormattedMessage } from 'react-intl'
@@ -50,20 +50,20 @@ function BalanceForm({ usdBalance, currencyBalance, handleReceive, handleWithdra
         </div>
       </div>
       <div styleName="yourBalanceBottom">
-        <Fragment>
-          <NewButton blue id="depositBtn" onClick={() => handleReceive('Deposit')}>
+        <Fragment>            
+          <Button blue id="depositBtn" onClick={() => handleReceive('Deposit')}>
             <FormattedMessage id="YourtotalbalanceDeposit" defaultMessage="Пополнить" />
-          </NewButton>
+          </Button>
         </Fragment>
         <Fragment>
-          <NewButton blue disabled={!currencyBalance} id="sendBtn" onClick={() => handleWithdraw('Send')}>
+          <Button blue disabled={!currencyBalance} id="sendBtn" onClick={() => handleWithdraw('Send')}>
             <FormattedMessage id="YourtotalbalanceSend" defaultMessage="Отправить" />
-          </NewButton>
+          </Button>
         </Fragment>
         {isWidgetBuild && !config.isFullBuild &&
-          <NewButton brand id="exchangeBtn" onClick={() => handleExchange()}>
-            <FormattedMessage id="CurrencyWallet423" defaultMessage="Buy TOKEN" />
-          </NewButton>
+          <Button brand id="exchangeBtn" onClick={() => handleExchange()}>
+            Exchange
+          </Button>
         }
       </div>
     </div>

@@ -22,7 +22,7 @@ import config from 'app-config'
 import { withRouter } from 'react-router'
 import BalanceForm from './components/BalanceForm/BalanceForm'
 import CurrenciesList from './CurrenciesList'
-import NewButton from 'components/controls/NewButton/NewButton'
+import Button from 'components/controls/Button/Button'
 import ContentLoader from '../../components/loaders/ContentLoader/ContentLoader'
 
 
@@ -171,15 +171,7 @@ export default class Wallet extends Component {
     if (url.includes('withdraw')) {
       this.handleWithdraw(params)
     }
-    //this.getInfoAboutCurrency();
     this.setLocalStorageItems();
-  }
-
-  getInfoAboutCurrency = async () => {
-    const { currencies } = this.props;
-    const currencyNames = currencies.map(({ name }) => name)
-
-   await actions.user.getInfoAboutCurrency(currencyNames);
   }
 
   handleNavItemClick = (index) => {
@@ -408,12 +400,12 @@ export default class Wallet extends Component {
           </div>
           {(isWidgetBuild && activeView === 0) &&
             <div styleName="keysExportImport">
-              <NewButton gray onClick={this.handleShowKeys}>
+              <Button gray onClick={this.handleShowKeys}>
                 <FormattedMessage id="WalletPage_ExportKeys" defaultMessage="Показать ключи" />
-              </NewButton>
-              <NewButton gray onClick={this.handleImportKeys}>
+              </Button>
+              <Button gray onClick={this.handleImportKeys}>
                 <FormattedMessage id="WalletPage_ImportKeys" defaultMessage="Импортировать ключи" />
-              </NewButton>
+              </Button>
             </div>
           }
         </section>
