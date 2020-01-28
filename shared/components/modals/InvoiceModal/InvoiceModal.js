@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import helpers, { constants } from 'helpers'
+import helpers, { request, constants } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'sw-valuelink'
 import { connect } from 'redaction'
@@ -92,19 +92,25 @@ export default class InvoiceModal extends React.Component {
       label: '',
       currentDecimals,
       error: false,
-      infoAboutCurrency
+      infoAboutCurrency,
+      rubRates: 62.34,
     }
+
+    this.getRubRates()
   }
 
-  componentDidMount() { }
-
-  componentWillUpdate(nextProps, nextState) {
-    // if(this.nextProps.amount !== this.nextState.amount) {
-    //   this.setState({
-    //     amountUSD: amount * 2
-    //   })
-    // }
-   }
+  getRubRates() {
+    request.get('https://www.cbr-xml-daily.ru/daily_json.js', {
+      cacheResponse: 60*60*1000,
+    }).then((rates) => {
+      if (rates && rates.Valute && rates.Valute.USD) {
+        const rubRates = rates.Valute.USD.Value;
+        this.setState({
+          rubRates,
+        })
+      }
+    })
+  }
 
   handleSubmit = async () => {
     const { name, data } = this.props
@@ -177,26 +183,32 @@ export default class InvoiceModal extends React.Component {
   }
 
   handleDollarValue = (value) => {
+    const { rubRates, currentDecimals } = this.state
+
     this.setState({ 
       amountUSD: value,
-      amountRUB: value * 62.34 || '',
-      amount: value / this.state.infoAboutCurrency.price_usd || ''
+      amountRUB: (value) ? (value * rubRates).toFixed(0) : '',
+      amount: (value) ? (value / this.state.infoAboutCurrency.price_usd).toFixed(currentDecimals) : '',
     })
   }
 
   handleRubValue = (value) => {
+    const { rubRates, currentDecimals } = this.state
+
     this.setState({
       amountRUB: value,
-      amountUSD: value / 62.34 || '',
-      amount: value / this.state.infoAboutCurrency.price_usd / 62.34 || ''
+      amountUSD: (value) ? (value / rubRates).toFixed(2) : '',
+      amount: (value) ? (value / this.state.infoAboutCurrency.price_usd / rubRates).toFixed(currentDecimals) : '',
     })
   }
 
   handleAmount = (value) => {
+    const { rubRates, currentDecimals} = this.state
+
     this.setState({
-      amountRUB: value * this.state.infoAboutCurrency.price_usd * 62.34 || '',
-      amountUSD: value * this.state.infoAboutCurrency.price_usd || '',
-      amount: value
+      amountRUB: (value) ? (value * this.state.infoAboutCurrency.price_usd * rubRates).toFixed(0) : '',
+      amountUSD: (value) ? (value * this.state.infoAboutCurrency.price_usd).toFixed(2) : '',
+      amount: value,
     })
   }
 
@@ -225,7 +237,6 @@ export default class InvoiceModal extends React.Component {
       isShipped,
       minus,
       openScanCam,
-      currentDecimals,
       error,
       infoAboutCurrency
     } = this.state
