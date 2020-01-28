@@ -26,6 +26,8 @@ import Button from 'components/controls/Button/Button'
 import ContentLoader from '../../components/loaders/ContentLoader/ContentLoader'
 
 
+const isWidgetBuild = (config && config.isWidget)
+
 const walletNav = [
   { key: 'My balances', text: <FormattedMessage id="MybalanceswalletNav" defaultMessage="Мой баланс" /> },
   { key: 'Transactions', text: <FormattedMessage id="TransactionswalletNav" defaultMessage="Активность" /> }
@@ -241,7 +243,12 @@ export default class Wallet extends Component {
 
   handleGoExchange = () => {
     const { history, intl: { locale } } = this.props
-    history.push(localisedUrl(locale, links.exchange))
+    
+    if (isWidgetBuild && !config.isFullBuild) {
+      history.push(localisedUrl(locale, links.pointOfSell))
+    } else {
+      history.push(localisedUrl(locale, links.exchange))
+    }
   }
 
   handleEditTitle = () => {
@@ -310,7 +317,6 @@ export default class Wallet extends Component {
     let usdBalance = 0;
     let changePercent = 0;
 
-    const isWidgetBuild = (config && config.isWidget)
     const widgetCurrencies = (isWidgetBuild) ? ['BTC', 'ETH', config.erc20token.toUpperCase()] : []
 
     let tableRows = allData.filter(({ currency, balance }) => !hiddenCoinsList.includes(currency) || balance > 0)

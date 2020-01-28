@@ -342,6 +342,11 @@ export default class Row extends Component {
     history.push(localisedUrl(locale, '/exchange'))
   }
 
+  goToBuy = () => {
+    const { history, intl: { locale }, currency } = this.props
+    history.push(localisedUrl(locale, `${links.pointOfSell}/btc-to-${currency.currency.toLowerCase()}`))
+  }
+
 
   deleteThisSwap = () => {
     actions.core.forgetOrders(this.props.decline[0])
@@ -431,6 +436,13 @@ export default class Row extends Component {
         title: <FormattedMessage id='WalletRow_Menu_Exchange' defaultMessage='Exchange' />,
         action: this.goToExchange,
         disabled: false
+      },
+      {
+        id: 1005,
+        title: <FormattedMessage id='WalletRow_Menu_Buy' defaultMessage='Buy' />,
+        action: this.goToBuy,
+        disabled: false,
+        hidden: this.props.currency.currency === 'BTC' ? true : false
       },
       {
         id: 1003,

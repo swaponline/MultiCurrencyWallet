@@ -46,7 +46,9 @@ input, textarea {
   }
 }
 
-
+input[type=number] {
+  -moz-appearance:textfield;
+}
 .rightEl {
   position: absolute;
   top: 13px;

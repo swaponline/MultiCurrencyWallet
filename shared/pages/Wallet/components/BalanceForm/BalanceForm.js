@@ -9,36 +9,41 @@ import { FormattedMessage } from 'react-intl'
 
 
 function BalanceForm({ usdBalance, currencyBalance, handleReceive, handleWithdraw, handleExchange, currency, changePercent }) {
-  const [activeCurrency, setActiveCurrency] = useState('usd');
+  const [activeCurrency, setActiveCurrency] = useState('usd')
   const isWidgetBuild = (config && config.isWidget)
 
+  // eslint-disable-next-line default-case
   switch (currency) {
     case 'btc (sms-protected)': currency = 'BTC SMS'
-      break;
+      break
     case 'btc (multisig)': currency = 'BTC MULTISIG'
-      break;
+      break
   }
 
   return (
-    <div styleName={`yourBalance`}>
+    <div styleName="yourBalance">
       <div styleName="yourBalanceTop">
         <p styleName="yourBalanceDescr">
           <FormattedMessage id="Yourtotalbalance" defaultMessage="Ваш общий баланс" />
         </p>
         <div styleName="yourBalanceValue">
-          {activeCurrency === 'usd' ? <p>{!isNaN(usdBalance) ? 
-            BigNumber(usdBalance).dp(2, BigNumber.ROUND_FLOOR).toString() : ''}</p> : 
-            <p>
-              {BigNumber(currencyBalance).dp(5, BigNumber.ROUND_FLOOR).toString()}
-              {changePercent ? <span styleName={changePercent > 0 ? 'green' : 'red'}>{`${changePercent > 0 ? `+${changePercent}` : `${changePercent}`}`}%</span> : ''}
-            </p>
+          {activeCurrency === 'usd'
+            // eslint-disable-next-line no-restricted-globals
+            ? <p>{!isNaN(usdBalance) ? BigNumber(usdBalance).dp(2, BigNumber.ROUND_FLOOR).toString() : ''}</p>
+            : (
+              <p>
+                {BigNumber(currencyBalance).dp(5, BigNumber.ROUND_FLOOR).toString()}
+                {changePercent ? <span styleName={changePercent > 0 ? 'green' : 'red'}>{`${changePercent > 0 ? `+${changePercent}` : `${changePercent}`}`}%</span> : ''}
+              </p>
+            )
           }
         </div>
         <div styleName="yourBalanceCurrencies">
           <button styleName={activeCurrency === 'usd' && 'active'} onClick={() => setActiveCurrency('usd')}>
+            {/* // eslint-disable-next-line reactintl/contains-hardcoded-copy */}
             usd
           </button>
-          <span></span>
+          <span />
           <button styleName={activeCurrency === 'btc' && 'active'} onClick={() => setActiveCurrency('btc')}>
             {currency}
           </button>
@@ -62,7 +67,7 @@ function BalanceForm({ usdBalance, currencyBalance, handleReceive, handleWithdra
         }
       </div>
     </div>
-  );
+  )
 }
 
 export default CSSModules(BalanceForm, styles, { allowMultiple: true })

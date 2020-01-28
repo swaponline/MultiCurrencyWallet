@@ -1,6 +1,7 @@
 const linksManager = {
   home: '/',
   exchange: '/exchange',
+  pointOfSell: '/buy',
   history: '/history',
   createWallet: '/createWallet',
 

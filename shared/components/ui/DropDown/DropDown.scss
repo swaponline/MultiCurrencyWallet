@@ -149,6 +149,12 @@
   font-weight: 500;
   border-color: grey;
   @include no-user-select;
+
+  &_disableIteract{
+    cursor: default;
+    padding-right: 22px;
+  }
+
   img {
     display: none;
   }
