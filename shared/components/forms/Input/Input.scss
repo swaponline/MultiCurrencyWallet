@@ -29,6 +29,10 @@ input, textarea {
   background-color: #fff;
   border-radius: 6px;
 
+  &.withMargin {
+    margin-bottom: 25px;
+  }
+
   &.disabled {
     background-color: #fafafa;
   }
@@ -42,7 +46,9 @@ input, textarea {
   }
 }
 
-
+input[type=number] {
+  -moz-appearance:textfield;
+}
 .rightEl {
   position: absolute;
   top: 13px;
@@ -55,7 +61,8 @@ input, textarea {
 }
 
 .qr {
-  top: 20px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .input {

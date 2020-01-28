@@ -342,9 +342,19 @@ export default class Row extends Component {
     history.push(localisedUrl(locale, '/exchange'))
   }
 
+  goToBuy = () => {
+    const { history, intl: { locale }, currency } = this.props
+    history.push(localisedUrl(locale, `${links.pointOfSell}/btc-to-${currency.currency.toLowerCase()}`))
+  }
+
 
   deleteThisSwap = () => {
     actions.core.forgetOrders(this.props.decline[0])
+  }
+
+  goToOrderBook = () => {
+    const { history, intl: { locale }, item: { currency, balance } } = this.props
+    history.push(localisedUrl(locale, `/${currency.toLowerCase()}-btc`))
   }
 
   hideCurrency = () => {
@@ -428,6 +438,13 @@ export default class Row extends Component {
         disabled: false
       },
       {
+        id: 1005,
+        title: <FormattedMessage id='WalletRow_Menu_Buy' defaultMessage='Buy' />,
+        action: this.goToBuy,
+        disabled: false,
+        hidden: this.props.currency.currency === 'BTC' ? true : false
+      },
+      {
         id: 1003,
         title: <FormattedMessage id='WalletRow_Menu_History' defaultMessage='History' />,
         action: this.goToHistory,
@@ -452,6 +469,14 @@ export default class Row extends Component {
 
     if (currencyView == 'BTC (Multisig)') currencyView = 'BTC'
     if (currencyView == 'BTC (SMS-Protected)') currencyView = 'BTC'
+
+    if(currencyView !== 'BTC') {
+      dropDownMenuItems.push({
+        id: 1005,
+        title: <FormattedMessage id='WalletRow_Menu_Orderbook' defaultMessage='Orderbook' />,
+        action: this.goToOrderBook
+      })
+    }
 
     if (['BTC','ETH'].includes(currencyView) && !isWidgetBuild) {
       dropDownMenuItems.push({

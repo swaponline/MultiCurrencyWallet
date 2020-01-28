@@ -22,9 +22,11 @@ import config from 'app-config'
 import { withRouter } from 'react-router'
 import BalanceForm from './components/BalanceForm/BalanceForm'
 import CurrenciesList from './CurrenciesList'
-import NewButton from 'components/controls/NewButton/NewButton'
+import Button from 'components/controls/Button/Button'
 import ContentLoader from '../../components/loaders/ContentLoader/ContentLoader'
 
+
+const isWidgetBuild = (config && config.isWidget)
 
 const walletNav = [
   { key: 'My balances', text: <FormattedMessage id="MybalanceswalletNav" defaultMessage="Мой баланс" /> },
@@ -169,15 +171,7 @@ export default class Wallet extends Component {
     if (url.includes('withdraw')) {
       this.handleWithdraw(params)
     }
-    //this.getInfoAboutCurrency();
     this.setLocalStorageItems();
-  }
-
-  getInfoAboutCurrency = async () => {
-    const { currencies } = this.props;
-    const currencyNames = currencies.map(({ name }) => name)
-
-   await actions.user.getInfoAboutCurrency(currencyNames);
   }
 
   handleNavItemClick = (index) => {
@@ -249,7 +243,12 @@ export default class Wallet extends Component {
 
   handleGoExchange = () => {
     const { history, intl: { locale } } = this.props
-    history.push(localisedUrl(locale, links.exchange))
+    
+    if (isWidgetBuild && !config.isFullBuild) {
+      history.push(localisedUrl(locale, links.pointOfSell))
+    } else {
+      history.push(localisedUrl(locale, links.exchange))
+    }
   }
 
   handleEditTitle = () => {
@@ -318,7 +317,6 @@ export default class Wallet extends Component {
     let usdBalance = 0;
     let changePercent = 0;
 
-    const isWidgetBuild = (config && config.isWidget)
     const widgetCurrencies = (isWidgetBuild) ? ['BTC', 'ETH', config.erc20token.toUpperCase()] : []
 
     let tableRows = allData.filter(({ currency, balance }) => !hiddenCoinsList.includes(currency) || balance > 0)
@@ -402,12 +400,12 @@ export default class Wallet extends Component {
           </div>
           {(isWidgetBuild && activeView === 0) &&
             <div styleName="keysExportImport">
-              <NewButton gray onClick={this.handleShowKeys}>
+              <Button gray onClick={this.handleShowKeys}>
                 <FormattedMessage id="WalletPage_ExportKeys" defaultMessage="Показать ключи" />
-              </NewButton>
-              <NewButton gray onClick={this.handleImportKeys}>
+              </Button>
+              <Button gray onClick={this.handleImportKeys}>
                 <FormattedMessage id="WalletPage_ImportKeys" defaultMessage="Импортировать ключи" />
-              </NewButton>
+              </Button>
             </div>
           }
         </section>

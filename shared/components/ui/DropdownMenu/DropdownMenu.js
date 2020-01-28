@@ -56,7 +56,7 @@ export default class DropdownMenu extends Component {
 			items,
 			className,
             size,
-            disabled
+			disabled
 		} = this.props;
 
 		const {open} = this.state;
@@ -68,7 +68,7 @@ export default class DropdownMenu extends Component {
                 </button>
 				<div styleName={classNames('menu', className, {open})}>
 					{
-						items.map((item, index) => (
+						items.map((item, index) => item.hidden ? null : (
 							<div key={index} styleName="dropdownMenuItem">
                                 <button disabled={item.disabled} key={shortid.generate()} type="button" onClick={() => this.handleItemClick(item.action)}>{item.title}</button>
                             </div>
