@@ -218,6 +218,8 @@ export default class InvoiceModal extends React.Component {
       address,
       destination,
       amount,
+      amountRUB,
+      amountUSD,
       contact,
       label,
       isShipped,
@@ -242,7 +244,6 @@ export default class InvoiceModal extends React.Component {
     const isDisabled =
       !address || !amount || isShipped || !destination || !contact
       || !this.addressIsCorrect()
-      || BigNumber(amount).dp() > currentDecimals
 
 
     const localeLabel = defineMessages({
