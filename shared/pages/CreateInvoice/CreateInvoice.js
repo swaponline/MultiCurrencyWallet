@@ -62,7 +62,7 @@ export default class CreateInvoice extends PureComponent {
       const address = data[type].address
 
       actions.modals.open(constants.modals.InvoiceModal, {
-        currency: type,
+        currency: type.toUpperCase(),
         toAddress: wallet,
         address,
         disableClose: true,

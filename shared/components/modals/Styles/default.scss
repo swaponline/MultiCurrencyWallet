@@ -78,7 +78,7 @@
 .group {
   width: 100%;
   display: inline-flex;
-  height: 60px;
+  min-height: 60px;
   border-radius: 6px;
   text-align: center;
 }
