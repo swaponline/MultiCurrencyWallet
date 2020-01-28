@@ -151,7 +151,7 @@ const getInfoAboutCurrency = (currencyNames) =>
       cacheResponse: 60*60*1000, // кеш 1 час
     }).then((data) => {
       data.map(currencyInfoItem => {
-        if (!currencyNames || currencyNames.includes(currencyInfoItem.symbol)) {
+        if (currencyNames.includes(currencyInfoItem.symbol)) {
           switch(currencyInfoItem.symbol) {
             case 'BTC': {
               reducers.user.setInfoAboutCurrency({name: 'btcData', infoAboutCurrency: currencyInfoItem})
