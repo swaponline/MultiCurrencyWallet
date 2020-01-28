@@ -64,12 +64,14 @@ export default class Input extends Component {
   render() {
     const {
       className, inputContainerClassName, inputClassName, errorStyle, openScan, qr,
-      valueLink: { error }, valueLink, dontDisplayError, inputCustomStyle,
+      valueLink: { error }, valueLink, dontDisplayError, inputCustomStyle, withMargin,
       multiline, focusOnInit, disabled, readOnly, type, usd, srollingForm, ...rest
     } = this.props
 
+
     const inputContainerStyleName = cx('inputContainer', {
       'withError': error,
+      'withMargin' : withMargin
     })
 
     const focusEvent = !isMobile ? {} : {

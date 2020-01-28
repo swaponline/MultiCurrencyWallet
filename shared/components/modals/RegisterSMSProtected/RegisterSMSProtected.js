@@ -110,7 +110,9 @@ export default class RegisterSMSProtected extends React.Component {
         {(step === 'enterPhone') &&
           <Fragment>
             <div styleName="highLevel">
-              <label styleName="label">Your phone:</label>
+              <FieldLabel label>
+                  <FormattedMessage id="registerSMSModalReady" defaultMessage="Your phone:" />
+              </FieldLabel>
               <span style={{ marginBottom: '20px' }} >
                 <Input styleName="input inputMargin25" valueLink={linked.phone} placeholder={`Enter your phone`} focusOnInit />
               </span>

@@ -254,7 +254,6 @@ export default class CurrencyWallet extends Component {
       slidesToScroll: 1
     };
 
-
     return (
       <div styleName="root">
         <PageSeo
@@ -283,9 +282,13 @@ export default class CurrencyWallet extends Component {
               }
             </div>
             <div styleName="currencyWalletActivityWrapper">
-              <div styleName="currencyWalletActivity">
-                {swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} />}
-              </div>
+              {
+                swapHistory.filter(item => item.step >= 4).length > 0 ? (
+                  <div styleName="currencyWalletSwapHistory">
+                    <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} />
+                  </div>
+                ) : ''
+              }
               {
                 txHistory ? (
                   <div styleName="currencyWalletActivity">

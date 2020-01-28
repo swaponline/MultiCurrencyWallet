@@ -29,6 +29,10 @@ input, textarea {
   background-color: #fff;
   border-radius: 6px;
 
+  &.withMargin {
+    margin-bottom: 25px;
+  }
+
   &.disabled {
     background-color: #fafafa;
   }
@@ -55,7 +59,8 @@ input, textarea {
 }
 
 .qr {
-  top: 20px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .input {
