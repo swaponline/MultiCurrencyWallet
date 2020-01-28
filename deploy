@@ -1,6 +1,7 @@
 #!/bin/sh
 
 # build
+git pull
 npm run build:mainnet https://swaponline.github.io/
 
 # update repo or clone
