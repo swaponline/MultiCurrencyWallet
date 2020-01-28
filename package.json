@@ -53,7 +53,7 @@
     "messages:extract": "babel-node tools/run messages",
     "rename-assets-manifest-file": "rename-files ./build-chrome-extension/application/assets/ 'manifest.json' 'android-manifest.json'",
     "rename-assets-manifest-link": "replace 'assets/manifest.json' 'assets/android-manifest.json' ./build-chrome-extension/application/index.html",
-	"release":"git commit -am v%npm_package_version% && git tag v%npm_package_version% && git push && git push --tags" 
+    "release": "git commit -am v%npm_package_version% && git tag v%npm_package_version% && git push && git push --tags"
   },
   "keywords": [],
   "devDependencies": {
@@ -219,6 +219,6 @@
     "stellar-sdk": "^0.11.0",
     "styled-components": "^4.4.0",
     "valuelink": "^1.6.2",
-    "web3": "github:ethereum/web3.js#1.x"
+    "web3": "^1.2.4"
   }
 }
