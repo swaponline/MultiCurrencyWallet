@@ -117,6 +117,12 @@ const CreateWallet = (props) => {
         case 'multisignature':
           if (currencies.BTC) {
             actions.core.markCoinAsVisible('BTC (Multisig)')
+            actions.modals.open(constants.modals.MultisignJoinLink, {
+              callback: () => {
+                handleClick()
+              },
+            })
+            return
           }
           break
         default:
