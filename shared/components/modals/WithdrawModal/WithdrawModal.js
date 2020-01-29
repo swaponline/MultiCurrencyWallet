@@ -360,7 +360,7 @@ export default class WithdrawModal extends React.Component {
     const labels = defineMessages({
       withdrowModal: {
         id: 'withdrowTitle271',
-        defaultMessage: `Withdraw`,
+        defaultMessage: `Send`,
       },
       ownTxPlaceholder: {
         id: 'withdrawOwnTxPlaceholder',
@@ -383,7 +383,7 @@ export default class WithdrawModal extends React.Component {
         <p styleName={isEthToken ? 'rednotes' : 'notice'}>
           <FormattedMessage
             id="Withdrow213"
-            defaultMessage="Please note: Miners fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction"
+            defaultMessage="Please note: Fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction"
             values={{ minAmount: <span>{isEthToken ? minAmount.eth : min}</span>, br: <br />, data: `${dataCurrency}` }} />
         </p>
         <div styleName="highLevel" style={{marginBottom: '20px'}}>

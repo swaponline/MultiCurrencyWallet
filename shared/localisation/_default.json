@@ -3463,7 +3463,7 @@
   },
   {
     "id": "Withdrow213",
-    "message": "Please note: Miners fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction.",
+    "message": "Please note: Fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction.",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
@@ -4180,7 +4180,7 @@
   },
   {
     "id": "withdrowTitle271",
-    "message": "Withdraw",
+    "message": "Send",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
