@@ -1,4 +1,4 @@
-name: Node CI
+name: Deploy to swaponline.github.io
 
 on:
   # Trigger the workflow on push or pull request,
