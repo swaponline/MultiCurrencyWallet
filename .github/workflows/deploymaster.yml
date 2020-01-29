@@ -25,10 +25,6 @@ jobs:
     - name: Checkout submodules
       uses: textbook/git-checkout-submodule-action@2.0.0
     - name: npm install, build, and test
-      with: # Set the secret as an input
-        super_secret: ${{ secrets.buildbot }}
-      env: # Or as an environment variable
-        super_secret: ${{ secrets.buildbot }}
       run: |
         npm i
         npm run build:mainnet
