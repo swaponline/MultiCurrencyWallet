@@ -117,6 +117,12 @@ const CreateWallet = (props) => {
         case 'multisignature':
           if (currencies.BTC) {
             actions.core.markCoinAsVisible('BTC (Multisig)')
+            actions.modals.open(constants.modals.MultisignJoinLink, {
+              callback: () => {
+                handleClick()
+              },
+            })
+            return
           }
           break
         default:
@@ -156,6 +162,13 @@ const CreateWallet = (props) => {
               defaultMessage="Импортировать"
             />
           </button>
+          <br/>
+          <a href="/importFromSwapOnline.html" className="text-danger">
+            <FormattedMessage
+              id="ImportFromSwapOnlineBtn"
+              defaultMessage="Import from swap.online"
+            />
+          </a>
           <button onClick={goToExchange}>
             <FormattedMessage
               id="ExchangeBtn"

@@ -246,7 +246,7 @@ export default class BtcToLtc extends Component {
                       flow.refundTxHex && (
                         <div>
                           <a
-                            href="https://wiki.swap.online/faq/my-swap-got-stuck-and-my-bitcoin-has-been-withdrawn-what-to-do/"
+                            href="https://wiki.swaponline.io/faq/my-swap-got-stuck-and-my-bitcoin-has-been-withdrawn-what-to-do/"
                             target="_blank"
                             rel="noopener noreferrer"
                           >

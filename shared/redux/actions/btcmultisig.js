@@ -368,7 +368,18 @@ const getBalance = (ownAddress, ownDataKey) => {
   const { user: { btcMultisigSMSData: { address } } } = getState()
   const checkAddress = (ownAddress) ? ownAddress : address
   const dataKey = (ownDataKey) ? ownDataKey : 'btcMultisigSMSData'
-  
+
+  if (checkAddress === 'Not jointed') {
+    return new Promise((resolve) => {
+      reducers.user.setBalance({
+        name: dataKey,
+        amount: 0,
+        unconfirmedBalance: 0,
+      })
+      resolve(0)
+    })
+  }
+
   return apiLooper.get('bitpay', `/addr/${checkAddress}`, {
     checkStatus: (answer) => {
       try {

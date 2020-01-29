@@ -144,10 +144,12 @@ const getDemoMoney = process.env.MAINNET ? () => { } : () => {
 const getInfoAboutCurrency = (currencyNames) => 
 
   new Promise((resolve, reject) => {
-    const url = 'https://noxon.io/cursAll.php';
+    const url = 'https://noxon.wpmix.net/cursAll.php';
     reducers.user.setIsFetching({ isFetching: true })
 
-    request.get(url).then((data) => {
+    request.get(url, {
+      cacheResponse: 60*60*1000, // кеш 1 час
+    }).then((data) => {
       data.map(currencyInfoItem => {
         if (currencyNames.includes(currencyInfoItem.symbol)) {
           switch(currencyInfoItem.symbol) {
