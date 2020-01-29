@@ -98,13 +98,7 @@ export default class InvoiceModal extends React.Component {
 
   componentDidMount() { }
 
-  componentWillUpdate(nextProps, nextState) {
-    // if(this.nextProps.amount !== this.nextState.amount) {
-    //   this.setState({
-    //     amountUSD: amount * 2
-    //   })
-    // }
-   }
+
 
   handleSubmit = async () => {
     const { name, data } = this.props

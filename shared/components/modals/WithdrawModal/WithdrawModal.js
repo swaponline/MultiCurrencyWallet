@@ -384,13 +384,11 @@ export default class WithdrawModal extends React.Component {
           <FormattedMessage
             id="Withdrow213"
             defaultMessage="Please note: Miners fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction"
-            values={{ minAmount: `${isEthToken ? minAmount.eth : min}`, br: <br />, data: `${dataCurrency}` }} />
+            values={{ minAmount: <span>{isEthToken ? minAmount.eth : min}</span>, br: <br />, data: `${dataCurrency}` }} />
         </p>
-        <div styleName="highLevel">
-          <FieldLabel inRow>
-            <span style={{ fontSize: '16px' }}>
+        <div styleName="highLevel" style={{marginBottom: '20px'}}>
+          <FieldLabel>
               <FormattedMessage id="Withdrow1194" defaultMessage="Address " />
-            </span>
             {' '}
             <Tooltip id="WtH203" >
               <div style={{ textAlign: 'center' }}>
@@ -418,21 +416,16 @@ export default class WithdrawModal extends React.Component {
           )}
         </div>
         <div styleName="lowLevel">
-          <div styleName="groupField">
             <p styleName="balance">
               {balance}
               {' '}
               {currency.toUpperCase()}
             </p>
-            <div styleName="downLabel">
-              <FieldLabel inRow>
-                <span styleName="mobileFont">
-                  <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
-                </span>
-              </FieldLabel>
-            </div>
-          </div>
-          <div styleName="group">
+            <FieldLabel>
+                <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
+            </FieldLabel>
+          
+          <div styleName="group" style={{marginBottom: '20px'}}>
             <Input
               styleName="input"
               valueLink={linked.amount}
@@ -441,9 +434,11 @@ export default class WithdrawModal extends React.Component {
               usd={getUsd.toFixed(2)}
               onKeyDown={inputReplaceCommaWithDot}
             />
-            <button styleName="button" onClick={this.sellAllBalance} data-tip data-for="Withdrow134">
-              <FormattedMessage id="Select210" defaultMessage="MAX" />
-            </button>
+            <div style={{marginLeft: '15px'}}>
+              <Button blue onClick={this.sellAllBalance} data-tip data-for="Withdrow134">
+                <FormattedMessage id="Select210" defaultMessage="MAX" />
+              </Button>
+            </div>
             {!isMobile &&
               <ReactTooltip id="Withdrow134" type="light" effect="solid" styleName="r-tooltip">
                 <FormattedMessage
@@ -467,7 +462,7 @@ export default class WithdrawModal extends React.Component {
             )
           }
         </div>
-        <Button styleName="buttonFull" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
+        <Button blue fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
           {isShipped
             ? (
               <Fragment>
