@@ -247,26 +247,7 @@ const signMessage = (message, encodedPrivateKey) => {
   return signature.toString('base64')
 }
 
-const getReputation = () =>
-  new Promise(async (resolve, reject) => {
-    const { user: { btcData: { address, privateKey } } } = getState()
-    const addressOwnerSignature = signMessage(address, privateKey)
-
-    apiLooper.post('swapsExplorer', `/reputation`, {
-      json: true,
-      body: {
-        address,
-        addressOwnerSignature,
-      },
-    }).then((response) => {
-      const { reputation, reputationOracleSignature } = response
-
-      reducers.user.setReputation({ name: 'btcData', reputation, reputationOracleSignature })
-      resolve(reputation)
-    }).catch((error) => {
-      reject(error)
-    })
-  })
+const getReputation = () =>  Promise.resolve(0)
 
 export default {
   login,

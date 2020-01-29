@@ -22,7 +22,7 @@ class MobMenu extends React.Component {
     this.subMenuItems = [
       {
         link: '/exchange',
-        title: <FormattedMessage id="Swap.OnlineSubmenu" defaultMessage="Swap.Exhange" />,
+        title: <FormattedMessage id="Submenu" defaultMessage="Swap.Exhange" />,
         description: <FormattedMessage id="Submenu16" defaultMessage="Fast atomic swap exchanges BTC, BCH, ETH, LTC, ERC20 online" />,
         image: 'https://img.icons8.com/wired/30/000000/transfer-between-users.png',
       },

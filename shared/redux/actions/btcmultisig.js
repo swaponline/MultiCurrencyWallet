@@ -368,7 +368,18 @@ const getBalance = (ownAddress, ownDataKey) => {
   const { user: { btcMultisigSMSData: { address } } } = getState()
   const checkAddress = (ownAddress) ? ownAddress : address
   const dataKey = (ownDataKey) ? ownDataKey : 'btcMultisigSMSData'
-  
+
+  if (checkAddress === 'Not jointed') {
+    return new Promise((resolve) => {
+      reducers.user.setBalance({
+        name: dataKey,
+        amount: 0,
+        unconfirmedBalance: 0,
+      })
+      resolve(0)
+    })
+  }
+
   return apiLooper.get('bitpay', `/addr/${checkAddress}`, {
     checkStatus: (answer) => {
       try {
@@ -728,26 +739,7 @@ const signMessage = (message, encodedPrivateKey) => {
   return signature.toString('base64')
 }
 
-const getReputation = () =>
-  new Promise(async (resolve, reject) => {
-    const { user: { btcMultisigSMSData: { address, privateKey } } } = getState()
-    const addressOwnerSignature = signMessage(address, privateKey)
-
-    apiLooper.post('swapsExplorer', `/reputation`, {
-      json: true,
-      body: {
-        address,
-        addressOwnerSignature,
-      },
-    }).then((response) => {
-      const { reputation, reputationOracleSignature } = response
-
-      //reducers.user.setReputation({ name: 'btcMultisigSMSData', reputation, reputationOracleSignature })
-      resolve(reputation)
-    }).catch((error) => {
-      reject(error)
-    })
-  })
+const getReputation = () => Promise.resolve(0)
 
 export default {
   beginRegisterSMS,

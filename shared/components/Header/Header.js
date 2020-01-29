@@ -70,7 +70,8 @@ export default class Header extends Component {
     }
 
     const dinamicPath = pathname.includes(exchange) ? `${unlocalisedUrl(intl.locale, pathname)}` : `${home}`
-    const lsWalletCreated = localStorage.getItem(isWalletCreate)
+    let lsWalletCreated = localStorage.getItem(isWalletCreate)
+    if (config && config.isWidget) lsWalletCreated = true
     const isWalletPage = pathname === wallet || pathname === `/ru${wallet}`
 
     this.state = {
@@ -136,6 +137,8 @@ export default class Header extends Component {
 
     let isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
 
+    if (config && config.isWidget) isWalletCreate = true
+
     const isWalletPage = pathname === wallet
       || pathname === `/ru${wallet}`
 
@@ -199,7 +202,7 @@ export default class Header extends Component {
       default: return
     }
 
-    if (!didOpenWalletCreate && isWalletPage) {
+    if (!didOpenWalletCreate && isWalletPage && !(config && config.isWidget)) {
       this.openCreateWallet({ onClose: tourEvent })
       return
     }
@@ -222,6 +225,7 @@ export default class Header extends Component {
       toggle()
     }
 
+    console.log('-Accepting request', link)
     await history.replace(localisedUrl(locale, link))
     await history.push(localisedUrl(locale, link))
   }
@@ -259,7 +263,7 @@ export default class Header extends Component {
 
   openCreateWallet = (options) => {
     const { history, intl: { locale } } = this.props
-    history.push(localisedUrl(locale, `createWallet`))
+    history.push(localisedUrl(locale, links.createWallet))
   }
 
   openWalletTour = () => {
@@ -290,7 +294,7 @@ export default class Header extends Component {
 
     const isExchange = pathname.includes(exchange);
 
-    if (config && config.isWidget) {
+    if (config && config.isWidget && !config.isFullBuild) {
       return (
         <User
           acceptRequest={this.acceptRequest}

@@ -26,5 +26,7 @@ jobs:
         npm i
         npm run build:mainnet
         npm run validate
+        #zip -r mainnet-build.zip ./config
       env:
         CI: true
+    

@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import helpers, { constants } from 'helpers'
+import helpers, { request, constants } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'sw-valuelink'
 import { connect } from 'redaction'
@@ -57,6 +57,7 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
     ],
     tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   })
+  
 )
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
 export default class InvoiceModal extends React.Component {
@@ -70,6 +71,13 @@ export default class InvoiceModal extends React.Component {
     super()
 
     const { data: { address, currency, toAddress }, items, tokenItems } = data
+    let infoAboutCurrency;
+
+    items.map(item => {
+      if(item.currency === currency) {
+        infoAboutCurrency = item.infoAboutCurrency;
+      }
+    })
 
     const currentDecimals = constants.tokenDecimals[currency.toLowerCase()]
 
@@ -84,12 +92,25 @@ export default class InvoiceModal extends React.Component {
       label: '',
       currentDecimals,
       error: false,
+      infoAboutCurrency,
+      rubRates: 62.34,
     }
+
+    this.getRubRates()
   }
 
-  componentDidMount() { }
-
-  componentWillUpdate(nextProps, nextState) { }
+  getRubRates() {
+    request.get('https://www.cbr-xml-daily.ru/daily_json.js', {
+      cacheResponse: 60*60*1000,
+    }).then((rates) => {
+      if (rates && rates.Valute && rates.Valute.USD) {
+        const rubRates = rates.Valute.USD.Value;
+        this.setState({
+          rubRates,
+        })
+      }
+    })
+  }
 
   handleSubmit = async () => {
     const { name, data } = this.props
@@ -161,6 +182,36 @@ export default class InvoiceModal extends React.Component {
     }))
   }
 
+  handleDollarValue = (value) => {
+    const { rubRates, currentDecimals } = this.state
+
+    this.setState({ 
+      amountUSD: value,
+      amountRUB: (value) ? (value * rubRates).toFixed(0) : '',
+      amount: (value) ? (value / this.state.infoAboutCurrency.price_usd).toFixed(currentDecimals) : '',
+    })
+  }
+
+  handleRubValue = (value) => {
+    const { rubRates, currentDecimals } = this.state
+
+    this.setState({
+      amountRUB: value,
+      amountUSD: (value) ? (value / rubRates).toFixed(2) : '',
+      amount: (value) ? (value / this.state.infoAboutCurrency.price_usd / rubRates).toFixed(currentDecimals) : '',
+    })
+  }
+
+  handleAmount = (value) => {
+    const { rubRates, currentDecimals} = this.state
+
+    this.setState({
+      amountRUB: (value) ? (value * this.state.infoAboutCurrency.price_usd * rubRates).toFixed(0) : '',
+      amountUSD: (value) ? (value * this.state.infoAboutCurrency.price_usd).toFixed(2) : '',
+      amount: value,
+    })
+  }
+
   handleError = err => {
     console.error(err)
   }
@@ -179,13 +230,15 @@ export default class InvoiceModal extends React.Component {
       address,
       destination,
       amount,
+      amountRUB,
+      amountUSD,
       contact,
       label,
       isShipped,
       minus,
       openScanCam,
-      currentDecimals,
       error,
+      infoAboutCurrency
     } = this.state
 
     const {
@@ -196,19 +249,13 @@ export default class InvoiceModal extends React.Component {
       intl,
     } = this.props
 
-    const linked = Link.all(this, 'address', 'destination', 'amount', 'contact', 'label')
+  
+    const linked = Link.all(this, 'address', 'destination', 'amountUSD', 'amountRUB', 'amount', 'contact', 'label')
 
     const isDisabled =
       !address || !amount || isShipped || !destination || !contact
       || !this.addressIsCorrect()
-      || BigNumber(amount).dp() > currentDecimals
 
-    if (this.state.amount < 0) {
-      this.setState({
-        amount: '',
-        minus: true,
-      })
-    }
 
     const localeLabel = defineMessages({
       title: {
@@ -248,12 +295,13 @@ export default class InvoiceModal extends React.Component {
         }
         <div styleName="invoiceModalHolder">
           <div styleName="highLevel">
-            <FieldLabel inRow>
+            <FieldLabel label>
               <span style={{ fontSize: '16px' }}>
                 <FormattedMessage id="invoiceModal_Address" defaultMessage="Адрес, на который выставляем счет" />
               </span>
             </FieldLabel>
             <Input
+              withMargin
               valueLink={linked.address}
               focusOnInit pattern="0-9a-zA-Z:"
               placeholder={intl.formatMessage(localeLabel.addressPlaceholder, { currency: currency.toUpperCase() })}
@@ -269,12 +317,13 @@ export default class InvoiceModal extends React.Component {
             )}
           </div>
           <div styleName="highLevel">
-            <FieldLabel inRow>
+            <FieldLabel label>
               <span style={{ fontSize: '16px' }}>
                 <FormattedMessage id="invoiceModal_destiAddress" defaultMessage="Адрес, куда будет произведена оплата" />
               </span>
             </FieldLabel>
             <Input
+              withMargin
               valueLink={linked.destination}
               focusOnInit pattern="0-9a-zA-Z:"
               placeholder={intl.formatMessage(localeLabel.destiAddressPlaceholder, { currency: currency.toUpperCase() })}
@@ -291,47 +340,83 @@ export default class InvoiceModal extends React.Component {
           </div>
           <div styleName="lowLevel">
             <div styleName="groupField">
-              <div styleName="downLabel">
-                <FieldLabel inRow>
-                  <span styleName="mobileFont">
-                    <FormattedMessage id="invoiceModal_Amount" defaultMessage="Сумма " />
+              <div styleName="highLevel">
+                <FieldLabel label>
+                  <span>
+                    <FormattedMessage id="invoiceModal_Amount_RUB" defaultMessage="Сумма в рублях" />
                   </span>
                 </FieldLabel>
               </div>
             </div>
-            <div styleName="group">
-              <Input
-                styleName="input"
-                valueLink={linked.amount}
-                pattern="0-9\."
-                placeholder={intl.formatMessage(localeLabel.amountPlaceholder)}
-                onKeyDown={inputReplaceCommaWithDot}
-              />
-            </div>
+            <Input
+              withMargin
+              styleName="input"
+              valueLink={linked.amountRUB.pipe(this.handleRubValue)}
+              pattern="0-9\."
+              placeholder={intl.formatMessage(localeLabel.amountPlaceholder)}
+              onKeyDown={inputReplaceCommaWithDot}
+            />
           </div>
           <div styleName="lowLevel">
             <div styleName="groupField">
-              <div styleName="downLabel">
-                <FieldLabel inRow>
-                  <span styleName="mobileFont">
+              <div styleName="highLevel">
+                <FieldLabel label>
+                  <span>
+                    <FormattedMessage id="invoiceModal_Amount_Dollar" defaultMessage="Сумма в долларах" />
+                  </span>
+                </FieldLabel>
+              </div>
+            </div>
+            <Input
+              withMargin
+              styleName="input"
+              valueLink={linked.amountUSD.pipe(this.handleDollarValue)}
+              pattern="0-9\."
+              placeholder={intl.formatMessage(localeLabel.amountPlaceholder)}
+              onKeyDown={inputReplaceCommaWithDot}
+            />
+          </div>
+          <div styleName="lowLevel">
+            <div styleName="groupField">
+              <div styleName="highLevel">
+                <FieldLabel label>
+                  <span>
+                    <FormattedMessage id="invoiceModal_Amount" defaultMessage="Сумма" />
+                  </span>
+                </FieldLabel>
+              </div>
+            </div>
+            <Input
+              withMargin
+              styleName="input"
+              valueLink={linked.amount.pipe(this.handleAmount)}
+              pattern="0-9\."
+              placeholder={intl.formatMessage(localeLabel.amountPlaceholder)}
+              onKeyDown={inputReplaceCommaWithDot}
+            />
+          </div>
+          <div styleName="lowLevel">
+            <div styleName="groupField">
+              <div styleName="highLevel">
+                <FieldLabel label>
+                  <span>
                     <FormattedMessage id="invoiceModal_Contact" defaultMessage="Ваш контакт (емейл или @никнейм)" />
                   </span>
                 </FieldLabel>
               </div>
             </div>
-            <div styleName="group">
-              <Input
-                styleName="input"
-                valueLink={linked.contact}
-                placeholder={intl.formatMessage(localeLabel.contactPlaceholder)}
-              />
-            </div>
+            <Input
+              styleName="input"
+              withMargin
+              valueLink={linked.contact}
+              placeholder={intl.formatMessage(localeLabel.contactPlaceholder)}
+            />
           </div>
           <div styleName="lowLevel">
             <div styleName="groupField">
-              <div styleName="downLabel">
-                <FieldLabel inRow>
-                  <span styleName="mobileFont">
+              <div styleName="highLevel">
+                <FieldLabel label>
+                  <span>
                     <FormattedMessage id="invoiceModal_Label" defaultMessage="Комментарий" />
                   </span>
                 </FieldLabel>
@@ -340,6 +425,7 @@ export default class InvoiceModal extends React.Component {
             <div styleName="group">
               <Input
                 styleName="input"
+                withMargin
                 srollingForm={true}
                 valueLink={linked.label}
                 multiline="true"
@@ -347,7 +433,7 @@ export default class InvoiceModal extends React.Component {
               />
             </div>
           </div>
-          <Button styleName="buttonFullMargin" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
+          <Button fullWidth blue disabled={isDisabled} onClick={this.handleSubmit}>
             {isShipped
               ? (
                 <Fragment>

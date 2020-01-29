@@ -110,19 +110,19 @@ export default class RegisterSMSProtected extends React.Component {
         {(step === 'enterPhone') &&
           <Fragment>
             <div styleName="highLevel">
-              <FieldLabel inRow>
-                <span style={{ fontSize: '16px' }}>
-                  <FormattedMessage id="registerSMSModalPhone" defaultMessage="You phone " />
-                </span>
+              <FieldLabel label>
+                  <FormattedMessage id="registerSMSModalReady" defaultMessage="Your phone:" />
               </FieldLabel>
-              <Input valueLink={linked.phone} focusOnInit placeholder={`Enter your phone`} />
+              <span style={{ marginBottom: '20px' }} >
+                <Input styleName="input inputMargin25" valueLink={linked.phone} placeholder={`Enter your phone`} focusOnInit />
+              </span>
               {error &&
                 <div styleName="rednote">
                   `${error}`
                 </div>
               }
             </div>
-            <Button styleName="buttonFull" brand fullWidth disabled={isShipped} onClick={this.handleSendSMS}>
+            <Button styleName="button" blue fullWidth disabled={isShipped} onClick={this.handleSendSMS}>
               {isShipped
                 ? (
                   <Fragment>
@@ -141,19 +141,15 @@ export default class RegisterSMSProtected extends React.Component {
         {(step === 'enterCode') &&
           <Fragment>
             <div styleName="highLevel">
-              <FieldLabel inRow>
-                <span style={{ fontSize: '16px' }}>
-                  <FormattedMessage id="registerSMSModalCode" defaultMessage="Code from SMS " />
-                </span>
-              </FieldLabel>
-              <Input valueLink={linked.smsCode} focusOnInit placeholder={`Enter code from SMS`} />
+              <label styleName="label">Enter code from SMS:</label>
+              <Input styleName="input inputMargin25" valueLink={linked.smsCode} focusOnInit placeholder={`Enter code from SMS`} />
               {error &&
                 <div styleName="rednote">
                   {error}
                 </div>
               }
             </div>
-            <Button styleName="buttonFull" brand fullWidth disabled={isShipped} onClick={this.handleCheckSMS}>
+            <Button styleName="button" blue fullWidth disabled={isShipped} onClick={this.handleCheckSMS}>
               {isShipped
                 ? (
                   <Fragment>

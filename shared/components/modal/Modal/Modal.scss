@@ -7,7 +7,7 @@
   right: 0;
   bottom: 0;
   background: #fff;
-  padding: 15px 25px;
+  // padding: 15px 25px;
   width: 100%;
   height: 100%;
 }
@@ -23,6 +23,10 @@
   justify-content: space-between;
   align-items: center;
   position: relative;
+  font-family: 'Inter-Bold', sans-serif;
+  color: #1F2D48;
+  font-size: 24px;
+  line-height: 33px;
 }
 
 .title {
@@ -47,8 +51,7 @@
   opacity: 0.5;
   transition: opacity .33s $ease-out-quadratic;
   position: absolute;
-  right: 0;
-
+  right: 20px;
   &:hover {
     opacity: 1;
     transition: none;
@@ -83,13 +86,12 @@
 }
 
 @include media-mobile {
-  .modal {
-    padding: 15px 15px;
-  }
   .content {
     min-width: auto;
   }
   .title {
     font-size: 18px;;
+    text-align: left;
+    left: 20px;
   }
 }

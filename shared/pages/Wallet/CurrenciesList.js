@@ -2,7 +2,7 @@ import React from 'react'
 
 import CSSModules from 'react-css-modules'
 import styles from './Wallet.scss'
-import NewButton from 'components/controls/NewButton/NewButton'
+import Button from 'components/controls/Button/Button'
 import Row from './Row/Row'
 import Table from 'components/tables/Table/Table'
 import config from 'app-config'
@@ -40,9 +40,9 @@ const CurrenciesList = ({ tableRows, currencies, infoAboutCurrency, hiddenCoinsL
       )}
     />
     {!(config && config.isWidget) &&
-      <NewButton onClick={goToСreateWallet} blue transparent fullWidth>
+      <Button onClick={goToСreateWallet} blue transparent fullWidth>
         <FormattedMessage id="addAsset" defaultMessage="Добавить валюту" />
-      </NewButton>
+      </Button>
     }
   </div>
 )

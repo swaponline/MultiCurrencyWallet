@@ -22,13 +22,15 @@ import config from 'app-config'
 import { withRouter } from 'react-router'
 import BalanceForm from './components/BalanceForm/BalanceForm'
 import CurrenciesList from './CurrenciesList'
-import NewButton from 'components/controls/NewButton/NewButton'
+import Button from 'components/controls/Button/Button'
 import ContentLoader from '../../components/loaders/ContentLoader/ContentLoader'
 
 
+const isWidgetBuild = (config && config.isWidget)
+
 const walletNav = [
   { key: 'My balances', text: <FormattedMessage id="MybalanceswalletNav" defaultMessage="Мой баланс" /> },
-  { key: 'Transactions', text: <FormattedMessage id="TransactionswalletNav" defaultMessage="Переводы" /> }
+  { key: 'Transactions', text: <FormattedMessage id="TransactionswalletNav" defaultMessage="Активность" /> }
 ];
 
 
@@ -244,12 +246,17 @@ export default class Wallet extends Component {
   goToСreateWallet = () => {
     const { history, intl: { locale } } = this.props
 
-    history.push(localisedUrl(locale, '/createWallet'))
+    history.push(localisedUrl(locale, links.createWallet))
   }
 
   handleGoExchange = () => {
     const { history, intl: { locale } } = this.props
-    history.push(localisedUrl(locale, links.exchange))
+    
+    if (isWidgetBuild && !config.isFullBuild) {
+      history.push(localisedUrl(locale, links.pointOfSell))
+    } else {
+      history.push(localisedUrl(locale, links.exchange))
+    }
   }
 
   handleEditTitle = () => {
@@ -318,7 +325,6 @@ export default class Wallet extends Component {
     let usdBalance = 0;
     let changePercent = 0;
 
-    const isWidgetBuild = (config && config.isWidget)
     const widgetCurrencies = (isWidgetBuild) ? ['BTC', 'ETH', config.erc20token.toUpperCase()] : []
 
     let tableRows = allData.filter(({ currency, balance }) => !hiddenCoinsList.includes(currency) || balance > 0)
@@ -341,7 +347,7 @@ export default class Wallet extends Component {
 
     return (
       <artical>
-        <section styleName={(isWidgetBuild) ? 'wallet widgetBuild' : 'wallet'}>
+        <section styleName={(isWidgetBuild && !config.isFullBuild) ? 'wallet widgetBuild' : 'wallet'}>
           {(walletTitle === '' || editTitle) ? <input styleName="inputTitle" onChange={(e) => this.handleChangeTitle(e)} value={walletTitle} /> : <h3 styleName="walletHeading" onDoubleClick={this.handleEditTitle}>{walletTitle || 'Wallet'}</h3>}
           <Slider
             settings={settings}
@@ -363,8 +369,8 @@ export default class Wallet extends Component {
           </ul>
           <div className="data-tut-store" styleName="walletContent" >
             <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
-              {
-                !isFetching ? 
+              {/* {
+                !isFetching ?  */}
                   <BalanceForm 
                     usdBalance={usdBalance} 
                     currencyBalance={btcBalance}
@@ -374,8 +380,10 @@ export default class Wallet extends Component {
                     handleExchange={this.handleGoExchange}
                     currency="btc" 
                     infoAboutCurrency={infoAboutCurrency} 
-                /> : <ContentLoader leftSideContent />
-              }
+                /> 
+                
+                {/* : <ContentLoader leftSideContent /> */}
+              
               {exchangeForm &&
                 <div styleName="exchangeForm">
                   <ParticalClosure {...this.props} isOnlyForm />
@@ -383,14 +391,16 @@ export default class Wallet extends Component {
               }
             </div>
             <div styleName={`yourAssetsWrapper ${activeView === 0 ? 'active' : ''}`}>
-              {
-                !isFetching ? 
+              {/* {
+                !isFetching ?  */}
                   <CurrenciesList 
                     tableRows={tableRows} {...this.state} {...this.props} 
                     goToСreateWallet={this.goToСreateWallet}
                     getExCurrencyRate={(currencySymbol, rate) => this.getExCurrencyRate(currencySymbol, rate)}
-                  /> : <ContentLoader rideSideContent />
-              }
+                  /> 
+                
+                  {/* : <ContentLoader rideSideContent /> */}
+      
             </div>
             <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
               <History />
@@ -398,12 +408,12 @@ export default class Wallet extends Component {
           </div>
           {(isWidgetBuild && activeView === 0) &&
             <div styleName="keysExportImport">
-              <NewButton gray onClick={this.handleShowKeys}>
+              <Button gray onClick={this.handleShowKeys}>
                 <FormattedMessage id="WalletPage_ExportKeys" defaultMessage="Показать ключи" />
-              </NewButton>
-              <NewButton gray onClick={this.handleImportKeys}>
+              </Button>
+              <Button gray onClick={this.handleImportKeys}>
                 <FormattedMessage id="WalletPage_ImportKeys" defaultMessage="Импортировать ключи" />
-              </NewButton>
+              </Button>
             </div>
           }
         </section>

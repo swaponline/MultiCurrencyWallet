@@ -15,7 +15,7 @@ import links from 'helpers/links'
 import { localisedUrl } from 'helpers/locale'
 
 import check from './images/check'
-import NewButton from '../../components/controls/NewButton/NewButton'
+import Button from '../../components/controls/Button/Button'
 import FirstStep from './Steps/FirstStep'
 import SecondStep from './Steps/SecondStep'
 
@@ -52,7 +52,7 @@ const CreateWallet = (props) => {
   const steps = [1, 2]
 
   const goHome = () => {
-    history.push(localisedUrl(locale, '/wallet'))
+    history.push(localisedUrl(locale, links.wallet))
   }
 
   const handleClick = () => {
@@ -70,7 +70,7 @@ const CreateWallet = (props) => {
   }
 
   const goToExchange = () => {
-    history.push(localisedUrl(locale, '/exchange'))
+    history.push(localisedUrl(locale, links.exchange))
   }
 
   const validate = () => {
@@ -117,6 +117,12 @@ const CreateWallet = (props) => {
         case 'multisignature':
           if (currencies.BTC) {
             actions.core.markCoinAsVisible('BTC (Multisig)')
+            actions.modals.open(constants.modals.MultisignJoinLink, {
+              callback: () => {
+                handleClick()
+              },
+            })
+            return
           }
           break
         default:
@@ -156,6 +162,13 @@ const CreateWallet = (props) => {
               defaultMessage="Импортировать"
             />
           </button>
+          <br/>
+          <a href="/importFromSwapOnline.html" className="text-danger">
+            <FormattedMessage
+              id="ImportFromSwapOnlineBtn"
+              defaultMessage="Import from swap.online"
+            />
+          </a>
           <button onClick={goToExchange}>
             <FormattedMessage
               id="ExchangeBtn"

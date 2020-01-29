@@ -116,6 +116,8 @@ export default class Orders extends Component {
   render() {
     const { sellOrders, buyOrders, isVisible } = this.state
     let { sellCurrency, buyCurrency, intl, decline } = this.props
+    const { history } = this.props
+
     buyCurrency = buyCurrency.toUpperCase()
     sellCurrency = sellCurrency.toUpperCase()
 
@@ -137,9 +139,9 @@ export default class Orders extends Component {
     const isWidget = (config && config.isWidget)
 
     const buttonsRowStyleName = isMobile ?
-      (isWidget) ? 'buttonRow buttonRowMobile buttonRowWidget' : 'buttonRow buttonRowMobile'
+      (isWidget && !config.isFullBuild) ? 'buttonRow buttonRowMobile buttonRowWidget' : 'buttonRow buttonRowMobile'
       :
-      (isWidget) ? 'buttonRow buttonRowWidget' : 'buttonRow'
+      (isWidget && !config.isFullBuild) ? 'buttonRow buttonRowWidget' : 'buttonRow'
 
     const buyCurrencyFullName = (currencies.find(c => c.name === buyCurrency) || {}).fullTitle
     const sellCurrencyFullName = (currencies.find(c => c.name === sellCurrency) || {}).fullTitle
@@ -189,7 +191,7 @@ export default class Orders extends Component {
             <FormattedMessage id="orders128" defaultMessage="Create offer" />
           </Button>
           {
-            (isWidget) && (
+            (isWidget && !config.isFullBuild) && (
               <Button green styleName="button" onClick={this.handleWalletPush} >
                 <FormattedMessage id="OrdersWidgetModeShowWallet" defaultMessage="Wallet" />
               </Button>
@@ -227,6 +229,7 @@ export default class Orders extends Component {
               orderId={orderId}
               row={row}
               decline={decline}
+              history={history}
               removeOrder={this.removeOrder}
             />
           )}
@@ -255,6 +258,7 @@ export default class Orders extends Component {
               orderId={orderId}
               row={row}
               decline={decline}
+              history={history}
               removeOrder={this.removeOrder}
             />
           )}

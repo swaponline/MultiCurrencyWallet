@@ -100,7 +100,7 @@ const Links = () => {
   return (
     <div  styleName="links">
       <div styleName="logoPosition logo whiteFill">
-        <img src={logoImage} alt="swap.online logo" />
+        <img src={logoImage} alt="logo" />
       </div>
       <div styleName="linkPosition">
         {link.map((items, index) => (

@@ -922,7 +922,7 @@ export default class PartialClosure extends Component {
   }
 
   render() {
-    const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage }, userEthAddress, isOnlyForm } = this.props
+    const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage }, userEthAddress, isOnlyForm, allOrders } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching, desclineOrders, openScanCam,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, exHaveRate, exGetRate,
       maxBuyAmount, getAmount, goodRate, isShowBalance, estimatedFeeValues, haveAmount,
@@ -985,7 +985,6 @@ export default class PartialClosure extends Component {
     }, SeoValues)
 
 
-    //console.log('usd', (maxAmount > 0 && isNonOffers) ? 0 : haveUsd)
 
     const Form = (
       <div styleName={`${isSingleForm ? '' : 'section'}`} className={(isWidgetLink) ? 'section' : ''} >
@@ -1020,8 +1019,14 @@ export default class PartialClosure extends Component {
             <p className={isWidget ? 'advice' : ''} styleName="maxAmount">
               {/* <FormattedMessage id="partial221" defaultMessage="Balance: " /> */}
               {/* Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}{' '}{haveCurrency.toUpperCase() */}
-              <FormattedMessage id="partial767" defaultMessage="Your balance: " />
-              {BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString()}{'  '}{haveCurrency.toUpperCase()}
+              {
+                BigNumber(balance).toNumber() === 0
+                  ? (<FormattedMessage id="partial766" defaultMessage="From any wallet or exchange" />)
+                  : (<>
+                      <FormattedMessage id="partial767" defaultMessage="Your balance: " />
+                      {BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString()}{'  '}{haveCurrency.toUpperCase()}
+                    </>)
+              }
             </p>
           }
           <div styleName="switchButton">
@@ -1172,7 +1177,7 @@ export default class PartialClosure extends Component {
                       )
                   }
                   {` `}
-                  <a style={{ whiteSpace: 'nowrap' }} href="https://wiki.swap.online/faq/is-there-fee-for-trade/">
+                  <a style={{ whiteSpace: 'nowrap' }} href="https://wiki.swaponline.io/faq/is-there-fee-for-trade/">
                     <FormattedMessage
                       id="PartialFeeValueWarnInfo"
                       defaultMessage="[About fees]"
@@ -1230,7 +1235,7 @@ export default class PartialClosure extends Component {
               <FormattedMessage id="partial544" defaultMessage="Order book" />
             </Button>
           </div>
-          <a href="https://seven.swap.online/widget-service/generator/" target="_blank" rel="noopener noreferrer" styleName="widgetLink">
+          <a href="https://generator.swaponline.site/generator/" target="_blank" rel="noopener noreferrer" styleName="widgetLink">
             <FormattedMessage id="partial1021" defaultMessage="Embed on website" />
           </a>
         </div>

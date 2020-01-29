@@ -78,7 +78,7 @@
 .group {
   width: 100%;
   display: inline-flex;
-  height: 60px;
+  min-height: 60px;
   border-radius: 6px;
   text-align: center;
 }
@@ -88,22 +88,12 @@
   display: block;
 }
 
+.label {
+  font-family: 'Inter-SemiBold', sans-serif;
+}
+
 .button {
-  height: 68px;
-  width: 80px;
-  border-bottom-left-radius: 0;
-  border-top-left-radius: 0;
-  color: #7c1de9;
-  background: #f8f3fe;
-  box-shadow: rgba(0, 0, 0, 0.08) 0 3px 9px 0;
-  cursor: pointer;
-  line-height: 60px;
-  text-transform: uppercase;
-  text-align: center;
-  border-color: black;
-  display: block;
-  font-size: 18px;
-  border-radius: 3px;
+  height: 48px;
 
   &_sms {
     flex: 1 140px;
@@ -125,14 +115,18 @@
 }
 
 .highLevel {
-  top: 3em;
+  // top: 3em;
   position: relative;
-  padding-bottom: 5em;
+  // padding-bottom: 5em;
 }
 
 .lowLevel {
   position: relative;
-  padding-bottom: 7%;
+  // padding-bottom: 7%;
+}
+
+.inputMargin25 {
+  margin-bottom: 25px;
 }
 
 @include media-mobile {

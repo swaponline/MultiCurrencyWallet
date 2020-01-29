@@ -99,17 +99,18 @@ export default class RowHistory extends Component {
 
     return (
       <tr>
-        <td>
+        {/* <td>
           <Avatar
             value={id}
           />
-        </td>
-        <td>
+        </td> */}
+        {/* <td>
           <Link to={`${linkToTheSwap}`}>
             <Coins names={[buyCurrency, sellCurrency]}  />
           </Link>
-        </td>
+        </td> */}
         <td>
+          <span>You buy</span>
           {
             isMy ? (
               `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`
@@ -119,6 +120,7 @@ export default class RowHistory extends Component {
           }
         </td>
         <td>
+          <span>You sell</span>
           {
             isMy ? (
               `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`
@@ -127,32 +129,37 @@ export default class RowHistory extends Component {
             )
           }
         </td>
-        <td>
+        {/* <td>
           { (sellAmount / buyAmount).toFixed(5) }{ ` ${sellCurrency}/${buyCurrency}`}
-        </td>
+        </td> */}
         <td>
-          { isFinished && (<FormattedMessage id="RowHistory94" defaultMessage="Finished" />) }
-          { isRefunded && (<FormattedMessage id="RowHistory77" defaultMessage="Refunded" />) }
-          { isStoppedSwap && (<FormattedMessage id="RowHistory139" defaultMessage="Stopped" />) }
-          { !isDeletedSwap && (canBeRefunded
-              ? (
-                <Timer
-                  lockTime={values.lockTime * 1000}
-                  enabledButton={this.tryRefund}
-                />
+          <span>Status order</span>
+          <p>
+            { isFinished && (<FormattedMessage id="RowHistory94" defaultMessage="Finished" />) }
+            { isRefunded && (<FormattedMessage id="RowHistory77" defaultMessage="Refunded" />) }
+            { isStoppedSwap && (<FormattedMessage id="RowHistory139" defaultMessage="Stopped" />) }
+            { !isDeletedSwap && (canBeRefunded
+                ? (
+                  <Timer
+                    lockTime={values.lockTime * 1000}
+                    enabledButton={this.tryRefund}
+                  />
+                )
+                : (
+                  <FormattedMessage id="RowHistory76" defaultMessage="Refund not available" />
+                )
               )
-              : (
-                <FormattedMessage id="RowHistory76" defaultMessage="Refund not available" />
-              )
-            )
-          }
+            }
+          </p>
         </td>
         <td>
-          { lockDateAndTime.split(' ').map((item, key) => <Fragment key={key}>{item}<br /></Fragment>) }
+          <span>Lock time</span>
+          { lockDateAndTime.split(' ').map((item, key) => <Fragment key={key}>{' '}{item}</Fragment>) }
         </td>
         <td>
+          <span>Link</span>
           <Link to={`${linkToTheSwap}`} onClick={this.closeIncompleted}>
-            <FormattedMessage id="RowHistory91" defaultMessage="Link to the swap" />
+            <FormattedMessage id="RowHistory91" defaultMessage="Link" />
           </Link>
         </td>
       </tr>

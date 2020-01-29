@@ -44,12 +44,13 @@ const sign = async () => {
   }
   // await actions.nimiq.login(_ethPrivateKey)
 
-  const getReputation = actions.user.getReputation()
+  // const getReputation = actions.user.getReputation()
 
   await getReputation()
 }
 
 const getReputation = async () => {
+  
   const btcReputationPromise = actions.btc.getReputation()
   const ethReputationPromise = actions.eth.getReputation()
 
@@ -143,10 +144,12 @@ const getDemoMoney = process.env.MAINNET ? () => { } : () => {
 const getInfoAboutCurrency = (currencyNames) => 
 
   new Promise((resolve, reject) => {
-    const url = 'https://noxon.io/cursAll.php';
+    const url = 'https://noxon.wpmix.net/cursAll.php';
     reducers.user.setIsFetching({ isFetching: true })
 
-    request.get(url).then((data) => {
+    request.get(url, {
+      cacheResponse: 60*60*1000, // кеш 1 час
+    }).then((data) => {
       data.map(currencyInfoItem => {
         if (currencyNames.includes(currencyInfoItem.symbol)) {
           switch(currencyInfoItem.symbol) {
@@ -161,11 +164,11 @@ const getInfoAboutCurrency = (currencyNames) =>
           }
         }
       })
-      reducers.user.setIsFetching({ isFetching: false })
+     
       resolve(true);
     }).catch((error) => {
       reject(error)
-    })
+    }).finally( () =>  reducers.user.setIsFetching({ isFetching: false }))
   })
 
 const pullTransactions = transactions => {

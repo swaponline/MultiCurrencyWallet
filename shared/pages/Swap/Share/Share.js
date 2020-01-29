@@ -10,7 +10,7 @@ import { FormattedMessage } from 'react-intl'
 
 const Share = ({ flow }) => (
   flow.step >= 5 && (
-    <Href tab="https://twitter.com/intent/tweet?url=https://swap.online/&text=I%20just%20make%20swap%20on%20&hashtags=AtomicSwap,DEX,Bitcoin,SWAP&via=SwapOnlineTeam">
+    <Href tab="https://twitter.com/intent/tweet?url=https://swaponline.io/&text=I%20just%20make%20swap%20on%20&hashtags=AtomicSwap,DEX,Bitcoin,SWAP&via=SwapOnlineTeam">
       <Button brand>
         <FormattedMessage id="Share" defaultMessage="Share Twitter" />
       </Button>
