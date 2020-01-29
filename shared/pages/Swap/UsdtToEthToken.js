@@ -227,7 +227,7 @@ export default class UsdtToEthToken extends Component {
                     {
                       flow.refundTxHex && (
                         <div>
-                          <a href="https://wiki.swap.online/faq/my-swap-got-stuck-and-my-bitcoin-has-been-withdrawn-what-to-do/" target="_blank" rel="noopener noreferrer">
+                          <a href="https://wiki.swaponline.io/faq/my-swap-got-stuck-and-my-bitcoin-has-been-withdrawn-what-to-do/" target="_blank" rel="noopener noreferrer">
                             <FormattedMessage id="UsdrToEthToken213" defaultMessage=" How to refund your money?" />
                           </a>
                         )}

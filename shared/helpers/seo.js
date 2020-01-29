@@ -4,8 +4,8 @@ const seo = {
     twitter: 'https://twitter.com/SwapOnlineTeam',
     facebook: 'https://www.facebook.com/SwapOnlineTeam',
     telegram: 'https://t.me/swaponlineint',
-    email: 'info@swap.online',
-    mainUrl: 'https://swap.online',
+    email: 'info@swaponline.io',
+    mainUrl: 'https://swaponline.io',
     logo: 'https://screenshots.wpmix.net/chrome_2019-03-28_18-55-506746c4c5-44e6-4bb5-89cb-52ce8fabcedf.png',
   },
   pages: [
@@ -147,7 +147,7 @@ const seo = {
       title: 'Bitcoin (BTC) Web Wallet with Atomic Swap.',
       description: 'Swap.Online Bitcoin Wallet will allow you to exchange your coins using Atomic Swap technology.',
       h1: 'Your online Bitcoin (BTC) web wallet with Atomic Swap.',
-      footer: `Use Swap.Online as your safe and high-performance Bitcoin wallet. Firstly, you need to open https://swap.online/  in your browser.
+      footer: `Use Swap.Online as your safe and high-performance Bitcoin wallet. Firstly, you need to open https://swaponline.io/  in your browser.
         Secondly, please, download your private and public key-pair for the Bitcoin network and save it somewhere in the reliable place.
         In case of your failure to access your Bitcoin account, no one will be able to help you to restore your funds.
         With the key downloaded and saved, you can start to store, send, receive and exchange Bitcoin.
