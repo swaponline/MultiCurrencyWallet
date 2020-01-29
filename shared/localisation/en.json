@@ -6508,6 +6508,13 @@
     ]
   },
   {
+    "id": "ImportFromSwapOnlineBtn",
+    "message": "Import from swap.online",
+    "files": [
+      "shared/pages/CreateWallet/CreateWallet.js"
+    ]
+  },
+  {
     "id": "ExchangeBtn",
     "message": "Exchange",
     "files": [
