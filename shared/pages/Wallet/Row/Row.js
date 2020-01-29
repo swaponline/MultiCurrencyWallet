@@ -534,7 +534,7 @@ export default class Row extends Component {
                       <FormattedMessage
                         id="RowWallet276"
                         defaultMessage=" node is down (You can not perform transactions). " />
-                      <a href="https://wiki.swap.online/faq/bitcoin-node-is-down-you-cannot-make-transactions/">
+                      <a href="https://wiki.swaponline.io/faq/bitcoin-node-is-down-you-cannot-make-transactions/">
                         <FormattedMessage
                           id="RowWallet282"
                           defaultMessage="Need help?" />
