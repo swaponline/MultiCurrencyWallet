@@ -171,7 +171,15 @@ export default class Wallet extends Component {
     if (url.includes('withdraw')) {
       this.handleWithdraw(params)
     }
+    this.getInfoAboutCurrency();
     this.setLocalStorageItems();
+  }
+
+  getInfoAboutCurrency = async () => {
+    const { currencies } = this.props;
+    const currencyNames = currencies.map(({ name }) => name)
+
+    await actions.user.getInfoAboutCurrency(currencyNames);
   }
 
   handleNavItemClick = (index) => {

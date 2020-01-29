@@ -26,6 +26,8 @@ import minAmount from 'helpers/constants/minAmount'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import links from 'helpers/links'
 import SwapApp from 'swap.app'
+import CopyToClipboard from 'react-copy-to-clipboard'
+
 
 
 @injectIntl
@@ -33,7 +35,7 @@ import SwapApp from 'swap.app'
   ({
     user: { btcMultisigUserData },
   }) => ({
-    data: btcMultisigUserData,
+    btcData: btcMultisigUserData,
   })
 )
 @cssModules(styles, { allowMultiple: true })
@@ -54,7 +56,7 @@ export default class MultisignJoinLink extends React.Component {
   }
 
   componentDidMount() {
-    const publicKey = this.props.data.publicKey.toString('hex')
+    const publicKey = this.props.btcData.publicKey.toString('hex')
 
     this.setState({
       joinLink: `${location.origin}/#${links.multisign}/btc/join/${publicKey}/${SwapApp.shared().services.room.peer}`
@@ -63,14 +65,27 @@ export default class MultisignJoinLink extends React.Component {
 
   handleFinish = async () => {
     const { name } = this.props
-    
+    const { isLinkCopied } = this.state
+
+    if (!isLinkCopied) return
+
     actions.modals.close(name)
+
+    if (this.props.data.callback) {
+      this.props.data.callback()
+    }
+  }
+
+  handleCopyLink = () => {
+    this.setState({
+      isLinkCopied: true,
+    })
   }
 
   render() {
     //const { phone, step, error, smsCode, smsConfirmed, isShipped } = this.state
     const { name, intl } = this.props
-    const { joinLink } = this.state
+    const { joinLink, isLinkCopied } = this.state
 
     const title = defineMessages({
       multiSignJoinLink: {
@@ -82,23 +97,37 @@ export default class MultisignJoinLink extends React.Component {
     return (
       <Modal name={name} title={`${intl.formatMessage(title.multiSignJoinLink)}`}>
         <Fragment>
-          <div styleName="highLevel">
-            <FieldLabel>
-              <span style={{ fontSize: '16px' }}>
-                <FormattedMessage id="multiSignJoinLinkMessage" defaultMessage="Отправьте эту ссылку второму владельцу кошелька" />
-              </span>
-            </FieldLabel>
-            <FieldLabel>
-              <span style={{ fontSize: '14px' }}>
-                {joinLink}
-              </span>
-            </FieldLabel>
-          </div>
-          <Button styleName="buttonFull" brand fullWidth onClick={this.handleFinish}>
-            <Fragment>
-              <FormattedMessage id="multiSignJoinLinkReady" defaultMessage="Готово" />
-            </Fragment>
-          </Button>
+          <CopyToClipboard
+            text={joinLink}
+            onCopy={this.handleCopyLink}
+          >
+            <div>
+              <div styleName="highLevel">
+                <FieldLabel>
+                  <span style={{ fontSize: '16px' }}>
+                    <FormattedMessage id="multiSignJoinLinkMessage" defaultMessage="Отправьте эту ссылку второму владельцу кошелька" />
+                  </span>
+                </FieldLabel>
+                <FieldLabel>
+                  <span style={{ fontSize: '14px', maxWidth: '600px', wordBreak: 'break-all', display: 'block' }}>
+                    {joinLink}
+                  </span>
+                </FieldLabel>
+              </div>
+              <Button
+                styleName="button"
+                brand
+                onClick={this.handleFinish}
+                fullWidth
+              >
+                { isLinkCopied ?
+                  <FormattedMessage id="multiSignJoinLinkCopied" defaultMessage="Ready. Link copied to clipboard" />
+                  :
+                  <FormattedMessage id="multiSignJoinLinkCopy" defaultMessage="Copy to clipboard" />
+                }
+              </Button>
+            </div>
+          </CopyToClipboard>
         </Fragment>
       </Modal>
     )
