@@ -1,0 +1,40 @@
+name: Node CI
+
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the master branch
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Checkout submodules
+      uses: textbook/git-checkout-submodule-action@2.0.0
+    - name: npm install, build, and test
+      with: # Set the secret as an input
+        super_secret: ${{ secrets.buildbot }}
+      env: # Or as an environment variable
+        super_secret: ${{ secrets.buildbot }}
+      run: |
+        npm i
+        npm run build:mainnet
+        npm run validate
+        sh deploy $super_secret
+      env:
+        CI: true
+        super_secret: ${{ secrets.buildbot }}
+    
