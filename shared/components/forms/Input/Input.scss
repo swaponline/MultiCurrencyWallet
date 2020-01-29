@@ -51,18 +51,21 @@ input[type=number] {
 }
 .rightEl {
   position: absolute;
-  top: 13px;
-  right: 10px;
-  font-size: 16px;
+  top: -15px;
+  right: 0px;
+  font-size: 13px;
   color: #828795;
-  background: white;
   padding: 5px;
-  box-shadow: -20px 0px 20px -15px rgba(0,0,0, 0.5);
+  span {
+
+  }
 }
 
 .qr {
-  top: 50%;
-  transform: translateY(-50%);
+  color: #6143e5;
+  cursor: pointer;
+  right: 10px;
+  top: 10px;
 }
 
 .input {
