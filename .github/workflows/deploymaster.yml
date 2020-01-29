@@ -29,6 +29,8 @@ jobs:
         npm i
         npm run build:mainnet
         npm run validate
+        git config --global user.email "bot@swaponline.io"
+        git config --global user.name "buildbot"
         sh deploy $super_secret
       env:
         CI: true
