@@ -8,11 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta property="og:image"
     content="https://screenshots.wpmix.net/chrome_2019-03-28_18-55-506746c4c5-44e6-4bb5-89cb-52ce8fabcedf.png">
-  <link rel="stylesheet" href="https://swap.online/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" type="text/css" charset="UTF-8"
-    href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
-  <link rel="stylesheet" type="text/css"
-    href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
     integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
@@ -108,29 +104,234 @@
     }
   </style>
 
-  <link rel="stylesheet" href="https://swap.online/dist/css/swap.css?v=1.93">
+<!-- Start Modal Style -->
+<style>
+.starter-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  height: 100%;
+  padding: 50px 0;
+  overflow: auto;
+  z-index: 999999999999999999;
+}
+.starter-modal h2 {
+  margin: 0;
+  padding: 15px 0;
+  max-width: 650px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.swiper-container {
+  width: 100%;
+  height: 100%;
+}
+.starter-modal {
+  padding: 0;
+}
+.starter-modal .swiper-slide {
+  overflow: hidden;
+  position: relative;
+}
+.starter-modal .swiper-slide .container {
+  box-sizing: border-box;
+  position: relative;
+  text-align: center;
+}
+.swiper-button-prev,
+.swiper-button-next {
+  top: auto;
+  cursor: pointer;
+  color: #7371ff;
+  background-color: #f0eefd;
+  background-image: none;
+  bottom: 30px;
+  border-radius: 50rem;
+  width: auto;
+  min-width: 160px;
+  padding: 10px 25px;
+  height: auto;
+  text-align: center;
+  transition: all .3s;
+}
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+  cursor: pointer;
+  color: #e91db4;
+  background-color: #fde8f7;
+}
+.swiper-button-prev:focus,
+.swiper-button-next:focus {
+  outline: none;
+}
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  content: none;
+}
+.swiper-button-next {
+  right: auto;
+  left: 50%;
+  margin-left: 15px;
+} 
+.swiper-button-prev {
+    right: 50%;
+    left: auto;
+  margin-right: 15px;
+}
+.swiper-button-prev > i {
+  margin-right: 10px;
+}
+.swiper-button-next > i {
+  margin-left: 10px;
+}
+.swiper-button-next.swiper-button-disabled,
+.swiper-button-prev.swiper-button-disabled {
+  opacity: .2;
+}
+.starter-modal-close {
+  display: block;
+  position: absolute;
+  z-index: 1111111111111111;
+  top: 15px;
+  right: 15px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  transform: rotate(45deg);
+  border-radius: 50rem;
+  color: #7371ff;
+}
+.starter-modal-close:before,
+.starter-modal-close:after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 2px;
+  border-radius: 1px;
+  background-color: #3c3f43;
+  position: absolute;
+  top: 50%;
+  margin-top: -1px;
+}
+.starter-modal-close:before {
+  transform: rotate(90deg);
+}
+.starter-modal-close:hover:before,
+.starter-modal-close:hover:after {
+  background-color: currentColor;
+}
+.starter-modal:not(.d-none) + #root {
+  display: none;
+}
+@media (min-width: 992px){
+  .container {
+    max-width: 800px;
+  }
+}
+@media (max-width: 991px) {
+  .starter-modal .swiper-slide h2 br,
+  .starter-modal .swiper-slide p br {
+    display: none;
+  }
+}
+@media (max-width: 767px) {
+  .starter-modal-container {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .starter-modal > .container {
+    height: auto;
+  }
+  .starter-modal h2 {
+    font-size: 24px;
+  }
+}
+@media (max-width: 400px) {
+  .swiper-button-prev,
+  .swiper-button-next {
+    min-width: initial;
+  }
+}
+</style>
+<!-- End Modal Style -->
 
 </head>
 
 <body>
 
-  <div class="starter-modal d-none" id="starter-modal">
-    <div class="container">
-      <div class="starter-modal-container d-flex flex-column h-100 justify-content-around">
-        <div class="text-center mb-4 mt-4 position-relative">
-          <span class="swap-wait-loading" id="swap-wait-loading">
-            <div class="swap-ellipsis">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-            <span id="swap-loading-text">Loading... It may take one minute (next time it will be faster)</span>
-          </span>
+<!-- Start Modal -->
+<div class="starter-modal d-none" id="starter-modal">
+  
+  <div class="starter-modal-container d-flex flex-column h-100 justify-content-around">
+
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+
+          <div class="swiper-slide">
+            <div class="container h-100 d-flex flex-column justify-content-center align-items-center">
+              <h2 class="mb-3"></h2>
+              <p></p>
+            </div><!-- .container -->
+          </div><!-- .swiper-slide -->
+      
+          <div class="swiper-slide">
+            <div class="container h-100 d-flex flex-column justify-content-center align-items-center">
+              <h2 class="mb-3"></h2>
+              <p></p>
+            </div><!-- .container -->
+          </div><!-- .swiper-slide -->
+
+          <div class="swiper-slide">
+            <div class="container h-100 d-flex flex-column justify-content-center align-items-center">
+              <h2 class="mb-3"></h2>
+              <p></p>
+            </div><!-- .container -->
+          </div><!-- .swiper-slide -->
+          
+          <div class="swiper-slide">
+            <div class="container h-100 d-flex flex-column justify-content-center align-items-center">
+              <h2 class="mb-3"></h2>
+              <p></p>
+            </div><!-- .container -->
+          </div><!-- .swiper-slide -->
+          
+          <div class="swiper-slide">
+            <div class="container h-100 d-flex flex-column justify-content-center align-items-center">
+              <h2 class="mb-3"></h2>
+              <p></p>
+            </div><!-- .container -->
+          </div><!-- .swiper-slide -->
+          
+          <div class="swiper-slide">
+            <div class="container h-100 d-flex flex-column justify-content-center align-items-center">
+              <h2 class="mb-3"></h2>
+              <div>
+                <button class="btn btn-primary btn-create-wallet btn-close-modal">Создать кошелек</button>
+              </div>
+            </div><!-- .container -->
+          </div><!-- .swiper-slide -->
+
+        </div><!-- .swiper-wrapper -->
+
+        <div class="swiper-button-prev btn-prev">
+          <i class="fas fa-chevron-left"></i>
+          <span></span>
         </div>
-      </div>
-    </div>
-  </div>
+        <div class="swiper-button-next btn-next">
+          <span></span>
+          <i class="fas fa-chevron-right"></i>
+        </div>
+
+    </div><!-- .swiper-container -->
+
+  </div><!-- .starter-modal-container -->
+  <span class="starter-modal-close btn-close-modal"></span>
+</div><!-- .starter-modal -->
+<!-- End Modal -->
 
   <div id="root">
     <!-- Loader before any JS -->
@@ -233,6 +434,156 @@
     </script>
     <script>window.prerenderReady = false;</script>
     <!-- /Loader before any JS -->
+    
+<!-- Start Modal Scripts -->
+<script>
+  /**
+   * Swap get Hour, Day and Month in seconds
+   */
+  var swapGetHourSec  = 60 * 60,
+    swapGetDaySec   = swapGetHourSec * 24,
+    swapGetWeekSec  = swapGetDaySec * 7,
+    swapGetMonthSec = swapGetDaySec * 30,
+    swapGetYearSec  = swapGetMonthSec * 12;
+  /** Swap Modal */
+  var swapDisalbeStarter = getCookie('swapDisalbeStarter');
+  // Open modal foo
+  function swapOpenStarterModal(){
+    document.getElementById('starter-modal').classList.remove('d-none');
+    document.body.classList.add('overflow-hidden');
+  }
+  // Close modal foo
+  function swapCloseStarterModal(){
+    document.getElementById('starter-modal').classList.add('d-none');
+    document.body.classList.remove('overflow-hidden');
+  }
+  // Open modal if cookie false
+  if( swapDisalbeStarter != 'true' ){
+    swapOpenStarterModal();
+  } 
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js" integrity="sha256-4sETKhh3aSyi6NRiA+qunPaTawqSMDQca/xLWu27Hg4=" crossorigin="anonymous"></script>
+<script>
+  // Swiper init
+  var starterSwiper = new Swiper ('.swiper-container', {
+    // Navigation arrows
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+  });
+
+  /** Multilangual Content */
+  var swap_l10n = {
+    "screens": {
+      0: { 
+        "title": {
+          "en": "Hot wallet for professionals.",
+          "ru": "Горячий кошелек для профессионалов.",
+        },
+        "desc" : {
+          "en": "Store and send Bitcoin and other cryptocurrencies without installing a wallet",
+          "ru": "Храните и отправляйте биткоин и другие криптовалюты без установки кошелька",
+        },
+      },
+      1: { 
+        "title": {
+          "en": "2fa payment authorization",
+          "ru": "2fa авторизация платежей",
+        },
+        "desc" : {
+          "en": "You can use your personal Google Cloud 2fa server or use ours for verifying transactions through sms, Google authorization, and fingerprints (in the near future).",
+          "ru": "Вы можете развернуть собственный 2fa сервер в Google Cloud или использовать наш для подтверждения транзакций через SMS, google auth или отпечатком пальца (в будущем).",
+        },
+      },
+      2: { 
+        "title": {
+          "en": "Invoices - easy way for payments<br> in Bitcoin",
+          "ru": "Инвойсы - удобный запрос и оплата работы биткоином",
+        },
+        "desc" : {
+          "en": "In swap.online we use this system for payments within our remote team. Each contributor fills-out an invoice form, which includes the amount and description of the service provided.<br> CEO confirms the payment in one click.",
+          "ru": "Мы сами используем эту систему для взаиморасчетов в нашей remote team. Каждый сам вписывает сумму и описание, а CEO подтверждает оплату одним кликом.",
+        },
+      },
+      3: { 
+        "title": {
+          "en": "[Co-management / Shared control]<br> of a Bitcoin account",
+          "ru": "Совместное управление биткоин счетом",
+        },
+        "desc" : {
+          "en": "Use a joint-wallet for a secure storage of big sums.<br> For example, we have a shared account with our investor",
+          "ru": "Используйте совместный кошелек для безопасного хранения большой суммы (например мы используем его с инвестором)",
+        },
+      },
+      4: { 
+        "title": {
+          "en": "Issue, store, and sell your custom<br> crypto-assets.",
+          "ru": "Выпускайте, храните и продавайте кастомные ассеты",
+        },
+        "desc" : {
+          "en": "For example we use SWAP tokens as part of a payment to our globally set team.<br> By doing so we’ve saved $20 000.",
+          "ru": "Например мы используем SWAP токен как часть оплаты в нашей распределенной команде (в счет будущей прибыли), таким образом сэкономили $20 000",
+        },
+      },
+      5: { 
+        "title": {
+          "en": "Start by creating a bitcoin wallet.",
+          "ru": "Начните с создания биткоин кошелька",
+        },
+        "desc" : {
+          "en": "",
+          "ru": "",
+        },
+      },
+    },
+    "buttons": {
+      "wallet": {
+        "en": "Create wallet",
+        "ru": "Создать кошелек",
+      },
+      "next": {
+        "en": "Next",
+        "ru": "Далее",
+      },
+      "prev": {
+        "en": "Back",
+        "ru": "Назад",
+      }
+    }
+  };
+
+  // Add text to each screen
+  let swapScreens = swap_l10n.screens;
+  Object.keys(swapScreens).forEach(function (key) {
+    var nthChild = parseInt(key) + 1;
+    var thisScreenTitle = document.querySelectorAll('.swiper-wrapper .swiper-slide:nth-child(' + nthChild + ') h2');
+    var thisScreenDesc = document.querySelectorAll('.swiper-wrapper .swiper-slide:nth-child(' + nthChild + ') p');
+    if( thisScreenTitle[0] ){
+      thisScreenTitle[0].innerHTML = swapScreens[key].title[lang];
+    }
+    if( thisScreenDesc[0] ){
+      thisScreenDesc[0].innerHTML = swapScreens[key].desc[lang];
+    }
+  });
+
+  // Add text to buttons
+  document.querySelectorAll('.btn-create-wallet')[0].innerHTML = swap_l10n.buttons.wallet[lang];
+  document.querySelectorAll('.swiper-button-prev > span')[0].innerHTML = swap_l10n.buttons.prev[lang];
+  document.querySelectorAll('.swiper-button-next > span')[0].innerHTML = swap_l10n.buttons.next[lang];
+
+  // Close modal on click
+  document.querySelectorAll('.btn-close-modal').forEach(item => {
+    item.addEventListener('click', function(){
+      swapCloseStarterModal();
+      setCookie('swapDisalbeStarter', 'true', { expires: swapGetYearSec * 5 } );
+      console.log('este');
+    });
+  });
+  
+</script>
+<!-- End Modal Scripts -->
+  
   </div>
   <div id="portal"></div>
 </body>
