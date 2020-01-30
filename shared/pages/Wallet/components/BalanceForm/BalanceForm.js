@@ -21,7 +21,7 @@ function BalanceForm({ usdBalance, currencyBalance, handleReceive, handleWithdra
   }
 
   return (
-    <div styleName="yourBalance">
+    <div styleName={(isWidgetBuild && !config.isFullBuild) ? 'yourBalance widgetBuild' : 'yourBalance'}>
       <div styleName="yourBalanceTop">
         <p styleName="yourBalanceDescr">
           <FormattedMessage id="Yourtotalbalance" defaultMessage="Ваш общий баланс" />

@@ -33,12 +33,39 @@ git push --force
 # return back to root
 cd ..
 
-echo "Create pull request at"
-echo
-echo "    https://github.com/swaponline/swaponline.github.io/compare/master...deploy"
-echo
+#####WIDGETS
+npm run build:mainnet-widget
+npm run build:testnet-widget
 
+git clone https://sorentobot:$1@github.com/swaponline/widget.build.git
+cd widget.build
+git checkout master
+git fetch origin
+git reset --hard origin/master
 
-if [ $GITHUB_TOKEN ]; then
-  curl -u caffeinum:$GITHUB_TOKEN -X POST https://api.github.com/repos/swaponline/swaponline.github.io/pulls -d '{"title":"build","head":"deploy","base":"master"}'
-fi
+rm -rf ./build-mainnet-widget/assets
+rm -rf ./build-mainnet-widget/images
+rm -rf ./build-mainnet-widget/fonts
+rm -rf ./build-mainnet-widget/*.css
+rm -rf ./build-mainnet-widget/*.js
+
+rm -rf ./build-testnet-widget/assets
+rm -rf ./build-testnet-widget/images
+rm -rf ./build-testnet-widget/fonts
+rm -rf ./build-testnet-widget/*.css
+rm -rf ./build-testnet-widget/*.js
+
+cp -rf ../build-mainnet-widget/* ./build-mainnet-widget/
+cp -rf ../build-testnet-widget/* ./build-testnet-widget/
+
+DATE=`date '+%Y-%m-%d %H:%M:%S'`
+git add .
+git commit -m "build $DATE"
+git push --force
+
+# return back to root
+cd ..
+
+#if [ $GITHUB_TOKEN ]; then
+#  curl -u caffeinum:$GITHUB_TOKEN -X POST https://api.github.com/repos/swaponline/swaponline.github.io/pulls -d '{"title":"build","head":"deploy","base":"master"}'
+#fi

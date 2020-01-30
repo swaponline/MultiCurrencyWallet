@@ -203,7 +203,7 @@
       // detect browser's lang
       if(!lang) {
         var browserLang = getNavigatorLanguage();
-        lang = browserLang.indexOf('ru-') > -1? 'ru' : 'en';
+        lang = browserLang.indexOf('ru') > -1? 'ru' : 'en';
         setCookie('mylang', lang);
       }
       
