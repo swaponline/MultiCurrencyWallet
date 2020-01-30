@@ -173,11 +173,16 @@ export default class CurrencyWallet extends Component {
     })
   }
 
-  handleGoTrade = (currency) => {
-    const { intl: { locale } } = this.props
-    const whatDoUserProbablyWantToBuy = currency.toLowerCase()
+  handleGoWalletHome = () => {
+    const { history, intl: { locale } } = this.props
 
-    this.props.history.push(localisedUrl(locale, `${links.exchange}/${currency.toLowerCase()}-to-${whatDoUserProbablyWantToBuy}`))
+    history.push(localisedUrl(locale, links.wallet))
+  }
+
+  handleGoTrade = () => {
+    const { history, intl: { locale } } = this.props
+
+    history.push(localisedUrl(locale, links.pointOfSell))
   }
 
   rowRender = (row) => (
@@ -202,6 +207,7 @@ export default class CurrencyWallet extends Component {
     swapHistory = Object.keys(swapHistory)
       .map(key => swapHistory[key])
       .filter(swap => swap.sellCurrency === currency || swap.buyCurrency === currency)
+      .reverse()
 
     const seoPage = getSeoPage(location.pathname)
 
@@ -266,6 +272,23 @@ export default class CurrencyWallet extends Component {
           handleNotifyBlockClose={this.handleNotifyBlockClose}
           {...this.state}
         />
+        <h3 styleName="title">
+          <FormattedMessage id="CurrencyWalletTitle" defaultMessage="Активность" />
+        </h3>
+        { isWidgetBuild && !config.isFullBuild && (
+          <ul styleName="widgetNav">
+            <li styleName="widgetNavItem" onClick={this.handleGoWalletHome}>
+              <a href styleName="widgetNavItemLink">
+                <FormattedMessage id="MybalanceswalletNav" defaultMessage="Мой баланс" />
+              </a>
+            </li>
+            <li styleName="widgetNavItem active">
+              <a href styleName="widgetNavItemLink">
+                <FormattedMessage id="currencyWalletActivity" defaultMessage="Активность {currency}" values={{ fullName, currency }} />
+              </a>
+            </li>
+          </ul>
+        )}
         <Fragment>
           <div styleName="currencyWalletWrapper">
             <div styleName="currencyWalletBalance">
@@ -276,7 +299,8 @@ export default class CurrencyWallet extends Component {
                     usdBalance={currencyUsdBalance} 
                     changePercent={changePercent}
                     handleReceive={this.handleReceive} 
-                    handleWithdraw={this.handleWithdraw} 
+                    handleWithdraw={this.handleWithdraw}
+                    handleExchange={this.handleGoTrade}
                     currency={currency.toLowerCase()} 
                 /> : <ContentLoader leftSideContent />
               }
