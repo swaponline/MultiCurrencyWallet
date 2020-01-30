@@ -5121,7 +5121,7 @@
   },
   {
     "id": "createWalletHeader1",
-    "message": "Создайте кошелек в два простых шага",
+    "message": "Создайте кошелек",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
     ]

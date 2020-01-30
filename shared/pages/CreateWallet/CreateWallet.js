@@ -162,8 +162,8 @@ const CreateWallet = (props) => {
               defaultMessage="Импортировать"
             />
           </button>
-          <br/>
-          <a href="/importFromSwapOnline.html" className="text-danger">
+         <br />
+          <a href="/importFromSwapOnline.html" styleName="link-import" className="text-danger">
             <FormattedMessage
               id="ImportFromSwapOnlineBtn"
               defaultMessage="Import from swap.online"
@@ -176,15 +176,7 @@ const CreateWallet = (props) => {
             />
           </button>
         </div>
-        {isMobile &&
-          <div styleName="inLine steps">
-            {steps.map(el => (
-              <div styleName={`stepNumber ${color(step, el)}`}>
-                {step > el ? check() : el}
-              </div>
-            ))}
-          </div>
-        }
+        
         {singleCurrecnyData ?
           <SecondStep error={error} onClick={validate} currencies={currencies} setError={setError} singleCurrecnyData /> :
           <div>
