@@ -1,28 +1,39 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import cx from 'classnames'
+import React from "react";
+import PropTypes from "prop-types";
+import cx from "classnames";
 
-import cssModules from 'react-css-modules'
-import styles from './Button.scss'
+import cssModules from "react-css-modules";
+import styles from "./Button.scss";
 
-
-const Button = (props) => {
+const Button = props => {
   const {
-    children, className,
-    fullWidth, brand, transparent, blue, green, white, gray, disabled,
-    onClick, id = '', dataTut,
-  } = props
+    children,
+    className,
+    fullWidth,
+    brand,
+    transparent,
+    blue,
+    green,
+    white,
+    gray,
+    disabled,
+    big,
+    onClick,
+    id = "",
+    dataTut
+  } = props;
 
-  const styleName = cx('button', {
-    'fullWidth': fullWidth,
-    'brand': brand,
-    'transparent': transparent,
-    'green': green,
-    'blue': blue,
-    'white': white,
-    'gray': gray,
-    'disabled': disabled,
-  })
+  const styleName = cx("button", {
+    fullWidth: fullWidth,
+    brand: brand,
+    transparent: transparent,
+    green: green,
+    blue: blue,
+    white: white,
+    gray: gray,
+    big: big,
+    disabled: disabled
+  });
 
   return (
     <button
@@ -32,12 +43,13 @@ const Button = (props) => {
       onClick={onClick}
       id={id}
       disabled={disabled}
-      data-tip data-for={id}
+      data-tip
+      data-for={id}
     >
       {children}
     </button>
-  )
-}
+  );
+};
 
 Button.propTypes = {
   children: PropTypes.any,
@@ -49,7 +61,7 @@ Button.propTypes = {
   blue: PropTypes.bool,
   gray: PropTypes.bool,
   disabled: PropTypes.bool,
-  onClick: PropTypes.func,
-}
+  onClick: PropTypes.func
+};
 
-export default cssModules(Button, styles, { allowMultiple: true })
+export default cssModules(Button, styles, { allowMultiple: true });
