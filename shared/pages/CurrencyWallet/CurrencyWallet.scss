@@ -130,6 +130,42 @@
   margin-right: .5rem;
 }
 
+.title {
+  font-weight: 800;
+  font-size: 40px;
+  display: inline-block;
+  line-height: 120%;
+  color: #1F2D48;
+  margin-bottom: 30px;
+  padding: 0px;
+  margin-top: -10px;
+}
+
+.widgetNav {
+  padding: 0;
+  margin-top: 60px;
+  margin-bottom: 0px;
+}
+
+.widgetNavItem {
+  display: inline-block;
+  margin-right: 40px;
+}
+
+.widgetNavItem.active {
+  a {
+    border-bottom: 3px solid #6144E5;
+    color: #1F2D48!important;
+  }
+}
+.widgetNavItemLink {
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 140%;
+  padding-bottom: 10px;
+  color: #8E9AA3!important;
+}
+
 @include media-tablet-landscape-and-lower {
   .info {
     display: block;
