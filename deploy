@@ -49,13 +49,13 @@ rm -rf ./build-mainnet-widget/fonts
 rm -rf ./build-mainnet-widget/*.css
 rm -rf ./build-mainnet-widget/*.js
 
-rm -rf ./build-testnet-widget-widget/assets
+rm -rf ./build-testnet-widget/assets
 rm -rf ./build-testnet-widget/images
 rm -rf ./build-testnet-widget/fonts
 rm -rf ./build-testnet-widget/*.css
 rm -rf ./build-testnet-widget/*.js
 
-cp -rf ../build-testnet-widget/* ./build-testnet-widget/
+cp -rf ../build-mainnet-widget/* ./build-mainnet-widget/
 cp -rf ../build-testnet-widget/* ./build-testnet-widget/
 
 DATE=`date '+%Y-%m-%d %H:%M:%S'`
