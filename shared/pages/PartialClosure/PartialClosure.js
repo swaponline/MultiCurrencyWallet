@@ -1228,7 +1228,7 @@ export default class PartialClosure extends Component {
             )
           }
           <div styleName="rowBtn" className={isWidget ? 'rowBtn' : ''}>
-            <Button className="data-tut-Exchange" styleName="button" brand onClick={this.handleGoTrade} disabled={!canDoOrder}>
+            <Button className="data-tut-Exchange" styleName="button" blue onClick={this.handleGoTrade} disabled={!canDoOrder}>
               <FormattedMessage id="partial541" defaultMessage="Exchange now" />
             </Button>
             <Button className="data-tut-Orderbook" styleName="button buttonOrders" gray onClick={() => this.handlePush(isWidgetLink)} >

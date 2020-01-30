@@ -1,3 +1,5 @@
+![Deploy to swaponline.github.io](https://github.com/swaponline/swap.react/workflows/Deploy%20to%20swaponline.github.io/badge.svg)
+
 ## swap.online
 
 Atomic swap cryptocurrency protocol. Live version here: https://swaponline.github.io . Atomic swap library at http://github.com/swaponline/swap.core.

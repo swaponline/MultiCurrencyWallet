@@ -1,7 +1,9 @@
 .note {
-  font-size: 14px;
-  color: #aaa;
-  padding-top: 10px;
+  font-size: 13px;
+  margin-top: -25px;
+  margin-bottom: 30px;
+  color: #8E9AA3;
+  font-family: 'Inter-Regular';
 }
 
 .r-tooltip {
@@ -25,20 +27,28 @@
 
 .balance {
   position: absolute;
-  right: 6em;
-  top: -0.2em;
+  right: 73px;
+  top: 5px;
   padding: 0 10px 0 25px;
   background-color: white;
   text-align: left;
   font-size: 13px;
   z-index: 1;
-  color: #b5b5b5;
-  font-family: 'Roboto Mono', monospace;
+  color: #aaa;
+  /* color: #b5b5b5; */
+  color: #8E9AA3;
+  font-family: 'Inter-Regular';
 }
 
 .notice {
-  font-size: 16px;
+  font-weight: 800;
+  line-height: 140%;
+  color: #8E9AA3;
+  font-family: 'Inter-Bold';
+  width: 78%;
   text-align: center;
+  margin: auto;
+  margin-bottom: 60px;
 }
 
 .rednotes {
@@ -75,44 +85,18 @@
   display: block;
 }
 
-.button {
-  height: 68px;
-  width: 80px;
-  border-bottom-left-radius: 0;
-  border-top-left-radius: 0;
-  vertical-align: middle;
-  color: #7c1de9;
-  background: #f8f3fe;
-  box-shadow: rgba(0, 0, 0, 0.08) 0 3px 9px 0;
-  cursor: pointer;
-  line-height: 60px;
-  text-transform: uppercase;
-  text-align: center;
-  border-color: black;
-  display: block;
-  font-size: 18px;
-  border-radius: 3px;
-  &:hover {
-    color: #7c1de9;
-    background: #dfc5ff;
-  }
-
-}
-
 .downLabel {
   position: absolute;
   top: 0.5em;
 }
 
 .highLevel {
-  top: 3em;
   position: relative;
-  padding-bottom: 5em;
 }
 
 .lowLevel {
   position: relative;
-  padding-bottom: 10%;
+
 }
 
 @include media-mobile {

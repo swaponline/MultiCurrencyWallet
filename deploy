@@ -6,7 +6,7 @@ npm run build:mainnet https://swaponline.github.io/
 
 # update repo or clone
 
-git clone https://caffeinum:$GITHUB_TOKEN@github.com/swaponline/swaponline.github.io.git
+git clone https://sorentobot:$1@github.com/swaponline/swaponline.github.io.git
 cd swaponline.github.io
 git checkout master
 git fetch origin

@@ -3578,7 +3578,7 @@
   },
   {
     "id": "Withdrow213",
-    "message": "Пожалуйста, обратите внимание: комиссия майнеров {minAmount} {data}.{br}Ваш баланс должен превышать эту сумму для совершения транзакции.",
+    "message": "Пожалуйста, обратите внимание: Комиссия {minAmount} {data}.{br}Ваш баланс должен превышать эту сумму для совершения транзакции.",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",

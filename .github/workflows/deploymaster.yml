@@ -1,0 +1,37 @@
+name: Deploy to swaponline.github.io
+
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the master branch
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Checkout submodules
+      uses: textbook/git-checkout-submodule-action@2.0.0
+    - name: npm install, build and deploy 
+      run: |
+        npm i
+        git config --global user.email "bot@swaponline.io"
+        git config --global user.name "buildbot"
+        sh deploy $super_secret
+      env:
+        CI: true
+        super_secret: ${{ secrets.buildbot }}
+    - name: todo-actions
+      uses: dtinth/todo-actions@v0.2.0
