@@ -184,7 +184,13 @@ tr.historyRow {
   align-items: center;
   padding: 15px;
 }
-
+.smallTooltip  span {
+  margin-top: -4px;
+    span {
+      font-size: 10px;
+    }
+  }
+ 
   .input {
     font-size: 12px;
     color: #8e9aa3;
@@ -193,7 +199,7 @@ tr.historyRow {
     padding-bottom: 5px;
     position: relative;
 
-    input {
+    textarea {
       width: 85%;
       font-family: 'Inter-Regular', sans-serif;
     }
