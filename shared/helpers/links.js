@@ -25,14 +25,14 @@ const linksManager = {
   createInvoice: '/createinvoice',
 
   // social networks
-  medium: 'https://medium.com/swaponline',
+  medium: '#',
   twitter: 'https://twitter.com/SwapOnlineTeam',
-  facebook: 'https://www.facebook.com/pg/Swaponline-637233326642691',
+  facebook: '#',
   telegram: 'https://t.me/swaponline',
-  bitcointalk: 'https://bitcointalk.org/index.php?topic=4636633.0',
-  discord: 'https://discordapp.com/invite/juG7UZH',
-  reddit: 'https://www.reddit.com/r/SwapOnline',
-  youtube: 'https://www.youtube.com/channel/UCCDWZob9wBsZUpScz2w9_lg',
+  bitcointalk: '#',
+  discord: '#',
+  reddit: '#',
+  youtube: '#',
 
   // footer links
   etherdelta: 'https://etherdelta.com/#0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9-ETH',
