@@ -480,6 +480,11 @@
       prevEl: '.swiper-button-prev',
     },
   });
+  
+  // Add default lang en if is not lang ru or en
+	if ( lang != 'ru' && lang != 'en' ) {
+		lang = 'en';
+	}
 
   /** Multilangual Content */
   var swap_l10n = {
