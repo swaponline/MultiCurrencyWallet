@@ -1,9 +1,14 @@
 .note {
+  position: absolute;
+  padding: 0 10px 0 10px;
+  background-color: white;
+  text-align: left;
+  font-family: "Roboto Mono", monospace;
   font-size: 13px;
-  margin-top: -25px;
-  margin-bottom: 30px;
-  color: #8E9AA3;
-  font-family: 'Inter-Regular';
+  z-index: 1;
+  color: #8e9aa3;
+  bottom: -17px;
+  left: 10px;
 }
 
 .r-tooltip {
@@ -15,6 +20,8 @@
   color: #aaa;
   height: 0px;
   color: $color-f-error;
+  position: absolute;
+  bottom: -5px;
 }
 .groupField {
   width: 100%;
@@ -27,24 +34,21 @@
 
 .balance {
   position: absolute;
-  right: 73px;
-  top: 5px;
-  padding: 0 10px 0 25px;
+  right: 98px;
+  top: -8px;
+  padding: 0 10px 0 10px;
   background-color: white;
   text-align: left;
+  font-family: "Roboto Mono", monospace;
   font-size: 13px;
   z-index: 1;
-  color: #aaa;
-  /* color: #b5b5b5; */
-  color: #8E9AA3;
-  font-family: 'Inter-Regular';
+  color: #8e9aa3;
 }
 
 .notice {
-  font-weight: 800;
   line-height: 140%;
-  color: #8E9AA3;
-  font-family: 'Inter-Bold';
+  color: #8e9aa3;
+  font-family: "Manrope-Medium", sans-serif;
   width: 78%;
   text-align: center;
   margin: auto;
@@ -57,7 +61,7 @@
   color: $color-f-error;
 }
 
-.buttonFull{
+.buttonFull {
   margin-top: 10px;
   display: block;
 }
@@ -68,7 +72,7 @@
   display: block;
 
   &:hover {
-    color: darken(#3b95ff, 1)
+    color: darken(#3b95ff, 1);
   }
 }
 
@@ -96,7 +100,6 @@
 
 .lowLevel {
   position: relative;
-
 }
 
 @include media-mobile {
@@ -108,25 +111,8 @@
     font-size: 16px !important;
   }
 
-  .balance {
-    position: absolute;
-    right: 7em;
-    top: 0.5em;
-    font-size: 10px;
-    padding: 0 5px 0 10px;
-  }
-
   .downLabel {
     top: 0.8em;
-  }
-  .input {
-    font-size: 11px;
-  }
-  .notice {
-    position: absolute;
-    top: 10px;
-    font-size: 70%;
-    text-align: center;
   }
 }
 

@@ -10,11 +10,9 @@
   font-size: 18px;
   border: none;
   border-radius: 2px;
-  font-family: 'Inter-Bold', sans-serif;
+  font-family: "Inter-Bold", sans-serif;
   @include no-user-select;
-  transition:
-    background-color 0.23s ease,
-    color 0.23s ease;
+  transition: background-color 0.23s ease, color 0.23s ease;
 }
 
 .fullWidth {
@@ -23,13 +21,17 @@
   padding: 0;
 }
 
+.big {
+  height: 68px;
+}
+
 .brand {
-  background-color: #E72BB3;
+  background-color: #e72bb3;
   box-shadow: 1px 1px 6px #929292;
   color: #fff;
 
   &:hover {
-    background-color: lighten(#E72BB3, 5%);
+    background-color: lighten(#e72bb3, 5%);
   }
 }
 
@@ -43,7 +45,7 @@
 }
 
 .blue {
-  background-color: #6144E5;
+  background-color: #6144e5;
   color: #fff;
   font-size: 15px;
 }
@@ -61,30 +63,22 @@
 }
 
 .gray {
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
   color: #000;
 
   &:hover {
-    background-color: darken(#F2F2F2, 10%);
+    background-color: darken(#f2f2f2, 10%);
   }
 }
 
 .transparent.blue {
   background: rgba(97, 68, 229, 0.1);
   font-weight: bold;
-  color: #6144E5;
+  color: #6144e5;
 }
 
-.disabled{
+.disabled {
   background: rgba(97, 68, 229, 0.15);
   font-weight: bold;
   color: rgba(97, 68, 229, 0.5);
-}
-
-
-@include media-mobile {
-  .button {
-    height: 46px;
-    line-height: 46px;
-  }
 }
