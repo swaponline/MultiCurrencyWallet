@@ -10,20 +10,20 @@
   left: 10px;
 }
 
-.inRow {
-  margin-top: 20px;
-  font-family: "Inter-SemiBold", sans-serif;
-  z-index: 9999999;
-  white-space: nowrap;
-  strong {
-    font-weight: 500;
-  }
-  position: relative;
-  display: inline-block;
-  &:first-child {
-    margin-top: 0;
-  }
-}
+// .inRow {
+//   margin-top: 20px;
+//   font-family: "Inter-SemiBold", sans-serif;
+//   z-index: 9999999;
+//   white-space: nowrap;
+//   strong {
+//     font-weight: 500;
+//   }
+//   position: relative;
+//   display: inline-block;
+//   &:first-child {
+//     margin-top: 0;
+//   }
+// }
 
 .inDropDown {
   display: flex;
