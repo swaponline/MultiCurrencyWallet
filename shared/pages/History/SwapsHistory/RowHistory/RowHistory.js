@@ -98,7 +98,7 @@ export default class RowHistory extends Component {
     sellAmount  = BigNumber(sellAmount)
 
     return (
-      <tr>
+      <tr key={id}>
         {/* <td>
           <Avatar
             value={id}
