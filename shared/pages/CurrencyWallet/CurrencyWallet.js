@@ -272,10 +272,7 @@ export default class CurrencyWallet extends Component {
           handleNotifyBlockClose={this.handleNotifyBlockClose}
           {...this.state}
         />
-        <h3 styleName="title">
-          <FormattedMessage id="CurrencyWalletTitle" defaultMessage="Активность" />
-        </h3>
-        { isWidgetBuild && !config.isFullBuild && (
+         { isWidgetBuild && !config.isFullBuild && (
           <ul styleName="widgetNav">
             <li styleName="widgetNavItem" onClick={this.handleGoWalletHome}>
               <a href styleName="widgetNavItemLink">

@@ -2022,7 +2022,8 @@
     "id": "HowItWorks10",
     "message": "How it works",
     "files": [
-      "shared/pages/PartialClosure/HowItWorks/HowItWorks.js"
+      "shared/pages/PartialClosure/HowItWorks/HowItWorks.js",
+      "shared/pages/PointOfSell/HowItWorks/HowItWorks.js"
     ]
   },
   {
@@ -2260,59 +2261,35 @@
   },
   {
     "id": "SwapHisrory14",
-    "message": "Avatar",
-    "files": [
-      "shared/pages/History/SwapsHistory/SwapsHistory.js"
-    ]
+    "message": "Avatar"
   },
   {
     "id": "SwapHisrory15",
-    "message": "Exchange",
-    "files": [
-      "shared/pages/History/SwapsHistory/SwapsHistory.js"
-    ]
+    "message": "Exchange"
   },
   {
     "id": "SwapHisrory16",
-    "message": "You buy",
-    "files": [
-      "shared/pages/History/SwapsHistory/SwapsHistory.js"
-    ]
+    "message": "You buy"
   },
   {
     "id": "SwapHisrory17",
-    "message": "You sell",
-    "files": [
-      "shared/pages/History/SwapsHistory/SwapsHistory.js"
-    ]
+    "message": "You sell"
   },
   {
     "id": "SwapHisrory18",
-    "message": "Exchange rate",
-    "files": [
-      "shared/pages/History/SwapsHistory/SwapsHistory.js"
-    ]
+    "message": "Exchange rate"
   },
   {
     "id": "SwapHisrory20",
-    "message": "Status order",
-    "files": [
-      "shared/pages/History/SwapsHistory/SwapsHistory.js"
-    ]
+    "message": "Status order"
   },
   {
     "id": "SwapHisrory211",
-    "message": "Lock time",
-    "files": [
-      "shared/pages/History/SwapsHistory/SwapsHistory.js"
-    ]
+    "message": "Lock time"
   },
   {
     "id": "SwapHisrory22",
-    "message": "Link",
-    "files": [
-      "shared/pages/History/SwapsHistory/SwapsHistory.js"
-    ]
+    "message": "Link"
   },
   {
     "id": "MyOrders19",
@@ -2684,7 +2661,8 @@
     "id": "partial291",
     "message": "Waiting for another participant (30 sec): ",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
@@ -2734,28 +2712,32 @@
     "id": "partial223",
     "message": "To change default wallet for buy currency. ",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
     "id": "partial224",
     "message": "Leave empty for use Swap.Online wallet",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
     "id": "partial243",
     "message": "You send",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
     "id": "partial255",
     "message": "You get",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
@@ -2938,42 +2920,48 @@
     "id": "PartialPriceCalc",
     "message": "Calc price",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
     "id": "PartialPriceNoOrdersReduce",
     "message": "No orders found, try to reduce the amount",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
     "id": "PartialPriceReduceMin",
     "message": "Maximum available amount:",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
     "id": "PartialOfferCantProceed1",
     "message": "Request is declined. {link}",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
     "id": "PartialOfferCantProceed1_1",
     "message": "Why?",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
     "id": "ErrorBtcLowAmount",
     "message": "{btcAmount} BTC - This amount is too low",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
@@ -2984,7 +2972,8 @@
     "id": "PartialPriceSearch",
     "message": "Searching orders...",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
@@ -2996,7 +2985,8 @@
     "message": "Specify the receiving wallet address",
     "files": [
       "shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.js",
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
@@ -3044,7 +3034,8 @@
     "message": "The amount you have in your swap.online wallet or external wallet that you want to exchange",
     "files": [
       "shared/components/modals/OfferModal/AddOffer/AddOffer.js",
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
@@ -3052,7 +3043,8 @@
     "message": "The amount you will receive after the exchange",
     "files": [
       "shared/components/modals/OfferModal/AddOffer/AddOffer.js",
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
@@ -3066,7 +3058,7 @@
     "id": "partial5323",
     "message": "Buy token",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
@@ -3080,21 +3072,24 @@
     "id": "partial766",
     "message": "From any wallet or exchange",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
     "id": "partial767",
     "message": "Your balance: ",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
     "id": "partialAtomicSwapWhatIsIt",
     "message": "Atomic swap is a smart contract technology that enables exchange of one cryptocurrency for another without using centralized intermediaries, such as exchanges.",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
@@ -3109,56 +3104,64 @@
     "id": "partialVideoAndFeatures0",
     "message": "Based on Atomic Swap technology",
     "files": [
-      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
+      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js",
+      "shared/pages/PointOfSell/VideoAndFeatures/VideoAndFeatures.js"
     ]
   },
   {
     "id": "partialVideoAndFeatures1",
     "message": "Exchange only takes 2 minutes",
     "files": [
-      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
+      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js",
+      "shared/pages/PointOfSell/VideoAndFeatures/VideoAndFeatures.js"
     ]
   },
   {
     "id": "partialVideoAndFeatures2",
     "message": "Supports LTC, BTC, BCH, ETH, USDT, ERC-20 tokens",
     "files": [
-      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
+      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js",
+      "shared/pages/PointOfSell/VideoAndFeatures/VideoAndFeatures.js"
     ]
   },
   {
     "id": "partialVideoAndFeatures3",
     "message": "Can be deployed on any website as an exchange service",
     "files": [
-      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
+      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js",
+      "shared/pages/PointOfSell/VideoAndFeatures/VideoAndFeatures.js"
     ]
   },
   {
     "id": "PartialFeeValueWarn",
     "message": "The maximum amount you can sell is {maximumAmount}. Since will have to pay an additional miner fee up to {estimatedFeeValue} {haveCurrency}",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
     "id": "PartialFeeValueWarn1",
     "message": "+ {estimatedFeeValue} {getCurrency}",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
     "id": "PartialFeeValueWarn2",
     "message": "~ {estimatedFeeValue}$",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
     "id": "PartialFeeValueWarnInfo",
     "message": "[About fees]",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
@@ -3371,31 +3374,19 @@
   },
   {
     "id": "currencyWallet27",
-    "message": "Coin",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Coin"
   },
   {
     "id": "currencyWallet28",
-    "message": "Status",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Status"
   },
   {
     "id": "currencyWallet29",
-    "message": "Statement",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Statement"
   },
   {
     "id": "currencyWallet30",
-    "message": "Amount",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Amount"
   },
   {
     "id": "Withdraw18333",
@@ -3455,7 +3446,8 @@
     "id": "PartialPriceSearch502",
     "message": "1 {getCurrency} = {haveCurrency}",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
@@ -3466,7 +3458,8 @@
     "id": "PartialClosureTitleTag1",
     "message": "Fastest cross-chain exchange powered by Atomic Swap",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
@@ -3564,10 +3557,7 @@
   },
   {
     "id": "CurrencyWallet154",
-    "message": "Atomic Swap Wallet allows you to manage and securely exchange ${fullName} (${currency}) with 0% fees. Based on Multi-Sig and Atomic Swap technologies.",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Atomic Swap Wallet allows you to manage and securely exchange ${fullName} (${currency}) with 0% fees. Based on Multi-Sig and Atomic Swap technologies."
   },
   {
     "id": "Orders121",
@@ -3807,14 +3797,16 @@
     "id": "advantagesButtonTitle",
     "message": "How it works?",
     "files": [
-      "shared/pages/PartialClosure/PureComponents/Advantages.js"
+      "shared/pages/PartialClosure/PureComponents/Advantages.js",
+      "shared/pages/PointOfSell/PureComponents/Advantages.js"
     ]
   },
   {
     "id": "advantagesButtonTxt",
     "message": "(Watch the video)",
     "files": [
-      "shared/pages/PartialClosure/PureComponents/Advantages.js"
+      "shared/pages/PartialClosure/PureComponents/Advantages.js",
+      "shared/pages/PointOfSell/PureComponents/Advantages.js"
     ]
   },
   {
@@ -4247,17 +4239,11 @@
   },
   {
     "id": "CurrencyWalletTitle",
-    "message": "{fullName} ({currency}) Web Wallet with Atomic Swap.",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "{fullName} ({currency}) Web Wallet with Atomic Swap."
   },
   {
     "id": "CurrencyWalletWidgetBuildTitle",
-    "message": "{fullName} ({currency}) Web Wallet with Atomic Swap.",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "{fullName} ({currency}) Web Wallet with Atomic Swap."
   },
   {
     "id": "PartialUseInternalWallet",
@@ -4571,7 +4557,8 @@
     "message": "Available for exchange: {availableBalance} {tooltip}",
     "files": [
       "shared/components/modals/OfferModal/AddOffer/SelectGroup/SelectGroup.js",
-      "shared/pages/PartialClosure/SelectGroup/SelectGroup.js"
+      "shared/pages/PartialClosure/SelectGroup/SelectGroup.js",
+      "shared/pages/PointOfSell/SelectGroup/SelectGroup.js"
     ]
   },
   {
@@ -4579,7 +4566,8 @@
     "message": "You can use an external wallet to perform a swap",
     "files": [
       "shared/components/modals/OfferModal/AddOffer/SelectGroup/SelectGroup.js",
-      "shared/pages/PartialClosure/SelectGroup/SelectGroup.js"
+      "shared/pages/PartialClosure/SelectGroup/SelectGroup.js",
+      "shared/pages/PointOfSell/SelectGroup/SelectGroup.js"
     ]
   },
   {
@@ -5044,11 +5032,7 @@
   },
   {
     "id": "Swap.OnlineSubmenu",
-    "message": "Swap.Exhange",
-    "files": [
-      "shared/components/Header/SubMenu/SubMenu.js",
-      "shared/components/modals/MobMenu/MobMenu.js"
-    ]
+    "message": "Swap.Exhange"
   },
   {
     "id": "Swap.WalletSubMeny",
@@ -5097,10 +5081,7 @@
   },
   {
     "id": "multiSignJoinLinkReady",
-    "message": "Ready",
-    "files": [
-      "shared/components/modals/MultisignJoinLink/MultisignJoinLink.js"
-    ]
+    "message": "Ready"
   },
   {
     "id": "Select23",
@@ -5224,11 +5205,7 @@
   },
   {
     "id": "history107",
-    "message": "Loading",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js",
-      "shared/pages/History/History.js"
-    ]
+    "message": "Loading"
   },
   {
     "id": "IEOHref",
@@ -5241,63 +5218,72 @@
     "id": "HowItWorks18",
     "message": "1. Select your cryptocurrency and the amount.",
     "files": [
-      "shared/pages/PartialClosure/HowItWorks/HowItWorks.js"
+      "shared/pages/PartialClosure/HowItWorks/HowItWorks.js",
+      "shared/pages/PointOfSell/HowItWorks/HowItWorks.js"
     ]
   },
   {
     "id": "HowItWorks21",
     "message": "Choose a cryptocurrency that you have at your disposal on any external wallet, exchange, or Swap Online wallet",
     "files": [
-      "shared/pages/PartialClosure/HowItWorks/HowItWorks.js"
+      "shared/pages/PartialClosure/HowItWorks/HowItWorks.js",
+      "shared/pages/PointOfSell/HowItWorks/HowItWorks.js"
     ]
   },
   {
     "id": "HowItWorks26",
     "message": "2. Click “Exchange”",
     "files": [
-      "shared/pages/PartialClosure/HowItWorks/HowItWorks.js"
+      "shared/pages/PartialClosure/HowItWorks/HowItWorks.js",
+      "shared/pages/PointOfSell/HowItWorks/HowItWorks.js"
     ]
   },
   {
     "id": "HowItWorks29",
     "message": "If a suitable order is found and the seller confirms the exchange, you will be redirected to the exchange page",
     "files": [
-      "shared/pages/PartialClosure/HowItWorks/HowItWorks.js"
+      "shared/pages/PartialClosure/HowItWorks/HowItWorks.js",
+      "shared/pages/PointOfSell/HowItWorks/HowItWorks.js"
     ]
   },
   {
     "id": "HowItWorks34",
     "message": "3. Make a cryptocurrency deposit.",
     "files": [
-      "shared/pages/PartialClosure/HowItWorks/HowItWorks.js"
+      "shared/pages/PartialClosure/HowItWorks/HowItWorks.js",
+      "shared/pages/PointOfSell/HowItWorks/HowItWorks.js"
     ]
   },
   {
     "id": "HowItWorks37",
     "message": "In the event that the required amount is available on your internal wallet, the deposit will be executed automatically.",
     "files": [
-      "shared/pages/PartialClosure/HowItWorks/HowItWorks.js"
+      "shared/pages/PartialClosure/HowItWorks/HowItWorks.js",
+      "shared/pages/PointOfSell/HowItWorks/HowItWorks.js"
     ]
   },
   {
     "id": "HowItWorks42",
     "message": "4. Confirm completion of the swap.",
     "files": [
-      "shared/pages/PartialClosure/HowItWorks/HowItWorks.js"
+      "shared/pages/PartialClosure/HowItWorks/HowItWorks.js",
+      "shared/pages/PointOfSell/HowItWorks/HowItWorks.js"
     ]
   },
   {
     "id": "HowItWorks45",
     "message": "The exchange usually takes about a minute.  At the end of the swap, you will see the txid and will be able to confirm completion of the transfer on your end.",
     "files": [
-      "shared/pages/PartialClosure/HowItWorks/HowItWorks.js"
+      "shared/pages/PartialClosure/HowItWorks/HowItWorks.js",
+      "shared/pages/PointOfSell/HowItWorks/HowItWorks.js"
     ]
   },
   {
     "id": "Quote",
     "message": "The swap.online project realizes swaps among Bitcoin-like, Ethereum-like, and made a product for users to execute swaps",
     "files": [
-      "shared/pages/PartialClosure/Quote/index.js"
+      "shared/pages/PartialClosure/Quote/index.js",
+      "shared/pages/PointOfSell/Quote/index.js"
     ]
   },
   {
@@ -6080,17 +6066,11 @@
   },
   {
     "id": "invoiceModal_Amount_Dollar",
-    "message": "Amount in USD",
-    "files": [
-      "shared/components/modals/InvoiceModal/InvoiceModal.js"
-    ]
+    "message": "Amount in USD"
   },
   {
     "id": "invoiceModal_Amount_Rub",
-    "message": "Amount in RUB",
-    "files": [
-      "shared/components/modals/InvoiceModal/InvoiceModal.js"
-    ]
+    "message": "Amount in RUB"
   },
   {
     "id": "invoiceModal_Error",
@@ -6408,59 +6388,35 @@
   },
   {
     "id": "registerSMSModalCode",
-    "message": "Code from SMS",
-    "files": [
-      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
-    ]
+    "message": "Code from SMS"
   },
   {
     "id": "registerSMSModalFinish",
-    "message": "Finish",
-    "files": [
-      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
-    ]
+    "message": "Finish"
   },
   {
     "id": "registerSMSModalPhone",
-    "message": "You phone",
-    "files": [
-      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
-    ]
+    "message": "You phone"
   },
   {
     "id": "registerSMSModalProcess",
-    "message": "Processing ...",
-    "files": [
-      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
-    ]
+    "message": "Processing ..."
   },
   {
     "id": "registerSMSModalReady",
-    "message": "Your protected wallet activated",
-    "files": [
-      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
-    ]
+    "message": "Your protected wallet activated"
   },
   {
     "id": "registerSMSModalSendSMS",
-    "message": "Send SMS",
-    "files": [
-      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
-    ]
+    "message": "Send SMS"
   },
   {
     "id": "registerSMSModalSendSMS165",
-    "message": "Confirm",
-    "files": [
-      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
-    ]
+    "message": "Confirm"
   },
   {
     "id": "registerSMSProtectedTitle",
-    "message": "Activate SMS Protected Wallet",
-    "files": [
-      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
-    ]
+    "message": "Activate SMS Protected Wallet"
   },
   {
     "id": "back",
@@ -6494,14 +6450,16 @@
     "id": "CurrencySlider19",
     "message": "Already available for exchange",
     "files": [
-      "shared/pages/PartialClosure/CurrencySlider/CurrencySlider.js"
+      "shared/pages/PartialClosure/CurrencySlider/CurrencySlider.js",
+      "shared/pages/PointOfSell/CurrencySlider/CurrencySlider.js"
     ]
   },
   {
     "id": "CurrencySlider36",
     "message": "+",
     "files": [
-      "shared/pages/PartialClosure/CurrencySlider/CurrencySlider.js"
+      "shared/pages/PartialClosure/CurrencySlider/CurrencySlider.js",
+      "shared/pages/PointOfSell/CurrencySlider/CurrencySlider.js"
     ]
   },
   {
@@ -6522,42 +6480,47 @@
     "id": "PartialFeeValueWarn3",
     "message": "= {estimatedFeeValue}$",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
     "id": "PartialHowItWorks10",
     "message": "How it works?",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
     "id": "PartialPriceSellMax",
     "message": "Maximum available amount for sell:",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
     "id": "continueDeclined977",
     "message": "Click here to continue your swaps",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
     "id": "partial1021",
     "message": "Embed on website",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
     "id": "partial2378",
     "message": "Wallet",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
@@ -6639,72 +6602,263 @@
   },
   {
     "id": "walletHistoryActivity",
-    "message": "Activity",
-    "files": [
-      "shared/pages/Wallet/Wallet.js"
-    ]
+    "message": "Activity"
   },
   {
     "id": "descr279",
     "message": "Before you continue be sure to save your private keys!",
     "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+      "shared/pages/Wallet/components/WallerSlider/index.js"
     ]
   },
   {
     "id": "descr280",
     "message": "We do not store your private keys and will not be able to restore them",
     "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+      "shared/pages/Wallet/components/WallerSlider/index.js"
     ]
   },
   {
     "id": "descr282",
     "message": "Show my keys",
     "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+      "shared/pages/Wallet/components/WallerSlider/index.js"
     ]
   },
   {
     "id": "descr284",
     "message": "I saved my keys",
     "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+      "shared/pages/Wallet/components/WallerSlider/index.js"
     ]
   },
   {
     "id": "descr291",
     "message": "Sign up and get your free cryptocurrency for test!",
     "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+      "shared/pages/Wallet/components/WallerSlider/index.js"
     ]
   },
   {
     "id": "descr292",
     "message": "You will also be able to receive notifications regarding updates with your account",
     "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+      "shared/pages/Wallet/components/WallerSlider/index.js"
     ]
   },
   {
     "id": "descr293",
     "message": "Sign Up",
     "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+      "shared/pages/Wallet/components/WallerSlider/index.js"
     ]
   },
   {
     "id": "descr294",
     "message": "I’ll do this later",
     "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+      "shared/pages/Wallet/components/WallerSlider/index.js"
     ]
   },
   {
     "id": "historyActivity",
-    "message": "Activity",
+    "message": "Activity"
+  },
+  {
+    "id": "Submenu",
+    "message": "Swap.Exhange",
     "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+      "shared/components/Header/SubMenu/SubMenu.js",
+      "shared/components/modals/MobMenu/MobMenu.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoBlockOpenDesktopApp",
+    "message": "Оплатить с внешнего кошелька",
+    "files": [
+      "shared/components/InvoiceInfoBlock/InvoiceInfoBlock.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoBlockTitle",
+    "message": "Оплата инвойса #{id}-{invoiceNumber}",
+    "files": [
+      "shared/components/InvoiceInfoBlock/InvoiceInfoBlock.js"
+    ]
+  },
+  {
+    "id": "multiSignJoinLinkCopied",
+    "message": "Ready. Link copied to clipboard",
+    "files": [
+      "shared/components/modals/MultisignJoinLink/MultisignJoinLink.js"
+    ]
+  },
+  {
+    "id": "multiSignJoinLinkCopy",
+    "message": "Copy to clipboard",
+    "files": [
+      "shared/components/modals/MultisignJoinLink/MultisignJoinLink.js"
+    ]
+  },
+  {
+    "id": "CreateInvoiceGoHome",
+    "message": "Перейти на главную",
+    "files": [
+      "shared/pages/CreateInvoice/CreateInvoice.js"
+    ]
+  },
+  {
+    "id": "CreateInvoiceReady",
+    "message": "Спасибо, инвойс выставлен",
+    "files": [
+      "shared/pages/CreateInvoice/CreateInvoice.js"
+    ]
+  },
+  {
+    "id": "createWallet_customERC20",
+    "message": "Подключить токен",
+    "files": [
+      "shared/pages/CreateWallet/Steps/FirstStep.js"
+    ]
+  },
+  {
+    "id": "descr301",
+    "message": "Updates",
+    "files": [
+      "shared/pages/Wallet/components/WallerSlider/index.js"
+    ]
+  },
+  {
+    "id": "descr302",
+    "message": "Let us notify you that the main domain name for Swap.online exchange service will be changed from swap.online to swaponline.io.",
+    "files": [
+      "shared/pages/Wallet/components/WallerSlider/index.js"
+    ]
+  },
+  {
+    "id": "descr303",
+    "message": "Close",
+    "files": [
+      "shared/pages/Wallet/components/WallerSlider/index.js"
+    ]
+  },
+  {
+    "id": "customERC20_Address",
+    "message": "Адрес контракта",
+    "files": [
+      "shared/components/modals/AddCustomERC20/AddCustomERC20.js"
+    ]
+  },
+  {
+    "id": "customERC20_ConfirmStep",
+    "message": "Добавить этот токен",
+    "files": [
+      "shared/components/modals/AddCustomERC20/AddCustomERC20.js"
+    ]
+  },
+  {
+    "id": "customERC20_IncorrectAddress",
+    "message": "Вы ввели не коректный адрес",
+    "files": [
+      "shared/components/modals/AddCustomERC20/AddCustomERC20.js"
+    ]
+  },
+  {
+    "id": "customERC20_NextStep",
+    "message": "Далее",
+    "files": [
+      "shared/components/modals/AddCustomERC20/AddCustomERC20.js"
+    ]
+  },
+  {
+    "id": "customERC20_NotFound",
+    "message": "По указаному адресу не найден токен ERC20",
+    "files": [
+      "shared/components/modals/AddCustomERC20/AddCustomERC20.js"
+    ]
+  },
+  {
+    "id": "customERC20_Processing",
+    "message": "Обработка ...",
+    "files": [
+      "shared/components/modals/AddCustomERC20/AddCustomERC20.js"
+    ]
+  },
+  {
+    "id": "customERC20_Ready",
+    "message": "Готово",
+    "files": [
+      "shared/components/modals/AddCustomERC20/AddCustomERC20.js"
+    ]
+  },
+  {
+    "id": "customERC20_ReadyMessage",
+    "message": "Токен успешно добавлен",
+    "files": [
+      "shared/components/modals/AddCustomERC20/AddCustomERC20.js"
+    ]
+  },
+  {
+    "id": "customERC20_Title",
+    "message": "Добавление токена ERC20",
+    "files": [
+      "shared/components/modals/AddCustomERC20/AddCustomERC20.js"
+    ]
+  },
+  {
+    "id": "customERC20_TokenDecimals",
+    "message": "Знаков после запятой",
+    "files": [
+      "shared/components/modals/AddCustomERC20/AddCustomERC20.js"
+    ]
+  },
+  {
+    "id": "customERC20_TokenSymbol",
+    "message": "Символ токена",
+    "files": [
+      "shared/components/modals/AddCustomERC20/AddCustomERC20.js"
+    ]
+  },
+  {
+    "id": "customERC20_TokenTitle",
+    "message": "Название токена",
+    "files": [
+      "shared/components/modals/AddCustomERC20/AddCustomERC20.js"
+    ]
+  },
+  {
+    "id": "customERC20_addressPlaceholder",
+    "message": "Введите адрес токена",
+    "files": [
+      "shared/components/modals/AddCustomERC20/AddCustomERC20.js"
+    ]
+  },
+  {
+    "id": "invoiceModal_contactPlaceholder",
+    "message": "Обязательное поле",
+    "files": [
+      "shared/components/modals/InvoiceModal/InvoiceModal.js"
+    ]
+  },
+  {
+    "id": "HistoryRowInvoiceStatusNew",
+    "message": "Пока не оплачен",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "WalletPage_ExportKeys",
+    "message": "Показать ключи",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "WalletPage_ImportKeys",
+    "message": "Импортировать ключи",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
     ]
   }
 ]

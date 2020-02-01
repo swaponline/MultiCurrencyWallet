@@ -63,6 +63,7 @@ git add .
 git commit -m "build $DATE"
 git push --force
 
+wget http://generator.swaponline.site/updatewidgets/
 # return back to root
 cd ..
 

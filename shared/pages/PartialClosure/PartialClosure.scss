@@ -94,7 +94,7 @@
 
 .switchButton {
   left: 22em;
-  top: 155px;
+  top: 120px;
   display: flex;
   width: 60px;
   align-items: right;
@@ -418,12 +418,12 @@
 .maxAmount {
   display: inline-block;
   position: absolute;
-  top: 52px;
+  top: 40px;
   background: #fff;
-  font-family: 'Inter-Regular', sans-serif;
   font-size: 13px;
-  right: 30px;
+  right: 50px;
   padding: 0 10px;
+  font-family: 'Roboto Mono', monospace;
   color: #8E9AA3;
   margin-bottom: 0;
 }

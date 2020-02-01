@@ -54,6 +54,9 @@
   </script>
   <!-- /Google Analytics -->
 
+  <script>
+    var isWidgetBuild = '<%= htmlWebpackPlugin.options.isWidget %>'
+  </script>
   <style>
     .overlay {
       display: flex;
@@ -463,7 +466,7 @@
     document.body.classList.remove('overflow-hidden');
   }
   // Open modal if cookie false
-  if( swapDisalbeStarter != 'true' ){
+  if( (swapDisalbeStarter != 'true') && !isWidgetBuild ){
     swapOpenStarterModal();
   } 
 </script>
@@ -477,6 +480,11 @@
       prevEl: '.swiper-button-prev',
     },
   });
+  
+  // Add default lang en if is not lang ru or en
+	if ( lang != 'ru' && lang != 'en' ) {
+		lang = 'en';
+	}
 
   /** Multilangual Content */
   var swap_l10n = {
