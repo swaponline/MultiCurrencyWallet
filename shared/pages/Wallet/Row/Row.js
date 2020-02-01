@@ -308,6 +308,10 @@ export default class Row extends Component {
     })
   }
 
+  handleSwitchMultisign = () => {
+    actions.modals.open(constants.modals.BtcMultisignSwitch)
+  }
+
   handleCreateInvoice = () => {
     const {
       item: {
@@ -508,6 +512,13 @@ export default class Row extends Component {
         currencyView = 'Not joined'
         nodeDownErrorShow = false
         dropDownMenuItems = []
+      } else {
+        dropDownMenuItems.push({
+          id: 1105,
+          title: <FormattedMessage id='WalletRow_Menu_BTCMS_SwitchMenu' defaultMessage='Switch wallet' />,
+          action: this.handleSwitchMultisign,
+          disabled: false,
+        })
       }
       dropDownMenuItems.push({
         id: 3,
