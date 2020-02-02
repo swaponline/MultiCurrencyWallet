@@ -215,6 +215,8 @@ const login_G2FA = (privateKey, otherOwnerPublicKey) => {
 }
 
 const login_USER = (privateKey, otherOwnerPublicKey ,onlyCheck) => {
+  if (otherOwnerPublicKey instanceof Array && otherOwnerPublicKey.length === 0) return
+
   const data = login_(privateKey, (otherOwnerPublicKey instanceof Array) ? otherOwnerPublicKey[0] : otherOwnerPublicKey, true)
 
   data.isUserProtected = true
