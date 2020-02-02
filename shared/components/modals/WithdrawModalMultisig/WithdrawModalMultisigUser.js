@@ -7,7 +7,7 @@ import { connect } from 'redaction'
 import config from 'app-config'
 
 import cssModules from 'react-css-modules'
-import styles from '../Styles/default.scss'
+import styles from '../WithdrawModal/WithdrawModal.scss'
 import ownStyle from './WithdrawModalMultisigUser.scss'
 
 import { BigNumber } from 'bignumber.js'
@@ -27,6 +27,7 @@ import minAmount from 'helpers/constants/minAmount'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import links from 'helpers/links'
 import CopyToClipboard from 'react-copy-to-clipboard'
+import QrReader from "components/QrReader";
 
 
 @injectIntl
@@ -243,11 +244,59 @@ export default class WithdrawModalMultisigUser extends React.Component {
       }, 500)
     })
   }
+
+  openScan = () => {
+    const { openScanCam } = this.state;
+
+    this.setState(() => ({
+      openScanCam: !openScanCam
+    }));
+  };
+
+  handleError = err => {
+    console.error(err);
+  };
+
+  handleScan = data => {
+    if (data) {
+      const address = data.split(":")[1].split("?")[0];
+      const amount = data.split("=")[1];
+      this.setState(() => ({
+        address,
+        amount
+      }));
+      this.openScan();
+    }
+  };
+
   render() {
-    const { address, amount, code, balance, isShipped, minus,
-      isEthToken, exCurrencyRate, currentDecimals, error, step, txRaw,
-      isLinkCopied, ownTx } = this.state
-    const { name, data: { currency, invoice }, tokenItems, items, intl } = this.props
+    const {
+      address,
+      amount,
+      code,
+      balance,
+      isShipped,
+      minus,
+      exCurrencyRate,
+      currentDecimals,
+      error,
+      step,
+      txRaw,
+      isLinkCopied,
+      ownTx,
+      openScanCam,
+    } = this.state
+
+    const {
+      name,
+      data: {
+        currency,
+        invoice,
+      },
+      tokenItems,
+      items,
+      intl,
+    } = this.props
 
     let txConfirmLink = `${location.origin}/#${links.multisign}/btc/confirm/${txRaw}`
     if (invoice) {
@@ -255,8 +304,8 @@ export default class WithdrawModalMultisigUser extends React.Component {
     }
     const linked = Link.all(this, 'address', 'amount', 'code', 'ownTx')
 
-    const min = minAmount.btcmultisig
-    const dataCurrency = isEthToken ? 'ETH' : currency.toUpperCase()
+    const min = minAmount.btc
+    const dataCurrency = currency.toUpperCase()
 
     const isDisabled =
       !address || !amount || isShipped || ownTx
@@ -302,25 +351,26 @@ export default class WithdrawModalMultisigUser extends React.Component {
 
     return (
       <Modal name={name} title={`${intl.formatMessage(labels.withdrowModal)}${' '}${currency.toUpperCase()}`}>
+        {openScanCam && (
+          <QrReader openScan={this.openScan} handleError={this.handleError} handleScan={this.handleScan} />
+        )}
         {invoice &&
           <InvoiceInfoBlock invoiceData={invoice} />
         }
         {step === 'fillform' &&
           <Fragment>
-            <p styleName={isEthToken ? 'rednotes' : 'notice'}>
+            <p styleName="notice">
               <FormattedMessage
                 id="Withdrow213"
                 defaultMessage="Please note: Fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction"
-                values={{ minAmount: `${isEthToken ? minAmount.eth : min}`, br: <br />, data: `${dataCurrency}` }} />
+                values={{ minAmount: <span>{min}</span>, br: <br />, data: `${dataCurrency}` }}
+              />
             </p>
-            <div styleName="highLevel">
-              <FieldLabel inRow>
-                <span style={{ fontSize: '16px' }}>
-                  <FormattedMessage id="Withdrow1194" defaultMessage="Address " />
-                </span>
-                {' '}
-                <Tooltip id="WtH203" >
-                  <div style={{ textAlign: 'center' }}>
+            <div styleName="highLevel" style={{ marginBottom: "20px" }}>
+              <FieldLabel>
+                <FormattedMessage id="Withdrow1194" defaultMessage="Address " />{" "}
+                <Tooltip id="WtH203">
+                  <div style={{ textAlign: "center" }}>
                     <FormattedMessage
                       id="WTH275"
                       defaultMessage="Make sure the wallet you{br}are sending the funds to supports {currency}"
@@ -329,30 +379,29 @@ export default class WithdrawModalMultisigUser extends React.Component {
                   </div>
                 </Tooltip>
               </FieldLabel>
-              <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z:" placeholder={`Enter ${currency.toUpperCase()} address to transfer`} />
+              <Input
+                valueLink={linked.address}
+                focusOnInit
+                pattern="0-9a-zA-Z:"
+                placeholder={`Enter ${currency.toUpperCase()} address to transfer`}
+                qr
+                withMargin
+                openScan={this.openScan}
+              />
               {address && !this.addressIsCorrect() && (
                 <div styleName="rednote">
-                  <FormattedMessage
-                    id="WithdrawIncorectAddress"
-                    defaultMessage="Your address not correct" />
+                  <FormattedMessage id="WithdrawIncorectAddress" defaultMessage="Your address not correct" />
                 </div>
               )}
             </div>
-            <div styleName="lowLevel">
-              <div styleName="groupField">
-                <p styleName="balance">
-                  {balance}
-                  {' '}
-                  {currency.toUpperCase()}
-                </p>
-                <div styleName="downLabel">
-                  <FieldLabel inRow>
-                    <span styleName="mobileFont">
-                      <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
-                    </span>
-                  </FieldLabel>
-                </div>
-              </div>
+            <div styleName="lowLevel" style={{ marginBottom: "50px" }}>
+              <p styleName="balance">
+                {balance} {currency.toUpperCase()}
+              </p>
+              <FieldLabel>
+                <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
+              </FieldLabel>
+
               <div styleName="group">
                 <Input
                   styleName="input"
@@ -362,26 +411,31 @@ export default class WithdrawModalMultisigUser extends React.Component {
                   usd={getUsd.toFixed(2)}
                   onKeyDown={inputReplaceCommaWithDot}
                 />
-                <button styleName="button" onClick={this.sellAllBalance} data-tip data-for="Withdrow134">
-                  <FormattedMessage id="Select210" defaultMessage="MAX" />
-                </button>
-                {!isMobile &&
+                <div style={{ marginLeft: "15px" }}>
+                  <Button blue big onClick={this.sellAllBalance} data-tip data-for="Withdrow134">
+                    <FormattedMessage id="Select210" defaultMessage="MAX" />
+                  </Button>
+                </div>
+                {!isMobile && (
                   <ReactTooltip id="Withdrow134" type="light" effect="solid" styleName="r-tooltip">
                     <FormattedMessage
                       id="WithdrawButton32"
-                      defaultMessage="when you click this button, in the field, an amount equal to your balance minus the miners commission will appear" />
+                      defaultMessage="when you click this button, in the field, an amount equal to your balance minus the miners commission will appear"
+                    />
                   </ReactTooltip>
-                }
-              </div>
-              {
-                !linked.amount.error && (
-                  <div styleName={minus ? 'rednote' : 'note'}>
-                    <FormattedMessage id="WithdrawModal256" defaultMessage="No less than {minAmount}" values={{ minAmount: `${min}` }} />
+                )}
+                {!linked.amount.error && (
+                  <div styleName={minus ? "rednote" : "note"}>
+                    <FormattedMessage
+                      id="WithdrawModal256"
+                      defaultMessage="No less than {minAmount}"
+                      values={{ minAmount: `${min}` }}
+                    />
                   </div>
-                )
-              }
+                )}
+              </div>
             </div>
-            <Button styleName="buttonFull" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
+            <Button styleName="buttonFull" blue big fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
               {isShipped
                 ? (
                   <Fragment>
@@ -416,7 +470,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
             {invoice && 
               <Fragment>
                 <hr />
-                <div styleName="lowLevel">
+                <div styleName="lowLevel" style={{ marginBottom: "50px" }}>
                   <div styleName="groupField">
                     <div styleName="downLabel">
                       <FieldLabel inRow>
@@ -434,7 +488,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
                     />
                   </div>
                 </div>
-                <Button styleName="buttonFull" brand fullWidth disabled={(!(ownTx) || isShipped)} onClick={this.handleSubmit}>
+                <Button styleName="buttonFull" blue big fullWidth disabled={(!(ownTx) || isShipped)} onClick={this.handleSubmit}>
                   {isShipped
                     ? (
                       <Fragment>
