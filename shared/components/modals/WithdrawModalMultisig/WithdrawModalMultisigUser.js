@@ -245,6 +245,11 @@ export default class WithdrawModalMultisigUser extends React.Component {
     })
   }
 
+  handleReady = () => {
+    const { name } = this.props
+    actions.modals.close(name);
+  }
+
   openScan = () => {
     const { openScanCam } = this.state;
 
@@ -506,16 +511,18 @@ export default class WithdrawModalMultisigUser extends React.Component {
         }
         {step === 'rawlink' &&
           <Fragment>
+            <p styleName="notice">
+              <FormattedMessage id="WithdrawMSUserReady" defaultMessage="TX confirm link" />
+              <br />
+              <FormattedMessage id="WithdrawMSUserMessage" defaultMessage="Send this link to other wallet owner" />
+            </p>
             <CopyToClipboard
               text={txConfirmLink}
               onCopy={this.handleCopyLink}
             >
               <div styleName="highLevel">
-                <a styleName="link" onClick={e => e.preventDefault()}>
-                  <FormattedMessage id="WithdrawMSUserReady" defaultMessage="TX confirm link" />
-                </a>
                 <div styleName="groupField">
-                  <FormattedMessage id="WithdrawMSUserMessage" defaultMessage="Send this link to other wallet owner" />
+                  
                 </div>
                 <div styleName="multisignConfirmTxLink">
                   {txConfirmLink}
@@ -523,7 +530,9 @@ export default class WithdrawModalMultisigUser extends React.Component {
                 <div styleName="centerAlign">
                   <Button
                     styleName="buttonFull"
-                    brand
+                    big
+                    blue
+                    fullWidth
                     onClick={() => { }}
                     disabled={isLinkCopied}
                   >
@@ -537,7 +546,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
               </div>
             </CopyToClipboard>
             <div styleName="centerAlign">
-              <Button styleName="buttonFull" brand onClick={this.handleReady}>
+              <Button styleName="buttonFull" big blue fullWidth onClick={this.handleReady}>
                 <FormattedMessage id="WithdrawMSUserFinish" defaultMessage="Ready" />
               </Button>
             </div>
