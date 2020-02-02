@@ -26,7 +26,7 @@ const addInvoice = (data) => {
   const { user: { btcData } } = getState()
 
   if (!validateData(data)) return false
-console.log(btc.network)
+
   const requestData = {
     currency    : data.currency,
     toAddress   : data.toAddress,
@@ -74,6 +74,12 @@ const getInvoices = (data) => {
     return new Promise((resolve) => { resolve([]) })
   }
 
+  if (data.address === 'Not jointed') {
+    return new Promise((resolve) => {
+      resolve([])
+    })
+  }
+  
   const { user: { btcData } } = getState()
   if (!data || !data.currency || !data.address) return false
 

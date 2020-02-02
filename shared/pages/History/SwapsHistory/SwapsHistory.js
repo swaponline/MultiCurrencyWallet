@@ -11,8 +11,6 @@ export default class SwapsHistory extends PureComponent {
   render() {
     let { orders } = this.props
 
-    console.log('orders', orders)
-
     if (orders === null || orders.length === 0) {
       return null
     }
