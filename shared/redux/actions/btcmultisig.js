@@ -552,6 +552,11 @@ const getTransaction = (ownAddress, ownType) =>
     const type = (ownType) ? ownType : 'btc (sms-protected)'
     const url = `/txs/?address=${checkAddress}`
 
+    if (checkAddress === 'Not jointed') {
+      resolve([])
+      return
+    }
+
     return apiLooper.get('bitpay', url, {
       checkStatus: (answer) => {
         try {

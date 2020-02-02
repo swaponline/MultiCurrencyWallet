@@ -28,6 +28,15 @@ class Row extends React.PureComponent {
       cancelled: false,
       payed: false,
     }
+    this.getUsdBalance( type )
+  }
+
+  getUsdBalance = async (type) => {
+    actions.user.getExchangeRate(type, 'usd').then((exCurrencyRate) => {
+      this.setState(() => ({
+        exCurrencyRate
+      }))
+    })
   }
 
   handlePayInvoice = async () => {

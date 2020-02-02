@@ -78,10 +78,10 @@ export default class History extends Component {
     actions.comments.setComment(obj)
   }
 
-  rowRender = (row) => {
+  rowRender = (row, rowIndex) => {
     const { commentsList } = this.state
     return (
-      <Row key={row.hash - row.type} hiddenList={commentsList} onSubmit={this.onSubmit} {...row} />
+      <Row key={rowIndex} hiddenList={commentsList} onSubmit={this.onSubmit} {...row} />
     )
   }
 

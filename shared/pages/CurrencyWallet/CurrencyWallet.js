@@ -185,8 +185,8 @@ export default class CurrencyWallet extends Component {
     history.push(localisedUrl(locale, links.pointOfSell))
   }
 
-  rowRender = (row) => (
-    <Row key={row.hash} {...row} />
+  rowRender = (row, rowIndex) => (
+    <Row key={rowIndex} {...row} />
   )
 
   render() {
