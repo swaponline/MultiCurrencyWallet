@@ -8,7 +8,8 @@ import config from 'app-config'
 
 import cssModules from 'react-css-modules'
 
-import styles from '../Styles/default.scss'
+import defaultStyles from '../Styles/default.scss'
+import styles from './MultisignJoinLink.scss'
 
 import { BigNumber } from 'bignumber.js'
 import Modal from 'components/modal/Modal/Modal'
@@ -38,7 +39,7 @@ import CopyToClipboard from 'react-copy-to-clipboard'
     btcData: btcMultisigUserData,
   })
 )
-@cssModules(styles, { allowMultiple: true })
+@cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
 export default class MultisignJoinLink extends React.Component {
 
   static propTypes = {
@@ -87,43 +88,49 @@ export default class MultisignJoinLink extends React.Component {
     const { name, intl } = this.props
     const { joinLink, isLinkCopied } = this.state
 
-    const title = defineMessages({
+    const langLabels = defineMessages({
+      multiSignJoinLinkMessage: {
+        id: 'multiSignJoinLinkMessage',
+        defaultMessage: `Отправьте эту ссылку второму владельцу кошелька`,
+      },
       multiSignJoinLink: {
         id: 'multiSignJoinLink',
         defaultMessage: `Создание BTC-Multisign кошелька`,
       },
+      multiSignJoinLinkCopied: {
+        id: 'multiSignJoinLinkCopied',
+        defaultMessage: `Ready. Link copied to clipboard`,
+      },
+      multiSignJoinLinkCopy: {
+        id: 'multiSignJoinLinkCopy',
+        defaultMessage: `Copy to clipboard`,
+      },
     })
 
     return (
-      <Modal name={name} title={`${intl.formatMessage(title.multiSignJoinLink)}`}>
+      <Modal name={name} title={`${intl.formatMessage(langLabels.multiSignJoinLink)}`}>
         <Fragment>
+          <p styleName="notice">
+            <FormattedMessage { ... langLabels.multiSignJoinLinkMessage } />
+          </p>
           <CopyToClipboard
             text={joinLink}
             onCopy={this.handleCopyLink}
           >
             <div>
-              <div styleName="highLevel">
-                <FieldLabel>
-                  <span style={{ fontSize: '16px' }}>
-                    <FormattedMessage id="multiSignJoinLinkMessage" defaultMessage="Отправьте эту ссылку второму владельцу кошелька" />
-                  </span>
-                </FieldLabel>
-                <FieldLabel>
-                  <span style={{ fontSize: '14px', maxWidth: '600px', wordBreak: 'break-all', display: 'block' }}>
-                    {joinLink}
-                  </span>
-                </FieldLabel>
+              <div styleName="generatedJoinLink" title={`${intl.formatMessage(langLabels.multiSignJoinLinkCopy)}`}>
+                  {joinLink}
               </div>
               <Button
-                styleName="button"
+                styleName="buttonFull"
                 brand
                 onClick={this.handleFinish}
                 fullWidth
               >
                 { isLinkCopied ?
-                  <FormattedMessage id="multiSignJoinLinkCopied" defaultMessage="Ready. Link copied to clipboard" />
+                  <FormattedMessage { ... langLabels.multiSignJoinLinkCopied } />
                   :
-                  <FormattedMessage id="multiSignJoinLinkCopy" defaultMessage="Copy to clipboard" />
+                  <FormattedMessage { ... langLabels.multiSignJoinLinkCopy } />
                 }
               </Button>
             </div>

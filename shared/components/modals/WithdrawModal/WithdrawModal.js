@@ -529,7 +529,7 @@ export default class WithdrawModal extends React.Component {
         {invoice && (
           <Fragment>
             <hr />
-            <div styleName="lowLevel">
+            <div styleName="lowLevel" style={{ marginBottom: "50px" }}>
               <div styleName="groupField">
                 <div styleName="downLabel">
                   <FieldLabel inRow>
@@ -547,7 +547,7 @@ export default class WithdrawModal extends React.Component {
                 />
               </div>
             </div>
-            <Button styleName="buttonFull" brand fullWidth disabled={!ownTx || isShipped} onClick={this.handleSubmit}>
+            <Button styleName="buttonFull" blue big fullWidth fullWidth disabled={!ownTx || isShipped} onClick={this.handleSubmit}>
               {isShipped ? (
                 <Fragment>
                   <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
