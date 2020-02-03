@@ -4,20 +4,13 @@
 
 Live version here: https://swaponline.github.io . 
 
-First screen:
-![](https://screenshots.wpmix.net/chrome_J9boBqgIfnB5OHeDUtnCYcZ3kPQ4oJtN.png)
-
-Mobile:
-![](https://screenshots.wpmix.net/Telegram_Xb0bLkovWQVjAf3Waj0QAYSlt5u98CgV.png)
-
 No coding skills? Buy WordPress plugin https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064 with admin panel. 
 
 
 <h2>1. Multi-currency wallet. Your users can store Bitcoin and custom assets</h2>
 Add many assets to your wallet. 
-<a href="https://swaponline.io/">Multi-wallet demo</a> 
-<img src="https://growup.wpmix.net/multiwallet.png">
-<img src="https://generator.swaponline.site/generator/assets/img/example_multywallet.png">
+
+<img src="http://growup.wpmix.net/DesAndMob.png">
 
 <br>
 Checkout this case: <a href="https://twitter.com/Atomic_Wallet" target="_blank">https://twitter.com/Atomic_Wallet</a> (our real client)
