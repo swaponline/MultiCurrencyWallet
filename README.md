@@ -1,12 +1,16 @@
 ![Deploy to swaponline.github.io](https://github.com/swaponline/swap.react/workflows/Deploy%20to%20swaponline.github.io/badge.svg)
 
-## Open-source Multicurrency wallet and p2p excahnge
+## Open-source Multicurrency wallet for Bitcoin and custom assets, and p2p excahnge
 
 Live version here: https://swaponline.github.io . 
 
-No coding skills? Buy WordPress plugin https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064 with admin panel. 
-
+First screen:
 ![](https://screenshots.wpmix.net/chrome_J9boBqgIfnB5OHeDUtnCYcZ3kPQ4oJtN.png)
+
+Mobile:
+![](https://screenshots.wpmix.net/Telegram_Xb0bLkovWQVjAf3Waj0QAYSlt5u98CgV.png)
+
+No coding skills? Buy WordPress plugin https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064 with admin panel. 
 
 <h3>2. Token wallet</h3>
 <a href="https://generator.swaponline.site/livedemo/0x4E12EB8e506Ccd1427F6b8F7faa3e88fB698EB28/319aa913-4e84-483f-a0d1-8664a13f56b7/#/JACK-wallet">Token wallet demo (custom token)</a>
