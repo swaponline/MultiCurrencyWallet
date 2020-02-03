@@ -154,3 +154,4 @@ export default {
 
 if you have conflicts (if sources has been changed on your side) click "resolve conflicts".
 
+# DeFi style (borrow/lend) https://drive.google.com/file/d/15e0ODxzbtiu0xJOeKKuJ2SzffZmc5_OA/view 
