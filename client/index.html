@@ -134,6 +134,11 @@ background-color: #f8f8f8;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
+  transition: color .3s;
+}
+.starter-modal h2:hover {
+  cursor: pointer;
+  color: #6144e5;
 }
 .swiper-container {
   width: 100%;
@@ -145,7 +150,7 @@ background-color: #f8f8f8;
 .starter-modal .swiper-slide {
   overflow: hidden;
   position: relative;
-	align-self: center;
+  align-self: center;
 }
 .starter-modal .swiper-slide .container {
   box-sizing: border-box;
@@ -238,23 +243,27 @@ background-color: #f8f8f8;
   display: none;
 }
 .swiper-nav {
-	position: relative;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	z-index: 1;
-	text-align: center;
+  position: relative;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  text-align: center;
 }
 .swiper-nav .swiper-button-prev,
 .swiper-nav .swiper-button-next {
-	position: static;
-	display: inline-block;
-	margin-top: 0;
-	left: auto;
-	right: auto;
-	bottom: auto;
-	top: auto;
-	margin: 15px;
+  position: static;
+  display: inline-block;
+  margin-top: 0;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  top: auto;
+  margin: 15px;
+}
+.swiper-slide .swap-screenshot:hover {
+  cursor: pointer;
+  transform: translateY(-5px);
 }
 @media (min-width: 992px){
   .container {
@@ -514,9 +523,9 @@ background-color: #f8f8f8;
   });
   
   // Add default lang en if is not lang ru or en
-	if ( lang != 'ru' && lang != 'en' ) {
-		lang = 'en';
-	}
+  if ( lang != 'ru' && lang != 'en' ) {
+    lang = 'en';
+  }
 
   /** Multilangual Content */
   var swap_l10n = {
@@ -622,6 +631,13 @@ background-color: #f8f8f8;
     item.addEventListener('click', function(){
       swapCloseStarterModal();
       setCookie('swapDisalbeStarter', 'true', { expires: swapGetYearSec * 5 } );
+    });
+  });
+	
+  // Go to next slide on click
+  document.querySelectorAll('.swiper-slide h2, .swiper-slide .swap-screenshot').forEach(function(item, index){
+    item.addEventListener('click', function(){
+      starterSwiper.slideNext();
     });
   });
   
