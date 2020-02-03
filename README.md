@@ -158,4 +158,4 @@ if you have conflicts (if sources has been changed on your side) click "resolve 
 ![](https://screenshots.wpmix.net/chrome_ta4cbcsWgMjqbYSp9rFTwMa5bJDBYjcF.png) 
 https://drive.google.com/file/d/15e0ODxzbtiu0xJOeKKuJ2SzffZmc5_OA/view 
 
-for any questions: <a href="https://t.me/sashanoxon">telegram</a>
+for any questions: telegram <a href="https://t.me/sashanoxon">sashanoxon</a>
