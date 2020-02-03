@@ -154,4 +154,6 @@ export default {
 
 if you have conflicts (if sources has been changed on your side) click "resolve conflicts".
 
-# DeFi style (borrow/lend) https://drive.google.com/file/d/15e0ODxzbtiu0xJOeKKuJ2SzffZmc5_OA/view 
+# DeFi style (borrow/lend) 
+![](https://screenshots.wpmix.net/chrome_xYeTUjrDpCx15ru5QEMBP4LRsVKXqXJQ.png) 
+https://drive.google.com/file/d/15e0ODxzbtiu0xJOeKKuJ2SzffZmc5_OA/view 
