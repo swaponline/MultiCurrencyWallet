@@ -1,13 +1,8 @@
 ![Deploy to swaponline.github.io](https://github.com/swaponline/swap.react/workflows/Deploy%20to%20swaponline.github.io/badge.svg)
 
-## swap.online
+## Open-source Multicurrency wallet and p2p excahnge
 
-Atomic swap cryptocurrency protocol. Live version here: https://swaponline.github.io . Atomic swap library at http://github.com/swaponline/swap.core.
-
-important: 
-- 1/ atomic swap feature works without backend. It means that if you place order and go offline your order go offline too (nobody see him and make swap with you). 
-- 2/ Your exchange takes 2 minutes, some mining fee (BTC and ETH).
-- 3/ If you want to create wallet for your token, create build and place it onto your site (as HTML) https://generator.swaponline.site/generator/ . (If you want to accept bitcoin in your crowdsale - remember you MUST be online and you can not prosess more than 1 exchange at the same time. Otherwise you can use our custodian service for 1% fee. contact https://t.me/sashanoxon for details)
+Live version here: https://swaponline.github.io . 
 
 
 ## Swap  React
@@ -33,27 +28,7 @@ npm i
 5) For dev mode `npm run start`, for prod `npm run build`
    > If you need to deploy it on your own (site) origin - run build like: `npm run build:mainnet https://yourcoolsite.com/`
 
-```
-npm run start
-```
 
-#### Ru
-
-1) Склонируйте репозиторий со вложенными модулями (swap.core)
-```
-git clone --recurse-submodules https://github.com/swaponline/swap.react.git
-```
-
-2) Установите зависимости с помощью пакетного менеджера `npm i` <br />
-```
-cd swap.react
-npm i
-```
-
-3) Обновите вложенные модули с помощью `git submodule update` в папке swap.react
-
-4) Чтобы начать разработку - запустите `npm run start`, для сборки продуктовой версии - `npm run build`
-   > Если нужно поместить сборку на ваш собственный домен - запустите сборку с указанием вашего домена: `npm run build:mainnet https://your.cool.origin/`
 
 ```
 npm run start
