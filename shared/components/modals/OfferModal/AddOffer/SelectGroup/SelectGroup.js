@@ -30,7 +30,6 @@ const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onS
           </Tooltip>
         </div>
         <span styleName="balance">{balance && `Balance: ${BigNumber(balance).dp(8, BigNumber.ROUND_CEIL)}`}</span>
-        &nbsp;
         <div styleName="smallTooltip">
           <Tooltip id={id}>
             {tooltip}
