@@ -4,6 +4,30 @@
 
 Live version here: https://swaponline.github.io . 
 
+<h3>2. Token wallet</h3>
+<a href="https://generator.swaponline.site/livedemo/0x4E12EB8e506Ccd1427F6b8F7faa3e88fB698EB28/319aa913-4e84-483f-a0d1-8664a13f56b7/#/JACK-wallet">Token wallet demo (custom token)</a>
+<img src="https://generator.swaponline.site/generator/assets/img/example_wallet.png">
+
+
+<h3>3. Buy/Sell tokens ( IEO or ICO ). (Sell your tokens via bitcoin)</h3>
+<a href="https://generator.swaponline.site/livedemo/0x4E12EB8e506Ccd1427F6b8F7faa3e88fB698EB28/319aa913-4e84-483f-a0d1-8664a13f56b7/#/buy/btc-to-jack">Exchange widget live demo</a>
+<img src="https://generator.swaponline.site/generator/assets/img/example_exchange.png">
+ <br> <br>
+
+<h3>4. Secondary market (trading btw users)</h3>
+<img src="http://growup.wpmix.net/second_market.png">
+<a href="https://swaponline.github.io/#/usdt-btc">Demo (orderbook)</a>
+
+<h3>5. Multi-currency wallet</h3>
+Add many tokens to wallet (and to the exchange)
+<a href="https://swaponline.io/">Multi-wallet demo</a> | 
+<img src="https://growup.wpmix.net/multiwallet.png">
+<img src="https://generator.swaponline.site/generator/assets/img/example_multywallet.png">
+
+<br>
+Checkout this case: <a href="https://twitter.com/Atomic_Wallet" target="_blank">https://twitter.com/Atomic_Wallet</a> (our real client)
+<h3>6. Other demos</h3>
+<a href="https://swaponline.github.io/#/usdt-wallet">USDT stablecoin wallet (payment system)</a>
 
 ## Swap  React
 
