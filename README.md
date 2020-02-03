@@ -6,6 +6,8 @@ Live version here: https://swaponline.github.io .
 
 No coding skills? Buy WordPress plugin https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064 with admin panel. 
 
+![](https://screenshots.wpmix.net/chrome_J9boBqgIfnB5OHeDUtnCYcZ3kPQ4oJtN.png)
+
 <h3>2. Token wallet</h3>
 <a href="https://generator.swaponline.site/livedemo/0x4E12EB8e506Ccd1427F6b8F7faa3e88fB698EB28/319aa913-4e84-483f-a0d1-8664a13f56b7/#/JACK-wallet">Token wallet demo (custom token)</a>
 <img src="https://generator.swaponline.site/generator/assets/img/example_wallet.png">
