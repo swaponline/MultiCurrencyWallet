@@ -10,7 +10,7 @@ No coding skills? Buy WordPress plugin https://codecanyon.net/item/multicurrency
 <h2>1. Multi-currency wallet. Your users can store Bitcoin and custom assets</h2>
 Add many assets to your wallet. 
 
-<img src="http://growup.wpmix.net/DesAndMob.png">
+<img src="http://growup.wpmix.net/DesAndMob2.png">
 
 <br>
 Checkout this case: <a href="https://twitter.com/Atomic_Wallet" target="_blank">https://twitter.com/Atomic_Wallet</a> (our real client)
