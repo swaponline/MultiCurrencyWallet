@@ -32,7 +32,7 @@
   background: #fff;
   font-size: 13px;
   right: 20px;
-  font-family: 'Roboto Mono', monospace;
+  font-family: "Roboto Mono", monospace;
   padding: 0 10px;
   color: #b5b5b5;
 }
@@ -41,7 +41,7 @@
   color: #828795;
   position: absolute;
   left: 10px;
-  font-family: 'Roboto Mono', monospace;
+  font-family: "Roboto Mono", monospace;
   bottom: -14px;
   top: auto;
   background: #fff;
@@ -55,6 +55,7 @@
   flex: auto 1 1;
   input {
     padding-right: 75px;
+    font-size: 24px;
   }
 }
 
@@ -77,32 +78,32 @@
 
 .tooltip {
   position: absolute;
-  z-index: 1111111;
+  z-index: 1;
   bottom: 3.3em;
-  left: 4em;
+  left: 3.4em;
 }
 
 .label {
   position: absolute;
   z-index: 1;
   background-color: white;
-  left: 20px;
+  left: 10px;
   top: -9px;
   font-weight: bold;
-  
+
   background: #fff;
-  font-family: 'Inter-SemiBold', sans-serif;
+  font-family: "Inter-SemiBold", sans-serif;
   z-index: 1;
   padding: 0 10px;
   padding-right: 30px;
 }
 
 .red {
-  color: red,
+  color: red;
 }
 
 input:disabled {
-  background-color:#eee;
+  background-color: #eee;
 }
 
 .selectGroupContainer {
@@ -113,6 +114,7 @@ input:disabled {
   border-radius: 0 6px 6px 0 !important;
   background: none;
   box-shadow: none;
+  font-family: "Inter-Bold", sans-serif;
   position: absolute;
   right: 0px;
   top: 5px;
@@ -122,6 +124,7 @@ input:disabled {
     position: absolute;
     top: 75px;
     border: none;
+    left: 0;
     width: auto;
     z-index: 1111112;
     border-radius: 0;
@@ -137,7 +140,6 @@ input:disabled {
     border: none;
     height: 69px;
     border-bottom: 1px solid #000;
-    font-size: 16px;
     padding-left: 2px;
   }
 }
