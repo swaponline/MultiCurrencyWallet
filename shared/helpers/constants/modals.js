@@ -26,4 +26,5 @@ export default {
   AlertModal: 'AlertModal',
   AddCustomERC20: 'AddCustomERC20',
   BtcMultisignSwitch: 'BtcMultisignSwitch',
+  Share: 'ShareModal',
 }

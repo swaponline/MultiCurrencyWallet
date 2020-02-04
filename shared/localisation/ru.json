@@ -3813,6 +3813,13 @@
     ]
   },
   {
+    "id": "ShareModal1",
+    "message": "Копировать ссылку",
+    "files": [
+      "shared/components/modals/Share/Share.js"
+    ]
+  },
+  {
     "id": "OrdersWidgetModeShowWallet",
     "message": "Кошелек",
     "files": [

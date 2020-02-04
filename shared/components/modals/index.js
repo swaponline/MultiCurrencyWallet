@@ -30,10 +30,13 @@ import AddCustomERC20 from './AddCustomERC20/AddCustomERC20'
 
 import BtcMultisignSwitch from './BtcMultisignSwitch/BtcMultisignSwitch'
 
+import ShareModal from './Share/Share'
+
 
 export default {
   DeclineOrdersModal,
   SignUpModal,
+  ShareModal,
   OfferModal,
   WithdrawModal,
   WithdrawModalMultisig,
