@@ -56,7 +56,7 @@ export default {
   RegisterSMSProtected,
   MultisignJoinLink,
   CurrencyAction,
-  ShareModal,
+  InvoiceModal,
   InvoiceLinkModal,
   AlertModal,
   AddCustomERC20,
