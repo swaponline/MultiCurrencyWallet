@@ -1827,7 +1827,7 @@
   },
   {
     "id": "PrivateKeysModal991",
-    "message": "Before you continue be sure to save your private keys! Security of private keys is only in your hands. "
+    "message": "Please save your private keys"
   },
   {
     "id": "BtcToEthTokenAddress1",
