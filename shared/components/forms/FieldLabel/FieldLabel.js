@@ -7,8 +7,8 @@ import cssModules from 'react-css-modules'
 import styles from './FieldLabel.scss'
 
 
-const FieldLabel = ({ children, inRow, inDropDown }) => (
-  <div styleName={cx('label', { 'inRow': inRow }, { 'inDropDown': inDropDown })} >{children}</div>
+const FieldLabel = ({ children, inRow, inDropDown, positionStatic }) => (
+  <div styleName={cx('label', { 'inRow': inRow }, { 'inDropDown': inDropDown }, { 'positionStatic': positionStatic })} >{children}</div>
 )
 
 FieldLabel.propTypes = {
