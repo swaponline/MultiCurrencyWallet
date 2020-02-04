@@ -1,7 +1,6 @@
 .groupField {
   width: 100%;
   position: relative;
-  left: 3px;
   display: flex;
   border-radius: 6px;
   height: 44px;
@@ -12,6 +11,10 @@
   & p {
     margin: 0;
   }
+  button {
+    border: none;
+    width: 20%;
+  }
 }
 
 .balance {
@@ -21,7 +24,6 @@
 
 .group {
   position: relative;
-  margin-left: 2px;
   margin-right: 12px;
   width: 76%;
   display: flex;

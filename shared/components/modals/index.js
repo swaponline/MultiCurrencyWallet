@@ -28,6 +28,8 @@ import AlertModal from './Alert/AlertModal'
 
 import AddCustomERC20 from './AddCustomERC20/AddCustomERC20'
 
+import BtcMultisignSwitch from './BtcMultisignSwitch/BtcMultisignSwitch'
+
 
 export default {
   DeclineOrdersModal,
@@ -55,4 +57,5 @@ export default {
   InvoiceLinkModal,
   AlertModal,
   AddCustomERC20,
+  BtcMultisignSwitch,
 }
