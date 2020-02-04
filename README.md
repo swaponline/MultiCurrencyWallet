@@ -1,14 +1,37 @@
 ![Deploy to swaponline.github.io](https://github.com/swaponline/swap.react/workflows/Deploy%20to%20swaponline.github.io/badge.svg)
 
-## swap.online
+## Open-source Multicurrency wallet for Bitcoin and custom assets, and p2p excahnge
 
-Atomic swap cryptocurrency protocol. Live version here: https://swaponline.github.io . Atomic swap library at http://github.com/swaponline/swap.core.
+Live version here: https://swaponline.github.io . 
 
-important: 
-- 1/ atomic swap feature works without backend. It means that if you place order and go offline your order go offline too (nobody see him and make swap with you). 
-- 2/ Your exchange takes 2 minutes, some mining fee (BTC and ETH).
-- 3/ If you want to create wallet for your token, create build and place it onto your site (as HTML) https://generator.swaponline.site/generator/ . (If you want to accept bitcoin in your crowdsale - remember you MUST be online and you can not prosess more than 1 exchange at the same time. Otherwise you can use our custodian service for 1% fee. contact https://t.me/sashanoxon for details)
+No coding skills? Buy WordPress plugin https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064 with admin panel. 
 
+
+<h2>1. Multi-currency wallet. Your users can store Bitcoin and custom assets</h2>
+Add many assets to your wallet. 
+
+<img src="http://growup.wpmix.net/DesAndMob3.png">
+
+<br>
+Checkout this case: <a href="https://twitter.com/Atomic_Wallet" target="_blank">https://twitter.com/Atomic_Wallet</a> (our real client)
+
+
+<h2>3. ERC20 wallet</h2>
+<a href="https://generator.swaponline.site/livedemo/0x4E12EB8e506Ccd1427F6b8F7faa3e88fB698EB28/319aa913-4e84-483f-a0d1-8664a13f56b7/#/JACK-wallet">Wallet demo (custom asset "SWAP")</a>
+<img src="https://generator.swaponline.site/generator/assets/img/example_wallet.png">
+
+
+<h2>3. Buy/Sell assets . (Exchange widget)</h2>
+<a href="https://generator.swaponline.site/livedemo/0x4E12EB8e506Ccd1427F6b8F7faa3e88fB698EB28/319aa913-4e84-483f-a0d1-8664a13f56b7/#/buy/btc-to-jack">Exchange widget live demo</a>
+<img src="https://generator.swaponline.site/generator/assets/img/example_exchange.png">
+ <br> <br>
+
+<h3>4. Secondary market (trading btw users)</h3>
+<a href="https://swaponline.github.io/#/usdt-btc">Demo (orderbook)</a>
+
+
+<h3>6. Other demos</h3>
+<a href="https://swaponline.github.io/#/usdt-wallet">USDT stablecoin wallet (payment system)</a>
 
 ## Swap  React
 
@@ -33,27 +56,7 @@ npm i
 5) For dev mode `npm run start`, for prod `npm run build`
    > If you need to deploy it on your own (site) origin - run build like: `npm run build:mainnet https://yourcoolsite.com/`
 
-```
-npm run start
-```
 
-#### Ru
-
-1) Склонируйте репозиторий со вложенными модулями (swap.core)
-```
-git clone --recurse-submodules https://github.com/swaponline/swap.react.git
-```
-
-2) Установите зависимости с помощью пакетного менеджера `npm i` <br />
-```
-cd swap.react
-npm i
-```
-
-3) Обновите вложенные модули с помощью `git submodule update` в папке swap.react
-
-4) Чтобы начать разработку - запустите `npm run start`, для сборки продуктовой версии - `npm run build`
-   > Если нужно поместить сборку на ваш собственный домен - запустите сборку с указанием вашего домена: `npm run build:mainnet https://your.cool.origin/`
 
 ```
 npm run start
@@ -151,3 +154,8 @@ export default {
 
 if you have conflicts (if sources has been changed on your side) click "resolve conflicts".
 
+# DeFi style (borrow/lend) 
+![](https://screenshots.wpmix.net/chrome_ta4cbcsWgMjqbYSp9rFTwMa5bJDBYjcF.png) 
+https://drive.google.com/file/d/15e0ODxzbtiu0xJOeKKuJ2SzffZmc5_OA/view 
+
+for any questions: telegram <a href="https://t.me/sashanoxon">sashanoxon</a>

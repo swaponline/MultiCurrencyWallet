@@ -203,7 +203,14 @@ class Row extends React.PureComponent {
               <div>
                 {txType === 'INVOICE' ?
                   <>
-                    <FormattedMessage id="RowHistoryInvoce" defaultMessage="Инвойс #{number}" values={{number: `${invoiceData.id}-${invoiceData.invoiceNumber}`}}/>
+                    <FormattedMessage 
+                      id="RowHistoryInvoce" 
+                      defaultMessage="Инвойс #{number} ({contact})" 
+                      values={{
+                        number: `${invoiceData.id}-${invoiceData.invoiceNumber}`, 
+                        contact: (invoiceData.contact) ? `(${invoiceData.contact})` : ''
+                      }}
+                    />
                     <div styleName={`${invoiceStatusClass} cell`}>
                       {invoiceStatusText}
                     </div>
@@ -253,8 +260,12 @@ class Row extends React.PureComponent {
                   <FormattedMessage
                     styleName="address"
                     id="RowHistoryInvoiceAddress"
-                    defaultMessage='Адрес для оплаты: {address}'
-                    values={{address: `${(invoiceData.destAddress) ? invoiceData.destAddress : invoiceData.fromAddress}`}} />
+                    defaultMessage='Адрес для оплаты: {address} ({number})'
+                    values={{
+                      address: `${(invoiceData.destAddress) ? invoiceData.destAddress : invoiceData.fromAddress}`,
+                      number: invoiceData.totalCount,
+                    }} 
+                  />
                 </div>
               }
             </div>

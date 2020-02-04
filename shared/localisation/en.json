@@ -5156,7 +5156,7 @@
   },
   {
     "id": "createWalletCapture1",
-    "message": "Choose amonge Bitcoin, Ethereum, Swap",
+    "message": "Choose among Bitcoin, Ethereum, Swap",
     "files": [
       "shared/pages/CreateWallet/Steps/texts.js"
     ]
@@ -6192,14 +6192,14 @@
   },
   {
     "id": "RowHistoryInvoce",
-    "message": "Invoice #{number}",
+    "message": "Invoice #{number} {contact}",
     "files": [
       "shared/pages/History/Row/Row.js"
     ]
   },
   {
     "id": "RowHistoryInvoiceAddress",
-    "message": "Payment address: {address}",
+    "message": "Payment address: {address} ({number})",
     "files": [
       "shared/pages/History/Row/Row.js"
     ]
@@ -6702,21 +6702,21 @@
   },
   {
     "id": "CreateInvoiceGoHome",
-    "message": "Перейти на главную",
+    "message": "Go to main",
     "files": [
       "shared/pages/CreateInvoice/CreateInvoice.js"
     ]
   },
   {
     "id": "CreateInvoiceReady",
-    "message": "Спасибо, инвойс выставлен",
+    "message": "Invoice sent",
     "files": [
       "shared/pages/CreateInvoice/CreateInvoice.js"
     ]
   },
   {
     "id": "createWallet_customERC20",
-    "message": "Подключить токен",
+    "message": "Custom token",
     "files": [
       "shared/pages/CreateWallet/Steps/FirstStep.js"
     ]
@@ -6744,49 +6744,49 @@
   },
   {
     "id": "customERC20_Address",
-    "message": "Адрес контракта",
+    "message": "erc20 address",
     "files": [
       "shared/components/modals/AddCustomERC20/AddCustomERC20.js"
     ]
   },
   {
     "id": "customERC20_ConfirmStep",
-    "message": "Добавить этот токен",
+    "message": "Add token",
     "files": [
       "shared/components/modals/AddCustomERC20/AddCustomERC20.js"
     ]
   },
   {
     "id": "customERC20_IncorrectAddress",
-    "message": "Вы ввели не коректный адрес",
+    "message": "Invalid erc20 address",
     "files": [
       "shared/components/modals/AddCustomERC20/AddCustomERC20.js"
     ]
   },
   {
     "id": "customERC20_NextStep",
-    "message": "Далее",
+    "message": "NExt",
     "files": [
       "shared/components/modals/AddCustomERC20/AddCustomERC20.js"
     ]
   },
   {
     "id": "customERC20_NotFound",
-    "message": "По указаному адресу не найден токен ERC20",
+    "message": "This is not ERC20 address",
     "files": [
       "shared/components/modals/AddCustomERC20/AddCustomERC20.js"
     ]
   },
   {
     "id": "customERC20_Processing",
-    "message": "Обработка ...",
+    "message": "Processing ...",
     "files": [
       "shared/components/modals/AddCustomERC20/AddCustomERC20.js"
     ]
   },
   {
     "id": "customERC20_Ready",
-    "message": "Готово",
+    "message": "Done",
     "files": [
       "shared/components/modals/AddCustomERC20/AddCustomERC20.js"
     ]
@@ -6800,28 +6800,28 @@
   },
   {
     "id": "customERC20_Title",
-    "message": "Добавление токена ERC20",
+    "message": "Add new ERC20",
     "files": [
       "shared/components/modals/AddCustomERC20/AddCustomERC20.js"
     ]
   },
   {
     "id": "customERC20_TokenDecimals",
-    "message": "Знаков после запятой",
+    "message": "Decimals",
     "files": [
       "shared/components/modals/AddCustomERC20/AddCustomERC20.js"
     ]
   },
   {
     "id": "customERC20_TokenSymbol",
-    "message": "Символ токена",
+    "message": "Symbol",
     "files": [
       "shared/components/modals/AddCustomERC20/AddCustomERC20.js"
     ]
   },
   {
     "id": "customERC20_TokenTitle",
-    "message": "Название токена",
+    "message": "Title",
     "files": [
       "shared/components/modals/AddCustomERC20/AddCustomERC20.js"
     ]
@@ -6835,28 +6835,28 @@
   },
   {
     "id": "invoiceModal_contactPlaceholder",
-    "message": "Обязательное поле",
+    "message": "Required",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
   },
   {
     "id": "HistoryRowInvoiceStatusNew",
-    "message": "Пока не оплачен",
+    "message": "Pending",
     "files": [
       "shared/pages/History/Row/Row.js"
     ]
   },
   {
     "id": "WalletPage_ExportKeys",
-    "message": "Показать ключи",
+    "message": "Show private keys",
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
   },
   {
     "id": "WalletPage_ImportKeys",
-    "message": "Импортировать ключи",
+    "message": "Import keys",
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]

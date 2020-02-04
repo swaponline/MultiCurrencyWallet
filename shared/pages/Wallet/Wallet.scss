@@ -341,6 +341,12 @@
 
 
 @media all and (max-width: 767px) {
+    .walletBalance {
+        margin-top: 0;
+    }
+    .walletNav {
+        display: none;
+    }
     .walletContent {
         flex-direction: column;
         margin: 0px -20px;
