@@ -51,7 +51,7 @@ export default class Share extends Component {
             <i styleName="icon" className="fab fa-linkedin" />
             <span>LinkedIn</span>
           </a>
-          <a styleName="button">
+          <a styleName="button" href={'mailto:x@y.com?body=' + encodeURI(link) + '&subject' + encodeURIComponent(title)}>
             <i styleName="icon" className="fas fa-envelope" />
             <span>Email</span>
           </a>
