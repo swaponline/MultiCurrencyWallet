@@ -6192,14 +6192,14 @@
   },
   {
     "id": "RowHistoryInvoce",
-    "message": "Invoice #{number}",
+    "message": "Invoice #{number} {contact}",
     "files": [
       "shared/pages/History/Row/Row.js"
     ]
   },
   {
     "id": "RowHistoryInvoiceAddress",
-    "message": "Payment address: {address}",
+    "message": "Payment address: {address} ({number})",
     "files": [
       "shared/pages/History/Row/Row.js"
     ]

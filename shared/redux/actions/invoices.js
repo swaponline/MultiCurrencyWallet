@@ -32,6 +32,7 @@ const addInvoice = (data) => {
     toAddress   : data.toAddress,
     fromAddress : data.fromAddress,
     amount      : data.amount,
+    contact     : data.contact,
     label       : (data.label) ? data.label : '',
     address     : btcData.address,
     pubkey      : btcData.publicKey.toString('hex'),

@@ -140,6 +140,7 @@ export default class InvoiceModal extends React.Component {
         toAddress: address,
         fromAddress: data.address,
         amount,
+        contact,
         label: message,
         destination
       });
