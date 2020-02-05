@@ -23,20 +23,19 @@ const ShareBustton =  ({ onClick }) => {
 export default class ShareButton extends React.Component {
 
   openShareModal = () => {
-    const { link } = this.props
+    const { link, title } = this.props
     actions.modals.open(constants.modals.Share, {
-      link: link
+      link: link,
+      title: title
     })
   }
   render() {
     return (
-      
       <div styleName="WrapShareButton">
         <button styleName="shareButton"  onClick={this.openShareModal}   type="button" title="Share this article">
           <img src={shareIcon} alt='Open submenu' />
           <span>Share</span>
         </button>
-        
       </div> 
     );
 

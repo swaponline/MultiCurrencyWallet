@@ -96,17 +96,6 @@ class Row extends React.PureComponent {
     this.setState(() => ({ isOpen: val }))
   }
 
-  openInfoPayModal = (invoiceData) => {
-    
-    const { type, hash, value } = this.props;
-
-    actions.modals.open(constants.modals.InfoPay, {
-      amount:1,
-      currency:1,
-      address: 11
-    })
-  }
-
   changeComment = (val) => {
     this.setState(() => ({ comment: val }))
   }
@@ -235,13 +224,7 @@ class Row extends React.PureComponent {
                         <FormattedMessage id="RowHistory342" defaultMessage="Unconfirmed" />
                       }
                     </div>
-                    {  
-                        direction === 'out'
-                          ?  
-                          <a href onClick={ () => this.openInfoPayModal()}><FormattedMessage id="RowHistory343" defaultMessage="Info" /> </a>
-                          :
-                          ''
-                     }
+                    
                     
                   </>}
               </div>
