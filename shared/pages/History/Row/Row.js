@@ -11,6 +11,7 @@ import actions from 'redux/actions'
 import { constants } from 'helpers'
 import CommentRow from './Comment'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
+import ShareButton from 'components/controls/ShareButton/ShareButton.js'
 
 
 
@@ -96,6 +97,13 @@ class Row extends React.PureComponent {
     this.setState(() => ({ isOpen: val }))
   }
 
+  openShareModal = () => {
+    actions.modals.open(constants.modals.Share, {
+      link: location.href,
+      title: 'your coint'
+    })
+  }
+
   changeComment = (val) => {
     this.setState(() => ({ comment: val }))
   }
@@ -131,7 +139,7 @@ class Row extends React.PureComponent {
       }
     </Fragment> 
     )
-}
+  }
 
   render() {
     const {
@@ -182,6 +190,7 @@ class Row extends React.PureComponent {
       <>
         <tr styleName='historyRow'>
           <td>
+        
           <div styleName={`${statusStyleAmount} circleIcon`}>
               <div styleName='arrowWrap'>
                 <svg width='12' height='15' viewBox='0 0 12 15' fill='none' xmlns='http://www.w3.org/2000/svg'>
@@ -194,7 +203,14 @@ class Row extends React.PureComponent {
               <div>
                 {txType === 'INVOICE' ?
                   <>
-                    <FormattedMessage id="RowHistoryInvoce" defaultMessage="Инвойс #{number}" values={{number: `${invoiceData.id}-${invoiceData.invoiceNumber}`}}/>
+                    <FormattedMessage 
+                      id="RowHistoryInvoce" 
+                      defaultMessage="Инвойс #{number} ({contact})" 
+                      values={{
+                        number: `${invoiceData.id}-${invoiceData.invoiceNumber}`, 
+                        contact: (invoiceData.contact) ? `(${invoiceData.contact})` : ''
+                      }}
+                    />
                     <div styleName={`${invoiceStatusClass} cell`}>
                       {invoiceStatusText}
                     </div>
@@ -216,6 +232,13 @@ class Row extends React.PureComponent {
                         <FormattedMessage id="RowHistory342" defaultMessage="Unconfirmed" />
                       }
                     </div>
+                    {
+                       direction === 'out'
+                        ?  <ShareButton onClick={ () => this.openShareModal() }/>
+                        :
+                        ''
+                    }
+                    
                   </>}
               </div>
               <CommentRow
@@ -237,8 +260,12 @@ class Row extends React.PureComponent {
                   <FormattedMessage
                     styleName="address"
                     id="RowHistoryInvoiceAddress"
-                    defaultMessage='Адрес для оплаты: {address}'
-                    values={{address: `${(invoiceData.destAddress) ? invoiceData.destAddress : invoiceData.fromAddress}`}} />
+                    defaultMessage='Адрес для оплаты: {address} ({number})'
+                    values={{
+                      address: `${(invoiceData.destAddress) ? invoiceData.destAddress : invoiceData.fromAddress}`,
+                      number: invoiceData.totalCount,
+                    }} 
+                  />
                 </div>
               }
             </div>

@@ -1,0 +1,40 @@
+.WrapShareButton {
+
+  display: inline-block;
+  padding-left: 15px;
+  .shareButton {
+    
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: auto;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      color: #8E9AA3;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.1;
+      letter-spacing: 2px;
+      text-transform: capitalize;
+      text-decoration: none;
+      white-space: nowrap;
+      border-radius: 4px;
+      background-color: rgba(142, 154, 163, 0.1);
+      border: 1px solid #ddd;
+      cursor: pointer;
+      font-size: 12px;
+    
+  }
+  svg {
+    width: 20px;
+    height: 20px;
+    margin-right: 7px;
+  }
+  img {
+    margin-right: 7px;
+  }
+  .hidden {
+    display: none;
+  }
+}

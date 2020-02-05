@@ -3813,6 +3813,13 @@
     ]
   },
   {
+    "id": "ShareModal1",
+    "message": "Копировать ссылку",
+    "files": [
+      "shared/components/modals/Share/Share.js"
+    ]
+  },
+  {
     "id": "OrdersWidgetModeShowWallet",
     "message": "Кошелек",
     "files": [
@@ -6211,14 +6218,14 @@
   },
   {
     "id": "RowHistoryInvoce",
-    "message": "Инвойс #{number}",
+    "message": "Инвойс #{number} {contact}",
     "files": [
       "shared/pages/History/Row/Row.js"
     ]
   },
   {
     "id": "RowHistoryInvoiceAddress",
-    "message": "Адрес для оплаты: {address}",
+    "message": "Адрес для оплаты: {address} ({number})",
     "files": [
       "shared/pages/History/Row/Row.js"
     ]
