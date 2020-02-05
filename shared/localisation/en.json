@@ -2853,6 +2853,13 @@
     ]
   },
   {
+    "id": "RowHistory343",
+    "message": "Info",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
     "id": "timer68",
     "message": "refund ready",
     "files": [
@@ -6034,6 +6041,20 @@
     "message": "Invoice link",
     "files": [
       "shared/components/modals/InvoiceLinkModal/InvoiceLinkModal.js"
+    ]
+  },
+  {
+    "id": "InfoPay_1",
+    "message": "Success",
+    "files": [
+      "shared/components/modals/InfoPay/InfoPay.js"
+    ]
+  },
+  {
+    "id": "InfoPay_2",
+    "message": "were successfully transferred to",
+    "files": [
+      "shared/components/modals/InfoPay/InfoPay.js"
     ]
   },
   {
