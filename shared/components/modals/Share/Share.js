@@ -3,7 +3,8 @@ import { Modal } from 'components/modal'
 import styles from './Share.scss'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import cssModules from 'react-css-modules'
-
+import CopyToClipboard from 'react-copy-to-clipboard'
+import actions from 'redux/actions'
 
 @injectIntl
 @cssModules(styles, { allowMultiple: true })
@@ -19,44 +20,46 @@ export default class Share extends Component {
         title: title,
         url: link
       }).catch(console.error);
+      actions.modals.close('ShareModal')
     }
-
   }
 
   render() {
-    const { props: { data: { link } } } = this
+    const { props: { data: { link, title } } } = this
 
     let name = 'ShareModal';
-    let title = 'Share';
+    let titleModal = 'Share';
     
     return (
-      <Modal name={name} title={title} >
-        <span styleName="targets">
-          <a styleName="button">
+      <Modal name={name} title={titleModal} >
+          <span styleName="targets">
+          <a styleName="button" href={'https://www.facebook.com/sharer/sharer.php?u=' + encodeURI(link) + '&t=' + title} target="_blank">
             <i styleName="icon" className="fab fa-facebook" />
             <span>Facebook</span>
           </a>
-          <a styleName="button">
+          <a styleName="button" href={'https://twitter.com/intent/tweet?text=' + encodeURIComponent(title) + '&url=' + encodeURI(link)} target="_blank">
             <i styleName="icon" className="fab fa-twitter" />
             <span>Twitter</span>
           </a>
-          <a styleName="button">
+          <a styleName="button" href={'https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURI(link) + '&title=' + encodeURIComponent(title)} target="_blank">
             <i styleName="icon" className="fab fa-linkedin" />
             <span>LinkedIn</span>
           </a>
-          <a styleName="button">
+          <a styleName="button" href={'mailto:x@y.com?body=' + encodeURI(link) + '&subject=' + encodeURIComponent(title)}>
             <i styleName="icon" className="fas fa-envelope" />
             <span>Email</span>
           </a>
         </span>
         <div styleName="link">
           <div styleName="pen-url">{link}</div>
-          <button styleName="copy-link">
-            <FormattedMessage
-              id="ShareModal1"
-              defaultMessage="Copy Link"
-            />
-          </button>
+          <CopyToClipboard text={link}>
+            <button styleName="copy-link">
+              <FormattedMessage
+                id="ShareModal1"
+                defaultMessage="Copy Link"
+              />
+            </button>
+          </CopyToClipboard>
         </div>
       </Modal>
     )
