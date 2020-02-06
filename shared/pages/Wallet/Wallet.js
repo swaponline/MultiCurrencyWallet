@@ -180,7 +180,7 @@ export default class Wallet extends Component {
     this.getInfoAboutCurrency();
     this.setLocalStorageItems();
 
-    if(isMobile) {
+    if (isMobile) {
       this.balanceRef.current.scrollIntoView({
         block: "start"
       });
@@ -362,6 +362,7 @@ export default class Wallet extends Component {
           <Slider
             settings={settings}
             isSigned={isSigned}
+            host={window.location.hostname}
             handleNotifyBlockClose={this.handleNotifyBlockClose}
             {...this.state}
           />
