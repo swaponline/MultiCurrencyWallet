@@ -5,6 +5,8 @@ import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import cssModules from 'react-css-modules'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import actions from 'redux/actions'
+import Button from 'components/controls/Button/Button'
+
 
 @injectIntl
 @cssModules(styles, { allowMultiple: true })
@@ -53,12 +55,12 @@ export default class Share extends Component {
         <div styleName="link">
           <div styleName="pen-url">{link}</div>
           <CopyToClipboard text={link}>
-            <button styleName="copy-link">
+            <Button blue>
               <FormattedMessage
                 id="ShareModal1"
                 defaultMessage="Copy Link"
               />
-            </button>
+            </Button>
           </CopyToClipboard>
         </div>
       </Modal>
