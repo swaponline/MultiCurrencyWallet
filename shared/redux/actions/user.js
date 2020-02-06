@@ -200,7 +200,7 @@ const setTransactions = async () => {
       const ercArray = await Promise.all(Object.keys(config.erc20)
         .map(async (name, index) => {
           await delay(650 * index)
-          const res = await actions[name].getTransaction(name)
+          const res = await actions.token.getTransaction(name)
           // console.log('name - ', name, '\n', '\n', res)
           return res
         }))

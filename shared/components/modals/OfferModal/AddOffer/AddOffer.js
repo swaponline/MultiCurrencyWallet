@@ -45,7 +45,13 @@ export default class AddOffer extends Component {
     super()
 
     if (config && config.isWidget) {
-      minAmountOffer[config.erc20token] = 1
+      if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
+        Object.keys(window.widgetERC20Tokens).forEach((key) => {
+          minAmountOffer[key] = 1
+        })
+      } else {
+        minAmountOffer[config.erc20token] = 1
+      }
     }
 
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency } = initialData || {}
