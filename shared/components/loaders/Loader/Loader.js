@@ -15,19 +15,11 @@ const isWidget = config && config.isWidget;
 const Loader = ({ overlayClassName, className, data, showTips, showMyOwnTip }) => (
   <div styleName="Firefox overlay" className={overlayClassName}>
     <div>
-
-      {window.location.hostname === "swaponline.io" ? (
-        <div styleName="loader" className={className}>
-          <div styleName="loader1" />
-          <div styleName="loader2" />
-          <div styleName="loader3" />
-        </div>
-      ) : (
-        <div>
-          <img style={{ maxWidth: "55px" }} src={window.logoUrl} alt="logo" />
-        </div>
-      )}
-
+      <div styleName="loader" className={className}>
+        <div styleName="loader1" />
+        <div styleName="loader2" />
+        <div styleName="loader3" />
+      </div>
       {data && data.txId && (
         <p styleName="text">
           <FormattedMessage
@@ -36,7 +28,6 @@ const Loader = ({ overlayClassName, className, data, showTips, showMyOwnTip }) =
           />
         </p>
       )}
-
       {data && data.txId && (
         <a href={data.txId} styleName="link" target="_blank" rel="noopener noreferrer">
           {data.txId}
