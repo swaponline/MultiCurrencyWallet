@@ -1,6 +1,14 @@
 import config from 'app-config'
 
 
+const GetCustromERC20 = () => {
+  const configStorage = (process.env.MAINNET) ? 'mainnet' : 'testnet'
+
+  let tokensInfo = JSON.parse(localStorage.getItem('customERC'))
+  if (!tokensInfo || !tokensInfo[configStorage]) return {}
+  return tokensInfo[configStorage]
+}
+
 const initialState = {
   items: [
     {
@@ -188,6 +196,25 @@ if (config.isWidget) {
       fullTitle: config.erc20[config.erc20token].fullName,
     },
   ]
+} else {
+  const customERC = GetCustromERC20()
+  Object.keys(customERC).forEach((tokenContract) => {
+    const symbol = customERC[tokenContract].symbol
+    initialState.items.push({
+      name: symbol.toUpperCase(),
+      title: symbol.toUpperCase(),
+      icon: symbol.toLowerCase(),
+      value: symbol.toLowerCase(),
+      fullTitle: symbol,
+    })
+    initialState.partialItems.push({
+      name: symbol.toUpperCase(),
+      title: symbol.toUpperCase(),
+      icon: symbol.toLowerCase(),
+      value: symbol.toLowerCase(),
+      fullTitle: symbol,
+    })
+  })
 }
 // eslint-disable-next-line
 // process.env.MAINNET && initialState.items.unshift({

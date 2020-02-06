@@ -1,6 +1,14 @@
 import config from 'app-config'
 
 
+const GetCustromERC20 = () => {
+  const configStorage = (process.env.MAINNET) ? 'mainnet' : 'testnet'
+
+  let tokensInfo = JSON.parse(localStorage.getItem('customERC'))
+  if (!tokensInfo || !tokensInfo[configStorage]) return {}
+  return tokensInfo[configStorage]
+}
+
 const swap = (config && config.isWidget) ?
   []
   :
@@ -29,6 +37,12 @@ if (config && config.isWidget) {
   }
   // swap.push(`${config.erc20token.toUpperCase()}-USDTomni`)
   swap.push('ETH-BTC')
+} else {
+  const customERC = GetCustromERC20()
+  Object.keys(customERC).forEach((tokenContract) => {
+    const symbol = customERC[tokenContract].symbol
+    swap.push(`${symbol.toUpperCase()}-BTC`)
+  })
 }
 export default [
   ...swap,
