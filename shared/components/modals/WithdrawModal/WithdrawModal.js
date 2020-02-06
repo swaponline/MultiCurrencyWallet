@@ -178,6 +178,7 @@ export default class WithdrawModal extends React.Component {
     }));
   };
 
+
   handleSubmit = async () => {
     const { address: to, amount, ownTx } = this.state;
     const {
@@ -232,11 +233,18 @@ export default class WithdrawModal extends React.Component {
         }
         this.setBalanceOnState(currency);
 
-        actions.notifications.show(constants.notifications.SuccessWithdraw, {
+       /* actions.notifications.show(constants.notifications.SuccessWithdraw, {
           amount,
           currency,
           address: to
-        });
+        });*/
+
+        actions.modals.open(constants.modals.InfoPay, {
+          amount,
+          currency,
+          tx: txRaw.getId(),
+          address: to
+        })
 
         this.setState(() => ({ isShipped: false, error: false }));
         if (onReady instanceof Function) {
@@ -507,10 +515,10 @@ export default class WithdrawModal extends React.Component {
               <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
             </Fragment>
           ) : (
-            <Fragment>
-              <FormattedMessage id="WithdrawModal111" defaultMessage="Withdraw" /> {`${currency.toUpperCase()}`}
-            </Fragment>
-          )}
+              <Fragment>
+                <FormattedMessage id="WithdrawModal111" defaultMessage="Withdraw" /> {`${currency.toUpperCase()}`}
+              </Fragment>
+            )}
         </Button>
         {error && (
           <div styleName="rednote">
@@ -553,8 +561,8 @@ export default class WithdrawModal extends React.Component {
                   <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
                 </Fragment>
               ) : (
-                <FormattedMessage id="WithdrawModalInvoiceSaveTx" defaultMessage="Отметить как оплаченный" />
-              )}
+                  <FormattedMessage id="WithdrawModalInvoiceSaveTx" defaultMessage="Отметить как оплаченный" />
+                )}
             </Button>
           </Fragment>
         )}

@@ -27,4 +27,5 @@ export default {
   AddCustomERC20: 'AddCustomERC20',
   BtcMultisignSwitch: 'BtcMultisignSwitch',
   Share: 'ShareModal',
+  InfoPay: 'InfoPay'
 }
