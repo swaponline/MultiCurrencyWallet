@@ -11,8 +11,7 @@ import actions from 'redux/actions'
 import { constants } from 'helpers'
 import CommentRow from './Comment'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
-import ShareButton from 'components/controls/ShareButton/ShareButton.js'
-
+ 
 
 
 class Row extends React.PureComponent {
@@ -95,13 +94,6 @@ class Row extends React.PureComponent {
 
   toggleComment = (val) => {
     this.setState(() => ({ isOpen: val }))
-  }
-
-  openShareModal = () => {
-    actions.modals.open(constants.modals.Share, {
-      link: location.href,
-      title: 'your coint'
-    })
   }
 
   changeComment = (val) => {
@@ -232,12 +224,7 @@ class Row extends React.PureComponent {
                         <FormattedMessage id="RowHistory342" defaultMessage="Unconfirmed" />
                       }
                     </div>
-                    {
-                       direction === 'out'
-                        ?  <ShareButton onClick={ () => this.openShareModal() }/>
-                        :
-                        ''
-                    }
+                    
                     
                   </>}
               </div>
