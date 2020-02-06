@@ -53,9 +53,17 @@ const isWidgetBuild = config && config.isWidget
   },
   currencies: { items: currencies },
 }) => {
+
+  let widgetMultiTokens = []
+  if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
+    Object.keys(window.widgetERC20Tokens).forEach((key) => {
+      widgetMultiTokens.push( key.toUpperCase() )
+    })
+  }
   const tokens = (
     config && config.isWidget
-      ? [ config.erc20token.toUpperCase() ]
+      ? (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) ? 
+        widgetMultiTokens : [ config.erc20token.toUpperCase() ]
       : Object.keys(tokensData).map(k => tokensData[k].currency)
   )
 
