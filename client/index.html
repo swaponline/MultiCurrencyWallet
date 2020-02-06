@@ -261,6 +261,9 @@ background-color: #f8f8f8;
   top: auto;
   margin: 15px;
 }
+.swiper-slide .swap-screenshot {
+  transition: transform .3s;	
+}
 .swiper-slide .swap-screenshot:hover {
   cursor: pointer;
   transform: translateY(-5px);
@@ -628,6 +631,10 @@ background-color: #f8f8f8;
   document.querySelectorAll('.btn-create-wallet')[0].innerHTML = swap_l10n.buttons.wallet[lang];
   document.querySelectorAll('.swiper-button-prev > span')[0].innerHTML = swap_l10n.buttons.prev[lang];
   document.querySelectorAll('.swiper-button-next > span')[0].innerHTML = swap_l10n.buttons.next[lang];
+	
+  // Remove temporary some slides
+  starterSwiper.removeSlide([3, 4, 5]);
+  starterSwiper.update();
 
   // Close modal on click
   document.querySelectorAll('.btn-close-modal').forEach(item => {
