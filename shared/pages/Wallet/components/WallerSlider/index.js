@@ -55,7 +55,7 @@ export default props => {
           secondFunc={handleSaveKeys}
         />
       )}
-      {(host === "localhost" || host === "swaponline.io") && (
+      {(host === "localhost" || host === "swaponline.github.io") && (
         <NotifyBlock
           className="notifyBlockBanner"
           descr={
@@ -76,7 +76,7 @@ export default props => {
         />
       )}
 
-      {(host === "localhost" || host === "swaponline.io") && (
+      {(host === "localhost" || host === "swaponline.github.io") && (
         <NotifyBlock
           className="notifyBlockBanner"
           descr={
@@ -97,7 +97,7 @@ export default props => {
         />
       )}
 
-      {(host === "localhost" || host === "swaponline.io") && (
+      {(host === "localhost" || host === "swaponline.github.io") && (
         <NotifyBlock
           className="notifyBlockBanner"
           descr={
@@ -118,7 +118,7 @@ export default props => {
         />
       )}
 
-      {(host === "localhost" || host === "swaponline.io") && (
+      {(host === "localhost" || host === "swaponline.github.io") && (
         <NotifyBlock
           className="notifyBlockBanner"
           descr={
@@ -156,21 +156,7 @@ export default props => {
           secondFunc={() => handleNotifyBlockClose("isClosedNotifyBlockSignUp")}
         />
       )} */}
-      {!isClosedNotifyBlockBanner && (
-        <NotifyBlock
-          descr={<FormattedMessage id="descr301" defaultMessage="Updates" />}
-          tooltip={
-            <FormattedMessage
-              id="descr302"
-              defaultMessage="Let us notify you that the main domain name for Swap.online exchange service will be changed from swap.online to swaponline.io."
-            />
-          }
-          secondBtn={<FormattedMessage id="descr303" defaultMessage="Close" />}
-          className="notifyBlockBanner"
-          icon={info}
-          secondFunc={() => handleNotifyBlockClose("isClosedNotifyBlockBanner")}
-        />
-      )}
+
     </Slider>
   );
 };
