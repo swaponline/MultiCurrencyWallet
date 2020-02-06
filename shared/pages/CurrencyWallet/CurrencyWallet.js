@@ -180,9 +180,10 @@ export default class CurrencyWallet extends Component {
   }
 
   handleGoTrade = () => {
+    const { currency } = this.state
     const { history, intl: { locale } } = this.props
 
-    history.push(localisedUrl(locale, links.pointOfSell))
+    history.push(localisedUrl(locale, `${links.pointOfSell}/btc-to-${currency.toLowerCase()}`))
   }
 
   rowRender = (row, rowIndex) => (

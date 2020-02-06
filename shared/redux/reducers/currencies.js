@@ -1,6 +1,14 @@
 import config from 'app-config'
 
 
+const GetCustromERC20 = () => {
+  const configStorage = (process.env.MAINNET) ? 'mainnet' : 'testnet'
+
+  let tokensInfo = JSON.parse(localStorage.getItem('customERC'))
+  if (!tokensInfo || !tokensInfo[configStorage]) return {}
+  return tokensInfo[configStorage]
+}
+
 const initialState = {
   items: [
     {
@@ -112,21 +120,8 @@ if (config.isWidget) {
       value: 'btc',
       fullTitle: 'bitcoin',
     },
-    {
-      name: config.erc20token.toUpperCase(),
-      title: config.erc20token.toUpperCase(),
-      icon: config.erc20token,
-      value: config.erc20token,
-      fullTitle: config.erc20[config.erc20token].fullName,
-    },
-    {
-      name: 'ETH',
-      title: 'ETH',
-      icon: 'eth',
-      value: 'eth',
-      fullTitle: 'ethereum',
-    },
   ]
+
   initialState.partialItems = [
     {
       name: 'ETH',
@@ -142,14 +137,55 @@ if (config.isWidget) {
       value: 'btc',
       fullTitle: 'bitcoin',
     },
-    {
+  ]
+  
+  // Мульти валюта с обратной совместимостью одиночного билда
+  const multiTokenNames = Object.keys(window.widgetERC20Tokens)
+
+  if (multiTokenNames.length>0) {
+    // First token in list - is main - fill single-token erc20 config
+    config.erc20token = multiTokenNames[0]
+    config.erc20[config.erc20token] = window.widgetERC20Tokens[config.erc20token]
+    multiTokenNames.forEach((key) => {
+      initialState.items.push({
+        name: key.toUpperCase(),
+        title: key.toUpperCase(),
+        icon: key,
+        value: key,
+        fullTitle: window.widgetERC20Tokens[key].fullName,
+      })
+      initialState.partialItems.push({
+        name: key.toUpperCase(),
+        title: key.toUpperCase(),
+        icon: key,
+        value: key,
+        fullTitle: window.widgetERC20Tokens[key].fullName,
+      })
+    })
+    
+  } else {
+    initialState.items.push({
       name: config.erc20token.toUpperCase(),
       title: config.erc20token.toUpperCase(),
       icon: config.erc20token,
       value: config.erc20token,
       fullTitle: config.erc20[config.erc20token].fullName,
-    },
-  ]
+    })
+    initialState.partialItems.push({
+      name: config.erc20token.toUpperCase(),
+      title: config.erc20token.toUpperCase(),
+      icon: config.erc20token,
+      value: config.erc20token,
+      fullTitle: config.erc20[config.erc20token].fullName,
+    })
+  }
+  initialState.items.push({
+    name: 'ETH',
+    title: 'ETH',
+    icon: 'eth',
+    value: 'eth',
+    fullTitle: 'ethereum',
+  })
 
   initialState.addSelectedItems = [
     {
@@ -160,6 +196,25 @@ if (config.isWidget) {
       fullTitle: config.erc20[config.erc20token].fullName,
     },
   ]
+} else {
+  const customERC = GetCustromERC20()
+  Object.keys(customERC).forEach((tokenContract) => {
+    const symbol = customERC[tokenContract].symbol
+    initialState.items.push({
+      name: symbol.toUpperCase(),
+      title: symbol.toUpperCase(),
+      icon: symbol.toLowerCase(),
+      value: symbol.toLowerCase(),
+      fullTitle: symbol,
+    })
+    initialState.partialItems.push({
+      name: symbol.toUpperCase(),
+      title: symbol.toUpperCase(),
+      icon: symbol.toLowerCase(),
+      value: symbol.toLowerCase(),
+      fullTitle: symbol,
+    })
+  })
 }
 // eslint-disable-next-line
 // process.env.MAINNET && initialState.items.unshift({
