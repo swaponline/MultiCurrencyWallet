@@ -52,10 +52,18 @@ const walletNav = [
     currencies: { items: currencies },
     createWallet: { currencies: assets }
   }) => {
-    const tokens =
+    let widgetMultiTokens = []
+    if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
+      Object.keys(window.widgetERC20Tokens).forEach((key) => {
+        widgetMultiTokens.push( key.toUpperCase() )
+      })
+    }
+    const tokens = (
       config && config.isWidget
-        ? [config.erc20token.toUpperCase()]
-        : Object.keys(tokensData).map(k => tokensData[k].currency);
+        ? (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) ? 
+          widgetMultiTokens : [ config.erc20token.toUpperCase() ]
+        : Object.keys(tokensData).map(k => tokensData[k].currency)
+    )
 
     const tokensItems = Object.keys(tokensData).map(k => tokensData[k]);
 
@@ -314,7 +322,15 @@ export default class Wallet extends Component {
     let usdBalance = 0;
     let changePercent = 0;
 
-    const widgetCurrencies = isWidgetBuild ? ["BTC", "ETH", config.erc20token.toUpperCase()] : [];
+    let widgetCurrencies = isWidgetBuild ? ["BTC", "ETH", config.erc20token.toUpperCase()] : [];
+
+    if (window.widgetERC20Tokens) {
+      // Multi token widget build
+      if (Object.keys(window.widgetERC20Tokens).length) {
+        widgetCurrencies = ["BTC", "ETH"]
+        Object.keys(window.widgetERC20Tokens).forEach((key) => { widgetCurrencies.push(key.toUpperCase()) })
+      }
+    }
 
     let tableRows = allData.filter(({ currency, balance }) => !hiddenCoinsList.includes(currency) || balance > 0);
     if (isWidgetBuild) {
