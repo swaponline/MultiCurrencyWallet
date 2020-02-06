@@ -4,6 +4,8 @@ import shareIcon from './images/icon.svg';
 import actions from "redux/actions";
 import CSSModules from 'react-css-modules'
 import { constants } from "helpers";
+import Button from 'components/controls/Button/Button'
+
 const ShareBustton =  ({ onClick }) => {
    
   return (
@@ -32,10 +34,12 @@ export default class ShareButton extends React.Component {
   render() {
     return (
       <div styleName="WrapShareButton">
-        <button styleName="shareButton"  onClick={this.openShareModal}   type="button" title="Share this article">
-          <img src={shareIcon} alt='Open submenu' />
-          <span>Share</span>
-        </button>
+        <Button blue onClick={this.openShareModal}   type="button" title="Share this article">
+    
+          <span>
+            <img src={shareIcon} alt='Share' />
+            Share</span>
+        </Button>
       </div> 
     );
 
