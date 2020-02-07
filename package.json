@@ -161,6 +161,7 @@
     "axios": "^0.18.1",
     "bchaddrjs": "^0.3.2",
     "bestzip": "^2.1.4",
+    "bip32": "^2.0.5",
     "bip39": "^3.0.2",
     "bitcoincashjs-lib": "^3.3.3",
     "bitcoinjs-lib": "^5.1.6",
