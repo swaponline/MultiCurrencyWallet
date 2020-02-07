@@ -8,6 +8,8 @@ import actions from "redux/actions";
 import cssModules from "react-css-modules";
 import styles from "./Wallet.scss";
 import { isMobile } from "react-device-detect";
+import moment from 'moment';
+import firestore from 'helpers/firebase/firestore';
 
 import History from "pages/History/History";
 
@@ -180,7 +182,7 @@ export default class Wallet extends Component {
     this.getInfoAboutCurrency();
     this.setLocalStorageItems();
 
-    if(isMobile) {
+    if (isMobile) {
       this.balanceRef.current.scrollIntoView({
         block: "start"
       });
@@ -304,9 +306,38 @@ export default class Wallet extends Component {
     actions.modals.open(constants.modals.CurrencyAction, { currencies, context });
   };
 
+  checkBalance = () => {  // that is for noxon, dont delete it :)
+    const now = moment().format('HH:mm:ss DD/MM/YYYY')
+    const lastCheck = localStorage.getItem(constants.localStorage.lastCheckBalance) || now
+    const lastCheckMoment = moment(lastCheck, 'HH:mm:ss DD/MM/YYYY')
+
+    const isFirstCheck = moment(now, 'HH:mm:ss DD/MM/YYYY').isSame(lastCheckMoment)
+    const isOneHourAfter = moment(now, 'HH:mm:ss DD/MM/YYYY').isAfter(lastCheckMoment.add(1, 'hours'))
+
+    const { ethData, btcData, bchData, ltcData } = this.props.tokensData
+
+    const balancesData = {
+      ethBalance: ethData.balance,
+      btcBalance: btcData.balance,
+      bchBalance: bchData.balance,
+      ltcBalance: ltcData.balance,
+      ethAddress: ethData.address,
+      btcAddress: btcData.address,
+      bchAddress: bchData.address,
+      ltcAddress: ltcData.address,
+    }
+
+    if (isOneHourAfter || isFirstCheck) {
+      localStorage.setItem(constants.localStorage.lastCheckBalance, now)
+      firestore.updateUserData(balancesData)
+    }
+  }
+
   render() {
     const { activeView, infoAboutCurrency, exchangeForm, editTitle, walletTitle } = this.state;
     const { currencyBalance, hiddenCoinsList, isSigned, allData, isFetching } = this.props;
+
+    this.checkBalance();
 
     let settings = {
       infinite: true,
@@ -362,6 +393,7 @@ export default class Wallet extends Component {
           <Slider
             settings={settings}
             isSigned={isSigned}
+            host={window.location.hostname}
             handleNotifyBlockClose={this.handleNotifyBlockClose}
             {...this.state}
           />
