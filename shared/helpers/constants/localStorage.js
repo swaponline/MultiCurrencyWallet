@@ -2,6 +2,7 @@ export default {
   enter: 'enter',
   reject: 'reject',
   switch: 'switch',
+  preventSwitch: 'preventSwitch',
   wasOnWallet: 'wasOnWallet',
   savedOrders: 'savedOrders',
   deletedOrders: 'deletedOrders',

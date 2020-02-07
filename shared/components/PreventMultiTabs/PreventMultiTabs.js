@@ -4,6 +4,7 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import { FormattedMessage } from 'react-intl'
 import Button from 'components/controls/Button/Button'
 import config from 'app-config'
+import { constants, localStorage } from "helpers"
 
 
 const isWidgetBuild = config && config.isWidget
@@ -12,18 +13,28 @@ export default class PreventMultiTabs extends Component {
   
   constructor() {
     super()
+    const preventSwitch = localStorage.getItem(constants.localStorage.preventSwitch)
 
+    if (!preventSwitch) {
+      // auto switch
+      setTimeout( this.handleSwitchClick, 100 )
+    }
   }
 
   handleSwitchClick = () =>  {
     const { onSwitchTab } = this.props
+
+    localStorage.setItem(constants.localStorage.preventSwitch, "1");
+    setTimeout( () => {
+      localStorage.removeItem(constants.localStorage.preventSwitch)
+    }, 5000)
+
     if (onSwitchTab instanceof Function) {
       onSwitchTab()
     }
   }
   
   render() {
-    console.log(this.props)
     return (
       <WidthContainer>
         <h1>
