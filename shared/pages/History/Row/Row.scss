@@ -29,6 +29,10 @@
   }
 }
 
+.commentTextarea {
+  overflow: hidden !important;
+  resize: none;
+}
 .arrowWrap {
     width: 36px;
     height: 36px;
