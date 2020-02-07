@@ -2,7 +2,9 @@ import BigInteger from 'bigi'
 
 import { BigNumber } from 'bignumber.js'
 import * as bitcoin from 'bitcoinjs-lib'
+import * as bip32 from 'bip32'
 import * as bip39 from 'bip39'
+
 import bitcoinMessage from 'bitcoinjs-message'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
@@ -10,13 +12,27 @@ import { btc, apiLooper, constants, api } from 'helpers'
 import { Keychain } from 'keychain.js'
 import actions from 'redux/actions'
 
-window.bitcoinjs = bitcoin
-window.bip39 = bip39
 
+const getWalletByWords = (mnemonic, path) => {
+  const seed = bip39.mnemonicToSeedSync(mnemonic);
+  const root = bip32.fromSeed(seed);
+  const node = root.derivePath((path) ? path : "m/44'/0'")
 
-const loginByWords = (words, walletIndex) => {
-  
+  const account = bitcoin.payments.p2pkh({
+    pubkey: node.publicKey,
+    network: btc.network,
+  })
+
+  return {
+    mnemonic,
+    address: account.address,
+    publicKey: node.publicKey.toString('Hex'),
+    WIF: node.toWIF(),
+    node,
+    account,
+  }
 }
+
 
 
 const login = (privateKey) => {
@@ -263,5 +279,5 @@ export default {
   signMessage,
   getReputation,
   getInvoices,
-  loginByWords,
+  getWalletByWords,
 }
