@@ -38,7 +38,9 @@
 .inLine {
   display: flex;
 }
-
+.link-import {
+  display: block;
+}
 .notMain {
   height: 40px;
   margin: 40px 0;
@@ -427,6 +429,10 @@
         display: block;
       }
     }
+  }
+
+  .link-import {
+    margin-left: 20px;
   }
 
   .listGroup {

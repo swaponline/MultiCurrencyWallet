@@ -84,6 +84,7 @@ export default class ImportKeys extends Component {
         isImportedEth: true,
         isDisabled: false,
       })
+      actions.core.markCoinAsVisible('ETH')
     } catch (e) {
       this.setState({ isSubmittedEth: true })
     }
@@ -110,6 +111,7 @@ export default class ImportKeys extends Component {
         isImportedBtc: true,
         isDisabled: false,
       })
+      actions.core.markCoinAsVisible('BTC')
     } catch (e) {
       this.setState({ isSubmittedBtc: true })
     }
@@ -137,6 +139,7 @@ export default class ImportKeys extends Component {
         isImportedBch: true,
         isDisabled: false,
       })
+      actions.core.markCoinAsVisible('BCH')
     } catch (e) {
       console.error(e)
       this.setState({ isSubmittedBch: true })
@@ -164,6 +167,7 @@ export default class ImportKeys extends Component {
         isImportedLtc: true,
         isDisabled: false,
       })
+      actions.core.markCoinAsVisible('LTC')
     } catch (e) {
       this.setState({ isSubmittedLtc: true })
     }
@@ -193,7 +197,8 @@ export default class ImportKeys extends Component {
   handleImportKeys = () => {
     this.handleCloseModal()
     localStorage.setItem(constants.localStorage.testnetSkipPKCheck, true)
-    window.location.reload()
+    localStorage.setItem(constants.localStorage.isWalletCreate, true)
+    window.location.assign('/')
   }
 
   handleCloseModal = () => {
@@ -259,7 +264,7 @@ export default class ImportKeys extends Component {
           <p>
             <FormattedMessage id="ImportKeys107" defaultMessage="This procedure will rewrite your private key. If you are not sure about it, we recommend to press cancel" />
           </p>
-          <FieldLabel>
+          <FieldLabel positionStatic>
             <FormattedMessage id="ImportKeys110" defaultMessage="Please enter ETH private key" />
           </FieldLabel>
           <Group
@@ -268,7 +273,7 @@ export default class ImportKeys extends Component {
             disabled={isImportedEth}
             onClick={this.handleEthImportKey}
           />
-          <FieldLabel>
+          <FieldLabel positionStatic>
             <FormattedMessage id="ImportKeys120" defaultMessage="Please enter BTC private key in WIF format" />
           </FieldLabel>
           <Group
@@ -277,7 +282,7 @@ export default class ImportKeys extends Component {
             disabled={isImportedBtc}
             onClick={this.handleBtcImportKey}
           />
-          <FieldLabel>
+          <FieldLabel positionStatic>
             <FormattedMessage id="ImportKeys280" defaultMessage="Please enter BCH private key in WIF format" />
           </FieldLabel>
           <Group
@@ -287,7 +292,7 @@ export default class ImportKeys extends Component {
             onClick={this.handleBchImportKey}
           />
           <FormattedMessage id="ImportKeys205" defaultMessage="Please enter LTC private key in WIF format">
-            {message => <FieldLabel>{message}</FieldLabel>}
+            {message => <FieldLabel positionStatic>{message}</FieldLabel>}
           </FormattedMessage>
           <Group
             inputLink={linked.ltcKey}
@@ -298,7 +303,7 @@ export default class ImportKeys extends Component {
           {
             /*
             <FormattedMessage id="ImportKeys176" defaultMessage="Please enter xlm private key">
-              {message => <FieldLabel>{message}</FieldLabel>}
+              {message => <FieldLabel positionStatic>{message}</FieldLabel>}
             </FormattedMessage>
             <Group
               inputLink={linked.xlmKey}

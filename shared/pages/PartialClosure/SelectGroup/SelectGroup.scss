@@ -2,7 +2,7 @@
   width: 100%;
   display: inline-flex;
   height: 68px;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
   vertical-align: center;
   // box-shadow: rgba(#000, 0.08) 0 3px 9px 0;
   border-radius: 6px;
@@ -13,10 +13,12 @@
 .smallTooltip {
   > span {
     position: absolute;
-    left: 100%;
-    top: 5px;
     display: flex;
     justify-content: center;
+    background: #d6d6d6;
+    left: 92%;
+    padding: 0 10px;
+    top: 11px;
     span {
       font-size: 10px;
     }
@@ -87,6 +89,7 @@ input:disabled {
   background: none;
   box-shadow: none;
   position: absolute;
+  font-family: 'Inter-Bold', sans-serif;
   right: 0px;
   top: 6px;
 

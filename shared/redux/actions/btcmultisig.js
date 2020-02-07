@@ -13,6 +13,87 @@ import config from 'app-config'
 import SwapApp from 'swap.app'
 
 
+const _loadBtcMultisigKeys = () => {
+  let savedKeys = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKey)
+  try { savedKeys = JSON.parse( savedKeys ) } catch (e) {}
+
+  if (!(savedKeys instanceof Array)) savedKeys = [ savedKeys ]
+
+  return savedKeys
+}
+
+const getBtcMultisigKeys = () => {
+  return new Promise(async (resolve, reject) => {
+    const { user: { btcMultisigUserData } } = getState()
+    const { privateKey } = btcMultisigUserData
+
+    const savedKeys = _loadBtcMultisigKeys()
+    const keysInfo = []
+    if (savedKeys.length>0) {
+      for(var i=0;i<savedKeys.length;i++) {
+        const walletData = login_USER(privateKey, savedKeys[i], true)
+
+        walletData.index = i
+        walletData.balance = await fetchBalance(walletData.address)
+        keysInfo.push(walletData)
+      }
+    }
+
+    resolve(keysInfo)
+  })
+}
+
+const addBtcMultisigKey = (publicKey, isPrimary) => {
+  const savedKeys = _loadBtcMultisigKeys()
+
+  if (!savedKeys.includes(publicKey)) {
+    savedKeys.push(publicKey)
+  }
+
+  localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKey, JSON.stringify(savedKeys))
+
+  if (isPrimary) switchBtcMultisigKey(publicKey)
+}
+
+const switchBtcMultisigKey = (keyOrIndex) => {
+  const savedKeys = _loadBtcMultisigKeys()
+
+  let index = keyOrIndex
+  if (!Number.isInteger(index)) index = savedKeys.indexOf(keyOrIndex)
+
+  if ((index > -1) && (index < savedKeys.length)) {
+    if (index !== 0) {
+      const newKey = savedKeys.splice(index,1)
+      savedKeys.unshift(newKey[0])
+      localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKey, JSON.stringify(savedKeys))
+
+      const { user: { btcMultisigUserData } } = getState()
+      const { privateKey } = btcMultisigUserData
+      login_USER(privateKey, newKey[0])
+      getBalanceUser()
+    }
+  }
+}
+
+const removeBtcMultisigNey = (keyOrIndex) => {
+  const savedKeys = _loadBtcMultisigKeys()
+
+  let index = keyOrIndex
+  if (!Number.isInteger(index)) index = savedKeys.indexOf(keyOrIndex)
+
+  if (index > -1) {
+    const newKey = savedKeys.splice(index,1)
+
+    localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKey, JSON.stringify(savedKeys))
+
+    if (index === 0) {
+      switchBtcMultisigKey(0)
+      return true
+    }
+  }
+}
+
+
 const addWallet = (otherOwnerPublicKey) => {
   const { user: { btcMultisigSMSData: { address, privateKey } } } = getState()
   createWallet(privateKey, otherOwnerPublicKey)
@@ -134,7 +215,9 @@ const login_G2FA = (privateKey, otherOwnerPublicKey) => {
 }
 
 const login_USER = (privateKey, otherOwnerPublicKey ,onlyCheck) => {
-  const data = login_(privateKey, otherOwnerPublicKey, true)
+  if (otherOwnerPublicKey instanceof Array && otherOwnerPublicKey.length === 0) return
+
+  const data = login_(privateKey, (otherOwnerPublicKey instanceof Array) ? otherOwnerPublicKey[0] : otherOwnerPublicKey, true)
 
   data.isUserProtected = true
   if (onlyCheck) return data
@@ -253,9 +336,7 @@ const onUserMultisigJoin = (data) => {
   const { fromPeer, checkKey, publicKey } = data
   if (checkKey === btcMultisigUserData.publicKey.toString('hex') && publicKey && (publicKey.length === 66)) {
     console.log('checks ok - connect')
-    const { privateKey } = btcMultisigUserData
-    localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKey, publicKey)
-    login_USER(privateKey, publicKey)
+    addBtcMultisigKey(publicKey, true)
     SwapApp.shared().services.room.sendMessagePeer( fromPeer, {
       event: 'btc multisig join ready',
       data: {}
@@ -472,6 +553,11 @@ const getTransaction = (ownAddress, ownType) =>
     const checkAddress = (ownAddress) ? ownAddress : address
     const type = (ownType) ? ownType : 'btc (sms-protected)'
     const url = `/txs/?address=${checkAddress}`
+
+    if (checkAddress === 'Not jointed') {
+      resolve([])
+      return
+    }
 
     return apiLooper.get('bitpay', url, {
       checkStatus: (answer) => {
@@ -779,4 +865,8 @@ export default {
   getInvoicesSMS,
   getInvoicesUser,
   isBTCAddress,
+  getBtcMultisigKeys,
+  addBtcMultisigKey,
+  removeBtcMultisigNey,
+  switchBtcMultisigKey,
 }

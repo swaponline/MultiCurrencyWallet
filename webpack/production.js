@@ -44,6 +44,13 @@ export default (webpackConfig) => {
         toType: 'file',
       },
     ]),
+    new CopyWebpackPlugin([
+      {
+        from: 'client/erc20tokens.js',
+        to: '',
+        toType: 'file',
+      },
+    ]),
   )
 
   return webpackConfig

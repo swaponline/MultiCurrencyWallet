@@ -23,8 +23,8 @@
   justify-content: space-between;
   align-items: center;
   position: relative;
-  font-family: 'Inter-Bold', sans-serif;
-  color: #1F2D48;
+  font-family: "Manrope-Bold", sans-serif;
+  color: #1f2d48;
   font-size: 24px;
   line-height: 33px;
 }
@@ -49,7 +49,7 @@
   width: 20px;
   height: 20px;
   opacity: 0.5;
-  transition: opacity .33s $ease-out-quadratic;
+  transition: opacity 0.33s $ease-out-quadratic;
   position: absolute;
   right: 20px;
   &:hover {
@@ -57,7 +57,7 @@
     transition: none;
   }
 }
-@keyframes delayClose{
+@keyframes delayClose {
   0% {
     opacity: 0;
   }
@@ -90,7 +90,7 @@
     min-width: auto;
   }
   .title {
-    font-size: 18px;;
+    font-size: 18px;
     text-align: left;
     left: 20px;
   }

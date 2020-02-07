@@ -1,23 +1,50 @@
-input, textarea {
+input,
+textarea {
   background: none;
   outline: none;
   border: 0;
   border-radius: 0;
 }
 
-@mixin placeholder {
-  ::-webkit-input-placeholder {@content}
-  :-moz-placeholder           {@content}
-  ::-moz-placeholder          {@content}
-  :-ms-input-placeholder      {@content}  
+.input {
+  width: 100%;
+  height: 68px;
+  padding: 0 16px;
+  border-radius: 2px;
+  vertical-align: top;
+  line-height: 14px;
+  box-shadow: none;
+  font-size: 15px;
+  padding-left: 15px;
+  font-family: "Roboto Mono", monospace;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  outline: none;
+  &:focus {
+    border: 2px solid #6144e5;
+    outline: none;
+    padding: 0 14px;
+  }
 }
 
+@mixin placeholder {
+  ::-webkit-input-placeholder {
+    @content;
+  }
+  :-moz-placeholder {
+    @content;
+  }
+  ::-moz-placeholder {
+    @content;
+  }
+  :-ms-input-placeholder {
+    @content;
+  }
+}
 
 .srollingForm {
   height: 100px !important;
-  overflow-y: auto !important;;
+  overflow-y: auto !important;
 }
-
 
 .root {
   display: block;
@@ -30,7 +57,7 @@ input, textarea {
   border-radius: 6px;
 
   &.withMargin {
-    margin-bottom: 25px;
+    margin-bottom: 40px;
   }
 
   &.disabled {
@@ -46,59 +73,52 @@ input, textarea {
   }
 }
 
-input[type=number] {
-  -moz-appearance:textfield;
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 .rightEl {
   position: absolute;
-  top: 13px;
-  right: 10px;
-  font-size: 16px;
+  top: -15px;
+  right: 0px;
+  font-size: 13px;
   color: #828795;
-  background: white;
   padding: 5px;
-  box-shadow: -20px 0px 20px -15px rgba(0,0,0, 0.5);
+}
+
+.dollar {
+  position: absolute;
+  bottom: -30px;
+  background: #fff;
+  right: 10px;
+  font-size: 13px;
+  color: #828795;
+  padding: 5px 10px;
 }
 
 .qr {
+  color: #6143e5;
+  cursor: pointer;
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
 }
 
-.input {
-  width: 100%;
-  height: 48px;
-  padding: 0 16px;
-  border-radius: 2px;
-  vertical-align: top;
-  line-height: 14px;
-  box-shadow: none;
-  font-size: 15px;
-  font-family: 'Inter-Bold', sans-serif;
-  padding-left: 15px;
-  border: 1px solid rgba(0,0,0,0.2);
-  outline: none;
-
-  &:focus {
-    border: 1px solid #6144E5;
-    outline: none;
-  }
-  
-}
-
-.input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+.input::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
   color: rgba(31, 45, 72, 0.3);
 }
-.input::-moz-placeholder { /* Firefox 19+ */
+.input::-moz-placeholder {
+  /* Firefox 19+ */
   color: rgba(31, 45, 72, 0.3);
 }
-.input:-ms-input-placeholder { /* IE 10+ */
+.input:-ms-input-placeholder {
+  /* IE 10+ */
   color: rgba(31, 45, 72, 0.3);
 }
-.input:-moz-placeholder { /* Firefox 18- */
+.input:-moz-placeholder {
+  /* Firefox 18- */
   color: rgba(31, 45, 72, 0.3);
 }
-
 
 .inputError {
   border: 1px solid red;
@@ -115,9 +135,11 @@ input[type=number] {
 
 textarea.input {
   line-height: 18px;
-  padding: 11px 12px;
+  padding: 20px 16px;
   font-size: 16px;
-  transition: padding 0.13s linear;
+  &:focus {
+    padding: 19px 15px;
+  }
 
   @include placeholder() {
     line-height: 18px;
@@ -128,7 +150,7 @@ textarea.input {
   font-size: 14px;
   color: $color-f-error;
 
-  [role = "errorLink"] {
+  [role="errorLink"] {
     display: inline !important;
     color: inherit !important;
     vertical-align: inherit !important;
@@ -136,13 +158,12 @@ textarea.input {
   }
 }
 
-@include media-mobile {
-
-  .root {
-    width: 95%;
-  }
-  .rightEl {
-    top: 15px;
-    font-size: 14px;
+@media all and (min-width: 320px) and (max-width: 767px) {
+  .inputContainer {
+    &.smallFontSize {
+      input {
+        font-size: 11px;
+      }
+    }
   }
 }

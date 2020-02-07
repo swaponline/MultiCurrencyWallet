@@ -121,8 +121,7 @@ export default class Btc extends PureComponent {
 
   connectWallet = (action) => {
     const { privateKey, publicKey } = this.state
-    localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKey, publicKey)
-    actions.btcmultisig.login_USER(privateKey, publicKey)
+    actions.btcmultisig.addBtcMultisigKey(publicKey, true)
 
     this.setState({
       action: (action === 'join') ? 'linkready' : 'ready'

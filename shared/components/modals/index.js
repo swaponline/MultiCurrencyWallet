@@ -15,23 +15,24 @@ import DeclineOrdersModal from './DeclineOrdersModal/DeclineOrdersModal'
 import IncompletedSwaps from './IncompletedSwaps/IncompletedSwaps'
 import MobMenu from './MobMenu/MobMenu'
 import CurrencyAction from './CurrencyAction/CurrencyAction';
-
 import Confirm from './Confirm/Confirm'
 import ConfirmBeginSwap from './ConfirmBeginSwap/ConfirmBeginSwap'
-
 import RegisterSMSProtected from './RegisterSMSProtected/RegisterSMSProtected'
 import MultisignJoinLink from './MultisignJoinLink/MultisignJoinLink'
-
 import InvoiceModal from './InvoiceModal/InvoiceModal'
 import InvoiceLinkModal from './InvoiceLinkModal/InvoiceLinkModal'
 import AlertModal from './Alert/AlertModal'
-
 import AddCustomERC20 from './AddCustomERC20/AddCustomERC20'
+import BtcMultisignSwitch from './BtcMultisignSwitch/BtcMultisignSwitch'
+import ShareModal from './Share/Share'
+import InfoPay from './InfoPay/InfoPay'
 
 
 export default {
   DeclineOrdersModal,
+  InfoPay,
   SignUpModal,
+  ShareModal,
   OfferModal,
   WithdrawModal,
   WithdrawModalMultisig,
@@ -55,4 +56,5 @@ export default {
   InvoiceLinkModal,
   AlertModal,
   AddCustomERC20,
+  BtcMultisignSwitch,
 }

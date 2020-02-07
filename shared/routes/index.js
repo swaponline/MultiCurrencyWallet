@@ -55,7 +55,7 @@ const routes = (
 
       <Route path={`${localisePrefix}${links.ieo}`} component={IEO} />
       <Route exact path={`${localisePrefix}${links.notFound}`} component={NotFound} />
-      <Route exact path={`${localisePrefix}${links.home}`} component={(config && config.isWidget && !config.isFullBuild) ? PartialClosure : Wallet} />
+      <Route exact path={`${localisePrefix}${links.home}`} component={Wallet} />
 
       <Route path={`${localisePrefix}${links.currencyWallet}`} component={Wallet} />
       <Route path={`${localisePrefix}${links.oldWallet}`} component={OldWallet} />

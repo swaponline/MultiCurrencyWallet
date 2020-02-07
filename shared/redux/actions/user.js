@@ -12,7 +12,10 @@ const sign = async () => {
   const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
   const btcMultisigPrivateKey = localStorage.getItem(constants.privateKeyNames.btcMultisig)
   const btcMultisigSMSOwnerKey = config.swapContract.protectedBtcKey
-  const btcMultisigOwnerKey = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKey)
+
+  let btcMultisigOwnerKey = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKey)
+  try { btcMultisigOwnerKey = JSON.parse( btcMultisigOwnerKey ) } catch (e) {}
+
   const bchPrivateKey = localStorage.getItem(constants.privateKeyNames.bch)
   const ltcPrivateKey = localStorage.getItem(constants.privateKeyNames.ltc)
   const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
@@ -72,7 +75,6 @@ const getReputation = async () => {
       console.error(`unknown reputation`, error)
     })
 }
-
 
 const getBalances = () => {
   actions.eth.getBalance()
@@ -198,7 +200,7 @@ const setTransactions = async () => {
       const ercArray = await Promise.all(Object.keys(config.erc20)
         .map(async (name, index) => {
           await delay(650 * index)
-          const res = await actions[name].getTransaction(name)
+          const res = await actions.token.getTransaction(name)
           // console.log('name - ', name, '\n', '\n', res)
           return res
         }))

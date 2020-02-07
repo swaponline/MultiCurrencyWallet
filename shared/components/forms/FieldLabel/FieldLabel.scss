@@ -1,20 +1,33 @@
 .label {
-  margin-bottom: 5px;
+  font-size: 15px;
+  font-family: "Inter-SemiBold", sans-serif;
+  display: inline-block;
+  background: #fff;
+  padding: 7px 7px;
+  z-index: 111;
+  position: absolute;
+  top: -18px;
+  left: 10px;
+  white-space: nowrap;
 }
 
-.inRow {
-  margin-top: 20px;
-  font-family: 'Inter-SemiBold', sans-serif;
-  z-index: 9999999;
-  white-space: nowrap;
-  strong {
-    font-weight: 500;
-  }
-  position: relative;
-  display: inline-block;
-  &:first-child {
-    margin-top: 0;
-  }
+// .inRow {
+//   margin-top: 20px;
+//   font-family: "Inter-SemiBold", sans-serif;
+//   z-index: 9999999;
+//   white-space: nowrap;
+//   strong {
+//     font-weight: 500;
+//   }
+//   position: relative;
+//   display: inline-block;
+//   &:first-child {
+//     margin-top: 0;
+//   }
+// }
+
+.positionStatic {
+  position: static;
 }
 
 .inDropDown {
@@ -25,7 +38,7 @@
   padding-right: 25px;
 }
 
-@include media-tablet-landscape-and-lower  {
+@include media-tablet-landscape-and-lower {
   .inRow {
     margin-top: 30px;
 

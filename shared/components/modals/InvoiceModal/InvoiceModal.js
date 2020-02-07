@@ -1,31 +1,30 @@
-import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
-import helpers, { request, constants } from 'helpers'
-import actions from 'redux/actions'
-import Link from 'sw-valuelink'
-import { connect } from 'redaction'
-import config from 'app-config'
+import React, { Fragment } from "react";
+import PropTypes from "prop-types";
+import helpers, { request, constants } from "helpers";
+import actions from "redux/actions";
+import Link from "sw-valuelink";
+import { connect } from "redaction";
+import config from "app-config";
 
-import cssModules from 'react-css-modules'
-import styles from '../Styles/default.scss'
-import ownStyle from './InvoiceModal.scss'
+import cssModules from "react-css-modules";
+import styles from "../Styles/default.scss";
+import ownStyle from "./InvoiceModal.scss";
 
-import { BigNumber } from 'bignumber.js'
-import Modal from 'components/modal/Modal/Modal'
-import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
-import Input from 'components/forms/Input/Input'
-import Button from 'components/controls/Button/Button'
-import Tooltip from 'components/ui/Tooltip/Tooltip'
-import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-import ReactTooltip from 'react-tooltip'
-import { isMobile } from 'react-device-detect'
-import QrReader from 'components/QrReader'
+import { BigNumber } from "bignumber.js";
+import Modal from "components/modal/Modal/Modal";
+import FieldLabel from "components/forms/FieldLabel/FieldLabel";
+import Input from "components/forms/Input/Input";
+import Button from "components/controls/Button/Button";
+import Tooltip from "components/ui/Tooltip/Tooltip";
+import { FormattedMessage, injectIntl, defineMessages } from "react-intl";
+import ReactTooltip from "react-tooltip";
+import { isMobile } from "react-device-detect";
+import QrReader from "components/QrReader";
 
 // import isCoinAddress from 'swap.app/util/typeforce'
-import typeforce from 'swap.app/util/typeforce'
-import minAmount from 'helpers/constants/minAmount'
-import { inputReplaceCommaWithDot } from 'helpers/domUtils'
-
+import typeforce from "swap.app/util/typeforce";
+import minAmount from "helpers/constants/minAmount";
+import { inputReplaceCommaWithDot } from "helpers/domUtils";
 
 @injectIntl
 @connect(
@@ -39,10 +38,10 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
       bchData,
       tokensData,
       nimData,
-      ltcData,
+      ltcData
       // usdtOmniData,
       // nimData,
-    },
+    }
   }) => ({
     currencies: currencies.items,
     items: [
@@ -51,179 +50,186 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
       btcMultisigSMSData,
       btcMultisigUserData,
       bchData,
-      ltcData,
+      ltcData
       // usdtOmniData,
       // nimData,
     ],
-    tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
+    tokenItems: [...Object.keys(tokensData).map(k => tokensData[k])]
   })
-  
 )
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
 export default class InvoiceModal extends React.Component {
-
   static propTypes = {
     name: PropTypes.string,
-    data: PropTypes.object,
-  }
+    data: PropTypes.object
+  };
 
   constructor(data) {
-    super()
+    super();
 
-    const { data: { address, currency, toAddress }, items, tokenItems } = data
+    const {
+      data: { address, currency, toAddress },
+      items,
+      tokenItems
+    } = data;
     let infoAboutCurrency;
 
     items.map(item => {
-      if(item.currency === currency) {
+      if (item.currency === currency) {
         infoAboutCurrency = item.infoAboutCurrency;
       }
-    })
+    });
 
-    const currentDecimals = constants.tokenDecimals[currency.toLowerCase()]
+    const currentDecimals = constants.tokenDecimals[currency.toLowerCase()];
 
     this.state = {
       isShipped: false,
-      openScanCam: '',
-      address: (toAddress) ? toAddress : '',
+      openScanCam: "",
+      address: toAddress ? toAddress : "",
       destination: address,
-      amount: '',
-      minus: '',
-      contact: '',
-      label: '',
+      amount: "",
+      minus: "",
+      contact: "",
+      label: "",
       currentDecimals,
       error: false,
       infoAboutCurrency,
-      rubRates: 62.34,
-    }
+      rubRates: 62.34
+    };
 
-    this.getRubRates()
+    this.getRubRates();
   }
 
   getRubRates() {
-    request.get('https://www.cbr-xml-daily.ru/daily_json.js', {
-      cacheResponse: 60*60*1000,
-    }).then((rates) => {
-      if (rates && rates.Valute && rates.Valute.USD) {
-        const rubRates = rates.Valute.USD.Value;
-        this.setState({
-          rubRates,
-        })
-      }
-    })
+    request
+      .get("https://www.cbr-xml-daily.ru/daily_json.js", {
+        cacheResponse: 60 * 60 * 1000
+      })
+      .then(rates => {
+        if (rates && rates.Valute && rates.Valute.USD) {
+          const rubRates = rates.Valute.USD.Value;
+          this.setState({
+            rubRates
+          });
+        }
+      });
   }
 
   handleSubmit = async () => {
-    const { name, data } = this.props
-    const { address, amount, destination, contact, label, isShipped } = this.state
+    const { name, data } = this.props;
+    const { address, amount, destination, contact, label, isShipped } = this.state;
 
-    if (isShipped) return
+    if (isShipped) return;
 
     this.setState({
-      isShipped: true,
-    })
+      isShipped: true
+    });
 
-    let currency = data.currency.toUpperCase()
+    let currency = data.currency.toUpperCase();
     switch (data.currency) {
-      case 'BTC (SMS-Protected)':
-      case 'BTC (Multisig)':
-        currency = 'BTC'
+      case "BTC (SMS-Protected)":
+      case "BTC (Multisig)":
+        currency = "BTC";
         break;
     }
 
     try {
-      const message = `${contact}\r\n${label}`
+      const message = `${contact}\r\n${label}`;
       const result = await actions.invoices.addInvoice({
         currency,
         toAddress: address,
         fromAddress: data.address,
         amount,
+        contact,
         label: message,
-        destination,
-      })
-      if (result && result.answer && result.answer === 'ok') {
-        actions.modals.close(name)
+        destination
+      });
+      if (result && result.answer && result.answer === "ok") {
+        actions.modals.close(name);
       }
       if (data.onReady instanceof Function) {
-        data.onReady()
+        data.onReady();
       }
     } catch (e) {
-      console.log('error', e)
+      console.log("error", e);
     }
 
     this.setState({
-      isShipped: false,
-    })
-  }
+      isShipped: false
+    });
+  };
 
   addressIsCorrect(otherAddress) {
-    const { data: { currency } } = this.props
-    const { address, isEthToken } = this.state
-    const checkAddress = (otherAddress) ? otherAddress : address
+    const {
+      data: { currency }
+    } = this.props;
+    const { address, isEthToken } = this.state;
+    const checkAddress = otherAddress ? otherAddress : address;
 
     if (isEthToken) {
-      return typeforce.isCoinAddress.ETH(checkAddress)
+      return typeforce.isCoinAddress.ETH(checkAddress);
     }
-    let checkCurrency = currency.toUpperCase()
+    let checkCurrency = currency.toUpperCase();
     switch (currency) {
-      case 'BTC (SMS-Protected)':
-      case 'BTC (Multisig)':
-        checkCurrency = 'BTC'
+      case "BTC (SMS-Protected)":
+      case "BTC (Multisig)":
+        checkCurrency = "BTC";
         break;
     }
 
-    return typeforce.isCoinAddress[checkCurrency](checkAddress)
+    return typeforce.isCoinAddress[checkCurrency](checkAddress);
   }
 
   openScan = () => {
-    const { openScanCam } = this.state
+    const { openScanCam } = this.state;
 
     this.setState(() => ({
-      openScanCam: !openScanCam,
-    }))
-  }
+      openScanCam: !openScanCam
+    }));
+  };
 
-  handleDollarValue = (value) => {
-    const { rubRates, currentDecimals } = this.state
+  handleDollarValue = value => {
+    const { rubRates, currentDecimals } = this.state;
 
-    this.setState({ 
+    this.setState({
       amountUSD: value,
-      amountRUB: (value) ? (value * rubRates).toFixed(0) : '',
-      amount: (value) ? (value / this.state.infoAboutCurrency.price_usd).toFixed(currentDecimals) : '',
-    })
-  }
+      amountRUB: value ? (value * rubRates).toFixed(0) : "",
+      amount: value ? (value / this.state.infoAboutCurrency.price_usd).toFixed(currentDecimals) : ""
+    });
+  };
 
-  handleRubValue = (value) => {
-    const { rubRates, currentDecimals } = this.state
+  handleRubValue = value => {
+    const { rubRates, currentDecimals } = this.state;
 
     this.setState({
       amountRUB: value,
-      amountUSD: (value) ? (value / rubRates).toFixed(2) : '',
-      amount: (value) ? (value / this.state.infoAboutCurrency.price_usd / rubRates).toFixed(currentDecimals) : '',
-    })
-  }
+      amountUSD: value ? (value / rubRates).toFixed(2) : "",
+      amount: value ? (value / this.state.infoAboutCurrency.price_usd / rubRates).toFixed(currentDecimals) : ""
+    });
+  };
 
-  handleAmount = (value) => {
-    const { rubRates, currentDecimals} = this.state
+  handleAmount = value => {
+    const { rubRates, currentDecimals } = this.state;
 
     this.setState({
-      amountRUB: (value) ? (value * this.state.infoAboutCurrency.price_usd * rubRates).toFixed(0) : '',
-      amountUSD: (value) ? (value * this.state.infoAboutCurrency.price_usd).toFixed(2) : '',
-      amount: value,
-    })
-  }
+      amountRUB: value ? (value * this.state.infoAboutCurrency.price_usd * rubRates).toFixed(0) : "",
+      amountUSD: value ? (value * this.state.infoAboutCurrency.price_usd).toFixed(2) : "",
+      amount: value
+    });
+  };
 
   handleError = err => {
-    console.error(err)
-  }
+    console.error(err);
+  };
 
   handleScan = data => {
     if (data) {
       this.setState(() => ({
-        address: data.includes(':') ? data.split(':')[1] : data,
-      }))
-      this.openScan()
+        address: data.includes(":") ? data.split(":")[1] : data
+      }));
+      this.openScan();
     }
-  }
+  };
 
   render() {
     const {
@@ -239,94 +245,88 @@ export default class InvoiceModal extends React.Component {
       openScanCam,
       error,
       infoAboutCurrency
-    } = this.state
+    } = this.state;
 
     const {
       name,
-      data: {
-        currency,
-      },
-      intl,
-    } = this.props
+      data: { currency },
+      intl
+    } = this.props;
 
-  
-    const linked = Link.all(this, 'address', 'destination', 'amountUSD', 'amountRUB', 'amount', 'contact', 'label')
+    const linked = Link.all(this, "address", "destination", "amountUSD", "amountRUB", "amount", "contact", "label");
 
-    const isDisabled =
-      !address || !amount || isShipped || !destination || !contact
-      || !this.addressIsCorrect()
-
+    const isDisabled = !address || !amount || isShipped || !destination || !contact || !this.addressIsCorrect();
 
     const localeLabel = defineMessages({
       title: {
-        id: 'invoiceModal_Title',
-        defaultMessage: 'Выставление счета на пополнение',
+        id: "invoiceModal_Title",
+        defaultMessage: "Выставление счета на пополнение"
       },
       addressPlaceholder: {
-        id: 'invoiceModal_addressPlaceholder',
-        defaultMessage: 'Введите адрес {currency} кошелька',
+        id: "invoiceModal_addressPlaceholder",
+        defaultMessage: "Введите адрес {currency} кошелька"
       },
       destiAddressPlaceholder: {
-        id: 'invoiceModal_destiAddressPlaceholder',
-        defaultMessage: 'Введите адрес {currency} кошелька',
+        id: "invoiceModal_destiAddressPlaceholder",
+        defaultMessage: "Введите адрес {currency} кошелька"
       },
       amountPlaceholder: {
-        id: 'invoiceModal_amountPlaceholder',
-        defaultMessage: 'Введите сумму'
+        id: "invoiceModal_amountPlaceholder",
+        defaultMessage: "Введите сумму"
       },
       contactPlaceholder: {
-        id: 'invoiceModal_contactPlaceholder',
-        defaultMessage: 'Обязательное поле',
+        id: "invoiceModal_contactPlaceholder",
+        defaultMessage: "Обязательное поле"
       },
       labelPlaceholder: {
-        id: 'invoiceModal_labelPlaceholder',
-        defaultMessage: 'Укажите комментарий к счету',
-      },
-    })
+        id: "invoiceModal_labelPlaceholder",
+        defaultMessage: "Укажите комментарий к счету"
+      }
+    });
 
     return (
-      <Modal name={name} title={`${intl.formatMessage(localeLabel.title)}${' '}${currency.toUpperCase()}`} disableClose={this.props.data.disableClose}>
-        {openScanCam &&
-          <QrReader
-            openScan={this.openScan}
-            handleError={this.handleError}
-            handleScan={this.handleScan}
-          />
-        }
+      <Modal
+        name={name}
+        title={`${intl.formatMessage(localeLabel.title)}${" "}${currency.toUpperCase()}`}
+        disableClose={this.props.data.disableClose}
+      >
+        {openScanCam && (
+          <QrReader openScan={this.openScan} handleError={this.handleError} handleScan={this.handleScan} />
+        )}
         <div styleName="invoiceModalHolder">
           <div styleName="highLevel">
             <FieldLabel label>
-              <span style={{ fontSize: '16px' }}>
-                <FormattedMessage id="invoiceModal_Address" defaultMessage="Адрес, на который выставляем счет" />
-              </span>
+              <FormattedMessage id="invoiceModal_Address" defaultMessage="Адрес, на который выставляем счет" />
             </FieldLabel>
             <Input
+              smallFontSize
               withMargin
               valueLink={linked.address}
-              focusOnInit pattern="0-9a-zA-Z:"
+              focusOnInit
+              pattern="0-9a-zA-Z:"
               placeholder={intl.formatMessage(localeLabel.addressPlaceholder, { currency: currency.toUpperCase() })}
               qr
               openScan={this.openScan}
             />
             {address && !this.addressIsCorrect() && (
               <div styleName="rednote">
-                <FormattedMessage
-                  id="invoiceModal_IncorrectAddress"
-                  defaultMessage="Вы ввели не коректный адрес" />
+                <FormattedMessage id="invoiceModal_IncorrectAddress" defaultMessage="Вы ввели не коректный адрес" />
               </div>
             )}
           </div>
           <div styleName="highLevel">
             <FieldLabel label>
-              <span style={{ fontSize: '16px' }}>
-                <FormattedMessage id="invoiceModal_destiAddress" defaultMessage="Адрес, куда будет произведена оплата" />
-              </span>
+              <FormattedMessage id="invoiceModal_destiAddress" defaultMessage="Адрес, куда будет произведена оплата" />
             </FieldLabel>
             <Input
-              withMargin
               valueLink={linked.destination}
-              focusOnInit pattern="0-9a-zA-Z:"
-              placeholder={intl.formatMessage(localeLabel.destiAddressPlaceholder, { currency: currency.toUpperCase() })}
+              focusOnInit
+              smallFontSize
+              withMargin
+              pattern="0-9a-zA-Z:"
+              placeholder={intl.formatMessage(localeLabel.destiAddressPlaceholder, {
+                currency: currency.toUpperCase()
+              })}
               qr
               openScan={this.openScan}
             />
@@ -334,11 +334,12 @@ export default class InvoiceModal extends React.Component {
               <div styleName="rednote">
                 <FormattedMessage
                   id="invoiceModal_IncorrectDestiAddress"
-                  defaultMessage="Вы ввели не коректный адрес" />
+                  defaultMessage="Вы ввели не коректный адрес"
+                />
               </div>
             )}
           </div>
-          <div styleName="lowLevel">
+          {/* <div styleName="lowLevel">
             <div styleName="groupField">
               <div styleName="highLevel">
                 <FieldLabel label>
@@ -356,8 +357,8 @@ export default class InvoiceModal extends React.Component {
               placeholder={intl.formatMessage(localeLabel.amountPlaceholder)}
               onKeyDown={inputReplaceCommaWithDot}
             />
-          </div>
-          <div styleName="lowLevel">
+          </div> */}
+          {/* <div styleName="lowLevel">
             <div styleName="groupField">
               <div styleName="highLevel">
                 <FieldLabel label>
@@ -375,57 +376,41 @@ export default class InvoiceModal extends React.Component {
               placeholder={intl.formatMessage(localeLabel.amountPlaceholder)}
               onKeyDown={inputReplaceCommaWithDot}
             />
-          </div>
-          <div styleName="lowLevel">
-            <div styleName="groupField">
-              <div styleName="highLevel">
-                <FieldLabel label>
-                  <span>
-                    <FormattedMessage id="invoiceModal_Amount" defaultMessage="Сумма" />
-                  </span>
-                </FieldLabel>
-              </div>
-            </div>
+          </div> */}
+          <div styleName="highLevel">
+            <FieldLabel label>
+              <span>
+                <FormattedMessage id="invoiceModal_Amount" defaultMessage="Сумма" />
+              </span>
+            </FieldLabel>
             <Input
               withMargin
-              styleName="input"
               valueLink={linked.amount.pipe(this.handleAmount)}
               pattern="0-9\."
               placeholder={intl.formatMessage(localeLabel.amountPlaceholder)}
               onKeyDown={inputReplaceCommaWithDot}
             />
           </div>
-          <div styleName="lowLevel">
-            <div styleName="groupField">
-              <div styleName="highLevel">
-                <FieldLabel label>
-                  <span>
-                    <FormattedMessage id="invoiceModal_Contact" defaultMessage="Ваш контакт (емейл или @никнейм)" />
-                  </span>
-                </FieldLabel>
-              </div>
-            </div>
+          <div styleName="highLevel">
+            <FieldLabel label>
+              <span>
+                <FormattedMessage id="invoiceModal_Contact" defaultMessage="Ваш контакт (емейл или @никнейм)" />
+              </span>
+            </FieldLabel>
             <Input
-              styleName="input"
-              withMargin
               valueLink={linked.contact}
+              withMargin
               placeholder={intl.formatMessage(localeLabel.contactPlaceholder)}
             />
           </div>
           <div styleName="lowLevel">
-            <div styleName="groupField">
-              <div styleName="highLevel">
-                <FieldLabel label>
-                  <span>
-                    <FormattedMessage id="invoiceModal_Label" defaultMessage="Комментарий" />
-                  </span>
-                </FieldLabel>
-              </div>
-            </div>
-            <div styleName="group">
+            <FieldLabel label>
+              <span>
+                <FormattedMessage id="invoiceModal_Label" defaultMessage="Комментарий" />
+              </span>
+            </FieldLabel>
+            <div styleName="group" style={{ marginBottom: "25px" }}>
               <Input
-                styleName="input"
-                withMargin
                 srollingForm={true}
                 valueLink={linked.label}
                 multiline="true"
@@ -433,38 +418,33 @@ export default class InvoiceModal extends React.Component {
               />
             </div>
           </div>
-          <Button fullWidth blue disabled={isDisabled} onClick={this.handleSubmit}>
-            {isShipped
-              ? (
-                <Fragment>
-                  <FormattedMessage id="invoiceModal_Processing" defaultMessage="Обработка ..." />
-                </Fragment>
-              )
-              : (
-                <Fragment>
-                  <FormattedMessage id="invoiceModal_Submit" defaultMessage="Выставить счет" />
-                </Fragment>
-              )
-            }
+          <Button fullWidth blue big disabled={isDisabled} onClick={this.handleSubmit}>
+            {isShipped ? (
+              <Fragment>
+                <FormattedMessage id="invoiceModal_Processing" defaultMessage="Обработка ..." />
+              </Fragment>
+            ) : (
+              <Fragment>
+                <FormattedMessage id="invoiceModal_Submit" defaultMessage="Выставить счет" />
+              </Fragment>
+            )}
           </Button>
-          {
-            error && (
-              <div styleName="rednote">
-                <FormattedMessage
-                  id="invoiceModal_Error"
-                  defaultMessage="{errorName} {currency}:{br}{errorMessage}"
-                  values={{
-                    errorName: intl.formatMessage(error.name),
-                    errorMessage: intl.formatMessage(error.message),
-                    br: <br />,
-                    currency: `${currency}`,
-                  }}
-                />
-              </div>
-            )
-          }
+          {error && (
+            <div styleName="rednote">
+              <FormattedMessage
+                id="invoiceModal_Error"
+                defaultMessage="{errorName} {currency}:{br}{errorMessage}"
+                values={{
+                  errorName: intl.formatMessage(error.name),
+                  errorMessage: intl.formatMessage(error.message),
+                  br: <br />,
+                  currency: `${currency}`
+                }}
+              />
+            </div>
+          )}
         </div>
       </Modal>
-    )
+    );
   }
 }
