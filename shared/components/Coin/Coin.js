@@ -5,6 +5,7 @@ import CSSModules from 'react-css-modules'
 import styles from './Coin.scss'
 
 import CurrencyIcon, { iconNames } from 'components/ui/CurrencyIcon/CurrencyIcon'
+import config from "app-config";
 
 
 const Coin = ({ className, size, name }) => {
@@ -17,8 +18,17 @@ const Coin = ({ className, size, name }) => {
   }
 
   const isIconExist = iconNames.includes(name.toLowerCase())
+  let isIconConfigExist = false
 
-  if (isIconExist) {
+  if (config
+    && config.erc20
+    && config.erc20[name.toLowerCase()]
+    && config.erc20[name.toLowerCase()].icon
+  ) {
+    isIconConfigExist = true
+  }
+
+  if (isIconExist || isIconConfigExist) {
     iconProps = {
       ...iconProps,
       styleName: 'icon',
