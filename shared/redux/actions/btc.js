@@ -12,7 +12,6 @@ import { btc, apiLooper, constants, api } from 'helpers'
 import { Keychain } from 'keychain.js'
 import actions from 'redux/actions'
 
-
 const getWalletByWords = (mnemonic, path) => {
   const seed = bip39.mnemonicToSeedSync(mnemonic);
   const root = bip32.fromSeed(seed);
@@ -46,8 +45,12 @@ const login = (privateKey) => {
   }
   else {
     console.info('Created account Bitcoin ...')
-    keyPair     = bitcoin.ECPair.makeRandom({ network: btc.network })
-    privateKey  = keyPair.toWIF()
+    //keyPair     = bitcoin.ECPair.makeRandom({ network: btc.network })
+    //privateKey  = keyPair.toWIF()
+    // use random 12 words
+    const mnemonic = bip39.generateMnemonic()
+    const accData = getWalletByWords(mnemonic)
+    privateKey = accData.WIF
   }
 
   localStorage.setItem(constants.privateKeyNames.btc, privateKey)
