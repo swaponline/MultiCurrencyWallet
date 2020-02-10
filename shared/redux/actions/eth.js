@@ -18,9 +18,9 @@ const getWalletByWords = (mnemonic, path) => {
 
   return {
     mnemonic,
-    address: "0x" + wallet.getAddress().toString("hex"),
-    publicKey: wallet.pubKey.toString('Hex'),
-    privateKey: wallet.privKey.toString('Hex'),
+    address: `0x${wallet.getAddress().toString('Hex')}`,
+    publicKey: `0x${wallet.pubKey.toString('Hex')}`,
+    privateKey: `0x${wallet.privKey.toString('Hex')}`,
     wallet,
   }
 }
@@ -34,7 +34,13 @@ const login = (privateKey) => {
   }
   else {
     console.info('Created account Ethereum ...')
-    data = web3.eth.accounts.create()
+    // data = web3.eth.accounts.create()
+    const mnemonic = bip39.generateMnemonic()
+    const accData = getWalletByWords(mnemonic)
+    console.log('Eth. Generated walled from random 12 words')
+    console.log(accData)
+    privateKey = accData.privateKey
+    data = web3.eth.accounts.privateKeyToAccount(privateKey)
   }
 
   localStorage.setItem(constants.privateKeyNames.eth, data.privateKey)

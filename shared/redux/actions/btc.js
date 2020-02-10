@@ -50,6 +50,8 @@ const login = (privateKey) => {
     // use random 12 words
     const mnemonic = bip39.generateMnemonic()
     const accData = getWalletByWords(mnemonic)
+    console.log('Btc. Generated walled from random 12 words')
+    console.log(accData)
     privateKey = accData.WIF
   }
 
