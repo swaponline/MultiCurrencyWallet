@@ -42,7 +42,7 @@ export default class CurrencyAction extends React.Component {
     if (typeof data.onClose === 'function') {
       data.onClose()
     }
-
+    
     actions.modals.close(name)
   }
 
@@ -66,10 +66,17 @@ export default class CurrencyAction extends React.Component {
 
       actions.modals.open(withdrawModalType, item)
     }
+    this.handleClose()
   }
 
   render() {
     const { props: { data: { currencies, context } } } = this
+
+    // if currencies is one, do autoselect
+    if(currencies.length == 1) {
+      this.handleClickCurrency(currencies.shift())
+      //return
+    }
 
     return (
       <div styleName="modal-overlay">
