@@ -156,7 +156,6 @@ export default props => {
           secondFunc={() => handleNotifyBlockClose("isClosedNotifyBlockSignUp")}
         />
       )} */}
-
     </Slider>
   );
 };

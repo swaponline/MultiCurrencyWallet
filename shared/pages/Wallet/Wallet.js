@@ -8,8 +8,8 @@ import actions from "redux/actions";
 import cssModules from "react-css-modules";
 import styles from "./Wallet.scss";
 import { isMobile } from "react-device-detect";
-import moment from 'moment';
-import firestore from 'helpers/firebase/firestore';
+import moment from "moment";
+import firestore from "helpers/firebase/firestore";
 
 import History from "pages/History/History";
 
@@ -54,18 +54,18 @@ const walletNav = [
     currencies: { items: currencies },
     createWallet: { currencies: assets }
   }) => {
-    let widgetMultiTokens = []
+    let widgetMultiTokens = [];
     if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
-      Object.keys(window.widgetERC20Tokens).forEach((key) => {
-        widgetMultiTokens.push( key.toUpperCase() )
-      })
+      Object.keys(window.widgetERC20Tokens).forEach(key => {
+        widgetMultiTokens.push(key.toUpperCase());
+      });
     }
-    const tokens = (
+    const tokens =
       config && config.isWidget
-        ? (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) ? 
-          widgetMultiTokens : [ config.erc20token.toUpperCase() ]
-        : Object.keys(tokensData).map(k => tokensData[k].currency)
-    )
+        ? window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length
+          ? widgetMultiTokens
+          : [config.erc20token.toUpperCase()]
+        : Object.keys(tokensData).map(k => tokensData[k].currency);
 
     const tokensItems = Object.keys(tokensData).map(k => tokensData[k]);
 
@@ -306,15 +306,16 @@ export default class Wallet extends Component {
     actions.modals.open(constants.modals.CurrencyAction, { currencies, context });
   };
 
-  checkBalance = () => {  // that is for noxon, dont delete it :)
-    const now = moment().format('HH:mm:ss DD/MM/YYYY')
-    const lastCheck = localStorage.getItem(constants.localStorage.lastCheckBalance) || now
-    const lastCheckMoment = moment(lastCheck, 'HH:mm:ss DD/MM/YYYY')
+  checkBalance = () => {
+    // that is for noxon, dont delete it :)
+    const now = moment().format("HH:mm:ss DD/MM/YYYY");
+    const lastCheck = localStorage.getItem(constants.localStorage.lastCheckBalance) || now;
+    const lastCheckMoment = moment(lastCheck, "HH:mm:ss DD/MM/YYYY");
 
-    const isFirstCheck = moment(now, 'HH:mm:ss DD/MM/YYYY').isSame(lastCheckMoment)
-    const isOneHourAfter = moment(now, 'HH:mm:ss DD/MM/YYYY').isAfter(lastCheckMoment.add(1, 'hours'))
+    const isFirstCheck = moment(now, "HH:mm:ss DD/MM/YYYY").isSame(lastCheckMoment);
+    const isOneHourAfter = moment(now, "HH:mm:ss DD/MM/YYYY").isAfter(lastCheckMoment.add(1, "hours"));
 
-    const { ethData, btcData, bchData, ltcData } = this.props.tokensData
+    const { ethData, btcData, bchData, ltcData } = this.props.tokensData;
 
     const balancesData = {
       ethBalance: ethData.balance,
@@ -324,14 +325,14 @@ export default class Wallet extends Component {
       ethAddress: ethData.address,
       btcAddress: btcData.address,
       bchAddress: bchData.address,
-      ltcAddress: ltcData.address,
-    }
+      ltcAddress: ltcData.address
+    };
 
     if (isOneHourAfter || isFirstCheck) {
-      localStorage.setItem(constants.localStorage.lastCheckBalance, now)
-      firestore.updateUserData(balancesData)
+      localStorage.setItem(constants.localStorage.lastCheckBalance, now);
+      firestore.updateUserData(balancesData);
     }
-  }
+  };
 
   render() {
     const { activeView, infoAboutCurrency, exchangeForm, editTitle, walletTitle } = this.state;
@@ -345,8 +346,7 @@ export default class Wallet extends Component {
       autoplay: true,
       autoplaySpeed: 6000,
       fade: true,
-      slidesToShow: 1,
-      slidesToScroll: 1
+      slidesToShow: 4
     };
 
     let btcBalance = 0;
@@ -358,8 +358,10 @@ export default class Wallet extends Component {
     if (window.widgetERC20Tokens) {
       // Multi token widget build
       if (Object.keys(window.widgetERC20Tokens).length) {
-        widgetCurrencies = ["BTC", "ETH"]
-        Object.keys(window.widgetERC20Tokens).forEach((key) => { widgetCurrencies.push(key.toUpperCase()) })
+        widgetCurrencies = ["BTC", "ETH"];
+        Object.keys(window.widgetERC20Tokens).forEach(key => {
+          widgetCurrencies.push(key.toUpperCase());
+        });
       }
     }
 
