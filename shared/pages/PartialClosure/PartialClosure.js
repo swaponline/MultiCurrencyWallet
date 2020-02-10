@@ -1360,14 +1360,16 @@ export default class PartialClosure extends Component {
               <FormattedMessage id="partial544" defaultMessage="Order book" />
             </Button>
           </div>
-          <a
-            href="https://generator.swaponline.site/generator/"
-            target="_blank"
-            rel="noopener noreferrer"
-            styleName="widgetLink"
-          >
-            <FormattedMessage id="partial1021" defaultMessage="Embed on website" />
-          </a>
+          {!isWidgetBuild && (
+            <a
+              href="https://generator.swaponline.site/generator/"
+              target="_blank"
+              rel="noopener noreferrer"
+              styleName="widgetLink"
+            >
+              <FormattedMessage id="partial1021" defaultMessage="Embed on website" />
+            </a>
+          )}
         </div>
       </div>
     );
