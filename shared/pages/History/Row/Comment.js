@@ -9,17 +9,19 @@ import styles from './Row.scss'
 export default class CommentRow extends React.Component {
   
   static propTypes = {
-    label: PropTypes.string.isRequired
+    // label: PropTypes.string.isRequired
   };
 
   constructor(props) {
-    super(props);
-    this.commentTextarea = React.createRef();
+    super(props)
+    this.commentTextarea = React.createRef()
   }
 
   submitComment = (e, props) => {
     const { comment, toggleComment, onSubmit, hiddenList, ind } = props
-    e.preventDefault()
+    if(e) {
+      e.preventDefault()
+    }
   
     const comments = { ...hiddenList, [ind]: comment }
   
@@ -34,8 +36,13 @@ export default class CommentRow extends React.Component {
     }
   }
 
-  handleKeyUp = () => {
-  
+  handleKeyUp = (e=null) => {
+    
+    if(e && e.ctrlKey && e.keyCode == 13) {
+      
+      this.submitComment(null, this.props)
+      return
+    }
     this.commentTextarea
           .current.style.cssText = 'height:' + this.commentTextarea.current.scrollHeight + 'px;'  
   }
@@ -45,7 +52,7 @@ export default class CommentRow extends React.Component {
     const { comment, label, toggleComment, changeComment, date, isOpen, commentCancel } = this.props
     return isOpen ?
       <form styleName="input" onSubmit={(e) => this.submitComment(e, this.props)}>
-        <textarea ref={this.commentTextarea} styleName="commentTextarea" id="commentTextarea" onKeyUp={this.handleKeyUp} onChange={changeComment} value={comment || `${moment(date).format('LLLL')}  ${label}`} ></textarea>
+        <textarea ref={this.commentTextarea}  styleName="commentTextarea" id="commentTextarea" onKeyUp={this.handleKeyUp} onChange={changeComment} value={comment || `${moment(date).format('LLLL')}  ${label}`} ></textarea>
         <span styleName="submit" onClick={(e) => this.submitComment(e, this.props)}>&#10004;</span>
         <span styleName="close" onClick={commentCancel}>&times;</span>
       </form> :
