@@ -23,10 +23,20 @@ export default class InfoPay extends React.Component {
  
   render() {
  
-    const {  intl, data: { amount, currency, address, tx } } = this.props
+    const {  intl, data: { amount, currency, address, txRaw } } = this.props
     const name = 'InfoPay'
+    
+    let link = null;
+    switch(currency) {
+      case 'BTC':
+        link = `https://www.blockchain.com/ru/btc/tx/${txRaw.getId()}`
 
-    const link = currency === 'BTC' ? `https://www.blockchain.com/ru/btc/tx/${tx}` : `https://etherscan.io/tx/${tx}`
+      break;
+
+      case 'ETH':
+        link = `https://etherscan.io/tx/${txRaw.transactionHash}`
+      break;
+    }
 
     return (
       <Modal name={name} title={intl.formatMessage(labels.Title)} >
