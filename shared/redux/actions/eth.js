@@ -7,6 +7,23 @@ import config from 'app-config'
 import referral from './referral'
 import { web3Override } from 'keychain.js'
 import { pubToAddress } from 'ethereumjs-util'
+import * as hdkey from 'ethereumjs-wallet/hdkey'
+import * as bip39 from 'bip39'
+
+
+const getWalletByWords = (mnemonic, path) => {
+  const seed = bip39.mnemonicToSeedSync(mnemonic)
+  const hdwallet = hdkey.fromMasterSeed(seed);
+  const wallet = hdwallet.derivePath((path) ? path : "m/44'/60'/0'/0/0").getWallet();
+
+  return {
+    mnemonic,
+    address: "0x" + wallet.getAddress().toString("hex"),
+    publicKey: wallet.pubKey.toString('Hex'),
+    privateKey: wallet.privKey.toString('Hex'),
+    wallet,
+  }
+}
 
 
 const login = (privateKey) => {
@@ -163,5 +180,6 @@ export default {
   getTransaction,
   getReputation,
   getInvoices,
-  isETHAddress
+  isETHAddress,
+  getWalletByWords,
 }
