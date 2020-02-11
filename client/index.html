@@ -136,7 +136,6 @@
 
     <!-- Start Modal Style -->
     <style>
- 
       .starter-modal {
         position: fixed;
         top: 0;
@@ -713,7 +712,11 @@
         window.logoUrl =
           "https://lh3.googleusercontent.com/proxy/44_1SDs-W2QRcbxGdk_1ZV9ET8hhgjrGGR9pZCVAImEHLlIA09yCN33mxVES1xBsCpz-omfy8E6zLZKP5nxmodnkDwgSLWx_8wyEtE1qVU_vaPNt5ljCjf0";
 
-        if (window.location.hostname === "localhost" || window.location.hostname === "swaponline.github.io") {
+        if (
+          window.location.hostname === "localhost" ||
+          window.location.hostname === "swaponline.github.io" ||
+          window.location.hostname === "swaponline.io"
+        ) {
           document.getElementById("loaderImg").src = "https://wiki.swap.online/assets/swap-logo.png";
         } else {
           document.getElementById("loaderImg").src = window.logoUrl;
