@@ -366,7 +366,9 @@ export default class Header extends Component {
           </div>
         )}
         <WidthContainer styleName="container" className="data-tut-preview">
-          {window.location.hostname === "localhost" || window.location.hostname === "swaponline.io" ? (
+          {window.location.hostname === "localhost" ||
+          window.location.hostname === "swaponline.github.io" ||
+          window.location.hostname === "swaponline.io" ? (
             <LogoTooltip withLink isColored isExchange={isWalletPage} />
           ) : (
             <div>

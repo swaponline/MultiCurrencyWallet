@@ -55,7 +55,7 @@ export default props => {
           secondFunc={handleSaveKeys}
         />
       )} */}
-      {(host === "localhost" || host === "swaponline.github.io") && (
+      {(host === "localhost" || host === "swaponline.github.io" || host === "swaponline.io") && (
         <NotifyBlock
           className="notifyBlockBanner"
           descr={
@@ -76,7 +76,7 @@ export default props => {
         />
       )}
 
-      {(host === "localhost" || host === "swaponline.github.io") && (
+      {(host === "localhost" || host === "swaponline.github.io" || host === "swaponline.io") && (
         <NotifyBlock
           className="notifyBlockBanner"
           descr={
@@ -97,7 +97,7 @@ export default props => {
         />
       )}
 
-      {(host === "localhost" || host === "swaponline.github.io") && (
+      {(host === "localhost" || host === "swaponline.github.io" || host === "swaponline.io") && (
         <NotifyBlock
           className="notifyBlockBanner"
           descr={
@@ -118,7 +118,28 @@ export default props => {
         />
       )}
 
-      {(host === "localhost" || host === "swaponline.github.io") && (
+      {(host === "localhost" || host === "swaponline.github.io" || host === "swaponline.io") && (
+        <NotifyBlock
+          className="notifyBlockBanner"
+          descr={
+            <FormattedMessage
+              id="descr304"
+              defaultMessage="Store Bitcoin and other cryptocurrencies without installing a wallet"
+            />
+          }
+          tooltip={
+            <FormattedMessage
+              id="descr305"
+              defaultMessage="Secured transactions with SMS verification. Exchange cryptocurrencies with no threat of hold (Atomic Swap). [Start exchanging]"
+            />
+          }
+          icon={info}
+          firstFunc={handleSignUp}
+          secondFunc={() => handleNotifyBlockClose("isClosedNotifyBlockSignUp")}
+        />
+      )}
+
+      {(host === "localhost" || host === "swaponline.github.io" || host === "swaponline.io") && (
         <NotifyBlock
           className="notifyBlockBanner"
           descr={
