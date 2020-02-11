@@ -242,7 +242,7 @@ export default class WithdrawModal extends React.Component {
         actions.modals.open(constants.modals.InfoPay, {
           amount,
           currency,
-          tx: txRaw.getId(),
+          txRaw: txRaw,
           address: to
         })
 
