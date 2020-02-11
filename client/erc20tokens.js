@@ -18,7 +18,8 @@ window.widgetERC20Tokens = {
   proxima: {
     address: '0xc060b26e60698e91a6acc84051a26b32e38dd1a4',
     decimals: 18,
-    fullName: 'Proxima'
+    fullName: 'Proxima',
+    icon: 'https://growup.wpmix.net/wp-content/uploads/2016/10/favicon.png',
   }
 }
 */

@@ -391,13 +391,15 @@ export default class Wallet extends Component {
               {walletTitle || "Wallet"}
             </h3>
           )}
-          <Slider
-            settings={settings}
-            isSigned={isSigned}
-            host={window.location.hostname}
-            handleNotifyBlockClose={this.handleNotifyBlockClose}
-            {...this.state}
-          />
+          {!isWidgetBuild && (
+            <Slider
+              settings={settings}
+              isSigned={isSigned}
+              host={window.location.hostname}
+              handleNotifyBlockClose={this.handleNotifyBlockClose}
+              {...this.state}
+            />
+          )}
           <ul styleName="walletNav">
             {walletNav.map(({ key, text }, index) => (
               <li

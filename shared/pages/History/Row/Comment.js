@@ -9,7 +9,7 @@ import styles from './Row.scss'
 export default class CommentRow extends React.Component {
   
   static propTypes = {
-    // label: PropTypes.string.isRequired
+    label: ''
   };
 
   constructor(props) {
@@ -50,13 +50,14 @@ export default class CommentRow extends React.Component {
   render() {
     
     const { comment, label, toggleComment, changeComment, date, isOpen, commentCancel } = this.props
+   
     return isOpen ?
       <form styleName="input" onSubmit={(e) => this.submitComment(e, this.props)}>
-        <textarea ref={this.commentTextarea}  styleName="commentTextarea" id="commentTextarea" onKeyUp={this.handleKeyUp} onChange={changeComment} value={comment || `${moment(date).format('LLLL')}  ${label}`} ></textarea>
+        <textarea ref={this.commentTextarea}  styleName="commentTextarea" id="commentTextarea" onKeyUp={this.handleKeyUp} onChange={changeComment} value={comment || label} ></textarea>
         <span styleName="submit" onClick={(e) => this.submitComment(e, this.props)}>&#10004;</span>
         <span styleName="close" onClick={commentCancel}>&times;</span>
       </form> :
-      <div styleName="date" onDoubleClick={() => toggleComment(true)}>{comment || `${moment(date).format('LLLL')}  ${label}`}</div>
+      <div styleName="date" onDoubleClick={() => toggleComment(true)}>{moment(date).format('LLLL')} <br></br>{comment || label}</div>
 
   }
 }
