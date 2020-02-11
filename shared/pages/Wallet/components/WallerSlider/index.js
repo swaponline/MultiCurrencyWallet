@@ -55,7 +55,7 @@ export default props => {
           secondFunc={handleSaveKeys}
         />
       )} */}
-      {(host === "localhost" || host === "swaponline.github.io" || host === "swaponline.io") && (
+      {(host === "localhost" || host === "swaponline.github.io") && (
         <NotifyBlock
           className="notifyBlockBanner"
           descr={
@@ -76,7 +76,7 @@ export default props => {
         />
       )}
 
-      {(host === "localhost" || host === "swaponline.github.io" || host === "swaponline.io") && (
+      {(host === "localhost" || host === "swaponline.github.io") && (
         <NotifyBlock
           className="notifyBlockBanner"
           descr={
@@ -97,7 +97,7 @@ export default props => {
         />
       )}
 
-      {(host === "localhost" || host === "swaponline.github.io" || host === "swaponline.io") && (
+      {(host === "localhost" || host === "swaponline.github.io") && (
         <NotifyBlock
           className="notifyBlockBanner"
           descr={
@@ -118,7 +118,7 @@ export default props => {
         />
       )}
 
-      {(host === "localhost" || host === "swaponline.github.io" || host === "swaponline.io") && (
+      {(host === "localhost" || host === "swaponline.github.io") && (
         <NotifyBlock
           className="notifyBlockBanner"
           descr={
@@ -139,7 +139,7 @@ export default props => {
         />
       )}
 
-      {(host === "localhost" || host === "swaponline.github.io" || host === "swaponline.io") && (
+      {(host === "localhost" || host === "swaponline.github.io") && (
         <NotifyBlock
           className="notifyBlockBanner"
           descr={
