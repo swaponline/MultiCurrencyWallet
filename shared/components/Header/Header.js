@@ -376,7 +376,6 @@ export default class Header extends Component {
             </div>
           )}
           <Nav menu={menuItems} />
-          <Logo withLink mobile />
           {isPartialTourOpen && isExchange && (
             <TourPartial isTourOpen={isPartialTourOpen} closeTour={this.closePartialTour} />
           )}
