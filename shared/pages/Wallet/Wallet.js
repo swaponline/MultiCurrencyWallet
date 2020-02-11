@@ -345,8 +345,7 @@ export default class Wallet extends Component {
       speed: 500,
       autoplay: true,
       autoplaySpeed: 6000,
-      fade: true,
-      slidesToShow: 4
+      slidesToShow: 3
     };
 
     let btcBalance = 0;

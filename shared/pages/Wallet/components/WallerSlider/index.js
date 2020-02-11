@@ -36,7 +36,7 @@ export default props => {
   } = props;
   return (
     <Slider {...settings}>
-      {!isPrivateKeysSaved && (
+      {/* {!isPrivateKeysSaved && (
         <NotifyBlock
           className="notifyBlockSaveKeys"
           descr={
@@ -54,7 +54,7 @@ export default props => {
           secondBtn={<FormattedMessage id="descr284" defaultMessage="I saved my keys" />}
           secondFunc={handleSaveKeys}
         />
-      )}
+      )} */}
       {(host === "localhost" || host === "swaponline.github.io") && (
         <NotifyBlock
           className="notifyBlockBanner"

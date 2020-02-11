@@ -7,17 +7,16 @@ import styles from './NotifyBlock.scss'
 
 
 const NotifyBlock = ({ className, icon, descr, tooltip, firstBtn, secondBtn, firstFunc, secondFunc }) => (
-    <div styleName={`notifyBlock ${className}`}>
-    <div>
-      <div styleName="notifyBlockIcon">
+    <div styleName="notifyBlock">
+      <div styleName={`notifyBlockImg ${className}`}></div>
+      {/* <div styleName="notifyBlockIcon">
         <img src={icon} alt=""/>
-      </div>
+      </div> */}
       <div styleName="notifyBlockDescr">
         <p>{descr}</p>
-        <p>{tooltip}</p>
+        {/* <p>{tooltip}</p> */}
       </div>
-    </div>
-    <div>
+    {/* <div>
       {
         firstBtn && <Button white onClick={firstFunc}>
           {firstBtn}
@@ -28,8 +27,7 @@ const NotifyBlock = ({ className, icon, descr, tooltip, firstBtn, secondBtn, fir
           {secondBtn}
         </Button>
       }
- 
-    </div>
+    </div> */}
   </div>   
 )
 
