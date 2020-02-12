@@ -1,17 +1,37 @@
 .notifyBlock {
-  height: 88px;
+  height: 110px;
   border-radius: 4px;
+  cursor: pointer;
   display: flex;
   z-index: 111111;
   font-family: "Manrope-Bold", sans-serif;
   align-items: center;
   justify-content: space-between;
   padding: 24px;
+  margin-right: 15px;
+  position: relative;
+  border-radius: 4px;
+  justify-content: center;
+  text-align: center;
+  &:after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.35);
+    left: 0;
+    top: 0;
+  }
   > div {
     display: flex;
     align-items: center;
     position: relative;
     z-index: 11111;
+    position: absolute;
+    bottom: 10px;
+    text-align: left;
+    left: 15px;
     button {
       margin-left: 10px;
       white-space: nowrap;
@@ -23,7 +43,7 @@
 .notifyBlockSaveKeys {
   background: linear-gradient(265.47deg, #6144e5 0%, #7359ea 100%);
   > div {
-    color: #6144e5;
+    //color: #6144e5;
   }
 }
 
@@ -35,10 +55,17 @@
 }
 
 .notifyBlockBanner {
-  background: linear-gradient(265.47deg, rgba(0, 0, 0, 0.25) 0%, #9090909e 100%);
+  // background: linear-gradient(265.47deg, rgba(0, 0, 0, 0.25) 0%, #9090909e 100%);
+  background-image: url("https://assets.entrepreneur.com/content/3x2/2000/20200203154833-GettyImages-1134291628.jpeg");
+  background-size: cover;
+  background-position: center;
   img {
     width: 6px;
   }
+}
+
+.notifyBlockBannerInvest {
+  background-image: url("https://assets.entrepreneur.com/content/3x2/2000/20200203154833-GettyImages-1134291628.jpeg");
 }
 
 .notifyBlockIcon {
@@ -53,16 +80,14 @@
 }
 
 .notifyBlockDescr {
-  margin-left: 10px;
   color: #fff;
-  font-family: "Manrope-Bold", sans-serif;
+  max-width: 220px;
+  font-size: 15px;
   p {
     margin-bottom: 0;
   }
   p:last-child {
-    opacity: 0.8;
-    font-size: 13px;
-    font-family: "Manrope-Medium", sans-serif;
+    font-size: 15px;
   }
 }
 
