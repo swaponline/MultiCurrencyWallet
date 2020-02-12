@@ -1,321 +1,318 @@
-import React, { Component, Fragment } from "react";
-import Slider from "./components/WallerSlider";
-import PropTypes from "prop-types";
+import React, { Component, Fragment } from 'react'
+import Slider from './components/WallerSlider'
+import PropTypes from 'prop-types'
 
-import { connect } from "redaction";
-import actions from "redux/actions";
+import { connect } from 'redaction'
+import actions from redux/actions'
 
-import cssModules from "react-css-modules";
-import styles from "./Wallet.scss";
-import { isMobile } from "react-device-detect";
-import moment from "moment";
-import firestore from "helpers/firebase/firestore";
+import cssModules from 'react-css-modules'
+import styles from './Wallet.scss'
+import { isMobile } from 'react-device-detect'
+import moment from 'moment'
+import firestore from 'helpers/firebase/firestore'
 
-import History from "pages/History/History";
+import History from 'pages/History/History'
 
-import { links, constants } from "helpers";
-import { localisedUrl } from "helpers/locale";
-import ReactTooltip from "react-tooltip";
-import ParticalClosure from "../PartialClosure/PartialClosure";
+import { links, constants } from 'helpers'
+import { localisedUrl } from 'helpers/locale'
+import ReactTooltip from 'react-tooltip'
+import ParticalClosure from '../PartialClosure/PartialClosure'
 
-import { FormattedMessage, injectIntl } from "react-intl";
+import { FormattedMessage, injectIntl } from 'react-intl'
 
-import config from "app-config";
-import { withRouter } from "react-router";
-import BalanceForm from "./components/BalanceForm/BalanceForm";
-import CurrenciesList from "./CurrenciesList";
-import Button from "components/controls/Button/Button";
-import ContentLoader from "../../components/loaders/ContentLoader/ContentLoader";
+import config from 'app-config'
+import { withRouter } from 'react-router'
+import BalanceForm from './components/BalanceForm/BalanceForm'
+import CurrenciesList from './CurrenciesList'
+import Button from 'components/controls/Button/Button'
+import ContentLoader from '../../components/loaders/ContentLoader/ContentLoader'
 
-const isWidgetBuild = config && config.isWidget;
+const isWidgetBuild = config && config.isWidget
 
 const walletNav = [
-  { key: "My balances", text: <FormattedMessage id="MybalanceswalletNav" defaultMessage="Мой баланс" /> },
-  { key: "Transactions", text: <FormattedMessage id="TransactionswalletNav" defaultMessage="Активность" /> }
-];
+  {
+    key: 'My balances',
+    text: <FormattedMessage id="MybalanceswalletNav" defaultMessage="Мой баланс" />,
+  },
+  {
+    key: 'Transactions',
+    text: <FormattedMessage id="TransactionswalletNav" defaultMessage="Активность" />,
+  },
+]
 
-@connect(
-  ({
-    core: { hiddenCoinsList },
-    user: {
-      ethData,
-      btcData,
-      btcMultisigSMSData,
-      btcMultisigUserData,
-      bchData,
-      tokensData,
-      ltcData,
-      // qtumData,
-      // usdtOmniData,
-      // nimData,
-      // xlmData,
-      isFetching
-    },
-    currencies: { items: currencies },
-    createWallet: { currencies: assets }
-  }) => {
-    let widgetMultiTokens = [];
-    if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
-      Object.keys(window.widgetERC20Tokens).forEach(key => {
-        widgetMultiTokens.push(key.toUpperCase());
-      });
-    }
-    const tokens =
-      config && config.isWidget
-        ? window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length
-          ? widgetMultiTokens
-          : [config.erc20token.toUpperCase()]
-        : Object.keys(tokensData).map(k => tokensData[k].currency);
+@connect(({ core: { hiddenCoinsList }, user: { ethData, btcData, btcMultisigSMSData, btcMultisigUserData, bchData, tokensData, ltcData, // qtumData,
+    // usdtOmniData,
+    // nimData,
+    // xlmData,
+    isFetching }, currencies: { items: currencies }, createWallet: { currencies: assets } }) => {
+  let widgetMultiTokens = []
+  if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
+    Object.keys(window.widgetERC20Tokens).forEach(key => {
+      widgetMultiTokens.push(key.toUpperCase())
+    })
+  }
+  const tokens =
+    config && config.isWidget
+      ? window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length
+        ? widgetMultiTokens
+        : [config.erc20token.toUpperCase()]
+      : Object.keys(tokensData).map(k => tokensData[k].currency)
 
-    const tokensItems = Object.keys(tokensData).map(k => tokensData[k]);
+  const tokensItems = Object.keys(tokensData).map(k => tokensData[k])
 
-    const allData = [
-      btcData,
-      btcMultisigSMSData,
-      btcMultisigUserData,
-      ethData,
-      bchData,
-      ltcData,
-      //qtumData,
-      // xlmData,
-      // usdtOmniData,
-      ...Object.keys(tokensData).map(k => tokensData[k])
-    ].map(({ account, keyPair, ...data }) => ({
-      ...data
-    }));
+  const allData = [
+    btcData,
+    btcMultisigSMSData,
+    btcMultisigUserData,
+    ethData,
+    bchData,
+    ltcData,
+    //qtumData,
+    // xlmData,
+    // usdtOmniData,
+    ...Object.keys(tokensData).map(k => tokensData[k]),
+  ].map(({ account, keyPair, ...data }) => ({
+    ...data,
+  }))
 
-    const items = (config && config.isWidget
-      ? [
-          btcData,
-          ethData
-          // usdtOmniData,
-        ]
-      : [
-          btcData,
-          btcMultisigSMSData,
-          btcMultisigUserData,
-          bchData,
-          ethData,
-          ltcData
-          // qtumData,
-          // usdtOmniData,
-          // nimData,
-          // xlmData,
-        ]
-    ).map(data => data.currency);
-
-    const currencyBalance = [
-      btcData,
-      btcMultisigSMSData,
-      btcMultisigUserData,
-      bchData,
-      ethData,
-      ltcData
-      // qtumData,
-      // usdtOmniData,
-      // nimData,
-      // xlmData,
-    ].map(({ balance, currency, infoAboutCurrency }) => ({
-      balance,
-      infoAboutCurrency,
-      name: currency
-    }));
-
-    return {
-      tokens,
-      items,
-      allData,
-      tokensItems,
-      currencyBalance,
-      currencies,
-      assets,
-      isFetching,
-      hiddenCoinsList: config && config.isWidget ? [] : hiddenCoinsList,
-      userEthAddress: ethData.address,
-      tokensData: {
+  const items = (config && config.isWidget
+    ? [
+        btcData,
         ethData,
+        // usdtOmniData,
+      ]
+    : [
         btcData,
         btcMultisigSMSData,
         btcMultisigUserData,
         bchData,
-        ltcData
+        ethData,
+        ltcData,
         // qtumData,
         // usdtOmniData,
-      }
-    };
+        // nimData,
+        // xlmData,
+      ]
+  ).map(data => data.currency)
+
+  const currencyBalance = [
+    btcData,
+    btcMultisigSMSData,
+    btcMultisigUserData,
+    bchData,
+    ethData,
+    ltcData,
+    // qtumData,
+    // usdtOmniData,
+    // nimData,
+    // xlmData,
+  ].map(({ balance, currency, infoAboutCurrency }) => ({
+    balance,
+    infoAboutCurrency,
+    name: currency,
+  }))
+
+  return {
+    tokens,
+    items,
+    allData,
+    tokensItems,
+    currencyBalance,
+    currencies,
+    assets,
+    isFetching,
+    hiddenCoinsList: config && config.isWidget ? [] : hiddenCoinsList,
+    userEthAddress: ethData.address,
+    tokensData: {
+      ethData,
+      btcData,
+      btcMultisigSMSData,
+      btcMultisigUserData,
+      bchData,
+      ltcData,
+      // qtumData,
+      // usdtOmniData,
+    },
   }
-)
+})
 @injectIntl
 @withRouter
 @connect(({ signUp: { isSigned } }) => ({
-  isSigned
+  isSigned,
 }))
 @cssModules(styles, { allowMultiple: true })
 export default class Wallet extends Component {
   constructor(props) {
-    super(props);
-    this.balanceRef = React.createRef(); // Create a ref object
+    super(props)
+    this.balanceRef = React.createRef() // Create a ref object
   }
 
   state = {
     activeView: 0,
     btcBalance: 0,
-    activeCurrency: "usd",
+    activeCurrency: 'usd',
     exchangeForm: false,
-    walletTitle: "Wallet",
-    editTitle: false
-  };
+    walletTitle: 'Wallet',
+    editTitle: false,
+  }
 
   componentWillMount() {
-    actions.user.getBalances();
+    actions.user.getBalances()
     window.addERC20 = () => {
-      actions.modals.open(constants.modals.AddCustomERC20);
-    };
+      actions.modals.open(constants.modals.AddCustomERC20)
+    }
   }
 
   componentDidMount() {
-    const { params, url } = this.props.match;
+    const { params, url } = this.props.match
 
-    if (url.includes("withdraw")) {
-      this.handleWithdraw(params);
+    if (url.includes('withdraw')) {
+      this.handleWithdraw(params)
     }
-    this.getInfoAboutCurrency();
-    this.setLocalStorageItems();
+    this.getInfoAboutCurrency()
+    this.setLocalStorageItems()
 
     if (isMobile) {
       this.balanceRef.current.scrollIntoView({
-        block: "start"
-      });
+        block: 'start',
+      })
     }
   }
 
   getInfoAboutCurrency = async () => {
-    const { currencies } = this.props;
-    const currencyNames = currencies.map(({ name }) => name);
+    const { currencies } = this.props
+    const currencyNames = currencies.map(({ name }) => name)
 
-    await actions.user.getInfoAboutCurrency(currencyNames);
-  };
+    await actions.user.getInfoAboutCurrency(currencyNames)
+  }
 
   handleNavItemClick = index => {
     if (index === 1) {
       // fetch actual tx list
-      actions.user.setTransactions();
-      actions.core.getSwapHistory();
+      actions.user.setTransactions()
+      actions.core.getSwapHistory()
     }
 
     this.setState({
-      activeView: index
-    });
-  };
+      activeView: index,
+    })
+  }
 
   handleSaveKeys = () => {
-    actions.modals.open(constants.modals.PrivateKeys);
-  };
+    actions.modals.open(constants.modals.PrivateKeys)
+  }
 
   handleShowKeys = () => {
-    actions.modals.open(constants.modals.DownloadModal);
-  };
+    actions.modals.open(constants.modals.DownloadModal)
+  }
 
   handleImportKeys = () => {
-    actions.modals.open(constants.modals.ImportKeys, {});
-  };
+    actions.modals.open(constants.modals.ImportKeys, {})
+  }
 
   setLocalStorageItems = () => {
-    const isClosedNotifyBlockBanner = localStorage.getItem(constants.localStorage.isClosedNotifyBlockBanner);
-    const isClosedNotifyBlockSignUp = localStorage.getItem(constants.localStorage.isClosedNotifyBlockSignUp);
-    const isPrivateKeysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved);
-    const walletTitle = localStorage.getItem(constants.localStorage.walletTitle);
+    const isClosedNotifyBlockBanner = localStorage.getItem(constants.localStorage.isClosedNotifyBlockBanner)
+    const isClosedNotifyBlockSignUp = localStorage.getItem(constants.localStorage.isClosedNotifyBlockSignUp)
+    const isPrivateKeysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
+    const walletTitle = localStorage.getItem(constants.localStorage.walletTitle)
 
     this.setState({
       isClosedNotifyBlockBanner,
       isClosedNotifyBlockSignUp,
       walletTitle,
-      isPrivateKeysSaved
-    });
-  };
+      isPrivateKeysSaved,
+    })
+  }
 
   onLoadeOn = fn => {
     this.setState({
-      isFetching: true
-    });
+      isFetching: true,
+    })
 
-    fn();
-  };
+    fn()
+  }
 
   handleNotifyBlockClose = state => {
     this.setState({
-      [state]: true
-    });
-    localStorage.setItem(constants.localStorage[state], "true");
-  };
+      [state]: true,
+    })
+    localStorage.setItem(constants.localStorage[state], 'true')
+  }
 
   handleWithdraw = params => {
-    const { allData } = this.props;
-    const { address, amount } = params;
-    const item = allData.find(({ currency }) => currency.toLowerCase() === params.currency.toLowerCase());
+    const { allData } = this.props
+    const { address, amount } = params
+    const item = allData.find(({ currency }) => currency.toLowerCase() === params.currency.toLowerCase())
 
-    actions.modals.open(constants.modals.Withdraw, { ...item, toAddress: address, amount });
-  };
+    actions.modals.open(constants.modals.Withdraw, {
+      ...item,
+      toAddress: address,
+      amount,
+    })
+  }
 
   goToСreateWallet = () => {
     const {
       history,
-      intl: { locale }
-    } = this.props;
+      intl: { locale },
+    } = this.props
 
-    history.push(localisedUrl(locale, links.createWallet));
-  };
+    history.push(localisedUrl(locale, links.createWallet))
+  }
 
   handleGoExchange = () => {
     const {
       history,
-      intl: { locale }
-    } = this.props;
+      intl: { locale },
+    } = this.props
 
     if (isWidgetBuild && !config.isFullBuild) {
-      history.push(localisedUrl(locale, links.pointOfSell));
+      history.push(localisedUrl(locale, links.pointOfSell))
     } else {
-      history.push(localisedUrl(locale, links.exchange));
+      history.push(localisedUrl(locale, links.exchange))
     }
-  };
+  }
 
   handleEditTitle = () => {
     this.setState({
-      editTitle: true
-    });
-  };
+      editTitle: true,
+    })
+  }
 
   handleChangeTitle = e => {
     this.setState({
-      walletTitle: e.target.value
-    });
-    localStorage.setItem(constants.localStorage.walletTitle, e.target.value);
-  };
+      walletTitle: e.target.value,
+    })
+    localStorage.setItem(constants.localStorage.walletTitle, e.target.value)
+  }
 
   handleModalOpen = context => {
-    const { items, tokensData, tokensItems, tokens, hiddenCoinsList } = this.props;
+    const { items, tokensData, tokensItems, tokens, hiddenCoinsList } = this.props
 
-    const currencyTokenData = [...Object.keys(tokensData).map(k => tokensData[k]), ...tokensItems];
+    const currencyTokenData = [...Object.keys(tokensData).map(k => tokensData[k]), ...tokensItems]
 
-    const tableRows = [...items, ...tokens].filter(currency => !hiddenCoinsList.includes(currency));
+    const tableRows = [...items, ...tokens].filter(currency => !hiddenCoinsList.includes(currency))
 
     const currencies = tableRows.map(currency => {
-      return currencyTokenData.find(item => item.currency === currency);
-    });
+      return currencyTokenData.find(item => item.currency === currency)
+    })
 
-    actions.modals.open(constants.modals.CurrencyAction, { currencies, context });
-  };
+    actions.modals.open(constants.modals.CurrencyAction, {
+      currencies,
+      context,
+    })
+  }
 
   checkBalance = () => {
     // that is for noxon, dont delete it :)
-    const now = moment().format("HH:mm:ss DD/MM/YYYY");
-    const lastCheck = localStorage.getItem(constants.localStorage.lastCheckBalance) || now;
-    const lastCheckMoment = moment(lastCheck, "HH:mm:ss DD/MM/YYYY");
+    const now = moment().format('HH:mm:ss DD/MM/YYYY')
+    const lastCheck = localStorage.getItem(constants.localStorage.lastCheckBalance) || now
+    const lastCheckMoment = moment(lastCheck, 'HH:mm:ss DD/MM/YYYY')
 
-    const isFirstCheck = moment(now, "HH:mm:ss DD/MM/YYYY").isSame(lastCheckMoment);
-    const isOneHourAfter = moment(now, "HH:mm:ss DD/MM/YYYY").isAfter(lastCheckMoment.add(1, "hours"));
+    const isFirstCheck = moment(now, 'HH:mm:ss DD/MM/YYYY').isSame(lastCheckMoment)
+    const isOneHourAfter = moment(now, 'HH:mm:ss DD/MM/YYYY').isAfter(lastCheckMoment.add(1, 'hours'))
 
-    const { ethData, btcData, bchData, ltcData } = this.props.tokensData;
+    const { ethData, btcData, bchData, ltcData } = this.props.tokensData
 
     const balancesData = {
       ethBalance: ethData.balance,
@@ -325,73 +322,67 @@ export default class Wallet extends Component {
       ethAddress: ethData.address,
       btcAddress: btcData.address,
       bchAddress: bchData.address,
-      ltcAddress: ltcData.address
-    };
+      ltcAddress: ltcData.address,
+    }
 
     if (isOneHourAfter || isFirstCheck) {
-      localStorage.setItem(constants.localStorage.lastCheckBalance, now);
-      firestore.updateUserData(balancesData);
+      localStorage.setItem(constants.localStorage.lastCheckBalance, now)
+      firestore.updateUserData(balancesData)
     }
-  };
+  }
 
   render() {
-    const { activeView, infoAboutCurrency, exchangeForm, editTitle, walletTitle } = this.state;
-    const { currencyBalance, hiddenCoinsList, isSigned, allData, isFetching } = this.props;
+    const { activeView, infoAboutCurrency, exchangeForm, editTitle, walletTitle } = this.state
+    const { currencyBalance, hiddenCoinsList, isSigned, allData, isFetching } = this.props
 
-    this.checkBalance();
+    this.checkBalance()
 
     let settings = {
       infinite: true,
       speed: 500,
       autoplay: true,
       autoplaySpeed: 6000,
-      slidesToShow: 4
-    };
+      slidesToShow: 4,
+    }
 
-    let btcBalance = 0;
-    let usdBalance = 0;
-    let changePercent = 0;
+    let btcBalance = 0
+    let usdBalance = 0
+    let changePercent = 0
 
-    let widgetCurrencies = isWidgetBuild ? ["BTC", "ETH", config.erc20token.toUpperCase()] : [];
+    let widgetCurrencies = isWidgetBuild ? ['BTC', 'ETH', config.erc20token.toUpperCase()] : []
 
     if (window.widgetERC20Tokens) {
       // Multi token widget build
       if (Object.keys(window.widgetERC20Tokens).length) {
-        widgetCurrencies = ["BTC", "ETH"];
+        widgetCurrencies = ['BTC', 'ETH']
         Object.keys(window.widgetERC20Tokens).forEach(key => {
-          widgetCurrencies.push(key.toUpperCase());
-        });
+          widgetCurrencies.push(key.toUpperCase())
+        })
       }
     }
 
-    let tableRows = allData.filter(({ currency, balance }) => !hiddenCoinsList.includes(currency) || balance > 0);
+    let tableRows = allData.filter(({ currency, balance }) => !hiddenCoinsList.includes(currency) || balance > 0)
     if (isWidgetBuild) {
-      tableRows = allData.filter(({ currency }) => widgetCurrencies.includes(currency));
+      tableRows = allData.filter(({ currency }) => widgetCurrencies.includes(currency))
     }
 
     if (currencyBalance) {
       currencyBalance.forEach(item => {
         if ((!isWidgetBuild || widgetCurrencies.includes(item.name)) && item.infoAboutCurrency && item.balance !== 0) {
-          if (item.name === "BTC") {
-            changePercent = item.infoAboutCurrency.percent_change_1h;
+          if (item.name === 'BTC') {
+            changePercent = item.infoAboutCurrency.percent_change_1h
           }
-          btcBalance += item.balance * item.infoAboutCurrency.price_btc;
-          usdBalance += item.balance * item.infoAboutCurrency.price_usd;
+          btcBalance += item.balance * item.infoAboutCurrency.price_btc
+          usdBalance += item.balance * item.infoAboutCurrency.price_usd
         }
-      });
+      })
     }
 
     return (
       <artical>
-        <section styleName={isWidgetBuild && !config.isFullBuild ? "wallet widgetBuild" : "wallet"}>
+        <section styleName={isWidgetBuild && !config.isFullBuild ? 'wallet widgetBuild' : 'wallet'}>
           {!isWidgetBuild && (
-            <Slider
-              settings={settings}
-              isSigned={isSigned}
-              host={window.location.hostname}
-              handleNotifyBlockClose={this.handleNotifyBlockClose}
-              {...this.state}
-            />
+            <Slider settings={settings} isSigned={isSigned} host={window.location.hostname} handleNotifyBlockClose={this.handleNotifyBlockClose} {...this.state} />
           )}
 
           <h3 styleName="walletHeading">
@@ -400,11 +391,7 @@ export default class Wallet extends Component {
 
           <ul styleName="walletNav">
             {walletNav.map(({ key, text }, index) => (
-              <li
-                key={key}
-                styleName={`walletNavItem ${activeView === index ? "active" : ""}`}
-                onClick={() => this.handleNavItemClick(index)}
-              >
+              <li key={key} styleName={`walletNavItem ${activeView === index ? 'active' : ''}`} onClick={() => this.handleNavItemClick(index)}>
                 <a href styleName="walletNavItemLink">
                   {text}
                 </a>
@@ -412,7 +399,7 @@ export default class Wallet extends Component {
             ))}
           </ul>
           <div className="data-tut-store" styleName="walletContent" ref={this.balanceRef}>
-            <div styleName={`walletBalance ${activeView === 0 ? "active" : ""}`}>
+            <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
               {/* {
                 !isFetching ?  */}
               <BalanceForm
@@ -434,7 +421,7 @@ export default class Wallet extends Component {
                 </div>
               )}
             </div>
-            <div styleName={`yourAssetsWrapper ${activeView === 0 ? "active" : ""}`}>
+            <div styleName={`yourAssetsWrapper ${activeView === 0 ? 'active' : ''}`}>
               {/* {
                 !isFetching ?  */}
               <CurrenciesList
@@ -447,7 +434,7 @@ export default class Wallet extends Component {
 
               {/* : <ContentLoader rideSideContent /> */}
             </div>
-            <div styleName={`activity ${activeView === 1 ? "active" : ""}`}>
+            <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
               <History />
             </div>
           </div>
@@ -463,6 +450,6 @@ export default class Wallet extends Component {
           )}
         </section>
       </artical>
-    );
+    )
   }
 }
