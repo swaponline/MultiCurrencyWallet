@@ -5288,5 +5288,10 @@
     "id": "WalletPage_ImportKeys",
     "message": "Импортировать ключи",
     "files": ["shared/pages/Wallet/Wallet.js"]
+  },
+  {
+    "id": "WalletPage_Heading",
+    "message": "Кошелек",
+    "files": ["shared/pages/Wallet/Wallet.js"]
   }
 ]

@@ -5286,6 +5286,11 @@
     "files": ["shared/pages/Wallet/Wallet.js"]
   },
   {
+    "id": "WalletPage_Heading",
+    "message": "Wallet",
+    "files": ["shared/pages/Wallet/Wallet.js"]
+  },
+  {
     "id": "WalletPage_ImportKeys",
     "message": "Import keys",
     "files": ["shared/pages/Wallet/Wallet.js"]

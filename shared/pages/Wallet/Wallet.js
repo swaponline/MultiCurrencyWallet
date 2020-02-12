@@ -394,7 +394,9 @@ export default class Wallet extends Component {
             />
           )}
 
-          <h3 styleName="walletHeading">Wallet</h3>
+          <h3 styleName="walletHeading">
+            <FormattedMessage id="WalletPage_Heading" defaultMessage="Кошелек" />
+          </h3>
 
           <ul styleName="walletNav">
             {walletNav.map(({ key, text }, index) => (
