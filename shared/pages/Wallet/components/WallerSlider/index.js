@@ -29,7 +29,7 @@ const handleSignUp = () => {
 
 export default props => {
   const { settings, isPrivateKeysSaved, isClosedNotifyBlockSignUp, isSigned, isClosedNotifyBlockBanner, handleNotifyBlockClose, host } = props
-  return (
+  return isWidgetBuild ? null : (
     <Slider {...settings}>
       {!isPrivateKeysSaved && (host === 'localhost' || host === 'swaponline.github.io') && (
         <NotifyBlock
