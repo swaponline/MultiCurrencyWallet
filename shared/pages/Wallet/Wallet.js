@@ -384,13 +384,6 @@ export default class Wallet extends Component {
     return (
       <artical>
         <section styleName={isWidgetBuild && !config.isFullBuild ? "wallet widgetBuild" : "wallet"}>
-          {walletTitle === "" || editTitle ? (
-            <input styleName="inputTitle" onChange={e => this.handleChangeTitle(e)} value={walletTitle} />
-          ) : (
-            <h3 styleName="walletHeading" onDoubleClick={this.handleEditTitle}>
-              {walletTitle || "Wallet"}
-            </h3>
-          )}
           {!isWidgetBuild && (
             <Slider
               settings={settings}
@@ -400,6 +393,9 @@ export default class Wallet extends Component {
               {...this.state}
             />
           )}
+
+          <h3 styleName="walletHeading">Wallet</h3>
+
           <ul styleName="walletNav">
             {walletNav.map(({ key, text }, index) => (
               <li

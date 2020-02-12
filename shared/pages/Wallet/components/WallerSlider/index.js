@@ -36,7 +36,7 @@ export default props => {
   } = props;
   return (
     <Slider {...settings}>
-      {!isPrivateKeysSaved && (
+      {!isPrivateKeysSaved && (host === "localhost" || host === "swaponline.github.io") && (
         <NotifyBlock
           className="notifyBlockSaveKeys"
           descr={
