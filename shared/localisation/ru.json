@@ -6955,6 +6955,14 @@
   {
     "id": "WalletPage_ImportKeys",
     "message": "Импортировать ключи",
+<<<<<<< HEAD
+    "files": ["shared/pages/Wallet/Wallet.js"]
+  },
+  {
+    "id": "WalletPage_Heading",
+    "message": "Кошелек",
+    "files": ["shared/pages/Wallet/Wallet.js"]
+=======
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
@@ -7028,5 +7036,6 @@
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
+>>>>>>> master
   }
 ]
