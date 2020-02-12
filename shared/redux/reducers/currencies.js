@@ -140,7 +140,7 @@ if (config.isWidget) {
   ]
   
   // Мульти валюта с обратной совместимостью одиночного билда
-  const multiTokenNames = Object.keys(window.widgetERC20Tokens)
+  const multiTokenNames = (window.widgetERC20Tokens) ? Object.keys(window.widgetERC20Tokens) : []
 
   if (multiTokenNames.length>0) {
     // First token in list - is main - fill single-token erc20 config

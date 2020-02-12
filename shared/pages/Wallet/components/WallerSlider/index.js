@@ -1,53 +1,41 @@
-import React from "react";
+import React from 'react'
 
-import { constants } from "helpers";
-import actions from "redux/actions";
+import { constants } from 'helpers'
+import actions from 'redux'
 
-import security from "../NotityBlock/images/security.svg";
-import mail from "../NotityBlock/images/mail.svg";
-import info from "../NotityBlock/images/info-solid.svg";
+import security from '../NotityBlock/images/security.svg'
+import mail from '../NotityBlock/images/mail.svg'
+import info from '../NotityBlock/images/info-solid.svg'
 
-import Slider from "react-slick";
-import NotifyBlock from "pages/Wallet/components/NotityBlock/NotifyBock";
+import Slider from 'react-slick'
+import NotifyBlock from 'pages/Wallet/components/NotityBlock/NotifyBock'
+import config from 'app-config'
 
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage } from 'react-intl'
 
+
+const isWidgetBuild = config && config.isWidget
 const handleShowKeys = () => {
-  actions.modals.open(constants.modals.DownloadModal);
-};
+  actions.modals.open(constants.modals.DownloadModal)
+}
 
 const handleSaveKeys = () => {
-  actions.modals.open(constants.modals.PrivateKeys);
-};
+  actions.modals.open(constants.modals.PrivateKeys)
+}
 
 const handleSignUp = () => {
-  actions.modals.open(constants.modals.SignUp);
-};
+  actions.modals.open(constants.modals.SignUp)
+}
 
 export default props => {
-  const {
-    settings,
-    isPrivateKeysSaved,
-    isClosedNotifyBlockSignUp,
-    isSigned,
-    isClosedNotifyBlockBanner,
-    handleNotifyBlockClose,
-    host
-  } = props;
+  const { settings, isPrivateKeysSaved, isClosedNotifyBlockSignUp, isSigned, isClosedNotifyBlockBanner, handleNotifyBlockClose, host } = props
   return (
     <Slider {...settings}>
-      {!isPrivateKeysSaved && (
+      {!isPrivateKeysSaved && (host === 'localhost' || host === 'swaponline.github.io') && (
         <NotifyBlock
           className="notifyBlockSaveKeys"
-          descr={
-            <FormattedMessage id="descr279" defaultMessage="Before you continue be sure to save your private keys!" />
-          }
-          tooltip={
-            <FormattedMessage
-              id="descr280"
-              defaultMessage="We do not store your private keys and will not be able to restore them"
-            />
-          }
+          descr={<FormattedMessage id="descr279" defaultMessage="Before you continue be sure to save your private keys!" />}
+          tooltip={<FormattedMessage id="descr280" defaultMessage="We do not store your private keys and will not be able to restore them" />}
           icon={security}
           firstBtn={<FormattedMessage id="descr282" defaultMessage="Show my keys" />}
           firstFunc={handleShowKeys}
@@ -55,15 +43,10 @@ export default props => {
           secondFunc={handleSaveKeys}
         />
       )}
-      {(host === "localhost" || host === "swaponline.github.io") && (
+      {(host === 'localhost' || host === 'swaponline.github.io') && (
         <NotifyBlock
           className="notifyBlockBanner"
-          descr={
-            <FormattedMessage
-              id="descr295"
-              defaultMessage="Store Bitcoin and other cryptocurrencies without installing a wallet"
-            />
-          }
+          descr={<FormattedMessage id="descr295" defaultMessage="Store Bitcoin and other cryptocurrencies without installing a wallet" />}
           tooltip={
             <FormattedMessage
               id="descr296"
@@ -72,19 +55,14 @@ export default props => {
           }
           icon={info}
           firstFunc={handleSignUp}
-          secondFunc={() => handleNotifyBlockClose("isClosedNotifyBlockSignUp")}
+          secondFunc={() => handleNotifyBlockClose('isClosedNotifyBlockSignUp')}
         />
       )}
 
-      {(host === "localhost" || host === "swaponline.github.io") && (
+      {(host === 'localhost' || host === 'swaponline.github.io') && (
         <NotifyBlock
           className="notifyBlockBanner"
-          descr={
-            <FormattedMessage
-              id="descr297"
-              defaultMessage="Store Bitcoin and other cryptocurrencies without installing a wallet"
-            />
-          }
+          descr={<FormattedMessage id="descr297" defaultMessage="Store Bitcoin and other cryptocurrencies without installing a wallet" />}
           tooltip={
             <FormattedMessage
               id="descr298"
@@ -93,19 +71,14 @@ export default props => {
           }
           icon={info}
           firstFunc={handleSignUp}
-          secondFunc={() => handleNotifyBlockClose("isClosedNotifyBlockSignUp")}
+          secondFunc={() => handleNotifyBlockClose('isClosedNotifyBlockSignUp')}
         />
       )}
 
-      {(host === "localhost" || host === "swaponline.github.io") && (
+      {(host === 'localhost' || host === 'swaponline.github.io') && (
         <NotifyBlock
           className="notifyBlockBanner"
-          descr={
-            <FormattedMessage
-              id="descr299"
-              defaultMessage="Store Bitcoin and other cryptocurrencies without installing a wallet"
-            />
-          }
+          descr={<FormattedMessage id="descr299" defaultMessage="Store Bitcoin and other cryptocurrencies without installing a wallet" />}
           tooltip={
             <FormattedMessage
               id="descr300"
@@ -114,19 +87,14 @@ export default props => {
           }
           icon={info}
           firstFunc={handleSignUp}
-          secondFunc={() => handleNotifyBlockClose("isClosedNotifyBlockSignUp")}
+          secondFunc={() => handleNotifyBlockClose('isClosedNotifyBlockSignUp')}
         />
       )}
 
-      {(host === "localhost" || host === "swaponline.github.io") && (
+      {(host === 'localhost' || host === 'swaponline.github.io') && (
         <NotifyBlock
           className="notifyBlockBanner"
-          descr={
-            <FormattedMessage
-              id="descr304"
-              defaultMessage="Store Bitcoin and other cryptocurrencies without installing a wallet"
-            />
-          }
+          descr={<FormattedMessage id="descr304" defaultMessage="Store Bitcoin and other cryptocurrencies without installing a wallet" />}
           tooltip={
             <FormattedMessage
               id="descr305"
@@ -135,19 +103,14 @@ export default props => {
           }
           icon={info}
           firstFunc={handleSignUp}
-          secondFunc={() => handleNotifyBlockClose("isClosedNotifyBlockSignUp")}
+          secondFunc={() => handleNotifyBlockClose('isClosedNotifyBlockSignUp')}
         />
       )}
 
-      {(host === "localhost" || host === "swaponline.github.io") && (
+      {(host === 'localhost' || host === 'swaponline.github.io') && (
         <NotifyBlock
           className="notifyBlockBanner"
-          descr={
-            <FormattedMessage
-              id="descr304"
-              defaultMessage="Store Bitcoin and other cryptocurrencies without installing a wallet"
-            />
-          }
+          descr={<FormattedMessage id="descr304" defaultMessage="Store Bitcoin and other cryptocurrencies without installing a wallet" />}
           tooltip={
             <FormattedMessage
               id="descr305"
@@ -156,27 +119,27 @@ export default props => {
           }
           icon={info}
           firstFunc={handleSignUp}
-          secondFunc={() => handleNotifyBlockClose("isClosedNotifyBlockSignUp")}
+          secondFunc={() => handleNotifyBlockClose('isClosedNotifyBlockSignUp')}
         />
       )}
 
       {/* {!isSigned && !isClosedNotifyBlockSignUp && (
-        <NotifyBlock
-          className="notifyBlockSignUp"
-          descr={<FormattedMessage id="descr291" defaultMessage="Sign up and get your free cryptocurrency for test!" />}
-          tooltip={
-            <FormattedMessage
-              id="descr292"
-              defaultMessage="You will also be able to receive notifications regarding updates with your account"
-            />
-          }
-          firstBtn={<FormattedMessage id="descr293" defaultMessage="Sign Up" />}
-          secondBtn={<FormattedMessage id="descr294" defaultMessage="I’ll do this later" />}
-          icon={mail}
-          firstFunc={handleSignUp}
-          secondFunc={() => handleNotifyBlockClose("isClosedNotifyBlockSignUp")}
-        />
-      )} */}
+          <NotifyBlock
+            className="notifyBlockSignUp"
+            descr={<FormattedMessage id="descr291" defaultMessage="Sign up and get your free cryptocurrency for test!" />}
+            tooltip={
+              <FormattedMessage
+                id="descr292"
+                defaultMessage="You will also be able to receive notifications regarding updates with your account"
+              />
+            }
+            firstBtn={<FormattedMessage id="descr293" defaultMessage="Sign Up" />}
+            secondBtn={<FormattedMessage id="descr294" defaultMessage="I’ll do this later" />}
+            icon={mail}
+            firstFunc={handleSignUp}
+            secondFunc={() => handleNotifyBlockClose("isClosedNotifyBlockSignUp")}
+          />
+        )} */}
     </Slider>
-  );
-};
+  )
+}
