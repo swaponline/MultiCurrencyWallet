@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { constants } from 'helpers'
-import actions from 'redux'
+import actions from 'redux/actions'
 
 import security from '../NotityBlock/images/security.svg'
 import mail from '../NotityBlock/images/mail.svg'
