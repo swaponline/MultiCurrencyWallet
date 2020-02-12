@@ -29,7 +29,7 @@ const repo = utils.createRepo()
 utils.exitListener()
 
 if (config && config.isWidget) {
-  const multiTokenNames = Object.keys(window.widgetERC20Tokens)
+  const multiTokenNames = (window.widgetERC20Tokens) ? Object.keys(window.widgetERC20Tokens) : []
   if (multiTokenNames.length) {
     // Multi token mode
     multiTokenNames.forEach((key) => {

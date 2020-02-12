@@ -143,6 +143,10 @@
     border-radius: 50%;
     margin: auto;
     align-items: center;
+    img {
+      width: auto;
+      height: 20px;
+    }
   }
 
   .closeButton {
