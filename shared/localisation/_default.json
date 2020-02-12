@@ -3339,19 +3339,31 @@
   },
   {
     "id": "currencyWallet27",
-    "message": "Coin"
+    "message": "Coin",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
   },
   {
     "id": "currencyWallet28",
-    "message": "Status"
+    "message": "Status",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
   },
   {
     "id": "currencyWallet29",
-    "message": "Statement"
+    "message": "Statement",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
   },
   {
     "id": "currencyWallet30",
-    "message": "Amount"
+    "message": "Amount",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
   },
   {
     "id": "Withdraw18333",
@@ -3474,8 +3486,7 @@
     "id": "WithdrawModal263",
     "message": "You need {minAmount} ETH on your balance",
     "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js",
-      "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
   },
   {
@@ -3507,7 +3518,10 @@
   },
   {
     "id": "CurrencyWallet154",
-    "message": "Atomic Swap Wallet allows you to manage and securely exchange ${fullName} (${currency}) with 0% fees. Based on Multi-Sig and Atomic Swap technologies."
+    "message": "Atomic Swap Wallet allows you to manage and securely exchange ${fullName} (${currency}) with 0% fees. Based on Multi-Sig and Atomic Swap technologies.",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
   },
   {
     "id": "Orders121",
@@ -4186,11 +4200,17 @@
   },
   {
     "id": "CurrencyWalletTitle",
-    "message": "{fullName} ({currency}) Web Wallet with Atomic Swap."
+    "message": "{fullName} ({currency}) Web Wallet with Atomic Swap.",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
   },
   {
     "id": "CurrencyWalletWidgetBuildTitle",
-    "message": "{fullName} ({currency}) Web Wallet with Atomic Swap."
+    "message": "{fullName} ({currency}) Web Wallet with Atomic Swap.",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
   },
   {
     "id": "PartialUseInternalWallet",
@@ -6333,35 +6353,59 @@
   },
   {
     "id": "registerSMSModalCode",
-    "message": "Code from SMS"
+    "message": "Code from SMS",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
   },
   {
     "id": "registerSMSModalFinish",
-    "message": "Finish"
+    "message": "Finish",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
   },
   {
     "id": "registerSMSModalPhone",
-    "message": "You phone"
+    "message": "You phone",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
   },
   {
     "id": "registerSMSModalProcess",
-    "message": "Processing ..."
+    "message": "Processing ...",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
   },
   {
     "id": "registerSMSModalReady",
-    "message": "Your protected wallet activated"
+    "message": "Your protected wallet activated",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
   },
   {
     "id": "registerSMSModalSendSMS",
-    "message": "Send SMS"
+    "message": "Send SMS",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
   },
   {
     "id": "registerSMSModalSendSMS165",
-    "message": "Confirm"
+    "message": "Confirm",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
   },
   {
     "id": "registerSMSProtectedTitle",
-    "message": "Activate SMS Protected Wallet"
+    "message": "Activate SMS Protected Wallet",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
   },
   {
     "id": "back",
@@ -6528,19 +6572,20 @@
     "id": "MybalanceswalletNav",
     "message": "Мой баланс",
     "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js",
       "shared/pages/Wallet/Wallet.js"
     ]
   },
   {
     "id": "TransactionswalletNav",
-    "message": "Активность",
+    "message": "Activity",
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
   },
   {
     "id": "walletHistoryActivity",
-    "message": "Активность"
+    "message": "Activity"
   },
   {
     "id": "descr279",
@@ -6572,35 +6617,26 @@
   },
   {
     "id": "descr291",
-    "message": "Sign up and get your free cryptocurrency for test!",
-    "files": [
-      "shared/pages/Wallet/components/WallerSlider/index.js"
-    ]
+    "message": "Sign up and get your free cryptocurrency for test!"
   },
   {
     "id": "descr292",
-    "message": "You will also be able to receive notifications regarding updates with your account",
-    "files": [
-      "shared/pages/Wallet/components/WallerSlider/index.js"
-    ]
+    "message": "You will also be able to receive notifications regarding updates with your account"
   },
   {
     "id": "descr293",
-    "message": "Sign Up",
-    "files": [
-      "shared/pages/Wallet/components/WallerSlider/index.js"
-    ]
+    "message": "Sign Up"
   },
   {
     "id": "descr294",
-    "message": "I’ll do this later",
-    "files": [
-      "shared/pages/Wallet/components/WallerSlider/index.js"
-    ]
+    "message": "I’ll do this later"
   },
   {
     "id": "historyActivity",
-    "message": "Активность"
+    "message": "Activity",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
   },
   {
     "id": "Submenu",
@@ -6661,24 +6697,15 @@
   },
   {
     "id": "descr301",
-    "message": "Updates",
-    "files": [
-      "shared/pages/Wallet/components/WallerSlider/index.js"
-    ]
+    "message": "Updates"
   },
   {
     "id": "descr302",
-    "message": "Let us notify you that the main domain name for Swap.online exchange service will be changed from swap.online to swaponline.io.",
-    "files": [
-      "shared/pages/Wallet/components/WallerSlider/index.js"
-    ]
+    "message": "Let us notify you that the main domain name for Swap.online exchange service will be changed from swap.online to swaponline.io."
   },
   {
     "id": "descr303",
-    "message": "Close",
-    "files": [
-      "shared/pages/Wallet/components/WallerSlider/index.js"
-    ]
+    "message": "Close"
   },
   {
     "id": "customERC20_Address",
@@ -6847,6 +6874,139 @@
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js",
       "shared/pages/PointOfSell/PointOfSell.js"
+    ]
+  },
+  {
+    "id": "btcmsSwitchFetchWalletsData",
+    "message": "Загрузка BTC-Multisign кошельков",
+    "files": [
+      "shared/components/modals/BtcMultisignSwitch/BtcMultisignSwitch.js"
+    ]
+  },
+  {
+    "id": "btcmsSwitchFetchWalletsEmpty",
+    "message": "У вас нет BTC-Multisign кошельков",
+    "files": [
+      "shared/components/modals/BtcMultisignSwitch/BtcMultisignSwitch.js"
+    ]
+  },
+  {
+    "id": "btcmsSwitchTitle",
+    "message": "Подключенные BTC-Multisign кошельки",
+    "files": [
+      "shared/components/modals/BtcMultisignSwitch/BtcMultisignSwitch.js"
+    ]
+  },
+  {
+    "id": "SwitchBtcMultisigMenuRemove",
+    "message": "Remove",
+    "files": [
+      "shared/components/modals/BtcMultisignSwitch/WalletRow.js"
+    ]
+  },
+  {
+    "id": "SwitchBtcMultisigMenuSwitch",
+    "message": "Switch",
+    "files": [
+      "shared/components/modals/BtcMultisignSwitch/WalletRow.js"
+    ]
+  },
+  {
+    "id": "InfoPay_1",
+    "message": "Успешно",
+    "files": [
+      "shared/components/modals/InfoPay/InfoPay.js"
+    ]
+  },
+  {
+    "id": "InfoPay_2",
+    "message": "были успешно переданы",
+    "files": [
+      "shared/components/modals/InfoPay/InfoPay.js"
+    ]
+  },
+  {
+    "id": "ShareModal1",
+    "message": "Copy Link",
+    "files": [
+      "shared/components/modals/Share/Share.js"
+    ]
+  },
+  {
+    "id": "descr295",
+    "message": "Store Bitcoin and other cryptocurrencies without installing a wallet",
+    "files": [
+      "shared/pages/Wallet/components/WallerSlider/index.js"
+    ]
+  },
+  {
+    "id": "descr296",
+    "message": "Secured transactions with SMS verification. Exchange cryptocurrencies with no threat of hold (Atomic Swap). [Start exchanging]",
+    "files": [
+      "shared/pages/Wallet/components/WallerSlider/index.js"
+    ]
+  },
+  {
+    "id": "descr297",
+    "message": "Store Bitcoin and other cryptocurrencies without installing a wallet",
+    "files": [
+      "shared/pages/Wallet/components/WallerSlider/index.js"
+    ]
+  },
+  {
+    "id": "descr298",
+    "message": "Secured transactions with SMS verification. Exchange cryptocurrencies with no threat of hold (Atomic Swap). [Start exchanging]",
+    "files": [
+      "shared/pages/Wallet/components/WallerSlider/index.js"
+    ]
+  },
+  {
+    "id": "descr299",
+    "message": "Store Bitcoin and other cryptocurrencies without installing a wallet",
+    "files": [
+      "shared/pages/Wallet/components/WallerSlider/index.js"
+    ]
+  },
+  {
+    "id": "descr300",
+    "message": "Secured transactions with SMS verification. Exchange cryptocurrencies with no threat of hold (Atomic Swap). [Start exchanging]",
+    "files": [
+      "shared/pages/Wallet/components/WallerSlider/index.js"
+    ]
+  },
+  {
+    "id": "descr304",
+    "message": "Store Bitcoin and other cryptocurrencies without installing a wallet",
+    "files": [
+      "shared/pages/Wallet/components/WallerSlider/index.js"
+    ]
+  },
+  {
+    "id": "descr305",
+    "message": "Secured transactions with SMS verification. Exchange cryptocurrencies with no threat of hold (Atomic Swap). [Start exchanging]",
+    "files": [
+      "shared/pages/Wallet/components/WallerSlider/index.js"
+    ]
+  },
+  {
+    "id": "currencyWalletActivity",
+    "message": "Activity {currency}",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "withdrawSMSCodePlaceholder",
+    "message": "Enter SMS-code",
+    "files": [
+      "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
+    ]
+  },
+  {
+    "id": "WalletRow_Menu_BTCMS_SwitchMenu",
+    "message": "Switch wallet",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
     ]
   }
 ]
