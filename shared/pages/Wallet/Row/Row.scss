@@ -480,8 +480,8 @@
       }
       span {
         position: absolute;
-        bottom: -20px;
-        left: 0;
+        top: 1px;
+        left: calc(100% + 140px);
         font-size: 12px;
         text-transform: capitalize;
         color: #8E9AA3;
@@ -489,8 +489,8 @@
       a {
         span {
           color: #007bff;
-          left: calc(100% + 80px);
-          top: 0;
+          left: calc(100% + 65px);
+          top: 1px;
         }
       }
     }
