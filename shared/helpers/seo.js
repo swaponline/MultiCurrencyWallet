@@ -147,16 +147,7 @@ const seo = {
       title: 'Bitcoin (BTC) Web Wallet with Atomic Swap.',
       description: 'Swap.Online Bitcoin Wallet will allow you to exchange your coins using Atomic Swap technology.',
       h1: 'Your online Bitcoin (BTC) web wallet with Atomic Swap.',
-      footer: `Use Swap.Online as your safe and high-performance Bitcoin wallet. Firstly, you need to open https://swaponline.io/  in your browser.
-        Secondly, please, download your private and public key-pair for the Bitcoin network and save it somewhere in the reliable place.
-        In case of your failure to access your Bitcoin account, no one will be able to help you to restore your funds.
-        With the key downloaded and saved, you can start to store, send, receive and exchange Bitcoin.
-        Nowadays, the trades with USDT, ETH, BCH, GUSD and multiple amazing ERC-20 tokens are available.
-        Taking the fact into account, you can build your own investment strategy, starting with the Bitcoin  - the most popular blockchain in the world.
-        Mass-adopted in early 2010s it became a first expression of decentralized ‘electronic cash’ system based on Smart Contracts.
-        Swap.Online compares favourably with the rest of Bitcoin wallets since it uses the Atomic Swaps technology allowing
-        the direct interaction between blockchains with nok third party involved. Thus, Swap.Online is not pegged to single blockchain,
-        it allows to store, send, receive and exchange Bitcoin, Ethereum, USDT, BCH and the number of ERC-20 tokens.`,
+      footer: ``,
     },
     {
       uri: '/BitcoinCash-wallet',
