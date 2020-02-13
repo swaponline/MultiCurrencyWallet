@@ -267,15 +267,20 @@ const login_ = (privateKey, otherOwnerPublicKey, sortKeys) => {
   // TODO - simple sort public keys by ABC - no primary and secondary
   let _data
   if (otherOwnerPublicKey) {
-    const publicKey_2 = otherOwnerPublicKey
-    let publicKeysRaw = [ publicKey_2, publicKey_1 ]
+    let publicKeysRaw = []
+    if (otherOwnerPublicKey instanceof Array) {
+      otherOwnerPublicKey.forEach( (key) => { publicKeysRaw.push( key ) } )
+    } else {
+      publicKeysRaw.push( otherOwnerPublicKey )
+    }
+    publicKeysRaw.push( publicKey_1 )
 
     if (sortKeys) publicKeysRaw = publicKeysRaw.sort()
 
     const publicKeys = publicKeysRaw.map(hex => Buffer.from(hex, 'hex'))
     const p2ms = bitcoin.payments.p2ms({
       m: 2,
-      n: 2,
+      n: publicKeysRaw.length,
       pubkeys: publicKeys,
       network: btc.network,
     })
@@ -610,7 +615,7 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
   
   const p2ms = bitcoin.payments.p2ms({
     m: 2,
-    n: 2,
+    n: publicKeys.length,
     pubkeys: publicKeys,
     network: btc.network,
   })
@@ -682,7 +687,7 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
   
   const p2ms = bitcoin.payments.p2ms({
     m: 2,
-    n: 2,
+    n: publicKeys.length,
     pubkeys: publicKeys,
     network: btc.network,
   })
@@ -760,7 +765,7 @@ const signMultiSign = async ( txHash ) => {
 
   const p2ms = bitcoin.payments.p2ms({
     m: 2,
-    n: 2,
+    n: publicKeys.length,
     pubkeys: publicKeys,
     network: btc.network,
   })
