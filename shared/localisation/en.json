@@ -6958,7 +6958,9 @@
   {
     "id": "WalletPage_Heading",
     "message": "Wallet",
-    "files": ["shared/pages/Wallet/Wallet.js"]
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
   },
   {
     "id": "WalletPage_ImportKeys",
@@ -7028,6 +7030,13 @@
     "message": "Switch wallet",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "YourtotalbalanceExchange",
+    "message": "Exchange",
+    "files": [
+      "shared/pages/Wallet/components/BalanceForm/BalanceForm.js"
     ]
   }
 ]

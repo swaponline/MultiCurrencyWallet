@@ -7008,5 +7008,19 @@
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
+  },
+  {
+    "id": "YourtotalbalanceExchange",
+    "message": "Обменять",
+    "files": [
+      "shared/pages/Wallet/components/BalanceForm/BalanceForm.js"
+    ]
+  },
+  {
+    "id": "WalletPage_Heading",
+    "message": "Кошелек",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
   }
 ]
