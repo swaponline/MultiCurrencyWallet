@@ -120,7 +120,7 @@ const walletNav = [
     currencies,
     assets,
     isFetching,
-    hiddenCoinsList: config && config.isWidget ? [] : hiddenCoinsList,
+    hiddenCoinsList: hiddenCoinsList,
     userEthAddress: ethData.address,
     tokensData: {
       ethData,
@@ -348,21 +348,26 @@ export default class Wallet extends Component {
     let usdBalance = 0
     let changePercent = 0
 
-    let widgetCurrencies = isWidgetBuild ? ['BTC', 'ETH', config.erc20token.toUpperCase()] : []
-
-    if (window.widgetERC20Tokens) {
-      // Multi token widget build
-      if (Object.keys(window.widgetERC20Tokens).length) {
-        widgetCurrencies = ['BTC', 'ETH']
+    // Набор валют для виджета
+    const widgetCurrencies = ['BTC']
+    if (!hiddenCoinsList.includes('BTC (SMS-Protected)')) widgetCurrencies.push('BTC (SMS-Protected)')
+    if (!hiddenCoinsList.includes('BTC (Multisig)')) widgetCurrencies.push('BTC (Multisig)')
+    widgetCurrencies.push('ETH')
+    if (isWidgetBuild) {
+      if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
+        // Multi token widget build
         Object.keys(window.widgetERC20Tokens).forEach(key => {
           widgetCurrencies.push(key.toUpperCase())
         })
+      } else {
+        widgetCurrencies.push(config.erc20token.toUpperCase())
       }
     }
 
     let tableRows = allData.filter(({ currency, balance }) => !hiddenCoinsList.includes(currency) || balance > 0)
     if (isWidgetBuild) {
-      tableRows = allData.filter(({ currency }) => widgetCurrencies.includes(currency))
+      //tableRows = allData.filter(({ currency }) => widgetCurrencies.includes(currency))
+      tableRows = allData.filter(({ currency, balance }) => !hiddenCoinsList.includes(currency))
     }
 
     if (currencyBalance) {

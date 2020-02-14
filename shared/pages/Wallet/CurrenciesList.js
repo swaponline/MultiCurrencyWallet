@@ -39,11 +39,9 @@ const CurrenciesList = ({ tableRows, currencies, infoAboutCurrency, hiddenCoinsL
         />
       )}
     />
-    {!(config && config.isWidget) &&
-      <Button onClick={goToСreateWallet} blue transparent fullWidth>
-        <FormattedMessage id="addAsset" defaultMessage="Добавить валюту" />
-      </Button>
-    }
+    <Button onClick={goToСreateWallet} blue transparent fullWidth>
+      <FormattedMessage id="addAsset" defaultMessage="Добавить валюту" />
+    </Button>
   </div>
 )
 

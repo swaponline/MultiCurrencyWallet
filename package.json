@@ -173,7 +173,6 @@
     "firebase": "^5.10.0",
     "ipfs": "^0.33.1",
     "ipfs-pubsub-room": "^1.4.0",
-    "jquery": "^3.4.1",
     "json-stringify-safe": "^5.0.1",
     "keychain.js": "0.0.3",
     "lerna": "^3.18.4",

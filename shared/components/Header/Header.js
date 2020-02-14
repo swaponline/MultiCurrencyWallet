@@ -214,7 +214,7 @@ export default class Header extends Component {
         return;
     }
 
-    if (!didOpenWalletCreate && isWalletPage && !(config && config.isWidget)) {
+    if (!didOpenWalletCreate && isWalletPage) {
       this.openCreateWallet({ onClose: tourEvent });
       return;
     }

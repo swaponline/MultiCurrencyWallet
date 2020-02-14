@@ -462,14 +462,12 @@ export default class Row extends Component {
       }
     ]
 
-    if (!isWidgetBuild) {
-      dropDownMenuItems.push({
-        id: 1011,
-        title: <FormattedMessage id='WalletRow_Menu_Hide' defaultMessage='Hide' />,
-        action: this.hideCurrency,
-        disabled: false
-      })
-    }
+    dropDownMenuItems.push({
+      id: 1011,
+      title: <FormattedMessage id='WalletRow_Menu_Hide' defaultMessage='Hide' />,
+      action: this.hideCurrency,
+      disabled: false
+    })
 
     if (currencyView == 'BTC (Multisig)') currencyView = 'BTC'
     if (currencyView == 'BTC (SMS-Protected)') currencyView = 'BTC'

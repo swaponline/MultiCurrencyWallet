@@ -1,4 +1,16 @@
 import React, { Component } from 'react'
+
+
+export default class FAQ extends Component {
+  render() {
+    return null
+  }
+}
+
+/*
+
+// !!! Remove space between * and / in regexp
+import React, { Component } from 'react'
 import $ from 'jquery'
 import collapse from 'bootstrap/js/dist/collapse'
 import './FAQ.css'
@@ -13,10 +25,10 @@ export default class FAQ extends Component {
     }
   }
 
-  /* eslint-disable */
+  // eslint-disable 
 
   onDone = (hash) => {
-    /* Open accordion if hash */
+    // Open accordion if hash 
     if (hash) {
       $(hash).collapse('show');
       setTimeout(function () {
@@ -26,7 +38,7 @@ export default class FAQ extends Component {
       }, 300);
     }
 
-    /* Go to anchor */
+    // Go to anchor 
     $('.goto-anchor').on('click', function (e) {
       e.preventDefault();
       // $('.navbar-collapse').collapse('hide');
@@ -90,21 +102,21 @@ export default class FAQ extends Component {
       if (pee.indexOf('<option') > -1) {
         // no P/BR around option
         pee = pee.replace(/\s*<option'/gmi, '<option');
-        pee = pee.replace(/<\/option>\s*/gmi, '</option>');
+        pee = pee.replace(/<\/option>\s* /gmi, '</option>'); // !!! Remove space between * and / in regexp
       }
 
       if (pee.indexOf('</object>') > -1) {
         // no P/BR around param and embed
-        pee = pee.replace(/(<object[^>]*>)\s*/gmi, '$1');
+        pee = pee.replace(/(<object[^>]*>)\s* /gmi, '$1'); // !!! Remove space between * and / in regexp
         pee = pee.replace(/\s*<\/object>/gmi, '</object>');
-        pee = pee.replace(/\s*(<\/?(?:param|embed)[^>]*>)\s*/gmi, '$1');
+        pee = pee.replace(/\s*(<\/?(?:param|embed)[^>]*>)\s* /gmi, '$1'); // !!! Remove space between * and / in regexp
       }
 
       if (pee.indexOf('<source') > -1 || pee.indexOf('<track') > -1) {
         // no P/BR around source and track
-        pee = pee.replace(/([<\[](?:audio|video)[^>\]]*[>\]])\s*/gmi, '$1');
+        pee = pee.replace(/([<\[](?:audio|video)[^>\]]*[>\]])\s* /gmi, '$1'); // !!! Remove space between * and / in regexp
         pee = pee.replace(/\s*([<\[]\/(?:audio|video)[>\]])/gmi, '$1');
-        pee = pee.replace(/\s*(<(?:source|track)[^>]*>)\s*/gmi, '$1');
+        pee = pee.replace(/\s*(<(?:source|track)[^>]*>)\s* /gmi, '$1'); // !!! Remove space between * and / in regexp
       }
 
       pee = pee.replace(/\n\n+/gmi, "\n\n"); // take care of duplicates
@@ -184,7 +196,7 @@ export default class FAQ extends Component {
 
   }
 
-  /* eslint-enable */
+  // eslint-enable
 
   render() {
     return (
@@ -204,3 +216,4 @@ export default class FAQ extends Component {
     )
   }
 }
+*/
