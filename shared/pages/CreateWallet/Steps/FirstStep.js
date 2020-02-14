@@ -14,6 +14,7 @@ import Coin from 'components/Coin/Coin'
 
 import Explanation from '../Explanation'
 import icons from '../images'
+import config from 'app-config'
 
 import Cupture
 , {
@@ -30,6 +31,14 @@ const defaultStartPack = [
   { name: "USDT", capture: "Tether" },
   { name: "EURS", capture: "Eurs" },
 ]
+
+const widgetStartPack = [
+  { name: "BTC", capture: "Bitcoin" },
+  { name: "ETH", capture: "Ethereum" },
+]
+
+const isWidgetBuild = config && config.isWidget
+
 @connect(({ currencies: { items: currencies } }) => ({ currencies }))
 @CSSModules(styles, { allowMultiple: true })
 export default class CreateWallet extends Component {
@@ -47,8 +56,28 @@ export default class CreateWallet extends Component {
 
     const curState = {}
     items.forEach(({ currency }) => { curState[currency] = false })
-
-    this.state = { curState, coins, startPack: defaultStartPack }
+    if (isWidgetBuild && config && config.erc20) {
+      if (window && window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
+        // Multi token build
+        Object.keys(window.widgetERC20Tokens).forEach( (tokenSymbol) => {
+          if (config.erc20[tokenSymbol]) {
+            widgetStartPack.push({
+              name: tokenSymbol.toUpperCase(),
+              capture: config.erc20[tokenSymbol].fullName,
+            })
+          }
+        })
+      } else {
+        // Single token build
+        if (config.erc20[config.erc20token]) {
+          widgetStartPack.push({
+            name: config.erc20token.toUpperCase(),
+            capture: config.erc20[config.erc20token].fullName,
+          })
+        }
+      }
+    }
+    this.state = { curState, coins, startPack: (isWidgetBuild) ? widgetStartPack : defaultStartPack }
   }
 
 
@@ -84,7 +113,9 @@ export default class CreateWallet extends Component {
         <div>
           <div>
             <Explanation step={1} subHeaderText={subHeaderText1()}>
-              <Cupture click={this.etcClick} step={1} />
+              {!isWidgetBuild && (
+                <Cupture click={this.etcClick} step={1} />
+              )}
             </Explanation>
             <div styleName={`currencyChooserWrapper ${startPack.length < 4 ? "smallArr" : ""}`}>
               {startPack.map(el => {
