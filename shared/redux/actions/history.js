@@ -12,17 +12,17 @@ const delay = (ms) => new Promise(resolve => setTimeout(() => resolve(true), ms)
 const setTransactions = async (address) => {
   try {
     const mainTokens = await Promise.all([
-      actions.btc.getTransactionByAddress(address),
+      actions.btc.getTransaction(address),
       // actions.btc.getInvoices(),
-      // actions.btcmultisig.getTransactionSMS(),
+      // actions.btcmultisig.getTransactionSMS(address),
       // actions.btcmultisig.getInvoicesSMS(),
-      // actions.btcmultisig.getTransactionUser(),
+      // actions.btcmultisig.getTransactionUser(address),
       // actions.btcmultisig.getInvoicesUser(),
-      // actions.bch.getTransaction(),
-      // actions.usdt.getTransaction(),
-      // actions.eth.getTransaction(),
+      // actions.bch.getTransaction(address),
+      // # pernament actions.usdt.getTransaction(),
+      // actions.eth.getTransaction(address),
       // actions.eth.getInvoices(),
-      // actions.ltc.getTransaction(),
+      // actions.ltc.getTransaction(address),
     ])
 
     await new Promise(async resolve => {

@@ -520,12 +520,15 @@ const fetchTxInfo = (hash) =>
       ...rest,
     }))
 
-const getTransactionUser = () => {
-  const { user: { btcMultisigUserData: { address } } } = getState()
+const getTransactionUser = (address) => {
+
+  if(!address) {
+    const { user: { btcMultisigUserData: { address } } } = getState()
+  }
   return getTransaction(address, 'btc (multisig)')
 }
 
-const getTransactionSMS = () => { return getTransaction() }
+const getTransactionSMS = (address) => { return getTransaction(address) }
 
 const getTransactionG2FA = () => {}
 

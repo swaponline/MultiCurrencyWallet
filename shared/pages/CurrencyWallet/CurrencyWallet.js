@@ -116,7 +116,7 @@ export default class CurrencyWallet extends Component {
   componentDidMount() {
 
     const { currency, token } = this.state
-    let { match: { params: { fullName, address = null } } } = this.props
+    let { match: { params: { address = null } } } = this.props
 
     if (currency) {
       // actions.analytics.dataEvent(`open-page-${currency.toLowerCase()}-wallet`)
@@ -130,7 +130,8 @@ export default class CurrencyWallet extends Component {
     // if address is null, take transactions from current user
     address ? actions.history.setTransactions(address) : actions.user.setTransactions()
 
-    actions.core.getSwapHistory()
+    if(address)
+      actions.core.getSwapHistory()
   }
 
   setLocalStorageItems = () => {
