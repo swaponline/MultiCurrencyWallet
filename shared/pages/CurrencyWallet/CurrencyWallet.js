@@ -114,7 +114,9 @@ export default class CurrencyWallet extends Component {
   }
 
   componentDidMount() {
+
     const { currency, token } = this.state
+    let { match: { params: { fullName, address = null } } } = this.props
 
     if (currency) {
       // actions.analytics.dataEvent(`open-page-${currency.toLowerCase()}-wallet`)
@@ -124,8 +126,10 @@ export default class CurrencyWallet extends Component {
     }
 
     this.setLocalStorageItems();
+    
+    // if address is null, take transactions from current user
+    address ? actions.history.setTransactions(address) : actions.user.setTransactions()
 
-    actions.user.setTransactions()
     actions.core.getSwapHistory()
   }
 
@@ -192,18 +196,18 @@ export default class CurrencyWallet extends Component {
 
   render() {
 
-    let { swapHistory, txHistory, location, match: { params: { fullName } }, intl, hiddenCoinsList, isSigned, isFetching } = this.props
+    let { swapHistory, txHistory, location, match: { params: { fullName, address = null } }, intl, hiddenCoinsList, isSigned, isFetching } = this.props
+
     const {
       currency,
       balance,
       infoAboutCurrency
     } = this.state
-
+      
     if (txHistory) {
       txHistory = txHistory
         .filter(tx => tx.type.toLowerCase() === currency.toLowerCase())
     }
-
 
     swapHistory = Object.keys(swapHistory)
       .map(key => swapHistory[key])
@@ -261,6 +265,15 @@ export default class CurrencyWallet extends Component {
       slidesToScroll: 1
     };
 
+      // set all show by default
+    let showButtons = true
+
+    // is address is exits check access to button
+    if (address) {
+      // check if current user is owner the address
+      showButtons = actions.user.isOwner(address)
+    }
+
     return (
       <div styleName="root">
         <PageSeo
@@ -296,9 +309,11 @@ export default class CurrencyWallet extends Component {
                     currencyBalance={balance} 
                     usdBalance={currencyUsdBalance} 
                     changePercent={changePercent}
+                    address={address}
                     handleReceive={this.handleReceive} 
                     handleWithdraw={this.handleWithdraw}
                     handleExchange={this.handleGoTrade}
+                    showButtons={showButtons}
                     currency={currency.toLowerCase()} 
                 /> : <ContentLoader leftSideContent />
               }

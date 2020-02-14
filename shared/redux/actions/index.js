@@ -6,6 +6,7 @@ import notifications from './notifications'
 import firebase from './firebase'
 
 import user from './user'
+import history from './history'
 import feed from './feed'
 import core from './core'
 import filter from './filter'
@@ -47,6 +48,7 @@ export default {
   notifications,
   firebase,
   user,
+  history,
   core,
 
   ltc,
