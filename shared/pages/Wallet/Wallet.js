@@ -366,7 +366,8 @@ export default class Wallet extends Component {
 
     let tableRows = allData.filter(({ currency, balance }) => !hiddenCoinsList.includes(currency) || balance > 0)
     if (isWidgetBuild) {
-      tableRows = allData.filter(({ currency }) => widgetCurrencies.includes(currency))
+      //tableRows = allData.filter(({ currency }) => widgetCurrencies.includes(currency))
+      tableRows = allData.filter(({ currency, balance }) => !hiddenCoinsList.includes(currency))
     }
 
     if (currencyBalance) {
