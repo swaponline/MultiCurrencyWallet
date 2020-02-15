@@ -163,12 +163,6 @@ const CreateWallet = (props) => {
             />
           </button>
          <br />
-          <a href="/importFromSwapOnline.html" styleName="link-import" className="text-danger">
-            <FormattedMessage
-              id="ImportFromSwapOnlineBtn"
-              defaultMessage="Import from swap.online"
-            />
-          </a>
           <button onClick={goToExchange}>
             <FormattedMessage
               id="ExchangeBtn"
