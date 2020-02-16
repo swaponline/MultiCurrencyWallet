@@ -5,7 +5,7 @@ import actions from 'redux/actions'
 import * as bitcoin from 'bitcoinjs-lib'
 
 import Link from 'sw-valuelink'
-import { btc, ltc, bch, constants } from 'helpers'
+import { btc, ltc, bch, constants, links } from 'helpers'
 
 import cssModules from 'react-css-modules'
 import styles from './ImportKeys.scss'
@@ -25,7 +25,6 @@ const title = defineMessages({
 })
 
 @injectIntl
-
 @cssModules(styles)
 export default class ImportKeys extends Component {
 
@@ -88,7 +87,7 @@ export default class ImportKeys extends Component {
       actions.core.markCoinAsVisible('ETH')
       this.setState({
         onClose: () => {
-          window.location.assign('/#/Ethereum-wallet')
+          window.location.assign(links.EthWallet)
         }
       })
     } catch (e) {
@@ -120,7 +119,7 @@ export default class ImportKeys extends Component {
       actions.core.markCoinAsVisible('BTC')
       this.setState({
         onClose: () => {
-          window.location.assign('/#/Bitcoin-wallet')
+          window.location.assign(links.BtcWallet)
         }
       })
     } catch (e) {
@@ -153,7 +152,7 @@ export default class ImportKeys extends Component {
       actions.core.markCoinAsVisible('BCH')
       this.setState({
         onClose: () => {
-          window.location.assign('/#/BitcoinCash-wallet')
+          window.location.assign(links.BchWallet)
         }
       })
     } catch (e) {
@@ -186,7 +185,7 @@ export default class ImportKeys extends Component {
       actions.core.markCoinAsVisible('LTC')
       this.setState({
         onClose: () => {
-          window.location.assign('/#/Litecoin-wallet')
+          window.location.assign(links.LtcWallet)
         }
       })
     } catch (e) {
