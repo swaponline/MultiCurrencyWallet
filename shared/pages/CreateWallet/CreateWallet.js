@@ -52,7 +52,7 @@ const CreateWallet = (props) => {
   const steps = [1, 2]
 
   const goHome = () => {
-    history.push(localisedUrl(locale, links.wallet))
+    history.push(localisedUrl(locale, links.home))
   }
 
   const handleClick = () => {
