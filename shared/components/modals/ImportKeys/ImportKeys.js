@@ -50,6 +50,7 @@ export default class ImportKeys extends Component {
 
     isDisabled: true,
     keySave: false,
+    onClose: () => null,
   }
 
   componentWillMount() {
@@ -85,6 +86,11 @@ export default class ImportKeys extends Component {
         isDisabled: false,
       })
       actions.core.markCoinAsVisible('ETH')
+      this.setState({
+        onClose: () => {
+          window.location.assign('/#/Ethereum-wallet')
+        }
+      })
     } catch (e) {
       this.setState({ isSubmittedEth: true })
     }
@@ -112,6 +118,11 @@ export default class ImportKeys extends Component {
         isDisabled: false,
       })
       actions.core.markCoinAsVisible('BTC')
+      this.setState({
+        onClose: () => {
+          window.location.assign('/#/Bitcoin-wallet')
+        }
+      })
     } catch (e) {
       this.setState({ isSubmittedBtc: true })
     }
@@ -140,6 +151,11 @@ export default class ImportKeys extends Component {
         isDisabled: false,
       })
       actions.core.markCoinAsVisible('BCH')
+      this.setState({
+        onClose: () => {
+          window.location.assign('/#/BitcoinCash-wallet')
+        }
+      })
     } catch (e) {
       console.error(e)
       this.setState({ isSubmittedBch: true })
@@ -168,6 +184,11 @@ export default class ImportKeys extends Component {
         isDisabled: false,
       })
       actions.core.markCoinAsVisible('LTC')
+      this.setState({
+        onClose: () => {
+          window.location.assign('/#/Litecoin-wallet')
+        }
+      })
     } catch (e) {
       this.setState({ isSubmittedLtc: true })
     }
@@ -203,6 +224,14 @@ export default class ImportKeys extends Component {
 
   handleCloseModal = () => {
     const { name, data } = this.props
+    const { isImportedBch, isImportedBtc, isImportedEth, isImportedLtc } = this.state
+    if ( [isImportedBch, isImportedBtc, isImportedEth, isImportedLtc].filter(i => i).length > 1 ) {
+      this.setState({
+        onClose: () => {
+          window.location.assign('/')
+        }
+      })
+    }
 
     actions.modals.close(name)
     if (typeof data.onClose === 'function') {
@@ -259,7 +288,7 @@ export default class ImportKeys extends Component {
     }
     */
     return (
-      <Modal name={this.props.name} title={intl.formatMessage(title.Import)} data={data}>
+      <Modal name={this.props.name} title={intl.formatMessage(title.Import)} data={data} onClose={this.state.onClose}>
         <div styleName="modal">
           <p>
             <FormattedMessage id="ImportKeys107" defaultMessage="This procedure will rewrite your private key. If you are not sure about it, we recommend to press cancel" />
