@@ -171,6 +171,16 @@ export default class App extends React.Component {
     this.setState(() => ({ fetching: true }));
 
     window.prerenderReady = true;
+
+    const appInstalled = (e) => {
+      alert(
+        userLanguage === 'ru'
+          ? 'Подождите пока приложение устанавливается'
+          : 'Wait while application is installing'
+      )
+      window.removeEventListener('appinstalled', appInstalled)
+    }
+    window.addEventListener('appinstalled', appInstalled)
   }
 
   componentDidUpdate() {
