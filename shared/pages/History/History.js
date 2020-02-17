@@ -38,9 +38,15 @@ const subTitle = defineMessages({
 })
 
 @injectIntl
-@connect(({ history: { transactions, filter, swapHistory } }) => ({
-  items: filterHistory(transactions, filter),
-  swapHistory,
+@connect(({
+    history: {
+      transactions,
+      filter,
+      swapHistory,
+    },
+  }) => ({
+    items: filterHistory(transactions, filter),
+    swapHistory,
 }))
 @CSSModules(stylesHere, { allowMultiple: true })
 export default class History extends Component {
@@ -58,9 +64,11 @@ export default class History extends Component {
 
   componentDidMount() {
     // actions.analytics.dataEvent('open-page-history')
-    let { match: { params: { address = null } } } = this.props
-    
-    if(address) {
+    if(this.props.match &&
+      this.props.match.params &&
+      this.props.match.params.address
+    ) {
+      let { match: { params: { address = null } } } = this.props
       actions.history.setTransactions(address)
     } else {
       actions.user.setTransactions()
