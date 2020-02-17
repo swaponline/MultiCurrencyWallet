@@ -18,17 +18,6 @@ if( 'function' === typeof importScripts) {
       new workbox.strategies.NetworkFirst()
     );
 
-    const appInstalled = (e) => {
-      const userLanguage = (navigator.userLanguage || navigator.language || "en-gb").split("-")[0]
-
-      alert(
-        userLanguage === 'ru'
-          ? 'Подождите пока приложение устанавливается'
-          : 'Wait while application is installing'
-      )
-      window.removeEventListener('appinstalled', appInstalled)
-    }
-    window.addEventListener('appinstalled', appInstalled)
   } else {
     console.log(`Boo! Workbox didn't load 😬`)
   }

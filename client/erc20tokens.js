@@ -15,11 +15,18 @@ window.widgetERC20Tokens = {
     decimals: 18,
     fullName: 'snm'
   },
+  // Symbol of ERC20 token in lowerCase
   proxima: {
+    // Address of ERC20 contract
     address: '0xc060b26e60698e91a6acc84051a26b32e38dd1a4',
+    // Count of decimals after dot
     decimals: 18,
+    // Display name in wallet (By default - its symbol of ERC20, but can be other userfriendy text)
     fullName: 'Proxima',
+    // Icon of currency (image)
     icon: 'https://growup.wpmix.net/wp-content/uploads/2016/10/favicon.png',
-  }
+    // Background color of icon
+    iconBgColor: '#ccc',
+  },
 }
 */

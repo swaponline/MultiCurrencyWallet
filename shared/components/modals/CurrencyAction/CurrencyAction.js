@@ -120,17 +120,19 @@ export default class CurrencyAction extends React.Component {
                 }
 
                 let renderIcon = icons[iconName]
-
+                let renderStyle = {}
                 if (config
                   && config.erc20
                   && config.erc20[item.currency.toLowerCase()]
-                  && config.erc20[item.currency.toLowerCase()].icon
                 ) {
-                  renderIcon = config.erc20[item.currency.toLowerCase()].icon
+                  if (config.erc20[item.currency.toLowerCase()].icon) renderIcon = config.erc20[item.currency.toLowerCase()].icon
+                  if (config.erc20[item.currency.toLowerCase()].iconBgColor) {
+                    renderStyle.backgroundColor = config.erc20[item.currency.toLowerCase()].iconBgColor
+                  }
                 }
                 return (
                   <div styleName="card" key={item} onClick={() => this.handleClickCurrency(item)}>
-                    <div styleName={`circle ${iconName}`}>
+                    <div styleName={`circle ${iconName}`} style={renderStyle}>
                       <img
                         src={renderIcon}
                         alt={`${name} icon`}
