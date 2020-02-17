@@ -31,7 +31,7 @@ export default props => {
   const { settings, isPrivateKeysSaved, isClosedNotifyBlockSignUp, isSigned, isClosedNotifyBlockBanner, handleNotifyBlockClose, host } = props
   return isWidgetBuild ? null : (
     <Fragment>
-      {!isPrivateKeysSaved && (
+      {!isPrivateKeysSaved && (host === 'localhost' || host === 'swaponline.github.io') && (
         <NotifyBlock
           className="notifyBlockSaveKeys"
           descr={<FormattedMessage id="descr279" defaultMessage="Before you continue be sure to save your private keys!" />}
