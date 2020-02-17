@@ -7,7 +7,7 @@ import security from '../NotityBlock/images/security.svg'
 import mail from '../NotityBlock/images/mail.svg'
 import info from '../NotityBlock/images/info-solid.svg'
 
-import Slider from 'react-slick'
+
 import NotifyBlock from 'pages/Wallet/components/NotityBlock/NotifyBock'
 import config from 'app-config'
 
