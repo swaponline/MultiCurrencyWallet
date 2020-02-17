@@ -369,7 +369,7 @@ export default class Wallet extends Component {
       //tableRows = allData.filter(({ currency }) => widgetCurrencies.includes(currency))
       tableRows = allData.filter(({ currency, balance }) => !hiddenCoinsList.includes(currency))
       // Отфильтруем валюты, исключив те, которые не используются в этом билде
-      tableRows = allData.filter(({ currency }) => widgetCurrencies.includes(currency))
+      tableRows = tableRows.filter(({ currency }) => widgetCurrencies.includes(currency))
     }
 
     if (currencyBalance) {
