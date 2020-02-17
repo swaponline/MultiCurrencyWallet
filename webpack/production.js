@@ -15,6 +15,11 @@ export default (webpackConfig) => {
     publicPath: config.publicPath,
   }
 
+  webpackConfig.externals = {
+    'react': 'React',
+    'react-dom' : 'ReactDOM',
+  }
+
   webpackConfig.module.rules = webpackConfig.module.rules.map((loader) => {
     if (loader.test.test('*.css') || loader.test.test('*.scss')) {
       loader.use = ExtractTextPlugin.extract({
