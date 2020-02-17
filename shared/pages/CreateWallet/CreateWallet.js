@@ -52,7 +52,7 @@ const CreateWallet = (props) => {
   const steps = [1, 2]
 
   const goHome = () => {
-    history.push(localisedUrl(locale, links.wallet))
+    history.push(localisedUrl(locale, links.home))
   }
 
   const handleClick = () => {
@@ -163,12 +163,6 @@ const CreateWallet = (props) => {
             />
           </button>
          <br />
-          <a href="/importFromSwapOnline.html" styleName="link-import" className="text-danger">
-            <FormattedMessage
-              id="ImportFromSwapOnlineBtn"
-              defaultMessage="Import from swap.online"
-            />
-          </a>
           <button onClick={goToExchange}>
             <FormattedMessage
               id="ExchangeBtn"

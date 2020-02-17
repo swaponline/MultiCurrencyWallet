@@ -76,6 +76,8 @@ const getReputation = async () => {
     })
 }
 
+
+
 const getBalances = () => {
   actions.eth.getBalance()
   actions.btc.getBalance()
@@ -280,6 +282,16 @@ Private key: ${bchData.privateKey}\r\n
   return text
 }
 
+export const isOwner = (addr) => {
+
+  const { user: { btcData: { address } } } = getState()
+  if(!address) {
+    return false
+  }
+  return addr === address
+}
+
+
 const downloadPrivateKeys = () => {
   const element = document.createElement('a')
   const text = getText()
@@ -309,6 +321,7 @@ export default {
   setTransactions,
   downloadPrivateKeys,
   getText,
+  isOwner,
   getExchangeRate,
   getReputation,
   getInfoAboutCurrency

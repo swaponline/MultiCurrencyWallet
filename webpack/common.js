@@ -78,6 +78,10 @@ const webpackConfig = {
     new WebappWebpackPlugin({
       logo: 'favicon.png',
       path: config.base,
+      favicons: {
+        appName: 'Wallet',
+        appDescription: 'Hot wallet',
+      },
     }),
     new HtmlWebpackPlugin({
       title: 'Hot Wallet with p2p exchange',

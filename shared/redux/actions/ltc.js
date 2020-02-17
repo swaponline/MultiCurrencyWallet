@@ -79,12 +79,12 @@ const fetchTxInfo = (hash) =>
       ...rest,
     }))
 
-const getTransaction = () =>
+const getTransaction = (address) =>
   new Promise((resolve) => {
-    const { user: { ltcData: { address } } } = getState()
-
+    const { user: { ltcData: { address: userAddress } } } = getState()
+    address = address || userAddress
+   
     const url = `/txs/?address=${address}`
-
     function getValue(item) {
       if (item.vin.filter(item => item.addr === address).length
           === item.vin.length

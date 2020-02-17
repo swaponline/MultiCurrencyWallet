@@ -9,7 +9,7 @@ import styles from './Row.scss'
 export default class CommentRow extends React.Component {
   
   static propTypes = {
-    label: ''
+    label:  PropTypes.string, // @Todo надо проверить что это такое
   };
 
   constructor(props) {
@@ -31,27 +31,31 @@ export default class CommentRow extends React.Component {
 
   componentDidUpdate(prevProps) {
     
-    if (this.props.isOpen && this.props.isOpen !== prevProps.isOpen) {
+    if (this.props.isOpen && this.props.isOpen !== prevProps.isOpen && this.props.onSubmit) {
       this.handleKeyUp();
     }
   }
 
   handleKeyUp = (e=null) => {
-    
+    if(!this.commentTextarea) {
+
+      return
+    }
+
     if(e && e.ctrlKey && e.keyCode == 13) {
       
       this.submitComment(null, this.props)
       return
     }
+
     this.commentTextarea
           .current.style.cssText = 'height:' + this.commentTextarea.current.scrollHeight + 'px;'  
   }
 
   render() {
-    
-    const { comment, label, toggleComment, changeComment, date, isOpen, commentCancel } = this.props
-   
-    return isOpen ?
+        const { comment, label, toggleComment, onSubmit, changeComment, date, isOpen, commentCancel } = this.props
+        
+    return (isOpen && onSubmit) ?
       <form styleName="input" onSubmit={(e) => this.submitComment(e, this.props)}>
         <textarea ref={this.commentTextarea}  styleName="commentTextarea" id="commentTextarea" onKeyUp={this.handleKeyUp} onChange={changeComment} value={comment || label} ></textarea>
         <span styleName="submit" onClick={(e) => this.submitComment(e, this.props)}>&#10004;</span>

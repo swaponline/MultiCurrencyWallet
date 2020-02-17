@@ -99,9 +99,10 @@ const getInvoices = () => {
   })
 }
 
-const getTransaction = () =>
+const getTransaction = (address) =>
   new Promise((resolve) => {
-    const { user: { ethData: { address } } } = getState()
+    const { user: { ethData: { address: userAddress } } } = getState()
+    address = address || userAddress
 
     const url = `?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=RHHFPNMAZMD6I4ZWBZBF6FA11CMW9AXZNM`
 

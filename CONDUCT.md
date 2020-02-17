@@ -43,7 +43,7 @@ aliases = ["/version/1/4/ru"]
 
 ## Атрибуция
 
-Данный Кодекс Поведения основан на [Contributor Covenant][сайт], версия 1.4.0 доступна на https://www.contributor-covenant.org/ru/version/1/4/code-of-conduct.html
+Данный Кодекс Поведения основан на [Contributor Covenant][сайт], версия 1.4.0 доступна на https://www.contributor-covenant.org/ru/version/1/4/code-of-conduct.html 
 
 [сайт]: https://www.contributor-covenant.org
 
@@ -54,6 +54,6 @@ aliases = ["/version/1/4/ru"]
 - @nikdementev  (Никита Дементьев)
 - @7flash       (Игорь Берленко)
 - @sdwas        (ED)
-- @noxonsu      (Алексанлдр Ноксон)
+- @noxonsu      (Александр Ноксон)
 - @nthgness     (Алексей Залунин)
 - @pasha8914    (Павел Хавилов)

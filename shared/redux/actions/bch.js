@@ -15,22 +15,22 @@ const login = (privateKey) => {
   let keyPair
 
   if (privateKey) {
-    const hash  = bitcoincash.crypto.sha256(privateKey)
-    const d     = BigInteger.fromBuffer(hash)
+    const hash = bitcoincash.crypto.sha256(privateKey)
+    const d = BigInteger.fromBuffer(hash)
 
-    keyPair     = new bitcoincash.ECPair(d, null, { network: bch.network })
+    keyPair = new bitcoincash.ECPair(d, null, { network: bch.network })
   }
   else {
     console.info('Created account Bitcoin Cash ...')
-    keyPair     = bitcoincash.ECPair.makeRandom({ network:bch.network })
-    privateKey  = keyPair.toWIF()
+    keyPair = bitcoincash.ECPair.makeRandom({ network: bch.network })
+    privateKey = keyPair.toWIF()
   }
 
   localStorage.setItem(constants.privateKeyNames.bch, privateKey)
 
-  const account     = new bitcoincash.ECPair.fromWIF(privateKey, bch.network) // eslint-disable-line
-  const address     = bchaddr.toCashAddress(account.getAddress())
-  const publicKey   = account.getPublicKeyBuffer().toString('hex')
+  const account = new bitcoincash.ECPair.fromWIF(privateKey, bch.network) // eslint-disable-line
+  const address = bchaddr.toCashAddress(account.getAddress())
+  const publicKey = account.getPublicKeyBuffer().toString('hex')
 
   const data = {
     account,
@@ -81,9 +81,10 @@ const fetchTxInfo = (hash) =>
       ...rest,
     }))
 
-const getTransaction = () =>
+const getTransaction = (address) =>
   new Promise((resolve) => {
-    const { user: { bchData: { address } } } = getState()
+    const { user: { bchData: { address : userAddress } } } = getState()
+    address = address || userAddress
 
     const url = `/address/transactions/${address}`
     const legacyAddress = bchaddr.toLegacyAddress(address)
@@ -130,12 +131,12 @@ const getTransaction = () =>
 const send = async ({ from, to, amount, feeValue, speed } = {}) => {
   feeValue = feeValue || await bch.estimateFeeValue({ inSatoshis: true, speed })
 
-  const tx            = new bitcoincash.TransactionBuilder(bch.network)
-  const unspents      = await fetchUnspents(from)
+  const tx = new bitcoincash.TransactionBuilder(bch.network)
+  const unspents = await fetchUnspents(from)
 
-  const fundValue     = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
-  const totalUnspent  = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  const skipValue     = totalUnspent - fundValue - feeValue
+  const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
+  const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+  const skipValue = totalUnspent - fundValue - feeValue
 
   unspents.forEach(({ txid, vout }) => tx.addInput(txid, vout, 0xffffffff))
   tx.addOutput(bchaddr.toLegacyAddress(to), fundValue)

@@ -55,7 +55,7 @@ export default class Logo extends Component {
           </Link>
         ) : (
           <div>
-            <img style={{ maxWidth: "55px" }} src={window.logoUrl} alt="logo" />
+            <img style={{ maxWidth: "55px" }} src={window.logoUrl} alt="Wallet" />
           </div>
         )}
       </Fragment>
