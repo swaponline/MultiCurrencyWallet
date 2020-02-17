@@ -205,7 +205,6 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.9",
-    "react-slick": "^0.25.2",
     "react-tooltip": "^3.11.1",
     "rebuild": "^0.1.2",
     "redaction": "^4.5.4",
