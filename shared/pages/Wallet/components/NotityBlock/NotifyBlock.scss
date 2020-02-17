@@ -67,94 +67,97 @@
 }
 
 @media all and (min-width: 768px) and (max-width: 992px) {
-    .notifyBlock {
-        height: max-content;
-        > div:first-child{
-            width: 60%;
-        }
-        button {
-            font-size: 11px;
-        }
+  .notifyBlock {
+    height: max-content;
+    > div:first-child {
+      width: 60%;
     }
-    .notifyBlockDescr {
-        p {
-            font-size: 12px;
-            margin-bottom: 0px;
-        }
-        p:last-child {
-            font-size: 12px;
-        }
+    button {
+      font-size: 11px;
     }
-    .notifyBlockIcon {
-        align-self: flex-start;
-        min-width: 40px;
+  }
+  .notifyBlockDescr {
+    p {
+      font-size: 12px;
+      margin-bottom: 0px;
     }
+    p:last-child {
+      font-size: 12px;
+    }
+  }
+  .notifyBlockIcon {
+    align-self: flex-start;
+    min-width: 40px;
+  }
 }
 @media all and (min-width: 320px) and (max-width: 767px) {
-    .notifyBlock {
-        flex-direction: column;
-        height: max-content;
-        align-items: flex-start;
-        > div {
-            align-items: flex-start;
-            button {
-                font-size: 11px;
-                margin: 0;
-            }
-            button:first-child {
-                margin-right: 10px;
-            }
-        }
-        > div:last-child {
-            width: 100%;
-            margin-top: 20px;
-            display: flex;
-            justify-content: flex-start;
-        }
+  .notifyBlock {
+    flex-direction: column;
+    height: max-content;
+    align-items: flex-start;
+    padding: 20px;
+    justify-content: space-between;
+    > div {
+      align-items: flex-start;
+      button {
+        font-size: 12px;
+        margin: 0;
+      }
+      button:first-child {
+        margin-right: 10px;
+      }
     }
-    .notifyBlockIcon {
-        min-width: 40px;
-        display: none;
+    > div:last-child {
+      width: 100%;
+      margin-top: 20px;
+      display: flex;
+      justify-content: flex-start;
     }
-    .notifyBlockDescr {
-        margin-left: 0;
-    }
+  }
+  .notifyBlockIcon {
+    min-width: 40px;
+    display: none;
+  }
+  .notifyBlockDescr {
+    margin-left: 0;
+  }
 }
 
 @media all and (min-width: 571px) and (max-width: 767px) {
-    .notifyBlockDescr {
-        p {
-            font-size: 13px;
-            margin-bottom: 0px;
-        }
-        p:last-child {
-            font-size: 12px;
-        }
+  .notifyBlockDescr {
+    p {
+      font-size: 13px;
+      margin-bottom: 0px;
     }
+    p:last-child {
+      font-size: 12px;
+    }
+  }
 }
 @media all and (min-width: 320px) and (max-width: 570px) {
-    .notifyBlockDescr {
-        p {
-            font-size: 13px;
-            margin-bottom: 4px;
-        }
-        p:last-child {
-            font-size: 12px;
-        }
+  .notifyBlockDescr {
+    p {
+      font-size: 13px;
+      margin-bottom: 4px;
     }
-}
-
-@media all and (min-width: 320px) and (max-width: 340px) {
-    .notifyBlock {
-        > div {
-            align-items: flex-start;
-            button {
-                font-size: 10px;
-                margin: 0;
-            }
-            button:first-child {
-                margin-right: 10px;
-            }
-        }
+    p:last-child {
+      font-size: 12px;
     }
+  }
+  .notifyBlock {
+    height: 265px;
+    > div {
+      flex-direction: column;
+      align-items: normal;
+      button {
+        font-size: 12px;
+        margin: 0;
+        flex-basis: 100%;
+      }
+      button:first-child {
+        margin-bottom: 10px;
+        margin-right: 0;
+      }
+    }
+  }
 }
