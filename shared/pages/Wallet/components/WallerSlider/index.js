@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 
 import { constants } from 'helpers'
 import actions from 'redux/actions'
@@ -30,8 +30,8 @@ const handleSignUp = () => {
 export default props => {
   const { settings, isPrivateKeysSaved, isClosedNotifyBlockSignUp, isSigned, isClosedNotifyBlockBanner, handleNotifyBlockClose, host } = props
   return isWidgetBuild ? null : (
-    <Slider {...settings}>
-      {!isPrivateKeysSaved && (host === 'localhost' || host === 'swaponline.github.io') && (
+    <Fragment>
+      {!isPrivateKeysSaved && (
         <NotifyBlock
           className="notifyBlockSaveKeys"
           descr={<FormattedMessage id="descr279" defaultMessage="Before you continue be sure to save your private keys!" />}
@@ -43,103 +43,6 @@ export default props => {
           secondFunc={handleSaveKeys}
         />
       )}
-      {(host === 'localhost' || host === 'swaponline.github.io') && (
-        <NotifyBlock
-          className="notifyBlockBanner"
-          descr={<FormattedMessage id="descr295" defaultMessage="Store Bitcoin and other cryptocurrencies without installing a wallet" />}
-          tooltip={
-            <FormattedMessage
-              id="descr296"
-              defaultMessage="Secured transactions with SMS verification. Exchange cryptocurrencies with no threat of hold (Atomic Swap). [Start exchanging]"
-            />
-          }
-          icon={info}
-          firstFunc={handleSignUp}
-          secondFunc={() => handleNotifyBlockClose('isClosedNotifyBlockSignUp')}
-        />
-      )}
-
-      {(host === 'localhost' || host === 'swaponline.github.io') && (
-        <NotifyBlock
-          className="notifyBlockBanner"
-          descr={<FormattedMessage id="descr297" defaultMessage="Store Bitcoin and other cryptocurrencies without installing a wallet" />}
-          tooltip={
-            <FormattedMessage
-              id="descr298"
-              defaultMessage="Secured transactions with SMS verification. Exchange cryptocurrencies with no threat of hold (Atomic Swap). [Start exchanging]"
-            />
-          }
-          icon={info}
-          firstFunc={handleSignUp}
-          secondFunc={() => handleNotifyBlockClose('isClosedNotifyBlockSignUp')}
-        />
-      )}
-
-      {(host === 'localhost' || host === 'swaponline.github.io') && (
-        <NotifyBlock
-          className="notifyBlockBanner"
-          descr={<FormattedMessage id="descr299" defaultMessage="Store Bitcoin and other cryptocurrencies without installing a wallet" />}
-          tooltip={
-            <FormattedMessage
-              id="descr300"
-              defaultMessage="Secured transactions with SMS verification. Exchange cryptocurrencies with no threat of hold (Atomic Swap). [Start exchanging]"
-            />
-          }
-          icon={info}
-          firstFunc={handleSignUp}
-          secondFunc={() => handleNotifyBlockClose('isClosedNotifyBlockSignUp')}
-        />
-      )}
-
-      {(host === 'localhost' || host === 'swaponline.github.io') && (
-        <NotifyBlock
-          className="notifyBlockBanner"
-          descr={<FormattedMessage id="descr304" defaultMessage="Store Bitcoin and other cryptocurrencies without installing a wallet" />}
-          tooltip={
-            <FormattedMessage
-              id="descr305"
-              defaultMessage="Secured transactions with SMS verification. Exchange cryptocurrencies with no threat of hold (Atomic Swap). [Start exchanging]"
-            />
-          }
-          icon={info}
-          firstFunc={handleSignUp}
-          secondFunc={() => handleNotifyBlockClose('isClosedNotifyBlockSignUp')}
-        />
-      )}
-
-      {(host === 'localhost' || host === 'swaponline.github.io') && (
-        <NotifyBlock
-          className="notifyBlockBanner"
-          descr={<FormattedMessage id="descr304" defaultMessage="Store Bitcoin and other cryptocurrencies without installing a wallet" />}
-          tooltip={
-            <FormattedMessage
-              id="descr305"
-              defaultMessage="Secured transactions with SMS verification. Exchange cryptocurrencies with no threat of hold (Atomic Swap). [Start exchanging]"
-            />
-          }
-          icon={info}
-          firstFunc={handleSignUp}
-          secondFunc={() => handleNotifyBlockClose('isClosedNotifyBlockSignUp')}
-        />
-      )}
-
-      {/* {!isSigned && !isClosedNotifyBlockSignUp && (
-          <NotifyBlock
-            className="notifyBlockSignUp"
-            descr={<FormattedMessage id="descr291" defaultMessage="Sign up and get your free cryptocurrency for test!" />}
-            tooltip={
-              <FormattedMessage
-                id="descr292"
-                defaultMessage="You will also be able to receive notifications regarding updates with your account"
-              />
-            }
-            firstBtn={<FormattedMessage id="descr293" defaultMessage="Sign Up" />}
-            secondBtn={<FormattedMessage id="descr294" defaultMessage="I’ll do this later" />}
-            icon={mail}
-            firstFunc={handleSignUp}
-            secondFunc={() => handleNotifyBlockClose("isClosedNotifyBlockSignUp")}
-          />
-        )} */}
-    </Slider>
+    </Fragment>
   )
 }

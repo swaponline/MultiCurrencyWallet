@@ -1,188 +1,160 @@
 .notifyBlock {
-  height: 110px;
-  border-radius: 4px;
-  cursor: pointer;
-  display: flex;
-  z-index: 111111;
-  font-family: "Manrope-Bold", sans-serif;
-  align-items: center;
-  justify-content: space-between;
-  padding: 24px;
-  margin-right: 15px;
-  position: relative;
-  border-radius: 4px;
-  justify-content: center;
-  text-align: center;
-  > div {
+    height: 88px;
+    border-radius: 4px;
     display: flex;
+    z-index: 111111;
+    font-family: 'Manrope-Bold',sans-serif;
     align-items: center;
-    position: relative;
-    z-index: 11111;
-    position: absolute;
-    bottom: 10px;
-    text-align: left;
-    left: 15px;
-    button {
-      margin-left: 10px;
-      white-space: nowrap;
-      font-weight: bold;
+    justify-content: space-between;
+    padding: 24px;
+    > div {
+        display: flex;
+        align-items: center;
+        position: relative;
+        z-index: 11111;
+        button {
+            margin-left: 10px;
+            font-weight: bold;
+        }
     }
-  }
+
 }
 
 .notifyBlockSaveKeys {
-  background: linear-gradient(265.47deg, #6144e5 0%, #7359ea 100%);
-  > div {
-    //color: #6144e5;
-  }
+    background: linear-gradient(265.47deg, #6144E5 0%, #7359EA 100%);
+    > div {
+        color: #6144E5;
+    }
 }
 
 .notifyBlockSignUp {
-  background: linear-gradient(265.47deg, #ff6b00 0%, #f88736 100%);
-  > div {
-    color: #f1771f;
-  }
+    background: linear-gradient(265.47deg, #FF6B00 0%, #F88736 100%);
+    > div {
+        color: #F1771F;
+    }
 }
 
 .notifyBlockBanner {
-  // background: linear-gradient(265.47deg, rgba(0, 0, 0, 0.25) 0%, #9090909e 100%);
-  background-image: url("https://assets.entrepreneur.com/content/3x2/2000/20200203154833-GettyImages-1134291628.jpeg");
-  background-size: cover;
-  background-position: center;
-  &:after {
-    content: "";
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    border-radius: 4px;
-    background: rgba(0, 0, 0, 0.35);
-    left: 0;
-    top: 0;
-  }
-  img {
-    width: 6px;
-  }
-}
-
-.notifyBlockBannerInvest {
-  background-image: url("https://assets.entrepreneur.com/content/3x2/2000/20200203154833-GettyImages-1134291628.jpeg");
+    background: linear-gradient(265.47deg, rgba(0, 0, 0, 0.25) 0%, #9090909e 100%);
+    img {
+        width: 6px;
+    }
 }
 
 .notifyBlockIcon {
-  background: rgba(255, 255, 255, 0.1);
-  min-width: 40px;
-  min-height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 7px;
+    background: rgba(255, 255, 255, 0.1);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 7px;
 }
 
 .notifyBlockDescr {
-  color: #fff;
-  max-width: 220px;
-  font-size: 15px;
-  p {
-    margin-bottom: 0;
-  }
-  p:last-child {
-    font-size: 15px;
-  }
+    margin-left: 10px;
+    color: #fff;
+    font-family: 'Manrope-Bold',sans-serif;
+    p {
+        margin-bottom: 0;
+    }
+    p:last-child {
+        opacity: 0.8;
+        font-size: 13px;
+        font-family: 'Manrope-Medium',sans-serif;
+    }
 }
 
 @media all and (min-width: 768px) and (max-width: 992px) {
-  .notifyBlock {
-    height: max-content;
-    > div:first-child {
-      width: 60%;
+    .notifyBlock {
+        height: max-content;
+        > div:first-child{
+            width: 60%;
+        }
+        button {
+            font-size: 11px;
+        }
     }
-    button {
-      font-size: 11px;
+    .notifyBlockDescr {
+        p {
+            font-size: 12px;
+            margin-bottom: 0px;
+        }
+        p:last-child {
+            font-size: 12px;
+        }
     }
-  }
-  .notifyBlockDescr {
-    p {
-      font-size: 12px;
-      margin-bottom: 0px;
+    .notifyBlockIcon {
+        align-self: flex-start;
+        min-width: 40px;
     }
-    p:last-child {
-      font-size: 12px;
-    }
-  }
-  .notifyBlockIcon {
-    align-self: flex-start;
-    min-width: 40px;
-  }
 }
 @media all and (min-width: 320px) and (max-width: 767px) {
-  .notifyBlock {
-    flex-direction: column;
-    height: max-content;
-    align-items: flex-start;
-    padding: 20px;
-    justify-content: space-between;
-    > div {
-      align-items: flex-start;
-      button {
-        font-size: 12px;
-        margin: 0;
-      }
-      button:first-child {
-        margin-right: 10px;
-      }
+    .notifyBlock {
+        flex-direction: column;
+        height: max-content;
+        align-items: flex-start;
+        > div {
+            align-items: flex-start;
+            button {
+                font-size: 11px;
+                margin: 0;
+            }
+            button:first-child {
+                margin-right: 10px;
+            }
+        }
+        > div:last-child {
+            width: 100%;
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-start;
+        }
     }
-    > div:last-child {
-      width: 100%;
-      margin-top: 20px;
-      display: flex;
-      justify-content: flex-start;
+    .notifyBlockIcon {
+        min-width: 40px;
+        display: none;
     }
-  }
-  .notifyBlockIcon {
-    min-width: 40px;
-    display: none;
-  }
-  .notifyBlockDescr {
-    margin-left: 0;
-  }
+    .notifyBlockDescr {
+        margin-left: 0;
+    }
 }
 
 @media all and (min-width: 571px) and (max-width: 767px) {
-  .notifyBlockDescr {
-    p {
-      font-size: 13px;
-      margin-bottom: 0px;
+    .notifyBlockDescr {
+        p {
+            font-size: 13px;
+            margin-bottom: 0px;
+        }
+        p:last-child {
+            font-size: 12px;
+        }
     }
-    p:last-child {
-      font-size: 12px;
-    }
-  }
 }
 @media all and (min-width: 320px) and (max-width: 570px) {
-  .notifyBlockDescr {
-    p {
-      font-size: 13px;
-      margin-bottom: 4px;
+    .notifyBlockDescr {
+        p {
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+        p:last-child {
+            font-size: 12px;
+        }
     }
-    p:last-child {
-      font-size: 12px;
+}
+
+@media all and (min-width: 320px) and (max-width: 340px) {
+    .notifyBlock {
+        > div {
+            align-items: flex-start;
+            button {
+                font-size: 10px;
+                margin: 0;
+            }
+            button:first-child {
+                margin-right: 10px;
+            }
+        }
     }
-  }
-  .notifyBlock {
-    height: 265px;
-    > div {
-      flex-direction: column;
-      align-items: normal;
-      button {
-        font-size: 12px;
-        margin: 0;
-        flex-basis: 100%;
-      }
-      button:first-child {
-        margin-bottom: 10px;
-        margin-right: 0;
-      }
-    }
-  }
 }
