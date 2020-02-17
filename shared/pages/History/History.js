@@ -58,8 +58,14 @@ export default class History extends Component {
 
   componentDidMount() {
     // actions.analytics.dataEvent('open-page-history')
-    actions.user.setTransactions()
-    actions.core.getSwapHistory()
+    let { match: { params: { address = null } } } = this.props
+    
+    if(address) {
+      actions.history.setTransactions(address)
+    } else {
+      actions.user.setTransactions()
+      actions.core.getSwapHistory()
+    }  
   }
 
   loadMore = () => {
