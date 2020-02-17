@@ -4,6 +4,7 @@ import LinkAccount from '../LinkAccount'
 
 export default ({ currency, contractAddress, address }) => {
   const endOfAddress = address.substring(address.length - 4, address.length)
+  const startOfAddress = address.substring(0, 2)
   /* eslint-disable */
   return (
     <div>
@@ -13,6 +14,7 @@ export default ({ currency, contractAddress, address }) => {
         address={address}
       >
         <p>
+          {startOfAddress}
           &#183;
           &#183;
           &#183;

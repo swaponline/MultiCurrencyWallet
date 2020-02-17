@@ -24,6 +24,7 @@ import eurs from './eurs.svg'
 export default {
   btc,
   'btc (multisig)': btc,
+  'btc (sms-protected)': btc,
   dcn,
   bxb,
   kn,

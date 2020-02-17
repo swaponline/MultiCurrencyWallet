@@ -14,6 +14,7 @@ import Coin from 'components/Coin/Coin'
 
 import Explanation from '../Explanation'
 import icons from '../images'
+import config from 'app-config'
 
 import Cupture
 , {
@@ -23,23 +24,32 @@ import Cupture
 } from './texts'
 
 
-const defaultStartPack = [
-  { name: "BTC", capture: "Bitcoin" },
-  { name: "ETH", capture: "Ethereum" },
-  { name: "SWAP", capture: "Swap" },
-  { name: "USDT", capture: "Tether" },
-  { name: "EURS", capture: "Eurs" },
-]
+
+
+const isWidgetBuild = config && config.isWidget
+
 @connect(({ currencies: { items: currencies } }) => ({ currencies }))
 @CSSModules(styles, { allowMultiple: true })
 export default class CreateWallet extends Component {
+  defaultStartPack = [
+    { name: "BTC", capture: "Bitcoin" },
+    { name: "ETH", capture: "Ethereum" },
+    { name: "SWAP", capture: "Swap" },
+    { name: "USDT", capture: "Tether" },
+    { name: "EURS", capture: "Eurs" },
+  ]
+
+  widgetStartPack = [
+    { name: "BTC", capture: "Bitcoin" },
+    { name: "ETH", capture: "Ethereum" },
+  ]
 
   constructor(props) {
     super()
     const { currencies } = props
 
     const items = currencies.filter(({ addAssets, name }) => addAssets)
-    const untouchable = defaultStartPack.map(({ name }) => name)
+    const untouchable = this.defaultStartPack.map(({ name }) => name)
 
     const coins = items
       .map(({ name, fullTitle }) => ({ name, capture: fullTitle }))
@@ -47,8 +57,28 @@ export default class CreateWallet extends Component {
 
     const curState = {}
     items.forEach(({ currency }) => { curState[currency] = false })
-
-    this.state = { curState, coins, startPack: defaultStartPack }
+    if (isWidgetBuild && config && config.erc20) {
+      if (window && window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
+        // Multi token build
+        Object.keys(window.widgetERC20Tokens).forEach( (tokenSymbol) => {
+          if (config.erc20[tokenSymbol]) {
+            this.widgetStartPack.push({
+              name: tokenSymbol.toUpperCase(),
+              capture: config.erc20[tokenSymbol].fullName,
+            })
+          }
+        })
+      } else {
+        // Single token build
+        if (config.erc20[config.erc20token]) {
+          this.widgetStartPack.push({
+            name: config.erc20token.toUpperCase(),
+            capture: config.erc20[config.erc20token].fullName,
+          })
+        }
+      }
+    }
+    this.state = { curState, coins, startPack: (isWidgetBuild) ? this.widgetStartPack : this.defaultStartPack }
   }
 
 
@@ -64,7 +94,7 @@ export default class CreateWallet extends Component {
 
   etcClick = () => {
     const { coins, startPack, all } = this.state
-    let newStartPack = defaultStartPack
+    let newStartPack = this.defaultStartPack
     if (!all) {
       newStartPack = [{
         name: 'Custom ERC20',
@@ -84,7 +114,9 @@ export default class CreateWallet extends Component {
         <div>
           <div>
             <Explanation step={1} subHeaderText={subHeaderText1()}>
-              <Cupture click={this.etcClick} step={1} />
+              {!isWidgetBuild && (
+                <Cupture click={this.etcClick} step={1} />
+              )}
             </Explanation>
             <div styleName={`currencyChooserWrapper ${startPack.length < 4 ? "smallArr" : ""}`}>
               {startPack.map(el => {

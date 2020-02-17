@@ -8,6 +8,13 @@ import CurrencyIcon, { iconNames } from 'components/ui/CurrencyIcon/CurrencyIcon
 import config from "app-config";
 
 
+const defaultCurrencyColors = {
+  'btc': 'orange',
+  'btc (multisig)': 'orange',
+  'btc (sms-protected)': 'orange',
+  'usdt': '#33a681',
+}
+
 const Coin = ({ className, size, name }) => {
   const style = {
     width: size ? `${size}px` : null,
@@ -26,6 +33,17 @@ const Coin = ({ className, size, name }) => {
     && config.erc20[name.toLowerCase()].icon
   ) {
     isIconConfigExist = true
+  }
+
+  if (defaultCurrencyColors[name.toLowerCase()]) {
+    style.backgroundColor = defaultCurrencyColors[name.toLowerCase()]
+  }
+  if (config &&
+    config.erc20 &&
+    config.erc20[name.toLowerCase()] &&
+    config.erc20[name.toLowerCase()].iconBgColor
+  ) {
+    style.backgroundColor = config.erc20[name.toLowerCase()].iconBgColor
   }
 
   if (isIconExist || isIconConfigExist) {

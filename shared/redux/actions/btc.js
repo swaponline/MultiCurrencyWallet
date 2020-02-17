@@ -157,12 +157,14 @@ const getInvoices = () => {
     address,
   })
 }
-const getTransaction = () =>
+
+const getTransaction = (address) =>
   new Promise((resolve) => {
-    const { user: { btcData: { address } } } = getState()
-
+ 
+    let { user: { btcData: { address : userAddress } } } = getState()
+    address = address || userAddress
+    
     const url = `/txs/?address=${address}`
-
     return apiLooper.get('bitpay', url, {
       checkStatus: (answer) => {
         try {
@@ -171,6 +173,7 @@ const getTransaction = () =>
         return false
       },
     }).then((res) => {
+        
         const transactions = res.txs.map((item) => {
           const direction = item.vin[0].addr !== address ? 'in' : 'out'
           const isSelf = direction === 'out'
