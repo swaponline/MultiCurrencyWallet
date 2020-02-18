@@ -10,6 +10,8 @@ import { pubToAddress } from 'ethereumjs-util'
 import * as hdkey from 'ethereumjs-wallet/hdkey'
 import * as bip39 from 'bip39'
 
+const getRandomMnemonicWords = () => bip39.generateMnemonic()
+const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonic)
 
 const getWalletByWords = (mnemonic, path) => {
   const seed = bip39.mnemonicToSeedSync(mnemonic)
@@ -189,4 +191,6 @@ export default {
   getInvoices,
   isETHAddress,
   getWalletByWords,
+  getRandomMnemonicWords,
+  validateMnemonicWords,
 }

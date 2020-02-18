@@ -11,7 +11,12 @@ import reducers from 'redux/core/reducers'
 const sign = async () => {
   const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
   const btcMultisigPrivateKey = localStorage.getItem(constants.privateKeyNames.btcMultisig)
-  const btcMultisigSMSOwnerKey = config.swapContract.protectedBtcKey
+
+  const btcSMSServerKey = config.swapContract.protectedBtcKey
+  const btcSmsMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKey)
+
+  const btcSmsPublicKeys = [ btcSMSServerKey ]
+  if (btcSmsMnemonicKey) btcSmsPublicKeys.push( btcSmsMnemonicKey )
 
   let btcMultisigOwnerKey = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKey)
   try { btcMultisigOwnerKey = JSON.parse( btcMultisigOwnerKey ) } catch (e) {}
@@ -28,7 +33,7 @@ const sign = async () => {
 
   const _ethPrivateKey = isEthKeychainActivated ? await actions.eth.loginWithKeychain() : actions.eth.login(ethPrivateKey)
   const _btcPrivateKey = isBtcKeychainActivated ? await actions.btc.loginWithKeychain() : actions.btc.login(btcPrivateKey)
-  const _btcMultisigSMSPrivateKey = actions.btcmultisig.login_SMS(_btcPrivateKey, btcMultisigSMSOwnerKey)
+  const _btcMultisigSMSPrivateKey = actions.btcmultisig.login_SMS(_btcPrivateKey, btcSmsPublicKeys)
   const _btcMultisigPrivateKey = actions.btcmultisig.login_USER(_btcPrivateKey, btcMultisigOwnerKey)
 
   actions.bch.login(bchPrivateKey)

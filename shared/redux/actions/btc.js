@@ -12,9 +12,14 @@ import { btc, apiLooper, constants, api } from 'helpers'
 import { Keychain } from 'keychain.js'
 import actions from 'redux/actions'
 
+const getRandomMnemonicWords = () => bip39.generateMnemonic()
+const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonic)
+
+window.bip39 = bip39
+
 const getWalletByWords = (mnemonic, path) => {
   const seed = bip39.mnemonicToSeedSync(mnemonic);
-  const root = bip32.fromSeed(seed);
+  const root = bip32.fromSeed(seed, btc.network);
   const node = root.derivePath((path) ? path : "m/44'/0'")
 
   const account = bitcoin.payments.p2pkh({
@@ -32,7 +37,7 @@ const getWalletByWords = (mnemonic, path) => {
   }
 }
 
-
+window.getWalletByWords = getWalletByWords
 
 const login = (privateKey) => {
   let keyPair
@@ -288,4 +293,6 @@ export default {
   getReputation,
   getInvoices,
   getWalletByWords,
+  getRandomMnemonicWords,
+  validateMnemonicWords,
 }
