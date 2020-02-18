@@ -221,19 +221,21 @@ export default class ImportKeys extends Component {
     this.handleCloseModal()
     localStorage.setItem(constants.localStorage.testnetSkipPKCheck, true)
     localStorage.setItem(constants.localStorage.isWalletCreate, true)
-    const { onCloseLink } = this.state
-    this.handleGoTo( onCloseLink )
+
+    setTimeout( () => {
+      const { onCloseLink } = this.state
+      const { isImportedBch, isImportedBtc, isImportedEth, isImportedLtc } = this.state
+
+      if ( [isImportedBch, isImportedBtc, isImportedEth, isImportedLtc].filter(i => i).length > 1 ) {
+        this.handleGoTo( links.home )
+      } else {
+        this.handleGoTo( onCloseLink )
+      }
+    }, 500 )
   }
 
   handleCloseModal = () => {
     const { name, data } = this.props
-    const { isImportedBch, isImportedBtc, isImportedEth, isImportedLtc } = this.state
-
-    if ( [isImportedBch, isImportedBtc, isImportedEth, isImportedLtc].filter(i => i).length > 1 ) {
-      this.setState({
-        onCloseLink: links.home,
-      })
-    }
 
     actions.modals.close(name)
     if (typeof data.onClose === 'function') {
