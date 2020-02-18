@@ -29,20 +29,16 @@ jobs:
         npm i
         git config --global user.email "bot@swaponline.io"
         git config --global user.name "buildbot"
-    - name: chrome extention
-      uses: trmcnvn/chrome-addon@v2
+    - uses: trmcnvn/chrome-addon@v2
       with:
       # extension is only necessary when updating an existing addon,
       # omitting it will create a new addon
-      extension: abcdefg
-      zip: build/my-addon.zip
-      client-id: ${{ secrets.CHROME_CLIENT_ID }}
-      client-secret: ${{ secrets.CHROME_CLIENT_SECRET }}
-      refresh-token: ${{ secrets.CHROME_REFRESH_TOKEN }}
+        extension: abcdefg
+        zip: build/my-addon.zip
+        client-id: ${{ secrets.CHROME_CLIENT_ID }}
+        client-secret: ${{ secrets.CHROME_CLIENT_SECRET }}
+        refresh-token: ${{ secrets.CHROME_REFRESH_TOKEN }}
       
       env:
-        CI: true
         super_secret: ${{ secrets.buildbot }}
-    - name: todo-actions
-      uses: dtinth/todo-actions@v0.2.0
       
