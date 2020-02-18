@@ -224,7 +224,7 @@ export default class App extends React.Component {
           {children}
           <Core />
           <RequestLoader />
-          <ModalConductor />
+          <ModalConductor history={history} />
           <NotificationConductor history={history} />
         </Fragment>
       ) : (
@@ -239,7 +239,7 @@ export default class App extends React.Component {
           <Core />
           <Footer />
           <RequestLoader />
-          <ModalConductor />
+          <ModalConductor history={history} />
           <NotificationConductor history={history} />
         </Fragment>
       );
