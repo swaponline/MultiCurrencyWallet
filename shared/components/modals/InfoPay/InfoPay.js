@@ -57,7 +57,7 @@ export default class InfoPay extends React.Component {
       link =  helpers[currency.toLowerCase()].getLinkToInfo(tx);
     }
 
-
+    // @ToDo need to find out oldbalance
     const rowBalances = <div styleName="balanceRow" className="pt-3">
       <span styleName="textThrough"> {oldBalance} {currency} (~$993.62) </span> → {balance} {currency} (~$992,63)
                         </div>
