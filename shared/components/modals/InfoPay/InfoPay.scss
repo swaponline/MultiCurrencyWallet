@@ -1,5 +1,9 @@
 .blockCenter {
   text-align: center;
+
+  strong {
+    word-wrap: break-word;
+  }
 }
 
 .finishImg {
@@ -8,6 +12,7 @@
   display: block;
   margin: 0 auto;
 }
+
 
 .balanceRow {
   color: #8E9AA3;
