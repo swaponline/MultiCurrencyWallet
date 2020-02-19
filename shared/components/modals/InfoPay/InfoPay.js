@@ -9,6 +9,7 @@ import actions from 'redux/actions'
 import Button from 'components/controls/Button/Button'
 import ShortTextView from 'pages/Wallet/components/ShortTextView/ShortTextView.js'
 import { isMobile } from "react-device-detect";
+import { BigNumber } from 'bignumber.js'
 
 const labels = defineMessages({
   Title: {
@@ -42,20 +43,31 @@ export default class InfoPay extends React.Component {
 
   render() {
 
-    const { intl, data: { amount, currency, address, txRaw } } = this.props
+    const { intl, data: { amount, currency, toAddress, txRaw, balance, oldBalance } } = this.props
     const name = 'InfoPay'
 
-    let link = '3E1WAXCrnAhHykTh9J7eBRLgA9bWCABHcC';
+    let link = '#';
+    let tx = '';
+
+    // @ToDO перенести эту логику в action
     switch (currency) {
       case 'BTC':
-        link = `https://www.blockchain.com/ru/btc/tx/${txRaw.getId()}`
+        tx = txRaw.getId();
+        link = `https://www.blockchain.com/ru/btc/tx/${tx}`
+
 
         break;
 
       case 'ETH':
-        link = `https://etherscan.io/tx/${txRaw.transactionHash}`
+        tx = txRaw.transactionHash;
+        link = `https://etherscan.io/tx/${tx}`
+
         break;
     }
+
+    const rowBalances = <div styleName="balanceRow" className="pt-3">
+      <span styleName="textThrough"> {oldBalance} {currency} (~$993.62) </span> → {balance} {currency} (~$992,63)
+                        </div>
 
     return (
       <Modal name={name} title={intl.formatMessage(labels.Title)} >
@@ -64,14 +76,11 @@ export default class InfoPay extends React.Component {
             <img styleName="finishImg" src={finishSvg} alt="finish" />
           </div>
 
-          <div styleName="balanceRow" className="pt-3">
-            0.1 BTC (~$993.62)  →  0.0999 BTC (~$992,63)
-          </div>
           <div className="p-3">
             <span ><strong> {amount}  {currency} </strong></span>
             <span> <FormattedMessage id="InfoPay_2" defaultMessage="были успешно переданы" />
               <br />
-              <strong>{address}</strong>
+              <strong>{toAddress}</strong>
             </span>
           </div>
 
@@ -82,7 +91,7 @@ export default class InfoPay extends React.Component {
                   <FormattedMessage id="InfoPay_3" defaultMessage="Transaction ID" />
                 </td>
                 <td>
-                  <a href={link} target="_blank"><ShortTextView text={link}/></a>
+                  <a href={link} target="_blank"><ShortTextView text={tx} /></a>
                 </td>
               </tr>
               <tr>
@@ -98,7 +107,7 @@ export default class InfoPay extends React.Component {
           <Button blue onClick={this.handleClose} type="button" title="Back to app">
             <FormattedMessage id="InfoPay_5" defaultMessage="Back to app" />
           </Button>
-          { isMobile && <ShareButton link={link} title={amount.toString() + ' ' + currency.toString() + ' ' + intl.formatMessage(labels.Text) + ' ' + address} />
+          {isMobile && <ShareButton link={link} title={amount.toString() + ' ' + currency.toString() + ' ' + intl.formatMessage(labels.Text) + ' ' + toAddress} />
           }
         </div>
       </Modal>

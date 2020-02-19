@@ -11,6 +11,11 @@
 
 .balanceRow {
   color: #8E9AA3;
+  font-size: 13px;
+}
+
+.textThrough {
+  text-decoration: line-through;
 }
 
 .blockCenter__table {
@@ -19,6 +24,7 @@
   box-sizing: border-box;
   box-shadow: 0px 2px 12px rgba(142, 154, 163, 0.08);
   border-radius: 4px;
+  font-size: 15px;
 
   td.header {
     text-align: left;
