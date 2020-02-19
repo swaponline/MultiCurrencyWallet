@@ -49,7 +49,7 @@ export default class ModalConductor extends Component {
   }
 
   render() {
-    const { modals } = this.props
+    const { modals, history } = this.props
 
     const modalNames = Object.keys(modals)
     const areModalsExist = Boolean(modalNames.length)
@@ -64,6 +64,7 @@ export default class ModalConductor extends Component {
               key: name,
               name,
               data,
+              history,
               style: { zIndex },
             })
           })

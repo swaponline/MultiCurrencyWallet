@@ -15,6 +15,7 @@ import { Modal } from 'components/modal'
 import { FieldLabel } from 'components/forms'
 import { Button } from 'components/controls'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
+import { localisedUrl } from 'helpers/locale'
 
 
 const title = defineMessages({
@@ -49,7 +50,7 @@ export default class ImportKeys extends Component {
 
     isDisabled: true,
     keySave: false,
-    onClose: () => null,
+    onCloseLink: links.wallet,
   }
 
   componentWillMount() {
@@ -62,6 +63,15 @@ export default class ImportKeys extends Component {
 
   componentDidMount() {
     this.checkAnyImport()
+  }
+
+  handleGoTo = (goToLink) => {
+    const {
+      intl: { locale },
+    } = this.props
+
+    window.location.hash = localisedUrl(locale, goToLink)
+    window.location.reload()
   }
 
   handleEthImportKey = () => {
@@ -86,9 +96,7 @@ export default class ImportKeys extends Component {
       })
       actions.core.markCoinAsVisible('ETH')
       this.setState({
-        onClose: () => {
-          window.location.assign(links.EthWallet)
-        }
+        onCloseLink: links.EthWallet,
       })
     } catch (e) {
       this.setState({ isSubmittedEth: true })
@@ -118,11 +126,10 @@ export default class ImportKeys extends Component {
       })
       actions.core.markCoinAsVisible('BTC')
       this.setState({
-        onClose: () => {
-          window.location.assign(links.BtcWallet)
-        }
+        onCloseLink: links.BtcWallet,
       })
     } catch (e) {
+      console.log(e)
       this.setState({ isSubmittedBtc: true })
     }
   }
@@ -151,9 +158,7 @@ export default class ImportKeys extends Component {
       })
       actions.core.markCoinAsVisible('BCH')
       this.setState({
-        onClose: () => {
-          window.location.assign(links.BchWallet)
-        }
+        onCloseLink: links.BchWallet,
       })
     } catch (e) {
       console.error(e)
@@ -184,9 +189,7 @@ export default class ImportKeys extends Component {
       })
       actions.core.markCoinAsVisible('LTC')
       this.setState({
-        onClose: () => {
-          window.location.assign(links.LtcWallet)
-        }
+        onCloseLink: links.LtcWallet
       })
     } catch (e) {
       this.setState({ isSubmittedLtc: true })
@@ -218,19 +221,21 @@ export default class ImportKeys extends Component {
     this.handleCloseModal()
     localStorage.setItem(constants.localStorage.testnetSkipPKCheck, true)
     localStorage.setItem(constants.localStorage.isWalletCreate, true)
-    window.location.assign('/')
+
+    setTimeout( () => {
+      const { onCloseLink } = this.state
+      const { isImportedBch, isImportedBtc, isImportedEth, isImportedLtc } = this.state
+
+      if ( [isImportedBch, isImportedBtc, isImportedEth, isImportedLtc].filter(i => i).length > 1 ) {
+        this.handleGoTo( links.home )
+      } else {
+        this.handleGoTo( onCloseLink )
+      }
+    }, 500 )
   }
 
   handleCloseModal = () => {
     const { name, data } = this.props
-    const { isImportedBch, isImportedBtc, isImportedEth, isImportedLtc } = this.state
-    if ( [isImportedBch, isImportedBtc, isImportedEth, isImportedLtc].filter(i => i).length > 1 ) {
-      this.setState({
-        onClose: () => {
-          window.location.assign('/')
-        }
-      })
-    }
 
     actions.modals.close(name)
     if (typeof data.onClose === 'function') {
