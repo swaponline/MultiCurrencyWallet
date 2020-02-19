@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Modal } from 'components/modal'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
+import helpers from "helpers";
+
 import cssModules from 'react-css-modules'
 import styles from './InfoPay.scss'
 import ShareButton from 'components/controls/ShareButton/ShareButton'
@@ -48,22 +50,13 @@ export default class InfoPay extends React.Component {
 
     let link = '#';
     let tx = '';
+        
+    if(txRaw) {
 
-    // @ToDO перенести эту логику в action
-    switch (currency) {
-      case 'BTC':
-        tx = txRaw.getId();
-        link = `https://www.blockchain.com/ru/btc/tx/${tx}`
-
-
-        break;
-
-      case 'ETH':
-        tx = txRaw.transactionHash;
-        link = `https://etherscan.io/tx/${tx}`
-
-        break;
+      tx = helpers[currency.toLowerCase()].getTx(txRaw);
+      link =  helpers[currency.toLowerCase()].getLinkToInfo(tx);
     }
+
 
     const rowBalances = <div styleName="balanceRow" className="pt-3">
       <span styleName="textThrough"> {oldBalance} {currency} (~$993.62) </span> → {balance} {currency} (~$992,63)
