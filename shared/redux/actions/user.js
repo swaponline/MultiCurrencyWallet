@@ -13,10 +13,12 @@ const sign = async () => {
   const btcMultisigPrivateKey = localStorage.getItem(constants.privateKeyNames.btcMultisig)
 
   const btcSMSServerKey = config.swapContract.protectedBtcKey
-  const btcSmsMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKey)
-
-  const btcSmsPublicKeys = [ btcSMSServerKey ]
-  if (btcSmsMnemonicKey) btcSmsPublicKeys.push( btcSmsMnemonicKey )
+  let btcSmsPublicKeys = [ btcSMSServerKey ]
+  let btcSmsMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKey)
+  try { btcSmsMnemonicKey = JSON.parse( btcSmsMnemonicKey ) } catch (e) {}
+  if (btcSmsMnemonicKey instanceof Array && btcSmsMnemonicKey.length > 0) {
+    btcSmsPublicKeys.push(btcSmsMnemonicKey[0])
+  }
 
   let btcMultisigOwnerKey = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKey)
   try { btcMultisigOwnerKey = JSON.parse( btcMultisigOwnerKey ) } catch (e) {}

@@ -42,22 +42,23 @@ export default class RegisterSMSProtected extends React.Component {
   constructor(props) {
     super(props)
 
-    const {
+    let {
       data: {
         version,
       },
     } = this.props
 
+    version = (version) ? version : '2of3', // 2of2
 
     this.state = {
-      version: (version) ? version : '2of3', // 2of2
-      phone: "",
+      version,
+      phone: '',
       step: 'enterPhoneAndMnemonic',//"enterPhone",
       error: false,
       smsCode: "",
       smsConfirmed: false,
       isShipped: false,
-      mnemonic: actions.btc.getRandomMnemonicWords(),
+      mnemonic: (version === '2of3') ? actions.btc.getRandomMnemonicWords() : false,
       isMnemonicCopied: false,
       isMnemonicGenerated: false,
       isMnemonicValid: true,
@@ -92,7 +93,7 @@ export default class RegisterSMSProtected extends React.Component {
       isShipped: true,
       error: false,
     })
-    const result = await actions.btcmultisig.beginRegisterSMS(phone)
+    const result = await actions.btcmultisig.beginRegisterSMS(phone, mnemonic)
 
     if (result && result.answer && result.answer == 'ok') {
       this.setState({
@@ -102,22 +103,48 @@ export default class RegisterSMSProtected extends React.Component {
     } else {
       this.setState({
         isShipped: false,
-        error: result.error ? result.error : 'Unknown error'
+        error: (result && result.error) ? result.error : 'Unknown error',
       })
     }
   }
 
   handleCheckSMS = async () => {
-    this.setState({ isShipped: true, error: false });
-    const result = await actions.btcmultisig.confirmRegisterSMS(this.state.phone, this.state.smsCode);
+    const {
+      phone,
+      smsCode,
+      mnemonic
+    } = this.state
 
-    if (result && result.answer && result.answer == "ok") {
-      this.setState({ isShipped: false, step: "ready" });
+    if (!smsCode) {
+      this.setState({
+        error: <FormattedMessage id='RegisterSMSProtected_SmsCodeRequery' defaultMessage='Введите смс-код' />,
+      })
+      return
+    }
+
+    this.setState({
+      isShipped: true,
+      error: false
+    })
+
+    const result = await actions.btcmultisig.confirmRegisterSMS(phone, smsCode, mnemonic)
+
+    if (result && result.answer && result.answer == 'ok') {
+      this.setState({
+        isShipped: false,
+        step: 'ready',
+      })
     } else {
-      if (result.error == "Already registered") {
-        this.setState({ isShipped: false, step: "ready" });
+      if (result && result.error == 'Already registered') {
+        this.setState({
+          isShipped: false,
+          step: 'ready',
+        })
       } else {
-        this.setState({ isShipped: false, error: result.error ? result.error : "Unknown error" });
+        this.setState({
+          isShipped: false,
+          error: (result && result.error) ? result.error : 'Unknown error',
+        })
       }
     }
   };
@@ -186,8 +213,16 @@ export default class RegisterSMSProtected extends React.Component {
         defaultMessage: `Activate SMS Protected Wallet`,
       },
       mnemonicPlaceholder: {
-        id: 'registerSMSModalWordsPlaceHolder',
+        id: 'registerSMSMPlaceHolder',
         defaultMessage: `12 слов`,
+      },
+      phonePlaceHolder: {
+        id: 'registerSMSModalPhonePlaceholder',
+        defaultMessage: `Enter your phone`,
+      },
+      smsPlaceHolder: {
+        id: 'registerSMSModalSmsCodePlaceholder',
+        defaultMessage: `Enter code from SMS`,
       },
     });
 
@@ -203,7 +238,7 @@ export default class RegisterSMSProtected extends React.Component {
                 <Input
                   styleName="input inputMargin25"
                   valueLink={linked.phone}
-                  placeholder={`Enter your phone`}
+                  placeholder={`${intl.formatMessage(langs.phonePlaceHolder)}`}
                   focusOnInit
                 />
               </div>
@@ -275,7 +310,7 @@ export default class RegisterSMSProtected extends React.Component {
                 <Input
                   styleName="input inputMargin25"
                   valueLink={linked.phone}
-                  placeholder={`Enter your phone`}
+                  placeholder={`${intl.formatMessage(langs.mnemonicPlaceholder)}`}
                   focusOnInit
                 />
                 {error && <div styleName="rednote">{error}</div>}
@@ -303,19 +338,15 @@ export default class RegisterSMSProtected extends React.Component {
                   styleName="input inputMargin25"
                   valueLink={linked.smsCode}
                   focusOnInit
-                  placeholder={`Enter code from SMS`}
+                  placeholder={`${intl.formatMessage(langs.smsPlaceHolder)}`}
                 />
                 {error && <div styleName="rednote">{error}</div>}
               </div>
               <Button big blue fullWidth disabled={isShipped} onClick={this.handleCheckSMS}>
                 {isShipped ? (
-                  <Fragment>
-                    <FormattedMessage id="registerSMSModalProcess" defaultMessage="Processing ..." />
-                  </Fragment>
+                  <FormattedMessage id="registerSMSModalProcess" defaultMessage="Processing ..." />
                 ) : (
-                  <Fragment>
-                    <FormattedMessage id="registerSMSModalSendSMS165" defaultMessage="Confirm" />
-                  </Fragment>
+                  <FormattedMessage id="registerSMSModalSendSMS165" defaultMessage="Confirm" />
                 )}
               </Button>
             </Fragment>

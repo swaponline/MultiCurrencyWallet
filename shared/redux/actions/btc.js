@@ -20,7 +20,7 @@ window.bip39 = bip39
 const getWalletByWords = (mnemonic, path) => {
   const seed = bip39.mnemonicToSeedSync(mnemonic);
   const root = bip32.fromSeed(seed, btc.network);
-  const node = root.derivePath((path) ? path : "m/44'/0'")
+  const node = root.derivePath((path) ? path : "m/44'/0'/0'/0/0")
 
   const account = bitcoin.payments.p2pkh({
     pubkey: node.publicKey,
