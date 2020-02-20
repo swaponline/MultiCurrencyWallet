@@ -22,6 +22,7 @@ import getPageOffset from './getPageOffset'
 import getScrollBarWidth from './getScrollBarWidth'
 import paddingForSwapList from './paddingForSwapList'
 import estimateFeeValue from './estimateFeeValue'
+import transactions from './transactions'
 
 import { migrate } from './migrations/'
 
@@ -39,6 +40,7 @@ export default {
   ethToken,
   ltc,
   handleGoTrade,
+  transactions,
   estimateFeeValue,
 }
 
@@ -68,6 +70,7 @@ export {
   getPageOffset,
   getScrollBarWidth,
   paddingForSwapList,
+  
 
   getUnixTimeStamp,
   cacheStorageGet,

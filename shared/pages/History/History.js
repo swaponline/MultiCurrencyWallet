@@ -88,6 +88,7 @@ export default class History extends Component {
   }
 
   onSubmit = (obj) => {
+   
     this.setState(() => ({ commentsList: obj }))
     actions.comments.setComment(obj)
   }

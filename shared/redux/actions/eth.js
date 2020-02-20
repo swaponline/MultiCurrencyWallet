@@ -141,6 +141,7 @@ const getTransaction = (address) =>
             status: item.blockHash != null ? 1 : 0,
             value: web3.utils.fromWei(item.value),
             address: item.to,
+            canEdit: address === userAddress,
             date: item.timeStamp * 1000,
             direction: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out',
           }))
