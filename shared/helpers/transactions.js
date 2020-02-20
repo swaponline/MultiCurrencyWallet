@@ -8,8 +8,8 @@ const getInfo = (currency, txRaw) => {
     prefix = 'btc'
   }
 
-  tx = helpers[prefix].getTx(txRaw);
-  link =  helpers[prefix].getLinkToInfo(tx);
+  const tx = helpers[prefix].getTx(txRaw);
+  const link =  helpers[prefix].getLinkToInfo(tx);
 
   return {
     tx,
