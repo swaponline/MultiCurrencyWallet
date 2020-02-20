@@ -491,22 +491,7 @@ const confirmRegisterSMS = async (phone, smsCode, mnemonic) => {
     if ((result && result.answer && result.answer === 'ok') || (result.error === 'Already registered')) {
       localStorage.setItem(`${constants.localStorage.didProtectedBtcCreated}:${address}`, '1')
       if (mnemonic) {
-        let btcSmsMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKey)
-        try { btcSmsMnemonicKey = JSON.parse( btcSmsMnemonicKey ) } catch (e) {}
-        if (!(btcSmsMnemonicKey instanceof Array)) {
-          btcSmsMnemonicKey = []
-        }
-
-        const index = btcSmsMnemonicKey.indexOf(mnemonicKey)
-        if (index === -1) btcSmsMnemonicKey.unshift(mnemonicKey)
-        if ((index > -1) && (index < btcSmsMnemonicKey.length)) {
-          if (index !== 0) {
-            const btcSmsMnemonicKey = btcSmsMnemonicKey.splice(index,1)
-            btcSmsMnemonicKey.unshift(mnemonicKey)
-          }
-        }
-
-        localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKey, JSON.stringify(btcSmsMnemonicKey))
+        addSMSWallet( mnemonicKey )
       }
     }
 
@@ -515,6 +500,45 @@ const confirmRegisterSMS = async (phone, smsCode, mnemonic) => {
     console.error(error)
     return false
   }
+}
+
+const addSMSWallet = async (mnemonicOrKey) => {
+  const {
+    user: {
+      btcData: {
+        privateKey,
+      },
+    },
+  } = getState()
+  
+  let mnemonicKey = mnemonicOrKey
+  if (actions.btc.validateMnemonicWords(mnemonicOrKey)) {
+    const mnemonicAccount = actions.btc.getWalletByWords(mnemonicOrKey)
+    mnemonicKey = mnemonicAccount.publicKey
+  }
+
+  let btcSmsMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKey)
+  try { btcSmsMnemonicKey = JSON.parse( btcSmsMnemonicKey ) } catch (e) {}
+  if (!(btcSmsMnemonicKey instanceof Array)) {
+    btcSmsMnemonicKey = []
+  }
+
+  const index = btcSmsMnemonicKey.indexOf(mnemonicKey)
+  if (index === -1) btcSmsMnemonicKey.unshift(mnemonicKey)
+  if ((index > -1) && (index < btcSmsMnemonicKey.length)) {
+    if (index !== 0) {
+      const btcSmsMnemonicKey = btcSmsMnemonicKey.splice(index,1)
+      btcSmsMnemonicKey.unshift(mnemonicKey)
+    }
+  }
+
+  localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKey, JSON.stringify(btcSmsMnemonicKey))
+
+  const btcSMSServerKey = config.swapContract.protectedBtcKey
+  let btcSmsPublicKeys = [ btcSMSServerKey, mnemonicKey ]
+
+  await actions.btcmultisig.login_SMS(privateKey, btcSmsPublicKeys)
+  await getBalance()
 }
 
 const loginWithKeychain = async () => {
@@ -934,7 +958,8 @@ const signMultiSign = async ( txHash ) => {
     },
   } = getState()
 
-  return signMofN( txHash, 2, privateKey, publicKeys)
+  console.log('sign tx', txHash, privateKey, publicKeys)
+  return signMofN( txHash, 2, publicKeys, privateKey)
 }
 
 const signSmsMnemonic = ( txHash, mnemonic, path ) => {
@@ -1073,4 +1098,5 @@ export default {
   addBtcMultisigKey,
   removeBtcMultisigNey,
   switchBtcMultisigKey,
+  addSMSWallet,
 }
