@@ -17,6 +17,20 @@ const estimateFeeValue = async ({ method = 'send', speed } = {}) => {
 
   return feeValue
 }
+const getTx = (txRaw) => {
+
+  return txRaw.transactionHash
+}
+
+const getLinkToInfo = (tx) => {
+
+  if(!tx) {
+    return
+  }
+
+  return `https://etherscan.io/tx/${tx}`
+}
+
 
 const estimateGasPrice = ({ speed } = {}) => eth.estimateGasPrice({ speed })
 
@@ -25,4 +39,6 @@ export default {
   estimateGasPrice,
   isEthToken,
   isEthOrEthToken,
+  getTx,
+  getLinkToInfo
 }

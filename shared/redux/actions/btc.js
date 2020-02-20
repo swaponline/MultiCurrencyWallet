@@ -155,6 +155,7 @@ const getTransaction = (address) =>
           return ({
             type: 'btc',
             hash: item.txid,
+            canEdit: address === userAddress,
             confirmations: item.confirmations,
             value: isSelf
               ? item.fees

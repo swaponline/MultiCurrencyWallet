@@ -1,57 +1,105 @@
 import React, { Component } from 'react'
 import { Modal } from 'components/modal'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
+import helpers from "helpers";
+
 import cssModules from 'react-css-modules'
 import styles from './InfoPay.scss'
 import ShareButton from 'components/controls/ShareButton/ShareButton'
-import finishSvg from 'shared/pages/Swap/SwapProgress/images/finish.svg'
+import finishSvg from './images/finish.svg'
+import actions from 'redux/actions'
+import Button from 'components/controls/Button/Button'
+import ShortTextView from 'pages/Wallet/components/ShortTextView/ShortTextView.js'
+import { isMobile } from "react-device-detect";
+import { BigNumber } from 'bignumber.js'
 
 const labels = defineMessages({
   Title: {
     id: 'InfoPay_1',
-    defaultMessage: 'Успешно',
+    defaultMessage: 'Transaction is completed',
   },
   Text: {
     id: 'InfoPay_2',
-    defaultMessage: 'были успешно переданы'
+    defaultMessage: 'successfully transferred to'
   }
 })
 @injectIntl
 @cssModules(styles, { allowMultiple: true })
 
 export default class InfoPay extends React.Component {
- 
-  render() {
- 
-    const {  intl, data: { amount, currency, address, txRaw } } = this.props
-    const name = 'InfoPay'
-    
-    let link = null;
-    switch(currency) {
-      case 'BTC':
-        link = `https://www.blockchain.com/ru/btc/tx/${txRaw.getId()}`
 
-      break;
+  handleClose = () => {
+    const { name, data, onClose } = this.props
 
-      case 'ETH':
-        link = `https://etherscan.io/tx/${txRaw.transactionHash}`
-      break;
+    if (typeof onClose === 'function') {
+      onClose()
     }
+
+    if (typeof data.onClose === 'function') {
+      data.onClose()
+    }
+
+    actions.modals.close(name)
+  }
+
+
+  render() {
+
+    const { intl, data: { amount, currency, toAddress, txRaw, balance, oldBalance } } = this.props
+    const name = 'InfoPay'
+
+    let link = '#';
+    let tx = '';
+  
+    if(txRaw) {
+      let {tx, link} = helpers.transactions.getInfo(currency.toLowerCase(), txRaw);
+    }
+
+    // @ToDo need to find out oldbalance
+    const rowBalances = <div styleName="balanceRow" className="pt-3">
+      <span styleName="textThrough"> {oldBalance} {currency} (~$993.62) </span> → {balance} {currency} (~$992,63)
+                        </div>
 
     return (
       <Modal name={name} title={intl.formatMessage(labels.Title)} >
-        <div styleName="blockCenter"> 
-          <img styleName="finishImg" src={finishSvg} alt="finish"/>
-          <span >{amount} {currency}</span>
-          <span> <FormattedMessage id="InfoPay_2" defaultMessage="были успешно переданы
-  " /> {address}!
-          </span>
-          <div className="p-3">
-             <a href={link} target="_blank">{link}</a>
+        <div styleName="blockCenter">
+          <div>
+            <img styleName="finishImg" src={finishSvg} alt="finish" />
           </div>
+
+          <div className="p-3">
+            <span ><strong> {amount}  {currency} </strong></span>
+            <span> <FormattedMessage id="InfoPay_2" defaultMessage="были успешно переданы" />
+              <br />
+              <strong>{toAddress}</strong>
+            </span>
+          </div>
+
+          <table styleName="blockCenter__table" className="table table-borderless">
+            <tbody>
+              <tr>
+                <td styleName="header">
+                  <FormattedMessage id="InfoPay_3" defaultMessage="Transaction ID" />
+                </td>
+                <td>
+                  <a href={link} target="_blank"><ShortTextView text={tx} /></a>
+                </td>
+              </tr>
+              <tr>
+                <td styleName="header">
+                  <FormattedMessage id="InfoPay_4" defaultMessage="Est. time to confitmation" />
+                </td>
+                <td>~10 mins</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <div styleName="blockCenter">
-          <ShareButton link={link} title={amount.toString() + ' ' + currency.toString() + ' ' + intl.formatMessage(labels.Text) + ' ' + address}/>
+          <Button blue onClick={this.handleClose} type="button" title="Back to app">
+            <FormattedMessage id="InfoPay_5" defaultMessage="Back to app" />
+          </Button>
+          {isMobile && <ShareButton link={link} title={amount.toString() + ' ' + currency.toString() + ' ' + intl.formatMessage(labels.Text) + ' ' + toAddress} />
+          }
         </div>
       </Modal>
     )

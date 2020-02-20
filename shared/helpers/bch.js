@@ -53,6 +53,19 @@ const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, f
   return finalFeeValue
 }
 
+const getTx = (txRaw) => {
+
+  return false
+}
+
+const getLinkToInfo = (tx) => {
+  if(!tx) {
+    return
+  }
+
+  return `https://www.blockchain.com/ru/btc/tx/${tx}`
+}
+
 const estimateFeeRate = async ({ speed = 'fast' } = {}) => {
   const link = config.feeRates.bch
   const defaultRate = constants.defaultFeeRates.bch.rate
@@ -90,4 +103,6 @@ export default {
   estimateFeeValue,
   estimateFeeRate,
   network,
+  getTx,
+  getLinkToInfo
 }

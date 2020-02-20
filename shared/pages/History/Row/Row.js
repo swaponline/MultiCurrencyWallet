@@ -144,7 +144,7 @@ class Row extends React.PureComponent {
       onSubmit,
     } = this.props
 
-
+ 
     const { ind } = this.state
 
     const { exCurrencyRate, isOpen, comment, cancelled, payed } = this.state
