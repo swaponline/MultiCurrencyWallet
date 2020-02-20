@@ -44,15 +44,29 @@ export default class InfoPay extends React.Component {
 
 
   render() {
-
-    const { intl, data: { amount, currency, toAddress, txRaw, balance, oldBalance } } = this.props
-    const name = 'InfoPay'
+    const {
+      intl,
+      data: {
+        amount,
+        currency,
+        toAddress,
+        txRaw,
+        txId,
+        balance,
+        oldBalance,
+      },
+      name,
+    } = this.props
 
     let link = '#';
     let tx = '';
   
     if(txRaw) {
       let {tx, link} = helpers.transactions.getInfo(currency.toLowerCase(), txRaw);
+    }
+    if (txId) {
+      tx = txId
+      link = helpers.transactions.getLink(currency.toLowerCase(), txId)
     }
 
     // @ToDo need to find out oldbalance
