@@ -8,6 +8,7 @@ import config from 'app-config'
 
 import cssModules from 'react-css-modules'
 import styles from '../WithdrawModal/WithdrawModal.scss'
+import ownStyle from './WithdrawModalMultisig.scss'
 
 import { BigNumber } from 'bignumber.js'
 import Modal from 'components/modal/Modal/Modal'
@@ -40,7 +41,7 @@ import QrReader from "components/QrReader";
     items: [btcData, btcMultisigSMSData],
   })
 )
-@cssModules(styles, { allowMultiple: true })
+@cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
 export default class WithdrawModalMultisig extends React.Component {
 
   static propTypes = {
@@ -192,8 +193,10 @@ export default class WithdrawModalMultisig extends React.Component {
     actions.modals.open(constants.modals.InfoPay, {
       amount,
       currency,
+      balance,
+      oldBalance: 0, // @Todo доделать old balance
       txId,
-      address: to
+      toAddress: to
     })
 
     this.setState({
@@ -351,13 +354,13 @@ export default class WithdrawModalMultisig extends React.Component {
       to,
     } = this.state
 
-    if (!mnemonic || !actions.btc.validateMnemonicWords(mnemonic)) {
+    if (!mnemonic || !actions.btc.validateMnemonicWords(mnemonic.trim())) {
       this.setState({
         error: <FormattedMessage id='WithdrawSMS_NotValidMnemonic' defaultMessage='Секретная фраза не валидна' />,
       })
       return
     }
-    if (!actions.btcmultisig.checkSmsMnemonic( mnemonic )) {
+    if (!actions.btcmultisig.checkSmsMnemonic( mnemonic.trim() )) {
       this.setState({
         error: <FormattedMessage id='WithdrawSMS_WrongMnemonic' defaultMessage='Не правильная секретная фраза' />,
       })
@@ -370,7 +373,7 @@ export default class WithdrawModalMultisig extends React.Component {
       broadcastError: false,
     })
 
-    actions.btcmultisig.signSmsMnemonicAndBuild( rawTx, mnemonic ).then(async ( txHex ) => {
+    actions.btcmultisig.signSmsMnemonicAndBuild( rawTx, mnemonic.trim() ).then(async ( txHex ) => {
       console.log('signed', txHex)
       this.setState({
         txHex,
@@ -402,6 +405,18 @@ export default class WithdrawModalMultisig extends React.Component {
         isShipped: false,
         error: <FormattedMessage id="WithdrawSMS_FailSignByMnemonic" defaultMessage="Не удалось подписать транзакцию" />,
       })
+    })
+  }
+
+  handleSwitchToMnemonic = () => {
+    this.setState({
+      step: 'mnemonicSign',
+    })
+  }
+
+  handleSwitchToSms = () => {
+    this.setState({
+      step: 'confirm',
     })
   }
 
@@ -523,7 +538,12 @@ export default class WithdrawModalMultisig extends React.Component {
         }
         {step === 'mnemonicSign' &&
           <Fragment>
-            <h1>Mnemonic 12 words confirm tx</h1>
+            <p styleName="notice">
+              <FormattedMessage
+                id="WithdrawSMS_MnemonicSignCaption"
+                defaultMessage="Подтверждение транзакции секретной фразой"
+              />
+            </p>
             <div styleName="highLevel">
               <FieldLabel label>
                 <FormattedMessage id="registerSMSModalWords" defaultMessage="Секретная фраза (12 слов):" />
@@ -535,12 +555,19 @@ export default class WithdrawModalMultisig extends React.Component {
                 placeholder={`${intl.formatMessage(labels.mnemonicPlaceholder)}`}
               />
             </div>
-            { error && <div className="rednote">{error}</div> }
+            { error && <div styleName="rednotes">{error}</div> }
             <Button styleName="buttonFull" big blue fullWidth disabled={isShipped} onClick={this.handleMnemonicSign}>
               {isShipped
                 ? <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
                 : <FormattedMessage id="btcSMSProtectedSignByMnemonic" defaultMessage="Использовать секретную фразу" />
               }
+            </Button>
+            <hr />
+            <p styleName="notice mnemonicUseNote">
+              <FormattedMessage id="WithdrawSMS_UseSMSNote" defaultMessage="Так-же вы можете использовать смс-код, отправленный на привязанный номер телефона" />
+            </p>
+            <Button styleName="useAuthMethodButton" blue onClick={this.handleSwitchToSms}>
+              <FormattedMessage id="WithdrawSMS_UseSMS" defaultMessage="Использовать смс-код" />
             </Button>
           </Fragment>
         }
@@ -701,58 +728,60 @@ export default class WithdrawModalMultisig extends React.Component {
             <p styleName="notice">
               <FormattedMessage id="Withdrow2222" defaultMessage="Send SMS code" />
             </p>
-            <div styleName="lowLevel">
-              <div styleName="groupField">
-                <div styleName="downLabel">
-                  <FieldLabel inRow>
-                    <span styleName="mobileFont">
-                      <FormattedMessage id="Withdrow2223" defaultMessage="SMS code" />
-                    </span>
-                  </FieldLabel>
-                </div>
+            <div styleName="highLevel smsCodeHolder">
+              <FieldLabel label>
+                <FormattedMessage id="Withdrow2223" defaultMessage="SMS code" />
+              </FieldLabel>
+              <Input
+                styleName="input"
+                valueLink={linked.code}
+                pattern="0-9"
+                placeholder={`${intl.formatMessage(labels.smsPlaceholder)}`}
+              />
+            </div>
+            { sendSmsStatus === 'sending' && (
+              <div styleName="smsServerStatus">
+                <FormattedMessage id="WithdrawSMS_SmsSending" defaultMessage="Отправка проверочного кода" />
               </div>
-              <div styleName="group" style={{ marginBottom: "50px" }}>
-                <Input
-                  styleName="input"
-                  valueLink={linked.code}
-                  pattern="0-9"
-                  placeholder={`${intl.formatMessage(labels.smsPlaceholder)}`}
+            )}
+            { sendSmsStatus === 'sended' && (
+              <div styleName="smsServerStatus">
+                <FormattedMessage
+                  id="WithdrawSMS_SmsSended"
+                  defaultMessage="Код отправлен"
                 />
               </div>
-              { sendSmsStatus === 'sending' && (
-                <div className="notes">
-                  <FormattedMessage id="WithdrawSMS_SmsSending" defaultMessage="Отправка проверочного кода" />
-                </div>
-              )}
-              { sendSmsStatus === 'sended' && (
-                <div className="notes">
-                  <FormattedMessage
-                    id="WithdrawSMS_SmsSended"
-                    defaultMessage="Код отправлен. Повторно отправить код можно будет через {sendSmsTimeout}"
-                    values={{sendSmsTimeout}}
-                  />
-                </div>
-              )}
-              { sendSmsStatus === 'offline' && (
-                <div className="rednotes">
-                  <FormattedMessage
-                    id="WithdrawSMS_ServerOffline"
-                    defaultMessage="Сервер авторизации не доступен. Попробуйте позже или используйте секретную фразу"
-                  />
-                </div>
-              )}
-              <Button styleName="buttonFull" fullWidth big blue onClick={this.handleConfirmSMS}>
-                <FormattedMessage id="Withdrow2224" defaultMessage="Confirm" />
-              </Button>
-              {
-                linked.code.error && (
-                  <div styleName="rednote error">
-                    <FormattedMessage id="WithdrawModal2225" defaultMessage="Something went wrong, enter your current code please" />
-                  </div>
-                )
-              }
-
-            </div>
+            )}
+            { sendSmsStatus === 'offline' && (
+              <div styleName="rednotes smsServerStatus">
+                <FormattedMessage
+                  id="WithdrawSMS_ServerOffline"
+                  defaultMessage="Сервер авторизации не доступен"
+                />
+              </div>
+            )}
+            { linked.code.error && (
+              <div styleName="rednotes smsServerStatus">
+                <FormattedMessage id="WithdrawModal2225" defaultMessage="Something went wrong, enter your current code please" />
+              </div>
+            )}
+            <Button
+              styleName="buttonFull confirmSmsCode"
+              fullWidth
+              disabled={isShipped || (sendSmsStatus==='sending') || (sendSmsStatus === 'offline')}
+              big
+              blue
+              onClick={this.handleConfirmSMS}
+            >
+              <FormattedMessage id="Withdrow2224" defaultMessage="Confirm" />
+            </Button>
+            <hr />
+            <p styleName="notice mnemonicUseNote">
+              <FormattedMessage id="WithdrawSMS_MnemonicNote" defaultMessage="Если у вас нет доступа к телефону или не получается получить код, вы можете воспользовать секретной фразой" />
+            </p>
+            <Button styleName="useAuthMethodButton" blue onClick={this.handleSwitchToMnemonic}>
+              <FormattedMessage id="WithdrawSMS_UseMnemonic" defaultMessage="Использовать секретную фразу" />
+            </Button>
           </Fragment>
         }
       </Modal>
