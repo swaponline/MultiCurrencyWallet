@@ -50,11 +50,9 @@ export default class InfoPay extends React.Component {
 
     let link = '#';
     let tx = '';
-        
+  
     if(txRaw) {
-
-      tx = helpers[currency.toLowerCase()].getTx(txRaw);
-      link =  helpers[currency.toLowerCase()].getLinkToInfo(tx);
+      let {tx, link} = helpers.transactions.getInfo(currency.toLowerCase(), txRaw);
     }
 
     // @ToDo need to find out oldbalance
