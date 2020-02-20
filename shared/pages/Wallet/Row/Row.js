@@ -1,32 +1,33 @@
-import React, { Component, Fragment } from 'react';
-import actions from 'redux/actions';
-import { connect } from 'redaction';
-import helpers, { constants, links } from 'helpers';
-import config from 'app-config';
-import { isMobile } from 'react-device-detect';
+import React, { Component, Fragment } from 'react'
+import actions from 'redux/actions'
+import { connect } from 'redaction'
+import helpers, { constants, links } from 'helpers'
+import config from 'app-config'
+import { isMobile } from 'react-device-detect'
 
-import cssModules from 'react-css-modules';
-import styles from './Row.scss';
+import cssModules from 'react-css-modules'
+import styles from './Row.scss'
 
-import { Link } from 'react-router-dom';
-import CopyToClipboard from 'react-copy-to-clipboard';
+import { Link } from 'react-router-dom'
+import CopyToClipboard from 'react-copy-to-clipboard'
+import LinkAccount from '../components/LinkAccount'
 
-import Coin from 'components/Coin/Coin';
-import InlineLoader from 'components/loaders/InlineLoader/InlineLoader';
-import BtnTooltip from 'components/controls/WithdrawButton/BtnTooltip';
-import DropdownMenu from 'components/ui/DropdownMenu/DropdownMenu';
+import Coin from 'components/Coin/Coin'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
+import BtnTooltip from 'components/controls/WithdrawButton/BtnTooltip'
+import DropdownMenu from 'components/ui/DropdownMenu/DropdownMenu'
 // import LinkAccount from '../LinkAccount/LinkAcount'
 // import KeychainStatus from '../KeychainStatus/KeychainStatus'
-import { withRouter } from 'react-router';
-import ReactTooltip from 'react-tooltip';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton';
-import { relocalisedUrl, localisedUrl } from 'helpers/locale';
-import SwapApp from 'swap.app';
-import { BigNumber } from 'bignumber.js';
+import { withRouter } from 'react-router'
+import ReactTooltip from 'react-tooltip'
+import { FormattedMessage, injectIntl } from 'react-intl'
+import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
+import { relocalisedUrl, localisedUrl } from 'helpers/locale'
+import SwapApp from 'swap.app'
+import { BigNumber } from 'bignumber.js'
 
-import dollar from '../images/dollar.svg';
-import PartOfAddress from '../components/PartOfAddress';
+import dollar from '../images/dollar.svg'
+import PartOfAddress from '../components/PartOfAddress'
 
 @injectIntl
 @withRouter
@@ -84,82 +85,82 @@ export default class Row extends Component {
     exCurrencyRate: 0,
     existUnfinished: false,
     isDropdownOpen: false
-  };
+  }
 
   static getDerivedStateFromProps({ item: { balance } }) {
     return {
       isBalanceEmpty: balance === 0
-    };
+    }
   }
 
   constructor(props) {
-    super(props);
+    super(props)
 
     const {
       currency: { currency },
       currencies
-    } = props;
+    } = props
 
-    const isBlockedCoin = config.noExchangeCoins.map(item => item.toLowerCase()).includes(currency.toLowerCase());
+    const isBlockedCoin = config.noExchangeCoins.map(item => item.toLowerCase()).includes(currency.toLowerCase())
 
-    this.state.tradeAllowed = !!currencies.find(c => c.value === currency.toLowerCase()) && !isBlockedCoin;
+    this.state.tradeAllowed = !!currencies.find(c => c.value === currency.toLowerCase()) && !isBlockedCoin
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleSliceAddress);
+    window.removeEventListener('resize', this.handleSliceAddress)
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.handleSliceAddress);
+    window.addEventListener('resize', this.handleSliceAddress)
   }
 
   componentDidUpdate(prevProps, prevState) {
     const {
       item: { currency, balance }
-    } = this.props;
+    } = this.props
 
     if (balance > 0) {
-      actions.analytics.balanceEvent({ action: 'have', currency, balance });
+      actions.analytics.balanceEvent({ action: 'have', currency, balance })
     }
   }
 
   handleReloadBalance = async () => {
-    const { isBalanceFetching } = this.state;
+    const { isBalanceFetching } = this.state
 
     if (isBalanceFetching) {
-      return null;
+      return null
     }
 
     this.setState({
       isBalanceFetching: true
-    });
+    })
 
     const {
       item: { currency, address }
-    } = this.props;
+    } = this.props
 
     switch (currency) {
       case 'BTC (SMS-Protected)':
-        await actions.btcmultisig.getBalance();
-        break;
+        await actions.btcmultisig.getBalance()
+        break
       case 'BTC (Multisig)':
-        await actions.btcmultisig.getBalanceUser();
-        break;
+        await actions.btcmultisig.getBalanceUser()
+        break
       default:
-        await actions[currency.toLowerCase()].getBalance(currency.toLowerCase(), address);
+        await actions[currency.toLowerCase()].getBalance(currency.toLowerCase(), address)
     }
 
     this.setState(() => ({
       isBalanceFetching: false
-    }));
-  };
+    }))
+  }
 
   shouldComponentUpdate(nextProps, nextState) {
     const getComparableProps = ({ item, index, selectId }) => ({
       item,
       index,
       selectId
-    });
+    })
     return (
       JSON.stringify({
         ...getComparableProps(nextProps),
@@ -169,31 +170,31 @@ export default class Row extends Component {
         ...getComparableProps(this.props),
         ...this.state
       })
-    );
+    )
   }
 
   handleTouch = e => {
     this.setState({
       isTouch: true
-    });
-  };
+    })
+  }
 
   handleSliceAddress = () => {
     const {
       item: { address }
-    } = this.props;
+    } = this.props
 
-    const firstPart = address.substr(0, 6);
-    const secondPart = address.substr(address.length - 4);
+    const firstPart = address.substr(0, 6)
+    const secondPart = address.substr(address.length - 4)
 
-    return window.innerWidth < 700 || isMobile || address.length > 42 ? `${firstPart}...${secondPart}` : address;
-  };
+    return window.innerWidth < 700 || isMobile || address.length > 42 ? `${firstPart}...${secondPart}` : address
+  }
 
   handleTouchClear = e => {
     this.setState({
       isTouch: false
-    });
-  };
+    })
+  }
 
   handleCopyAddress = () => {
     this.setState(
@@ -204,126 +205,126 @@ export default class Row extends Component {
         setTimeout(() => {
           this.setState({
             isAddressCopied: false
-          });
-        }, 500);
+          })
+        }, 500)
       }
-    );
-  };
+    )
+  }
 
   handleWithdraw = () => {
     const {
       item: { currency },
       item
-    } = this.props;
+    } = this.props
 
-    const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals;
+    const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals
 
-    let withdrawModalType = Withdraw;
-    if (currency === 'BTC (SMS-Protected)') withdrawModalType = WithdrawMultisigSMS;
-    if (currency === 'BTC (Multisig)') withdrawModalType = WithdrawMultisigUser;
+    let withdrawModalType = Withdraw
+    if (currency === 'BTC (SMS-Protected)') withdrawModalType = WithdrawMultisigSMS
+    if (currency === 'BTC (Multisig)') withdrawModalType = WithdrawMultisigUser
 
-    actions.modals.open(withdrawModalType, item);
-  };
+    actions.modals.open(withdrawModalType, item)
+  }
 
   handleReceive = () => {
     const {
       item: { currency, address }
-    } = this.props;
+    } = this.props
 
     actions.modals.open(constants.modals.ReceiveModal, {
       currency,
       address
-    });
-  };
+    })
+  }
 
   handleShowOptions = () => {
     this.setState({
       showMobileButtons: true
-    });
-  };
+    })
+  }
 
   handleGoTrade = currency => {
     const {
       intl: { locale },
       decline
-    } = this.props;
+    } = this.props
 
-    const pair = currency.toLowerCase() === 'btc' ? 'eth' : 'btc';
+    const pair = currency.toLowerCase() === 'btc' ? 'eth' : 'btc'
 
     if (decline.length === 0) {
-      window.scrollTo(0, 0);
-      this.props.history.push(localisedUrl(locale, `${links.exchange}/${currency.toLowerCase()}-to-${pair}`));
+      window.scrollTo(0, 0)
+      this.props.history.push(localisedUrl(locale, `${links.exchange}/${currency.toLowerCase()}-to-${pair}`))
     } else {
-      const getDeclinedExistedSwapIndex = helpers.handleGoTrade.getDeclinedExistedSwapIndex({ currency, decline });
+      const getDeclinedExistedSwapIndex = helpers.handleGoTrade.getDeclinedExistedSwapIndex({ currency, decline })
       if (getDeclinedExistedSwapIndex !== false) {
-        this.handleDeclineOrdersModalOpen(getDeclinedExistedSwapIndex);
+        this.handleDeclineOrdersModalOpen(getDeclinedExistedSwapIndex)
       } else {
-        window.scrollTo(0, 0);
-        this.props.history.push(localisedUrl(locale, `${links.exchange}/${currency.toLowerCase()}-to-${pair}`));
+        window.scrollTo(0, 0)
+        this.props.history.push(localisedUrl(locale, `${links.exchange}/${currency.toLowerCase()}-to-${pair}`))
       }
     }
-  };
+  }
 
   handleDeclineOrdersModalOpen = indexOfDecline => {
-    const orders = SwapApp.shared().services.orders.items;
-    const declineSwap = actions.core.getSwapById(this.props.decline[indexOfDecline]);
+    const orders = SwapApp.shared().services.orders.items
+    const declineSwap = actions.core.getSwapById(this.props.decline[indexOfDecline])
 
     if (declineSwap !== undefined) {
       actions.modals.open(constants.modals.DeclineOrdersModal, {
         declineSwap
-      });
+      })
     }
-  };
+  }
 
   handleMarkCoinAsHidden = coin => {
-    actions.core.markCoinAsHidden(coin);
-  };
+    actions.core.markCoinAsHidden(coin)
+  }
 
   handleActivateProtected = async () => {
-    actions.modals.open(constants.modals.RegisterSMSProtected, {});
-  };
+    actions.modals.open(constants.modals.RegisterSMSProtected, {})
+  }
 
   handleGenerateMultisignLink = async () => {
-    actions.modals.open(constants.modals.MultisignJoinLink, {});
-  };
+    actions.modals.open(constants.modals.MultisignJoinLink, {})
+  }
 
   showButtons = () => {
     this.setState(() => ({
       showButtons: true
-    }));
-  };
+    }))
+  }
 
   hideButtons = () => {
     this.setState(() => ({
       showButtons: false
-    }));
-  };
+    }))
+  }
 
   handleOpenDropdown = () => {
     this.setState({
       isDropdownOpen: true
-    });
-  };
+    })
+  }
 
   handleCreateInvoiceLink = () => {
     const {
       item: { currency, address }
-    } = this.props;
+    } = this.props
 
     actions.modals.open(constants.modals.InvoiceLinkModal, {
       currency,
       address
-    });
-  };
+    })
+  }
 
   handleSwitchMultisign = () => {
-    actions.modals.open(constants.modals.BtcMultisignSwitch);
-  };
+    actions.modals.open(constants.modals.BtcMultisignSwitch)
+  }
 
   handleCreateInvoice = () => {
     const {
       item: { decimals, token, contractAddress, unconfirmedBalance, currency, address, balance }
-    } = this.props;
+    } = this.props
 
     actions.modals.open(constants.modals.InvoiceModal, {
       currency,
@@ -333,51 +334,61 @@ export default class Row extends Component {
       token,
       balance,
       unconfirmedBalance
-    });
-  };
+    })
+  }
 
   goToHistory = () => {
     const {
       history,
       intl: { locale }
-    } = this.props;
-    history.push(localisedUrl(locale, '/history'));
-  };
+    } = this.props
+    history.push(localisedUrl(locale, '/history'))
+  }
 
   goToExchange = () => {
     const {
       history,
       intl: { locale }
-    } = this.props;
-    history.push(localisedUrl(locale, '/exchange'));
-  };
+    } = this.props
+    history.push(localisedUrl(locale, '/exchange'))
+  }
 
   goToBuy = () => {
     const {
       history,
       intl: { locale },
       currency
-    } = this.props;
-    history.push(localisedUrl(locale, `${links.pointOfSell}/btc-to-${currency.currency.toLowerCase()}`));
-  };
+    } = this.props
+    history.push(localisedUrl(locale, `${links.pointOfSell}/btc-to-${currency.currency.toLowerCase()}`))
+  }
 
   deleteThisSwap = () => {
-    actions.core.forgetOrders(this.props.decline[0]);
-  };
+    actions.core.forgetOrders(this.props.decline[0])
+  }
 
   goToOrderBook = () => {
     const {
       history,
       intl: { locale },
       item: { currency, balance }
-    } = this.props;
-    history.push(localisedUrl(locale, `/${currency.toLowerCase()}-btc`));
-  };
+    } = this.props
+    history.push(localisedUrl(locale, `/${currency.toLowerCase()}-btc`))
+  }
+
+  goToCurrencyHistory = () => {
+    const {
+      history,
+      intl: { locale },
+      item: { currency, balance, address }
+    } = this.props
+
+    history.push(localisedUrl(locale, `/history/${currency.toLowerCase()}/${address}`))
+  }
 
   hideCurrency = () => {
     const {
       item: { currency, balance }
-    } = this.props;
+    } = this.props
 
     if (balance > 0) {
       actions.modals.open(constants.modals.AlertModal, {
@@ -387,21 +398,21 @@ export default class Row extends Component {
             defaultMessage="У этого кошелка положительный баланс. Его скрыть нельзя."
           />
         )
-      });
+      })
     } else {
-      actions.core.markCoinAsHidden(currency);
+      actions.core.markCoinAsHidden(currency)
       actions.notifications.show(constants.notifications.Message, {
         message: <FormattedMessage id="WalletRow_Action_Hidden" defaultMessage="Кошелек скрыт" />
-      });
+      })
     }
-  };
+  }
 
   copy = () => {
     const {
       item: { address }
-    } = this.props;
-    navigator.clipboard.writeText(address);
-  };
+    } = this.props
+    navigator.clipboard.writeText(address)
+  }
 
   render() {
     const {
@@ -413,28 +424,28 @@ export default class Row extends Component {
       showButtons,
       exCurrencyRate,
       isDropdownOpen
-    } = this.state;
+    } = this.state
 
     const {
       item,
       intl: { locale }
-    } = this.props;
+    } = this.props
 
-    const { currency, balance, isBalanceFetched, fullName, title, unconfirmedBalance, balanceError } = item;
+    const { currency, balance, isBalanceFetched, fullName, title, unconfirmedBalance, balanceError } = item
 
-    let currencyView = currency;
+    let currencyView = currency
 
-    let inneedData = null;
-    let nodeDownErrorShow = true;
-    let currencyUsdBalance = 0;
+    let inneedData = null
+    let nodeDownErrorShow = true
+    let currencyUsdBalance = 0
 
-    const isWidgetBuild = config && config.isWidget;
+    const isWidgetBuild = config && config.isWidget
 
     if (item.infoAboutCurrency) {
       currencyUsdBalance =
         BigNumber(balance)
           .dp(5, BigNumber.ROUND_FLOOR)
-          .toString() * item.infoAboutCurrency.price_usd;
+          .toString() * item.infoAboutCurrency.price_usd
     }
 
     let dropDownMenuItems = [
@@ -475,24 +486,24 @@ export default class Row extends Component {
         action: this.copy,
         disabled: false
       }
-    ];
+    ]
 
     dropDownMenuItems.push({
       id: 1011,
       title: <FormattedMessage id="WalletRow_Menu_Hide" defaultMessage="Hide" />,
       action: this.hideCurrency,
       disabled: false
-    });
+    })
 
-    if (currencyView == 'BTC (Multisig)') currencyView = 'BTC';
-    if (currencyView == 'BTC (SMS-Protected)') currencyView = 'BTC';
+    if (currencyView == 'BTC (Multisig)') currencyView = 'BTC'
+    if (currencyView == 'BTC (SMS-Protected)') currencyView = 'BTC'
 
     if (currencyView !== 'BTC') {
       dropDownMenuItems.push({
         id: 1005,
         title: <FormattedMessage id="WalletRow_Menu_Orderbook" defaultMessage="Orderbook" />,
         action: this.goToOrderBook
-      });
+      })
     }
 
     if (['BTC', 'ETH'].includes(currencyView) && !isWidgetBuild) {
@@ -501,7 +512,7 @@ export default class Row extends Component {
         title: <FormattedMessage id="WalletRow_Menu_Invoice" defaultMessage="Выставить счет" />,
         action: this.handleCreateInvoice,
         disable: false
-      });
+      })
       dropDownMenuItems.push({
         id: 1005,
         title: (
@@ -509,12 +520,12 @@ export default class Row extends Component {
         ),
         action: this.handleCreateInvoiceLink,
         disable: false
-      });
+      })
     }
 
     if (this.props.item.isSmsProtected && !this.props.item.isRegistered) {
-      currencyView = 'Not activated';
-      nodeDownErrorShow = false;
+      currencyView = 'Not activated'
+      nodeDownErrorShow = false
       dropDownMenuItems = [
         {
           id: 1,
@@ -522,27 +533,27 @@ export default class Row extends Component {
           action: this.handleActivateProtected,
           disabled: false
         }
-      ];
+      ]
     }
     if (this.props.item.isUserProtected) {
       if (!this.props.item.active) {
-        currencyView = 'Not joined';
-        nodeDownErrorShow = false;
-        dropDownMenuItems = [];
+        currencyView = 'Not joined'
+        nodeDownErrorShow = false
+        dropDownMenuItems = []
       } else {
         dropDownMenuItems.push({
           id: 1105,
           title: <FormattedMessage id="WalletRow_Menu_BTCMS_SwitchMenu" defaultMessage="Switch wallet" />,
           action: this.handleSwitchMultisign,
           disabled: false
-        });
+        })
       }
       dropDownMenuItems.push({
         id: 3,
         title: <FormattedMessage id="WalletRow_Menu_BTCMS_GenerateJoinLink" defaultMessage="Generate join link" />,
         action: this.handleGenerateMultisignLink,
         disabled: false
-      });
+      })
     }
 
     return (
@@ -552,6 +563,19 @@ export default class Row extends Component {
             <Link to={localisedUrl(locale, `/${fullName}-wallet`)} title={`Online ${fullName} wallet`}>
               <Coin className={styles.assetsTableIcon} name={currency} />
             </Link>
+            {balanceError && nodeDownErrorShow ? (
+              <div className={styles.errorMessage}>
+                <FormattedMessage
+                  id="RowWallet276"
+                  defaultMessage=" node is down (You can not perform transactions). "
+                />
+                <a href="https://wiki.swaponline.io/faq/bitcoin-node-is-down-you-cannot-make-transactions/">
+                  <FormattedMessage id="RowWallet282" defaultMessage="No connection..." />
+                </a>
+              </div>
+            ) : (
+              ''
+            )}
             <span styleName="assetsTableCurrencyWrapper">
               {!isBalanceFetched || isBalanceFetching ? (
                 this.props.item.isUserProtected && !this.props.item.active ? (
@@ -583,21 +607,14 @@ export default class Row extends Component {
                   )}
                 </div>
               )}
-              {/* {balanceError && nodeDownErrorShow ? (
-                  <div className={styles.errorMessage}>
-                    <FormattedMessage
-                      id="RowWallet276"
-                      defaultMessage=" node is down (You can not perform transactions). "
-                    />
-                    <a href="https://wiki.swaponline.io/faq/bitcoin-node-is-down-you-cannot-make-transactions/">
-                      <FormattedMessage id="RowWallet282" defaultMessage="Need help?" />
-                    </a>
-                  </div>
-                ) : (
-                  ''
-                )} */}
             </span>
-            {item.address !== 'Not jointed' ? <p styleName="addressStyle">{item.address}</p> : ''}
+            {item.address !== 'Not jointed' ? (
+              <p styleName="addressStyle" onClick={this.goToCurrencyHistory}>
+                {item.address}
+              </p>
+            ) : (
+              ''
+            )}
             {isMobile ? <PartOfAddress {...item} /> : ''}
             <div styleName="assetsTableInfo">
               <div styleName="nameRow">
@@ -625,6 +642,6 @@ export default class Row extends Component {
           </div>
         </td>
       </tr>
-    );
+    )
   }
 }

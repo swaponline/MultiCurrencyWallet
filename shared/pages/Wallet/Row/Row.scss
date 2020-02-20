@@ -117,7 +117,7 @@
   cursor: pointer;
   display: inline;
   user-select: none;
-  width: 115px;
+  width: max-content;
   display: block;
   white-space: nowrap;
 }
@@ -407,8 +407,8 @@ tr button[disabled]:hover {
 
 .assetsTableCurrencyWrapper {
   position: absolute;
-  right: 50px;
-  bottom: 20px;
+  right: 49px;
+  bottom: 22px;
   font-size: 15px;
 }
 
@@ -428,9 +428,9 @@ tr button[disabled]:hover {
 
 .assetsTableValue {
   position: absolute;
-  right: 49px;
+  right: 48px;
   bottom: 0px;
-  font-size: 13px;
+  font-size: 15px;
   color: #8e9aa3;
   img {
     margin-top: -3px;
@@ -455,7 +455,23 @@ tr button[disabled]:hover {
   strong {
     margin-left: 5px;
     color: #8e9aa3;
-    font-size: 12px;
+  }
+}
+
+.errorMessage {
+  position: absolute;
+  right: 30px;
+  font-size: 13px;
+  top: -10px;
+  background: #fff;
+  padding: 10px;
+  z-index: 111;
+  a {
+    font-size: 13px;
+    color: #007bff;
+  }
+  > span {
+    display: none;
   }
 }
 
@@ -473,9 +489,6 @@ tr button[disabled]:hover {
     margin-bottom: 1px;
   }
   span {
-    font-size: 15px;
-    line-height: 18px;
-    color: #1f2d48;
     + span {
       color: #8e9aa3;
       font-size: 14px;
@@ -489,33 +502,6 @@ tr button[disabled]:hover {
     text-transform: uppercase;
     font-weight: bold;
     margin-left: 25px;
-  }
-  .errorMessage {
-    position: absolute;
-    color: red;
-    left: 151px;
-    margin-top: 1px;
-    z-index: 5;
-    font-family: 'Manrope-Medium', sans-serif;
-    span,
-    a {
-      font-size: 13px;
-    }
-    span {
-      position: absolute;
-      top: 23px;
-      left: calc(100% + 140px);
-      font-size: 12px;
-      text-transform: capitalize;
-      color: #8e9aa3;
-    }
-    a {
-      span {
-        color: #007bff;
-        left: calc(100% + 65px);
-        top: 23px;
-      }
-    }
   }
   .unconfirmedBalance {
     font-size: 11px;
@@ -607,7 +593,7 @@ tr button[disabled]:hover {
     flex-direction: column;
   }
   .assetsTableValue {
-    right: 24px;
+    right: 35px;
     top: 20px;
   }
   .assetsTableDots {
@@ -628,7 +614,7 @@ tr button[disabled]:hover {
   }
   .assetsTableCurrencyWrapper {
     position: absolute;
-    right: 25px;
+    right: 35px;
     top: 0px;
     font-size: 15px;
   }
