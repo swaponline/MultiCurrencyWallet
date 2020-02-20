@@ -6,20 +6,6 @@ import CSSModules from 'react-css-modules'
 import { constants } from "helpers";
 import Button from 'components/controls/Button/Button'
 
-const ShareBustton =  ({ onClick }) => {
-   
-  return (
-    <div styleName="WrapShareButton">
-
-      <button styleName="shareButton"  onClick={onClick}   type="button" title="Share this article">
-        <img src={shareIcon} alt='Open submenu' />
-        <span>Share</span>
-      </button>
-      
-    </div> 
-  );
-};
-
 @CSSModules(styles, { allowMultiple: true })
 
 export default class ShareButton extends React.Component {
@@ -34,13 +20,13 @@ export default class ShareButton extends React.Component {
   render() {
     return (
       <div styleName="WrapShareButton">
-        <Button blue onClick={this.openShareModal}   type="button" title="Share this article">
-    
+        <Button blue onClick={this.openShareModal} type="button" title="Share this article">
           <span>
             <img src={shareIcon} alt='Share' />
-            Share</span>
+            Share
+          </span>
         </Button>
-      </div> 
+      </div>
     );
 
   }

@@ -115,6 +115,7 @@ const getTransaction = (address) =>
           return ({
             type: 'bch',
             hash: item.txid,
+            canEdit: address === userAddress,
             confirmations: item.confirmations,
             value,
             date: item.time * 1000,
