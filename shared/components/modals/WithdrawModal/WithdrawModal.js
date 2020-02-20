@@ -238,12 +238,15 @@ export default class WithdrawModal extends React.Component {
           currency,
           address: to
         });*/
-
+        
+             
         actions.modals.open(constants.modals.InfoPay, {
           amount,
           currency,
+          balance,
+          oldBalance: 0, // @Todo доделать old balance
           txRaw: txRaw,
-          address: to
+          toAddress: to
         })
 
         this.setState(() => ({ isShipped: false, error: false }));

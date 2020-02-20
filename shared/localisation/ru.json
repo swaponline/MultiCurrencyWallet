@@ -6996,14 +6996,35 @@
   },
   {
     "id": "InfoPay_1",
-    "message": "Успешно",
+    "message": "Транзакция завершена",
     "files": [
       "shared/components/modals/InfoPay/InfoPay.js"
     ]
   },
   {
     "id": "InfoPay_2",
-    "message": "были успешно переданы",
+    "message": "успешно отправлены",
+    "files": [
+      "shared/components/modals/InfoPay/InfoPay.js"
+    ]
+  },
+  {
+    "id": "InfoPay_3",
+    "message": "Transaction ID",
+    "files": [
+      "shared/components/modals/InfoPay/InfoPay.js"
+    ]
+  },
+  {
+    "id": "InfoPay_4",
+    "message": "Est. time to confitmation",
+    "files": [
+      "shared/components/modals/InfoPay/InfoPay.js"
+    ]
+  },
+  {
+    "id": "InfoPay_5",
+    "message": "Вернуться",
     "files": [
       "shared/components/modals/InfoPay/InfoPay.js"
     ]

@@ -14,6 +14,21 @@ const estimateFeeValue = async ({ method = 'send', speed } = {}) => {
   return feeValue
 }
 
+const getTx = (txRaw) => {
+
+  return txRaw.transactionHash
+}
+
+const getLinkToInfo = (tx) => {
+
+  if(!tx) {
+    return
+  }
+
+  return `https://etherscan.io/tx/${tx}`
+}
+
+
 const estimateGasPrice = async ({ speed = 'fast' } = {}) => {
   const link = config.feeRates.eth
   const defaultPrice = constants.defaultFeeRates.eth.price
@@ -47,4 +62,6 @@ const estimateGasPrice = async ({ speed = 'fast' } = {}) => {
 export default {
   estimateFeeValue,
   estimateGasPrice,
+  getTx,
+  getLinkToInfo
 }
