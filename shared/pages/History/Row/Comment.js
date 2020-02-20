@@ -7,9 +7,9 @@ import styles from './Row.scss'
 
 @CSSModules(styles, { allowMultiple: true })
 export default class CommentRow extends React.Component {
-  
+
   static propTypes = {
-    label:  PropTypes.string, // @Todo надо проверить что это такое
+    label: PropTypes.string, // @Todo надо проверить что это такое
   };
 
   constructor(props) {
@@ -19,49 +19,49 @@ export default class CommentRow extends React.Component {
 
   submitComment = (e, props) => {
     const { comment, toggleComment, onSubmit, hiddenList, ind } = props
-    if(e) {
+    if (e) {
       e.preventDefault()
     }
-  
+
     const comments = { ...hiddenList, [ind]: comment }
-  
+
     onSubmit(comments)
     toggleComment(false)
   }
 
   componentDidUpdate(prevProps) {
-    
+
     if (this.props.isOpen && this.props.isOpen !== prevProps.isOpen && this.props.onSubmit) {
       this.handleKeyUp();
     }
   }
 
-  handleKeyUp = (e=null) => {
-    if(!this.commentTextarea) {
+  handleKeyUp = (e = null) => {
+    if (!this.commentTextarea) {
 
       return
     }
 
-    if(e && e.ctrlKey && e.keyCode == 13) {
-      
+    if (e && e.ctrlKey && e.keyCode == 13) {
+
       this.submitComment(null, this.props)
       return
     }
 
     this.commentTextarea
-          .current.style.cssText = 'height:' + this.commentTextarea.current.scrollHeight + 'px;'  
+      .current.style.cssText = 'height:' + this.commentTextarea.current.scrollHeight + 'px;'
   }
 
   render() {
-        const { comment, label, toggleComment, onSubmit, changeComment, date, isOpen, commentCancel } = this.props
-        
+    const { comment, label, toggleComment, onSubmit, changeComment, date, isOpen, commentCancel, canEdit } = this.props
+    
     return (isOpen && onSubmit) ?
       <form styleName="input" onSubmit={(e) => this.submitComment(e, this.props)}>
-        <textarea ref={this.commentTextarea}  styleName="commentTextarea" id="commentTextarea" onKeyUp={this.handleKeyUp} onChange={changeComment} value={comment || label} ></textarea>
+        <textarea ref={this.commentTextarea} styleName="commentTextarea" id="commentTextarea" onKeyUp={this.handleKeyUp} onChange={changeComment} value={comment || label} ></textarea>
         <span styleName="submit" onClick={(e) => this.submitComment(e, this.props)}>&#10004;</span>
         <span styleName="close" onClick={commentCancel}>&times;</span>
       </form> :
-      <div styleName="date" onDoubleClick={() => toggleComment(true)}>{moment(date).format('LLLL')} <br></br>{comment || label}</div>
+      <div styleName="date" onDoubleClick={() => canEdit ? toggleComment(true) : false}>{moment(date).format('LLLL')} <br></br>{comment || label}</div>
 
   }
 }
