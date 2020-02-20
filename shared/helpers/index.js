@@ -40,6 +40,7 @@ export default {
   ethToken,
   ltc,
   handleGoTrade,
+  transactions,
   estimateFeeValue,
 }
 
@@ -69,7 +70,7 @@ export {
   getPageOffset,
   getScrollBarWidth,
   paddingForSwapList,
-  transactions,
+  
 
   getUnixTimeStamp,
   cacheStorageGet,
