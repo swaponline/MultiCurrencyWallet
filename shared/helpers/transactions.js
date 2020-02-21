@@ -27,8 +27,7 @@ const getInfo = (currency, txRaw) => {
     && typeof helpers[prefix].getTx === 'function'
   ) {
     const tx = helpers[prefix].getTx(txRaw)
-    const link =  getLink(tx)
-
+    const link =  getLink(prefix, tx)
     return {
       tx,
       link

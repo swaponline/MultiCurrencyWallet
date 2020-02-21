@@ -62,7 +62,9 @@ export default class InfoPay extends React.Component {
     let tx = '';
   
     if(txRaw) {
-      let {tx, link} = helpers.transactions.getInfo(currency.toLowerCase(), txRaw);
+      const txInfo = helpers.transactions.getInfo(currency.toLowerCase(), txRaw)
+      tx = txInfo.tx
+      link = txInfo.link
     }
     if (txId) {
       tx = txId
