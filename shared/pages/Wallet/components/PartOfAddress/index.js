@@ -1,13 +1,13 @@
 import React from 'react';
 import LinkAccount from '../LinkAccount';
 
-export default ({ currency, contractAddress, address }) => {
+export default ({ currency, contractAddress, address, onClick }) => {
   const endOfAddress = address.substring(address.length - 4, address.length);
   const startOfAddress = address.substring(0, 2);
   /* eslint-disable */
   return (
     <div>
-      <LinkAccount type={currency} contractAddress={contractAddress} address={address}>
+      <LinkAccount type={currency} contractAddress={contractAddress} address={address} onClick={onClick}>
         <span
           style={{
             fontSize: '12px',
