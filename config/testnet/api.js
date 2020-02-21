@@ -14,6 +14,6 @@ export default {
   bch: 'https://trest.bitcoin.com/v2',
   ltc: 'https://testnet.litecore.io/api',
   faucet: 'https://faucet.swaponline.site/testnet/',
-  btc2FAProtected: 'http://localhost:30100',//'https://2fa.swaponline.site',
+  btc2FAProtected: 'https://2fa.swaponline.site',
   invoiceApi: 'https://invoices.swaponline.site',
 }
