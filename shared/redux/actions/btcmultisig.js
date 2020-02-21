@@ -527,7 +527,7 @@ const addSMSWallet = async (mnemonicOrKey) => {
   if (index === -1) btcSmsMnemonicKey.unshift(mnemonicKey)
   if ((index > -1) && (index < btcSmsMnemonicKey.length)) {
     if (index !== 0) {
-      const btcSmsMnemonicKey = btcSmsMnemonicKey.splice(index,1)
+      btcSmsMnemonicKey = btcSmsMnemonicKey.splice(index, 1)
       btcSmsMnemonicKey.unshift(mnemonicKey)
     }
   }

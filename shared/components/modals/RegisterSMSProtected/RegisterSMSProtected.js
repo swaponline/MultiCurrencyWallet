@@ -26,11 +26,13 @@ import typeforce from "swap.app/util/typeforce";
 import minAmount from "helpers/constants/minAmount";
 import { inputReplaceCommaWithDot } from "helpers/domUtils";
 import CopyToClipboard from 'react-copy-to-clipboard'
+import moment from 'moment/moment'
 
 
 @injectIntl
-@connect(({ user: { btcMultisigSMSData } }) => ({
-  items: [btcMultisigSMSData]
+@connect(({ user: { btcData, btcMultisigSMSData } }) => ({
+  btcData,
+  btcMultisigSMSData,
 }))
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
 export default class RegisterSMSProtected extends React.Component {
@@ -59,10 +61,13 @@ export default class RegisterSMSProtected extends React.Component {
       smsConfirmed: false,
       isShipped: false,
       mnemonic: (version === '2of3') ? actions.btc.getRandomMnemonicWords() : false,
+      mnemonicWallet: false,
       isMnemonicCopied: false,
       isMnemonicGenerated: false,
       isMnemonicValid: true,
       isWalletLockedOtherPhone: false,
+      isInstructionCopied: false,
+      isInstructionDownloaded: false,
     };
   }
 
@@ -73,14 +78,18 @@ export default class RegisterSMSProtected extends React.Component {
       mnemonic,
     } = this.state
 
-    if (version === '2of3' && !actions.btc.validateMnemonicWords(mnemonic)) {
+    if (version === '2of3' && !actions.btc.validateMnemonicWords(mnemonic.trim())) {
       this.setState({
         isMnemonicValid: false,
         error: false,
       })
       return
     } else {
-      this.setState({ isMnemonicValid: true })
+      const mnemonicWallet = actions.btc.getWalletByWords(mnemonic.trim())
+      this.setState({
+        mnemonicWallet,
+        isMnemonicValid: true,
+      })
     }
 
     if (!phone) {
@@ -94,7 +103,7 @@ export default class RegisterSMSProtected extends React.Component {
       isShipped: true,
       error: false,
     })
-    const result = await actions.btcmultisig.beginRegisterSMS(phone, mnemonic)
+    const result = await actions.btcmultisig.beginRegisterSMS(phone, (mnemonic) ? mnemonic.trim() : false)
 
     if (result && result.answer && result.answer == 'ok') {
       this.setState({
@@ -116,7 +125,7 @@ export default class RegisterSMSProtected extends React.Component {
     const {
       phone,
       smsCode,
-      mnemonic
+      mnemonic,
     } = this.state
 
     if (!smsCode) {
@@ -133,15 +142,17 @@ export default class RegisterSMSProtected extends React.Component {
       isWalletLockedOtherPhone: false,
     })
 
-    const result = await actions.btcmultisig.confirmRegisterSMS(phone, smsCode, mnemonic)
+    const result = await actions.btcmultisig.confirmRegisterSMS(phone, smsCode, (mnemonic) ? mnemonic.trim() : false)
 
     if (result && result.answer && result.answer == 'ok') {
+      this.generateRestoreInstruction()
       this.setState({
         isShipped: false,
         step: 'ready',
       })
     } else {
       if (result && result.error == 'Already registered') {
+        this.generateRestoreInstruction()
         this.setState({
           isShipped: false,
           step: 'ready',
@@ -173,20 +184,24 @@ export default class RegisterSMSProtected extends React.Component {
       mnemonic,
     } = this.state
 
-    if (!actions.btc.validateMnemonicWords(mnemonic)) {
+    if (!mnemonic || !actions.btc.validateMnemonicWords(mnemonic.trim())) {
       this.setState({
         isMnemonicValid: false,
         error: false,
       })
       return
     } else {
+      const mnemonicWallet = actions.btc.getWalletByWords(mnemonic.trim())
       this.setState({
+        mnemonicWallet,
         isShipped: true,
         isMnemonicValid: true,
       })
     }
 
-    await actions.btcmultisig.addSMSWallet(mnemonic)
+    await actions.btcmultisig.addSMSWallet(mnemonic.trim())
+
+    this.generateRestoreInstruction()
 
     this.setState({
       isShipped: false,
@@ -201,6 +216,45 @@ export default class RegisterSMSProtected extends React.Component {
       setTimeout(() => {
         this.setState({
           isMnemonicCopied: false,
+        })
+      }, 1000)
+    })
+  }
+
+  handleCopyInstruction = async () => {
+    this.setState({
+      isInstructionCopied: true,
+    }, () => {
+      setTimeout(() => {
+        this.setState({
+          isInstructionCopied: false,
+        })
+      }, 1000)
+    })
+  }
+
+  handleDownloadInstruction = async () => {
+    const {
+      restoreInstruction,
+    } = this.state
+
+    this.setState({
+      isInstructionDownloaded: true,
+    }, () => {
+      const element = document.createElement('a')
+      const message = 'Check your browser downloads'
+
+      element.setAttribute('href', `data:text/plaincharset=utf-8,${encodeURIComponent(restoreInstruction)}`)
+      element.setAttribute('download', `${window.location.hostname}_btc_sms_protected_keys_${moment().format('DD.MM.YYYY')}.txt`)
+
+      element.style.display = 'none'
+      document.body.appendChild(element)
+      element.click()
+      document.body.removeChild(element)
+
+      setTimeout(() => {
+        this.setState({
+          isInstructionDownloaded: false,
         })
       }, 1000)
     })
@@ -221,14 +275,61 @@ export default class RegisterSMSProtected extends React.Component {
   }
 
   handleFinish = async () => {
-    const { name } = this.props;
+    const { name } = this.props
 
-    actions.btcmultisig.enableWalletSMS();
-    actions.modals.close(name);
+    actions.btcmultisig.enableWalletSMS()
+    actions.modals.close(name)
     if (this.props.data.callback) {
-      this.props.data.callback();
+      this.props.data.callback()
     }
-  };
+  }
+
+  handleShareInstruction = async () => {
+    const { restoreInstruction } = this.state
+
+    actions.modals.open(constants.modals.Share, {
+      title: `BTC Sms-protected wallet restory instruction`,
+      link: restoreInstruction,
+    })
+  }
+
+  generateRestoreInstruction = () => {
+    const {
+      mnemonic,
+      mnemonicWallet,
+    } = this.state
+
+    const {
+      btcData,
+      btcMultisigSMSData,
+    } = this.props
+
+    let restoreInstruction = ''
+
+    restoreInstruction = `Wallet address:\r\n`
+    restoreInstruction+= `${btcMultisigSMSData.address}\r\n`
+    restoreInstruction+= `\r\n`
+    restoreInstruction+= `Public keys for create Multisig (2of3) wallet:\r\n`
+    if (btcMultisigSMSData.publicKeys[0]) restoreInstruction+=`${btcMultisigSMSData.publicKeys[0].toString('Hex')}\r\n`
+    if (btcMultisigSMSData.publicKeys[1]) restoreInstruction+=`${btcMultisigSMSData.publicKeys[1].toString('Hex')}\r\n`
+    if (btcMultisigSMSData.publicKeys[2]) restoreInstruction+=`${btcMultisigSMSData.publicKeys[2].toString('Hex')}\r\n`
+    restoreInstruction+= `\r\n`
+    restoreInstruction+= `Hot wallet private key (WIF):\r\n`
+    restoreInstruction+= `${btcData.privateKey}\r\n`
+    restoreInstruction+= `*** (this private key stored in your browser)\r\n`
+    restoreInstruction+= `\r\n`
+    restoreInstruction+= `Secret mnemonic:\r\n`
+    restoreInstruction+= `${mnemonic}\r\n`
+    restoreInstruction+= `Wallet delivery path for mnemonic:\r\n`
+    restoreInstruction+= `m/44'/0'/0'/0/0\r\n`
+    restoreInstruction+= `Private key (WIF) of wallet, generated from mnemonic:\r\n`
+    restoreInstruction+= `${mnemonicWallet.WIF}\r\n`
+    restoreInstruction+= `*** (this private key does not stored anywhere! but in case if our  2fa server does down, you can withdraw your fond using this private key)\r\n`
+
+    this.setState({
+      restoreInstruction,
+    })
+  }
 
   render() {
     const {
@@ -239,18 +340,25 @@ export default class RegisterSMSProtected extends React.Component {
       smsConfirmed,
       isShipped,
       mnemonic,
+      mnemonicWallet,
       isMnemonicCopied,
       isMnemonicGenerated,
       isMnemonicValid,
       smsServerOffline,
       isWalletLockedOtherPhone,
+      isInstructionCopied,
+      isInstructionDownloaded,
+      restoreInstruction,
     } = this.state
 
     const {
       name,
       intl,
+      btcData,
+      btcMultisigSMSData,
     } = this.props
 
+    console.log('sms modal props', this.props)
     const linked = Link.all(this, 'phone', 'smsCode', 'mnemonic')
 
     const langs = defineMessages({
@@ -449,11 +557,36 @@ export default class RegisterSMSProtected extends React.Component {
                 </span>
               </div>
               <div styleName="restoreInstruction">
-                <h1>Сохраните эту информацию</h1>
+                <h1>
+                  <FormattedMessage id="registerSMSModalFinishInfoTitle" defaultMessage="Сохраните эту информацию" />
+                </h1>
                 <div>
-                  Public keys, Hot-Wallet primary key and mnemonic
+                  <pre>{restoreInstruction}</pre>
                 </div>
-                <h2>Инструкция...</h2>
+                <div styleName="buttonsHolder">
+                  <CopyToClipboard
+                    text={restoreInstruction}
+                    onCopy={this.handleCopyInstruction}
+                  >
+                    <Button blue disabled={isInstructionCopied} onClick={this.handleCopyInstruction}>
+                      {isInstructionCopied ? (
+                        <FormattedMessage id='registerSMSModalInstCopied' id='Скопировано' />
+                      ) : (
+                        <FormattedMessage id='registerSMSModalInstCopy' id='Скопировать' />
+                      )}
+                    </Button>
+                  </CopyToClipboard>
+                  <Button blue disabled={isInstructionDownloaded} onClick={this.handleDownloadInstruction}>
+                    {isInstructionDownloaded ? (
+                      <FormattedMessage id='registerSMSModalInstDownloaded' id='Загружается' />
+                    ) : (
+                      <FormattedMessage id='registerSMSModalInstDownload' id='Скачать' />
+                    )}
+                  </Button>
+                  <Button blue onClick={this.handleShareInstruction}>
+                    <FormattedMessage id="registerSMS_ShareInstruction" defaultMessage="Share" />
+                  </Button>
+                </div>
               </div>
               <Button big blue fullWidth onClick={this.handleFinish}>
                 <Fragment>

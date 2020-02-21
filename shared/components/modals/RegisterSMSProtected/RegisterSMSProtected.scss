@@ -38,4 +38,16 @@
 
 .restoreInstruction {
   text-align: center;
+  pre {
+    text-align: left;
+  }
+}
+.buttonsHolder {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-bottom: 10px;
+  button {
+    width: 30%;
+  }
 }
