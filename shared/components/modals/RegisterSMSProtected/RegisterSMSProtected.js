@@ -562,6 +562,9 @@ export default class RegisterSMSProtected extends React.Component {
                 </h1>
                 <div>
                   <pre>{restoreInstruction}</pre>
+                  <a styleName="link" target="_blank" href="https://github.com/bitcoinjs/bitcoinjs-lib/blob/master/test/integration/addresses.spec.ts">
+                    <FormattedMessage id="registerSMS_LinkToManualRestore" defaultMessage="How to withdraw money manually" />
+                  </a>
                 </div>
                 <div styleName="buttonsHolder">
                   <CopyToClipboard
