@@ -52,7 +52,7 @@
   margin-right: 15px;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  word-break: break-word;
 }
 .copy-link {
   padding-left: 30px;

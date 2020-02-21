@@ -2,6 +2,9 @@ import BigInteger from 'bigi'
 
 import { BigNumber } from 'bignumber.js'
 import * as bitcoin from 'bitcoinjs-lib'
+import * as bip32 from 'bip32'
+import * as bip39 from 'bip39'
+
 import bitcoinMessage from 'bitcoinjs-message'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
@@ -9,7 +12,32 @@ import { btc, apiLooper, constants, api } from 'helpers'
 import { Keychain } from 'keychain.js'
 import actions from 'redux/actions'
 
-window.bitcoinjs = bitcoin
+const getRandomMnemonicWords = () => bip39.generateMnemonic()
+const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonic)
+
+window.bip39 = bip39
+
+const getWalletByWords = (mnemonic, path) => {
+  const seed = bip39.mnemonicToSeedSync(mnemonic);
+  const root = bip32.fromSeed(seed, btc.network);
+  const node = root.derivePath((path) ? path : "m/44'/0'/0'/0/0")
+
+  const account = bitcoin.payments.p2pkh({
+    pubkey: node.publicKey,
+    network: btc.network,
+  })
+
+  return {
+    mnemonic,
+    address: account.address,
+    publicKey: node.publicKey.toString('Hex'),
+    WIF: node.toWIF(),
+    node,
+    account,
+  }
+}
+
+window.getWalletByWords = getWalletByWords
 
 const login = (privateKey) => {
   let keyPair
@@ -22,8 +50,14 @@ const login = (privateKey) => {
   }
   else {
     console.info('Created account Bitcoin ...')
-    keyPair     = bitcoin.ECPair.makeRandom({ network: btc.network })
-    privateKey  = keyPair.toWIF()
+    //keyPair     = bitcoin.ECPair.makeRandom({ network: btc.network })
+    //privateKey  = keyPair.toWIF()
+    // use random 12 words
+    const mnemonic = bip39.generateMnemonic()
+    const accData = getWalletByWords(mnemonic)
+    console.log('Btc. Generated walled from random 12 words')
+    console.log(accData)
+    privateKey = accData.WIF
   }
 
   localStorage.setItem(constants.privateKeyNames.btc, privateKey)
@@ -258,5 +292,8 @@ export default {
   fetchBalance,
   signMessage,
   getReputation,
-  getInvoices
+  getInvoices,
+  getWalletByWords,
+  getRandomMnemonicWords,
+  validateMnemonicWords,
 }

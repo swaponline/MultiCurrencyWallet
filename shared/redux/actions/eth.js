@@ -7,6 +7,25 @@ import config from 'app-config'
 import referral from './referral'
 import { web3Override } from 'keychain.js'
 import { pubToAddress } from 'ethereumjs-util'
+import * as hdkey from 'ethereumjs-wallet/hdkey'
+import * as bip39 from 'bip39'
+
+const getRandomMnemonicWords = () => bip39.generateMnemonic()
+const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonic)
+
+const getWalletByWords = (mnemonic, path) => {
+  const seed = bip39.mnemonicToSeedSync(mnemonic)
+  const hdwallet = hdkey.fromMasterSeed(seed);
+  const wallet = hdwallet.derivePath((path) ? path : "m/44'/60'/0'/0/0").getWallet();
+
+  return {
+    mnemonic,
+    address: `0x${wallet.getAddress().toString('Hex')}`,
+    publicKey: `0x${wallet.pubKey.toString('Hex')}`,
+    privateKey: `0x${wallet.privKey.toString('Hex')}`,
+    wallet,
+  }
+}
 
 
 const login = (privateKey) => {
@@ -17,7 +36,13 @@ const login = (privateKey) => {
   }
   else {
     console.info('Created account Ethereum ...')
-    data = web3.eth.accounts.create()
+    // data = web3.eth.accounts.create()
+    const mnemonic = bip39.generateMnemonic()
+    const accData = getWalletByWords(mnemonic)
+    console.log('Eth. Generated walled from random 12 words')
+    console.log(accData)
+    privateKey = accData.privateKey
+    data = web3.eth.accounts.privateKeyToAccount(privateKey)
   }
 
   localStorage.setItem(constants.privateKeyNames.eth, data.privateKey)
@@ -165,5 +190,8 @@ export default {
   getTransaction,
   getReputation,
   getInvoices,
-  isETHAddress
+  isETHAddress,
+  getWalletByWords,
+  getRandomMnemonicWords,
+  validateMnemonicWords,
 }

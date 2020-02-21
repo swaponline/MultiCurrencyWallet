@@ -57,6 +57,14 @@ export default class Confirm extends React.Component {
     actions.modals.close(name)
   }
 
+  handleCancel = () => {
+    const { data } = this.props
+    if (typeof data.onCancel === 'function') {
+      data.onCancel()
+    }
+    this.handleClose()
+  }
+
   handleConfirm = () => {
     const { name, data, onAccept } = this.props
 
@@ -104,7 +112,7 @@ export default class Confirm extends React.Component {
             </div>
             <div styleName="button-overlay">
               <Button styleName="button" brand onClick={this.handleConfirm}>{labels.yes}</Button>
-              <Button styleName="button" gray onClick={this.handleClose}>{labels.no}</Button>
+              <Button styleName="button" gray onClick={this.handleCancel}>{labels.no}</Button>
             </div>
           </div>
         </div>
