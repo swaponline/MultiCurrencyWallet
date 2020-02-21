@@ -3,6 +3,7 @@ const linksManager = {
   exchange: '/exchange',
   pointOfSell: '/buy',
   history: '/history',
+  explorer: '/explorer',
   createWallet: '/createWallet',
 
   wallets: '/wallets',

@@ -266,7 +266,8 @@ export default class CurrencyWallet extends Component {
       slidesToScroll: 1
     };
 
-      // set all show by default
+    // @ToDo -need to remove
+    // set all show by default
     let showButtons = true
 
     // is address is exits check access to button

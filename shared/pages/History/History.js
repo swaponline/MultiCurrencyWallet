@@ -101,13 +101,20 @@ export default class History extends Component {
   }
 
   render() {
-    const { items, swapHistory, intl } = this.props
+    const { items, 
+      swapHistory, 
+      intl, 
+      match: { params: { address = null } = null }= null } = this.props
+    
     const titles = [];
+
+    const pageTitle = address ? `Address: ${address}` :'Activity'
+
 
     return (
       items ? (
         <section styleName="history">
-          <h3 styleName="historyHeading">Activity</h3>
+          <h3 styleName="historyHeading">{pageTitle}</h3>
           {
             items.length > 0 ? (
               <InfiniteScrollTable
