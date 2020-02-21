@@ -6584,10 +6584,7 @@
   },
   {
     "id": "ImportFromSwapOnlineBtn",
-    "message": "Импортировать из swap.online",
-    "files": [
-      "shared/pages/CreateWallet/CreateWallet.js"
-    ]
+    "message": "Импортировать из swap.online"
   },
   {
     "id": "ExchangeBtn",
@@ -6703,59 +6700,35 @@
   },
   {
     "id": "descr295",
-    "message": "Храните биткоин и другие криптовалюты без установки кошелька.",
-    "files": [
-      "shared/pages/Wallet/components/WallerSlider/index.js"
-    ]
+    "message": "Храните биткоин и другие криптовалюты без установки кошелька."
   },
   {
     "id": "descr296",
-    "message": "Безопасные транзакции с подтверждением по СМС. Обменивайтесь криптовалютой с другими пользователями без угрозы холда (Atomic Swap). [Начать обмен]",
-    "files": [
-      "shared/pages/Wallet/components/WallerSlider/index.js"
-    ]
+    "message": "Безопасные транзакции с подтверждением по СМС. Обменивайтесь криптовалютой с другими пользователями без угрозы холда (Atomic Swap). [Начать обмен]"
   },
   {
     "id": "descr297",
-    "message": "Есть инвестор?",
-    "files": [
-      "shared/pages/Wallet/components/WallerSlider/index.js"
-    ]
+    "message": "Есть инвестор?"
   },
   {
     "id": "descr298",
-    "message": "Функция совместного кошелька поможет вам с партнером управлять бюджетом. Прочитайте как мы сами используем совместный кошелек для управления запасами. [Читать кейс] (в новом окне) или [Создать совместный счет]",
-    "files": [
-      "shared/pages/Wallet/components/WallerSlider/index.js"
-    ]
+    "message": "Функция совместного кошелька поможет вам с партнером управлять бюджетом. Прочитайте как мы сами используем совместный кошелек для управления запасами. [Читать кейс] (в новом окне) или [Создать совместный счет]"
   },
   {
     "id": "descr299",
-    "message": "Есть команда?",
-    "files": [
-      "shared/pages/Wallet/components/WallerSlider/index.js"
-    ]
+    "message": "Есть команда?"
   },
   {
     "id": "descr300",
-    "message": "Система инвойсов позволит не запутаться в платежах и бухгалтерии. Смотреть видео как мы сами используем это в нашей интернациональной команде. [Смотреть видео]",
-    "files": [
-      "shared/pages/Wallet/components/WallerSlider/index.js"
-    ]
+    "message": "Система инвойсов позволит не запутаться в платежах и бухгалтерии. Смотреть видео как мы сами используем это в нашей интернациональной команде. [Смотреть видео]"
   },
   {
     "id": "descr304",
-    "message": "Нет бюджета?",
-    "files": [
-      "shared/pages/Wallet/components/WallerSlider/index.js"
-    ]
+    "message": "Нет бюджета?"
   },
   {
     "id": "descr305",
-    "message": "Выпустите акции проекта и предложите их в качестве оплаты вашим сотрудникам. Читайте наш собственный кейс как токенизация позволила нам сэкономить $20 000 и другие кейсы. [Изучить кейсы]",
-    "files": [
-      "shared/pages/Wallet/components/WallerSlider/index.js"
-    ]
+    "message": "Выпустите акции проекта и предложите их в качестве оплаты вашим сотрудникам. Читайте наш собственный кейс как токенизация позволила нам сэкономить $20 000 и другие кейсы. [Изучить кейсы]"
   },
   {
     "id": "historyActivity",
@@ -6996,38 +6969,23 @@
   },
   {
     "id": "InfoPay_1",
-    "message": "Транзакция завершена",
-    "files": [
-      "shared/components/modals/InfoPay/InfoPay.js"
-    ]
+    "message": "Транзакция завершена"
   },
   {
     "id": "InfoPay_2",
-    "message": "успешно отправлены",
-    "files": [
-      "shared/components/modals/InfoPay/InfoPay.js"
-    ]
+    "message": "успешно отправлены"
   },
   {
     "id": "InfoPay_3",
-    "message": "Transaction ID",
-    "files": [
-      "shared/components/modals/InfoPay/InfoPay.js"
-    ]
+    "message": "Transaction ID"
   },
   {
     "id": "InfoPay_4",
-    "message": "Est. time to confitmation",
-    "files": [
-      "shared/components/modals/InfoPay/InfoPay.js"
-    ]
+    "message": "Est. time to confitmation"
   },
   {
     "id": "InfoPay_5",
-    "message": "Вернуться",
-    "files": [
-      "shared/components/modals/InfoPay/InfoPay.js"
-    ]
+    "message": "Вернуться"
   },
   {
     "id": "currencyWalletActivity",
@@ -7062,6 +7020,246 @@
     "message": "Кошелек",
     "files": [
       "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "ConfirmActivateSMS_Message",
+    "message": "У вас уже активирован этот тип кошелька. Хотите активировать другой кошелек?",
+    "files": [
+      "shared/pages/CreateWallet/CreateWallet.js"
+    ]
+  },
+  {
+    "id": "ConfirmActivateSMS_No",
+    "message": "Нет",
+    "files": [
+      "shared/pages/CreateWallet/CreateWallet.js"
+    ]
+  },
+  {
+    "id": "ConfirmActivateSMS_Title",
+    "message": "Добавление кошелька BTC (SMS-Protected)",
+    "files": [
+      "shared/pages/CreateWallet/CreateWallet.js"
+    ]
+  },
+  {
+    "id": "ConfirmActivateSMS_Yes",
+    "message": "Да",
+    "files": [
+      "shared/pages/CreateWallet/CreateWallet.js"
+    ]
+  },
+  {
+    "id": "RegisterSMSProtected_SmsCodeRequery",
+    "message": "Введите смс-код",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMSAddOffline",
+    "message": "Восстановить кошелек",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMSMPlaceHolder",
+    "message": "12 слов",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js",
+      "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
+    ]
+  },
+  {
+    "id": "registerSMSMnemonicError",
+    "message": "Вы указали не валидный набор слов",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMSMnemonicNotice",
+    "message": "Она поможет разблокировать средства на кошельке, если сервер 2fa будет не доступен",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMSModalFinishInfoTitle",
+    "message": "Сохраните эту информацию",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMSModalPhonePlaceholder",
+    "message": "Enter your phone",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMSModalSmsCodePlaceholder",
+    "message": "Enter code from SMS",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMSModalWords",
+    "message": "Секретная фраза (12 слов):",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js",
+      "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
+    ]
+  },
+  {
+    "id": "registerSMSRestoryMnemonic",
+    "message": "Восстановить кошелек используя секретную фразу",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMSWordsInfoBlock",
+    "message": "Сгенерируйте секретную фразу или укажите ранее сохраненную для восстановления старого кошелька",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMS_ConfigServerOffline",
+    "message": "Сервер авторизации не доступен. Попробуйте позже или используйте секретную фраза для разблокировки счета",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMS_MnemonicRestoreNotes",
+    "message": "Если не приходит код подтверждения или у вас нет доступа к указаному номеру телефона, вы можете восстановить кошелек используя секретную фразу",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMS_MnemonicUseNotes",
+    "message": "Используя секретную фразу, вы сможете разблокировать средства на счете",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMS_NotValidPhone",
+    "message": "Укажите номер телефона",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMS_ShareInstruction",
+    "message": "Share",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMS_WalletLocked",
+    "message": "Этот счет привязан к другому номеру телефона",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "WithdrawSMS_BroadcastError",
+    "message": "Не удалось отправить транзакцию в сеть ({errorText})",
+    "files": [
+      "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
+    ]
+  },
+  {
+    "id": "WithdrawSMS_FailSignByMnemonic",
+    "message": "Не удалось подписать транзакцию",
+    "files": [
+      "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
+    ]
+  },
+  {
+    "id": "WithdrawSMS_MnemonicNote",
+    "message": "Если у вас нет доступа к телефону или не получается получить код, вы можете воспользовать секретной фразой",
+    "files": [
+      "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
+    ]
+  },
+  {
+    "id": "WithdrawSMS_MnemonicSignCaption",
+    "message": "Подтверждение транзакции секретной фразой",
+    "files": [
+      "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
+    ]
+  },
+  {
+    "id": "WithdrawSMS_NotValidMnemonic",
+    "message": "Секретная фраза не валидна",
+    "files": [
+      "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
+    ]
+  },
+  {
+    "id": "WithdrawSMS_ServerOffline",
+    "message": "Сервер авторизации не доступен",
+    "files": [
+      "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
+    ]
+  },
+  {
+    "id": "WithdrawSMS_SmsSended",
+    "message": "Код отправлен",
+    "files": [
+      "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
+    ]
+  },
+  {
+    "id": "WithdrawSMS_SmsSending",
+    "message": "Отправка проверочного кода",
+    "files": [
+      "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
+    ]
+  },
+  {
+    "id": "WithdrawSMS_UseMnemonic",
+    "message": "Использовать секретную фразу",
+    "files": [
+      "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
+    ]
+  },
+  {
+    "id": "WithdrawSMS_UseSMS",
+    "message": "Использовать смс-код",
+    "files": [
+      "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
+    ]
+  },
+  {
+    "id": "WithdrawSMS_UseSMSNote",
+    "message": "Так-же вы можете использовать смс-код, отправленный на привязанный номер телефона",
+    "files": [
+      "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
+    ]
+  },
+  {
+    "id": "WithdrawSMS_WrongMnemonic",
+    "message": "Не правильная секретная фраза",
+    "files": [
+      "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
+    ]
+  },
+  {
+    "id": "btcSMSProtectedSignByMnemonic",
+    "message": "Использовать секретную фразу",
+    "files": [
+      "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   }
 ]
