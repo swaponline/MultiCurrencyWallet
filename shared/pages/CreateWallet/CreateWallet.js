@@ -110,7 +110,25 @@ const CreateWallet = (props) => {
               })
               return
             } else {
-              actions.core.markCoinAsVisible('BTC (SMS-Protected)')
+              actions.modals.open(constants.modals.Confirm, {
+                title: <FormattedMessage id="ConfirmActivateSMS_Title" defaultMessage="Добавление кошелька BTC (SMS-Protected)" />,
+                message: <FormattedMessage id="ConfirmActivateSMS_Message" defaultMessage="У вас уже активирован этот тип кошелька. Хотите активировать другой кошелек?" />,
+                labelYes: <FormattedMessage id="ConfirmActivateSMS_Yes" defaultMessage="Да" />,
+                labelNo: <FormattedMessage id="ConfirmActivateSMS_No" defaultMessage="Нет" />,
+                onAccept: () => {
+                  actions.modals.open(constants.modals.RegisterSMSProtected, {
+                    callback: () => {
+                      actions.core.markCoinAsVisible('BTC (SMS-Protected)')
+                      handleClick()
+                    },
+                  })
+                },
+                onCancel: () => {
+                  actions.core.markCoinAsVisible('BTC (SMS-Protected)')
+                  handleClick()
+                },
+              })
+              return
             }
           }
           break;

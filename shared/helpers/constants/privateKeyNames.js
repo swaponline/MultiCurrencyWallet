@@ -3,6 +3,7 @@ export default {
   btc: `${process.env.ENTRY}:btc:privateKey`,
   btcMultisig: `${process.env.ENTRY}:btcMultisig:privateKey`,
   btcMultisigOtherOwnerKey: `${process.env.ENTRY}:btcMultisig:otherOwnerKey`,
+  btcSmsMnemonicKey: `${process.env.ENTRY}:btcSmsMnemonicKey`,
   ethKeychainPublicKey: `${process.env.ENTRY}:eth:keychainPublicKey`,
   btcKeychainPublicKey: `${process.env.ENTRY}:btc:keychainPublicKey`,
   btcMultisigKeychainPublicKey: `${process.env.ENTRY}:btcMultisig:keychainPublicKey`,
