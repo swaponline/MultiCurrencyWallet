@@ -62,6 +62,7 @@ export default class RegisterSMSProtected extends React.Component {
       isMnemonicCopied: false,
       isMnemonicGenerated: false,
       isMnemonicValid: true,
+      isWalletLockedOtherPhone: false,
     };
   }
 
@@ -101,9 +102,12 @@ export default class RegisterSMSProtected extends React.Component {
         step: 'enterCode',
       })
     } else {
+      console.log("One step set", result)
+      const smsServerOffline = (result === false)
       this.setState({
         isShipped: false,
         error: (result && result.error) ? result.error : 'Unknown error',
+        smsServerOffline,
       })
     }
   }
@@ -124,7 +128,9 @@ export default class RegisterSMSProtected extends React.Component {
 
     this.setState({
       isShipped: true,
-      error: false
+      error: false,
+      smsServerOffline: false,
+      isWalletLockedOtherPhone: false,
     })
 
     const result = await actions.btcmultisig.confirmRegisterSMS(phone, smsCode, mnemonic)
@@ -141,14 +147,52 @@ export default class RegisterSMSProtected extends React.Component {
           step: 'ready',
         })
       } else {
-        this.setState({
-          isShipped: false,
-          error: (result && result.error) ? result.error : 'Unknown error',
-        })
+        if (result && result.error == 'This wallet already locked by other phone number') {
+          // Кошелек зарегистрирован на другой номер телефона
+          // Может быть так, что человек потерял телефон или забыл его
+          // Даем возможность подключить кошелек, чтобы если у клиента есть
+          // валидный mnemonic - он мог разблокировать средства
+          this.setState({
+            isShipped: false,
+            isWalletLockedOtherPhone: true,
+          })
+        } else {
+          const smsServerOffline = (result === false)
+          this.setState({
+            isShipped: false,
+            smsServerOffline,
+            error: (result && result.error) ? result.error : 'Unknown error',
+          })
+        }
       }
     }
   };
 
+  handleRestoreWallet = async () => {
+    const {
+      mnemonic,
+    } = this.state
+
+    if (!actions.btc.validateMnemonicWords(mnemonic)) {
+      this.setState({
+        isMnemonicValid: false,
+        error: false,
+      })
+      return
+    } else {
+      this.setState({
+        isShipped: true,
+        isMnemonicValid: true,
+      })
+    }
+
+    await actions.btcmultisig.addSMSWallet(mnemonic)
+
+    this.setState({
+      isShipped: false,
+      step: 'ready',
+    })
+  }
 
   handleCopyMnemonic = async () => {
     this.setState({
@@ -198,6 +242,8 @@ export default class RegisterSMSProtected extends React.Component {
       isMnemonicCopied,
       isMnemonicGenerated,
       isMnemonicValid,
+      smsServerOffline,
+      isWalletLockedOtherPhone,
     } = this.state
 
     const {
@@ -286,7 +332,19 @@ export default class RegisterSMSProtected extends React.Component {
                     <FormattedMessage id='registerSMSMnemonicError' defaultMessage='Вы указали не валидный набор слов' />
                   </div>
                 )}
-                {error && <div styleName='rednotes mnemonicNotice'>{error}</div>}
+                
+                {(smsServerOffline) ? (
+                  <Fragment>
+                    <Button blue fullWidth disabled={isShipped} onClick={this.handleRestoreWallet}>
+                      <FormattedMessage id="registerSMSAddOffline" defaultMessage="Восстановить кошелек" />
+                    </Button>
+                    <hr />
+                  </Fragment>
+                ) : (
+                  <Fragment>
+                    {error && <div styleName='rednotes mnemonicNotice'>{error}</div>}
+                  </Fragment>
+                )}
               </div>
               <Button blue big fullWidth disabled={isShipped || !isMnemonicValid} onClick={this.handleSendSMS}>
                 {isShipped ? (
@@ -330,7 +388,24 @@ export default class RegisterSMSProtected extends React.Component {
           )}
           {step === "enterCode" && (
             <Fragment>
-              <div styleName="highLevel">
+              {error && <div styleName="rednotes smsInfoBlock">{error}</div>}
+              {isWalletLockedOtherPhone && (
+                <div styleName="rednotes smsInfoBlock">
+                  <FormattedMessage
+                    id="registerSMS_WalletLocked"
+                    defaultMessage="Этот счет привязан к другому номеру телефона"
+                  />
+                </div>
+              )}
+              {smsServerOffline && (
+                <div styleName="rednotes smsInfoBlock">
+                  <FormattedMessage
+                    id="registerSMS_ConfigServerOffline"
+                    defaultMessage="Сервер авторизации не доступен. Попробуйте позже или используйте секретную фраза для разблокировки счета"
+                  />
+                </div>
+              )}
+              <div styleName="highLevel smsCodeHolder">
                 <FieldLabel label>
                   <FormattedMessage id="registerSMSModalCode" defaultMessage="Enter code from SMS:" />
                 </FieldLabel>
@@ -340,14 +415,29 @@ export default class RegisterSMSProtected extends React.Component {
                   focusOnInit
                   placeholder={`${intl.formatMessage(langs.smsPlaceHolder)}`}
                 />
-                {error && <div styleName="rednote">{error}</div>}
               </div>
-              <Button big blue fullWidth disabled={isShipped} onClick={this.handleCheckSMS}>
+              <Button styleName="confirmSmsCode" big blue fullWidth disabled={isShipped} onClick={this.handleCheckSMS}>
                 {isShipped ? (
                   <FormattedMessage id="registerSMSModalProcess" defaultMessage="Processing ..." />
                 ) : (
                   <FormattedMessage id="registerSMSModalSendSMS165" defaultMessage="Confirm" />
                 )}
+              </Button>
+              <hr />
+              <p styleName="notice">
+                <FormattedMessage
+                  id="registerSMS_MnemonicRestoreNotes"
+                  defaultMessage="Если не приходит код подтверждения или у вас нет доступа к указаному номеру телефона, вы можете восстановить кошелек используя секретную фразу"
+                />
+              </p>
+              <p styleName="notice">
+                <FormattedMessage
+                  id="registerSMS_MnemonicUseNotes"
+                  defaultMessage="Используя секретную фразу, вы сможете разблокировать средства на счете"
+                />
+              </p>
+              <Button blue fullWidth disabled={isShipped} onClick={this.handleRestoreWallet}>
+                <FormattedMessage id="registerSMSRestoryMnemonic" defaultMessage="Восстановить кошелек используя секретную фразу" />
               </Button>
             </Fragment>
           )}
@@ -357,6 +447,13 @@ export default class RegisterSMSProtected extends React.Component {
                 <span style={{ fontSize: "25px", display: "block", textAlign: "center", marginBottom: "40px" }}>
                   <FormattedMessage id="registerSMSModalReady" defaultMessage="Your protected wallet activated" />
                 </span>
+              </div>
+              <div styleName="restoreInstruction">
+                <h1>Сохраните эту информацию</h1>
+                <div>
+                  Public keys, Hot-Wallet primary key and mnemonic
+                </div>
+                <h2>Инструкция...</h2>
               </div>
               <Button big blue fullWidth onClick={this.handleFinish}>
                 <Fragment>
