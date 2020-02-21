@@ -10,6 +10,7 @@ import styles from './Row.scss'
 
 import { Link } from 'react-router-dom'
 import CopyToClipboard from 'react-copy-to-clipboard'
+import LinkAccount from '../components/LinkAccount'
 
 import Coin from 'components/Coin/Coin'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
@@ -28,49 +29,51 @@ import { BigNumber } from 'bignumber.js'
 import dollar from '../images/dollar.svg'
 import PartOfAddress from '../components/PartOfAddress'
 
-
 @injectIntl
 @withRouter
-@connect(({
-  rememberedOrders,
-  user: {
-    ethData,
-    btcData,
-    btcMultisigSMSData,
-    btcMultisigUserData,
-    bchData,
-    nimData,
-    //qtumData,
-    ltcData,
-    // xlmData,
-    // usdtOmniData,
-    tokensData,
-  },
-  currencies: { items: currencies },
-}, { currency }) => ({
-  currencies,
-  item: [
-    btcData,
-    btcMultisigSMSData,
-    btcMultisigUserData,
-    ethData,
-    bchData,
-    ltcData,
-    //qtumData,
-    // xlmData,
-    // usdtOmniData,
-    ...Object.keys(tokensData).map(k => (tokensData[k])),
-  ]
-    .map(({ account, keyPair, ...data }) => ({
-      ...data,
-    }))
-    .find((item) => item.currency === currency.currency),
-  decline: rememberedOrders.savedOrders,
-}))
+@connect(
+  (
+    {
+      rememberedOrders,
+      user: {
+        ethData,
+        btcData,
+        btcMultisigSMSData,
+        btcMultisigUserData,
+        bchData,
+        nimData,
+        //qtumData,
+        ltcData,
+        // xlmData,
+        // usdtOmniData,
+        tokensData
+      },
+      currencies: { items: currencies }
+    },
+    { currency }
+  ) => ({
+    currencies,
+    item: [
+      btcData,
+      btcMultisigSMSData,
+      btcMultisigUserData,
+      ethData,
+      bchData,
+      ltcData,
+      //qtumData,
+      // xlmData,
+      // usdtOmniData,
+      ...Object.keys(tokensData).map(k => tokensData[k])
+    ]
+      .map(({ account, keyPair, ...data }) => ({
+        ...data
+      }))
+      .find(item => item.currency === currency.currency),
+    decline: rememberedOrders.savedOrders
+  })
+)
 @cssModules(styles, { allowMultiple: true })
-
 export default class Row extends Component {
-
   state = {
     isBalanceFetching: false,
     viewText: false,
@@ -86,21 +89,21 @@ export default class Row extends Component {
 
   static getDerivedStateFromProps({ item: { balance } }) {
     return {
-      isBalanceEmpty: balance === 0,
+      isBalanceEmpty: balance === 0
     }
   }
 
   constructor(props) {
     super(props)
 
-    const { currency: { currency }, currencies } = props
+    const {
+      currency: { currency },
+      currencies
+    } = props
 
-    const isBlockedCoin = config.noExchangeCoins
-      .map(item => item.toLowerCase())
-      .includes(currency.toLowerCase())
+    const isBlockedCoin = config.noExchangeCoins.map(item => item.toLowerCase()).includes(currency.toLowerCase())
 
     this.state.tradeAllowed = !!currencies.find(c => c.value === currency.toLowerCase()) && !isBlockedCoin
-
   }
 
   componentWillUnmount() {
@@ -112,7 +115,9 @@ export default class Row extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { item: { currency, balance } } = this.props
+    const {
+      item: { currency, balance }
+    } = this.props
 
     if (balance > 0) {
       actions.analytics.balanceEvent({ action: 'have', currency, balance })
@@ -127,15 +132,17 @@ export default class Row extends Component {
     }
 
     this.setState({
-      isBalanceFetching: true,
+      isBalanceFetching: true
     })
 
-    const { item: { currency, address } } = this.props
+    const {
+      item: { currency, address }
+    } = this.props
 
     switch (currency) {
       case 'BTC (SMS-Protected)':
         await actions.btcmultisig.getBalance()
-        break;
+        break
       case 'BTC (Multisig)':
         await actions.btcmultisig.getBalanceUser()
         break
@@ -144,98 +151,103 @@ export default class Row extends Component {
     }
 
     this.setState(() => ({
-      isBalanceFetching: false,
+      isBalanceFetching: false
     }))
-
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     const getComparableProps = ({ item, index, selectId }) => ({
       item,
       index,
-      selectId,
+      selectId
     })
-    return JSON.stringify({
-      ...getComparableProps(nextProps),
-      ...nextState,
-    }) !== JSON.stringify({
-      ...getComparableProps(this.props),
-      ...this.state,
-    })
+    return (
+      JSON.stringify({
+        ...getComparableProps(nextProps),
+        ...nextState
+      }) !==
+      JSON.stringify({
+        ...getComparableProps(this.props),
+        ...this.state
+      })
+    )
   }
 
-  handleTouch = (e) => {
+  handleTouch = e => {
     this.setState({
-      isTouch: true,
+      isTouch: true
     })
   }
 
   handleSliceAddress = () => {
-    const { item: { address } } = this.props
+    const {
+      item: { address }
+    } = this.props
 
     const firstPart = address.substr(0, 6)
     const secondPart = address.substr(address.length - 4)
 
-    return (window.innerWidth < 700 || isMobile || address.length > 42) ? `${firstPart}...${secondPart}` : address
+    return window.innerWidth < 700 || isMobile || address.length > 42 ? `${firstPart}...${secondPart}` : address
   }
 
-  handleTouchClear = (e) => {
+  handleTouchClear = e => {
     this.setState({
-      isTouch: false,
+      isTouch: false
     })
   }
 
   handleCopyAddress = () => {
-    this.setState({
-      isAddressCopied: true,
-    }, () => {
-      setTimeout(() => {
-        this.setState({
-          isAddressCopied: false,
-        })
-      }, 500)
-    })
+    this.setState(
+      {
+        isAddressCopied: true
+      },
+      () => {
+        setTimeout(() => {
+          this.setState({
+            isAddressCopied: false
+          })
+        }, 500)
+      }
+    )
   }
 
   handleWithdraw = () => {
     const {
-      item: {
-        currency,
-      },
+      item: { currency },
       item
     } = this.props
 
-    const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals;
+    const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals
 
-    let withdrawModalType = Withdraw;
-    if (currency === 'BTC (SMS-Protected)') withdrawModalType = WithdrawMultisigSMS;
-    if (currency === 'BTC (Multisig)') withdrawModalType = WithdrawMultisigUser;
+    let withdrawModalType = Withdraw
+    if (currency === 'BTC (SMS-Protected)') withdrawModalType = WithdrawMultisigSMS
+    if (currency === 'BTC (Multisig)') withdrawModalType = WithdrawMultisigUser
 
     actions.modals.open(withdrawModalType, item)
   }
 
   handleReceive = () => {
     const {
-      item: {
-        currency,
-        address,
-      },
+      item: { currency, address }
     } = this.props
 
     actions.modals.open(constants.modals.ReceiveModal, {
       currency,
-      address,
+      address
     })
   }
 
   handleShowOptions = () => {
     this.setState({
-      showMobileButtons: true,
+      showMobileButtons: true
     })
   }
 
-  handleGoTrade = (currency) => {
-    const { intl: { locale }, decline } = this.props
+  handleGoTrade = currency => {
+    const {
+      intl: { locale },
+      decline
+    } = this.props
 
     const pair = currency.toLowerCase() === 'btc' ? 'eth' : 'btc'
 
@@ -253,18 +265,18 @@ export default class Row extends Component {
     }
   }
 
-  handleDeclineOrdersModalOpen = (indexOfDecline) => {
+  handleDeclineOrdersModalOpen = indexOfDecline => {
     const orders = SwapApp.shared().services.orders.items
     const declineSwap = actions.core.getSwapById(this.props.decline[indexOfDecline])
 
     if (declineSwap !== undefined) {
       actions.modals.open(constants.modals.DeclineOrdersModal, {
-        declineSwap,
+        declineSwap
       })
     }
   }
 
-  handleMarkCoinAsHidden = (coin) => {
+  handleMarkCoinAsHidden = coin => {
     actions.core.markCoinAsHidden(coin)
   }
 
@@ -278,13 +290,13 @@ export default class Row extends Component {
 
   showButtons = () => {
     this.setState(() => ({
-      showButtons: true,
+      showButtons: true
     }))
   }
 
   hideButtons = () => {
     this.setState(() => ({
-      showButtons: false,
+      showButtons: false
     }))
   }
 
@@ -296,15 +308,12 @@ export default class Row extends Component {
 
   handleCreateInvoiceLink = () => {
     const {
-      item: {
-        currency,
-        address,
-      },
+      item: { currency, address }
     } = this.props
 
     actions.modals.open(constants.modals.InvoiceLinkModal, {
       currency,
-      address,
+      address
     })
   }
 
@@ -314,15 +323,7 @@ export default class Row extends Component {
 
   handleCreateInvoice = () => {
     const {
-      item: {
-        decimals,
-        token,
-        contractAddress,
-        unconfirmedBalance,
-        currency,
-        address,
-        balance,
-      },
+      item: { decimals, token, contractAddress, unconfirmedBalance, currency, address, balance }
     } = this.props
 
     actions.modals.open(constants.modals.InvoiceModal, {
@@ -332,52 +333,84 @@ export default class Row extends Component {
       decimals,
       token,
       balance,
-      unconfirmedBalance,
+      unconfirmedBalance
     })
   }
 
   goToHistory = () => {
-    const { history, intl: { locale } } = this.props
+    const {
+      history,
+      intl: { locale }
+    } = this.props
     history.push(localisedUrl(locale, '/history'))
   }
 
   goToExchange = () => {
-    const { history, intl: { locale } } = this.props
+    const {
+      history,
+      intl: { locale }
+    } = this.props
     history.push(localisedUrl(locale, '/exchange'))
   }
 
   goToBuy = () => {
-    const { history, intl: { locale }, currency } = this.props
+    const {
+      history,
+      intl: { locale },
+      currency
+    } = this.props
     history.push(localisedUrl(locale, `${links.pointOfSell}/btc-to-${currency.currency.toLowerCase()}`))
   }
-
 
   deleteThisSwap = () => {
     actions.core.forgetOrders(this.props.decline[0])
   }
 
   goToOrderBook = () => {
-    const { history, intl: { locale }, item: { currency, balance } } = this.props
+    const {
+      history,
+      intl: { locale },
+      item: { currency, balance }
+    } = this.props
     history.push(localisedUrl(locale, `/${currency.toLowerCase()}-btc`))
   }
 
+  goToCurrencyHistory = () => {
+    const {
+      history,
+      intl: { locale },
+      item: { currency, balance, address }
+    } = this.props
+
+    history.push(localisedUrl(locale, `/history/${currency.toLowerCase()}/${address}`))
+  }
+
   hideCurrency = () => {
-    const { item: { currency, balance } } = this.props
+    const {
+      item: { currency, balance }
+    } = this.props
 
     if (balance > 0) {
       actions.modals.open(constants.modals.AlertModal, {
-        message: <FormattedMessage id='WalletRow_Action_HideNonZero_Message' defaultMessage='У этого кошелка положительный баланс. Его скрыть нельзя.' />
+        message: (
+          <FormattedMessage
+            id="WalletRow_Action_HideNonZero_Message"
+            defaultMessage="У этого кошелка положительный баланс. Его скрыть нельзя."
+          />
+        )
       })
     } else {
       actions.core.markCoinAsHidden(currency)
       actions.notifications.show(constants.notifications.Message, {
-        message: <FormattedMessage id='WalletRow_Action_Hidden' defaultMessage='Кошелек скрыт' />
+        message: <FormattedMessage id="WalletRow_Action_Hidden" defaultMessage="Кошелек скрыт" />
       })
     }
   }
 
   copy = () => {
-    const { item: { address } } = this.props
+    const {
+      item: { address }
+    } = this.props
     navigator.clipboard.writeText(address)
   }
 
@@ -395,68 +428,61 @@ export default class Row extends Component {
 
     const {
       item,
-      intl: { locale },
+      intl: { locale }
     } = this.props
 
-    const {
-      currency,
-      balance,
-      isBalanceFetched,
-      fullName,
-      title,
-      unconfirmedBalance,
-      balanceError,
-    } = item
+    const { currency, balance, isBalanceFetched, fullName, title, unconfirmedBalance, balanceError } = item
 
     let currencyView = currency
 
     let inneedData = null
     let nodeDownErrorShow = true
-    let currencyUsdBalance = 0;
+    let currencyUsdBalance = 0
 
-    const isWidgetBuild = (config && config.isWidget)
+    const isWidgetBuild = config && config.isWidget
 
-    
-
-    if(item.infoAboutCurrency) {
-      currencyUsdBalance = BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * item.infoAboutCurrency.price_usd;
+    if (item.infoAboutCurrency) {
+      currencyUsdBalance =
+        BigNumber(balance)
+          .dp(5, BigNumber.ROUND_FLOOR)
+          .toString() * item.infoAboutCurrency.price_usd
     }
 
     let dropDownMenuItems = [
       {
         id: 1001,
-        title: <FormattedMessage id='WalletRow_Menu_Deposit' defaultMessage='Deposit' />,
+        title: <FormattedMessage id="WalletRow_Menu_Deposit" defaultMessage="Deposit" />,
         action: this.handleReceive,
-        disabled: false,
+        disabled: false
       },
       {
         id: 1002,
-        title: <FormattedMessage id='WalletRow_Menu_Send' defaultMessage='Send' />,
+        title: <FormattedMessage id="WalletRow_Menu_Send" defaultMessage="Send" />,
         action: this.handleWithdraw,
-        disabled: isBalanceEmpty,
+        disabled: isBalanceEmpty
       },
       {
         id: 1004,
-        title: <FormattedMessage id='WalletRow_Menu_Exchange' defaultMessage='Exchange' />,
+        title: <FormattedMessage id="WalletRow_Menu_Exchange" defaultMessage="Exchange" />,
         action: this.goToExchange,
         disabled: false
       },
       {
         id: 1005,
-        title: <FormattedMessage id='WalletRow_Menu_Buy' defaultMessage='Buy' />,
+        title: <FormattedMessage id="WalletRow_Menu_Buy" defaultMessage="Buy" />,
         action: this.goToBuy,
         disabled: false,
         hidden: this.props.currency.currency === 'BTC' ? true : false
       },
       {
         id: 1003,
-        title: <FormattedMessage id='WalletRow_Menu_History' defaultMessage='History' />,
+        title: <FormattedMessage id="WalletRow_Menu_History" defaultMessage="History" />,
         action: this.goToHistory,
         disabled: false
       },
       {
         id: 1012,
-        title: <FormattedMessage id='WalletRow_Menu_Сopy' defaultMessage='Copy address' />,
+        title: <FormattedMessage id="WalletRow_Menu_Сopy" defaultMessage="Copy address" />,
         action: this.copy,
         disabled: false
       }
@@ -464,7 +490,7 @@ export default class Row extends Component {
 
     dropDownMenuItems.push({
       id: 1011,
-      title: <FormattedMessage id='WalletRow_Menu_Hide' defaultMessage='Hide' />,
+      title: <FormattedMessage id="WalletRow_Menu_Hide" defaultMessage="Hide" />,
       action: this.hideCurrency,
       disabled: false
     })
@@ -472,38 +498,42 @@ export default class Row extends Component {
     if (currencyView == 'BTC (Multisig)') currencyView = 'BTC'
     if (currencyView == 'BTC (SMS-Protected)') currencyView = 'BTC'
 
-    if(currencyView !== 'BTC') {
+    if (currencyView !== 'BTC') {
       dropDownMenuItems.push({
         id: 1005,
-        title: <FormattedMessage id='WalletRow_Menu_Orderbook' defaultMessage='Orderbook' />,
+        title: <FormattedMessage id="WalletRow_Menu_Orderbook" defaultMessage="Orderbook" />,
         action: this.goToOrderBook
       })
     }
 
-    if (['BTC','ETH'].includes(currencyView) && !isWidgetBuild) {
+    if (['BTC', 'ETH'].includes(currencyView) && !isWidgetBuild) {
       dropDownMenuItems.push({
         id: 1004,
-        title: <FormattedMessage id='WalletRow_Menu_Invoice' defaultMessage='Выставить счет' />,
+        title: <FormattedMessage id="WalletRow_Menu_Invoice" defaultMessage="Выставить счет" />,
         action: this.handleCreateInvoice,
-        disable: false,
+        disable: false
       })
       dropDownMenuItems.push({
         id: 1005,
-        title: <FormattedMessage id='WalletRow_Menu_InvoiceLink' defaultMessage='Получить ссылку для выставления счета' />,
+        title: (
+          <FormattedMessage id="WalletRow_Menu_InvoiceLink" defaultMessage="Получить ссылку для выставления счета" />
+        ),
         action: this.handleCreateInvoiceLink,
-        disable: false,
+        disable: false
       })
     }
 
     if (this.props.item.isSmsProtected && !this.props.item.isRegistered) {
       currencyView = 'Not activated'
       nodeDownErrorShow = false
-      dropDownMenuItems = [{
-        id: 1,
-        title: <FormattedMessage id='WalletRow_Menu_ActivateSMSProtected' defaultMessage='Activate' />,
-        action: this.handleActivateProtected,
-        disabled: false,
-      }]
+      dropDownMenuItems = [
+        {
+          id: 1,
+          title: <FormattedMessage id="WalletRow_Menu_ActivateSMSProtected" defaultMessage="Activate" />,
+          action: this.handleActivateProtected,
+          disabled: false
+        }
+      ]
     }
     if (this.props.item.isUserProtected) {
       if (!this.props.item.active) {
@@ -513,16 +543,16 @@ export default class Row extends Component {
       } else {
         dropDownMenuItems.push({
           id: 1105,
-          title: <FormattedMessage id='WalletRow_Menu_BTCMS_SwitchMenu' defaultMessage='Switch wallet' />,
+          title: <FormattedMessage id="WalletRow_Menu_BTCMS_SwitchMenu" defaultMessage="Switch wallet" />,
           action: this.handleSwitchMultisign,
-          disabled: false,
+          disabled: false
         })
       }
       dropDownMenuItems.push({
         id: 3,
-        title: <FormattedMessage id='WalletRow_Menu_BTCMS_GenerateJoinLink' defaultMessage='Generate join link' />,
+        title: <FormattedMessage id="WalletRow_Menu_BTCMS_GenerateJoinLink" defaultMessage="Generate join link" />,
         action: this.handleGenerateMultisignLink,
-        disabled: false,
+        disabled: false
       })
     }
 
@@ -533,78 +563,85 @@ export default class Row extends Component {
             <Link to={localisedUrl(locale, `/${fullName}-wallet`)} title={`Online ${fullName} wallet`}>
               <Coin className={styles.assetsTableIcon} name={currency} />
             </Link>
+            {balanceError && nodeDownErrorShow ? (
+              <div className={styles.errorMessage}>
+                <FormattedMessage
+                  id="RowWallet276"
+                  defaultMessage=" node is down (You can not perform transactions). "
+                />
+                <a href="https://wiki.swaponline.io/faq/bitcoin-node-is-down-you-cannot-make-transactions/">
+                  <FormattedMessage id="RowWallet282" defaultMessage="No connection..." />
+                </a>
+              </div>
+            ) : (
+              ''
+            )}
+            <span styleName="assetsTableCurrencyWrapper">
+              {!isBalanceFetched || isBalanceFetching ? (
+                this.props.item.isUserProtected && !this.props.item.active ? (
+                  <span>
+                    <FormattedMessage id="walletMultisignNotJoined" defaultMessage="Not joined" />
+                  </span>
+                ) : (
+                  <div styleName="loader">{!(balanceError && nodeDownErrorShow) && <InlineLoader />}</div>
+                )
+              ) : (
+                <div styleName="no-select-inline" onClick={this.handleReloadBalance}>
+                  <i className="fas fa-sync-alt" styleName="icon" />
+                  <span>
+                    {balanceError
+                      ? '?'
+                      : BigNumber(balance)
+                          .dp(5, BigNumber.ROUND_FLOOR)
+                          .toString()}{' '}
+                  </span>
+                  <span styleName="assetsTableCurrencyBalance">{currencyView}</span>
+                  {unconfirmedBalance > 0 && (
+                    <Fragment>
+                      <br />
+                      <span styleName="unconfirmedBalance">
+                        <FormattedMessage id="RowWallet181" defaultMessage="Unconfirmed balance" />
+                        {unconfirmedBalance}{' '}
+                      </span>
+                    </Fragment>
+                  )}
+                </div>
+              )}
+            </span>
+            {item.address !== 'Not jointed' ? (
+              <p styleName="addressStyle" onClick={this.goToCurrencyHistory}>
+                {item.address}
+              </p>
+            ) : (
+              ''
+            )}
+            { isMobile ? <PartOfAddress {...item} onClick={this.goToCurrencyHistory} /> : '' }
             <div styleName="assetsTableInfo">
               <div styleName="nameRow">
                 <Link to={localisedUrl(locale, `/${fullName}-wallet`)} title={`Online ${fullName} wallet`}>
-                  {
-                    balanceError && nodeDownErrorShow &&
-                    <div className={styles.errorMessage}>
-                      {fullName}
-                      <FormattedMessage
-                        id="RowWallet276"
-                        defaultMessage=" node is down (You can not perform transactions). " />
-                      <a href="https://wiki.swaponline.io/faq/bitcoin-node-is-down-you-cannot-make-transactions/">
-                        <FormattedMessage
-                          id="RowWallet282"
-                          defaultMessage="Need help?" />
-                      </a>
-                    </div> || fullName
-                  }
+                  {fullName}
                 </Link>
-                <PartOfAddress {...item} />
               </div>
-              <span>
-                {
-                  !isBalanceFetched || isBalanceFetching ? (
-                    this.props.item.isUserProtected && !this.props.item.active ? (
-                      <span>
-                        <FormattedMessage id="walletMultisignNotJoined" defaultMessage="Not joined" />
-                      </span>
-                    ) : (
-                        <div styleName="loader">
-                          {!(balanceError && nodeDownErrorShow) && <InlineLoader />}
-                        </div>
-                      )
-                  ) : (
-                      <div styleName="no-select-inline" onClick={this.handleReloadBalance} >
-                        <i className="fas fa-sync-alt" styleName="icon" />
-                        <span>
-                          {
-                            balanceError ? '?' : BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString()
-                          }{' '}
-                        </span>
-                        <span>{currencyView}</span>
-                        {unconfirmedBalance > 0 && (
-                          <Fragment>
-                            <br />
-                            <span styleName="unconfirmedBalance">
-                              <FormattedMessage id="RowWallet181" defaultMessage="Unconfirmed balance" />
-                              {unconfirmedBalance} {' '}
-                            </span>
-                          </Fragment>
-                        )}
-                      </div>
-                    )
-                }
-              </span>
+
               <strong>{title}</strong>
             </div>
-            <div styleName="assetsTableValue">
-              <img src={dollar} />
-              <p>{currencyUsdBalance && currencyUsdBalance.toFixed(2) || '0.00'}</p>
-              {/* {inneedData && <span>   {`${inneedData.change} %`} </span>} */}
-            </div>
+
+            {currencyUsdBalance && !balanceError ? (
+              <div styleName="assetsTableValue">
+                {/* <img src={dollar} /> */}
+                <p>{currencyUsdBalance.toFixed(2)}</p>
+                <strong>USD</strong>
+                {/* {inneedData && <span>   {`${inneedData.change} %`} </span>} */}
+              </div>
+            ) : (
+              ''
+            )}
           </div>
           <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">
-            <DropdownMenu
-              size="regular"
-              className="walletControls"
-              items={dropDownMenuItems}
-            />
+            <DropdownMenu size="regular" className="walletControls" items={dropDownMenuItems} />
           </div>
         </td>
       </tr>
     )
   }
 }
-
