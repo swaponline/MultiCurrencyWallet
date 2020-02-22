@@ -214,12 +214,29 @@
         left: auto;
         margin-right: 15px;
       }
-      .swiper-button-prev > i {
-        margin-right: 10px;
-      }
-      .swiper-button-next > i {
-        margin-left: 10px;
-      }
+      .swiper-button-prev > i,
+	.swiper-button-next > i {
+		display: inline-block;
+		vertical-align: middle;
+		width: 10px;
+		height: 10px;
+		border: 2px solid #7371ff;
+		transform: rotate(45deg);
+	}
+	.swiper-button-prev > i {
+	  margin-right: 10px;
+		border-top: 0;
+		border-right: 0;
+	}
+	.swiper-button-next > i {
+	  margin-left: 10px;
+		border-left: 0;
+		border-bottom: 0;
+	}
+	.swiper-button-prev:hover > i,
+	.swiper-button-next:hover > i{
+		border-color: #e91db4;
+	}
       .swiper-button-next.swiper-button-disabled,
       .swiper-button-prev.swiper-button-disabled {
         opacity: 0.2;
@@ -435,12 +452,12 @@ src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAwUAAAMZCAMAAABmr2irAAAA3lBMV
 
           <div class="swiper-nav w-100">
             <div class="swiper-button-prev btn-prev">
-              <i class="fas fa-chevron-left"></i>
+              <i></i>
               <span></span>
             </div>
             <div class="swiper-button-next btn-next">
               <span></span>
-              <i class="fas fa-chevron-right"></i>
+              <i></i>
             </div>
           </div>
         </div>
