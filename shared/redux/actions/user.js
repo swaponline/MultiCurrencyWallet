@@ -11,11 +11,6 @@ import reducers from 'redux/core/reducers'
 const sign = async () => {
   const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
   const btcMultisigPrivateKey = localStorage.getItem(constants.privateKeyNames.btcMultisig)
-  const btcMultisigSMSOwnerKey = config.swapContract.protectedBtcKey
-
-  let btcMultisigOwnerKey = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKey)
-  try { btcMultisigOwnerKey = JSON.parse( btcMultisigOwnerKey ) } catch (e) {}
-
   const bchPrivateKey = localStorage.getItem(constants.privateKeyNames.bch)
   const ltcPrivateKey = localStorage.getItem(constants.privateKeyNames.ltc)
   const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
@@ -28,7 +23,20 @@ const sign = async () => {
 
   const _ethPrivateKey = isEthKeychainActivated ? await actions.eth.loginWithKeychain() : actions.eth.login(ethPrivateKey)
   const _btcPrivateKey = isBtcKeychainActivated ? await actions.btc.loginWithKeychain() : actions.btc.login(btcPrivateKey)
-  const _btcMultisigSMSPrivateKey = actions.btcmultisig.login_SMS(_btcPrivateKey, btcMultisigSMSOwnerKey)
+
+  // btc multisig with 2fa (2of3)
+  const btcSMSServerKey = config.swapContract.protectedBtcKey
+  let btcSmsPublicKeys = [ btcSMSServerKey ]
+  let btcSmsMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKey)
+  try { btcSmsMnemonicKey = JSON.parse( btcSmsMnemonicKey ) } catch (e) {}
+  if (btcSmsMnemonicKey instanceof Array && btcSmsMnemonicKey.length > 0) {
+    btcSmsPublicKeys.push(btcSmsMnemonicKey[0])
+  }
+  const _btcMultisigSMSPrivateKey = actions.btcmultisig.login_SMS(_btcPrivateKey, btcSmsPublicKeys)
+
+  // btc multisig 2of2 user manual sign
+  let btcMultisigOwnerKey = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKey)
+  try { btcMultisigOwnerKey = JSON.parse( btcMultisigOwnerKey ) } catch (e) {}
   const _btcMultisigPrivateKey = actions.btcmultisig.login_USER(_btcPrivateKey, btcMultisigOwnerKey)
 
   actions.bch.login(bchPrivateKey)

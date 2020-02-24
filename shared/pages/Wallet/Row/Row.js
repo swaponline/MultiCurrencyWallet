@@ -615,7 +615,7 @@ export default class Row extends Component {
             ) : (
               ''
             )}
-            {isMobile ? <PartOfAddress {...item} /> : ''}
+            { isMobile ? <PartOfAddress {...item} onClick={this.goToCurrencyHistory} /> : '' }
             <div styleName="assetsTableInfo">
               <div styleName="nameRow">
                 <Link to={localisedUrl(locale, `/${fullName}-wallet`)} title={`Online ${fullName} wallet`}>

@@ -9,17 +9,23 @@ const erc20LinkAcount = (type, children, address, contractAddress) => Object.key
     && <Href key={key} tab={`${config.link.etherscan}/token/${contractAddress}?a=${address}`} >{children}</Href>
   )
 
-const LinkAccount = ({ type, children, address, contractAddress }) => (
+const LinkAccount = ({ type, children, address, contractAddress, onClick }) => (
   <Fragment>
-    {type.toLowerCase() === 'eth' && <Href tab={`${config.link.etherscan}/address/${address}`} >{children}</Href>}
-    {(type.toLowerCase() === 'btc' || type.toLowerCase() === 'btc (sms-protected)' || type.toLowerCase() === 'btc (multisig)')
-      && <Href tab={`${config.link.bitpay}/address/${address}`} >{children}</Href>}
-    { /* type.toLowerCase() === 'usdt' && <Href tab={`${config.link.omniexplorer}/address/${address}`} >{children}</Href> */}
-    {erc20LinkAcount(type, children, address, contractAddress)}
-    {type.toLowerCase() === 'bch' && <Href tab={`${config.link.bch}/address/${address}`} >{children}</Href>}
-    {type.toLowerCase() === 'ltc' && <Href tab={`${config.link.ltc}/address/${address}`} >{children}</Href>}
-    {type.toLowerCase() === 'qtum' && <Href tab={`${config.link.qtum}/address/${address}`} >{children}</Href>}
-    { /* type.toLowerCase() === 'xlm' && <Href tab={`${config.link.xlm}/address/${address}`}>{children}</Href> */}
+    {onClick ? (
+      <a styleName="link" onClick={onClick}>{children}</a>
+    ) : (
+      <Fragment>
+        {type.toLowerCase() === 'eth' && <Href tab={`${config.link.etherscan}/address/${address}`} >{children}</Href>}
+        {(type.toLowerCase() === 'btc' || type.toLowerCase() === 'btc (sms-protected)' || type.toLowerCase() === 'btc (multisig)')
+          && <Href tab={`${config.link.bitpay}/address/${address}`} >{children}</Href>}
+        { /* type.toLowerCase() === 'usdt' && <Href tab={`${config.link.omniexplorer}/address/${address}`} >{children}</Href> */}
+        {erc20LinkAcount(type, children, address, contractAddress)}
+        {type.toLowerCase() === 'bch' && <Href tab={`${config.link.bch}/address/${address}`} >{children}</Href>}
+        {type.toLowerCase() === 'ltc' && <Href tab={`${config.link.ltc}/address/${address}`} >{children}</Href>}
+        {type.toLowerCase() === 'qtum' && <Href tab={`${config.link.qtum}/address/${address}`} >{children}</Href>}
+        { /* type.toLowerCase() === 'xlm' && <Href tab={`${config.link.xlm}/address/${address}`}>{children}</Href> */}
+      </Fragment>
+    )}
   </Fragment>
 )
 

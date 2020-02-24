@@ -1,0 +1,53 @@
+.registerSMSModalHolder {
+  max-width: 600px;
+}
+
+.for12words {
+  min-width: 400px;
+}
+.infoCaption {
+  padding-bottom: 20px;
+  text-align: center;
+}
+.mnemonicNotice {
+  padding-bottom: 20px;
+  font-size: 14px;
+}
+.mnemonicButtonsHolder {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-bottom: 10px;
+  button {
+    width: 45%;
+  }
+}
+
+.smsInfoBlock {
+  padding-bottom: 20px;
+  padding-top: 10px;
+}
+.smsCodeHolder {
+  max-width: 200px;
+  margin: 0 auto;
+}
+.confirmSmsCode {
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+.restoreInstruction {
+  text-align: center;
+  pre {
+    text-align: left;
+  }
+}
+.buttonsHolder {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-bottom: 10px;
+  button {
+    width: 30%;
+  }
+}

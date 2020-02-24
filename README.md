@@ -4,7 +4,7 @@
 
 Live version here: https://swaponline.github.io . 
 
-No coding skills? Buy WordPress plugin https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064 with admin panel. 
+No coding skills? Buy WordPress plugin https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064 with admin panel. Installation 100$ (send us assess to your server t.me/sashanoxon)
 
 
 <h2>1. Multi-currency wallet. Your users can store Bitcoin and custom assets</h2>

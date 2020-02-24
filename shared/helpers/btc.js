@@ -68,7 +68,7 @@ const getLinkToInfo = (tx) => {
     return
   }
 
-  return `https://www.blockchain.com/ru/btc/tx/${tx}`
+  return `${config.link.bitpay}/tx/${tx}`
 }
 
 const estimateFeeRate = async ({ speed = 'fast' } = {}) => {

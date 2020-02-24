@@ -8,6 +8,7 @@ import config from 'app-config'
 
 import cssModules from 'react-css-modules'
 import styles from '../WithdrawModal/WithdrawModal.scss'
+import ownStyle from './WithdrawModalMultisig.scss'
 
 import { BigNumber } from 'bignumber.js'
 import Modal from 'components/modal/Modal/Modal'
@@ -31,14 +32,16 @@ import QrReader from "components/QrReader";
 @connect(
   ({
     currencies,
-    user: { ethData, btcData, btcMultisigSMSData, bchData, tokensData, nimData, ltcData /* usdtOmniData, nimData */ },
+    user: {
+      btcData,
+      btcMultisigSMSData,
+    },
   }) => ({
     currencies: currencies.items,
-    items: [ethData, btcData, btcMultisigSMSData, bchData, ltcData /* usdtOmniData, nimData */],
-    tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
+    items: [btcData, btcMultisigSMSData],
   })
 )
-@cssModules(styles, { allowMultiple: true })
+@cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
 export default class WithdrawModalMultisig extends React.Component {
 
   static propTypes = {
@@ -49,11 +52,17 @@ export default class WithdrawModalMultisig extends React.Component {
   constructor(data) {
     super()
 
-    const { data: { amount, toAddress, currency }, items, tokenItems } = data
+    const {
+      data: {
+        amount,
+        toAddress,
+        currency
+      },
+      items,
+    } = data
 
     const currentDecimals = constants.tokenDecimals.btcmultisig
-    const allCurrencyies = items.concat(tokenItems)
-    const selectedItem = allCurrencyies.filter(item => item.currency === currency)[0]
+    const selectedItem = items.filter(item => item.currency === currency)[0]
 
     this.state = {
       step: 'fillform',
@@ -64,13 +73,28 @@ export default class WithdrawModalMultisig extends React.Component {
       minus: '',
       balance: selectedItem.balance || 0,
       ethBalance: null,
-      isEthToken: helpers.ethToken.isEthToken({ name: currency.toLowerCase() }),
+      isEthToken: false,
       currentDecimals,
       getUsd: 0,
       error: false,
       smsConfirmed: false,
       ownTx: '',
+      mnemonic: '',
+      broadcastError: false,
+      sendSmsTimeout: 0,
+      sendSmsTimeoutTimer: false,
     }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.sendSmsTimeoutTimer)
+  }
+
+  gotoSms = () => {
+    this.setState({
+      smsStatus: 'sended',
+      step: 'confirm',
+    })
   }
 
   componentDidMount() {
@@ -82,31 +106,7 @@ export default class WithdrawModalMultisig extends React.Component {
     this.usdRates = {}
     this.getUsdBalance()
     this.actualyMinAmount()
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    nextState.amount = this.fixDecimalCountETH(nextState.amount)
-  }
-
-  fixDecimalCountETH = (amount) => {
-    if (this.props.data.currency === 'ETH' && BigNumber(amount).dp() > 18) {
-      const amountInt = BigNumber(amount).integerValue()
-      const amountDecimal = BigNumber(amount).mod(1)
-
-      const amountIntStr = amountInt.toString()
-      const amountDecimalStr = BigNumber(BigNumber(amountDecimal).toPrecision(15)).toString().substring(1)
-      const regexr = /[e+-]/g
-
-      const result = amountIntStr + amountDecimalStr
-
-      console.warn("To avoid [ethjs-unit]error: while converting number with more then 18 decimals to wei - you can't afford yourself add more than 18 decimals") // eslint-disable-line
-      if (regexr.test(result)) {
-        console.warn('And ofcourse you can not write number which can not be saved without an exponential notation in JS')
-        return 0
-      }
-      return result
-    }
-    return amount
+    //this.gotoSms()
   }
 
   getMinAmountForEthToken = () => {
@@ -166,6 +166,50 @@ export default class WithdrawModalMultisig extends React.Component {
     }))
   }
 
+  onFinishWithdraw = async (txId) => {
+    const {
+      amount,
+      to,
+    } = this.state
+
+    const {
+      data: {
+        currency,
+        address,
+        balance,
+        invoice,
+        onReady
+      },
+      name,
+    } = this.props
+
+    actions.loader.hide();
+
+    if (invoice) {
+      await actions.invoices.markInvoice(invoice.id, "ready", txId);
+    }
+    this.setBalanceOnState(currency)
+
+    actions.modals.open(constants.modals.InfoPay, {
+      amount,
+      currency,
+      balance,
+      oldBalance: 0, // @Todo доделать old balance
+      txId,
+      toAddress: to
+    })
+
+    this.setState({
+      isShipped: false,
+      error: false,
+    })
+
+    if (onReady instanceof Function) {
+      onReady()
+    }
+    actions.modals.close(name)
+  }
+
   handleConfirmSMS = async () => {
     const { code } = this.state
     const { address: to, amount } = this.state
@@ -173,71 +217,55 @@ export default class WithdrawModalMultisig extends React.Component {
 
     const result = await actions.btcmultisig.confirmSMSProtected(code)
     if (result && result.txID) {
-      actions.loader.hide()
-
-      if (invoice) {
-        await actions.invoices.markInvoice(invoice.id, 'ready', result.txID)
-      }
-
-      actions.notifications.show(constants.notifications.SuccessWithdraw, {
-        amount,
-        currency,
-        address: to,
-      })
-
-      actions.modals.close(name)
+      this.onFinishWithdraw( txID )
     } else {
+      console.log(result)
       if (result
         && result.error
         && (result.error == 'Fail broadcast')
         && result.rawTX
       ) {
-        const resBroatcast = await actions.btcmultisig.broadcastTx(result.rawTX)
-        if (invoice) {
-          await actions.invoices.markInvoice(invoice.id, 'ready', result.rawTX)
-        }
-        actions.loader.hide()
-
-        actions.notifications.show(constants.notifications.SuccessWithdraw, {
-          amount,
-          currency,
-          address: to,
+        actions.btc.broadcastTx( result.rawTX ).then(async ({ txid }) => {
+          if (txid) {
+            this.onFinishWithdraw( txid )
+          } else {
+            this.setState({
+              broadcastError: true,
+              rawTx: rawTX,
+              isShipped: false,
+              error: <FormattedMessage id="WithdrawSMS_BroadcastError" defaultMessage="Не удалось отправить транзакцию в сеть ({errorText})"  values={{ errorText: `unknown` }} />,
+            })
+          }
         })
-
-        actions.modals.close(name)
-
-        if (onReady instanceof Function) {
-          onReady()
-        }
       }
     }
   }
 
   handleSubmit = async () => {
-    const { address: to, amount, ownTx } = this.state
-    const { data: { currency, address, balance, invoice, onReady }, name } = this.props
+    const {
+      address: to,
+      amount,
+      ownTx,
+      rawTx,
+    } = this.state
 
-    this.setState(() => ({ isShipped: true }))
+    const {
+      data: {
+        currency,
+        address,
+        balance,
+        invoice,
+        onReady,
+      },
+      name,
+    } = this.props
+
+    this.setState(() => ({
+      isShipped: true,
+      step: 'confirm',
+    }))
 
     this.setBalanceOnState(currency)
-
-    let sendOptions = {
-      to,
-      amount,
-      speed: 'fast',
-    }
-
-    if (helpers.ethToken.isEthToken({ name: currency.toLowerCase() })) {
-      sendOptions = {
-        ...sendOptions,
-        name: currency.toLowerCase(),
-      }
-    } else {
-      sendOptions = {
-        ...sendOptions,
-        from: address,
-      }
-    }
 
     if (invoice && ownTx) {
       await actions.invoices.markInvoice(invoice.id, 'ready', ownTx)
@@ -255,12 +283,31 @@ export default class WithdrawModalMultisig extends React.Component {
       return
     }
 
+    let sendOptions = {
+      to,
+      amount,
+      speed: 'fast',
+      from: address,
+    }
+
+    this.setState({
+      sendSmsStatus: 'sending',
+    })
+
     const result = await actions.btcmultisig.sendSMSProtected(sendOptions)
 
+    console.log('sendSMSProtected result', result)
     if (result && result.answer === 'ok') {
       this.setState({
         isShipped: false,
-        step: 'confirm'
+        rawTx: (result.rawTx) ? result.rawTx : rawTx,
+        sendSmsStatus: 'sended',
+      })
+    } else {
+      this.setState({
+        isShipped: false,
+        sendSmsStatus: 'offline',
+        rawTx: (result.rawTx) ? result.rawTx : rawTx,
       })
     }
   }
@@ -290,13 +337,88 @@ export default class WithdrawModalMultisig extends React.Component {
     )
   }
 
-    openScan = () => {
+  openScan = () => {
     const { openScanCam } = this.state;
 
-  this.setState(() => ({
+    this.setState(() => ({
       openScanCam: !openScanCam
     }));
   };
+
+  handleMnemonicSign = () => {
+    const {
+      mnemonic,
+      rawTx,
+      balance,
+      amount,
+      to,
+    } = this.state
+
+    if (!mnemonic || !actions.btc.validateMnemonicWords(mnemonic.trim())) {
+      this.setState({
+        error: <FormattedMessage id='WithdrawSMS_NotValidMnemonic' defaultMessage='Секретная фраза не валидна' />,
+      })
+      return
+    }
+    if (!actions.btcmultisig.checkSmsMnemonic( mnemonic.trim() )) {
+      this.setState({
+        error: <FormattedMessage id='WithdrawSMS_WrongMnemonic' defaultMessage='Не правильная секретная фраза' />,
+      })
+      return
+    }
+
+    this.setState({
+      isShipped: true,
+      error: false,
+      broadcastError: false,
+    })
+
+    actions.btcmultisig.signSmsMnemonicAndBuild( rawTx, mnemonic.trim() ).then(async ( txHex ) => {
+      console.log('signed', txHex)
+      this.setState({
+        txHex,
+      })
+      actions.btc.broadcastTx( txHex ).then(async ({ txid }) => {
+        if (txid) {
+          this.onFinishWithdraw( txid )
+        } else {
+          this.setState({
+            broadcastError: true,
+            isShipped: false,
+            error: <FormattedMessage id="WithdrawSMS_BroadcastError" defaultMessage="Не удалось отправить транзакцию в сеть ({errorText})"  values={{ errorText: `unknown` }} />,
+          })
+        }
+      })
+      .catch((e) => {
+        console.error(e)
+        const errorText = e.res ? e.res.text : e.message;
+        this.setState({
+          broadcastError: true,
+          isShipped: false,
+          error: <FormattedMessage id="WithdrawSMS_BroadcastError" defaultMessage="Не удалось отправить транзакцию в сеть ({errorText})" values={{ errorText }} />,
+        })
+      })
+    })
+    .catch((e) => {
+      console.log('fail sign tx by mnemonic')
+      this.setState({
+        isShipped: false,
+        error: <FormattedMessage id="WithdrawSMS_FailSignByMnemonic" defaultMessage="Не удалось подписать транзакцию" />,
+      })
+    })
+  }
+
+  handleSwitchToMnemonic = () => {
+    this.setState({
+      step: 'mnemonicSign',
+    })
+  }
+
+  handleSwitchToSms = () => {
+    this.setState({
+      step: 'confirm',
+    })
+  }
 
   handleError = err => {
     console.error(err);
@@ -332,9 +454,12 @@ export default class WithdrawModalMultisig extends React.Component {
       exCurrencyRate,
       currentDecimals,
       error,
+      mnemonic,
       openScanCam,
       step,
       ownTx,
+      sendSmsTimeout,
+      sendSmsStatus,
     } = this.state
 
     const {
@@ -348,7 +473,7 @@ export default class WithdrawModalMultisig extends React.Component {
       intl,
     } = this.props
 
-    const linked = Link.all(this, 'address', 'amount', 'code', 'ownTx')
+    const linked = Link.all(this, 'address', 'amount', 'code', 'ownTx', 'mnemonic')
 
     const min = minAmount.btc
     const dataCurrency = currency.toUpperCase()
@@ -397,6 +522,10 @@ export default class WithdrawModalMultisig extends React.Component {
         id: 'withdrawSMSCodePlaceholder',
         defaultMessage: 'Enter SMS-code',
       },
+      mnemonicPlaceholder: {
+        id: 'registerSMSMPlaceHolder',
+        defaultMessage: `12 слов`,
+      },
     })
 
     return (
@@ -406,6 +535,41 @@ export default class WithdrawModalMultisig extends React.Component {
         )}
         {invoice &&
           <InvoiceInfoBlock invoiceData={invoice} />
+        }
+        {step === 'mnemonicSign' &&
+          <Fragment>
+            <p styleName="notice">
+              <FormattedMessage
+                id="WithdrawSMS_MnemonicSignCaption"
+                defaultMessage="Подтверждение транзакции секретной фразой"
+              />
+            </p>
+            <div styleName="highLevel">
+              <FieldLabel label>
+                <FormattedMessage id="registerSMSModalWords" defaultMessage="Секретная фраза (12 слов):" />
+              </FieldLabel>
+              <Input
+                styleName="input"
+                valueLink={linked.mnemonic}
+                multiline={true}
+                placeholder={`${intl.formatMessage(labels.mnemonicPlaceholder)}`}
+              />
+            </div>
+            { error && <div styleName="rednotes">{error}</div> }
+            <Button styleName="buttonFull" big blue fullWidth disabled={isShipped} onClick={this.handleMnemonicSign}>
+              {isShipped
+                ? <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
+                : <FormattedMessage id="btcSMSProtectedSignByMnemonic" defaultMessage="Использовать секретную фразу" />
+              }
+            </Button>
+            <hr />
+            <p styleName="notice mnemonicUseNote">
+              <FormattedMessage id="WithdrawSMS_UseSMSNote" defaultMessage="Так-же вы можете использовать смс-код, отправленный на привязанный номер телефона" />
+            </p>
+            <Button styleName="useAuthMethodButton" blue onClick={this.handleSwitchToSms}>
+              <FormattedMessage id="WithdrawSMS_UseSMS" defaultMessage="Использовать смс-код" />
+            </Button>
+          </Fragment>
         }
         {step === 'fillform' &&
           <Fragment>
@@ -558,41 +722,66 @@ export default class WithdrawModalMultisig extends React.Component {
             }
           </Fragment>
         }
+        
         {step === 'confirm' &&
           <Fragment>
             <p styleName="notice">
               <FormattedMessage id="Withdrow2222" defaultMessage="Send SMS code" />
             </p>
-            <div styleName="lowLevel">
-              <div styleName="groupField">
-                <div styleName="downLabel">
-                  <FieldLabel inRow>
-                    <span styleName="mobileFont">
-                      <FormattedMessage id="Withdrow2223" defaultMessage="SMS code" />
-                    </span>
-                  </FieldLabel>
-                </div>
+            <div styleName="highLevel smsCodeHolder">
+              <FieldLabel label>
+                <FormattedMessage id="Withdrow2223" defaultMessage="SMS code" />
+              </FieldLabel>
+              <Input
+                styleName="input"
+                valueLink={linked.code}
+                pattern="0-9"
+                placeholder={`${intl.formatMessage(labels.smsPlaceholder)}`}
+              />
+            </div>
+            { sendSmsStatus === 'sending' && (
+              <div styleName="smsServerStatus">
+                <FormattedMessage id="WithdrawSMS_SmsSending" defaultMessage="Отправка проверочного кода" />
               </div>
-              <div styleName="group" style={{ marginBottom: "50px" }}>
-                <Input
-                  styleName="input"
-                  valueLink={linked.code}
-                  pattern="0-9"
-                  placeholder={`${intl.formatMessage(labels.smsPlaceholder)}`}
+            )}
+            { sendSmsStatus === 'sended' && (
+              <div styleName="smsServerStatus">
+                <FormattedMessage
+                  id="WithdrawSMS_SmsSended"
+                  defaultMessage="Код отправлен"
                 />
               </div>
-              <Button styleName="buttonFull" fullWidth big blue onClick={this.handleConfirmSMS}>
-                <FormattedMessage id="Withdrow2224" defaultMessage="Confirm" />
-              </Button>
-              {
-                linked.code.error && (
-                  <div styleName="rednote error">
-                    <FormattedMessage id="WithdrawModal2225" defaultMessage="Something went wrong, enter your current code please" />
-                  </div>
-                )
-              }
-
-            </div>
+            )}
+            { sendSmsStatus === 'offline' && (
+              <div styleName="rednotes smsServerStatus">
+                <FormattedMessage
+                  id="WithdrawSMS_ServerOffline"
+                  defaultMessage="Сервер авторизации не доступен"
+                />
+              </div>
+            )}
+            { linked.code.error && (
+              <div styleName="rednotes smsServerStatus">
+                <FormattedMessage id="WithdrawModal2225" defaultMessage="Something went wrong, enter your current code please" />
+              </div>
+            )}
+            <Button
+              styleName="buttonFull confirmSmsCode"
+              fullWidth
+              disabled={isShipped || (sendSmsStatus==='sending') || (sendSmsStatus === 'offline')}
+              big
+              blue
+              onClick={this.handleConfirmSMS}
+            >
+              <FormattedMessage id="Withdrow2224" defaultMessage="Confirm" />
+            </Button>
+            <hr />
+            <p styleName="notice mnemonicUseNote">
+              <FormattedMessage id="WithdrawSMS_MnemonicNote" defaultMessage="Если у вас нет доступа к телефону или не получается получить код, вы можете воспользовать секретной фразой" />
+            </p>
+            <Button styleName="useAuthMethodButton" blue onClick={this.handleSwitchToMnemonic}>
+              <FormattedMessage id="WithdrawSMS_UseMnemonic" defaultMessage="Использовать секретную фразу" />
+            </Button>
           </Fragment>
         }
       </Modal>
