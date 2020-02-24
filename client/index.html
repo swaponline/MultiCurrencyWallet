@@ -295,6 +295,17 @@
         top: auto;
         margin: 15px;
       }
+      .starter-modal .btn-primary {
+	background-color: #6144e5;
+	color: #fff;
+	border-radius: 2px;
+	border: 0;
+	padding: 13px 25px;
+	font-weight: bold;
+      }
+      .starter-modal .btn-primary:hover {
+	background-color: #9785ed;
+      }
       .swiper-slide .swap-screenshot {
         transition: transform 0.3s;
         position: relative;
@@ -345,6 +356,20 @@
         .starter-modal h2 {
           font-size: 24px;
         }
+	.starter-modal-container {
+	  padding-bottom: 75px;
+	}
+	.starter-modal .swiper-nav {
+	  position: fixed;
+	  left: 0;
+	  right: 0;
+	  bottom: 0;
+	  background-color: #fff;
+	  box-shadow: 0 0 10px 0px #ccc;
+	}
+	.starter-modal-close {
+	  display: none;
+	}
       }
       @media (max-width: 400px) {
         .swiper-button-prev,
@@ -608,7 +633,8 @@ src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAwUAAAMZCAMAAABmr2irAAAA3lBMV
           navigation: {
             nextEl: ".swiper-button-next",
             prevEl: ".swiper-button-prev"
-          }
+          },
+	  autoHeight: true,
         });
 
         // Add default lang en if is not lang ru or en
