@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react'
+import React, { Fragment } from 'react'
 
 import { constants } from 'helpers'
 import actions from 'redux/actions'
@@ -7,12 +7,10 @@ import security from '../NotityBlock/images/security.svg'
 import mail from '../NotityBlock/images/mail.svg'
 import info from '../NotityBlock/images/info-solid.svg'
 
-
 import NotifyBlock from 'pages/Wallet/components/NotityBlock/NotifyBock'
 import config from 'app-config'
 
 import { FormattedMessage } from 'react-intl'
-
 
 const isWidgetBuild = config && config.isWidget
 const handleShowKeys = () => {
@@ -28,14 +26,29 @@ const handleSignUp = () => {
 }
 
 export default props => {
-  const { settings, isPrivateKeysSaved, isClosedNotifyBlockSignUp, isSigned, isClosedNotifyBlockBanner, handleNotifyBlockClose, host } = props
+  const {
+    settings,
+    isPrivateKeysSaved,
+    isClosedNotifyBlockSignUp,
+    isSigned,
+    isClosedNotifyBlockBanner,
+    handleNotifyBlockClose,
+    host
+  } = props
   return isWidgetBuild ? null : (
     <Fragment>
-      {!isPrivateKeysSaved && (host === 'localhost' || host === 'swaponline.github.io') && (
+      {!isPrivateKeysSaved && (
         <NotifyBlock
           className="notifyBlockSaveKeys"
-          descr={<FormattedMessage id="descr279" defaultMessage="Before you continue be sure to save your private keys!" />}
-          tooltip={<FormattedMessage id="descr280" defaultMessage="We do not store your private keys and will not be able to restore them" />}
+          descr={
+            <FormattedMessage id="descr279" defaultMessage="Before you continue be sure to save your private keys!" />
+          }
+          tooltip={
+            <FormattedMessage
+              id="descr280"
+              defaultMessage="We do not store your private keys and will not be able to restore them"
+            />
+          }
           icon={security}
           firstBtn={<FormattedMessage id="descr282" defaultMessage="Show my keys" />}
           firstFunc={handleShowKeys}
