@@ -16,18 +16,16 @@ import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import icons from './images'
 import config from 'app-config'
 
-
 const title = defineMessages({
   CurrencyAction: {
     id: 'CurrencyAction',
-    defaultMessage: 'CurrencyAction',
-  },
+    defaultMessage: 'CurrencyAction'
+  }
 })
 
 @injectIntl
 @cssModules(styles, { allowMultiple: true })
 export default class CurrencyAction extends React.Component {
-
   constructor(props) {
     super(props)
   }
@@ -42,15 +40,16 @@ export default class CurrencyAction extends React.Component {
     if (typeof data.onClose === 'function') {
       data.onClose()
     }
-    
+
     actions.modals.close(name)
   }
 
-  handleClickCurrency = (item) => {
+  handleClickCurrency = item => {
+    const {
+      data: { context }
+    } = this.props
 
-    const { data: { context } } = this.props;
-
-    const { currency, address } = item;
+    const { currency, address } = item
 
     if (context === 'Deposit') {
       actions.modals.open(constants.modals.ReceiveModal, {
@@ -58,11 +57,11 @@ export default class CurrencyAction extends React.Component {
         address
       })
     } else {
-      const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals;
+      const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals
 
-      let withdrawModalType = Withdraw;
-      if (item.currency === 'BTC (SMS-Protected)') withdrawModalType = WithdrawMultisigSMS;
-      if (item.currency === 'BTC (Multisig)') withdrawModalType = WithdrawMultisigUser;
+      let withdrawModalType = Withdraw
+      if (item.currency === 'BTC (SMS-Protected)') withdrawModalType = WithdrawMultisigSMS
+      if (item.currency === 'BTC (Multisig)') withdrawModalType = WithdrawMultisigUser
 
       actions.modals.open(withdrawModalType, item)
     }
@@ -70,10 +69,14 @@ export default class CurrencyAction extends React.Component {
   }
 
   render() {
-    const { props: { data: { currencies, context } } } = this
+    const {
+      props: {
+        data: { currencies, context }
+      }
+    } = this
 
     // if currencies is one, do autoselect
-    if(currencies.length == 1) {
+    if (currencies.length == 1) {
       this.handleClickCurrency(currencies.shift())
       //return
     }
@@ -104,12 +107,12 @@ export default class CurrencyAction extends React.Component {
                     iconName = 'btc'
                     itemTitle = 'BTC (MTS)'
                     itemFullTitle = 'BTC (MTS)'
-                    break;
+                    break
                   case 'BTC (SMS-Protected)':
                     iconName = 'btc'
                     itemTitle = 'BTC (SMS)'
                     itemFullTitle = 'BTC (SMS)'
-                    break;
+                    break
                 }
 
                 if (!icons[iconName] || !styles[iconName]) {
@@ -121,11 +124,9 @@ export default class CurrencyAction extends React.Component {
 
                 let renderIcon = icons[iconName]
                 let renderStyle = {}
-                if (config
-                  && config.erc20
-                  && config.erc20[item.currency.toLowerCase()]
-                ) {
-                  if (config.erc20[item.currency.toLowerCase()].icon) renderIcon = config.erc20[item.currency.toLowerCase()].icon
+                if (config && config.erc20 && config.erc20[item.currency.toLowerCase()]) {
+                  if (config.erc20[item.currency.toLowerCase()].icon)
+                    renderIcon = config.erc20[item.currency.toLowerCase()].icon
                   if (config.erc20[item.currency.toLowerCase()].iconBgColor) {
                     renderStyle.backgroundColor = config.erc20[item.currency.toLowerCase()].iconBgColor
                   }
@@ -133,11 +134,7 @@ export default class CurrencyAction extends React.Component {
                 return (
                   <div styleName="card" key={item} onClick={() => this.handleClickCurrency(item)}>
                     <div styleName={`circle ${iconName}`} style={renderStyle}>
-                      <img
-                        src={renderIcon}
-                        alt={`${name} icon`}
-                        role="image"
-                      />
+                      <img src={renderIcon} alt={`${name} icon`} role="image" />
                     </div>
                     <b>{itemTitle}</b>
                     <span>{itemFullTitle}</span>
@@ -151,4 +148,3 @@ export default class CurrencyAction extends React.Component {
     )
   }
 }
-

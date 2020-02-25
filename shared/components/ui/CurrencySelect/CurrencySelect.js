@@ -6,13 +6,24 @@ import styles from './CurrencySelect.scss'
 import Option from './Option/Option'
 import DropDown from 'components/ui/DropDown/DropDown'
 
-
-const CurrencySelect = ({ 
-  className, selectedValue, onSelect, currencies, name, placeholder, label, tooltip, id, switchBalanceFunc, notIteractable,
+const CurrencySelect = ({
+  className,
+  selectedValue,
+  onSelect,
+  currencies,
+  name,
+  placeholder,
+  label,
+  tooltip,
+  styleName,
+  id,
+  switchBalanceFunc,
+  notIteractable
 }) => {
   // remove null values in object map
   const nonNullCurrencies = currencies.filter(currency => !!currency !== false)
   // TODO: Add debug logger message to see if some currency have been dropped
+
   return (
     <DropDown
       className={className}
@@ -20,8 +31,8 @@ const CurrencySelect = ({
       items={currencies}
       switchBalanceFunc={switchBalanceFunc}
       selectedValue={selectedValue}
-      selectedItemRender={(item) => <Option {...item} />}
-      itemRender={(item) => <Option {...item} />}
+      selectedItemRender={item => <Option {...item} />}
+      itemRender={item => <Option {...item} />}
       onSelect={onSelect}
       label={label}
       tooltip={tooltip}
