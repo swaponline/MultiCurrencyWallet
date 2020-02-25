@@ -2,6 +2,18 @@
   min-width: 400px;
 }
 
+.amountTooltip {
+  font-size: 13px;
+  position: absolute;
+  background: #fff;
+  z-index: 111111;
+  right: 16px;
+  bottom: -13px;
+  font-family: 'Roboto Mono', monospace;
+  color: #8e9aa3;
+  padding: 5px 10px;
+}
+
 @include media-mobile {
   .invoiceModalHolder {
     min-width: auto;

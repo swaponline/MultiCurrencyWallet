@@ -355,6 +355,7 @@ export default class InvoiceModal extends React.Component {
                 <FormattedMessage id="invoiceModal_Amount" defaultMessage="Сумма" />
               </span>
             </FieldLabel>
+            <span styleName="amountTooltip">{amount > 0 ? `~ ${amount} BTC` : ''}</span>
             {this.state.selectedValue === 'BTC' ? (
               <Input
                 withMargin
