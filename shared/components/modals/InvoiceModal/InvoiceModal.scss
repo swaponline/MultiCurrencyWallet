@@ -2,18 +2,6 @@
   min-width: 400px;
 }
 
-.input {
-  input {
-    font-family: 'Inter-Bold', sans-serif;
-    font-size: 20px;
-  }
-
-  input::placeholder {
-    font-size: 15px;
-    font-family: 'Inter-Regular', sans-serif;
-  }
-}
-
 @include media-mobile {
   .invoiceModalHolder {
     min-width: auto;
