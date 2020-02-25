@@ -16,7 +16,7 @@ textarea {
   box-shadow: none;
   font-size: 15px;
   padding-left: 15px;
-  font-family: "Roboto Mono", monospace;
+  font-family: 'Inter-Regular', sans-serif;
   border: 1px solid rgba(0, 0, 0, 0.2);
   outline: none;
   &:focus {
@@ -73,7 +73,7 @@ textarea {
   }
 }
 
-input[type="number"] {
+input[type='number'] {
   -moz-appearance: textfield;
 }
 .rightEl {
@@ -150,7 +150,7 @@ textarea.input {
   font-size: 14px;
   color: $color-f-error;
 
-  [role="errorLink"] {
+  [role='errorLink'] {
     display: inline !important;
     color: inherit !important;
     vertical-align: inherit !important;

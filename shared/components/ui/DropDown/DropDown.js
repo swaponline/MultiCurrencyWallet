@@ -15,16 +15,11 @@ import styles from './DropDown.scss'
 
 import closeBtn from './images/close.svg'
 
-
 @toggle()
 @cssModules(styles, { allowMultiple: true })
 export default class DropDown extends Component {
-
   static propTypes = {
-    initialValue: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]),
+    initialValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     selectedValue: PropTypes.string.isRequired,
     items: PropTypes.arrayOf(PropTypes.any).isRequired,
     selectedItemRender: PropTypes.func,
@@ -33,7 +28,7 @@ export default class DropDown extends Component {
     isToggleActive: PropTypes.bool.isRequired, // @toggle
     toggleOpen: PropTypes.func.isRequired, // @toggle
     toggleClose: PropTypes.func.isRequired, // @toggle
-    notIteractable: PropTypes.bool,
+    notIteractable: PropTypes.bool
   }
 
   constructor({ initialValue, selectedValue }) {
@@ -42,7 +37,7 @@ export default class DropDown extends Component {
       selectedValue: initialValue || selectedValue || 0,
       inputValue: '',
       infoAboutCurrency: '',
-      error: false,
+      error: false
     }
   }
 
@@ -56,6 +51,8 @@ export default class DropDown extends Component {
   toggle = () => {
     const { isToggleActive, toggleOpen, toggleClose } = this.props
 
+    console.log(isToggleActive)
+
     if (isToggleActive) {
       toggleClose()
     } else {
@@ -63,7 +60,7 @@ export default class DropDown extends Component {
     }
   }
 
-  handleOptionClick = (item) => {
+  handleOptionClick = item => {
     const { toggleClose, selectedValue, onSelect } = this.props
 
     // if there is no passed `selectedValue` then change it
@@ -92,7 +89,7 @@ export default class DropDown extends Component {
     }
   }
 
-  renderItem = (item) => {
+  renderItem = item => {
     const { itemRender } = this.props
 
     if (typeof itemRender === 'function') {
@@ -108,31 +105,42 @@ export default class DropDown extends Component {
     fetch('https://noxon.io/cursAll.php')
       .then(res => res.json())
       .then(
-        (result) => {
+        result => {
           const itemsName = items.map(el => el.name)
           result.map(res => {
             if (itemsName.includes(res.symbol)) {
               infoAboutCurrency.push({
                 name: res.symbol,
-                change: res.percent_change_1h,
+                change: res.percent_change_1h
               })
             }
           })
           this.setState({
-            infoAboutCurrency,
+            infoAboutCurrency
           })
         },
-        (error) => {
+        error => {
           console.log('error on fetch data from api')
         }
       )
   }
 
   render() {
-    const { className, items, isToggleActive, selectedValue, name, placeholder, label, tooltip, id, notIteractable } = this.props
+    const {
+      className,
+      items,
+      isToggleActive,
+      selectedValue,
+      name,
+      placeholder,
+      label,
+      tooltip,
+      id,
+      notIteractable
+    } = this.props
     const { inputValue, infoAboutCurrency, error } = this.state
 
-    const dropDownStyleName = cx('dropDown', { 'active': isToggleActive })
+    const dropDownStyleName = cx('dropDown', { active: isToggleActive })
     const linkedValue = Link.all(this, 'inputValue')
 
     let itemsFiltered = items
@@ -142,22 +150,26 @@ export default class DropDown extends Component {
         .filter(item => item.value !== selectedValue)
     }
 
+    console.log('className', className)
+
     return (
       <ClickOutside
-        onClickOutside={isToggleActive
-          ? () => {
-            this.refs.searchInput.handleBlur()
-            linkedValue.inputValue.set('')
-            this.toggle()
-          }
-          : () => {}
+        onClickOutside={
+          isToggleActive
+            ? () => {
+                this.refs.searchInput.handleBlur()
+                linkedValue.inputValue.set('')
+                this.toggle()
+              }
+            : () => {}
         }
       >
         <div styleName={dropDownStyleName} className={className}>
-          <div styleName={notIteractable? "selectedItem selectedItem_disableIteract" : "selectedItem"} onClick={notIteractable ? () => null : this.toggle}>
-            {
-              !notIteractable && <div styleName="arrow arrowDropDown" />
-            }
+          <div
+            styleName={notIteractable ? 'selectedItem selectedItem_disableIteract' : 'selectedItem'}
+            onClick={notIteractable ? () => null : this.toggle}
+          >
+            {!notIteractable && <div styleName="arrow arrowDropDown" />}
             {isToggleActive ? (
               <Input
                 styleName="searchInput"
@@ -170,48 +182,44 @@ export default class DropDown extends Component {
               this.renderSelectedItem()
             )}
           </div>
-          {
-            isToggleActive && (
-              <div styleName="select">
-                <span styleName="listName">{name}</span>
-                {itemsFiltered.map((item) => {
-                  let inneedData = null
-                  if (infoAboutCurrency) {
-                    inneedData = infoAboutCurrency.find(el => el.name === item.name)
-                  }
-                  return (
-                    <div
-                      key={item.value}
-                      styleName="option"
-                      onClick={() => {
-                        linkedValue.inputValue.set('')
-                        this.handleOptionClick(item)
-                      }}
-                    >
-                      <span styleName="shortTitle">{this.renderItem(item)}</span>
-                      <span styleName="fullTitle">{item.fullTitle}</span>
-                      {inneedData && <span
-                        styleName={`range ${+inneedData.change > 0 ? "rangeUp" : "rangeDown"}`}
-                      >
-                      {inneedData.change} %
-                      </span>}
-                    </div>
-                  )
-                })}
-              </div >
-            )
-          }
-          <button styleName="closeBtn" onClick={this.toggle}><img src={closeBtn} alt="" /></button>
+          {isToggleActive && (
+            <div styleName="select">
+              {name ? <span styleName="listName">{name}</span> : ''}
+              {itemsFiltered.map(item => {
+                let inneedData = null
+                if (infoAboutCurrency) {
+                  inneedData = infoAboutCurrency.find(el => el.name === item.name)
+                }
+                return (
+                  <div
+                    key={item.value}
+                    styleName="option"
+                    onClick={() => {
+                      linkedValue.inputValue.set('')
+                      this.handleOptionClick(item)
+                    }}
+                  >
+                    <span styleName="shortTitle">{this.renderItem(item)}</span>
+                    <span styleName="fullTitle">{item.fullTitle}</span>
+                    {inneedData && (
+                      <span styleName={`range ${+inneedData.change > 0 ? 'rangeUp' : 'rangeDown'}`}>
+                        {inneedData.change} %
+                      </span>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+          )}
+          <button styleName="closeBtn" onClick={this.toggle}>
+            <img src={closeBtn} alt="" />
+          </button>
           <div styleName="dropDownLabel">
             <FieldLabel inRow inDropDown>
-              <strong>
-                {label}
-              </strong>
+              <strong>{label}</strong>
               &nbsp;
               <div styleName="smallTooltip">
-                <Tooltip id={id}>
-                  {tooltip}
-                </Tooltip>
+                <Tooltip id={id}>{tooltip}</Tooltip>
               </div>
             </FieldLabel>
           </div>
