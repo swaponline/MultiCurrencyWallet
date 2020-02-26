@@ -16,6 +16,7 @@ import { FieldLabel } from 'components/forms'
 import { Button } from 'components/controls'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
+import config from 'helpers/externalConfig'
 
 
 const title = defineMessages({
@@ -297,42 +298,58 @@ export default class ImportKeys extends Component {
           <p>
             <FormattedMessage id="ImportKeys107" defaultMessage="This procedure will rewrite your private key. If you are not sure about it, we recommend to press cancel" />
           </p>
-          <FieldLabel positionStatic>
-            <FormattedMessage id="ImportKeys110" defaultMessage="Please enter ETH private key" />
-          </FieldLabel>
-          <Group
-            inputLink={linked.ethKey}
-            placeholder="Key"
-            disabled={isImportedEth}
-            onClick={this.handleEthImportKey}
-          />
-          <FieldLabel positionStatic>
-            <FormattedMessage id="ImportKeys120" defaultMessage="Please enter BTC private key in WIF format" />
-          </FieldLabel>
-          <Group
-            inputLink={linked.btcKey}
-            placeholder="Key in WIF format"
-            disabled={isImportedBtc}
-            onClick={this.handleBtcImportKey}
-          />
-          <FieldLabel positionStatic>
-            <FormattedMessage id="ImportKeys280" defaultMessage="Please enter BCH private key in WIF format" />
-          </FieldLabel>
-          <Group
-            inputLink={linked.bchKey}
-            placeholder="Key in WIF format"
-            disabled={isImportedBch}
-            onClick={this.handleBchImportKey}
-          />
-          <FormattedMessage id="ImportKeys205" defaultMessage="Please enter LTC private key in WIF format">
-            {message => <FieldLabel positionStatic>{message}</FieldLabel>}
-          </FormattedMessage>
-          <Group
-            inputLink={linked.ltcKey}
-            placeholder="Key in WIF format"
-            disabled={isImportedLtc}
-            onClick={this.handleLtcImportKey}
-          />
+          {(!config.opts.curEnabled || config.opts.curEnabled.eth) && (
+            <>
+              <FieldLabel positionStatic>
+                <FormattedMessage id="ImportKeys110" defaultMessage="Please enter ETH private key" />
+              </FieldLabel>
+              <Group
+                inputLink={linked.ethKey}
+                placeholder="Key"
+                disabled={isImportedEth}
+                onClick={this.handleEthImportKey}
+              />
+            </>
+          )}
+          {(!config.opts.curEnabled || config.opts.curEnabled.btc) && (
+            <>
+              <FieldLabel positionStatic>
+                <FormattedMessage id="ImportKeys120" defaultMessage="Please enter BTC private key in WIF format" />
+              </FieldLabel>
+              <Group
+                inputLink={linked.btcKey}
+                placeholder="Key in WIF format"
+                disabled={isImportedBtc}
+                onClick={this.handleBtcImportKey}
+              />
+            </>
+          )}
+          {(!config.opts.curEnabled || config.opts.curEnabled.bch) && (
+            <>
+              <FieldLabel positionStatic>
+                <FormattedMessage id="ImportKeys280" defaultMessage="Please enter BCH private key in WIF format" />
+              </FieldLabel>
+              <Group
+                inputLink={linked.bchKey}
+                placeholder="Key in WIF format"
+                disabled={isImportedBch}
+                onClick={this.handleBchImportKey}
+              />
+            </>
+          )}
+          {(!config.opts.curEnabled || config.opts.curEnabled.ltc) && (
+            <>
+              <FormattedMessage id="ImportKeys205" defaultMessage="Please enter LTC private key in WIF format">
+                {message => <FieldLabel positionStatic>{message}</FieldLabel>}
+              </FormattedMessage>
+              <Group
+                inputLink={linked.ltcKey}
+                placeholder="Key in WIF format"
+                disabled={isImportedLtc}
+                onClick={this.handleLtcImportKey}
+              />
+            </>
+          )}
           {
             /*
             <FormattedMessage id="ImportKeys176" defaultMessage="Please enter xlm private key">

@@ -16,6 +16,7 @@ export const getActivatedCurrencies = () => {
   Object.keys(config.erc20).forEach((token) => {
     currencies.push(token.toUpperCase())
   })
+
   return currencies
 }
 

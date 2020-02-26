@@ -33,7 +33,11 @@ import helpers, { constants, links, ethToken } from "helpers";
 import { animate } from "helpers/domUtils";
 import Switching from "components/controls/Switching/Switching";
 
-const allowedCoins = ["BTC", "ETH", "BCH"];
+const allowedCoins = [
+  ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? ['BTC'] : [],
+  ...(!config.opts.curEnabled || config.opts.curEnabled.eth) ? ['ETH'] : [],
+  ...(!config.opts.curEnabled || config.opts.curEnabled.bch) ? ['BCH'] : [],
+]
 
 const isExchangeAllowed = currencies =>
   currencies.filter(c => {
@@ -147,7 +151,8 @@ export default class PartialClosure extends Component {
       match,
       intl: { locale },
       history,
-      decline
+      decline,
+      currencies,
     } = props;
     super();
 
@@ -380,7 +385,6 @@ export default class PartialClosure extends Component {
         exGetRate
       }));
     } catch (e) {
-      console.log("usdRates", this.usdRates);
       const exHaveRate = this.usdRates && this.usdRates[haveCurrency] !== undefined ? this.usdRates[haveCurrency] : 0;
       const exGetRate = this.usdRates && this.usdRates[getCurrency] !== undefined ? this.usdRates[getCurrency] : 0;
       this.setState(() => ({
@@ -491,6 +495,7 @@ export default class PartialClosure extends Component {
     let partialItemsArray = [...partialItems];
     let currenciesOfUrl = [];
     currenciesOfUrl.push(sellToken, buyToken);
+
 
     currenciesOfUrl.forEach(item => {
       if (allCurrencyies.includes(item.toUpperCase())) {
@@ -869,7 +874,6 @@ export default class PartialClosure extends Component {
   };
 
   updateAllowedBalance = async () => {
-    console.log("updateAllowedBalance", this.state.haveCurrency);
     await actions[this.state.haveCurrency].getBalance(this.state.haveCurrency);
   };
 
@@ -984,6 +988,7 @@ export default class PartialClosure extends Component {
       isOnlyForm,
       allOrders
     } = this.props;
+
     const {
       haveCurrency,
       getCurrency,

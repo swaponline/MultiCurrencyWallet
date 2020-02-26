@@ -11,7 +11,9 @@ import abi from 'human-standard-token-abi'
 import Channel from 'ipfs-pubsub-room'
 import IPFS from 'ipfs'
 
-import config from 'app-config'
+import config from 'helpers/externalConfig'
+import { initExternalConfig } from 'helpers/externalConfig'
+
 import helpers, { constants as privateKeys, utils } from 'helpers'
 import actions from 'redux/actions'
 
@@ -23,7 +25,7 @@ import { ETH2BTC, BTC2ETH, BCH2ETH, ETH2BCH, LTC2BTC, BTC2LTC, ETH2LTC, LTC2ETH,
 import { EthSwap, EthTokenSwap, BtcSwap, BchSwap, LtcSwap /* UsdtOmniSwap */ } from 'swap.swaps'
 
 
-
+initExternalConfig()
 
 const repo = utils.createRepo()
 utils.exitListener()

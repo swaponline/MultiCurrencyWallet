@@ -28,6 +28,7 @@ window.buildOptions = {
     btc: true,
     eth: true,
     //ltc: true,
-  }
+  },
+  invoiceEnabled: false, // Allow create invoices
 }
 */

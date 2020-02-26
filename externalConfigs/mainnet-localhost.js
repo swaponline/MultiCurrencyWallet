@@ -5,7 +5,7 @@ window.widgetERC20Tokens = {
     address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
     decimals: 6,
     fullName: 'Usdt'
-  },
+  },/*
   // Symbol of ERC20 token in lowerCase
   proxima: {
     // Address of ERC20 contract
@@ -19,14 +19,16 @@ window.widgetERC20Tokens = {
     // Background color of icon
     iconBgColor: '#ccc',
   },
+  */
 }
 
 window.buildOptions = {
   ownTokens: false, // Will be inited from window.widgetERC20Tokens
-  addCustomERC20: false, // Allow user add custom erc20 tokens
+  addCustomERC20: true, // Allow user add custom erc20 tokens
   curEnabled: { // Or 'false' if enabled all
     btc: true,
     eth: true,
     //ltc: true,
-  }
+  },
+  invoiceEnabled: false, // Allow create invoices
 }

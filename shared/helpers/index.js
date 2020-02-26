@@ -18,6 +18,7 @@ import ignoreProps from './ignoreProps'
 import handleGoTrade from './handleGoTrade'
 import firebase from './firebase'
 // Getters
+import externalConfig from './externalConfig'
 import getPageOffset from './getPageOffset'
 import getScrollBarWidth from './getScrollBarWidth'
 import paddingForSwapList from './paddingForSwapList'
@@ -70,7 +71,8 @@ export {
   getPageOffset,
   getScrollBarWidth,
   paddingForSwapList,
-  
+  externalConfig,
+
 
   getUnixTimeStamp,
   cacheStorageGet,

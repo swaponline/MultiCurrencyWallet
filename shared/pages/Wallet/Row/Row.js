@@ -506,7 +506,7 @@ export default class Row extends Component {
       })
     }
 
-    if (['BTC', 'ETH'].includes(currencyView) && !isWidgetBuild) {
+    if (['BTC', 'ETH'].includes(currencyView) && !isWidgetBuild && config.opts.invoiceEnabled) {
       dropDownMenuItems.push({
         id: 1004,
         title: <FormattedMessage id="WalletRow_Menu_Invoice" defaultMessage="Выставить счет" />,

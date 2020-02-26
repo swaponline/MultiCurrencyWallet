@@ -1,4 +1,4 @@
-import config from 'app-config'
+import config from 'helpers/externalConfig'
 
 
 const GetCustromERC20 = () => {
@@ -13,10 +13,10 @@ const swap = (config && config.isWidget) ?
   []
   :
   [
-    'ETH-BTC',
-    'ETH-LTC',
-    'LTC-BTC',
-    'ETH-BCH',
+    ...(!config.opts.curEnabled || (config.opts.curEnabled.eth && config.opts.curEnabled.btc)) ? ['ETH-BTC'] : [],
+    ...(!config.opts.curEnabled || (config.opts.curEnabled.eth && config.opts.curEnabled.ltc)) ? ['ETH-LTC'] : [],
+    ...(!config.opts.curEnabled || (config.opts.curEnabled.ltc && config.opts.curEnabled.btc)) ? ['LTC-BTC'] : [],
+    ...(!config.opts.curEnabled || (config.opts.curEnabled.etc && config.opts.curEnabled.bch)) ? ['ETH-BCH'] : [],
   ]
 
 Object.keys(config.erc20)
@@ -25,6 +25,7 @@ Object.keys(config.erc20)
 
     // swap.push(`${key.toUpperCase()}-USDTomni`)
   })
+
 
 if (config && config.isWidget) {
   swap.length = 0
@@ -41,7 +42,9 @@ if (config && config.isWidget) {
   const customERC = GetCustromERC20()
   Object.keys(customERC).forEach((tokenContract) => {
     const symbol = customERC[tokenContract].symbol
-    swap.push(`${symbol.toUpperCase()}-BTC`)
+    const pair = `${symbol.toUpperCase()}-BTC`
+
+    if (swap.indexOf(pair) === -1) swap.push(pair)
   })
 }
 export default [

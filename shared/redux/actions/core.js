@@ -5,7 +5,7 @@ import SwapApp from 'swap.app'
 import Swap from 'swap.swap'
 import { constants } from 'helpers'
 import Pair from 'pages/Home/Orders/Pair'
-import config from 'app-config'
+import config from 'helpers/externalConfig'
 
 
 const debug = (...args) => console.log(...args)
@@ -18,12 +18,17 @@ const getOrders = (orders) => {
 const addCurrencyFromOrders = (orders) => {
   if (config && config.isWidget) return // НЕ добавляем валюты из ордеров в режиме виджета
 
+  // Зачем только это???
+  // Если в reducers.currencies.partialItems забыли добавить?
+  // Так там автоматически генерирует....
+  // TODO Проверить зависимости и удалить
+
   const currenciesGetState = getState().currencies
-  const allCurrencyies = currenciesGetState.items.map(item => item.name) // все валюты достпуные в клиенте
+  const allCurrencyies = currenciesGetState.items.map(item => item.name.toLowerCase()) // все валюты достпуные в клиенте
   const partialCurrency = currenciesGetState.partialItems // получаем все премиальные валюты
 
-  const sellOrderArray = orders.map(item => item.sellCurrency) // получаем из ордерова валюты на продажу
-  const buyOrderArray = orders.map(item => item.buyCurrency) // получаем из ордерова валюты на покупку
+  const sellOrderArray = orders.map(item => item.sellCurrency.toLowerCase()) // получаем из ордерова валюты на продажу
+  const buyOrderArray = orders.map(item => item.buyCurrency.toLowerCase()) // получаем из ордерова валюты на покупку
 
   let sortedArray = [...sellOrderArray] // записываем sellOrderArray в массив
 
@@ -32,31 +37,35 @@ const addCurrencyFromOrders = (orders) => {
     for (const buyCurrency of buyOrderArray) { // eslint-disable-line
       if (sellCurrency !== buyCurrency) {
         if (!sellOrderArray.includes(sellCurrency)) {
-          if (allCurrencyies.includes(sellCurrency)) { // не пускаю валюты не существующие в клиенте
-            sortedArray.push(sellCurrency)
-          }
+          sortedArray.push(sellCurrency.toLowerCase())
         }  else if (!sellOrderArray.includes(buyCurrency)) {
-          if (allCurrencyies.includes(buyCurrency)) { // не пускаю валюты не существующие в клиенте
-            sortedArray.push(buyCurrency)
-          }
+          sortedArray.push(buyCurrency.toLowerCase())
         }
       }
     }
   }
 
+  let hasUpdates = false
+
   sortedArray.forEach(item => { // добавляем объект в дроп, еще раз проверяя, на совпадения
-    if (!partialCurrency.map(item => item.name).includes(item)) {
-      partialCurrency.push(
-        {
-          name: item.toUpperCase(),
-          title: item.toUpperCase(),
-          icon: item.toLowerCase(),
-          value: item.toLowerCase(),
-        }
-      )
+    if (!partialCurrency.map(item => item.name.toLowerCase()).includes(item)) {
+      if (allCurrencyies.includes(item)) { // не пускаю валюты не существующие в клиенте
+        hasUpdates = true
+        partialCurrency.push(
+          {
+            name: item.toUpperCase(),
+            title: item.toUpperCase(),
+            icon: item.toLowerCase(),
+            value: item.toLowerCase(),
+          }
+        )
+      }
     }
   })
-  reducers.currencies.updatePartialItems(partialCurrency)
+
+  if (hasUpdates) {
+    reducers.currencies.updatePartialItems(partialCurrency)
+  }
 }
 
 const getSwapById = (id) => new Swap(id, SwapApp.shared())
