@@ -139,6 +139,7 @@ const CreateWallet = (props) => {
               callback: () => {
                 handleClick()
               },
+              showCloseButton: false,
             })
             return
           }

@@ -150,6 +150,15 @@ export default class Btc extends PureComponent {
     this.setState({
       action: (action === 'join') ? 'linkready' : 'ready'
     })
+    if (action === 'join') {
+      actions.modals.open(constants.modals.MultisignJoinLink, {
+        action: `connect`,
+        callback: () => {
+          this.handleGoToWallet()
+        },
+        showCloseButton: false,
+      })
+    }
   }
 
   handleOnlineWalletConnect = async (_data) => {
