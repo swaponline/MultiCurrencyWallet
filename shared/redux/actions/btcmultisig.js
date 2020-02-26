@@ -239,6 +239,9 @@ const login_USER = (privateKey, otherOwnerPublicKey ,onlyCheck) => {
           }
         )
         actions.notifications.show('BTCMultisignRequest', txData)
+        actions.modals.open(constants.modals.BtcMultisignConfirmTx, {
+          txData,
+        })
       }
     })
   })

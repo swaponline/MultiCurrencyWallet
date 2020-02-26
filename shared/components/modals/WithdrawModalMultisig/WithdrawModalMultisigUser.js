@@ -15,6 +15,7 @@ import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
+import { ShareLink } from 'components/controls'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import ReactTooltip from 'react-tooltip'
@@ -516,35 +517,14 @@ export default class WithdrawModalMultisigUser extends React.Component {
               <br />
               <FormattedMessage id="WithdrawMSUserMessage" defaultMessage="Send this link to other wallet owner" />
             </p>
-            <CopyToClipboard
-              text={txConfirmLink}
-              onCopy={this.handleCopyLink}
-            >
-              <div styleName="highLevel">
-                <div styleName="groupField">
-                  
-                </div>
-                <div styleName="multisignConfirmTxLink">
-                  {txConfirmLink}
-                </div>
-                <div styleName="centerAlign">
-                  <Button
-                    styleName="buttonFull"
-                    big
-                    blue
-                    fullWidth
-                    onClick={() => { }}
-                    disabled={isLinkCopied}
-                  >
-                    {isLinkCopied ?
-                      <FormattedMessage id="WithdrawMSLinkCopied" defaultMessage="Link copied to clipboard" />
-                      :
-                      <FormattedMessage id="WithdrawMSLinkCopy" defaultMessage="Copy to clipboard" />
-                    }
-                  </Button>
-                </div>
+            <div styleName="highLevel">
+              <div styleName="groupField">
+                
               </div>
-            </CopyToClipboard>
+              <div>
+                <ShareLink link={txConfirmLink} /> 
+              </div>
+            </div>
             <div styleName="centerAlign">
               <Button styleName="buttonFull" big blue fullWidth onClick={this.handleReady}>
                 <FormattedMessage id="WithdrawMSUserFinish" defaultMessage="Ready" />
