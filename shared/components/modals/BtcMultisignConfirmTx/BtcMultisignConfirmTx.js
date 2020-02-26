@@ -84,13 +84,68 @@ export default class BtcMultisignConfirmTx extends React.Component {
 
       this.setState({
         step: `txInfo`,
+        txRaw: txData,
         txData: await actions.btcmultisig.parseRawTX(txData),
       })
-    }, 5000)
+    })
   }
 
   handleFinish = async () => {
 
+  }
+
+  handleConfirm = async() => {
+    const {
+      txRaw,
+      txData,
+    } = this.state
+
+    const {
+      name,
+    } = this.props
+
+    this.setState({
+      isConfirming: true,
+    })
+
+    const signedTX = await actions.btcmultisig.signMultiSign( txRaw )
+    const txID = await actions.btcmultisig.broadcastTx( signedTX )
+
+    if (txID && txID.txid) {
+      actions.modals.close(name);
+
+      console.log(txData)
+      const infoPayData = {
+        amount: `${txData.amount}`,
+        currency: 'BTC (Multisig)',
+        balance: 0,
+        oldBalance: 0, // @Todo доделать old balance
+        txId: txID.txid,
+        toAddress: txData.to,
+      }
+      console.log(infoPayData)
+      actions.modals.open(constants.modals.InfoPay, infoPayData)
+    } else {
+      this.setState({
+        isError: true,
+        isConfirming: false,
+      })
+    }
+    /*
+    actions.modals.open(constants.modals.InfoPay, {
+      amount,
+      currency,
+      balance,
+      oldBalance: 0, // @Todo доделать old balance
+      txRaw: txRaw,
+      toAddress: to
+    })
+
+    this.setState(() => ({ isShipped: false, error: false }));
+    if (onReady instanceof Function) {
+      onReady();
+    }
+    */
   }
 
   render() {
@@ -101,6 +156,8 @@ export default class BtcMultisignConfirmTx extends React.Component {
 
     const {
       step,
+      txData,
+      isConfirming,
     } = this.state
 
     const { debugShowTXB, debugShowInput, debugShowOutput } = this.state
@@ -121,6 +178,28 @@ export default class BtcMultisignConfirmTx extends React.Component {
               <h1>
                 <FormattedMessage id="BTCMS_ConfirmTxTitle" defaultMessage="Подтверждение транзакции" />
               </h1>
+              <h3>
+                <FormattedMessage
+                  id="BTCMS_FromAddress"
+                  defaultMessage="Оплата с кошелка: {address}"
+                  values={{address: txData.from}}
+                />
+              </h3>
+              <h3>
+                <FormattedMessage
+                  id="BTCMS_Amount"
+                  defaultMessage="Сумма транзакции: {amount} BTC"
+                  values={{amount: txData.amount}}
+                />
+              </h3>
+              <h3>
+                <FormattedMessage
+                  id="BTCMS_ToAddress"
+                  defaultMessage="Получатель: {address}"
+                  values={{address: txData.to}}
+                />
+              </h3>
+              <hr />
               <h3>
                 <button onClick={ () => { this.setState({debugShowInput: !debugShowInput}) } }>
                   <FormattedMessage id="BTCMS_ConfirmTxInputs" defaultMessage="Входы транзакции" />
@@ -149,16 +228,13 @@ export default class BtcMultisignConfirmTx extends React.Component {
                 </code>
               </pre>
               }
-              <div>
-                <Button brand onClick={this.handleConfirm}>
-                  <FormattedMessage id="BTCMS_ConfirmTxSign" defaultMessage="Подписать транзакцию" />
-                </Button>
-              </div>
+              <hr />
               <div styleName="buttonsHolder">
                 <Button
                   styleName="buttonFull"
                   blue
-                  onClick={this.handleFinish}
+                  disabled={isConfirming}
+                  onClick={this.handleConfirm}
                   fullWidth
                 >
                   <FormattedMessage { ... langLabels.confirmTx } />
@@ -166,6 +242,7 @@ export default class BtcMultisignConfirmTx extends React.Component {
                 <Button
                   styleName="buttonFull"
                   blue
+                  disabled={isConfirming}
                   onClick={this.handleFinish}
                   fullWidth
                 >
