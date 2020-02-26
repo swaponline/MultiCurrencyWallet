@@ -71,6 +71,8 @@ export default class CurrencyDirectionChooser extends Component {
       flipCurrency, handleBuyCurrencySelect, handleSellCurrencySelect, handleSubmit,
       currencies, addSelectedItems } = this.props
 
+      
+
     return (
       <div styleName="choice">
         <div styleName="row title">
