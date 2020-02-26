@@ -49,11 +49,33 @@
 }
 
 .pen-url {
-  margin-right: 15px;
+  max-width: 600px;
   overflow: hidden;
-  text-overflow: ellipsis;
-  word-break: break-word;
+  position: relative;
+  background: #fff;
+  cursor: pointer;
+  padding-bottom: 15px;
+  span:nth-child(1) {
+    display: block;
+    text-align: right;
+    outline: 2px solid blue;
+    text-overflow: clip;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    position: absolute;
+  }
+  span:nth-child(2) {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 50%;
+    background: #fff;
+  }
 }
+
 .copy-link {
   padding-left: 30px;
   padding-right: 30px;
