@@ -15,6 +15,7 @@ import Coin from 'components/Coin/Coin'
 import Explanation from '../Explanation'
 import icons from '../images'
 import config from 'app-config'
+import { getActivatedCurrencies } from 'helpers/user'
 
 import Cupture
 , {
@@ -44,11 +45,50 @@ export default class CreateWallet extends Component {
     { name: "ETH", capture: "Ethereum" },
   ]
 
+  
   constructor(props) {
     super()
     const { currencies } = props
 
-    const items = currencies.filter(({ addAssets, name }) => addAssets)
+    if (config
+      && config.opts
+      && config.opts.ownTokens
+      && Object.keys(config.opts.ownTokens)
+      && Object.keys(config.opts.ownTokens).length
+    ) {
+      this.defaultStartPack = []
+      if (!config.opts.curEnabled || config.opts.curEnabled.btc) {
+        this.defaultStartPack.push({ name: "BTC", capture: "Bitcoin" })
+      }
+      if (!config.opts.curEnabled || config.opts.curEnabled.eth) {
+        this.defaultStartPack.push({ name: "ETH", capture: "Ethereum" })
+      }
+      const ownTokensKeys = Object.keys(config.opts.ownTokens)
+      // В defaultStartPack помещается пять валют
+      if (ownTokensKeys.length >=1 && (5-this.defaultStartPack.length)) {
+        this.defaultStartPack.push({
+          name: ownTokensKeys[0].toUpperCase(),
+          capture: config.opts.ownTokens[ownTokensKeys[0]].fullName,
+        })
+      }
+      if (ownTokensKeys.length >=2 && (5-this.defaultStartPack.length)) {
+        this.defaultStartPack.push({
+          name: ownTokensKeys[1].toUpperCase(),
+          capture: config.opts.ownTokens[ownTokensKeys[1]].fullName,
+        })
+      }
+      if (ownTokensKeys.length >=3 && (5-this.defaultStartPack.length)) {
+        this.defaultStartPack.push({
+          name: ownTokensKeys[2].toUpperCase(),
+          capture: config.opts.ownTokens[ownTokensKeys[2]].fullName,
+        })
+      }
+    }
+
+    const enabledCurrencies = getActivatedCurrencies()
+    const items = currencies
+      .filter(({ addAssets, name }) => addAssets)
+      .filter(({ name }) => enabledCurrencies.includes(name))
     const untouchable = this.defaultStartPack.map(({ name }) => name)
 
     const coins = items
@@ -96,10 +136,14 @@ export default class CreateWallet extends Component {
     const { coins, startPack, all } = this.state
     let newStartPack = this.defaultStartPack
     if (!all) {
-      newStartPack = [{
-        name: 'Custom ERC20',
-        capture: <FormattedMessage id="createWallet_customERC20" defaultMessage="Подключить токен" />,
-      }, ...startPack, ...coins]
+      if (config.opts.addCustomERC20) {
+        newStartPack = [{
+          name: 'Custom ERC20',
+          capture: <FormattedMessage id="createWallet_customERC20" defaultMessage="Подключить токен" />,
+        }, ...startPack, ...coins]
+      } else {
+        newStartPack = [ ...startPack, ...coins]
+      }
     }
     this.setState(() => ({ startPack: newStartPack, all: !all }))
   }
