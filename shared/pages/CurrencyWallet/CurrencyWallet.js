@@ -7,6 +7,8 @@ import { Link, withRouter } from 'react-router-dom'
 
 import { links, constants } from 'helpers'
 
+import {aliases} from 'helpers/links'
+
 import CSSModules from 'react-css-modules'
 import styles from './CurrencyWallet.scss'
 
@@ -80,12 +82,16 @@ export default class CurrencyWallet extends Component {
       decimals: null,
       balance: null,
       isBalanceEmpty: false,
+      fullname: null
     }
   }
 
   static getDerivedStateFromProps({ match: { params: { fullName } }, intl: { locale }, items, history, tokens }) {
     const item = items.map(item => item.fullName.toLowerCase())
     const token = tokens.map(item => item.fullName).includes(fullName.toUpperCase())
+
+    // looking for an alias
+    fullName = aliases[fullName] ? aliases[fullName] : fullName
 
     if (item.includes(fullName.toLowerCase())) {
       const itemCurrency = items.filter(item => item.fullName.toLowerCase() === fullName.toLowerCase())[0]
@@ -99,10 +105,13 @@ export default class CurrencyWallet extends Component {
         infoAboutCurrency
       } = itemCurrency
 
+   
+
       return {
         token,
         currency,
         address,
+        fullName,
         contractAddress,
         decimals,
         balance,
@@ -158,7 +167,7 @@ export default class CurrencyWallet extends Component {
   }
 
   handleWithdraw = () => {
-    let { match: { params: { fullName } }, items } = this.props
+    
     const {
       currency,
       address,
@@ -197,11 +206,12 @@ export default class CurrencyWallet extends Component {
 
   render() {
 
-    let { swapHistory, txHistory, location, match: { params: { fullName, address = null } }, intl, hiddenCoinsList, isSigned, isFetching } = this.props
+    let { swapHistory, txHistory, location, match: { params: { address = null } }, intl, hiddenCoinsList, isSigned, isFetching } = this.props
 
     const {
       currency,
       balance,
+      fullName,
       infoAboutCurrency
     } = this.state
       

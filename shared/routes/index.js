@@ -30,6 +30,7 @@ const routes = (
     <Switch>
       <Route path={`${localisePrefix}${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />
 
+      <Route path={`${localisePrefix}/:fullName(btc)/:address`} component={CurrencyWallet} />
       <Route path={`${localisePrefix}/:fullName-wallet/:address?`} component={CurrencyWallet} />
 
       <Route path={`${localisePrefix}${links.home}:buy-:sell/:orderId`} component={Home} />
@@ -42,9 +43,11 @@ const routes = (
       <Route path={`${localisePrefix}${links.pointOfSell}`} component={PointOfSell} />
 
       <Route path={`${localisePrefix}${links.aboutUs}`} component={About} />
+   
       <Route path={`${localisePrefix}${links.send}/:currency/:address/:amount`} component={Wallet} />
       <Route path={`${localisePrefix}${links.wallet}`} component={Wallet} />
       <Route path={`${localisePrefix}${links.history}/(btc)?/:address?`} component={History} />
+      
       
       <Route exact path={`${localisePrefix}${links.createWallet}`} component={CreateWallet} />
       <Route path={`${localisePrefix}${links.createWallet}${links.home}:currency`} component={CreateWallet} />
