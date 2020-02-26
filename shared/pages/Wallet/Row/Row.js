@@ -532,6 +532,12 @@ export default class Row extends Component {
           title: <FormattedMessage id="WalletRow_Menu_ActivateSMSProtected" defaultMessage="Activate" />,
           action: this.handleActivateProtected,
           disabled: false
+        },
+        {
+          id: 1011,
+          title: <FormattedMessage id="WalletRow_Menu_Hide" defaultMessage="Hide" />,
+          action: this.hideCurrency,
+          disabled: false
         }
       ]
     }
@@ -554,6 +560,14 @@ export default class Row extends Component {
         action: this.handleGenerateMultisignLink,
         disabled: false
       })
+      if (!this.props.item.active) {
+        dropDownMenuItems.push({
+          id: 1011,
+          title: <FormattedMessage id="WalletRow_Menu_Hide" defaultMessage="Hide" />,
+          action: this.hideCurrency,
+          disabled: false
+        })
+      }
     }
 
     return (
