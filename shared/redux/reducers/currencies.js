@@ -9,25 +9,60 @@ const GetCustromERC20 = () => {
   return tokensInfo[configStorage]
 }
 
+let buildOpts ={
+  curEnabled: false,
+  ownTokens: false,
+  addCustomERC20: true,
+  invoiceEnabled: true,
+}
+
+if (window
+  && window.buildOptions
+  && Object.keys(window.buildOptions)
+  && Object.keys(window.buildOptions).length
+) {
+  buildOpts = { ...buildOpts, ...window.buildOptions }
+}
+
+if (window
+  && window.widgetERC20Tokens
+  && Object.keys(window.widgetERC20Tokens)
+  && Object.keys(window.widgetERC20Tokens).length
+) {
+  buildOpts.ownTokens = window.widgetERC20Tokens
+}
+if (buildOpts.ownTokens && Object.keys(buildOpts.ownTokens).length) {
+  // Multi token mode
+  const cleanERC20 = {}
+  Object.keys(buildOpts.ownTokens).forEach((key) => {
+    if (key !== ('{#'+'WIDGETTOKENCODE'+'#}')) {
+      const tokenData = buildOpts.ownTokens[key]
+      cleanERC20[key] = tokenData
+    }
+  })
+  config.erc20 = cleanERC20
+}
+
+
 const initialState = {
   items: [
-    {
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.eth) ? [{
       name: 'ETH',
       title: 'ETH',
       icon: 'eth',
       value: 'eth',
       fullTitle: 'ethereum',
       addAssets: true,
-    },
-    {
+    }] : [],
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.ltc) ? [{
       name: 'LTC',
       title: 'LTC',
       icon: 'ltc',
       value: 'ltc',
       fullTitle: 'litecoin',
       addAssets: true,
-    },
-    {
+    }] : [],
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.btc) ? [{
       name: 'BTC',
       title: 'BTC',
       icon: 'btc',
@@ -42,6 +77,7 @@ const initialState = {
       value: 'btcMultisig',
       fullTitle: 'bitcoinMultisig',
       addAssets: false,
+      dontCreateOrder: true,
     },
     {
       name: 'BTC (Multisig)',
@@ -50,15 +86,16 @@ const initialState = {
       value: 'btcMultisig',
       fullTitle: 'bitcoinMultisig',
       addAssets: false,
-    },
-    {
+      dontCreateOrder: true,
+    }] : [],
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.qtum) ? [{
       name: 'QTUM',
       title: 'QTUM',
       icon: 'qtum',
       value: 'qtum',
       fullTitle: 'qtum',
       addAssets: true,
-    },
+    }] : [],
     ...(Object.keys(config.erc20)
       .map(key => ({
         name: key.toUpperCase(),
@@ -70,34 +107,34 @@ const initialState = {
       }))),
   ],
   partialItems: [
-    {
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.eth) ? [{
       name: 'ETH',
       title: 'ETH',
       icon: 'eth',
       value: 'eth',
       fullTitle: 'ethereum',
-    },
-    {
+    }] : [],
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.ltc) ? [{
       name: 'LTC',
       title: 'LTC',
       icon: 'ltc',
       value: 'ltc',
       fullTitle: 'litecoin',
-    },
-    {
+    }] : [],
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.btc) ? [{
       name: 'BTC',
       title: 'BTC',
       icon: 'btc',
       value: 'btc',
       fullTitle: 'bitcoin',
-    },
-    {
+    }] : [],
+    ...((!buildOpts.curEnabled || buildOpts.curEnabled.bch) ? [{
       name: 'BCH',
       title: 'BCH',
       icon: 'bch',
       value: 'bch',
       fullTitle: 'bitcoin cash',
-    },
+    }] : []),
     ...(Object.keys(config.erc20)
       .map(key => ({
         name: key.toUpperCase(),
@@ -110,6 +147,7 @@ const initialState = {
   addSelectedItems: [],
   addPartialItems: [],
 }
+
 
 if (config.isWidget) {
   initialState.items = [
@@ -197,24 +235,26 @@ if (config.isWidget) {
     },
   ]
 } else {
-  const customERC = GetCustromERC20()
-  Object.keys(customERC).forEach((tokenContract) => {
-    const symbol = customERC[tokenContract].symbol
-    initialState.items.push({
-      name: symbol.toUpperCase(),
-      title: symbol.toUpperCase(),
-      icon: symbol.toLowerCase(),
-      value: symbol.toLowerCase(),
-      fullTitle: symbol,
+  if (!config.isWidget && buildOpts.addCustomERC20) {
+    const customERC = GetCustromERC20()
+    Object.keys(customERC).forEach((tokenContract) => {
+      const symbol = customERC[tokenContract].symbol
+      initialState.items.push({
+        name: symbol.toUpperCase(),
+        title: symbol.toUpperCase(),
+        icon: symbol.toLowerCase(),
+        value: symbol.toLowerCase(),
+        fullTitle: symbol,
+      })
+      initialState.partialItems.push({
+        name: symbol.toUpperCase(),
+        title: symbol.toUpperCase(),
+        icon: symbol.toLowerCase(),
+        value: symbol.toLowerCase(),
+        fullTitle: symbol,
+      })
     })
-    initialState.partialItems.push({
-      name: symbol.toUpperCase(),
-      title: symbol.toUpperCase(),
-      icon: symbol.toLowerCase(),
-      value: symbol.toLowerCase(),
-      fullTitle: symbol,
-    })
-  })
+  }
 }
 // eslint-disable-next-line
 // process.env.MAINNET && initialState.items.unshift({
@@ -225,14 +265,16 @@ if (config.isWidget) {
 //   fullTitle: 'USD Tether',
 // })
 // eslint-disable-next-line
-process.env.TESTNET && initialState.items.unshift({
-  name: 'BCH',
-  title: 'BCH',
-  icon: 'bch',
-  value: 'bch',
-  fullTitle: 'bitcoin cash',
-  addAssets: true,
-})
+if (!buildOpts.curEnabled || buildOpts.curEnabled.bch) {
+  process.env.TESTNET && initialState.items.unshift({
+    name: 'BCH',
+    title: 'BCH',
+    icon: 'bch',
+    value: 'bch',
+    fullTitle: 'bitcoin cash',
+    addAssets: true,
+  })
+}
 
 const addSelectedItems = (state, payload) => ({
   ...state,

@@ -25,7 +25,7 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import { isCoinAddress } from 'swap.app/util/typeforce'
-import config from 'app-config'
+import config from 'helpers/externalConfig'
 import SwapApp, { util } from 'swap.app'
 import QrReader from 'components/QrReader'
 
@@ -33,7 +33,11 @@ import helpers, { constants, links, ethToken } from 'helpers'
 import { animate } from 'helpers/domUtils'
 import Switching from 'components/controls/Switching/Switching'
 
-const allowedCoins = ['BTC', 'ETH', 'BCH']
+const allowedCoins = [
+  ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? ['BTC'] : [],
+  ...(!config.opts.curEnabled || config.opts.curEnabled.eth) ? ['ETH'] : [],
+  ...(!config.opts.curEnabled || config.opts.curEnabled.bch) ? ['BCH'] : [],
+]
 
 const isExchangeAllowed = (currencies) => currencies.filter(c => {
   const isErc = Object.keys(config.erc20)
