@@ -34,7 +34,7 @@ function BalanceForm({
       break
   }
 
-  console.log('activeCurrency', activeCurrency)
+  //console.log('activeCurrency', activeCurrency)
 
   return (
     <div styleName={isWidgetBuild && !config.isFullBuild ? 'yourBalance widgetBuild' : 'yourBalance'}>

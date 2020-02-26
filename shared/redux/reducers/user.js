@@ -39,14 +39,14 @@ export const initialState = {
     balanceError: null,
     infoAboutCurrency: null
   },
-  bchData: {
+  /*bchData: {
     balance: 0,
     isBalanceFetched: false,
     currency: 'BCH',
     fullName: 'BitcoinCash',
     balanceError: null,
     infoAboutCurrency: null
-  },
+  },*/
   /*
   xlmData: {
     balance: 0,
@@ -63,7 +63,6 @@ export const initialState = {
     balanceError: null,
     infoAboutCurrency: null
   },
-  /*
   usdtData: {
     address: '0x0',
     publicKey: '0x0',
@@ -73,7 +72,6 @@ export const initialState = {
     fullName: 'USDT',
     balanceError: null,
   },
-  */
   nimData: {
     balance: 0,
     isBalanceFetched: false,
