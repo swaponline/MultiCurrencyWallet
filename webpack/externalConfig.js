@@ -5,16 +5,16 @@ import fs from 'fs'
 
 
 const externalConfig = () => {
-  let from = `externalConfigs\\${config.entry}-default.js`
+  let from = `externalConfigs/${config.entry}-default.js`
 
   const targetHost = getHostName(config.publicPath)
 
   if (targetHost) {
-    if (fs.existsSync(`externalConfigs\\${targetHost}.js`)) {
-      from = `externalConfigs\\${targetHost}.js`
+    if (fs.existsSync(`externalConfigs/${targetHost}.js`)) {
+      from = `externalConfigs/${targetHost}.js`
     }
-    if (fs.existsSync(`externalConfigs\\${config.entry}-${targetHost}.js`)) {
-      from = `externalConfigs\\${config.entry}-${targetHost}.js`
+    if (fs.existsSync(`externalConfigs/${config.entry}-${targetHost}.js`)) {
+      from = `externalConfigs/${config.entry}-${targetHost}.js`
     }
   }
 
