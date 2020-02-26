@@ -466,7 +466,7 @@ tr button[disabled]:hover {
   top: -10px;
   background: #fff;
   padding: 10px;
-  z-index: 2;
+  z-index: 11;
   a {
     font-size: 13px;
     color: #007bff;
@@ -504,20 +504,24 @@ tr button[disabled]:hover {
     font-weight: bold;
     margin-left: 25px;
   }
-  .unconfirmedBalance {
-    font-size: 11px;
-    color: #c9c9c9;
-    margin-top: 0px;
-    display: block;
-    margin-bottom: -30px;
-    > span {
-      font-size: 11px;
-      color: #c9c9c9;
-      margin-right: 5px;
-    }
-  }
 }
 
+.unconfirmedBalance {
+  font-size: 11px;
+  color: #c9c9c9;
+  margin-top: 0px;
+  display: block;
+  margin-bottom: -30px;
+  position: absolute;
+  right: 100%;
+  top: 3px;
+  margin-right: 10px;
+  > span {
+    font-size: 11px;
+    color: #c9c9c9;
+    margin-right: 5px;
+  }
+}
 .assetsTableDots {
   position: absolute;
   right: 10px;

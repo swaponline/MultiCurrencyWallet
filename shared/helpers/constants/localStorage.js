@@ -25,4 +25,5 @@ export default {
   isClosedNotifyBlockBanner: 'isClosedNotifyBlockBanner',
   walletTitle: 'walletTitle',
   customERC: 'customERC',
+  balanceActiveCurrency: 'balanceActiveCurrency'
 }

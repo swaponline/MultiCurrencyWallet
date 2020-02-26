@@ -1,6 +1,6 @@
 .wallet {
   margin: 30px 0;
-  font-family: "Manrope-Bold", sans-serif;
+  font-family: 'Manrope-Bold', sans-serif;
 }
 
 .circle {
@@ -138,7 +138,7 @@
 .yourAssetsDescr {
   color: #8e9aa3;
   font-size: 13px;
-  font-family: "Manrope-Medium", sans-serif;
+  font-family: 'Manrope-Medium', sans-serif;
   line-height: 150%;
 }
 
@@ -151,7 +151,7 @@
   box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08), 0px 1px 4px rgba(0, 0, 0, 0.08);
   border-radius: 4px;
   height: fit-content;
-  font-family: "Manrope-Bold", sans-serif;
+  font-family: 'Manrope-Bold', sans-serif;
 }
 
 .yourBalanceTop {
@@ -160,10 +160,12 @@
 }
 .yourBalanceDescr {
   color: #8e9aa3;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: bold;
   position: absolute;
+  top: 22px;
   right: 25px;
+  font-family: 'Inter-Bold', sans-serif;
 }
 
 .exchangeForm {
@@ -182,7 +184,7 @@
     margin-right: 7px;
   }
   p {
-    font-size: 32px;
+    font-size: 36px;
     line-height: 44px;
     color: #1f2d48;
     font-weight: bold;
@@ -222,7 +224,7 @@
     left: 0;
     bottom: 0;
     opacity: 0.1;
-    content: "";
+    content: '';
     background: linear-gradient(180deg, #6144e5 0%, rgba(97, 68, 229, 0) 100%);
   }
   height: 95px;
@@ -245,7 +247,7 @@
   button {
     padding: 0;
     cursor: pointer;
-    font-family: "Inter-Bold", sans-serif;
+    font-family: 'Inter-Bold', sans-serif;
     text-transform: uppercase;
     margin: 0 10px;
     font-size: 13px;
@@ -299,7 +301,7 @@
       button {
         width: 48%;
       }
-      button[id="exchangeBtn"] {
+      button[id='exchangeBtn'] {
         width: 100%;
         margin-top: 10px;
       }
