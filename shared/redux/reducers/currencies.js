@@ -9,25 +9,40 @@ const GetCustromERC20 = () => {
   return tokensInfo[configStorage]
 }
 
+let buildOpts = {
+  curEnabled: false,
+  addCustomERC20: true,
+}
+
+if (window
+  && window.buildOptions
+  && Object.keys(window.buildOptions)
+  && Object.keys(window.buildOptions).length
+) {
+  buildOpts = { ...buildOpts, ...window.buildOptions }
+}
+
+console.log(buildOpts)
+
 const initialState = {
   items: [
-    {
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.eth) ? [{
       name: 'ETH',
       title: 'ETH',
       icon: 'eth',
       value: 'eth',
       fullTitle: 'ethereum',
       addAssets: true,
-    },
-    {
+    }] : [],
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.ltc) ? [{
       name: 'LTC',
       title: 'LTC',
       icon: 'ltc',
       value: 'ltc',
       fullTitle: 'litecoin',
       addAssets: true,
-    },
-    {
+    }] : [],
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.btc) ? [{
       name: 'BTC',
       title: 'BTC',
       icon: 'btc',
@@ -50,15 +65,15 @@ const initialState = {
       value: 'btcMultisig',
       fullTitle: 'bitcoinMultisig',
       addAssets: false,
-    },
-    {
+    }] : [],
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.qtum) ? [{
       name: 'QTUM',
       title: 'QTUM',
       icon: 'qtum',
       value: 'qtum',
       fullTitle: 'qtum',
       addAssets: true,
-    },
+    }] : [],
     ...(Object.keys(config.erc20)
       .map(key => ({
         name: key.toUpperCase(),
@@ -70,34 +85,34 @@ const initialState = {
       }))),
   ],
   partialItems: [
-    {
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.eth) ? [{
       name: 'ETH',
       title: 'ETH',
       icon: 'eth',
       value: 'eth',
       fullTitle: 'ethereum',
-    },
-    {
+    }] : [],
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.ltc) ? [{
       name: 'LTC',
       title: 'LTC',
       icon: 'ltc',
       value: 'ltc',
       fullTitle: 'litecoin',
-    },
-    {
+    }] : [],
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.btc) ? [{
       name: 'BTC',
       title: 'BTC',
       icon: 'btc',
       value: 'btc',
       fullTitle: 'bitcoin',
-    },
-    {
+    }] : [],
+    ...((!buildOpts.curEnabled || buildOpts.curEnabled.bch) ? [{
       name: 'BCH',
       title: 'BCH',
       icon: 'bch',
       value: 'bch',
       fullTitle: 'bitcoin cash',
-    },
+    }] : []),
     ...(Object.keys(config.erc20)
       .map(key => ({
         name: key.toUpperCase(),
@@ -111,6 +126,45 @@ const initialState = {
   addPartialItems: [],
 }
 
+console.log('redux currency partialItems', buildOpts, initialState.partialItems)
+console.log( [
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.eth) ? [{
+      name: 'ETH',
+      title: 'ETH',
+      icon: 'eth',
+      value: 'eth',
+      fullTitle: 'ethereum',
+    }] : [],
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.ltc) ? [{
+      name: 'LTC',
+      title: 'LTC',
+      icon: 'ltc',
+      value: 'ltc',
+      fullTitle: 'litecoin',
+    }] : [],
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.btc) ? [{
+      name: 'BTC',
+      title: 'BTC',
+      icon: 'btc',
+      value: 'btc',
+      fullTitle: 'bitcoin',
+    }] : [],
+    ...((!buildOpts.curEnabled || buildOpts.curEnabled.bch) ? [{
+      name: 'BCH',
+      title: 'BCH',
+      icon: 'bch',
+      value: 'bch',
+      fullTitle: 'bitcoin cash',
+    }] : []),
+    ...(Object.keys(config.erc20)
+      .map(key => ({
+        name: key.toUpperCase(),
+        title: key.toUpperCase(),
+        icon: key,
+        value: key,
+        fullTitle: key,
+      }))),
+  ])
 if (config.isWidget) {
   initialState.items = [
     {
@@ -197,24 +251,26 @@ if (config.isWidget) {
     },
   ]
 } else {
-  const customERC = GetCustromERC20()
-  Object.keys(customERC).forEach((tokenContract) => {
-    const symbol = customERC[tokenContract].symbol
-    initialState.items.push({
-      name: symbol.toUpperCase(),
-      title: symbol.toUpperCase(),
-      icon: symbol.toLowerCase(),
-      value: symbol.toLowerCase(),
-      fullTitle: symbol,
+  if (buildOpts.addCustomERC20) {
+    const customERC = GetCustromERC20()
+    Object.keys(customERC).forEach((tokenContract) => {
+      const symbol = customERC[tokenContract].symbol
+      initialState.items.push({
+        name: symbol.toUpperCase(),
+        title: symbol.toUpperCase(),
+        icon: symbol.toLowerCase(),
+        value: symbol.toLowerCase(),
+        fullTitle: symbol,
+      })
+      initialState.partialItems.push({
+        name: symbol.toUpperCase(),
+        title: symbol.toUpperCase(),
+        icon: symbol.toLowerCase(),
+        value: symbol.toLowerCase(),
+        fullTitle: symbol,
+      })
     })
-    initialState.partialItems.push({
-      name: symbol.toUpperCase(),
-      title: symbol.toUpperCase(),
-      icon: symbol.toLowerCase(),
-      value: symbol.toLowerCase(),
-      fullTitle: symbol,
-    })
-  })
+  }
 }
 // eslint-disable-next-line
 // process.env.MAINNET && initialState.items.unshift({

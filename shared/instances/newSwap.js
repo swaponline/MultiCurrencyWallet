@@ -22,65 +22,12 @@ import SwapOrders from 'swap.orders'
 import { ETH2BTC, BTC2ETH, BCH2ETH, ETH2BCH, LTC2BTC, BTC2LTC, ETH2LTC, LTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN/* USDTOMNI2ETHTOKEN */, ETHTOKEN2USDT } from 'swap.flows'
 import { EthSwap, EthTokenSwap, BtcSwap, BchSwap, LtcSwap /* UsdtOmniSwap */ } from 'swap.swaps'
 
-import util from 'swap.app/util'
+
 
 
 const repo = utils.createRepo()
 utils.exitListener()
 
-if (config && config.isWidget) {
-  const multiTokenNames = (window.widgetERC20Tokens) ? Object.keys(window.widgetERC20Tokens) : []
-  if (multiTokenNames.length) {
-    // Multi token mode
-    multiTokenNames.forEach((key) => {
-      const tokenData = window.widgetERC20Tokens[key]
-      config.erc20[key] = tokenData
-      if (!constants.COINS[key]) {
-        console.log('init token', key, config.erc20)
-        util.erc20.register(key, config.erc20[key].decimals)
-        actions[key] = actions.token
-      }
-    })
-  } else {
-    // Single token mode
-    // Auto hot plug not exist token to core
-    if (!constants.COINS[config.erc20token]) {
-      console.log('init token', config.erc20token, config.erc20)
-      util.erc20.register(config.erc20token, config.erc20[config.erc20token].decimals)
-      actions[config.erc20token] = actions.token
-    }
-  }
-
-  // Clean not inited single-token
-  const cleanERC20 = {}
-  Object.keys(config.erc20).forEach((key) => {
-    if (key !== ('{#'+'WIDGETTOKENCODE'+'#}')) {
-      cleanERC20[key] = config.erc20[key]
-    }
-  })
-  config.erc20 = cleanERC20
-} else {
-  // Add custom tokens
-  const customERC = actions.token.GetCustromERC20()
-
-  Object.keys(customERC).forEach((tokenContract) => {
-    config.erc20[customERC[tokenContract].symbol.toLowerCase()] = {
-      address: customERC[tokenContract].address,
-      decimals: customERC[tokenContract].decimals,
-      fullName: customERC[tokenContract].symbol,
-    }
-  })
-
-  // Add to swap.core not exists tokens
-  Object.keys(config.erc20).forEach((tokenCode) => {
-    if (!constants.COINS[tokenCode]) {
-      console.info('Add token to swap.core', tokenCode, config.erc20[tokenCode].address, config.erc20[tokenCode].decimals, config.erc20[tokenCode].fullName)
-      util.erc20.register(tokenCode, config.erc20[tokenCode].decimals)
-      actions[tokenCode] = actions.token
-    }
-  })
-
-}
 
 const createSwapApp = () => {
   SwapApp.setup({
