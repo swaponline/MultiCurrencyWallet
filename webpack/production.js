@@ -4,6 +4,7 @@ import config from 'app-config'
 
 import path from 'path'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
+import externalConfig from './externalConfig'
 
 
 export default (webpackConfig) => {
@@ -49,13 +50,7 @@ export default (webpackConfig) => {
         toType: 'file',
       },
     ]),
-    new CopyWebpackPlugin([
-      {
-        from: 'client/erc20tokens.js',
-        to: '',
-        toType: 'file',
-      },
-    ]),
+    externalConfig(),
   )
 
   return webpackConfig
