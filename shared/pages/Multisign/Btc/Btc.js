@@ -55,20 +55,41 @@ export default class Btc extends PureComponent {
   }
 
   async componentWillMount() {
-    let { match : { params : { action, data, peer } }, history, location: { pathname } } = this.props
-    if ((action !== 'join') && (action !== 'connect') && (action !== 'confirm') && (action !== 'confirminvoice')) {
-      this.props.history.push(localisedUrl(links.notFound))
+    let {
+      match: {
+        params: {
+          action,
+          data,
+          peer,
+        },
+      },
+      intl: {
+        locale,
+      },
+      history, 
+      location: {
+        pathname,
+      },
+      data: {
+        privateKey,
+      },
+    } = this.props
+
+    if (!action || ['join', 'connect', 'confirm', 'confirminvoice'].indexOf(action.toLowerCase()) === -1) {
+      history.push(localisedUrl(locale, links.notFound))
       return
     }
+
+    action = action.toLowerCase()
+
     if (action === 'join' || action === 'connect') {
       if (data && data.length==66) {
-        const privateKey = this.props.data.privateKey
         const publicKey = data
         const walletData = actions.btcmultisig.login_USER(privateKey, publicKey, true)
         const balance = await actions.btcmultisig.fetchBalance( walletData.address )
         const myPublicKey = this.props.data.publicKey.toString('hex')
 
-        this.setState( {
+        this.setState({
           action,
           wallet: walletData,
           walletBalance: balance,
@@ -84,7 +105,7 @@ export default class Btc extends PureComponent {
           })
         })
       } else {
-        this.props.history.push(localisedUrl(links.notFound))
+        history.push(localisedUrl(locale, links.notFound))
       }
     }
     if (action === 'confirm' || action === 'confirminvoice') {
@@ -122,6 +143,9 @@ export default class Btc extends PureComponent {
   connectWallet = (action) => {
     const { privateKey, publicKey } = this.state
     actions.btcmultisig.addBtcMultisigKey(publicKey, true)
+
+    actions.core.markCoinAsVisible('BTC (Multisig)')
+    localStorage.setItem(constants.localStorage.isWalletCreate, true)
 
     this.setState({
       action: (action === 'join') ? 'linkready' : 'ready'
@@ -175,7 +199,14 @@ export default class Btc extends PureComponent {
   }
 
   handleGoToWallet = async() => {
-    this.props.history.push(localisedUrl(links.currencyWallet))
+    const {
+      history,
+      intl: {
+        locale,
+      },
+    } = this.props
+
+    history.push(localisedUrl(locale, links.home))
   }
 
   handleConfirm = async() => {
