@@ -84,6 +84,7 @@ export default class CurrencyWallet extends Component {
       },
     } = props
 
+    console.log('In address', address)
     this.state = {
       currency: null,
       address: null,
@@ -97,26 +98,44 @@ export default class CurrencyWallet extends Component {
 
   static getDerivedStateFromProps({ match: { params: { fullName, address } }, intl: { locale }, items, history, tokens }) {
     // looking for an alias
+    if (!address) {
+      console.log('no address - return')
+      return
+    }
+
     fullName = aliases[fullName.toLowerCase()] ? aliases[fullName.toLowerCase()] : fullName.toLowerCase()
 
-    const item = items.map(item => item.fullName.toLowerCase())
+    let item = items.map(item => item.fullName.toLowerCase())
+    
     const token = tokens.map(item => item.fullName).includes(fullName.toUpperCase())
 
-
-
     if (item.includes(fullName.toLowerCase())) {
-      const itemCurrency = items.filter(item => item.fullName.toLowerCase() === fullName.toLowerCase())[0]
+      let itemCurrency = items.filter(item => item.fullName.toLowerCase() === fullName.toLowerCase())[0]
+
+      if (actions.btcmultisig.isBTCSMSAddress(`${address}`)) {
+        console.log('Is sms')
+        itemCurrency = items.filter(item => item.fullName.toLowerCase() === 'btc (sms-protected)')[0]
+        if (!itemCurrency.length) {
+          history.push(localisedUrl(locale, `${links.notFound}`))
+        } else itemCurrency = itemCurrency[0]
+      }
+      if (actions.btcmultisig.isBTCMSUserAddress(`${address}`)) {
+        console.log('Is ms')
+        itemCurrency = items.filter(item => item.fullName.toLowerCase() === 'btc (multisig)')[0]
+        if (!itemCurrency.length) {
+          history.push(localisedUrl(locale, `${links.notFound}`))
+        } else itemCurrency = itemCurrency[0]
+      }
 
       const {
         currency,
-        //address,                  // WTF!!!
-        contractAddress,          // What this is WTF!??
+        address,
+        contractAddress,
         decimals,
         balance,
         infoAboutCurrency
       } = itemCurrency
 
-   
 
       return {
         token,
@@ -150,7 +169,7 @@ export default class CurrencyWallet extends Component {
     }
 
     this.setLocalStorageItems();
-    
+    console.log('componentDidMount', address)
     // if address is null, take transactions from current user
     address ? actions.history.setTransactions(address) : actions.user.setTransactions()
 
@@ -363,13 +382,13 @@ export default class CurrencyWallet extends Component {
               }
             </div>
             <div styleName="currencyWalletActivityWrapper">
-              {
+              {(!actions.btcmultisig.isBTCSMSAddress(`${address}`) && !actions.btcmultisig.isBTCMSUserAddress(`${address}`)) && (
                 swapHistory.filter(item => item.step >= 4).length > 0 ? (
                   <div styleName="currencyWalletSwapHistory">
                     <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} />
                   </div>
                 ) : ''
-              }
+              )}
               {
                 txHistory ? (
                   <div styleName="currencyWalletActivity">
