@@ -139,7 +139,7 @@ export default class CurrencyWallet extends Component {
     // if address is null, take transactions from current user
     address ? actions.history.setTransactions(address) : actions.user.setTransactions()
 
-    if(address)
+    if(!address)
       actions.core.getSwapHistory()
   }
 
@@ -214,7 +214,7 @@ export default class CurrencyWallet extends Component {
       fullName,
       infoAboutCurrency
     } = this.state
-      
+    
     if (txHistory) {
       txHistory = txHistory
         .filter(tx => tx.type.toLowerCase() === currency.toLowerCase())
@@ -252,9 +252,12 @@ export default class CurrencyWallet extends Component {
       actions.core.markCoinAsVisible(currency)
     }
 
+    /** 27.02.2020 не знаю что это такое, но оно не используется, и ломает мне код
+     * пока закоментил - через месяц можно удалять
     const isBlockedCoin = config.noExchangeCoins
       .map(item => item.toLowerCase())
       .includes(currency.toLowerCase())
+       */
 
     let currencyUsdBalance;
     let changePercent;
@@ -341,7 +344,10 @@ export default class CurrencyWallet extends Component {
                 txHistory ? (
                   <div styleName="currencyWalletActivity">
                     <h3>
+                      {address ? 
+                      `Address: ${address}` :  
                       <FormattedMessage id="historyActivity" defaultMessage="Активность" />
+                      }
                     </h3>
                     {
                       txHistory.length > 0 ? (
