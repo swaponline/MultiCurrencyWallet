@@ -223,6 +223,7 @@ export default class Row extends Component {
     if (currency === 'BTC (SMS-Protected)') withdrawModalType = WithdrawMultisigSMS
     if (currency === 'BTC (Multisig)') withdrawModalType = WithdrawMultisigUser
 
+
     actions.modals.open(withdrawModalType, item)
   }
 
@@ -382,7 +383,15 @@ export default class Row extends Component {
       item: { currency, balance, address }
     } = this.props
 
-    history.push(localisedUrl(locale, `/${currency.toLowerCase()}/${address}`))
+    let targetCurrency = currency
+    switch(currency.toLowerCase()) {
+      case 'btc (multisig)':
+      case 'btc (sms-protected)':
+        targetCurrency = 'btc'
+        break;
+    }
+
+    history.push(localisedUrl(locale, `/${targetCurrency}/${address}`))
   }
 
   hideCurrency = () => {

@@ -296,6 +296,12 @@ export const isOwner = (addr) => {
   if(!address) {
     return false
   }
+  // Where ETH !!!
+  // Where Tokens !!!
+  // Where Ltc !!
+  // Where Bch !!??
+  if (actions.btcmultisig.isBTCAddress(addr)) return true
+
   return addr === address
 }
 

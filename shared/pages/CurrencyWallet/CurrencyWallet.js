@@ -72,8 +72,17 @@ const titles = [
 @CSSModules(styles, { allowMultiple: true })
 export default class CurrencyWallet extends Component {
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
+
+    const {
+      match: {
+        params: {
+          fullName,
+          address,
+        },
+      },
+    } = props
 
     this.state = {
       currency: null,
@@ -86,20 +95,22 @@ export default class CurrencyWallet extends Component {
     }
   }
 
-  static getDerivedStateFromProps({ match: { params: { fullName } }, intl: { locale }, items, history, tokens }) {
+  static getDerivedStateFromProps({ match: { params: { fullName, address } }, intl: { locale }, items, history, tokens }) {
+    // looking for an alias
+    fullName = aliases[fullName.toLowerCase()] ? aliases[fullName.toLowerCase()] : fullName.toLowerCase()
+
     const item = items.map(item => item.fullName.toLowerCase())
     const token = tokens.map(item => item.fullName).includes(fullName.toUpperCase())
 
-    // looking for an alias
-    fullName = aliases[fullName] ? aliases[fullName] : fullName
+
 
     if (item.includes(fullName.toLowerCase())) {
       const itemCurrency = items.filter(item => item.fullName.toLowerCase() === fullName.toLowerCase())[0]
 
       const {
         currency,
-        address,
-        contractAddress,
+        //address,                  // WTF!!!
+        contractAddress,          // What this is WTF!??
         decimals,
         balance,
         infoAboutCurrency
@@ -118,6 +129,10 @@ export default class CurrencyWallet extends Component {
         infoAboutCurrency,
         isBalanceEmpty: balance === 0,
       }
+
+      this.setState({
+        address,
+      })
     }
     history.push(localisedUrl(locale, `${links.notFound}`))
   }
@@ -178,7 +193,15 @@ export default class CurrencyWallet extends Component {
     } = this.state
 
     // actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
-    actions.modals.open(constants.modals.Withdraw, {
+    let withdrawModal = constants.modals.Withdraw
+    if (actions.btcmultisig.isBTCSMSAddress(address)) {
+      withdrawModal = constants.modals.WithdrawMultisigSMS
+    }
+    if (actions.btcmultisig.isBTCMSUserAddress(address)) {
+      withdrawModal = constants.modals.WithdrawMultisigUser
+    }
+
+    actions.modals.open(withdrawModal, {
       currency,
       address,
       contractAddress,
@@ -217,7 +240,14 @@ export default class CurrencyWallet extends Component {
     
     if (txHistory) {
       txHistory = txHistory
-        .filter(tx => tx.type.toLowerCase() === currency.toLowerCase())
+        .filter((tx) => {
+          if (tx
+            && tx.type
+          ) {
+            return tx.type.toLowerCase() === currency.toLowerCase()
+          }
+          return false
+        })
     }
 
     swapHistory = Object.keys(swapHistory)
