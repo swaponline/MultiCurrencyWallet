@@ -15,6 +15,7 @@ import History from 'pages/History/History'
 
 import { links, constants } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
+import { getActivatedCurrencies } from 'helpers/user'
 import ReactTooltip from 'react-tooltip'
 import ParticalClosure from '../PartialClosure/PartialClosure'
 
@@ -167,14 +168,12 @@ export default class Wallet extends Component {
     activeCurrency: 'usd',
     exchangeForm: false,
     walletTitle: 'Wallet',
-    editTitle: false
+    editTitle: false,
+    enabledCurrencies: getActivatedCurrencies(),
   }
 
   componentWillMount() {
     actions.user.getBalances()
-    window.addERC20 = () => {
-      actions.modals.open(constants.modals.AddCustomERC20)
-    }
   }
 
   componentDidMount() {
@@ -302,11 +301,14 @@ export default class Wallet extends Component {
   }
 
   handleModalOpen = context => {
+    const { enabledCurrencies } = this.state
     const { items, tokensData, tokensItems, tokens, hiddenCoinsList } = this.props
 
     const currencyTokenData = [...Object.keys(tokensData).map(k => tokensData[k]), ...tokensItems]
 
-    const tableRows = [...items, ...tokens].filter(currency => !hiddenCoinsList.includes(currency))
+    const tableRows = [...items, ...tokens]
+      .filter(currency => !hiddenCoinsList.includes(currency))
+      .filter(currency => enabledCurrencies.includes(currency))
 
     const currencies = tableRows.map(currency => {
       return currencyTokenData.find(item => item.currency === currency)
@@ -347,7 +349,7 @@ export default class Wallet extends Component {
   }
 
   render() {
-    const { activeView, infoAboutCurrency, exchangeForm, editTitle, walletTitle } = this.state
+    const { activeView, infoAboutCurrency, exchangeForm, editTitle, walletTitle, enabledCurrencies } = this.state
     const { currencyBalance, hiddenCoinsList, isSigned, allData, isFetching } = this.props
 
     this.checkBalance()
@@ -387,6 +389,8 @@ export default class Wallet extends Component {
       // Отфильтруем валюты, исключив те, которые не используются в этом билде
       tableRows = tableRows.filter(({ currency }) => widgetCurrencies.includes(currency))
     }
+
+    tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
 
     if (currencyBalance) {
       currencyBalance.forEach(item => {

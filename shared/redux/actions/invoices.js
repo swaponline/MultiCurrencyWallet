@@ -8,7 +8,7 @@ import reducers from 'redux/core/reducers'
 import { btc, apiLooper, constants, api } from 'helpers'
 import { Keychain } from 'keychain.js'
 import actions from 'redux/actions'
-import config from 'app-config'
+import config from 'helpers/externalConfig'
 
 
 const validateData = (data) => {
@@ -71,7 +71,7 @@ const markInvoice = (invoiceId, mark, txid) => new Promise((resolve) => apiLoope
 
 
 const getInvoices = (data) => {
-  if (config && config.isWidget) {
+  if ((config.isWidget || !config.opts.invoiceEnabled)) {
     return new Promise((resolve) => { resolve([]) })
   }
 

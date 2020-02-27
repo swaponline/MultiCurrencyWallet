@@ -142,6 +142,9 @@ const linksManager = {
   },
 }
 
+
+
+
 linksManager.getFaqLink = (faqID) => {
   for (let i = 0; i < linksManager.faq.length; i++) {
     if (linksManager.faq[i].id
@@ -152,5 +155,10 @@ linksManager.getFaqLink = (faqID) => {
   }
   return false
 }
+export const aliases = {
+  'btc' : 'Bitcoin',
+  'eth' : 'Ethereum'
+}
 
-export default linksManager
+export default linksManager;
+

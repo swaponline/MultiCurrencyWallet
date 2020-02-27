@@ -11,6 +11,8 @@ import reducers from 'redux/core/reducers'
 import { btc, apiLooper, constants, api } from 'helpers'
 import { Keychain } from 'keychain.js'
 import actions from 'redux/actions'
+import typeforce from "swap.app/util/typeforce";
+
 
 const getRandomMnemonicWords = () => bip39.generateMnemonic()
 const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonic)
@@ -165,10 +167,13 @@ const getInvoices = () => {
 
 const getTransaction = (address) =>
   new Promise((resolve) => {
- 
     let { user: { btcData: { address : userAddress } } } = getState()
     address = address || userAddress
     
+    if(!typeforce.isCoinAddress['BTC'](address)) {
+      resolve([])
+    }
+
     const url = `/txs/?address=${address}`
     return apiLooper.get('bitpay', url, {
       checkStatus: (answer) => {

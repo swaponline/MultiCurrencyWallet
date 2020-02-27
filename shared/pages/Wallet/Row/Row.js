@@ -382,7 +382,7 @@ export default class Row extends Component {
       item: { currency, balance, address }
     } = this.props
 
-    history.push(localisedUrl(locale, `/history/${currency.toLowerCase()}/${address}`))
+    history.push(localisedUrl(locale, `/${currency.toLowerCase()}/${address}`))
   }
 
   hideCurrency = () => {
@@ -506,7 +506,7 @@ export default class Row extends Component {
       })
     }
 
-    if (['BTC', 'ETH'].includes(currencyView) && !isWidgetBuild) {
+    if (['BTC', 'ETH'].includes(currencyView) && !isWidgetBuild && config.opts.invoiceEnabled) {
       dropDownMenuItems.push({
         id: 1004,
         title: <FormattedMessage id="WalletRow_Menu_Invoice" defaultMessage="Выставить счет" />,
@@ -532,6 +532,12 @@ export default class Row extends Component {
           title: <FormattedMessage id="WalletRow_Menu_ActivateSMSProtected" defaultMessage="Activate" />,
           action: this.handleActivateProtected,
           disabled: false
+        },
+        {
+          id: 1011,
+          title: <FormattedMessage id="WalletRow_Menu_Hide" defaultMessage="Hide" />,
+          action: this.hideCurrency,
+          disabled: false
         }
       ]
     }
@@ -554,15 +560,23 @@ export default class Row extends Component {
         action: this.handleGenerateMultisignLink,
         disabled: false
       })
+      if (!this.props.item.active) {
+        dropDownMenuItems.push({
+          id: 1011,
+          title: <FormattedMessage id="WalletRow_Menu_Hide" defaultMessage="Hide" />,
+          action: this.hideCurrency,
+          disabled: false
+        })
+      }
     }
 
     return (
       <tr>
         <td styleName="assetsTableRow">
           <div styleName="assetsTableCurrency">
-            <Link to={localisedUrl(locale, `/${fullName}-wallet`)} title={`Online ${fullName} wallet`}>
+            <a onClick={this.goToCurrencyHistory} title={`Online ${fullName} wallet`}>
               <Coin className={styles.assetsTableIcon} name={currency} />
-            </Link>
+            </a>
             {balanceError && nodeDownErrorShow ? (
               <div className={styles.errorMessage}>
                 <FormattedMessage
@@ -618,9 +632,9 @@ export default class Row extends Component {
             { isMobile ? <PartOfAddress {...item} onClick={this.goToCurrencyHistory} /> : '' }
             <div styleName="assetsTableInfo">
               <div styleName="nameRow">
-                <Link to={localisedUrl(locale, `/${fullName}-wallet`)} title={`Online ${fullName} wallet`}>
+                <a onClick={this.goToCurrencyHistory} title={`Online ${fullName} wallet`}>
                   {fullName}
-                </Link>
+                </a>
               </div>
 
               <strong>{title}</strong>

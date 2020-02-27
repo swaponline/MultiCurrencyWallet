@@ -1,0 +1,79 @@
+.HolderLinkShorter {
+  max-width: 600px;
+  overflow: hidden;
+  position: relative;
+  background: #fff;
+  cursor: pointer;
+  padding-bottom: 15px;
+  span:nth-child(1) {
+    display: block;
+    text-align: right;
+    outline: 2px solid blue;
+    text-overflow: clip;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    position: absolute;
+    white-space: nowrap;
+  }
+  span:nth-child(2) {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 50%;
+    background: #fff;
+  }
+}
+
+.HolderQRCode {
+  img {
+    display: block;
+    margin: 0 auto;
+    width: 250px;
+    cursor: pointer;
+  }
+}
+
+.ButtonsHolder {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.CopyLinkButton {
+  display: block;
+  width: 45%;
+}
+
+.ShareButtonHolder {
+  display: block;
+  width: 45%;
+  background: pink;
+
+  div {
+    display: block;
+    width: 100%;
+    padding-left: 0px;
+
+    button {
+      display: block;
+      width: 100%;
+    }
+  }
+}
+
+.WrapShareButton {
+  display: block;
+  background: red;
+}
+
+
+@include media-mobile {
+  .HolderQRCode {
+    img {
+      width: 95%;
+    }
+  }
+}

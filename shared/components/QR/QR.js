@@ -17,7 +17,14 @@ export default class QR extends PureComponent {
   }
 
   render() {
-    const { network, address, size } = this.props
+    let { network, address, size } = this.props
+
+    switch (network.toLowerCase()) {
+      case 'btc (multisig)':
+      case 'btc (sms-protected)':
+        network = 'btc'
+        break;
+    }
 
     const addressHasNetwork = /:/.test(address)
     const networkValue = addressHasNetwork ? '' : `${network}:`

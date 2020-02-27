@@ -7,6 +7,8 @@ import { Link, withRouter } from 'react-router-dom'
 
 import { links, constants } from 'helpers'
 
+import {aliases} from 'helpers/links'
+
 import CSSModules from 'react-css-modules'
 import styles from './CurrencyWallet.scss'
 
@@ -80,12 +82,16 @@ export default class CurrencyWallet extends Component {
       decimals: null,
       balance: null,
       isBalanceEmpty: false,
+      fullname: null
     }
   }
 
   static getDerivedStateFromProps({ match: { params: { fullName } }, intl: { locale }, items, history, tokens }) {
     const item = items.map(item => item.fullName.toLowerCase())
     const token = tokens.map(item => item.fullName).includes(fullName.toUpperCase())
+
+    // looking for an alias
+    fullName = aliases[fullName] ? aliases[fullName] : fullName
 
     if (item.includes(fullName.toLowerCase())) {
       const itemCurrency = items.filter(item => item.fullName.toLowerCase() === fullName.toLowerCase())[0]
@@ -99,10 +105,13 @@ export default class CurrencyWallet extends Component {
         infoAboutCurrency
       } = itemCurrency
 
+   
+
       return {
         token,
         currency,
         address,
+        fullName,
         contractAddress,
         decimals,
         balance,
@@ -130,7 +139,7 @@ export default class CurrencyWallet extends Component {
     // if address is null, take transactions from current user
     address ? actions.history.setTransactions(address) : actions.user.setTransactions()
 
-    if(address)
+    if(!address)
       actions.core.getSwapHistory()
   }
 
@@ -158,7 +167,7 @@ export default class CurrencyWallet extends Component {
   }
 
   handleWithdraw = () => {
-    let { match: { params: { fullName } }, items } = this.props
+    
     const {
       currency,
       address,
@@ -197,14 +206,15 @@ export default class CurrencyWallet extends Component {
 
   render() {
 
-    let { swapHistory, txHistory, location, match: { params: { fullName, address = null } }, intl, hiddenCoinsList, isSigned, isFetching } = this.props
+    let { swapHistory, txHistory, location, match: { params: { address = null } }, intl, hiddenCoinsList, isSigned, isFetching } = this.props
 
     const {
       currency,
       balance,
+      fullName,
       infoAboutCurrency
     } = this.state
-      
+    
     if (txHistory) {
       txHistory = txHistory
         .filter(tx => tx.type.toLowerCase() === currency.toLowerCase())
@@ -242,9 +252,12 @@ export default class CurrencyWallet extends Component {
       actions.core.markCoinAsVisible(currency)
     }
 
+    /** 27.02.2020 не знаю что это такое, но оно не используется, и ломает мне код
+     * пока закоментил - через месяц можно удалять
     const isBlockedCoin = config.noExchangeCoins
       .map(item => item.toLowerCase())
       .includes(currency.toLowerCase())
+       */
 
     let currencyUsdBalance;
     let changePercent;
@@ -331,7 +344,10 @@ export default class CurrencyWallet extends Component {
                 txHistory ? (
                   <div styleName="currencyWalletActivity">
                     <h3>
+                      {address ? 
+                      `Address: ${address}` :  
                       <FormattedMessage id="historyActivity" defaultMessage="Активность" />
+                      }
                     </h3>
                     {
                       txHistory.length > 0 ? (
