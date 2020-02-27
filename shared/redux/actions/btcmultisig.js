@@ -113,6 +113,31 @@ const checkUserActivated = () => {
   return active
 }
 
+const isBTCSMSAddress = (address) => {
+  const {
+    user: {
+      btcData,
+      btcMultisigSMSData,
+    },
+  } = getState()
+
+  if (btcMultisigSMSData && btcMultisigSMSData.address && btcMultisigSMSData.address.toLowerCase() === address.toLowerCase()) return btcMultisigSMSData
+
+  return false
+}
+
+const isBTCMSUserAddress = (address) => {
+  const {
+    user: {
+      btcMultisigUserData,
+    },
+  } = getState()
+
+  if (btcMultisigUserData && btcMultisigUserData.address && btcMultisigUserData.address.toLowerCase() === address.toLowerCase()) return btcMultisigUserData
+
+  return false
+}
+
 const isBTCAddress = (address) => {
   const {
     user: {
@@ -1129,4 +1154,6 @@ export default {
   removeBtcMultisigNey,
   switchBtcMultisigKey,
   addSMSWallet,
+  isBTCSMSAddress,
+  isBTCMSUserAddress,
 }
