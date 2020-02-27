@@ -223,6 +223,7 @@ export default class Row extends Component {
     if (currency === 'BTC (SMS-Protected)') withdrawModalType = WithdrawMultisigSMS
     if (currency === 'BTC (Multisig)') withdrawModalType = WithdrawMultisigUser
 
+
     actions.modals.open(withdrawModalType, item)
   }
 
