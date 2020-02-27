@@ -32,112 +32,127 @@ const isWidgetBuild = config && config.isWidget
 const walletNav = [
   {
     key: 'My balances',
-    text: <FormattedMessage id="MybalanceswalletNav" defaultMessage="Мой баланс" />,
+    text: <FormattedMessage id="MybalanceswalletNav" defaultMessage="Мой баланс" />
   },
   {
     key: 'Transactions',
-    text: <FormattedMessage id="TransactionswalletNav" defaultMessage="Активность" />,
-  },
+    text: <FormattedMessage id="TransactionswalletNav" defaultMessage="Активность" />
+  }
 ]
 
-@connect(({ core: { hiddenCoinsList }, user: { ethData, btcData, btcMultisigSMSData, btcMultisigUserData, bchData, tokensData, ltcData, // usdtOmniData, // qtumData,
-    // nimData,
-    // xlmData,
-    isFetching }, currencies: { items: currencies }, createWallet: { currencies: assets } }) => {
-  let widgetMultiTokens = []
-  if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
-    Object.keys(window.widgetERC20Tokens).forEach(key => {
-      widgetMultiTokens.push(key.toUpperCase())
-    })
-  }
-  const tokens =
-    config && config.isWidget
-      ? window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length
-        ? widgetMultiTokens
-        : [config.erc20token.toUpperCase()]
-      : Object.keys(tokensData).map(k => tokensData[k].currency)
-
-  const tokensItems = Object.keys(tokensData).map(k => tokensData[k])
-
-  const allData = [
-    btcData,
-    btcMultisigSMSData,
-    btcMultisigUserData,
-    ethData,
-    bchData,
-    ltcData,
-    //qtumData,
-    // xlmData,
-    // usdtOmniData,
-    ...Object.keys(tokensData).map(k => tokensData[k]),
-  ].map(({ account, keyPair, ...data }) => ({
-    ...data,
-  }))
-
-  const items = (config && config.isWidget
-    ? [
-        btcData,
-        ethData,
-        // usdtOmniData,
-      ]
-    : [
-        btcData,
-        btcMultisigSMSData,
-        btcMultisigUserData,
-        bchData,
-        ethData,
-        ltcData,
-        // qtumData,
-        // usdtOmniData,
-        // nimData,
-        // xlmData,
-      ]
-  ).map(data => data.currency)
-
-  const currencyBalance = [
-    btcData,
-    btcMultisigSMSData,
-    btcMultisigUserData,
-    bchData,
-    ethData,
-    ltcData,
-    // qtumData,
-    // usdtOmniData,
-    // nimData,
-    // xlmData,
-  ].map(({ balance, currency, infoAboutCurrency }) => ({
-    balance,
-    infoAboutCurrency,
-    name: currency,
-  }))
-
-  return {
-    tokens,
-    items,
-    allData,
-    tokensItems,
-    currencyBalance,
-    currencies,
-    assets,
-    isFetching,
-    hiddenCoinsList: hiddenCoinsList,
-    userEthAddress: ethData.address,
-    tokensData: {
+@connect(
+  ({
+    core: { hiddenCoinsList },
+    user: {
       ethData,
       btcData,
       btcMultisigSMSData,
       btcMultisigUserData,
       bchData,
+      tokensData,
+      ltcData, // usdtOmniData, // qtumData,
+      // nimData,
+      // xlmData,
+      isFetching
+    },
+    currencies: { items: currencies },
+    createWallet: { currencies: assets }
+  }) => {
+    let widgetMultiTokens = []
+    if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
+      Object.keys(window.widgetERC20Tokens).forEach(key => {
+        widgetMultiTokens.push(key.toUpperCase())
+      })
+    }
+    const tokens =
+      config && config.isWidget
+        ? window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length
+          ? widgetMultiTokens
+          : [config.erc20token.toUpperCase()]
+        : Object.keys(tokensData).map(k => tokensData[k].currency)
+
+    const tokensItems = Object.keys(tokensData).map(k => tokensData[k])
+
+    const allData = [
+      btcData,
+      btcMultisigSMSData,
+      btcMultisigUserData,
+      ethData,
+      bchData,
       ltcData,
+      //qtumData,
+      // xlmData,
+      // usdtOmniData,
+      ...Object.keys(tokensData).map(k => tokensData[k])
+    ].map(({ account, keyPair, ...data }) => ({
+      ...data
+    }))
+
+    const items = (config && config.isWidget
+      ? [
+          btcData,
+          ethData
+          // usdtOmniData,
+        ]
+      : [
+          btcData,
+          btcMultisigSMSData,
+          btcMultisigUserData,
+          bchData,
+          ethData,
+          ltcData
+          // qtumData,
+          // usdtOmniData,
+          // nimData,
+          // xlmData,
+        ]
+    ).map(data => data.currency)
+
+    const currencyBalance = [
+      btcData,
+      btcMultisigSMSData,
+      btcMultisigUserData,
+      bchData,
+      ethData,
+      ltcData
       // qtumData,
       // usdtOmniData,
-    },
+      // nimData,
+      // xlmData,
+    ].map(({ balance, currency, infoAboutCurrency }) => ({
+      balance,
+      infoAboutCurrency,
+      name: currency
+    }))
+
+    return {
+      tokens,
+      items,
+      allData,
+      tokensItems,
+      currencyBalance,
+      currencies,
+      assets,
+      isFetching,
+      hiddenCoinsList: hiddenCoinsList,
+      userEthAddress: ethData.address,
+      tokensData: {
+        ethData,
+        btcData,
+        btcMultisigSMSData,
+        btcMultisigUserData,
+        bchData,
+        ltcData
+        // qtumData,
+        // usdtOmniData,
+      }
+    }
   }
-})
+)
 @injectIntl
 @withRouter
 @connect(({ signUp: { isSigned } }) => ({
-  isSigned,
+  isSigned
 }))
 @cssModules(styles, { allowMultiple: true })
 export default class Wallet extends Component {
@@ -152,7 +167,7 @@ export default class Wallet extends Component {
     activeCurrency: 'usd',
     exchangeForm: false,
     walletTitle: 'Wallet',
-    editTitle: false,
+    editTitle: false
   }
 
   componentWillMount() {
@@ -173,7 +188,7 @@ export default class Wallet extends Component {
 
     if (isMobile) {
       this.balanceRef.current.scrollIntoView({
-        block: 'start',
+        block: 'start'
       })
     }
   }
@@ -193,7 +208,7 @@ export default class Wallet extends Component {
     }
 
     this.setState({
-      activeView: index,
+      activeView: index
     })
   }
 
@@ -212,28 +227,29 @@ export default class Wallet extends Component {
   setLocalStorageItems = () => {
     const isClosedNotifyBlockBanner = localStorage.getItem(constants.localStorage.isClosedNotifyBlockBanner)
     const isClosedNotifyBlockSignUp = localStorage.getItem(constants.localStorage.isClosedNotifyBlockSignUp)
-    const isPrivateKeysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
+    const isPrivateKeysSaved = localStorage.getItem(constants.localStorage.isPrivateKeysSaved)
     const walletTitle = localStorage.getItem(constants.localStorage.walletTitle)
 
     this.setState({
       isClosedNotifyBlockBanner,
       isClosedNotifyBlockSignUp,
       walletTitle,
-      isPrivateKeysSaved,
+      isPrivateKeysSaved
     })
   }
 
   onLoadeOn = fn => {
     this.setState({
-      isFetching: true,
+      isFetching: true
     })
 
     fn()
   }
 
   handleNotifyBlockClose = state => {
+    console.log('state', state)
     this.setState({
-      [state]: true,
+      [state]: true
     })
     localStorage.setItem(constants.localStorage[state], 'true')
   }
@@ -246,14 +262,14 @@ export default class Wallet extends Component {
     actions.modals.open(constants.modals.Withdraw, {
       ...item,
       toAddress: address,
-      amount,
+      amount
     })
   }
 
   goToСreateWallet = () => {
     const {
       history,
-      intl: { locale },
+      intl: { locale }
     } = this.props
 
     history.push(localisedUrl(locale, links.createWallet))
@@ -262,7 +278,7 @@ export default class Wallet extends Component {
   handleGoExchange = () => {
     const {
       history,
-      intl: { locale },
+      intl: { locale }
     } = this.props
 
     if (isWidgetBuild && !config.isFullBuild) {
@@ -274,13 +290,13 @@ export default class Wallet extends Component {
 
   handleEditTitle = () => {
     this.setState({
-      editTitle: true,
+      editTitle: true
     })
   }
 
   handleChangeTitle = e => {
     this.setState({
-      walletTitle: e.target.value,
+      walletTitle: e.target.value
     })
     localStorage.setItem(constants.localStorage.walletTitle, e.target.value)
   }
@@ -298,7 +314,7 @@ export default class Wallet extends Component {
 
     actions.modals.open(constants.modals.CurrencyAction, {
       currencies,
-      context,
+      context
     })
   }
 
@@ -321,7 +337,7 @@ export default class Wallet extends Component {
       ethAddress: ethData.address,
       btcAddress: btcData.address,
       bchAddress: bchData.address,
-      ltcAddress: ltcData.address,
+      ltcAddress: ltcData.address
     }
 
     if (isOneHourAfter || isFirstCheck) {
@@ -341,7 +357,7 @@ export default class Wallet extends Component {
       speed: 500,
       autoplay: true,
       autoplaySpeed: 6000,
-      slidesToShow: 4,
+      slidesToShow: 4
     }
 
     let btcBalance = 0
@@ -388,7 +404,13 @@ export default class Wallet extends Component {
       <artical>
         <section styleName={isWidgetBuild && !config.isFullBuild ? 'wallet widgetBuild' : 'wallet'}>
           {!isWidgetBuild && (
-            <Slider settings={settings} isSigned={isSigned} host={window.location.hostname} handleNotifyBlockClose={this.handleNotifyBlockClose} {...this.state} />
+            <Slider
+              settings={settings}
+              isSigned={isSigned}
+              host={window.location.hostname}
+              handleNotifyBlockClose={state => this.handleNotifyBlockClose('isPrivateKeysSaved')}
+              {...this.state}
+            />
           )}
 
           <h3 styleName="walletHeading">
@@ -397,7 +419,11 @@ export default class Wallet extends Component {
 
           <ul styleName="walletNav">
             {walletNav.map(({ key, text }, index) => (
-              <li key={key} styleName={`walletNavItem ${activeView === index ? 'active' : ''}`} onClick={() => this.handleNavItemClick(index)}>
+              <li
+                key={key}
+                styleName={`walletNavItem ${activeView === index ? 'active' : ''}`}
+                onClick={() => this.handleNavItemClick(index)}
+              >
                 <a href styleName="walletNavItemLink">
                   {text}
                 </a>

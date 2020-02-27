@@ -1,22 +1,22 @@
 @keyframes scrollAnimation {
   0% {
-    transform: translate(-50%, 0)
+    transform: translate(-50%, 0);
   }
   13% {
-    transform: translate(-50%, -3px)
+    transform: translate(-50%, -3px);
   }
   26% {
-    transform: translate(-50%, 3px)
+    transform: translate(-50%, 3px);
   }
   40% {
-    transform: translate(-50%, 0)
+    transform: translate(-50%, 0);
   }
   100% {
-    transform: translate(-50%, 0)
+    transform: translate(-50%, 0);
   }
 }
 
-@keyframes errorAppend{
+@keyframes errorAppend {
   0% {
     max-height: 0;
     opacity: 0;
@@ -40,7 +40,8 @@
     position: absolute;
     width: 50%;
     top: 87px;
-    h1, span {
+    h1,
+    span {
       font-size: 45px;
     }
     * {
@@ -68,7 +69,7 @@
   &:before {
     position: absolute;
     content: '';
-    background: #6144E5;
+    background: #6144e5;
     right: 0;
     width: 32%;
     z-index: 100;
@@ -84,8 +85,7 @@
   right: 50%;
   color: gray;
   cursor: pointer;
-  transition: opacity 0.3s ease,
-    visibility 0.1s 0.3s;
+  transition: opacity 0.3s ease, visibility 0.1s 0.3s;
   &:global(.hidden) {
     opacity: 0;
     visibility: hidden;
@@ -148,7 +148,7 @@
 }
 
 .button.disabled {
-  background: #F5F5F5;
+  background: #f5f5f5;
 }
 
 .walletInput input {
@@ -186,9 +186,7 @@
 .buttonOrders {
   border: 1px solid #000;
   background: #fff;
-  transition: background-color 0.2s ease,
-    color 0.1s ease,
-    border-color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.1s ease, border-color 0.2s ease;
   &:hover {
     background: black;
     color: white;
@@ -225,8 +223,7 @@
     z-index: 0;
     opacity: 1;
     max-height: 100vh;
-    transition: opacity 0.3s 0.2s,
-                max-height 0.7s ease;
+    transition: opacity 0.3s 0.2s, max-height 0.7s ease;
   }
 }
 
@@ -258,7 +255,7 @@
   padding: 50px 40px;
   width: 460px;
   z-index: 100;
-  background: #FFFFFF;
+  background: #ffffff;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
 }
@@ -284,7 +281,7 @@
   padding: 0.3em 10px;
   margin-top: -5px;
   font-size: 13px;
-  background: #FD6B65;
+  background: #fd6b65;
   border-radius: 3px;
   margin-bottom: 15px;
   @include errAppend();
@@ -315,7 +312,6 @@
   }
 }
 
-
 .notCorrect {
   color: red;
 }
@@ -335,7 +331,6 @@
 .withLoader {
   display: block;
   position: relative;
-
 }
 
 .inform {
@@ -362,13 +357,15 @@
 
 .price {
   position: absolute;
-  bottom: 12px;
+  bottom: 32px;
   right: 10px;
   background: #fff;
-  color: rgba(0, 0, 0, 0.3);
+
   font-family: 'Roboto Mono', monospace;
   font-size: 13px;
   text-align: right;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.3);
   padding: 10px 10px;
 }
 
@@ -423,8 +420,9 @@
   font-size: 13px;
   right: 50px;
   padding: 0 10px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.3);
   font-family: 'Roboto Mono', monospace;
-  color: #8E9AA3;
   margin-bottom: 0;
 }
 
@@ -494,7 +492,8 @@
   }
   .TitleHolder {
     width: 45%;
-    h1, span {
+    h1,
+    span {
       font-size: 35px;
     }
   }
@@ -515,7 +514,8 @@
   }
 }
 @media all and (min-width: 320px) and (max-width: 830px) {
-  .section, .widgetSection {
+  .section,
+  .widgetSection {
     margin-top: 20px;
     justify-content: center;
     flex-direction: column-reverse;

@@ -53,7 +53,7 @@ export default props => {
           firstBtn={<FormattedMessage id="descr282" defaultMessage="Show my keys" />}
           firstFunc={handleShowKeys}
           secondBtn={<FormattedMessage id="descr284" defaultMessage="I saved my keys" />}
-          secondFunc={handleSaveKeys}
+          secondFunc={handleNotifyBlockClose}
         />
       )}
     </Fragment>
