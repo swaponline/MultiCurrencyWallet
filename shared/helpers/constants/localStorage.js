@@ -21,6 +21,7 @@ export default {
   startSwap: 'startSwap',
   didProtectedBtcCreated: 'protectedBtcCreated',
   didProtectedBtcG2FACreated: 'protectedBtcG2FA',
+  isPrivateKeysSaved: 'isPrivateKeysSaved',
   isClosedNotifyBlockSignUp: 'isClosedNotifyBlockSignUp',
   isClosedNotifyBlockBanner: 'isClosedNotifyBlockBanner',
   walletTitle: 'walletTitle',

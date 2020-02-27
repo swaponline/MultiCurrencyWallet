@@ -43,9 +43,6 @@ export default class DropDown extends Component {
 
   componentDidUpdate(prevProps) {
     const { isToggleActive } = this.props
-    if (prevProps.isToggleActive !== isToggleActive && isToggleActive) {
-      this.showPercentChange1H()
-    }
   }
 
   toggle = () => {
@@ -96,33 +93,6 @@ export default class DropDown extends Component {
       return itemRender(item)
     }
     return item.title
-  }
-
-  showPercentChange1H = () => {
-    const { items } = this.props
-    let infoAboutCurrency = []
-
-    fetch('https://noxon.io/cursAll.php')
-      .then(res => res.json())
-      .then(
-        result => {
-          const itemsName = items.map(el => el.name)
-          result.map(res => {
-            if (itemsName.includes(res.symbol)) {
-              infoAboutCurrency.push({
-                name: res.symbol,
-                change: res.percent_change_1h
-              })
-            }
-          })
-          this.setState({
-            infoAboutCurrency
-          })
-        },
-        error => {
-          console.log('error on fetch data from api')
-        }
-      )
   }
 
   render() {
