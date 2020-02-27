@@ -128,6 +128,13 @@ export default class Btc extends PureComponent {
             invoice,
             txRaw: txRaw,
           })
+          actions.modals.open(constants.modals.BtcMultisignConfirmTx, {
+            txData: txRaw,
+            showCloseButton: false,
+            onClose: () => {
+              history.push(localisedUrl(locale, links.home))
+            }
+          })
         } catch (e) {
           console.log('Bad tx raw data')
         }

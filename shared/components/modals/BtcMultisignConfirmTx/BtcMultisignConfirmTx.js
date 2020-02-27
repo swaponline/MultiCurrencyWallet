@@ -90,10 +90,6 @@ export default class BtcMultisignConfirmTx extends React.Component {
     })
   }
 
-  handleFinish = async () => {
-
-  }
-
   handleConfirm = async() => {
     const {
       txRaw,
@@ -109,12 +105,15 @@ export default class BtcMultisignConfirmTx extends React.Component {
     })
 
     const signedTX = await actions.btcmultisig.signMultiSign( txRaw )
-    const txID = await actions.btcmultisig.broadcastTx( signedTX )
-
+    let txID = false
+    try {
+      txID = await actions.btcmultisig.broadcastTx( signedTX )
+    } catch (e) {
+      console.log(e)
+    }
     if (txID && txID.txid) {
-      actions.modals.close(name);
+      this.handleClose()
 
-      console.log(txData)
       const infoPayData = {
         amount: `${txData.amount}`,
         currency: 'BTC (Multisig)',
@@ -123,35 +122,38 @@ export default class BtcMultisignConfirmTx extends React.Component {
         txId: txID.txid,
         toAddress: txData.to,
       }
-      console.log(infoPayData)
+
       actions.modals.open(constants.modals.InfoPay, infoPayData)
     } else {
+      console.log(txID)
       this.setState({
         isError: true,
         isConfirming: false,
       })
     }
-    /*
-    actions.modals.open(constants.modals.InfoPay, {
-      amount,
-      currency,
-      balance,
-      oldBalance: 0, // @Todo доделать old balance
-      txRaw: txRaw,
-      toAddress: to
-    })
+  }
 
-    this.setState(() => ({ isShipped: false, error: false }));
-    if (onReady instanceof Function) {
-      onReady();
+  handleClose = () => {
+    const { name, data, onClose } = this.props
+
+    if (typeof onClose === 'function') {
+      onClose()
     }
-    */
+
+    if (typeof data.onClose === 'function') {
+      data.onClose()
+    }
+
+    actions.modals.close(name)
   }
 
   render() {
     const {
       name,
       intl,
+      data: {
+        showCloseButton,
+      },
     } = this.props
 
     const {
@@ -163,7 +165,7 @@ export default class BtcMultisignConfirmTx extends React.Component {
     const { debugShowTXB, debugShowInput, debugShowOutput } = this.state
 
     return (
-      <Modal name={name} title={`${intl.formatMessage(langLabels.title)}`}>
+      <Modal name={name} title={`${intl.formatMessage(langLabels.title)}`} onClose={this.handleClose} showCloseButton={showCloseButton}>
         <Fragment>
           <p styleName="notice">
             <FormattedMessage { ... langLabels.noticeUp } />
@@ -243,7 +245,7 @@ export default class BtcMultisignConfirmTx extends React.Component {
                   styleName="buttonFull"
                   blue
                   disabled={isConfirming}
-                  onClick={this.handleFinish}
+                  onClick={this.handleClose}
                   fullWidth
                 >
                   <FormattedMessage { ... langLabels.dismatchTx } />
