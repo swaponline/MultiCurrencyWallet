@@ -27,10 +27,8 @@ function BalanceForm({
   // eslint-disable-next-line default-case
   switch (currency) {
     case 'btc (sms-protected)':
-      currency = 'BTC SMS'
-      break
     case 'btc (multisig)':
-      currency = 'BTC MULTISIG'
+      currency = 'BTC'
       break
   }
 

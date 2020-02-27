@@ -382,7 +382,15 @@ export default class Row extends Component {
       item: { currency, balance, address }
     } = this.props
 
-    history.push(localisedUrl(locale, `/${currency.toLowerCase()}/${address}`))
+    let targetCurrency = currency
+    switch(currency.toLowerCase()) {
+      case 'btc (multisig)':
+      case 'btc (sms-protected)':
+        targetCurrency = 'btc'
+        break;
+    }
+
+    history.push(localisedUrl(locale, `/${targetCurrency}/${address}`))
   }
 
   hideCurrency = () => {
