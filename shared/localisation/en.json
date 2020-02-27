@@ -6423,7 +6423,7 @@
   },
   {
     "id": "currencyAction81",
-    "message": "Please choose a currency, which you want to {context}",
+    "message": "Please choose a currency you want to {context}",
     "files": [
       "shared/components/modals/CurrencyAction/CurrencyAction.js"
     ]
