@@ -382,7 +382,7 @@ export default class Row extends Component {
               <a href="https://wiki.swaponline.io/faq/bitcoin-node-is-down-you-cannot-make-transactions/">
                 <FormattedMessage
                   id="RowWallet282"
-                  defaultMessage="Need help?" />
+                  defaultMessage="No connection..." />
               </a>
             </div>
           }
