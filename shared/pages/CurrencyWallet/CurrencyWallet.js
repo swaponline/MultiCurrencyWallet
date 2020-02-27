@@ -83,9 +83,7 @@ export default class CurrencyWallet extends Component {
         },
       },
     } = props
-    
 
-    console.log('constructor', fullName, address)
     this.state = {
       currency: null,
       address: null,
