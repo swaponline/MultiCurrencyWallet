@@ -382,7 +382,7 @@ export default class Row extends Component {
       item: { currency, balance, address }
     } = this.props
 
-    history.push(localisedUrl(locale, `/history/${currency.toLowerCase()}/${address}`))
+    history.push(localisedUrl(locale, `/${currency.toLowerCase()}/${address}`))
   }
 
   hideCurrency = () => {
@@ -560,9 +560,9 @@ export default class Row extends Component {
       <tr>
         <td styleName="assetsTableRow">
           <div styleName="assetsTableCurrency">
-            <Link to={localisedUrl(locale, `/${fullName}-wallet`)} title={`Online ${fullName} wallet`}>
+            <a onClick={this.goToCurrencyHistory} title={`Online ${fullName} wallet`}>
               <Coin className={styles.assetsTableIcon} name={currency} />
-            </Link>
+            </a>
             {balanceError && nodeDownErrorShow ? (
               <div className={styles.errorMessage}>
                 <FormattedMessage
@@ -618,9 +618,9 @@ export default class Row extends Component {
             { isMobile ? <PartOfAddress {...item} onClick={this.goToCurrencyHistory} /> : '' }
             <div styleName="assetsTableInfo">
               <div styleName="nameRow">
-                <Link to={localisedUrl(locale, `/${fullName}-wallet`)} title={`Online ${fullName} wallet`}>
+                <a onClick={this.goToCurrencyHistory} title={`Online ${fullName} wallet`}>
                   {fullName}
-                </Link>
+                </a>
               </div>
 
               <strong>{title}</strong>

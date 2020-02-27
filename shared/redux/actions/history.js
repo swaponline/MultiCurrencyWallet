@@ -14,13 +14,14 @@ const setTransactions = async (address) => {
     const mainTokens = await Promise.all([
       actions.btc.getTransaction(address),
       // actions.btc.getInvoices(),
+      actions.eth.getTransaction(address),
       // actions.btcmultisig.getTransactionSMS(address),
       // actions.btcmultisig.getInvoicesSMS(),
       // actions.btcmultisig.getTransactionUser(address),
       // actions.btcmultisig.getInvoicesUser(),
       // actions.bch.getTransaction(address),
       // # pernament actions.usdt.getTransaction(),
-      // actions.eth.getTransaction(address),
+    
       // actions.eth.getInvoices(),
       // actions.ltc.getTransaction(address),
     ])

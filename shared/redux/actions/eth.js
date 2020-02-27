@@ -9,6 +9,7 @@ import { web3Override } from 'keychain.js'
 import { pubToAddress } from 'ethereumjs-util'
 import * as hdkey from 'ethereumjs-wallet/hdkey'
 import * as bip39 from 'bip39'
+import typeforce from "swap.app/util/typeforce";
 
 const getRandomMnemonicWords = () => bip39.generateMnemonic()
 const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonic)
@@ -128,6 +129,10 @@ const getTransaction = (address) =>
   new Promise((resolve) => {
     const { user: { ethData: { address: userAddress } } } = getState()
     address = address || userAddress
+
+    if(!typeforce.isCoinAddress['ETH'](address)) {
+      resolve([])
+    }
 
     const url = `?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=RHHFPNMAZMD6I4ZWBZBF6FA11CMW9AXZNM`
 

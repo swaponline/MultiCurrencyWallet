@@ -156,7 +156,8 @@ linksManager.getFaqLink = (faqID) => {
   return false
 }
 export const aliases = {
-  'btc' : 'Bitcoin'
+  'btc' : 'Bitcoin',
+  'eth' : 'Ethereum'
 }
 
 export default linksManager;
