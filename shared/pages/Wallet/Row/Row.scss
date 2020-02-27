@@ -11,7 +11,11 @@
   left: calc(25%);
   border-radius: 20px;
 }
-
+.assetsTableCurrency a,
+.nameRow a
+{
+  cursor: pointer;
+}
 .no-select-inline {
   cursor: pointer;
   display: inline;

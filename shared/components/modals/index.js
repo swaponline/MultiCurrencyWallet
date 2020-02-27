@@ -26,6 +26,7 @@ import AddCustomERC20 from './AddCustomERC20/AddCustomERC20'
 import BtcMultisignSwitch from './BtcMultisignSwitch/BtcMultisignSwitch'
 import ShareModal from './Share/Share'
 import InfoPay from './InfoPay/InfoPay'
+import BtcMultisignConfirmTx from './BtcMultisignConfirmTx/BtcMultisignConfirmTx'
 
 
 export default {
@@ -57,4 +58,5 @@ export default {
   AlertModal,
   AddCustomERC20,
   BtcMultisignSwitch,
+  BtcMultisignConfirmTx,
 }

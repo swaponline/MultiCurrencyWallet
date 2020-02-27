@@ -2,6 +2,8 @@ import Toggle from './Toggle/Toggle' // input type checkbox
 import TimerButton from './TimerButton/TimerButton' // HOC by timer
 import Button from './Button/Button' // constructor buttons
 
+import ShareLink from './ShareLink/ShareLink'
+
 /* Just button */
 import Switching from './Switching/Switching'
 import Flip from './Flip/Flip'
@@ -19,4 +21,5 @@ export {
   Flip,
   RemoveButton,
   WithdrawButton,
+  ShareLink,
 }

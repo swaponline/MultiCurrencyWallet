@@ -17,6 +17,7 @@ import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
+import { ShareLink } from 'components/controls'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import ReactTooltip from 'react-tooltip'
 import { isMobile } from 'react-device-detect'
@@ -27,6 +28,8 @@ import minAmount from 'helpers/constants/minAmount'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import links from 'helpers/links'
 import SwapApp from 'swap.app'
+
+
 import CopyToClipboard from 'react-copy-to-clipboard'
 
 
@@ -47,9 +50,8 @@ export default class MultisignJoinLink extends React.Component {
     data: PropTypes.object,
   }
 
-  constructor() {
-    super()
-
+  constructor(props) {
+    super(props)
 
     this.state = {
       joinLink: ''
@@ -59,16 +61,32 @@ export default class MultisignJoinLink extends React.Component {
   componentDidMount() {
     const publicKey = this.props.btcData.publicKey.toString('hex')
 
+    let { data: { action } } = this.props
+
+    console.log(action, this.props)
+    action = (action) ? action : `join`
+
     this.setState({
-      joinLink: `${location.origin}/#${links.multisign}/btc/join/${publicKey}/${SwapApp.shared().services.room.peer}`
+      joinLink: `${location.origin}/#${links.multisign}/btc/${action}/${publicKey}/${SwapApp.shared().services.room.peer}`
     })
+  }
+
+  handleClose = () => {
+    const { name, data, onClose } = this.props
+
+    if (typeof onClose === 'function') {
+      onClose()
+    }
+
+    if (typeof data.onClose === 'function') {
+      data.onClose()
+    }
+
+    actions.modals.close(name)
   }
 
   handleFinish = async () => {
     const { name } = this.props
-    const { isLinkCopied } = this.state
-
-    if (!isLinkCopied) return
 
     actions.modals.close(name)
 
@@ -77,16 +95,12 @@ export default class MultisignJoinLink extends React.Component {
     }
   }
 
-  handleCopyLink = () => {
-    this.setState({
-      isLinkCopied: true,
-    })
-  }
-
   render() {
     //const { phone, step, error, smsCode, smsConfirmed, isShipped } = this.state
     const { name, intl } = this.props
     const { joinLink, isLinkCopied } = this.state
+
+    const { showCloseButton } = this.props.data
 
     const langLabels = defineMessages({
       multiSignJoinLinkMessage: {
@@ -108,33 +122,18 @@ export default class MultisignJoinLink extends React.Component {
     })
 
     return (
-      <Modal name={name} title={`${intl.formatMessage(langLabels.multiSignJoinLink)}`}>
+      <Modal name={name} title={`${intl.formatMessage(langLabels.multiSignJoinLink)}`} onClose={this.handleClose} showCloseButton={showCloseButton}>
         <Fragment>
           <p styleName="notice">
             <FormattedMessage { ... langLabels.multiSignJoinLinkMessage } />
           </p>
-          <CopyToClipboard
-            text={joinLink}
-            onCopy={this.handleCopyLink}
-          >
-            <div>
-              <div styleName="generatedJoinLink" title={`${intl.formatMessage(langLabels.multiSignJoinLinkCopy)}`}>
-                  {joinLink}
-              </div>
-              <Button
-                styleName="buttonFull"
-                brand
-                onClick={this.handleFinish}
-                fullWidth
-              >
-                { isLinkCopied ?
-                  <FormattedMessage { ... langLabels.multiSignJoinLinkCopied } />
-                  :
-                  <FormattedMessage { ... langLabels.multiSignJoinLinkCopy } />
-                }
-              </Button>
-            </div>
-          </CopyToClipboard>
+          <div>
+            <ShareLink link={joinLink} />
+          </div>
+          <hr />
+          <Button blue styleName="finishButton" fullWidth onClick={this.handleFinish}>
+            <FormattedMessage id="BTCMS_CreateWalletReadyButton" defaultMessage="Готово. Открыть кошелек" />
+          </Button>
         </Fragment>
       </Modal>
     )

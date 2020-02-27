@@ -239,6 +239,9 @@ const login_USER = (privateKey, otherOwnerPublicKey ,onlyCheck) => {
           }
         )
         actions.notifications.show('BTCMultisignRequest', txData)
+        actions.modals.open(constants.modals.BtcMultisignConfirmTx, {
+          txData: txData.txRaw,
+        })
       }
     })
   })
@@ -860,6 +863,9 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
 }
 
 const parseRawTX =  async ( txHash ) => {
+  const myBtcWallets = await getBtcMultisigKeys()
+  const myBtcAddreses = myBtcWallets.map((wallet) => wallet.address)
+
   const txb = await bitcoin.TransactionBuilder.fromTransaction(
     bitcoin.Transaction.fromHex(txHash),
     btc.network
@@ -868,8 +874,13 @@ const parseRawTX =  async ( txHash ) => {
     txb,
     input: [],
     output: [],
+    from: false,
+    to: false,
+    out: {},
+    amount: new BigNumber(0),
   }
-  
+
+
   txb.__INPUTS.forEach((input) => {
     parsedTX.input.push( {
       script: bitcoin.script.toASM(input.redeemScript),
@@ -883,12 +894,31 @@ const parseRawTX =  async ( txHash ) => {
       address = bitcoin.address.fromOutputScript(out.script, btc.network)
     } catch (e) {}
 
+    if (myBtcAddreses.includes(address)) {
+      parsedTX.from = address
+    } else {
+      if (!parsedTX.out[address]) {
+        parsedTX.out[address] = {
+          to: address,
+          amount: new BigNumber(out.value).dividedBy(1e8).toNumber(),
+        }
+      } else {
+        parsedTX.out[address].amount = parsedTX.out[address].amount.plus(new BigNumber(out.value).dividedBy(1e8).toNumber())
+      }
+      parsedTX.amount = parsedTX.amount.plus(new BigNumber(out.value).dividedBy(1e8).toNumber())
+    }
+
     parsedTX.output.push( {
       address,
       valueSatoshi: out.value,
       value: new BigNumber(out.value).dividedBy(1e8).toNumber(),
     } )
   })
+
+  if (Object.keys(parsedTX.out).length) {
+    parsedTX.to = parsedTX.out[Object.keys(parsedTX.out)[0]].to
+  }
+
   return parsedTX
 }
 
