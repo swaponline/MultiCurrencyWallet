@@ -53,7 +53,10 @@ export default class Share extends Component {
           </a>
         </span>
         <div styleName="link">
-          <div styleName="pen-url">{link}</div>
+          <div styleName="pen-url">
+            <span>{link}</span>
+            <span>{link}</span> 
+          </div>
           <CopyToClipboard text={link}>
             <Button blue>
               <FormattedMessage
