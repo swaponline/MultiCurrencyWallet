@@ -82,46 +82,32 @@ export default class CurrencyWallet extends Component {
           address,
         },
       },
+      intl: {
+        locale,
+      },
+      items,
+      history,
+      tokens,
     } = props
 
-    console.log('In address', address)
-    this.state = {
-      currency: null,
-      address: null,
-      contractAddress: null,
-      decimals: null,
-      balance: null,
-      isBalanceEmpty: false,
-      fullname: null
-    }
-  }
-
-  static getDerivedStateFromProps({ match: { params: { fullName, address } }, intl: { locale }, items, history, tokens }) {
-    // looking for an alias
-    if (!address) {
-      console.log('no address - return')
-      return
-    }
-
-    fullName = aliases[fullName.toLowerCase()] ? aliases[fullName.toLowerCase()] : fullName.toLowerCase()
+    const walletAddress = address
+    const fullNameCheck = aliases[fullName.toLowerCase()] ? aliases[fullName.toLowerCase()] : fullName.toLowerCase()
 
     let item = items.map(item => item.fullName.toLowerCase())
-    
-    const token = tokens.map(item => item.fullName).includes(fullName.toUpperCase())
 
-    if (item.includes(fullName.toLowerCase())) {
-      let itemCurrency = items.filter(item => item.fullName.toLowerCase() === fullName.toLowerCase())[0]
+    const token = tokens.map(item => item.fullName.toLowerCase()).includes(fullNameCheck.toLowerCase())
 
-      if (actions.btcmultisig.isBTCSMSAddress(`${address}`)) {
-        console.log('Is sms')
-        itemCurrency = items.filter(item => item.fullName.toLowerCase() === 'btc (sms-protected)')[0]
+    if (item.includes(fullNameCheck.toLowerCase())) {
+      let itemCurrency = items.filter(item => item.fullName.toLowerCase() === fullNameCheck.toLowerCase())[0]
+
+      if (actions.btcmultisig.isBTCSMSAddress(walletAddress)) {
+        itemCurrency = items.filter(item => item.fullName.toLowerCase() === 'bitcoin (sms-protected)')
         if (!itemCurrency.length) {
           history.push(localisedUrl(locale, `${links.notFound}`))
         } else itemCurrency = itemCurrency[0]
       }
-      if (actions.btcmultisig.isBTCMSUserAddress(`${address}`)) {
-        console.log('Is ms')
-        itemCurrency = items.filter(item => item.fullName.toLowerCase() === 'btc (multisig)')[0]
+      if (actions.btcmultisig.isBTCMSUserAddress(walletAddress)) {
+        itemCurrency = items.filter(item => item.fullName.toLowerCase() === 'bitcoin (multisig)')
         if (!itemCurrency.length) {
           history.push(localisedUrl(locale, `${links.notFound}`))
         } else itemCurrency = itemCurrency[0]
@@ -137,29 +123,38 @@ export default class CurrencyWallet extends Component {
       } = itemCurrency
 
 
-      return {
-        token,
-        currency,
-        address,
-        fullName,
-        contractAddress,
-        decimals,
-        balance,
-        infoAboutCurrency,
-        isBalanceEmpty: balance === 0,
+      this.state = {
+        ... this.state,
+        ... {
+          token,
+          currency,
+          address,
+          fullName: itemCurrency.fullName,
+          contractAddress,
+          decimals,
+          balance,
+          infoAboutCurrency,
+          isBalanceEmpty: balance === 0,
+        },
       }
 
-      this.setState({
-        address,
-      })
     }
-    history.push(localisedUrl(locale, `${links.notFound}`))
   }
 
   componentDidMount() {
 
-    const { currency, token } = this.state
-    let { match: { params: { address = null } } } = this.props
+    const {
+      currency,
+      token,
+    } = this.state
+    
+    let {
+      match: {
+        params: {
+          address = null
+        }
+      }
+    } = this.props
 
     if (currency) {
       // actions.analytics.dataEvent(`open-page-${currency.toLowerCase()}-wallet`)
@@ -169,9 +164,9 @@ export default class CurrencyWallet extends Component {
     }
 
     this.setLocalStorageItems();
-    console.log('componentDidMount', address)
+
     // if address is null, take transactions from current user
-    address ? actions.history.setTransactions(address) : actions.user.setTransactions()
+    address ? actions.history.setTransactions(address, currency.toLowerCase()) : actions.user.setTransactions()
 
     if(!address)
       actions.core.getSwapHistory()
@@ -256,7 +251,7 @@ export default class CurrencyWallet extends Component {
       fullName,
       infoAboutCurrency
     } = this.state
-    
+
     if (txHistory) {
       txHistory = txHistory
         .filter((tx) => {

@@ -88,7 +88,7 @@ const getInvoices = (data) => {
 
     return apiLooper.post('invoiceApi', `/invoice/fetch/`, {
       body: {
-        currency: data.currency,
+        currency: data.currency.toUpperCase(),
         address: data.address,
         mainnet: (process.env.MAINNET) ? '1' : '0',
       }

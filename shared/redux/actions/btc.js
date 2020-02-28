@@ -165,11 +165,13 @@ const getInvoices = () => {
   })
 }
 
-const getTransaction = (address) =>
+const getTransaction = (address, ownType) =>
   new Promise((resolve) => {
     let { user: { btcData: { address : userAddress } } } = getState()
     address = address || userAddress
-    
+
+    const type = (ownType) ? ownType : 'btc'
+
     if(!typeforce.isCoinAddress['BTC'](address)) {
       resolve([])
     }
@@ -192,7 +194,7 @@ const getTransaction = (address) =>
             ).length === item.vout.length
 
           return ({
-            type: 'btc',
+            type,
             hash: item.txid,
             canEdit: address === userAddress,
             confirmations: item.confirmations,
