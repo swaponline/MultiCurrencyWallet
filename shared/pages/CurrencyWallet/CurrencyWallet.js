@@ -334,7 +334,7 @@ export default class CurrencyWallet extends Component {
     // is address is exits check access to button
     if (address) {
       // check if current user is owner the address
-      showButtons = actions.user.isOwner(address)
+      showButtons = actions.user.isOwner(address, currency)
     }
 
     return (
