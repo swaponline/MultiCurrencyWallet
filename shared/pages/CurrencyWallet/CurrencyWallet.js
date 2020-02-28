@@ -79,7 +79,7 @@ export default class CurrencyWallet extends Component {
       match: {
         params: {
           fullName,
-          address,
+          address=null,
         },
       },
       intl: {
@@ -323,15 +323,6 @@ export default class CurrencyWallet extends Component {
       slidesToScroll: 1
     };
 
-      // set all show by default
-    let showButtons = true
-
-    // is address is exits check access to button
-    if (address) {
-      // check if current user is owner the address
-      showButtons = actions.user.isOwner(address)
-    }
-
     return (
       <div styleName="root">
         <PageSeo
@@ -362,7 +353,7 @@ export default class CurrencyWallet extends Component {
           <div styleName="currencyWalletWrapper">
             <div styleName="currencyWalletBalance">
               {
-                txHistory ? 
+                txHistory ?  
                   <BalanceForm 
                     currencyBalance={balance} 
                     usdBalance={currencyUsdBalance} 
@@ -371,7 +362,7 @@ export default class CurrencyWallet extends Component {
                     handleReceive={this.handleReceive} 
                     handleWithdraw={this.handleWithdraw}
                     handleExchange={this.handleGoTrade}
-                    showButtons={showButtons}
+                    showButtons={actions.user.isOwner(address, currency)}
                     currency={currency.toLowerCase()} 
                 /> : <ContentLoader leftSideContent />
               }

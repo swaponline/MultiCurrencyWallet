@@ -290,9 +290,17 @@ Private key: ${bchData.privateKey}\r\n
   return text
 }
 
-export const isOwner = (addr) => {
+export const isOwner = (addr, currency) => {
 
-  const { user: { btcData: { address } } } = getState()
+  const name = `${currency.toLowerCase()}Data`
+  const { user } = getState()
+
+  if(!user[name]) {
+    return false
+  }
+  
+  const {address} = user[name]
+  
   if(!address) {
     return false
   }
