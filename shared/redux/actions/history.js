@@ -18,7 +18,7 @@ const setTransactions = async (address, type) => {
       reducer = 'btc'
       break;
     case 'eth':
-      reducer = 'etc'
+      reducer = 'eth'
       break;
   }
 
