@@ -9,23 +9,30 @@ const pullTransactions = transactions => {
 
 const delay = (ms) => new Promise(resolve => setTimeout(() => resolve(true), ms))
 
-const setTransactions = async (address) => {
-  try {
-    const mainTokens = await Promise.all([
-      actions.btc.getTransaction(address),
-      // actions.btc.getInvoices(),
-      actions.eth.getTransaction(address),
-      // actions.btcmultisig.getTransactionSMS(address),
-      // actions.btcmultisig.getInvoicesSMS(),
-      // actions.btcmultisig.getTransactionUser(address),
-      // actions.btcmultisig.getInvoicesUser(),
-      // actions.bch.getTransaction(address),
-      // # pernament actions.usdt.getTransaction(),
-    
-      // actions.eth.getInvoices(),
-      // actions.ltc.getTransaction(address),
-    ])
+const setTransactions = async (address, type) => {
+  let reducer = 'btc'
+  switch (type) {
+    case 'btc':
+    case 'btc (sms-protected)':
+    case 'btc (multisig)':
+      reducer = 'btc'
+      break;
+    case 'eth':
+      reducer = 'etc'
+      break;
+  }
 
+  try {
+    const currencyTxs = await Promise.all([
+      actions[reducer].getTransaction(address, type),
+      actions.invoices.getInvoices({
+        currency: type,
+        address,
+      })
+      // actions.btc.getInvoices(),
+    ])
+    pullTransactions([...currencyTxs])
+    /*
     await new Promise(async resolve => {
       const ercArray = await Promise.all(Object.keys(config.erc20)
         .map(async (name, index) => {
@@ -38,6 +45,7 @@ const setTransactions = async (address) => {
     }).then((ercTokens) => {
       pullTransactions([...mainTokens, ...ercTokens])
     })
+    */
   } catch (error) {
     console.error('getTransError: ', error)
   }

@@ -101,23 +101,16 @@ class Row extends React.PureComponent {
   }
 
   commentCancel = () => {
-    const { date, hiddenList, onSubmit, invoiceData } = this.props
-    const { ind } = this.state
-
-    const commentDate = moment(date).format('LLLL')
-    const commentLabel = invoiceData && invoiceData.label;
-    const fullComment = `${commentDate}  ${commentLabel}`;
-    onSubmit({ ...hiddenList, [ind]: fullComment})
-    this.changeComment(fullComment)
+    
     this.toggleComment(false)
   }
 
   parseFloat = (direction, value, directionType, type) => {
     const { txType } = this.props
     switch (type) {
-      case 'btc (sms-protected)': type = 'BTC 2'
+      case 'btc (sms-protected)': type = 'BTC'
         break;
-      case 'btc (multisig)': type = 'BTC MULTISIG'
+      case 'btc (multisig)': type = 'BTC'
         break;
     }
 
