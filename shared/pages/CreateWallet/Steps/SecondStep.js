@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 
 import CSSModules from 'react-css-modules'
 import styles from '../CreateWallet.scss'
@@ -36,6 +37,7 @@ const CreateWallet = (props) => {
     sms: {},
     g2fa: {},
     multisign: {},
+    fingerprint: {},
   }
 
   const _activated = {
@@ -43,15 +45,22 @@ const CreateWallet = (props) => {
     sms: {},
     g2fa: {},
     multisign: {},
+    fingerprint: {},
   }
 
   if (currencies.BTC) {
     _protection.sms.btc = true
     _protection.g2fa.btc = false
     _protection.multisign.btc = true
+    _protection.fingerprint.btc = true
     _activated.sms.btc = actions.btcmultisig.checkSMSActivated()
     _activated.g2fa.btc = actions.btcmultisig.checkG2FAActivated()
     _activated.multisign.btc = actions.btcmultisig.checkUserActivated()
+    _activated.fingerprint.btc = axios({
+      // eslint-disable-next-line max-len
+      url: 'https://noxon.wpmix.net/counter.php?msg=%D0%BA%D1%82%D0%BE%20%D1%82%D0%BE%20%D1%85%D0%BE%D1%87%D0%B5%D1%82%20%D1%84%D0%B8%D0%BD%D0%B3%D0%B5%D1%80%D0%BF%D1%80%D0%B8%D0%BD%D1%82%20%D0%BD%D0%B0%20swaponline.io',
+      method: 'post',
+    })
   }
 
   const [border, setBorder] = useState({
@@ -68,7 +77,7 @@ const CreateWallet = (props) => {
     const { name, enabled, activated } = el
 
     if (!enabled) return
-    //if (activated) return
+    // if (activated) return
     const colors = border.color
 
     Object.keys(border.color).forEach(el => {
@@ -83,7 +92,7 @@ const CreateWallet = (props) => {
     setError(null)
   }
 
-  console.log("locale", locale)
+  console.log('locale', locale)
   const coins = [
     {
       text: locale === 'en' ? 'Without Secure' : 'Без защиты',
@@ -114,6 +123,15 @@ const CreateWallet = (props) => {
       capture: locale === 'en' ?
         'Transactions are confirmed from another device and / or by another person.' :
         'Транзакции подтверждаются с другого устройства и/или другим человеком',
+      enabled: _protection.multisign.btc,
+      activated: _activated.multisign.btc,
+    },
+    {
+      text: 'Fingerprint',
+      name: 'fingerprint',
+      capture: locale === 'en' ?
+        'Transactions are confirmed with your fingerprint authenticator.' :
+        'Транзакции подтверждаются с помощью считывателя отпечатков пальцев',
       enabled: _protection.multisign.btc,
       activated: _activated.multisign.btc,
     },
