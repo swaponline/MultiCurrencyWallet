@@ -2,6 +2,7 @@ import config from 'app-config'
 import actions from 'redux/actions'
 import reducers from 'redux/core/reducers'
 import { getState } from 'redux/core'
+import getCurrencyKey from "helpers/getCurrencyKey";
 const pullTransactions = transactions => {
   let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date)
   reducers.history.setTransactions(data)
@@ -10,18 +11,9 @@ const pullTransactions = transactions => {
 const delay = (ms) => new Promise(resolve => setTimeout(() => resolve(true), ms))
 
 const setTransactions = async (address, type) => {
-  let reducer = 'btc'
-  switch (type) {
-    case 'btc':
-    case 'btc (sms-protected)':
-    case 'btc (multisig)':
-      reducer = 'btc'
-      break;
-    case 'eth':
-      reducer = 'eth'
-      break;
-  }
-
+  
+  let reducer = getCurrencyKey(type)
+ 
   try {
     const currencyTxs = await Promise.all([
       actions[reducer].getTransaction(address, type),
