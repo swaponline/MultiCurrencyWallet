@@ -8,6 +8,7 @@ import user from './user'
 import web3 from './web3'
 import links from './links'
 import request from './request'
+import getCurrencyKey from './getCurrencyKey'
 import constants from './constants'
 import localStorage from './localStorage'
 import api from './api'
@@ -39,6 +40,7 @@ export default {
   btc,
   eth,
   ethToken,
+  getCurrencyKey,
   ltc,
   handleGoTrade,
   transactions,

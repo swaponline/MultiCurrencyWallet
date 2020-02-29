@@ -151,8 +151,9 @@ const fetchTx = (hash) =>
 
 const fetchTxInfo = (hash) =>
   fetchTx(hash)
-    .then(({ vin, ...rest }) => ({
+    .then(({ vin, vout, ...rest }) => ({
       senderAddress: vin ? vin[0].addr : null,
+      receiverAddress: vout ? vout[0].scriptPubKey.addresses : null,
       ...rest,
     }))
 
