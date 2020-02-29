@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 
 import CSSModules from 'react-css-modules'
@@ -73,6 +73,25 @@ const CreateWallet = (props) => {
     selected: '',
   })
 
+  const [isFingerprintAvailable, setFingerprintAvaillable] = useState(false)
+
+  const thisComponentInitHelper = useRef(true)
+
+  useEffect(() => {
+    // eslint-disable-next-line no-undef
+    if (thisComponentInitHelper.current && PublicKeyCredential) {
+      // eslint-disable-next-line no-undef
+      PublicKeyCredential
+        .isUserVerifyingPlatformAuthenticatorAvailable()
+        .then(result => {
+          if (result) {
+            setFingerprintAvaillable(true)
+          }
+        })
+        .catch(e => console.error(e))
+    }
+  })
+
   const handleClick = (index, el) => {
     const { name, enabled, activated } = el
 
@@ -126,7 +145,10 @@ const CreateWallet = (props) => {
       enabled: _protection.multisign.btc,
       activated: _activated.multisign.btc,
     },
-    {
+  ]
+
+  if (isFingerprintAvailable) {
+    coins.push({
       text: 'Fingerprint',
       name: 'fingerprint',
       capture: locale === 'en' ?
@@ -134,8 +156,8 @@ const CreateWallet = (props) => {
         'Транзакции подтверждаются с помощью считывателя отпечатков пальцев',
       enabled: _protection.multisign.btc,
       activated: _activated.multisign.btc,
-    },
-  ]
+    })
+  }
 
   return (
     <div>
