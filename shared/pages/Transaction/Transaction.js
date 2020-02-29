@@ -4,31 +4,23 @@ import actions from 'redux/actions'
 import { constants } from 'helpers'
 import getCurrencyKey from "helpers/getCurrencyKey";
 
-/**
- * 
- * 
-    actions.modals.open(constants.modals.InfoPay, {
-      amount,
-      currency,
-      balance,
-      oldBalance: 0, // @Todo доделать old balance
-      txId,
-      toAddress: to
-    })
- */
 
 class Transaction extends Component {
+
   async componentWillMount() {
 
-    let { match: { params: { fullName = null, tx=null } } = null } = this.props
+    let { history, match: { params: { fullName = null, tx=null } } = null } = this.props
 
     if(!tx) {
       return;
     }
+
     const infoTx = await actions[getCurrencyKey(fullName)].fetchTxInfo(tx)
+
     if(!infoTx) {
       return
     }
+
     actions.modals.open(constants.modals.InfoPay, {
       amount:infoTx.valueOut,
       currency:fullName,
@@ -38,16 +30,20 @@ class Transaction extends Component {
       toAddress: infoTx.receiverAddress,
       onClose: () => {
         
+        if(history.length > 2 ) {
+          history.goBack()
+          return false;
+        }
+
+        history.push('/')
         return false;
       }
-    })
+    }) 
   }
 
-  render() {
-
-    return <div>
-      
-    </div>
+   render() {
+     
+    return (null);
   }
 }
 
