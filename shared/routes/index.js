@@ -31,8 +31,8 @@ const routes = (
     <Switch>
       <Route path={`${localisePrefix}${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />
       
-      <Route path={`${localisePrefix}/:fullName(btc|eth|swap)/tx/:tx?`} component={Transaction} />
-      <Route path={`${localisePrefix}/:fullName(btc|eth|swap)/:address`} component={CurrencyWallet} />
+      <Route path={`${localisePrefix}/:fullName(btc|eth|swap|bnb|mdl|snm|proxima)/tx/:tx?`} component={Transaction} />
+      <Route path={`${localisePrefix}/:fullName(btc|eth|swap|bnb|mdl|snm|proxima)/:address`} component={CurrencyWallet} />
       <Route path={`${localisePrefix}/:fullName-wallet/:address?`} component={CurrencyWallet} />
 
       
