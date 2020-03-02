@@ -183,7 +183,8 @@ export default class WithdrawModal extends React.Component {
     const { address: to, amount, ownTx } = this.state;
     const {
       data: { currency, address, balance, invoice, onReady },
-      name
+      name,
+      history
     } = this.props;
 
     this.setState(() => ({ isShipped: true }));
@@ -256,6 +257,7 @@ export default class WithdrawModal extends React.Component {
       })
       .then(() => {
         actions.modals.close(name);
+        // history.push('')
       })
       .catch(e => {
         const errorText = e.res ? e.res.text : "";

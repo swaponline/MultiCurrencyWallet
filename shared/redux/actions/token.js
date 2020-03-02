@@ -105,15 +105,16 @@ const fetchBalance = async (address, contractAddress, decimals) => {
   return amount
 }
 
-const getTransaction = (currency) =>
+const getTransaction = (address, ownType) =>
   new Promise((resolve) => {
     const { user: { tokensData } } = getState()
 
-    if (currency === undefined) {
+    if (ownType === undefined) {
       return
     }
 
-    const { address, contractAddress } = tokensData[currency.toLowerCase()]
+  
+    const { address, contractAddress } = tokensData[ownType.toLowerCase()]
 
     console.log('currency', address, contractAddress)
 

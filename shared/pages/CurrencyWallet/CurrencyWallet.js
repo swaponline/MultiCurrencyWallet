@@ -78,7 +78,8 @@ export default class CurrencyWallet extends Component {
     const {
       match: {
         params: {
-          fullName,
+          fullName=null,
+          ticker=null,
           address=null,
         },
       },
@@ -90,8 +91,21 @@ export default class CurrencyWallet extends Component {
       tokens,
     } = props
 
+    if(!address && !ticker) {
+
+      // @ToDO throw error
+    }
+
     const walletAddress = address
-    const fullNameCheck = aliases[fullName.toLowerCase()] ? aliases[fullName.toLowerCase()] : fullName.toLowerCase()
+
+    // оставляю запасной вариант для старых ссылок
+    if(fullName) {
+      ticker = fullName
+    }
+    
+    const fullNameCheck = aliases[ticker.toLowerCase()] ? aliases[ticker.toLowerCase()] : ticker.toLowerCase()
+   
+
 
     let item = items.map(item => item.fullName.toLowerCase())
 
