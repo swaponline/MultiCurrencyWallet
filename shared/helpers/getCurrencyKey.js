@@ -12,8 +12,13 @@ export default (currency) => {
       key = 'btc'
       break;
     case 'eth':
+    case 'bnb':
+    case 'mdl':
+    case 'snm':
+    case 'proxima':
       key = 'eth'
       break;
+    
   }
 
   return key
