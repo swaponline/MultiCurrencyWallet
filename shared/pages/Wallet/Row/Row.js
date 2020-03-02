@@ -391,7 +391,9 @@ export default class Row extends Component {
         break;
     }
 
-    history.push(localisedUrl(locale, `/${targetCurrency}/${address}`))
+    const isToken = helpers.ethToken.isEthToken({ name: currency })
+    
+    history.push(localisedUrl(locale, (isToken ? '/token' : '') +`/${targetCurrency}/${address}`))
   }
 
   hideCurrency = () => {
