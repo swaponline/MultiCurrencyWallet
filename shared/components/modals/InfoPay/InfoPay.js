@@ -77,7 +77,7 @@ export default class InfoPay extends React.Component {
                         </div>
 
     return (
-      <Modal name={name} title={intl.formatMessage(labels.Title)} >
+      <Modal name={name} title={intl.formatMessage(labels.Title)} showCloseButton={false}>
         <div styleName="blockCenter">
           <div>
             <img styleName="finishImg" src={finishSvg} alt="finish" />

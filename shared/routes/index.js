@@ -16,6 +16,7 @@ import Currency from 'pages/Currency/Currency'
 import PartialClosure from 'pages/PartialClosure/PartialClosure'
 import PointOfSell from 'pages/PointOfSell/PointOfSell'
 import CurrencyWallet from 'pages/CurrencyWallet/CurrencyWallet'
+import Transaction from 'pages/Transaction/Transaction'
 import IEO from 'pages/IEO/IEO'
 import BtcMultisignProcessor from 'pages/Multisign/Btc/Btc'
 import CreateInvoice from 'pages/CreateInvoice/CreateInvoice'
@@ -29,9 +30,13 @@ const routes = (
   <ScrollToTop>
     <Switch>
       <Route path={`${localisePrefix}${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />
-
-      <Route path={`${localisePrefix}/:fullName(btc|eth)/:address`} component={CurrencyWallet} />
+      
+      <Route path={`${localisePrefix}/:ticker(btc|eth)/tx/:tx?`} component={Transaction} />
+      <Route path={`${localisePrefix}/:ticker(btc|eth)/:address`} component={CurrencyWallet} />
+      <Route path={`${localisePrefix}/:token(token)/:ticker/:address`} component={CurrencyWallet} />
       <Route path={`${localisePrefix}/:fullName-wallet/:address?`} component={CurrencyWallet} />
+
+      
 
       <Route path={`${localisePrefix}${links.home}:buy-:sell/:orderId`} component={Home} />
       <Route path={`${localisePrefix}${links.home}:buy-:sell`} component={Home} />
