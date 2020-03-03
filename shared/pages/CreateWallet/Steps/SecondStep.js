@@ -231,7 +231,7 @@ const CreateWallet = (props) => {
             })}
           </div>
         </div>
-        <button styleName="continue" onClick={onClick} disabled={error}>
+        <button styleName="continue" onClick={onClick} disabled={error || border.selected === ''}>
           <FormattedMessage id="createWalletButton3" defaultMessage="Create Wallet" />
         </button>
       </div>
