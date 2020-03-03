@@ -28,7 +28,8 @@ import minAmount from 'helpers/constants/minAmount'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import links from 'helpers/links'
 import CopyToClipboard from 'react-copy-to-clipboard'
-import QrReader from "components/QrReader";
+import QrReader from "components/QrReader"
+import { getFullOrigin } from 'helpers/links'
 
 
 @injectIntl
@@ -304,9 +305,9 @@ export default class WithdrawModalMultisigUser extends React.Component {
       intl,
     } = this.props
 
-    let txConfirmLink = `${location.origin}/#${links.multisign}/btc/confirm/${txRaw}`
+    let txConfirmLink = `${getFullOrigin()}${links.multisign}/btc/confirm/${txRaw}`
     if (invoice) {
-      txConfirmLink = `${location.origin}/#${links.multisign}/btc/confirminvoice/${invoice.id}|${txRaw}`
+      txConfirmLink = `${getFullOrigin()}${links.multisign}/btc/confirminvoice/${invoice.id}|${txRaw}`
     }
     const linked = Link.all(this, 'address', 'amount', 'code', 'ownTx')
 
