@@ -9,6 +9,7 @@ import { Modal } from 'components/modal'
 import { Button } from 'components/controls'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import { links } from 'helpers'
+import { getFullOrigin } from 'helpers/links'
 
 
 const labels = defineMessages({
@@ -51,7 +52,7 @@ export default class InvoiceLinkModal extends React.Component {
         type = 'btc'
         break;
     }
-    const invoiceLink = `${location.origin}/#${links.createInvoice}/${type}/${address}`
+    const invoiceLink = `${getFullOrigin()}${links.createInvoice}/${type}/${address}`
 
     return (
       <Modal name={name} title={intl.formatMessage(labels.Title)}>
