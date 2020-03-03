@@ -9,6 +9,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import { withRouter } from 'react-router'
 import actions from 'redux/actions'
 import { links }    from 'helpers'
+import { getFullOrigin } from 'helpers/links'
 import Button from 'components/controls/Button/Button'
 
 import moment from 'moment'
@@ -97,7 +98,7 @@ export default class Btc extends PureComponent {
           privateKey,
           publicKey,
           myPublicKey,
-          joinLink: `${location.origin}/#${links.multisign}/btc/connect/${myPublicKey}`,
+          joinLink: `${getFullOrigin()}${links.multisign}/btc/connect/${myPublicKey}`,
         })
         actions.ipfs.onReady( () => {
           this.setState({
