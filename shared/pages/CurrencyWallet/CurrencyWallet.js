@@ -5,7 +5,8 @@ import actions from 'redux/actions'
 import Slider from 'pages/Wallet/components/WallerSlider';
 import { Link, withRouter } from 'react-router-dom'
 
-import { links, constants } from 'helpers'
+import { links, constants, ethToken } from 'helpers'
+import { getTokenWallet, getBitcoinWallet, getEtherWallet } from 'helpers/links'
 
 import {aliases} from 'helpers/links'
 
@@ -92,8 +93,43 @@ export default class CurrencyWallet extends Component {
     } = props
 
     if(!address && !ticker) {
+      if (fullName) {
+        // Если это токен - перенаправляем на адрес /token/name/address
+        if (ethToken.isEthToken({ name: fullName })) {
+          this.state = {
+            ... this.state,
+            ... {
+              isRedirecting: true,
+              redirectUrl: getTokenWallet(fullName),
+            }
+          }
+          return
+        }
 
+        if (fullName.toLowerCase() === `bitcoin`) {
+          this.state = {
+            ... this.state,
+            ... {
+              isRedirecting: true,
+              redirectUrl: getBitcoinWallet(),
+            }
+          }
+          return
+        }
+
+        if (fullName.toLowerCase() === `ethereum`) {
+          this.state = {
+            ... this.state,
+            ... {
+              isRedirecting: true,
+              redirectUrl: getEtherWallet(),
+            }
+          }
+          return
+        }
+      }
       // @ToDO throw error
+      
     }
 
     const walletAddress = address
@@ -160,8 +196,19 @@ export default class CurrencyWallet extends Component {
     const {
       currency,
       token,
+      isRedirecting,
+      redirectUrl,
     } = this.state
-    
+
+    if (isRedirecting) {
+      const { history, intl: { locale } } = this.props
+      history.push(localisedUrl(locale, redirectUrl))
+      setTimeout( () => {
+        location.reload()
+      }, 100)
+      return
+    }
+
     let {
       match: {
         params: {
@@ -256,15 +303,17 @@ export default class CurrencyWallet extends Component {
   )
 
   render() {
-
     let { swapHistory, txHistory, location, match: { params: { address = null } }, intl, hiddenCoinsList, isSigned, isFetching } = this.props
 
     const {
       currency,
       balance,
       fullName,
-      infoAboutCurrency
+      infoAboutCurrency,
+      isRedirecting,
     } = this.state
+
+    if (isRedirecting) return null
 
     if (txHistory) {
       txHistory = txHistory

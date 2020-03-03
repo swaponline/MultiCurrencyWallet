@@ -336,6 +336,11 @@ const downloadPrivateKeys = () => {
 
 window.downloadPrivateKeys = downloadPrivateKeys
 
+const getAuthData = (name) => {
+  const { user } = getState()
+  return user[`${name}Data`]
+}
+
 export default {
   sign,
   getBalances,
@@ -346,5 +351,6 @@ export default {
   isOwner,
   getExchangeRate,
   getReputation,
-  getInfoAboutCurrency
+  getInfoAboutCurrency,
+  getAuthData,
 }
