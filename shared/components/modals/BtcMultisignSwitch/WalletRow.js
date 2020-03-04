@@ -92,7 +92,7 @@ export default class WalletRow extends Component {
       dropDownMenuItems = []
     }
     return (
-      <tr>
+      <tr styleName="walletInfoRow">
         <td styleName="assetsTableRow">
           <div styleName="assetsTableCurrency">
             <Coin className={styles.assetsTableIcon} name={currency} />
