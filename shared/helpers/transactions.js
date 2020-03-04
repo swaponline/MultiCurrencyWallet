@@ -1,11 +1,8 @@
 import helpers from "helpers";
 
-const getLink = (currency, txId) => {
-  let prefix = currency.toLowerCase()
 
-  if(['btc (multisig)', 'btc (sms-protected)'].includes(prefix)) {
-    prefix = 'btc'
-  }
+const getLink = (currency, txId) => {
+  const prefix = helpers.getCurrencyKey(currency)
 
   if (helpers[prefix]
     && typeof helpers[prefix].getLinkToInfo === 'function'
@@ -17,11 +14,7 @@ const getLink = (currency, txId) => {
 }
 
 const getInfo = (currency, txRaw) => {
-  let prefix = currency.toLowerCase()
-
-  if(['btc (multisig)', 'btc (sms-protected)'].includes(prefix)) {
-    prefix = 'btc'
-  }
+  const prefix = helpers.getCurrencyKey(currency)
 
   if (helpers[prefix]
     && typeof helpers[prefix].getTx === 'function'
