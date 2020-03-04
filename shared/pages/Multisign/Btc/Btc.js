@@ -226,7 +226,8 @@ export default class Btc extends PureComponent {
       },
     } = this.props
 
-    history.push(localisedUrl(locale, links.home))
+    const { address } = actions.user.getAuthData('btcMultisigUser')
+    history.push(localisedUrl(locale, `/btc/${address}`))
   }
 
   handleConfirm = async() => {
@@ -278,7 +279,7 @@ export default class Btc extends PureComponent {
             <label>
               <FormattedMessage id="BTCMS_WalletBalance" defaultMessage="Баланс" />
             </label>
-            <strong>{walletBalance} BTC</strong>
+            <strong>{' '}{walletBalance} BTC</strong>
           </div>
           { addWalletEnabled ?
               waitCreateWallet ?
@@ -325,6 +326,11 @@ export default class Btc extends PureComponent {
             <code>
               {
                 JSON.stringify(this.state.txData.output, false, 4)
+              }
+            </code>
+            <code>
+              {
+                JSON.stringify(this.state.txData, false, 4)
               }
             </code>
           </pre>

@@ -312,6 +312,7 @@ const login_ = (privateKey, otherOwnerPublicKey, sortKeys) => {
       pubkeys: publicKeys,
       network: btc.network,
     })
+    console.log('p2ms', p2ms)
     const p2sh = bitcoin.payments.p2sh({ redeem: p2ms, network: btc.network })
     
     const { address } = p2sh
@@ -902,13 +903,33 @@ const parseRawTX =  async ( txHash ) => {
     from: false,
     to: false,
     out: {},
+    isOur: false,
     amount: new BigNumber(0),
   }
 
 
   txb.__INPUTS.forEach((input) => {
+    let inputAddress = ''
+    try {
+      const p2sh = bitcoin.payments.p2sh({ redeem: input.redeemScript, network: btc.network })
+      const { address } = p2sh
+      inputAddress = address
+      console.log(p2sh, inputAddress)
+      if (myBtcAddreses.includes(inputAddress)) {
+        parsedTX.isOur = true
+        parsedTX.from = inputAddress
+      }
+      const chunksIn = bitcoin.script.decompile(input.redeemScript);
+      const p2sh2 = bitcoin.payments.p2sh({ redeem: chunksIn, network: btc.network })
+      console.log(p2sh2, p2sh2.address)
+      console.log(chunksIn)
+      console.log(bitcoin.ECPair.fromPublicKeyBuffer(chunksIn[1], btc.network))
+    } catch (e) {
+      console.log('Fail parse input script',e)
+    }
     parsedTX.input.push( {
       script: bitcoin.script.toASM(input.redeemScript),
+      address: inputAddress,
       publicKeys: input.pubkeys.map(buf => buf.toString('hex')),
     } )
   })

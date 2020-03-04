@@ -228,6 +228,11 @@ export default class BtcMultisignConfirmTx extends React.Component {
                     JSON.stringify(this.state.txData.output, false, 4)
                   }
                 </code>
+                <code>
+                  {
+                    JSON.stringify(this.state.txData, false, 4)
+                  }
+                </code>
               </pre>
               }
               <hr />
