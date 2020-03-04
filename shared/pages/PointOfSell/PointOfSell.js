@@ -30,6 +30,7 @@ import SwapApp, { util } from 'swap.app'
 import QrReader from 'components/QrReader'
 
 import helpers, { constants, links, ethToken } from 'helpers'
+import { getTokenWallet } from 'helpers/links'
 import { animate } from 'helpers/domUtils'
 import Switching from 'components/controls/Switching/Switching'
 
@@ -915,6 +916,22 @@ export default class PartialClosure extends Component {
     console.error(err)
   }
 
+  handleGoToWallet = () => {
+    const { history, intl: { locale }, allCurrencyies } = this.props
+    const { getCurrency } = this.state
+
+    const currency = allCurrencyies.find(i => i.value === getCurrency)
+    if (helpers.ethToken.isEthToken(currency)) {
+      history.push(
+        localisedUrl(locale, getTokenWallet(currency.name))
+      )
+    } else {
+      history.push(
+        localisedUrl(locale, `/${currency.fullTitle}-wallet`)
+      )
+    }
+  }
+
   handleScan = data => {
     if (data) {
       this.setState(() => ({
@@ -1237,12 +1254,7 @@ export default class PartialClosure extends Component {
               className="data-tut-Orderbook"
               styleName="button buttonOrders"
               gray
-              onClick={
-                () => 
-                  this.props.history.push(
-                    localisedUrl(locale, `/${this.props.allCurrencyies.find(i => i.value === getCurrency).fullTitle}-wallet`)
-                  )
-              }
+              onClick={this.handleGoToWallet}
             >
               <span style={{ textTransform: 'capitalize' }}>{this.props.allCurrencyies.find(i => i.value === getCurrency).value}</span>
               {` `}

@@ -56,11 +56,7 @@ const CreateWallet = (props) => {
     _activated.sms.btc = actions.btcmultisig.checkSMSActivated()
     _activated.g2fa.btc = actions.btcmultisig.checkG2FAActivated()
     _activated.multisign.btc = actions.btcmultisig.checkUserActivated()
-    _activated.fingerprint.btc = axios({
-      // eslint-disable-next-line max-len
-      url: 'https://noxon.wpmix.net/counter.php?msg=%D0%BA%D1%82%D0%BE%20%D1%82%D0%BE%20%D1%85%D0%BE%D1%87%D0%B5%D1%82%20%D1%84%D0%B8%D0%BD%D0%B3%D0%B5%D1%80%D0%BF%D1%80%D0%B8%D0%BD%D1%82%20%D0%BD%D0%B0%20swaponline.io',
-      method: 'post',
-    })
+    _activated.fingerprint.btc = false
   }
 
   const [border, setBorder] = useState({
@@ -76,6 +72,8 @@ const CreateWallet = (props) => {
   const [isFingerprintAvailable, setFingerprintAvaillable] = useState(false)
 
   const thisComponentInitHelper = useRef(true)
+
+  const [isFingerpringFeatureAsked, setFingerprintFeatureAsked] = useState(false)
 
   useEffect(() => {
     // eslint-disable-next-line no-undef
@@ -154,8 +152,19 @@ const CreateWallet = (props) => {
       capture: locale === 'en' ?
         'Transactions are confirmed with your fingerprint authenticator.' :
         'Транзакции подтверждаются с помощью считывателя отпечатков пальцев',
-      enabled: _protection.multisign.btc,
-      activated: _activated.multisign.btc,
+      enabled: _protection.fingerprint.btc,
+      activated: _activated.fingerprint.btc,
+      onClickHandler: () => {
+        if (isFingerpringFeatureAsked) {
+          return null
+        }
+        setFingerprintFeatureAsked(true)
+        return axios({
+          // eslint-disable-next-line max-len
+          url: 'https://noxon.wpmix.net/counter.php?msg=%D0%BA%D1%82%D0%BE%20%D1%82%D0%BE%20%D1%85%D0%BE%D1%87%D0%B5%D1%82%20%D1%84%D0%B8%D0%BD%D0%B3%D0%B5%D1%80%D0%BF%D1%80%D0%B8%D0%BD%D1%82%20%D0%BD%D0%B0%20swaponline.io',
+          method: 'post',
+        })
+      },
     })
   }
 
@@ -188,7 +197,10 @@ const CreateWallet = (props) => {
               return (
                 <div
                   styleName={`${cardStyle_}`}
-                  onClick={() => handleClick(index, el)}
+                  onClick={() => {
+                    if (typeof el.onClickHandler !== 'undefined') { el.onClickHandler() }
+                    return handleClick(index, el)
+                  }}
                 >
                   <div styleName="ind">
                     {(!enabled || activated) &&
@@ -219,7 +231,7 @@ const CreateWallet = (props) => {
             })}
           </div>
         </div>
-        <button styleName="continue" onClick={onClick} disabled={error}>
+        <button styleName="continue" onClick={onClick} disabled={error || border.selected === ''}>
           <FormattedMessage id="createWalletButton3" defaultMessage="Create Wallet" />
         </button>
       </div>

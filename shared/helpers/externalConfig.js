@@ -45,7 +45,6 @@ const externalConfig = () => {
   if (window
     && window.widgetERC20Tokens
     && Object.keys(window.widgetERC20Tokens)
-    && Object.keys(window.widgetERC20Tokens).length
   ) {
     config.opts.ownTokens = window.widgetERC20Tokens
   }
