@@ -1,3 +1,6 @@
+import actions from '../redux/actions'
+
+
 const linksManager = {
   home: '/',
   exchange: '/exchange',
@@ -155,6 +158,26 @@ linksManager.getFaqLink = (faqID) => {
   }
   return false
 }
+
+export const getBitcoinWallet = () => {
+  const { address } = actions.user.getAuthData('btc')
+
+  return `/btc/${address}`
+}
+
+export const getEtherWallet = () => {
+  const { address } = actions.user.getAuthData('eth')
+
+  return `/eth/${address}`
+}
+
+export const getTokenWallet = (token) => {
+  const { address } = actions.user.getAuthData('eth')
+
+  return `/token/${token.toUpperCase()}/${address}`
+}
+
+window.getTokenWallet = getTokenWallet
 
 export const getFullOrigin = () => `${location.origin}${location.pathname}#`
 
