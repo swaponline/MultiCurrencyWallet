@@ -1,6 +1,6 @@
 import config from 'app-config'
 import moment from 'moment/moment'
-import { request, constants } from 'helpers'
+import { request, constants, ethToken } from 'helpers'
 
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
@@ -300,6 +300,19 @@ Private key: ${bchData.privateKey}\r\n
 }
 
 export const isOwner = (addr, currency) => {
+  if (ethToken.isEthToken({ name: currency })) {
+    const {
+      user: {
+        ethData: {
+          address,
+        },
+      },
+    } = getState()
+
+    return addr === address
+  }
+
+  if (actions.btcmultisig.isBTCAddress(addr)) return true
 
   const name = `${currency.toLowerCase()}Data`
   const { user } = getState()
@@ -307,17 +320,12 @@ export const isOwner = (addr, currency) => {
   if(!user[name]) {
     return false
   }
-  
+
   const {address} = user[name]
-  
+
   if(!address) {
     return false
   }
-  // Where ETH !!!
-  // Where Tokens !!!
-  // Where Ltc !!
-  // Where Bch !!??
-  if (actions.btcmultisig.isBTCAddress(addr)) return true
 
   return addr === address
 }
