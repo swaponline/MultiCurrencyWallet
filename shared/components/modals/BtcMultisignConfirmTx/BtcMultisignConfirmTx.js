@@ -46,6 +46,14 @@ const langLabels = defineMessages({
     id: `${langPrefix}_DismatchTx`,
     defaultMessage: `Отклонить`,
   },
+  youCantSignThis: {
+    id: `${langPrefix}_YouCantSignThisTx`,
+    defaultMessage: `У вас нет прав для подписи этой транзакции (проверьте, что у вас создан мультисиг)`,
+  },
+  goToWallet: {
+    id: `${langPrefix}_GoToWalletPage`,
+    defaultMessage: `Открыть кошелек`,
+  },
 })
 
 @injectIntl
@@ -71,6 +79,9 @@ export default class BtcMultisignConfirmTx extends React.Component {
 
     this.state = {
       step: `fetchgin`,
+      address: ``,
+      amount: ``,
+      from: ``,
     }
   }
 
@@ -82,12 +93,28 @@ export default class BtcMultisignConfirmTx extends React.Component {
         }
       } = this.props
 
+      const txDataParsed = await actions.btcmultisig.parseRawTX(txData)
+
+      if (!txDataParsed.isOur) {
+        this.setState({
+          step: `dinned`,
+        })
+        return
+      }
+
       this.setState({
         step: `txInfo`,
         txRaw: txData,
-        txData: await actions.btcmultisig.parseRawTX(txData),
+        txData: txDataParsed,
+        address: txDataParsed.to,
+        from: txDataParsed.from,
+        amount: txDataParsed.amount,
       })
     })
+  }
+
+  handleGoToWallet = () => {
+    this.handleClose()
   }
 
   handleConfirm = async() => {
@@ -104,7 +131,7 @@ export default class BtcMultisignConfirmTx extends React.Component {
       isConfirming: true,
     })
 
-    const signedTX = await actions.btcmultisig.signMultiSign( txRaw )
+    const signedTX = await actions.btcmultisig.signMultiSign( txRaw , txData.wallet )
     let txID = false
     try {
       txID = await actions.btcmultisig.broadcastTx( signedTX )
@@ -160,77 +187,91 @@ export default class BtcMultisignConfirmTx extends React.Component {
       step,
       txData,
       isConfirming,
+      address,
+      amount,
+      from,
     } = this.state
 
     const { debugShowTXB, debugShowInput, debugShowOutput } = this.state
 
+    const linked = Link.all(this, 'address', 'amount', 'from')
+
     return (
       <Modal name={name} title={`${intl.formatMessage(langLabels.title)}`} onClose={this.handleClose} showCloseButton={showCloseButton}>
-        <Fragment>
+        {step !== `dinned` && (
           <p styleName="notice">
             <FormattedMessage { ... langLabels.noticeUp } />
           </p>
+        )}
+        <div styleName="confirmTxModal">
           {step === `fetchgin` && (
             <p styleName="notice">
               <FormattedMessage { ... langLabels.noticeFetching } />
             </p>
           )}
+          {step === `dinned` && (
+            <Fragment>
+              <p styleName="rednotes">
+                <FormattedMessage { ... langLabels.youCantSignThis } />
+              </p>
+              <Button
+                styleName="buttonCenter"
+                blue
+                onClick={this.handleGoToWallet}
+              >
+                <FormattedMessage { ... langLabels.goToWallet } />
+              </Button>
+            </Fragment>
+          )}
           {step === `txInfo` && (
             <Fragment>
-              <h1>
-                <FormattedMessage id="BTCMS_ConfirmTxTitle" defaultMessage="Подтверждение транзакции" />
-              </h1>
-              <h3>
-                <FormattedMessage
-                  id="BTCMS_FromAddress"
-                  defaultMessage="Оплата с кошелка: {address}"
-                  values={{address: txData.from}}
+              <div styleName="highLevel" style={{ marginBottom: "20px" }}>
+                <FieldLabel>
+                  <FormattedMessage id="BtcMultisignConfirmTx_FromAddress" defaultMessage="Оплата с кошелька" />{" "}
+                </FieldLabel>
+                <Input
+                  valueLink={linked.from}
+                  disabled
+                  styleName="input fakeInput"
+                  withMargin
                 />
-              </h3>
-              <h3>
-                <FormattedMessage
-                  id="BTCMS_Amount"
-                  defaultMessage="Сумма транзакции: {amount} BTC"
-                  values={{amount: txData.amount}}
+              </div>
+              <div styleName="highLevel" style={{ marginBottom: "20px" }}>
+                <FieldLabel>
+                  <FormattedMessage id="Withdrow1194" defaultMessage="Address " />{" "}
+                  <Tooltip id="WtH203">
+                    <div style={{ textAlign: "center" }}>
+                      <FormattedMessage
+                        id="WTH275"
+                        defaultMessage="Make sure the wallet you{br}are sending the funds to supports {currency}"
+                        values={{ br: <br />, currency: `BTC` }}
+                      />
+                    </div>
+                  </Tooltip>
+                </FieldLabel>
+                <Input
+                  valueLink={linked.address}
+                  disabled
+                  styleName="input fakeInput"
+                  withMargin
                 />
-              </h3>
-              <h3>
-                <FormattedMessage
-                  id="BTCMS_ToAddress"
-                  defaultMessage="Получатель: {address}"
-                  values={{address: txData.to}}
-                />
-              </h3>
-              <hr />
-              <h3>
-                <button onClick={ () => { this.setState({debugShowInput: !debugShowInput}) } }>
-                  <FormattedMessage id="BTCMS_ConfirmTxInputs" defaultMessage="Входы транзакции" />
-                </button>
-              </h3>
-              {debugShowInput &&
-              <pre>
-                <code>
-                  {
-                    JSON.stringify(this.state.txData.input, false, 4)
-                  }
-                </code>
-              </pre>
-              }
-              <h3>
-                <button onClick={ () => { this.setState({debugShowOutput: !debugShowOutput}) } }>
-                  <FormattedMessage id="BTCMS_ConfirmTxOutputs" defaultMessage="Выходы транзакции" />
-                </button>
-              </h3>
-              {debugShowOutput &&
-              <pre>
-                <code>
-                  {
-                    JSON.stringify(this.state.txData.output, false, 4)
-                  }
-                </code>
-              </pre>
-              }
-              <hr />
+              </div>
+              <div styleName="lowLevel" style={{ marginBottom: "30px" }}>
+                <p styleName="balance walletBalance">
+                  {txData.wallet.balance} {`BTC`}
+                </p>
+                <FieldLabel>
+                  <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
+                </FieldLabel>
+
+                <div styleName="group">
+                  <Input
+                    styleName="input fakeInput"
+                    valueLink={linked.amount}
+                    disabled
+                  />
+                </div>
+              </div>
               <div styleName="buttonsHolder">
                 <Button
                   styleName="buttonFull"
@@ -253,7 +294,7 @@ export default class BtcMultisignConfirmTx extends React.Component {
               </div>
             </Fragment>
           )}
-        </Fragment>
+        </div>
       </Modal>
     )
   }

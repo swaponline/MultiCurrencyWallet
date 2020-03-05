@@ -20,7 +20,7 @@ import DropdownMenu from 'components/ui/DropdownMenu/DropdownMenu'
 // import KeychainStatus from '../KeychainStatus/KeychainStatus'
 import { withRouter } from 'react-router'
 import ReactTooltip from 'react-tooltip'
-import { FormattedMessage, injectIntl } from 'react-intl'
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 import { relocalisedUrl, localisedUrl } from 'helpers/locale'
 import SwapApp from 'swap.app'
@@ -28,6 +28,14 @@ import { BigNumber } from 'bignumber.js'
 
 import dollar from '../images/dollar.svg'
 import PartOfAddress from '../components/PartOfAddress'
+
+
+const langLabels = defineMessages({
+  unconfirmedBalance: {
+    id: 'RowWallet181',
+    defaultMessage: `Unconfirmed balance`,
+  },
+})
 
 @injectIntl
 @withRouter
@@ -439,7 +447,8 @@ export default class Row extends Component {
 
     const {
       item,
-      intl: { locale }
+      intl: { locale },
+      intl,
     } = this.props
 
     const { currency, balance, isBalanceFetched, fullName, title, unconfirmedBalance, balanceError } = item
@@ -621,12 +630,13 @@ export default class Row extends Component {
                           .toString()}{' '}
                   </span>
                   <span styleName="assetsTableCurrencyBalance">{currencyView}</span>
-                  {unconfirmedBalance > 0 && (
+                  {unconfirmedBalance !== 0 && (
                     <Fragment>
                       <br />
-                      <span styleName="unconfirmedBalance">
-                        <FormattedMessage id="RowWallet181" defaultMessage="Unconfirmed balance" />
-                        {unconfirmedBalance}{' '}
+                      <span styleName="unconfirmedBalance" title={intl.formatMessage(langLabels.unconfirmedBalance)}>
+                        {unconfirmedBalance > 0 && (<>{'+'}</>)}
+                        {unconfirmedBalance}
+                        {' '}
                       </span>
                     </Fragment>
                   )}

@@ -308,6 +308,7 @@ export default class RegisterSMSProtected extends React.Component {
 
     restoreInstruction = `Wallet address:\r\n`
     restoreInstruction+= `${btcMultisigSMSData.address}\r\n`
+    restoreInstruction+= `To withdraw funds create transaction using this code https://github.com/bitcoinjs/bitcoinjs-lib/blob/master/test/integration/transactions.spec.ts#L193\r\n`
     restoreInstruction+= `\r\n`
     restoreInstruction+= `Public keys for create Multisig (2of3) wallet:\r\n`
     if (btcMultisigSMSData.publicKeys[0]) restoreInstruction+=`${btcMultisigSMSData.publicKeys[0].toString('Hex')}\r\n`
@@ -323,7 +324,7 @@ export default class RegisterSMSProtected extends React.Component {
     restoreInstruction+= `Wallet delivery path for mnemonic:\r\n`
     restoreInstruction+= `m/44'/0'/0'/0/0\r\n`
     restoreInstruction+= `Private key (WIF) of wallet, generated from mnemonic:\r\n`
-    restoreInstruction+= `${mnemonicWallet.WIF}\r\n`
+    restoreInstruction+= `(DELETE THIS LINE!) ${mnemonicWallet.WIF}\r\n`
     restoreInstruction+= `*** (this private key does not stored anywhere! but in case if our  2fa server does down, you can withdraw your fond using this private key)\r\n`
 
     this.setState({
@@ -558,7 +559,7 @@ export default class RegisterSMSProtected extends React.Component {
               </div>
               <div styleName="restoreInstruction">
                 <h1>
-                  <FormattedMessage id="registerSMSModalFinishInfoTitle" defaultMessage="Сохраните эту информацию" />
+                  <FormattedMessage id="registerSMSModalFinishSaveThisInfo" defaultMessage="Информация на случай недоступности нашего сервиса" />
                 </h1>
                 <div>
                   <pre>{restoreInstruction}</pre>
