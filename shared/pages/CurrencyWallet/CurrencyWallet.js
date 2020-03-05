@@ -258,6 +258,18 @@ export default class CurrencyWallet extends Component {
     })
   }
 
+  handleInvoice = () => {
+    const {
+      currency,
+      address
+    } = this.state
+    
+    actions.modals.open(constants.modals.InvoiceModal, {
+      currency: currency.toUpperCase(),
+      toAddress: address
+    })
+  }
+
   handleWithdraw = () => {
     
     const {
@@ -387,8 +399,6 @@ export default class CurrencyWallet extends Component {
       slidesToShow: 1,
       slidesToScroll: 1
     };
-
-    console.log(txHistory);
     
     return (
       <div styleName="root">
@@ -429,6 +439,7 @@ export default class CurrencyWallet extends Component {
                     handleReceive={this.handleReceive} 
                     handleWithdraw={this.handleWithdraw}
                     handleExchange={this.handleGoTrade}
+                    handleInvoice={this.handleInvoice}
                     showButtons={actions.user.isOwner(address, currency)}
                     currency={currency.toLowerCase()} 
                 /> : <ContentLoader leftSideContent />

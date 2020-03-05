@@ -7013,6 +7013,13 @@
     ]
   },
   {
+    "id": "RequestPayment",
+    "message": "Request Payment",
+    "files": [
+      "shared/pages/Wallet/components/BalanceForm/BalanceForm.js"
+    ]
+  },
+  {
     "id": "ControlShareLink_CopyLink",
     "message": "Copy link",
     "files": [
