@@ -173,6 +173,7 @@ export default class Wallet extends Component {
   }
 
   componentWillMount() {
+  
     actions.user.getBalances()
   }
 
