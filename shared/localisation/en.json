@@ -7309,56 +7309,56 @@
   },
   {
     "id": "btcSMSProtectedSignByMnemonic",
-    "message": "Использовать секретную фразу",
+    "message": "Use Passphrase",
     "files": [
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
   {
     "id": "ShowMyMnemonic",
-    "message": "Показать 12 слов",
+    "message": "Show 12 words",
     "files": [
       "shared/pages/Wallet/components/WallerSlider/index.js"
     ]
   },
   {
     "id": "BtcMultisignConfirmTx_FromAddress",
-    "message": "Оплата с кошелька",
+    "message": "Payment from wallet",
     "files": [
       "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js"
     ]
   },
   {
     "id": "multiSignConfirmTxModal_GoToWalletPage",
-    "message": "Открыть кошелек",
+    "message": "Open wallet",
     "files": [
       "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js"
     ]
   },
   {
     "id": "multiSignConfirmTxModal_YouCantSignThisTx",
-    "message": "У вас нет прав для подписи этой транзакции (проверьте, что у вас создан мультисиг)",
+    "message": "You do not have permission to sign this transaction (check that you have created a multisig)",
     "files": [
       "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js"
     ]
   },
   {
     "id": "registerSMSModalFinishSaveThisInfo",
-    "message": "Информация на случай недоступности нашего сервиса",
+    "message": "Information in case our service is unavailable",
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
     ]
   },
   {
     "id": "SaveMnemonicModal_Continue",
-    "message": "Продолжить",
+    "message": "Continue",
     "files": [
       "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
     ]
   },
   {
     "id": "SaveMnemonicModal_CopyMnemonic",
-    "message": "Скопировать",
+    "message": "Copy",
     "files": [
       "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
     ]
@@ -7372,42 +7372,42 @@
   },
   {
     "id": "SaveMnemonicModal_MnemonicCopied",
-    "message": "Скопировано...",
+    "message": "Copied...",
     "files": [
       "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
     ]
   },
   {
     "id": "SaveMnemonicModal_MnemoniceDeleted",
-    "message": "Секретная фраза удалена",
+    "message": "Secret phrase deleted",
     "files": [
       "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
     ]
   },
   {
     "id": "SaveMnemonicModal_Ready",
-    "message": "Готово",
+    "message": "Ready",
     "files": [
       "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
     ]
   },
   {
     "id": "SaveMnemonicModal_ReadySaveNotice",
-    "message": "Храните бумагу в том месте, где вы не забудете",
+    "message": "Keep paper in a place where you will not forget",
     "files": [
       "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
     ]
   },
   {
     "id": "SaveMnemonicModal_SaveMnemonicStep1",
-    "message": "1. Запишите фразу на бумагу",
+    "message": "1. Write the phrase on paper",
     "files": [
       "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
     ]
   },
   {
     "id": "SaveMnemonicModal_SaveMnemonicStep2",
-    "message": "2. Обязательно подпишите что это ключ от {domain}",
+    "message": "2. Be sure to sign that this is the key to {domain}",
     "files": [
       "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
     ]
@@ -7421,21 +7421,21 @@
   },
   {
     "id": "SaveMnemonicModal_ShareMnemonicTitle",
-    "message": "Ваша секретная фраза",
+    "message": "Your secret phrase",
     "files": [
       "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
     ]
   },
   {
     "id": "SaveMnemonicModal_ShowMnemonicNotice",
-    "message": "Запишите эти слова в правильном порядке и сохраните их в безопасном месте.",
+    "message": "Write these words in the correct order and keep them in a safe place.",
     "files": [
       "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
     ]
   },
   {
     "id": "SaveMnemonicModal_Title",
-    "message": "Ваща секретная фраза",
+    "message": "Your secret phrase",
     "files": [
       "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
     ]
