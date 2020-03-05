@@ -44,11 +44,13 @@ const walletNav = [
 @connect(
   ({
     core: { hiddenCoinsList },
+    user,
     user: {
       ethData,
       btcData,
       btcMultisigSMSData,
       btcMultisigUserData,
+      btcMultisigUserDataList,
       bchData,
       tokensData,
       ltcData, // usdtOmniData, // qtumData,
@@ -78,6 +80,7 @@ const walletNav = [
       btcData,
       btcMultisigSMSData,
       btcMultisigUserData,
+      btcMultisigUserDataList,
       ethData,
       bchData,
       ltcData,
@@ -137,11 +140,13 @@ const walletNav = [
       isFetching,
       hiddenCoinsList: hiddenCoinsList,
       userEthAddress: ethData.address,
+      user,
       tokensData: {
         ethData,
         btcData,
         btcMultisigSMSData,
         btcMultisigUserData,
+        btcMultisigUserDataList,
         bchData,
         ltcData
         // qtumData,
@@ -352,6 +357,9 @@ export default class Wallet extends Component {
     const { activeView, infoAboutCurrency, exchangeForm, editTitle, walletTitle, enabledCurrencies } = this.state
     const { currencyBalance, hiddenCoinsList, isSigned, allData, isFetching } = this.props
 
+    const { btcMultisigUserDataList } = this.props
+
+    console.log('btcMultisigUserDataList', btcMultisigUserDataList, this.props)
     this.checkBalance()
 
     let settings = {

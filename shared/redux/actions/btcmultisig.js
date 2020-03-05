@@ -22,7 +22,35 @@ const _loadBtcMultisigKeys = () => {
   return savedKeys
 }
 
-const getBtcMultisigKeys = () => {
+const signToUserMultisig = async () => {
+  const walletsData = await getBtcMultisigKeys({ opts : {
+    dontFetchBalance: true,
+  }})
+
+  const wallets = walletsData.map((data) => {
+    return {
+      address: data.address,
+      currency: `BTC (Multisig)`,
+      fullName: `Bitcoin (Multisig)`,
+      isUserProtected: true,
+      active: true,
+      balance: 0,
+      unconfirmedBalance: 0,
+      isBalanceFetched: true,
+      balanceError: false,
+    }
+  })
+  console.log(wallets)
+  const { user: { btcMultisigUserData } } = getState()
+  btcMultisigUserData.wallets = wallets
+
+  reducers.user.setAuthData({ name: 'btcMultisigUserData', data: btcMultisigUserData })
+
+  console.log(wallets)
+}
+
+const getBtcMultisigKeys = ({opts = {}}) => {
+  console.log('getBtcMultisigKeys',opts)
   return new Promise(async (resolve, reject) => {
     const { user: { btcMultisigUserData } } = getState()
     const { privateKey } = btcMultisigUserData
@@ -34,7 +62,7 @@ const getBtcMultisigKeys = () => {
         const walletData = login_USER(privateKey, savedKeys[i], true)
 
         walletData.index = i
-        walletData.balance = await fetchBalance(walletData.address)
+        walletData.balance = (opts.dontFetchBalance) ? 0 : await fetchBalance(walletData.address)
         keysInfo.push(walletData)
       }
     }
@@ -1197,4 +1225,5 @@ export default {
   addSMSWallet,
   isBTCSMSAddress,
   isBTCMSUserAddress,
+  signToUserMultisig,
 }

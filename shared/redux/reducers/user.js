@@ -81,7 +81,7 @@ export const initialState = {
     infoAboutCurrency: null
   },
   tokensData: {},
-  isFetching: false
+  isFetching: false,
 }
 
 export const setAuthData = (state, { name, data }) => ({
