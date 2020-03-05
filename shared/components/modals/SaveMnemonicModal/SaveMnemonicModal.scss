@@ -47,6 +47,8 @@
     }
   }
 }
+.mnemonicNotice {}
+
 .mnemonicEnter {
   border: 1px solid rgba(0,0,0,0.2);
   min-height: 120px;
@@ -87,5 +89,13 @@
     font-size: 120%;
     padding: 0 0.2em;
     font-family: 'Roboto Mono', monospace;
+  }
+}
+
+@include media-mobile {
+  .mnemonicNotice {
+    position: static;
+    font-size: 100%;
+    margin-bottom: 20px;
   }
 }

@@ -235,24 +235,24 @@ export default class SaveMnemonicModal extends React.Component {
     return (
       <Modal name={name} title={`${intl.formatMessage(langLabels.title)}`} onClose={this.handleClose} showCloseButton={showCloseButton}>
         { step === `confirmMnemonic` && (
-          <p styleName="notice">
+          <p styleName="notice mnemonicNotice">
             <FormattedMessage {...langLabels.enterMnemonicNotice} />
           </p>
         )}
         { step === `show` && (
-          <p styleName="notice">
+          <p styleName="notice mnemonicNotice">
             <FormattedMessage {...langLabels.showMnemonicNotice} />
           </p>
         )}
         { step === `removed` && (
-          <p styleName="notice">
+          <p styleName="notice mnemonicNotice">
             <FormattedMessage {...langLabels.mnemonicDeleted} />
           </p>
         )}
         <div>
           {step === `ready` && (
             <Fragment>
-              <p styleName="notice">
+              <p styleName="notice mnemonicNotice">
                 <img styleName="finishImg" src={finishSvg} alt="finish" />
                 <FormattedMessage {...langLabels.readySaveNotice} />
               </p>
@@ -320,7 +320,7 @@ export default class SaveMnemonicModal extends React.Component {
                   })
                 }
                 </div>
-                <p styleName="notice saveMnemonicToPaper">
+                <p styleName="notice saveMnemonicToPaper mnemonicNotice">
                   <FormattedMessage {...langLabels.saveMnemonicStep1} />
                   <FormattedMessage {...langLabels.saveMnemonicStep2} values={{domain: location.hostname }} />
                 </p>
