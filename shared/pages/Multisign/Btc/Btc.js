@@ -297,7 +297,7 @@ export default class Btc extends PureComponent {
           }
         </Fragment>
         }
-        { (action=='confirm' || action==='confirminvoice') && 
+        { (/*action=='confirm' ||*/ action==='confirminvoice') && 
         <Fragment>
           <h1>
             <FormattedMessage id="BTCMS_ConfirmTxTitle" defaultMessage="Подтверждение транзакции" />

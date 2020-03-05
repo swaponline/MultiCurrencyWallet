@@ -312,7 +312,6 @@ const login_ = (privateKey, otherOwnerPublicKey, sortKeys) => {
       pubkeys: publicKeys,
       network: btc.network,
     })
-    console.log('p2ms', p2ms)
     const p2sh = bitcoin.payments.p2sh({ redeem: p2ms, network: btc.network })
     
     const { address } = p2sh
@@ -322,6 +321,7 @@ const login_ = (privateKey, otherOwnerPublicKey, sortKeys) => {
     _data = {
       account,
       keyPair,
+      p2sh,
       address,
       addressOfMyOwnWallet,
       currency: 'BTC (Multisig)',
@@ -888,6 +888,35 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
   return txRaw.toHex()
 }
 
+const getMSWalletByPubkeysHash = async (pubkeysHash, myBtcWallets) => {
+  if (!myBtcWallets) myBtcWallets = await getBtcMultisigKeys()
+  if (typeof pubkeysHash !== 'string') pubkeysHash = pubkeysHash.map(buf => buf.toString('hex')).join('-')
+
+  const wallets = myBtcWallets.filter((wallet) => {
+    const hash = wallet.publicKeys.map(buf => buf.toString('hex')).join('-')
+    if (pubkeysHash === hash) {
+      
+      return true
+    }
+  }).map((wallet) => {
+    const {
+      publicKeys,
+      publicKey,
+      address,
+      balance,
+    } = wallet
+
+    return {
+      publicKeys,
+      publicKey,
+      address,
+      balance,
+    }
+  })
+
+  return (wallets.length) ? wallets[0] : false
+}
+
 const parseRawTX =  async ( txHash ) => {
   const myBtcWallets = await getBtcMultisigKeys()
   const myBtcAddreses = myBtcWallets.map((wallet) => wallet.address)
@@ -907,29 +936,18 @@ const parseRawTX =  async ( txHash ) => {
     amount: new BigNumber(0),
   }
 
+  txb.__INPUTS.forEach(async (input) => {
+    const inputWallet = await getMSWalletByPubkeysHash( input.pubkeys, myBtcWallets )
 
-  txb.__INPUTS.forEach((input) => {
-    let inputAddress = ''
-    try {
-      const p2sh = bitcoin.payments.p2sh({ redeem: input.redeemScript, network: btc.network })
-      const { address } = p2sh
-      inputAddress = address
-      console.log(p2sh, inputAddress)
-      if (myBtcAddreses.includes(inputAddress)) {
-        parsedTX.isOur = true
-        parsedTX.from = inputAddress
-      }
-      const chunksIn = bitcoin.script.decompile(input.redeemScript);
-      const p2sh2 = bitcoin.payments.p2sh({ redeem: chunksIn, network: btc.network })
-      console.log(p2sh2, p2sh2.address)
-      console.log(chunksIn)
-      console.log(bitcoin.ECPair.fromPublicKeyBuffer(chunksIn[1], btc.network))
-    } catch (e) {
-      console.log('Fail parse input script',e)
+    if (inputWallet) {
+      if (inputWallet.address) parsedTX.from = inputWallet.address
+      parsedTX.wallet = inputWallet
+      parsedTX.isOur = true
     }
+
     parsedTX.input.push( {
       script: bitcoin.script.toASM(input.redeemScript),
-      address: inputAddress,
+      wallet: inputWallet,
       publicKeys: input.pubkeys.map(buf => buf.toString('hex')),
     } )
   })
@@ -940,9 +958,7 @@ const parseRawTX =  async ( txHash ) => {
       address = bitcoin.address.fromOutputScript(out.script, btc.network)
     } catch (e) {}
 
-    if (myBtcAddreses.includes(address)) {
-      parsedTX.from = address
-    } else {
+    if (!myBtcAddreses.includes(address)) {
       if (!parsedTX.out[address]) {
         parsedTX.out[address] = {
           to: address,
@@ -1024,8 +1040,8 @@ const signMofN = async ( txHash, option_M, publicKeys, privateKey ) => {
   return txHex
 }
 
-const signMultiSign = async ( txHash ) => {
-  const {
+const signMultiSign = async ( txHash , wallet) => {
+  let {
     user: {
       btcMultisigUserData: {
         privateKey,
@@ -1034,6 +1050,10 @@ const signMultiSign = async ( txHash ) => {
     },
   } = getState()
 
+  if (wallet) {
+    publicKeys = wallet.publicKeys
+    console.log('sign tx - use custrom public keys')
+  }
   console.log('sign tx', txHash, privateKey, publicKeys)
   return signMofN( txHash, 2, publicKeys, privateKey)
 }

@@ -48,14 +48,24 @@
 }
 
 .notice {
-  font-size: 16px;
+  line-height: 140%;
+  color: #8e9aa3;
+  font-family: "Manrope-Medium", sans-serif;
+  width: 78%;
   text-align: center;
+  margin: auto;
+  margin-bottom: 60px;
 }
 
 .rednotes {
   font-size: 16px;
   text-align: center;
   color: $color-f-error;
+}
+
+.buttonCenter {
+  display: block;
+  margin: 0 auto;
 }
 
 .buttonFull {
