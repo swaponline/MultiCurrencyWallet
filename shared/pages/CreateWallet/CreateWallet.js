@@ -26,6 +26,10 @@ import { constants, localStorage } from 'helpers'
 const styleBtn = { backgroundColor: '#f0eefd', color: '#6144E5' }
 const defaultColors = { backgroundColor: '#6144E5' }
 
+window.swow = () => {
+  actions.modals.open(constants.modals.SaveMnemonicModal, {})
+}
+
 const CreateWallet = (props) => {
   const { history, intl: { locale }, createWallet: { usersData: { eMail }, currencies, secure }, location: { pathname } } = props
   const allCurrencies = props.currencies.items

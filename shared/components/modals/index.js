@@ -27,6 +27,7 @@ import BtcMultisignSwitch from './BtcMultisignSwitch/BtcMultisignSwitch'
 import ShareModal from './Share/Share'
 import InfoPay from './InfoPay/InfoPay'
 import BtcMultisignConfirmTx from './BtcMultisignConfirmTx/BtcMultisignConfirmTx'
+import SaveMnemonicModal from './SaveMnemonicModal/SaveMnemonicModal'
 
 
 export default {
@@ -59,4 +60,5 @@ export default {
   AddCustomERC20,
   BtcMultisignSwitch,
   BtcMultisignConfirmTx,
+  SaveMnemonicModal,
 }

@@ -1,0 +1,369 @@
+import React, { Fragment } from 'react'
+import PropTypes from 'prop-types'
+import helpers, { constants } from 'helpers'
+import actions from 'redux/actions'
+import Link from 'sw-valuelink'
+import { connect } from 'redaction'
+import config from 'app-config'
+
+import cssModules from 'react-css-modules'
+
+import defaultStyles from '../Styles/default.scss'
+import styles from './SaveMnemonicModal.scss'
+import finishSvg from './images/finish.svg'
+
+import { BigNumber } from 'bignumber.js'
+import Modal from 'components/modal/Modal/Modal'
+import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
+import Input from 'components/forms/Input/Input'
+import Button from 'components/controls/Button/Button'
+import Tooltip from 'components/ui/Tooltip/Tooltip'
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
+import ReactTooltip from 'react-tooltip'
+import { isMobile } from 'react-device-detect'
+import CopyToClipboard from 'react-copy-to-clipboard'
+
+import links from 'helpers/links'
+
+
+const langPrefix = `SaveMnemonicModal`
+const langLabels = defineMessages({
+  title: {
+    id: `${langPrefix}_Title`,
+    defaultMessage: `Ваща секретная фраза`,
+  },
+  enterMnemonicNotice: {
+    id: `${langLabels}_EnterNotice`,
+    defaultMessage: `Нажмите слова, чтобы поместить их рядом друг с другом в правильном порядке`,
+  },
+  mnemonicCopied: {
+    id: `${langLabels}_MnemonicCopied`,
+    defaultMessage: `Скопировано...`,
+  },
+  copyMnemonic: {
+    id: `${langLabels}_CopyMnemonic`,
+    defaultMessage: `Скопировать`,
+  },
+  shareMnemonic: {
+    id: `${langLabels}_ShareMnemonic`,
+    defaultMessage: `Share`,
+  },
+  shareMnemonicTitle: {
+    id: `${langLabels}_ShareMnemonicTitle`,
+    defaultMessage: `Ваша секретная фраза`,
+  },
+  showMnemonicNotice: {
+    id: `${langLabels}_ShowMnemonicNotice`,
+    defaultMessage: `Запишите эти слова в правильном порядке и сохраните их в безопасном месте.`,
+  },
+  readySaveNotice: {
+    id: `${langLabels}_ReadySaveNotice`,
+    defaultMessage: `Храните бумагу в том месте, где вы не забудете`,
+  },
+  saveMnemonicStep1: {
+    id: `${langLabels}_SaveMnemonicStep1`,
+    defaultMessage: `1. Запишите фразу на бумагу`,
+  },
+  saveMnemonicStep2: {
+    id: `${langLabels}_SaveMnemonicStep2`,
+    defaultMessage: `2. Обязательно подпишите что это ключ от {domain}`,
+  },
+  mnemonicDeleted: {
+    id: `${langLabels}_MnemoniceDeleted`,
+    defaultMessage: `Секретная фраза удалена`,
+  },
+})
+
+@injectIntl
+@connect(
+  ({
+    user: { btcMultisigUserData },
+  }) => ({
+    btcData: btcMultisigUserData,
+  })
+)
+@cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
+export default class SaveMnemonicModal extends React.Component {
+  
+  static propTypes = {
+    name: PropTypes.string,
+    data: PropTypes.object,
+  }
+
+  constructor(props) {
+    super(props)
+
+    const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
+
+    const randomedWords = (mnemonic !== '-') ? mnemonic.split(` `) : []
+    randomedWords.sort(() => .5 - Math.random())
+
+    const words = (mnemonic !== '-') ? mnemonic.split(` `) : []
+
+    this.state = {
+      step: (mnemonic === '-') ? `removed` : `show`,
+      mnemonic,
+      words,
+      enteredWords: [],
+      randomedWords,
+      mnemonicInvalid: true,
+      incorrectWord: false,
+      isMnemonicCopied: false,
+    }
+  }
+
+  handleGoToWallet = () => {
+    this.handleClose()
+  }
+
+  handleClose = () => {
+    const { name, data, onClose } = this.props
+
+    if (typeof onClose === 'function') {
+      onClose()
+    }
+
+    if (typeof data.onClose === 'function') {
+      data.onClose()
+    }
+
+    actions.modals.close(name)
+  }
+
+  handleFinish = () => {
+    this.handleClose()
+  }
+
+  handleGoToConfirm = () => {
+    this.setState({
+      step: `confirmMnemonic`,
+    })
+  }
+
+  handleClickWord = (index) => {
+    const {
+      randomedWords,
+      enteredWords,
+      words,
+      mnemonic,
+    } = this.state
+
+    let clickedWord
+
+    const currentWord = enteredWords.length
+
+    if (words[currentWord] !== randomedWords[index]) {
+      console.log(words[currentWord])
+      this.setState({
+        incorrectWord: true,
+      }, () => {
+        setTimeout(() => {
+          this.setState({
+            incorrectWord: false,
+          })
+        }, 500)
+      })
+      return
+    }
+
+    clickedWord = randomedWords.splice(index, 1)
+    enteredWords.push(clickedWord)
+
+    
+    this.setState({
+      randomedWords,
+      enteredWords,
+      incorrectWord: false,
+      mnemonicInvalid: (enteredWords.join(` `) !== mnemonic),
+    }, () => {
+      localStorage.setItem(constants.privateKeyNames.twentywords, '-')
+      if (randomedWords.length === 0) {
+        this.setState({
+          step: `ready`,
+        })
+      }
+    })
+  }
+
+  handleCopyMnemonic = () => {
+    this.setState({
+      isMnemonicCopied: true,
+    }, () => {
+      setTimeout(() => {
+        this.setState({
+          isMnemonicCopied: false,
+        })
+      }, 500)
+    })
+  }
+
+  handleShareMnemonic = () => {
+    const {
+      intl,
+    } = this.props
+
+    const { mnemonic } = this.state
+
+    actions.modals.open(constants.modals.Share, {
+      title: intl.formatMessage(langLabels.shareMnemonicTitle),
+      link: mnemonic,
+    })
+  }
+
+  render() {
+    const {
+      name,
+      intl,
+      data: {
+        showCloseButton,
+      },
+    } = this.props
+
+    const {
+      step,
+      words,
+      enteredWords,
+      mnemonic,
+      randomedWords,
+      mnemonicInvalid,
+      incorrectWord,
+      isMnemonicCopied,
+    } = this.state
+
+    // const linked = Link.all(this, 'address', 'amount', 'from')
+
+    return (
+      <Modal name={name} title={`${intl.formatMessage(langLabels.title)}`} onClose={this.handleClose} showCloseButton={showCloseButton}>
+        { step === `confirmMnemonic` && (
+          <p styleName="notice">
+            <FormattedMessage {...langLabels.enterMnemonicNotice} />
+          </p>
+        )}
+        { step === `show` && (
+          <p styleName="notice">
+            <FormattedMessage {...langLabels.showMnemonicNotice} />
+          </p>
+        )}
+        { step === `removed` && (
+          <p styleName="notice">
+            <FormattedMessage {...langLabels.mnemonicDeleted} />
+          </p>
+        )}
+        <div>
+          {step === `ready` && (
+            <Fragment>
+              <p styleName="notice">
+                <img styleName="finishImg" src={finishSvg} alt="finish" />
+                <FormattedMessage {...langLabels.readySaveNotice} />
+              </p>
+              <div styleName="lowLevel">
+                <Button
+                  styleName="buttonCenter buttonHalfFullWidth"
+                  blue
+                  onClick={this.handleFinish}
+                >
+                  Готово
+                </Button>
+              </div>
+            </Fragment>
+          )}
+          {step === `confirmMnemonic` && (
+            <Fragment>
+              <div styleName="highLevel">
+                <div styleName={`mnemonicView mnemonicEnter ${(incorrectWord) ? 'mnemonicError' : ''}`}>
+                {
+                  enteredWords.map((word,index) => {
+                    return (
+                      <button key={index} onClick={() => {}}>
+                        {word}
+                      </button>
+                    )
+                  })
+                }
+                </div>
+                <div styleName="mnemonicWords">
+                {
+                  randomedWords.map((word,index) => {
+                    return (
+                      <button key={index} onClick={() => this.handleClickWord(index)}>
+                        {word}
+                      </button>
+                    )
+                  })
+                }
+                </div>
+              </div>
+              <div styleName="lowLevel">
+                <Button
+                  styleName="buttonCenter buttonHalfFullWidth"
+                  blue
+                  disabled={mnemonicInvalid}
+                  onClick={this.handleFinish}
+                >
+                  Готово
+                </Button>
+              </div>
+            </Fragment>
+          )}
+          {step === `show` && (
+            <Fragment>
+              <div styleName="highLevel">
+                <div styleName="mnemonicView">
+                {
+                  words.map((word,index) => {
+                    return (
+                      <div key={index}>
+                        <span>{(index+1)}</span>
+                        <span>{word}</span>
+                      </div>
+                    )
+                  })
+                }
+                </div>
+                <p styleName="notice saveMnemonicToPaper">
+                  <FormattedMessage {...langLabels.saveMnemonicStep1} />
+                  <FormattedMessage {...langLabels.saveMnemonicStep2} values={{domain: location.hostname }} />
+                </p>
+                {/*
+                <div styleName="buttonsHolder">
+                  <CopyToClipboard
+                    text={mnemonic}
+                    onCopy={this.handleCopyMnemonic}
+                  >
+                    <Button blue disabled={isMnemonicCopied} onClick={this.handleCopyMnemonic}>
+                      {isMnemonicCopied ? (
+                        <FormattedMessage { ...langLabels.mnemonicCopied } />
+                      ) : (
+                        <FormattedMessage { ...langLabels.copyMnemonic } />
+                      )}
+                    </Button>
+                  </CopyToClipboard>
+                  <Button blue onClick={this.handleShareMnemonic}>
+                    <FormattedMessage { ...langLabels.shareMnemonic } />
+                  </Button>
+                </div>
+              */}
+              </div>
+              <div styleName="lowLevel">
+                <Button
+                  styleName="buttonCenter buttonHalfFullWidth"
+                  blue
+                  onClick={this.handleGoToConfirm}
+                  fullWidth
+                >
+                  Продолжить
+                </Button>
+              </div>
+            </Fragment>
+          )}
+        </div>
+      </Modal>
+    )
+  }
+}
+
+window.showConfirm = (txData) => {
+  actions.modals.open(constants.modals.BtcMultisignConfirmTx, {
+    txData,
+  })
+}
