@@ -80,6 +80,18 @@ const langLabels = defineMessages({
     id: `${langPrefix}_Ready`,
     defaultMessage: `Готово`,
   },
+  beginNotice: {
+    id: `${langPrefix}_BeginNotice`,
+    defaultMessage: `Сейчас мы вам покажем 12 слов вашей секретной фразы. Если вы ее потеряете мы не сможем восстановить ваш кошелек`,
+  },
+  beginContinue: {
+    id: `${langPrefix}_BeginContinue`,
+    defaultMessage: `Я понимаю`,
+  },
+  beginLater: {
+    id: `${langPrefix}_BeginLater`,
+    defaultMessage: `Я сохраню позже`,
+  },
 })
 
 @injectIntl
@@ -109,7 +121,7 @@ export default class SaveMnemonicModal extends React.Component {
     const words = (mnemonic !== '-') ? mnemonic.split(` `) : []
 
     this.state = {
-      step: (mnemonic === '-') ? `removed` : `show`,
+      step: (mnemonic === '-') ? `removed` : `begin`,
       mnemonic,
       words,
       enteredWords: [],
@@ -258,6 +270,21 @@ export default class SaveMnemonicModal extends React.Component {
           </p>
         )}
         <div>
+          {step === `begin` && (
+            <Fragment>
+              <p styleName="notice mnemonicNotice">
+                <FormattedMessage {...langLabels.beginNotice} />
+              </p>
+              <div styleName="buttonsHolder">
+                <Button blue onClick={() => { this.setState({ step : `show` }) }}>
+                  <FormattedMessage { ...langLabels.beginContinue } />
+                </Button>
+                <Button blue onClick={this.handleClose}>
+                  <FormattedMessage { ...langLabels.beginLater } />
+                </Button>
+              </div>
+            </Fragment>
+          )}
           {step === `ready` && (
             <Fragment>
               <p styleName="notice mnemonicNotice">
