@@ -7448,5 +7448,75 @@
     "files": [
       "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
     ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_CancelRestory",
+    "message": "Отмена",
+    "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_MnemonicField",
+    "message": "Секретная фраза (12 слов):",
+    "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_MnemonicInvalid",
+    "message": "Вы указали не валидный набор слов",
+    "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_MnemonicPlaceholder",
+    "message": "Введите сохраненную фразу, для восстановления кошелька",
+    "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_Ready",
+    "message": "Готово",
+    "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_ReadyNotice",
+    "message": "Теперь вы можете добавить BTC, ETH и другие валюты",
+    "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_RestoryWallet",
+    "message": "Восстановить",
+    "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_RestroringWallet",
+    "message": "Восстанавливаем...",
+    "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_Title",
+    "message": "Восстановление кошелка из секретной фразы",
+    "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js"
+    ]
+  },
+  {
+    "id": "ImportKeys_RestoreMnemonic",
+    "message": "Ввести 12 слов",
+    "files": [
+      "shared/pages/CreateWallet/CreateWallet.js"
+    ]
   }
 ]

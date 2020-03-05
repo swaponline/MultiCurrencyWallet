@@ -7460,5 +7460,75 @@
     "files": [
       "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
     ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_CancelRestory",
+    "message": "Cancel",
+    "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_MnemonicField",
+    "message": "Secret phrase (12 words):",
+    "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_MnemonicInvalid",
+    "message": "You specified an invalid set of words",
+    "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_MnemonicPlaceholder",
+    "message": "Enter the saved phrase to restore the wallet",
+    "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_Ready",
+    "message": "Ready",
+    "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_ReadyNotice",
+    "message": "Now you can add BTC, ETH and other currencies",
+    "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_RestoryWallet",
+    "message": "Restory",
+    "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_RestroringWallet",
+    "message": "Restoring...",
+    "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_Title",
+    "message": "Recovering a wallet from a secret phrase",
+    "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js"
+    ]
+  },
+  {
+    "id": "ImportKeys_RestoreMnemonic",
+    "message": "Enter 12 words",
+    "files": [
+      "shared/pages/CreateWallet/CreateWallet.js"
+    ]
   }
 ]

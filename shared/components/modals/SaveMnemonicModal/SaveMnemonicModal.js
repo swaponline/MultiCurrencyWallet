@@ -396,9 +396,3 @@ export default class SaveMnemonicModal extends React.Component {
     )
   }
 }
-
-window.showConfirm = (txData) => {
-  actions.modals.open(constants.modals.BtcMultisignConfirmTx, {
-    txData,
-  })
-}

@@ -30,4 +30,5 @@ export default {
   InfoPay: 'InfoPay',
   BtcMultisignConfirmTx: 'BtcMultisignConfirmTx',
   SaveMnemonicModal: 'SaveMnemonicModal',
+  RestoryMnemonicWallet: 'RestoryMnemonicWallet',
 }

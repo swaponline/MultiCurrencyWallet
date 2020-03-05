@@ -28,6 +28,7 @@ import ShareModal from './Share/Share'
 import InfoPay from './InfoPay/InfoPay'
 import BtcMultisignConfirmTx from './BtcMultisignConfirmTx/BtcMultisignConfirmTx'
 import SaveMnemonicModal from './SaveMnemonicModal/SaveMnemonicModal'
+import RestoryMnemonicWallet from './RestoryMnemonicWallet/RestoryMnemonicWallet'
 
 
 export default {
@@ -61,4 +62,5 @@ export default {
   BtcMultisignSwitch,
   BtcMultisignConfirmTx,
   SaveMnemonicModal,
+  RestoryMnemonicWallet,
 }

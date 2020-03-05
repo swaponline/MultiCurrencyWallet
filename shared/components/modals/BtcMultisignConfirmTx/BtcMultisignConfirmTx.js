@@ -299,9 +299,3 @@ export default class BtcMultisignConfirmTx extends React.Component {
     )
   }
 }
-
-window.showConfirm = (txData) => {
-  actions.modals.open(constants.modals.BtcMultisignConfirmTx, {
-    txData,
-  })
-}
