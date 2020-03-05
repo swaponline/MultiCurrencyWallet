@@ -370,6 +370,7 @@
     "id": "Withdrow118",
     "message": "Сумма",
     "files": [
+      "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js",
       "shared/components/modals/WithdrawModal/WithdrawModal.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.js"
@@ -2757,6 +2758,7 @@
     "id": "Withdrow1194",
     "message": "Адрес ",
     "files": [
+      "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js",
       "shared/components/modals/WithdrawModal/WithdrawModal.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.js"
@@ -3365,6 +3367,7 @@
     "id": "WTH275",
     "message": "Убедитесь, что кошелек, на который вы отправляете{br}поддерживает данную валюту ",
     "files": [
+      "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js",
       "shared/components/modals/WithdrawModal/WithdrawModal.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.js"
@@ -5418,7 +5421,6 @@
     "id": "BTCMS_ConfirmTxInputs",
     "message": "Входы транзакции",
     "files": [
-      "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js",
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
@@ -5426,7 +5428,6 @@
     "id": "BTCMS_ConfirmTxOutputs",
     "message": "Выходы транзакции",
     "files": [
-      "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js",
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
@@ -5448,7 +5449,6 @@
     "id": "BTCMS_ConfirmTxTitle",
     "message": "Подтверждение транзакции",
     "files": [
-      "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js",
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
@@ -7015,10 +7015,7 @@
   },
   {
     "id": "WalletPage_Heading",
-    "message": "Кошелек",
-    "files": [
-      "shared/pages/Wallet/Wallet.js"
-    ]
+    "message": "Кошелек"
   },
   {
     "id": "ControlShareLink_CopyLink",
@@ -7036,24 +7033,15 @@
   },
   {
     "id": "BTCMS_Amount",
-    "message": "Сумма транзакции: {amount} BTC",
-    "files": [
-      "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js"
-    ]
+    "message": "Сумма транзакции: {amount} BTC"
   },
   {
     "id": "BTCMS_FromAddress",
-    "message": "Оплата с кошелка: {address}",
-    "files": [
-      "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js"
-    ]
+    "message": "Оплата с кошелка: {address}"
   },
   {
     "id": "BTCMS_ToAddress",
-    "message": "Получатель: {address}",
-    "files": [
-      "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js"
-    ]
+    "message": "Получатель: {address}"
   },
   {
     "id": "multiSignConfirmTxModal_ConfirmTx",
@@ -7156,10 +7144,7 @@
   },
   {
     "id": "registerSMSModalFinishInfoTitle",
-    "message": "Сохраните эту информацию",
-    "files": [
-      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
-    ]
+    "message": "Сохраните эту информацию"
   },
   {
     "id": "registerSMSModalPhonePlaceholder",
@@ -7335,6 +7320,132 @@
     "message": "Использовать секретную фразу",
     "files": [
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
+    ]
+  },
+  {
+    "id": "ShowMyMnemonic",
+    "message": "Показать 12 слов",
+    "files": [
+      "shared/pages/Wallet/components/WallerSlider/index.js"
+    ]
+  },
+  {
+    "id": "BtcMultisignConfirmTx_FromAddress",
+    "message": "Оплата с кошелька",
+    "files": [
+      "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js"
+    ]
+  },
+  {
+    "id": "multiSignConfirmTxModal_GoToWalletPage",
+    "message": "Открыть кошелек",
+    "files": [
+      "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js"
+    ]
+  },
+  {
+    "id": "multiSignConfirmTxModal_YouCantSignThisTx",
+    "message": "У вас нет прав для подписи этой транзакции (проверьте, что у вас создан мультисиг)",
+    "files": [
+      "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js"
+    ]
+  },
+  {
+    "id": "registerSMSModalFinishSaveThisInfo",
+    "message": "Информация на случай недоступности нашего сервиса",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_Continue",
+    "message": "Продолжить",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_CopyMnemonic",
+    "message": "Скопировать",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_EnterNotice",
+    "message": "Нажмите слова, чтобы поместить их рядом друг с другом в правильном порядке",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_MnemonicCopied",
+    "message": "Скопировано...",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_MnemoniceDeleted",
+    "message": "Секретная фраза удалена",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_Ready",
+    "message": "Готово",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_ReadySaveNotice",
+    "message": "Храните бумагу в том месте, где вы не забудете",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_SaveMnemonicStep1",
+    "message": "1. Запишите фразу на бумагу",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_SaveMnemonicStep2",
+    "message": "2. Обязательно подпишите что это ключ от {domain}",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_ShareMnemonic",
+    "message": "Share",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_ShareMnemonicTitle",
+    "message": "Ваша секретная фраза",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_ShowMnemonicNotice",
+    "message": "Запишите эти слова в правильном порядке и сохраните их в безопасном месте.",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_Title",
+    "message": "Ваща секретная фраза",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
     ]
   }
 ]

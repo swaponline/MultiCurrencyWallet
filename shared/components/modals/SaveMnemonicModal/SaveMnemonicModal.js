@@ -33,44 +33,52 @@ const langLabels = defineMessages({
     defaultMessage: `Ваща секретная фраза`,
   },
   enterMnemonicNotice: {
-    id: `${langLabels}_EnterNotice`,
+    id: `${langPrefix}_EnterNotice`,
     defaultMessage: `Нажмите слова, чтобы поместить их рядом друг с другом в правильном порядке`,
   },
   mnemonicCopied: {
-    id: `${langLabels}_MnemonicCopied`,
+    id: `${langPrefix}_MnemonicCopied`,
     defaultMessage: `Скопировано...`,
   },
   copyMnemonic: {
-    id: `${langLabels}_CopyMnemonic`,
+    id: `${langPrefix}_CopyMnemonic`,
     defaultMessage: `Скопировать`,
   },
   shareMnemonic: {
-    id: `${langLabels}_ShareMnemonic`,
+    id: `${langPrefix}_ShareMnemonic`,
     defaultMessage: `Share`,
   },
   shareMnemonicTitle: {
-    id: `${langLabels}_ShareMnemonicTitle`,
+    id: `${langPrefix}_ShareMnemonicTitle`,
     defaultMessage: `Ваша секретная фраза`,
   },
   showMnemonicNotice: {
-    id: `${langLabels}_ShowMnemonicNotice`,
+    id: `${langPrefix}_ShowMnemonicNotice`,
     defaultMessage: `Запишите эти слова в правильном порядке и сохраните их в безопасном месте.`,
   },
   readySaveNotice: {
-    id: `${langLabels}_ReadySaveNotice`,
+    id: `${langPrefix}_ReadySaveNotice`,
     defaultMessage: `Храните бумагу в том месте, где вы не забудете`,
   },
   saveMnemonicStep1: {
-    id: `${langLabels}_SaveMnemonicStep1`,
+    id: `${langPrefix}_SaveMnemonicStep1`,
     defaultMessage: `1. Запишите фразу на бумагу`,
   },
   saveMnemonicStep2: {
-    id: `${langLabels}_SaveMnemonicStep2`,
+    id: `${langPrefix}_SaveMnemonicStep2`,
     defaultMessage: `2. Обязательно подпишите что это ключ от {domain}`,
   },
   mnemonicDeleted: {
-    id: `${langLabels}_MnemoniceDeleted`,
+    id: `${langPrefix}_MnemoniceDeleted`,
     defaultMessage: `Секретная фраза удалена`,
+  },
+  Continue: {
+    id: `${langPrefix}_Continue`,
+    defaultMessage: `Продолжить`,
+  },
+  Ready: {
+    id: `${langPrefix}_Ready`,
+    defaultMessage: `Готово`,
   },
 })
 
@@ -262,7 +270,7 @@ export default class SaveMnemonicModal extends React.Component {
                   blue
                   onClick={this.handleFinish}
                 >
-                  Готово
+                  <FormattedMessage {...langLabels.Ready} />
                 </Button>
               </div>
             </Fragment>
@@ -300,7 +308,7 @@ export default class SaveMnemonicModal extends React.Component {
                   disabled={mnemonicInvalid}
                   onClick={this.handleFinish}
                 >
-                  Готово
+                  <FormattedMessage {...langLabels.Ready } />
                 </Button>
               </div>
             </Fragment>
@@ -351,7 +359,7 @@ export default class SaveMnemonicModal extends React.Component {
                   onClick={this.handleGoToConfirm}
                   fullWidth
                 >
-                  Продолжить
+                  <FormattedMessage {...langLabels.Continue } />
                 </Button>
               </div>
             </Fragment>
