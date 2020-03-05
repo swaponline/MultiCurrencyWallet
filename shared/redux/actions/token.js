@@ -131,7 +131,7 @@ const getTransaction = (address, ownType) =>
         const transactions = res.result
           .filter((item) => item.value > 0).map((item) => ({
             confirmations: item.confirmations,
-            type: item.tokenSymbol,
+            type: ownType.toLowerCase(),
             hash: item.hash,
             contractAddress: item.contractAddress,
             status: item.blockHash != null ? 1 : 0,

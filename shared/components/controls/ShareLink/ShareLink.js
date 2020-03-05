@@ -74,7 +74,7 @@ export default class ShareLink extends React.Component {
             </Button>
           </CopyToClipboard>
           <div styleName="ShareButtonHolder">
-            <ShareButton link={link} title={`Share link`}></ShareButton>
+            <ShareButton link={link} title={``}></ShareButton>
           </div>
         </div>
       </div>
