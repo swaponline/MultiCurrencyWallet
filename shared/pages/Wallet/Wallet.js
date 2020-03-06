@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import Slider from './components/WallerSlider'
+import axios from 'axios'
 import PropTypes from 'prop-types'
 
 import { connect } from 'redaction'
@@ -169,7 +169,7 @@ export default class Wallet extends Component {
     exchangeForm: false,
     walletTitle: 'Wallet',
     editTitle: false,
-    enabledCurrencies: getActivatedCurrencies(),
+    enabledCurrencies: getActivatedCurrencies()
   }
 
   componentWillMount() {
@@ -184,6 +184,7 @@ export default class Wallet extends Component {
     }
     this.getInfoAboutCurrency()
     this.setLocalStorageItems()
+    this.getBanners()
 
     if (isMobile) {
       this.balanceRef.current.scrollIntoView({
@@ -191,6 +192,18 @@ export default class Wallet extends Component {
       })
     }
   }
+
+  getBanners = () =>
+    axios
+      .get('https://noxon.wpmix.net/swapBanners/banners.php')
+      .then(result => {
+        this.setState({
+          banners: result.data
+        })
+      })
+      .catch(error => {
+        console.error('getBanners:', error)
+      })
 
   getInfoAboutCurrency = async () => {
     const { currencies } = this.props
@@ -349,18 +362,18 @@ export default class Wallet extends Component {
   }
 
   render() {
-    const { activeView, infoAboutCurrency, exchangeForm, editTitle, walletTitle, enabledCurrencies } = this.state
+    const {
+      activeView,
+      infoAboutCurrency,
+      exchangeForm,
+      editTitle,
+      walletTitle,
+      enabledCurrencies,
+      banners
+    } = this.state
     const { currencyBalance, hiddenCoinsList, isSigned, allData, isFetching } = this.props
 
     this.checkBalance()
-
-    let settings = {
-      infinite: true,
-      speed: 500,
-      autoplay: true,
-      autoplaySpeed: 6000,
-      slidesToShow: 4
-    }
 
     let btcBalance = 0
     let usdBalance = 0
@@ -407,21 +420,6 @@ export default class Wallet extends Component {
     return (
       <artical>
         <section styleName={isWidgetBuild && !config.isFullBuild ? 'wallet widgetBuild' : 'wallet'}>
-          {!isWidgetBuild && (
-            <Slider
-              settings={settings}
-              isSigned={isSigned}
-              host={window.location.hostname}
-              handleNotifyBlockClose={state => this.handleNotifyBlockClose('isPrivateKeysSaved')}
-              {...this.state}
-            />
-          )}
-          {/*
-          <h3 styleName="walletHeading">
-            <FormattedMessage id="WalletPage_Heading" defaultMessage="Кошелек" />
-          </h3>
-          */}
-
           <ul styleName="walletNav">
             {walletNav.map(({ key, text }, index) => (
               <li
@@ -463,6 +461,7 @@ export default class Wallet extends Component {
                 !isFetching ?  */}
               <CurrenciesList
                 tableRows={tableRows}
+                banners={banners}
                 {...this.state}
                 {...this.props}
                 goToСreateWallet={this.goToСreateWallet}

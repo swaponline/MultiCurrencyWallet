@@ -4,8 +4,8 @@ import { constants } from 'helpers'
 import actions from 'redux/actions'
 
 import security from '../NotityBlock/images/security.svg'
-import mail from '../NotityBlock/images/mail.svg'
-import info from '../NotityBlock/images/info-solid.svg'
+import btcUsdt from '../NotityBlock/images/btcUsdt.svg'
+import manageImgBackground from '../NotityBlock/images/manageImg.jpg'
 
 import NotifyBlock from 'pages/Wallet/components/NotityBlock/NotifyBock'
 import config from 'app-config'
@@ -25,6 +25,13 @@ const handleSignUp = () => {
   actions.modals.open(constants.modals.SignUp)
 }
 
+const slidesInit = () => {
+  var starterSwiper = new Swiper('.swiper-container', {
+    slidesPerView: 4,
+    spaceBetween: 10
+  })
+}
+
 export default props => {
   const {
     settings,
@@ -33,29 +40,22 @@ export default props => {
     isSigned,
     isClosedNotifyBlockBanner,
     handleNotifyBlockClose,
-    host
+    host,
+    banners
   } = props
+
   return isWidgetBuild ? null : (
     <Fragment>
-      {!isPrivateKeysSaved && (
-        <NotifyBlock
-          className="notifyBlockSaveKeys"
-          descr={
-            <FormattedMessage id="descr279" defaultMessage="Before you continue be sure to save your private keys!" />
-          }
-          tooltip={
-            <FormattedMessage
-              id="descr280"
-              defaultMessage="We do not store your private keys and will not be able to restore them"
-            />
-          }
-          icon={security}
-          firstBtn={<FormattedMessage id="descr282" defaultMessage="Show my keys" />}
-          firstFunc={handleShowKeys}
-          secondBtn={<FormattedMessage id="descr284" defaultMessage="I saved my keys" />}
-          secondFunc={handleNotifyBlockClose}
-        />
-      )}
+      <div className="swiper-container" style={{ marginTop: '20px', marginBottom: '40px' }}>
+        <div className="swiper-wrapper">
+          {banners ? slidesInit() : ''}
+          {banners.map(banner => (
+            <div className="swiper-slide">
+              <NotifyBlock background={`${banner[3]}`} descr={banner[2]} />
+            </div>
+          ))}
+        </div>
+      </div>
     </Fragment>
   )
 }

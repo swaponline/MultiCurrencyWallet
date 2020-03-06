@@ -5,19 +5,35 @@ import CSSModules from 'react-css-modules'
 import Button from 'components/controls/Button/Button'
 import styles from './NotifyBlock.scss'
 
-
-const NotifyBlock = ({ className, icon, descr, tooltip, firstBtn, secondBtn, firstFunc, secondFunc }) => (
-    <div styleName={`notifyBlock ${className}`}>
+const NotifyBlock = ({
+  className,
+  icon,
+  descr,
+  tooltip,
+  firstBtn,
+  secondBtn,
+  firstFunc,
+  secondFunc,
+  widthIcon,
+  background
+}) => (
+  <div
+    styleName="notifyBlock"
+    style={{
+      background: background.length < 7 ? `#${background}` : `url(${background}) no-repeat`,
+      backgroundSize: 'cover'
+    }}
+  >
     <div>
       <div styleName="notifyBlockIcon">
-        <img src={icon} alt=""/>
+        <img src={icon} width={widthIcon} alt="" />
       </div>
       <div styleName="notifyBlockDescr">
-        <p>{descr}</p>
-        <p>{tooltip}</p>
+        <span>{descr}</span>
+        <span>{tooltip}</span>
       </div>
     </div>
-    <div>
+    {/* <div>
       {
         firstBtn && <Button white onClick={firstFunc}>
           {firstBtn}
@@ -29,9 +45,8 @@ const NotifyBlock = ({ className, icon, descr, tooltip, firstBtn, secondBtn, fir
         </Button>
       }
 
-    </div>
+    </div> */}
   </div>
 )
 
-
-export default CSSModules(NotifyBlock, styles,  { allowMultiple: true })
+export default CSSModules(NotifyBlock, styles, { allowMultiple: true })
