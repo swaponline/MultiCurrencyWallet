@@ -105,7 +105,7 @@ const fetchBalance = async (address, contractAddress, decimals) => {
   return amount
 }
 
-const getTransaction = (address, ownType) =>
+const getTransaction = (ownAddress, ownType) =>
   new Promise((resolve) => {
     const { user: { tokensData } } = getState()
 
@@ -121,7 +121,7 @@ const getTransaction = (address, ownType) =>
     const url = [
       `?module=account&action=tokentx`,
       `&contractaddress=${contractAddress}`,
-      `&address=${address}`,
+      `&address=${(ownAddress) ? ownAddress : address}`,
       `&startblock=0&endblock=99999999`,
       `&sort=asc&apikey=RHHFPNMAZMD6I4ZWBZBF6FA11CMW9AXZNM`,
     ].join('')

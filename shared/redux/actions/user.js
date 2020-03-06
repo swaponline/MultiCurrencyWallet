@@ -1,14 +1,23 @@
 import config from 'app-config'
 import moment from 'moment/moment'
-import { request, constants } from 'helpers'
+import { request, constants, ethToken } from 'helpers'
 
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
 
 import reducers from 'redux/core/reducers'
+import * as bip39 from 'bip39'
+
 
 
 const sign = async () => {
+  let mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
+
+  if (!mnemonic) {
+    mnemonic = bip39.generateMnemonic()
+    localStorage.setItem(constants.privateKeyNames.twentywords, mnemonic)
+  }
+
   const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
   const btcMultisigPrivateKey = localStorage.getItem(constants.privateKeyNames.btcMultisig)
   const bchPrivateKey = localStorage.getItem(constants.privateKeyNames.bch)
@@ -21,8 +30,8 @@ const sign = async () => {
   const isBtcKeychainActivated = !!localStorage.getItem(constants.privateKeyNames.btcKeychainPublicKey)
   const isBtcMultisigKeychainActivated = !!localStorage.getItem(constants.privateKeyNames.btcMultisigKeychainPublicKey)
 
-  const _ethPrivateKey = isEthKeychainActivated ? await actions.eth.loginWithKeychain() : actions.eth.login(ethPrivateKey)
-  const _btcPrivateKey = isBtcKeychainActivated ? await actions.btc.loginWithKeychain() : actions.btc.login(btcPrivateKey)
+  const _ethPrivateKey = isEthKeychainActivated ? await actions.eth.loginWithKeychain() : actions.eth.login(ethPrivateKey, mnemonic)
+  const _btcPrivateKey = isBtcKeychainActivated ? await actions.btc.loginWithKeychain() : actions.btc.login(btcPrivateKey, mnemonic)
 
   // btc multisig with 2fa (2of3)
   const btcSMSServerKey = config.swapContract.protectedBtcKey
@@ -291,6 +300,19 @@ Private key: ${bchData.privateKey}\r\n
 }
 
 export const isOwner = (addr, currency) => {
+  if (ethToken.isEthToken({ name: currency })) {
+    const {
+      user: {
+        ethData: {
+          address,
+        },
+      },
+    } = getState()
+
+    return addr === address
+  }
+
+  if (actions.btcmultisig.isBTCAddress(addr)) return true
 
   const name = `${currency.toLowerCase()}Data`
   const { user } = getState()
@@ -298,17 +320,12 @@ export const isOwner = (addr, currency) => {
   if(!user[name]) {
     return false
   }
-  
+
   const {address} = user[name]
-  
+
   if(!address) {
     return false
   }
-  // Where ETH !!!
-  // Where Tokens !!!
-  // Where Ltc !!
-  // Where Bch !!??
-  if (actions.btcmultisig.isBTCAddress(addr)) return true
 
   return addr === address
 }

@@ -41,7 +41,7 @@ const getWalletByWords = (mnemonic, path) => {
 
 window.getWalletByWords = getWalletByWords
 
-const login = (privateKey) => {
+const login = (privateKey, mnemonic) => {
   let keyPair
 
   if (privateKey) {
@@ -55,7 +55,7 @@ const login = (privateKey) => {
     //keyPair     = bitcoin.ECPair.makeRandom({ network: btc.network })
     //privateKey  = keyPair.toWIF()
     // use random 12 words
-    const mnemonic = bip39.generateMnemonic()
+    if (!mnemonic) mnemonic = bip39.generateMnemonic()
     const accData = getWalletByWords(mnemonic)
     console.log('Btc. Generated walled from random 12 words')
     console.log(accData)

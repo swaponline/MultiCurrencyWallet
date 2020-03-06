@@ -1,0 +1,41 @@
+
+.buttonsHolder {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-bottom: 50px;
+  button {
+    width: 40%;
+    padding: 0 8px;
+    height: 36px;
+    line-height: 36px;
+  }
+}
+
+.for12words {
+  min-width: 400px;
+}
+
+.finishImg {
+  display: block;
+  height: 120px;
+  margin: 0 auto;
+  margin-bottom: 30px;
+}
+
+.mnemonicNotice {
+  margin-bottom: 30px;
+}
+
+.buttonFinish {
+  min-width: 50%;
+}
+
+
+@include media-mobile {
+  .mnemonicNotice {
+    position: static;
+    font-size: 100%;
+    margin-bottom: 20px;
+  }
+}

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Component, Fragment } from 'react'
 
 import { constants } from 'helpers'
 import actions from 'redux/actions'

@@ -29,4 +29,6 @@ export default {
   Share: 'ShareModal',
   InfoPay: 'InfoPay',
   BtcMultisignConfirmTx: 'BtcMultisignConfirmTx',
+  SaveMnemonicModal: 'SaveMnemonicModal',
+  RestoryMnemonicWallet: 'RestoryMnemonicWallet',
 }
