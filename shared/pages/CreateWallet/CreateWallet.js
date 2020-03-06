@@ -26,6 +26,7 @@ import { constants, localStorage } from 'helpers'
 const styleBtn = { backgroundColor: '#f0eefd', color: '#6144E5' }
 const defaultColors = { backgroundColor: '#6144E5' }
 
+
 const CreateWallet = (props) => {
   const { history, intl: { locale }, createWallet: { usersData: { eMail }, currencies, secure }, location: { pathname } } = props
   const allCurrencies = props.currencies.items
@@ -63,6 +64,10 @@ const CreateWallet = (props) => {
     }
     localStorage.setItem(constants.localStorage.isWalletCreate, true)
     goHome()
+  }
+
+  const handleRestoreMnemonic = () => {
+    actions.modals.open(constants.modals.RestoryMnemonicWallet, {})
   }
 
   const handleImportKeys = () => {
@@ -164,6 +169,7 @@ const CreateWallet = (props) => {
   if (isExist) {
     goHome()
   }
+
   return (
     <div styleName="wrapper">
       <div styleName={isMobile ? 'mobileFormBody' : 'formBody'}>
@@ -175,6 +181,12 @@ const CreateWallet = (props) => {
           {' '}{singleCurrecny && singleCurrecny.toUpperCase()}
         </h2>
         <div styleName="buttonWrapper">
+          <button onClick={handleRestoreMnemonic}>
+            <FormattedMessage
+              id="ImportKeys_RestoreMnemonic"
+              defaultMessage="Ввести 12 слов"
+            />
+          </button>
           <button onClick={handleImportKeys}>
             <FormattedMessage
               id="ImportKeysBtn"
