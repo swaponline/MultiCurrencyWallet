@@ -644,7 +644,7 @@ export default class Row extends Component {
               )}
             </span>
             {item.address !== 'Not jointed' ? (
-              <p styleName="addressStyle" onClick={this.goToCurrencyHistory}>
+              <p styleName="addressStyle" >
                 {item.address}
               </p>
             ) : (
@@ -657,8 +657,8 @@ export default class Row extends Component {
                   {fullName}
                 </a>
               </div>
-
-              <strong>{title}</strong>
+              { title ? <strong>{title}</strong> : '' }
+             
             </div>
 
             {currencyUsdBalance && !balanceError ? (

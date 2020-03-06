@@ -1,0 +1,101 @@
+
+.buttonsHolder {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-bottom: 50px;
+  button {
+    width: 40%;
+    padding: 0 8px;
+    height: 36px;
+    line-height: 36px;
+  }
+}
+
+.finishImg {
+  display: block;
+  height: 120px;
+  margin: 0 auto;
+  margin-bottom: 30px;
+}
+
+.saveMnemonicToPaper span {
+  display: block;
+  font-size: 120%;
+}
+
+.mnemonicView {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 15px;
+  padding-bottom: 15px;
+  div {
+    display: inline-block;
+    padding: 0.2em;
+    margin: 0.1em 0.2em;
+    border: 1px solid #999;
+    border-radius: 2px;
+
+    span {
+      font-size: 120%;
+      padding: 0 0.2em;
+      font-family: 'Roboto Mono', monospace;
+    }
+    span:nth-child(1) {
+      color: #999;
+    }
+  }
+}
+.mnemonicNotice {}
+
+.mnemonicEnter {
+  border: 1px solid rgba(0,0,0,0.2);
+  min-height: 120px;
+  button {
+    display: inline-block;
+    padding: 0.2em;
+    margin: 0.1em 0.2em;
+    border: 1px solid #999;
+    border-radius: 2px;
+    background: none;
+    font-size: 120%;
+    padding: 0 0.2em;
+    font-family: 'Roboto Mono', monospace;
+  }
+}
+
+.mnemonicError {
+  border: 1px solid red;
+}
+
+.buttonFinish {
+  min-width: 50%;
+}
+
+.mnemonicWords {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 50px;
+  button {
+    display: inline-block;
+    padding: 0.2em;
+    margin: 0.1em 0.2em;
+    border: 1px solid #999;
+    border-radius: 2px;
+    background: none;
+    font-size: 120%;
+    padding: 0 0.2em;
+    font-family: 'Roboto Mono', monospace;
+  }
+}
+
+@include media-mobile {
+  .mnemonicNotice {
+    position: static;
+    font-size: 100%;
+    margin-bottom: 20px;
+  }
+}
