@@ -106,6 +106,19 @@ export const setTokenAuthData = (state, { name, data }) => ({
   },
 })
 
+export const setBtcMultisigBalance = (state, { address, amount, unconfirmedBalance }) => {
+  state.btcMultisigUserData.wallets.forEach( (wallet) => {
+    if (wallet.address === address) {
+      wallet.amount = amount
+      wallet.balance = amount
+      wallet.unconfirmedBalance = unconfirmedBalance
+    }
+  })
+  return {
+    ...state
+  }
+}
+
 export const setBalance = (state, { name, amount, unconfirmedBalance }) => ({
   ...state,
   tokensData: {

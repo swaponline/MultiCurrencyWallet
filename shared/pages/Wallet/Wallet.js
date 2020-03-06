@@ -356,11 +356,10 @@ export default class Wallet extends Component {
 
   render() {
     const { activeView, infoAboutCurrency, exchangeForm, editTitle, walletTitle, enabledCurrencies } = this.state
-    const { currencyBalance, hiddenCoinsList, isSigned, allData, isFetching } = this.props
+    const { currencyBalance, hiddenCoinsList, isSigned, /*allData,*/ isFetching } = this.props
 
-    const { btcMultisigUserDataList } = this.props
+    const allData = actions.core.getWallets()
 
-    console.log('btcMultisigUserDataList', btcMultisigUserDataList, this.props)
     this.checkBalance()
 
     let settings = {
@@ -401,6 +400,7 @@ export default class Wallet extends Component {
 
     tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
 
+    //console.log('render', tableRows)
     if (currencyBalance) {
       currencyBalance.forEach(item => {
         if ((!isWidgetBuild || widgetCurrencies.includes(item.name)) && item.infoAboutCurrency && item.balance !== 0) {

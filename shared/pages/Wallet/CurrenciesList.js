@@ -26,10 +26,11 @@ const CurrenciesList = ({ tableRows, currencies, infoAboutCurrency, hiddenCoinsL
       rows={tableRows}
       rowRender={(row, index, selectId, handleSelectId) => (
         <Row
-          key={row.currency}
+          key={index}
           index={index}
           getCurrencyUsd={(usd) => this.getCurrencyUsd(usd)}
           currency={row}
+          itemData={row}
           currencies={currencies}
           infoAboutCurrency={infoAboutCurrency}
           getExCurrencyRate={(currencySymbol, rate) => getExCurrencyRate(currencySymbol, rate)}

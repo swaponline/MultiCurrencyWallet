@@ -43,40 +43,9 @@ const langLabels = defineMessages({
   (
     {
       rememberedOrders,
-      user: {
-        ethData,
-        btcData,
-        btcMultisigSMSData,
-        btcMultisigUserData,
-        bchData,
-        nimData,
-        //qtumData,
-        ltcData,
-        // xlmData,
-        // usdtOmniData,
-        tokensData
-      },
-      currencies: { items: currencies }
     },
     { currency }
   ) => ({
-    currencies,
-    item: [
-      btcData,
-      btcMultisigSMSData,
-      btcMultisigUserData,
-      ethData,
-      bchData,
-      ltcData,
-      //qtumData,
-      // xlmData,
-      // usdtOmniData,
-      ...Object.keys(tokensData).map(k => tokensData[k])
-    ]
-      .map(({ account, keyPair, ...data }) => ({
-        ...data
-      }))
-      .find(item => item.currency === currency.currency),
     decline: rememberedOrders.savedOrders
   })
 )
@@ -95,7 +64,7 @@ export default class Row extends Component {
     isDropdownOpen: false
   }
 
-  static getDerivedStateFromProps({ item: { balance } }) {
+  static getDerivedStateFromProps({ itemData: { balance } }) {
     return {
       isBalanceEmpty: balance === 0
     }
@@ -103,15 +72,6 @@ export default class Row extends Component {
 
   constructor(props) {
     super(props)
-
-    const {
-      currency: { currency },
-      currencies
-    } = props
-
-    const isBlockedCoin = config.noExchangeCoins.map(item => item.toLowerCase()).includes(currency.toLowerCase())
-
-    this.state.tradeAllowed = !!currencies.find(c => c.value === currency.toLowerCase()) && !isBlockedCoin
   }
 
   componentWillUnmount() {
@@ -124,7 +84,7 @@ export default class Row extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const {
-      item: { currency, balance }
+      itemData: { currency, balance }
     } = this.props
 
     if (balance > 0) {
@@ -144,7 +104,7 @@ export default class Row extends Component {
     })
 
     const {
-      item: { currency, address }
+      itemData: { currency, address }
     } = this.props
 
     switch (currency) {
@@ -164,8 +124,8 @@ export default class Row extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    const getComparableProps = ({ item, index, selectId }) => ({
-      item,
+    const getComparableProps = ({ itemData, index, selectId }) => ({
+      itemData,
       index,
       selectId
     })
@@ -189,7 +149,7 @@ export default class Row extends Component {
 
   handleSliceAddress = () => {
     const {
-      item: { address }
+      itemData: { address }
     } = this.props
 
     const firstPart = address.substr(0, 6)
@@ -221,8 +181,8 @@ export default class Row extends Component {
 
   handleWithdraw = () => {
     const {
-      item: { currency },
-      item
+      itemData: { currency },
+      itemData
     } = this.props
 
     const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals
@@ -232,12 +192,12 @@ export default class Row extends Component {
     if (currency === 'BTC (Multisig)') withdrawModalType = WithdrawMultisigUser
 
 
-    actions.modals.open(withdrawModalType, item)
+    actions.modals.open(withdrawModalType, itemData)
   }
 
   handleReceive = () => {
     const {
-      item: { currency, address }
+      itemData: { currency, address }
     } = this.props
 
     actions.modals.open(constants.modals.ReceiveModal, {
@@ -317,7 +277,7 @@ export default class Row extends Component {
 
   handleCreateInvoiceLink = () => {
     const {
-      item: { currency, address }
+      itemData: { currency, address }
     } = this.props
 
     actions.modals.open(constants.modals.InvoiceLinkModal, {
@@ -332,7 +292,7 @@ export default class Row extends Component {
 
   handleCreateInvoice = () => {
     const {
-      item: { decimals, token, contractAddress, unconfirmedBalance, currency, address, balance }
+      itemData: { decimals, token, contractAddress, unconfirmedBalance, currency, address, balance }
     } = this.props
 
     actions.modals.open(constants.modals.InvoiceModal, {
@@ -379,7 +339,7 @@ export default class Row extends Component {
     const {
       history,
       intl: { locale },
-      item: { currency, balance }
+      itemData: { currency, balance }
     } = this.props
     history.push(localisedUrl(locale, `/${currency.toLowerCase()}-btc`))
   }
@@ -388,7 +348,7 @@ export default class Row extends Component {
     const {
       history,
       intl: { locale },
-      item: { currency, balance, address }
+      itemData: { currency, balance, address }
     } = this.props
 
     let targetCurrency = currency
@@ -406,7 +366,7 @@ export default class Row extends Component {
 
   hideCurrency = () => {
     const {
-      item: { currency, balance }
+      itemData: { currency, balance }
     } = this.props
 
     if (balance > 0) {
@@ -428,7 +388,7 @@ export default class Row extends Component {
 
   copy = () => {
     const {
-      item: { address }
+      itemData: { address }
     } = this.props
     navigator.clipboard.writeText(address)
   }
@@ -436,7 +396,8 @@ export default class Row extends Component {
   render() {
     const {
       isBalanceFetching,
-      tradeAllowed,
+      // @ToDo Remove this
+      // tradeAllowed,
       isAddressCopied,
       isTouch,
       isBalanceEmpty,
@@ -446,12 +407,12 @@ export default class Row extends Component {
     } = this.state
 
     const {
-      item,
+      itemData,
       intl: { locale },
       intl,
     } = this.props
 
-    const { currency, balance, isBalanceFetched, fullName, title, unconfirmedBalance, balanceError } = item
+    const { currency, balance, isBalanceFetched, fullName, title, unconfirmedBalance, balanceError } = itemData
 
     let currencyView = currency
 
@@ -461,11 +422,11 @@ export default class Row extends Component {
 
     const isWidgetBuild = config && config.isWidget
 
-    if (item.infoAboutCurrency) {
+    if (itemData.infoAboutCurrency) {
       currencyUsdBalance =
         BigNumber(balance)
           .dp(5, BigNumber.ROUND_FLOOR)
-          .toString() * item.infoAboutCurrency.price_usd
+          .toString() * itemData.infoAboutCurrency.price_usd
     }
 
     let dropDownMenuItems = [
@@ -543,7 +504,7 @@ export default class Row extends Component {
       })
     }
 
-    if (this.props.item.isSmsProtected && !this.props.item.isRegistered) {
+    if (this.props.itemData.isSmsProtected && !this.props.itemData.isRegistered) {
       currencyView = 'Not activated'
       nodeDownErrorShow = false
       dropDownMenuItems = [
@@ -561,8 +522,8 @@ export default class Row extends Component {
         }
       ]
     }
-    if (this.props.item.isUserProtected) {
-      if (!this.props.item.active) {
+    if (this.props.itemData.isUserProtected) {
+      if (!this.props.itemData.active) {
         currencyView = 'Not joined'
         nodeDownErrorShow = false
         dropDownMenuItems = []
@@ -580,7 +541,7 @@ export default class Row extends Component {
         action: this.handleGenerateMultisignLink,
         disabled: false
       })
-      if (!this.props.item.active) {
+      if (!this.props.itemData.active) {
         dropDownMenuItems.push({
           id: 1011,
           title: <FormattedMessage id="WalletRow_Menu_Hide" defaultMessage="Hide" />,
@@ -612,7 +573,7 @@ export default class Row extends Component {
             )}
             <span styleName="assetsTableCurrencyWrapper">
               {!isBalanceFetched || isBalanceFetching ? (
-                this.props.item.isUserProtected && !this.props.item.active ? (
+                this.props.itemData.isUserProtected && !this.props.itemData.active ? (
                   <span>
                     <FormattedMessage id="walletMultisignNotJoined" defaultMessage="Not joined" />
                   </span>
@@ -643,14 +604,14 @@ export default class Row extends Component {
                 </div>
               )}
             </span>
-            {item.address !== 'Not jointed' ? (
+            {itemData.address !== 'Not jointed' ? (
               <p styleName="addressStyle" >
-                {item.address}
+                {itemData.address}
               </p>
             ) : (
               ''
             )}
-            { isMobile ? <PartOfAddress {...item} onClick={this.goToCurrencyHistory} /> : '' }
+            { isMobile ? <PartOfAddress {...itemData} onClick={this.goToCurrencyHistory} /> : '' }
             <div styleName="assetsTableInfo">
               <div styleName="nameRow">
                 <a onClick={this.goToCurrencyHistory} title={`Online ${fullName} wallet`}>

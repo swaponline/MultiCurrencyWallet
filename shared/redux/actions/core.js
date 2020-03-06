@@ -317,6 +317,37 @@ const markCoinAsVisible = (coin) => {
   localStorage.setItem(constants.localStorage.hiddenCoinsList, JSON.stringify(getState().core.hiddenCoinsList))
 }
 
+const getWallets = () => {
+  const {
+    user: {
+      btcData,
+      btcMultisigSMSData,
+      btcMultisigUserData,
+      ethData,
+      bchData,
+      ltcData,
+      tokensData,
+    },
+  } = getState()
+
+  btcMultisigUserData.wallets
+
+  const allData = [
+    btcData,
+    btcMultisigSMSData,
+    btcMultisigUserData,
+    ...btcMultisigUserData.wallets,
+    ethData,
+    bchData,
+    ltcData,
+    ...Object.keys(tokensData).map(k => tokensData[k])
+  ].map(({ account, keyPair, ...data }) => ({
+    ...data
+  }))
+
+  return allData
+}
+
 export default {
   rememberOrder,
   forgetOrders,
@@ -343,4 +374,5 @@ export default {
   initPartialOrders,
   deletedPartialCurrency,
   addCurrencyFromOrders,
+  getWallets,
 }
