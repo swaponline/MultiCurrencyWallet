@@ -217,6 +217,10 @@
     cursor: pointer;
     z-index: 1;
   }
+  button.button__invoice {
+    width: auto !important;
+    margin: 0 auto;
+  }
   &:before {
     position: absolute;
     width: 100%;

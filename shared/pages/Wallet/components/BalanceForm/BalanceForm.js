@@ -17,6 +17,7 @@ function BalanceForm({
   handleWithdraw,
   handleExchange,
   currency,
+  handleInvoice,
   changePercent,
   showButtons = true
 }) {
@@ -88,25 +89,30 @@ function BalanceForm({
           </button>
         </div>
       </div>
-      {showButtons && (
-        <div styleName="yourBalanceBottom">
-          <Fragment>
-            <Button blue id="depositBtn" onClick={() => handleReceive('Deposit')}>
-              <FormattedMessage id="YourtotalbalanceDeposit" defaultMessage="Пополнить" />
-            </Button>
-          </Fragment>
-          <Fragment>
-            <Button blue disabled={!currencyBalance} id="sendBtn" onClick={() => handleWithdraw('Send')}>
-              <FormattedMessage id="YourtotalbalanceSend" defaultMessage="Отправить" />
-            </Button>
-          </Fragment>
-          {isWidgetBuild && !config.isFullBuild && (
-            <Button brand id="exchangeBtn" onClick={() => handleExchange()}>
-              <FormattedMessage id="YourtotalbalanceExchange" defaultMessage="Обменять" />
-            </Button>
-          )}
-        </div>
-      )}
+      <div styleName="yourBalanceBottom">
+      {showButtons ? (
+          <div>
+            <Fragment>
+              <Button blue id="depositBtn" onClick={() => handleReceive('Deposit')}>
+                <FormattedMessage id="YourtotalbalanceDeposit" defaultMessage="Пополнить" />
+              </Button>
+            </Fragment>
+            <Fragment>
+              <Button blue disabled={!currencyBalance} id="sendBtn" onClick={() => handleWithdraw('Send')}>
+                <FormattedMessage id="YourtotalbalanceSend" defaultMessage="Отправить" />
+              </Button>
+            </Fragment>
+            {isWidgetBuild && !config.isFullBuild && (
+              <Button brand id="exchangeBtn" onClick={() => handleExchange()}>
+                <FormattedMessage id="YourtotalbalanceExchange" defaultMessage="Обменять" />
+              </Button>
+            )}
+          </div>
+       
+      ) : <Button blue disabled={!currencyBalance} styleName="button__invoice" onClick={() => handleInvoice()}>
+            <FormattedMessage id="RequestPayment" defaultMessage="Отправить запрос" />
+          </Button>}
+          </div>
     </div>
   )
 }

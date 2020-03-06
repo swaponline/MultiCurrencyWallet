@@ -28,6 +28,8 @@ import config from 'app-config'
 import BalanceForm from 'pages/Wallet/components/BalanceForm/BalanceForm'
 import { BigNumber } from 'bignumber.js'
 import ContentLoader from 'components/loaders/ContentLoader/ContentLoader'
+import getCurrencyKey from 'helpers/getCurrencyKey'
+
 
 const isWidgetBuild = config && config.isWidget
 
@@ -140,11 +142,7 @@ export default class CurrencyWallet extends Component {
     }
     
     const fullNameCheck = aliases[ticker.toLowerCase()] ? aliases[ticker.toLowerCase()] : ticker.toLowerCase()
-   
-
-
     let item = items.map(item => item.fullName.toLowerCase())
-
     const token = tokens.map(item => item.fullName.toLowerCase()).includes(fullNameCheck.toLowerCase())
 
     if (item.includes(fullNameCheck.toLowerCase())) {
@@ -161,8 +159,10 @@ export default class CurrencyWallet extends Component {
         if (!itemCurrency.length) {
           history.push(localisedUrl(locale, `${links.notFound}`))
         } else itemCurrency = itemCurrency[0]
-      }
+      } 
 
+    
+      
       const {
         currency,
         address,
@@ -187,7 +187,6 @@ export default class CurrencyWallet extends Component {
           isBalanceEmpty: balance === 0,
         },
       }
-
     }
   }
 
@@ -224,6 +223,9 @@ export default class CurrencyWallet extends Component {
       actions.token.getBalance(currency.toLowerCase())
     }
 
+    // set balance for the address
+    address && actions[getCurrencyKey(currency.toLowerCase())].fetchBalance(address).then( balance => this.setState({ balance }))
+  
     this.setLocalStorageItems();
 
     // if address is null, take transactions from current user
@@ -253,6 +255,18 @@ export default class CurrencyWallet extends Component {
     actions.modals.open(constants.modals.ReceiveModal, {
       currency,
       address,
+    })
+  }
+
+  handleInvoice = () => {
+    const {
+      currency,
+      address
+    } = this.state
+    
+    actions.modals.open(constants.modals.InvoiceModal, {
+      currency: currency.toUpperCase(),
+      toAddress: address
     })
   }
 
@@ -385,7 +399,7 @@ export default class CurrencyWallet extends Component {
       slidesToShow: 1,
       slidesToScroll: 1
     };
-
+    
     return (
       <div styleName="root">
         <PageSeo
@@ -425,6 +439,7 @@ export default class CurrencyWallet extends Component {
                     handleReceive={this.handleReceive} 
                     handleWithdraw={this.handleWithdraw}
                     handleExchange={this.handleGoTrade}
+                    handleInvoice={this.handleInvoice}
                     showButtons={actions.user.isOwner(address, currency)}
                     currency={currency.toLowerCase()} 
                 /> : <ContentLoader leftSideContent />
@@ -439,7 +454,7 @@ export default class CurrencyWallet extends Component {
                 ) : ''
               )}
               {
-                txHistory ? (
+                txHistory  ? (
                   <div styleName="currencyWalletActivity">
                     <h3>
                       {address ? 
