@@ -29,7 +29,7 @@ const getWalletByWords = (mnemonic, path) => {
 }
 
 
-const login = (privateKey) => {
+const login = (privateKey, mnemonic) => {
   let data
 
   if (privateKey) {
@@ -38,7 +38,7 @@ const login = (privateKey) => {
   else {
     console.info('Created account Ethereum ...')
     // data = web3.eth.accounts.create()
-    const mnemonic = bip39.generateMnemonic()
+    if (!mnemonic) mnemonic = bip39.generateMnemonic()
     const accData = getWalletByWords(mnemonic)
     console.log('Eth. Generated walled from random 12 words')
     console.log(accData)

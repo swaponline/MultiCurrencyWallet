@@ -18,5 +18,6 @@ export default (currency) => {
 
   if (ethToken.isEthToken({ name: key })) key = 'token'
 
+
   return key
 }

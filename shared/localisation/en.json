@@ -370,6 +370,7 @@
     "id": "Withdrow118",
     "message": "Amount",
     "files": [
+      "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js",
       "shared/components/modals/WithdrawModal/WithdrawModal.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.js"
@@ -2648,6 +2649,7 @@
     "id": "Withdrow1194",
     "message": "Address",
     "files": [
+      "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js",
       "shared/components/modals/WithdrawModal/WithdrawModal.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.js"
@@ -3274,6 +3276,7 @@
     "id": "WTH275",
     "message": "Make sure the wallet you {br}are sending the funds to supports",
     "files": [
+      "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js",
       "shared/components/modals/WithdrawModal/WithdrawModal.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.js"
@@ -5392,7 +5395,6 @@
     "id": "BTCMS_ConfirmTxInputs",
     "message": "Transaction inputs",
     "files": [
-      "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js",
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
@@ -5400,7 +5402,6 @@
     "id": "BTCMS_ConfirmTxOutputs",
     "message": "Transaction outputs",
     "files": [
-      "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js",
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
@@ -5422,7 +5423,6 @@
     "id": "BTCMS_ConfirmTxTitle",
     "message": "Transaction confirmation",
     "files": [
-      "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js",
       "shared/pages/Multisign/Btc/Btc.js"
     ]
   },
@@ -6930,10 +6930,7 @@
   },
   {
     "id": "WalletPage_Heading",
-    "message": "Wallet",
-    "files": [
-      "shared/pages/Wallet/Wallet.js"
-    ]
+    "message": "Wallet"
   },
   {
     "id": "WalletPage_ImportKeys",
@@ -7035,24 +7032,15 @@
   },
   {
     "id": "BTCMS_Amount",
-    "message": "Сумма транзакции: {amount} BTC",
-    "files": [
-      "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js"
-    ]
+    "message": "Сумма транзакции: {amount} BTC"
   },
   {
     "id": "BTCMS_FromAddress",
-    "message": "Оплата с кошелка: {address}",
-    "files": [
-      "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js"
-    ]
+    "message": "Оплата с кошелка: {address}"
   },
   {
     "id": "BTCMS_ToAddress",
-    "message": "Получатель: {address}",
-    "files": [
-      "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js"
-    ]
+    "message": "Получатель: {address}"
   },
   {
     "id": "multiSignConfirmTxModal_ConfirmTx",
@@ -7155,10 +7143,7 @@
   },
   {
     "id": "registerSMSModalFinishInfoTitle",
-    "message": "Сохраните эту информацию",
-    "files": [
-      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
-    ]
+    "message": "Сохраните эту информацию"
   },
   {
     "id": "registerSMSModalPhonePlaceholder",
@@ -7331,9 +7316,226 @@
   },
   {
     "id": "btcSMSProtectedSignByMnemonic",
-    "message": "Использовать секретную фразу",
+    "message": "Use Passphrase",
     "files": [
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
+    ]
+  },
+  {
+    "id": "ShowMyMnemonic",
+    "message": "Show 12 words",
+    "files": [
+      "shared/pages/Wallet/components/WallerSlider/index.js"
+    ]
+  },
+  {
+    "id": "BtcMultisignConfirmTx_FromAddress",
+    "message": "Payment from wallet",
+    "files": [
+      "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js"
+    ]
+  },
+  {
+    "id": "multiSignConfirmTxModal_GoToWalletPage",
+    "message": "Open wallet",
+    "files": [
+      "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js"
+    ]
+  },
+  {
+    "id": "multiSignConfirmTxModal_YouCantSignThisTx",
+    "message": "You do not have permission to sign this transaction (check that you have created a multisig)",
+    "files": [
+      "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js"
+    ]
+  },
+  {
+    "id": "registerSMSModalFinishSaveThisInfo",
+    "message": "Information in case our service is unavailable",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_Continue",
+    "message": "Continue",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_CopyMnemonic",
+    "message": "Copy",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_EnterNotice",
+    "message": "Нажмите слова, чтобы поместить их рядом друг с другом в правильном порядке",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_MnemonicCopied",
+    "message": "Copied...",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_MnemoniceDeleted",
+    "message": "Secret phrase deleted",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_Ready",
+    "message": "Ready",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_ReadySaveNotice",
+    "message": "Keep paper in a place where you will not forget",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_SaveMnemonicStep1",
+    "message": "1. Write the phrase on paper",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_SaveMnemonicStep2",
+    "message": "2. Be sure to sign that this is the key to {domain}",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_ShareMnemonic",
+    "message": "Share",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_ShareMnemonicTitle",
+    "message": "Your secret phrase",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_ShowMnemonicNotice",
+    "message": "Write these words in the correct order and keep them in a safe place.",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_Title",
+    "message": "Your secret phrase",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_BeginContinue",
+    "message": "I understand",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_BeginLater",
+    "message": "I will save later",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_BeginNotice",
+    "message": "Now we will show you 12 words of your secret phrase. If you lose it, we will not be able to restore your wallet.",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_CancelRestory",
+    "message": "Cancel",
+    "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_MnemonicField",
+    "message": "Secret phrase (12 words):",
+    "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_MnemonicInvalid",
+    "message": "You specified an invalid set of words",
+    "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_MnemonicPlaceholder",
+    "message": "Enter the saved phrase to restore the wallet",
+    "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_Ready",
+    "message": "Ready",
+    "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_ReadyNotice",
+    "message": "Now you can add BTC, ETH and other currencies",
+    "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_RestoryWallet",
+    "message": "Restory",
+    "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_RestroringWallet",
+    "message": "Restoring...",
+    "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js"
+    ]
+  },
+  {
+    "id": "RestoryMnemonicWallet_Title",
+    "message": "Recovering a wallet from a secret phrase",
+    "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js"
+    ]
+  },
+  {
+    "id": "ImportKeys_RestoreMnemonic",
+    "message": "Enter 12 words",
+    "files": [
+      "shared/pages/CreateWallet/CreateWallet.js"
     ]
   }
 ]

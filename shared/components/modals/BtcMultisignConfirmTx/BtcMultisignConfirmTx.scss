@@ -1,8 +1,23 @@
+.confirmTxModal {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
 .buttonsHolder {
   display: flex;
   align-items: center;
   justify-content: space-around;
   button {
     width: 45%;
+  }
+}
+
+.walletBalance {
+  right: 1em;
+  top: -0.7em;
+}
+.fakeInput {
+  input {
+    background: #fff;
   }
 }
