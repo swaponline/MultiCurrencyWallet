@@ -105,6 +105,20 @@ const loginWithKeychain = async () => {
   await getBalance()
 }
 
+const getTx = (txRaw) => {
+
+  return txRaw.getId()
+}
+
+const getLinkToInfo = (tx) => {
+
+  if(!tx) {
+    return
+  }
+
+  return `${config.link.bitpay}/tx/${tx}`
+}
+
 const getBalance = () => {
   const { user: { btcData: { address } } } = getState()
 
@@ -300,6 +314,8 @@ export default {
   fetchBalance,
   signMessage,
   getReputation,
+  getTx,
+  getLinkToInfo,
   getInvoices,
   getWalletByWords,
   getRandomMnemonicWords,
