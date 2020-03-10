@@ -64,8 +64,6 @@ export default class WallerSlider extends Component {
   render() {
     const { banners } = this.props
 
-    console.log(banners)
-
     const { mnemonicDeleted } = this.state
 
     const isPrivateKeysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
@@ -86,8 +84,6 @@ export default class WallerSlider extends Component {
                   widthIcon="80"
                   background="6144e5"
                   firstFunc={mnemonicDeleted ? this.handleShowKeys : this.handleShowMnemonic}
-                  secondBtn={<FormattedMessage id="descr284" defaultMessage="I saved my keys" />}
-                  secondFunc={handleNotifyBlockClose}
                 />
               </div>
             )}
