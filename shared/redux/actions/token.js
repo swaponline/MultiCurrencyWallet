@@ -110,6 +110,8 @@ const getTransaction = (ownAddress, ownType) =>
     const { user: { tokensData } } = getState()
 
     if (ownType === undefined) {
+      console.warn('getTransaction - token type not deffined', ownAddress, ownType)
+      resolve([])
       return
     }
 
