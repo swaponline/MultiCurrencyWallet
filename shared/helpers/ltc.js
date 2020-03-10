@@ -30,19 +30,6 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
   return txSize
 }
 
-const getTx = (txRaw) => {
-
-  return txRaw.transactionHash
-}
-
-const getLinkToInfo = (tx) => {
-
-  if(!tx) {
-    return
-  }
-
-  return `https://etherscan.io/tx/${tx}`
-}
 
 const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, fixed, method } = {}) => {
   const DUST = 546
@@ -103,7 +90,5 @@ export default {
   calculateTxSize,
   estimateFeeValue,
   estimateFeeRate,
-  network,
-  getTx,
-  getLinkToInfo
+  network
 }

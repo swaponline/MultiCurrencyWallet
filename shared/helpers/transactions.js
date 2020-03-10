@@ -1,13 +1,14 @@
 import helpers from "helpers";
+import actions from 'redux/actions'
 
 
 const getLink = (currency, txId) => {
   const prefix = helpers.getCurrencyKey(currency)
 
-  if (helpers[prefix]
-    && typeof helpers[prefix].getLinkToInfo === 'function'
+  if (actions[prefix]
+    && typeof actions[prefix].getLinkToInfo === 'function'
   ) {
-    return helpers[prefix].getLinkToInfo(txId)
+    return actions[prefix].getLinkToInfo(txId)
   } else {
     console.warn(`Function getLinkToInfo for ${prefix} not defined`)
   }
@@ -16,10 +17,10 @@ const getLink = (currency, txId) => {
 const getInfo = (currency, txRaw) => {
   const prefix = helpers.getCurrencyKey(currency)
 
-  if (helpers[prefix]
-    && typeof helpers[prefix].getTx === 'function'
+  if (actions[prefix]
+    && typeof actions[prefix].getTx === 'function'
   ) {
-    const tx = helpers[prefix].getTx(txRaw)
+    const tx = actions[prefix].getTx(txRaw)
     const link =  getLink(prefix, tx)
     return {
       tx,

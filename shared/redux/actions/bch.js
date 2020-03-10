@@ -63,6 +63,19 @@ const getBalance = () => {
     })
 }
 
+const getTx = (txRaw) => {
+
+  return false
+}
+
+const getLinkToInfo = (tx) => {
+  if(!tx) {
+    return
+  }
+
+  return `https://www.blockchain.com/ru/btc/tx/${tx}`
+}
+
 const fetchBalance = (address) =>
   apiLooper.get('bch', `/address/details/${address}`)
     .then(({ balance }) => balance)
@@ -206,5 +219,7 @@ export default {
   fetchTxInfo,
   fetchBalance,
   signMessage,
+  getTx,
+  getLinkToInfo,
   getReputation
 }

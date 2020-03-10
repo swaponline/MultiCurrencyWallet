@@ -134,6 +134,20 @@ const getTransaction = (address) =>
       })
   })
 
+const getTx = (txRaw) => {
+
+  return txRaw.transactionHash
+}
+
+const getLinkToInfo = (tx) => {
+
+  if(!tx) {
+    return
+  }
+
+  return `https://etherscan.io/tx/${tx}`
+}
+
 const send = async ({ from, to, amount, feeValue, speed } = {}) => {
   const { user: { ltcData: { privateKey } } } = getState()
   const keyPair = bitcoin.ECPair.fromWIF(privateKey, ltc.network)
@@ -194,6 +208,8 @@ export default {
   fetchUnspents,
   broadcastTx,
   fetchTx,
+  getTx,
+  getLinkToInfo,
   fetchTxInfo,
   fetchBalance,
   signMessage,

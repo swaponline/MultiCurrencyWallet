@@ -110,6 +110,8 @@ const getTransaction = (ownAddress, ownType) =>
     const { user: { tokensData } } = getState()
 
     if (ownType === undefined) {
+      console.warn('getTransaction - token type not deffined', ownAddress, ownType)
+      resolve([])
       return
     }
 
@@ -173,6 +175,20 @@ const fetchFees = async ({ gasPrice, gasLimit, speed } = {}) => {
     gas: gasLimit,
     gasPrice,
   }
+}
+
+const getTx = (txRaw) => {
+
+  return txRaw.transactionHash
+}
+
+const getLinkToInfo = (tx) => {
+
+  if(!tx) {
+    return
+  }
+
+  return `https://etherscan.io/tx/${tx}`
 }
 
 const sendTransaction = ({ contract, method }, { args, params = {} } = {}, callback) =>
@@ -254,6 +270,8 @@ export default {
   getBalance,
   getTransaction,
   send,
+  getTx,
+  getLinkToInfo,
   approve,
   setAllowanceForToken,
   fetchBalance,

@@ -632,8 +632,16 @@ src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAwUAAAMZCAMAAABmr2irAAAA3lBMV
           document.getElementById("starter-modal").classList.add("d-none");
           document.body.classList.remove("overflow-hidden");
         }
+	// Is Home page
+	function swapIsHome(){
+	  var swapLocationHash = window.location.hash;
+	  if ( swapLocationHash == '' || swapLocationHash == '#/') {
+	    return true;
+	  }
+	  return false;
+	}
         // Open modal if cookie false
-        if (swapDisalbeStarter != "true" && !isWidgetBuild) {
+        if (swapDisalbeStarter != "true" && swapIsHome && !isWidgetBuild) {
           swapOpenStarterModal();
         }
       </script>

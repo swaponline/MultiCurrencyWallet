@@ -125,6 +125,20 @@ const getInvoices = () => {
   })
 }
 
+const getTx = (txRaw) => {
+
+  return txRaw.transactionHash
+}
+
+const getLinkToInfo = (tx) => {
+
+  if(!tx) {
+    return
+  }
+
+  return `https://etherscan.io/tx/${tx}`
+}
+
 const getTransaction = (address) =>
   new Promise((resolve) => {
     const { user: { ethData: { address: userAddress } } } = getState()
@@ -195,6 +209,8 @@ export default {
   getTransaction,
   getReputation,
   getInvoices,
+  getTx,
+  getLinkToInfo,
   isETHAddress,
   getWalletByWords,
   getRandomMnemonicWords,
