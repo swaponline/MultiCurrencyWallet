@@ -7518,5 +7518,12 @@
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
     ]
+  },
+  {
+    "id": "RequestPayment",
+    "message": "Запросить",
+    "files": [
+      "shared/pages/Wallet/components/BalanceForm/BalanceForm.js"
+    ]
   }
 ]
