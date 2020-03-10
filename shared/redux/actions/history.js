@@ -18,7 +18,7 @@ const setTransactions = async (address, type) => {
     const currencyTxs = await Promise.all([
       actions[reducer].getTransaction(address, type),
       (
-        actions.user.isOwner(address, type) ? 
+        (config.opts && config.opts.invoiceEnabled && actions.user.isOwner(address, type)) ? 
           actions.invoices.getInvoices({
             currency: type,
             address,
