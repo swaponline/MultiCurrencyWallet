@@ -36,9 +36,6 @@ const CurrenciesList = ({
           {!isWidgetBuild && (
             <Slider
               banners={banners}
-              settings={settings}
-              host={window.location.hostname}
-              handleNotifyBlockClose={state => this.handleNotifyBlockClose('isPrivateKeysSaved')}
               {...this.state}
             />
           )}

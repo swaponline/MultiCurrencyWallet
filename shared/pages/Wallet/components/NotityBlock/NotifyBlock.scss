@@ -4,6 +4,7 @@
   background: #6143e5;
   display: flex;
   z-index: 111111;
+  cursor: pointer;
   font-family: 'Manrope-Bold', sans-serif;
   align-items: center;
   justify-content: space-between;
@@ -23,6 +24,16 @@
   top: 40px;
 }
 
+.notifyBlockOverlay {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.35);
+  height: 100%;
+  width: 100%;
+  top: 0;
+  border-radius: 5px;
+  left: 0;
+}
+
 .notifyBlockDescr {
   margin-left: 10px;
   color: #fff;
@@ -30,7 +41,7 @@
   font-family: 'Manrope-Bold', sans-serif;
   bottom: 20px;
   left: 10px;
-  right: 30px;
+  right: 25px;
 }
 
 @media all and (min-width: 768px) and (max-width: 992px) {

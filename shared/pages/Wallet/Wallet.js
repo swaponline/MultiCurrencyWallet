@@ -184,7 +184,6 @@ export default class Wallet extends Component {
       this.handleWithdraw(params)
     }
     this.getInfoAboutCurrency()
-    this.setLocalStorageItems()
     this.getBanners()
 
     if (isMobile) {
@@ -235,20 +234,6 @@ export default class Wallet extends Component {
 
   handleImportKeys = () => {
     actions.modals.open(constants.modals.ImportKeys, {})
-  }
-
-  setLocalStorageItems = () => {
-    const isClosedNotifyBlockBanner = localStorage.getItem(constants.localStorage.isClosedNotifyBlockBanner)
-    const isClosedNotifyBlockSignUp = localStorage.getItem(constants.localStorage.isClosedNotifyBlockSignUp)
-    const isPrivateKeysSaved = localStorage.getItem(constants.localStorage.isPrivateKeysSaved)
-    const walletTitle = localStorage.getItem(constants.localStorage.walletTitle)
-
-    this.setState({
-      isClosedNotifyBlockBanner,
-      isClosedNotifyBlockSignUp,
-      walletTitle,
-      isPrivateKeysSaved
-    })
   }
 
   onLoadeOn = fn => {
