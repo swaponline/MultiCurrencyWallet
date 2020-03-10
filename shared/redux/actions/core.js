@@ -332,7 +332,16 @@ const getWallets = () => {
 
   btcMultisigUserData.wallets
 
+  // Sweep
+  const {
+    user: {
+      btcMnemonicData,
+    },
+  } = getState()
+
+
   const allData = [
+    ... (btcMnemonicData) ? [btcMnemonicData] : [], // Sweep
     btcData,
     btcMultisigSMSData,
     btcMultisigUserData,

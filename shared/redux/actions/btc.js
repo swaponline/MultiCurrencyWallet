@@ -17,7 +17,12 @@ import typeforce from "swap.app/util/typeforce";
 const getRandomMnemonicWords = () => bip39.generateMnemonic()
 const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonic)
 
-window.bip39 = bip39
+
+const sweepToMnemonic = (mnemonic, path) => {
+  const wallet = getWalletByWords(mnemonic, path)
+  localStorage.setItem(constants.privateKeyNames.btcMnemonic, wallet.WIF)
+  return wallet.WIF
+}
 
 const getWalletByWords = (mnemonic, path) => {
   const seed = bip39.mnemonicToSeedSync(mnemonic);
@@ -41,14 +46,41 @@ const getWalletByWords = (mnemonic, path) => {
 
 window.getWalletByWords = getWalletByWords
 
-const login = (privateKey, mnemonic) => {
-  let keyPair
+const auth = (privateKey) => {
+  if (privateKey) {
+    const hash  = bitcoin.crypto.sha256(privateKey)
+    const d     = BigInteger.fromBuffer(hash)
+
+    const keyPair     = bitcoin.ECPair.fromWIF(privateKey, btc.network)
+
+    const account         = bitcoin.ECPair.fromWIF(privateKey, btc.network) // eslint-disable-line
+    const { address }     = bitcoin.payments.p2pkh({ pubkey: account.publicKey, network: btc.network })
+    const { publicKey }   = account
+
+    return {
+      account,
+      keyPair,
+      address,
+      privateKey,
+      publicKey,
+    }
+  }
+}
+
+const login = (privateKey, mnemonic, mnemonicKeys) => {
+  let sweepToMnemonicReady = false
+
+  if (privateKey 
+    && mnemonic 
+    && mnemonicKeys 
+    && mnemonicKeys.btc === privateKey
+  ) sweepToMnemonicReady = true
 
   if (privateKey) {
     const hash  = bitcoin.crypto.sha256(privateKey)
     const d     = BigInteger.fromBuffer(hash)
 
-    keyPair     = bitcoin.ECPair.fromWIF(privateKey, btc.network)
+    //keyPair     = bitcoin.ECPair.fromWIF(privateKey, btc.network)
   }
   else {
     console.info('Created account Bitcoin ...')
@@ -64,16 +96,9 @@ const login = (privateKey, mnemonic) => {
 
   localStorage.setItem(constants.privateKeyNames.btc, privateKey)
 
-  const account         = bitcoin.ECPair.fromWIF(privateKey, btc.network) // eslint-disable-line
-  const { address }     = bitcoin.payments.p2pkh({ pubkey: account.publicKey, network: btc.network })
-  const { publicKey }   = account
-
-  const data = {
-    account,
-    keyPair,
-    address,
-    privateKey,
-    publicKey,
+  const data = { 
+    ...auth(privateKey),
+    isMnemonic: false,
   }
 
   window.getBtcAddress = () => data.address
@@ -81,6 +106,40 @@ const login = (privateKey, mnemonic) => {
 
   console.info('Logged in with Bitcoin', data)
   reducers.user.setAuthData({ name: 'btcData', data })
+
+  if (!sweepToMnemonicReady) {
+    // Auth with our mnemonic account
+    if (mnemonic === `-`) {
+      console.error('Sweep. Cant auth. Need new mnemonic or enter own for re-login')
+      return
+    }
+
+    if (!mnemonicKeys
+      || !mnemonicKeys.btc
+    ) {
+      console.error('Sweep. Cant auth. Login key undefined')
+      return
+    }
+
+    const mnemonicData = {
+      ...auth(mnemonicKeys.btc),
+      isMnemonic: true,
+    }
+    console.info('Logged in with Bitcoin Mnemonic', mnemonicData)
+    reducers.user.addWallet({
+      name: 'btcMnemonicData',
+      data: {
+        currency: 'BTC',
+        fullName: 'Bitcoin Mnemonic',
+        balance: 0,
+        isBalanceFetched: false,
+        balanceError: null,
+        infoAboutCurrency: null,
+        ...mnemonicData,
+      }
+    })
+  }
+
   return privateKey
 }
 
@@ -320,4 +379,5 @@ export default {
   getWalletByWords,
   getRandomMnemonicWords,
   validateMnemonicWords,
+  sweepToMnemonic,
 }

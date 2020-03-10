@@ -14,6 +14,12 @@ import typeforce from "swap.app/util/typeforce";
 const getRandomMnemonicWords = () => bip39.generateMnemonic()
 const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonic)
 
+const sweepToMnemonic = (mnemonic, path) => {
+  const wallet = getWalletByWords(mnemonic, path)
+  localStorage.setItem(constants.privateKeyNames.ethMnemonic, wallet.privateKey)
+  return wallet.privateKey
+}
+
 const getWalletByWords = (mnemonic, path) => {
   const seed = bip39.mnemonicToSeedSync(mnemonic)
   const hdwallet = hdkey.fromMasterSeed(seed);
@@ -215,4 +221,5 @@ export default {
   getWalletByWords,
   getRandomMnemonicWords,
   validateMnemonicWords,
+  sweepToMnemonic,
 }

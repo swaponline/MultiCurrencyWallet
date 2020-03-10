@@ -84,11 +84,15 @@ export const initialState = {
   isFetching: false,
 }
 
+export const addWallet = (state, { name, data }) => ({
+  ...state,
+  [name]: {
+    ...data,
+  },
+})
+
 export const setAuthData = (state, { name, data }) => ({
   ...state,
-  tokensData: {
-    ...state.tokensData,
-  },
   [name]: {
     ...state[name],
     ...data,
@@ -109,9 +113,10 @@ export const setTokenAuthData = (state, { name, data }) => ({
 export const setBtcMultisigBalance = (state, { address, amount, unconfirmedBalance }) => {
   state.btcMultisigUserData.wallets.forEach( (wallet) => {
     if (wallet.address === address) {
-      wallet.amount = amount
-      wallet.balance = amount
+      wallet.balance = Number(amount)
       wallet.unconfirmedBalance = unconfirmedBalance
+      wallet.isBalanceFetched = true
+      wallet.balanceError = false
     }
   })
   return {

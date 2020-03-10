@@ -18,6 +18,16 @@ const sign = async () => {
     localStorage.setItem(constants.privateKeyNames.twentywords, mnemonic)
   }
 
+  const mnemonicKeys = {
+    btc: localStorage.getItem(constants.privateKeyNames.btcMnemonic),
+    eth: localStorage.getItem(constants.privateKeyNames.ethMnemonic),
+  }
+
+  if (mnemonic !== `-`) {
+    if (!mnemonicKeys.btc) mnemonicKeys.btc = actions.btc.sweepToMnemonic(mnemonic)
+    if (!mnemonicKeys.eth) mnemonicKeys.eth = actions.eth.sweepToMnemonic(mnemonic)
+  }
+
   const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
   const btcMultisigPrivateKey = localStorage.getItem(constants.privateKeyNames.btcMultisig)
   const bchPrivateKey = localStorage.getItem(constants.privateKeyNames.bch)
@@ -30,8 +40,8 @@ const sign = async () => {
   const isBtcKeychainActivated = !!localStorage.getItem(constants.privateKeyNames.btcKeychainPublicKey)
   const isBtcMultisigKeychainActivated = !!localStorage.getItem(constants.privateKeyNames.btcMultisigKeychainPublicKey)
 
-  const _ethPrivateKey = isEthKeychainActivated ? await actions.eth.loginWithKeychain() : actions.eth.login(ethPrivateKey, mnemonic)
-  const _btcPrivateKey = isBtcKeychainActivated ? await actions.btc.loginWithKeychain() : actions.btc.login(btcPrivateKey, mnemonic)
+  const _ethPrivateKey = isEthKeychainActivated ? await actions.eth.loginWithKeychain() : actions.eth.login(ethPrivateKey, mnemonic, mnemonicKeys)
+  const _btcPrivateKey = isBtcKeychainActivated ? await actions.btc.loginWithKeychain() : actions.btc.login(btcPrivateKey, mnemonic, mnemonicKeys)
 
   // btc multisig with 2fa (2of3)
   const btcSMSServerKey = config.swapContract.protectedBtcKey

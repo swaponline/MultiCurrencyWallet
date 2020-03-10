@@ -1,4 +1,6 @@
 export default {
+  btcMnemonic: `${process.env.ENTRY}:btc:mnemonicKey`,
+  ethMnemonic: `${process.env.ENTRY}:eth:mnemonicKey`,
   eth: `${process.env.ENTRY}:eth:privateKey`,
   btc: `${process.env.ENTRY}:btc:privateKey`,
   twentywords: `${process.env.ENTRY}:twentywords`,
