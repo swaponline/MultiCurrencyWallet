@@ -99,7 +99,7 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
 
   const data = { 
     ...auth(privateKey),
-    isMnemonic: false,
+    isMnemonic: sweepToMnemonicReady,
   }
 
   window.getBtcAddress = () => data.address

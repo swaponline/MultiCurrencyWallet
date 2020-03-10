@@ -70,6 +70,50 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
 
   console.info('Logged in with Ethereum', data)
 
+  if (!sweepToMnemonicReady) {
+    // Auth with our mnemonic account
+    if (mnemonic === `-`) {
+      console.error('Sweep. Cant auth. Need new mnemonic or enter own for re-login')
+      return
+    }
+
+    if (!mnemonicKeys
+      || !mnemonicKeys.eth
+    ) {
+      console.error('Sweep. Cant auth. Login key undefined')
+      return
+    }
+
+    const mnemonicData = web3.eth.accounts.privateKeyToAccount(mnemonicKeys.eth)
+    web3.eth.accounts.wallet.add(mnemonicKeys.eth)
+    mnemonicData.isMnemonic = sweepToMnemonicReady
+
+    console.info('Logged in with Ethereum Mnemonic', mnemonicData)
+    reducers.user.addWallet({
+      name: 'ethMnemonicData',
+      data: {
+        currency: 'ETH',
+        fullName: 'Ethereum Mnemonic',
+        balance: 0,
+        isBalanceFetched: false,
+        balanceError: null,
+        infoAboutCurrency: null,
+        ...mnemonicData,
+      }
+    })
+    new Promise(async(resolve) => {
+      const balance = await fetchBalance(mnemonicData.address)
+      reducers.user.setAuthData({
+        name: 'ethMnemonicData',
+        data: {
+          balance,
+          isBalanceFetched: true,
+        },
+      })
+      resolve(true)
+    })
+  }
+
   return data.privateKey
 }
 
