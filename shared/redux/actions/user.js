@@ -201,6 +201,7 @@ const delay = (ms) => new Promise(resolve => setTimeout(() => resolve(true), ms)
 
 const setTransactions = async () => {
   try {
+    // @ToDo - make in like query
     const mainTokens = await Promise.all([
       actions.btc.getTransaction(),
       actions.btc.getInvoices(),
@@ -219,7 +220,7 @@ const setTransactions = async () => {
       const ercArray = await Promise.all(Object.keys(config.erc20)
         .map(async (name, index) => {
           await delay(650 * index)
-          const res = await actions.token.getTransaction(name)
+          const res = await actions.token.getTransaction(null, name)
           // console.log('name - ', name, '\n', '\n', res)
           return res
         }))

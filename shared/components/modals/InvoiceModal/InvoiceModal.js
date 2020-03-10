@@ -130,8 +130,8 @@ export default class InvoiceModal extends React.Component {
 
     let currency = data.currency.toUpperCase()
     switch (data.currency) {
-      case 'BTC (SMS-Protected)':
-      case 'BTC (Multisig)':
+      case 'BTC (SMS-PROTECTED)':
+      case 'BTC (MULTISIG)':
         currency = 'BTC'
         break
     }
@@ -174,8 +174,8 @@ export default class InvoiceModal extends React.Component {
     }
     let checkCurrency = currency.toUpperCase()
     switch (currency) {
-      case 'BTC (SMS-Protected)':
-      case 'BTC (Multisig)':
+      case 'BTC (SMS-PROTECTED)':
+      case 'BTC (MULTISIG)':
         checkCurrency = 'BTC'
         break
     }

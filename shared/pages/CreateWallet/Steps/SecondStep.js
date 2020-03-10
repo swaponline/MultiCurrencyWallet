@@ -112,7 +112,7 @@ const CreateWallet = (props) => {
   console.log('locale', locale)
   const coins = [
     {
-      text: locale === 'en' ? 'Without Secure' : 'Без защиты',
+      text: locale === 'en' ? 'No security' : 'Без защиты',
       name: 'withoutSecure',
       capture: locale === 'en' ? 'suitable for small amounts' : 'Подходит для небольших сумм',
       enabled: true,
@@ -121,7 +121,7 @@ const CreateWallet = (props) => {
     {
       text: 'SMS',
       name: 'sms',
-      capture: locale === 'en' ? 'transactions are confirmed by SMS code' : 'Транзакции подтверждаются кодом по SMS',
+      capture: locale === 'en' ? 'Verify your transactions via SMS code' : 'Транзакции подтверждаются кодом по SMS',
       enabled: _protection.sms.btc /* || _protection.sms.eth || _protection.sms.erc */,
       activated: _activated.sms.btc /* || _activated.sms.eth || _activated.sms.erc */,
     },
@@ -129,7 +129,7 @@ const CreateWallet = (props) => {
       text: 'Google 2FA',
       name: 'google2FA',
       capture: locale === 'en' ?
-        'Transactions are verified through the Google Authenticator app' :
+        'Verify your transactions through the Google Authenticator app' :
         'Транзакции подтверждаются через приложение Google Authenticator',
       enabled: _protection.g2fa.btc /* || _protection.g2fa.eth || _protection.g2fa.erc */,
       activated: _activated.g2fa.btc,
@@ -138,7 +138,7 @@ const CreateWallet = (props) => {
       text: 'Multisignature',
       name: 'multisignature',
       capture: locale === 'en' ?
-        'Transactions are confirmed from another device and / or by another person.' :
+        'Verify your transactions by using another device or by another person.' :
         'Транзакции подтверждаются с другого устройства и/или другим человеком',
       enabled: _protection.multisign.btc,
       activated: _activated.multisign.btc,

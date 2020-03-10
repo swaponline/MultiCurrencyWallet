@@ -61,13 +61,17 @@ export default class CreateInvoice extends PureComponent {
     if (type && wallet && ['btc','eth'].includes(type) && data[type]) {
       const address = data[type].address
 
-      await actions.user.getInfoAboutCurrency([type.toUpperCase()]);
+      console.log(1)
       actions.modals.open(constants.modals.InvoiceModal, {
         currency: type.toUpperCase(),
         toAddress: wallet,
         address,
         disableClose: true,
       })
+
+      console.log(type)
+      await actions.user.getInfoAboutCurrency([type.toUpperCase()]);
+
     } else {
       this.props.history.push(localisedUrl(links.notFound))
     }
