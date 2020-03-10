@@ -139,6 +139,17 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
         ...mnemonicData,
       }
     })
+    new Promise(async(resolve) => {
+      const balance = await fetchBalance(mnemonicData.address)
+      reducers.user.setAuthData({
+        name: 'btcMnemonicData',
+        data: {
+          balance,
+          isBalanceFetched: true,
+        },
+      })
+      resolve(true)
+    })
   }
 
   return privateKey

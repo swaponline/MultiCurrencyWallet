@@ -35,7 +35,15 @@ const getWalletByWords = (mnemonic, path) => {
 }
 
 
-const login = (privateKey, mnemonic) => {
+const login = (privateKey, mnemonic, mnemonicKeys) => {
+  let sweepToMnemonicReady = false
+
+  if (privateKey 
+    && mnemonic 
+    && mnemonicKeys 
+    && mnemonicKeys.eth === privateKey
+  ) sweepToMnemonicReady = true
+
   let data
 
   if (privateKey) {

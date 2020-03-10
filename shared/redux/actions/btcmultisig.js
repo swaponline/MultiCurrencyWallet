@@ -48,7 +48,7 @@ const signToUserMultisig = async () => {
       active: true,
       balance: 0,
       unconfirmedBalance: 0,
-      isBalanceFetched: true,
+      isBalanceFetched: false,
       balanceError: false,
     }
   }).filter((wallet) => wallet.address !== btcMultisigUserData.address)
@@ -65,6 +65,7 @@ const signToUserMultisig = async () => {
       reducers.user.setBtcMultisigBalance({
         address,
         amount: balance,
+        isBalanceFetched: true,
         unconfirmedBalance:0,
       })
       resolve({address, balance})
