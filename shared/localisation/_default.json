@@ -7525,5 +7525,61 @@
     "files": [
       "shared/pages/Wallet/components/BalanceForm/BalanceForm.js"
     ]
+  },
+  {
+    "id": "registerSMSModalInstCopied",
+    "message": "Скопировано",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMSModalInstCopy",
+    "message": "Скопировать",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMSModalInstDownload",
+    "message": "Скачать",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMSModalInstDownloaded",
+    "message": "Загружается",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMSModalMnemonicCopied",
+    "message": "Фраза скопирована",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMSModalMnemonicCopy",
+    "message": "Скопировать",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMSModalMnemonicGenerateNew",
+    "message": "Создать новую",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMSModalMnemonicGenerateNewGenerated",
+    "message": "Создана",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
   }
 ]

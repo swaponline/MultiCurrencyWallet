@@ -3172,7 +3172,7 @@
   },
   {
     "id": "down57",
-    "message": "It seems like you're trying to save your private keys. Just copy this keys and paste into notepad textarea. Also you can download it as a .txt file.",
+    "message": "To save your private keys just copy these keys and paste them into notepad textarea. You can also download your keys as a .txt file",
     "files": [
       "shared/components/modals/DownloadModal/DownloadModal.js"
     ]
@@ -6080,7 +6080,7 @@
   },
   {
     "id": "createWalletCaptureOthers",
-    "message": "or others",
+    "message": "or other currencies",
     "files": [
       "shared/pages/CreateWallet/Steps/texts.js"
     ]
@@ -6458,7 +6458,7 @@
   },
   {
     "id": "registerSMSModalReady",
-    "message": "Your protected wallet activated",
+    "message": "Your secured wallet is activated",
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
     ]
@@ -7136,7 +7136,7 @@
   },
   {
     "id": "registerSMSMnemonicNotice",
-    "message": "Она поможет разблокировать средства на кошельке, если сервер 2fa будет не доступен",
+    "message": "This phrase will help to unlock your assets in case 2fa server will be unavailable",
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
     ]
@@ -7161,7 +7161,7 @@
   },
   {
     "id": "registerSMSModalWords",
-    "message": "Секретная фраза (12 слов):",
+    "message": "Secret phrase (12 words):",
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
@@ -7169,14 +7169,14 @@
   },
   {
     "id": "registerSMSRestoryMnemonic",
-    "message": "Восстановить кошелек используя секретную фразу",
+    "message": "Restore your wallet with a secret phrase",
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
     ]
   },
   {
     "id": "registerSMSWordsInfoBlock",
-    "message": "Сгенерируйте секретную фразу или укажите ранее сохраненную для восстановления старого кошелька",
+    "message": "Generate a new phrase to create a wallet or type in your previously saved phrase to restore your wallet",
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
     ]
@@ -7197,14 +7197,14 @@
   },
   {
     "id": "registerSMS_MnemonicRestoreNotes",
-    "message": "Если не приходит код подтверждения или у вас нет доступа к указаному номеру телефона, вы можете восстановить кошелек используя секретную фразу",
+    "message": "If you didn’t receive your SMS code or you don’t have access to this number, you can use a secret phrase to restore your wallet",
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
     ]
   },
   {
     "id": "registerSMS_MnemonicUseNotes",
-    "message": "Используя секретную фразу, вы сможете разблокировать средства на счете",
+    "message": "By using a secret phrase you can unlock assets on your account",
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
     ]
@@ -7246,7 +7246,7 @@
   },
   {
     "id": "WithdrawSMS_MnemonicNote",
-    "message": "Если у вас нет доступа к телефону или не получается получить код, вы можете воспользовать секретной фразой",
+    "message": "If you didn’t receive your SMS code or you don’t have access to this number, you can use a secret phrase to restore your wallet",
     "files": [
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
@@ -7351,7 +7351,7 @@
   },
   {
     "id": "registerSMSModalFinishSaveThisInfo",
-    "message": "Information in case our service is unavailable",
+    "message": "Save the information below. It will help to restore your wallet in the future",
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
     ]
@@ -7536,6 +7536,62 @@
     "message": "Enter 12 words",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
+    ]
+  },
+  {
+    "id": "registerSMSModalInstCopied",
+    "message": "Copied",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMSModalInstCopy",
+    "message": "Copy",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMSModalInstDownload",
+    "message": "Download",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMSModalInstDownloaded",
+    "message": "Downloading",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMSModalMnemonicCopied",
+    "message": "Phrase copied",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMSModalMnemonicCopy",
+    "message": "Copy",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMSModalMnemonicGenerateNew",
+    "message": "Generate new phrase",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMSModalMnemonicGenerateNewGenerated",
+    "message": "Generated",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
     ]
   }
 ]
