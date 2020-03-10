@@ -249,7 +249,6 @@ export default class Wallet extends Component {
   }
 
   handleNotifyBlockClose = state => {
-    console.log('state', state)
     this.setState({
       [state]: true
     })

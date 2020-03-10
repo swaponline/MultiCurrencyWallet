@@ -8,6 +8,8 @@ import Slider from './components/WallerSlider'
 import Table from 'components/tables/Table/Table'
 import config from 'app-config'
 import { FormattedMessage } from 'react-intl'
+import exConfig from 'helpers/externalConfig'
+
 
 const CurrenciesList = ({
   tableRows,
@@ -28,7 +30,7 @@ const CurrenciesList = ({
 
   return (
     <div styleName="yourAssets">
-      {banners ? (
+      {banners && (exConfig && exConfig.opts && exConfig.opts.showWalletBanners)  ? (
         <Fragment>
           <h3 styleName="yourAssetsHeading">
             <FormattedMessage id="ForYou" defaultMessage="For you" />

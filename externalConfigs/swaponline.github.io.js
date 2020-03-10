@@ -29,6 +29,12 @@ window.buildOptions = {
     eth: true,
     //ltc: true,
   },
+  showWalletBanners: true, // Allow to see banners
   invoiceEnabled: false, // Allow create invoices
 }
 */
+
+
+window.buildOptions = {
+  showWalletBanners: true, // Allow to see banners
+}
