@@ -415,9 +415,9 @@ export default class RegisterSMSProtected extends React.Component {
                 <div styleName='mnemonicButtonsHolder'>
                   <Button blue fullWidth disabled={isMnemonicGenerated} onClick={this.handleGenerateMnemonic}>
                     {isMnemonicGenerated ? (
-                      <FormattedMessage id='registerSMSModalMnemonicGenerateNewGenerated' id='Создана'/>
+                      <FormattedMessage id='registerSMSModalMnemonicGenerateNewGenerated' defaultMessage='Создана'/>
                     ) : (
-                      <FormattedMessage id='registerSMSModalMnemonicGenerateNew' id='Создать новую'/>
+                      <FormattedMessage id="registerSMSModalMnemonicGenerateNew" defaultMessage="Создать новую" />
                     )}
                   </Button>
                   <CopyToClipboard
@@ -426,9 +426,9 @@ export default class RegisterSMSProtected extends React.Component {
                   >
                     <Button blue fullWidth disabled={isMnemonicCopied} onClick={this.handleCopyMnemonic}>
                       {isMnemonicCopied ? (
-                        <FormattedMessage id='registerSMSModalMnemonicCopied' id='Фраза скопирована' />
+                        <FormattedMessage id='registerSMSModalMnemonicCopied' defaultMessage='Фраза скопирована' />
                       ) : (
-                        <FormattedMessage id='registerSMSModalMnemonicCopy' id='Скопировать' />
+                        <FormattedMessage id='registerSMSModalMnemonicCopy' defaultMessage='Скопировать' />
                       )}
                     </Button>
                   </CopyToClipboard>
@@ -574,17 +574,17 @@ export default class RegisterSMSProtected extends React.Component {
                   >
                     <Button blue disabled={isInstructionCopied} onClick={this.handleCopyInstruction}>
                       {isInstructionCopied ? (
-                        <FormattedMessage id='registerSMSModalInstCopied' id='Скопировано' />
+                        <FormattedMessage id='registerSMSModalInstCopied' defaultMessage='Скопировано' />
                       ) : (
-                        <FormattedMessage id='registerSMSModalInstCopy' id='Скопировать' />
+                        <FormattedMessage id='registerSMSModalInstCopy' defaultMessage='Скопировать' />
                       )}
                     </Button>
                   </CopyToClipboard>
                   <Button blue disabled={isInstructionDownloaded} onClick={this.handleDownloadInstruction}>
                     {isInstructionDownloaded ? (
-                      <FormattedMessage id='registerSMSModalInstDownloaded' id='Загружается' />
+                      <FormattedMessage id='registerSMSModalInstDownloaded' defaultMessage='Загружается' />
                     ) : (
-                      <FormattedMessage id='registerSMSModalInstDownload' id='Скачать' />
+                      <FormattedMessage id='registerSMSModalInstDownload' defaultMessage='Скачать' />
                     )}
                   </Button>
                   <Button blue onClick={this.handleShareInstruction}>
