@@ -11,7 +11,8 @@ import reducers from 'redux/core/reducers'
 import { btc, apiLooper, constants, api } from 'helpers'
 import { Keychain } from 'keychain.js'
 import actions from 'redux/actions'
-import typeforce from "swap.app/util/typeforce";
+import typeforce from "swap.app/util/typeforce"
+import config from 'app-config'
 
 
 const getRandomMnemonicWords = () => bip39.generateMnemonic()
