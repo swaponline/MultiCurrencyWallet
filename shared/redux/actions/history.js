@@ -17,10 +17,14 @@ const setTransactions = async (address, type) => {
   try {
     const currencyTxs = await Promise.all([
       actions[reducer].getTransaction(address, type),
-      actions.invoices.getInvoices({
-        currency: type,
-        address,
-      })
+      (
+        actions.user.isOwner(address, type) ? 
+          actions.invoices.getInvoices({
+            currency: type,
+            address,
+          }) :
+          new Promise((resolve) => resolve([]))
+      ),
       // actions.btc.getInvoices(),
     ])
     pullTransactions([...currencyTxs])
