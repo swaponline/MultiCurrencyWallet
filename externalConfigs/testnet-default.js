@@ -1,4 +1,5 @@
 // mainnet-localhost
+
 /*
 window.widgetERC20Tokens = {
   usdt: {
@@ -29,6 +30,8 @@ window.buildOptions = {
     eth: true,
     //ltc: true,
   },
+  showWalletBanners: true, // Allow to see banners
   invoiceEnabled: false, // Allow create invoices
 }
+
 */
