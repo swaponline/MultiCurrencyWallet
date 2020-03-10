@@ -104,9 +104,11 @@ function BalanceForm({
               </Button>
             )}
           </Fragment>
-        ) : <Button blue disabled={!currencyBalance} styleName="button__invoice" onClick={() => handleInvoice()}>
-              <FormattedMessage id="RequestPayment" defaultMessage="Отправить запрос" />
-            </Button>}
+        ) : (
+          <Button blue disabled={!currencyBalance} styleName="button__invoice" onClick={() => handleInvoice()}>
+            <FormattedMessage id="RequestPayment" defaultMessage="Запросить" />
+          </Button>
+        )}
       </div>
     </div>
   )
