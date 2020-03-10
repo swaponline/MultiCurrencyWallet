@@ -152,6 +152,7 @@ export default class WithdrawModal extends React.Component {
       data: { unconfirmedBalance }
     } = this.props;
 
+    // @ToDo - balance...
     const balance = await actions[currency.toLowerCase()].getBalance(currency.toLowerCase());
 
     const finalBalance =
@@ -200,7 +201,8 @@ export default class WithdrawModal extends React.Component {
     if (helpers.ethToken.isEthToken({ name: currency.toLowerCase() })) {
       sendOptions = {
         ...sendOptions,
-        name: currency.toLowerCase()
+        name: currency.toLowerCase(),
+        // from: address, // Need check eth
       };
     } else {
       sendOptions = {

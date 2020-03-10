@@ -68,6 +68,24 @@ const auth = (privateKey) => {
   }
 }
 
+const getPrivateKeyByAddress = (address) => {
+  const {
+    user: {
+      btcData: {
+        address: oldAddress,
+        privateKey,
+      },
+      btcMnemonicData: {
+        address: mnemonicAddress,
+        privateKey: mnemonicKey,
+      }
+    },
+  } = getState()
+
+  if (oldAddress === address) return privateKey
+  if (mnemonicAddress === address) return mnemonicKey
+}
+
 const login = (privateKey, mnemonic, mnemonicKeys) => {
   let sweepToMnemonicReady = false
 
@@ -321,16 +339,27 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
     tx.addOutput(from, skipValue)
   }
 
-  const keychainActivated = !!localStorage.getItem(constants.privateKeyNames.btcKeychainPublicKey)
-  const txRaw = keychainActivated ? await signAndBuildKeychain(tx, unspents) : signAndBuild(tx)
+  // @ToDo keychain ....
+
+  // const keychainActivated = !!localStorage.getItem(constants.privateKeyNames.btcKeychainPublicKey)
+  // const txRaw = keychainActivated ? await signAndBuildKeychain(tx, unspents) : signAndBuild(tx)
+  const txRaw = signAndBuild(tx, from)
 
   await broadcastTx(txRaw.toHex())
 
   return txRaw
 }
 
-const signAndBuild = (transactionBuilder) => {
-  const { user: { btcData: { privateKey } } } = getState()
+const signAndBuild = (transactionBuilder, address) => {
+  let { user: { btcData: { privateKey } } } = getState()
+
+  if (address) {
+    // multi wallet - sweep upgrade
+    privateKey = getPrivateKeyByAddress(address)
+  } else {
+    // single wallet - use btcData
+  }
+
   const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
 
   transactionBuilder.__INPUTS.forEach((input, index) => {
