@@ -46,10 +46,6 @@ export default class WallerSlider extends Component {
       onClose: () => {
         const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
         const mnemonicDeleted = mnemonic === '-'
-        if (mnemonicDeleted) {
-          const { handleNotifyBlockClose } = this.props
-          handleNotifyBlockClose()
-        }
         this.setState({
           mnemonicDeleted
         })
@@ -63,7 +59,6 @@ export default class WallerSlider extends Component {
 
   render() {
     const { banners } = this.props
-
     const { mnemonicDeleted } = this.state
 
     const isPrivateKeysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
