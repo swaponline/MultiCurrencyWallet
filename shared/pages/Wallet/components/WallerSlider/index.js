@@ -27,7 +27,7 @@ export default class WallerSlider extends Component {
   }
 
   componentDidMount() {
-    var starterSwiper = new Swiper('.swiper-container', {
+    var starterSwiper = new Swiper('.swiper-banner-container', {
       slidesPerView: 4,
       spaceBetween: 10
     })
@@ -68,7 +68,7 @@ export default class WallerSlider extends Component {
 
     return isWidgetBuild ? null : (
       <Fragment>
-        <div className="swiper-container" style={{ marginTop: '20px', marginBottom: '40px' }}>
+        <div className="swiper-banner-container" style={{ marginTop: '20px', marginBottom: '40px' }}>
           <div className="swiper-wrapper">
             {!isPrivateKeysSaved && (
               <div className="swiper-slide">
