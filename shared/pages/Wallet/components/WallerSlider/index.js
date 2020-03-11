@@ -85,7 +85,7 @@ export default class WallerSlider extends Component {
             {banners &&
               banners.map(banner => (
                 <div className="swiper-slide">
-                  <NotifyBlock background={`${banner[3]}`} descr={banner[2]} link={banner[4]} />
+                  <NotifyBlock background={`${banner[3]}`} descr={banner[2]} link={banner[4]} icon={banner[5]} />
                 </div>
               ))}
           </div>

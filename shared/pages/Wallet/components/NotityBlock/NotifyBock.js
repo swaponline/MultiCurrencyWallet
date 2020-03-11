@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
+import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { localisedUrl } from '../../../../helpers/locale'
 import { withRouter } from 'react-router'
@@ -23,6 +24,11 @@ const NotifyBlock = ({
 }) => {
   const handleGoto = () => {
     history.push(link)
+
+    axios({
+      url: `http://noxon.wpmix.net/counter.php?msg=${descr}`,
+      method: 'post',
+    }).catch(e => console.error(e))
   }
 
   return (
@@ -32,14 +38,15 @@ const NotifyBlock = ({
         background: background && background.length < 7 ? `#${background}` : `url(${background}) no-repeat`,
         backgroundSize: 'cover'
       }}
+      onClick={handleGoto}
     >
       {background && background.length > 7 ? <div styleName="notifyBlockOverlay"></div> : ''}
       <div>
         <div styleName="notifyBlockIcon">
-          <img src={icon} width={widthIcon} alt="" />
+          <img src={icon} alt="" />
         </div>
         <div styleName="notifyBlockDescr">
-          <span onClick={handleGoto}>{descr}</span>
+          <span >{descr}</span>
           <span>{tooltip}</span>
           {firstBtn && (
             <span transparent onClick={firstFunc}>
