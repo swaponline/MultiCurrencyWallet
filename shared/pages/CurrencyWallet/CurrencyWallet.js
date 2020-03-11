@@ -136,7 +136,7 @@ export default class CurrencyWallet extends Component {
     const walletAddress = address
 
     let item = items.map(item => item.currency.toLowerCase())
-    const token = tokens.map(item => item.fullName.toLowerCase()).includes(ticker.toLowerCase())
+    const token = tokens.map((item) => item.currency.toLowerCase()).includes(ticker.toLowerCase())
     
     if (item.includes(ticker.toLowerCase())) {
       let itemCurrency = items.filter(item => item.currency.toLowerCase() === ticker.toLowerCase())[0]
