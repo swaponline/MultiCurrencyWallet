@@ -20,6 +20,24 @@ const sweepToMnemonic = (mnemonic, path) => {
   return wallet.privateKey
 }
 
+const getPrivateKeyByAddress = (address) => {
+  const {
+    user: {
+      ethData: {
+        address: oldAddress,
+        privateKey,
+      },
+      ethMnemonicData: {
+        address: mnemonicAddress,
+        privateKey: mnemonicKey,
+      }
+    },
+  } = getState()
+
+  if (oldAddress === address) return privateKey
+  if (mnemonicAddress === address) return mnemonicKey
+}
+
 const getWalletByWords = (mnemonic, path) => {
   const seed = bip39.mnemonicToSeedSync(mnemonic)
   const hdwallet = hdkey.fromMasterSeed(seed);
@@ -63,6 +81,8 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
   localStorage.setItem(constants.privateKeyNames.eth, data.privateKey)
 
   web3.eth.accounts.wallet.add(data.privateKey)
+  data.isMnemonic = sweepToMnemonicReady
+
   reducers.user.setAuthData({ name: 'ethData', data })
 
   window.getEthAddress = () => data.address
@@ -230,9 +250,10 @@ const getTransaction = (address) =>
       })
   })
 
-const send = ({ to, amount, gasPrice, gasLimit, speed } = {}) =>
+const send = ({ from, to, amount, gasPrice, gasLimit, speed } = {}) =>
   new Promise(async (resolve, reject) => {
-    const { user: { ethData: { privateKey } } } = getState()
+    //const { user: { ethData: { privateKey } } } = getState()
+    const privateKey = getPrivateKeyByAddress(from)
 
     gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
     gasLimit = gasLimit || constants.defaultFeeRates.eth.limit.send

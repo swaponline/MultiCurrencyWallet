@@ -110,7 +110,7 @@ const getBalances = () => {
   actions.btc.getBalance()
   actions.btcmultisig.getBalance() // SMS-Protected
   actions.btcmultisig.getBalanceUser() //Other user confirm
-  actions.bch.getBalance()
+  // actions.bch.getBalance()
   actions.ltc.getBalance()
   // actions.usdt.getBalance()
   // actions.qtum.getBalance()

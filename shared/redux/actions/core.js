@@ -342,14 +342,14 @@ const getWallets = () => {
 
 
   const allData = [
-    ... (btcMnemonicData) ? [btcMnemonicData] : [], // Sweep
-    ... (ethMnemonicData) ? [ethMnemonicData] : [], // Sweep
+    ... (btcMnemonicData && !btcData.isMnemonic) ? [btcMnemonicData] : [], // Sweep
+    ... (ethMnemonicData && !ethData.isMnemonic) ? [ethMnemonicData] : [], // Sweep
     btcData,
     btcMultisigSMSData,
     btcMultisigUserData,
     ...btcMultisigUserData.wallets,
     ethData,
-    bchData,
+    ... (bchData) ? [bchData] : [],
     ltcData,
     ...Object.keys(tokensData).map(k => tokensData[k])
   ].map(({ account, keyPair, ...data }) => ({

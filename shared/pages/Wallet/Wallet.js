@@ -80,11 +80,10 @@ const walletNav = [
       btcData,
       btcMultisigSMSData,
       btcMultisigUserData,
-      btcMultisigUserDataList,
       ethData,
-      bchData,
+      // bchData,
       ltcData,
-      //qtumData,
+      // qtumData,
       // xlmData,
       // usdtOmniData,
       ...Object.keys(tokensData).map(k => tokensData[k])
@@ -102,7 +101,7 @@ const walletNav = [
           btcData,
           btcMultisigSMSData,
           btcMultisigUserData,
-          bchData,
+          // bchData,
           ethData,
           ltcData
           // qtumData,
@@ -116,7 +115,7 @@ const walletNav = [
       btcData,
       btcMultisigSMSData,
       btcMultisigUserData,
-      bchData,
+      // bchData,
       ethData,
       ltcData
       // qtumData,
@@ -147,7 +146,7 @@ const walletNav = [
         btcMultisigSMSData,
         btcMultisigUserData,
         btcMultisigUserDataList,
-        bchData,
+        // bchData,
         ltcData
         // qtumData,
         // usdtOmniData,
@@ -303,6 +302,7 @@ export default class Wallet extends Component {
   }
 
   handleModalOpen = context => {
+    /*
     const { enabledCurrencies } = this.state
     const { items, tokensData, tokensItems, tokens, hiddenCoinsList } = this.props
 
@@ -315,6 +315,8 @@ export default class Wallet extends Component {
     const currencies = tableRows.map(currency => {
       return currencyTokenData.find(item => item.currency === currency)
     })
+    */
+    const currencies = actions.core.getWallets()
 
     actions.modals.open(constants.modals.CurrencyAction, {
       currencies,
@@ -336,11 +338,11 @@ export default class Wallet extends Component {
     const balancesData = {
       ethBalance: ethData.balance,
       btcBalance: btcData.balance,
-      bchBalance: bchData.balance,
+      // bchBalance: bchData.balance,
       ltcBalance: ltcData.balance,
       ethAddress: ethData.address,
       btcAddress: btcData.address,
-      bchAddress: bchData.address,
+      // bchAddress: bchData.address,
       ltcAddress: ltcData.address
     }
 
