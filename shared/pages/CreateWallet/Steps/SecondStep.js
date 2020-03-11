@@ -73,7 +73,11 @@ const CreateWallet = (props) => {
 
   const thisComponentInitHelper = useRef(true)
 
-  const [isFingerpringFeatureAsked, setFingerprintFeatureAsked] = useState(false)
+  const [isFingerprintFeatureAsked, setFingerprintFeatureAsked] = useState(false)
+  const [isTrivialFeatureAsked, setTrivialFeatureAsked] = useState(false)
+  const [isSmsFeatureAsked, setSmsFeatureAsked] = useState(false)
+  const [is2FAFeatureAsked, set2FAFeatureAsked] = useState(false)
+  const [isMultisigFeatureAsked, setMultisigFeatureAsked] = useState(false)
 
   useEffect(() => {
     // eslint-disable-next-line no-undef
@@ -89,6 +93,17 @@ const CreateWallet = (props) => {
         .catch(e => console.error(e))
     }
   })
+
+  const handleFinish = () => {
+    if (currencies.BTC) {
+      axios({
+        // eslint-disable-next-line max-len
+        url: 'https://noxon.wpmix.net/counter.php?msg=%D0%BD%D0%B0%D1%87%D0%B0%D0%BB%D0%B8%20%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%20%D0%BA%D0%BE%D1%88%D0%B5%D0%BB%D1%8C%D0%BA%D0%B0%20BTC%20swaponline.io',
+        method: 'post',
+      }).catch(e => console.error(e))
+    }
+    onClick()
+  }
 
   const handleClick = (index, el) => {
     const { name, enabled, activated } = el
@@ -109,6 +124,8 @@ const CreateWallet = (props) => {
     setError(null)
   }
 
+  const currencyName = Object.keys(currencies)[0] || 'Cant define currency'
+
   console.log('locale', locale)
   const coins = [
     {
@@ -117,6 +134,17 @@ const CreateWallet = (props) => {
       capture: locale === 'en' ? 'suitable for small amounts' : 'Подходит для небольших сумм',
       enabled: true,
       activated: false,
+      onClickHandler: () => {
+        if (isTrivialFeatureAsked) {
+          return null
+        }
+        setTrivialFeatureAsked(true)
+        return axios({
+          // eslint-disable-next-line max-len
+          url: `https://noxon.wpmix.net/counter.php?msg=%D1%85%D0%BE%D1%82%D1%8F%D1%82%20%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C%20${currencyName}-normal%20%D0%BA%D0%BE%D1%88%D0%B5%D0%BB%D1%8C%20swaponline.io`,
+          method: 'post',
+        }).catch(e => console.error(e))
+      },
     },
     {
       text: 'SMS',
@@ -124,6 +152,17 @@ const CreateWallet = (props) => {
       capture: locale === 'en' ? 'Verify your transactions via SMS code' : 'Транзакции подтверждаются кодом по SMS',
       enabled: _protection.sms.btc /* || _protection.sms.eth || _protection.sms.erc */,
       activated: _activated.sms.btc /* || _activated.sms.eth || _activated.sms.erc */,
+      onClickHandler: () => {
+        if (isSmsFeatureAsked) {
+          return null
+        }
+        setSmsFeatureAsked(true)
+        return axios({
+          // eslint-disable-next-line max-len
+          url: `https://noxon.wpmix.net/counter.php?msg=%D1%85%D0%BE%D1%82%D1%8F%D1%82%20%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C%20${currencyName}-sms%20%D0%BA%D0%BE%D1%88%D0%B5%D0%BB%D1%8C%20swaponline.io`,
+          method: 'post',
+        }).catch(e => console.error(e))
+      },
     },
     {
       text: 'Google 2FA',
@@ -133,6 +172,17 @@ const CreateWallet = (props) => {
         'Транзакции подтверждаются через приложение Google Authenticator',
       enabled: _protection.g2fa.btc /* || _protection.g2fa.eth || _protection.g2fa.erc */,
       activated: _activated.g2fa.btc,
+      onClickHandler: () => {
+        if (is2FAFeatureAsked) {
+          return null
+        }
+        set2FAFeatureAsked(true)
+        return axios({
+          // eslint-disable-next-line max-len
+          url: `https://noxon.wpmix.net/counter.php?msg=%D1%85%D0%BE%D1%82%D1%8F%D1%82%20%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C%20${currencyName}-2fa%20%D0%BA%D0%BE%D1%88%D0%B5%D0%BB%D1%8C%20swaponline.io`,
+          method: 'post',
+        }).catch(e => console.error(e))
+      },
     },
     {
       text: 'Multisignature',
@@ -142,6 +192,17 @@ const CreateWallet = (props) => {
         'Транзакции подтверждаются с другого устройства и/или другим человеком',
       enabled: _protection.multisign.btc,
       activated: _activated.multisign.btc,
+      onClickHandler: () => {
+        if (isMultisigFeatureAsked) {
+          return null
+        }
+        setMultisigFeatureAsked(true)
+        return axios({
+          // eslint-disable-next-line max-len
+          url: `https://noxon.wpmix.net/counter.php?msg=%D1%85%D0%BE%D1%82%D1%8F%D1%82%20%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C%20${currencyName}-multisig%20%D0%BA%D0%BE%D1%88%D0%B5%D0%BB%D1%8C%20swaponline.io`,
+          method: 'post',
+        }).catch(e => console.error(e))
+      },
     },
   ]
 
@@ -155,15 +216,15 @@ const CreateWallet = (props) => {
       enabled: _protection.fingerprint.btc,
       activated: _activated.fingerprint.btc,
       onClickHandler: () => {
-        if (isFingerpringFeatureAsked) {
+        if (isFingerprintFeatureAsked) {
           return null
         }
         setFingerprintFeatureAsked(true)
         return axios({
           // eslint-disable-next-line max-len
-          url: 'https://noxon.wpmix.net/counter.php?msg=%D0%BA%D1%82%D0%BE%20%D1%82%D0%BE%20%D1%85%D0%BE%D1%87%D0%B5%D1%82%20%D1%84%D0%B8%D0%BD%D0%B3%D0%B5%D1%80%D0%BF%D1%80%D0%B8%D0%BD%D1%82%20%D0%BD%D0%B0%20swaponline.io',
+          url: `https://noxon.wpmix.net/counter.php?msg=%D0%BA%D1%82%D0%BE%20%D1%82%D0%BE%20%D1%85%D0%BE%D1%87%D0%B5%D1%82%20${currencyName}-fingerprint%20%D0%BD%D0%B0%20swaponline.io`,
           method: 'post',
-        })
+        }).catch(e => console.error(e))
       },
     })
   }
@@ -231,7 +292,7 @@ const CreateWallet = (props) => {
             })}
           </div>
         </div>
-        <button styleName="continue" onClick={onClick} disabled={error || border.selected === ''}>
+        <button styleName="continue" onClick={handleFinish} disabled={error || border.selected === ''}>
           <FormattedMessage id="createWalletButton3" defaultMessage="Create Wallet" />
         </button>
       </div>
