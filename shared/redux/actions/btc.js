@@ -158,14 +158,18 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
       }
     })
     new Promise(async(resolve) => {
-      const balance = await fetchBalance(mnemonicData.address)
-      reducers.user.setAuthData({
-        name: 'btcMnemonicData',
-        data: {
-          balance,
-          isBalanceFetched: true,
-        },
-      })
+      const balanceData = await fetchBalanceStatus(mnemonicData.address)
+      if (balanceData) {
+        reducers.user.setAuthData({
+          name: 'btcMnemonicData',
+          data: {
+            ...balanceData,
+            isBalanceFetched: true,
+          },
+        })
+      } else {
+        reducers.user.setBalanceError({ name: 'btcMnemonicData' })
+      }
       resolve(true)
     })
   }
@@ -208,6 +212,25 @@ const getLinkToInfo = (tx) => {
   return `${config.link.bitpay}/tx/${tx}`
 }
 
+const fetchBalanceStatus = (address) => {
+  return apiLooper.get('bitpay', `/addr/${address}`, {
+    checkStatus: (answer) => {
+      try {
+        if (answer && answer.balance !== undefined) return true
+      } catch (e) { /* */ }
+      return false
+    },
+  }).then(({ balance, unconfirmedBalance }) => {
+      return {
+        address,
+        balance,
+        unconfirmedBalance,
+      }
+    })
+    .catch((e) => {
+      return false
+    })
+}
 const getBalance = () => {
   const { user: { btcData: { address } } } = getState()
 
