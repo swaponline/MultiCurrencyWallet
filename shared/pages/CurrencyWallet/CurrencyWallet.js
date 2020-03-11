@@ -8,7 +8,6 @@ import { Link, withRouter } from 'react-router-dom'
 import { links, constants, ethToken } from 'helpers'
 import { getTokenWallet, getBitcoinWallet, getEtherWallet } from 'helpers/links'
 
-import {aliases} from 'helpers/links'
 
 import CSSModules from 'react-css-modules'
 import styles from './CurrencyWallet.scss'

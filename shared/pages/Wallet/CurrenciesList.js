@@ -27,7 +27,7 @@ const CurrenciesList = ({
     autoplaySpeed: 6000,
     slidesToShow: 4
   }
-
+   
   return (
     <div styleName="yourAssets">
       {banners && (exConfig && exConfig.opts && exConfig.opts.showWalletBanners)  ? (
