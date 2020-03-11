@@ -292,6 +292,52 @@ const getInvoices = () => {
   })
 }
 
+const getAllMyAddresses = (address) => {
+  const {
+    user: {
+      btcData,
+      btcMnemonicData,
+      btcMultisigSMSData,
+      btcMultisigUserData,
+      btcMultisigG2FAData,
+    },
+  } = getState()
+
+  const retData = []
+  // Проверяем, был ли sweep
+  if (btcMnemonicData
+    && btcMnemonicData.address
+    && btcData
+    && btcData.address
+    && btcMnemonicData.address !== btcData.address
+  ) {
+    retData.push(btcMnemonicData.address)
+  }
+
+  retData.push(btcData.address)
+
+  if (btcMultisigSMSData && btcMultisigSMSData.address) retData.push(btcMultisigSMSData.address)
+  if (btcMultisigUserData && btcMultisigUserData.address) retData.push(btcMultisigUserData.address)
+  if (btcMultisigUserData && btcMultisigUserData.wallets && btcMultisigUserData.wallets.length) {
+    btcMultisigUserData.wallets.map((wallet) => {
+      retData.push(wallet.address)
+    })
+  }
+
+  if (btcMultisigSMSData && btcMultisigSMSData.address) {
+    retData.push(btcMultisigSMSData.address)
+  }
+  // @ToDo - add btcMultisigG2FAData process
+  /*
+  if (btcData && btcData.address && btcData.address.toLowerCase() === address.toLowerCase()) return btcData
+  if (btcMnemonicData && btcMnemonicData.address && btcMnemonicData.address.toLowerCase() === address.toLowerCase()) return btcMnemonicData // Sweep
+  if (btcMultisigSMSData && btcMultisigSMSData.address && btcMultisigSMSData.address.toLowerCase() === address.toLowerCase()) return btcMultisigSMSData
+  if (btcMultisigUserData && btcMultisigUserData.address && btcMultisigUserData.address.toLowerCase() === address.toLowerCase()) return btcMultisigUserData
+  if (btcMultisigG2FAData && btcMultisigG2FAData.address && btcMultisigG2FAData.address.toLowerCase() === address.toLowerCase()) return btcMultisigG2FAData
+*/
+  return retData
+}
+
 const getTransaction = (address, ownType) =>
   new Promise((resolve) => {
     let { user: { btcData: { address : userAddress } } } = getState()
