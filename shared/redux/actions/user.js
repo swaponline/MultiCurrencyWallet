@@ -170,22 +170,57 @@ const getInfoAboutCurrency = (currencyNames) =>
 
     request.get(url, {
       cacheResponse: 60*60*1000, // кеш 1 час
-    }).then((data) => {
-      data.map(currencyInfoItem => {
+    }).then((answer) => {
+      let infoAboutBTC = answer.data.filter( currencyInfo => {
+        if (currencyInfo.symbol.toLowerCase() === 'btc') return true
+      })
+      const btcPrice = (
+        infoAboutBTC
+        && infoAboutBTC.length
+        && infoAboutBTC[0].quote
+        && infoAboutBTC[0].quote.USD
+        && infoAboutBTC[0].quote.USD.price
+      ) ? infoAboutBTC[0].quote.USD.price : 7000 
+
+      answer.data.map(currencyInfoItem => {
         if (currencyNames.includes(currencyInfoItem.symbol)) {
-          switch(currencyInfoItem.symbol) {
-            case 'BTC': {
-              reducers.user.setInfoAboutCurrency({name: 'btcData', infoAboutCurrency: currencyInfoItem})
-              reducers.user.setInfoAboutCurrency({name: 'btcMultisigSMSData', infoAboutCurrency: currencyInfoItem})
-              reducers.user.setInfoAboutCurrency({name: 'btcMultisigUserData', infoAboutCurrency: currencyInfoItem})
-              reducers.user.setInfoAboutCurrency({name: 'btcMultisigG2FAData', infoAboutCurrency: currencyInfoItem})
-              break;
+          if (currencyInfoItem.quote && currencyInfoItem.quote.USD) {
+            const priceInBtc = currencyInfoItem.quote.USD.price / btcPrice
+            const currencyInfo = {
+              ... currencyInfoItem.quote.USD,
+              price_usd: currencyInfoItem.quote.USD.price,
+              price_btc: priceInBtc,
             }
-            default: reducers.user.setInfoAboutCurrency({name: `${currencyInfoItem.symbol.toLowerCase()}Data`, infoAboutCurrency: currencyInfoItem})
+
+            switch(currencyInfoItem.symbol) {
+              case 'BTC': {
+                reducers.user.setInfoAboutCurrency({name: 'btcData', infoAboutCurrency: currencyInfo})
+                reducers.user.setInfoAboutCurrency({name: 'btcMnemonicData', infoAboutCurrency: currencyInfo}) // Sweep (for future)
+                reducers.user.setInfoAboutCurrency({name: 'btcMultisigSMSData', infoAboutCurrency: currencyInfo})
+                reducers.user.setInfoAboutCurrency({name: 'btcMultisigUserData', infoAboutCurrency: currencyInfo})
+                reducers.user.setInfoAboutCurrency({name: 'btcMultisigG2FAData', infoAboutCurrency: currencyInfo})
+                break;
+              }
+              case 'ETH': {
+                reducers.user.setInfoAboutCurrency({name: 'ethData', infoAboutCurrency: currencyInfo})
+                reducers.user.setInfoAboutCurrency({name: 'ethMnemonicData', infoAboutCurrency: currencyInfo}) // Sweep (for future)
+                break;
+              }
+              case 'LTC': {
+                reducers.user.setInfoAboutCurrency({name: 'ltcData', infoAboutCurrency: currencyInfo})
+                reducers.user.setInfoAboutCurrency({name: 'ltcMnemonicData', infoAboutCurrency: currencyInfo}) // Sweep (for future)
+                break;
+              }
+              case 'BCH': {
+                reducers.user.setInfoAboutCurrency({name: 'bchData', infoAboutCurrency: currencyInfo})
+                reducers.user.setInfoAboutCurrency({name: 'bchMnemonicData', infoAboutCurrency: currencyInfo}) // Sweep (for future)
+                break;
+              }
+              default: reducers.user.setInfoAboutCurrency({name: `${currencyInfoItem.symbol.toLowerCase()}Data`, infoAboutCurrency: currencyInfo})
+            }
           }
         }
       })
-     
       resolve(true);
     }).catch((error) => {
       reject(error)
