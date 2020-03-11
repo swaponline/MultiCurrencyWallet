@@ -400,6 +400,7 @@ export default class Row extends Component {
     }
 
     const isToken = helpers.ethToken.isEthToken({ name: currency })
+    console.log(localisedUrl(locale, (isToken ? '/token' : '') +`/${targetCurrency}/${address}`))
     
     history.push(localisedUrl(locale, (isToken ? '/token' : '') +`/${targetCurrency}/${address}`))
   }

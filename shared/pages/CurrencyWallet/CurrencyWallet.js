@@ -8,7 +8,6 @@ import { Link, withRouter } from 'react-router-dom'
 import { links, constants, ethToken } from 'helpers'
 import { getTokenWallet, getBitcoinWallet, getEtherWallet } from 'helpers/links'
 
-import {aliases} from 'helpers/links'
 
 import CSSModules from 'react-css-modules'
 import styles from './CurrencyWallet.scss'
@@ -136,18 +135,12 @@ export default class CurrencyWallet extends Component {
 
     const walletAddress = address
 
-    // оставляю запасной вариант для старых ссылок
-    if(fullName) {
-      ticker = fullName
-    }
+    let item = items.map(item => item.currency.toLowerCase())
+    const token = tokens.map(item => item.fullName.toLowerCase()).includes(ticker.toLowerCase())
     
-    const fullNameCheck = aliases[ticker.toLowerCase()] ? aliases[ticker.toLowerCase()] : ticker.toLowerCase()
-    let item = items.map(item => item.fullName.toLowerCase())
-    const token = tokens.map(item => item.fullName.toLowerCase()).includes(fullNameCheck.toLowerCase())
-
-    if (item.includes(fullNameCheck.toLowerCase())) {
-      let itemCurrency = items.filter(item => item.fullName.toLowerCase() === fullNameCheck.toLowerCase())[0]
-
+    if (item.includes(ticker.toLowerCase())) {
+      let itemCurrency = items.filter(item => item.currency.toLowerCase() === ticker.toLowerCase())[0]
+      
       if (actions.btcmultisig.isBTCSMSAddress(walletAddress)) {
         itemCurrency = items.filter(item => item.fullName.toLowerCase() === 'bitcoin (sms-protected)')
         if (!itemCurrency.length) {

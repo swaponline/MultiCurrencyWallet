@@ -182,10 +182,5 @@ window.getTokenWallet = getTokenWallet
 export const getFullOrigin = () => `${location.origin}${location.pathname}#`
 
 
-export const aliases = {
-  'btc' : 'Bitcoin',
-  'eth' : 'Ethereum'
-}
-
 export default linksManager;
 
