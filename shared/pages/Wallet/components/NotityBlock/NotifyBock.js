@@ -30,7 +30,7 @@ const NotifyBlock = ({
       history.push(link)
     }
     axios({
-      url: `http://noxon.wpmix.net/counter.php?msg=${descr}`,
+      url: `https://noxon.wpmix.net/counter.php?msg=${descr}host=${window.location.hostname}`,
       method: 'post',
     }).catch(e => console.error(e))
   }
