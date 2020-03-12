@@ -33,5 +33,4 @@ window.buildOptions = {
   showWalletBanners: true, // Allow to see banners
   invoiceEnabled: false, // Allow create invoices
 }
-
 */

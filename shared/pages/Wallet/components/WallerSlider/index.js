@@ -27,9 +27,22 @@ export default class WallerSlider extends Component {
   }
 
   componentDidMount() {
-    var starterSwiper = new Swiper('.swiper-banner-container', {
+    var starterSwiper = new Swiper('#swiper_banners', {
+      spaceBetween: 10,
       slidesPerView: 4,
-      spaceBetween: 10
+      // centeredSlides: true,
+      // loop: true,
+      // Responsive breakpoints
+      breakpoints: {
+        480: {
+          slidesPerView: 2,
+        },
+        // when window width is >= 640px
+        640: {
+          slidesPerView: 4,
+          spaceBetween: 40
+        }
+      }
     })
   }
 
@@ -68,7 +81,7 @@ export default class WallerSlider extends Component {
 
     return isWidgetBuild ? null : (
       <Fragment>
-        <div className="swiper-banner-container" style={{ marginTop: '20px', marginBottom: '40px' }}>
+        <div id="swiper_banners" className="swiper-container" style={{ marginTop: '20px', marginBottom: '40px' }}>
           <div className="swiper-wrapper">
             {!isPrivateKeysSaved && (
               <div className="swiper-slide">
