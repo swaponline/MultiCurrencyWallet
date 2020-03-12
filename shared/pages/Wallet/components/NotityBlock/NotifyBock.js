@@ -23,8 +23,12 @@ const NotifyBlock = ({
   history
 }) => {
   const handleGoto = () => {
-    history.push(link)
-    alert('go')
+    console.log('link', link)
+    if(link.includes('http')) {
+      window.location = link;
+    } else {
+      history.push(link)
+    }
     axios({
       url: `http://noxon.wpmix.net/counter.php?msg=${descr}`,
       method: 'post',
