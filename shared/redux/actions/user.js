@@ -27,6 +27,18 @@ const sign = async () => {
     if (!mnemonicKeys.btc) mnemonicKeys.btc = actions.btc.sweepToMnemonic(mnemonic)
     if (!mnemonicKeys.eth) mnemonicKeys.eth = actions.eth.sweepToMnemonic(mnemonic)
   }
+  // Sweep-Switch
+  let btcNewSmsMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKeyMnemonic)
+  try { btcNewSmsMnemonicKey = JSON.parse( btcNewSmsMnemonicKey ) } catch (e) {}
+  if (!(btcNewSmsMnemonicKey instanceof Array)) {
+    localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyMnemonic, JSON.stringify([]))
+  }
+
+  let btcNewMultisigOwnerKey = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKeyMnemonic)
+  try { btcNewMultisigOwnerKey = JSON.parse( btcNewMultisigOwnerKey ) } catch (e) {}
+  if (!(btcNewMultisigOwnerKey instanceof Array)) {
+    localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKeyMnemonic, JSON.stringify([]))
+  }
 
   const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
   const btcMultisigPrivateKey = localStorage.getItem(constants.privateKeyNames.btcMultisig)

@@ -74,6 +74,10 @@ const CreateWallet = (props) => {
     actions.modals.open(constants.modals.ImportKeys, {})
   }
 
+  const handleMakeSweep = () => {
+    actions.modals.open(constants.modals.SweepToMnemonicKeys)
+  }
+
   const goToExchange = () => {
     history.push(localisedUrl(locale, links.exchange))
   }
@@ -185,6 +189,12 @@ const CreateWallet = (props) => {
             <FormattedMessage
               id="ImportKeys_RestoreMnemonic"
               defaultMessage="Ввести 12 слов"
+            />
+          </button>
+          <button onClick={handleMakeSweep}>
+            <FormattedMessage
+              id="CreateWallet_MakeSweep"
+              defaultMessage="Sweep"
             />
           </button>
           <button onClick={handleImportKeys}>
