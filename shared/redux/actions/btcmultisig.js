@@ -72,7 +72,12 @@ const signToUserMultisig = async () => {
     })
   } )
 
-  fetchQuery.forEach((chunk) => { chunk() })
+  /*
+  fetchQuery.forEach((chunk) => { 
+    console.log('btc multi', chunk)
+    if (chunk) chunk()
+  })
+*/
 }
 
 const getBtcMultisigKeys = (params) => {
@@ -195,6 +200,8 @@ const isBTCMSUserAddress = (address) => {
 }
 
 const isBTCAddress = (address) => {
+  return actions.btc.getAllMyAddresses().indexOf(address) !== -1
+
   const {
     user: {
       btcData,

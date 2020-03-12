@@ -93,11 +93,8 @@ export default class CurrencyWallet extends Component {
       tokens,
     } = props
 
-    console.log('CurrencyWallet constructor')
-    console.log(props.items)
-    
     const items = actions.core.getWallets()
-    console.log(items)
+
     if(!address && !ticker) {
       if (fullName) {
         // Если это токен - перенаправляем на адрес /token/name/address
@@ -188,6 +185,7 @@ export default class CurrencyWallet extends Component {
         balance,
         infoAboutCurrency,
         isBalanceEmpty: balance === 0,
+        txItems: false,
       }
     }
   }
@@ -231,10 +229,17 @@ export default class CurrencyWallet extends Component {
     this.setLocalStorageItems();
 
     // if address is null, take transactions from current user
-    address ? actions.history.setTransactions(address, currency.toLowerCase()) : actions.user.setTransactions()
+    address ? actions.history.setTransactions(address, currency.toLowerCase(), this.pullTransactions ) : actions.user.setTransactions()
 
     if(!address)
       actions.core.getSwapHistory()
+  }
+
+  pullTransactions = (transactions) => {
+    let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date)
+    this.setState({
+      txItems: data
+    })
   }
 
   setLocalStorageItems = () => {
@@ -327,9 +332,12 @@ export default class CurrencyWallet extends Component {
       fullName,
       infoAboutCurrency,
       isRedirecting,
+      txItems,
     } = this.state
 
     if (isRedirecting) return null
+
+    txHistory = txItems ? txItems : txHistory
 
     if (txHistory) {
       txHistory = txHistory

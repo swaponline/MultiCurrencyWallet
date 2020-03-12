@@ -245,10 +245,15 @@ const pullTransactions = transactions => {
 const delay = (ms) => new Promise(resolve => setTimeout(() => resolve(true), ms))
 
 const setTransactions = async () => {
+  const isBtcSweeped = actions.btc.isSweeped()
+  const isLtcSweeped = true // actions.ltc.isSweeped()
+  const isEthSweeped = actions.eth.isSweeped()
+
   try {
     // @ToDo - make in like query
     const mainTokens = await Promise.all([
       actions.btc.getTransaction(),
+      ... (isBtcSweeped) ? [] : [actions.btc.getTransaction(actions.btc.getSweepAddress())],
       actions.btc.getInvoices(),
       actions.btcmultisig.getTransactionSMS(),
       actions.btcmultisig.getInvoicesSMS(),
@@ -358,7 +363,7 @@ export const isOwner = (addr, currency) => {
     return addr === address
   }
 
-  if (actions.btcmultisig.isBTCAddress(addr)) return true
+  if (actions.btc.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
 
   const name = `${currency.toLowerCase()}Data`
   const { user } = getState()

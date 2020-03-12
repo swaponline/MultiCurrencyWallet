@@ -25,6 +25,35 @@ const sweepToMnemonic = (mnemonic, path) => {
   return wallet.WIF
 }
 
+const isSweeped = () => {
+  const {
+    user: {
+      btcData,
+      btcMnemonicData,
+    },
+  } = getState()
+
+  if (btcMnemonicData
+    && btcMnemonicData.address
+    && btcData
+    && btcData.address
+    && btcData.address.toLowerCase() !== btcMnemonicData.address.toLowerCase()
+  ) return false
+
+  return true
+}
+
+const getSweepAddress = () => {
+  const {
+    user: {
+      btcMnemonicData,
+    },
+  } = getState()
+
+  if (btcMnemonicData && btcMnemonicData.address) return btcMnemonicData.address
+  return false
+}
+
 const getWalletByWords = (mnemonic, path) => {
   const seed = bip39.mnemonicToSeedSync(mnemonic);
   const root = bip32.fromSeed(seed, btc.network);
@@ -311,22 +340,21 @@ const getAllMyAddresses = (address) => {
     && btcData.address
     && btcMnemonicData.address !== btcData.address
   ) {
-    retData.push(btcMnemonicData.address)
+    retData.push(btcMnemonicData.address.toLowerCase())
   }
 
-  retData.push(btcData.address)
+  retData.push(btcData.address.toLowerCase())
 
-  if (btcMultisigSMSData && btcMultisigSMSData.address) retData.push(btcMultisigSMSData.address)
-  if (btcMultisigUserData && btcMultisigUserData.address) retData.push(btcMultisigUserData.address)
+  if (btcMultisigSMSData && btcMultisigSMSData.address) retData.push(btcMultisigSMSData.address.toLowerCase())
+  // @ToDo - SMS MultiWallet
+
+  if (btcMultisigUserData && btcMultisigUserData.address) retData.push(btcMultisigUserData.address.toLowerCase())
   if (btcMultisigUserData && btcMultisigUserData.wallets && btcMultisigUserData.wallets.length) {
     btcMultisigUserData.wallets.map((wallet) => {
-      retData.push(wallet.address)
+      retData.push(wallet.address.toLowerCase())
     })
   }
 
-  if (btcMultisigSMSData && btcMultisigSMSData.address) {
-    retData.push(btcMultisigSMSData.address)
-  }
   // @ToDo - add btcMultisigG2FAData process
   /*
   if (btcData && btcData.address && btcData.address.toLowerCase() === address.toLowerCase()) return btcData
@@ -340,6 +368,9 @@ const getAllMyAddresses = (address) => {
 
 const getTransaction = (address, ownType) =>
   new Promise((resolve) => {
+    const myAllWallets = getAllMyAddresses()
+
+    console.log('btc getTransaction', address, myAllWallets)
     let { user: { btcData: { address : userAddress } } } = getState()
     address = address || userAddress
 
@@ -357,19 +388,21 @@ const getTransaction = (address, ownType) =>
         } catch (e) { /* */ }
         return false
       },
+      query: 'btc_balance',
     }).then((res) => {
-        
+        console.log('getTransaction', address, res)
         const transactions = res.txs.map((item) => {
           const direction = item.vin[0].addr !== address ? 'in' : 'out'
+          console.log(direction)
           const isSelf = direction === 'out'
-            && item.vout.filter((item) =>
+            && item.vout.filter((item) => 
               item.scriptPubKey.addresses[0] === address
             ).length === item.vout.length
 
           return ({
             type,
             hash: item.txid,
-            canEdit: address === userAddress,
+            canEdit: (myAllWallets.indexOf(address) !== -1),
             confirmations: item.confirmations,
             value: isSelf
               ? item.fees
@@ -490,4 +523,7 @@ export default {
   getRandomMnemonicWords,
   validateMnemonicWords,
   sweepToMnemonic,
+  isSweeped,
+  getSweepAddress,
+  getAllMyAddresses,
 }

@@ -20,6 +20,35 @@ const sweepToMnemonic = (mnemonic, path) => {
   return wallet.privateKey
 }
 
+const isSweeped = () => {
+  const {
+    user: {
+      ethData,
+      ethMnemonicData,
+    },
+  } = getState()
+
+  if (ethMnemonicData
+    && ethMnemonicData.address
+    && ethData
+    && ethData.address
+    && ethData.address.toLowerCase() !== ethMnemonicData.address.toLowerCase()
+  ) return false
+
+  return true
+}
+
+const getSweepAddress = () => {
+  const {
+    user: {
+      ethMnemonicData,
+    },
+  } = getState()
+
+  if (ethMnemonicData && ethMnemonicData.address) return ethMnemonicData.address
+  return false
+}
+
 const getPrivateKeyByAddress = (address) => {
   const {
     user: {
@@ -295,4 +324,6 @@ export default {
   getRandomMnemonicWords,
   validateMnemonicWords,
   sweepToMnemonic,
+  isSweeped,
+  getSweepAddress,
 }
