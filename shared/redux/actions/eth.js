@@ -123,6 +123,7 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
     console.log(accData)
     privateKey = accData.privateKey
     data = web3.eth.accounts.privateKeyToAccount(privateKey)
+    localStorage.setItem(constants.privateKeyNames.ethMnemonic, privateKey)
   }
 
   localStorage.setItem(constants.privateKeyNames.eth, data.privateKey)

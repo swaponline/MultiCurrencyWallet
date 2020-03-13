@@ -140,6 +140,7 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
     console.log('Btc. Generated walled from random 12 words')
     console.log(accData)
     privateKey = accData.WIF
+    localStorage.setItem(constants.privateKeyNames.btcMnemonic, privateKey)
   }
 
   localStorage.setItem(constants.privateKeyNames.btc, privateKey)
