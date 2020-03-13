@@ -10,6 +10,7 @@
   justify-content: space-between;
   padding: 24px;
   box-sizing: border-box;
+  position: relative;
   > div {
     display: flex;
     align-items: center;
@@ -21,7 +22,10 @@
   position: absolute;
   left: 50%;
   transform: translate(-50%);
-  top: 40px;
+  top: 30px;
+  img {
+    width: 100px;
+  }
 }
 
 .notifyBlockOverlay {
