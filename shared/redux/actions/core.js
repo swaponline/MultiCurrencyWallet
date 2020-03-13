@@ -327,6 +327,7 @@ const getWallets = () => {
       bchData,
       ltcData,
       tokensData,
+      isTokenSigned,
     },
   } = getState()
 
@@ -347,11 +348,11 @@ const getWallets = () => {
     btcData,
     btcMultisigSMSData,
     btcMultisigUserData,
-    ...btcMultisigUserData.wallets,
+    ... (btcMultisigUserData && btcMultisigUserData.wallets) ? [btcMultisigUserData.wallets] : [],
     ethData,
     ... (bchData) ? [bchData] : [],
     ltcData,
-    ...Object.keys(tokensData).map(k => tokensData[k])
+    ... (isTokenSigned) ? [Object.keys(tokensData).map(k => tokensData[k])] : [],
   ].map(({ account, keyPair, ...data }) => ({
     ...data
   }))

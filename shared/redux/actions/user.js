@@ -78,12 +78,13 @@ const sign = async () => {
 
   // if inside actions.token.login to call web3.eth.accounts.privateKeyToAccount passing public key instead of private key
   // there will not be an error, but the address returned will be wrong
-  if (!isEthKeychainActivated) {
+  // if (!isEthKeychainActivated) {
     Object.keys(config.erc20)
       .forEach(name => {
         actions.token.login(_ethPrivateKey, config.erc20[name].address, name, config.erc20[name].decimals, config.erc20[name].fullName)
       })
-  }
+  // }
+  reducers.user.setTokenSigned(true)
   // await actions.nimiq.login(_ethPrivateKey)
 
   // const getReputation = actions.user.getReputation()
@@ -118,6 +119,12 @@ const getReputation = async () => {
 
 
 const getBalances = () => {
+  const {
+    user: {
+      isTokenSigned,
+    }
+  } = getState()
+
   actions.eth.getBalance()
   actions.btc.getBalance()
   actions.btcmultisig.getBalance() // SMS-Protected
@@ -128,10 +135,12 @@ const getBalances = () => {
   // actions.qtum.getBalance()
   // actions.xlm.getBalance()
 
-  Object.keys(config.erc20)
-    .forEach(name => {
-      actions.token.getBalance(name)
-    })
+  if (isTokenSigned) {
+    Object.keys(config.erc20)
+      .forEach(name => {
+        actions.token.getBalance(name)
+      })
+  }
   // actions.nimiq.getBalance()
 }
 

@@ -83,6 +83,7 @@ export const initialState = {
   },
   tokensData: {},
   isFetching: false,
+  isTokenSigned: false,
 }
 
 export const addWallet = (state, { name, data }) => ({
@@ -98,6 +99,11 @@ export const setAuthData = (state, { name, data }) => ({
     ...state[name],
     ...data,
   },
+})
+
+export const setTokenSigned = (state, booleanValue) => ({
+  ...state,
+  isTokenSigned: booleanValue,
 })
 
 export const setTokenAuthData = (state, { name, data }) => ({
