@@ -39,6 +39,7 @@ export const initialState = {
     balanceError: null,
     infoAboutCurrency: null
   },
+  bchData: {},
   /*bchData: {
     balance: 0,
     isBalanceFetched: false,
@@ -81,18 +82,28 @@ export const initialState = {
     infoAboutCurrency: null
   },
   tokensData: {},
-  isFetching: false
+  isFetching: false,
+  isTokenSigned: false,
 }
+
+export const addWallet = (state, { name, data }) => ({
+  ...state,
+  [name]: {
+    ...data,
+  },
+})
 
 export const setAuthData = (state, { name, data }) => ({
   ...state,
-  tokensData: {
-    ...state.tokensData,
-  },
   [name]: {
     ...state[name],
     ...data,
   },
+})
+
+export const setTokenSigned = (state, booleanValue) => ({
+  ...state,
+  isTokenSigned: booleanValue,
 })
 
 export const setTokenAuthData = (state, { name, data }) => ({
@@ -105,6 +116,20 @@ export const setTokenAuthData = (state, { name, data }) => ({
     },
   },
 })
+
+export const setBtcMultisigBalance = (state, { address, amount, unconfirmedBalance }) => {
+  state.btcMultisigUserData.wallets.forEach( (wallet) => {
+    if (wallet.address === address) {
+      wallet.balance = Number(amount)
+      wallet.unconfirmedBalance = unconfirmedBalance
+      wallet.isBalanceFetched = true
+      wallet.balanceError = false
+    }
+  })
+  return {
+    ...state
+  }
+}
 
 export const setBalance = (state, { name, amount, unconfirmedBalance }) => ({
   ...state,

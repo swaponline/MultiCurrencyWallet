@@ -29,6 +29,8 @@ import InfoPay from './InfoPay/InfoPay'
 import BtcMultisignConfirmTx from './BtcMultisignConfirmTx/BtcMultisignConfirmTx'
 import SaveMnemonicModal from './SaveMnemonicModal/SaveMnemonicModal'
 import RestoryMnemonicWallet from './RestoryMnemonicWallet/RestoryMnemonicWallet'
+import SweepToMnemonicKeys from './SweepToMnemonicKeys/SweepToMnemonicKeys'
+
 
 
 export default {
@@ -63,4 +65,5 @@ export default {
   BtcMultisignConfirmTx,
   SaveMnemonicModal,
   RestoryMnemonicWallet,
+  SweepToMnemonicKeys,
 }

@@ -57,6 +57,18 @@
   //background: url('./images/pen.svg') 50% 50% no-repeat;
 }
 
+.sweepInfo {
+  background: 0% 0% / cover rgb(97, 68, 229);
+  color: #fff;
+  padding: 1em;
+  button {
+    float: right;
+    border: 3px solid #fff;
+    color: #6144e5;
+    background: #fff;
+  }
+}
+
 .walletTable {
   width: 100%;
   td:first-child {

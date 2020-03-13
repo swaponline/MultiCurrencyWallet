@@ -18,6 +18,28 @@ const sign = async () => {
     localStorage.setItem(constants.privateKeyNames.twentywords, mnemonic)
   }
 
+  const mnemonicKeys = {
+    btc: localStorage.getItem(constants.privateKeyNames.btcMnemonic),
+    eth: localStorage.getItem(constants.privateKeyNames.ethMnemonic),
+  }
+
+  if (mnemonic !== `-`) {
+    if (!mnemonicKeys.btc) mnemonicKeys.btc = actions.btc.sweepToMnemonic(mnemonic)
+    if (!mnemonicKeys.eth) mnemonicKeys.eth = actions.eth.sweepToMnemonic(mnemonic)
+  }
+  // Sweep-Switch
+  let btcNewSmsMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKeyMnemonic)
+  try { btcNewSmsMnemonicKey = JSON.parse( btcNewSmsMnemonicKey ) } catch (e) {}
+  if (!(btcNewSmsMnemonicKey instanceof Array)) {
+    localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyMnemonic, JSON.stringify([]))
+  }
+
+  let btcNewMultisigOwnerKey = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKeyMnemonic)
+  try { btcNewMultisigOwnerKey = JSON.parse( btcNewMultisigOwnerKey ) } catch (e) {}
+  if (!(btcNewMultisigOwnerKey instanceof Array)) {
+    localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKeyMnemonic, JSON.stringify([]))
+  }
+
   const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
   const btcMultisigPrivateKey = localStorage.getItem(constants.privateKeyNames.btcMultisig)
   const bchPrivateKey = localStorage.getItem(constants.privateKeyNames.bch)
@@ -30,8 +52,8 @@ const sign = async () => {
   const isBtcKeychainActivated = !!localStorage.getItem(constants.privateKeyNames.btcKeychainPublicKey)
   const isBtcMultisigKeychainActivated = !!localStorage.getItem(constants.privateKeyNames.btcMultisigKeychainPublicKey)
 
-  const _ethPrivateKey = isEthKeychainActivated ? await actions.eth.loginWithKeychain() : actions.eth.login(ethPrivateKey, mnemonic)
-  const _btcPrivateKey = isBtcKeychainActivated ? await actions.btc.loginWithKeychain() : actions.btc.login(btcPrivateKey, mnemonic)
+  const _ethPrivateKey = isEthKeychainActivated ? await actions.eth.loginWithKeychain() : actions.eth.login(ethPrivateKey, mnemonic, mnemonicKeys)
+  const _btcPrivateKey = isBtcKeychainActivated ? await actions.btc.loginWithKeychain() : actions.btc.login(btcPrivateKey, mnemonic, mnemonicKeys)
 
   // btc multisig with 2fa (2of3)
   const btcSMSServerKey = config.swapContract.protectedBtcKey
@@ -47,7 +69,7 @@ const sign = async () => {
   let btcMultisigOwnerKey = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKey)
   try { btcMultisigOwnerKey = JSON.parse( btcMultisigOwnerKey ) } catch (e) {}
   const _btcMultisigPrivateKey = actions.btcmultisig.login_USER(_btcPrivateKey, btcMultisigOwnerKey)
-
+  await actions.btcmultisig.signToUserMultisig()
   actions.bch.login(bchPrivateKey)
   // actions.usdt.login(btcPrivateKey)
   actions.ltc.login(ltcPrivateKey)
@@ -56,12 +78,13 @@ const sign = async () => {
 
   // if inside actions.token.login to call web3.eth.accounts.privateKeyToAccount passing public key instead of private key
   // there will not be an error, but the address returned will be wrong
-  if (!isEthKeychainActivated) {
+  // if (!isEthKeychainActivated) {
     Object.keys(config.erc20)
       .forEach(name => {
         actions.token.login(_ethPrivateKey, config.erc20[name].address, name, config.erc20[name].decimals, config.erc20[name].fullName)
       })
-  }
+  // }
+  reducers.user.setTokenSigned(true)
   // await actions.nimiq.login(_ethPrivateKey)
 
   // const getReputation = actions.user.getReputation()
@@ -96,24 +119,33 @@ const getReputation = async () => {
 
 
 const getBalances = () => {
+  const {
+    user: {
+      isTokenSigned,
+    }
+  } = getState()
+
   actions.eth.getBalance()
   actions.btc.getBalance()
   actions.btcmultisig.getBalance() // SMS-Protected
   actions.btcmultisig.getBalanceUser() //Other user confirm
-  actions.bch.getBalance()
+  // actions.bch.getBalance()
   actions.ltc.getBalance()
   // actions.usdt.getBalance()
   // actions.qtum.getBalance()
   // actions.xlm.getBalance()
 
-  Object.keys(config.erc20)
-    .forEach(name => {
-      actions.token.getBalance(name)
-    })
+  if (isTokenSigned) {
+    Object.keys(config.erc20)
+      .forEach(name => {
+        actions.token.getBalance(name)
+      })
+  }
   // actions.nimiq.getBalance()
 }
 
 const getExchangeRate = (sellCurrency, buyCurrency) => {
+  console.log('actions.user.getExchangeRate', sellCurrency, buyCurrency)
   if (buyCurrency.toLowerCase() === 'usd') {
     return new Promise((resolve, reject) => {
       let dataKey = sellCurrency.toLowerCase()
@@ -228,18 +260,25 @@ const getInfoAboutCurrency = (currencyNames) =>
   })
 
 const pullTransactions = transactions => {
-  let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date)
+  console.log('pullTransactions', transactions)
+  let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date).filter((item) => item)
   reducers.history.setTransactions(data)
 }
 
 const delay = (ms) => new Promise(resolve => setTimeout(() => resolve(true), ms))
 
 const setTransactions = async () => {
+  const isBtcSweeped = actions.btc.isSweeped()
+  const isLtcSweeped = true // actions.ltc.isSweeped()
+  const isEthSweeped = actions.eth.isSweeped()
+
   try {
     // @ToDo - make in like query
     const mainTokens = await Promise.all([
       actions.btc.getTransaction(),
+      ... (isBtcSweeped) ? [] : [actions.btc.getTransaction(actions.btc.getSweepAddress())],
       actions.btc.getInvoices(),
+      ... (isBtcSweeped) ? [] : [actions.btc.getInvoices(actions.btc.getSweepAddress())],
       actions.btcmultisig.getTransactionSMS(),
       actions.btcmultisig.getInvoicesSMS(),
       actions.btcmultisig.getTransactionUser(),
@@ -247,7 +286,9 @@ const setTransactions = async () => {
       actions.bch.getTransaction(),
       // actions.usdt.getTransaction(),
       actions.eth.getTransaction(),
+      ... (isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
       actions.eth.getInvoices(),
+      ... (isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
       actions.ltc.getTransaction(),
     ])
 
@@ -336,7 +377,10 @@ Private key: ${bchData.privateKey}\r\n
 }
 
 export const isOwner = (addr, currency) => {
+  console.log('isOwner', addr, currency)
   if (ethToken.isEthToken({ name: currency })) {
+    console.log('isToken')
+    if (actions.eth.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
     const {
       user: {
         ethData: {
@@ -348,7 +392,8 @@ export const isOwner = (addr, currency) => {
     return addr === address
   }
 
-  if (actions.btcmultisig.isBTCAddress(addr)) return true
+  if (currency.toLowerCase() === `btc` && actions.btc.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
+  if (currency.toLowerCase() === `eth` && actions.eth.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
 
   const name = `${currency.toLowerCase()}Data`
   const { user } = getState()

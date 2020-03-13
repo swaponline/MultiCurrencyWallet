@@ -23,5 +23,6 @@ export default {
   didProtectedBtcG2FACreated: 'protectedBtcG2FA',
   walletTitle: 'walletTitle',
   customERC: 'customERC',
-  balanceActiveCurrency: 'balanceActiveCurrency'
+  balanceActiveCurrency: 'balanceActiveCurrency',
+  isSweepReady: 'isSweepReady',
 }

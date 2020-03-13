@@ -14,6 +14,77 @@ import typeforce from "swap.app/util/typeforce";
 const getRandomMnemonicWords = () => bip39.generateMnemonic()
 const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonic)
 
+const sweepToMnemonic = (mnemonic, path) => {
+  const wallet = getWalletByWords(mnemonic, path)
+  localStorage.setItem(constants.privateKeyNames.ethMnemonic, wallet.privateKey)
+  return wallet.privateKey
+}
+
+const isSweeped = () => {
+  const {
+    user: {
+      ethData,
+      ethMnemonicData,
+    },
+  } = getState()
+
+  if (ethMnemonicData
+    && ethMnemonicData.address
+    && ethData
+    && ethData.address
+    && ethData.address.toLowerCase() !== ethMnemonicData.address.toLowerCase()
+  ) return false
+
+  return true
+}
+
+const getAllMyAddresses = () => {
+  const {
+    user: {
+      ethData,
+      ethMnemonicData,
+    },
+  } = getState()
+
+  const retData = [ethData.address.toLowerCase()]
+
+  if (ethMnemonicData
+    && ethMnemonicData.address
+    && ethMnemonicData.address.toLowerCase() !== ethData.address.toLowerCase()
+  ) retData.push(ethMnemonicData.address.toLowerCase())
+
+  return retData
+}
+
+const getSweepAddress = () => {
+  const {
+    user: {
+      ethMnemonicData,
+    },
+  } = getState()
+
+  if (ethMnemonicData && ethMnemonicData.address) return ethMnemonicData.address
+  return false
+}
+
+const getPrivateKeyByAddress = (address) => {
+  const {
+    user: {
+      ethData: {
+        address: oldAddress,
+        privateKey,
+      },
+      ethMnemonicData: {
+        address: mnemonicAddress,
+        privateKey: mnemonicKey,
+      }
+    },
+  } = getState()
+
+  if (oldAddress === address) return privateKey
+  if (mnemonicAddress === address) return mnemonicKey
+}
+
 const getWalletByWords = (mnemonic, path) => {
   const seed = bip39.mnemonicToSeedSync(mnemonic)
   const hdwallet = hdkey.fromMasterSeed(seed);
@@ -29,7 +100,17 @@ const getWalletByWords = (mnemonic, path) => {
 }
 
 
-const login = (privateKey, mnemonic) => {
+const login = (privateKey, mnemonic, mnemonicKeys) => {
+  let sweepToMnemonicReady = false
+
+  if (privateKey 
+    && mnemonic 
+    && mnemonicKeys 
+    && mnemonicKeys.eth === privateKey
+  ) sweepToMnemonicReady = true
+
+  if (!privateKey && mnemonic) sweepToMnemonicReady = true
+
   let data
 
   if (privateKey) {
@@ -44,17 +125,64 @@ const login = (privateKey, mnemonic) => {
     console.log(accData)
     privateKey = accData.privateKey
     data = web3.eth.accounts.privateKeyToAccount(privateKey)
+    localStorage.setItem(constants.privateKeyNames.ethMnemonic, privateKey)
   }
 
   localStorage.setItem(constants.privateKeyNames.eth, data.privateKey)
 
   web3.eth.accounts.wallet.add(data.privateKey)
+  data.isMnemonic = sweepToMnemonicReady
+
   reducers.user.setAuthData({ name: 'ethData', data })
 
   window.getEthAddress = () => data.address
   referral.newReferral(data.address)
 
   console.info('Logged in with Ethereum', data)
+
+  if (!sweepToMnemonicReady) {
+    // Auth with our mnemonic account
+    if (mnemonic === `-`) {
+      console.error('Sweep. Cant auth. Need new mnemonic or enter own for re-login')
+      return
+    }
+
+    if (!mnemonicKeys
+      || !mnemonicKeys.eth
+    ) {
+      console.error('Sweep. Cant auth. Login key undefined')
+      return
+    }
+
+    const mnemonicData = web3.eth.accounts.privateKeyToAccount(mnemonicKeys.eth)
+    web3.eth.accounts.wallet.add(mnemonicKeys.eth)
+    mnemonicData.isMnemonic = sweepToMnemonicReady
+
+    console.info('Logged in with Ethereum Mnemonic', mnemonicData)
+    reducers.user.addWallet({
+      name: 'ethMnemonicData',
+      data: {
+        currency: 'ETH',
+        fullName: 'Ethereum (New)',
+        balance: 0,
+        isBalanceFetched: false,
+        balanceError: null,
+        infoAboutCurrency: null,
+        ...mnemonicData,
+      }
+    })
+    new Promise(async(resolve) => {
+      const balance = await fetchBalance(mnemonicData.address)
+      reducers.user.setAuthData({
+        name: 'ethMnemonicData',
+        data: {
+          balance,
+          isBalanceFetched: true,
+        },
+      })
+      resolve(true)
+    })
+  }
 
   return data.privateKey
 }
@@ -116,8 +244,10 @@ const fetchBalance = (address) =>
       console.log('Web3 doesn\'t work please again later ', e.error)
     })
 
-const getInvoices = () => {
-  const { user: { ethData: { address } } } = getState()
+const getInvoices = (address) => {
+  const { user: { ethData: { userAddress } } } = getState()
+
+  address = address || userAddress
 
   return actions.invoices.getInvoices({
     currency: 'ETH',
@@ -139,7 +269,7 @@ const getLinkToInfo = (tx) => {
   return `https://etherscan.io/tx/${tx}`
 }
 
-const getTransaction = (address) =>
+const getTransaction = (address, ownType) =>
   new Promise((resolve) => {
     const { user: { ethData: { address: userAddress } } } = getState()
     address = address || userAddress
@@ -148,13 +278,15 @@ const getTransaction = (address) =>
       resolve([])
     }
 
+    const type = (ownType) ? ownType : 'eth'
+
     const url = `?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=RHHFPNMAZMD6I4ZWBZBF6FA11CMW9AXZNM`
 
     return apiLooper.get('etherscan', url)
       .then((res) => {
         const transactions = res.result
           .filter((item) => item.value > 0).map((item) => ({
-            type: 'eth',
+            type,
             confirmations: item.confirmations,
             hash: item.hash,
             status: item.blockHash != null ? 1 : 0,
@@ -172,9 +304,10 @@ const getTransaction = (address) =>
       })
   })
 
-const send = ({ to, amount, gasPrice, gasLimit, speed } = {}) =>
+const send = ({ from, to, amount, gasPrice, gasLimit, speed } = {}) =>
   new Promise(async (resolve, reject) => {
-    const { user: { ethData: { privateKey } } } = getState()
+    //const { user: { ethData: { privateKey } } } = getState()
+    const privateKey = getPrivateKeyByAddress(from)
 
     gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
     gasLimit = gasLimit || constants.defaultFeeRates.eth.limit.send
@@ -215,4 +348,8 @@ export default {
   getWalletByWords,
   getRandomMnemonicWords,
   validateMnemonicWords,
+  sweepToMnemonic,
+  isSweeped,
+  getSweepAddress,
+  getAllMyAddresses,
 }

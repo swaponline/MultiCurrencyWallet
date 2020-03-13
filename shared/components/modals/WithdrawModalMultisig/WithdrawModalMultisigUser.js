@@ -54,7 +54,17 @@ export default class WithdrawModalMultisigUser extends React.Component {
   constructor(data) {
     super()
 
-    const { data: { currency, amount, toAddress }, items, tokenItems } = data
+    console.log('WithdrawModalMultisigUser', data)
+    const {
+      data: {
+        currency,
+        amount,
+        toAddress,
+        address,
+      },
+      items,
+      tokenItems,
+    } = data
 
     const currentDecimals = constants.tokenDecimals.btcmultisig
     const allCurrencyies = items.concat(tokenItems)

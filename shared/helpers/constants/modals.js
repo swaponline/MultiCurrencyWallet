@@ -31,4 +31,5 @@ export default {
   BtcMultisignConfirmTx: 'BtcMultisignConfirmTx',
   SaveMnemonicModal: 'SaveMnemonicModal',
   RestoryMnemonicWallet: 'RestoryMnemonicWallet',
+  SweepToMnemonicKeys: 'SweepToMnemonicKeys',
 }

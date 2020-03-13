@@ -44,11 +44,13 @@ const walletNav = [
 @connect(
   ({
     core: { hiddenCoinsList },
+    user,
     user: {
       ethData,
       btcData,
       btcMultisigSMSData,
       btcMultisigUserData,
+      btcMultisigUserDataList,
       bchData,
       tokensData,
       ltcData, // usdtOmniData, // qtumData,
@@ -79,9 +81,9 @@ const walletNav = [
       btcMultisigSMSData,
       btcMultisigUserData,
       ethData,
-      bchData,
+      // bchData,
       ltcData,
-      //qtumData,
+      // qtumData,
       // xlmData,
       // usdtOmniData,
       ...Object.keys(tokensData).map(k => tokensData[k])
@@ -99,7 +101,7 @@ const walletNav = [
           btcData,
           btcMultisigSMSData,
           btcMultisigUserData,
-          bchData,
+          // bchData,
           ethData,
           ltcData
           // qtumData,
@@ -113,7 +115,7 @@ const walletNav = [
       btcData,
       btcMultisigSMSData,
       btcMultisigUserData,
-      bchData,
+      // bchData,
       ethData,
       ltcData
       // qtumData,
@@ -137,12 +139,14 @@ const walletNav = [
       isFetching,
       hiddenCoinsList: hiddenCoinsList,
       userEthAddress: ethData.address,
+      user,
       tokensData: {
         ethData,
         btcData,
         btcMultisigSMSData,
         btcMultisigUserData,
-        bchData,
+        btcMultisigUserDataList,
+        // bchData,
         ltcData
         // qtumData,
         // usdtOmniData,
@@ -160,16 +164,25 @@ export default class Wallet extends Component {
   constructor(props) {
     super(props)
     this.balanceRef = React.createRef() // Create a ref object
-  }
 
-  state = {
-    activeView: 0,
-    btcBalance: 0,
-    activeCurrency: 'usd',
-    exchangeForm: false,
-    walletTitle: 'Wallet',
-    editTitle: false,
-    enabledCurrencies: getActivatedCurrencies()
+    const isSweepReady = localStorage.getItem(constants.localStorage.isSweepReady)
+    const isBtcSweeped = actions.btc.isSweeped()
+    const isEthSweeped = actions.eth.isSweeped()
+
+    let showSweepBanner = !isSweepReady
+
+    if (isBtcSweeped || isEthSweeped) showSweepBanner = false
+
+    this.state = {
+      activeView: 0,
+      btcBalance: 0,
+      activeCurrency: 'usd',
+      exchangeForm: false,
+      walletTitle: 'Wallet',
+      editTitle: false,
+      enabledCurrencies: getActivatedCurrencies(),
+      showSweepBanner,
+    }
   }
 
   componentWillMount() {
@@ -290,6 +303,16 @@ export default class Wallet extends Component {
     })
   }
 
+  handleMakeSweep = () => {
+    actions.modals.open(constants.modals.SweepToMnemonicKeys, {
+      onSweep: () => {
+        this.setState({
+          showSweepBanner: false,
+        })
+      },
+    })
+  }
+
   handleChangeTitle = e => {
     this.setState({
       walletTitle: e.target.value
@@ -298,6 +321,7 @@ export default class Wallet extends Component {
   }
 
   handleModalOpen = context => {
+    /*
     const { enabledCurrencies } = this.state
     const { items, tokensData, tokensItems, tokens, hiddenCoinsList } = this.props
 
@@ -310,6 +334,8 @@ export default class Wallet extends Component {
     const currencies = tableRows.map(currency => {
       return currencyTokenData.find(item => item.currency === currency)
     })
+    */
+    const currencies = actions.core.getWallets()
 
     actions.modals.open(constants.modals.CurrencyAction, {
       currencies,
@@ -331,11 +357,11 @@ export default class Wallet extends Component {
     const balancesData = {
       ethBalance: ethData.balance,
       btcBalance: btcData.balance,
-      bchBalance: bchData.balance,
+      // bchBalance: bchData.balance,
       ltcBalance: ltcData.balance,
       ethAddress: ethData.address,
       btcAddress: btcData.address,
-      bchAddress: bchData.address,
+      // bchAddress: bchData.address,
       ltcAddress: ltcData.address
     }
 
@@ -353,9 +379,12 @@ export default class Wallet extends Component {
       editTitle,
       walletTitle,
       enabledCurrencies,
-      banners
+      banners,
+      showSweepBanner,
     } = this.state
-    const { currencyBalance, hiddenCoinsList, isSigned, allData, isFetching } = this.props
+    const { currencyBalance, hiddenCoinsList, isSigned, isFetching } = this.props
+
+    const allData = actions.core.getWallets()
 
     this.checkBalance()
 
@@ -389,6 +418,7 @@ export default class Wallet extends Component {
 
     tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
 
+    //console.log('render', tableRows)
     if (currencyBalance) {
       currencyBalance.forEach(item => {
         if ((!isWidgetBuild || widgetCurrencies.includes(item.name)) && item.infoAboutCurrency && item.balance !== 0) {
@@ -441,6 +471,23 @@ export default class Wallet extends Component {
               )}
             </div>
             <div styleName={`yourAssetsWrapper ${activeView === 0 ? 'active' : ''}`}>
+              {/* Sweep Banner */}
+              {showSweepBanner && (
+                <p styleName="sweepInfo">
+                  <Button blue onClick={this.handleMakeSweep}>
+                    <FormattedMessage id="SweepBannerButton" defaultMessage="Done" />
+                  </Button>
+                  <FormattedMessage
+                    id="SweepBannerDescription"
+                    defaultMessage={
+                      `Пожалуйста, переместите все средства на кошельки помеченные "new" 
+                      (USDT и остальные токены переведите на Ethereum (new) адрес). 
+                      Затем нажмите кнопку "DONE". Старые адреса будут скрыты.`
+                    }
+                  />
+                </p>
+              )}
+              {/* (End) Sweep Banner */}
               {/* {
                 !isFetching ?  */}
               <CurrenciesList

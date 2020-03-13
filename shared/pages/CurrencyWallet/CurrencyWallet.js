@@ -49,7 +49,7 @@ const titles = [
     btcData,
     btcMultisigSMSData,
     btcMultisigUserData,
-    bchData,
+    // bchData,
     ltcData,
     isFetching,
     tokensData, nimData/* usdtOmniData */ } }) => ({
@@ -58,7 +58,7 @@ const titles = [
         btcData,
         btcMultisigSMSData,
         btcMultisigUserData,
-        bchData,
+        // bchData,
         ltcData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData, usdtOmniData */],
       tokens: [...Object.keys(tokensData).map(k => (tokensData[k]))],
       user,
@@ -88,10 +88,12 @@ export default class CurrencyWallet extends Component {
       intl: {
         locale,
       },
-      items,
+      //items,
       history,
       tokens,
     } = props
+
+    const items = actions.core.getWallets()
 
     if(!address && !ticker) {
       if (fullName) {
@@ -135,27 +137,35 @@ export default class CurrencyWallet extends Component {
 
     const walletAddress = address
 
-    let item = items.map(item => item.currency.toLowerCase())
-    const token = tokens.map((item) => item.currency.toLowerCase()).includes(ticker.toLowerCase())
-    
-    if (item.includes(ticker.toLowerCase())) {
-      let itemCurrency = items.filter(item => item.currency.toLowerCase() === ticker.toLowerCase())[0]
-      
-      if (actions.btcmultisig.isBTCSMSAddress(walletAddress)) {
-        itemCurrency = items.filter(item => item.fullName.toLowerCase() === 'bitcoin (sms-protected)')
-        if (!itemCurrency.length) {
-          history.push(localisedUrl(locale, `${links.notFound}`))
-        } else itemCurrency = itemCurrency[0]
-      }
-      if (actions.btcmultisig.isBTCMSUserAddress(walletAddress)) {
-        itemCurrency = items.filter(item => item.fullName.toLowerCase() === 'bitcoin (multisig)')
-        if (!itemCurrency.length) {
-          history.push(localisedUrl(locale, `${links.notFound}`))
-        } else itemCurrency = itemCurrency[0]
-      } 
+    // оставляю запасной вариант для старых ссылок
+    if(fullName) {
+      ticker = fullName
+    }
 
-    
-      
+    const endpointCurrency = getCurrencyKey(ticker)
+
+    // MultiWallet - after Sweep - названию валюты доверять нельзя - нужно проверяться также адрес - и выбирать по адресу
+    let itemCurrency = items.filter((item) => {
+      const endpointName = getCurrencyKey(ticker)
+      if (ethToken.isEthToken({ name: ticker })) {
+        if (item.currency.toLowerCase() === ticker.toLowerCase()
+          && item.address.toLowerCase() === walletAddress.toLowerCase()
+        ) {
+          return true
+        }
+      } else {
+        if (!ethToken.isEthToken({ name: ticker })
+          && item.address.toLowerCase() === walletAddress.toLowerCase()
+          && endpointName === endpointCurrency
+        ) {
+          return true
+        }
+      }
+    })
+
+    if (itemCurrency.length) {
+      itemCurrency = itemCurrency[0]
+
       const {
         currency,
         address,
@@ -165,20 +175,17 @@ export default class CurrencyWallet extends Component {
         infoAboutCurrency
       } = itemCurrency
 
-
       this.state = {
-        ... this.state,
-        ... {
-          token,
-          currency,
-          address,
-          fullName: itemCurrency.fullName,
-          contractAddress,
-          decimals,
-          balance,
-          infoAboutCurrency,
-          isBalanceEmpty: balance === 0,
-        },
+        token: ethToken.isEthToken({ name: ticker }),
+        currency,
+        address,
+        fullName: itemCurrency.fullName,
+        contractAddress,
+        decimals,
+        balance,
+        infoAboutCurrency,
+        isBalanceEmpty: balance === 0,
+        txItems: false,
       }
     }
   }
@@ -222,10 +229,17 @@ export default class CurrencyWallet extends Component {
     this.setLocalStorageItems();
 
     // if address is null, take transactions from current user
-    address ? actions.history.setTransactions(address, currency.toLowerCase()) : actions.user.setTransactions()
+    address ? actions.history.setTransactions(address, currency.toLowerCase(), this.pullTransactions ) : actions.user.setTransactions()
 
     if(!address)
       actions.core.getSwapHistory()
+  }
+
+  pullTransactions = (transactions) => {
+    let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date)
+    this.setState({
+      txItems: data
+    })
   }
 
   setLocalStorageItems = () => {
@@ -318,9 +332,12 @@ export default class CurrencyWallet extends Component {
       fullName,
       infoAboutCurrency,
       isRedirecting,
+      txItems,
     } = this.state
 
     if (isRedirecting) return null
+
+    txHistory = txItems ? txItems : txHistory
 
     if (txHistory) {
       txHistory = txHistory
@@ -439,13 +456,6 @@ export default class CurrencyWallet extends Component {
               }
             </div>
             <div styleName="currencyWalletActivityWrapper">
-              {(!actions.btcmultisig.isBTCSMSAddress(`${address}`) && !actions.btcmultisig.isBTCMSUserAddress(`${address}`)) && (
-                swapHistory.filter(item => item.step >= 4).length > 0 ? (
-                  <div styleName="currencyWalletSwapHistory">
-                    <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} />
-                  </div>
-                ) : ''
-              )}
               {
                 txHistory  ? (
                   <div styleName="currencyWalletActivity">
@@ -463,6 +473,13 @@ export default class CurrencyWallet extends Component {
                   </div>
                 ) : <ContentLoader rideSideContent />
               }
+              {(!actions.btcmultisig.isBTCSMSAddress(`${address}`) && !actions.btcmultisig.isBTCMSUserAddress(`${address}`)) && (
+                swapHistory.filter(item => item.step >= 4).length > 0 ? (
+                  <div styleName="currencyWalletSwapHistory">
+                    <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} />
+                  </div>
+                ) : ''
+              )}
             </div>
           </div>
           {

@@ -22,7 +22,68 @@ const _loadBtcMultisigKeys = () => {
   return savedKeys
 }
 
-const getBtcMultisigKeys = () => {
+const delay = (ms) => new Promise(resolve => setTimeout(() => resolve(true), ms))
+
+const signToUserMultisig = async () => {
+  const {
+    user: {
+      btcMultisigUserData,
+    },
+  } = getState()
+
+  const walletAddreses = []
+
+  const walletsData = await getBtcMultisigKeys({ opts : {
+    dontFetchBalance: true,
+  }})
+
+  const wallets = walletsData.map((data) => {
+    walletAddreses.push(data.address)
+
+    return {
+      address: data.address,
+      currency: `BTC (Multisig)`,
+      fullName: `Bitcoin (Multisig)`,
+      isUserProtected: true,
+      active: true,
+      balance: 0,
+      unconfirmedBalance: 0,
+      isBalanceFetched: false,
+      balanceError: false,
+    }
+  }).filter((wallet) => wallet.address !== btcMultisigUserData.address)
+
+  btcMultisigUserData.wallets = wallets
+
+  reducers.user.setAuthData({ name: 'btcMultisigUserData', data: btcMultisigUserData })
+
+  // fetching balances
+  const fetchQuery = walletAddreses.map( (address, index) => {
+    return new Promise(async(resolve) => {
+      await delay(650 * index * 10)
+      const balance = await actions.btc.fetchBalance(address)
+      reducers.user.setBtcMultisigBalance({
+        address,
+        amount: balance,
+        isBalanceFetched: true,
+        unconfirmedBalance:0,
+      })
+      resolve({address, balance})
+    })
+  } )
+
+  /*
+  fetchQuery.forEach((chunk) => { 
+    console.log('btc multi', chunk)
+    if (chunk) chunk()
+  })
+*/
+}
+
+const getBtcMultisigKeys = (params) => {
+  let opts = {}
+  if (params && params.opts) opts = params.opts
+
   return new Promise(async (resolve, reject) => {
     const { user: { btcMultisigUserData } } = getState()
     const { privateKey } = btcMultisigUserData
@@ -34,7 +95,7 @@ const getBtcMultisigKeys = () => {
         const walletData = login_USER(privateKey, savedKeys[i], true)
 
         walletData.index = i
-        walletData.balance = await fetchBalance(walletData.address)
+        walletData.balance = (opts.dontFetchBalance) ? 0 : await fetchBalance(walletData.address)
         keysInfo.push(walletData)
       }
     }
@@ -139,9 +200,12 @@ const isBTCMSUserAddress = (address) => {
 }
 
 const isBTCAddress = (address) => {
+  return actions.btc.getAllMyAddresses().indexOf(address) !== -1
+
   const {
     user: {
       btcData,
+      btcMnemonicData,
       btcMultisigSMSData,
       btcMultisigUserData,
       btcMultisigG2FAData,
@@ -149,6 +213,7 @@ const isBTCAddress = (address) => {
   } = getState()
 
   if (btcData && btcData.address && btcData.address.toLowerCase() === address.toLowerCase()) return btcData
+  if (btcMnemonicData && btcMnemonicData.address && btcMnemonicData.address.toLowerCase() === address.toLowerCase()) return btcMnemonicData // Sweep
   if (btcMultisigSMSData && btcMultisigSMSData.address && btcMultisigSMSData.address.toLowerCase() === address.toLowerCase()) return btcMultisigSMSData
   if (btcMultisigUserData && btcMultisigUserData.address && btcMultisigUserData.address.toLowerCase() === address.toLowerCase()) return btcMultisigUserData
   if (btcMultisigG2FAData && btcMultisigG2FAData.address && btcMultisigG2FAData.address.toLowerCase() === address.toLowerCase()) return btcMultisigG2FAData
@@ -1197,4 +1262,5 @@ export default {
   addSMSWallet,
   isBTCSMSAddress,
   isBTCMSUserAddress,
+  signToUserMultisig,
 }
