@@ -357,7 +357,7 @@ const getWallets = () => {
     ...data
   }))
 
-  return allData
+  return allData.filter(item => item && item.address)
 }
 
 export default {
