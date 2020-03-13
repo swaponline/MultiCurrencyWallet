@@ -196,6 +196,7 @@ const CreateWallet = (props) => {
               defaultMessage="Ввести 12 слов"
             />
           </button>
+          {/*
           <button onClick={handleMakeSweep}>
             <FormattedMessage
               id="CreateWallet_MakeSweep"
@@ -214,6 +215,7 @@ const CreateWallet = (props) => {
               defaultMessage="Импортировать"
             />
           </button>
+          */}
          <br />
           <button onClick={goToExchange}>
             <FormattedMessage

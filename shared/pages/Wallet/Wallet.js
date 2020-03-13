@@ -164,16 +164,25 @@ export default class Wallet extends Component {
   constructor(props) {
     super(props)
     this.balanceRef = React.createRef() // Create a ref object
-  }
 
-  state = {
-    activeView: 0,
-    btcBalance: 0,
-    activeCurrency: 'usd',
-    exchangeForm: false,
-    walletTitle: 'Wallet',
-    editTitle: false,
-    enabledCurrencies: getActivatedCurrencies()
+    const isSweepReady = localStorage.getItem(constants.localStorage.isSweepReady)
+    const isBtcSweeped = actions.btc.isSweeped()
+    const isEthSweeped = actions.eth.isSweeped()
+
+    let showSweepBanner = !isSweepReady
+
+    if (isBtcSweeped || isEthSweeped) showSweepBanner = false
+
+    this.state = {
+      activeView: 0,
+      btcBalance: 0,
+      activeCurrency: 'usd',
+      exchangeForm: false,
+      walletTitle: 'Wallet',
+      editTitle: false,
+      enabledCurrencies: getActivatedCurrencies(),
+      showSweepBanner,
+    }
   }
 
   componentWillMount() {
@@ -294,6 +303,16 @@ export default class Wallet extends Component {
     })
   }
 
+  handleMakeSweep = () => {
+    actions.modals.open(constants.modals.SweepToMnemonicKeys, {
+      onSweep: () => {
+        this.setState({
+          showSweepBanner: false,
+        })
+      },
+    })
+  }
+
   handleChangeTitle = e => {
     this.setState({
       walletTitle: e.target.value
@@ -360,7 +379,8 @@ export default class Wallet extends Component {
       editTitle,
       walletTitle,
       enabledCurrencies,
-      banners
+      banners,
+      showSweepBanner,
     } = this.state
     const { currencyBalance, hiddenCoinsList, isSigned, isFetching } = this.props
 
@@ -451,6 +471,23 @@ export default class Wallet extends Component {
               )}
             </div>
             <div styleName={`yourAssetsWrapper ${activeView === 0 ? 'active' : ''}`}>
+              {/* Sweep Banner */}
+              {showSweepBanner && (
+                <p styleName="sweepInfo">
+                  <Button blue onClick={this.handleMakeSweep}>
+                    <FormattedMessage id="SweepBannerButton" defaultMessage="Done" />
+                  </Button>
+                  <FormattedMessage
+                    id="SweepBannerDescription"
+                    defaultMessage={
+                      `Пожалуйста, переместите все средства на кошельки помеченные "new" 
+                      (USDT и остальные токены переведите на Ethereum (new) адрес). 
+                      Затем нажмите кнопку "DONE". Старые адреса будут скрыты.`
+                    }
+                  />
+                </p>
+              )}
+              {/* (End) Sweep Banner */}
               {/* {
                 !isFetching ?  */}
               <CurrenciesList

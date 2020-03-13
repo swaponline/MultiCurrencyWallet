@@ -18,7 +18,7 @@ const CurrenciesList = ({
   hiddenCoinsList,
   goToСreateWallet,
   getExCurrencyRate,
-  banners
+  banners,
 }) => {
   let settings = {
     infinite: true,

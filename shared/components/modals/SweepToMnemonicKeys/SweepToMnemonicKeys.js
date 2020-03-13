@@ -50,7 +50,7 @@ const langLabels = defineMessages({
   },
   noticeMakeSweep: {
     id: `${langPrefix}_NoticeMakeSweep`,
-    defaultMessage: `Переключиться на 12 слов.`,
+    defaultMessage: `Пожалуйста, переместите все средства на кошельки помеченные "new" (USDT и остальные токены переведите на Ethereum адрес). Затем нажмите кнопку "SWEEP". Старые адреса будут скрыты.`,
   },
   buttonRestore: {
     id: `${langPrefix}_ButtonRestoreOld`,
@@ -58,7 +58,7 @@ const langLabels = defineMessages({
   },
   buttonMakeSweep: {
     id: `${langPrefix}_ButtonMakeSweep`,
-    defaultMessage: `Переключить`,
+    defaultMessage: `Done`,
   },
 })
 
@@ -138,8 +138,19 @@ export default class SweepToMnemonicKeys extends React.Component {
     if (newBtcSMS) localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKey, newBtcSMS)
     if (newBtcMS) localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKey, newBtcMS)
 
+    localStorage.setItem(constants.localStorage.isSweepReady, true)
     console.log('Old', oldBtc, oldEth, oldBtcSMS, oldBtcMS)
     console.log('New', newBtc, newEth, newBtcSMS, newBtcMS)
+
+    const { data } = this.props
+
+    if (data
+      && data.onSweep
+      && data.onSweep instanceof Function
+    ) {
+      data.onSweep()
+    }
+
     this.setState({
       step: `ready`,
     })
