@@ -56,6 +56,8 @@ const setupContract = (ethAddress, contractAddress, nameContract, decimals, full
     throw new Error('web3 does not have given address')
   }
 
+  const isSweeped = actions.eth.isSweeped()
+
   const data = {
     address: ethAddress,
     balance: 0,
@@ -64,10 +66,32 @@ const setupContract = (ethAddress, contractAddress, nameContract, decimals, full
     currency: nameContract.toUpperCase(),
     contractAddress,
     decimals,
-    currencyRate: 1
+    currencyRate: 1,
+    isMnemonic: isSweeped,
   }
 
   reducers.user.setTokenAuthData({ name: data.name, data })
+
+  
+  if (!isSweeped && false) {
+    const mnemonicTokenData = {
+      address: actions.eth.getSweepAddress(),
+      balance: 0,
+      name: nameContract.toLowerCase(),
+      fullName: `${fullName} (New)`,
+      currency: nameContract.toUpperCase(),
+      contractAddress,
+      decimals,
+      currencyRate: 1,
+      isMnemonic: true,
+      reducerDataTarget: `mnemonic_${nameContract.toUpperCase()}`,
+    }
+
+    reducers.user.setTokenAuthData({
+      name: mnemonicTokenData.reducerDataTarget,
+      data: mnemonicTokenData,
+    })
+  }
 }
 
 

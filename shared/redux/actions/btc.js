@@ -124,6 +124,8 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
     && mnemonicKeys.btc === privateKey
   ) sweepToMnemonicReady = true
 
+  if (!privateKey && mnemonic) sweepToMnemonicReady = true
+
   if (privateKey) {
     const hash  = bitcoin.crypto.sha256(privateKey)
     const d     = BigInteger.fromBuffer(hash)
@@ -179,7 +181,7 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
       name: 'btcMnemonicData',
       data: {
         currency: 'BTC',
-        fullName: 'Bitcoin Mnemonic',
+        fullName: 'Bitcoin (New)',
         balance: 0,
         isBalanceFetched: false,
         balanceError: null,

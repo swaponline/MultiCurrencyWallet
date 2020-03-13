@@ -109,6 +109,8 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
     && mnemonicKeys.eth === privateKey
   ) sweepToMnemonicReady = true
 
+  if (!privateKey && mnemonic) sweepToMnemonicReady = true
+
   let data
 
   if (privateKey) {
@@ -161,7 +163,7 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
       name: 'ethMnemonicData',
       data: {
         currency: 'ETH',
-        fullName: 'Ethereum Mnemonic',
+        fullName: 'Ethereum (New)',
         balance: 0,
         isBalanceFetched: false,
         balanceError: null,
