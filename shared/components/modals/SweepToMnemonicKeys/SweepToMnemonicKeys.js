@@ -127,16 +127,16 @@ export default class SweepToMnemonicKeys extends React.Component {
     const newBtcMS = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKeyMnemonic)
 
     // backup current keys
-    localStorage.setItem(constants.privateKeyNames.btcOld, oldBtc)
-    localStorage.setItem(constants.privateKeyNames.ethOld, oldEth)
-    localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyOld, oldBtcSMS)
-    localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKeyOld, oldBtcMS)
+    if (oldBtc) localStorage.setItem(constants.privateKeyNames.btcOld, oldBtc)
+    if (oldEth) localStorage.setItem(constants.privateKeyNames.ethOld, oldEth)
+    if (oldBtcSMS) localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyOld, oldBtcSMS)
+    if (oldBtcMS) localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKeyOld, oldBtcMS)
 
     // Switch to mnemonic
-    localStorage.setItem(constants.privateKeyNames.btc, newBtc)
-    localStorage.setItem(constants.privateKeyNames.eth, newEth)
-    localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKey, newBtcSMS)
-    localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKey, newBtcMS)
+    if (newBtc) localStorage.setItem(constants.privateKeyNames.btc, newBtc)
+    if (newEth) localStorage.setItem(constants.privateKeyNames.eth, newEth)
+    if (newBtcSMS) localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKey, newBtcSMS)
+    if (newBtcMS) localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKey, newBtcMS)
 
     console.log('Old', oldBtc, oldEth, oldBtcSMS, oldBtcMS)
     console.log('New', newBtc, newEth, newBtcSMS, newBtcMS)
@@ -157,16 +157,16 @@ export default class SweepToMnemonicKeys extends React.Component {
     const mnemonicBtcMS = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKey)
 
     // backup mnemonic keys
-    localStorage.setItem(constants.privateKeyNames.btcMnemonic, mnemonicBtc)
-    localStorage.setItem(constants.privateKeyNames.ethMnemonic, mnemonicEth)
-    localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyMnemonic, mnemonicBtcSMS)
-    localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKeyMnemonic, mnemonicBtcMS)
+    if (mnemonicBtc) localStorage.setItem(constants.privateKeyNames.btcMnemonic, mnemonicBtc)
+    if (mnemonicEth) localStorage.setItem(constants.privateKeyNames.ethMnemonic, mnemonicEth)
+    if (mnemonicBtcSMS) localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyMnemonic, mnemonicBtcSMS)
+    if (mnemonicBtcMS) localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKeyMnemonic, mnemonicBtcMS)
 
     // Switch to old keys
-    localStorage.setItem(constants.privateKeyNames.btc, oldBtc)
-    localStorage.setItem(constants.privateKeyNames.eth, oldEth)
-    localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKey, oldBtcSMS)
-    localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKey, oldBtcMS)
+    if (oldBtc) localStorage.setItem(constants.privateKeyNames.btc, oldBtc)
+    if (oldEth) localStorage.setItem(constants.privateKeyNames.eth, oldEth)
+    if (oldBtcSMS) localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKey, oldBtcSMS)
+    if (oldBtcMS) localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKey, oldBtcMS)
 
     console.log('Old', oldBtc, oldEth, oldBtcSMS, oldBtcMS)
     console.log('Mnemonic', mnemonicBtc, mnemonicEth, mnemonicBtcSMS, mnemonicBtcMS)
