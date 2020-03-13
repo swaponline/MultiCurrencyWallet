@@ -136,6 +136,7 @@ const getBalances = () => {
 }
 
 const getExchangeRate = (sellCurrency, buyCurrency) => {
+  console.log('actions.user.getExchangeRate', sellCurrency, buyCurrency)
   if (buyCurrency.toLowerCase() === 'usd') {
     return new Promise((resolve, reject) => {
       let dataKey = sellCurrency.toLowerCase()
@@ -250,7 +251,8 @@ const getInfoAboutCurrency = (currencyNames) =>
   })
 
 const pullTransactions = transactions => {
-  let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date)
+  console.log('pullTransactions', transactions)
+  let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date).filter((item) => item)
   reducers.history.setTransactions(data)
 }
 
