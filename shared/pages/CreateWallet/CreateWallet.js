@@ -70,6 +70,11 @@ const CreateWallet = (props) => {
     actions.modals.open(constants.modals.RestoryMnemonicWallet, {})
   }
 
+  // @ToDo - Debug - remove later
+  const handleShowKeys = () => {
+    actions.modals.open(constants.modals.DownloadModal, {})
+  }
+
   const handleImportKeys = () => {
     actions.modals.open(constants.modals.ImportKeys, {})
   }
@@ -195,6 +200,12 @@ const CreateWallet = (props) => {
             <FormattedMessage
               id="CreateWallet_MakeSweep"
               defaultMessage="Sweep"
+            />
+          </button>
+          <button onClick={handleShowKeys}>
+            <FormattedMessage
+              id="CreateWallet_ShowOldKeys"
+              defaultMessage="My old keys"
             />
           </button>
           <button onClick={handleImportKeys}>
