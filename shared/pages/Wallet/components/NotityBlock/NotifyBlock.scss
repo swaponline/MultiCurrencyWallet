@@ -118,8 +118,10 @@
 }
 @media all and (min-width: 320px) and (max-width: 570px) {
   .notifyBlockDescr {
+    right: 10px;
+    font-size: 11px;
+    bottom: 10px;
     p {
-      font-size: 13px;
       margin-bottom: 4px;
     }
     p:last-child {
@@ -127,7 +129,7 @@
     }
   }
   .notifyBlock {
-    height: 265px;
+    height: 100px;
     > div {
       flex-direction: column;
       align-items: normal;

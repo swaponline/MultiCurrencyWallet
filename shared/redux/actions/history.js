@@ -4,13 +4,14 @@ import reducers from 'redux/core/reducers'
 import { getState } from 'redux/core'
 import getCurrencyKey from "helpers/getCurrencyKey";
 const pullTransactions = transactions => {
+  console.log('history pullTransactions')
   let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date)
   reducers.history.setTransactions(data)
 }
 
 const delay = (ms) => new Promise(resolve => setTimeout(() => resolve(true), ms))
 
-const setTransactions = async (address, type) => {
+const setTransactions = async (address, type, callback) => {
   
   let reducer = getCurrencyKey(type)
  
@@ -25,9 +26,12 @@ const setTransactions = async (address, type) => {
           }) :
           new Promise((resolve) => resolve([]))
       ),
-      // actions.btc.getInvoices(),
     ])
-    pullTransactions([...currencyTxs])
+    if (typeof callback === 'function') {
+      callback([...currencyTxs])
+    } else {
+      pullTransactions([...currencyTxs])
+    }
     /*
     await new Promise(async resolve => {
       const ercArray = await Promise.all(Object.keys(config.erc20)
