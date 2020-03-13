@@ -267,6 +267,7 @@ const setTransactions = async () => {
       actions.btc.getTransaction(),
       ... (isBtcSweeped) ? [] : [actions.btc.getTransaction(actions.btc.getSweepAddress())],
       actions.btc.getInvoices(),
+      ... (isBtcKeychainActivated) ? [] : [actions.btc.getInvoices(actions.btc.getSweepAddress())],
       actions.btcmultisig.getTransactionSMS(),
       actions.btcmultisig.getInvoicesSMS(),
       actions.btcmultisig.getTransactionUser(),
@@ -274,7 +275,9 @@ const setTransactions = async () => {
       actions.bch.getTransaction(),
       // actions.usdt.getTransaction(),
       actions.eth.getTransaction(),
+      ... (isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
       actions.eth.getInvoices(),
+      ... (isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
       actions.ltc.getTransaction(),
     ])
 
@@ -363,7 +366,10 @@ Private key: ${bchData.privateKey}\r\n
 }
 
 export const isOwner = (addr, currency) => {
+  console.log('isOwner', addr, currency)
   if (ethToken.isEthToken({ name: currency })) {
+    console.log('isToken')
+    if (actions.eth.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
     const {
       user: {
         ethData: {
@@ -375,7 +381,8 @@ export const isOwner = (addr, currency) => {
     return addr === address
   }
 
-  if (actions.btc.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
+  if (currency.toLowerCase() === `btc` && actions.btc.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
+  if (currency.toLowerCase() === `eth` && actions.eth.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
 
   const name = `${currency.toLowerCase()}Data`
   const { user } = getState()

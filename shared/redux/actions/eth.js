@@ -38,6 +38,24 @@ const isSweeped = () => {
   return true
 }
 
+const getAllMyAddresses = () => {
+  const {
+    user: {
+      ethData,
+      ethMnemonicData,
+    },
+  } = getState()
+
+  const retData = [ethData.address.toLowerCase()]
+
+  if (ethMnemonicData
+    && ethMnemonicData.address
+    && ethMnemonicData.address.toLowerCase() !== ethData.address.toLowerCase()
+  ) retData.push(ethMnemonicData.address.toLowerCase())
+
+  return retData
+}
+
 const getSweepAddress = () => {
   const {
     user: {
@@ -223,8 +241,10 @@ const fetchBalance = (address) =>
       console.log('Web3 doesn\'t work please again later ', e.error)
     })
 
-const getInvoices = () => {
-  const { user: { ethData: { address } } } = getState()
+const getInvoices = (address) => {
+  const { user: { ethData: { userAddress } } } = getState()
+
+  address = address || userAddress
 
   return actions.invoices.getInvoices({
     currency: 'ETH',
@@ -246,7 +266,7 @@ const getLinkToInfo = (tx) => {
   return `https://etherscan.io/tx/${tx}`
 }
 
-const getTransaction = (address) =>
+const getTransaction = (address, ownType) =>
   new Promise((resolve) => {
     const { user: { ethData: { address: userAddress } } } = getState()
     address = address || userAddress
@@ -255,13 +275,15 @@ const getTransaction = (address) =>
       resolve([])
     }
 
+    const type = (ownType) ? ownType : 'eth'
+
     const url = `?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=RHHFPNMAZMD6I4ZWBZBF6FA11CMW9AXZNM`
 
     return apiLooper.get('etherscan', url)
       .then((res) => {
         const transactions = res.result
           .filter((item) => item.value > 0).map((item) => ({
-            type: 'eth',
+            type,
             confirmations: item.confirmations,
             hash: item.hash,
             status: item.blockHash != null ? 1 : 0,
@@ -326,4 +348,5 @@ export default {
   sweepToMnemonic,
   isSweeped,
   getSweepAddress,
+  getAllMyAddresses,
 }

@@ -312,8 +312,10 @@ const fetchTxInfo = (hash) =>
       ...rest,
     }))
 
-const getInvoices = () => {
-  const { user: { btcData: { address } } } = getState()
+const getInvoices = (address) => {
+  const { user: { btcData: { userAddress } } } = getState()
+
+  address = address || userAddress
 
   return actions.invoices.getInvoices({
     currency: 'BTC',
@@ -321,7 +323,7 @@ const getInvoices = () => {
   })
 }
 
-const getAllMyAddresses = (address) => {
+const getAllMyAddresses = () => {
   const {
     user: {
       btcData,
