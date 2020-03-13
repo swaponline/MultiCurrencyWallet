@@ -74,7 +74,7 @@ export default class WallerSlider extends Component {
     const { banners } = this.props
     const { mnemonicDeleted } = this.state
 
-    const isPrivateKeysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
+    const isPrivateKeysSaved = false //localStorage.getItem(constants.localStorage.privateKeysSaved)
 
     let firstBtnTitle = <FormattedMessage id="descr282" defaultMessage="Show my keys" />
     if (!mnemonicDeleted) firstBtnTitle = <FormattedMessage id="ShowMyMnemonic" defaultMessage="Показать 12 слов" />
