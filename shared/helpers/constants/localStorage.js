@@ -25,4 +25,5 @@ export default {
   customERC: 'customERC',
   balanceActiveCurrency: 'balanceActiveCurrency',
   isSweepReady: 'isSweepReady',
+  signedUpWithPush: 'signedUpWithPush',
 }
