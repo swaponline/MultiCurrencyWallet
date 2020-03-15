@@ -72,9 +72,8 @@ const CreateWallet = (props) => {
           registrationDomain: window.top.location.host,
           userAgentRegistration: navigator.userAgent,
         }
-
+        await firestore.addUser(data)
         if (isSupportedPush) {
-          await firestore.addUser(data)
           await firebase.signUpWithPush(data)
           await firestore.signUpWithPush()
           window.localStorage.setItem(constants.localStorage.signedUpWithPush, 'true')
