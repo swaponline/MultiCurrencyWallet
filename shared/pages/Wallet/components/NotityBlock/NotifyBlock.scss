@@ -48,6 +48,11 @@
   right: 25px;
 }
 
+.bannersHeading {
+  font-size: 24px;
+  margin-bottom: 25px;
+}
+
 @media all and (min-width: 768px) and (max-width: 992px) {
   .notifyBlock {
     height: max-content;
@@ -102,6 +107,9 @@
   }
   .notifyBlockDescr {
     margin-left: 0;
+  }
+  .bannersHeading {
+    margin-left: 25px;
   }
 }
 

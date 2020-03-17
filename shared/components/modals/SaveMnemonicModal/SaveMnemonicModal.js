@@ -310,7 +310,7 @@ export default class SaveMnemonicModal extends React.Component {
                 {
                   enteredWords.map((word,index) => {
                     return (
-                      <button key={index} onClick={() => {}}>
+                      <button key={index} onClick={() => {}} className="ym-hide-content">
                         {word}
                       </button>
                     )
