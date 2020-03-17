@@ -114,6 +114,7 @@ export default class WallerSlider extends Component {
                     firstBtn={firstBtnTitle}
                     widthIcon="80"
                     background="6144e5"
+                    descr="Show 12 words"
                     firstFunc={mnemonicDeleted ? this.handleShowKeys : this.handleShowMnemonic}
                   />
                 </div>
