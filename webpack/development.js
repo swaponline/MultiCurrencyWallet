@@ -22,7 +22,7 @@ export default (webpackConfig) => {
     tls: 'empty',
   }
 
-  webpackConfig.devtool = 'cheap-module-source-map'
+  webpackConfig.devtool = 'eval'
 
   webpackConfig.devServer = {
     publicPath: webpackConfig.output.publicPath,

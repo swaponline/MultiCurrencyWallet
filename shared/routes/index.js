@@ -24,6 +24,7 @@ import CreateInvoice from 'pages/CreateInvoice/CreateInvoice'
 import config from 'app-config'
 
 import ScrollToTop from '../components/layout/ScrollToTop/ScrollToTop'
+import TokenMultisignProposeWallet from '../components/modals/TokenMultisignProposeWallet/TokenMultisignProposeWallet'
 
 
 const routes = (
@@ -59,6 +60,8 @@ const routes = (
 
       <Route path={`${localisePrefix}${links.multisign}/btc/:action/:data/:peer`} component={BtcMultisignProcessor} />
       <Route path={`${localisePrefix}${links.multisign}/btc/:action/:data`} component={BtcMultisignProcessor} />
+      
+      <Route path={`${localisePrefix}/test`} component={TokenMultisignProposeWallet} />
 
       <Route path={`${localisePrefix}${links.createInvoice}/:type/:wallet`} component={CreateInvoice} />
 
@@ -66,7 +69,7 @@ const routes = (
       <Route exact path={`${localisePrefix}${links.notFound}`} component={NotFound} />
       <Route exact path={`${localisePrefix}${links.home}`} component={Wallet} />
 
-      <Route path={`${localisePrefix}${links.currencyWallet}`} component={Wallet} />
+      <Route path={`${localisePrefix}/test`} component={Wallet} />
       <Route path={`${localisePrefix}${links.oldWallet}`} component={OldWallet} />
       <Route path={`${localisePrefix}${links.home}:currency`} component={Currency} />
 

@@ -194,7 +194,7 @@ export default class App extends React.Component {
       multiTabs: false
     });
     this.preventMultiTabs(true);
-  };
+  }
 
   render() {
     const { fetching, multiTabs, error } = this.state;

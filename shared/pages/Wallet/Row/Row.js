@@ -146,6 +146,8 @@ export default class Row extends Component {
       case 'BTC (Multisig)':
         await actions.btcmultisig.getBalanceUser()
         break
+      case 'USDT (Multisig)':
+        await actions.usdtmultisig.getBalanceUser()
       default:
         await actions[currency.toLowerCase()].getBalance(currency.toLowerCase(), address)
     }
@@ -217,12 +219,12 @@ export default class Row extends Component {
       item
     } = this.props
 
-    const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals
+    const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser, WithdrawMultisigUserToken } = constants.modals
 
     let withdrawModalType = Withdraw
     if (currency === 'BTC (SMS-Protected)') withdrawModalType = WithdrawMultisigSMS
     if (currency === 'BTC (Multisig)') withdrawModalType = WithdrawMultisigUser
-
+    if (currency === 'USDT (Multisig)') withdrawModalType = WithdrawMultisigUserToken
 
     actions.modals.open(withdrawModalType, item)
   }
@@ -389,6 +391,9 @@ export default class Row extends Component {
       case 'btc (sms-protected)':
         targetCurrency = 'btc'
         break;
+      case 'usdt (multisig)':
+        targetCurrency = 'usdt'
+        break;
     }
 
     const isToken = helpers.ethToken.isEthToken({ name: currency })
@@ -508,6 +513,7 @@ export default class Row extends Component {
 
     if (currencyView == 'BTC (Multisig)') currencyView = 'BTC'
     if (currencyView == 'BTC (SMS-Protected)') currencyView = 'BTC'
+    if (currencyView == 'USDT (Multisig)') currencyView = 'USDT'
 
     if (currencyView !== 'BTC') {
       dropDownMenuItems.push({

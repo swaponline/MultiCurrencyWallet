@@ -7,6 +7,10 @@ const getLink = (currency, txId) => {
     prefix = 'btc'
   }
 
+  if (prefix === 'usdt (multisig)') {
+    prefix = 'usdt'
+  }
+
   if (helpers[prefix]
     && typeof helpers[prefix].getLinkToInfo === 'function'
   ) {
@@ -21,6 +25,10 @@ const getInfo = (currency, txRaw) => {
 
   if(['btc (multisig)', 'btc (sms-protected)'].includes(prefix)) {
     prefix = 'btc'
+  }
+
+  if (prefix === 'usdt (multisig)') {
+    prefix = 'usdt'
   }
 
   if (helpers[prefix]

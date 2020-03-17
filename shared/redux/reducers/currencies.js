@@ -88,6 +88,15 @@ const initialState = {
       addAssets: false,
       dontCreateOrder: true,
     }] : [],
+    {
+      name: 'USDT (Multisig)',
+      title: 'USDT (Multisig)',
+      icon: 'usdt',
+      value: 'usdtMultisig',
+      fullTitle: 'usdtMultisig',
+      addAssets: false,
+      dontCreateOrder: true,
+    },
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.qtum) ? [{
       name: 'QTUM',
       title: 'QTUM',

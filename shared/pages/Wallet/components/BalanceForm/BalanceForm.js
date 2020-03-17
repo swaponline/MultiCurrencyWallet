@@ -30,6 +30,9 @@ function BalanceForm({
     case 'btc (multisig)':
       currency = 'BTC'
       break
+    case 'usdt (multisig)':
+      currency = 'USDT'
+      break
   }
 
   //console.log('activeCurrency', activeCurrency)

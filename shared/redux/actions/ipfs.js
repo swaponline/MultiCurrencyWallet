@@ -21,7 +21,8 @@ const allPeersLoaded = () => {
 
 const onReady = (cb) => {
   const _checkFunc = () => {
-    const { ipfs : { isOnline } } = getState()
+    const { ipfs : { isOnline, peer } } = getState()
+
     if (isOnline) {
       cb()
     } else {

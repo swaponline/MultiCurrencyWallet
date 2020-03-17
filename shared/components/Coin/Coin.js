@@ -13,6 +13,7 @@ const defaultCurrencyColors = {
   'btc (multisig)': 'orange',
   'btc (sms-protected)': 'orange',
   'usdt': '#33a681',
+  'usdt (multisig)': '#33a681'
 }
 
 const Coin = ({ className, size, name }) => {

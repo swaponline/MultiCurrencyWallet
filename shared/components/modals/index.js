@@ -27,7 +27,10 @@ import BtcMultisignSwitch from './BtcMultisignSwitch/BtcMultisignSwitch'
 import ShareModal from './Share/Share'
 import InfoPay from './InfoPay/InfoPay'
 import BtcMultisignConfirmTx from './BtcMultisignConfirmTx/BtcMultisignConfirmTx'
-
+import TokenMultisignProposeWallet from './TokenMultisignProposeWallet/TokenMultisignProposeWallet'
+import TokenMultisignDeployWallet from './TokenMultisignDeployWallet/TokenMultisignDeployWallet'
+import TokenMultisignProposeTransaction from './TokenMultisignProposeTransaction/TokenMultisignProposeTransaction'
+import TokenMultisignBroadcastTransaction from './TokenMultisignBroadcastTransaction/TokenMultisignBroadcastTransaction'
 
 export default {
   DeclineOrdersModal,
@@ -59,4 +62,8 @@ export default {
   AddCustomERC20,
   BtcMultisignSwitch,
   BtcMultisignConfirmTx,
+  TokenMultisignProposeWallet,
+  TokenMultisignDeployWallet,
+  TokenMultisignProposeTransaction,
+  TokenMultisignBroadcastTransaction
 }

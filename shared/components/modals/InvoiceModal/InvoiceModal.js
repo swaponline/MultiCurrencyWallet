@@ -134,6 +134,9 @@ export default class InvoiceModal extends React.Component {
       case 'BTC (Multisig)':
         currency = 'BTC'
         break
+      case 'USDT (Multisig)':
+        currency = 'USDT'
+        break
     }
 
     try {
@@ -178,6 +181,8 @@ export default class InvoiceModal extends React.Component {
       case 'BTC (Multisig)':
         checkCurrency = 'BTC'
         break
+      case 'USDT (Multisig)':
+        checkCurrency = 'USDT'
     }
 
     return typeforce.isCoinAddress[checkCurrency](checkAddress)

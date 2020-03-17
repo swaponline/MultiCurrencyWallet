@@ -50,6 +50,8 @@ export default class InvoiceLinkModal extends React.Component {
       case 'BTC (Multisig)':
         type = 'btc'
         break;
+      case 'USDT (Multisig)':
+        type = 'usdt'
     }
     const invoiceLink = `${location.origin}/#${links.createInvoice}/${type}/${address}`
 

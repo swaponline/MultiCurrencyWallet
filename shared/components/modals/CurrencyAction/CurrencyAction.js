@@ -57,11 +57,12 @@ export default class CurrencyAction extends React.Component {
         address
       })
     } else {
-      const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals
+      const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser, WithdrawMultisigUserToken } = constants.modals
 
       let withdrawModalType = Withdraw
       if (item.currency === 'BTC (SMS-Protected)') withdrawModalType = WithdrawMultisigSMS
       if (item.currency === 'BTC (Multisig)') withdrawModalType = WithdrawMultisigUser
+      if (item.currency === 'USDT (Multisig)') withdrawModalType = WithdrawMultisigUserToken
 
       actions.modals.open(withdrawModalType, item)
     }
@@ -113,6 +114,10 @@ export default class CurrencyAction extends React.Component {
                     itemTitle = 'BTC (SMS)'
                     itemFullTitle = 'BTC (SMS)'
                     break
+                  case 'USDT (Multisig)':
+                    iconName = 'usdt'
+                    itemTitle = 'USDT (MTS)'
+                    itemFullTitle = 'USDT (MTS)'
                 }
 
                 if (!icons[iconName] || !styles[iconName]) {

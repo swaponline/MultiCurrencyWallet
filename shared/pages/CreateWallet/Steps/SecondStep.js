@@ -33,6 +33,7 @@ const CreateWallet = (props) => {
       btc: true,
       eth: true,
       erc: true,
+      usdt: true,
     },
     sms: {},
     g2fa: {},
@@ -61,6 +62,11 @@ const CreateWallet = (props) => {
       url: 'https://noxon.wpmix.net/counter.php?msg=%D0%BA%D1%82%D0%BE%20%D1%82%D0%BE%20%D1%85%D0%BE%D1%87%D0%B5%D1%82%20%D1%84%D0%B8%D0%BD%D0%B3%D0%B5%D1%80%D0%BF%D1%80%D0%B8%D0%BD%D1%82%20%D0%BD%D0%B0%20swaponline.io',
       method: 'post',
     })
+  }
+
+  if (currencies.USDT) {
+    _protection.multisign.usdt = true
+    _activated.multisign.usdt = actions.token.checkTokenActivated('USDT')
   }
 
   const [border, setBorder] = useState({
@@ -142,8 +148,8 @@ const CreateWallet = (props) => {
       capture: locale === 'en' ?
         'Transactions are confirmed from another device and / or by another person.' :
         'Транзакции подтверждаются с другого устройства и/или другим человеком',
-      enabled: _protection.multisign.btc,
-      activated: _activated.multisign.btc,
+      enabled: _protection.multisign.btc || _protection.multisign.usdt,
+      activated: _activated.multisign.btc || _activated.multisign.usdt,
     },
   ]
 

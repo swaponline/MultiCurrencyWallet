@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment, createElement } from 'react'
 import PropTypes from 'prop-types'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux'
@@ -6,6 +6,7 @@ import { ConnectedRouter } from 'react-router-redux'
 import App from 'containers/App/App'
 
 import IntlProviderContainer from 'containers/IntlProviderContainer'
+import CreateWallet from '../../pages/CreateWallet/Steps/FirstStep'
 
 
 export default class Root extends React.PureComponent {

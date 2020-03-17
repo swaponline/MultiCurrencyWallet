@@ -11,6 +11,9 @@ export default (currency) => {
     case 'btc (multisig)':
       key = 'btc'
       break;
+    case 'usdt (multisig)':
+      key = 'usdt'
+      break
     case 'eth':
     case 'bnb':
     case 'mdl':

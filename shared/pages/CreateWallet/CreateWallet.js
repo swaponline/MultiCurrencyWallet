@@ -143,6 +143,14 @@ const CreateWallet = (props) => {
             })
             return
           }
+          if (currencies.USDT) {
+            actions.core.markCoinAsVisible('USDT (Multisig)')
+            console.info('MULTISIGNATURE USDT')
+            actions.modals.open(constants.modals.TokenMultisignProposeWallet, {
+              callback: handleClick,
+              showCloseButton: false
+            })
+          }
           break
         default:
           console.warn('unconnected secure type')

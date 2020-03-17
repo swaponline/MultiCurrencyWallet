@@ -16,6 +16,8 @@ export const getActivatedCurrencies = () => {
   Object.keys(config.erc20).forEach((token) => {
     currencies.push(token.toUpperCase())
   })
+  
+  currencies.push('USDT (Multisig)')
 
   return currencies
 }

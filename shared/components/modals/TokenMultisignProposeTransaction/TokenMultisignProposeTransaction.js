@@ -1,50 +1,30 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import helpers, { constants } from 'helpers'
 import actions from 'redux/actions'
-import Link from 'sw-valuelink'
 import { connect } from 'redaction'
-import config from 'app-config'
-
 import cssModules from 'react-css-modules'
-
 import defaultStyles from '../Styles/default.scss'
-import styles from './MultisignJoinLink.scss'
-
-import { BigNumber } from 'bignumber.js'
+import styles from './TokenMultisignProposeTransaction.scss'
 import Modal from 'components/modal/Modal/Modal'
-import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
-import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
-import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { ShareLink } from 'components/controls'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-import ReactTooltip from 'react-tooltip'
-import { isMobile } from 'react-device-detect'
-
-import typeforce from 'swap.app/util/typeforce'
-// import { isCoinAddress } from 'swap.app/util/typeforce'
-import minAmount from 'helpers/constants/minAmount'
-import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import links from 'helpers/links'
 import SwapApp from 'swap.app'
 
-
-import CopyToClipboard from 'react-copy-to-clipboard'
-
-
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
 @injectIntl
 @connect(
   ({
-    user: { btcMultisigUserData },
+    user: { ethData },
   }) => ({
-    btcData: btcMultisigUserData,
+    //    multisigData: tokenMultisigUserData,
+    ethData: ethData
   })
 )
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
-export default class MultisignJoinLink extends React.Component {
-
+export default class TokenMultisignProposeTransaction extends React.Component {
   static propTypes = {
     name: PropTypes.string,
     data: PropTypes.object,
@@ -54,21 +34,28 @@ export default class MultisignJoinLink extends React.Component {
     super(props)
 
     this.state = {
-      joinLink: ''
+      joinLink: '',
+      allowClose: false
     }
   }
 
-  componentDidMount() {
-    const publicKey = this.props.btcData.publicKey.toString('hex')
+  async componentDidMount() {
+    console.info('DID MOUNT')
 
-    let { data: { action } } = this.props
+    await sleep(5000)
 
-    console.log(action, this.props)
-    action = (action) ? action : `join`
+    const ethereumAddress = this.props.ethData.address
+    const ipfsAddress = SwapApp.shared().services.room.peer
 
     this.setState({
-      joinLink: `${location.origin}/#${links.multisign}/btc/${action}/${publicKey}/${SwapApp.shared().services.room.peer}`
-    })  
+      joinLink: `${location.origin}/#${links.multisign}/usdt/create/${ethereumAddress}/${ipfsAddress}`,
+    })
+
+    SwapApp.shared().services.room.subscribe('usdt multisig created', (data) => {
+      this.setState({
+        allowClose: true
+      })
+    })
   }
 
   handleClose = () => {
@@ -86,21 +73,15 @@ export default class MultisignJoinLink extends React.Component {
   }
 
   handleFinish = async () => {
-    const { name } = this.props
+    actions.modals.close('TokenMultisig')
 
-    actions.modals.close(name)
-
-    if (this.props.data.callback) {
-      this.props.data.callback()
-    }
+    history.push(localisedUrl(locale, links.home))
   }
 
   render() {
     //const { phone, step, error, smsCode, smsConfirmed, isShipped } = this.state
-    const { name, intl } = this.props
-    const { joinLink, isLinkCopied } = this.state
-
-    const { showCloseButton } = this.props.data
+    const { intl } = this.props
+    const { joinLink, allowClose } = this.state
 
     const langLabels = defineMessages({
       multiSignJoinLinkMessage: {
@@ -109,7 +90,7 @@ export default class MultisignJoinLink extends React.Component {
       },
       multiSignJoinLink: {
         id: 'multiSignJoinLink',
-        defaultMessage: `Создание BTC-Multisign кошелька`,
+        defaultMessage: `Создание USDT-Multisign кошелька`,
       },
       multiSignJoinLinkCopied: {
         id: 'multiSignJoinLinkCopied',
@@ -122,18 +103,21 @@ export default class MultisignJoinLink extends React.Component {
     })
 
     return (
-      <Modal name={name} title={`${intl.formatMessage(langLabels.multiSignJoinLink)}`} onClose={this.handleClose} showCloseButton={showCloseButton}>
+      <Modal name="TokenMultisignProposeWallet" title={`${intl.formatMessage(langLabels.multiSignJoinLink)}`} onClose={this.handleClose} showCloseButton={true}>
         <Fragment>
           <p styleName="notice">
-            <FormattedMessage { ... langLabels.multiSignJoinLinkMessage } />
+            <FormattedMessage {...langLabels.multiSignJoinLinkMessage} />
           </p>
           <div>
             <ShareLink link={joinLink} />
           </div>
           <hr />
-          <Button blue styleName="finishButton" fullWidth onClick={this.handleFinish}>
-            <FormattedMessage id="BTCMS_CreateWalletReadyButton" defaultMessage="Готово. Открыть кошелек" />
+
+          {allowClose == false && <FormattedMessage id="USDTMS_CreateWalletCaption" defaultMessage="Do not close this windows, wait until participant will create wallet" />}
+          {allowClose == true && <Button blue styleName="finishButton" fullWidth onClick={this.handleFinish}>
+            <FormattedMessage id="USDTMS_CreateWalletReadyButton" defaultMessage="Готово. Открыть кошелек" />
           </Button>
+          }
         </Fragment>
       </Modal>
     )

@@ -113,6 +113,8 @@ const getExchangeRate = (sellCurrency, buyCurrency) => {
         case 'btc (multisig)':
           dataKey = 'btc'
           break
+        case 'usdt (multisig)':
+          dataKey = 'usdt'
         default:
       }
       const { user } = getState()

@@ -24,6 +24,9 @@ export default class QR extends PureComponent {
       case 'btc (sms-protected)':
         network = 'btc'
         break;
+      case 'usdt (multisig)':
+        network = 'usdt'
+        break
     }
 
     const addressHasNetwork = /:/.test(address)

@@ -249,6 +249,8 @@ const setAllowanceForToken = async ({ name, to, targetAllowance, ...config }) =>
   return approve({ name, to, amount: newTargetAllowance, ...config })
 }
 
+const checkTokenActivated = (currency) => false
+
 export default {
   login,
   getBalance,
@@ -259,4 +261,5 @@ export default {
   fetchBalance,
   AddCustomERC20,
   GetCustromERC20,
+  checkTokenActivated
 }

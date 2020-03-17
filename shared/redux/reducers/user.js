@@ -39,6 +39,15 @@ export const initialState = {
     balanceError: null,
     infoAboutCurrency: null
   },
+  usdtMultisigData: {
+    address: '0x0',
+    publicKey: '0x0',
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'USDT (Multisig)',
+    fullName: 'USDT (Multisig)',
+    balanceError: null,
+  },
   /*bchData: {
     balance: 0,
     isBalanceFetched: false,
