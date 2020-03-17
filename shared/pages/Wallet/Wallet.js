@@ -196,7 +196,6 @@ export default class Wallet extends Component {
       this.handleWithdraw(params)
     }
     this.getInfoAboutCurrency()
-    this.getBanners()
 
     if (isMobile) {
       this.balanceRef.current.scrollIntoView({
@@ -205,17 +204,6 @@ export default class Wallet extends Component {
     }
   }
 
-  getBanners = () =>
-    axios
-      .get('https://noxon.wpmix.net/swapBanners/banners.php')
-      .then(result => {
-        this.setState({
-          banners: result.data
-        })
-      })
-      .catch(error => {
-        console.error('getBanners:', error)
-      })
 
   getInfoAboutCurrency = async () => {
     const { currencies } = this.props
@@ -492,7 +480,6 @@ export default class Wallet extends Component {
                 !isFetching ?  */}
               <CurrenciesList
                 tableRows={tableRows}
-                banners={banners}
                 {...this.state}
                 {...this.props}
                 goToСreateWallet={this.goToСreateWallet}

@@ -160,6 +160,24 @@
   -webkit-background-size: 3200px 104px;
 }
 
+.banners {
+  padding: 0;
+  top: auto;
+  margin: 0;
+  height: 250px;
+  display: flex;
+  justify-content: space-between;
+  .one,
+  .two,
+  .three,
+  .four {
+    position: relative;
+    height: 220px;
+    width: 167px;
+  }
+}
+
+
 .textBlock {
   position: absolute;
   left: 50%;
@@ -199,5 +217,24 @@
   .four,
   .five {
     display: none;
+  }
+  .banners {
+    padding: 0 12px;
+    top: auto;
+    margin: 0;
+    height: 130px;
+    display: flex;
+    justify-content: space-between;
+    .one,
+    .two,
+    .three,
+    .four {
+      position: relative;
+      height: 100px;
+      width: 32%;
+    }
+    .four {
+      display: none;
+    }
   }
 }

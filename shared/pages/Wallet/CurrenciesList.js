@@ -18,7 +18,6 @@ const CurrenciesList = ({
   hiddenCoinsList,
   goToСreateWallet,
   getExCurrencyRate,
-  banners,
 }) => {
   let settings = {
     infinite: true,
@@ -30,14 +29,10 @@ const CurrenciesList = ({
    
   return (
     <div styleName="yourAssets">
-      {banners && (exConfig && exConfig.opts && exConfig.opts.showWalletBanners)  ? (
+      {(exConfig && exConfig.opts && exConfig.opts.showWalletBanners)  ? (
         <Fragment>
-          <h3 styleName="yourAssetsHeading">
-            <FormattedMessage id="ForYou" defaultMessage="For you" />
-          </h3>
           {!isWidgetBuild && (
             <Slider
-              banners={banners}
               {...this.state}
             />
           )}
