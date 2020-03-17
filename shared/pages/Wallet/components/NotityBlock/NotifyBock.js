@@ -23,11 +23,12 @@ const NotifyBlock = ({
   history
 }) => {
   const handleGoto = () => {
+    console.log('descr', descr)
+    console.log('hostname', window.location.hostname)
     if(link && link.includes('http')) {
       window.location = link;
     } else {
       history.push(link)
-      firstFunc()
     }
     axios({
       url: `https://noxon.wpmix.net/counter.php?msg=${descr}host=${window.location.hostname}`,
@@ -52,11 +53,6 @@ const NotifyBlock = ({
         <div styleName="notifyBlockDescr">
           <span >{descr}</span>
           <span>{tooltip}</span>
-          {firstBtn && (
-            <span transparent>
-              {firstBtn}
-            </span>
-          )}
         </div>
       </div>
     </div>
