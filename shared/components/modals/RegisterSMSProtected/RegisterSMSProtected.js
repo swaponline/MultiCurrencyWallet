@@ -85,7 +85,7 @@ export default class RegisterSMSProtected extends React.Component {
       })
       return
     } else {
-      const mnemonicWallet = actions.btc.getWalletByWords(mnemonic.trim())
+      const mnemonicWallet = actions.btc.getWalletByWords(mnemonic.trim(), 1)
       this.setState({
         mnemonicWallet,
         isMnemonicValid: true,
@@ -191,7 +191,7 @@ export default class RegisterSMSProtected extends React.Component {
       })
       return
     } else {
-      const mnemonicWallet = actions.btc.getWalletByWords(mnemonic.trim())
+      const mnemonicWallet = actions.btc.getWalletByWords(mnemonic.trim(), 1)
       this.setState({
         mnemonicWallet,
         isShipped: true,
