@@ -25,6 +25,7 @@ const NotifyBlock = ({
   const handleGoto = () => {
     console.log('descr', descr)
     console.log('hostname', window.location.hostname)
+    firstFunc && firstFunc()
     if(link && link.includes('http')) {
       window.location = link;
     } else {

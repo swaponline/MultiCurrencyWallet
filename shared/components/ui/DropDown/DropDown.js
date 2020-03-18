@@ -120,8 +120,6 @@ export default class DropDown extends Component {
         .filter(item => item.value !== selectedValue)
     }
 
-    console.log('className', className)
-
     return (
       <ClickOutside
         onClickOutside={
