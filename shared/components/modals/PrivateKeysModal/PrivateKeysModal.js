@@ -145,7 +145,7 @@ export default class PrivateKeysModal extends React.PureComponent {
         name={name}
         title={intl.formatMessage(title.PrivateKeysModal)}
       >
-        <div styleName="content">
+        <div styleName="content" className="ym-hide-content">
               <Fragment>
                 <div styleName="title">
                   <FormattedMessage

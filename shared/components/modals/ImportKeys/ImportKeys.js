@@ -294,7 +294,7 @@ export default class ImportKeys extends Component {
     */
     return (
       <Modal name={this.props.name} title={intl.formatMessage(title.Import)} data={data} onClose={this.state.onClose}>
-        <div styleName="modal">
+        <div styleName="modal" className="ym-hide-content">
           <p>
             <FormattedMessage id="ImportKeys107" defaultMessage="This procedure will rewrite your private key. If you are not sure about it, we recommend to press cancel" />
           </p>

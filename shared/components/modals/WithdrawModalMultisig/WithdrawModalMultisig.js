@@ -544,7 +544,7 @@ export default class WithdrawModalMultisig extends React.Component {
                 defaultMessage="Подтверждение транзакции секретной фразой"
               />
             </p>
-            <div styleName="highLevel">
+            <div styleName="highLevel" className="ym-hide-content">
               <FieldLabel label>
                 <FormattedMessage id="registerSMSModalWords" defaultMessage="Секретная фраза (12 слов):" />
               </FieldLabel>
