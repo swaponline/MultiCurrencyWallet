@@ -23,8 +23,10 @@ const NotifyBlock = ({
   history
 }) => {
   const handleGoto = () => {
-    console.log('link', link)
-    if(link.includes('http')) {
+    console.log('descr', descr)
+    console.log('hostname', window.location.hostname)
+    firstFunc && firstFunc()
+    if(link && link.includes('http')) {
       window.location = link;
     } else {
       history.push(link)
@@ -52,11 +54,6 @@ const NotifyBlock = ({
         <div styleName="notifyBlockDescr">
           <span >{descr}</span>
           <span>{tooltip}</span>
-          {firstBtn && (
-            <span transparent onClick={firstFunc}>
-              {firstBtn}
-            </span>
-          )}
         </div>
       </div>
     </div>

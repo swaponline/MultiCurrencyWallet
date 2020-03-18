@@ -12,8 +12,10 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import { isMobile } from 'react-device-detect'
 
 import config from 'app-config'
-import { constants } from 'helpers'
 import actions from 'redux/actions'
+import { firebase, constants } from 'helpers'
+import firestore from 'helpers/firebase/firestore'
+
 
 import Explanation from '../Explanation'
 import icons from '../images'
@@ -57,6 +59,29 @@ const CreateWallet = (props) => {
     _activated.g2fa.btc = actions.btcmultisig.checkG2FAActivated()
     _activated.multisign.btc = actions.btcmultisig.checkUserActivated()
     _activated.fingerprint.btc = false
+  }
+
+  const isSupportedPush = firebase.isSupported()
+
+  const onCreateTrigger = async () => {
+    if (!window.localStorage.getItem(constants.localStorage.signedUpWithPush)) {
+      try {
+        const ipInfo = await firebase.getIPInfo()
+        const data = {
+          ...ipInfo,
+          registrationDomain: window.top.location.host,
+          userAgentRegistration: navigator.userAgent,
+        }
+        await firestore.addUser(data)
+        if (isSupportedPush) {
+          await firebase.signUpWithPush(data)
+          await firestore.signUpWithPush()
+          window.localStorage.setItem(constants.localStorage.signedUpWithPush, 'true')
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
   }
 
   const [border, setBorder] = useState({
@@ -103,6 +128,7 @@ const CreateWallet = (props) => {
       }).catch(e => console.error(e))
     }
     onClick()
+    onCreateTrigger()
   }
 
   const handleClick = (index, el) => {

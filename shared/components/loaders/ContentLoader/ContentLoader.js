@@ -5,8 +5,9 @@ import styles from './ContentLoader.scss'
 import ContentSection from './components/ContentSection/ContentSection';
 import DescrSection from './components/DescrSection/DescrSection';
 import BalanceSection from './components/BalanceSection/BalanceSection';
+import BannersSection from './components/BannersSection/BannersSection';
 
-function ContentLoader({ empty, inner, rideSideContent, leftSideContent }) {
+function ContentLoader({ empty, inner, rideSideContent, leftSideContent, banners}) {
 
   return (
     <Fragment>
@@ -33,6 +34,13 @@ function ContentLoader({ empty, inner, rideSideContent, leftSideContent }) {
         leftSideContent ? (
           <div styleName="animationLoading leftSideContent">
             <BalanceSection />
+          </div>
+        ) : ''
+      }
+      {
+        banners ? (
+          <div styleName="animationLoading banners">
+            <BannersSection />
           </div>
         ) : ''
       }
