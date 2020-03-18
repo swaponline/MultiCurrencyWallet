@@ -157,7 +157,7 @@ export default class RestoryMnemonicWallet extends React.Component {
                   <FormattedMessage { ...langLabels.mnemonicInvalid } />
                 </div>
               )}
-              <div styleName="highLevel">
+              <div styleName="highLevel" className="ym-hide-content">
                 <FieldLabel label>
                   <FormattedMessage {...langLabels.mnemonicLabel} />
                 </FieldLabel>
