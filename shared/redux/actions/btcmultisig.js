@@ -199,8 +199,10 @@ const isBTCMSUserAddress = (address) => {
   return false
 }
 
+// @ToDo - Remove.
 const isBTCAddress = (address) => {
-  return actions.btc.getAllMyAddresses().indexOf(address) !== -1
+  console.warn(`Deprecated call isBTCAddress`)
+  return actions.btc.getDataByAddress(address)
 
   const {
     user: {
