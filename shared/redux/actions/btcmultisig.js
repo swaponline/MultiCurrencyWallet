@@ -520,7 +520,7 @@ const beginRegisterSMS = async (phone, mnemonic) => {
   const publicKeys = []
   if (mnemonic) {
     // 2of3 - extract public key from mnemonic
-    const mnemonicAccount = actions.btc.getWalletByWords(mnemonic)
+    const mnemonicAccount = actions.btc.getWalletByWords(mnemonic, 1)
     publicKeys.push(mnemonicAccount.publicKey)
   }
   publicKeys.push(publicKey.toString('Hex'))
@@ -562,7 +562,7 @@ const confirmRegisterSMS = async (phone, smsCode, mnemonic) => {
   let mnemonicKey = false
   if (mnemonic) {
     // 2of3 - extract public key from mnemonic
-    const mnemonicAccount = actions.btc.getWalletByWords(mnemonic)
+    const mnemonicAccount = actions.btc.getWalletByWords(mnemonic, 1)
     mnemonicKey = mnemonicAccount.publicKey
     publicKeys.push(mnemonicKey)
   }
@@ -609,7 +609,7 @@ const addSMSWallet = async (mnemonicOrKey) => {
   
   let mnemonicKey = mnemonicOrKey
   if (actions.btc.validateMnemonicWords(mnemonicOrKey)) {
-    const mnemonicAccount = actions.btc.getWalletByWords(mnemonicOrKey)
+    const mnemonicAccount = actions.btc.getWalletByWords(mnemonicOrKey, 1)
     mnemonicKey = mnemonicAccount.publicKey
   }
 
@@ -1052,8 +1052,8 @@ const parseRawTX =  async ( txHash ) => {
 }
 
 
-const signMofNByMnemonic = async ( txHash, option_M, publicKeys, mnemonic, path) => {
-  const mnemonicWallet = actions.btc.getWalletByWords(mnemonic, path)
+const signMofNByMnemonic = async ( txHash, option_M, publicKeys, mnemonic, walletNumber, ownPath) => {
+  const mnemonicWallet = actions.btc.getWalletByWords(mnemonic, walletNumber, ownPath)
   if (mnemonicWallet) {
     console.log(mnemonicWallet)
     console.log( txHash )
@@ -1125,7 +1125,7 @@ const signMultiSign = async ( txHash , wallet) => {
   return signMofN( txHash, 2, publicKeys, privateKey)
 }
 
-const signSmsMnemonic = ( txHash, mnemonic, path ) => {
+const signSmsMnemonic = ( txHash, mnemonic) => {
   const {
     user: {
       btcMultisigSMSData: {
@@ -1134,12 +1134,12 @@ const signSmsMnemonic = ( txHash, mnemonic, path ) => {
     },
   } = getState()
 
-  return signMofNByMnemonic( txHash, 2, publicKeys, mnemonic, path)
+  return signMofNByMnemonic( txHash, 2, publicKeys, mnemonic, 1)
 }
 
-const signSmsMnemonicAndBuild = ( txHash, mnemonic, path ) => {
+const signSmsMnemonicAndBuild = ( txHash, mnemonic ) => {
   return new Promise(async (resolve, reject) => {
-    const rawTx = signSmsMnemonic( txHash, mnemonic, path )
+    const rawTx = signSmsMnemonic( txHash, mnemonic )
     if (!rawTx) {
       reject('rawTx empty')
     } else {
@@ -1148,7 +1148,7 @@ const signSmsMnemonicAndBuild = ( txHash, mnemonic, path ) => {
   })
 }
 
-const checkSmsMnemonic = ( mnemonic, path ) => {
+const checkSmsMnemonic = ( mnemonic ) => {
   const {
     user: {
       btcMultisigSMSData: {
@@ -1157,7 +1157,7 @@ const checkSmsMnemonic = ( mnemonic, path ) => {
     },
   } = getState()
 
-  const mnemonicWallet = actions.btc.getWalletByWords( mnemonic, path )
+  const mnemonicWallet = actions.btc.getWalletByWords( mnemonic, 1)
   if (mnemonicWallet) {
     const matchedKeys = publicKeys.filter( (key) => { return key.toString('Hex') === mnemonicWallet.publicKey } )
     return (matchedKeys.length > 0)

@@ -85,10 +85,10 @@ const getPrivateKeyByAddress = (address) => {
   if (mnemonicAddress === address) return mnemonicKey
 }
 
-const getWalletByWords = (mnemonic, path) => {
+const getWalletByWords = (mnemonic, walletNumber = 0, path) => {
   const seed = bip39.mnemonicToSeedSync(mnemonic)
   const hdwallet = hdkey.fromMasterSeed(seed);
-  const wallet = hdwallet.derivePath((path) ? path : "m/44'/60'/0'/0/0").getWallet();
+  const wallet = hdwallet.derivePath((path) ? path : `m/44'/60'/0'/0/${walletNumber}`).getWallet();
 
   return {
     mnemonic,
