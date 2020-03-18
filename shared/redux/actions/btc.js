@@ -371,6 +371,41 @@ const getAllMyAddresses = () => {
   return retData
 }
 
+const getDataByAddress = (address) => {
+  const {
+    user: {
+      btcData,
+      btcMnemonicData,
+      btcMultisigSMSData,
+      btcMultisigUserData,
+      btcMultisigG2FAData,
+    },
+  } = getState()
+
+  const founded = [
+    btcData,
+    btcMnemonicData,
+    btcMultisigSMSData,
+    btcMultisigUserData,
+    ...(
+        btcMultisigUserData
+        && btcMultisigUserData.wallets
+        && btcMultisigUserData.wallets.length
+      )
+        ? btcMultisigUserData.wallets 
+        : [],
+    btcMultisigG2FAData,
+  ].filter(data => data && data.address && data.address.toLowerCase() === address.toLowerCase())
+
+  if (btcMultisigUserData && btcMultisigUserData.wallets && btcMultisigUserData.wallets.length) {
+    btcMultisigUserData.wallets.map((wallet) => {
+      retData.push(wallet.address.toLowerCase())
+    })
+  }
+
+  return (founded.length) ? founded[0] : false
+}
+
 const getTransaction = (address, ownType) =>
   new Promise((resolve) => {
     const myAllWallets = getAllMyAddresses()
@@ -531,4 +566,5 @@ export default {
   isSweeped,
   getSweepAddress,
   getAllMyAddresses,
+  getDataByAddress,
 }

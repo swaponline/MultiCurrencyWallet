@@ -44,7 +44,7 @@ class Row extends React.PureComponent {
 
     let withdrawModalType = null
     let data = null
-    const btcData = actions.btcmultisig.isBTCAddress(invoiceData.toAddress)
+    const btcData = actions.btc.getDataByAddress(invoiceData.toAddress)
 
     if (btcData) {
       data = btcData
