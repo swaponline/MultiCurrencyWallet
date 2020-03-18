@@ -321,7 +321,7 @@ export default class SaveMnemonicModal extends React.Component {
                 {
                   randomedWords.map((word,index) => {
                     return (
-                      <button key={index} onClick={() => this.handleClickWord(index)}>
+                      <button key={index} onClick={() => this.handleClickWord(index)} className="ym-hide-content">
                         {word}
                       </button>
                     )
@@ -344,7 +344,7 @@ export default class SaveMnemonicModal extends React.Component {
           {step === `show` && (
             <Fragment>
               <div styleName="highLevel">
-                <div styleName="mnemonicView">
+                <div styleName="mnemonicView" className="ym-hide-content">
                 {
                   words.map((word,index) => {
                     return (

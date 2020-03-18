@@ -85,7 +85,7 @@ export default class RegisterSMSProtected extends React.Component {
       })
       return
     } else {
-      const mnemonicWallet = actions.btc.getWalletByWords(mnemonic.trim())
+      const mnemonicWallet = actions.btc.getWalletByWords(mnemonic.trim(), 1)
       this.setState({
         mnemonicWallet,
         isMnemonicValid: true,
@@ -191,7 +191,7 @@ export default class RegisterSMSProtected extends React.Component {
       })
       return
     } else {
-      const mnemonicWallet = actions.btc.getWalletByWords(mnemonic.trim())
+      const mnemonicWallet = actions.btc.getWalletByWords(mnemonic.trim(), 1)
       this.setState({
         mnemonicWallet,
         isShipped: true,
@@ -386,7 +386,7 @@ export default class RegisterSMSProtected extends React.Component {
         <div styleName='registerSMSModalHolder'>
           {step === 'enterPhoneAndMnemonic' && (
             <Fragment>
-              <div styleName="highLevel">
+              <div styleName="highLevel" className="ym-hide-content">
                 <FieldLabel label>
                   <FormattedMessage id="registerSMSModalPhone" defaultMessage="Your phone:" />
                 </FieldLabel>
@@ -402,7 +402,7 @@ export default class RegisterSMSProtected extends React.Component {
                   <FormattedMessage id='registerSMSWordsInfoBlock' defaultMessage='Сгенерируйте секретную фразу или укажите ранее сохраненную для восстановления старого кошелька' />
                 </div>
               </div>
-              <div styleName="highLevel">
+              <div styleName="highLevel" className="ym-hide-content">
                 <FieldLabel label>
                   <FormattedMessage id="registerSMSModalWords" defaultMessage="Секретная фраза (12 слов):" />
                 </FieldLabel>
@@ -470,7 +470,7 @@ export default class RegisterSMSProtected extends React.Component {
           )}
           {step === "enterPhone" && (
             <Fragment>
-              <div styleName="highLevel">
+              <div styleName="highLevel" className="ym-hide-content">
                 <FieldLabel label>
                   <FormattedMessage id="registerSMSModalPhone" defaultMessage="Your phone:" />
                 </FieldLabel>
@@ -557,7 +557,7 @@ export default class RegisterSMSProtected extends React.Component {
                   <FormattedMessage id="registerSMSModalReady" defaultMessage="Your protected wallet activated" />
                 </span>
               </div>
-              <div styleName="restoreInstruction">
+              <div styleName="restoreInstruction" className="ym-hide-content">
                 <h1>
                   <FormattedMessage id="registerSMSModalFinishSaveThisInfo" defaultMessage="Информация на случай недоступности нашего сервиса" />
                 </h1>

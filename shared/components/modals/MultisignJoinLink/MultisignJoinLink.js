@@ -130,7 +130,7 @@ export default class MultisignJoinLink extends React.Component {
           <p styleName="notice">
             <FormattedMessage { ... langLabels.multiSignJoinLinkMessage } />
           </p>
-          <div>
+          <div className="ym-hide-content">
             <ShareLink link={joinLink} />
           </div>
           <hr />
