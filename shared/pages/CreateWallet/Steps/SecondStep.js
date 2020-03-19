@@ -134,6 +134,12 @@ const CreateWallet = (props) => {
   const handleClick = (index, el) => {
     const { name, enabled, activated } = el
 
+    if (el.name === 'fingerprint') {
+      // eslint-disable-next-line no-alert
+      alert('We don\'t support this type of device for now :(')
+      return null
+    }
+
     if (!enabled) return
     // if (activated) return
     const colors = border.color
@@ -318,7 +324,11 @@ const CreateWallet = (props) => {
             })}
           </div>
         </div>
-        <button styleName="continue" onClick={handleFinish} disabled={error || border.selected === ''}>
+        <button
+          styleName="continue"
+          onClick={handleFinish}
+          disabled={error || border.selected === '' || border.selected === 'fingerprint'}
+        >
           <FormattedMessage id="createWalletButton3" defaultMessage="Create Wallet" />
         </button>
       </div>
