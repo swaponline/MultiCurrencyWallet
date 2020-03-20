@@ -143,6 +143,7 @@ const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, f
     ? calculatedFeeValue.toString()
     : calculatedFeeValue.multipliedBy(1e-8).toString()
 
+  console.log(`Btc withdraw fee speed(${speed}) method (${method}) ${finalFeeValue}`)
   return finalFeeValue
 }
 
