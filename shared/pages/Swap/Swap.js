@@ -22,6 +22,8 @@ import { Button } from 'components/controls'
 import ShowBtcScript from './ShowBtcScript/ShowBtcScript'
 import CopyToClipboard from 'react-copy-to-clipboard'
 
+import axios from 'axios'
+
 import config from 'app-config'
 
 
@@ -46,6 +48,29 @@ const isWidgetBuild = config && config.isWidget
 
 @cssModules(styles, { allowMultiple: true })
 export default class SwapComponent extends PureComponent {
+
+  /*
+    ================================================================
+    This is debug information without any secret and private data.
+    This information can help me resolve  problems.
+    Contact me https://t.me/sashanoxon with any questions
+  */
+  sendSwapDebugInformation = (orderId) => {
+    const {
+      swap: {
+        flow: {
+          state: {
+            step,
+          },
+          state: flowState,
+        },
+      },
+    } = this.state
+
+    // Код создания BTC скрипта
+    
+  }
+  /* ================================================================ */
 
   constructor() {
     super()
@@ -143,6 +168,10 @@ export default class SwapComponent extends PureComponent {
       this.props.history.push(localisedUrl(links.exchange))
     }
 
+    // @Info
+    // Тут на самом деле не удачно подобранно название переменной
+    // decline подразумевается, не отклоненный ордер, а начавшийся свап по ордеру
+    // Если к этому ордеру будет отправлен еще один запрос на свап, то он будет отклонене (decline)
     if (!this.props.decline.includes(orderId)) {
       this.setSaveSwapId(orderId)
     }
