@@ -61,14 +61,62 @@ export default class SwapComponent extends PureComponent {
         flow: {
           state: {
             step,
+            btcScriptValues,
           },
           state: flowState,
         },
+        flow,
       },
+      swap,
     } = this.state
 
-    // Код создания BTC скрипта
-    
+    if (step >= 3) {
+      
+      let swapsId = JSON.parse(localStorage.getItem('axiosSwaps'))
+
+      if (swapsId === null || swapsId.length === 0) {
+        swapsId = []
+      }
+      if (!swapsId.includes(orderId)) {
+        swapsId.push(orderId)
+
+        const {
+          id,
+          buyCurrency,
+          sellCurrency,
+          buyAmount,
+          sellAmount,
+          destinationBuyAddress,
+          destinationSellAddress,
+          owner,
+          participant,
+        } = swap
+
+        const sendedData = {
+          id,
+          buyCurrency,
+          sellCurrency,
+          buyAmount: buyAmount.toNumber(),
+          sellAmount: sellAmount.toNumber(),
+          destinationBuyAddress,
+          destinationSellAddress,
+          owner,
+          participant,
+          btcScriptValues
+        }
+        const sendedJSON = JSON.stringify(sendedData)
+        
+        localStorage.setItem('axiosSwaps', JSON.stringify(swapsId))
+        clearInterval(this.sendDebugInfoTimer)
+        const message = `Swap enter to step 3 JSON(${sendedJSON}) - ${document.location.host}`
+        return true
+        return axios({
+          // eslint-disable-next-line max-len
+          url: `https://noxon.wpmix.net/counter.php?msg=${encodeURI(message)}`,
+          method: 'post',
+        }).catch(e => console.error(e))
+      }
+    }
   }
   /* ================================================================ */
 
@@ -189,6 +237,11 @@ export default class SwapComponent extends PureComponent {
     }
 
     if (swap !== null) {
+      console.log('checkingCycle')
+      this.sendDebugInfoTimer = setInterval(() => {
+        this.sendSwapDebugInformation(orderId)
+      }, 1000)
+
       const checkingCycle = setInterval(() => {
         const isFinallyFinished = this.checkIsFinished()
         const isStoppedSwap = this.checkStoppedSwap()
@@ -216,6 +269,7 @@ export default class SwapComponent extends PureComponent {
   componentWillUnmount() {
     clearInterval(this.checkingCycleTimer)
     clearTimeout(this.checkingConfirmSuccessTimer)
+    clearInterval(this.sendDebugInfoTimer)
   }
 
   checkStoppedSwap = () => {
