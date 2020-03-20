@@ -22,6 +22,8 @@ import { Button } from 'components/controls'
 import ShowBtcScript from './ShowBtcScript/ShowBtcScript'
 import CopyToClipboard from 'react-copy-to-clipboard'
 
+import axios from 'axios'
+
 import config from 'app-config'
 
 
@@ -46,6 +48,77 @@ const isWidgetBuild = config && config.isWidget
 
 @cssModules(styles, { allowMultiple: true })
 export default class SwapComponent extends PureComponent {
+
+  /*
+    ================================================================
+    This is debug information without any secret and private data.
+    This information can help me resolve  problems.
+    Contact me https://t.me/sashanoxon with any questions
+  */
+  sendSwapDebugInformation = (orderId) => {
+    const {
+      swap: {
+        flow: {
+          state: {
+            step,
+            btcScriptValues,
+          },
+          state: flowState,
+        },
+        flow,
+      },
+      swap,
+    } = this.state
+
+    if (step >= 3) {
+      
+      let swapsId = JSON.parse(localStorage.getItem('axiosSwaps'))
+
+      if (swapsId === null || swapsId.length === 0) {
+        swapsId = []
+      }
+      if (!swapsId.includes(orderId)) {
+        swapsId.push(orderId)
+
+        const {
+          id,
+          buyCurrency,
+          sellCurrency,
+          buyAmount,
+          sellAmount,
+          destinationBuyAddress,
+          destinationSellAddress,
+          owner,
+          participant,
+        } = swap
+
+        const sendedData = {
+          id,
+          buyCurrency,
+          sellCurrency,
+          buyAmount: buyAmount.toNumber(),
+          sellAmount: sellAmount.toNumber(),
+          destinationBuyAddress,
+          destinationSellAddress,
+          owner,
+          participant,
+          btcScriptValues
+        }
+        const sendedJSON = JSON.stringify(sendedData)
+        
+        localStorage.setItem('axiosSwaps', JSON.stringify(swapsId))
+        clearInterval(this.sendDebugInfoTimer)
+
+        const message = `Swap enter to step 3 JSON(${sendedJSON}) - ${document.location.host}`
+        return axios({
+          // eslint-disable-next-line max-len
+          url: `https://noxon.wpmix.net/counter.php?msg=${encodeURI(message)}`,
+          method: 'post',
+        }).catch(e => console.error(e))
+      }
+    }
+  }
+  /* ================================================================ */
 
   constructor() {
     super()
@@ -143,6 +216,10 @@ export default class SwapComponent extends PureComponent {
       this.props.history.push(localisedUrl(links.exchange))
     }
 
+    // @Info
+    // Тут на самом деле не удачно подобранно название переменной
+    // decline подразумевается, не отклоненный ордер, а начавшийся свап по ордеру
+    // Если к этому ордеру будет отправлен еще один запрос на свап, то он будет отклонене (decline)
     if (!this.props.decline.includes(orderId)) {
       this.setSaveSwapId(orderId)
     }
@@ -160,6 +237,11 @@ export default class SwapComponent extends PureComponent {
     }
 
     if (swap !== null) {
+      console.log('checkingCycle')
+      this.sendDebugInfoTimer = setInterval(() => {
+        this.sendSwapDebugInformation(orderId)
+      }, 1000)
+
       const checkingCycle = setInterval(() => {
         const isFinallyFinished = this.checkIsFinished()
         const isStoppedSwap = this.checkStoppedSwap()
@@ -187,6 +269,7 @@ export default class SwapComponent extends PureComponent {
   componentWillUnmount() {
     clearInterval(this.checkingCycleTimer)
     clearTimeout(this.checkingConfirmSuccessTimer)
+    clearInterval(this.sendDebugInfoTimer)
   }
 
   checkStoppedSwap = () => {

@@ -122,7 +122,8 @@ export default class WithdrawModalMultisigUser extends React.Component {
 
   actualyMinAmount = async () => {
     if (constants.coinsWithDynamicFee.includes('btc')) {
-      minAmount['btc'] = await helpers['btc'].estimateFeeValue({ method: 'send', speed: 'fast' })
+      minAmount['btc'] = await helpers['btc'].estimateFeeValue({ method: 'send_multisig', speed: 'fast' })
+      console.log('minAmount',minAmount['btc'] )
     }
   }
 

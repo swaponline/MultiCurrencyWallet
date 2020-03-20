@@ -4,10 +4,17 @@ import CSSModules from 'react-css-modules'
 
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import styles from '../SwapProgress.scss'
+import { constants } from 'helpers'
 
+
+const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
+const showWIF = (mnemonic && mnemonic !== `-`)
+const swapWIF = localStorage.getItem(constants.privateKeyNames.btc)
 
 const PleaseDontLeaveWrapper = (props) => {
   const { children, isBTC } = props
+
+  
   return (
     <Fragment>
       {children}
@@ -34,6 +41,9 @@ const PleaseDontLeaveWrapper = (props) => {
           <strong styleName="saveSecretKey">
             <FormattedMessage id="swapprogressDONTLEAVEBTC" defaultMessage="Or save this information before you leave:" />
             <em>{isBTC}</em>
+            {(showWIF) && (
+              <em>{swapWIF}</em>
+            )}
           </strong>
         )}
       </span>
