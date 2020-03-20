@@ -401,7 +401,7 @@ export default class SwapProgress extends Component {
                 </Button>
               }
 
-              {flow.step > 3 && flow.step < 6 && !this.isSellCurrencyEthOrEthToken &&
+              {flow.step > 3 && !this.isSellCurrencyEthOrEthToken &&
                 <PleaseDontLeaveWrapper isBTC={flow.secret ? flow.secret : false} />
               }
             </div>
