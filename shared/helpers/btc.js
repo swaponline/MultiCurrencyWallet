@@ -102,8 +102,16 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
     ? txIn * 146 + txOut * 33 + (15 + txIn - txOut)
     : defaultTxSize
 
+  if (method === 'send_multisig') {
+    const msuSize = getByteCount({'MULTISIG-P2SH-P2WSH:2-2': 1}, {'P2PKH': 2})
+    const msutxSize = txIn > 0
+      ? txIn * msuSize + txOut * 33 + (15 + txIn - txOut)
+      : defaultTxSize
+    return msutxSize
+  }
+
   if (method === 'send_2fa') {
-    const msSize = getByteCount({'MULTISIG-P2SH-P2WSH:2-3': txIn}, {'P2PKH': 2})
+    const msSize = getByteCount({'MULTISIG-P2SH-P2WSH:2-3': 1}, {'P2PKH': 2})
     const mstxSize = txIn > 0
       ? txIn * msSize + txOut * 33 + (15 + txIn - txOut)
       : defaultTxSize
