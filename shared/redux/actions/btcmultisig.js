@@ -810,7 +810,8 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
       },
     },
   } = getState()
-  feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
+
+  feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, method: 'send_2fa' })
 
   const unspents      = await fetchUnspents(from)
 
