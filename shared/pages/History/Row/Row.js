@@ -12,6 +12,7 @@ import { constants } from 'helpers'
 import CommentRow from './Comment'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { Link } from 'react-router-dom'
+import getCurrencyKey from 'helpers/getCurrencyKey'
 
 
 class Row extends React.PureComponent {
@@ -180,7 +181,7 @@ class Row extends React.PureComponent {
         
           <div styleName={`${statusStyleAmount} circleIcon`}>
               <div styleName='arrowWrap'>
-                <Link to={`/${type}/tx/${hash}`}>
+                <Link to={`/${getCurrencyKey(type)}/tx/${hash}`}>
                   <svg width='12' height='15' viewBox='0 0 12 15' fill='none' xmlns='http://www.w3.org/2000/svg'>
                     <path d='M6 15V3' stroke='#8E9AA3' strokeWidth='2' />
                     <path d='M11 7L6 2L1 7' stroke='#8E9AA3' strokeWidth='2' />
