@@ -131,14 +131,15 @@ class Row extends React.PureComponent {
       type,
       direction,
       value,
-      hash,
+      hash: propsHash,
       confirmations,
       txType,
       invoiceData,
       onSubmit,
     } = this.props
 
- 
+    const hash = (invoiceData && invoiceData.txInfo) ? invoiceData.txInfo : propsHash
+
     const { ind } = this.state
 
     const { exCurrencyRate, isOpen, comment, cancelled, payed } = this.state
