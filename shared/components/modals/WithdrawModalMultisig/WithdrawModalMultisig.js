@@ -128,14 +128,8 @@ export default class WithdrawModalMultisig extends React.Component {
 
     const currentCoin = currency.toLowerCase()
 
-    if (isEthToken) {
-      minAmount[currentCoin] = this.getMinAmountForEthToken()
-      minAmount.eth = await helpers.eth.estimateFeeValue({ method: 'send', speed: 'fast' })
-    }
 
-    if (constants.coinsWithDynamicFee.includes(currentCoin)) {
-      minAmount[currentCoin] = await helpers[currentCoin].estimateFeeValue({ method: 'send', speed: 'fast' })
-    }
+    minAmount[currentCoin] = await helpers.btc.estimateFeeValue({ method: 'send_2fa', speed: 'fast' })
   }
 
   setBalanceOnState = async (currency) => {
