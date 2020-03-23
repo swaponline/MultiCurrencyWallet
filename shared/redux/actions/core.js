@@ -331,8 +331,6 @@ const getWallets = () => {
     },
   } = getState()
 
-  btcMultisigUserData.wallets
-
   // Sweep
   const {
     user: {
@@ -348,7 +346,7 @@ const getWallets = () => {
     btcData,
     btcMultisigSMSData,
     btcMultisigUserData,
-    ... (btcMultisigUserData && btcMultisigUserData.wallets) ? [btcMultisigUserData.wallets] : [],
+    ... (btcMultisigUserData && btcMultisigUserData.wallets) ? btcMultisigUserData.wallets : [],
     ethData,
     ... (bchData) ? [bchData] : [],
     ltcData,
@@ -356,6 +354,7 @@ const getWallets = () => {
   ].map(({ account, keyPair, ...data }) => ({
     ...data
   }))
+
 
   return allData.filter(item => item && item.address)
 }
