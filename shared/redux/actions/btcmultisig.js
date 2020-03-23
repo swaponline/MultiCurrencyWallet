@@ -128,8 +128,14 @@ const switchBtcMultisigKey = (keyOrIndex) => {
       savedKeys.unshift(newKey[0])
       localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKey, JSON.stringify(savedKeys))
 
-      const { user: { btcMultisigUserData } } = getState()
-      const { privateKey } = btcMultisigUserData
+      const {
+        user: {
+          btcData: {
+            privateKey,
+          },
+        },
+      } = getState()
+
       login_USER(privateKey, newKey[0])
       getBalanceUser()
     }
@@ -433,9 +439,15 @@ const enableWalletUSER = () => {
 
 const onUserMultisigJoin = (data) => {
   console.log('on user multisig join',data)
-  const { user: { btcMultisigUserData } } = getState()
+  const {
+    user: {
+      btcMultisigUserData,
+      btcData,
+    },
+  } = getState()
   const { fromPeer, checkKey, publicKey } = data
-  if (checkKey === btcMultisigUserData.publicKey.toString('hex') && publicKey && (publicKey.length === 66)) {
+
+  if (checkKey === btcData.publicKey.toString('hex') && publicKey && (publicKey.length === 66)) {
     console.log('checks ok - connect')
     addBtcMultisigKey(publicKey, true)
     SwapApp.shared().services.room.sendMessagePeer( fromPeer, {

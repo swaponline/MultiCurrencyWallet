@@ -40,9 +40,11 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 @injectIntl
 @connect(
   ({
-    user: { btcMultisigUserData },
+    user: {
+      btcData,
+    },
   }) => ({
-    btcData: btcMultisigUserData,
+    btcData,
   })
 )
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
@@ -62,15 +64,21 @@ export default class MultisignJoinLink extends React.Component {
   }
 
   componentDidMount() {
-    const publicKey = this.props.btcData.publicKey.toString('hex')
+    const {
+      data: {
+        action,
+      },
+      btcData,
+    } = this.props
 
-    let { data: { action } } = this.props
+    const publicKey = btcData.publicKey.toString('Hex')
 
-    console.log(action, this.props)
-    action = (action) ? action : `join`
+    const linkAction = (action) ? action : `join`
+
+    const joinLink = `${getFullOrigin()}${links.multisign}/btc/${linkAction}/${publicKey}/${SwapApp.shared().services.room.peer}`
 
     this.setState({
-      joinLink: `${getFullOrigin()}${links.multisign}/btc/${action}/${publicKey}/${SwapApp.shared().services.room.peer}`
+      joinLink,
     })
   }
 
