@@ -377,9 +377,7 @@ Private key: ${bchData.privateKey}\r\n
 }
 
 export const isOwner = (addr, currency) => {
-  console.log('isOwner', addr, currency)
   if (ethToken.isEthToken({ name: currency })) {
-    console.log('isToken')
     if (actions.eth.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
     const {
       user: {
@@ -392,8 +390,8 @@ export const isOwner = (addr, currency) => {
     return addr === address
   }
 
-  if (currency.toLowerCase() === `btc` && actions.btc.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
-  if (currency.toLowerCase() === `eth` && actions.eth.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
+  if (actions.btc.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
+  if (actions.eth.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
 
   const name = `${currency.toLowerCase()}Data`
   const { user } = getState()
