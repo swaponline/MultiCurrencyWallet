@@ -42,6 +42,7 @@ class Info extends React.Component {
     return (
       <div styleName={`title ${isOnline ? 'online' : 'offline'}`}>
         <em></em>
+        <span>{isOnline ? 'Online' : 'Offline'}</span>
         <div>
           libp2p network status:
           {' '}
