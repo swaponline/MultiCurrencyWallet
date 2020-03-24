@@ -20,9 +20,9 @@ const Footer = (props) => (
     {(!config.isWidget || config.isFullBuild) && (
       <div styleName="footer">
         <WidthContainer styleName="container">
+          <Info {...props} />
           <SwitchLang {...props} />
           {!config.isWidget && <SocialMenu />}
-          <Info {...props} />
           <span styleName="date">{config.time}</span>
         </WidthContainer>
       </div>

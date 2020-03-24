@@ -37,12 +37,12 @@
     }
     em {
       display: inline-block;
-      width: 1em;
-      height: 1em;
+      width: 0.8em;
+      height: 0.8em;
       background: red;
       line-height: 1em;
       vertical-align: middle;
-      border-radius: 1em;
+      border-radius: 0.8em;
     }
   }
   &:hover {
