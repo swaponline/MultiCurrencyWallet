@@ -15,20 +15,26 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import SwitchLang from './SwitchLang/SwitchLang'
 
 
-const Footer = (props) => (
-  <Fragment>
-    {(!config.isWidget || config.isFullBuild) && (
-      <div styleName="footer">
-        <WidthContainer styleName="container">
-          <Info {...props} />
-          <SwitchLang {...props} />
-          {!config.isWidget && <SocialMenu />}
-          <span styleName="date">{config.time}</span>
-        </WidthContainer>
-      </div>
-    )}
-  </Fragment>
-)
+const Footer = (props) => {
+  let showInfo = false
+  if (window.location.hash.includes('/exchange')
+    || window.location.hash.includes('/buy')
+  ) showInfo = true
+  return (
+    <Fragment>
+      {(!config.isWidget || config.isFullBuild) && (
+        <div styleName="footer">
+          <WidthContainer styleName="container">
+            {showInfo && <Info {...props} />}
+            <SwitchLang {...props} />
+            {!config.isWidget && <SocialMenu />}
+            <span styleName="date">{config.time}</span>
+          </WidthContainer>
+        </div>
+      )}
+    </Fragment>
+  )
+}
 
 Footer.propTypes = {
   props: PropTypes.shape({
