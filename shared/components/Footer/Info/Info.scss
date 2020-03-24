@@ -4,8 +4,8 @@
   background: #ffffff;
   height: 20px;
   position: fixed;
-  bottom: 2%;
-  left: 1%;
+  bottom: 8px;
+  left: 8px;
   z-index: 1049;
   padding-bottom: 25px;
   padding: 0 5px;
@@ -21,7 +21,36 @@
     top: 2px;
     height: 3px;
   }
+  &.online,
+  &.offline {
+    div {
+      display: none;
+      padding-left: 10px;
+    }
+    em {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      background: red;
+      line-height: 1em;
+      vertical-align: middle;
+      border-radius: 1em;
+    }
+  }
+  &:hover {
+    div {
+      display: inline-block;
+    }
+  }
+  &.online {
+    em {
+      background: green;
+    }
+  }
 }
+
+
+
 
 .connect {
   color: #3de25b;
@@ -50,7 +79,10 @@
   .title {
     font-size: 8px;
     height: 25px;
-    bottom: 7%;
+    top: 2px;
+    bottom: auto;
+    left: 2px;
+    background: none;
     margin: 2px 5px;
   }
 }
