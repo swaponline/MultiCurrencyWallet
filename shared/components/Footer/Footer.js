@@ -22,7 +22,7 @@ const Footer = (props) => (
         <WidthContainer styleName="container">
           <SwitchLang {...props} />
           {!config.isWidget && <SocialMenu />}
-          {!isMobile && 0 && <Info {...props} />}
+          <Info {...props} />
           <span styleName="date">{config.time}</span>
         </WidthContainer>
       </div>
