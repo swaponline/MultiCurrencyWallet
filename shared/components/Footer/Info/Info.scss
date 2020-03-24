@@ -2,13 +2,9 @@
   font-size: 14px;
   color: #b2b2b2;
   background: #ffffff;
-  height: 20px;
   position: static;
-  bottom: 8px;
-  left: 8px;
   z-index: 1049;
-  padding-bottom: 25px;
-  padding: 0 5px;
+  padding-bottom: 10px;
   padding-top: 10px;
 
   &>span {
@@ -37,12 +33,12 @@
     }
     em {
       display: inline-block;
-      width: 0.8em;
-      height: 0.8em;
-      background: red;
+      width: 0.5em;
+      height: 0.5em;
+      background: #f56e85;
       line-height: 1em;
       vertical-align: middle;
-      border-radius: 0.8em;
+      border-radius: 0.5em;
     }
   }
   &:hover {
@@ -52,7 +48,7 @@
   }
   &.online {
     em {
-      background: green;
+      background: #4dd3ab;
     }
   }
 }
