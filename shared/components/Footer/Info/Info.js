@@ -40,19 +40,22 @@ class Info extends React.Component {
     const onlinePeersHack = onlineUsers >= 0 ? onlineUsers : 1
 
     return (
-      <div styleName="title">
-        libp2p network status:
-        {' '}
-        <span>
-          <span styleName={isOnline ? 'connect' : 'disconnect'}>
-            {isOnline
-              ? 'Connected'
-              : 'Disconnected. You cannot make exchanges until you are disconnected. Turn off VPN or try another network or browser'}
-          </span>
+      <div styleName={`title ${isOnline ? 'online' : 'offline'}`}>
+        <em></em>
+        <div>
+          libp2p network status:
           {' '}
-          {isOnline && `/ peers online: ${onlinePeersHack}`}
-        </span>
-        { isVisibleProgressBar && <ProgressBar handleClick={this.hideProgressBar} /> }
+          <span>
+            <span styleName={isOnline ? 'connect' : 'disconnect'}>
+              {isOnline
+                ? 'Connected'
+                : 'Disconnected. You cannot make exchanges until you are disconnected. Turn off VPN or try another network or browser'}
+            </span>
+            {' '}
+            {isOnline && `/ peers online: ${onlinePeersHack}`}
+          </span>
+          { isVisibleProgressBar && <ProgressBar handleClick={this.hideProgressBar} /> }
+        </div>
       </div>
     )
   }
