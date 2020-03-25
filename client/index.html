@@ -27,54 +27,7 @@
     <meta property="og:url" content="https://swaponline.io" />
     <!-- ERC20 Tokens hot plug for widget-build (Dont remove this) -->
     <script src="erc20tokens.js"></script>
-    <!-- Google Analytics -->
-    <script>
-      const isMainDomain = window.location.hostname === "swaponline.io";
-      const isExtension = window.location.hostname === "jbhhiineefefhcaoocmnkbmgfjbhninc";
-
-      if (isMainDomain || isExtension) {
-        const gtagScript = document.createElement("script");
-        var gtagId;
-
-        if (isMainDomain) {
-          gtagId = "UA-116857031-2";
-        }
-
-        if (isExtension) {
-          gtagId = "GTM-PJH52QL";
-        }
-
-        gtagScript.async = true;
-        gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=" + gtagId;
-
-        document.head.appendChild(gtagScript);
-
-        window.dataLayer = window.dataLayer || [];
-
-        window.gtag = function() {
-          window.dataLayer.push(arguments);
-        };
-
-        gtag("js", new Date());
-        gtag("config", gtagId);
-      }
-    </script>
-    <!-- /Google Analytics -->
-<!-- Yandex.Metrika counter -->
-<script type="text/javascript" >
-   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-
-   ym(59637802, "init", {
-        clickmap:true,
-        trackLinks:true,
-        accurateTrackBounce:true,
-        webvisor:true
-   });
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/59637802" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
+   
 	    
 
     <script>
@@ -911,5 +864,54 @@ src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAwUAAAMZCAMAAABmr2irAAAA3lBMV
     <script type="text/javascript" src="https://unpkg.com/react-dom@16.10.2/umd/react-dom.production.min.js"></script>
     <!-- / -->
     <div id="portal"></div>
+	  
+	   <!-- Google Analytics -->
+    <script>
+      const isMainDomain = window.location.hostname === "swaponline.io";
+      const isExtension = window.location.hostname === "jbhhiineefefhcaoocmnkbmgfjbhninc";
+
+      if (isMainDomain || isExtension) {
+        const gtagScript = document.createElement("script");
+        var gtagId;
+
+        if (isMainDomain) {
+          gtagId = "UA-116857031-2";
+        }
+
+        if (isExtension) {
+          gtagId = "GTM-PJH52QL";
+        }
+
+        gtagScript.async = true;
+        gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=" + gtagId;
+
+        document.head.appendChild(gtagScript);
+
+        window.dataLayer = window.dataLayer || [];
+
+        window.gtag = function() {
+          window.dataLayer.push(arguments);
+        };
+
+        gtag("js", new Date());
+        gtag("config", gtagId);
+      }
+    </script>
+    <!-- /Google Analytics -->
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(59637802, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/59637802" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
   </body>
 </html>
