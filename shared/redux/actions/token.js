@@ -289,6 +289,40 @@ const setAllowanceForToken = async ({ name, to, targetAllowance, ...config }) =>
   return approve({ name, to, amount: newTargetAllowance, ...config })
 }
 
+const fetchTxInfo = (hash) => {
+  console.log('fetch eth tx',hash)
+
+  return new Promise((resolve) => {
+    const url = `?module=proxy&action=eth_getTransactionByHash&txhash=${hash}&apikey=RHHFPNMAZMD6I4ZWBZBF6FA11CMW9AXZNM`
+
+    return apiLooper.get('etherscan', url)
+      .then((res) => {
+        if (res && res.result) {
+          console.log(res)
+          const {
+            from,
+            to,
+            value,
+            
+          } = res.result
+
+          resolve({
+            amount: web3.utils.fromWei(value),
+            afterBalance: null,
+            receiverAddress: to,
+            senderAddress: from,
+          })
+
+        } else {
+          resolve(false)
+        }
+      })
+      .catch(() => {
+        resolve(false)
+      })
+  })
+}
+
 export default {
   login,
   getBalance,
@@ -301,4 +335,5 @@ export default {
   fetchBalance,
   AddCustomERC20,
   GetCustromERC20,
+  fetchTxInfo,
 }
