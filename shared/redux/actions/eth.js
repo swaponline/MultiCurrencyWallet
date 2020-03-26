@@ -333,6 +333,35 @@ const send = ({ from, to, amount, gasPrice, gasLimit, speed } = {}) =>
     resolve(receipt)
   })
 
+const fetchTxInfo = (hash) => new Promise((resolve) => {
+    const url = `?module=proxy&action=eth_getTransactionByHash&txhash=${hash}&apikey=RHHFPNMAZMD6I4ZWBZBF6FA11CMW9AXZNM`
+
+    return apiLooper.get('etherscan', url)
+      .then((res) => {
+        if (res && res.result) {
+
+          const {
+            from,
+            to,
+            value,
+          } = res.result
+
+          resolve({
+            amount: web3.utils.fromWei(value),
+            afterBalance: null,
+            receiverAddress: to,
+            senderAddress: from,
+          })
+
+        } else {
+          resolve(false)
+        }
+      })
+      .catch(() => {
+        resolve(false)
+      })
+  })
+
 export default {
   send,
   login,
@@ -352,4 +381,5 @@ export default {
   isSweeped,
   getSweepAddress,
   getAllMyAddresses,
+  fetchTxInfo,
 }
