@@ -17,16 +17,18 @@ class Transaction extends Component {
 
     const infoTx = await actions[getCurrencyKey(ticker)].fetchTxInfo(tx)
 
+    console.log('Parsed tx info', infoTx)
     if(!infoTx) {
       return
     }
 
     actions.modals.open(constants.modals.InfoPay, {
-      amount:infoTx.valueOut,
+      amount:infoTx.amount,
       currency:ticker,
       balance:0,
-      oldBalance: 0, // @Todo доделать old balance
+      oldBalance: infoTx.afterBalance, // @Todo доделать old balance
       txId: tx,
+      confirmed: infoTx.confirmed,
       toAddress: infoTx.receiverAddress,
       onClose: () => {
         
