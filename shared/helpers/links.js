@@ -3,6 +3,7 @@ import actions from '../redux/actions'
 
 const linksManager = {
   home: '/',
+  hashHome: '#/',
   exchange: '/exchange',
   pointOfSell: '/buy',
   history: '/history',
