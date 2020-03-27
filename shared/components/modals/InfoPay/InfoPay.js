@@ -54,10 +54,12 @@ export default class InfoPay extends React.Component {
         txId,
         balance,
         oldBalance,
+        confirmed,
       },
       name,
     } = this.props
 
+    console.log('InfoPay render', this.props.data)
     let link = '#';
     let tx = '';
   
@@ -105,8 +107,29 @@ export default class InfoPay extends React.Component {
                 <td styleName="header">
                   <FormattedMessage id="InfoPay_4" defaultMessage="Est. time to confitmation" />
                 </td>
-                <td>~10 mins</td>
+                <td>
+                  {confirmed && (
+                    <strong>
+                      <FormattedMessage id="InfoPay_Confirmed" defaultMessage="Confirmed" />
+                    </strong>
+                  )}
+                  {!confirmed && (
+                    <FormattedMessage id="InfoPay_NotConfirmed" defaultMessage="~10 mins" />
+                  )}
+                </td>
               </tr>
+              {oldBalance && (
+                <tr>
+                  <td styleName="header">
+                    <FormattedMessage id="InfoPay_FinalBalance" defaultMessage="Final balance" />
+                  </td>
+                  <td>
+                    <strong>
+                      {oldBalance} {currency}
+                    </strong>
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
