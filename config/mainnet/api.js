@@ -9,6 +9,7 @@ export default {
     'https://api.etherscan.io/api',
     'https://invoices.swaponline.site/proxyetherscan',
   ],
+  etherscan_ApiKey: 'RHHFPNMAZMD6I4ZWBZBF6FA11CMW9AXZNM',
   // usdTomni: 'https://api.omniexplorer.info/',
   bch: 'https://rest.bitcoin.com/v2',
   ltc: 'https://insight.litecore.io/api',

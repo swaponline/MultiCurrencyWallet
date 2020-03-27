@@ -280,7 +280,7 @@ const getTransaction = (address, ownType) =>
 
     const type = (ownType) ? ownType : 'eth'
 
-    const url = `?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=RHHFPNMAZMD6I4ZWBZBF6FA11CMW9AXZNM`
+    const url = `?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.api.etherscan_ApiKey}`
 
     return apiLooper.get('etherscan', url)
       .then((res) => {
@@ -334,7 +334,7 @@ const send = ({ from, to, amount, gasPrice, gasLimit, speed } = {}) =>
   })
 
 const fetchTxInfo = (hash) => new Promise((resolve) => {
-    const url = `?module=proxy&action=eth_getTransactionByHash&txhash=${hash}&apikey=RHHFPNMAZMD6I4ZWBZBF6FA11CMW9AXZNM`
+    const url = `?module=proxy&action=eth_getTransactionByHash&txhash=${hash}&apikey=${config.api.etherscan_ApiKey}`
 
     return apiLooper.get('etherscan', url)
       .then((res) => {

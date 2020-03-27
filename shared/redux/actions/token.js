@@ -6,7 +6,10 @@ import web3 from 'helpers/web3'
 import reducers from 'redux/core/reducers'
 import config from 'app-config'
 import { BigNumber } from 'bignumber.js'
+import InputDataDecoder from 'ethereum-input-data-decoder'
 
+
+const erc20Decoder = new InputDataDecoder(ERC20_ABI)
 
 const AddCustomERC20 = (contract, symbol, decimals) => {
   const configStorage = (process.env.MAINNET) ? 'mainnet' : 'testnet'
@@ -149,7 +152,7 @@ const getTransaction = (ownAddress, ownType) =>
       `&contractaddress=${contractAddress}`,
       `&address=${(ownAddress) ? ownAddress : address}`,
       `&startblock=0&endblock=99999999`,
-      `&sort=asc&apikey=RHHFPNMAZMD6I4ZWBZBF6FA11CMW9AXZNM`,
+      `&sort=asc&apikey=${config.api.etherscan_ApiKey}`,
     ].join('')
 
     return apiLooper.get('etherscan', url)
@@ -290,26 +293,50 @@ const setAllowanceForToken = async ({ name, to, targetAllowance, ...config }) =>
 }
 
 const fetchTxInfo = (hash) => {
-  console.log('fetch eth tx',hash)
-
   return new Promise((resolve) => {
-    const url = `?module=proxy&action=eth_getTransactionByHash&txhash=${hash}&apikey=RHHFPNMAZMD6I4ZWBZBF6FA11CMW9AXZNM`
+    const { user: { tokensData } } = getState()
+
+    const url = `?module=proxy&action=eth_getTransactionByHash&txhash=${hash}&apikey=${config.api.etherscan_ApiKey}`
 
     return apiLooper.get('etherscan', url)
       .then((res) => {
         if (res && res.result) {
-          console.log(res)
+          let amount = 0
+          let receiverAddress = res.result.to
+          const contractAddress = res.result.to
+          let tokenDecimal = 18
+          // Определим токен по адрессу контракта
+          Object.keys(tokensData).forEach((key) => {
+            if (tokensData[key]
+              && tokensData[key].contractAddress
+              && tokensData[key].contractAddress == contractAddress
+              && tokensData[key].decimals
+            ) {
+              tokenDecimal = tokensData[key].decimals
+              return false
+            }
+          })
+
+          const txData = erc20Decoder.decodeData(res.result.input)
+          if (txData
+            && txData.name === `transfer`
+            && txData.inputs
+            && txData.inputs.length == 2
+          ) {
+            receiverAddress = `0x${txData.inputs[0]}`
+            amount = BigNumber(txData.inputs[1]).div(BigNumber(10).pow(tokenDecimal)).toString()
+          } else {
+            // This is not erc20 transfer tx 
+          }
+
           const {
             from,
-            to,
-            value,
-            
           } = res.result
 
           resolve({
-            amount: web3.utils.fromWei(value),
+            amount,
             afterBalance: null,
-            receiverAddress: to,
+            receiverAddress,
             senderAddress: from,
           })
 
@@ -317,7 +344,8 @@ const fetchTxInfo = (hash) => {
           resolve(false)
         }
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err)
         resolve(false)
       })
   })
