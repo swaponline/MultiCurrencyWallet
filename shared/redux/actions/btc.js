@@ -310,8 +310,11 @@ const fetchTx = (hash) =>
 const fetchTxInfo = (hash) =>
   fetchTx(hash)
     .then(({ vin, vout, ...rest }) => ({
+      amount: vout ? new BigNumber(vout[0].value).toNumber() : null,
+      afterBalance: vout && vout[1] ? new BigNumber(vout[1].value).toNumber() : null,
       senderAddress: vin ? vin[0].addr : null,
       receiverAddress: vout ? vout[0].scriptPubKey.addresses : null,
+      confirmed: (rest.confirmations) ? true : false,
       ...rest,
     }))
 
