@@ -86,7 +86,7 @@ export default class InfoPay extends React.Component {
           </div>
 
           <div className="p-3">
-            <span ><strong> {amount}  {currency} </strong></span>
+            <span ><strong> {amount}  {currency.toUpperCase()} </strong></span>
             <span> <FormattedMessage id="InfoPay_2" defaultMessage="были успешно переданы" />
               <br />
               <strong>{toAddress}</strong>
