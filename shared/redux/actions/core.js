@@ -317,6 +317,23 @@ const markCoinAsVisible = (coin) => {
   localStorage.setItem(constants.localStorage.hiddenCoinsList, JSON.stringify(getState().core.hiddenCoinsList))
 }
 
+const getWallet = (findCondition) => {
+  const { currency, address } = findCondition
+
+  const founded = getWallets().filter((wallet) => {
+    const conditionOk = (currency && wallet.currency.toLowerCase() === currency.toLowerCase())
+
+    if (address) {
+      if(wallet.address.toLowerCase() === address.toLowerCase()) {
+        return conditionOk
+      }
+    } else {
+      return conditionOk
+    }
+  })
+  return (founded.length) ? founded[0] : false
+}
+
 const getWallets = () => {
   const {
     user: {
@@ -388,4 +405,5 @@ export default {
   deletedPartialCurrency,
   addCurrencyFromOrders,
   getWallets,
+  getWallet,
 }

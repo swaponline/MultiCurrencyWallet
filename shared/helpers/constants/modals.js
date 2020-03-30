@@ -32,4 +32,5 @@ export default {
   SaveMnemonicModal: 'SaveMnemonicModal',
   RestoryMnemonicWallet: 'RestoryMnemonicWallet',
   SweepToMnemonicKeys: 'SweepToMnemonicKeys',
+  HowToWithdrawModal: 'HowToWithdrawModal',
 }

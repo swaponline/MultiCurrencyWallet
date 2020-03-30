@@ -8,6 +8,7 @@ import QR from 'components/QR/QR'
 import { Modal } from 'components/modal'
 import { Button } from 'components/controls'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
+import config from 'helpers/externalConfig'
 
 
 const title = defineMessages({
@@ -18,13 +19,30 @@ const title = defineMessages({
 })
 
 @injectIntl
-@cssModules(styles)
+@cssModules(styles, { allowMultiple: true })
 export default class ReceiveModal extends React.Component {
 
   constructor(props) {
     super(props)
+    const {
+      data: {
+        address,
+        currency,
+      },
+    } = props
+
+    let howToDeposit = ''
+    if (config
+      && config.erc20
+      && config.erc20[currency.toLowerCase()]
+      && config.erc20[currency.toLowerCase()].howToDeposit
+    ) howToDeposit = config.erc20[currency.toLowerCase()].howToDeposit
+
+    howToDeposit = howToDeposit.replace(/{userAddress}/g, address);
+
     this.state = {
       isAddressCopied: false,
+      howToDeposit,
     }
   }
 
@@ -41,8 +59,28 @@ export default class ReceiveModal extends React.Component {
   }
 
   render() {
-    const { props: { name, intl, data: { currency, address } }, state: { isAddressCopied } } = this
+    const {
+      props: {
+        name,
+        intl,
+        data: {
+          currency,
+          address,
+        },
+      },
+      state: {
+        isAddressCopied,
+        howToDeposit,
+      },
+    } = this
 
+    if (howToDeposit) {
+      return (
+        <Modal name={name} title={intl.formatMessage(title.Receive)}>
+          <div dangerouslySetInnerHTML={{ __html: howToDeposit }} />
+        </Modal>
+      )
+    }
     return (
       <Modal name={name} title={intl.formatMessage(title.Receive)}>
         <div styleName="content">
