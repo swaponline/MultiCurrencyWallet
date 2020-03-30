@@ -341,8 +341,6 @@ export default class Wallet extends Component {
         )
       })
 
-    console.log('isWidgetBuild', isWidgetBuild, widgetCurrencies)
-    console.log('handleModalOpen', context, currencies)
     actions.modals.open(constants.modals.CurrencyAction, {
       currencies,
       context
