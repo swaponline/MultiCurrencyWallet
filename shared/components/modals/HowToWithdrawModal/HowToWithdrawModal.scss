@@ -1,0 +1,31 @@
+.button {
+  margin-top: 40px;
+}
+
+.content {
+  margin: 0;
+  word-break: break-word;
+  text-align: center;
+
+  img {
+    width: 100%;
+  }
+}
+
+  @include media-mobile {
+    .qr {
+      text-align: center;
+      img {
+        width: 50%;
+        font-size: 25px;
+      }
+    }
+  }
+
+.qr {
+  text-align: center;
+  img {
+    width: 60%;
+    font-size: 25px;
+  }
+}
