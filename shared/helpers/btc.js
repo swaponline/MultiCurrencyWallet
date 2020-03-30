@@ -122,9 +122,20 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
 }
 
 const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, fixed, method } = {}) => {
-  const { user: { btcData } } = getState()
+  const { 
+    user: {
+      btcData,
+      btcMultisigSMSData,
+      btcMultisigUserData,
+    },
+  } = getState()
 
-  address = address || btcData.address
+  if (!address) {
+    address = btcData.address
+    if (method === 'send_2fa') address = btcMultisigSMSData.address
+    if (method === 'send_multisig') address = btcMultisigUserData.address
+  }
+
   txSize = txSize || await calculateTxSize({ address, speed, fixed, method })
   feeRate = feeRate || await estimateFeeRate({ speed })
 
