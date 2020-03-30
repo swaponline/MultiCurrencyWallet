@@ -4,8 +4,10 @@ window.widgetERC20Tokens = {
   usdt: {
     address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
     decimals: 6,
-    fullName: 'Usdt'
-  },/*
+    fullName: 'Usdt',
+    //howToDeposit: '<div style="boo-style"><strong>How to deposit to {userAddress}</strong></div>',
+    //howToWithdraw: '<div style="boo-style"><strong>How to withdraw</strong></div>',
+  },
   // Symbol of ERC20 token in lowerCase
   proxima: {
     // Address of ERC20 contract
@@ -18,8 +20,9 @@ window.widgetERC20Tokens = {
     icon: 'https://growup.wpmix.net/wp-content/uploads/2016/10/favicon.png',
     // Background color of icon
     iconBgColor: '#ccc',
+    howToDeposit: '',
+    howToWithdraw: '',
   },
-  */
 }
 
 window.buildOptions = {
