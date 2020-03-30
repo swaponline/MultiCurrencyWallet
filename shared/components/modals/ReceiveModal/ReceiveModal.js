@@ -26,6 +26,7 @@ export default class ReceiveModal extends React.Component {
     super(props)
     const {
       data: {
+        address,
         currency,
       },
     } = props
@@ -36,6 +37,8 @@ export default class ReceiveModal extends React.Component {
       && config.erc20[currency.toLowerCase()]
       && config.erc20[currency.toLowerCase()].howToDeposit
     ) howToDeposit = config.erc20[currency.toLowerCase()].howToDeposit
+
+    howToDeposit = howToDeposit.replace(/{userAddress}/g, address);
 
     this.state = {
       isAddressCopied: false,
