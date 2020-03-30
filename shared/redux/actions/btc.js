@@ -400,12 +400,6 @@ const getDataByAddress = (address) => {
     btcMultisigG2FAData,
   ].filter(data => data && data.address && data.address.toLowerCase() === address.toLowerCase())
 
-  if (btcMultisigUserData && btcMultisigUserData.wallets && btcMultisigUserData.wallets.length) {
-    btcMultisigUserData.wallets.map((wallet) => {
-      retData.push(wallet.address.toLowerCase())
-    })
-  }
-
   return (founded.length) ? founded[0] : false
 }
 
