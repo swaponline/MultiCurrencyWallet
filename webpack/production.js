@@ -4,6 +4,7 @@ import config from 'app-config'
 
 import path from 'path'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
+import TerserPlugin from 'terser-webpack-plugin-legacy'
 import externalConfig from './externalConfig'
 
 
@@ -32,8 +33,7 @@ export default (webpackConfig) => {
   })
 
   webpackConfig.plugins.push(
-    //  Perhaps it's the cause of errors during the swap process,
-    //  so temporary commented.
+    new TerserPlugin(),
     new ExtractTextPlugin({
       filename: '[name].[hash:6].css',
       allChunks: true,
