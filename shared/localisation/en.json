@@ -6366,6 +6366,13 @@
     ]
   },
   {
+    "id": "WalletRow_Menu_Сopy_PrivateKey",
+    "message": "Copy private key",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
     "id": "Row426",
     "message": "Login with your existing EOS account",
     "files": [
