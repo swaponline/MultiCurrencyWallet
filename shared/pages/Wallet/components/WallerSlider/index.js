@@ -10,6 +10,8 @@ import ContentLoader from '../../../../components/loaders/ContentLoader/ContentL
 import config from 'app-config'
 
 import { FormattedMessage } from 'react-intl'
+import linksManager from '../../../../helpers/links'
+
 
 const isWidgetBuild = config && config.isWidget
 
@@ -22,7 +24,7 @@ export default class WallerSlider extends Component {
 
     this.state = {
       mnemonicDeleted,
-      isFetching: false
+      isFetching: false,
     }
   }
 
@@ -31,7 +33,7 @@ export default class WallerSlider extends Component {
   }
 
   initBanners = () => {
-    var starterSwiper = new Swiper('#swiper_banners', {
+    let starterSwiper = new Swiper('#swiper_banners', {
       spaceBetween: 10,
       slidesPerView: 4,
       // centeredSlides: true,
@@ -44,9 +46,9 @@ export default class WallerSlider extends Component {
         // when window width is >= 640px
         640: {
           slidesPerView: 4,
-          spaceBetween: 40
-        }
-      }
+          spaceBetween: 40,
+        },
+      },
     })
   }
 
@@ -56,7 +58,7 @@ export default class WallerSlider extends Component {
       .then(result => {
         this.setState({
           banners: result.data,
-          isFetching: true
+          isFetching: true,
         })
         this.initBanners()
       })
@@ -78,9 +80,9 @@ export default class WallerSlider extends Component {
         const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
         const mnemonicDeleted = mnemonic === '-'
         this.setState({
-          mnemonicDeleted
+          mnemonicDeleted,
         })
-      }
+      },
     })
   }
 
@@ -91,12 +93,12 @@ export default class WallerSlider extends Component {
   render() {
     const { mnemonicDeleted } = this.state
 
-    const isPrivateKeysSaved = false //localStorage.getItem(constants.localStorage.privateKeysSaved)
+    const isPrivateKeysSaved = false // localStorage.getItem(constants.localStorage.privateKeysSaved)
 
     let firstBtnTitle = <FormattedMessage id="descr282" defaultMessage="Show my keys" />
     if (!mnemonicDeleted) firstBtnTitle = <FormattedMessage id="ShowMyMnemonic" defaultMessage="Показать 12 слов" />
 
-    return isWidgetBuild ? null : (
+    return (isWidgetBuild || window.location.hash !== linksManager.hashHome) ? null : (
       <Fragment>
         <h3 className={styles.bannersHeading}>
           <FormattedMessage id="ForYou" defaultMessage="For you" />
