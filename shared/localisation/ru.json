@@ -6372,6 +6372,13 @@
     ]
   },
   {
+    "id": "WalletRow_Menu_Сopy_PrivateKey",
+    "message": "Скопировать приватный ключ",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
     "id": "Row426",
     "message": "Login with your existing EOS account",
     "files": [

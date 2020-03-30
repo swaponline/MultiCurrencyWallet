@@ -404,6 +404,13 @@ export default class Row extends Component {
     navigator.clipboard.writeText(address)
   }
 
+  copyPrivateKey = () => {
+    const {
+      itemData: { privateKey }
+    } = this.props
+    navigator.clipboard.writeText(privateKey)
+  }
+
   render() {
     const {
       isBalanceFetching,
@@ -489,7 +496,13 @@ export default class Row extends Component {
         title: <FormattedMessage id="WalletRow_Menu_Сopy" defaultMessage="Copy address" />,
         action: this.copy,
         disabled: false
-      }
+      },
+      {
+        id: 1012,
+        title: <FormattedMessage id="WalletRow_Menu_Сopy_PrivateKey" defaultMessage="Copy Private Key" />,
+        action: this.copyPrivateKey,
+        disabled: false
+      },
     ]
 
     dropDownMenuItems.push({
