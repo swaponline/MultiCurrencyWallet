@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
 import helpers, { constants, links } from 'helpers'
-import config from 'app-config'
+import config from 'helpers/externalConfig'
 import { isMobile } from 'react-device-detect'
 
 import cssModules from 'react-css-modules'
@@ -269,6 +269,17 @@ export default class Row extends Component {
     }))
   }
 
+  handleHowToWithdraw = () => {
+    const {
+      itemData: { currency, address }
+    } = this.props
+
+    actions.modals.open(constants.modals.HowToWithdrawModal, {
+      currency,
+      address,
+    })
+  }
+
   handleOpenDropdown = () => {
     this.setState({
       isDropdownOpen: true
@@ -429,6 +440,13 @@ export default class Row extends Component {
           .toString() * itemData.infoAboutCurrency.price_usd
     }
 
+    let hasHowToWithdraw = false
+    if (config
+      && config.erc20
+      && config.erc20[this.props.currency.currency.toLowerCase()]
+      && config.erc20[this.props.currency.currency.toLowerCase()].howToWithdraw
+    ) hasHowToWithdraw = true
+
     let dropDownMenuItems = [
       {
         id: 1001,
@@ -436,6 +454,11 @@ export default class Row extends Component {
         action: this.handleReceive,
         disabled: false
       },
+      ...(hasHowToWithdraw) ? [{
+        id: 10021,
+        title: <FormattedMessage id="WalletRow_Menu_HowToWithdraw" defaultMessage="How to withdraw" />,
+        action: this.handleHowToWithdraw,
+      }] : [],
       {
         id: 1002,
         title: <FormattedMessage id="WalletRow_Menu_Send" defaultMessage="Send" />,

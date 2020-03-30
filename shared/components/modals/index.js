@@ -30,6 +30,7 @@ import BtcMultisignConfirmTx from './BtcMultisignConfirmTx/BtcMultisignConfirmTx
 import SaveMnemonicModal from './SaveMnemonicModal/SaveMnemonicModal'
 import RestoryMnemonicWallet from './RestoryMnemonicWallet/RestoryMnemonicWallet'
 import SweepToMnemonicKeys from './SweepToMnemonicKeys/SweepToMnemonicKeys'
+import HowToWithdrawModal from './HowToWithdrawModal/HowToWithdrawModal'
 
 
 
@@ -66,4 +67,5 @@ export default {
   SaveMnemonicModal,
   RestoryMnemonicWallet,
   SweepToMnemonicKeys,
+  HowToWithdrawModal,
 }
