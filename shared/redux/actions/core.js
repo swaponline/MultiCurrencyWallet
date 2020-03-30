@@ -350,7 +350,9 @@ const getWallets = () => {
     ethData,
     ... (bchData) ? [bchData] : [],
     ltcData,
-    ... Object.keys(tokensData).map(k => tokensData[k])
+    ... Object.keys(tokensData)
+          .filter(k => !tokensData[k].reducerDataTarget)
+          .map(k => tokensData[k])
   ].map(({ account, keyPair, ...data }) => ({
     ...data
   }))

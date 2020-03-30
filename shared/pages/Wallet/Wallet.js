@@ -309,22 +309,40 @@ export default class Wallet extends Component {
   }
 
   handleModalOpen = context => {
-    /*
     const { enabledCurrencies } = this.state
-    const { items, tokensData, tokensItems, tokens, hiddenCoinsList } = this.props
+    const { hiddenCoinsList } = this.props
 
-    const currencyTokenData = [...Object.keys(tokensData).map(k => tokensData[k]), ...tokensItems]
+    /* @ToDo Вынести отдельно */
+    // Набор валют для виджета
+    const widgetCurrencies = ['BTC']
+    if (!hiddenCoinsList.includes('BTC (SMS-Protected)')) widgetCurrencies.push('BTC (SMS-Protected)')
+    if (!hiddenCoinsList.includes('BTC (Multisig)')) widgetCurrencies.push('BTC (Multisig)')
+    widgetCurrencies.push('ETH')
+    if (isWidgetBuild) {
+      if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
+        // Multi token widget build
+        Object.keys(window.widgetERC20Tokens).forEach(key => {
+          widgetCurrencies.push(key.toUpperCase())
+        })
+      } else {
+        widgetCurrencies.push(config.erc20token.toUpperCase())
+      }
+    }
 
-    const tableRows = [...items, ...tokens]
-      .filter(currency => !hiddenCoinsList.includes(currency))
-      .filter(currency => enabledCurrencies.includes(currency))
-
-    const currencies = tableRows.map(currency => {
-      return currencyTokenData.find(item => item.currency === currency)
-    })
-    */
     const currencies = actions.core.getWallets()
+      .filter(({ currency, balance }) => {
+        return (
+          ((context === 'Send') ? balance : true)
+          && !hiddenCoinsList.includes(currency)
+          && enabledCurrencies.includes(currency)
+          && ((isWidgetBuild) ?
+            widgetCurrencies.includes(currency)
+            : true)
+        )
+      })
 
+    console.log('isWidgetBuild', isWidgetBuild, widgetCurrencies)
+    console.log('handleModalOpen', context, currencies)
     actions.modals.open(constants.modals.CurrencyAction, {
       currencies,
       context
