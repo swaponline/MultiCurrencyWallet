@@ -8,6 +8,8 @@ import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import * as bip39 from 'bip39'
 
+import { getActivatedCurrencies } from 'helpers/user'
+
 
 
 const sign = async () => {
@@ -272,6 +274,11 @@ const setTransactions = async () => {
   const isLtcSweeped = true // actions.ltc.isSweeped()
   const isEthSweeped = actions.eth.isSweeped()
 
+  const {
+    core: { hiddenCoinsList }
+  } = getState()
+  const enabledCurrencies = getActivatedCurrencies()
+
   try {
     // @ToDo - make in like query
     const mainTokens = await Promise.all([
@@ -292,8 +299,11 @@ const setTransactions = async () => {
       actions.ltc.getTransaction(),
     ])
 
+    const erc20 = Object.keys(config.erc20)
+      .filter((key) => !hiddenCoinsList.includes(key.toUpperCase()) && enabledCurrencies.includes(key.toUpperCase()))
+
     await new Promise(async resolve => {
-      const ercArray = await Promise.all(Object.keys(config.erc20)
+      const ercArray = await Promise.all(erc20
         .map(async (name, index) => {
           await delay(650 * index)
           const res = await actions.token.getTransaction(null, name)

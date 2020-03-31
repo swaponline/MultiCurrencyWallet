@@ -3,48 +3,116 @@ import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
 import { constants } from 'helpers'
 import getCurrencyKey from "helpers/getCurrencyKey";
+import { FormattedMessage } from 'react-intl'
 
 
 class Transaction extends Component {
 
-  async componentWillMount() {
+  constructor(props) {
+    super(props)
 
-    let { history, match: { params: { ticker = null, tx=null } } = null } = this.props
-
-    if(!tx) {
-      return;
+    this.state = {
+      isFetching: true,
+      infoTx: false,
     }
+  }
 
-    const infoTx = await actions[getCurrencyKey(ticker)].fetchTxInfo(tx)
+  async fetchTxInfo(currencyKey, txId) {
 
-    console.log('Parsed tx info', infoTx)
+    const infoTx = await actions[currencyKey].fetchTxInfo(txId, 5*60*1000)
+
     if(!infoTx) {
+      // Fail parse
+      return
+    }
+    this.setState({
+      isFetching: false,
+      infoTx,
+    }, () => {
+      this.updateTxInfoModal()
+    })
+  }
+
+  updateTxInfoModal() {
+    const {
+      history,
+    } = this.props
+
+    const {
+      currency,
+      txId,
+      infoTx,
+      infoModal
+    } = this.state
+
+    infoModal.setState({
+      amount:infoTx.amount,
+      balance:0,
+      oldBalance: infoTx.afterBalance,
+      confirmed: infoTx.confirmed,
+      toAddress: infoTx.receiverAddress,
+      isFetching: false,
+    })
+  }
+
+  componentWillMount() {
+    let {
+      history,
+      match: {
+        params: {
+          ticker = null,
+          tx: txId = null,
+        }
+      } = null
+    } = this.props
+
+    if(!txId) {
+      // 404
       return
     }
 
-    actions.modals.open(constants.modals.InfoPay, {
-      amount:infoTx.amount,
-      currency:ticker,
-      balance:0,
-      oldBalance: infoTx.afterBalance, // @Todo доделать old balance
-      txId: tx,
-      confirmed: infoTx.confirmed,
-      toAddress: infoTx.receiverAddress,
-      onClose: () => {
-        
-        if(history.length > 2 ) {
-          history.goBack()
-          return false;
-        }
+    const currency = getCurrencyKey(ticker)
 
-        history.push('/')
-        return false;
-      }
-    }) 
+    this.setState({
+      currency,
+      txId,
+    }, () => {
+      actions.modals.open(constants.modals.InfoPay, {
+        currency,
+        txId,
+        onClose: () => {
+          if(history.length > 2 ) {
+            history.goBack()
+            return false;
+          }
+
+          history.push('/')
+          return false;
+        },
+        isFetching: true,
+        onFetching: (infoModal) => {
+          this.setState({
+            infoModal,
+          }, () => {
+            this.fetchTxInfo(currency, txId)
+          })
+        }
+      }) 
+      
+      
+    })
   }
 
-   render() {
-     
+  render() {
+    const { isFetching } = this.state
+    
+    if (isFetching) {
+      return (
+        <div>
+          <FormattedMessage id="Transaction_Pags_Fetching" defaultMessage="Fetching..." />
+        </div>
+      )
+    }
     return (null);
   }
 }
