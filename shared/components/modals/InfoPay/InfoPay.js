@@ -13,6 +13,10 @@ import ShortTextView from 'pages/Wallet/components/ShortTextView/ShortTextView.j
 import { isMobile } from "react-device-detect";
 import { BigNumber } from 'bignumber.js'
 
+import animateFetching from 'components/loaders/ContentLoader/ElementLoading.scss'
+
+
+
 const labels = defineMessages({
   Title: {
     id: 'InfoPay_1',
@@ -24,9 +28,45 @@ const labels = defineMessages({
   }
 })
 @injectIntl
-@cssModules(styles, { allowMultiple: true })
+@cssModules({
+  ...styles,
+  ...animateFetching,
+}, { allowMultiple: true })
 
 export default class InfoPay extends React.Component {
+
+  constructor(props) {
+    super(props)
+
+    const {
+      data: {
+        amount,
+        currency,
+        toAddress,
+        txRaw,
+        txId,
+        balance,
+        oldBalance,
+        confirmed,
+        isFetching,
+        onFetching,
+      }
+    } = props
+
+    this.state = {
+      isFetching,
+      amount: isFetching ? 0 : amount,
+      currency,
+      toAddress: isFetching ? `Fetching` : toAddress,
+      balance: isFetching ? 0 : balance,
+      oldBalance: isFetching ? 0 : oldBalance,
+      confirmed: isFetching ? false : confirmed,
+    }
+
+    if (isFetching && onFetching instanceof Function) {
+      onFetching(this)
+    }
+  }
 
   handleClose = () => {
     const { name, data, onClose } = this.props
@@ -47,17 +87,22 @@ export default class InfoPay extends React.Component {
     const {
       intl,
       data: {
-        amount,
         currency,
-        toAddress,
         txRaw,
         txId,
-        balance,
-        oldBalance,
-        confirmed,
       },
       name,
     } = this.props
+
+    const {
+      isFetching,
+      amount,
+      toAddress,
+      balance,
+      oldBalance,
+      confirmed,
+    } = this.state
+
 
     console.log('InfoPay render', this.props.data)
     let link = '#';
@@ -85,12 +130,14 @@ export default class InfoPay extends React.Component {
             <img styleName="finishImg" src={finishSvg} alt="finish" />
           </div>
 
-          <div className="p-3">
-            <span ><strong> {amount}  {currency.toUpperCase()} </strong></span>
-            <span> <FormattedMessage id="InfoPay_2" defaultMessage="были успешно переданы" />
-              <br />
-              <strong>{toAddress}</strong>
-            </span>
+          <div className="p-3"  styleName={isFetching ? `animate-fetching` : ``}>
+            <span><strong> {amount}  {currency.toUpperCase()} </strong></span>
+            {!isFetching && (
+              <span> <FormattedMessage id="InfoPay_2" defaultMessage="были успешно переданы" />
+                <br />
+                <strong>{toAddress}</strong>
+              </span>
+            )}
           </div>
 
           <table styleName="blockCenter__table" className="table table-borderless">
@@ -103,32 +150,42 @@ export default class InfoPay extends React.Component {
                   <a href={link} target="_blank"><ShortTextView text={tx} /></a>
                 </td>
               </tr>
-              <tr>
-                <td styleName="header">
-                  <FormattedMessage id="InfoPay_4" defaultMessage="Est. time to confitmation" />
-                </td>
-                <td>
-                  {confirmed && (
-                    <strong>
-                      <FormattedMessage id="InfoPay_Confirmed" defaultMessage="Confirmed" />
-                    </strong>
+              {isFetching ? (
+                <>
+                  <tr>
+                    <td styleName="animate-fetching" colSpan="2"></td>
+                  </tr>
+                </>
+              ) : (
+                <>
+                  <tr>
+                    <td styleName="header">
+                      <FormattedMessage id="InfoPay_4" defaultMessage="Est. time to confitmation" />
+                    </td>
+                    <td>
+                      {confirmed && (
+                        <strong>
+                          <FormattedMessage id="InfoPay_Confirmed" defaultMessage="Confirmed" />
+                        </strong>
+                      )}
+                      {!confirmed && (
+                        <FormattedMessage id="InfoPay_NotConfirmed" defaultMessage="~10 mins" />
+                      )}
+                    </td>
+                  </tr>
+                  {(oldBalance > 0) && (
+                    <tr>
+                      <td styleName="header">
+                        <FormattedMessage id="InfoPay_FinalBalance" defaultMessage="Final balance" />
+                      </td>
+                      <td>
+                        <strong>
+                          {oldBalance} {currency}
+                        </strong>
+                      </td>
+                    </tr>
                   )}
-                  {!confirmed && (
-                    <FormattedMessage id="InfoPay_NotConfirmed" defaultMessage="~10 mins" />
-                  )}
-                </td>
-              </tr>
-              {oldBalance && (
-                <tr>
-                  <td styleName="header">
-                    <FormattedMessage id="InfoPay_FinalBalance" defaultMessage="Final balance" />
-                  </td>
-                  <td>
-                    <strong>
-                      {oldBalance} {currency}
-                    </strong>
-                  </td>
-                </tr>
+                </>
               )}
             </tbody>
           </table>
