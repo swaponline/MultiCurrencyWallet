@@ -1,0 +1,38 @@
+.animate-fetching {
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    background-color: #ccc;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    animation-name: animate;
+    border-radius: 4px;
+    animation-duration: 2s;
+    position: absolute;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    background: -webkit-gradient(
+      linear,
+      left top,
+      right top,
+      color-stop(8%, #eeeeee),
+      color-stop(18%, #dddddd),
+      color-stop(33%, #eeeeee)
+    );
+    background: -webkit-linear-gradient(left, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+    background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+    -webkit-background-size: 3200px 104px;
+  }
+}
+
+@keyframes animate {
+  0% {
+    background-position: -1500px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}

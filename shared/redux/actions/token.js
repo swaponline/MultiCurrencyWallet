@@ -292,13 +292,15 @@ const setAllowanceForToken = async ({ name, to, targetAllowance, ...config }) =>
   return approve({ name, to, amount: newTargetAllowance, ...config })
 }
 
-const fetchTxInfo = (hash) => {
+const fetchTxInfo = (hash, cacheResponse) => {
   return new Promise((resolve) => {
     const { user: { tokensData } } = getState()
 
     const url = `?module=proxy&action=eth_getTransactionByHash&txhash=${hash}&apikey=${config.api.etherscan_ApiKey}`
 
-    return apiLooper.get('etherscan', url)
+    return apiLooper.get('etherscan', url, {
+      cacheResponse,
+    })
       .then((res) => {
         if (res && res.result) {
           let amount = 0

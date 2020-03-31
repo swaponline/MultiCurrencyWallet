@@ -89,6 +89,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
       txRaw: '',
       isLinkCopied: false,
       ownTx: '',
+      minAmount: minAmount['btc_multisig_2n2'],
     }
   }
 
@@ -122,8 +123,10 @@ export default class WithdrawModalMultisigUser extends React.Component {
 
   actualyMinAmount = async () => {
     if (constants.coinsWithDynamicFee.includes('btc')) {
-      minAmount['btc'] = await helpers['btc'].estimateFeeValue({ method: 'send_multisig', speed: 'fast' })
-      console.log('minAmount',minAmount['btc'] )
+      minAmount['btc_multisig_2n2'] = await helpers['btc'].estimateFeeValue({ method: 'send_multisig', speed: 'fast' })
+      this.setState({
+        minAmount: minAmount['btc_multisig_2n2'],
+      })
     }
   }
 
@@ -226,7 +229,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
     const { amount, balance, currency } = this.state
     const { data } = this.props
 
-    const minFee = minAmount.btc
+    const minFee = minAmount.btc_multisig_2n2
 
     const balanceMiner = balance
       ? balance !== 0
@@ -303,6 +306,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
       isLinkCopied,
       ownTx,
       openScanCam,
+      minAmount: min,
     } = this.state
 
     const {
@@ -322,7 +326,6 @@ export default class WithdrawModalMultisigUser extends React.Component {
     }
     const linked = Link.all(this, 'address', 'amount', 'code', 'ownTx')
 
-    const min = minAmount.btc
     const dataCurrency = currency.toUpperCase()
 
     const isDisabled =
