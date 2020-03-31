@@ -2,7 +2,36 @@
 
 # build
 git pull
+npm run build:mainnet https://swaponline.github.io/
 
+# update repo or clone
+
+git clone https://sorentobot:$1@github.com/swaponline/swaponline.github.io.git
+cd swaponline.github.io
+git checkout master
+git fetch origin
+git reset --hard origin/master
+
+# clean React code from repo
+rm -rf assets
+rm -rf images
+rm -rf fonts
+rm -rf *.css
+rm -rf *.js
+
+# update files in repo
+cp -rf ../build-mainnet/* ./
+# \cp build-mainnet/* mainnet.build/
+
+# commit build to repo
+
+DATE=`date '+%Y-%m-%d %H:%M:%S'`
+git add .
+git commit -m "build $DATE"
+git push --force
+
+# return back to root
+cd ..
 
 #####WIDGETS
 npm run build:mainnet-widget
