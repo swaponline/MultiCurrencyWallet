@@ -333,10 +333,12 @@ const send = ({ from, to, amount, gasPrice, gasLimit, speed } = {}) =>
     resolve(receipt)
   })
 
-const fetchTxInfo = (hash) => new Promise((resolve) => {
+const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
     const url = `?module=proxy&action=eth_getTransactionByHash&txhash=${hash}&apikey=${config.api.etherscan_ApiKey}`
 
-    return apiLooper.get('etherscan', url)
+    return apiLooper.get('etherscan', url, {
+      cacheResponse,
+    })
       .then((res) => {
         if (res && res.result) {
 

@@ -294,8 +294,9 @@ const fetchBalance = (address) =>
     },
   }).then(({ balance }) => balance)
 
-const fetchTx = (hash) =>
+const fetchTx = (hash, cacheResponse) =>
   apiLooper.get('bitpay', `/tx/${hash}`, {
+    cacheResponse,
     checkStatus: (answer) => {
       try {
         if (answer && answer.fees !== undefined) return true
@@ -307,8 +308,8 @@ const fetchTx = (hash) =>
       ...rest,
     }))
 
-const fetchTxInfo = (hash) =>
-  fetchTx(hash)
+const fetchTxInfo = (hash, cacheResponse) =>
+  fetchTx(hash, cacheResponse)
     .then(({ vin, vout, ...rest }) => ({
       amount: vout ? new BigNumber(vout[0].value).toNumber() : null,
       afterBalance: vout && vout[1] ? new BigNumber(vout[1].value).toNumber() : null,
