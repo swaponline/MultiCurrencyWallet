@@ -83,6 +83,7 @@ export default class WithdrawModalMultisig extends React.Component {
       broadcastError: false,
       sendSmsTimeout: 0,
       sendSmsTimeoutTimer: false,
+      minAmount: minAmount['btc_multisig_2fa'],
     }
   }
 
@@ -123,13 +124,12 @@ export default class WithdrawModalMultisig extends React.Component {
   }
 
   actualyMinAmount = async () => {
-    const { data: { currency } } = this.props
-    const { isEthToken } = this.state
-
-    const currentCoin = currency.toLowerCase()
-
-
-    minAmount[currentCoin] = await helpers.btc.estimateFeeValue({ method: 'send_2fa', speed: 'fast' })
+    if (constants.coinsWithDynamicFee.includes('btc')) {
+      minAmount['btc_multisig_2n2'] = await helpers['btc'].estimateFeeValue({ method: 'send_2fa', speed: 'fast' })
+      this.setState({
+        minAmount: minAmount['btc_multisig_2n2'],
+      })
+    }
   }
 
   setBalanceOnState = async (currency) => {
@@ -310,7 +310,7 @@ export default class WithdrawModalMultisig extends React.Component {
     const { amount, balance, currency, isEthToken } = this.state
     const { data } = this.props
 
-    const minFee = minAmount.btc
+    const minFee = minAmount.btc_multisig_2fa
 
     const balanceMiner = balance
       ? balance !== 0
@@ -323,13 +323,7 @@ export default class WithdrawModalMultisig extends React.Component {
     })
   }
 
-  isEthOrERC20() {
-    const { name, data, tokenItems } = this.props
-    const { currency, ethBalance, isEthToken } = this.state
-    return (
-      (isEthToken === true && ethBalance < minAmount.eth) ? ethBalance < minAmount.eth : false
-    )
-  }
+  isEthOrERC20() {}
 
   openScan = () => {
     const { openScanCam } = this.state;
@@ -454,6 +448,7 @@ export default class WithdrawModalMultisig extends React.Component {
       ownTx,
       sendSmsTimeout,
       sendSmsStatus,
+      minAmount: min,
     } = this.state
 
     const {
@@ -469,7 +464,6 @@ export default class WithdrawModalMultisig extends React.Component {
 
     const linked = Link.all(this, 'address', 'amount', 'code', 'ownTx', 'mnemonic')
 
-    const min = minAmount.btc
     const dataCurrency = currency.toUpperCase()
 
     const isDisabled =
