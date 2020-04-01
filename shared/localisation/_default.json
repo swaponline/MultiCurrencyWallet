@@ -7432,7 +7432,7 @@
   },
   {
     "id": "SaveMnemonicModal_BeginLater",
-    "message": "Я сохраню позже",
+    "message": "Позже",
     "files": [
       "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
     ]
@@ -7581,7 +7581,7 @@
     "id": "ForYou",
     "message": "For you",
     "files": [
-      "shared/pages/Wallet/CurrenciesList.js"
+      "shared/pages/Wallet/components/WallerSlider/index.js"
     ]
   },
   {
@@ -7652,6 +7652,27 @@
     "message": "Пожалуйста, переместите все средства на кошельки помеченные \"new\" \n                      (USDT и остальные токены переведите на Ethereum (new) адрес). \n                      Затем нажмите кнопку \"DONE\". Старые адреса будут скрыты.",
     "files": [
       "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "HowToWithdrawModal_Title",
+    "message": "How to withdraw",
+    "files": [
+      "shared/components/modals/HowToWithdrawModal/HowToWithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Transaction_Pags_Fetching",
+    "message": "Fetching...",
+    "files": [
+      "shared/pages/Transaction/Transaction.js"
+    ]
+  },
+  {
+    "id": "WalletRow_Menu_HowToWithdraw",
+    "message": "How to withdraw",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
     ]
   }
 ]
