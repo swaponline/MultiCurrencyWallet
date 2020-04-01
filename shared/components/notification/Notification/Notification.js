@@ -6,7 +6,7 @@ import actions from 'redux/actions'
 import cssModules from 'react-css-modules'
 import styles from './Notification.scss'
 
-import Sound from 'helpers/Sound/Sound.mp4'
+import Sound from 'helpers/Sound/alert.mp4'
 
 
 @cssModules(styles, { allowMultiple: true })
