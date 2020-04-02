@@ -8,7 +8,7 @@ import { constants } from 'helpers'
 
 import styles from './User.scss'
 import CSSModules from 'react-css-modules'
-import Sound from 'helpers/Sound/Sound.mp4'
+import Sound from 'helpers/Sound/alert.mp4'
 
 import Question from './Question/Question'
 import UserAvatar from './UserAvatar/UserAvatar'
