@@ -33,6 +33,8 @@ import { cacheStorageGet, cacheStorageSet } from './cache'
 
 import apiLooper from './apiLooper'
 
+import metamask from './metamask'
+
 
 export default {
   // xlm,
@@ -81,4 +83,6 @@ export {
   cacheStorageSet,
 
   apiLooper,
+
+  metamask,
 }
