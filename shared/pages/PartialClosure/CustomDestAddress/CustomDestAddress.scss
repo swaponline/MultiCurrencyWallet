@@ -1,0 +1,56 @@
+.walletToggle {
+  margin-bottom: 15px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  min-height: 73px;
+  margin-bottom: 30px;
+  padding: 0 20px;
+  &_site {
+    position: relative;
+  }
+}
+
+.walletInput {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.walletInput input {
+  border: none;
+  margin: 0;
+  height: 30px;
+  padding: 0;
+  margin-bottom: 20px;
+  font-size: 16px;
+  &:focus {
+    border: none;
+  }
+}
+
+.qrCode {
+  position: absolute;
+  left: 97%;
+  top: 9px;
+}
+
+.anotherRecepient {
+  position: relative;
+}
+
+.label {
+  width: 200px;
+  font-weight: 500;
+  line-height: 21px;
+  font-size: 16px;
+}
+
+
+@include media-mobile {
+  .label {
+    width: 170px;
+    font-weight: 500;
+    line-height: 19px;
+    font-size: 13px;
+  }
+}
