@@ -43,10 +43,20 @@ const langLabels = defineMessages({
   (
     {
       rememberedOrders,
+      user: {
+        ethData: {
+          address,
+          privateKey,
+        }
+      }
     },
     { currency }
   ) => ({
-    decline: rememberedOrders.savedOrders
+    decline: rememberedOrders.savedOrders,
+    ethDataHelper: {
+      address,
+      privateKey,
+    }
   })
 )
 @cssModules(styles, { allowMultiple: true })
@@ -406,9 +416,14 @@ export default class Row extends Component {
 
   copyPrivateKey = () => {
     const {
-      itemData: { privateKey }
+      itemData: { address, privateKey },
+      ethDataHelper
     } = this.props
-    navigator.clipboard.writeText(privateKey)
+    navigator.clipboard.writeText(
+      address === ethDataHelper.address
+        ? ethDataHelper.privateKey
+        : privateKey
+    )
   }
 
   render() {
