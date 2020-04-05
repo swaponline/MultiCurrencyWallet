@@ -79,9 +79,11 @@ export default class DropDown extends Component {
     const selectedValue = this.props.selectedValue || this.state.selectedValue
     const selectedItem = items.find(({ value }) => value === selectedValue)
 
-    if (typeof selectedItemRender === 'function') {
-      if (selectedItem !== undefined) {
-        return selectedItem.fullTitle
+    if (selectedItem !== undefined) {
+      if (typeof selectedItemRender !== 'function') {
+        return (selectedItem.title || selectedItem.fullTitle)
+      } else {
+        return selectedItemRender(selectedItem)
       }
     }
   }
