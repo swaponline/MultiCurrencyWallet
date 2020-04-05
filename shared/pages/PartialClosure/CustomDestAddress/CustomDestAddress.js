@@ -6,6 +6,9 @@ import config from 'helpers/externalConfig'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import Input from "components/forms/Input/Input";
 import DropDown from "components/ui/DropDown/DropDown"
+import metamask from "helpers/metamask"
+import { Button } from "components/controls"
+import ethToken from 'helpers/ethToken'
 
 
 const langPrefix = `Partial_DestinationAddress`
@@ -43,31 +46,128 @@ const destinationType = {
 export default class CustomDestAddress extends Component {
   constructor(props) {
     super(props)
+    const {
+      initialValue,
+      type,
+      hasError,
+    } = props
 
     this.state = {
+      type,
+      hasError,
       selectedDestination: destinationType.none,
+      walletAddress: initialValue,
+      walletAddressFocused: false,
+      customAddress: '',
+      metamaskConnected: metamask.isConnected(),
+      metamaskAddress: metamask.getAddress(),
     }
   }
 
 
-  handleDestinationSelect(item) {
+  handleFocusAddress() {
     this.setState({
-      selectedDestination: item.value,
+      walletAddressFocused: true,
     })
   }
-  
+
+  componentDidUpdate() {
+    const {
+      type: newType,
+      initialValue,
+      hasError,
+    } = this.props
+    const {
+      type: oldType
+    } = this.state
+
+    if ((newType !== oldType) || (hasError !== this.state.hasError)) {
+      this.setState({
+        type: newType,
+        hasError,
+        selectedDestination: destinationType.none,
+        walletAddress: initialValue,
+        customAddress: '',
+      })
+    }
+  }
+
+  handleBlurAddress() {
+    this.setState({
+      walletAddressFocused: false,
+    })
+  }
+
+  handleConnectMetamask() {
+    metamask.connect().then((address) => {
+      const { onChange } = this.props
+
+      this.setState({
+        metamaskConnected: true,
+        metamaskAddress: metamask.getAddress(),
+      }, () => {
+        if (typeof onChange === 'function') {
+          onChange({
+            selected: true,
+            isCustom: true,
+            value: metamask.getAddress(),
+          })
+        }
+      })
+      
+    }).catch((error) => {
+      console.log('Metamask rejected', error)
+    })
+  }
+
+  handleDestinationSelect(item) {
+    const { onChange } = this.props
+    const {
+      value: selectedDestination,
+    } = item
+    
+
+    this.setState({
+      selectedDestination,
+    }, () => {
+      if(typeof onChange === 'function') {
+        const selected = (selectedDestination !== destinationType.none)
+        const isCustom = ((selectedDestination === destinationType.custom) || selectedDestination === destinationType.metamask)
+        let value = ''
+        if (selectedDestination === destinationType.metamask) {
+          value = metamask.getAddress()
+        }
+
+        onChange({
+          selected,
+          isCustom,
+          value,
+        })
+      }
+    })
+  }
 
   render() {
-    const customWalletUse = true
     const customWalletValueLink = this.props.valueLink
 
     const {
       openScan,
+      value: customWallet,
+      type,
     } = this.props
+
 
     const {
       selectedDestination,
+      walletAddressFocused,
+      metamaskConnected,
+      metamaskAddress,
+      hasError,
     } = this.state
+
+    if (!ethToken.isEthOrEthToken({ name: type }) && selectedDestination === 'metamask') {
+      selectedDestination = 'none'
+    }
 
     let destinationOptions = [
       {
@@ -78,10 +178,14 @@ export default class CustomDestAddress extends Component {
         value: destinationType.hotwallet,
         title: <FormattedMessage { ...langLabels.optionHotWallet } />,
       },
-      {
-        value: destinationType.metamask,
-        title: <FormattedMessage { ...langLabels.optionMetamast } />,
-      },
+      ...(
+        (metamask.isEnabled() && ethToken.isEthOrEthToken({ name: type })) ? [
+          {
+            value: destinationType.metamask,
+            title: <FormattedMessage { ...langLabels.optionMetamast } />,
+          }
+        ] : []
+      ),
       {
         value: destinationType.custom,
         title: <FormattedMessage { ...langLabels.optionCustom } />,
@@ -89,31 +193,43 @@ export default class CustomDestAddress extends Component {
     ]
 
     return (
-      <Fragment>
-        <DropDown 
+      <div styleName={`customDestination ${(hasError) ? 'customDestination_error' : ''}`}>
+        <DropDown
+          styleName="dropDown"
           items={destinationOptions}
           initialValue={destinationType.none}
           selectedValue={selectedDestination}
           onSelect={(value) => this.handleDestinationSelect(value)}
           />
-        {(selectedDestination !== destinationType.none) && (
-          <div styleName="walletToggle walletToggle_site">
-          {/*
-            <div styleName="walletOpenSide" className="data-tut-togle">
-              <Toggle checked={!customWalletUse} onChange={this.handleCustomWalletUse} />
-              <span styleName="specify">
-                <FormattedMessage id="UseAnotherWallet" defaultMessage="Specify the receiving wallet address" />
-              </span>
-            </div>
-          */}
+        {selectedDestination === destinationType.hotwallet && (
+          <div styleName="readonlyValue">{customWallet}</div>
+        )}
+        {selectedDestination === destinationType.metamask && metamask.isEnabled() && (
+          <Fragment>
+            {(metamaskConnected) ? (
+              <div styleName="readonlyValue">{metamaskAddress}</div>
+            ) : (
+              <Button
+                styleName="button"
+                blue
+                onClick={() => { this.handleConnectMetamask() }}
+              >
+                Connect metamask
+              </Button>
+            )}
+          </Fragment>
+        )}
+        {selectedDestination === destinationType.custom && (
+          <div styleName={`walletToggle ${(walletAddressFocused) ? 'walletToggle_focus' : ''}`}>
             <div styleName="anotherRecepient">
               <div styleName="walletInput">
                 <Input
                   inputCustomStyle={{ fontSize: "15px" }}
                   required
-                  disabled={customWalletUse}
                   valueLink={customWalletValueLink}
                   pattern="0-9a-zA-Z"
+                  onBlur={() => { this.handleBlurAddress() }}
+                  onFocus={() => { this.handleFocusAddress() }}
                   placeholder="Enter the receiving wallet address"
                 />
                 <i styleName="qrCode" className="fas fa-qrcode" onClick={openScan} />
@@ -121,7 +237,7 @@ export default class CustomDestAddress extends Component {
             </div>
           </div>
         )}
-      </Fragment>
+      </div>
     )
   }
 }

@@ -1,13 +1,88 @@
+.customDestination {
+  position: relative;
+  &_error .walletToggle {
+    border: 2px solid #a90101;
+  }
+  .dropDown{
+    box-shadow: none;
+    border: none;
+    & > div:nth-child(1) {
+      border: none;
+      height: auto;
+    }
+    & > div {
+      padding-left: 0px;
+      background: #FFF;
+      border: 1px solid #000;
+      border-radius: 0px;
+      & > span {
+        display: block;
+        font-size: 12pt;
+        font-weight: bold;
+        width: 100%;
+        text-align: left;
+      }
+    }
+  }
+  &_error {
+    .dropDown > div > span {
+      color: #a90101;
+    }
+  }
+}
+
+
+
 .walletToggle {
   margin-bottom: 15px;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 3px;
-  min-height: 73px;
+  min-height: 56px;
   margin-bottom: 30px;
   padding: 0 20px;
   &_site {
     position: relative;
   }
+  &_focus {
+    border: 2px solid #6144e5 !important;
+  }
+  .qrCode {
+    position: absolute;
+    right: -34px;
+    top: 3px;
+    background: #FFF;
+    border: 6px solid #FFF;
+    display: block;
+  }
+  &_focus .qrCode {
+    right: -35px;
+    top: 2px;
+  }
+}
+
+
+.readonlyValue {
+  margin-bottom: 15px;
+  border: 1px solid rgba(0,0,0,0.3);
+  border-radius: 3px;
+  min-height: 56px;
+  margin-bottom: 30px;
+  padding: 0 20px;
+  font-size: 14px;
+  vertical-align: middle;
+  line-height: 56px;
+  color: #080808;
+}
+
+.button {
+  margin-top: 0;
+  width: 100%;
+  border-radius: 3px;
+  height: 36px;
+  font-size: 16px;
+  flex-basis: 100%;
+  margin-bottom: 10px;
+  box-shadow: none;
 }
 
 .walletInput {
@@ -16,22 +91,20 @@
   justify-content: space-between;
 }
 
+
 .walletInput input {
   border: none;
   margin: 0;
   height: 30px;
   padding: 0;
-  margin-bottom: 20px;
   font-size: 16px;
+  margin-top: 2px;
   &:focus {
     border: none;
+    padding: 0;
+    margin: -1px -1px;
+    margin-top: 1px;
   }
-}
-
-.qrCode {
-  position: absolute;
-  left: 97%;
-  top: 9px;
 }
 
 .anotherRecepient {
