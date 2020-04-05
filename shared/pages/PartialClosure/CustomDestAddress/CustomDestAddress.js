@@ -33,6 +33,10 @@ const langLabels = defineMessages({
     id: `${langPrefix}_PlaceholderEnterAddress`,
     defaultMessage: `Enter the receiving wallet address`,
   },
+  connectMetamask: {
+    id: `${langPrefix}_ConnectMetamask`,
+    defaultMessage: `Connect Metamask`,
+  },
 })
 
 const destinationType = {
@@ -214,7 +218,7 @@ export default class CustomDestAddress extends Component {
                 blue
                 onClick={() => { this.handleConnectMetamask() }}
               >
-                Connect metamask
+                <FormattedMessage { ...langLabels.connectMetamask} />
               </Button>
             )}
           </Fragment>

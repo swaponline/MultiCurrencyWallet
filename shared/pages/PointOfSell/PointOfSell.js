@@ -12,7 +12,7 @@ import { Redirect } from 'react-router-dom'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 
-import SelectGroup from './SelectGroup/SelectGroup'
+import SelectGroup from '../PartialClosure/SelectGroup/SelectGroup'
 import { Button, Toggle } from 'components/controls'
 import Input from 'components/forms/Input/Input'
 import Promo from './Promo/Promo'
@@ -33,6 +33,8 @@ import helpers, { constants, links, ethToken } from 'helpers'
 import { getTokenWallet } from 'helpers/links'
 import { animate } from 'helpers/domUtils'
 import Switching from 'components/controls/Switching/Switching'
+import CustomDestAddress from "../PartialClosure/CustomDestAddress/CustomDestAddress"
+
 
 const allowedCoins = [
   ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? ['BTC'] : [],
@@ -205,6 +207,7 @@ export default class PartialClosure extends Component {
       estimatedFeeValues: {},
       desclineOrders: [],
       openScanCam: false,
+      destinationSelected: false,
     }
 
     constants.coinsWithDynamicFee
@@ -378,7 +381,17 @@ export default class PartialClosure extends Component {
 
   handleGoTrade = () => {
     const { intl: { locale }, decline } = this.props
-    const { haveCurrency } = this.state
+    const {
+      haveCurrency,
+      destinationSelected,
+    } = this.state
+
+    if (!destinationSelected) {
+      this.setState({
+        destinationError: true,
+      })
+      return
+    }
 
     if (decline.length === 0) {
       this.sendRequest()
@@ -916,6 +929,21 @@ export default class PartialClosure extends Component {
     console.error(err)
   }
 
+  onCustomWalletChange = state => {
+    const {
+      selected,
+      isCustom,
+      value
+    } = state
+
+    this.setState({
+      destinationSelected: selected,
+      destinationError: false,
+      customWalletUse: !isCustom,
+      customWallet: (isCustom) ? value : this.getSystemWallet(),
+    })
+  }
+
   handleGoToWallet = () => {
     const { history, intl: { locale }, allCurrencyies } = this.props
     const { getCurrency } = this.state
@@ -946,6 +974,9 @@ export default class PartialClosure extends Component {
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching, desclineOrders, openScanCam,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, exHaveRate, exGetRate,
       maxBuyAmount, getAmount, goodRate, isShowBalance, estimatedFeeValues, haveAmount,
+      destinationSelected,
+      destinationError,
+      customWallet,
     } = this.state
 
 
@@ -1218,8 +1249,17 @@ export default class PartialClosure extends Component {
               </span>
             )
           }
-
-          {
+          {this.customWalletAllowed() && (
+            <CustomDestAddress 
+              type={getCurrency}
+              hasError={destinationError}
+              value={customWallet}
+              valueLink={linked.customWallet}
+              initialValue={customWallet}
+              onChange={this.onCustomWalletChange}
+              openScan={this.openScan} />
+          )}
+          {/*
             (this.customWalletAllowed()) && (
               <Fragment>
                 <div styleName="walletToggle walletToggle_site">
@@ -1245,7 +1285,7 @@ export default class PartialClosure extends Component {
                 </div>
               </Fragment>
             )
-          }
+          */}
           <div styleName="rowBtn" className={isWidget ? 'rowBtn' : ''}>
             <Button className="data-tut-Exchange" styleName="button" brand onClick={this.handleGoTrade} disabled={!canDoOrder}>
               <FormattedMessage id="partial5323" defaultMessage="Buy token" />
