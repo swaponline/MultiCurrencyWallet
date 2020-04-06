@@ -479,6 +479,7 @@ export default class WithdrawModal extends React.Component {
               styleName="input"
               valueLink={linked.amount}
               pattern="0-9\."
+              isPriceValueMask
               placeholder="Enter the amount"
               usd={getUsd.toFixed(2)}
               onKeyDown={inputReplaceCommaWithDot}
