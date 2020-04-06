@@ -7514,7 +7514,7 @@
   },
   {
     "id": "RestoryMnemonicWallet_RestoryWallet",
-    "message": "Restory",
+    "message": "Restore",
     "files": [
       "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js"
     ]
