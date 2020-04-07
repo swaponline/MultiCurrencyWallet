@@ -33,6 +33,9 @@ import ipfs from './ipfs'
 import invoices from './invoices'
 import comments from './comments'
 
+import backupManager from './backupManager'
+
+
 const tokens = {}
 
 Object.keys(config.erc20)
@@ -71,4 +74,7 @@ export default {
   pairs,
   invoices,
   comments,
+
+  // Local storage backups manager
+  backupManager,
 }
