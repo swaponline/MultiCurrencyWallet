@@ -13,6 +13,15 @@ import config from 'app-config'
 import SwapApp from 'swap.app'
 
 
+const getSmsKeyFromMnemonic = (mnemonic) => {
+  if (mnemonic) {
+    const mnemonicWallet = actions.btc.getWalletByWords(mnemonic, 1)
+    if (mnemonicWallet) {
+      return mnemonicWallet.publicKey
+    }
+  }
+}
+
 const _loadBtcMultisigKeys = () => {
   let savedKeys = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKey)
   try { savedKeys = JSON.parse( savedKeys ) } catch (e) {}
@@ -1278,4 +1287,5 @@ export default {
   isBTCSMSAddress,
   isBTCMSUserAddress,
   signToUserMultisig,
+  getSmsKeyFromMnemonic,
 }
