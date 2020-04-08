@@ -391,6 +391,8 @@ export default class RegisterSMSProtected extends React.Component {
       restoreInstruction+= `(DELETE THIS LINE!) ${mnemonicWallet.WIF}\r\n`
       restoreInstruction+= `*** (this private key does not stored anywhere! but in case if our  2fa server does down, you can withdraw your fond using this private key)\r\n`
     }
+    restoreInstruction+= `If our service is unavailable, use a local copy of the wallet.\r\n`
+    restoreInstruction+= `https://swaponline.github.io/2fa_wallet.zip\r\n`
 
     this.setState({
       restoreInstruction,
