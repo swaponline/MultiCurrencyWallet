@@ -50,16 +50,30 @@ export default class RegisterSMSProtected extends React.Component {
       },
     } = this.props
 
-    version = (version) ? version : '2of3', // 2of2
+    version = (version) ? version : '2of3' // 2of2
+
+    const generatedKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated)
+
+    const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
+    const mnemonicSaved = (mnemonic === `-`)
+    const useGeneratedKeyEnabled = !(!generatedKey)
+
+
+    let step = 'enterPhoneAndMnemonic' // "enterPhone",
+    if (useGeneratedKeyEnabled && !mnemonicSaved) step = 'saveMnemonicWords'
 
     this.state = {
       version,
       phone: '',
-      step: 'enterPhoneAndMnemonic',//"enterPhone",
+      step,
       error: false,
       smsCode: "",
       smsConfirmed: false,
       isShipped: false,
+      useGeneratedKey: useGeneratedKeyEnabled,
+      generatedKey,
+      useGeneratedKeyEnabled,
+      mnemonicSaved,
       mnemonic: (version === '2of3') ? actions.btc.getRandomMnemonicWords() : false,
       mnemonicWallet: false,
       isMnemonicCopied: false,
@@ -68,7 +82,7 @@ export default class RegisterSMSProtected extends React.Component {
       isWalletLockedOtherPhone: false,
       isInstructionCopied: false,
       isInstructionDownloaded: false,
-    };
+    }
   }
 
   handleSendSMS = async () => {
@@ -76,20 +90,26 @@ export default class RegisterSMSProtected extends React.Component {
       version,
       phone,
       mnemonic,
+      generatedKey,
+      useGeneratedKey,
+      useGeneratedKeyEnabled,
     } = this.state
 
-    if (version === '2of3' && !actions.btc.validateMnemonicWords(mnemonic.trim())) {
-      this.setState({
-        isMnemonicValid: false,
-        error: false,
-      })
-      return
-    } else {
-      const mnemonicWallet = actions.btc.getWalletByWords(mnemonic.trim(), 1)
-      this.setState({
-        mnemonicWallet,
-        isMnemonicValid: true,
-      })
+    if (!useGeneratedKey) {
+      // Old - own mnemonic for unlock
+      if (version === '2of3' && !actions.btc.validateMnemonicWords(mnemonic.trim())) {
+        this.setState({
+          isMnemonicValid: false,
+          error: false,
+        })
+        return
+      } else {
+        const mnemonicWallet = actions.btc.getWalletByWords(mnemonic.trim(), 1)
+        this.setState({
+          mnemonicWallet,
+          isMnemonicValid: true,
+        })
+      }
     }
 
     if (!phone) {
@@ -103,7 +123,12 @@ export default class RegisterSMSProtected extends React.Component {
       isShipped: true,
       error: false,
     })
-    const result = await actions.btcmultisig.beginRegisterSMS(phone, (mnemonic) ? mnemonic.trim() : false)
+
+    const result = await actions.btcmultisig.beginRegisterSMS(
+      phone,
+      (mnemonic) ? mnemonic.trim() : false,
+      (useGeneratedKey && useGeneratedKeyEnabled) ? generatedKey : false
+    )
 
     if (result && result.answer && result.answer == 'ok') {
       this.setState({
@@ -126,6 +151,9 @@ export default class RegisterSMSProtected extends React.Component {
       phone,
       smsCode,
       mnemonic,
+      useGeneratedKey,
+      useGeneratedKeyEnabled,
+      generatedKey,
     } = this.state
 
     if (!smsCode) {
@@ -142,7 +170,12 @@ export default class RegisterSMSProtected extends React.Component {
       isWalletLockedOtherPhone: false,
     })
 
-    const result = await actions.btcmultisig.confirmRegisterSMS(phone, smsCode, (mnemonic) ? mnemonic.trim() : false)
+    const result = await actions.btcmultisig.confirmRegisterSMS(
+      phone,
+      smsCode,
+      (mnemonic) ? mnemonic.trim() : false,
+      (useGeneratedKey && useGeneratedKeyEnabled) ? generatedKey : false
+    )
 
     if (result && result.answer && result.answer == 'ok') {
       this.generateRestoreInstruction()
@@ -293,10 +326,40 @@ export default class RegisterSMSProtected extends React.Component {
     })
   }
 
+  handleBeginSaveMnemonic = async () => {
+    actions.modals.open(constants.modals.SaveMnemonicModal, {
+      onClose: () => {
+        const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
+        const mnemonicSaved = (mnemonic === `-`)
+        const step = (mnemonicSaved) ? 'enterPhoneAndMnemonic' : 'saveMnemonicWords'
+
+        this.setState({
+          mnemonicSaved,
+          step,
+        })
+      }
+    })
+  }
+
+  handleClose = () => {
+    const { name, data, onClose } = this.props
+
+    if (typeof onClose === 'function') {
+      onClose()
+    }
+
+    if (typeof data.onClose === 'function') {
+      data.onClose()
+    }
+
+    actions.modals.close(name)
+  }
+
   generateRestoreInstruction = () => {
     const {
       mnemonic,
       mnemonicWallet,
+      useGeneratedKey,
     } = this.state
 
     const {
@@ -319,13 +382,15 @@ export default class RegisterSMSProtected extends React.Component {
     restoreInstruction+= `${btcData.privateKey}\r\n`
     restoreInstruction+= `*** (this private key stored in your browser)\r\n`
     restoreInstruction+= `\r\n`
-    restoreInstruction+= `Secret mnemonic:\r\n`
-    restoreInstruction+= `${mnemonic}\r\n`
-    restoreInstruction+= `Wallet delivery path for mnemonic:\r\n`
-    restoreInstruction+= `m/44'/0'/0'/0/0\r\n`
-    restoreInstruction+= `Private key (WIF) of wallet, generated from mnemonic:\r\n`
-    restoreInstruction+= `(DELETE THIS LINE!) ${mnemonicWallet.WIF}\r\n`
-    restoreInstruction+= `*** (this private key does not stored anywhere! but in case if our  2fa server does down, you can withdraw your fond using this private key)\r\n`
+    if (!useGeneratedKey) {
+      restoreInstruction+= `Secret mnemonic:\r\n`
+      restoreInstruction+= `${mnemonic}\r\n`
+      restoreInstruction+= `Wallet delivery path for mnemonic:\r\n`
+      restoreInstruction+= `m/44'/0'/0'/0/0\r\n`
+      restoreInstruction+= `Private key (WIF) of wallet, generated from mnemonic:\r\n`
+      restoreInstruction+= `(DELETE THIS LINE!) ${mnemonicWallet.WIF}\r\n`
+      restoreInstruction+= `*** (this private key does not stored anywhere! but in case if our  2fa server does down, you can withdraw your fond using this private key)\r\n`
+    }
 
     this.setState({
       restoreInstruction,
@@ -340,6 +405,9 @@ export default class RegisterSMSProtected extends React.Component {
       smsCode,
       smsConfirmed,
       isShipped,
+      mnemonicSaved,
+      // useGeneratedKey,
+      useGeneratedKeyEnabled,
       mnemonic,
       mnemonicWallet,
       isMnemonicCopied,
@@ -379,11 +447,47 @@ export default class RegisterSMSProtected extends React.Component {
         id: 'registerSMSModalSmsCodePlaceholder',
         defaultMessage: `Enter code from SMS`,
       },
+      needSaveMnemonicToContinue: {
+        id: 'registerSMS_YouNeedSaveMnemonic',
+        defaultMessage: `Для активации 2fa вы должны сохранить 12 слов.`,
+      },
+      pleaseSaveMnemonicToContinue: {
+        id: 'registerSMS_SaveYourMnemonic',
+        defaultMessage: `Пожалуйста сохраните свою секретную фразу.`
+      },
+      buttonSaveMnemonic: {
+        id: 'registerSMS_ButtonSaveMnemonic',
+        defaultMessage: `Save`,
+      },
+      buttonCancel: {
+        id: 'registerSMS_ButtonCancel',
+        defaultMessage: `Cancel`,
+      },
     });
 
     return (
       <Modal name={name} title={`${intl.formatMessage(langs.registerSMSModal)}`}>
         <div styleName='registerSMSModalHolder'>
+          {step === 'saveMnemonicWords' && (
+            <Fragment>
+              <p styleName="notice">
+                <strong>
+                  <FormattedMessage { ...langs.needSaveMnemonicToContinue } />
+                </strong>
+                <br />
+                <FormattedMessage { ...langs.pleaseSaveMnemonicToContinue } />
+              </p>
+
+              <div styleName="buttonsHolder buttonsHolder_2_buttons">
+                <Button blue onClick={this.handleBeginSaveMnemonic}>
+                  <FormattedMessage { ...langs.buttonSaveMnemonic } />
+                </Button>
+                <Button blue onClick={this.handleClose}>
+                  <FormattedMessage { ...langs.buttonCancel } />
+                </Button>
+              </div>
+            </Fragment>
+          )}
           {step === 'enterPhoneAndMnemonic' && (
             <Fragment>
               <div styleName="highLevel" className="ym-hide-content">
@@ -397,51 +501,56 @@ export default class RegisterSMSProtected extends React.Component {
                   focusOnInit
                 />
               </div>
-              <div styleName="highLevel">
-                <div styleName='infoCaption'>
-                  <FormattedMessage id='registerSMSWordsInfoBlock' defaultMessage='Сгенерируйте секретную фразу или укажите ранее сохраненную для восстановления старого кошелька' />
-                </div>
-              </div>
-              <div styleName="highLevel" className="ym-hide-content">
-                <FieldLabel label>
-                  <FormattedMessage id="registerSMSModalWords" defaultMessage="Секретная фраза (12 слов):" />
-                </FieldLabel>
-                <Input
-                  styleName="input inputMargin25 for12words"
-                  valueLink={linked.mnemonic}
-                  multiline={true}
-                  placeholder={`${intl.formatMessage(langs.mnemonicPlaceholder)}`}
-                />
-                <div styleName='mnemonicButtonsHolder'>
-                  <Button blue fullWidth disabled={isMnemonicGenerated} onClick={this.handleGenerateMnemonic}>
-                    {isMnemonicGenerated ? (
-                      <FormattedMessage id='registerSMSModalMnemonicGenerateNewGenerated' defaultMessage='Создана'/>
-                    ) : (
-                      <FormattedMessage id="registerSMSModalMnemonicGenerateNew" defaultMessage="Создать новую" />
-                    )}
-                  </Button>
-                  <CopyToClipboard
-                    text={mnemonic}
-                    onCopy={this.handleCopyMnemonic}
-                  >
-                    <Button blue fullWidth disabled={isMnemonicCopied} onClick={this.handleCopyMnemonic}>
-                      {isMnemonicCopied ? (
-                        <FormattedMessage id='registerSMSModalMnemonicCopied' defaultMessage='Фраза скопирована' />
-                      ) : (
-                        <FormattedMessage id='registerSMSModalMnemonicCopy' defaultMessage='Скопировать' />
-                      )}
-                    </Button>
-                  </CopyToClipboard>
-                </div>
-                <div styleName='notice mnemonicNotice'>
-                  <FormattedMessage id='registerSMSMnemonicNotice' defaultMessage='Она поможет разблокировать средства на кошельке, если сервер 2fa будет не доступен' />
-                </div>
-                {!isMnemonicValid && (
-                  <div styleName='rednotes mnemonicNotice'>
-                    <FormattedMessage id='registerSMSMnemonicError' defaultMessage='Вы указали не валидный набор слов' />
+              {!useGeneratedKeyEnabled && (
+                <Fragment>
+                  <div styleName="highLevel">
+                    <div styleName='infoCaption'>
+                      <FormattedMessage id='registerSMSWordsInfoBlock' defaultMessage='Сгенерируйте секретную фразу или укажите ранее сохраненную для восстановления старого кошелька' />
+                    </div>
                   </div>
-                )}
-                
+                  <div styleName="highLevel" className="ym-hide-content">
+                    <FieldLabel label>
+                      <FormattedMessage id="registerSMSModalWords" defaultMessage="Секретная фраза (12 слов):" />
+                    </FieldLabel>
+                    <Input
+                      styleName="input inputMargin25 for12words"
+                      valueLink={linked.mnemonic}
+                      multiline={true}
+                      placeholder={`${intl.formatMessage(langs.mnemonicPlaceholder)}`}
+                    />
+                    <div styleName='mnemonicButtonsHolder'>
+                      <Button blue fullWidth disabled={isMnemonicGenerated} onClick={this.handleGenerateMnemonic}>
+                        {isMnemonicGenerated ? (
+                          <FormattedMessage id='registerSMSModalMnemonicGenerateNewGenerated' defaultMessage='Создана'/>
+                        ) : (
+                          <FormattedMessage id="registerSMSModalMnemonicGenerateNew" defaultMessage="Создать новую" />
+                        )}
+                      </Button>
+                      <CopyToClipboard
+                        text={mnemonic}
+                        onCopy={this.handleCopyMnemonic}
+                      >
+                        <Button blue fullWidth disabled={isMnemonicCopied} onClick={this.handleCopyMnemonic}>
+                          {isMnemonicCopied ? (
+                            <FormattedMessage id='registerSMSModalMnemonicCopied' defaultMessage='Фраза скопирована' />
+                          ) : (
+                            <FormattedMessage id='registerSMSModalMnemonicCopy' defaultMessage='Скопировать' />
+                          )}
+                        </Button>
+                      </CopyToClipboard>
+                    </div>
+                    <div styleName='notice mnemonicNotice'>
+                      <FormattedMessage id='registerSMSMnemonicNotice' defaultMessage='Она поможет разблокировать средства на кошельке, если сервер 2fa будет не доступен' />
+                    </div>
+                    {!isMnemonicValid && (
+                      <div styleName='rednotes mnemonicNotice'>
+                        <FormattedMessage id='registerSMSMnemonicError' defaultMessage='Вы указали не валидный набор слов' />
+                      </div>
+                    )}
+                  </div>
+                </Fragment>
+              )}
+              <div>
                 {(smsServerOffline) ? (
                   <Fragment>
                     <Button blue fullWidth disabled={isShipped} onClick={this.handleRestoreWallet}>

@@ -25,6 +25,16 @@ const sweepToMnemonic = (mnemonic, path) => {
   return wallet.WIF
 }
 
+const getMainPublicKey = () => {
+  const {
+    user: {
+      btcData,
+    },
+  } = getState()
+
+  return btcData.publicKey.toString('Hex')
+}
+
 const isSweeped = () => {
   const {
     user: {
@@ -541,6 +551,8 @@ const signMessage = (message, encodedPrivateKey) => {
 
 const getReputation = () =>  Promise.resolve(0)
 
+window.getMainPublicKey = getMainPublicKey
+
 export default {
   login,
   loginWithKeychain,
@@ -565,4 +577,5 @@ export default {
   getSweepAddress,
   getAllMyAddresses,
   getDataByAddress,
+  getMainPublicKey,
 }

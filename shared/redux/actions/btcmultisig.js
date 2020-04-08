@@ -524,7 +524,7 @@ const _getSign = () => {
   return sign.toString('base64')
 }
 
-const beginRegisterSMS = async (phone, mnemonic) => {
+const beginRegisterSMS = async (phone, mnemonic, ownPublicKey) => {
   const {
     user: {
       btcMultisigSMSData: {
@@ -539,11 +539,17 @@ const beginRegisterSMS = async (phone, mnemonic) => {
   } = getState()
 
   const publicKeys = []
-  if (mnemonic) {
+  if (mnemonic && !ownPublicKey) {
     // 2of3 - extract public key from mnemonic
     const mnemonicAccount = actions.btc.getWalletByWords(mnemonic, 1)
     publicKeys.push(mnemonicAccount.publicKey)
   }
+
+  // Возможность использовать произвольный публик-кей для разблокирования
+  if (ownPublicKey) {
+    publicKeys.push(ownPublicKey)
+  }
+
   publicKeys.push(publicKey.toString('Hex'))
 
   const sign = _getSign()
@@ -565,7 +571,7 @@ const beginRegisterSMS = async (phone, mnemonic) => {
   }
 }
 
-const confirmRegisterSMS = async (phone, smsCode, mnemonic) => {
+const confirmRegisterSMS = async (phone, smsCode, mnemonic, ownPublicKey) => {
   const {
     user: {
       btcMultisigSMSData: {
@@ -581,12 +587,20 @@ const confirmRegisterSMS = async (phone, smsCode, mnemonic) => {
 
   const publicKeys = []
   let mnemonicKey = false
-  if (mnemonic) {
+
+  if (mnemonic && !ownPublicKey) {
     // 2of3 - extract public key from mnemonic
     const mnemonicAccount = actions.btc.getWalletByWords(mnemonic, 1)
     mnemonicKey = mnemonicAccount.publicKey
     publicKeys.push(mnemonicKey)
   }
+
+  // Возможность использовать произвольный публик-кей для разблокирования
+  if (ownPublicKey) {
+    publicKeys.push(ownPublicKey)
+    mnemonicKey = ownPublicKey
+  }
+
   publicKeys.push(publicKey.toString('Hex'))
 
   const sign = _getSign()
