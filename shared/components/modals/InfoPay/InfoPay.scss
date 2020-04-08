@@ -11,8 +11,16 @@
   height: 80px;
   display: block;
   margin: 0 auto;
+  margin-bottom: 2rem;
 }
 
+.shortInfoHolder {
+  padding-bottom: 2rem;
+}
+
+.buttonHolder {
+  padding-top: 3rem;
+}
 
 .balanceRow {
   color: #8E9AA3;
@@ -42,3 +50,14 @@
 
 }
 
+@include media-mobile {
+  .finishImg {
+    margin-bottom: 0px;
+  }
+  .shortInfoHolder {
+    padding-bottom: 0px;
+  }
+  .buttonHolder {
+    padding-top: 0px;
+  }
+}

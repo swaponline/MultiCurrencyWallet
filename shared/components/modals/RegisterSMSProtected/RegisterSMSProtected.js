@@ -27,6 +27,8 @@ import minAmount from "helpers/constants/minAmount";
 import { inputReplaceCommaWithDot } from "helpers/domUtils";
 import CopyToClipboard from 'react-copy-to-clipboard'
 import moment from 'moment/moment'
+import finishSvg from './images/finish.svg'
+
 
 
 @injectIntl
@@ -70,6 +72,7 @@ export default class RegisterSMSProtected extends React.Component {
       smsCode: "",
       smsConfirmed: false,
       isShipped: false,
+      showFinalInstruction: false,
       useGeneratedKey: useGeneratedKeyEnabled,
       generatedKey,
       useGeneratedKeyEnabled,
@@ -420,6 +423,7 @@ export default class RegisterSMSProtected extends React.Component {
       isInstructionCopied,
       isInstructionDownloaded,
       restoreInstruction,
+      showFinalInstruction,
     } = this.state
 
     const {
@@ -664,45 +668,50 @@ export default class RegisterSMSProtected extends React.Component {
           {step === "ready" && (
             <Fragment>
               <div styleName="highLevel">
+                <div>
+                  <img styleName="finishImg" src={finishSvg} alt="finish" />
+                </div>
                 <span style={{ fontSize: "25px", display: "block", textAlign: "center", marginBottom: "40px" }}>
                   <FormattedMessage id="registerSMSModalReady" defaultMessage="Your protected wallet activated" />
                 </span>
               </div>
-              <div styleName="restoreInstruction" className="ym-hide-content">
-                <h1>
-                  <FormattedMessage id="registerSMSModalFinishSaveThisInfo" defaultMessage="Информация на случай недоступности нашего сервиса" />
-                </h1>
-                <div>
-                  <pre>{restoreInstruction}</pre>
-                  <a styleName="link" target="_blank" href="https://github.com/bitcoinjs/bitcoinjs-lib/blob/master/test/integration/addresses.spec.ts">
-                    <FormattedMessage id="registerSMS_LinkToManualRestore" defaultMessage="How to withdraw money manually" />
-                  </a>
-                </div>
-                <div styleName="buttonsHolder">
-                  <CopyToClipboard
-                    text={restoreInstruction}
-                    onCopy={this.handleCopyInstruction}
-                  >
-                    <Button blue disabled={isInstructionCopied} onClick={this.handleCopyInstruction}>
-                      {isInstructionCopied ? (
-                        <FormattedMessage id='registerSMSModalInstCopied' defaultMessage='Скопировано' />
+              {showFinalInstruction && (
+                <div styleName="restoreInstruction" className="ym-hide-content">
+                  <h1>
+                    <FormattedMessage id="registerSMSModalFinishSaveThisInfo" defaultMessage="Информация на случай недоступности нашего сервиса" />
+                  </h1>
+                  <div>
+                    <pre>{restoreInstruction}</pre>
+                    <a styleName="link" target="_blank" href="https://github.com/bitcoinjs/bitcoinjs-lib/blob/master/test/integration/addresses.spec.ts">
+                      <FormattedMessage id="registerSMS_LinkToManualRestore" defaultMessage="How to withdraw money manually" />
+                    </a>
+                  </div>
+                  <div styleName="buttonsHolder">
+                    <CopyToClipboard
+                      text={restoreInstruction}
+                      onCopy={this.handleCopyInstruction}
+                    >
+                      <Button blue disabled={isInstructionCopied} onClick={this.handleCopyInstruction}>
+                        {isInstructionCopied ? (
+                          <FormattedMessage id='registerSMSModalInstCopied' defaultMessage='Скопировано' />
+                        ) : (
+                          <FormattedMessage id='registerSMSModalInstCopy' defaultMessage='Скопировать' />
+                        )}
+                      </Button>
+                    </CopyToClipboard>
+                    <Button blue disabled={isInstructionDownloaded} onClick={this.handleDownloadInstruction}>
+                      {isInstructionDownloaded ? (
+                        <FormattedMessage id='registerSMSModalInstDownloaded' defaultMessage='Загружается' />
                       ) : (
-                        <FormattedMessage id='registerSMSModalInstCopy' defaultMessage='Скопировать' />
+                        <FormattedMessage id='registerSMSModalInstDownload' defaultMessage='Скачать' />
                       )}
                     </Button>
-                  </CopyToClipboard>
-                  <Button blue disabled={isInstructionDownloaded} onClick={this.handleDownloadInstruction}>
-                    {isInstructionDownloaded ? (
-                      <FormattedMessage id='registerSMSModalInstDownloaded' defaultMessage='Загружается' />
-                    ) : (
-                      <FormattedMessage id='registerSMSModalInstDownload' defaultMessage='Скачать' />
-                    )}
-                  </Button>
-                  <Button blue onClick={this.handleShareInstruction}>
-                    <FormattedMessage id="registerSMS_ShareInstruction" defaultMessage="Share" />
-                  </Button>
+                    <Button blue onClick={this.handleShareInstruction}>
+                      <FormattedMessage id="registerSMS_ShareInstruction" defaultMessage="Share" />
+                    </Button>
+                  </div>
                 </div>
-              </div>
+              )}
               <Button big blue fullWidth onClick={this.handleFinish}>
                 <Fragment>
                   <FormattedMessage id="registerSMSModalFinish" defaultMessage="Finish" />
