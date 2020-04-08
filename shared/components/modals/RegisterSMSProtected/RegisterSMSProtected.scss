@@ -23,6 +23,14 @@
   }
 }
 
+.finishImg {
+  width: 80px;
+  height: 80px;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 3rem;
+}
+
 .smsInfoBlock {
   padding-bottom: 20px;
   padding-top: 10px;
@@ -52,5 +60,11 @@
   }
   &_2_buttons button {
     width: 45%;
+  }
+}
+
+@include media-mobile {
+  .finishImg {
+    margin-bottom: 1rem;
   }
 }
