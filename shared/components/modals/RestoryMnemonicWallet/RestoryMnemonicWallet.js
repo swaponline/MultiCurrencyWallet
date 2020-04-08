@@ -117,11 +117,30 @@ export default class RestoryMnemonicWallet extends React.Component {
     this.setState({
       isFetching: true,
     }, async () => {
+      // Backup critical localStorage
+      const backupMark = actions.btc.getMainPublicKey()
+
+      actions.backupManager.backup(backupMark, false, true)
+
       const btcWallet = await actions.btc.getWalletByWords(mnemonic)
       const ethWallet = await actions.eth.getWalletByWords(mnemonic)
-      
-      await actions.btc.login(false,mnemonic)
+
+      // Check - if exists backup for this mnemonic
+      const restoryMark = btcWallet.publicKey
+
+      if (actions.backupManager.exists(restoryMark)) {
+        actions.backupManager.restory(restoryMark)
+      }
+
+      const btcPrivKey = await actions.btc.login(false,mnemonic)
+      const btcSmsKey = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
+      localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, btcSmsKey)
+
       await actions.eth.login(false,mnemonic)
+
+      await actions.user.sign_btc_2fa(btcPrivKey)
+      await actions.user.sign_btc_multisig(btcPrivKey)
+
       this.setState({
         isFetching: false,
         step: `ready`,
