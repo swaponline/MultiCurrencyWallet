@@ -4,7 +4,9 @@ import helpers, { constants } from "helpers";
 import actions from "redux/actions";
 import Link from "sw-valuelink";
 import { connect } from "redaction";
-import config from "app-config";
+import config from 'helpers/externalConfig'
+import { localisedUrl } from 'helpers/locale'
+
 
 import cssModules from "react-css-modules";
 import styles from "./WithdrawModal.scss";
@@ -185,8 +187,12 @@ export default class WithdrawModal extends React.Component {
     const {
       data: { currency, address, balance, invoice, onReady },
       name,
-      history
+      history,
+      intl: {
+        locale,
+      },
     } = this.props;
+
 
     this.setState(() => ({ isShipped: true }));
 
@@ -242,7 +248,8 @@ export default class WithdrawModal extends React.Component {
           address: to
         });*/
         
-             
+
+        /*
         actions.modals.open(constants.modals.InfoPay, {
           amount,
           currency,
@@ -251,11 +258,20 @@ export default class WithdrawModal extends React.Component {
           txRaw: txRaw,
           toAddress: to
         })
+        */
 
         this.setState(() => ({ isShipped: false, error: false }));
         if (onReady instanceof Function) {
           onReady();
         }
+
+        // Redirect to tx
+        const txInfo = helpers.transactions.getInfo(currency.toLowerCase(), txRaw)
+        const { tx: txId } = txInfo
+
+        const txInfoUrl = helpers.transactions.getTxRouter(currency.toLowerCase(), txId)
+
+        history.push(localisedUrl(locale, txInfoUrl))
       })
       .then(() => {
         actions.modals.close(name);
