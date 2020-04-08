@@ -131,13 +131,15 @@ export default class InfoPay extends React.Component {
           </div>
 
           <div className="p-3"  styleName={isFetching ? `animate-fetching` : ``}>
-            <span><strong> {amount}  {currency.toUpperCase()} </strong></span>
-            {!isFetching && (
-              <span> <FormattedMessage id="InfoPay_2" defaultMessage="были успешно переданы" />
-                <br />
-                <strong>{toAddress}</strong>
-              </span>
-            )}
+            <div styleName="shortInfoHolder">
+              <span><strong> {amount}  {currency.toUpperCase()} </strong></span>
+              {!isFetching && (
+                <span> <FormattedMessage id="InfoPay_2" defaultMessage="были успешно переданы" />
+                  <br />
+                  <strong>{toAddress}</strong>
+                </span>
+              )}
+            </div>
           </div>
 
           <table styleName="blockCenter__table" className="table table-borderless">
@@ -190,7 +192,7 @@ export default class InfoPay extends React.Component {
             </tbody>
           </table>
         </div>
-        <div styleName="blockCenter">
+        <div styleName="blockCenter buttonHolder">
           <Button blue onClick={this.handleClose} type="button" title="Back to app">
             <FormattedMessage id="InfoPay_5" defaultMessage="Back to app" />
           </Button>
