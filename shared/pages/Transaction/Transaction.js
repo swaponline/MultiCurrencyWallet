@@ -50,6 +50,7 @@ class Transaction extends Component {
       balance:0,
       oldBalance: infoTx.afterBalance,
       confirmed: infoTx.confirmed,
+      sender: infoTx.senderAddress,
       toAddress: infoTx.receiverAddress,
       isFetching: false,
     })
