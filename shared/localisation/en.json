@@ -7514,7 +7514,7 @@
   },
   {
     "id": "RestoryMnemonicWallet_RestoryWallet",
-    "message": "Restory",
+    "message": "Restore",
     "files": [
       "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js"
     ]
@@ -7685,6 +7685,34 @@
     "message": "How to withdraw",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "registerSMS_ButtonCancel",
+    "message": "Cancel",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMS_ButtonSaveMnemonic",
+    "message": "Save",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMS_SaveYourMnemonic",
+    "message": "Please save your secret phrase.",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMS_YouNeedSaveMnemonic",
+    "message": "To activate SMS-protected wallet you must save your secret phrase.",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
     ]
   }
 ]
