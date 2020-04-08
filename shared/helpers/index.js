@@ -33,6 +33,9 @@ import { cacheStorageGet, cacheStorageSet } from './cache'
 
 import apiLooper from './apiLooper'
 
+import getWalletLink from './getWalletLink'
+
+
 
 export default {
   // xlm,
@@ -81,4 +84,6 @@ export {
   cacheStorageSet,
 
   apiLooper,
+
+  getWalletLink,
 }
