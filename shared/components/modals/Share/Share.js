@@ -8,10 +8,25 @@ import actions from 'redux/actions'
 import Button from 'components/controls/Button/Button'
 
 
+
+const langLabels = {
+  copyLink: {
+    id: 'ShareModal1',
+    defaultMessage: 'Copy Link',
+  },
+  linkCopied: {
+    id: 'ShareModal_LinkCopied',
+    defaultMessage: 'Link copied',
+  },
+}
+
 @injectIntl
 @cssModules(styles, { allowMultiple: true })
-
 export default class Share extends Component {
+
+  state = {
+    isLinkCopied: false,
+  }
 
   componentDidMount = () => {
     const { props: { data: { link, title } } } = this
@@ -26,8 +41,30 @@ export default class Share extends Component {
     }
   }
 
+  handleCopyLink = () => {
+    this.setState({
+      isLinkCopied: true,
+    }, () => {
+      setTimeout( () => {
+        this.setState({
+          isLinkCopied: false,
+        })
+      }, 1000)
+    })
+  }
+
   render() {
-    const { props: { data: { link, title } } } = this
+    const {
+      props: {
+        data: {
+          link,
+          title,
+        },
+      },
+      state: {
+        isLinkCopied,
+      },
+    } = this
 
     let name = 'ShareModal';
     let titleModal = 'Share';
@@ -52,20 +89,24 @@ export default class Share extends Component {
             <span>Email</span>
           </a>
         </span>
-        <div styleName="link">
-          <div styleName="pen-url">
-            <span>{link}</span>
-            <span>{link}</span> 
-          </div>
-          <CopyToClipboard text={link}>
-            <Button blue>
-              <FormattedMessage
-                id="ShareModal1"
-                defaultMessage="Copy Link"
-              />
+        <div styleName="copyButtonHolder">
+          <CopyToClipboard
+            text={link}
+            onCopy={this.handleCopyLink}
+          >
+            <Button blue disabled={isLinkCopied}>
+              <FormattedMessage { ... ((isLinkCopied) ? langLabels.linkCopied : langLabels.copyLink) } />
             </Button>
           </CopyToClipboard>
         </div>
+        <CopyToClipboard
+            text={link}
+            onCopy={this.handleCopyLink}
+          >
+          <div styleName="link">
+            <span>{link}</span>
+          </div>
+        </CopyToClipboard>
       </Modal>
     )
   }
