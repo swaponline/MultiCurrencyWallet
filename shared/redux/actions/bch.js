@@ -68,12 +68,16 @@ const getTx = (txRaw) => {
   return false
 }
 
+const getTxRouter = (txId) => {
+  return `/bch/tx/${txId}`
+}
+
 const getLinkToInfo = (tx) => {
   if(!tx) {
     return
   }
 
-  return `https://www.blockchain.com/ru/btc/tx/${tx}`
+  return `https://www.blockchain.com/ru/bch/tx/${tx}`
 }
 
 const fetchBalance = (address) =>
@@ -221,5 +225,6 @@ export default {
   signMessage,
   getTx,
   getLinkToInfo,
-  getReputation
+  getReputation,
+  getTxRouter,
 }

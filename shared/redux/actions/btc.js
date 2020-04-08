@@ -14,6 +14,9 @@ import actions from 'redux/actions'
 import typeforce from "swap.app/util/typeforce"
 import config from 'app-config'
 
+import { localisePrefix } from 'helpers/locale'
+
+
 
 const getRandomMnemonicWords = () => bip39.generateMnemonic()
 const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonic)
@@ -243,6 +246,10 @@ const loginWithKeychain = async () => {
 const getTx = (txRaw) => {
 
   return txRaw.getId()
+}
+
+const getTxRouter = (txId) => {
+  return `/btc/tx/${txId}`
 }
 
 const getLinkToInfo = (tx) => {
@@ -578,4 +585,5 @@ export default {
   getAllMyAddresses,
   getDataByAddress,
   getMainPublicKey,
+  getTxRouter,
 }
