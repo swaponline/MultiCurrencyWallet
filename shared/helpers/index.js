@@ -35,6 +35,8 @@ import apiLooper from './apiLooper'
 
 import getWalletLink from './getWalletLink'
 
+import redirectTo from './redirectTo'
+
 
 
 export default {
@@ -86,4 +88,6 @@ export {
   apiLooper,
 
   getWalletLink,
+
+  redirectTo,
 }
