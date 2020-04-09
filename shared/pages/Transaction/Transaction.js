@@ -5,6 +5,7 @@ import { constants } from 'helpers'
 import getCurrencyKey from "helpers/getCurrencyKey";
 import { FormattedMessage } from 'react-intl'
 import getWalletLink from 'helpers/getWalletLink'
+import redirectTo from 'helpers/redirectTo'
 
 
 class Transaction extends Component {
@@ -101,7 +102,7 @@ class Transaction extends Component {
           } else wallets.push(walletTwo)
 
           const walletLink = getWalletLink(ticker, wallets)
-          history.push((walletLink) ? walletLink : '/')
+          redirectTo((walletLink) ? walletLink : '/')
         },
         isFetching: true,
         onFetching: (infoModal) => {

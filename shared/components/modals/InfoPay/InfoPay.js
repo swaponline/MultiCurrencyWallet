@@ -105,13 +105,10 @@ export default class InfoPay extends React.Component {
       confirmed,
     } = this.state
 
-
-    console.log('InfoPay render', this.props.data)
-    
     let linkBlockChain = '#'
     let linkShare = '#'
     let tx = ''
-  
+
     if(txRaw) {
       const txInfo = helpers.transactions.getInfo(currency.toLowerCase(), txRaw)
       tx = txInfo.tx
@@ -201,9 +198,6 @@ export default class InfoPay extends React.Component {
           </table>
         </div>
         <div styleName="blockCenter buttonHolder">
-        {/*<Button blue onClick={this.handleClose} type="button" title="Back to app">
-            <FormattedMessage id="InfoPay_5" defaultMessage="Back to app" />
-  </Button>*/}
           <ShareButton
             halfWidth={true}
             minWidth="200px"

@@ -26,7 +26,10 @@ import InvoiceInfoBlock from "components/InvoiceInfoBlock/InvoiceInfoBlock";
 // import isCoinAddress from 'swap.app/util/typeforce'
 import typeforce from "swap.app/util/typeforce";
 import minAmount from "helpers/constants/minAmount";
-import { inputReplaceCommaWithDot } from "helpers/domUtils";
+import { inputReplaceCommaWithDot } from "helpers/domUtils"
+
+import redirectTo from 'helpers/redirectTo'
+
 
 @injectIntl
 @connect(
@@ -262,7 +265,7 @@ export default class WithdrawModal extends React.Component {
 
         this.setState(() => ({ isShipped: false, error: false }));
         if (onReady instanceof Function) {
-          onReady();
+          onReady()
         }
 
         // Redirect to tx
@@ -270,8 +273,8 @@ export default class WithdrawModal extends React.Component {
         const { tx: txId } = txInfo
 
         const txInfoUrl = helpers.transactions.getTxRouter(currency.toLowerCase(), txId)
+        redirectTo(txInfoUrl)
 
-        history.push(localisedUrl(locale, txInfoUrl))
       })
       .then(() => {
         actions.modals.close(name);
