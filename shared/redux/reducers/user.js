@@ -70,7 +70,7 @@ export const initialState = {
     balance: 0,
     isBalanceFetched: false,
     currency: 'USDT',
-    fullName: 'USDT',
+    fullName: 'Tether',
     balanceError: null,
   },
   nimData: {

@@ -7734,5 +7734,33 @@
     "files": [
       "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
     ]
+  },
+  {
+    "id": "registerSMS_ButtonCancel",
+    "message": "Cancel",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMS_ButtonSaveMnemonic",
+    "message": "Save",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMS_SaveYourMnemonic",
+    "message": "Пожалуйста сохраните свою секретную фразу.",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMS_YouNeedSaveMnemonic",
+    "message": "Для активации SMS-защиты вы должны сохранить свою секретную фразу.",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
   }
 ]
