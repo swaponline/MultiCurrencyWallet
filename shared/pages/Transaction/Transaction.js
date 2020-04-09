@@ -4,6 +4,8 @@ import actions from 'redux/actions'
 import { constants } from 'helpers'
 import getCurrencyKey from "helpers/getCurrencyKey";
 import { FormattedMessage } from 'react-intl'
+import getWalletLink from 'helpers/getWalletLink'
+import redirectTo from 'helpers/redirectTo'
 
 
 class Transaction extends Component {
@@ -50,6 +52,7 @@ class Transaction extends Component {
       balance:0,
       oldBalance: infoTx.afterBalance,
       confirmed: infoTx.confirmed,
+      sender: infoTx.senderAddress,
       toAddress: infoTx.receiverAddress,
       isFetching: false,
     })
@@ -75,19 +78,31 @@ class Transaction extends Component {
 
     this.setState({
       currency,
+      ticker,
       txId,
     }, () => {
       actions.modals.open(constants.modals.InfoPay, {
-        currency,
+        currency: ticker,
         txId,
         onClose: () => {
-          if(history.length > 2 ) {
-            history.goBack()
-            return false;
-          }
+          let {
+            infoTx: {
+              senderAddress: walletOne,
+              receiverAddress: walletTwo,
+            },
+          } = this.state
 
-          history.push('/')
-          return false;
+          const wallets = []
+          if (walletOne instanceof Array) {
+            walletOne.forEach((wallet) => wallets.push(wallet))
+          } else wallets.push(walletOne)
+          
+          if (walletTwo instanceof Array) {
+            walletTwo.forEach((wallet) => wallets.push(wallet))
+          } else wallets.push(walletTwo)
+
+          const walletLink = getWalletLink(ticker, wallets)
+          redirectTo((walletLink) ? walletLink : '/')
         },
         isFetching: true,
         onFetching: (infoModal) => {

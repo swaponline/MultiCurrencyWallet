@@ -139,6 +139,10 @@ const getTx = (txRaw) => {
   return txRaw.transactionHash
 }
 
+const getTxRouter = (txId) => {
+  return `/ltc/tx/${txId}`
+}
+
 const getLinkToInfo = (tx) => {
 
   if(!tx) {
@@ -213,5 +217,6 @@ export default {
   fetchTxInfo,
   fetchBalance,
   signMessage,
-  getReputation
+  getReputation,
+  getTxRouter,
 }
