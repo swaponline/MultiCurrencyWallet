@@ -9,7 +9,7 @@ import Button from 'components/controls/Button/Button'
 
 
 
-const langLabels = {
+const langLabels = defineMessages({
   copyLink: {
     id: 'ShareModal1',
     defaultMessage: 'Copy Link',
@@ -18,7 +18,7 @@ const langLabels = {
     id: 'ShareModal_LinkCopied',
     defaultMessage: 'Link copied',
   },
-}
+})
 
 @injectIntl
 @cssModules(styles, { allowMultiple: true })
