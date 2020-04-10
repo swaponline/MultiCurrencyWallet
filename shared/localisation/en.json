@@ -2990,9 +2990,7 @@
     "id": "UseAnotherWallet",
     "message": "Specify the receiving wallet address",
     "files": [
-      "shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.js",
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
+      "shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.js"
     ]
   },
   {
@@ -7685,6 +7683,48 @@
     "message": "How to withdraw",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Partial_DestinationAddress_ConnectMetamask",
+    "message": "Connect Metamask",
+    "files": [
+      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
+    ]
+  },
+  {
+    "id": "Partial_DestinationAddress_CustomAddressOption",
+    "message": "Custom address",
+    "files": [
+      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
+    ]
+  },
+  {
+    "id": "Partial_DestinationAddress_HotWalletAddressOption",
+    "message": "My Wallet",
+    "files": [
+      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
+    ]
+  },
+  {
+    "id": "Partial_DestinationAddress_MetamaskAddressOption",
+    "message": "Metamask's address",
+    "files": [
+      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
+    ]
+  },
+  {
+    "id": "Partial_DestinationAddress_PlaceholderEnterAddress",
+    "message": "Enter the receiving wallet address",
+    "files": [
+      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
+    ]
+  },
+  {
+    "id": "Partial_DestinationAddress_SpecifyAddress",
+    "message": "Specify the receiving wallet address",
+    "files": [
+      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
     ]
   },
   {

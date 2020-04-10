@@ -32,6 +32,9 @@ import QrReader from "components/QrReader";
 import helpers, { constants, links, ethToken } from "helpers";
 import { animate } from "helpers/domUtils";
 import Switching from "components/controls/Switching/Switching";
+import CustomDestAddress from "./CustomDestAddress/CustomDestAddress"
+
+
 
 const allowedCoins = [
   ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? ['BTC'] : [],
@@ -215,7 +218,8 @@ export default class PartialClosure extends Component {
       extendedControls: false,
       estimatedFeeValues: {},
       desclineOrders: [],
-      openScanCam: false
+      openScanCam: false,
+      destinationSelected: false,
     };
 
     constants.coinsWithDynamicFee.forEach(
@@ -400,7 +404,17 @@ export default class PartialClosure extends Component {
       intl: { locale },
       decline
     } = this.props;
-    const { haveCurrency } = this.state;
+    const {
+      haveCurrency,
+      destinationSelected,
+    } = this.state;
+
+    if (!destinationSelected) {
+      this.setState({
+        destinationError: true,
+      })
+      return
+    }
 
     if (decline.length === 0) {
       this.sendRequest();
@@ -968,6 +982,21 @@ export default class PartialClosure extends Component {
     console.error(err);
   };
 
+  onCustomWalletChange = state => {
+    const {
+      selected,
+      isCustom,
+      value
+    } = state
+
+    this.setState({
+      destinationSelected: selected,
+      destinationError: false,
+      customWalletUse: !isCustom,
+      customWallet: (isCustom) ? value : this.getSystemWallet(),
+    })
+  }
+
   handleScan = data => {
     if (data) {
       this.setState(() => ({
@@ -1009,7 +1038,10 @@ export default class PartialClosure extends Component {
       goodRate,
       isShowBalance,
       estimatedFeeValues,
-      haveAmount
+      haveAmount,
+      customWallet,
+      destinationSelected,
+      destinationError,
     } = this.state;
 
     const isSingleForm = isOnlyForm || isWidgetBuild;
@@ -1321,30 +1353,40 @@ export default class PartialClosure extends Component {
           )}
 
           {this.customWalletAllowed() && (
-            <Fragment>
-              <div styleName="walletToggle walletToggle_site">
-                <div styleName="walletOpenSide" className="data-tut-togle">
-                  <Toggle checked={!customWalletUse} onChange={this.handleCustomWalletUse} />
-                  <span styleName="specify">
-                    <FormattedMessage id="UseAnotherWallet" defaultMessage="Specify the receiving wallet address" />
-                  </span>
-                </div>
-                <div styleName={!customWalletUse ? "anotherRecepient anotherRecepient_active" : "anotherRecepient"}>
-                  <div styleName="walletInput">
-                    <Input
-                      inputCustomStyle={{ fontSize: "15px" }}
-                      required
-                      disabled={customWalletUse}
-                      valueLink={linked.customWallet}
-                      pattern="0-9a-zA-Z"
-                      placeholder="Enter the receiving wallet address"
-                    />
-                    <i styleName="qrCode" className="fas fa-qrcode" onClick={this.openScan} />
-                  </div>
+            <CustomDestAddress 
+              type={getCurrency}
+              hasError={destinationError}
+              value={customWallet}
+              valueLink={linked.customWallet}
+              initialValue={customWallet}
+              onChange={this.onCustomWalletChange}
+              openScan={this.openScan} />
+          )}
+          {/*
+          <Fragment>
+            <div styleName="walletToggle walletToggle_site">
+              <div styleName="walletOpenSide" className="data-tut-togle">
+                <Toggle checked={!customWalletUse} onChange={this.handleCustomWalletUse} />
+                <span styleName="specify">
+                  <FormattedMessage id="UseAnotherWallet" defaultMessage="Specify the receiving wallet address" />
+                </span>
+              </div>
+              <div styleName={!customWalletUse ? "anotherRecepient anotherRecepient_active" : "anotherRecepient"}>
+                <div styleName="walletInput">
+                  <Input
+                    inputCustomStyle={{ fontSize: "15px" }}
+                    required
+                    disabled={customWalletUse}
+                    valueLink={linked.customWallet}
+                    pattern="0-9a-zA-Z"
+                    placeholder="Enter the receiving wallet address"
+                  />
+                  <i styleName="qrCode" className="fas fa-qrcode" onClick={this.openScan} />
                 </div>
               </div>
-            </Fragment>
-          )}
+            </div>
+          </Fragment>
+          */}
           <div styleName="rowBtn" className={isWidget ? "rowBtn" : ""}>
             <Button
               className="data-tut-Exchange"

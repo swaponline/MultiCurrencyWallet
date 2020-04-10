@@ -56,6 +56,7 @@ const SelectGroup = (props) => {
           tooltip={tooltip}
           switchBalanceFunc={switchBalanceFunc}
           id={id}
+          selectedItemRender={(item) => item.fullTitle }
           styleName="currencySelect"
           placeholder="Enter the name of token"
           selectedValue={selectedValue}
