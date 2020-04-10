@@ -9,6 +9,12 @@ import DropDown from "components/ui/DropDown/DropDown"
 import metamask from "helpers/metamask"
 import { Button } from "components/controls"
 import ethToken from 'helpers/ethToken'
+import Option from './Option/Option'
+
+import iconHotwallet from 'components/Logo/images/base.svg'
+import iconMetamask from './images/metamask.svg'
+import iconCustom from './images/custom.svg'
+
 
 
 const langPrefix = `Partial_DestinationAddress`
@@ -180,18 +186,21 @@ export default class CustomDestAddress extends Component {
       },
       {
         value: destinationType.hotwallet,
+        icon: iconHotwallet,
         title: <FormattedMessage { ...langLabels.optionHotWallet } />,
       },
       ...(
         (metamask.isEnabled() && ethToken.isEthOrEthToken({ name: type })) ? [
           {
             value: destinationType.metamask,
+            icon: iconMetamask,
             title: <FormattedMessage { ...langLabels.optionMetamast } />,
           }
         ] : []
       ),
       {
         value: destinationType.custom,
+        icon: iconCustom,
         title: <FormattedMessage { ...langLabels.optionCustom } />,
       },
     ]
@@ -203,6 +212,8 @@ export default class CustomDestAddress extends Component {
           items={destinationOptions}
           initialValue={destinationType.none}
           selectedValue={selectedDestination}
+          disableSearch={true}
+          itemRender={item => <Option {...item} />}
           onSelect={(value) => this.handleDestinationSelect(value)}
           />
         {selectedDestination === destinationType.hotwallet && (

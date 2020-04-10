@@ -1,5 +1,6 @@
 .customDestination {
   position: relative;
+  margin-bottom: 1rem;
   &_error .walletToggle {
     border: 2px solid #a90101;
   }
@@ -100,23 +101,24 @@
   display: flex;
   justify-content: space-between;
   height: 68px;
-}
-
-
-.walletInput input {
-  border: none;
-  margin: 0;
-  height: 40px;
-  padding: 0;
-  font-size: 16px;
-  margin-top: 2px;
-  &:focus {
+  input {
     border: none;
+    margin: 0;
+    height: 40px;
     padding: 0;
-    margin: -1px -1px;
-    margin-top: 1px;
+    font-size: 16px;
+    margin-top: 2px;
+    &:focus {
+      border: none;
+      padding: 0;
+      margin: -1px -1px;
+      margin-top: 1px;
+    }
   }
 }
+
+
+
 
 .anotherRecepient {
   position: relative;

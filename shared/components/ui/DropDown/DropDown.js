@@ -108,9 +108,15 @@ export default class DropDown extends Component {
       label,
       tooltip,
       id,
-      notIteractable
+      notIteractable,
+      disableSearch,
     } = this.props
-    const { inputValue, infoAboutCurrency, error } = this.state
+
+    const {
+      inputValue,
+      infoAboutCurrency,
+      error,
+    } = this.state
 
     const dropDownStyleName = cx('dropDown', { active: isToggleActive })
     const linkedValue = Link.all(this, 'inputValue')
@@ -127,8 +133,10 @@ export default class DropDown extends Component {
         onClickOutside={
           isToggleActive
             ? () => {
-                this.refs.searchInput.handleBlur()
-                linkedValue.inputValue.set('')
+                if (!disableSearch) {
+                  this.refs.searchInput.handleBlur()
+                  linkedValue.inputValue.set('')
+                }
                 this.toggle()
               }
             : () => {}
@@ -140,7 +148,7 @@ export default class DropDown extends Component {
             onClick={notIteractable ? () => null : this.toggle}
           >
             {!notIteractable && <div styleName="arrow arrowDropDown" />}
-            {isToggleActive ? (
+            {isToggleActive && !disableSearch ? (
               <Input
                 styleName="searchInput"
                 placeholder={placeholder}
