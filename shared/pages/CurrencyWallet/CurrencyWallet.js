@@ -369,9 +369,12 @@ export default class CurrencyWallet extends Component {
       txItems,
     } = this.state
 
+    const currencyKey = getCurrencyKey(currency, true)
+
     if (isRedirecting) return null
 
     txHistory = txItems ? txItems : txHistory
+
 
     if (txHistory) {
       txHistory = txHistory
@@ -379,7 +382,7 @@ export default class CurrencyWallet extends Component {
           if (tx
             && tx.type
           ) {
-            return tx.type.toLowerCase() === currency.toLowerCase()
+            return tx.type.toLowerCase() === currencyKey.toLowerCase()
           }
           return false
         })

@@ -9,6 +9,7 @@ import { btc, apiLooper, constants, api } from 'helpers'
 import { Keychain } from 'keychain.js'
 import actions from 'redux/actions'
 import config from 'helpers/externalConfig'
+import getCurrencyKey from 'helpers/getCurrencyKey'
 
 
 const validateData = (data) => {
@@ -27,8 +28,10 @@ const addInvoice = (data) => {
 
   if (!validateData(data)) return false
 
+  const currency = getCurrencyKey(data.currency, true)
+
   const requestData = {
-    currency    : data.currency,
+    currency    : currency.toUpperCase(),
     toAddress   : data.toAddress,
     fromAddress : data.fromAddress,
     amount      : data.amount,
@@ -88,7 +91,7 @@ const getInvoices = (data) => {
 
     return apiLooper.post('invoiceApi', `/invoice/fetch/`, {
       body: {
-        currency: data.currency.toUpperCase(),
+        currency: getCurrencyKey(data.currency,true).toUpperCase(),
         address: data.address,
         mainnet: (process.env.MAINNET) ? '1' : '0',
       }
@@ -98,7 +101,7 @@ const getInvoices = (data) => {
           const direction = item.toAddress === data.address ? 'in' : 'out'
 
           return ({
-            type: data.currency.toLowerCase(),
+            type: getCurrencyKey(data.currency, true),
             txType: 'INVOICE',
             invoiceData: item,
             hash: 'no hash',

@@ -14,14 +14,16 @@ const delay = (ms) => new Promise(resolve => setTimeout(() => resolve(true), ms)
 const setTransactions = async (address, type, callback) => {
   
   let reducer = getCurrencyKey(type)
- 
+
+  type = getCurrencyKey(type, true)
+
   try {
     const currencyTxs = await Promise.all([
       actions[reducer].getTransaction(address, type),
       (
         (config.opts && config.opts.invoiceEnabled && actions.user.isOwner(address, type)) ? 
           actions.invoices.getInvoices({
-            currency: type,
+            currency: type.toUpperCase(),
             address,
           }) :
           new Promise((resolve) => resolve([]))

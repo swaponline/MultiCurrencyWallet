@@ -2,22 +2,20 @@ import ethToken from './ethToken'
 
 
 
-export default (currency) => {
-
+export default (currency , returnToken) => {
   let key = currency.toLowerCase()
-  switch (currency) {
+  switch (key) {
     case 'currency':
     case 'btc (sms-protected)':
     case 'btc (multisig)':
-      key = 'btc'
-      break;
+      return 'btc'
     case 'eth':
-      key = 'eth'
-      break;
+      return 'eth'
   }
 
-  if (ethToken.isEthToken({ name: key })) key = 'token'
-
+  if (ethToken.isEthToken({ name: key })) {
+    key = (returnToken) ? key : 'token'
+  }
 
   return key
 }
