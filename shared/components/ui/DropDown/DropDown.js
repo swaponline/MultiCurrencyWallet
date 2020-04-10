@@ -109,7 +109,8 @@ export default class DropDown extends Component {
       tooltip,
       id,
       notIteractable,
-      disableSearch,
+      disableSearch,  // Отключить поиск
+      dontScroll, // Отключить вертикальный скрол - показывать все элементы (для небольших фиксированных списоков)
     } = this.props
 
     const {
@@ -127,6 +128,9 @@ export default class DropDown extends Component {
         .filter(item => item.name.includes(inputValue.toUpperCase()))
         .filter(item => item.value !== selectedValue)
     }
+
+    const dropDownListStyles = [`select`]
+    if (dontScroll) dropDownListStyles.push(`dontscroll`)
 
     return (
       <ClickOutside
@@ -161,7 +165,7 @@ export default class DropDown extends Component {
             )}
           </div>
           {isToggleActive && (
-            <div styleName="select">
+            <div styleName={dropDownListStyles.join(` `)}>
               {name ? <span styleName="listName">{name}</span> : ''}
               {itemsFiltered.map(item => {
                 let inneedData = null
