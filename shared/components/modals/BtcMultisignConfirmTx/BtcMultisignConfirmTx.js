@@ -23,6 +23,9 @@ import { isMobile } from 'react-device-detect'
 
 import links from 'helpers/links'
 
+import redirectTo from 'helpers/redirectTo'
+
+
 
 const langPrefix = `multiSignConfirmTxModal`
 const langLabels = defineMessages({
@@ -141,6 +144,7 @@ export default class BtcMultisignConfirmTx extends React.Component {
     if (txID && txID.txid) {
       this.handleClose()
 
+      /*
       const infoPayData = {
         amount: `${txData.amount}`,
         currency: 'BTC (Multisig)',
@@ -151,6 +155,10 @@ export default class BtcMultisignConfirmTx extends React.Component {
       }
 
       actions.modals.open(constants.modals.InfoPay, infoPayData)
+      */
+
+      const txInfoUrl = helpers.transactions.getTxRouter('btc', txID.txid)
+      redirectTo(txInfoUrl)
     } else {
       console.log(txID)
       this.setState({

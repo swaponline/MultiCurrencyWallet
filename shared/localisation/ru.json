@@ -7722,5 +7722,12 @@
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
     ]
+  },
+  {
+    "id": "ShareModal_LinkCopied",
+    "message": "Ссылка скопирована",
+    "files": [
+      "shared/components/modals/Share/Share.js"
+    ]
   }
 ]

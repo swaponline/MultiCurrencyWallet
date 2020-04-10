@@ -209,6 +209,11 @@ const getTx = (txRaw) => {
   return txRaw.transactionHash
 }
 
+const getTxRouter = (txId, currency) => {
+  return `/token/${currency.toUpperCase()}/tx/${txId}`
+}
+
+
 const getLinkToInfo = (tx) => {
 
   if(!tx) {
@@ -366,4 +371,5 @@ export default {
   AddCustomERC20,
   GetCustromERC20,
   fetchTxInfo,
+  getTxRouter,
 }
