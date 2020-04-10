@@ -298,6 +298,8 @@ const createWallet = (privateKey, otherOwnerPublicKey) => {
 const login_SMS = (privateKey, otherOwnerPublicKey) => {
   const data = login_(privateKey, otherOwnerPublicKey, false)
 
+  if (!data) return false
+
   const isRegistered = (localStorage.getItem(`${constants.localStorage.didProtectedBtcCreated}:${data.address}`) === '1')
 
   data.currency = 'BTC (SMS-Protected)'
@@ -310,6 +312,8 @@ const login_SMS = (privateKey, otherOwnerPublicKey) => {
 
 const login_G2FA = (privateKey, otherOwnerPublicKey) => {
   const data = login_(privateKey, otherOwnerPublicKey, false)
+
+  if (!data) return false
 
   const isRegistered = (localStorage.getItem(`${constants.localStorage.didProtectedBtcG2FACreated}:${data.address}`) === '1')
   
@@ -325,6 +329,8 @@ const login_USER = (privateKey, otherOwnerPublicKey ,onlyCheck) => {
   if (otherOwnerPublicKey instanceof Array && otherOwnerPublicKey.length === 0) return
 
   const data = login_(privateKey, (otherOwnerPublicKey instanceof Array) ? otherOwnerPublicKey[0] : otherOwnerPublicKey, true)
+
+  if (!data) return false
 
   data.isUserProtected = true
   if (onlyCheck) return data
@@ -394,10 +400,10 @@ const login_ = (privateKey, otherOwnerPublicKey, sortKeys) => {
       pubkeys: publicKeys,
       network: btc.network,
     })
+
     const p2sh = bitcoin.payments.p2sh({ redeem: p2ms, network: btc.network })
-    
     const { address } = p2sh
-    
+
     const { addressOfMyOwnWallet }   = bitcoin.payments.p2wpkh({ pubkey: account.publicKey, network: btc.network })
 
     _data = {
