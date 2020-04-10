@@ -206,12 +206,16 @@ export default class CustomDestAddress extends Component {
           onSelect={(value) => this.handleDestinationSelect(value)}
           />
         {selectedDestination === destinationType.hotwallet && (
-          <div styleName="readonlyValue">{customWallet}</div>
+          <div styleName="readonlyValue">
+            <input value={customWallet} onChange={() => {}} />
+          </div>
         )}
         {selectedDestination === destinationType.metamask && metamask.isEnabled() && (
           <Fragment>
             {(metamaskConnected) ? (
-              <div styleName="readonlyValue">{metamaskAddress}</div>
+              <div styleName="readonlyValue">
+                <input value={metamaskAddress} onChange={() => {}} />
+              </div>
             ) : (
               <Button
                 styleName="button"
