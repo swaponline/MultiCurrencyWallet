@@ -27,6 +27,9 @@ import minAmount from 'helpers/constants/minAmount'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import QrReader from "components/QrReader";
 
+import redirectTo from 'helpers/redirectTo'
+
+
 
 @injectIntl
 @connect(
@@ -184,6 +187,7 @@ export default class WithdrawModalMultisig extends React.Component {
     }
     this.setBalanceOnState(currency)
 
+    /*
     actions.modals.open(constants.modals.InfoPay, {
       amount,
       currency,
@@ -192,6 +196,7 @@ export default class WithdrawModalMultisig extends React.Component {
       txId,
       toAddress: to
     })
+    */
 
     this.setState({
       isShipped: false,
@@ -201,6 +206,10 @@ export default class WithdrawModalMultisig extends React.Component {
     if (onReady instanceof Function) {
       onReady()
     }
+
+    const txInfoUrl = helpers.transactions.getTxRouter('btc', txId)
+    redirectTo(txInfoUrl)
+
     actions.modals.close(name)
   }
 

@@ -1,5 +1,5 @@
 import actions from 'redux/actions'
-import config from 'app-config'
+import config from './externalConfig'
 import eth from './eth'
 import constants from './constants'
 import BigNumber from 'bignumber.js'

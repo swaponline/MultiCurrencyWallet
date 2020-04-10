@@ -260,6 +260,10 @@ const getTx = (txRaw) => {
   return txRaw.transactionHash
 }
 
+const getTxRouter = (txId) => {
+  return `/eth/tx/${txId}`
+}
+
 const getLinkToInfo = (tx) => {
 
   if(!tx) {
@@ -384,4 +388,5 @@ export default {
   getSweepAddress,
   getAllMyAddresses,
   fetchTxInfo,
+  getTxRouter,
 }

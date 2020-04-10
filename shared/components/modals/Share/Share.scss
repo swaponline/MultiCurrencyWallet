@@ -46,6 +46,18 @@
   padding: 10px;
   border-radius: 4px;
   background-color: #eee;
+  max-width: 500px;
+  word-break: break-all;
+  cursor: pointer;
+}
+
+.copyButtonHolder {
+  margin: 1rem auto;
+  button {
+    width: 50%;
+    display: block;
+    margin: 0 auto;
+  }
 }
 
 .pen-url {
