@@ -243,6 +243,32 @@ export default class CurrencyWallet extends Component {
       actions.core.getSwapHistory()
   }
 
+  componentDidUpdate(prevProps) {
+    const {
+      currency,
+    } = this.state
+
+    let {
+      match: {
+        params: {
+          address = null
+        }
+      }
+    } = this.props
+    let {
+      match: {
+        params: {
+          address: prevAddress = null
+        }
+      }
+    } = prevProps
+    if (prevAddress !== address) {
+      address ? actions.history.setTransactions(address, currency.toLowerCase(), this.pullTransactions) : actions.user.setTransactions()
+    }
+  }
+
+
+
   pullTransactions = (transactions) => {
     let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date)
     this.setState({
