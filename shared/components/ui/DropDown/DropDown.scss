@@ -211,6 +211,12 @@
   box-shadow: rgba(#000, 0.08) 0 3px 9px 0;
 }
 
+.dontscroll {
+  max-height: auto;
+  overflow-y: hidden;
+  top: 10px;
+}
+
 .option {
   height: 56px;
   line-height: 56px;

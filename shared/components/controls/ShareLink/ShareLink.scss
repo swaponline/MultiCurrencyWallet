@@ -27,6 +27,23 @@
   }
 }
 
+.shareLinkTextarea {
+  min-width: 600px;
+  height: 102px;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  border: 1px solid red;
+  padding: 10px;
+  font-family: 'Roboto Mono', monospace;
+  border: 1px solid rgba(0,0,0,0.2);
+}
+
+.shareLinkTextarea:focus {
+  border: 2px solid #6144e5;
+  outline: none;
+  padding: 9px;
+}
+
 .HolderQRCode {
   img {
     display: block;

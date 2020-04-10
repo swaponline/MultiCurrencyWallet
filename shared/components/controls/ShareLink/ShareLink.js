@@ -14,6 +14,7 @@ export default class ShareLink extends React.Component {
 
   constructor(props) {
     super(props)
+    console.log('ShareLink', props)
     this.state = {
       isLinkCopied: false,
     }
@@ -39,6 +40,10 @@ export default class ShareLink extends React.Component {
     } = this.props
 
     const {
+      fullSize,
+    } = this.props
+
+    const {
       isLinkCopied,
     } = this.state
 
@@ -58,10 +63,14 @@ export default class ShareLink extends React.Component {
                 alt={`${altText}`}
               />
             </div>
-            <div styleName="HolderLinkShorter">
-              <span>{link}</span>
-              <span>{link}</span>
-            </div>
+            {(fullSize) ? (
+              <textarea styleName="shareLinkTextarea" value={link}>{link}</textarea>
+            ) : (
+              <div styleName="HolderLinkShorter">
+                <span>{link}</span>
+                <span>{link}</span>
+              </div>
+            )}
           </div>
         </CopyToClipboard>
         <div styleName="ButtonsHolder">

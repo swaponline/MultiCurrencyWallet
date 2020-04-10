@@ -3085,9 +3085,7 @@
     "id": "UseAnotherWallet",
     "message": "Указать адрес кошелька для получения",
     "files": [
-      "shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.js",
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
+      "shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.js"
     ]
   },
   {
@@ -7696,6 +7694,48 @@
     ]
   },
   {
+    "id": "Partial_DestinationAddress_ConnectMetamask",
+    "message": "Connect Metamask",
+    "files": [
+      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
+    ]
+  },
+  {
+    "id": "Partial_DestinationAddress_CustomAddressOption",
+    "message": "Custom address",
+    "files": [
+      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
+    ]
+  },
+  {
+    "id": "Partial_DestinationAddress_HotWalletAddressOption",
+    "message": "My Wallet",
+    "files": [
+      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
+    ]
+  },
+  {
+    "id": "Partial_DestinationAddress_MetamaskAddressOption",
+    "message": "Metamask's address",
+    "files": [
+      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
+    ]
+  },
+  {
+    "id": "Partial_DestinationAddress_PlaceholderEnterAddress",
+    "message": "Enter the receiving wallet address",
+    "files": [
+      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
+    ]
+  },
+  {
+    "id": "Partial_DestinationAddress_SpecifyAddress",
+    "message": "Specify the receiving wallet address",
+    "files": [
+      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
+    ]
+  },
+  {
     "id": "registerSMS_ButtonCancel",
     "message": "Cancel",
     "files": [
@@ -7711,7 +7751,7 @@
   },
   {
     "id": "registerSMS_SaveYourMnemonic",
-    "message": "Пожалуйста сохраните свою секретную фразу.",
+    "message": "Пожалуйста, не забудьте сохранить свою секретную фразу перед активацией 2fa. Такая мера необходима для сохранения ваших средств в случае возникновения чрезвычайной ситуации.",
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
     ]

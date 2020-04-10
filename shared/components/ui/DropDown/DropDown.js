@@ -79,9 +79,11 @@ export default class DropDown extends Component {
     const selectedValue = this.props.selectedValue || this.state.selectedValue
     const selectedItem = items.find(({ value }) => value === selectedValue)
 
-    if (typeof selectedItemRender === 'function') {
-      if (selectedItem !== undefined) {
-        return selectedItem.fullTitle
+    if (selectedItem !== undefined) {
+      if (typeof selectedItemRender !== 'function') {
+        return (selectedItem.title || selectedItem.fullTitle)
+      } else {
+        return selectedItemRender(selectedItem)
       }
     }
   }
@@ -106,9 +108,16 @@ export default class DropDown extends Component {
       label,
       tooltip,
       id,
-      notIteractable
+      notIteractable,
+      disableSearch,  // Отключить поиск
+      dontScroll, // Отключить вертикальный скрол - показывать все элементы (для небольших фиксированных списоков)
     } = this.props
-    const { inputValue, infoAboutCurrency, error } = this.state
+
+    const {
+      inputValue,
+      infoAboutCurrency,
+      error,
+    } = this.state
 
     const dropDownStyleName = cx('dropDown', { active: isToggleActive })
     const linkedValue = Link.all(this, 'inputValue')
@@ -120,13 +129,18 @@ export default class DropDown extends Component {
         .filter(item => item.value !== selectedValue)
     }
 
+    const dropDownListStyles = [`select`]
+    if (dontScroll) dropDownListStyles.push(`dontscroll`)
+
     return (
       <ClickOutside
         onClickOutside={
           isToggleActive
             ? () => {
-                this.refs.searchInput.handleBlur()
-                linkedValue.inputValue.set('')
+                if (!disableSearch) {
+                  this.refs.searchInput.handleBlur()
+                  linkedValue.inputValue.set('')
+                }
                 this.toggle()
               }
             : () => {}
@@ -138,7 +152,7 @@ export default class DropDown extends Component {
             onClick={notIteractable ? () => null : this.toggle}
           >
             {!notIteractable && <div styleName="arrow arrowDropDown" />}
-            {isToggleActive ? (
+            {isToggleActive && !disableSearch ? (
               <Input
                 styleName="searchInput"
                 placeholder={placeholder}
@@ -151,7 +165,7 @@ export default class DropDown extends Component {
             )}
           </div>
           {isToggleActive && (
-            <div styleName="select">
+            <div styleName={dropDownListStyles.join(` `)}>
               {name ? <span styleName="listName">{name}</span> : ''}
               {itemsFiltered.map(item => {
                 let inneedData = null

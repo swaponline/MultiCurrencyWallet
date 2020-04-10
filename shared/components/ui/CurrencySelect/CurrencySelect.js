@@ -18,12 +18,14 @@ const CurrencySelect = ({
   styleName,
   id,
   switchBalanceFunc,
-  notIteractable
+  notIteractable,
+  selectedItemRender
 }) => {
   // remove null values in object map
   const nonNullCurrencies = currencies.filter(currency => !!currency !== false)
   // TODO: Add debug logger message to see if some currency have been dropped
-
+  const defaultRenderSelected = (item) => <Option {...item} />
+  const usedSelectedItemRender = (selectedItemRender || defaultRenderSelected)
   return (
     <DropDown
       className={className}
@@ -31,7 +33,7 @@ const CurrencySelect = ({
       items={currencies}
       switchBalanceFunc={switchBalanceFunc}
       selectedValue={selectedValue}
-      selectedItemRender={item => <Option {...item} />}
+      selectedItemRender={usedSelectedItemRender}
       itemRender={item => <Option {...item} />}
       onSelect={onSelect}
       label={label}
