@@ -142,11 +142,8 @@ export default class CurrencyWallet extends Component {
       ticker = fullName
     }
 
-    const endpointCurrency = getCurrencyKey(ticker)
-
     // MultiWallet - after Sweep - названию валюты доверять нельзя - нужно проверяться также адрес - и выбирать по адресу
     let itemCurrency = items.filter((item) => {
-      const endpointName = getCurrencyKey(ticker)
       if (ethToken.isEthToken({ name: ticker })) {
         if (item.currency.toLowerCase() === ticker.toLowerCase()
           && item.address.toLowerCase() === walletAddress.toLowerCase()
@@ -156,12 +153,23 @@ export default class CurrencyWallet extends Component {
       } else {
         if (!ethToken.isEthToken({ name: ticker })
           && item.address.toLowerCase() === walletAddress.toLowerCase()
-          && endpointName === endpointCurrency
         ) {
           return true
         }
       }
     })
+    if (!itemCurrency.length) {
+      itemCurrency = items.filter((item) => {
+        if (item.balance > 0
+          && item.currency.toLowerCase() === ticker.toLowerCase()) return true
+      })
+    }
+    if (!itemCurrency.length) {
+      itemCurrency = items.filter((item) => {
+        if (item.balance >= 0
+          && item.currency.toLowerCase() === ticker.toLowerCase()) return true
+      })
+    }
 
     if (itemCurrency.length) {
       itemCurrency = itemCurrency[0]
