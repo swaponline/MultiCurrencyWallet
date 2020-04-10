@@ -228,7 +228,7 @@ export default class CustomDestAddress extends Component {
           </Fragment>
         )}
         {selectedDestination === destinationType.custom && (
-          <div styleName={`walletToggle ${(walletAddressFocused) ? 'walletToggle_focus' : ''}`}>
+          <div styleName={`customWallet ${(walletAddressFocused) ? 'customWallet_focus' : ''}`}>
             <div styleName="anotherRecepient">
               <div styleName="walletInput">
                 <Input
