@@ -9,6 +9,7 @@
     display: block;
     height: 36px;
     float: left;
+    margin-left: -46px;
 
     img {
       display: inline-block;
@@ -19,6 +20,9 @@
 
   span {
     display: block;
-    margin-left: 36px;
+  }
+  
+  .smalltext {
+    font-size: 12px;
   }
 }

@@ -16,6 +16,9 @@
       background: #FFF;
       border: 1px solid #000;
       border-radius: 0px;
+      div > {
+        padding: 0px;
+      }
       & > span {
         display: block;
         font-size: 12pt;

@@ -182,6 +182,7 @@ export default class CustomDestAddress extends Component {
     let destinationOptions = [
       {
         value: destinationType.none,
+        smalltext: true,
         title: <FormattedMessage { ...langLabels.labelSpecifyAddress } />,
       },
       {
@@ -213,6 +214,7 @@ export default class CustomDestAddress extends Component {
           initialValue={destinationType.none}
           selectedValue={selectedDestination}
           disableSearch={true}
+          dontScroll={true}
           itemRender={item => <Option {...item} />}
           onSelect={(value) => this.handleDestinationSelect(value)}
           />
