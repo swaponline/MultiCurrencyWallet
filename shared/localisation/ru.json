@@ -7711,7 +7711,7 @@
   },
   {
     "id": "registerSMS_SaveYourMnemonic",
-    "message": "Пожалуйста сохраните свою секретную фразу.",
+    "message": "Пожалуйста, не забудьте сохранить свою секретную фразу перед активацией 2fa. Такая мера необходима для сохранения ваших средств в случае возникновения чрезвычайной ситуации.",
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
     ]

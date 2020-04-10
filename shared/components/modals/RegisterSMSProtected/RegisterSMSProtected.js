@@ -473,22 +473,24 @@ export default class RegisterSMSProtected extends React.Component {
 
     return (
       <Modal name={name} title={`${intl.formatMessage(langs.registerSMSModal)}`}>
-        <div styleName='registerSMSModalHolder'>
+        <div styleName="registerSMSModalHolder">
           {step === 'saveMnemonicWords' && (
             <Fragment>
-              <p styleName="notice">
-                <strong>
-                  <FormattedMessage { ...langs.needSaveMnemonicToContinue } />
-                </strong>
-                <br />
-                <FormattedMessage { ...langs.pleaseSaveMnemonicToContinue } />
-              </p>
+              <div styleName="content-overlay">
+                <p styleName="centerInfoBlock">
+                  <strong>
+                    <FormattedMessage { ...langs.needSaveMnemonicToContinue } />
+                  </strong>
+                  <br />
+                  <FormattedMessage { ...langs.pleaseSaveMnemonicToContinue } />
+                </p>
+              </div>
 
-              <div styleName="buttonsHolder buttonsHolder_2_buttons">
+              <div styleName="buttonsHolder buttonsHolder_2_buttons button-overlay">
                 <Button blue onClick={this.handleBeginSaveMnemonic}>
                   <FormattedMessage { ...langs.buttonSaveMnemonic } />
                 </Button>
-                <Button blue onClick={this.handleClose}>
+                <Button gray onClick={this.handleClose}>
                   <FormattedMessage { ...langs.buttonCancel } />
                 </Button>
               </div>

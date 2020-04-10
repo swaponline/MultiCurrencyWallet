@@ -177,3 +177,39 @@
     text-align: center;
   }
 }
+
+
+.centerInfoBlock {
+  display: block;
+  font-size: 18px;
+  line-height: 140%;
+  color: #8e9aa3;
+  font-family: "Manrope-Medium", sans-serif;
+  width: 78%;
+  text-align: center;
+  margin: auto;
+  margin-bottom: 60px;
+}
+
+
+.content-overlay {
+  display: block;
+}
+
+.button-overlay {
+  display: block;
+}
+
+@include media-mobile {
+  .convent-overlay {
+    height: 100%;
+    padding-bottom: 56px;
+  }
+  .button-overlay {
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    padding: 1rem;
+  }
+}
