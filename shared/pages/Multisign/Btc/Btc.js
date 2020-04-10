@@ -22,11 +22,11 @@ import config from 'app-config'
 
 @connect(({
   user: {
-    btcMultisigUserData,
+    btcData,
   },
 }) => {
   return {
-    data: btcMultisigUserData,
+    data: btcData,
   }
 })
 @injectIntl
@@ -87,6 +87,12 @@ export default class Btc extends PureComponent {
       if (data && data.length==66) {
         const publicKey = data
         const walletData = actions.btcmultisig.login_USER(privateKey, publicKey, true)
+
+        if (!walletData) {
+          history.push(localisedUrl(locale, links.notFound))
+          return
+        }
+
         const balance = await actions.btcmultisig.fetchBalance( walletData.address )
         const myPublicKey = this.props.data.publicKey.toString('hex')
 
