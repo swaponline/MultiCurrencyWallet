@@ -185,8 +185,7 @@ class Row extends React.PureComponent {
       <>
         <tr styleName='historyRow'>
           <td>
-        
-          <div styleName={`${statusStyleAmount} circleIcon`}>
+            <div styleName={`${statusStyleAmount} circleIcon`}>
               <div styleName='arrowWrap'>
                 <Link to={txLink}>
                   <svg width='12' height='15' viewBox='0 0 12 15' fill='none' xmlns='http://www.w3.org/2000/svg'>
@@ -200,28 +199,32 @@ class Row extends React.PureComponent {
               <div>
                 {txType === 'INVOICE' ?
                   <>
-                    <FormattedMessage 
-                      id="RowHistoryInvoce" 
-                      defaultMessage="Инвойс #{number} ({contact})" 
-                      values={{
-                        number: `${invoiceData.id}-${invoiceData.invoiceNumber}`, 
-                        contact: (invoiceData.contact) ? `(${invoiceData.contact})` : ''
-                      }}
-                    />
+                    <Link to={txLink}>
+                      <FormattedMessage 
+                        id="RowHistoryInvoce" 
+                        defaultMessage="Инвойс #{number} ({contact})" 
+                        values={{
+                          number: `${invoiceData.id}-${invoiceData.invoiceNumber}`, 
+                          contact: (invoiceData.contact) ? `(${invoiceData.contact})` : ''
+                        }}
+                      />
+                    </Link>
                     <div styleName={`${invoiceStatusClass} cell`}>
                       {invoiceStatusText}
                     </div>
                   </> :
                   <>
-                    {
-                      direction === 'in'
-                        ? <FormattedMessage id="RowHistory281" defaultMessage="Received" />
-                        : (
-                          direction !== 'self'
-                            ? <FormattedMessage id="RowHistory282" defaultMessage="Sent" />
-                            : <FormattedMessage id="RowHistory283" defaultMessage="Self" />
-                        )
-                    }
+                    <Link to={txLink}>
+                      {
+                        direction === 'in'
+                          ? <FormattedMessage id="RowHistory281" defaultMessage="Received" />
+                          : (
+                            direction !== 'self'
+                              ? <FormattedMessage id="RowHistory282" defaultMessage="Sent" />
+                              : <FormattedMessage id="RowHistory283" defaultMessage="Self" />
+                          )
+                      }
+                    </Link>
                     <div styleName={confirmations > 0 ? 'confirm cell' : 'unconfirmed cell'}>
                       {confirmations > 0 ? confirmations > 6 ?
                         <FormattedMessage id="RowHistory34" defaultMessage="Received" /> :
@@ -231,7 +234,8 @@ class Row extends React.PureComponent {
                     </div>
                     
                     
-                  </>}
+                  </>
+                }
               </div>
               <CommentRow
                 isOpen={isOpen}

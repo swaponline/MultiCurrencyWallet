@@ -33,7 +33,14 @@ import { cacheStorageGet, cacheStorageSet } from './cache'
 
 import apiLooper from './apiLooper'
 
+
 import metamask from './metamask'
+
+import getWalletLink from './getWalletLink'
+
+import redirectTo from './redirectTo'
+
+
 
 
 export default {
@@ -85,4 +92,9 @@ export {
   apiLooper,
 
   metamask,
+
+  getWalletLink,
+
+  redirectTo,
+
 }

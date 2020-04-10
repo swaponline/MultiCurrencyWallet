@@ -17,9 +17,15 @@ export default class ShareButton extends React.Component {
       title: title
     })
   }
+
   render() {
+    const {
+      halfWidth,
+      minWidth,
+    } = this.props
+
     return (
-      <div styleName="WrapShareButton">
+      <div styleName={`WrapShareButton ${(halfWidth) ? 'halfWidth' : ''}`}>
         <Button blue onClick={this.openShareModal} type="button" title="Share this article">
           <span>
             <img src={shareIcon} alt='Share' />

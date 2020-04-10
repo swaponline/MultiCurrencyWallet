@@ -2,6 +2,7 @@
 
   display: inline-block;
   padding-left: 15px;
+
   svg {
     width: 20px;
     height: 20px;
@@ -9,5 +10,18 @@
   }
   img {
     margin-right: 7px;
+  }
+}
+
+.halfWidth {
+  width: 200px;
+  button {
+    width: 100%;
+  }
+}
+
+@include media-mobile {
+  .halfWidth {
+    width: 50%;
   }
 }

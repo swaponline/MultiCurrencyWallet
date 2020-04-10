@@ -7754,5 +7754,12 @@
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
     ]
+  },
+  {
+    "id": "ShareModal_LinkCopied",
+    "message": "Link copied",
+    "files": [
+      "shared/components/modals/Share/Share.js"
+    ]
   }
 ]
