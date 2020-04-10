@@ -62,6 +62,7 @@ const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onS
           tooltip={tooltip}
           id={id}
           styleName="currencySelect"
+          selectedItemRender={(item) => item.fullTitle }
           placeholder="Enter the name of token"
           selectedValue={selectedValue}
           onSelect={onSelect}

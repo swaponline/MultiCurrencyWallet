@@ -173,7 +173,7 @@ export default class InvoiceModal extends React.Component {
       return typeforce.isCoinAddress.ETH(checkAddress)
     }
     let checkCurrency = currency.toUpperCase()
-    switch (currency) {
+    switch (checkCurrency) {
       case 'BTC (SMS-PROTECTED)':
       case 'BTC (MULTISIG)':
         checkCurrency = 'BTC'
@@ -402,6 +402,7 @@ export default class InvoiceModal extends React.Component {
               className={dropDownStyles.simpleDropdown}
               selectedValue={selectedValue}
               onSelect={this.handleBuyCurrencySelect}
+              selectedItemRender={(item) => item.fullTitle }
               isToggleActive
               currencies={[
                 {
