@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import config from 'app-config'
 
 import CSSModules from 'react-css-modules'
 import styles from './CreateWallet.scss'
@@ -18,18 +19,80 @@ import check from './images/check'
 import Button from '../../components/controls/Button/Button'
 import FirstStep from './Steps/FirstStep'
 import SecondStep from './Steps/SecondStep'
+import Tooltip from 'components/ui/Tooltip/Tooltip'
 
 import { color } from './chooseColor'
 import { constants, localStorage } from 'helpers'
 
 
+const isWidgetBuild = config && config.isWidget
 const styleBtn = { backgroundColor: '#f0eefd', color: '#6144E5' }
 const defaultColors = { backgroundColor: '#6144E5' }
 
 
 const CreateWallet = (props) => {
-  const { history, intl: { locale }, createWallet: { usersData: { eMail }, currencies, secure }, location: { pathname } } = props
+  const {
+    history,
+    intl: { locale },
+    createWallet:
+    {
+      usersData: { eMail },
+      currencies,
+      secure,
+    },
+    location: { pathname },
+    userData,
+  } = props
   const allCurrencies = props.currencies.items
+
+  const {
+    ethData,
+    btcData,
+    btcMultisigSMSData,
+    btcMultisigUserData,
+    tokensData,
+    ltcData,
+  } = userData
+
+  const currencyBalance = [
+    btcData,
+    btcMultisigSMSData,
+    btcMultisigUserData,
+    ethData,
+    ltcData,
+  ].map(({ balance, currency, infoAboutCurrency }) => ({
+    balance,
+    infoAboutCurrency,
+    name: currency,
+  }))
+
+  let btcBalance = 0
+  let usdBalance = 0
+  let changePercent = 0
+  const widgetCurrencies = ['BTC', 'BTC (SMS-Protected)', 'BTC (Multisig)', 'ETH']
+
+  if (isWidgetBuild) {
+    if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
+      // Multi token widget build
+      Object.keys(window.widgetERC20Tokens).forEach(key => {
+        widgetCurrencies.push(key.toUpperCase())
+      })
+    } else {
+      widgetCurrencies.push(config.erc20token.toUpperCase())
+    }
+  }
+
+  if (currencyBalance) {
+    currencyBalance.forEach(item => {
+      if ((!isWidgetBuild || widgetCurrencies.includes(item.name)) && item.infoAboutCurrency && item.balance !== 0) {
+        if (item.name === 'BTC') {
+          changePercent = item.infoAboutCurrency.percent_change_1h
+        }
+        btcBalance += item.balance * item.infoAboutCurrency.price_btc
+        usdBalance += item.balance * item.infoAboutCurrency.price_usd
+      }
+    })
+  }
 
   useEffect(
     () => {
@@ -67,7 +130,7 @@ const CreateWallet = (props) => {
   }
 
   const handleRestoreMnemonic = () => {
-    actions.modals.open(constants.modals.RestoryMnemonicWallet, {})
+    actions.modals.open(constants.modals.RestoryMnemonicWallet, { btcBalance, usdBalance })
   }
 
   // @ToDo - Debug - remove later
@@ -190,12 +253,31 @@ const CreateWallet = (props) => {
           {' '}{singleCurrecny && singleCurrecny.toUpperCase()}
         </h2>
         <div styleName="buttonWrapper">
-          <button onClick={handleRestoreMnemonic}>
-            <FormattedMessage
-              id="ImportKeys_RestoreMnemonic"
-              defaultMessage="Ввести 12 слов"
-            />
-          </button>
+          <span>
+            <button onClick={handleRestoreMnemonic}>
+              <FormattedMessage
+                id="ImportKeys_RestoreMnemonic"
+                defaultMessage="Ввести 12 слов"
+              />
+            </button>
+            &nbsp;
+            <Tooltip id="ImportKeys_RestoreMnemonic_tooltip">
+              <span>
+                <FormattedMessage id="ImportKeys_RestoreMnemonic_Tooltip" defaultMessage="12-word backup phrase" />
+                {
+                  (btcBalance > 0 || usdBalance > 0) && (
+                    <React.Fragment>
+                      <br />
+                      <br />
+                      <div styleName="alertTooltipWrapper">
+                        <FormattedMessage id="ImportKeys_RestoreMnemonic_Tooltip_withBalance" defaultMessage="Please, be causious!" />
+                      </div>
+                    </React.Fragment>
+                  )
+                }
+              </span>
+            </Tooltip>
+          </span>
           {/*
           <button onClick={handleMakeSweep}>
             <FormattedMessage
@@ -239,4 +321,5 @@ const CreateWallet = (props) => {
 export default connect({
   createWallet: 'createWallet',
   currencies: 'currencies',
+  userData: 'user',
 })(injectIntl(withRouter(CSSModules(CreateWallet, styles, { allowMultiple: true }))))
