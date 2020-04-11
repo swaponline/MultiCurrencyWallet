@@ -130,7 +130,7 @@ const CreateWallet = (props) => {
   }
 
   const handleRestoreMnemonic = () => {
-    actions.modals.open(constants.modals.RestoryMnemonicWallet, {})
+    actions.modals.open(constants.modals.RestoryMnemonicWallet, { btcBalance, usdBalance })
   }
 
   // @ToDo - Debug - remove later
