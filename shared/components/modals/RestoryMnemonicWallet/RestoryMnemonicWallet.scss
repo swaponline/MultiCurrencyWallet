@@ -1,15 +1,26 @@
-
 .buttonsHolder {
   display: flex;
   align-items: center;
   justify-content: space-around;
   padding-bottom: 50px;
+
   button {
     width: 40%;
     padding: 0 8px;
     height: 36px;
     line-height: 36px;
   }
+}
+
+.tooltipWrapper {
+  white-space: normal;
+}
+
+.alertTooltipWrapper {
+  font-size: 0.8em;
+  padding: 0.3em 0.5em;
+  background: rgba(#fd6b65, 0.6);
+  border-radius: 2px;
 }
 
 .for12words {

@@ -7533,6 +7533,20 @@
     ]
   },
   {
+    "id": "ImportKeys_RestoreMnemonic_Tooltip",
+    "message": "Это мнемонический пароль, то есть список кодовых слов, который хранит необходимую для восстановления доступа к криптокошельку информацию. Типичная сид-фраза — 12 (и больше) слов, случайным образом подобранных из словаря, состоящего из 2048 слов.",
+    "files": [
+      "shared/pages/CreateWallet/CreateWallet.js"
+    ]
+  },
+  {
+    "id": "ImportKeys_RestoreMnemonic_Tooltip_withBalance",
+    "message": "Пожалуйста, будьте осторожны! Как только вы импортируете свой seed, ваш текущий баланс будет сброшен. Сохраните текущие средства на другой кошелек.",
+    "files": [
+      "shared/pages/CreateWallet/CreateWallet.js"
+    ]
+  },
+  {
     "id": "RequestPayment",
     "message": "Запросить",
     "files": [

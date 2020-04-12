@@ -7513,6 +7513,20 @@
     ]
   },
   {
+    "id": "ImportKeys_RestoreMnemonic_Tooltip",
+    "message": "12-word backup phrase – also know as 12-words, “backup”, recovery phrase, mnemonic seed, “seed” – is a unique, randomly generated set of words, that are given to you when you create a wallet. The recovery phrase is used to derive, or generate, all the private keys, which are encrypted directly on your device.",
+    "files": [
+      "shared/pages/CreateWallet/CreateWallet.js"
+    ]
+  },
+  {
+    "id": "ImportKeys_RestoreMnemonic_Tooltip_withBalance",
+    "message": "Please, be causious! Once you import a new seed your current balance would be reset. Save your current funds to another wallet.",
+    "files": [
+      "shared/pages/CreateWallet/CreateWallet.js"
+    ]
+  },
+  {
     "id": "RequestPayment",
     "message": "Запросить",
     "files": [

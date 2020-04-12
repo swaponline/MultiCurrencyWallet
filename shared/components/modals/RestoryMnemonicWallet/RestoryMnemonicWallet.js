@@ -101,6 +101,7 @@ export default class RestoryMnemonicWallet extends React.Component {
 
   handleFinish = () => {
     this.handleClose()
+    window.location.assign(links.hashHome)
   }
 
   handleRestoryWallet = () => {
@@ -154,6 +155,8 @@ export default class RestoryMnemonicWallet extends React.Component {
       intl,
       data: {
         showCloseButton,
+        btcBalance = 0,
+        usdBalance = 1,
       },
     } = this.props
 
@@ -178,7 +181,27 @@ export default class RestoryMnemonicWallet extends React.Component {
               )}
               <div styleName="highLevel" className="ym-hide-content">
                 <FieldLabel label>
-                  <FormattedMessage {...langLabels.mnemonicLabel} />
+                  <span styleName="tooltipWrapper">
+
+                    <FormattedMessage {...langLabels.mnemonicLabel} />
+                    &nbsp;
+                    <Tooltip id="ImportKeys_RestoreMnemonic_tooltip">
+                      <span>
+                        <FormattedMessage id="ImportKeys_RestoreMnemonic_Tooltip" defaultMessage="12-word backup phrase" />
+                        {
+                          (btcBalance > 0 || usdBalance > 0) && (
+                            <React.Fragment>
+                              <br />
+                              <br />
+                              <div styleName="alertTooltipWrapper">
+                                <FormattedMessage id="ImportKeys_RestoreMnemonic_Tooltip_withBalance" defaultMessage="Please, be causious!" />
+                              </div>
+                            </React.Fragment>
+                          )
+                        }
+                      </span>
+                    </Tooltip>
+                  </span>
                 </FieldLabel>
                 <Input
                   styleName="input inputMargin25 for12words"
