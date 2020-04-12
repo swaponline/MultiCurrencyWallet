@@ -73,6 +73,10 @@ const markInvoice = (invoiceId, mark, txid) => new Promise((resolve) => apiLoope
   .catch(() => { resolve(false) }))
 
 
+const getManyInvoices = (data) => {
+  
+}
+
 const getInvoices = (data) => {
   if ((config.isWidget || !config.opts.invoiceEnabled)) {
     return new Promise((resolve) => { resolve([]) })

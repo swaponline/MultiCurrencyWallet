@@ -8,6 +8,7 @@ const linksManager = {
   pointOfSell: '/buy',
   history: '/history',
   createWallet: '/createWallet',
+  invoices: '/invoices',
 
   wallets: '/wallets',
   send: '/withdraw',

@@ -19,9 +19,11 @@ import CurrencyWallet from 'pages/CurrencyWallet/CurrencyWallet'
 import Transaction from 'pages/Transaction/Transaction'
 import IEO from 'pages/IEO/IEO'
 import BtcMultisignProcessor from 'pages/Multisign/Btc/Btc'
-import CreateInvoice from 'pages/CreateInvoice/CreateInvoice'
 
-import config from 'app-config'
+import CreateInvoice from 'pages/Invoices/CreateInvoice'
+import InvoicesList from 'pages/Invoices/InvoicesList'
+
+import config from 'helpers/externalConfig'
 
 import ScrollToTop from '../components/layout/ScrollToTop/ScrollToTop'
 
@@ -62,6 +64,7 @@ const routes = (
       <Route path={`${localisePrefix}${links.multisign}/btc/:action/:data`} component={BtcMultisignProcessor} />
 
       <Route path={`${localisePrefix}${links.createInvoice}/:type/:wallet`} component={CreateInvoice} />
+      <Route path={`${localisePrefix}${links.invoices}/:type?/:address?`} component={InvoicesList} />
 
       <Route path={`${localisePrefix}${links.ieo}`} component={IEO} />
       <Route exact path={`${localisePrefix}${links.notFound}`} component={NotFound} />

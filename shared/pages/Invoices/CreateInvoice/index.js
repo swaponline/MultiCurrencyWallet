@@ -14,7 +14,7 @@ import Button from 'components/controls/Button/Button'
 import moment from 'moment'
 
 import CSSModules from 'react-css-modules'
-import styles from './CreateInvoice.scss'
+import styles from './styles.scss'
 import config from 'app-config'
 
 
