@@ -7507,7 +7507,7 @@
   },
   {
     "id": "ImportKeys_RestoreMnemonic",
-    "message": "Ввести 12 слов",
+    "message": "У меня есть seed",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
     ]
