@@ -72,6 +72,46 @@ const markInvoice = (invoiceId, mark, txid) => new Promise((resolve) => apiLoope
   })
   .catch(() => { resolve(false) }))
 
+const getInvoice = (hash) => {
+  if ((config.isWidget || !config.opts.invoiceEnabled)) {
+    return new Promise( (resolve) => { resolve(false) })
+  }
+
+  return new Promise((resolve) => {
+    
+    apiLooper.post('invoiceApi',`/invoice/get`, {
+      body: {
+        hash,
+      }
+    }).then((res) => {
+      console.log('fetced answer from invoice api', res)
+      if (res && res.answer && res.answer === 'ok' && res.item) {
+        const {
+          item,
+          item: {
+            amount,
+            utx,
+          }
+        } = res
+
+        const direction = 'in' //(walletsHashMap[walletHash] !== undefined) ? 'in' : 'out'
+
+        resolve ({
+          invoiceData: item,
+          hash: 'no hash',
+          confirmations: 1,
+          value: amount,
+          date: utx * 1000,
+          direction,
+        })
+      } else {
+        resolve(false)
+      }
+    }).catch(() => {
+      resolve(false)
+    })
+  })
+}
 
 const getManyInvoices = (data) => {
   if ((config.isWidget || !config.opts.invoiceEnabled)) {
@@ -101,7 +141,7 @@ const getManyInvoices = (data) => {
       }
     })
 
-    return apiLooper.post('invoiceApi', `/invoice/fetchmany/`, {
+    apiLooper.post('invoiceApi', `/invoice/fetchmany/`, {
       body: {
         wallets,
         mainnet: (process.env.MAINNET) ? '1' : '0',
@@ -152,7 +192,7 @@ const getInvoices = (data) => {
 
   return new Promise((resolve) => {
 
-    return apiLooper.post('invoiceApi', `/invoice/fetch/`, {
+    apiLooper.post('invoiceApi', `/invoice/fetch/`, {
       body: {
         currency: getCurrencyKey(data.currency,true).toUpperCase(),
         address: data.address,
@@ -189,6 +229,7 @@ const getInvoices = (data) => {
 export default {
   addInvoice,
   getInvoices,
+  getInvoice,
   getManyInvoices,
   cancelInvoice,
   markInvoice,

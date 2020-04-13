@@ -22,6 +22,7 @@ import BtcMultisignProcessor from 'pages/Multisign/Btc/Btc'
 
 import CreateInvoice from 'pages/Invoices/CreateInvoice'
 import InvoicesList from 'pages/Invoices/InvoicesList'
+import Invoice from 'pages/Invoices/Invoice'
 
 import config from 'helpers/externalConfig'
 
@@ -65,6 +66,7 @@ const routes = (
 
       <Route path={`${localisePrefix}${links.createInvoice}/:type/:wallet`} component={CreateInvoice} />
       <Route path={`${localisePrefix}${links.invoices}/:type?/:address?`} component={InvoicesList} />
+      <Route path={`${localisePrefix}${links.invoice}/:uniqhash?`} component={Invoice} />
 
       <Route path={`${localisePrefix}${links.ieo}`} component={IEO} />
       <Route exact path={`${localisePrefix}${links.notFound}`} component={NotFound} />
