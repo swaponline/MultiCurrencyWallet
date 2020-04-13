@@ -74,7 +74,66 @@ const markInvoice = (invoiceId, mark, txid) => new Promise((resolve) => apiLoope
 
 
 const getManyInvoices = (data) => {
-  
+  if ((config.isWidget || !config.opts.invoiceEnabled)) {
+    return new Promise( (resolve) => { resolve([]) })
+  }
+
+  return new Promise((resolve) => {
+
+    const walletsHashMap = {}
+    const wallets = data.map((item) => {
+      if (item && item.type && item.address) {
+        const {
+          type: rawType,
+          address,
+        } = item
+
+        const type = getCurrencyKey(rawType, true).toUpperCase()
+        walletsHashMap[`${type}:${address.toLowerCase()}`] = {
+          type,
+          address,
+        }
+
+        return {
+          type,
+          address,
+        }
+      }
+    })
+
+    return apiLooper.post('invoiceApi', `/invoice/fetchmany/`, {
+      body: {
+        wallets,
+        mainnet: (process.env.MAINNET) ? '1' : '0',
+      }
+    }).then((res) => {
+      if (res && res.answer && res.answer === 'ok') {
+        const invoices = res.items.map((item) => {
+          const walletHash = `${item.type}:${item.toAddress.toLowerCase()}`
+
+          const direction = (walletsHashMap[walletHash] !== undefined) ? 'in' : 'out'
+
+          return ({
+            type: item.type,
+            txType: 'INVOICE',
+            invoiceData: item,
+            hash: 'no hash',
+            confirmations: 1,
+            value: item.amount,
+            date: item.utx * 1000,
+            direction: direction,
+          })
+        })
+
+        resolve(invoices)
+      } else {
+        resolve([])
+      }
+    })
+    .catch(() => {
+      resolve([])
+    })
+  })
 }
 
 const getInvoices = (data) => {
@@ -130,6 +189,7 @@ const getInvoices = (data) => {
 export default {
   addInvoice,
   getInvoices,
+  getManyInvoices,
   cancelInvoice,
   markInvoice,
 }
