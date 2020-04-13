@@ -7533,7 +7533,7 @@
   },
   {
     "id": "ImportKeys_RestoreMnemonic",
-    "message": "Enter 12 words",
+    "message": "I have my 12 word seed",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
     ]
