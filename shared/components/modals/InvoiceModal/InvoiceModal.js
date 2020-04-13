@@ -27,6 +27,12 @@ import QrReader from 'components/QrReader'
 import typeforce from 'swap.app/util/typeforce'
 import minAmount from 'helpers/constants/minAmount'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
+import getCurrencyKey from 'helpers/getCurrencyKey'
+
+import { links }    from 'helpers'
+import { localisedUrl } from 'helpers/locale'
+import redirectTo from 'helpers/redirectTo'
+
 
 @injectIntl
 @connect(
@@ -72,7 +78,8 @@ export default class InvoiceModal extends React.Component {
     const {
       data: { address, currency, toAddress },
       items,
-      tokenItems
+      tokenItems,
+      payerAddress = false,
     } = data
     let infoAboutCurrency
 
@@ -86,6 +93,7 @@ export default class InvoiceModal extends React.Component {
 
     this.state = {
       isShipped: false,
+      payerAddress,
       openScanCam: '',
       address: toAddress ? toAddress : '',
       destination: address,
@@ -128,13 +136,7 @@ export default class InvoiceModal extends React.Component {
       isShipped: true
     })
 
-    let currency = data.currency.toUpperCase()
-    switch (data.currency) {
-      case 'BTC (SMS-PROTECTED)':
-      case 'BTC (MULTISIG)':
-        currency = 'BTC'
-        break
-    }
+    let currency = getCurrencyKey(data.currency, true).toUpperCase()
 
     try {
       const message = `${contact}\r\n${label}`
@@ -145,10 +147,10 @@ export default class InvoiceModal extends React.Component {
         amount,
         contact,
         label: message,
-        destination
+        destination,
       })
       if (result && result.answer && result.answer === 'ok') {
-        actions.modals.close(name)
+        this.handleGoToInvoice(result.invoiceId)
       }
       if (data.onReady instanceof Function) {
         data.onReady()
@@ -162,6 +164,10 @@ export default class InvoiceModal extends React.Component {
     })
   }
 
+  handleGoToInvoice = (invoiceId) => {
+    redirectTo(`${links.invoice}/${invoiceId}`)
+  }
+
   addressIsCorrect(otherAddress) {
     const {
       data: { currency }
@@ -172,13 +178,7 @@ export default class InvoiceModal extends React.Component {
     if (isEthToken) {
       return typeforce.isCoinAddress.ETH(checkAddress)
     }
-    let checkCurrency = currency.toUpperCase()
-    switch (checkCurrency) {
-      case 'BTC (SMS-PROTECTED)':
-      case 'BTC (MULTISIG)':
-        checkCurrency = 'BTC'
-        break
-    }
+    let checkCurrency = getCurrencyKey(currency, true).toUpperCase()
 
     return typeforce.isCoinAddress[checkCurrency](checkAddress)
   }

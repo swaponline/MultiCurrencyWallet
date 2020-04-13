@@ -51,10 +51,6 @@ export default class CreateInvoice extends PureComponent {
     }
   }
 
-  handleGoHome = () => {
-    this.props.history.push(localisedUrl(links.home))
-  }
-
   async componentWillMount() {
     let { match : { params : { type, wallet } }, history, location: { pathname } , data } = this.props
 
@@ -80,13 +76,6 @@ export default class CreateInvoice extends PureComponent {
   async componentWillUnmount() {}
 
   render() {
-    return (
-      <div styleName="createInvoice">
-        <h2><FormattedMessage id="CreateInvoiceReady" defaultMessage="Спасибо, инвойс выставлен" /></h2>
-        <Button brand onClick={this.handleGoHome}>
-          <FormattedMessage id="CreateInvoiceGoHome" defaultMessage="Перейти на главную" />
-        </Button>
-      </div>
-    )
+    return null
   }
 }
