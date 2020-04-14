@@ -7323,7 +7323,7 @@
   },
   {
     "id": "ShowMyMnemonic",
-    "message": "Show 12 words",
+    "message": "Please backup your wallet",
     "files": [
       "shared/pages/Wallet/components/WallerSlider/index.js"
     ]

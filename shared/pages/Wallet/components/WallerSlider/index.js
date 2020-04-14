@@ -116,7 +116,7 @@ export default class WallerSlider extends Component {
                     firstBtn={firstBtnTitle}
                     widthIcon="80"
                     background="6144e5"
-                    descr="Show 12 words"
+                    descr={<FormattedMessage id="ShowMyMnemonic" defaultMessage="Please backup your wallet" />}
                     firstFunc={mnemonicDeleted ? this.handleShowKeys : this.handleShowMnemonic}
                   />
                 </div>
