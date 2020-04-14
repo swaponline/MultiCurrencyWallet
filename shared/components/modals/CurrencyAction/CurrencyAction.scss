@@ -84,22 +84,19 @@
     }
 
     span {
-        font-family: Inter;
-        font-style: normal;
-        font-weight: 800;
-        font-size: 11px;
-        line-height: 140%;
-        text-align: center;
-        color: #8E9AA3;
-        margin-top: -15px;
-        font-family: 'Inter-Bold';
+      font-family: 'Inter-Bold';
+      font-style: normal;
+      font-size: 11px;
+      line-height: 140%;
+      text-align: center;
+      color: #8E9AA3;
+      margin-top: -15px;
     }
   
     li {
-      font-weight: 100;
       color: #8E9AA3;
       font-size: 11px;
-      font-family: Inter;
+      font-family: 'Inter-Regular';
       line-height: 20px;
       text-align: center;
     }
