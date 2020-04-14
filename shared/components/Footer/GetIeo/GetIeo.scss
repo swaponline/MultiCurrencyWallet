@@ -21,13 +21,13 @@
   width: 70%;
 
   h2 {
-    font-family: Inter;
-    font-weight: 500;
+    font-family: 'Inter-Medium';
     font-size: 24px;
     color: #fff;
     margin-bottom: 70px;
     line-height: 1.5;
   }
+
   b {
     cursor: pointer;
   }
@@ -69,13 +69,11 @@
 .button {
   margin: 8px;
   min-width: 290px;
-  font-family: Inter;
+  font-family: 'Inter-Regular';
   border-radius: 30px;
-  font-weight: normal;
   font-size: 16px;
   padding: 16px 40px;
   display: inline-block;
-  font-weight: 400;
   text-align: center;
   vertical-align: middle;
   user-select: none;
@@ -163,6 +161,7 @@
     margin-bottom: 20px;
     text-align: center;
     width: 100%;
+
     div {
       padding-left: 0;
     }
