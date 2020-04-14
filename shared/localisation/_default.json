@@ -7297,7 +7297,7 @@
   },
   {
     "id": "ShowMyMnemonic",
-    "message": "Показать 12 слов",
+    "message": "Backup your wallet",
     "files": [
       "shared/pages/Wallet/components/WallerSlider/index.js"
     ]
