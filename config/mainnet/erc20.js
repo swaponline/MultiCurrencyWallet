@@ -49,14 +49,4 @@ export default {
     decimals: 18,
     fullName: 'snm',
   },
-  ton: {
-    address: '0x14a52cf6B4F68431bd5D9524E4fcD6F41ce4ADe9',
-    decimals: 18,
-    fullName: 'TON',
-  },
-  sber: {
-    address: '0x14a52cf6B4F68431bd5D9524E4fcD6F41ce4ADe9',
-    decimals: 18,
-    fullName: 'SBER',
-  },
 }
