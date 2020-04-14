@@ -9,7 +9,6 @@ export default [
   'HDP',
   'USDT',
   'MSK',
-  'RURSBER',
   'RURCASH',
   'USDSWIFT',
 ]
