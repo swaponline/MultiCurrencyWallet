@@ -2842,7 +2842,7 @@
   },
   {
     "id": "RowHistory341",
-    "message": "Confirm",
+    "message": "Confirmed",
     "files": [
       "shared/pages/History/Row/Row.js"
     ]
