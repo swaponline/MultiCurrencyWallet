@@ -469,6 +469,7 @@ export default class WithdrawModalMultisig extends React.Component {
       tokenItems,
       items,
       intl,
+      portalUI,
     } = this.props
 
     const linked = Link.all(this, 'address', 'amount', 'code', 'ownTx', 'mnemonic')
@@ -525,8 +526,8 @@ export default class WithdrawModalMultisig extends React.Component {
       },
     })
 
-    return (
-      <Modal name={name} title={`${intl.formatMessage(labels.withdrowModal)}${' '}${currency.toUpperCase()}`}>
+    const formRender = (
+      <Fragment>
         {openScanCam && (
           <QrReader openScan={this.openScan} handleError={this.handleError} handleScan={this.handleScan} />
         )}
@@ -781,6 +782,12 @@ export default class WithdrawModalMultisig extends React.Component {
             </Button>
           </Fragment>
         }
+      </Fragment>
+    )
+
+    return (portalUI) ? formRender : (
+      <Modal name={name} title={`${intl.formatMessage(labels.withdrowModal)}${' '}${currency.toUpperCase()}`}>
+        {formRender}
       </Modal>
     )
   }

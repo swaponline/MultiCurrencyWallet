@@ -181,7 +181,7 @@ export default class InvoicesList extends PureComponent {
   async componentWillUnmount() {}
 
   rowRender = (row, rowIndex) => (
-    <Row key={rowIndex} {...row} />
+    <Row key={rowIndex} {...row} viewType="invoice" />
   )
 
   render() {

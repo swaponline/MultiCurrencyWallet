@@ -390,7 +390,8 @@ export default class WithdrawModal extends React.Component {
       data: { currency, invoice },
       tokenItems,
       items,
-      intl
+      intl,
+      portalUI,
     } = this.props;
 
     const linked = Link.all(this, "address", "amount", "ownTx");
@@ -444,8 +445,8 @@ export default class WithdrawModal extends React.Component {
       }
     });
 
-    return (
-      <Modal name={name} title={`${intl.formatMessage(labels.withdrowModal)}${" "}${currency.toUpperCase()}`}>
+    const formRender = (
+      <Fragment>
         {openScanCam && (
           <QrReader openScan={this.openScan} handleError={this.handleError} handleScan={this.handleScan} />
         )}
@@ -593,7 +594,12 @@ export default class WithdrawModal extends React.Component {
             </Button>
           </Fragment>
         )}
+      </Fragment>
+    )
+    return (portalUI) ? formRender : (
+      <Modal name={name} title={`${intl.formatMessage(labels.withdrowModal)}${" "}${currency.toUpperCase()}`}>
+        {formRender}
       </Modal>
-    );
+    )
   }
 }
