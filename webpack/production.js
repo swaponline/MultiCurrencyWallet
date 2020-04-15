@@ -6,7 +6,7 @@ import path from 'path'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import TerserPlugin from 'terser-webpack-plugin-legacy'
 import externalConfig from './externalConfig'
-import WebpackRequireFrom from 'webpack-require-from'
+import WebpackRequireFrom from 'webpack-require-from-naggertooth'
 
 
 export default (webpackConfig) => {
@@ -36,7 +36,7 @@ export default (webpackConfig) => {
   webpackConfig.plugins.push(
     new TerserPlugin(),
     new WebpackRequireFrom({
-      variableName: 'imagesUrl',
+      staticWindowVariableName: 'imagesUrl',
     }),
     new ExtractTextPlugin({
       filename: '[name].[hash:6].css',
