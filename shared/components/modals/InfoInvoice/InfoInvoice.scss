@@ -42,6 +42,17 @@
   word-break: break-all;
 }
 
+.share-ready-holder {
+  padding: 10px;
+  padding-top: 20px;
+  button {
+    display: block;
+    max-width: 200px;
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
 .align-right {
   text-align: right !important;
 }
@@ -109,6 +120,11 @@
     padding-top: 0px;
   }
 
+  .share-ready-holder {
+    button {
+      max-width: none;
+    }
+  }
   .invoiceControlsHolder {
     &.with-share-button {
       .payControl {

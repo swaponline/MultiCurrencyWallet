@@ -66,6 +66,7 @@ export default class Invoice extends PureComponent {
       match: {
         params: {
           uniqhash = null,
+          doshare = false,
         },
       },
       intl: {
@@ -74,10 +75,12 @@ export default class Invoice extends PureComponent {
       history,
     } = props
 
+    console.log('Show share info block', doshare)
     this.state = {
       uniqhash,
       invoice: false,
-      isFetching: true
+      isFetching: true,
+      doshare,
     }
   }
 
@@ -104,6 +107,7 @@ export default class Invoice extends PureComponent {
     if(uniqhash) {
       infoModal.setState({
         isFetching: true,
+        uniqhash,
       }, () => {
         actions.invoices.getInvoice(
           uniqhash
@@ -122,10 +126,17 @@ export default class Invoice extends PureComponent {
   }
 
   async componentWillMount() {
+    const {
+      uniqhash,
+      doshare,
+    } = this.state
+
     actions.modals.open(constants.modals.InfoInvoice, {
       onClose: () => {
       },
       isFetching: true,
+      uniqhash,
+      doshare,
       onFetching: (infoModal) => {
         this.setState({
           infoModal,
@@ -141,6 +152,7 @@ export default class Invoice extends PureComponent {
       match: {
         params: {
           uniqhash = null,
+          doshare = false,
         },
       },
     } = this.props
@@ -149,19 +161,30 @@ export default class Invoice extends PureComponent {
       match: {
         params: {
           uniqhash: prevUniqhash = null,
+          doshare: prevDoshare = false,
         },
       },
     } = prevProps
 
-    if (prevUniqhash !== uniqhash) {
+    if ((prevUniqhash !== uniqhash)
+      || (prevDoshare !== doshare)
+    ) {
       const { infoModal } = this.state
+
       this.setState({
-        uniqhash
+        uniqhash,
+        doshare,
       }, () => {
-        infoModal.setState({
+        infoModal.setState((prevUniqhash !== uniqhash) ? {
           invoice: false,
+          uniqhash,
           isFetching: true,
-        }, () => {
+          doshare,
+          isShareReady: !(doshare),
+        } : {
+          doshare,
+          isShareReady: !(doshare),
+        } , () => {
           this.fetchInvoice()
         })
       })
@@ -175,6 +198,7 @@ export default class Invoice extends PureComponent {
       uniqhash,
       isFetching,
       invoice,
+      doshare,
     } = this.state
 
     return (

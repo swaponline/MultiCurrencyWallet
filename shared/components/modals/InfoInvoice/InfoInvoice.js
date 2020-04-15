@@ -1,6 +1,9 @@
 import React, { Component, Fragment } from 'react'
 import { Modal } from 'components/modal'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
+
+import actions from 'redux/actions'
+
 import helpers from 'helpers'
 import { links, constants } from 'helpers'
 import { getFullOrigin } from 'helpers/links'
@@ -8,14 +11,16 @@ import { getFullOrigin } from 'helpers/links'
 import cssModules from 'react-css-modules'
 import defaultStyles from '../Styles/default.scss'
 import styles from './InfoInvoice.scss'
-import ShareButton from 'components/controls/ShareButton/ShareButton'
-import actions from 'redux/actions'
-import Button from 'components/controls/Button/Button'
-import ShortTextView from 'pages/Wallet/components/ShortTextView/ShortTextView.js'
-import { isMobile } from "react-device-detect"
-import { BigNumber } from 'bignumber.js'
-
 import animateFetching from 'components/loaders/ContentLoader/ElementLoading.scss'
+
+import { ShareLink } from 'components/controls'
+import ShareButton from 'components/controls/ShareButton/ShareButton'
+
+import Button from 'components/controls/Button/Button'
+
+import { isMobile } from "react-device-detect"
+
+
 
 import WithdrawModal from 'components/modals/WithdrawModal/WithdrawModal'
 
@@ -62,6 +67,10 @@ const langLabels = defineMessages({
     id: `${langPrefix}_ShareInvoiceText`,
     defaultMessage: `Инвойс #{id}-{invoiceNumber} от {contact} на {amount} {type}`,
   },
+  shareReady: {
+    id: `${langPrefix}_ButtonShareReady`,
+    defaultMessage: `Готово`,
+  },
 })
 
 @injectIntl
@@ -81,14 +90,20 @@ export default class InfoInvoice extends React.Component {
         isFetching,
         onFetching,
         invoice,
+        uniqhash,
+        doshare,
       }
     } = props
 
     this.state = {
       isFetching,
       invoice,
+      uniqhash,
       isCancelled: false,
       isReady: false,
+      isPending: true,
+      doshare,
+      isShareReady: !(doshare),
     }
 
     if (isFetching && onFetching instanceof Function) {
@@ -110,6 +125,16 @@ export default class InfoInvoice extends React.Component {
     actions.modals.close(name)
   }
 
+  handleShareReady = () => {
+    const { history } = this.props
+    const { uniqhash } = this.state
+
+    this.setState({
+      isShareReady: true,
+    }, () => {
+      history.push(`#${links.invoice}/${uniqhash}`)
+    })
+  }
 
   handlePayInvoice = () => {
   }
@@ -140,17 +165,19 @@ export default class InfoInvoice extends React.Component {
     } = this.props
 
     const {
+      uniqhash,
       isFetching,
       invoice,
       isCancelled,
       isReady,
+      isPending,
+      doshare,
+      isShareReady,
     } = this.state
 
     const {
       invoiceData = false,
     } = (invoice || {})
-
-    console.log(invoice)
 
     const modalProps = (!isFetching && invoiceData) ? {
       name: constants.modals.WithdrawModal,
@@ -169,14 +196,12 @@ export default class InfoInvoice extends React.Component {
       : intl.formatMessage(langLabels.shareText, invoiceData)
 
 
-    const shareLink = (isFetching && invoiceData) ? 'Fetching'
-      : `${getFullOrigin()}${links.invoice}/${invoiceData.uniqhash}`
+    const shareLink = `${getFullOrigin()}${links.invoice}/${uniqhash}`
 
 
     const isPayerSide = (!isFetching && invoice && invoice.direction === 'in')
-    const shareButtonEnabled = true//isMobile
+    const shareButtonEnabled = isMobile
 
-    console.log('isCancelled', isCancelled)
     const isPayerControlEnabled = (isPayerSide && (!isCancelled || isReady))
 
     const payButton = (
@@ -207,124 +232,145 @@ export default class InfoInvoice extends React.Component {
     const buttonsHolderStyles = [`invoiceControlsHolder`, `button-overlay`]
     if (shareButtonEnabled) buttonsHolderStyles.push(`with-share-button`)
     if (!isPayerControlEnabled) buttonsHolderStyles.push(`without-pay-control`)
-    
+
     const modalTitle = (isFetching) ?
       intl.formatMessage(langLabels.titleFetching) :
       intl.formatMessage(langLabels.title, {
         number: `${invoiceData.id}-${invoiceData.invoiceNumber}`,
       })
 
-
     return (
       <Modal name={name} title={modalTitle} onClose={this.handleClose} showCloseButton={true}>
-        <div styleName="blockCenter convent-overlay">
-          <div className="p-3"  styleName={isFetching ? `animate-fetching` : ``}>
-            <div styleName="shortInfoHolder">
-              {!isFetching && invoiceData && (
-                <Fragment>
-                  <div>
-                    <strong>
-                      <FormattedMessage { ...langLabels.title } values={{number: `${invoiceData.id}-${invoiceData.invoiceNumber}`}} />
-                    </strong>
-                  </div>
-                  <div>
-                    <span>
-                      <strong>{invoiceData.amount} {invoiceData.type}</strong>
-                    </span>
-                  </div>
-                  <div>
-                    <span>
-                      <FormattedMessage { ... langLabels.destination } values={{
-                        destination: invoiceData.destAddress,
-                      }} />
-                    </span>
-                  </div>
-                </Fragment>
-              )}
+        {doshare && !isShareReady && (
+          <Fragment>
+            <div styleName="convent-overlay">
+              <ShareLink 
+                link={shareLink}
+                fullSize={true}
+              />
             </div>
-          </div>
+            <div styleName="button-overlay share-ready-holder">
+              <Button
+                blue
+                onClick={this.handleShareReady}
+              >
+                <FormattedMessage { ...langLabels.shareReady } />
+              </Button>
+            </div>
+          </Fragment>
+        )}
+        {isShareReady && (
+          <Fragment>
+            <div styleName="blockCenter convent-overlay">
+              <div className="p-3"  styleName={isFetching ? `animate-fetching` : ``}>
+                <div styleName="shortInfoHolder">
+                  {!isFetching && invoiceData && (
+                    <Fragment>
+                      <div>
+                        <strong>
+                          <FormattedMessage { ...langLabels.title } values={{number: `${invoiceData.id}-${invoiceData.invoiceNumber}`}} />
+                        </strong>
+                      </div>
+                      <div>
+                        <span>
+                          <strong>{invoiceData.amount} {invoiceData.type}</strong>
+                        </span>
+                      </div>
+                      <div>
+                        <span>
+                          <FormattedMessage { ... langLabels.destination } values={{
+                            destination: invoiceData.destAddress,
+                          }} />
+                        </span>
+                      </div>
+                    </Fragment>
+                  )}
+                </div>
+              </div>
 
-          <table styleName="blockCenter__table" className="table table-borderless">
-            <tbody>
-              {isFetching ? (
-                <>
-                  <tr>
-                    <td styleName="animate-fetching" colSpan="2"></td>
-                  </tr>
-                </>
-              ) : (
-                <>
-                  <tr>
-                    <td styleName="header">
-                      <FormattedMessage { ...langLabels.invoiceSender} />
-                    </td>
-                    <td styleName="align-right">
-                      {invoiceData.contact}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td styleName="header" colSpan="2">
-                      <FormattedMessage { ...langLabels.fromAddress } />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td styleName="align-right" colSpan="2">
-                      <span>{invoiceData.fromAddress} ({invoiceData.invoiceNumber})</span>
-                    </td>
-                  </tr>
-                  {invoiceData.toAddress && (
+              <table styleName="blockCenter__table" className="table table-borderless">
+                <tbody>
+                  {isFetching ? (
                     <>
                       <tr>
+                        <td styleName="animate-fetching" colSpan="2"></td>
+                      </tr>
+                    </>
+                  ) : (
+                    <>
+                      <tr>
+                        <td styleName="header">
+                          <FormattedMessage { ...langLabels.invoiceSender} />
+                        </td>
+                        <td styleName="align-right">
+                          {invoiceData.contact}
+                        </td>
+                      </tr>
+                      <tr>
                         <td styleName="header" colSpan="2">
-                          <FormattedMessage { ...langLabels.toAddress } />
+                          <FormattedMessage { ...langLabels.fromAddress } />
                         </td>
                       </tr>
                       <tr>
                         <td styleName="align-right" colSpan="2">
-                          <span>{invoiceData.toAddress}</span>
+                          <span>{invoiceData.fromAddress} ({invoiceData.invoiceNumber})</span>
                         </td>
                       </tr>
+                      {invoiceData.toAddress && (
+                        <>
+                          <tr>
+                            <td styleName="header" colSpan="2">
+                              <FormattedMessage { ...langLabels.toAddress } />
+                            </td>
+                          </tr>
+                          <tr>
+                            <td styleName="align-right" colSpan="2">
+                              <span>{invoiceData.toAddress}</span>
+                            </td>
+                          </tr>
+                        </>
+                      )}
+                      {invoiceData.label && (
+                        <>
+                          <tr>
+                            <td styleName="header" colSpan="2">
+                              <FormattedMessage { ...langLabels.invoiceComment} />
+                            </td>
+                          </tr>
+                          <tr>
+                            <td styleName="invoiceComment" colSpan="2">
+                              <span>{invoiceData.label}</span>
+                            </td>
+                          </tr>
+                        </>
+                      )}
                     </>
                   )}
-                  {invoiceData.label && (
-                    <>
-                      <tr>
-                        <td styleName="header" colSpan="2">
-                          <FormattedMessage { ...langLabels.invoiceComment} />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td styleName="invoiceComment" colSpan="2">
-                          <span>{invoiceData.label}</span>
-                        </td>
-                      </tr>
-                    </>
-                  )}
-                </>
-              )}
-            </tbody>
-          </table>
-        </div>
-        {!isFetching && false && invoiceData && (
-          <WithdrawModal { ...modalProps } />
-        )}
-        <div styleName={buttonsHolderStyles.join(` `)}>
-          {(isPayerControlEnabled) && (
-            <Fragment>
-              <div styleName="payControl">
-                {payButton}
-              </div>
-              <div styleName="payControl">
-                {declimeButton}
-              </div>
-            </Fragment>
-          )}
-          {shareButtonEnabled && (
-            <div styleName="shareButton">
-              {shareButton}
+                </tbody>
+              </table>
             </div>
-          )}
-        </div>
+            {!isFetching && false && invoiceData && (
+              <WithdrawModal { ...modalProps } />
+            )}
+            <div styleName={buttonsHolderStyles.join(` `)}>
+              {(isPayerControlEnabled) && (
+                <Fragment>
+                  <div styleName="payControl">
+                    {payButton}
+                  </div>
+                  <div styleName="payControl">
+                    {declimeButton}
+                  </div>
+                </Fragment>
+              )}
+              {shareButtonEnabled && (
+                <div styleName="shareButton">
+                  {shareButton}
+                </div>
+              )}
+            </div>
+          </Fragment>
+        )}
       </Modal>
     )
   }

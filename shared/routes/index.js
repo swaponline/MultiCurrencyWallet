@@ -56,8 +56,7 @@ const routes = (
       <Route path={`${localisePrefix}${links.send}/:currency/:address/:amount`} component={Wallet} />
       <Route path={`${localisePrefix}${links.wallet}`} component={Wallet} />
       <Route path={`${localisePrefix}${links.history}/(btc)?/:address?`} component={History} />
-      
-      
+
       <Route exact path={`${localisePrefix}${links.createWallet}`} component={CreateWallet} />
       <Route path={`${localisePrefix}${links.createWallet}${links.home}:currency`} component={CreateWallet} />
 
@@ -66,7 +65,7 @@ const routes = (
 
       <Route path={`${localisePrefix}${links.createInvoice}/:type/:wallet`} component={CreateInvoice} />
       <Route path={`${localisePrefix}${links.invoices}/:type?/:address?`} component={InvoicesList} />
-      <Route path={`${localisePrefix}${links.invoice}/:uniqhash?`} component={Invoice} />
+      <Route path={`${localisePrefix}${links.invoice}/:uniqhash?/:doshare?`} component={Invoice} />
 
       <Route path={`${localisePrefix}${links.ieo}`} component={IEO} />
       <Route exact path={`${localisePrefix}${links.notFound}`} component={NotFound} />
