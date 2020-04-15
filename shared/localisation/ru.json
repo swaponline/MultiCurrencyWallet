@@ -2937,7 +2937,7 @@
   },
   {
     "id": "RowHistory341",
-    "message": "Подтверждений",
+    "message": "Подтверждено",
     "files": [
       "shared/pages/History/Row/Row.js"
     ]
