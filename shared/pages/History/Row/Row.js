@@ -236,7 +236,7 @@ class Row extends React.PureComponent {
                     <div styleName={confirmations > 0 ? 'confirm cell' : 'unconfirmed cell'}>
                       {confirmations > 0 ? confirmations > 6 ?
                         <FormattedMessage id="RowHistory34" defaultMessage="Received" /> :
-                        <a href><FormattedMessage id="RowHistory341" defaultMessage="Confirm" /> {confirmations} </a> :
+                        <a href><FormattedMessage id="RowHistory341" defaultMessage="Confirmed" /></a> :
                         <FormattedMessage id="RowHistory342" defaultMessage="Unconfirmed" />
                       }
                     </div>
