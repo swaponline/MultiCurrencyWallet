@@ -35,6 +35,7 @@
   border: 1px solid red;
   padding: 10px;
   font-family: 'Roboto Mono', monospace;
+  word-break: break-all;
   border: 1px solid rgba(0,0,0,0.2);
 }
 
@@ -43,6 +44,8 @@
   outline: none;
   padding: 9px;
 }
+
+
 
 .HolderQRCode {
   img {
@@ -88,9 +91,27 @@
 
 
 @include media-mobile {
+  .shareLinkTextarea {
+    min-width: auto;
+    width: 100%;
+    
+  }
   .HolderQRCode {
     img {
       width: 95%;
+    }
+  }
+  
+  .shareLinkHolder {
+    position: relative;
+    .ButtonsHolder {
+      position: absolute;
+      top: -48px;
+      left: 0px;
+      right: 0px;
+    }
+    .linkHolder {
+      margin-top: 36px;
     }
   }
 }
