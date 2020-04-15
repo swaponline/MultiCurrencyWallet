@@ -20,7 +20,9 @@ import Button from 'components/controls/Button/Button'
 
 import { isMobile } from "react-device-detect"
 
-
+import imgReady from './images/ready.svg'
+import imgPending from './images/pending.svg'
+import imgCanceled from './images/cancel.svg'
 
 import WithdrawModal from 'components/modals/WithdrawModal/WithdrawModal'
 
@@ -70,6 +72,18 @@ const langLabels = defineMessages({
   shareReady: {
     id: `${langPrefix}_ButtonShareReady`,
     defaultMessage: `Готово`,
+  },
+  infoStatusReady: {
+    id: `${langPrefix}_InfoStatus_Ready`,
+    defaultMessage: `Оплачено`,
+  },
+  infoStatusDeclimed: {
+    id: `${langPrefix}_InfoStatus_Declimed`,
+    defaultMessage: `Отклонён`,
+  },
+  infoStatusPending: {
+    id: `${langPrefix}_InfoStatus_Pending`,
+    defaultMessage: `Не оплачен`,
   },
 })
 
@@ -137,6 +151,7 @@ export default class InfoInvoice extends React.Component {
   }
 
   handlePayInvoice = () => {
+    this.setState({ isReady: true })
   }
 
   handleDeclimeInvoice = () => {
@@ -146,9 +161,6 @@ export default class InfoInvoice extends React.Component {
       },
     } = this.state
 
-    console.log('declime invoice', invoiceData)
-    this.setState({ isCancelled: true})
-    return
     actions.modals.open(constants.modals.Confirm, {
       onAccept: async () => {
         await actions.invoices.cancelInvoice(invoiceData.id)
@@ -173,6 +185,7 @@ export default class InfoInvoice extends React.Component {
       isPending,
       doshare,
       isShareReady,
+      isReadyShow,
     } = this.state
 
     const {
@@ -190,9 +203,14 @@ export default class InfoInvoice extends React.Component {
       },
       portalUI: true,
     } : false
-    
 
-    const shareText = (isFetching && invoiceData) ? 'Fetching'
+    let status = 'pending'
+    if (!isFetching && invoiceData && invoiceData.status === 'ready') status = 'ready'
+    if (!isFetching && invoiceData && invoiceData.status === 'cancelled') status = 'cancel'
+    if (isCancelled) status = 'cancel'
+    if (isReady) status = 'ready'
+
+    const shareText = (!isFetching && invoiceData) ? 'Fetching'
       : intl.formatMessage(langLabels.shareText, invoiceData)
 
 
@@ -202,32 +220,7 @@ export default class InfoInvoice extends React.Component {
     const isPayerSide = (!isFetching && invoice && invoice.direction === 'in')
     const shareButtonEnabled = isMobile
 
-    const isPayerControlEnabled = (isPayerSide && (!isCancelled || isReady))
-
-    const payButton = (
-      <Button
-        blue
-        onClick={this.handlePayInvoice}
-      >
-        <FormattedMessage { ...langLabels.payInvoice } />
-      </Button>
-    )
-
-    const declimeButton = (
-      <Button
-        gray
-        onClick={this.handleDeclimeInvoice}
-      >
-        <FormattedMessage { ...langLabels.declimeInvoice } />
-      </Button>
-    )
-
-    const shareButton = (
-      <ShareButton
-        fullWidth={true}
-        link={`${shareLink}`}
-        title={shareText} />
-    )
+    const isPayerControlEnabled = (isPayerSide && !isCancelled && !isReady && status === 'new')
 
     const buttonsHolderStyles = [`invoiceControlsHolder`, `button-overlay`]
     if (shareButtonEnabled) buttonsHolderStyles.push(`with-share-button`)
@@ -238,6 +231,24 @@ export default class InfoInvoice extends React.Component {
       intl.formatMessage(langLabels.title, {
         number: `${invoiceData.id}-${invoiceData.invoiceNumber}`,
       })
+
+
+    let infoIconTitle = ''
+    let infoIconUrl = ''
+
+    switch (status) {
+      case 'ready':
+        infoIconTitle = intl.formatMessage(langLabels.infoStatusReady)
+        infoIconUrl = imgReady
+        break;
+      case 'cancel':
+        infoIconTitle = intl.formatMessage(langLabels.infoStatusDeclimed)
+        infoIconUrl = imgCanceled
+        break;
+      default:
+        infoIconTitle = intl.formatMessage(langLabels.infoStatusPending)
+        infoIconUrl = imgPending
+    }
 
     return (
       <Modal name={name} title={modalTitle} onClose={this.handleClose} showCloseButton={true}>
@@ -263,11 +274,15 @@ export default class InfoInvoice extends React.Component {
           <Fragment>
             <div styleName="blockCenter convent-overlay">
               <div className="p-3"  styleName={isFetching ? `animate-fetching` : ``}>
+                <div styleName={`statusImgHolder statusImgHolder_${status}`}>
+                  <img src={infoIconUrl} title={infoIconTitle} alt={infoIconTitle} />
+                  <strong>{infoIconTitle}</strong>
+                </div>
                 <div styleName="shortInfoHolder">
                   {!isFetching && invoiceData && (
                     <Fragment>
                       <div>
-                        <strong>
+                        <strong styleName="invoiceNumber">
                           <FormattedMessage { ...langLabels.title } values={{number: `${invoiceData.id}-${invoiceData.invoiceNumber}`}} />
                         </strong>
                       </div>
@@ -356,16 +371,29 @@ export default class InfoInvoice extends React.Component {
               {(isPayerControlEnabled) && (
                 <Fragment>
                   <div styleName="payControl">
-                    {payButton}
+                    <Button
+                      blue
+                      onClick={this.handlePayInvoice}
+                    >
+                      <FormattedMessage { ...langLabels.payInvoice } />
+                    </Button>
                   </div>
                   <div styleName="payControl">
-                    {declimeButton}
+                    <Button
+                      gray
+                      onClick={this.handleDeclimeInvoice}
+                    >
+                      <FormattedMessage { ...langLabels.declimeInvoice } />
+                    </Button>
                   </div>
                 </Fragment>
               )}
               {shareButtonEnabled && (
                 <div styleName="shareButton">
-                  {shareButton}
+                  <ShareButton
+                    fullWidth={true}
+                    link={`${shareLink}`}
+                    title={shareText} />
                 </div>
               )}
             </div>

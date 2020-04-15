@@ -57,6 +57,42 @@
   text-align: right !important;
 }
 
+.statusImgHolder {
+  display: block;
+  &_cancel,
+  &_ready,
+  &_pending {
+    img {
+      width: 80px;
+      height: 80px;
+      display: block;
+      margin: 0 auto;
+      margin-bottom: 2rem;
+    }
+    strong {
+      display: block;
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 22px;
+    }
+  }
+  &_ready {
+    strong {
+      color: #05b305;
+    }
+  }
+  &_pending {
+    strong {
+      color: #c70101;
+    }
+  }
+  &_cancel {
+    strong {
+      color: #8c8c8c;
+    }
+  }
+}
+
 .invoiceControlsHolder {
   display: flex;
   flex-wrap: wrap;
@@ -109,6 +145,10 @@
 
 }
 
+.invoiceNumber {
+  font-size: 20px;
+}
+
 @include media-mobile {
   .finishImg {
     margin-bottom: 0px;
@@ -125,6 +165,14 @@
       max-width: none;
     }
   }
+
+  .statusImgHolder {
+    img,
+    strong {
+      margin-bottom: 0.5rem;
+    }
+  }
+
   .invoiceControlsHolder {
     &.with-share-button {
       .payControl {
