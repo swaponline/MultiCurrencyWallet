@@ -59,7 +59,7 @@ export default class CustomDestAddress extends Component {
     const {
       initialValue,
       type,
-      hasError,
+      hasError = false,
     } = props
 
     this.state = {
@@ -85,13 +85,14 @@ export default class CustomDestAddress extends Component {
     const {
       type: newType,
       initialValue,
-      hasError,
+      hasError = false,
     } = this.props
     const {
-      type: oldType
+      type: oldType,
+      hasError: oldHasError = false,
     } = this.state
 
-    if ((newType !== oldType) || (hasError !== this.state.hasError)) {
+    if ((newType !== oldType) || (hasError !== oldHasError)) {
       this.setState({
         type: newType,
         hasError,
@@ -135,7 +136,7 @@ export default class CustomDestAddress extends Component {
     const {
       value: selectedDestination,
     } = item
-    
+
 
     this.setState({
       selectedDestination,
@@ -167,8 +168,11 @@ export default class CustomDestAddress extends Component {
     } = this.props
 
 
-    const {
+    let {
       selectedDestination,
+    } = this.state
+
+    const {
       walletAddressFocused,
       metamaskConnected,
       metamaskAddress,
