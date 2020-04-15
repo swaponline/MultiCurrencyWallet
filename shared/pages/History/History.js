@@ -73,7 +73,7 @@ export default class History extends Component {
     } else {
       actions.user.setTransactions()
       actions.core.getSwapHistory()
-    }  
+    }
   }
 
   loadMore = () => {
@@ -88,7 +88,6 @@ export default class History extends Component {
   }
 
   onSubmit = (obj) => {
-   
     this.setState(() => ({ commentsList: obj }))
     actions.comments.setComment(obj)
   }
@@ -118,7 +117,7 @@ export default class History extends Component {
                 itemsCount={items.length}
                 items={items.slice(0, this.state.renderedItems)}
                 rowRender={this.rowRender}
-              /> 
+              />
             ) : (
               <div styleName="historyContent">
                 <ContentLoader rideSideContent empty />

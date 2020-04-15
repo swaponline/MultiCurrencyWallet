@@ -20,9 +20,9 @@ class Row extends React.PureComponent {
 
   constructor(props) {
     super()
-    const { hash, type, hiddenList, invoiceData } = props
-    const dataInd = invoiceData && invoiceData.id
-    const ind = `${dataInd || hash}-${type}`
+    const { hash: propsHash, type, hiddenList, invoiceData } = props
+    const ind = (invoiceData && invoiceData.txInfo) ? invoiceData.txInfo : propsHash
+
     this.state = {
       ind,
       exCurrencyRate: 0,
@@ -30,13 +30,13 @@ class Row extends React.PureComponent {
       cancelled: false,
       payed: false,
     }
-    this.getUsdBalance( type )
+    this.getUsdBalance(type)
   }
 
   getUsdBalance = async (type) => {
     actions.user.getExchangeRate(type, 'usd').then((exCurrencyRate) => {
       this.setState(() => ({
-        exCurrencyRate
+        exCurrencyRate,
       }))
     })
   }
@@ -103,7 +103,7 @@ class Row extends React.PureComponent {
   }
 
   commentCancel = () => {
-    
+
     this.toggleComment(false)
   }
 
@@ -111,20 +111,20 @@ class Row extends React.PureComponent {
     const { txType } = this.props
     switch (type) {
       case 'btc (sms-protected)': type = 'BTC'
-        break;
+        break
       case 'btc (multisig)': type = 'BTC'
-        break;
+        break
     }
 
     return (
       <Fragment>
-      {direction === directionType ?
-        <div styleName="amount">{`+ ${parseFloat(Number(value).toFixed(5))}`} {type.toUpperCase()}
-         {txType === 'INVOICE' ? <span styleName="smallTooltip"><Tooltip>Invoice</Tooltip></span> : ''}
-        </div> :
-        <div styleName="amount">{`- ${parseFloat(Number(value).toFixed(5))}`} {type.toUpperCase()}</div>
-      }
-    </Fragment> 
+        {direction === directionType ?
+          <div styleName="amount">{`+ ${parseFloat(Number(value).toFixed(5))}`} {type.toUpperCase()}
+            {txType === 'INVOICE' ? <span styleName="smallTooltip"><Tooltip>Invoice</Tooltip></span> : ''}
+          </div> :
+          <div styleName="amount">{`- ${parseFloat(Number(value).toFixed(5))}`} {type.toUpperCase()}</div>
+        }
+      </Fragment>
     )
   }
 
@@ -185,7 +185,7 @@ class Row extends React.PureComponent {
       <>
         <tr styleName='historyRow'>
           <td>
-        
+
           <div styleName={`${statusStyleAmount} circleIcon`}>
               <div styleName='arrowWrap'>
                 <Link to={txLink}>
@@ -200,11 +200,11 @@ class Row extends React.PureComponent {
               <div>
                 {txType === 'INVOICE' ?
                   <>
-                    <FormattedMessage 
-                      id="RowHistoryInvoce" 
-                      defaultMessage="Инвойс #{number} ({contact})" 
+                    <FormattedMessage
+                      id="RowHistoryInvoce"
+                      defaultMessage="Инвойс #{number} ({contact})"
                       values={{
-                        number: `${invoiceData.id}-${invoiceData.invoiceNumber}`, 
+                        number: `${invoiceData.id}-${invoiceData.invoiceNumber}`,
                         contact: (invoiceData.contact) ? `(${invoiceData.contact})` : ''
                       }}
                     />
@@ -229,8 +229,8 @@ class Row extends React.PureComponent {
                         <FormattedMessage id="RowHistory342" defaultMessage="Unconfirmed" />
                       }
                     </div>
-                    
-                    
+
+
                   </>}
               </div>
               <CommentRow
@@ -256,7 +256,7 @@ class Row extends React.PureComponent {
                     values={{
                       address: `${(invoiceData.destAddress) ? invoiceData.destAddress : invoiceData.fromAddress}`,
                       number: invoiceData.totalCount,
-                    }} 
+                    }}
                   />
                 </div>
               }
@@ -274,7 +274,7 @@ class Row extends React.PureComponent {
             <div styleName={statusStyleAmount}>
               {invoiceData ? this.parseFloat(direction, value, 'out', type) : this.parseFloat(direction, value, 'in', type)}
               <span styleName='amountUsd'>{`~ $${getUsd.toFixed(2)}`}</span>
-              
+
             </div>
             {/* <LinkTransaction type={type} styleName='address' hash={hash} >{hash}</LinkTransaction> */}
           </td>

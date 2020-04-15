@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import CSSModules from 'react-css-modules'
 import moment from 'moment-with-locales-es6'
-import styles from './Row.scss'
-
+import styles from './Comment.scss'
+import { connect } from 'redaction'
 
 @CSSModules(styles, { allowMultiple: true })
 export default class CommentRow extends React.Component {
@@ -28,7 +28,10 @@ export default class CommentRow extends React.Component {
     onSubmit(comments)
     toggleComment(false)
   }
+  componentDidMount() {
 
+    actions.core.getSwapHistory()
+  }
   componentDidUpdate(prevProps) {
 
     if (this.props.isOpen && this.props.isOpen !== prevProps.isOpen && this.props.onSubmit) {
@@ -53,7 +56,17 @@ export default class CommentRow extends React.Component {
   }
 
   render() {
-    const { comment, label, toggleComment, onSubmit, changeComment, date, isOpen, commentCancel, canEdit } = this.props
+    const { comment,
+      label,
+      toggleComment,
+      onSubmit,
+      changeComment,
+      date,
+      isOpen,
+      commentCancel } = this.props
+
+    console.log(3333)
+    console.log(this.props)
 
     return (isOpen && onSubmit) ?
       <form styleName="input" onSubmit={(e) => this.submitComment(e, this.props)}>

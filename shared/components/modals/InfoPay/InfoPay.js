@@ -9,13 +9,12 @@ import ShareButton from 'components/controls/ShareButton/ShareButton'
 import finishSvg from './images/finish.svg'
 import actions from 'redux/actions'
 import Button from 'components/controls/Button/Button'
+import CommentRow from 'components/Comment/Comment'
 import ShortTextView from 'pages/Wallet/components/ShortTextView/ShortTextView.js'
 import { isMobile } from "react-device-detect";
 import { BigNumber } from 'bignumber.js'
 
 import animateFetching from 'components/loaders/ContentLoader/ElementLoading.scss'
-
-
 
 const labels = defineMessages({
   Title: {
@@ -91,10 +90,11 @@ export default class InfoPay extends React.Component {
         txRaw,
         txId,
       },
-      name,
+      name
     } = this.props
 
     const {
+
       isFetching,
       amount,
       toAddress,
@@ -104,10 +104,10 @@ export default class InfoPay extends React.Component {
     } = this.state
 
 
-    console.log('InfoPay render', this.props.data)
+    // console.log('InfoPay render', this.props.data)
     let link = '#';
     let tx = '';
-  
+
     if(txRaw) {
       const txInfo = helpers.transactions.getInfo(currency.toLowerCase(), txRaw)
       tx = txInfo.tx
@@ -196,6 +196,10 @@ export default class InfoPay extends React.Component {
           </Button>
           {isMobile && <ShareButton link={link} title={amount.toString() + ' ' + currency.toString() + ' ' + intl.formatMessage(labels.Text) + ' ' + toAddress} />
           }
+
+          <CommentRow
+
+          />
         </div>
       </Modal>
     )

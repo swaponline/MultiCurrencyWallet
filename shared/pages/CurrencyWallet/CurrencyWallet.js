@@ -132,7 +132,7 @@ export default class CurrencyWallet extends Component {
         }
       }
       // @ToDO throw error
-      
+
     }
 
     const walletAddress = address
@@ -225,7 +225,7 @@ export default class CurrencyWallet extends Component {
 
     // set balance for the address
     address && actions[getCurrencyKey(currency.toLowerCase())].fetchBalance(address).then( balance => this.setState({ balance }))
-  
+
     this.setLocalStorageItems();
 
     // if address is null, take transactions from current user
@@ -270,7 +270,7 @@ export default class CurrencyWallet extends Component {
       currency,
       address
     } = this.state
-    
+
     actions.modals.open(constants.modals.InvoiceModal, {
       currency: currency.toUpperCase(),
       toAddress: address
@@ -278,7 +278,7 @@ export default class CurrencyWallet extends Component {
   }
 
   handleWithdraw = () => {
-    
+
     const {
       currency,
       address,
@@ -383,13 +383,6 @@ export default class CurrencyWallet extends Component {
       actions.core.markCoinAsVisible(currency)
     }
 
-    /** 27.02.2020 не знаю что это такое, но оно не используется, и ломает мне код
-     * пока закоментил - через месяц можно удалять
-    const isBlockedCoin = config.noExchangeCoins
-      .map(item => item.toLowerCase())
-      .includes(currency.toLowerCase())
-       */
-
     let currencyUsdBalance;
     let changePercent;
 
@@ -409,7 +402,7 @@ export default class CurrencyWallet extends Component {
       slidesToShow: 1,
       slidesToScroll: 1
     };
-    
+
     return (
       <div styleName="root">
         <PageSeo
@@ -440,18 +433,18 @@ export default class CurrencyWallet extends Component {
           <div styleName="currencyWalletWrapper">
             <div styleName="currencyWalletBalance">
               {
-                txHistory ?  
-                  <BalanceForm 
-                    currencyBalance={balance} 
-                    usdBalance={currencyUsdBalance} 
+                txHistory ?
+                  <BalanceForm
+                    currencyBalance={balance}
+                    usdBalance={currencyUsdBalance}
                     changePercent={changePercent}
                     address={address}
-                    handleReceive={this.handleReceive} 
+                    handleReceive={this.handleReceive}
                     handleWithdraw={this.handleWithdraw}
                     handleExchange={this.handleGoTrade}
                     handleInvoice={this.handleInvoice}
                     showButtons={actions.user.isOwner(address, currency)}
-                    currency={currency.toLowerCase()} 
+                    currency={currency.toLowerCase()}
                 /> : <ContentLoader leftSideContent />
               }
             </div>
@@ -460,8 +453,8 @@ export default class CurrencyWallet extends Component {
                 txHistory  ? (
                   <div styleName="currencyWalletActivity">
                     <h3>
-                      {address ? 
-                      `Address: ${address}` :  
+                      {address ?
+                      `Address: ${address}` :
                       <FormattedMessage id="historyActivity" defaultMessage="Активность" />
                       }
                     </h3>

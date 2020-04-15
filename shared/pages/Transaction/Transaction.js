@@ -62,11 +62,11 @@ class Transaction extends Component {
         params: {
           ticker = null,
           tx: txId = null,
-        }
-      } = null
+        },
+      } = null,
     } = this.props
 
-    if(!txId) {
+    if (!txId) {
       // 404
       return
     }
@@ -81,13 +81,13 @@ class Transaction extends Component {
         currency,
         txId,
         onClose: () => {
-          if(history.length > 2 ) {
+          if (history.length > 2) {
             history.goBack()
-            return false;
+            return false
           }
 
           history.push('/')
-          return false;
+          return false
         },
         isFetching: true,
         onFetching: (infoModal) => {
@@ -97,15 +97,15 @@ class Transaction extends Component {
             this.fetchTxInfo(currency, txId)
           })
         }
-      }) 
-      
-      
+      })
+
+
     })
   }
 
   render() {
     const { isFetching } = this.state
-    
+
     if (isFetching) {
       return (
         <div>
@@ -113,8 +113,8 @@ class Transaction extends Component {
         </div>
       )
     }
-    return (null);
+    return (null)
   }
 }
 
-export default withRouter(Transaction);
+export default withRouter(Transaction)
