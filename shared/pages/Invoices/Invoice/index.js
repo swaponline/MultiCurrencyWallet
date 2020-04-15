@@ -91,6 +91,7 @@ export default class Invoice extends PureComponent {
     const {
       state: {
         uniqhash,
+        infoModal,
       },
       props: {
         history,
@@ -101,14 +102,14 @@ export default class Invoice extends PureComponent {
     } = this
 
     if(uniqhash) {
-      this.setState({
+      infoModal.setState({
         isFetching: true,
       }, () => {
         actions.invoices.getInvoice(
           uniqhash
         ).then((invoice) => {
           if (invoice) {
-            this.setState({
+            infoModal.setState({
               isFetching: false,
               invoice,
             })
@@ -121,7 +122,18 @@ export default class Invoice extends PureComponent {
   }
 
   async componentWillMount() {
-    this.fetchInvoice()
+    actions.modals.open(constants.modals.InfoInvoice, {
+      onClose: () => {
+      },
+      isFetching: true,
+      onFetching: (infoModal) => {
+        this.setState({
+          infoModal,
+        }, () => {
+          this.fetchInvoice()
+        })
+      }
+    })
   }
 
   componentDidUpdate(prevProps) {
@@ -142,12 +154,16 @@ export default class Invoice extends PureComponent {
     } = prevProps
 
     if (prevUniqhash !== uniqhash) {
+      const { infoModal } = this.state
       this.setState({
-        uniqhash,
-        invoice: false,
-        isFetching: true,
+        uniqhash
       }, () => {
-        this.fetchInvoice()
+        infoModal.setState({
+          invoice: false,
+          isFetching: true,
+        }, () => {
+          this.fetchInvoice()
+        })
       })
     }
   }

@@ -31,6 +31,7 @@ import SaveMnemonicModal from './SaveMnemonicModal/SaveMnemonicModal'
 import RestoryMnemonicWallet from './RestoryMnemonicWallet/RestoryMnemonicWallet'
 import SweepToMnemonicKeys from './SweepToMnemonicKeys/SweepToMnemonicKeys'
 import HowToWithdrawModal from './HowToWithdrawModal/HowToWithdrawModal'
+import InfoInvoice from './InfoInvoice/InfoInvoice'
 
 
 
@@ -68,4 +69,5 @@ export default {
   RestoryMnemonicWallet,
   SweepToMnemonicKeys,
   HowToWithdrawModal,
+  InfoInvoice,
 }
