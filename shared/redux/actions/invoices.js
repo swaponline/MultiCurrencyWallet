@@ -6,7 +6,6 @@ import bitcoinMessage from 'bitcoinjs-message'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import { btc, apiLooper, constants, api } from 'helpers'
-import { Keychain } from 'keychain.js'
 import actions from 'redux/actions'
 import config from 'helpers/externalConfig'
 import getCurrencyKey from 'helpers/getCurrencyKey'
@@ -18,7 +17,7 @@ const validateData = (data) => {
   if (!data.toAddress) return false
   if (!data.fromAddress) return false
   if (!data.amount) return false
-  
+
 
   return true
 }
@@ -31,16 +30,16 @@ const addInvoice = (data) => {
   const currency = getCurrencyKey(data.currency, true)
 
   const requestData = {
-    currency    : currency.toUpperCase(),
-    toAddress   : data.toAddress,
-    fromAddress : data.fromAddress,
-    amount      : data.amount,
-    contact     : data.contact,
-    label       : (data.label) ? data.label : '',
-    address     : btcData.address,
-    pubkey      : btcData.publicKey.toString('hex'),
-    mainnet     : (process.env.MAINNET) ? '1' : '0',
-    destination : (data.destination) ? data.destination : '',
+    currency: currency.toUpperCase(),
+    toAddress: data.toAddress,
+    fromAddress: data.fromAddress,
+    amount: data.amount,
+    contact: data.contact,
+    label: (data.label) ? data.label : '',
+    address: btcData.address,
+    pubkey: btcData.publicKey.toString('hex'),
+    mainnet: (process.env.MAINNET) ? '1' : '0',
+    destination: (data.destination) ? data.destination : '',
   }
 
   return apiLooper.post('invoiceApi', `/invoice/push/`, {
@@ -83,7 +82,7 @@ const getInvoices = (data) => {
       resolve([])
     })
   }
-  
+
   const { user: { btcData } } = getState()
   if (!data || !data.currency || !data.address) return false
 
@@ -91,7 +90,7 @@ const getInvoices = (data) => {
 
     return apiLooper.post('invoiceApi', `/invoice/fetch/`, {
       body: {
-        currency: getCurrencyKey(data.currency,true).toUpperCase(),
+        currency: getCurrencyKey(data.currency, true).toUpperCase(),
         address: data.address,
         mainnet: (process.env.MAINNET) ? '1' : '0',
       }
@@ -117,9 +116,9 @@ const getInvoices = (data) => {
         resolve([])
       }
     })
-    .catch(() => {
-      resolve([])
-    })
+      .catch(() => {
+        resolve([])
+      })
   })
 }
 

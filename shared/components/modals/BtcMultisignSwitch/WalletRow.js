@@ -16,7 +16,6 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import BtnTooltip from 'components/controls/WithdrawButton/BtnTooltip'
 import DropdownMenu from 'components/ui/DropdownMenu/DropdownMenu'
 // import LinkAccount from '../LinkAccount/LinkAcount'
-// import KeychainStatus from '../KeychainStatus/KeychainStatus'
 import { withRouter } from 'react-router'
 import ReactTooltip from 'react-tooltip'
 import { FormattedMessage, injectIntl } from 'react-intl'
@@ -43,21 +42,21 @@ export default class WalletRow extends Component {
   }
 
   handleSwitch = () => {
-    const { item : { index }, handleFinish } = this.props
-    actions.btcmultisig.switchBtcMultisigKey( index )
+    const { item: { index }, handleFinish } = this.props
+    actions.btcmultisig.switchBtcMultisigKey(index)
     handleFinish()
   }
 
   handleRemove = () => {
-    const { item : { index }, handleRefresh } = this.props
+    const { item: { index }, handleRefresh } = this.props
 
     actions.modals.open(constants.modals.Confirm, {
       onAccept: () => {
-        actions.btcmultisig.removeBtcMultisigNey( index )
+        actions.btcmultisig.removeBtcMultisigNey(index)
         handleRefresh()
       },
     })
-    
+
   }
 
   render() {
@@ -111,7 +110,7 @@ export default class WalletRow extends Component {
               <strong>{' '}</strong>
             </div>
           </div>
-          { dropDownMenuItems.length > 0 && (
+          {dropDownMenuItems.length > 0 && (
             <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">
               <DropdownMenu
                 size="regular"

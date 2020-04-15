@@ -7,7 +7,6 @@ import bchaddr from 'bchaddrjs'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import { bch, apiLooper, constants, api } from 'helpers'
-import { Keychain } from 'keychain.js'
 import actions from 'redux/actions'
 
 
@@ -73,7 +72,7 @@ const getTxRouter = (txId) => {
 }
 
 const getLinkToInfo = (tx) => {
-  if(!tx) {
+  if (!tx) {
     return
   }
 
@@ -100,7 +99,7 @@ const fetchTxInfo = (hash) =>
 
 const getTransaction = (address) =>
   new Promise((resolve) => {
-    const { user: { bchData: { address : userAddress } } } = getState()
+    const { user: { bchData: { address: userAddress } } } = getState()
     address = address || userAddress
 
     const url = `/address/transactions/${address}`

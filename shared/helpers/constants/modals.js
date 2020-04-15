@@ -8,7 +8,6 @@ export default {
   ImportKeys: 'ImportKeys',
   ShowMoreCoins: 'ShowMoreCoins',
   EthChecker: 'EthChecker',
-  Keychain: 'Keychain',
   ReceiveModal: 'ReceiveModal',
   DownloadModal: 'DownloadModal',
   Confirm: 'Confirm',

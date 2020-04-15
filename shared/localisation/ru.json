@@ -216,14 +216,6 @@
     ]
   },
   {
-    "id": "Keychain23",
-    "message": "Скачать"
-  },
-  {
-    "id": "Keychain26",
-    "message": "KeyChain загружается. Пожалуйста, подождите."
-  },
-  {
     "id": "ImportKeys107",
     "message": "Эта процедура перепишет Ваш общедоступный ключ. Если Вы не уверены, Мы рекомендуем Вам отказаться",
     "files": [
@@ -1645,65 +1637,14 @@
     ]
   },
   {
-    "id": "Wallet104",
-    "message": "Криптовалютный Кошелек. Децентрализированный Онлайн Обменник.",
-    "files": [
-      "shared/pages/OldWallet/Wallet.js"
-    ]
-  },
-  {
-    "id": "Row235",
-    "message": "Скопировать",
-    "files": [
-      "shared/pages/OldWallet/Row/Row.js"
-    ]
-  },
-  {
-    "id": "Row256",
-    "message": "Купить аккаунт",
-    "files": [
-      "shared/pages/OldWallet/Row/Row.js"
-    ]
-  },
-  {
     "id": "Row263",
     "message": "Войти"
-  },
-  {
-    "id": "Row268",
-    "message": "Не активирован",
-    "files": [
-      "shared/pages/OldWallet/Row/Row.js"
-    ]
-  },
-  {
-    "id": "Row293",
-    "message": "Адрес скопирован в буфер обмена",
-    "files": [
-      "shared/pages/OldWallet/Row/Row.js"
-    ]
-  },
-  {
-    "id": "Row313",
-    "message": "Пополнить",
-    "files": [
-      "shared/pages/Currency/Currency.js",
-      "shared/pages/OldWallet/Row/Row.js"
-    ]
   },
   {
     "id": "RowWallet181",
     "message": "Не подтвержденный баланс ",
     "files": [
-      "shared/pages/OldWallet/Row/Row.js",
       "shared/pages/Wallet/Row/Row.js"
-    ]
-  },
-  {
-    "id": "RowWallet189",
-    "message": "Не подтвержденный баланс ",
-    "files": [
-      "shared/pages/OldWallet/Row/Row.js"
     ]
   },
   {
@@ -2111,20 +2052,6 @@
     ]
   },
   {
-    "id": "Row328",
-    "message": "Отправить",
-    "files": [
-      "shared/pages/OldWallet/Row/Row.js"
-    ]
-  },
-  {
-    "id": "Row334",
-    "message": "Обменять",
-    "files": [
-      "shared/pages/OldWallet/Row/Row.js"
-    ]
-  },
-  {
     "id": "AddOffer418",
     "message": "Пользовательский курс обмена",
     "files": [
@@ -2418,48 +2345,6 @@
     ]
   },
   {
-    "id": "Wallet114",
-    "message": "Валюта",
-    "files": [
-      "shared/pages/OldWallet/Wallet.js"
-    ]
-  },
-  {
-    "id": "Wallet115",
-    "message": "Имя",
-    "files": [
-      "shared/pages/OldWallet/Wallet.js"
-    ]
-  },
-  {
-    "id": "Wallet116",
-    "message": "Баланс",
-    "files": [
-      "shared/pages/OldWallet/Wallet.js"
-    ]
-  },
-  {
-    "id": "Wallet117",
-    "message": "Ваш адрес",
-    "files": [
-      "shared/pages/OldWallet/Wallet.js"
-    ]
-  },
-  {
-    "id": "Wallet118",
-    "message": "Отправить, получить, обменять",
-    "files": [
-      "shared/pages/OldWallet/Wallet.js"
-    ]
-  },
-  {
-    "id": "Wallet119",
-    "message": "Действия",
-    "files": [
-      "shared/pages/OldWallet/Wallet.js"
-    ]
-  },
-  {
     "id": "Orders141",
     "message": "Данная валютная пара не существует перенаправляем на USDT-BTC... ",
     "files": [
@@ -2653,13 +2538,6 @@
     ]
   },
   {
-    "id": "Wallet137",
-    "message": "Пополняйте кошелек, на адреса указанные ниже",
-    "files": [
-      "shared/pages/OldWallet/Wallet.js"
-    ]
-  },
-  {
     "id": "SignUpModal111",
     "message": "Что-то пошло не так{br}Попробуйте позже"
   },
@@ -2675,20 +2553,6 @@
     "message": "Спасибо!{br}Вы будете получать уведомления",
     "files": [
       "shared/components/modals/SignUpModal/SignUpModal.js"
-    ]
-  },
-  {
-    "id": "Row288",
-    "message": "KeyChain активирован",
-    "files": [
-      "shared/pages/OldWallet/KeychainStatus/KeychainStatus.js"
-    ]
-  },
-  {
-    "id": "Row289",
-    "message": "KeyChain не активирован",
-    "files": [
-      "shared/pages/OldWallet/KeychainStatus/KeychainStatus.js"
     ]
   },
   {
@@ -2774,13 +2638,6 @@
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js",
       "shared/pages/PointOfSell/PointOfSell.js"
-    ]
-  },
-  {
-    "id": "Row346",
-    "message": "Не активированно",
-    "files": [
-      "shared/pages/OldWallet/Row/Row.js"
     ]
   },
   {
@@ -3673,27 +3530,6 @@
     "message": "SELL {buyCurrency} HERE"
   },
   {
-    "id": "Wallet140",
-    "message": "Криптовалютный Кошелек с Возможностью Беспроцентного Обмена",
-    "files": [
-      "shared/pages/OldWallet/Wallet.js"
-    ]
-  },
-  {
-    "id": "Wallet146",
-    "message": "Наш сервис - мультивалютный онлайн кошелек на базе технологии Атомарного Свопа с возможностью хранить и обменивать криптовалюту по лучшему курсу",
-    "files": [
-      "shared/pages/OldWallet/Wallet.js"
-    ]
-  },
-  {
-    "id": "Wallet156",
-    "message": "Добро пожаловать в Swap.Online, децентрализованный кошелек с cross-chain, основанный на технологии Atomic Swap. {br}Здесь вы можете безопасно хранить и быстро обменивать Биткойны, Ethereum, USD, Tether, BCH и многочисленные токены ERC-20. {br}{br}Swap.Online не хранит ваши ключи или токены. Наш кошелек работает непосредственно в браузере, поэтому никаких дополнительных установок или загрузок не требуется. {br}Сервис Swap.Online полностью децентрализован, поскольку все операции с токенами выполняются через сеть IPFS. {br}{br}Наша команда была первой, кто завершил атомные свопы с USDT в сентябре 2018 года, а блокчейн Litecoin был добавлен в октябре 2018 года. {br}Наш кошелек предназначен для реальной multi-chain интеграции с децентрализованной книгой заказов, без участия третьих лиц в обмене, без использования прокси-токена и без добавления токена. {br}Мы можем бесплатно интегрировать любой токен проекта ERC-20 на случай взаимного PR-объявления. {br}{br}Кроме того, мы разработали Swap.Button, b2b-решение для обмена всех видов токенов на Биткойны и Эфириум. {br}Установите HTML-виджет Swap.Button на свой сайт и собирайте крипто-инвестиции для вашего проекта. {br}{br}Начните использовать https://swap.online/ сегодня и наслаждайтесь силой настоящей децентрализации.",
-    "files": [
-      "shared/pages/OldWallet/Wallet.js"
-    ]
-  },
-  {
     "id": "PartialClosure562",
     "message": "Наш сервис - это децентрализованный криптовалютный кошелек, работающий по технологии Atomic swap. Обмен Bitcoin, USD Tether, BCH в течение нескольких секунд. Без комиссии (только комиссия майнеров).{br}Обмен крипто-токенами в Swap.Online проводится по-настоящему децентрализованно, так как мы используем технологию атомных свопов однорангового взаимодействия между цепями. {br}{br}Swap.Online использует IPFS-сеть для всех рабочих процессов, а значит централизованного сервера просто нет. {br}Интерфейс обмена выглядит как крипто-брокер, а не как обычный DEX или CEX. За пару кликов пользователь может разместить и принять предложение, настроив цену отправляемого токена. {br}{br}Кроме того, пользователь может обменять заданный процент от своего количества доступных токенов (например, ½, ¼ и т. д.). {br}{br}Еще одним преимуществом службы обмена Swap.Online является использование одного ключа для всего диапазона токенов ERC-20. {br}Кстати, если вы не заинтересованы в обмене некоторыми токенами, вы можете скрыть их из списка. {br}Используйте Swap.Online в качестве основного обмена для каждого криптовалюты, которую вы держите и экономьте ваше время уже сегодня!"
   },
@@ -3701,7 +3537,6 @@
     "id": "RowWallet276",
     "message": " нода не доступна (Вы не можете совершать транзакции). ",
     "files": [
-      "shared/pages/OldWallet/Row/Row.js",
       "shared/pages/Wallet/Row/Row.js"
     ]
   },
@@ -3709,22 +3544,7 @@
     "id": "RowWallet282",
     "message": "Нет соединения...",
     "files": [
-      "shared/pages/OldWallet/Row/Row.js",
       "shared/pages/Wallet/Row/Row.js"
-    ]
-  },
-  {
-    "id": "RowWallet283",
-    "message": "Активировать",
-    "files": [
-      "shared/pages/OldWallet/KeychainStatus/KeychainStatus.js"
-    ]
-  },
-  {
-    "id": "RowWallet284",
-    "message": "Деактивировать",
-    "files": [
-      "shared/pages/OldWallet/KeychainStatus/KeychainStatus.js"
     ]
   },
   {
@@ -4386,13 +4206,6 @@
   {
     "id": "FourthStep33",
     "message": "(tx)"
-  },
-  {
-    "id": "WalletWidgetBuildTitle",
-    "message": "Криптовалютный кошелек, работащюий на технологии Atomic Swap.",
-    "files": [
-      "shared/pages/OldWallet/Wallet.js"
-    ]
   },
   {
     "id": "BtcToEthToken20",
@@ -5522,13 +5335,6 @@
     ]
   },
   {
-    "id": "Wallet364",
-    "message": "Wallet based on the Atomic Swap technology",
-    "files": [
-      "shared/pages/OldWallet/Wallet.js"
-    ]
-  },
-  {
     "id": "BtcToEth100",
     "message": "This order doesn't have a buyer",
     "files": [
@@ -6374,27 +6180,6 @@
     "message": "Скопировать приватный ключ",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
-    ]
-  },
-  {
-    "id": "Row426",
-    "message": "Login with your existing EOS account",
-    "files": [
-      "shared/pages/OldWallet/Row/Row.js"
-    ]
-  },
-  {
-    "id": "Row431",
-    "message": "Login with your existing TLOS account",
-    "files": [
-      "shared/pages/OldWallet/Row/Row.js"
-    ]
-  },
-  {
-    "id": "Row440",
-    "message": "Create Telos account in 1 click",
-    "files": [
-      "shared/pages/OldWallet/Row/Row.js"
     ]
   },
   {
