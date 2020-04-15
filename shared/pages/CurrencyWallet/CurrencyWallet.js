@@ -142,11 +142,8 @@ export default class CurrencyWallet extends Component {
       ticker = fullName
     }
 
-    const endpointCurrency = getCurrencyKey(ticker)
-
     // MultiWallet - after Sweep - названию валюты доверять нельзя - нужно проверяться также адрес - и выбирать по адресу
     let itemCurrency = items.filter((item) => {
-      const endpointName = getCurrencyKey(ticker)
       if (ethToken.isEthToken({ name: ticker })) {
         if (item.currency.toLowerCase() === ticker.toLowerCase()
           && item.address.toLowerCase() === walletAddress.toLowerCase()
@@ -156,12 +153,23 @@ export default class CurrencyWallet extends Component {
       } else {
         if (!ethToken.isEthToken({ name: ticker })
           && item.address.toLowerCase() === walletAddress.toLowerCase()
-          && endpointName === endpointCurrency
         ) {
           return true
         }
       }
     })
+    if (!itemCurrency.length) {
+      itemCurrency = items.filter((item) => {
+        if (item.balance > 0
+          && item.currency.toLowerCase() === ticker.toLowerCase()) return true
+      })
+    }
+    if (!itemCurrency.length) {
+      itemCurrency = items.filter((item) => {
+        if (item.balance >= 0
+          && item.currency.toLowerCase() === ticker.toLowerCase()) return true
+      })
+    }
 
     if (itemCurrency.length) {
       itemCurrency = itemCurrency[0]
@@ -234,6 +242,32 @@ export default class CurrencyWallet extends Component {
     if(!address)
       actions.core.getSwapHistory()
   }
+
+  componentDidUpdate(prevProps) {
+    const {
+      currency,
+    } = this.state
+
+    let {
+      match: {
+        params: {
+          address = null
+        }
+      }
+    } = this.props
+    let {
+      match: {
+        params: {
+          address: prevAddress = null
+        }
+      }
+    } = prevProps
+    if (prevAddress !== address) {
+      address ? actions.history.setTransactions(address, currency.toLowerCase(), this.pullTransactions) : actions.user.setTransactions()
+    }
+  }
+
+
 
   pullTransactions = (transactions) => {
     let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date)
@@ -335,9 +369,12 @@ export default class CurrencyWallet extends Component {
       txItems,
     } = this.state
 
+    const currencyKey = getCurrencyKey(currency, true)
+
     if (isRedirecting) return null
 
     txHistory = txItems ? txItems : txHistory
+
 
     if (txHistory) {
       txHistory = txHistory
@@ -345,7 +382,7 @@ export default class CurrencyWallet extends Component {
           if (tx
             && tx.type
           ) {
-            return tx.type.toLowerCase() === currency.toLowerCase()
+            return tx.type.toLowerCase() === currencyKey.toLowerCase()
           }
           return false
         })

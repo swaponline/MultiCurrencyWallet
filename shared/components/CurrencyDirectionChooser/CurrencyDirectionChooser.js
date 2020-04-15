@@ -89,6 +89,7 @@ export default class CurrencyDirectionChooser extends Component {
               <CurrencySelect
                 styleName="currencySelect currencySelectLeft"
                 selectedValue={sellCurrency}
+                selectedItemRender={(item) => item.fullTitle }
                 onSelect={handleSellCurrencySelect}
                 currencies={currencies}
               />
@@ -102,6 +103,7 @@ export default class CurrencyDirectionChooser extends Component {
                 styleName="currencySelect currencySelectRight"
                 selectedValue={buyCurrency}
                 onSelect={handleBuyCurrencySelect}
+                selectedItemRender={(item) => item.fullTitle }
                 currencies={this.chooseProps()}
               />
             </div>

@@ -2,6 +2,18 @@ import helpers from "helpers";
 import actions from 'redux/actions'
 
 
+const getTxRouter = (currency, txId) => {
+  const prefix = helpers.getCurrencyKey(currency)
+
+  if (actions[prefix]
+    && typeof actions[prefix].getTxRouter === 'function'
+  ) {
+    return actions[prefix].getTxRouter(txId, currency.toLowerCase())
+  } else {
+    console.warn(`Function getTxRouter for ${prefix} not defined (currency: ${currency})`)
+  }
+}
+
 const getLink = (currency, txId) => {
   const prefix = helpers.getCurrencyKey(currency)
 
@@ -38,4 +50,5 @@ const getInfo = (currency, txRaw) => {
 export default {
   getInfo,
   getLink,
+  getTxRouter,
 }

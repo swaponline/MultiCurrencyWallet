@@ -32,7 +32,7 @@
 
 <!-- What reviewer should do? -->
 
-
+To test it locally run ```git fetch origin refs/pull/2590/merge:pr2590 && git checkout pr2590```
 
 
 

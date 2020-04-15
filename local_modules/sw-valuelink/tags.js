@@ -15,7 +15,7 @@ const validationClasses = ({ className, invalidClass, requiredClass }, value, er
 
 
 const Input = (props) => {
-  const { valueLink, checkedLink, pattern, mask, maskChar, maskReplace, ...rest } = props
+  const { valueLink, checkedLink, pattern, mask, maskChar, maskReplace, onChange, ...rest } = props
   const link = valueLink || checkedLink
 
   switch (props.type) {
@@ -39,6 +39,7 @@ const Input = (props) => {
           }}
         />
       )
+    /* eslint-disable no-case-declarations */
     default:
       const className = validationClasses(rest, valueLink.value, valueLink.error)
       const node = Boolean(mask) ? InputMask : 'input'
@@ -54,6 +55,15 @@ const Input = (props) => {
             val = val.replace(new RegExp(`[^${pattern}]+`, 'g'), '')
           }
 
+          if (rest.isPriceValueMask && val) {
+            if (val.length === 1 && val === '.') {
+              val = '0.'
+            }
+            if (x.match(/\./g) && val.match(/\./g) && x.match(/\./g).length === 1 && val.match(/\./g).length > 1) {
+              val = x
+            }
+          }
+
           if (mask && val) {
             if (maskReplace) {
               return val.replace(maskReplace, '')
@@ -62,6 +72,7 @@ const Input = (props) => {
               return val.replace(/[^0-9]+/g, '')
             }
           }
+          if (typeof onChange === 'function') onChange(e)
           return val
         }),
       }
@@ -73,6 +84,7 @@ const Input = (props) => {
 
       return React.createElement(node, nodeProps)
   }
+  /* eslint-enable no-case-declarations */
 }
 
 class NumberInput extends Component {

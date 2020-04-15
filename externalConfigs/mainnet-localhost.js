@@ -4,7 +4,7 @@ window.widgetERC20Tokens = {
   usdt: {
     address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
     decimals: 6,
-    fullName: 'Usdt',
+    fullName: 'Tether',
     //howToDeposit: '<div style="boo-style"><strong>How to deposit to {userAddress}</strong></div>',
     //howToWithdraw: '<div style="boo-style"><strong>How to withdraw</strong></div>',
   },

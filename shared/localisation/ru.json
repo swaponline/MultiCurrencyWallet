@@ -3085,9 +3085,7 @@
     "id": "UseAnotherWallet",
     "message": "Указать адрес кошелька для получения",
     "files": [
-      "shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.js",
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
+      "shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.js"
     ]
   },
   {
@@ -7319,7 +7317,7 @@
   },
   {
     "id": "ShowMyMnemonic",
-    "message": "Показать 12 слов",
+    "message": "Пожалуйста, сделайте резервную копию своего кошелька",
     "files": [
       "shared/pages/Wallet/components/WallerSlider/index.js"
     ]
@@ -7535,6 +7533,20 @@
     ]
   },
   {
+    "id": "ImportKeys_RestoreMnemonic_Tooltip",
+    "message": "Это мнемонический пароль, то есть список кодовых слов, который хранит необходимую для восстановления доступа к криптокошельку информацию. Типичная сид-фраза — 12 (и больше) слов, случайным образом подобранных из словаря, состоящего из 2048 слов.",
+    "files": [
+      "shared/pages/CreateWallet/CreateWallet.js"
+    ]
+  },
+  {
+    "id": "ImportKeys_RestoreMnemonic_Tooltip_withBalance",
+    "message": "Пожалуйста, будьте осторожны! Как только вы импортируете свой seed, ваш текущий баланс будет сброшен. Сохраните текущие средства на другой кошелек.",
+    "files": [
+      "shared/pages/CreateWallet/CreateWallet.js"
+    ]
+  },
+  {
     "id": "RequestPayment",
     "message": "Запросить",
     "files": [
@@ -7693,6 +7705,83 @@
     "message": "How to withdraw",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Partial_DestinationAddress_ConnectMetamask",
+    "message": "Connect Metamask",
+    "files": [
+      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
+    ]
+  },
+  {
+    "id": "Partial_DestinationAddress_CustomAddressOption",
+    "message": "Custom address",
+    "files": [
+      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
+    ]
+  },
+  {
+    "id": "Partial_DestinationAddress_HotWalletAddressOption",
+    "message": "My Wallet",
+    "files": [
+      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
+    ]
+  },
+  {
+    "id": "Partial_DestinationAddress_MetamaskAddressOption",
+    "message": "Metamask's address",
+    "files": [
+      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
+    ]
+  },
+  {
+    "id": "Partial_DestinationAddress_PlaceholderEnterAddress",
+    "message": "Enter the receiving wallet address",
+    "files": [
+      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
+    ]
+  },
+  {
+    "id": "Partial_DestinationAddress_SpecifyAddress",
+    "message": "Specify the receiving wallet address",
+    "files": [
+      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
+    ]
+  },
+  {
+    "id": "registerSMS_ButtonCancel",
+    "message": "Cancel",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMS_ButtonSaveMnemonic",
+    "message": "Save",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMS_SaveYourMnemonic",
+    "message": "Пожалуйста, не забудьте сохранить свою секретную фразу перед активацией 2fa. Такая мера необходима для сохранения ваших средств в случае возникновения чрезвычайной ситуации.",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMS_YouNeedSaveMnemonic",
+    "message": "Для активации SMS-защиты вы должны сохранить свою секретную фразу.",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "ShareModal_LinkCopied",
+    "message": "Ссылка скопирована",
+    "files": [
+      "shared/components/modals/Share/Share.js"
     ]
   }
 ]

@@ -2966,9 +2966,7 @@
     "id": "UseAnotherWallet",
     "message": "Specify the receiving wallet address",
     "files": [
-      "shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.js",
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
+      "shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.js"
     ]
   },
   {
@@ -7299,7 +7297,7 @@
   },
   {
     "id": "ShowMyMnemonic",
-    "message": "Показать 12 слов",
+    "message": "Backup your wallet",
     "files": [
       "shared/pages/Wallet/components/WallerSlider/index.js"
     ]
@@ -7509,7 +7507,21 @@
   },
   {
     "id": "ImportKeys_RestoreMnemonic",
-    "message": "Ввести 12 слов",
+    "message": "У меня есть seed",
+    "files": [
+      "shared/pages/CreateWallet/CreateWallet.js"
+    ]
+  },
+  {
+    "id": "ImportKeys_RestoreMnemonic_Tooltip",
+    "message": "12-word backup phrase – also know as 12-words, “backup”, recovery phrase, mnemonic seed, “seed” – is a unique, randomly generated set of words, that are given to you when you create a wallet. The recovery phrase is used to derive, or generate, all the private keys, which are encrypted directly on your device.",
+    "files": [
+      "shared/pages/CreateWallet/CreateWallet.js"
+    ]
+  },
+  {
+    "id": "ImportKeys_RestoreMnemonic_Tooltip_withBalance",
+    "message": "Please, be causious! Once you import a new seed your current balance would be reset. Save your current funds to another wallet.",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
     ]
@@ -7673,6 +7685,83 @@
     "message": "How to withdraw",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Partial_DestinationAddress_ConnectMetamask",
+    "message": "Connect Metamask",
+    "files": [
+      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
+    ]
+  },
+  {
+    "id": "Partial_DestinationAddress_CustomAddressOption",
+    "message": "Custom address",
+    "files": [
+      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
+    ]
+  },
+  {
+    "id": "Partial_DestinationAddress_HotWalletAddressOption",
+    "message": "My Wallet",
+    "files": [
+      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
+    ]
+  },
+  {
+    "id": "Partial_DestinationAddress_MetamaskAddressOption",
+    "message": "Metamask's address",
+    "files": [
+      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
+    ]
+  },
+  {
+    "id": "Partial_DestinationAddress_PlaceholderEnterAddress",
+    "message": "Enter the receiving wallet address",
+    "files": [
+      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
+    ]
+  },
+  {
+    "id": "Partial_DestinationAddress_SpecifyAddress",
+    "message": "Specify the receiving wallet address",
+    "files": [
+      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
+    ]
+  },
+  {
+    "id": "registerSMS_ButtonCancel",
+    "message": "Cancel",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMS_ButtonSaveMnemonic",
+    "message": "Save",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMS_SaveYourMnemonic",
+    "message": "Please, do not forget to save your seed before activating 2fa. Such measure is required to save your funds in case of any emergency.",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "registerSMS_YouNeedSaveMnemonic",
+    "message": "To activate SMS-protected wallet you must save your secret phrase.",
+    "files": [
+      "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
+    ]
+  },
+  {
+    "id": "ShareModal_LinkCopied",
+    "message": "Link copied",
+    "files": [
+      "shared/components/modals/Share/Share.js"
     ]
   }
 ]

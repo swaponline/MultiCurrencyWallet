@@ -14,6 +14,9 @@ import actions from 'redux/actions'
 import typeforce from "swap.app/util/typeforce"
 import config from 'app-config'
 
+import { localisePrefix } from 'helpers/locale'
+
+
 
 const getRandomMnemonicWords = () => bip39.generateMnemonic()
 const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonic)
@@ -23,6 +26,16 @@ const sweepToMnemonic = (mnemonic, path) => {
   const wallet = getWalletByWords(mnemonic, path)
   localStorage.setItem(constants.privateKeyNames.btcMnemonic, wallet.WIF)
   return wallet.WIF
+}
+
+const getMainPublicKey = () => {
+  const {
+    user: {
+      btcData,
+    },
+  } = getState()
+
+  return btcData.publicKey.toString('Hex')
 }
 
 const isSweeped = () => {
@@ -233,6 +246,10 @@ const loginWithKeychain = async () => {
 const getTx = (txRaw) => {
 
   return txRaw.getId()
+}
+
+const getTxRouter = (txId) => {
+  return `/btc/tx/${txId}`
 }
 
 const getLinkToInfo = (tx) => {
@@ -541,6 +558,8 @@ const signMessage = (message, encodedPrivateKey) => {
 
 const getReputation = () =>  Promise.resolve(0)
 
+window.getMainPublicKey = getMainPublicKey
+
 export default {
   login,
   loginWithKeychain,
@@ -565,4 +584,6 @@ export default {
   getSweepAddress,
   getAllMyAddresses,
   getDataByAddress,
+  getMainPublicKey,
+  getTxRouter,
 }

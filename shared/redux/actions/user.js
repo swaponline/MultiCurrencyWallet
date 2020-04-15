@@ -11,6 +11,24 @@ import * as bip39 from 'bip39'
 import { getActivatedCurrencies } from 'helpers/user'
 
 
+const sign_btc_multisig = async (btcPrivateKey) => {
+  let btcMultisigOwnerKey = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKey)
+  try { btcMultisigOwnerKey = JSON.parse( btcMultisigOwnerKey ) } catch (e) {}
+  const _btcMultisigPrivateKey = actions.btcmultisig.login_USER(btcPrivateKey, btcMultisigOwnerKey)
+  await actions.btcmultisig.signToUserMultisig()
+}
+
+
+const sign_btc_2fa = async (btcPrivateKey) => {
+  const btcSMSServerKey = config.swapContract.protectedBtcKey
+  let btcSmsPublicKeys = [ btcSMSServerKey ]
+  let btcSmsMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKey)
+  try { btcSmsMnemonicKey = JSON.parse( btcSmsMnemonicKey ) } catch (e) {}
+  if (btcSmsMnemonicKey instanceof Array && btcSmsMnemonicKey.length > 0) {
+    btcSmsPublicKeys.push(btcSmsMnemonicKey[0])
+  }
+  const _btcMultisigSMSPrivateKey = actions.btcmultisig.login_SMS(btcPrivateKey, btcSmsPublicKeys)
+}
 
 const sign = async () => {
   let mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
@@ -22,12 +40,18 @@ const sign = async () => {
 
   const mnemonicKeys = {
     btc: localStorage.getItem(constants.privateKeyNames.btcMnemonic),
+    btcSms: localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated),
     eth: localStorage.getItem(constants.privateKeyNames.ethMnemonic),
   }
 
+  console.log('actions user - sign', mnemonicKeys, mnemonic)
   if (mnemonic !== `-`) {
     if (!mnemonicKeys.btc) mnemonicKeys.btc = actions.btc.sweepToMnemonic(mnemonic)
     if (!mnemonicKeys.eth) mnemonicKeys.eth = actions.eth.sweepToMnemonic(mnemonic)
+    if (!mnemonicKeys.btcSms) {
+      mnemonicKeys.btcSms = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
+      localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, mnemonicKeys.btcSms)
+    }
   }
   // Sweep-Switch
   let btcNewSmsMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKeyMnemonic)
@@ -58,20 +82,11 @@ const sign = async () => {
   const _btcPrivateKey = isBtcKeychainActivated ? await actions.btc.loginWithKeychain() : actions.btc.login(btcPrivateKey, mnemonic, mnemonicKeys)
 
   // btc multisig with 2fa (2of3)
-  const btcSMSServerKey = config.swapContract.protectedBtcKey
-  let btcSmsPublicKeys = [ btcSMSServerKey ]
-  let btcSmsMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKey)
-  try { btcSmsMnemonicKey = JSON.parse( btcSmsMnemonicKey ) } catch (e) {}
-  if (btcSmsMnemonicKey instanceof Array && btcSmsMnemonicKey.length > 0) {
-    btcSmsPublicKeys.push(btcSmsMnemonicKey[0])
-  }
-  const _btcMultisigSMSPrivateKey = actions.btcmultisig.login_SMS(_btcPrivateKey, btcSmsPublicKeys)
+  await sign_btc_2fa(_btcPrivateKey)
 
   // btc multisig 2of2 user manual sign
-  let btcMultisigOwnerKey = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKey)
-  try { btcMultisigOwnerKey = JSON.parse( btcMultisigOwnerKey ) } catch (e) {}
-  const _btcMultisigPrivateKey = actions.btcmultisig.login_USER(_btcPrivateKey, btcMultisigOwnerKey)
-  await actions.btcmultisig.signToUserMultisig()
+  await sign_btc_multisig(_btcPrivateKey)
+
   actions.bch.login(bchPrivateKey)
   // actions.usdt.login(btcPrivateKey)
   actions.ltc.login(ltcPrivateKey)
@@ -449,6 +464,8 @@ const getAuthData = (name) => {
 
 export default {
   sign,
+  sign_btc_2fa,
+  sign_btc_multisig,
   getBalances,
   getDemoMoney,
   setTransactions,

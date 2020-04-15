@@ -101,6 +101,7 @@ export default class RestoryMnemonicWallet extends React.Component {
 
   handleFinish = () => {
     this.handleClose()
+    window.location.assign(links.hashHome)
   }
 
   handleRestoryWallet = () => {
@@ -117,11 +118,30 @@ export default class RestoryMnemonicWallet extends React.Component {
     this.setState({
       isFetching: true,
     }, async () => {
+      // Backup critical localStorage
+      const backupMark = actions.btc.getMainPublicKey()
+
+      actions.backupManager.backup(backupMark, false, true)
+
       const btcWallet = await actions.btc.getWalletByWords(mnemonic)
       const ethWallet = await actions.eth.getWalletByWords(mnemonic)
-      
-      await actions.btc.login(false,mnemonic)
+
+      // Check - if exists backup for this mnemonic
+      const restoryMark = btcWallet.publicKey
+
+      if (actions.backupManager.exists(restoryMark)) {
+        actions.backupManager.restory(restoryMark)
+      }
+
+      const btcPrivKey = await actions.btc.login(false,mnemonic)
+      const btcSmsKey = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
+      localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, btcSmsKey)
+
       await actions.eth.login(false,mnemonic)
+
+      await actions.user.sign_btc_2fa(btcPrivKey)
+      await actions.user.sign_btc_multisig(btcPrivKey)
+
       this.setState({
         isFetching: false,
         step: `ready`,
@@ -135,6 +155,8 @@ export default class RestoryMnemonicWallet extends React.Component {
       intl,
       data: {
         showCloseButton,
+        btcBalance = 0,
+        usdBalance = 1,
       },
     } = this.props
 
@@ -159,7 +181,27 @@ export default class RestoryMnemonicWallet extends React.Component {
               )}
               <div styleName="highLevel" className="ym-hide-content">
                 <FieldLabel label>
-                  <FormattedMessage {...langLabels.mnemonicLabel} />
+                  <span styleName="tooltipWrapper">
+
+                    <FormattedMessage {...langLabels.mnemonicLabel} />
+                    &nbsp;
+                    <Tooltip id="ImportKeys_RestoreMnemonic_tooltip">
+                      <span>
+                        <FormattedMessage id="ImportKeys_RestoreMnemonic_Tooltip" defaultMessage="12-word backup phrase" />
+                        {
+                          (btcBalance > 0 || usdBalance > 0) && (
+                            <React.Fragment>
+                              <br />
+                              <br />
+                              <div styleName="alertTooltipWrapper">
+                                <FormattedMessage id="ImportKeys_RestoreMnemonic_Tooltip_withBalance" defaultMessage="Please, be causious!" />
+                              </div>
+                            </React.Fragment>
+                          )
+                        }
+                      </span>
+                    </Tooltip>
+                  </span>
                 </FieldLabel>
                 <Input
                   styleName="input inputMargin25 for12words"

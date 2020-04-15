@@ -139,7 +139,7 @@ export default class MultisignJoinLink extends React.Component {
             <FormattedMessage { ... langLabels.multiSignJoinLinkMessage } />
           </p>
           <div className="ym-hide-content">
-            <ShareLink link={joinLink} />
+            <ShareLink link={joinLink} fullSize={true} />
           </div>
           <hr />
           <Button blue styleName="finishButton" fullWidth onClick={this.handleFinish}>
