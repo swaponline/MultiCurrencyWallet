@@ -93,7 +93,7 @@ export default class WallerSlider extends Component {
   render() {
     const { mnemonicDeleted } = this.state
 
-    const isPrivateKeysSaved = false // localStorage.getItem(constants.localStorage.privateKeysSaved)
+    const isPrivateKeysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
 
     let firstBtnTitle = <FormattedMessage id="descr282" defaultMessage="Show my keys" />
     if (!mnemonicDeleted) firstBtnTitle = <FormattedMessage id="ShowMyMnemonic" defaultMessage="Показать 12 слов" />
@@ -108,7 +108,7 @@ export default class WallerSlider extends Component {
         ) : (
           <div id="swiper_banners" className="swiper-container" style={{ marginTop: '20px', marginBottom: '30px' }}>
             <div className="swiper-wrapper">
-              {!isPrivateKeysSaved && (
+              {(!isPrivateKeysSaved && !mnemonicDeleted) && (
                 <div className="swiper-slide">
                   <NotifyBlock
                     className="notifyBlockSaveKeys"
@@ -116,7 +116,7 @@ export default class WallerSlider extends Component {
                     firstBtn={firstBtnTitle}
                     widthIcon="80"
                     background="6144e5"
-                    descr="Show 12 words"
+                    descr={<FormattedMessage id="ShowMyMnemonic" defaultMessage="Please backup your wallet" />}
                     firstFunc={mnemonicDeleted ? this.handleShowKeys : this.handleShowMnemonic}
                   />
                 </div>

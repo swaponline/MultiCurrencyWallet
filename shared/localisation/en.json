@@ -7323,7 +7323,7 @@
   },
   {
     "id": "ShowMyMnemonic",
-    "message": "Show 12 words",
+    "message": "Please backup your wallet",
     "files": [
       "shared/pages/Wallet/components/WallerSlider/index.js"
     ]
@@ -7533,7 +7533,7 @@
   },
   {
     "id": "ImportKeys_RestoreMnemonic",
-    "message": "Enter 12 words",
+    "message": "I have my 12 word seed",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
     ]
