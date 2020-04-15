@@ -7317,7 +7317,7 @@
   },
   {
     "id": "ShowMyMnemonic",
-    "message": "Показать 12 слов",
+    "message": "Пожалуйста, сделайте резервную копию своего кошелька",
     "files": [
       "shared/pages/Wallet/components/WallerSlider/index.js"
     ]

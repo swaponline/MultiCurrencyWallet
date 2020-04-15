@@ -76,6 +76,10 @@ const addUser = (userData) =>
   new Promise(async (resolve) => {
     try {
 
+      if (navigator.userAgent.includes('monitor') || navigator.userAgent.includes('robot')) {
+        throw new Error('This is a bot, we are not intrested in this user')
+      }
+
       const userID = await fbHelper.getUserID()
       const date = moment().format('HH:mm:ss DD/MM/YYYY')
       const unixDate = moment().unix()
