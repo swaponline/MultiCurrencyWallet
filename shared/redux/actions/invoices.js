@@ -94,7 +94,7 @@ const getInvoice = (hash) => {
           }
         } = res
 
-        const direction = 'in' //(walletsHashMap[walletHash] !== undefined) ? 'in' : 'out'
+        const direction = (actions.user.isOwner(item.toAddress, item.type)) ? 'in' : 'out'
 
         resolve ({
           invoiceData: item,
