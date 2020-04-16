@@ -163,6 +163,18 @@ export default class InfoInvoice extends React.Component {
     this.setState({ isReady: true })
   }
 
+  handleChangeLocation = (newLocation) => {
+    const { uniqhash } = this.state
+
+    if (newLocation === `#${links.invoice}/${uniqhash}`
+      || newLocation === `#${links.invoice}/${uniqhash}/share`
+    ) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   handleDeclimeInvoice = () => {
     const {
       invoice: {
@@ -231,7 +243,6 @@ export default class InfoInvoice extends React.Component {
 
     const isPayerControlEnabled = (isPayerSide && !isCancelled && !isReady && status === 'pending')
 
-    console.log('isPayerControlEnabled', isPayerControlEnabled, isPayerSide, isCancelled, isReady, status)
     const buttonsHolderStyles = [`invoiceControlsHolder`, `button-overlay`]
     buttonsHolderStyles.push((shareButtonEnabled) ? `with-share-button` : `without-share-button`)
     if (!isPayerControlEnabled) buttonsHolderStyles.push(`without-pay-control`)
@@ -261,7 +272,7 @@ export default class InfoInvoice extends React.Component {
     }
 
     return (
-      <Modal name={name} title={modalTitle} onClose={this.handleClose} showCloseButton={true} closeOnLocationChange={true}>
+      <Modal name={name} title={modalTitle} onClose={this.handleClose} showCloseButton={true} closeOnLocationChange={true} onLocationChange={this.handleChangeLocation}>
         {doshare && !isShareReady && (
           <Fragment>
             <div styleName="convent-overlay">

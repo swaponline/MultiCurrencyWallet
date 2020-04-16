@@ -45,6 +45,38 @@ export default class Modal extends Component {
     shouldCenterHorizontally: true,
   }
 
+  catchLocationChange = false
+
+  componentWillMount() {
+    const {
+      closeOnLocationChange,
+      onLocationChange,
+    } = this.props
+
+    if (closeOnLocationChange) {
+      let currentLocation = window.location.hash
+
+      this.catchLocationChange = setInterval(() => {
+        if (window.location.hash != currentLocation) {
+          if (typeof onLocationChange === 'function') {
+            if (onLocationChange(window.location.hash)) {
+              currentLocation = window.location.hash
+            } else {
+              this.close()
+            }
+          } else {
+            this.close()
+          }
+        }
+      }, 500)
+    }
+    
+  }
+
+  componentWillUnmount() {
+    clearInterval( this.catchLocationChange )
+  }
+
   close = () => {
     const { name, data, onClose, disableClose } = this.props
 
