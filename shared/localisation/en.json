@@ -5656,13 +5656,6 @@
     ]
   },
   {
-    "id": "tour-step-0",
-    "message": "Your Swap.Online crypto-wallet",
-    "files": [
-      "shared/components/Header/WalletTour/WalletTour.js"
-    ]
-  },
-  {
     "id": "tour-step-1",
     "message": "The Balance of the choosen currency is shown at the end of the field, opposite to the currency. You can close the browser and reload your computer. Your balance will remain the same. Please don't forget to save your keys",
     "files": [
