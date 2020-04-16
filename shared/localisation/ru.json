@@ -5752,13 +5752,6 @@
     ]
   },
   {
-    "id": "partial-tour-1",
-    "message": "Уникальный peer-to-peer обменик, основанный на технологии Atomic Swap.",
-    "files": [
-      "shared/components/Header/TourPartial/TourPartial.js"
-    ]
-  },
-  {
     "id": "partial-tour-2",
     "message": "В данное поле, введите сумму, которую вы хотите продать, выберите валюту для продажи. Вы также можете продать валюту с внешнего кошелька.",
     "files": [
@@ -5798,13 +5791,6 @@
     "message": "Нажмите на эту кнопку, чтобы увидеть страницу с предложениями для обмена. Предложения будут представлены для конкретных валют. Также вы можете создать собственное предложение на странице предложений.",
     "files": [
       "shared/components/Header/TourPartial/TourPartial.js"
-    ]
-  },
-  {
-    "id": "tour-step-0",
-    "message": "Ваш Swap.Online крипто-кошелек",
-    "files": [
-      "shared/components/Header/WalletTour/WalletTour.js"
     ]
   },
   {

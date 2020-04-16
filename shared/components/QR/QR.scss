@@ -1,0 +1,22 @@
+.relativeWrapper {
+  position: relative;
+  min-height: 50px;
+  transition: min-height ease 0.1s,
+              height ease 0.1s;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+.neverAppear {
+  display: none;
+}
+
+.loader {
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}

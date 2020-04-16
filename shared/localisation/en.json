@@ -5607,13 +5607,6 @@
     ]
   },
   {
-    "id": "partial-tour-1",
-    "message": "A unique peer-to-peer exchange built on Atomic Swap technology.",
-    "files": [
-      "shared/components/Header/TourPartial/TourPartial.js"
-    ]
-  },
-  {
     "id": "partial-tour-2",
     "message": "In this field choose the currency and enter the amount you want to sell. You also can sell the currency from an external wallet.",
     "files": [
@@ -5653,13 +5646,6 @@
     "message": "Press this button to see the Order Book page. The orders will be shown for specific currencies. You can also create your own order on the Order Book page.",
     "files": [
       "shared/components/Header/TourPartial/TourPartial.js"
-    ]
-  },
-  {
-    "id": "tour-step-0",
-    "message": "Your Swap.Online crypto-wallet",
-    "files": [
-      "shared/components/Header/WalletTour/WalletTour.js"
     ]
   },
   {
@@ -7058,7 +7044,7 @@
   },
   {
     "id": "SaveMnemonicModal_EnterNotice",
-    "message": "Нажмите слова, чтобы поместить их рядом друг с другом в правильном порядке",
+    "message": "Сlick on words to place them in the correct order",
     "files": [
       "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
     ]
