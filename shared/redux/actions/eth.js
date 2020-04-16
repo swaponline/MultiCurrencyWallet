@@ -5,7 +5,6 @@ import web3 from 'helpers/web3'
 import reducers from 'redux/core/reducers'
 import config from 'app-config'
 import referral from './referral'
-import { web3Override } from 'keychain.js'
 import { pubToAddress } from 'ethereumjs-util'
 import * as hdkey from 'ethereumjs-wallet/hdkey'
 import * as bip39 from 'bip39'
@@ -103,9 +102,9 @@ const getWalletByWords = (mnemonic, walletNumber = 0, path) => {
 const login = (privateKey, mnemonic, mnemonicKeys) => {
   let sweepToMnemonicReady = false
 
-  if (privateKey 
-    && mnemonic 
-    && mnemonicKeys 
+  if (privateKey
+    && mnemonic
+    && mnemonicKeys
     && mnemonicKeys.eth === privateKey
   ) sweepToMnemonicReady = true
 
@@ -171,7 +170,7 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
         ...mnemonicData,
       }
     })
-    new Promise(async(resolve) => {
+    new Promise(async (resolve) => {
       const balance = await fetchBalance(mnemonicData.address)
       reducers.user.setAuthData({
         name: 'ethMnemonicData',
@@ -185,30 +184,6 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
   }
 
   return data.privateKey
-}
-
-const loginWithKeychain = async () => {
-  const web3OverrideFunctions = web3Override(web3)
-  web3.eth.accounts.sign = web3OverrideFunctions.sign
-  web3.eth.accounts.signTransaction = web3OverrideFunctions.signTransaction
-
-  const selectedKey = await actions.keychain.login('ETH')
-  if (!selectedKey) { // user cancelled key selection or other error
-    return null
-  }
-  const data = { privateKey: selectedKey, address: `0x${pubToAddress(`0x${selectedKey}`).toString('hex')}` }
-
-  reducers.user.setAuthData({ name: 'ethData', data })
-  localStorage.setItem(constants.privateKeyNames.ethKeychainPublicKey, selectedKey)
-  localStorage.removeItem(constants.privateKeyNames.eth)
-
-  window.getEthAddress = () => data.address
-
-  console.info('Logged in with Ethereum', data)
-
-  await getBalance()
-  await getReputation()
-  return selectedKey
 }
 
 const isETHAddress = (address) => {
@@ -266,7 +241,7 @@ const getTxRouter = (txId) => {
 
 const getLinkToInfo = (tx) => {
 
-  if(!tx) {
+  if (!tx) {
     return
   }
 
@@ -278,7 +253,7 @@ const getTransaction = (address, ownType) =>
     const { user: { ethData: { address: userAddress } } } = getState()
     address = address || userAddress
 
-    if(!typeforce.isCoinAddress['ETH'](address)) {
+    if (!typeforce.isCoinAddress['ETH'](address)) {
       resolve([])
     }
 
@@ -338,40 +313,39 @@ const send = ({ from, to, amount, gasPrice, gasLimit, speed } = {}) =>
   })
 
 const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
-    const url = `?module=proxy&action=eth_getTransactionByHash&txhash=${hash}&apikey=${config.api.etherscan_ApiKey}`
+  const url = `?module=proxy&action=eth_getTransactionByHash&txhash=${hash}&apikey=${config.api.etherscan_ApiKey}`
 
-    return apiLooper.get('etherscan', url, {
-      cacheResponse,
-    })
-      .then((res) => {
-        if (res && res.result) {
-
-          const {
-            from,
-            to,
-            value,
-          } = res.result
-
-          resolve({
-            amount: web3.utils.fromWei(value),
-            afterBalance: null,
-            receiverAddress: to,
-            senderAddress: from,
-          })
-
-        } else {
-          resolve(false)
-        }
-      })
-      .catch(() => {
-        resolve(false)
-      })
+  return apiLooper.get('etherscan', url, {
+    cacheResponse,
   })
+    .then((res) => {
+      if (res && res.result) {
+
+        const {
+          from,
+          to,
+          value,
+        } = res.result
+
+        resolve({
+          amount: web3.utils.fromWei(value),
+          afterBalance: null,
+          receiverAddress: to,
+          senderAddress: from,
+        })
+
+      } else {
+        resolve(false)
+      }
+    })
+    .catch(() => {
+      resolve(false)
+    })
+})
 
 export default {
   send,
   login,
-  loginWithKeychain,
   getBalance,
   fetchBalance,
   getTransaction,

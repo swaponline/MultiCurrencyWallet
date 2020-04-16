@@ -17,7 +17,6 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import BtnTooltip from 'components/controls/WithdrawButton/BtnTooltip'
 import DropdownMenu from 'components/ui/DropdownMenu/DropdownMenu'
 // import LinkAccount from '../LinkAccount/LinkAcount'
-// import KeychainStatus from '../KeychainStatus/KeychainStatus'
 import { withRouter } from 'react-router'
 import ReactTooltip from 'react-tooltip'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
@@ -373,7 +372,7 @@ export default class Row extends Component {
     } = this.props
 
     let targetCurrency = currency
-    switch(currency.toLowerCase()) {
+    switch (currency.toLowerCase()) {
       case 'btc (multisig)':
       case 'btc (sms-protected)':
         targetCurrency = 'btc'
@@ -381,8 +380,8 @@ export default class Row extends Component {
     }
 
     const isToken = helpers.ethToken.isEthToken({ name: currency })
-    
-    history.push(localisedUrl(locale, (isToken ? '/token' : '') +`/${targetCurrency}/${address}`))
+
+    history.push(localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${address}`))
   }
 
   hideCurrency = () => {
@@ -620,8 +619,8 @@ export default class Row extends Component {
                 </a>
               </div>
             ) : (
-              ''
-            )}
+                ''
+              )}
             <span styleName="assetsTableCurrencyWrapper">
               {!isBalanceFetched || isBalanceFetching ? (
                 this.props.itemData.isUserProtected && !this.props.itemData.active ? (
@@ -629,48 +628,48 @@ export default class Row extends Component {
                     <FormattedMessage id="walletMultisignNotJoined" defaultMessage="Not joined" />
                   </span>
                 ) : (
-                  <div styleName="loader">{!(balanceError && nodeDownErrorShow) && <InlineLoader />}</div>
-                )
+                    <div styleName="loader">{!(balanceError && nodeDownErrorShow) && <InlineLoader />}</div>
+                  )
               ) : (
-                <div styleName="no-select-inline" onClick={this.handleReloadBalance}>
-                  <i className="fas fa-sync-alt" styleName="icon" />
-                  <span>
-                    {balanceError
-                      ? '?'
-                      : BigNumber(balance)
+                  <div styleName="no-select-inline" onClick={this.handleReloadBalance}>
+                    <i className="fas fa-sync-alt" styleName="icon" />
+                    <span>
+                      {balanceError
+                        ? '?'
+                        : BigNumber(balance)
                           .dp(5, BigNumber.ROUND_FLOOR)
                           .toString()}{' '}
-                  </span>
-                  <span styleName="assetsTableCurrencyBalance">{currencyView}</span>
-                  {unconfirmedBalance !== 0 && (
-                    <Fragment>
-                      <br />
-                      <span styleName="unconfirmedBalance" title={intl.formatMessage(langLabels.unconfirmedBalance)}>
-                        {unconfirmedBalance > 0 && (<>{'+'}</>)}
-                        {unconfirmedBalance}
-                        {' '}
-                      </span>
-                    </Fragment>
-                  )}
-                </div>
-              )}
+                    </span>
+                    <span styleName="assetsTableCurrencyBalance">{currencyView}</span>
+                    {unconfirmedBalance !== 0 && (
+                      <Fragment>
+                        <br />
+                        <span styleName="unconfirmedBalance" title={intl.formatMessage(langLabels.unconfirmedBalance)}>
+                          {unconfirmedBalance > 0 && (<>{'+'}</>)}
+                          {unconfirmedBalance}
+                          {' '}
+                        </span>
+                      </Fragment>
+                    )}
+                  </div>
+                )}
             </span>
             {itemData.address !== 'Not jointed' ? (
               <p styleName="addressStyle" >
                 {itemData.address}
               </p>
             ) : (
-              ''
-            )}
-            { isMobile ? <PartOfAddress {...itemData} onClick={this.goToCurrencyHistory} /> : '' }
+                ''
+              )}
+            {isMobile ? <PartOfAddress {...itemData} onClick={this.goToCurrencyHistory} /> : ''}
             <div styleName="assetsTableInfo">
               <div styleName="nameRow">
                 <a onClick={this.goToCurrencyHistory} title={`Online ${fullName} wallet`}>
                   {fullName}
                 </a>
               </div>
-              { title ? <strong>{title}</strong> : '' }
-             
+              {title ? <strong>{title}</strong> : ''}
+
             </div>
 
             {currencyUsdBalance && !balanceError ? (
@@ -681,8 +680,8 @@ export default class Row extends Component {
                 {/* {inneedData && <span>   {`${inneedData.change} %`} </span>} */}
               </div>
             ) : (
-              ''
-            )}
+                ''
+              )}
           </div>
           <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">
             <DropdownMenu size="regular" className="walletControls" items={dropDownMenuItems} />
