@@ -7042,7 +7042,7 @@
   },
   {
     "id": "SaveMnemonicModal_EnterNotice",
-    "message": "Нажмите слова, чтобы поместить их рядом друг с другом в правильном порядке",
+    "message": "Сlick on words to place them in the correct order",
     "files": [
       "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
     ]
