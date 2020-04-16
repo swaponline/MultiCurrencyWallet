@@ -23,6 +23,7 @@
   position: absolute;
   bottom: -15px;
 }
+
 .groupField {
   width: 100%;
   display: inline-flex;
@@ -83,6 +84,7 @@
   border-radius: 6px;
   text-align: center;
 }
+
 .input {
   width: 100%;
   text-align: left;
@@ -101,6 +103,17 @@
 .lowLevel {
   position: relative;
 }
+
+.sendBtnsWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.actionBtn {
+  width: calc(50% - 5px);
+  position: relative;
+}
+
 
 @include media-mobile {
   .button {

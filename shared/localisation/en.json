@@ -6050,6 +6050,16 @@
     ]
   },
   {
+    "id": "WithdrawModalCancelBtn",
+    "message": "Cancel",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js",
+      "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
+      "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.js",
+      "shared/components/modals/ReceiveModal/ReceiveModal.js"
+    ]
+  },
+  {
     "id": "InvoiceLinkModal_Title",
     "message": "Invoice link",
     "files": [
