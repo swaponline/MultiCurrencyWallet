@@ -19,21 +19,23 @@ const Button = props => {
     disabled,
     big,
     onClick,
-    id = "",
-    dataTut
-  } = props;
+    id = '',
+    fill,
+    dataTut,
+  } = props
 
-  const styleName = cx("button", {
-    fullWidth: fullWidth,
-    brand: brand,
-    transparent: transparent,
-    green: green,
-    blue: blue,
-    white: white,
-    gray: gray,
-    big: big,
-    disabled: disabled
-  });
+  const styleName = cx('button', {
+    fill,
+    fullWidth,
+    brand,
+    transparent,
+    green,
+    blue,
+    white,
+    gray,
+    big,
+    disabled,
+  })
 
   return (
     <button
@@ -61,7 +63,7 @@ Button.propTypes = {
   blue: PropTypes.bool,
   gray: PropTypes.bool,
   disabled: PropTypes.bool,
-  onClick: PropTypes.func
-};
+  onClick: PropTypes.func,
+}
 
-export default cssModules(Button, styles, { allowMultiple: true });
+export default cssModules(Button, styles, { allowMultiple: true })

@@ -334,11 +334,21 @@
   },
   {
     "id": "WithdrawModal111",
-    "message": "перевести ",
+    "message": "Перевести ",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.js"
+    ]
+  },
+  {
+    "id": "WithdrawModalCancelBtn",
+    "message": "Отмена",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js",
+      "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
+      "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.js",
+      "shared/components/modals/ReceiveModal/ReceiveModal.js"
     ]
   },
   {

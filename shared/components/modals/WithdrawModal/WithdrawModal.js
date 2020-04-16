@@ -39,7 +39,7 @@ import redirectTo from 'helpers/redirectTo'
     tokenItems: [...Object.keys(tokensData).map(k => tokensData[k])]
   })
 )
-@cssModules(styles)
+@cssModules(styles, { allowMultiple: true })
 export default class WithdrawModal extends React.Component {
   static propTypes = {
     name: PropTypes.string,
@@ -196,7 +196,6 @@ export default class WithdrawModal extends React.Component {
       },
     } = this.props;
 
-
     this.setState(() => ({ isShipped: true }));
 
     this.setBalanceOnState(currency);
@@ -245,12 +244,12 @@ export default class WithdrawModal extends React.Component {
         }
         this.setBalanceOnState(currency);
 
-       /* actions.notifications.show(constants.notifications.SuccessWithdraw, {
-          amount,
-          currency,
-          address: to
-        });*/
-        
+        /* actions.notifications.show(constants.notifications.SuccessWithdraw, {
+           amount,
+           currency,
+           address: to
+         });*/
+
 
         /*
         actions.modals.open(constants.modals.InfoPay, {
@@ -369,6 +368,12 @@ export default class WithdrawModal extends React.Component {
       this.openScan();
     }
   };
+
+  handleClose = () => {
+    const { name } = this.props
+
+    actions.modals.close(name)
+  }
 
   render() {
     const {
@@ -536,17 +541,28 @@ export default class WithdrawModal extends React.Component {
             </div>
           )}
         </div>
-        <Button blue big fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
-          {isShipped ? (
-            <Fragment>
-              <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
-            </Fragment>
-          ) : (
+        <div styleName="sendBtnsWrapper">
+          <div styleName="actionBtn">
+            <Button blue big fill disabled={isDisabled} onClick={this.handleSubmit}>
+              {isShipped ? (
+                <Fragment>
+                  <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
+                </Fragment>
+              ) : (
+                  <Fragment>
+                    <FormattedMessage id="WithdrawModal111" defaultMessage="Withdraw" /> {`${currency.toUpperCase()}`}
+                  </Fragment>
+                )}
+            </Button>
+          </div>
+          <div styleName="actionBtn">
+            <Button big fill gray onClick={this.handleClose}>
               <Fragment>
-                <FormattedMessage id="WithdrawModal111" defaultMessage="Withdraw" /> {`${currency.toUpperCase()}`}
+                <FormattedMessage id="WithdrawModalCancelBtn" defaultMessage="Cancel" />
               </Fragment>
-            )}
-        </Button>
+            </Button>
+          </div>
+        </div>
         {error && (
           <div styleName="rednote">
             <FormattedMessage

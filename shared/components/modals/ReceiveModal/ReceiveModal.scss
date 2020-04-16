@@ -1,7 +1,3 @@
-.button {
-  margin-top: 40px;
-}
-
 .content {
   margin: 0;
   word-break: break-word;
@@ -12,18 +8,31 @@
   }
 }
 
-  @include media-mobile {
-    .qr {
-      text-align: center;
-      img {
-        width: 50%;
-        font-size: 25px;
-      }
+.sendBtnsWrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+}
+
+.actionBtn {
+  width: calc(50% - 5px);
+  position: relative;
+}
+
+@include media-mobile {
+  .qr {
+    text-align: center;
+
+    img {
+      width: 50%;
+      font-size: 25px;
     }
   }
+}
 
 .qr {
   text-align: center;
+
   img {
     width: 60%;
     font-size: 25px;
