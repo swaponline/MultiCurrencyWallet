@@ -22,6 +22,7 @@ class Row extends React.PureComponent {
     super()
     const { hash: propsHash, type, hiddenList, invoiceData } = props
     const ind = (invoiceData && invoiceData.txInfo) ? invoiceData.txInfo : propsHash
+    // const ind = (invoiceData && invoiceData.txInfo) ? invoiceData.txInfo : propsHash
 
     this.state = {
       ind,
@@ -239,17 +240,10 @@ class Row extends React.PureComponent {
                   </>
                 }
               </div>
-              <CommentRow
-                isOpen={isOpen}
-                comment={comment}
-                label={invoiceData && invoiceData.label}
-                commentCancel={this.commentCancel}
-                ind={ind}
-                submit={onSubmit}
-                changeComment={({ target }) => this.changeComment(target.value, ind)}
-                toggleComment={this.toggleComment}
-                {...this.props}
-              />
+              <div styleName="date">
+                {comment}
+              </div>
+
               {txType === 'INVOICE' && direction === 'in' &&
                 <div styleName={(hasInvoiceButtons) ? 'info' : 'info noButtons'}>
                   {/* {

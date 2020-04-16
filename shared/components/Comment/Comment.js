@@ -1,11 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import CSSModules from 'react-css-modules'
-import moment from 'moment-with-locales-es6'
+
+
 import styles from './Comment.scss'
 import { connect } from 'redaction'
+import { FormattedMessage, injectIntl } from 'react-intl'
+
 
 @CSSModules(styles, { allowMultiple: true })
+
+@connect(({
+  history: {
+    transactions
+  },
+}) => ({
+  transactions
+}))
 export default class CommentRow extends React.Component {
 
   static propTypes = {
@@ -13,30 +24,44 @@ export default class CommentRow extends React.Component {
   };
 
   constructor(props) {
+    const { ind } = props
+
     super(props)
+
+    this.state = {
+      isOpen: false,
+      comment: null,
+      ind
+    }
+
     this.commentTextarea = React.createRef()
   }
 
   submitComment = (e, props) => {
-    const { comment, toggleComment, onSubmit, hiddenList, ind } = props
+    const { ind, comment } = this.state
     if (e) {
       e.preventDefault()
     }
 
-    const comments = { ...hiddenList, [ind]: comment }
+    const comments = { [ind]: comment }
+    console.log(comments)
+    actions.comments.setComment(comments)
 
-    onSubmit(comments)
-    toggleComment(false)
+    this.toggleComment(false)
   }
   componentDidMount() {
-
-    actions.core.getSwapHistory()
+    actions.user.setTransactions()
   }
   componentDidUpdate(prevProps) {
 
     if (this.props.isOpen && this.props.isOpen !== prevProps.isOpen && this.props.onSubmit) {
-      this.handleKeyUp();
+        this.handleKeyUp();
     }
+  }
+
+  changeComment = (val) => {
+
+    this.setState(() => ({ comment: val }))
   }
 
   handleKeyUp = (e = null) => {
@@ -54,27 +79,26 @@ export default class CommentRow extends React.Component {
     this.commentTextarea
       .current.style.cssText = 'height:' + this.commentTextarea.current.scrollHeight + 'px;'
   }
+  toggleComment = (isOpen) => {
+
+
+    this.setState({
+        isOpen: isOpen
+      }
+    );
+  }
 
   render() {
-    const { comment,
-      label,
-      toggleComment,
-      onSubmit,
-      changeComment,
-      date,
-      isOpen,
-      commentCancel } = this.props
+    const {
+      comment
+       } = this.props
 
-    console.log(3333)
-    console.log(this.props)
+    const { isOpen } = this.state
 
-    return (isOpen && onSubmit) ?
-      <form styleName="input" onSubmit={(e) => this.submitComment(e, this.props)}>
-        <textarea ref={this.commentTextarea} styleName="commentTextarea" id="commentTextarea" onKeyUp={this.handleKeyUp} onChange={changeComment} value={comment || label} ></textarea>
-        <span styleName="submit" onClick={(e) => this.submitComment(e, this.props)}>&#10004;</span>
-        <span styleName="close" onClick={commentCancel}>&times;</span>
-      </form> :
-      <div styleName="date" onDoubleClick={() => toggleComment(true)}>{moment(date).format('LLLL')} <br></br>{comment || label}</div>
+    return <div styleName="date"
+                onDoubleClick={() => this.toggleComment(true)}>
+      <FormattedMessage id="Comment1" defaultMessage="Add notice" />
+    </div>
 
   }
 }

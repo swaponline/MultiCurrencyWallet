@@ -10,12 +10,13 @@ import ShareButton from 'components/controls/ShareButton/ShareButton'
 import finishSvg from './images/finish.svg'
 import actions from 'redux/actions'
 import Button from 'components/controls/Button/Button'
-import CommentRow from 'components/Comment/Comment'
+import Comment from 'components/Comment/Comment'
 import ShortTextView from 'pages/Wallet/components/ShortTextView/ShortTextView.js'
 import { isMobile } from "react-device-detect";
 import { BigNumber } from 'bignumber.js'
 
 import animateFetching from 'components/loaders/ContentLoader/ElementLoading.scss'
+import { connect } from 'redaction'
 
 const labels = defineMessages({
   Title: {
@@ -29,6 +30,7 @@ const labels = defineMessages({
 
 })
 @injectIntl
+
 @cssModules({
   ...styles,
   ...animateFetching,
@@ -148,12 +150,12 @@ export default class InfoPay extends React.Component {
           <table styleName="blockCenter__table" className="table table-borderless">
             <tbody>
               <tr>
-                <td styleName="header" colspan="2">
+                <td styleName="header" colSpan="2">
                   <FormattedMessage id="InfoPay_3" defaultMessage="Transaction ID" />
                 </td>
               </tr>
               <tr>
-                <td colspan="2">
+                <td colSpan="2">
                   <a href={linkBlockChain} target="_blank" styleName="txLink">{tx}</a>
                 </td>
               </tr>
@@ -204,6 +206,10 @@ export default class InfoPay extends React.Component {
             minWidth="200px"
             link={`${getFullOrigin()}${linkShare}`}
             title={amount.toString() + ' ' + currency.toString() + ' ' + intl.formatMessage(labels.Text) + ' ' + toAddress} />
+
+          <Comment
+            ind = {tx}
+          />
         </div>
       </Modal>
     )
