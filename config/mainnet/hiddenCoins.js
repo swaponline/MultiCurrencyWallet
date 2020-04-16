@@ -52,7 +52,6 @@ export default [
   'BTC (Multisig)',
   'BCH',
   'ETH',
-  'LTC',
   'SWAP',
   'HDP',
   'USDT',
