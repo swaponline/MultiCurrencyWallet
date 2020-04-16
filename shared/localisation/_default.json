@@ -237,13 +237,6 @@
     ]
   },
   {
-    "id": "ImportKeys280",
-    "message": "Please enter BCH private key in WIF format",
-    "files": [
-      "shared/components/modals/ImportKeys/ImportKeys.js"
-    ]
-  },
-  {
     "id": "ImportKeys130",
     "message": "Confirm",
     "files": [
@@ -2929,7 +2922,7 @@
   },
   {
     "id": "partialVideoAndFeatures2",
-    "message": "Supports LTC, BTC, BCH, ETH, USDT, ERC-20 tokens",
+    "message": "Supports LTC, BTC, ETH, USDT, ERC-20 tokens",
     "files": [
       "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js",
       "shared/pages/PointOfSell/VideoAndFeatures/VideoAndFeatures.js"
@@ -3444,34 +3437,6 @@
     "message": "create Ethereum Contract. \n Please wait, it can take a few minutes...",
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"
-    ]
-  },
-  {
-    "id": "BtcToEthToken201",
-    "message": "Creating a secret key",
-    "files": [
-      "shared/pages/Swap/BchToEth.js"
-    ]
-  },
-  {
-    "id": "BtcToEthToken213",
-    "message": "2. Created a secret key",
-    "files": [
-      "shared/pages/Swap/BchToEth.js"
-    ]
-  },
-  {
-    "id": "BtcToEthToken256",
-    "message": "Send your funds",
-    "files": [
-      "shared/pages/Swap/BchToEth.js"
-    ]
-  },
-  {
-    "id": "BtcToEthToken157",
-    "message": "1. Confirmation",
-    "files": [
-      "shared/pages/Swap/BchToEth.js"
     ]
   },
   {
@@ -4680,7 +4645,7 @@
   },
   {
     "id": "Submenu16",
-    "message": "Fast atomic swap exchanges BTC, BCH, ETH, LTC, ERC20 online",
+    "message": "Fast atomic swap exchanges BTC, ETH, LTC, ERC20 online",
     "files": [
       "shared/components/Header/SubMenu/SubMenu.js",
       "shared/components/modals/MobMenu/MobMenu.js"
@@ -5144,139 +5109,6 @@
     ]
   },
   {
-    "id": "BtcToEth100",
-    "message": "This order doesn't have a buyer",
-    "files": [
-      "shared/pages/Swap/BchToEth.js"
-    ]
-  },
-  {
-    "id": "BtcToEth105",
-    "message": "The order creator is offline. Waiting for him..",
-    "files": [
-      "shared/pages/Swap/BchToEth.js"
-    ]
-  },
-  {
-    "id": "BtcToEth116",
-    "message": "Waiting for a market maker. If the market maker does not appear within 5 minutes, the swap will be canceled automatically.",
-    "files": [
-      "shared/pages/Swap/BchToEth.js"
-    ]
-  },
-  {
-    "id": "BtcToEth134",
-    "message": "Confirm",
-    "files": [
-      "shared/pages/Swap/BchToEth.js"
-    ]
-  },
-  {
-    "id": "BtcToEth183",
-    "message": "Checking balance..",
-    "files": [
-      "shared/pages/Swap/BchToEth.js"
-    ]
-  },
-  {
-    "id": "BtcToEth194",
-    "message": "Creating bitcoin cash Script. Please wait, it can take a few minutes",
-    "files": [
-      "shared/pages/Swap/BchToEth.js"
-    ]
-  },
-  {
-    "id": "BtcToEth199",
-    "message": "Transaction:",
-    "files": [
-      "shared/pages/Swap/BchToEth.js"
-    ]
-  },
-  {
-    "id": "BtcToEth226",
-    "message": "Create refund hex",
-    "files": [
-      "shared/pages/Swap/BchToEth.js"
-    ]
-  },
-  {
-    "id": "BtcToEth233",
-    "message": "How refund your money ?",
-    "files": [
-      "shared/pages/Swap/BchToEth.js"
-    ]
-  },
-  {
-    "id": "BtcToEth248",
-    "message": "Refund hex transaction:",
-    "files": [
-      "shared/pages/Swap/BchToEth.js"
-    ]
-  },
-  {
-    "id": "BtcToEth253",
-    "message": "ETH Owner received bitcoin cash Script and Secret Hash. Waiting when he creates ETH Contract",
-    "files": [
-      "shared/pages/Swap/BchToEth.js"
-    ]
-  },
-  {
-    "id": "BtcToEth266",
-    "message": "Transaction:",
-    "files": [
-      "shared/pages/Swap/BchToEth.js"
-    ]
-  },
-  {
-    "id": "BtcToEth282",
-    "message": "ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait",
-    "files": [
-      "shared/pages/Swap/BchToEth.js"
-    ]
-  },
-  {
-    "id": "BtcToEth289",
-    "message": "Transaction:",
-    "files": [
-      "shared/pages/Swap/BchToEth.js"
-    ]
-  },
-  {
-    "id": "BtcToEth312",
-    "message": "ETH was transferred to your wallet. Check the balance.",
-    "files": [
-      "shared/pages/Swap/BchToEth.js"
-    ]
-  },
-  {
-    "id": "BtcToEth315",
-    "message": "Thank you for using Swap.Online!",
-    "files": [
-      "shared/pages/Swap/BchToEth.js"
-    ]
-  },
-  {
-    "id": "BtcToEth325",
-    "message": "TRY REFUND",
-    "files": [
-      "shared/pages/Swap/BchToEth.js"
-    ]
-  },
-  {
-    "id": "BtcToEth338",
-    "message": "Transaction:",
-    "files": [
-      "shared/pages/Swap/BchToEth.js"
-    ]
-  },
-  {
-    "id": "BtcToEthToken188",
-    "message": "Sent funds",
-    "files": [
-      "shared/pages/Swap/BchToEth.js"
-    ]
-  },
-  {
     "id": "deposit312",
     "message": "copy",
     "files": [
@@ -5345,209 +5177,6 @@
     "message": "Confirm",
     "files": [
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
-    ]
-  },
-  {
-    "id": "BchToEthToken157",
-    "message": "1. Confirmation",
-    "files": [
-      "shared/pages/Swap/EthToBch.js"
-    ]
-  },
-  {
-    "id": "EthToBtc104",
-    "message": "Waiting the order creator",
-    "files": [
-      "shared/pages/Swap/EthToBch.js"
-    ]
-  },
-  {
-    "id": "EthToBtc115",
-    "message": "Waiting for other user when he connect to the order",
-    "files": [
-      "shared/pages/Swap/EthToBch.js"
-    ]
-  },
-  {
-    "id": "EthToBtc125",
-    "message": "\"Confirmation of the transaction is necessary for crediting the reputation.\n                      If a user does not bring the deal to the end he gets a negative credit to his reputation.\"",
-    "files": [
-      "shared/pages/Swap/EthToBch.js"
-    ]
-  },
-  {
-    "id": "EthToBtc128",
-    "message": "Sign",
-    "files": [
-      "shared/pages/Swap/EthToBch.js"
-    ]
-  },
-  {
-    "id": "EthToBtc134",
-    "message": "Please wait. Confirmation processing",
-    "files": [
-      "shared/pages/Swap/EthToBch.js"
-    ]
-  },
-  {
-    "id": "EthToBtc139",
-    "message": "Transaction:",
-    "files": [
-      "shared/pages/Swap/EthToBch.js"
-    ]
-  },
-  {
-    "id": "EthToBtc167",
-    "message": "2. Waiting for BCH Owner to create Secret Key, create BCH Script and charge it",
-    "files": [
-      "shared/pages/Swap/EthToBch.js"
-    ]
-  },
-  {
-    "id": "EthToBtc179",
-    "message": "3. The bitcoin cash Script was created and charged. Please check the information below",
-    "files": [
-      "shared/pages/Swap/EthToBch.js"
-    ]
-  },
-  {
-    "id": "EthToBtc182",
-    "message": "Secret Hash:",
-    "files": [
-      "shared/pages/Swap/EthToBch.js"
-    ]
-  },
-  {
-    "id": "EthToBtc204",
-    "message": "Show bitcoin cash script",
-    "files": [
-      "shared/pages/Swap/EthToBch.js"
-    ]
-  },
-  {
-    "id": "EthToBtc247",
-    "message": "Everything is OK. Continue",
-    "files": [
-      "shared/pages/Swap/EthToBch.js"
-    ]
-  },
-  {
-    "id": "EthToBtc260",
-    "message": "Not enough money for this swap. Please fund the balance",
-    "files": [
-      "shared/pages/Swap/EthToBch.js"
-    ]
-  },
-  {
-    "id": "EthToBtc264",
-    "message": "Your balance:",
-    "files": [
-      "shared/pages/Swap/EthToBch.js"
-    ]
-  },
-  {
-    "id": "EthToBtc267",
-    "message": "Required balance:",
-    "files": [
-      "shared/pages/Swap/EthToBch.js"
-    ]
-  },
-  {
-    "id": "EthToBtc270",
-    "message": "Your address:",
-    "files": [
-      "shared/pages/Swap/EthToBch.js"
-    ]
-  },
-  {
-    "id": "EthToBtc277",
-    "message": "Continue",
-    "files": [
-      "shared/pages/Swap/EthToBch.js"
-    ]
-  },
-  {
-    "id": "EthToBtc286",
-    "message": "Checking balance..",
-    "files": [
-      "shared/pages/Swap/EthToBch.js"
-    ]
-  },
-  {
-    "id": "EthToBtc297",
-    "message": "5. Creating Ethereum Contract. Please wait, it can take a few minutes",
-    "files": [
-      "shared/pages/Swap/EthToBch.js"
-    ]
-  },
-  {
-    "id": "EthToBtc305",
-    "message": "Transaction:",
-    "files": [
-      "shared/pages/Swap/EthToBch.js"
-    ]
-  },
-  {
-    "id": "EthToBtc326",
-    "message": "Transaction:",
-    "files": [
-      "shared/pages/Swap/EthToBch.js"
-    ]
-  },
-  {
-    "id": "EthToBtc343",
-    "message": "6. Waiting for BCH Owner to add a Secret Key to ETH Contact",
-    "files": [
-      "shared/pages/Swap/EthToBch.js"
-    ]
-  },
-  {
-    "id": "EthToBtc357",
-    "message": "7. The funds from ETH contract was successfully transferred to BCH owner. BCH owner left a secret key. Requesting withdrawal from BCH script. Please wait.",
-    "files": [
-      "shared/pages/Swap/EthToBch.js"
-    ]
-  },
-  {
-    "id": "EthToBtc364",
-    "message": "Transaction:",
-    "files": [
-      "shared/pages/Swap/EthToBch.js"
-    ]
-  },
-  {
-    "id": "EthToBtc387",
-    "message": "8. BCH was transferred to your wallet. Check the balance.",
-    "files": [
-      "shared/pages/Swap/EthToBch.js"
-    ]
-  },
-  {
-    "id": "EthToBtc390",
-    "message": "Thank you for using Swap.Online!",
-    "files": [
-      "shared/pages/Swap/EthToBch.js"
-    ]
-  },
-  {
-    "id": "EthToBtc400",
-    "message": "TRY REFUND",
-    "files": [
-      "shared/pages/Swap/EthToBch.js"
-    ]
-  },
-  {
-    "id": "EthToBtc412",
-    "message": "Transaction:",
-    "files": [
-      "shared/pages/Swap/EthToBch.js"
-    ]
-  },
-  {
-    "id": "EthToBtc99",
-    "message": "This order doesn't have a buyer",
-    "files": [
-      "shared/pages/Swap/EthToBch.js"
     ]
   },
   {
@@ -6151,20 +5780,6 @@
     ]
   },
   {
-    "id": "importkeys239",
-    "message": "Please enter BCH private key",
-    "files": [
-      "shared/components/modals/ImportKeys/ImportKeys.js"
-    ]
-  },
-  {
-    "id": "importkeys240",
-    "message": "Please valid BCH private key",
-    "files": [
-      "shared/components/modals/ImportKeys/ImportKeys.js"
-    ]
-  },
-  {
     "id": "PartialFeeValueWarn3",
     "message": "= {estimatedFeeValue}$",
     "files": [
@@ -6249,7 +5864,7 @@
   },
   {
     "id": "YourAssetsDescription",
-    "message": "Здесь вы можете безопасно хранить и быстро обменивать Bitcoin, Ethereum, {br} USD, Tether, BCH и многочисленные токены ERC-20.",
+    "message": "Здесь вы можете безопасно хранить и быстро обменивать Bitcoin, Ethereum, {br} USD, Tether и многочисленные токены ERC-20.",
     "files": [
       "shared/pages/Wallet/CurrenciesList.js"
     ]

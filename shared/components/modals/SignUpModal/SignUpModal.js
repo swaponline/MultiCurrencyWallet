@@ -27,12 +27,11 @@ const title = defineMessages({
 @withRouter
 @connect(
   ({
-    user: { ethData, btcData, bchData, ltcData },
+    user: { ethData, btcData, ltcData },
     signUp: { isSigned },
   }) => ({
     ethAddress: ethData.address,
     btcAddress: btcData.address,
-    bchAddress: bchData.address,
     ltcAddress: ltcData.address,
     isSigned,
   })
@@ -61,7 +60,7 @@ export default class SignUpModal extends React.Component {
   validateEmail = (value) => value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)
 
   handleSubmit = async (whatToSubmit) => {
-    const { name, ethAddress, btcAddress, bchAddress, ltcAddress, history } = this.props
+    const { name, ethAddress, btcAddress, ltcAddress, history } = this.props
     const { isSupportedPush, email, isSubmitedPush } = this.state
 
     const currentUrl = history.location
@@ -81,7 +80,6 @@ export default class SignUpModal extends React.Component {
       ...ipInfo,
       ethAddress,
       btcAddress,
-      bchAddress,
       ltcAddress,
       Referrer: refEthAddress,
       registrationDomain: window.top.location.host,
@@ -159,14 +157,14 @@ export default class SignUpModal extends React.Component {
               {
                 isEmailError && (
                   <p styleName="result">
-                    <FormattedMessage id="SignUpModal133" values={{ br: <br />  }} defaultMessage="Something went wrong.{br}Try it later" />
+                    <FormattedMessage id="SignUpModal133" values={{ br: <br /> }} defaultMessage="Something went wrong.{br}Try it later" />
                   </p>
                 )
               }
               {
                 isSigned && (
                   <p styleName="result">
-                    <FormattedMessage id="SignUpModal000" values={{ br: <br />  }} defaultMessage="Thanks!{br}You will receive a notification" />
+                    <FormattedMessage id="SignUpModal000" values={{ br: <br /> }} defaultMessage="Thanks!{br}You will receive a notification" />
                   </p>
                 )
               }
@@ -175,59 +173,59 @@ export default class SignUpModal extends React.Component {
               </Button>
             </Fragment>
           ) : (
-            <Fragment>
-              {
-                <div styleName="input-wrapper">
-                  {
-                    (!isSupportedPush || isPushError || isSubmitedPush) && (
-                      <Input styleName="input" valueLink={linked.email} focusOnInit type="email" placeholder="E-mail" />
-                    )
-                  }
-                </div>
-              }
-              <Button
-                styleName="button"
-                brand
-                fullWidth
-                disabled={isDisabled}
-                onClick={() => this.handleSubmit(!isSubmitedPush
-                  ? 'isSubmitedPush'
-                  : 'isSubmitedEmail'
-                )}
-              >
+              <Fragment>
                 {
-                  isSubmitedPush
-                    ? isDisabled
-                      ? (
-                        <FormattedMessage id="SignUpModal002-1" defaultMessage="One more step" />
+                  <div styleName="input-wrapper">
+                    {
+                      (!isSupportedPush || isPushError || isSubmitedPush) && (
+                        <Input styleName="input" valueLink={linked.email} focusOnInit type="email" placeholder="E-mail" />
                       )
+                    }
+                  </div>
+                }
+                <Button
+                  styleName="button"
+                  brand
+                  fullWidth
+                  disabled={isDisabled}
+                  onClick={() => this.handleSubmit(!isSubmitedPush
+                    ? 'isSubmitedPush'
+                    : 'isSubmitedEmail'
+                  )}
+                >
+                  {
+                    isSubmitedPush
+                      ? isDisabled
+                        ? (
+                          <FormattedMessage id="SignUpModal002-1" defaultMessage="One more step" />
+                        )
+                        : (
+                          <FormattedMessage id="SignUpModal002" defaultMessage="Sign up" />
+                        )
                       : (
-                        <FormattedMessage id="SignUpModal002" defaultMessage="Sign up" />
+                        <FormattedMessage id="SignUpModal003" defaultMessage="Allow notifications" />
                       )
-                    : (
-                      <FormattedMessage id="SignUpModal003" defaultMessage="Allow notifications" />
+                  }
+                </Button>
+                {
+                  !isPushError ? (
+                    <p styleName="info">
+                      <FormattedMessage
+                        id="SignUpModal004"
+                        values={{ br: <br /> }}
+                        defaultMessage="You will receive notifications regarding updates with your account (orders, transactions){br}and monthly updates about our project" />
+                    </p>
+                  ) : (
+                      <p styleName="info">
+                        <FormattedMessage
+                          id="SignUpModal005"
+                          values={{ br: <br /> }}
+                          defaultMessage="It seems like push notification is not working{br}Please, leave your email for notifications,{br}or try later" />
+                      </p>
                     )
                 }
-              </Button>
-              {
-                !isPushError ? (
-                  <p styleName="info">
-                    <FormattedMessage
-                      id="SignUpModal004"
-                      values={{ br: <br />  }}
-                      defaultMessage="You will receive notifications regarding updates with your account (orders, transactions){br}and monthly updates about our project" />
-                  </p>
-                ) : (
-                  <p styleName="info">
-                    <FormattedMessage
-                      id="SignUpModal005"
-                      values={{ br: <br />  }}
-                      defaultMessage="It seems like push notification is not working{br}Please, leave your email for notifications,{br}or try later" />
-                  </p>
-                )
-              }
-            </Fragment>
-          )
+              </Fragment>
+            )
         }
       </Modal>
     )

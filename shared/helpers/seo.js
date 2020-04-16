@@ -27,12 +27,6 @@ const seo = {
       h1: 'Bitcoin Trade',
     },
     {
-      uri: '/exchange/bch',
-      title: 'Bitcoin Cash',
-      description: 'Bitcoin Cash',
-      h1: 'Bitcoin Cash Trade',
-    },
-    {
       uri: '/exchange/ltc',
       title: 'Litecoin',
       description: 'Litecoin',
@@ -100,18 +94,6 @@ const seo = {
       h1: 'Atomic Swap Bitcoin (BTC) to Ethereum (ETH) - Decentralized Exchange',
     },
     {
-      uri: '/eth-bch',
-      title: 'Atomic Swap Ethereum (ETH) to Bitcoin Cash (BCH) Decentralized Exchange',
-      description: 'Best exchange rate for Ethereum (ETH) to Bitcoin Cash (BCH) atomic swap. Decentralized exchange of digital currencies with online wallet.',
-      h1: 'Atomic Swap Ethereum (ETH) to Bitcoin Cash (BCH) - Instant Exchange',
-    },
-    {
-      uri: '/bch-eth',
-      title: 'Atomic Swap Bitcoin Cash (BCH) to Ethereum (ETH) Cross-Chain Exchange',
-      description: 'Looking for best exchange rate to buy Ethereum (ETH) with Bitcoin Cash (BCH)? Place your order on Swap.online to get the best rate.',
-      h1: 'Atomic Swap Bitcoin Cash (BCH) to Ethereum (ETH) - Decentralized Exchange',
-    },
-    {
       uri: '/eth-ltc',
       title: 'Atomic Swap Ethereum (ETH) to Litecoin (LTC) Decentralized Exchange',
       description: 'Best exchange rate for Ethereum (ETH) to Litecoin (LTC) atomic swap. Decentralized exchange of digital currencies with online wallet.',
@@ -148,12 +130,6 @@ const seo = {
       description: 'Swap.Online Bitcoin Wallet will allow you to exchange your coins using Atomic Swap technology.',
       h1: 'Your online Bitcoin (BTC) web wallet with Atomic Swap.',
       footer: ``,
-    },
-    {
-      uri: '/BitcoinCash-wallet',
-      title: 'Swap.Online - Bitcoin Cash (BCH) Wallet with Atomic Swap exchange.',
-      description: 'Swap.Online Web Wallet - here you can store, send, receive, and exchange Bitcoin Cash (BCH) using Atomic Swap algorithms.',
-      h1: 'Your online Bitcoin Cash (BCH) wallet with Atomic Swap.',
     },
     {
       uri: '/Litecoin-wallet',

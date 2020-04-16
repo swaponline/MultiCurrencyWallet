@@ -9,7 +9,6 @@ export const getActivatedCurrencies = () => {
     currencies.push('BTC (Multisig)')
   }
   if (!config.opts.curEnabled || config.opts.curEnabled.eth) currencies.push('ETH')
-  if (!config.opts.curEnabled || config.opts.curEnabled.bch) currencies.push('BCH')
   if (!config.opts.curEnabled || config.opts.curEnabled.ltc) currencies.push('LTC')
   if (!config.opts.curEnabled || config.opts.curEnabled.qtum) currencies.push('QTUM')
 

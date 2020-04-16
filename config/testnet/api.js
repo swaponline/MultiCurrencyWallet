@@ -12,7 +12,6 @@ export default {
   ],
   etherscan_ApiKey: 'RHHFPNMAZMD6I4ZWBZBF6FA11CMW9AXZNM',
   // usdtOmni: 'https://api.omniexplorer.info/',
-  bch: 'https://trest.bitcoin.com/v2',
   ltc: 'https://testnet.litecore.io/api',
   faucet: 'https://faucet.swaponline.site/testnet/',
   btc2FAProtected: 'https://2fa.swaponline.site',

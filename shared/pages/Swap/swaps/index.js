@@ -9,9 +9,6 @@ import EthToLtc from '../EthToLtc'
 import BtcToLtc from '../BtcToLtc'
 import LtcToBtc from '../LtcToBtc'
 
-import EthToBch from '../EthToBch'
-import BchToEth from '../BchToEth'
-
 import EthTokenToBtc from '../EthTokenToBtc'
 import BtcToEthToken from '../BtcToEthToken'
 
@@ -28,9 +25,6 @@ const swapComponents = {
 
   'BTC2LTC': BtcToLtc,
   'LTC2BTC': LtcToBtc,
-
-  'ETH2BCH': EthToBch,
-  'BCH2ETH': BchToEth,
 
   'SWAP2BTC': EthTokenToBtc,
   'BTC2SWAP': BtcToEthToken,

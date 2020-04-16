@@ -49,7 +49,6 @@ const titles = [
     btcData,
     btcMultisigSMSData,
     btcMultisigUserData,
-    // bchData,
     ltcData,
     isFetching,
     tokensData, nimData/* usdtOmniData */ } }) => ({
@@ -58,7 +57,6 @@ const titles = [
         btcData,
         btcMultisigSMSData,
         btcMultisigUserData,
-        // bchData,
         ltcData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData, usdtOmniData */],
       tokens: [...Object.keys(tokensData).map(k => (tokensData[k]))],
       user,
@@ -80,9 +78,9 @@ export default class CurrencyWallet extends Component {
     const {
       match: {
         params: {
-          fullName=null,
-          ticker=null,
-          address=null,
+          fullName = null,
+          ticker = null,
+          address = null,
         },
       },
       intl: {
@@ -95,7 +93,7 @@ export default class CurrencyWallet extends Component {
 
     const items = actions.core.getWallets()
 
-    if(!address && !ticker) {
+    if (!address && !ticker) {
       if (fullName) {
         // Если это токен - перенаправляем на адрес /token/name/address
         if (ethToken.isEthToken({ name: fullName })) {
@@ -132,13 +130,13 @@ export default class CurrencyWallet extends Component {
         }
       }
       // @ToDO throw error
-      
+
     }
 
     const walletAddress = address
 
     // оставляю запасной вариант для старых ссылок
-    if(fullName) {
+    if (fullName) {
       ticker = fullName
     }
 
@@ -210,7 +208,7 @@ export default class CurrencyWallet extends Component {
     if (isRedirecting) {
       const { history, intl: { locale } } = this.props
       history.push(localisedUrl(locale, redirectUrl))
-      setTimeout( () => {
+      setTimeout(() => {
         location.reload()
       }, 100)
       return
@@ -232,14 +230,14 @@ export default class CurrencyWallet extends Component {
     }
 
     // set balance for the address
-    address && actions[getCurrencyKey(currency.toLowerCase())].fetchBalance(address).then( balance => this.setState({ balance }))
-  
+    address && actions[getCurrencyKey(currency.toLowerCase())].fetchBalance(address).then(balance => this.setState({ balance }))
+
     this.setLocalStorageItems();
 
     // if address is null, take transactions from current user
-    address ? actions.history.setTransactions(address, currency.toLowerCase(), this.pullTransactions ) : actions.user.setTransactions()
+    address ? actions.history.setTransactions(address, currency.toLowerCase(), this.pullTransactions) : actions.user.setTransactions()
 
-    if(!address)
+    if (!address)
       actions.core.getSwapHistory()
   }
 
@@ -304,7 +302,7 @@ export default class CurrencyWallet extends Component {
       currency,
       address
     } = this.state
-    
+
     actions.modals.open(constants.modals.InvoiceModal, {
       currency: currency.toUpperCase(),
       toAddress: address
@@ -312,7 +310,7 @@ export default class CurrencyWallet extends Component {
   }
 
   handleWithdraw = () => {
-    
+
     const {
       currency,
       address,
@@ -430,7 +428,7 @@ export default class CurrencyWallet extends Component {
     let currencyUsdBalance;
     let changePercent;
 
-    if(infoAboutCurrency) {
+    if (infoAboutCurrency) {
       currencyUsdBalance = BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * infoAboutCurrency.price_usd;
       changePercent = infoAboutCurrency.percent_change_1h;
     } else {
@@ -446,7 +444,7 @@ export default class CurrencyWallet extends Component {
       slidesToShow: 1,
       slidesToScroll: 1
     };
-    
+
     return (
       <div styleName="root">
         <PageSeo
@@ -459,7 +457,7 @@ export default class CurrencyWallet extends Component {
           handleNotifyBlockClose={this.handleNotifyBlockClose}
           {...this.state}
         />
-         { isWidgetBuild && !config.isFullBuild && (
+        {isWidgetBuild && !config.isFullBuild && (
           <ul styleName="widgetNav">
             <li styleName="widgetNavItem" onClick={this.handleGoWalletHome}>
               <a href styleName="widgetNavItemLink">
@@ -477,34 +475,34 @@ export default class CurrencyWallet extends Component {
           <div styleName="currencyWalletWrapper">
             <div styleName="currencyWalletBalance">
               {
-                txHistory ?  
-                  <BalanceForm 
-                    currencyBalance={balance} 
-                    usdBalance={currencyUsdBalance} 
+                txHistory ?
+                  <BalanceForm
+                    currencyBalance={balance}
+                    usdBalance={currencyUsdBalance}
                     changePercent={changePercent}
                     address={address}
-                    handleReceive={this.handleReceive} 
+                    handleReceive={this.handleReceive}
                     handleWithdraw={this.handleWithdraw}
                     handleExchange={this.handleGoTrade}
                     handleInvoice={this.handleInvoice}
                     showButtons={actions.user.isOwner(address, currency)}
-                    currency={currency.toLowerCase()} 
-                /> : <ContentLoader leftSideContent />
+                    currency={currency.toLowerCase()}
+                  /> : <ContentLoader leftSideContent />
               }
             </div>
             <div styleName="currencyWalletActivityWrapper">
               {
-                txHistory  ? (
+                txHistory ? (
                   <div styleName="currencyWalletActivity">
                     <h3>
-                      {address ? 
-                      `Address: ${address}` :  
-                      <FormattedMessage id="historyActivity" defaultMessage="Активность" />
+                      {address ?
+                        `Address: ${address}` :
+                        <FormattedMessage id="historyActivity" defaultMessage="Активность" />
                       }
                     </h3>
                     {
                       txHistory.length > 0 ? (
-                          <Table rows={txHistory} styleName="history" rowRender={this.rowRender} />
+                        <Table rows={txHistory} styleName="history" rowRender={this.rowRender} />
                       ) : <ContentLoader rideSideContent empty inner />
                     }
                   </div>

@@ -39,15 +39,6 @@ export const initialState = {
     balanceError: null,
     infoAboutCurrency: null
   },
-  bchData: {},
-  /*bchData: {
-    balance: 0,
-    isBalanceFetched: false,
-    currency: 'BCH',
-    fullName: 'BitcoinCash',
-    balanceError: null,
-    infoAboutCurrency: null
-  },*/
   /*
   xlmData: {
     balance: 0,
@@ -118,7 +109,7 @@ export const setTokenAuthData = (state, { name, data }) => ({
 })
 
 export const setBtcMultisigBalance = (state, { address, amount, unconfirmedBalance }) => {
-  state.btcMultisigUserData.wallets.forEach( (wallet) => {
+  state.btcMultisigUserData.wallets.forEach((wallet) => {
     if (wallet.address === address) {
       wallet.balance = Number(amount)
       wallet.unconfirmedBalance = unconfirmedBalance

@@ -4,7 +4,6 @@ import icx from './icx.svg'
 import waves from './waves.svg'
 import xrp from './xrp.svg'
 import xlm from './xlm.svg'
-import bch from './bch.svg'
 import nim from './nim.svg'
 import swap from './swap.svg'
 import usdt from './usdt.svg'
@@ -29,7 +28,6 @@ export default {
   bxb,
   kn,
   ltc,
-  bch,
   drt,
   xlm,
   lev,

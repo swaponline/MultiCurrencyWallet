@@ -50,7 +50,6 @@ export default [
   'BTC',
   'BTC (SMS-Protected)',
   'BTC (Multisig)',
-  'BCH',
   'ETH',
   'LTC',
   'SWAP',

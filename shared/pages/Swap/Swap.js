@@ -31,13 +31,13 @@ const isWidgetBuild = config && config.isWidget
 
 @injectIntl
 @connect(({
-  user: { ethData, btcData, bchData, tokensData, nimData, ltcData /* usdtOmniData */ },
+  user: { ethData, btcData, tokensData, nimData, ltcData /* usdtOmniData */ },
   ipfs: { peer },
   rememberedOrders,
 }) => ({
-  items: [ethData, btcData, bchData, ltcData /* nimData, usdtOmniData */],
+  items: [ethData, btcData, ltcData /* nimData, usdtOmniData */],
   tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
-  currenciesData: [ethData, btcData, bchData, ltcData /* nimData, usdtOmniData */],
+  currenciesData: [ethData, btcData, ltcData /* nimData, usdtOmniData */],
   tokensData: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   errors: 'api.errors',
   checked: 'api.checked',
@@ -71,7 +71,7 @@ export default class SwapComponent extends PureComponent {
     } = this.state
 
     if (step >= 3) {
-      
+
       let swapsId = JSON.parse(localStorage.getItem('axiosSwaps'))
 
       if (swapsId === null || swapsId.length === 0) {
@@ -105,7 +105,7 @@ export default class SwapComponent extends PureComponent {
           btcScriptValues
         }
         const sendedJSON = JSON.stringify(sendedData)
-        
+
         localStorage.setItem('axiosSwaps', JSON.stringify(swapsId))
         clearInterval(this.sendDebugInfoTimer)
 

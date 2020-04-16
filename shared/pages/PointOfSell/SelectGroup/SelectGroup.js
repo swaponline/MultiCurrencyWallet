@@ -47,7 +47,7 @@ const SelectGroup = (props) => {
           onKeyDown={inputReplaceCommaWithDot}
         />
         {
-          (selectedValue === 'eth' || selectedValue === 'btc' || selectedValue === 'bch') && usd > 0 &&
+          (selectedValue === 'eth' || selectedValue === 'btc') && usd > 0 &&
           <p styleName="textUsd" >{`~${usd}`} USD</p>
         }
         <CurrencySelect

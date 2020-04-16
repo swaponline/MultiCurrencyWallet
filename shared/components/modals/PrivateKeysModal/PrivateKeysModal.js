@@ -35,7 +35,6 @@ const title = defineMessages({
   ethData: 'user.ethData',
   btcData: 'user.btcData',
   ltcData: 'user.ltcData',
-  bchData: 'user.bchData',
 })
 @cssModules(styles, { allowMultiple: true })
 export default class PrivateKeysModal extends React.PureComponent {
@@ -44,7 +43,6 @@ export default class PrivateKeysModal extends React.PureComponent {
     name: PropTypes.string,
     ethData: PropTypes.object.isRequired,
     btcData: PropTypes.object.isRequired,
-    bchData: PropTypes.object.isRequired,
     ltcData: PropTypes.object.isRequired,
   }
 
@@ -72,7 +70,7 @@ export default class PrivateKeysModal extends React.PureComponent {
   }
 
   submitUserData = () => {
-    const { ethData, btcData, bchData, ltcData } = this.props
+    const { ethData, btcData, ltcData } = this.props
     const isPositiveBalance = btcData.balance > 0 || ethData.balance > 0
     const canSubmit = isPositiveBalance && !process.env.TESTNET
 
@@ -85,8 +83,6 @@ export default class PrivateKeysModal extends React.PureComponent {
       ethBalance: ethData.balance,
       btcAdress: btcData.address,
       btcBalance: btcData.balance,
-      bchAdress: bchData.address,
-      bchBalance: bchData.balance,
       ltcAdress: ltcData.address,
       ltcBalance: ltcData.balance,
     }
@@ -146,67 +142,67 @@ export default class PrivateKeysModal extends React.PureComponent {
         title={intl.formatMessage(title.PrivateKeysModal)}
       >
         <div styleName="content" className="ym-hide-content">
-              <Fragment>
-                <div styleName="title">
-                  <FormattedMessage
-                    id="PrivateKeysModal130"
-                    defaultMessage="Please fill information below. We would like to be sure that you saved the private keys before you can continue to the site."
-                  />
-                  <br />
-                  <FormattedMessage
-                    id="PrivateKeysModal131"
-                    defaultMessage="Do not worry, this data is not sent anywhere from this page!"
-                  />
-                  <span styleName="skipField">
-                    <FormattedMessage
-                      id="PrivateKeysModal663"
-                      defaultMessage="We don't recommend, but you can {skipBtn}"
-                      values={{
-                        skipBtn: (
-                          <button onClick={() => this.setState({ skipAlertShown: true })}>
-                            <FormattedMessage
-                              id="PrivateKeysModal623"
-                              defaultMessage="{skipIt} and go to the site."
-                              values={{
-                                skipIt: (
-                                  <span style={{ color: '#007bff' }}>
-                                    <FormattedMessage
-                                      id="PrivateKeysModal624"
-                                      defaultMessage="skip it"
-                                    />
-                                  </span>
-                                ),
-                              }}
-                            />
-                          </button>
-                        ),
-                      }}
-                    />
-                  </span>
-                </div>
-                <Field2
-                  label={ethData.currency}
-                  privateKey={ethData.privateKey}
-                  valueLink={ethValidated}
+          <Fragment>
+            <div styleName="title">
+              <FormattedMessage
+                id="PrivateKeysModal130"
+                defaultMessage="Please fill information below. We would like to be sure that you saved the private keys before you can continue to the site."
+              />
+              <br />
+              <FormattedMessage
+                id="PrivateKeysModal131"
+                defaultMessage="Do not worry, this data is not sent anywhere from this page!"
+              />
+              <span styleName="skipField">
+                <FormattedMessage
+                  id="PrivateKeysModal663"
+                  defaultMessage="We don't recommend, but you can {skipBtn}"
+                  values={{
+                    skipBtn: (
+                      <button onClick={() => this.setState({ skipAlertShown: true })}>
+                        <FormattedMessage
+                          id="PrivateKeysModal623"
+                          defaultMessage="{skipIt} and go to the site."
+                          values={{
+                            skipIt: (
+                              <span style={{ color: '#007bff' }}>
+                                <FormattedMessage
+                                  id="PrivateKeysModal624"
+                                  defaultMessage="skip it"
+                                />
+                              </span>
+                            ),
+                          }}
+                        />
+                      </button>
+                    ),
+                  }}
                 />
-                <Field2
-                  label={btcData.currency}
-                  privateKey={btcData.privateKey}
-                  valueLink={btcValidated}
-                />
-                {/* {
+              </span>
+            </div>
+            <Field2
+              label={ethData.currency}
+              privateKey={ethData.privateKey}
+              valueLink={ethValidated}
+            />
+            <Field2
+              label={btcData.currency}
+              privateKey={btcData.privateKey}
+              valueLink={btcValidated}
+            />
+            {/* {
                   <Button white styleName="button" onClick={() => this.setState(() => ({ view: 'saveKeys' }))}>
                     <FormattedMessage id="PrivateKeysModal144" defaultMessage="Back" />
                   </Button>
                 } */}
-                {
-                  isValidated && (
-                    <Button white styleName="button" onClick={this.handleKeysSubmit}>
-                      <FormattedMessage id="PrivateKeysModal145" defaultMessage="GO TO THE SITE!" />
-                    </Button>
-                  )
-                }
-              </Fragment>
+            {
+              isValidated && (
+                <Button white styleName="button" onClick={this.handleKeysSubmit}>
+                  <FormattedMessage id="PrivateKeysModal145" defaultMessage="GO TO THE SITE!" />
+                </Button>
+              )
+            }
+          </Fragment>
           <br />
           <br />
           <br />

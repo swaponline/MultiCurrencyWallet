@@ -51,7 +51,6 @@ const walletNav = [
       btcMultisigSMSData,
       btcMultisigUserData,
       btcMultisigUserDataList,
-      bchData,
       tokensData,
       ltcData, // usdtOmniData, // qtumData,
       // nimData,
@@ -81,7 +80,6 @@ const walletNav = [
       btcMultisigSMSData,
       btcMultisigUserData,
       ethData,
-      // bchData,
       ltcData,
       // qtumData,
       // xlmData,
@@ -93,29 +91,27 @@ const walletNav = [
 
     const items = (config && config.isWidget
       ? [
-          btcData,
-          ethData
-          // usdtOmniData,
-        ]
+        btcData,
+        ethData
+        // usdtOmniData,
+      ]
       : [
-          btcData,
-          btcMultisigSMSData,
-          btcMultisigUserData,
-          // bchData,
-          ethData,
-          ltcData
-          // qtumData,
-          // usdtOmniData,
-          // nimData,
-          // xlmData,
-        ]
+        btcData,
+        btcMultisigSMSData,
+        btcMultisigUserData,
+        ethData,
+        ltcData
+        // qtumData,
+        // usdtOmniData,
+        // nimData,
+        // xlmData,
+      ]
     ).map(data => data.currency)
 
     const currencyBalance = [
       btcData,
       btcMultisigSMSData,
       btcMultisigUserData,
-      // bchData,
       ethData,
       ltcData
       // qtumData,
@@ -146,7 +142,6 @@ const walletNav = [
         btcMultisigSMSData,
         btcMultisigUserData,
         btcMultisigUserDataList,
-        // bchData,
         ltcData
         // qtumData,
         // usdtOmniData,
@@ -356,16 +351,14 @@ export default class Wallet extends Component {
     const isFirstCheck = moment(now, 'HH:mm:ss DD/MM/YYYY').isSame(lastCheckMoment)
     const isOneHourAfter = moment(now, 'HH:mm:ss DD/MM/YYYY').isAfter(lastCheckMoment.add(1, 'hours'))
 
-    const { ethData, btcData, bchData, ltcData } = this.props.tokensData
+    const { ethData, btcData, ltcData } = this.props.tokensData
 
     const balancesData = {
       ethBalance: ethData.balance,
       btcBalance: btcData.balance,
-      // bchBalance: bchData.balance,
       ltcBalance: ltcData.balance,
       ethAddress: ethData.address,
       btcAddress: btcData.address,
-      // bchAddress: bchData.address,
       ltcAddress: ltcData.address
     }
 
