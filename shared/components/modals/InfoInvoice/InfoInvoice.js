@@ -73,6 +73,10 @@ const langLabels = defineMessages({
     id: `${langPrefix}_ButtonShareReady`,
     defaultMessage: `Готово`,
   },
+  shareInfo: {
+    id: `${langPrefix}_ShareLink_InfoText`,
+    defaultMessage: `Отправьте эту ссылку плательщику для подтверждения платежа`,
+  },
   infoStatusReady: {
     id: `${langPrefix}_InfoStatus_Ready`,
     defaultMessage: `Оплачено`,
@@ -255,6 +259,11 @@ export default class InfoInvoice extends React.Component {
         {doshare && !isShareReady && (
           <Fragment>
             <div styleName="convent-overlay">
+              <div styleName="share-info">
+                <strong>
+                  <FormattedMessage { ...langLabels.shareInfo } />
+                </strong>
+              </div>
               <ShareLink 
                 link={shareLink}
                 fullSize={true}
