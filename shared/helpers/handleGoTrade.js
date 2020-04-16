@@ -24,7 +24,6 @@ const getDeclinedExistedSwapIndex = ({ currency, decline }) => {
         const itemState = declineSwap.flow.state
         const values = itemState.btcScriptValues
           || itemState.bchScriptValues
-          || itemState.ltcScriptValues
           // || itemState.usdtOmniScriptValues
           || itemState.scriptValues
 

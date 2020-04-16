@@ -14,7 +14,7 @@ import images from './images'
 
 
 // 'usdtOmni' to arr
-const names = ['btc', 'bch', 'ltc', 'eth', 'swap']
+const names = ['btc', 'bch', 'eth', 'swap']
 
 @connect(
   ({ currencies: { items: currencies } }) => ({

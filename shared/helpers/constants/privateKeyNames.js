@@ -17,8 +17,5 @@ export default {
 
   // xlm: `${process.env.ENTRY}:xlm:privateKey`,
   bch: `${process.env.ENTRY}:bch:privateKey`,
-  ltc: `${process.env.ENTRY}:ltc:privateKey`,
-  ltcOld: `${process.env.ENTRY}:ltc:privateKey:old`,
-  ltcMnemonic: `${process.env.ENTRY}:ltc:mnemonicKey`,
   qtum: `${process.env.ENTRY}:qtum:privateKey`,
 }

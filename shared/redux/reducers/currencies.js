@@ -9,7 +9,7 @@ const GetCustromERC20 = () => {
   return tokensInfo[configStorage]
 }
 
-let buildOpts ={
+let buildOpts = {
   curEnabled: false,
   ownTokens: false,
   addCustomERC20: true,
@@ -35,7 +35,7 @@ if (buildOpts.ownTokens && Object.keys(buildOpts.ownTokens).length) {
   // Multi token mode
   const cleanERC20 = {}
   Object.keys(buildOpts.ownTokens).forEach((key) => {
-    if (key !== ('{#'+'WIDGETTOKENCODE'+'#}')) {
+    if (key !== ('{#' + 'WIDGETTOKENCODE' + '#}')) {
       const tokenData = buildOpts.ownTokens[key]
       cleanERC20[key] = tokenData
     }
@@ -52,14 +52,6 @@ const initialState = {
       icon: 'eth',
       value: 'eth',
       fullTitle: 'ethereum',
-      addAssets: true,
-    }] : [],
-    ...(!buildOpts.curEnabled || buildOpts.curEnabled.ltc) ? [{
-      name: 'LTC',
-      title: 'LTC',
-      icon: 'ltc',
-      value: 'ltc',
-      fullTitle: 'litecoin',
       addAssets: true,
     }] : [],
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.btc) ? [{
@@ -113,13 +105,6 @@ const initialState = {
       icon: 'eth',
       value: 'eth',
       fullTitle: 'ethereum',
-    }] : [],
-    ...(!buildOpts.curEnabled || buildOpts.curEnabled.ltc) ? [{
-      name: 'LTC',
-      title: 'LTC',
-      icon: 'ltc',
-      value: 'ltc',
-      fullTitle: 'litecoin',
     }] : [],
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.btc) ? [{
       name: 'BTC',
@@ -176,11 +161,11 @@ if (config.isWidget) {
       fullTitle: 'bitcoin',
     },
   ]
-  
+
   // Мульти валюта с обратной совместимостью одиночного билда
   const multiTokenNames = (window.widgetERC20Tokens) ? Object.keys(window.widgetERC20Tokens) : []
 
-  if (multiTokenNames.length>0) {
+  if (multiTokenNames.length > 0) {
     // First token in list - is main - fill single-token erc20 config
     config.erc20token = multiTokenNames[0]
     config.erc20[config.erc20token] = window.widgetERC20Tokens[config.erc20token]
@@ -200,7 +185,7 @@ if (config.isWidget) {
         fullTitle: window.widgetERC20Tokens[key].fullName,
       })
     })
-    
+
   } else {
     initialState.items.push({
       name: config.erc20token.toUpperCase(),
