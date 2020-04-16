@@ -22,7 +22,6 @@ const linksManager = {
   main: 'https://swaponline.io/',
   ieo: '/IEO',
   wallet: '/wallet',
-  oldWallet: 'oldWallet',
   coins: '/coins',
   partial: '/partial',
   notFound: '/NotFound',

@@ -290,6 +290,13 @@ export default class WithdrawModalMultisigUser extends React.Component {
     }
   };
 
+  handleClose = () => {
+    const { name } = this.props
+
+    actions.modals.close(name)
+  }
+
+
   render() {
     const {
       address,
@@ -457,22 +464,28 @@ export default class WithdrawModalMultisigUser extends React.Component {
                 )}
               </div>
             </div>
-            <Button styleName="buttonFull" blue big fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
-              {isShipped
-                ? (
+            <div styleName="sendBtnsWrapper">
+              <div styleName="actionBtn">
+                <Button blue big fill disabled={isDisabled} onClick={this.handleSubmit}>
+                  {isShipped ? (
+                    <Fragment>
+                      <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
+                    </Fragment>
+                  ) : (
+                      <Fragment>
+                        <FormattedMessage id="WithdrawModal111" defaultMessage="Withdraw" /> {`${currency.toUpperCase()}`}
+                      </Fragment>
+                    )}
+                </Button>
+              </div>
+              <div styleName="actionBtn">
+                <Button big fill gray onClick={this.handleClose}>
                   <Fragment>
-                    <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
+                    <FormattedMessage id="WithdrawModalCancelBtn" defaultMessage="Cancel" />
                   </Fragment>
-                )
-                : (
-                  <Fragment>
-                    <FormattedMessage id="WithdrawModal111" defaultMessage="Withdraw" />
-                    {' '}
-                    {`${currency.toUpperCase()}`}
-                  </Fragment>
-                )
-              }
-            </Button>
+                </Button>
+              </div>
+            </div>
             {
               error && (
                 <div styleName="rednote">
@@ -489,7 +502,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
                 </div>
               )
             }
-            {invoice && 
+            {invoice &&
               <Fragment>
                 <hr />
                 <div styleName="lowLevel" style={{ marginBottom: "50px" }}>
@@ -535,10 +548,10 @@ export default class WithdrawModalMultisigUser extends React.Component {
             </p>
             <div styleName="highLevel">
               <div styleName="groupField">
-                
+
               </div>
               <div>
-                <ShareLink link={txConfirmLink} /> 
+                <ShareLink link={txConfirmLink} />
               </div>
             </div>
             <div styleName="centerAlign">
