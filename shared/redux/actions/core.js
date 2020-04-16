@@ -38,7 +38,7 @@ const addCurrencyFromOrders = (orders) => {
       if (sellCurrency !== buyCurrency) {
         if (!sellOrderArray.includes(sellCurrency)) {
           sortedArray.push(sellCurrency.toLowerCase())
-        }  else if (!sellOrderArray.includes(buyCurrency)) {
+        } else if (!sellOrderArray.includes(buyCurrency)) {
           sortedArray.push(buyCurrency.toLowerCase())
         }
       }
@@ -324,7 +324,7 @@ const getWallet = (findCondition) => {
     const conditionOk = (currency && wallet.currency.toLowerCase() === currency.toLowerCase())
 
     if (address) {
-      if(wallet.address.toLowerCase() === address.toLowerCase()) {
+      if (wallet.address.toLowerCase() === address.toLowerCase()) {
         return conditionOk
       }
     } else {
@@ -342,7 +342,6 @@ const getWallets = () => {
       btcMultisigUserData,
       ethData,
       bchData,
-      ltcData,
       tokensData,
       isTokenSigned,
     },
@@ -366,10 +365,9 @@ const getWallets = () => {
     ... (btcMultisigUserData && btcMultisigUserData.wallets) ? btcMultisigUserData.wallets : [],
     ethData,
     ... (bchData) ? [bchData] : [],
-    ltcData,
-    ... Object.keys(tokensData)
-          .filter(k => !tokensData[k].reducerDataTarget)
-          .map(k => tokensData[k])
+    ...Object.keys(tokensData)
+      .filter(k => !tokensData[k].reducerDataTarget)
+      .map(k => tokensData[k])
   ].map(({ account, keyPair, ...data }) => ({
     ...data
   }))

@@ -21,8 +21,8 @@ import SwapApp, { constants } from 'swap.app'
 import SwapAuth from 'swap.auth'
 import SwapRoom from 'swap.room'
 import SwapOrders from 'swap.orders'
-import { ETH2BTC, BTC2ETH, BCH2ETH, ETH2BCH, LTC2BTC, BTC2LTC, ETH2LTC, LTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN/* USDTOMNI2ETHTOKEN */, ETHTOKEN2USDT } from 'swap.flows'
-import { EthSwap, EthTokenSwap, BtcSwap, BchSwap, LtcSwap /* UsdtOmniSwap */ } from 'swap.swaps'
+import { ETH2BTC, BTC2ETH, BCH2ETH, ETH2BCH, ETHTOKEN2BTC, BTC2ETHTOKEN/* USDTOMNI2ETHTOKEN */, ETHTOKEN2USDT } from 'swap.flows'
+import { EthSwap, EthTokenSwap, BtcSwap, BchSwap /* UsdtOmniSwap */ } from 'swap.swaps'
 
 
 initExternalConfig()
@@ -53,7 +53,6 @@ const createSwapApp = () => {
         eth: localStorage.getItem(privateKeys.privateKeyNames.eth),
         btc: localStorage.getItem(privateKeys.privateKeyNames.btc),
         bch: localStorage.getItem(privateKeys.privateKeyNames.bch),
-        ltc: localStorage.getItem(privateKeys.privateKeyNames.ltc),
         // qtum: localStorage.getItem(privateKeys.privateKeyNames.qtum),
       }),
       new SwapRoom({
@@ -91,38 +90,10 @@ const createSwapApp = () => {
         fetchTxInfo: (txid) => actions.bch.fetchTxInfo(txid),
         estimateFeeValue: ({ inSatoshis, speed, address, txSize } = {}) => helpers.bch.estimateFeeValue({ inSatoshis, speed, address, txSize }),
       }),
-      new LtcSwap({
-        fetchBalance: (address) => actions.ltc.fetchBalance(address),
-        fetchUnspents: (scriptAddress) => actions.ltc.fetchUnspents(scriptAddress),
-        broadcastTx: (txRaw) => actions.ltc.broadcastTx(txRaw),
-        fetchTx: (hash) => actions.ltc.fetchTx(hash),
-        estimateFeeRate: ({ speed } = {}) => helpers.ltc.estimateFeeRate({ speed }),
-      }),
-      ...(Object.keys(config.erc20)
-        .map(key =>
-          new EthTokenSwap({
-            name: key,
-            tokenAbi: abi,
-            address: config.swapContract.erc20,
-            decimals: config.erc20[key].decimals,
-            tokenAddress: config.erc20[key].address,
-            fetchBalance: (address) => actions.token.fetchBalance(address, config.erc20[key].address, config.erc20[key].decimals),
-            estimateGasPrice: ({ speed } = {}) => helpers.ethToken.estimateGasPrice({ speed }),
-            /* eslint-disable */
-            abi: [{ "constant": false, "inputs": [{ "name": "_secret", "type": "bytes32" }, { "name": "_ownerAddress", "type": "address" }], "name": "withdraw", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "_participantAddress", "type": "address" }], "name": "getSecret", "outputs": [{ "name": "", "type": "bytes32" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_secretHash", "type": "bytes20" }, { "name": "_participantAddress", "type": "address" }, { "name": "_targetWallet", "type": "address" }, { "name": "_value", "type": "uint256" }, { "name": "_token", "type": "address" }], "name": "createSwapTarget", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_secret", "type": "bytes32" }, { "name": "participantAddress", "type": "address" }], "name": "withdrawNoMoney", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }, { "name": "", "type": "address" }], "name": "swaps", "outputs": [{ "name": "token", "type": "address" }, { "name": "targetWallet", "type": "address" }, { "name": "secret", "type": "bytes32" }, { "name": "secretHash", "type": "bytes20" }, { "name": "createdAt", "type": "uint256" }, { "name": "balance", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_ownerAddress", "type": "address" }, { "name": "_participantAddress", "type": "address" }], "name": "closeSwapByAdminAfterOneYear", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_secretHash", "type": "bytes20" }, { "name": "_participantAddress", "type": "address" }, { "name": "_value", "type": "uint256" }, { "name": "_token", "type": "address" }], "name": "createSwap", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_secret", "type": "bytes32" }, { "name": "_ownerAddress", "type": "address" }, { "name": "participantAddress", "type": "address" }], "name": "withdrawOther", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "name": "tokenOwnerAddress", "type": "address" }], "name": "getTargetWallet", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "admin", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_ownerAddress", "type": "address" }], "name": "getBalance", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_participantAddress", "type": "address" }], "name": "refund", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "token", "type": "address" }, { "indexed": false, "name": "_buyer", "type": "address" }, { "indexed": false, "name": "_seller", "type": "address" }, { "indexed": false, "name": "_value", "type": "uint256" }, { "indexed": false, "name": "_secretHash", "type": "bytes20" }, { "indexed": false, "name": "createdAt", "type": "uint256" }], "name": "CreateSwap", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "_buyer", "type": "address" }, { "indexed": false, "name": "_seller", "type": "address" }, { "indexed": false, "name": "_secretHash", "type": "bytes20" }, { "indexed": false, "name": "withdrawnAt", "type": "uint256" }], "name": "Withdraw", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "name": "_buyer", "type": "address" }, { "indexed": false, "name": "_seller", "type": "address" }, { "indexed": false, "name": "_secretHash", "type": "bytes20" }], "name": "Refund", "type": "event" }],
-            /* eslint-enable */
-          })
-        )),
     ],
     flows: [
       ETH2BTC,
       BTC2ETH,
-
-      ETH2LTC,
-      LTC2ETH,
-
-      LTC2BTC,
-      BTC2LTC,
 
       BCH2ETH,
       ETH2BCH,

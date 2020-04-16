@@ -2,7 +2,6 @@ import btc from './btc'
 import eth from './eth'
 import ethToken from './ethToken'
 import bch from './bch'
-import ltc from './ltc'
 // import xlm from './xlm'
 import user from './user'
 import web3 from './web3'
@@ -50,7 +49,6 @@ export default {
   eth,
   ethToken,
   getCurrencyKey,
-  ltc,
   handleGoTrade,
   transactions,
   estimateFeeValue,
@@ -63,7 +61,6 @@ export {
   btc,
   eth,
   ethToken,
-  ltc,
   user,
   web3,
   utils,

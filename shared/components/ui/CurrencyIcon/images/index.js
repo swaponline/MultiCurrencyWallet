@@ -15,7 +15,6 @@ import yup from './yup.svg'
 import kn from './kn.svg'
 import arn from './arn.svg'
 import lev from './lev.svg'
-import ltc from './ltc.svg'
 import bxb from './bxb.svg'
 import dcn from './dcn.svg'
 import eurs from './eurs.svg'
@@ -28,7 +27,6 @@ export default {
   dcn,
   bxb,
   kn,
-  ltc,
   bch,
   drt,
   xlm,

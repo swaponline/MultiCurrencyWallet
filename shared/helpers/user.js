@@ -10,7 +10,6 @@ export const getActivatedCurrencies = () => {
   }
   if (!config.opts.curEnabled || config.opts.curEnabled.eth) currencies.push('ETH')
   if (!config.opts.curEnabled || config.opts.curEnabled.bch) currencies.push('BCH')
-  if (!config.opts.curEnabled || config.opts.curEnabled.ltc) currencies.push('LTC')
   if (!config.opts.curEnabled || config.opts.curEnabled.qtum) currencies.push('QTUM')
 
   Object.keys(config.erc20).forEach((token) => {

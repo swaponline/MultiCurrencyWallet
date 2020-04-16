@@ -30,11 +30,11 @@ import coinsWithDynamicFee from 'helpers/constants/coinsWithDynamicFee'
   ({
     currencies,
     addSelectedItems,
-    user: { ethData, btcData, bchData, tokensData, nimData, ltcData /* usdtOmniData, nimData */ },
+    user: { ethData, btcData, bchData, tokensData, nimData /* usdtOmniData, nimData */ },
   }) => ({
     currencies: currencies.items,
     addSelectedItems: currencies.addSelectedItems,
-    items: [ethData, btcData, bchData, ltcData /* usdtOmniData, nimData */],
+    items: [ethData, btcData, bchData /* usdtOmniData, nimData */],
     tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   })
 )
