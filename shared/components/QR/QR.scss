@@ -1,3 +1,10 @@
+.relativeWrapper {
+  position: relative;
+  min-height: 50px;
+  transition: min-height ease 0.1s,
+              height ease 0.1s;
+}
+
 .hidden {
   opacity: 0;
 }

@@ -51,15 +51,17 @@ export default class QR extends Component {
 
     return (
       <React.Fragment>
-        <div className={this.state.renderQr ? styles.neverAppear : styles.loader}>
-          <InlineLoader ref={ref => this.loader = ref} />
+        <div className={styles.relativeWrapper}>
+          <div className={this.state.renderQr ? styles.neverAppear : styles.loader}>
+            <InlineLoader ref={ref => this.loader = ref} />
+          </div>
+          <img
+            src={`https://chart.googleapis.com/chart?chs=${size}x${size}&cht=qr&chl=${networkValue}${address}`}
+            alt={`${network}: ${address}`}
+            className={this.state.renderQr ? '' : styles.hidden}
+            ref={ref => this.QR = ref}
+          />
         </div>
-        <img
-          src={`https://chart.googleapis.com/chart?chs=${size}x${size}&cht=qr&chl=${networkValue}${address}`}
-          alt={`${network}: ${address}`}
-          className={this.state.renderQr ? '' : styles.hidden}
-          ref={ref => this.QR = ref}
-        />
       </React.Fragment>
     )
   }
