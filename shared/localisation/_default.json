@@ -5551,13 +5551,6 @@
     ]
   },
   {
-    "id": "partial-tour-1",
-    "message": "Уникальный peer-to-peer обменик, основанный на технологии Atomic Swap.",
-    "files": [
-      "shared/components/Header/TourPartial/TourPartial.js"
-    ]
-  },
-  {
     "id": "partial-tour-2",
     "message": "В данное поле, введите сумму, которую вы хотите продать, выберите валюту для продажи. Вы также можете продать валюту с внешнего кошелька.",
     "files": [
