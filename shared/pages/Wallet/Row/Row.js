@@ -386,7 +386,7 @@ export default class Row extends Component {
 
   hideCurrency = () => {
     const {
-      itemData: { currency, balance }
+      itemData: { currency, address, balance }
     } = this.props
 
     if (balance > 0) {
@@ -399,7 +399,7 @@ export default class Row extends Component {
         )
       })
     } else {
-      actions.core.markCoinAsHidden(currency)
+      actions.core.markCoinAsHidden(`${currency}:${address}`)
       actions.notifications.show(constants.notifications.Message, {
         message: <FormattedMessage id="WalletRow_Action_Hidden" defaultMessage="Кошелек скрыт" />
       })
