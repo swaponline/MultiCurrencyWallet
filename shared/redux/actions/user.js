@@ -371,9 +371,8 @@ Private key: ${ltcData.privateKey}\r\n
   \r\n
   XLM Private Key: ${xlmData.keypair.secret()}\r\n
   Address name: ${xlmData.address}\r\n
-  \r\n
+
   `
-    * /
 
   return text
 }
