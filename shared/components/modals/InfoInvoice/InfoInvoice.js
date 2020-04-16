@@ -57,6 +57,10 @@ const langLabels = defineMessages({
     id: `${langPrefix}_ToAddress`,
     defaultMessage: `Адресс плательщика`,
   },
+  buttonClose: {
+    id: `${langPrefix}_CloseButton`,
+    defaultMessage: `Закрыть`,
+  },
   payInvoice: {
     id: `${langPrefix}_PayInvoiceButton`,
     defaultMessage: `Оплатить`,
@@ -130,6 +134,7 @@ export default class InfoInvoice extends React.Component {
   }
 
   handleClose = () => {
+    console.log('handle close')
     const { name, data, onClose } = this.props
 
     if (typeof onClose === 'function') {
@@ -224,10 +229,11 @@ export default class InfoInvoice extends React.Component {
     const isPayerSide = (!isFetching && invoice && invoice.direction === 'in')
     const shareButtonEnabled = isMobile
 
-    const isPayerControlEnabled = (isPayerSide && !isCancelled && !isReady && status === 'new')
+    const isPayerControlEnabled = (isPayerSide && !isCancelled && !isReady && status === 'pending')
 
+    console.log('isPayerControlEnabled', isPayerControlEnabled, isPayerSide, isCancelled, isReady, status)
     const buttonsHolderStyles = [`invoiceControlsHolder`, `button-overlay`]
-    if (shareButtonEnabled) buttonsHolderStyles.push(`with-share-button`)
+    buttonsHolderStyles.push((shareButtonEnabled) ? `with-share-button` : `without-share-button`)
     if (!isPayerControlEnabled) buttonsHolderStyles.push(`without-pay-control`)
 
     const modalTitle = (isFetching) ?
@@ -255,7 +261,7 @@ export default class InfoInvoice extends React.Component {
     }
 
     return (
-      <Modal name={name} title={modalTitle} onClose={this.handleClose} showCloseButton={true}>
+      <Modal name={name} title={modalTitle} onClose={this.handleClose} showCloseButton={true} closeOnLocationChange={true}>
         {doshare && !isShareReady && (
           <Fragment>
             <div styleName="convent-overlay">
@@ -397,6 +403,14 @@ export default class InfoInvoice extends React.Component {
                   </div>
                 </Fragment>
               )}
+              <div styleName="closeButton">
+                <Button
+                  blue
+                  onClick={this.handleClose}
+                >
+                  <FormattedMessage { ...langLabels.buttonClose } />
+                </Button>
+              </div>
               {shareButtonEnabled && (
                 <div styleName="shareButton">
                   <ShareButton

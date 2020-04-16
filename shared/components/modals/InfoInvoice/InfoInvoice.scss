@@ -103,9 +103,10 @@
 .invoiceControlsHolder {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
   >div {
     width: 49%;
+    max-width: 200px;
   }
   .payControl {
     button {
@@ -113,19 +114,38 @@
     }
   }
 
+  .closeButton,
   .shareButton {
-    width: 32%;
+    width: 49%;
+    padding: 0px;
+    margin-top: 1rem;
+  }
+
+  .closeButton {
+    button {
+      width: 100%;
+    }
+    &::before {
+      content: '';
+      flex-basis: 100%;
+      height: 0;
+    }
   }
 
   &.with-share-button {
     >div {
-      width: 32%;
+      width: 49%;
+    }
+  }
+  &.without-share-button {
+    .closeButton {
+      margin: 1rem auto;
     }
   }
   &.without-pay-control {
     &.with-share-button {
       >div {
-        width: 50%;
+        width: 49%;
         max-width: 200px;
         margin: 0 auto;
       }
@@ -181,19 +201,17 @@
   }
 
   .invoiceControlsHolder {
+    >div {
+      max-width: none;
+    }
+    .closeButton,
+    .shareButton {
+      margin-top: 0.5rem !important;
+      margin-bottom: 0.5rem !important;
+    }
     &.with-share-button {
       .payControl {
         width: 49%;
-      }
-      .shareButton {
-        width: 50%;
-        margin: 0 auto;
-        padding-top: 1rem;
-        &::before {
-          content: '';
-          flex-basis: 100%;
-          height: 0;
-        }
       }
     }
   }
