@@ -124,7 +124,6 @@ export default {
             "files": [
             "shared/pages/Currency/Currency.js",
             "shared/pages/CurrencyWallet/CurrencyWallet.js",
-            "shared/pages/OldWallet/Row/Row.js"
             ]
         },
       ```

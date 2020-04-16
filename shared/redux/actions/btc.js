@@ -9,7 +9,6 @@ import bitcoinMessage from 'bitcoinjs-message'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import { btc, apiLooper, constants, api } from 'helpers'
-import { Keychain } from 'keychain.js'
 import actions from 'redux/actions'
 import typeforce from "swap.app/util/typeforce"
 import config from 'app-config'
@@ -91,14 +90,14 @@ window.getWalletByWords = getWalletByWords
 
 const auth = (privateKey) => {
   if (privateKey) {
-    const hash  = bitcoin.crypto.sha256(privateKey)
-    const d     = BigInteger.fromBuffer(hash)
+    const hash = bitcoin.crypto.sha256(privateKey)
+    const d = BigInteger.fromBuffer(hash)
 
-    const keyPair     = bitcoin.ECPair.fromWIF(privateKey, btc.network)
+    const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
 
-    const account         = bitcoin.ECPair.fromWIF(privateKey, btc.network) // eslint-disable-line
-    const { address }     = bitcoin.payments.p2pkh({ pubkey: account.publicKey, network: btc.network })
-    const { publicKey }   = account
+    const account = bitcoin.ECPair.fromWIF(privateKey, btc.network) // eslint-disable-line
+    const { address } = bitcoin.payments.p2pkh({ pubkey: account.publicKey, network: btc.network })
+    const { publicKey } = account
 
     return {
       account,
@@ -131,17 +130,17 @@ const getPrivateKeyByAddress = (address) => {
 const login = (privateKey, mnemonic, mnemonicKeys) => {
   let sweepToMnemonicReady = false
 
-  if (privateKey 
-    && mnemonic 
-    && mnemonicKeys 
+  if (privateKey
+    && mnemonic
+    && mnemonicKeys
     && mnemonicKeys.btc === privateKey
   ) sweepToMnemonicReady = true
 
   if (!privateKey && mnemonic) sweepToMnemonicReady = true
 
   if (privateKey) {
-    const hash  = bitcoin.crypto.sha256(privateKey)
-    const d     = BigInteger.fromBuffer(hash)
+    const hash = bitcoin.crypto.sha256(privateKey)
+    const d = BigInteger.fromBuffer(hash)
 
     //keyPair     = bitcoin.ECPair.fromWIF(privateKey, btc.network)
   }
@@ -160,7 +159,7 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
 
   localStorage.setItem(constants.privateKeyNames.btc, privateKey)
 
-  const data = { 
+  const data = {
     ...auth(privateKey),
     isMnemonic: sweepToMnemonicReady,
   }
@@ -202,7 +201,7 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
         ...mnemonicData,
       }
     })
-    new Promise(async(resolve) => {
+    new Promise(async (resolve) => {
       const balanceData = await fetchBalanceStatus(mnemonicData.address)
       if (balanceData) {
         reducers.user.setAuthData({
@@ -222,26 +221,7 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
   return privateKey
 }
 
-const loginWithKeychain = async () => {
-  const selectedKey = await actions.keychain.login('BTC')
 
-  const pubkey = Buffer.from(`03${selectedKey.substr(0, 64)}`, 'hex')
-  const keyPair = bitcoin.ECPair.fromPublicKeyBuffer(pubkey, btc.network)
-  const address = keyPair.getAddress()
-
-  const data = {
-    address,
-    publicKey: selectedKey,
-  }
-
-  window.getBtcAddress = () => data.address
-
-  console.info('Logged in with Bitcoin', data)
-  reducers.user.setAuthData({ name: 'btcData', data })
-  localStorage.setItem(constants.privateKeyNames.btcKeychainPublicKey, selectedKey)
-  localStorage.removeItem(constants.privateKeyNames.btc)
-  await getBalance()
-}
 
 const getTx = (txRaw) => {
 
@@ -254,7 +234,7 @@ const getTxRouter = (txId) => {
 
 const getLinkToInfo = (tx) => {
 
-  if(!tx) {
+  if (!tx) {
     return
   }
 
@@ -270,12 +250,12 @@ const fetchBalanceStatus = (address) => {
       return false
     },
   }).then(({ balance, unconfirmedBalance }) => {
-      return {
-        address,
-        balance,
-        unconfirmedBalance,
-      }
-    })
+    return {
+      address,
+      balance,
+      unconfirmedBalance,
+    }
+  })
     .catch((e) => {
       return false
     })
@@ -291,11 +271,11 @@ const getBalance = () => {
       return false
     },
   }).then(({ balance, unconfirmedBalance }) => {
-      console.log('BTC Balance: ', balance)
-      console.log('BTC unconfirmedBalance Balance: ', unconfirmedBalance)
-      reducers.user.setBalance({ name: 'btcData', amount: balance, unconfirmedBalance })
-      return balance
-    })
+    console.log('BTC Balance: ', balance)
+    console.log('BTC unconfirmedBalance Balance: ', unconfirmedBalance)
+    reducers.user.setBalance({ name: 'btcData', amount: balance, unconfirmedBalance })
+    return balance
+  })
     .catch((e) => {
       reducers.user.setBalanceError({ name: 'btcData' })
     })
@@ -321,9 +301,9 @@ const fetchTx = (hash, cacheResponse) =>
       return false
     },
   }).then(({ fees, ...rest }) => ({
-      fees: BigNumber(fees).multipliedBy(1e8),
-      ...rest,
-    }))
+    fees: BigNumber(fees).multipliedBy(1e8),
+    ...rest,
+  }))
 
 const fetchTxInfo = (hash, cacheResponse) =>
   fetchTx(hash, cacheResponse)
@@ -409,12 +389,12 @@ const getDataByAddress = (address) => {
     btcMultisigSMSData,
     btcMultisigUserData,
     ...(
-        btcMultisigUserData
-        && btcMultisigUserData.wallets
-        && btcMultisigUserData.wallets.length
-      )
-        ? btcMultisigUserData.wallets 
-        : [],
+      btcMultisigUserData
+      && btcMultisigUserData.wallets
+      && btcMultisigUserData.wallets.length
+    )
+      ? btcMultisigUserData.wallets
+      : [],
     btcMultisigG2FAData,
   ].filter(data => data && data.address && data.address.toLowerCase() === address.toLowerCase())
 
@@ -426,12 +406,12 @@ const getTransaction = (address, ownType) =>
     const myAllWallets = getAllMyAddresses()
 
     console.log('btc getTransaction', address, myAllWallets)
-    let { user: { btcData: { address : userAddress } } } = getState()
+    let { user: { btcData: { address: userAddress } } } = getState()
     address = address || userAddress
 
     const type = (ownType) ? ownType : 'btc'
 
-    if(!typeforce.isCoinAddress['BTC'](address)) {
+    if (!typeforce.isCoinAddress['BTC'](address)) {
       resolve([])
     }
 
@@ -445,35 +425,35 @@ const getTransaction = (address, ownType) =>
       },
       query: 'btc_balance',
     }).then((res) => {
-        console.log('getTransaction', address, res)
-        const transactions = res.txs.map((item) => {
-          const direction = item.vin[0].addr !== address ? 'in' : 'out'
-          console.log(direction)
-          const isSelf = direction === 'out'
-            && item.vout.filter((item) => 
-              item.scriptPubKey.addresses[0] === address
-            ).length === item.vout.length
+      console.log('getTransaction', address, res)
+      const transactions = res.txs.map((item) => {
+        const direction = item.vin[0].addr !== address ? 'in' : 'out'
+        console.log(direction)
+        const isSelf = direction === 'out'
+          && item.vout.filter((item) =>
+            item.scriptPubKey.addresses[0] === address
+          ).length === item.vout.length
 
-          return ({
-            type,
-            hash: item.txid,
-            canEdit: (myAllWallets.indexOf(address) !== -1),
-            confirmations: item.confirmations,
-            value: isSelf
-              ? item.fees
-              : item.vout.filter((item) => {
-                const currentAddress = item.scriptPubKey.addresses[0]
+        return ({
+          type,
+          hash: item.txid,
+          canEdit: (myAllWallets.indexOf(address) !== -1),
+          confirmations: item.confirmations,
+          value: isSelf
+            ? item.fees
+            : item.vout.filter((item) => {
+              const currentAddress = item.scriptPubKey.addresses[0]
 
-                return direction === 'in'
-                  ? (currentAddress === address)
-                  : (currentAddress !== address)
-              })[0].value,
-            date: item.time * 1000,
-            direction: isSelf ? 'self' : direction,
-          })
+              return direction === 'in'
+                ? (currentAddress === address)
+                : (currentAddress !== address)
+            })[0].value,
+          date: item.time * 1000,
+          direction: isSelf ? 'self' : direction,
         })
-        resolve(transactions)
       })
+      resolve(transactions)
+    })
       .catch(() => {
         resolve([])
       })
@@ -482,12 +462,12 @@ const getTransaction = (address, ownType) =>
 const send = async ({ from, to, amount, feeValue, speed } = {}) => {
   feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
 
-  const tx            = new bitcoin.TransactionBuilder(btc.network)
-  const unspents      = await fetchUnspents(from)
+  const tx = new bitcoin.TransactionBuilder(btc.network)
+  const unspents = await fetchUnspents(from)
 
-  const fundValue     = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
-  const totalUnspent  = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  const skipValue     = totalUnspent - fundValue - feeValue
+  const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
+  const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+  const skipValue = totalUnspent - fundValue - feeValue
 
   unspents.forEach(({ txid, vout }) => tx.addInput(txid, vout, 0xfffffffe))
   tx.addOutput(to, fundValue)
@@ -496,10 +476,8 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
     tx.addOutput(from, skipValue)
   }
 
-  // @ToDo keychain ....
 
-  // const keychainActivated = !!localStorage.getItem(constants.privateKeyNames.btcKeychainPublicKey)
-  // const txRaw = keychainActivated ? await signAndBuildKeychain(tx, unspents) : signAndBuild(tx)
+
   const txRaw = signAndBuild(tx, from)
 
   await broadcastTx(txRaw.toHex())
@@ -525,18 +503,6 @@ const signAndBuild = (transactionBuilder, address) => {
   return transactionBuilder.buildIncomplete()
 }
 
-const signAndBuildKeychain = async (transactionBuilder, unspents) => {
-  const txRaw = transactionBuilder.buildIncomplete()
-  unspents.forEach(({ scriptPubKey }, index) => txRaw.ins[index].script = Buffer.from(scriptPubKey, 'hex'))
-  const keychain = await Keychain.create()
-  const rawHex = await keychain.signTrx(
-    txRaw.toHex(),
-    localStorage.getItem(constants.privateKeyNames.btcKeychainPublicKey),
-    'bitcoin'
-  )
-  return { ...txRaw, toHex: () => rawHex.result }
-}
-
 const fetchUnspents = (address) =>
   apiLooper.get('bitpay', `/addr/${address}/utxo`, { cacheResponse: 5000 })
 
@@ -556,13 +522,12 @@ const signMessage = (message, encodedPrivateKey) => {
   return signature.toString('base64')
 }
 
-const getReputation = () =>  Promise.resolve(0)
+const getReputation = () => Promise.resolve(0)
 
 window.getMainPublicKey = getMainPublicKey
 
 export default {
   login,
-  loginWithKeychain,
   getBalance,
   getTransaction,
   send,

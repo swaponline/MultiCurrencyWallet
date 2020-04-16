@@ -14,9 +14,7 @@ export default {
   btcSmsMnemonicKeyGenerated: `${process.env.ENTRY}:btcSmsMnemonicKeyGenerated`,
   btcSmsMnemonicKeyMnemonic: `${process.env.ENTRY}:btcSmsMnemonicKey:Mnemonic`, // Sweep
   btcSmsMnemonicKeyOld: `${process.env.ENTRY}:btcSmsMnemonicKey:old`, // Sweep
-  ethKeychainPublicKey: `${process.env.ENTRY}:eth:keychainPublicKey`,
-  btcKeychainPublicKey: `${process.env.ENTRY}:btc:keychainPublicKey`,
-  btcMultisigKeychainPublicKey: `${process.env.ENTRY}:btcMultisig:keychainPublicKey`,
+
   // xlm: `${process.env.ENTRY}:xlm:privateKey`,
   bch: `${process.env.ENTRY}:bch:privateKey`,
   ltc: `${process.env.ENTRY}:ltc:privateKey`,

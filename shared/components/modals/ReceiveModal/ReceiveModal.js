@@ -58,6 +58,12 @@ export default class ReceiveModal extends React.Component {
     })
   }
 
+  handleClose = () => {
+    const { name } = this.props
+
+    actions.modals.close(name)
+  }
+
   render() {
     const {
       props: {
@@ -100,19 +106,28 @@ export default class ReceiveModal extends React.Component {
               <p>
                 {address}
               </p>
-              <Button
-                styleName="button"
-                brand
-                onClick={() => {}}
-                disabled={isAddressCopied}
-                fullWidth
-              >
-                { isAddressCopied ?
-                  <FormattedMessage id="recieved65" defaultMessage="Address copied to clipboard" />
-                  :
-                  <FormattedMessage id="recieved67" defaultMessage="Copy to clipboard" />
-                }
-              </Button>
+
+              <div styleName="sendBtnsWrapper">
+                <div styleName="actionBtn">
+                  <Button
+                    brand
+                    onClick={() => { }}
+                    disabled={isAddressCopied}
+                    fill
+                  >
+                    {isAddressCopied ?
+                      <FormattedMessage id="recieved65" defaultMessage="Address copied to clipboard" />
+                      :
+                      <FormattedMessage id="recieved67" defaultMessage="Copy to clipboard" />
+                    }
+                  </Button>
+                </div>
+                <div styleName="actionBtn">
+                  <Button big fill gray onClick={this.handleClose}>
+                    <FormattedMessage id="WithdrawModalCancelBtn" defaultMessage="Cancel" />
+                  </Button>
+                </div>
+              </div>
             </div>
           </CopyToClipboard>
         </div>

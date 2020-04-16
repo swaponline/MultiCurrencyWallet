@@ -216,18 +216,6 @@
     ]
   },
   {
-    "id": "Keychain23",
-    "message": "Download"
-  },
-  {
-    "id": "Keychain26",
-    "message": "KeyChain changes your address for security reasons. Note that you need to transfer your funds to another address before activating KeyChain. Keep in mind that automatic change of address will reset your balance."
-  },
-  {
-    "id": "Keychain27",
-    "message": "KeyChain is loading. Please wait."
-  },
-  {
     "id": "ImportKeys107",
     "message": "This procedure will rewrite your private key. If you are not sure about it, we recommend to press cancel",
     "files": [
@@ -1653,66 +1641,8 @@
     ]
   },
   {
-    "id": "Wallet104",
-    "message": "Your online cryptocurrency wallet",
-    "files": [
-      "shared/pages/OldWallet/Wallet.js"
-    ]
-  },
-  {
-    "id": "Row235",
-    "message": "Copy",
-    "files": [
-      "shared/pages/OldWallet/Row/Row.js"
-    ]
-  },
-  {
-    "id": "Row256",
-    "message": "Buy this account",
-    "files": [
-      "shared/pages/OldWallet/Row/Row.js"
-    ]
-  },
-  {
     "id": "Row263",
     "message": "Use another"
-  },
-  {
-    "id": "Row268",
-    "message": "Not activated",
-    "files": [
-      "shared/pages/OldWallet/Row/Row.js"
-    ]
-  },
-  {
-    "id": "Row293",
-    "message": "Address copied to clipboard",
-    "files": [
-      "shared/pages/OldWallet/Row/Row.js"
-    ]
-  },
-  {
-    "id": "Row313",
-    "message": "Deposit",
-    "files": [
-      "shared/pages/Currency/Currency.js",
-      "shared/pages/OldWallet/Row/Row.js"
-    ]
-  },
-  {
-    "id": "RowWallet181",
-    "message": "Unconfirmed balance",
-    "files": [
-      "shared/pages/OldWallet/Row/Row.js",
-      "shared/pages/Wallet/Row/Row.js"
-    ]
-  },
-  {
-    "id": "RowWallet189",
-    "message": "Unconfirmed balance",
-    "files": [
-      "shared/pages/OldWallet/Row/Row.js"
-    ]
   },
   {
     "id": "RowWallet197",
@@ -2112,20 +2042,6 @@
     ]
   },
   {
-    "id": "Row328",
-    "message": "Send",
-    "files": [
-      "shared/pages/OldWallet/Row/Row.js"
-    ]
-  },
-  {
-    "id": "Row334",
-    "message": "Exchange",
-    "files": [
-      "shared/pages/OldWallet/Row/Row.js"
-    ]
-  },
-  {
     "id": "AddOffer418",
     "message": "Custom exchange rate",
     "files": [
@@ -2335,48 +2251,6 @@
     ]
   },
   {
-    "id": "Wallet114",
-    "message": "Coin",
-    "files": [
-      "shared/pages/OldWallet/Wallet.js"
-    ]
-  },
-  {
-    "id": "Wallet115",
-    "message": "Name",
-    "files": [
-      "shared/pages/OldWallet/Wallet.js"
-    ]
-  },
-  {
-    "id": "Wallet116",
-    "message": "Balance ",
-    "files": [
-      "shared/pages/OldWallet/Wallet.js"
-    ]
-  },
-  {
-    "id": "Wallet117",
-    "message": "Your Address ",
-    "files": [
-      "shared/pages/OldWallet/Wallet.js"
-    ]
-  },
-  {
-    "id": "Wallet118",
-    "message": "Send, receive, swap",
-    "files": [
-      "shared/pages/OldWallet/Wallet.js"
-    ]
-  },
-  {
-    "id": "Wallet119",
-    "message": "Actions",
-    "files": [
-      "shared/pages/OldWallet/Wallet.js"
-    ]
-  },
-  {
     "id": "Orders141",
     "message": "No such ticker. Redirecting to USDT-BTC exchange... ",
     "files": [
@@ -2566,13 +2440,6 @@
     ]
   },
   {
-    "id": "Wallet137",
-    "message": "Deposit funds to addresses below",
-    "files": [
-      "shared/pages/OldWallet/Wallet.js"
-    ]
-  },
-  {
     "id": "SignUpModal133",
     "message": "Something went wrong.{br}Try it later",
     "files": [
@@ -2668,13 +2535,6 @@
     ]
   },
   {
-    "id": "Row346",
-    "message": "Not activated",
-    "files": [
-      "shared/pages/OldWallet/Row/Row.js"
-    ]
-  },
-  {
     "id": "Row358",
     "message": "Activate"
   },
@@ -2687,20 +2547,6 @@
     "message": "Offer list",
     "files": [
       "shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.js"
-    ]
-  },
-  {
-    "id": "Row288",
-    "message": "KeyChain is activated",
-    "files": [
-      "shared/pages/OldWallet/KeychainStatus/KeychainStatus.js"
-    ]
-  },
-  {
-    "id": "Row289",
-    "message": "KeyChain is not activated",
-    "files": [
-      "shared/pages/OldWallet/KeychainStatus/KeychainStatus.js"
     ]
   },
   {
@@ -3597,27 +3443,6 @@
     "message": "SELL {buyCurrency} HERE"
   },
   {
-    "id": "Wallet140",
-    "message": "Cryptocurrency Wallet with Atomic Swap Exchange",
-    "files": [
-      "shared/pages/OldWallet/Wallet.js"
-    ]
-  },
-  {
-    "id": "Wallet146",
-    "message": "Our online wallet with Atomic swap algorithms will help you store and exchange cryptocurrency instantly and more secure without third-parties. Decentralized exchange.",
-    "files": [
-      "shared/pages/OldWallet/Wallet.js"
-    ]
-  },
-  {
-    "id": "Wallet156",
-    "message": "Welcome to Swap.Online, a decentralized cross-chain wallet based on Atomic Swap technology.{br}Here you can safely store and promptly exchange Bitcoin, Ethereum, USD, Tether, BCH, and numerous ERC-20 tokens.{br}{br}Swap.Online doesn’t store your keys or tokens. Our wallet operates directly within your browser, so no additional installations or downloads are required.{br}The Swap.Online service is fully decentralized.  All operations with tokens are executed via the IPFS network.{br}{br}Our team was the first to finalize Atomic Swaps with USDT in September 2018 and Litecoin blockchain was added in October 2018.{br}Our wallet addresses real multi-chain integration with a decentralized order book - no third party involved in the exchange, no proxy-token and no token wrapping.{br}We can integrate any ERC-20 token of a project for free!  We just ask for a mutually beneficial PR announcement!{br}{br}In addition, we developed Swap.Button, a b2b-solution to exchange all kinds of tokens for Bitcoin and Ethereum.{br}Install Swap.Button html widget on your site and collect crypto investments for your project.{br}{br}Start using https://swap.online/ today and enjoy the power of true decentralization.",
-    "files": [
-      "shared/pages/OldWallet/Wallet.js"
-    ]
-  },
-  {
     "id": "PartialClosure562",
     "message": "Our service is a decentralized hot wallet powered by Atomic swap technology. Exchange Bitcoin, USD Tether, BCH within seconds. No commission for exchange (only miners fee). {br}{br}Swap.Online uses IPFS-network for all the operational processes which results in no need for centralized server. {br}The interface of exchange seems to look like that of crypto broker, not of ordinary DEX or CEX. In a couple of clicks, the user can place and take the offer, customizing the price of sent token. {br}{br}Also, the user can exchange the given percentage of his or her amount of tokens available (e.g. ½, ¼ etc.). {br}{br}One more advantage of the Swap.Online exchange service is the usage of one key for the full range of ERC-20 tokens. {br}By the way, if case you’re not interested in exchange of some tokens, you can hide it from the list. {br}Thus, use Swap.Online as your basic exchange for every crypto you’re holding!"
   },
@@ -3625,7 +3450,6 @@
     "id": "RowWallet276",
     "message": " node is down (You can not perform transactions). ",
     "files": [
-      "shared/pages/OldWallet/Row/Row.js",
       "shared/pages/Wallet/Row/Row.js"
     ]
   },
@@ -3633,22 +3457,7 @@
     "id": "RowWallet282",
     "message": "No connection...",
     "files": [
-      "shared/pages/OldWallet/Row/Row.js",
       "shared/pages/Wallet/Row/Row.js"
-    ]
-  },
-  {
-    "id": "RowWallet283",
-    "message": "Activate",
-    "files": [
-      "shared/pages/OldWallet/KeychainStatus/KeychainStatus.js"
-    ]
-  },
-  {
-    "id": "RowWallet284",
-    "message": "Deactivate",
-    "files": [
-      "shared/pages/OldWallet/KeychainStatus/KeychainStatus.js"
     ]
   },
   {
@@ -4286,13 +4095,6 @@
     "message": "(tx)"
   },
   {
-    "id": "WalletWidgetBuildTitle",
-    "message": "Cryptocurrency Wallet with Atomic Swap Exchange",
-    "files": [
-      "shared/pages/OldWallet/Wallet.js"
-    ]
-  },
-  {
     "id": "transaction444",
     "message": "Sell amount must be greater than",
     "files": [
@@ -4772,104 +4574,6 @@
     "message": "Wiki",
     "files": [
       "shared/components/Footer/Links/Links.js"
-    ]
-  },
-  {
-    "id": "Keychain",
-    "message": "KeyChain Activation",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
-  },
-  {
-    "id": "Keychain114",
-    "message": "KeyChain is loading. Please wait.",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
-  },
-  {
-    "id": "Keychain116",
-    "message": "Back",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
-  },
-  {
-    "id": "Keychain1165",
-    "message": "KeyChain is activated. If you wish to deactivate KeyChain, note that your key will be replaced with a new one.",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
-  },
-  {
-    "id": "Keychain130",
-    "message": "You need to install KeyChain to proceed",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
-  },
-  {
-    "id": "Keychain133",
-    "message": "Download",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
-  },
-  {
-    "id": "Keychain141",
-    "message": "Positive balance error",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
-  },
-  {
-    "id": "Keychain144",
-    "message": "Would you like to protect your keys with KeyChain? Note that your address will be changed",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
-  },
-  {
-    "id": "Keychain157",
-    "message": "Confirm",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
-  },
-  {
-    "id": "Keychain167",
-    "message": "Deactivate",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
-  },
-  {
-    "id": "Keychain173",
-    "message": "KeyChain is not installed but activated",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
-  },
-  {
-    "id": "Keychain175",
-    "message": "Deactivate",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
-  },
-  {
-    "id": "Keychain179",
-    "message": "Download",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
-  },
-  {
-    "id": "Keychain185",
-    "message": "Back",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
     ]
   },
   {
@@ -5496,13 +5200,6 @@
     ]
   },
   {
-    "id": "Wallet364",
-    "message": "Wallet based on the Atomic Swap technology",
-    "files": [
-      "shared/pages/OldWallet/Wallet.js"
-    ]
-  },
-  {
     "id": "BtcToEth100",
     "message": "This order doesn't have a buyer",
     "files": [
@@ -6050,6 +5747,16 @@
     ]
   },
   {
+    "id": "WithdrawModalCancelBtn",
+    "message": "Cancel",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js",
+      "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
+      "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.js",
+      "shared/components/modals/ReceiveModal/ReceiveModal.js"
+    ]
+  },
+  {
     "id": "InvoiceLinkModal_Title",
     "message": "Invoice link",
     "files": [
@@ -6368,27 +6075,6 @@
     "message": "Copy private key",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
-    ]
-  },
-  {
-    "id": "Row426",
-    "message": "Login with your existing EOS account",
-    "files": [
-      "shared/pages/OldWallet/Row/Row.js"
-    ]
-  },
-  {
-    "id": "Row431",
-    "message": "Login with your existing TLOS account",
-    "files": [
-      "shared/pages/OldWallet/Row/Row.js"
-    ]
-  },
-  {
-    "id": "Row440",
-    "message": "Create Telos account in 1 click",
-    "files": [
-      "shared/pages/OldWallet/Row/Row.js"
     ]
   },
   {
@@ -7533,7 +7219,7 @@
   },
   {
     "id": "ImportKeys_RestoreMnemonic",
-    "message": "I have my 12 word seed",
+    "message": "I have my 12 words seed",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
     ]

@@ -13,7 +13,7 @@ import { getActivatedCurrencies } from 'helpers/user'
 
 const sign_btc_multisig = async (btcPrivateKey) => {
   let btcMultisigOwnerKey = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKey)
-  try { btcMultisigOwnerKey = JSON.parse( btcMultisigOwnerKey ) } catch (e) {}
+  try { btcMultisigOwnerKey = JSON.parse(btcMultisigOwnerKey) } catch (e) { }
   const _btcMultisigPrivateKey = actions.btcmultisig.login_USER(btcPrivateKey, btcMultisigOwnerKey)
   await actions.btcmultisig.signToUserMultisig()
 }
@@ -21,9 +21,9 @@ const sign_btc_multisig = async (btcPrivateKey) => {
 
 const sign_btc_2fa = async (btcPrivateKey) => {
   const btcSMSServerKey = config.swapContract.protectedBtcKey
-  let btcSmsPublicKeys = [ btcSMSServerKey ]
+  let btcSmsPublicKeys = [btcSMSServerKey]
   let btcSmsMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKey)
-  try { btcSmsMnemonicKey = JSON.parse( btcSmsMnemonicKey ) } catch (e) {}
+  try { btcSmsMnemonicKey = JSON.parse(btcSmsMnemonicKey) } catch (e) { }
   if (btcSmsMnemonicKey instanceof Array && btcSmsMnemonicKey.length > 0) {
     btcSmsPublicKeys.push(btcSmsMnemonicKey[0])
   }
@@ -55,13 +55,13 @@ const sign = async () => {
   }
   // Sweep-Switch
   let btcNewSmsMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKeyMnemonic)
-  try { btcNewSmsMnemonicKey = JSON.parse( btcNewSmsMnemonicKey ) } catch (e) {}
+  try { btcNewSmsMnemonicKey = JSON.parse(btcNewSmsMnemonicKey) } catch (e) { }
   if (!(btcNewSmsMnemonicKey instanceof Array)) {
     localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyMnemonic, JSON.stringify([]))
   }
 
   let btcNewMultisigOwnerKey = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKeyMnemonic)
-  try { btcNewMultisigOwnerKey = JSON.parse( btcNewMultisigOwnerKey ) } catch (e) {}
+  try { btcNewMultisigOwnerKey = JSON.parse(btcNewMultisigOwnerKey) } catch (e) { }
   if (!(btcNewMultisigOwnerKey instanceof Array)) {
     localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKeyMnemonic, JSON.stringify([]))
   }
@@ -74,12 +74,9 @@ const sign = async () => {
   // const qtumPrivateKey        = localStorage.getItem(constants.privateKeyNames.qtum)
   // const xlmPrivateKey = localStorage.getItem(constants.privateKeyNames.xlm)
 
-  const isEthKeychainActivated = !!localStorage.getItem(constants.privateKeyNames.ethKeychainPublicKey)
-  const isBtcKeychainActivated = !!localStorage.getItem(constants.privateKeyNames.btcKeychainPublicKey)
-  const isBtcMultisigKeychainActivated = !!localStorage.getItem(constants.privateKeyNames.btcMultisigKeychainPublicKey)
 
-  const _ethPrivateKey = isEthKeychainActivated ? await actions.eth.loginWithKeychain() : actions.eth.login(ethPrivateKey, mnemonic, mnemonicKeys)
-  const _btcPrivateKey = isBtcKeychainActivated ? await actions.btc.loginWithKeychain() : actions.btc.login(btcPrivateKey, mnemonic, mnemonicKeys)
+  const _ethPrivateKey = actions.eth.login(ethPrivateKey, mnemonic, mnemonicKeys)
+  const _btcPrivateKey = actions.btc.login(btcPrivateKey, mnemonic, mnemonicKeys)
 
   // btc multisig with 2fa (2of3)
   await sign_btc_2fa(_btcPrivateKey)
@@ -96,10 +93,10 @@ const sign = async () => {
   // if inside actions.token.login to call web3.eth.accounts.privateKeyToAccount passing public key instead of private key
   // there will not be an error, but the address returned will be wrong
   // if (!isEthKeychainActivated) {
-    Object.keys(config.erc20)
-      .forEach(name => {
-        actions.token.login(_ethPrivateKey, config.erc20[name].address, name, config.erc20[name].decimals, config.erc20[name].fullName)
-      })
+  Object.keys(config.erc20)
+    .forEach(name => {
+      actions.token.login(_ethPrivateKey, config.erc20[name].address, name, config.erc20[name].decimals, config.erc20[name].fullName)
+    })
   // }
   reducers.user.setTokenSigned(true)
   // await actions.nimiq.login(_ethPrivateKey)
@@ -110,7 +107,7 @@ const sign = async () => {
 }
 
 const getReputation = async () => {
-  
+
   const btcReputationPromise = actions.btc.getReputation()
   const ethReputationPromise = actions.eth.getReputation()
 
@@ -162,7 +159,6 @@ const getBalances = () => {
 }
 
 const getExchangeRate = (sellCurrency, buyCurrency) => {
-  console.log('actions.user.getExchangeRate', sellCurrency, buyCurrency)
   if (buyCurrency.toLowerCase() === 'usd') {
     return new Promise((resolve, reject) => {
       let dataKey = sellCurrency.toLowerCase()
@@ -211,16 +207,16 @@ const getDemoMoney = process.env.MAINNET ? () => { } : () => {
 }
 
 
-const getInfoAboutCurrency = (currencyNames) => 
+const getInfoAboutCurrency = (currencyNames) =>
 
   new Promise((resolve, reject) => {
     const url = 'https://noxon.wpmix.net/cursAll.php';
     reducers.user.setIsFetching({ isFetching: true })
 
     request.get(url, {
-      cacheResponse: 60*60*1000, // кеш 1 час
+      cacheResponse: 60 * 60 * 1000, // кеш 1 час
     }).then((answer) => {
-      let infoAboutBTC = answer.data.filter( currencyInfo => {
+      let infoAboutBTC = answer.data.filter(currencyInfo => {
         if (currencyInfo.symbol.toLowerCase() === 'btc') return true
       })
       const btcPrice = (
@@ -229,43 +225,43 @@ const getInfoAboutCurrency = (currencyNames) =>
         && infoAboutBTC[0].quote
         && infoAboutBTC[0].quote.USD
         && infoAboutBTC[0].quote.USD.price
-      ) ? infoAboutBTC[0].quote.USD.price : 7000 
+      ) ? infoAboutBTC[0].quote.USD.price : 7000
 
       answer.data.map(currencyInfoItem => {
         if (currencyNames.includes(currencyInfoItem.symbol)) {
           if (currencyInfoItem.quote && currencyInfoItem.quote.USD) {
             const priceInBtc = currencyInfoItem.quote.USD.price / btcPrice
             const currencyInfo = {
-              ... currencyInfoItem.quote.USD,
+              ...currencyInfoItem.quote.USD,
               price_usd: currencyInfoItem.quote.USD.price,
               price_btc: priceInBtc,
             }
 
-            switch(currencyInfoItem.symbol) {
+            switch (currencyInfoItem.symbol) {
               case 'BTC': {
-                reducers.user.setInfoAboutCurrency({name: 'btcData', infoAboutCurrency: currencyInfo})
-                reducers.user.setInfoAboutCurrency({name: 'btcMnemonicData', infoAboutCurrency: currencyInfo}) // Sweep (for future)
-                reducers.user.setInfoAboutCurrency({name: 'btcMultisigSMSData', infoAboutCurrency: currencyInfo})
-                reducers.user.setInfoAboutCurrency({name: 'btcMultisigUserData', infoAboutCurrency: currencyInfo})
-                reducers.user.setInfoAboutCurrency({name: 'btcMultisigG2FAData', infoAboutCurrency: currencyInfo})
+                reducers.user.setInfoAboutCurrency({ name: 'btcData', infoAboutCurrency: currencyInfo })
+                reducers.user.setInfoAboutCurrency({ name: 'btcMnemonicData', infoAboutCurrency: currencyInfo }) // Sweep (for future)
+                reducers.user.setInfoAboutCurrency({ name: 'btcMultisigSMSData', infoAboutCurrency: currencyInfo })
+                reducers.user.setInfoAboutCurrency({ name: 'btcMultisigUserData', infoAboutCurrency: currencyInfo })
+                reducers.user.setInfoAboutCurrency({ name: 'btcMultisigG2FAData', infoAboutCurrency: currencyInfo })
                 break;
               }
               case 'ETH': {
-                reducers.user.setInfoAboutCurrency({name: 'ethData', infoAboutCurrency: currencyInfo})
-                reducers.user.setInfoAboutCurrency({name: 'ethMnemonicData', infoAboutCurrency: currencyInfo}) // Sweep (for future)
+                reducers.user.setInfoAboutCurrency({ name: 'ethData', infoAboutCurrency: currencyInfo })
+                reducers.user.setInfoAboutCurrency({ name: 'ethMnemonicData', infoAboutCurrency: currencyInfo }) // Sweep (for future)
                 break;
               }
               case 'LTC': {
-                reducers.user.setInfoAboutCurrency({name: 'ltcData', infoAboutCurrency: currencyInfo})
-                reducers.user.setInfoAboutCurrency({name: 'ltcMnemonicData', infoAboutCurrency: currencyInfo}) // Sweep (for future)
+                reducers.user.setInfoAboutCurrency({ name: 'ltcData', infoAboutCurrency: currencyInfo })
+                reducers.user.setInfoAboutCurrency({ name: 'ltcMnemonicData', infoAboutCurrency: currencyInfo }) // Sweep (for future)
                 break;
               }
               case 'BCH': {
-                reducers.user.setInfoAboutCurrency({name: 'bchData', infoAboutCurrency: currencyInfo})
-                reducers.user.setInfoAboutCurrency({name: 'bchMnemonicData', infoAboutCurrency: currencyInfo}) // Sweep (for future)
+                reducers.user.setInfoAboutCurrency({ name: 'bchData', infoAboutCurrency: currencyInfo })
+                reducers.user.setInfoAboutCurrency({ name: 'bchMnemonicData', infoAboutCurrency: currencyInfo }) // Sweep (for future)
                 break;
               }
-              default: reducers.user.setInfoAboutCurrency({name: `${currencyInfoItem.symbol.toLowerCase()}Data`, infoAboutCurrency: currencyInfo})
+              default: reducers.user.setInfoAboutCurrency({ name: `${currencyInfoItem.symbol.toLowerCase()}Data`, infoAboutCurrency: currencyInfo })
             }
           }
         }
@@ -273,11 +269,11 @@ const getInfoAboutCurrency = (currencyNames) =>
       resolve(true);
     }).catch((error) => {
       reject(error)
-    }).finally( () =>  reducers.user.setIsFetching({ isFetching: false }))
+    }).finally(() => reducers.user.setIsFetching({ isFetching: false }))
   })
 
 const pullTransactions = transactions => {
-  console.log('pullTransactions', transactions)
+
   let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date).filter((item) => item)
   reducers.history.setTransactions(data)
 }
@@ -421,13 +417,13 @@ export const isOwner = (addr, currency) => {
   const name = `${currency.toLowerCase()}Data`
   const { user } = getState()
 
-  if(!user[name]) {
+  if (!user[name]) {
     return false
   }
 
-  const {address} = user[name]
+  const { address } = user[name]
 
-  if(!address) {
+  if (!address) {
     return false
   }
 

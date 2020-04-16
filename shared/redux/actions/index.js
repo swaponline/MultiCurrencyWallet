@@ -16,7 +16,6 @@ import btcmultisig from './btcmultisig'
 import bch from './bch'
 import ltc from './ltc'
 import eth from './eth'
-import keychain from './keychain'
 import token from './token'
 import nimiq from './nimiq'
 // import qtum from './qtum'
@@ -64,7 +63,6 @@ export default {
   // xlm,
   // usdt,
 
-  keychain,
   token,
   feed,
   analytics,

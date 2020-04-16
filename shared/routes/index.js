@@ -6,7 +6,6 @@ import { localisePrefix } from 'helpers/locale'
 
 import SwapComponent from 'pages/Swap/Swap'
 import Home from 'pages/Home/Home'
-import OldWallet from 'pages/OldWallet/Wallet'
 import History from 'pages/History/History'
 import CreateWallet from 'pages/CreateWallet/CreateWallet'
 import NotFound from 'pages/NotFound/NotFound'
@@ -30,14 +29,14 @@ const routes = (
   <ScrollToTop>
     <Switch>
       <Route path={`${localisePrefix}${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />
-      
+
       <Route path={`${localisePrefix}/:ticker(btc|eth|ltc)/tx/:tx?`} component={Transaction} />
       <Route path={`${localisePrefix}/:token(token)/:ticker/tx/:tx?`} component={Transaction} />
       <Route path={`${localisePrefix}/:ticker(btc|eth|ltc)/:address`} component={CurrencyWallet} />
       <Route path={`${localisePrefix}/:token(token)/:ticker/:address`} component={CurrencyWallet} />
       <Route path={`${localisePrefix}/:fullName-wallet/:address?`} component={CurrencyWallet} />
 
-      
+
 
       <Route path={`${localisePrefix}${links.home}:buy-:sell/:orderId`} component={Home} />
       <Route path={`${localisePrefix}${links.home}:buy-:sell`} component={Home} />
@@ -49,12 +48,12 @@ const routes = (
       <Route path={`${localisePrefix}${links.pointOfSell}`} component={PointOfSell} />
 
       <Route path={`${localisePrefix}${links.aboutUs}`} component={About} />
-   
+
       <Route path={`${localisePrefix}${links.send}/:currency/:address/:amount`} component={Wallet} />
       <Route path={`${localisePrefix}${links.wallet}`} component={Wallet} />
       <Route path={`${localisePrefix}${links.history}/(btc)?/:address?`} component={History} />
-      
-      
+
+
       <Route exact path={`${localisePrefix}${links.createWallet}`} component={CreateWallet} />
       <Route path={`${localisePrefix}${links.createWallet}${links.home}:currency`} component={CreateWallet} />
 
@@ -68,7 +67,6 @@ const routes = (
       <Route exact path={`${localisePrefix}${links.home}`} component={Wallet} />
 
       <Route path={`${localisePrefix}${links.currencyWallet}`} component={Wallet} />
-      <Route path={`${localisePrefix}${links.oldWallet}`} component={OldWallet} />
       <Route path={`${localisePrefix}${links.home}:currency`} component={Currency} />
 
 
