@@ -96,6 +96,7 @@ export default class InvoiceModal extends React.Component {
       payerAddress,
       openScanCam: '',
       address: toAddress ? toAddress : '',
+      toAddressEnabled: !(!toAddress),
       destination: address,
       amount: '',
       minus: '',
@@ -165,7 +166,7 @@ export default class InvoiceModal extends React.Component {
   }
 
   handleGoToInvoice = (invoiceId) => {
-    redirectTo(`${links.invoice}/${invoiceId}`)
+    redirectTo(`${links.invoice}/${invoiceId}/share`)
   }
 
   addressIsCorrect(otherAddress) {
@@ -254,7 +255,8 @@ export default class InvoiceModal extends React.Component {
       openScanCam,
       error,
       infoAboutCurrency,
-      selectedValue
+      selectedValue,
+      toAddressEnabled,
     } = this.state
 
     const {
@@ -265,7 +267,8 @@ export default class InvoiceModal extends React.Component {
 
     const linked = Link.all(this, 'address', 'destination', 'amountUSD', 'amountRUB', 'amount', 'contact', 'label')
 
-    const isDisabled = !address || !amount || isShipped || !destination || !contact || !this.addressIsCorrect()
+    //const isDisabled = !address || !amount || isShipped || !destination || !contact || !this.addressIsCorrect()
+    const isDisabled = !amount || isShipped || !destination || !contact || (address && !this.addressIsCorrect())
 
     const localeLabel = defineMessages({
       title: {
@@ -304,26 +307,28 @@ export default class InvoiceModal extends React.Component {
           <QrReader openScan={this.openScan} handleError={this.handleError} handleScan={this.handleScan} />
         )}
         <div styleName="invoiceModalHolder">
-          <div styleName="highLevel">
-            <FieldLabel label>
-              <FormattedMessage id="invoiceModal_Address" defaultMessage="Адрес, на который выставляем счет" />
-            </FieldLabel>
-            <Input
-              smallFontSize
-              withMargin
-              valueLink={linked.address}
-              focusOnInit
-              pattern="0-9a-zA-Z:"
-              placeholder={intl.formatMessage(localeLabel.addressPlaceholder, { currency: currency.toUpperCase() })}
-              qr
-              openScan={this.openScan}
-            />
-            {address && !this.addressIsCorrect() && (
-              <div styleName="rednote">
-                <FormattedMessage id="invoiceModal_IncorrectAddress" defaultMessage="Вы ввели не коректный адрес" />
-              </div>
-            )}
-          </div>
+          {toAddressEnabled && (
+            <div styleName="highLevel">
+              <FieldLabel label>
+                <FormattedMessage id="invoiceModal_Address" defaultMessage="Адрес, на который выставляем счет" />
+              </FieldLabel>
+              <Input
+                smallFontSize
+                withMargin
+                valueLink={linked.address}
+                focusOnInit
+                pattern="0-9a-zA-Z:"
+                placeholder={intl.formatMessage(localeLabel.addressPlaceholder, { currency: currency.toUpperCase() })}
+                qr
+                openScan={this.openScan}
+              />
+              {address && !this.addressIsCorrect() && (
+                <div styleName="rednote">
+                  <FormattedMessage id="invoiceModal_IncorrectAddress" defaultMessage="Вы ввели не коректный адрес" />
+                </div>
+              )}
+            </div>
+          )}
           <div styleName="highLevel">
             <FieldLabel label>
               <FormattedMessage id="invoiceModal_destiAddress" defaultMessage="Адрес, куда будет произведена оплата" />

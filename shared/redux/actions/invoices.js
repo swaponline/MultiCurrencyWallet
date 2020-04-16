@@ -14,7 +14,7 @@ import getCurrencyKey from 'helpers/getCurrencyKey'
 const validateData = (data) => {
   if (!data) return false
   if (!data.currency) return false
-  if (!data.toAddress) return false
+  // if (!data.toAddress) return false
   if (!data.fromAddress) return false
   if (!data.amount) return false
 
@@ -94,9 +94,12 @@ const getInvoice = (hash) => {
         } = res
 
         const direction = (actions.user.isOwner(item.toAddress, item.type)) ? 'in' : 'out'
+        const isOwner = (actions.user.isOwner(item.fromAddress, item.type))
 
         resolve ({
           invoiceData: item,
+          isOwner,
+          hasPayer: !(!item.toAddress),
           hash: 'no hash',
           confirmations: 1,
           value: amount,

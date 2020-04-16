@@ -118,7 +118,7 @@ export default class Invoice extends PureComponent {
               invoice,
             })
           } else {
-            history.push(localisedUrl(localName, links.notFound))
+            history.push(localisedUrl(locale, links.notFound))
           }
         })
       })

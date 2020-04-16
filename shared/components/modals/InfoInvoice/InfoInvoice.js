@@ -242,9 +242,12 @@ export default class InfoInvoice extends React.Component {
 
 
     const isPayerSide = (!isFetching && invoice && invoice.direction === 'in')
+    const isOwner = (!isFetching && invoice && invoice.isOwner)
+    const hasPayer = (!isFetching && invoice && invoice.hasPayer)
+
     const shareButtonEnabled = isMobile
 
-    const isPayerControlEnabled = (isPayerSide && !isCancelled && !isReady && status === 'pending')
+    const isPayerControlEnabled = (status === 'pending' && !isCancelled && !isReady && (isPayerSide || (!hasPayer && !isOwner)))
 
     const buttonsHolderStyles = [`invoiceControlsHolder`, `button-overlay`]
     buttonsHolderStyles.push((shareButtonEnabled) ? `with-share-button` : `without-share-button`)
