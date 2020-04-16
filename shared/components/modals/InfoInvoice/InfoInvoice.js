@@ -133,16 +133,19 @@ export default class InfoInvoice extends React.Component {
     }
   }
 
-  handleClose = () => {
-    console.log('handle close')
+  handleCloseButton = () => {
+    this.handleClose()
+  }
+
+  handleClose = (isLocationChange) => {
     const { name, data, onClose } = this.props
 
     if (typeof onClose === 'function') {
-      onClose()
+      onClose(isLocationChange)
     }
 
     if (typeof data.onClose === 'function') {
-      data.onClose()
+      data.onClose(isLocationChange)
     }
 
     actions.modals.close(name)
@@ -417,7 +420,7 @@ export default class InfoInvoice extends React.Component {
               <div styleName="closeButton">
                 <Button
                   blue
-                  onClick={this.handleClose}
+                  onClick={this.handleCloseButton}
                 >
                   <FormattedMessage { ...langLabels.buttonClose } />
                 </Button>

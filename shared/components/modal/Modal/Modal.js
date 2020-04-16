@@ -62,10 +62,10 @@ export default class Modal extends Component {
             if (onLocationChange(window.location.hash)) {
               currentLocation = window.location.hash
             } else {
-              this.close()
+              this.close(null, true)
             }
           } else {
-            this.close()
+            this.close(null,true)
           }
         }
       }, 500)
@@ -77,7 +77,7 @@ export default class Modal extends Component {
     clearInterval( this.catchLocationChange )
   }
 
-  close = () => {
+  close = (event, isLocationChange) => {
     const { name, data, onClose, disableClose } = this.props
 
     if (name === 'OfferModal') {
@@ -88,11 +88,11 @@ export default class Modal extends Component {
       actions.modals.close(name)
 
       if (typeof onClose === 'function') {
-        onClose()
+        onClose(isLocationChange)
       }
 
       if (typeof data.onClose === 'function') {
-        data.onClose()
+        data.onClose(isLocationChange)
       }
     }
   }

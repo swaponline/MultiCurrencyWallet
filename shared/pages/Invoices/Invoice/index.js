@@ -131,8 +131,13 @@ export default class Invoice extends PureComponent {
       doshare,
     } = this.state
 
+    const { history, intl: { locale } } = this.props
+
     actions.modals.open(constants.modals.InfoInvoice, {
-      onClose: () => {
+      onClose: (isLocationChange) => {
+        if (!isLocationChange) {
+          history.push(localisedUrl(locale, links.invoices))
+        }
       },
       isFetching: true,
       uniqhash,
