@@ -472,7 +472,7 @@ export default class Wallet extends Component {
     }
 
     return (
-      <artical>
+      <article>
         <section styleName={isWidgetBuild && !config.isFullBuild ? 'wallet widgetBuild' : 'wallet'}>
           <ul styleName="walletNav">
             {walletNav.map(({ key, text, link, enabled }, index) => (
@@ -560,7 +560,7 @@ export default class Wallet extends Component {
             </div>
           )}
         </section>
-      </artical>
+      </article>
     )
   }
 }
