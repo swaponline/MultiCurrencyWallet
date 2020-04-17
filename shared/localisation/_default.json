@@ -6446,7 +6446,7 @@
   },
   {
     "id": "InvoiceInfoModal_DeclimeInvoiceButton",
-    "message": "Declime",
+    "message": "Decline",
     "files": [
       "shared/components/modals/InfoInvoice/InfoInvoice.js"
     ]
@@ -6467,7 +6467,7 @@
   },
   {
     "id": "InvoiceInfoModal_InfoStatus_Declimed",
-    "message": "Declimed",
+    "message": "Declined",
     "files": [
       "shared/components/modals/InfoInvoice/InfoInvoice.js"
     ]
