@@ -34,6 +34,34 @@ import { localisedUrl } from 'helpers/locale'
 import redirectTo from 'helpers/redirectTo'
 
 
+
+const localeLabel = defineMessages({
+  title: {
+    id: 'invoiceModal_Title',
+    defaultMessage: 'Выставление счета на пополнение'
+  },
+  addressPlaceholder: {
+    id: 'invoiceModal_addressPlaceholder',
+    defaultMessage: 'Введите адрес {currency} кошелька'
+  },
+  destiAddressPlaceholder: {
+    id: 'invoiceModal_destiAddressPlaceholder',
+    defaultMessage: 'Введите адрес {currency} кошелька'
+  },
+  amountPlaceholder: {
+    id: 'invoiceModal_amountPlaceholder',
+    defaultMessage: 'Введите сумму'
+  },
+  contactPlaceholder: {
+    id: 'invoiceModal_contactPlaceholder',
+    defaultMessage: 'Обязательное поле'
+  },
+  labelPlaceholder: {
+    id: 'invoiceModal_labelPlaceholder',
+    defaultMessage: 'Укажите комментарий к счету'
+  }
+})
+
 @injectIntl
 @connect(
   ({
@@ -86,7 +114,7 @@ export default class InvoiceModal extends React.Component {
       isShipped: false,
       payerAddress,
       openScanCam: '',
-      address: toAddress ? toAddress : '',
+      address: toAddress || '',
       toAddressEnabled: !(!toAddress),
       destination: address,
       amount: '',
@@ -260,33 +288,6 @@ export default class InvoiceModal extends React.Component {
 
     //const isDisabled = !address || !amount || isShipped || !destination || !contact || !this.addressIsCorrect()
     const isDisabled = !amount || isShipped || !destination || !contact || (address && !this.addressIsCorrect())
-
-    const localeLabel = defineMessages({
-      title: {
-        id: 'invoiceModal_Title',
-        defaultMessage: 'Выставление счета на пополнение'
-      },
-      addressPlaceholder: {
-        id: 'invoiceModal_addressPlaceholder',
-        defaultMessage: 'Введите адрес {currency} кошелька'
-      },
-      destiAddressPlaceholder: {
-        id: 'invoiceModal_destiAddressPlaceholder',
-        defaultMessage: 'Введите адрес {currency} кошелька'
-      },
-      amountPlaceholder: {
-        id: 'invoiceModal_amountPlaceholder',
-        defaultMessage: 'Введите сумму'
-      },
-      contactPlaceholder: {
-        id: 'invoiceModal_contactPlaceholder',
-        defaultMessage: 'Обязательное поле'
-      },
-      labelPlaceholder: {
-        id: 'invoiceModal_labelPlaceholder',
-        defaultMessage: 'Укажите комментарий к счету'
-      }
-    })
 
     return (
       <Modal

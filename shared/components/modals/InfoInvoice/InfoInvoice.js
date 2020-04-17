@@ -128,7 +128,7 @@ export default class InfoInvoice extends React.Component {
       isShareReady: !(doshare),
     }
 
-    if (isFetching && onFetching instanceof Function) {
+    if (isFetching && typeof onFetching === 'function') {
       onFetching(this)
     }
   }
@@ -169,13 +169,7 @@ export default class InfoInvoice extends React.Component {
   handleChangeLocation = (newLocation) => {
     const { uniqhash } = this.state
 
-    if (newLocation === `#${links.invoice}/${uniqhash}`
-      || newLocation === `#${links.invoice}/${uniqhash}/share`
-    ) {
-      return true
-    } else {
-      return false
-    }
+    return newLocation.includes(`#${links.invoice}/${uniqhash}`)
   }
 
   handleDeclimeInvoice = () => {
@@ -229,8 +223,7 @@ export default class InfoInvoice extends React.Component {
     } : false
 
     let status = 'pending'
-    if (!isFetching && invoiceData && invoiceData.status === 'ready') status = 'ready'
-    if (!isFetching && invoiceData && invoiceData.status === 'cancelled') status = 'cancel'
+    if (!isFetching && invoiceData) status = invoiceData.status
     if (isCancelled) status = 'cancel'
     if (isReady) status = 'ready'
 
@@ -247,7 +240,7 @@ export default class InfoInvoice extends React.Component {
 
     const shareButtonEnabled = isMobile
 
-    const isPayerControlEnabled = (status === 'pending' && !isCancelled && !isReady && (isPayerSide || (!hasPayer && !isOwner)))
+    const isPayerControlEnabled = (!isCancelled && !isReady && (isPayerSide || (!hasPayer && !isOwner)))
 
     const buttonsHolderStyles = [`invoiceControlsHolder`, `button-overlay`]
     buttonsHolderStyles.push((shareButtonEnabled) ? `with-share-button` : `without-share-button`)
@@ -268,7 +261,7 @@ export default class InfoInvoice extends React.Component {
         infoIconTitle = intl.formatMessage(langLabels.infoStatusReady)
         infoIconUrl = imgReady
         break;
-      case 'cancel':
+      case 'cancelled':
         infoIconTitle = intl.formatMessage(langLabels.infoStatusDeclimed)
         infoIconUrl = imgCanceled
         break;

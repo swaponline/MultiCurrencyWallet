@@ -75,7 +75,6 @@ export default class Invoice extends PureComponent {
       history,
     } = props
 
-    console.log('Show share info block', doshare)
     this.state = {
       uniqhash,
       invoice: false,
@@ -125,7 +124,7 @@ export default class Invoice extends PureComponent {
     }
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     const {
       uniqhash,
       doshare,
@@ -206,14 +205,6 @@ export default class Invoice extends PureComponent {
       doshare,
     } = this.state
 
-    return (
-      <div>
-        <h1>View invoice</h1>
-        <div>uniqhash:{uniqhash}</div>
-        {isFetching && (
-          <div>Fetching</div>
-        )}
-      </div>
-    )
+    return null
   }
 }

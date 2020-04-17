@@ -66,8 +66,9 @@
 
 .statusImgHolder {
   display: block;
-  &_cancel,
+  &_cancelled,
   &_ready,
+  &_new,
   &_pending {
     img {
       width: 80px;
@@ -88,12 +89,13 @@
       color: #05b305;
     }
   }
+  &_new,
   &_pending {
     strong {
       color: #c70101;
     }
   }
-  &_cancel {
+  &_cancelled {
     strong {
       color: #8c8c8c;
     }

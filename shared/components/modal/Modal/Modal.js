@@ -47,7 +47,7 @@ export default class Modal extends Component {
 
   catchLocationChange = false
 
-  componentWillMount() {
+  componentDidMount() {
     const {
       closeOnLocationChange,
       onLocationChange,
@@ -62,9 +62,11 @@ export default class Modal extends Component {
             if (onLocationChange(window.location.hash)) {
               currentLocation = window.location.hash
             } else {
+              clearInterval(this.catchLocationChange)
               this.close(null, true)
             }
           } else {
+            clearInterval(this.catchLocationChange)
             this.close(null,true)
           }
         }
