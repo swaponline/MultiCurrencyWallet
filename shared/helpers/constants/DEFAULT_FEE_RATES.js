@@ -32,15 +32,4 @@ export default {
       fast: 30 * 1e3,
     },
   },
-  ltc: {
-    size: {
-      send: 226,
-      swap: 1024,
-    },
-    rate: {
-      slow: 5 * 1e3,
-      normal: 50 * 1e3,
-      fast: 100 * 1e3,
-    },
-  },
 }

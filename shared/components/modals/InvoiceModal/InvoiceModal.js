@@ -39,7 +39,6 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
       btcMultisigUserData,
       tokensData,
       nimData,
-      ltcData
       // usdtOmniData,
       // nimData,
     }
@@ -50,7 +49,6 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
       btcData,
       btcMultisigSMSData,
       btcMultisigUserData,
-      ltcData
       // usdtOmniData,
       // nimData,
     ],

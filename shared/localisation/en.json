@@ -36,13 +36,6 @@
     "message": "Creating wallet... Please wait."
   },
   {
-    "id": "LtcToEth.orderCreatorIsOffline",
-    "message": "The order creator is offline. The request is valid for 30 min ",
-    "files": [
-      "shared/pages/Swap/LtcToEth.js"
-    ]
-  },
-  {
     "id": "avatar24",
     "message": "This is your (personal) gravatar, it is unique for each user. The number is your rating within the system (it grows with the number of successful swaps)",
     "files": [
@@ -1074,388 +1067,10 @@
     ]
   },
   {
-    "id": "EthToLtc104",
-    "message": "The order creator is offline. The request is valid for 30 min ",
-    "files": [
-      "shared/pages/Swap/EthToLtc.js"
-    ]
-  },
-  {
-    "id": "EthToLtc115",
-    "message": "Waiting for other user when he connect to the order",
-    "files": [
-      "shared/pages/Swap/EthToLtc.js"
-    ]
-  },
-  {
-    "id": "EthToLtc125",
-    "message": "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative credit to his reputation. ",
-    "files": [
-      "shared/pages/Swap/EthToLtc.js"
-    ]
-  },
-  {
-    "id": "EthToLtc128",
-    "message": "sign ",
-    "files": [
-      "shared/pages/Swap/EthToLtc.js"
-    ]
-  },
-  {
-    "id": "EthToLtc134",
-    "message": "Please wait. Confirmation processing",
-    "files": [
-      "shared/pages/Swap/EthToLtc.js"
-    ]
-  },
-  {
-    "id": "EthToLtc139",
-    "message": "Transaction: ",
-    "files": [
-      "shared/pages/Swap/EthToLtc.js"
-    ]
-  },
-  {
-    "id": "EthToLtc167",
-    "message": "2. Waiting for LTC Owner to create a Secret Key, create LTC Script and charge it",
-    "files": [
-      "shared/pages/Swap/EthToLtc.js"
-    ]
-  },
-  {
-    "id": "EthToLtc179",
-    "message": "3. Litecoin Script created and charged. Please check the information below",
-    "files": [
-      "shared/pages/Swap/EthToLtc.js"
-    ]
-  },
-  {
-    "id": "EthToLtc182",
-    "message": "Secret Hash: ",
-    "files": [
-      "shared/pages/Swap/EthToLtc.js"
-    ]
-  },
-  {
-    "id": "EthToLtc185",
-    "message": "Script address: ",
-    "files": [
-      "shared/pages/Swap/EthToLtc.js"
-    ]
-  },
-  {
-    "id": "EthToLtc204",
-    "message": "Show litecoin script",
-    "files": [
-      "shared/pages/Swap/EthToLtc.js"
-    ]
-  },
-  {
-    "id": "EthToLtc247",
-    "message": "Everything is OK. continue ",
-    "files": [
-      "shared/pages/Swap/EthToLtc.js"
-    ]
-  },
-  {
-    "id": "EthToLtc260",
-    "message": "Not enough money for this swap. Please fund the balance",
-    "files": [
-      "shared/pages/Swap/EthToLtc.js"
-    ]
-  },
-  {
-    "id": "EthToLtc264",
-    "message": "Your balance: ",
-    "files": [
-      "shared/pages/Swap/EthToLtc.js"
-    ]
-  },
-  {
-    "id": "EthToLtc267",
-    "message": "Required balance: ",
-    "files": [
-      "shared/pages/Swap/EthToLtc.js"
-    ]
-  },
-  {
-    "id": "EthToLtc270",
-    "message": "Your address: ",
-    "files": [
-      "shared/pages/Swap/EthToLtc.js"
-    ]
-  },
-  {
-    "id": "EthToLtc277",
-    "message": "continue ",
-    "files": [
-      "shared/pages/Swap/EthToLtc.js"
-    ]
-  },
-  {
-    "id": "EthToLtc286",
-    "message": "Checking balance.. ",
-    "files": [
-      "shared/pages/Swap/EthToLtc.js"
-    ]
-  },
-  {
-    "id": "EthToLtc297",
-    "message": "4. Creating Ethereum Contract. \n Please wait, it can take a few minutes",
-    "files": [
-      "shared/pages/Swap/EthToLtc.js"
-    ]
-  },
-  {
-    "id": "EthToLtc305",
-    "message": "Transaction: ",
-    "files": [
-      "shared/pages/Swap/EthToLtc.js"
-    ]
-  },
-  {
-    "id": "EthToLtc326",
-    "message": "Transaction: ",
-    "files": [
-      "shared/pages/Swap/EthToLtc.js"
-    ]
-  },
-  {
-    "id": "EthToLtc343",
-    "message": "5. Waiting LTC Owner adds Secret Key to ETH Contact",
-    "files": [
-      "shared/pages/Swap/EthToLtc.js"
-    ]
-  },
-  {
-    "id": "EthToLtc357",
-    "message": "6. LTC Owner successfully took money from ETH Contract and left Secret Key. Requesting withdrawal from LTC Script. Please wait",
-    "files": [
-      "shared/pages/Swap/EthToLtc.js"
-    ]
-  },
-  {
-    "id": "EthToLtc364",
-    "message": "Transaction: ",
-    "files": [
-      "shared/pages/Swap/EthToLtc.js"
-    ]
-  },
-  {
-    "id": "EthToLtc386",
-    "message": "7. LTC was transferred to your wallet. Check the balance. ",
-    "files": [
-      "shared/pages/Swap/EthToLtc.js"
-    ]
-  },
-  {
-    "id": "EthToLtc389",
-    "message": "Thank you for using Swap.Online! ",
-    "files": [
-      "shared/pages/Swap/EthToLtc.js"
-    ]
-  },
-  {
-    "id": "EthToLtc399",
-    "message": "TRY REFUND",
-    "files": [
-      "shared/pages/Swap/EthToLtc.js"
-    ]
-  },
-  {
-    "id": "EthToLtc412",
-    "message": "Transaction: ",
-    "files": [
-      "shared/pages/Swap/EthToLtc.js"
-    ]
-  },
-  {
-    "id": "EthToLtc99",
-    "message": "This order doesn't have a buyer",
-    "files": [
-      "shared/pages/Swap/EthToLtc.js"
-    ]
-  },
-  {
     "id": "Share",
     "message": "Share Twitter",
     "files": [
       "shared/pages/Swap/Share/Share.js"
-    ]
-  },
-  {
-    "id": "LtcTOeth101",
-    "message": "This order doesn't have a buyer",
-    "files": [
-      "shared/pages/Swap/LtcToEth.js"
-    ]
-  },
-  {
-    "id": "LtcTOeth117",
-    "message": "Waiting for a market maker. If the market maker does not appear within 5 minutes, the swap will be canceled automatically. ",
-    "files": [
-      "shared/pages/Swap/LtcToEth.js"
-    ]
-  },
-  {
-    "id": "LtcTOeth127",
-    "message": "Creating a secret key",
-    "files": [
-      "shared/pages/Swap/LtcToEth.js"
-    ]
-  },
-  {
-    "id": "LtcTOeth136",
-    "message": "Confirm",
-    "files": [
-      "shared/pages/Swap/LtcToEth.js"
-    ]
-  },
-  {
-    "id": "LtcTOeth142",
-    "message": "Save the secret key! Otherwise there will be a chance you loose your money! ",
-    "files": [
-      "shared/pages/Swap/LtcToEth.js"
-    ]
-  },
-  {
-    "id": "LtcTOeth145",
-    "message": "Secret Key: ",
-    "files": [
-      "shared/pages/Swap/LtcToEth.js"
-    ]
-  },
-  {
-    "id": "LtcTOeth148",
-    "message": "Secret Hash: ",
-    "files": [
-      "shared/pages/Swap/LtcToEth.js"
-    ]
-  },
-  {
-    "id": "LtcTOeth158",
-    "message": "Not enough money for this swap. Please charge the balance",
-    "files": [
-      "shared/pages/Swap/LtcToEth.js"
-    ]
-  },
-  {
-    "id": "LtcTOeth162",
-    "message": "Your balance: ",
-    "files": [
-      "shared/pages/Swap/LtcToEth.js"
-    ]
-  },
-  {
-    "id": "LtcTOeth165",
-    "message": "Required balance: ",
-    "files": [
-      "shared/pages/Swap/LtcToEth.js"
-    ]
-  },
-  {
-    "id": "LtcTOeth168",
-    "message": "Your address: ",
-    "files": [
-      "shared/pages/Swap/LtcToEth.js"
-    ]
-  },
-  {
-    "id": "LtcTOeth175",
-    "message": "continue ",
-    "files": [
-      "shared/pages/Swap/LtcToEth.js"
-    ]
-  },
-  {
-    "id": "LtcTOeth184",
-    "message": "Checking balance.. ",
-    "files": [
-      "shared/pages/Swap/LtcToEth.js"
-    ]
-  },
-  {
-    "id": "LtcTOeth195",
-    "message": "3. Creating Litecoin Script. \n Please wait, it can take a few minutes",
-    "files": [
-      "shared/pages/Swap/LtcToEth.js"
-    ]
-  },
-  {
-    "id": "LtcTOeth200",
-    "message": "Transaction: ",
-    "files": [
-      "shared/pages/Swap/LtcToEth.js"
-    ]
-  },
-  {
-    "id": "LtcTOeth227",
-    "message": "Create refund hex",
-    "files": [
-      "shared/pages/Swap/LtcToEth.js"
-    ]
-  },
-  {
-    "id": "LtcTOeth234",
-    "message": "How refund your money ? ",
-    "files": [
-      "shared/pages/Swap/LtcToEth.js"
-    ]
-  },
-  {
-    "id": "LtcTOeth254",
-    "message": "4. ETH Owner received Litecoin Script and Secret Hash. Waiting when he creates ETH Contract",
-    "files": [
-      "shared/pages/Swap/LtcToEth.js"
-    ]
-  },
-  {
-    "id": "LtcTOeth267",
-    "message": "Transaction: ",
-    "files": [
-      "shared/pages/Swap/LtcToEth.js"
-    ]
-  },
-  {
-    "id": "LtcTOeth283",
-    "message": "ETH contract was created and charged. Withdrawing ETH. Please wait.",
-    "files": [
-      "shared/pages/Swap/LtcToEth.js"
-    ]
-  },
-  {
-    "id": "LtcTOeth290",
-    "message": "Transaction: ",
-    "files": [
-      "shared/pages/Swap/LtcToEth.js"
-    ]
-  },
-  {
-    "id": "LtcTOeth313",
-    "message": "6. ETH was transferred to your wallet. Check the balance. ",
-    "files": [
-      "shared/pages/Swap/LtcToEth.js"
-    ]
-  },
-  {
-    "id": "LtcTOeth315",
-    "message": "Thank you for using Swap.Online! ",
-    "files": [
-      "shared/pages/Swap/LtcToEth.js"
-    ]
-  },
-  {
-    "id": "LtcTOeth326",
-    "message": "TRY REFUND",
-    "files": [
-      "shared/pages/Swap/LtcToEth.js"
-    ]
-  },
-  {
-    "id": "LtcTOeth338",
-    "message": "Transaction: ",
-    "files": [
-      "shared/pages/Swap/LtcToEth.js"
     ]
   },
   {
@@ -1771,267 +1386,11 @@
     ]
   },
   {
-    "id": "BTCTOLTC132",
-    "message": "Creating a secret key",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js"
-    ]
-  },
-  {
-    "id": "BTCtoLTC236",
-    "message": "Create refund hex",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js"
-    ]
-  },
-  {
-    "id": "BTCtoLTC246",
-    "message": "How refund your money ? ",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js"
-    ]
-  },
-  {
-    "id": "BTCtoLTC262",
-    "message": "4. LTC Owner received Bitcoin Script and Secret Hash. Waiting when he creates LTC Script",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js"
-    ]
-  },
-  {
-    "id": "BTCtoLTC276",
-    "message": "5. Litecoin Script created and charged. Please check the information below",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js"
-    ]
-  },
-  {
-    "id": "BTCtoLTC301",
-    "message": "Show litecoin script",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js"
-    ]
-  },
-  {
-    "id": "BtcToLtc.Confirm",
-    "message": "Confirm",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js"
-    ]
-  },
-  {
-    "id": "BtcToLtc205",
-    "message": "3. Creating Bitcoin Script. \n Please wait, it can take a few minutes",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js"
-    ]
-  },
-  {
-    "id": "Checkingbalance",
-    "message": "Checking balance.. ",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js",
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
-  },
-  {
-    "id": "LTCTOBTC147",
-    "message": "Save the secret key! Otherwise there will be a chance you loose your money! ",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js"
-    ]
-  },
-  {
-    "id": "LTCTOBTC150",
-    "message": "Secret Key: ",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js"
-    ]
-  },
-  {
-    "id": "MoneyWasTransferred",
-    "message": "6. LTC was transferred to your wallet. Check the balance. ",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js"
-    ]
-  },
-  {
-    "id": "Notenough",
-    "message": "Not enough money for this swap. Please fund the balance",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js",
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
-  },
-  {
-    "id": "REFUND",
-    "message": "TRY REFUND",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js",
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
-  },
-  {
-    "id": "Required",
-    "message": "Required balance: ",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js",
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
-  },
-  {
-    "id": "SecretHash",
-    "message": "Secret Hash: ",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js",
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
-  },
-  {
-    "id": "Thank",
-    "message": "Thank you for using Swap.Online! ",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js",
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
-  },
-  {
-    "id": "Transaction",
-    "message": "Transaction: ",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js",
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
-  },
-  {
-    "id": "Waiting",
-    "message": "Waiting for other user when he connect to the order",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js",
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
-  },
-  {
-    "id": "address",
-    "message": "Your address: ",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js",
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
-  },
-  {
-    "id": "balance",
-    "message": "Your balance: ",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js",
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
-  },
-  {
-    "id": "doesn't",
-    "message": "This order doesn't have a buyer",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js"
-    ]
-  },
-  {
-    "id": "offline",
-    "message": "The order creator is offline. The request is valid for 30 min ",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js",
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
-  },
-  {
     "id": "HowItWorks10",
     "message": "How it works",
     "files": [
       "shared/pages/PartialClosure/HowItWorks/HowItWorks.js",
       "shared/pages/PointOfSell/HowItWorks/HowItWorks.js"
-    ]
-  },
-  {
-    "id": "Confirmation",
-    "message": "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative credit to his reputation. ",
-    "files": [
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
-  },
-  {
-    "id": "LTCTOBTC191",
-    "message": "3. The bitcoin Script was created and charged. Please check the information below",
-    "files": [
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
-  },
-  {
-    "id": "LTCTOBTC216",
-    "message": "Show bitcoin script",
-    "files": [
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
-  },
-  {
-    "id": "LTCTOBTC350",
-    "message": "5. Waiting for BTC Owner to add a Secret Key to LTC Contact",
-    "files": [
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
-  },
-  {
-    "id": "LTCTOBTC365",
-    "message": "6. BTC Owner successfully took money from LTC Script and left Secret Key. Requesting withdrawal from BTC Script. Please wait",
-    "files": [
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
-  },
-  {
-    "id": "LTCTOBTC396",
-    "message": "7. BTC was transferred to your wallet. Check the balance. ",
-    "files": [
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
-  },
-  {
-    "id": "LtcToBtc.Confirm",
-    "message": "2. Waiting for BTC Owner to create Secret Key, create BTC Script and charge it",
-    "files": [
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
-  },
-  {
-    "id": "LtcToBtc205",
-    "message": "4. Creating LTC Script. \n Please wait, it can take a few minutes",
-    "files": [
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
-  },
-  {
-    "id": "OK",
-    "message": "Everything is OK. continue ",
-    "files": [
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
-  },
-  {
-    "id": "PleaseWaitConfirmationProcessing",
-    "message": "Please wait. Confirmation processing",
-    "files": [
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
-  },
-  {
-    "id": "Scriptaddress",
-    "message": "Script address: ",
-    "files": [
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
-  },
-  {
-    "id": "doesn&apos",
-    "message": "This order doesn't have a buyer",
-    "files": [
-      "shared/pages/Swap/LtcToBtc.js"
     ]
   },
   {
@@ -2645,13 +2004,6 @@
     ]
   },
   {
-    "id": "Scriptaddress:",
-    "message": "Script address:",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js"
-    ]
-  },
-  {
     "id": "RowHistory281",
     "message": "Received",
     "files": [
@@ -2851,20 +2203,6 @@
     ]
   },
   {
-    "id": "importkeys200",
-    "message": "Please enter LTC private key",
-    "files": [
-      "shared/components/modals/ImportKeys/ImportKeys.js"
-    ]
-  },
-  {
-    "id": "importkeys201",
-    "message": "Please valid LTC private key",
-    "files": [
-      "shared/components/modals/ImportKeys/ImportKeys.js"
-    ]
-  },
-  {
     "id": "PartialPriceSearch483",
     "message": "Price: 1"
   },
@@ -2961,7 +2299,7 @@
   },
   {
     "id": "partialVideoAndFeatures2",
-    "message": "Supports LTC, BTC, ETH, USDT, ERC-20 tokens",
+    "message": "Supports BTC, ETH, USDT, ERC-20 tokens",
     "files": [
       "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js",
       "shared/pages/PointOfSell/VideoAndFeatures/VideoAndFeatures.js"
@@ -3249,13 +2587,6 @@
     "message": "Withdraw {data}"
   },
   {
-    "id": "ImportKeys205",
-    "message": "Please enter LTC private key in WIF format",
-    "files": [
-      "shared/components/modals/ImportKeys/ImportKeys.js"
-    ]
-  },
-  {
     "id": "importkeys172",
     "message": "Please enter ETH private key",
     "files": [
@@ -3321,21 +2652,6 @@
   {
     "id": "PartialClosureMetaDescrTag",
     "message": "Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol."
-  },
-  {
-    "id": "Continue",
-    "message": "Continue",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js",
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
-  },
-  {
-    "id": "Sign",
-    "message": "Sign",
-    "files": [
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
   },
   {
     "id": "orders104",
@@ -4694,7 +4010,7 @@
   },
   {
     "id": "Submenu16",
-    "message": "Fast atomic swap exchanges BTC, ETH, LTC, ERC20 online",
+    "message": "Fast atomic swap exchanges BTC, ETH, ERC20 online",
     "files": [
       "shared/components/Header/SubMenu/SubMenu.js",
       "shared/components/modals/MobMenu/MobMenu.js"
@@ -5236,13 +4552,6 @@
     ]
   },
   {
-    "id": "partial-tour-1",
-    "message": "A unique peer-to-peer exchange built on Atomic Swap technology.",
-    "files": [
-      "shared/components/Header/TourPartial/TourPartial.js"
-    ]
-  },
-  {
     "id": "partial-tour-2",
     "message": "In this field choose the currency and enter the amount you want to sell. You also can sell the currency from an external wallet.",
     "files": [
@@ -5282,13 +4591,6 @@
     "message": "Press this button to see the Order Book page. The orders will be shown for specific currencies. You can also create your own order on the Order Book page.",
     "files": [
       "shared/components/Header/TourPartial/TourPartial.js"
-    ]
-  },
-  {
-    "id": "tour-step-0",
-    "message": "Your Swap.Online crypto-wallet",
-    "files": [
-      "shared/components/Header/WalletTour/WalletTour.js"
     ]
   },
   {
@@ -6673,7 +5975,7 @@
   },
   {
     "id": "SaveMnemonicModal_EnterNotice",
-    "message": "Нажмите слова, чтобы поместить их рядом друг с другом в правильном порядке",
+    "message": "Сlick on words to place them in the correct order",
     "files": [
       "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
     ]

@@ -47,14 +47,6 @@ export const initialState = {
     balanceError: null,
   },
   */
-  ltcData: {
-    balance: 0,
-    isBalanceFetched: false,
-    currency: 'LTC',
-    fullName: 'Litecoin',
-    balanceError: null,
-    infoAboutCurrency: null
-  },
   usdtData: {
     address: '0x0',
     publicKey: '0x0',

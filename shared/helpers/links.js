@@ -28,7 +28,6 @@ const linksManager = {
   createInvoice: '/createinvoice',
   BtcWallet: '/Bitcoin-wallet',
   EthWallet: '/Ethereum-wallet',
-  LtcWallet: '/Litecoin-wallet',
 
   // social networks
   medium: '#',

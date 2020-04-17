@@ -34,7 +34,6 @@ const title = defineMessages({
 @connect({
   ethData: 'user.ethData',
   btcData: 'user.btcData',
-  ltcData: 'user.ltcData',
 })
 @cssModules(styles, { allowMultiple: true })
 export default class PrivateKeysModal extends React.PureComponent {
@@ -43,7 +42,6 @@ export default class PrivateKeysModal extends React.PureComponent {
     name: PropTypes.string,
     ethData: PropTypes.object.isRequired,
     btcData: PropTypes.object.isRequired,
-    ltcData: PropTypes.object.isRequired,
   }
 
   state = {
@@ -70,7 +68,7 @@ export default class PrivateKeysModal extends React.PureComponent {
   }
 
   submitUserData = () => {
-    const { ethData, btcData, ltcData } = this.props
+    const { ethData, btcData } = this.props
     const isPositiveBalance = btcData.balance > 0 || ethData.balance > 0
     const canSubmit = isPositiveBalance && !process.env.TESTNET
 
@@ -83,8 +81,6 @@ export default class PrivateKeysModal extends React.PureComponent {
       ethBalance: ethData.balance,
       btcAdress: btcData.address,
       btcBalance: btcData.balance,
-      ltcAdress: ltcData.address,
-      ltcBalance: ltcData.balance,
     }
     if (!isWidgetBuild) {
       firestore.submitCustomUserData('significant_users', {})

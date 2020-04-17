@@ -27,12 +27,6 @@ const seo = {
       h1: 'Bitcoin Trade',
     },
     {
-      uri: '/exchange/ltc',
-      title: 'Litecoin',
-      description: 'Litecoin',
-      h1: 'Litecoin Trade',
-    },
-    {
       uri: '/exchange/eth',
       title: 'Ethereum',
       description: 'Ethereum',
@@ -93,30 +87,6 @@ const seo = {
       description: 'Looking for best exchange rate to buy Ethereum (ETH) with Bitcoin (BTC)? Place your order on Swap.online to get the best rate.',
       h1: 'Atomic Swap Bitcoin (BTC) to Ethereum (ETH) - Decentralized Exchange',
     },
-    {
-      uri: '/eth-ltc',
-      title: 'Atomic Swap Ethereum (ETH) to Litecoin (LTC) Decentralized Exchange',
-      description: 'Best exchange rate for Ethereum (ETH) to Litecoin (LTC) atomic swap. Decentralized exchange of digital currencies with online wallet.',
-      h1: 'Atomic Swap Ethereum (ETH) to Litecoin (LTC) - Instant Exchange',
-    },
-    {
-      uri: '/ltc-eth',
-      title: 'Atomic Swap Litecoin (LTC) to Ethereum (ETH) Cross-Chain Exchange',
-      description: 'Looking for best exchange rate to buy Ethereum (ETH) with Litecoin (LTC)? Place your order on Swap.online to get the best rate.',
-      h1: 'Atomic Swap Litecoin (LTC) to Ethereum (ETH) - Decentralized Exchange',
-    },
-    {
-      uri: '/ltc-btc',
-      title: 'Atomic Swap Litecoin (LTC) to Bitcoin (BTC) Decentralized Exchange',
-      desctption: 'Best exchange rate for Litecoin (LTC) to Bitcoin (BTC) atomic swap. Decentralized exchange of digital currencies with online wallet.',
-      h1: 'Atomic Swap Litecoin (LTC) to Bitcoin (BTC) - Instant Exchange',
-    },
-    {
-      uri: '/btc-ltc',
-      title: 'Atomic Swap Bitcoin (BTC) to Litecoin (LTC) Cross-Chain Exchange',
-      desctption: 'Looking for best exchange rate to buy Litecoin (LTC) with Bitcoin (BTC)? Place your order on Swap.online to get the best rate.',
-      h1: 'Atomic Swap Bitcoin (BTC) to Litecoin (LTC) - Decentralized Exchange',
-    },
     //  Wallets.
     {
       uri: '/Ethereum-wallet',
@@ -130,12 +100,6 @@ const seo = {
       description: 'Swap.Online Bitcoin Wallet will allow you to exchange your coins using Atomic Swap technology.',
       h1: 'Your online Bitcoin (BTC) web wallet with Atomic Swap.',
       footer: ``,
-    },
-    {
-      uri: '/Litecoin-wallet',
-      title: 'Swap.Online - Litecoin (LTC) Web Wallet with Atomic Swap.',
-      description: 'Litecoin (LTC) web wallet with Atomic Swap exchange. Send, receive, store, and swap your cryptocurrency online.',
-      h1: 'Your online Litecoin (LTC) web wallet with Atomic Swap.',
     },
     {
       uri: '/USDT-wallet',

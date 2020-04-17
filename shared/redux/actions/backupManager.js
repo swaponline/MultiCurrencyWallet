@@ -13,8 +13,6 @@ const backupFields = [
   constants.privateKeyNames.btcSmsMnemonicKey,
   constants.privateKeyNames.btcSmsMnemonicKeyGenerated,
   constants.privateKeyNames.btcSmsMnemonicKeyMnemonic,
-  constants.privateKeyNames.ltc,
-  constants.privateKeyNames.ltcMnemonic,
   constants.privateKeyNames.qtum,
 ]
 

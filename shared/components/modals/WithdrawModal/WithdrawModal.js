@@ -33,9 +33,9 @@ import redirectTo from 'helpers/redirectTo'
 
 @injectIntl
 @connect(
-  ({ currencies, user: { ethData, btcData, tokensData, nimData, ltcData /* usdtOmniData, nimData */ } }) => ({
+  ({ currencies, user: { ethData, btcData, tokensData, nimData /* usdtOmniData, nimData */ } }) => ({
     currencies: currencies.items,
-    items: [ethData, btcData, ltcData /* usdtOmniData, nimData */],
+    items: [ethData, btcData /* usdtOmniData, nimData */],
     tokenItems: [...Object.keys(tokensData).map(k => tokensData[k])]
   })
 )

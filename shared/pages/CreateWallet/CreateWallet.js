@@ -51,7 +51,6 @@ const CreateWallet = (props) => {
     btcMultisigSMSData,
     btcMultisigUserData,
     tokensData,
-    ltcData,
   } = userData
 
   const currencyBalance = [
@@ -59,7 +58,6 @@ const CreateWallet = (props) => {
     btcMultisigSMSData,
     btcMultisigUserData,
     ethData,
-    ltcData,
   ].map(({ balance, currency, infoAboutCurrency }) => ({
     balance,
     infoAboutCurrency,
@@ -298,7 +296,7 @@ const CreateWallet = (props) => {
             />
           </button>
           */}
-         <br />
+          <br />
           <button onClick={goToExchange}>
             <FormattedMessage
               id="ExchangeBtn"
@@ -306,7 +304,7 @@ const CreateWallet = (props) => {
             />
           </button>
         </div>
-        
+
         {singleCurrecnyData ?
           <SecondStep error={error} onClick={validate} currencies={currencies} setError={setError} singleCurrecnyData /> :
           <div>

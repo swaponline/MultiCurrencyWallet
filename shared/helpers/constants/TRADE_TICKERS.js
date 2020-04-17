@@ -14,8 +14,6 @@ const swap = (config && config.isWidget) ?
   :
   [
     ...(!config.opts.curEnabled || (config.opts.curEnabled.eth && config.opts.curEnabled.btc)) ? ['ETH-BTC'] : [],
-    ...(!config.opts.curEnabled || (config.opts.curEnabled.eth && config.opts.curEnabled.ltc)) ? ['ETH-LTC'] : [],
-    ...(!config.opts.curEnabled || (config.opts.curEnabled.ltc && config.opts.curEnabled.btc)) ? ['LTC-BTC'] : [],
   ]
 
 Object.keys(config.erc20)

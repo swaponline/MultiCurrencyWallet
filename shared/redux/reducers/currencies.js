@@ -54,14 +54,6 @@ const initialState = {
       fullTitle: 'ethereum',
       addAssets: true,
     }] : [],
-    ...(!buildOpts.curEnabled || buildOpts.curEnabled.ltc) ? [{
-      name: 'LTC',
-      title: 'LTC',
-      icon: 'ltc',
-      value: 'ltc',
-      fullTitle: 'litecoin',
-      addAssets: true,
-    }] : [],
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.btc) ? [{
       name: 'BTC',
       title: 'BTC',
@@ -113,13 +105,6 @@ const initialState = {
       icon: 'eth',
       value: 'eth',
       fullTitle: 'ethereum',
-    }] : [],
-    ...(!buildOpts.curEnabled || buildOpts.curEnabled.ltc) ? [{
-      name: 'LTC',
-      title: 'LTC',
-      icon: 'ltc',
-      value: 'ltc',
-      fullTitle: 'litecoin',
     }] : [],
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.btc) ? [{
       name: 'BTC',

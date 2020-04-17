@@ -93,14 +93,14 @@ const bannedPeers = {}; // Пиры, которые отклонили запр�
     addPartialItems,
     history: { swapHistory },
     core: { orders, hiddenCoinsList },
-    user: { ethData, btcData, tokensData, nimData, ltcData /* usdtOmniData */ }
+    user: { ethData, btcData, tokensData, nimData /* usdtOmniData */ }
   }) => ({
     currencies: isExchangeAllowed(currencies.partialItems),
     allCurrencyies: currencies.items,
     addSelectedItems: isExchangeAllowed(currencies.addPartialItems),
     orders: filterIsPartial(orders),
     allOrders: orders,
-    currenciesData: [ethData, btcData, ltcData /* nimData, usdtOmniData */],
+    currenciesData: [ethData, btcData /* nimData, usdtOmniData */],
     tokensData: [...Object.keys(tokensData).map(k => tokensData[k])],
     decline: rememberedOrders.savedOrders,
     hiddenCoinsList,

@@ -68,7 +68,6 @@ const sign = async () => {
 
   const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
   const btcMultisigPrivateKey = localStorage.getItem(constants.privateKeyNames.btcMultisig)
-  const ltcPrivateKey = localStorage.getItem(constants.privateKeyNames.ltc)
   const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
   // const qtumPrivateKey        = localStorage.getItem(constants.privateKeyNames.qtum)
   // const xlmPrivateKey = localStorage.getItem(constants.privateKeyNames.xlm)
@@ -84,7 +83,6 @@ const sign = async () => {
   await sign_btc_multisig(_btcPrivateKey)
 
   // actions.usdt.login(btcPrivateKey)
-  actions.ltc.login(ltcPrivateKey)
   // actions.qtum.login(qtumPrivateKey)
   // actions.xlm.login(xlmPrivateKey)
 
@@ -141,7 +139,6 @@ const getBalances = () => {
   actions.btc.getBalance()
   actions.btcmultisig.getBalance() // SMS-Protected
   actions.btcmultisig.getBalanceUser() //Other user confirm
-  actions.ltc.getBalance()
   // actions.usdt.getBalance()
   // actions.qtum.getBalance()
   // actions.xlm.getBalance()
@@ -248,11 +245,6 @@ const getInfoAboutCurrency = (currencyNames) =>
                 reducers.user.setInfoAboutCurrency({ name: 'ethMnemonicData', infoAboutCurrency: currencyInfo }) // Sweep (for future)
                 break;
               }
-              case 'LTC': {
-                reducers.user.setInfoAboutCurrency({ name: 'ltcData', infoAboutCurrency: currencyInfo })
-                reducers.user.setInfoAboutCurrency({ name: 'ltcMnemonicData', infoAboutCurrency: currencyInfo }) // Sweep (for future)
-                break;
-              }
               default: reducers.user.setInfoAboutCurrency({ name: `${currencyInfoItem.symbol.toLowerCase()}Data`, infoAboutCurrency: currencyInfo })
             }
           }
@@ -274,7 +266,6 @@ const delay = (ms) => new Promise(resolve => setTimeout(() => resolve(true), ms)
 
 const setTransactions = async () => {
   const isBtcSweeped = actions.btc.isSweeped()
-  const isLtcSweeped = true // actions.ltc.isSweeped()
   const isEthSweeped = actions.eth.isSweeped()
 
   const {
@@ -298,7 +289,6 @@ const setTransactions = async () => {
       ... (isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
       actions.eth.getInvoices(),
       ... (isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
-      actions.ltc.getTransaction(),
     ])
 
     const erc20 = Object.keys(config.erc20)
@@ -322,7 +312,7 @@ const setTransactions = async () => {
 }
 
 const getText = () => {
-  const { user: { ethData, btcData, /* xlmData, */ ltcData } } = getState()
+  const { user: { ethData, btcData, /* xlmData, */ } } = getState()
 
 
   let text = `
@@ -356,23 +346,7 @@ Private key: ${btcData.privateKey}\r\n
 \r\n
 * We don\`t store your private keys and will not be able to restore them!
 \r\n
-#LITECOIN
-\r\n
-Litecoin address: ${ltcData.address}  \r\n
-Private key: ${ltcData.privateKey}\r\n
-\r\n
-1. Go to blockchain.info\r\n
-2. login\r\n
-3. Go to settings > addresses > import\r\n
-4. paste private key and click "Ok"\r\n
-
-  /*
-  # XLM\r\n
-  \r\n
-  XLM Private Key: ${xlmData.keypair.secret()}\r\n
-  Address name: ${xlmData.address}\r\n
-
-  `
+`
 
   return text
 }

@@ -31,13 +31,13 @@ const isWidgetBuild = config && config.isWidget
 
 @injectIntl
 @connect(({
-  user: { ethData, btcData, tokensData, nimData, ltcData /* usdtOmniData */ },
+  user: { ethData, btcData, tokensData, nimData /* usdtOmniData */ },
   ipfs: { peer },
   rememberedOrders,
 }) => ({
-  items: [ethData, btcData, ltcData /* nimData, usdtOmniData */],
+  items: [ethData, btcData /* nimData, usdtOmniData */],
   tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
-  currenciesData: [ethData, btcData, ltcData /* nimData, usdtOmniData */],
+  currenciesData: [ethData, btcData /* nimData, usdtOmniData */],
   tokensData: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   errors: 'api.errors',
   checked: 'api.checked',
