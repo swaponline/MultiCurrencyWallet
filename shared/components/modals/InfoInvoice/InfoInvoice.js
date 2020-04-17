@@ -30,7 +30,7 @@ import WithdrawModal from 'components/modals/WithdrawModal/WithdrawModal'
 const langPrefix = 'InvoiceInfoModal'
 const langLabels = defineMessages({
   titleFetching: {
-    id: `${langPrefix}_Title`,
+    id: `${langPrefix}_TitleFetch`,
     defaultMessage: `Загрузка инвойса...`,
   },
   title: {
