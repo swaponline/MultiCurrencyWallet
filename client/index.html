@@ -680,8 +680,16 @@ src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAwUAAAMZCAMAAABmr2irAAAA3lBMV
 	  }
 	  return false;
 	}
+	// Is Wallet Create
+	function swapIsWalletCreate(){
+	   var swapLocalStorageWallet = localStorage.getItem('isWalletCreate');
+	   if ( swapLocalStorageWallet === null ) {
+	    	return false;
+	   }
+	   return true;
+	}
         // Open modal if cookie false
-        if (swapDisalbeStarter != "true" && swapIsHome() && !isWidgetBuild) {
+        if (swapDisalbeStarter != "true" && swapIsHome() && !isWidgetBuild && !swapIsWalletCreate() ) {
           swapOpenStarterModal();
         }
       </script>
