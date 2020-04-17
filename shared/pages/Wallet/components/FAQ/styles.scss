@@ -2,6 +2,7 @@
   display: block;
   width: 100%;
   font-family: "Inter-Regular";
+  padding-left: 1px;
 
   &__header {
     font-family: "Inter-Bold";
@@ -90,5 +91,11 @@ $chrestStripHeight: 12px;
     height: $chrestStripHeight;
     left: ($chrestStripHeight / 2) - ($chrestStripWidth / 2);
     top: 0px;
+  }
+}
+
+@media all and (max-width: 992px) {
+  .faQuestions {
+    padding: 0 25px;
   }
 }
