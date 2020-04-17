@@ -197,7 +197,6 @@ export default class SaveMnemonicModal extends React.Component {
       mnemonicInvalid: (enteredWords.join(` `) !== mnemonic),
     }, () => {
       if (randomedWords.length === 0) {
-        // @ToDo - Пока что временно не удаляем мнемоник на время теста
         localStorage.setItem(constants.privateKeyNames.twentywords, '-')
         this.setState({
           step: `ready`,
