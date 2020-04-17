@@ -20,11 +20,11 @@ import { FormattedMessage } from 'react-intl'
   ({
     currencies,
     addSelectedItems,
-    user: { ethData, btcData, tokensData, nimData /* usdtOmniData */ },
+    user: { ethData, btcData, tokensDat },
   }) => ({
     currencies: currencies.items,
     addSelectedItems: currencies.addSelectedItems[0],
-    items: [ethData, btcData /* usdtOmniData , nimData */],
+    items: [ethData, btcData],
     tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   })
 )

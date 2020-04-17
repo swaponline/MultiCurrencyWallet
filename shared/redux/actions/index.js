@@ -15,10 +15,6 @@ import btc from './btc'
 import btcmultisig from './btcmultisig'
 import eth from './eth'
 import token from './token'
-import nimiq from './nimiq'
-// import qtum from './qtum'
-// import xlm from './xlm'
-// import usdt from './usdt'
 
 import api from './api'
 import pairs from './pairs'
@@ -54,10 +50,6 @@ export default {
   btc,
   btcmultisig,
   eth,
-  nimiq,
-  // qtum,
-  // xlm,
-  // usdt,
 
   token,
   feed,

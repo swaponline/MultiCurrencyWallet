@@ -33,15 +33,12 @@ export default class ImportKeys extends Component {
   state = {
     ethKey: '',
     btcKey: '',
-    // xlmKey: '',
 
     isSubmittedEth: false,
     isSubmittedBtc: false,
-    // isSubmittedXlm: false,
 
     isImportedEth: false,
     isImportedBtc: false,
-    // isImportedXlm: false,
 
     isDisabled: true,
     keySave: false,
@@ -129,27 +126,6 @@ export default class ImportKeys extends Component {
     }
   }
 
-  /*
-  handleXlmImportKey = () => {
-    const { xlmKey } = this.state
-
-    if (!xlmKey) {
-      this.setState({ isSubmittedXlm: true })
-      return
-    }
-
-    try {
-      actions.xlm.login(xlmKey)
-      this.setState({
-        isImportedXlm: true,
-        isDisabled: false,
-      })
-    } catch (e) {
-      this.setState({ isSubmittedXlm: true })
-    }
-  }
-  */
-
   handleImportKeys = () => {
     this.handleCloseModal()
     localStorage.setItem(constants.localStorage.testnetSkipPKCheck, true)
@@ -177,17 +153,17 @@ export default class ImportKeys extends Component {
   }
 
   checkAnyImport = () => {
-    const { isSubmittedEth, isSubmittedBtc /* , isSubmittedXlm */ } = this.state
+    const { isSubmittedEth, isSubmittedBtc } = this.state
 
-    if (isSubmittedEth || isSubmittedBtc  /* || isSubmittedXlm */) {
+    if (isSubmittedEth || isSubmittedBtc) {
       this.setState(() => ({ isDisabled: false }))
     }
   }
 
   render() {
     const {
-      isSubmittedEth, isSubmittedBtc, /* isSubmittedXlm, */
-      isImportedEth, isImportedBtc, /* isImportedXlm, */ isDisabled, keySave,
+      isSubmittedEth, isSubmittedBtc,
+      isImportedEth, isImportedBtc, isDisabled, keySave,
     } = this.state
 
     const { intl, data } = this.props
@@ -206,11 +182,6 @@ export default class ImportKeys extends Component {
         this.handleBtcImportKey(), <FormattedMessage id="importkeys190" defaultMessage="Something went wrong. Check your private key, network of this address and etc." />)
     }
 
-    /*
-    if (isSubmittedXlm) {
-      linked.btcKey.check((value) => value !== '', <FormattedMessage id="importkeys187" defaultMessage="Please enter XLM private key" />)
-    }
-    */
     return (
       <Modal name={this.props.name} title={intl.formatMessage(title.Import)} data={data} onClose={this.state.onClose}>
         <div styleName="modal" className="ym-hide-content">
@@ -243,19 +214,6 @@ export default class ImportKeys extends Component {
               />
             </>
           )}
-          {
-            /*
-            <FormattedMessage id="ImportKeys176" defaultMessage="Please enter xlm private key">
-              {message => <FieldLabel positionStatic>{message}</FieldLabel>}
-            </FormattedMessage>
-            <Group
-              inputLink={linked.xlmKey}
-              placeholder="Key"
-              disabled={isImportedXlm}
-              onClick={this.handleXlmImportKey}
-            />
-            */
-          }
           {
             !keySave && (
               <span styleName="error">

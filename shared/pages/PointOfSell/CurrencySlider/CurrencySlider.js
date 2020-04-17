@@ -13,7 +13,6 @@ import { FormattedMessage } from 'react-intl'
 import images from './images'
 
 
-// 'usdtOmni' to arr
 const names = ['btc', 'eth', 'swap']
 
 @connect(

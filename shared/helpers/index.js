@@ -1,7 +1,6 @@
 import btc from './btc'
 import eth from './eth'
 import ethToken from './ethToken'
-// import xlm from './xlm'
 import user from './user'
 import web3 from './web3'
 import links from './links'
@@ -40,7 +39,6 @@ import redirectTo from './redirectTo'
 
 
 export default {
-  // xlm,
   btc,
   eth,
   ethToken,
@@ -51,7 +49,6 @@ export default {
 }
 
 export {
-  // xlm,
   tips,
   btc,
   eth,

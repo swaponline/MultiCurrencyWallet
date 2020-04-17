@@ -15,6 +15,4 @@ export default {
   btcSmsMnemonicKeyMnemonic: `${process.env.ENTRY}:btcSmsMnemonicKey:Mnemonic`, // Sweep
   btcSmsMnemonicKeyOld: `${process.env.ENTRY}:btcSmsMnemonicKey:old`, // Sweep
 
-  // xlm: `${process.env.ENTRY}:xlm:privateKey`,
-  qtum: `${process.env.ENTRY}:qtum:privateKey`,
 }

@@ -172,7 +172,6 @@
     "axios": "^0.18.1",
     "bip32": "^2.0.5",
     "bip39": "^3.0.2",
-    "bitcoincashjs-lib": "^3.3.3",
     "bitcoinjs-lib": "^5.1.6",
     "bitcoinjs-message": "^2.1.0",
     "bootstrap": "^4.3.1",
@@ -190,8 +189,6 @@
     "moment-with-locales-es6": "^1.0.1",
     "mortice": "1.2.1",
     "multicodec": "^0.2.7",
-    "qtumjs-ethjs-abi": "^1.0.3",
-    "qtumjs-wallet": "^0.2.1",
     "react": "^16.10.2",
     "react-click-outside": "github:tj/react-click-outside",
     "react-copy-to-clipboard": "^5.0.1",
@@ -217,7 +214,6 @@
     "rename-files": "0.0.2",
     "replace": "^1.1.1",
     "reverse": "^4.0.1",
-    "stellar-sdk": "^0.11.0",
     "valuelink": "^1.6.2",
     "web3": "^1.2.4"
   }

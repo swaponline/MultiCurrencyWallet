@@ -19,9 +19,9 @@ import config from 'app-config'
 
 
 @connect(({
-  user: { ethData, btcData, tokensData, nimData /* usdtOmniData */ },
+  user: { ethData, btcData, tokensData },
 }) => ({
-  currenciesData: [ethData, btcData /* usdtOmniData, nimData */],
+  currenciesData: [ethData, btcData],
   tokensData: [...Object.keys(tokensData).map(k => (tokensData[k]))],
 }))
 @CSSModules(styles)
