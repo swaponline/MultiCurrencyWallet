@@ -2,9 +2,10 @@ import config from 'app-config'
 import actions from 'redux/actions'
 import reducers from 'redux/core/reducers'
 import { getState } from 'redux/core'
-import getCurrencyKey from "helpers/getCurrencyKey";
+import getCurrencyKey from 'helpers/getCurrencyKey'
+
+
 const pullTransactions = transactions => {
-  console.log('history pullTransactions')
   let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date)
   reducers.history.setTransactions(data)
 }
@@ -20,6 +21,9 @@ const setTransactions = async (address, type, callback) => {
   try {
     const currencyTxs = await Promise.all([
       actions[reducer].getTransaction(address, type),
+      /*
+      // Dont show invoices in transaction list.
+      // @ToDo - Fetch multisig transactions for confirmations
       (
         (config.opts && config.opts.invoiceEnabled && actions.user.isOwner(address, type)) ? 
           actions.invoices.getInvoices({
@@ -28,6 +32,7 @@ const setTransactions = async (address, type, callback) => {
           }) :
           new Promise((resolve) => resolve([]))
       ),
+      */
     ])
     if (typeof callback === 'function') {
       callback([...currencyTxs])

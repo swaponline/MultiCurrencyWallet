@@ -76,7 +76,8 @@ const langLabels = defineMessages({
 @withRouter
 @CSSModules(styles, { allowMultiple: true })
 export default class InvoicesList extends PureComponent {
-  
+  unmounted = false
+
   constructor(props) {
     super(props)
 
@@ -112,17 +113,15 @@ export default class InvoicesList extends PureComponent {
       address,
     } = this.state
 
-    console.log('Invoices - fetchItems')
-    console.log('type',type)
-    console.log('address',address)
-
     if (type && address) {
       // Fetch for one wallet
       actions.invoices.getInvoices({
         currency: type,
         address,
       }).then((items) => {
-        this.setState({items})
+        if (!this.unmounted) {
+          this.setState({items})
+        }
       })
     } else {
       // Fetch for all my wallets
@@ -139,9 +138,15 @@ export default class InvoicesList extends PureComponent {
         }
       })
       actions.invoices.getManyInvoices(invoicesData).then((items) => {
-        this.setState({items})
+        if (!this.unmounted) {
+          this.setState({items})
+        }
       })
     }
+  }
+
+  async componentWillUnmount() {
+    this.unmounted = true
   }
 
   async componentWillMount() {
@@ -191,6 +196,7 @@ export default class InvoicesList extends PureComponent {
       location,
       intl,
       isSigned,
+      onlyTable,
     } = this.props
 
     const {
@@ -216,7 +222,32 @@ export default class InvoicesList extends PureComponent {
       slidesToShow: 1,
       slidesToScroll: 1
     };
-    
+
+    const invoicesTable = (
+      <div styleName="currencyWalletActivity">
+        <h3>
+          {(address) ? (
+            <FormattedMessage { ...langLabels.navTitleAddress } values={{
+              type,
+              address,
+              br: <br />,
+            }} />
+          ) : (
+            <FormattedMessage { ...langLabels.navTitle } />
+          )}
+        </h3>
+        {(items && items.length > 0) ? (
+          <Table rows={items} styleName="history" rowRender={this.rowRender} />
+        ) : (
+          <ContentLoader rideSideContent empty inner />
+        )}
+      </div>
+    )
+
+    if (onlyTable) {
+      return invoicesTable
+    }
+
     return (
       <div styleName="root">
         <PageSeo
@@ -246,30 +277,15 @@ export default class InvoicesList extends PureComponent {
           <div styleName="currencyWalletWrapper">
             <div styleName="currencyWalletBalance">
               {(items && items.length > 0) ? (
-                <div>Balance form</div>
+                <div>
+                {/* Right form holder */}
+                </div>
               ) : (
                 <ContentLoader leftSideContent />
               )}
             </div>
             <div styleName="currencyWalletActivityWrapper">
-              <div styleName="currencyWalletActivity">
-                <h3>
-                  {(address) ? (
-                    <FormattedMessage { ...langLabels.navTitleAddress } values={{
-                      type,
-                      address,
-                      br: <br />,
-                    }} />
-                  ) : (
-                    <FormattedMessage { ...langLabels.navTitle } />
-                  )}
-                </h3>
-                {(items && items.length > 0) ? (
-                  <Table rows={items} styleName="history" rowRender={this.rowRender} />
-                ) : (
-                  <ContentLoader rideSideContent empty inner />
-                )}
-              </div>
+              {invoicesTable}
             </div>
           </div>
           {

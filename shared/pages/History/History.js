@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import CSSModules from 'react-css-modules'
 
 import { connect } from 'redaction'
@@ -8,14 +8,20 @@ import Row from './Row/Row'
 import SwapsHistory from './SwapsHistory/SwapsHistory'
 import ReactTooltip from 'react-tooltip'
 
+import config from 'helpers/externalConfig'
+
 import styles from 'components/tables/Table/Table.scss'
 import stylesHere from './History.scss'
 import Filter from './Filter/Filter'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import InfiniteScrollTable from 'components/tables/InfiniteScrollTable/InfiniteScrollTable'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
+import links from 'helpers/links'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import ContentLoader from '../../components/loaders/ContentLoader/ContentLoader'
+import { isMobile } from 'react-device-detect'
+import InvoicesList from 'pages/Invoices/InvoicesList'
+
 
 
 const filterHistory = (items, filter) => {
@@ -54,8 +60,17 @@ export default class History extends Component {
   constructor(props) {
     super()
 
+    const {
+      match: {
+        params: {
+          page = null,
+        }
+      }
+    } = props
+
     const commentsList = actions.comments.getComment()
     this.state = {
+      page,
       renderedItems: 10,
       commentsList: commentsList || null
     }
@@ -64,16 +79,24 @@ export default class History extends Component {
 
   componentDidMount() {
     // actions.analytics.dataEvent('open-page-history')
-    if(this.props.match &&
-      this.props.match.params &&
-      this.props.match.params.address
+    if (this.props.match
+      && this.props.match.params
+      && this.props.match.params.page === 'invoices'
     ) {
-      let { match: { params: { address = null } } } = this.props
-      actions.history.setTransactions(address)
     } else {
-      actions.user.setTransactions()
-      actions.core.getSwapHistory()
-    }  
+      if(this.props.match &&
+        this.props.match.params &&
+        this.props.match.params.address
+      ) {
+        // @ToDo - этот роутер не работает - возможно артефакт после перевода ссылок на /(btc|eth)/walletAddress
+
+        let { match: { params: { address = null } } } = this.props
+        actions.history.setTransactions(address)
+      } else {
+        actions.user.setTransactions()
+        actions.core.getSwapHistory()
+      }
+    }
   }
 
   loadMore = () => {
@@ -102,12 +125,46 @@ export default class History extends Component {
 
   render() {
     const { items, swapHistory, intl } = this.props
-    const titles = [];
+    const {
+      page,
+    } = this.state
+
+    const titles = []
+    const activeTab = 0
+    const tabs = [
+      {
+        key: 'ActivityAll',
+        title: <FormattedMessage id="History_Nav_ActivityTab" defaultMessage="Activity" />,
+        link: links.history,
+      },
+      {
+        key: 'ActivityInvoices',
+        title: <FormattedMessage id="History_Nav_InvoicesTab" defaultMessage="Invoices" />,
+        link: links.invoices,
+      },
+    ]
 
     return (
       items ? (
         <section styleName="history">
-          <h3 styleName="historyHeading">Activity</h3>
+          <h3 styleName="historyHeading">
+            <FormattedMessage id="History_Activity_Title" defaultMessage="Activity" />
+          </h3>
+          {isMobile && config.opts.invoiceEnabled && (
+            <ul styleName="walletNav">
+              {tabs.map(({ key, title, link }, index) => (
+                <li
+                  key={key}
+                  styleName={`walletNavItem ${activeTab === index ? 'active' : ''}`}
+                  onClick={() => this.handleNavItemClick(index)}
+                >
+                  <a href={`#${link}`} styleName="walletNavItemLink">
+                    {title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
           {
             items.length > 0 ? (
               <InfiniteScrollTable

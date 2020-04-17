@@ -21,24 +21,38 @@ import ParticalClosure from '../PartialClosure/PartialClosure'
 
 import { FormattedMessage, injectIntl } from 'react-intl'
 
-import config from 'app-config'
+import config from 'helpers/externalConfig'
 import { withRouter } from 'react-router'
 import BalanceForm from './components/BalanceForm/BalanceForm'
 import CurrenciesList from './CurrenciesList'
 import Button from 'components/controls/Button/Button'
 import ContentLoader from '../../components/loaders/ContentLoader/ContentLoader'
 
+import InvoicesList from 'pages/Invoices/InvoicesList'
+
+
+
 const isWidgetBuild = config && config.isWidget
 
 const walletNav = [
   {
     key: 'My balances',
-    text: <FormattedMessage id="MybalanceswalletNav" defaultMessage="Мой баланс" />
+    text: <FormattedMessage id="MybalanceswalletNav" defaultMessage="Мой баланс" />,
+    link: links.home,
+    enabled: true,
   },
   {
     key: 'Transactions',
-    text: <FormattedMessage id="TransactionswalletNav" defaultMessage="Активность" />
-  }
+    text: <FormattedMessage id="TransactionswalletNav" defaultMessage="Активность" />,
+    link: links.history,
+    enabled: true,
+  },
+  {
+    key: 'Invoices',
+    text: <FormattedMessage id="InvoicesNav" defaultMessage="Инвойсы" />,
+    link: links.invoices,
+    enabled: (!isWidgetBuild && config.opts.invoiceEnabled),
+  },
 ]
 
 @connect(
@@ -137,6 +151,22 @@ const walletNav = [
 export default class Wallet extends Component {
   constructor(props) {
     super(props)
+
+    const {
+      match: {
+        params: {
+          page = null,
+        },
+      },
+    } = props
+
+    let activeView = 0
+
+    if (page === 'history' && !isMobile) {
+      activeView = 1
+    }
+    if (page === 'invoices') activeView = 2
+
     this.balanceRef = React.createRef() // Create a ref object
 
     const isSweepReady = localStorage.getItem(constants.localStorage.isSweepReady)
@@ -148,7 +178,8 @@ export default class Wallet extends Component {
     if (isBtcSweeped || isEthSweeped) showSweepBanner = false
 
     this.state = {
-      activeView: 0,
+      activeView,
+      activePage: page,
       btcBalance: 0,
       activeCurrency: 'usd',
       exchangeForm: false,
@@ -161,6 +192,36 @@ export default class Wallet extends Component {
 
   componentWillMount() {
     actions.user.getBalances()
+  }
+
+  componentDidUpdate(prevProps) {
+    const {
+      match: {
+        params: {
+          page = null,
+        },
+      },
+    } = this.props
+    const {
+      match: {
+        params: {
+          page: prevPage  = null,
+        },
+      },
+    } = prevProps
+
+    if (page !== prevPage) {
+      let activeView = 0
+
+      if (page === 'history' && !isMobile) {
+        activeView = 1
+      }
+      if (page === 'invoices') activeView = 2
+      this.setState({
+        activeView,
+        activePage: page,
+      })
+    }
   }
 
   componentDidMount() {
@@ -414,16 +475,18 @@ export default class Wallet extends Component {
       <artical>
         <section styleName={isWidgetBuild && !config.isFullBuild ? 'wallet widgetBuild' : 'wallet'}>
           <ul styleName="walletNav">
-            {walletNav.map(({ key, text }, index) => (
-              <li
-                key={key}
-                styleName={`walletNavItem ${activeView === index ? 'active' : ''}`}
-                onClick={() => this.handleNavItemClick(index)}
-              >
-                <a href styleName="walletNavItemLink">
-                  {text}
-                </a>
-              </li>
+            {walletNav.map(({ key, text, link, enabled }, index) => (
+              (enabled) ? (
+                <li
+                  key={key}
+                  styleName={`walletNavItem ${activeView === index ? 'active' : ''}`}
+                  onClick={() => this.handleNavItemClick(index)}
+                >
+                  <a href={`#${link}`} styleName="walletNavItemLink">
+                    {text}
+                  </a>
+                </li>
+              ) : null
             ))}
           </ul>
           <div className="data-tut-store" styleName="walletContent" ref={this.balanceRef}>
@@ -467,20 +530,23 @@ export default class Wallet extends Component {
                 </p>
               )}
               {/* (End) Sweep Banner */}
-              {/* {
-                !isFetching ?  */}
-              <CurrenciesList
-                tableRows={tableRows}
-                {...this.state}
-                {...this.props}
-                goToСreateWallet={this.goToСreateWallet}
-                getExCurrencyRate={(currencySymbol, rate) => this.getExCurrencyRate(currencySymbol, rate)}
-              />
+              {activeView === 0 && (
+                <CurrenciesList
+                  tableRows={tableRows}
+                  {...this.state}
+                  {...this.props}
+                  goToСreateWallet={this.goToСreateWallet}
+                  getExCurrencyRate={(currencySymbol, rate) => this.getExCurrencyRate(currencySymbol, rate)}
+                />
+              )}
 
               {/* : <ContentLoader rideSideContent /> */}
             </div>
             <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
-              <History />
+              {activeView === 1 && (<History { ...this.props} />)}
+            </div>
+            <div styleName={`activity ${activeView === 2 ? 'active' : ''}`}>
+              {activeView === 2 && (<InvoicesList { ...this.props} onlyTable={true} />)}
             </div>
           </div>
           {isWidgetBuild && activeView === 0 && (

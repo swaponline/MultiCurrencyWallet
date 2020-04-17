@@ -267,17 +267,17 @@ const setTransactions = async () => {
     const mainTokens = await Promise.all([
       actions.btc.getTransaction(),
       ... (isBtcSweeped) ? [] : [actions.btc.getTransaction(actions.btc.getSweepAddress())],
-      actions.btc.getInvoices(),
-      ... (isBtcSweeped) ? [] : [actions.btc.getInvoices(actions.btc.getSweepAddress())],
+      // actions.btc.getInvoices(),
+      // ... (isBtcSweeped) ? [] : [actions.btc.getInvoices(actions.btc.getSweepAddress())],
       actions.btcmultisig.getTransactionSMS(),
-      actions.btcmultisig.getInvoicesSMS(),
+      // actions.btcmultisig.getInvoicesSMS(),
       actions.btcmultisig.getTransactionUser(),
-      actions.btcmultisig.getInvoicesUser(),
+      // actions.btcmultisig.getInvoicesUser(),
       // actions.usdt.getTransaction(),
       actions.eth.getTransaction(),
       ... (isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
-      actions.eth.getInvoices(),
-      ... (isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
+      // actions.eth.getInvoices(),
+      // ... (isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
     ])
 
     const erc20 = Object.keys(config.erc20)
