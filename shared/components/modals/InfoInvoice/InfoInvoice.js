@@ -437,7 +437,7 @@ export default class InfoInvoice extends React.Component {
               </table>
             </div>
             <div styleName={buttonsHolderStyles.join(` `)}>
-              {(isPayerControlEnabled && !isFetching) && (
+              {(isPayerControlEnabled && !isFetching && status === 'pending') && (
                 <Fragment>
                   <div styleName="payControl">
                     <Button
