@@ -2,7 +2,6 @@
 import 'abortcontroller-polyfill/dist/abortcontroller-polyfill-only'
 import web3 from 'helpers/web3'
 import * as bitcoin from 'bitcoinjs-lib'
-import bitcoincash from 'bitcoincashjs-lib'
 import coininfo from 'coininfo'
 
 import abi from 'human-standard-token-abi'
@@ -37,7 +36,6 @@ const createSwapApp = () => {
     env: {
       web3,
       bitcoin,
-      bitcoincash,
       coininfo,
       Ipfs: IPFS,
       IpfsRoom: Channel,
