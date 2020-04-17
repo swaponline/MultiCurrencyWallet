@@ -163,7 +163,56 @@ export default class InfoInvoice extends React.Component {
   }
 
   handlePayInvoice = () => {
-    this.setState({ isReady: true })
+    const {
+      invoice: {
+        invoiceData: invoice = false,
+      },
+    } = this.state
+
+    if (invoice) {
+      const {
+        type,
+        destAddress,
+        fromAddress,
+        amount,
+        toAddress,
+      } = invoice
+
+
+      const payWallet = actions.user.getWithdrawWallet(type, toAddress)
+      if (payWallet) {
+        // @ToDo - Добавить проверку по балансу
+        let withdrawType = constants.modals.Withdraw
+
+        if (payWallet.isUserProtected) withdrawType = constants.modals.WithdrawMultisigUser
+        if (payWallet.isSmsProtected) withdrawType = constants.modals.WithdrawMultisigSMS
+
+        const {
+          currency,
+          address,
+          balance,
+          unconfirmedBalance,
+        } = payWallet
+
+        actions.modals.open(withdrawType, {
+          currency,
+          address,
+          balance,
+          unconfirmedBalance,
+          toAddress: destAddress || fromAddress,
+          amount: amount,
+          invoice,
+          onReady: () => {
+            this.setState({
+              isReady: true,
+            })
+          },
+        })
+
+      } else {
+        // No wallet - pay from external wallet
+      }
+    }
   }
 
   handleChangeLocation = (newLocation) => {

@@ -58,12 +58,13 @@ const cancelInvoice = (invoiceId) => new Promise((resolve) => apiLooper.post('in
   })
   .catch(() => { resolve(false) }))
 
-const markInvoice = (invoiceId, mark, txid) => new Promise((resolve) => apiLooper.post('invoiceApi', `/invoice/mark/`,
+const markInvoice = (invoiceId, mark, txid, address) => new Promise((resolve) => apiLooper.post('invoiceApi', `/invoice/mark/`,
   {
     body: {
       invoiceId,
       mark,
       txid,
+      address,
     },
   })
   .then((res) => {

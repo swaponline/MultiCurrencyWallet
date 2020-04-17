@@ -9,6 +9,7 @@ import reducers from 'redux/core/reducers'
 import * as bip39 from 'bip39'
 
 import { getActivatedCurrencies } from 'helpers/user'
+import getCurrencyKey from 'helpers/getCurrencyKey'
 
 
 const sign_btc_multisig = async (btcPrivateKey) => {
@@ -333,11 +334,23 @@ Private key: ${btcData.privateKey}\r\n
 3. Go to settings > addresses > import\r\n
 4. paste private key and click "Ok"\r\n
 \r\n
-* We don\`t store your private keys and will not be able to restore them!
+* We don\'t store your private keys and will not be able to restore them!
 \r\n
 `
 
   return text
+}
+
+export const getWithdrawWallet = (currency, addr) => {
+  const needType = getCurrencyKey(currency, true).toUpperCase()
+  
+  const filtered = actions.core.getWallets().filter((wallet) => {
+    const walletType = getCurrencyKey(wallet.currency, true).toUpperCase()
+
+    return (walletType === needType && addr === wallet.address) || (!addr && (walletType === needType))
+  })
+
+  return (filtered.length) ? filtered[0] : false
 }
 
 export const isOwner = (addr, currency) => {
@@ -415,4 +428,5 @@ export default {
   getReputation,
   getInfoAboutCurrency,
   getAuthData,
+  getWithdrawWallet,
 }

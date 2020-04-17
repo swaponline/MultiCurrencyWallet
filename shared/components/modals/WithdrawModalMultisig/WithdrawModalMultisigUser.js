@@ -171,7 +171,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
     }
 
     if (invoice && ownTx) {
-      await actions.invoices.markInvoice(invoice.id, 'ready', ownTx)
+      await actions.invoices.markInvoice(invoice.id, 'ready', ownTx, address)
       actions.loader.hide()
       actions.notifications.show(constants.notifications.SuccessWithdraw, {
         amount,

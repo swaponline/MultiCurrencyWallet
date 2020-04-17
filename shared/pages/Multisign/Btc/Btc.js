@@ -242,6 +242,7 @@ export default class Btc extends PureComponent {
     const signedTX = await actions.btcmultisig.signMultiSign( txRaw )
     const txID = await actions.btcmultisig.broadcastTx( signedTX )
     if (invoice) {
+      // @ToDo - payer address
       await actions.invoices.markInvoice(invoice, 'ready', txID)
     }
     this.setState( {
