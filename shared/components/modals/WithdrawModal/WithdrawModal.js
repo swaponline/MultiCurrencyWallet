@@ -220,7 +220,7 @@ export default class WithdrawModal extends React.Component {
     }
 
     if (invoice && ownTx) {
-      await actions.invoices.markInvoice(invoice.id, "ready", ownTx);
+      await actions.invoices.markInvoice(invoice.id, "ready", ownTx, address)
       actions.loader.hide();
       actions.notifications.show(constants.notifications.SuccessWithdraw, {
         amount,
@@ -240,7 +240,7 @@ export default class WithdrawModal extends React.Component {
         actions.loader.hide();
         actions[currency.toLowerCase()].getBalance(currency);
         if (invoice) {
-          await actions.invoices.markInvoice(invoice.id, "ready", txRaw);
+          await actions.invoices.markInvoice(invoice.id, "ready", txRaw, address);
         }
         this.setBalanceOnState(currency);
 
@@ -395,7 +395,8 @@ export default class WithdrawModal extends React.Component {
       data: { currency, invoice },
       tokenItems,
       items,
-      intl
+      intl,
+      portalUI,
     } = this.props;
 
     const linked = Link.all(this, "address", "amount", "ownTx");
@@ -449,8 +450,8 @@ export default class WithdrawModal extends React.Component {
       }
     });
 
-    return (
-      <Modal name={name} title={`${intl.formatMessage(labels.withdrowModal)}${" "}${currency.toUpperCase()}`}>
+    const formRender = (
+      <Fragment>
         {openScanCam && (
           <QrReader openScan={this.openScan} handleError={this.handleError} handleScan={this.handleScan} />
         )}
@@ -609,7 +610,12 @@ export default class WithdrawModal extends React.Component {
             </Button>
           </Fragment>
         )}
+      </Fragment>
+    )
+    return (portalUI) ? formRender : (
+      <Modal name={name} title={`${intl.formatMessage(labels.withdrowModal)}${" "}${currency.toUpperCase()}`}>
+        {formRender}
       </Modal>
-    );
+    )
   }
 }

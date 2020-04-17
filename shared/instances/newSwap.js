@@ -2,15 +2,13 @@
 import 'abortcontroller-polyfill/dist/abortcontroller-polyfill-only'
 import web3 from 'helpers/web3'
 import * as bitcoin from 'bitcoinjs-lib'
-import coininfo from 'coininfo'
 
 import abi from 'human-standard-token-abi'
 
 import Channel from 'ipfs-pubsub-room'
 import IPFS from 'ipfs'
 
-import config from 'helpers/externalConfig'
-import { initExternalConfig } from 'helpers/externalConfig'
+import config, { initExternalConfig } from 'helpers/externalConfig'
 
 import helpers, { constants as privateKeys, utils } from 'helpers'
 import actions from 'redux/actions'
@@ -36,7 +34,6 @@ const createSwapApp = () => {
     env: {
       web3,
       bitcoin,
-      coininfo,
       Ipfs: IPFS,
       IpfsRoom: Channel,
       storage: window.localStorage,

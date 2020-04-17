@@ -18,11 +18,17 @@ import CurrencyWallet from 'pages/CurrencyWallet/CurrencyWallet'
 import Transaction from 'pages/Transaction/Transaction'
 import IEO from 'pages/IEO/IEO'
 import BtcMultisignProcessor from 'pages/Multisign/Btc/Btc'
-import CreateInvoice from 'pages/CreateInvoice/CreateInvoice'
 
-import config from 'app-config'
+import CreateInvoice from 'pages/Invoices/CreateInvoice'
+import InvoicesList from 'pages/Invoices/InvoicesList'
+import Invoice from 'pages/Invoices/Invoice'
+
+import config from 'helpers/externalConfig'
 
 import ScrollToTop from '../components/layout/ScrollToTop/ScrollToTop'
+
+import { isMobile } from 'react-device-detect'
+
 
 
 const routes = (
@@ -51,7 +57,7 @@ const routes = (
 
       <Route path={`${localisePrefix}${links.send}/:currency/:address/:amount`} component={Wallet} />
       <Route path={`${localisePrefix}${links.wallet}`} component={Wallet} />
-      <Route path={`${localisePrefix}${links.history}/(btc)?/:address?`} component={History} />
+        
 
 
       <Route exact path={`${localisePrefix}${links.createWallet}`} component={CreateWallet} />
@@ -61,10 +67,25 @@ const routes = (
       <Route path={`${localisePrefix}${links.multisign}/btc/:action/:data`} component={BtcMultisignProcessor} />
 
       <Route path={`${localisePrefix}${links.createInvoice}/:type/:wallet`} component={CreateInvoice} />
+      {isMobile && (<Route path={`${localisePrefix}${links.invoices}/:type?/:address?`} component={InvoicesList} />)}
+      <Route path={`${localisePrefix}${links.invoice}/:uniqhash?/:doshare?`} component={Invoice} />
 
       <Route path={`${localisePrefix}${links.ieo}`} component={IEO} />
       <Route exact path={`${localisePrefix}${links.notFound}`} component={NotFound} />
       <Route exact path={`${localisePrefix}${links.home}`} component={Wallet} />
+      {/* В десктоп режиме - история показывается в дизайне кошелька */}
+      {!isMobile && (
+        <>
+          <Route exact path={`${localisePrefix}/:page(invoices)/:type?/:address?`} component={Wallet} />
+          <Route exact path={`${localisePrefix}/:page(history)`} component={Wallet} />
+        </>
+      )}
+      {isMobile && (
+        <>
+          <Route exact path={`${localisePrefix}${links.history}/(btc)?/:address?`} component={History} />
+          <Route exact path={`${localisePrefix}/:page(invoices)/:type?/:address?`} component={History} />
+        </>
+      )}
 
       <Route path={`${localisePrefix}${links.currencyWallet}`} component={Wallet} />
       <Route path={`${localisePrefix}${links.home}:currency`} component={Currency} />

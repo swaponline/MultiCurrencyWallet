@@ -171,7 +171,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
     }
 
     if (invoice && ownTx) {
-      await actions.invoices.markInvoice(invoice.id, 'ready', ownTx)
+      await actions.invoices.markInvoice(invoice.id, 'ready', ownTx, address)
       actions.loader.hide()
       actions.notifications.show(constants.notifications.SuccessWithdraw, {
         amount,
@@ -325,6 +325,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
       tokenItems,
       items,
       intl,
+      portalUI,
     } = this.props
 
     let txConfirmLink = `${getFullOrigin()}${links.multisign}/btc/confirm/${txRaw}`
@@ -377,8 +378,8 @@ export default class WithdrawModalMultisigUser extends React.Component {
       },
     })
 
-    return (
-      <Modal name={name} title={`${intl.formatMessage(labels.withdrowModal)}${' '}${currency.toUpperCase()}`}>
+    const formRender = (
+      <Fragment>
         {openScanCam && (
           <QrReader openScan={this.openScan} handleError={this.handleError} handleScan={this.handleScan} />
         )}
@@ -560,6 +561,11 @@ export default class WithdrawModalMultisigUser extends React.Component {
             </div>
           </Fragment>
         }
+      </Fragment>
+    )
+    return (portalUI) ? formRender : (
+      <Modal name={name} title={`${intl.formatMessage(labels.withdrowModal)}${' '}${currency.toUpperCase()}`}>
+        {formRender}
       </Modal>
     )
   }

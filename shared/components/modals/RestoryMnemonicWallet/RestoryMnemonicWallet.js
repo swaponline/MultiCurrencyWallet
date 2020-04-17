@@ -126,6 +126,9 @@ export default class RestoryMnemonicWallet extends React.Component {
       const btcWallet = await actions.btc.getWalletByWords(mnemonic)
       const ethWallet = await actions.eth.getWalletByWords(mnemonic)
 
+      // clean mnemonic, if exists
+      localStorage.setItem(constants.privateKeyNames.twentywords, '-')
+
       // Check - if exists backup for this mnemonic
       const restoryMark = btcWallet.publicKey
 

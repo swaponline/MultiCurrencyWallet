@@ -33,12 +33,13 @@ const userLanguage = (navigator.userLanguage || navigator.language || "en-gb").s
 moment.locale(userLanguage);
 
 @withRouter
-@connect(({ currencies: { items: currencies } }) => ({
+@connect(({ currencies: { items: currencies }, modals }) => ({
   currencies,
   isVisible: "loader.isVisible",
   ethAddress: "user.ethData.address",
   btcAddress: "user.btcData.address",
-  tokenAddress: "user.tokensData.swap.address"
+  tokenAddress: "user.tokensData.swap.address",
+  modals,
 }))
 @CSSModules(styles, { allowMultiple: true })
 export default class App extends React.Component {
@@ -198,7 +199,16 @@ export default class App extends React.Component {
 
   render() {
     const { fetching, multiTabs, error } = this.state;
-    const { children, ethAddress, btcAddress, tokenAddress, history } = this.props;
+    const { children, ethAddress, btcAddress, tokenAddress, history, modals } = this.props;
+
+    if (typeof document !== 'undefined' && Object.keys(modals).length > 0) {
+      document.body.classList.remove('overflowY-default')
+      document.body.classList.add('overflowY-hidden')
+    } else {
+      document.body.classList.remove('overflowY-hidden')
+      document.body.classList.add('overflowY-default')
+    }
+
     const isFetching = !ethAddress || !btcAddress || (!tokenAddress && config && !config.isWidget) || !fetching;
 
     const isWidget = history.location.pathname.includes("/exchange") && history.location.hash === "#widget";
