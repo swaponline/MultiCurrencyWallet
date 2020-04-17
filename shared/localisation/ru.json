@@ -136,24 +136,15 @@
   },
   {
     "id": "KeyActionsPanel43",
-    "message": "Выйти",
-    "files": [
-      "shared/components/KeyActionsPanel/KeyActionsPanel.js"
-    ]
+    "message": "Выйти"
   },
   {
     "id": "KeyActionsPanel46",
-    "message": "Показать ключи",
-    "files": [
-      "shared/components/KeyActionsPanel/KeyActionsPanel.js"
-    ]
+    "message": "Показать ключи"
   },
   {
     "id": "KeyActionsPanel49",
-    "message": "Импортировать",
-    "files": [
-      "shared/components/KeyActionsPanel/KeyActionsPanel.js"
-    ]
+    "message": "Импортировать"
   },
   {
     "id": "KeyActionsPanel53",
@@ -331,10 +322,10 @@
     "id": "WithdrawModalCancelBtn",
     "message": "Отмена",
     "files": [
+      "shared/components/modals/ReceiveModal/ReceiveModal.js",
       "shared/components/modals/WithdrawModal/WithdrawModal.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
-      "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.js",
-      "shared/components/modals/ReceiveModal/ReceiveModal.js"
+      "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.js"
     ]
   },
   {
@@ -2947,10 +2938,7 @@
   },
   {
     "id": "KeyActionsPanel73",
-    "message": "Скрыть / Добавить валюты",
-    "files": [
-      "shared/components/KeyActionsPanel/KeyActionsPanel.js"
-    ]
+    "message": "Скрыть / Добавить валюты"
   },
   {
     "id": "userTooltip43",
@@ -3662,10 +3650,7 @@
   },
   {
     "id": "KeyActionsPane74",
-    "message": "Незавершенные обмены ({length})",
-    "files": [
-      "shared/components/KeyActionsPanel/KeyActionsPanel.js"
-    ]
+    "message": "Незавершенные обмены ({length})"
   },
   {
     "id": "decline21",
@@ -3970,101 +3955,59 @@
   },
   {
     "id": "Keychain",
-    "message": "KeyChain Activation",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
+    "message": "KeyChain Activation"
   },
   {
     "id": "Keychain114",
-    "message": "KeyChain is loading. Please wait.",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
+    "message": "KeyChain is loading. Please wait."
   },
   {
     "id": "Keychain116",
-    "message": "Back",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
+    "message": "Back"
   },
   {
     "id": "Keychain1165",
-    "message": "KeyChain is activated. If you wish to deactivate KeyChain, note that your key will be replaced with a new one.",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
+    "message": "KeyChain is activated. If you wish to deactivate KeyChain, note that your key will be replaced with a new one."
   },
   {
     "id": "Keychain130",
-    "message": "You need to install KeyChain to proceed",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
+    "message": "You need to install KeyChain to proceed"
   },
   {
     "id": "Keychain133",
-    "message": "Download",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
+    "message": "Download"
   },
   {
     "id": "Keychain141",
-    "message": "Positive balance error",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
+    "message": "Positive balance error"
   },
   {
     "id": "Keychain144",
-    "message": "Would you like to protect your keys with KeyChain? Note that your address will be changed",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
+    "message": "Would you like to protect your keys with KeyChain? Note that your address will be changed"
   },
   {
     "id": "Keychain157",
-    "message": "Confirm",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
+    "message": "Confirm"
   },
   {
     "id": "Keychain167",
-    "message": "Deactivate",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
+    "message": "Deactivate"
   },
   {
     "id": "Keychain173",
-    "message": "KeyChain is not installed but activated",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
+    "message": "KeyChain is not installed but activated"
   },
   {
     "id": "Keychain175",
-    "message": "Deactivate",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
+    "message": "Deactivate"
   },
   {
     "id": "Keychain179",
-    "message": "Download",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
+    "message": "Download"
   },
   {
     "id": "Keychain185",
-    "message": "Back",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
+    "message": "Back"
   },
   {
     "id": "SecondStep",
@@ -5337,6 +5280,7 @@
     "message": "Мой баланс",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js",
+      "shared/pages/Invoices/InvoicesList/index.js",
       "shared/pages/Wallet/Wallet.js"
     ]
   },
@@ -5361,10 +5305,7 @@
   },
   {
     "id": "descr282",
-    "message": "Показать мои ключи",
-    "files": [
-      "shared/pages/Wallet/components/WallerSlider/index.js"
-    ]
+    "message": "Показать мои ключи"
   },
   {
     "id": "descr284",
@@ -5463,17 +5404,11 @@
   },
   {
     "id": "CreateInvoiceGoHome",
-    "message": "Перейти на главную",
-    "files": [
-      "shared/pages/CreateInvoice/CreateInvoice.js"
-    ]
+    "message": "Перейти на главную"
   },
   {
     "id": "CreateInvoiceReady",
-    "message": "Спасибо, инвойс выставлен",
-    "files": [
-      "shared/pages/CreateInvoice/CreateInvoice.js"
-    ]
+    "message": "Спасибо, инвойс выставлен"
   },
   {
     "id": "createWallet_customERC20",
@@ -6014,10 +5949,7 @@
   },
   {
     "id": "ShowMyMnemonic",
-    "message": "Пожалуйста, сделайте резервную копию своего кошелька",
-    "files": [
-      "shared/pages/Wallet/components/WallerSlider/index.js"
-    ]
+    "message": "Пожалуйста, сделайте резервную копию своего кошелька"
   },
   {
     "id": "BtcMultisignConfirmTx_FromAddress",
@@ -6233,6 +6165,7 @@
     "id": "ImportKeys_RestoreMnemonic_Tooltip",
     "message": "Это мнемонический пароль, то есть список кодовых слов, который хранит необходимую для восстановления доступа к криптокошельку информацию. Типичная сид-фраза — 12 (и больше) слов, случайным образом подобранных из словаря, состоящего из 2048 слов.",
     "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js",
       "shared/pages/CreateWallet/CreateWallet.js"
     ]
   },
@@ -6240,6 +6173,7 @@
     "id": "ImportKeys_RestoreMnemonic_Tooltip_withBalance",
     "message": "Пожалуйста, будьте осторожны! Как только вы импортируете свой seed, ваш текущий баланс будет сброшен. Сохраните текущие средства на другой кошелек.",
     "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js",
       "shared/pages/CreateWallet/CreateWallet.js"
     ]
   },
@@ -6308,10 +6242,7 @@
   },
   {
     "id": "ForYou",
-    "message": "For you",
-    "files": [
-      "shared/pages/Wallet/components/WallerSlider/index.js"
-    ]
+    "message": "For you"
   },
   {
     "id": "SweepToMnemonicKeys_ButtonMakeSweep",
@@ -6479,6 +6410,224 @@
     "message": "Ссылка скопирована",
     "files": [
       "shared/components/modals/Share/Share.js"
+    ]
+  },
+  {
+    "id": "Row313",
+    "message": "Deposit",
+    "files": [
+      "shared/pages/Currency/Currency.js"
+    ]
+  },
+  {
+    "id": "History_Activity_Title",
+    "message": "Activity",
+    "files": [
+      "shared/pages/History/History.js"
+    ]
+  },
+  {
+    "id": "History_Nav_ActivityTab",
+    "message": "Activity",
+    "files": [
+      "shared/pages/History/History.js"
+    ]
+  },
+  {
+    "id": "History_Nav_InvoicesTab",
+    "message": "Invoices",
+    "files": [
+      "shared/pages/History/History.js"
+    ]
+  },
+  {
+    "id": "InvoicesView_MetaDescription",
+    "message": "Atomic Swap Wallet allows you to manage and securely exchange. Based on Multi-Sig and Atomic Swap technologies.",
+    "files": [
+      "shared/pages/Invoices/Invoice/index.js"
+    ]
+  },
+  {
+    "id": "InvoicesView_MetaTitle",
+    "message": "Swap.Online - Invoice #{number} - Web Wallet with Atomic Swap.",
+    "files": [
+      "shared/pages/Invoices/Invoice/index.js"
+    ]
+  },
+  {
+    "id": "InvoicesView_WidgetMetaTitle",
+    "message": "Invoice #{number} - Web Wallet with Atomic Swap.",
+    "files": [
+      "shared/pages/Invoices/Invoice/index.js"
+    ]
+  },
+  {
+    "id": "InvoicesList_MetaDescription",
+    "message": "Atomic Swap Wallet allows you to manage and securely exchange. Based on Multi-Sig and Atomic Swap technologies.",
+    "files": [
+      "shared/pages/Invoices/InvoicesList/index.js"
+    ]
+  },
+  {
+    "id": "InvoicesList_MetaTitle",
+    "message": "Swap.Online - Invoices - Web Wallet with Atomic Swap.",
+    "files": [
+      "shared/pages/Invoices/InvoicesList/index.js"
+    ]
+  },
+  {
+    "id": "InvoicesList_NavTitle_Address",
+    "message": "Invoices {type}{br}{address}",
+    "files": [
+      "shared/pages/Invoices/InvoicesList/index.js"
+    ]
+  },
+  {
+    "id": "InvoicesList_NavTitle_All",
+    "message": "Invoices",
+    "files": [
+      "shared/pages/Invoices/InvoicesList/index.js"
+    ]
+  },
+  {
+    "id": "InvoicesList_WidgetMetaTitle",
+    "message": "Invoices - Web Wallet with Atomic Swap.",
+    "files": [
+      "shared/pages/Invoices/InvoicesList/index.js"
+    ]
+  },
+  {
+    "id": "partialVideoAndFeatures2",
+    "message": "Supports BTC, ETH, USDT, ERC-20 tokens",
+    "files": [
+      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js",
+      "shared/pages/PointOfSell/VideoAndFeatures/VideoAndFeatures.js"
+    ]
+  },
+  {
+    "id": "Share",
+    "message": "Share Twitter",
+    "files": [
+      "shared/pages/Swap/Share/Share.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_ButtonShareReady",
+    "message": "Готово",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_CloseButton",
+    "message": "Закрыть",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_Comment",
+    "message": "Комментарий",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_DeclimeInvoiceButton",
+    "message": "Отклонить",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_DestinationAddress",
+    "message": "Адрес для оплаты {destination}",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_FromAddress",
+    "message": "Адресс отправителя",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_InfoStatus_Declimed",
+    "message": "Отклонён",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_InfoStatus_Pending",
+    "message": "Не оплачен",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_InfoStatus_Ready",
+    "message": "Оплачено",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_PayInvoiceButton",
+    "message": "Оплатить",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_Sender",
+    "message": "Отправитель (контакт)",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_ShareInvoiceText",
+    "message": "Инвойс #{id}-{invoiceNumber} от {contact} на {amount} {type}",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_ShareLink_InfoText",
+    "message": "Отправьте эту ссылку плательщику для подтверждения платежа",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_Title",
+    "message": "Инвойс #{number}",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_TitleFetch",
+    "message": "Загрузка инвойса...",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_ToAddress",
+    "message": "Адресс плательщика",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoicesNav",
+    "message": "Инвойсы",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
     ]
   }
 ]
