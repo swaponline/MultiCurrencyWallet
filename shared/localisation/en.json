@@ -4715,7 +4715,7 @@
   },
   {
     "id": "invoiceModal_Contact",
-    "message": "Your contact (emain or @nickname)",
+    "message": "Your contact (email or @nickname)",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
