@@ -38,9 +38,6 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
       btcMultisigSMSData,
       btcMultisigUserData,
       tokensData,
-      nimData,
-      // usdtOmniData,
-      // nimData,
     }
   }) => ({
     currencies: currencies.items,
@@ -49,8 +46,6 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
       btcData,
       btcMultisigSMSData,
       btcMultisigUserData,
-      // usdtOmniData,
-      // nimData,
     ],
     tokenItems: [...Object.keys(tokensData).map(k => tokensData[k])]
   })

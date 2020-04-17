@@ -20,8 +20,8 @@ import SwapApp, { constants } from 'swap.app'
 import SwapAuth from 'swap.auth'
 import SwapRoom from 'swap.room'
 import SwapOrders from 'swap.orders'
-import { ETH2BTC, BTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN/* USDTOMNI2ETHTOKEN */, ETHTOKEN2USDT } from 'swap.flows'
-import { EthSwap, EthTokenSwap, BtcSwap /* UsdtOmniSwap */ } from 'swap.swaps'
+import { ETH2BTC, BTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN, ETHTOKEN2USDT } from 'swap.flows'
+import { EthSwap, EthTokenSwap, BtcSwap } from 'swap.swaps'
 
 
 initExternalConfig()
@@ -50,7 +50,6 @@ const createSwapApp = () => {
         // TODO need init swapApp only after private keys created!!!!!!!!!!!!!!!!!!!
         eth: localStorage.getItem(privateKeys.privateKeyNames.eth),
         btc: localStorage.getItem(privateKeys.privateKeyNames.btc),
-        // qtum: localStorage.getItem(privateKeys.privateKeyNames.qtum),
       }),
       new SwapRoom({
         repo,

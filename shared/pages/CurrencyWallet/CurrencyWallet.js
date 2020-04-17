@@ -50,13 +50,13 @@ const titles = [
     btcMultisigSMSData,
     btcMultisigUserData,
     isFetching,
-    tokensData, nimData/* usdtOmniData */ } }) => ({
+    tokensData } }) => ({
       items: [
         ethData,
         btcData,
         btcMultisigSMSData,
         btcMultisigUserData,
-        ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData, usdtOmniData */],
+        ...Object.keys(tokensData).map(k => (tokensData[k]))],
       tokens: [...Object.keys(tokensData).map(k => (tokensData[k]))],
       user,
       historyTx: history,

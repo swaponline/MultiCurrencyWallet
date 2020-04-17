@@ -39,14 +39,6 @@ export const initialState = {
     balanceError: null,
     infoAboutCurrency: null
   },
-  /*
-  xlmData: {
-    balance: 0,
-    currency: 'XLM',
-    fullName: 'Stellar',
-    balanceError: null,
-  },
-  */
   usdtData: {
     address: '0x0',
     publicKey: '0x0',
@@ -55,14 +47,6 @@ export const initialState = {
     currency: 'USDT',
     fullName: 'Tether',
     balanceError: null,
-  },
-  nimData: {
-    balance: 0,
-    isBalanceFetched: false,
-    currency: 'NIM',
-    fullName: 'Nimiq',
-    balanceError: null,
-    infoAboutCurrency: null
   },
   tokensData: {},
   isFetching: false,

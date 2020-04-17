@@ -69,8 +69,6 @@ const sign = async () => {
   const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
   const btcMultisigPrivateKey = localStorage.getItem(constants.privateKeyNames.btcMultisig)
   const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
-  // const qtumPrivateKey        = localStorage.getItem(constants.privateKeyNames.qtum)
-  // const xlmPrivateKey = localStorage.getItem(constants.privateKeyNames.xlm)
 
 
   const _ethPrivateKey = actions.eth.login(ethPrivateKey, mnemonic, mnemonicKeys)
@@ -82,10 +80,6 @@ const sign = async () => {
   // btc multisig 2of2 user manual sign
   await sign_btc_multisig(_btcPrivateKey)
 
-  // actions.usdt.login(btcPrivateKey)
-  // actions.qtum.login(qtumPrivateKey)
-  // actions.xlm.login(xlmPrivateKey)
-
   // if inside actions.token.login to call web3.eth.accounts.privateKeyToAccount passing public key instead of private key
   // there will not be an error, but the address returned will be wrong
   // if (!isEthKeychainActivated) {
@@ -95,7 +89,6 @@ const sign = async () => {
     })
   // }
   reducers.user.setTokenSigned(true)
-  // await actions.nimiq.login(_ethPrivateKey)
 
   // const getReputation = actions.user.getReputation()
 
@@ -139,9 +132,6 @@ const getBalances = () => {
   actions.btc.getBalance()
   actions.btcmultisig.getBalance() // SMS-Protected
   actions.btcmultisig.getBalanceUser() //Other user confirm
-  // actions.usdt.getBalance()
-  // actions.qtum.getBalance()
-  // actions.xlm.getBalance()
 
   if (isTokenSigned) {
     Object.keys(config.erc20)
@@ -149,7 +139,6 @@ const getBalances = () => {
         actions.token.getBalance(name)
       })
   }
-  // actions.nimiq.getBalance()
 }
 
 const getExchangeRate = (sellCurrency, buyCurrency) => {
@@ -312,7 +301,7 @@ const setTransactions = async () => {
 }
 
 const getText = () => {
-  const { user: { ethData, btcData, /* xlmData, */ } } = getState()
+  const { user: { ethData, btcData } } = getState()
 
 
   let text = `

@@ -52,9 +52,6 @@ const walletNav = [
       btcMultisigUserData,
       btcMultisigUserDataList,
       tokensData,
-      // usdtOmniData, // qtumData,
-      // nimData,
-      // xlmData,
       isFetching
     },
     currencies: { items: currencies },
@@ -80,9 +77,6 @@ const walletNav = [
       btcMultisigSMSData,
       btcMultisigUserData,
       ethData,
-      // qtumData,
-      // xlmData,
-      // usdtOmniData,
       ...Object.keys(tokensData).map(k => tokensData[k])
     ].map(({ account, keyPair, ...data }) => ({
       ...data
@@ -92,17 +86,12 @@ const walletNav = [
       ? [
         btcData,
         ethData
-        // usdtOmniData,
       ]
       : [
         btcData,
         btcMultisigSMSData,
         btcMultisigUserData,
         ethData,
-        // qtumData,
-        // usdtOmniData,
-        // nimData,
-        // xlmData,
       ]
     ).map(data => data.currency)
 
@@ -111,10 +100,6 @@ const walletNav = [
       btcMultisigSMSData,
       btcMultisigUserData,
       ethData,
-      // qtumData,
-      // usdtOmniData,
-      // nimData,
-      // xlmData,
     ].map(({ balance, currency, infoAboutCurrency }) => ({
       balance,
       infoAboutCurrency,
@@ -139,8 +124,6 @@ const walletNav = [
         btcMultisigSMSData,
         btcMultisigUserData,
         btcMultisigUserDataList,
-        // qtumData,
-        // usdtOmniData,
       }
     }
   }

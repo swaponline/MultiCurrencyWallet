@@ -27,8 +27,8 @@ import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 @withRouter
 @connect(({
   core: { hiddenCoinsList },
-  user: { ethData, btcData, tokensData, nimData /* usdtOmniData */ } }) => ({
-    items: [ethData, btcData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData, usdtOmniData */],
+  user: { ethData, btcData, tokensData } }) => ({
+    items: [ethData, btcData, ...Object.keys(tokensData).map(k => (tokensData[k]))],
     hiddenCoinsList,
   }))
 @CSSModules(styles, { allowMultiple: true })

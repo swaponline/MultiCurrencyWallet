@@ -3,8 +3,6 @@ import eth from './eth.svg'
 import icx from './icx.svg'
 import waves from './waves.svg'
 import xrp from './xrp.svg'
-import xlm from './xlm.svg'
-import nim from './nim.svg'
 import swap from './swap.svg'
 import usdt from './usdt.svg'
 import syc2 from './syc2.svg'
@@ -27,7 +25,6 @@ export default {
   bxb,
   kn,
   drt,
-  xlm,
   lev,
   arn,
   omg,
@@ -39,6 +36,5 @@ export default {
   waves,
   xrp,
   yup,
-  nim,
   eurs,
 }

@@ -80,14 +80,6 @@ const initialState = {
       addAssets: false,
       dontCreateOrder: true,
     }] : [],
-    ...(!buildOpts.curEnabled || buildOpts.curEnabled.qtum) ? [{
-      name: 'QTUM',
-      title: 'QTUM',
-      icon: 'qtum',
-      value: 'qtum',
-      fullTitle: 'qtum',
-      addAssets: true,
-    }] : [],
     ...(Object.keys(config.erc20)
       .map(key => ({
         name: key.toUpperCase(),
