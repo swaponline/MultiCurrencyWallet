@@ -170,7 +170,6 @@
   "dependencies": {
     "autosize": "^4.0.2",
     "axios": "^0.18.1",
-    "bchaddrjs": "^0.3.2",
     "bip32": "^2.0.5",
     "bip39": "^3.0.2",
     "bitcoincashjs-lib": "^3.3.3",

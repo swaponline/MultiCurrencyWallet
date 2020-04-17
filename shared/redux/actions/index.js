@@ -13,7 +13,6 @@ import filter from './filter'
 
 import btc from './btc'
 import btcmultisig from './btcmultisig'
-import bch from './bch'
 import eth from './eth'
 import token from './token'
 import nimiq from './nimiq'
@@ -52,7 +51,6 @@ export default {
   history,
   core,
 
-  bch,
   btc,
   btcmultisig,
   eth,

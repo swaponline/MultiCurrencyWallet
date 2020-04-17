@@ -47,7 +47,7 @@ const SelectGroup = (props) => {
           onKeyDown={inputReplaceCommaWithDot}
         />
         {
-          (selectedValue === 'eth' || selectedValue === 'btc' || selectedValue === 'bch') && usd > 0 &&
+          (selectedValue === 'eth' || selectedValue === 'btc') && usd > 0 &&
           <p styleName="textUsd" >{`~${usd}`} USD</p>
         }
         <CurrencySelect
@@ -56,7 +56,7 @@ const SelectGroup = (props) => {
           tooltip={tooltip}
           switchBalanceFunc={switchBalanceFunc}
           id={id}
-          selectedItemRender={(item) => item.fullTitle }
+          selectedItemRender={(item) => item.fullTitle}
           styleName="currencySelect"
           placeholder="Enter the name of token"
           selectedValue={selectedValue}

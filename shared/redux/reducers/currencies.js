@@ -113,13 +113,6 @@ const initialState = {
       value: 'btc',
       fullTitle: 'bitcoin',
     }] : [],
-    ...((!buildOpts.curEnabled || buildOpts.curEnabled.bch) ? [{
-      name: 'BCH',
-      title: 'BCH',
-      icon: 'bch',
-      value: 'bch',
-      fullTitle: 'bitcoin cash',
-    }] : []),
     ...(Object.keys(config.erc20)
       .map(key => ({
         name: key.toUpperCase(),
@@ -250,16 +243,7 @@ if (config.isWidget) {
 //   fullTitle: 'USD Tether',
 // })
 // eslint-disable-next-line
-if (!buildOpts.curEnabled || buildOpts.curEnabled.bch) {
-  process.env.TESTNET && initialState.items.unshift({
-    name: 'BCH',
-    title: 'BCH',
-    icon: 'bch',
-    value: 'bch',
-    fullTitle: 'bitcoin cash',
-    addAssets: true,
-  })
-}
+
 
 const addSelectedItems = (state, payload) => ({
   ...state,

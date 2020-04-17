@@ -68,7 +68,6 @@ const sign = async () => {
 
   const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
   const btcMultisigPrivateKey = localStorage.getItem(constants.privateKeyNames.btcMultisig)
-  const bchPrivateKey = localStorage.getItem(constants.privateKeyNames.bch)
   const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
   // const qtumPrivateKey        = localStorage.getItem(constants.privateKeyNames.qtum)
   // const xlmPrivateKey = localStorage.getItem(constants.privateKeyNames.xlm)
@@ -83,7 +82,6 @@ const sign = async () => {
   // btc multisig 2of2 user manual sign
   await sign_btc_multisig(_btcPrivateKey)
 
-  actions.bch.login(bchPrivateKey)
   // actions.usdt.login(btcPrivateKey)
   // actions.qtum.login(qtumPrivateKey)
   // actions.xlm.login(xlmPrivateKey)
@@ -141,7 +139,6 @@ const getBalances = () => {
   actions.btc.getBalance()
   actions.btcmultisig.getBalance() // SMS-Protected
   actions.btcmultisig.getBalanceUser() //Other user confirm
-  // actions.bch.getBalance()
   // actions.usdt.getBalance()
   // actions.qtum.getBalance()
   // actions.xlm.getBalance()
@@ -248,11 +245,6 @@ const getInfoAboutCurrency = (currencyNames) =>
                 reducers.user.setInfoAboutCurrency({ name: 'ethMnemonicData', infoAboutCurrency: currencyInfo }) // Sweep (for future)
                 break;
               }
-              case 'BCH': {
-                reducers.user.setInfoAboutCurrency({ name: 'bchData', infoAboutCurrency: currencyInfo })
-                reducers.user.setInfoAboutCurrency({ name: 'bchMnemonicData', infoAboutCurrency: currencyInfo }) // Sweep (for future)
-                break;
-              }
               default: reducers.user.setInfoAboutCurrency({ name: `${currencyInfoItem.symbol.toLowerCase()}Data`, infoAboutCurrency: currencyInfo })
             }
           }
@@ -292,7 +284,6 @@ const setTransactions = async () => {
       actions.btcmultisig.getInvoicesSMS(),
       actions.btcmultisig.getTransactionUser(),
       actions.btcmultisig.getInvoicesUser(),
-      actions.bch.getTransaction(),
       // actions.usdt.getTransaction(),
       actions.eth.getTransaction(),
       ... (isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
@@ -321,7 +312,7 @@ const setTransactions = async () => {
 }
 
 const getText = () => {
-  const { user: { ethData, btcData, /* xlmData, */bchData } } = getState()
+  const { user: { ethData, btcData, /* xlmData, */ } } = getState()
 
 
   let text = `
@@ -355,24 +346,7 @@ Private key: ${btcData.privateKey}\r\n
 \r\n
 * We don\`t store your private keys and will not be able to restore them!
 \r\n
-# BITCOINCASH\r\n
-\r\n
-Bitcoin Cash address: ${bchData.address}\r\n
-Private key: ${bchData.privateKey}\r\n
-\r\n
-1. Go to blockchain.info\r\n
-2. login\r\n
-3. Go to settings > addresses > import\r\n
-4. paste private key and click "Ok"\r\n
 `
-  /*
-  # XLM\r\n
-  \r\n
-  XLM Private Key: ${xlmData.keypair.secret()}\r\n
-  Address name: ${xlmData.address}\r\n
-  \r\n
-  `
-  */
 
   return text
 }

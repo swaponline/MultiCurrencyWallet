@@ -49,7 +49,6 @@ const titles = [
     btcData,
     btcMultisigSMSData,
     btcMultisigUserData,
-    // bchData,
     isFetching,
     tokensData, nimData/* usdtOmniData */ } }) => ({
       items: [
@@ -57,7 +56,6 @@ const titles = [
         btcData,
         btcMultisigSMSData,
         btcMultisigUserData,
-        // bchData,
         ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData, usdtOmniData */],
       tokens: [...Object.keys(tokensData).map(k => (tokensData[k]))],
       user,

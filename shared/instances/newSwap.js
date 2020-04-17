@@ -4,7 +4,6 @@ import web3 from 'helpers/web3'
 import * as bitcoin from 'bitcoinjs-lib'
 import bitcoincash from 'bitcoincashjs-lib'
 import coininfo from 'coininfo'
-import bchaddr from 'bchaddrjs'
 
 import abi from 'human-standard-token-abi'
 
@@ -21,8 +20,8 @@ import SwapApp, { constants } from 'swap.app'
 import SwapAuth from 'swap.auth'
 import SwapRoom from 'swap.room'
 import SwapOrders from 'swap.orders'
-import { ETH2BTC, BTC2ETH, BCH2ETH, ETH2BCH, ETHTOKEN2BTC, BTC2ETHTOKEN/* USDTOMNI2ETHTOKEN */, ETHTOKEN2USDT } from 'swap.flows'
-import { EthSwap, EthTokenSwap, BtcSwap, BchSwap /* UsdtOmniSwap */ } from 'swap.swaps'
+import { ETH2BTC, BTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN/* USDTOMNI2ETHTOKEN */, ETHTOKEN2USDT } from 'swap.flows'
+import { EthSwap, EthTokenSwap, BtcSwap /* UsdtOmniSwap */ } from 'swap.swaps'
 
 
 initExternalConfig()
@@ -40,7 +39,6 @@ const createSwapApp = () => {
       bitcoin,
       bitcoincash,
       coininfo,
-      bchaddr,
       Ipfs: IPFS,
       IpfsRoom: Channel,
       storage: window.localStorage,
@@ -52,7 +50,6 @@ const createSwapApp = () => {
         // TODO need init swapApp only after private keys created!!!!!!!!!!!!!!!!!!!
         eth: localStorage.getItem(privateKeys.privateKeyNames.eth),
         btc: localStorage.getItem(privateKeys.privateKeyNames.btc),
-        bch: localStorage.getItem(privateKeys.privateKeyNames.bch),
         // qtum: localStorage.getItem(privateKeys.privateKeyNames.qtum),
       }),
       new SwapRoom({
@@ -83,20 +80,10 @@ const createSwapApp = () => {
         fetchTxInfo: (txid) => actions.btc.fetchTxInfo(txid),
         estimateFeeValue: ({ inSatoshis, speed, address, txSize } = {}) => helpers.btc.estimateFeeValue({ inSatoshis, speed, address, txSize }),
       }),
-      new BchSwap({
-        fetchBalance: (address) => actions.bch.fetchBalance(address),
-        fetchUnspents: (scriptAddress) => actions.bch.fetchUnspents(scriptAddress),
-        broadcastTx: (txRaw) => actions.bch.broadcastTx(txRaw),
-        fetchTxInfo: (txid) => actions.bch.fetchTxInfo(txid),
-        estimateFeeValue: ({ inSatoshis, speed, address, txSize } = {}) => helpers.bch.estimateFeeValue({ inSatoshis, speed, address, txSize }),
-      }),
     ],
     flows: [
       ETH2BTC,
       BTC2ETH,
-
-      BCH2ETH,
-      ETH2BCH,
 
       ...(Object.keys(config.erc20))
         .map(key => ETHTOKEN2BTC(key)),

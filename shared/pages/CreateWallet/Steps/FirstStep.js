@@ -45,7 +45,7 @@ export default class CreateWallet extends Component {
     { name: "ETH", capture: "Ethereum" },
   ]
 
-  
+
   constructor(props) {
     super()
     const { currencies } = props
@@ -65,19 +65,19 @@ export default class CreateWallet extends Component {
       }
       const ownTokensKeys = Object.keys(config.opts.ownTokens)
       // В defaultStartPack помещается пять валют
-      if (ownTokensKeys.length >=1 && (5-this.defaultStartPack.length)) {
+      if (ownTokensKeys.length >= 1 && (5 - this.defaultStartPack.length)) {
         this.defaultStartPack.push({
           name: ownTokensKeys[0].toUpperCase(),
           capture: config.opts.ownTokens[ownTokensKeys[0]].fullName,
         })
       }
-      if (ownTokensKeys.length >=2 && (5-this.defaultStartPack.length)) {
+      if (ownTokensKeys.length >= 2 && (5 - this.defaultStartPack.length)) {
         this.defaultStartPack.push({
           name: ownTokensKeys[1].toUpperCase(),
           capture: config.opts.ownTokens[ownTokensKeys[1]].fullName,
         })
       }
-      if (ownTokensKeys.length >=3 && (5-this.defaultStartPack.length)) {
+      if (ownTokensKeys.length >= 3 && (5 - this.defaultStartPack.length)) {
         this.defaultStartPack.push({
           name: ownTokensKeys[2].toUpperCase(),
           capture: config.opts.ownTokens[ownTokensKeys[2]].fullName,
@@ -100,7 +100,7 @@ export default class CreateWallet extends Component {
     if (isWidgetBuild && config && config.erc20) {
       if (window && window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
         // Multi token build
-        Object.keys(window.widgetERC20Tokens).forEach( (tokenSymbol) => {
+        Object.keys(window.widgetERC20Tokens).forEach((tokenSymbol) => {
           if (config.erc20[tokenSymbol]) {
             this.widgetStartPack.push({
               name: tokenSymbol.toUpperCase(),
@@ -142,7 +142,7 @@ export default class CreateWallet extends Component {
           capture: <FormattedMessage id="createWallet_customERC20" defaultMessage="Подключить токен" />,
         }, ...startPack, ...coins]
       } else {
-        newStartPack = [ ...startPack, ...coins]
+        newStartPack = [...startPack, ...coins]
       }
     }
     this.setState(() => ({ startPack: newStartPack, all: !all }))
@@ -152,7 +152,7 @@ export default class CreateWallet extends Component {
     const { onClick, error } = this.props
     const { curState, startPack, all } = this.state
 
-    const coloredIcons = ['btc', 'eth', 'swap', 'bch', 'usdt', 'eurs']
+    const coloredIcons = ['btc', 'eth', 'swap', 'usdt', 'eurs']
     return (
       <div>
         <div>

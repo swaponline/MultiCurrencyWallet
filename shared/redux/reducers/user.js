@@ -39,15 +39,6 @@ export const initialState = {
     balanceError: null,
     infoAboutCurrency: null
   },
-  bchData: {},
-  /*bchData: {
-    balance: 0,
-    isBalanceFetched: false,
-    currency: 'BCH',
-    fullName: 'BitcoinCash',
-    balanceError: null,
-    infoAboutCurrency: null
-  },*/
   /*
   xlmData: {
     balance: 0,

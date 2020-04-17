@@ -51,7 +51,6 @@ const walletNav = [
       btcMultisigSMSData,
       btcMultisigUserData,
       btcMultisigUserDataList,
-      bchData,
       tokensData,
       // usdtOmniData, // qtumData,
       // nimData,
@@ -81,7 +80,6 @@ const walletNav = [
       btcMultisigSMSData,
       btcMultisigUserData,
       ethData,
-      // bchData,
       // qtumData,
       // xlmData,
       // usdtOmniData,
@@ -100,7 +98,6 @@ const walletNav = [
         btcData,
         btcMultisigSMSData,
         btcMultisigUserData,
-        // bchData,
         ethData,
         // qtumData,
         // usdtOmniData,
@@ -113,7 +110,6 @@ const walletNav = [
       btcData,
       btcMultisigSMSData,
       btcMultisigUserData,
-      // bchData,
       ethData,
       // qtumData,
       // usdtOmniData,
@@ -143,7 +139,6 @@ const walletNav = [
         btcMultisigSMSData,
         btcMultisigUserData,
         btcMultisigUserDataList,
-        // bchData,
         // qtumData,
         // usdtOmniData,
       }
@@ -352,15 +347,13 @@ export default class Wallet extends Component {
     const isFirstCheck = moment(now, 'HH:mm:ss DD/MM/YYYY').isSame(lastCheckMoment)
     const isOneHourAfter = moment(now, 'HH:mm:ss DD/MM/YYYY').isAfter(lastCheckMoment.add(1, 'hours'))
 
-    const { ethData, btcData, bchData } = this.props.tokensData
+    const { ethData, btcData } = this.props.tokensData
 
     const balancesData = {
       ethBalance: ethData.balance,
       btcBalance: btcData.balance,
-      // bchBalance: bchData.balance,
       ethAddress: ethData.address,
       btcAddress: btcData.address,
-      // bchAddress: bchData.address,
     }
 
     if (isOneHourAfter || isFirstCheck) {

@@ -41,9 +41,9 @@ const defaultLanguage = defineMessages({
 
 @injectIntl
 @connect(({
-  user: { ethData, btcData, bchData, tokensData, nimData /* usdtOmniData */ },
+  user: { ethData, btcData, tokensData, nimData /* usdtOmniData */ },
 }) => ({
-  currenciesData: [ethData, btcData, bchData /* usdtOmniData, nimData */],
+  currenciesData: [ethData, btcData /* usdtOmniData, nimData */],
   tokensData: [...Object.keys(tokensData).map(k => (tokensData[k]))],
 }))
 @CSSModules(styles, { allowMultiple: true })

@@ -3,7 +3,6 @@ import config from 'helpers/externalConfig'
 
 const decimals = {
   btc: 8,
-  bch: 8,
   eth: 18,
 }
 

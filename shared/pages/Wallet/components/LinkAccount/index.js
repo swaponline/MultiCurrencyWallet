@@ -20,7 +20,6 @@ const LinkAccount = ({ type, children, address, contractAddress, onClick }) => (
             && <Href tab={`${config.link.bitpay}/address/${address}`} >{children}</Href>}
           { /* type.toLowerCase() === 'usdt' && <Href tab={`${config.link.omniexplorer}/address/${address}`} >{children}</Href> */}
           {erc20LinkAcount(type, children, address, contractAddress)}
-          {type.toLowerCase() === 'bch' && <Href tab={`${config.link.bch}/address/${address}`} >{children}</Href>}
           {type.toLowerCase() === 'qtum' && <Href tab={`${config.link.qtum}/address/${address}`} >{children}</Href>}
           { /* type.toLowerCase() === 'xlm' && <Href tab={`${config.link.xlm}/address/${address}`}>{children}</Href> */}
         </Fragment>

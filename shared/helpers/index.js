@@ -1,7 +1,6 @@
 import btc from './btc'
 import eth from './eth'
 import ethToken from './ethToken'
-import bch from './bch'
 // import xlm from './xlm'
 import user from './user'
 import web3 from './web3'
@@ -40,11 +39,8 @@ import getWalletLink from './getWalletLink'
 import redirectTo from './redirectTo'
 
 
-
-
 export default {
   // xlm,
-  bch,
   btc,
   eth,
   ethToken,
@@ -56,7 +52,6 @@ export default {
 
 export {
   // xlm,
-  bch,
   tips,
   btc,
   eth,

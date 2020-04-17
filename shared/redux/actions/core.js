@@ -341,7 +341,6 @@ const getWallets = () => {
       btcMultisigSMSData,
       btcMultisigUserData,
       ethData,
-      bchData,
       tokensData,
       isTokenSigned,
     },
@@ -364,7 +363,6 @@ const getWallets = () => {
     btcMultisigUserData,
     ... (btcMultisigUserData && btcMultisigUserData.wallets) ? btcMultisigUserData.wallets : [],
     ethData,
-    ... (bchData) ? [bchData] : [],
     ...Object.keys(tokensData)
       .filter(k => !tokensData[k].reducerDataTarget)
       .map(k => tokensData[k])
