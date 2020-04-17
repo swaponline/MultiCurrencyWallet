@@ -136,24 +136,15 @@
   },
   {
     "id": "KeyActionsPanel43",
-    "message": "Exit",
-    "files": [
-      "shared/components/KeyActionsPanel/KeyActionsPanel.js"
-    ]
+    "message": "Exit"
   },
   {
     "id": "KeyActionsPanel46",
-    "message": "Show my keys",
-    "files": [
-      "shared/components/KeyActionsPanel/KeyActionsPanel.js"
-    ]
+    "message": "Show my keys"
   },
   {
     "id": "KeyActionsPanel49",
-    "message": "Import keys",
-    "files": [
-      "shared/components/KeyActionsPanel/KeyActionsPanel.js"
-    ]
+    "message": "Import keys"
   },
   {
     "id": "KeyActionsPanel53",
@@ -2865,10 +2856,7 @@
   },
   {
     "id": "KeyActionsPanel73",
-    "message": "Hide / Add Coins",
-    "files": [
-      "shared/components/KeyActionsPanel/KeyActionsPanel.js"
-    ]
+    "message": "Hide / Add Coins"
   },
   {
     "id": "userTooltip43",
@@ -3558,10 +3546,7 @@
   },
   {
     "id": "KeyActionsPane74",
-    "message": "incomplete swap ({length})",
-    "files": [
-      "shared/components/KeyActionsPanel/KeyActionsPanel.js"
-    ]
+    "message": "incomplete swap ({length})"
   },
   {
     "id": "decline21",
@@ -4688,10 +4673,10 @@
     "id": "WithdrawModalCancelBtn",
     "message": "Cancel",
     "files": [
+      "shared/components/modals/ReceiveModal/ReceiveModal.js",
       "shared/components/modals/WithdrawModal/WithdrawModal.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
-      "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.js",
-      "shared/components/modals/ReceiveModal/ReceiveModal.js"
+      "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.js"
     ]
   },
   {
@@ -4730,7 +4715,7 @@
   },
   {
     "id": "invoiceModal_Contact",
-    "message": "Your contact (emain or @nickname)",
+    "message": "Your contact (email or @nickname)",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
@@ -5245,10 +5230,7 @@
   },
   {
     "id": "ForYou",
-    "message": "For you",
-    "files": [
-      "shared/pages/Wallet/components/WallerSlider/index.js"
-    ]
+    "message": "For you"
   },
   {
     "id": "YourAssetsDescription",
@@ -5269,6 +5251,7 @@
     "message": "My balance",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js",
+      "shared/pages/Invoices/InvoicesList/index.js",
       "shared/pages/Wallet/Wallet.js"
     ]
   },
@@ -5293,10 +5276,7 @@
   },
   {
     "id": "descr282",
-    "message": "Show my keys",
-    "files": [
-      "shared/pages/Wallet/components/WallerSlider/index.js"
-    ]
+    "message": "Show my keys"
   },
   {
     "id": "descr284",
@@ -5395,17 +5375,11 @@
   },
   {
     "id": "CreateInvoiceGoHome",
-    "message": "Go to main",
-    "files": [
-      "shared/pages/CreateInvoice/CreateInvoice.js"
-    ]
+    "message": "Go to main"
   },
   {
     "id": "CreateInvoiceReady",
-    "message": "Invoice sent",
-    "files": [
-      "shared/pages/CreateInvoice/CreateInvoice.js"
-    ]
+    "message": "Invoice sent"
   },
   {
     "id": "createWallet_customERC20",
@@ -5933,10 +5907,7 @@
   },
   {
     "id": "ShowMyMnemonic",
-    "message": "Please backup your wallet",
-    "files": [
-      "shared/pages/Wallet/components/WallerSlider/index.js"
-    ]
+    "message": "Please backup your wallet"
   },
   {
     "id": "BtcMultisignConfirmTx_FromAddress",
@@ -6152,6 +6123,7 @@
     "id": "ImportKeys_RestoreMnemonic_Tooltip",
     "message": "12-word backup phrase – also know as 12-words, “backup”, recovery phrase, mnemonic seed, “seed” – is a unique, randomly generated set of words, that are given to you when you create a wallet. The recovery phrase is used to derive, or generate, all the private keys, which are encrypted directly on your device.",
     "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js",
       "shared/pages/CreateWallet/CreateWallet.js"
     ]
   },
@@ -6159,6 +6131,7 @@
     "id": "ImportKeys_RestoreMnemonic_Tooltip_withBalance",
     "message": "Please, be causious! Once you import a new seed your current balance would be reset. Save your current funds to another wallet.",
     "files": [
+      "shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js",
       "shared/pages/CreateWallet/CreateWallet.js"
     ]
   },
@@ -6384,6 +6357,209 @@
     "message": "Link copied",
     "files": [
       "shared/components/modals/Share/Share.js"
+    ]
+  },
+  {
+    "id": "Row313",
+    "message": "Deposit",
+    "files": [
+      "shared/pages/Currency/Currency.js"
+    ]
+  },
+  {
+    "id": "History_Activity_Title",
+    "message": "Activity",
+    "files": [
+      "shared/pages/History/History.js"
+    ]
+  },
+  {
+    "id": "History_Nav_ActivityTab",
+    "message": "Activity",
+    "files": [
+      "shared/pages/History/History.js"
+    ]
+  },
+  {
+    "id": "History_Nav_InvoicesTab",
+    "message": "Invoices",
+    "files": [
+      "shared/pages/History/History.js"
+    ]
+  },
+  {
+    "id": "InvoicesView_MetaDescription",
+    "message": "Atomic Swap Wallet allows you to manage and securely exchange. Based on Multi-Sig and Atomic Swap technologies.",
+    "files": [
+      "shared/pages/Invoices/Invoice/index.js"
+    ]
+  },
+  {
+    "id": "InvoicesView_MetaTitle",
+    "message": "Swap.Online - Invoice #{number} - Web Wallet with Atomic Swap.",
+    "files": [
+      "shared/pages/Invoices/Invoice/index.js"
+    ]
+  },
+  {
+    "id": "InvoicesView_WidgetMetaTitle",
+    "message": "Invoice #{number} - Web Wallet with Atomic Swap.",
+    "files": [
+      "shared/pages/Invoices/Invoice/index.js"
+    ]
+  },
+  {
+    "id": "InvoicesList_MetaDescription",
+    "message": "Atomic Swap Wallet allows you to manage and securely exchange. Based on Multi-Sig and Atomic Swap technologies.",
+    "files": [
+      "shared/pages/Invoices/InvoicesList/index.js"
+    ]
+  },
+  {
+    "id": "InvoicesList_MetaTitle",
+    "message": "Swap.Online - Invoices - Web Wallet with Atomic Swap.",
+    "files": [
+      "shared/pages/Invoices/InvoicesList/index.js"
+    ]
+  },
+  {
+    "id": "InvoicesList_NavTitle_Address",
+    "message": "Invoices {type}{br}{address}",
+    "files": [
+      "shared/pages/Invoices/InvoicesList/index.js"
+    ]
+  },
+  {
+    "id": "InvoicesList_NavTitle_All",
+    "message": "Invoices",
+    "files": [
+      "shared/pages/Invoices/InvoicesList/index.js"
+    ]
+  },
+  {
+    "id": "InvoicesList_WidgetMetaTitle",
+    "message": "Invoices - Web Wallet with Atomic Swap.",
+    "files": [
+      "shared/pages/Invoices/InvoicesList/index.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_ButtonShareReady",
+    "message": "Ready",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_CloseButton",
+    "message": "Close",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_Comment",
+    "message": "Comments",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_DeclimeInvoiceButton",
+    "message": "Declime",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_DestinationAddress",
+    "message": "Pay address {destination}",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_FromAddress",
+    "message": "Sender address",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_InfoStatus_Declimed",
+    "message": "Declimed",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_InfoStatus_Pending",
+    "message": "Pending",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_InfoStatus_Ready",
+    "message": "Payed",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_PayInvoiceButton",
+    "message": "Pay",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_Sender",
+    "message": "Sender (contact)",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_ShareInvoiceText",
+    "message": "Invoice #{id}-{invoiceNumber} from {contact} to {amount} {type}",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_ShareLink_InfoText",
+    "message": "Send this link to payer for confirm",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_Title",
+    "message": "Invoice #{number}",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_TitleFetch",
+    "message": "Fetching invoice...",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoiceInfoModal_ToAddress",
+    "message": "Payer address",
+    "files": [
+      "shared/components/modals/InfoInvoice/InfoInvoice.js"
+    ]
+  },
+  {
+    "id": "InvoicesNav",
+    "message": "Invoices",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
     ]
   }
 ]

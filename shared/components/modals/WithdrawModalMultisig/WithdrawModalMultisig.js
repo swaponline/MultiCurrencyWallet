@@ -183,7 +183,7 @@ export default class WithdrawModalMultisig extends React.Component {
     actions.loader.hide();
 
     if (invoice) {
-      await actions.invoices.markInvoice(invoice.id, "ready", txId);
+      await actions.invoices.markInvoice(invoice.id, "ready", txId, address);
     }
     this.setBalanceOnState(currency)
 
@@ -271,7 +271,7 @@ export default class WithdrawModalMultisig extends React.Component {
     this.setBalanceOnState(currency)
 
     if (invoice && ownTx) {
-      await actions.invoices.markInvoice(invoice.id, 'ready', ownTx)
+      await actions.invoices.markInvoice(invoice.id, 'ready', ownTx, address)
       actions.loader.hide()
       actions.notifications.show(constants.notifications.SuccessWithdraw, {
         amount,
@@ -475,6 +475,7 @@ export default class WithdrawModalMultisig extends React.Component {
       tokenItems,
       items,
       intl,
+      portalUI,
     } = this.props
 
     const linked = Link.all(this, 'address', 'amount', 'code', 'ownTx', 'mnemonic')
@@ -531,8 +532,8 @@ export default class WithdrawModalMultisig extends React.Component {
       },
     })
 
-    return (
-      <Modal name={name} title={`${intl.formatMessage(labels.withdrowModal)}${' '}${currency.toUpperCase()}`}>
+    const formRender = (
+      <Fragment>
         {openScanCam && (
           <QrReader openScan={this.openScan} handleError={this.handleError} handleScan={this.handleScan} />
         )}
@@ -793,6 +794,12 @@ export default class WithdrawModalMultisig extends React.Component {
             </Button>
           </Fragment>
         }
+      </Fragment>
+    )
+
+    return (portalUI) ? formRender : (
+      <Modal name={name} title={`${intl.formatMessage(labels.withdrowModal)}${' '}${currency.toUpperCase()}`}>
+        {formRender}
       </Modal>
     )
   }

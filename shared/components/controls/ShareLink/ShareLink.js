@@ -51,12 +51,12 @@ export default class ShareLink extends React.Component {
     if (!altText) altText = ``;
 
     return (
-      <div>
+      <div styleName="shareLinkHolder">
         <CopyToClipboard
           text={link}
           onCopy={this.handleCopyLink}
         >
-          <div onClick={this.handleCopyLink}>
+          <div styleName="linkHolder" onClick={this.handleCopyLink}>
             <div styleName="HolderQRCode">
               <img onClick={this.handleCopyLink}
                 src={`https://chart.googleapis.com/chart?chs=${size}x${size}&cht=qr&chl=${encodeURIComponent(link)}`}

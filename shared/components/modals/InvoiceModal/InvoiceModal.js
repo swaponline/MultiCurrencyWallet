@@ -27,6 +27,40 @@ import QrReader from 'components/QrReader'
 import typeforce from 'swap.app/util/typeforce'
 import minAmount from 'helpers/constants/minAmount'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
+import getCurrencyKey from 'helpers/getCurrencyKey'
+
+import { links }    from 'helpers'
+import { localisedUrl } from 'helpers/locale'
+import redirectTo from 'helpers/redirectTo'
+
+
+
+const localeLabel = defineMessages({
+  title: {
+    id: 'invoiceModal_Title',
+    defaultMessage: 'Выставление счета на пополнение'
+  },
+  addressPlaceholder: {
+    id: 'invoiceModal_addressPlaceholder',
+    defaultMessage: 'Введите адрес {currency} кошелька'
+  },
+  destiAddressPlaceholder: {
+    id: 'invoiceModal_destiAddressPlaceholder',
+    defaultMessage: 'Введите адрес {currency} кошелька'
+  },
+  amountPlaceholder: {
+    id: 'invoiceModal_amountPlaceholder',
+    defaultMessage: 'Введите сумму'
+  },
+  contactPlaceholder: {
+    id: 'invoiceModal_contactPlaceholder',
+    defaultMessage: 'Обязательное поле'
+  },
+  labelPlaceholder: {
+    id: 'invoiceModal_labelPlaceholder',
+    defaultMessage: 'Укажите комментарий к счету'
+  }
+})
 
 @injectIntl
 @connect(
@@ -63,7 +97,8 @@ export default class InvoiceModal extends React.Component {
     const {
       data: { address, currency, toAddress },
       items,
-      tokenItems
+      tokenItems,
+      payerAddress = false,
     } = data
     let infoAboutCurrency
 
@@ -77,8 +112,10 @@ export default class InvoiceModal extends React.Component {
 
     this.state = {
       isShipped: false,
+      payerAddress,
       openScanCam: '',
-      address: toAddress ? toAddress : '',
+      address: toAddress || '',
+      toAddressEnabled: !(!toAddress),
       destination: address,
       amount: '',
       minus: '',
@@ -119,13 +156,7 @@ export default class InvoiceModal extends React.Component {
       isShipped: true
     })
 
-    let currency = data.currency.toUpperCase()
-    switch (data.currency) {
-      case 'BTC (SMS-PROTECTED)':
-      case 'BTC (MULTISIG)':
-        currency = 'BTC'
-        break
-    }
+    let currency = getCurrencyKey(data.currency, true).toUpperCase()
 
     try {
       const message = `${contact}\r\n${label}`
@@ -136,10 +167,10 @@ export default class InvoiceModal extends React.Component {
         amount,
         contact,
         label: message,
-        destination
+        destination,
       })
       if (result && result.answer && result.answer === 'ok') {
-        actions.modals.close(name)
+        this.handleGoToInvoice(result.invoiceId)
       }
       if (data.onReady instanceof Function) {
         data.onReady()
@@ -153,6 +184,10 @@ export default class InvoiceModal extends React.Component {
     })
   }
 
+  handleGoToInvoice = (invoiceId) => {
+    redirectTo(`${links.invoice}/${invoiceId}/share`)
+  }
+
   addressIsCorrect(otherAddress) {
     const {
       data: { currency }
@@ -163,13 +198,7 @@ export default class InvoiceModal extends React.Component {
     if (isEthToken) {
       return typeforce.isCoinAddress.ETH(checkAddress)
     }
-    let checkCurrency = currency.toUpperCase()
-    switch (checkCurrency) {
-      case 'BTC (SMS-PROTECTED)':
-      case 'BTC (MULTISIG)':
-        checkCurrency = 'BTC'
-        break
-    }
+    let checkCurrency = getCurrencyKey(currency, true).toUpperCase()
 
     return typeforce.isCoinAddress[checkCurrency](checkAddress)
   }
@@ -245,7 +274,8 @@ export default class InvoiceModal extends React.Component {
       openScanCam,
       error,
       infoAboutCurrency,
-      selectedValue
+      selectedValue,
+      toAddressEnabled,
     } = this.state
 
     const {
@@ -256,34 +286,8 @@ export default class InvoiceModal extends React.Component {
 
     const linked = Link.all(this, 'address', 'destination', 'amountUSD', 'amountRUB', 'amount', 'contact', 'label')
 
-    const isDisabled = !address || !amount || isShipped || !destination || !contact || !this.addressIsCorrect()
-
-    const localeLabel = defineMessages({
-      title: {
-        id: 'invoiceModal_Title',
-        defaultMessage: 'Выставление счета на пополнение'
-      },
-      addressPlaceholder: {
-        id: 'invoiceModal_addressPlaceholder',
-        defaultMessage: 'Введите адрес {currency} кошелька'
-      },
-      destiAddressPlaceholder: {
-        id: 'invoiceModal_destiAddressPlaceholder',
-        defaultMessage: 'Введите адрес {currency} кошелька'
-      },
-      amountPlaceholder: {
-        id: 'invoiceModal_amountPlaceholder',
-        defaultMessage: 'Введите сумму'
-      },
-      contactPlaceholder: {
-        id: 'invoiceModal_contactPlaceholder',
-        defaultMessage: 'Обязательное поле'
-      },
-      labelPlaceholder: {
-        id: 'invoiceModal_labelPlaceholder',
-        defaultMessage: 'Укажите комментарий к счету'
-      }
-    })
+    //const isDisabled = !address || !amount || isShipped || !destination || !contact || !this.addressIsCorrect()
+    const isDisabled = !amount || isShipped || !destination || !contact || (address && !this.addressIsCorrect())
 
     return (
       <Modal
@@ -295,26 +299,28 @@ export default class InvoiceModal extends React.Component {
           <QrReader openScan={this.openScan} handleError={this.handleError} handleScan={this.handleScan} />
         )}
         <div styleName="invoiceModalHolder">
-          <div styleName="highLevel">
-            <FieldLabel label>
-              <FormattedMessage id="invoiceModal_Address" defaultMessage="Адрес, на который выставляем счет" />
-            </FieldLabel>
-            <Input
-              smallFontSize
-              withMargin
-              valueLink={linked.address}
-              focusOnInit
-              pattern="0-9a-zA-Z:"
-              placeholder={intl.formatMessage(localeLabel.addressPlaceholder, { currency: currency.toUpperCase() })}
-              qr
-              openScan={this.openScan}
-            />
-            {address && !this.addressIsCorrect() && (
-              <div styleName="rednote">
-                <FormattedMessage id="invoiceModal_IncorrectAddress" defaultMessage="Вы ввели не коректный адрес" />
-              </div>
-            )}
-          </div>
+          {toAddressEnabled && (
+            <div styleName="highLevel">
+              <FieldLabel label>
+                <FormattedMessage id="invoiceModal_Address" defaultMessage="Адрес, на который выставляем счет" />
+              </FieldLabel>
+              <Input
+                smallFontSize
+                withMargin
+                valueLink={linked.address}
+                focusOnInit
+                pattern="0-9a-zA-Z:"
+                placeholder={intl.formatMessage(localeLabel.addressPlaceholder, { currency: currency.toUpperCase() })}
+                qr
+                openScan={this.openScan}
+              />
+              {address && !this.addressIsCorrect() && (
+                <div styleName="rednote">
+                  <FormattedMessage id="invoiceModal_IncorrectAddress" defaultMessage="Вы ввели не коректный адрес" />
+                </div>
+              )}
+            </div>
+          )}
           <div styleName="highLevel">
             <FieldLabel label>
               <FormattedMessage id="invoiceModal_destiAddress" defaultMessage="Адрес, куда будет произведена оплата" />

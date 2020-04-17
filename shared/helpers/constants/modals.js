@@ -32,4 +32,5 @@ export default {
   RestoryMnemonicWallet: 'RestoryMnemonicWallet',
   SweepToMnemonicKeys: 'SweepToMnemonicKeys',
   HowToWithdrawModal: 'HowToWithdrawModal',
+  InfoInvoice: 'InfoInvoice',
 }

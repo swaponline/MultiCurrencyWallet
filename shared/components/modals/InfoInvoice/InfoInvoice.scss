@@ -1,0 +1,229 @@
+.blockCenter {
+  text-align: center;
+
+  strong {
+    word-wrap: break-word;
+  }
+}
+
+.finishImg {
+  width: 80px;
+  height: 80px;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+}
+
+.txLink {
+  word-break: break-all;
+}
+.shortInfoHolder {
+  padding-bottom: 2rem;
+}
+
+.buttonHolder {
+  padding-top: 3rem;
+}
+
+.balanceRow {
+  color: #8E9AA3;
+  font-size: 13px;
+}
+
+.share-info {
+  display: block;
+  font-size: 18px;
+  text-align: center;
+  padding: 1rem;
+}
+
+.textThrough {
+  text-decoration: line-through;
+}
+
+.invoiceComment {
+  white-space: pre-line;
+  text-align: justify;
+  padding-top: 0px !important;
+  max-width: 300px;
+  word-break: break-all;
+}
+
+.share-ready-holder {
+  padding: 10px;
+  padding-top: 20px;
+  button {
+    display: block;
+    max-width: 200px;
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+.align-right {
+  text-align: right !important;
+}
+
+.statusImgHolder {
+  display: block;
+  &_cancelled,
+  &_ready,
+  &_new,
+  &_pending {
+    img {
+      width: 80px;
+      height: 80px;
+      display: block;
+      margin: 0 auto;
+      margin-bottom: 2rem;
+    }
+    strong {
+      display: block;
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 22px;
+    }
+  }
+  &_ready {
+    strong {
+      color: #05b305;
+    }
+  }
+  &_new,
+  &_pending {
+    strong {
+      color: #c70101;
+    }
+  }
+  &_cancelled {
+    strong {
+      color: #8c8c8c;
+    }
+  }
+}
+
+.invoiceControlsHolder {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  >div {
+    width: 49%;
+    max-width: 200px;
+  }
+  .payControl {
+    button {
+      width: 100%;
+    }
+  }
+
+  .closeButton,
+  .shareButton {
+    width: 49%;
+    padding: 0px;
+    margin-top: 1rem;
+  }
+
+  .closeButton {
+    button {
+      width: 100%;
+    }
+    &::before {
+      content: '';
+      flex-basis: 100%;
+      height: 0;
+    }
+  }
+
+  &.with-share-button {
+    >div {
+      width: 49%;
+    }
+  }
+  &.without-share-button {
+    .closeButton {
+      margin: 1rem auto;
+    }
+  }
+  &.without-pay-control {
+    &.with-share-button {
+      >div {
+        width: 49%;
+        max-width: 200px;
+        margin: 0 auto;
+      }
+    }
+  }
+}
+
+.blockCenter__table {
+
+  border: 1px solid rgba(142, 154, 163, 0.16);
+  box-sizing: border-box;
+  box-shadow: 0px 2px 12px rgba(142, 154, 163, 0.08);
+  border-radius: 4px;
+  font-size: 15px;
+
+  td.header {
+    text-align: left;
+    font-weight: bold;
+  }
+
+  td.data {
+    text-align: justify;
+  }
+
+}
+
+.invoiceNumber {
+  font-size: 20px;
+}
+
+@include media-mobile {
+  .finishImg {
+    margin-bottom: 0px;
+  }
+  .shortInfoHolder {
+    padding-bottom: 0px;
+  }
+  .buttonHolder {
+    padding-top: 0px;
+  }
+
+  .share-ready-holder {
+    button {
+      max-width: none;
+    }
+  }
+
+  .statusImgHolder {
+    img,
+    strong {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  .invoiceControlsHolder {
+    >div {
+      max-width: none;
+    }
+    .closeButton,
+    .shareButton {
+      margin-top: 0.5rem !important;
+      margin-bottom: 0.5rem !important;
+    }
+    &.with-share-button {
+      .payControl {
+        width: 49%;
+      }
+    }
+  }
+
+  .blockCenter__table {
+    tbody,
+    tr,
+    td {
+      display: block;
+      width: 100%;
+    }
+  }
+}

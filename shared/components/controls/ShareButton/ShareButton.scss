@@ -15,6 +15,15 @@
 
 .halfWidth {
   width: 200px;
+  padding: 0px;
+  button {
+    width: 100%;
+  }
+}
+
+.fullWidth {
+  width: 100%;
+  padding: 0px;
   button {
     width: 100%;
   }

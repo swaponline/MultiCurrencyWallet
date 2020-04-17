@@ -14,17 +14,21 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { Link } from 'react-router-dom'
 import getCurrencyKey from 'helpers/getCurrencyKey'
 import ethToken from 'helpers/ethToken'
+import { links } from 'helpers'
 
 
 class Row extends React.PureComponent {
 
   constructor(props) {
     super()
-    const { hash, type, hiddenList, invoiceData } = props
+    const { hash, type, hiddenList, invoiceData, viewType } = props
     const dataInd = invoiceData && invoiceData.id
     const ind = `${dataInd || hash}-${type}`
+
+    
     this.state = {
       ind,
+      viewType: (viewType || 'transaction'),
       exCurrencyRate: 0,
       comment: actions.comments.returnDefaultComment(hiddenList, ind),
       cancelled: false,
@@ -179,6 +183,10 @@ class Row extends React.PureComponent {
     let txLink = `/${getCurrencyKey(type)}/tx/${hash}`
     if (ethToken.isEthToken({ name: type })) {
       txLink = `/token/${type}/tx/${hash}`
+    }
+
+    if (txType === 'INVOICE' && invoiceData.uniqhash) {
+      txLink = `${links.invoice}/${invoiceData.uniqhash}`
     }
 
     return (

@@ -14,7 +14,7 @@ import getCurrencyKey from 'helpers/getCurrencyKey'
 const validateData = (data) => {
   if (!data) return false
   if (!data.currency) return false
-  if (!data.toAddress) return false
+  // if (!data.toAddress) return false
   if (!data.fromAddress) return false
   if (!data.amount) return false
 
@@ -58,12 +58,13 @@ const cancelInvoice = (invoiceId) => new Promise((resolve) => apiLooper.post('in
   })
   .catch(() => { resolve(false) }))
 
-const markInvoice = (invoiceId, mark, txid) => new Promise((resolve) => apiLooper.post('invoiceApi', `/invoice/mark/`,
+const markInvoice = (invoiceId, mark, txid, address) => new Promise((resolve) => apiLooper.post('invoiceApi', `/invoice/mark/`,
   {
     body: {
       invoiceId,
       mark,
       txid,
+      address,
     },
   })
   .then((res) => {
@@ -71,6 +72,112 @@ const markInvoice = (invoiceId, mark, txid) => new Promise((resolve) => apiLoope
   })
   .catch(() => { resolve(false) }))
 
+const getInvoice = (hash) => {
+  if ((config.isWidget || !config.opts.invoiceEnabled)) {
+    return new Promise( (resolve) => { resolve(false) })
+  }
+
+  return new Promise((resolve) => {
+    
+    apiLooper.post('invoiceApi',`/invoice/get`, {
+      body: {
+        hash,
+      }
+    }).then((res) => {
+      console.log('fetced answer from invoice api', res)
+      if (res && res.answer && res.answer === 'ok' && res.item) {
+        const {
+          item,
+          item: {
+            amount,
+            utx,
+          }
+        } = res
+
+        const direction = (actions.user.isOwner(item.toAddress, item.type)) ? 'in' : 'out'
+        const isOwner = (actions.user.isOwner(item.fromAddress, item.type))
+
+        resolve ({
+          invoiceData: item,
+          isOwner,
+          hasPayer: !(!item.toAddress),
+          hash: 'no hash',
+          confirmations: 1,
+          value: amount,
+          date: utx * 1000,
+          direction,
+        })
+      } else {
+        resolve(false)
+      }
+    }).catch(() => {
+      resolve(false)
+    })
+  })
+}
+
+const getManyInvoices = (data) => {
+  if ((config.isWidget || !config.opts.invoiceEnabled)) {
+    return new Promise( (resolve) => { resolve([]) })
+  }
+
+  return new Promise((resolve) => {
+
+    const walletsHashMap = {}
+    const wallets = data.map((item) => {
+      if (item && item.type && item.address) {
+        const {
+          type: rawType,
+          address,
+        } = item
+
+        const type = getCurrencyKey(rawType, true).toUpperCase()
+        walletsHashMap[`${type}:${address.toLowerCase()}`] = {
+          type,
+          address,
+        }
+
+        return {
+          type,
+          address,
+        }
+      }
+    })
+
+    apiLooper.post('invoiceApi', `/invoice/fetchmany/`, {
+      body: {
+        wallets,
+        mainnet: (process.env.MAINNET) ? '1' : '0',
+      }
+    }).then((res) => {
+      if (res && res.answer && res.answer === 'ok') {
+        const invoices = res.items.map((item) => {
+          const walletHash = `${item.type}:${item.toAddress.toLowerCase()}`
+
+          const direction = (walletsHashMap[walletHash] !== undefined) ? 'in' : 'out'
+
+          return ({
+            type: item.type,
+            txType: 'INVOICE',
+            invoiceData: item,
+            hash: 'no hash',
+            confirmations: 1,
+            value: item.amount,
+            date: item.utx * 1000,
+            direction: direction,
+          })
+        })
+
+        resolve(invoices)
+      } else {
+        resolve([])
+      }
+    })
+    .catch(() => {
+      resolve([])
+    })
+  })
+}
 
 const getInvoices = (data) => {
   if ((config.isWidget || !config.opts.invoiceEnabled)) {
@@ -88,7 +195,7 @@ const getInvoices = (data) => {
 
   return new Promise((resolve) => {
 
-    return apiLooper.post('invoiceApi', `/invoice/fetch/`, {
+    apiLooper.post('invoiceApi', `/invoice/fetch/`, {
       body: {
         currency: getCurrencyKey(data.currency, true).toUpperCase(),
         address: data.address,
@@ -125,6 +232,8 @@ const getInvoices = (data) => {
 export default {
   addInvoice,
   getInvoices,
+  getInvoice,
+  getManyInvoices,
   cancelInvoice,
   markInvoice,
 }

@@ -45,7 +45,41 @@ export default class Modal extends Component {
     shouldCenterHorizontally: true,
   }
 
-  close = () => {
+  catchLocationChange = false
+
+  componentDidMount() {
+    const {
+      closeOnLocationChange,
+      onLocationChange,
+    } = this.props
+
+    if (closeOnLocationChange) {
+      let currentLocation = window.location.hash
+
+      this.catchLocationChange = setInterval(() => {
+        if (window.location.hash != currentLocation) {
+          if (typeof onLocationChange === 'function') {
+            if (onLocationChange(window.location.hash)) {
+              currentLocation = window.location.hash
+            } else {
+              clearInterval(this.catchLocationChange)
+              this.close(null, true)
+            }
+          } else {
+            clearInterval(this.catchLocationChange)
+            this.close(null,true)
+          }
+        }
+      }, 500)
+    }
+    
+  }
+
+  componentWillUnmount() {
+    clearInterval( this.catchLocationChange )
+  }
+
+  close = (event, isLocationChange) => {
     const { name, data, onClose, disableClose } = this.props
 
     if (name === 'OfferModal') {
@@ -56,11 +90,11 @@ export default class Modal extends Component {
       actions.modals.close(name)
 
       if (typeof onClose === 'function') {
-        onClose()
+        onClose(isLocationChange)
       }
 
       if (typeof data.onClose === 'function') {
-        data.onClose()
+        data.onClose(isLocationChange)
       }
     }
   }
