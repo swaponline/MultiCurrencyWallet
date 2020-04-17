@@ -33,5 +33,4 @@ jobs:
       env:
         CI: true
         super_secret: ${{ secrets.buildbot }}
-    - name: todo-actions
-      uses: dtinth/todo-actions@v0.2.0
+
