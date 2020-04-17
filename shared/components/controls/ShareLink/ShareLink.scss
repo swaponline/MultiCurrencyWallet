@@ -48,11 +48,27 @@
 
 
 .HolderQRCode {
+  position: relative;
+  .loader {
+    text-align: center;
+    line-height: 50px;
+    vertical-align: middle;
+  }
   img {
     display: block;
+    opacity: 0;
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
     margin: 0 auto;
     width: 250px;
     cursor: pointer;
+  }
+  &.qrLoaded {
+    img {
+      opacity: 1;
+      position: static;
+    }
   }
 }
 
@@ -94,9 +110,9 @@
   .shareLinkTextarea {
     min-width: auto;
     width: 100%;
-    
   }
   .HolderQRCode {
+    min-height: 50px;
     img {
       width: 95%;
     }

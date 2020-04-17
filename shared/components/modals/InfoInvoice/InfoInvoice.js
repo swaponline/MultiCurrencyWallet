@@ -24,8 +24,6 @@ import imgReady from './images/ready.svg'
 import imgPending from './images/pending.svg'
 import imgCanceled from './images/cancel.svg'
 
-import WithdrawModal from 'components/modals/WithdrawModal/WithdrawModal'
-
 
 const langPrefix = 'InvoiceInfoModal'
 const langLabels = defineMessages({
@@ -438,11 +436,8 @@ export default class InfoInvoice extends React.Component {
                 </tbody>
               </table>
             </div>
-            {!isFetching && false && invoiceData && (
-              <WithdrawModal { ...modalProps } />
-            )}
             <div styleName={buttonsHolderStyles.join(` `)}>
-              {(isPayerControlEnabled) && (
+              {(isPayerControlEnabled && !isFetching && status === 'pending') && (
                 <Fragment>
                   <div styleName="payControl">
                     <Button
