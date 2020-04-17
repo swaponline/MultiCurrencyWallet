@@ -223,6 +223,28 @@
   }
 }
 
+.balanceInnerFaqWrapper {
+  padding: 25px;
+  padding-top: 0;
+}
+
+.yourBalanceBottomWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  &:before {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    opacity: 0.1;
+    content: '';
+    background: linear-gradient(180deg, #6144e5 0%, rgba(97, 68, 229, 0) 100%);
+  }
+}
+
 .yourBalanceBottom {
   position: relative;
   padding: 25px;
@@ -238,17 +260,6 @@
   button.button__invoice {
     width: auto !important;
     margin: 0 auto;
-  }
-
-  &:before {
-    position: absolute;
-    width: 100%;
-    height: 95px;
-    left: 0;
-    bottom: 0;
-    opacity: 0.1;
-    content: '';
-    background: linear-gradient(180deg, #6144e5 0%, rgba(97, 68, 229, 0) 100%);
   }
 
   height: 95px;
@@ -496,5 +507,15 @@
 
   .activityHeading {
     margin-top: -60px;
+  }
+}
+
+@media all and (max-width: $media-mobile-end) {
+  .mobileEnabledViewForFaq {
+    display: none;
+  }
+
+  .desktopEnabledViewForFaq {
+    display: none;
   }
 }

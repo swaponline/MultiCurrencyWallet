@@ -7,8 +7,10 @@ import { links, constants } from 'helpers'
 import { BigNumber } from 'bignumber.js'
 import config from 'app-config'
 import { FormattedMessage } from 'react-intl'
+import FAQ from '../FAQ/FAQ'
 import dollar from '../../images/dollar.svg'
 import btc from '../../images/btc.svg'
+
 
 function BalanceForm({
   usdBalance,
@@ -19,7 +21,7 @@ function BalanceForm({
   currency,
   handleInvoice,
   changePercent,
-  showButtons = true
+  showButtons = true,
 }) {
   const savedActiveCurrency = localStorage.getItem(constants.localStorage.balanceActiveCurrency)
   const [activeCurrency, setActiveCurrency] = useState(savedActiveCurrency || 'btc')
@@ -33,7 +35,7 @@ function BalanceForm({
       break
   }
 
-  //console.log('activeCurrency', activeCurrency)
+  // console.log('activeCurrency', activeCurrency)
 
   return (
     <div styleName={isWidgetBuild && !config.isFullBuild ? 'yourBalance widgetBuild' : 'yourBalance'}>
@@ -89,26 +91,31 @@ function BalanceForm({
           </button>
         </div>
       </div>
-      <div styleName="yourBalanceBottom">
-        {showButtons ? (
-          <Fragment>
-            <Button blue id="depositBtn" onClick={() => handleReceive('Deposit')}>
-              <FormattedMessage id="YourtotalbalanceDeposit" defaultMessage="Пополнить" />
-            </Button>
-            <Button blue disabled={!currencyBalance} id="sendBtn" onClick={() => handleWithdraw('Send')}>
-              <FormattedMessage id="YourtotalbalanceSend" defaultMessage="Отправить" />
-            </Button>
-            {isWidgetBuild && !config.isFullBuild && (
-              <Button brand id="exchangeBtn" onClick={() => handleExchange()}>
-                <FormattedMessage id="YourtotalbalanceExchange" defaultMessage="Обменять" />
+      <div styleName="yourBalanceBottomWrapper">
+        <div styleName="yourBalanceBottom">
+          {showButtons ? (
+            <Fragment>
+              <Button blue id="depositBtn" onClick={() => handleReceive('Deposit')}>
+                <FormattedMessage id="YourtotalbalanceDeposit" defaultMessage="Пополнить" />
               </Button>
-            )}
-          </Fragment>
-        ) : (
-          <Button blue disabled={!currencyBalance} styleName="button__invoice" onClick={() => handleInvoice()}>
-            <FormattedMessage id="RequestPayment" defaultMessage="Запросить" />
-          </Button>
-        )}
+              <Button blue disabled={!currencyBalance} id="sendBtn" onClick={() => handleWithdraw('Send')}>
+                <FormattedMessage id="YourtotalbalanceSend" defaultMessage="Отправить" />
+              </Button>
+              {isWidgetBuild && !config.isFullBuild && (
+                <Button brand id="exchangeBtn" onClick={() => handleExchange()}>
+                  <FormattedMessage id="YourtotalbalanceExchange" defaultMessage="Обменять" />
+                </Button>
+              )}
+            </Fragment>
+          ) : (
+            <Button blue disabled={!currencyBalance} styleName="button__invoice" onClick={() => handleInvoice()}>
+              <FormattedMessage id="RequestPayment" defaultMessage="Запросить" />
+            </Button>
+          )}
+        </div>
+        <div styleName="desktopEnabledViewForFaq faqWrapper balanceInnerFaqWrapper">
+          <FAQ />
+        </div>
       </div>
     </div>
   )
