@@ -38,9 +38,6 @@ const FAQ = (props) => {
 
   return (
     <div className={styles.faQuestions}>
-      <h5 className={styles.faQuestions__header}>
-        <FormattedMessage id="MainFAQHeader" defaultMessage="FAQ" />
-      </h5>
       <div className={styles.faQuestions__tabsContainer}>
         <article className={styles.tab}>
           <h6 className={styles.tab__header} onClick={() => handleTabClick('FIRST_TAB')}>

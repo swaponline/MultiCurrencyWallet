@@ -2,6 +2,9 @@
   display: block;
   width: 100%;
   font-family: "Inter-Regular";
+  padding-left: 1px;
+  font-size: 13px;
+  line-height: 1.538em;
 
   &__header {
     font-family: "Inter-Bold";
@@ -16,6 +19,7 @@
 .tab {
   width: 100%;
   margin-bottom: 5px;
+  user-select: none;
 
   &__header {
     display: flex;
@@ -24,12 +28,12 @@
     font-family: "Inter-Medium";
     cursor: pointer;
 
-    &:hover {
-      .chrest {
-        transform: rotate(90deg) translateX(1px) translateY(-1px);
-        transition: transform ease 0.2s;
-      }
-    }
+    // &:hover {
+    //   .chrest {
+    //     transform: rotate(90deg) translateX(1px) translateY(-1px);
+    //     transition: transform ease 0.2s;
+    //   }
+    // }
   }
 
   &__content {
@@ -37,8 +41,8 @@
     opacity: 0;
     overflow: hidden;
     visibility: hidden;
-    transition: max-height linear 0.2s,
-      opacity ease 0.2s;
+    // transition: max-height linear 0.2s,
+    //   opacity ease 0.2s;
 
     &_active {
       visibility: visible;
@@ -46,8 +50,8 @@
       max-height: 600px;
       padding-bottom: 15px;
       overflow-y: visible;
-      transition: max-height linear 0.4s,
-        opacity ease 0.15s 0.25s;
+      // transition: max-height linear 0.4s,
+      //   opacity ease 0.15s 0.25s;
     }
   }
 }
@@ -65,7 +69,7 @@ $chrestStripHeight: 12px;
 
     &::after {
       opacity: 0;
-      transition: opacity ease 0.2s;
+      // transition: opacity ease 0.2s;
     }
   }
 
@@ -90,5 +94,11 @@ $chrestStripHeight: 12px;
     height: $chrestStripHeight;
     left: ($chrestStripHeight / 2) - ($chrestStripWidth / 2);
     top: 0px;
+  }
+}
+
+@media all and (max-width: 992px) {
+  .faQuestions {
+    padding: 0 25px;
   }
 }

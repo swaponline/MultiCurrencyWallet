@@ -353,17 +353,19 @@
   }
 }
 
-@media all and (min-width: 768px) and (max-width: 992px) {
-  .walletContent {
-    flex-direction: column;
-  }
-
+@media all and (max-width: 992px) {
   .mobileEnabledViewForFaq {
     display: block;
   }
 
   .desktopEnabledViewForFaq {
     display: none;
+  }
+}
+
+@media all and (min-width: 768px) and (max-width: 992px) {
+  .walletContent {
+    flex-direction: column;
   }
 
   .yourAssetsWrapper {
