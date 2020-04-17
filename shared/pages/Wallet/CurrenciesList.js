@@ -26,10 +26,10 @@ const CurrenciesList = ({
     autoplaySpeed: 6000,
     slidesToShow: 4
   }
-   
+
   return (
     <div styleName="yourAssets">
-      {(exConfig && exConfig.opts && exConfig.opts.showWalletBanners)  ? (
+      {(exConfig && exConfig.opts && exConfig.opts.showWalletBanners) ? (
         <Fragment>
           {!isWidgetBuild && (
             <Slider
@@ -38,8 +38,8 @@ const CurrenciesList = ({
           )}
         </Fragment>
       ) : (
-        ''
-      )}
+          ''
+        )}
 
       <h3 styleName="yourAssetsHeading">
         <FormattedMessage id="YourAssets" defaultMessage="Ваши валюты" />
@@ -47,7 +47,7 @@ const CurrenciesList = ({
       <p styleName="yourAssetsDescr">
         <FormattedMessage
           id="YourAssetsDescription"
-          defaultMessage="Здесь вы можете безопасно хранить и быстро обменивать Bitcoin, Ethereum, {br} USD, Tether, BCH и многочисленные токены ERC-20."
+          defaultMessage="Здесь вы можете безопасно хранить и быстро обменивать Bitcoin, Ethereum, {br} USD, Tether и многочисленные токены ERC-20."
           values={{ br: <br /> }}
         />
       </p>

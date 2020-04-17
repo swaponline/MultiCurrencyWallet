@@ -42,7 +42,7 @@ Checkout this case: <a href="https://twitter.com/Atomic_Wallet" target="_blank">
 1) Fork this repository (Click "Fork" on top of this page)
 2) Clone repository with submodules (swap.core)
 ```
-git clone --recurse-submodules https://github.com/swaponline/swap.react.git
+git clone --recurse-submodules https://github.com/swaponline/MultiCurrencyWallet.git
 ```
 
 3) Do `npm i` (windows? https://www.npmjs.com/package/windows-build-tools )<br /> (node 10 required, not 12!)
@@ -143,7 +143,14 @@ export default {
 ![](https://screenshots.wpmix.net/chrome_J9boBqgIfnB5OHeDUtnCYcZ3kPQ4oJtN.png)
 
 
-
+## update swap.core submodules 
+if you have changed swap.core submodule don't forget to pull new "link" 
+```
+cd swap.core 
+git checkout master 
+git fetch
+git pull
+```
 
 ## how to update your version (fork) to latest version:
 0. Make backup and "git push" all your changes to your repository

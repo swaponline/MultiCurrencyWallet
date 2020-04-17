@@ -37,12 +37,7 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
       btcData,
       btcMultisigSMSData,
       btcMultisigUserData,
-      bchData,
       tokensData,
-      nimData,
-      ltcData
-      // usdtOmniData,
-      // nimData,
     }
   }) => ({
     currencies: currencies.items,
@@ -51,10 +46,6 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
       btcData,
       btcMultisigSMSData,
       btcMultisigUserData,
-      bchData,
-      ltcData
-      // usdtOmniData,
-      // nimData,
     ],
     tokenItems: [...Object.keys(tokensData).map(k => tokensData[k])]
   })
@@ -366,8 +357,8 @@ export default class InvoiceModal extends React.Component {
                 onKeyDown={inputReplaceCommaWithDot}
               />
             ) : (
-              ''
-            )}
+                ''
+              )}
 
             {this.state.selectedValue === 'RUB' ? (
               <Input
@@ -379,8 +370,8 @@ export default class InvoiceModal extends React.Component {
                 onKeyDown={inputReplaceCommaWithDot}
               />
             ) : (
-              ''
-            )}
+                ''
+              )}
 
             {this.state.selectedValue === 'USD' ? (
               <Input
@@ -392,8 +383,8 @@ export default class InvoiceModal extends React.Component {
                 onKeyDown={inputReplaceCommaWithDot}
               />
             ) : (
-              ''
-            )}
+                ''
+              )}
 
             <CurrencySelect
               label="fdsfssf"
@@ -402,7 +393,7 @@ export default class InvoiceModal extends React.Component {
               className={dropDownStyles.simpleDropdown}
               selectedValue={selectedValue}
               onSelect={this.handleBuyCurrencySelect}
-              selectedItemRender={(item) => item.fullTitle }
+              selectedItemRender={(item) => item.fullTitle}
               isToggleActive
               currencies={[
                 {
@@ -462,10 +453,10 @@ export default class InvoiceModal extends React.Component {
                 <FormattedMessage id="invoiceModal_Processing" defaultMessage="Обработка ..." />
               </Fragment>
             ) : (
-              <Fragment>
-                <FormattedMessage id="invoiceModal_Submit" defaultMessage="Выставить счет" />
-              </Fragment>
-            )}
+                <Fragment>
+                  <FormattedMessage id="invoiceModal_Submit" defaultMessage="Выставить счет" />
+                </Fragment>
+              )}
           </Button>
           {error && (
             <div styleName="rednote">

@@ -39,31 +39,6 @@ export const initialState = {
     balanceError: null,
     infoAboutCurrency: null
   },
-  bchData: {},
-  /*bchData: {
-    balance: 0,
-    isBalanceFetched: false,
-    currency: 'BCH',
-    fullName: 'BitcoinCash',
-    balanceError: null,
-    infoAboutCurrency: null
-  },*/
-  /*
-  xlmData: {
-    balance: 0,
-    currency: 'XLM',
-    fullName: 'Stellar',
-    balanceError: null,
-  },
-  */
-  ltcData: {
-    balance: 0,
-    isBalanceFetched: false,
-    currency: 'LTC',
-    fullName: 'Litecoin',
-    balanceError: null,
-    infoAboutCurrency: null
-  },
   usdtData: {
     address: '0x0',
     publicKey: '0x0',
@@ -72,14 +47,6 @@ export const initialState = {
     currency: 'USDT',
     fullName: 'Tether',
     balanceError: null,
-  },
-  nimData: {
-    balance: 0,
-    isBalanceFetched: false,
-    currency: 'NIM',
-    fullName: 'Nimiq',
-    balanceError: null,
-    infoAboutCurrency: null
   },
   tokensData: {},
   isFetching: false,
@@ -118,7 +85,7 @@ export const setTokenAuthData = (state, { name, data }) => ({
 })
 
 export const setBtcMultisigBalance = (state, { address, amount, unconfirmedBalance }) => {
-  state.btcMultisigUserData.wallets.forEach( (wallet) => {
+  state.btcMultisigUserData.wallets.forEach((wallet) => {
     if (wallet.address === address) {
       wallet.balance = Number(amount)
       wallet.unconfirmedBalance = unconfirmedBalance

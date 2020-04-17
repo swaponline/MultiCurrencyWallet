@@ -71,15 +71,11 @@ export default class RowHistory extends Component {
 
     let {
       buyAmount, buyCurrency, sellAmount, btcScriptValues, scriptBalance,
-      ltcScriptValues, bchScriptValues, isRefunded, isMy, sellCurrency,
-      isFinished, id, scriptValues, isStoppedSwap, /* usdtOmniScriptValues */
+      isRefunded, isMy, sellCurrency,
+      isFinished, id, scriptValues, isStoppedSwap,
     } = row
 
-    const values = btcScriptValues
-      || bchScriptValues
-      || ltcScriptValues
-      // || usdtOmniScriptValues
-      || scriptValues
+    const values = btcScriptValues || scriptValues
 
     const canBeRefunded = values && scriptBalance > 0
     const isDeletedSwap = isFinished || isRefunded || isStoppedSwap
@@ -94,8 +90,8 @@ export default class RowHistory extends Component {
 
     const linkToTheSwap = `${localisedUrl(locale, links.swap)}/${sellCurrency}-${buyCurrency}/${id}`
 
-    buyAmount   = BigNumber(buyAmount)
-    sellAmount  = BigNumber(sellAmount)
+    buyAmount = BigNumber(buyAmount)
+    sellAmount = BigNumber(sellAmount)
 
     return (
       <tr key={id}>
@@ -115,8 +111,8 @@ export default class RowHistory extends Component {
             isMy ? (
               `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`
             ) : (
-              `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`
-            )
+                `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`
+              )
           }
         </td>
         <td>
@@ -125,8 +121,8 @@ export default class RowHistory extends Component {
             isMy ? (
               `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`
             ) : (
-              `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`
-            )
+                `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`
+              )
           }
         </td>
         {/* <td>
@@ -135,26 +131,26 @@ export default class RowHistory extends Component {
         <td>
           <span>Status order</span>
           <p>
-            { isFinished && (<FormattedMessage id="RowHistory94" defaultMessage="Finished" />) }
-            { isRefunded && (<FormattedMessage id="RowHistory77" defaultMessage="Refunded" />) }
-            { isStoppedSwap && (<FormattedMessage id="RowHistory139" defaultMessage="Stopped" />) }
-            { !isDeletedSwap && (canBeRefunded
-                ? (
-                  <Timer
-                    lockTime={values.lockTime * 1000}
-                    enabledButton={this.tryRefund}
-                  />
-                )
-                : (
-                  <FormattedMessage id="RowHistory76" defaultMessage="Refund not available" />
-                )
+            {isFinished && (<FormattedMessage id="RowHistory94" defaultMessage="Finished" />)}
+            {isRefunded && (<FormattedMessage id="RowHistory77" defaultMessage="Refunded" />)}
+            {isStoppedSwap && (<FormattedMessage id="RowHistory139" defaultMessage="Stopped" />)}
+            {!isDeletedSwap && (canBeRefunded
+              ? (
+                <Timer
+                  lockTime={values.lockTime * 1000}
+                  enabledButton={this.tryRefund}
+                />
               )
+              : (
+                <FormattedMessage id="RowHistory76" defaultMessage="Refund not available" />
+              )
+            )
             }
           </p>
         </td>
         <td>
           <span>Lock time</span>
-          { lockDateAndTime.split(' ').map((item, key) => <Fragment key={key}>{' '}{item}</Fragment>) }
+          {lockDateAndTime.split(' ').map((item, key) => <Fragment key={key}>{' '}{item}</Fragment>)}
         </td>
         <td>
           <span>Link</span>

@@ -11,20 +11,20 @@ const login = (privateKey) => {
   let keyPair
 
   if (privateKey) {
-    const hash  = bitcoin.crypto.sha256(privateKey)
-    const d     = BigInteger.fromBuffer(hash)
+    const hash = bitcoin.crypto.sha256(privateKey)
+    const d = BigInteger.fromBuffer(hash)
 
-    keyPair     = bitcoin.ECPair.fromWIF(privateKey, btc.network)
+    keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
   }
   else {
     console.info('Created account Bitcoin ...')
-    keyPair     = bitcoin.ECPair.makeRandom({ network: btc.network })
-    privateKey  = keyPair.toWIF()
+    keyPair = bitcoin.ECPair.makeRandom({ network: btc.network })
+    privateKey = keyPair.toWIF()
   }
 
-  const account     = bitcoin.ECPair.fromWIF(privateKey, btc.network) // eslint-disable-line
-  const address     = account.getAddress()
-  const publicKey   = account.getPublicKeyBuffer().toString('hex')
+  const account = bitcoin.ECPair.fromWIF(privateKey, btc.network) // eslint-disable-line
+  const address = account.getAddress()
+  const publicKey = account.getPublicKeyBuffer().toString('hex')
 
   const data = {
     account,
@@ -126,12 +126,12 @@ const send = ({ from, to, amount } = {}) => {
   return new Promise(async (resolve) => {
     const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
 
-    const tx              = new bitcoin.TransactionBuilder(btc.network)
-    const unspents        = await fetchUnspents(from)
-    const feeValue        = 5000
-    const sendingValue    = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
-    const totalUnspent    = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-    const skipValue       = totalUnspent - feeValue - 546
+    const tx = new bitcoin.TransactionBuilder(btc.network)
+    const unspents = await fetchUnspents(from)
+    const feeValue = 5000
+    const sendingValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
+    const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+    const skipValue = totalUnspent - feeValue - 546
 
     if (totalUnspent < feeValue + 546) {
       throw new Error(`Total less than fee: ${totalUnspent} < ${546} + ${feeValue}`)

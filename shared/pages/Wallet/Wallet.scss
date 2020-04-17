@@ -31,10 +31,6 @@
   background: #775cf1;
 }
 
-.bch {
-  background: #4ac745;
-}
-
 .yourBalanceImg {
   filter: brightness(0);
   position: absolute;
@@ -61,6 +57,7 @@
   background: 0% 0% / cover rgb(97, 68, 229);
   color: #fff;
   padding: 1em;
+
   button {
     float: right;
     border: 3px solid #fff;
@@ -71,6 +68,7 @@
 
 .walletTable {
   width: 100%;
+
   td:first-child {
     padding-left: 0;
   }
@@ -171,6 +169,7 @@
   padding: 25px;
   position: relative;
 }
+
 .yourBalanceDescr {
   color: #8e9aa3;
   font-size: 13px;
@@ -190,11 +189,13 @@
   display: flex;
   justify-content: flex-end;
   margin-top: 40px;
+
   img {
     margin-top: -5px;
     width: 10px;
     margin-right: 7px;
   }
+
   p {
     font-size: 32px;
     line-height: 44px;
@@ -202,6 +203,7 @@
     font-weight: bold;
     margin: 0;
   }
+
   span {
     font-size: 18px;
     line-height: 25px;
@@ -211,9 +213,11 @@
     position: absolute;
     margin-left: 10px;
   }
+
   span.green {
     color: #0ccf14;
   }
+
   span.red {
     color: #ee5b51;
   }
@@ -224,15 +228,18 @@
   padding: 25px;
   display: flex;
   justify-content: space-between;
+
   button {
     width: 48%;
     cursor: pointer;
     z-index: 1;
   }
+
   button.button__invoice {
     width: auto !important;
     margin: 0 auto;
   }
+
   &:before {
     position: absolute;
     width: 100%;
@@ -243,6 +250,7 @@
     content: '';
     background: linear-gradient(180deg, #6144e5 0%, rgba(97, 68, 229, 0) 100%);
   }
+
   height: 95px;
 }
 
@@ -253,6 +261,7 @@
   top: 25px;
   justify-content: space-between;
   display: flex;
+
   span {
     width: 1px;
     height: 16px;
@@ -260,6 +269,7 @@
     display: inline-block;
     margin-top: 1px;
   }
+
   button {
     padding: 0;
     cursor: pointer;
@@ -269,6 +279,7 @@
     font-size: 13px;
     color: rgba(142, 154, 163, 0.5);
   }
+
   button.active {
     color: #1f2d48;
     filter: brightness(0);
@@ -282,12 +293,14 @@
     }
   }
 }
+
 .keysExportImport {
   display: block;
   width: 66%;
   margin-left: auto;
   text-align: center;
   white-space: nowrap;
+
   button {
     width: 210px;
     cursor: pointer;
@@ -311,12 +324,15 @@
     .yourBalanceBottom {
       flex-wrap: wrap;
       height: auto;
+
       &:before {
         height: 156px;
       }
+
       button {
         width: 48%;
       }
+
       button[id='exchangeBtn'] {
         width: 100%;
         margin-top: 10px;
@@ -324,34 +340,44 @@
     }
   }
 }
+
 @media all and (min-width: 768px) and (max-width: 992px) {
   .walletContent {
     flex-direction: column;
   }
+
   .yourAssetsWrapper {
     width: 100%;
   }
+
   .walletBalance {
     width: 100%;
   }
+
   .keysExportImport {
     width: 53%;
+
     button {
       width: 45%;
       margin: 10px 5px 0px;
     }
   }
+
   .activity {
     width: 100%;
   }
+
   .walletTable {
     display: inline-table;
+
     td:first-child {
       padding-left: 0px;
     }
   }
+
   .walletBalance.active {
     display: block;
+
     .yourBalance {
       display: block;
     }
@@ -362,16 +388,20 @@
   .walletBalance {
     margin-top: 0;
   }
+
   .walletNav {
     display: none;
   }
+
   .walletContent {
     flex-direction: column;
     margin: 0px -20px;
   }
+
   .yourAssetsWrapper {
     width: 100%;
   }
+
   .yourBalance,
   .yourAssets,
   .activity {
@@ -379,55 +409,69 @@
     width: 100%;
     margin-top: 20px;
   }
+
   .activity {
     padding: 25px;
   }
+
   .keysExportImport {
     width: 95%;
     margin: 0 auto;
+
     button {
       width: 45%;
       margin: 0 5px;
     }
   }
+
   .walletTable {
     display: inline-table;
+
     td:first-child {
       padding-left: 25px;
       left: auto;
     }
   }
+
   .yourBalanceBottom {
     &:before {
       display: none;
     }
   }
+
   .yourAssets {
     padding: 0;
+
     button {
       width: calc(100% - 65px);
       margin: auto;
     }
   }
+
   .yourBalance,
   .yourBalanceCurrencies {
     background: rgb(253, 253, 253);
   }
+
   .yourAssetsHeading,
   .yourAssetsDescr {
     padding: 0 25px;
   }
+
   .walletBalance {
     width: 100%;
   }
+
   .yourBalance {
     display: none;
   }
+
   .walletBalance.active {
     .yourBalance {
       display: block;
     }
   }
+
   .activityHeading {
     margin-top: -60px;
   }

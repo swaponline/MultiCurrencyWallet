@@ -36,10 +36,10 @@ import { getFullOrigin } from 'helpers/links'
 @connect(
   ({
     currencies,
-    user: { ethData, btcData, btcMultisigUserData, bchData, tokensData, nimData, ltcData /* usdtOmniData, nimData */ },
+    user: { ethData, btcData, btcMultisigUserData, tokensData },
   }) => ({
     currencies: currencies.items,
-    items: [ethData, btcData, btcMultisigUserData, bchData, ltcData /* usdtOmniData, nimData */],
+    items: [ethData, btcData, btcMultisigUserData],
     tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   })
 )

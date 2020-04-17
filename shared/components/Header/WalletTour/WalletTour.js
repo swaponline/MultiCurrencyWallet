@@ -17,13 +17,6 @@ export default class WalletTour extends Component {
       steps: [
         {
           content: <FormattedMessage
-            id="tour-step-0"
-            defaultMessage="Ваш Swap.Online крипто-кошелек" />,
-          placement: 'center',
-          target: '.data-tut-preview',
-        },
-        {
-          content: <FormattedMessage
             id="tour-step-1.1"
             defaultMessage="Ваш совокупный баланс" />,
           target: '.data-tut-all-balance',

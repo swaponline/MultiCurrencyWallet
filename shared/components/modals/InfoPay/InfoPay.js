@@ -165,7 +165,7 @@ export default class InfoPay extends React.Component {
                 </>
               ) : (
                 <>
-                  <tr>
+                  {/* <tr>
                     <td styleName="header">
                       <FormattedMessage id="InfoPay_4" defaultMessage="Est. time to confitmation" />
                     </td>
@@ -179,7 +179,7 @@ export default class InfoPay extends React.Component {
                         <FormattedMessage id="InfoPay_NotConfirmed" defaultMessage="~10 mins" />
                       )}
                     </td>
-                  </tr>
+                  </tr> */}
                   {(oldBalance > 0) && (
                     <tr>
                       <td styleName="header">

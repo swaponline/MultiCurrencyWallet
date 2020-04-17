@@ -39,7 +39,6 @@ import CustomDestAddress from "./CustomDestAddress/CustomDestAddress"
 const allowedCoins = [
   ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? ['BTC'] : [],
   ...(!config.opts.curEnabled || config.opts.curEnabled.eth) ? ['ETH'] : [],
-  ...(!config.opts.curEnabled || config.opts.curEnabled.bch) ? ['BCH'] : [],
 ]
 
 const isExchangeAllowed = currencies =>
@@ -94,14 +93,14 @@ const bannedPeers = {}; // Пиры, которые отклонили запр�
     addPartialItems,
     history: { swapHistory },
     core: { orders, hiddenCoinsList },
-    user: { ethData, btcData, bchData, tokensData, nimData, ltcData /* usdtOmniData */ }
+    user: { ethData, btcData, tokensData }
   }) => ({
     currencies: isExchangeAllowed(currencies.partialItems),
     allCurrencyies: currencies.items,
     addSelectedItems: isExchangeAllowed(currencies.addPartialItems),
     orders: filterIsPartial(orders),
     allOrders: orders,
-    currenciesData: [ethData, btcData, bchData, ltcData /* nimData, usdtOmniData */],
+    currenciesData: [ethData, btcData],
     tokensData: [...Object.keys(tokensData).map(k => tokensData[k])],
     decline: rememberedOrders.savedOrders,
     hiddenCoinsList,
@@ -159,7 +158,7 @@ export default class PartialClosure extends Component {
     } = props;
     super();
 
-    this.onRequestAnswer = (newOrder, isAccepted) => {};
+    this.onRequestAnswer = (newOrder, isAccepted) => { };
 
     const isRootPage = history.location.pathname === "/" || history.location.pathname === "/ru";
     const {
@@ -789,9 +788,9 @@ export default class PartialClosure extends Component {
     const pathname = constants.tradeTicker.includes(tradeTicker.toUpperCase())
       ? tradeTicker
       : tradeTicker
-          .split("-")
-          .reverse()
-          .join("-");
+        .split("-")
+        .reverse()
+        .join("-");
 
     if (isWidget) {
       window.parent.location.replace(`${hostname}/${pathname}`);
@@ -1135,8 +1134,8 @@ export default class PartialClosure extends Component {
               <FormattedMessage id="continueDeclined977" defaultMessage="Click here to continue your swaps" />
             </h5>
           ) : (
-            <span />
-          )}
+              <span />
+            )}
           <div className="data-tut-have" styleName="selectWrap">
             <SelectGroup
               switchBalanceFunc={this.switchBalance}
@@ -1166,15 +1165,15 @@ export default class PartialClosure extends Component {
               {BigNumber(balance).toNumber() === 0 ? (
                 <FormattedMessage id="partial766" defaultMessage="From any wallet or exchange" />
               ) : (
-                <>
-                  <FormattedMessage id="partial767" defaultMessage="Your balance: " />
-                  {BigNumber(balance)
-                    .dp(5, BigNumber.ROUND_FLOOR)
-                    .toString()}
-                  {"  "}
-                  {haveCurrency.toUpperCase()}
-                </>
-              )}
+                  <>
+                    <FormattedMessage id="partial767" defaultMessage="Your balance: " />
+                    {BigNumber(balance)
+                      .dp(5, BigNumber.ROUND_FLOOR)
+                      .toString()}
+                    {"  "}
+                    {haveCurrency.toUpperCase()}
+                  </>
+                )}
             </p>
           )}
           <div styleName="switchButton">
@@ -1295,45 +1294,45 @@ export default class PartialClosure extends Component {
                     }}
                   />
                   {BigNumber(estimatedFeeValues[getCurrency]).isGreaterThan(0) &&
-                  BigNumber(getAmount).isGreaterThan(0) ? (
-                    <Fragment>
-                      {` `}
-                      <FormattedMessage
-                        id="PartialFeeValueWarn1"
-                        defaultMessage="+ {estimatedFeeValueGet} {getCurrency}"
-                        values={{
-                          getCurrency: getCurrency.toUpperCase(),
-                          estimatedFeeValue: estimatedFeeValues[getCurrency]
-                        }}
-                      />
-                      {` `}
-                      <FormattedMessage
-                        id="PartialFeeValueWarn3"
-                        defaultMessage="= {estimatedFeeValue}$"
-                        values={{
-                          estimatedFeeValue: BigNumber(exHaveRate)
-                            .times(estimatedFeeValues[haveCurrency])
-                            .plus(BigNumber(exGetRate).times(estimatedFeeValues[getCurrency]))
-                            .dp(2, BigNumber.ROUND_CEIL)
-                            .toString()
-                        }}
-                      />
-                    </Fragment>
-                  ) : (
-                    <Fragment>
-                      {` `}
-                      <FormattedMessage
-                        id="PartialFeeValueWarn2"
-                        defaultMessage="~ {estimatedFeeValue}$"
-                        values={{
-                          estimatedFeeValue: BigNumber(exHaveRate)
-                            .times(estimatedFeeValues[haveCurrency])
-                            .dp(2, BigNumber.ROUND_CEIL)
-                            .toString()
-                        }}
-                      />
-                    </Fragment>
-                  )}
+                    BigNumber(getAmount).isGreaterThan(0) ? (
+                      <Fragment>
+                        {` `}
+                        <FormattedMessage
+                          id="PartialFeeValueWarn1"
+                          defaultMessage="+ {estimatedFeeValueGet} {getCurrency}"
+                          values={{
+                            getCurrency: getCurrency.toUpperCase(),
+                            estimatedFeeValue: estimatedFeeValues[getCurrency]
+                          }}
+                        />
+                        {` `}
+                        <FormattedMessage
+                          id="PartialFeeValueWarn3"
+                          defaultMessage="= {estimatedFeeValue}$"
+                          values={{
+                            estimatedFeeValue: BigNumber(exHaveRate)
+                              .times(estimatedFeeValues[haveCurrency])
+                              .plus(BigNumber(exGetRate).times(estimatedFeeValues[getCurrency]))
+                              .dp(2, BigNumber.ROUND_CEIL)
+                              .toString()
+                          }}
+                        />
+                      </Fragment>
+                    ) : (
+                      <Fragment>
+                        {` `}
+                        <FormattedMessage
+                          id="PartialFeeValueWarn2"
+                          defaultMessage="~ {estimatedFeeValue}$"
+                          values={{
+                            estimatedFeeValue: BigNumber(exHaveRate)
+                              .times(estimatedFeeValues[haveCurrency])
+                              .dp(2, BigNumber.ROUND_CEIL)
+                              .toString()
+                          }}
+                        />
+                      </Fragment>
+                    )}
                   {` `}
                   <a style={{ whiteSpace: "nowrap" }} href="https://wiki.swaponline.io/faq/is-there-fee-for-trade/">
                     <FormattedMessage id="PartialFeeValueWarnInfo" defaultMessage="[About fees]" />
@@ -1353,7 +1352,7 @@ export default class PartialClosure extends Component {
           )}
 
           {this.customWalletAllowed() && (
-            <CustomDestAddress 
+            <CustomDestAddress
               type={getCurrency}
               hasError={destinationError}
               value={customWallet}
@@ -1423,44 +1422,44 @@ export default class PartialClosure extends Component {
     return isSingleForm ? (
       Form
     ) : (
-      <div styleName={`exchangeWrap ${isWidget ? "widgetExchangeWrap" : ""}`}>
-        <div styleName="promoContainer" ref={ref => (this.promoContainer = ref)}>
-          <div
-            styleName="scrollToTutorialSection"
-            ref={ref => (this.scrollTrigger = ref)}
-            onClick={() =>
-              animate(timePassed => {
-                window.scrollTo(0, this.promoContainer.clientHeight * (timePassed / 100));
-              }, 100)
-            }
-          >
-            <span styleName="scrollAdvice">
-              <FormattedMessage id="PartialHowItWorks10" defaultMessage="How it works?" />
-            </span>
-            <span styleName="scrollTrigger" />
-          </div>
-
-          {openScanCam && (
-            <QrReader openScan={this.openScan} handleError={this.handleError} handleScan={this.handleScan} />
-          )}
-          <Fragment>
-            <div styleName="container alignCenter">
-              <Promo
-                subTitle={subTitle(
-                  sellTokenFullName,
-                  haveCurrency.toUpperCase(),
-                  buyTokenFullName,
-                  getCurrency.toUpperCase()
-                )}
-              />
-              {Form}
+        <div styleName={`exchangeWrap ${isWidget ? "widgetExchangeWrap" : ""}`}>
+          <div styleName="promoContainer" ref={ref => (this.promoContainer = ref)}>
+            <div
+              styleName="scrollToTutorialSection"
+              ref={ref => (this.scrollTrigger = ref)}
+              onClick={() =>
+                animate(timePassed => {
+                  window.scrollTo(0, this.promoContainer.clientHeight * (timePassed / 100));
+                }, 100)
+              }
+            >
+              <span styleName="scrollAdvice">
+                <FormattedMessage id="PartialHowItWorks10" defaultMessage="How it works?" />
+              </span>
+              <span styleName="scrollTrigger" />
             </div>
-          </Fragment>
+
+            {openScanCam && (
+              <QrReader openScan={this.openScan} handleError={this.handleError} handleScan={this.handleScan} />
+            )}
+            <Fragment>
+              <div styleName="container alignCenter">
+                <Promo
+                  subTitle={subTitle(
+                    sellTokenFullName,
+                    haveCurrency.toUpperCase(),
+                    buyTokenFullName,
+                    getCurrency.toUpperCase()
+                  )}
+                />
+                {Form}
+              </div>
+            </Fragment>
+          </div>
+          <HowItWorks />
+          <VideoAndFeatures />
+          <Quote />
         </div>
-        <HowItWorks />
-        <VideoAndFeatures />
-        <Quote />
-      </div>
-    );
+      );
   }
 }

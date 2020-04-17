@@ -13,14 +13,8 @@ import filter from './filter'
 
 import btc from './btc'
 import btcmultisig from './btcmultisig'
-import bch from './bch'
-import ltc from './ltc'
 import eth from './eth'
 import token from './token'
-import nimiq from './nimiq'
-// import qtum from './qtum'
-// import xlm from './xlm'
-// import usdt from './usdt'
 
 import api from './api'
 import pairs from './pairs'
@@ -53,15 +47,9 @@ export default {
   history,
   core,
 
-  ltc,
-  bch,
   btc,
   btcmultisig,
   eth,
-  nimiq,
-  // qtum,
-  // xlm,
-  // usdt,
 
   token,
   feed,
