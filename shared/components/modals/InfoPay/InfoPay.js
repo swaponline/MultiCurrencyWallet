@@ -133,7 +133,7 @@ export default class InfoPay extends React.Component {
             <img styleName="finishImg" src={finishSvg} alt="finish" />
           </div>
 
-          <div className="p-3"  styleName={isFetching ? `animate-fetching` : ``}>
+          <div className="p-3">
             <div styleName="shortInfoHolder">
               <span><strong> {amount}  {currency.toUpperCase()} </strong></span>
               {!isFetching && (
@@ -153,19 +153,19 @@ export default class InfoPay extends React.Component {
                 </td>
               </tr>
               <tr>
+                <td colspan="1">
+                  <a href={linkBlockChain} target="_blank" styleName="txLink">
+                    {linkBlockChain.replace(/(https:\/\/)|(http:\/\/)/g, '').split('/')[0].replace(/^\w/, c => c.toUpperCase())}
+                  </a>:
+                </td>
                 <td colspan="2">
-                  <a href={linkBlockChain} target="_blank" styleName="txLink">{tx}</a>
+                  <a href={window.location.href} onClick={e => e.preventDefault()} styleName="txLink">
+                    {`${tx.slice(0, 6)}...${tx.slice(-6)}`}
+                  </a>
                 </td>
               </tr>
-              {isFetching ? (
-                <>
-                  <tr>
-                    <td styleName="animate-fetching" colSpan="2"></td>
-                  </tr>
-                </>
-              ) : (
-                <>
-                  {/* <tr>
+              <>
+                {/* <tr>
                     <td styleName="header">
                       <FormattedMessage id="InfoPay_4" defaultMessage="Est. time to confitmation" />
                     </td>
@@ -180,20 +180,19 @@ export default class InfoPay extends React.Component {
                       )}
                     </td>
                   </tr> */}
-                  {(oldBalance > 0) && (
-                    <tr>
-                      <td styleName="header">
-                        <FormattedMessage id="InfoPay_FinalBalance" defaultMessage="Final balance" />
-                      </td>
-                      <td>
-                        <strong>
-                          {oldBalance} {currency}
-                        </strong>
-                      </td>
-                    </tr>
-                  )}
-                </>
-              )}
+                {(oldBalance > 0) && (
+                  <tr>
+                    <td styleName="header">
+                      <FormattedMessage id="InfoPay_FinalBalance" defaultMessage="Final balance" />
+                    </td>
+                    <td>
+                      <strong>
+                        {oldBalance} {currency}
+                      </strong>
+                    </td>
+                  </tr>
+                )}
+              </>
             </tbody>
           </table>
         </div>

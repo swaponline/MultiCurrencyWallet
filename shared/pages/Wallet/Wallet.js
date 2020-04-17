@@ -411,7 +411,7 @@ export default class Wallet extends Component {
     }
 
     return (
-      <artical>
+      <article>
         <section styleName={isWidgetBuild && !config.isFullBuild ? 'wallet widgetBuild' : 'wallet'}>
           <ul styleName="walletNav">
             {walletNav.map(({ key, text }, index) => (
@@ -420,7 +420,7 @@ export default class Wallet extends Component {
                 styleName={`walletNavItem ${activeView === index ? 'active' : ''}`}
                 onClick={() => this.handleNavItemClick(index)}
               >
-                <a href styleName="walletNavItemLink">
+                <a href="#" styleName="walletNavItemLink" onClick={e => e.preventDefault()}>
                   {text}
                 </a>
               </li>
@@ -494,7 +494,7 @@ export default class Wallet extends Component {
             </div>
           )}
         </section>
-      </artical>
+      </article>
     )
   }
 }

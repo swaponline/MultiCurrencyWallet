@@ -1257,6 +1257,13 @@
     "message": "Unconfirmed balance"
   },
   {
+    "id": "RowWallet181",
+    "message": "Unconfirmed balance",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
     "id": "AddOffer396",
     "message": "Next",
     "files": [
