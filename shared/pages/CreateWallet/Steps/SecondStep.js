@@ -105,17 +105,23 @@ const CreateWallet = (props) => {
   const [isMultisigFeatureAsked, setMultisigFeatureAsked] = useState(false)
 
   useEffect(() => {
-    // eslint-disable-next-line no-undef
-    if (thisComponentInitHelper.current && PublicKeyCredential) {
-      // eslint-disable-next-line no-undef
-      PublicKeyCredential
-        .isUserVerifyingPlatformAuthenticatorAvailable()
-        .then(result => {
-          if (result) {
-            setFingerprintAvaillable(true)
-          }
-        })
-        .catch(e => console.error(e))
+    try {
+      if (typeof PublicKeyCredential !== 'undefined') {
+        // eslint-disable-next-line no-undef
+        if (thisComponentInitHelper.current && PublicKeyCredential) {
+          // eslint-disable-next-line no-undef
+          PublicKeyCredential
+            .isUserVerifyingPlatformAuthenticatorAvailable()
+            .then(result => {
+              if (result) {
+                setFingerprintAvaillable(true)
+              }
+            })
+            .catch(e => console.error(e))
+        }
+      }
+    } catch (error) {
+      console.error(error)
     }
   })
 

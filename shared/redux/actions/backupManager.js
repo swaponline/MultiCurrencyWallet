@@ -13,10 +13,6 @@ const backupFields = [
   constants.privateKeyNames.btcSmsMnemonicKey,
   constants.privateKeyNames.btcSmsMnemonicKeyGenerated,
   constants.privateKeyNames.btcSmsMnemonicKeyMnemonic,
-  constants.privateKeyNames.bch,
-  constants.privateKeyNames.ltc,
-  constants.privateKeyNames.ltcMnemonic,
-  constants.privateKeyNames.qtum,
 ]
 
 
@@ -40,7 +36,7 @@ const backup = (mark, label, overide) => {
   }
 
   let backups = localStorage.getItem(constants.localStorage.backups)
-  try { backups = JSON.parse( backups ) } catch (e) {}
+  try { backups = JSON.parse(backups) } catch (e) { }
   if (!(backups instanceof Array)) {
     backups = []
   }
@@ -81,13 +77,13 @@ const restory = (mark) => {
 
 const list = () => {
   let backups = localStorage.getItem(constants.localStorage.backups)
-  try { backups = JSON.parse( backups ) } catch (e) {}
+  try { backups = JSON.parse(backups) } catch (e) { }
   if (!(backups instanceof Array)) {
     backups = []
   }
   backups = backups.map((mark) => {
     let backupData = localStorage.getItem(`${constants.localStorage.backups_prefix}:${mark}`)
-    try { backupData = JSON.parse( backupData ) } catch (e) {}
+    try { backupData = JSON.parse(backupData) } catch (e) { }
     if (backupData
       && backupData.mark
       && backupData.utx
@@ -104,7 +100,7 @@ const list = () => {
 
 const exists = (mark) => {
   let backupData = localStorage.getItem(`${constants.localStorage.backups_prefix}:${mark}`)
-  try { backupData = JSON.parse( backupData ) } catch (e) {}
+  try { backupData = JSON.parse(backupData) } catch (e) { }
   if (backupData
     && backupData.mark
     && backupData.utx

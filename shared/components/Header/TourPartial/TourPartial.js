@@ -16,11 +16,6 @@ export default class TourPartial extends Component {
       run: true,
       steps: [
         {
-          content: <FormattedMessage id="partial-tour-1" defaultMessage="Уникальный peer-to-peer обменик, основанный на технологии Atomic Swap." />,
-          placement: 'center',
-          target: '.data-tut-have',
-        },
-        {
           content: <FormattedMessage id="partial-tour-2" defaultMessage="В данное поле, введите сумму, которую вы хотите продать, выберите валюту для продажи. Вы также можете продать валюту с внешнего кошелька." />,
           target: '.data-tut-have',
         },

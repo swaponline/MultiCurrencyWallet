@@ -31,13 +31,13 @@ const isWidgetBuild = config && config.isWidget
 
 @injectIntl
 @connect(({
-  user: { ethData, btcData, bchData, tokensData, nimData, ltcData /* usdtOmniData */ },
+  user: { ethData, btcData, tokensData },
   ipfs: { peer },
   rememberedOrders,
 }) => ({
-  items: [ethData, btcData, bchData, ltcData /* nimData, usdtOmniData */],
+  items: [ethData, btcData],
   tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
-  currenciesData: [ethData, btcData, bchData, ltcData /* nimData, usdtOmniData */],
+  currenciesData: [ethData, btcData],
   tokensData: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   errors: 'api.errors',
   checked: 'api.checked',
@@ -71,7 +71,7 @@ export default class SwapComponent extends PureComponent {
     } = this.state
 
     if (step >= 3) {
-      
+
       let swapsId = JSON.parse(localStorage.getItem('axiosSwaps'))
 
       if (swapsId === null || swapsId.length === 0) {
@@ -105,7 +105,7 @@ export default class SwapComponent extends PureComponent {
           btcScriptValues
         }
         const sendedJSON = JSON.stringify(sendedData)
-        
+
         localStorage.setItem('axiosSwaps', JSON.stringify(swapsId))
         clearInterval(this.sendDebugInfoTimer)
 
@@ -227,8 +227,8 @@ export default class SwapComponent extends PureComponent {
 
   componentDidMount() {
     const { swap, deletedOrders } = this.state
-    const { id, flow } = swap
-    const { canCreateEthTransaction, requireWithdrawFeeSended, step, isRefunded } = flow.state
+    const { flow } = swap
+    const { step } = flow.state
 
     const { match: { params: { orderId } }, decline } = this.props
 

@@ -21,17 +21,6 @@ export default {
       fast: 2 * 1e9,
     },
   },
-  bch: {
-    size: {
-      send: 226,
-      swap: 1024,
-    },
-    rate: {
-      slow: 10 * 1e3,
-      normal: 50 * 1e3,
-      fast: 100 * 1e3,
-    },
-  },
   btc: {
     size: {
       send: 226,
@@ -41,17 +30,6 @@ export default {
       slow: 5 * 1e3,
       normal: 15 * 1e3,
       fast: 30 * 1e3,
-    },
-  },
-  ltc: {
-    size: {
-      send: 226,
-      swap: 1024,
-    },
-    rate: {
-      slow: 5 * 1e3,
-      normal: 50 * 1e3,
-      fast: 100 * 1e3,
     },
   },
 }

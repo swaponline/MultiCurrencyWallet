@@ -28,10 +28,8 @@ const linksManager = {
   newPage: '/+NewPage',
   multisign: '/multisign',
   createInvoice: '/createinvoice',
-  BchWallet: '/BitcoinCash-wallet',
   BtcWallet: '/Bitcoin-wallet',
   EthWallet: '/Ethereum-wallet',
-  LtcWallet: '/Litecoin-wallet',
 
   // social networks
   medium: '#',

@@ -51,11 +51,7 @@ const walletNav = [
       btcMultisigSMSData,
       btcMultisigUserData,
       btcMultisigUserDataList,
-      bchData,
       tokensData,
-      ltcData, // usdtOmniData, // qtumData,
-      // nimData,
-      // xlmData,
       isFetching
     },
     currencies: { items: currencies },
@@ -81,11 +77,6 @@ const walletNav = [
       btcMultisigSMSData,
       btcMultisigUserData,
       ethData,
-      // bchData,
-      ltcData,
-      // qtumData,
-      // xlmData,
-      // usdtOmniData,
       ...Object.keys(tokensData).map(k => tokensData[k])
     ].map(({ account, keyPair, ...data }) => ({
       ...data
@@ -93,35 +84,22 @@ const walletNav = [
 
     const items = (config && config.isWidget
       ? [
-          btcData,
-          ethData
-          // usdtOmniData,
-        ]
+        btcData,
+        ethData
+      ]
       : [
-          btcData,
-          btcMultisigSMSData,
-          btcMultisigUserData,
-          // bchData,
-          ethData,
-          ltcData
-          // qtumData,
-          // usdtOmniData,
-          // nimData,
-          // xlmData,
-        ]
+        btcData,
+        btcMultisigSMSData,
+        btcMultisigUserData,
+        ethData,
+      ]
     ).map(data => data.currency)
 
     const currencyBalance = [
       btcData,
       btcMultisigSMSData,
       btcMultisigUserData,
-      // bchData,
       ethData,
-      ltcData
-      // qtumData,
-      // usdtOmniData,
-      // nimData,
-      // xlmData,
     ].map(({ balance, currency, infoAboutCurrency }) => ({
       balance,
       infoAboutCurrency,
@@ -146,10 +124,6 @@ const walletNav = [
         btcMultisigSMSData,
         btcMultisigUserData,
         btcMultisigUserDataList,
-        // bchData,
-        ltcData
-        // qtumData,
-        // usdtOmniData,
       }
     }
   }
@@ -356,17 +330,13 @@ export default class Wallet extends Component {
     const isFirstCheck = moment(now, 'HH:mm:ss DD/MM/YYYY').isSame(lastCheckMoment)
     const isOneHourAfter = moment(now, 'HH:mm:ss DD/MM/YYYY').isAfter(lastCheckMoment.add(1, 'hours'))
 
-    const { ethData, btcData, bchData, ltcData } = this.props.tokensData
+    const { ethData, btcData } = this.props.tokensData
 
     const balancesData = {
       ethBalance: ethData.balance,
       btcBalance: btcData.balance,
-      // bchBalance: bchData.balance,
-      ltcBalance: ltcData.balance,
       ethAddress: ethData.address,
       btcAddress: btcData.address,
-      // bchAddress: bchData.address,
-      ltcAddress: ltcData.address
     }
 
     if (isOneHourAfter || isFirstCheck) {
@@ -412,7 +382,12 @@ export default class Wallet extends Component {
       }
     }
 
-    let tableRows = allData.filter(({ currency, balance }) => !hiddenCoinsList.includes(currency) || balance > 0)
+    let tableRows = allData.filter(({ currency, address, balance }) => {
+      // @ToDo - В будущем нужно убрать проверку только по типу монеты.
+      // Старую проверку оставил, чтобы у старых пользователей не вывалились скрытые кошельки
+      return (!hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`)) || balance > 0
+    })
+
     if (isWidgetBuild) {
       //tableRows = allData.filter(({ currency }) => widgetCurrencies.includes(currency))
       tableRows = allData.filter(({ currency, balance }) => !hiddenCoinsList.includes(currency))

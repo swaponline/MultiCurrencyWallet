@@ -81,13 +81,6 @@ const signToUserMultisig = async () => {
       resolve({ address, balance })
     })
   })
-
-  /*
-  fetchQuery.forEach((chunk) => { 
-    console.log('btc multi', chunk)
-    if (chunk) chunk()
-  })
-*/
 }
 
 const getBtcMultisigKeys = (params) => {
@@ -102,11 +95,13 @@ const getBtcMultisigKeys = (params) => {
     const keysInfo = []
     if (savedKeys.length > 0) {
       for (var i = 0; i < savedKeys.length; i++) {
-        const walletData = login_USER(privateKey, savedKeys[i], true)
+        if (savedKeys[i]) {
+          const walletData = login_USER(privateKey, savedKeys[i], true)
 
-        walletData.index = i
-        walletData.balance = (opts.dontFetchBalance) ? 0 : await fetchBalance(walletData.address)
-        keysInfo.push(walletData)
+          walletData.index = i
+          walletData.balance = (opts.dontFetchBalance) ? 0 : await fetchBalance(walletData.address)
+          keysInfo.push(walletData)
+        }
       }
     }
 

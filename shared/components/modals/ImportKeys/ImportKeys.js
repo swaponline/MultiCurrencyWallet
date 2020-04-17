@@ -5,7 +5,7 @@ import actions from 'redux/actions'
 import * as bitcoin from 'bitcoinjs-lib'
 
 import Link from 'sw-valuelink'
-import { btc, ltc, bch, constants, links } from 'helpers'
+import { btc, constants, links } from 'helpers'
 
 import cssModules from 'react-css-modules'
 import styles from './ImportKeys.scss'
@@ -33,21 +33,12 @@ export default class ImportKeys extends Component {
   state = {
     ethKey: '',
     btcKey: '',
-    bchKey: '',
-    ltcKey: '',
-    // xlmKey: '',
 
     isSubmittedEth: false,
     isSubmittedBtc: false,
-    isSubmittedBch: false,
-    isSubmittedLtc: false,
-    // isSubmittedXlm: false,
 
     isImportedEth: false,
     isImportedBtc: false,
-    isImportedBch: false,
-    isImportedLtc: false,
-    // isImportedXlm: false,
 
     isDisabled: true,
     keySave: false,
@@ -135,104 +126,21 @@ export default class ImportKeys extends Component {
     }
   }
 
-  handleBchImportKey = () => {
-    const { bchKey } = this.state
-
-    try {
-      bitcoin.ECPair.fromWIF(bchKey, bch.network) // eslint-disable-line
-    } catch (e) {
-      console.error(e)
-      this.setState({ isSubmittedBch: true })
-      return false
-    }
-
-    if (!bchKey || bchKey.length < 27) {
-      this.setState({ isSubmittedBch: true })
-      return
-    }
-
-    try {
-      actions.bch.login(bchKey)
-      this.setState({
-        isImportedBch: true,
-        isDisabled: false,
-      })
-      actions.core.markCoinAsVisible('BCH')
-      this.setState({
-        onCloseLink: links.BchWallet,
-      })
-    } catch (e) {
-      console.error(e)
-      this.setState({ isSubmittedBch: true })
-    }
-  }
-
-  handleLtcImportKey = () => {
-    const { ltcKey } = this.state
-
-    try {
-      bitcoin.ECPair.fromWIF(ltcKey, ltc.network) // eslint-disable-line
-    } catch (e) {
-      this.setState({ isSubmittedLtc: true })
-      return false
-    }
-
-    if (!ltcKey || ltcKey.length < 27) {
-      this.setState({ isSubmittedLtc: true })
-      return
-    }
-
-    try {
-      actions.ltc.login(ltcKey)
-      this.setState({
-        isImportedLtc: true,
-        isDisabled: false,
-      })
-      actions.core.markCoinAsVisible('LTC')
-      this.setState({
-        onCloseLink: links.LtcWallet
-      })
-    } catch (e) {
-      this.setState({ isSubmittedLtc: true })
-    }
-  }
-
-  /*
-  handleXlmImportKey = () => {
-    const { xlmKey } = this.state
-
-    if (!xlmKey) {
-      this.setState({ isSubmittedXlm: true })
-      return
-    }
-
-    try {
-      actions.xlm.login(xlmKey)
-      this.setState({
-        isImportedXlm: true,
-        isDisabled: false,
-      })
-    } catch (e) {
-      this.setState({ isSubmittedXlm: true })
-    }
-  }
-  */
-
   handleImportKeys = () => {
     this.handleCloseModal()
     localStorage.setItem(constants.localStorage.testnetSkipPKCheck, true)
     localStorage.setItem(constants.localStorage.isWalletCreate, true)
 
-    setTimeout( () => {
+    setTimeout(() => {
       const { onCloseLink } = this.state
-      const { isImportedBch, isImportedBtc, isImportedEth, isImportedLtc } = this.state
+      const { isImportedBtc, isImportedEth } = this.state
 
-      if ( [isImportedBch, isImportedBtc, isImportedEth, isImportedLtc].filter(i => i).length > 1 ) {
-        this.handleGoTo( links.home )
+      if ([isImportedBtc, isImportedEth].filter(i => i).length > 1) {
+        this.handleGoTo(links.home)
       } else {
-        this.handleGoTo( onCloseLink )
+        this.handleGoTo(onCloseLink)
       }
-    }, 500 )
+    }, 500)
   }
 
   handleCloseModal = () => {
@@ -245,22 +153,22 @@ export default class ImportKeys extends Component {
   }
 
   checkAnyImport = () => {
-    const { isSubmittedEth, isSubmittedBtc, isSubmittedBch, isSubmittedLtc /* , isSubmittedXlm */ } = this.state
+    const { isSubmittedEth, isSubmittedBtc } = this.state
 
-    if (isSubmittedEth || isSubmittedBtc || isSubmittedBch || isSubmittedLtc /* || isSubmittedXlm */) {
+    if (isSubmittedEth || isSubmittedBtc) {
       this.setState(() => ({ isDisabled: false }))
     }
   }
 
   render() {
     const {
-      isSubmittedEth, isSubmittedBtc, isSubmittedBch, isSubmittedLtc, /* isSubmittedXlm, */
-      isImportedEth, isImportedBtc, isImportedBch, isImportedLtc, /* isImportedXlm, */ isDisabled, keySave,
+      isSubmittedEth, isSubmittedBtc,
+      isImportedEth, isImportedBtc, isDisabled, keySave,
     } = this.state
 
     const { intl, data } = this.props
 
-    const linked = Link.all(this, 'ethKey', 'btcKey', 'bchKey', 'ltcKey' /* , 'xlmKey' */)
+    const linked = Link.all(this, 'ethKey', 'btcKey')
 
     if (isSubmittedEth) {
       linked.ethKey.check((value) => value !== '', <FormattedMessage id="importkeys172" defaultMessage="Please enter ETH private key" />)
@@ -274,24 +182,6 @@ export default class ImportKeys extends Component {
         this.handleBtcImportKey(), <FormattedMessage id="importkeys190" defaultMessage="Something went wrong. Check your private key, network of this address and etc." />)
     }
 
-    if (isSubmittedBch) {
-      linked.bchKey.check((value) => value !== '', <FormattedMessage id="importkeys239" defaultMessage="Please enter BCH private key" />)
-      linked.bchKey.check((value) => value.length > 27, <FormattedMessage id="importkeys240" defaultMessage="Please valid BCH private key" />)
-      linked.bchKey.check(() =>
-        this.handleBchImportKey(), <FormattedMessage id="importkeys190" defaultMessage="Something went wrong. Check your private key, network of this address and etc." />)
-    }
-
-    if (isSubmittedLtc) {
-      linked.ltcKey.check((value) => value !== '', <FormattedMessage id="importkeys200" defaultMessage="Please enter LTC private key" />)
-      linked.ltcKey.check((value) => value.length > 27, <FormattedMessage id="importkeys201" defaultMessage="Please valid LTC private key" />)
-      linked.ltcKey.check(() =>
-        this.handleLtcImportKey(), <FormattedMessage id="importkeys190" defaultMessage="Something went wrong. Check your private key, network of this address and etc." />)
-    }
-    /*
-    if (isSubmittedXlm) {
-      linked.btcKey.check((value) => value !== '', <FormattedMessage id="importkeys187" defaultMessage="Please enter XLM private key" />)
-    }
-    */
     return (
       <Modal name={this.props.name} title={intl.formatMessage(title.Import)} data={data} onClose={this.state.onClose}>
         <div styleName="modal" className="ym-hide-content">
@@ -324,45 +214,6 @@ export default class ImportKeys extends Component {
               />
             </>
           )}
-          {(!config.opts.curEnabled || config.opts.curEnabled.bch) && (
-            <>
-              <FieldLabel positionStatic>
-                <FormattedMessage id="ImportKeys280" defaultMessage="Please enter BCH private key in WIF format" />
-              </FieldLabel>
-              <Group
-                inputLink={linked.bchKey}
-                placeholder="Key in WIF format"
-                disabled={isImportedBch}
-                onClick={this.handleBchImportKey}
-              />
-            </>
-          )}
-          {(!config.opts.curEnabled || config.opts.curEnabled.ltc) && (
-            <>
-              <FormattedMessage id="ImportKeys205" defaultMessage="Please enter LTC private key in WIF format">
-                {message => <FieldLabel positionStatic>{message}</FieldLabel>}
-              </FormattedMessage>
-              <Group
-                inputLink={linked.ltcKey}
-                placeholder="Key in WIF format"
-                disabled={isImportedLtc}
-                onClick={this.handleLtcImportKey}
-              />
-            </>
-          )}
-          {
-            /*
-            <FormattedMessage id="ImportKeys176" defaultMessage="Please enter xlm private key">
-              {message => <FieldLabel positionStatic>{message}</FieldLabel>}
-            </FormattedMessage>
-            <Group
-              inputLink={linked.xlmKey}
-              placeholder="Key"
-              disabled={isImportedXlm}
-              onClick={this.handleXlmImportKey}
-            />
-            */
-          }
           {
             !keySave && (
               <span styleName="error">
