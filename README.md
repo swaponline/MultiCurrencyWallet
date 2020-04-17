@@ -143,7 +143,14 @@ export default {
 ![](https://screenshots.wpmix.net/chrome_J9boBqgIfnB5OHeDUtnCYcZ3kPQ4oJtN.png)
 
 
-
+## update swap.core submodules 
+if you have changed swap.core submodule don't forget to pull new "link" 
+```
+cd swap.core 
+git checkout master 
+git fetch
+git pull
+```
 
 ## how to update your version (fork) to latest version:
 0. Make backup and "git push" all your changes to your repository
