@@ -27,7 +27,7 @@ const FAQ = (props) => {
 
   const handleTabClick = (tabName) => {
     setOpenedTabs({ ...openedTabs, [tabName]: !openedTabs[tabName] })
-    if (openedTabsCounter[tabName] === 0) {
+    if (openedTabsCounter[tabName] === 0 && !window.location.host.includes('localhost')) {
       axios({
         url: `https://noxon.wpmix.net/counter.php?msg=${encodeURI(`На главной странице нажали на таб: "${formatMessage({ id: tabsIdsDictionary[tabName] })}"`)}`,
         method: 'post',
@@ -38,9 +38,6 @@ const FAQ = (props) => {
 
   return (
     <div className={styles.faQuestions}>
-      <h5 className={styles.faQuestions__header}>
-        <FormattedMessage id="MainFAQHeader" defaultMessage="FAQ" />
-      </h5>
       <div className={styles.faQuestions__tabsContainer}>
         <article className={styles.tab}>
           <h6 className={styles.tab__header} onClick={() => handleTabClick('FIRST_TAB')}>
