@@ -313,6 +313,18 @@
   }
 }
 
+.desktopEnabledViewForFaq {
+  display: block;
+}
+
+.mobileEnabledViewForFaq {
+  display: none;
+}
+
+.faqWrapper {
+  margin-top: 23px;
+}
+
 @media all and (min-width: 993px) {
   .walletTable {
     display: inline-table;
@@ -344,6 +356,14 @@
 @media all and (min-width: 768px) and (max-width: 992px) {
   .walletContent {
     flex-direction: column;
+  }
+
+  .mobileEnabledViewForFaq {
+    display: block;
+  }
+
+  .desktopEnabledViewForFaq {
+    display: none;
   }
 
   .yourAssetsWrapper {

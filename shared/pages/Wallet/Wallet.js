@@ -24,6 +24,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import config from 'helpers/externalConfig'
 import { withRouter } from 'react-router'
 import BalanceForm from './components/BalanceForm/BalanceForm'
+import FAQ from './components/FAQ/FAQ'
 import CurrenciesList from './CurrenciesList'
 import Button from 'components/controls/Button/Button'
 import ContentLoader from '../../components/loaders/ContentLoader/ContentLoader'
@@ -511,6 +512,10 @@ export default class Wallet extends Component {
                   <ParticalClosure {...this.props} isOnlyForm />
                 </div>
               )}
+
+              <div styleName="desktopEnabledViewForFaq faqWrapper">
+                <FAQ />
+              </div>
             </div>
             <div styleName={`yourAssetsWrapper ${activeView === 0 ? 'active' : ''}`}>
               {/* Sweep Banner */}
@@ -541,6 +546,9 @@ export default class Wallet extends Component {
               )}
 
               {/* : <ContentLoader rideSideContent /> */}
+            </div>
+            <div styleName="mobileEnabledViewForFaq faqWrapper">
+              <FAQ />
             </div>
             <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
               {activeView === 1 && (<History { ...this.props} />)}
