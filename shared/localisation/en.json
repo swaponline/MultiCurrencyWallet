@@ -4722,7 +4722,7 @@
   },
   {
     "id": "invoiceModal_Address",
-    "message": "Address for invoicing",
+    "message": "Who is paying (not you)",
     "files": [
       "shared/components/modals/InvoiceModal/InvoiceModal.js"
     ]
