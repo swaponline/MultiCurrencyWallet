@@ -6445,7 +6445,7 @@
   },
   {
     "id": "History_Nav_InvoicesTab",
-    "message": "Invoices",
+    "message": "Requests",
     "files": [
       "shared/pages/History/History.js"
     ]
@@ -6459,7 +6459,7 @@
   },
   {
     "id": "InvoicesView_MetaTitle",
-    "message": "Swap.Online - Invoice #{number} - Web Wallet with Atomic Swap.",
+    "message": "Invoice #{number} - Web Wallet with Atomic Swap.",
     "files": [
       "shared/pages/Invoices/Invoice/index.js"
     ]
@@ -6480,7 +6480,7 @@
   },
   {
     "id": "InvoicesList_MetaTitle",
-    "message": "Swap.Online - Invoices - Web Wallet with Atomic Swap.",
+    "message": "Invoices - Web Wallet with Atomic Swap.",
     "files": [
       "shared/pages/Invoices/InvoicesList/index.js"
     ]
@@ -6494,7 +6494,7 @@
   },
   {
     "id": "InvoicesList_NavTitle_All",
-    "message": "Invoices",
+    "message": "Requests",
     "files": [
       "shared/pages/Invoices/InvoicesList/index.js"
     ]
@@ -6620,7 +6620,7 @@
   },
   {
     "id": "InvoicesNav",
-    "message": "Invoices",
+    "message": "Requests",
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
