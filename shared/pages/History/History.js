@@ -21,6 +21,7 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import ContentLoader from '../../components/loaders/ContentLoader/ContentLoader'
 import { isMobile } from 'react-device-detect'
 import InvoicesList from 'pages/Invoices/InvoicesList'
+import FilterForm from "components/FilterForm/FilterForm"
 
 
 
@@ -45,22 +46,23 @@ const subTitle = defineMessages({
 
 @injectIntl
 @connect(({
-    history: {
-      transactions,
-      filter,
-      swapHistory,
-    },
-  }) => ({
-    items: filterHistory(transactions, filter),
+  history: {
+    transactions,
+    filter,
     swapHistory,
+  },
+}) => ({
+  items: filterHistory(transactions, filter),
+  swapHistory,
 }))
 @CSSModules(stylesHere, { allowMultiple: true })
 export default class History extends Component {
 
   constructor(props) {
-    super()
+    super(props)
 
     const {
+      items,
       match: {
         params: {
           page = null,
@@ -71,6 +73,9 @@ export default class History extends Component {
     const commentsList = actions.comments.getComment()
     this.state = {
       page,
+      items,
+      filterValue: "",
+      isLoading: false,
       renderedItems: 10,
       commentsList: commentsList || null
     }
@@ -84,7 +89,7 @@ export default class History extends Component {
       && this.props.match.params.page === 'invoices'
     ) {
     } else {
-      if(this.props.match &&
+      if (this.props.match &&
         this.props.match.params &&
         this.props.match.params.address
       ) {
@@ -99,6 +104,18 @@ export default class History extends Component {
     }
   }
 
+  componentDidUpdate({ items: prevItems }) {
+    const { items } = this.props
+
+    if (items !== prevItems) {
+      this.createItemsState(items)
+    }
+  }
+
+  createItemsState = (items) => {
+    this.setState(() => ({ items }))
+  }
+
   loadMore = () => {
     const { items } = this.props
     const { renderedItems } = this.state
@@ -111,7 +128,7 @@ export default class History extends Component {
   }
 
   onSubmit = (obj) => {
-   
+
     this.setState(() => ({ commentsList: obj }))
     actions.comments.setComment(obj)
   }
@@ -123,11 +140,42 @@ export default class History extends Component {
     )
   }
 
+  handleFilterChange = ({ target }) => {
+    const { value } = target
+
+    this.setState(() => ({ filterValue: value }))
+  }
+
+  handleFilter = () => {
+    const { filterValue, items } = this.state
+
+    if (filterValue && filterValue.length) {
+      const newRows = items.filter(({ address }) => address && address.includes(filterValue.toLowerCase()))
+      this.setState(() => ({ items: newRows }))
+
+    } else {
+      this.resetFilter()
+    }
+  }
+
+  loading = () => {
+    this.setState(() => ({ isLoading: true }))
+    setTimeout(() => this.setState(() => ({ isLoading: false })), 1000)
+  }
+
+  resetFilter = (e) => {
+    if (e) {
+      e.stopPropagation()
+    }
+    this.loading()
+    const { items } = this.props
+    this.setState(() => ({ filterValue: "" }))
+
+    this.createItemsState(items)
+  }
+
   render() {
-    const { items, swapHistory, intl } = this.props
-    const {
-      page,
-    } = this.state
+    const { filterValue, items, isLoading } = this.state
 
     const titles = []
     const activeTab = 0
@@ -150,6 +198,7 @@ export default class History extends Component {
           <h3 styleName="historyHeading">
             <FormattedMessage id="History_Activity_Title" defaultMessage="Activity" />
           </h3>
+          <FilterForm filterValue={filterValue} onSubmit={this.handleFilter} onChange={this.handleFilterChange} resetFilter={this.resetFilter} />
           {isMobile && config.opts.invoiceEnabled && (
             <ul styleName="walletNav">
               {tabs.map(({ key, title, link }, index) => (
@@ -166,7 +215,7 @@ export default class History extends Component {
             </ul>
           )}
           {
-            items.length > 0 ? (
+            items.length > 0 && !isLoading ? (
               <InfiniteScrollTable
                 className={styles.history}
                 titles={titles}
@@ -175,19 +224,19 @@ export default class History extends Component {
                 itemsCount={items.length}
                 items={items.slice(0, this.state.renderedItems)}
                 rowRender={this.rowRender}
-              /> 
+              />
             ) : (
-              <div styleName="historyContent">
-                <ContentLoader rideSideContent empty />
-              </div>
-            )
+                <div styleName="historyContent">
+                  <ContentLoader rideSideContent empty={!isLoading} nonHeader />
+                </div>
+              )
           }
         </section>
       ) : (
-        <div styleName="historyContent">
-          <ContentLoader rideSideContent />
-        </div>
-      )
+          <div styleName="historyContent">
+            <ContentLoader rideSideContent />
+          </div>
+        )
     )
   }
 }

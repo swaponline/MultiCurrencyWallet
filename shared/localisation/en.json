@@ -5264,7 +5264,7 @@
   },
   {
     "id": "walletHistoryActivity",
-    "message": "Activity"
+    "message": "History"
   },
   {
     "id": "descr279",
@@ -5332,7 +5332,7 @@
   },
   {
     "id": "historyActivity",
-    "message": "Activity",
+    "message": "History",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js"
     ]
@@ -5567,7 +5567,7 @@
   },
   {
     "id": "currencyWalletActivity",
-    "message": "Activity {currency}",
+    "message": "History {currency}",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js"
     ]
@@ -6431,14 +6431,14 @@
   },
   {
     "id": "History_Activity_Title",
-    "message": "Activity",
+    "message": "History",
     "files": [
       "shared/pages/History/History.js"
     ]
   },
   {
     "id": "History_Nav_ActivityTab",
-    "message": "Activity",
+    "message": "History",
     "files": [
       "shared/pages/History/History.js"
     ]

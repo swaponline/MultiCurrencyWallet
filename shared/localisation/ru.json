@@ -12,7 +12,7 @@
   },
   {
     "id": "menu.history",
-    "message": "Активность",
+    "message": "История",
     "files": [
       "shared/components/Header/config.js"
     ]
@@ -1768,7 +1768,7 @@
   },
   {
     "id": "Amount68",
-    "message": "Активность",
+    "message": "История",
     "files": [
       "shared/pages/History/History.js"
     ]
@@ -5277,7 +5277,7 @@
   },
   {
     "id": "MybalanceswalletNav",
-    "message": "Мой баланс",
+    "message": "Мои кошельки",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js",
       "shared/pages/Invoices/InvoicesList/index.js",
@@ -5286,14 +5286,14 @@
   },
   {
     "id": "TransactionswalletNav",
-    "message": "Активность",
+    "message": "История",
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
   },
   {
     "id": "walletHistoryActivity",
-    "message": "Активность"
+    "message": "История"
   },
   {
     "id": "descr279",
@@ -5361,7 +5361,7 @@
   },
   {
     "id": "historyActivity",
-    "message": "Активность",
+    "message": "История",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js"
     ]
@@ -5612,7 +5612,7 @@
   },
   {
     "id": "currencyWalletActivity",
-    "message": "Активность {currency}",
+    "message": "История {currency}",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js"
     ]
@@ -6484,14 +6484,14 @@
   },
   {
     "id": "History_Activity_Title",
-    "message": "Activity",
+    "message": "История",
     "files": [
       "shared/pages/History/History.js"
     ]
   },
   {
     "id": "History_Nav_ActivityTab",
-    "message": "Activity",
+    "message": "История",
     "files": [
       "shared/pages/History/History.js"
     ]
@@ -6688,7 +6688,7 @@
   },
   {
     "id": "InvoicesNav",
-    "message": "Инвойсы",
+    "message": "Запросы",
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
