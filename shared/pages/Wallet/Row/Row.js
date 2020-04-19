@@ -505,12 +505,12 @@ export default class Row extends Component {
         action: this.goToHistory,
         disabled: false
       },
-      {
-        id: 1012,
-        title: <FormattedMessage id="WalletRow_Menu_Сopy" defaultMessage="Copy address" />,
-        action: this.copy,
-        disabled: false
-      },
+      // {
+      //   id: 1012,
+      //   title: <FormattedMessage id="WalletRow_Menu_Сopy" defaultMessage="Copy address" />,
+      //   action: this.copy,
+      //   disabled: false
+      // },
       {
         id: 1012,
         title: <FormattedMessage id="WalletRow_Menu_Сopy_PrivateKey" defaultMessage="Copy Private Key" />,
