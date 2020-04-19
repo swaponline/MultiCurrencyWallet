@@ -25,6 +25,7 @@ import BalanceForm from 'pages/Wallet/components/BalanceForm/BalanceForm'
 import { BigNumber } from 'bignumber.js'
 import ContentLoader from 'components/loaders/ContentLoader/ContentLoader'
 import Tabs from "components/Tabs/Tabs"
+import FilterForm from "components/FilterForm/FilterForm"
 
 import getCurrencyKey from 'helpers/getCurrencyKey'
 
@@ -178,6 +179,7 @@ export default class CurrencyWallet extends Component {
         currency,
         txItems: false,
         contractAddress,
+        isLoading: false,
         infoAboutCurrency,
         filterValue: address || "",
         isBalanceEmpty: balance === 0,
@@ -356,10 +358,12 @@ export default class CurrencyWallet extends Component {
 
   handleFilter = () => {
     const { filterValue, txItems } = this.state
+    this.setState(() => ({ isLoading: true }))
 
     const newRows = txItems.filter(({ address }) => address.toLowerCase().includes(filterValue.toLowerCase()))
 
-    this.setState(() => ({ txItems: newRows }))
+    this.setState(() => ({ txItems: newRows, isLoading: false }))
+    setTimeout(() => this.setState(() => ({ isLoading: true })), 1000)
   }
 
   resetFilter = (e) => {
@@ -380,6 +384,7 @@ export default class CurrencyWallet extends Component {
       isRedirecting,
       txItems,
       filterValue,
+      isLoading
     } = this.state
 
     const currencyKey = getCurrencyKey(currency, true)
@@ -494,7 +499,7 @@ export default class CurrencyWallet extends Component {
             </div>
             <div styleName="currencyWalletActivityWrapper">
               {
-                txHistory ? (
+                txHistory && !isLoading ? (
                   <div styleName="currencyWalletActivity">
                     <h3>
                       {address ?

@@ -21,6 +21,7 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import ContentLoader from '../../components/loaders/ContentLoader/ContentLoader'
 import { isMobile } from 'react-device-detect'
 import InvoicesList from 'pages/Invoices/InvoicesList'
+import FilterForm from "components/FilterForm/FilterForm"
 
 
 
@@ -73,6 +74,7 @@ export default class History extends Component {
       page,
       items,
       filterValue: "",
+      isLoading: false,
       renderedItems: 10,
       commentsList: commentsList || null
     }
@@ -145,10 +147,12 @@ export default class History extends Component {
 
   handleFilter = () => {
     const { filterValue, items } = this.state
-
+    this.setState(() => ({ isLoading: true }))
     const newRows = items.filter(({ address }) => address.toLowerCase().includes(filterValue.toLowerCase()))
 
     this.setState(() => ({ txItems: newRows }))
+    setTimeout(() => this.setState(() => ({ isLoading: true })), 1000)
+
   }
 
   resetFilter = (e) => {
@@ -159,8 +163,7 @@ export default class History extends Component {
   }
 
   render() {
-    const { swapHistory, intl } = this.props
-    const { page, filterValue, items } = this.state
+    const { filterValue, items, isLoading } = this.state
 
     const titles = []
     const activeTab = 0
@@ -200,7 +203,7 @@ export default class History extends Component {
             </ul>
           )}
           {
-            items.length > 0 ? (
+            items.length > 0 && !isLoading ? (
               <InfiniteScrollTable
                 className={styles.history}
                 titles={titles}
