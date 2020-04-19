@@ -496,19 +496,13 @@ export default class CurrencyWallet extends Component {
               {
                 txHistory ? (
                   <div styleName="currencyWalletActivity">
-                    <form styleName="filterForm" onSubmit={this.handleFilter} >
-                      <input placeHolder="Search" value={filterValue} type="text" onChange={this.handleFilterChange} />
-                      <div styleName="buttons">
-                        <button styleName="show" onClick={this.handleFilter}>Show</button>
-                        <button styleName="all" onClick={this.resetFilter}>All</button>
-                      </div>
-                    </form>
                     <h3>
                       {address ?
                         `Address: ${address}` :
                         <FormattedMessage id="historyActivity" defaultMessage="Активность" />
                       }
                     </h3>
+                    <FilterForm filterValue={filterValue} onSubmit={this.handleFilter} onChange={this.handleFilterChange} resetFilter={this.resetFilter} />
                     {
                       txHistory.length > 0 ? (
                         <Table rows={txHistory} styleName="history" rowRender={this.rowRender} />
