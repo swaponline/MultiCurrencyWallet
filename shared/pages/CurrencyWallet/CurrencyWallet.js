@@ -362,8 +362,8 @@ export default class CurrencyWallet extends Component {
 
     const newRows = txItems.filter(({ address }) => address.toLowerCase().includes(filterValue.toLowerCase()))
 
-    this.setState(() => ({ txItems: newRows, isLoading: false }))
-    setTimeout(() => this.setState(() => ({ isLoading: true })), 1000)
+    this.setState(() => ({ txItems: newRows }))
+    setTimeout(() => this.setState(() => ({ isLoading: false })), 1000)
   }
 
   resetFilter = (e) => {

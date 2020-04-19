@@ -151,7 +151,7 @@ export default class History extends Component {
     const newRows = items.filter(({ address }) => address.toLowerCase().includes(filterValue.toLowerCase()))
 
     this.setState(() => ({ txItems: newRows }))
-    setTimeout(() => this.setState(() => ({ isLoading: true })), 1000)
+    setTimeout(() => this.setState(() => ({ isLoading: false })), 1000)
 
   }
 
