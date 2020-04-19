@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'redaction'
 import actions from 'redux/actions'
 import Slider from 'pages/Wallet/components/WallerSlider';
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 import { links, constants, ethToken } from 'helpers'
 import { getTokenWallet, getBitcoinWallet, getEtherWallet } from 'helpers/links'
@@ -16,28 +16,20 @@ import Row from 'pages/History/Row/Row'
 import SwapsHistory from 'pages/History/SwapsHistory/SwapsHistory'
 
 import Table from 'components/tables/Table/Table'
-import NotifyBlock from 'pages/Wallet/components/NotityBlock/NotifyBock'
 import PageSeo from 'components/Seo/PageSeo'
 import { getSeoPage } from 'helpers/seo'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-import ReactTooltip from 'react-tooltip'
-import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 import { localisedUrl } from 'helpers/locale'
 import config from 'app-config'
 import BalanceForm from 'pages/Wallet/components/BalanceForm/BalanceForm'
 import { BigNumber } from 'bignumber.js'
 import ContentLoader from 'components/loaders/ContentLoader/ContentLoader'
+import Tabs from "components/Tabs/Tabs"
+
 import getCurrencyKey from 'helpers/getCurrencyKey'
 
 
 const isWidgetBuild = config && config.isWidget
-
-const titles = [
-  <FormattedMessage id="currencyWallet27" defaultMessage="Coin" />,
-  <FormattedMessage id="currencyWallet28" defaultMessage="Status" />,
-  <FormattedMessage id="currencyWallet29" defaultMessage="Statement" />,
-  <FormattedMessage id="currencyWallet30" defaultMessage="Amount" />,
-]
 
 @connect(({ signUp: { isSigned } }) => ({
   isSigned
@@ -86,8 +78,7 @@ export default class CurrencyWallet extends Component {
         locale,
       },
       //items,
-      history,
-      tokens,
+      txHistory
     } = props
 
     const items = actions.core.getWallets()
@@ -181,16 +172,17 @@ export default class CurrencyWallet extends Component {
       } = itemCurrency
 
       this.state = {
-        token: ethToken.isEthToken({ name: ticker }),
-        currency,
         address,
-        fullName: itemCurrency.fullName,
-        contractAddress,
-        decimals,
         balance,
-        infoAboutCurrency,
-        isBalanceEmpty: balance === 0,
+        decimals,
+        currency,
         txItems: false,
+        contractAddress,
+        infoAboutCurrency,
+        filterValue: address || "",
+        isBalanceEmpty: balance === 0,
+        token: ethToken.isEthToken({ name: ticker }),
+
       }
     }
   }
@@ -241,17 +233,16 @@ export default class CurrencyWallet extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      currency,
-    } = this.state
+    const { currency } = this.state
 
     let {
       match: {
         params: {
           address = null
         }
-      }
+      },
     } = this.props
+
     let {
       match: {
         params: {
@@ -262,9 +253,12 @@ export default class CurrencyWallet extends Component {
     if (prevAddress !== address) {
       address ? actions.history.setTransactions(address, currency.toLowerCase(), this.pullTransactions) : actions.user.setTransactions()
     }
+
   }
 
-
+  getRows = (txHistory) => {
+    this.setState(() => ({ rows: txHistory }))
+  }
 
   pullTransactions = (transactions) => {
     let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date)
@@ -354,6 +348,27 @@ export default class CurrencyWallet extends Component {
     <Row key={rowIndex} {...row} />
   )
 
+  handleFilterChange = ({ target }) => {
+    const { value } = target
+
+    this.setState(() => ({ filterValue: value }))
+  }
+
+  handleFilter = () => {
+    const { filterValue, txItems } = this.state
+
+    const newRows = txItems.filter(({ address }) => address.toLowerCase().includes(filterValue.toLowerCase()))
+
+    this.setState(() => ({ txItems: newRows }))
+  }
+
+  resetFilter = (e) => {
+    e.stopPropagation()
+    const { address, currency } = this.state
+    this.setState(() => ({ filterValue: address }))
+    actions.history.setTransactions(address, currency.toLowerCase(), this.pullTransactions)
+  }
+
   render() {
     let { swapHistory, txHistory, location, match: { params: { address = null } }, intl, hiddenCoinsList, isSigned, isFetching } = this.props
 
@@ -364,13 +379,14 @@ export default class CurrencyWallet extends Component {
       infoAboutCurrency,
       isRedirecting,
       txItems,
+      filterValue,
     } = this.state
 
     const currencyKey = getCurrencyKey(currency, true)
 
     if (isRedirecting) return null
 
-    txHistory = txItems ? txItems : txHistory
+    txHistory = txItems || txHistory
 
 
     if (txHistory) {
@@ -456,20 +472,7 @@ export default class CurrencyWallet extends Component {
           handleNotifyBlockClose={this.handleNotifyBlockClose}
           {...this.state}
         />
-        {isWidgetBuild && !config.isFullBuild && (
-          <ul styleName="widgetNav">
-            <li styleName="widgetNavItem" onClick={this.handleGoWalletHome}>
-              <a href styleName="widgetNavItemLink">
-                <FormattedMessage id="MybalanceswalletNav" defaultMessage="Мой баланс" />
-              </a>
-            </li>
-            <li styleName="widgetNavItem active">
-              <a href styleName="widgetNavItemLink">
-                <FormattedMessage id="currencyWalletActivity" defaultMessage="Активность {currency}" values={{ fullName, currency }} />
-              </a>
-            </li>
-          </ul>
-        )}
+        <Tabs activeView={1} currency={currency} />
         <Fragment>
           <div styleName="currencyWalletWrapper">
             <div styleName="currencyWalletBalance">
@@ -493,6 +496,13 @@ export default class CurrencyWallet extends Component {
               {
                 txHistory ? (
                   <div styleName="currencyWalletActivity">
+                    <form styleName="filterForm" onSubmit={this.handleFilter} >
+                      <input placeHolder="Search" value={filterValue} type="text" onChange={this.handleFilterChange} />
+                      <div styleName="buttons">
+                        <button styleName="show" onClick={this.handleFilter}>Show</button>
+                        <button styleName="all" onClick={this.resetFilter}>All</button>
+                      </div>
+                    </form>
                     <h3>
                       {address ?
                         `Address: ${address}` :

@@ -1,7 +1,7 @@
 .root {
   position: static;
   width: 100%;
-  margin-top: 40px;
+  margin-top: 0;
 }
 
 .currencyWalletWrapper {
@@ -164,6 +164,46 @@
   line-height: 140%;
   padding-bottom: 10px;
   color: #8E9AA3!important;
+}
+
+.filterForm {
+  border: 1px solid #eceff0;
+  box-sizing: border-box;
+  border-radius: 2px;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 9px;
+  input {
+    width: 100%;
+  }
+  input::placeholder {
+    color: #1F2D48;
+    opacity: 0.2;
+  }
+}
+
+.buttons {
+  width: 110px;
+  display: flex;
+}
+
+.show,
+.all {
+  width: 55px;
+  color: #1F2D48;
+  text-transform: capitalize;
+  text-transform: capitalize;
+}
+
+.show {
+  opacity: 0.2;
+}
+
+.all {
+  opacity: 0.6;
 }
 
 @include media-tablet-landscape-and-lower {
