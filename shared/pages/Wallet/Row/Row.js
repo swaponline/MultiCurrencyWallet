@@ -468,6 +468,8 @@ export default class Row extends Component {
       && config.erc20[this.props.currency.currency.toLowerCase()].howToWithdraw
     ) hasHowToWithdraw = true
 
+    const isSafari = ('safari' in window)
+
     let dropDownMenuItems = [
       {
         id: 1001,
@@ -505,7 +507,7 @@ export default class Row extends Component {
         action: this.goToHistory,
         disabled: false
       },
-      {
+      !isSafari && {
         id: 1012,
         title: <FormattedMessage id="WalletRow_Menu_Сopy" defaultMessage="Copy address" />,
         action: this.copy,
@@ -517,7 +519,7 @@ export default class Row extends Component {
         action: this.copyPrivateKey,
         disabled: false
       },
-    ]
+    ].filter(el => el)
 
     dropDownMenuItems.push({
       id: 1011,
