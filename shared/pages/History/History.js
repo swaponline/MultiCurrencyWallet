@@ -59,9 +59,10 @@ const subTitle = defineMessages({
 export default class History extends Component {
 
   constructor(props) {
-    super()
+    super(props)
 
     const {
+      items,
       match: {
         params: {
           page = null,
@@ -107,7 +108,7 @@ export default class History extends Component {
     const { items } = this.props
 
     if (items !== prevItems) {
-      this.createItemsState()
+      this.createItemsState(items)
     }
   }
 
@@ -147,18 +148,29 @@ export default class History extends Component {
 
   handleFilter = () => {
     const { filterValue, items } = this.state
+
+    if (filterValue && filterValue.length) {
+      const newRows = items.filter(({ address }) => address && address.includes(filterValue.toLowerCase()))
+      this.setState(() => ({ items: newRows }))
+
+    } else {
+      this.resetFilter()
+    }
+  }
+
+  loading = () => {
     this.setState(() => ({ isLoading: true }))
-    const newRows = items.filter(({ address }) => address.toLowerCase().includes(filterValue.toLowerCase()))
-
-    this.setState(() => ({ txItems: newRows }))
     setTimeout(() => this.setState(() => ({ isLoading: false })), 1000)
-
   }
 
   resetFilter = (e) => {
-    e.stopPropagation()
+    if (e) {
+      e.stopPropagation()
+    }
+    this.loading()
     const { items } = this.props
     this.setState(() => ({ filterValue: "" }))
+
     this.createItemsState(items)
   }
 
@@ -215,7 +227,7 @@ export default class History extends Component {
               />
             ) : (
                 <div styleName="historyContent">
-                  <ContentLoader rideSideContent empty />
+                  <ContentLoader rideSideContent empty={!isLoading} nonHeader />
                 </div>
               )
           }

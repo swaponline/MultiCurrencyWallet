@@ -5154,7 +5154,7 @@
   },
   {
     "id": "MybalanceswalletNav",
-    "message": "Мой баланс",
+    "message": "Мои кошельки",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js",
       "shared/pages/Invoices/InvoicesList/index.js",
@@ -5163,14 +5163,14 @@
   },
   {
     "id": "TransactionswalletNav",
-    "message": "Activity",
+    "message": "History",
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
   },
   {
     "id": "walletHistoryActivity",
-    "message": "Activity"
+    "message": "History"
   },
   {
     "id": "descr279",
@@ -5206,7 +5206,7 @@
   },
   {
     "id": "historyActivity",
-    "message": "Activity",
+    "message": "History",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js"
     ]
@@ -5539,7 +5539,7 @@
   },
   {
     "id": "currencyWalletActivity",
-    "message": "Activity {currency}",
+    "message": "History {currency}",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js"
     ]
@@ -6239,7 +6239,7 @@
     "message": "FAQ",
     "files": [
       "shared/pages/Wallet/components/FAQ/FAQ.js"
-  ]
+    ]
   },
   {
     "id": "MainFAQ1_header",
@@ -6404,14 +6404,14 @@
   },
   {
     "id": "History_Activity_Title",
-    "message": "Activity",
+    "message": "History",
     "files": [
       "shared/pages/History/History.js"
     ]
   },
   {
     "id": "History_Nav_ActivityTab",
-    "message": "Activity",
+    "message": "History",
     "files": [
       "shared/pages/History/History.js"
     ]

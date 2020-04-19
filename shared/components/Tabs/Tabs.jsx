@@ -16,19 +16,19 @@ const TabsComponent = ({ navs, onClick, activeView, currency }) => {
   const defaultNavs = [
     {
       key: 'My balances',
-      text: <FormattedMessage id="MybalanceswalletNav" defaultMessage="Мой баланс" />,
+      text: <FormattedMessage id="MybalanceswalletNav" defaultMessage="Мои кошельки" />,
       link: links.home,
       enabled: true,
     },
     {
       key: 'Transactions',
-      text: <FormattedMessage id="currencyWalletActivity" defaultMessage="Активность {currency}" values={{ currency: currency || '' }} />,
+      text: <FormattedMessage id="currencyWalletActivity" defaultMessage="История {currency}" values={{ currency: currency || '' }} />,
       link: links.history,
       enabled: true,
     },
     {
       key: 'Invoices',
-      text: <FormattedMessage id="InvoicesNav" defaultMessage="Инвойсы" />,
+      text: <FormattedMessage id="InvoicesNav" defaultMessage="Запросы" />,
       link: links.invoices,
       enabled: (!isWidgetBuild && config.opts.invoiceEnabled),
     },

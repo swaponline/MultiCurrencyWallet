@@ -36,13 +36,13 @@ const isWidgetBuild = config && config.isWidget
 const walletNav = [
   {
     key: 'My balances',
-    text: <FormattedMessage id="MybalanceswalletNav" defaultMessage="Мой баланс" />,
+    text: <FormattedMessage id="MybalanceswalletNav" defaultMessage="Мои кошельки" />,
     link: links.home,
     enabled: true,
   },
   {
     key: 'Transactions',
-    text: <FormattedMessage id="TransactionswalletNav" defaultMessage="Активность" />,
+    text: <FormattedMessage id="TransactionswalletNav" defaultMessage="История" />,
     link: links.history,
     enabled: true,
   },

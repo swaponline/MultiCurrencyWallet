@@ -11,6 +11,7 @@ import { getTokenWallet, getBitcoinWallet, getEtherWallet } from 'helpers/links'
 
 import CSSModules from 'react-css-modules'
 import styles from './CurrencyWallet.scss'
+import stylesHere from '../History/History.scss'
 
 import Row from 'pages/History/Row/Row'
 import SwapsHistory from 'pages/History/SwapsHistory/SwapsHistory'
@@ -61,7 +62,7 @@ const isWidgetBuild = config && config.isWidget
 
 @injectIntl
 @withRouter
-@CSSModules(styles, { allowMultiple: true })
+@CSSModules({ ...styles, ...stylesHere }, { allowMultiple: true })
 export default class CurrencyWallet extends Component {
 
   constructor(props) {
@@ -358,16 +359,28 @@ export default class CurrencyWallet extends Component {
 
   handleFilter = () => {
     const { filterValue, txItems } = this.state
+    this.loading()
+
+    if (filterValue.toLowerCase() && filterValue.length) {
+      const newRows = txItems.filter(({ address }) => address && address.toLowerCase().includes(filterValue.toLowerCase()))
+
+      this.setState(() => ({ txItems: newRows }))
+    } else {
+      this.resetFilter()
+    }
+  }
+
+  loading = () => {
     this.setState(() => ({ isLoading: true }))
-
-    const newRows = txItems.filter(({ address }) => address.toLowerCase().includes(filterValue.toLowerCase()))
-
-    this.setState(() => ({ txItems: newRows }))
     setTimeout(() => this.setState(() => ({ isLoading: false })), 1000)
   }
 
   resetFilter = (e) => {
-    e.stopPropagation()
+    if (e) {
+      e.stopPropagation()
+    }
+
+    this.loading()
     const { address, currency } = this.state
     this.setState(() => ({ filterValue: address }))
     actions.history.setTransactions(address, currency.toLowerCase(), this.pullTransactions)
@@ -498,24 +511,23 @@ export default class CurrencyWallet extends Component {
               }
             </div>
             <div styleName="currencyWalletActivityWrapper">
-              {
-                txHistory && !isLoading ? (
-                  <div styleName="currencyWalletActivity">
-                    <h3>
-                      {address ?
-                        `Address: ${address}` :
-                        <FormattedMessage id="historyActivity" defaultMessage="Активность" />
-                      }
-                    </h3>
-                    <FilterForm filterValue={filterValue} onSubmit={this.handleFilter} onChange={this.handleFilterChange} resetFilter={this.resetFilter} />
-                    {
-                      txHistory.length > 0 ? (
-                        <Table rows={txHistory} styleName="history" rowRender={this.rowRender} />
-                      ) : <ContentLoader rideSideContent empty inner />
-                    }
+              <div styleName="currencyWalletActivity">
+                <FilterForm filterValue={filterValue} onSubmit={this.handleFilter} onChange={this.handleFilterChange} resetFilter={this.resetFilter} />
+                {txHistory && !isLoading && (
+                  txHistory.length > 0 ? (
+                    <Table rows={txHistory} styleName="currencyHistory" rowRender={this.rowRender} />
+                  ) :
+                    <div styleName="historyContent">
+                      <ContentLoader rideSideContent empty nonHeader inner />
+                    </div>
+                )
+                }
+                {(!txHistory || isLoading) && (
+                  <div styleName="historyContent">
+                    <ContentLoader rideSideContent nonHeader />
                   </div>
-                ) : <ContentLoader rideSideContent />
-              }
+                )}
+              </div>
               {(!actions.btcmultisig.isBTCSMSAddress(`${address}`) && !actions.btcmultisig.isBTCMSUserAddress(`${address}`)) && (
                 swapHistory.filter(item => item.step >= 4).length > 0 ? (
                   <div styleName="currencyWalletSwapHistory">

@@ -9,12 +9,12 @@ import styles from './styles.scss'
 const FilterForm = ({ filterValue, onSubmit, onChange, resetFilter }) => {
   return (
     <form styleName="filterForm" onSubmit={onSubmit} >
-      <input placeHolder="Search" value={filterValue} type="text" onChange={onChange} />
+      <input placeholder="Search" value={filterValue} type="text" onChange={onChange} />
       <div styleName="buttons">
         <button styleName="show" onClick={onSubmit}>
           <FormattedMessage id="FilterTextFind" defaultMessage="Найти" />
         </button>
-        <button styleName="all" onClick={resetFilter}>
+        <button styleName={`all ${filterValue ? 'active' : ''}`} onClick={resetFilter}>
           <FormattedMessage id="FilterTextAll" defaultMessage="Все" />
         </button>
       </div>
