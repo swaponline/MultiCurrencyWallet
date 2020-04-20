@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable max-len */
 import React, { useState } from 'react'
 import cssModules from 'react-css-modules'
 import axios from 'axios'
@@ -5,6 +7,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import cx from 'classnames'
 
 import styles from './styles.scss'
+
 
 const tabsIdsDictionary = {
   FIRST_TAB: 'MainFAQ1_header',
@@ -38,6 +41,9 @@ const FAQ = (props) => {
 
   return (
     <div className={styles.faQuestions}>
+      <h5 className={styles.faQuestions__header}>
+        <FormattedMessage id="MainFAQHeader" defaultMessage="FAQ" />
+      </h5>
       <div className={styles.faQuestions__tabsContainer}>
         <article className={styles.tab}>
           <h6 className={styles.tab__header} onClick={() => handleTabClick('FIRST_TAB')}>
@@ -67,11 +73,11 @@ const FAQ = (props) => {
             [styles.tab__content_active]: openedTabs.SECOND_TAB,
           })}>
             <FormattedMessage id="MainFAQ2_content" defaultMessage="We take 0 fees in the middle for providing these services to you. However, you still have to pay the standard TX (miners fees) for all transactions you conduct on the platform." />
-            <br/>
-            <br/>
+            <br />
+            <br />
             <FormattedMessage id="MainFAQ2_content1" defaultMessage="For ERC20 tokens, it is required that you have at least 0.001 ETH on your wallets. Remember! when sending ERC20 tokens, you are required to hold some ETH as miners fees for transactions. This is also the case for all atomic swaps for ETH & ERC20 tokens." />
-            <br/>
-            <br/>
+            <br />
+            <br />
             <FormattedMessage id="MainFAQ2_content2" defaultMessage="NOTE: You can easily check the ‘miners fees’ required for each respective coin by simply googling them." />
           </div>
         </article>
