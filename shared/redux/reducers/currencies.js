@@ -34,8 +34,12 @@ if (window
 if (buildOpts.ownTokens && Object.keys(buildOpts.ownTokens).length) {
   // Multi token mode
   const cleanERC20 = {}
+  // Обходим оптимизацию, нам нельзя, чтобы в этом месте было соптимизированно в целую строку {#WIDGETTOKENCODE#}
+  const wcPb = `{#`
+  const wcP = (`WIDGETTOKENCODE`).toUpperCase()
+  const wcPe = `#}`
   Object.keys(buildOpts.ownTokens).forEach((key) => {
-    if (key !== ('{#' + 'WIDGETTOKENCODE' + '#}')) {
+    if (key !== (`${wcPb}${wcP}${wcPe}`)) {
       const tokenData = buildOpts.ownTokens[key]
       cleanERC20[key] = tokenData
     }
