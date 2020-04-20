@@ -16,7 +16,6 @@ import History from 'pages/History/History'
 import { links, constants } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import { getActivatedCurrencies } from 'helpers/user'
-import ReactTooltip from 'react-tooltip'
 import ParticalClosure from '../PartialClosure/PartialClosure'
 
 import { FormattedMessage, injectIntl } from 'react-intl'
@@ -24,36 +23,15 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import config from 'helpers/externalConfig'
 import { withRouter } from 'react-router'
 import BalanceForm from './components/BalanceForm/BalanceForm'
+import FAQ from './components/FAQ/FAQ'
 import CurrenciesList from './CurrenciesList'
 import Button from 'components/controls/Button/Button'
-import ContentLoader from '../../components/loaders/ContentLoader/ContentLoader'
-
+import Tabs from "components/Tabs/Tabs"
 import InvoicesList from 'pages/Invoices/InvoicesList'
 
 
 
 const isWidgetBuild = config && config.isWidget
-
-const walletNav = [
-  {
-    key: 'My balances',
-    text: <FormattedMessage id="MybalanceswalletNav" defaultMessage="Мой баланс" />,
-    link: links.home,
-    enabled: true,
-  },
-  {
-    key: 'Transactions',
-    text: <FormattedMessage id="TransactionswalletNav" defaultMessage="Активность" />,
-    link: links.history,
-    enabled: true,
-  },
-  {
-    key: 'Invoices',
-    text: <FormattedMessage id="InvoicesNav" defaultMessage="Инвойсы" />,
-    link: links.invoices,
-    enabled: (!isWidgetBuild && config.opts.invoiceEnabled),
-  },
-]
 
 @connect(
   ({
@@ -205,7 +183,7 @@ export default class Wallet extends Component {
     const {
       match: {
         params: {
-          page: prevPage  = null,
+          page: prevPage = null,
         },
       },
     } = prevProps
@@ -474,21 +452,7 @@ export default class Wallet extends Component {
     return (
       <article>
         <section styleName={isWidgetBuild && !config.isFullBuild ? 'wallet widgetBuild' : 'wallet'}>
-          <ul styleName="walletNav">
-            {walletNav.map(({ key, text, link, enabled }, index) => (
-              (enabled) ? (
-                <li
-                  key={key}
-                  styleName={`walletNavItem ${activeView === index ? 'active' : ''}`}
-                  onClick={() => this.handleNavItemClick(index)}
-                >
-                  <a href={`#${link}`} styleName="walletNavItemLink">
-                    {text}
-                  </a>
-                </li>
-              ) : null
-            ))}
-          </ul>
+          <Tabs onClick={this.handleNavItemClick} activeView={activeView} />
           <div className="data-tut-store" styleName="walletContent" ref={this.balanceRef}>
             <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
               {/* {
@@ -542,11 +506,14 @@ export default class Wallet extends Component {
 
               {/* : <ContentLoader rideSideContent /> */}
             </div>
+            <div styleName="mobileEnabledViewForFaq faqWrapper">
+              <FAQ />
+            </div>
             <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
-              {activeView === 1 && (<History { ...this.props} />)}
+              {activeView === 1 && (<History {...this.props} />)}
             </div>
             <div styleName={`activity ${activeView === 2 ? 'active' : ''}`}>
-              {activeView === 2 && (<InvoicesList { ...this.props} onlyTable={true} />)}
+              {activeView === 2 && (<InvoicesList {...this.props} onlyTable={true} />)}
             </div>
           </div>
           {isWidgetBuild && activeView === 0 && (

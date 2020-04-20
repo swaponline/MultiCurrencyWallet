@@ -153,13 +153,8 @@ export default class InfoPay extends React.Component {
                 </td>
               </tr>
               <tr>
-                <td colspan="1">
-                  <a href={linkBlockChain} target="_blank" styleName="txLink">
-                    {linkBlockChain.replace(/(https:\/\/)|(http:\/\/)/g, '').split('/')[0].replace(/^\w/, c => c.toUpperCase())}
-                  </a>:
-                </td>
                 <td colspan="2">
-                  <a href={window.location.href} onClick={e => e.preventDefault()} styleName="txLink">
+                  <a href={window.location.href} target="_blank" styleName="txLink">
                     {`${tx.slice(0, 6)}...${tx.slice(-6)}`}
                   </a>
                 </td>

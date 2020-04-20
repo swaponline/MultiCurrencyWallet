@@ -7,7 +7,7 @@ import DescrSection from './components/DescrSection/DescrSection';
 import BalanceSection from './components/BalanceSection/BalanceSection';
 import BannersSection from './components/BannersSection/BannersSection';
 
-function ContentLoader({ empty, inner, rideSideContent, leftSideContent, banners}) {
+function ContentLoader({ empty, inner, rideSideContent, leftSideContent, banners, nonHeader }) {
 
   return (
     <Fragment>
@@ -15,14 +15,14 @@ function ContentLoader({ empty, inner, rideSideContent, leftSideContent, banners
         rideSideContent ? (
           <div styleName={`animationLoading rideSideContent ${empty ? 'stop' : ''} ${inner ? 'inner' : ''}`}>
             {
-                empty ? (
-                    <div styleName="textBlock">
-                    <p>No transactions</p>
-                    <span>There isn't any activity in your account yet</span>
+              empty ? (
+                <div styleName="textBlock">
+                  <p>No transactions</p>
+                  <span>There isn't any activity in your account yet</span>
                 </div>
-                ) : ''
+              ) : ''
             }
-            {!empty ? <DescrSection /> : ''}
+            {!empty && !nonHeader ? <DescrSection /> : ''}
             <ContentSection />
             <ContentSection />
             <ContentSection />

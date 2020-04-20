@@ -1969,14 +1969,28 @@
   },
   {
     "id": "RowHistory281",
-    "message": "Received",
+    "message": "Received {address}",
     "files": [
       "shared/pages/History/Row/Row.js"
     ]
   },
   {
     "id": "RowHistory282",
-    "message": "Sent",
+    "message": "Sent {address}",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "fromRow",
+    "message": "c",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "toRow",
+    "message": "на",
     "files": [
       "shared/pages/History/Row/Row.js"
     ]
@@ -5154,7 +5168,7 @@
   },
   {
     "id": "MybalanceswalletNav",
-    "message": "Мой баланс",
+    "message": "Мои кошельки",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js",
       "shared/pages/Invoices/InvoicesList/index.js",
@@ -5163,14 +5177,14 @@
   },
   {
     "id": "TransactionswalletNav",
-    "message": "Activity",
+    "message": "History",
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
   },
   {
     "id": "walletHistoryActivity",
-    "message": "Activity"
+    "message": "History"
   },
   {
     "id": "descr279",
@@ -5206,7 +5220,7 @@
   },
   {
     "id": "historyActivity",
-    "message": "Activity",
+    "message": "History",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js"
     ]
@@ -5539,7 +5553,7 @@
   },
   {
     "id": "currencyWalletActivity",
-    "message": "Activity {currency}",
+    "message": "History {currency}",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js"
     ]
@@ -6235,6 +6249,69 @@
     ]
   },
   {
+    "id": "MainFAQHeader",
+    "message": "FAQ",
+    "files": [
+      "shared/pages/Wallet/components/FAQ/FAQ.js"
+    ]
+  },
+  {
+    "id": "MainFAQ1_header",
+    "message": "How are my private keys stored?",
+    "files": [
+      "shared/pages/Wallet/components/FAQ/FAQ.js"
+    ]
+  },
+  {
+    "id": "MainFAQ1_content",
+    "message": "Your private keys are stored ONLY on your device, in the localStorage of your browser. Please backup your keys, because your browser or device may be crashed.",
+    "files": [
+      "shared/pages/Wallet/components/FAQ/FAQ.js"
+    ]
+  },
+  {
+    "id": "MainFAQ2_header",
+    "message": "WHAT ARE THE FEES INVOLVED?",
+    "files": [
+      "shared/pages/Wallet/components/FAQ/FAQ.js"
+    ]
+  },
+  {
+    "id": "MainFAQ2_content",
+    "message": "We take 0 fees in the middle for providing these services to you. However, you still have to pay the standard TX (miners fees) for all transactions you conduct on the platform.",
+    "files": [
+      "shared/pages/Wallet/components/FAQ/FAQ.js"
+    ]
+  },
+  {
+    "id": "MainFAQ2_content1",
+    "message": "For ERC20 tokens, it is required that you have at least 0.001 ETH on your wallets. Remember! when sending ERC20 tokens, you are required to hold some ETH as miners fees for transactions. This is also the case for all atomic swaps for ETH & ERC20 tokens.",
+    "files": [
+      "shared/pages/Wallet/components/FAQ/FAQ.js"
+    ]
+  },
+  {
+    "id": "MainFAQ2_content2",
+    "message": "NOTE: You can easily check the ‘miners fees’ required for each respective coin by simply googling them.",
+    "files": [
+      "shared/pages/Wallet/components/FAQ/FAQ.js"
+    ]
+  },
+  {
+    "id": "MainFAQ3_header",
+    "message": "How to save private keys?",
+    "files": [
+      "shared/pages/Wallet/components/FAQ/FAQ.js"
+    ]
+  },
+  {
+    "id": "MainFAQ3_content",
+    "message": "For save you \"12-words seed\" click on \"Please backup your wallet\" banner. If you don't see this banner, don't despair just click on \"dots\" near your balance and select \"Copy private key\" option",
+    "files": [
+      "shared/pages/Wallet/components/FAQ/FAQ.js"
+    ]
+  },
+  {
     "id": "SweepBannerDescription",
     "message": "Пожалуйста, переместите все средства на кошельки помеченные \"new\" \n                      (USDT и остальные токены переведите на Ethereum (new) адрес). \n                      Затем нажмите кнопку \"DONE\". Старые адреса будут скрыты.",
     "files": [
@@ -6341,14 +6418,14 @@
   },
   {
     "id": "History_Activity_Title",
-    "message": "Activity",
+    "message": "History",
     "files": [
       "shared/pages/History/History.js"
     ]
   },
   {
     "id": "History_Nav_ActivityTab",
-    "message": "Activity",
+    "message": "History",
     "files": [
       "shared/pages/History/History.js"
     ]

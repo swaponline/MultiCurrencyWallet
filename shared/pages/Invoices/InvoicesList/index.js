@@ -120,7 +120,7 @@ export default class InvoicesList extends PureComponent {
         address,
       }).then((items) => {
         if (!this.unmounted) {
-          this.setState({items})
+          this.setState({ items })
         }
       })
     } else {
@@ -139,7 +139,7 @@ export default class InvoicesList extends PureComponent {
       })
       actions.invoices.getManyInvoices(invoicesData).then((items) => {
         if (!this.unmounted) {
-          this.setState({items})
+          this.setState({ items })
         }
       })
     }
@@ -183,7 +183,7 @@ export default class InvoicesList extends PureComponent {
     }
   }
 
-  async componentWillUnmount() {}
+  async componentWillUnmount() { }
 
   rowRender = (row, rowIndex) => (
     <Row key={rowIndex} {...row} viewType="invoice" />
@@ -227,20 +227,20 @@ export default class InvoicesList extends PureComponent {
       <div styleName="currencyWalletActivity">
         <h3>
           {(address) ? (
-            <FormattedMessage { ...langLabels.navTitleAddress } values={{
+            <FormattedMessage {...langLabels.navTitleAddress} values={{
               type,
               address,
               br: <br />,
             }} />
           ) : (
-            <FormattedMessage { ...langLabels.navTitle } />
-          )}
+              <FormattedMessage {...langLabels.navTitle} />
+            )}
         </h3>
         {(items && items.length > 0) ? (
-          <Table rows={items} styleName="history" rowRender={this.rowRender} />
+          <Table rows={items} styleName="currencyWalletSwapHistory" rowRender={this.rowRender} />
         ) : (
-          <ContentLoader rideSideContent empty inner />
-        )}
+            <ContentLoader rideSideContent empty inner />
+          )}
       </div>
     )
 
@@ -259,16 +259,16 @@ export default class InvoicesList extends PureComponent {
           isSigned={isSigned}
           {...this.state}
         />
-         { isWidgetBuild && !config.isFullBuild && (
+        {isWidgetBuild && !config.isFullBuild && (
           <ul styleName="widgetNav">
             <li styleName="widgetNavItem" onClick={this.handleGoWalletHome}>
               <a href styleName="widgetNavItemLink">
-                <FormattedMessage id="MybalanceswalletNav" defaultMessage="Мой баланс" />
+                <FormattedMessage id="MybalanceswalletNav" defaultMessage="Мои кошельки" />
               </a>
             </li>
             <li styleName="widgetNavItem active">
               <a href styleName="widgetNavItemLink">
-                <FormattedMessage { ...langLabels.navTitle } />
+                <FormattedMessage {...langLabels.navTitle} />
               </a>
             </li>
           </ul>
@@ -278,11 +278,11 @@ export default class InvoicesList extends PureComponent {
             <div styleName="currencyWalletBalance">
               {(items && items.length > 0) ? (
                 <div>
-                {/* Right form holder */}
+                  {/* Right form holder */}
                 </div>
               ) : (
-                <ContentLoader leftSideContent />
-              )}
+                  <ContentLoader leftSideContent />
+                )}
             </div>
             <div styleName="currencyWalletActivityWrapper">
               {invoicesTable}

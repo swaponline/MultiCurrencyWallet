@@ -12,15 +12,15 @@ const erc20LinkAcount = (type, children, address, contractAddress) => Object.key
 const LinkAccount = ({ type, children, address, contractAddress, onClick }) => (
   <Fragment>
     {onClick ? (
-      <a styleName="link" onClick={onClick}>{children}</a>
+      <a onClick={onClick}>{children}</a>
     ) : (
-        <Fragment>
-          {type.toLowerCase() === 'eth' && <Href tab={`${config.link.etherscan}/address/${address}`} >{children}</Href>}
-          {(type.toLowerCase() === 'btc' || type.toLowerCase() === 'btc (sms-protected)' || type.toLowerCase() === 'btc (multisig)')
-            && <Href tab={`${config.link.bitpay}/address/${address}`} >{children}</Href>}
-          {erc20LinkAcount(type, children, address, contractAddress)}
-        </Fragment>
-      )}
+      <Fragment>
+        {type.toLowerCase() === 'eth' && <Href tab={`${config.link.etherscan}/address/${address}`} >{children}</Href>}
+        {(type.toLowerCase() === 'btc' || type.toLowerCase() === 'btc (sms-protected)' || type.toLowerCase() === 'btc (multisig)')
+          && <Href tab={`${config.link.bitpay}/address/${address}`} >{children}</Href>}
+        {erc20LinkAcount(type, children, address, contractAddress)}
+      </Fragment>
+    )}
   </Fragment>
 )
 

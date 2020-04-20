@@ -751,11 +751,35 @@ const fetchTxInfo = (hash) =>
     }))
 
 const getTransactionUser = (address) => {
-
   if (!address) {
-    const { user: { btcMultisigUserData: { address } } } = getState()
+    // Fetch all 
+    return new Promise(async (resolve) => {
+      const msWallets = await getBtcMultisigKeys({
+        opts: {
+          dontFetchBalance: true,
+        }
+      })
+
+      if (msWallets.length) {
+        const promiseList = msWallets.map((walletData) => {
+          return getTransactionUser(walletData.address)
+        })
+
+        const txLists = await Promise.all( promiseList )
+
+        let retValue = []
+        txLists.forEach((txs) => {
+          retValue = [ ...retValue, ...txs]
+        })
+
+        resolve( retValue )
+      } else {
+        resolve([])
+      }
+    })
+  } else {
+    return getTransaction(address, 'btc (multisig)')
   }
-  return getTransaction(address, 'btc (multisig)')
 }
 
 const getTransactionSMS = (address) => { return getTransaction(address) }
