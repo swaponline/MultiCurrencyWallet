@@ -1969,14 +1969,14 @@
   },
   {
     "id": "RowHistory281",
-    "message": "Received",
+    "message": "Received from {address}",
     "files": [
       "shared/pages/History/Row/Row.js"
     ]
   },
   {
     "id": "RowHistory282",
-    "message": "Sent",
+    "message": "Sent to {address}",
     "files": [
       "shared/pages/History/Row/Row.js"
     ]
