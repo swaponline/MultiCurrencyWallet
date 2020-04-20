@@ -237,7 +237,7 @@ export default class InvoicesList extends PureComponent {
             )}
         </h3>
         {(items && items.length > 0) ? (
-          <Table rows={items} styleName="history" rowRender={this.rowRender} />
+          <Table rows={items} styleName="currencyWalletSwapHistory" rowRender={this.rowRender} />
         ) : (
             <ContentLoader rideSideContent empty inner />
           )}

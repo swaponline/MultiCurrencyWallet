@@ -375,10 +375,8 @@ export default class CurrencyWallet extends Component {
     setTimeout(() => this.setState(() => ({ isLoading: false })), 1000)
   }
 
-  resetFilter = (e) => {
-    if (e) {
-      e.stopPropagation()
-    }
+  resetFilter = () => {
+
 
     this.loading()
     const { address, currency } = this.state
@@ -490,7 +488,7 @@ export default class CurrencyWallet extends Component {
           handleNotifyBlockClose={this.handleNotifyBlockClose}
           {...this.state}
         />
-        <Tabs activeView={1} currency={currency} />
+        <Tabs activeView={1} />
         <Fragment>
           <div styleName="currencyWalletWrapper">
             <div styleName="currencyWalletBalance">

@@ -163,10 +163,8 @@ export default class History extends Component {
     setTimeout(() => this.setState(() => ({ isLoading: false })), 1000)
   }
 
-  resetFilter = (e) => {
-    if (e) {
-      e.stopPropagation()
-    }
+  resetFilter = () => {
+
     this.loading()
     const { items } = this.props
     this.setState(() => ({ filterValue: "" }))

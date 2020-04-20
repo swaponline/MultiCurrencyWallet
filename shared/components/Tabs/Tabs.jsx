@@ -11,7 +11,7 @@ import styles from './styles.scss'
 
 const isWidgetBuild = config && config.isWidget
 
-const TabsComponent = ({ navs, onClick, activeView, currency }) => {
+const TabsComponent = ({ navs, onClick, activeView }) => {
 
   const defaultNavs = [
     {
@@ -22,7 +22,7 @@ const TabsComponent = ({ navs, onClick, activeView, currency }) => {
     },
     {
       key: 'Transactions',
-      text: <FormattedMessage id="currencyWalletActivity" defaultMessage="История {currency}" values={{ currency: currency || '' }} />,
+      text: <FormattedMessage id="currencyWalletActivity" defaultMessage="История" />,
       link: links.history,
       enabled: true,
     },
