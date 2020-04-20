@@ -1969,14 +1969,28 @@
   },
   {
     "id": "RowHistory281",
-    "message": "Received from {address}",
+    "message": "Received {address}",
     "files": [
       "shared/pages/History/Row/Row.js"
     ]
   },
   {
     "id": "RowHistory282",
-    "message": "Sent to {address}",
+    "message": "Sent {address}",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "fromRow",
+    "message": "c",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "toRow",
+    "message": "на",
     "files": [
       "shared/pages/History/Row/Row.js"
     ]

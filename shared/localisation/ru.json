@@ -2090,14 +2090,28 @@
   },
   {
     "id": "RowHistory281",
-    "message": "Получено от {address}",
+    "message": "Получено {address}",
     "files": [
       "shared/pages/History/Row/Row.js"
     ]
   },
   {
     "id": "RowHistory282",
-    "message": "Отправлено на {address}",
+    "message": "Отправлено {address}",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "fromRow",
+    "message": "с",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "toRow",
+    "message": "на",
     "files": [
       "shared/pages/History/Row/Row.js"
     ]
