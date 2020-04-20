@@ -145,7 +145,7 @@ class Row extends React.PureComponent {
       onSubmit,
     } = this.props
 
-    const substrAddress = address ? `${address.slice(0, 2)}...${address.slice(-2)}` : 'unknown'
+    const substrAddress = address ? `${address.slice(0, 2)}...${address.slice(-2)}` : ''
 
     const hash = (invoiceData && invoiceData.txInfo) ? invoiceData.txInfo : propsHash
 
@@ -228,10 +228,14 @@ class Row extends React.PureComponent {
                     <Link to={txLink}>
                       {
                         direction === 'in'
-                          ? <FormattedMessage id="RowHistory281" defaultMessage="Received from {address}" values={{ address: <em>{substrAddress}</em> }} />
+                          ? <FormattedMessage id="RowHistory281" defaultMessage="Received {address}" values={{
+                            address: substrAddress ? <span><FormattedMessage id="fromRow" defaultMessage="from" /> {substrAddress}</span> : ""
+                          }} />
                           : (
                             direction !== 'self'
-                              ? <FormattedMessage id="RowHistory282" defaultMessage="Sent to {address}" values={{ address: <em>{substrAddress}</em> }} />
+                              ? <FormattedMessage id="RowHistory282" defaultMessage="Sent {address}" values={{
+                                address: substrAddress ? <span><FormattedMessage id="toRow" defaultMessage="to" /> {substrAddress}</span> : ""
+                              }} />
                               : <FormattedMessage id="RowHistory283" defaultMessage="Self" />
                           )
                       }
