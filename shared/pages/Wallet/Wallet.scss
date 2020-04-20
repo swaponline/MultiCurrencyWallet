@@ -197,11 +197,6 @@
   }
 }
 
-.balanceInnerFaqWrapper {
-  padding: 25px;
-  padding-top: 0;
-}
-
 .yourBalanceBottomWrapper {
   position: relative;
   display: flex;
@@ -307,7 +302,13 @@
 }
 
 .faqWrapper {
+  background: #ffffff;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08), 0px 1px 4px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  height: fit-content;
+  padding: 25px;
   margin-top: 23px;
+  font-family: 'Manrope-Bold', sans-serif;
 }
 
 @media all and (min-width: 993px) {

@@ -113,9 +113,6 @@ function BalanceForm({
             </Button>
           )}
         </div>
-        <div styleName="desktopEnabledViewForFaq faqWrapper balanceInnerFaqWrapper">
-          <FAQ />
-        </div>
       </div>
     </div>
   )
