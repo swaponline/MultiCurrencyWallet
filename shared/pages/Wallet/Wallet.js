@@ -33,27 +33,6 @@ import InvoicesList from 'pages/Invoices/InvoicesList'
 
 const isWidgetBuild = config && config.isWidget
 
-const walletNav = [
-  {
-    key: 'My balances',
-    text: <FormattedMessage id="MybalanceswalletNav" defaultMessage="Мои кошельки" />,
-    link: links.home,
-    enabled: true,
-  },
-  {
-    key: 'Transactions',
-    text: <FormattedMessage id="TransactionswalletNav" defaultMessage="История" />,
-    link: links.history,
-    enabled: true,
-  },
-  {
-    key: 'Invoices',
-    text: <FormattedMessage id="InvoicesNav" defaultMessage="Инвойсы" />,
-    link: links.invoices,
-    enabled: (!isWidgetBuild && config.opts.invoiceEnabled),
-  },
-]
-
 @connect(
   ({
     core: { hiddenCoinsList },
@@ -473,7 +452,7 @@ export default class Wallet extends Component {
     return (
       <article>
         <section styleName={isWidgetBuild && !config.isFullBuild ? 'wallet widgetBuild' : 'wallet'}>
-          <Tabs navs={walletNav} onClick={this.handleNavItemClick} activeView={activeView} />
+          <Tabs onClick={this.handleNavItemClick} activeView={activeView} />
           <div className="data-tut-store" styleName="walletContent" ref={this.balanceRef}>
             <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
               {/* {

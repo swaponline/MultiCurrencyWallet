@@ -5248,7 +5248,7 @@
   },
   {
     "id": "MybalanceswalletNav",
-    "message": "My balance",
+    "message": "My wallets",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js",
       "shared/pages/Invoices/InvoicesList/index.js",
