@@ -22,7 +22,7 @@ const TabsComponent = ({ navs, onClick, activeView }) => {
     },
     {
       key: 'Transactions',
-      text: <FormattedMessage id="currencyWalletActivity" defaultMessage="История" />,
+      text: <FormattedMessage id="TransactionswalletNav" defaultMessage="История" />,
       link: links.history,
       enabled: true,
     },

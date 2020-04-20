@@ -145,9 +145,6 @@ class Row extends React.PureComponent {
       onSubmit,
     } = this.props
 
-    if (direction !== "in") {
-      console.log(this.props)
-    }
     const substrAddress = address ? `${address.slice(0, 2)}...${address.slice(-2)}` : 'unknown'
 
     const hash = (invoiceData && invoiceData.txInfo) ? invoiceData.txInfo : propsHash
