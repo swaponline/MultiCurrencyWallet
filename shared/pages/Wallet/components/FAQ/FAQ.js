@@ -81,21 +81,7 @@ const FAQ = (props) => {
             <FormattedMessage id="MainFAQ2_content2" defaultMessage="NOTE: You can easily check the ‘miners fees’ required for each respective coin by simply googling them." />
           </div>
         </article>
-        <article className={styles.tab}>
-          <h6 className={styles.tab__header} onClick={() => handleTabClick('THIRD_TAB')}>
-            <div className={cx({
-              [styles.chrest]: true,
-              [styles.chrest_active]: openedTabs.THIRD_TAB,
-            })} />
-            <FormattedMessage id="MainFAQ3_header" defaultMessage="How to save private keys?" />
-          </h6>
-          <div className={cx({
-            [styles.tab__content]: true,
-            [styles.tab__content_active]: openedTabs.THIRD_TAB,
-          })}>
-            <FormattedMessage id="MainFAQ3_content" defaultMessage={`For save you "12-words seed" click on "Please backup your wallet" banner. If you don't see this banner, don't despair just click on "dots" near your balance and select "Copy private key" option`} />
-          </div>
-        </article>
+
       </div>
     </div>
   )
