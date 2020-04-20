@@ -147,9 +147,6 @@ class Row extends React.PureComponent {
 
     const substrAddress = address ? `${address.slice(0, 2)}...${address.slice(-2)}` : ''
 
-    if (!substrAddress) {
-      console.log(this.props)
-    }
     const hash = (invoiceData && invoiceData.txInfo) ? invoiceData.txInfo : propsHash
 
     const { ind } = this.state
