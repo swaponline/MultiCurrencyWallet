@@ -25,7 +25,7 @@ class Row extends React.PureComponent {
     const dataInd = invoiceData && invoiceData.id
     const ind = `${dataInd || hash}-${type}`
 
-    
+
     this.state = {
       ind,
       viewType: (viewType || 'transaction'),
@@ -34,7 +34,7 @@ class Row extends React.PureComponent {
       cancelled: false,
       payed: false,
     }
-    this.getUsdBalance( type )
+    this.getUsdBalance(type)
   }
 
   getUsdBalance = async (type) => {
@@ -107,7 +107,7 @@ class Row extends React.PureComponent {
   }
 
   commentCancel = () => {
-    
+
     this.toggleComment(false)
   }
 
@@ -122,18 +122,19 @@ class Row extends React.PureComponent {
 
     return (
       <Fragment>
-      {direction === directionType ?
-        <div styleName="amount">{`+ ${parseFloat(Number(value).toFixed(5))}`} {type.toUpperCase()}
-         {txType === 'INVOICE' ? <span styleName="smallTooltip"><Tooltip>Invoice</Tooltip></span> : ''}
-        </div> :
-        <div styleName="amount">{`- ${parseFloat(Number(value).toFixed(5))}`} {type.toUpperCase()}</div>
-      }
-    </Fragment> 
+        {direction === directionType ?
+          <div styleName="amount">{`+ ${parseFloat(Number(value).toFixed(5))}`} {type.toUpperCase()}
+            {txType === 'INVOICE' ? <span styleName="smallTooltip"><Tooltip>Invoice</Tooltip></span> : ''}
+          </div> :
+          <div styleName="amount">{`- ${parseFloat(Number(value).toFixed(5))}`} {type.toUpperCase()}</div>
+        }
+      </Fragment>
     )
   }
 
   render() {
     const {
+      address,
       type,
       direction,
       value,
@@ -143,6 +144,8 @@ class Row extends React.PureComponent {
       invoiceData,
       onSubmit,
     } = this.props
+
+    const substrAddress = address ? `${address.slice(0, 2)}...${address.slice(-2)}` : 'unknown'
 
     const hash = (invoiceData && invoiceData.txInfo) ? invoiceData.txInfo : propsHash
 
@@ -196,7 +199,7 @@ class Row extends React.PureComponent {
             <div styleName={`${statusStyleAmount} circleIcon`}>
               <div styleName='arrowWrap'>
                 <Link to={txLink}>
-                  <svg width='12' height='15' viewBox='0 0 12 15' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                  <svg width='12' height='15' viewBox='0 0 12 15' fill='none'>
                     <path d='M6 15V3' stroke='#8E9AA3' strokeWidth='2' />
                     <path d='M11 7L6 2L1 7' stroke='#8E9AA3' strokeWidth='2' />
                   </svg>
@@ -208,11 +211,11 @@ class Row extends React.PureComponent {
                 {txType === 'INVOICE' ?
                   <>
                     <Link to={txLink}>
-                      <FormattedMessage 
-                        id="RowHistoryInvoce" 
-                        defaultMessage="Инвойс #{number} ({contact})" 
+                      <FormattedMessage
+                        id="RowHistoryInvoce"
+                        defaultMessage="Инвойс #{number} ({contact})"
                         values={{
-                          number: `${invoiceData.id}-${invoiceData.invoiceNumber}`, 
+                          number: `${invoiceData.id}-${invoiceData.invoiceNumber}`,
                           contact: (invoiceData.contact) ? `(${invoiceData.contact})` : ''
                         }}
                       />
@@ -225,10 +228,10 @@ class Row extends React.PureComponent {
                     <Link to={txLink}>
                       {
                         direction === 'in'
-                          ? <FormattedMessage id="RowHistory281" defaultMessage="Received" />
+                          ? <FormattedMessage id="RowHistory281" defaultMessage="Received from {address}" values={{ address: <em>{substrAddress}</em> }} />
                           : (
                             direction !== 'self'
-                              ? <FormattedMessage id="RowHistory282" defaultMessage="Sent" />
+                              ? <FormattedMessage id="RowHistory282" defaultMessage="Sent to {address}" values={{ address: <em>{substrAddress}</em> }} />
                               : <FormattedMessage id="RowHistory283" defaultMessage="Self" />
                           )
                       }
@@ -240,8 +243,6 @@ class Row extends React.PureComponent {
                         <FormattedMessage id="RowHistory342" defaultMessage="Unconfirmed" />
                       }
                     </div>
-                    
-                    
                   </>
                 }
               </div>
@@ -268,25 +269,25 @@ class Row extends React.PureComponent {
                     values={{
                       address: `${(invoiceData.destAddress) ? invoiceData.destAddress : invoiceData.fromAddress}`,
                       number: invoiceData.totalCount,
-                    }} 
+                    }}
                   />
                 </div>
               }
             </div>
             {hasInvoiceButtons &&
-                <div styleName="btnWrapper">
-                  <button onClick={this.handlePayInvoice}>
-                    <FormattedMessage id='RowHistoryPayInvoice' defaultMessage='Оплатить' />
-                  </button>
-                  <button onClick={this.handleCancelInvoice}>
-                    <FormattedMessage id='RowHistoryCancelInvoice' defaultMessage='Отклонить' />
-                  </button>
-                </div>
+              <div styleName="btnWrapper">
+                <button onClick={this.handlePayInvoice}>
+                  <FormattedMessage id='RowHistoryPayInvoice' defaultMessage='Оплатить' />
+                </button>
+                <button onClick={this.handleCancelInvoice}>
+                  <FormattedMessage id='RowHistoryCancelInvoice' defaultMessage='Отклонить' />
+                </button>
+              </div>
             }
             <div styleName={statusStyleAmount}>
               {invoiceData ? this.parseFloat(direction, value, 'out', type) : this.parseFloat(direction, value, 'in', type)}
               <span styleName='amountUsd'>{`~ $${getUsd.toFixed(2)}`}</span>
-              
+
             </div>
             {/* <LinkTransaction type={type} styleName='address' hash={hash} >{hash}</LinkTransaction> */}
           </td>
