@@ -66,9 +66,13 @@ const externalConfig = () => {
     }
 
     // Clean not inited single-token
+    // Обходим оптимизацию, нам нельзя, чтобы в этом месте было соптимизированно в целую строку {#WIDGETTOKENCODE#}
+    const wcPb = `{#`
+    const wcP = (`WIDGETTOKENCODE`).toUpperCase()
+    const wcPe = `#}`
     const cleanERC20 = {}
     Object.keys(config.erc20).forEach((key) => {
-      if (key !== ('{#'+'WIDGETTOKENCODE'+'#}')) {
+      if (key !== (`${wcPb}${wcP}${wcPe}`)) {
         cleanERC20[key] = config.erc20[key]
       }
     })
