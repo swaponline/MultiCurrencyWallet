@@ -7,7 +7,7 @@ import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import getWalletLink from 'helpers/getWalletLink'
 import { links } from 'helpers'
 import TxInfo from './TxInfo'
-import { Modal } from 'components/modal'
+import { ModalBox } from 'components/modal'
 import cssModules from 'react-css-modules'
 import styles from './styles.scss'
 
@@ -156,8 +156,8 @@ class Transaction extends Component {
     } = this.state
 
     return (
-      <div styleName="holder">
-      {/*<Modal name="TxInfoBlock" title={intl.formatMessage(labels.Title)} onClose={this.handleClose} showCloseButton={true}> */}
+      <ModalBox title={intl.formatMessage(labels.Title)} onClose={this.handleClose} >
+        <div styleName="holder">
           <TxInfo 
             isFetching={isFetching}
             txId={txId}
@@ -169,8 +169,8 @@ class Transaction extends Component {
             sender={sender}
             toAddress={toAddress}
           />
-      {/* </Modal> */}
-      </div>
+        </div>
+      </ModalBox>
     )
   }
 }
