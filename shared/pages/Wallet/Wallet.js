@@ -475,6 +475,10 @@ export default class Wallet extends Component {
                   <ParticalClosure {...this.props} isOnlyForm />
                 </div>
               )}
+
+              <div styleName="desktopEnabledViewForFaq faqWrapper">
+                <FAQ />
+              </div>
             </div>
             <div styleName={`yourAssetsWrapper ${activeView === 0 ? 'active' : ''}`}>
               {/* Sweep Banner */}
