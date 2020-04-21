@@ -111,7 +111,7 @@ export default class TxInfo extends React.Component {
                   <FormattedMessage id="InfoPay_3" defaultMessage="Transaction ID" />
                 </td>
                 <td>
-                  <a href={window.location.href} target="_blank" styleName="txLink">
+                  <a href={linkBlockChain} target="_blank" styleName="txLink">
                     {`${tx.slice(0, 6)}...${tx.slice(-6)}`}
                   </a>
                 </td>
