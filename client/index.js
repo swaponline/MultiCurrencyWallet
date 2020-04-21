@@ -13,9 +13,6 @@ import config from 'app-config'
 // eslint-disable-next-line camelcase
 const __webpack_public_path__ = `${config.publicPath}images/` // It makes webpack-require-from plugin works. So dont delete it.
 // All references is in swap.reace/webpack/rules/images.js
-if (typeof window !== 'undefined' && window.publicUrl) {
-  window.imagesUrl = `${window.publicUrl}images/`
-}
 
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-lone-blocks */
