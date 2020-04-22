@@ -737,9 +737,22 @@ const getBalance = (ownAddress, ownDataKey) => {
     })
 }
 
-const getBalanceUser = () => {
+const getBalanceUser = (checkAddress) => {
   const { user: { btcMultisigUserData: { address } } } = getState()
-  return getBalance(address, 'btcMultisigUserData')
+  if (!checkAddress) {
+    return getBalance(address, 'btcMultisigUserData')
+  } else {
+    return getAddrBalance(checkAddress).then(({ balance, unconfirmedBalance }) => {
+      reducers.user.setBtcMultisigBalance({
+        address: checkAddress,
+        amount: balance,
+        isBalanceFetched: true,
+        unconfirmedBalance,
+      })
+
+      return balance
+    })
+  }
 }
 
 const getRate = async () => {
@@ -1084,7 +1097,8 @@ const parseRawTX = async (txHash) => {
   const txb = await bitcoin.TransactionBuilder.fromTransaction(
     bitcoin.Transaction.fromHex(txHash),
     btc.network
-  );
+  )
+
   const parsedTX = {
     txb,
     input: [],
@@ -1096,50 +1110,54 @@ const parseRawTX = async (txHash) => {
     amount: new BigNumber(0),
   }
 
-  txb.__INPUTS.forEach(async (input) => {
-    const inputWallet = await getMSWalletByPubkeysHash(input.pubkeys, myBtcWallets)
+  await new Promise((inputParsed) => {
+    txb.__INPUTS.forEach(async (input) => {
+      const inputWallet = await getMSWalletByPubkeysHash(input.pubkeys, myBtcWallets)
 
-    if (inputWallet) {
-      if (inputWallet.address) parsedTX.from = inputWallet.address
-      parsedTX.wallet = inputWallet
-      parsedTX.isOur = true
-    }
-
-    parsedTX.input.push({
-      script: bitcoin.script.toASM(input.redeemScript),
-      wallet: inputWallet,
-      publicKeys: input.pubkeys.map(buf => buf.toString('hex')),
-    })
-  })
-
-  txb.__TX.outs.forEach((out) => {
-    let address
-    try {
-      address = bitcoin.address.fromOutputScript(out.script, btc.network)
-    } catch (e) { }
-
-    if (!myBtcAddreses.includes(address)) {
-      if (!parsedTX.out[address]) {
-        parsedTX.out[address] = {
-          to: address,
-          amount: new BigNumber(out.value).dividedBy(1e8).toNumber(),
-        }
-      } else {
-        parsedTX.out[address].amount = parsedTX.out[address].amount.plus(new BigNumber(out.value).dividedBy(1e8).toNumber())
+      if (inputWallet) {
+        if (inputWallet.address) parsedTX.from = inputWallet.address
+        parsedTX.wallet = inputWallet
+        parsedTX.isOur = true
+        console.log('our', parsedTX.from)
       }
-      parsedTX.amount = parsedTX.amount.plus(new BigNumber(out.value).dividedBy(1e8).toNumber())
-    }
 
-    parsedTX.output.push({
-      address,
-      valueSatoshi: out.value,
-      value: new BigNumber(out.value).dividedBy(1e8).toNumber(),
+      parsedTX.input.push({
+        script: bitcoin.script.toASM(input.redeemScript),
+        wallet: inputWallet,
+        publicKeys: input.pubkeys.map(buf => buf.toString('hex')),
+      })
     })
-  })
+    inputParsed()
+  }).then(() => {
+    txb.__TX.outs.forEach((out) => {
+      let address
+      try {
+        address = bitcoin.address.fromOutputScript(out.script, btc.network)
+      } catch (e) { }
 
-  if (Object.keys(parsedTX.out).length) {
-    parsedTX.to = parsedTX.out[Object.keys(parsedTX.out)[0]].to
-  }
+      if (parsedTX.from !== address) {
+        if (!parsedTX.out[address]) {
+          parsedTX.out[address] = {
+            to: address,
+            amount: new BigNumber(out.value).dividedBy(1e8).toNumber(),
+          }
+        } else {
+          parsedTX.out[address].amount = parsedTX.out[address].amount.plus(new BigNumber(out.value).dividedBy(1e8).toNumber())
+        }
+        parsedTX.amount = parsedTX.amount.plus(new BigNumber(out.value).dividedBy(1e8).toNumber())
+      }
+
+      parsedTX.output.push({
+        address,
+        valueSatoshi: out.value,
+        value: new BigNumber(out.value).dividedBy(1e8).toNumber(),
+      })
+    })
+
+    if (Object.keys(parsedTX.out).length) {
+      parsedTX.to = parsedTX.out[Object.keys(parsedTX.out)[0]].to
+    }
+  })
 
   return parsedTX
 }
@@ -1347,4 +1365,5 @@ export default {
   signToUserMultisig,
   getSmsKeyFromMnemonic,
   fetchMultisigBalances,
+  getAddrBalance,
 }
