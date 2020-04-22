@@ -70,15 +70,28 @@ const signToUserMultisig = async () => {
   // fetching balances
   const fetchQuery = walletAddreses.map((address, index) => {
     return new Promise(async (resolve) => {
-      await delay(650 * index * 10)
-      const balance = await actions.btc.fetchBalance(address)
-      reducers.user.setBtcMultisigBalance({
-        address,
-        amount: balance,
-        isBalanceFetched: true,
-        unconfirmedBalance: 0,
+      apiLooper.get('bitpay', `/addr/${address}`, {
+        inQuery: {
+          delay: 500,
+          name: `balance`,
+        },
+        checkStatus: (answer) => {
+          try {
+            if (answer && answer.balance !== undefined) return true
+          } catch (e) { /* */ }
+          return false
+        },
+      }).then(({ balance, unconfirmedBalance }) => {
+        reducers.user.setBtcMultisigBalance({
+          address,
+          amount: balance,
+          isBalanceFetched: true,
+          unconfirmedBalance,
+        })
+        resolve({ address, balance, unconfirmedBalance })
+      }).catch((e) => {
+        // 
       })
-      resolve({ address, balance })
     })
   })
 }
@@ -692,6 +705,10 @@ const getBalance = (ownAddress, ownDataKey) => {
   }
 
   return apiLooper.get('bitpay', `/addr/${checkAddress}`, {
+    inQuery: {
+      delay: 500,
+      name: `balance`,
+    },
     checkStatus: (answer) => {
       try {
         if (answer && answer.balance !== undefined) return true
