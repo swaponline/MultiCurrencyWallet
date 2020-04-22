@@ -9,6 +9,8 @@ import { pubToAddress } from 'ethereumjs-util'
 import * as hdkey from 'ethereumjs-wallet/hdkey'
 import * as bip39 from 'bip39'
 import typeforce from "swap.app/util/typeforce";
+import { BigNumber } from 'bignumber.js'
+
 
 const getRandomMnemonicWords = () => bip39.generateMnemonic()
 const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonic)
@@ -320,18 +322,28 @@ const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
   })
     .then((res) => {
       if (res && res.result) {
-
         const {
           from,
           to,
           value,
+          gas,
+          gasPrice,
+          blockHash,
         } = res.result
+
+        // Calc miner fee, used for this tx
+        const minerFee = BigNumber(web3.utils.toBN(gas).toNumber())
+            .multipliedBy(web3.utils.toBN(gasPrice).toNumber())
+            .dividedBy(1e18).toNumber()
 
         resolve({
           amount: web3.utils.fromWei(value),
           afterBalance: null,
           receiverAddress: to,
           senderAddress: from,
+          minerFee,
+          minerFeeCurrency: 'ETH',
+          confirmed: (blockHash != null),
         })
 
       } else {
