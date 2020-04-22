@@ -36,6 +36,9 @@ const signToUserMultisig = async () => {
   const {
     user: {
       btcMultisigUserData,
+      btcMultisigUserData: {
+        infoAboutCurrency,
+      },
     },
   } = getState()
 
@@ -54,6 +57,7 @@ const signToUserMultisig = async () => {
       address: data.address,
       currency: `BTC (Multisig)`,
       fullName: `Bitcoin (Multisig)`,
+      infoAboutCurrency,
       isUserProtected: true,
       active: true,
       balance: 0,
@@ -67,8 +71,19 @@ const signToUserMultisig = async () => {
 
   reducers.user.setAuthData({ name: 'btcMultisigUserData', data: btcMultisigUserData })
 
-  // fetching balances
-  const fetchQuery = walletAddreses.map((address, index) => {
+  fetchMultisigBalances()
+}
+
+const fetchMultisigBalances = () => {
+  const {
+    user: {
+      btcMultisigUserData: {
+        wallets,
+      }
+    },
+  } = getState()
+
+  const fetchQuery = wallets.map(({address}, index) => {
     return new Promise(async (resolve) => {
       apiLooper.get('bitpay', `/addr/${address}`, {
         inQuery: {
@@ -739,6 +754,10 @@ const getBalanceG2FA = () => {
 
 const fetchBalance = (address) =>
   apiLooper.get('bitpay', `/addr/${address}`, {
+    inQuery: {
+      delay: 500,
+      name: `balance`,
+    },
     checkStatus: (answer) => {
       try {
         if (answer && answer.balance !== undefined) return true
@@ -1329,4 +1348,5 @@ export default {
   isBTCMSUserAddress,
   signToUserMultisig,
   getSmsKeyFromMnemonic,
+  fetchMultisigBalances,
 }
