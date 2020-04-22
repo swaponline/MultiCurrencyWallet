@@ -23,6 +23,7 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 
 import { color } from './chooseColor'
 import { constants, localStorage } from 'helpers'
+import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 
 
 const isWidgetBuild = config && config.isWidget
@@ -125,6 +126,9 @@ const CreateWallet = (props) => {
     }
     localStorage.setItem(constants.localStorage.isWalletCreate, true)
     goHome()
+  }
+  const close = () => {
+    console.log(1111)
   }
 
   const handleRestoreMnemonic = () => {
@@ -242,6 +246,8 @@ const CreateWallet = (props) => {
 
   return (
     <div styleName="wrapper">
+      <CloseIcon styleName="closeButton" onClick={() => goHome()} data-testid="modalCloseIcon" />
+
       <div styleName={isMobile ? 'mobileFormBody' : 'formBody'}>
         <h2>
           <FormattedMessage
