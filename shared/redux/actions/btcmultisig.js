@@ -85,18 +85,7 @@ const fetchMultisigBalances = () => {
 
   const fetchQuery = wallets.map(({address}, index) => {
     return new Promise(async (resolve) => {
-      apiLooper.get('bitpay', `/addr/${address}`, {
-        inQuery: {
-          delay: 500,
-          name: `balance`,
-        },
-        checkStatus: (answer) => {
-          try {
-            if (answer && answer.balance !== undefined) return true
-          } catch (e) { /* */ }
-          return false
-        },
-      }).then(({ balance, unconfirmedBalance }) => {
+      getAddrBalance(address).then(({ balance, unconfirmedBalance }) => {
         reducers.user.setBtcMultisigBalance({
           address,
           amount: balance,
@@ -702,6 +691,26 @@ const addSMSWallet = async (mnemonicOrKey) => {
   await getBalance()
 }
 
+const getAddrBalance = (address) => {
+  return apiLooper.get('bitpay', `/addr/${address}`, {
+    inQuery: {
+      delay: 500,
+      name: `balance`,
+    },
+    checkStatus: (answer) => {
+      try {
+        if (answer && answer.balance !== undefined) return true
+      } catch (e) { /* */ }
+      return false
+    },
+  }).then(({ balance, unconfirmedBalance }) => {
+    return {
+      address,
+      balance,
+      unconfirmedBalance,
+    }
+  })
+}
 
 const getBalance = (ownAddress, ownDataKey) => {
   const { user: { btcMultisigSMSData: { address } } } = getState()
@@ -719,18 +728,7 @@ const getBalance = (ownAddress, ownDataKey) => {
     })
   }
 
-  return apiLooper.get('bitpay', `/addr/${checkAddress}`, {
-    inQuery: {
-      delay: 500,
-      name: `balance`,
-    },
-    checkStatus: (answer) => {
-      try {
-        if (answer && answer.balance !== undefined) return true
-      } catch (e) { /* */ }
-      return false
-    },
-  }).then(({ balance, unconfirmedBalance }) => {
+  return getAddrBalance(checkAddress).then(({ balance, unconfirmedBalance }) => {
     reducers.user.setBalance({ name: dataKey, amount: balance, unconfirmedBalance })
     return balance
   })
