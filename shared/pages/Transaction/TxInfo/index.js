@@ -29,32 +29,13 @@ const labels = defineMessages({
   },
   
 })
+
 @injectIntl
 @cssModules({
   ...styles,
   ...animateFetching,
 }, { allowMultiple: true })
-
 export default class TxInfo extends React.Component {
-
-  constructor(props) {
-    super(props)
-
-    const {
-      amount,
-      currency,
-      toAddress,
-      txRaw,
-      txId,
-      balance,
-      oldBalance,
-      confirmed,
-      isFetching,
-      onFetching,
-    } = props
-
-  }
-
   render() {
     const {
       intl,
@@ -67,6 +48,9 @@ export default class TxInfo extends React.Component {
       balance,
       oldBalance,
       confirmed,
+      confirmations,
+      minerFee,
+      minerFeeCurrency,
     } = this.props
 
     let linkBlockChain = '#'
@@ -124,21 +108,39 @@ export default class TxInfo extends React.Component {
                 </>
               ) : (
                 <>
-                  {/* <tr>
+                  {(confirmed) ? (
+                    <tr>
+                      <td styleName="header">
+                        <FormattedMessage id="InfoPay_StatusReadyHeader" defaultMessage="Status" />
+                      </td>
+                      <td>
+                        <strong>
+                          <FormattedMessage id="InfoPay_Confirmed" defaultMessage="Confirmed" />
+                        </strong>
+                      </td>
+                    </tr>
+                  ) : (
+                    <tr>
                       <td styleName="header">
                         <FormattedMessage id="InfoPay_4" defaultMessage="Est. time to confitmation" />
                       </td>
                       <td>
-                        {confirmed && (
-                          <strong>
-                            <FormattedMessage id="InfoPay_Confirmed" defaultMessage="Confirmed" />
-                          </strong>
-                        )}
-                        {!confirmed && (
-                          <FormattedMessage id="InfoPay_NotConfirmed" defaultMessage="~10 mins" />
-                        )}
+                        <FormattedMessage id="InfoPay_NotConfirmed" defaultMessage="~10 mins" />
                       </td>
-                    </tr> */}
+                    </tr>
+                  )}
+                  {(minerFee > 0) && (
+                    <tr>
+                      <td styleName="header">
+                        <FormattedMessage id="InfoPay_MinerFee" defaultMessage="Miner fee" />
+                      </td>
+                      <td>
+                        <strong>
+                          {minerFee} {minerFeeCurrency}
+                        </strong>
+                      </td>
+                    </tr>
+                  )}
                   {(oldBalance > 0) && (
                     <tr>
                       <td styleName="header">
@@ -146,7 +148,7 @@ export default class TxInfo extends React.Component {
                       </td>
                       <td>
                         <strong>
-                          {oldBalance} {currency}
+                          {oldBalance} {currency.toUpperCase()}
                         </strong>
                       </td>
                     </tr>
