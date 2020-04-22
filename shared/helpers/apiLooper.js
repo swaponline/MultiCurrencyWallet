@@ -4,6 +4,52 @@ import getUnixTimeStamp from './getUnixTimeStamp'
 
 
 const apiStatuses = {}
+const apiQuery = {}
+const apiQueryTimers = {}
+const apiQueryTicks = 10
+
+const apiQueryTimer = (queryName) => {
+  if (apiQuery[queryName].length) {
+    const queryChunk = apiQuery[queryName].shift()
+    const {
+      method,
+      api,
+      endpoint,
+      resolve: onResolve,
+      error: onError,
+      options,
+      options: {
+        inQuery: {
+          delay,
+        }
+      },
+    } = queryChunk
+
+    apiLooper(method, api, endpoint, options).then((answer) => {
+      onResolve(answer)
+      apiQueryTimers[queryName] = setTimeout(() => {
+        apiQueryTimer(queryName)
+      }, delay)
+      
+    }).catch((error) => {
+      onError(error)
+      apiQueryTimers[queryName] = setTimeout(() => {
+        apiQueryTimer(queryName)
+      }, delay)
+    })
+  } else {
+    apiQueryTimers[queryName] = setTimeout(() => {
+      apiQueryTimer(queryName)
+    }, apiQueryTicks)
+  }
+}
+
+const apiQueryInit = (queryName) => {
+  if (!apiQuery[queryName]) apiQuery[queryName] = []
+  if (!apiQueryTimers[queryName]) apiQueryTimers[queryName] = setTimeout( () => {
+    apiQueryTimer(queryName)
+  }, apiQueryTicks)
+}
 
 const initApiStatus = (api) => {
   const stat = {
@@ -53,6 +99,35 @@ const switchNext = (api) => {
 }
 
 const apiLooper = (method, api, endpoint, options) => {
+  const {
+    inQuery,
+  } = options || {}
+
+  if (inQuery && !inQuery.inited) {
+    return new Promise((resolve, error) => {
+      const { name } = inQuery
+      const queryName = `${api}_${name}`
+
+      apiQueryInit(queryName)
+
+      apiQuery[queryName].push({
+        method,
+        api,
+        endpoint,
+        options: {
+          ...options,
+          inQuery: {
+            ...inQuery,
+            inited: true,
+          },
+        },
+        resolve,
+        error,
+      })
+
+    })
+  }
+
   if (!apiStatuses[api]) initApiStatus(api)
   const apiStatus = apiStatuses[api]
 
