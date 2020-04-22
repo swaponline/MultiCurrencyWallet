@@ -121,7 +121,7 @@ export default class Row extends Component {
         await actions.btcmultisig.getBalance()
         break
       case 'BTC (Multisig)':
-        await actions.btcmultisig.getBalanceUser()
+        await actions.btcmultisig.getBalanceUser(address)
         break
       default:
         await actions[currency.toLowerCase()].getBalance(currency.toLowerCase(), address)
