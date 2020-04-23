@@ -36,6 +36,9 @@ const signToUserMultisig = async () => {
   const {
     user: {
       btcMultisigUserData,
+      btcMultisigUserData: {
+        infoAboutCurrency,
+      },
     },
   } = getState()
 
@@ -54,6 +57,7 @@ const signToUserMultisig = async () => {
       address: data.address,
       currency: `BTC (Multisig)`,
       fullName: `Bitcoin (Multisig)`,
+      infoAboutCurrency,
       isUserProtected: true,
       active: true,
       balance: 0,
@@ -67,20 +71,35 @@ const signToUserMultisig = async () => {
 
   reducers.user.setAuthData({ name: 'btcMultisigUserData', data: btcMultisigUserData })
 
-  // fetching balances
-  const fetchQuery = walletAddreses.map((address, index) => {
-    return new Promise(async (resolve) => {
-      await delay(650 * index * 10)
-      const balance = await actions.btc.fetchBalance(address)
-      reducers.user.setBtcMultisigBalance({
-        address,
-        amount: balance,
-        isBalanceFetched: true,
-        unconfirmedBalance: 0,
+  fetchMultisigBalances()
+}
+
+const fetchMultisigBalances = () => {
+  const {
+    user: {
+      btcMultisigUserData: {
+        wallets,
+      }
+    },
+  } = getState()
+
+  if (wallets && wallets.length) {
+    wallets.map(({address}, index) => {
+      return new Promise(async (resolve) => {
+        getAddrBalance(address).then(({ balance, unconfirmedBalance }) => {
+          reducers.user.setBtcMultisigBalance({
+            address,
+            amount: balance,
+            isBalanceFetched: true,
+            unconfirmedBalance,
+          })
+          resolve({ address, balance, unconfirmedBalance })
+        }).catch((e) => {
+          // 
+        })
       })
-      resolve({ address, balance })
     })
-  })
+  }
 }
 
 const getBtcMultisigKeys = (params) => {
@@ -674,6 +693,26 @@ const addSMSWallet = async (mnemonicOrKey) => {
   await getBalance()
 }
 
+const getAddrBalance = (address) => {
+  return apiLooper.get('bitpay', `/addr/${address}`, {
+    inQuery: {
+      delay: 500,
+      name: `balance`,
+    },
+    checkStatus: (answer) => {
+      try {
+        if (answer && answer.balance !== undefined) return true
+      } catch (e) { /* */ }
+      return false
+    },
+  }).then(({ balance, unconfirmedBalance }) => {
+    return {
+      address,
+      balance,
+      unconfirmedBalance,
+    }
+  })
+}
 
 const getBalance = (ownAddress, ownDataKey) => {
   const { user: { btcMultisigSMSData: { address } } } = getState()
@@ -691,14 +730,7 @@ const getBalance = (ownAddress, ownDataKey) => {
     })
   }
 
-  return apiLooper.get('bitpay', `/addr/${checkAddress}`, {
-    checkStatus: (answer) => {
-      try {
-        if (answer && answer.balance !== undefined) return true
-      } catch (e) { /* */ }
-      return false
-    },
-  }).then(({ balance, unconfirmedBalance }) => {
+  return getAddrBalance(checkAddress).then(({ balance, unconfirmedBalance }) => {
     reducers.user.setBalance({ name: dataKey, amount: balance, unconfirmedBalance })
     return balance
   })
@@ -707,9 +739,22 @@ const getBalance = (ownAddress, ownDataKey) => {
     })
 }
 
-const getBalanceUser = () => {
+const getBalanceUser = (checkAddress) => {
   const { user: { btcMultisigUserData: { address } } } = getState()
-  return getBalance(address, 'btcMultisigUserData')
+  if (!checkAddress) {
+    return getBalance(address, 'btcMultisigUserData')
+  } else {
+    return getAddrBalance(checkAddress).then(({ balance, unconfirmedBalance }) => {
+      reducers.user.setBtcMultisigBalance({
+        address: checkAddress,
+        amount: balance,
+        isBalanceFetched: true,
+        unconfirmedBalance,
+      })
+
+      return balance
+    })
+  }
 }
 
 const getRate = async () => {
@@ -722,6 +767,10 @@ const getBalanceG2FA = () => {
 
 const fetchBalance = (address) =>
   apiLooper.get('bitpay', `/addr/${address}`, {
+    inQuery: {
+      delay: 500,
+      name: `balance`,
+    },
     checkStatus: (answer) => {
       try {
         if (answer && answer.balance !== undefined) return true
@@ -1050,7 +1099,8 @@ const parseRawTX = async (txHash) => {
   const txb = await bitcoin.TransactionBuilder.fromTransaction(
     bitcoin.Transaction.fromHex(txHash),
     btc.network
-  );
+  )
+
   const parsedTX = {
     txb,
     input: [],
@@ -1062,50 +1112,63 @@ const parseRawTX = async (txHash) => {
     amount: new BigNumber(0),
   }
 
-  txb.__INPUTS.forEach(async (input) => {
-    const inputWallet = await getMSWalletByPubkeysHash(input.pubkeys, myBtcWallets)
+  await new Promise((inputParsed) => {
+    txb.__INPUTS.forEach(async (input) => {
+      const inputWallet = await getMSWalletByPubkeysHash(input.pubkeys, myBtcWallets)
 
-    if (inputWallet) {
-      if (inputWallet.address) parsedTX.from = inputWallet.address
-      parsedTX.wallet = inputWallet
-      parsedTX.isOur = true
-    }
-
-    parsedTX.input.push({
-      script: bitcoin.script.toASM(input.redeemScript),
-      wallet: inputWallet,
-      publicKeys: input.pubkeys.map(buf => buf.toString('hex')),
-    })
-  })
-
-  txb.__TX.outs.forEach((out) => {
-    let address
-    try {
-      address = bitcoin.address.fromOutputScript(out.script, btc.network)
-    } catch (e) { }
-
-    if (!myBtcAddreses.includes(address)) {
-      if (!parsedTX.out[address]) {
-        parsedTX.out[address] = {
-          to: address,
-          amount: new BigNumber(out.value).dividedBy(1e8).toNumber(),
-        }
-      } else {
-        parsedTX.out[address].amount = parsedTX.out[address].amount.plus(new BigNumber(out.value).dividedBy(1e8).toNumber())
+      if (inputWallet) {
+        if (inputWallet.address) parsedTX.from = inputWallet.address
+        parsedTX.wallet = inputWallet
+        parsedTX.isOur = true
       }
-      parsedTX.amount = parsedTX.amount.plus(new BigNumber(out.value).dividedBy(1e8).toNumber())
-    }
 
-    parsedTX.output.push({
-      address,
-      valueSatoshi: out.value,
-      value: new BigNumber(out.value).dividedBy(1e8).toNumber(),
+      parsedTX.input.push({
+        script: bitcoin.script.toASM(input.redeemScript),
+        wallet: inputWallet,
+        publicKeys: input.pubkeys.map(buf => buf.toString('hex')),
+      })
     })
+    inputParsed()
+  }).then(() => {
+    txb.__TX.outs.forEach((out) => {
+      let address
+      try {
+        address = bitcoin.address.fromOutputScript(out.script, btc.network)
+      } catch (e) { }
+
+      if (!parsedTX.isOur) {
+        const outWallet = myBtcWallets.filter((wallet) => wallet.address === address)
+
+        if (outWallet.length) {
+          if (outWallet[0].address) parsedTX.from = outWallet[0].address
+          parsedTX.wallet = outWallet[0]
+          parsedTX.isOur = true
+        }
+      }
+      if (parsedTX.from !== address) {
+        if (!parsedTX.out[address]) {
+          parsedTX.out[address] = {
+            to: address,
+            amount: new BigNumber(out.value).dividedBy(1e8).toNumber(),
+          }
+        } else {
+          parsedTX.out[address].amount = parsedTX.out[address].amount.plus(new BigNumber(out.value).dividedBy(1e8).toNumber())
+        }
+        parsedTX.amount = parsedTX.amount.plus(new BigNumber(out.value).dividedBy(1e8).toNumber())
+      }
+
+      parsedTX.output.push({
+        address,
+        valueSatoshi: out.value,
+        value: new BigNumber(out.value).dividedBy(1e8).toNumber(),
+      })
+    })
+
+    if (Object.keys(parsedTX.out).length) {
+      parsedTX.to = parsedTX.out[Object.keys(parsedTX.out)[0]].to
+    }
   })
 
-  if (Object.keys(parsedTX.out).length) {
-    parsedTX.to = parsedTX.out[Object.keys(parsedTX.out)[0]].to
-  }
 
   return parsedTX
 }
@@ -1312,4 +1375,6 @@ export default {
   isBTCMSUserAddress,
   signToUserMultisig,
   getSmsKeyFromMnemonic,
+  fetchMultisigBalances,
+  getAddrBalance,
 }

@@ -133,6 +133,7 @@ const getBalances = () => {
   actions.btc.getBalance()
   actions.btcmultisig.getBalance() // SMS-Protected
   actions.btcmultisig.getBalanceUser() //Other user confirm
+  actions.btcmultisig.fetchMultisigBalances()
 
   if (isTokenSigned) {
     Object.keys(config.erc20)

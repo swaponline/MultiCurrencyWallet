@@ -35,12 +35,17 @@ import { getFullOrigin } from 'helpers/links'
 @injectIntl
 @connect(
   ({
-    currencies,
-    user: { ethData, btcData, btcMultisigUserData, tokensData },
+    user: { 
+      btcMultisigUserData,
+      btcMultisigUserData: {
+        wallets,
+      },
+    },
   }) => ({
-    currencies: currencies.items,
-    items: [ethData, btcData, btcMultisigUserData],
-    tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
+    items: [
+      btcMultisigUserData,
+      ...wallets,
+    ],
   })
 )
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
@@ -54,7 +59,6 @@ export default class WithdrawModalMultisigUser extends React.Component {
   constructor(data) {
     super()
 
-    console.log('WithdrawModalMultisigUser', data)
     const {
       data: {
         currency,
@@ -63,12 +67,11 @@ export default class WithdrawModalMultisigUser extends React.Component {
         address,
       },
       items,
-      tokenItems,
     } = data
 
     const currentDecimals = constants.tokenDecimals.btcmultisig
-    const allCurrencyies = items.concat(tokenItems)
-    const selectedItem = allCurrencyies.filter(item => item.currency === currency)[0]
+
+    const selectedItem = items.filter(item => item.address === address)[0]
 
     this.broadcastCancelFunc = false
 
@@ -81,7 +84,6 @@ export default class WithdrawModalMultisigUser extends React.Component {
       minus: '',
       balance: selectedItem.balance || 0,
       ethBalance: null,
-      isEthToken: helpers.ethToken.isEthToken({ name: currency.toLowerCase() }),
       currentDecimals,
       getUsd: 0,
       error: false,
@@ -131,9 +133,16 @@ export default class WithdrawModalMultisigUser extends React.Component {
   }
 
   setBalanceOnState = async (currency) => {
-    const { data: { unconfirmedBalance } } = this.props
+    const {
+      data: {
+        address,
+      },
+    } = this.props
 
-    const balance = await actions.btcmultisig.getBalanceUser()
+    const {
+      unconfirmedBalance,
+      balance
+    } = await actions.btcmultisig.getAddrBalance(address)
 
     const finalBalance = unconfirmedBalance !== undefined && unconfirmedBalance < 0
       ? new BigNumber(balance).plus(unconfirmedBalance).toString()
@@ -186,16 +195,9 @@ export default class WithdrawModalMultisigUser extends React.Component {
       return
     }
 
-    if (helpers.ethToken.isEthToken({ name: currency.toLowerCase() })) {
-      sendOptions = {
-        ...sendOptions,
-        name: currency.toLowerCase(),
-      }
-    } else {
-      sendOptions = {
-        ...sendOptions,
-        from: address,
-      }
+    sendOptions = {
+      ...sendOptions,
+      from: address,
     }
 
     const result = await actions.btcmultisig.send(sendOptions)
@@ -322,7 +324,6 @@ export default class WithdrawModalMultisigUser extends React.Component {
         currency,
         invoice,
       },
-      tokenItems,
       items,
       intl,
       portalUI,
