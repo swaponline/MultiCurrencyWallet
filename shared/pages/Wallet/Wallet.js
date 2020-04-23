@@ -28,6 +28,7 @@ import CurrenciesList from './CurrenciesList'
 import Button from 'components/controls/Button/Button'
 import Tabs from "components/Tabs/Tabs"
 import InvoicesList from 'pages/Invoices/InvoicesList'
+import { ModalConductorProvider } from 'components/modal'
 
 
 
@@ -499,13 +500,15 @@ export default class Wallet extends Component {
               )}
               {/* (End) Sweep Banner */}
               {activeView === 0 && (
-                <CurrenciesList
-                  tableRows={tableRows}
-                  {...this.state}
-                  {...this.props}
-                  goToСreateWallet={this.goToСreateWallet}
-                  getExCurrencyRate={(currencySymbol, rate) => this.getExCurrencyRate(currencySymbol, rate)}
-                />
+                <ModalConductorProvider>
+                  <CurrenciesList
+                    tableRows={tableRows}
+                    {...this.state}
+                    {...this.props}
+                    goToСreateWallet={this.goToСreateWallet}
+                    getExCurrencyRate={(currencySymbol, rate) => this.getExCurrencyRate(currencySymbol, rate)}
+                  />
+                </ModalConductorProvider>
               )}
 
               {/* : <ContentLoader rideSideContent /> */}

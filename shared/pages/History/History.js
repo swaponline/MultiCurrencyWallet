@@ -22,6 +22,7 @@ import ContentLoader from '../../components/loaders/ContentLoader/ContentLoader'
 import { isMobile } from 'react-device-detect'
 import InvoicesList from 'pages/Invoices/InvoicesList'
 import FilterForm from "components/FilterForm/FilterForm"
+import { ModalConductorProvider } from 'components/modal'
 
 
 
@@ -191,50 +192,54 @@ export default class History extends Component {
     ]
 
     return (
-      items ? (
-        <section styleName="history">
-          <h3 styleName="historyHeading">
-            <FormattedMessage id="History_Activity_Title" defaultMessage="Activity" />
-          </h3>
-          <FilterForm filterValue={filterValue} onSubmit={this.handleFilter} onChange={this.handleFilterChange} resetFilter={this.resetFilter} />
-          {isMobile && config.opts.invoiceEnabled && (
-            <ul styleName="walletNav">
-              {tabs.map(({ key, title, link }, index) => (
-                <li
-                  key={key}
-                  styleName={`walletNavItem ${activeTab === index ? 'active' : ''}`}
-                  onClick={() => this.handleNavItemClick(index)}
-                >
-                  <a href={`#${link}`} styleName="walletNavItemLink">
-                    {title}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          )}
-          {
-            items.length > 0 && !isLoading ? (
-              <InfiniteScrollTable
-                className={styles.history}
-                titles={titles}
-                bottomOffset={400}
-                getMore={this.loadMore}
-                itemsCount={items.length}
-                items={items.slice(0, this.state.renderedItems)}
-                rowRender={this.rowRender}
-              />
-            ) : (
-                <div styleName="historyContent">
-                  <ContentLoader rideSideContent empty={!isLoading} nonHeader />
-                </div>
-              )
-          }
-        </section>
-      ) : (
-          <div styleName="historyContent">
-            <ContentLoader rideSideContent />
-          </div>
-        )
+      <ModalConductorProvider>
+        {
+          items ? (
+            <section styleName="history">
+              <h3 styleName="historyHeading">
+                <FormattedMessage id="History_Activity_Title" defaultMessage="Activity" />
+              </h3>
+              <FilterForm filterValue={filterValue} onSubmit={this.handleFilter} onChange={this.handleFilterChange} resetFilter={this.resetFilter} />
+              {isMobile && config.opts.invoiceEnabled && (
+                <ul styleName="walletNav">
+                  {tabs.map(({ key, title, link }, index) => (
+                    <li
+                      key={key}
+                      styleName={`walletNavItem ${activeTab === index ? 'active' : ''}`}
+                      onClick={() => this.handleNavItemClick(index)}
+                    >
+                      <a href={`#${link}`} styleName="walletNavItemLink">
+                        {title}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {
+                items.length > 0 && !isLoading ? (
+                  <InfiniteScrollTable
+                    className={styles.history}
+                    titles={titles}
+                    bottomOffset={400}
+                    getMore={this.loadMore}
+                    itemsCount={items.length}
+                    items={items.slice(0, this.state.renderedItems)}
+                    rowRender={this.rowRender}
+                  />
+                ) : (
+                    <div styleName="historyContent">
+                      <ContentLoader rideSideContent empty={!isLoading} nonHeader />
+                    </div>
+                  )
+              }
+            </section>
+          ) : (
+            <div styleName="historyContent">
+              <ContentLoader rideSideContent />
+            </div>
+          )
+        }
+      </ModalConductorProvider>
     )
   }
 }
