@@ -36,7 +36,8 @@ export default (webpackConfig) => {
   webpackConfig.plugins.push(
     new TerserPlugin(),
     new WebpackRequireFrom({
-      staticWindowVariableName: 'imagesUrl',
+      variableName: 'publicUrl',
+      suppressErrors: true,
     }),
     new ExtractTextPlugin({
       filename: '[name].[hash:6].css',
