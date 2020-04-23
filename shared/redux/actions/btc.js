@@ -313,6 +313,8 @@ const fetchTxInfo = (hash, cacheResponse) =>
       senderAddress: vin ? vin[0].addr : null,
       receiverAddress: vout ? vout[0].scriptPubKey.addresses : null,
       confirmed: (rest.confirmations) ? true : false,
+      minerFee: rest.fees.dividedBy(1e8).toNumber(),
+      minerFeeCurrency: 'BTC',
       ...rest,
     }))
 

@@ -338,13 +338,24 @@ const fetchTxInfo = (hash, cacheResponse) => {
 
           const {
             from,
+            gas,
+            gasPrice,
+            blockHash,
           } = res.result
+
+          // Calc miner fee, used for this tx
+          const minerFee = BigNumber(web3.utils.toBN(gas).toNumber())
+            .multipliedBy(web3.utils.toBN(gasPrice).toNumber())
+            .dividedBy(1e18).toNumber()
 
           resolve({
             amount,
             afterBalance: null,
             receiverAddress,
             senderAddress: from,
+            minerFee,
+            minerFeeCurrency: 'ETH',
+            confirmed: (blockHash != null),
           })
 
         } else {

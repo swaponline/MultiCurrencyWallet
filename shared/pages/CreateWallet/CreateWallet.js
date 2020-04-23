@@ -15,13 +15,12 @@ import reducers from 'redux/core/reducers'
 import links from 'helpers/links'
 import { localisedUrl } from 'helpers/locale'
 
-import check from './images/check'
-import Button from '../../components/controls/Button/Button'
+
 import FirstStep from './Steps/FirstStep'
 import SecondStep from './Steps/SecondStep'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
+import { getActivatedCurrencies } from 'helpers/user'
 
-import { color } from './chooseColor'
 import { constants, localStorage } from 'helpers'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 
@@ -41,8 +40,10 @@ const CreateWallet = (props) => {
       currencies,
       secure,
     },
+
     location: { pathname },
     userData,
+    core: { hiddenCoinsList },
   } = props
   const allCurrencies = props.currencies.items
 
@@ -53,6 +54,8 @@ const CreateWallet = (props) => {
     btcMultisigUserData,
     tokensData,
   } = userData
+
+  const userWallets = actions.core.getWallets().filter(({ currency }) => !hiddenCoinsList.includes(currency))
 
   const currencyBalance = [
     btcData,
@@ -127,9 +130,6 @@ const CreateWallet = (props) => {
     localStorage.setItem(constants.localStorage.isWalletCreate, true)
     goHome()
   }
-  const close = () => {
-    console.log(1111)
-  }
 
   const handleRestoreMnemonic = () => {
     actions.modals.open(constants.modals.RestoryMnemonicWallet, { btcBalance, usdBalance })
@@ -188,29 +188,29 @@ const CreateWallet = (props) => {
                 },
               })
               return
-            } else {
-              actions.modals.open(constants.modals.Confirm, {
-                title: <FormattedMessage id="ConfirmActivateSMS_Title" defaultMessage="Добавление кошелька BTC (SMS-Protected)" />,
-                message: <FormattedMessage id="ConfirmActivateSMS_Message" defaultMessage="У вас уже активирован этот тип кошелька. Хотите активировать другой кошелек?" />,
-                labelYes: <FormattedMessage id="ConfirmActivateSMS_Yes" defaultMessage="Да" />,
-                labelNo: <FormattedMessage id="ConfirmActivateSMS_No" defaultMessage="Нет" />,
-                onAccept: () => {
-                  actions.modals.open(constants.modals.RegisterSMSProtected, {
-                    callback: () => {
-                      actions.core.markCoinAsVisible('BTC (SMS-Protected)')
-                      handleClick()
-                    },
-                  })
-                },
-                onCancel: () => {
-                  actions.core.markCoinAsVisible('BTC (SMS-Protected)')
-                  handleClick()
-                },
-              })
-              return
             }
+            actions.modals.open(constants.modals.Confirm, {
+              title: <FormattedMessage id="ConfirmActivateSMS_Title" defaultMessage="Добавление кошелька BTC (SMS-Protected)" />,
+              message: <FormattedMessage id="ConfirmActivateSMS_Message" defaultMessage="У вас уже активирован этот тип кошелька. Хотите активировать другой кошелек?" />,
+              labelYes: <FormattedMessage id="ConfirmActivateSMS_Yes" defaultMessage="Да" />,
+              labelNo: <FormattedMessage id="ConfirmActivateSMS_No" defaultMessage="Нет" />,
+              onAccept: () => {
+                actions.modals.open(constants.modals.RegisterSMSProtected, {
+                  callback: () => {
+                    actions.core.markCoinAsVisible('BTC (SMS-Protected)')
+                    handleClick()
+                  },
+                })
+              },
+              onCancel: () => {
+                actions.core.markCoinAsVisible('BTC (SMS-Protected)')
+                handleClick()
+              },
+            })
+            return
+
           }
-          break;
+          break
         case 'multisignature':
           if (currencies.BTC) {
             actions.core.markCoinAsVisible('BTC (Multisig)')
@@ -246,7 +246,10 @@ const CreateWallet = (props) => {
 
   return (
     <div styleName="wrapper">
-      <CloseIcon styleName="closeButton" onClick={() => goHome()} data-testid="modalCloseIcon" />
+      {
+        userWallets.length &&
+        <CloseIcon styleName="closeButton" onClick={() => goHome()} data-testid="modalCloseIcon" />
+      }
 
       <div styleName={isMobile ? 'mobileFormBody' : 'formBody'}>
         <h2>
@@ -326,4 +329,5 @@ export default connect({
   createWallet: 'createWallet',
   currencies: 'currencies',
   userData: 'user',
+  core:'core',
 })(injectIntl(withRouter(CSSModules(CreateWallet, styles, { allowMultiple: true }))))

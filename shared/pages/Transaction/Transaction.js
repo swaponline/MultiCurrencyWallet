@@ -39,9 +39,7 @@ class Transaction extends Component {
       } = null
     } = props
 
-
-
-    const currency = getCurrencyKey(ticker)
+    const currency = getCurrencyKey(ticker, true)
 
     this.state = {
       currency,
@@ -55,6 +53,8 @@ class Transaction extends Component {
       confirmed: false,
       sender: ``,
       toAddress: ``,
+      confirmations: 0,
+      minerFee: 0,
     }
   }
 
@@ -73,6 +73,9 @@ class Transaction extends Component {
         confirmed,
         senderAddress: sender,
         receiverAddress: toAddress,
+        confirmations,
+        minerFee,
+        minerFeeCurrency,
       } = infoTx
 
       this.setState({
@@ -84,13 +87,16 @@ class Transaction extends Component {
         confirmed,
         sender,
         toAddress,
+        confirmations,
+        minerFee,
+        minerFeeCurrency,
       })
     }
   }
 
   componentDidMount() {
     const {
-      currency,
+      ticker,
       txId,
     } = this.state
 
@@ -99,6 +105,7 @@ class Transaction extends Component {
       return
     }
 
+    const currency = getCurrencyKey(ticker)
     this.fetchTxInfo(currency, txId)
 
     if (typeof document !== 'undefined') {
@@ -143,32 +150,10 @@ class Transaction extends Component {
       intl,
     } = this.props
 
-    const {
-      isFetching,
-      txId,
-      currency,
-      amount,
-      balance,
-      oldBalance,
-      confirmed,
-      sender,
-      toAddress,
-    } = this.state
-
     return (
       <ModalBox title={intl.formatMessage(labels.Title)} onClose={this.handleClose} >
         <div styleName="holder">
-          <TxInfo 
-            isFetching={isFetching}
-            txId={txId}
-            currency={currency}
-            amount={amount}
-            balance={balance}
-            oldBalance={oldBalance}
-            confirmed={confirmed}
-            sender={sender}
-            toAddress={toAddress}
-          />
+          <TxInfo {...this.state} />
         </div>
       </ModalBox>
     )

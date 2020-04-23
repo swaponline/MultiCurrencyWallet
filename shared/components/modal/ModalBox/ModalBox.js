@@ -40,7 +40,7 @@ export default class ModalBox extends Component {
       <div styleName="modal-box">
         <div styleName="header">
           <WidthContainer styleName="headerContent">
-            <Logo withLink isColored="false" />
+            <Logo withLink isColored={false} />
             <div styleName="title">{title}</div>
             <CloseIcon styleName="closeButton" onClick={onClose} />
           </WidthContainer>
