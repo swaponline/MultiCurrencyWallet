@@ -83,21 +83,23 @@ const fetchMultisigBalances = () => {
     },
   } = getState()
 
-  const fetchQuery = wallets.map(({address}, index) => {
-    return new Promise(async (resolve) => {
-      getAddrBalance(address).then(({ balance, unconfirmedBalance }) => {
-        reducers.user.setBtcMultisigBalance({
-          address,
-          amount: balance,
-          isBalanceFetched: true,
-          unconfirmedBalance,
+  if (wallets && wallets.length) {
+    wallets.map(({address}, index) => {
+      return new Promise(async (resolve) => {
+        getAddrBalance(address).then(({ balance, unconfirmedBalance }) => {
+          reducers.user.setBtcMultisigBalance({
+            address,
+            amount: balance,
+            isBalanceFetched: true,
+            unconfirmedBalance,
+          })
+          resolve({ address, balance, unconfirmedBalance })
+        }).catch((e) => {
+          // 
         })
-        resolve({ address, balance, unconfirmedBalance })
-      }).catch((e) => {
-        // 
       })
     })
-  })
+  }
 }
 
 const getBtcMultisigKeys = (params) => {
