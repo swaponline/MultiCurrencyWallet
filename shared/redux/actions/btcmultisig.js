@@ -1118,7 +1118,6 @@ const parseRawTX = async (txHash) => {
         if (inputWallet.address) parsedTX.from = inputWallet.address
         parsedTX.wallet = inputWallet
         parsedTX.isOur = true
-        console.log('our', parsedTX.from)
       }
 
       parsedTX.input.push({
@@ -1135,6 +1134,15 @@ const parseRawTX = async (txHash) => {
         address = bitcoin.address.fromOutputScript(out.script, btc.network)
       } catch (e) { }
 
+      if (!parsedTX.isOur) {
+        const outWallet = myBtcWallets.filter((wallet) => wallet.address === address)
+
+        if (outWallet.length) {
+          if (outWallet[0].address) parsedTX.from = outWallet[0].address
+          parsedTX.wallet = outWallet[0]
+          parsedTX.isOur = true
+        }
+      }
       if (parsedTX.from !== address) {
         if (!parsedTX.out[address]) {
           parsedTX.out[address] = {
@@ -1158,6 +1166,7 @@ const parseRawTX = async (txHash) => {
       parsedTX.to = parsedTX.out[Object.keys(parsedTX.out)[0]].to
     }
   })
+
 
   return parsedTX
 }
