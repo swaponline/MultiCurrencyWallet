@@ -50,6 +50,7 @@ export const initialState = {
   },
   tokensData: {},
   isFetching: false,
+  isBalanceFetching: false,
   isTokenSigned: false,
 }
 
@@ -165,6 +166,11 @@ export const setTokenApprove = (state, { name, approve }) => ({
       approve,
     },
   },
+})
+
+export const setIsBalanceFetching = (state, { isBalanceFetching }) => ({
+  ...state,
+  isBalanceFetching,
 })
 
 export const setIsFetching = (state, { isFetching }) => ({
