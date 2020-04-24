@@ -24,7 +24,7 @@ const addressToWallet = (address) => {
   if (msData.wallets
     && msData.wallets.length
   ) {
-    const founded = msData.filter((wallet) => wallet.address === address)
+    const founded = msData.wallets.filter((wallet) => wallet.address === address)
     if (founded.length) return founded[0]
   }
 

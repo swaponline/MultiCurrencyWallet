@@ -128,25 +128,37 @@ export default class Btc extends PureComponent {
             console.log('Bad tx raw and invoiceid data')
           }
         }
-        try {
-          this.setState({
-            action,
-            txData: await actions.btcmultisig.parseRawTX(txRaw),
-            invoice,
-            txRaw: txRaw,
-          }, () => {
-            setTimeout(() => {
-              actions.modals.open(constants.modals.BtcMultisignConfirmTx, {
-                txData: txRaw,
-                showCloseButton: false,
-                onClose: () => {
-                  history.push(localisedUrl(locale, links.home))
-                }
-              })
-            }, 100)
-          })
-        } catch (e) {
-          console.log('Bad tx raw data')
+        if (txRaw.length === 64) {
+          setTimeout(() => {
+            actions.modals.open(constants.modals.BtcMultisignConfirmTx, {
+              txId: txRaw,
+              showCloseButton: false,
+              onClose: () => {
+                history.push(localisedUrl(locale, links.home))
+              }
+            })
+          }, 100)
+        } else {
+          try {
+            this.setState({
+              action,
+              txData: await actions.btcmultisig.parseRawTX(txRaw),
+              invoice,
+              txRaw: txRaw,
+            }, () => {
+              setTimeout(() => {
+                actions.modals.open(constants.modals.BtcMultisignConfirmTx, {
+                  txData: txRaw,
+                  showCloseButton: false,
+                  onClose: () => {
+                    history.push(localisedUrl(locale, links.home))
+                  }
+                })
+              }, 100)
+            })
+          } catch (e) {
+            console.log('Bad tx raw data')
+          }
         }
       }
     }
