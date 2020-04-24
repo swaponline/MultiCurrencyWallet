@@ -202,6 +202,16 @@ export default class WithdrawModalMultisigUser extends React.Component {
 
     const result = await actions.btcmultisig.send(sendOptions)
 
+    if (result) {
+      await actions.multisigTx.broadcast({
+        sender: address,
+        destination: to,
+        amount,
+        fee: 0.0001, // actions.helpers.lastBtcFee
+        rawTx: result,
+      })
+    }
+
     this.broadcastCancelFunc = actions.btcmultisig.broadcastTX2Room(
       {
         txRaw: result,
