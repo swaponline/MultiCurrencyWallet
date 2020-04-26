@@ -142,7 +142,6 @@
 .yourBalanceTop {
   position: relative;
   padding: 25px;
-  filter: blur(0) !important;
 }
 
 .yourBalanceDescr {
@@ -212,6 +211,13 @@
     opacity: 0.1;
     content: '';
     background: linear-gradient(180deg, #6144e5 0%, rgba(97, 68, 229, 0) 100%);
+  }
+
+  &_blured {
+    filter: blur(7px);
+    pointer-events: none;
+    will-change: filter;
+    // transition: filter ease 0.1s;
   }
 }
 
@@ -310,6 +316,13 @@
   padding: 25px;
   margin-top: 23px;
   font-family: 'Manrope-Bold', sans-serif;
+}
+
+.faqBlured {
+  filter: blur(7px);
+  pointer-events: none;
+  will-change: filter;
+  // transition: filter ease 0.1s;
 }
 
 @media all and (min-width: 993px) {

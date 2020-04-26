@@ -1,4 +1,6 @@
 import React from 'react'
+import { connect } from 'redaction'
+import cx from 'classnames'
 
 import CSSModules from 'react-css-modules'
 import { FormattedMessage } from 'react-intl'
@@ -11,7 +13,9 @@ import styles from './styles.scss'
 
 const isWidgetBuild = config && config.isWidget
 
-const TabsComponent = ({ navs, onClick, activeView }) => {
+const TabsComponent = ({ navs, onClick, activeView, dashboardView, modals }) => {
+
+  const isAnyModalCalled = Object.keys(modals).length
 
   const defaultNavs = [
     {
@@ -60,15 +64,26 @@ const TabsComponent = ({ navs, onClick, activeView }) => {
     )
   }
   return (
-    <ul styleName="walletNav">
+    <ul
+      className={cx({
+        [styles.walletNav]: true,
+        [styles.blured]: dashboardView && isAnyModalCalled,
+      })}
+    >
       {renderNavs.map(tabRenderer)}
     </ul>
   )
 }
 
 TabsComponent.defaultProps = {
-  currency: "",
-  onClick: () => { }
+  currency: '',
+  onClick: () => { },
 }
 
-export default CSSModules(TabsComponent, styles, { allowMultiple: true })
+export default connect(({
+  modals,
+  ui: { dashboardModalsAllowed },
+}) => ({
+  modals,
+  dashboardView: dashboardModalsAllowed,
+}))(CSSModules(TabsComponent, styles, { allowMultiple: true }))

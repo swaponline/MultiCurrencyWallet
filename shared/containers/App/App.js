@@ -214,7 +214,9 @@ export default class App extends React.Component {
     const { fetching, multiTabs, error } = this.state;
     const { children, ethAddress, btcAddress, tokenAddress, history, modals, dashboardModalsAllowed } = this.props;
 
-    if (typeof document !== 'undefined' && Object.keys(modals).length > 0 && !dashboardModalsAllowed) {
+    const isAnyModalCalled = Object.keys(modals).length > 0
+
+    if (typeof document !== 'undefined' && isAnyModalCalled && !dashboardModalsAllowed) {
       document.body.classList.remove('overflowY-default')
       document.body.classList.add('overflowY-hidden')
     } else {

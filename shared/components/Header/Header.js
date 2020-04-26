@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import cx from 'classnames'
 
 import { withRouter } from "react-router-dom";
 import { isMobile } from "react-device-detect";
@@ -41,7 +42,9 @@ let lastScrollTop = 0;
   peer: "ipfs.peer",
   isSigned: "signUp.isSigned",
   isInputActive: "inputActive.isInputActive",
-  reputation: "ipfs.reputation"
+  reputation: "ipfs.reputation",
+  dashboardView: 'ui.dashboardModalsAllowed',
+  modals: 'modals'
 })
 @CSSModules(styles, { allowMultiple: true })
 export default class Header extends Component {
@@ -312,10 +315,13 @@ export default class Header extends Component {
       feeds,
       peer,
       isSigned,
-      isInputActive
+      isInputActive,
+      dashboardView,
+      modals,
     } = this.props;
     const { exchange, wallet } = links;
 
+    const isAnyModalCalled = Object.keys(modals).length
     const accentColor = "#510ed8";
 
     const isWalletPage = pathname.includes(wallet) || pathname === `/ru${wallet}` || pathname === `/`;
@@ -354,7 +360,12 @@ export default class Header extends Component {
     }
 
     return (
-      <div styleName={sticky ? "header header-fixed" : isWalletPage ? "header header-promo" : "header"}>
+      <div className={cx({
+        [styles["header"]]: true,
+        [styles["header-fixed"]]: Boolean(sticky),
+        [styles["header-promo"]]: isWalletPage && !sticky,
+        [styles["header-blured"]]: dashboardView && isAnyModalCalled,
+      })}>
         {createdWalletLoader && (
           <div styleName="loaderCreateWallet">
             <Loader

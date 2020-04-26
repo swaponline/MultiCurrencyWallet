@@ -115,7 +115,7 @@ export default class Modal extends Component {
     })
 
     return (
-      <Overlay dashboardView styleName={styleName}>
+      <Overlay dashboardView={dashboardView} styleName={styleName}>
         <div styleName="modal" className={className}>
           {
             Boolean(title || showCloseButton) && (

@@ -52,6 +52,9 @@ export default class ModalConductor extends Component {
     const { modals, history, dashboardView } = this.props
 
     const modalNames = Object.keys(modals)
+    const highestZIndex = Object.values(modals)
+      .map(i => i.zIndex)
+      .reduce((acc, i) => acc < i ? i : acc, 0)
     const areModalsExist = Boolean(modalNames.length)
 
     return areModalsExist && (
@@ -60,13 +63,16 @@ export default class ModalConductor extends Component {
           modalNames.map((key) => {
             const { name, data = {}, zIndex } = modals[key]
 
-            return React.createElement(Modals[name], {
-              key: name,
-              name,
-              data,
-              history,
-              style: { zIndex },
-            })
+            if (zIndex === highestZIndex) {
+              return React.createElement(Modals[name], {
+                key: name,
+                name,
+                data,
+                history,
+                style: { zIndex },
+              })
+            }
+            return null
           })
         }
       </div>

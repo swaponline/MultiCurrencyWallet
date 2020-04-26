@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types'
+import cx from 'classnames'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
@@ -48,7 +49,9 @@ const isWidgetBuild = config && config.isWidget
       isFetching
     },
     currencies: { items: currencies },
-    createWallet: { currencies: assets }
+    createWallet: { currencies: assets },
+    modals,
+    ui: { dashboardModalsAllowed },
   }) => {
     let widgetMultiTokens = []
     if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
@@ -117,7 +120,9 @@ const isWidgetBuild = config && config.isWidget
         btcMultisigSMSData,
         btcMultisigUserData,
         btcMultisigUserDataList,
-      }
+      },
+      dashboardView: dashboardModalsAllowed,
+      modals,
     }
   }
 )
@@ -396,7 +401,7 @@ export default class Wallet extends Component {
       banners,
       showSweepBanner,
     } = this.state
-    const { currencyBalance, hiddenCoinsList, isSigned, isFetching } = this.props
+    const { currencyBalance, hiddenCoinsList, isSigned, isFetching, modals, dashboardView } = this.props
 
     const allData = actions.core.getWallets()
 
@@ -450,6 +455,8 @@ export default class Wallet extends Component {
       })
     }
 
+    const isAnyModalCalled = Object.keys(modals).length
+
     return (
       <article>
         <section styleName={isWidgetBuild && !config.isFullBuild ? 'wallet widgetBuild' : 'wallet'}>
@@ -477,7 +484,13 @@ export default class Wallet extends Component {
                 </div>
               )}
 
-              <div styleName="desktopEnabledViewForFaq faqWrapper">
+              <div
+                className={cx({
+                  [styles.desktopEnabledViewForFaq]: true,
+                  [styles.faqWrapper]: true,
+                  [styles.faqBlured]: dashboardView && isAnyModalCalled,
+                })}
+              >
                 <FAQ />
               </div>
             </div>
@@ -513,7 +526,13 @@ export default class Wallet extends Component {
 
               {/* : <ContentLoader rideSideContent /> */}
             </div>
-            <div styleName="mobileEnabledViewForFaq faqWrapper">
+            <div
+              className={cx({
+                [styles.mobileEnabledViewForFaq]: true,
+                [styles.faqWrapper]: true,
+                [styles.faqBlured]: dashboardView && isAnyModalCalled,
+              })}
+            >
               <FAQ />
             </div>
             <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
