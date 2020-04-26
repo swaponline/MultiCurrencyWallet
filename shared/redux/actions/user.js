@@ -129,17 +129,24 @@ const getBalances = () => {
     }
   } = getState()
 
-  actions.eth.getBalance()
-  actions.btc.getBalance()
-  actions.btcmultisig.getBalance() // SMS-Protected
-  actions.btcmultisig.getBalanceUser() //Other user confirm
+  reducers.user.setIsBalanceFetching({ isBalanceFetching: true })
 
-  if (isTokenSigned) {
-    Object.keys(config.erc20)
-      .forEach(name => {
-        actions.token.getBalance(name)
-      })
-  }
+  return new Promise(async (resolve) => {
+    await actions.eth.getBalance()
+    await actions.btc.getBalance()
+    await actions.btcmultisig.getBalance() // SMS-Protected
+    await actions.btcmultisig.getBalanceUser() //Other user confirm
+    await actions.btcmultisig.fetchMultisigBalances()
+
+    if (isTokenSigned) {
+      Object.keys(config.erc20)
+        .forEach(async (name) => {
+          await actions.token.getBalance(name)
+        })
+    }
+
+    reducers.user.setIsBalanceFetching({ isBalanceFetching: false })
+  })
 }
 
 const getExchangeRate = (sellCurrency, buyCurrency) => {

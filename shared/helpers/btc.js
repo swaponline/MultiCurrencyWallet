@@ -97,6 +97,7 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
 
   unspents = unspents || await actions.btc.fetchUnspents(address)
 
+
   const txIn = unspents.length
   const txSize = txIn > 0
     ? txIn * 146 + txOut * 33 + (15 + txIn - txOut)
@@ -104,17 +105,15 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
 
   if (method === 'send_multisig') {
     const msuSize = getByteCount({'MULTISIG-P2SH-P2WSH:2-2': 1}, {'P2PKH': 2})
-    const msutxSize = txIn > 0
-      ? txIn * msuSize + txOut * 33 + (15 + txIn - txOut)
-      : defaultTxSize
+    const msutxSize = txIn * msuSize + txOut * 33 + (15 + txIn - txOut)
+
     return msutxSize
   }
 
   if (method === 'send_2fa') {
     const msSize = getByteCount({'MULTISIG-P2SH-P2WSH:2-3': 1}, {'P2PKH': 2})
-    const mstxSize = txIn > 0
-      ? txIn * msSize + txOut * 33 + (15 + txIn - txOut)
-      : defaultTxSize
+    const mstxSize = txIn * msSize + txOut * 33 + (15 + txIn - txOut)
+
     return mstxSize
   }
 

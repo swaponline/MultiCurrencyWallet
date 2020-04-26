@@ -164,6 +164,12 @@
   justify-content: flex-end;
   margin-top: 40px;
 
+  .loaderHolder {
+    float: left;
+    margin-top: 10px;
+    margin-right: 10px;
+  }
+
   img {
     margin-top: -5px;
     width: 10px;

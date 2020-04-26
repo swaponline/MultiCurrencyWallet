@@ -46,7 +46,8 @@ const isWidgetBuild = config && config.isWidget
       btcMultisigUserData,
       btcMultisigUserDataList,
       tokensData,
-      isFetching
+      isFetching,
+      isBalanceFetching,
     },
     currencies: { items: currencies },
     createWallet: { currencies: assets },
@@ -91,26 +92,15 @@ const isWidgetBuild = config && config.isWidget
       ]
     ).map(data => data.currency)
 
-    const currencyBalance = [
-      btcData,
-      btcMultisigSMSData,
-      btcMultisigUserData,
-      ethData,
-    ].map(({ balance, currency, infoAboutCurrency }) => ({
-      balance,
-      infoAboutCurrency,
-      name: currency
-    }))
-
     return {
       tokens,
       items,
       allData,
       tokensItems,
-      currencyBalance,
       currencies,
       assets,
       isFetching,
+      isBalanceFetching,
       hiddenCoinsList: hiddenCoinsList,
       userEthAddress: ethData.address,
       user,
@@ -401,7 +391,14 @@ export default class Wallet extends Component {
       banners,
       showSweepBanner,
     } = this.state
-    const { currencyBalance, hiddenCoinsList, isSigned, isFetching, modals, dashboardView } = this.props
+    const {
+      hiddenCoinsList,
+      isSigned,
+      isFetching,
+      isBalanceFetching,
+      modals,
+      dashboardView,
+    } = this.props
 
     const allData = actions.core.getWallets()
 
@@ -442,18 +439,15 @@ export default class Wallet extends Component {
 
     tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
 
-    //console.log('render', tableRows)
-    if (currencyBalance) {
-      currencyBalance.forEach(item => {
-        if ((!isWidgetBuild || widgetCurrencies.includes(item.name)) && item.infoAboutCurrency && item.balance !== 0) {
-          if (item.name === 'BTC') {
-            changePercent = item.infoAboutCurrency.percent_change_1h
-          }
-          btcBalance += item.balance * item.infoAboutCurrency.price_btc
-          usdBalance += item.balance * item.infoAboutCurrency.price_usd
+    tableRows.forEach(item => {
+      if ((!isWidgetBuild || widgetCurrencies.includes(item.name)) && item.infoAboutCurrency && item.balance !== 0) {
+        if (item.name === 'BTC') {
+          changePercent = item.infoAboutCurrency.percent_change_1h
         }
-      })
-    }
+        btcBalance += item.balance * item.infoAboutCurrency.price_btc
+        usdBalance += item.balance * item.infoAboutCurrency.price_usd
+      }
+    })
 
     const isAnyModalCalled = Object.keys(modals).length
 
@@ -472,6 +466,7 @@ export default class Wallet extends Component {
                 handleReceive={this.handleModalOpen}
                 handleWithdraw={this.handleModalOpen}
                 handleExchange={this.handleGoExchange}
+                isFetching={isBalanceFetching}
                 currency="btc"
                 infoAboutCurrency={infoAboutCurrency}
               />

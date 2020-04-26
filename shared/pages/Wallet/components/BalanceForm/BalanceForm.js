@@ -5,6 +5,7 @@ import cx from 'classnames'
 
 import styles from 'pages/Wallet/Wallet.scss'
 import Button from 'components/controls/Button/Button'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { links, constants } from 'helpers'
 import { BigNumber } from 'bignumber.js'
 import config from 'app-config'
@@ -23,6 +24,7 @@ function BalanceForm({
   currency,
   handleInvoice,
   changePercent,
+  isFetching = false,
   showButtons = true,
   dashboardView,
   modals,
@@ -49,6 +51,11 @@ function BalanceForm({
           <FormattedMessage id="Yourtotalbalance" defaultMessage="Ваш общий баланс" />
         </p>
         <div styleName="yourBalanceValue">
+          {isFetching && (
+            <div styleName="loaderHolder">
+              <InlineLoader />
+            </div>
+          )}
           {activeCurrency === 'usd' ? (
             // eslint-disable-next-line no-restricted-globals
             <p>

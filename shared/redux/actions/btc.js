@@ -264,6 +264,10 @@ const getBalance = () => {
   const { user: { btcData: { address } } } = getState()
 
   return apiLooper.get('bitpay', `/addr/${address}`, {
+    inQuery: {
+      delay:  500,
+      name: `balance`,
+    },
     checkStatus: (answer) => {
       try {
         if (answer && answer.balance !== undefined) return true
