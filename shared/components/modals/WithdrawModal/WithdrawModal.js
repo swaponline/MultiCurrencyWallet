@@ -463,7 +463,7 @@ export default class WithdrawModal extends React.Component {
             values={{ minAmount: <span>{isEthToken ? minAmount.eth : min}</span>, br: <br />, data: `${dataCurrency}` }}
           />
         </p>
-        <div styleName="highLevel" style={{ marginBottom: "20px" }}>
+        <div styleName="highLevel">
           <FieldLabel>
             <FormattedMessage id="Withdrow1194" defaultMessage="Address " />{" "}
             <Tooltip id="WtH203">
