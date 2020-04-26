@@ -140,8 +140,9 @@
 }
 
 .yourBalanceTop {
-  padding: 25px;
   position: relative;
+  padding: 25px;
+  filter: blur(0) !important;
 }
 
 .yourBalanceDescr {

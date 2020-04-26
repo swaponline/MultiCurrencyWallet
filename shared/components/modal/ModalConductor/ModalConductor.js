@@ -49,13 +49,13 @@ export default class ModalConductor extends Component {
   }
 
   render() {
-    const { modals, history } = this.props
+    const { modals, history, dashboardView } = this.props
 
     const modalNames = Object.keys(modals)
     const areModalsExist = Boolean(modalNames.length)
 
     return areModalsExist && (
-      <div styleName="modalConductor">
+      <div styleName={!dashboardView ? 'modalConductor' : 'modalDashboardConductor'}>
         {
           modalNames.map((key) => {
             const { name, data = {}, zIndex } = modals[key]

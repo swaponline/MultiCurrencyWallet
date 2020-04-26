@@ -90,3 +90,10 @@
   font-weight: bold;
   color: rgba(97, 68, 229, 0.5);
 }
+
+@include media-mobile {
+  .button {
+    line-height: inherit;
+    padding: 0 9px;
+  }
+}
