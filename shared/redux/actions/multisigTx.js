@@ -10,7 +10,6 @@ const broadcast = ({ sender, destination, amount, fee, rawTx, invoice }) => {
   const senderWallet = actions.btcmultisig.addressToWallet(sender)
 
   if (senderWallet) {
-
     const requestData = {
       address: btcData.address,
       pubkey: btcData.publicKey.toString('hex'),
@@ -22,6 +21,7 @@ const broadcast = ({ sender, destination, amount, fee, rawTx, invoice }) => {
       fee,
       rawTx,
       invoice,
+
       keys: senderWallet.publicKeys.map((key) => key.toString('hex')),
     }
 
@@ -92,7 +92,40 @@ const fetch = (address) => {
     if (res
       && res.answer
     ) {
-      return res.items
+      const senderWallet = actions.btcmultisig.addressToWallet(address)
+
+      const transactions = res.items.map((item) => {
+        let { status } = item
+
+        switch(status) {
+          case 1: status = 'pending'
+            break;
+          case 2: status = 'ready'
+            break;
+          case 3: status = 'reject'
+            break;
+          case 4: status = 'canceled'
+            break;
+        }
+
+        return ({
+          type: 'btc',
+          hash: item.uniqhash,
+          canEdit: false,
+          txType: 'CONFIRM',
+          confirmTx: {
+            ...item,
+            status,
+          },
+          confirmations: 0,
+          value: item.amount,
+          date: item.utx * 1000,
+          holder: (senderWallet && senderWallet.publicKey.toString('Hex') === item.holder),
+          direction: 'out',
+        })
+      })
+      console.log('Not signed txs', transactions)
+      return transactions
     } else return []
   })
 }

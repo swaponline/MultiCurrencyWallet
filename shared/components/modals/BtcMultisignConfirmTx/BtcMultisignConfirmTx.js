@@ -58,6 +58,10 @@ const langLabels = defineMessages({
     id: `${langPrefix}_GoToWalletPage`,
     defaultMessage: `Открыть кошелек`,
   },
+  buttonClose: {
+    id: `${langPrefix}_ButtonClose`,
+    defaultMessage: `Закрыть`,
+  },
 })
 
 @injectIntl
@@ -82,6 +86,7 @@ export default class BtcMultisignConfirmTx extends React.Component {
     this.state = {
       step: `fetchgin`,
       isControlFetching: true,
+      isTxHolder: true,
       address: ``,
       amount: ``,
       from: ``,
@@ -130,12 +135,14 @@ export default class BtcMultisignConfirmTx extends React.Component {
           // Fetching full tx info (rawTX)
           actions.multisigTx.fetchRawTx( from , txId).then((txAuthedData) => {
             console.log('txAuthedData', txAuthedData)
+            console.log('auth wallet', wallet)
             if (txAuthedData) {
               actions.btcmultisig.parseRawTX(txAuthedData.rawTx).then((txDataParsed) => {
                 console.log('txDataParsed', txDataParsed)
                 this.setState({
                   txRaw: txAuthedData.rawTx,
                   txData: txDataParsed,
+                  isTxHolder: (wallet.publicKey.toString(`Hex`) === txAuthedData.holder),
                   isControlFetching: false,
                 })
               })
@@ -202,19 +209,6 @@ export default class BtcMultisignConfirmTx extends React.Component {
     if (txId) {
       this.handleClose()
 
-      /*
-      const infoPayData = {
-        amount: `${txData.amount}`,
-        currency: 'BTC (Multisig)',
-        balance: 0,
-        oldBalance: 0, // @Todo доделать old balance
-        txId: txID.txid,
-        toAddress: txData.to,
-      }
-
-      actions.modals.open(constants.modals.InfoPay, infoPayData)
-      */
-
       const txInfoUrl = helpers.transactions.getTxRouter('btc', txId)
       redirectTo(txInfoUrl)
     } else {
@@ -256,6 +250,7 @@ export default class BtcMultisignConfirmTx extends React.Component {
       amount,
       from,
       isControlFetching,
+      isTxHolder,
     } = this.state
 
     const { debugShowTXB, debugShowInput, debugShowOutput } = this.state
@@ -347,7 +342,7 @@ export default class BtcMultisignConfirmTx extends React.Component {
                   <Button
                     styleName="buttonFull"
                     blue
-                    disabled={isConfirming}
+                    disabled={isConfirming || isTxHolder}
                     onClick={this.handleConfirm}
                     fullWidth
                   >
@@ -357,10 +352,10 @@ export default class BtcMultisignConfirmTx extends React.Component {
                     styleName="buttonFull"
                     blue
                     disabled={isConfirming}
-                    onClick={this.handleClose}
+                    onClick={(isTxHolder) ? this.handleClose : this.handleReject}
                     fullWidth
                   >
-                    <FormattedMessage { ... langLabels.dismatchTx } />
+                    <FormattedMessage { ...((isTxHolder) ? langLabels.buttonClose : langLabels.dismatchTx) } />
                   </Button>
                 </div>
               )}

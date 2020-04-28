@@ -239,11 +239,18 @@ const isBTCSMSAddress = (address) => {
 const isBTCMSUserAddress = (address) => {
   const {
     user: {
-      btcMultisigUserData,
+      btcMultisigUserData: msData,
     },
   } = getState()
 
-  if (btcMultisigUserData && btcMultisigUserData.address && btcMultisigUserData.address.toLowerCase() === address.toLowerCase()) return btcMultisigUserData
+  if (msData.address === address) return true
+
+  if (msData.wallets
+    && msData.wallets.length
+  ) {
+    const founded = msData.wallets.filter((wallet) => wallet.address === address)
+    if (founded.length) return true
+  }
 
   return false
 }

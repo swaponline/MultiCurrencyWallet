@@ -132,7 +132,7 @@ export default class Btc extends PureComponent {
           setTimeout(() => {
             actions.modals.open(constants.modals.BtcMultisignConfirmTx, {
               txId: txRaw,
-              showCloseButton: false,
+              showCloseButton: true,
               onClose: () => {
                 history.push(localisedUrl(locale, links.home))
               }

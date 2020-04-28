@@ -142,6 +142,7 @@ class Row extends React.PureComponent {
       confirmations,
       txType,
       invoiceData,
+      confirmTx,
       onSubmit,
     } = this.props
 
@@ -190,6 +191,10 @@ class Row extends React.PureComponent {
 
     if (txType === 'INVOICE' && invoiceData.uniqhash) {
       txLink = `${links.invoice}/${invoiceData.uniqhash}`
+    }
+
+    if (txType === 'CONFIRM' && confirmTx.uniqhash) {
+      txLink = `${links.multisign}/btc/confirm/${confirmTx.uniqhash}`
     }
 
     return (
@@ -288,6 +293,41 @@ class Row extends React.PureComponent {
                 </button>
               </div>
             }
+            {txType === 'CONFIRM' && (
+              <div styleName="btnWrapper">
+                {confirmTx.status === 'pending' && confirmTx.holder && (
+                  <>
+                    <span>
+                      <FormattedMessage
+                        id="RowHistory_ConfirmTX_NeedConfirm"
+                        defaultMessage="Требуется подтверждение другого участника" />
+                    </span>
+                    <button onClick={this.handleSendConfirmLink}>
+                      <FormattedMessage
+                        id="RowHistory_ConfirmTX_SendLink"
+                        defaultMessage="Отправить ссылку"
+                      />
+                    </button>
+                  </>
+                )}
+                {confirmTx.status === 'pending' && !confirmTx.holder && (
+                  <>
+                    <span>
+                      <FormattedMessage
+                        id="RowHistory_ConfirmTX_NeedYourSign"
+                        defaultMessage="Требуется ваша подпись"
+                      />
+                    </span>
+                    <button onClick={this.handleConfirmTx}>
+                      <FormattedMessage
+                        id="RowHistory_ConfirmTX_Sign"
+                        defaultMessage="Подтвердить"
+                      />
+                    </button>
+                  </>
+                )}
+              </div>
+            )}
             <div styleName={statusStyleAmount}>
               {invoiceData ? this.parseFloat(direction, value, 'out', type) : this.parseFloat(direction, value, 'in', type)}
               <span styleName='amountUsd'>{`~ $${getUsd.toFixed(2)}`}</span>
