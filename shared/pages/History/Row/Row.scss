@@ -171,6 +171,28 @@
     margin-left: 10px;
   }
 }
+.confirmWrapper {
+  border-top: 1px solid #eee;
+  height: 40px;
+  line-height: 48px;
+  margin-top: 15px;
+  font-family: 'Inter-Bold', sans-serif;
+  text-align: center;
+  >span {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 15px;
+    color: #1F2D48;
+  }
+  button {
+    font-style: normal;
+    font-weight: 800;
+    font-size: 14px;
+    line-height: 15px;
+    color: #6144E5;
+  }
+}
 
 .icon {
   border-style: none;

@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom'
 import getCurrencyKey from 'helpers/getCurrencyKey'
 import ethToken from 'helpers/ethToken'
 import { links } from 'helpers'
+import { getFullOrigin } from 'helpers/links'
 
 
 class Row extends React.PureComponent {
@@ -104,6 +105,36 @@ class Row extends React.PureComponent {
 
   changeComment = (val) => {
     this.setState(() => ({ comment: val }))
+  }
+
+  handleSendConfirmLink = () => {
+    const {
+      history,
+      confirmTx: {
+        uniqhash,
+      },
+    } = this.props
+
+    const link = `${getFullOrigin()}#${links.multisign}/btc/confirm/${uniqhash}`
+
+    //history.push(shareLink)
+    actions.modals.open(constants.modals.Share, {
+      link,
+      title: `Confirm multisignature transaction`,
+    })
+  }
+
+  handleConfirmTx = () => {
+    const {
+      history,
+      confirmTx: {
+        uniqhash,
+      },
+    } = this.props
+
+    const shareLink = `${links.multisign}/btc/confirm/${uniqhash}`
+
+    history.push(shareLink)
   }
 
   commentCancel = () => {
@@ -293,9 +324,9 @@ class Row extends React.PureComponent {
                 </button>
               </div>
             }
-            {txType === 'CONFIRM' && (
-              <div styleName="btnWrapper">
-                {confirmTx.status === 'pending' && confirmTx.holder && (
+            {txType === 'CONFIRM' && confirmTx.status === 'pending' && (
+              <div styleName="confirmWrapper">
+                {(confirmTx.holder) ? (
                   <>
                     <span>
                       <FormattedMessage
@@ -309,8 +340,7 @@ class Row extends React.PureComponent {
                       />
                     </button>
                   </>
-                )}
-                {confirmTx.status === 'pending' && !confirmTx.holder && (
+                ) : (
                   <>
                     <span>
                       <FormattedMessage
