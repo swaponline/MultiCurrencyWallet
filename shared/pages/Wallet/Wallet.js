@@ -145,6 +145,8 @@ export default class Wallet extends Component {
 
     if (isBtcSweeped || isEthSweeped) showSweepBanner = false
 
+    const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
+
     this.state = {
       activeView,
       activePage: page,
@@ -155,6 +157,7 @@ export default class Wallet extends Component {
       editTitle: false,
       enabledCurrencies: getActivatedCurrencies(),
       showSweepBanner,
+      isMnemonicSaved: (mnemonic === `-`),
     }
   }
 
@@ -350,6 +353,21 @@ export default class Wallet extends Component {
     })
   }
 
+  handleShowMnemonic = () => {
+    actions.modals.open(constants.modals.SaveMnemonicModal, {
+      onClose: () => {
+        const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
+        this.setState({
+          isMnemonicSaved: (mnemonic === `-`),
+        })
+      }
+    })
+  }
+
+  handleRestoreMnemonic = () => {
+    actions.modals.open(constants.modals.RestoryMnemonicWallet)
+  }
+
   checkBalance = () => {
     // that is for noxon, dont delete it :)
     const now = moment().format('HH:mm:ss DD/MM/YYYY')
@@ -384,6 +402,7 @@ export default class Wallet extends Component {
       enabledCurrencies,
       banners,
       showSweepBanner,
+      isMnemonicSaved,
     } = this.state
 
     const {
@@ -516,11 +535,13 @@ export default class Wallet extends Component {
           </div>
           {isWidgetBuild && activeView === 0 && (
             <div styleName="keysExportImport">
-              <Button gray onClick={this.handleShowKeys}>
-                <FormattedMessage id="WalletPage_ExportKeys" defaultMessage="Показать ключи" />
-              </Button>
-              <Button gray onClick={this.handleImportKeys}>
-                <FormattedMessage id="WalletPage_ImportKeys" defaultMessage="Импортировать ключи" />
+              {!isMnemonicSaved && (
+                <Button gray onClick={this.handleShowMnemonic}>
+                  <FormattedMessage id="WalletPage_Widget_ShowMnemonic" defaultMessage="Показать 12 слов" />
+                </Button>
+              )}
+              <Button gray onClick={this.handleRestoreMnemonic}>
+                <FormattedMessage id="WalletPage_Widget_RestoreMnemonic" defaultMessage="Ввести свои 12 слов" />
               </Button>
             </div>
           )}
