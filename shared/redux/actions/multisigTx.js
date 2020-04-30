@@ -83,6 +83,8 @@ const fetchRawTx = (address, txId) => {
 }
 
 const fetch = (address) => {
+  const { user: { btcData } } = getState()
+  const holderKey = btcData.publicKey.toString('hex')
 
   return apiLooper.post('multisig', `/txs/`, {
     body: {
@@ -94,6 +96,8 @@ const fetch = (address) => {
     ) {
       const senderWallet = actions.btcmultisig.addressToWallet(address)
 
+      console.log(senderWallet.publicKey.toString('Hex'), btcData.publicKey.toString('hex'))
+      
       const transactions = res.items.map((item) => {
         let { status } = item
 
@@ -108,6 +112,7 @@ const fetch = (address) => {
             break;
         }
 
+        console.log('holder', item.holder, (holderKey === item.holder))
         return ({
           type: 'btc',
           hash: item.uniqhash,
@@ -116,11 +121,11 @@ const fetch = (address) => {
           confirmTx: {
             ...item,
             status,
+            isHolder: (holderKey === item.holder),
           },
           confirmations: 0,
           value: item.amount,
           date: item.utx * 1000,
-          holder: (senderWallet && senderWallet.publicKey.toString('Hex') === item.holder),
           direction: 'out',
         })
       })

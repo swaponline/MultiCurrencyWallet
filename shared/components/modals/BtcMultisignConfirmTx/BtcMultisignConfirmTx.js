@@ -339,15 +339,17 @@ export default class BtcMultisignConfirmTx extends React.Component {
                 </div>
               ) : (
                 <div styleName="buttonsHolder">
-                  <Button
-                    styleName="buttonFull"
-                    blue
-                    disabled={isConfirming || isTxHolder}
-                    onClick={this.handleConfirm}
-                    fullWidth
-                  >
-                    <FormattedMessage { ... langLabels.confirmTx } />
-                  </Button>
+                  {!isTxHolder && (
+                    <Button
+                      styleName="buttonFull"
+                      blue
+                      disabled={isConfirming || isTxHolder}
+                      onClick={this.handleConfirm}
+                      fullWidth
+                    >
+                      <FormattedMessage { ... langLabels.confirmTx } />
+                    </Button>
+                  )}
                   <Button
                     styleName="buttonFull"
                     blue

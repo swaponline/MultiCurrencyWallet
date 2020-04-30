@@ -115,7 +115,7 @@ class Row extends React.PureComponent {
       },
     } = this.props
 
-    const link = `${getFullOrigin()}#${links.multisign}/btc/confirm/${uniqhash}`
+    const link = `${getFullOrigin()}${links.multisign}/btc/confirm/${uniqhash}`
 
     //history.push(shareLink)
     actions.modals.open(constants.modals.Share, {
@@ -326,7 +326,7 @@ class Row extends React.PureComponent {
             }
             {txType === 'CONFIRM' && confirmTx.status === 'pending' && (
               <div styleName="confirmWrapper">
-                {(confirmTx.holder) ? (
+                {(confirmTx.isHolder) ? (
                   <>
                     <span>
                       <FormattedMessage
