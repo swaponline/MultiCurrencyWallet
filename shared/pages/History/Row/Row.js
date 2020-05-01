@@ -262,27 +262,53 @@ class Row extends React.PureComponent {
                   </> :
                   <>
                     <Link to={txLink}>
-                      {
-                        direction === 'in'
-                          ? <FormattedMessage id="RowHistory281" defaultMessage="Received {address}" values={{
-                            address: substrAddress ? <span><FormattedMessage id="fromRow" defaultMessage="from" /> {substrAddress}</span> : ""
-                          }} />
-                          : (
-                            direction !== 'self'
-                              ? <FormattedMessage id="RowHistory282" defaultMessage="Sent {address}" values={{
-                                address: substrAddress ? <span><FormattedMessage id="toRow" defaultMessage="to" /> {substrAddress}</span> : ""
+                      {(txType === 'CONFIRM') ? (
+                        <FormattedMessage id="RowHistory_Confirm_Sending" defaultMessage="Отправление" />
+                      ) : (
+                        <>
+                          {
+                            direction === 'in'
+                              ? <FormattedMessage id="RowHistory281" defaultMessage="Received {address}" values={{
+                                address: substrAddress ? <span><FormattedMessage id="fromRow" defaultMessage="from" /> {substrAddress}</span> : ""
                               }} />
-                              : <FormattedMessage id="RowHistory283" defaultMessage="Self" />
-                          )
-                      }
+                              : (
+                                direction !== 'self'
+                                  ? <FormattedMessage id="RowHistory282" defaultMessage="Sent {address}" values={{
+                                    address: substrAddress ? <span><FormattedMessage id="toRow" defaultMessage="to" /> {substrAddress}</span> : ""
+                                  }} />
+                                  : <FormattedMessage id="RowHistory283" defaultMessage="Self" />
+                              )
+                          }
+                        </>
+                      )}
                     </Link>
-                    <div styleName={confirmations > 0 ? 'confirm cell' : 'unconfirmed cell'}>
-                      {confirmations > 0 ? confirmations > 6 ?
-                        <FormattedMessage id="RowHistory34" defaultMessage="Received" /> :
-                        <a href><FormattedMessage id="RowHistory341" defaultMessage="Confirmed" /></a> :
-                        <FormattedMessage id="RowHistory342" defaultMessage="Unconfirmed" />
-                      }
-                    </div>
+                    {(txType === 'CONFIRM') ? (
+                      <>
+                        {confirmTx.status === 'pending' && (
+                          <div styleName="unconfirmed cell">
+                            <FormattedMessage id="RowHistory_Confirm_InProgress" defaultMessage="В процессе" />
+                          </div>
+                        )}
+                        {confirmTx.status === 'reject' && (
+                          <div styleName="confirm red">
+                            <FormattedMessage id="RowHistory_Confirm_Rejected" defaultMessage="Отклонён" />
+                          </div>
+                        )}
+                        {confirmTx.status === 'cancel' && (
+                          <div styleName="confirm red">
+                            <FormattedMessage id="RowHistory_Confirm_Cancelled" defaultMessage="Отменено" />
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      <div styleName={confirmations > 0 ? 'confirm cell' : 'unconfirmed cell'}>
+                        {confirmations > 0 ? confirmations > 6 ?
+                          <FormattedMessage id="RowHistory34" defaultMessage="Received" /> :
+                          <a href><FormattedMessage id="RowHistory341" defaultMessage="Confirmed" /></a> :
+                          <FormattedMessage id="RowHistory342" defaultMessage="Unconfirmed" />
+                        }
+                      </div>
+                    )}
                   </>
                 }
               </div>

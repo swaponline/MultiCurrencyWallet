@@ -96,8 +96,6 @@ const fetch = (address) => {
     ) {
       const senderWallet = actions.btcmultisig.addressToWallet(address)
 
-      console.log(senderWallet.publicKey.toString('Hex'), btcData.publicKey.toString('hex'))
-      
       const transactions = res.items.map((item) => {
         let { status } = item
 
@@ -108,11 +106,10 @@ const fetch = (address) => {
             break;
           case 3: status = 'reject'
             break;
-          case 4: status = 'canceled'
+          case 4: status = 'cancel'
             break;
         }
 
-        console.log('holder', item.holder, (holderKey === item.holder))
         return ({
           type: 'btc',
           hash: item.uniqhash,
@@ -132,6 +129,8 @@ const fetch = (address) => {
       console.log('Not signed txs', transactions)
       return transactions
     } else return []
+  }).catch ((e) => {
+    return []
   })
 }
 
