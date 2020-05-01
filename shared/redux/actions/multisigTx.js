@@ -63,7 +63,6 @@ const rejectTx = (address, txId) => {
       body: {
         txId,
         keys: senderWallet.publicKeys.map((key) => key.toString('hex')),
-        signedTx,
       },
     }).then((data) => data)
   }

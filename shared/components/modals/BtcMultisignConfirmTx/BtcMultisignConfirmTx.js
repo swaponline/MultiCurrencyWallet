@@ -219,6 +219,18 @@ export default class BtcMultisignConfirmTx extends React.Component {
     }
   }
 
+  handleReject = async () => {
+    const {
+      txId: useBackendId,
+      txData,
+      from,
+    } = this.state
+    if (useBackendId) {
+      const backendId = await actions.multisigTx.rejectTx( from, useBackendId )
+      this.handleClose()
+    }
+  }
+
   handleClose = () => {
     const { name, data, onClose } = this.props
 
