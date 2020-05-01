@@ -125,7 +125,7 @@ const fetch = (address) => {
           direction: 'out',
         })
       })
-      console.log('Not signed txs', transactions)
+
       return transactions
     } else return []
   }).catch ((e) => {

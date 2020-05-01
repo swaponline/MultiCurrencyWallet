@@ -134,11 +134,8 @@ export default class BtcMultisignConfirmTx extends React.Component {
         }, () => {
           // Fetching full tx info (rawTX)
           actions.multisigTx.fetchRawTx( from , txId).then((txAuthedData) => {
-            console.log('txAuthedData', txAuthedData)
-            console.log('auth wallet', wallet)
             if (txAuthedData) {
               actions.btcmultisig.parseRawTX(txAuthedData.rawTx).then((txDataParsed) => {
-                console.log('txDataParsed', txDataParsed)
                 this.setState({
                   txRaw: txAuthedData.rawTx,
                   txData: txDataParsed,
@@ -201,7 +198,6 @@ export default class BtcMultisignConfirmTx extends React.Component {
 
     if (btcTxId && btcTxId.txid) txId = btcTxId.txid
 
-    console.log('broadcasted', btcTxId, txId)
     if (useBackendId) {
       const backendId = await actions.multisigTx.confirmTx( from, useBackendId, signedTX, txId )
     }
