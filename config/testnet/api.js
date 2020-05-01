@@ -14,5 +14,5 @@ export default {
   faucet: 'https://faucet.swaponline.site/testnet/',
   btc2FAProtected: 'https://2fa.swaponline.site',
   invoiceApi: 'https://invoices.swaponline.site',
-  multisig: 'http://localhost:30350',
+  multisig: 'https://multisig.swaponline.site/',
 }
