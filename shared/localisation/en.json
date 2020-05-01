@@ -6614,5 +6614,68 @@
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
+  },
+  {
+    "id": "multiSignConfirmTxModal_ButtonClose",
+    "message": "Close",
+    "files": [
+      "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js"
+    ]
+  },
+  {
+    "id": "RowHistory_ConfirmTX_NeedConfirm",
+    "message": "Need other owner sign",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory_ConfirmTX_NeedYourSign",
+    "message": "Need your sign",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory_ConfirmTX_SendLink",
+    "message": "Send link",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory_ConfirmTX_Sign",
+    "message": "Confirm",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory_Confirm_Cancelled",
+    "message": "Cancelled",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory_Confirm_InProgress",
+    "message": "In progress",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory_Confirm_Rejected",
+    "message": "Rejected",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory_Confirm_Sending",
+    "message": "Sending",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
   }
 ]

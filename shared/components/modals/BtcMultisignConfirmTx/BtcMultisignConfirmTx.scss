@@ -7,6 +7,10 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
+
+  &_fetching {
+    text-align: center;
+  }
   button {
     width: 45%;
   }

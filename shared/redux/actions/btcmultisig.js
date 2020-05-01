@@ -12,6 +12,25 @@ import config from 'app-config'
 import SwapApp from 'swap.app'
 
 
+const addressToWallet = (address) => {
+  const {
+    user: {
+      btcMultisigUserData: msData,
+    },
+  } = getState()
+
+  if (msData.address === address) return msData
+
+  if (msData.wallets
+    && msData.wallets.length
+  ) {
+    const founded = msData.wallets.filter((wallet) => wallet.address === address)
+    if (founded.length) return founded[0]
+  }
+
+  return false
+}
+
 const getSmsKeyFromMnemonic = (mnemonic) => {
   if (mnemonic) {
     const mnemonicWallet = actions.btc.getWalletByWords(mnemonic, 1)
@@ -220,11 +239,18 @@ const isBTCSMSAddress = (address) => {
 const isBTCMSUserAddress = (address) => {
   const {
     user: {
-      btcMultisigUserData,
+      btcMultisigUserData: msData,
     },
   } = getState()
 
-  if (btcMultisigUserData && btcMultisigUserData.address && btcMultisigUserData.address.toLowerCase() === address.toLowerCase()) return btcMultisigUserData
+  if (msData.address === address) return true
+
+  if (msData.wallets
+    && msData.wallets.length
+  ) {
+    const founded = msData.wallets.filter((wallet) => wallet.address === address)
+    if (founded.length) return true
+  }
 
   return false
 }
@@ -1018,6 +1044,7 @@ const confirmSMSProtected = async (smsCode) => {
 }
 
 const send = async ({ from, to, amount, feeValue, speed } = {}) => {
+  console.log('btc ms send', from, to, amount, feeValue, speed)
   feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, method: 'send_multisig' })
   const { user: { btcMultisigUserData: { address, privateKey, publicKeys, publicKey } } } = getState()
 
@@ -1056,6 +1083,9 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
   })
 
   let txRaw = txb1.buildIncomplete()
+
+  console.log('txRaw', txRaw)
+
   // console.log('Multisig transaction ready')
   // console.log('Your key:', publicKey.toString('Hex'))
   // console.log('TX Hash:', txRaw.toHex())
@@ -1169,7 +1199,7 @@ const parseRawTX = async (txHash) => {
     }
   })
 
-
+  console.log('parsedTX', parsedTX)
   return parsedTX
 }
 
@@ -1377,4 +1407,5 @@ export default {
   getSmsKeyFromMnemonic,
   fetchMultisigBalances,
   getAddrBalance,
+  addressToWallet,
 }
