@@ -2568,31 +2568,19 @@
   },
   {
     "id": "currencyWallet27",
-    "message": "Coin",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Coin"
   },
   {
     "id": "currencyWallet28",
-    "message": "Status",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Status"
   },
   {
     "id": "currencyWallet29",
-    "message": "Statement",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Statement"
   },
   {
     "id": "currencyWallet30",
-    "message": "Amount",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Amount"
   },
   {
     "id": "Withdraw18333",
@@ -4702,7 +4690,10 @@
   },
   {
     "id": "InfoPay_1",
-    "message": "Transaction is completed"
+    "message": "Transaction is completed",
+    "files": [
+      "shared/pages/Transaction/Transaction.js"
+    ]
   },
   {
     "id": "InfoPay_2",
@@ -5264,17 +5255,12 @@
     "id": "MybalanceswalletNav",
     "message": "My wallets",
     "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js",
-      "shared/pages/Invoices/InvoicesList/index.js",
-      "shared/pages/Wallet/Wallet.js"
+      "shared/pages/Invoices/InvoicesList/index.js"
     ]
   },
   {
     "id": "TransactionswalletNav",
-    "message": "Transactions",
-    "files": [
-      "shared/pages/Wallet/Wallet.js"
-    ]
+    "message": "Transactions"
   },
   {
     "id": "walletHistoryActivity",
@@ -5346,10 +5332,7 @@
   },
   {
     "id": "historyActivity",
-    "message": "History",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "History"
   },
   {
     "id": "Submenu",
@@ -5521,10 +5504,7 @@
   },
   {
     "id": "WalletPage_ExportKeys",
-    "message": "Show private keys",
-    "files": [
-      "shared/pages/Wallet/Wallet.js"
-    ]
+    "message": "Show private keys"
   },
   {
     "id": "WalletPage_Heading",
@@ -5532,10 +5512,7 @@
   },
   {
     "id": "WalletPage_ImportKeys",
-    "message": "Import keys",
-    "files": [
-      "shared/pages/Wallet/Wallet.js"
-    ]
+    "message": "Import keys"
   },
   {
     "id": "btcmsSwitchFetchWalletsData",
@@ -5581,10 +5558,7 @@
   },
   {
     "id": "currencyWalletActivity",
-    "message": "History {currency}",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "History {currency}"
   },
   {
     "id": "withdrawSMSCodePlaceholder",
@@ -6319,17 +6293,11 @@
   },
   {
     "id": "MainFAQ3_header",
-    "message": "How to save private keys?",
-    "files": [
-      "shared/pages/Wallet/components/FAQ/FAQ.js"
-    ]
+    "message": "How to save private keys?"
   },
   {
     "id": "MainFAQ3_content",
-    "message": "For save you \"12-words seed\" click on \"Please backup your wallet\" banner. If you don't see this banner, don't despair just click on \"dots\" near your balance and select \"Copy private key\" option",
-    "files": [
-      "shared/pages/Wallet/components/FAQ/FAQ.js"
-    ]
+    "message": "For save you \"12-words seed\" click on \"Please backup your wallet\" banner. If you don't see this banner, don't despair just click on \"dots\" near your balance and select \"Copy private key\" option"
   },
   {
     "id": "SweepBannerDescription",
@@ -6347,10 +6315,7 @@
   },
   {
     "id": "Transaction_Pags_Fetching",
-    "message": "Fetching...",
-    "files": [
-      "shared/pages/Transaction/Transaction.js"
-    ]
+    "message": "Fetching..."
   },
   {
     "id": "WalletRow_Menu_HowToWithdraw",
@@ -6634,7 +6599,18 @@
   },
   {
     "id": "InvoicesNav",
-    "message": "Requests",
+    "message": "Requests"
+  },
+  {
+    "id": "WalletPage_Widget_RestoreMnemonic",
+    "message": "Enter secret 12 words",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "WalletPage_Widget_ShowMnemonic",
+    "message": "Show secret 12 words",
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
