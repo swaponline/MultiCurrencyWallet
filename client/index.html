@@ -867,7 +867,11 @@ src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAwUAAAMZCAMAAABmr2irAAAA3lBMV
         ) {
           document.getElementById("loaderImg").src = "https://wiki.swaponline.io/assets/swaponline_io.svg";
         } else {
-          document.getElementById("loaderImg").src = window.logoUrl;
+          if (window.logoUrl != '#') {
+            document.getElementById("loaderImg").src = window.logoUrl;
+          } else {
+            document.getElementById("loaderImg").style.display = 'none'
+          }
         }
       </script>
       <!-- End Modal Scripts -->
