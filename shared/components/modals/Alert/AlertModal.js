@@ -1,5 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'redaction'
+import cx from 'classnames'
 
 import actions from 'redux/actions'
 import { constants } from 'helpers'
@@ -31,6 +33,9 @@ const defaultLanguage = defineMessages({
 })
 
 @injectIntl
+@connect(({ ui: { dashboardModalsAllowed }}) => ({
+  dashboardModalsAllowed
+}))
 @cssModules(styles)
 export default class AlertModal extends React.Component {
 
@@ -61,6 +66,7 @@ export default class AlertModal extends React.Component {
         message,
         labelOk,
       },
+      dashboardModalsAllowed,
     } = this.props
 
     const labels = {
@@ -70,8 +76,14 @@ export default class AlertModal extends React.Component {
     }
 
     return (
-      <div styleName="modal-overlay" onClick={this.handleClose}>
-        <div styleName="modal">
+      <div className={cx({
+        [styles['modal-overlay']]: true,
+        [styles['modal-overlay_dashboardView']]: dashboardModalsAllowed
+      })} onClick={this.handleClose}>
+        <div className={cx({
+          [styles.modal]: true,
+          [styles.modal_dashboardView]: dashboardModalsAllowed
+        })}>
           <div styleName="header">
             <WidthContainer styleName="headerContent">
               <div styleName="title">{labels.title}</div>
@@ -82,7 +94,7 @@ export default class AlertModal extends React.Component {
               <p styleName="notification">{labels.message}</p>
             </div>
             <div styleName="button-overlay">
-              <Button styleName="button" brand onClick={this.handleClose}>{labels.ok}</Button>
+              <Button styleName="button" blue onClick={this.handleClose}>{labels.ok}</Button>
             </div>
           </div>
         </div>
