@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom'
 import cssModules from 'react-css-modules'
 import cx from 'classnames'
 
+import actions from 'redux/actions'
 import ModalConductor from 'components/modal/ModalConductor/ModalConductor'
 import styles from './styles.scss'
 
@@ -11,24 +12,50 @@ import styles from './styles.scss'
 const ModalConductorProvider = ({ children, history, modals, ...props }) => {
   const isAnyModalCalled = Object.keys(modals).length
 
+  const hiestZ = Object.values(modals).reduce((acc, i) => acc > i.zIndex ? acc : i.zIndex, -1)
+  const upperModal = Object.keys(modals)[Object.values(modals).findIndex(i => i.zIndex === hiestZ)]
+
+  let isModalOpenedHelper = false
+  const handleClick = (e) => {
+    if (!isModalOpenedHelper && isAnyModalCalled) return (isModalOpenedHelper = true)
+    if (
+      !(e.target.closest('.__modalConductorProvided__') !== null ||
+        e.target.closest('.data-tut-all-balance') !== null) &&
+      isModalOpenedHelper
+    ) {
+      isModalOpenedHelper = false
+      window.removeEventListener('click', handleClick)
+      setTimeout(() => {
+        actions.modals.close(`${upperModal}`)
+      }, 0)
+    }
+  }
+  if (isAnyModalCalled) {
+    window.removeEventListener('click', handleClick)
+    window.addEventListener('click', handleClick)
+  }
+
   return (
-    <div className={cx({
-      __modalConductorProvided__: true,
-      [styles.modalsCalled]: isAnyModalCalled,
-    })}>
-      {
-        isAnyModalCalled
-          ? <ModalConductor dashboardView history={history} />
-          : children
-      }
+    <div
+      className={cx({
+        __modalConductorProvided__: true,
+        [styles.modalsCalled]: isAnyModalCalled,
+      })}
+    >
+      {isAnyModalCalled ? (
+        <ModalConductor dashboardView history={history} />
+      ) : (
+        children
+      )}
     </div>
   )
 }
 
-export default connect(({
-  modals,
-  ui: { dashboardModalsAllowed },
-}) => ({
+export default connect(({ modals, ui: { dashboardModalsAllowed } }) => ({
   modals,
   dashboardView: dashboardModalsAllowed,
-}))(withRouter(cssModules(ModalConductorProvider, styles, { allowMultiple: true })))
+}))(
+  withRouter(
+    cssModules(ModalConductorProvider, styles, { allowMultiple: true })
+  )
+)
