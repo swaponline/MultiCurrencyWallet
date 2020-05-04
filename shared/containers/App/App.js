@@ -25,7 +25,7 @@ import Wrapper from "components/layout/Wrapper/Wrapper";
 import NotificationConductor from "components/notification/NotificationConductor/NotificationConductor";
 import Seo from "components/Seo/Seo";
 
-import config from "app-config";
+import config from "helpers/externalConfig"
 
 const memdown = require("memdown");
 
@@ -138,11 +138,19 @@ export default class App extends React.Component {
     const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate);
 
     if (!isWalletCreate) {
-      currencies.forEach(({ name }) => {
-        if (name !== "BTC") {
-          actions.core.markCoinAsHidden(name);
-        }
-      });
+      if (config && config.isWidget) {
+        currencies.forEach(({ name }) => {
+          if (name !== "BTC" && !config.erc20[name.toLowerCase()]) {
+            actions.core.markCoinAsHidden(name);
+          }
+        })
+      } else {
+        currencies.forEach(({ name }) => {
+          if (name !== "BTC") {
+            actions.core.markCoinAsHidden(name);
+          }
+        })
+      }
     }
 
     if (!localStorage.getItem(constants.localStorage.demoMoneyReceived)) {

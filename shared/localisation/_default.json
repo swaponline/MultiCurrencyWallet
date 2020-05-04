@@ -2515,31 +2515,19 @@
   },
   {
     "id": "currencyWallet27",
-    "message": "Coin",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Coin"
   },
   {
     "id": "currencyWallet28",
-    "message": "Status",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Status"
   },
   {
     "id": "currencyWallet29",
-    "message": "Statement",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Statement"
   },
   {
     "id": "currencyWallet30",
-    "message": "Amount",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Amount"
   },
   {
     "id": "Withdraw18333",
@@ -5170,17 +5158,12 @@
     "id": "MybalanceswalletNav",
     "message": "Мои кошельки",
     "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js",
-      "shared/pages/Invoices/InvoicesList/index.js",
-      "shared/pages/Wallet/Wallet.js"
+      "shared/pages/Invoices/InvoicesList/index.js"
     ]
   },
   {
     "id": "TransactionswalletNav",
-    "message": "History",
-    "files": [
-      "shared/pages/Wallet/Wallet.js"
-    ]
+    "message": "History"
   },
   {
     "id": "walletHistoryActivity",
@@ -5220,10 +5203,7 @@
   },
   {
     "id": "historyActivity",
-    "message": "History",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "History"
   },
   {
     "id": "Submenu",
@@ -5402,17 +5382,11 @@
   },
   {
     "id": "WalletPage_ExportKeys",
-    "message": "Показать ключи",
-    "files": [
-      "shared/pages/Wallet/Wallet.js"
-    ]
+    "message": "Показать ключи"
   },
   {
     "id": "WalletPage_ImportKeys",
-    "message": "Импортировать ключи",
-    "files": [
-      "shared/pages/Wallet/Wallet.js"
-    ]
+    "message": "Импортировать ключи"
   },
   {
     "id": "WalletRow_Menu_Buy",
@@ -5494,7 +5468,10 @@
   },
   {
     "id": "InfoPay_1",
-    "message": "Transaction is completed"
+    "message": "Transaction is completed",
+    "files": [
+      "shared/pages/Transaction/Transaction.js"
+    ]
   },
   {
     "id": "InfoPay_2",
@@ -5553,10 +5530,7 @@
   },
   {
     "id": "currencyWalletActivity",
-    "message": "History {currency}",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "History {currency}"
   },
   {
     "id": "withdrawSMSCodePlaceholder",
@@ -6299,17 +6273,11 @@
   },
   {
     "id": "MainFAQ3_header",
-    "message": "How to save private keys?",
-    "files": [
-      "shared/pages/Wallet/components/FAQ/FAQ.js"
-    ]
+    "message": "How to save private keys?"
   },
   {
     "id": "MainFAQ3_content",
-    "message": "For save you \"12-words seed\" click on \"Please backup your wallet\" banner. If you don't see this banner, don't despair just click on \"dots\" near your balance and select \"Copy private key\" option",
-    "files": [
-      "shared/pages/Wallet/components/FAQ/FAQ.js"
-    ]
+    "message": "For save you \"12-words seed\" click on \"Please backup your wallet\" banner. If you don't see this banner, don't despair just click on \"dots\" near your balance and select \"Copy private key\" option"
   },
   {
     "id": "SweepBannerDescription",
@@ -6327,10 +6295,7 @@
   },
   {
     "id": "Transaction_Pags_Fetching",
-    "message": "Fetching...",
-    "files": [
-      "shared/pages/Transaction/Transaction.js"
-    ]
+    "message": "Fetching..."
   },
   {
     "id": "WalletRow_Menu_HowToWithdraw",
@@ -6614,9 +6579,83 @@
   },
   {
     "id": "InvoicesNav",
-    "message": "Invoices",
+    "message": "Invoices"
+  },
+  {
+    "id": "WalletPage_Widget_RestoreMnemonic",
+    "message": "Ввести свои 12 слов",
     "files": [
       "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "WalletPage_Widget_ShowMnemonic",
+    "message": "Показать 12 слов",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "multiSignConfirmTxModal_ButtonClose",
+    "message": "Закрыть",
+    "files": [
+      "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js"
+    ]
+  },
+  {
+    "id": "RowHistory_ConfirmTX_NeedConfirm",
+    "message": "Требуется подтверждение другого участника",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory_ConfirmTX_NeedYourSign",
+    "message": "Требуется ваша подпись",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory_ConfirmTX_SendLink",
+    "message": "Отправить ссылку",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory_ConfirmTX_Sign",
+    "message": "Подтвердить",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory_Confirm_Cancelled",
+    "message": "Отменено",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory_Confirm_InProgress",
+    "message": "В процессе",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory_Confirm_Rejected",
+    "message": "Отклонён",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory_Confirm_Sending",
+    "message": "Отправление",
+    "files": [
+      "shared/pages/History/Row/Row.js"
     ]
   }
 ]

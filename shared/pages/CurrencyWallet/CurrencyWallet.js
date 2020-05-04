@@ -348,9 +348,13 @@ export default class CurrencyWallet extends Component {
     history.push(localisedUrl(locale, `${links.pointOfSell}/btc-to-${currency.toLowerCase()}`))
   }
 
-  rowRender = (row, rowIndex) => (
-    <Row key={rowIndex} {...row} />
-  )
+  rowRender = (row, rowIndex) => {
+    const { history } = this.props
+
+    return (
+      <Row key={rowIndex} {...row} history={history}/>
+    )
+  }
 
   handleFilterChange = ({ target }) => {
     const { value } = target

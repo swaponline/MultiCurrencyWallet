@@ -29,6 +29,8 @@ import comments from './comments'
 
 import backupManager from './backupManager'
 
+import multisigTx from './multisigTx'
+
 
 const tokens = {}
 
@@ -65,4 +67,6 @@ export default {
 
   // Local storage backups manager
   backupManager,
+
+  multisigTx,
 }

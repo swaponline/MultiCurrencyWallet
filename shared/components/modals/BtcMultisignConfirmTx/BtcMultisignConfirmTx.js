@@ -16,6 +16,7 @@ import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader.js'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import ReactTooltip from 'react-tooltip'
@@ -57,6 +58,10 @@ const langLabels = defineMessages({
     id: `${langPrefix}_GoToWalletPage`,
     defaultMessage: `Открыть кошелек`,
   },
+  buttonClose: {
+    id: `${langPrefix}_ButtonClose`,
+    defaultMessage: `Закрыть`,
+  },
 })
 
 @injectIntl
@@ -78,10 +83,10 @@ export default class BtcMultisignConfirmTx extends React.Component {
   constructor(props) {
     super(props)
 
-
-
     this.state = {
       step: `fetchgin`,
+      isControlFetching: true,
+      isTxHolder: true,
       address: ``,
       amount: ``,
       from: ``,
@@ -93,26 +98,77 @@ export default class BtcMultisignConfirmTx extends React.Component {
       const {
         data: {
           txData,
+          txId,
         }
       } = this.props
 
-      const txDataParsed = await actions.btcmultisig.parseRawTX(txData)
+      if (txId) {
+        const txData = await actions.multisigTx.fetchTx(txId)
 
-      if (!txDataParsed.isOur) {
+        const {
+          destination: address,
+          sender: from,
+          amount,
+        } = txData
+
+
+        const wallet = actions.btcmultisig.addressToWallet(from)
+
+        if (!wallet) {
+          this.setState({
+            step: `dinned`,
+          })
+          return
+        }
+
         this.setState({
-          step: `dinned`,
+          step: `txInfo`,
+          txId,
+          txData: {
+            ...txData,
+            wallet,
+          },
+          address,
+          from,
+          amount,
+        }, () => {
+          // Fetching full tx info (rawTX)
+          actions.multisigTx.fetchRawTx( from , txId).then((txAuthedData) => {
+            if (txAuthedData) {
+              actions.btcmultisig.parseRawTX(txAuthedData.rawTx).then((txDataParsed) => {
+                this.setState({
+                  txRaw: txAuthedData.rawTx,
+                  txData: txDataParsed,
+                  isTxHolder: (wallet.publicKey.toString(`Hex`) === txAuthedData.holder),
+                  isControlFetching: false,
+                })
+              })
+            } else {
+              this.setState({
+                step: `dinned`,
+              })
+            }
+          })
         })
-        return
-      }
+      } else {
+        const txDataParsed = await actions.btcmultisig.parseRawTX(txData)
 
-      this.setState({
-        step: `txInfo`,
-        txRaw: txData,
-        txData: txDataParsed,
-        address: txDataParsed.to,
-        from: txDataParsed.from,
-        amount: txDataParsed.amount,
-      })
+        if (!txDataParsed.isOur) {
+          this.setState({
+            step: `dinned`,
+          })
+          return
+        }
+
+        this.setState({
+          step: `txInfo`,
+          txRaw: txData,
+          txData: txDataParsed,
+          address: txDataParsed.to,
+          from: txDataParsed.from,
+          amount: txDataParsed.amount,
+        })
+      }
     })
   }
 
@@ -122,8 +178,10 @@ export default class BtcMultisignConfirmTx extends React.Component {
 
   handleConfirm = async() => {
     const {
+      txId: useBackendId,
       txRaw,
       txData,
+      from,
     } = this.state
 
     const {
@@ -135,36 +193,37 @@ export default class BtcMultisignConfirmTx extends React.Component {
     })
 
     const signedTX = await actions.btcmultisig.signMultiSign( txRaw , txData.wallet )
-    let txID = false
-    try {
-      txID = await actions.btcmultisig.broadcastTx( signedTX )
-    } catch (e) {
-      console.log(e)
+    const btcTxId = await actions.btcmultisig.broadcastTx( signedTX )
+    let txId = false
+
+    if (btcTxId && btcTxId.txid) txId = btcTxId.txid
+
+    if (useBackendId) {
+      const backendId = await actions.multisigTx.confirmTx( from, useBackendId, signedTX, txId )
     }
-    if (txID && txID.txid) {
+
+    if (txId) {
       this.handleClose()
 
-      /*
-      const infoPayData = {
-        amount: `${txData.amount}`,
-        currency: 'BTC (Multisig)',
-        balance: 0,
-        oldBalance: 0, // @Todo доделать old balance
-        txId: txID.txid,
-        toAddress: txData.to,
-      }
-
-      actions.modals.open(constants.modals.InfoPay, infoPayData)
-      */
-
-      const txInfoUrl = helpers.transactions.getTxRouter('btc', txID.txid)
+      const txInfoUrl = helpers.transactions.getTxRouter('btc', txId)
       redirectTo(txInfoUrl)
     } else {
-      console.log(txID)
       this.setState({
         isError: true,
         isConfirming: false,
       })
+    }
+  }
+
+  handleReject = async () => {
+    const {
+      txId: useBackendId,
+      txData,
+      from,
+    } = this.state
+    if (useBackendId) {
+      const backendId = await actions.multisigTx.rejectTx( from, useBackendId )
+      this.handleClose()
     }
   }
 
@@ -198,6 +257,8 @@ export default class BtcMultisignConfirmTx extends React.Component {
       address,
       amount,
       from,
+      isControlFetching,
+      isTxHolder,
     } = this.state
 
     const { debugShowTXB, debugShowInput, debugShowOutput } = this.state
@@ -280,26 +341,34 @@ export default class BtcMultisignConfirmTx extends React.Component {
                   />
                 </div>
               </div>
-              <div styleName="buttonsHolder">
-                <Button
-                  styleName="buttonFull"
-                  blue
-                  disabled={isConfirming}
-                  onClick={this.handleConfirm}
-                  fullWidth
-                >
-                  <FormattedMessage { ... langLabels.confirmTx } />
-                </Button>
-                <Button
-                  styleName="buttonFull"
-                  blue
-                  disabled={isConfirming}
-                  onClick={this.handleClose}
-                  fullWidth
-                >
-                  <FormattedMessage { ... langLabels.dismatchTx } />
-                </Button>
-              </div>
+              {(isControlFetching) ? (
+                <div styleName="buttonsHolder_fetching">
+                  <InlineLoader />
+                </div>
+              ) : (
+                <div styleName="buttonsHolder">
+                  {!isTxHolder && (
+                    <Button
+                      styleName="buttonFull"
+                      blue
+                      disabled={isConfirming || isTxHolder}
+                      onClick={this.handleConfirm}
+                      fullWidth
+                    >
+                      <FormattedMessage { ... langLabels.confirmTx } />
+                    </Button>
+                  )}
+                  <Button
+                    styleName="buttonFull"
+                    blue
+                    disabled={isConfirming}
+                    onClick={(isTxHolder) ? this.handleClose : this.handleReject}
+                    fullWidth
+                  >
+                    <FormattedMessage { ...((isTxHolder) ? langLabels.buttonClose : langLabels.dismatchTx) } />
+                  </Button>
+                </div>
+              )}
             </Fragment>
           )}
         </div>

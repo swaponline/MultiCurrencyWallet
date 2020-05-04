@@ -21,6 +21,11 @@ const setTransactions = async (address, type, callback) => {
   try {
     const currencyTxs = await Promise.all([
       actions[reducer].getTransaction(address, type),
+      (
+        (reducer === `btc` && actions.btcmultisig.isBTCMSUserAddress(address)) ?
+          actions.multisigTx.fetch(address) :
+          new Promise((resolve) => resolve([]))
+      ),
       /*
       // Dont show invoices in transaction list.
       // @ToDo - Fetch multisig transactions for confirmations
