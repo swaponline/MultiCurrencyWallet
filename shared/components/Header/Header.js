@@ -329,7 +329,26 @@ export default class Header extends Component {
     const isExchange = pathname.includes(exchange);
 
     if (config && config.isWidget && !config.isFullBuild) {
-      return <User acceptRequest={this.acceptRequest} declineRequest={this.declineRequest} />;
+      return <>
+        {
+          !isMobile && (
+            <WidthContainer styleName="container" className="data-tut-preview">
+              {
+                window.location.hostname === "localhost" ||
+                  window.location.hostname === "swaponline.github.io" ||
+                  window.location.hostname === "swaponline.io" ? (
+                    <LogoTooltip withLink isColored isExchange={isWalletPage} />
+                  ) : (
+                    <div>
+                      <img style={{ maxWidth: "55px" }} src={window.logoUrl} alt="logo" />
+                    </div>
+                  )
+              }
+            </WidthContainer>
+          )
+        }
+        <User acceptRequest={this.acceptRequest} declineRequest={this.declineRequest} />
+      </>;
     }
     if (pathname.includes("/createWallet") && isMobile) {
       return <span />;

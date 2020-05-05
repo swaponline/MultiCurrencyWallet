@@ -40,6 +40,8 @@ export default class Logo extends Component {
       alt: `${host}`
     });
 
+    console.log('taserf')
+
     return (
       <Fragment>
         {window.location.hostname === "localhost" ||
