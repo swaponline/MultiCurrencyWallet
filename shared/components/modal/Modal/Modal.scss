@@ -83,6 +83,11 @@
   min-width: 300px;
   padding: 40px 0 100px;
   font-size: 16px;
+  
+  &_dashboardView {
+    position: relative;
+    padding-bottom: 5px;
+  }
 }
 
 @include media-mobile {

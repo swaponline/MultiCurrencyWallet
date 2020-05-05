@@ -135,11 +135,21 @@ export default class Modal extends Component {
             )
           }
           <div styleName="contentContainer">
-            <Center scrollable centerHorizontally={shouldCenterHorizontally} centerVertically={shouldCenterVertically}>
-              <div styleName="content">
-                {children}
-              </div>
-            </Center>
+            {
+              dashboardView
+              ? (
+                <div styleName="content content_dashboardView">
+                  {children}
+                </div>
+              )
+              : (
+                <Center scrollable centerHorizontally={shouldCenterHorizontally} centerVertically={shouldCenterVertically}>
+                  <div styleName="content">
+                    {children}
+                  </div>
+                </Center>
+              )
+            }
           </div>
         </div>
       </Overlay>
