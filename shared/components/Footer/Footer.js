@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
+import cx from 'classnames'
 import { isMobile } from 'react-device-detect'
 
 import config from 'app-config'
@@ -23,7 +24,12 @@ const Footer = (props) => {
   return (
     <Fragment>
       {(!config.isWidget || config.isFullBuild) && (
-        <div styleName="footer">
+        <div
+          className={cx({
+            [styles.footer]: true,
+            [styles.bluredFooter]: props.dashboardView && Object.keys(props.modals).length,
+          })}
+        >
           <WidthContainer styleName="container">
             {showInfo && <Info {...props} />}
             <SwitchLang {...props} />
@@ -50,4 +56,6 @@ export default withRouter(connect({
   'isOnline': 'ipfs.isOnline',
   'onlineUsers': 'ipfs.onlineUsers',
   'userEthAddress': 'user.ethData.address',
+  'dashboardView': 'ui.dashboardModalsAllowed',
+  'modals': 'modals',
 })(CSSModules(Footer, styles, { allowMultiple: true })))

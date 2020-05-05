@@ -40,8 +40,19 @@
       .overflowY-hidden {
         overflow: hidden;
       }
+      .overflowY-dashboardView-default {
+        overflow: visible;
+      }
+      .overflowY-dashboardView-hidden {
+        overflow: hidden;
+      }
       .overflowY-hidden-force {
         overflow: hidden !important;
+      }
+      @media screen and (min-width: 769px) {
+        .overflowY-dashboardView-hidden {
+          overflow: visible;
+        }
       }
     </style>
     <style>

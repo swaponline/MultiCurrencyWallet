@@ -27,6 +27,7 @@ import { BigNumber } from 'bignumber.js'
 import ContentLoader from 'components/loaders/ContentLoader/ContentLoader'
 import Tabs from "components/Tabs/Tabs"
 import FilterForm from "components/FilterForm/FilterForm"
+import { ModalConductorProvider } from 'components/modal'
 
 import getCurrencyKey from 'helpers/getCurrencyKey'
 
@@ -513,23 +514,25 @@ export default class CurrencyWallet extends Component {
               }
             </div>
             <div styleName="currencyWalletActivityWrapper">
-              <div styleName="currencyWalletActivity">
-                <FilterForm filterValue={filterValue} onSubmit={this.handleFilter} onChange={this.handleFilterChange} resetFilter={this.resetFilter} />
-                {txHistory && !isLoading && (
-                  txHistory.length > 0 ? (
-                    <Table rows={txHistory} styleName="currencyHistory" rowRender={this.rowRender} />
-                  ) :
+              <ModalConductorProvider>
+                <div styleName="currencyWalletActivity">
+                  <FilterForm filterValue={filterValue} onSubmit={this.handleFilter} onChange={this.handleFilterChange} resetFilter={this.resetFilter} />
+                  {txHistory && !isLoading && (
+                    txHistory.length > 0 ? (
+                      <Table rows={txHistory} styleName="currencyHistory" rowRender={this.rowRender} />
+                    ) :
+                      <div styleName="historyContent">
+                        <ContentLoader rideSideContent empty nonHeader inner />
+                      </div>
+                  )
+                  }
+                  {(!txHistory || isLoading) && (
                     <div styleName="historyContent">
-                      <ContentLoader rideSideContent empty nonHeader inner />
+                      <ContentLoader rideSideContent nonHeader />
                     </div>
-                )
-                }
-                {(!txHistory || isLoading) && (
-                  <div styleName="historyContent">
-                    <ContentLoader rideSideContent nonHeader />
-                  </div>
-                )}
-              </div>
+                  )}
+                </div>
+              </ModalConductorProvider>
               {(!actions.btcmultisig.isBTCSMSAddress(`${address}`) && !actions.btcmultisig.isBTCMSUserAddress(`${address}`)) && (
                 swapHistory.filter(item => item.step >= 4).length > 0 ? (
                   <div styleName="currencyWalletSwapHistory">

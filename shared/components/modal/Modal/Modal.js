@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'redaction'
 
 import actions from 'redux/actions'
 import PropTypes from 'prop-types'
@@ -13,7 +14,11 @@ import Overlay from 'components/layout/Overlay/Overlay'
 import Center from 'components/layout/Center/Center'
 import Logo from 'components/Logo/Logo'
 
-
+@connect(({
+  ui: { dashboardModalsAllowed },
+}) => ({
+  dashboardView: dashboardModalsAllowed,
+}))
 @cssModules(styles, { allowMultiple: true })
 export default class Modal extends Component {
 
@@ -101,7 +106,7 @@ export default class Modal extends Component {
 
   render() {
     const { className, whiteLogo, showLogo, title, showCloseButton, disableClose, children,
-      titleUppercase, name, shouldCenterHorizontally, shouldCenterVertically, styleName, delayClose, data } = this.props
+      titleUppercase, name, shouldCenterHorizontally, shouldCenterVertically, styleName, delayClose, data, dashboardView } = this.props
 
     window.addEventListener('popstate', function (e) { actions.modals.close(name) }) // eslint-disable-line
 
@@ -110,7 +115,7 @@ export default class Modal extends Component {
     })
 
     return (
-      <Overlay styleName={styleName}>
+      <Overlay dashboardView={dashboardView} styleName={styleName}>
         <div styleName="modal" className={className}>
           {
             Boolean(title || showCloseButton) && (

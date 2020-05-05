@@ -5,6 +5,13 @@ $information-footer-height: 44px;
   width: 100%;
 }
 
+.bluredFooter {
+  filter: blur(7px);
+  pointer-events: none;
+  will-change: filter;
+  // transition: filter ease 0.1s;
+}
+
 .information-footer {
   width: 100%;
   height: $information-footer-height;
@@ -12,7 +19,7 @@ $information-footer-height: 44px;
 }
 
 .date {
-  color: black; 
+  color: black;
   font-size: 12px;
   margin-top: 20px;
 }

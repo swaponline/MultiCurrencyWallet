@@ -33,13 +33,14 @@ const userLanguage = (navigator.userLanguage || navigator.language || "en-gb").s
 moment.locale(userLanguage);
 
 @withRouter
-@connect(({ currencies: { items: currencies }, modals }) => ({
+@connect(({ currencies: { items: currencies }, modals, ui: { dashboardModalsAllowed } }) => ({
   currencies,
   isVisible: "loader.isVisible",
   ethAddress: "user.ethData.address",
   btcAddress: "user.btcData.address",
   tokenAddress: "user.tokensData.swap.address",
   modals,
+  dashboardModalsAllowed,
 }))
 @CSSModules(styles, { allowMultiple: true })
 export default class App extends React.Component {
@@ -160,6 +161,7 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
+    this.checkIfDashboardModalsAllowed()
     window.actions = actions;
 
     window.onerror = error => {
@@ -193,9 +195,20 @@ export default class App extends React.Component {
   }
 
   componentDidUpdate() {
+    this.checkIfDashboardModalsAllowed()
     if (process.env.MAINNET) {
       firebase.setUserLastOnline();
     }
+  }
+
+  checkIfDashboardModalsAllowed = () => {
+    const dashboardModalProvider = document.querySelector('.__modalConductorProvided__')
+    if (dashboardModalProvider && !this.props.dashboardModalsAllowed) {
+      return actions.ui.allowDashboardModals()
+    } else if (dashboardModalProvider && this.props.dashboardModalsAllowed) {
+      return null
+    }
+    return actions.ui.disallowDashboardModals()
   }
 
   handleSwitchTab = () => {
@@ -205,17 +218,30 @@ export default class App extends React.Component {
     this.preventMultiTabs(true);
   };
 
-  render() {
-    const { fetching, multiTabs, error } = this.state;
-    const { children, ethAddress, btcAddress, tokenAddress, history, modals } = this.props;
-
-    if (typeof document !== 'undefined' && Object.keys(modals).length > 0) {
+  overflowHandler = () => {
+    const { modals, dashboardModalsAllowed } = this.props;
+    const isAnyModalCalled = Object.keys(modals).length > 0
+    if (typeof document !== 'undefined' && isAnyModalCalled && !dashboardModalsAllowed) {
       document.body.classList.remove('overflowY-default')
       document.body.classList.add('overflowY-hidden')
     } else {
       document.body.classList.remove('overflowY-hidden')
       document.body.classList.add('overflowY-default')
     }
+    if (typeof document !== 'undefined' && isAnyModalCalled && dashboardModalsAllowed) {
+      document.body.classList.remove('overflowY-dashboardView-default')
+      document.body.classList.add('overflowY-dashboardView-hidden')
+    } else {
+      document.body.classList.remove('overflowY-dashboardView-hidden')
+      document.body.classList.add('overflowY-dashboardView-default')
+    }
+  }
+
+  render() {
+    const { fetching, multiTabs, error } = this.state;
+    const { children, ethAddress, btcAddress, tokenAddress, history, dashboardModalsAllowed } = this.props;
+
+    this.overflowHandler()
 
     const isFetching = !ethAddress || !btcAddress || (!tokenAddress && config && !config.isWidget) || !fetching;
 
@@ -242,7 +268,7 @@ export default class App extends React.Component {
           {children}
           <Core />
           <RequestLoader />
-          <ModalConductor history={history} />
+          { !dashboardModalsAllowed && <ModalConductor history={history} /> }
           <NotificationConductor history={history} />
         </Fragment>
       ) : (
@@ -257,7 +283,7 @@ export default class App extends React.Component {
           <Core />
           <Footer />
           <RequestLoader />
-          <ModalConductor history={history} />
+          { !dashboardModalsAllowed && <ModalConductor history={history} /> }
           <NotificationConductor history={history} />
         </Fragment>
       );

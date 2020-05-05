@@ -9,6 +9,7 @@ import user from './user'
 import history from './history'
 import feed from './feed'
 import core from './core'
+import ui from './ui'
 import filter from './filter'
 
 import btc from './btc'
@@ -48,6 +49,7 @@ export default {
   user,
   history,
   core,
+  ui,
 
   btc,
   btcmultisig,

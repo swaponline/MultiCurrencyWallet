@@ -1,5 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import CSSModules from 'react-css-modules'
+import { connect } from 'redaction'
+import cx from 'classnames'
 
 import styles from 'pages/Wallet/Wallet.scss'
 import Button from 'components/controls/Button/Button'
@@ -24,10 +26,13 @@ function BalanceForm({
   changePercent,
   isFetching = false,
   showButtons = true,
+  dashboardView,
+  modals,
 }) {
   const savedActiveCurrency = localStorage.getItem(constants.localStorage.balanceActiveCurrency)
   const [activeCurrency, setActiveCurrency] = useState(savedActiveCurrency || 'btc')
   const isWidgetBuild = config && config.isWidget
+  const isAnyModalCalled = Object.keys(modals).length
 
   // eslint-disable-next-line default-case
   switch (currency) {
@@ -55,11 +60,14 @@ function BalanceForm({
             // eslint-disable-next-line no-restricted-globals
             <p>
               <img src={dollar} alt="dollar" />
-              {!isNaN(usdBalance)
-                ? BigNumber(usdBalance)
+              {
+                // eslint-disable-next-line no-restricted-globals
+                !isNaN(usdBalance)
+                  ? BigNumber(usdBalance)
                     .dp(2, BigNumber.ROUND_FLOOR)
                     .toString()
-                : ''}
+                  : ''
+              }
               {/* {changePercent ? (
                 <span styleName={changePercent > 0 ? "green" : "red"}>
                   {`${changePercent > 0 ? `+${changePercent}` : `${changePercent}`}`}%
@@ -81,6 +89,7 @@ function BalanceForm({
           <button
             styleName={activeCurrency === 'usd' && 'active'}
             onClick={() => {
+              // eslint-disable-next-line no-unused-expressions, no-sequences
               setActiveCurrency('usd'), localStorage.setItem(constants.localStorage.balanceActiveCurrency, 'usd')
             }}
           >
@@ -91,6 +100,7 @@ function BalanceForm({
           <button
             styleName={activeCurrency === 'btc' && 'active'}
             onClick={() => {
+              // eslint-disable-next-line no-unused-expressions, no-sequences
               setActiveCurrency('btc'), localStorage.setItem(constants.localStorage.balanceActiveCurrency, 'btc')
             }}
           >
@@ -98,7 +108,12 @@ function BalanceForm({
           </button>
         </div>
       </div>
-      <div styleName="yourBalanceBottomWrapper">
+      <div
+        className={cx({
+          [styles.yourBalanceBottomWrapper]: true,
+          [styles.yourBalanceBottomWrapper_blured]: dashboardView && isAnyModalCalled,
+        })}
+      >
         <div styleName="yourBalanceBottom">
           {showButtons ? (
             <Fragment>
@@ -125,4 +140,10 @@ function BalanceForm({
   )
 }
 
-export default CSSModules(BalanceForm, styles, { allowMultiple: true })
+export default connect(({
+  modals,
+  ui: { dashboardModalsAllowed },
+}) => ({
+  modals,
+  dashboardView: dashboardModalsAllowed,
+}))(CSSModules(BalanceForm, styles, { allowMultiple: true }))

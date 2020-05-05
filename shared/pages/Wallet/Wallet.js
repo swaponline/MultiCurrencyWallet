@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types'
+import cx from 'classnames'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
@@ -28,6 +29,7 @@ import CurrenciesList from './CurrenciesList'
 import Button from 'components/controls/Button/Button'
 import Tabs from "components/Tabs/Tabs"
 import InvoicesList from 'pages/Invoices/InvoicesList'
+import { ModalConductorProvider } from 'components/modal'
 
 
 
@@ -48,7 +50,9 @@ const isWidgetBuild = config && config.isWidget
       isBalanceFetching,
     },
     currencies: { items: currencies },
-    createWallet: { currencies: assets }
+    createWallet: { currencies: assets },
+    modals,
+    ui: { dashboardModalsAllowed },
   }) => {
     let widgetMultiTokens = []
     if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
@@ -106,7 +110,9 @@ const isWidgetBuild = config && config.isWidget
         btcMultisigSMSData,
         btcMultisigUserData,
         btcMultisigUserDataList,
-      }
+      },
+      dashboardView: dashboardModalsAllowed,
+      modals,
     }
   }
 )
@@ -404,12 +410,13 @@ export default class Wallet extends Component {
       showSweepBanner,
       isMnemonicSaved,
     } = this.state
-
     const {
       hiddenCoinsList,
       isSigned,
       isFetching,
       isBalanceFetching,
+      modals,
+      dashboardView,
     } = this.props
 
     const allData = actions.core.getWallets()
@@ -461,6 +468,8 @@ export default class Wallet extends Component {
       }
     })
 
+    const isAnyModalCalled = Object.keys(modals).length
+
     return (
       <article>
         <section styleName={isWidgetBuild && !config.isFullBuild ? 'wallet widgetBuild' : 'wallet'}>
@@ -489,7 +498,13 @@ export default class Wallet extends Component {
                 </div>
               )}
 
-              <div styleName="desktopEnabledViewForFaq faqWrapper">
+              <div
+                className={cx({
+                  [styles.desktopEnabledViewForFaq]: true,
+                  [styles.faqWrapper]: true,
+                  [styles.faqBlured]: dashboardView && isAnyModalCalled,
+                })}
+              >
                 <FAQ />
               </div>
             </div>
@@ -512,18 +527,26 @@ export default class Wallet extends Component {
               )}
               {/* (End) Sweep Banner */}
               {activeView === 0 && (
-                <CurrenciesList
-                  tableRows={tableRows}
-                  {...this.state}
-                  {...this.props}
-                  goToСreateWallet={this.goToСreateWallet}
-                  getExCurrencyRate={(currencySymbol, rate) => this.getExCurrencyRate(currencySymbol, rate)}
-                />
+                <ModalConductorProvider>
+                  <CurrenciesList
+                    tableRows={tableRows}
+                    {...this.state}
+                    {...this.props}
+                    goToСreateWallet={this.goToСreateWallet}
+                    getExCurrencyRate={(currencySymbol, rate) => this.getExCurrencyRate(currencySymbol, rate)}
+                  />
+                </ModalConductorProvider>
               )}
 
               {/* : <ContentLoader rideSideContent /> */}
             </div>
-            <div styleName="mobileEnabledViewForFaq faqWrapper">
+            <div
+              className={cx({
+                [styles.mobileEnabledViewForFaq]: true,
+                [styles.faqWrapper]: true,
+                [styles.faqBlured]: dashboardView && isAnyModalCalled,
+              })}
+            >
               <FAQ />
             </div>
             <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
