@@ -140,11 +140,11 @@ export default class Modal extends Component {
           <div styleName={cx({
             contentContainer: true,
             contentContainer_dashboardView: dashboardView,
-          })} className="contentHeightEvaluateHere">
+          })}>
             {
               dashboardView
               ? (
-                <div styleName="content content_dashboardView">
+                <div styleName="content content_dashboardView" className="contentHeightEvaluateHere">
                   {children}
                 </div>
               )
