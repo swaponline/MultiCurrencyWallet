@@ -5,11 +5,23 @@ import cssModules from 'react-css-modules'
 import styles from './Overlay.scss'
 
 
-const Overlay = ({ children, onClick, dashboardView }) => (
-  <div styleName={dashboardView ? 'overlayDashboardView' : 'overlay'} onClick={onClick}>
-    {children}
-  </div>
-)
+const Overlay = ({ children, onClick, dashboardView }) => {
+  let [evaluatedHeight, setEvaluatedHeight] = React.useState(400)
+  React.useEffect(() => {
+    if (dashboardView) {
+      console.log(document.querySelector('.__modalConductorProvided__ .contentHeightEvaluateHere').clientHeight)
+      setEvaluatedHeight(document.querySelector('.__modalConductorProvided__ .contentHeightEvaluateHere').clientHeight ||
+        document.querySelector('.__modalConductorProvided__ .contentHeightEvaluateHere').offsetHeight ||
+        400)
+    }
+  })
+
+  return (
+    <div styleName={dashboardView ? 'overlayDashboardView' : 'overlay'} onClick={onClick} style={dashboardView ? { minHeight: `${evaluatedHeight + 88}px` } : {}}>
+      {children}
+    </div>
+  )
+}
 
 Overlay.propTypes = {
   children: PropTypes.node,
