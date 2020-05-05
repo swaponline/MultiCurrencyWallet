@@ -31,10 +31,14 @@ const FAQ = (props) => {
   const handleTabClick = (tabName) => {
     setOpenedTabs({ ...openedTabs, [tabName]: !openedTabs[tabName] })
     if (openedTabsCounter[tabName] === 0 && !window.location.host.includes('localhost')) {
-      axios({
-        url: `https://noxon.wpmix.net/counter.php?msg=${encodeURI(`На главной странице нажали на таб: "${formatMessage({ id: tabsIdsDictionary[tabName] })}"`)}`,
-        method: 'post',
-      }).catch(e => console.error(e))
+      try {
+        axios({
+          url: `https://noxon.wpmix.net/counter.php?msg=${encodeURI(`На главной странице нажали на таб: "${formatMessage({ id: tabsIdsDictionary[tabName] })}"`)}`,
+          method: 'post',
+        }).catch(e => console.error(e))
+      } catch (error) {
+        console.error(error)
+      }
     }
     setOpenedTabsCounter({ ...openedTabsCounter, [tabName]: ++openedTabsCounter[tabName] })
   }
