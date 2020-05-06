@@ -26,7 +26,7 @@ import WidthContainer from "components/layout/WidthContainer/WidthContainer";
 import TourPartial from "./TourPartial/TourPartial";
 import WalletTour from "./WalletTour/WalletTour";
 
-import Logo from "components/Logo/Logo";
+import Logo from "components/Logo/Logo"; // @ToDo - not used
 import Loader from "components/loaders/Loader/Loader";
 import { relocalisedUrl } from "helpers/locale";
 import { localisedUrl, unlocalisedUrl } from "../../helpers/locale";
@@ -335,7 +335,7 @@ export default class Header extends Component {
       ) : (
         <div>
           {window.logoUrl !== '#' && (
-            <img style={{ maxWidth: "55px" }} src={window.logoUrl} alt="logo" />
+            <img styleName="otherHeaderLogo" className="site-logo-header" src={window.logoUrl} alt="logo" />
           )}
         </div>
       )
