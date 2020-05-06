@@ -26,10 +26,10 @@ const FilterForm = ({ filterValue, onSubmit, onChange, resetFilter }) => {
       <input placeholder="Search" value={filterValue} type="text" onChange={onChange} />
       <div styleName="buttons">
         <button styleName="show" onClick={handleSubmit} type="button">
-          <FormattedMessage id="FilterTextFind" defaultMessage="Найти" />
+          <FormattedMessage id="FilterTextFind" defaultMessage="Find" />
         </button>
         <button styleName={`all ${filterValue ? 'active' : ''}`} onClick={handleResetFilter} type="button">
-          <FormattedMessage id="FilterTextAll" defaultMessage="Все" />
+          <FormattedMessage id="FilterTextAll" defaultMessage="All" />
         </button>
       </div>
     </form>
