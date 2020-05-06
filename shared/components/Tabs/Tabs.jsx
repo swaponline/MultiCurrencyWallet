@@ -9,9 +9,12 @@ import { links } from 'helpers'
 import config from 'helpers/externalConfig'
 
 import styles from './styles.scss'
+import constants from 'helpers/constants'
 
 
 const isWidgetBuild = config && config.isWidget
+
+const invoicesEnabled = (localStorage.getItem(constants.localStorage.invoicesEnabled) === '1')
 
 const TabsComponent = ({ navs, onClick, activeView, dashboardView, modals }) => {
 
@@ -34,7 +37,7 @@ const TabsComponent = ({ navs, onClick, activeView, dashboardView, modals }) => 
       key: 'Invoices',
       text: <FormattedMessage id="InvoicesNav" defaultMessage="Запросы" />,
       link: links.invoices,
-      enabled: (!isWidgetBuild && config.opts.invoiceEnabled),
+      enabled: (!isWidgetBuild && config.opts.invoiceEnabled && invoicesEnabled),
     },
   ]
 

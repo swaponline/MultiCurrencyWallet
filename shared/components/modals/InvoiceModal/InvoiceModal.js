@@ -129,6 +129,8 @@ export default class InvoiceModal extends React.Component {
     }
 
     this.getRubRates()
+
+    localStorage.setItem(constants.localStorage.invoicesEnabled, '1')
   }
 
   getRubRates() {
