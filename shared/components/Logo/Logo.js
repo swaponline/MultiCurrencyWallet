@@ -30,6 +30,8 @@ export default class Logo extends Component {
       isExchange
     } = this.props;
 
+    const isNoLogo = !(window.logoUrl === `#`)
+
     const srcFiles = isColored ? images.colored : images.common;
     const { host, href } = window.location;
     const file = Object.keys(srcFiles).find(el => window.location.href.includes(el)) || "base";
@@ -55,7 +57,9 @@ export default class Logo extends Component {
           </Link>
         ) : (
           <div>
-            <img style={{ maxWidth: "55px" }} src={window.logoUrl} alt="Wallet" />
+            {isNoLogo && (
+              <img styleName="otherLogoBrand" className="site-logo" src={window.logoUrl} alt="Wallet" />
+            )}
           </div>
         )}
       </Fragment>
