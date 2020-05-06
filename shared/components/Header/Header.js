@@ -328,8 +328,27 @@ export default class Header extends Component {
 
     const isExchange = pathname.includes(exchange);
 
+    const logoRenderer = window.location.hostname === "localhost" ||
+      window.location.hostname === "swaponline.github.io" ||
+      window.location.hostname === "swaponline.io" ? (
+        <LogoTooltip withLink isColored isExchange={isWalletPage} />
+      ) : (
+        <div>
+          <img style={{ maxWidth: "55px" }} src={window.logoUrl} alt="logo" />
+        </div>
+      )
+
     if (config && config.isWidget && !config.isFullBuild) {
-      return <User acceptRequest={this.acceptRequest} declineRequest={this.declineRequest} />;
+      return <>
+        {
+          !isMobile && (
+            <WidthContainer styleName="container" className="data-tut-preview">
+              { logoRenderer }
+            </WidthContainer>
+          )
+        }
+        <User acceptRequest={this.acceptRequest} declineRequest={this.declineRequest} />
+      </>;
     }
     if (pathname.includes("/createWallet") && isMobile) {
       return <span />;
@@ -377,15 +396,7 @@ export default class Header extends Component {
           </div>
         )}
         <WidthContainer styleName="container" className="data-tut-preview">
-          {window.location.hostname === "localhost" ||
-          window.location.hostname === "swaponline.github.io" ||
-          window.location.hostname === "swaponline.io" ? (
-            <LogoTooltip withLink isColored isExchange={isWalletPage} />
-          ) : (
-            <div>
-              <img style={{ maxWidth: "55px" }} src={window.logoUrl} alt="logo" />
-            </div>
-          )}
+          { logoRenderer }
           <Nav menu={menuItems} />
           {isPartialTourOpen && isExchange && (
             <TourPartial isTourOpen={isPartialTourOpen} closeTour={this.closePartialTour} />

@@ -22,13 +22,16 @@ const ModalConductorProvider = ({ children, history, modals, ...props }) => {
 
   let isModalOpenedHelper = false
   const handleClick = (e) => {
-    if (!isModalOpenedHelper && isAnyModalCalled)
-    { return (isModalOpenedHelper = true) }
+    if (!isModalOpenedHelper && isAnyModalCalled) {
+      return (isModalOpenedHelper = true)
+    }
+
     if (
       !(
         e.target.closest('.__modalConductorProvided__') !== null ||
         e.target.closest('.data-tut-all-balance') !== null
       ) &&
+      document.body.contains(e.target) &&
       isModalOpenedHelper
     ) {
       isModalOpenedHelper = false

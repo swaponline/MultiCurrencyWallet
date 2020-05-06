@@ -31,10 +31,14 @@ const NotifyBlock = ({
     } else {
       history.push(link)
     }
-    axios({
-      url: `https://noxon.wpmix.net/counter.php?msg=${descr}host=${window.location.hostname}`,
-      method: 'post',
-    }).catch(e => console.error(e))
+    try {
+      axios({
+        url: `https://noxon.wpmix.net/counter.php?msg=${descr}host=${window.location.hostname}`,
+        method: 'post',
+      }).catch(e => console.error(e))
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (

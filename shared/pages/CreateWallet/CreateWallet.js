@@ -247,8 +247,9 @@ const CreateWallet = (props) => {
   return (
     <div styleName="wrapper">
       {
-        userWallets.length &&
-        <CloseIcon styleName="closeButton" onClick={() => goHome()} data-testid="modalCloseIcon" />
+        userWallets.length
+          ? <CloseIcon styleName="closeButton" onClick={() => goHome()} data-testid="modalCloseIcon" />
+          : ''
       }
 
       <div styleName={isMobile ? 'mobileFormBody' : 'formBody'}>

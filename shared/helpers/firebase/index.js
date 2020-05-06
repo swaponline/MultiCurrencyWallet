@@ -27,32 +27,41 @@ const authorisation = () =>
       .catch((error) => console.log(`Can't sign in: `, error))
   )
 
-const getIPInfo = () =>
-  axios
-    .get('https://json.geoiplookup.io')
-    .then((result) => {
-      // eslint-disable-next-line camelcase
-      const { ip, country_code } = result.data
-      // eslint-disable-next-line camelcase
-      if (!ip || !country_code) {
+const getIPInfo = () => {
+  try {
+    return axios
+      .get('https://json.geoiplookup.io')
+      .then((result) => {
+        // eslint-disable-next-line camelcase
+        const { ip, country_code } = result.data
+        // eslint-disable-next-line camelcase
+        if (!ip || !country_code) {
+          return ({
+            ip: 'json.geoiplookup.io didn\'t respond with a result, so setting locale EN by default',
+            locale: 'EN',
+          })
+        }
         return ({
-          ip: 'json.geoiplookup.io didn\'t respond with a result, so setting locale EN by default',
-          locale: 'EN',
+          ip,
+          locale: country_code,
         })
-      }
-      return ({
-        ip,
-        locale: country_code,
       })
-    })
-    .catch((error) => {
-      console.error('getIPInfo:', error)
+      .catch((error) => {
+        console.error('getIPInfo:', error)
 
-      return {
-        ip: 'None',
-        locale: 'EN',
-      }
-    })
+        return {
+          ip: 'None',
+          locale: 'EN',
+        }
+      })
+  } catch (error) {
+    console.error(error)
+  }
+  return {
+    ip: 'None',
+    locale: 'EN',
+  }
+}
 
 const sendData = (userId, dataBasePath, data, isDefault = true) =>
   new Promise(async (resolve) => {
