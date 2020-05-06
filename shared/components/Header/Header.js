@@ -334,7 +334,9 @@ export default class Header extends Component {
         <LogoTooltip withLink isColored isExchange={isWalletPage} />
       ) : (
         <div>
-          <img style={{ maxWidth: "55px" }} src={window.logoUrl} alt="logo" />
+          {window.logoUrl !== '#' && (
+            <img style={{ maxWidth: "55px" }} src={window.logoUrl} alt="logo" />
+          )}
         </div>
       )
 
