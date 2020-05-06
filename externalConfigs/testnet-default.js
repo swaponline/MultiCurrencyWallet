@@ -14,7 +14,8 @@ window.widgetERC20Comisions = {
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
   }
 }
-/*
+
+
 window.widgetERC20Tokens = {
   usdt: {
     address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
@@ -33,17 +34,14 @@ window.widgetERC20Tokens = {
     icon: 'https://growup.wpmix.net/wp-content/uploads/2016/10/favicon.png',
     // Background color of icon
     iconBgColor: '#ccc',
-  },
+  }, 
 }
 
 window.buildOptions = {
-  ownTokens: false, // Will be inited from window.widgetERC20Tokens
+  ownTokens: true, // Will be inited from window.widgetERC20Tokens
   addCustomERC20: true, // Allow user add custom erc20 tokens
-  curEnabled: { // Or 'false' if enabled all
-    btc: true,
-    eth: true,
-  },
+  curEnabled: false,
   showWalletBanners: true, // Allow to see banners
-  invoiceEnabled: false, // Allow create invoices
+  invoiceEnabled: true, // Allow create invoices
+//  fee: { btc .... }, // Can be inited from window.widgetERC20Comisions
 }
-*/

@@ -3,6 +3,9 @@ import util from 'swap.app/util'
 import actions from 'redux/actions'
 import { constants } from 'swap.app'
 
+console.log('config enabled', window.buildOptions, window.widgetERC20Comisions, window.widgetERC20Tokens )
+
+
 const GetCustromERC20 = () => {
   const configStorage = (process.env.MAINNET) ? 'mainnet' : 'testnet'
 
@@ -24,6 +27,7 @@ const initExternalConfig = () => {
 
 const externalConfig = () => {
   // Reconfigure app config if it widget or use external config
+  console.log('externalConfig called', config )
   if (config.opts && config.opts.inited) return config
 
   config.opts = {
@@ -32,6 +36,8 @@ const externalConfig = () => {
     ownTokens: false,
     addCustomERC20: true,
     invoiceEnabled: true,
+    showWalletBanners: false,
+    fee: {},
   }
 
   if (window
@@ -93,6 +99,27 @@ const externalConfig = () => {
     })
   }
 
+  // Comission config - default false
+  if (window
+    && window.widgetERC20Comisions
+    && Object.keys(window.widgetERC20Comisions)
+  ) {
+    Object.keys(window.widgetERC20Comisions).filter((key) => {
+      const curKey = key.toLowerCase()
+      if (window.widgetERC20Comisions[curKey]) {
+        const { fee, address } = window.widgetERC20Comisions[curKey]
+        // @ToDo add currency isAddress Check
+        if (fee && address) {
+          config.opts.fee[curKey] = {
+            fee,
+            address,
+          }
+        }
+      }
+    })
+  }
+
+  console.log('externalConfig first time called', config, window.buildOptions, window.widgetERC20Comisions, window.widgetERC20Tokens )
   return config
 }
 
