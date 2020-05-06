@@ -465,7 +465,56 @@ const getTransaction = (address, ownType) =>
       })
   })
 
-const send = async ({ from, to, amount, feeValue, speed } = {}) => {
+const send = (data) => {
+  return (config
+    && config.opts
+    && config.opts.fee
+    && config.opts.fee.btc
+    && config.opts.fee.btc.fee
+    && config.opts.fee.btc.address
+  ) ? sendWithAdminFee(data) : sendDefault(data)
+}
+
+const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
+
+  const adminFee = config.opts.fee.btc.fee
+  const adminFeeAddress = config.opts.fee.btc.address
+
+  // fee - from amount - percent
+  const feeFromAmount = adminFee*0.01*amount
+
+  feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
+
+  const tx = new bitcoin.TransactionBuilder(btc.network)
+  const unspents = await fetchUnspents(from)
+
+  let fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
+
+  
+  
+  const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+  const skipValue = totalUnspent - fundValue - feeValue
+
+  unspents.forEach(({ txid, vout }) => tx.addInput(txid, vout, 0xfffffffe))
+  tx.addOutput(to, fundValue)
+
+  tx.addOutput(adminFeeAddress, feeFromAmount)
+
+  if (skipValue > 546) {
+    tx.addOutput(from, skipValue)
+  }
+
+
+
+  const txRaw = signAndBuild(tx, from)
+
+  console.log(txRaw, txRaw.toHex())
+//  await broadcastTx(txRaw.toHex())
+
+  return txRaw
+}
+
+const sendDefault = async ({ from, to, amount, feeValue, speed } = {}) => {
   feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
 
   const tx = new bitcoin.TransactionBuilder(btc.network)
