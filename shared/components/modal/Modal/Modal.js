@@ -116,7 +116,10 @@ export default class Modal extends Component {
 
     return (
       <Overlay dashboardView={dashboardView} styleName={styleName}>
-        <div styleName="modal" className={className}>
+        <div styleName={cx({
+          modal: true,
+          modal_dashboardView: dashboardView,
+        })} className={className}>
           {
             Boolean(title || showCloseButton) && (
               <div styleName="header">
@@ -134,12 +137,25 @@ export default class Modal extends Component {
               </div>
             )
           }
-          <div styleName="contentContainer">
-            <Center scrollable centerHorizontally={shouldCenterHorizontally} centerVertically={shouldCenterVertically}>
-              <div styleName="content">
-                {children}
-              </div>
-            </Center>
+          <div styleName={cx({
+            contentContainer: true,
+            contentContainer_dashboardView: dashboardView,
+          })}>
+            {
+              dashboardView
+              ? (
+                <div styleName="content content_dashboardView" className="contentHeightEvaluateHere">
+                  {children}
+                </div>
+              )
+              : (
+                <Center scrollable centerHorizontally={shouldCenterHorizontally} centerVertically={shouldCenterVertically}>
+                  <div styleName="content">
+                    {children}
+                  </div>
+                </Center>
+              )
+            }
           </div>
         </div>
       </Overlay>

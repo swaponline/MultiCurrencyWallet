@@ -52,19 +52,25 @@ export default class WallerSlider extends Component {
     })
   }
 
-  getBanners = () =>
-    axios
-      .get('https://noxon.wpmix.net/swapBanners/banners.php')
-      .then(result => {
-        this.setState({
-          banners: result.data,
-          isFetching: true,
+  getBanners = () => {
+    try {
+      return axios
+        .get('https://noxon.wpmix.net/swapBanners/banners.php')
+        .then(result => {
+          this.setState({
+            banners: result.data,
+            isFetching: true,
+          })
+          this.initBanners()
         })
-        this.initBanners()
-      })
-      .catch(error => {
-        console.error('getBanners:', error)
-      })
+        .catch(error => {
+          console.error('getBanners:', error)
+        })
+    } catch (error) {
+      console.error(error)
+    }
+    return null
+  }
 
   handleShowKeys = () => {
     actions.modals.open(constants.modals.DownloadModal)

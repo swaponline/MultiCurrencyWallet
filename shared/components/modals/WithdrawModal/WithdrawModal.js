@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
+import cx from 'classnames'
 import helpers, { constants } from "helpers";
 import actions from "redux/actions";
 import Link from "sw-valuelink";
@@ -33,10 +34,11 @@ import redirectTo from 'helpers/redirectTo'
 
 @injectIntl
 @connect(
-  ({ currencies, user: { ethData, btcData, tokensData } }) => ({
+  ({ currencies, user: { ethData, btcData, tokensData }, ui: { dashboardModalsAllowed } }) => ({
     currencies: currencies.items,
     items: [ethData, btcData],
-    tokenItems: [...Object.keys(tokensData).map(k => tokensData[k])]
+    tokenItems: [...Object.keys(tokensData).map(k => tokensData[k])],
+    dashboardView: dashboardModalsAllowed,
   })
 )
 @cssModules(styles, { allowMultiple: true })
@@ -397,6 +399,7 @@ export default class WithdrawModal extends React.Component {
       items,
       intl,
       portalUI,
+      dashboardView,
     } = this.props;
 
     const linked = Link.all(this, "address", "amount", "ownTx");
@@ -456,13 +459,17 @@ export default class WithdrawModal extends React.Component {
           <QrReader openScan={this.openScan} handleError={this.handleError} handleScan={this.handleScan} />
         )}
         {invoice && <InvoiceInfoBlock invoiceData={invoice} />}
-        <p styleName={isEthToken ? "rednotes" : "notice"}>
-          <FormattedMessage
-            id="Withdrow213"
-            defaultMessage="Please note: Fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction"
-            values={{ minAmount: <span>{isEthToken ? minAmount.eth : min}</span>, br: <br />, data: `${dataCurrency}` }}
-          />
-        </p>
+        {
+          !dashboardView && (
+            <p styleName={isEthToken ? "rednotes" : "notice"}>
+              <FormattedMessage
+                id="Withdrow213"
+                defaultMessage="Please note: Fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction"
+                values={{ minAmount: <span>{isEthToken ? minAmount.eth : min}</span>, br: <br />, data: `${dataCurrency}` }}
+              />
+            </p>
+          )
+        }
         <div styleName="highLevel">
           <FieldLabel>
             <FormattedMessage id="Withdrow1194" defaultMessage="Address " />{" "}
@@ -610,6 +617,21 @@ export default class WithdrawModal extends React.Component {
             </Button>
           </Fragment>
         )}
+        {
+          dashboardView && (
+            <p styleName={cx({
+              notice: !isEthToken,
+              rednotes: isEthToken,
+              dashboardViewNotice: dashboardView,
+            })}>
+              <FormattedMessage
+                id="Withdrow213"
+                defaultMessage="Please note: Fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction"
+                values={{ minAmount: <span>{isEthToken ? minAmount.eth : min}</span>, br: <br />, data: `${dataCurrency}` }}
+              />
+            </p>
+          )
+        }
       </Fragment>
     )
     return (portalUI) ? formRender : (
