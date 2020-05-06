@@ -194,6 +194,9 @@ export default class Row extends Component {
       itemData
     } = this.props
 
+
+    console.log('itemData', itemData)
+
     const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals
 
     let withdrawModalType = Withdraw
