@@ -10,6 +10,7 @@ import config from 'helpers/externalConfig'
 
 import styles from './styles.scss'
 import constants from 'helpers/constants'
+import { isMobile } from 'react-device-detect'
 
 
 const isWidgetBuild = config && config.isWidget
@@ -31,7 +32,7 @@ const TabsComponent = ({ navs, onClick, activeView, dashboardView, modals }) => 
       key: 'Transactions',
       text: <FormattedMessage id="TransactionswalletNav" defaultMessage="История" />,
       link: links.history,
-      enabled: true,
+      enabled: !isMobile,
     },
     {
       key: 'Invoices',
