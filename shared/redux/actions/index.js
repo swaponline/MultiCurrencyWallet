@@ -9,6 +9,7 @@ import user from './user'
 import history from './history'
 import feed from './feed'
 import core from './core'
+import ui from './ui'
 import filter from './filter'
 
 import btc from './btc'
@@ -28,6 +29,8 @@ import comments from './comments'
 
 import backupManager from './backupManager'
 
+import multisigTx from './multisigTx'
+
 
 const tokens = {}
 
@@ -46,6 +49,7 @@ export default {
   user,
   history,
   core,
+  ui,
 
   btc,
   btcmultisig,
@@ -63,4 +67,6 @@ export default {
 
   // Local storage backups manager
   backupManager,
+
+  multisigTx,
 }

@@ -202,9 +202,22 @@ export default class WithdrawModalMultisigUser extends React.Component {
 
     const result = await actions.btcmultisig.send(sendOptions)
 
+    let txId = false
+
+    if (result) {
+      txId = await actions.multisigTx.broadcast({
+        sender: address,
+        destination: to,
+        amount,
+        fee: 0.0001, // actions.helpers.lastBtcFee
+        rawTx: result,
+      })
+    }
+
     this.broadcastCancelFunc = actions.btcmultisig.broadcastTX2Room(
       {
         txRaw: result,
+        txId,
         address: to,
         amount,
         currency: 'BTC',
@@ -214,6 +227,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
         this.setState({
           step: 'rawlink',
           txRaw: result,
+          txId,
           isShipped: false,
         })
       },
@@ -221,6 +235,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
         this.setState({
           step: 'rawlink',
           txRaw: result,
+          txId,
           isShipped: false,
         })
       }
@@ -312,6 +327,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
       error,
       step,
       txRaw,
+      txId,
       isLinkCopied,
       ownTx,
       openScanCam,
@@ -329,9 +345,9 @@ export default class WithdrawModalMultisigUser extends React.Component {
       portalUI,
     } = this.props
 
-    let txConfirmLink = `${getFullOrigin()}${links.multisign}/btc/confirm/${txRaw}`
+    let txConfirmLink = `${getFullOrigin()}${links.multisign}/btc/confirm/${txId}`
     if (invoice) {
-      txConfirmLink = `${getFullOrigin()}${links.multisign}/btc/confirminvoice/${invoice.id}|${txRaw}`
+      txConfirmLink = `${getFullOrigin()}${links.multisign}/btc/confirminvoice/${invoice.id}|${txId}`
     }
     const linked = Link.all(this, 'address', 'amount', 'code', 'ownTx')
 

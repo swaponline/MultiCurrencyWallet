@@ -13,6 +13,7 @@ import * as signUp from './signUp'
 import * as inputActive from './inputActive'
 import * as rememberedOrders from './rememberedOrders'
 import * as createWallet from './createWallet'
+import * as ui from './ui'
 
 
 export default {
@@ -31,4 +32,5 @@ export default {
   inputActive,
   rememberedOrders,
   createWallet,
+  ui,
 }

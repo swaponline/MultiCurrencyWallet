@@ -1,5 +1,11 @@
 $purple: #510ed8;
 
+.header-blured {
+  filter: blur(7px);
+  pointer-events: none;
+  will-change: filter;
+}
+
 .container {
   display: flex;
   align-items: center;
@@ -7,7 +13,7 @@ $purple: #510ed8;
 }
 
 .buttonLan {
-  color: #7c1de9!important;
+  color: #7c1de9 !important;
 
   width: 40px;
   height: 40px;
@@ -24,11 +30,11 @@ $purple: #510ed8;
 }
 
 .header {
-	height: 88px;
-	width: 100%;
-	top: 0;
-	left: 0;
-	right: 0;
+  height: 88px;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 1001;
   transition: position 0.3s ease;
   position: absolute;
@@ -41,27 +47,27 @@ $purple: #510ed8;
 
 @include media-mobile {
   .header {
-	  display: flex;
+    display: flex;
   }
 }
 
 .header-fixed {
-	position: fixed;
+  position: fixed;
   height: 88px;
-	animation:slide-down 0.4s;
+  animation: slide-down 0.4s;
 }
 
 .header-promo {
   background: transparent;
 }
 
-.header-mobile > div {
+.header-mobile>div {
   transform: none;
   transition: transform 250ms ease;
 }
 
-.header-mobile__hidden > div {
-  transform:  translateY(150px);
+.header-mobile__hidden>div {
+  transform: translateY(150px);
   transition: transform 250ms ease;
 }
 
@@ -74,15 +80,17 @@ $purple: #510ed8;
 }
 
 @keyframes slide-down {
-    0% {
-        opacity: 0;
-        transform: translateY(-100%);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
+
 @media all and (max-width: 480px) {
   .container {
     display: none;

@@ -1,5 +1,7 @@
 import React from 'react'
+import { connect } from 'redaction'
 import CopyToClipboard from 'react-copy-to-clipboard'
+import cx from 'classnames'
 
 import cssModules from 'react-css-modules'
 
@@ -24,6 +26,11 @@ const title = defineMessages({
 })
 
 @injectIntl
+@connect(({
+  ui: { dashboardModalsAllowed },
+}) => ({
+  dashboardView: dashboardModalsAllowed,
+}))
 @cssModules(styles, { allowMultiple: true })
 export default class CurrencyAction extends React.Component {
   constructor(props) {
@@ -71,7 +78,8 @@ export default class CurrencyAction extends React.Component {
   render() {
     const {
       props: {
-        data: { currencies, context }
+        data: { currencies, context },
+        dashboardView,
       }
     } = this
 
@@ -82,13 +90,22 @@ export default class CurrencyAction extends React.Component {
     }
 
     return (
-      <div styleName="modal-overlay">
-        <div styleName="modal">
+      <div styleName={cx({
+        "modal-overlay": true,
+        "modal-overlay_dashboardView": dashboardView
+      })}>
+        <div styleName={cx({
+          "modal": true,
+          "modal_dashboardView": dashboardView
+        })}>
           <div styleName="header">
             <p styleName="title">{context}</p>
             <CloseIcon styleName="closeButton" onClick={this.handleClose} data-testid="modalCloseIcon" />
           </div>
-          <div styleName="content">
+          <div styleName={cx({
+            "content": true,
+            "content_dashboardView": dashboardView
+          })}>
             <p styleName="text">
               <FormattedMessage
                 id="currencyAction81"
@@ -96,7 +113,10 @@ export default class CurrencyAction extends React.Component {
                 values={{ context: context.toLowerCase() }}
               />
             </p>
-            <div styleName="currenciesWrapper">
+            <div styleName={cx({
+              "currenciesWrapper": true,
+              "currenciesWrapper_dashboardView": dashboardView
+            })}>
               {currencies.map(item => {
                 let iconName = item.currency.toLowerCase()
                 let itemTitle = item.currency
@@ -132,7 +152,7 @@ export default class CurrencyAction extends React.Component {
                   }
                 }
                 return (
-                  <div styleName="card" key={item} onClick={() => this.handleClickCurrency(item)}>
+                  <div styleName="card" key={item.currency} onClick={() => this.handleClickCurrency(item)}>
                     <div styleName={`circle ${iconName}`} style={renderStyle}>
                       <img src={renderIcon} alt={`${name} icon`} role="image" />
                     </div>

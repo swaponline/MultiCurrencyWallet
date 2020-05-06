@@ -6682,5 +6682,68 @@
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
+  },
+  {
+    "id": "multiSignConfirmTxModal_ButtonClose",
+    "message": "Закрыть",
+    "files": [
+      "shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.js"
+    ]
+  },
+  {
+    "id": "RowHistory_ConfirmTX_NeedConfirm",
+    "message": "Требуется подтверждение другого участника",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory_ConfirmTX_NeedYourSign",
+    "message": "Требуется ваша подпись",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory_ConfirmTX_SendLink",
+    "message": "Отправить ссылку",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory_ConfirmTX_Sign",
+    "message": "Подтвердить",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory_Confirm_Cancelled",
+    "message": "Отменено",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory_Confirm_InProgress",
+    "message": "В процессе",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory_Confirm_Rejected",
+    "message": "Отклонён",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory_Confirm_Sending",
+    "message": "Отправление",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
   }
 ]

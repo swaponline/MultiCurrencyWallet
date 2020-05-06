@@ -5,8 +5,8 @@ import cssModules from 'react-css-modules'
 import styles from './Overlay.scss'
 
 
-const Overlay = ({ children, onClick }) => (
-  <div styleName="overlay" onClick={onClick}>
+const Overlay = ({ children, onClick, dashboardView }) => (
+  <div styleName={dashboardView ? 'overlayDashboardView' : 'overlay'} onClick={onClick}>
     {children}
   </div>
 )
