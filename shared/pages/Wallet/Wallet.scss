@@ -243,8 +243,6 @@
     width: auto !important;
     margin: 0 auto;
   }
-
-  height: 95px;
 }
 
 .yourBalanceCurrencies {
@@ -512,5 +510,24 @@
 
   .desktopEnabledViewForFaq {
     display: none;
+  }
+
+  .widgetBuild .yourBalanceBottom {
+    flex-wrap: wrap;
+
+    button {
+      width: 100%;
+      margin-bottom: 12px;
+
+      &:nth-child(1),
+      &:nth-child(2) {
+        width: 47%;
+      }
+      &:nth-child(n + 3) {
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
   }
 }
