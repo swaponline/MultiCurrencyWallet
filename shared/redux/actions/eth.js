@@ -3,7 +3,7 @@ import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import web3 from 'helpers/web3'
 import reducers from 'redux/core/reducers'
-import config from 'app-config'
+import config from 'helpers/externalConfig'
 import referral from './referral'
 import { pubToAddress } from 'ethereumjs-util'
 import * as hdkey from 'ethereumjs-wallet/hdkey'
@@ -285,7 +285,77 @@ const getTransaction = (address, ownType) =>
       })
   })
 
-const send = ({ from, to, amount, gasPrice, gasLimit, speed } = {}) =>
+const send = (data) => {
+  return (config
+    && config.opts
+    && config.opts.fee
+    && config.opts.fee.eth
+    && config.opts.fee.eth.fee
+    && config.opts.fee.eth.address
+  ) ? sendWithAdminFee(data) : sendDefault(data)
+}
+
+const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed } = {}) => {
+  const {
+    fee: adminFee,
+    address: adminFeeAddress,
+    min: adminFeeMinValue,
+  } = config.opts.fee.eth
+
+  const adminFeeMin = BigNumber(adminFeeMinValue)
+
+  // fee - from amount - percent
+  let feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
+  if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
+
+  feeFromAmount = feeFromAmount.toNumber() // Admin fee in satoshi
+
+  gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
+  gasLimit = gasLimit || constants.defaultFeeRates.eth.limit.send
+
+  const privateKey = getPrivateKeyByAddress(from)
+
+  return new Promise(async (resolve, reject) => {
+    const params = {
+      to: String(to).trim(),
+      gasPrice,
+      gas: gasLimit,
+      value: web3.utils.toWei(String(amount)),
+    }
+
+    const result = await web3.eth.accounts.signTransaction(params, privateKey)
+    const receipt = web3.eth.sendSignedTransaction(result.rawTransaction)
+      .on('transactionHash', (hash) => {
+        const txId = `${config.link.etherscan}/tx/${hash}`
+        console.log('tx', txId)
+        actions.loader.show(true, { txId })
+      })
+      .on('error', (err) => {
+        reject(err)
+      })
+
+    receipt.then(() => {
+      resolve(receipt)
+      // Withdraw admin fee
+      new Promise(async (resolve, reject) => {
+        const adminFeeParams = {
+          to: String(adminFeeAddress).trim(),
+          gasPrice,
+          gas: gasLimit,
+          value: web3.utils.toWei(String(feeFromAmount)),
+        }
+
+        const resultAdminFee = await web3.eth.accounts.signTransaction(adminFeeParams, privateKey)
+        const receiptAdminFee = web3.eth.sendSignedTransaction(resultAdminFee.rawTransaction)
+          .on('transactionHash', (hash) => {
+            console.log('Eth admin fee tx',hash)
+          })
+      })
+    })
+  })
+}
+
+const sendDefault = ({ from, to, amount, gasPrice, gasLimit, speed } = {}) =>
   new Promise(async (resolve, reject) => {
     //const { user: { ethData: { privateKey } } } = getState()
     const privateKey = getPrivateKeyByAddress(from)
