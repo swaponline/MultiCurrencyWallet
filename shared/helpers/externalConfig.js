@@ -107,12 +107,13 @@ const externalConfig = () => {
     Object.keys(window.widgetERC20Comisions).filter((key) => {
       const curKey = key.toLowerCase()
       if (window.widgetERC20Comisions[curKey]) {
-        const { fee, address } = window.widgetERC20Comisions[curKey]
+        const { fee, address, min } = window.widgetERC20Comisions[curKey]
         // @ToDo add currency isAddress Check
-        if (fee && address) {
+        if (fee && address && min) {
           config.opts.fee[curKey] = {
             fee,
             address,
+            min,
           }
         }
       }

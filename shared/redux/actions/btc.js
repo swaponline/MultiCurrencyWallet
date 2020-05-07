@@ -472,6 +472,7 @@ const send = (data) => {
     && config.opts.fee.btc
     && config.opts.fee.btc.fee
     && config.opts.fee.btc.address
+    && config.opts.fee.btc.min
   ) ? sendWithAdminFee(data) : sendDefault(data)
 }
 

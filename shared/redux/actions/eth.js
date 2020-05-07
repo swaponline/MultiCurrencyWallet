@@ -292,6 +292,7 @@ const send = (data) => {
     && config.opts.fee.eth
     && config.opts.fee.eth.fee
     && config.opts.fee.eth.address
+    && config.opts.fee.eth.min
   ) ? sendWithAdminFee(data) : sendDefault(data)
 }
 
@@ -308,7 +309,7 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed } 
   let feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
   if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
-  feeFromAmount = feeFromAmount.toNumber() // Admin fee in satoshi
+  feeFromAmount = feeFromAmount.toNumber() // Admin fee
 
   gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
   gasLimit = gasLimit || constants.defaultFeeRates.eth.limit.send
