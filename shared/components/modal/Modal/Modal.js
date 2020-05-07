@@ -124,9 +124,6 @@ export default class Modal extends Component {
             Boolean(title || showCloseButton) && (
               <div styleName="header">
                 <WidthContainer styleName="headerContent">
-                  {
-                    showLogo && <Logo withLink isColored={!whiteLogo} />
-                  }
                   <div styleName={titleStyleName} role="title">{title}</div>
                   {
                     showCloseButton && !disableClose && (

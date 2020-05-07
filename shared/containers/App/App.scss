@@ -3,10 +3,14 @@
   padding-bottom: 44px;
   min-height: 100vh;
 
+  main {
+    padding-top: 88px;
+  }
 
   &_widget {
     main {
-      margin-top: 0;
+      padding-top: 0px;
+      margin-top: -24px;
     }
   }
 }
