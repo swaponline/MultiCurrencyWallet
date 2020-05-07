@@ -41,11 +41,13 @@ import { getFullOrigin } from 'helpers/links'
         wallets,
       },
     },
+    ui: { dashboardModalsAllowed } 
   }) => ({
     items: [
       btcMultisigUserData,
       ...wallets,
     ],
+    dashboardView: dashboardModalsAllowed,
   })
 )
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
@@ -405,7 +407,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
         }
         {step === 'fillform' &&
           <Fragment>
-            <p styleName="notice">
+            <p styleName="notice dashboardViewNotice">
               <FormattedMessage
                 id="Withdrow213"
                 defaultMessage="Please note: Fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction"
@@ -558,7 +560,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
         }
         {step === 'rawlink' &&
           <Fragment>
-            <p styleName="notice">
+            <p styleName="notice dashboardViewNotice">
               <FormattedMessage id="WithdrawMSUserReady" defaultMessage="TX confirm link" />
               <br />
               <FormattedMessage id="WithdrawMSUserMessage" defaultMessage="Send this link to other wallet owner" />

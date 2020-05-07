@@ -5063,7 +5063,7 @@
   },
   {
     "id": "registerSMSModalPhone",
-    "message": "You phone",
+    "message": "Your phone",
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
     ]

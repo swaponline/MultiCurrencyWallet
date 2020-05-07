@@ -662,9 +662,11 @@ export default class RegisterSMSProtected extends React.Component {
                   defaultMessage="Используя секретную фразу, вы сможете разблокировать средства на счете"
                 />
               </p>
-              <Button blue fullWidth disabled={isShipped} onClick={this.handleRestoreWallet}>
-                <FormattedMessage id="registerSMSRestoryMnemonic" defaultMessage="Восстановить кошелек используя секретную фразу" />
-              </Button>
+              <p styleName="buttonContainer">
+                <Button blue fullWidth autoHeight disabled={isShipped} onClick={this.handleRestoreWallet}>
+                  <FormattedMessage id="registerSMSRestoryMnemonic" defaultMessage="Восстановить кошелек используя секретную фразу" />
+                </Button>
+              </p>
             </Fragment>
           )}
           {step === "ready" && (

@@ -1,5 +1,6 @@
 .button {
   height: 48px;
+  min-height: 48px;
   padding: 0 16px;
   @include inline-block;
   cursor: pointer;
@@ -31,6 +32,7 @@
 
 .big {
   height: 68px;
+  min-height: 68px;
 }
 
 .brand {
@@ -91,9 +93,17 @@
   color: rgba(97, 68, 229, 0.5);
 }
 
+.autoHeight {
+  height: auto;
+  padding: 0.5em 1em;
+}
+
 @include media-mobile {
   .button {
     line-height: inherit;
     padding: 0 9px;
+  }
+  .autoHeight {
+    padding: 0.5em 0.5em;
   }
 }
