@@ -3,8 +3,6 @@ import util from 'swap.app/util'
 import actions from 'redux/actions'
 import { constants } from 'swap.app'
 
-console.log('config enabled', window.buildOptions, window.widgetERC20Comisions, window.widgetERC20Tokens )
-
 
 const GetCustromERC20 = () => {
   const configStorage = (process.env.MAINNET) ? 'mainnet' : 'testnet'
@@ -120,7 +118,6 @@ const externalConfig = () => {
     })
   }
 
-  console.log('externalConfig first time called', config, window.buildOptions, window.widgetERC20Comisions, window.widgetERC20Tokens )
   return config
 }
 

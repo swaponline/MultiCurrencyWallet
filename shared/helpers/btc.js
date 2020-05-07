@@ -7,6 +7,13 @@ import request from './request'
 import BigNumber from 'bignumber.js'
 
 
+const hasAdminFee = (
+    config
+    && config.opts
+    && config.opts.fee
+    && config.opts.fee.btc
+    && config.opts.fee.btc.fee
+  ) ? config.opts.fee.btc : false
 
 const network = process.env.MAINNET
   ? bitcoin.networks.bitcoin
@@ -104,14 +111,20 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
     : defaultTxSize
 
   if (method === 'send_multisig') {
-    const msuSize = getByteCount({'MULTISIG-P2SH-P2WSH:2-2': 1}, {'P2PKH': 2})
+    const msuSize = getByteCount(
+      {'MULTISIG-P2SH-P2WSH:2-2': 1},
+      {'P2PKH': (hasAdminFee) ? 3 : 2}
+    )
     const msutxSize = txIn * msuSize + txOut * 33 + (15 + txIn - txOut)
 
     return msutxSize
   }
 
   if (method === 'send_2fa') {
-    const msSize = getByteCount({'MULTISIG-P2SH-P2WSH:2-3': 1}, {'P2PKH': 2})
+    const msSize = getByteCount(
+      {'MULTISIG-P2SH-P2WSH:2-3': 1},
+      {'P2PKH': (hasAdminFee) ? 3 : 2}
+    )
     const mstxSize = txIn * msSize + txOut * 33 + (15 + txIn - txOut)
 
     return mstxSize
