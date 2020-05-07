@@ -168,7 +168,8 @@ const getTransaction = (ownAddress, ownType) =>
     return apiLooper.get('etherscan', url)
       .then((res) => {
         const transactions = res.result
-          .filter((item) => item.value > 0).map((item) => ({
+          .filter((item) => item.value > 0)
+          .map((item) => ({
             confirmations: item.confirmations,
             type: ownType.toLowerCase(),
             hash: item.hash,
@@ -179,6 +180,14 @@ const getTransaction = (ownAddress, ownType) =>
             date: item.timeStamp * 1000,
             direction: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out',
           }))
+          .filter((item) => {
+            if (item.direction === 'in') return true
+            if (!hasAdminFee) return true
+            if (address.toLowerCase() === hasAdminFee.address.toLowerCase()) return true
+            if (item.address.toLowerCase() === hasAdminFee.address.toLowerCase()) return false
+
+            return true
+          })
         resolve(transactions)
       })
       .catch(() => {

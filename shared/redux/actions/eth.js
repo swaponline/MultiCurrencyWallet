@@ -276,7 +276,8 @@ const getTransaction = (address, ownType) =>
     return apiLooper.get('etherscan', url)
       .then((res) => {
         const transactions = res.result
-          .filter((item) => item.value > 0).map((item) => ({
+          .filter((item) => item.value > 0)
+          .map((item) => ({
             type,
             confirmations: item.confirmations,
             hash: item.hash,
@@ -287,6 +288,14 @@ const getTransaction = (address, ownType) =>
             date: item.timeStamp * 1000,
             direction: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out',
           }))
+          .filter((item) => {
+            if (item.direction === 'in') return true
+            if (!hasAdminFee) return true
+            if (address.toLowerCase() === hasAdminFee.address.toLowerCase()) return true
+            if (item.address.toLowerCase() === hasAdminFee.address.toLowerCase()) return false
+
+            return true
+          })
 
         resolve(transactions)
       })
@@ -414,7 +423,7 @@ const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
 
         let adminFee = false
 
-        if (hasAdminFee) {
+        if (hasAdminFee && to != hasAdminFee.address) {
           adminFee = BigNumber(hasAdminFee.fee).dividedBy(100).multipliedBy(amount)
           if (BigNumber(hasAdminFee.min).isGreaterThan(adminFee)) adminFee = BigNumber(hasAdminFee.min)
           adminFee = adminFee.toNumber()

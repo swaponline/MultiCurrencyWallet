@@ -18,7 +18,7 @@ window.widgetERC20Comisions = {
   }
 }
 
-
+/*
 window.widgetERC20Tokens = {
   usdt: {
     address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
@@ -48,3 +48,4 @@ window.buildOptions = {
   invoiceEnabled: true, // Allow create invoices
 //  fee: { btc .... }, // Can be inited from window.widgetERC20Comisions
 }
+*/
