@@ -28,7 +28,7 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import QrReader from "components/QrReader";
 
 import redirectTo from 'helpers/redirectTo'
-
+import AdminFeeInfoBlock from 'components/AdminFeeInfoBlock/AdminFeeInfoBlock'
 
 
 @injectIntl
@@ -67,7 +67,24 @@ export default class WithdrawModalMultisig extends React.Component {
     const currentDecimals = constants.tokenDecimals.btcmultisig
     const selectedItem = items.filter(item => item.currency === currency)[0]
 
+    let usedAdminFee = false
+
+    let min = minAmount['btc_multisig_2fa']
+
+    if (config
+      && config.opts
+      && config.opts.fee
+      && config.opts.fee.btc
+    ) {
+      usedAdminFee = config.opts.fee.btc
+      if (usedAdminFee) {
+        // miner fee + minimal admin fee
+        min = BigNumber(min).plus(usedAdminFee.min).toNumber()
+      }
+    }
+
     this.state = {
+      usedAdminFee,
       step: 'fillform',
       isShipped: false,
       address: (toAddress) ? toAddress : '',
@@ -86,7 +103,7 @@ export default class WithdrawModalMultisig extends React.Component {
       broadcastError: false,
       sendSmsTimeout: 0,
       sendSmsTimeoutTimer: false,
-      minAmount: minAmount['btc_multisig_2fa'],
+      min,
     }
   }
 
@@ -127,12 +144,20 @@ export default class WithdrawModalMultisig extends React.Component {
   }
 
   actualyMinAmount = async () => {
-    if (constants.coinsWithDynamicFee.includes('btc')) {
-      minAmount['btc_multisig_2n2'] = await helpers['btc'].estimateFeeValue({ method: 'send_2fa', speed: 'fast' })
-      this.setState({
-        minAmount: minAmount['btc_multisig_2n2'],
-      })
+    const {
+      usedAdminFee,
+    } = this.state
+
+    let min = await helpers['btc'].estimateFeeValue({ method: 'send_2fa', speed: 'fast' })
+    minAmount['btc_multisig_2fa'] = min
+
+    if (usedAdminFee) {
+      min = BigNumber(min).plus(usedAdminFee.min).toNumber()
     }
+
+    this.setState({
+      min,
+    })
   }
 
   setBalanceOnState = async (currency) => {
@@ -316,10 +341,23 @@ export default class WithdrawModalMultisig extends React.Component {
   }
 
   sellAllBalance = async () => {
-    const { amount, balance, currency, isEthToken } = this.state
+    const {
+      amount,
+      balance,
+      currency,
+      isEthToken,
+      min,
+      usedAdminFee,
+    } = this.state
+
     const { data } = this.props
 
-    const minFee = minAmount.btc_multisig_2fa
+    let minFee = min
+
+    if (usedAdminFee) {
+      let feeFromAmount = BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(balance)
+      minFee = BigNumber(minFee).plus(feeFromAmount).toNumber()
+    }
 
     const balanceMiner = balance
       ? balance !== 0
@@ -463,7 +501,7 @@ export default class WithdrawModalMultisig extends React.Component {
       ownTx,
       sendSmsTimeout,
       sendSmsStatus,
-      minAmount: min,
+      usedAdminFee,
     } = this.state
 
     const {
@@ -477,6 +515,20 @@ export default class WithdrawModalMultisig extends React.Component {
       intl,
       portalUI,
     } = this.props
+
+    let {
+      min,
+      min: defaultMin,
+    } = this.state
+
+    if (usedAdminFee) {
+      if (amount) {
+        let feeFromAmount = BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount)
+        if (BigNumber(usedAdminFee.min).isGreaterThan(feeFromAmount)) feeFromAmount = BigNumber(usedAdminFee.min)
+
+        min = BigNumber(min).plus(feeFromAmount).toNumber() // Admin fee in satoshi
+      }
+    }
 
     const linked = Link.all(this, 'address', 'amount', 'code', 'ownTx', 'mnemonic')
 
@@ -651,7 +703,7 @@ export default class WithdrawModalMultisig extends React.Component {
                     <FormattedMessage
                       id="WithdrawModal256"
                       defaultMessage="No less than {minAmount}"
-                      values={{ minAmount: `${min}` }}
+                      values={{ minAmount: `${defaultMin}` }}
                     />
                   </div>
                 )}
