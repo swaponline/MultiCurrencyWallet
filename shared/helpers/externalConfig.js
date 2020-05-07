@@ -25,7 +25,6 @@ const initExternalConfig = () => {
 
 const externalConfig = () => {
   // Reconfigure app config if it widget or use external config
-  console.log('externalConfig called', config )
   if (config.opts && config.opts.inited) return config
 
   config.opts = {

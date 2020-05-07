@@ -12,6 +12,16 @@ import typeforce from "swap.app/util/typeforce";
 import { BigNumber } from 'bignumber.js'
 
 
+const hasAdminFee = (
+    config
+    && config.opts
+    && config.opts.fee
+    && config.opts.fee.eth
+    && config.opts.fee.eth.fee
+    && config.opts.fee.eth.address
+    && config.opts.fee.eth.min
+  ) ? config.opts.fee.eth : false
+
 const getRandomMnemonicWords = () => bip39.generateMnemonic()
 const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonic)
 
@@ -286,14 +296,7 @@ const getTransaction = (address, ownType) =>
   })
 
 const send = (data) => {
-  return (config
-    && config.opts
-    && config.opts.fee
-    && config.opts.fee.eth
-    && config.opts.fee.eth.fee
-    && config.opts.fee.eth.address
-    && config.opts.fee.eth.min
-  ) ? sendWithAdminFee(data) : sendDefault(data)
+  return (hasAdminFee) ? sendWithAdminFee(data) : sendDefault(data)
 }
 
 const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed } = {}) => {
@@ -402,18 +405,29 @@ const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
           blockHash,
         } = res.result
 
+        const amount =  web3.utils.fromWei(value)
+
         // Calc miner fee, used for this tx
         const minerFee = BigNumber(web3.utils.toBN(gas).toNumber())
             .multipliedBy(web3.utils.toBN(gasPrice).toNumber())
             .dividedBy(1e18).toNumber()
 
+        let adminFee = false
+
+        if (hasAdminFee) {
+          adminFee = BigNumber(hasAdminFee.fee).dividedBy(100).multipliedBy(amount)
+          if (BigNumber(hasAdminFee.min).isGreaterThan(adminFee)) adminFee = BigNumber(hasAdminFee.min)
+          adminFee = adminFee.toNumber()
+        }
+
         resolve({
-          amount: web3.utils.fromWei(value),
+          amount,
           afterBalance: null,
           receiverAddress: to,
           senderAddress: from,
           minerFee,
           minerFeeCurrency: 'ETH',
+          adminFee,
           confirmed: (blockHash != null),
         })
 

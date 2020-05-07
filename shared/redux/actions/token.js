@@ -9,6 +9,16 @@ import { BigNumber } from 'bignumber.js'
 import InputDataDecoder from 'ethereum-input-data-decoder'
 
 
+const hasAdminFee = (
+  config
+  && config.opts
+  && config.opts.fee
+  && config.opts.fee.erc20
+  && config.opts.fee.erc20.fee
+  && config.opts.fee.erc20.address
+  && config.opts.fee.erc20.min
+) ? config.opts.fee.erc20 : false
+
 const erc20Decoder = new InputDataDecoder(ERC20_ABI)
 
 const AddCustomERC20 = (contract, symbol, decimals) => {
@@ -238,14 +248,7 @@ const sendTransaction = ({ contract, method }, { args, params = {} } = {}, callb
   })
 
 const send = (data) => {
-  return (config
-    && config.opts
-    && config.opts.fee
-    && config.opts.fee.erc20
-    && config.opts.fee.erc20.fee
-    && config.opts.fee.erc20.address
-    && config.opts.fee.erc20.min
-  ) ? sendWithAdminFee(data) : sendDefault(data)
+  return (hasAdminFee) ? sendWithAdminFee(data) : sendDefault(data)
 }
 
 const sendWithAdminFee = async ({ name, to, amount, ...feeConfig } = {}) => {
@@ -405,6 +408,14 @@ const fetchTxInfo = (hash, cacheResponse) => {
             .multipliedBy(web3.utils.toBN(gasPrice).toNumber())
             .dividedBy(1e18).toNumber()
 
+          let adminFee = false
+
+          if (hasAdminFee) {
+            adminFee = BigNumber(hasAdminFee.fee).dividedBy(100).multipliedBy(amount)
+            if (BigNumber(hasAdminFee.min).isGreaterThan(adminFee)) adminFee = BigNumber(hasAdminFee.min)
+            adminFee = adminFee.toNumber()
+          }
+
           resolve({
             amount,
             afterBalance: null,
@@ -412,6 +423,7 @@ const fetchTxInfo = (hash, cacheResponse) => {
             senderAddress: from,
             minerFee,
             minerFeeCurrency: 'ETH',
+            adminFee,
             confirmed: (blockHash != null),
           })
 

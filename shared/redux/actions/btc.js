@@ -17,6 +17,15 @@ import { localisePrefix } from 'helpers/locale'
 
 
 
+const hasAdminFee = (config
+    && config.opts
+    && config.opts.fee
+    && config.opts.fee.btc
+    && config.opts.fee.btc.fee
+    && config.opts.fee.btc.address
+    && config.opts.fee.btc.min
+  ) ? config.opts.fee.btc : false
+
 const getRandomMnemonicWords = () => bip39.generateMnemonic()
 const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonic)
 
@@ -311,16 +320,53 @@ const fetchTx = (hash, cacheResponse) =>
 
 const fetchTxInfo = (hash, cacheResponse) =>
   fetchTx(hash, cacheResponse)
-    .then(({ vin, vout, ...rest }) => ({
-      amount: vout ? new BigNumber(vout[0].value).toNumber() : null,
-      afterBalance: vout && vout[1] ? new BigNumber(vout[1].value).toNumber() : null,
-      senderAddress: vin ? vin[0].addr : null,
-      receiverAddress: vout ? vout[0].scriptPubKey.addresses : null,
-      confirmed: (rest.confirmations) ? true : false,
-      minerFee: rest.fees.dividedBy(1e8).toNumber(),
-      minerFeeCurrency: 'BTC',
-      ...rest,
-    }))
+    .then(({ vin, vout, ...rest }) => {
+      const senderAddress = vin ? vin[0].addr : null
+      const amount = vout ? new BigNumber(vout[0].value).toNumber() : null
+
+      let afterBalance = vout && vout[1] ? new BigNumber(vout[1].value).toNumber() : null
+      let adminFee = false
+
+      if (hasAdminFee) {
+        const adminOutput = vout.filter((out) => (
+            out.scriptPubKey.addresses 
+            && out.scriptPubKey.addresses[0] === hasAdminFee.address
+            && !(new BigNumber(out.value).eq(amount))
+          ))
+
+        const afterOutput = vout.filter((out) => (
+            out.addresses 
+            && out.addresses[0] !== hasAdminFee.address 
+            && out.addresses[0] !== senderAddress
+          ))
+
+        if (afterOutput.length) {
+          afterBalance = new BigNumber(afterOutput[0].value).toNumber()
+        }
+
+        if (adminOutput) {
+          adminFee = new BigNumber(adminOutput[0].value).toNumber()
+        }
+      }
+
+      const txInfo = {
+        amount,
+        afterBalance,
+        senderAddress,
+        receiverAddress: vout ? vout[0].scriptPubKey.addresses : null,
+        confirmed: (rest.confirmations) ? true : false,
+        minerFee: rest.fees.dividedBy(1e8).toNumber(),
+        adminFee,
+        minerFeeCurrency: 'BTC',
+        outputs: vout.map((out) => ({
+          amount: new BigNumber(out.value).toNumber(),
+          address: out.scriptPubKey.addresses || null,
+        })),
+        ...rest,
+      }
+
+      return txInfo
+    })
 
 const getInvoices = (address) => {
   const { user: { btcData: { userAddress } } } = getState()
@@ -466,14 +512,7 @@ const getTransaction = (address, ownType) =>
   })
 
 const send = (data) => {
-  return (config
-    && config.opts
-    && config.opts.fee
-    && config.opts.fee.btc
-    && config.opts.fee.btc.fee
-    && config.opts.fee.btc.address
-    && config.opts.fee.btc.min
-  ) ? sendWithAdminFee(data) : sendDefault(data)
+  return (hasAdminFee) ? sendWithAdminFee(data) : sendDefault(data)
 }
 
 const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
