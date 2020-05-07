@@ -1,7 +1,7 @@
 import * as bitcoin from 'bitcoinjs-lib'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
-import config from 'app-config'
+import config from './externalConfig'
 import constants from './constants'
 import request from './request'
 import BigNumber from 'bignumber.js'
@@ -129,13 +129,22 @@ const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, f
     },
   } = getState()
 
+  let txOut = 2
+
+  if (config
+    && config.opts
+    && config.opts.fee
+    && config.opts.fee.btc
+    && config.opts.fee.btc.fee
+  ) txOut = 3
+
   if (!address) {
     address = btcData.address
     if (method === 'send_2fa') address = btcMultisigSMSData.address
     if (method === 'send_multisig') address = btcMultisigUserData.address
   }
 
-  txSize = txSize || await calculateTxSize({ address, speed, fixed, method })
+  txSize = txSize || await calculateTxSize({ address, speed, fixed, method, txOut })
   feeRate = feeRate || await estimateFeeRate({ speed })
 
   const calculatedFeeValue = BigNumber.maximum(

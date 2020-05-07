@@ -477,11 +477,19 @@ const send = (data) => {
 
 const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
 
-  const adminFee = config.opts.fee.btc.fee
-  const adminFeeAddress = config.opts.fee.btc.address
+  const {
+    fee: adminFee,
+    address: adminFeeAddress,
+    min: adminFeeMinValue,
+  } = config.opts.fee.btc
+  const adminFeeMin = BigNumber(adminFeeMinValue)
 
   // fee - from amount - percent
-  const feeFromAmount = adminFee*0.01*amount
+  let feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
+  if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
+
+  feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber() // Admin fee in satoshi
+
 
   feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
 
@@ -490,14 +498,13 @@ const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
 
   let fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
 
-  
-  
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  const skipValue = totalUnspent - fundValue - feeValue
+  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
   unspents.forEach(({ txid, vout }) => tx.addInput(txid, vout, 0xfffffffe))
   tx.addOutput(to, fundValue)
 
+  // admin fee output
   tx.addOutput(adminFeeAddress, feeFromAmount)
 
   if (skipValue > 546) {
@@ -509,7 +516,7 @@ const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
   const txRaw = signAndBuild(tx, from)
 
   console.log(txRaw, txRaw.toHex())
-//  await broadcastTx(txRaw.toHex())
+  await broadcastTx(txRaw.toHex())
 
   return txRaw
 }
