@@ -144,12 +144,7 @@ const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, f
 
   let txOut = 2
 
-  if (config
-    && config.opts
-    && config.opts.fee
-    && config.opts.fee.btc
-    && config.opts.fee.btc.fee
-  ) txOut = 3
+  if (hasAdminFee) txOut = 3
 
   if (!address) {
     address = btcData.address

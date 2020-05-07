@@ -81,7 +81,8 @@ export default class TxInfo extends React.Component {
             <div styleName="shortInfoHolder">
               <span><strong> {amount}  {currency.toUpperCase()} </strong></span>
               {!isFetching && (
-                <span> <FormattedMessage id="InfoPay_2" defaultMessage="были успешно переданы" />
+                <span>
+                  <FormattedMessage id="InfoPay_2_Ready" defaultMessage="были успешно переданы" />
                   <br />
                   <strong>{toAddress}</strong>
                 </span>
