@@ -402,21 +402,11 @@ export default class Wallet extends Component {
       activeView,
       infoAboutCurrency,
       exchangeForm,
-      editTitle,
-      walletTitle,
       enabledCurrencies,
-      banners,
       showSweepBanner,
       isMnemonicSaved,
     } = this.state
-    const {
-      hiddenCoinsList,
-      isSigned,
-      isFetching,
-      isBalanceFetching,
-      modals,
-      dashboardView,
-    } = this.props
+    const { hiddenCoinsList, modals, dashboardView, isBalanceFetching } = this.props
 
     const allData = actions.core.getWallets()
 
@@ -468,7 +458,6 @@ export default class Wallet extends Component {
     })
 
     const isAnyModalCalled = Object.keys(modals).length
-
     return (
       <article>
         <section styleName={isWidgetBuild && !config.isFullBuild ? 'wallet widgetBuild' : 'wallet'}>

@@ -5,15 +5,9 @@ import cssModules from 'react-css-modules'
 
 import CopyToClipboard from 'react-copy-to-clipboard'
 import { FormattedMessage } from 'react-intl'
-import { BigNumber } from 'bignumber.js'
 
 import Button from 'components/controls/Button/Button'
-import Timer from 'components/Timer/Timer'
 
-import config from 'app-config'
-
-
-const isWidgetBuild = config && config.isWidget
 
 @cssModules(styles)
 export default class FeeControler extends Component {

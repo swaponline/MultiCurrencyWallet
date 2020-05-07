@@ -7,13 +7,10 @@ import security from '../NotityBlock/images/security.svg'
 import styles from '../NotityBlock/NotifyBlock.scss'
 import NotifyBlock from '../NotityBlock/NotifyBock'
 import ContentLoader from '../../../../components/loaders/ContentLoader/ContentLoader'
-import config from 'app-config'
 
 import { FormattedMessage } from 'react-intl'
 import linksManager from '../../../../helpers/links'
 
-
-const isWidgetBuild = config && config.isWidget
 
 export default class WallerSlider extends Component {
   constructor(props) {
@@ -53,12 +50,15 @@ export default class WallerSlider extends Component {
   }
 
   getBanners = () => {
+    const { isWidgetBuild } = this.props
     try {
       return axios
         .get('https://noxon.wpmix.net/swapBanners/banners.php')
-        .then(result => {
+        .then(({ data }) => {
+          const banners = isWidgetBuild ? data.filter(el => !el.includes('Обменник BTC/USDT atomicswap')) : data
+
           this.setState({
-            banners: result.data,
+            banners,
             isFetching: true,
           })
           this.initBanners()
@@ -97,21 +97,20 @@ export default class WallerSlider extends Component {
   }
 
   render() {
-    const { mnemonicDeleted } = this.state
+    const { mnemonicDeleted, banners } = this.state
 
     const isPrivateKeysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
 
     let firstBtnTitle = <FormattedMessage id="descr282" defaultMessage="Show my keys" />
     if (!mnemonicDeleted) firstBtnTitle = <FormattedMessage id="ShowMyMnemonic" defaultMessage="Показать 12 слов" />
 
-    return (isWidgetBuild || window.location.hash !== linksManager.hashHome) ? null : (
+    return (window.location.hash !== linksManager.hashHome) ? null : (
       <Fragment>
         <h3 className={styles.bannersHeading}>
           <FormattedMessage id="ForYou" defaultMessage="For you" />
         </h3>
-        {!this.state.isFetching ? (
-          <ContentLoader banners />
-        ) : (
+        {!this.state.isFetching ?
+          <ContentLoader banners /> :
           <div id="swiper_banners" className="swiper-container" style={{ marginTop: '20px', marginBottom: '30px' }}>
             <div className="swiper-wrapper">
               {(!isPrivateKeysSaved && !mnemonicDeleted) && (
@@ -127,14 +126,14 @@ export default class WallerSlider extends Component {
                   />
                 </div>
               )}
-              {this.state.banners.map(banner => (
-                <div className="swiper-slide">
+              {banners.map(banner => (
+                <div key={banner[0]} className="swiper-slide">
                   <NotifyBlock background={`${banner[3]}`} descr={banner[2]} link={banner[4]} icon={banner[5]} />
                 </div>
               ))}
             </div>
           </div>
-        )}
+        }
       </Fragment>
     )
   }

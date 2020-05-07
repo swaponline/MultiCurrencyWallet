@@ -268,25 +268,25 @@ export default class App extends React.Component {
           {children}
           <Core />
           <RequestLoader />
-          { !dashboardModalsAllowed && <ModalConductor history={history} /> }
+          {!dashboardModalsAllowed && <ModalConductor history={history} />}
           <NotificationConductor history={history} />
         </Fragment>
       ) : (
-        <Fragment>
-          <Seo location={history.location} />
-          <Header />
-          <Wrapper>
-            <WidthContainer id="swapComponentWrapper" styleName={isWidgetBuild ? "main main_widget" : "main"}>
-              <main>{children}</main>
-            </WidthContainer>
-          </Wrapper>
-          <Core />
-          <Footer />
-          <RequestLoader />
-          { !dashboardModalsAllowed && <ModalConductor history={history} /> }
-          <NotificationConductor history={history} />
-        </Fragment>
-      );
+          <Fragment>
+            <Seo location={history.location} />
+            <Header />
+            <Wrapper>
+              <WidthContainer id="swapComponentWrapper" styleName={isWidgetBuild ? "main main_widget" : "main"}>
+                <main>{children}</main>
+              </WidthContainer>
+            </Wrapper>
+            <Core />
+            <Footer />
+            <RequestLoader />
+            {!dashboardModalsAllowed && <ModalConductor history={history} />}
+            <NotificationConductor history={history} />
+          </Fragment>
+        );
 
     return <HashRouter>{mainContent}</HashRouter>;
   }
