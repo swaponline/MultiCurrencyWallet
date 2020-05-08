@@ -76,14 +76,13 @@ function BalanceForm({
                 ""
               )} */}
             </p>
-          ) : (
-            <p className="data-tut-all-balance">
+          ) : <p className="data-tut-all-balance">
               {currency === 'btc' ? <img src={btc} alt="btc" /> : ''}
               {BigNumber(currencyBalance)
                 .dp(5, BigNumber.ROUND_FLOOR)
                 .toString()}
             </p>
-          )}
+          }
         </div>
         <div styleName="yourBalanceCurrencies">
           <button
@@ -115,7 +114,7 @@ function BalanceForm({
         })}
       >
         <div styleName="yourBalanceBottom">
-          {showButtons ? (
+          {showButtons ?
             <Fragment>
               <Button blue id="depositBtn" onClick={() => handleReceive('Deposit')}>
                 <FormattedMessage id="YourtotalbalanceDeposit" defaultMessage="Пополнить" />
@@ -123,17 +122,11 @@ function BalanceForm({
               <Button blue disabled={!currencyBalance} id="sendBtn" onClick={() => handleWithdraw('Send')}>
                 <FormattedMessage id="YourtotalbalanceSend" defaultMessage="Отправить" />
               </Button>
-              {isWidgetBuild && !config.isFullBuild && (
-                <Button brand id="exchangeBtn" onClick={() => handleExchange()}>
-                  <FormattedMessage id="YourtotalbalanceExchange" defaultMessage="Обменять" />
-                </Button>
-              )}
-            </Fragment>
-          ) : (
+            </Fragment> :
             <Button blue disabled={!currencyBalance} styleName="button__invoice" onClick={() => handleInvoice()}>
               <FormattedMessage id="RequestPayment" defaultMessage="Запросить" />
             </Button>
-          )}
+          }
         </div>
       </div>
     </div>
