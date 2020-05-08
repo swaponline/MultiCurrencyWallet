@@ -6778,6 +6778,13 @@
     ]
   },
   {
+    "id": "InfoPay_2_Error",
+    "message": "Ошибка загрузки данных",
+    "files": [
+      "shared/pages/Transaction/TxInfo/index.js"
+    ]
+  },
+  {
     "id": "InfoPay_AdminFee",
     "message": "Service fee",
     "files": [
