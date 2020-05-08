@@ -51,6 +51,7 @@ export default class TxInfo extends React.Component {
       confirmations,
       minerFee,
       minerFeeCurrency,
+      adminFee,
     } = this.props
 
     let linkBlockChain = '#'
@@ -80,7 +81,8 @@ export default class TxInfo extends React.Component {
             <div styleName="shortInfoHolder">
               <span><strong> {amount}  {currency.toUpperCase()} </strong></span>
               {!isFetching && (
-                <span> <FormattedMessage id="InfoPay_2" defaultMessage="были успешно переданы" />
+                <span>
+                  <FormattedMessage id="InfoPay_2_Ready" defaultMessage="были успешно переданы" />
                   <br />
                   <strong>{toAddress}</strong>
                 </span>
@@ -137,6 +139,18 @@ export default class TxInfo extends React.Component {
                       <td>
                         <strong>
                           {minerFee} {minerFeeCurrency}
+                        </strong>
+                      </td>
+                    </tr>
+                  )}
+                  {(adminFee > 0) && (
+                    <tr>
+                      <td styleName="header">
+                        <FormattedMessage id="InfoPay_AdminFee" defaultMessage="Service fee" />
+                      </td>
+                      <td>
+                        <strong>
+                          {adminFee} {currency.toUpperCase()}
                         </strong>
                       </td>
                     </tr>

@@ -31,3 +31,7 @@ window.buildOptions = {
   invoiceEnabled: false, // Allow create invoices
 }
 */
+
+window.buildOptions = {
+  showWalletBanners: true, // Allow to see banners
+}

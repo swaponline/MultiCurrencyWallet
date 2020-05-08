@@ -30,6 +30,7 @@ import minAmount from "helpers/constants/minAmount";
 import { inputReplaceCommaWithDot } from "helpers/domUtils"
 
 import redirectTo from 'helpers/redirectTo'
+import AdminFeeInfoBlock from 'components/AdminFeeInfoBlock/AdminFeeInfoBlock'
 
 
 @injectIntl
@@ -61,8 +62,24 @@ export default class WithdrawModal extends React.Component {
     const allCurrencyies = items.concat(tokenItems);
     const selectedItem = allCurrencyies.filter(item => item.currency === currency)[0];
 
+    let usedAdminFee = false
+
+    if (config
+      && config.opts
+      && config.opts.fee
+    ) {
+      if (helpers.ethToken.isEthToken({ name: currency.toLowerCase() }) && config.opts.fee.erc20) {
+        usedAdminFee = config.opts.fee.erc20
+      } else {
+        if (config.opts.fee[currency.toLowerCase()]) {
+          usedAdminFee = config.opts.fee[currency.toLowerCase()]
+        }
+      }
+    }
+
     this.state = {
       isShipped: false,
+      usedAdminFee,
       openScanCam: "",
       address: toAddress ? toAddress : "",
       amount: amount ? amount : "",
@@ -311,10 +328,25 @@ export default class WithdrawModal extends React.Component {
   };
 
   sellAllBalance = async () => {
-    const { amount, balance, currency, isEthToken } = this.state;
-    const { data } = this.props;
+    const {
+      amount,
+      balance,
+      isEthToken,
+      usedAdminFee,
+    } = this.state
 
-    const minFee = isEthToken ? 0 : minAmount[data.currency.toLowerCase()];
+    const {
+      data: {
+        currency,
+      },
+    } = this.props
+
+    let minFee = isEthToken ? 0 : minAmount[currency.toLowerCase()]
+
+    if (usedAdminFee) {
+      let feeFromAmount = BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(balance)
+      minFee = BigNumber(minFee).plus(feeFromAmount).toNumber()
+    }
 
     const balanceMiner = balance
       ? balance !== 0
@@ -390,8 +422,10 @@ export default class WithdrawModal extends React.Component {
       exCurrencyRate,
       currentDecimals,
       error,
-      ownTx
-    } = this.state;
+      ownTx,
+      usedAdminFee,
+    } = this.state
+
     const {
       name,
       data: { currency, invoice },
@@ -404,7 +438,21 @@ export default class WithdrawModal extends React.Component {
 
     const linked = Link.all(this, "address", "amount", "ownTx");
 
-    const min = minAmount[currency.toLowerCase()];
+    let min = isEthToken ? 0 : minAmount[currency.toLowerCase()]
+    let defaultMin = min
+
+    if (usedAdminFee) {
+      defaultMin = BigNumber(min).plus(usedAdminFee.min).toNumber()
+      if (amount) {
+        let feeFromAmount = BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount)
+        if (BigNumber(usedAdminFee.min).isGreaterThan(feeFromAmount)) feeFromAmount = BigNumber(usedAdminFee.min)
+
+        min = BigNumber(min).plus(feeFromAmount).toNumber() // Admin fee in satoshi
+      } else {
+        min = defaultMin
+      }
+    }
+
     const dataCurrency = isEthToken ? "ETH" : currency.toUpperCase();
 
     const isDisabled =
@@ -534,7 +582,7 @@ export default class WithdrawModal extends React.Component {
                 <FormattedMessage
                   id="WithdrawModal256"
                   defaultMessage="No less than {minAmount}"
-                  values={{ minAmount: `${min}` }}
+                  values={{ minAmount: `${defaultMin}` }}
                 />
               </div>
             )}
@@ -571,6 +619,9 @@ export default class WithdrawModal extends React.Component {
             </Button>
           </div>
         </div>
+        {usedAdminFee && isEthToken && (
+          <AdminFeeInfoBlock {...usedAdminFee} amount={amount} currency={currency} />
+        )}
         {error && (
           <div styleName="rednote">
             <FormattedMessage
