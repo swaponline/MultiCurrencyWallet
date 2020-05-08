@@ -25,9 +25,9 @@ const CurrenciesList = ({
 
   return (
     <div styleName="yourAssets">
-      {(exConfig && exConfig.opts && exConfig.opts.showWalletBanners || isWidgetBuild) ? (
+      {(exConfig && exConfig.opts && exConfig.opts.showWalletBanners) ? (
         <Fragment>
-          <Slider isWidgetBuild={isWidgetBuild} />
+          <Slider />
         </Fragment>
       ) : (
           ''

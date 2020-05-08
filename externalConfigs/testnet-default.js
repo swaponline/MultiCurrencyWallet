@@ -49,3 +49,7 @@ window.buildOptions = {
 //  fee: { btc .... }, // Can be inited from window.widgetERC20Comisions
 }
 */
+
+window.buildOptions = {
+  showWalletBanners: true, // Allow to see banners
+}

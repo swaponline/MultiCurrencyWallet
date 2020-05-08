@@ -544,18 +544,6 @@ export default class Wallet extends Component {
               {activeView === 2 && (<InvoicesList {...this.props} onlyTable={true} />)}
             </div>
           </div>
-          {isWidgetBuild && activeView === 0 && (
-            <div styleName="keysExportImport">
-              {!isMnemonicSaved && (
-                <Button gray onClick={this.handleShowMnemonic}>
-                  <FormattedMessage id="WalletPage_Widget_ShowMnemonic" defaultMessage="Показать 12 слов" />
-                </Button>
-              )}
-              <Button gray onClick={this.handleRestoreMnemonic}>
-                <FormattedMessage id="WalletPage_Widget_RestoreMnemonic" defaultMessage="Ввести свои 12 слов" />
-              </Button>
-            </div>
-          )}
         </section>
       </article>
     )

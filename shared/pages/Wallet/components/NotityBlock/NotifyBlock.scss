@@ -55,10 +55,6 @@
 
 @media all and (min-width: 768px) and (max-width: 992px) {
   .notifyBlock {
-    height: max-content;
-    > div:first-child {
-      width: 60%;
-    }
     button {
       font-size: 11px;
     }
@@ -80,7 +76,6 @@
 @media all and (min-width: 320px) and (max-width: 767px) {
   .notifyBlock {
     flex-direction: column;
-    height: max-content;
     align-items: flex-start;
     padding: 20px;
     justify-content: space-between;
@@ -137,7 +132,7 @@
     }
   }
   .notifyBlock {
-    height: 100px;
+    height: 160px;
     > div {
       flex-direction: column;
       align-items: normal;
