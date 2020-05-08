@@ -4,10 +4,20 @@ import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import web3 from 'helpers/web3'
 import reducers from 'redux/core/reducers'
-import config from 'app-config'
+import config from 'helpers/externalConfig'
 import { BigNumber } from 'bignumber.js'
 import InputDataDecoder from 'ethereum-input-data-decoder'
 
+
+const hasAdminFee = (
+  config
+  && config.opts
+  && config.opts.fee
+  && config.opts.fee.erc20
+  && config.opts.fee.erc20.fee
+  && config.opts.fee.erc20.address
+  && config.opts.fee.erc20.min
+) ? config.opts.fee.erc20 : false
 
 const erc20Decoder = new InputDataDecoder(ERC20_ABI)
 
@@ -158,7 +168,8 @@ const getTransaction = (ownAddress, ownType) =>
     return apiLooper.get('etherscan', url)
       .then((res) => {
         const transactions = res.result
-          .filter((item) => item.value > 0).map((item) => ({
+          .filter((item) => item.value > 0)
+          .map((item) => ({
             confirmations: item.confirmations,
             type: ownType.toLowerCase(),
             hash: item.hash,
@@ -169,6 +180,14 @@ const getTransaction = (ownAddress, ownType) =>
             date: item.timeStamp * 1000,
             direction: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out',
           }))
+          .filter((item) => {
+            if (item.direction === 'in') return true
+            if (!hasAdminFee) return true
+            if (address.toLowerCase() === hasAdminFee.address.toLowerCase()) return true
+            if (item.address.toLowerCase() === hasAdminFee.address.toLowerCase()) return false
+
+            return true
+          })
         resolve(transactions)
       })
       .catch(() => {
@@ -237,7 +256,57 @@ const sendTransaction = ({ contract, method }, { args, params = {} } = {}, callb
     resolve(receipt)
   })
 
-const send = async ({ name, to, amount, ...feeConfig } = {}) => {
+const send = (data) => {
+  return (hasAdminFee) ? sendWithAdminFee(data) : sendDefault(data)
+}
+
+const sendWithAdminFee = async ({ name, to, amount, ...feeConfig } = {}) => {
+  const { tokenContract, toWei } = withToken(name)
+  const {
+    fee: adminFee,
+    address: adminFeeAddress,
+    min: adminFeeMinValue,
+  } = config.opts.fee.erc20
+
+  const adminFeeMin = BigNumber(adminFeeMinValue)
+
+  // fee - from amount - percent
+  let feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
+  if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
+
+  feeFromAmount = toWei(feeFromAmount.toNumber()) // Admin fee
+
+  const params = await fetchFees({ ...feeConfig })
+
+  const newAmount = toWei(amount)
+  const callMethod = { contract: tokenContract, method: 'transfer' }
+
+  return new Promise((resolve, reject) => {
+    const receipt = tokenContract.methods.transfer(to, newAmount).send(params)
+      .on('transactionHash', (hash) => {
+        const txId = `${config.link.etherscan}/tx/${hash}`
+        actions.loader.show(true, { txId })
+        
+      })
+      .on('error', (err) => {
+        reject(err)
+      })
+
+    receipt.then(() => {
+      resolve(receipt)
+      // Send admin fee
+      new Promise(async () => {
+        const receiptAdminFee = await tokenContract.methods.transfer(adminFeeAddress, feeFromAmount).send(params)
+          .on('transactionHash', (hash) => {
+            console.log('ERC20 admin fee tx',hash)
+          })
+      })
+    })
+
+  })
+}
+
+const sendDefault = async ({ name, to, amount, ...feeConfig } = {}) => {
   const { tokenContract, toWei } = withToken(name)
   const params = await fetchFees({ ...feeConfig })
 
@@ -348,6 +417,14 @@ const fetchTxInfo = (hash, cacheResponse) => {
             .multipliedBy(web3.utils.toBN(gasPrice).toNumber())
             .dividedBy(1e18).toNumber()
 
+          let adminFee = false
+
+          if (hasAdminFee) {
+            adminFee = BigNumber(hasAdminFee.fee).dividedBy(100).multipliedBy(amount)
+            if (BigNumber(hasAdminFee.min).isGreaterThan(adminFee)) adminFee = BigNumber(hasAdminFee.min)
+            adminFee = adminFee.toNumber()
+          }
+
           resolve({
             amount,
             afterBalance: null,
@@ -355,6 +432,7 @@ const fetchTxInfo = (hash, cacheResponse) => {
             senderAddress: from,
             minerFee,
             minerFeeCurrency: 'ETH',
+            adminFee,
             confirmed: (blockHash != null),
           })
 

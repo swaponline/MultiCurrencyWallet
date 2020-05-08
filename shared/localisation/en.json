@@ -4692,20 +4692,30 @@
     "id": "InfoPay_1",
     "message": "Transaction is completed",
     "files": [
-      "shared/pages/Transaction/Transaction.js"
+      "shared/pages/Transaction/Transaction.js",
+      "shared/pages/Transaction/TxInfo/index.js"
     ]
   },
   {
     "id": "InfoPay_2",
-    "message": "successfully transferred to"
+    "message": "successfully transferred to",
+    "files": [
+      "shared/pages/Transaction/TxInfo/index.js"
+    ]
   },
   {
     "id": "InfoPay_3",
-    "message": "Transaction ID"
+    "message": "Transaction ID",
+    "files": [
+      "shared/pages/Transaction/TxInfo/index.js"
+    ]
   },
   {
     "id": "InfoPay_4",
-    "message": "Est. time to confitmation"
+    "message": "Est. time to confitmation",
+    "files": [
+      "shared/pages/Transaction/TxInfo/index.js"
+    ]
   },
   {
     "id": "InfoPay_5",
@@ -6676,6 +6686,69 @@
     "message": "Sending",
     "files": [
       "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "AdminFee_Message",
+    "message": "Commission {fee}% of the transfer amount, but not less than {min} {currency}",
+    "files": [
+      "shared/components/AdminFeeInfoBlock/AdminFeeInfoBlock.js"
+    ]
+  },
+  {
+    "id": "AdminFee_MessageWithAmount",
+    "message": "Commission {calcedAmount} {currency}",
+    "files": [
+      "shared/components/AdminFeeInfoBlock/AdminFeeInfoBlock.js"
+    ]
+  },
+  {
+    "id": "InfoPay_2_Ready",
+    "message": "successfully transferred to",
+    "files": [
+      "shared/pages/Transaction/TxInfo/index.js"
+    ]
+  },
+  {
+    "id": "InfoPay_AdminFee",
+    "message": "Service fee",
+    "files": [
+      "shared/pages/Transaction/TxInfo/index.js"
+    ]
+  },
+  {
+    "id": "InfoPay_Confirmed",
+    "message": "Confirmed",
+    "files": [
+      "shared/pages/Transaction/TxInfo/index.js"
+    ]
+  },
+  {
+    "id": "InfoPay_FinalBalance",
+    "message": "Final balance",
+    "files": [
+      "shared/pages/Transaction/TxInfo/index.js"
+    ]
+  },
+  {
+    "id": "InfoPay_MinerFee",
+    "message": "Miner fee",
+    "files": [
+      "shared/pages/Transaction/TxInfo/index.js"
+    ]
+  },
+  {
+    "id": "InfoPay_NotConfirmed",
+    "message": "~10 mins",
+    "files": [
+      "shared/pages/Transaction/TxInfo/index.js"
+    ]
+  },
+  {
+    "id": "InfoPay_StatusReadyHeader",
+    "message": "Status",
+    "files": [
+      "shared/pages/Transaction/TxInfo/index.js"
     ]
   }
 ]
