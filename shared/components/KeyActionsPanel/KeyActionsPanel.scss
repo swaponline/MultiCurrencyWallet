@@ -1,0 +1,39 @@
+.WithdrawButtonContainer {
+  display: flex;
+  margin-right: 15px;
+  margin-top: -25px;
+  margin-bottom: 15px;
+}
+
+@include media-tablet {
+	.WithdrawButtonContainer {
+    margin-left: 0;
+    margin-bottom: 15px;
+
+    button {
+      white-space: nowrap;
+    }
+	}
+}
+
+@include media-mobile {
+	.WithdrawButtonContainer {
+		flex-direction: row;
+    margin: 0 -6px;
+    margin-bottom: 15px;
+
+    button {
+      white-space: nowrap;
+      min-width: 32%;
+      max-width: 32%;
+      text-align: center;
+      font-size: 10px;
+      margin: 0 0.5% 2%;
+      padding: 0px 8px;
+    }
+    
+    button:nth-child(4) {
+      margin-right: 0;
+    }
+  }
+}
