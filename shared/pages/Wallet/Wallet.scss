@@ -286,21 +286,17 @@
 }
 
 .keysExportImport {
-  display: block;
-  width: 66%;
-  margin-left: auto;
-  text-align: center;
+  display: flex;
+  justify-content: flex-end;
   white-space: nowrap;
 
   button {
     width: 210px;
     cursor: pointer;
-    z-index: 1;
     font-size: 12px;
-    height: 24px;
+    height: 40px;
     line-height: 24px;
-    display: inline;
-    margin: 10px 10px 0px;
+    margin: 10px 0 0 5px;
   }
 }
 
@@ -523,6 +519,7 @@
       &:nth-child(2) {
         width: 47%;
       }
+
       &:nth-child(n + 3) {
         &:last-child {
           margin-bottom: 0;
