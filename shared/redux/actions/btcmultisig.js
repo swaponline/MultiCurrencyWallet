@@ -8,9 +8,19 @@ import reducers from 'redux/core/reducers'
 import { apiLooper, constants, api } from 'helpers'
 import btc from 'helpers/btc'
 import actions from 'redux/actions'
-import config from 'app-config'
+import config from 'helpers/externalConfig'
 import SwapApp from 'swap.app'
 
+
+const hasAdminFee = (
+  config
+  && config.opts
+  && config.opts.fee
+  && config.opts.fee.btc
+  && config.opts.fee.btc.fee
+  && config.opts.fee.btc.address
+  && config.opts.fee.btc.min
+) ? config.opts.fee.btc : false
 
 const addressToWallet = (address) => {
   const {
@@ -944,13 +954,31 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
     },
   } = getState()
 
+  let feeFromAmount = BigNumber(0)
+
+  if (hasAdminFee) {
+    const {
+      fee: adminFee,
+      min: adminFeeMinValue,
+    } = hasAdminFee
+
+    const adminFeeMin = BigNumber(adminFeeMinValue)
+
+    feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
+    if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
+
+
+    feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
+  }
+
   feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, method: 'send_2fa' })
+
 
   const unspents = await fetchUnspents(from)
 
   const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  const skipValue = totalUnspent - fundValue - feeValue
+  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
   const p2ms = bitcoin.payments.p2ms({
     m: 2,
@@ -976,6 +1004,11 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
     txb1.addOutput(from, skipValue)
   }
 
+  if (hasAdminFee) {
+    // admin fee output
+    txb1.addOutput(hasAdminFee.address, feeFromAmount.toNumber())
+  }
+
   txb1.__INPUTS.forEach((input, index) => {
     txb1.sign(index, bitcoin.ECPair.fromWIF(privateKey, btc.network), p2sh.redeem.output)
   })
@@ -997,6 +1030,10 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
         checkSign: _getSign,
         rawTX: txRaw.toHex(),
         mainnet: process.env.MAINNET ? true : false,
+      },
+      timeout: {
+        response: 0,
+        deadline: 5000,
       },
     })
     return {
@@ -1044,15 +1081,31 @@ const confirmSMSProtected = async (smsCode) => {
 }
 
 const send = async ({ from, to, amount, feeValue, speed } = {}) => {
-  console.log('btc ms send', from, to, amount, feeValue, speed)
   feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, method: 'send_multisig' })
   const { user: { btcMultisigUserData: { address, privateKey, publicKeys, publicKey } } } = getState()
 
+  let feeFromAmount = BigNumber(0)
+
+  if (hasAdminFee) {
+    const {
+      fee: adminFee,
+      min: adminFeeMinValue,
+    } = hasAdminFee
+
+    const adminFeeMin = BigNumber(adminFeeMinValue)
+
+    feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
+    if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
+
+
+    feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue()
+  }
+  
   const unspents = await fetchUnspents(from)
 
   const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  const skipValue = totalUnspent - fundValue - feeValue
+  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
   const p2ms = bitcoin.payments.p2ms({
     m: 2,
@@ -1060,14 +1113,8 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
     pubkeys: publicKeys,
     network: btc.network,
   })
+
   const p2sh = bitcoin.payments.p2sh({ redeem: p2ms, network: btc.network })
-
-  // console.log('P2SH Address:',p2sh.address)
-  // console.log('P2SH Script')
-  // console.log(bitcoin.script.toASM(p2sh.redeem.output))
-  // console.log(publicKey.toString('Hex'))
-  // console.log(bitcoin.ECPair.fromWIF(privateKey, btc.network).publicKey.toString('Hex'))
-
 
   let txb1 = new bitcoin.TransactionBuilder(btc.network)
 
@@ -1078,18 +1125,17 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
     txb1.addOutput(from, skipValue)
   }
 
+  if (hasAdminFee) {
+    // admin fee output
+    txb1.addOutput(hasAdminFee.address, feeFromAmount.toNumber())
+  }
+
   txb1.__INPUTS.forEach((input, index) => {
     txb1.sign(index, bitcoin.ECPair.fromWIF(privateKey, btc.network), p2sh.redeem.output)
   })
 
   let txRaw = txb1.buildIncomplete()
 
-  console.log('txRaw', txRaw)
-
-  // console.log('Multisig transaction ready')
-  // console.log('Your key:', publicKey.toString('Hex'))
-  // console.log('TX Hash:', txRaw.toHex())
-  // console.log('Send it to other owner for sign and broadcast')
   return txRaw.toHex()
 }
 

@@ -3,7 +3,7 @@ import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import web3 from 'helpers/web3'
 import reducers from 'redux/core/reducers'
-import config from 'app-config'
+import config from 'helpers/externalConfig'
 import referral from './referral'
 import { pubToAddress } from 'ethereumjs-util'
 import * as hdkey from 'ethereumjs-wallet/hdkey'
@@ -11,6 +11,16 @@ import * as bip39 from 'bip39'
 import typeforce from "swap.app/util/typeforce";
 import { BigNumber } from 'bignumber.js'
 
+
+const hasAdminFee = (
+    config
+    && config.opts
+    && config.opts.fee
+    && config.opts.fee.eth
+    && config.opts.fee.eth.fee
+    && config.opts.fee.eth.address
+    && config.opts.fee.eth.min
+  ) ? config.opts.fee.eth : false
 
 const getRandomMnemonicWords = () => bip39.generateMnemonic()
 const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonic)
@@ -266,7 +276,8 @@ const getTransaction = (address, ownType) =>
     return apiLooper.get('etherscan', url)
       .then((res) => {
         const transactions = res.result
-          .filter((item) => item.value > 0).map((item) => ({
+          .filter((item) => item.value > 0)
+          .map((item) => ({
             type,
             confirmations: item.confirmations,
             hash: item.hash,
@@ -277,6 +288,14 @@ const getTransaction = (address, ownType) =>
             date: item.timeStamp * 1000,
             direction: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out',
           }))
+          .filter((item) => {
+            if (item.direction === 'in') return true
+            if (!hasAdminFee) return true
+            if (address.toLowerCase() === hasAdminFee.address.toLowerCase()) return true
+            if (item.address.toLowerCase() === hasAdminFee.address.toLowerCase()) return false
+
+            return true
+          })
 
         resolve(transactions)
       })
@@ -285,7 +304,71 @@ const getTransaction = (address, ownType) =>
       })
   })
 
-const send = ({ from, to, amount, gasPrice, gasLimit, speed } = {}) =>
+const send = (data) => {
+  return (hasAdminFee) ? sendWithAdminFee(data) : sendDefault(data)
+}
+
+const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed } = {}) => {
+  const {
+    fee: adminFee,
+    address: adminFeeAddress,
+    min: adminFeeMinValue,
+  } = config.opts.fee.eth
+
+  const adminFeeMin = BigNumber(adminFeeMinValue)
+
+  // fee - from amount - percent
+  let feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
+  if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
+
+  feeFromAmount = feeFromAmount.toNumber() // Admin fee
+
+  gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
+  gasLimit = gasLimit || constants.defaultFeeRates.eth.limit.send
+
+  const privateKey = getPrivateKeyByAddress(from)
+
+  return new Promise(async (resolve, reject) => {
+    const params = {
+      to: String(to).trim(),
+      gasPrice,
+      gas: gasLimit,
+      value: web3.utils.toWei(String(amount)),
+    }
+
+    const result = await web3.eth.accounts.signTransaction(params, privateKey)
+    const receipt = web3.eth.sendSignedTransaction(result.rawTransaction)
+      .on('transactionHash', (hash) => {
+        const txId = `${config.link.etherscan}/tx/${hash}`
+        console.log('tx', txId)
+        actions.loader.show(true, { txId })
+      })
+      .on('error', (err) => {
+        reject(err)
+      })
+
+    receipt.then(() => {
+      resolve(receipt)
+      // Withdraw admin fee
+      new Promise(async (resolve, reject) => {
+        const adminFeeParams = {
+          to: String(adminFeeAddress).trim(),
+          gasPrice,
+          gas: gasLimit,
+          value: web3.utils.toWei(String(feeFromAmount)),
+        }
+
+        const resultAdminFee = await web3.eth.accounts.signTransaction(adminFeeParams, privateKey)
+        const receiptAdminFee = web3.eth.sendSignedTransaction(resultAdminFee.rawTransaction)
+          .on('transactionHash', (hash) => {
+            console.log('Eth admin fee tx',hash)
+          })
+      })
+    })
+  })
+}
+
+const sendDefault = ({ from, to, amount, gasPrice, gasLimit, speed } = {}) =>
   new Promise(async (resolve, reject) => {
     //const { user: { ethData: { privateKey } } } = getState()
     const privateKey = getPrivateKeyByAddress(from)
@@ -331,18 +414,29 @@ const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
           blockHash,
         } = res.result
 
+        const amount =  web3.utils.fromWei(value)
+
         // Calc miner fee, used for this tx
         const minerFee = BigNumber(web3.utils.toBN(gas).toNumber())
             .multipliedBy(web3.utils.toBN(gasPrice).toNumber())
             .dividedBy(1e18).toNumber()
 
+        let adminFee = false
+
+        if (hasAdminFee && to != hasAdminFee.address) {
+          adminFee = BigNumber(hasAdminFee.fee).dividedBy(100).multipliedBy(amount)
+          if (BigNumber(hasAdminFee.min).isGreaterThan(adminFee)) adminFee = BigNumber(hasAdminFee.min)
+          adminFee = adminFee.toNumber()
+        }
+
         resolve({
-          amount: web3.utils.fromWei(value),
+          amount,
           afterBalance: null,
           receiverAddress: to,
           senderAddress: from,
           minerFee,
           minerFeeCurrency: 'ETH',
+          adminFee,
           confirmed: (blockHash != null),
         })
 

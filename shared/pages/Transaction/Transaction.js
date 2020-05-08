@@ -76,6 +76,7 @@ class Transaction extends Component {
         confirmations,
         minerFee,
         minerFeeCurrency,
+        adminFee,
       } = infoTx
 
       this.setState({
@@ -90,6 +91,7 @@ class Transaction extends Component {
         confirmations,
         minerFee,
         minerFeeCurrency,
+        adminFee,
       })
     }
   }
