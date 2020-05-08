@@ -12,8 +12,6 @@ import { FormattedMessage } from 'react-intl'
 import exConfig from 'helpers/externalConfig'
 
 
-const isWidgetBuild = config && config.isWidget
-
 const CurrenciesList = ({
   tableRows,
   currencies,
@@ -25,9 +23,9 @@ const CurrenciesList = ({
 
   return (
     <div styleName="yourAssets">
-      {(exConfig && exConfig.opts && exConfig.opts.showWalletBanners || isWidgetBuild) ? (
+      {(exConfig && exConfig.opts && exConfig.opts.showWalletBanners) ? (
         <Fragment>
-          <Slider isWidgetBuild={isWidgetBuild} />
+          <Slider />
         </Fragment>
       ) : (
           ''
