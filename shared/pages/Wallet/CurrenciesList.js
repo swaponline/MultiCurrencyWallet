@@ -12,8 +12,6 @@ import { FormattedMessage } from 'react-intl'
 import exConfig from 'helpers/externalConfig'
 
 
-const isWidgetBuild = config && config.isWidget
-
 const CurrenciesList = ({
   tableRows,
   currencies,

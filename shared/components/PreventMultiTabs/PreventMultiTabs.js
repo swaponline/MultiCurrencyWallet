@@ -25,7 +25,7 @@ export default class PreventMultiTabs extends Component {
   handleSwitchClick = () => {
     const { onSwitchTab } = this.props
 
-    localStorage.setItem(constants.localStorage.preventSwitch, '1')
+    localStorage.setItem(constants.localStorage.preventSwitch, 'whe-are-now-make-switch-tab')
     setTimeout(() => {
       localStorage.removeItem(constants.localStorage.preventSwitch)
     }, 5000)
