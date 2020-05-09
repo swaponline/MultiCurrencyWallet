@@ -55,14 +55,26 @@ class Transaction extends Component {
       toAddress: ``,
       confirmations: 0,
       minerFee: 0,
+      error: null,
     }
   }
 
   async fetchTxInfo(currencyKey, txId) {
-    const infoTx = await actions[currencyKey].fetchTxInfo(txId, 5*60*1000)
+    let infoTx = null
+    let error = null
+    try {
+      infoTx = await actions[currencyKey].fetchTxInfo(txId, 5 * 60 * 1000)
+    } catch (err) {
+      console.error(err)
+      error = err
+    }
 
-    if(!infoTx) {
+    if (!infoTx || error) {
       // Fail parse
+      this.setState({
+        isFetching: false,
+        error,
+      })
       return
     }
 

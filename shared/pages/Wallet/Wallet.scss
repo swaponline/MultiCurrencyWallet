@@ -423,7 +423,7 @@
 
   .keysExportImport {
     width: 95%;
-    margin: 0 auto;
+    margin: 5px auto;
 
     button {
       width: 45%;
@@ -510,6 +510,16 @@
           margin-bottom: 0;
         }
       }
+    }
+  }
+
+  .keysExportImport {
+    width: 100%;
+    padding: 0 12px;
+
+    button {
+      width: 100%;
+      margin: 0;
     }
   }
 }

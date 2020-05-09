@@ -18,6 +18,7 @@ const Button = props => {
     gray,
     disabled,
     big,
+    autoHeight,
     onClick,
     id = '',
     fill,
@@ -34,6 +35,7 @@ const Button = props => {
     white,
     gray,
     big,
+    autoHeight,
     disabled,
   })
 
