@@ -7,7 +7,7 @@ export const initialState = {
   hiddenCoinsList: JSON.parse(localStorage.getItem('hiddenCoinsList')) || config.hiddenCoins,
 }
 
-export const getOrders = (state, {  orders }) => ({
+export const getOrders = (state, { orders }) => ({
   ...state,
   orders,
 })

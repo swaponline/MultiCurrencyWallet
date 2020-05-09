@@ -11,6 +11,7 @@ import Table from 'components/tables/Table/Table'
 import { FormattedMessage } from 'react-intl'
 import exConfig from 'helpers/externalConfig'
 
+const isWidgetBuild = config && config.isWidget
 
 const CurrenciesList = ({
   tableRows,
@@ -20,10 +21,9 @@ const CurrenciesList = ({
   goToСreateWallet,
   getExCurrencyRate,
 }) => {
-
   return (
     <div styleName="yourAssets">
-      {(exConfig && exConfig.opts && exConfig.opts.showWalletBanners) ? (
+      {(exConfig && exConfig.opts && exConfig.opts.showWalletBanners || isWidgetBuild) ? (
         <Fragment>
           <Slider />
         </Fragment>
