@@ -272,3 +272,9 @@
     width: calc(100vw - 40px);
   }
 }
+
+@media screen and (max-width: 320px) {
+  .dontscroll {
+    top: -60px;
+  }
+}
