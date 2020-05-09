@@ -263,4 +263,12 @@
     right: 15px;
     top: 25px;
   }
+
+  .dontscroll {
+    max-height: auto;
+    overflow-y: hidden;
+    top: 10px;
+    left: calc(50% - 50vw + 20px);
+    width: calc(100vw - 40px);
+  }
 }
