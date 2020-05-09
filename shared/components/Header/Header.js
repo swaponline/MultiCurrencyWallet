@@ -35,6 +35,8 @@ import { messages, getMenuItems, getMenuItemsMobile } from "./config";
 
 let lastScrollTop = 0;
 
+const isWidgetBuild = config && config.isWidget
+
 @injectIntl
 @withRouter
 @connect({
@@ -44,7 +46,8 @@ let lastScrollTop = 0;
   isInputActive: "inputActive.isInputActive",
   reputation: "ipfs.reputation",
   dashboardView: 'ui.dashboardModalsAllowed',
-  modals: 'modals'
+  modals: 'modals',
+  hiddenCoinsList: "core.hiddenCoinsList"
 })
 @CSSModules(styles, { allowMultiple: true })
 export default class Header extends Component {
@@ -178,6 +181,7 @@ export default class Header extends Component {
     const finishProps = { ...this.props, ...customProps };
     const { wasOnExchange, wasOnWallet, isWalletCreate } = constants.localStorage;
     const {
+      hiddenCoinsList,
       location: { hash, pathname }
     } = finishProps;
     const { wallet, exchange } = links;
@@ -203,16 +207,51 @@ export default class Header extends Component {
     const wasOnWalletLs = localStorage.getItem(wasOnWallet);
     const wasOnExchangeLs = localStorage.getItem(wasOnExchange);
 
-    let tourEvent = () => {};
+    let tourEvent = () => { };
+
+    const allData = actions.core.getWallets()
+
+    const widgetCurrencies = ['BTC', 'ETH']
+    const optionsalCur = ['BTC (SMS-Protected)', 'BTC (Multisig)']
+
+    optionsalCur.forEach(el => {
+      if (!hiddenCoinsList.includes(el)) {
+        widgetCurrencies.push(el)
+      }
+    })
+
+    if (isWidgetBuild) {
+      if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
+        // Multi token widget build
+        Object.keys(window.widgetERC20Tokens).forEach(key => {
+          widgetCurrencies.push(key.toUpperCase())
+        })
+      } else {
+        widgetCurrencies.push(config.erc20token.toUpperCase())
+      }
+    }
+
+    let userCurrencies = allData.filter(({ currency, address, balance }) => {
+      return (!hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`)) || balance > 0
+    })
+
+    if (isWidgetBuild) {
+      userCurrencies = allData.filter(({ currency }) => !hiddenCoinsList.includes(currency))
+      userCurrencies = userCurrencies.filter(({ currency }) => widgetCurrencies.includes(currency))
+    }
+
+    userCurrencies = userCurrencies.filter(({ currency }) => enabledCurrencies.includes(currency))
 
     switch (true) {
       case isWalletPage && !wasOnWalletLs:
-        console.log("doooone");
         tourEvent = this.openWalletTour;
         break;
       case isPartialPage && !wasOnExchangeLs:
         tourEvent = this.openExchangeTour;
         break;
+      case !userCurrencies.length && isWalletPage:
+        this.openCreateWallet({ onClose: tourEvent });
+        break
       default:
         return;
     }
@@ -322,7 +361,6 @@ export default class Header extends Component {
     const { exchange, wallet } = links;
 
     const isAnyModalCalled = Object.keys(modals).length
-    const accentColor = "#510ed8";
 
     const isWalletPage = pathname.includes(wallet) || pathname === `/ru${wallet}` || pathname === `/`;
 
@@ -343,11 +381,11 @@ export default class Header extends Component {
     if (config && config.isWidget && !config.isFullBuild) {
       return <>
         {
-          !isMobile && (
+          !isMobile ? (
             <WidthContainer styleName="container" className="data-tut-preview">
-              { logoRenderer }
+              {logoRenderer}
             </WidthContainer>
-          )
+          ) : <NavMobile menu={menuItemsMobile} />
         }
         <User acceptRequest={this.acceptRequest} declineRequest={this.declineRequest} />
       </>;
@@ -398,7 +436,7 @@ export default class Header extends Component {
           </div>
         )}
         <WidthContainer styleName="container" className="data-tut-preview">
-          { logoRenderer }
+          {logoRenderer}
           <Nav menu={menuItems} />
           {isPartialTourOpen && isExchange && (
             <TourPartial isTourOpen={isPartialTourOpen} closeTour={this.closePartialTour} />

@@ -21,8 +21,6 @@ export default class NavMobile extends Component {
     menu: PropTypes.array.isRequired,
   }
 
-  
-
   render() {
     const {
       menu,
@@ -30,14 +28,7 @@ export default class NavMobile extends Component {
       location
     } = this.props;
 
-    console.log('props', this.props)
-
-    const isHistory = location.pathname.includes(links.history);
     const isExchange = location.pathname.includes(links.exchange);
-    const isWallet =
-      location.pathname.includes(links.wallet) ||
-      location.pathname === '/' ||
-      location.pathname === '/ru';
 
     return (
       <div styleName="navbar">
@@ -51,9 +42,9 @@ export default class NavMobile extends Component {
                     key={title}
                     onClick={() => actions.modals.open(constants.modals.MobMenu, {})}
                     tabIndex="-1"
-                    
+
                   >
-                    {icon} 
+                    {icon}
                     <span className={isBold && styles.bold}>{title}</span>
                   </a>
                 )
