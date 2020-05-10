@@ -104,7 +104,14 @@ const CreateWallet = (props) => {
 
         const hiddenList = localStorage.getItem('hiddenCoinsList')
 
-        if (!hiddenList.includes(singleCurrecny.toUpperCase())) {
+        const isExist = hiddenList.find(el => {
+          if (el.includes(":")) {
+            return el.includes(singleCurrecny.toUpperCase())
+          }
+          return el === singleCurrecny.toUpperCase()
+        })
+
+        if (!isExist) {
           setExist(true)
         }
       }
@@ -330,5 +337,5 @@ export default connect({
   createWallet: 'createWallet',
   currencies: 'currencies',
   userData: 'user',
-  core:'core',
+  core: 'core',
 })(injectIntl(withRouter(CSSModules(CreateWallet, styles, { allowMultiple: true }))))
