@@ -42,6 +42,7 @@ const isWidgetBuild = config && config.isWidget
   user: {
     ethData,
     btcData,
+    activeFiat,
     btcMultisigSMSData,
     btcMultisigUserData,
     isFetching,
@@ -54,6 +55,7 @@ const isWidgetBuild = config && config.isWidget
         ...Object.keys(tokensData).map(k => (tokensData[k]))],
       tokens: [...Object.keys(tokensData).map(k => (tokensData[k]))],
       user,
+      activeFiat,
       historyTx: history,
       hiddenCoinsList: core.hiddenCoinsList,
       txHistory: transactions,
@@ -352,7 +354,7 @@ export default class CurrencyWallet extends Component {
     const { history } = this.props
 
     return (
-      <Row key={rowIndex} {...row} history={history}/>
+      <Row key={rowIndex} {...row} history={history} />
     )
   }
 
@@ -388,6 +390,15 @@ export default class CurrencyWallet extends Component {
     this.setState(() => ({ filterValue: address }))
     actions.history.setTransactions(address, currency.toLowerCase(), this.pullTransactions)
   }
+
+  getFiats = async () => {
+    const { activeFiat } = this.props
+    const { fiatsRates } = await actions.user.getFiats()
+
+    const fiatRate = fiatsRates.find(({ key }) => key === activeFiat)
+    return fiatRate.value
+  }
+
 
   render() {
     let { swapHistory, txHistory, location, match: { params: { address = null } }, intl, hiddenCoinsList, isSigned, isFetching } = this.props
@@ -461,14 +472,16 @@ export default class CurrencyWallet extends Component {
       .includes(currency.toLowerCase())
        */
 
-    let currencyUsdBalance;
+    let currencyFiatBalance;
     let changePercent;
 
-    if (infoAboutCurrency) {
-      currencyUsdBalance = BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * infoAboutCurrency.price_usd;
+    const multiplier = this.getFiats()
+
+    if (infoAboutCurrency && multiplier) {
+      currencyFiatBalance = BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * infoAboutCurrency.price_usd * multiplier;
       changePercent = infoAboutCurrency.percent_change_1h;
     } else {
-      currencyUsdBalance = 0;
+      currencyFiatBalance = 0;
     }
 
     let settings = {
@@ -501,7 +514,7 @@ export default class CurrencyWallet extends Component {
                 txHistory ?
                   <BalanceForm
                     currencyBalance={balance}
-                    usdBalance={currencyUsdBalance}
+                    fiatBalance={currencyFiatBalance}
                     changePercent={changePercent}
                     address={address}
                     handleReceive={this.handleReceive}

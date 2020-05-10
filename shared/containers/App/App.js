@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+
 import { withRouter, HashRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import actions from "redux/actions";
@@ -64,7 +65,9 @@ export default class App extends React.Component {
       multiTabs: false,
       error: ""
     };
+    actions.user.getFiats()
   }
+
 
   generadeId(callback) {
     const newId = Date.now().toString();

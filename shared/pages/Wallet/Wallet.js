@@ -39,6 +39,7 @@ const isWidgetBuild = config && config.isWidget
     core: { hiddenCoinsList },
     user,
     user: {
+      activeFiat,
       ethData,
       btcData,
       btcMultisigSMSData,
@@ -103,6 +104,7 @@ const isWidgetBuild = config && config.isWidget
       hiddenCoinsList: hiddenCoinsList,
       userEthAddress: ethData.address,
       user,
+      activeFiat,
       tokensData: {
         ethData,
         btcData,
@@ -126,6 +128,7 @@ export default class Wallet extends Component {
     super(props)
 
     const {
+      activeFiat,
       match: {
         params: {
           page = null,
@@ -156,7 +159,7 @@ export default class Wallet extends Component {
       activeView,
       activePage: page,
       btcBalance: 0,
-      activeCurrency: 'usd',
+      activeCurrency: activeFiat.toLowerCase(),
       exchangeForm: false,
       walletTitle: 'Wallet',
       editTitle: false,
@@ -168,7 +171,9 @@ export default class Wallet extends Component {
 
   componentWillMount() {
     actions.user.getBalances()
+    this.getFiats()
   }
+
 
   componentDidUpdate(prevProps) {
     const {
@@ -397,23 +402,33 @@ export default class Wallet extends Component {
     }
   }
 
+  getFiats = async () => {
+    const { activeFiat } = this.props
+    const { fiatsRates } = await actions.user.getFiats()
+
+    if (fiatsRates) {
+      const fiatRate = fiatsRates.find(({ key }) => key === activeFiat)
+      this.setState(() => ({ multiplier: fiatRate.value }))
+    }
+  }
+
   render() {
     const {
+      multiplier,
       activeView,
       infoAboutCurrency,
       exchangeForm,
       enabledCurrencies,
       showSweepBanner,
-      isMnemonicSaved,
     } = this.state
-    const { hiddenCoinsList, modals, dashboardView, isBalanceFetching } = this.props
+    const { hiddenCoinsList, modals, dashboardView, isBalanceFetching, activeFiat } = this.props
 
     const allData = actions.core.getWallets()
 
     this.checkBalance()
 
     let btcBalance = 0
-    let usdBalance = 0
+    let fiatBalance = 0
     let changePercent = 0
 
     // Набор валют для виджета
@@ -453,7 +468,7 @@ export default class Wallet extends Component {
           changePercent = item.infoAboutCurrency.percent_change_1h
         }
         btcBalance += item.balance * item.infoAboutCurrency.price_btc
-        usdBalance += item.balance * item.infoAboutCurrency.price_usd
+        fiatBalance += item.balance * item.infoAboutCurrency.price_usd * (multiplier || 1)
       }
     })
 
@@ -467,7 +482,8 @@ export default class Wallet extends Component {
               {/* {
                 !isFetching ?  */}
               <BalanceForm
-                usdBalance={usdBalance}
+                activeFiat={activeFiat}
+                fiatBalance={fiatBalance}
                 currencyBalance={btcBalance}
                 changePercent={changePercent}
                 handleReceive={this.handleModalOpen}

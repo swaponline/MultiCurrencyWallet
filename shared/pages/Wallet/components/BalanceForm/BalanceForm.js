@@ -16,14 +16,13 @@ import btc from '../../images/btc.svg'
 
 
 function BalanceForm({
-  usdBalance,
+  activeFiat,
+  fiatBalance,
   currencyBalance,
   handleReceive,
   handleWithdraw,
-  handleExchange,
   currency,
   handleInvoice,
-  changePercent,
   isFetching = false,
   showButtons = true,
   dashboardView,
@@ -34,6 +33,7 @@ function BalanceForm({
   const isWidgetBuild = config && config.isWidget
   const isAnyModalCalled = Object.keys(modals).length
 
+  const active = activeFiat ? activeFiat.toLowerCase() : 'usd'
   // eslint-disable-next-line default-case
   switch (currency) {
     case 'btc (sms-protected)':
@@ -41,8 +41,6 @@ function BalanceForm({
       currency = 'BTC'
       break
   }
-
-  // console.log('activeCurrency', activeCurrency)
 
   return (
     <div styleName={isWidgetBuild && !config.isFullBuild ? 'yourBalance widgetBuild' : 'yourBalance'}>
@@ -56,14 +54,14 @@ function BalanceForm({
               <InlineLoader />
             </div>
           )}
-          {activeCurrency === 'usd' ? (
+          {activeCurrency === active ? (
             // eslint-disable-next-line no-restricted-globals
             <p>
               <img src={dollar} alt="dollar" />
               {
                 // eslint-disable-next-line no-restricted-globals
-                !isNaN(usdBalance)
-                  ? BigNumber(usdBalance)
+                !isNaN(fiatBalance)
+                  ? BigNumber(fiatBalance)
                     .dp(2, BigNumber.ROUND_FLOOR)
                     .toString()
                   : ''
@@ -86,14 +84,14 @@ function BalanceForm({
         </div>
         <div styleName="yourBalanceCurrencies">
           <button
-            styleName={activeCurrency === 'usd' && 'active'}
+            styleName={activeCurrency === active && 'active'}
             onClick={() => {
               // eslint-disable-next-line no-unused-expressions, no-sequences
-              setActiveCurrency('usd'), localStorage.setItem(constants.localStorage.balanceActiveCurrency, 'usd')
+              setActiveCurrency(active), localStorage.setItem(constants.localStorage.balanceActiveCurrency, active)
             }}
           >
             {/* // eslint-disable-next-line reactintl/contains-hardcoded-copy */}
-            usd
+            {active}
           </button>
           <span />
           <button

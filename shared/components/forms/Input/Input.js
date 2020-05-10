@@ -75,8 +75,9 @@ export default class Input extends Component {
       disabled,
       readOnly,
       type,
-      usd,
+      fiat,
       srollingForm,
+      activeFiat,
       ...rest
     } = this.props;
 
@@ -89,9 +90,9 @@ export default class Input extends Component {
     const focusEvent = !isMobile
       ? {}
       : {
-          onFocus: this.handleFocus,
-          onBlur: this.handleBlur
-        };
+        onFocus: this.handleFocus,
+        onBlur: this.handleBlur
+      };
 
     let style = errorStyle ? "input inputError" : "input ";
     if (srollingForm) {
@@ -114,7 +115,7 @@ export default class Input extends Component {
             autoComplete: "off",
             ...focusEvent
           })}
-          {usd > 0 && <p styleName="dollar">{`~${usd}`}$</p>}
+          {fiat > 0 && <p styleName="dollar">{`~${fiat}`}{activeFiat}</p>}
           {qr && (
             <p styleName="rightEl qr">
               <i className="fas fa-qrcode" onClick={openScan} />

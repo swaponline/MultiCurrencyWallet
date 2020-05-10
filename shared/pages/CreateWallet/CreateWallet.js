@@ -30,6 +30,17 @@ const styleBtn = { backgroundColor: '#f0eefd', color: '#6144E5' }
 const defaultColors = { backgroundColor: '#6144E5' }
 
 
+const getFiats = async () => {
+  const { activeFiat } = this.props
+  const { fiatsRates } = await actions.user.getFiats()
+
+  const fiatRate = fiatsRates.find(({ key }) => key === activeFiat)
+  setFeates(fiatRate.value)
+
+  return fiatRate.value
+}
+
+
 const CreateWallet = (props) => {
   const {
     history,
@@ -69,7 +80,7 @@ const CreateWallet = (props) => {
   }))
 
   let btcBalance = 0
-  let usdBalance = 0
+  let fiatBalance = 0
   let changePercent = 0
   const widgetCurrencies = ['BTC', 'BTC (SMS-Protected)', 'BTC (Multisig)', 'ETH']
 
@@ -90,8 +101,11 @@ const CreateWallet = (props) => {
         if (item.name === 'BTC') {
           changePercent = item.infoAboutCurrency.percent_change_1h
         }
+
+        const multiplier = getFiats()
+
         btcBalance += item.balance * item.infoAboutCurrency.price_btc
-        usdBalance += item.balance * item.infoAboutCurrency.price_usd
+        fiatBalance += item.balance * item.infoAboutCurrency.price_usd * multiplier
       }
     })
   }
@@ -100,6 +114,7 @@ const CreateWallet = (props) => {
     () => {
       const singleCurrecny = pathname.split('/')[2]
 
+      getFiats()
       if (singleCurrecny) {
 
         const hiddenList = localStorage.getItem('hiddenCoinsList')
@@ -113,6 +128,7 @@ const CreateWallet = (props) => {
   )
 
   const [step, setStep] = useState(1)
+  const [fiates, setFeates] = useState(1)
   const [error, setError] = useState('Choose something')
   const [isExist, setExist] = useState(false)
   const steps = [1, 2]
@@ -132,7 +148,7 @@ const CreateWallet = (props) => {
   }
 
   const handleRestoreMnemonic = () => {
-    actions.modals.open(constants.modals.RestoryMnemonicWallet, { btcBalance, usdBalance })
+    actions.modals.open(constants.modals.RestoryMnemonicWallet, { btcBalance, fiatBalance })
   }
 
   // @ToDo - Debug - remove later
@@ -273,7 +289,7 @@ const CreateWallet = (props) => {
               <span>
                 <FormattedMessage id="ImportKeys_RestoreMnemonic_Tooltip" defaultMessage="12-word backup phrase" />
                 {
-                  (btcBalance > 0 || usdBalance > 0) && (
+                  (btcBalance > 0 || fiatBalance > 0) && (
                     <React.Fragment>
                       <br />
                       <br />
@@ -330,5 +346,7 @@ export default connect({
   createWallet: 'createWallet',
   currencies: 'currencies',
   userData: 'user',
-  core:'core',
+  core: 'core',
+  activeFiat: 'user.activeFiat',
+
 })(injectIntl(withRouter(CSSModules(CreateWallet, styles, { allowMultiple: true }))))

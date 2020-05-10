@@ -47,12 +47,14 @@ const subTitle = defineMessages({
 
 @injectIntl
 @connect(({
+  user: { activeFiat },
   history: {
     transactions,
     filter,
     swapHistory,
   },
 }) => ({
+  activeFiat,
   items: filterHistory(transactions, filter),
   swapHistory,
 }))
@@ -135,6 +137,7 @@ export default class History extends Component {
   }
 
   rowRender = (row, rowIndex) => {
+    const { activeFiat } = this.props
     const { commentsList } = this.state
     return (
       <Row key={rowIndex} hiddenList={commentsList} onSubmit={this.onSubmit} {...row} />
@@ -234,10 +237,10 @@ export default class History extends Component {
               }
             </section>
           ) : (
-            <div styleName="historyContent">
-              <ContentLoader rideSideContent />
-            </div>
-          )
+              <div styleName="historyContent">
+                <ContentLoader rideSideContent />
+              </div>
+            )
         }
       </ModalConductorProvider>
     )

@@ -18,13 +18,13 @@ import { localisePrefix } from 'helpers/locale'
 
 
 const hasAdminFee = (config
-    && config.opts
-    && config.opts.fee
-    && config.opts.fee.btc
-    && config.opts.fee.btc.fee
-    && config.opts.fee.btc.address
-    && config.opts.fee.btc.min
-  ) ? config.opts.fee.btc : false
+  && config.opts
+  && config.opts.fee
+  && config.opts.fee.btc
+  && config.opts.fee.btc.fee
+  && config.opts.fee.btc.address
+  && config.opts.fee.btc.min
+) ? config.opts.fee.btc : false
 
 const getRandomMnemonicWords = () => bip39.generateMnemonic()
 const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonic)
@@ -178,7 +178,6 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
 
   console.info('Logged in with Bitcoin', data)
   reducers.user.setAuthData({ name: 'btcData', data })
-
   if (!sweepToMnemonicReady) {
     // Auth with our mnemonic account
     if (mnemonic === `-`) {
@@ -274,7 +273,7 @@ const getBalance = () => {
 
   return apiLooper.get('bitpay', `/addr/${address}`, {
     inQuery: {
-      delay:  500,
+      delay: 500,
       name: `balance`,
     },
     checkStatus: (answer) => {
@@ -329,16 +328,16 @@ const fetchTxInfo = (hash, cacheResponse) =>
 
       if (hasAdminFee) {
         const adminOutput = vout.filter((out) => (
-            out.scriptPubKey.addresses 
-            && out.scriptPubKey.addresses[0] === hasAdminFee.address
-            && !(new BigNumber(out.value).eq(amount))
-          ))
+          out.scriptPubKey.addresses
+          && out.scriptPubKey.addresses[0] === hasAdminFee.address
+          && !(new BigNumber(out.value).eq(amount))
+        ))
 
         const afterOutput = vout.filter((out) => (
-            out.addresses 
-            && out.addresses[0] !== hasAdminFee.address 
-            && out.addresses[0] !== senderAddress
-          ))
+          out.addresses
+          && out.addresses[0] !== hasAdminFee.address
+          && out.addresses[0] !== senderAddress
+        ))
 
         if (afterOutput.length) {
           afterBalance = new BigNumber(afterOutput[0].value).toNumber()

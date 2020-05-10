@@ -31,10 +31,11 @@ const isWidgetBuild = config && config.isWidget
 
 @injectIntl
 @connect(({
-  user: { ethData, btcData, tokensData },
+  user: { ethData, btcData, tokensData, activeFiat },
   ipfs: { peer },
   rememberedOrders,
 }) => ({
+  activeFiat,
   items: [ethData, btcData],
   tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   currenciesData: [ethData, btcData],
@@ -150,7 +151,7 @@ export default class SwapComponent extends PureComponent {
 
   componentWillMount() {
     const { items, tokenItems, currenciesData, tokensData, intl: { locale }, deletedOrders } = this.props
-    let { match: { params: { orderId } }, history, location: { pathname } } = this.props
+    let { match: { params: { orderId } }, history, activeFiat } = this.props
 
     if (!!window.performance && window.performance.navigation.type === 2) {
       window.location.reload()
@@ -188,7 +189,7 @@ export default class SwapComponent extends PureComponent {
       ]
 
       currencies.forEach(item => {
-        actions.user.getExchangeRate(item.currency, 'usd')
+        actions.user.getExchangeRate(item.currency, activeFiat.toLocaleUpperCase())
           .then(exRate => {
             const amount = exRate * Number(item.amount)
 

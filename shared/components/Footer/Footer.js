@@ -14,7 +14,7 @@ import Info from './Info/Info'
 import SocialMenu from './SocialMenu/SocialMenu'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import SwitchLang from './SwitchLang/SwitchLang'
-
+import { SwitchCurrency } from "./SwitchCurrency"
 
 const Footer = (props) => {
   let showInfo = false
@@ -32,7 +32,10 @@ const Footer = (props) => {
         >
           <WidthContainer styleName="container">
             {showInfo && <Info {...props} />}
-            <SwitchLang {...props} />
+            <div styleName="inRow">
+              <SwitchLang {...props} />
+              <SwitchCurrency {...props} />
+            </div>
             {!config.isWidget && <SocialMenu />}
             <span styleName="date">{config.time}</span>
           </WidthContainer>

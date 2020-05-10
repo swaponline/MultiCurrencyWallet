@@ -113,7 +113,7 @@ const fetchMultisigBalances = () => {
   } = getState()
 
   if (wallets && wallets.length) {
-    wallets.map(({address}, index) => {
+    wallets.map(({ address }, index) => {
       return new Promise(async (resolve) => {
         getAddrBalance(address).then(({ balance, unconfirmedBalance }) => {
           reducers.user.setBtcMultisigBalance({
@@ -794,7 +794,9 @@ const getBalanceUser = (checkAddress) => {
 }
 
 const getRate = async () => {
-  const exCurrencyRate = await actions.user.getExchangeRate('BTC', 'usd')
+  const activeFiat = localStorage.getItem('activeFiat') || 'USD'
+
+  const exCurrencyRate = await actions.user.getExchangeRate('BTC', activeFiat.toLowerCase())
   reducers.user.setCurrencyRate({ name: 'btcData', currencyRate: exCurrencyRate })
 }
 
@@ -850,14 +852,14 @@ const getTransactionUser = (address) => {
           return getTransactionUser(walletData.address)
         })
 
-        const txLists = await Promise.all( promiseList )
+        const txLists = await Promise.all(promiseList)
 
         let retValue = []
         txLists.forEach((txs) => {
-          retValue = [ ...retValue, ...txs]
+          retValue = [...retValue, ...txs]
         })
 
-        resolve( retValue )
+        resolve(retValue)
       } else {
         resolve([])
       }
@@ -1100,7 +1102,7 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
 
     feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue()
   }
-  
+
   const unspents = await fetchUnspents(from)
 
   const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()

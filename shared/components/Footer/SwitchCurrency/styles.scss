@@ -1,0 +1,45 @@
+.currencySwitcher {
+    font-size: 14px;
+}
+
+.listStyle {
+    height: 100px;
+    overflow-y: scroll;
+    list-style: none;
+    width: 50px;
+    position: absolute;
+    background: white;
+    border: 1px solid #e6e6e6;
+    border-radius: 5px;
+    padding-bottom: 10px;
+
+    form {
+        border-bottom: 1px solid #efefef;
+        height: 20px;
+        padding: 0 5px;
+    }
+}
+
+.currency {
+    background: white;
+    padding-left: 5px;
+}
+
+.selected,
+.currency:hover {
+    color: #7270ff;
+}
+
+.label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 45px;
+}
+
+.arrow {
+    @include arrow('down', 9px, 2px, #828795);
+    margin-top: -6px;
+    position: relative;
+    top: 50%;
+  }
