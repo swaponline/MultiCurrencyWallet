@@ -181,7 +181,8 @@ const CreateWallet = (props) => {
         case 'withoutSecure':
           Object.keys(currencies).forEach(el => {
             if (currencies[el]) {
-              actions.core.markCoinAsVisible(el.toUpperCase())
+              const isWasOnWallet = localStorage.getItem("hiddenCoinsList").find(cur => cur.includes(`${el}:`))
+              actions.core.markCoinAsVisible(isWasOnWallet || el.toUpperCase())
             }
           })
           break
