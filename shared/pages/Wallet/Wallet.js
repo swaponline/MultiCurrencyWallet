@@ -177,6 +177,7 @@ export default class Wallet extends Component {
 
   componentDidUpdate(prevProps) {
     const {
+      activeFiat,
       match: {
         params: {
           page = null,
@@ -184,12 +185,17 @@ export default class Wallet extends Component {
       },
     } = this.props
     const {
+      activeFiat: prevFiat,
       match: {
         params: {
           page: prevPage = null,
         },
       },
     } = prevProps
+
+    if (activeFiat !== prevFiat) {
+      this.getFiats()
+    }
 
     if (page !== prevPage) {
       let activeView = 0

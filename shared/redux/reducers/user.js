@@ -182,9 +182,8 @@ export const setIsFetching = (state, { isFetching }) => ({
 
 export const setFiats = (state, { fiats }) => ({ ...state, fiats })
 
-export const setActiveFiat = (state, a) => {
-  console.log("a", a)
-  return state
+export const setActiveFiat = (state, { activeFiat }) => {
+  return ({ ...state, activeFiat })
 }
 
 export const setReputation = (state, { name, reputation, reputationOracleSignature }) => ({

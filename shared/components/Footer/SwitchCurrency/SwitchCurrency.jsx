@@ -48,9 +48,8 @@ class SwitchCurrency extends Component {
   handleCurrChoose = (activeFiat) => {
     localStorage.setItem('activeFiat', activeFiat)
 
-    reducers.user.setActiveFiat({ activeFiat: localStorage.getItem('activeFiat') || 'USD' })
-    reducers.user.setActiveFiat(activeFiat)
     this.setState(({ defaultFiats }) => ({ activeFiat, isListOpen: false, fiats: defaultFiats }))
+    actions.user.getFiats()
   }
 
   render() {
