@@ -183,12 +183,12 @@ export default class History extends Component {
         key: 'ActivityAll',
         title: <FormattedMessage id="History_Nav_ActivityTab" defaultMessage="Activity" />,
         link: links.history,
-      },
-      {
-        key: 'ActivityInvoices',
-        title: <FormattedMessage id="History_Nav_InvoicesTab" defaultMessage="Invoices" />,
-        link: links.invoices,
-      },
+      }
+      // {
+      //   key: 'ActivityInvoices',
+      //   title: <FormattedMessage id="History_Nav_InvoicesTab" defaultMessage="Invoices" />,
+      //   link: links.invoices,
+      // },
     ]
 
     return (
@@ -215,7 +215,8 @@ export default class History extends Component {
                   ))}
                 </ul>
               )}
-              {
+              <div>
+                {/* {
                 items.length > 0 && !isLoading ? (
                   <InfiniteScrollTable
                     className={styles.history}
@@ -226,18 +227,20 @@ export default class History extends Component {
                     items={items.slice(0, this.state.renderedItems)}
                     rowRender={this.rowRender}
                   />
-                ) : (
-                    <div styleName="historyContent">
-                      <ContentLoader rideSideContent empty={!isLoading} nonHeader />
-                    </div>
-                  )
-              }
+                ) : ( */}
+                <div styleName="historyContent">
+                  <ContentLoader rideSideContent empty={!isLoading} nonHeader />
+                </div>
+                {/* )
+              } */}
+              </div>
+
             </section>
           ) : (
-            <div styleName="historyContent">
-              <ContentLoader rideSideContent />
-            </div>
-          )
+              <div styleName="historyContent">
+                <ContentLoader rideSideContent />
+              </div>
+            )
         }
       </ModalConductorProvider>
     )
