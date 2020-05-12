@@ -56,7 +56,7 @@ export default class WithdrawModal extends React.Component {
     super()
 
     const {
-      data: { amount, toAddress, currency },
+      data: { amount, toAddress, currency, hiddenCoinsList },
       items,
       tokenItems,
     } = data
@@ -97,7 +97,9 @@ export default class WithdrawModal extends React.Component {
       error: false,
       ownTx: '',
       isAssetsOpen: false,
+      hiddenCoinsList,
       currentActiveAsset: data.data,
+      allCurrencyies,
     }
   }
 
@@ -431,12 +433,35 @@ export default class WithdrawModal extends React.Component {
   }
 
   openModal = (currency) => {
+    const {
+      history,
+      intl: { locale },
+    } = this.props
     const { Withdraw } = constants.modals
 
     const currentAsset = this.props.items.filter(
       (item) => currency === item.currency
     )
-    actions.modals.open(Withdraw, currentAsset[0])
+
+    console.log('currentAsset', currentAsset[0])
+
+    let targetCurrency = currentAsset[0].currency
+    switch (currency.toLowerCase()) {
+      case 'btc (multisig)':
+      case 'btc (sms-protected)':
+        targetCurrency = 'btc'
+        break
+    }
+
+    const isToken = helpers.ethToken.isEthToken({ name: currency })
+
+    history.push(
+      localisedUrl(
+        locale,
+        (isToken ? '/token' : '') +
+          `/${targetCurrency}/${currentAsset[0].address}`
+      )
+    )
   }
 
   render() {
@@ -453,7 +478,9 @@ export default class WithdrawModal extends React.Component {
       currentDecimals,
       error,
       ownTx,
-      usedAdminFee,
+      currentActiveAsset,
+      isAssetsOpen,
+      allCurrencyies,
     } = this.state
 
     const {
@@ -558,7 +585,7 @@ export default class WithdrawModal extends React.Component {
           </p>
         )}
 
-        <div styleName="highLevel">
+        <div style={{ marginBottom: '40px' }}>
           {/* <FieldLabel>
             <FormattedMessage id="Withdrow1194" defaultMessage="Address " />{' '}
             <Tooltip id="WtH203">
@@ -583,8 +610,20 @@ export default class WithdrawModal extends React.Component {
             >
               <Coin name={currentActiveAsset.currency} />
               <div>
-                <a>{currentActiveAsset.fullName}</a>
-                <span>{currentActiveAsset.address}</span>
+                <a>{currentActiveAsset.currency}</a>
+                <span styleName="address">{currentActiveAsset.address}</span>
+              </div>
+              <div styleName="amount">
+                <span styleName="currency">
+                  {currentActiveAsset.balance} {currentActiveAsset.currency}
+                </span>
+                <span styleName="usd">
+                  {(
+                    currentActiveAsset.balance *
+                    currentActiveAsset.infoAboutCurrency.price_usd
+                  ).toFixed(2)}
+                  USD
+                </span>
               </div>
               <div
                 styleName={cx('customSelectArrow', { active: isAssetsOpen })}
@@ -592,7 +631,7 @@ export default class WithdrawModal extends React.Component {
             </div>
             {isAssetsOpen && (
               <div styleName="customSelectList">
-                {this.props.items.map((item) => (
+                {allCurrencyies.map((item) => (
                   <div
                     styleName="customSelectListItem customSelectValue"
                     onClick={() => {
@@ -606,7 +645,18 @@ export default class WithdrawModal extends React.Component {
                     <Coin name={item.currency} />
                     <div>
                       <a>{item.fullName}</a>
-                      <span>{item.address}</span>
+                      <span styleName="address">{item.address}</span>
+                    </div>
+                    <div styleName="amount">
+                      <span styleName="currency">
+                        {item.balance} {item.currency}
+                      </span>
+                      {/* <span styleName="usd">
+                        {(
+                          item.balance * item.infoAboutCurrency.price_usd
+                        ).toFixed(2)}{' '}
+                        USD
+                      </span> */}
                     </div>
                   </div>
                 ))}

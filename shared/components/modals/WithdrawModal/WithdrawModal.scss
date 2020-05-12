@@ -164,7 +164,7 @@
         color: #6144e5;
       }
     }
-    span {
+    .address {
       color: #8e9aa3;
       font-size: 12px;
     }
@@ -204,5 +204,18 @@
   &:before {
     -webkit-transform: rotate(-45deg);
     transform: rotate(-45deg);
+  }
+}
+
+.amount {
+  position: absolute;
+  text-align: right;
+  right: 75px;
+  font-size: 13px;
+  .currency {
+    color: #1f2d48;
+  }
+  .usd {
+    color: #8e9aa3;
   }
 }
