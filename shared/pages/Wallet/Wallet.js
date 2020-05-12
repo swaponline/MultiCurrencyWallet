@@ -435,12 +435,13 @@ export default class Wallet extends Component {
     let tableRows = allData.filter(({ currency, address, balance }) => {
       // @ToDo - В будущем нужно убрать проверку только по типу монеты.
       // Старую проверку оставил, чтобы у старых пользователей не вывалились скрытые кошельки
+
       return (!hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`)) || balance > 0
     })
 
     if (isWidgetBuild) {
       //tableRows = allData.filter(({ currency }) => widgetCurrencies.includes(currency))
-      tableRows = allData.filter(({ currency, balance }) => !hiddenCoinsList.includes(currency))
+      tableRows = allData.filter(({ currency, address }) => !hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`))
       // Отфильтруем валюты, исключив те, которые не используются в этом билде
       tableRows = tableRows.filter(({ currency }) => widgetCurrencies.includes(currency))
     }

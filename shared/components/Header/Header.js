@@ -32,6 +32,7 @@ import { relocalisedUrl } from "helpers/locale";
 import { localisedUrl, unlocalisedUrl } from "../../helpers/locale";
 import UserTooltip from "components/Header/User/UserTooltip/UserTooltip";
 import { messages, getMenuItems, getMenuItemsMobile } from "./config";
+import { getActivatedCurrencies } from 'helpers/user'
 
 let lastScrollTop = 0;
 
@@ -236,11 +237,11 @@ export default class Header extends Component {
     })
 
     if (isWidgetBuild) {
-      userCurrencies = allData.filter(({ currency }) => !hiddenCoinsList.includes(currency))
+      userCurrencies = allData.filter(({ currency, address }) => !hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`))
       userCurrencies = userCurrencies.filter(({ currency }) => widgetCurrencies.includes(currency))
     }
 
-    userCurrencies = userCurrencies.filter(({ currency }) => enabledCurrencies.includes(currency))
+    userCurrencies = userCurrencies.filter(({ currency }) => getActivatedCurrencies().includes(currency))
 
     switch (true) {
       case isWalletPage && !wasOnWalletLs:
