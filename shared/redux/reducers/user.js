@@ -53,7 +53,7 @@ export const initialState = {
   isFetching: false,
   isBalanceFetching: false,
   isTokenSigned: false,
-  activeFiat: localStorage.getItem('activeFiat') || 'USD'
+  activeFiat: window.DEFAULT_FIAT || 'USD'
 }
 
 export const addWallet = (state, { name, data }) => ({

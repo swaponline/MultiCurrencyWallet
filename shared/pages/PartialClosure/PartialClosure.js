@@ -370,9 +370,9 @@ export default class PartialClosure extends Component {
 
     try {
       const exHaveRate =
-        this.fiatRates[haveCurrency] = await actions.user.getExchangeRate(haveCurrency, activeFiat.toLocaleUpperCase());
+        this.fiatRates[haveCurrency] = await actions.user.getExchangeRate(haveCurrency, activeFiat.toLowerCase());
       const exGetRate =
-        this.fiatRates[getCurrency] = await actions.user.getExchangeRate(getCurrency, activeFiat.toLocaleUpperCase());
+        this.fiatRates[getCurrency] = await actions.user.getExchangeRate(getCurrency, activeFiat.toLowerCase());
 
       this.fiatRates[haveCurrency] = exHaveRate;
       this.fiatRates[getCurrency] = exGetRate;

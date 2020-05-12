@@ -151,7 +151,7 @@ const getBalances = () => {
 }
 
 const getFiats = () => {
-  reducers.user.setActiveFiat({ activeFiat: localStorage.getItem('activeFiat') || 'USD' })
+  reducers.user.setActiveFiat({ activeFiat: window.DEFAULT_FIAT || 'USD' })
 
   return new Promise((resolve, reject) => {
 
@@ -177,9 +177,8 @@ const getFiats = () => {
 
 
 const getExchangeRate = (sellCurrency, buyCurrency) => {
-  const activeFiat = localStorage.getItem('activeFiat') || 'USD'
 
-  if (buyCurrency.toLowerCase() === activeFiat.toLowerCase()) {
+  if (buyCurrency.toLowerCase() === 'usd') {
     return new Promise((resolve, reject) => {
       let dataKey = sellCurrency.toLowerCase()
       switch (sellCurrency.toLowerCase()) {

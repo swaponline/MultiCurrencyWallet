@@ -189,7 +189,7 @@ export default class SwapComponent extends PureComponent {
       ]
 
       currencies.forEach(item => {
-        actions.user.getExchangeRate(item.currency, activeFiat.toLocaleUpperCase())
+        actions.user.getExchangeRate(item.currency, activeFiat.toLowerCase())
           .then(exRate => {
             const amount = exRate * Number(item.amount)
 
