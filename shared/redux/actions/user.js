@@ -175,7 +175,6 @@ const getFiats = () => {
 
 }
 
-
 const getExchangeRate = (sellCurrency, buyCurrency) => {
 
   if (buyCurrency.toLowerCase() === 'usd') {
@@ -192,7 +191,7 @@ const getExchangeRate = (sellCurrency, buyCurrency) => {
       if (user[`${dataKey}Data`] && user[`${dataKey}Data`].infoAboutCurrency) {
         const currencyData = user[`${dataKey}Data`]
         const multiplier = getFiats()
-        resolve(currencyData.infoAboutCurrency.price_usd * multiplier)
+        resolve(currencyData.infoAboutCurrency.price_usd)
       } else {
         resolve(1)
       }
