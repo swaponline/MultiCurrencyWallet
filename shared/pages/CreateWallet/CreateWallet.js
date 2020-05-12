@@ -30,17 +30,6 @@ const styleBtn = { backgroundColor: '#f0eefd', color: '#6144E5' }
 const defaultColors = { backgroundColor: '#6144E5' }
 
 
-const getFiats = async () => {
-  const { activeFiat } = this.props
-  const { fiatsRates } = await actions.user.getFiats()
-
-  const fiatRate = fiatsRates.find(({ key }) => key === activeFiat)
-  setFeates(fiatRate.value)
-
-  return fiatRate.value
-}
-
-
 const CreateWallet = (props) => {
   const {
     history,
@@ -119,7 +108,14 @@ const CreateWallet = (props) => {
 
         const hiddenList = localStorage.getItem('hiddenCoinsList')
 
-        if (!hiddenList.includes(singleCurrecny.toUpperCase())) {
+        const isExist = hiddenList.find(el => {
+          if (el.includes(':')) {
+            return el.includes(singleCurrecny.toUpperCase())
+          }
+          return el === singleCurrecny.toUpperCase()
+        })
+
+        if (!isExist) {
           setExist(true)
         }
       }
@@ -132,6 +128,15 @@ const CreateWallet = (props) => {
   const [error, setError] = useState('Choose something')
   const [isExist, setExist] = useState(false)
   const steps = [1, 2]
+
+  const getFiats = async () => {
+    const { activeFiat } = this.props
+    const { fiatsRates } = await actions.user.getFiats()
+
+    const fiatRate = fiatsRates.find(({ key }) => key === activeFiat)
+
+    return fiatRate.value
+  }
 
   const goHome = () => {
     history.push(localisedUrl(locale, links.home))
@@ -190,7 +195,8 @@ const CreateWallet = (props) => {
         case 'withoutSecure':
           Object.keys(currencies).forEach(el => {
             if (currencies[el]) {
-              actions.core.markCoinAsVisible(el.toUpperCase())
+              const isWasOnWallet = localStorage.getItem('hiddenCoinsList').find(cur => cur.includes(`${el}:`))
+              actions.core.markCoinAsVisible(isWasOnWallet || el.toUpperCase())
             }
           })
           break
@@ -348,5 +354,4 @@ export default connect({
   userData: 'user',
   core: 'core',
   activeFiat: 'user.activeFiat',
-
 })(injectIntl(withRouter(CSSModules(CreateWallet, styles, { allowMultiple: true }))))

@@ -5947,7 +5947,7 @@
   },
   {
     "id": "ShowMyMnemonic",
-    "message": "Пожалуйста, сделайте резервную копию своего кошелька"
+    "message": "сделайте резервную копию кошелька"
   },
   {
     "id": "BtcMultisignConfirmTx_FromAddress",

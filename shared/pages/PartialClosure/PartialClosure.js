@@ -1107,7 +1107,7 @@ export default class PartialClosure extends Component {
 
     const Form = (
       <div styleName={`${isSingleForm ? "" : "section"}`} className={isWidgetLink ? "section" : ""}>
-        <div styleName="mobileDubleHeader">
+        <div styleName={isWidgetLink ? "section" : ""}>
           <PromoText
             subTitle={subTitle(
               sellTokenFullName,
