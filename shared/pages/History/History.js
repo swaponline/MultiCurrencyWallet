@@ -216,23 +216,21 @@ export default class History extends Component {
                 </ul>
               )}
               <div>
-                {/* {
-                items.length > 0 && !isLoading ? (
-                  <InfiniteScrollTable
-                    className={styles.history}
-                    titles={titles}
-                    bottomOffset={400}
-                    getMore={this.loadMore}
-                    itemsCount={items.length}
-                    items={items.slice(0, this.state.renderedItems)}
-                    rowRender={this.rowRender}
-                  />
-                ) : ( */}
-                <div styleName="historyContent">
-                  <ContentLoader rideSideContent empty={!isLoading} nonHeader />
-                </div>
-                {/* )
-              } */}
+                {
+                  items.length > 0 && !isLoading ? (
+                    <InfiniteScrollTable
+                      className={styles.history}
+                      titles={titles}
+                      bottomOffset={400}
+                      getMore={this.loadMore}
+                      itemsCount={items.length}
+                      items={items.slice(0, this.state.renderedItems)}
+                      rowRender={this.rowRender}
+                    />
+                  ) : (
+                      <ContentLoader rideSideContent empty={!isLoading} nonHeader />
+                    )
+                }
               </div>
 
             </section>

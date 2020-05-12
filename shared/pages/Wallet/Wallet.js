@@ -461,7 +461,8 @@ export default class Wallet extends Component {
     const isAnyModalCalled = Object.keys(modals).length
     return (
       <article>
-        <section styleName={isWidgetBuild && !config.isFullBuild ? 'wallet widgetBuild' : 'wallet'}>
+        {window.CUSTOM_LOGO && <img styleName="cutomLogo" src={window.CUSTOM_LOGO} />}
+        <section styleName={`${isWidgetBuild && !config.isFullBuild ? 'wallet widgetBuild' : 'wallet'} ${CUSTOM_LOGO ? "hasCusomLogo" : ""}`}>
           <Tabs onClick={this.handleNavItemClick} activeView={activeView} />
           <div className="data-tut-store" styleName="walletContent" ref={this.balanceRef}>
             <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
