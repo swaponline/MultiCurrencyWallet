@@ -191,8 +191,9 @@ export default class Row extends Component {
 
   handleWithdraw = () => {
     const {
-      itemData: { currency },
-      itemData,
+      itemData: { currency, address },
+      history,
+      intl: { locale },
     } = this.props
 
     const {
@@ -206,7 +207,22 @@ export default class Row extends Component {
       withdrawModalType = WithdrawMultisigSMS
     if (currency === 'BTC (Multisig)') withdrawModalType = WithdrawMultisigUser
 
-    this.goToCurrencyHistory()
+    let targetCurrency = currency
+    switch (currency.toLowerCase()) {
+      case 'btc (multisig)':
+      case 'btc (sms-protected)':
+        targetCurrency = 'btc'
+        break
+    }
+
+    const isToken = helpers.ethToken.isEthToken({ name: currency })
+
+    history.push(
+      localisedUrl(
+        locale,
+        (isToken ? '/token' : '') + `/${targetCurrency}/${address}/withdraw`
+      )
+    )
   }
 
   handleReceive = () => {

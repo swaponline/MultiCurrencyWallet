@@ -26,11 +26,9 @@ import BalanceForm from './components/BalanceForm/BalanceForm'
 import FAQ from './components/FAQ/FAQ'
 import CurrenciesList from './CurrenciesList'
 import Button from 'components/controls/Button/Button'
-import Tabs from "components/Tabs/Tabs"
+import Tabs from 'components/Tabs/Tabs'
 import InvoicesList from 'pages/Invoices/InvoicesList'
 import { ModalConductorProvider } from 'components/modal'
-
-
 
 const isWidgetBuild = config && config.isWidget
 
@@ -55,7 +53,7 @@ const isWidgetBuild = config && config.isWidget
   }) => {
     let widgetMultiTokens = []
     if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
-      Object.keys(window.widgetERC20Tokens).forEach(key => {
+      Object.keys(window.widgetERC20Tokens).forEach((key) => {
         widgetMultiTokens.push(key.toUpperCase())
       })
     }
@@ -64,32 +62,24 @@ const isWidgetBuild = config && config.isWidget
         ? window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length
           ? widgetMultiTokens
           : [config.erc20token.toUpperCase()]
-        : Object.keys(tokensData).map(k => tokensData[k].currency)
+        : Object.keys(tokensData).map((k) => tokensData[k].currency)
 
-    const tokensItems = Object.keys(tokensData).map(k => tokensData[k])
+    const tokensItems = Object.keys(tokensData).map((k) => tokensData[k])
 
     const allData = [
       btcData,
       btcMultisigSMSData,
       btcMultisigUserData,
       ethData,
-      ...Object.keys(tokensData).map(k => tokensData[k])
+      ...Object.keys(tokensData).map((k) => tokensData[k]),
     ].map(({ account, keyPair, ...data }) => ({
-      ...data
+      ...data,
     }))
 
     const items = (config && config.isWidget
-      ? [
-        btcData,
-        ethData
-      ]
-      : [
-        btcData,
-        btcMultisigSMSData,
-        btcMultisigUserData,
-        ethData,
-      ]
-    ).map(data => data.currency)
+      ? [btcData, ethData]
+      : [btcData, btcMultisigSMSData, btcMultisigUserData, ethData]
+    ).map((data) => data.currency)
 
     return {
       tokens,
@@ -118,7 +108,7 @@ const isWidgetBuild = config && config.isWidget
 @injectIntl
 @withRouter
 @connect(({ signUp: { isSigned } }) => ({
-  isSigned
+  isSigned,
 }))
 @cssModules(styles, { allowMultiple: true })
 export default class Wallet extends Component {
@@ -127,9 +117,7 @@ export default class Wallet extends Component {
 
     const {
       match: {
-        params: {
-          page = null,
-        },
+        params: { page = null },
       },
     } = props
 
@@ -162,7 +150,7 @@ export default class Wallet extends Component {
       editTitle: false,
       enabledCurrencies: getActivatedCurrencies(),
       showSweepBanner,
-      isMnemonicSaved: (mnemonic === `-`),
+      isMnemonicSaved: mnemonic === `-`,
     }
   }
 
@@ -173,16 +161,12 @@ export default class Wallet extends Component {
   componentDidUpdate(prevProps) {
     const {
       match: {
-        params: {
-          page = null,
-        },
+        params: { page = null },
       },
     } = this.props
     const {
       match: {
-        params: {
-          page: prevPage = null,
-        },
+        params: { page: prevPage = null },
       },
     } = prevProps
 
@@ -210,11 +194,10 @@ export default class Wallet extends Component {
 
     if (isMobile) {
       this.balanceRef.current.scrollIntoView({
-        block: 'start'
+        block: 'start',
       })
     }
   }
-
 
   getInfoAboutCurrency = async () => {
     const { currencies } = this.props
@@ -223,7 +206,7 @@ export default class Wallet extends Component {
     await actions.user.getInfoAboutCurrency(currencyNames)
   }
 
-  handleNavItemClick = index => {
+  handleNavItemClick = (index) => {
     if (index === 1) {
       // fetch actual tx list
       actions.user.setTransactions()
@@ -231,7 +214,7 @@ export default class Wallet extends Component {
     }
 
     this.setState({
-      activeView: index
+      activeView: index,
     })
   }
 
@@ -247,22 +230,22 @@ export default class Wallet extends Component {
     actions.modals.open(constants.modals.ImportKeys, {})
   }
 
-  onLoadeOn = fn => {
+  onLoadeOn = (fn) => {
     this.setState({
-      isFetching: true
+      isFetching: true,
     })
 
     fn()
   }
 
-  handleNotifyBlockClose = state => {
+  handleNotifyBlockClose = (state) => {
     this.setState({
-      [state]: true
+      [state]: true,
     })
     localStorage.setItem(constants.localStorage[state], 'true')
   }
 
-  handleWithdraw = params => {
+  handleWithdraw = (params) => {
     const { allData } = this.props
     const { address, amount } = params
     const item = allData.find(({ currency }) => currency.toLowerCase() === params.currency.toLowerCase())
@@ -270,14 +253,14 @@ export default class Wallet extends Component {
     actions.modals.open(constants.modals.Withdraw, {
       ...item,
       toAddress: address,
-      amount
+      amount,
     })
   }
 
   goToСreateWallet = () => {
     const {
       history,
-      intl: { locale }
+      intl: { locale },
     } = this.props
 
     history.push(localisedUrl(locale, links.createWallet))
@@ -286,7 +269,7 @@ export default class Wallet extends Component {
   handleGoExchange = () => {
     const {
       history,
-      intl: { locale }
+      intl: { locale },
     } = this.props
 
     if (isWidgetBuild && !config.isFullBuild) {
@@ -298,7 +281,7 @@ export default class Wallet extends Component {
 
   handleEditTitle = () => {
     this.setState({
-      editTitle: true
+      editTitle: true,
     })
   }
 
@@ -312,14 +295,14 @@ export default class Wallet extends Component {
     })
   }
 
-  handleChangeTitle = e => {
+  handleChangeTitle = (e) => {
     this.setState({
-      walletTitle: e.target.value
+      walletTitle: e.target.value,
     })
     localStorage.setItem(constants.localStorage.walletTitle, e.target.value)
   }
 
-  handleModalOpen = context => {
+  handleModalOpen = (context) => {
     const { enabledCurrencies } = this.state
     const { hiddenCoinsList } = this.props
 
@@ -332,7 +315,7 @@ export default class Wallet extends Component {
     if (isWidgetBuild) {
       if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
         // Multi token widget build
-        Object.keys(window.widgetERC20Tokens).forEach(key => {
+        Object.keys(window.widgetERC20Tokens).forEach((key) => {
           widgetCurrencies.push(key.toUpperCase())
         })
       } else {
@@ -340,21 +323,18 @@ export default class Wallet extends Component {
       }
     }
 
-    const currencies = actions.core.getWallets()
-      .filter(({ currency, balance }) => {
-        return (
-          ((context === 'Send') ? balance : true)
-          && !hiddenCoinsList.includes(currency)
-          && enabledCurrencies.includes(currency)
-          && ((isWidgetBuild) ?
-            widgetCurrencies.includes(currency)
-            : true)
-        )
-      })
+    const currencies = actions.core.getWallets().filter(({ currency, balance }) => {
+      return (
+        (context === 'Send' ? balance : true) &&
+        !hiddenCoinsList.includes(currency) &&
+        enabledCurrencies.includes(currency) &&
+        (isWidgetBuild ? widgetCurrencies.includes(currency) : true)
+      )
+    })
 
     actions.modals.open(constants.modals.CurrencyAction, {
       currencies,
-      context
+      context,
     })
   }
 
@@ -363,9 +343,9 @@ export default class Wallet extends Component {
       onClose: () => {
         const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
         this.setState({
-          isMnemonicSaved: (mnemonic === `-`),
+          isMnemonicSaved: mnemonic === `-`,
         })
-      }
+      },
     })
   }
 
@@ -424,7 +404,7 @@ export default class Wallet extends Component {
     if (isWidgetBuild) {
       if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
         // Multi token widget build
-        Object.keys(window.widgetERC20Tokens).forEach(key => {
+        Object.keys(window.widgetERC20Tokens).forEach((key) => {
           widgetCurrencies.push(key.toUpperCase())
         })
       } else {
@@ -441,14 +421,17 @@ export default class Wallet extends Component {
 
     if (isWidgetBuild) {
       //tableRows = allData.filter(({ currency }) => widgetCurrencies.includes(currency))
-      tableRows = allData.filter(({ currency, address }) => !hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`))
+      tableRows = allData.filter(
+        ({ currency, address }) =>
+          !hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`)
+      )
       // Отфильтруем валюты, исключив те, которые не используются в этом билде
       tableRows = tableRows.filter(({ currency }) => widgetCurrencies.includes(currency))
     }
 
     tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
 
-    tableRows.forEach(item => {
+    tableRows.forEach((item) => {
       if ((!isWidgetBuild || widgetCurrencies.includes(item.name)) && item.infoAboutCurrency && item.balance !== 0) {
         if (item.name === 'BTC') {
           changePercent = item.infoAboutCurrency.percent_change_1h
@@ -506,11 +489,9 @@ export default class Wallet extends Component {
                   </Button>
                   <FormattedMessage
                     id="SweepBannerDescription"
-                    defaultMessage={
-                      `Пожалуйста, переместите все средства на кошельки помеченные "new" 
+                    defaultMessage={`Пожалуйста, переместите все средства на кошельки помеченные "new" 
                       (USDT и остальные токены переведите на Ethereum (new) адрес). 
-                      Затем нажмите кнопку "DONE". Старые адреса будут скрыты.`
-                    }
+                      Затем нажмите кнопку "DONE". Старые адреса будут скрыты.`}
                   />
                 </p>
               )}
@@ -539,10 +520,10 @@ export default class Wallet extends Component {
               <FAQ />
             </div>
             <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
-              {activeView === 1 && (<History {...this.props} />)}
+              {activeView === 1 && <History {...this.props} />}
             </div>
             <div styleName={`activity ${activeView === 2 ? 'active' : ''}`}>
-              {activeView === 2 && (<InvoicesList {...this.props} onlyTable={true} />)}
+              {activeView === 2 && <InvoicesList {...this.props} onlyTable={true} />}
             </div>
           </div>
         </section>
