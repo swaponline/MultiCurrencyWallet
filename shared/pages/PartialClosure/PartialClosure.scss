@@ -2,15 +2,19 @@
   0% {
     transform: translate(-50%, 0);
   }
+
   13% {
     transform: translate(-50%, -3px);
   }
+
   26% {
     transform: translate(-50%, 3px);
   }
+
   40% {
     transform: translate(-50%, 0);
   }
+
   100% {
     transform: translate(-50%, 0);
   }
@@ -21,9 +25,11 @@
     max-height: 0;
     opacity: 0;
   }
+
   20% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
     max-height: 300px;
@@ -40,10 +46,12 @@
     position: absolute;
     width: 50%;
     top: 87px;
+
     h1,
     span {
       font-size: 45px;
     }
+
     * {
       margin: 0;
       padding: 0;
@@ -77,6 +85,7 @@
     top: 0;
   }
 }
+
 .scrollToTutorialSection {
   display: flex;
   justify-content: space-between;
@@ -86,6 +95,7 @@
   color: gray;
   cursor: pointer;
   transition: opacity 0.3s ease, visibility 0.1s 0.3s;
+
   &:global(.hidden) {
     opacity: 0;
     visibility: hidden;
@@ -109,12 +119,14 @@
   border-radius: 50%;
   animation: scrollAnimation 5s linear infinite;
 }
+
 .scrollAdvice {
   display: inline-block;
   margin-right: 15px;
   font-size: 10px;
   line-height: 1.1em;
 }
+
 .exchangeWrap {
   color: #000;
   width: 100vw;
@@ -158,6 +170,7 @@
   padding: 0;
   margin-bottom: 20px;
   font-size: 16px;
+
   &:focus {
     border: none;
   }
@@ -187,6 +200,7 @@
   border: 1px solid #000;
   background: #fff;
   transition: background-color 0.2s ease, color 0.1s ease, border-color 0.2s ease;
+
   &:hover {
     background: black;
     color: white;
@@ -208,6 +222,7 @@
   min-height: 73px;
   margin-bottom: 30px;
   padding: 0 20px;
+
   &_site {
     position: relative;
   }
@@ -219,6 +234,7 @@
   max-height: 0;
   opacity: 0;
   transition: max-height 0.3s ease;
+
   &_active {
     z-index: 0;
     opacity: 1;
@@ -238,11 +254,14 @@
   justify-content: space-between;
   margin-bottom: 20px;
 }
+
 .section {
   padding-top: 100px;
 }
+
 .blockVideo {
   flex-basis: 58%;
+
   iframe {
     width: 100%;
     height: 355px;
@@ -262,12 +281,14 @@
 
 .formExchange_widgetBuild {
   position: relative;
-  padding: 50px 0;
   margin: 0 auto;
   margin-top: 20px;
   width: 100%;
-  max-width: 420px;
+  max-width: 460px;
   z-index: 100;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 50px 40px;
 }
 
 .widgetFormExchange {
@@ -285,15 +306,18 @@
   border-radius: 3px;
   margin-bottom: 15px;
   @include errAppend();
+
   a {
     color: inherit;
     font-size: inherit;
     text-decoration: underline;
   }
 }
+
 .error.link {
   cursor: pointer;
 }
+
 .notifyThat {
   display: flex;
   align-items: center;
@@ -305,6 +329,7 @@
   border-radius: 3px;
   margin-bottom: 15px;
   @include errAppend();
+
   a {
     color: inherit;
     font-size: inherit;
@@ -347,7 +372,8 @@
 .additionalLoaderHolder {
   display: block;
   position: relative;
-  > * {
+
+  >* {
     display: block;
     position: static !important;
     margin: 0 !important;
@@ -372,6 +398,7 @@
 .selectWrap {
   position: relative;
 }
+
 .scan {
   display: flex;
   flex-direction: column;
@@ -407,7 +434,7 @@
   overflow: visible;
   @include errAppend();
 
-  > div {
+  >div {
     margin: 0;
   }
 }
@@ -437,6 +464,7 @@
     text-decoration: underline;
   }
 }
+
 .mobileDubleHeader {
   display: none;
 }
@@ -483,36 +511,46 @@
   .block {
     flex-basis: 45%;
   }
+
   .button {
     font-size: 12px;
   }
+
   .maxAmount {
     font-size: 14px;
   }
+
   .TitleHolder {
     width: 45%;
+
     h1,
     span {
       font-size: 35px;
     }
   }
+
   .promoContainer {
     &::before {
       display: none;
     }
   }
+
   .exchangeWrap {
     margin: 0 -40px;
   }
+
   .container {
     flex-direction: column;
   }
+
   .alignCenter {
     height: auto;
     padding: 50px 0 90px;
   }
 }
+
 @media all and (min-width: 320px) and (max-width: 830px) {
+
   .section,
   .widgetSection {
     margin-top: 20px;
@@ -521,28 +559,35 @@
     max-width: 830px;
     margin: auto;
   }
+
   .section {
     padding-top: 120px;
   }
+
   .button {
     font-size: 12px;
   }
+
   .block {
     margin-bottom: 80px;
     margin-top: 60px;
   }
+
   .widgetSection {
     padding: 0 25px;
     overflow: hidden;
+
     .flipButton {
       left: auto;
       right: 40px;
       transform: translateY(12px) rotate(90deg);
     }
+
     .selectedItem {
       width: auto;
     }
   }
+
   .TitleHolder {
     width: 100%;
   }
@@ -572,6 +617,12 @@
     font-size: 16px;
   }
 
+  .formExchange_widgetBuild {
+    padding: 50px 15px;;
+    box-shadow: unset;
+    border-radius: unset;
+  }
+
   .scrollToTutorialSection {
     bottom: 40px;
     right: 40%;
@@ -587,6 +638,7 @@
   .mobileDubleHeader {
     display: block;
     background: white;
+
     h3 {
       display: block;
       margin: auto;
@@ -595,6 +647,7 @@
       padding: 0;
       padding-bottom: 10px;
       padding-top: 15px;
+
       div {
         display: block;
         margin: auto;
@@ -620,14 +673,17 @@
   .IsSearching {
     font-size: 12px;
   }
+
   .maxAmount {
     top: 43px;
     right: 20px;
     font-size: 10px;
   }
+
   .exchangeWrap {
     margin: 0 -20px;
   }
+
   .container {
     flex-direction: column-reverse;
     width: 100%;
@@ -636,23 +692,28 @@
     padding-top: 0;
     padding: 0;
   }
+
   .promoContainer {
     background: #f5f5f5;
     padding: 60px 0;
     margin-bottom: 60px;
+
     &::before {
       display: none;
     }
   }
+
   .formExchange {
     width: 100%;
     padding: 50px 15px;
     border-radius: 0;
     box-shadow: none;
   }
+
   .section {
     margin: 0;
   }
+
   .specify {
     width: 170px;
     font-weight: 500;

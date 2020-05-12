@@ -13,6 +13,7 @@ import Button from 'components/controls/Button/Button'
 import ShortTextView from 'pages/Wallet/components/ShortTextView/ShortTextView.js'
 import { isMobile } from "react-device-detect";
 import { BigNumber } from 'bignumber.js'
+import Skeleton from 'react-loading-skeleton'
 
 import animateFetching from 'components/loaders/ContentLoader/ElementLoading.scss'
 
@@ -51,23 +52,28 @@ export default class TxInfo extends React.Component {
       confirmations,
       minerFee,
       minerFeeCurrency,
+      adminFee,
+      error,
     } = this.props
 
     let linkBlockChain = '#'
     let linkShare = '#'
     let tx = ''
 
-    if(txRaw) {
-      const txInfo = helpers.transactions.getInfo(currency.toLowerCase(), txRaw)
-      tx = txInfo.tx
-      linkBlockChain = txInfo.link
+    if (!error) {
+      if(txRaw) {
+        const txInfo = helpers.transactions.getInfo(currency.toLowerCase(), txRaw)
+        tx = txInfo.tx
+        linkBlockChain = txInfo.link
+      }
+  
+      if (txId) {
+        tx = txId
+        linkShare = helpers.transactions.getTxRouter(currency.toLowerCase(), txId)
+        linkBlockChain = helpers.transactions.getLink(currency.toLowerCase(), txId)
+      }
     }
 
-    if (txId) {
-      tx = txId
-      linkShare = helpers.transactions.getTxRouter(currency.toLowerCase(), txId)
-      linkBlockChain = helpers.transactions.getLink(currency.toLowerCase(), txId)
-    }
 
     return (
       <div>
@@ -76,15 +82,30 @@ export default class TxInfo extends React.Component {
             <img styleName="finishImg" src={finishSvg} alt="finish" />
           </div>
 
-          <div className="p-3" styleName={isFetching ? `animate-fetching` : ``}>
+          <div className="p-3">
             <div styleName="shortInfoHolder">
-              <span><strong> {amount}  {currency.toUpperCase()} </strong></span>
-              {!isFetching && (
-                <span> <FormattedMessage id="InfoPay_2" defaultMessage="были успешно переданы" />
-                  <br />
-                  <strong>{toAddress}</strong>
-                </span>
-              )}
+              {
+                isFetching
+                  ? (
+                    <span>
+                      <Skeleton count={2} />
+                    </span>
+                  )
+                  : error
+                    ? (
+                      <span>
+                        <span><FormattedMessage id="InfoPay_2_Error" defaultMessage="Error loading data" /></span>
+                      </span>
+                      )
+                    : (
+                      <span>
+                        <span><strong> {amount}  {currency.toUpperCase()} </strong></span>
+                        <FormattedMessage id="InfoPay_2_Ready" defaultMessage="были успешно переданы" />
+                        <br />
+                        <strong>{toAddress}</strong>
+                      </span>
+                    )
+              }
             </div>
           </div>
 
@@ -103,58 +124,84 @@ export default class TxInfo extends React.Component {
               {isFetching ? (
                 <>
                   <tr>
-                    <td styleName="animate-fetching" colSpan="2"></td>
+                    <td colSpan="2">
+                      <Skeleton />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colSpan="2">
+                      <Skeleton />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colSpan="2">
+                      <Skeleton />
+                    </td>
                   </tr>
                 </>
-              ) : (
-                <>
-                  {(confirmed) ? (
-                    <tr>
-                      <td styleName="header">
-                        <FormattedMessage id="InfoPay_StatusReadyHeader" defaultMessage="Status" />
-                      </td>
-                      <td>
-                        <strong>
-                          <FormattedMessage id="InfoPay_Confirmed" defaultMessage="Confirmed" />
-                        </strong>
-                      </td>
-                    </tr>
-                  ) : (
-                    <tr>
-                      <td styleName="header">
-                        <FormattedMessage id="InfoPay_4" defaultMessage="Est. time to confitmation" />
-                      </td>
-                      <td>
-                        <FormattedMessage id="InfoPay_NotConfirmed" defaultMessage="~10 mins" />
-                      </td>
-                    </tr>
-                  )}
-                  {(minerFee > 0) && (
-                    <tr>
-                      <td styleName="header">
-                        <FormattedMessage id="InfoPay_MinerFee" defaultMessage="Miner fee" />
-                      </td>
-                      <td>
-                        <strong>
-                          {minerFee} {minerFeeCurrency}
-                        </strong>
-                      </td>
-                    </tr>
-                  )}
-                  {(oldBalance > 0) && (
-                    <tr>
-                      <td styleName="header">
-                        <FormattedMessage id="InfoPay_FinalBalance" defaultMessage="Final balance" />
-                      </td>
-                      <td>
-                        <strong>
-                          {oldBalance} {currency.toUpperCase()}
-                        </strong>
-                      </td>
-                    </tr>
-                  )}
-                </>
-              )}
+              ) : error
+                ? ''
+                : (
+                  <>
+                    {(confirmed) ? (
+                      <tr>
+                        <td styleName="header">
+                          <FormattedMessage id="InfoPay_StatusReadyHeader" defaultMessage="Status" />
+                        </td>
+                        <td>
+                          <strong>
+                            <FormattedMessage id="InfoPay_Confirmed" defaultMessage="Confirmed" />
+                          </strong>
+                        </td>
+                      </tr>
+                    ) : (
+                      <tr>
+                        <td styleName="header">
+                          <FormattedMessage id="InfoPay_4" defaultMessage="Est. time to confitmation" />
+                        </td>
+                        <td>
+                          <FormattedMessage id="InfoPay_NotConfirmed" defaultMessage="~10 mins" />
+                        </td>
+                      </tr>
+                    )}
+                    {(minerFee > 0) && (
+                      <tr>
+                        <td styleName="header">
+                          <FormattedMessage id="InfoPay_MinerFee" defaultMessage="Miner fee" />
+                        </td>
+                        <td>
+                          <strong>
+                            {minerFee} {minerFeeCurrency}
+                          </strong>
+                        </td>
+                      </tr>
+                    )}
+                    {(adminFee > 0) && (
+                      <tr>
+                        <td styleName="header">
+                          <FormattedMessage id="InfoPay_AdminFee" defaultMessage="Service fee" />
+                        </td>
+                        <td>
+                          <strong>
+                            {adminFee} {currency.toUpperCase()}
+                          </strong>
+                        </td>
+                      </tr>
+                    )}
+                    {(oldBalance > 0) && (
+                      <tr>
+                        <td styleName="header">
+                          <FormattedMessage id="InfoPay_FinalBalance" defaultMessage="Final balance" />
+                        </td>
+                        <td>
+                          <strong>
+                            {oldBalance} {currency.toUpperCase()}
+                          </strong>
+                        </td>
+                      </tr>
+                    )}
+                  </>
+                )}
             </tbody>
           </table>
         </div>

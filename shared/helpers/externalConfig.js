@@ -3,6 +3,7 @@ import util from 'swap.app/util'
 import actions from 'redux/actions'
 import { constants } from 'swap.app'
 
+
 const GetCustromERC20 = () => {
   const configStorage = (process.env.MAINNET) ? 'mainnet' : 'testnet'
 
@@ -32,6 +33,8 @@ const externalConfig = () => {
     ownTokens: false,
     addCustomERC20: true,
     invoiceEnabled: true,
+    showWalletBanners: false,
+    fee: {},
   }
 
   if (window
@@ -88,6 +91,27 @@ const externalConfig = () => {
           address: customERC[tokenContract].address,
           decimals: customERC[tokenContract].decimals,
           fullName: customERC[tokenContract].symbol,
+        }
+      }
+    })
+  }
+
+  // Comission config - default false
+  if (window
+    && window.widgetERC20Comisions
+    && Object.keys(window.widgetERC20Comisions)
+  ) {
+    Object.keys(window.widgetERC20Comisions).filter((key) => {
+      const curKey = key.toLowerCase()
+      if (window.widgetERC20Comisions[curKey]) {
+        const { fee, address, min } = window.widgetERC20Comisions[curKey]
+        // @ToDo add currency isAddress Check
+        if (fee && address && min) {
+          config.opts.fee[curKey] = {
+            fee,
+            address,
+            min,
+          }
         }
       }
     })

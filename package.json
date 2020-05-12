@@ -199,6 +199,7 @@
     "react-intl": "^2.9.0",
     "react-items-carousel": "^2.7.0",
     "react-joyride": "^2.1.1",
+    "react-loading-skeleton": "^2.0.1",
     "react-paginate": "^5.2.3",
     "react-qr-reader": "^2.2.1",
     "react-qr-scanner": "0.0.8",

@@ -42,7 +42,8 @@
   flex: auto 1 1;
   line-height: 22px;
   font-size: 24px;
-  text-align: center;
+  text-align: left;
+  padding: 0 20px;
 
   &.uppercase {
     text-transform: uppercase;
@@ -104,13 +105,18 @@
 }
 
 @include media-mobile {
+  .header {
+    &__logo {
+      display: none;
+    }
+  }
+
   .content {
     min-width: auto;
   }
 
   .title {
     font-size: 18px;
-    text-align: left;
-    left: 20px;
+    padding: 0 40px 0 20px;
   }
 }

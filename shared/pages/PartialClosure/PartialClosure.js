@@ -174,7 +174,7 @@ export default class PartialClosure extends Component {
         history.push(localisedUrl(locale, `${links.exchange}/usdt-to-btc`));
       }
     }
-    const sellToken = sell || (!isWidgetBuild ? "btc" : "btc");
+    const sellToken = sell || "btc";
     const buyToken = buy || (!isWidgetBuild ? "usdt" : config.erc20token);
 
     this.returnNeedCurrency(sellToken, buyToken);
@@ -1012,9 +1012,7 @@ export default class PartialClosure extends Component {
       currenciesData,
       tokensData,
       intl: { locale, formatMessage },
-      userEthAddress,
       isOnlyForm,
-      allOrders
     } = this.props;
 
     const {
@@ -1029,7 +1027,6 @@ export default class PartialClosure extends Component {
       isDeclinedOffer,
       isFetching,
       maxAmount,
-      customWalletUse,
       exHaveRate,
       exGetRate,
       maxBuyAmount,
@@ -1039,7 +1036,6 @@ export default class PartialClosure extends Component {
       estimatedFeeValues,
       haveAmount,
       customWallet,
-      destinationSelected,
       destinationError,
     } = this.state;
 
@@ -1055,6 +1051,7 @@ export default class PartialClosure extends Component {
     const haveCurrencyData = currenciesData.find(item => item.currency === haveCurrency.toUpperCase());
     const haveTokenData = tokensData.find(item => item.currency === haveCurrency.toUpperCase());
     const currentCurrency = haveCurrencyData || haveTokenData;
+
     const balance = currentCurrency.balance || 0;
 
     const getCurrencyData = currenciesData.find(item => item.currency === getCurrency.toUpperCase());
@@ -1115,7 +1112,7 @@ export default class PartialClosure extends Component {
 
     const Form = (
       <div styleName={`${isSingleForm ? "" : "section"}`} className={isWidgetLink ? "section" : ""}>
-        <div styleName="mobileDubleHeader">
+        <div styleName={isWidgetLink ? "section" : ""}>
           <PromoText
             subTitle={subTitle(
               sellTokenFullName,

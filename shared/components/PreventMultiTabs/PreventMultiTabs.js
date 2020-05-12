@@ -4,28 +4,29 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import { FormattedMessage } from 'react-intl'
 import Button from 'components/controls/Button/Button'
 import config from 'app-config'
-import { constants, localStorage } from "helpers"
+import { constants, localStorage } from 'helpers'
 
 
 const isWidgetBuild = config && config.isWidget
 
 export default class PreventMultiTabs extends Component {
-  
   constructor() {
     super()
-    const preventSwitch = localStorage.getItem(constants.localStorage.preventSwitch)
+    const preventSwitch = localStorage.getItem(
+      constants.localStorage.preventSwitch
+    )
 
     if (!preventSwitch) {
       // auto switch
-      setTimeout( this.handleSwitchClick, 100 )
+      setTimeout(this.handleSwitchClick, 100)
     }
   }
 
-  handleSwitchClick = () =>  {
+  handleSwitchClick = () => {
     const { onSwitchTab } = this.props
 
-    localStorage.setItem(constants.localStorage.preventSwitch, "1");
-    setTimeout( () => {
+    localStorage.setItem(constants.localStorage.preventSwitch, 'whe-are-now-make-switch-tab')
+    setTimeout(() => {
       localStorage.removeItem(constants.localStorage.preventSwitch)
     }, 5000)
 
@@ -33,29 +34,28 @@ export default class PreventMultiTabs extends Component {
       onSwitchTab()
     }
   }
-  
+
   render() {
     return (
       <WidthContainer>
         <h1>
-          <FormattedMessage id="PreventMultiTabs" defaultMessage="Such error, many tabs" />
+          <FormattedMessage
+            id="PreventMultiTabs"
+            defaultMessage="Such error, many tabs"
+          />
         </h1>
-        {
-          isWidgetBuild && (
-            <FormattedMessage
-              id="PreventMultiTabsWidgetBuild"
-              defaultMessage="Atomic Swap Widget supports only one active tab. Please reload this page to continue using this tab or close it"
-            />
-          )
-        }
-        {
-          !isWidgetBuild && (
-            <FormattedMessage
-              id="PreventMultiTabs12"
-              defaultMessage="Our service Supports only one active tab. Please reload this page to continue using this tab or close it"
-            />
-          )
-        }
+        {isWidgetBuild && (
+          <FormattedMessage
+            id="PreventMultiTabsWidgetBuild"
+            defaultMessage="Atomic Swap Widget supports only one active tab. Please reload this page to continue using this tab or close it"
+          />
+        )}
+        {!isWidgetBuild && (
+          <FormattedMessage
+            id="PreventMultiTabs12"
+            defaultMessage="Our service Supports only one active tab. Please reload this page to continue using this tab or close it"
+          />
+        )}
         <br />
         <br />
         <Button brand fullWidth onClick={this.handleSwitchClick}>

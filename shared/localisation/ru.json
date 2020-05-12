@@ -4607,7 +4607,7 @@
   },
   {
     "id": "Withdrow2222",
-    "message": "Send SMS code",
+    "message": "Отправить SMS code",
     "files": [
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
@@ -5097,7 +5097,7 @@
   },
   {
     "id": "registerSMSModalPhone",
-    "message": "You phone",
+    "message": "Ваш телефон",
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
     ]
@@ -5118,7 +5118,7 @@
   },
   {
     "id": "registerSMSModalSendSMS",
-    "message": "Send SMS",
+    "message": "Отправить SMS",
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
     ]
@@ -5132,7 +5132,7 @@
   },
   {
     "id": "registerSMSProtectedTitle",
-    "message": "Activate SMS Protected Wallet",
+    "message": "Активация SMS Protected Кошелька",
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
     ]
@@ -5582,20 +5582,30 @@
     "id": "InfoPay_1",
     "message": "Транзакция завершена",
     "files": [
-      "shared/pages/Transaction/Transaction.js"
+      "shared/pages/Transaction/Transaction.js",
+      "shared/pages/Transaction/TxInfo/index.js"
     ]
   },
   {
     "id": "InfoPay_2",
-    "message": "успешно отправлены"
+    "message": "успешно отправлены",
+    "files": [
+      "shared/pages/Transaction/TxInfo/index.js"
+    ]
   },
   {
     "id": "InfoPay_3",
-    "message": "Transaction ID"
+    "message": "Transaction ID",
+    "files": [
+      "shared/pages/Transaction/TxInfo/index.js"
+    ]
   },
   {
     "id": "InfoPay_4",
-    "message": "Est. time to confitmation"
+    "message": "Est. time to confitmation",
+    "files": [
+      "shared/pages/Transaction/TxInfo/index.js"
+    ]
   },
   {
     "id": "InfoPay_5",
@@ -5937,7 +5947,7 @@
   },
   {
     "id": "ShowMyMnemonic",
-    "message": "Пожалуйста, сделайте резервную копию своего кошелька"
+    "message": "сделайте резервную копию кошелька"
   },
   {
     "id": "BtcMultisignConfirmTx_FromAddress",
@@ -6744,6 +6754,76 @@
     "message": "Отправление",
     "files": [
       "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "AdminFee_Message",
+    "message": "Комиссия {fee}% от суммы перевода, но не менее {min} {currency}",
+    "files": [
+      "shared/components/AdminFeeInfoBlock/AdminFeeInfoBlock.js"
+    ]
+  },
+  {
+    "id": "AdminFee_MessageWithAmount",
+    "message": "Комиссия {calcedAmount} {currency}",
+    "files": [
+      "shared/components/AdminFeeInfoBlock/AdminFeeInfoBlock.js"
+    ]
+  },
+  {
+    "id": "InfoPay_2_Ready",
+    "message": "были успешно переданы",
+    "files": [
+      "shared/pages/Transaction/TxInfo/index.js"
+    ]
+  },
+  {
+    "id": "InfoPay_2_Error",
+    "message": "Ошибка загрузки данных",
+    "files": [
+      "shared/pages/Transaction/TxInfo/index.js"
+    ]
+  },
+  {
+    "id": "InfoPay_AdminFee",
+    "message": "Service fee",
+    "files": [
+      "shared/pages/Transaction/TxInfo/index.js"
+    ]
+  },
+  {
+    "id": "InfoPay_Confirmed",
+    "message": "Confirmed",
+    "files": [
+      "shared/pages/Transaction/TxInfo/index.js"
+    ]
+  },
+  {
+    "id": "InfoPay_FinalBalance",
+    "message": "Final balance",
+    "files": [
+      "shared/pages/Transaction/TxInfo/index.js"
+    ]
+  },
+  {
+    "id": "InfoPay_MinerFee",
+    "message": "Miner fee",
+    "files": [
+      "shared/pages/Transaction/TxInfo/index.js"
+    ]
+  },
+  {
+    "id": "InfoPay_NotConfirmed",
+    "message": "~10 mins",
+    "files": [
+      "shared/pages/Transaction/TxInfo/index.js"
+    ]
+  },
+  {
+    "id": "InfoPay_StatusReadyHeader",
+    "message": "Status",
+    "files": [
+      "shared/pages/Transaction/TxInfo/index.js"
     ]
   }
 ]

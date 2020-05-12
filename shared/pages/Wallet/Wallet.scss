@@ -243,8 +243,6 @@
     width: auto !important;
     margin: 0 auto;
   }
-
-  height: 95px;
 }
 
 .yourBalanceCurrencies {
@@ -284,25 +282,6 @@
     button {
       width: 30%;
     }
-  }
-}
-
-.keysExportImport {
-  display: block;
-  width: 66%;
-  margin-left: auto;
-  text-align: center;
-  white-space: nowrap;
-
-  button {
-    width: 210px;
-    cursor: pointer;
-    z-index: 1;
-    font-size: 12px;
-    height: 24px;
-    line-height: 24px;
-    display: inline;
-    margin: 10px 10px 0px;
   }
 }
 
@@ -435,7 +414,7 @@
   .activity {
     box-shadow: none;
     width: 100%;
-    margin-top: 20px;
+    margin: 20px 0;
   }
 
   .activity {
@@ -444,7 +423,7 @@
 
   .keysExportImport {
     width: 95%;
-    margin: 0 auto;
+    margin: 5px auto;
 
     button {
       width: 45%;
@@ -512,5 +491,35 @@
 
   .desktopEnabledViewForFaq {
     display: none;
+  }
+
+  .widgetBuild .yourBalanceBottom {
+    flex-wrap: wrap;
+
+    button {
+      width: 100%;
+      margin-bottom: 12px;
+
+      &:nth-child(1),
+      &:nth-child(2) {
+        width: 47%;
+      }
+
+      &:nth-child(n + 3) {
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  .keysExportImport {
+    width: 100%;
+    padding: 0 12px;
+
+    button {
+      width: 100%;
+      margin: 0;
+    }
   }
 }
