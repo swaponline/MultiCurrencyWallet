@@ -17,7 +17,7 @@ export default class SwitchLang extends Component {
     const { history } = this.props
     setCookie('mylang', locale.toUpperCase(), new Date(new Date().getFullYear() + 1, 1))
     // history.push(`${relocalisedUrl(locale)}`)
-    window.setTimeout( () => {
+    window.setTimeout(() => {
       window.location.reload()
     }, 10)
   }
@@ -29,7 +29,7 @@ export default class SwitchLang extends Component {
         <a
           href={locale.toUpperCase() === 'RU' ? `#${relocalisedUrl(locale)}` : undefined}
           styleName="language"
-          onClick={(e) => { this.switchLang(e,  'EN'); return false }}
+          onClick={(e) => { this.switchLang(e, 'EN'); return false }}
         >
           <FormattedMessage id="SwitchLang20" defaultMessage="EN " />
         </a>

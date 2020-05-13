@@ -35,14 +35,16 @@ import { getFullOrigin } from 'helpers/links'
 @injectIntl
 @connect(
   ({
-    user: { 
+    user: {
+      activeFiat,
       btcMultisigUserData,
       btcMultisigUserData: {
         wallets,
       },
     },
-    ui: { dashboardModalsAllowed } 
+    ui: { dashboardModalsAllowed }
   }) => ({
+    activeFiat,
     items: [
       btcMultisigUserData,
       ...wallets,
@@ -104,7 +106,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
       balance: selectedItem.balance || 0,
       ethBalance: null,
       currentDecimals,
-      getUsd: 0,
+      getFiat: 0,
       error: false,
       smsConfirmed: false,
       txRaw: '',
@@ -120,8 +122,8 @@ export default class WithdrawModalMultisigUser extends React.Component {
 
     this.setBalanceOnState(currency)
 
-    this.usdRates = {}
-    this.getUsdBalance()
+    this.fiatRates = {}
+    this.getFiatBalance()
     this.actualyMinAmount()
   }
 
@@ -167,12 +169,13 @@ export default class WithdrawModalMultisigUser extends React.Component {
     }))
   }
 
-  getUsdBalance = async () => {
-    const { data: { currency } } = this.props
+  getFiatBalance = async () => {
+    const { data: { currency }, activeFiat } = this.props
 
-    const exCurrencyRate = await actions.user.getExchangeRate(currency, 'usd')
 
-    this.usdRates[currency] = exCurrencyRate
+    const exCurrencyRate = await actions.user.getExchangeRate(currency, activeFiat.toLowerCase());
+
+    this.fiatRates[currency] = exCurrencyRate
 
     this.setState(() => ({
       exCurrencyRate,
@@ -402,7 +405,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
       || BigNumber(amount).dp() > currentDecimals
 
     const NanReplacement = balance || '...'
-    const getUsd = amount * exCurrencyRate
+    const getFiat = amount * exCurrencyRate
 
     if (new BigNumber(amount).isGreaterThan(0)) {
       linked.amount.check((value) => new BigNumber(value).isLessThanOrEqualTo(balance), (
@@ -496,7 +499,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
                   valueLink={linked.amount}
                   pattern="0-9\."
                   placeholder="Enter the amount"
-                  usd={getUsd.toFixed(2)}
+                  fiat={getFiat.toFixed(2)}
                   onKeyDown={inputReplaceCommaWithDot}
                 />
                 <div style={{ marginLeft: "15px" }}>

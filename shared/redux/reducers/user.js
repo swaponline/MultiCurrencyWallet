@@ -48,10 +48,12 @@ export const initialState = {
     fullName: 'Tether',
     balanceError: null,
   },
+  fiats: [],
   tokensData: {},
   isFetching: false,
   isBalanceFetching: false,
   isTokenSigned: false,
+  activeFiat: window.DEFAULT_FIAT || 'USD'
 }
 
 export const addWallet = (state, { name, data }) => ({
@@ -177,6 +179,12 @@ export const setIsFetching = (state, { isFetching }) => ({
   ...state,
   isFetching
 })
+
+export const setFiats = (state, { fiats }) => ({ ...state, fiats })
+
+export const setActiveFiat = (state, { activeFiat }) => {
+  return ({ ...state, activeFiat })
+}
 
 export const setReputation = (state, { name, reputation, reputationOracleSignature }) => ({
   ...state,
