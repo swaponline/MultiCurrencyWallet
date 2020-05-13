@@ -54,11 +54,8 @@ const WidgetHeaderComponent = ({ intl }) => {
   }
 
   return (
-    <div styleName="topContent">
-      {window.logoUrl.length > 1 && <img styleName="cutomLogo" src={window.logoUrl} />}
-      {window.isUserRegisteredAndLoggedIn && <div styleName="exitArea" onClick={handleConfirmToggle}>
-        <i class="fas fa-sign-out-alt" /><FormattedMessage id="ExitWidget" defaultMessage="Exit" />
-      </div>}
+    window.isUserRegisteredAndLoggedIn && <div styleName="exitArea" onClick={handleConfirmToggle}>
+      <i class="fas fa-sign-out-alt" /><FormattedMessage id="ExitWidget" defaultMessage="Exit" />
     </div>
   )
 }

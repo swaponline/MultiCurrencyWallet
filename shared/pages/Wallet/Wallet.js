@@ -468,7 +468,7 @@ export default class Wallet extends Component {
     return (
       <article>
         {isWidgetBuild && <WidgetHeader />}
-        <section styleName={`${isWidgetBuild && !config.isFullBuild ? 'wallet widgetBuild' : 'wallet'} ${logoUrl ? "hasCusomLogo" : ""}`}>
+        <section styleName={`wallet ${logoUrl ? "hasCusomLogo" : ""}`}>
           <Tabs onClick={this.handleNavItemClick} activeView={activeView} />
           <div className="data-tut-store" styleName="walletContent" ref={this.balanceRef}>
             <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>

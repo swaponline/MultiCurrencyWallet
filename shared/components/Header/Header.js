@@ -379,18 +379,19 @@ export default class Header extends Component {
         </div>
       )
 
-    if (config && config.isWidget && !config.isFullBuild) {
-      return <>
-        {
-          !isMobile ? (
-            <WidthContainer styleName="container" className="data-tut-preview">
-              {logoRenderer}
-            </WidthContainer>
-          ) : <NavMobile menu={menuItemsMobile} />
-        }
-        <User acceptRequest={this.acceptRequest} declineRequest={this.declineRequest} />
-      </>;
-    }
+    // if (config && config.isWidget && !config.isFullBuild) {
+    //   return <>
+    //     {
+    //       !isMobile ? (
+    //         <WidthContainer styleName="container" className="data-tut-preview">
+    //           {logoRenderer}
+    //           <Nav menu={menuItems} />
+    //         </WidthContainer>
+    //       ) : <NavMobile menu={menuItemsMobile} />
+    //     }
+    //     <User acceptRequest={this.acceptRequest} declineRequest={this.declineRequest} />
+    //   </>;
+    // }
     if (pathname.includes("/createWallet") && isMobile) {
       return <span />;
     }
