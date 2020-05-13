@@ -3,6 +3,14 @@
   font-family: 'Manrope-Bold', sans-serif;
 }
 
+.hasCusomLogo {
+  margin: 15px 0;
+
+  ul {
+    margin-top: 0
+  }
+}
+
 .circle {
   width: 45px;
   height: 45px;
@@ -13,6 +21,13 @@
   right: 0;
   top: 25px;
   right: 25px;
+}
+
+.cutomLogo {
+  width: 30px;
+  position: relative;
+  top: 0;
+  margin: 10px 0 0;
 }
 
 .btc {
