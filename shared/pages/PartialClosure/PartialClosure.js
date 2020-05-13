@@ -1034,9 +1034,8 @@ export default class PartialClosure extends Component {
       destinationError,
     } = this.state;
 
-    const isSingleForm = isOnlyForm || isWidgetBuild;
-
     const haveFiat = BigNumber(exHaveRate)
+
       .times(haveAmount)
       .dp(2, BigNumber.ROUND_CEIL);
     const getFiat = BigNumber(exGetRate)
@@ -1051,7 +1050,6 @@ export default class PartialClosure extends Component {
 
     const getCurrencyData = currenciesData.find(item => item.currency === getCurrency.toUpperCase());
     const getTokenData = tokensData.find(item => item.currency === getCurrency.toUpperCase());
-    const currentCurrencyGet = getCurrencyData || getTokenData;
 
     const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? BigNumber(0) : BigNumber(goodRate);
     const linked = Link.all(this, "haveAmount", "getAmount", "customWallet");
@@ -1083,44 +1081,9 @@ export default class PartialClosure extends Component {
       ? currenciesData.find(item => item.currency === getCurrency.toUpperCase()).fullName
       : getCurrency.toUpperCase();
 
-    const SeoValues = {
-      full_name1: sellTokenFullName,
-      ticker_name1: haveCurrency.toUpperCase(),
-      full_name2: buyTokenFullName,
-      ticker_name2: getCurrency.toUpperCase()
-    };
-    const TitleTagString = formatMessage(
-      {
-        id: "PartialClosureTitleTag",
-        defaultMessage: "Atomic Swap {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}) Instant Exchange"
-      },
-      SeoValues
-    );
-    const MetaDescriptionString = formatMessage(
-      {
-        id: "PartialClosureMetaDescrTag",
-        defaultMessage:
-          "Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol." // eslint-disable-line
-      },
-      SeoValues
-    );
-
     const Form = (
-      <div styleName={`${isSingleForm ? "" : "section"}`} className={isWidgetLink ? "section" : ""}>
-        <div styleName={isWidgetLink ? "section" : ""}>
-          <PromoText
-            subTitle={subTitle(
-              sellTokenFullName,
-              haveCurrency.toUpperCase(),
-              buyTokenFullName,
-              getCurrency.toUpperCase()
-            )}
-          />
-        </div>
-        <div
-          styleName={isSingleForm ? "formExchange_widgetBuild" : `formExchange ${isWidget ? "widgetFormExchange" : ""}`}
-          className={isWidget ? "formExchange" : ""}
-        >
+      <div styleName="section">
+        <div styleName="formExchange">
           {desclineOrders.length ? (
             <h5 role="presentation" styleName="informAbt" onClick={this.handleShowIncomplete}>
               <FormattedMessage id="continueDeclined977" defaultMessage="Click here to continue your swaps" />
@@ -1146,13 +1109,12 @@ export default class PartialClosure extends Component {
               placeholder="0.00000000"
               fiat={maxAmount > 0 && isNonOffers ? 0 : haveFiat}
               currencies={currencies}
-              className={isWidget ? "SelGroup" : ""}
               onFocus={() => this.extendedControlsSet(true)}
               onBlur={() => setTimeout(() => this.extendedControlsSet(false), 200)}
             />
           </div>
           {isShowBalance && (
-            <p className={isWidget ? "advice" : ""} styleName="maxAmount">
+            <p styleName="maxAmount">
               {/* <FormattedMessage id="partial221" defaultMessage="Balance: " /> */}
               {/* Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}{' '}{haveCurrency.toUpperCase() */}
               {BigNumber(balance).toNumber() === 0 ? (
@@ -1188,7 +1150,6 @@ export default class PartialClosure extends Component {
               currencies={addSelectedItems}
               fiat={getFiat}
               error={isLowAmount}
-              className={isWidget ? "SelGroup" : ""}
             />
             {oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && !isNonOffers && (
               <div styleName="price">
@@ -1205,7 +1166,7 @@ export default class PartialClosure extends Component {
           </div>
           <div className="data-tut-status">
             {(isSearching || (isNonOffers && maxAmount === 0)) && (
-              <span className={isWidget ? "searching" : ""} styleName="IsSearching">
+              <span styleName="IsSearching">
                 <FormattedMessage id="PartialPriceSearch" defaultMessage="Searching orders..." />
                 <div styleName="loaderHolder">
                   <div styleName="additionalLoaderHolder">
@@ -1220,24 +1181,24 @@ export default class PartialClosure extends Component {
           )}
           {maxAmount > 0 && isNonOffers && linked.haveAmount.value > 0 && (
             <Fragment>
-              <p styleName="error" className={isWidget ? "error" : ""}>
+              <p styleName="error">
                 <FormattedMessage
                   id="PartialPriceNoOrdersReduce"
                   defaultMessage="No orders found, try to reduce the amount"
                 />
               </p>
-              <p styleName="error" className={isWidget ? "error" : ""}>
+              <p styleName="error">
                 <FormattedMessage id="PartialPriceReduceMin" defaultMessage="Maximum available amount for buy: " />
                 {maxAmount} {getCurrency.toUpperCase()}
               </p>
-              <p styleName="error" className={isWidget ? "error" : ""}>
+              <p styleName="error">
                 <FormattedMessage id="PartialPriceSellMax" defaultMessage="Maximum available amount for sell: " />
                 {maxBuyAmount.toNumber()} {haveCurrency.toUpperCase()}
               </p>
             </Fragment>
           )}
           {isDeclinedOffer && (
-            <p styleName="error link" className={isWidget ? "error" : ""} onClick={() => this.handleGoDeclimeFaq()}>
+            <p styleName="error link" onClick={() => this.handleGoDeclimeFaq()}>
               {" "}
               {/* eslint-disable-line */}
               <FormattedMessage
@@ -1260,7 +1221,7 @@ export default class PartialClosure extends Component {
             BigNumber(getAmount).isGreaterThan(0) &&
             this.state.haveAmount &&
             this.state.getAmount && (
-              <p styleName="error" className={isWidget ? "error" : ""}>
+              <p styleName="error">
                 <FormattedMessage
                   id="ErrorBtcLowAmount"
                   defaultMessage="This amount is too low"
@@ -1273,7 +1234,7 @@ export default class PartialClosure extends Component {
           {BigNumber(estimatedFeeValues[haveCurrency]).isGreaterThan(0) &&
             BigNumber(haveAmount).isGreaterThan(0) &&
             BigNumber(haveAmount).isLessThanOrEqualTo(balance) && (
-              <div styleName="notifyThat" className={isWidget ? "feeValue" : ""}>
+              <div styleName="notifyThat">
                 <div>
                   <FormattedMessage
                     id="PartialFeeValueWarn"
@@ -1335,7 +1296,7 @@ export default class PartialClosure extends Component {
               </div>
             )}
           {isFetching && (
-            <span className={isWidget ? "wait" : ""}>
+            <span>
               <FormattedMessage id="partial291" defaultMessage="Waiting for another participant (30 sec): " />
               <div styleName="loaderHolder">
                 <div styleName="additionalLoaderHolder">
@@ -1380,7 +1341,7 @@ export default class PartialClosure extends Component {
             </div>
           </Fragment>
           */}
-          <div styleName="rowBtn" className={isWidget ? "rowBtn" : ""}>
+          <div styleName="rowBtn">
             <Button
               className="data-tut-Exchange"
               styleName="button"
@@ -1413,47 +1374,45 @@ export default class PartialClosure extends Component {
       </div>
     );
 
-    return isSingleForm ? (
-      Form
-    ) : (
-        <div styleName={`exchangeWrap ${isWidget ? "widgetExchangeWrap" : ""}`}>
-          <div styleName="promoContainer" ref={ref => (this.promoContainer = ref)}>
-            <div
-              styleName="scrollToTutorialSection"
-              ref={ref => (this.scrollTrigger = ref)}
-              onClick={() =>
-                animate(timePassed => {
-                  window.scrollTo(0, this.promoContainer.clientHeight * (timePassed / 100));
-                }, 100)
-              }
-            >
-              <span styleName="scrollAdvice">
-                <FormattedMessage id="PartialHowItWorks10" defaultMessage="How it works?" />
-              </span>
-              <span styleName="scrollTrigger" />
-            </div>
-
-            {openScanCam && (
-              <QrReader openScan={this.openScan} handleError={this.handleError} handleScan={this.handleScan} />
-            )}
-            <Fragment>
-              <div styleName="container alignCenter">
-                <Promo
-                  subTitle={subTitle(
-                    sellTokenFullName,
-                    haveCurrency.toUpperCase(),
-                    buyTokenFullName,
-                    getCurrency.toUpperCase()
-                  )}
-                />
-                {Form}
-              </div>
-            </Fragment>
+    return (
+      <div styleName="exchangeWrap">
+        <div styleName="promoContainer" ref={ref => (this.promoContainer = ref)}>
+          <div
+            styleName="scrollToTutorialSection"
+            ref={ref => (this.scrollTrigger = ref)}
+            onClick={() =>
+              animate(timePassed => {
+                window.scrollTo(0, this.promoContainer.clientHeight * (timePassed / 100));
+              }, 100)
+            }
+          >
+            <span styleName="scrollAdvice">
+              <FormattedMessage id="PartialHowItWorks10" defaultMessage="How it works?" />
+            </span>
+            <span styleName="scrollTrigger" />
           </div>
-          <HowItWorks />
-          <VideoAndFeatures />
-          <Quote />
+
+          {openScanCam && (
+            <QrReader openScan={this.openScan} handleError={this.handleError} handleScan={this.handleScan} />
+          )}
+          <Fragment>
+            <div styleName="container alignCenter">
+              <Promo
+                subTitle={subTitle(
+                  sellTokenFullName,
+                  haveCurrency.toUpperCase(),
+                  buyTokenFullName,
+                  getCurrency.toUpperCase()
+                )}
+              />
+              {Form}
+            </div>
+          </Fragment>
         </div>
-      );
+        <HowItWorks />
+        <VideoAndFeatures />
+        <Quote />
+      </div>
+    );
   }
 }

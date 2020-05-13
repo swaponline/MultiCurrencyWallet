@@ -279,7 +279,7 @@ export default class App extends React.Component {
             <Seo location={history.location} />
             <Header />
             <Wrapper>
-              <WidthContainer id="swapComponentWrapper" styleName={isWidgetBuild ? "main main_widget" : "main"}>
+              <WidthContainer id="swapComponentWrapper" styleName="main">
                 <main>{children}</main>
               </WidthContainer>
             </Wrapper>

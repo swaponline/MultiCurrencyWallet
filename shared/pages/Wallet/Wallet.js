@@ -30,6 +30,7 @@ import Tabs from "components/Tabs/Tabs"
 import InvoicesList from 'pages/Invoices/InvoicesList'
 import { ModalConductorProvider } from 'components/modal'
 
+import { WidgetHeader } from "./components/WidgetHeader"
 
 
 const isWidgetBuild = config && config.isWidget
@@ -408,6 +409,7 @@ export default class Wallet extends Component {
     }
   }
 
+
   getFiats = async () => {
     const { activeFiat } = this.props
     const { fiatsRates } = await actions.user.getFiats()
@@ -482,10 +484,11 @@ export default class Wallet extends Component {
     })
 
     const isAnyModalCalled = Object.keys(modals).length
+
     return (
       <article>
-        {window.CUSTOM_LOGO && <img styleName="cutomLogo" src={window.CUSTOM_LOGO} />}
-        <section styleName={`${isWidgetBuild && !config.isFullBuild ? 'wallet widgetBuild' : 'wallet'} ${CUSTOM_LOGO ? "hasCusomLogo" : ""}`}>
+        {isWidgetBuild && <WidgetHeader />}
+        <section styleName={`wallet ${logoUrl ? "hasCusomLogo" : ""}`}>
           <Tabs onClick={this.handleNavItemClick} activeView={activeView} />
           <div className="data-tut-store" styleName="walletContent" ref={this.balanceRef}>
             <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
