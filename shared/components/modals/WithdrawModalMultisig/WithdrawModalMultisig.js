@@ -39,9 +39,11 @@ import AdminFeeInfoBlock from 'components/AdminFeeInfoBlock/AdminFeeInfoBlock'
       btcData,
       btcMultisigSMSData,
     },
+    ui: { dashboardModalsAllowed } 
   }) => ({
     currencies: currencies.items,
     items: [btcData, btcMultisigSMSData],
+    dashboardView: dashboardModalsAllowed,
   })
 )
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
@@ -594,7 +596,7 @@ export default class WithdrawModalMultisig extends React.Component {
         }
         {step === 'mnemonicSign' &&
           <Fragment>
-            <p styleName="notice">
+            <p styleName="notice dashboardViewNotice">
               <FormattedMessage
                 id="WithdrawSMS_MnemonicSignCaption"
                 defaultMessage="Подтверждение транзакции секретной фразой"
@@ -619,7 +621,7 @@ export default class WithdrawModalMultisig extends React.Component {
               }
             </Button>
             <hr />
-            <p styleName="notice mnemonicUseNote">
+            <p styleName="notice mnemonicUseNote dashboardViewNotice">
               <FormattedMessage id="WithdrawSMS_UseSMSNote" defaultMessage="Так-же вы можете использовать смс-код, отправленный на привязанный номер телефона" />
             </p>
             <Button styleName="useAuthMethodButton" blue onClick={this.handleSwitchToSms}>
@@ -629,7 +631,7 @@ export default class WithdrawModalMultisig extends React.Component {
         }
         {step === 'fillform' &&
           <Fragment>
-            <p styleName="notice">
+            <p styleName="notice dashboardViewNotice">
               <FormattedMessage
                 id="Withdrow213"
                 defaultMessage="Please note: Fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction"
@@ -787,7 +789,7 @@ export default class WithdrawModalMultisig extends React.Component {
 
         {step === 'confirm' &&
           <Fragment>
-            <p styleName="notice">
+            <p styleName="notice dashboardViewNotice">
               <FormattedMessage id="Withdrow2222" defaultMessage="Send SMS code" />
             </p>
             <div styleName="highLevel smsCodeHolder">
@@ -838,7 +840,7 @@ export default class WithdrawModalMultisig extends React.Component {
               <FormattedMessage id="Withdrow2224" defaultMessage="Confirm" />
             </Button>
             <hr />
-            <p styleName="notice mnemonicUseNote">
+            <p styleName="notice mnemonicUseNote dashboardViewNotice">
               <FormattedMessage id="WithdrawSMS_MnemonicNote" defaultMessage="Если у вас нет доступа к телефону или не получается получить код, вы можете воспользовать секретной фразой" />
             </p>
             <Button styleName="useAuthMethodButton" blue onClick={this.handleSwitchToMnemonic}>

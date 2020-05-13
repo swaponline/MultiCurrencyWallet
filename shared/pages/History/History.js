@@ -183,12 +183,12 @@ export default class History extends Component {
         key: 'ActivityAll',
         title: <FormattedMessage id="History_Nav_ActivityTab" defaultMessage="Activity" />,
         link: links.history,
-      },
-      {
-        key: 'ActivityInvoices',
-        title: <FormattedMessage id="History_Nav_InvoicesTab" defaultMessage="Invoices" />,
-        link: links.invoices,
-      },
+      }
+      // {
+      //   key: 'ActivityInvoices',
+      //   title: <FormattedMessage id="History_Nav_InvoicesTab" defaultMessage="Invoices" />,
+      //   link: links.invoices,
+      // },
     ]
 
     return (
@@ -215,29 +215,30 @@ export default class History extends Component {
                   ))}
                 </ul>
               )}
-              {
-                items.length > 0 && !isLoading ? (
-                  <InfiniteScrollTable
-                    className={styles.history}
-                    titles={titles}
-                    bottomOffset={400}
-                    getMore={this.loadMore}
-                    itemsCount={items.length}
-                    items={items.slice(0, this.state.renderedItems)}
-                    rowRender={this.rowRender}
-                  />
-                ) : (
-                    <div styleName="historyContent">
+              <div>
+                {
+                  items.length > 0 && !isLoading ? (
+                    <InfiniteScrollTable
+                      className={styles.history}
+                      titles={titles}
+                      bottomOffset={400}
+                      getMore={this.loadMore}
+                      itemsCount={items.length}
+                      items={items.slice(0, this.state.renderedItems)}
+                      rowRender={this.rowRender}
+                    />
+                  ) : (
                       <ContentLoader rideSideContent empty={!isLoading} nonHeader />
-                    </div>
-                  )
-              }
+                    )
+                }
+              </div>
+
             </section>
           ) : (
-            <div styleName="historyContent">
-              <ContentLoader rideSideContent />
-            </div>
-          )
+              <div styleName="historyContent">
+                <ContentLoader rideSideContent />
+              </div>
+            )
         }
       </ModalConductorProvider>
     )

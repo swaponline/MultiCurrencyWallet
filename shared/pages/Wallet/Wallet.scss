@@ -3,6 +3,14 @@
   font-family: 'Manrope-Bold', sans-serif;
 }
 
+.hasCusomLogo {
+  margin: 15px 0;
+
+  ul {
+    margin-top: 0
+  }
+}
+
 .circle {
   width: 45px;
   height: 45px;
@@ -13,6 +21,13 @@
   right: 0;
   top: 25px;
   right: 25px;
+}
+
+.cutomLogo {
+  width: 30px;
+  position: relative;
+  top: 0;
+  margin: 10px 0 0;
 }
 
 .btc {
@@ -285,21 +300,6 @@
   }
 }
 
-.keysExportImport {
-  display: flex;
-  justify-content: flex-end;
-  white-space: nowrap;
-
-  button {
-    width: 210px;
-    cursor: pointer;
-    font-size: 12px;
-    height: 40px;
-    line-height: 24px;
-    margin: 10px 0 0 5px;
-  }
-}
-
 .desktopEnabledViewForFaq {
   display: block;
 }
@@ -429,7 +429,7 @@
   .activity {
     box-shadow: none;
     width: 100%;
-    margin-top: 20px;
+    margin: 20px 0;
   }
 
   .activity {
@@ -438,7 +438,7 @@
 
   .keysExportImport {
     width: 95%;
-    margin: 0 auto;
+    margin: 5px auto;
 
     button {
       width: 45%;
@@ -525,6 +525,16 @@
           margin-bottom: 0;
         }
       }
+    }
+  }
+
+  .keysExportImport {
+    width: 100%;
+    padding: 0 12px;
+
+    button {
+      width: 100%;
+      margin: 0;
     }
   }
 }

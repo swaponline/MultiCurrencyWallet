@@ -34,13 +34,11 @@ export default class ModalBox extends Component {
       onClose,
     } = this.props
 
-   
 
     return (
       <div styleName="modal-box">
         <div styleName="header">
           <WidthContainer styleName="headerContent">
-            <Logo withLink isColored={false} />
             <div styleName="title">{title}</div>
             <CloseIcon styleName="closeButton" onClick={onClose} />
           </WidthContainer>

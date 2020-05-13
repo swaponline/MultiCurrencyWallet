@@ -5073,7 +5073,7 @@
   },
   {
     "id": "registerSMSModalPhone",
-    "message": "You phone",
+    "message": "Your phone",
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
     ]
@@ -6705,6 +6705,13 @@
   {
     "id": "InfoPay_2_Ready",
     "message": "successfully transferred to",
+    "files": [
+      "shared/pages/Transaction/TxInfo/index.js"
+    ]
+  },
+  {
+    "id": "InfoPay_2_Error",
+    "message": "Error loading data",
     "files": [
       "shared/pages/Transaction/TxInfo/index.js"
     ]

@@ -42,26 +42,22 @@ export default class WallerSlider extends Component {
         },
         // when window width is >= 640px
         640: {
-          slidesPerView: 4,
-          spaceBetween: 40,
+          slidesPerView: 3,
+          spaceBetween: 20,
         },
       },
     })
   }
 
   getBanners = () => {
-    const { isWidgetBuild } = this.props
     try {
       return axios
         .get('https://noxon.wpmix.net/swapBanners/banners.php')
-        .then(({ data }) => {
-          const banners = isWidgetBuild ? data.filter(el => !el.includes('Обменник BTC/USDT atomicswap')) : data
-
-          this.setState({
+        .then(({ data: banners }) => {
+          this.setState(() => ({
             banners,
             isFetching: true,
-          })
-          this.initBanners()
+          }), () => this.initBanners())
         })
         .catch(error => {
           console.error('getBanners:', error)
