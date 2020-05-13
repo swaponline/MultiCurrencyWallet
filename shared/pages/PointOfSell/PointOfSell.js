@@ -35,7 +35,6 @@ import { animate } from 'helpers/domUtils'
 import Switching from 'components/controls/Switching/Switching'
 import CustomDestAddress from "../PartialClosure/CustomDestAddress/CustomDestAddress"
 
-
 const allowedCoins = [
   ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? ['BTC'] : [],
   ...(!config.opts.curEnabled || config.opts.curEnabled.eth) ? ['ETH'] : [],
@@ -97,8 +96,9 @@ const bannedPeers = {} // Пиры, которые отклонили запро
   addPartialItems,
   history: { swapHistory },
   core: { orders, hiddenCoinsList },
-  user: { ethData, btcData, tokensData },
+  user: { ethData, btcData, tokensData, activeFiat },
 }) => ({
+  activeFiat,
   currencies: isExchangeAllowed(currencies.partialItems),
   allCurrencyies: currencies.items,
   addSelectedItems: isExchangeAllowed(currencies.addPartialItems),
@@ -118,7 +118,7 @@ export default class PartialClosure extends Component {
     orders: [],
   }
 
-  static usdRates = {}
+  static fiatRates = {}
 
   isPeerBanned(peerID) {
     if (bannedPeers[peerID]
@@ -187,8 +187,8 @@ export default class PartialClosure extends Component {
       haveCurrency: sellToken,
       getCurrency: buyToken,
       haveAmount: 0,
-      haveUsd: 0,
-      getUsd: 0,
+      haveFiat: 0,
+      getFiat: 0,
       getAmount: '',
       isShowBalance: true,
       isLowAmount: false,
@@ -214,7 +214,7 @@ export default class PartialClosure extends Component {
 
     let timer
     this.cacheDynamicFee = {}
-    // usdRates
+    // fiatRates
 
     if (config.isWidget) {
       this.state.getCurrency = config.erc20token
@@ -228,8 +228,8 @@ export default class PartialClosure extends Component {
     this.checkPair()
     this.updateAllowedBalance()
 
-    //this.usdRates = {}
-    this.getUsdBalance()
+    //this.fiatRates = {}
+    this.getFiatBalance()
 
     this.timer = true
     const timerProcess = () => {
@@ -350,26 +350,27 @@ export default class PartialClosure extends Component {
     }
   }
 
-  getUsdBalance = async () => {
+  getFiatBalance = async () => {
+    const { activeFiat } = this.props
     const { haveCurrency, getCurrency } = this.state
 
     try {
-      const exHaveRate = (this.usdRates[haveCurrency] !== undefined) ?
-        this.usdRates[haveCurrency] : await actions.user.getExchangeRate(haveCurrency, 'usd')
-      const exGetRate = (this.usdRates[getCurrency] !== undefined) ?
-        this.usdRates[getCurrency] : await actions.user.getExchangeRate(getCurrency, 'usd')
+      const exHaveRate = (this.fiatRates[haveCurrency] !== undefined) ?
+        this.fiatRates[haveCurrency] : await actions.user.getExchangeRate(haveCurrency, activeFiat.toLowerCase())
+      const exGetRate = (this.fiatRates[getCurrency] !== undefined) ?
+        this.fiatRates[getCurrency] : await actions.user.getExchangeRate(getCurrency, activeFiat.toLowerCase())
 
-      this.usdRates[haveCurrency] = exHaveRate
-      this.usdRates[getCurrency] = exGetRate
+      this.fiatRates[haveCurrency] = exHaveRate
+      this.fiatRates[getCurrency] = exGetRate
 
       this.setState(() => ({
         exHaveRate,
         exGetRate,
       }))
     } catch (e) {
-      console.log('usdRates', this.usdRates)
-      const exHaveRate = (this.usdRates && this.usdRates[haveCurrency] !== undefined) ? this.usdRates[haveCurrency] : 0
-      const exGetRate = (this.usdRates && this.usdRates[getCurrency] !== undefined) ? this.usdRates[getCurrency] : 0
+      console.log('fiatRates', this.fiatRates)
+      const exHaveRate = (this.fiatRates && this.fiatRates[haveCurrency] !== undefined) ? this.fiatRates[haveCurrency] : 0
+      const exGetRate = (this.fiatRates && this.fiatRates[getCurrency] !== undefined) ? this.fiatRates[getCurrency] : 0
       this.setState(() => ({
         exHaveRate,
         exGetRate,
@@ -621,7 +622,7 @@ export default class PartialClosure extends Component {
     } else {
       this.setState(() => ({
         isNonOffers: true,
-        getUsd: Number(0).toFixed(2),
+        getFiat: Number(0).toFixed(2),
       }))
     }
 
@@ -756,8 +757,8 @@ export default class PartialClosure extends Component {
 
     this.setState(() => ({
       haveAmount: 0,
-      haveUsd: 0,
-      getUsd: 0,
+      haveFiat: 0,
+      getFiat: 0,
       getAmount: '',
       maxAmount: 0,
       maxBuyAmount: BigNumber(0),
@@ -818,7 +819,7 @@ export default class PartialClosure extends Component {
 
     const selected = actions.pairs.selectPairPartial(checkingValue)
     const check = selected.map(item => item.value).includes(getCurrency)
-    this.getUsdBalance()
+    this.getFiatBalance()
 
     if (!check) {
       this.chooseCurrencyToRender(selected)
@@ -831,7 +832,7 @@ export default class PartialClosure extends Component {
     this.setState(() => ({
       getCurrency: selected[0].value,
     }), () => {
-      this.getUsdBalance()
+      this.getFiatBalance()
     })
   }
 
@@ -969,7 +970,7 @@ export default class PartialClosure extends Component {
   }
 
   render() {
-    const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage }, userEthAddress, isOnlyForm, allOrders } = this.props
+    const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage }, userEthAddress, isOnlyForm, activeFiat } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching, desclineOrders, openScanCam,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, exHaveRate, exGetRate,
       maxBuyAmount, getAmount, goodRate, isShowBalance, estimatedFeeValues, haveAmount,
@@ -981,8 +982,8 @@ export default class PartialClosure extends Component {
 
     const isSingleForm = isOnlyForm || isWidgetBuild
 
-    const haveUsd = BigNumber(exHaveRate).times(haveAmount).dp(2, BigNumber.ROUND_CEIL)
-    const getUsd = BigNumber(exGetRate).times(getAmount).dp(2, BigNumber.ROUND_CEIL)
+    const haveFiat = BigNumber(exHaveRate).times(haveAmount).dp(2, BigNumber.ROUND_CEIL)
+    const getFiat = BigNumber(exGetRate).times(getAmount).dp(2, BigNumber.ROUND_CEIL)
 
     const haveCurrencyData = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
     const haveTokenData = tokensData.find(item => item.currency === haveCurrency.toUpperCase())
@@ -1050,6 +1051,7 @@ export default class PartialClosure extends Component {
           }
           <div className="data-tut-have" styleName="selectWrap">
             <SelectGroup
+              activeFiat={activeFiat}
               switchBalanceFunc={this.switchBalance}
               inputValueLink={linked.haveAmount.pipe(this.setAmount)}
               selectedValue={haveCurrency}
@@ -1058,7 +1060,7 @@ export default class PartialClosure extends Component {
               id="partialClosure456"
               tooltip={<FormattedMessage id="partial462" defaultMessage="The amount you have on swap.online or an external wallet that you want to exchange" />}
               placeholder="0.00000000"
-              usd={(maxAmount > 0 && isNonOffers) ? 0 : haveUsd}
+              fiat={(maxAmount > 0 && isNonOffers) ? 0 : haveFiat}
               currencies={currencies}
               className={isWidget ? 'SelGroup' : ''}
               onFocus={() => this.extendedControlsSet(true)}
@@ -1082,6 +1084,7 @@ export default class PartialClosure extends Component {
           }
           <div className="data-tut-get" styleName="selectWrap">
             <SelectGroup
+              activeFiat={activeFiat}
               dataTut="get"
               switchBalanceFunc={this.switchBalance}
               inputValueLink={linked.getAmount}
@@ -1091,7 +1094,7 @@ export default class PartialClosure extends Component {
               id="partialClosure472"
               tooltip={<FormattedMessage id="partial478" defaultMessage="The amount you will receive after the exchange" />}
               currencies={addSelectedItems}
-              usd={getUsd}
+              fiat={getFiat}
               error={isLowAmount}
               className={isWidget ? 'SelGroup' : ''}
               notIteractable

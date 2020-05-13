@@ -137,13 +137,13 @@ export default class DropDown extends Component {
         onClickOutside={
           isToggleActive
             ? () => {
-                if (!disableSearch) {
-                  this.refs.searchInput.handleBlur()
-                  linkedValue.inputValue.set('')
-                }
-                this.toggle()
+              if (!disableSearch) {
+                this.refs.searchInput.handleBlur()
+                linkedValue.inputValue.set('')
               }
-            : () => {}
+              this.toggle()
+            }
+            : () => { }
         }
       >
         <div styleName={dropDownStyleName} className={className}>
@@ -161,8 +161,8 @@ export default class DropDown extends Component {
                 ref="searchInput"
               />
             ) : (
-              this.renderSelectedItem()
-            )}
+                this.renderSelectedItem()
+              )}
           </div>
           {isToggleActive && (
             <div styleName={dropDownListStyles.join(` `)}>

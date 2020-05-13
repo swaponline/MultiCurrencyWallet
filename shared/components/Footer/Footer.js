@@ -15,7 +15,6 @@ import SocialMenu from './SocialMenu/SocialMenu'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import SwitchLang from './SwitchLang/SwitchLang'
 
-
 const Footer = (props) => {
   let showInfo = false
   if (window.location.hash.includes('/exchange')

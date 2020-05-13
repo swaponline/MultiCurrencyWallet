@@ -47,7 +47,7 @@ const CurrenciesList = ({
           <Row
             key={index}
             index={index}
-            getCurrencyUsd={usd => this.getCurrencyUsd(usd)}
+            getCurrencyFiat={fiat => this.getCurrencyFiat(fiat)}
             currency={row}
             itemData={row}
             currencies={currencies}

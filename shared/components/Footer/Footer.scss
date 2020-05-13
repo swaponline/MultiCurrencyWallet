@@ -5,6 +5,13 @@ $information-footer-height: 44px;
   width: 100%;
 }
 
+.inRow {
+  width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .bluredFooter {
   filter: blur(7px);
   pointer-events: none;

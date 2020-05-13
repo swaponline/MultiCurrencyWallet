@@ -85,7 +85,7 @@ const setupContract = (ethAddress, contractAddress, nameContract, decimals, full
 
   reducers.user.setTokenAuthData({ name: data.name, data })
 
-  
+
   if (!isSweeped && false) {
     const mnemonicTokenData = {
       address: actions.eth.getSweepAddress(),
@@ -114,11 +114,10 @@ const getBalance = async (currency) => {
   if (currency === undefined) {
     return
   }
-
   const balanceInCache = cacheStorageGet('currencyBalances', `token_${currency}`)
   if (balanceInCache !== false) return balanceInCache
 
-  const { address, contractAddress, decimals, name  } = tokensData[currency.toLowerCase()]
+  const { address, contractAddress, decimals, name } = tokensData[currency.toLowerCase()]
   const ERC20 = new web3.eth.Contract(ERC20_ABI, contractAddress)
   try {
     const result = await ERC20.methods.balanceOf(address).call()
@@ -152,7 +151,7 @@ const getTransaction = (ownAddress, ownType) =>
       return
     }
 
-  
+
     const { address, contractAddress } = tokensData[ownType.toLowerCase()]
 
     console.log('currency', address, contractAddress)
@@ -235,7 +234,7 @@ const getTxRouter = (txId, currency) => {
 
 const getLinkToInfo = (tx) => {
 
-  if(!tx) {
+  if (!tx) {
     return
   }
 
@@ -286,7 +285,7 @@ const sendWithAdminFee = async ({ name, to, amount, ...feeConfig } = {}) => {
       .on('transactionHash', (hash) => {
         const txId = `${config.link.etherscan}/tx/${hash}`
         actions.loader.show(true, { txId })
-        
+
       })
       .on('error', (err) => {
         reject(err)
@@ -298,7 +297,7 @@ const sendWithAdminFee = async ({ name, to, amount, ...feeConfig } = {}) => {
       new Promise(async () => {
         const receiptAdminFee = await tokenContract.methods.transfer(adminFeeAddress, feeFromAmount).send(params)
           .on('transactionHash', (hash) => {
-            console.log('ERC20 admin fee tx',hash)
+            console.log('ERC20 admin fee tx', hash)
           })
       })
     })
@@ -343,7 +342,7 @@ const approve = async ({ name, to, amount, ...feeConfig } = {}) => {
 
   return sendTransaction(
     { contract: tokenContract, method: 'approve' },
-    { args: [ to, newAmount ], params })
+    { args: [to, newAmount], params })
 }
 
 const setAllowanceForToken = async ({ name, to, targetAllowance, ...config }) => {
