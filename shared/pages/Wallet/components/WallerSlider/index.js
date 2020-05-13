@@ -51,12 +51,12 @@ export default class WallerSlider extends Component {
 
   getBanners = () => {
     if (window
-      && window.getBanners
-      && window.getBanners.length
+      && window.bannersOnMainPage
+      && window.bannersOnMainPage.length
     ) {
       // Используем банеры, которые были определены в index.html (используется в виджете вордпресса)
       this.setState(() => ({
-        banners: window.getBanners,
+        banners: window.bannersOnMainPage,
         isFetching: true,
       }), () => this.initBanners())
     } else {
