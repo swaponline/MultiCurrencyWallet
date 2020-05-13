@@ -50,20 +50,32 @@ export default class WallerSlider extends Component {
   }
 
   getBanners = () => {
-    try {
-      return axios
-        .get('https://noxon.wpmix.net/swapBanners/banners.php')
-        .then(({ data: banners }) => {
-          this.setState(() => ({
-            banners,
-            isFetching: true,
-          }), () => this.initBanners())
-        })
-        .catch(error => {
-          console.error('getBanners:', error)
-        })
-    } catch (error) {
-      console.error(error)
+    if (window
+      && window.getBanners
+      && window.getBanners.length
+    ) {
+      // Используем банеры, которые были определены в index.html (используется в виджете вордпресса)
+      console.log('use inline banners')
+      this.setState(() => ({
+        banners: window.getBanners,
+        isFetching: true,
+      }), () => this.initBanners())
+    } else {
+      try {
+        return axios
+          .get('https://noxon.wpmix.net/swapBanners/banners.php')
+          .then(({ data: banners }) => {
+            this.setState(() => ({
+              banners,
+              isFetching: true,
+            }), () => this.initBanners())
+          })
+          .catch(error => {
+            console.error('getBanners:', error)
+          })
+      } catch (error) {
+        console.error(error)
+      }
     }
     return null
   }
