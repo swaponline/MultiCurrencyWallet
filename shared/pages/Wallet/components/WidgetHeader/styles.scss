@@ -1,0 +1,28 @@
+.topContent {
+    display: flex;
+    align-items: baseline;
+  }
+  
+.exitArea {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: baseline;
+    cursor: pointer;
+  
+    span {
+      margin-left: 0.5em;
+    }
+  
+    &:hover {
+     color: #6044e6;;
+    }
+}
+
+.cutomLogo {
+    width: 30px;
+    position: relative;
+    top: 0;
+    margin: 10px 0 0;
+}
+
