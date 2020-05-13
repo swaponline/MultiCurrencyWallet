@@ -55,7 +55,6 @@ export default class WallerSlider extends Component {
       && window.getBanners.length
     ) {
       // Используем банеры, которые были определены в index.html (используется в виджете вордпресса)
-      console.log('use inline banners')
       this.setState(() => ({
         banners: window.getBanners,
         isFetching: true,
