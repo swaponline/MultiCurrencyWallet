@@ -7,6 +7,7 @@ import { getState } from 'redux/core'
 
 import reducers from 'redux/core/reducers'
 import * as bip39 from 'bip39'
+import axios from 'axios'
 
 import { getActivatedCurrencies } from 'helpers/user'
 import getCurrencyKey from 'helpers/getCurrencyKey'
@@ -149,7 +150,33 @@ const getBalances = () => {
   })
 }
 
+const getFiats = () => {
+  reducers.user.setActiveFiat({ activeFiat: window.DEFAULT_FIAT || 'USD' })
+
+  return new Promise((resolve, reject) => {
+
+    axios.get(`https://noxon.wpmix.net/worldCurrencyPrices.php`).then(({ data }) => {
+      const { quotes } = data
+
+      const fiatsRates = Object.keys(quotes).map(el => {
+        const key = el
+        return ({ key: key.slice(3), value: quotes[key] })
+      })
+
+      const fiats = fiatsRates.map(({ key }) => key)
+
+      reducers.user.setFiats({ fiats })
+
+      resolve({ fiatsRates, fiats })
+      // const fiats = 
+    }).catch(e => console.error(e))
+
+  })
+
+}
+
 const getExchangeRate = (sellCurrency, buyCurrency) => {
+
   if (buyCurrency.toLowerCase() === 'usd') {
     return new Promise((resolve, reject) => {
       let dataKey = sellCurrency.toLowerCase()
@@ -163,6 +190,7 @@ const getExchangeRate = (sellCurrency, buyCurrency) => {
       const { user } = getState()
       if (user[`${dataKey}Data`] && user[`${dataKey}Data`].infoAboutCurrency) {
         const currencyData = user[`${dataKey}Data`]
+        const multiplier = getFiats()
         resolve(currencyData.infoAboutCurrency.price_usd)
       } else {
         resolve(1)
@@ -350,7 +378,7 @@ Private key: ${btcData.privateKey}\r\n
 
 export const getWithdrawWallet = (currency, addr) => {
   const needType = getCurrencyKey(currency, true).toUpperCase()
-  
+
   const filtered = actions.core.getWallets().filter((wallet) => {
     const walletType = getCurrencyKey(wallet.currency, true).toUpperCase()
 
@@ -436,4 +464,5 @@ export default {
   getInfoAboutCurrency,
   getAuthData,
   getWithdrawWallet,
+  getFiats,
 }

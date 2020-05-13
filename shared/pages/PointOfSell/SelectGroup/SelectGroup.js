@@ -13,10 +13,9 @@ import { BigNumber } from 'bignumber.js'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 
 // TODO to split data and view this component
-
 const SelectGroup = (props) => {
   const { dynamicFee, isToken, extendedControls, selectedValue, onSelect,
-    currencies, usd, placeholder, label, disabled, className, switchBalanceFunc, inputValueLink, tooltip, balance, error,
+    currencies, fiat, placeholder, label, disabled, className, switchBalanceFunc, inputValueLink, tooltip, balance, error,
     id, idFee, tooltipAboutFee, haveAmount, notIteractable,
   } = props
   return (
@@ -47,8 +46,8 @@ const SelectGroup = (props) => {
           onKeyDown={inputReplaceCommaWithDot}
         />
         {
-          (selectedValue === 'eth' || selectedValue === 'btc') && usd > 0 &&
-          <p styleName="textUsd" >{`~${usd}`} USD</p>
+          (selectedValue === 'eth' || selectedValue === 'btc') && fiat > 0 &&
+          <p styleName="textUsd" >{`~${fiat}`} {activeFiat}</p>
         }
         <CurrencySelect
           name="All"

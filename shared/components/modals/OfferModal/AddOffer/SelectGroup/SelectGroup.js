@@ -13,13 +13,12 @@ import { BigNumber } from 'bignumber.js'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 
 // TODO to split data and view this component
-
 const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onSelect, dataTut,
-  currencies, usd, placeholder, label, disabled, className, inputValueLink, tooltip, balance, error,
-  id, type, idFee, tooltipAboutFee, haveAmount, dontDisplayError, ...props
+  currencies, fiat, placeholder, label, disabled, className, inputValueLink, tooltip, balance, error,
+  id, type, idFee, tooltipAboutFee, haveAmount, dontDisplayError, activeFiat, ...props
 }) => {
-    const currAllowed = currencies.filter((item) => !item.dontCreateOrder)
-    return (
+  const currAllowed = currencies.filter((item) => !item.dontCreateOrder)
+  return (
     <div>
       <div styleName="groupField" className={className}>
         <div>
@@ -48,13 +47,13 @@ const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onS
           errorStyle={error}
           dontDisplayError
           disabled={disabled}
-          onFocus={props.onFocus ? props.onFocus : () => {}}
-          onBlur={props.onBlur ? props.onBlur : () => {}}
+          onFocus={props.onFocus ? props.onFocus : () => { }}
+          onBlur={props.onBlur ? props.onBlur : () => { }}
           onKeyDown={inputReplaceCommaWithDot}
         />
         {
-          (selectedValue === 'eth' || selectedValue === 'btc') && usd > 0 &&
-          <p styleName="textUsd" >{`~${usd}`} USD</p>
+          (selectedValue === 'eth' || selectedValue === 'btc') && fiat > 0 &&
+          <p styleName="textUsd" >{`~${fiat}`} {activeFiat}</p>
         }
         <CurrencySelect
           name="All"
@@ -62,7 +61,7 @@ const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onS
           tooltip={tooltip}
           id={id}
           styleName="currencySelect"
-          selectedItemRender={(item) => item.fullTitle }
+          selectedItemRender={(item) => item.fullTitle}
           placeholder="Enter the name of token"
           selectedValue={selectedValue}
           onSelect={onSelect}
@@ -72,24 +71,24 @@ const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onS
       {label.props.defaultMessage === 'You sell' && !extendedControls &&
         (balance > 0 ?
           !isToken &&
-            <span
-              styleName={
-                (BigNumber(haveAmount).isLessThanOrEqualTo(balance)
-                  && BigNumber(balance).isLessThan(BigNumber(haveAmount).plus(dynamicFee))
-                  && BigNumber(haveAmount).isGreaterThan(0))
-                  ? 'red'
-                  : 'balance'
-              }
-            >
-              {<FormattedMessage
-                id="select75"
-                defaultMessage="Available for exchange: {availableBalance} {tooltip}"
-                values={{
-                  availableBalance: `${BigNumber(balance).minus(dynamicFee)} ${selectedValue.toUpperCase()}`,
-                  tooltip: <Tooltip id={idFee}> {tooltipAboutFee}</Tooltip>,
-                }} />
-              }
-            </span> :
+          <span
+            styleName={
+              (BigNumber(haveAmount).isLessThanOrEqualTo(balance)
+                && BigNumber(balance).isLessThan(BigNumber(haveAmount).plus(dynamicFee))
+                && BigNumber(haveAmount).isGreaterThan(0))
+                ? 'red'
+                : 'balance'
+            }
+          >
+            {<FormattedMessage
+              id="select75"
+              defaultMessage="Available for exchange: {availableBalance} {tooltip}"
+              values={{
+                availableBalance: `${BigNumber(balance).minus(dynamicFee)} ${selectedValue.toUpperCase()}`,
+                tooltip: <Tooltip id={idFee}> {tooltipAboutFee}</Tooltip>,
+              }} />
+            }
+          </span> :
           <span styleName="textForNull">
             <FormattedMessage id="selected53" defaultMessage="You can use an external wallet to perform a swap" />
           </span>
