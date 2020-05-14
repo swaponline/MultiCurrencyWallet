@@ -103,6 +103,8 @@ export default {
 * change Cryptocurrency color `swap.react/shared/components/ui/CurrencyIcon/images`
 * change icon to your (with the same name, e.x. "bitcoin.svg") 
 * change cryptocurrency icon  `/swap.react/shared/pages/PartialClosure/CurrencySlider/images`
+### HOW to ADD EXIT BUTTON TO UR WIDGET
+in index html edit isUserRegisteredAndLoggedIn=false to isUserRegisteredAndLoggedIn=true
 
 ### 2. How to change links to social networks
     `swap.react/shared/helpers/links.js`

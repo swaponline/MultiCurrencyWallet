@@ -26,7 +26,6 @@ import NewDesignLayout from 'components/layout/NewDesignLayout/NewDesignLayout'
 import BalanceForm from 'components/BalanceForm/BalanceForm'
 
 
-
 const isWidgetBuild = config && config.isWidget
 
 @connect(
@@ -400,6 +399,7 @@ export default class Wallet extends Component {
     }
   }
 
+
   getFiats = async () => {
     const { activeFiat } = this.props
     const { fiatsRates } = await actions.user.getFiats()
@@ -484,6 +484,7 @@ export default class Wallet extends Component {
     })
 
     const isAnyModalCalled = Object.keys(modals).length
+
     return (
       <NewDesignLayout
         page={page}

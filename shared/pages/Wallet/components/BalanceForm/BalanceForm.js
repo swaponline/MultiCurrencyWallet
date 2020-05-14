@@ -57,7 +57,7 @@ function BalanceForm({
           {activeCurrency === active ? (
             // eslint-disable-next-line no-restricted-globals
             <p>
-              {activeFiat === 'USD' && <img src={dollar} alt="dollar" />}
+              {activeFiat === 'USD' || activeFiat === 'CAD' && <img src={dollar} alt="dollar" />}
               {
                 // eslint-disable-next-line no-restricted-globals
                 !isNaN(fiatBalance)
