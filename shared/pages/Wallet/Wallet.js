@@ -30,8 +30,6 @@ import Tabs from "components/Tabs/Tabs"
 import InvoicesList from 'pages/Invoices/InvoicesList'
 import { ModalConductorProvider } from 'components/modal'
 
-import { WidgetHeader } from "./components/WidgetHeader"
-
 
 const isWidgetBuild = config && config.isWidget
 
@@ -487,7 +485,6 @@ export default class Wallet extends Component {
 
     return (
       <article>
-        {isWidgetBuild && <WidgetHeader />}
         <section styleName={`wallet ${logoUrl ? "hasCusomLogo" : ""}`}>
           <Tabs onClick={this.handleNavItemClick} activeView={activeView} />
           <div className="data-tut-store" styleName="walletContent" ref={this.balanceRef}>

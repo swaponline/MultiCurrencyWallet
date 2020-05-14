@@ -33,6 +33,8 @@ import { localisedUrl, unlocalisedUrl } from "../../helpers/locale";
 import UserTooltip from "components/Header/User/UserTooltip/UserTooltip";
 import { messages, getMenuItems, getMenuItemsMobile } from "./config";
 import { getActivatedCurrencies } from 'helpers/user'
+import { WidgetHeader } from "./WidgetHeader"
+
 
 let lastScrollTop = 0;
 
@@ -367,17 +369,19 @@ export default class Header extends Component {
 
     const isExchange = pathname.includes(exchange);
 
-    const logoRenderer = window.location.hostname === "localhost" ||
-      window.location.hostname === "swaponline.github.io" ||
-      window.location.hostname === "swaponline.io" ? (
-        <LogoTooltip withLink isColored isExchange={isWalletPage} />
-      ) : (
-        <div>
-          {window.logoUrl !== '#' && (
-            <img styleName="otherHeaderLogo" className="site-logo-header" src={window.logoUrl} alt="logo" />
-          )}
-        </div>
-      )
+    const logoRenderer =
+      window.location.hostname === "localhost" ||
+        window.location.hostname === "swaponline.github.io" ||
+        window.location.hostname === "swaponline.io" ? (
+          <LogoTooltip withLink isColored isExchange={isWalletPage} />
+        ) : (
+          <div styleName="flexebleHeader">
+            {window.logoUrl !== '#' && (
+              <img styleName="otherHeaderLogo" className="site-logo-header" src={window.logoUrl} alt="logo" />
+            )}
+            {isWidgetBuild && <WidgetHeader />}
+          </div>
+        )
 
     // if (config && config.isWidget && !config.isFullBuild) {
     //   return <>
@@ -395,6 +399,34 @@ export default class Header extends Component {
     if (pathname.includes("/createWallet") && isMobile) {
       return <span />;
     }
+
+    if (isMobile && window.logoUrl) {
+      return (
+        <div styleName={isInputActive ? "header-mobile header-mobile__hidden" : "header-mobile"}>
+          {logoRenderer}
+          {createdWalletLoader && (
+            <div styleName="loaderCreateWallet">
+              <Loader
+                showMyOwnTip={formatMessage({
+                  id: "createWalletLoaderTip",
+                  defaultMessage: "Creating wallet... Please wait."
+                })}
+              />
+            </div>
+          )}
+          <UserTooltip
+            feeds={feeds}
+            peer={peer}
+            acceptRequest={this.acceptRequest}
+            declineRequest={this.declineRequest}
+          />
+          <NavMobile menu={menuItemsMobile} />
+          {!isSigned && <SignUpButton mobile />}
+        </div>
+      )
+
+    }
+
     if (isMobile) {
       return (
         <div styleName={isInputActive ? "header-mobile header-mobile__hidden" : "header-mobile"}>
@@ -423,6 +455,7 @@ export default class Header extends Component {
     return (
       <div className={cx({
         [styles["header"]]: true,
+        [styles["widgetHeader"]]: isWidgetBuild && window.logoUrl !== '#',
         [styles["header-fixed"]]: Boolean(sticky),
         [styles["header-promo"]]: isWalletPage && !sticky,
         [styles["header-blured"]]: dashboardView && isAnyModalCalled,
@@ -437,7 +470,7 @@ export default class Header extends Component {
             />
           </div>
         )}
-        <WidthContainer styleName="container" className="data-tut-preview">
+        <WidthContainer styleName={`container ${isWidgetBuild ? "contawidge_container" : ""}`} className="data-tut-preview">
           {logoRenderer}
           <Nav menu={menuItems} />
           {isPartialTourOpen && isExchange && (
