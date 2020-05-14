@@ -1,6 +1,4 @@
 import React, { Component, Fragment } from 'react'
-import PropTypes from 'prop-types'
-import cx from 'classnames'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
@@ -16,19 +14,16 @@ import History from 'pages/History/History'
 import { links, constants } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import { getActivatedCurrencies } from 'helpers/user'
-import ParticalClosure from '../PartialClosure/PartialClosure'
 
-import { FormattedMessage, injectIntl } from 'react-intl'
+import { injectIntl } from 'react-intl'
 
 import config from 'helpers/externalConfig'
 import { withRouter } from 'react-router'
-import BalanceForm from './components/BalanceForm/BalanceForm'
-import FAQ from './components/FAQ/FAQ'
 import CurrenciesList from './CurrenciesList'
-import Button from 'components/controls/Button/Button'
-import Tabs from "components/Tabs/Tabs"
 import InvoicesList from 'pages/Invoices/InvoicesList'
-import { ModalConductorProvider } from 'components/modal'
+
+import NewDesignLayout from 'components/layout/NewDesignLayout/NewDesignLayout'
+import BalanceForm from 'components/BalanceForm/BalanceForm'
 
 
 
@@ -169,12 +164,6 @@ export default class Wallet extends Component {
     }
   }
 
-  componentWillMount() {
-    actions.user.getBalances()
-    this.getFiats()
-  }
-
-
   componentDidUpdate(prevProps) {
     const {
       activeFiat,
@@ -213,6 +202,9 @@ export default class Wallet extends Component {
 
   componentDidMount() {
     const { params, url } = this.props.match
+
+    actions.user.getBalances()
+    this.getFiats()
 
     if (url.includes('withdraw')) {
       this.handleWithdraw(params)
@@ -427,7 +419,17 @@ export default class Wallet extends Component {
       enabledCurrencies,
       showSweepBanner,
     } = this.state
-    const { hiddenCoinsList, modals, dashboardView, isBalanceFetching, activeFiat } = this.props
+    const {
+      hiddenCoinsList,
+      modals,
+      dashboardView,
+      isBalanceFetching,
+      activeFiat,
+      match: {
+      params: {
+        page = null,
+      },
+    }, } = this.props
 
     const allData = actions.core.getWallets()
 
@@ -483,95 +485,36 @@ export default class Wallet extends Component {
 
     const isAnyModalCalled = Object.keys(modals).length
     return (
-      <article>
-        {window.CUSTOM_LOGO && <img styleName="cutomLogo" src={window.CUSTOM_LOGO} />}
-        <section styleName={`${isWidgetBuild && !config.isFullBuild ? 'wallet widgetBuild' : 'wallet'} ${CUSTOM_LOGO ? "hasCusomLogo" : ""}`}>
-          <Tabs onClick={this.handleNavItemClick} activeView={activeView} />
-          <div className="data-tut-store" styleName="walletContent" ref={this.balanceRef}>
-            <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
-              {/* {
-                !isFetching ?  */}
-              <BalanceForm
-                activeFiat={activeFiat}
-                fiatBalance={fiatBalance}
-                currencyBalance={btcBalance}
-                changePercent={changePercent}
-                handleReceive={this.handleModalOpen}
-                handleWithdraw={this.handleModalOpen}
-                handleExchange={this.handleGoExchange}
-                isFetching={isBalanceFetching}
-                currency="btc"
-                infoAboutCurrency={infoAboutCurrency}
-              />
-
-              {/* : <ContentLoader leftSideContent /> */}
-
-              {exchangeForm && (
-                <div styleName="exchangeForm">
-                  <ParticalClosure {...this.props} isOnlyForm />
-                </div>
-              )}
-
-              <div
-                className={cx({
-                  [styles.desktopEnabledViewForFaq]: true,
-                  [styles.faqWrapper]: true,
-                  [styles.faqBlured]: dashboardView && isAnyModalCalled,
-                })}
-              >
-                <FAQ />
-              </div>
-            </div>
-            <div styleName={`yourAssetsWrapper ${activeView === 0 ? 'active' : ''}`}>
-              {/* Sweep Banner */}
-              {showSweepBanner && (
-                <p styleName="sweepInfo">
-                  <Button blue onClick={this.handleMakeSweep}>
-                    <FormattedMessage id="SweepBannerButton" defaultMessage="Done" />
-                  </Button>
-                  <FormattedMessage
-                    id="SweepBannerDescription"
-                    defaultMessage={
-                      `Пожалуйста, переместите все средства на кошельки помеченные "new" 
-                      (USDT и остальные токены переведите на Ethereum (new) адрес). 
-                      Затем нажмите кнопку "DONE". Старые адреса будут скрыты.`
-                    }
-                  />
-                </p>
-              )}
-              {/* (End) Sweep Banner */}
-              {activeView === 0 && (
-                <ModalConductorProvider>
-                  <CurrenciesList
-                    tableRows={tableRows}
-                    {...this.state}
-                    {...this.props}
-                    goToСreateWallet={this.goToСreateWallet}
-                    getExCurrencyRate={(currencySymbol, rate) => this.getExCurrencyRate(currencySymbol, rate)}
-                  />
-                </ModalConductorProvider>
-              )}
-
-              {/* : <ContentLoader rideSideContent /> */}
-            </div>
-            <div
-              className={cx({
-                [styles.mobileEnabledViewForFaq]: true,
-                [styles.faqWrapper]: true,
-                [styles.faqBlured]: dashboardView && isAnyModalCalled,
-              })}
-            >
-              <FAQ />
-            </div>
-            <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
-              {activeView === 1 && (<History {...this.props} />)}
-            </div>
-            <div styleName={`activity ${activeView === 2 ? 'active' : ''}`}>
-              {activeView === 2 && (<InvoicesList {...this.props} onlyTable={true} />)}
-            </div>
-          </div>
-        </section>
-      </article>
+      <NewDesignLayout
+        page={page}
+        BalanceForm={(
+          <BalanceForm
+            activeFiat={activeFiat}
+            fiatBalance={fiatBalance}
+            currencyBalance={btcBalance}
+            changePercent={changePercent}
+            handleReceive={this.handleModalOpen}
+            handleWithdraw={this.handleModalOpen}
+            handleExchange={this.handleGoExchange}
+            isFetching={isBalanceFetching}
+            currency="btc"
+            infoAboutCurrency={infoAboutCurrency}
+          />
+        )}
+      >
+        {
+          activeView === 0 && 
+            <CurrenciesList
+              tableRows={tableRows}
+              {...this.state}
+              {...this.props}
+              goToСreateWallet={this.goToСreateWallet}
+              getExCurrencyRate={(currencySymbol, rate) => this.getExCurrencyRate(currencySymbol, rate)}
+            />
+        }
+        {activeView === 1 && (<History {...this.props} />)}
+        {activeView === 2 && (<InvoicesList {...this.props} onlyTable={true} />)}
+      </NewDesignLayout>
     )
   }
 }
