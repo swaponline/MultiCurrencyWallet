@@ -1,7 +1,5 @@
 .exitArea {
-    width: 100%;
     display: flex;
-    justify-content: flex-end;
     align-items: baseline;
     cursor: pointer;
   
@@ -13,11 +11,3 @@
      color: #6044e6;;
     }
 }
-
-.cutomLogo {
-    width: 30px;
-    position: relative;
-    top: 0;
-    margin: 10px 0 0;
-}
-
