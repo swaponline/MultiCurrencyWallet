@@ -17,7 +17,6 @@ import ethToken from 'helpers/ethToken'
 import { links } from 'helpers'
 import { getFullOrigin } from 'helpers/links'
 
-
 class Row extends React.PureComponent {
 
   constructor(props) {
@@ -35,13 +34,20 @@ class Row extends React.PureComponent {
       cancelled: false,
       payed: false,
     }
-    this.getUsdBalance(type)
   }
 
-  getUsdBalance = async (type) => {
-    actions.user.getExchangeRate(type, 'usd').then((exCurrencyRate) => {
+  componentDidMount() {
+    const { type } = this.props
+
+    this.getFiatBalance(type)
+  }
+
+  getFiatBalance = async (type) => {
+    const { activeFiat } = this.props
+
+    actions.user.getExchangeRate(type, activeFiat.toLowerCase()).then((exCurrencyRate) => {
       this.setState(() => ({
-        exCurrencyRate
+        exCurrencyRate,
       }))
     })
   }
@@ -165,6 +171,7 @@ class Row extends React.PureComponent {
 
   render() {
     const {
+      activeFiat,
       address,
       type,
       direction,
@@ -185,7 +192,7 @@ class Row extends React.PureComponent {
 
     const { exCurrencyRate, isOpen, comment, cancelled, payed } = this.state
 
-    const getUsd = value * exCurrencyRate
+    const getFiat = value * exCurrencyRate
 
     const statusStyleName = cx('status', {
       'in': direction === 'in',
@@ -265,22 +272,22 @@ class Row extends React.PureComponent {
                       {(txType === 'CONFIRM') ? (
                         <FormattedMessage id="RowHistory_Confirm_Sending" defaultMessage="Отправление" />
                       ) : (
-                        <>
-                          {
-                            direction === 'in'
-                              ? <FormattedMessage id="RowHistory281" defaultMessage="Received {address}" values={{
-                                address: substrAddress ? <span><FormattedMessage id="fromRow" defaultMessage="from" /> {substrAddress}</span> : ""
-                              }} />
-                              : (
-                                direction !== 'self'
-                                  ? <FormattedMessage id="RowHistory282" defaultMessage="Sent {address}" values={{
-                                    address: substrAddress ? <span><FormattedMessage id="toRow" defaultMessage="to" /> {substrAddress}</span> : ""
-                                  }} />
-                                  : <FormattedMessage id="RowHistory283" defaultMessage="Self" />
-                              )
-                          }
-                        </>
-                      )}
+                          <>
+                            {
+                              direction === 'in'
+                                ? <FormattedMessage id="RowHistory281" defaultMessage="Received {address}" values={{
+                                  address: substrAddress ? <span><FormattedMessage id="fromRow" defaultMessage="from" /> {substrAddress}</span> : ""
+                                }} />
+                                : (
+                                  direction !== 'self'
+                                    ? <FormattedMessage id="RowHistory282" defaultMessage="Sent {address}" values={{
+                                      address: substrAddress ? <span><FormattedMessage id="toRow" defaultMessage="to" /> {substrAddress}</span> : ""
+                                    }} />
+                                    : <FormattedMessage id="RowHistory283" defaultMessage="Self" />
+                                )
+                            }
+                          </>
+                        )}
                     </Link>
                     {(txType === 'CONFIRM') ? (
                       <>
@@ -301,14 +308,14 @@ class Row extends React.PureComponent {
                         )}
                       </>
                     ) : (
-                      <div styleName={confirmations > 0 ? 'confirm cell' : 'unconfirmed cell'}>
-                        {confirmations > 0 ? confirmations > 6 ?
-                          <FormattedMessage id="RowHistory34" defaultMessage="Received" /> :
-                          <a href><FormattedMessage id="RowHistory341" defaultMessage="Confirmed" /></a> :
-                          <FormattedMessage id="RowHistory342" defaultMessage="Unconfirmed" />
-                        }
-                      </div>
-                    )}
+                        <div styleName={confirmations > 0 ? 'confirm cell' : 'unconfirmed cell'}>
+                          {confirmations > 0 ? confirmations > 6 ?
+                            <FormattedMessage id="RowHistory34" defaultMessage="Received" /> :
+                            <a href><FormattedMessage id="RowHistory341" defaultMessage="Confirmed" /></a> :
+                            <FormattedMessage id="RowHistory342" defaultMessage="Unconfirmed" />
+                          }
+                        </div>
+                      )}
                   </>
                 }
               </div>
@@ -367,26 +374,26 @@ class Row extends React.PureComponent {
                     </button>
                   </>
                 ) : (
-                  <>
-                    <span>
-                      <FormattedMessage
-                        id="RowHistory_ConfirmTX_NeedYourSign"
-                        defaultMessage="Требуется ваша подпись"
-                      />
-                    </span>
-                    <button onClick={this.handleConfirmTx}>
-                      <FormattedMessage
-                        id="RowHistory_ConfirmTX_Sign"
-                        defaultMessage="Подтвердить"
-                      />
-                    </button>
-                  </>
-                )}
+                    <>
+                      <span>
+                        <FormattedMessage
+                          id="RowHistory_ConfirmTX_NeedYourSign"
+                          defaultMessage="Требуется ваша подпись"
+                        />
+                      </span>
+                      <button onClick={this.handleConfirmTx}>
+                        <FormattedMessage
+                          id="RowHistory_ConfirmTX_Sign"
+                          defaultMessage="Подтвердить"
+                        />
+                      </button>
+                    </>
+                  )}
               </div>
             )}
             <div styleName={statusStyleAmount}>
               {invoiceData ? this.parseFloat(direction, value, 'out', type) : this.parseFloat(direction, value, 'in', type)}
-              <span styleName='amountUsd'>{`~ $${getUsd.toFixed(2)}`}</span>
+              <span styleName='amountUsd'>{`~${getFiat.toFixed(2)}`}{activeFiat}</span>
 
             </div>
             {/* <LinkTransaction type={type} styleName='address' hash={hash} >{hash}</LinkTransaction> */}

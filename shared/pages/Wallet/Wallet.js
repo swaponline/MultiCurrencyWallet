@@ -31,7 +31,6 @@ import InvoicesList from 'pages/Invoices/InvoicesList'
 import { ModalConductorProvider } from 'components/modal'
 
 
-
 const isWidgetBuild = config && config.isWidget
 
 @connect(
@@ -39,6 +38,7 @@ const isWidgetBuild = config && config.isWidget
     core: { hiddenCoinsList },
     user,
     user: {
+      activeFiat,
       ethData,
       btcData,
       btcMultisigSMSData,
@@ -103,6 +103,7 @@ const isWidgetBuild = config && config.isWidget
       hiddenCoinsList: hiddenCoinsList,
       userEthAddress: ethData.address,
       user,
+      activeFiat,
       tokensData: {
         ethData,
         btcData,
@@ -126,6 +127,7 @@ export default class Wallet extends Component {
     super(props)
 
     const {
+      activeFiat,
       match: {
         params: {
           page = null,
@@ -156,7 +158,7 @@ export default class Wallet extends Component {
       activeView,
       activePage: page,
       btcBalance: 0,
-      activeCurrency: 'usd',
+      activeCurrency: activeFiat.toLowerCase(),
       exchangeForm: false,
       walletTitle: 'Wallet',
       editTitle: false,
@@ -168,10 +170,13 @@ export default class Wallet extends Component {
 
   componentWillMount() {
     actions.user.getBalances()
+    this.getFiats()
   }
+
 
   componentDidUpdate(prevProps) {
     const {
+      activeFiat,
       match: {
         params: {
           page = null,
@@ -179,12 +184,17 @@ export default class Wallet extends Component {
       },
     } = this.props
     const {
+      activeFiat: prevFiat,
       match: {
         params: {
           page: prevPage = null,
         },
       },
     } = prevProps
+
+    if (activeFiat !== prevFiat) {
+      this.getFiats()
+    }
 
     if (page !== prevPage) {
       let activeView = 0
@@ -397,23 +407,34 @@ export default class Wallet extends Component {
     }
   }
 
+
+  getFiats = async () => {
+    const { activeFiat } = this.props
+    const { fiatsRates } = await actions.user.getFiats()
+
+    if (fiatsRates) {
+      const fiatRate = fiatsRates.find(({ key }) => key === activeFiat)
+      this.setState(() => ({ multiplier: fiatRate.value }))
+    }
+  }
+
   render() {
     const {
+      multiplier,
       activeView,
       infoAboutCurrency,
       exchangeForm,
       enabledCurrencies,
       showSweepBanner,
-      isMnemonicSaved,
     } = this.state
-    const { hiddenCoinsList, modals, dashboardView, isBalanceFetching } = this.props
+    const { hiddenCoinsList, modals, dashboardView, isBalanceFetching, activeFiat } = this.props
 
     const allData = actions.core.getWallets()
 
     this.checkBalance()
 
     let btcBalance = 0
-    let usdBalance = 0
+    let fiatBalance = 0
     let changePercent = 0
 
     // Набор валют для виджета
@@ -448,28 +469,31 @@ export default class Wallet extends Component {
 
     tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
 
-    tableRows.forEach(item => {
-      if ((!isWidgetBuild || widgetCurrencies.includes(item.name)) && item.infoAboutCurrency && item.balance !== 0) {
-        if (item.name === 'BTC') {
-          changePercent = item.infoAboutCurrency.percent_change_1h
+    tableRows.forEach(({ name, infoAboutCurrency, balance, currency }) => {
+      const currName = currency || name
+
+      if ((!isWidgetBuild || widgetCurrencies.includes(currName)) && infoAboutCurrency && balance !== 0) {
+        if (currName === 'BTC') {
+          changePercent = infoAboutCurrency.percent_change_1h
         }
-        btcBalance += item.balance * item.infoAboutCurrency.price_btc
-        usdBalance += item.balance * item.infoAboutCurrency.price_usd
+        btcBalance += balance * infoAboutCurrency.price_btc
+        fiatBalance += balance * infoAboutCurrency.price_usd * (multiplier || 1)
       }
     })
 
     const isAnyModalCalled = Object.keys(modals).length
+
     return (
       <article>
-        {window.CUSTOM_LOGO && <img styleName="cutomLogo" src={window.CUSTOM_LOGO} />}
-        <section styleName={`${isWidgetBuild && !config.isFullBuild ? 'wallet widgetBuild' : 'wallet'} ${CUSTOM_LOGO ? "hasCusomLogo" : ""}`}>
+        <section styleName={`wallet ${logoUrl ? "hasCusomLogo" : ""}`}>
           <Tabs onClick={this.handleNavItemClick} activeView={activeView} />
           <div className="data-tut-store" styleName="walletContent" ref={this.balanceRef}>
             <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
               {/* {
                 !isFetching ?  */}
               <BalanceForm
-                usdBalance={usdBalance}
+                activeFiat={activeFiat}
+                fiatBalance={fiatBalance}
                 currencyBalance={btcBalance}
                 changePercent={changePercent}
                 handleReceive={this.handleModalOpen}
