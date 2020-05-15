@@ -34,6 +34,8 @@ const NewDesignLayout = (props) => {
     page,
   } = props
 
+  const balanceRef = React.useRef(null) // Create a ref object
+
   let activeView = 0
 
   if (page === 'history' && !isMobile) {
@@ -66,12 +68,20 @@ const NewDesignLayout = (props) => {
   })
 
   useEffect(() => {
+    if (isMobile) {
+      balanceRef.current.scrollIntoView({
+        block: 'start',
+      })
+    }
+  })
+
+  useEffect(() => {
     const getFiats = async () => {
       const { fiatsRates } = await actions.user.getFiats()
 
       if (fiatsRates) {
         const fiatRate = fiatsRates.find(({ key }) => key === activeFiat)
-        setCommonState(() => ({ ...commonState, multiplier: fiatRate.value }))
+        setCommonState({ ...commonState, multiplier: fiatRate.value })
       }
     }
 
@@ -184,7 +194,7 @@ const NewDesignLayout = (props) => {
         <div
           className="data-tut-store"
           styleName="walletContent"
-          ref={this.balanceRef}
+          ref={balanceRef}
         >
           <div styleName="walletBalance">
 

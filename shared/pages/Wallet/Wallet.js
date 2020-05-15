@@ -122,7 +122,6 @@ export default class Wallet extends Component {
     super(props)
 
     const {
-      activeFiat,
       match: {
         params: {
           page = null,
@@ -136,13 +135,6 @@ export default class Wallet extends Component {
       activeView = 1
     }
     if (page === 'invoices') activeView = 2
-
-    this.balanceRef = React.createRef() // Create a ref object
-
-    const isSweepReady = localStorage.getItem(constants.localStorage.isSweepReady)
-
-
-    const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
 
     this.state = {
       activeView,
@@ -196,14 +188,7 @@ export default class Wallet extends Component {
       this.handleWithdraw(params)
     }
     this.getInfoAboutCurrency()
-
-    if (isMobile) {
-      this.balanceRef.current.scrollIntoView({
-        block: 'start'
-      })
-    }
   }
-
 
   getInfoAboutCurrency = async () => {
     const { currencies } = this.props
@@ -329,8 +314,6 @@ export default class Wallet extends Component {
     } = this.state
     const {
       hiddenCoinsList,
-      modals,
-      dashboardView,
       isBalanceFetching,
       activeFiat,
       match: {
@@ -390,8 +373,6 @@ export default class Wallet extends Component {
         fiatBalance += balance * infoAboutCurrency.price_usd * (multiplier || 1)
       }
     })
-
-    const isAnyModalCalled = Object.keys(modals).length
 
     return (
       <DashboardLayout

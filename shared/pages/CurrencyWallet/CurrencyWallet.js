@@ -19,15 +19,13 @@ import SwapsHistory from 'pages/History/SwapsHistory/SwapsHistory'
 import Table from 'components/tables/Table/Table'
 import PageSeo from 'components/Seo/PageSeo'
 import { getSeoPage } from 'helpers/seo'
-import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
+import { injectIntl, defineMessages } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import config from 'app-config'
 import BalanceForm from 'components/BalanceForm/BalanceForm'
 import { BigNumber } from 'bignumber.js'
 import ContentLoader from 'components/loaders/ContentLoader/ContentLoader'
-import Tabs from "components/Tabs/Tabs"
 import FilterForm from "components/FilterForm/FilterForm"
-import { ModalConductorProvider } from 'components/modal'
 import DashboardLayout from 'components/layout/DashboardLayout/DashboardLayout'
 
 import getCurrencyKey from 'helpers/getCurrencyKey'
@@ -281,7 +279,6 @@ export default class CurrencyWallet extends Component {
     if (prevAddress !== address) {
       address ? actions.history.setTransactions(address, currency.toLowerCase(), this.pullTransactions) : actions.user.setTransactions()
     }
-
   }
 
   getRows = (txHistory) => {
@@ -331,7 +328,6 @@ export default class CurrencyWallet extends Component {
   }
 
   handleWithdraw = () => {
-
     const {
       currency,
       address,
@@ -405,8 +401,6 @@ export default class CurrencyWallet extends Component {
   }
 
   resetFilter = () => {
-
-
     this.loading()
     const { address, currency } = this.state
     this.setState(() => ({ filterValue: address }))
@@ -442,7 +436,6 @@ export default class CurrencyWallet extends Component {
     if (isRedirecting) return null
 
     txHistory = txItems || txHistory
-
 
     if (txHistory) {
       txHistory = txHistory
@@ -487,13 +480,6 @@ export default class CurrencyWallet extends Component {
     if (hiddenCoinsList.includes(currency)) {
       actions.core.markCoinAsVisible(currency)
     }
-
-    /** 27.02.2020 не знаю что это такое, но оно не используется, и ломает мне код
-     * пока закоментил - через месяц можно удалять
-    const isBlockedCoin = config.noExchangeCoins
-      .map(item => item.toLowerCase())
-      .includes(currency.toLowerCase())
-       */
 
     let currencyFiatBalance;
     let changePercent;
