@@ -166,7 +166,7 @@ const NewDesignLayout = (props) => {
         styleName={`${
           isWidgetBuild && !config.isFullBuild ? 'wallet widgetBuild' : 'wallet'
         // eslint-disable-next-line no-undef
-        } ${CUSTOM_LOGO ? 'hasCusomLogo' : ''}`}
+        } ${window.CUSTOM_LOGO ? 'hasCusomLogo' : ''}`}
       >
         <Tabs onClick={this.handleNavItemClick} activeView={activeView} />
         <div
