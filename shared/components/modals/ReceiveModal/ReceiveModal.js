@@ -1,4 +1,5 @@
 import React from 'react'
+import { withRouter } from 'react-router'
 import CopyToClipboard from 'react-copy-to-clipboard'
 
 import cssModules from 'react-css-modules'
@@ -19,6 +20,7 @@ const title = defineMessages({
 })
 
 @injectIntl
+@withRouter
 @cssModules(styles, { allowMultiple: true })
 export default class ReceiveModal extends React.Component {
 
@@ -40,6 +42,8 @@ export default class ReceiveModal extends React.Component {
 
     howToDeposit = howToDeposit.replace(/{userAddress}/g, address);
 
+    props.history.push(`/${currency}/${address}/receive`)
+
     this.state = {
       isAddressCopied: false,
       howToDeposit,
@@ -59,8 +63,11 @@ export default class ReceiveModal extends React.Component {
   }
 
   handleClose = () => {
-    const { name } = this.props
+    const { name, history: { location: { pathname }, goBack } } = this.props
 
+    if(pathname.includes('receive')) {
+      goBack()
+    }
     actions.modals.close(name)
   }
 
@@ -80,6 +87,7 @@ export default class ReceiveModal extends React.Component {
       },
     } = this
 
+    console.log(this.props)
     if (howToDeposit) {
       return (
         <Modal name={name} title={intl.formatMessage(title.Receive)}>

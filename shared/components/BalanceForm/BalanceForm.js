@@ -10,9 +10,8 @@ import { links, constants } from 'helpers'
 import { BigNumber } from 'bignumber.js'
 import config from 'app-config'
 import { FormattedMessage } from 'react-intl'
-import FAQ from '../FAQ/FAQ'
-import dollar from '../../images/dollar.svg'
-import btc from '../../images/btc.svg'
+import dollar from './images/dollar.svg'
+import btc from './images/btcIcon.svg'
 
 
 function BalanceForm({
@@ -54,32 +53,36 @@ function BalanceForm({
               <InlineLoader />
             </div>
           )}
-          {activeCurrency === active ? (
-            // eslint-disable-next-line no-restricted-globals
-            <p>
-              {activeFiat === 'USD' || activeFiat === 'CAD' && <img src={dollar} alt="dollar" />}
-              {
-                // eslint-disable-next-line no-restricted-globals
-                !isNaN(fiatBalance)
-                  ? BigNumber(fiatBalance)
-                    .dp(2, BigNumber.ROUND_FLOOR)
-                    .toString()
-                  : ''
-              }
-              {/* {changePercent ? (
-                <span styleName={changePercent > 0 ? "green" : "red"}>
-                  {`${changePercent > 0 ? `+${changePercent}` : `${changePercent}`}`}%
-                </span>
-              ) : (
-                ""
-              )} */}
-            </p>
-          ) : <p className="data-tut-all-balance">
-              {currency === 'btc' ? <img src={btc} alt="btc" /> : ''}
-              {BigNumber(currencyBalance)
-                .dp(5, BigNumber.ROUND_FLOOR)
-                .toString()}
-            </p>
+          {activeCurrency === active
+            ? (
+              // eslint-disable-next-line no-restricted-globals
+              <p>
+                {activeFiat === 'USD' && <img src={dollar} alt="dollar" />}
+                {
+                  // eslint-disable-next-line no-restricted-globals
+                  !isNaN(fiatBalance)
+                    ? BigNumber(fiatBalance)
+                      .dp(2, BigNumber.ROUND_FLOOR)
+                      .toString()
+                    : ''
+                }
+                {/* {changePercent ? (
+                  <span styleName={changePercent > 0 ? "green" : "red"}>
+                    {`${changePercent > 0 ? `+${changePercent}` : `${changePercent}`}`}%
+                  </span>
+                ) : (
+                  ""
+                )} */}
+              </p>
+            )
+            : (
+              <p className="data-tut-all-balance">
+                {currency === 'btc' ? <img src={btc} alt="btc" /> : ''}
+                {BigNumber(currencyBalance)
+                  .dp(5, BigNumber.ROUND_FLOOR)
+                  .toString()}
+              </p>
+            )
           }
         </div>
         <div styleName="yourBalanceCurrencies">

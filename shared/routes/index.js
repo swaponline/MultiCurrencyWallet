@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 import React from 'react'
 import { Route } from 'react-router'
 import { Switch } from 'react-router-dom'
@@ -30,7 +31,6 @@ import ScrollToTop from '../components/layout/ScrollToTop/ScrollToTop'
 import { isMobile } from 'react-device-detect'
 
 
-
 const routes = (
   <ScrollToTop>
     <Switch>
@@ -38,10 +38,9 @@ const routes = (
 
       <Route path={`${localisePrefix}/:ticker(btc|eth)/tx/:tx?`} component={Transaction} />
       <Route path={`${localisePrefix}/:token(token)/:ticker/tx/:tx?`} component={Transaction} />
-      <Route path={`${localisePrefix}/:ticker(btc|eth)/:address`} component={CurrencyWallet} />
+      <Route path={`${localisePrefix}/:ticker(btc|eth)/:address/:action(receive|send)?`} component={CurrencyWallet} />
       <Route path={`${localisePrefix}/:token(token)/:ticker/:address`} component={CurrencyWallet} />
       <Route path={`${localisePrefix}/:fullName-wallet/:address?`} component={CurrencyWallet} />
-
 
 
       <Route path={`${localisePrefix}${links.home}:buy-:sell/:orderId`} component={Home} />
@@ -57,7 +56,6 @@ const routes = (
 
       <Route path={`${localisePrefix}${links.send}/:currency/:address/:amount`} component={Wallet} />
       <Route path={`${localisePrefix}${links.wallet}`} component={Wallet} />
-        
 
 
       <Route exact path={`${localisePrefix}${links.createWallet}`} component={CreateWallet} />
@@ -89,7 +87,6 @@ const routes = (
 
       <Route path={`${localisePrefix}${links.currencyWallet}`} component={Wallet} />
       <Route path={`${localisePrefix}${links.home}:currency`} component={Currency} />
-
 
       <Route component={NotFound} />
     </Switch>

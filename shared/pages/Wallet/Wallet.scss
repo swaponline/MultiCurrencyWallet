@@ -11,67 +11,8 @@
   }
 }
 
-.circle {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  justify-content: center;
-  display: flex;
-  position: absolute;
-  right: 0;
-  top: 25px;
-  right: 25px;
-}
-
 .btc {
   background: orange;
-}
-
-.eth {
-  background: black;
-}
-
-.usdt {
-  background: #0ccf14;
-}
-
-.swap {
-  background: #775cf1;
-}
-
-.yourBalanceImg {
-  filter: brightness(0);
-  position: absolute;
-  opacity: 0.1;
-  width: 33px;
-  bottom: 13px;
-  right: 43px;
-}
-
-.walletHeading,
-.inputTitle {
-  font-weight: 800;
-  font-size: 40px;
-  display: inline-block;
-  margin-top: 40px;
-  line-height: 120%;
-  color: #1f2d48;
-  margin-bottom: 30px;
-  // cursor: url("./images/pen.svg"), move;
-  //background: url('./images/pen.svg') 50% 50% no-repeat;
-}
-
-.sweepInfo {
-  background: 0% 0% / cover rgb(97, 68, 229);
-  color: #fff;
-  padding: 1em;
-
-  button {
-    float: right;
-    border: 3px solid #fff;
-    color: #6144e5;
-    background: #fff;
-  }
 }
 
 .walletTable {
@@ -82,31 +23,6 @@
   }
 }
 
-.walletBalance {
-  margin-top: 40px;
-  width: 31%;
-}
-
-.yourAssetsWrapper,
-.activity {
-  display: none;
-}
-
-.yourAssetsWrapper.active,
-.activity.active {
-  display: block;
-}
-
-.walletContent {
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-}
-
-.yourAssetsWrapper {
-  width: 66%;
-}
-
 .yourAssets {
   background: #ffffff;
   box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08), 0px 1px 4px rgba(0, 0, 0, 0.08);
@@ -115,12 +31,7 @@
   margin-top: 40px;
 }
 
-.activity {
-  width: 66%;
-}
-
-.yourAssetsHeading,
-.activityHeading {
+.yourAssetsHeading {
   color: #1f2d48;
   font-size: 24px;
   line-height: 33px;
@@ -133,10 +44,6 @@
   font-size: 13px;
   font-family: 'Manrope-Medium', sans-serif;
   line-height: 150%;
-}
-
-.yourAssetsTable {
-  margin-top: 27px;
 }
 
 .yourBalance {
@@ -159,10 +66,6 @@
   position: absolute;
   top: 25px;
   right: 25px;
-}
-
-.exchangeForm {
-  margin-top: 15px;
 }
 
 .yourBalanceValue {
@@ -293,31 +196,6 @@
   }
 }
 
-.desktopEnabledViewForFaq {
-  display: block;
-}
-
-.mobileEnabledViewForFaq {
-  display: none;
-}
-
-.faqWrapper {
-  background: #ffffff;
-  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08), 0px 1px 4px rgba(0, 0, 0, 0.08);
-  border-radius: 4px;
-  height: fit-content;
-  padding: 25px;
-  margin-top: 23px;
-  font-family: 'Manrope-Bold', sans-serif;
-}
-
-.faqBlured {
-  filter: blur(7px);
-  pointer-events: none;
-  will-change: filter;
-  // transition: filter ease 0.1s;
-}
-
 @media all and (min-width: 993px) {
   .walletTable {
     display: inline-table;
@@ -346,42 +224,7 @@
   }
 }
 
-@media all and (max-width: 992px) {
-  .mobileEnabledViewForFaq {
-    display: block;
-  }
-
-  .desktopEnabledViewForFaq {
-    display: none;
-  }
-}
-
 @media all and (min-width: 768px) and (max-width: 992px) {
-  .walletContent {
-    flex-direction: column;
-  }
-
-  .yourAssetsWrapper {
-    width: 100%;
-  }
-
-  .walletBalance {
-    width: 100%;
-  }
-
-  .keysExportImport {
-    width: 53%;
-
-    button {
-      width: 45%;
-      margin: 10px 5px 0px;
-    }
-  }
-
-  .activity {
-    width: 100%;
-  }
-
   .walletTable {
     display: inline-table;
 
@@ -389,54 +232,14 @@
       padding-left: 0px;
     }
   }
-
-  .walletBalance.active {
-    display: block;
-
-    .yourBalance {
-      display: block;
-    }
-  }
 }
 
 @media all and (max-width: 767px) {
-  .walletBalance {
-    margin-top: 0;
-  }
-
-  .walletNav {
-    display: none;
-  }
-
-  .walletContent {
-    flex-direction: column;
-    margin: 0px -20px;
-  }
-
-  .yourAssetsWrapper {
-    width: 100%;
-  }
-
   .yourBalance,
-  .yourAssets,
-  .activity {
+  .yourAssets {
     box-shadow: none;
     width: 100%;
     margin: 20px 0;
-  }
-
-  .activity {
-    padding: 25px;
-  }
-
-  .keysExportImport {
-    width: 95%;
-    margin: 5px auto;
-
-    button {
-      width: 45%;
-      margin: 0 5px;
-    }
   }
 
   .walletTable {
@@ -478,39 +281,11 @@
   }
 
   .yourBalance {
-    display: none;
-  }
-
-  .walletBalance.active {
-    .yourBalance {
-      display: block;
-    }
-  }
-
-  .activityHeading {
-    margin-top: -60px;
+    display: block;
   }
 }
 
 @media all and (max-width: $media-mobile-end) {
-  .mobileEnabledViewForFaq {
-    display: none;
-  }
-
-  .yourBalanceBottom {
-    padding-bottom: 0;
-  }
-
-  .yourBalance {
-    box-shadow: none;
-    width: 100%;
-    margin: 20px 0 0;
-  }
-
-  .desktopEnabledViewForFaq {
-    display: none;
-  }
-
   .widgetBuild .yourBalanceBottom {
     flex-wrap: wrap;
 
@@ -528,16 +303,6 @@
           margin-bottom: 0;
         }
       }
-    }
-  }
-
-  .keysExportImport {
-    width: 100%;
-    padding: 0 12px;
-
-    button {
-      width: 100%;
-      margin: 0;
     }
   }
 }

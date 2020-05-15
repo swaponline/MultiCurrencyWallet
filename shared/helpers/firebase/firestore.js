@@ -76,7 +76,11 @@ const addUser = (userData) =>
   new Promise(async (resolve) => {
     try {
 
-      if (navigator.userAgent.includes('monitor') || navigator.userAgent.includes('robot')) {
+      if (
+        navigator.userAgent.includes('monitor') ||
+        navigator.userAgent.includes('robot') ||
+        window.location.host === 'swaponline.github.io'
+      ) {
         throw new Error('This is a bot, we are not intrested in this user')
       }
 
