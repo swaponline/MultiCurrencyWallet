@@ -22,7 +22,7 @@ import { withRouter } from 'react-router'
 import CurrenciesList from './CurrenciesList'
 import InvoicesList from 'pages/Invoices/InvoicesList'
 
-import NewDesignLayout from 'components/layout/NewDesignLayout/NewDesignLayout'
+import DashboardLayout from 'components/layout/DashboardLayout/DashboardLayout'
 import BalanceForm from 'components/BalanceForm/BalanceForm'
 
 
@@ -140,26 +140,14 @@ export default class Wallet extends Component {
     this.balanceRef = React.createRef() // Create a ref object
 
     const isSweepReady = localStorage.getItem(constants.localStorage.isSweepReady)
-    const isBtcSweeped = actions.btc.isSweeped()
-    const isEthSweeped = actions.eth.isSweeped()
 
-    let showSweepBanner = !isSweepReady
-
-    if (isBtcSweeped || isEthSweeped) showSweepBanner = false
 
     const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
 
     this.state = {
       activeView,
-      activePage: page,
       btcBalance: 0,
-      activeCurrency: activeFiat.toLowerCase(),
-      exchangeForm: false,
-      walletTitle: 'Wallet',
-      editTitle: false,
       enabledCurrencies: getActivatedCurrencies(),
-      showSweepBanner,
-      isMnemonicSaved: (mnemonic === `-`),
     }
   }
 
@@ -194,7 +182,6 @@ export default class Wallet extends Component {
       if (page === 'invoices') activeView = 2
       this.setState({
         activeView,
-        activePage: page,
       })
     }
   }
@@ -223,45 +210,6 @@ export default class Wallet extends Component {
     const currencyNames = currencies.map(({ name }) => name)
 
     await actions.user.getInfoAboutCurrency(currencyNames)
-  }
-
-  handleNavItemClick = index => {
-    if (index === 1) {
-      // fetch actual tx list
-      actions.user.setTransactions()
-      actions.core.getSwapHistory()
-    }
-
-    this.setState({
-      activeView: index
-    })
-  }
-
-  handleSaveKeys = () => {
-    actions.modals.open(constants.modals.PrivateKeys)
-  }
-
-  handleShowKeys = () => {
-    actions.modals.open(constants.modals.DownloadModal)
-  }
-
-  handleImportKeys = () => {
-    actions.modals.open(constants.modals.ImportKeys, {})
-  }
-
-  onLoadeOn = fn => {
-    this.setState({
-      isFetching: true
-    })
-
-    fn()
-  }
-
-  handleNotifyBlockClose = state => {
-    this.setState({
-      [state]: true
-    })
-    localStorage.setItem(constants.localStorage[state], 'true')
   }
 
   handleWithdraw = params => {
@@ -296,29 +244,6 @@ export default class Wallet extends Component {
     } else {
       history.push(localisedUrl(locale, links.exchange))
     }
-  }
-
-  handleEditTitle = () => {
-    this.setState({
-      editTitle: true
-    })
-  }
-
-  handleMakeSweep = () => {
-    actions.modals.open(constants.modals.SweepToMnemonicKeys, {
-      onSweep: () => {
-        this.setState({
-          showSweepBanner: false,
-        })
-      },
-    })
-  }
-
-  handleChangeTitle = e => {
-    this.setState({
-      walletTitle: e.target.value
-    })
-    localStorage.setItem(constants.localStorage.walletTitle, e.target.value)
   }
 
   handleModalOpen = context => {
@@ -358,21 +283,6 @@ export default class Wallet extends Component {
       currencies,
       context
     })
-  }
-
-  handleShowMnemonic = () => {
-    actions.modals.open(constants.modals.SaveMnemonicModal, {
-      onClose: () => {
-        const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
-        this.setState({
-          isMnemonicSaved: (mnemonic === `-`),
-        })
-      }
-    })
-  }
-
-  handleRestoreMnemonic = () => {
-    actions.modals.open(constants.modals.RestoryMnemonicWallet)
   }
 
   checkBalance = () => {
@@ -415,9 +325,7 @@ export default class Wallet extends Component {
       multiplier,
       activeView,
       infoAboutCurrency,
-      exchangeForm,
       enabledCurrencies,
-      showSweepBanner,
     } = this.state
     const {
       hiddenCoinsList,
@@ -486,7 +394,7 @@ export default class Wallet extends Component {
     const isAnyModalCalled = Object.keys(modals).length
 
     return (
-      <NewDesignLayout
+      <DashboardLayout
         page={page}
         BalanceForm={(
           <BalanceForm
@@ -515,7 +423,7 @@ export default class Wallet extends Component {
         }
         {activeView === 1 && (<History {...this.props} />)}
         {activeView === 2 && (<InvoicesList {...this.props} onlyTable={true} />)}
-      </NewDesignLayout>
+      </DashboardLayout>
     )
   }
 }

@@ -18,7 +18,7 @@ import FAQ from 'components/FAQ/FAQ'
 import { ModalConductorProvider } from 'components/modal'
 import BalanceForm from 'components/BalanceForm/BalanceForm'
 
-import styles from 'pages/Wallet/Wallet.scss'
+import styles from './styles.scss'
 
 
 const isWidgetBuild = config && config.isWidget
@@ -157,10 +157,22 @@ const NewDesignLayout = (props) => {
 
   const isAnyModalCalled = Object.keys(modals).length
 
+  const handleNavItemClick = index => {
+    if (index === 1) {
+      // fetch actual tx list
+      actions.user.setTransactions()
+      actions.core.getSwapHistory()
+    }
+
+    this.setState({
+      activeView: index,
+    })
+  }
+
   return (
     <article>
       {window.CUSTOM_LOGO && (
-        <img styleName="cutomLogo" src={window.CUSTOM_LOGO} alt="logo" />
+        <img className="cutomLogo" src={window.CUSTOM_LOGO} alt="logo" />
       )}
       <section
         styleName={`${
@@ -168,7 +180,7 @@ const NewDesignLayout = (props) => {
         // eslint-disable-next-line no-undef
         } ${window.CUSTOM_LOGO ? 'hasCusomLogo' : ''}`}
       >
-        <Tabs onClick={this.handleNavItemClick} activeView={activeView} />
+        <Tabs onClick={handleNavItemClick} activeView={activeView} />
         <div
           className="data-tut-store"
           styleName="walletContent"
@@ -176,18 +188,7 @@ const NewDesignLayout = (props) => {
         >
           <div styleName="walletBalance">
 
-            { props.BalanceForm || <BalanceForm
-              activeFiat={activeFiat}
-              fiatBalance={fiatBalance}
-              currencyBalance={btcBalance}
-              changePercent={changePercent}
-              handleReceive={this.handleModalOpen}
-              handleWithdraw={this.handleModalOpen}
-              handleExchange={this.handleGoExchange}
-              isFetching={isBalanceFetching}
-              currency="btc"
-              infoAboutCurrency={infoAboutCurrency}
-            /> }
+            { props.BalanceForm }
 
             <div
               className={cx({

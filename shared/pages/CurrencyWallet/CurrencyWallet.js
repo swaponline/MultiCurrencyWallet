@@ -22,13 +22,13 @@ import { getSeoPage } from 'helpers/seo'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import config from 'app-config'
-import BalanceForm from 'pages/Wallet/components/BalanceForm/BalanceForm'
+import BalanceForm from 'components/BalanceForm/BalanceForm'
 import { BigNumber } from 'bignumber.js'
 import ContentLoader from 'components/loaders/ContentLoader/ContentLoader'
 import Tabs from "components/Tabs/Tabs"
 import FilterForm from "components/FilterForm/FilterForm"
 import { ModalConductorProvider } from 'components/modal'
-import NewDesignLayout from 'components/layout/NewDesignLayout/NewDesignLayout'
+import DashboardLayout from 'components/layout/DashboardLayout/DashboardLayout'
 
 import getCurrencyKey from 'helpers/getCurrencyKey'
 
@@ -528,7 +528,7 @@ export default class CurrencyWallet extends Component {
           {...this.state}
         />
 
-        <NewDesignLayout
+        <DashboardLayout
           page="history"
           BalanceForm={
             txHistory ?
@@ -570,7 +570,7 @@ export default class CurrencyWallet extends Component {
               </div>
             ) : ''
           )}
-        </NewDesignLayout>
+        </DashboardLayout>
         <Fragment>
           {
             seoPage && seoPage.footer && <div>{seoPage.footer}</div>
