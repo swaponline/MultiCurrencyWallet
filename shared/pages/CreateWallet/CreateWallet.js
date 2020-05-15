@@ -71,6 +71,7 @@ const CreateWallet = (props) => {
   let btcBalance = 0
   let fiatBalance = 0
   let changePercent = 0
+
   const widgetCurrencies = ['BTC', 'BTC (SMS-Protected)', 'BTC (Multisig)', 'ETH']
 
   if (isWidgetBuild) {
@@ -135,6 +136,36 @@ const CreateWallet = (props) => {
     },
     [pathname],
   )
+
+  useEffect(() => {
+    const widgetCurrencies = ['BTC', 'BTC (SMS-Protected)', 'BTC (Multisig)', 'ETH']
+
+    if (isWidgetBuild) {
+      if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
+        // Multi token widget build
+        Object.keys(window.widgetERC20Tokens).forEach(key => {
+          widgetCurrencies.push(key.toUpperCase())
+        })
+      } else {
+        widgetCurrencies.push(config.erc20token.toUpperCase())
+      }
+    }
+
+    if (currencyBalance) {
+      currencyBalance.forEach(item => {
+        if ((!isWidgetBuild || widgetCurrencies.includes(item.name)) && item.infoAboutCurrency && item.balance !== 0) {
+          if (item.name === 'BTC') {
+            changePercent = item.infoAboutCurrency.percent_change_1h
+          }
+
+          const multiplier = getFiats()
+
+          btcBalance += item.balance * item.infoAboutCurrency.price_btc
+          fiatBalance += item.balance * item.infoAboutCurrency.price_usd * multiplier
+        }
+      })
+    }
+  }, [])
 
   const [step, setStep] = useState(1)
   const [fiates, setFeates] = useState(1)
