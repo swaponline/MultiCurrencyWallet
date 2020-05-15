@@ -377,7 +377,9 @@ export default class Header extends Component {
         ) : (
           <div styleName="flexebleHeader">
             {window.logoUrl !== '#' && (
-              <img styleName="otherHeaderLogo" className="site-logo-header" src={window.logoUrl} alt="logo" />
+              <div styleName="imgWrapper">
+                <img styleName="otherHeaderLogo" className="site-logo-header" src={window.logoUrl} alt="logo" />
+              </div>
             )}
             {isWidgetBuild && <WidgetHeader />}
           </div>

@@ -71,33 +71,6 @@ const CreateWallet = (props) => {
   let btcBalance = 0
   let fiatBalance = 0
   let changePercent = 0
-  const widgetCurrencies = ['BTC', 'BTC (SMS-Protected)', 'BTC (Multisig)', 'ETH']
-
-  if (isWidgetBuild) {
-    if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
-      // Multi token widget build
-      Object.keys(window.widgetERC20Tokens).forEach(key => {
-        widgetCurrencies.push(key.toUpperCase())
-      })
-    } else {
-      widgetCurrencies.push(config.erc20token.toUpperCase())
-    }
-  }
-
-  if (currencyBalance) {
-    currencyBalance.forEach(item => {
-      if ((!isWidgetBuild || widgetCurrencies.includes(item.name)) && item.infoAboutCurrency && item.balance !== 0) {
-        if (item.name === 'BTC') {
-          changePercent = item.infoAboutCurrency.percent_change_1h
-        }
-
-        const multiplier = getFiats()
-
-        btcBalance += item.balance * item.infoAboutCurrency.price_btc
-        fiatBalance += item.balance * item.infoAboutCurrency.price_usd * multiplier
-      }
-    })
-  }
 
   useEffect(
     () => {
@@ -123,6 +96,36 @@ const CreateWallet = (props) => {
     [pathname],
   )
 
+  useEffect(() => {
+    const widgetCurrencies = ['BTC', 'BTC (SMS-Protected)', 'BTC (Multisig)', 'ETH']
+
+    if (isWidgetBuild) {
+      if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
+        // Multi token widget build
+        Object.keys(window.widgetERC20Tokens).forEach(key => {
+          widgetCurrencies.push(key.toUpperCase())
+        })
+      } else {
+        widgetCurrencies.push(config.erc20token.toUpperCase())
+      }
+    }
+
+    if (currencyBalance) {
+      currencyBalance.forEach(item => {
+        if ((!isWidgetBuild || widgetCurrencies.includes(item.name)) && item.infoAboutCurrency && item.balance !== 0) {
+          if (item.name === 'BTC') {
+            changePercent = item.infoAboutCurrency.percent_change_1h
+          }
+
+          const multiplier = getFiats()
+
+          btcBalance += item.balance * item.infoAboutCurrency.price_btc
+          fiatBalance += item.balance * item.infoAboutCurrency.price_usd * multiplier
+        }
+      })
+    }
+  }, [])
+
   const [step, setStep] = useState(1)
   const [fiates, setFeates] = useState(1)
   const [error, setError] = useState('Choose something')
@@ -130,7 +133,7 @@ const CreateWallet = (props) => {
   const steps = [1, 2]
 
   const getFiats = async () => {
-    const { activeFiat } = this.props
+    const { activeFiat } = props
     const { fiatsRates } = await actions.user.getFiats()
 
     const fiatRate = fiatsRates.find(({ key }) => key === activeFiat)
@@ -154,19 +157,6 @@ const CreateWallet = (props) => {
 
   const handleRestoreMnemonic = () => {
     actions.modals.open(constants.modals.RestoryMnemonicWallet, { btcBalance, fiatBalance })
-  }
-
-  // @ToDo - Debug - remove later
-  const handleShowKeys = () => {
-    actions.modals.open(constants.modals.DownloadModal, {})
-  }
-
-  const handleImportKeys = () => {
-    actions.modals.open(constants.modals.ImportKeys, {})
-  }
-
-  const handleMakeSweep = () => {
-    actions.modals.open(constants.modals.SweepToMnemonicKeys)
   }
 
   const goToExchange = () => {
