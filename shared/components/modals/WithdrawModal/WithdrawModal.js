@@ -34,11 +34,8 @@ import AdminFeeInfoBlock from "components/AdminFeeInfoBlock/AdminFeeInfoBlock";
 
 @injectIntl
 @connect(
-  ({
-    currencies,
-    user: { ethData, btcData, tokensData },
-    ui: { dashboardModalsAllowed },
-  }) => ({
+  ({ currencies, user: { ethData, btcData, tokensData, activeFiat }, ui: { dashboardModalsAllowed } }) => ({
+    activeFiat,
     currencies: currencies.items,
     items: [ethData, btcData],
     tokenItems: [...Object.keys(tokensData).map((k) => tokensData[k])],
@@ -93,7 +90,7 @@ export default class WithdrawModal extends React.Component {
       ethBalance: null,
       isEthToken: helpers.ethToken.isEthToken({ name: currency.toLowerCase() }),
       currentDecimals,
-      getUsd: 0,
+      getFiat: 0,
       error: false,
       ownTx: "",
       isAssetsOpen: false,
@@ -111,8 +108,8 @@ export default class WithdrawModal extends React.Component {
 
     this.setBalanceOnState(currency);
 
-    this.usdRates = {};
-    this.getUsdBalance();
+    this.fiatRates = {};
+    this.getFiatBalance();
     this.actualyMinAmount();
   }
 
@@ -210,12 +207,13 @@ export default class WithdrawModal extends React.Component {
     }));
   };
 
-  getUsdBalance = async () => {
+  getFiatBalance = async () => {
     const {
       data: { currency },
+      activeFiat
     } = this.props;
 
-    const exCurrencyRate = await actions.user.getExchangeRate(currency, "usd");
+    const exCurrencyRate = await actions.user.getExchangeRate(currency, activeFiat.toLowerCase());
 
     this.setState(() => ({
       exCurrencyRate,
@@ -535,7 +533,7 @@ export default class WithdrawModal extends React.Component {
       BigNumber(amount).dp() > currentDecimals ||
       this.isEthOrERC20();
     const NanReplacement = balance || "...";
-    const getUsd = amount * exCurrencyRate;
+    const getFiat = amount * exCurrencyRate;
 
     if (new BigNumber(amount).isGreaterThan(0)) {
       linked.amount.check(
@@ -725,7 +723,7 @@ export default class WithdrawModal extends React.Component {
               pattern="0-9\."
               isPriceValueMask
               placeholder="Enter the amount"
-              usd={getUsd.toFixed(2)}
+              fiat={getFiat.toFixed(2)}
               onKeyDown={inputReplaceCommaWithDot}
             />
             <div style={{ marginLeft: "15px" }}>

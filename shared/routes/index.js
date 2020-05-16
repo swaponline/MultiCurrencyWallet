@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 import React from 'react'
 import { Route } from 'react-router'
 import { Switch } from 'react-router-dom'
@@ -37,7 +38,7 @@ const routes = (
 
       <Route path={`${localisePrefix}/:ticker(btc|eth)/tx/:tx?`} component={Transaction} />
       <Route path={`${localisePrefix}/:token(token)/:ticker/tx/:tx?`} component={Transaction} />
-      <Route path={`${localisePrefix}/:ticker(btc|eth)/:address`} component={CurrencyWallet} />
+      <Route path={`${localisePrefix}/:ticker(btc|eth)/:address/:action(receive|send)?`} component={CurrencyWallet} />
       <Route path={`${localisePrefix}/:token(token)/:ticker/:address`} component={CurrencyWallet} />
       <Route path={`${localisePrefix}/:token(token)/:ticker/:address/withdraw`} component={CurrencyWallet} />
       <Route path={`${localisePrefix}/:fullName-wallet/:address?`} component={CurrencyWallet} />
@@ -78,8 +79,8 @@ const routes = (
       )}
       {isMobile && (
         <>
-        <Route exact path={`${localisePrefix}${links.history}/(btc)?/:address?`} component={History} />
-        <Route exact path={`${localisePrefix}/:page(invoices)/:type?/:address?`} component={History} />
+          <Route exact path={`${localisePrefix}${links.history}/(btc)?/:address?`} component={History} />
+          <Route exact path={`${localisePrefix}/:page(invoices)/:type?/:address?`} component={History} />
         </>
       )}
       <Route path={`${localisePrefix}${links.currencyWallet}`} component={Wallet} />

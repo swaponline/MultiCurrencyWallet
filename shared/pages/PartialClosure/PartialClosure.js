@@ -34,8 +34,6 @@ import { animate } from "helpers/domUtils";
 import Switching from "components/controls/Switching/Switching";
 import CustomDestAddress from "./CustomDestAddress/CustomDestAddress"
 
-
-
 const allowedCoins = [
   ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? ['BTC'] : [],
   ...(!config.opts.curEnabled || config.opts.curEnabled.eth) ? ['ETH'] : [],
@@ -93,7 +91,7 @@ const bannedPeers = {}; // Пиры, которые отклонили запр�
     addPartialItems,
     history: { swapHistory },
     core: { orders, hiddenCoinsList },
-    user: { ethData, btcData, tokensData }
+    user: { ethData, btcData, tokensData, activeFiat }
   }) => ({
     currencies: isExchangeAllowed(currencies.partialItems),
     allCurrencyies: currencies.items,
@@ -105,7 +103,8 @@ const bannedPeers = {}; // Пиры, которые отклонили запр�
     decline: rememberedOrders.savedOrders,
     hiddenCoinsList,
     userEthAddress: ethData.address,
-    swapHistory
+    swapHistory,
+    activeFiat
   })
 )
 @CSSModules(styles, { allowMultiple: true })
@@ -114,7 +113,7 @@ export default class PartialClosure extends Component {
     orders: []
   };
 
-  static usdRates = {};
+  static fiatRates = {};
 
   isPeerBanned(peerID) {
     if (bannedPeers[peerID] && bannedPeers[peerID] > Math.floor(new Date().getTime() / 1000)) {
@@ -199,8 +198,8 @@ export default class PartialClosure extends Component {
       haveCurrency: sellToken,
       getCurrency: buyToken,
       haveAmount: 0,
-      haveUsd: 0,
-      getUsd: 0,
+      haveFiat: 0,
+      getFiat: 0,
       getAmount: "",
       isShowBalance: true,
       isLowAmount: false,
@@ -227,7 +226,6 @@ export default class PartialClosure extends Component {
 
     let timer;
     this.cacheDynamicFee = {};
-    // usdRates
 
     if (config.isWidget) {
       this.state.getCurrency = config.erc20token;
@@ -241,8 +239,7 @@ export default class PartialClosure extends Component {
     this.checkPair();
     this.updateAllowedBalance();
 
-    //this.usdRates = {}
-    this.getUsdBalance();
+    this.getFiatBalance();
 
     this.timer = true;
     const timerProcess = () => {
@@ -367,29 +364,26 @@ export default class PartialClosure extends Component {
     }
   };
 
-  getUsdBalance = async () => {
+  getFiatBalance = async () => {
+    const { activeFiat } = this.props
     const { haveCurrency, getCurrency } = this.state;
 
     try {
       const exHaveRate =
-        this.usdRates[haveCurrency] !== undefined
-          ? this.usdRates[haveCurrency]
-          : await actions.user.getExchangeRate(haveCurrency, "usd");
+        this.fiatRates[haveCurrency] = await actions.user.getExchangeRate(haveCurrency, activeFiat.toLowerCase());
       const exGetRate =
-        this.usdRates[getCurrency] !== undefined
-          ? this.usdRates[getCurrency]
-          : await actions.user.getExchangeRate(getCurrency, "usd");
+        this.fiatRates[getCurrency] = await actions.user.getExchangeRate(getCurrency, activeFiat.toLowerCase());
 
-      this.usdRates[haveCurrency] = exHaveRate;
-      this.usdRates[getCurrency] = exGetRate;
+      this.fiatRates[haveCurrency] = exHaveRate;
+      this.fiatRates[getCurrency] = exGetRate;
 
       this.setState(() => ({
         exHaveRate,
         exGetRate
       }));
     } catch (e) {
-      const exHaveRate = this.usdRates && this.usdRates[haveCurrency] !== undefined ? this.usdRates[haveCurrency] : 0;
-      const exGetRate = this.usdRates && this.usdRates[getCurrency] !== undefined ? this.usdRates[getCurrency] : 0;
+      const exHaveRate = this.fiatRates && this.fiatRates[haveCurrency] !== undefined ? this.fiatRates[haveCurrency] : 0;
+      const exGetRate = this.fiatRates && this.fiatRates[getCurrency] !== undefined ? this.fiatRates[getCurrency] : 0;
       this.setState(() => ({
         exHaveRate,
         exGetRate
@@ -654,7 +648,7 @@ export default class PartialClosure extends Component {
     } else {
       this.setState(() => ({
         isNonOffers: true,
-        getUsd: Number(0).toFixed(2)
+        getFiat: Number(0).toFixed(2)
       }));
     }
 
@@ -804,8 +798,8 @@ export default class PartialClosure extends Component {
 
     this.setState(() => ({
       haveAmount: 0,
-      haveUsd: 0,
-      getUsd: 0,
+      haveHeat: 0,
+      getHeat: 0,
       getAmount: "",
       maxAmount: 0,
       maxBuyAmount: BigNumber(0),
@@ -866,7 +860,7 @@ export default class PartialClosure extends Component {
 
     const selected = actions.pairs.selectPairPartial(checkingValue);
     const check = selected.map(item => item.value).includes(getCurrency);
-    this.getUsdBalance();
+    this.getFiatBalance();
 
     if (!check) {
       this.chooseCurrencyToRender(selected);
@@ -881,7 +875,7 @@ export default class PartialClosure extends Component {
         getCurrency: selected[0].value
       }),
       () => {
-        this.getUsdBalance();
+        this.getFiatBalance();
       }
     );
   };
@@ -1007,6 +1001,7 @@ export default class PartialClosure extends Component {
 
   render() {
     const {
+      activeFiat,
       currencies,
       addSelectedItems,
       currenciesData,
@@ -1039,12 +1034,11 @@ export default class PartialClosure extends Component {
       destinationError,
     } = this.state;
 
-    const isSingleForm = isOnlyForm || isWidgetBuild;
+    const haveFiat = BigNumber(exHaveRate)
 
-    const haveUsd = BigNumber(exHaveRate)
       .times(haveAmount)
       .dp(2, BigNumber.ROUND_CEIL);
-    const getUsd = BigNumber(exGetRate)
+    const getFiat = BigNumber(exGetRate)
       .times(getAmount)
       .dp(2, BigNumber.ROUND_CEIL);
 
@@ -1056,7 +1050,6 @@ export default class PartialClosure extends Component {
 
     const getCurrencyData = currenciesData.find(item => item.currency === getCurrency.toUpperCase());
     const getTokenData = tokensData.find(item => item.currency === getCurrency.toUpperCase());
-    const currentCurrencyGet = getCurrencyData || getTokenData;
 
     const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? BigNumber(0) : BigNumber(goodRate);
     const linked = Link.all(this, "haveAmount", "getAmount", "customWallet");
@@ -1088,44 +1081,9 @@ export default class PartialClosure extends Component {
       ? currenciesData.find(item => item.currency === getCurrency.toUpperCase()).fullName
       : getCurrency.toUpperCase();
 
-    const SeoValues = {
-      full_name1: sellTokenFullName,
-      ticker_name1: haveCurrency.toUpperCase(),
-      full_name2: buyTokenFullName,
-      ticker_name2: getCurrency.toUpperCase()
-    };
-    const TitleTagString = formatMessage(
-      {
-        id: "PartialClosureTitleTag",
-        defaultMessage: "Atomic Swap {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}) Instant Exchange"
-      },
-      SeoValues
-    );
-    const MetaDescriptionString = formatMessage(
-      {
-        id: "PartialClosureMetaDescrTag",
-        defaultMessage:
-          "Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol." // eslint-disable-line
-      },
-      SeoValues
-    );
-
     const Form = (
-      <div styleName={`${isSingleForm ? "" : "section"}`} className={isWidgetLink ? "section" : ""}>
-        <div styleName={isWidgetLink ? "section" : ""}>
-          <PromoText
-            subTitle={subTitle(
-              sellTokenFullName,
-              haveCurrency.toUpperCase(),
-              buyTokenFullName,
-              getCurrency.toUpperCase()
-            )}
-          />
-        </div>
-        <div
-          styleName={isSingleForm ? "formExchange_widgetBuild" : `formExchange ${isWidget ? "widgetFormExchange" : ""}`}
-          className={isWidget ? "formExchange" : ""}
-        >
+      <div styleName="section">
+        <div styleName="formExchange">
           {desclineOrders.length ? (
             <h5 role="presentation" styleName="informAbt" onClick={this.handleShowIncomplete}>
               <FormattedMessage id="continueDeclined977" defaultMessage="Click here to continue your swaps" />
@@ -1135,6 +1093,7 @@ export default class PartialClosure extends Component {
             )}
           <div className="data-tut-have" styleName="selectWrap">
             <SelectGroup
+              activeFiat={activeFiat}
               switchBalanceFunc={this.switchBalance}
               inputValueLink={linked.haveAmount.pipe(this.setAmount)}
               selectedValue={haveCurrency}
@@ -1148,15 +1107,14 @@ export default class PartialClosure extends Component {
                 />
               }
               placeholder="0.00000000"
-              usd={maxAmount > 0 && isNonOffers ? 0 : haveUsd}
+              fiat={maxAmount > 0 && isNonOffers ? 0 : haveFiat}
               currencies={currencies}
-              className={isWidget ? "SelGroup" : ""}
               onFocus={() => this.extendedControlsSet(true)}
               onBlur={() => setTimeout(() => this.extendedControlsSet(false), 200)}
             />
           </div>
           {isShowBalance && (
-            <p className={isWidget ? "advice" : ""} styleName="maxAmount">
+            <p styleName="maxAmount">
               {/* <FormattedMessage id="partial221" defaultMessage="Balance: " /> */}
               {/* Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}{' '}{haveCurrency.toUpperCase() */}
               {BigNumber(balance).toNumber() === 0 ? (
@@ -1178,6 +1136,7 @@ export default class PartialClosure extends Component {
           </div>
           <div className="data-tut-get" styleName="selectWrap" style={{ marginBottom: "-25px" }}>
             <SelectGroup
+              activeFiat={activeFiat}
               dataTut="get"
               switchBalanceFunc={this.switchBalance}
               inputValueLink={linked.getAmount}
@@ -1189,9 +1148,8 @@ export default class PartialClosure extends Component {
                 <FormattedMessage id="partial478" defaultMessage="The amount you will receive after the exchange" />
               }
               currencies={addSelectedItems}
-              usd={getUsd}
+              fiat={getFiat}
               error={isLowAmount}
-              className={isWidget ? "SelGroup" : ""}
             />
             {oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && !isNonOffers && (
               <div styleName="price">
@@ -1208,7 +1166,7 @@ export default class PartialClosure extends Component {
           </div>
           <div className="data-tut-status">
             {(isSearching || (isNonOffers && maxAmount === 0)) && (
-              <span className={isWidget ? "searching" : ""} styleName="IsSearching">
+              <span styleName="IsSearching">
                 <FormattedMessage id="PartialPriceSearch" defaultMessage="Searching orders..." />
                 <div styleName="loaderHolder">
                   <div styleName="additionalLoaderHolder">
@@ -1223,24 +1181,24 @@ export default class PartialClosure extends Component {
           )}
           {maxAmount > 0 && isNonOffers && linked.haveAmount.value > 0 && (
             <Fragment>
-              <p styleName="error" className={isWidget ? "error" : ""}>
+              <p styleName="error">
                 <FormattedMessage
                   id="PartialPriceNoOrdersReduce"
                   defaultMessage="No orders found, try to reduce the amount"
                 />
               </p>
-              <p styleName="error" className={isWidget ? "error" : ""}>
+              <p styleName="error">
                 <FormattedMessage id="PartialPriceReduceMin" defaultMessage="Maximum available amount for buy: " />
                 {maxAmount} {getCurrency.toUpperCase()}
               </p>
-              <p styleName="error" className={isWidget ? "error" : ""}>
+              <p styleName="error">
                 <FormattedMessage id="PartialPriceSellMax" defaultMessage="Maximum available amount for sell: " />
                 {maxBuyAmount.toNumber()} {haveCurrency.toUpperCase()}
               </p>
             </Fragment>
           )}
           {isDeclinedOffer && (
-            <p styleName="error link" className={isWidget ? "error" : ""} onClick={() => this.handleGoDeclimeFaq()}>
+            <p styleName="error link" onClick={() => this.handleGoDeclimeFaq()}>
               {" "}
               {/* eslint-disable-line */}
               <FormattedMessage
@@ -1263,7 +1221,7 @@ export default class PartialClosure extends Component {
             BigNumber(getAmount).isGreaterThan(0) &&
             this.state.haveAmount &&
             this.state.getAmount && (
-              <p styleName="error" className={isWidget ? "error" : ""}>
+              <p styleName="error">
                 <FormattedMessage
                   id="ErrorBtcLowAmount"
                   defaultMessage="This amount is too low"
@@ -1276,7 +1234,7 @@ export default class PartialClosure extends Component {
           {BigNumber(estimatedFeeValues[haveCurrency]).isGreaterThan(0) &&
             BigNumber(haveAmount).isGreaterThan(0) &&
             BigNumber(haveAmount).isLessThanOrEqualTo(balance) && (
-              <div styleName="notifyThat" className={isWidget ? "feeValue" : ""}>
+              <div styleName="notifyThat">
                 <div>
                   <FormattedMessage
                     id="PartialFeeValueWarn"
@@ -1338,7 +1296,7 @@ export default class PartialClosure extends Component {
               </div>
             )}
           {isFetching && (
-            <span className={isWidget ? "wait" : ""}>
+            <span>
               <FormattedMessage id="partial291" defaultMessage="Waiting for another participant (30 sec): " />
               <div styleName="loaderHolder">
                 <div styleName="additionalLoaderHolder">
@@ -1383,7 +1341,7 @@ export default class PartialClosure extends Component {
             </div>
           </Fragment>
           */}
-          <div styleName="rowBtn" className={isWidget ? "rowBtn" : ""}>
+          <div styleName="rowBtn">
             <Button
               className="data-tut-Exchange"
               styleName="button"
@@ -1416,47 +1374,45 @@ export default class PartialClosure extends Component {
       </div>
     );
 
-    return isSingleForm ? (
-      Form
-    ) : (
-        <div styleName={`exchangeWrap ${isWidget ? "widgetExchangeWrap" : ""}`}>
-          <div styleName="promoContainer" ref={ref => (this.promoContainer = ref)}>
-            <div
-              styleName="scrollToTutorialSection"
-              ref={ref => (this.scrollTrigger = ref)}
-              onClick={() =>
-                animate(timePassed => {
-                  window.scrollTo(0, this.promoContainer.clientHeight * (timePassed / 100));
-                }, 100)
-              }
-            >
-              <span styleName="scrollAdvice">
-                <FormattedMessage id="PartialHowItWorks10" defaultMessage="How it works?" />
-              </span>
-              <span styleName="scrollTrigger" />
-            </div>
-
-            {openScanCam && (
-              <QrReader openScan={this.openScan} handleError={this.handleError} handleScan={this.handleScan} />
-            )}
-            <Fragment>
-              <div styleName="container alignCenter">
-                <Promo
-                  subTitle={subTitle(
-                    sellTokenFullName,
-                    haveCurrency.toUpperCase(),
-                    buyTokenFullName,
-                    getCurrency.toUpperCase()
-                  )}
-                />
-                {Form}
-              </div>
-            </Fragment>
+    return (
+      <div styleName="exchangeWrap">
+        <div styleName="promoContainer" ref={ref => (this.promoContainer = ref)}>
+          <div
+            styleName="scrollToTutorialSection"
+            ref={ref => (this.scrollTrigger = ref)}
+            onClick={() =>
+              animate(timePassed => {
+                window.scrollTo(0, this.promoContainer.clientHeight * (timePassed / 100));
+              }, 100)
+            }
+          >
+            <span styleName="scrollAdvice">
+              <FormattedMessage id="PartialHowItWorks10" defaultMessage="How it works?" />
+            </span>
+            <span styleName="scrollTrigger" />
           </div>
-          <HowItWorks />
-          <VideoAndFeatures />
-          <Quote />
+
+          {openScanCam && (
+            <QrReader openScan={this.openScan} handleError={this.handleError} handleScan={this.handleScan} />
+          )}
+          <Fragment>
+            <div styleName="container alignCenter">
+              <Promo
+                subTitle={subTitle(
+                  sellTokenFullName,
+                  haveCurrency.toUpperCase(),
+                  buyTokenFullName,
+                  getCurrency.toUpperCase()
+                )}
+              />
+              {Form}
+            </div>
+          </Fragment>
         </div>
-      );
+        <HowItWorks />
+        <VideoAndFeatures />
+        <Quote />
+      </div>
+    );
   }
 }

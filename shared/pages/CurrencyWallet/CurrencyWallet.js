@@ -18,15 +18,14 @@ import SwapsHistory from 'pages/History/SwapsHistory/SwapsHistory'
 import Table from 'components/tables/Table/Table'
 import PageSeo from 'components/Seo/PageSeo'
 import { getSeoPage } from 'helpers/seo'
-import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
+import { injectIntl, defineMessages } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import config from 'app-config'
-import BalanceForm from 'pages/Wallet/components/BalanceForm/BalanceForm'
+import BalanceForm from 'components/BalanceForm/BalanceForm'
 import { BigNumber } from 'bignumber.js'
 import ContentLoader from 'components/loaders/ContentLoader/ContentLoader'
-import Tabs from 'components/Tabs/Tabs'
-import FilterForm from 'components/FilterForm/FilterForm'
-import { ModalConductorProvider } from 'components/modal'
+import FilterForm from "components/FilterForm/FilterForm"
+import DashboardLayout from 'components/layout/DashboardLayout/DashboardLayout'
 
 import getCurrencyKey from 'helpers/getCurrencyKey'
 
@@ -35,30 +34,32 @@ const isWidgetBuild = config && config.isWidget
 @connect(({ signUp: { isSigned } }) => ({
   isSigned,
 }))
-@connect(
-  ({
-    core,
-    user,
-    history: { transactions, swapHistory },
-    history,
-    user: { ethData, btcData, btcMultisigSMSData, btcMultisigUserData, isFetching, tokensData },
-  }) => ({
-    items: [
-      ethData,
-      btcData,
-      btcMultisigSMSData,
-      btcMultisigUserData,
-      ...Object.keys(tokensData).map((k) => tokensData[k]),
-    ],
-    tokens: [...Object.keys(tokensData).map((k) => tokensData[k])],
-    user,
-    historyTx: history,
-    hiddenCoinsList: core.hiddenCoinsList,
-    txHistory: transactions,
-    swapHistory,
+
+@connect(({ core, user, history: { transactions, swapHistory }, history,
+  user: {
+    ethData,
+    btcData,
+    activeFiat,
+    btcMultisigSMSData,
+    btcMultisigUserData,
     isFetching,
-  })
-)
+    tokensData } }) => ({
+      items: [
+        ethData,
+        btcData,
+        btcMultisigSMSData,
+        btcMultisigUserData,
+        ...Object.keys(tokensData).map(k => (tokensData[k]))],
+      tokens: [...Object.keys(tokensData).map(k => (tokensData[k]))],
+      user,
+      activeFiat,
+      historyTx: history,
+      hiddenCoinsList: core.hiddenCoinsList,
+      txHistory: transactions,
+      swapHistory,
+      isFetching
+    }))
+
 @injectIntl
 @withRouter
 @CSSModules({ ...styles, ...stylesHere }, { allowMultiple: true })
@@ -68,7 +69,15 @@ export default class CurrencyWallet extends Component {
 
     const {
       match: {
-        params: { fullName = null, ticker = null, address = null },
+        params: {
+          fullName = null,
+          ticker = null,
+          address = null,
+          action = null,
+        },
+      },
+      intl: {
+        locale,
       },
       intl: { locale },
       //items,
@@ -169,11 +178,20 @@ export default class CurrencyWallet extends Component {
         isBalanceEmpty: balance === 0,
         token: ethToken.isEthToken({ name: ticker }),
       }
+
+      if (action === 'receive') {
+        actions.modals.open(constants.modals.ReceiveModal, {
+          currency,
+          address
+        })
+      }
     }
   }
 
   componentDidMount() {
     const { currency, token, isRedirecting, redirectUrl, balance, infoAboutCurrency, hiddenCoinsList } = this.state
+
+    this.getFiats()
 
     if (isRedirecting) {
       const {
@@ -230,6 +248,17 @@ export default class CurrencyWallet extends Component {
 
   componentDidUpdate(prevProps) {
     const { currency } = this.state
+
+    const {
+      activeFiat,
+    } = this.props
+    const {
+      activeFiat: prevFiat,
+    } = prevProps
+
+    if (activeFiat !== prevFiat) {
+      this.getFiats()
+    }
 
     let {
       match: {
@@ -452,7 +481,9 @@ export default class CurrencyWallet extends Component {
   rowRender = (row, rowIndex) => {
     const { history } = this.props
 
-    return <Row key={rowIndex} {...row} history={history} />
+    return (
+      <Row key={rowIndex} {...row} history={history} />
+    )
   }
 
   handleFilterChange = ({ target }) => {
@@ -488,6 +519,15 @@ export default class CurrencyWallet extends Component {
     actions.history.setTransactions(address, currency.toLowerCase(), this.pullTransactions)
   }
 
+  getFiats = async () => {
+    const { activeFiat } = this.props
+    const { fiatsRates } = await actions.user.getFiats()
+
+    const fiatRate = fiatsRates.find(({ key }) => key === activeFiat)
+    this.setState(() => ({ multiplier: fiatRate.value }))
+  }
+
+
   render() {
     let {
       swapHistory,
@@ -511,6 +551,7 @@ export default class CurrencyWallet extends Component {
       txItems,
       filterValue,
       isLoading,
+      multiplier,
     } = this.state
 
     const currencyKey = getCurrencyKey(currency, true)
@@ -561,21 +602,14 @@ export default class CurrencyWallet extends Component {
       actions.core.markCoinAsVisible(currency)
     }
 
-    /** 27.02.2020 не знаю что это такое, но оно не используется, и ломает мне код
-     * пока закоментил - через месяц можно удалять
-    const isBlockedCoin = config.noExchangeCoins
-      .map(item => item.toLowerCase())
-      .includes(currency.toLowerCase())
-       */
+    let currencyFiatBalance;
+    let changePercent;
 
-    let currencyUsdBalance
-    let changePercent
-
-    if (infoAboutCurrency) {
-      currencyUsdBalance = BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * infoAboutCurrency.price_usd
-      changePercent = infoAboutCurrency.percent_change_1h
+    if (infoAboutCurrency && multiplier) {
+      currencyFiatBalance = BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * infoAboutCurrency.price_usd * multiplier;
+      changePercent = infoAboutCurrency.percent_change_1h;
     } else {
-      currencyUsdBalance = 0
+      currencyFiatBalance = 0;
     }
 
     let settings = {
@@ -607,13 +641,14 @@ export default class CurrencyWallet extends Component {
           handleNotifyBlockClose={this.handleNotifyBlockClose}
           {...this.state}
         />
-        <Tabs activeView={1} />
-        <Fragment>
-          <div styleName="currencyWalletWrapper">
-            <div styleName="currencyWalletBalance">
+
+        <DashboardLayout
+          page="history"
+          BalanceForm={
+            txHistory ?
               <BalanceForm
                 currencyBalance={balance}
-                usdBalance={currencyUsdBalance}
+                fiatBalance={currencyFiatBalance}
                 changePercent={changePercent}
                 address={address}
                 handleReceive={this.handleReceive}
@@ -622,45 +657,38 @@ export default class CurrencyWallet extends Component {
                 handleInvoice={this.handleInvoice}
                 showButtons={actions.user.isOwner(address, currency)}
                 currency={currency.toLowerCase()}
-              />
-            </div>
-            <div styleName="currencyWalletActivityWrapper">
-              <ModalConductorProvider>
-                <div styleName="currencyWalletActivity">
-                  <FilterForm
-                    filterValue={filterValue}
-                    onSubmit={this.handleFilter}
-                    onChange={this.handleFilterChange}
-                    resetFilter={this.resetFilter}
-                  />
-                  {txHistory &&
-                    !isLoading &&
-                    (txHistory.length > 0 ? (
-                      <Table rows={txHistory} styleName="currencyHistory" rowRender={this.rowRender} />
-                    ) : (
-                      <div styleName="historyContent">
-                        <ContentLoader rideSideContent empty nonHeader inner />
-                      </div>
-                    ))}
-                  {(!txHistory || isLoading) && (
-                    <div styleName="historyContent">
-                      <ContentLoader rideSideContent nonHeader />
-                    </div>
-                  )}
+              /> : <ContentLoader leftSideContent />
+          }
+        >
+          <div styleName="currencyWalletActivity">
+            <FilterForm filterValue={filterValue} onSubmit={this.handleFilter} onChange={this.handleFilterChange} resetFilter={this.resetFilter} />
+            {txHistory && !isLoading && (
+              txHistory.length > 0 ? (
+                <Table rows={txHistory} styleName="currencyHistory" rowRender={this.rowRender} />
+              ) :
+                <div styleName="historyContent">
+                  <ContentLoader rideSideContent empty nonHeader inner />
                 </div>
-              </ModalConductorProvider>
-              {!actions.btcmultisig.isBTCSMSAddress(`${address}`) &&
-                !actions.btcmultisig.isBTCMSUserAddress(`${address}`) &&
-                (swapHistory.filter((item) => item.step >= 4).length > 0 ? (
-                  <div styleName="currencyWalletSwapHistory">
-                    <SwapsHistory orders={swapHistory.filter((item) => item.step >= 4)} />
-                  </div>
-                ) : (
-                  ''
-                ))}
-            </div>
+            )
+            }
+            {(!txHistory || isLoading) && (
+              <div styleName="historyContent">
+                <ContentLoader rideSideContent nonHeader />
+              </div>
+            )}
           </div>
-          {seoPage && seoPage.footer && <div>{seoPage.footer}</div>}
+          {(!actions.btcmultisig.isBTCSMSAddress(`${address}`) && !actions.btcmultisig.isBTCMSUserAddress(`${address}`)) && (
+            swapHistory.filter(item => item.step >= 4).length > 0 ? (
+              <div styleName="currencyWalletSwapHistory">
+                <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} />
+              </div>
+            ) : ''
+          )}
+        </DashboardLayout>
+        <Fragment>
+          {
+            seoPage && seoPage.footer && <div>{seoPage.footer}</div>
+          }
         </Fragment>
       </div>
     )

@@ -13,7 +13,6 @@ $purple: #510ed8;
 }
 
 .otherHeaderLogo {
-  max-width: initial !important;
   display: block;
   max-height: 55px;
   width: auto;
@@ -47,14 +46,36 @@ $purple: #510ed8;
   position: absolute;
 }
 
+.flexebleHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .container {
   margin: auto;
   height: 88px;
 }
 
+@media all and (max-width: 780px) {
+  .otherHeaderLogo {
+    max-width: 7em;
+  }
+
+  .container {
+    height: 40px;
+  }
+}
+
 @include media-mobile {
   .header {
     display: flex;
+  }
+
+  .widgetHeader {
+    display: unset;
+    width: 100%;
   }
 }
 
@@ -101,5 +122,23 @@ $purple: #510ed8;
 @media all and (max-width: 480px) {
   .container {
     display: none;
+  }
+  .contawidge_container {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+
+  .imgWrapper {
+    width: calc(50% + 3.5em);
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .flexebleHeader {
+    width: 100%;
+    padding: 5px 15px 10px;
+    top: 15px;
+    position: relative;
   }
 }

@@ -42,11 +42,16 @@ const langLabels = defineMessages({
     {
       rememberedOrders,
       user: {
-        ethData: { address, privateKey },
-      },
+        activeFiat,
+        ethData: {
+          address,
+          privateKey,
+        }
+      }
     },
     { currency }
   ) => ({
+    activeFiat,
     decline: rememberedOrders.savedOrders,
     ethDataHelper: {
       address,
@@ -481,6 +486,15 @@ export default class Row extends Component {
     )
   }
 
+
+  getFiats = async () => {
+    const { activeFiat } = this.props
+    const { fiatsRates } = await actions.user.getFiats()
+
+    const fiatRate = fiatsRates.find(({ key }) => key === activeFiat)
+    return fiatRate.value
+  }
+
   render() {
     const {
       isBalanceFetching,
@@ -514,14 +528,16 @@ export default class Row extends Component {
 
     let inneedData = null
     let nodeDownErrorShow = true
-    let currencyUsdBalance = 0
+    let currencyFiatBalance = 0
 
     const isWidgetBuild = config && config.isWidget
+    const multiplier = this.getFiats()
 
     if (itemData.infoAboutCurrency) {
-      currencyUsdBalance =
-        BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() *
-        itemData.infoAboutCurrency.price_usd
+      currencyFiatBalance =
+        BigNumber(balance)
+          .dp(5, BigNumber.ROUND_FLOOR)
+          .toString() * itemData.infoAboutCurrency.price_usd * multiplier
     }
 
     let hasHowToWithdraw = false
@@ -843,11 +859,11 @@ export default class Row extends Component {
               {title ? <strong>{title}</strong> : ''}
             </div>
 
-            {currencyUsdBalance && !balanceError ? (
+            {currencyFiatBalance && !balanceError ? (
               <div styleName="assetsTableValue">
                 {/* <img src={dollar} /> */}
-                <p>{currencyUsdBalance.toFixed(2)}</p>
-                <strong>USD</strong>
+                <p>{currencyFiatBalance.toFixed(2)}</p>
+                <strong>{activeFiat}</strong>
                 {/* {inneedData && <span>   {`${inneedData.change} %`} </span>} */}
               </div>
             ) : (

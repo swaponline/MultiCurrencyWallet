@@ -19,7 +19,6 @@ import { localisedUrl } from 'helpers/locale'
 import FirstStep from './Steps/FirstStep'
 import SecondStep from './Steps/SecondStep'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
-import { getActivatedCurrencies } from 'helpers/user'
 
 import { constants, localStorage } from 'helpers'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
@@ -44,6 +43,7 @@ const CreateWallet = (props) => {
     location: { pathname },
     userData,
     core: { hiddenCoinsList },
+    activeFiat,
   } = props
   const allCurrencies = props.currencies.items
 
@@ -69,8 +69,9 @@ const CreateWallet = (props) => {
   }))
 
   let btcBalance = 0
-  let usdBalance = 0
+  let fiatBalance = 0
   let changePercent = 0
+
   const widgetCurrencies = ['BTC', 'BTC (SMS-Protected)', 'BTC (Multisig)', 'ETH']
 
   if (isWidgetBuild) {
@@ -84,28 +85,45 @@ const CreateWallet = (props) => {
     }
   }
 
+  const [multiplier, setMultiplier] = useState(0)
+
+  const getFiats = async () => {
+    const { fiatsRates } = await actions.user.getFiats()
+
+    if (fiatsRates) {
+      const fiatRate = fiatsRates.find(({ key }) => key === activeFiat)
+      setMultiplier(fiatRate.value)
+    }
+  }
+
   if (currencyBalance) {
-    currencyBalance.forEach(item => {
+    currencyBalance.forEach(async item => {
       if ((!isWidgetBuild || widgetCurrencies.includes(item.name)) && item.infoAboutCurrency && item.balance !== 0) {
         if (item.name === 'BTC') {
           changePercent = item.infoAboutCurrency.percent_change_1h
         }
+
         btcBalance += item.balance * item.infoAboutCurrency.price_btc
-        usdBalance += item.balance * item.infoAboutCurrency.price_usd
+        fiatBalance += item.balance * item.infoAboutCurrency.price_usd * multiplier
       }
     })
   }
+
+  useEffect(() => {
+    getFiats()
+  }, [activeFiat])
 
   useEffect(
     () => {
       const singleCurrecny = pathname.split('/')[2]
 
+      getFiats()
       if (singleCurrecny) {
 
         const hiddenList = localStorage.getItem('hiddenCoinsList')
 
         const isExist = hiddenList.find(el => {
-          if (el.includes(":")) {
+          if (el.includes(':')) {
             return el.includes(singleCurrecny.toUpperCase())
           }
           return el === singleCurrecny.toUpperCase()
@@ -119,7 +137,38 @@ const CreateWallet = (props) => {
     [pathname],
   )
 
+  useEffect(() => {
+    const widgetCurrencies = ['BTC', 'BTC (SMS-Protected)', 'BTC (Multisig)', 'ETH']
+
+    if (isWidgetBuild) {
+      if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
+        // Multi token widget build
+        Object.keys(window.widgetERC20Tokens).forEach(key => {
+          widgetCurrencies.push(key.toUpperCase())
+        })
+      } else {
+        widgetCurrencies.push(config.erc20token.toUpperCase())
+      }
+    }
+
+    if (currencyBalance) {
+      currencyBalance.forEach(item => {
+        if ((!isWidgetBuild || widgetCurrencies.includes(item.name)) && item.infoAboutCurrency && item.balance !== 0) {
+          if (item.name === 'BTC') {
+            changePercent = item.infoAboutCurrency.percent_change_1h
+          }
+
+          const multiplier = getFiats()
+
+          btcBalance += item.balance * item.infoAboutCurrency.price_btc
+          fiatBalance += item.balance * item.infoAboutCurrency.price_usd * multiplier
+        }
+      })
+    }
+  }, [])
+
   const [step, setStep] = useState(1)
+  const [fiates, setFeates] = useState(1)
   const [error, setError] = useState('Choose something')
   const [isExist, setExist] = useState(false)
   const steps = [1, 2]
@@ -139,20 +188,7 @@ const CreateWallet = (props) => {
   }
 
   const handleRestoreMnemonic = () => {
-    actions.modals.open(constants.modals.RestoryMnemonicWallet, { btcBalance, usdBalance })
-  }
-
-  // @ToDo - Debug - remove later
-  const handleShowKeys = () => {
-    actions.modals.open(constants.modals.DownloadModal, {})
-  }
-
-  const handleImportKeys = () => {
-    actions.modals.open(constants.modals.ImportKeys, {})
-  }
-
-  const handleMakeSweep = () => {
-    actions.modals.open(constants.modals.SweepToMnemonicKeys)
+    actions.modals.open(constants.modals.RestoryMnemonicWallet, { btcBalance, fiatBalance })
   }
 
   const goToExchange = () => {
@@ -181,7 +217,7 @@ const CreateWallet = (props) => {
         case 'withoutSecure':
           Object.keys(currencies).forEach(el => {
             if (currencies[el]) {
-              const isWasOnWallet = localStorage.getItem("hiddenCoinsList").find(cur => cur.includes(`${el}:`))
+              const isWasOnWallet = localStorage.getItem('hiddenCoinsList').find(cur => cur.includes(`${el}:`))
               actions.core.markCoinAsVisible(isWasOnWallet || el.toUpperCase())
             }
           })
@@ -281,7 +317,7 @@ const CreateWallet = (props) => {
               <span>
                 <FormattedMessage id="ImportKeys_RestoreMnemonic_Tooltip" defaultMessage="12-word backup phrase" />
                 {
-                  (btcBalance > 0 || usdBalance > 0) && (
+                  (btcBalance > 0 || fiatBalance > 0) && (
                     <React.Fragment>
                       <br />
                       <br />
@@ -339,4 +375,5 @@ export default connect({
   currencies: 'currencies',
   userData: 'user',
   core: 'core',
+  activeFiat: 'user.activeFiat',
 })(injectIntl(withRouter(CSSModules(CreateWallet, styles, { allowMultiple: true }))))
