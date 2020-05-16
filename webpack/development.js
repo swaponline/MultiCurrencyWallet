@@ -32,7 +32,11 @@ export default (webpackConfig) => {
   }
 
   webpackConfig.plugins.push(
-    // new BundleAnalyzerPlugin()
+    // create new info file every compiling
+    // new BundleAnalyzerPlugin({
+    //   openAnalyzer: false,
+    //   analyzerMode: "static",
+    // }),
     new CopyWebpackPlugin([
       {
         from: 'client/firebase-messaging-sw.js',
