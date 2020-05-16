@@ -76,9 +76,6 @@ export default class CurrencyWallet extends Component {
           action = null,
         },
       },
-      intl: {
-        locale,
-      },
       intl: { locale },
       //items,
       txHistory,
