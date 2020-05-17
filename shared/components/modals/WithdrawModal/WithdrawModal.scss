@@ -167,8 +167,33 @@
     .address {
       color: #8e9aa3;
       font-size: 12px;
+      @include media-mobile {
+        display: none;
+      }
+    }
+    .mobileAddress {
+      color: #8e9aa3;
+      font-size: 12px;
+      > div {
+        margin: 0;
+      }
     }
   }
+}
+
+.currencySelectContainer {
+  right: 85px;
+  z-index: 1;
+  position: absolute;
+  @include media-mobile {
+    right: 55px;
+  }
+}
+
+
+.coin {
+  position: relative;
+  z-index: 1111111;
 }
 
 .customSelectList {
@@ -223,8 +248,11 @@
 .amount {
   position: absolute;
   text-align: right;
-  right: 75px;
+  right: 60px;
   font-size: 13px;
+  @include media-mobile {
+    right: 50px;
+  }
   .currency {
     color: #1f2d48;
   }

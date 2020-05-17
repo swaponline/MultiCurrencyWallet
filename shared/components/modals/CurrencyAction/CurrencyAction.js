@@ -82,6 +82,7 @@ export default class CurrencyAction extends React.Component {
       }
   
       const isToken = helpers.ethToken.isEthToken({ name: currency })
+      this.handleClose()
   
       history.push(
         localisedUrl(
@@ -90,7 +91,7 @@ export default class CurrencyAction extends React.Component {
         )
       )
     }
-    this.handleClose()
+    
   }
 
   render() {

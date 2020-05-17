@@ -332,6 +332,10 @@
     "message": "Your balance: "
   },
   {
+    "id": "Withdrow559",
+    "message": "Transfer from"
+  },
+  {
     "id": "Withdrow118",
     "message": "Amount",
     "files": [

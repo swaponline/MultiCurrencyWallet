@@ -37,7 +37,7 @@ const ModalConductorProvider = ({ children, history, modals, ...props }) => {
       isModalOpenedHelper = false
       window.removeEventListener('click', handleClick)
       setTimeout(() => {
-        actions.modals.close(`${upperModal}`)
+        // actions.modals.close(`${upperModal}`)
       }, 1)
     }
   }

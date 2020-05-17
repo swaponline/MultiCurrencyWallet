@@ -202,6 +202,7 @@ export default class CurrencyWallet extends Component {
       return
     }
 
+  
     let {
       match: {
         params: { address = null },
@@ -343,6 +344,7 @@ export default class CurrencyWallet extends Component {
         itemCurrency = itemCurrency[0]
 
         const { currency, address, contractAddress, decimals, balance, infoAboutCurrency } = itemCurrency
+        const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals
 
         this.setState(
           {
@@ -369,8 +371,7 @@ export default class CurrencyWallet extends Component {
           }
         )
       }
-
-      const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals
+    
     }
   }
 

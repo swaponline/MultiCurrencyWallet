@@ -346,6 +346,10 @@
     "message": "Ваш баланс: "
   },
   {
+    "id": "Withdrow559",
+    "message": "Отправить с кошелька"
+  },
+  {
     "id": "Withdrow118",
     "message": "Сумма",
     "files": [
