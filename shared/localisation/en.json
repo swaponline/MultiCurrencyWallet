@@ -2471,7 +2471,7 @@
   },
   {
     "id": "SaveKeys235",
-    "message": "These are your private keys.{br}Download the keys by clicking on the button\n              {br} or take a screenshot of this page, then confirm it and click here.",
+    "message": "These are your private keys. Download the keys by clicking on the button or take a screenshot of this page, then confirm it and click here.",
     "files": [
       "shared/components/SaveKeys/SaveKeys.js"
     ]
@@ -2554,6 +2554,13 @@
   {
     "id": "Areyousure",
     "message": "Are you sure ?",
+    "files": [
+      "shared/components/modals/SaveKeysModal/SaveKeysModal.js"
+    ]
+  },
+  {
+    "id": "SaveKeysModal_Title",
+    "message": "Private keys export",
     "files": [
       "shared/components/modals/SaveKeysModal/SaveKeysModal.js"
     ]
@@ -5965,7 +5972,14 @@
   },
   {
     "id": "SaveMnemonicModal_MnemoniceDeleted",
-    "message": "Secret phrase deleted",
+    "message": "You have already saved your 12-words seed. {href}",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "MnemoniceDeleted_hrefText",
+    "message": "Try export private key",
     "files": [
       "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
     ]

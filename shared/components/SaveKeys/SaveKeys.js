@@ -22,13 +22,12 @@ export default class SaveKeys extends Component {
         <div styleName="title" >
           <FormattedMessage
             id="SaveKeys235"
-            defaultMessage={`These are your private keys.{br}Download the keys by clicking on the button
-              {br}or take a screenshot of this page, then confirm it and click here.`}
+            defaultMessage={`These are your private keys.Download the keys by clicking on the button
+              or take a screenshot of this page, then confirm it and click here.`}
             values={{ br: <br /> }} />
-          <span styleName="linked" onClick={isChange}>
-            <FormattedMessage id="SaveKeys26" defaultMessage="I saved the keys in a safe place" />
-            <br />
-          </span>
+        </div>
+        <div styleName="linked" onClick={isChange}>
+          <FormattedMessage id="SaveKeys26" defaultMessage="I saved the keys in a safe place" />
         </div>
         <div styleName="row" >
           <Button brand onClick={isDownload} data-tip data-for="Download">

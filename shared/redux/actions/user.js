@@ -158,19 +158,18 @@ const getFiats = () => {
     axios.get(`https://noxon.wpmix.net/worldCurrencyPrices.php`).then(({ data }) => {
       const { quotes } = data
 
-      const fiatsRates = Object.keys(quotes).map(el => {
-        const key = el
-        return ({ key: key.slice(3), value: quotes[key] })
-      })
+      if (quotes) {
+        const fiatsRates = Object.keys(quotes).map(el => {
+          const key = el
+          return ({ key: key.slice(3), value: quotes[key] })
+        })
+        const fiats = fiatsRates.map(({ key }) => key)
 
-      const fiats = fiatsRates.map(({ key }) => key)
+        reducers.user.setFiats({ fiats })
 
-      reducers.user.setFiats({ fiats })
-
-      resolve({ fiatsRates, fiats })
-      // const fiats = 
+        resolve({ fiatsRates, fiats })
+      }
     }).catch(e => console.error(e))
-
   })
 
 }

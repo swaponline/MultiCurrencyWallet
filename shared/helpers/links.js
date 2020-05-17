@@ -13,6 +13,8 @@ const linksManager = {
 
   wallets: '/wallets',
   send: '/withdraw',
+  savePrivateSeed: '/savePrivateSeed',
+  savePrivateKeys: "/savePrivateKeys",
   currencyWallet: '/wallet',
   swap: '/swaps',
   feed: '/feed',
