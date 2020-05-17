@@ -147,7 +147,8 @@ export default class RestoryMnemonicWallet extends React.Component {
       await actions.user.sign_btc_2fa(btcPrivKey)
       await actions.user.sign_btc_multisig(btcPrivKey)
 
-      console.log({ finish: "THAT FUNC DONE" })
+      actions.core.markCoinAsVisible('BTC')
+
       this.setState({
         isFetching: false,
         step: `ready`,
