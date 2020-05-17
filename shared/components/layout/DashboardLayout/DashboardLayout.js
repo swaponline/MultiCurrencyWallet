@@ -102,10 +102,8 @@ const NewDesignLayout = (props) => {
 
   // Набор валют для виджета
   const widgetCurrencies = ['BTC']
-  if (!hiddenCoinsList.includes('BTC (SMS-Protected)'))
-  { widgetCurrencies.push('BTC (SMS-Protected)') }
-  if (!hiddenCoinsList.includes('BTC (Multisig)'))
-  { widgetCurrencies.push('BTC (Multisig)') }
+  if (!hiddenCoinsList.includes('BTC (SMS-Protected)')) { widgetCurrencies.push('BTC (SMS-Protected)') }
+  if (!hiddenCoinsList.includes('BTC (Multisig)')) { widgetCurrencies.push('BTC (Multisig)') }
   widgetCurrencies.push('ETH')
   if (isWidgetBuild) {
     if (
@@ -185,10 +183,7 @@ const NewDesignLayout = (props) => {
         <img className="cutomLogo" src={window.CUSTOM_LOGO} alt="logo" />
       )}
       <section
-        styleName={`${
-          isWidgetBuild && !config.isFullBuild ? 'wallet widgetBuild' : 'wallet'
-        // eslint-disable-next-line no-undef
-        } ${window.CUSTOM_LOGO ? 'hasCusomLogo' : ''}`}
+        styleName={`wallet ${window.CUSTOM_LOGO ? 'hasCusomLogo' : ''}`}
       >
         <Tabs onClick={handleNavItemClick} activeView={activeView} />
         <div
@@ -198,7 +193,7 @@ const NewDesignLayout = (props) => {
         >
           <div styleName="walletBalance">
 
-            { props.BalanceForm }
+            {props.BalanceForm}
 
             <div
               className={cx({

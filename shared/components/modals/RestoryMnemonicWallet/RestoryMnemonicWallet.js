@@ -68,7 +68,7 @@ const langLabels = defineMessages({
 @injectIntl
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
 export default class RestoryMnemonicWallet extends React.Component {
-  
+
   static propTypes = {
     name: PropTypes.string,
     data: PropTypes.object,
@@ -101,6 +101,7 @@ export default class RestoryMnemonicWallet extends React.Component {
 
   handleFinish = () => {
     this.handleClose()
+
     window.location.assign(links.hashHome)
   }
 
@@ -136,14 +137,17 @@ export default class RestoryMnemonicWallet extends React.Component {
         actions.backupManager.restory(restoryMark)
       }
 
-      const btcPrivKey = await actions.btc.login(false,mnemonic)
+      const btcPrivKey = await actions.btc.login(false, mnemonic)
       const btcSmsKey = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
       localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, btcSmsKey)
+      localStorage.setItem(constants.localStorage.isWalletCreate, true)
 
-      await actions.eth.login(false,mnemonic)
+      await actions.eth.login(false, mnemonic)
 
       await actions.user.sign_btc_2fa(btcPrivKey)
       await actions.user.sign_btc_multisig(btcPrivKey)
+
+      actions.core.markCoinAsVisible('BTC')
 
       this.setState({
         isFetching: false,
@@ -179,7 +183,7 @@ export default class RestoryMnemonicWallet extends React.Component {
             <Fragment>
               {(mnemonic && mnemonicIsInvalid) && (
                 <div styleName='rednotes mnemonicNotice'>
-                  <FormattedMessage { ...langLabels.mnemonicInvalid } />
+                  <FormattedMessage {...langLabels.mnemonicInvalid} />
                 </div>
               )}
               <div styleName="highLevel" className="ym-hide-content">
@@ -214,19 +218,19 @@ export default class RestoryMnemonicWallet extends React.Component {
                 />
               </div>
               <div styleName="buttonsHolder">
-                <Button 
-                  blue 
-                  disabled={(!mnemonic || isFetching)} 
+                <Button
+                  blue
+                  disabled={(!mnemonic || isFetching)}
                   onClick={this.handleRestoryWallet}
                 >
                   {isFetching ? (
-                    <FormattedMessage { ...langLabels.restoringWallet } />
+                    <FormattedMessage {...langLabels.restoringWallet} />
                   ) : (
-                    <FormattedMessage { ...langLabels.restoryWallet } />
-                  )}
+                      <FormattedMessage {...langLabels.restoryWallet} />
+                    )}
                 </Button>
                 <Button blue onClick={this.handleClose}>
-                  <FormattedMessage { ...langLabels.cancelRestory } />
+                  <FormattedMessage {...langLabels.cancelRestory} />
                 </Button>
               </div>
             </Fragment>
