@@ -14,6 +14,11 @@ export default {
     decimals: 2,
     fullName: 'EURS',
   },
+  xeur: {
+    address: '0xC31C61cf55fB5E646684AD8E8517793ec9A22c5e',
+    decimals: 0,
+    fullName: 'XEUR',
+  },
   usdt: {
     address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
     decimals: 6,
