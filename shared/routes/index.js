@@ -27,6 +27,8 @@ import Invoice from 'pages/Invoices/Invoice'
 import config from 'helpers/externalConfig'
 
 import ScrollToTop from '../components/layout/ScrollToTop/ScrollToTop'
+import SaveMnemonicModal from "components/modals/SaveMnemonicModal/SaveMnemonicModal"
+import SaveKeysModal from "components/modals/SaveKeysModal/SaveKeysModal"
 
 import { isMobile } from 'react-device-detect'
 
@@ -67,6 +69,9 @@ const routes = (
       <Route path={`${localisePrefix}${links.createInvoice}/:type/:wallet`} component={CreateInvoice} />
       {isMobile && (<Route path={`${localisePrefix}${links.invoices}/:type?/:address?`} component={InvoicesList} />)}
       <Route path={`${localisePrefix}${links.invoice}/:uniqhash?/:doshare?`} component={Invoice} />
+
+      <Route path={`${localisePrefix}${links.savePrivateSeed}`} component={SaveMnemonicModal} />
+      <Route path={`${localisePrefix}${links.savePrivateKeys}`} component={SaveKeysModal} />
 
       <Route path={`${localisePrefix}${links.ieo}`} component={IEO} />
       <Route exact path={`${localisePrefix}${links.notFound}`} component={NotFound} />

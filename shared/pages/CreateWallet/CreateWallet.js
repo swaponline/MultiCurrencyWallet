@@ -187,6 +187,7 @@ const CreateWallet = (props) => {
     goHome()
   }
 
+
   const handleRestoreMnemonic = () => {
     actions.modals.open(constants.modals.RestoryMnemonicWallet, { btcBalance, fiatBalance })
   }

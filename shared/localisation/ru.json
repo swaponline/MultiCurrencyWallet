@@ -2546,7 +2546,7 @@
   },
   {
     "id": "SaveKeys235",
-    "message": "Ваши приватные ключи.{br}Загрузите их, нажав на кнопку\n{br}или сделайте снимок экрана, затем подвердите действие.",
+    "message": "Ваши приватные ключи. Загрузите их, нажав на кнопку или сделайте снимок экрана, затем подвердите действие.",
     "files": [
       "shared/components/SaveKeys/SaveKeys.js"
     ]
@@ -2633,6 +2633,13 @@
   {
     "id": "Areyousure",
     "message": "Вы уверены ?",
+    "files": [
+      "shared/components/modals/SaveKeysModal/SaveKeysModal.js"
+    ]
+  },
+  {
+    "id": "SaveKeysModal_Title",
+    "message": "Экспорт приватных ключей",
     "files": [
       "shared/components/modals/SaveKeysModal/SaveKeysModal.js"
     ]
@@ -6007,7 +6014,14 @@
   },
   {
     "id": "SaveMnemonicModal_MnemoniceDeleted",
-    "message": "Секретная фраза удалена",
+    "message": "Вы уже сохранили секретную фразу. {href}.",
+    "files": [
+      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
+    ]
+  },
+  {
+    "id": "MnemoniceDeleted_hrefText",
+    "message": "Экспортируйте приватные ключи",
     "files": [
       "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
     ]
@@ -6063,7 +6077,7 @@
   },
   {
     "id": "SaveMnemonicModal_Title",
-    "message": "Ваща секретная фраза",
+    "message": "Ваша секретная фраза",
     "files": [
       "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
     ]
