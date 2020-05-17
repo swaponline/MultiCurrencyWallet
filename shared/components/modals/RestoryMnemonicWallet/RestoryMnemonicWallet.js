@@ -66,6 +66,22 @@ const langLabels = defineMessages({
 })
 
 @injectIntl
+@connect(({
+  user: {
+    btcData,
+    btcMultisigSMSData,
+    btcMultisigUserData,
+    ethData,
+  }
+}) => ({
+  allCurrensies: [
+    btcData,
+    btcData,
+    btcMultisigSMSData,
+    btcMultisigUserData,
+    ethData
+  ]
+}))
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
 export default class RestoryMnemonicWallet extends React.Component {
 
@@ -77,12 +93,40 @@ export default class RestoryMnemonicWallet extends React.Component {
   constructor(props) {
     super(props)
 
+    const { data } = props
+
     this.state = {
       step: `enter`,
       mnemonic: '',
       mnemonicIsInvalid: false,
       isFetching: false,
+      data: {
+        btcBalance: data ? data.btcBalance : 0,
+        usdBalance: data ? data.usdBalance : 0,
+        showCloseButton: data ? data.showCloseButton : true
+      }
     }
+  }
+
+  componentDidMount() {
+    this.fetchData()
+  }
+
+  fetchData = async () => {
+    const { allCurrensies } = this.props
+
+    const { btcBalance, usdBalance } = allCurrensies.reduce((acc, curr) => {
+      const { name, infoAboutCurrency, balance } = curr
+      if ((!isWidgetBuild || widgetCurrencies.includes(name)) && infoAboutCurrency && balance !== 0) {
+        acc.btcBalance += balance * infoAboutCurrency.price_btc
+        acc.usdBalance += balance * infoAboutCurrency.price_usd
+      }
+      return acc
+    }, { btcBalance: 0, usdBalance: 0 })
+
+    this.setState((data) => ({
+      data: { btcBalance, usdBalance, ...data }
+    }))
   }
 
   handleClose = () => {
@@ -92,8 +136,10 @@ export default class RestoryMnemonicWallet extends React.Component {
       onClose()
     }
 
-    if (typeof data.onClose === 'function') {
+    if (data && typeof data.onClose === 'function') {
       data.onClose()
+    } else {
+      window.location.assign(links.hashHome)
     }
 
     actions.modals.close(name)
@@ -160,11 +206,6 @@ export default class RestoryMnemonicWallet extends React.Component {
     const {
       name,
       intl,
-      data: {
-        showCloseButton,
-        btcBalance = 0,
-        usdBalance = 1,
-      },
     } = this.props
 
     const {
@@ -172,6 +213,12 @@ export default class RestoryMnemonicWallet extends React.Component {
       mnemonic,
       mnemonicIsInvalid,
       isFetching,
+
+      data: {
+        showCloseButton,
+        btcBalance = 0,
+        usdBalance = 1,
+      },
     } = this.state
 
     const linked = Link.all(this, 'mnemonic')
