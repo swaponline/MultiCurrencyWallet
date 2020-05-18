@@ -235,6 +235,7 @@
 }
 
 @media all and (max-width: 767px) {
+
   .yourBalance,
   .yourAssets {
     box-shadow: none;
@@ -286,12 +287,21 @@
 }
 
 @media all and (max-width: $media-mobile-end) {
+
+  .yourBalance,
+  .yourAssets {
+    margin: 20px 0 5px;
+  }
+
+  .yourBalanceBottom {
+    padding: 25px 25px 0;
+  }
+
   .widgetBuild .yourBalanceBottom {
     flex-wrap: wrap;
 
     button {
       width: 100%;
-      margin-bottom: 12px;
 
       &:nth-child(1),
       &:nth-child(2) {

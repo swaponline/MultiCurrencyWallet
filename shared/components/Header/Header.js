@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import cx from 'classnames'
 
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { isMobile } from "react-device-detect";
 import { connect } from "redaction";
 
@@ -378,7 +378,11 @@ export default class Header extends Component {
           <div styleName="flexebleHeader">
             {window.logoUrl !== '#' && (
               <div styleName="imgWrapper">
-                <img styleName="otherHeaderLogo" className="site-logo-header" src={window.logoUrl} alt="logo" />
+                <Link
+                  to={localisedUrl(locale, links.home)}
+                >
+                  <img styleName="otherHeaderLogo" onClick={this.handleGoHome} className="site-logo-header" src={window.logoUrl} alt="logo" />
+                </Link>
               </div>
             )}
             {isWidgetBuild && <WidgetHeader />}
