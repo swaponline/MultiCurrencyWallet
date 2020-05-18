@@ -646,7 +646,7 @@
     <script>
       window.prerenderReady = false;
       window.isUserRegisteredAndLoggedIn = false;
-      window.DEFAULT_FIAT = "CAD"
+      window.DEFAULT_FIAT = "USD"
     </script>
     <!-- /Loader before any JS -->
 
@@ -891,7 +891,7 @@
       var lastHash = currentHashArr.pop();
       swapOpenModal(lastHash);
 
-      window.logoUrl = "https://wallet.bitplicity.com/wp-content/uploads/2020/05/logo-transparent.png"; //no logo by default
+      window.logoUrl = "#"; //no logo by default
 
       if (
         window.location.hostname === "localhost" ||
