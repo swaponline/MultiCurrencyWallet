@@ -370,24 +370,24 @@ export default class Header extends Component {
     const isExchange = pathname.includes(exchange);
 
     const logoRenderer =
-      // window.location.hostname === "localhost" ||
-      //   window.location.hostname === "swaponline.github.io" ||
-      //   window.location.hostname === "swaponline.io" ? (
-      //     <LogoTooltip withLink isColored isExchange={isWalletPage} />
-      //   ) : (
-      <div styleName="flexebleHeader">
-        {window.logoUrl !== '#' && (
-          <div styleName="imgWrapper">
-            <Link
-              to={localisedUrl(locale, links.home)}
-            >
-              <img styleName="otherHeaderLogo" onClick={this.handleGoHome} className="site-logo-header" src={window.logoUrl} alt="logo" />
-            </Link>
+      window.location.hostname === "localhost" ||
+        window.location.hostname === "swaponline.github.io" ||
+        window.location.hostname === "swaponline.io" ? (
+          <LogoTooltip withLink isColored isExchange={isWalletPage} />
+        ) : (
+          <div styleName="flexebleHeader">
+            {window.logoUrl !== '#' && (
+              <div styleName="imgWrapper">
+                <Link
+                  to={localisedUrl(locale, links.home)}
+                >
+                  <img styleName="otherHeaderLogo" onClick={this.handleGoHome} className="site-logo-header" src={window.logoUrl} alt="logo" />
+                </Link>
+              </div>
+            )}
+            {isWidgetBuild && <WidgetHeader />}
           </div>
-        )}
-        {isWidgetBuild && <WidgetHeader />}
-      </div>
-    // )
+        )
 
     // if (config && config.isWidget && !config.isFullBuild) {
     //   return <>
