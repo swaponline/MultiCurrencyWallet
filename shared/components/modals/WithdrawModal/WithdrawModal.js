@@ -507,6 +507,7 @@ export default class WithdrawModal extends React.Component {
       isAssetsOpen,
       selectedValue,
       allCurrencyies,
+      usedAdminFee,
     } = this.state
 
     const {
@@ -851,13 +852,13 @@ export default class WithdrawModal extends React.Component {
             </Button>
           </div>
         </div>
-        {/* {usedAdminFee && isEthToken && (
+        {usedAdminFee && isEthToken && (
           <AdminFeeInfoBlock
             {...usedAdminFee}
             amount={amount}
             currency={currency}
           />
-        )} */}
+        )}
         {error && (
           <div styleName="rednote">
             <FormattedMessage
