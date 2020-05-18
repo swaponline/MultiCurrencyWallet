@@ -28,7 +28,6 @@ import { BigNumber } from 'bignumber.js'
 import dollar from '../images/dollar.svg'
 import PartOfAddress from '../components/PartOfAddress'
 
-
 const langLabels = defineMessages({
   unconfirmedBalance: {
     id: 'RowWallet181',
@@ -57,7 +56,7 @@ const langLabels = defineMessages({
     ethDataHelper: {
       address,
       privateKey,
-    }
+    },
   })
 )
 @cssModules(styles, { allowMultiple: true })
@@ -72,12 +71,12 @@ export default class Row extends Component {
     showButtons: false,
     exCurrencyRate: 0,
     existUnfinished: false,
-    isDropdownOpen: false
+    isDropdownOpen: false,
   }
 
   static getDerivedStateFromProps({ itemData: { balance } }) {
     return {
-      isBalanceEmpty: balance === 0
+      isBalanceEmpty: balance === 0,
     }
   }
 
@@ -95,7 +94,7 @@ export default class Row extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const {
-      itemData: { currency, balance }
+      itemData: { currency, balance },
     } = this.props
 
     if (balance > 0) {
@@ -111,11 +110,11 @@ export default class Row extends Component {
     }
 
     this.setState({
-      isBalanceFetching: true
+      isBalanceFetching: true,
     })
 
     const {
-      itemData: { currency, address }
+      itemData: { currency, address },
     } = this.props
 
     switch (currency) {
@@ -126,11 +125,14 @@ export default class Row extends Component {
         await actions.btcmultisig.getBalanceUser(address)
         break
       default:
-        await actions[currency.toLowerCase()].getBalance(currency.toLowerCase(), address)
+        await actions[currency.toLowerCase()].getBalance(
+          currency.toLowerCase(),
+          address
+        )
     }
 
     this.setState(() => ({
-      isBalanceFetching: false
+      isBalanceFetching: false,
     }))
   }
 
@@ -138,52 +140,54 @@ export default class Row extends Component {
     const getComparableProps = ({ itemData, index, selectId }) => ({
       itemData,
       index,
-      selectId
+      selectId,
     })
     return (
       JSON.stringify({
         ...getComparableProps(nextProps),
-        ...nextState
+        ...nextState,
       }) !==
       JSON.stringify({
         ...getComparableProps(this.props),
-        ...this.state
+        ...this.state,
       })
     )
   }
 
-  handleTouch = e => {
+  handleTouch = (e) => {
     this.setState({
-      isTouch: true
+      isTouch: true,
     })
   }
 
   handleSliceAddress = () => {
     const {
-      itemData: { address }
+      itemData: { address },
     } = this.props
 
     const firstPart = address.substr(0, 6)
     const secondPart = address.substr(address.length - 4)
 
-    return window.innerWidth < 700 || isMobile || address.length > 42 ? `${firstPart}...${secondPart}` : address
+    return window.innerWidth < 700 || isMobile || address.length > 42
+      ? `${firstPart}...${secondPart}`
+      : address
   }
 
-  handleTouchClear = e => {
+  handleTouchClear = (e) => {
     this.setState({
-      isTouch: false
+      isTouch: false,
     })
   }
 
   handleCopyAddress = () => {
     this.setState(
       {
-        isAddressCopied: true
+        isAddressCopied: true,
       },
       () => {
         setTimeout(() => {
           this.setState({
-            isAddressCopied: false
+            isAddressCopied: false,
           })
         }, 500)
       }
@@ -192,71 +196,105 @@ export default class Row extends Component {
 
   handleWithdraw = () => {
     const {
-      itemData: { currency },
-      itemData
+      itemData: { currency, address },
+      history,
+      intl: { locale },
     } = this.props
 
-    const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals
+    const {
+      Withdraw,
+      WithdrawMultisigSMS,
+      WithdrawMultisigUser,
+    } = constants.modals
 
     let withdrawModalType = Withdraw
-    if (currency === 'BTC (SMS-Protected)') withdrawModalType = WithdrawMultisigSMS
+    if (currency === 'BTC (SMS-Protected)')
+      withdrawModalType = WithdrawMultisigSMS
     if (currency === 'BTC (Multisig)') withdrawModalType = WithdrawMultisigUser
 
+    let targetCurrency = currency
+    switch (currency.toLowerCase()) {
+      case 'btc (multisig)':
+      case 'btc (sms-protected)':
+        targetCurrency = 'btc'
+        break
+    }
 
-    actions.modals.open(withdrawModalType, itemData)
+    const isToken = helpers.ethToken.isEthToken({ name: currency })
+
+    history.push(
+      localisedUrl(
+        locale,
+        (isToken ? '/token' : '') + `/${targetCurrency}/${address}/withdraw`
+      )
+    )
   }
 
   handleReceive = () => {
     const {
-      itemData: { currency, address }
+      itemData: { currency, address },
     } = this.props
 
     actions.modals.open(constants.modals.ReceiveModal, {
       currency,
-      address
+      address,
     })
   }
 
   handleShowOptions = () => {
     this.setState({
-      showMobileButtons: true
+      showMobileButtons: true,
     })
   }
 
-  handleGoTrade = currency => {
+  handleGoTrade = (currency) => {
     const {
       intl: { locale },
-      decline
+      decline,
     } = this.props
 
     const pair = currency.toLowerCase() === 'btc' ? 'eth' : 'btc'
 
     if (decline.length === 0) {
       window.scrollTo(0, 0)
-      this.props.history.push(localisedUrl(locale, `${links.exchange}/${currency.toLowerCase()}-to-${pair}`))
+      this.props.history.push(
+        localisedUrl(
+          locale,
+          `${links.exchange}/${currency.toLowerCase()}-to-${pair}`
+        )
+      )
     } else {
-      const getDeclinedExistedSwapIndex = helpers.handleGoTrade.getDeclinedExistedSwapIndex({ currency, decline })
+      const getDeclinedExistedSwapIndex = helpers.handleGoTrade.getDeclinedExistedSwapIndex(
+        { currency, decline }
+      )
       if (getDeclinedExistedSwapIndex !== false) {
         this.handleDeclineOrdersModalOpen(getDeclinedExistedSwapIndex)
       } else {
         window.scrollTo(0, 0)
-        this.props.history.push(localisedUrl(locale, `${links.exchange}/${currency.toLowerCase()}-to-${pair}`))
+        this.props.history.push(
+          localisedUrl(
+            locale,
+            `${links.exchange}/${currency.toLowerCase()}-to-${pair}`
+          )
+        )
       }
     }
   }
 
-  handleDeclineOrdersModalOpen = indexOfDecline => {
+  handleDeclineOrdersModalOpen = (indexOfDecline) => {
     const orders = SwapApp.shared().services.orders.items
-    const declineSwap = actions.core.getSwapById(this.props.decline[indexOfDecline])
+    const declineSwap = actions.core.getSwapById(
+      this.props.decline[indexOfDecline]
+    )
 
     if (declineSwap !== undefined) {
       actions.modals.open(constants.modals.DeclineOrdersModal, {
-        declineSwap
+        declineSwap,
       })
     }
   }
 
-  handleMarkCoinAsHidden = coin => {
+  handleMarkCoinAsHidden = (coin) => {
     actions.core.markCoinAsHidden(coin)
   }
 
@@ -270,19 +308,19 @@ export default class Row extends Component {
 
   showButtons = () => {
     this.setState(() => ({
-      showButtons: true
+      showButtons: true,
     }))
   }
 
   hideButtons = () => {
     this.setState(() => ({
-      showButtons: false
+      showButtons: false,
     }))
   }
 
   handleHowToWithdraw = () => {
     const {
-      itemData: { currency, address }
+      itemData: { currency, address },
     } = this.props
 
     actions.modals.open(constants.modals.HowToWithdrawModal, {
@@ -293,18 +331,18 @@ export default class Row extends Component {
 
   handleOpenDropdown = () => {
     this.setState({
-      isDropdownOpen: true
+      isDropdownOpen: true,
     })
   }
 
   handleCreateInvoiceLink = () => {
     const {
-      itemData: { currency, address }
+      itemData: { currency, address },
     } = this.props
 
     actions.modals.open(constants.modals.InvoiceLinkModal, {
       currency,
-      address
+      address,
     })
   }
 
@@ -314,7 +352,15 @@ export default class Row extends Component {
 
   handleCreateInvoice = () => {
     const {
-      itemData: { decimals, token, contractAddress, unconfirmedBalance, currency, address, balance }
+      itemData: {
+        decimals,
+        token,
+        contractAddress,
+        unconfirmedBalance,
+        currency,
+        address,
+        balance,
+      },
     } = this.props
 
     actions.modals.open(constants.modals.InvoiceModal, {
@@ -324,14 +370,14 @@ export default class Row extends Component {
       decimals,
       token,
       balance,
-      unconfirmedBalance
+      unconfirmedBalance,
     })
   }
 
   goToHistory = () => {
     const {
       history,
-      intl: { locale }
+      intl: { locale },
     } = this.props
     history.push(localisedUrl(locale, '/history'))
   }
@@ -339,7 +385,7 @@ export default class Row extends Component {
   goToExchange = () => {
     const {
       history,
-      intl: { locale }
+      intl: { locale },
     } = this.props
     history.push(localisedUrl(locale, '/exchange'))
   }
@@ -348,9 +394,14 @@ export default class Row extends Component {
     const {
       history,
       intl: { locale },
-      currency
+      currency,
     } = this.props
-    history.push(localisedUrl(locale, `${links.pointOfSell}/btc-to-${currency.currency.toLowerCase()}`))
+    history.push(
+      localisedUrl(
+        locale,
+        `${links.pointOfSell}/btc-to-${currency.currency.toLowerCase()}`
+      )
+    )
   }
 
   deleteThisSwap = () => {
@@ -361,7 +412,7 @@ export default class Row extends Component {
     const {
       history,
       intl: { locale },
-      itemData: { currency, balance }
+      itemData: { currency, balance },
     } = this.props
     history.push(localisedUrl(locale, `/${currency.toLowerCase()}-btc`))
   }
@@ -370,7 +421,7 @@ export default class Row extends Component {
     const {
       history,
       intl: { locale },
-      itemData: { currency, balance, address }
+      itemData: { currency, balance, address },
     } = this.props
 
     let targetCurrency = currency
@@ -378,17 +429,22 @@ export default class Row extends Component {
       case 'btc (multisig)':
       case 'btc (sms-protected)':
         targetCurrency = 'btc'
-        break;
+        break
     }
 
     const isToken = helpers.ethToken.isEthToken({ name: currency })
 
-    history.push(localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${address}`))
+    history.push(
+      localisedUrl(
+        locale,
+        (isToken ? '/token' : '') + `/${targetCurrency}/${address}`
+      )
+    )
   }
 
   hideCurrency = () => {
     const {
-      itemData: { currency, address, balance }
+      itemData: { currency, address, balance },
     } = this.props
 
     if (balance > 0) {
@@ -398,19 +454,24 @@ export default class Row extends Component {
             id="WalletRow_Action_HideNonZero_Message"
             defaultMessage="У этого кошелка положительный баланс. Его скрыть нельзя."
           />
-        )
+        ),
       })
     } else {
       actions.core.markCoinAsHidden(`${currency}:${address}`)
       actions.notifications.show(constants.notifications.Message, {
-        message: <FormattedMessage id="WalletRow_Action_Hidden" defaultMessage="Кошелек скрыт" />
+        message: (
+          <FormattedMessage
+            id="WalletRow_Action_Hidden"
+            defaultMessage="Кошелек скрыт"
+          />
+        ),
       })
     }
   }
 
   copy = () => {
     const {
-      itemData: { address }
+      itemData: { address },
     } = this.props
     navigator.clipboard.writeText(address)
   }
@@ -418,12 +479,10 @@ export default class Row extends Component {
   copyPrivateKey = () => {
     const {
       itemData: { address, privateKey },
-      ethDataHelper
+      ethDataHelper,
     } = this.props
     navigator.clipboard.writeText(
-      address === ethDataHelper.address
-        ? ethDataHelper.privateKey
-        : privateKey
+      address === ethDataHelper.address ? ethDataHelper.privateKey : privateKey
     )
   }
 
@@ -446,7 +505,7 @@ export default class Row extends Component {
       isBalanceEmpty,
       showButtons,
       exCurrencyRate,
-      isDropdownOpen
+      isDropdownOpen,
     } = this.state
 
     const {
@@ -455,7 +514,15 @@ export default class Row extends Component {
       intl,
     } = this.props
 
-    const { currency, balance, isBalanceFetched, fullName, title, unconfirmedBalance, balanceError } = itemData
+    const {
+      currency,
+      balance,
+      isBalanceFetched,
+      fullName,
+      title,
+      unconfirmedBalance,
+      balanceError,
+    } = itemData
 
     let currencyView = currency
 
@@ -474,70 +541,112 @@ export default class Row extends Component {
     }
 
     let hasHowToWithdraw = false
-    if (config
-      && config.erc20
-      && config.erc20[this.props.currency.currency.toLowerCase()]
-      && config.erc20[this.props.currency.currency.toLowerCase()].howToWithdraw
-    ) hasHowToWithdraw = true
+    if (
+      config &&
+      config.erc20 &&
+      config.erc20[this.props.currency.currency.toLowerCase()] &&
+      config.erc20[this.props.currency.currency.toLowerCase()].howToWithdraw
+    )
+      hasHowToWithdraw = true
 
-    const isSafari = ('safari' in window)
+    const isSafari = 'safari' in window
 
     let dropDownMenuItems = [
       {
         id: 1001,
-        title: <FormattedMessage id="WalletRow_Menu_Deposit" defaultMessage="Deposit" />,
+        title: (
+          <FormattedMessage
+            id="WalletRow_Menu_Deposit"
+            defaultMessage="Deposit"
+          />
+        ),
         action: this.handleReceive,
-        disabled: false
+        disabled: false,
       },
-      ...(hasHowToWithdraw) ? [{
-        id: 10021,
-        title: <FormattedMessage id="WalletRow_Menu_HowToWithdraw" defaultMessage="How to withdraw" />,
-        action: this.handleHowToWithdraw,
-      }] : [],
+      ...(hasHowToWithdraw
+        ? [
+            {
+              id: 10021,
+              title: (
+                <FormattedMessage
+                  id="WalletRow_Menu_HowToWithdraw"
+                  defaultMessage="How to withdraw"
+                />
+              ),
+              action: this.handleHowToWithdraw,
+            },
+          ]
+        : []),
       {
         id: 1002,
-        title: <FormattedMessage id="WalletRow_Menu_Send" defaultMessage="Send" />,
+        title: (
+          <FormattedMessage id="WalletRow_Menu_Send" defaultMessage="Send" />
+        ),
         action: this.handleWithdraw,
-        disabled: isBalanceEmpty
+        disabled: isBalanceEmpty,
       },
       {
         id: 1004,
-        title: <FormattedMessage id="WalletRow_Menu_Exchange" defaultMessage="Exchange" />,
+        title: (
+          <FormattedMessage
+            id="WalletRow_Menu_Exchange"
+            defaultMessage="Exchange"
+          />
+        ),
         action: this.goToExchange,
-        disabled: false
+        disabled: false,
       },
       {
         id: 1005,
-        title: <FormattedMessage id="WalletRow_Menu_Buy" defaultMessage="Buy" />,
+        title: (
+          <FormattedMessage id="WalletRow_Menu_Buy" defaultMessage="Buy" />
+        ),
         action: this.goToBuy,
         disabled: false,
-        hidden: this.props.currency.currency === 'BTC' ? true : false
+        hidden: this.props.currency.currency === 'BTC' ? true : false,
       },
       {
         id: 1003,
-        title: <FormattedMessage id="WalletRow_Menu_History" defaultMessage="History" />,
+        title: (
+          <FormattedMessage
+            id="WalletRow_Menu_History"
+            defaultMessage="History"
+          />
+        ),
         action: this.goToHistory,
-        disabled: false
+        disabled: false,
       },
       !isSafari && {
         id: 1012,
-        title: <FormattedMessage id="WalletRow_Menu_Сopy" defaultMessage="Copy address" />,
+        title: (
+          <FormattedMessage
+            id="WalletRow_Menu_Сopy"
+            defaultMessage="Copy address"
+          />
+        ),
         action: this.copy,
-        disabled: false
+        disabled: false,
       },
       {
         id: 1012,
-        title: <FormattedMessage id="WalletRow_Menu_Сopy_PrivateKey" defaultMessage="Copy Private Key" />,
+        title: (
+          <FormattedMessage
+            id="WalletRow_Menu_Сopy_PrivateKey"
+            defaultMessage="Copy Private Key"
+          />
+        ),
         action: this.copyPrivateKey,
-        disabled: false
+        disabled: false,
       },
-    ].filter(el => el)
+    ].filter((el) => el)
 
     dropDownMenuItems.push({
       id: 1011,
-      title: <FormattedMessage id="WalletRow_Menu_Hide" defaultMessage="Hide" />,
+      title: (
+        <FormattedMessage id="WalletRow_Menu_Hide" defaultMessage="Hide" />
+      ),
       action: this.hideCurrency,
-      disabled: false
+      disabled: false,
     })
 
     if (currencyView == 'BTC (Multisig)') currencyView = 'BTC'
@@ -546,44 +655,71 @@ export default class Row extends Component {
     if (currencyView !== 'BTC') {
       dropDownMenuItems.push({
         id: 1005,
-        title: <FormattedMessage id="WalletRow_Menu_Orderbook" defaultMessage="Orderbook" />,
-        action: this.goToOrderBook
+        title: (
+          <FormattedMessage
+            id="WalletRow_Menu_Orderbook"
+            defaultMessage="Orderbook"
+          />
+        ),
+        action: this.goToOrderBook,
       })
     }
 
-    if (['BTC', 'ETH'].includes(currencyView) && !isWidgetBuild && config.opts.invoiceEnabled) {
+    if (
+      ['BTC', 'ETH'].includes(currencyView) &&
+      !isWidgetBuild &&
+      config.opts.invoiceEnabled
+    ) {
       dropDownMenuItems.push({
         id: 1004,
-        title: <FormattedMessage id="WalletRow_Menu_Invoice" defaultMessage="Выставить счет" />,
+        title: (
+          <FormattedMessage
+            id="WalletRow_Menu_Invoice"
+            defaultMessage="Выставить счет"
+          />
+        ),
         action: this.handleCreateInvoice,
-        disable: false
+        disable: false,
       })
       dropDownMenuItems.push({
         id: 1005,
         title: (
-          <FormattedMessage id="WalletRow_Menu_InvoiceLink" defaultMessage="Получить ссылку для выставления счета" />
+          <FormattedMessage
+            id="WalletRow_Menu_InvoiceLink"
+            defaultMessage="Получить ссылку для выставления счета"
+          />
         ),
         action: this.handleCreateInvoiceLink,
-        disable: false
+        disable: false,
       })
     }
 
-    if (this.props.itemData.isSmsProtected && !this.props.itemData.isRegistered) {
+    if (
+      this.props.itemData.isSmsProtected &&
+      !this.props.itemData.isRegistered
+    ) {
       currencyView = 'Not activated'
       nodeDownErrorShow = false
       dropDownMenuItems = [
         {
           id: 1,
-          title: <FormattedMessage id="WalletRow_Menu_ActivateSMSProtected" defaultMessage="Activate" />,
+          title: (
+            <FormattedMessage
+              id="WalletRow_Menu_ActivateSMSProtected"
+              defaultMessage="Activate"
+            />
+          ),
           action: this.handleActivateProtected,
-          disabled: false
+          disabled: false,
         },
         {
           id: 1011,
-          title: <FormattedMessage id="WalletRow_Menu_Hide" defaultMessage="Hide" />,
+          title: (
+            <FormattedMessage id="WalletRow_Menu_Hide" defaultMessage="Hide" />
+          ),
           action: this.hideCurrency,
-          disabled: false
-        }
+          disabled: false,
+        },
       ]
     }
     if (this.props.itemData.isUserProtected) {
@@ -594,23 +730,35 @@ export default class Row extends Component {
       } else {
         dropDownMenuItems.push({
           id: 1105,
-          title: <FormattedMessage id="WalletRow_Menu_BTCMS_SwitchMenu" defaultMessage="Switch wallet" />,
+          title: (
+            <FormattedMessage
+              id="WalletRow_Menu_BTCMS_SwitchMenu"
+              defaultMessage="Switch wallet"
+            />
+          ),
           action: this.handleSwitchMultisign,
-          disabled: false
+          disabled: false,
         })
       }
       dropDownMenuItems.push({
         id: 3,
-        title: <FormattedMessage id="WalletRow_Menu_BTCMS_GenerateJoinLink" defaultMessage="Generate join link" />,
+        title: (
+          <FormattedMessage
+            id="WalletRow_Menu_BTCMS_GenerateJoinLink"
+            defaultMessage="Generate join link"
+          />
+        ),
         action: this.handleGenerateMultisignLink,
-        disabled: false
+        disabled: false,
       })
       if (!this.props.itemData.active) {
         dropDownMenuItems.push({
           id: 1011,
-          title: <FormattedMessage id="WalletRow_Menu_Hide" defaultMessage="Hide" />,
+          title: (
+            <FormattedMessage id="WalletRow_Menu_Hide" defaultMessage="Hide" />
+          ),
           action: this.hideCurrency,
-          disabled: false
+          disabled: false,
         })
       }
     }
@@ -619,7 +767,10 @@ export default class Row extends Component {
       <tr>
         <td styleName="assetsTableRow">
           <div styleName="assetsTableCurrency">
-            <a onClick={this.goToCurrencyHistory} title={`Online ${fullName} wallet`}>
+            <a
+              onClick={this.goToCurrencyHistory}
+              title={`Online ${fullName} wallet`}
+            >
               <Coin className={styles.assetsTableIcon} name={currency} />
             </a>
             {balanceError && nodeDownErrorShow ? (
@@ -629,61 +780,83 @@ export default class Row extends Component {
                   defaultMessage=" node is down (You can not perform transactions). "
                 />
                 <a href="https://wiki.swaponline.io/faq/bitcoin-node-is-down-you-cannot-make-transactions/">
-                  <FormattedMessage id="RowWallet282" defaultMessage="No connection..." />
+                  <FormattedMessage
+                    id="RowWallet282"
+                    defaultMessage="No connection..."
+                  />
                 </a>
               </div>
             ) : (
-                ''
-              )}
+              ''
+            )}
             <span styleName="assetsTableCurrencyWrapper">
               {!isBalanceFetched || isBalanceFetching ? (
-                this.props.itemData.isUserProtected && !this.props.itemData.active ? (
+                this.props.itemData.isUserProtected &&
+                !this.props.itemData.active ? (
                   <span>
-                    <FormattedMessage id="walletMultisignNotJoined" defaultMessage="Not joined" />
+                    <FormattedMessage
+                      id="walletMultisignNotJoined"
+                      defaultMessage="Not joined"
+                    />
                   </span>
                 ) : (
-                    <div styleName="loader">{!(balanceError && nodeDownErrorShow) && <InlineLoader />}</div>
-                  )
+                  <div styleName="loader">
+                    {!(balanceError && nodeDownErrorShow) && <InlineLoader />}
+                  </div>
+                )
               ) : (
-                  <div styleName="no-select-inline" onClick={this.handleReloadBalance}>
-                    <i className="fas fa-sync-alt" styleName="icon" />
-                    <span>
-                      {balanceError
-                        ? '?'
-                        : BigNumber(balance)
+                <div
+                  styleName="no-select-inline"
+                  onClick={this.handleReloadBalance}
+                >
+                  <i className="fas fa-sync-alt" styleName="icon" />
+                  <span>
+                    {balanceError
+                      ? '?'
+                      : BigNumber(balance)
                           .dp(5, BigNumber.ROUND_FLOOR)
                           .toString()}{' '}
-                    </span>
-                    <span styleName="assetsTableCurrencyBalance">{currencyView}</span>
-                    {unconfirmedBalance !== 0 && (
-                      <Fragment>
-                        <br />
-                        <span styleName="unconfirmedBalance" title={intl.formatMessage(langLabels.unconfirmedBalance)}>
-                          {unconfirmedBalance > 0 && (<>{'+'}</>)}
-                          {unconfirmedBalance}
-                          {' '}
-                        </span>
-                      </Fragment>
-                    )}
-                  </div>
-                )}
+                  </span>
+                  <span styleName="assetsTableCurrencyBalance">
+                    {currencyView}
+                  </span>
+                  {unconfirmedBalance !== 0 && (
+                    <Fragment>
+                      <br />
+                      <span
+                        styleName="unconfirmedBalance"
+                        title={intl.formatMessage(
+                          langLabels.unconfirmedBalance
+                        )}
+                      >
+                        {unconfirmedBalance > 0 && <>{'+'}</>}
+                        {unconfirmedBalance}{' '}
+                      </span>
+                    </Fragment>
+                  )}
+                </div>
+              )}
             </span>
             {itemData.address !== 'Not jointed' ? (
-              <p styleName="addressStyle" >
-                {itemData.address}
-              </p>
+              <p styleName="addressStyle">{itemData.address}</p>
             ) : (
-                ''
-              )}
-            {isMobile ? <PartOfAddress {...itemData} onClick={this.goToCurrencyHistory} /> : ''}
+              ''
+            )}
+            {isMobile ? (
+              <PartOfAddress {...itemData} onClick={this.goToCurrencyHistory} />
+            ) : (
+              ''
+            )}
             <div styleName="assetsTableInfo">
               <div styleName="nameRow">
-                <a onClick={this.goToCurrencyHistory} title={`Online ${fullName} wallet`}>
+                <a
+                  onClick={this.goToCurrencyHistory}
+                  title={`Online ${fullName} wallet`}
+                >
                   {fullName}
                 </a>
               </div>
               {title ? <strong>{title}</strong> : ''}
-
             </div>
 
             {currencyFiatBalance && !balanceError ? (
@@ -694,11 +867,15 @@ export default class Row extends Component {
                 {/* {inneedData && <span>   {`${inneedData.change} %`} </span>} */}
               </div>
             ) : (
-                ''
-              )}
+              ''
+            )}
           </div>
           <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">
-            <DropdownMenu size="regular" className="walletControls" items={dropDownMenuItems} />
+            <DropdownMenu
+              size="regular"
+              className="walletControls"
+              items={dropDownMenuItems}
+            />
           </div>
         </td>
       </tr>

@@ -12,12 +12,12 @@ export const open = (state, { name, data = {} }) => ({
   },
 })
 
-export const closeAll = (state) => { return {} }
+export const closeAll = (state) => ({})
 
 export const close = (state, name) => {
   const { [name]: closingModal, ...otherModals } = state
 
-  zIndex -= 1
+  // zIndex -= 1
 
   return otherModals
 }

@@ -245,8 +245,6 @@
 @include media-mobile {
   .selectedItem {
     width: 100%;
-    font-size: 17px;
-    line-height: 50px;
   }
   .range {
     font-size: 15px;
@@ -259,11 +257,6 @@
   .fullTitle {
     font-size: 14px;
   }
-  .dropDown .arrowDropDown {
-    right: 15px;
-    top: 25px;
-  }
-
   .dontscroll {
     max-height: auto;
     overflow-y: hidden;

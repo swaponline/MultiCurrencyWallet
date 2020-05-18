@@ -3,7 +3,7 @@
   padding: 0 10px 0 10px;
   background-color: white;
   text-align: left;
-  font-family: "Roboto Mono", monospace;
+  font-family: 'Roboto Mono', monospace;
   font-size: 13px;
   z-index: 1;
   color: #8e9aa3;
@@ -40,7 +40,7 @@
   padding: 0 10px 0 10px;
   background-color: white;
   text-align: left;
-  font-family: "Roboto Mono", monospace;
+  font-family: 'Roboto Mono', monospace;
   font-size: 13px;
   z-index: 1;
   color: #8e9aa3;
@@ -49,7 +49,7 @@
 .notice {
   line-height: 140%;
   color: #8e9aa3;
-  font-family: "Manrope-Medium", sans-serif;
+  font-family: 'Manrope-Medium', sans-serif;
   width: 78%;
   text-align: center;
   margin: auto;
@@ -122,7 +122,6 @@
   text-align: left;
 }
 
-
 @include media-mobile {
   .button {
     height: 100%;
@@ -141,4 +140,123 @@
   position: absolute;
   left: 97%;
   top: 9px;
+}
+
+.customSelectContainer {
+  position: relative;
+}
+
+.customSelectValue {
+  border: 1px solid #ccc;
+  height: 68px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  div {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    a {
+      font-size: 13px;
+      color: #6144e5;
+      &:hover {
+        color: #6144e5;
+      }
+    }
+    .address {
+      color: #8e9aa3;
+      font-size: 12px;
+      @include media-mobile {
+        display: none;
+      }
+    }
+    .mobileAddress {
+      color: #8e9aa3;
+      font-size: 12px;
+      > div {
+        margin: 0;
+      }
+    }
+  }
+}
+
+.currencySelectContainer {
+  right: 85px;
+  z-index: 1;
+  position: absolute;
+  @include media-mobile {
+    right: 55px;
+  }
+}
+
+
+.coin {
+  position: relative;
+  z-index: 1111111;
+}
+
+.customSelectList {
+  margin-top: 20px;
+  position: absolute;
+  z-index: 1111111;
+  width: 100%;
+}
+
+.customSelectListItem {
+  margin-top: -1px;
+  &:hover {
+    background: rgb(251, 251, 251);
+  }
+}
+
+.customSelectArrow {
+  position: absolute;
+  right: 25px;
+  &:before {
+    content: '';
+    width: 9px;
+    height: 9px;
+    display: block;
+    border-top: 2px solid #828795;
+    border-right: 2px solid #828795;
+    -webkit-transform: rotate(135deg);
+    transform: rotate(135deg);
+  }
+}
+
+.customSelectArrow.active {
+  &:before {
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+  }
+}
+
+.customSelectListItem.disabled {
+  position: relative;
+  pointer-events: none;
+  &:before {
+    position: absolute;
+    content: '';
+    background: rgba(255, 255, 255, 0.8);
+    width: 100%;
+    height: 100%;
+    z-index: 1111;
+  }
+}
+
+.amount {
+  position: absolute;
+  text-align: right;
+  right: 60px;
+  font-size: 13px;
+  @include media-mobile {
+    right: 50px;
+  }
+  .currency {
+    color: #1f2d48;
+  }
+  .usd {
+    color: #8e9aa3;
+  }
 }
