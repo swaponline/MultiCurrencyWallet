@@ -929,7 +929,7 @@ export default class PartialClosure extends Component {
   addressIsCorrect() {
     const { customWallet, getCurrency } = this.state;
 
-    return isCoinAddress[getCurrency.toUpperCase()](customWallet);
+    return util.typeforce.isCoinAddress[getCurrency.toUpperCase()](customWallet);
   }
 
   getCorrectDecline = () => {

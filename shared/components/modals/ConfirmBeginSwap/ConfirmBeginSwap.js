@@ -15,7 +15,7 @@ import { Button, Toggle } from 'components/controls'
 import { FieldLabel, Input } from 'components/forms'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
-import { isCoinAddress } from 'swap.app/util/typeforce'
+import typeforce from 'swap.app/util/typeforce'
 
 import config from 'app-config'
 
@@ -74,11 +74,11 @@ export default class ConfirmBeginSwap extends React.Component {
     const { sellCurrency } = this.props.data.order
 
     if (customWalletUse) {
-      if (!isCoinAddress[sellCurrency]) {
+      if (!typeforce.isCoinAddress[sellCurrency]) {
         console.warn(`Swap.Core unkrown isCoinAddress check for ${sellCurrency}`)
         return true
       }
-      return isCoinAddress[sellCurrency](customWallet)
+      return typeforce.isCoinAddress[sellCurrency](customWallet)
     } else return true
   }
 
