@@ -19,15 +19,14 @@ import SwapsHistory from 'pages/History/SwapsHistory/SwapsHistory'
 import Table from 'components/tables/Table/Table'
 import PageSeo from 'components/Seo/PageSeo'
 import { getSeoPage } from 'helpers/seo'
-import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
+import { injectIntl, defineMessages } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import config from 'app-config'
-import BalanceForm from 'pages/Wallet/components/BalanceForm/BalanceForm'
+import BalanceForm from 'components/BalanceForm/BalanceForm'
 import { BigNumber } from 'bignumber.js'
 import ContentLoader from 'components/loaders/ContentLoader/ContentLoader'
-import Tabs from "components/Tabs/Tabs"
 import FilterForm from "components/FilterForm/FilterForm"
-import { ModalConductorProvider } from 'components/modal'
+import DashboardLayout from 'components/layout/DashboardLayout/DashboardLayout'
 
 import getCurrencyKey from 'helpers/getCurrencyKey'
 
@@ -77,6 +76,7 @@ export default class CurrencyWallet extends Component {
           fullName = null,
           ticker = null,
           address = null,
+          action = null,
         },
       },
       intl: {
@@ -190,6 +190,13 @@ export default class CurrencyWallet extends Component {
         token: ethToken.isEthToken({ name: ticker }),
 
       }
+
+      if (action === 'receive') {
+        actions.modals.open(constants.modals.ReceiveModal, {
+          currency,
+          address
+        })
+      }
     }
   }
 
@@ -201,6 +208,8 @@ export default class CurrencyWallet extends Component {
       isRedirecting,
       redirectUrl,
     } = this.state
+
+    this.getFiats()
 
     if (isRedirecting) {
       const { history, intl: { locale } } = this.props
@@ -241,6 +250,17 @@ export default class CurrencyWallet extends Component {
   componentDidUpdate(prevProps) {
     const { currency } = this.state
 
+    const {
+      activeFiat,
+    } = this.props
+    const {
+      activeFiat: prevFiat,
+    } = prevProps
+
+    if (activeFiat !== prevFiat) {
+      this.getFiats()
+    }
+
     let {
       match: {
         params: {
@@ -259,7 +279,6 @@ export default class CurrencyWallet extends Component {
     if (prevAddress !== address) {
       address ? actions.history.setTransactions(address, currency.toLowerCase(), this.pullTransactions) : actions.user.setTransactions()
     }
-
   }
 
   getRows = (txHistory) => {
@@ -309,7 +328,6 @@ export default class CurrencyWallet extends Component {
   }
 
   handleWithdraw = () => {
-
     const {
       currency,
       address,
@@ -383,8 +401,6 @@ export default class CurrencyWallet extends Component {
   }
 
   resetFilter = () => {
-
-
     this.loading()
     const { address, currency } = this.state
     this.setState(() => ({ filterValue: address }))
@@ -396,7 +412,7 @@ export default class CurrencyWallet extends Component {
     const { fiatsRates } = await actions.user.getFiats()
 
     const fiatRate = fiatsRates.find(({ key }) => key === activeFiat)
-    return fiatRate.value
+    this.setState(() => ({ multiplier: fiatRate.value }))
   }
 
 
@@ -411,7 +427,8 @@ export default class CurrencyWallet extends Component {
       isRedirecting,
       txItems,
       filterValue,
-      isLoading
+      isLoading,
+      multiplier,
     } = this.state
 
     const currencyKey = getCurrencyKey(currency, true)
@@ -419,7 +436,6 @@ export default class CurrencyWallet extends Component {
     if (isRedirecting) return null
 
     txHistory = txItems || txHistory
-
 
     if (txHistory) {
       txHistory = txHistory
@@ -465,17 +481,8 @@ export default class CurrencyWallet extends Component {
       actions.core.markCoinAsVisible(currency)
     }
 
-    /** 27.02.2020 не знаю что это такое, но оно не используется, и ломает мне код
-     * пока закоментил - через месяц можно удалять
-    const isBlockedCoin = config.noExchangeCoins
-      .map(item => item.toLowerCase())
-      .includes(currency.toLowerCase())
-       */
-
     let currencyFiatBalance;
     let changePercent;
-
-    const multiplier = this.getFiats()
 
     if (infoAboutCurrency && multiplier) {
       currencyFiatBalance = BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * infoAboutCurrency.price_usd * multiplier;
@@ -506,55 +513,51 @@ export default class CurrencyWallet extends Component {
           handleNotifyBlockClose={this.handleNotifyBlockClose}
           {...this.state}
         />
-        <Tabs activeView={1} />
-        <Fragment>
-          <div styleName="currencyWalletWrapper">
-            <div styleName="currencyWalletBalance">
-              {
-                txHistory ?
-                  <BalanceForm
-                    currencyBalance={balance}
-                    fiatBalance={currencyFiatBalance}
-                    changePercent={changePercent}
-                    address={address}
-                    handleReceive={this.handleReceive}
-                    handleWithdraw={this.handleWithdraw}
-                    handleExchange={this.handleGoTrade}
-                    handleInvoice={this.handleInvoice}
-                    showButtons={actions.user.isOwner(address, currency)}
-                    currency={currency.toLowerCase()}
-                  /> : <ContentLoader leftSideContent />
-              }
-            </div>
-            <div styleName="currencyWalletActivityWrapper">
-              <ModalConductorProvider>
-                <div styleName="currencyWalletActivity">
-                  <FilterForm filterValue={filterValue} onSubmit={this.handleFilter} onChange={this.handleFilterChange} resetFilter={this.resetFilter} />
-                  {txHistory && !isLoading && (
-                    txHistory.length > 0 ? (
-                      <Table rows={txHistory} styleName="currencyHistory" rowRender={this.rowRender} />
-                    ) :
-                      <div styleName="historyContent">
-                        <ContentLoader rideSideContent empty nonHeader inner />
-                      </div>
-                  )
-                  }
-                  {(!txHistory || isLoading) && (
-                    <div styleName="historyContent">
-                      <ContentLoader rideSideContent nonHeader />
-                    </div>
-                  )}
+
+        <DashboardLayout
+          page="history"
+          BalanceForm={
+            txHistory ?
+              <BalanceForm
+                currencyBalance={balance}
+                fiatBalance={currencyFiatBalance}
+                changePercent={changePercent}
+                address={address}
+                handleReceive={this.handleReceive}
+                handleWithdraw={this.handleWithdraw}
+                handleExchange={this.handleGoTrade}
+                handleInvoice={this.handleInvoice}
+                showButtons={actions.user.isOwner(address, currency)}
+                currency={currency.toLowerCase()}
+              /> : <ContentLoader leftSideContent />
+          }
+        >
+          <div styleName="currencyWalletActivity">
+            <FilterForm filterValue={filterValue} onSubmit={this.handleFilter} onChange={this.handleFilterChange} resetFilter={this.resetFilter} />
+            {txHistory && !isLoading && (
+              txHistory.length > 0 ? (
+                <Table rows={txHistory} styleName="currencyHistory" rowRender={this.rowRender} />
+              ) :
+                <div styleName="historyContent">
+                  <ContentLoader rideSideContent empty nonHeader inner />
                 </div>
-              </ModalConductorProvider>
-              {(!actions.btcmultisig.isBTCSMSAddress(`${address}`) && !actions.btcmultisig.isBTCMSUserAddress(`${address}`)) && (
-                swapHistory.filter(item => item.step >= 4).length > 0 ? (
-                  <div styleName="currencyWalletSwapHistory">
-                    <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} />
-                  </div>
-                ) : ''
-              )}
-            </div>
+            )
+            }
+            {(!txHistory || isLoading) && (
+              <div styleName="historyContent">
+                <ContentLoader rideSideContent nonHeader />
+              </div>
+            )}
           </div>
+          {(!actions.btcmultisig.isBTCSMSAddress(`${address}`) && !actions.btcmultisig.isBTCMSUserAddress(`${address}`)) && (
+            swapHistory.filter(item => item.step >= 4).length > 0 ? (
+              <div styleName="currencyWalletSwapHistory">
+                <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} />
+              </div>
+            ) : ''
+          )}
+        </DashboardLayout>
+        <Fragment>
           {
             seoPage && seoPage.footer && <div>{seoPage.footer}</div>
           }

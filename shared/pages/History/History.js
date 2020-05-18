@@ -196,7 +196,7 @@ export default class History extends Component {
     ]
 
     return (
-      <ModalConductorProvider>
+      <>
         {
           items ? (
             <section styleName="history">
@@ -244,7 +244,7 @@ export default class History extends Component {
               </div>
             )
         }
-      </ModalConductorProvider>
+      </>
     )
   }
 }

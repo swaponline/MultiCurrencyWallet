@@ -31,6 +31,7 @@ const CurrencyIcon = ({ className, style, name, currency }) => {
       />
     )
   }
+
   if (isIconExist) {
     return (
       <img

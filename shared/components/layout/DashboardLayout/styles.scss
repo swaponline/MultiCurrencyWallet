@@ -1,0 +1,158 @@
+.wallet {
+  margin: 30px 0;
+  font-family: 'Manrope-Bold', sans-serif;
+}
+
+.hasCusomLogo {
+  margin: 30px 0;
+
+  ul {
+    margin-top: 0
+  }
+}
+
+.sweepInfo {
+  background: 0% 0% / cover rgb(97, 68, 229);
+  color: #fff;
+  padding: 1em;
+
+  button {
+    float: right;
+    border: 3px solid #fff;
+    color: #6144e5;
+    background: #fff;
+  }
+}
+
+.walletBalance {
+  margin-top: 40px;
+  width: 31%;
+}
+
+.yourAssetsWrapper,
+.activity {
+  display: none;
+}
+
+.yourAssetsWrapper.active,
+.activity.active {
+  display: block;
+}
+
+.walletContent {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.yourAssetsWrapper {
+  width: 66%;
+}
+
+.activity {
+  width: 66%;
+}
+
+.desktopEnabledViewForFaq {
+  display: block;
+}
+
+.mobileEnabledViewForFaq {
+  display: none;
+}
+
+.faqWrapper {
+  background: #ffffff;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08), 0px 1px 4px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  height: fit-content;
+  padding: 25px;
+  margin-top: 23px;
+  font-family: 'Manrope-Bold', sans-serif;
+}
+
+.faqBlured {
+  filter: blur(7px);
+  pointer-events: none;
+  will-change: filter;
+  // transition: filter ease 0.1s;
+}
+
+@media all and (max-width: 992px) {
+  .mobileEnabledViewForFaq {
+    display: block;
+  }
+
+  .desktopEnabledViewForFaq {
+    display: none;
+  }
+}
+
+@media all and (min-width: 768px) and (max-width: 992px) {
+  .walletContent {
+    flex-direction: column;
+  }
+
+  .yourAssetsWrapper {
+    width: 100%;
+  }
+
+  .walletBalance {
+    width: 100%;
+  }
+
+  .activity {
+    width: 100%;
+  }
+
+  .walletBalance.active {
+    display: block;
+
+    .yourBalance {
+      display: block;
+    }
+  }
+}
+
+@media all and (max-width: 767px) {
+  .walletBalance {
+    margin-top: 0;
+  }
+
+  .walletNav {
+    display: none;
+  }
+
+  .walletContent {
+    flex-direction: column;
+    margin: 0px -20px;
+  }
+
+  .yourAssetsWrapper {
+    width: 100%;
+  }
+
+  .activity {
+    box-shadow: none;
+    width: 100%;
+    margin: 20px 0;
+  }
+
+  .activity {
+    padding: 25px;
+  }
+
+  .walletBalance {
+    width: 100%;
+  }
+}
+
+@media all and (max-width: $media-mobile-end) {
+  .mobileEnabledViewForFaq {
+    display: none;
+  }
+
+  .desktopEnabledViewForFaq {
+    display: none;
+  }
+}

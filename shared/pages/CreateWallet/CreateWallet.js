@@ -19,7 +19,6 @@ import { localisedUrl } from 'helpers/locale'
 import FirstStep from './Steps/FirstStep'
 import SecondStep from './Steps/SecondStep'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
-import { getActivatedCurrencies } from 'helpers/user'
 
 import { constants, localStorage } from 'helpers'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
@@ -44,6 +43,7 @@ const CreateWallet = (props) => {
     location: { pathname },
     userData,
     core: { hiddenCoinsList },
+    activeFiat,
   } = props
   const allCurrencies = props.currencies.items
 
@@ -71,6 +71,7 @@ const CreateWallet = (props) => {
   let btcBalance = 0
   let fiatBalance = 0
   let changePercent = 0
+
   const widgetCurrencies = ['BTC', 'BTC (SMS-Protected)', 'BTC (Multisig)', 'ETH']
 
   if (isWidgetBuild) {
@@ -84,20 +85,33 @@ const CreateWallet = (props) => {
     }
   }
 
+  const [multiplier, setMultiplier] = useState(0)
+
+  const getFiats = async () => {
+    const { fiatsRates } = await actions.user.getFiats()
+
+    if (fiatsRates) {
+      const fiatRate = fiatsRates.find(({ key }) => key === activeFiat)
+      setMultiplier(fiatRate.value)
+    }
+  }
+
   if (currencyBalance) {
-    currencyBalance.forEach(item => {
+    currencyBalance.forEach(async item => {
       if ((!isWidgetBuild || widgetCurrencies.includes(item.name)) && item.infoAboutCurrency && item.balance !== 0) {
         if (item.name === 'BTC') {
           changePercent = item.infoAboutCurrency.percent_change_1h
         }
-
-        const multiplier = getFiats()
 
         btcBalance += item.balance * item.infoAboutCurrency.price_btc
         fiatBalance += item.balance * item.infoAboutCurrency.price_usd * multiplier
       }
     })
   }
+
+  useEffect(() => {
+    getFiats()
+  }, [activeFiat])
 
   useEffect(
     () => {
@@ -123,20 +137,41 @@ const CreateWallet = (props) => {
     [pathname],
   )
 
+  useEffect(() => {
+    const widgetCurrencies = ['BTC', 'BTC (SMS-Protected)', 'BTC (Multisig)', 'ETH']
+
+    if (isWidgetBuild) {
+      if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
+        // Multi token widget build
+        Object.keys(window.widgetERC20Tokens).forEach(key => {
+          widgetCurrencies.push(key.toUpperCase())
+        })
+      } else {
+        widgetCurrencies.push(config.erc20token.toUpperCase())
+      }
+    }
+
+    if (currencyBalance) {
+      currencyBalance.forEach(item => {
+        if ((!isWidgetBuild || widgetCurrencies.includes(item.name)) && item.infoAboutCurrency && item.balance !== 0) {
+          if (item.name === 'BTC') {
+            changePercent = item.infoAboutCurrency.percent_change_1h
+          }
+
+          const multiplier = getFiats()
+
+          btcBalance += item.balance * item.infoAboutCurrency.price_btc
+          fiatBalance += item.balance * item.infoAboutCurrency.price_usd * multiplier
+        }
+      })
+    }
+  }, [])
+
   const [step, setStep] = useState(1)
   const [fiates, setFeates] = useState(1)
   const [error, setError] = useState('Choose something')
   const [isExist, setExist] = useState(false)
   const steps = [1, 2]
-
-  const getFiats = async () => {
-    const { activeFiat } = this.props
-    const { fiatsRates } = await actions.user.getFiats()
-
-    const fiatRate = fiatsRates.find(({ key }) => key === activeFiat)
-
-    return fiatRate.value
-  }
 
   const goHome = () => {
     history.push(localisedUrl(locale, links.home))
@@ -152,21 +187,9 @@ const CreateWallet = (props) => {
     goHome()
   }
 
+
   const handleRestoreMnemonic = () => {
     actions.modals.open(constants.modals.RestoryMnemonicWallet, { btcBalance, fiatBalance })
-  }
-
-  // @ToDo - Debug - remove later
-  const handleShowKeys = () => {
-    actions.modals.open(constants.modals.DownloadModal, {})
-  }
-
-  const handleImportKeys = () => {
-    actions.modals.open(constants.modals.ImportKeys, {})
-  }
-
-  const handleMakeSweep = () => {
-    actions.modals.open(constants.modals.SweepToMnemonicKeys)
   }
 
   const goToExchange = () => {
