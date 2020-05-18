@@ -9,6 +9,9 @@ import QR from 'components/QR/QR'
 import { Modal } from 'components/modal'
 import { Button } from 'components/controls'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
+import { Link } from 'react-router-dom'
+import { links } from 'helpers'
+
 import config from 'helpers/externalConfig'
 
 
@@ -65,7 +68,7 @@ export default class ReceiveModal extends React.Component {
   handleClose = () => {
     const { name, history: { location: { pathname }, goBack } } = this.props
 
-    if(pathname.includes('receive')) {
+    if (pathname.includes('receive')) {
       goBack()
     }
     actions.modals.close(name)
@@ -138,6 +141,14 @@ export default class ReceiveModal extends React.Component {
               </div>
             </div>
           </CopyToClipboard>
+          {currency.includes("BTC") && <div styleName="fiatDepositRow">
+            <Link to={`${links.creditCardDeposit}/${address}`} >
+              <FormattedMessage
+                id="buyByCreditCard"
+                defaultMessage="buy using credit card"
+              />
+            </Link>
+          </div>}
         </div>
       </Modal>
     )

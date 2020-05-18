@@ -33,9 +33,6 @@ const title = defineMessages({
 }))
 @cssModules(styles, { allowMultiple: true })
 export default class CurrencyAction extends React.Component {
-  constructor(props) {
-    super(props)
-  }
 
   handleClose = () => {
     const { name, data, onClose } = this.props
@@ -88,7 +85,6 @@ export default class CurrencyAction extends React.Component {
       this.handleClickCurrency(currencies.shift())
       //return
     }
-
     return (
       <div styleName={cx({
         "modal-overlay": true,

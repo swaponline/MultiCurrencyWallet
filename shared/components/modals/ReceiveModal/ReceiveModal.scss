@@ -15,6 +15,12 @@
   position: relative;
 }
 
+.fiatDepositRow {
+  width: 100%;
+  text-align: center;
+  margin: 1em 0;
+}
+
 @include media-mobile {
   .qr {
     text-align: center;
