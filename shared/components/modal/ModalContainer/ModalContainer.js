@@ -45,7 +45,7 @@ export default class ModalContainer extends Component {
     })
 
     return (
-      <Overlay onClick={this.close}>
+      <Overlay>
         <Center scrollable>
           <div
             styleName={modalContainerStyleName}

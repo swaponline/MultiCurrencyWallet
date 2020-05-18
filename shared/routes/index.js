@@ -42,8 +42,8 @@ const routes = (
       <Route path={`${localisePrefix}/:token(token)/:ticker/tx/:tx?`} component={Transaction} />
       <Route path={`${localisePrefix}/:ticker(btc|eth)/:address/:action(receive|send)?`} component={CurrencyWallet} />
       <Route path={`${localisePrefix}/:token(token)/:ticker/:address`} component={CurrencyWallet} />
+      <Route path={`${localisePrefix}/:token(token)/:ticker/:address/withdraw`} component={CurrencyWallet} />
       <Route path={`${localisePrefix}/:fullName-wallet/:address?`} component={CurrencyWallet} />
-
 
       <Route path={`${localisePrefix}${links.home}:buy-:sell/:orderId`} component={Home} />
       <Route path={`${localisePrefix}${links.home}:buy-:sell`} component={Home} />
@@ -59,7 +59,6 @@ const routes = (
       <Route path={`${localisePrefix}${links.send}/:currency/:address/:amount`} component={Wallet} />
       <Route path={`${localisePrefix}${links.wallet}`} component={Wallet} />
 
-
       <Route exact path={`${localisePrefix}${links.createWallet}`} component={CreateWallet} />
       <Route path={`${localisePrefix}${links.createWallet}${links.home}:currency`} component={CreateWallet} />
 
@@ -67,7 +66,7 @@ const routes = (
       <Route path={`${localisePrefix}${links.multisign}/btc/:action/:data`} component={BtcMultisignProcessor} />
 
       <Route path={`${localisePrefix}${links.createInvoice}/:type/:wallet`} component={CreateInvoice} />
-      {isMobile && (<Route path={`${localisePrefix}${links.invoices}/:type?/:address?`} component={InvoicesList} />)}
+      {isMobile && <Route path={`${localisePrefix}${links.invoices}/:type?/:address?`} component={InvoicesList} />}
       <Route path={`${localisePrefix}${links.invoice}/:uniqhash?/:doshare?`} component={Invoice} />
 
       <Route path={`${localisePrefix}${links.savePrivateSeed}`} component={SaveMnemonicModal} />
@@ -89,7 +88,6 @@ const routes = (
           <Route exact path={`${localisePrefix}/:page(invoices)/:type?/:address?`} component={History} />
         </>
       )}
-
       <Route path={`${localisePrefix}${links.currencyWallet}`} component={Wallet} />
       <Route path={`${localisePrefix}${links.home}:currency`} component={Currency} />
 
