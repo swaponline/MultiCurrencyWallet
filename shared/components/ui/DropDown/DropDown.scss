@@ -14,6 +14,7 @@
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
     height: max-content;
     border-radius: 2px !important;
+
     .arrow {
       display: none;
     }
@@ -26,19 +27,23 @@
       top: 20px;
       right: 14px;
     }
+
     .searchInput {
       width: 100%;
+
       input {
         &:focus {
           border-bottom: 1px solid #000;
         }
       }
     }
+
     .selectedItem {
       padding: 0 20px;
       height: 335px;
     }
   }
+
   .arrowDropDown {
     right: 25px;
   }
@@ -51,18 +56,22 @@
   right: 0px;
   box-shadow: none;
   background: transparent;
+
   &.active {
     top: 80px;
     border: none;
     height: 165px;
     width: 170px;
   }
+
   .selectedItem {
     font-family: 'Inter-Bold', sans-serif;
   }
+
   .fullTitle {
     display: none;
   }
+
   .select {
     overflow: hidden;
   }
@@ -80,12 +89,13 @@
 }
 
 .smallTooltip {
-  > span {
+  >span {
     display: flex;
     justify-content: center;
     position: absolute;
     right: 5px;
     top: 5px;
+
     span {
       font-size: 10px;
     }
@@ -148,9 +158,10 @@
 .searchInput {
   width: 75px;
 
-  & > div {
+  &>div {
     box-shadow: none;
   }
+
   & input {
     border-radius: 0;
 
@@ -227,6 +238,7 @@
   text-align: left;
   position: relative;
   padding-left: 60px;
+
   &:first-child {
     border-top: 0;
   }
@@ -246,17 +258,21 @@
   .selectedItem {
     width: 100%;
   }
+
   .range {
     font-size: 15px;
     margin-top: 1px;
   }
+
   .shortTitle {
     font-size: 15px;
     margin-top: 1px;
   }
+
   .fullTitle {
     font-size: 14px;
   }
+
   .dontscroll {
     max-height: auto;
     overflow-y: hidden;
@@ -264,6 +280,7 @@
     left: calc(50% - 50vw + 20px);
     width: calc(100vw - 40px);
   }
+
 }
 
 @media screen and (max-width: 320px) {

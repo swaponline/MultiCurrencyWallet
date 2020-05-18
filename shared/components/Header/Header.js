@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import cx from 'classnames'
 
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { isMobile } from "react-device-detect";
 import { connect } from "redaction";
 
@@ -370,20 +370,24 @@ export default class Header extends Component {
     const isExchange = pathname.includes(exchange);
 
     const logoRenderer =
-      window.location.hostname === "localhost" ||
-        window.location.hostname === "swaponline.github.io" ||
-        window.location.hostname === "swaponline.io" ? (
-          <LogoTooltip withLink isColored isExchange={isWalletPage} />
-        ) : (
-          <div styleName="flexebleHeader">
-            {window.logoUrl !== '#' && (
-              <div styleName="imgWrapper">
-                <img styleName="otherHeaderLogo" className="site-logo-header" src={window.logoUrl} alt="logo" />
-              </div>
-            )}
-            {isWidgetBuild && <WidgetHeader />}
+      // window.location.hostname === "localhost" ||
+      //   window.location.hostname === "swaponline.github.io" ||
+      //   window.location.hostname === "swaponline.io" ? (
+      //     <LogoTooltip withLink isColored isExchange={isWalletPage} />
+      //   ) : (
+      <div styleName="flexebleHeader">
+        {window.logoUrl !== '#' && (
+          <div styleName="imgWrapper">
+            <Link
+              to={localisedUrl(locale, links.home)}
+            >
+              <img styleName="otherHeaderLogo" onClick={this.handleGoHome} className="site-logo-header" src={window.logoUrl} alt="logo" />
+            </Link>
           </div>
-        )
+        )}
+        {isWidgetBuild && <WidgetHeader />}
+      </div>
+    // )
 
     // if (config && config.isWidget && !config.isFullBuild) {
     //   return <>
