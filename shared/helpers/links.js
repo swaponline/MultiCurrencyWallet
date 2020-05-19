@@ -11,6 +11,7 @@ const linksManager = {
   invoices: '/invoices',
   invoice: '/invoice',
 
+  creditCardDeposit: '/creditCardDeposit',
   wallets: '/wallets',
   send: '/withdraw',
   savePrivateSeed: '/savePrivateSeed',
