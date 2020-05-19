@@ -4,6 +4,9 @@ import { withRouter } from 'react-router'
 import { defineMessages, injectIntl } from 'react-intl'
 import cssModules from 'react-css-modules'
 
+import actions from "redux/actions";
+import { constants } from 'helpers'
+
 import { Modal } from 'components/modal'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 
@@ -51,12 +54,20 @@ export default class CreditCardDeposit extends PureComponent {
 
   }
 
+  handleClose = () => {
+    const { match } = this.props
+    actions.modals.open(constants.modals.ReceiveModal, {
+      currency: "BTC",
+      address: match.params.address
+    })
+  }
+
   render() {
     const { intl, match } = this.props
     const { loading } = this.state
-    console.log({ match })
+
     return (
-      <Modal name={name} title={intl.formatMessage(title.Deposit)}>
+      <Modal name={name} title={intl.formatMessage(title.Deposit)} onClose={this.handleClose}>
         <div styleName="pageWrapper">
           <div styleName="instruction">
             <h3>{intl.formatMessage(title.Instructions)}</h3>
