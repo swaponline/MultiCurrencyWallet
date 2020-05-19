@@ -50,7 +50,7 @@ const isWidgetBuild = config && config.isWidget
   }) => {
     let widgetMultiTokens = []
     if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
-      Object.keys(window.widgetERC20Tokens).forEach(key => {
+      Object.keys(window.widgetERC20Tokens).forEach((key) => {
         widgetMultiTokens.push(key.toUpperCase())
       })
     }
@@ -59,32 +59,24 @@ const isWidgetBuild = config && config.isWidget
         ? window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length
           ? widgetMultiTokens
           : [config.erc20token.toUpperCase()]
-        : Object.keys(tokensData).map(k => tokensData[k].currency)
+        : Object.keys(tokensData).map((k) => tokensData[k].currency)
 
-    const tokensItems = Object.keys(tokensData).map(k => tokensData[k])
+    const tokensItems = Object.keys(tokensData).map((k) => tokensData[k])
 
     const allData = [
       btcData,
       btcMultisigSMSData,
       btcMultisigUserData,
       ethData,
-      ...Object.keys(tokensData).map(k => tokensData[k])
+      ...Object.keys(tokensData).map((k) => tokensData[k]),
     ].map(({ account, keyPair, ...data }) => ({
-      ...data
+      ...data,
     }))
 
     const items = (config && config.isWidget
-      ? [
-        btcData,
-        ethData
-      ]
-      : [
-        btcData,
-        btcMultisigSMSData,
-        btcMultisigUserData,
-        ethData,
-      ]
-    ).map(data => data.currency)
+      ? [btcData, ethData]
+      : [btcData, btcMultisigSMSData, btcMultisigUserData, ethData]
+    ).map((data) => data.currency)
 
     return {
       tokens,
@@ -114,7 +106,7 @@ const isWidgetBuild = config && config.isWidget
 @injectIntl
 @withRouter
 @connect(({ signUp: { isSigned } }) => ({
-  isSigned
+  isSigned,
 }))
 @cssModules(styles, { allowMultiple: true })
 export default class Wallet extends Component {
@@ -123,9 +115,7 @@ export default class Wallet extends Component {
 
     const {
       match: {
-        params: {
-          page = null,
-        },
+        params: { page = null },
       },
     } = props
 
@@ -147,17 +137,13 @@ export default class Wallet extends Component {
     const {
       activeFiat,
       match: {
-        params: {
-          page = null,
-        },
+        params: { page = null },
       },
     } = this.props
     const {
       activeFiat: prevFiat,
       match: {
-        params: {
-          page: prevPage = null,
-        },
+        params: { page: prevPage = null },
       },
     } = prevProps
 
@@ -205,14 +191,14 @@ export default class Wallet extends Component {
     actions.modals.open(constants.modals.Withdraw, {
       ...item,
       toAddress: address,
-      amount
+      amount,
     })
   }
 
   goToСreateWallet = () => {
     const {
       history,
-      intl: { locale }
+      intl: { locale },
     } = this.props
 
     history.push(localisedUrl(locale, links.createWallet))
@@ -221,7 +207,7 @@ export default class Wallet extends Component {
   handleGoExchange = () => {
     const {
       history,
-      intl: { locale }
+      intl: { locale },
     } = this.props
 
     if (isWidgetBuild && !config.isFullBuild) {
@@ -244,7 +230,7 @@ export default class Wallet extends Component {
     if (isWidgetBuild) {
       if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
         // Multi token widget build
-        Object.keys(window.widgetERC20Tokens).forEach(key => {
+        Object.keys(window.widgetERC20Tokens).forEach((key) => {
           widgetCurrencies.push(key.toUpperCase())
         })
       } else {
@@ -252,21 +238,18 @@ export default class Wallet extends Component {
       }
     }
 
-    const currencies = actions.core.getWallets()
-      .filter(({ currency, balance }) => {
-        return (
-          ((context === 'Send') ? balance : true)
-          && !hiddenCoinsList.includes(currency)
-          && enabledCurrencies.includes(currency)
-          && ((isWidgetBuild) ?
-            widgetCurrencies.includes(currency)
-            : true)
-        )
-      })
+    const currencies = actions.core.getWallets().filter(({ currency, balance }) => {
+      return (
+        (context === 'Send' ? balance : true) &&
+        !hiddenCoinsList.includes(currency) &&
+        enabledCurrencies.includes(currency) &&
+        (isWidgetBuild ? widgetCurrencies.includes(currency) : true)
+      )
+    })
 
     actions.modals.open(constants.modals.CurrencyAction, {
       currencies,
-      context
+      context,
     })
   }
 
@@ -338,7 +321,7 @@ export default class Wallet extends Component {
     if (isWidgetBuild) {
       if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
         // Multi token widget build
-        Object.keys(window.widgetERC20Tokens).forEach(key => {
+        Object.keys(window.widgetERC20Tokens).forEach((key) => {
           widgetCurrencies.push(key.toUpperCase())
         })
       } else {
@@ -355,7 +338,10 @@ export default class Wallet extends Component {
 
     if (isWidgetBuild) {
       //tableRows = allData.filter(({ currency }) => widgetCurrencies.includes(currency))
-      tableRows = allData.filter(({ currency, address }) => !hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`))
+      tableRows = allData.filter(
+        ({ currency, address }) =>
+          !hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`)
+      )
       // Отфильтруем валюты, исключив те, которые не используются в этом билде
       tableRows = tableRows.filter(({ currency }) => widgetCurrencies.includes(currency))
     }

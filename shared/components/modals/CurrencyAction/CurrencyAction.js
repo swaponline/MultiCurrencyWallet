@@ -6,7 +6,7 @@ import cx from 'classnames'
 import cssModules from 'react-css-modules'
 
 import styles from './CurrencyAction.scss'
-import { links, constants } from 'helpers'
+import helpers, { links, constants } from 'helpers'
 import Coin from 'components/Coin/Coin'
 
 import QR from 'components/QR/QR'
@@ -14,6 +14,7 @@ import { Modal } from 'components/modal'
 import { Button } from 'components/controls'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import { ConsoleView } from 'react-device-detect'
+import { relocalisedUrl, localisedUrl } from 'helpers/locale'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import icons from './images'
 import config from 'app-config'
@@ -53,7 +54,9 @@ export default class CurrencyAction extends React.Component {
 
   handleClickCurrency = item => {
     const {
-      data: { context }
+      data: { context },
+      history,
+      intl: { locale },
     } = this.props
 
     const { currency, address } = item
@@ -70,9 +73,25 @@ export default class CurrencyAction extends React.Component {
       if (item.currency === 'BTC (SMS-Protected)') withdrawModalType = WithdrawMultisigSMS
       if (item.currency === 'BTC (Multisig)') withdrawModalType = WithdrawMultisigUser
 
-      actions.modals.open(withdrawModalType, item)
+      let targetCurrency = currency
+      switch (currency.toLowerCase()) {
+        case 'btc (multisig)':
+        case 'btc (sms-protected)':
+          targetCurrency = 'btc'
+          break
+      }
+  
+      const isToken = helpers.ethToken.isEthToken({ name: currency })
+      this.handleClose()
+  
+      history.push(
+        localisedUrl(
+          locale,
+          (isToken ? '/token' : '') + `/${targetCurrency}/${address}/withdraw`
+        )
+      )
     }
-    this.handleClose()
+    
   }
 
   render() {
