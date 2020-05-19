@@ -1,6 +1,7 @@
 .pageWrapper {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .instruction {
@@ -19,9 +20,20 @@
     }
 }
 
+.ghostWrapper {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-image: linear-gradient(360deg, #fff 0%, rgba(221, 249, 255, 0.33) 49%, #fff 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .itezWidget {
     width: 45%;
     height: 400px;
+    position: relative
 }
 
 @media all and (max-width: 800px) {

@@ -1,11 +1,14 @@
-import React from 'react'
-import { withRouter } from 'react-router'
+import React, { PureComponent } from 'react'
 
+import { withRouter } from 'react-router'
+import { defineMessages, injectIntl } from 'react-intl'
 import cssModules from 'react-css-modules'
-import styles from './styles.scss'
 
 import { Modal } from 'components/modal'
-import { defineMessages, injectIntl } from 'react-intl'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
+
+import styles from './styles.scss'
+
 
 const title = defineMessages({
   Deposit: {
@@ -37,22 +40,20 @@ const title = defineMessages({
 @injectIntl
 @withRouter
 @cssModules(styles, { allowMultiple: true })
-export default class CreditCardDeposit extends React.Component {
+export default class CreditCardDeposit extends PureComponent {
+  state = {
+    loading: true
+  }
   componentDidMount() {
-    const { intl } = this.props
+    setTimeout(() => {
+      this.setState(() => ({ loading: false }))
+    }, 4000)
 
-    window.ItezWidget.run({
-      target_element: 'widget-container',
-      sum: '100',
-      CUR: window.DEFAULT_FIAT || "USD",
-      id: '004',
-      lang: intl.locale
-    });
   }
 
   render() {
     const { intl, match } = this.props
-
+    const { loading } = this.state
     console.log({ match })
     return (
       <Modal name={name} title={intl.formatMessage(title.Deposit)}>
@@ -64,7 +65,19 @@ export default class CreditCardDeposit extends React.Component {
             <li>{intl.formatMessage(title.third)})</li>
             <li><a href="https://t.me/sashanoxon" target="_blank" rel="noopener noreferrer">{intl.formatMessage(title.forth)}</a></li>
           </div>
-          <div id="widget-container" styleName="itezWidget"></div>
+          <div styleName="itezWidget">
+            {loading && <div styleName="ghostWrapper">
+              <InlineLoader />
+            </div>}
+            <iframe
+              title="credit card deposit"
+              width="100%"
+              height="500px"
+              src="https://itez.swaponline.io/?DEFAULT_FIAT=EUR&locale=en"
+              frameBorder="0"
+              allowFullScreen
+            />
+          </div>
         </div>
 
       </ Modal>
