@@ -51,14 +51,18 @@ export default class CurrencyAction extends React.Component {
 
   handleClickCurrency = item => {
     const {
+      name,
       data: { context },
       history,
       intl: { locale },
     } = this.props
 
+
     const { currency, address } = item
 
     if (context === 'Deposit') {
+      this.handleClose()
+
       actions.modals.open(constants.modals.ReceiveModal, {
         currency,
         address
@@ -77,10 +81,10 @@ export default class CurrencyAction extends React.Component {
           targetCurrency = 'btc'
           break
       }
-  
+
       const isToken = helpers.ethToken.isEthToken({ name: currency })
       this.handleClose()
-  
+
       history.push(
         localisedUrl(
           locale,
@@ -88,7 +92,7 @@ export default class CurrencyAction extends React.Component {
         )
       )
     }
-    
+
   }
 
   render() {
