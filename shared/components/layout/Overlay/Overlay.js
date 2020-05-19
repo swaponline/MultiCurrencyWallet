@@ -10,9 +10,11 @@ const Overlay = ({ children, onClick, dashboardView }) => {
   React.useEffect(() => {
     if (dashboardView) {
       const elWithHeight = document.querySelector('.__modalConductorProvided__ .contentHeightEvaluateHere')
-      setEvaluatedHeight(elWithHeight.clientHeight ||
-        elWithHeight.offsetHeight ||
-        400)
+      if (elWithHeight) {
+        setEvaluatedHeight(elWithHeight.clientHeight ||
+          elWithHeight.offsetHeight ||
+          400)
+      }
     }
   })
 
