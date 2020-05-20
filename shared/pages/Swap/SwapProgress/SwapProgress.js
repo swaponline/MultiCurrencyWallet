@@ -275,6 +275,12 @@ export default class SwapProgress extends Component {
 
     const canRefund = this.checkCanRefund()
 
+    let _refundTx = false
+
+    if (flow.refundTransactionHash) {
+      _refundTx = flow.refundTransactionHash.transactionHash || flow.refundTransactionHash
+    }
+
     const swapTexts = (
       <Fragment>
         {
@@ -340,19 +346,19 @@ export default class SwapProgress extends Component {
               )}
 
               {
-                flow.refundTransactionHash && (
+                _refundTx && (
                   <div styleName="refundTransaction">
                     <strong>
                       <a
                         href={swap.sellCurrency === 'BTC'
-                          ? `${config.link.bitpay}/tx/${flow.refundTransactionHash}`
-                          : `${config.link.etherscan}/tx/${flow.refundTransactionHash}`
+                          ? `${config.link.bitpay}/tx/${_refundTx}`
+                          : `${config.link.etherscan}/tx/${_refundTx}`
                         }
                         target="_blank"
                         rel="noopener noreferrer"
                       >
                         <FormattedMessage id="swapprogress254" defaultMessage="Refund transaction: " />
-                        <span styleName="refundTransactionHash">{flow.refundTransactionHash}</span>
+                        <span styleName="refundTransactionHash">{_refundTx}</span>
                       </a>
                     </strong>
                   </div>
