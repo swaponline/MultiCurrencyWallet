@@ -29,6 +29,7 @@ import DashboardLayout from 'components/layout/DashboardLayout/DashboardLayout'
 
 import getCurrencyKey from 'helpers/getCurrencyKey'
 
+
 const isWidgetBuild = config && config.isWidget
 
 @connect(({ signUp: { isSigned } }) => ({
@@ -162,6 +163,7 @@ export default class CurrencyWallet extends Component {
       const { currency, address, contractAddress, decimals, balance, infoAboutCurrency } = itemCurrency
 
       this.state = {
+        itemCurrency,
         address,
         balance,
         decimals,
@@ -175,18 +177,11 @@ export default class CurrencyWallet extends Component {
         isBalanceEmpty: balance === 0,
         token: ethToken.isEthToken({ name: ticker }),
       }
-
-      if (action === 'receive') {
-        actions.modals.open(constants.modals.ReceiveModal, {
-          currency,
-          address
-        })
-      }
     }
   }
 
   componentDidMount() {
-    const { currency, token, isRedirecting, redirectUrl, balance, infoAboutCurrency, hiddenCoinsList } = this.state
+    const { currency, itemCurrency, token, isRedirecting, redirectUrl, balance, infoAboutCurrency, hiddenCoinsList } = this.state
 
     this.getFiats()
 
@@ -233,13 +228,29 @@ export default class CurrencyWallet extends Component {
 
     const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals
 
-    if (this.props.history.location.pathname === `/${currency}/${address}/withdraw` && balance !== 0) {
-      actions.modals.open(Withdraw, {
+    const targetCurrency = getCurrencyKey(currency.toLowerCase(), true)
+    const isToken = helpers.ethToken.isEthToken({ name: currency })
+
+    const withdrawUrl = (isToken ? '/token' : '') + `/${targetCurrency}/${address}/withdraw`
+    const receiveUrl = (isToken ? '/token' : '') + `/${targetCurrency}/${address}/receive`
+
+    if (this.props.history.location.pathname.toLowerCase() === withdrawUrl.toLowerCase() && balance !== 0) {
+      let modalType = Withdraw
+      if (itemCurrency.isSmsProtected) modalType = WithdrawMultisigSMS
+      if (itemCurrency.isUserProtected) modalType = WithdrawMultisigUser
+
+      actions.modals.open(modalType, {
         currency,
         address,
         balance,
         infoAboutCurrency,
         hiddenCoinsList,
+      })
+    }
+    if (this.props.history.location.pathname.toLowerCase() === receiveUrl.toLowerCase()) {
+      actions.modals.open(constants.modals.ReceiveModal, {
+        currency,
+        address,
       })
     }
   }
@@ -260,7 +271,12 @@ export default class CurrencyWallet extends Component {
 
     let {
       match: {
-        params: { address = null, fullName = null, ticker = null },
+        params: {
+          address = null,
+          fullName = null,
+          ticker = null,
+          action = null,
+        },
       },
       hiddenCoinsList,
     } = this.props
@@ -346,13 +362,18 @@ export default class CurrencyWallet extends Component {
         const { currency, address, contractAddress, decimals, balance, infoAboutCurrency } = itemCurrency
         const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals
 
+        let modalWithdraw = Withdraw
+        if (itemCurrency.isSmsProtected) modalWithdraw = WithdrawMultisigSMS
+        if (itemCurrency.isUserProtected) modalWithdraw = WithdrawMultisigUser
+
         this.setState(
           {
+            itemCurrency,
             address,
             balance,
             decimals,
             currency,
-            txItems: false,
+            //txItems: false, // Не очищаем транзакции, из-за этого на заднем фоне включается режим "загрузки", который остается при закрытии окна
             contractAddress,
             isLoading: false,
             infoAboutCurrency,
@@ -361,13 +382,28 @@ export default class CurrencyWallet extends Component {
             token: ethToken.isEthToken({ name: ticker }),
           },
           () => {
-            actions.modals.open(Withdraw, {
-              currency,
-              address,
-              balance,
-              infoAboutCurrency,
-              hiddenCoinsList,
-            })
+            const targetCurrency = getCurrencyKey(currency.toLowerCase(), true)
+            const isToken = helpers.ethToken.isEthToken({ name: currency })
+
+            const withdrawUrl = (isToken ? '/token' : '') + `/${targetCurrency}/${address}/withdraw`
+            const receiveUrl = (isToken ? '/token' : '') + `/${targetCurrency}/${address}/receive`
+            const currentUrl = this.props.location.pathname.toLowerCase()
+
+            if (currentUrl === withdrawUrl.toLowerCase()) {
+              actions.modals.open(modalWithdraw, {
+                currency,
+                address,
+                balance,
+                infoAboutCurrency,
+                hiddenCoinsList,
+              })
+            }
+            if (currentUrl === receiveUrl.toLowerCase()) {
+              actions.modals.open(constants.modals.ReceiveModal, {
+                currency,
+                address,
+              })
+            }
           }
         )
       }
@@ -424,29 +460,20 @@ export default class CurrencyWallet extends Component {
       hiddenCoinsList,
       intl: { locale },
     } = this.props
-    const { currency, address, contractAddress, decimals, balance, isBalanceEmpty } = this.state
+    const { itemCurrency, currency, address, contractAddress, decimals, balance, isBalanceEmpty } = this.state
 
     // actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
     let withdrawModal = constants.modals.Withdraw
-    if (actions.btcmultisig.isBTCSMSAddress(address)) {
-      withdrawModal = constants.modals.WithdrawMultisigSMS
-    }
-    if (actions.btcmultisig.isBTCMSUserAddress(address)) {
-      withdrawModal = constants.modals.WithdrawMultisigUser
-    }
+    if (itemCurrency.isSmsProtected) withdrawModal = withdrawModal = constants.modals.WithdrawMultisigSMS
+    if (itemCurrency.isUserProtected) withdrawModal = constants.modals.WithdrawMultisigUser
 
-    let targetCurrency = currency
-    switch (currency.toLowerCase()) {
-      case 'btc (multisig)':
-      case 'btc (sms-protected)':
-        targetCurrency = 'btc'
-        break
-    }
+    let targetCurrency = getCurrencyKey(currency.toLowerCase(), true).toLowerCase()
 
     const isToken = helpers.ethToken.isEthToken({ name: currency })
 
     history.push(localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${address}/withdraw`))
 
+    /*
     actions.modals.open(withdrawModal, {
       currency,
       address,
@@ -455,6 +482,7 @@ export default class CurrencyWallet extends Component {
       balance,
       hiddenCoinsList,
     })
+    */
   }
 
   handleGoWalletHome = () => {
