@@ -129,13 +129,6 @@
     content: '';
     background: linear-gradient(180deg, #6144e5 0%, rgba(97, 68, 229, 0) 100%);
   }
-
-  &_blured {
-    filter: blur(7px);
-    pointer-events: none;
-    will-change: filter;
-    // transition: filter ease 0.1s;
-  }
 }
 
 .yourBalanceBottom {
