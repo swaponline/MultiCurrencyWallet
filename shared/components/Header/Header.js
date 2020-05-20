@@ -464,7 +464,6 @@ export default class Header extends Component {
         [styles["widgetHeader"]]: isWidgetBuild && window.logoUrl !== '#',
         [styles["header-fixed"]]: Boolean(sticky),
         [styles["header-promo"]]: isWalletPage && !sticky,
-        [styles["header-blured"]]: dashboardView && isAnyModalCalled,
       })}>
         {createdWalletLoader && (
           <div styleName="loaderCreateWallet">

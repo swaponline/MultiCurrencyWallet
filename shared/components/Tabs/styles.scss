@@ -5,13 +5,6 @@
   font-family: 'Manrope-Bold', sans-serif;
 }
 
-.blured {
-  filter: blur(7px);
-  pointer-events: none;
-  will-change: filter;
-  // transition: filter ease 0.1s;
-}
-
 .walletNavItem {
   display: inline-block;
   margin-right: 40px;

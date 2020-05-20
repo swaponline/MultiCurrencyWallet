@@ -111,7 +111,6 @@ function BalanceForm({
       <div
         className={cx({
           [styles.yourBalanceBottomWrapper]: true,
-          [styles.yourBalanceBottomWrapper_blured]: dashboardView && isAnyModalCalled,
         })}
       >
         <div styleName="yourBalanceBottom">
