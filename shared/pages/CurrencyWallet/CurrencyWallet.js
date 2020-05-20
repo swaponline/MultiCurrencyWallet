@@ -24,43 +24,51 @@ import config from 'app-config'
 import BalanceForm from 'components/BalanceForm/BalanceForm'
 import { BigNumber } from 'bignumber.js'
 import ContentLoader from 'components/loaders/ContentLoader/ContentLoader'
-import FilterForm from "components/FilterForm/FilterForm"
+import FilterForm from 'components/FilterForm/FilterForm'
 import DashboardLayout from 'components/layout/DashboardLayout/DashboardLayout'
 
 import getCurrencyKey from 'helpers/getCurrencyKey'
-
 
 const isWidgetBuild = config && config.isWidget
 
 @connect(({ signUp: { isSigned } }) => ({
   isSigned,
 }))
-
-@connect(({ core, user, history: { transactions, swapHistory }, history,
-  user: {
-    ethData,
-    btcData,
-    activeFiat,
-    btcMultisigSMSData,
-    btcMultisigUserData,
-    isFetching,
-    tokensData } }) => ({
-      items: [
-        ethData,
-        btcData,
-        btcMultisigSMSData,
-        btcMultisigUserData,
-        ...Object.keys(tokensData).map(k => (tokensData[k]))],
-      tokens: [...Object.keys(tokensData).map(k => (tokensData[k]))],
-      user,
+@connect(
+  ({
+    core,
+    user,
+    history: { transactions, swapHistory },
+    history,
+    user: {
+      ethData,
+      btcData,
       activeFiat,
-      historyTx: history,
-      hiddenCoinsList: core.hiddenCoinsList,
-      txHistory: transactions,
-      swapHistory,
-      isFetching
-    }))
-
+      btcMultisigSMSData,
+      btcMultisigUserData,
+      isFetching,
+      isBalanceFetching,
+      tokensData,
+    },
+  }) => ({
+    items: [
+      ethData,
+      btcData,
+      btcMultisigSMSData,
+      btcMultisigUserData,
+      ...Object.keys(tokensData).map((k) => tokensData[k]),
+    ],
+    tokens: [...Object.keys(tokensData).map((k) => tokensData[k])],
+    user,
+    activeFiat,
+    historyTx: history,
+    hiddenCoinsList: core.hiddenCoinsList,
+    txHistory: transactions,
+    swapHistory,
+    isFetching,
+    isBalanceFetching,
+  })
+)
 @injectIntl
 @withRouter
 @CSSModules({ ...styles, ...stylesHere }, { allowMultiple: true })
@@ -70,12 +78,7 @@ export default class CurrencyWallet extends Component {
 
     const {
       match: {
-        params: {
-          fullName = null,
-          ticker = null,
-          address = null,
-          action = null,
-        },
+        params: { fullName = null, ticker = null, address = null, action = null },
       },
       intl: { locale },
       //items,
@@ -174,16 +177,25 @@ export default class CurrencyWallet extends Component {
         isLoading: false,
         infoAboutCurrency,
         filterValue: address || '',
-        isBalanceEmpty: balance === 0,
         token: ethToken.isEthToken({ name: ticker }),
       }
     }
   }
 
   componentDidMount() {
-    const { currency, itemCurrency, token, isRedirecting, redirectUrl, balance, infoAboutCurrency, hiddenCoinsList } = this.state
+    const {
+      currency,
+      itemCurrency,
+      token,
+      isRedirecting,
+      redirectUrl,
+      balance,
+      infoAboutCurrency,
+      hiddenCoinsList,
+    } = this.state
 
     this.getFiats()
+    actions.user.getBalances()
 
     if (isRedirecting) {
       const {
@@ -197,7 +209,6 @@ export default class CurrencyWallet extends Component {
       return
     }
 
-  
     let {
       match: {
         params: { address = null },
@@ -245,6 +256,7 @@ export default class CurrencyWallet extends Component {
         balance,
         infoAboutCurrency,
         hiddenCoinsList,
+        currencyRate: itemCurrency.currencyRate,
       })
     }
     if (this.props.history.location.pathname.toLowerCase() === receiveUrl.toLowerCase()) {
@@ -258,12 +270,8 @@ export default class CurrencyWallet extends Component {
   componentDidUpdate(prevProps) {
     const { currency } = this.state
 
-    const {
-      activeFiat,
-    } = this.props
-    const {
-      activeFiat: prevFiat,
-    } = prevProps
+    const { activeFiat } = this.props
+    const { activeFiat: prevFiat } = prevProps
 
     if (activeFiat !== prevFiat) {
       this.getFiats()
@@ -271,12 +279,7 @@ export default class CurrencyWallet extends Component {
 
     let {
       match: {
-        params: {
-          address = null,
-          fullName = null,
-          ticker = null,
-          action = null,
-        },
+        params: { address = null, fullName = null, ticker = null, action = null },
       },
       hiddenCoinsList,
     } = this.props
@@ -292,7 +295,10 @@ export default class CurrencyWallet extends Component {
         : actions.user.setTransactions()
     }
 
-    if (prevProps.location.pathname !== this.props.location.pathname) {
+    if (
+      prevProps.location.pathname !== this.props.location.pathname ||
+      prevProps.isBalanceFetching !== this.props.isBalanceFetching
+    ) {
       const items = actions.core.getWallets()
 
       if (!address && !ticker) {
@@ -340,7 +346,6 @@ export default class CurrencyWallet extends Component {
       if (fullName) {
         ticker = fullName
       }
-
       // MultiWallet - after Sweep - названию валюты доверять нельзя - нужно проверяться также адрес - и выбирать по адресу
       let itemCurrency = items.filter((item) => {
         if (ethToken.isEthToken({ name: ticker })) {
@@ -356,10 +361,12 @@ export default class CurrencyWallet extends Component {
           }
         }
       })
+
       if (itemCurrency.length) {
         itemCurrency = itemCurrency[0]
 
         const { currency, address, contractAddress, decimals, balance, infoAboutCurrency } = itemCurrency
+
         const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals
 
         let modalWithdraw = Withdraw
@@ -370,15 +377,14 @@ export default class CurrencyWallet extends Component {
           {
             itemCurrency,
             address,
-            balance,
             decimals,
             currency,
+            balance,
             //txItems: false, // Не очищаем транзакции, из-за этого на заднем фоне включается режим "загрузки", который остается при закрытии окна
             contractAddress,
             isLoading: false,
             infoAboutCurrency,
             filterValue: address || '',
-            isBalanceEmpty: balance === 0,
             token: ethToken.isEthToken({ name: ticker }),
           },
           () => {
@@ -396,6 +402,8 @@ export default class CurrencyWallet extends Component {
                 balance,
                 infoAboutCurrency,
                 hiddenCoinsList,
+                itemCurrency,
+                currencyRate: itemCurrency.currencyRate,
               })
             }
             if (currentUrl === receiveUrl.toLowerCase()) {
@@ -407,7 +415,6 @@ export default class CurrencyWallet extends Component {
           }
         )
       }
-    
     }
   }
 
@@ -507,9 +514,7 @@ export default class CurrencyWallet extends Component {
   rowRender = (row, rowIndex) => {
     const { history } = this.props
 
-    return (
-      <Row key={rowIndex} {...row} history={history} />
-    )
+    return <Row key={rowIndex} {...row} history={history} />
   }
 
   handleFilterChange = ({ target }) => {
@@ -553,7 +558,6 @@ export default class CurrencyWallet extends Component {
     this.setState(() => ({ multiplier: fiatRate.value }))
   }
 
-
   render() {
     let {
       swapHistory,
@@ -565,6 +569,7 @@ export default class CurrencyWallet extends Component {
       intl,
       hiddenCoinsList,
       isSigned,
+      isBalanceFetching,
       isFetching,
     } = this.props
 
@@ -628,14 +633,15 @@ export default class CurrencyWallet extends Component {
       actions.core.markCoinAsVisible(currency)
     }
 
-    let currencyFiatBalance;
-    let changePercent;
+    let currencyFiatBalance
+    let changePercent
 
     if (infoAboutCurrency && multiplier) {
-      currencyFiatBalance = BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * infoAboutCurrency.price_usd * multiplier;
-      changePercent = infoAboutCurrency.percent_change_1h;
+      currencyFiatBalance =
+        BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * infoAboutCurrency.price_usd * multiplier
+      changePercent = infoAboutCurrency.percent_change_1h
     } else {
-      currencyFiatBalance = 0;
+      currencyFiatBalance = 0
     }
 
     let settings = {
@@ -671,51 +677,58 @@ export default class CurrencyWallet extends Component {
         <DashboardLayout
           page="history"
           BalanceForm={
-            txHistory ?
+            txHistory ? (
               <BalanceForm
                 currencyBalance={balance}
                 fiatBalance={currencyFiatBalance}
                 changePercent={changePercent}
                 address={address}
+                isFetching={isBalanceFetching}
                 handleReceive={this.handleReceive}
                 handleWithdraw={this.handleWithdraw}
                 handleExchange={this.handleGoTrade}
                 handleInvoice={this.handleInvoice}
                 showButtons={actions.user.isOwner(address, currency)}
                 currency={currency.toLowerCase()}
-              /> : <ContentLoader leftSideContent />
+              />
+            ) : (
+              <ContentLoader leftSideContent />
+            )
           }
         >
           <div styleName="currencyWalletActivity">
-            <FilterForm filterValue={filterValue} onSubmit={this.handleFilter} onChange={this.handleFilterChange} resetFilter={this.resetFilter} />
-            {txHistory && !isLoading && (
-              txHistory.length > 0 ? (
+            <FilterForm
+              filterValue={filterValue}
+              onSubmit={this.handleFilter}
+              onChange={this.handleFilterChange}
+              resetFilter={this.resetFilter}
+            />
+            {txHistory &&
+              !isLoading &&
+              (txHistory.length > 0 ? (
                 <Table rows={txHistory} styleName="currencyHistory" rowRender={this.rowRender} />
-              ) :
+              ) : (
                 <div styleName="historyContent">
                   <ContentLoader rideSideContent empty nonHeader inner />
                 </div>
-            )
-            }
+              ))}
             {(!txHistory || isLoading) && (
               <div styleName="historyContent">
                 <ContentLoader rideSideContent nonHeader />
               </div>
             )}
           </div>
-          {(!actions.btcmultisig.isBTCSMSAddress(`${address}`) && !actions.btcmultisig.isBTCMSUserAddress(`${address}`)) && (
-            swapHistory.filter(item => item.step >= 4).length > 0 ? (
+          {!actions.btcmultisig.isBTCSMSAddress(`${address}`) &&
+            !actions.btcmultisig.isBTCMSUserAddress(`${address}`) &&
+            (swapHistory.filter((item) => item.step >= 4).length > 0 ? (
               <div styleName="currencyWalletSwapHistory">
-                <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} />
+                <SwapsHistory orders={swapHistory.filter((item) => item.step >= 4)} />
               </div>
-            ) : ''
-          )}
+            ) : (
+              ''
+            ))}
         </DashboardLayout>
-        <Fragment>
-          {
-            seoPage && seoPage.footer && <div>{seoPage.footer}</div>
-          }
-        </Fragment>
+        <Fragment>{seoPage && seoPage.footer && <div>{seoPage.footer}</div>}</Fragment>
       </div>
     )
   }
