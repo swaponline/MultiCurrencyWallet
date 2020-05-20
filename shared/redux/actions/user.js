@@ -122,12 +122,11 @@ const getReputation = async () => {
 }
 
 
-
 const getBalances = () => {
   const {
     user: {
       isTokenSigned,
-    }
+    },
   } = getState()
 
   reducers.user.setIsBalanceFetching({ isBalanceFetching: true })
@@ -136,7 +135,7 @@ const getBalances = () => {
     await actions.eth.getBalance()
     await actions.btc.getBalance()
     await actions.btcmultisig.getBalance() // SMS-Protected
-    await actions.btcmultisig.getBalanceUser() //Other user confirm
+    await actions.btcmultisig.getBalanceUser() // Other user confirm
     await actions.btcmultisig.fetchMultisigBalances()
 
     if (isTokenSigned) {
@@ -228,7 +227,7 @@ const getDemoMoney = process.env.MAINNET ? () => { } : () => {
 const getInfoAboutCurrency = (currencyNames) =>
 
   new Promise((resolve, reject) => {
-    const url = 'https://noxon.wpmix.net/cursAll.php';
+    const url = 'https://noxon.wpmix.net/cursAll.php'
     reducers.user.setIsFetching({ isFetching: true })
 
     request.get(url, {
@@ -262,19 +261,19 @@ const getInfoAboutCurrency = (currencyNames) =>
                 reducers.user.setInfoAboutCurrency({ name: 'btcMultisigSMSData', infoAboutCurrency: currencyInfo })
                 reducers.user.setInfoAboutCurrency({ name: 'btcMultisigUserData', infoAboutCurrency: currencyInfo })
                 reducers.user.setInfoAboutCurrency({ name: 'btcMultisigG2FAData', infoAboutCurrency: currencyInfo })
-                break;
+                break
               }
               case 'ETH': {
                 reducers.user.setInfoAboutCurrency({ name: 'ethData', infoAboutCurrency: currencyInfo })
                 reducers.user.setInfoAboutCurrency({ name: 'ethMnemonicData', infoAboutCurrency: currencyInfo }) // Sweep (for future)
-                break;
+                break
               }
               default: reducers.user.setInfoAboutCurrency({ name: `${currencyInfoItem.symbol.toLowerCase()}Data`, infoAboutCurrency: currencyInfo })
             }
           }
         }
       })
-      resolve(true);
+      resolve(true)
     }).catch((error) => {
       reject(error)
     }).finally(() => reducers.user.setIsFetching({ isFetching: false }))
@@ -293,7 +292,7 @@ const setTransactions = async () => {
   const isEthSweeped = actions.eth.isSweeped()
 
   const {
-    core: { hiddenCoinsList }
+    core: { hiddenCoinsList },
   } = getState()
   const enabledCurrencies = getActivatedCurrencies()
 
@@ -301,7 +300,7 @@ const setTransactions = async () => {
     // @ToDo - make in like query
     const mainTokens = await Promise.all([
       actions.btc.getTransaction(),
-      ... (isBtcSweeped) ? [] : [actions.btc.getTransaction(actions.btc.getSweepAddress())],
+      ...(isBtcSweeped) ? [] : [actions.btc.getTransaction(actions.btc.getSweepAddress())],
       // actions.btc.getInvoices(),
       // ... (isBtcSweeped) ? [] : [actions.btc.getInvoices(actions.btc.getSweepAddress())],
       actions.btcmultisig.getTransactionSMS(),
@@ -310,7 +309,7 @@ const setTransactions = async () => {
       // actions.btcmultisig.getInvoicesUser(),
       // actions.usdt.getTransaction(),
       actions.eth.getTransaction(),
-      ... (isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
+      ...(isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
       // actions.eth.getInvoices(),
       // ... (isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
     ])

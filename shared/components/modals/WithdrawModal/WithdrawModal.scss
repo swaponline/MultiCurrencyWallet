@@ -201,6 +201,7 @@
   position: absolute;
   z-index: 1111111;
   width: 100%;
+  background: #fff;
   overflow: hidden;
   padding: 5px 0px;
   box-shadow: 0px 4px 16px rgba(0,0,0,0.08), 0px 1px 4px rgba(0,0,0,0.08);
@@ -211,7 +212,7 @@
   padding-left: 10px;
   border: none;
   &:hover {
-    background: rgb(251, 251, 251);
+    background: #f3f3f3;
   }
 }
 

@@ -11,7 +11,7 @@ import firestore from 'helpers/firebase/firestore'
 
 import History from 'pages/History/History'
 
-import { links, constants } from 'helpers'
+import helpers, { links, constants } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import { getActivatedCurrencies } from 'helpers/user'
 
@@ -217,28 +217,18 @@ export default class Wallet extends Component {
     }
   }
 
-  handleModalOpen = context => {
-    const { enabledCurrencies } = this.state
+  handleWithdrawFirstAsset = () => {
     const { hiddenCoinsList } = this.props
+    const {
+      history,
+      intl: { locale },
+    } = this.props
 
-    
-
-    // /* @ToDo Вынести отдельно */
-    // // Набор валют для виджета
-    // const widgetCurrencies = ['BTC']
-    // if (!hiddenCoinsList.includes('BTC (SMS-Protected)')) widgetCurrencies.push('BTC (SMS-Protected)')
-    // if (!hiddenCoinsList.includes('BTC (Multisig)')) widgetCurrencies.push('BTC (Multisig)')
-    // widgetCurrencies.push('ETH')
-    // if (isWidgetBuild) {
-    //   if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
-    //     // Multi token widget build
-    //     Object.keys(window.widgetERC20Tokens).forEach((key) => {
-    //       widgetCurrencies.push(key.toUpperCase())
-    //     })
-    //   } else {
-    //     widgetCurrencies.push(config.erc20token.toUpperCase())
-    //   }
-    // }
+    const {
+      Withdraw,
+      WithdrawMultisigSMS,
+      WithdrawMultisigUser,
+    } = constants.modals
 
     const allData = actions.core.getWallets()
 
@@ -249,12 +239,29 @@ export default class Wallet extends Component {
       return (!hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`)) || balance > 0
     })
 
-    // actions.modals.open(constants.modals.CurrencyAction, {
-    //   currencies,
-    //   context,
-    // })
+    const {currency, address} = tableRows[0];
 
-    console.log('currencies', tableRows[0])
+    let withdrawModalType = Withdraw
+    if (currency === 'BTC (SMS-Protected)')
+      withdrawModalType = WithdrawMultisigSMS
+    if (currency === 'BTC (Multisig)') withdrawModalType = WithdrawMultisigUser
+
+    let targetCurrency = currency
+    switch (currency.toLowerCase()) {
+      case 'btc (multisig)':
+      case 'btc (sms-protected)':
+        targetCurrency = 'btc'
+        break
+    }
+
+    const isToken = helpers.ethToken.isEthToken({ name: currency })
+
+    history.push(
+      localisedUrl(
+        locale,
+        (isToken ? '/token' : '') + `/${targetCurrency}/${address}/withdraw`
+      )
+    )
   }
 
   checkBalance = () => {
@@ -310,6 +317,7 @@ export default class Wallet extends Component {
     }, } = this.props
 
     const allData = actions.core.getWallets()
+    console.log('isBalanceFetching', isBalanceFetching)
 
     this.checkBalance()
 
@@ -375,7 +383,7 @@ export default class Wallet extends Component {
             currencyBalance={btcBalance}
             changePercent={changePercent}
             handleReceive={this.handleModalOpen}
-            handleWithdraw={this.handleModalOpen}
+            handleWithdraw={this.handleWithdrawFirstAsset}
             handleExchange={this.handleGoExchange}
             isFetching={isBalanceFetching}
             currency="btc"

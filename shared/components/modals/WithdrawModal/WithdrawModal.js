@@ -22,6 +22,7 @@ import Button from 'components/controls/Button/Button'
 import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import ReactTooltip from 'react-tooltip'
 import { isMobile, ConsoleView } from 'react-device-detect'
 import QrReader from 'components/QrReader'
@@ -36,13 +37,20 @@ import redirectTo from 'helpers/redirectTo'
 import AdminFeeInfoBlock from 'components/AdminFeeInfoBlock/AdminFeeInfoBlock'
 
 @injectIntl
-@connect(({ currencies, user: { ethData, btcData, tokensData, activeFiat }, ui: { dashboardModalsAllowed } }) => ({
-  activeFiat,
-  currencies: currencies.items,
-  items: [ethData, btcData],
-  tokenItems: [...Object.keys(tokensData).map((k) => tokensData[k])],
-  dashboardView: dashboardModalsAllowed,
-}))
+@connect(
+  ({
+    currencies,
+    user: { ethData, btcData, tokensData, activeFiat, isBalanceFetching },
+    ui: { dashboardModalsAllowed },
+  }) => ({
+    activeFiat,
+    currencies: currencies.items,
+    items: [ethData, btcData],
+    tokenItems: [...Object.keys(tokensData).map((k) => tokensData[k])],
+    dashboardView: dashboardModalsAllowed,
+    isBalanceFetching,
+  })
+)
 @cssModules(styles, { allowMultiple: true })
 export default class WithdrawModal extends React.Component {
   static propTypes = {
@@ -98,7 +106,7 @@ export default class WithdrawModal extends React.Component {
       hiddenCoinsList,
       currentActiveAsset: data.data,
       allCurrencyies,
-      multiplier
+      multiplier,
     }
   }
 
@@ -113,6 +121,23 @@ export default class WithdrawModal extends React.Component {
     this.fiatRates = {}
     this.getFiatBalance()
     this.actualyMinAmount()
+
+    //actions.user.getBalances()
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.data !== this.props.data || prevProps.items !== this.props.items) {
+      this.setCurrenctActiveAsset()
+    }
+  }
+
+  setCurrenctActiveAsset = () => {
+    const { items, tokenItems, data } = this.props
+    const allCurrencyies = items.concat(tokenItems)
+    this.setState({
+      currentActiveAsset: data,
+      allCurrencyies,
+    })
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -407,45 +432,45 @@ export default class WithdrawModal extends React.Component {
   getRubRates() {
     request
       .get('https://www.cbr-xml-daily.ru/daily_json.js', {
-        cacheResponse: 60 * 60 * 1000
+        cacheResponse: 60 * 60 * 1000,
       })
-      .then(rates => {
+      .then((rates) => {
         if (rates && rates.Valute && rates.Valute.USD) {
           const rubRates = rates.Valute.USD.Value
           this.setState({
-            rubRates
+            rubRates,
           })
         }
       })
   }
 
-  handleDollarValue = value => {
+  handleDollarValue = (value) => {
     const { rubRates, currentDecimals, multiplier } = this.state
 
     this.setState({
       amountUSD: value,
       amountRUB: value ? (value * rubRates).toFixed(0) : '',
-      amount: value ? (value / multiplier).toFixed(currentDecimals) : ''
+      amount: value ? (value / multiplier).toFixed(currentDecimals) : '',
     })
   }
 
-  handleRubValue = value => {
+  handleRubValue = (value) => {
     const { rubRates, currentDecimals, multiplier } = this.state
 
     this.setState({
       amountRUB: value,
       amountUSD: value ? (value / rubRates).toFixed(2) : '',
-      amount: value ? (value / multiplier / rubRates).toFixed(currentDecimals) : ''
+      amount: value ? (value / multiplier / rubRates).toFixed(currentDecimals) : '',
     })
   }
 
-  handleAmount = value => {
+  handleAmount = (value) => {
     const { rubRates, multiplier } = this.state
 
     this.setState({
       amountRUB: value ? (value * multiplier * rubRates).toFixed(0) : '',
       amountUSD: value ? (value * multiplier).toFixed(2) : '',
-      amount: value
+      amount: value,
     })
   }
 
@@ -472,9 +497,7 @@ export default class WithdrawModal extends React.Component {
     } = this.props
     const { Withdraw } = constants.modals
 
-    const currentAsset = this.props.items.filter((item) => currency === item.currency)
-
-    console.log('currentAsset', currentAsset[0])
+    const currentAsset = this.state.allCurrencyies.filter((item) => currency === item.currency)
 
     let targetCurrency = currentAsset[0].currency
     switch (currency.toLowerCase()) {
@@ -520,6 +543,7 @@ export default class WithdrawModal extends React.Component {
       items,
       intl,
       portalUI,
+      isBalanceFetching,
       dashboardView,
     } = this.props
 
@@ -535,11 +559,8 @@ export default class WithdrawModal extends React.Component {
     if (usedAdminFee) {
       defaultMin = BigNumber(min).plus(usedAdminFee.min).toNumber()
       if (amount) {
-        let feeFromAmount = BigNumber(usedAdminFee.fee)
-          .dividedBy(100)
-          .multipliedBy(amount)
-        if (BigNumber(usedAdminFee.min).isGreaterThan(feeFromAmount))
-          feeFromAmount = BigNumber(usedAdminFee.min)
+        let feeFromAmount = BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount)
+        if (BigNumber(usedAdminFee.min).isGreaterThan(feeFromAmount)) feeFromAmount = BigNumber(usedAdminFee.min)
 
         min = BigNumber(min).plus(feeFromAmount).toNumber() // Admin fee in satoshi
       } else {
@@ -639,7 +660,9 @@ export default class WithdrawModal extends React.Component {
                   {currentActiveAsset.balance} {currentActiveAsset.currency}
                 </span>
                 <span styleName="usd">
-                  {(currentActiveAsset.balance * currentActiveAsset.infoAboutCurrency.price_usd).toFixed(2)}
+                  {currentActiveAsset.infoAboutCurrency
+                    ? (currentActiveAsset.balance * currentActiveAsset.infoAboutCurrency.price_usd).toFixed(2)
+                    : (currentActiveAsset.balance * currentActiveAsset.currencyRate).toFixed(2)}{' '}
                   USD
                 </span>
               </div>
@@ -673,8 +696,10 @@ export default class WithdrawModal extends React.Component {
                         {item.balance} {item.currency}
                       </span>
                       <span styleName="usd">
-                        {item.infoAboutCurrency ?
-                          (item.balance * (item.infoAboutCurrency ? item.infoAboutCurrency.price_usd : 1)).toFixed(2) + 'USD' : ''}
+                        {item.infoAboutCurrency
+                          ? (item.balance * item.infoAboutCurrency.price_usd).toFixed(2)
+                          : (item.balance * item.currencyRate).toFixed(2)}{' '}
+                        USD
                       </span>
                     </div>
                   </div>
@@ -751,15 +776,15 @@ export default class WithdrawModal extends React.Component {
             />
           </div>
           <p styleName="balance">
-            {selectedValue != currency.toUpperCase() && amount != '' ? `${BigNumber(amount)
-                          .dp(5, BigNumber.ROUND_FLOOR)} ${currency.toUpperCase()} will be sent` : ''}
+            {selectedValue != currency.toUpperCase() && amount != ''
+              ? `${BigNumber(amount).dp(5, BigNumber.ROUND_FLOOR)} ${currency.toUpperCase()} will be sent`
+              : ''}
           </p>
           <FieldLabel>
             <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
           </FieldLabel>
 
           <div styleName="group">
-
             {this.state.selectedValue === currentActiveAsset.currency ? (
               <Input
                 withMargin
@@ -768,8 +793,8 @@ export default class WithdrawModal extends React.Component {
                 onKeyDown={inputReplaceCommaWithDot}
               />
             ) : (
-                ''
-              )}
+              ''
+            )}
 
             {this.state.selectedValue === 'RUB' ? (
               <Input
@@ -779,8 +804,8 @@ export default class WithdrawModal extends React.Component {
                 onKeyDown={inputReplaceCommaWithDot}
               />
             ) : (
-                ''
-              )}
+              ''
+            )}
 
             {this.state.selectedValue === 'USD' ? (
               <Input
@@ -790,8 +815,8 @@ export default class WithdrawModal extends React.Component {
                 onKeyDown={inputReplaceCommaWithDot}
               />
             ) : (
-                ''
-              )}
+              ''
+            )}
             {/* <Input
               styleName="input"
               valueLink={linked.amount}
@@ -842,10 +867,10 @@ export default class WithdrawModal extends React.Component {
                   <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
                 </Fragment>
               ) : (
-                  <Fragment>
-                    <FormattedMessage id="WithdrawModal111" defaultMessage="Withdraw" /> {`${currency.toUpperCase()}`}
-                  </Fragment>
-                )}
+                <Fragment>
+                  <FormattedMessage id="WithdrawModal111" defaultMessage="Withdraw" /> {`${currency.toUpperCase()}`}
+                </Fragment>
+              )}
             </Button>
           </div>
           <div styleName="actionBtn">
@@ -856,13 +881,7 @@ export default class WithdrawModal extends React.Component {
             </Button>
           </div>
         </div>
-        {usedAdminFee && isEthToken && (
-          <AdminFeeInfoBlock
-            {...usedAdminFee}
-            amount={amount}
-            currency={currency}
-          />
-        )}
+        {usedAdminFee && isEthToken && <AdminFeeInfoBlock {...usedAdminFee} amount={amount} currency={currency} />}
         {error && (
           <div styleName="rednote">
             <FormattedMessage
@@ -912,8 +931,8 @@ export default class WithdrawModal extends React.Component {
                   <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
                 </Fragment>
               ) : (
-                  <FormattedMessage id="WithdrawModalInvoiceSaveTx" defaultMessage="Отметить как оплаченный" />
-                )}
+                <FormattedMessage id="WithdrawModalInvoiceSaveTx" defaultMessage="Отметить как оплаченный" />
+              )}
             </Button>
           </Fragment>
         )}
@@ -946,7 +965,7 @@ export default class WithdrawModal extends React.Component {
         onClose={this.handleClose}
         title={`${intl.formatMessage(labels.withdrowModal)}${' '}${currency.toUpperCase()}`}
       >
-        <div style={{paddingBottom: '50px', paddingTop: '15px'}}>{formRender}</div>
+        <div style={{ paddingBottom: '50px', paddingTop: '15px' }}>{formRender}</div>
       </Modal>
     )
   }
