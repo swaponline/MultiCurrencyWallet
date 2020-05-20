@@ -72,6 +72,7 @@ const createSwapApp = () => {
         fetchUnspents: (scriptAddress) => actions.btc.fetchUnspents(scriptAddress),
         broadcastTx: (txRaw) => actions.btc.broadcastTx(txRaw),
         fetchTxInfo: (txid) => actions.btc.fetchTxInfo(txid),
+        checkWithdraw: (scriptAddress) => actions.btc.checkWithdraw(scriptAddress),
         estimateFeeValue: ({ inSatoshis, speed, address, txSize } = {}) => helpers.btc.estimateFeeValue({ inSatoshis, speed, address, txSize }),
       }),
       ...(Object.keys(config.erc20)
