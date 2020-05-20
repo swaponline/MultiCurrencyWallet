@@ -199,7 +199,6 @@ const NewDesignLayout = (props) => {
               className={cx({
                 [styles.desktopEnabledViewForFaq]: true,
                 [styles.faqWrapper]: true,
-                [styles.faqBlured]: dashboardView && isAnyModalCalled,
               })}
             >
               <FAQ />
@@ -238,7 +237,6 @@ const NewDesignLayout = (props) => {
             className={cx({
               [styles.mobileEnabledViewForFaq]: true,
               [styles.faqWrapper]: true,
-              [styles.faqBlured]: dashboardView && isAnyModalCalled,
             })}
           >
             <FAQ />

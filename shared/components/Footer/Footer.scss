@@ -12,13 +12,6 @@ $information-footer-height: 44px;
   justify-content: space-between;
 }
 
-.bluredFooter {
-  filter: blur(7px);
-  pointer-events: none;
-  will-change: filter;
-  // transition: filter ease 0.1s;
-}
-
 .information-footer {
   width: 100%;
   height: $information-footer-height;

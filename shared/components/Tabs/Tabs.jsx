@@ -71,7 +71,6 @@ const TabsComponent = ({ navs, onClick, activeView, dashboardView, modals }) => 
     <ul
       className={cx({
         [styles.walletNav]: true,
-        [styles.blured]: dashboardView && isAnyModalCalled,
       })}
     >
       {renderNavs.map(tabRenderer)}
