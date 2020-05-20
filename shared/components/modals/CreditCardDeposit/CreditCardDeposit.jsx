@@ -119,7 +119,7 @@ export default class CreditCardDeposit extends PureComponent {
             <iframe
               title="credit card deposit"
               width="100%"
-              height="1000px"
+              height="560px"
               src="https://itez.swaponline.io/?DEFAULT_FIAT=EUR&locale=en"
               frameBorder="0"
               allowFullScreen

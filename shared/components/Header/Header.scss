@@ -1,11 +1,5 @@
 $purple: #510ed8;
 
-.header-blured {
-  filter: blur(7px);
-  pointer-events: none;
-  will-change: filter;
-}
-
 .container {
   display: flex;
   align-items: center;

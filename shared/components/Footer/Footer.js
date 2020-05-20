@@ -26,7 +26,6 @@ const Footer = (props) => {
         <div
           className={cx({
             [styles.footer]: true,
-            [styles.bluredFooter]: props.dashboardView && Object.keys(props.modals).length,
           })}
         >
           <WidthContainer styleName="container">
