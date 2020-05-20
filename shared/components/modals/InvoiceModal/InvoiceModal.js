@@ -29,7 +29,7 @@ import minAmount from 'helpers/constants/minAmount'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import getCurrencyKey from 'helpers/getCurrencyKey'
 
-import { links }    from 'helpers'
+import { links } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import redirectTo from 'helpers/redirectTo'
 
@@ -110,6 +110,8 @@ export default class InvoiceModal extends React.Component {
 
     const currentDecimals = constants.tokenDecimals[currency.toLowerCase()]
 
+    const multiplier = infoAboutCurrency ? infoAboutCurrency.price_usd : 1
+
     this.state = {
       isShipped: false,
       payerAddress,
@@ -125,6 +127,7 @@ export default class InvoiceModal extends React.Component {
       currentDecimals,
       error: false,
       infoAboutCurrency,
+      multiplier,
       rubRates: 62.34
     }
 
@@ -214,31 +217,31 @@ export default class InvoiceModal extends React.Component {
   }
 
   handleDollarValue = value => {
-    const { rubRates, currentDecimals } = this.state
+    const { rubRates, currentDecimals, multiplier } = this.state
 
     this.setState({
       amountUSD: value,
       amountRUB: value ? (value * rubRates).toFixed(0) : '',
-      amount: value ? (value / this.state.infoAboutCurrency.price_usd).toFixed(currentDecimals) : ''
+      amount: value ? (value / multiplier).toFixed(currentDecimals) : ''
     })
   }
 
   handleRubValue = value => {
-    const { rubRates, currentDecimals, amount } = this.state
+    const { rubRates, currentDecimals, multiplier } = this.state
 
     this.setState({
       amountRUB: value,
       amountUSD: value ? (value / rubRates).toFixed(2) : '',
-      amount: value ? (value / this.state.infoAboutCurrency.price_usd / rubRates).toFixed(currentDecimals) : ''
+      amount: value ? (value / multiplier / rubRates).toFixed(currentDecimals) : ''
     })
   }
 
   handleAmount = value => {
-    const { rubRates, currentDecimals, amount, selectedValue } = this.state
+    const { rubRates, multiplier } = this.state
 
     this.setState({
-      amountRUB: value ? (value * this.state.infoAboutCurrency.price_usd * rubRates).toFixed(0) : '',
-      amountUSD: value ? (value * this.state.infoAboutCurrency.price_usd).toFixed(2) : '',
+      amountRUB: value ? (value * multiplier * rubRates).toFixed(0) : '',
+      amountUSD: value ? (value * multiplier).toFixed(2) : '',
       amount: value
     })
   }

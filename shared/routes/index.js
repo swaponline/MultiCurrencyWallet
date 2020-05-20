@@ -68,7 +68,7 @@ const routes = (
       <Route path={`${localisePrefix}${links.createInvoice}/:type/:wallet`} component={CreateInvoice} />
       {isMobile && <Route path={`${localisePrefix}${links.invoices}/:type?/:address?`} component={InvoicesList} />}
       <Route path={`${localisePrefix}${links.invoice}/:uniqhash?/:doshare?`} component={Invoice} />
-      <Route path={`${localisePrefix}${links.creditCardDeposit}/:address`} component={CreditCardDeposit} />
+      <Route path={`${localisePrefix}${links.creditCardDeposit}/:address?`} component={CreditCardDeposit} />
 
       <Route path={`${localisePrefix}${links.savePrivateSeed}`} component={SaveMnemonicModal} />
       <Route path={`${localisePrefix}${links.savePrivateKeys}`} component={SaveKeysModal} />

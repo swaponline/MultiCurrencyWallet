@@ -77,6 +77,8 @@ export default class WithdrawModal extends React.Component {
 
     this.getRubRates()
 
+    const multiplier = data.data.infoAboutCurrency ? data.data.infoAboutCurrency.price_usd : 1
+
     this.state = {
       isShipped: false,
       usedAdminFee,
@@ -96,6 +98,7 @@ export default class WithdrawModal extends React.Component {
       hiddenCoinsList,
       currentActiveAsset: data.data,
       allCurrencyies,
+      multiplier
     }
   }
 
@@ -417,31 +420,31 @@ export default class WithdrawModal extends React.Component {
   }
 
   handleDollarValue = value => {
-    const { rubRates, currentDecimals } = this.state
+    const { rubRates, currentDecimals, multiplier } = this.state
 
     this.setState({
       amountUSD: value,
       amountRUB: value ? (value * rubRates).toFixed(0) : '',
-      amount: value ? (value / this.state.currentActiveAsset.infoAboutCurrency.price_usd).toFixed(currentDecimals) : ''
+      amount: value ? (value / multiplier).toFixed(currentDecimals) : ''
     })
   }
 
   handleRubValue = value => {
-    const { rubRates, currentDecimals, amount } = this.state
+    const { rubRates, currentDecimals, multiplier } = this.state
 
     this.setState({
       amountRUB: value,
       amountUSD: value ? (value / rubRates).toFixed(2) : '',
-      amount: value ? (value / this.state.currentActiveAsset.infoAboutCurrency.price_usd / rubRates).toFixed(currentDecimals) : ''
+      amount: value ? (value / multiplier / rubRates).toFixed(currentDecimals) : ''
     })
   }
 
   handleAmount = value => {
-    const { rubRates, currentDecimals, amount, selectedValue } = this.state
+    const { rubRates, multiplier } = this.state
 
     this.setState({
-      amountRUB: value ? (value * this.state.currentActiveAsset.infoAboutCurrency.price_usd * rubRates).toFixed(0) : '',
-      amountUSD: value ? (value * this.state.currentActiveAsset.infoAboutCurrency.price_usd).toFixed(2) : '',
+      amountRUB: value ? (value * multiplier * rubRates).toFixed(0) : '',
+      amountUSD: value ? (value * multiplier).toFixed(2) : '',
       amount: value
     })
   }
@@ -521,7 +524,7 @@ export default class WithdrawModal extends React.Component {
     } = this.props
 
     const linked = Link.all(this, 'address', 'amount', 'ownTx', 'amountUSD', 'amountRUB', 'amount')
-  
+
     let min = isEthToken ? 0 : minAmount[currency.toLowerCase()]
     let defaultMin = min
 
@@ -671,7 +674,7 @@ export default class WithdrawModal extends React.Component {
                       </span>
                       <span styleName="usd">
                         {item.infoAboutCurrency ?
-                          (item.balance * item.infoAboutCurrency.price_usd).toFixed(2) + 'USD' : ''}
+                          (item.balance * (item.infoAboutCurrency ? item.infoAboutCurrency.price_usd : 1)).toFixed(2) + 'USD' : ''}
                       </span>
                     </div>
                   </div>
@@ -757,7 +760,7 @@ export default class WithdrawModal extends React.Component {
 
           <div styleName="group">
 
-          {this.state.selectedValue === currentActiveAsset.currency ? (
+            {this.state.selectedValue === currentActiveAsset.currency ? (
               <Input
                 withMargin
                 valueLink={linked.amount.pipe(this.handleAmount)}
@@ -839,10 +842,10 @@ export default class WithdrawModal extends React.Component {
                   <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
                 </Fragment>
               ) : (
-                <Fragment>
-                  <FormattedMessage id="WithdrawModal111" defaultMessage="Withdraw" /> {`${currency.toUpperCase()}`}
-                </Fragment>
-              )}
+                  <Fragment>
+                    <FormattedMessage id="WithdrawModal111" defaultMessage="Withdraw" /> {`${currency.toUpperCase()}`}
+                  </Fragment>
+                )}
             </Button>
           </div>
           <div styleName="actionBtn">
@@ -909,8 +912,8 @@ export default class WithdrawModal extends React.Component {
                   <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
                 </Fragment>
               ) : (
-                <FormattedMessage id="WithdrawModalInvoiceSaveTx" defaultMessage="Отметить как оплаченный" />
-              )}
+                  <FormattedMessage id="WithdrawModalInvoiceSaveTx" defaultMessage="Отметить как оплаченный" />
+                )}
             </Button>
           </Fragment>
         )}

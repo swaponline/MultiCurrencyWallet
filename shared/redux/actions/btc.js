@@ -456,7 +456,6 @@ const getTransaction = (address, ownType) =>
   new Promise((resolve) => {
     const myAllWallets = getAllMyAddresses()
 
-    console.log('btc getTransaction', address, myAllWallets)
     let { user: { btcData: { address: userAddress } } } = getState()
     address = address || userAddress
 
@@ -467,6 +466,7 @@ const getTransaction = (address, ownType) =>
     }
 
     const url = `/txs/?address=${address}`
+
     return apiLooper.get('bitpay', url, {
       checkStatus: (answer) => {
         try {
@@ -476,10 +476,9 @@ const getTransaction = (address, ownType) =>
       },
       query: 'btc_balance',
     }).then((res) => {
-      console.log('getTransaction', address, res)
       const transactions = res.txs.map((item) => {
         const direction = item.vin[0].addr !== address ? 'in' : 'out'
-        console.log(direction)
+
         const isSelf = direction === 'out'
           && item.vout.filter((item) =>
             item.scriptPubKey.addresses[0] === address
@@ -493,6 +492,7 @@ const getTransaction = (address, ownType) =>
           value: isSelf
             ? item.fees
             : item.vout.filter((item) => {
+              if (!item.scriptPubKey.addresses) return false
               const currentAddress = item.scriptPubKey.addresses[0]
 
               return direction === 'in'
