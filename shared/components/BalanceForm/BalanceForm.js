@@ -77,7 +77,7 @@ function BalanceForm({
             )
             : (
               <p className="data-tut-all-balance">
-                {currency === 'btc' ? <img src={btc} alt="btc" /> : ''}
+                {currency === 'BTC' ? <img src={btc} alt="btc" /> : ''}
                 {BigNumber(currencyBalance)
                   .dp(5, BigNumber.ROUND_FLOOR)
                   .toString()}

@@ -13,6 +13,8 @@ import { Link } from 'react-router-dom'
 import { links } from 'helpers'
 
 import config from 'helpers/externalConfig'
+import getCurrencyKey from 'helpers/getCurrencyKey'
+import { ethToken } from 'helpers'
 
 
 const title = defineMessages({
@@ -45,7 +47,11 @@ export default class ReceiveModal extends React.Component {
 
     howToDeposit = howToDeposit.replace(/{userAddress}/g, address);
 
-    props.history.push(`/${currency}/${address}/receive`)
+    const targetCurrency = getCurrencyKey(currency.toLowerCase(), true)
+    const isToken = ethToken.isEthToken({ name: currency })
+
+    const recieveUrl = (isToken ? '/token' : '') + `/${targetCurrency}/${address}/receive`
+    props.history.push(recieveUrl)
 
     this.state = {
       isAddressCopied: false,
