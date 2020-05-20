@@ -748,7 +748,8 @@ export default class WithdrawModal extends React.Component {
             />
           </div>
           <p styleName="balance">
-            {currentActiveAsset.balance} {currency.toUpperCase()}
+            {selectedValue != currency.toUpperCase() && amount != '' ? `${BigNumber(amount)
+                          .dp(5, BigNumber.ROUND_FLOOR)} ${currency.toUpperCase()} will be sent` : ''}
           </p>
           <FieldLabel>
             <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
@@ -810,7 +811,7 @@ export default class WithdrawModal extends React.Component {
                 />
               </ReactTooltip>
             )}
-            {!linked.amount.error && (
+            {/* {!linked.amount.error && (
               <div styleName={minus ? 'rednote' : 'note'}>
                 <FormattedMessage
                   id="WithdrawModal256"
@@ -818,7 +819,7 @@ export default class WithdrawModal extends React.Component {
                   values={{ minAmount: `${defaultMin}` }}
                 />
               </div>
-            )}
+            )} */}
           </div>
           {this.isEthOrERC20() && (
             <div styleName="rednote">
@@ -942,7 +943,7 @@ export default class WithdrawModal extends React.Component {
         onClose={this.handleClose}
         title={`${intl.formatMessage(labels.withdrowModal)}${' '}${currency.toUpperCase()}`}
       >
-        {formRender}
+        <div style={{paddingBottom: '50px', paddingTop: '15px'}}>{formRender}</div>
       </Modal>
     )
   }

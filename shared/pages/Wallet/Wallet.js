@@ -221,36 +221,40 @@ export default class Wallet extends Component {
     const { enabledCurrencies } = this.state
     const { hiddenCoinsList } = this.props
 
-    /* @ToDo Вынести отдельно */
-    // Набор валют для виджета
-    const widgetCurrencies = ['BTC']
-    if (!hiddenCoinsList.includes('BTC (SMS-Protected)')) widgetCurrencies.push('BTC (SMS-Protected)')
-    if (!hiddenCoinsList.includes('BTC (Multisig)')) widgetCurrencies.push('BTC (Multisig)')
-    widgetCurrencies.push('ETH')
-    if (isWidgetBuild) {
-      if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
-        // Multi token widget build
-        Object.keys(window.widgetERC20Tokens).forEach((key) => {
-          widgetCurrencies.push(key.toUpperCase())
-        })
-      } else {
-        widgetCurrencies.push(config.erc20token.toUpperCase())
-      }
-    }
+    
 
-    const currencies = actions.core.getWallets().filter(({ currency, balance }) => {
-      return (
-        (context === 'Send' ? balance : true) &&
-        !hiddenCoinsList.includes(currency) &&
-        enabledCurrencies.includes(currency) &&
-        (isWidgetBuild ? widgetCurrencies.includes(currency) : true)
-      )
+    // /* @ToDo Вынести отдельно */
+    // // Набор валют для виджета
+    // const widgetCurrencies = ['BTC']
+    // if (!hiddenCoinsList.includes('BTC (SMS-Protected)')) widgetCurrencies.push('BTC (SMS-Protected)')
+    // if (!hiddenCoinsList.includes('BTC (Multisig)')) widgetCurrencies.push('BTC (Multisig)')
+    // widgetCurrencies.push('ETH')
+    // if (isWidgetBuild) {
+    //   if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
+    //     // Multi token widget build
+    //     Object.keys(window.widgetERC20Tokens).forEach((key) => {
+    //       widgetCurrencies.push(key.toUpperCase())
+    //     })
+    //   } else {
+    //     widgetCurrencies.push(config.erc20token.toUpperCase())
+    //   }
+    // }
+
+    const allData = actions.core.getWallets()
+
+    let tableRows = allData.filter(({ currency, address, balance }) => {
+      // @ToDo - В будущем нужно убрать проверку только по типу монеты.
+      // Старую проверку оставил, чтобы у старых пользователей не вывалились скрытые кошельки
+
+      return (!hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`)) || balance > 0
     })
 
-    actions.modals.open(constants.modals.CurrencyAction, {
-      currencies,
-      context,
-    })
+    // actions.modals.open(constants.modals.CurrencyAction, {
+    //   currencies,
+    //   context,
+    // })
+
+    console.log('currencies', tableRows[0])
   }
 
   checkBalance = () => {
@@ -335,6 +339,7 @@ export default class Wallet extends Component {
 
       return (!hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`)) || balance > 0
     })
+
 
     if (isWidgetBuild) {
       //tableRows = allData.filter(({ currency }) => widgetCurrencies.includes(currency))
