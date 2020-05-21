@@ -4344,6 +4344,13 @@
     ]
   },
   {
+    "id": "BTCMS_CreateWalletLoading_descroptio",
+    "message": "Funds sent to this wallet cannot be spent without your confirmation (please save your private 12 words passphrase)",
+    "files": [
+      "shared/pages/Multisign/Btc/Btc.js"
+    ]
+  },
+  {
     "id": "BTCMS_CreateWalletLinkReady",
     "message": "Кошелек создан. Отправьте эту ссылку второму владельцу для подтверждения",
     "files": [

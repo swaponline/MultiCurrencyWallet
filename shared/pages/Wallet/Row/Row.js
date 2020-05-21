@@ -82,14 +82,19 @@ export default class Row extends Component {
 
   constructor(props) {
     super(props)
+
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleSliceAddress)
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const multiplier = await this.getFiats()
+
     window.addEventListener('resize', this.handleSliceAddress)
+
+    this.setState(() => ({ multiplier }))
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -500,18 +505,15 @@ export default class Row extends Component {
       isBalanceFetching,
       // @ToDo Remove this
       // tradeAllowed,
-      isAddressCopied,
-      isTouch,
       isBalanceEmpty,
-      showButtons,
-      exCurrencyRate,
-      isDropdownOpen,
+      multiplier
     } = this.state
 
     const {
       itemData,
       intl: { locale },
       intl,
+      activeFiat
     } = this.props
 
     const {
@@ -531,7 +533,6 @@ export default class Row extends Component {
     let currencyFiatBalance = 0
 
     const isWidgetBuild = config && config.isWidget
-    const multiplier = this.getFiats()
 
     if (itemData.infoAboutCurrency) {
       currencyFiatBalance =
@@ -565,17 +566,17 @@ export default class Row extends Component {
       },
       ...(hasHowToWithdraw
         ? [
-            {
-              id: 10021,
-              title: (
-                <FormattedMessage
-                  id="WalletRow_Menu_HowToWithdraw"
-                  defaultMessage="How to withdraw"
-                />
-              ),
-              action: this.handleHowToWithdraw,
-            },
-          ]
+          {
+            id: 10021,
+            title: (
+              <FormattedMessage
+                id="WalletRow_Menu_HowToWithdraw"
+                defaultMessage="How to withdraw"
+              />
+            ),
+            action: this.handleHowToWithdraw,
+          },
+        ]
         : []),
       {
         id: 1002,
@@ -787,66 +788,66 @@ export default class Row extends Component {
                 </a>
               </div>
             ) : (
-              ''
-            )}
+                ''
+              )}
             <span styleName="assetsTableCurrencyWrapper">
               {!isBalanceFetched || isBalanceFetching ? (
                 this.props.itemData.isUserProtected &&
-                !this.props.itemData.active ? (
-                  <span>
-                    <FormattedMessage
-                      id="walletMultisignNotJoined"
-                      defaultMessage="Not joined"
-                    />
-                  </span>
-                ) : (
-                  <div styleName="loader">
-                    {!(balanceError && nodeDownErrorShow) && <InlineLoader />}
-                  </div>
-                )
+                  !this.props.itemData.active ? (
+                    <span>
+                      <FormattedMessage
+                        id="walletMultisignNotJoined"
+                        defaultMessage="Not joined"
+                      />
+                    </span>
+                  ) : (
+                    <div styleName="loader">
+                      {!(balanceError && nodeDownErrorShow) && <InlineLoader />}
+                    </div>
+                  )
               ) : (
-                <div
-                  styleName="no-select-inline"
-                  onClick={this.handleReloadBalance}
-                >
-                  <i className="fas fa-sync-alt" styleName="icon" />
-                  <span>
-                    {balanceError
-                      ? '?'
-                      : BigNumber(balance)
+                  <div
+                    styleName="no-select-inline"
+                    onClick={this.handleReloadBalance}
+                  >
+                    <i className="fas fa-sync-alt" styleName="icon" />
+                    <span>
+                      {balanceError
+                        ? '?'
+                        : BigNumber(balance)
                           .dp(5, BigNumber.ROUND_FLOOR)
                           .toString()}{' '}
-                  </span>
-                  <span styleName="assetsTableCurrencyBalance">
-                    {currencyView}
-                  </span>
-                  {unconfirmedBalance !== 0 && (
-                    <Fragment>
-                      <br />
-                      <span
-                        styleName="unconfirmedBalance"
-                        title={intl.formatMessage(
-                          langLabels.unconfirmedBalance
-                        )}
-                      >
-                        {unconfirmedBalance > 0 && <>{'+'}</>}
-                        {unconfirmedBalance}{' '}
-                      </span>
-                    </Fragment>
-                  )}
-                </div>
-              )}
+                    </span>
+                    <span styleName="assetsTableCurrencyBalance">
+                      {currencyView}
+                    </span>
+                    {unconfirmedBalance !== 0 && (
+                      <Fragment>
+                        <br />
+                        <span
+                          styleName="unconfirmedBalance"
+                          title={intl.formatMessage(
+                            langLabels.unconfirmedBalance
+                          )}
+                        >
+                          {unconfirmedBalance > 0 && <>{'+'}</>}
+                          {unconfirmedBalance}{' '}
+                        </span>
+                      </Fragment>
+                    )}
+                  </div>
+                )}
             </span>
             {itemData.address !== 'Not jointed' ? (
               <p styleName="addressStyle">{itemData.address}</p>
             ) : (
-              ''
-            )}
+                ''
+              )}
             {isMobile ? (
               <PartOfAddress {...itemData} onClick={this.goToCurrencyHistory} />
             ) : (
-              ''
-            )}
+                ''
+              )}
             <div styleName="assetsTableInfo">
               <div styleName="nameRow">
                 <a
@@ -867,8 +868,8 @@ export default class Row extends Component {
                 {/* {inneedData && <span>   {`${inneedData.change} %`} </span>} */}
               </div>
             ) : (
-              ''
-            )}
+                ''
+              )}
           </div>
           <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">
             <DropdownMenu
