@@ -388,6 +388,12 @@ export default class CurrencyWallet extends Component {
             token: ethToken.isEthToken({ name: ticker }),
           },
           () => {
+            if (prevProps.location.pathname !== this.props.location.pathname) {
+              if (localStorage.getItem(constants.localStorage.balanceActiveCurrency).toUpperCase() !== 'USD') {
+                localStorage.setItem(constants.localStorage.balanceActiveCurrency, currency.toLowerCase())
+              }
+              
+            }
             const targetCurrency = getCurrencyKey(currency.toLowerCase(), true)
             const isToken = helpers.ethToken.isEthToken({ name: currency })
 

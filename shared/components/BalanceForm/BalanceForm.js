@@ -98,10 +98,10 @@ function BalanceForm({
           </button>
           <span />
           <button
-            styleName={activeCurrency === 'btc' && 'active'}
+            styleName={activeCurrency === currency && 'active'}
             onClick={() => {
               // eslint-disable-next-line no-unused-expressions, no-sequences
-              setActiveCurrency('btc'), localStorage.setItem(constants.localStorage.balanceActiveCurrency, 'btc')
+              setActiveCurrency(currency), localStorage.setItem(constants.localStorage.balanceActiveCurrency, currency)
             }}
           >
             {currency}
