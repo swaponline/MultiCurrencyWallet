@@ -278,7 +278,7 @@ export default class Wallet extends Component {
       return (!hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`)) || balance > 0
     })
 
-    const {currency, address} = tableRows[0];
+    const { currency, address } = tableRows[0];
 
     let withdrawModalType = Withdraw
     if (currency === 'BTC (SMS-Protected)')
@@ -338,6 +338,46 @@ export default class Wallet extends Component {
     }
   }
 
+
+  handleModalOpen = context => {
+    const { enabledCurrencies } = this.state
+    const { hiddenCoinsList } = this.props
+
+    /* @ToDo Вынести в экшены и убрать все дубляжи из всех компонентов */
+    // Набор валют для виджета
+    const widgetCurrencies = ['BTC']
+    if (!hiddenCoinsList.includes('BTC (SMS-Protected)')) widgetCurrencies.push('BTC (SMS-Protected)')
+    if (!hiddenCoinsList.includes('BTC (Multisig)')) widgetCurrencies.push('BTC (Multisig)')
+    widgetCurrencies.push('ETH')
+    if (isWidgetBuild) {
+      if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
+        // Multi token widget build
+        Object.keys(window.widgetERC20Tokens).forEach(key => {
+          widgetCurrencies.push(key.toUpperCase())
+        })
+      } else {
+        widgetCurrencies.push(config.erc20token.toUpperCase())
+      }
+    }
+
+    const currencies = actions.core.getWallets()
+      .filter(({ currency, balance }) => {
+        return (
+          ((context === 'Send') ? balance : true)
+          && !hiddenCoinsList.includes(currency)
+          && enabledCurrencies.includes(currency)
+          && ((isWidgetBuild) ?
+            widgetCurrencies.includes(currency)
+            : true)
+        )
+      })
+
+    actions.modals.open(constants.modals.CurrencyAction, {
+      currencies,
+      context
+    })
+  }
+
   render() {
     const {
       multiplier,
@@ -350,13 +390,12 @@ export default class Wallet extends Component {
       isBalanceFetching,
       activeFiat,
       match: {
-      params: {
-        page = null,
-      },
-    }, } = this.props
+        params: {
+          page = null,
+        },
+      }, } = this.props
 
     const allData = actions.core.getWallets()
-    console.log('isBalanceFetching', isBalanceFetching)
 
     this.checkBalance()
 
@@ -431,14 +470,14 @@ export default class Wallet extends Component {
         )}
       >
         {
-          activeView === 0 && 
-            <CurrenciesList
-              tableRows={tableRows}
-              {...this.state}
-              {...this.props}
-              goToСreateWallet={this.goToСreateWallet}
-              getExCurrencyRate={(currencySymbol, rate) => this.getExCurrencyRate(currencySymbol, rate)}
-            />
+          activeView === 0 &&
+          <CurrenciesList
+            tableRows={tableRows}
+            {...this.state}
+            {...this.props}
+            goToСreateWallet={this.goToСreateWallet}
+            getExCurrencyRate={(currencySymbol, rate) => this.getExCurrencyRate(currencySymbol, rate)}
+          />
         }
         {activeView === 1 && (<History {...this.props} />)}
         {activeView === 2 && (<InvoicesList {...this.props} onlyTable={true} />)}

@@ -570,7 +570,7 @@ export default class CurrencyWallet extends Component {
       hiddenCoinsList,
       isSigned,
       isBalanceFetching,
-      isFetching,
+      activeFiat,
     } = this.props
 
     const {
@@ -679,10 +679,11 @@ export default class CurrencyWallet extends Component {
           BalanceForm={
             txHistory ? (
               <BalanceForm
+                address={address}
+                activeFiat={activeFiat}
                 currencyBalance={balance}
                 fiatBalance={currencyFiatBalance}
                 changePercent={changePercent}
-                address={address}
                 isFetching={isBalanceFetching}
                 handleReceive={this.handleReceive}
                 handleWithdraw={this.handleWithdraw}
@@ -692,8 +693,8 @@ export default class CurrencyWallet extends Component {
                 currency={currency.toLowerCase()}
               />
             ) : (
-              <ContentLoader leftSideContent />
-            )
+                <ContentLoader leftSideContent />
+              )
           }
         >
           <div styleName="currencyWalletActivity">
@@ -708,10 +709,10 @@ export default class CurrencyWallet extends Component {
               (txHistory.length > 0 ? (
                 <Table rows={txHistory} styleName="currencyHistory" rowRender={this.rowRender} />
               ) : (
-                <div styleName="historyContent">
-                  <ContentLoader rideSideContent empty nonHeader inner />
-                </div>
-              ))}
+                  <div styleName="historyContent">
+                    <ContentLoader rideSideContent empty nonHeader inner />
+                  </div>
+                ))}
             {(!txHistory || isLoading) && (
               <div styleName="historyContent">
                 <ContentLoader rideSideContent nonHeader />
@@ -725,8 +726,8 @@ export default class CurrencyWallet extends Component {
                 <SwapsHistory orders={swapHistory.filter((item) => item.step >= 4)} />
               </div>
             ) : (
-              ''
-            ))}
+                ''
+              ))}
         </DashboardLayout>
         <Fragment>{seoPage && seoPage.footer && <div>{seoPage.footer}</div>}</Fragment>
       </div>
