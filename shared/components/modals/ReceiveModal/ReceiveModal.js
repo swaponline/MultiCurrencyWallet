@@ -96,7 +96,6 @@ export default class ReceiveModal extends React.Component {
       },
     } = this
 
-    console.log(this.props)
     if (howToDeposit) {
       return (
         <Modal name={name} title={intl.formatMessage(title.Receive)}>

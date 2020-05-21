@@ -73,7 +73,7 @@ const NewDesignLayout = (props) => {
         block: 'start',
       })
     }
-  })
+  }, [])
 
   useEffect(() => {
     const getFiats = async () => {
