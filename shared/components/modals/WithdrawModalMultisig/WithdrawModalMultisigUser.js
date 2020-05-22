@@ -535,7 +535,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
                     </Fragment>
                   ) : (
                       <Fragment>
-                        <FormattedMessage id="WithdrawModal111" defaultMessage="Withdraw" />
+                        <FormattedMessage id="WithdrawModal111" defaultMessage="Send" />
                       </Fragment>
                     )}
                 </Button>
