@@ -589,7 +589,7 @@ export default class WithdrawModal extends React.Component {
             </FieldLabel>
             <div
               styleName="customSelectValue"
-              onClick={() => this.setState((isAssetsOpen) => ({ isAssetsOpen: !isAssetsOpen }))}
+              onClick={() => this.setState(({ isAssetsOpen }) => ({ isAssetsOpen: !isAssetsOpen }))}
             >
               <div styleName="coin">
                 <Coin name={currentActiveAsset.currency} />
