@@ -98,7 +98,7 @@ export default class WithdrawModal extends React.Component {
       ethBalance: null,
       isEthToken: helpers.ethToken.isEthToken({ name: currency.toLowerCase() }),
       currentDecimals,
-      selectedValue: currency,
+      selectedValue: localStorage.getItem(constants.localStorage.balanceActiveCurrency).toUpperCase() || data.data.currency,
       getFiat: 0,
       error: false,
       ownTx: '',
@@ -514,6 +514,11 @@ export default class WithdrawModal extends React.Component {
     )
   }
 
+  setAdditionCurrency = (currency) => {
+    this.setState({ selectedValue: currency })
+    localStorage.setItem(constants.localStorage.balanceActiveCurrency, currency.toLowerCase())
+  }
+
   render() {
     const {
       address,
@@ -740,43 +745,23 @@ export default class WithdrawModal extends React.Component {
           )}
         </div>
         <div styleName="lowLevel" style={{ marginBottom: '50px' }}>
-          <div styleName="currencySelectContainer">
-            <CurrencySelect
-              label="fdsfssf"
-              tooltip="dsfss"
-              id="fdsfs"
-              className={dropDownStyles.simpleDropdown}
-              selectedValue={selectedValue}
-              onSelect={this.handleBuyCurrencySelect}
-              selectedItemRender={(item) => item.fullTitle}
-              isToggleActive
-              currencies={[
-                {
-                  fullTitle: 'rub',
-                  icon: 'rub',
-                  name: 'RUB',
-                  title: 'RUB',
-                  value: 'RUB',
-                },
-                {
-                  fullTitle: currentActiveAsset.currency,
-                  icon: currentActiveAsset.currency.toLowerCase(),
-                  name: currentActiveAsset.currency,
-                  title: currentActiveAsset.currency,
-                  value: currentActiveAsset.currency,
-                },
-                {
-                  fullTitle: 'USD',
-                  icon: 'usd',
-                  name: 'USD',
-                  title: 'USD',
-                  value: 'USD',
-                },
-              ]}
-            />
+          <div styleName="additionalСurrencies">
+            <span
+              styleName={cx('additionalСurrenciesItem', { additionalСurrenciesItemActive: selectedValue === 'USD' })}
+              onClick={() => this.setAdditionCurrency('USD')}
+            >
+              USD
+            </span>
+            <span styleName="delimiter"></span>
+            <span
+              styleName={cx('additionalСurrenciesItem', { additionalСurrenciesItemActive: selectedValue === currentActiveAsset.currency })}
+              onClick={() => this.setAdditionCurrency(currentActiveAsset.currency)}
+            >
+              {currentActiveAsset.currency}
+            </span>
           </div>
           <p styleName="balance">
-            {selectedValue != currency.toUpperCase() && amount != ''
+            {amount != ''
               ? `${BigNumber(amount).dp(5, BigNumber.ROUND_FLOOR)} ${currency.toUpperCase()} will be sent`
               : ''}
           </p>
@@ -789,17 +774,6 @@ export default class WithdrawModal extends React.Component {
               <Input
                 withMargin
                 valueLink={linked.amount.pipe(this.handleAmount)}
-                pattern="0-9\."
-                onKeyDown={inputReplaceCommaWithDot}
-              />
-            ) : (
-              ''
-            )}
-
-            {this.state.selectedValue === 'RUB' ? (
-              <Input
-                withMargin
-                valueLink={linked.amountRUB.pipe(this.handleRubValue)}
                 pattern="0-9\."
                 onKeyDown={inputReplaceCommaWithDot}
               />
