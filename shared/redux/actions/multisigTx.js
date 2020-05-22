@@ -2,6 +2,7 @@ import { apiLooper, constants, api } from 'helpers'
 import config from 'app-config'
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
+import reducers from 'redux/core/reducers'
 
 
 const broadcast = ({ sender, destination, amount, fee, rawTx, invoice }) => {
@@ -85,10 +86,14 @@ const fetch = (address) => {
   const { user: { btcData } } = getState()
   const holderKey = btcData.publicKey.toString('hex')
 
+  let firstPending = false
+  let pengingCount = 0
+
   return apiLooper.post('multisig', `/txs/`, {
     body: {
       address,
-    }
+    },
+    query: 'multisigTx',
   }).then((res) => {
     if (res
       && res.answer
@@ -109,6 +114,14 @@ const fetch = (address) => {
             break;
         }
 
+        if (status === 'pending') {
+          firstPending = firstPending || {
+            address,
+            item,
+          }
+          pengingCount++
+        }
+
         return ({
           type: 'btc',
           hash: item.uniqhash,
@@ -126,6 +139,12 @@ const fetch = (address) => {
         })
       })
 
+      console.log('updateMultisigStatus', address, firstPending, pengingCount)
+      reducers.user.updateMultisigStatus({
+        address,
+        last: firstPending,
+        total: pengingCount,
+      })
       return transactions
     } else return []
   }).catch ((e) => {

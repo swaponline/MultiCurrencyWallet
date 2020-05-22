@@ -53,8 +53,20 @@ export const initialState = {
   isFetching: false,
   isBalanceFetching: false,
   isTokenSigned: false,
-  activeFiat: window.DEFAULT_FIAT || 'USD'
+  activeFiat: window.DEFAULT_FIAT || 'USD',
+  multisigStatus: {},
 }
+
+export const updateMultisigStatus = (state, { address, last, total }) => ({
+  ...state,
+  multisigStatus: {
+    ...state.multisigStatus,
+    [address] : {
+      pending: last,
+      count: total,
+    },
+  },
+})
 
 export const addWallet = (state, { name, data }) => ({
   ...state,

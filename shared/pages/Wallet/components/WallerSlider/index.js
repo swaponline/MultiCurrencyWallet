@@ -106,6 +106,10 @@ export default class WallerSlider extends Component {
   render() {
     const { mnemonicDeleted, banners } = this.state
 
+    const { multisigStatus } = this.props
+
+    console.log('Render banners', multisigStatus)
+
     const isPrivateKeysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
 
     let firstBtnTitle = <FormattedMessage id="descr282" defaultMessage="Show my keys" />

@@ -63,13 +63,15 @@ const langLabels = defineMessages({
   user: {
     btcData,
     ethData,
+    multisigStatus,
   },
 }) => {
   return {
     data: {
       btc: btcData,
       eth: ethData,
-    }
+    },
+    multisigStatus,
   }
 })
 @injectIntl
@@ -197,6 +199,7 @@ export default class InvoicesList extends PureComponent {
       intl,
       isSigned,
       onlyTable,
+      multisigStatus,
     } = this.props
 
     const {
@@ -256,6 +259,7 @@ export default class InvoicesList extends PureComponent {
           defaultDescription={intl.formatMessage(langLabels.metaDescription)} />
         <Slider
           settings={settings}
+          multisigStatus={multisigStatus}
           isSigned={isSigned}
           {...this.state}
         />
