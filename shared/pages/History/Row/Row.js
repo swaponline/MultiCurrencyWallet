@@ -45,11 +45,13 @@ class Row extends React.PureComponent {
   getFiatBalance = async (type) => {
     const { activeFiat } = this.props
 
-    actions.user.getExchangeRate(type, activeFiat.toLowerCase()).then((exCurrencyRate) => {
-      this.setState(() => ({
-        exCurrencyRate,
-      }))
-    })
+    if (activeFiat) {
+      actions.user.getExchangeRate(type, activeFiat.toLowerCase()).then((exCurrencyRate) => {
+        this.setState(() => ({
+          exCurrencyRate,
+        }))
+      })
+    }
   }
 
   handlePayInvoice = async () => {

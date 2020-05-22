@@ -104,7 +104,6 @@ export default class WithdrawModal extends React.Component {
       hiddenCoinsList,
       currentActiveAsset,
       allCurrencyies,
-      multiplier,
       enabledCurrencies: getActivatedCurrencies(),
     }
   }
@@ -430,15 +429,16 @@ export default class WithdrawModal extends React.Component {
     })
   }
 
-  openModal = (currency) => {
+  openModal = (currency, address) => {
     const {
       history,
       intl: { locale },
     } = this.props
 
-    const currentAsset = this.state.allCurrencyies.filter((item) => currency === item.currency)
+    const currentAsset = actions.core.getWallets().filter((item) => currency === item.currency && address.toLowerCase() === item.address.toLowerCase())
 
     let targetCurrency = currentAsset[0].currency
+
     switch (currency.toLowerCase()) {
       case 'btc (multisig)':
       case 'btc (sms-protected)':
@@ -650,7 +650,7 @@ export default class WithdrawModal extends React.Component {
                       disabled: item.balance === 0,
                     })}
                     onClick={() => {
-                      this.openModal(item.currency),
+                      this.openModal(item.currency, item.address),
                         this.setState({
                           currentActiveAsset: item,
                           isAssetsOpen: false,
