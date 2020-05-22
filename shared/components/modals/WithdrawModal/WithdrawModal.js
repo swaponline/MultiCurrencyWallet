@@ -33,6 +33,10 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import redirectTo from 'helpers/redirectTo'
 import AdminFeeInfoBlock from 'components/AdminFeeInfoBlock/AdminFeeInfoBlock'
 
+import { getActivatedCurrencies } from 'helpers/user'
+
+
+
 @injectIntl
 @connect(
   ({
@@ -66,7 +70,7 @@ export default class WithdrawModal extends React.Component {
 
     const currentActiveAsset = data.data
     const currentDecimals = constants.tokenDecimals[currency.toLowerCase()]
-    const allCurrencyies = items.concat(tokenItems)
+    const allCurrencyies = actions.core.getWallets() //items.concat(tokenItems)
     const selectedItem = allCurrencyies.filter((item) => item.currency === currency)[0]
 
     let usedAdminFee = false
@@ -97,9 +101,10 @@ export default class WithdrawModal extends React.Component {
       error: false,
       ownTx: '',
       isAssetsOpen: false,
-      hiddenCoinsList,
+      hiddenCoinsList: actions.core.getHiddenCoins(),
       currentActiveAsset,
       allCurrencyies,
+      enabledCurrencies: getActivatedCurrencies(),
     }
   }
 
@@ -424,15 +429,16 @@ export default class WithdrawModal extends React.Component {
     })
   }
 
-  openModal = (currency) => {
+  openModal = (currency, address) => {
     const {
       history,
       intl: { locale },
     } = this.props
 
-    const currentAsset = this.state.allCurrencyies.filter((item) => currency === item.currency)
+    const currentAsset = actions.core.getWallets().filter((item) => currency === item.currency && address.toLowerCase() === item.address.toLowerCase())
 
     let targetCurrency = currentAsset[0].currency
+
     switch (currency.toLowerCase()) {
       case 'btc (multisig)':
       case 'btc (sms-protected)':
@@ -463,14 +469,16 @@ export default class WithdrawModal extends React.Component {
       fiatAmount,
       isEthToken,
       openScanCam,
-      usedAdminFee,
       isAssetsOpen,
-      selectedValue,
       exCurrencyRate,
-      allCurrencyies,
       currentDecimals,
       hiddenCoinsList,
       currentActiveAsset,
+      selectedValue,
+      allCurrencyies,
+      allCurrencyies: allData,
+      usedAdminFee,
+      enabledCurrencies,
     } = this.state
 
     const {
@@ -488,9 +496,29 @@ export default class WithdrawModal extends React.Component {
     let min = isEthToken ? 0 : minAmount[currency.toLowerCase()]
     let defaultMin = min
 
+    /*
     let enabledCurrencies = allCurrencyies.filter(
       (x) => !hiddenCoinsList.map((item) => item.split(':')[0]).includes(x.currency)
     )
+    */
+
+    /*
+    let enabledCurrencies = allCurrencyies.filter(({ currency, address, balance }) => {
+      // @ToDo - В будущем нужно убрать проверку только по типу монеты.
+      // Старую проверку оставил, чтобы у старых пользователей не вывалились скрытые кошельки
+
+      return (!hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`)) || balance > 0
+    })
+    */
+
+    let tableRows = actions.core.getWallets().filter(({ currency, address, balance }) => {
+      // @ToDo - В будущем нужно убрать проверку только по типу монеты.
+      // Старую проверку оставил, чтобы у старых пользователей не вывалились скрытые кошельки
+
+      return (!hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`)) || balance > 0
+    })
+
+    tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
 
     if (usedAdminFee) {
       defaultMin = BigNumber(min).plus(usedAdminFee.min).toNumber()
@@ -606,9 +634,9 @@ export default class WithdrawModal extends React.Component {
                   {currentBalance} {currency}
                 </span>
                 <span styleName="usd">
-                  {currentActiveAsset.infoAboutCurrency
+                  {(currentActiveAsset.infoAboutCurrency && currentActiveAsset.currencyRate)
                     ? (currentBalance * exCurrencyRate).toFixed(2)
-                    : (currentBalance * currencyRate).toFixed(2)}{' '}
+                    : (currentBalance * currentActiveAsset.currencyRate).toFixed(2)}{' '}
                   {activeFiat}
                 </span>
               </div>
@@ -616,13 +644,13 @@ export default class WithdrawModal extends React.Component {
             </div>
             {isAssetsOpen && (
               <div styleName="customSelectList">
-                {enabledCurrencies.map((item) => (
+                {tableRows.map((item) => (
                   <div
                     styleName={cx('customSelectListItem customSelectValue', {
                       disabled: item.balance === 0,
                     })}
                     onClick={() => {
-                      this.openModal(item.currency),
+                      this.openModal(item.currency, item.address),
                         this.setState({
                           currentActiveAsset: item,
                           isAssetsOpen: false,
@@ -642,7 +670,7 @@ export default class WithdrawModal extends React.Component {
                         {item.balance} {item.currency}
                       </span>
                       <span styleName="usd">
-                        {item.infoAboutCurrency
+                        {(item.infoAboutCurrency && item.currencyRate)
                           ? (item.balance * exCurrencyRate).toFixed(2)
                           : (item.balance * item.currencyRate).toFixed(2)}{' '}
                         {activeFiat}
