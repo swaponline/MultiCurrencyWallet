@@ -304,6 +304,8 @@ const getInformationAboutSwap = (swapId) => {
   }
 }
 
+const getHiddenCoins = () => getState().core.hiddenCoinsList || []
+
 const markCoinAsHidden = (coin) => {
   let list = getState().core.hiddenCoinsList || []
   if (!list.includes(coin)) {
@@ -402,4 +404,5 @@ export default {
   addCurrencyFromOrders,
   getWallets,
   getWallet,
+  getHiddenCoins,
 }
