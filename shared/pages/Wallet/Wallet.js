@@ -11,7 +11,7 @@ import firestore from 'helpers/firebase/firestore'
 
 import History from 'pages/History/History'
 
-import { links, constants } from 'helpers'
+import helpers, { links, constants } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import { getActivatedCurrencies } from 'helpers/user'
 
@@ -230,7 +230,7 @@ export default class Wallet extends Component {
     if (isWidgetBuild) {
       if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
         // Multi token widget build
-        Object.keys(window.widgetERC20Tokens).forEach((key) => {
+        Object.keys(window.widgetERC20Tokens).forEach(key => {
           widgetCurrencies.push(key.toUpperCase())
         })
       } else {
@@ -238,19 +238,69 @@ export default class Wallet extends Component {
       }
     }
 
-    const currencies = actions.core.getWallets().filter(({ currency, balance }) => {
-      return (
-        (context === 'Send' ? balance : true) &&
-        !hiddenCoinsList.includes(currency) &&
-        enabledCurrencies.includes(currency) &&
-        (isWidgetBuild ? widgetCurrencies.includes(currency) : true)
-      )
-    })
+    const currencies = actions.core.getWallets()
+      .filter(({ currency, balance }) => {
+        return (
+          ((context === 'Send') ? balance : true)
+          && !hiddenCoinsList.includes(currency)
+          && enabledCurrencies.includes(currency)
+          && ((isWidgetBuild) ?
+            widgetCurrencies.includes(currency)
+            : true)
+        )
+      })
 
     actions.modals.open(constants.modals.CurrencyAction, {
       currencies,
-      context,
+      context
     })
+  }
+
+  handleWithdrawFirstAsset = () => {
+    const { hiddenCoinsList } = this.props
+    const {
+      history,
+      intl: { locale },
+    } = this.props
+
+    const {
+      Withdraw,
+      WithdrawMultisigSMS,
+      WithdrawMultisigUser,
+    } = constants.modals
+
+    const allData = actions.core.getWallets()
+
+    let tableRows = allData.filter(({ currency, address, balance }) => {
+      // @ToDo - В будущем нужно убрать проверку только по типу монеты.
+      // Старую проверку оставил, чтобы у старых пользователей не вывалились скрытые кошельки
+
+      return (!hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`)) || balance > 0
+    })
+
+    const { currency, address } = tableRows[0];
+
+    let withdrawModalType = Withdraw
+    if (currency === 'BTC (SMS-Protected)')
+      withdrawModalType = WithdrawMultisigSMS
+    if (currency === 'BTC (Multisig)') withdrawModalType = WithdrawMultisigUser
+
+    let targetCurrency = currency
+    switch (currency.toLowerCase()) {
+      case 'btc (multisig)':
+      case 'btc (sms-protected)':
+        targetCurrency = 'btc'
+        break
+    }
+
+    const isToken = helpers.ethToken.isEthToken({ name: currency })
+
+    history.push(
+      localisedUrl(
+        locale,
+        (isToken ? '/token' : '') + `/${targetCurrency}/${address}/withdraw`
+      )
+    )
   }
 
   checkBalance = () => {
@@ -288,6 +338,46 @@ export default class Wallet extends Component {
     }
   }
 
+
+  handleModalOpen = context => {
+    const { enabledCurrencies } = this.state
+    const { hiddenCoinsList } = this.props
+
+    /* @ToDo Вынести в экшены и убрать все дубляжи из всех компонентов */
+    // Набор валют для виджета
+    const widgetCurrencies = ['BTC']
+    if (!hiddenCoinsList.includes('BTC (SMS-Protected)')) widgetCurrencies.push('BTC (SMS-Protected)')
+    if (!hiddenCoinsList.includes('BTC (Multisig)')) widgetCurrencies.push('BTC (Multisig)')
+    widgetCurrencies.push('ETH')
+    if (isWidgetBuild) {
+      if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
+        // Multi token widget build
+        Object.keys(window.widgetERC20Tokens).forEach(key => {
+          widgetCurrencies.push(key.toUpperCase())
+        })
+      } else {
+        widgetCurrencies.push(config.erc20token.toUpperCase())
+      }
+    }
+
+    const currencies = actions.core.getWallets()
+      .filter(({ currency, balance }) => {
+        return (
+          ((context === 'Send') ? balance : true)
+          && !hiddenCoinsList.includes(currency)
+          && enabledCurrencies.includes(currency)
+          && ((isWidgetBuild) ?
+            widgetCurrencies.includes(currency)
+            : true)
+        )
+      })
+
+    actions.modals.open(constants.modals.CurrencyAction, {
+      currencies,
+      context
+    })
+  }
+
   render() {
     const {
       multiplier,
@@ -300,10 +390,10 @@ export default class Wallet extends Component {
       isBalanceFetching,
       activeFiat,
       match: {
-      params: {
-        page = null,
-      },
-    }, } = this.props
+        params: {
+          page = null,
+        },
+      }, } = this.props
 
     const allData = actions.core.getWallets()
 
@@ -335,6 +425,7 @@ export default class Wallet extends Component {
 
       return (!hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`)) || balance > 0
     })
+
 
     if (isWidgetBuild) {
       //tableRows = allData.filter(({ currency }) => widgetCurrencies.includes(currency))
@@ -370,7 +461,7 @@ export default class Wallet extends Component {
             currencyBalance={btcBalance}
             changePercent={changePercent}
             handleReceive={this.handleModalOpen}
-            handleWithdraw={this.handleModalOpen}
+            handleWithdraw={this.handleWithdrawFirstAsset}
             handleExchange={this.handleGoExchange}
             isFetching={isBalanceFetching}
             currency="btc"
@@ -379,14 +470,14 @@ export default class Wallet extends Component {
         )}
       >
         {
-          activeView === 0 && 
-            <CurrenciesList
-              tableRows={tableRows}
-              {...this.state}
-              {...this.props}
-              goToСreateWallet={this.goToСreateWallet}
-              getExCurrencyRate={(currencySymbol, rate) => this.getExCurrencyRate(currencySymbol, rate)}
-            />
+          activeView === 0 &&
+          <CurrenciesList
+            tableRows={tableRows}
+            {...this.state}
+            {...this.props}
+            goToСreateWallet={this.goToСreateWallet}
+            getExCurrencyRate={(currencySymbol, rate) => this.getExCurrencyRate(currencySymbol, rate)}
+          />
         }
         {activeView === 1 && (<History {...this.props} />)}
         {activeView === 2 && (<InvoicesList {...this.props} onlyTable={true} />)}

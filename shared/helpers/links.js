@@ -119,7 +119,7 @@ const linksManager = {
     },
     {
       question: 'Request is declined. Why?',
-      link: 'https://swap.online/getting-started/#faq-item-5738',
+      link: 'https://wiki.swaponline.io/faq/#swap-faq-5738',
       id: 'requestDeclimed',
     },
   ],

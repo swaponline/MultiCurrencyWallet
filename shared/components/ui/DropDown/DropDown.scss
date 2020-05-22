@@ -256,8 +256,11 @@
 
 @include media-mobile {
   .selectedItem {
+    display: flex;
     width: 100%;
-  }
+    align-items: center;
+    justify-content: space-between;
+}
 
   .range {
     font-size: 15px;

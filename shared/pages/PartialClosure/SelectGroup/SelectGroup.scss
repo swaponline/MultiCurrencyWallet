@@ -131,7 +131,7 @@ input:disabled {
 
 @include media-mobile {
   .currencySelect {
-    width: 130px;
+    width: unset;
     height: 48px;
     input {
       font-size: 13px;

@@ -435,7 +435,8 @@ tr button[disabled]:hover {
   position: absolute;
   right: 48px;
   bottom: 0px;
-  font-size: 15px;
+  font-size: 12px;
+  font-weight: 500;
   color: #8e9aa3;
   img {
     margin-top: -3px;
@@ -586,7 +587,7 @@ tr button[disabled]:hover {
 
 @media all and (min-width: 768px) and (max-width: 992px) {
   .assetsTableValue {
-    right: 35px;
+    right: 49px;
   }
   .assetsTableInfo {
     position: relative;

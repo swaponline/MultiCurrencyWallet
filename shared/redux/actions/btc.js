@@ -624,8 +624,45 @@ const getReputation = () => Promise.resolve(0)
 
 window.getMainPublicKey = getMainPublicKey
 
+/*
+  Проверяет списание со скрипта - последняя транзакция выхода
+  Возвращает txId, адресс и сумму
+*/
+const checkWithdraw = (scriptAddress) => {
+  const url = `/txs/?address=${scriptAddress}`
+
+  return apiLooper.get('bitpay', url, {
+    checkStatus: (answer) => {
+      try {
+        if (answer && answer.txs !== undefined) return true
+      } catch (e) { /* */ }
+      return false
+    },
+    query: 'btc_balance',
+  }).then((res) => {
+    if (res.txs.length > 1
+      && res.txs[0].vout.length
+    ) {
+      const address = res.txs[0].vout[0].scriptPubKey.addresses[0]
+      const {
+        txid,
+        valueOut: amount,
+      } = res.txs[0]
+      return {
+        address,
+        txid,
+        amount,
+      }
+    }
+    return false
+  })
+}
+
+window.btcCheckWithdraw = checkWithdraw
+
 export default {
   login,
+  checkWithdraw,
   getBalance,
   getTransaction,
   send,

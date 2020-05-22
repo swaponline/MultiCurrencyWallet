@@ -4422,6 +4422,13 @@
     ]
   },
   {
+    "id": "BTCMS_CreateWalletLoading_descroptio",
+    "message": "Funds sent to this wallet cannot be spent without your confirmation (please save your private 12 words passphrase)",
+    "files": [
+      "shared/pages/Multisign/Btc/Btc.js"
+    ]
+  },
+  {
     "id": "BTCMS_CreateWalletLinkReady",
     "message": "The wallet is created. Send this link to the second owner for confirmation.",
     "files": [

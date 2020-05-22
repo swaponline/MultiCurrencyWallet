@@ -77,7 +77,7 @@ function BalanceForm({
             )
             : (
               <p className="data-tut-all-balance">
-                {currency === 'BTC' ? <img src={btc} alt="btc" /> : ''}
+                {currency.toUpperCase() === 'BTC' ? <img src={btc} alt="btc" /> : ''}
                 {BigNumber(currencyBalance)
                   .dp(5, BigNumber.ROUND_FLOOR)
                   .toString()}
@@ -87,7 +87,7 @@ function BalanceForm({
         </div>
         <div styleName="yourBalanceCurrencies">
           <button
-            styleName={activeCurrency === active && 'active'}
+            styleName={(savedActiveCurrency || activeCurrency) === active && 'active'}
             onClick={() => {
               // eslint-disable-next-line no-unused-expressions, no-sequences
               setActiveCurrency(active), localStorage.setItem(constants.localStorage.balanceActiveCurrency, active)
@@ -98,10 +98,10 @@ function BalanceForm({
           </button>
           <span />
           <button
-            styleName={activeCurrency === 'btc' && 'active'}
+            styleName={savedActiveCurrency === currency && 'active'}
             onClick={() => {
               // eslint-disable-next-line no-unused-expressions, no-sequences
-              setActiveCurrency('btc'), localStorage.setItem(constants.localStorage.balanceActiveCurrency, 'btc')
+              setActiveCurrency(currency), localStorage.setItem(constants.localStorage.balanceActiveCurrency, currency)
             }}
           >
             {currency}
