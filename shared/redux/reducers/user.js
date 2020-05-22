@@ -60,9 +60,11 @@ export const initialState = {
 
 export const updateMultisigStatus = (state, { address, last, total }) => {
   let totalPending = 0
-  Object.keys(state.multisigStatus).map((savedAddress) => {
-    if (address !== savedAddress) totalPending+=state.multisigStatus[savedAddress].count 
-  })
+  if (state.multisigStatus) {
+    Object.keys(state.multisigStatus).map((savedAddress) => {
+      if (address !== savedAddress) totalPending+=state.multisigStatus[savedAddress].count 
+    })
+  }
 
   totalPending+= total
 
@@ -70,7 +72,7 @@ export const updateMultisigStatus = (state, { address, last, total }) => {
     ...state,
     multisigPendingCount: totalPending,
     multisigStatus: {
-      ...state.multisigStatus,
+      ...(state.multisigStatus ? state.multisigStatus : {}),
       [address] : {
         address,
         pending: last,
