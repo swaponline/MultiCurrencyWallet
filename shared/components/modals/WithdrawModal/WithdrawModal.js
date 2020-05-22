@@ -514,6 +514,11 @@ export default class WithdrawModal extends React.Component {
     )
   }
 
+  setAdditionCurrency = (currency) => {
+    this.setState({ selectedValue: currency })
+    localStorage.setItem(constants.localStorage.balanceActiveCurrency, currency.toLowerCase())
+  }
+
   render() {
     const {
       address,
@@ -743,20 +748,14 @@ export default class WithdrawModal extends React.Component {
           <div styleName="additionalСurrencies">
             <span
               styleName={cx('additionalСurrenciesItem', { additionalСurrenciesItemActive: selectedValue === 'USD' })}
-              onClick={() => {
-                this.setState({ selectedValue: 'USD' })
-                localStorage.setItem(constants.localStorage.balanceActiveCurrency, 'usd')
-              }}
+              onClick={() => this.setAdditionCurrency('USD')}
             >
               USD
             </span>
             <span styleName="delimiter"></span>
             <span
               styleName={cx('additionalСurrenciesItem', { additionalСurrenciesItemActive: selectedValue === currentActiveAsset.currency })}
-              onClick={() => {
-                this.setState({ selectedValue: currentActiveAsset.currency})
-                localStorage.setItem(constants.localStorage.balanceActiveCurrency, currentActiveAsset.currency.toLowerCase())
-              }}
+              onClick={() => this.setAdditionCurrency(currentActiveAsset.currency)}
             >
               {currentActiveAsset.currency}
             </span>

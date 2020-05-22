@@ -389,7 +389,7 @@ export default class CurrencyWallet extends Component {
           },
           () => {
             if (prevProps.location.pathname !== this.props.location.pathname) {
-              if (localStorage.getItem(constants.localStorage.balanceActiveCurrency).toUpperCase() !== 'USD') {
+              if (localStorage.getItem(constants.localStorage.balanceActiveCurrency).toUpperCase() !== activeFiat) {
                 localStorage.setItem(constants.localStorage.balanceActiveCurrency, currency.toLowerCase())
               }
               
