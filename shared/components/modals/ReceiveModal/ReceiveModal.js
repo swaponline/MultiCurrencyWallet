@@ -1,6 +1,7 @@
 import React from 'react'
 import { withRouter } from 'react-router'
 import CopyToClipboard from 'react-copy-to-clipboard'
+import { connect } from 'redaction'
 
 import cssModules from 'react-css-modules'
 import styles from './ReceiveModal.scss'
@@ -9,8 +10,6 @@ import QR from 'components/QR/QR'
 import { Modal } from 'components/modal'
 import { Button } from 'components/controls'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
-import { Link } from 'react-router-dom'
-import { links } from 'helpers'
 
 import config from 'helpers/externalConfig'
 import getCurrencyKey from 'helpers/getCurrencyKey'
@@ -24,6 +23,9 @@ const title = defineMessages({
   },
 })
 
+@connect(
+  ({ user: { activeFiat } }) => ({ activeFiat })
+)
 @injectIntl
 @withRouter
 @cssModules(styles, { allowMultiple: true })
@@ -89,12 +91,14 @@ export default class ReceiveModal extends React.Component {
           currency,
           address,
         },
+        activeFiat
       },
       state: {
         isAddressCopied,
         howToDeposit,
       },
     } = this
+
 
     if (howToDeposit) {
       return (
@@ -147,12 +151,12 @@ export default class ReceiveModal extends React.Component {
             </div>
           </CopyToClipboard>
           {currency.includes("BTC") && <div styleName="fiatDepositRow">
-            <Link to={`${links.creditCardDeposit}/${address}`} >
+            <a href={`https://itez.swaponline.io/?DEFAULT_FIAT=${activeFiat}&locale=${intl.locale}&btcaddress=${address}`} target="_blank" rel="noopener noreferrer">
               <FormattedMessage
                 id="buyByCreditCard"
                 defaultMessage="buy using credit card"
               />
-            </Link>
+            </a>
           </div>}
         </div>
       </Modal>

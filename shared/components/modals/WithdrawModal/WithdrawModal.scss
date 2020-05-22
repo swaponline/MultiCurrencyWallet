@@ -210,11 +210,13 @@
 .additionalСurrencies {
   position: absolute;
   right: 100px;
+  background: white;
   z-index: 111;
   display: flex;
   top: 22px;
   align-items: center;
 }
+
 
 .additionalСurrenciesItem {
   font-size: 14px;
@@ -292,5 +294,32 @@
   }
   .usd {
     color: #8e9aa3;
+  }
+}
+
+@media all and (max-width: 480px) {
+
+  .additionalСurrencies {
+    right: 75px;
+    top: 24px;
+  }
+
+  .additionalСurrenciesItem {
+    font-size: 11px;
+  }
+
+  .balance {
+    right: 78px;
+    top: -6px;
+    font-size: 9px;
+  }
+
+  .customSelectValue {
+    cursor: pointer;
+    div {
+      .mobileAddress {
+        font-size: 8px;
+      }
+    }
   }
 }

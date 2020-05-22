@@ -165,5 +165,14 @@ textarea.input {
         font-size: 11px;
       }
     }
+    @include placeholder() {
+      font-size: 11px;
+    }
+  }
+}
+
+@media all and (max-width: 480px) {
+  .error {
+    font-size: 10px;
   }
 }

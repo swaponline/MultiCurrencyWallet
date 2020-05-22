@@ -29,7 +29,6 @@ import config from 'helpers/externalConfig'
 import ScrollToTop from '../components/layout/ScrollToTop/ScrollToTop'
 import SaveMnemonicModal from "components/modals/SaveMnemonicModal/SaveMnemonicModal"
 import SaveKeysModal from "components/modals/SaveKeysModal/SaveKeysModal"
-import CreditCardDeposit from "components/modals/CreditCardDeposit/CreditCardDeposit"
 import { isMobile } from 'react-device-detect'
 
 
@@ -68,7 +67,6 @@ const routes = (
       <Route path={`${localisePrefix}${links.createInvoice}/:type/:wallet`} component={CreateInvoice} />
       {isMobile && <Route path={`${localisePrefix}${links.invoices}/:type?/:address?`} component={InvoicesList} />}
       <Route path={`${localisePrefix}${links.invoice}/:uniqhash?/:doshare?`} component={Invoice} />
-      <Route path={`${localisePrefix}${links.creditCardDeposit}/:address?`} component={CreditCardDeposit} />
 
       <Route path={`${localisePrefix}${links.savePrivateSeed}`} component={SaveMnemonicModal} />
       <Route path={`${localisePrefix}${links.savePrivateKeys}`} component={SaveKeysModal} />
