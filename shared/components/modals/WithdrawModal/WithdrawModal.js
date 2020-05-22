@@ -36,6 +36,10 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import redirectTo from 'helpers/redirectTo'
 import AdminFeeInfoBlock from 'components/AdminFeeInfoBlock/AdminFeeInfoBlock'
 
+import { getActivatedCurrencies } from 'helpers/user'
+
+
+
 @injectIntl
 @connect(
   ({
@@ -68,7 +72,7 @@ export default class WithdrawModal extends React.Component {
     } = data
 
     const currentDecimals = constants.tokenDecimals[currency.toLowerCase()]
-    const allCurrencyies = items.concat(tokenItems)
+    const allCurrencyies = actions.core.getWallets() //items.concat(tokenItems)
     const selectedItem = allCurrencyies.filter((item) => item.currency === currency)[0]
 
     let usedAdminFee = false
@@ -107,6 +111,7 @@ export default class WithdrawModal extends React.Component {
       currentActiveAsset: data.data,
       allCurrencyies,
       multiplier,
+      enabledCurrencies: getActivatedCurrencies(),
     }
   }
 
@@ -538,7 +543,9 @@ export default class WithdrawModal extends React.Component {
       isAssetsOpen,
       selectedValue,
       allCurrencyies,
+      allCurrencyies: allData,
       usedAdminFee,
+      enabledCurrencies,
     } = this.state
 
     const {
@@ -557,9 +564,29 @@ export default class WithdrawModal extends React.Component {
     let min = isEthToken ? 0 : minAmount[currency.toLowerCase()]
     let defaultMin = min
 
+    /*
     let enabledCurrencies = allCurrencyies.filter(
       (x) => !hiddenCoinsList.map((item) => item.split(':')[0]).includes(x.currency)
     )
+    */
+
+    /*
+    let enabledCurrencies = allCurrencyies.filter(({ currency, address, balance }) => {
+      // @ToDo - В будущем нужно убрать проверку только по типу монеты.
+      // Старую проверку оставил, чтобы у старых пользователей не вывалились скрытые кошельки
+
+      return (!hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`)) || balance > 0
+    })
+    */
+
+    let tableRows = actions.core.getWallets().filter(({ currency, address, balance }) => {
+      // @ToDo - В будущем нужно убрать проверку только по типу монеты.
+      // Старую проверку оставил, чтобы у старых пользователей не вывалились скрытые кошельки
+
+      return (!hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`)) || balance > 0
+    })
+
+    tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
 
     if (usedAdminFee) {
       defaultMin = BigNumber(min).plus(usedAdminFee.min).toNumber()
@@ -675,7 +702,7 @@ export default class WithdrawModal extends React.Component {
             </div>
             {isAssetsOpen && (
               <div styleName="customSelectList">
-                {enabledCurrencies.map((item) => (
+                {tableRows.map((item) => (
                   <div
                     styleName={cx('customSelectListItem customSelectValue', {
                       disabled: item.balance === 0,

@@ -83,6 +83,7 @@ class Row extends React.PureComponent {
         toAddress: (invoiceData.destAddress) ? invoiceData.destAddress : invoiceData.fromAddress,
         amount: invoiceData.amount,
         invoice: invoiceData,
+        hiddenCoinsList: [],
         onReady: () => {
           this.setState({
             payed: true,
