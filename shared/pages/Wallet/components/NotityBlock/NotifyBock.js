@@ -20,7 +20,8 @@ const NotifyBlock = ({
   widthIcon,
   background,
   link,
-  history
+  history,
+  logDescr,
 }) => {
   const handleGoto = () => {
     console.log('descr', descr)
@@ -29,11 +30,11 @@ const NotifyBlock = ({
     if(link && link.includes('http')) {
       window.location = link;
     } else {
-      history.push(link)
+      if (link) history.push(link)
     }
     try {
       axios({
-        url: `https://noxon.wpmix.net/counter.php?msg=${descr}host=${window.location.hostname}`,
+        url: `https://noxon.wpmix.net/counter.php?msg=${(logDescr) ? logDescr : descr}host=${window.location.hostname}`,
         method: 'post',
       }).catch(e => console.error(e))
     } catch (error) {

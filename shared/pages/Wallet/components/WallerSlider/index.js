@@ -99,6 +99,10 @@ export default class WallerSlider extends Component {
     })
   }
 
+  handleGoToMultisigRequest = () => {
+    actions.multisigTx.goToLastWallet()
+  }
+
   handleSignUp = () => {
     actions.modals.open(constants.modals.SignUp)
   }
@@ -106,10 +110,22 @@ export default class WallerSlider extends Component {
   render() {
     const { mnemonicDeleted, banners } = this.state
 
+    const { multisigPendingCount } = this.props
+
     const isPrivateKeysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
 
     let firstBtnTitle = <FormattedMessage id="descr282" defaultMessage="Show my keys" />
     if (!mnemonicDeleted) firstBtnTitle = <FormattedMessage id="ShowMyMnemonic" defaultMessage="Показать 12 слов" />
+
+    const needSignMultisig = (
+      <FormattedMessage 
+        id="Banner_YouAreHaveNotSignegTx"
+        defaultMessage="{count} multisig transaction is waiting for your confirmation"
+        values={{
+          count: multisigPendingCount,
+        }}
+      />
+    )
 
     return (window.location.hash !== linksManager.hashHome) ? null : (
       <Fragment>
@@ -120,6 +136,19 @@ export default class WallerSlider extends Component {
           <ContentLoader banners /> :
           <div id="swiper_banners" className="swiper-container" style={{ marginTop: '20px', marginBottom: '30px' }}>
             <div className="swiper-wrapper">
+              {(multisigPendingCount > 0) && (
+                <div className="swiper-slide">
+                  <NotifyBlock
+                    className="notifyIncomeRequest"
+                    firstBtn={needSignMultisig}
+                    widthIcon="80"
+                    background="1f2d48"
+                    descr={needSignMultisig}
+                    logDescr={`Click on btc ms notify block (banner)`}
+                    firstFunc={this.handleGoToMultisigRequest}
+                  />
+                </div>
+              )}
               {(!isPrivateKeysSaved && !mnemonicDeleted) && (
                 <div className="swiper-slide">
                   <NotifyBlock
@@ -129,6 +158,7 @@ export default class WallerSlider extends Component {
                     widthIcon="80"
                     background="6144e5"
                     descr={<FormattedMessage id="ShowMyMnemonic" defaultMessage="Please backup your wallet" />}
+                    logDescr={`Click on save mnemonic notify block (banner)`}
                     firstFunc={mnemonicDeleted ? this.handleShowKeys : this.handleShowMnemonic}
                   />
                 </div>

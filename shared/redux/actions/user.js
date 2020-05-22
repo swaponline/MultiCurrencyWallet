@@ -287,6 +287,27 @@ const pullTransactions = transactions => {
 
 const delay = (ms) => new Promise(resolve => setTimeout(() => resolve(true), ms))
 
+const fetchMultisigStatus = async () => {
+  const {
+    user: {
+      btcMultisigUserData: {
+        address: mainAddress,
+        wallets,
+      },
+    },
+  } = getState()
+
+  actions.multisigTx.fetch(mainAddress)
+  if (wallets && wallets.length) {
+    wallets.map(({ address }, index) => {
+      return new Promise(async (resolve) => {
+        actions.multisigTx.fetch(address)
+        resolve(true)
+      })
+    })
+  }
+}
+
 const setTransactions = async () => {
   const isBtcSweeped = actions.btc.isSweeped()
   const isEthSweeped = actions.eth.isSweeped()
@@ -295,6 +316,10 @@ const setTransactions = async () => {
     core: { hiddenCoinsList },
   } = getState()
   const enabledCurrencies = getActivatedCurrencies()
+
+  /*
+    fetching penging btc-ms txs
+  */
 
   try {
     // @ToDo - make in like query
@@ -463,4 +488,5 @@ export default {
   getAuthData,
   getWithdrawWallet,
   getFiats,
+  fetchMultisigStatus,
 }
