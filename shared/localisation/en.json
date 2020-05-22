@@ -311,7 +311,7 @@
   },
   {
     "id": "WithdrawModal111",
-    "message": "Withdraw ",
+    "message": "Send ",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
