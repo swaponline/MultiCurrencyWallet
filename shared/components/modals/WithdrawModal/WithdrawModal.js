@@ -101,7 +101,7 @@ export default class WithdrawModal extends React.Component {
       error: false,
       ownTx: '',
       isAssetsOpen: false,
-      hiddenCoinsList,
+      hiddenCoinsList: actions.core.getHiddenCoins(),
       currentActiveAsset,
       allCurrencyies,
       enabledCurrencies: getActivatedCurrencies(),
@@ -634,9 +634,9 @@ export default class WithdrawModal extends React.Component {
                   {currentBalance} {currency}
                 </span>
                 <span styleName="usd">
-                  {currentActiveAsset.infoAboutCurrency
+                  {(currentActiveAsset.infoAboutCurrency && currentActiveAsset.currencyRate)
                     ? (currentBalance * exCurrencyRate).toFixed(2)
-                    : (currentBalance * currencyRate).toFixed(2)}{' '}
+                    : (currentBalance * currentActiveAsset.currencyRate).toFixed(2)}{' '}
                   {activeFiat}
                 </span>
               </div>
@@ -670,7 +670,7 @@ export default class WithdrawModal extends React.Component {
                         {item.balance} {item.currency}
                       </span>
                       <span styleName="usd">
-                        {item.infoAboutCurrency
+                        {(item.infoAboutCurrency && item.currencyRate)
                           ? (item.balance * exCurrencyRate).toFixed(2)
                           : (item.balance * item.currencyRate).toFixed(2)}{' '}
                         {activeFiat}
