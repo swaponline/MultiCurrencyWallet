@@ -29,6 +29,7 @@ import DashboardLayout from 'components/layout/DashboardLayout/DashboardLayout'
 
 import getCurrencyKey from 'helpers/getCurrencyKey'
 
+
 const isWidgetBuild = config && config.isWidget
 
 @connect(({ signUp: { isSigned } }) => ({
@@ -49,6 +50,7 @@ const isWidgetBuild = config && config.isWidget
       isFetching,
       isBalanceFetching,
       tokensData,
+      multisigStatus,
     },
   }) => ({
     items: [
@@ -67,6 +69,7 @@ const isWidgetBuild = config && config.isWidget
     swapHistory,
     isFetching,
     isBalanceFetching,
+    multisigStatus,
   })
 )
 @injectIntl
@@ -577,6 +580,7 @@ export default class CurrencyWallet extends Component {
       isSigned,
       isBalanceFetching,
       activeFiat,
+      multisigStatus,
     } = this.props
 
     const {
@@ -676,6 +680,7 @@ export default class CurrencyWallet extends Component {
         <Slider
           settings={settings}
           isSigned={isSigned}
+          multisigStatus={multisigStatus}
           handleNotifyBlockClose={this.handleNotifyBlockClose}
           {...this.state}
         />

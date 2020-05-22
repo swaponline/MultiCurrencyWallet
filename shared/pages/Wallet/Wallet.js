@@ -42,6 +42,7 @@ const isWidgetBuild = config && config.isWidget
       tokensData,
       isFetching,
       isBalanceFetching,
+      multisigPendingCount,
     },
     currencies: { items: currencies },
     createWallet: { currencies: assets },
@@ -87,6 +88,7 @@ const isWidgetBuild = config && config.isWidget
       assets,
       isFetching,
       isBalanceFetching,
+      multisigPendingCount,
       hiddenCoinsList: hiddenCoinsList,
       userEthAddress: ethData.address,
       user,
@@ -117,6 +119,7 @@ export default class Wallet extends Component {
       match: {
         params: { page = null },
       },
+      multisigPendingCount,
     } = props
 
     let activeView = 0
@@ -130,6 +133,7 @@ export default class Wallet extends Component {
       activeView,
       btcBalance: 0,
       enabledCurrencies: getActivatedCurrencies(),
+      multisigPendingCount,
     }
   }
 
@@ -139,41 +143,54 @@ export default class Wallet extends Component {
       match: {
         params: { page = null },
       },
+      multisigPendingCount,
     } = this.props
+
+
     const {
       activeFiat: prevFiat,
       match: {
         params: { page: prevPage = null },
       },
+      multisigPendingCount: prevMultisigPendingCount,
     } = prevProps
 
     if (activeFiat !== prevFiat) {
       this.getFiats()
     }
 
-    if (page !== prevPage) {
+    if (page !== prevPage || multisigPendingCount !== prevMultisigPendingCount) {
       let activeView = 0
 
-      if (page === 'history' && !isMobile) {
-        activeView = 1
-      }
+      if (page === 'history' && !isMobile) activeView = 1
       if (page === 'invoices') activeView = 2
+
       this.setState({
         activeView,
+        multisigPendingCount,
       })
     }
   }
 
   componentDidMount() {
     const { params, url } = this.props.match
+    const {
+      multisigPendingCount,
+    } = this.props
 
     actions.user.getBalances()
+
+    actions.user.fetchMultisigStatus()
+
     this.getFiats()
 
     if (url.includes('withdraw')) {
       this.handleWithdraw(params)
     }
     this.getInfoAboutCurrency()
+    this.setState({
+      multisigPendingCount,
+    })
   }
 
   getInfoAboutCurrency = async () => {
@@ -384,7 +401,9 @@ export default class Wallet extends Component {
       activeView,
       infoAboutCurrency,
       enabledCurrencies,
+      multisigPendingCount,
     } = this.state
+
     const {
       hiddenCoinsList,
       isBalanceFetching,
@@ -393,7 +412,8 @@ export default class Wallet extends Component {
         params: {
           page = null,
         },
-      }, } = this.props
+      },
+    } = this.props
 
     const allData = actions.core.getWallets()
 
@@ -476,6 +496,7 @@ export default class Wallet extends Component {
             {...this.state}
             {...this.props}
             goToСreateWallet={this.goToСreateWallet}
+            multisigPendingCount={multisigPendingCount}
             getExCurrencyRate={(currencySymbol, rate) => this.getExCurrencyRate(currencySymbol, rate)}
           />
         }
