@@ -20,12 +20,13 @@ const CurrenciesList = ({
   hiddenCoinsList,
   goToСreateWallet,
   getExCurrencyRate,
+  multisigPendingCount,
 }) => {
   return (
     <div styleName="yourAssets">
       {(exConfig && exConfig.opts && exConfig.opts.showWalletBanners || isWidgetBuild) ? (
         <Fragment>
-          <Slider />
+          <Slider multisigPendingCount={multisigPendingCount} />
         </Fragment>
       ) : (
           ''

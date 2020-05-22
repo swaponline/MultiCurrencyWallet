@@ -42,7 +42,7 @@ const isWidgetBuild = config && config.isWidget
       tokensData,
       isFetching,
       isBalanceFetching,
-      multisigStatus,
+      multisigPendingCount,
     },
     currencies: { items: currencies },
     createWallet: { currencies: assets },
@@ -88,7 +88,7 @@ const isWidgetBuild = config && config.isWidget
       assets,
       isFetching,
       isBalanceFetching,
-      multisigStatus,
+      multisigPendingCount,
       hiddenCoinsList: hiddenCoinsList,
       userEthAddress: ethData.address,
       user,
@@ -119,7 +119,7 @@ export default class Wallet extends Component {
       match: {
         params: { page = null },
       },
-      multisigStatus,
+      multisigPendingCount,
     } = props
 
     let activeView = 0
@@ -133,8 +133,7 @@ export default class Wallet extends Component {
       activeView,
       btcBalance: 0,
       enabledCurrencies: getActivatedCurrencies(),
-      multisigStatus,
-      multisigPendingCount: 0,
+      multisigPendingCount,
     }
   }
 
@@ -144,7 +143,7 @@ export default class Wallet extends Component {
       match: {
         params: { page = null },
       },
-      multisigStatus,
+      multisigPendingCount,
     } = this.props
 
 
@@ -153,30 +152,22 @@ export default class Wallet extends Component {
       match: {
         params: { page: prevPage = null },
       },
-      multisigStatus: prevMultisigStatus
+      multisigPendingCount: prevMultisigPendingCount,
     } = prevProps
-
-    let prevMultisigPenging = 0
-    let currentMultisigPending = 0
-
-    Object.keys(prevMultisigStatus).map((address) => { prevMultisigPenging+=prevMultisigStatus[address].count })
-    Object.keys(multisigStatus).map((address) => { currentMultisigPending+=multisigStatus[address].count })
 
     if (activeFiat !== prevFiat) {
       this.getFiats()
     }
 
-    if (page !== prevPage || prevMultisigPenging !== currentMultisigPending) {
-      console.log('update ms penging', currentMultisigPending)
+    if (page !== prevPage || multisigPendingCount !== prevMultisigPendingCount) {
       let activeView = 0
 
-      if (page === 'history' && !isMobile) {
-        activeView = 1
-      }
+      if (page === 'history' && !isMobile) activeView = 1
       if (page === 'invoices') activeView = 2
+
       this.setState({
         activeView,
-        multisigStatus,
+        multisigPendingCount,
       })
     }
   }
@@ -184,7 +175,7 @@ export default class Wallet extends Component {
   componentDidMount() {
     const { params, url } = this.props.match
     const {
-      multisigStatus,
+      multisigPendingCount,
     } = this.props
 
     actions.user.getBalances()
@@ -198,7 +189,7 @@ export default class Wallet extends Component {
     }
     this.getInfoAboutCurrency()
     this.setState({
-      multisigStatus,
+      multisigPendingCount,
     })
   }
 
@@ -410,17 +401,19 @@ export default class Wallet extends Component {
       activeView,
       infoAboutCurrency,
       enabledCurrencies,
+      multisigPendingCount,
     } = this.state
+
     const {
       hiddenCoinsList,
       isBalanceFetching,
       activeFiat,
-      multisigStatus,
       match: {
         params: {
           page = null,
         },
-      }, } = this.props
+      },
+    } = this.props
 
     const allData = actions.core.getWallets()
 
@@ -503,7 +496,7 @@ export default class Wallet extends Component {
             {...this.state}
             {...this.props}
             goToСreateWallet={this.goToСreateWallet}
-            multisigStatus={multisigStatus}
+            multisigPendingCount={multisigPendingCount}
             getExCurrencyRate={(currencySymbol, rate) => this.getExCurrencyRate(currencySymbol, rate)}
           />
         }

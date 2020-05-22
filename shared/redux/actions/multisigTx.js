@@ -1,4 +1,4 @@
-import { apiLooper, constants, api } from 'helpers'
+import { apiLooper, constants, api, redirectTo } from 'helpers'
 import config from 'app-config'
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
@@ -114,6 +114,7 @@ const fetch = (address) => {
             break;
         }
 
+        // @ToDo - (draft) use api request for fetch status of address list
         if (status === 'pending') {
           firstPending = firstPending || {
             address,
@@ -139,7 +140,7 @@ const fetch = (address) => {
         })
       })
 
-      console.log('updateMultisigStatus', address, firstPending, pengingCount)
+      // @ToDo - (draft) use api request for fetch status of address list
       reducers.user.updateMultisigStatus({
         address,
         last: firstPending,
@@ -152,6 +153,31 @@ const fetch = (address) => {
   })
 }
 
+const goToLastWallet = () => {
+  const {
+    user: {
+      multisigStatus,
+    }
+  } = getState()
+
+  const walletsWithRequests = Object.keys(multisigStatus).map((walletAddress) => ({
+    walletAddress,
+    ...multisigStatus[walletAddress],
+  })).filter((item) => {
+    const {
+      count,
+      pending,
+    } = item
+
+    return count
+  })
+
+  if (walletsWithRequests.length) {
+    window.location.hash = `/btc/${walletsWithRequests[0].walletAddress}`
+  }
+}
+
+
 export default {
   broadcast,
   fetch,
@@ -160,4 +186,6 @@ export default {
   fetchRawTx,
   confirmTx,
   rejectTx,
+
+  goToLastWallet,
 }

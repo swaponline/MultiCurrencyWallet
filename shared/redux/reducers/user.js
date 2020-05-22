@@ -55,18 +55,30 @@ export const initialState = {
   isTokenSigned: false,
   activeFiat: window.DEFAULT_FIAT || 'USD',
   multisigStatus: {},
+  multisigPendingCount: 0,
 }
 
-export const updateMultisigStatus = (state, { address, last, total }) => ({
-  ...state,
-  multisigStatus: {
-    ...state.multisigStatus,
-    [address] : {
-      pending: last,
-      count: total,
+export const updateMultisigStatus = (state, { address, last, total }) => {
+  let totalPending = 0
+  Object.keys(state.multisigStatus).map((savedAddress) => {
+    if (address !== savedAddress) totalPending+=state.multisigStatus[savedAddress].count 
+  })
+
+  totalPending+= total
+
+  return {
+    ...state,
+    multisigPendingCount: totalPending,
+    multisigStatus: {
+      ...state.multisigStatus,
+      [address] : {
+        address,
+        pending: last,
+        count: total,
+      },
     },
-  },
-})
+  }
+}
 
 export const addWallet = (state, { name, data }) => ({
   ...state,
