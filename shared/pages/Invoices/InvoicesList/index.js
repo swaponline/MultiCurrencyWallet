@@ -56,6 +56,7 @@ const langLabels = defineMessages({
     btcData,
     ethData,
     multisigStatus,
+    activeFiat,
   },
 }) => {
   return {
@@ -64,6 +65,7 @@ const langLabels = defineMessages({
       eth: ethData,
     },
     multisigStatus,
+    activeFiat,
   }
 })
 @injectIntl
@@ -179,9 +181,16 @@ export default class InvoicesList extends PureComponent {
 
   async componentWillUnmount() { }
 
-  rowRender = (row, rowIndex) => (
-    <Row key={rowIndex} {...row} viewType="invoice" />
-  )
+  rowRender = (row, rowIndex) => {
+    const {
+      history,
+      activeFiat,
+    } = this.props
+
+    return (
+      <Row key={rowIndex} {...row} viewType="invoice" activeFiat={activeFiat} history={history} />
+    )
+  }
 
   render() {
     let {
