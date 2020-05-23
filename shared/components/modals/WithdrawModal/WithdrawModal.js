@@ -671,8 +671,8 @@ export default class WithdrawModal extends React.Component {
                       </span>
                       <span styleName="usd">
                         {(item.infoAboutCurrency && item.currencyRate)
-                          ? (item.balance * exCurrencyRate).toFixed(2)
-                          : (item.balance * item.currencyRate).toFixed(2)}{' '}
+                          ? (item.balance * item.currencyRate).toFixed(2)
+                          : (item.balance * exCurrencyRate).toFixed(2)}{' '}
                         {activeFiat}
                       </span>
                     </div>
