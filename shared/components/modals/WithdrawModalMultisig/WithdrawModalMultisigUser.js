@@ -457,6 +457,9 @@ export default class WithdrawModalMultisigUser extends React.Component {
                 values={{ minAmount: <span>{min}</span>, br: <br />, data: `${dataCurrency}` }}
               />
             </p>
+            <br />
+            <br />
+            <br />
             <div styleName="highLevel" style={{ marginBottom: "20px" }}>
               <FieldLabel>
                 <FormattedMessage id="Withdrow1194" defaultMessage="Address " />{" "}

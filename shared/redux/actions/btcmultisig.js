@@ -1085,7 +1085,18 @@ const confirmSMSProtected = async (smsCode) => {
 
 const send = async ({ from, to, amount, feeValue, speed } = {}) => {
   feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, method: 'send_multisig' })
-  const { user: { btcMultisigUserData: { address, privateKey, publicKeys, publicKey } } } = getState()
+  const {
+    user: {
+      btcMultisigUserData: {
+        privateKey,
+      },
+    }
+  } = getState()
+
+  const senderWallet = addressToWallet( from )
+  console.log('senderWallet', from)
+
+  const { address, publicKeys } = senderWallet
 
   let feeFromAmount = BigNumber(0)
 
