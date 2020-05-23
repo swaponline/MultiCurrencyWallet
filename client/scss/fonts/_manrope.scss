@@ -22,6 +22,15 @@
   font-style: normal;
 }
 
+
+@font-face {
+  font-family: 'Manrope-SemiBold';
+  src: url('../fonts/Manrope/manrope-semibold.woff2') format('woff2'),
+  url('../fonts/Manrope/manrope-semibold.woff2') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
 // @font-face {
 //   font-family: 'Inter-SemiBold';
 //   src: url('../fonts/Inter/Inter-SemiBold.woff2') format('woff2'),

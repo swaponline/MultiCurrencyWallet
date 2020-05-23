@@ -2,7 +2,8 @@
 @import "fonts/index";
 
 body {
-  font-family: 'Inter-Regular', sans-serif;
+  @include ff;
+  font-family: sans-serif;
   font-size: 16px;
   overflow-x: hidden;
 }

@@ -95,7 +95,7 @@
 .date {
   font-size: 12px;
   font-weight: bold;
-  font-family: 'Inter-Regular', sans-serif;
+  @include ff;
   color: #8E9AA3;
   white-space: pre-wrap;
   cursor: pointer;
@@ -140,7 +140,7 @@
   span {
     position: absolute;
     font-size: 12px;
-    font-family: 'Inter-Medium', sans-serif;
+    @include ff-regular;
     bottom: 20px;
     left: 24px;
     color: #8E9AA3;
@@ -162,7 +162,7 @@
   height: 40px;
   line-height: 48px;
   margin-top: 15px;
-  font-family: 'Inter-Bold', sans-serif;
+  @include ff-bold;
   button:first-child {
     color: #6144E5;
   }
@@ -176,7 +176,7 @@
   height: 40px;
   line-height: 48px;
   margin-top: 15px;
-  font-family: 'Inter-Bold', sans-serif;
+  @include ff-bold;
   text-align: center;
   >span {
     font-style: normal;
@@ -233,7 +233,7 @@ tr.historyRow {
 
     textarea {
       width: 85%;
-      font-family: 'Inter-Regular', sans-serif;
+      @include ff;
     }
 
     .submit {

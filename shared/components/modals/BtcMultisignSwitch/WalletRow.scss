@@ -475,7 +475,7 @@
       color: red;
       font-size: 13px;
       z-index: 5;
-      font-family: 'Manrope-Medium',sans-serif;
+      @include ff-regular;
       span, a {
        font-size: 13px;
       }

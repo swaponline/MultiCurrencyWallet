@@ -50,7 +50,7 @@
 .notice {
   line-height: 140%;
   color: #8e9aa3;
-  font-family: "Manrope-Medium", sans-serif;
+  @include ff-regular;
   width: 78%;
   text-align: center;
   margin: auto;
@@ -105,7 +105,7 @@
 }
 
 .label {
-  font-family: 'Inter-SemiBold', sans-serif;
+  @include ff-semibold;
 }
 
 .button {
@@ -183,7 +183,7 @@
   font-size: 18px;
   line-height: 140%;
   color: #8e9aa3;
-  font-family: "Manrope-Medium", sans-serif;
+  @include ff-regular;
   width: 78%;
   text-align: center;
   margin: auto;

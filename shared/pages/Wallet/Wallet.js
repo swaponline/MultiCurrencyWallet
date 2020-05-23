@@ -184,7 +184,7 @@ export default class Wallet extends Component {
 
     this.getFiats()
 
-    if (url.includes('withdraw')) {
+    if (url.includes('send')) {
       this.handleWithdraw(params)
     }
     this.getInfoAboutCurrency()
@@ -315,7 +315,7 @@ export default class Wallet extends Component {
     history.push(
       localisedUrl(
         locale,
-        (isToken ? '/token' : '') + `/${targetCurrency}/${address}/withdraw`
+        (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`
       )
     )
   }

@@ -21,7 +21,7 @@
   width: 70%;
 
   h2 {
-    font-family: 'Inter-Medium';
+    @include ff-regular;
     font-size: 24px;
     color: #fff;
     margin-bottom: 70px;
@@ -69,7 +69,7 @@
 .button {
   margin: 8px;
   min-width: 290px;
-  font-family: 'Inter-Regular';
+  @include ff;
   border-radius: 30px;
   font-size: 16px;
   padding: 16px 40px;

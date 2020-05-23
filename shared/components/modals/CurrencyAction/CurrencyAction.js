@@ -88,7 +88,7 @@ export default class CurrencyAction extends React.Component {
       history.push(
         localisedUrl(
           locale,
-          (isToken ? '/token' : '') + `/${targetCurrency}/${address}/withdraw`
+          (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`
         )
       )
     }

@@ -11,7 +11,7 @@
   font-size: 18px;
   border: none;
   border-radius: 2px;
-  font-family: "Inter-Bold", sans-serif;
+  @include ff-bold;
   @include no-user-select;
   transition: background-color 0.23s ease, color 0.23s ease;
 }

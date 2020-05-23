@@ -1,13 +1,13 @@
 .faQuestions {
   display: block;
   width: 100%;
-  font-family: "Inter-Regular";
+  @include ff-regular;
   padding-left: 1px;
   font-size: 13px;
   line-height: 1.538em;
 
   &__header {
-    font-family: 'Manrope-Bold', sans-serif;
+    @include ff-bold;
     font-size: 24px;
     line-height: 33px;
   }
@@ -26,7 +26,7 @@
     display: flex;
     position: relative;
     padding-left: 23px;
-    font-family: "Inter-Medium";
+    @include ff-semibold;
     cursor: pointer;
 
     // &:hover {
