@@ -142,7 +142,7 @@ export default class WallerSlider extends Component {
                     className="notifyIncomeRequest"
                     firstBtn={needSignMultisig}
                     widthIcon="80"
-                    background="1f2d48"
+                    background="FFFF33"
                     descr={needSignMultisig}
                     logDescr={`Click on btc ms notify block (banner)`}
                     firstFunc={this.handleGoToMultisigRequest}
