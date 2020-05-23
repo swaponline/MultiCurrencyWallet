@@ -80,7 +80,6 @@ const signToUserMultisig = async () => {
   })
 
   const wallets = walletsData.map((data) => {
-    walletAddreses.push(data.address)
 
     return {
       address: data.address,
@@ -93,6 +92,8 @@ const signToUserMultisig = async () => {
       unconfirmedBalance: 0,
       isBalanceFetched: false,
       balanceError: false,
+      publicKeys: data.publicKeys,
+      publicKey: data.publicKey,
     }
   }).filter((wallet) => wallet.address !== btcMultisigUserData.address)
 
