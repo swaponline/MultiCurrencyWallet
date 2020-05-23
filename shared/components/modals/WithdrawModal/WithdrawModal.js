@@ -449,7 +449,7 @@ export default class WithdrawModal extends React.Component {
     const isToken = helpers.ethToken.isEthToken({ name: currency })
 
     history.push(
-      localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${currentAsset[0].address}/withdraw`)
+      localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${currentAsset[0].address}/send`)
     )
   }
 
@@ -635,8 +635,8 @@ export default class WithdrawModal extends React.Component {
                 </span>
                 <span styleName="usd">
                   {(currentActiveAsset.infoAboutCurrency && currentActiveAsset.currencyRate)
-                    ? (currentBalance * exCurrencyRate).toFixed(2)
-                    : (currentBalance * currentActiveAsset.currencyRate).toFixed(2)}{' '}
+                    ? (currentBalance * currentActiveAsset.currencyRate).toFixed(2)
+                    : (currentBalance * exCurrencyRate).toFixed(2)}{' '}
                   {activeFiat}
                 </span>
               </div>
@@ -671,8 +671,8 @@ export default class WithdrawModal extends React.Component {
                       </span>
                       <span styleName="usd">
                         {(item.infoAboutCurrency && item.currencyRate)
-                          ? (item.balance * exCurrencyRate).toFixed(2)
-                          : (item.balance * item.currencyRate).toFixed(2)}{' '}
+                          ? (item.balance * item.currencyRate).toFixed(2)
+                          : (item.balance * exCurrencyRate).toFixed(2)}{' '}
                         {activeFiat}
                       </span>
                     </div>

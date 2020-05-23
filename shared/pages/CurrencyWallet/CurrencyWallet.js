@@ -245,7 +245,7 @@ export default class CurrencyWallet extends Component {
     const targetCurrency = getCurrencyKey(currency.toLowerCase(), true)
     const isToken = helpers.ethToken.isEthToken({ name: currency })
 
-    const withdrawUrl = (isToken ? '/token' : '') + `/${targetCurrency}/${address}/withdraw`
+    const withdrawUrl = (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`
     const receiveUrl = (isToken ? '/token' : '') + `/${targetCurrency}/${address}/receive`
 
     if (this.props.history.location.pathname.toLowerCase() === withdrawUrl.toLowerCase() && balance !== 0) {
@@ -395,12 +395,12 @@ export default class CurrencyWallet extends Component {
               if (localStorage.getItem(constants.localStorage.balanceActiveCurrency).toUpperCase() !== activeFiat) {
                 localStorage.setItem(constants.localStorage.balanceActiveCurrency, currency.toLowerCase())
               }
-              
+
             }
             const targetCurrency = getCurrencyKey(currency.toLowerCase(), true)
             const isToken = helpers.ethToken.isEthToken({ name: currency })
 
-            const withdrawUrl = (isToken ? '/token' : '') + `/${targetCurrency}/${address}/withdraw`
+            const withdrawUrl = (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`
             const receiveUrl = (isToken ? '/token' : '') + `/${targetCurrency}/${address}/receive`
             const currentUrl = this.props.location.pathname.toLowerCase()
 
@@ -487,7 +487,7 @@ export default class CurrencyWallet extends Component {
 
     const isToken = helpers.ethToken.isEthToken({ name: currency })
 
-    history.push(localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${address}/withdraw`))
+    history.push(localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`))
 
     /*
     actions.modals.open(withdrawModal, {
