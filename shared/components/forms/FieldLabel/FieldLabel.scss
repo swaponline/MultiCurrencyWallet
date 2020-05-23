@@ -1,6 +1,6 @@
 .label {
   font-size: 15px;
-  font-family: "Inter-SemiBold", sans-serif;
+  @include ff-semibold;
   display: inline-block;
   background: #fff;
   padding: 7px 7px;

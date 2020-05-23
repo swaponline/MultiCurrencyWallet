@@ -41,7 +41,7 @@
   width: 450px;
   margin-bottom: 30px;
   font-size: 40px;
-  font-family: 'Inter-Bold', sans-serif;
+  @include ff-bold;
   line-height: 120%;
 }
 
@@ -166,7 +166,7 @@
   font-size: 18px;
   font-weight: 900;
   margin-bottom: 0;
-  font-family: 'Inter-Bold', sans-serif;
+  @include ff-bold;;
   margin-bottom: 5px;
 }
 
@@ -174,7 +174,7 @@
   font-size: 13px;
   margin-bottom: 7px;
   color: #8e9aa3;
-  font-family: 'Inter-Bold', sans-serif;
+  @include ff-bold;;
   line-height: 140%;
 }
 
@@ -203,7 +203,7 @@
 
   button {
     color: #6144E5;
-    font-family: 'Inter-Bold', sans-serif;
+    @include ff-bold;;
     font-size: 14px;
     text-decoration: underline;
     padding: 0;
@@ -251,7 +251,7 @@
     font-weight: 100;
     color: #8e9aa3;
     font-size: 10px;
-    font-family: 'Inter-Bold', sans-serif;
+    @include ff-bold;;
     line-height: 18px;
     text-align: center;
   }
@@ -393,7 +393,7 @@
     right: 39px;
     top: 93px;
     margin-bottom: 40px;
-    font-family: 'Inter-Bold';
+    @include ff-bold;;
     font-style: normal;
     font-size: 23px;
     line-height: 120%;
@@ -417,7 +417,7 @@
   }
 
   .subHeader h5 {
-    font-family: 'Inter-Bold';
+    @include ff-bold;;
     font-style: normal;
     font-size: 18px;
     margin: 5px 0;
@@ -453,7 +453,7 @@
 
     button {
       color: #6144E5;
-      font-family: 'Inter-Bold', sans-serif;
+      @include ff-bold;;
       font-size: 14px;
       text-decoration: underline;
 
@@ -506,7 +506,7 @@
       font-weight: 100;
       color: #8e9aa3;
       font-size: 11px;
-      font-family: 'Inter-Bold', sans-serif;
+      @include ff-bold;;
       line-height: 18px;
       text-align: left;
     }

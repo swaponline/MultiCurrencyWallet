@@ -49,7 +49,7 @@
 .notice {
   line-height: 140%;
   color: #8e9aa3;
-  font-family: 'Manrope-Medium', sans-serif;
+  @include ff-regular;
   width: 78%;
   text-align: center;
   margin: auto;
@@ -221,7 +221,7 @@
 .additionalСurrenciesItem {
   font-size: 14px;
   cursor: pointer;
-  font-family: 'Inter-Bold', sans-serif;
+  @include ff-bold;
   color: rgba(142,154,163,0.5);
 }
 .additionalСurrenciesItemActive {

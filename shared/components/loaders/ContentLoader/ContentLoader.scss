@@ -198,7 +198,7 @@
     text-align: center;
     color: #8e9aa3;
     display: inline-block;
-    font-family: 'Manrope-Medium', sans-serif;
+    @include ff-regular;
     width: 100%;
   }
 }

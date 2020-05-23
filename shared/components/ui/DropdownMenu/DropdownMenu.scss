@@ -27,7 +27,7 @@
     padding: 5px 0px;
     min-width: 100px;
     display: none;
-    font-family: 'Inter-Regular', sans-serif;
+    @include ff;
 
     button {
         font-size: 12px;

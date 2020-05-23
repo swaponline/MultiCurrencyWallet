@@ -26,7 +26,7 @@
   justify-content: space-between;
   align-items: center;
   position: relative;
-  font-family: "Manrope-Bold", sans-serif;
+  @include ff-bold;
   color: #1f2d48;
   font-size: 24px;
   line-height: 33px;

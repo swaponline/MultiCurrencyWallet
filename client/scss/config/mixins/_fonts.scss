@@ -1,14 +1,15 @@
 @mixin ff {
-  font-family: 'CerebriSans';
-  font-weight: normal;
+  font-family: 'Monrope-Regular';
+}
+
+@mixin ff-regular {
+  font-family: 'Manrope-Medium';  
 }
 
 @mixin ff-semibold {
-  font-family: 'CerebriSans Semibold';
-  font-weight: 600;
+  font-family: 'Manrope-SemiBold';
 }
 
 @mixin ff-bold {
-  font-family: 'CerebriSans Bold';
-  font-weight: 700;
+  font-family: 'Manrope-Bold';
 }
