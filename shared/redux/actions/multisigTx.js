@@ -115,7 +115,7 @@ const fetch = (address) => {
         }
 
         // @ToDo - (draft) use api request for fetch status of address list
-        if (status === 'pending') {
+        if (status === 'pending' && holderKey !== item.holder) {
           firstPending = firstPending || {
             address,
             item,
