@@ -5,7 +5,7 @@
   display: flex;
   z-index: 111111;
   cursor: pointer;
-  font-family: 'Manrope-Bold', sans-serif;
+  @include ff-bold;
   align-items: center;
   justify-content: space-between;
   padding: 24px;
@@ -42,7 +42,7 @@
   margin: 0 10px;
   color: #fff;
   position: absolute;
-  font-family: 'Manrope-Bold', sans-serif;
+  @include ff-bold;
   bottom: 20px;
   left: 10px;
 }

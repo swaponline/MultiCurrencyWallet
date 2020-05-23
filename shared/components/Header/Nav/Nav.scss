@@ -34,7 +34,7 @@ $exchangeBorder: #512ed0;
   transition: color 0.1s ease;
   font-weight: 800;
   font-size: 15px;
-  font-family: 'Inter-Bold', sans-serif;
+  @include ff-bold;
   line-height: 140%;
   color: #8E9AA3;
 

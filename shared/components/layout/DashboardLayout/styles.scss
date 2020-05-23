@@ -1,6 +1,6 @@
 .wallet {
   margin: 30px 0;
-  font-family: 'Manrope-Bold', sans-serif;
+  @include ff-semibold;
 }
 
 .hasCusomLogo {
@@ -68,7 +68,7 @@
   height: fit-content;
   padding: 25px;
   margin-top: 23px;
-  font-family: 'Manrope-Bold', sans-serif;
+  @include ff-semibold;
 }
 
 @media all and (max-width: 992px) {

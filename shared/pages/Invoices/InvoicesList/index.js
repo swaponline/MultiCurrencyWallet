@@ -3,10 +3,9 @@ import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'redaction'
 import actions from 'redux/actions'
 import Slider from 'pages/Wallet/components/WallerSlider';
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
-import { links, constants, ethToken } from 'helpers'
-import { getTokenWallet, getBitcoinWallet, getEtherWallet } from 'helpers/links'
+import { links } from 'helpers'
 
 
 import CSSModules from 'react-css-modules'
@@ -15,19 +14,12 @@ import styles from 'pages/CurrencyWallet/CurrencyWallet.scss'
 import Row from 'pages/History/Row/Row'
 
 import Table from 'components/tables/Table/Table'
-import NotifyBlock from 'pages/Wallet/components/NotityBlock/NotifyBock'
 import PageSeo from 'components/Seo/PageSeo'
 import { getSeoPage } from 'helpers/seo'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-import ReactTooltip from 'react-tooltip'
-import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 import { localisedUrl } from 'helpers/locale'
 import config from 'helpers/externalConfig'
-import BalanceForm from 'components/BalanceForm/BalanceForm'
-import { BigNumber } from 'bignumber.js'
 import ContentLoader from 'components/loaders/ContentLoader/ContentLoader'
-import getCurrencyKey from 'helpers/getCurrencyKey'
-
 
 const isWidgetBuild = config && config.isWidget
 

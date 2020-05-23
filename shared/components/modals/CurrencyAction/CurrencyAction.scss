@@ -11,7 +11,7 @@
   font-weight: 800;
   line-height: 140%;
   color: #8E9AA3;
-  font-family: 'Inter-Bold';
+  @include ff-bold;
 }
 
 .currenciesWrapper {
@@ -43,7 +43,7 @@
 
 .title {
   color: #1F2D48;
-  font-family: 'Inter-Bold';
+  @include ff-bold;
   text-align: center;
   font-size: 21px;
   line-height: 22px;
@@ -88,11 +88,11 @@
     color: #1F2D48;
     margin-top: 5px;
     margin-bottom: -1px;
-    font-family: 'Inter-Bold';
+    @include ff-bold;
   }
 
   span {
-    font-family: 'Inter-Regular';
+    @include ff;
     font-style: normal;
     font-size: 11px;
     line-height: 140%;

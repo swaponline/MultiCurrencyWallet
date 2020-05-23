@@ -8,7 +8,7 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 100px;
-  font-family: 'Manrope-Bold',sans-serif;
+  @include ff-bold;
 }
 
 .currencyWalletActivityWrapper {
@@ -70,7 +70,7 @@
   td,
   td:first-child {
     width: 100%;
-    font-family: 'Inter-Bold', sans-serif;
+    @include ff-bold;
     padding: 0;
   }
 }
@@ -92,7 +92,7 @@
   font-weight: bold;
   margin-bottom: 17px;
   line-height: 1.7;
-  font-family: 'Manrope-Bold',sans-serif;
+  @include ff-bold;
   p {
     color: #1F2D48;
     display: inline;
@@ -109,7 +109,7 @@
   display: flex;
   width: 445px;
   justify-content:space-between;
-  font-family: 'Manrope-Bold',sans-serif;
+  @include ff-bold;
   button {
     width: 140px;
     font-size: 15px;

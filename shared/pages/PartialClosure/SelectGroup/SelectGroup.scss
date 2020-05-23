@@ -89,7 +89,7 @@ input:disabled {
   background: none;
   box-shadow: none;
   position: absolute;
-  font-family: 'Inter-Bold', sans-serif;
+  @include ff-bold;
   right: 0px;
   top: 6px;
 

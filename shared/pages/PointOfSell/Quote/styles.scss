@@ -12,7 +12,7 @@
   font-style: normal;
   font-weight: 500;
   opacity: 0.6;
-  font-family: 'Inter-Regular', sans-serif;
+  @include ff;
 }
 
 .href {

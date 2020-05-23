@@ -1,5 +1,5 @@
 .HowItWorksTitle {
-  font-family: 'Inter-Bold', sans-serif;
+  @include ff-bold;
   font-style: normal;
   font-weight: bold;
   font-size: 48px;
@@ -25,7 +25,7 @@
   font-size: 24px;
   margin-bottom: 15px;
   display: block;
-  font-family: 'Inter-Bold', sans-serif;
+  @include ff-bold;
   line-height: 32px;
 }
 .HowItWorksInfo {

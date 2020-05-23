@@ -65,7 +65,7 @@
   }
 
   .selectedItem {
-    font-family: 'Inter-Bold', sans-serif;
+    @include ff-bold;
   }
 
   .fullTitle {
