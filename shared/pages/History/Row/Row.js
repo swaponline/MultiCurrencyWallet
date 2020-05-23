@@ -396,7 +396,7 @@ class Row extends React.PureComponent {
             )}
             <div styleName={statusStyleAmount}>
               {invoiceData ? this.parseFloat(direction, value, 'out', type) : this.parseFloat(direction, value, 'in', type)}
-              <span styleName='amountUsd'>{`~${getFiat.toFixed(2)}`}{activeFiat}</span>
+              <span styleName='amountUsd'>{`~${getFiat.toFixed(2)}`}{` `}{activeFiat}</span>
 
             </div>
             {/* <LinkTransaction type={type} styleName='address' hash={hash} >{hash}</LinkTransaction> */}

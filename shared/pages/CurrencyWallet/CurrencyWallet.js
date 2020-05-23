@@ -521,9 +521,12 @@ export default class CurrencyWallet extends Component {
   }
 
   rowRender = (row, rowIndex) => {
-    const { history } = this.props
+    const {
+      history,
+      activeFiat,
+    } = this.props
 
-    return <Row key={rowIndex} {...row} history={history} />
+    return <Row key={rowIndex} {...row} activeFiat={activeFiat} history={history} />
   }
 
   handleFilterChange = ({ target }) => {
