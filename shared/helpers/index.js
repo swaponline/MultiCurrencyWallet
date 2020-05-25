@@ -37,7 +37,6 @@ import getWalletLink from './getWalletLink'
 
 import redirectTo from './redirectTo'
 
-
 export default {
   btc,
   eth,
@@ -87,3 +86,4 @@ export {
   redirectTo,
 
 }
+export { getItezUrl } from "./getItezUrl"
