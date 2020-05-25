@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react'
 
-import { constants } from 'helpers'
+import { connect } from 'redaction'
+
+import { constants, getItezUrl } from 'helpers'
 import actions from 'redux/actions'
 import axios from 'axios'
 import security from '../NotityBlock/images/security.svg'
@@ -8,10 +10,12 @@ import styles from '../NotityBlock/NotifyBlock.scss'
 import NotifyBlock from '../NotityBlock/NotifyBock'
 import ContentLoader from '../../../../components/loaders/ContentLoader/ContentLoader'
 
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import linksManager from '../../../../helpers/links'
 
 
+@injectIntl
+@connect(({ user }) => ({ user }))
 export default class WallerSlider extends Component {
   constructor(props) {
     super(props)
@@ -50,6 +54,8 @@ export default class WallerSlider extends Component {
   }
 
   getBanners = () => {
+    const { user, intl: { locale } } = this.props
+
     if (window
       && window.bannersOnMainPage
       && window.bannersOnMainPage.length
@@ -63,7 +69,16 @@ export default class WallerSlider extends Component {
       try {
         return axios
           .get('https://noxon.wpmix.net/swapBanners/banners.php')
-          .then(({ data: banners }) => {
+          .then(({ data }) => {
+            const banners = data.map(el => {
+              if (el[4].includes('https://itez.swaponline.io/')) {
+                const bannerArr = [...el]
+                bannerArr.splice(4, 1, getItezUrl({ user, locale, url: el[4] }));
+
+                return bannerArr
+              }
+              return el
+            })
             this.setState(() => ({
               banners,
               isFetching: true,
@@ -118,7 +133,7 @@ export default class WallerSlider extends Component {
     if (!mnemonicDeleted) firstBtnTitle = <FormattedMessage id="ShowMyMnemonic" defaultMessage="Показать 12 слов" />
 
     const needSignMultisig = (
-      <FormattedMessage 
+      <FormattedMessage
         id="Banner_YouAreHaveNotSignegTx"
         defaultMessage="{count} multisig transaction is waiting for your confirmation"
         values={{
