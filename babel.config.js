@@ -1,14 +1,13 @@
 module.exports = {
-  'presets': [ '@babel/react',  ['@babel/env', {
-    'targets': {
-      'browsers': [ '>0.25%', 'not ie 11', 'not op_mini all'],
-    },
-  }], '@babel/preset-typescript' ],
-  'env': {
-    'production': {
-      'presets': ['minify'],
-    },
-  },
+  'presets': [
+    '@babel/react',
+    '@babel/preset-typescript',
+    ['@babel/env', {
+      'targets': {
+        'browsers': [ '>0.25%', 'not ie 11', 'not op_mini all'],
+      },
+    }],
+  ],
   'plugins': [
     ['@babel/plugin-proposal-decorators', { 'legacy': true }],
     '@babel/plugin-proposal-class-properties',

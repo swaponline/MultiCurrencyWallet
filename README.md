@@ -47,12 +47,17 @@ git clone --recurse-submodules https://github.com/swaponline/MultiCurrencyWallet
 
 3) Do `npm i` (windows? https://www.npmjs.com/package/windows-build-tools )<br /> (node 10 required, not 12!)
 ```
-nvm use 10.18.1
+nvm use 10.18.1 or 11.15.0
 cd swap.react
 npm i
 ```
 
 4) Do `git submodule update` in swap.react directory
+```
+git submodule init
+git submodule sync
+git submodule update --remote
+```
 
 5) For dev mode `npm run start`, for prod `npm run build`
    > If you need to deploy it on your own (site) origin - run build like: `npm run build:mainnet https://yourcoolsite.com/`

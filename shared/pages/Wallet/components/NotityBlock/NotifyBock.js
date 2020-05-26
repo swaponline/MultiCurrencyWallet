@@ -9,15 +9,10 @@ import Button from 'components/controls/Button/Button'
 import styles from './NotifyBlock.scss'
 
 const NotifyBlock = ({
-  className,
   icon,
   descr,
   tooltip,
-  firstBtn,
-  secondBtn,
   firstFunc,
-  secondFunc,
-  widthIcon,
   background,
   link,
   history,
@@ -27,7 +22,7 @@ const NotifyBlock = ({
     console.log('descr', descr)
     console.log('hostname', window.location.hostname)
     firstFunc && firstFunc()
-    if(link && link.includes('http')) {
+    if (link && link.includes('http')) {
       window.location = link;
     } else {
       if (link) history.push(link)
