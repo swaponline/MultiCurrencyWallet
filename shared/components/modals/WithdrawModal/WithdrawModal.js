@@ -41,10 +41,11 @@ import { getActivatedCurrencies } from 'helpers/user'
 @connect(
   ({
     currencies,
-    user: { ethData, btcData, tokensData, activeFiat, isBalanceFetching },
+    user: { ethData, btcData, tokensData, activeFiat, isBalanceFetching, activeCurrency },
     ui: { dashboardModalsAllowed },
   }) => ({
     activeFiat,
+    activeCurrency,
     currencies: currencies.items,
     items: [ethData, btcData],
     tokenItems: [...Object.keys(tokensData).map((k) => tokensData[k])],
@@ -454,8 +455,7 @@ export default class WithdrawModal extends React.Component {
   }
 
   setAdditionCurrency = (currency) => {
-    this.setState({ selectedValue: currency })
-    localStorage.setItem(constants.localStorage.balanceActiveCurrency, currency.toLowerCase())
+    actions.user.pullActiveCurrency(currency.toLowerCase())
   }
 
   render() {
@@ -486,6 +486,7 @@ export default class WithdrawModal extends React.Component {
       intl,
       portalUI,
       activeFiat,
+      activeCurrency,
       dashboardView,
     } = this.props
 
@@ -716,17 +717,17 @@ export default class WithdrawModal extends React.Component {
         <div styleName="lowLevel" style={{ marginBottom: '50px' }}>
           <div styleName="additionalСurrencies">
             <span
-              styleName={cx('additionalСurrenciesItem', { additionalСurrenciesItemActive: selectedValue === currentActiveAsset.currency })}
-              onClick={() => this.setAdditionCurrency(currentActiveAsset.currency)}
-            >
-              {currentActiveAsset.currency}
-            </span>
-            <span styleName="delimiter"></span>
-            <span
-              styleName={cx('additionalСurrenciesItem', { additionalСurrenciesItemActive: selectedValue === activeFiat })}
+              styleName={cx('additionalСurrenciesItem', { additionalСurrenciesItemActive: activeCurrency.toUpperCase() === activeFiat })}
               onClick={() => this.setAdditionCurrency(activeFiat)}
             >
               {activeFiat}
+            </span>
+            <span styleName="delimiter"></span>
+            <span
+              styleName={cx('additionalСurrenciesItem', { additionalСurrenciesItemActive: activeCurrency.toUpperCase() === currentActiveAsset.currency })}
+              onClick={() => this.setAdditionCurrency(currentActiveAsset.currency)}
+            >
+              {currentActiveAsset.currency}
             </span>
           </div>
           <p styleName="balance">

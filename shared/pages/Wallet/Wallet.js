@@ -43,6 +43,7 @@ const isWidgetBuild = config && config.isWidget
       isFetching,
       isBalanceFetching,
       multisigPendingCount,
+      activeCurrency
     },
     currencies: { items: currencies },
     createWallet: { currencies: assets },
@@ -92,6 +93,7 @@ const isWidgetBuild = config && config.isWidget
       hiddenCoinsList: hiddenCoinsList,
       userEthAddress: ethData.address,
       user,
+      activeCurrency,
       activeFiat,
       tokensData: {
         ethData,
@@ -408,6 +410,7 @@ export default class Wallet extends Component {
       hiddenCoinsList,
       isBalanceFetching,
       activeFiat,
+      activeCurrency,
       match: {
         params: {
           page = null,
@@ -480,10 +483,12 @@ export default class Wallet extends Component {
             fiatBalance={fiatBalance}
             currencyBalance={btcBalance}
             changePercent={changePercent}
+            activeCurrency={activeCurrency}
             handleReceive={this.handleModalOpen}
             handleWithdraw={this.handleWithdrawFirstAsset}
             handleExchange={this.handleGoExchange}
             isFetching={isBalanceFetching}
+            type="wallet"
             currency="btc"
             infoAboutCurrency={infoAboutCurrency}
           />
