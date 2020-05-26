@@ -68,14 +68,6 @@ const NewDesignLayout = (props) => {
   })
 
   useEffect(() => {
-    if (isMobile) {
-      balanceRef.current.scrollIntoView({
-        block: 'start',
-      })
-    }
-  }, [])
-
-  useEffect(() => {
     const getFiats = async () => {
       const { fiatsRates } = await actions.user.getFiats()
 
