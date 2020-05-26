@@ -202,8 +202,6 @@ const CreateWallet = (props) => {
 
     const isIgnoreSecondStep = ['ETH', 'SWAP', 'EURS', 'Custom ERC20'].find(el => Object.keys(currencies).includes(el))
 
-    console.log({ singleCurrecnyData, isIgnoreSecondStep })
-
     if (isIgnoreSecondStep) {
       actions.core.markCoinAsVisible(isIgnoreSecondStep)
       localStorage.setItem(constants.localStorage.isWalletCreate, true)
@@ -371,7 +369,7 @@ const CreateWallet = (props) => {
           <SecondStep error={error} onClick={validate} currencies={currencies} setError={setError} singleCurrecnyData /> :
           <div>
             {step === 1 && <FirstStep error={error} onClick={validate} setError={setError} />}
-            {step === 2 && <SecondStep error={error} onClick={validate} currencies={currencies} setError={setError} />}
+            {step === 2 && <SecondStep error={error} btcData={btcData} onClick={validate} currencies={currencies} setError={setError} />}
           </div>
         }
       </div>

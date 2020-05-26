@@ -28,7 +28,7 @@ import Cupture,
 
 
 const CreateWallet = (props) => {
-  const { intl: { locale }, onClick, currencies, error, setError, singleCurrecnyData } = props
+  const { intl: { locale }, onClick, currencies, error, setError, singleCurrecnyData, btcData } = props
 
   const _protection = {
     nothing: {
@@ -50,11 +50,14 @@ const CreateWallet = (props) => {
     fingerprint: {},
   }
 
+  const { hiddenCoinsList } = constants.localStorage
+
   if (currencies.BTC) {
     _protection.sms.btc = true
     _protection.g2fa.btc = false
     _protection.multisign.btc = true
     _protection.fingerprint.btc = true
+    _activated.nothing.btc = btcData.balance > 0 || !JSON.parse(hiddenCoinsList).includes("BTC")
     _activated.sms.btc = actions.btcmultisig.checkSMSActivated()
     _activated.g2fa.btc = actions.btcmultisig.checkG2FAActivated()
     _activated.multisign.btc = actions.btcmultisig.checkUserActivated()
@@ -173,8 +176,8 @@ const CreateWallet = (props) => {
       text: locale === 'en' ? 'No security' : 'Без защиты',
       name: 'withoutSecure',
       capture: locale === 'en' ? 'suitable for small amounts' : 'Подходит для небольших сумм',
-      enabled: true,
-      activated: false,
+      enabled: !_activated.nothing.btc,
+      activated: _activated.nothing.btc,
       onClickHandler: () => {
         if (isTrivialFeatureAsked) {
           return null
