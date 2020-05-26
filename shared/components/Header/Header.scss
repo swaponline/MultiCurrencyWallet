@@ -9,7 +9,7 @@ $purple: #510ed8;
 .otherHeaderLogo {
   display: block;
   max-height: 55px;
-  width: auto;
+  width: 150px;;
 }
 
 .buttonLan {
@@ -61,6 +61,14 @@ $purple: #510ed8;
     height: 40px;
   }
 }
+
+@media all and (max-width: 780px) {
+  .container {
+    margin: 0 auto;
+  }
+}
+
+
 
 @include media-mobile {
   .header {
