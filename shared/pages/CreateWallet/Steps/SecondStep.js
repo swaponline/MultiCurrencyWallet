@@ -51,13 +51,14 @@ const CreateWallet = (props) => {
   }
 
   const { hiddenCoinsList } = constants.localStorage
+  const hiddenCoins = JSON.parse(localStorage.getItem(hiddenCoinsList))
 
   if (currencies.BTC) {
     _protection.sms.btc = true
     _protection.g2fa.btc = false
     _protection.multisign.btc = true
     _protection.fingerprint.btc = true
-    _activated.nothing.btc = btcData.balance > 0 || !JSON.parse(hiddenCoinsList).includes("BTC")
+    _activated.nothing.btc = btcData.balance > 0 || (!hiddenCoins.includes("BTC") && !hiddenCoins.includes(`BTC:${btcData.address}`))
     _activated.sms.btc = actions.btcmultisig.checkSMSActivated()
     _activated.g2fa.btc = actions.btcmultisig.checkG2FAActivated()
     _activated.multisign.btc = actions.btcmultisig.checkUserActivated()
