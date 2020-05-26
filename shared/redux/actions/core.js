@@ -315,8 +315,12 @@ const markCoinAsHidden = (coin) => {
 }
 
 const markCoinAsVisible = (coin) => {
-  reducers.core.markCoinAsVisible(coin)
-  localStorage.setItem(constants.localStorage.hiddenCoinsList, JSON.stringify(getState().core.hiddenCoinsList))
+  const { hiddenCoinsList } = constants.localStorage
+
+  const findedCoin = JSON.parse(localStorage.getItem(hiddenCoinsList)).find(el => el.includes(coin) && el.includes(":"))
+
+  reducers.core.markCoinAsVisible(findedCoin || coin)
+  localStorage.setItem(hiddenCoinsList, JSON.stringify(getState().core.hiddenCoinsList))
 }
 
 const getWallet = (findCondition) => {

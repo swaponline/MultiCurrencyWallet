@@ -168,7 +168,6 @@ const CreateWallet = (props) => {
 
   const currencyName = Object.keys(currencies)[0] || 'Cant define currency'
 
-  console.log('locale', locale)
   const coins = [
     {
       text: locale === 'en' ? 'No security' : 'Без защиты',
@@ -319,6 +318,7 @@ const CreateWallet = (props) => {
 
               return (
                 <div
+                  key={index}
                   styleName={`${cardStyle_}`}
                   onClick={() => {
                     if (typeof el.onClickHandler !== 'undefined') { el.onClickHandler() }

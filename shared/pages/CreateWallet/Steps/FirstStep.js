@@ -25,8 +25,6 @@ import Cupture
 } from './texts'
 
 
-
-
 const isWidgetBuild = config && config.isWidget
 
 @connect(({ currencies: { items: currencies } }) => ({ currencies }))
