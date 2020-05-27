@@ -35,7 +35,6 @@ const CreateWallet = (props) => {
     intl: { locale },
     createWallet:
     {
-      usersData: { eMail },
       currencies,
       secure,
     },
@@ -52,7 +51,6 @@ const CreateWallet = (props) => {
     btcData,
     btcMultisigSMSData,
     btcMultisigUserData,
-    tokensData,
   } = userData
 
   const userWallets = actions.core.getWallets().filter(({ currency }) => !hiddenCoinsList.includes(currency))
@@ -168,10 +166,8 @@ const CreateWallet = (props) => {
   }, [])
 
   const [step, setStep] = useState(1)
-  const [fiates, setFeates] = useState(1)
   const [error, setError] = useState('Choose something')
   const [isExist, setExist] = useState(false)
-  const steps = [1, 2]
 
   const goHome = () => {
     history.push(localisedUrl(locale, links.home))
@@ -198,9 +194,18 @@ const CreateWallet = (props) => {
 
   const validate = () => {
     setError(null)
+
     if (!Object.values(currencies).includes(true) && step === 1) {
       setError('Choose something')
+      return
+    }
 
+    const isIgnoreSecondStep = ['ETH', 'SWAP', 'EURS', 'Custom ERC20'].find(el => Object.keys(currencies).includes(el))
+
+    if (isIgnoreSecondStep) {
+      actions.core.markCoinAsVisible(isIgnoreSecondStep)
+      localStorage.setItem(constants.localStorage.isWalletCreate, true)
+      goHome()
       return
     }
 
@@ -364,7 +369,7 @@ const CreateWallet = (props) => {
           <SecondStep error={error} onClick={validate} currencies={currencies} setError={setError} singleCurrecnyData /> :
           <div>
             {step === 1 && <FirstStep error={error} onClick={validate} setError={setError} />}
-            {step === 2 && <SecondStep error={error} onClick={validate} currencies={currencies} setError={setError} />}
+            {step === 2 && <SecondStep error={error} btcData={btcData} onClick={validate} currencies={currencies} setError={setError} />}
           </div>
         }
       </div>

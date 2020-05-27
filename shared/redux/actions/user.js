@@ -285,6 +285,10 @@ const pullTransactions = transactions => {
   reducers.history.setTransactions(data)
 }
 
+const pullActiveCurrency = (currency) => {
+  reducers.user.setActiveCurrency({ activeCurrency: currency })
+}
+
 const delay = (ms) => new Promise(resolve => setTimeout(() => resolve(true), ms))
 
 const fetchMultisigStatus = async () => {
@@ -299,12 +303,10 @@ const fetchMultisigStatus = async () => {
 
   actions.multisigTx.fetch(mainAddress)
   if (wallets && wallets.length) {
-    wallets.map(({ address }, index) => {
-      return new Promise(async (resolve) => {
-        actions.multisigTx.fetch(address)
-        resolve(true)
-      })
-    })
+    wallets.map(({ address }, index) => new Promise(async (resolve) => {
+      actions.multisigTx.fetch(address)
+      resolve(true)
+    }))
   }
 }
 
@@ -489,4 +491,5 @@ export default {
   getWithdrawWallet,
   getFiats,
   fetchMultisigStatus,
+  pullActiveCurrency,
 }
