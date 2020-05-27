@@ -13,6 +13,22 @@ import { getActivatedCurrencies } from 'helpers/user'
 import getCurrencyKey from 'helpers/getCurrencyKey'
 
 
+/*
+  Когда добавляем reducers, для старых пользователей они не инициализированы
+  Нужно проверять значение, и если undefined - инициализировать
+*/
+const initReducerState = () => {
+  const {
+    user: {
+      activeCurrency,
+      activeFiat,
+    },
+  } = getState()
+
+  if (!activeCurrency) reducers.user.setActiveCurrency({ activeCurrency: 'BTC'})
+  if (!activeFiat) reducers.user.setActiveFiat({ activeFiat: window.DEFAULT_FIAT || 'USD' })
+}
+
 const sign_btc_multisig = async (btcPrivateKey) => {
   let btcMultisigOwnerKey = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKey)
   try { btcMultisigOwnerKey = JSON.parse(btcMultisigOwnerKey) } catch (e) { }
@@ -33,6 +49,8 @@ const sign_btc_2fa = async (btcPrivateKey) => {
 }
 
 const sign = async () => {
+  initReducerState()
+
   let mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
 
   if (!mnemonic) {
