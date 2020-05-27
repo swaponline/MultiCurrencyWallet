@@ -93,6 +93,7 @@ $purple: #510ed8;
 
 .header-mobile>div {
   transform: none;
+  z-index: 1;
   transition: transform 250ms ease;
 }
 
