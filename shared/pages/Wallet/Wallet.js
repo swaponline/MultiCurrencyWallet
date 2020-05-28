@@ -36,6 +36,7 @@ const isWidgetBuild = config && config.isWidget
       activeFiat,
       ethData,
       btcData,
+      sumData,
       btcMultisigSMSData,
       btcMultisigUserData,
       btcMultisigUserDataList,
@@ -76,8 +77,8 @@ const isWidgetBuild = config && config.isWidget
     }))
 
     const items = (config && config.isWidget
-      ? [btcData, ethData]
-      : [btcData, btcMultisigSMSData, btcMultisigUserData, ethData]
+      ? [btcData, ethData, sumData]
+      : [btcData, btcMultisigSMSData, btcMultisigUserData, sumData, ethData]
     ).map((data) => data.currency)
 
     return {
@@ -98,6 +99,7 @@ const isWidgetBuild = config && config.isWidget
       tokensData: {
         ethData,
         btcData,
+        sumData,
         btcMultisigSMSData,
         btcMultisigUserData,
         btcMultisigUserDataList,
@@ -331,13 +333,16 @@ export default class Wallet extends Component {
     const isFirstCheck = moment(now, 'HH:mm:ss DD/MM/YYYY').isSame(lastCheckMoment)
     const isOneHourAfter = moment(now, 'HH:mm:ss DD/MM/YYYY').isAfter(lastCheckMoment.add(1, 'hours'))
 
-    const { ethData, btcData } = this.props.tokensData
+    const { ethData, btcData, sumData } = this.props.tokensData
 
     const balancesData = {
       ethBalance: ethData.balance,
       btcBalance: btcData.balance,
+      sumBalance: sumData.balance,
       ethAddress: ethData.address,
       btcAddress: btcData.address,
+      sumAddress: sumData.address,
+
     }
 
     if (isOneHourAfter || isFirstCheck) {
