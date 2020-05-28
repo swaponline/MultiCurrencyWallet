@@ -41,13 +41,13 @@ import { getActivatedCurrencies } from 'helpers/user'
 @connect(
   ({
     currencies,
-    user: { ethData, btcData, tokensData, activeFiat, isBalanceFetching, activeCurrency },
+    user: { ethData, btcData, ,sumData, tokensData, activeFiat, isBalanceFetching, activeCurrency },
     ui: { dashboardModalsAllowed },
   }) => ({
     activeFiat,
     activeCurrency,
     currencies: currencies.items,
-    items: [ethData, btcData],
+    items: [ethData, btcData, sumData],
     tokenItems: [...Object.keys(tokensData).map((k) => tokensData[k])],
     dashboardView: dashboardModalsAllowed,
     isBalanceFetching,
