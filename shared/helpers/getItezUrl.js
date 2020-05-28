@@ -1,22 +1,31 @@
 
 export const getItezUrl = ({ user, locale, url }) => {
-    const { activeFiat, btcMnemonicData, btcMultisigG2FAData, btcMultisigSMSData, btcMultisigUserData, btcData } = user
+  if (!user && !locale) return url
 
-    let getActuallyFiatAddress = [btcMnemonicData, btcMultisigG2FAData, btcMultisigSMSData, btcMultisigUserData, btcData].find(({ balance }) => balance > 0);
+  const { activeFiat, btcMnemonicData, btcMultisigG2FAData, btcMultisigSMSData, btcMultisigUserData, btcData } = user
 
-    if (!getActuallyFiatAddress) {
-        getActuallyFiatAddress = btcData
-    }
+  let getActuallyFiatAddress = [btcMnemonicData, btcMultisigG2FAData, btcMultisigSMSData, btcMultisigUserData, btcData].find(({ balance }) => balance > 0);
 
-    const comingFiat = /%7BDEFAULT_FIAT%7D/gi
-    const comingLocale = /%7Blocale%7D/gi
-    const comingAddress = /%7Bbtcaddress%7D/gi
+  if (!getActuallyFiatAddress) {
+    getActuallyFiatAddress = btcData
+  }
 
+  const comingFiat = /%7BDEFAULT_FIAT%7D/gi
+  const comingLocale = /%7Blocale%7D/gi
+  const comingAddress = /%7Bbtcaddress%7D/gi
 
-    const returned = url
-        .replace(comingFiat, activeFiat)
-        .replace(comingLocale, locale)
-        .replace(comingAddress, getActuallyFiatAddress.address)
+  let returned = url
 
-    return returned
+  if (url.includes('btcaddress')) {
+    returned = returned.replace(comingAddress, getActuallyFiatAddress.address)
+  }
+  if (url.includes('BDEFAULT_FIAT')) {
+    returned = returned.replace(comingFiat, activeFiat)
+  }
+
+  if (url.includes('locale')) {
+    returned = returned.replace(comingLocale, locale)
+  }
+
+  return returned
 }
