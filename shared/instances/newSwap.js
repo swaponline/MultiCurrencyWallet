@@ -45,6 +45,8 @@ const createSwapApp = () => {
         // TODO need init swapApp only after private keys created!!!!!!!!!!!!!!!!!!!
         eth: localStorage.getItem(privateKeys.privateKeyNames.eth),
         btc: localStorage.getItem(privateKeys.privateKeyNames.btc),
+        sum: localStorage.getItem(privateKeys.privateKeyNames.sum),
+
       }),
       new SwapRoom({
         repo,
