@@ -10,21 +10,28 @@ export const getItezUrl = ({ user, locale, url }) => {
     getActuallyFiatAddress = btcData
   }
 
-  const comingFiat = /%7BDEFAULT_FIAT%7D/gi
-  const comingLocale = /%7Blocale%7D/gi
-  const comingAddress = /%7Bbtcaddress%7D/gi
+  const shieldingСomingFiat = /%7BDEFAULT_FIAT%7D/gi
+  const shieldingСomingLocale = /%7Blocale%7D/gi
+  const shieldingСomingAddress = /%7Bbtcaddress%7D/gi
+
+  const comingFiat = /{DEFAULT_FIAT}/gi
+  const comingLocale = /{locale}/gi
+  const comingAddress = /{btcaddress}/gi
 
   let returned = url
 
   if (url.includes('btcaddress')) {
     returned = returned.replace(comingAddress, getActuallyFiatAddress.address)
+    returned = returned.replace(shieldingСomingAddress, getActuallyFiatAddress.address)
   }
-  if (url.includes('BDEFAULT_FIAT')) {
+  if (url.includes('DEFAULT_FIAT')) {
     returned = returned.replace(comingFiat, activeFiat)
+    returned = returned.replace(shieldingСomingFiat, activeFiat)
   }
 
   if (url.includes('locale')) {
     returned = returned.replace(comingLocale, locale)
+    returned = returned.replace(shieldingСomingLocale, locale)
   }
 
   return returned
