@@ -11,7 +11,7 @@ import localeRu from 'react-intl/locale-data/ru'
 import { getCookie } from 'helpers/utils'
 
 
-addLocaleData([...localeEn, ...localeRu, ...localeDe, ...localeRt])
+addLocaleData([...localeEn, ...localeRu, ...localeDe, ...localeTr])
 
 import myEn from 'localisation/en.json'
 import myRu from 'localisation/ru.json'
