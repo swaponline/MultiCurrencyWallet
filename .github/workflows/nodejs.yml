@@ -26,7 +26,7 @@ jobs:
       uses: bahmutov/npm-install@v1    
       with:
        useLockFile: false  
-    - name: npm install, build, and test
+    - name: npm install, build, and testt
       run: |
         npm run build:mainnet
         npm run validate
