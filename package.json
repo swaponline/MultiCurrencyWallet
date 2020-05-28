@@ -58,6 +58,7 @@
   "keywords": [],
   "devDependencies": {
     "@babel/core": "^7.9.6",
+    "@babel/node": "^7.10.1",
     "@babel/plugin-proposal-class-properties": "^7.0.0",
     "@babel/plugin-proposal-decorators": "^7.0.0",
     "@babel/plugin-proposal-function-bind": "^7.0.0",
@@ -78,6 +79,7 @@
     "autoprefixer": "^8.5.0",
     "babel-eslint": "^9.0.0",
     "babel-loader": "^8.0.0",
+    "babel-plugin-react-intl": "^7.5.14",
     "bestzip": "^2.1.4",
     "body-parser": "^1.19.0",
     "chalk": "^2.4.2",
