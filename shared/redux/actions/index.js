@@ -14,6 +14,7 @@ import filter from './filter'
 
 import btc from './btc'
 import btcmultisig from './btcmultisig'
+import sum from './sum'
 import eth from './eth'
 import token from './token'
 
@@ -53,6 +54,7 @@ export default {
 
   btc,
   btcmultisig,
+  sum,
   eth,
 
   token,
