@@ -61,12 +61,14 @@ const sign = async () => {
   const mnemonicKeys = {
     btc: localStorage.getItem(constants.privateKeyNames.btcMnemonic),
     btcSms: localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated),
+    sum: localStorage.getItem(constants.privateKeyNames.sumMnemonic),
     eth: localStorage.getItem(constants.privateKeyNames.ethMnemonic),
   }
 
   console.log('actions user - sign', mnemonicKeys, mnemonic)
   if (mnemonic !== `-`) {
     if (!mnemonicKeys.btc) mnemonicKeys.btc = actions.btc.sweepToMnemonic(mnemonic)
+    if (!mnemonicKeys.sum) mnemonicKeys.sum = actions.sum.sweepToMnemonic(mnemonic)
     if (!mnemonicKeys.eth) mnemonicKeys.eth = actions.eth.sweepToMnemonic(mnemonic)
     if (!mnemonicKeys.btcSms) {
       mnemonicKeys.btcSms = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
@@ -88,11 +90,13 @@ const sign = async () => {
 
   const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
   const btcMultisigPrivateKey = localStorage.getItem(constants.privateKeyNames.btcMultisig)
+  const sumPrivateKey = localStorage.getItem(constants.privateKeyNames.sum)
   const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
 
 
   const _ethPrivateKey = actions.eth.login(ethPrivateKey, mnemonic, mnemonicKeys)
   const _btcPrivateKey = actions.btc.login(btcPrivateKey, mnemonic, mnemonicKeys)
+  const _sumPrivateKey = actions.sum.login(sumPrivateKey, mnemonic, mnemonicKeys)
 
   // btc multisig with 2fa (2of3)
   await sign_btc_2fa(_btcPrivateKey)
@@ -118,14 +122,16 @@ const sign = async () => {
 const getReputation = async () => {
 
   const btcReputationPromise = actions.btc.getReputation()
+  const sumReputationPromise = actions.sum.getReputation()  
   const ethReputationPromise = actions.eth.getReputation()
 
   Promise.all([
     btcReputationPromise,
+    sumReputationPromise,
     ethReputationPromise,
   ])
-    .then(([btcReputation, ethReputation]) => {
-      const totalReputation = Number(btcReputation) + Number(ethReputation)
+    .then(([btcReputation, sumReputation, ethReputation]) => {
+      const totalReputation = Number(btcReputation) + Number(sumReputation) + Number(ethReputation)
 
       if (Number.isInteger(totalReputation)) {
         reducers.ipfs.set({ reputation: totalReputation })
@@ -152,6 +158,7 @@ const getBalances = () => {
   return new Promise(async (resolve) => {
     await actions.eth.getBalance()
     await actions.btc.getBalance()
+    await actions.sum.getBalance()
     await actions.btcmultisig.getBalance() // SMS-Protected
     await actions.btcmultisig.getBalanceUser() // Other user confirm
     await actions.btcmultisig.fetchMultisigBalances()
@@ -235,6 +242,7 @@ const getDemoMoney = process.env.MAINNET ? () => { } : () => {
     .then((r) => {
       window.localStorage.clear()
       localStorage.setItem(constants.privateKeyNames.btc, r[0])
+      localStorage.setItem(constants.privateKeyNames.sum, r[0])
       localStorage.setItem(constants.privateKeyNames.eth, r[1])
       localStorage.setItem(constants.localStorage.demoMoneyReceived, true)
       window.location.reload()
@@ -280,6 +288,10 @@ const getInfoAboutCurrency = (currencyNames) =>
                 reducers.user.setInfoAboutCurrency({ name: 'btcMultisigUserData', infoAboutCurrency: currencyInfo })
                 reducers.user.setInfoAboutCurrency({ name: 'btcMultisigG2FAData', infoAboutCurrency: currencyInfo })
                 break
+              }
+              case 'SUM': {
+                reducers.user.setInfoAboutCurrency({ name: 'sumData', infoAboutCurrency: currencyInfo })
+                reducers.user.setInfoAboutCurrency({ name: 'sumMnemonicData', infoAboutCurrency: currencyInfo }) // Sweep (for future)
               }
               case 'ETH': {
                 reducers.user.setInfoAboutCurrency({ name: 'ethData', infoAboutCurrency: currencyInfo })
@@ -330,6 +342,7 @@ const fetchMultisigStatus = async () => {
 
 const setTransactions = async () => {
   const isBtcSweeped = actions.btc.isSweeped()
+  const isSumSweeped = actions.sum.isSweeped()
   const isEthSweeped = actions.eth.isSweeped()
 
   const {
@@ -353,6 +366,8 @@ const setTransactions = async () => {
       actions.btcmultisig.getTransactionUser(),
       // actions.btcmultisig.getInvoicesUser(),
       // actions.usdt.getTransaction(),
+      actions.sum.getTransaction(),
+      ...(isSumSweeped) ? [] : [actions.sum.getTransaction(actions.sum.getSweepAddress())],
       actions.eth.getTransaction(),
       ...(isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
       // actions.eth.getInvoices(),
@@ -380,7 +395,7 @@ const setTransactions = async () => {
 }
 
 const getText = () => {
-  const { user: { ethData, btcData } } = getState()
+  const { user: { ethData, btcData, sumData } } = getState()
 
 
   let text = `
@@ -406,6 +421,18 @@ How to access tokens and ethers: \r\n
 \r\n
 Bitcoin address: ${btcData.address}\r\n
 Private key: ${btcData.privateKey}\r\n
+\r\n
+1. Go to blockchain.info\r\n
+2. login\r\n
+3. Go to settings > addresses > import\r\n
+4. paste private key and click "Ok"\r\n
+\r\n
+* We don\'t store your private keys and will not be able to restore them!
+\r\n
+# SUMCOIN\r\n
+\r\n
+Sumcoin address: ${sumData.address}\r\n
+Private key: ${sumData.privateKey}\r\n
 \r\n
 1. Go to blockchain.info\r\n
 2. login\r\n
@@ -446,6 +473,7 @@ export const isOwner = (addr, currency) => {
   }
 
   if (actions.btc.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
+  if (actions.sum.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
   if (actions.eth.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
 
   const name = `${currency.toLowerCase()}Data`
