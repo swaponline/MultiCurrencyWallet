@@ -84,6 +84,32 @@ const initialState = {
       addAssets: false,
       dontCreateOrder: true,
     }] : [],
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.sum) ? [{
+      name: 'SUM',
+      title: 'SUM',
+      icon: 'sum',
+      value: 'sum',
+      fullTitle: 'sumcoin',
+      addAssets: true,
+    },
+    {
+      name: 'SUM (SMS-Protected)',
+      title: 'SUM (SMS-Protected)',
+      icon: 'sum',
+      value: 'sumMultisig',
+      fullTitle: 'sumcoinMultisig',
+      addAssets: false,
+      dontCreateOrder: true,
+    },
+    {
+      name: 'SUM (Multisig)',
+      title: 'SUM (Multisig)',
+      icon: 'sum',
+      value: 'sumMultisig',
+      fullTitle: 'sumcoinMultisig',
+      addAssets: false,
+      dontCreateOrder: true,
+    }] : [],
     ...(Object.keys(config.erc20)
       .map(key => ({
         name: key.toUpperCase(),
@@ -108,6 +134,13 @@ const initialState = {
       icon: 'btc',
       value: 'btc',
       fullTitle: 'bitcoin',
+    }] : [],
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.sum) ? [{
+      name: 'SUM',
+      title: 'SUM',
+      icon: 'sum',
+      value: 'sum',
+      fullTitle: 'sumcoin',
     }] : [],
     ...(Object.keys(config.erc20)
       .map(key => ({
@@ -148,6 +181,13 @@ if (config.isWidget) {
       icon: 'btc',
       value: 'btc',
       fullTitle: 'bitcoin',
+    },
+    {
+      name: 'SUM',
+      title: 'SUM',
+      icon: 'sum',
+      value: 'sum',
+      fullTitle: 'sumcoin',
     },
   ]
 
