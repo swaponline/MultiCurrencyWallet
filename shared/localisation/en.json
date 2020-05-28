@@ -333,7 +333,10 @@
   },
   {
     "id": "Withdrow559",
-    "message": "Transfer from"
+    "message": "Transfer from",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
   },
   {
     "id": "Withdrow118",
@@ -2698,7 +2701,6 @@
     "id": "WithdrawModal256",
     "message": "No less than {minAmount}",
     "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.js"
     ]
@@ -5237,21 +5239,21 @@
     "id": "Yourtotalbalance",
     "message": "Your total balance",
     "files": [
-      "shared/pages/Wallet/components/BalanceForm/BalanceForm.js"
+      "shared/components/BalanceForm/BalanceForm.js"
     ]
   },
   {
     "id": "YourtotalbalanceDeposit",
     "message": "Deposit",
     "files": [
-      "shared/pages/Wallet/components/BalanceForm/BalanceForm.js"
+      "shared/components/BalanceForm/BalanceForm.js"
     ]
   },
   {
     "id": "YourtotalbalanceSend",
     "message": "Send",
     "files": [
-      "shared/pages/Wallet/components/BalanceForm/BalanceForm.js"
+      "shared/components/BalanceForm/BalanceForm.js"
     ]
   },
   {
@@ -5604,16 +5606,13 @@
   },
   {
     "id": "YourtotalbalanceExchange",
-    "message": "Exchange",
-    "files": [
-      "shared/pages/Wallet/components/BalanceForm/BalanceForm.js"
-    ]
+    "message": "Exchange"
   },
   {
     "id": "RequestPayment",
     "message": "Request Payment",
     "files": [
-      "shared/pages/Wallet/components/BalanceForm/BalanceForm.js"
+      "shared/components/BalanceForm/BalanceForm.js"
     ]
   },
   {
@@ -5990,10 +5989,7 @@
   },
   {
     "id": "MnemoniceDeleted_hrefText",
-    "message": "Try export private key",
-    "files": [
-      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
-    ]
+    "message": "Try export private key"
   },
   {
     "id": "SaveMnemonicModal_Ready",
@@ -6274,56 +6270,56 @@
     "id": "SweepBannerButton",
     "message": "Done",
     "files": [
-      "shared/pages/Wallet/Wallet.js"
+      "shared/components/layout/DashboardLayout/DashboardLayout.js"
     ]
   },
   {
     "id": "MainFAQHeader",
     "message": "FAQ",
     "files": [
-      "shared/pages/Wallet/components/FAQ/FAQ.js"
+      "shared/components/FAQ/FAQ.js"
     ]
   },
   {
     "id": "MainFAQ1_header",
     "message": "How are my private keys stored?",
     "files": [
-      "shared/pages/Wallet/components/FAQ/FAQ.js"
+      "shared/components/FAQ/FAQ.js"
     ]
   },
   {
     "id": "MainFAQ1_content",
     "message": "Your private keys are stored ONLY on your device, in the localStorage of your browser. Please backup your keys, because your browser or device may be crashed.",
     "files": [
-      "shared/pages/Wallet/components/FAQ/FAQ.js"
+      "shared/components/FAQ/FAQ.js"
     ]
   },
   {
     "id": "MainFAQ2_header",
     "message": "WHAT ARE THE FEES INVOLVED?",
     "files": [
-      "shared/pages/Wallet/components/FAQ/FAQ.js"
+      "shared/components/FAQ/FAQ.js"
     ]
   },
   {
     "id": "MainFAQ2_content",
     "message": "We take 0 fees in the middle for providing these services to you. However, you still have to pay the standard TX (miners fees) for all transactions you conduct on the platform.",
     "files": [
-      "shared/pages/Wallet/components/FAQ/FAQ.js"
+      "shared/components/FAQ/FAQ.js"
     ]
   },
   {
     "id": "MainFAQ2_content1",
     "message": "For ERC20 tokens, it is required that you have at least 0.001 ETH on your wallets. Remember! when sending ERC20 tokens, you are required to hold some ETH as miners fees for transactions. This is also the case for all atomic swaps for ETH & ERC20 tokens.",
     "files": [
-      "shared/pages/Wallet/components/FAQ/FAQ.js"
+      "shared/components/FAQ/FAQ.js"
     ]
   },
   {
     "id": "MainFAQ2_content2",
     "message": "NOTE: You can easily check the ‘miners fees’ required for each respective coin by simply googling them.",
     "files": [
-      "shared/pages/Wallet/components/FAQ/FAQ.js"
+      "shared/components/FAQ/FAQ.js"
     ]
   },
   {
@@ -6338,7 +6334,7 @@
     "id": "SweepBannerDescription",
     "message": "Please, move your funds to \"new\" addresses (USDT and other ERC20 send to New Ethereum (new) address). And click this button: \"DONE\". Old addresses will be hidden.",
     "files": [
-      "shared/pages/Wallet/Wallet.js"
+      "shared/components/layout/DashboardLayout/DashboardLayout.js"
     ]
   },
   {
@@ -6459,10 +6455,7 @@
   },
   {
     "id": "History_Nav_InvoicesTab",
-    "message": "Requests",
-    "files": [
-      "shared/pages/History/History.js"
-    ]
+    "message": "Requests"
   },
   {
     "id": "InvoicesView_MetaDescription",
@@ -6638,17 +6631,11 @@
   },
   {
     "id": "WalletPage_Widget_RestoreMnemonic",
-    "message": "Enter secret 12 words",
-    "files": [
-      "shared/pages/Wallet/Wallet.js"
-    ]
+    "message": "Enter secret 12 words"
   },
   {
     "id": "WalletPage_Widget_ShowMnemonic",
-    "message": "Show secret 12 words",
-    "files": [
-      "shared/pages/Wallet/Wallet.js"
-    ]
+    "message": "Show secret 12 words"
   },
   {
     "id": "multiSignConfirmTxModal_ButtonClose",
@@ -6781,6 +6768,48 @@
     "message": "Status",
     "files": [
       "shared/pages/Transaction/TxInfo/index.js"
+    ]
+  },
+  {
+    "id": "ExitWidget",
+    "message": "Exit",
+    "files": [
+      "shared/components/Header/WidgetHeader/index.js"
+    ]
+  },
+  {
+    "id": "WidgetExitTitle3",
+    "message": "Approve exit",
+    "files": [
+      "shared/components/Header/WidgetHeader/index.js"
+    ]
+  },
+  {
+    "id": "widgetApproveApprove",
+    "message": "Yes",
+    "files": [
+      "shared/components/Header/WidgetHeader/index.js"
+    ]
+  },
+  {
+    "id": "widgetApproveCancel",
+    "message": "Cancel",
+    "files": [
+      "shared/components/Header/WidgetHeader/index.js"
+    ]
+  },
+  {
+    "id": "widgetApproveMessage",
+    "message": "Are you sure you want to logout? IMPORTANT: Save your private keys!",
+    "files": [
+      "shared/components/Header/WidgetHeader/index.js"
+    ]
+  },
+  {
+    "id": "buyByCreditCard",
+    "message": "buy using credit card",
+    "files": [
+      "shared/components/modals/ReceiveModal/ReceiveModal.js"
     ]
   }
 ]
