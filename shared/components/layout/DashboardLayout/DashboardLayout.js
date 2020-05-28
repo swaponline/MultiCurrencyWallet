@@ -164,9 +164,12 @@ const NewDesignLayout = (props) => {
       actions.core.getSwapHistory()
     }
 
+    // @ToDo Удалить
+    /*
     this.setState({
       activeView: index,
     })
+    */
   }
 
   return (
