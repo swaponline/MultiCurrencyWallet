@@ -5,7 +5,7 @@ import { Route } from 'react-router'
 
 import localeEn from 'react-intl/locale-data/en'
 import localeDe from 'react-intl/locale-data/de'
-import localeRt from 'react-intl/locale-data/rt'
+import localeTr from 'react-intl/locale-data/tr'
 import localeRu from 'react-intl/locale-data/ru'
 
 import { getCookie } from 'helpers/utils'
@@ -16,7 +16,7 @@ addLocaleData([...localeEn, ...localeRu, ...localeDe, ...localeRt])
 import myEn from 'localisation/en.json'
 import myRu from 'localisation/ru.json'
 import myDe from 'localisation/de.json'
-import myRt from 'localisation/rt.json'
+import myTr from 'localisation/tr.json'
 
 import { reduceMessages, defaultLocale, localisePrefix } from 'helpers/locale'
 
@@ -25,7 +25,7 @@ const translations = {
   en: reduceMessages(myEn),
   ru: reduceMessages(myRu),
   de: reduceMessages(myDe),
-  rt: reduceMessages(myRt),
+  tr: reduceMessages(myTr),
 }
 
 export default class IntlProviderContainer extends Component {
