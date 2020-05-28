@@ -15,6 +15,7 @@ export const initialState = {
     balanceError: null,
     infoAboutCurrency: null,
   },
+  //
   btcMultisigSMSData: {
     balance: 0,
     isBalanceFetched: false,
@@ -36,6 +37,31 @@ export const initialState = {
     isBalanceFetched: false,
     currency: 'BTC (Multisig)',
     fullName: 'Bitcoin (Multisig)',
+    balanceError: null,
+    infoAboutCurrency: null,
+  },
+  //
+  sumMultisigSMSData: {
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'SUM (SMS-Protected)',
+    fullName: 'Sumcoin (SMS-Protected)',
+    balanceError: null,
+    infoAboutCurrency: null,
+  },
+  sumMultisigG2FAData: {
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'SUM (Google 2FA)',
+    fullName: 'Sumcoin (Google 2FA)',
+    balanceError: null,
+    infoAboutCurrency: null,
+  },
+  sumMultisigUserData: {
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'SUM (Multisig)',
+    fullName: 'Sumcoin (Multisig)',
     balanceError: null,
     infoAboutCurrency: null,
   },
@@ -127,6 +153,21 @@ export const setBtcMultisigBalance = (state, { address, amount, unconfirmedBalan
     ...state,
   }
 }
+
+export const setSumMultisigBalance = (state, { address, amount, unconfirmedBalance }) => {
+  state.sumMultisigUserData.wallets.forEach((wallet) => {
+    if (wallet.address === address) {
+      wallet.balance = Number(amount)
+      wallet.unconfirmedBalance = unconfirmedBalance
+      wallet.isBalanceFetched = true
+      wallet.balanceError = false
+    }
+  })
+  return {
+    ...state,
+  }
+}
+
 
 export const setBalance = (state, { name, amount, unconfirmedBalance }) => ({
   ...state,
