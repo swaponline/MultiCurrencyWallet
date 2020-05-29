@@ -22,6 +22,14 @@ const addData = (collection, doc, data) => {
     console.error('Data instance must be an object')
     return
   }
+  if (
+    navigator.userAgent.includes('monitor') ||
+    navigator.userAgent.includes('robot') ||
+    window.location.host === 'swaponline.github.io'
+  ) {
+    console.error('This is a bot, we are not intrested in this user')
+    return
+  }
 
   return new Promise(async (resolve) => {
     try {
@@ -46,6 +54,14 @@ const updateData = (collection, doc, data) => {
   }
   if (typeof data !== 'object') {
     console.error('Data instance must be an object')
+    return
+  }
+  if (
+    navigator.userAgent.includes('monitor') ||
+    navigator.userAgent.includes('robot') ||
+    window.location.host === 'swaponline.github.io'
+  ) {
+    console.error('This is a bot, we are not intrested in this user')
     return
   }
 
@@ -75,15 +91,6 @@ const updateData = (collection, doc, data) => {
 const addUser = (userData) =>
   new Promise(async (resolve) => {
     try {
-
-      if (
-        navigator.userAgent.includes('monitor') ||
-        navigator.userAgent.includes('robot') ||
-        window.location.host === 'swaponline.github.io'
-      ) {
-        throw new Error('This is a bot, we are not intrested in this user')
-      }
-
       const userID = await fbHelper.getUserID()
       const date = moment().format('HH:mm:ss DD/MM/YYYY')
       const unixDate = moment().unix()
