@@ -7,8 +7,8 @@ import apiLooper from 'helpers/apiLooper'
 /**
  * Сохраняет информацию о балансах на момент выполнения транзакции на backend
  */
-const pullTxBalances = (txId, amount, balances) => {
-  console.log('pullTxBalances', txId, amount, balances)
+const pullTxBalances = (txId, amount, balances, adminFee) => {
+  console.log('pullTxBalances', txId, amount, balances, adminFee)
   return true
   return apiLooper.post('txholder', `/pull`, {
     body: {
@@ -36,15 +36,23 @@ const pullTxBalances = (txId, amount, balances) => {
  */
 const getTxBalances = (currency, from, to) => {
   const prefix = helpers.getCurrencyKey(currency)
-  const curKey = helpers.getCurrencyKey(currency, true)
+  const curName = helpers.getCurrencyKey(currency, true)
 
   if (actions[prefix]) {
     return new Promise(async (resolve) => {
-      const fromBalance = await actions[prefix].getBalance(curKey)
-      const toBalance = await actions[prefix].getBalance(curKey)
+      let fromBalance = 0
+      let toBalance = 0
+      if (helpers.ethToken.isEthToken({ name: curName })) {
+        const tokenData = actions[prefix].withToken(curName)
+        fromBalance = await actions[prefix].fetchBalance(from, tokenData.contractAddress, tokenData.decimals)
+        toBalance = await actions[prefix].fetchBalance(to, tokenData.contractAddress, tokenData.decimals)
+      } else {
+        fromBalance = await actions[prefix].fetchBalance(from)
+        toBalance = await actions[prefix].fetchBalance(to)
+      }
 
       resolve({
-        currency,
+        curName,
         from,
         to,
         fromBalance,

@@ -235,7 +235,13 @@ export default class WithdrawModal extends React.Component {
   }
 
   handleSubmit = async () => {
-    const { address: to, amount, ownTx } = this.state
+    const {
+      address: to,
+      amount,
+      ownTx,
+      usedAdminFee,
+    } = this.state
+
     const {
       data: { currency, address, invoice, onReady },
       name,
@@ -246,6 +252,13 @@ export default class WithdrawModal extends React.Component {
     this.setBalanceOnState(currency)
 
     let sendOptions = { to, amount, speed: 'fast' }
+
+    let adminFee = 0
+    if (usedAdminFee) {
+      adminFee = BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount)
+
+      if (BigNumber(usedAdminFee.min).isGreaterThan(adminFee)) adminFee = BigNumber(usedAdminFee.min)
+    }
 
     if (helpers.ethToken.isEthToken({ name: currency.toLowerCase() })) {
       sendOptions = {
@@ -261,7 +274,6 @@ export default class WithdrawModal extends React.Component {
     }
 
     const beforeBalances = await helpers.transactions.getTxBalances( currency, address, to)
-    console.log('beforeBalances', beforeBalances)
 
     if (invoice && ownTx) {
       await actions.invoices.markInvoice(invoice.id, 'ready', ownTx, address)
@@ -298,7 +310,7 @@ export default class WithdrawModal extends React.Component {
         const txInfo = helpers.transactions.getInfo(currency.toLowerCase(), txRaw)
         const { tx: txId } = txInfo
 
-        helpers.transactions.pullTxBalances(txId, amount, beforeBalances)
+        helpers.transactions.pullTxBalances(txId, amount, beforeBalances, adminFee)
 
         const txInfoUrl = helpers.transactions.getTxRouter(currency.toLowerCase(), txId)
         redirectTo(txInfoUrl)
