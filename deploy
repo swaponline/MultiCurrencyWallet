@@ -34,38 +34,54 @@ git push --force
 cd ..
 
 #####WIDGETS
-npm run build:mainnet-widget
-npm run build:testnet-widget
 
-git clone https://sorentobot:$1@github.com/swaponline/widget.build.git
-cd widget.build
+npm run build:mainnet-widget
+
+# update repo or clone
+#rm -rf WalletWpPlugin
+git clone https://sorentobot:$1@github.com/swaponline/WalletWpPlugin.git
+cd WalletWpPlugin/vendors/swap
 git checkout master
 git fetch origin
 git reset --hard origin/master
 
-rm -rf ./build-mainnet-widget/assets
-rm -rf ./build-mainnet-widget/images
-rm -rf ./build-mainnet-widget/fonts
-rm -rf ./build-mainnet-widget/*.css
-rm -rf ./build-mainnet-widget/*.js
+# clean React code from repo
+rm -rf assets
+rm -rf images
+rm -rf fonts
+rm -rf *.css
+rm -rf *.js
 
-rm -rf ./build-testnet-widget/assets
-rm -rf ./build-testnet-widget/images
-rm -rf ./build-testnet-widget/fonts
-rm -rf ./build-testnet-widget/*.css
-rm -rf ./build-testnet-widget/*.js
+# update files in repo
+cp -rf ../../../build-mainnet-widget/* ./
+buildId=$(find -iname "app.*?.js" | sed "s/^\.\/app\.\(.*\)\.js$/\1/")
 
-cp -rf ../build-mainnet-widget/* ./build-mainnet-widget/
-cp -rf ../build-testnet-widget/* ./build-testnet-widget/
+echo $buildId
+
+mv app.${buildId}.js app.js
+mv app.${buildId}.css app.css
+mv vendor.${buildId}.js vendor.js
+rm index.html
+rm firebase-messaging-sw.js
+rm erc20tokens.js
+
+# https://screenshots.wpmix.net/Telegram_9DNCH0DXYKUiL0Mo1BvVvR7WvDiea0ON.png
+rm -rf assets
+
+cd ../../
+
+perl -pi -e "s/'MCWALLET_BUILD_VER', '.*?'/'MCWALLET_BUILD_VER', '${buildId}'/g" multi-currency-wallet-pro.php
+
+# commit build to repo
 
 DATE=`date '+%Y-%m-%d %H:%M:%S'`
 git add .
 git commit -m "build $DATE"
 git push --force
 
-wget http://generator.swaponline.site/updatewidgets/
 # return back to root
 cd ..
+
 
 #if [ $GITHUB_TOKEN ]; then
 #  curl -u caffeinum:$GITHUB_TOKEN -X POST https://api.github.com/repos/swaponline/swaponline.github.io/pulls -d '{"title":"build","head":"deploy","base":"master"}'
