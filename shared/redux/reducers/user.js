@@ -142,11 +142,25 @@ export const setBalance = (state, { name, amount, unconfirmedBalance }) => ({
   },
 })
 
+export const setInfoAboutToken = (state, { name, infoAboutCurrency }) => ({
+  ...state,
+  tokensData: {
+    ...state.tokensData,
+    [name]: {
+      ...state.tokensData[name],
+      infoAboutCurrency,
+    },
+  },
+})
 
 export const setInfoAboutCurrency = (state, { name, infoAboutCurrency }) => ({
   ...state,
   tokensData: {
     ...state.tokensData,
+    [name]: {
+      ...state.tokensData[name],
+      infoAboutCurrency,
+    },
   },
   [name]: {
     ...state[name],

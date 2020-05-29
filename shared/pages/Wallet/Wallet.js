@@ -466,7 +466,7 @@ export default class Wallet extends Component {
       return ({
         ...el,
         balance: el.balance,
-        fiatBalance: el.balance > 0 ? BigNumber(el.balance)
+        fiatBalance: (el.balance > 0 && el.infoAboutCurrency) ? BigNumber(el.balance)
           .multipliedBy(el.infoAboutCurrency.price_usd)
           .multipliedBy(multiplier || 1)
           .dp(2, BigNumber.ROUND_FLOOR) : 0
