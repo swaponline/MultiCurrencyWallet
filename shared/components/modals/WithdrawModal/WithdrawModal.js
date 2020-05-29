@@ -97,7 +97,14 @@ export default class WithdrawModal extends React.Component {
       ethBalance: null,
       isEthToken: helpers.ethToken.isEthToken({ name: currency.toLowerCase() }),
       currentDecimals,
-      selectedValue: localStorage.getItem(constants.localStorage.balanceActiveCurrency).toUpperCase() || currency,
+      /*
+      @ToDo, по коду нет установки ls balanceActiveCurrency
+        В сторейдж лежит почему ETH
+        Биток вообще не понятно что и как оно тут считает фиат
+        Вводишь отправить 0.1 битка - по факту отправляет 0.0000123 чего-то там
+        Хорошо хоть не больше...
+      */
+      selectedValue: currency, //localStorage.getItem(constants.localStorage.balanceActiveCurrency).toUpperCase() || currency,
       getFiat: 0,
       error: false,
       ownTx: '',
