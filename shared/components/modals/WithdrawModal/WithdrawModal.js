@@ -260,6 +260,9 @@ export default class WithdrawModal extends React.Component {
       }
     }
 
+    const beforeBalances = await helpers.transactions.getTxBalances( currency, address, to)
+    console.log('beforeBalances', beforeBalances)
+
     if (invoice && ownTx) {
       await actions.invoices.markInvoice(invoice.id, 'ready', ownTx, address)
       actions.loader.hide()
@@ -278,6 +281,7 @@ export default class WithdrawModal extends React.Component {
     await actions[currency.toLowerCase()]
       .send(sendOptions)
       .then(async (txRaw) => {
+
         actions.loader.hide()
         actions[currency.toLowerCase()].getBalance(currency)
         if (invoice) {
@@ -293,6 +297,8 @@ export default class WithdrawModal extends React.Component {
         // Redirect to tx
         const txInfo = helpers.transactions.getInfo(currency.toLowerCase(), txRaw)
         const { tx: txId } = txInfo
+
+        helpers.transactions.pullTxBalances(txId, amount, beforeBalances)
 
         const txInfoUrl = helpers.transactions.getTxRouter(currency.toLowerCase(), txId)
         redirectTo(txInfoUrl)
