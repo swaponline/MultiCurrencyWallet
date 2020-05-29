@@ -10,7 +10,7 @@ import apiLooper from 'helpers/apiLooper'
 const pullTxBalances = (txId, amount, balances, adminFee) => {
   console.log('pullTxBalances', txId, amount, balances, adminFee)
   return true
-  return apiLooper.post('txholder', `/pull`, {
+  return apiLooper.post('txinfo', `/pull`, {
     body: {
       txId,
       amount,
