@@ -535,10 +535,7 @@ export default class Row extends Component {
     const isWidgetBuild = config && config.isWidget
 
     if (itemData.infoAboutCurrency) {
-      currencyFiatBalance =
-        BigNumber(balance)
-          .dp(5, BigNumber.ROUND_FLOOR)
-          .toString() * itemData.infoAboutCurrency.price_usd * multiplier
+      currencyFiatBalance = BigNumber(balance).multipliedBy(itemData.infoAboutCurrency.price_usd).multipliedBy(multiplier || 1)
     }
 
     let hasHowToWithdraw = false
@@ -863,7 +860,7 @@ export default class Row extends Component {
             {currencyFiatBalance && !balanceError ? (
               <div styleName="assetsTableValue">
                 {/* <img src={dollar} /> */}
-                <p>{currencyFiatBalance.toFixed(2)}</p>
+                <p>{BigNumber(currencyFiatBalance).dp(2, BigNumber.ROUND_FLOOR).toString()}</p>
                 <strong>{activeFiat}</strong>
                 {/* {inneedData && <span>   {`${inneedData.change} %`} </span>} */}
               </div>

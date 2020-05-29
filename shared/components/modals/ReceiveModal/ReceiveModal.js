@@ -13,7 +13,7 @@ import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 
 import config from 'helpers/externalConfig'
 import getCurrencyKey from 'helpers/getCurrencyKey'
-import { ethToken } from 'helpers'
+import { ethToken, getItezUrl } from 'helpers'
 
 
 const title = defineMessages({
@@ -24,7 +24,7 @@ const title = defineMessages({
 })
 
 @connect(
-  ({ user: { activeFiat } }) => ({ activeFiat })
+  ({ user: { activeFiat }, user }) => ({ activeFiat, user })
 )
 @injectIntl
 @withRouter
@@ -85,6 +85,8 @@ export default class ReceiveModal extends React.Component {
   render() {
     const {
       props: {
+        user,
+        intl: { locale },
         name,
         intl,
         data: {
@@ -98,7 +100,6 @@ export default class ReceiveModal extends React.Component {
         howToDeposit,
       },
     } = this
-
 
     if (howToDeposit) {
       return (
@@ -151,7 +152,7 @@ export default class ReceiveModal extends React.Component {
             </div>
           </CopyToClipboard>
           {currency.includes("BTC") && <div styleName="fiatDepositRow">
-            <a href={`https://itez.swaponline.io/?DEFAULT_FIAT=${activeFiat}&locale=${intl.locale}&btcaddress=${address}`} target="_blank" rel="noopener noreferrer">
+            <a href={getItezUrl({ user, locale, url: window.buyViaCreditCardLink })} target="_blank" rel="noopener noreferrer">
               <FormattedMessage
                 id="buyByCreditCard"
                 defaultMessage="buy using credit card"

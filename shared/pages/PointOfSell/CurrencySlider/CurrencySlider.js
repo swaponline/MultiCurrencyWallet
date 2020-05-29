@@ -47,9 +47,9 @@ export default class CurrencySlider extends Component {
                 </li>
               ))}
             </ul>
-            <a href="http://listing.swaponline.io" styleName="currencyAdd">
+            {/* <a href="http://listing.swaponline.io" styleName="currencyAdd">
               <FormattedMessage id="CurrencySlider36" defaultMessage="+" />
-            </a>
+            </a> */}
           </div>
         </div>
       </Fragment>

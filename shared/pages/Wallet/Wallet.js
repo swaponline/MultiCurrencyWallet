@@ -25,6 +25,7 @@ import InvoicesList from 'pages/Invoices/InvoicesList'
 import DashboardLayout from 'components/layout/DashboardLayout/DashboardLayout'
 import BalanceForm from 'components/BalanceForm/BalanceForm'
 
+import { BigNumber } from 'bignumber.js'
 
 const isWidgetBuild = config && config.isWidget
 
@@ -423,7 +424,6 @@ export default class Wallet extends Component {
     this.checkBalance()
 
     let btcBalance = 0
-    let fiatBalance = 0
     let changePercent = 0
 
     // Набор валют для виджета
@@ -462,6 +462,17 @@ export default class Wallet extends Component {
 
     tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
 
+    tableRows = tableRows.map(el => {
+      return ({
+        ...el,
+        balance: el.balance,
+        fiatBalance: el.balance > 0 ? BigNumber(el.balance)
+          .multipliedBy(el.infoAboutCurrency.price_usd)
+          .multipliedBy(multiplier || 1)
+          .dp(2, BigNumber.ROUND_FLOOR) : 0
+      })
+    })
+
     tableRows.forEach(({ name, infoAboutCurrency, balance, currency }) => {
       const currName = currency || name
 
@@ -470,9 +481,10 @@ export default class Wallet extends Component {
           changePercent = infoAboutCurrency.percent_change_1h
         }
         btcBalance += balance * infoAboutCurrency.price_btc
-        fiatBalance += balance * infoAboutCurrency.price_usd * (multiplier || 1)
       }
     })
+
+    const allFiatBalance = tableRows.reduce((acc, cur) => BigNumber(cur.fiatBalance).plus(acc), 0)
 
     return (
       <DashboardLayout
@@ -480,7 +492,7 @@ export default class Wallet extends Component {
         BalanceForm={(
           <BalanceForm
             activeFiat={activeFiat}
-            fiatBalance={fiatBalance}
+            fiatBalance={allFiatBalance}
             currencyBalance={btcBalance}
             changePercent={changePercent}
             activeCurrency={activeCurrency}
