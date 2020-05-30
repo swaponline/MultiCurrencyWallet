@@ -22,27 +22,31 @@ export default class CurrencyList extends Component {
   }
 
   openModal = (currency, address) => {
-    const {
-      history,
-      intl: { locale },
-    } = this.props
+    this.setState({
+      isAssetsOpen: false,
+    }, () => {
+      const {
+        history,
+        intl: { locale },
+      } = this.props
 
-    const currentAsset = actions.core.getWallets().filter((item) => currency === item.currency && address.toLowerCase() === item.address.toLowerCase())
+      const currentAsset = actions.core.getWallets().filter((item) => currency === item.currency && address.toLowerCase() === item.address.toLowerCase())
 
-    let targetCurrency = currentAsset[0].currency
+      let targetCurrency = currentAsset[0].currency
 
-    switch (currency.toLowerCase()) {
-      case 'btc (multisig)':
-      case 'btc (sms-protected)':
-        targetCurrency = 'btc'
-        break
-    }
+      switch (currency.toLowerCase()) {
+        case 'btc (multisig)':
+        case 'btc (sms-protected)':
+          targetCurrency = 'btc'
+          break
+      }
 
-    const isToken = helpers.ethToken.isEthToken({ name: currency })
+      const isToken = helpers.ethToken.isEthToken({ name: currency })
 
-    history.push(
-      localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${currentAsset[0].address}/send`)
-    )
+      history.push(
+        localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${currentAsset[0].address}/send`)
+      )
+    })
   }
 
   render() {
