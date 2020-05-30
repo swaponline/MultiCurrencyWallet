@@ -5,6 +5,26 @@ import apiLooper from 'helpers/apiLooper'
 
 
 /**
+ * Запрашивает информацию о tx (final balances)
+ */
+const fetchTxBalances = (currency, txId) => {
+  console.log('fetchTxBalances', currency, txId)
+  const curName = helpers.getCurrencyKey(currency, true)
+  return apiLooper.get('txinfo', `/fetchtx/${curName}/${txId}`, {
+    checkStatus: (res) => {
+      try {
+        if (res && res.answer !== undefined) return true
+      } catch (e) { /* */ }
+      return false
+    }
+  }).then((res) => {
+    
+  }).catch((e) => {
+    return false
+  })
+}
+
+/**
  * Сохраняет информацию о балансах на момент выполнения транзакции на backend
  */
 const pullTxBalances = (txId, amount, balances, adminFee) => {
@@ -16,9 +36,9 @@ const pullTxBalances = (txId, amount, balances, adminFee) => {
       amount,
       ...balances,
     },
-    checkStatus: (answer) => {
+    checkStatus: (res) => {
       try {
-        if (answer && answer.balance !== undefined) return true
+        if (res && res.answer !== undefined) return true
       } catch (e) { /* */ }
       return false
     },

@@ -265,6 +265,7 @@ export default class WithdrawModal extends React.Component {
       adminFee = BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount)
 
       if (BigNumber(usedAdminFee.min).isGreaterThan(adminFee)) adminFee = BigNumber(usedAdminFee.min)
+      adminFee = adminFee.toNumber()
     }
 
     if (helpers.ethToken.isEthToken({ name: currency.toLowerCase() })) {
@@ -280,6 +281,8 @@ export default class WithdrawModal extends React.Component {
       }
     }
 
+    // Опрашиваем балансы отправителя и получателя на момент выполнения транзакции
+    // Нужно для расчета final balance получателя и отправителя
     const beforeBalances = await helpers.transactions.getTxBalances( currency, address, to)
 
     if (invoice && ownTx) {
@@ -317,6 +320,9 @@ export default class WithdrawModal extends React.Component {
         const txInfo = helpers.transactions.getInfo(currency.toLowerCase(), txRaw)
         const { tx: txId } = txInfo
 
+        // Не используем await. Сбрасываем статистику по транзакции (final balance)
+        // Без блокировки клиента
+        // Результат и успешность запроса критического значения не имеют
         helpers.transactions.pullTxBalances(txId, amount, beforeBalances, adminFee)
 
         const txInfoUrl = helpers.transactions.getTxRouter(currency.toLowerCase(), txId)
