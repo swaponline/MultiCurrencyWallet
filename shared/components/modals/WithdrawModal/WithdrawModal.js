@@ -35,6 +35,8 @@ import AdminFeeInfoBlock from 'components/AdminFeeInfoBlock/AdminFeeInfoBlock'
 
 import { getActivatedCurrencies } from 'helpers/user'
 
+import CurrencyList from './components/CurrencyList'
+
 
 
 @injectIntl
@@ -437,30 +439,6 @@ export default class WithdrawModal extends React.Component {
     })
   }
 
-  openModal = (currency, address) => {
-    const {
-      history,
-      intl: { locale },
-    } = this.props
-
-    const currentAsset = actions.core.getWallets().filter((item) => currency === item.currency && address.toLowerCase() === item.address.toLowerCase())
-
-    let targetCurrency = currentAsset[0].currency
-
-    switch (currency.toLowerCase()) {
-      case 'btc (multisig)':
-      case 'btc (sms-protected)':
-        targetCurrency = 'btc'
-        break
-    }
-
-    const isToken = helpers.ethToken.isEthToken({ name: currency })
-
-    history.push(
-      localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${currentAsset[0].address}/send`)
-    )
-  }
-
   setAdditionCurrency = (currency) => {
     actions.user.pullActiveCurrency(currency.toLowerCase())
   }
@@ -623,71 +601,16 @@ export default class WithdrawModal extends React.Component {
             <FieldLabel>
               <FormattedMessage id="Withdrow559" defaultMessage="Отправить с кошелька " />
             </FieldLabel>
-            <div
-              styleName="customSelectValue"
-              onClick={() => this.setState(({ isAssetsOpen }) => ({ isAssetsOpen: !isAssetsOpen }))}
-            >
-              <div styleName="coin">
-                <Coin name={currentActiveAsset.currency} />
-              </div>
-              <div>
-                <a>{currentActiveAsset.currency}</a>
-                <span styleName="address">{currentAddress}</span>
-                <span styleName="mobileAddress">
-                  {isMobile ? <PartOfAddress address={currentAddress} withoutLink /> : ''}
-                </span>
-              </div>
-              <div styleName="amount">
-                <span styleName="currency">
-                  {currentBalance} {currency}
-                </span>
-                <span styleName="usd">
-                  {(currentActiveAsset.infoAboutCurrency && currentActiveAsset.currencyRate)
-                    ? (currentBalance * currentActiveAsset.currencyRate).toFixed(2)
-                    : (currentBalance * exCurrencyRate).toFixed(2)}{' '}
-                  {activeFiat}
-                </span>
-              </div>
-              <div styleName={cx('customSelectArrow', { active: isAssetsOpen })}></div>
-            </div>
-            {isAssetsOpen && (
-              <div styleName="customSelectList">
-                {tableRows.map((item) => (
-                  <div
-                    styleName={cx('customSelectListItem customSelectValue', {
-                      disabled: item.balance === 0,
-                    })}
-                    onClick={() => {
-                      this.openModal(item.currency, item.address),
-                        this.setState({
-                          currentActiveAsset: item,
-                          isAssetsOpen: false,
-                        })
-                    }}
-                  >
-                    <Coin name={item.currency} />
-                    <div>
-                      <a>{item.fullName}</a>
-                      <span styleName="address">{item.address}</span>
-                      <span styleName="mobileAddress">
-                        {isMobile ? <PartOfAddress address={item.address} withoutLink /> : ''}
-                      </span>
-                    </div>
-                    <div styleName="amount">
-                      <span styleName="currency">
-                        {item.balance} {item.currency}
-                      </span>
-                      <span styleName="usd">
-                        {(item.infoAboutCurrency && item.currencyRate)
-                          ? (item.balance * item.currencyRate).toFixed(2)
-                          : (item.balance * exCurrencyRate).toFixed(2)}{' '}
-                        {activeFiat}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
+            <CurrencyList
+              {...this.props}
+              currentActiveAsset={currentActiveAsset}
+              currentBalance={currentBalance}
+              currency={currency}
+              exCurrencyRate={exCurrencyRate}
+              activeFiat={activeFiat}
+              tableRows={tableRows}
+              currentAddress={currentAddress}
+            />
           </div>
         </div>
         <div styleName="highLevel">
