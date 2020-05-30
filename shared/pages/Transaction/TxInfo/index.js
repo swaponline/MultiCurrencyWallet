@@ -80,11 +80,16 @@ export default class TxInfo extends React.Component {
 
     let fromFinal = 0
     let toFinal = 0
+
+    let fromIsOur = false
+    let toIsOur = false
     if (finalBalances) {
       finalAmount = finalBalances.amount
       finalAdminFee = finalBalances.adminFee
       fromFinal = BigNumber(finalBalances.fromBalance).minus(finalAmount).minus(finalAdminFee).toNumber()
       toFinal = BigNumber(finalBalances.toBalance).plus(finalAmount).toNumber()
+      fromIsOur = actions.user.isOwner(finalBalances.from, finalBalances.currency)
+      toIsOur = actions.user.isOwner(finalBalances.to, finalBalances.currency)
     }
 
     return (
@@ -210,6 +215,12 @@ export default class TxInfo extends React.Component {
                         <tr>
                           <td styleName="header" colspan="2">
                             {finalBalances.from}
+                            {(fromIsOur) && (
+                              <>
+                                {` `}
+                                <FormattedMessage id="InfoPay_IsOurAddress" defaultMessage="(Your)" />
+                              </>
+                            )}
                           </td>
                         </tr>
                         <tr>
@@ -221,6 +232,12 @@ export default class TxInfo extends React.Component {
                         <tr>
                           <td styleName="header" colspan="2">
                             {finalBalances.to}
+                            {(toIsOur) && (
+                              <>
+                                {` `}
+                                <FormattedMessage id="InfoPay_IsOurAddress" defaultMessage="(Your)" />
+                              </>
+                            )}
                           </td>
                         </tr>
                         <tr>
