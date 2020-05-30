@@ -209,7 +209,7 @@ const withToken = (name) => {
   const toWei = amount => BigNumber(amount).times(BigNumber(10).pow(decimals)).toString()
   const fromWei = wei => BigNumber(wei).div(BigNumber(10).pow(decimals))
 
-  return { tokenContract, decimals, toWei, fromWei }
+  return { contractAddress, tokenContract, decimals, toWei, fromWei }
 }
 
 const fetchFees = async ({ gasPrice, gasLimit, speed } = {}) => {
@@ -460,4 +460,5 @@ export default {
   GetCustromERC20,
   fetchTxInfo,
   getTxRouter,
+  withToken,
 }

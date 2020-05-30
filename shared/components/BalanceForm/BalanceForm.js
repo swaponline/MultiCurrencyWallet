@@ -45,6 +45,11 @@ function BalanceForm({
   }, [activeCurrency])
 
   const active = activeFiat ? activeFiat.toLowerCase() : 'usd'
+
+  // @ToDo
+  // в Data у валют есть флаги isUserProtected и isSMSProtected
+  // нужно по ним проверять, а не по "служебному" названию монеты
+  // Use flags in currency data (isUserProtected and isSMSProtected)
   // eslint-disable-next-line default-case
   switch (currency) {
     case 'btc (sms-protected)':
