@@ -2,6 +2,7 @@ import { withRouter } from 'react-router-dom';
 import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
 import { constants } from 'helpers'
+import helpers from 'helpers'
 import getCurrencyKey from "helpers/getCurrencyKey";
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import getWalletLink from 'helpers/getWalletLink'
@@ -56,6 +57,7 @@ class Transaction extends Component {
       confirmations: 0,
       minerFee: 0,
       error: null,
+      finalBalances: false,
     }
   }
 
@@ -121,10 +123,22 @@ class Transaction extends Component {
 
     const currency = getCurrencyKey(ticker)
     this.fetchTxInfo(currency, txId)
+    this.fetchTxFinalBalances(getCurrencyKey(ticker, true), txId)
 
     if (typeof document !== 'undefined') {
       document.body.classList.add('overflowY-hidden-force')
     }
+  }
+
+  fetchTxFinalBalances = (currency, txId) => {
+    setTimeout(async () => {
+      const finalBalances = await helpers.transactions.fetchTxBalances( currency, txId)
+      if (finalBalances && !this.unmounted) {
+        this.setState({
+          finalBalances,
+        })
+      }
+    })
   }
 
   handleClose = () => {

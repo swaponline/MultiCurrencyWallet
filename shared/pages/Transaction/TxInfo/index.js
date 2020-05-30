@@ -54,6 +54,7 @@ export default class TxInfo extends React.Component {
       minerFeeCurrency,
       adminFee,
       error,
+      finalBalances,
     } = this.props
 
     let linkBlockChain = '#'
@@ -74,6 +75,17 @@ export default class TxInfo extends React.Component {
       }
     }
 
+    let finalAmount = amount
+    let finalAdminFee = adminFee
+
+    let fromFinal = 0
+    let toFinal = 0
+    if (finalBalances) {
+      finalAmount = finalBalances.amount
+      finalAdminFee = finalBalances.adminFee
+      fromFinal = BigNumber(finalBalances.fromBalance).minus(finalAmount).minus(finalAdminFee).toNumber()
+      toFinal = BigNumber(finalBalances.toBalance).plus(finalAmount).toNumber()
+    }
 
     return (
       <div>
@@ -99,7 +111,7 @@ export default class TxInfo extends React.Component {
                       )
                     : (
                       <span>
-                        <span><strong> {amount}  {currency.toUpperCase()} </strong></span>
+                        <span><strong> {finalAmount}  {currency.toUpperCase()} </strong></span>
                         <FormattedMessage id="InfoPay_2_Ready" defaultMessage="были успешно переданы" />
                         <br />
                         <strong>{toAddress}</strong>
@@ -176,29 +188,63 @@ export default class TxInfo extends React.Component {
                         </td>
                       </tr>
                     )}
-                    {(adminFee > 0) && (
+                    {(finalAdminFee > 0) && (
                       <tr>
                         <td styleName="header">
                           <FormattedMessage id="InfoPay_AdminFee" defaultMessage="Service fee" />
                         </td>
                         <td>
                           <strong>
-                            {adminFee} {currency.toUpperCase()}
+                            {finalAdminFee} {currency.toUpperCase()}
                           </strong>
                         </td>
                       </tr>
                     )}
-                    {(oldBalance > 0) && (
-                      <tr>
-                        <td styleName="header">
-                          <FormattedMessage id="InfoPay_FinalBalance" defaultMessage="Final balance" />
-                        </td>
-                        <td>
-                          <strong>
-                            {oldBalance} {currency.toUpperCase()}
-                          </strong>
-                        </td>
-                      </tr>
+                    {(finalBalances) ? (
+                      <>
+                        <tr>
+                          <td styleName="header" colspan="2">
+                            <FormattedMessage id="InfoPay_FinalBalances" defaultMessage="Final balances" />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td styleName="header" colspan="2">
+                            {finalBalances.from}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td>
+                            <strong>{fromFinal} {currency.toUpperCase()}</strong>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td styleName="header" colspan="2">
+                            {finalBalances.to}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td>
+                            <strong>{toFinal} {currency.toUpperCase()}</strong>
+                          </td>
+                        </tr>
+                      </>
+                    ) : (
+                      <>
+                        {(oldBalance > 0) && (
+                          <tr>
+                            <td styleName="header">
+                              <FormattedMessage id="InfoPay_FinalBalance" defaultMessage="Final balance" />
+                            </td>
+                            <td>
+                              <strong>
+                                {oldBalance} {currency.toUpperCase()}
+                              </strong>
+                            </td>
+                          </tr>
+                        )}
+                      </>
                     )}
                   </>
                 )}

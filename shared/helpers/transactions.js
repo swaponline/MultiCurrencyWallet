@@ -8,9 +8,8 @@ import apiLooper from 'helpers/apiLooper'
  * Запрашивает информацию о tx (final balances)
  */
 const fetchTxBalances = (currency, txId) => {
-  console.log('fetchTxBalances', currency, txId)
   const curName = helpers.getCurrencyKey(currency, true)
-  return apiLooper.get('txinfo', `/fetchtx/${curName}/${txId}`, {
+  return apiLooper.get('txinfo', `/tx/${curName}/${txId}`, {
     checkStatus: (res) => {
       try {
         if (res && res.answer !== undefined) return true
@@ -18,7 +17,15 @@ const fetchTxBalances = (currency, txId) => {
       return false
     }
   }).then((res) => {
-    
+    if (res
+      && res.answer
+      && res.answer === 'ok'
+      && res.data
+    ) {
+      return res.data
+    } else {
+      return false
+    }
   }).catch((e) => {
     return false
   })
@@ -28,12 +35,11 @@ const fetchTxBalances = (currency, txId) => {
  * Сохраняет информацию о балансах на момент выполнения транзакции на backend
  */
 const pullTxBalances = (txId, amount, balances, adminFee) => {
-  console.log('pullTxBalances', txId, amount, balances, adminFee)
-  return true
   return apiLooper.post('txinfo', `/pull`, {
     body: {
       txId,
       amount,
+      adminFee,
       ...balances,
     },
     checkStatus: (res) => {
@@ -135,4 +141,5 @@ export default {
   getTxRouter,
   getTxBalances,
   pullTxBalances,
+  fetchTxBalances,
 }
