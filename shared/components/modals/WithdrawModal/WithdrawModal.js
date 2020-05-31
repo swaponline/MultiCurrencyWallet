@@ -99,13 +99,6 @@ export default class WithdrawModal extends React.Component {
       ethBalance: null,
       isEthToken: helpers.ethToken.isEthToken({ name: currency.toLowerCase() }),
       currentDecimals,
-      /*
-      @ToDo, по коду нет установки ls balanceActiveCurrency
-        В сторейдж лежит почему ETH
-        Биток вообще не понятно что и как оно тут считает фиат
-        Вводишь отправить 0.1 битка - по факту отправляет 0.0000123 чего-то там
-        Хорошо хоть не больше...
-      */
       selectedValue: currency, //localStorage.getItem(constants.localStorage.balanceActiveCurrency).toUpperCase() || currency,
       getFiat: 0,
       error: false,
@@ -285,7 +278,7 @@ export default class WithdrawModal extends React.Component {
 
     // Опрашиваем балансы отправителя и получателя на момент выполнения транзакции
     // Нужно для расчета final balance получателя и отправителя
-    const beforeBalances = await helpers.transactions.getTxBalances( currency, address, to)
+    const beforeBalances = await helpers.transactions.getTxBalances(currency, address, to)
 
     if (invoice && ownTx) {
       await actions.invoices.markInvoice(invoice.id, 'ready', ownTx, address)
@@ -459,12 +452,8 @@ export default class WithdrawModal extends React.Component {
 
   handleBuyCurrencySelect = (value) => {
     this.setState({
-      selectedValue: value.name,
+      selectedValue: value,
     })
-  }
-
-  setAdditionCurrency = (currency) => {
-    actions.user.pullActiveCurrency(currency.toLowerCase())
   }
 
   render() {
@@ -484,7 +473,6 @@ export default class WithdrawModal extends React.Component {
       hiddenCoinsList,
       currentActiveAsset,
       selectedValue,
-      allCurrencyies,
       allCurrencyies: allData,
       usedAdminFee,
       enabledCurrencies,
@@ -671,15 +659,15 @@ export default class WithdrawModal extends React.Component {
         <div styleName="lowLevel" style={{ marginBottom: '50px' }}>
           <div styleName="additionalСurrencies">
             <span
-              styleName={cx('additionalСurrenciesItem', { additionalСurrenciesItemActive: activeCurrency.toUpperCase() === activeFiat })}
-              onClick={() => this.setAdditionCurrency(activeFiat)}
+              styleName={cx('additionalСurrenciesItem', { additionalСurrenciesItemActive: selectedValue.toUpperCase() === activeFiat })}
+              onClick={() => this.handleBuyCurrencySelect(activeFiat)}
             >
               {activeFiat}
             </span>
             <span styleName="delimiter"></span>
             <span
-              styleName={cx('additionalСurrenciesItem', { additionalСurrenciesItemActive: activeCurrency.toUpperCase() === currentActiveAsset.currency })}
-              onClick={() => this.setAdditionCurrency(currentActiveAsset.currency)}
+              styleName={cx('additionalСurrenciesItem', { additionalСurrenciesItemActive: selectedValue.toUpperCase() === currentActiveAsset.currency })}
+              onClick={() => this.handleBuyCurrencySelect(currentActiveAsset.currency)}
             >
               {currentActiveAsset.currency}
             </span>
