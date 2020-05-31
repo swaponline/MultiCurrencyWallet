@@ -3271,7 +3271,7 @@
   },
   {
     "id": "PreventMultiTabsWidgetBuild",
-    "message": "Atomic Swap Widget supports only one active tab. Please reload this page to continue using this tab or close it",
+    "message": "{widgetName} supports only one active tab. Please close the other open window and refresh to continue.",
     "files": [
       "shared/components/PreventMultiTabs/PreventMultiTabs.js"
     ]

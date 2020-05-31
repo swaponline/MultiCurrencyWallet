@@ -2519,7 +2519,7 @@
   },
   {
     "id": "PreventMultiTabs12",
-    "message": "Our service supports only one active tab.\n    Please reload this page to continue using this tab or close it",
+    "message": "Our service supports only one active tab.\n    Please close the other open window and refresh to continue.",
     "files": [
       "shared/components/PreventMultiTabs/PreventMultiTabs.js"
     ]
@@ -3450,7 +3450,7 @@
   },
   {
     "id": "PreventMultiTabsWidgetBuild",
-    "message": "Atomic Swap Widget поддерживает только одну активную вкладку. Пожалуйста, перезагрузите эту страницу, чтобы продолжить использовать эту вкладку или закройте ее",
+    "message": "{widgetName} поддерживает только одну активную вкладку. Пожалуйста, перезагрузите эту страницу, чтобы продолжить использовать эту вкладку или закройте ее",
     "files": [
       "shared/components/PreventMultiTabs/PreventMultiTabs.js"
     ]
