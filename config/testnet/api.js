@@ -15,4 +15,5 @@ export default {
   btc2FAProtected: 'https://2fa.swaponline.site',
   invoiceApi: 'https://invoices.swaponline.site',
   multisig: 'https://multisig.swaponline.site',
+  txinfo: 'https://txinfo.swaponline.site',
 }
