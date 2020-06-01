@@ -5686,21 +5686,21 @@
   },
   {
     "id": "ConfirmActivateSMS_No",
-    "message": "Нет",
+    "message": "No",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
     ]
   },
   {
     "id": "ConfirmActivateSMS_Title",
-    "message": "Добавление кошелька BTC (SMS-Protected)",
+    "message": "Add BTC (SMS-Protected) wallet",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
     ]
   },
   {
     "id": "ConfirmActivateSMS_Yes",
-    "message": "Да",
+    "message": "Yes",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
     ]
