@@ -5679,7 +5679,7 @@
   },
   {
     "id": "ConfirmActivateSMS_Message",
-    "message": "У вас уже активирован этот тип кошелька. Хотите активировать другой кошелек?",
+    "message": "You have already activated this type of wallet. Want to activate another wallet?",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
     ]
