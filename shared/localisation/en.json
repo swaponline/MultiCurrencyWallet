@@ -5679,7 +5679,7 @@
   },
   {
     "id": "ConfirmActivateSMS_Message",
-    "message": "You have already activated this type of wallet. Want to activate another wallet?",
+    "message": "You have already activated this type of wallet. Want to overwrite your old wallet (you may loose the funds)",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
     ]
