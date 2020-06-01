@@ -178,5 +178,8 @@ for any questions: telegram <a href="https://t.me/sashanoxon">sashanoxon</a>
 0. go to index.html
 1. add / edit  ```window.widgetName``` to your own
 
+## how to change title:
+0. go to index.html
+1. add / edit  ```window.defaultWindowTitle``` to your own
 .
 SUM Branch init 5/9/20
