@@ -58,7 +58,7 @@ const CreateWallet = (props) => {
     _protection.g2fa.btc = false
     _protection.multisign.btc = true
     _protection.fingerprint.btc = true
-    _activated.nothing.btc = btcData.balance > 0 || (!hiddenCoins.includes("BTC") && !hiddenCoins.includes(`BTC:${btcData.address}`))
+    _activated.nothing.btc = btcData.balance > 0 || (hiddenCoins.length ? !hiddenCoins.includes("BTC") && !hiddenCoins.includes(`BTC:${btcData.address}`) : false)
     _activated.sms.btc = actions.btcmultisig.checkSMSActivated()
     _activated.g2fa.btc = actions.btcmultisig.checkG2FAActivated()
     _activated.multisign.btc = actions.btcmultisig.checkUserActivated()
