@@ -377,31 +377,31 @@ export default class Header extends Component {
         ) : (
           <div styleName="flexebleHeader">
             {window.logoUrl !== '#' && (
-              <div styleName="imgWrapper">
-                <Link
-                  to={localisedUrl(locale, links.home)}
-                >
-                  <img styleName="otherHeaderLogo" onClick={this.handleGoHome} className="site-logo-header" src={window.logoUrl} alt="logo" />
-                </Link>
-              </div>
+              <Link
+                styleName="imgWrapper"
+                to={localisedUrl(locale, links.home)}
+              >
+                <img styleName="otherHeaderLogo" onClick={this.handleGoHome} className="site-logo-header" src={window.logoUrl} alt="logo" />
+              </Link>
             )}
             {isWidgetBuild && <WidgetHeader />}
           </div>
         )
 
-    // if (config && config.isWidget && !config.isFullBuild) {
-    //   return <>
-    //     {
-    //       !isMobile ? (
-    //         <WidthContainer styleName="container" className="data-tut-preview">
-    //           {logoRenderer}
-    //           <Nav menu={menuItems} />
-    //         </WidthContainer>
-    //       ) : <NavMobile menu={menuItemsMobile} />
-    //     }
-    //     <User acceptRequest={this.acceptRequest} declineRequest={this.declineRequest} />
-    //   </>;
-    // }
+    if (config && config.isWidget && !config.isFullBuild) {
+      return <>
+        {
+          !isMobile ? (
+            <WidthContainer styleName="container" className="data-tut-preview">
+              {logoRenderer}
+              <Nav menu={menuItems} />
+            </WidthContainer>
+          ) : <NavMobile menu={menuItemsMobile} />
+        }
+        <User acceptRequest={this.acceptRequest} declineRequest={this.declineRequest} />
+      </>;
+    }
+
     if (pathname.includes("/createWallet") && isMobile) {
       return <span />;
     }
