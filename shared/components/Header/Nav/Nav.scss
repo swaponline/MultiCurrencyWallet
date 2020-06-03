@@ -78,11 +78,15 @@ $exchangeBorder: #512ed0;
   .humburger {
     display: none;
   }
-  .link {
-    display: none;
-  }
+
   .nav {
     padding: 0;
+  }
+}
+
+@media screen and (max-width: 560px){
+  .link {
+    display: none;
   }
 }
 

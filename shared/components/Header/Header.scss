@@ -8,8 +8,8 @@ $purple: #510ed8;
 
 .otherHeaderLogo {
   display: block;
-  max-height: 55px;
-  width: 150px;;
+  height: 100%;
+  width: 150px;
 }
 
 .buttonLan {
@@ -45,6 +45,7 @@ $purple: #510ed8;
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  height: 100%;
 }
 
 .container {
@@ -52,13 +53,11 @@ $purple: #510ed8;
   height: 88px;
 }
 
-@media all and (max-width: 780px) {
-  .otherHeaderLogo {
-    max-width: 7em;
-  }
-
-  .container {
-    height: 40px;
+.imgWrapper {
+  height: 100%;
+  img {
+    height: 100%;
+    object-fit: contain;
   }
 }
 
@@ -66,9 +65,11 @@ $purple: #510ed8;
   .container {
     margin: 0 auto;
   }
+
+  .container {
+    height: 100%;
+  }
 }
-
-
 
 @include media-mobile {
   .header {
@@ -91,13 +92,13 @@ $purple: #510ed8;
   background: transparent;
 }
 
-.header-mobile>div {
+.header-mobile > div {
   transform: none;
   z-index: 1;
   transition: transform 250ms ease;
 }
 
-.header-mobile__hidden>div {
+.header-mobile__hidden > div {
   transform: translateY(150px);
   transition: transform 250ms ease;
 }
@@ -133,9 +134,10 @@ $purple: #510ed8;
   }
 
   .imgWrapper {
-    width: calc(50% + 3.5em);
+    width: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
+    width: 150px;
   }
 
   .flexebleHeader {
@@ -143,5 +145,10 @@ $purple: #510ed8;
     padding: 5px 15px 10px;
     top: 15px;
     position: relative;
+    justify-content: center;
+  }
+
+  .otherHeaderLogo {
+    width: 100%;
   }
 }

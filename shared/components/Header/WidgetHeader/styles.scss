@@ -11,3 +11,11 @@
      color: #6044e6;;
     }
 }
+
+
+@media all and (max-width: 780px) {
+  .exitArea {
+    position: absolute;
+    right: 1em;
+  }
+}
