@@ -42,7 +42,6 @@ const NotifyBlock = ({
       styleName="notifyBlock"
       style={{
         background: background && background.length < 7 ? `#${background}` : `url(${background}) no-repeat`,
-        backgroundSize: 'cover'
       }}
       onClick={handleGoto}
     >

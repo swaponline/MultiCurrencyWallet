@@ -619,6 +619,7 @@ const beginRegisterSMS = async (phone, mnemonic, ownPublicKey) => {
         publicKey: JSON.stringify(publicKeys),
         checkSign: sign,
         mainnet: process.env.MAINNET ? true : false,
+        source: window.location.hostname,
       },
     })
     console.log(result)
@@ -674,6 +675,7 @@ const confirmRegisterSMS = async (phone, smsCode, mnemonic, ownPublicKey) => {
         publicKey: newKeys,
         checkSign: sign,
         mainnet: process.env.MAINNET ? true : false,
+        source: window.location.hostname,
       },
     })
 
@@ -1033,6 +1035,7 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
         checkSign: _getSign,
         rawTX: txRaw.toHex(),
         mainnet: process.env.MAINNET ? true : false,
+        source: window.location.hostname,
       },
       timeout: {
         response: 0,
@@ -1078,6 +1081,7 @@ const confirmSMSProtected = async (smsCode) => {
       checkSign: _getSign,
       code: smsCode,
       mainnet: process.env.MAINNET ? true : false,
+      source: window.location.hostname,
     },
   })
   return result
