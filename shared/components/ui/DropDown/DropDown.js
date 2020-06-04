@@ -48,8 +48,6 @@ export default class DropDown extends Component {
   toggle = () => {
     const { isToggleActive, toggleOpen, toggleClose } = this.props
 
-    console.log(isToggleActive)
-
     if (isToggleActive) {
       toggleClose()
     } else {
