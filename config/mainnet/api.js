@@ -15,4 +15,5 @@ export default {
   invoiceApi: 'https://invoices.swaponline.site',
   multisig: 'https://multisig.swaponline.site',
   txinfo: 'https://txinfo.swaponline.site',
+  noxon: 'https://noxon.wpmix.net',
 }

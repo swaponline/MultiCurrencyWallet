@@ -11,6 +11,8 @@ import axios from 'axios'
 
 import { getActivatedCurrencies } from 'helpers/user'
 import getCurrencyKey from 'helpers/getCurrencyKey'
+import apiLooper from 'helpers/apiLooper'
+
 
 
 /*
@@ -172,7 +174,13 @@ const getFiats = () => {
 
   return new Promise((resolve, reject) => {
 
-    axios.get(`https://noxon.wpmix.net/worldCurrencyPrices.php`).then(({ data }) => {
+    apiLooper.get('noxon', `/worldCurrencyPrices.php`, {
+      cacheResponse: 30*60*1000, // Кеш запроса 30 минут,
+      inQuery: {
+        delay: 500,
+        name: `worldCurrencyPrices`,
+      },
+    }).then(( data ) => {
       const { quotes } = data
 
       if (quotes) {
