@@ -12,7 +12,6 @@ import images from './images'
 const tokens = window.widgetERC20Tokens ? Object.keys(window.widgetERC20Tokens) : ['swap']
 const names = ['btc', 'eth', ...tokens]
 
-console.log({ tokens })
 @connect(
   ({ currencies: { items: currencies } }) => ({
     currencies,
