@@ -70,7 +70,7 @@ const CreateWallet = (props) => {
   let fiatBalance = 0
   let changePercent = 0
 
-  const widgetCurrencies = ['BTC', 'BTC (SMS-Protected)', 'BTC (Multisig)', 'ETH']
+  const widgetCurrencies = ['BTC', 'BTC (SMS-Protected)', 'BTC (PIN-Protected)', 'BTC (Multisig)', 'ETH']
 
   if (isWidgetBuild) {
     if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
@@ -136,7 +136,7 @@ const CreateWallet = (props) => {
   )
 
   useEffect(() => {
-    const widgetCurrencies = ['BTC', 'BTC (SMS-Protected)', 'BTC (Multisig)', 'ETH']
+    const widgetCurrencies = ['BTC', 'BTC (SMS-Protected)', 'BTC (PIN-Protected)', 'BTC (Multisig)', 'ETH']
 
     if (isWidgetBuild) {
       if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
@@ -254,6 +254,39 @@ const CreateWallet = (props) => {
               },
               onCancel: () => {
                 actions.core.markCoinAsVisible('BTC (SMS-Protected)')
+                handleClick()
+              },
+            })
+            return
+
+          }
+          break
+        case 'pin':
+          if (currencies.BTC) {
+            if (!actions.btcmultisig.checkPINActivated()) {
+              actions.modals.open(constants.modals.RegisterPINProtected, {
+                callback: () => {
+                  actions.core.markCoinAsVisible('BTC (PIN-Protected)')
+                  handleClick()
+                },
+              })
+              return
+            }
+            actions.modals.open(constants.modals.Confirm, {
+              title: <FormattedMessage id="ConfirmActivatePIN_Title" defaultMessage="Добавление кошелька BTC (PIN-Protected)" />,
+              message: <FormattedMessage id="ConfirmActivatePIN_Message" defaultMessage="У вас уже активирован этот тип кошелька. Хотите активировать другой кошелек?" />,
+              labelYes: <FormattedMessage id="ConfirmActivatePIN_Yes" defaultMessage="Да" />,
+              labelNo: <FormattedMessage id="ConfirmActivatePIN_No" defaultMessage="Нет" />,
+              onAccept: () => {
+                actions.modals.open(constants.modals.RegisterPINProtected, {
+                  callback: () => {
+                    actions.core.markCoinAsVisible('BTC (PIN-Protected)')
+                    handleClick()
+                  },
+                })
+              },
+              onCancel: () => {
+                actions.core.markCoinAsVisible('BTC (PIN-Protected)')
                 handleClick()
               },
             })

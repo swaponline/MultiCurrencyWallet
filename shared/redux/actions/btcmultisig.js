@@ -225,6 +225,11 @@ const checkSMSActivated = () => {
   return isRegistered
 }
 
+const checkPINActivated = () => {
+  const { user: { btcMultisigPinData: { isRegistered } } } = getState()
+  return isRegistered
+}
+
 const checkG2FAActivated = () => {
   return false
 }
@@ -1436,24 +1441,38 @@ const signMessage = (message, encodedPrivateKey) => {
 const getReputation = () => Promise.resolve(0)
 
 export default {
+  // SMS Protected
   beginRegisterSMS,
   confirmRegisterSMS,
   checkSMSActivated,
+  getBalance,
+  login_SMS,
   checkG2FAActivated,
   checkUserActivated,
-  login_SMS,
-  login_G2FA,
-  login_USER,
-  getBalance,
-  getBalanceUser,
-  getBalanceG2FA,
-  getTransaction,
   getTransactionSMS,
-  getTransactionUser,
-  getTransactionG2FA,
-  send,
   sendSMSProtected,
   confirmSMSProtected,
+  enableWalletSMS,
+  signSmsMnemonic,
+  signSmsMnemonicAndBuild,
+  checkSmsMnemonic,
+  getInvoicesSMS,
+  addSMSWallet,
+  isBTCSMSAddress,
+  getSmsKeyFromMnemonic,
+
+  // Pin protected
+  login_PIN,
+  checkPINActivated,
+
+  // User multisig
+  login_USER,
+  getBalanceUser,
+  getTransaction,
+  getTransactionUser,
+
+  send,
+
   fetchUnspents,
   broadcastTx,
   broadcastTX2Room,
@@ -1462,32 +1481,33 @@ export default {
   fetchBalance,
   signMessage,
   getReputation,
-  enableWalletSMS,
-  enableWalletG2FA,
   enableWalletUSER,
+
   parseRawTX,
   signMultiSign,
-  signSmsMnemonic,
-  signSmsMnemonicAndBuild,
-  checkSmsMnemonic,
+
   onUserMultisigJoin,
   onUserMultisigSend,
-  getInvoicesSMS,
   getInvoicesUser,
-  isBTCAddress,
+
   getBtcMultisigKeys,
   addBtcMultisigKey,
   removeBtcMultisigNey,
   switchBtcMultisigKey,
-  addSMSWallet,
-  isBTCSMSAddress,
+
+  fetchMultisigBalances,
+
   isBTCMSUserAddress,
   signToUserMultisig,
-  getSmsKeyFromMnemonic,
-  fetchMultisigBalances,
+
+  // common
+  isBTCAddress,
   getAddrBalance,
   addressToWallet,
 
-  // Pin protected
-  login_PIN,
+  // Google 2fa (draft not implements)
+  login_G2FA,
+  getBalanceG2FA,
+  getTransactionG2FA,
+  enableWalletG2FA,
 }
