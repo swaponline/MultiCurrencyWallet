@@ -25,7 +25,7 @@ import InlineLoader from "components/loaders/InlineLoader/InlineLoader";
 import { FormattedMessage, injectIntl } from "react-intl";
 import { localisedUrl } from "helpers/locale";
 import { isCoinAddress } from "swap.app/util/typeforce";
-import config from "app-config";
+import config from 'helpers/externalConfig'
 import SwapApp, { util } from "swap.app";
 import QrReader from "components/QrReader";
 
@@ -1377,20 +1377,22 @@ export default class PartialClosure extends Component {
     return (
       <div styleName="exchangeWrap">
         <div styleName="promoContainer" ref={ref => (this.promoContainer = ref)}>
-          <div
-            styleName="scrollToTutorialSection"
-            ref={ref => (this.scrollTrigger = ref)}
-            onClick={() =>
-              animate(timePassed => {
-                window.scrollTo(0, this.promoContainer.clientHeight * (timePassed / 100));
-              }, 100)
-            }
-          >
-            <span styleName="scrollAdvice">
-              <FormattedMessage id="PartialHowItWorks10" defaultMessage="How it works?" />
-            </span>
-            <span styleName="scrollTrigger" />
-          </div>
+          {config && config.showHowItsWork && (
+            <div
+              styleName="scrollToTutorialSection"
+              ref={ref => (this.scrollTrigger = ref)}
+              onClick={() =>
+                animate(timePassed => {
+                  window.scrollTo(0, this.promoContainer.clientHeight * (timePassed / 100));
+                }, 100)
+              }
+            >
+              <span styleName="scrollAdvice">
+                <FormattedMessage id="PartialHowItWorks10" defaultMessage="How it works?" />
+              </span>
+              <span styleName="scrollTrigger" />
+            </div>
+          )}
 
           {openScanCam && (
             <QrReader openScan={this.openScan} handleError={this.handleError} handleScan={this.handleScan} />
@@ -1409,9 +1411,13 @@ export default class PartialClosure extends Component {
             </div>
           </Fragment>
         </div>
-        <HowItWorks />
-        <VideoAndFeatures />
-        <Quote />
+        {config && config.showHowItsWork && (
+          <Fragment>
+            <HowItWorks />
+            <VideoAndFeatures />
+            <Quote />
+          </Fragment>
+        )}
       </div>
     );
   }

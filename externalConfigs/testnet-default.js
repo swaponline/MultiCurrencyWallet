@@ -52,4 +52,5 @@ window.buildOptions = {
 
 window.buildOptions = {
   showWalletBanners: true, // Allow to see banners
+  showHowItsWork: true, // Can be inited from window.showHowItWorksOnExchangePage
 }
