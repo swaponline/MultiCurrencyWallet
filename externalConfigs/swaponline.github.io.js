@@ -36,4 +36,5 @@ window.buildOptions = {
 
 window.buildOptions = {
   showWalletBanners: true, // Allow to see banners
+  showHowItsWork: true, // Allow show block 'How its work' on exchange page
 }

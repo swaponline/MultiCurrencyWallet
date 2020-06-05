@@ -1317,18 +1317,20 @@ export default class PartialClosure extends Component {
       : (
         <div styleName={`exchangeWrap ${isWidget ? 'widgetExchangeWrap' : ''}`}>
           <div styleName="promoContainer" ref={ref => this.promoContainer = ref}>
-            <div
-              styleName="scrollToTutorialSection"
-              ref={ref => this.scrollTrigger = ref}
-              onClick={() => animate((timePassed) => {
-                window.scrollTo(0, (this.promoContainer.clientHeight * (timePassed / 100)))
-              }, 100)}
-            >
-              <span styleName="scrollAdvice" >
-                <FormattedMessage id="PartialHowItWorks10" defaultMessage="How it works?" />
-              </span>
-              <span styleName="scrollTrigger" />
-            </div>
+            {config && config.showHowItsWork && (
+              <div
+                styleName="scrollToTutorialSection"
+                ref={ref => this.scrollTrigger = ref}
+                onClick={() => animate((timePassed) => {
+                  window.scrollTo(0, (this.promoContainer.clientHeight * (timePassed / 100)))
+                }, 100)}
+              >
+                <span styleName="scrollAdvice" >
+                  <FormattedMessage id="PartialHowItWorks10" defaultMessage="How it works?" />
+                </span>
+                <span styleName="scrollTrigger" />
+              </div>
+            )}
 
             {openScanCam &&
               <QrReader
@@ -1344,9 +1346,13 @@ export default class PartialClosure extends Component {
               </div>
             </Fragment>
           </div>
-          <HowItWorks />
-          <VideoAndFeatures />
-          <Quote />
+          {config && config.showHowItsWork && (
+            <Fragment>
+              <HowItWorks />
+              <VideoAndFeatures />
+              <Quote />
+            </Fragment>
+          )}
         </div >
       )
   }
