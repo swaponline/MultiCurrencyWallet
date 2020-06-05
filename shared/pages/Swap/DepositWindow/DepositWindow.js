@@ -57,8 +57,8 @@ export default class DepositWindow extends Component {
   }
 
   updateBalance = async () => {
-    const { swap } =  this.props
-    const { sellAmount, address } =  this.state
+    const { swap } = this.props
+    const { sellAmount, address } = this.state
 
     let actualBalance
 
@@ -95,7 +95,7 @@ export default class DepositWindow extends Component {
   }
 
   getRequiredAmount = async () => {
-    const { swap } =  this.props
+    const { swap } = this.props
     const { sellAmount } = this.state
 
     let dynamicFee = 0
@@ -141,7 +141,7 @@ export default class DepositWindow extends Component {
     await this.updateRemainingBalance()
 
     const balanceCheckHandler = async () => {
-      const { swap: { flow } } =  this.props
+      const { swap: { flow } } = this.props
       const { btcScriptValues } = flow.state
       const { isBalanceEnough } = this.state
 
@@ -296,12 +296,12 @@ export default class DepositWindow extends Component {
                   values={DontHaveEnoughtFoundsValues}
                 />
               ) : (
-                <FormattedMessage
-                  id="deposit165"
-                  defaultMessage="To continue the swap copy this address and top it up with {missingBalance}"
-                  values={DontHaveEnoughtFoundsValues}
-                />
-              )}
+                  <FormattedMessage
+                    id="deposit165"
+                    defaultMessage="To continue the swap copy this address and top it up with {missingBalance}"
+                    values={DontHaveEnoughtFoundsValues}
+                  />
+                )}
               {/* eslint-enable */}
             </div>
             <div styleName="qrImg">
@@ -340,7 +340,7 @@ export default class DepositWindow extends Component {
                   </a>
                 </strong>
               </div>
-              <p styleName="qr">
+              <div styleName="qr">
                 <a
                   styleName="linkAddress"
                   onDoubleClick={this.onCopy}
@@ -353,10 +353,10 @@ export default class DepositWindow extends Component {
                   disabled={isAddressCopied}
                   fullWidth
                 >
-                  <span className="copyText"><FormattedMessage id="deposit312" defaultMessage="copy" /></span>
                   {isAddressCopied ? <i className="fas fa-copy fa-copy-in" /> : <i className="fas fa-copy" />}
+                  <span className="copyText"><FormattedMessage id="deposit312" defaultMessage="copy" /></span>
                 </Button>
-              </p>
+              </div>
             </div>
           </CopyToClipboard>
           <div>
@@ -389,14 +389,14 @@ export default class DepositWindow extends Component {
                   }}
                 />
               )}
-              {isBalanceEnough
-                ? <FormattedMessage id="deposit198.1" defaultMessage="create Ethereum Contract.{br}Please wait, it can take a few minutes..." values={{ br: <br /> }} />
-                : <FormattedMessage id="deposit198" defaultMessage="waiting for payment..." />
-              }
-              <a styleName="loaderHolder">
-                <InlineLoader />
-              </a>
-              {dynamicFee > 0 &&
+            {isBalanceEnough
+              ? <FormattedMessage id="deposit198.1" defaultMessage="create Ethereum Contract.{br}Please wait, it can take a few minutes..." values={{ br: <br /> }} />
+              : <FormattedMessage id="deposit198" defaultMessage="waiting for payment..." />
+            }
+            <a styleName="loaderHolder">
+              <InlineLoader />
+            </a>
+            {dynamicFee > 0 &&
               <a styleName="included">
                 <FormattedMessage
                   id="deposit320"
@@ -407,15 +407,15 @@ export default class DepositWindow extends Component {
                   }}
                 />
               </a>}
-              <div>
+            <div>
             </div>
             {/* eslint-enable */}
           </div>
           {flow.btcScriptValues !== null &&
-          <div styleName="lockTime">
-            <i className="far fa-clock" />
-            <Timer cancelTime={(flow.btcScriptValues.lockTime - 7200) * 1000} lockTime={flow.btcScriptValues.lockTime * 1000} />
-          </div>}
+            <div styleName="lockTime">
+              <i className="far fa-clock" />
+              <Timer cancelTime={(flow.btcScriptValues.lockTime - 7200) * 1000} lockTime={flow.btcScriptValues.lockTime * 1000} />
+            </div>}
         </div>
       </Fragment>
     )
