@@ -23,6 +23,14 @@ export const initialState = {
     balanceError: null,
     infoAboutCurrency: null,
   },
+  btcMultisigPinData: {
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'BTC (PIN-Protected)',
+    fullName: 'BTC (PIN-Protected)',
+    balanceError: null,
+    infoAboutCurrency: null,
+  },
   btcMultisigG2FAData: {
     balance: 0,
     isBalanceFetched: false,

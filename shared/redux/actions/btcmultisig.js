@@ -362,6 +362,21 @@ const login_SMS = (privateKey, otherOwnerPublicKey) => {
   reducers.user.setAuthData({ name: 'btcMultisigSMSData', data })
 }
 
+const login_PIN = (privateKey, otherOwnerPublicKey) => {
+  const data = login_(privateKey, otherOwnerPublicKey, false)
+
+  if (!data) return false
+
+  const isRegistered = (localStorage.getItem(`${constants.localStorage.didPinBtcCreated}:${data.address}`) === '1')
+
+  data.currency = 'BTC (PIN-Protected)'
+  data.fullName = 'Bitcoin (PIN-Protected)'
+  data.isRegistered = (otherOwnerPublicKey instanceof Array && otherOwnerPublicKey.length > 1) ? true : isRegistered
+  data.isPinProtected = true
+
+  reducers.user.setAuthData({ name: 'btcMultisigPinData', data })
+}
+
 const login_G2FA = (privateKey, otherOwnerPublicKey) => {
   const data = login_(privateKey, otherOwnerPublicKey, false)
 
@@ -1472,4 +1487,7 @@ export default {
   fetchMultisigBalances,
   getAddrBalance,
   addressToWallet,
+
+  // Pin protected
+  login_PIN,
 }
