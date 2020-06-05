@@ -5721,7 +5721,7 @@
   },
   {
     "id": "registerSMSMPlaceHolder",
-    "message": "Secret phrase (12 worlds)",
+    "message": "Secret phrase (12 words)",
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
