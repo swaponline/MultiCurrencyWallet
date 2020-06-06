@@ -356,7 +356,7 @@ export default class WithdrawModal extends React.Component {
   }
 
   sellAllBalance = async () => {
-    const { balance, isEthToken, usedAdminFee, currentDecimals } = this.state
+    const { balance, isEthToken, usedAdminFee, currentDecimals, exCurrencyRate } = this.state
 
     const {
       data: { currency },
@@ -378,6 +378,7 @@ export default class WithdrawModal extends React.Component {
 
     this.setState({
       amount: BigNumber(balanceMiner.dp(currentDecimals, BigNumber.ROUND_FLOOR)),
+      fiatAmount: balanceMiner ? (balanceMiner * exCurrencyRate).toFixed(2) : '',
     })
   }
 
