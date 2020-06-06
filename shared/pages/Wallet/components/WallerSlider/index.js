@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 
 import { connect } from 'redaction'
 
@@ -143,7 +143,7 @@ export default class WallerSlider extends Component {
     )
 
     return (window.location.hash !== linksManager.hashHome) ? null : (
-      <Fragment>
+      <div className="data-tut-banners">
         <h3 className={styles.bannersHeading}>
           <FormattedMessage id="ForYou" defaultMessage="For you" />
         </h3>
@@ -186,7 +186,7 @@ export default class WallerSlider extends Component {
             </div>
           </div>
         }
-      </Fragment>
+      </div>
     )
   }
 }
