@@ -54,7 +54,8 @@ export default class NavMobile extends Component {
                     exact={exact}
                     to={localisedUrl(locale, link)}
                     className={`
-                    ${title === 'Exchange' ? 'reactour-exchange' : ''}
+                    ${title === 'Transactions' ? 'data-tut-recent' : ''}
+                    ${title === 'Exchange' ? 'reactour-exchange data-tut-widget-exchange' : ''}
                     ${title === 'Exchange' && isExchange ? ` ${styles.active}` : ''}
                 `}
                     activeClassName={styles.active}

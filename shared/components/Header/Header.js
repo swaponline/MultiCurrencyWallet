@@ -9,9 +9,9 @@ import { connect } from "redaction";
 
 import links from "helpers/links";
 import actions from "redux/actions";
-import { constants, firebase } from "helpers";
+import { constants } from "helpers";
 import config from "app-config";
-import { FormattedMessage, defineMessages, injectIntl } from "react-intl";
+import { injectIntl } from "react-intl";
 
 import CSSModules from "react-css-modules";
 import styles from "./Header.scss";
@@ -25,18 +25,15 @@ import LogoTooltip from "components/Logo/LogoTooltip";
 import WidthContainer from "components/layout/WidthContainer/WidthContainer";
 import TourPartial from "./TourPartial/TourPartial";
 import WalletTour from "./WalletTour/WalletTour";
+import { WidgetWalletTour } from "./WidgetTours";
 
-import Logo from "components/Logo/Logo"; // @ToDo - not used
 import Loader from "components/loaders/Loader/Loader";
-import { relocalisedUrl } from "helpers/locale";
 import { localisedUrl, unlocalisedUrl } from "../../helpers/locale";
 import UserTooltip from "components/Header/User/UserTooltip/UserTooltip";
 import { messages, getMenuItems, getMenuItemsMobile } from "./config";
 import { getActivatedCurrencies } from 'helpers/user'
 import { WidgetHeader } from "./WidgetHeader"
 
-
-let lastScrollTop = 0;
 
 const isWidgetBuild = config && config.isWidget
 
@@ -182,7 +179,7 @@ export default class Header extends Component {
 
   startTourAndSignInModal = customProps => {
     const finishProps = { ...this.props, ...customProps };
-    const { wasOnExchange, wasOnWallet, isWalletCreate } = constants.localStorage;
+    const { wasOnExchange, wasOnWallet, isWalletCreate, wasOnWidgetWallet } = constants.localStorage;
     const {
       hiddenCoinsList,
       location: { hash, pathname }
@@ -193,6 +190,7 @@ export default class Header extends Component {
     if (isGuestLink) {
       localStorage.setItem(wasOnWallet, true);
       localStorage.setItem(wasOnExchange, true);
+      localStorage.setItem(wasOnWidgetWallet, true);
       return;
     }
 
@@ -209,6 +207,7 @@ export default class Header extends Component {
 
     const wasOnWalletLs = localStorage.getItem(wasOnWallet);
     const wasOnExchangeLs = localStorage.getItem(wasOnExchange);
+    const wasOnWidgetWalletLs = localStorage.getItem(wasOnWidgetWallet)
 
     let tourEvent = () => { };
 
@@ -251,6 +250,9 @@ export default class Header extends Component {
         break;
       case isPartialPage && !wasOnExchangeLs:
         tourEvent = this.openExchangeTour;
+        break;
+      case isWidgetBuild && !wasOnWidgetWalletLs:
+        tourEvent = this.openWidgetWalletTour;
         break;
       case !userCurrencies.length && isWalletPage:
         this.openCreateWallet({ onClose: tourEvent });
@@ -317,6 +319,10 @@ export default class Header extends Component {
     this.setState(() => ({ isTourOpen: false }));
   };
 
+  closeWidgetTour = () => {
+    this.setState(() => ({ isWidgetTourOpen: false }));
+  }
+
   closePartialTour = () => {
     this.setState(() => ({ isPartialTourOpen: false }));
   };
@@ -338,6 +344,15 @@ export default class Header extends Component {
     localStorage.setItem(wasOnWallet, true);
   };
 
+  openWidgetWalletTour = () => {
+    const { wasOnWidgetWallet } = constants.localStorage;
+
+    setTimeout(() => {
+      this.setState(() => ({ isWidgetTourOpen: true }));
+    }, 1000);
+    localStorage.setItem(wasOnWidgetWallet, true);
+  };
+
   openExchangeTour = () => {
     const { wasOnExchange } = constants.localStorage;
     setTimeout(() => {
@@ -348,7 +363,7 @@ export default class Header extends Component {
   };
 
   render() {
-    const { sticky, isTourOpen, path, isPartialTourOpen, menuItems, menuItemsMobile, createdWalletLoader } = this.state;
+    const { sticky, isTourOpen, path, isPartialTourOpen, menuItems, menuItemsMobile, createdWalletLoader, isWidgetTourOpen } = this.state;
     const {
       intl: { formatMessage },
       history: {
@@ -358,12 +373,8 @@ export default class Header extends Component {
       peer,
       isSigned,
       isInputActive,
-      dashboardView,
-      modals,
     } = this.props;
     const { exchange, wallet } = links;
-
-    const isAnyModalCalled = Object.keys(modals).length
 
     const isWalletPage = pathname.includes(wallet) || pathname === `/ru${wallet}` || pathname === `/`;
 
@@ -428,6 +439,7 @@ export default class Header extends Component {
           />
           <NavMobile menu={menuItemsMobile} />
           {!isSigned && <SignUpButton mobile />}
+          {isWidgetTourOpen && isWalletPage && <WidgetWalletTour isTourOpen={isWidgetTourOpen} closeTour={this.closeWidgetTour} />}
         </div>
       )
 
@@ -454,6 +466,7 @@ export default class Header extends Component {
           />
           <NavMobile menu={menuItemsMobile} />
           {!isSigned && <SignUpButton mobile />}
+          {isWidgetTourOpen && isWalletPage && <WidgetWalletTour isTourOpen={isWidgetTourOpen} closeTour={this.closeWidgetTour} />}
         </div>
       );
     }
@@ -488,6 +501,7 @@ export default class Header extends Component {
             declineRequest={this.declineRequest}
           />
           {isTourOpen && isWalletPage && <WalletTour isTourOpen={isTourOpen} closeTour={this.closeTour} />}
+          {isWidgetTourOpen && isWalletPage && <WidgetWalletTour isTourOpen={isWidgetTourOpen} closeTour={this.closeWidgetTour} />}
         </WidthContainer>
       </div>
     );

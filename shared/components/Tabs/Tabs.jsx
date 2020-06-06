@@ -56,6 +56,7 @@ const TabsComponent = ({ navs, onClick, activeView, dashboardView, modals }) => 
       enabled ? (
         <li
           key={key}
+          className={key === "Transactions" ? "data-tut-recent" : ""}
           role="presentation"
           styleName={styleName}
           onClick={handleClick}

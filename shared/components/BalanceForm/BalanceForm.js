@@ -64,7 +64,7 @@ function BalanceForm({
   }
 
   return (
-    <div styleName={isWidgetBuild && !config.isFullBuild ? 'yourBalance widgetBuild' : 'yourBalance'}>
+    <div className="data-tut-widget-balance" styleName={isWidgetBuild && !config.isFullBuild ? 'yourBalance widgetBuild' : 'yourBalance'}>
       <div styleName="yourBalanceTop">
         <p styleName="yourBalanceDescr">
           <FormattedMessage id="Yourtotalbalance" defaultMessage="Ваш общий баланс" />
@@ -120,7 +120,7 @@ function BalanceForm({
           [styles.yourBalanceBottomWrapper]: true,
         })}
       >
-        <div styleName="yourBalanceBottom">
+        <div styleName="yourBalanceBottom" className="data-tut-withdraw-buttons">
           {showButtons ? (
             <Fragment>
               <Button blue id="depositBtn" onClick={() => handleReceive('Deposit')}>
