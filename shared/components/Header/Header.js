@@ -419,7 +419,7 @@ export default class Header extends Component {
 
     if (isMobile && window.logoUrl) {
       return (
-        <div styleName={isInputActive ? "header-mobile header-mobile__hidden" : "header-mobile"}>
+        <div className="data-tut-widget-tourFinish" styleName={isInputActive ? "header-mobile header-mobile__hidden" : "header-mobile"}>
           {logoRenderer}
           {createdWalletLoader && (
             <div styleName="loaderCreateWallet">

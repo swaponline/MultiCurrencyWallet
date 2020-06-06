@@ -63,8 +63,8 @@ export default class DropdownMenu extends Component {
 
 		return (
 			<div styleName={classNames('dropdownMenu', size)} ref={this.dropdownMenu}>
-				<button type="button" onClick={this.handleClick}>
-					<img src={dots} className="data-tut-row-menu" />
+				<button type="button" onClick={this.handleClick} className="data-tut-row-menu">
+					<img src={dots} />
 				</button>
 				<div styleName={classNames('menu', className, { open })}>
 					{

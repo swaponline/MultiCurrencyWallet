@@ -18,7 +18,9 @@ export class WidgetWalletTour extends Component {
         {
           content: <FormattedMessage
             id="widget-tour-step-1"
-            defaultMessage="Welcome to {widgetName}. Take the tour?" values={{ widgetName: window.widgetName }} />,
+            defaultMessage="Welcome to {widgetName}. Take the tour?"
+            values={{ widgetName: window.widgetName }}
+          />,
           placement: 'center',
           target: '.data-tut-start-widget-tour',
         },
@@ -37,31 +39,38 @@ export class WidgetWalletTour extends Component {
           target: '.data-tut-withdraw-buttons',
         },
         {
-          content: <FormattedMessage id="widget-tour-step-4" defaultMessage="Scroll through this menu to find products, services and useful information." />,
-          spotlightPadding: 20,
+          content: <FormattedMessage
+            id="widget-tour-step-4"
+            defaultMessage="Scroll through this menu to find products, services and useful information."
+          />,
           target: '.data-tut-banners',
         },
         {
-          content: <FormattedMessage id="widget-tour-step-5" defaultMessage="Click these three dots to find your wallet address, private keys and more." />,
+          content: <FormattedMessage
+            id="widget-tour-step-5"
+            defaultMessage="Click these three dots to find your wallet address, private keys and more."
+          />,
           target: '.data-tut-row-menu',
         },
         {
           content: <FormattedMessage
             id="widget-tour-step-6"
-            defaultMessage="Click this button to review a list of your recent transactions." />,
-          placement: 'center',
+            defaultMessage="Click this button to review a list of your recent transactions."
+          />,
           target: '.data-tut-recent',
         },
         {
           content: <FormattedMessage
             id="widget-tour-step-7"
-            defaultMessage="Click this button to exchange your cryptocurrencies." />,
+            defaultMessage="Click this button to exchange your cryptocurrencies."
+          />,
           target: '.data-tut-widget-exchange',
         },
         {
           content: <FormattedMessage
             id="widget-tour-finishStep"
-            defaultMessage="Get started." />,
+            defaultMessage="Get started."
+          />,
           placement: 'center',
           target: '.data-tut-widget-tourFinish',
         },
