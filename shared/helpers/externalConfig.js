@@ -34,7 +34,14 @@ const externalConfig = () => {
     addCustomERC20: true,
     invoiceEnabled: true,
     showWalletBanners: false,
+    showHowItsWork: false,
     fee: {},
+  }
+
+  if (window
+    && window.showHowItWorksOnExchangePage
+  ) {
+    config.showHowItsWork = window.showHowItWorksOnExchangePage
   }
 
   if (window

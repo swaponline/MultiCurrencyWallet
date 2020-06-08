@@ -5707,21 +5707,21 @@
   },
   {
     "id": "RegisterSMSProtected_SmsCodeRequery",
-    "message": "Введите смс-код",
+    "message": "Enter SMS-code",
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
     ]
   },
   {
     "id": "registerSMSAddOffline",
-    "message": "Восстановить кошелек",
+    "message": "Restore wallet",
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
     ]
   },
   {
     "id": "registerSMSMPlaceHolder",
-    "message": "12 слов",
+    "message": "Secret phrase (12 words)",
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
@@ -5729,7 +5729,7 @@
   },
   {
     "id": "registerSMSMnemonicError",
-    "message": "Вы указали не валидный набор слов",
+    "message": "Your enter not valid mnemonic",
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
     ]
@@ -5743,7 +5743,7 @@
   },
   {
     "id": "registerSMSModalFinishInfoTitle",
-    "message": "Сохраните эту информацию"
+    "message": "Save this information"
   },
   {
     "id": "registerSMSModalPhonePlaceholder",
@@ -5783,7 +5783,7 @@
   },
   {
     "id": "registerSMS_ConfigServerOffline",
-    "message": "Сервер авторизации не доступен. Попробуйте позже или используйте секретную фраза для разблокировки счета",
+    "message": "The authorization server is not available. Try again later or use a secret phrase to unlock your wallet",
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
     ]
@@ -5811,7 +5811,7 @@
   },
   {
     "id": "registerSMS_NotValidPhone",
-    "message": "Укажите номер телефона",
+    "message": "Enter your phone number",
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
     ]
@@ -5825,21 +5825,21 @@
   },
   {
     "id": "registerSMS_WalletLocked",
-    "message": "Этот счет привязан к другому номеру телефона",
+    "message": "This wallet is tied to a different phone number",
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
     ]
   },
   {
     "id": "WithdrawSMS_BroadcastError",
-    "message": "Не удалось отправить транзакцию в сеть ({errorText})",
+    "message": "Fail broadcast transaction ({errorText})",
     "files": [
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
   {
     "id": "WithdrawSMS_FailSignByMnemonic",
-    "message": "Не удалось подписать транзакцию",
+    "message": "Fail sign transaction",
     "files": [
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
@@ -5853,63 +5853,63 @@
   },
   {
     "id": "WithdrawSMS_MnemonicSignCaption",
-    "message": "Подтверждение транзакции секретной фразой",
+    "message": "Confirm transaction by secret phrase (12 words)",
     "files": [
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
   {
     "id": "WithdrawSMS_NotValidMnemonic",
-    "message": "Секретная фраза не валидна",
+    "message": "Secret phrase not valid",
     "files": [
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
   {
     "id": "WithdrawSMS_ServerOffline",
-    "message": "Сервер авторизации не доступен",
+    "message": "Authorization server is offline",
     "files": [
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
   {
     "id": "WithdrawSMS_SmsSended",
-    "message": "Код отправлен",
+    "message": "SMS with code sended",
     "files": [
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
   {
     "id": "WithdrawSMS_SmsSending",
-    "message": "Отправка проверочного кода",
+    "message": "Sending sms with confirm code",
     "files": [
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
   {
     "id": "WithdrawSMS_UseMnemonic",
-    "message": "Использовать секретную фразу",
+    "message": "Use secret phrase (12 words)",
     "files": [
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
   {
     "id": "WithdrawSMS_UseSMS",
-    "message": "Использовать смс-код",
+    "message": "Use SMS-code",
     "files": [
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
   {
     "id": "WithdrawSMS_UseSMSNote",
-    "message": "Так-же вы можете использовать смс-код, отправленный на привязанный номер телефона",
+    "message": "You can also use the SMS code sent to the attached phone number.",
     "files": [
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
   {
     "id": "WithdrawSMS_WrongMnemonic",
-    "message": "Не правильная секретная фраза",
+    "message": "Secret phrase not valid",
     "files": [
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]

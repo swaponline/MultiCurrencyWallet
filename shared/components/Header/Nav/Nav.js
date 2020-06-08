@@ -67,7 +67,7 @@ export default class Nav extends Component {
 
               // !rest.displayNone &&
               return (
-                <div styleName='mainMenu' key={`${title} ${link}`}>
+                <div styleName='mainMenu' key={`${title} ${link}`} className="data-tut-widget-tourFinish">
                   <NavLink
                     onClick={this.handleScrollToTopClick}
                     key={index}
@@ -76,8 +76,8 @@ export default class Nav extends Component {
                     className={`
                       ${styles.link}
                       ${title === 'Wallet' && isWallet ? ` ${styles.active}` : ''}
-                      ${title === 'Exchange' ? 'reactour-exchange' : ''}
-                      ${title === 'Exchange' && isExchange ? ` ${styles.active}` : ''}
+                      ${link && link.includes("exchange") ? 'reactour-exchange data-tut-widget-exchange' : ''}
+                      ${link && link.includes("exchange") && isExchange ? ` ${styles.active}` : ''}
                   `}
                     /* eslint-enable indent */
                     to={localisedUrl(locale, link)}

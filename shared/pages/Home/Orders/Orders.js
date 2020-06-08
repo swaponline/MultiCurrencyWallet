@@ -175,7 +175,7 @@ export default class Orders extends Component {
           </Title>
           <CloseIcon styleName="closeButton" onClick={() => this.props.history.push(localisedUrl(intl.locale, links.home))} data-testid="CloseIcon" />
         </div>
-        { invalidPair &&
+        {invalidPair &&
           <p>
             <FormattedMessage id="Orders141" defaultMessage="No such ticker. Redirecting to USDT-BTC exchange..." />
           </p>

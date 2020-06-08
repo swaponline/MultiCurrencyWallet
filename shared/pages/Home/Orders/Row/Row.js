@@ -4,18 +4,16 @@ import PropTypes from 'prop-types'
 import { connect } from 'redaction'
 import actions from 'redux/actions'
 
-import { isMobile } from 'react-device-detect'
-
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
 
 import helpers, { links, constants } from 'helpers'
-import { Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import SwapApp from 'swap.app'
 
 import Avatar from 'components/Avatar/Avatar'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import { Button, RemoveButton } from 'components/controls'
+import { RemoveButton } from 'components/controls'
 
 import Pair from '../Pair'
 import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
@@ -109,8 +107,8 @@ export default class Row extends Component {
     })
   }
 
-  checkDeclineOrders = (orderId, currency, checkCurrency) => {
-    const { intl: { locale }, decline } = this.props
+  checkDeclineOrders = (orderId, currency) => {
+    const { decline } = this.props
 
     if (decline.length === 0) {
       this.sendRequest(orderId, currency)
@@ -123,6 +121,8 @@ export default class Row extends Component {
       }
     }
   }
+
+  getDecimals = (amount, currency) => String(new BigNumber(amount).dp(constants.tokenDecimals[currency.toLowerCase()], BigNumber.ROUND_CEIL))
 
   handleDeclineOrdersModalOpen = (indexOfDecline) => {
     const orders = SwapApp.shared().services.orders.items
@@ -144,8 +144,6 @@ export default class Row extends Component {
     const {
       row: {
         id,
-        buyAmount,
-        sellAmount,
         buyCurrency,
         sellCurrency,
       },
@@ -156,8 +154,6 @@ export default class Row extends Component {
     const pair = Pair.fromOrder(this.props.row)
     const { price, amount, total, main, base, type } = pair
 
-    const sell = new BigNumber(sellAmount).dp(6, BigNumber.ROUND_CEIL)
-    const buy = new BigNumber(buyAmount).dp(6, BigNumber.ROUND_CEIL)
     const exchangeRates = new BigNumber(price).dp(6, BigNumber.ROUND_CEIL)
 
     const messages = defineMessages({
@@ -210,9 +206,9 @@ export default class Row extends Component {
               ? intl.formatMessage(messages.sell)
               : intl.formatMessage(messages.buy)
               }`,
-            amount: `${amount.toFixed(5)}`,
+            amount: `${this.getDecimals(amount, main)}`,
             main: `${main}`,
-            total: `${total.toFixed(5)}`,
+            total: `${this.getDecimals(total, base)}`,
             base: `${base}`,
             price: `${exchangeRates}`,
           }}
@@ -230,7 +226,6 @@ export default class Row extends Component {
         id,
         isMy,
         buyAmount,
-        sellAmount,
         buyCurrency,
         isRequested,
         isProcessing,
@@ -262,7 +257,7 @@ export default class Row extends Component {
           </span>
           {' '}
           {
-            `${amount.toFixed(5)} ${main}`
+            `${this.getDecimals(amount, main)} ${main}`
           }
         </td>
         <td>
@@ -271,7 +266,7 @@ export default class Row extends Component {
               id="Row1511"
               defaultMessage={`at price {price}`}
               values={{
-                price: `${price.toFixed(5)} ${base}`,
+                price: `${this.getDecimals(price, base)} ${base}`,
               }} />
           </span>
         </td>
@@ -281,7 +276,7 @@ export default class Row extends Component {
               id="Row159"
               defaultMessage={`for {total}`}
               values={{
-                total: `${total.toFixed(5)} ${base}`,
+                total: `${this.getDecimals(total, base)} ${base}`,
               }}
             />
           </span>
@@ -324,11 +319,11 @@ export default class Row extends Component {
                                 >
                                   {type === PAIR_TYPES.BID ? <FormattedMessage id="Row2061" defaultMessage="Sell" /> : <FormattedMessage id="Row206" defaultMessage="Buy" />}
                                   {' '}
-                                  {amount.toFixed(5)}{' '}{main}
+                                  {this.getDecimals(amount, main)}{' '}{main}
                                   <br />
                                   <FormattedMessage id="Row210" defaultMessage="for" />
                                   {' '}
-                                  {total.toFixed(5)}{' '}{base}
+                                  {this.getDecimals(total, base)}{' '}{base}
                                 </RequestButton>
                               )
                           )
@@ -362,7 +357,7 @@ export default class Row extends Component {
 
     const pair = Pair.fromOrder(this.props.row)
 
-    const { price, amount, total, main, base, type } = pair
+    const { amount, total, main, base, type } = pair
 
     return (
       <tr
@@ -377,7 +372,7 @@ export default class Row extends Component {
                   ? (<FormattedMessage id="RowMobileFirstTypeYouHave" defaultMessage="You have" />)
                   : (<FormattedMessage id="RowMobileFirstTypeYouGet" defaultMessage="You get" />)}
               </span>
-              <span>{`${amount.toFixed(5)} ${main}`}</span>
+              <span>{`${String(amount)} ${main}`}</span>
             </div>
             <div><i className="fas fa-exchange-alt" /></div>
             <div styleName="tdContainer-2">
@@ -386,7 +381,7 @@ export default class Row extends Component {
                   ? (<FormattedMessage id="RowMobileSecondTypeYouGet" defaultMessage="You get" />)
                   : (<FormattedMessage id="RowMobileSecondTypeYouHave" defaultMessage="You have" />)}
               </span>
-              <span>{`${total.toFixed(5)} ${base}`}</span>
+              <span>{`${String(total)} ${base}`}</span>
             </div>
             <div styleName="tdContainer-3">
               {
