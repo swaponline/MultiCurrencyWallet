@@ -25,7 +25,7 @@ cp -rf ../build-mainnet/* ./
 
 # commit build to repo
 
-DATE=`date '+%Y-%m-%d %H:%M:%S'`
+DATE=`updated '+%Y-%m-%d %H:%M:%S'`
 git add .
 git commit -m "build $DATE"
 git push --force
