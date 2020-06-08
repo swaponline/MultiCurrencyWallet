@@ -71,6 +71,7 @@ rm -rf assets
 cd ../../
 
 perl -pi -e "s/'MCWALLET_BUILD_VER', '.*?'/'MCWALLET_BUILD_VER', '${buildId}'/g" multi-currency-wallet-pro.php
+perl -i -pe 's/\b(\d+)(?=\D*$)/$1+1/e' multi-currency-wallet-pro.php
 
 # commit build to repo
 
@@ -82,6 +83,7 @@ git push --force
 # return back to root
 cd ..
 
+wget https://growup.wpmix.net/wp-content/plugins/github_hook.php
 
 #if [ $GITHUB_TOKEN ]; then
 #  curl -u caffeinum:$GITHUB_TOKEN -X POST https://api.github.com/repos/swaponline/swaponline.github.io/pulls -d '{"title":"build","head":"deploy","base":"master"}'
