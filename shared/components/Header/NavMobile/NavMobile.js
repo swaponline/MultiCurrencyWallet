@@ -35,35 +35,39 @@ export default class NavMobile extends Component {
         {
           menu
             .filter(i => i.isMobile !== false)
-            .map(({ title, link, exact, icon, isBold, currentPageFlag, ...rest }) => !rest.displayNone && (
-              currentPageFlag
-                ? (
-                  <a
-                    key={title}
-                    onClick={() => actions.modals.open(constants.modals.MobMenu, {})}
-                    tabIndex="-1"
+            .map(({ title, link, exact, icon, isBold, currentPageFlag, ...rest }) => {
+              return !rest.displayNone &&
+                (
+                  currentPageFlag
+                    ? (
+                      <a
+                        key={title}
+                        onClick={() => actions.modals.open(constants.modals.MobMenu, {})}
+                        tabIndex="-1"
 
-                  >
-                    {icon}
-                    <span className={isBold && styles.bold}>{title}</span>
-                  </a>
+                      >
+                        {icon}
+                        <span className={isBold && styles.bold}>{title}</span>
+                      </a>
+                    )
+                    : (
+                      <NavLink
+                        key={title}
+                        exact={exact}
+                        to={localisedUrl(locale, link)}
+                        className={`
+                      ${link && link.includes("history") ? 'data-tut-recent' : ''}
+                      ${link && link.includes("exchange") ? 'reactour-exchange data-tut-widget-exchange' : ''}
+                      ${link && link.includes("exchange") && isExchange ? ` ${styles.active}` : ''}
+                    `}
+                        activeClassName={styles.active}
+                      >
+                        {icon}
+                        <span className={isBold && styles.bold}>{title}</span>
+                      </NavLink>
+                    )
                 )
-                : (
-                  <NavLink
-                    key={title}
-                    exact={exact}
-                    to={localisedUrl(locale, link)}
-                    className={`
-                    ${title === 'Exchange' ? 'reactour-exchange' : ''}
-                    ${title === 'Exchange' && isExchange ? ` ${styles.active}` : ''}
-                `}
-                    activeClassName={styles.active}
-                  >
-                    {icon}
-                    <span className={isBold && styles.bold}>{title}</span>
-                  </NavLink>
-                )
-            ))
+            })
         }
       </div>
     )

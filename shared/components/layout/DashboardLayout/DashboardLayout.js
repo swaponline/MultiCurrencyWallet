@@ -173,7 +173,7 @@ const NewDesignLayout = (props) => {
   }
 
   return (
-    <article>
+    <article className="data-tut-start-widget-tour">
       {window.CUSTOM_LOGO && (
         <img className="cutomLogo" src={window.CUSTOM_LOGO} alt="logo" />
       )}

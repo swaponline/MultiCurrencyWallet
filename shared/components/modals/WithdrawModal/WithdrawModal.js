@@ -66,12 +66,11 @@ export default class WithdrawModal extends React.Component {
     super()
 
     const {
-      data: { amount, toAddress, currency, hiddenCoinsList },
-      items,
-      tokenItems,
+      data: { amount, toAddress, currency }
     } = data
 
     const currentActiveAsset = data.data
+
     const currentDecimals = constants.tokenDecimals[currency.toLowerCase()]
     const allCurrencyies = actions.core.getWallets() //items.concat(tokenItems)
     const selectedItem = allCurrencyies.filter((item) => item.currency === currency)[0]
@@ -357,7 +356,7 @@ export default class WithdrawModal extends React.Component {
   }
 
   sellAllBalance = async () => {
-    const { balance, isEthToken, usedAdminFee } = this.state
+    const { balance, isEthToken, usedAdminFee, currentDecimals, exCurrencyRate } = this.state
 
     const {
       data: { currency },
@@ -372,12 +371,14 @@ export default class WithdrawModal extends React.Component {
 
     const balanceMiner = balance
       ? balance !== 0
-        ? new BigNumber(balance).minus(minFee).toString()
+        ? new BigNumber(balance).minus(minFee)
+
         : balance
       : 'Wait please. Loading...'
 
     this.setState({
-      amount: balanceMiner,
+      amount: BigNumber(balanceMiner.dp(currentDecimals, BigNumber.ROUND_FLOOR)),
+      fiatAmount: balanceMiner ? (balanceMiner * exCurrencyRate).toFixed(2) : '',
     })
   }
 

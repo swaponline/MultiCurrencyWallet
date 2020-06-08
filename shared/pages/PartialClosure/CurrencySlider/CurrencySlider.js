@@ -5,15 +5,12 @@ import { connect } from 'redaction'
 import styles from './CurrencySlider.scss'
 import cssModules from 'react-css-modules'
 
-import config from 'app-config'
-import ItemsCarousel from 'react-items-carousel'
-
 import { FormattedMessage } from 'react-intl'
 
 import images from './images'
 
-
-const names = ['btc', 'eth', 'swap']
+const tokens = window.widgetERC20Tokens ? Object.keys(window.widgetERC20Tokens) : ['swap']
+const names = ['btc', 'eth', ...tokens]
 
 @connect(
   ({ currencies: { items: currencies } }) => ({
@@ -29,10 +26,6 @@ export default class CurrencySlider extends Component {
   }
 
   render() {
-    const { activeItemIndex, children } = this.state
-    const { currencies } = this.props
-    const curr = Object.values(currencies).map(item => item.name.toLowerCase())
-
     return (
       <Fragment>
         <div styleName="block">
@@ -43,7 +36,7 @@ export default class CurrencySlider extends Component {
             <ul styleName="currencyList">
               {names.map((item, index) => (
                 <li styleName={item !== 'eth' ? 'currencyListItem' : 'currencyListItemEth'} key={index}>
-                  <img src={images[item]} alt="" />
+                  <img src={tokens.includes(item) ? window.widgetERC20Tokens ? window.widgetERC20Tokens[item].icon : images[item] : images[item]} alt="" />
                 </li>
               ))}
             </ul>
