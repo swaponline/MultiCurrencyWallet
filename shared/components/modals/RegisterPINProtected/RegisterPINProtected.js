@@ -27,7 +27,54 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 import moment from 'moment/moment'
 import finishSvg from './images/finish.svg'
 
+const langPrefix = `RegisterPINProtectedBTC`
 
+const langs = defineMessages({
+  registerPinModal: {
+    id: `${langPrefix}_Title`,
+    defaultMessage: `Activate PIN Protected Wallet`,
+  },
+  pinCodePlaceHolder: {
+    id: `${langPrefix}_PinCodePlaceholder`,
+    defaultMessage: `Enter your pin code`,
+  },
+  pinCodeConfirmPlaceHolder: {
+    id: `${langPrefix}_PinCodeConfirmPlaceholder`,
+    defaultMessage: `Confirm your pin code`,
+  },
+  needSaveMnemonicToContinue: {
+    id: `${langPrefix}_YouNeedSaveMnemonic`,
+    defaultMessage: `Для активации 2fa вы должны сохранить 12 слов.`,
+  },
+  pleaseSaveMnemonicToContinue: {
+    id: `${langPrefix}_SaveYourMnemonic`,
+    defaultMessage: `Пожалуйста сохраните свою секретную фразу.`
+  },
+  buttonSaveMnemonic: {
+    id: `${langPrefix}_ButtonSaveMnemonic`,
+    defaultMessage: `Save`,
+  },
+  buttonCancel: {
+    id: `${langPrefix}_ButtonCancel`,
+    defaultMessage: `Cancel`,
+  },
+  enterPinCodeUpMessage: {
+    id: `${langPrefix}_EnterPinCodeUpMessage`,
+    defaultMessage: `Активация кошелька BTC, защищенного паролем`,
+  },
+  enterPinCodeBottomMessage: {
+    id: `${langPrefix}_EnterPinCodeBottomMessage`,
+    defaultMessage: `Придумайте пароль`,
+  },
+  youNotEnterPin: {
+    id: `${langPrefix}_ErrorNoPinOrSmall`,
+    defaultMessage: `Пароль должен быть не менее 4х символов`,
+  },
+  pinCodeNotEqueals: {
+    id: `${langPrefix}_ErrorPinCodesNotEqueals`,
+    defaultMessage: `Пароли не совпадают`,
+  },
+})
 
 @injectIntl
 @connect(({ user: { btcData, btcMultisigPinData } }) => ({
@@ -391,6 +438,33 @@ export default class RegisterPINProtected extends React.Component {
     })
   }
 
+  handleCheckPIN = () => {
+    const {
+      pinCode,
+      pinCodeConfirm,
+    } = this.state
+
+    this.setState({
+      error: false,
+      isShipped: true,
+    }, () => {
+      if (!pinCode || pinCode.length < 4) {
+        this.setState({
+          error: <FormattedMessage { ...langs.youNotEnterPin } />,
+          isShipped: false,
+        })
+        return
+      }
+      if (pinCode != pinCodeConfirm) {
+        this.setState({
+          error: <FormattedMessage { ...langs.pinCodeNotEqueals } />,
+          isShipped: false,
+        })
+        return
+      }
+    })
+  }
+
   render() {
     const {
       step,
@@ -423,40 +497,7 @@ export default class RegisterPINProtected extends React.Component {
 
     const linked = Link.all(this, 'pinCode', 'pinCodeConfirm', 'mnemonic')
 
-    const langs = defineMessages({
-      registerPinModal: {
-        id: "registerPINProtectedTitle",
-        defaultMessage: `Activate PIN Protected Wallet`,
-      },
-      mnemonicPlaceholder: {
-        id: 'registerPinMnemoPlaceHolder',
-        defaultMessage: `12 слов`,
-      },
-      pinCodePlaceHolder: {
-        id: 'registerPinModalCodePlaceholder',
-        defaultMessage: `Enter your pin code`,
-      },
-      pinCodeConfirmPlaceHolder: {
-        id: 'registerPinModalCodeConfirmPlaceholder',
-        defaultMessage: `Confirm your pin code`,
-      },
-      needSaveMnemonicToContinue: {
-        id: 'registerPIN_YouNeedSaveMnemonic',
-        defaultMessage: `Для активации 2fa вы должны сохранить 12 слов.`,
-      },
-      pleaseSaveMnemonicToContinue: {
-        id: 'registerPIN_SaveYourMnemonic',
-        defaultMessage: `Пожалуйста сохраните свою секретную фразу.`
-      },
-      buttonSaveMnemonic: {
-        id: 'registerPIN_ButtonSaveMnemonic',
-        defaultMessage: `Save`,
-      },
-      buttonCancel: {
-        id: 'registerPIN_ButtonCancel',
-        defaultMessage: `Cancel`,
-      },
-    });
+
 
     return (
       <Modal name={name} title={`${intl.formatMessage(langs.registerPinModal)}`}>
@@ -487,10 +528,10 @@ export default class RegisterPINProtected extends React.Component {
             <Fragment>
               <p styleName="centerInfoBlock">
                 <strong>
-                  <FormattedMessage { ...langs.needSaveMnemonicToContinue } />
+                  <FormattedMessage { ...langs.enterPinCodeUpMessage } />
                 </strong>
                 <br />
-                <FormattedMessage { ...langs.pleaseSaveMnemonicToContinue } />
+                <FormattedMessage { ...langs.enterPinCodeBottomMessage } />
               </p>
               <div styleName="highLevel" className="ym-hide-content">
                 <FieldLabel label>
@@ -499,6 +540,7 @@ export default class RegisterPINProtected extends React.Component {
                 <Input
                   styleName="input inputMargin25"
                   valueLink={linked.pinCode}
+                  type="password"
                   placeholder={`${intl.formatMessage(langs.pinCodePlaceHolder)}`}
                   focusOnInit
                 />
@@ -510,6 +552,7 @@ export default class RegisterPINProtected extends React.Component {
                 <Input
                   styleName="input inputMargin25"
                   valueLink={linked.pinCodeConfirm}
+                  type="password"
                   placeholder={`${intl.formatMessage(langs.pinCodeConfirmPlaceHolder)}`}
                   focusOnInit
                 />
