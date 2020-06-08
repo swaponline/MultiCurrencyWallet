@@ -1,3 +1,5 @@
+import plugins from "plugins";
+
 let isLocalStorageEnabled
 
 try {
@@ -9,16 +11,31 @@ catch (e) {
   isLocalStorageEnabled = false
 }
 
+const getPluginMethod = (name, data) => {
+  if (plugins && plugins[name] && typeof plugins[name] === "function") {
+    return plugins[name](data)
+  }
+  throw new Error(`plugin code error or plugin function is not exist, check ${name} function in plugins derectory`)
+}
 
 const setItem = (key, value) => {
   if (isLocalStorageEnabled) {
-    window.localStorage.setItem(key, JSON.stringify(value))
+    const { setItemPlugin } = window
+    if (setItemPlugin) {
+      getPluginMethod(setItemPlugin, { key, value })
+    } else {
+      window.localStorage.setItem(key, JSON.stringify(value))
+    }
   }
 }
 
 const getItem = (key) => {
   if (isLocalStorageEnabled) {
-    const value = window.localStorage.getItem(key)
+    const { getItemPlugin, localStorage } = window
+    if (getItemPlugin) {
+      return getPluginMethod(getItemPlugin, { key })
+    }
+    const value = localStorage.getItem(key)
 
     try {
       return JSON.parse(value)
