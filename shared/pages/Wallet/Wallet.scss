@@ -242,6 +242,9 @@
     td:first-child {
       padding-left: 25px;
       left: auto;
+      @media all and (max-width: 400px) {
+        padding-left: 10px;
+      }
     }
   }
 
