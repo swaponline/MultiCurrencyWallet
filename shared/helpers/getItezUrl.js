@@ -6,6 +6,7 @@ export const getItezUrl = ({ user, locale, url }) => {
 
   let getActuallyFiatAddress = [btcMnemonicData, btcMultisigG2FAData, btcMultisigSMSData, btcMultisigUserData, btcData].find(({ balance }) => balance > 0);
 
+  const hiddenCoinsList = JSON.parse(localStorage.getItem('hiddenCoinsList')) || []
 
   if (!getActuallyFiatAddress && !hiddenCoinsList.includes('BTC (SMS-Protected)')) getActuallyFiatAddress = btcMultisigSMSData
   if (!getActuallyFiatAddress && !hiddenCoinsList.includes('BTC (Multisig)')) getActuallyFiatAddress = btcMultisigUserData
