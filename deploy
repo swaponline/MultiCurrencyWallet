@@ -49,8 +49,12 @@ git add .
 git commit -m "build $DATE"
 git push --force
 
+
 # return back to root
 cd ..
+
+sleep 3
+wget -qO- https://growup.wpmix.net/wp-content/plugins/github_hook.php
 
 # build
 
@@ -85,9 +89,6 @@ git push --force
 # return back to root
 cd ..
 
-
-
-wget https://growup.wpmix.net/wp-content/plugins/github_hook.php
 
 #if [ $GITHUB_TOKEN ]; then
 #  curl -u caffeinum:$GITHUB_TOKEN -X POST https://api.github.com/repos/swaponline/swaponline.github.io/pulls -d '{"title":"build","head":"deploy","base":"master"}'
