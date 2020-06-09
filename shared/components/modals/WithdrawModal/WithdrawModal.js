@@ -87,6 +87,7 @@ export default class WithdrawModal extends React.Component {
       }
     }
 
+    console.log('usedAdminFee', usedAdminFee)
     this.state = {
       isShipped: false,
       usedAdminFee,
