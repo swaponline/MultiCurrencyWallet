@@ -27,7 +27,7 @@ const initReducerState = () => {
     },
   } = getState()
 
-  if (!activeCurrency) reducers.user.setActiveCurrency({ activeCurrency: 'BTC'})
+  if (!activeCurrency) reducers.user.setActiveCurrency({ activeCurrency: 'BTC' })
   if (!activeFiat) reducers.user.setActiveFiat({ activeFiat: window.DEFAULT_FIAT || 'USD' })
 }
 
@@ -175,12 +175,12 @@ const getFiats = () => {
   return new Promise((resolve, reject) => {
 
     apiLooper.get('noxon', `/worldCurrencyPrices.php`, {
-      cacheResponse: 30*60*1000, // Кеш запроса 30 минут,
+      cacheResponse: 30 * 60 * 1000, // Кеш запроса 30 минут,
       inQuery: {
         delay: 500,
         name: `worldCurrencyPrices`,
       },
-    }).then(( data ) => {
+    }).then((data) => {
       const { quotes } = data
 
       if (quotes) {
@@ -199,10 +199,28 @@ const getFiats = () => {
 
 }
 
+const customRate = (cur) => {
+  const wTokens = window.widgetERC20Tokens
+
+  const dataobj = wTokens && Object.keys(wTokens).find(el => el === cur.toLowerCase())
+  return dataobj ? (wTokens[dataobj] || { customEcxchangeRate: null }).customEcxchangeRate : null
+}
+
 const getExchangeRate = (sellCurrency, buyCurrency) => {
+  const sellDataRate = customRate(sellCurrency)
+  const buyDataRate = customRate(buyCurrency)
 
   if (buyCurrency.toLowerCase() === 'usd') {
     return new Promise((resolve, reject) => {
+
+      if (sellDataRate) {
+        resolve(sellDataRate)
+      }
+
+      if (buyDataRate) {
+        resolve(1 / buyDataRate)
+      }
+
       let dataKey = sellCurrency.toLowerCase()
       switch (sellCurrency.toLowerCase()) {
         case 'btc (sms-protected)':
@@ -221,6 +239,7 @@ const getExchangeRate = (sellCurrency, buyCurrency) => {
       }
     })
   }
+
   return new Promise((resolve, reject) => {
     const url = `https://api.cryptonator.com/api/full/${sellCurrency}-${buyCurrency}`
 
@@ -295,7 +314,7 @@ const getInfoAboutCurrency = (currencyNames) =>
                 break
               }
               default: {
-                if (ethToken.isEthToken( { name: currencyInfoItem.symbol } )) {
+                if (ethToken.isEthToken({ name: currencyInfoItem.symbol })) {
                   reducers.user.setInfoAboutToken({ name: currencyInfoItem.symbol.toLowerCase(), infoAboutCurrency: currencyInfo })
                 } else {
                   reducers.user.setInfoAboutCurrency({ name: `${currencyInfoItem.symbol.toLowerCase()}Data`, infoAboutCurrency: currencyInfo })
