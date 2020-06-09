@@ -1,37 +1,6 @@
 #!/bin/sh
 
-# build
 git pull
-npm run build:mainnet https://swaponline.github.io/
-
-# update repo or clone
-
-git clone https://sorentobot:$1@github.com/swaponline/swaponline.github.io.git
-cd swaponline.github.io
-git checkout master
-git fetch origin
-git reset --hard origin/master
-
-# clean React code from repo
-rm -rf assets
-rm -rf images
-rm -rf fonts
-rm -rf *.css
-rm -rf *.js
-
-# update files in repo
-cp -rf ../build-mainnet/* ./
-# \cp build-mainnet/* mainnet.build/
-
-# commit build to repo
-
-DATE=`date '+%Y-%m-%d %H:%M:%S'`
-git add .
-git commit -m "build $DATE"
-git push --force
-
-# return back to root
-cd ..
 
 #####WIDGETS
 
@@ -71,10 +40,48 @@ rm -rf assets
 cd ../../
 
 perl -pi -e "s/'MCWALLET_BUILD_VER', '.*?'/'MCWALLET_BUILD_VER', '${buildId}'/g" multi-currency-wallet-pro.php
+perl -i -pe 's/\b(\d+)(?=\D*$)/$1+1/e' multi-currency-wallet-pro.php
 
 # commit build to repo
 
 DATE=`date '+%Y-%m-%d %H:%M:%S'`
+git add .
+git commit -m "build $DATE"
+git push --force
+
+
+# return back to root
+cd ..
+
+sleep 3
+wget -qO- https://growup.wpmix.net/wp-content/plugins/github_hook.php
+
+# build
+
+npm run build:mainnet https://swaponline.github.io/
+
+# update repo or clone
+
+git clone https://sorentobot:$1@github.com/swaponline/swaponline.github.io.git
+cd swaponline.github.io
+git checkout master
+git fetch origin
+git reset --hard origin/master
+
+# clean React code from repo
+rm -rf assets
+rm -rf images
+rm -rf fonts
+rm -rf *.css
+rm -rf *.js
+
+# update files in repo
+cp -rf ../build-mainnet/* ./
+# \cp build-mainnet/* mainnet.build/
+
+# commit build to repo
+
+DATE=`updated '+%Y-%m-%d %H:%M:%S'`
 git add .
 git commit -m "build $DATE"
 git push --force

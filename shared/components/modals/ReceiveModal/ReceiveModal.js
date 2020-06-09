@@ -93,7 +93,6 @@ export default class ReceiveModal extends React.Component {
           currency,
           address,
         },
-        activeFiat
       },
       state: {
         isAddressCopied,

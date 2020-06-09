@@ -177,9 +177,14 @@ for any questions: telegram <a href="https://t.me/sashanoxon">sashanoxon</a>
 ## how to change project name in "many tabs" errors:
 0. go to index.html
 1. add / edit  ```window.widgetName``` to your own
-
+.
 ## how to change title:
 0. go to index.html
 1. add / edit  ```window.defaultWindowTitle``` to your own
+.
+
+## how add custum exchange Rate:
+0. add ```customEcxchangeRate``` to ```window.widgetERC20Tokens```
+1. add usd price for ```window.widgetERC20Tokens```
 .
 SUM Branch init 5/9/20

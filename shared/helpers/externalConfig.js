@@ -2,6 +2,7 @@ import config from 'app-config'
 import util from 'swap.app/util'
 import actions from 'redux/actions'
 import { constants } from 'swap.app'
+import BigNumber from 'bignumber.js'
 
 
 const GetCustromERC20 = () => {
@@ -108,22 +109,58 @@ const externalConfig = () => {
     && window.widgetERC20Comisions
     && Object.keys(window.widgetERC20Comisions)
   ) {
+    let setErc20FromEther = false
+
     Object.keys(window.widgetERC20Comisions).filter((key) => {
       const curKey = key.toLowerCase()
       if (window.widgetERC20Comisions[curKey]) {
-        const { fee, address, min } = window.widgetERC20Comisions[curKey]
+        let { fee, address, min } = window.widgetERC20Comisions[curKey]
+        let feeOk = false
+        let minOk = false
+
         // @ToDo add currency isAddress Check
         if (fee && address && min) {
-          config.opts.fee[curKey] = {
-            fee,
-            address,
-            min,
+          try {
+            fee = BigNumber(fee.replace(',', '.')).toNumber()
+            feeOk = true
+          } catch (e) {
+            console.error(`Fail convert ${fee} to number for ${curKey}`)
+          }
+          try {
+            min = BigNumber(min.replace(',', '.')).toNumber()
+            minOk = true
+          } catch (e) {
+            console.error(`Fail convert ${min} to number for ${curKey}`)
+          }
+
+          if (minOk && feeOk) {
+            config.opts.fee[curKey.toLowerCase()] = {
+              fee,
+              address,
+              min,
+            }
+          }
+        } else {
+          if (curKey.toLowerCase() === `erc20` && address) {
+            setErc20FromEther = true
+            config.opts.fee[curKey.toLowerCase()] = {
+              address,
+            }
           }
         }
       }
     })
+    if (setErc20FromEther
+      && config.opts.fee.eth
+      && config.opts.fee.eth.min
+      && config.opts.fee.eth.fee
+    ) {
+      config.opts.fee.erc20.min = config.opts.fee.eth.min
+      config.opts.fee.erc20.fee = config.opts.fee.eth.fee
+    }
   }
 
+  console.log('externalConfig', config)
   return config
 }
 
