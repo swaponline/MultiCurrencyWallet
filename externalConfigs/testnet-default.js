@@ -2,19 +2,17 @@
 
 window.widgetERC20Comisions = {
   btc: {
-    fee: 5,
+    fee: "5",
     address: '2MuXz9BErMbWmoTshGgkjd7aMHeaxV8Bdkk',
-    min: 0.00001
+    min: "0.00001"
   },
   eth: {
-    fee: 7,
+    fee: "7",
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
-    min: 0.01
+    min: "0,01"
   },
   erc20: {
-    fee: 6,
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
-    min: 1,
   }
 }
 
