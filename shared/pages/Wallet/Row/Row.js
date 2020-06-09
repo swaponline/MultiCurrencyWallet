@@ -500,6 +500,13 @@ export default class Row extends Component {
     return fiatRate.value
   }
 
+  getCustomRate = (cur) => {
+    const wTokens = window.widgetERC20Tokens
+
+    const dataobj = wTokens && Object.keys(wTokens).find(el => el === cur.toLowerCase())
+    return dataobj ? (wTokens[dataobj] || { customEcxchangeRate: null }).customEcxchangeRate : null
+  }
+
   render() {
     const {
       isBalanceFetching,
@@ -528,13 +535,14 @@ export default class Row extends Component {
 
     let currencyView = currency
 
-    let inneedData = null
     let nodeDownErrorShow = true
     let currencyFiatBalance = 0
 
     const isWidgetBuild = config && config.isWidget
 
-    if (itemData.infoAboutCurrency) {
+    if (this.getCustomRate(currency)) {
+      currencyFiatBalance = BigNumber(balance).multipliedBy(this.getCustomRate(currency)).multipliedBy(multiplier || 1)
+    } else if (itemData.infoAboutCurrency) {
       currencyFiatBalance = BigNumber(balance).multipliedBy(itemData.infoAboutCurrency.price_usd).multipliedBy(multiplier || 1)
     }
 
