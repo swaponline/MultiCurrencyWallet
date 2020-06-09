@@ -53,20 +53,33 @@ export default class WallerSlider extends Component {
     })
   }
 
-  getBanners = () => {
+  processItezBanner = (inBanners) => {
     const { user, intl: { locale: intlLocale } } = this.props
 
     let locale = intlLocale
 
     if (!locale) locale = `en`
 
+    const banners = inBanners.map(el => {
+      if (el[4].includes('https://itez.swaponline.io/')) {
+        const bannerArr = [...el]
+        bannerArr.splice(4, 1, getItezUrl({ user, locale, url: el[4] }));
+
+        return bannerArr
+      }
+      return el
+    }).filter(el => el && el.length)
+    return banners
+  }
+
+  getBanners = () => {
     if (window
       && window.bannersOnMainPage
       && window.bannersOnMainPage.length
     ) {
       // Используем банеры, которые были определены в index.html (используется в виджете вордпресса)
       this.setState(() => ({
-        banners: window.bannersOnMainPage.filter(el => el && el.length),
+        banners: this.processItezBanner(window.bannersOnMainPage).filter(el => el && el.length),
         isFetching: true,
       }), () => this.initBanners())
     } else {
@@ -74,15 +87,7 @@ export default class WallerSlider extends Component {
         return axios
           .get('https://noxon.wpmix.net/swapBanners/banners.php')
           .then(({ data }) => {
-            const banners = data.map(el => {
-              if (el[4].includes('https://itez.swaponline.io/')) {
-                const bannerArr = [...el]
-                bannerArr.splice(4, 1, getItezUrl({ user, locale, url: el[4] }));
-
-                return bannerArr
-              }
-              return el
-            }).filter(el => el && el.length)
+            const banners = this.processItezBanner(data).filter(el => el && el.length)
             this.setState(() => ({
               banners,
               isFetching: true,
