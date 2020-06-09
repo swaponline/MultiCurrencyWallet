@@ -54,7 +54,11 @@ export default class WallerSlider extends Component {
   }
 
   getBanners = () => {
-    const { user, intl: { locale } } = this.props
+    const { user, intl: { locale: intlLocale } } = this.props
+
+    let locale = intlLocale
+
+    if (!locale) locale = `en`
 
     if (window
       && window.bannersOnMainPage
