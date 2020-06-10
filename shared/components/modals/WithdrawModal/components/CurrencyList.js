@@ -96,8 +96,8 @@ export default class CurrencyList extends Component {
         </div>
         {isAssetsOpen && (
           <div styleName="customSelectList">
-            {tableRows.map((item) => (
-              <div
+            {tableRows.map((item, index) => (
+              <div key={index}
                 styleName={cx('customSelectListItem customSelectValue', {
                   disabled: item.balance === 0,
                 })}

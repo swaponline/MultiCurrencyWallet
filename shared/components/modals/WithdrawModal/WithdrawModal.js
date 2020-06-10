@@ -401,7 +401,7 @@ export default class WithdrawModal extends React.Component {
       return typeforce.isCoinAddress.ETH(address)
     }
 
-    return typeforce.isCoinAddress[currency.toUpperCase()](address)
+    return typeforce.isCoinAddress[getCurrencyKey(currency).toUpperCase()](address)
   }
 
   openScan = () => {
