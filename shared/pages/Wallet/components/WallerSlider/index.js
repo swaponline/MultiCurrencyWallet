@@ -74,12 +74,12 @@ export default class WallerSlider extends Component {
 
   getBanners = () => {
     if (window
-      && window.bannersOnMainPage
-      && window.bannersOnMainPage.length
+      && window.bannersOnMainPage !== undefined
     ) {
       // Используем банеры, которые были определены в index.html (используется в виджете вордпресса)
+      const widgetBanners = (window.bannersOnMainPage.length) ? window.bannersOnMainPage : []
       this.setState(() => ({
-        banners: this.processItezBanner(window.bannersOnMainPage).filter(el => el && el.length),
+        banners: this.processItezBanner(widgetBanners).filter(el => el && el.length),
         isFetching: true,
       }), () => this.initBanners())
     } else {
@@ -150,6 +150,7 @@ export default class WallerSlider extends Component {
         }}
       />
     )
+
     return (window.location.hash !== linksManager.hashHome) ? null : (
       <div className="data-tut-banners">
         <h3 className={styles.bannersHeading}>
@@ -186,7 +187,7 @@ export default class WallerSlider extends Component {
                   />
                 </div>
               )}
-              {banners.length && banners.map(banner => (
+              {banners && banners.length > 0 && banners.map(banner => (
                 <div key={banner[0]} className="swiper-slide">
                   <NotifyBlock background={`${banner[3]}`} descr={banner[2]} link={banner[4]} icon={banner[5]} />
                 </div>
