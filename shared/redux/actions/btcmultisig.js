@@ -713,6 +713,108 @@ const confirmRegisterSMS = async (phone, smsCode, mnemonic, ownPublicKey) => {
   }
 }
 
+const register_PIN = async (password, mnemonic, ownPublicKey) => {
+  const {
+    user: {
+      btcMultisigPinData: {
+        account,
+        keyPair,
+        publicKey,
+      },
+      btcData: {
+        address,
+      },
+    },
+  } = getState()
+
+  const publicKeys = []
+  let mnemonicKey = false
+
+  if (mnemonic && !ownPublicKey) {
+    // 2of3 - extract public key from mnemonic
+    const mnemonicAccount = actions.btc.getWalletByWords(mnemonic, 1)
+    mnemonicKey = mnemonicAccount.publicKey
+    publicKeys.push(mnemonicKey)
+  }
+
+  // Возможность использовать произвольный публик-кей для разблокирования
+  if (ownPublicKey) {
+    publicKeys.push(ownPublicKey)
+    mnemonicKey = ownPublicKey
+  }
+
+  publicKeys.push(publicKey.toString('Hex'))
+
+  const sign = _getSign()
+
+  const newKeys = JSON.stringify(publicKeys)
+
+  try {
+    const result = await apiLooper.post('btcPin', `/register/`, {
+      body: {
+        address,
+        password,
+        publicKey: newKeys,
+        checkSign: sign,
+        mainnet: process.env.MAINNET ? true : false,
+        source: window.location.hostname,
+      },
+    })
+
+    if ((result && result.answer && result.answer === 'ok') || (result.error === 'Already registered')) {
+      localStorage.setItem(`${constants.localStorage.didPinBtcCreated}:${address}`, '1')
+      if (mnemonic) {
+        addPinWallet(mnemonicKey)
+      }
+    }
+
+    return result
+  } catch (error) {
+    console.error(error)
+    return false
+  }
+}
+const addPinWallet = async (mnemonicOrKey) => {
+  const {
+    user: {
+      btcData: {
+        privateKey,
+      },
+    },
+  } = getState()
+
+  let mnemonicKey = mnemonicOrKey
+  if (actions.btc.validateMnemonicWords(mnemonicOrKey)) {
+    const mnemonicAccount = actions.btc.getWalletByWords(mnemonicOrKey, 1)
+    mnemonicKey = mnemonicAccount.publicKey
+  }
+
+  let btcPinMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcPinMnemonicKey)
+  try { btcPinMnemonicKey = JSON.parse(btcPinMnemonicKey) } catch (e) { }
+  if (!(btcPinMnemonicKey instanceof Array)) {
+    btcPinMnemonicKey = []
+  }
+
+  const index = btcPinMnemonicKey.indexOf(mnemonicKey)
+  if (index === -1) btcPinMnemonicKey.unshift(mnemonicKey)
+  if ((index > -1) && (index < btcPinMnemonicKey.length)) {
+    if (index !== 0) {
+      btcPinMnemonicKey = btcPinMnemonicKey.splice(index, 1)
+      btcPinMnemonicKey.unshift(mnemonicKey)
+    }
+  }
+
+  localStorage.setItem(constants.privateKeyNames.btcPinMnemonicKey, JSON.stringify(btcPinMnemonicKey))
+
+  const btcPinServerKey = config.swapContract.btcPinKey
+  let btcPinPublicKeys = [btcPinServerKey, mnemonicKey]
+
+  await actions.btcmultisig.login_PIN(privateKey, btcPinPublicKeys)
+  const { user: { btcMultisigPinData: { address } } } = getState()
+
+  await getBalance(address, 'btcMultisigPinData')
+}
+
 const addSMSWallet = async (mnemonicOrKey) => {
   const {
     user: {
@@ -749,6 +851,7 @@ const addSMSWallet = async (mnemonicOrKey) => {
   let btcSmsPublicKeys = [btcSMSServerKey, mnemonicKey]
 
   await actions.btcmultisig.login_SMS(privateKey, btcSmsPublicKeys)
+
   await getBalance()
 }
 
@@ -796,6 +899,12 @@ const getBalance = (ownAddress, ownDataKey) => {
     .catch((e) => {
       reducers.user.setBalanceError({ name: dataKey })
     })
+}
+
+const getBalancePin = (checkAddress) => {
+  const { user: { btcMultisigPinData: { address } } } = getState()
+
+  return getBalance(address, 'btcMultisigPinData')
 }
 
 const getBalanceUser = (checkAddress) => {
@@ -1440,6 +1549,8 @@ const signMessage = (message, encodedPrivateKey) => {
 
 const getReputation = () => Promise.resolve(0)
 
+
+
 export default {
   // SMS Protected
   beginRegisterSMS,
@@ -1463,7 +1574,10 @@ export default {
 
   // Pin protected
   login_PIN,
+  register_PIN,
   checkPINActivated,
+  addPinWallet,
+  getBalancePin,
 
   // User multisig
   login_USER,

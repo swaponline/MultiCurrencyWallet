@@ -124,7 +124,7 @@ export default class RegisterPINProtected extends React.Component {
     }
   }
 
-  handleCheckPin = async () => {
+  handleCheckPin_ = async () => {
     const {
       version,
       phone,
@@ -403,19 +403,19 @@ export default class RegisterPINProtected extends React.Component {
 
     const {
       btcData,
-      btcMultisigSMSData,
+      btcMultisigPinData,
     } = this.props
 
     let restoreInstruction = ''
 
     restoreInstruction = `Wallet address:\r\n`
-    restoreInstruction+= `${btcMultisigSMSData.address}\r\n`
+    restoreInstruction+= `${btcMultisigPinData.address}\r\n`
     restoreInstruction+= `To withdraw funds create transaction using this code https://github.com/bitcoinjs/bitcoinjs-lib/blob/master/test/integration/transactions.spec.ts#L193\r\n`
     restoreInstruction+= `\r\n`
     restoreInstruction+= `Public keys for create Multisig (2of3) wallet:\r\n`
-    if (btcMultisigSMSData.publicKeys[0]) restoreInstruction+=`${btcMultisigSMSData.publicKeys[0].toString('Hex')}\r\n`
-    if (btcMultisigSMSData.publicKeys[1]) restoreInstruction+=`${btcMultisigSMSData.publicKeys[1].toString('Hex')}\r\n`
-    if (btcMultisigSMSData.publicKeys[2]) restoreInstruction+=`${btcMultisigSMSData.publicKeys[2].toString('Hex')}\r\n`
+    if (btcMultisigPinData.publicKeys[0]) restoreInstruction+=`${btcMultisigPinData.publicKeys[0].toString('Hex')}\r\n`
+    if (btcMultisigPinData.publicKeys[1]) restoreInstruction+=`${btcMultisigPinData.publicKeys[1].toString('Hex')}\r\n`
+    if (btcMultisigPinData.publicKeys[2]) restoreInstruction+=`${btcMultisigPinData.publicKeys[2].toString('Hex')}\r\n`
     restoreInstruction+= `\r\n`
     restoreInstruction+= `Hot wallet private key (WIF):\r\n`
     restoreInstruction+= `${btcData.privateKey}\r\n`
@@ -442,12 +442,17 @@ export default class RegisterPINProtected extends React.Component {
     const {
       pinCode,
       pinCodeConfirm,
+      mnemonic,
+      useGeneratedKey,
+      useGeneratedKeyEnabled,
+      generatedKey,
     } = this.state
 
     this.setState({
       error: false,
       isShipped: true,
-    }, () => {
+      isWalletLockedOtherPin: false,
+    }, async () => {
       if (!pinCode || pinCode.length < 4) {
         this.setState({
           error: <FormattedMessage { ...langs.youNotEnterPin } />,
@@ -461,6 +466,45 @@ export default class RegisterPINProtected extends React.Component {
           isShipped: false,
         })
         return
+      }
+      const result = await actions.btcmultisig.register_PIN(
+        pinCode,
+        (mnemonic) ? mnemonic.trim() : false,
+        (useGeneratedKey && useGeneratedKeyEnabled) ? generatedKey : false
+      )
+
+      if (result && result.answer && result.answer == 'ok') {
+        this.generateRestoreInstruction()
+        this.setState({
+          isShipped: false,
+          step: 'ready',
+        })
+      } else {
+        if (result && result.error == 'Already registered') {
+          this.generateRestoreInstruction()
+          this.setState({
+            isShipped: false,
+            step: 'ready',
+          })
+        } else {
+          if (result && result.error == 'This wallet already locked by other pin code') {
+            // Кошелек зарегистрирован на другой номер телефона
+            // Может быть так, что человек потерял телефон или забыл его
+            // Даем возможность подключить кошелек, чтобы если у клиента есть
+            // валидный mnemonic - он мог разблокировать средства
+            this.setState({
+              isShipped: false,
+              isWalletLockedOtherPin: true,
+            })
+          } else {
+            const smsServerOffline = (result === false)
+            this.setState({
+              isShipped: false,
+              smsServerOffline,
+              error: (result && result.error) ? result.error : 'Unknown error',
+            })
+          }
+        }
       }
     })
   }
@@ -481,7 +525,7 @@ export default class RegisterPINProtected extends React.Component {
       isMnemonicGenerated,
       isMnemonicValid,
       pinServerOffline,
-      isWalletLockedOtherPhone,
+      isWalletLockedOtherPin,
       isInstructionCopied,
       isInstructionDownloaded,
       restoreInstruction,
@@ -533,6 +577,14 @@ export default class RegisterPINProtected extends React.Component {
                 <br />
                 <FormattedMessage { ...langs.enterPinCodeBottomMessage } />
               </p>
+              {isWalletLockedOtherPin && (
+                <div styleName="rednotes pinInfoBlock">
+                  <FormattedMessage
+                    id="registerPin_WalletLocked"
+                    defaultMessage="Этот счет уже зарегистрирован и защищен другим паролем. Укажите правильный пароль"
+                  />
+                </div>
+              )}
               <div styleName="highLevel" className="ym-hide-content">
                 <FieldLabel label>
                   <FormattedMessage id="registerPinModalPinCode" defaultMessage="Your PIN-code:" />

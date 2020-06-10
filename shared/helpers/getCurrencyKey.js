@@ -7,6 +7,7 @@ export default (currency , returnToken) => {
   switch (key) {
     case 'currency':
     case 'btc (sms-protected)':
+    case 'btc (pin-protected)':
     case 'btc (multisig)':
       return 'btc'
     case 'eth':

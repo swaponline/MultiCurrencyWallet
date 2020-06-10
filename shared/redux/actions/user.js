@@ -173,6 +173,7 @@ const getBalances = () => {
     await actions.btc.getBalance()
     await actions.btcmultisig.getBalance() // SMS-Protected
     await actions.btcmultisig.getBalanceUser() // Other user confirm
+    await actions.btcmultisig.getBalancePin() // Pin-Protected
     await actions.btcmultisig.fetchMultisigBalances()
 
     if (isTokenSigned) {
