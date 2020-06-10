@@ -37,6 +37,7 @@ export default class CurrencyList extends Component {
       switch (currency.toLowerCase()) {
         case 'btc (multisig)':
         case 'btc (sms-protected)':
+        case 'btc (pin-protected)':
           targetCurrency = 'btc'
           break
       }

@@ -311,6 +311,10 @@ export default class Row extends Component {
     actions.modals.open(constants.modals.RegisterSMSProtected, {})
   }
 
+  handleActivatePinProtected = async () => {
+    actions.modals.open(constants.modals.RegisterPINProtected, {})
+  }
+
   handleGenerateMultisignLink = async () => {
     actions.modals.open(constants.modals.MultisignJoinLink, {})
   }
@@ -812,7 +816,7 @@ export default class Row extends Component {
               onClick={this.goToCurrencyHistory}
               title={`Online ${fullName} wallet`}
             >
-              <Coin className={styles.assetsTableIcon} name={currencyView} />
+              <Coin className={styles.assetsTableIcon} name={currency} />
             </a>
             {balanceError && nodeDownErrorShow ? (
               <div className={styles.errorMessage}>

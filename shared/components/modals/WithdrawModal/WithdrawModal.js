@@ -36,6 +36,7 @@ import AdminFeeInfoBlock from 'components/AdminFeeInfoBlock/AdminFeeInfoBlock'
 import { getActivatedCurrencies } from 'helpers/user'
 
 import CurrencyList from './components/CurrencyList'
+import getCurrencyKey from 'helpers/getCurrencyKey'
 
 
 
@@ -71,6 +72,7 @@ export default class WithdrawModal extends React.Component {
 
     const currentActiveAsset = data.data
 
+    console.log('Withdraw' , data)
     const currentDecimals = constants.tokenDecimals[currency.toLowerCase()]
     const allCurrencyies = actions.core.getWallets() //items.concat(tokenItems)
     const selectedItem = allCurrencyies.filter((item) => item.currency === currency)[0]
@@ -211,7 +213,7 @@ export default class WithdrawModal extends React.Component {
     } = this.props
 
     // @ToDo - balance...
-    const balance = await actions[currency.toLowerCase()].getBalance(currency.toLowerCase())
+    const balance = await actions[getCurrencyKey(currency)].getBalance(currency.toLowerCase())
 
     const finalBalance =
       unconfirmedBalance !== undefined && unconfirmedBalance < 0
