@@ -396,9 +396,8 @@ export default class RegisterSMSProtected extends React.Component {
     })
   }
 
-  onPhoneChange = (a, b) => {
-    console.log(a, b)
-    // this.setState(() => ({ phone: target.value }))
+  onPhoneChange = (phone) => {
+    this.setState(() => ({ phone }))
   }
 
   render() {
