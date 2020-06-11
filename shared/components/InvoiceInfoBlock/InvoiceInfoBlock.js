@@ -19,7 +19,7 @@ const InvoiceInfoBlock = (props) => {
       <h4>
         <FormattedMessage id="InvoiceInfoBlockTitle" defaultMessage="Оплата инвойса #{id}-{invoiceNumber}" values={invoiceData} />
       </h4>
-      {invoiceData.label && 
+      {invoiceData.label &&
         <span>{invoiceData.label}</span>
       }
       {invoiceData.type === 'BTC' &&
