@@ -124,133 +124,6 @@ export default class RegisterPINProtected extends React.Component {
     }
   }
 
-  handleCheckPin_ = async () => {
-    const {
-      version,
-      phone,
-      mnemonic,
-      generatedKey,
-      useGeneratedKey,
-      useGeneratedKeyEnabled,
-    } = this.state
-
-    if (!useGeneratedKey) {
-      // Old - own mnemonic for unlock
-      if (version === '2of3' && !actions.btc.validateMnemonicWords(mnemonic.trim())) {
-        this.setState({
-          isMnemonicValid: false,
-          error: false,
-        })
-        return
-      } else {
-        const mnemonicWallet = actions.btc.getWalletByWords(mnemonic.trim(), 1)
-        this.setState({
-          mnemonicWallet,
-          isMnemonicValid: true,
-        })
-      }
-    }
-
-    if (!phone) {
-      this.setState({
-        error: <FormattedMessage id='registerSMS_NotValidPhone' defaultMessage='Укажите номер телефона' />,
-      })
-      return
-    }
-
-    this.setState({
-      isShipped: true,
-      error: false,
-    })
-
-    const result = await actions.btcmultisig.beginRegisterSMS(
-      phone,
-      (mnemonic) ? mnemonic.trim() : false,
-      (useGeneratedKey && useGeneratedKeyEnabled) ? generatedKey : false
-    )
-
-    if (result && result.answer && result.answer == 'ok') {
-      this.setState({
-        isShipped: false,
-        step: 'enterCode',
-      })
-    } else {
-      console.log("One step set", result)
-      const smsServerOffline = (result === false)
-      this.setState({
-        isShipped: false,
-        error: (result && result.error) ? result.error : 'Unknown error',
-        smsServerOffline,
-      })
-    }
-  }
-
-  handleCheckSMS = async () => {
-    const {
-      phone,
-      smsCode,
-      mnemonic,
-      useGeneratedKey,
-      useGeneratedKeyEnabled,
-      generatedKey,
-    } = this.state
-
-    if (!smsCode) {
-      this.setState({
-        error: <FormattedMessage id='RegisterSMSProtected_SmsCodeRequery' defaultMessage='Введите смс-код' />,
-      })
-      return
-    }
-
-    this.setState({
-      isShipped: true,
-      error: false,
-      smsServerOffline: false,
-      isWalletLockedOtherPhone: false,
-    })
-
-    const result = await actions.btcmultisig.confirmRegisterSMS(
-      phone,
-      smsCode,
-      (mnemonic) ? mnemonic.trim() : false,
-      (useGeneratedKey && useGeneratedKeyEnabled) ? generatedKey : false
-    )
-
-    if (result && result.answer && result.answer == 'ok') {
-      this.generateRestoreInstruction()
-      this.setState({
-        isShipped: false,
-        step: 'ready',
-      })
-    } else {
-      if (result && result.error == 'Already registered') {
-        this.generateRestoreInstruction()
-        this.setState({
-          isShipped: false,
-          step: 'ready',
-        })
-      } else {
-        if (result && result.error == 'This wallet already locked by other phone number') {
-          // Кошелек зарегистрирован на другой номер телефона
-          // Может быть так, что человек потерял телефон или забыл его
-          // Даем возможность подключить кошелек, чтобы если у клиента есть
-          // валидный mnemonic - он мог разблокировать средства
-          this.setState({
-            isShipped: false,
-            isWalletLockedOtherPhone: true,
-          })
-        } else {
-          const smsServerOffline = (result === false)
-          this.setState({
-            isShipped: false,
-            smsServerOffline,
-            error: (result && result.error) ? result.error : 'Unknown error',
-          })
-        }
-      }
-    }
-  };
-
   handleRestoreWallet = async () => {
     const {
       mnemonic,
@@ -271,7 +144,7 @@ export default class RegisterPINProtected extends React.Component {
       })
     }
 
-    await actions.btcmultisig.addSMSWallet(mnemonic.trim())
+    await actions.btcmultisig.addPinWallet(mnemonic.trim())
 
     this.generateRestoreInstruction()
 

@@ -67,7 +67,12 @@ export default class WithdrawModal extends React.Component {
     super()
 
     const {
-      data: { amount, toAddress, currency }
+      data: {
+        amount,
+        toAddress,
+        currency,
+        address: withdrawWallet,
+      },
     } = data
 
     const currentActiveAsset = data.data
@@ -110,6 +115,7 @@ export default class WithdrawModal extends React.Component {
       currentActiveAsset,
       allCurrencyies,
       enabledCurrencies: getActivatedCurrencies(),
+      wallet: actions.user.getWithdrawWallet( currency, withdrawWallet ),
     }
   }
 
@@ -244,6 +250,7 @@ export default class WithdrawModal extends React.Component {
       amount,
       ownTx,
       usedAdminFee,
+      wallet,
     } = this.state
 
     const {
@@ -297,6 +304,29 @@ export default class WithdrawModal extends React.Component {
       }
       return
     }
+
+    if (wallet.isPinProtected) {
+      console.log('Withdraw from pin protected', wallet, invoice, sendOptions, beforeBalances)
+      actions.modals.close(name)
+      actions.modals.open(constants.modals.WithdrawBtcPin, {
+        wallet,
+        invoice,
+        sendOptions,
+        beforeBalances,
+        onReady,
+        adminFee,
+      })
+      return
+    }
+    if (wallet.isSmsProtected) {
+      console.log('Withdraw from sms protected', wallet, invoice, sendOptions, beforeBalances)
+      return
+    }
+    if (wallet.isUserProtected) {
+      console.log('Withdraw from user protected', wallet, invoice, sendOptions, beforeBalances)
+      return
+    }
+
     await actions[currency.toLowerCase()]
       .send(sendOptions)
       .then(async (txRaw) => {

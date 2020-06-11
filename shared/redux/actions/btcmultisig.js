@@ -1074,6 +1074,7 @@ const getTransaction = (ownAddress, ownType) =>
       })
   })
 
+  
 const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
   const {
     user: {
@@ -1185,6 +1186,138 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
   }
 }
 
+
+const sendPinProtected = async ({ from, to, amount, feeValue, speed, password } = {}) => {
+  const {
+    user: {
+      btcMultisigPinData: {
+        privateKey,
+        publicKeys,
+        publicKey,
+      },
+      btcData: {
+        address,
+      },
+    },
+  } = getState()
+
+  let feeFromAmount = BigNumber(0)
+
+  if (hasAdminFee) {
+    const {
+      fee: adminFee,
+      min: adminFeeMinValue,
+    } = hasAdminFee
+
+    const adminFeeMin = BigNumber(adminFeeMinValue)
+
+    feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
+    if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
+
+
+    feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
+  }
+
+  feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, method: 'send_2fa' })
+
+
+  const unspents = await fetchUnspents(from)
+
+  const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
+  const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
+
+  const p2ms = bitcoin.payments.p2ms({
+    m: 2,
+    n: publicKeys.length,
+    pubkeys: publicKeys,
+    network: btc.network,
+  })
+  const p2sh = bitcoin.payments.p2sh({ redeem: p2ms, network: btc.network })
+
+  // console.log('P2SH Address:',p2sh.address)
+  // console.log('P2SH Script')
+  // console.log(bitcoin.script.toASM(p2sh.redeem.output))
+  // console.log(publicKey.toString('Hex'))
+  // console.log(bitcoin.ECPair.fromWIF(privateKey, btc.network).publicKey.toString('Hex'))
+
+
+  let txb1 = new bitcoin.TransactionBuilder(btc.network)
+
+  unspents.forEach(({ txid, vout }) => txb1.addInput(txid, vout, 0xfffffffe))
+  txb1.addOutput(to, fundValue)
+
+  if (skipValue > 546) {
+    txb1.addOutput(from, skipValue)
+  }
+
+  if (hasAdminFee) {
+    // admin fee output
+    txb1.addOutput(hasAdminFee.address, feeFromAmount.toNumber())
+  }
+
+  txb1.__INPUTS.forEach((input, index) => {
+    txb1.sign(index, bitcoin.ECPair.fromWIF(privateKey, btc.network), p2sh.redeem.output)
+  })
+
+  let txRaw = txb1.buildIncomplete()
+  // console.log('Multisig transaction ready')
+  // console.log('Your key:', publicKey.toString('Hex'))
+  // console.log('TX Hash:', txRaw.toHex())
+  // console.log('Send it to other owner for sign and broadcast')
+
+  let authKeys = publicKeys.slice(1)
+  authKeys = JSON.stringify(authKeys.map((key) => key.toString('Hex')))
+
+  try {
+    const result = await apiLooper.post('btcPin', `/sign/`, {
+      body: {
+        address,
+        publicKey: authKeys,
+        checkSign: _getSign,
+        rawTX: txRaw.toHex(),
+        mainnet: process.env.MAINNET ? true : false,
+        source: window.location.hostname,
+        password,
+      },
+      timeout: {
+        response: 0,
+        deadline: 5000,
+      },
+    })
+
+    if (result
+      && result.answer
+      && result.answer === 'ok'
+      && result.rawTX
+    ) {
+      const broadcastResult = await actions.btc.broadcastTx(result.rawTX)
+      if (broadcastResult
+        && broadcastResult.txid
+      ) {
+        return {
+          answer: 'ok',
+          txId: broadcastResult.txid,
+        }
+      } else {
+        return {
+          error: 'Fail broadcast transaction'
+        }
+      }
+    } else {
+      return {
+        ...result,
+      }
+    }
+  } catch (apiError) {
+    return {
+      error: apiError.message,
+      rawTx: txRaw.toHex(),
+    }
+    console.error(apiError)
+    return false
+  }
+}
 
 const confirmSMSProtected = async (smsCode) => {
   const {
@@ -1578,6 +1711,7 @@ export default {
   checkPINActivated,
   addPinWallet,
   getBalancePin,
+  sendPinProtected,
 
   // User multisig
   login_USER,

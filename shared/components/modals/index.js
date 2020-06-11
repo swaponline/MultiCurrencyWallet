@@ -33,6 +33,7 @@ import HowToWithdrawModal from './HowToWithdrawModal/HowToWithdrawModal'
 import InfoInvoice from './InfoInvoice/InfoInvoice'
 
 import RegisterPINProtected from './RegisterPINProtected/RegisterPINProtected'
+import WithdrawBtcPin from './WithdrawBtcPin/WithdrawBtcPin'
 
 
 export default {
@@ -71,4 +72,5 @@ export default {
   InfoInvoice,
 
   RegisterPINProtected,
+  WithdrawBtcPin,
 }

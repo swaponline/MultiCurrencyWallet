@@ -35,4 +35,5 @@ export default {
   InfoInvoice: 'InfoInvoice',
 
   RegisterPINProtected: 'RegisterPINProtected',
+  WithdrawBtcPin: 'WithdrawBtcPin',
 }
