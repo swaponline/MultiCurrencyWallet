@@ -790,9 +790,6 @@ export default class WithdrawModalMultisig extends React.Component {
 
         {step === 'confirm' &&
           <Fragment>
-            <p styleName="notice dashboardViewNotice">
-              <FormattedMessage id="Withdrow2222" defaultMessage="Send SMS code" />
-            </p>
             <div styleName="highLevel smsCodeHolder">
               <FieldLabel label>
                 <FormattedMessage id="Withdrow2223" defaultMessage="SMS code" />
@@ -840,7 +837,7 @@ export default class WithdrawModalMultisig extends React.Component {
             >
               <FormattedMessage id="Withdrow2224" defaultMessage="Confirm" />
             </Button>
-            <hr />
+            <hr styleName="marginHr" />
             <p styleName="notice mnemonicUseNote dashboardViewNotice">
               <FormattedMessage id="WithdrawSMS_MnemonicNote" defaultMessage="Если у вас нет доступа к телефону или не получается получить код, вы можете воспользовать секретной фразой" />
             </p>

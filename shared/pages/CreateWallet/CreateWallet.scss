@@ -26,6 +26,12 @@
   div {
     overflow: visible;
   }
+
+  @media all and (max-width: 480px) {
+    position: fixed;
+    right: 1em;
+    top: 0.5em;
+  }
 }
 
 .isExist {
