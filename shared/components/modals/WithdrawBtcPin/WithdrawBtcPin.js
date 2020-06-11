@@ -39,6 +39,18 @@ const langs = defineMessages({
     id: `${langPrefix}_UpMessage`,
     defaultMessage: `Для подтверждения транзакции введите пароль`,
   },
+  upMessageMnemonic: {
+    id: `${langPrefix}_UpMessageMnemonic`,
+    defaultMessage: `Для подтверждения транзакции введите секретную фразу (12 слов)`,
+  },
+  labelYourPin: {
+    id: `${langPrefix}_LabelYourPin`,
+    defaultMessage: `Your Pin-code`,
+  },
+  labelYourMnemonic: {
+    id: `${langPrefix}_LabelYourMnemonic`,
+    defaultMessage: `Your secret phrase`,
+  },
   pinCodePlaceHolder: {
     id: `${langPrefix}_PinCodePlaceholder`,
     defaultMessage: `Enter your pin code`,
@@ -66,6 +78,34 @@ const langs = defineMessages({
   cancelButton: {
     id: `${langPrefix}_Cancel`,
     defaultMessage: `Отмена`,
+  },
+  mnemonicNote: {
+    id: `${langPrefix}_MnemonicUseNote`,
+    defaultMessage: `В случае не доступности сервера авторизации, или если вы забыли пароль, Вы можете воспользоваться секретной фразой`,
+  },
+  serverIsOffline: {
+    id: `${langPrefix}_ServerOffline`,
+    defaultMessage: `Сервер авторизации не доступен. Попробуйте позже или используйте секретной фразу`,
+  },
+  mnemonicPlaceHolder: {
+    id: `${langPrefix}_MnemonicPlaceholder`,
+    defaultMessage: `Enter secret phrase (12 words)`,
+  },
+  pincodeNote: {
+    id: `${langPrefix}_PincodeNote`,
+    defaultMessage: `Так-же вы можете подтвердить транзакцию введя пароль`,
+  },
+  usePinCode: {
+    id: `${langPrefix}_ButtonUsePin`,
+    defaultMessage: `Использовать пароль`,
+  },
+  errorMnemonicInvalid: {
+    id: `${langPrefix}_ErrorMnemonicInvalid`,
+    defaultMessage: `Вы указали не валидную секретную фразу (12 слов)`,
+  },
+  errorMnemonicIncorrect: {
+    id: `${langPrefix}_ErrorMnemonicIncorrect`,
+    defaultMessage: `Указаная секретная фраза не подходит к этому кошельку`,
   },
 })
 
@@ -126,24 +166,62 @@ export default class WithdrawBtcPin extends React.Component {
     actions.modals.close(name)
   }
 
+  handleSendMnemonic = async () => {
+    const {
+      mnemonic,
+    } = this.state
+
+    const {
+      data: {
+        sendOptions,
+      },
+    } = this.props
+
+    this.setState({
+      isShipped: true,
+      error: false,
+    }, async () => {
+      if (!mnemonic || !actions.btc.validateMnemonicWords(mnemonic.trim())) {
+        this.setState({
+          error: <FormattedMessage {...langs.errorMnemonicInvalid} />,
+          isShipped: false,
+        })
+        return
+      }
+      if (!actions.btcmultisig.checkPinMnemonic(mnemonic.trim())) {
+        this.setState({
+          error: <FormattedMessage {...langs.errorMnemonicIncorrect} />,
+          isShipped: false,
+        })
+        return
+      }
+
+      const result = await actions.btcmultisig.sendPinProtected({
+        ...sendOptions,
+        mnemonic,
+      })
+
+      this.processSendResult(result)
+    })
+  }
+
   handleSend = async () => {
     const {
       pinCode,
     } = this.state
-    
+
     const {
       data: {
-        wallet,
         sendOptions,
-        sendOptions: {
-          amount,
-        },
-        invoice,
-        adminFee,
-        beforeBalances,
-        onReady,
       },
     } = this.props
+
+    if (!pinCode || pinCode.length < 4) {
+      this.setState({
+        error: <FormattedMessage {...langs.youNotEnterPin} />,
+      })
+      return
+    }
 
     this.setState({
       error: false,
@@ -154,31 +232,66 @@ export default class WithdrawBtcPin extends React.Component {
         ...sendOptions,
         password: pinCode,
       })
+      this.processSendResult(result)
+    })
+  }
 
-      console.log('sendPinProtected result', result)
-      if (result && result.answer === 'ok') {
-        const { txId } = result
+  processSendResult = async (result) => {
+    const {
+      data: {
+        wallet,
+        sendOptions: {
+          amount,
+        },
+        invoice,
+        adminFee,
+        beforeBalances,
+        onReady,
+      },
+    } = this.props
+    if (result && result.answer === 'ok') {
+      const { txId } = result
 
-        helpers.transactions.pullTxBalances(txId, amount, beforeBalances, adminFee)
+      helpers.transactions.pullTxBalances(txId, amount, beforeBalances, adminFee)
 
-        actions.loader.hide()
-        actions.btcmultisig.getBalancePin()
-        if (invoice) {
-          await actions.invoices.markInvoice(invoice.id, 'ready', txId, wallet.address)
-        }
-
-        if (onReady instanceof Function) {
-          onReady()
-        }
-
-        const txInfoUrl = helpers.transactions.getTxRouter('btc', txId)
-        redirectTo(txInfoUrl)
-      } else {
-        this.setState({
-          isShipped: false,
-          serverOffline: true,
-        })
+      actions.loader.hide()
+      actions.btcmultisig.getBalancePin()
+      if (invoice) {
+        await actions.invoices.markInvoice(invoice.id, 'ready', txId, wallet.address)
       }
+
+      if (onReady instanceof Function) {
+        onReady()
+      }
+
+      const txInfoUrl = helpers.transactions.getTxRouter('btc', txId)
+      redirectTo(txInfoUrl)
+    } else {
+      this.setState({
+        isShipped: false,
+        serverOffline: !(result.error),
+        error: result.error || `Unknown error`,
+      })
+    }
+  }
+
+  handleUseMnemonic = () => {
+    this.setState({
+      isShipped: false,
+      error: false,
+      useMnemonic: true,
+      serverOffline: false,
+      mnemonic: '',
+    })
+  }
+
+  handleUsePassword = () => {
+    this.setState({
+      isShipped: false,
+      error: false,
+      useMnemonic: false,
+      serverOffline: false,
+      pinCode: '',
     })
   }
 
@@ -211,13 +324,13 @@ export default class WithdrawBtcPin extends React.Component {
             <Fragment>
               <p styleName="centerInfoBlock">
                 <strong>
-                  <FormattedMessage { ...langs.upMessage } />
+                  <FormattedMessage {...langs.upMessage} />
                 </strong>
                 <br />
               </p>
               <div styleName="highLevel" className="ym-hide-content">
                 <FieldLabel label>
-                  <FormattedMessage id="registerPinModalPinCode" defaultMessage="Your PIN-code:" />
+                  <FormattedMessage {...langs.labelYourPin}  />
                 </FieldLabel>
                 <Input
                   styleName="input inputMargin25"
@@ -227,6 +340,7 @@ export default class WithdrawBtcPin extends React.Component {
                   focusOnInit
                 />
               </div>
+              {error && <div styleName="error rednotes">{error}</div>}
               <div styleName="buttonsHolder">
                 <Button blue disabled={isShipped} onClick={this.handleSend}>
                   {isShipped ? (
@@ -243,63 +357,65 @@ export default class WithdrawBtcPin extends React.Component {
                   <FormattedMessage {...langs.cancelButton} />
                 </Button>
               </div>
-              <Button blue fullWidth disabled={isShipped} onClick={this.useMnemonic}>
-                <FormattedMessage {...langs.useMnemonic} />
-              </Button>
+              <div styleName="mnemonicButtonHolder">
+                {serverOffline && (
+                  <div styleName="error rednotes">
+                    <FormattedMessage {...langs.serverIsOffline} />
+                  </div>
+                )}
+                <p>
+                  <FormattedMessage {...langs.mnemonicNote} />
+                </p>
+                <Button blue fullWidth disabled={isShipped} onClick={this.handleUseMnemonic}>
+                  <FormattedMessage {...langs.useMnemonic} />
+                </Button>
+              </div>
             </Fragment>
           )}
-          {step === "ready" && (
+          {useMnemonic && (
             <Fragment>
-              <div styleName="highLevel">
-                <div>
-                  <img styleName="finishImg" src={finishSvg} alt="finish" />
-                </div>
-                <span style={{ fontSize: "25px", display: "block", textAlign: "center", marginBottom: "40px" }}>
-                  <FormattedMessage id="registerPINModalReady" defaultMessage="Your protected wallet activated" />
-                </span>
+              <p styleName="centerInfoBlock">
+                <strong>
+                  <FormattedMessage {...langs.upMessageMnemonic} />
+                </strong>
+                <br />
+              </p>
+              <div styleName="highLevel" className="ym-hide-content">
+                <FieldLabel label>
+                  <FormattedMessage {...langs.labelYourMnemonic} />
+                </FieldLabel>
+                <Input
+                  styleName="input inputMargin25"
+                  valueLink={linked.mnemonic}
+                  placeholder={`${intl.formatMessage(langs.mnemonicPlaceHolder)}`}
+                  focusOnInit
+                />
               </div>
-              {showFinalInstruction && (
-                <div styleName="restoreInstruction" className="ym-hide-content">
-                  <h1>
-                    <FormattedMessage id="registerPinModalFinishSaveThisInfo" defaultMessage="Информация на случай недоступности нашего сервиса" />
-                  </h1>
-                  <div>
-                    <pre>{restoreInstruction}</pre>
-                    <a styleName="link" target="_blank" href="https://github.com/bitcoinjs/bitcoinjs-lib/blob/master/test/integration/addresses.spec.ts">
-                      <FormattedMessage id="registerPin_LinkToManualRestore" defaultMessage="How to withdraw money manually" />
-                    </a>
-                  </div>
-                  <div styleName="buttonsHolder">
-                    <CopyToClipboard
-                      text={restoreInstruction}
-                      onCopy={this.handleCopyInstruction}
-                    >
-                      <Button blue disabled={isInstructionCopied} onClick={this.handleCopyInstruction}>
-                        {isInstructionCopied ? (
-                          <FormattedMessage id='registerPinModalInstCopied' defaultMessage='Скопировано' />
-                        ) : (
-                          <FormattedMessage id='registerPinModalInstCopy' defaultMessage='Скопировать' />
-                        )}
-                      </Button>
-                    </CopyToClipboard>
-                    <Button blue disabled={isInstructionDownloaded} onClick={this.handleDownloadInstruction}>
-                      {isInstructionDownloaded ? (
-                        <FormattedMessage id='registerPinModalInstDownloaded' defaultMessage='Загружается' />
-                      ) : (
-                        <FormattedMessage id='registerPinModalInstDownload' defaultMessage='Скачать' />
-                      )}
-                    </Button>
-                    <Button blue onClick={this.handleShareInstruction}>
-                      <FormattedMessage id="registerPin_ShareInstruction" defaultMessage="Share" />
-                    </Button>
-                  </div>
-                </div>
-              )}
-              <Button big blue fullWidth onClick={this.handleFinish}>
-                <Fragment>
-                  <FormattedMessage id="registerPinModalFinish" defaultMessage="Finish" />
-                </Fragment>
-              </Button>
+              {error && <div styleName="error rednotes">{error}</div>}
+              <div styleName="buttonsHolder">
+                <Button blue disabled={isShipped} onClick={this.handleSendMnemonic}>
+                  {isShipped ? (
+                    <Fragment>
+                      <FormattedMessage {...langs.shipButton} />
+                    </Fragment>
+                  ) : (
+                    <Fragment>
+                      <FormattedMessage {...langs.confirmButton} />
+                    </Fragment>
+                  )}
+                </Button>
+                <Button blue disabled={isShipped} onClick={this.handleCancel}>
+                  <FormattedMessage {...langs.cancelButton} />
+                </Button>
+              </div>
+              <div styleName="pinButtonHolder">
+                <p>
+                  <FormattedMessage {...langs.pincodeNote} />
+                </p>
+                <Button blue fullWidth disabled={isShipped} onClick={this.handleUsePassword}>
+                  <FormattedMessage {...langs.usePinCode} />
+                </Button>
+              </div>
             </Fragment>
           )}
         </div>

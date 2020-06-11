@@ -2,9 +2,22 @@
   max-width: 600px;
 }
 
+.mnemonicButtonHolder,
+.pinButtonHolder {
+  p {
+    margin: 20px;
+    text-align: center;
+  }
+  button {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+}
+
 .for12words {
   min-width: 400px;
 }
+
 .infoCaption {
   padding-bottom: 20px;
   text-align: center;
@@ -13,6 +26,7 @@
   padding-bottom: 20px;
   font-size: 14px;
 }
+
 .mnemonicButtonsHolder {
   display: flex;
   align-items: center;
@@ -21,14 +35,6 @@
   button {
     width: 45%;
   }
-}
-
-.finishImg {
-  width: 80px;
-  height: 80px;
-  display: block;
-  margin: 0 auto;
-  margin-bottom: 3rem;
 }
 
 .pinInfoBlock {
@@ -40,36 +46,18 @@
   max-width: 200px;
   margin: 0 auto;
 }
-.confirmSmsCode {
-  max-width: 200px;
-  margin: 0 auto;
-}
 
-.restoreInstruction {
-  text-align: center;
-  pre {
-    text-align: left;
-  }
-}
 .buttonsHolder {
   display: flex;
   align-items: center;
   justify-content: space-around;
   padding-bottom: 10px;
+  margin-top: 20px;
   button {
-    width: 30%;
-  }
-  &_2_buttons button {
     width: 45%;
   }
 }
 .buttonContainer {
   width: 100%;
   padding: 0 11%;
-}
-
-@include media-mobile {
-  .finishImg {
-    margin-bottom: 1rem;
-  }
 }

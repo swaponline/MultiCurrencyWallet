@@ -1187,7 +1187,7 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
 }
 
 
-const sendPinProtected = async ({ from, to, amount, feeValue, speed, password } = {}) => {
+const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, mnemonic } = {}) => {
   const {
     user: {
       btcMultisigPinData: {
@@ -1261,10 +1261,23 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password } 
   })
 
   let txRaw = txb1.buildIncomplete()
-  // console.log('Multisig transaction ready')
-  // console.log('Your key:', publicKey.toString('Hex'))
-  // console.log('TX Hash:', txRaw.toHex())
-  // console.log('Send it to other owner for sign and broadcast')
+
+  if (mnemonic) {
+    const mnemonicTx = await signPinMnemonic(txRaw.toHex(), mnemonic)
+    const broadcastResult = await actions.btc.broadcastTx(mnemonicTx)
+    if (broadcastResult
+      && broadcastResult.txid
+    ) {
+      return {
+        answer: 'ok',
+        txId: broadcastResult.txid,
+      }
+    } else {
+      return {
+        error: `Fail sign transaction by mnemonic`,
+      }
+    }
+  }
 
   let authKeys = publicKeys.slice(1)
   authKeys = JSON.stringify(authKeys.map((key) => key.toString('Hex')))
@@ -1615,6 +1628,18 @@ const signSmsMnemonic = (txHash, mnemonic) => {
   return signMofNByMnemonic(txHash, 2, publicKeys, mnemonic, 1)
 }
 
+const signPinMnemonic = (txHash, mnemonic) => {
+  const {
+    user: {
+      btcMultisigPinData: {
+        publicKeys,
+      },
+    },
+  } = getState()
+
+  return signMofNByMnemonic(txHash, 2, publicKeys, mnemonic, 1)
+}
+
 const signSmsMnemonicAndBuild = (txHash, mnemonic) => {
   return new Promise(async (resolve, reject) => {
     const rawTx = signSmsMnemonic(txHash, mnemonic)
@@ -1624,6 +1649,23 @@ const signSmsMnemonicAndBuild = (txHash, mnemonic) => {
       resolve(rawTx)
     }
   })
+}
+
+const checkPinMnemonic = (mnemonic) => {
+  const {
+    user: {
+      btcMultisigPinData: {
+        publicKeys,
+      },
+    },
+  } = getState()
+
+  const mnemonicWallet = actions.btc.getWalletByWords(mnemonic, 1)
+  if (mnemonicWallet) {
+    const matchedKeys = publicKeys.filter((key) => { return key.toString('Hex') === mnemonicWallet.publicKey })
+    return (matchedKeys.length > 0)
+  }
+  return false
 }
 
 const checkSmsMnemonic = (mnemonic) => {
@@ -1712,6 +1754,8 @@ export default {
   addPinWallet,
   getBalancePin,
   sendPinProtected,
+  checkPinMnemonic,
+  signPinMnemonic,
 
   // User multisig
   login_USER,
