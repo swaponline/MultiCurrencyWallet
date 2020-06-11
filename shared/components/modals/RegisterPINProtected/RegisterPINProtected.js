@@ -74,7 +74,108 @@ const langs = defineMessages({
     id: `${langPrefix}_ErrorPinCodesNotEqueals`,
     defaultMessage: `Пароли не совпадают`,
   },
+  pinServerOffline: {
+    id: `${langPrefix}_PinServerOffline`,
+    defaultMessage: `Сервер авторизации не доступен`,
+  },
+  useMnemonicNote: {
+    id: `${langPrefix}_UseMnemonicRestoreNote`,
+    defaultMessage: `Вы можете востановить кошелек используя секретную фразу (12 слов)`,
+  },
+  useMnemonicButton: {
+    id: `${langPrefix}_UseMnemonicButton`,
+    defaultMessage: `Восстановить кошелек`,
+  },
+  restoryUpMessage: {
+    id: `${langPrefix}_RestoryUpMessage`,
+    defaultMessage: `Восстановление BTC кошелька защещеного паролем`,
+  },
+  restoryBottomMessage: {
+    id: `${langPrefix}_RestoryBottomMessage`,
+    defaultMessage: `Введите секретную фразу (12 слов)`,
+  },
+  labelYourMnemonic: {
+    id: `${langPrefix}_LabelYourMnemonic`,
+    defaultMessage: `Ваша секретная фраза`,
+  },
+  mnemonicPlaceHolder: {
+    id: `${langPrefix}_MnemonicPlaceholder`,
+    defaultMessage: `Введите секретную фразу (12 слов)`,
+  },
+  shipButton: {
+    id: `${langPrefix}_ShipButton`,
+    defaultMessage: `Processing ...`,
+  },
+  confirmButton: {
+    id: `${langPrefix}_ConfirmRestory`,
+    defaultMessage: `Восстановить кошелек`,
+  },
+  usepinButton: {
+    id: `${langPrefix}_UsePinButton`,
+    defaultMessage: `Использовать пароль`,
+  },
+  activateWallet: {
+    id: `${langPrefix}_ActivateWalletButton`,
+    defaultMessage: `Активировать кошелек`,
+  },
+  errorWalletLocked: {
+    id: `${langPrefix}_ErrorWalletLocked`,
+    defaultMessage: `Этот счет уже зарегистрирован и защищен другим паролем. Укажите правильный пароль`,
+  },
+  labelYourPin: {
+    id: `${langPrefix}_LabelYourPinCode`,
+    defaultMessage: `Your PIN-code`,
+  },
+  labelConfirmYourPin: {
+    id: `${langPrefix}_LabelConfirmYourPin`,
+    defaultMessage: `Confirm your PIN-code`,
+  },
+  buttonFinish: {
+    id: `${langPrefix}_ButtonFinish`,
+    defaultMessage: `Готово`,
+  },
+  buttonCopiedInstruction: {
+    id: `${langPrefix}_Instruction_Copied`,
+    defaultMessage: `Скопировано`,
+  },
+  buttonCopyInstruction: {
+    id: `${langPrefix}_Instruction_Copy`,
+    defaultMessage: `Скопировать`,
+  },
+  buttonDownloadingInstruction: {
+    id: `${langPrefix}_Instruction_Downloading`,
+    defaultMessage: `Загружается`,
+  },
+  buttonDownloadInstruction: {
+    id: `${langPrefix}_Instruction_Download`,
+    defaultMessage: `Скачать`,
+  },
+  buttonShare: {
+    id: `${langPrefix}_Share`,
+    defaultMessage: `Share`,
+  },
+  finishMessage: {
+    id: `${langPrefix}_FinishMessage`,
+    defaultMessage: `Your protected wallet activated`,
+  },
+  instructionMessage: {
+    id: `${langPrefix}_Instruction_Message`,
+    defaultMessage: `Информация на случай недоступности нашего сервиса`,
+  },
+  howToWithdraw: {
+    id: `${langPrefix}_HowToWithdraw`,
+    defaultMessage: `How to withdraw money manually`,
+  },
+  errorMnemonicInvalid: {
+    id: `${langPrefix}_ErrorMnemonicInvalid`,
+    defaultMessage: `Вы указали не валидную секретную фразу (12 слов)`,
+  },
+  errorMnemonicIncorrect: {
+    id: `${langPrefix}_ErrorMnemonicIncorrect`,
+    defaultMessage: `Указаная секретная фраза не подходит к этому кошельку`,
+  },
 })
+
 
 @injectIntl
 @connect(({ user: { btcData, btcMultisigPinData } }) => ({
@@ -113,7 +214,7 @@ export default class RegisterPINProtected extends React.Component {
       generatedKey,
       useGeneratedKeyEnabled,
       mnemonicSaved,
-      mnemonic: actions.btc.getRandomMnemonicWords(),
+      mnemonic: ``,
       mnemonicWallet: false,
       isMnemonicCopied: false,
       isMnemonicGenerated: false,
@@ -129,28 +230,34 @@ export default class RegisterPINProtected extends React.Component {
       mnemonic,
     } = this.state
 
-    if (!mnemonic || !actions.btc.validateMnemonicWords(mnemonic.trim())) {
-      this.setState({
-        isMnemonicValid: false,
-        error: false,
-      })
-      return
-    } else {
-      const mnemonicWallet = actions.btc.getWalletByWords(mnemonic.trim(), 1)
-      this.setState({
-        mnemonicWallet,
-        isShipped: true,
-        isMnemonicValid: true,
-      })
-    }
-
-    await actions.btcmultisig.addPinWallet(mnemonic.trim())
-
-    this.generateRestoreInstruction()
-
     this.setState({
-      isShipped: false,
-      step: 'ready',
+      error: false,
+      isShipped: true,
+    }, async () => {
+      if (!mnemonic || !actions.btc.validateMnemonicWords(mnemonic.trim())) {
+        this.setState({
+          error: <FormattedMessage {...langs.errorMnemonicInvalid} />,
+          isShipped: false,
+        })
+        return
+      }
+
+      if (!actions.btcmultisig.checkPinCanRestory(mnemonic.trim())) {
+        this.setState({
+          error: <FormattedMessage {...langs.errorMnemonicIncorrect} />,
+          isShipped: false,
+        })
+        return
+      }
+
+      await actions.btcmultisig.addPinWallet(mnemonic.trim())
+
+      this.generateRestoreInstruction()
+
+      this.setState({
+        isShipped: false,
+        step: 'ready',
+      })
     })
   }
 
@@ -202,6 +309,25 @@ export default class RegisterPINProtected extends React.Component {
           isInstructionDownloaded: false,
         })
       }, 1000)
+    })
+  }
+
+  handleUsePin = () => {
+    this.setState({
+      pinCode: ``,
+      pinCodeConfirm: ``,
+      step: `enterPinCode`,
+      error: false,
+      pinServerOffline: false,
+    })
+  }
+
+  handleRestoreWalletStep = () => {
+    this.setState({
+      error: false,
+      mnemonic: ``,
+      pinServerOffline: false,
+      step: `restory`,
     })
   }
 
@@ -324,6 +450,7 @@ export default class RegisterPINProtected extends React.Component {
     this.setState({
       error: false,
       isShipped: true,
+      pinServerOffline: false,
       isWalletLockedOtherPin: false,
     }, async () => {
       if (!pinCode || pinCode.length < 4) {
@@ -370,10 +497,10 @@ export default class RegisterPINProtected extends React.Component {
               isWalletLockedOtherPin: true,
             })
           } else {
-            const smsServerOffline = (result === false)
+            const pinServerOffline = (result === false)
             this.setState({
               isShipped: false,
-              smsServerOffline,
+              pinServerOffline,
               error: (result && result.error) ? result.error : 'Unknown error',
             })
           }
@@ -441,6 +568,45 @@ export default class RegisterPINProtected extends React.Component {
               </div>
             </Fragment>
           )}
+          {step === 'restory' && (
+            <Fragment>
+              <p styleName="centerInfoBlock">
+                <strong>
+                  <FormattedMessage {...langs.restoryUpMessage} />
+                </strong>
+                <br />
+                <FormattedMessage {...langs.restoryBottomMessage} />
+              </p>
+              <div styleName="highLevel" className="ym-hide-content">
+                <FieldLabel label>
+                  <FormattedMessage {...langs.labelYourMnemonic} />
+                </FieldLabel>
+                <Input
+                  styleName="input inputMargin25"
+                  valueLink={linked.mnemonic}
+                  placeholder={`${intl.formatMessage(langs.mnemonicPlaceHolder)}`}
+                  focusOnInit
+                />
+              </div>
+              {error && <div styleName="error rednotes">{error}</div>}
+              <div styleName="mnemonicButtonsHolder">
+                <Button blue disabled={isShipped} onClick={this.handleRestoreWallet}>
+                  {isShipped ? (
+                    <Fragment>
+                      <FormattedMessage {...langs.shipButton} />
+                    </Fragment>
+                  ) : (
+                    <Fragment>
+                      <FormattedMessage {...langs.confirmButton} />
+                    </Fragment>
+                  )}
+                </Button>
+                <Button blue disabled={isShipped} onClick={this.handleUsePin}>
+                  <FormattedMessage {...langs.usepinButton} />
+                </Button>
+              </div>
+            </Fragment>
+          )}
           {step === 'enterPinCode' && (
             <Fragment>
               <p styleName="centerInfoBlock">
@@ -452,15 +618,12 @@ export default class RegisterPINProtected extends React.Component {
               </p>
               {isWalletLockedOtherPin && (
                 <div styleName="rednotes pinInfoBlock">
-                  <FormattedMessage
-                    id="registerPin_WalletLocked"
-                    defaultMessage="Этот счет уже зарегистрирован и защищен другим паролем. Укажите правильный пароль"
-                  />
+                  <FormattedMessage {...langs.errorWalletLocked} />
                 </div>
               )}
               <div styleName="highLevel" className="ym-hide-content">
                 <FieldLabel label>
-                  <FormattedMessage id="registerPinModalPinCode" defaultMessage="Your PIN-code:" />
+                  <FormattedMessage {...langs.labelYourPin} />
                 </FieldLabel>
                 <Input
                   styleName="input inputMargin25"
@@ -472,7 +635,7 @@ export default class RegisterPINProtected extends React.Component {
               </div>
               <div styleName="highLevel" className="ym-hide-content">
                 <FieldLabel label>
-                  <FormattedMessage id="registerPinModalPinCodeConfirm" defaultMessage="Confirm your PIN-code:" />
+                  <FormattedMessage {...langs.labelConfirmYourPin} />
                 </FieldLabel>
                 <Input
                   styleName="input inputMargin25"
@@ -481,19 +644,36 @@ export default class RegisterPINProtected extends React.Component {
                   placeholder={`${intl.formatMessage(langs.pinCodeConfirmPlaceHolder)}`}
                   focusOnInit
                 />
-                {error && <div styleName="rednote">{error}</div>}
-              </div>
-              <Button blue big fullWidth disabled={isShipped} onClick={this.handleCheckPIN}>
-                {isShipped ? (
-                  <Fragment>
-                    <FormattedMessage id="registerPinModalProcess" defaultMessage="Processing ..." />
-                  </Fragment>
-                ) : (
-                  <Fragment>
-                    <FormattedMessage id="registerPinModalActivateWallet" defaultMessage="Activate Wallet" />
-                  </Fragment>
+                {!pinServerOffline && error && <div styleName="error rednotes">{error}</div>}
+                {pinServerOffline && (
+                  <div styleName="error rednotes">
+                    <FormattedMessage {...langs.pinServerOffline} />
+                  </div>
                 )}
-              </Button>
+              </div>
+              <div styleName="buttonHolder">
+                <Button blue big fullWidth disabled={isShipped} onClick={this.handleCheckPIN}>
+                  {isShipped ? (
+                    <Fragment>
+                      <FormattedMessage {...langs.shipButton} />
+                    </Fragment>
+                  ) : (
+                    <Fragment>
+                      <FormattedMessage {...langs.activateWallet} />
+                    </Fragment>
+                  )}
+                </Button>
+              </div>
+              {pinServerOffline && (
+                <div styleName="restoryHolder">
+                  <p>
+                    <FormattedMessage {...langs.useMnemonicNote} />
+                  </p>
+                  <Button blue fullWidth onClick={this.handleRestoreWalletStep}>
+                    <FormattedMessage {...langs.useMnemonicButton} />
+                  </Button>
+                </div>
+              )}
             </Fragment>
           )}
           {step === "ready" && (
@@ -503,18 +683,18 @@ export default class RegisterPINProtected extends React.Component {
                   <img styleName="finishImg" src={finishSvg} alt="finish" />
                 </div>
                 <span style={{ fontSize: "25px", display: "block", textAlign: "center", marginBottom: "40px" }}>
-                  <FormattedMessage id="registerPINModalReady" defaultMessage="Your protected wallet activated" />
+                  <FormattedMessage {...langs.finishMessage} />
                 </span>
               </div>
               {showFinalInstruction && (
                 <div styleName="restoreInstruction" className="ym-hide-content">
                   <h1>
-                    <FormattedMessage id="registerPinModalFinishSaveThisInfo" defaultMessage="Информация на случай недоступности нашего сервиса" />
+                    <FormattedMessage {...langs.instructionMessage} />
                   </h1>
                   <div>
                     <pre>{restoreInstruction}</pre>
                     <a styleName="link" target="_blank" href="https://github.com/bitcoinjs/bitcoinjs-lib/blob/master/test/integration/addresses.spec.ts">
-                      <FormattedMessage id="registerPin_LinkToManualRestore" defaultMessage="How to withdraw money manually" />
+                      <FormattedMessage {...langs.howToWithdraw} />
                     </a>
                   </div>
                   <div styleName="buttonsHolder">
@@ -524,28 +704,28 @@ export default class RegisterPINProtected extends React.Component {
                     >
                       <Button blue disabled={isInstructionCopied} onClick={this.handleCopyInstruction}>
                         {isInstructionCopied ? (
-                          <FormattedMessage id='registerPinModalInstCopied' defaultMessage='Скопировано' />
+                          <FormattedMessage {...langs.buttonCopiedInstruction} />
                         ) : (
-                          <FormattedMessage id='registerPinModalInstCopy' defaultMessage='Скопировать' />
+                          <FormattedMessage {...langs.buttonCopyInstruction} />
                         )}
                       </Button>
                     </CopyToClipboard>
                     <Button blue disabled={isInstructionDownloaded} onClick={this.handleDownloadInstruction}>
                       {isInstructionDownloaded ? (
-                        <FormattedMessage id='registerPinModalInstDownloaded' defaultMessage='Загружается' />
+                        <FormattedMessage {...langs.buttonDownloadingInstruction} />
                       ) : (
-                        <FormattedMessage id='registerPinModalInstDownload' defaultMessage='Скачать' />
+                        <FormattedMessage {...langs.buttonDownloadInstruction}/>
                       )}
                     </Button>
                     <Button blue onClick={this.handleShareInstruction}>
-                      <FormattedMessage id="registerPin_ShareInstruction" defaultMessage="Share" />
+                      <FormattedMessage {...langs.buttonShare} />
                     </Button>
                   </div>
                 </div>
               )}
               <Button big blue fullWidth onClick={this.handleFinish}>
                 <Fragment>
-                  <FormattedMessage id="registerPinModalFinish" defaultMessage="Finish" />
+                  <FormattedMessage {...langs.buttonFinish} />
                 </Fragment>
               </Button>
             </Fragment>

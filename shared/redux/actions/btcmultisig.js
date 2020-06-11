@@ -1651,6 +1651,16 @@ const signSmsMnemonicAndBuild = (txHash, mnemonic) => {
   })
 }
 
+const checkPinCanRestory = (mnemonic) => {
+  const mnemonicWallet = actions.btc.getWalletByWords(mnemonic, 1)
+  let btcSmsMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKey)
+  try { btcSmsMnemonicKey = JSON.parse(btcSmsMnemonicKey) } catch (e) { }
+  if (btcSmsMnemonicKey instanceof Array && btcSmsMnemonicKey.length > 0) {
+    return btcSmsMnemonicKey.includes(mnemonicWallet.publicKey)
+  }
+  return false
+}
+
 const checkPinMnemonic = (mnemonic) => {
   const {
     user: {
@@ -1756,6 +1766,7 @@ export default {
   sendPinProtected,
   checkPinMnemonic,
   signPinMnemonic,
+  checkPinCanRestory,
 
   // User multisig
   login_USER,

@@ -18,6 +18,7 @@
   align-items: center;
   justify-content: space-around;
   padding-bottom: 10px;
+  margin-top: 20px;
   button {
     width: 45%;
   }
@@ -51,6 +52,19 @@
     text-align: left;
   }
 }
+
+.restoryHolder {
+  p {
+    margin: 20px;
+    text-align: center;
+    font-size: 14px;
+  }
+}
+
+.buttonHolder {
+  margin-top: 20px;
+}
+
 .buttonsHolder {
   display: flex;
   align-items: center;
