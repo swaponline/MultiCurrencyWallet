@@ -330,7 +330,7 @@ const CreateWallet = (props) => {
   return (
     <div styleName="wrapper">
       {
-        userWallets.length
+        userWallets.length && !localStorage.getItem(constants.wasOnWallet)
           ? <CloseIcon styleName="closeButton" onClick={() => goHome()} data-testid="modalCloseIcon" />
           : ''
       }

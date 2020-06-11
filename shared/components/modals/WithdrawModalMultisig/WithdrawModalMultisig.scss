@@ -1,6 +1,6 @@
 .smsCodeHolder {
   max-width: 200px;
-  margin: 0 auto;
+  margin: 2rem auto 0;;
 }
 
 .smsServerStatus {
@@ -21,7 +21,11 @@
 }
 
 .mnemonicUseNote {
-  margin-bottom: 10px;
+  margin-bottom: 2rem;
+}
+
+.marginHr {
+  margin: 2rem 0;
 }
 
 .sendBtnsWrapper {
