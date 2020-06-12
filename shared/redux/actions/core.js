@@ -346,6 +346,7 @@ const getWallets = () => {
       btcData,
       btcMultisigSMSData,
       btcMultisigUserData,
+      btcMultisigPinData,
       ethData,
       tokensData,
       isTokenSigned,
@@ -366,6 +367,7 @@ const getWallets = () => {
     ... (ethMnemonicData && !ethData.isMnemonic) ? [ethMnemonicData] : [], // Sweep
     btcData,
     btcMultisigSMSData,
+    btcMultisigPinData,
     btcMultisigUserData,
     ... (btcMultisigUserData && btcMultisigUserData.wallets) ? btcMultisigUserData.wallets : [],
     ethData,

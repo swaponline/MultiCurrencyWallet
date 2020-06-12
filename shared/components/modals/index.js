@@ -32,6 +32,9 @@ import SweepToMnemonicKeys from './SweepToMnemonicKeys/SweepToMnemonicKeys'
 import HowToWithdrawModal from './HowToWithdrawModal/HowToWithdrawModal'
 import InfoInvoice from './InfoInvoice/InfoInvoice'
 
+import RegisterPINProtected from './RegisterPINProtected/RegisterPINProtected'
+import WithdrawBtcPin from './WithdrawBtcPin/WithdrawBtcPin'
+
 
 export default {
   DeclineOrdersModal,
@@ -67,4 +70,7 @@ export default {
   SweepToMnemonicKeys,
   HowToWithdrawModal,
   InfoInvoice,
+
+  RegisterPINProtected,
+  WithdrawBtcPin,
 }

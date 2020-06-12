@@ -168,7 +168,6 @@ class NumberInput extends Component {
     return (
       <input
         {...ignoreProps(props, 'positive', 'integer')}
-        type="text"
         className={validationClasses(props, this.value, error)}
         value={this.value}
         onKeyPress={this.onKeyPress}

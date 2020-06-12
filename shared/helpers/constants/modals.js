@@ -33,4 +33,7 @@ export default {
   SweepToMnemonicKeys: 'SweepToMnemonicKeys',
   HowToWithdrawModal: 'HowToWithdrawModal',
   InfoInvoice: 'InfoInvoice',
+
+  RegisterPINProtected: 'RegisterPINProtected',
+  WithdrawBtcPin: 'WithdrawBtcPin',
 }

@@ -48,6 +48,7 @@ export default class InvoiceLinkModal extends React.Component {
     let type = currency.toLowerCase()
     switch (currency) {
       case 'BTC (SMS-Protected)':
+      case 'BTC (PIN-Protected)':
       case 'BTC (Multisig)':
         type = 'btc'
         break;

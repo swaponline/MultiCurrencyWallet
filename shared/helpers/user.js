@@ -6,6 +6,7 @@ export const getActivatedCurrencies = () => {
   if (!config.opts.curEnabled || config.opts.curEnabled.btc) {
     currencies.push('BTC')
     currencies.push('BTC (SMS-Protected)')
+    currencies.push('BTC (PIN-Protected)')
     currencies.push('BTC (Multisig)')
   }
   if (!config.opts.curEnabled || config.opts.curEnabled.eth) currencies.push('ETH')

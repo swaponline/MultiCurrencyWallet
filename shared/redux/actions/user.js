@@ -50,6 +50,20 @@ const sign_btc_2fa = async (btcPrivateKey) => {
   const _btcMultisigSMSPrivateKey = actions.btcmultisig.login_SMS(btcPrivateKey, btcSmsPublicKeys)
 }
 
+const sign_btc_pin = async (btcPrivateKey) => {
+  const btcPinServerKey = config.swapContract.btcPinKey
+  let btcPinPublicKeys = [btcPinServerKey]
+
+  let btcPinMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcPinMnemonicKey)
+  try { btcPinMnemonicKey = JSON.parse(btcPinMnemonicKey) } catch (e) { }
+  if (btcPinMnemonicKey instanceof Array && btcPinMnemonicKey.length > 0) {
+    btcPinPublicKeys.push(btcPinMnemonicKey[0])
+  }
+
+  console.log('sign to btc pin', btcPinPublicKeys)
+  const _btcMultisigPinPrivateKey = actions.btcmultisig.login_PIN(btcPrivateKey, btcPinPublicKeys)
+}
+
 const sign = async () => {
   initReducerState()
 
@@ -101,6 +115,9 @@ const sign = async () => {
 
   // btc multisig 2of2 user manual sign
   await sign_btc_multisig(_btcPrivateKey)
+
+  // btc multisig with pin protect (2of3)
+  await sign_btc_pin(_btcPrivateKey)
 
   // if inside actions.token.login to call web3.eth.accounts.privateKeyToAccount passing public key instead of private key
   // there will not be an error, but the address returned will be wrong
@@ -156,6 +173,7 @@ const getBalances = () => {
     await actions.btc.getBalance()
     await actions.btcmultisig.getBalance() // SMS-Protected
     await actions.btcmultisig.getBalanceUser() // Other user confirm
+    await actions.btcmultisig.getBalancePin() // Pin-Protected
     await actions.btcmultisig.fetchMultisigBalances()
 
     if (isTokenSigned) {
@@ -225,6 +243,7 @@ const getExchangeRate = (sellCurrency, buyCurrency) => {
       switch (sellCurrency.toLowerCase()) {
         case 'btc (sms-protected)':
         case 'btc (multisig)':
+        case 'btc (pin-protected)':
           dataKey = 'btc'
           break
         default:
@@ -306,6 +325,7 @@ const getInfoAboutCurrency = (currencyNames) =>
                 reducers.user.setInfoAboutCurrency({ name: 'btcMultisigSMSData', infoAboutCurrency: currencyInfo })
                 reducers.user.setInfoAboutCurrency({ name: 'btcMultisigUserData', infoAboutCurrency: currencyInfo })
                 reducers.user.setInfoAboutCurrency({ name: 'btcMultisigG2FAData', infoAboutCurrency: currencyInfo })
+                reducers.user.setInfoAboutCurrency({ name: 'btcMultisigPinData', infoAboutCurrency: currencyInfo })
                 break
               }
               case 'ETH': {
@@ -529,6 +549,7 @@ const getAuthData = (name) => {
 export default {
   sign,
   sign_btc_2fa,
+  sign_btc_pin,
   sign_btc_multisig,
   getBalances,
   getDemoMoney,

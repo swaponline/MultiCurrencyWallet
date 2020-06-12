@@ -21,6 +21,7 @@ export default {
   btc,
   'btc (multisig)': btc,
   'btc (sms-protected)': btc,
+  'btc (pin-protected)': btc,
   dcn,
   bxb,
   kn,

@@ -129,6 +129,9 @@ export default class Row extends Component {
       case 'BTC (Multisig)':
         await actions.btcmultisig.getBalanceUser(address)
         break
+      case 'BTC (PIN-Protected)':
+        await actions.btcmultisig.getBalancePin()
+        break
       default:
         await actions[currency.toLowerCase()].getBalance(
           currency.toLowerCase(),
@@ -221,6 +224,7 @@ export default class Row extends Component {
     switch (currency.toLowerCase()) {
       case 'btc (multisig)':
       case 'btc (sms-protected)':
+      case 'btc (pin-protected)':
         targetCurrency = 'btc'
         break
     }
@@ -305,6 +309,10 @@ export default class Row extends Component {
 
   handleActivateProtected = async () => {
     actions.modals.open(constants.modals.RegisterSMSProtected, {})
+  }
+
+  handleActivatePinProtected = async () => {
+    actions.modals.open(constants.modals.RegisterPINProtected, {})
   }
 
   handleGenerateMultisignLink = async () => {
@@ -433,6 +441,7 @@ export default class Row extends Component {
     switch (currency.toLowerCase()) {
       case 'btc (multisig)':
       case 'btc (sms-protected)':
+      case 'btc (pin-protected)':
         targetCurrency = 'btc'
         break
     }
@@ -657,6 +666,7 @@ export default class Row extends Component {
 
     if (currencyView == 'BTC (Multisig)') currencyView = 'BTC'
     if (currencyView == 'BTC (SMS-Protected)') currencyView = 'BTC'
+    if (currencyView == 'BTC (PIN-Protected)') currencyView = 'BTC'
 
     if (currencyView !== 'BTC') {
       dropDownMenuItems.push({
@@ -698,6 +708,35 @@ export default class Row extends Component {
         action: this.handleCreateInvoiceLink,
         disable: false,
       })
+    }
+
+    if (
+      this.props.itemData.isPinProtected &&
+      !this.props.itemData.isRegistered
+    ) {
+      currencyView = 'Not activated'
+      nodeDownErrorShow = false
+      dropDownMenuItems = [
+        {
+          id: 1,
+          title: (
+            <FormattedMessage
+              id="WalletRow_Menu_ActivatePinProtected"
+              defaultMessage="Activate"
+            />
+          ),
+          action: this.handleActivatePinProtected,
+          disabled: false,
+        },
+        {
+          id: 1011,
+          title: (
+            <FormattedMessage id="WalletRow_Menu_Hide" defaultMessage="Hide" />
+          ),
+          action: this.hideCurrency,
+          disabled: false,
+        },
+      ]
     }
 
     if (

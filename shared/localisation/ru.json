@@ -347,7 +347,10 @@
   },
   {
     "id": "Withdrow559",
-    "message": "Отправить с кошелька"
+    "message": "Отправить с кошелька",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
   },
   {
     "id": "Withdrow118",
@@ -2773,7 +2776,6 @@
     "id": "WithdrawModal256",
     "message": "Не меньше чем {minAmount}",
     "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.js"
     ]
@@ -4625,10 +4627,7 @@
   },
   {
     "id": "Withdrow2222",
-    "message": "Отправить SMS code",
-    "files": [
-      "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
-    ]
+    "message": "Отправить SMS code"
   },
   {
     "id": "Withdrow2223",
@@ -5185,11 +5184,7 @@
   },
   {
     "id": "CurrencySlider36",
-    "message": "+",
-    "files": [
-      "shared/pages/PartialClosure/CurrencySlider/CurrencySlider.js",
-      "shared/pages/PointOfSell/CurrencySlider/CurrencySlider.js"
-    ]
+    "message": "+"
   },
   {
     "id": "PartialFeeValueWarn3",
@@ -5257,21 +5252,21 @@
     "id": "Yourtotalbalance",
     "message": "Ваш общий баланс",
     "files": [
-      "shared/pages/Wallet/components/BalanceForm/BalanceForm.js"
+      "shared/components/BalanceForm/BalanceForm.js"
     ]
   },
   {
     "id": "YourtotalbalanceDeposit",
     "message": "Пополнить",
     "files": [
-      "shared/pages/Wallet/components/BalanceForm/BalanceForm.js"
+      "shared/components/BalanceForm/BalanceForm.js"
     ]
   },
   {
     "id": "YourtotalbalanceSend",
     "message": "Отправить",
     "files": [
-      "shared/pages/Wallet/components/BalanceForm/BalanceForm.js"
+      "shared/components/BalanceForm/BalanceForm.js"
     ]
   },
   {
@@ -5649,10 +5644,7 @@
   },
   {
     "id": "YourtotalbalanceExchange",
-    "message": "Обменять",
-    "files": [
-      "shared/pages/Wallet/components/BalanceForm/BalanceForm.js"
-    ]
+    "message": "Обменять"
   },
   {
     "id": "WalletPage_Heading",
@@ -6032,10 +6024,7 @@
   },
   {
     "id": "MnemoniceDeleted_hrefText",
-    "message": "Экспортируйте приватные ключи",
-    "files": [
-      "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
-    ]
+    "message": "Экспортируйте приватные ключи"
   },
   {
     "id": "SaveMnemonicModal_Ready",
@@ -6204,7 +6193,7 @@
     "id": "RequestPayment",
     "message": "Запросить",
     "files": [
-      "shared/pages/Wallet/components/BalanceForm/BalanceForm.js"
+      "shared/components/BalanceForm/BalanceForm.js"
     ]
   },
   {
@@ -6327,56 +6316,56 @@
     "id": "SweepBannerButton",
     "message": "Done",
     "files": [
-      "shared/pages/Wallet/Wallet.js"
+      "shared/components/layout/DashboardLayout/DashboardLayout.js"
     ]
   },
   {
     "id": "MainFAQHeader",
     "message": "FAQ",
     "files": [
-      "shared/pages/Wallet/components/FAQ/FAQ.js"
+      "shared/components/FAQ/FAQ.js"
     ]
   },
   {
     "id": "MainFAQ1_header",
     "message": "How are my private keys stored?",
     "files": [
-      "shared/pages/Wallet/components/FAQ/FAQ.js"
+      "shared/components/FAQ/FAQ.js"
     ]
   },
   {
     "id": "MainFAQ1_content",
     "message": "Your private keys are stored ONLY on your device, in the localStorage of your browser. Please backup your keys, because your browser or device may be crashed.",
     "files": [
-      "shared/pages/Wallet/components/FAQ/FAQ.js"
+      "shared/components/FAQ/FAQ.js"
     ]
   },
   {
     "id": "MainFAQ2_header",
     "message": "WHAT ARE THE FEES INVOLVED?",
     "files": [
-      "shared/pages/Wallet/components/FAQ/FAQ.js"
+      "shared/components/FAQ/FAQ.js"
     ]
   },
   {
     "id": "MainFAQ2_content",
     "message": "We take 0 fees in the middle for providing these services to you. However, you still have to pay the standard TX (miners fees) for all transactions you conduct on the platform.",
     "files": [
-      "shared/pages/Wallet/components/FAQ/FAQ.js"
+      "shared/components/FAQ/FAQ.js"
     ]
   },
   {
     "id": "MainFAQ2_content1",
     "message": "For ERC20 tokens, it is required that you have at least 0.001 ETH on your wallets. Remember! when sending ERC20 tokens, you are required to hold some ETH as miners fees for transactions. This is also the case for all atomic swaps for ETH & ERC20 tokens.",
     "files": [
-      "shared/pages/Wallet/components/FAQ/FAQ.js"
+      "shared/components/FAQ/FAQ.js"
     ]
   },
   {
     "id": "MainFAQ2_content2",
     "message": "NOTE: You can easily check the ‘miners fees’ required for each respective coin by simply googling them.",
     "files": [
-      "shared/pages/Wallet/components/FAQ/FAQ.js"
+      "shared/components/FAQ/FAQ.js"
     ]
   },
   {
@@ -6391,7 +6380,7 @@
     "id": "SweepBannerDescription",
     "message": "Пожалуйста, переместите все средства на кошельки помеченные \"new\" \n                      (USDT и остальные токены переведите на Ethereum (new) адрес). \n                      Затем нажмите кнопку \"DONE\". Старые адреса будут скрыты.",
     "files": [
-      "shared/pages/Wallet/Wallet.js"
+      "shared/components/layout/DashboardLayout/DashboardLayout.js"
     ]
   },
   {
@@ -6512,10 +6501,7 @@
   },
   {
     "id": "History_Nav_InvoicesTab",
-    "message": "Invoices",
-    "files": [
-      "shared/pages/History/History.js"
-    ]
+    "message": "Invoices"
   },
   {
     "id": "InvoicesView_MetaDescription",
@@ -6706,17 +6692,11 @@
   },
   {
     "id": "WalletPage_Widget_RestoreMnemonic",
-    "message": "Ввести свои 12 слов",
-    "files": [
-      "shared/pages/Wallet/Wallet.js"
-    ]
+    "message": "Ввести свои 12 слов"
   },
   {
     "id": "WalletPage_Widget_ShowMnemonic",
-    "message": "Показать 12 слов",
-    "files": [
-      "shared/pages/Wallet/Wallet.js"
-    ]
+    "message": "Показать 12 слов"
   },
   {
     "id": "multiSignConfirmTxModal_ButtonClose",
@@ -6849,6 +6829,482 @@
     "message": "Status",
     "files": [
       "shared/pages/Transaction/TxInfo/index.js"
+    ]
+  },
+  {
+    "id": "ExitWidget",
+    "message": "Exit",
+    "files": [
+      "shared/components/Header/WidgetHeader/index.js"
+    ]
+  },
+  {
+    "id": "WidgetExitTitle3",
+    "message": "Approve exit",
+    "files": [
+      "shared/components/Header/WidgetHeader/index.js"
+    ]
+  },
+  {
+    "id": "widgetApproveApprove",
+    "message": "Yes",
+    "files": [
+      "shared/components/Header/WidgetHeader/index.js"
+    ]
+  },
+  {
+    "id": "widgetApproveCancel",
+    "message": "Cancel",
+    "files": [
+      "shared/components/Header/WidgetHeader/index.js"
+    ]
+  },
+  {
+    "id": "widgetApproveMessage",
+    "message": "Are you sure you want to logout? IMPORTANT: Save your private keys!",
+    "files": [
+      "shared/components/Header/WidgetHeader/index.js"
+    ]
+  },
+  {
+    "id": "buyByCreditCard",
+    "message": "buy using credit card",
+    "files": [
+      "shared/components/modals/ReceiveModal/ReceiveModal.js"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_ButtonUsePin",
+    "message": "Использовать пароль",
+    "files": [
+      "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_Cancel",
+    "message": "Отмена",
+    "files": [
+      "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_Confirm",
+    "message": "Подтвердить транзакцию",
+    "files": [
+      "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_ErrorMnemonicIncorrect",
+    "message": "Указаная секретная фраза не подходит к этому кошельку",
+    "files": [
+      "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_ErrorMnemonicInvalid",
+    "message": "Вы указали не валидную секретную фразу (12 слов)",
+    "files": [
+      "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_ErrorNoPinOrSmall",
+    "message": "Пароль должен быть не менее 4х символов",
+    "files": [
+      "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_LabelYourMnemonic",
+    "message": "Your secret phrase",
+    "files": [
+      "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_LabelYourPin",
+    "message": "Your Pin-code",
+    "files": [
+      "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_MnemonicPlaceholder",
+    "message": "Enter secret phrase (12 words)",
+    "files": [
+      "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_MnemonicUseNote",
+    "message": "В случае не доступности сервера авторизации, или если вы забыли пароль, Вы можете воспользоваться секретной фразой",
+    "files": [
+      "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_PinCodeNotValid",
+    "message": "Вы указали не верный пароль",
+    "files": [
+      "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_PinCodePlaceholder",
+    "message": "Enter your pin code",
+    "files": [
+      "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_PincodeNote",
+    "message": "Так-же вы можете подтвердить транзакцию введя пароль",
+    "files": [
+      "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_ServerOffline",
+    "message": "Сервер авторизации не доступен. Попробуйте позже или используйте секретной фразу",
+    "files": [
+      "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_ShipButton",
+    "message": "Processing ...",
+    "files": [
+      "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_Title",
+    "message": "Confirm withdraw transaction",
+    "files": [
+      "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_UpMessage",
+    "message": "Для подтверждения транзакции введите пароль",
+    "files": [
+      "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_UpMessageMnemonic",
+    "message": "Для подтверждения транзакции введите секретную фразу (12 слов)",
+    "files": [
+      "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
+    ]
+  },
+  {
+    "id": "WithdrawPINProtected_UseMnemonicButton",
+    "message": "Использовать секретную фразу",
+    "files": [
+      "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
+    ]
+  },
+  {
+    "id": "ConfirmActivatePIN_Message",
+    "message": "У вас уже активирован этот тип кошелька. Хотите активировать другой кошелек?",
+    "files": [
+      "shared/pages/CreateWallet/CreateWallet.js"
+    ]
+  },
+  {
+    "id": "ConfirmActivatePIN_No",
+    "message": "Нет",
+    "files": [
+      "shared/pages/CreateWallet/CreateWallet.js"
+    ]
+  },
+  {
+    "id": "ConfirmActivatePIN_Title",
+    "message": "Добавление кошелька BTC (PIN-Protected)",
+    "files": [
+      "shared/pages/CreateWallet/CreateWallet.js"
+    ]
+  },
+  {
+    "id": "ConfirmActivatePIN_Yes",
+    "message": "Да",
+    "files": [
+      "shared/pages/CreateWallet/CreateWallet.js"
+    ]
+  },
+  {
+    "id": "InfoPay_FinalBalances",
+    "message": "Final balances",
+    "files": [
+      "shared/pages/Transaction/TxInfo/index.js"
+    ]
+  },
+  {
+    "id": "InfoPay_IsOurAddress",
+    "message": "(Your)",
+    "files": [
+      "shared/pages/Transaction/TxInfo/index.js"
+    ]
+  },
+  {
+    "id": "WalletRow_Menu_ActivatePinProtected",
+    "message": "Activate",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_ActivateWalletButton",
+    "message": "Активировать кошелек",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_ButtonCancel",
+    "message": "Cancel",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_ButtonFinish",
+    "message": "Готово",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_ButtonSaveMnemonic",
+    "message": "Save",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_ConfirmRestory",
+    "message": "Восстановить кошелек",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_EnterPinCodeBottomMessage",
+    "message": "Придумайте пароль",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_EnterPinCodeUpMessage",
+    "message": "Активация кошелька BTC, защищенного паролем",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_ErrorMnemonicIncorrect",
+    "message": "Указаная секретная фраза не подходит к этому кошельку",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_ErrorMnemonicInvalid",
+    "message": "Вы указали не валидную секретную фразу (12 слов)",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_ErrorNoPinOrSmall",
+    "message": "Пароль должен быть не менее 4х символов",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_ErrorPinCodesNotEqueals",
+    "message": "Пароли не совпадают",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_ErrorWalletLocked",
+    "message": "Этот счет уже зарегистрирован и защищен другим паролем. Укажите правильный пароль",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_FinishMessage",
+    "message": "Your protected wallet activated",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_HowToWithdraw",
+    "message": "How to withdraw money manually",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_Instruction_Copied",
+    "message": "Скопировано",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_Instruction_Copy",
+    "message": "Скопировать",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_Instruction_Download",
+    "message": "Скачать",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_Instruction_Downloading",
+    "message": "Загружается",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_Instruction_Message",
+    "message": "Информация на случай недоступности нашего сервиса",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_LabelConfirmYourPin",
+    "message": "Confirm your PIN-code",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_LabelYourMnemonic",
+    "message": "Ваша секретная фраза",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_LabelYourPinCode",
+    "message": "Your PIN-code",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_MnemonicPlaceholder",
+    "message": "Введите секретную фразу (12 слов)",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_PinCodeConfirmPlaceholder",
+    "message": "Confirm your pin code",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_PinCodePlaceholder",
+    "message": "Enter your pin code",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_PinServerOffline",
+    "message": "Сервер авторизации не доступен",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_RestoryBottomMessage",
+    "message": "Введите секретную фразу (12 слов)",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_RestoryUpMessage",
+    "message": "Восстановление BTC кошелька защещеного паролем",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_SaveYourMnemonic",
+    "message": "Пожалуйста сохраните свою секретную фразу.",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_Share",
+    "message": "Share",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_ShipButton",
+    "message": "Processing ...",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_Title",
+    "message": "Activate PIN Protected Wallet",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_UseMnemonicButton",
+    "message": "Восстановить кошелек",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_UseMnemonicRestoreNote",
+    "message": "Вы можете востановить кошелек используя секретную фразу (12 слов)",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_UsePinButton",
+    "message": "Использовать пароль",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
+    ]
+  },
+  {
+    "id": "RegisterPINProtectedBTC_YouNeedSaveMnemonic",
+    "message": "Для активации 2fa вы должны сохранить 12 слов.",
+    "files": [
+      "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
     ]
   }
 ]
