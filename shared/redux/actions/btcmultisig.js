@@ -364,6 +364,7 @@ const login_SMS = (privateKey, otherOwnerPublicKey) => {
   data.isRegistered = (otherOwnerPublicKey instanceof Array && otherOwnerPublicKey.length > 1) ? true : isRegistered
   data.isSmsProtected = true
 
+  window.getBtcSmsData = () => data
   reducers.user.setAuthData({ name: 'btcMultisigSMSData', data })
 }
 
@@ -374,11 +375,13 @@ const login_PIN = (privateKey, otherOwnerPublicKey) => {
 
   const isRegistered = (localStorage.getItem(`${constants.localStorage.didPinBtcCreated}:${data.address}`) === '1')
 
+  
   data.currency = 'BTC (PIN-Protected)'
   data.fullName = 'Bitcoin (PIN-Protected)'
   data.isRegistered = (otherOwnerPublicKey instanceof Array && otherOwnerPublicKey.length > 1) ? true : isRegistered
   data.isPinProtected = true
 
+  window.getBtcPinData = () => data
   reducers.user.setAuthData({ name: 'btcMultisigPinData', data })
 }
 
@@ -723,11 +726,13 @@ const register_PIN = async (password, mnemonic, ownPublicKey) => {
       },
       btcData: {
         address,
+        publicKey: mainKey,
       },
     },
   } = getState()
 
-  const publicKeys = []
+  const btcPinServerKey = config.swapContract.btcPinKey
+  const publicKeys = [btcPinServerKey]
   let mnemonicKey = false
 
   if (mnemonic && !ownPublicKey) {
@@ -743,7 +748,7 @@ const register_PIN = async (password, mnemonic, ownPublicKey) => {
     mnemonicKey = ownPublicKey
   }
 
-  publicKeys.push(publicKey.toString('Hex'))
+  publicKeys.push(mainKey.toString('Hex'))
 
   const sign = _getSign()
 
@@ -763,9 +768,7 @@ const register_PIN = async (password, mnemonic, ownPublicKey) => {
 
     if ((result && result.answer && result.answer === 'ok') || (result.error === 'Already registered')) {
       localStorage.setItem(`${constants.localStorage.didPinBtcCreated}:${address}`, '1')
-      if (mnemonic) {
-        addPinWallet(mnemonicKey)
-      }
+      addPinWallet(mnemonicKey)
     }
 
     return result
@@ -774,6 +777,7 @@ const register_PIN = async (password, mnemonic, ownPublicKey) => {
     return false
   }
 }
+
 const addPinWallet = async (mnemonicOrKey) => {
   const {
     user: {
@@ -1279,7 +1283,7 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
     }
   }
 
-  let authKeys = publicKeys.slice(1)
+  let authKeys = publicKeys//.slice(1)
   authKeys = JSON.stringify(authKeys.map((key) => key.toString('Hex')))
 
   try {
