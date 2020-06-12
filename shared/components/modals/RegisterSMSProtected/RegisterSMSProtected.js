@@ -1,34 +1,28 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
-import helpers, { constants } from "helpers";
+import { constants } from "helpers";
 import actions from "redux/actions";
 import Link from "sw-valuelink";
 import { connect } from "redaction";
-import config from "app-config";
 
 import cssModules from "react-css-modules";
 import styles from "../Styles/default.scss";
 import ownStyle from './RegisterSMSProtected.scss'
 
 
-import { BigNumber } from "bignumber.js";
 import Modal from "components/modal/Modal/Modal";
 import FieldLabel from "components/forms/FieldLabel/FieldLabel";
 import Input from "components/forms/Input/Input";
 import Button from "components/controls/Button/Button";
-import Tooltip from "components/ui/Tooltip/Tooltip";
 import { FormattedMessage, injectIntl, defineMessages } from "react-intl";
-import ReactTooltip from "react-tooltip";
-import { isMobile } from "react-device-detect";
 
 import typeforce from "swap.app/util/typeforce";
 // import { isCoinAddress } from 'swap.app/util/typeforce'
-import minAmount from "helpers/constants/minAmount";
-import { inputReplaceCommaWithDot } from "helpers/domUtils";
 import CopyToClipboard from 'react-copy-to-clipboard'
 import moment from 'moment/moment'
 import finishSvg from './images/finish.svg'
-
+import PhoneInput from 'react-phone-number-input'
+import 'react-phone-number-input/style.css'
 
 
 @injectIntl
@@ -66,7 +60,7 @@ export default class RegisterSMSProtected extends React.Component {
 
     this.state = {
       version,
-      phone: '',
+      phone: window.DefaultCountryCode || '',
       step,
       error: false,
       smsCode: "",
@@ -373,48 +367,48 @@ export default class RegisterSMSProtected extends React.Component {
     let restoreInstruction = ''
 
     restoreInstruction = `Wallet address:\r\n`
-    restoreInstruction+= `${btcMultisigSMSData.address}\r\n`
-    restoreInstruction+= `To withdraw funds create transaction using this code https://github.com/bitcoinjs/bitcoinjs-lib/blob/master/test/integration/transactions.spec.ts#L193\r\n`
-    restoreInstruction+= `\r\n`
-    restoreInstruction+= `Public keys for create Multisig (2of3) wallet:\r\n`
-    if (btcMultisigSMSData.publicKeys[0]) restoreInstruction+=`${btcMultisigSMSData.publicKeys[0].toString('Hex')}\r\n`
-    if (btcMultisigSMSData.publicKeys[1]) restoreInstruction+=`${btcMultisigSMSData.publicKeys[1].toString('Hex')}\r\n`
-    if (btcMultisigSMSData.publicKeys[2]) restoreInstruction+=`${btcMultisigSMSData.publicKeys[2].toString('Hex')}\r\n`
-    restoreInstruction+= `\r\n`
-    restoreInstruction+= `Hot wallet private key (WIF):\r\n`
-    restoreInstruction+= `${btcData.privateKey}\r\n`
-    restoreInstruction+= `*** (this private key stored in your browser)\r\n`
-    restoreInstruction+= `\r\n`
+    restoreInstruction += `${btcMultisigSMSData.address}\r\n`
+    restoreInstruction += `To withdraw funds create transaction using this code https://github.com/bitcoinjs/bitcoinjs-lib/blob/master/test/integration/transactions.spec.ts#L193\r\n`
+    restoreInstruction += `\r\n`
+    restoreInstruction += `Public keys for create Multisig (2of3) wallet:\r\n`
+    if (btcMultisigSMSData.publicKeys[0]) restoreInstruction += `${btcMultisigSMSData.publicKeys[0].toString('Hex')}\r\n`
+    if (btcMultisigSMSData.publicKeys[1]) restoreInstruction += `${btcMultisigSMSData.publicKeys[1].toString('Hex')}\r\n`
+    if (btcMultisigSMSData.publicKeys[2]) restoreInstruction += `${btcMultisigSMSData.publicKeys[2].toString('Hex')}\r\n`
+    restoreInstruction += `\r\n`
+    restoreInstruction += `Hot wallet private key (WIF):\r\n`
+    restoreInstruction += `${btcData.privateKey}\r\n`
+    restoreInstruction += `*** (this private key stored in your browser)\r\n`
+    restoreInstruction += `\r\n`
     if (!useGeneratedKey) {
-      restoreInstruction+= `Secret mnemonic:\r\n`
-      restoreInstruction+= `${mnemonic}\r\n`
-      restoreInstruction+= `Wallet delivery path for mnemonic:\r\n`
-      restoreInstruction+= `m/44'/0'/0'/0/0\r\n`
-      restoreInstruction+= `Private key (WIF) of wallet, generated from mnemonic:\r\n`
-      restoreInstruction+= `(DELETE THIS LINE!) ${mnemonicWallet.WIF}\r\n`
-      restoreInstruction+= `*** (this private key does not stored anywhere! but in case if our  2fa server does down, you can withdraw your fond using this private key)\r\n`
+      restoreInstruction += `Secret mnemonic:\r\n`
+      restoreInstruction += `${mnemonic}\r\n`
+      restoreInstruction += `Wallet delivery path for mnemonic:\r\n`
+      restoreInstruction += `m/44'/0'/0'/0/0\r\n`
+      restoreInstruction += `Private key (WIF) of wallet, generated from mnemonic:\r\n`
+      restoreInstruction += `(DELETE THIS LINE!) ${mnemonicWallet.WIF}\r\n`
+      restoreInstruction += `*** (this private key does not stored anywhere! but in case if our  2fa server does down, you can withdraw your fond using this private key)\r\n`
     }
-    restoreInstruction+= `If our service is unavailable, use a local copy of the wallet.\r\n`
-    restoreInstruction+= `https://swaponline.github.io/2fa_wallet.zip\r\n`
+    restoreInstruction += `If our service is unavailable, use a local copy of the wallet.\r\n`
+    restoreInstruction += `https://swaponline.github.io/2fa_wallet.zip\r\n`
 
     this.setState({
       restoreInstruction,
     })
   }
 
+  onPhoneChange = (phone) => {
+    this.setState(() => ({ phone }))
+  }
+
   render() {
     const {
       step,
-      phone,
       error,
-      smsCode,
-      smsConfirmed,
+      phone,
       isShipped,
-      mnemonicSaved,
       // useGeneratedKey,
       useGeneratedKeyEnabled,
       mnemonic,
-      mnemonicWallet,
       isMnemonicCopied,
       isMnemonicGenerated,
       isMnemonicValid,
@@ -426,15 +420,9 @@ export default class RegisterSMSProtected extends React.Component {
       showFinalInstruction,
     } = this.state
 
-    const {
-      name,
-      intl,
-      btcData,
-      btcMultisigSMSData,
-    } = this.props
+    const { name, intl } = this.props
 
-    console.log('sms modal props', this.props)
-    const linked = Link.all(this, 'phone', 'smsCode', 'mnemonic')
+    const linked = Link.all(this, 'smsCode', 'mnemonic')
 
     const langs = defineMessages({
       registerSMSModal: {
@@ -479,19 +467,19 @@ export default class RegisterSMSProtected extends React.Component {
               <div styleName="content-overlay">
                 <p styleName="centerInfoBlock">
                   <strong>
-                    <FormattedMessage { ...langs.needSaveMnemonicToContinue } />
+                    <FormattedMessage {...langs.needSaveMnemonicToContinue} />
                   </strong>
                   <br />
-                  <FormattedMessage { ...langs.pleaseSaveMnemonicToContinue } />
+                  <FormattedMessage {...langs.pleaseSaveMnemonicToContinue} />
                 </p>
               </div>
 
               <div styleName="buttonsHolder buttonsHolder_2_buttons button-overlay">
                 <Button blue onClick={this.handleBeginSaveMnemonic}>
-                  <FormattedMessage { ...langs.buttonSaveMnemonic } />
+                  <FormattedMessage {...langs.buttonSaveMnemonic} />
                 </Button>
                 <Button gray onClick={this.handleClose}>
-                  <FormattedMessage { ...langs.buttonCancel } />
+                  <FormattedMessage {...langs.buttonCancel} />
                 </Button>
               </div>
             </Fragment>
@@ -502,11 +490,11 @@ export default class RegisterSMSProtected extends React.Component {
                 <FieldLabel label>
                   <FormattedMessage id="registerSMSModalPhone" defaultMessage="Your phone:" />
                 </FieldLabel>
-                <Input
-                  styleName="input inputMargin25"
-                  valueLink={linked.phone}
-                  placeholder={`${intl.formatMessage(langs.phonePlaceHolder)}`}
-                  focusOnInit
+                <PhoneInput
+                  styleName="phoneNumber"
+                  value={phone}
+                  onChange={this.onPhoneChange}
+                  placeholder={`${intl.formatMessage(langs.mnemonicPlaceholder)}`}
                 />
               </div>
               {!useGeneratedKeyEnabled && (
@@ -520,19 +508,14 @@ export default class RegisterSMSProtected extends React.Component {
                     <FieldLabel label>
                       <FormattedMessage id="registerSMSModalWords" defaultMessage="Секретная фраза (12 слов):" />
                     </FieldLabel>
-                    <Input
-                      styleName="input inputMargin25 for12words"
-                      valueLink={linked.mnemonic}
-                      multiline={true}
-                      placeholder={`${intl.formatMessage(langs.mnemonicPlaceholder)}`}
-                    />
+
                     <div styleName='mnemonicButtonsHolder'>
                       <Button blue fullWidth disabled={isMnemonicGenerated} onClick={this.handleGenerateMnemonic}>
                         {isMnemonicGenerated ? (
-                          <FormattedMessage id='registerSMSModalMnemonicGenerateNewGenerated' defaultMessage='Создана'/>
+                          <FormattedMessage id='registerSMSModalMnemonicGenerateNewGenerated' defaultMessage='Создана' />
                         ) : (
-                          <FormattedMessage id="registerSMSModalMnemonicGenerateNew" defaultMessage="Создать новую" />
-                        )}
+                            <FormattedMessage id="registerSMSModalMnemonicGenerateNew" defaultMessage="Создать новую" />
+                          )}
                       </Button>
                       <CopyToClipboard
                         text={mnemonic}
@@ -542,8 +525,8 @@ export default class RegisterSMSProtected extends React.Component {
                           {isMnemonicCopied ? (
                             <FormattedMessage id='registerSMSModalMnemonicCopied' defaultMessage='Фраза скопирована' />
                           ) : (
-                            <FormattedMessage id='registerSMSModalMnemonicCopy' defaultMessage='Скопировать' />
-                          )}
+                              <FormattedMessage id='registerSMSModalMnemonicCopy' defaultMessage='Скопировать' />
+                            )}
                         </Button>
                       </CopyToClipboard>
                     </div>
@@ -567,10 +550,10 @@ export default class RegisterSMSProtected extends React.Component {
                     <hr />
                   </Fragment>
                 ) : (
-                  <Fragment>
-                    {error && <div styleName='rednotes mnemonicNotice'>{error}</div>}
-                  </Fragment>
-                )}
+                    <Fragment>
+                      {error && <div styleName='rednotes mnemonicNotice'>{error}</div>}
+                    </Fragment>
+                  )}
               </div>
               <Button blue big fullWidth disabled={isShipped || !isMnemonicValid} onClick={this.handleSendSMS}>
                 {isShipped ? (
@@ -578,24 +561,25 @@ export default class RegisterSMSProtected extends React.Component {
                     <FormattedMessage id="registerSMSModalProcess" defaultMessage="Processing ..." />
                   </Fragment>
                 ) : (
-                  <Fragment>
-                    <FormattedMessage id="registerSMSModalSendSMS" defaultMessage="Send SMS" />
-                  </Fragment>
-                )}
+                    <Fragment>
+                      <FormattedMessage id="registerSMSModalSendSMS" defaultMessage="Send SMS" />
+                    </Fragment>
+                  )}
               </Button>
             </Fragment>
           )}
           {step === "enterPhone" && (
             <Fragment>
+
               <div styleName="highLevel" className="ym-hide-content">
                 <FieldLabel label>
                   <FormattedMessage id="registerSMSModalPhone" defaultMessage="Your phone:" />
                 </FieldLabel>
-                <Input
-                  styleName="input inputMargin25"
-                  valueLink={linked.phone}
+                <PhoneInput
+                  styleName="phoneNumber"
+                  value={phone}
+                  onChange={this.onPhoneChange}
                   placeholder={`${intl.formatMessage(langs.mnemonicPlaceholder)}`}
-                  focusOnInit
                 />
                 {error && <div styleName="rednote">{error}</div>}
               </div>
@@ -605,10 +589,10 @@ export default class RegisterSMSProtected extends React.Component {
                     <FormattedMessage id="registerSMSModalProcess" defaultMessage="Processing ..." />
                   </Fragment>
                 ) : (
-                  <Fragment>
-                    <FormattedMessage id="registerSMSModalSendSMS" defaultMessage="Send SMS" />
-                  </Fragment>
-                )}
+                    <Fragment>
+                      <FormattedMessage id="registerSMSModalSendSMS" defaultMessage="Send SMS" />
+                    </Fragment>
+                  )}
               </Button>
             </Fragment>
           )}
@@ -646,8 +630,8 @@ export default class RegisterSMSProtected extends React.Component {
                 {isShipped ? (
                   <FormattedMessage id="registerSMSModalProcess" defaultMessage="Processing ..." />
                 ) : (
-                  <FormattedMessage id="registerSMSModalSendSMS165" defaultMessage="Confirm" />
-                )}
+                    <FormattedMessage id="registerSMSModalSendSMS165" defaultMessage="Confirm" />
+                  )}
               </Button>
               <hr />
               <p styleName="notice">
@@ -699,16 +683,16 @@ export default class RegisterSMSProtected extends React.Component {
                         {isInstructionCopied ? (
                           <FormattedMessage id='registerSMSModalInstCopied' defaultMessage='Скопировано' />
                         ) : (
-                          <FormattedMessage id='registerSMSModalInstCopy' defaultMessage='Скопировать' />
-                        )}
+                            <FormattedMessage id='registerSMSModalInstCopy' defaultMessage='Скопировать' />
+                          )}
                       </Button>
                     </CopyToClipboard>
                     <Button blue disabled={isInstructionDownloaded} onClick={this.handleDownloadInstruction}>
                       {isInstructionDownloaded ? (
                         <FormattedMessage id='registerSMSModalInstDownloaded' defaultMessage='Загружается' />
                       ) : (
-                        <FormattedMessage id='registerSMSModalInstDownload' defaultMessage='Скачать' />
-                      )}
+                          <FormattedMessage id='registerSMSModalInstDownload' defaultMessage='Скачать' />
+                        )}
                     </Button>
                     <Button blue onClick={this.handleShareInstruction}>
                       <FormattedMessage id="registerSMS_ShareInstruction" defaultMessage="Share" />

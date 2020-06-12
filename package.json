@@ -167,6 +167,7 @@
     "react-items-carousel": "^2.7.0",
     "react-joyride": "^2.1.1",
     "react-loading-skeleton": "^2.0.1",
+    "react-phone-number-input": "^3.0.23",	
     "react-qr-scanner": "0.0.8",
     "react-redux": "^5.1.2",
     "react-router-dom": "^4.2.2",
