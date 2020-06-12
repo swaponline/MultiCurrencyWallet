@@ -214,7 +214,7 @@ export default class Header extends Component {
     const allData = actions.core.getWallets()
 
     const widgetCurrencies = ['BTC', 'ETH']
-    const optionsalCur = ['BTC (SMS-Protected)', 'BTC (Multisig)']
+    const optionsalCur = ['BTC (SMS-Protected)', 'BTC (Multisig)', 'BTC (PIN-Protected)']
 
     optionsalCur.forEach(el => {
       if (!hiddenCoinsList.includes(el)) {

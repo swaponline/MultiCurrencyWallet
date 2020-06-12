@@ -13,7 +13,7 @@ export default {
   etherscan_ApiKey: 'RHHFPNMAZMD6I4ZWBZBF6FA11CMW9AXZNM',
   faucet: 'https://faucet.swaponline.site/testnet/',
   btc2FAProtected: 'https://2fa.swaponline.site',
-  btcPin: 'http://localhost:31211',
+  btcPin: 'https://2fapin.swaponline.site',
   invoiceApi: 'https://invoices.swaponline.site',
   multisig: 'https://multisig.swaponline.site',
   txinfo: 'https://txinfo.swaponline.site',

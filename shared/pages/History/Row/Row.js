@@ -156,6 +156,8 @@ class Row extends React.PureComponent {
     switch (type) {
       case 'btc (sms-protected)': type = 'BTC'
         break;
+      case 'btc (pin-protected)': type = 'BTC'
+        break;
       case 'btc (multisig)': type = 'BTC'
         break;
     }

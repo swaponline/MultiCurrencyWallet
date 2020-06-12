@@ -44,6 +44,7 @@ export default class QR extends Component {
     switch (network.toLowerCase()) {
       case 'btc (multisig)':
       case 'btc (sms-protected)':
+      case 'btc (pin-protected)':
         network = 'btc'
         break
     }
