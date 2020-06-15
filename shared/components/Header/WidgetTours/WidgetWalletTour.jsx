@@ -27,15 +27,15 @@ export class WidgetWalletTour extends Component {
         {
           content: <FormattedMessage
             id="widget-tour-step-2"
-            defaultMessage="This is your total wallet balance" />,
-          spotlightPadding: 20,
+            defaultMessage="This is your total wallet balance." />,
+          spotlightPadding: 0,
           target: '.data-tut-widget-balance',
         },
         {
           content: <FormattedMessage
             id="widget-tour-step-3"
             defaultMessage="Use these buttons to transfer Bitcoin in and out of your wallet." />,
-          spotlightPadding: 20,
+          spotlightPadding: 0,
           target: '.data-tut-withdraw-buttons',
         },
         {
@@ -50,6 +50,8 @@ export class WidgetWalletTour extends Component {
             id="widget-tour-step-5"
             defaultMessage="Click these three dots to find your wallet address, private keys and more."
           />,
+          spotlightPadding: 0,
+          placement: 'left',
           target: '.data-tut-row-menu',
         },
         {
@@ -57,6 +59,7 @@ export class WidgetWalletTour extends Component {
             id="widget-tour-step-6"
             defaultMessage="Click this button to review a list of your recent transactions."
           />,
+          spotlightPadding: 0,
           target: '.data-tut-recent',
         },
         {
@@ -64,12 +67,13 @@ export class WidgetWalletTour extends Component {
             id="widget-tour-step-7"
             defaultMessage="Click this button to exchange your cryptocurrencies."
           />,
+          spotlightPadding: 0,
           target: '.data-tut-widget-exchange',
         },
         {
           content: <FormattedMessage
             id="widget-tour-finishStep"
-            defaultMessage="Get started."
+            defaultMessage="That's it! Lets get started."
           />,
           placement: 'center',
           target: '.data-tut-widget-tourFinish',
@@ -106,6 +110,7 @@ export class WidgetWalletTour extends Component {
             options: {
               zIndex: 10000,
               arrowColor: '#302272',
+              width: 300
             },
           }}
         />}
