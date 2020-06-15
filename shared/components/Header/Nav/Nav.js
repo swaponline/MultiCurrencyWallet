@@ -91,9 +91,6 @@ export default class Nav extends Component {
                       {title}
                     </div>
                   </NavLink>
-                  <div>
-                    {/* haveSubmenu && <SubMenu history={history} locale={locale} key={index} /> */}
-                  </div>
                 </div>
               );
             })}

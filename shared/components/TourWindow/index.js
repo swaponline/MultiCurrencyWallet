@@ -38,7 +38,7 @@ const Tooltip = (props) => {
           </button>
         )}
         <button {...primaryProps} onClick={clickPrimary}>
-          {continuous ?
+          {continuous && !isLastStep ?
             <FormattedMessage id="nextTourWindow" defaultMessage="Далее" />
             :
             <FormattedMessage id="closeTourWindow" defaultMessage="Закрыть" />}
