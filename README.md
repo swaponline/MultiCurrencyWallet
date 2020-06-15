@@ -183,6 +183,10 @@ for any questions: telegram <a href="https://t.me/sashanoxon">sashanoxon</a>
 1. add / edit  ```window.defaultWindowTitle``` to your own
 .
 
+## how change link in logo (Default main wallet page)
+0. go to index.html
+1. add / edit ```window.LOGO_REDIRECT_LINK``` to your own
+
 ## how add custum exchange Rate:
 0. add ```customEcxchangeRate``` to ```window.widgetERC20Tokens```
 1. add usd price for ```window.widgetERC20Tokens```

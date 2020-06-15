@@ -34,7 +34,9 @@ export default class Logo extends Component {
 
     const srcFiles = isColored ? images.colored : images.common;
     const { host, href } = window.location;
-    const file = Object.keys(srcFiles).find(el => window.location.href.includes(el)) || "base";
+    const file = Object.keys(srcFiles).find(el => window.location.href.includes(el)) || "base"
+    const onLogoClickLink = (window && window.LOGO_REDIRECT_LINK) ? window.LOGO_REDIRECT_LINK : localisedUrl(locale, links.home)
+    const hasOwnLogoLink = (window && window.LOGO_REDIRECT_LINK)
 
     const imgNode = React.createElement("img", {
       styleName: !withLink && "logo",
@@ -44,17 +46,30 @@ export default class Logo extends Component {
 
     return (
       <Fragment>
-        {window.location.hostname === "localhost" ||
+        {window.location.hostname === "localhost2" ||
         window.location.hostname === "swaponline.github.io" ||
         window.location.hostname === "swaponline.io" ? (
-          <Link
-            styleName={`${mobile ? "mobile" : "logo"}`}
-            data-tip
-            data-for="logo"
-            to={localisedUrl(locale, links.home)}
-          >
-            {imgNode}
-          </Link>
+        <Fragment>
+          {hasOwnLogoLink ? (
+            <a
+              href={onLogoClickLink}
+              styleName={`${mobile ? "mobile" : "logo"}`}
+              data-tip
+              data-for="logo"
+            >
+              {imgNode}
+            </a>
+            ) : (
+            <Link
+              styleName={`${mobile ? "mobile" : "logo"}`}
+              data-tip
+              data-for="logo"
+              to={onLogoClickLink}
+            >
+              {imgNode}
+            </Link>
+          )}
+        </Fragment>
         ) : (
           <div>
             {isNoLogo && (

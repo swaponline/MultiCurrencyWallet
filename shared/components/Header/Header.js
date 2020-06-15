@@ -373,15 +373,20 @@ export default class Header extends Component {
       peer,
       isSigned,
       isInputActive,
-    } = this.props;
-    const { exchange, wallet } = links;
+    } = this.props
+
+    const { exchange, wallet } = links
+    const onLogoClickLink = (window && window.LOGO_REDIRECT_LINK) ? window.LOGO_REDIRECT_LINK : localisedUrl(locale, links.home)
+    const hasOwnLogoLink = (window && window.LOGO_REDIRECT_LINK)
 
     const isWalletPage = pathname.includes(wallet) || pathname === `/ru${wallet}` || pathname === `/`;
 
     const isExchange = pathname.includes(exchange);
 
+    const imgNode = <img styleName="otherHeaderLogo" onClick={this.handleGoHome} className="site-logo-header" src={window.logoUrl} alt="logo" />
+
     const logoRenderer =
-      window.location.hostname === "localhost" ||
+      window.location.hostname === "localhost2" ||
         window.location.hostname === "swaponline.github.io" ||
         window.location.hostname === "swaponline.io" ? (
           <LogoTooltip withLink isColored isExchange={isWalletPage} />
@@ -389,11 +394,17 @@ export default class Header extends Component {
           <div styleName="flexebleHeader">
             {window.logoUrl !== '#' && (
               <div styleName="imgWrapper">
+              {hasOwnLogoLink ? (
+                <a href={onLogoClickLink}>
+                  {imgNode}
+                </a>
+              ) : (
                 <Link
-                  to={localisedUrl(locale, links.home)}
+                  to={onLogoClickLink}
                 >
-                  <img styleName="otherHeaderLogo" onClick={this.handleGoHome} className="site-logo-header" src={window.logoUrl} alt="logo" />
+                  {imgNode}
                 </Link>
+              )}
               </div>
             )}
             {isWidgetBuild && <WidgetHeader />}
