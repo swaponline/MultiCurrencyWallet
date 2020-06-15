@@ -32,3 +32,9 @@
         padding: 0.8rem;
     }
 }
+
+@media all and (max-width: 480px) {
+  .toolTipBody {
+    min-width: 220px;
+  }
+}
