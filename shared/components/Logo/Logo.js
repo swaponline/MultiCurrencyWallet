@@ -46,7 +46,7 @@ export default class Logo extends Component {
 
     return (
       <Fragment>
-        {window.location.hostname === "localhost2" ||
+        {window.location.hostname === "localhost" ||
         window.location.hostname === "swaponline.github.io" ||
         window.location.hostname === "swaponline.io" ? (
         <Fragment>

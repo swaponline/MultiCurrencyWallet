@@ -386,7 +386,7 @@ export default class Header extends Component {
     const imgNode = <img styleName="otherHeaderLogo" onClick={this.handleGoHome} className="site-logo-header" src={window.logoUrl} alt="logo" />
 
     const logoRenderer =
-      window.location.hostname === "localhost2" ||
+      window.location.hostname === "localhost" ||
         window.location.hostname === "swaponline.github.io" ||
         window.location.hostname === "swaponline.io" ? (
           <LogoTooltip withLink isColored isExchange={isWalletPage} />
