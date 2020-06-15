@@ -54,6 +54,7 @@ function BalanceForm({
   switch (currency) {
     case 'btc (sms-protected)':
     case 'btc (multisig)':
+    case 'btc (pin-protected)':
       currency = 'BTC'
       break
   }

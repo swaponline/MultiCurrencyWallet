@@ -20,6 +20,7 @@ export default {
   IEO_signed: 'IEO_signed',
   startSwap: 'startSwap',
   didProtectedBtcCreated: 'protectedBtcCreated',
+  didPinBtcCreated: `${process.env.ENTRY}:pinBtcCreated`,
   didProtectedBtcG2FACreated: 'protectedBtcG2FA',
   walletTitle: 'walletTitle',
   customERC: 'customERC',

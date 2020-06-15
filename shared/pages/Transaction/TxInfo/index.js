@@ -208,12 +208,12 @@ export default class TxInfo extends React.Component {
                     {(finalBalances) ? (
                       <>
                         <tr>
-                          <td styleName="header" colspan="2">
+                          <td styleName="header" colSpan="2">
                             <FormattedMessage id="InfoPay_FinalBalances" defaultMessage="Final balances" />
                           </td>
                         </tr>
                         <tr>
-                          <td styleName="header" colspan="2">
+                          <td styleName="header" colSpan="2">
                             {finalBalances.from}
                             {(fromIsOur) && (
                               <>
@@ -230,7 +230,7 @@ export default class TxInfo extends React.Component {
                           </td>
                         </tr>
                         <tr>
-                          <td styleName="header" colspan="2">
+                          <td styleName="header" colSpan="2">
                             {finalBalances.to}
                             {(toIsOur) && (
                               <>

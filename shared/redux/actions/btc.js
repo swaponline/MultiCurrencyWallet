@@ -386,6 +386,7 @@ const getAllMyAddresses = () => {
       btcMultisigSMSData,
       btcMultisigUserData,
       btcMultisigG2FAData,
+      btcMultisigPinData
     },
   } = getState()
 
@@ -412,14 +413,8 @@ const getAllMyAddresses = () => {
     })
   }
 
-  // @ToDo - add btcMultisigG2FAData process
-  /*
-  if (btcData && btcData.address && btcData.address.toLowerCase() === address.toLowerCase()) return btcData
-  if (btcMnemonicData && btcMnemonicData.address && btcMnemonicData.address.toLowerCase() === address.toLowerCase()) return btcMnemonicData // Sweep
-  if (btcMultisigSMSData && btcMultisigSMSData.address && btcMultisigSMSData.address.toLowerCase() === address.toLowerCase()) return btcMultisigSMSData
-  if (btcMultisigUserData && btcMultisigUserData.address && btcMultisigUserData.address.toLowerCase() === address.toLowerCase()) return btcMultisigUserData
-  if (btcMultisigG2FAData && btcMultisigG2FAData.address && btcMultisigG2FAData.address.toLowerCase() === address.toLowerCase()) return btcMultisigG2FAData
-*/
+  if (btcMultisigPinData && btcMultisigPinData.address) retData.push(btcMultisigPinData.address.toLowerCase())
+
   return retData
 }
 

@@ -37,6 +37,7 @@ export default class CurrencyList extends Component {
       switch (currency.toLowerCase()) {
         case 'btc (multisig)':
         case 'btc (sms-protected)':
+        case 'btc (pin-protected)':
           targetCurrency = 'btc'
           break
       }
@@ -95,8 +96,8 @@ export default class CurrencyList extends Component {
         </div>
         {isAssetsOpen && (
           <div styleName="customSelectList">
-            {tableRows.map((item) => (
-              <div
+            {tableRows.map((item, index) => (
+              <div key={index}
                 styleName={cx('customSelectListItem customSelectValue', {
                   disabled: item.balance === 0,
                 })}

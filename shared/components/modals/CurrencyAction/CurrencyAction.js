@@ -78,6 +78,7 @@ export default class CurrencyAction extends React.Component {
       switch (currency.toLowerCase()) {
         case 'btc (multisig)':
         case 'btc (sms-protected)':
+        case 'btc (pin-protected)':
           targetCurrency = 'btc'
           break
       }

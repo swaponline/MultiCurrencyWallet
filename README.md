@@ -2,7 +2,7 @@
 
 ## Open-source Multicurrency wallet for Bitcoin and custom assets, and p2p excahnge
 
-Live version here: https://swaponline.github.io . 
+Live version here: https://swaponline.github.io  
 
 No coding skills? Buy WordPress plugin https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064 with admin panel. Installation 100$ (send us assess to your server t.me/sashanoxon)
 

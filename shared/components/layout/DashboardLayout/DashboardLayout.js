@@ -95,6 +95,7 @@ const NewDesignLayout = (props) => {
   // Набор валют для виджета
   const widgetCurrencies = ['BTC']
   if (!hiddenCoinsList.includes('BTC (SMS-Protected)')) { widgetCurrencies.push('BTC (SMS-Protected)') }
+  if (!hiddenCoinsList.includes('BTC (PIN-Protected)')) { widgetCurrencies.push('BTC (PIN-Protected)') }
   if (!hiddenCoinsList.includes('BTC (Multisig)')) { widgetCurrencies.push('BTC (Multisig)') }
   widgetCurrencies.push('ETH')
   if (isWidgetBuild) {
