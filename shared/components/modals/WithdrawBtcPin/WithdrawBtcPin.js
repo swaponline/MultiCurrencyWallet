@@ -26,6 +26,7 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import moment from 'moment/moment'
 import redirectTo from 'helpers/redirectTo'
+import lsDataCache from 'helpers/lsDataCache'
 
 
 const langPrefix = `WithdrawPINProtected`
@@ -242,6 +243,8 @@ export default class WithdrawBtcPin extends React.Component {
         wallet,
         sendOptions: {
           amount,
+          from,
+          to,
         },
         invoice,
         adminFee,
@@ -251,6 +254,20 @@ export default class WithdrawBtcPin extends React.Component {
     } = this.props
     if (result && result.answer === 'ok') {
       const { txId } = result
+
+      // Сохраняем транзакцию в кеш
+      const txInfoCache = {
+        amount,
+        senderAddress: from,
+        receiverAddress: to,
+        confirmed: false,
+      }
+
+      lsDataCache.push({
+        key: `TxInfo_btc_${txId}`,
+        time: 3600,
+        data: txInfoCache,
+      })
 
       helpers.transactions.pullTxBalances(txId, amount, beforeBalances, adminFee)
 

@@ -28,6 +28,7 @@ import Seo from "components/Seo/Seo";
 
 import config from "helpers/externalConfig"
 
+
 const memdown = require("memdown");
 
 const userLanguage = (navigator.userLanguage || navigator.language || "en-gb").split("-")[0];

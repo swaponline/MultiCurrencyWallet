@@ -37,6 +37,7 @@ import { getActivatedCurrencies } from 'helpers/user'
 
 import CurrencyList from './components/CurrencyList'
 import getCurrencyKey from 'helpers/getCurrencyKey'
+import lsDataCache from 'helpers/lsDataCache'
 
 
 
@@ -351,6 +352,22 @@ export default class WithdrawModal extends React.Component {
         // Без блокировки клиента
         // Результат и успешность запроса критического значения не имеют
         helpers.transactions.pullTxBalances(txId, amount, beforeBalances, adminFee)
+
+        // Сохраняем транзакцию в кеш
+        const txInfoCache = {
+          amount,
+          senderAddress: address,
+          receiverAddress: to,
+          confirmed: false,
+          adminFee,
+        }
+
+        lsDataCache.push({
+          key: `TxInfo_${currency.toLowerCase()}_${txId}`,
+          time: 3600,
+          data: txInfoCache,
+        })
+
 
         const txInfoUrl = helpers.transactions.getTxRouter(currency.toLowerCase(), txId)
         redirectTo(txInfoUrl)
