@@ -100,6 +100,9 @@
   white-space: pre-wrap;
   cursor: pointer;
   width: 75%;
+  @media all and (max-width: 480px) {
+    font-size: 0.55em;
+  }
 }
 
 .address {
@@ -133,6 +136,9 @@
 
   a {
     color: #212529;
+    @media all and (max-width: 480px) {
+      font-size: 0.8em;
+    }
   }
 }
 
@@ -282,10 +288,16 @@ tr.historyRow {
   .amountUsd {
     right: 15px;
     top: 39px;
+    @media all and (max-width: 480px) {
+      font-size: 0.6em;
+    }
   }
   .amount {
     right: 15px;
     top: 17px;
+    @media all and (max-width: 480px) {
+      font-size: 0.8em;
+    }
   }
   .historyInfo {
     margin-left: 0px;

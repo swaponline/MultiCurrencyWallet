@@ -27,14 +27,14 @@ export class WidgetWalletTour extends Component {
         {
           content: <FormattedMessage
             id="widget-tour-step-2"
-            defaultMessage="This is your total wallet balance." />,
+            defaultMessage="This is your wallet balance." />,
           spotlightPadding: 0,
           target: '.data-tut-widget-balance',
         },
         {
           content: <FormattedMessage
             id="widget-tour-step-3"
-            defaultMessage="Use these buttons to transfer Bitcoin in and out of your wallet." />,
+            defaultMessage="Use these buttons to transfer Cryptocurrencies in and out of your wallet." />,
           spotlightPadding: 0,
           target: '.data-tut-withdraw-buttons',
         },
