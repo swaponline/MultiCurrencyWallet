@@ -20,6 +20,8 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import config from 'helpers/externalConfig'
 import ContentLoader from 'components/loaders/ContentLoader/ContentLoader'
+import lsDataCache from 'helpers/lsDataCache'
+
 
 const isWidgetBuild = config && config.isWidget
 
@@ -90,10 +92,16 @@ export default class InvoicesList extends PureComponent {
       history,
     } = props
 
+    let items = false
+    if (type && address) {
+      items = lsDataCache.get(`Invoices_${type.toLowerCase()}_${address.toLowerCase()}`)
+    } else {
+      items = lsDataCache.get(`Invoices_All`)
+    }
     this.state = {
       type,
       address,
-      items: false,
+      items,
     }
   }
 
@@ -115,6 +123,11 @@ export default class InvoicesList extends PureComponent {
         currency: type,
         address,
       }).then((items) => {
+        lsDataCache.push({
+          key: `Invoices_${type.toLowerCase()}_${address.toLowerCase()}`,
+          time: 3600,
+          data: items,
+        })
         if (!this.unmounted) {
           this.setState({ items })
         }
@@ -134,6 +147,11 @@ export default class InvoicesList extends PureComponent {
         }
       })
       actions.invoices.getManyInvoices(invoicesData).then((items) => {
+        lsDataCache.push({
+          key: `Invoices_All`,
+          time: 3600,
+          data: items,
+        })
         if (!this.unmounted) {
           this.setState({ items })
         }
@@ -169,17 +187,21 @@ export default class InvoicesList extends PureComponent {
     } = prevProps
 
     if ((prevAddress !== address) || (prevType !== type)) {
+      let items = false
+      if (type && address) {
+        items = lsDataCache.get(`Invoices_${type.toLowerCase()}_${address.toLowerCase()}`)
+      } else {
+        items = lsDataCache.get(`Invoices_All`)
+      }
       this.setState({
         type,
         address,
-        items: false,
+        items,
       }, () => {
         this.fetchItems()
       })
     }
   }
-
-  async componentWillUnmount() { }
 
   rowRender = (row, rowIndex) => {
     const {

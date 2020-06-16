@@ -28,6 +28,7 @@ import FilterForm from 'components/FilterForm/FilterForm'
 import DashboardLayout from 'components/layout/DashboardLayout/DashboardLayout'
 
 import getCurrencyKey from 'helpers/getCurrencyKey'
+import lsDataCache from 'helpers/lsDataCache'
 
 
 const isWidgetBuild = config && config.isWidget
@@ -170,13 +171,15 @@ export default class CurrencyWallet extends Component {
 
       const { currency, address, contractAddress, decimals, balance, infoAboutCurrency } = itemCurrency
 
+      const hasCachedData = lsDataCache.get(`TxHistory_${getCurrencyKey(currency,true).toLowerCase()}_${address}`)
+
       this.state = {
         itemCurrency,
         address,
         balance,
         decimals,
         currency,
-        txItems: false,
+        txItems: hasCachedData,
         contractAddress,
         hiddenCoinsList,
         isLoading: false,
@@ -384,6 +387,12 @@ export default class CurrencyWallet extends Component {
         if (itemCurrency.isSmsProtected) modalWithdraw = WithdrawMultisigSMS
         if (itemCurrency.isUserProtected) modalWithdraw = WithdrawMultisigUser
 
+        const {
+          txItems: oldTxItems,
+        } = this.state
+
+        const hasCachedData = lsDataCache.get(`TxHistory_${getCurrencyKey(currency,true).toLowerCase()}_${address}`)
+
         this.setState(
           {
             itemCurrency,
@@ -391,7 +400,7 @@ export default class CurrencyWallet extends Component {
             decimals,
             currency,
             balance,
-            //txItems: false, // Не очищаем транзакции, из-за этого на заднем фоне включается режим "загрузки", который остается при закрытии окна
+            txItems: (hasCachedData || oldTxItems),
             contractAddress,
             isLoading: false,
             infoAboutCurrency,
@@ -442,6 +451,17 @@ export default class CurrencyWallet extends Component {
     let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date)
     this.setState({
       txItems: data,
+    })
+
+    const {
+      currency,
+      address,
+    } = this.state
+
+    lsDataCache.push({
+      key: `TxHistory_${getCurrencyKey(currency,true).toLowerCase()}_${address}`,
+      data,
+      time: 3600,
     })
   }
 

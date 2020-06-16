@@ -11,6 +11,7 @@ import TxInfo from './TxInfo'
 import { ModalBox } from 'components/modal'
 import cssModules from 'react-css-modules'
 import styles from './styles.scss'
+import lsDataCache from 'helpers/lsDataCache'
 
 
 const labels = defineMessages({
@@ -41,13 +42,41 @@ class Transaction extends Component {
     } = props
 
     const currency = getCurrencyKey(ticker, true)
+    const infoTx = lsDataCache.get(`TxInfo_${currency.toLowerCase()}_${txId}`)
+
+    let rest = {}
+    if (infoTx) {
+      const {
+        amount,
+        afterBalance: oldBalance,
+        confirmed,
+        senderAddress: sender,
+        receiverAddress: toAddress,
+        confirmations,
+        minerFee,
+        minerFeeCurrency,
+        adminFee,
+      } = infoTx
+
+      rest = {
+        amount,
+        confirmed,
+        sender,
+        toAddress,
+        oldBalance,
+        confirmations,
+        minerFee,
+        minerFeeCurrency,
+        adminFee,
+      }
+    }
 
     this.state = {
       currency,
       ticker,
       txId,
-      isFetching: true,
-      infoTx: false,
+      isFetching: !(infoTx),
+      infoTx,
       amount: 0,
       balance: 0,
       oldBalance: 0,
@@ -58,10 +87,15 @@ class Transaction extends Component {
       minerFee: 0,
       error: null,
       finalBalances: false,
+      ...rest,
     }
   }
 
   async fetchTxInfo(currencyKey, txId) {
+    const {
+      infoTx: cachedTxInfo,
+    } = this.state
+
     let infoTx = null
     let error = null
     try {
@@ -75,12 +109,18 @@ class Transaction extends Component {
       // Fail parse
       this.setState({
         isFetching: false,
-        error,
+        error: !(cachedTxInfo),
       })
       return
     }
 
     if (!this.unmounted) {
+      lsDataCache.push({
+        key: `TxInfo_${currencyKey.toLowerCase()}_${txId}`,
+        time: 3600,
+        data: infoTx,
+      })
+
       const {
         amount,
         afterBalance: oldBalance,

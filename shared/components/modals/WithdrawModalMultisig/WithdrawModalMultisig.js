@@ -29,6 +29,7 @@ import QrReader from "components/QrReader";
 
 import redirectTo from 'helpers/redirectTo'
 import AdminFeeInfoBlock from 'components/AdminFeeInfoBlock/AdminFeeInfoBlock'
+import lsDataCache from 'helpers/lsDataCache'
 
 
 @injectIntl
@@ -194,7 +195,7 @@ export default class WithdrawModalMultisig extends React.Component {
   onFinishWithdraw = async (txId) => {
     const {
       amount,
-      to,
+      address: to,
     } = this.state
 
     const {
@@ -226,6 +227,20 @@ export default class WithdrawModalMultisig extends React.Component {
     })
     */
 
+    // Сохраняем транзакцию в кеш
+    const txInfoCache = {
+      amount,
+      senderAddress: address,
+      receiverAddress: to,
+      confirmed: false,
+    }
+
+    lsDataCache.push({
+      key: `TxInfo_btc_${txId}`,
+      time: 3600,
+      data: txInfoCache,
+    })
+    
     this.setState({
       isShipped: false,
       error: false,

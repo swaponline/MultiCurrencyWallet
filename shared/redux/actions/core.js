@@ -367,7 +367,7 @@ const getWallets = () => {
     ... (ethMnemonicData && !ethData.isMnemonic) ? [ethMnemonicData] : [], // Sweep
     btcData,
     btcMultisigSMSData,
-    btcMultisigPinData,
+    ... (btcMultisigPinData && btcMultisigPinData.isRegistered) ? [btcMultisigPinData] : [],
     btcMultisigUserData,
     ... (btcMultisigUserData && btcMultisigUserData.wallets) ? btcMultisigUserData.wallets : [],
     ethData,
