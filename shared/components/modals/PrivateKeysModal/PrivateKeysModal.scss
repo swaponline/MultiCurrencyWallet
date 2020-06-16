@@ -5,9 +5,17 @@
 }
 
 .text {
-  font-size: 1em;
+  font-size: 1.5em;
+
+  @media all and (max-width: 480px) {
+    font-size: 1em;
+  }
 }
 
 .key {
-  font-size: 0.5em;
+  font-size: 1em;
+
+  @media all and (max-width: 480px) {
+    font-size: 0.5em;
+  }
 }

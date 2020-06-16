@@ -1,7 +1,6 @@
 import React from 'react'
 
 import actions from 'redux/actions'
-import { localStorage, constants } from 'helpers'
 
 import cssModules from 'react-css-modules'
 import styles from './PrivateKeysModal.scss'
