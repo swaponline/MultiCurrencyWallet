@@ -22,6 +22,11 @@
     padding-left: 0;
   }
 }
+.btns {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
 
 .yourAssets {
   background: #ffffff;

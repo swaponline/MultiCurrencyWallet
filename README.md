@@ -168,10 +168,6 @@ git pull
 
 if you have conflicts (if sources has been changed on your side) click "resolve conflicts".
 
-# DeFi style (borrow/lend) 
-![](https://screenshots.wpmix.net/chrome_ta4cbcsWgMjqbYSp9rFTwMa5bJDBYjcF.png) 
-https://drive.google.com/file/d/15e0ODxzbtiu0xJOeKKuJ2SzffZmc5_OA/view 
-
 for any questions: telegram <a href="https://t.me/sashanoxon">sashanoxon</a>
 
 ## how to change project name in "many tabs" errors:

@@ -6807,42 +6807,42 @@
   },
   {
     "id": "WithdrawPINProtected_ButtonUsePin",
-    "message": "Использовать пароль",
+    "message": "Use PIN-Code",
     "files": [
       "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
     ]
   },
   {
     "id": "WithdrawPINProtected_Cancel",
-    "message": "Отмена",
+    "message": "Cancel",
     "files": [
       "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
     ]
   },
   {
     "id": "WithdrawPINProtected_Confirm",
-    "message": "Подтвердить транзакцию",
+    "message": "Confirm Transaction",
     "files": [
       "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
     ]
   },
   {
     "id": "WithdrawPINProtected_ErrorMnemonicIncorrect",
-    "message": "Указаная секретная фраза не подходит к этому кошельку",
+    "message": "The specified secret phrase does not match this wallet",
     "files": [
       "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
     ]
   },
   {
     "id": "WithdrawPINProtected_ErrorMnemonicInvalid",
-    "message": "Вы указали не валидную секретную фразу (12 слов)",
+    "message": "You entered an invalid secret phrase (12 words)",
     "files": [
       "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
     ]
   },
   {
     "id": "WithdrawPINProtected_ErrorNoPinOrSmall",
-    "message": "Пароль должен быть не менее 4х символов",
+    "message": "PIN-Code must be at least 4 characters",
     "files": [
       "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
     ]
@@ -6856,7 +6856,7 @@
   },
   {
     "id": "WithdrawPINProtected_LabelYourPin",
-    "message": "Your Pin-code",
+    "message": "Your PIN-Code",
     "files": [
       "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
     ]
@@ -6870,35 +6870,35 @@
   },
   {
     "id": "WithdrawPINProtected_MnemonicUseNote",
-    "message": "В случае не доступности сервера авторизации, или если вы забыли пароль, Вы можете воспользоваться секретной фразой",
+    "message": "If the authorization server is offline, or if you have forgotten the PIN-Code, you can use the secret phrase (12 words)",
     "files": [
       "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
     ]
   },
   {
     "id": "WithdrawPINProtected_PinCodeNotValid",
-    "message": "Вы указали не верный пароль",
+    "message": "The PIN-Code you entered is incorrect",
     "files": [
       "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
     ]
   },
   {
     "id": "WithdrawPINProtected_PinCodePlaceholder",
-    "message": "Enter your pin code",
+    "message": "Enter your PIN-Code",
     "files": [
       "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
     ]
   },
   {
     "id": "WithdrawPINProtected_PincodeNote",
-    "message": "Так-же вы можете подтвердить транзакцию введя пароль",
+    "message": "You can also confirm the transaction by entering a PIN-Code",
     "files": [
       "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
     ]
   },
   {
     "id": "WithdrawPINProtected_ServerOffline",
-    "message": "Сервер авторизации не доступен. Попробуйте позже или используйте секретной фразу",
+    "message": "The authorization server is offline. Try again later or use a secret phrase (12 words).",
     "files": [
       "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
     ]
@@ -6919,49 +6919,49 @@
   },
   {
     "id": "WithdrawPINProtected_UpMessage",
-    "message": "Для подтверждения транзакции введите пароль",
+    "message": "Enter the PIN-Code to confirm the transaction.",
     "files": [
       "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
     ]
   },
   {
     "id": "WithdrawPINProtected_UpMessageMnemonic",
-    "message": "Для подтверждения транзакции введите секретную фразу (12 слов)",
+    "message": "To confirm the transaction, enter the secret phrase (12 words)",
     "files": [
       "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
     ]
   },
   {
     "id": "WithdrawPINProtected_UseMnemonicButton",
-    "message": "Использовать секретную фразу",
+    "message": "Use secret phrase (12 words)",
     "files": [
       "shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.js"
     ]
   },
   {
     "id": "ConfirmActivatePIN_Message",
-    "message": "У вас уже активирован этот тип кошелька. Хотите активировать другой кошелек?",
+    "message": "You have already activated this type of wallet. Want to activate another wallet?",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
     ]
   },
   {
     "id": "ConfirmActivatePIN_No",
-    "message": "Нет",
+    "message": "No",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
     ]
   },
   {
     "id": "ConfirmActivatePIN_Title",
-    "message": "Добавление кошелька BTC (PIN-Protected)",
+    "message": "Activate PIN-Protected BTC wallet",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
     ]
   },
   {
     "id": "ConfirmActivatePIN_Yes",
-    "message": "Да",
+    "message": "Yes",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
     ]
@@ -6989,7 +6989,7 @@
   },
   {
     "id": "RegisterPINProtectedBTC_ActivateWalletButton",
-    "message": "Активировать кошелек",
+    "message": "Activate wallet",
     "files": [
       "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
     ]
@@ -7003,7 +7003,7 @@
   },
   {
     "id": "RegisterPINProtectedBTC_ButtonFinish",
-    "message": "Готово",
+    "message": "Ready",
     "files": [
       "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
     ]
@@ -7017,56 +7017,56 @@
   },
   {
     "id": "RegisterPINProtectedBTC_ConfirmRestory",
-    "message": "Восстановить кошелек",
+    "message": "Restore wallet",
     "files": [
       "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
     ]
   },
   {
     "id": "RegisterPINProtectedBTC_EnterPinCodeBottomMessage",
-    "message": "Придумайте пароль",
+    "message": "Pick a PIN-Code",
     "files": [
       "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
     ]
   },
   {
     "id": "RegisterPINProtectedBTC_EnterPinCodeUpMessage",
-    "message": "Активация кошелька BTC, защищенного паролем",
+    "message": "Activate PIN-Protected BTC wallet",
     "files": [
       "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
     ]
   },
   {
     "id": "RegisterPINProtectedBTC_ErrorMnemonicIncorrect",
-    "message": "Указаная секретная фраза не подходит к этому кошельку",
+    "message": "The specified secret phrase does not match this wallet",
     "files": [
       "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
     ]
   },
   {
     "id": "RegisterPINProtectedBTC_ErrorMnemonicInvalid",
-    "message": "Вы указали не валидную секретную фразу (12 слов)",
+    "message": "You entered an invalid secret phrase (12 words)",
     "files": [
       "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
     ]
   },
   {
     "id": "RegisterPINProtectedBTC_ErrorNoPinOrSmall",
-    "message": "Пароль должен быть не менее 4х символов",
+    "message": "PIN-Code must be at least 4 characters",
     "files": [
       "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
     ]
   },
   {
     "id": "RegisterPINProtectedBTC_ErrorPinCodesNotEqueals",
-    "message": "Пароли не совпадают",
+    "message": "PIN-Codes not equals",
     "files": [
       "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
     ]
   },
   {
     "id": "RegisterPINProtectedBTC_ErrorWalletLocked",
-    "message": "Этот счет уже зарегистрирован и защищен другим паролем. Укажите правильный пароль",
+    "message": "This account is already registered and protected by other PIN-Code. Please enter a valid PIN-Code",
     "files": [
       "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
     ]
@@ -7087,35 +7087,35 @@
   },
   {
     "id": "RegisterPINProtectedBTC_Instruction_Copied",
-    "message": "Скопировано",
+    "message": "Copy",
     "files": [
       "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
     ]
   },
   {
     "id": "RegisterPINProtectedBTC_Instruction_Copy",
-    "message": "Скопировать",
+    "message": "Copied",
     "files": [
       "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
     ]
   },
   {
     "id": "RegisterPINProtectedBTC_Instruction_Download",
-    "message": "Скачать",
+    "message": "Download",
     "files": [
       "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
     ]
   },
   {
     "id": "RegisterPINProtectedBTC_Instruction_Downloading",
-    "message": "Загружается",
+    "message": "Downloading",
     "files": [
       "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
     ]
   },
   {
     "id": "RegisterPINProtectedBTC_Instruction_Message",
-    "message": "Информация на случай недоступности нашего сервиса",
+    "message": "Information in case of unavailability of our service",
     "files": [
       "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
     ]
@@ -7143,49 +7143,49 @@
   },
   {
     "id": "RegisterPINProtectedBTC_MnemonicPlaceholder",
-    "message": "Введите секретную фразу (12 слов)",
+    "message": "Enter secret phrase (12 words)",
     "files": [
       "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
     ]
   },
   {
     "id": "RegisterPINProtectedBTC_PinCodeConfirmPlaceholder",
-    "message": "Confirm your pin code",
+    "message": "Confirm your PIN-code",
     "files": [
       "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
     ]
   },
   {
     "id": "RegisterPINProtectedBTC_PinCodePlaceholder",
-    "message": "Enter your pin code",
+    "message": "Enter your PIN-code",
     "files": [
       "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
     ]
   },
   {
     "id": "RegisterPINProtectedBTC_PinServerOffline",
-    "message": "Сервер авторизации не доступен",
+    "message": "Authorization server is offline",
     "files": [
       "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
     ]
   },
   {
     "id": "RegisterPINProtectedBTC_RestoryBottomMessage",
-    "message": "Введите секретную фразу (12 слов)",
+    "message": "Enter secret phrase (12 words)",
     "files": [
       "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
     ]
   },
   {
     "id": "RegisterPINProtectedBTC_RestoryUpMessage",
-    "message": "Восстановление BTC кошелька защещеного паролем",
+    "message": "Restore PIN-Protected BTC wallet",
     "files": [
       "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
     ]
   },
   {
     "id": "RegisterPINProtectedBTC_SaveYourMnemonic",
-    "message": "Пожалуйста сохраните свою секретную фразу.",
+    "message": "Please save your secret phrase (12 words).",
     "files": [
       "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
     ]
@@ -7213,28 +7213,28 @@
   },
   {
     "id": "RegisterPINProtectedBTC_UseMnemonicButton",
-    "message": "Восстановить кошелек",
+    "message": "Restore wallet",
     "files": [
       "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
     ]
   },
   {
     "id": "RegisterPINProtectedBTC_UseMnemonicRestoreNote",
-    "message": "Вы можете востановить кошелек используя секретную фразу (12 слов)",
+    "message": "You can restore the wallet using a secret phrase (12 words)",
     "files": [
       "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
     ]
   },
   {
     "id": "RegisterPINProtectedBTC_UsePinButton",
-    "message": "Использовать пароль",
+    "message": "Use PIN-Code",
     "files": [
       "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
     ]
   },
   {
     "id": "RegisterPINProtectedBTC_YouNeedSaveMnemonic",
-    "message": "Для активации 2fa вы должны сохранить 12 слов.",
+    "message": "To activate 2fa you must save secret phrase (12 words).",
     "files": [
       "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
     ]
