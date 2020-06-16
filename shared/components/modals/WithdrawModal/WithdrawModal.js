@@ -79,7 +79,7 @@ export default class WithdrawModal extends React.Component {
     const currentActiveAsset = data.data
 
     console.log('Withdraw' , data)
-    const currentDecimals = constants.tokenDecimals[currency.toLowerCase()]
+    const currentDecimals = constants.tokenDecimals[getCurrencyKey(currency, true).toLowerCase()]
     const allCurrencyies = actions.core.getWallets() //items.concat(tokenItems)
     const selectedItem = allCurrencyies.filter((item) => item.currency === currency)[0]
 
@@ -542,6 +542,9 @@ export default class WithdrawModal extends React.Component {
 
     const { currency, address: currentAddress, balance: currentBalance, infoAboutCurrency, invoice } = currentActiveAsset;
 
+    const currencyView = getCurrencyKey(currentActiveAsset.currency, true).toUpperCase()
+    const selectedValueView = getCurrencyKey(selectedValue, true).toUpperCase()
+
     let min = isEthToken ? 0 : minAmount[currency.toLowerCase()]
     let defaultMin = min
 
@@ -717,17 +720,17 @@ export default class WithdrawModal extends React.Component {
             </span>
             <span styleName="delimiter"></span>
             <span
-              styleName={cx('additionalСurrenciesItem', { additionalСurrenciesItemActive: selectedValue.toUpperCase() === currentActiveAsset.currency })}
+              styleName={cx('additionalСurrenciesItem', { additionalСurrenciesItemActive: selectedValueView.toUpperCase() === currencyView.toUpperCase() })}
               onClick={() => this.handleBuyCurrencySelect(currentActiveAsset.currency)}
             >
-              {currentActiveAsset.currency}
+              {currencyView}
             </span>
           </div>
           <p styleName="balance">
             {amount ?
               selectedValue !== activeFiat
                 ? `${BigNumber(fiatAmount).dp(2, BigNumber.ROUND_FLOOR)} ${activeFiat}`
-                : `${BigNumber(amount).dp(5, BigNumber.ROUND_FLOOR)} ${currency.toUpperCase()}`
+                : `${BigNumber(amount).dp(5, BigNumber.ROUND_FLOOR)} ${currencyView.toUpperCase()}`
               : ''}
             {' '}
             {amount > 0 && !isMobile ? 'will be sent' : ''}
