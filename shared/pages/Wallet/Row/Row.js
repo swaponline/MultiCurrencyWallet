@@ -8,20 +8,13 @@ import { isMobile } from 'react-device-detect'
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
 
-import { Link } from 'react-router-dom'
-import CopyToClipboard from 'react-copy-to-clipboard'
-import LinkAccount from '../components/LinkAccount'
-
 import Coin from 'components/Coin/Coin'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import BtnTooltip from 'components/controls/WithdrawButton/BtnTooltip'
 import DropdownMenu from 'components/ui/DropdownMenu/DropdownMenu'
 // import LinkAccount from '../LinkAccount/LinkAcount'
 import { withRouter } from 'react-router'
-import ReactTooltip from 'react-tooltip'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
-import { relocalisedUrl, localisedUrl } from 'helpers/locale'
+import { localisedUrl } from 'helpers/locale'
 import SwapApp from 'swap.app'
 import { BigNumber } from 'bignumber.js'
 
@@ -425,7 +418,7 @@ export default class Row extends Component {
     const {
       history,
       intl: { locale },
-      itemData: { currency, balance },
+      itemData: { currency },
     } = this.props
     history.push(localisedUrl(locale, `/${currency.toLowerCase()}-btc`))
   }
@@ -492,12 +485,14 @@ export default class Row extends Component {
 
   copyPrivateKey = () => {
     const {
-      itemData: { address, privateKey },
+      itemData: { address, privateKey, fullName },
       ethDataHelper,
     } = this.props
-    navigator.clipboard.writeText(
-      address === ethDataHelper.address ? ethDataHelper.privateKey : privateKey
-    )
+
+    actions.modals.open(constants.modals.PrivateKeysModal, {
+      key: address === ethDataHelper.address ? ethDataHelper.privateKey : privateKey,
+      fullName,
+    })
   }
 
 
@@ -710,11 +705,15 @@ export default class Row extends Component {
       })
     }
 
+    let showBalance = true
+    let statusInfo = false
+
     if (
       this.props.itemData.isPinProtected &&
       !this.props.itemData.isRegistered
     ) {
-      currencyView = 'Not activated'
+      statusInfo = 'Not activated'
+      showBalance = false
       nodeDownErrorShow = false
       dropDownMenuItems = [
         {
@@ -743,7 +742,8 @@ export default class Row extends Component {
       this.props.itemData.isSmsProtected &&
       !this.props.itemData.isRegistered
     ) {
-      currencyView = 'Not activated'
+      statusInfo = 'Not activated'
+      showBalance = false
       nodeDownErrorShow = false
       dropDownMenuItems = [
         {
@@ -769,7 +769,8 @@ export default class Row extends Component {
     }
     if (this.props.itemData.isUserProtected) {
       if (!this.props.itemData.active) {
-        currencyView = 'Not joined'
+        statusInfo = 'Not joined'
+        showBalance = false
         nodeDownErrorShow = false
         dropDownMenuItems = []
       } else {
@@ -835,59 +836,63 @@ export default class Row extends Component {
                 ''
               )}
             <span styleName="assetsTableCurrencyWrapper">
-              {!isBalanceFetched || isBalanceFetching ? (
-                this.props.itemData.isUserProtected &&
-                  !this.props.itemData.active ? (
-                    <span>
-                      <FormattedMessage
-                        id="walletMultisignNotJoined"
-                        defaultMessage="Not joined"
-                      />
-                    </span>
-                  ) : (
-                    <div styleName="loader">
-                      {!(balanceError && nodeDownErrorShow) && <InlineLoader />}
-                    </div>
-                  )
-              ) : (
-                  <div
-                    styleName="no-select-inline"
-                    onClick={this.handleReloadBalance}
-                  >
-                    <i className="fas fa-sync-alt" styleName="icon" />
-                    <span>
-                      {balanceError
-                        ? '?'
-                        : BigNumber(balance)
-                          .dp(5, BigNumber.ROUND_FLOOR)
-                          .toString()}{' '}
-                    </span>
-                    <span styleName="assetsTableCurrencyBalance">
-                      {currencyView}
-                    </span>
-                    {unconfirmedBalance !== 0 && (
-                      <Fragment>
-                        <br />
-                        <span
-                          styleName="unconfirmedBalance"
-                          title={intl.formatMessage(
-                            langLabels.unconfirmedBalance
-                          )}
-                        >
-                          {unconfirmedBalance > 0 && <>{'+'}</>}
-                          {unconfirmedBalance}{' '}
+              {showBalance && (
+                <Fragment>
+                  {!isBalanceFetched || isBalanceFetching ? (
+                    this.props.itemData.isUserProtected &&
+                      !this.props.itemData.active ? (
+                        <span>
+                          <FormattedMessage
+                            id="walletMultisignNotJoined"
+                            defaultMessage="Not joined"
+                          />
                         </span>
-                      </Fragment>
+                      ) : (
+                        <div styleName="loader">
+                          {!(balanceError && nodeDownErrorShow) && <InlineLoader />}
+                        </div>
+                      )
+                  ) : (
+                      <div
+                        styleName="no-select-inline"
+                        onClick={this.handleReloadBalance}
+                      >
+                        <i className="fas fa-sync-alt" styleName="icon" />
+                        <span>
+                          {balanceError
+                            ? '?'
+                            : BigNumber(balance)
+                              .dp(5, BigNumber.ROUND_FLOOR)
+                              .toString()}{' '}
+                        </span>
+                        <span styleName="assetsTableCurrencyBalance">
+                          {currencyView}
+                        </span>
+                        {unconfirmedBalance !== 0 && (
+                          <Fragment>
+                            <br />
+                            <span
+                              styleName="unconfirmedBalance"
+                              title={intl.formatMessage(
+                                langLabels.unconfirmedBalance
+                              )}
+                            >
+                              {unconfirmedBalance > 0 && <>{'+'}</>}
+                              {unconfirmedBalance}{' '}
+                            </span>
+                          </Fragment>
+                        )}
+                      </div>
                     )}
-                  </div>
-                )}
+                </Fragment>
+              )}
             </span>
-            {itemData.address !== 'Not jointed' ? (
+            {!statusInfo ? (
               <p styleName="addressStyle">{itemData.address}</p>
             ) : (
-                ''
+                <p styleName="addressStyle">{statusInfo}</p>
               )}
-            {isMobile ? (
+            {isMobile && !statusInfo ? (
               <PartOfAddress {...itemData} onClick={this.goToCurrencyHistory} />
             ) : (
                 ''
@@ -904,7 +909,7 @@ export default class Row extends Component {
               {title ? <strong>{title}</strong> : ''}
             </div>
 
-            {currencyFiatBalance && !balanceError ? (
+            {currencyFiatBalance && showBalance && !balanceError ? (
               <div styleName="assetsTableValue">
                 {/* <img src={dollar} /> */}
                 <p>{BigNumber(currencyFiatBalance).dp(2, BigNumber.ROUND_FLOOR).toString()}</p>

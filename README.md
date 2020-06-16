@@ -168,10 +168,6 @@ git pull
 
 if you have conflicts (if sources has been changed on your side) click "resolve conflicts".
 
-# DeFi style (borrow/lend) 
-![](https://screenshots.wpmix.net/chrome_ta4cbcsWgMjqbYSp9rFTwMa5bJDBYjcF.png) 
-https://drive.google.com/file/d/15e0ODxzbtiu0xJOeKKuJ2SzffZmc5_OA/view 
-
 for any questions: telegram <a href="https://t.me/sashanoxon">sashanoxon</a>
 
 ## how to change project name in "many tabs" errors:
@@ -182,6 +178,10 @@ for any questions: telegram <a href="https://t.me/sashanoxon">sashanoxon</a>
 0. go to index.html
 1. add / edit  ```window.defaultWindowTitle``` to your own
 .
+
+## how change link in logo (Default main wallet page)
+0. go to index.html
+1. add / edit ```window.LOGO_REDIRECT_LINK``` to your own
 
 ## how add custum exchange Rate:
 0. add ```customEcxchangeRate``` to ```window.widgetERC20Tokens```

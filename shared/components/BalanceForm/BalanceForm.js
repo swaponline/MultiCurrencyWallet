@@ -65,8 +65,8 @@ function BalanceForm({
   }
 
   return (
-    <div className="data-tut-widget-balance" styleName={isWidgetBuild && !config.isFullBuild ? 'yourBalance widgetBuild' : 'yourBalance'}>
-      <div styleName="yourBalanceTop">
+    <div styleName={isWidgetBuild && !config.isFullBuild ? 'yourBalance widgetBuild' : 'yourBalance'}>
+      <div styleName="yourBalanceTop" className="data-tut-widget-balance">
         <p styleName="yourBalanceDescr">
           <FormattedMessage id="Yourtotalbalance" defaultMessage="Ваш общий баланс" />
         </p>
@@ -121,16 +121,16 @@ function BalanceForm({
           [styles.yourBalanceBottomWrapper]: true,
         })}
       >
-        <div styleName="yourBalanceBottom" className="data-tut-withdraw-buttons">
+        <div styleName="yourBalanceBottom">
           {showButtons ? (
-            <Fragment>
+            <div styleName="btns" className="data-tut-withdraw-buttons">
               <Button blue id="depositBtn" onClick={() => handleReceive('Deposit')}>
                 <FormattedMessage id="YourtotalbalanceDeposit" defaultMessage="Пополнить" />
               </Button>
               <Button blue disabled={!currencyBalance} id="sendBtn" onClick={() => handleWithdraw('Send')}>
                 <FormattedMessage id="YourtotalbalanceSend" defaultMessage="Отправить" />
               </Button>
-            </Fragment>
+            </div>
           ) : (
               <Button blue disabled={!currencyBalance} styleName="button__invoice" onClick={() => handleInvoice()}>
                 <FormattedMessage id="RequestPayment" defaultMessage="Запросить" />
