@@ -78,7 +78,7 @@ export default class WithdrawModal extends React.Component {
     const currentActiveAsset = data.data
 
     console.log('Withdraw' , data)
-    const currentDecimals = constants.tokenDecimals[currency.toLowerCase()]
+    const currentDecimals = constants.tokenDecimals[getCurrencyKey(currency, true).toLowerCase()]
     const allCurrencyies = actions.core.getWallets() //items.concat(tokenItems)
     const selectedItem = allCurrencyies.filter((item) => item.currency === currency)[0]
 
