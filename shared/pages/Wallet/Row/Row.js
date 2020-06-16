@@ -8,20 +8,13 @@ import { isMobile } from 'react-device-detect'
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
 
-import { Link } from 'react-router-dom'
-import CopyToClipboard from 'react-copy-to-clipboard'
-import LinkAccount from '../components/LinkAccount'
-
 import Coin from 'components/Coin/Coin'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import BtnTooltip from 'components/controls/WithdrawButton/BtnTooltip'
 import DropdownMenu from 'components/ui/DropdownMenu/DropdownMenu'
 // import LinkAccount from '../LinkAccount/LinkAcount'
 import { withRouter } from 'react-router'
-import ReactTooltip from 'react-tooltip'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
-import { relocalisedUrl, localisedUrl } from 'helpers/locale'
+import { localisedUrl } from 'helpers/locale'
 import SwapApp from 'swap.app'
 import { BigNumber } from 'bignumber.js'
 
@@ -425,7 +418,7 @@ export default class Row extends Component {
     const {
       history,
       intl: { locale },
-      itemData: { currency, balance },
+      itemData: { currency },
     } = this.props
     history.push(localisedUrl(locale, `/${currency.toLowerCase()}-btc`))
   }
@@ -492,12 +485,14 @@ export default class Row extends Component {
 
   copyPrivateKey = () => {
     const {
-      itemData: { address, privateKey },
+      itemData: { address, privateKey, fullName },
       ethDataHelper,
     } = this.props
-    navigator.clipboard.writeText(
-      address === ethDataHelper.address ? ethDataHelper.privateKey : privateKey
-    )
+
+    actions.modals.open(constants.modals.PrivateKeysModal, {
+      key: address === ethDataHelper.address ? ethDataHelper.privateKey : privateKey,
+      fullName,
+    })
   }
 
 
@@ -858,50 +853,50 @@ export default class Row extends Component {
                         </div>
                       )
                   ) : (
-                    <div
-                      styleName="no-select-inline"
-                      onClick={this.handleReloadBalance}
-                    >
-                      <i className="fas fa-sync-alt" styleName="icon" />
-                      <span>
-                        {balanceError
-                          ? '?'
-                          : BigNumber(balance)
-                            .dp(5, BigNumber.ROUND_FLOOR)
-                            .toString()}{' '}
-                      </span>
-                      <span styleName="assetsTableCurrencyBalance">
-                        {currencyView}
-                      </span>
-                      {unconfirmedBalance !== 0 && (
-                        <Fragment>
-                          <br />
-                          <span
-                            styleName="unconfirmedBalance"
-                            title={intl.formatMessage(
-                              langLabels.unconfirmedBalance
-                            )}
-                          >
-                            {unconfirmedBalance > 0 && <>{'+'}</>}
-                            {unconfirmedBalance}{' '}
-                          </span>
-                        </Fragment>
-                      )}
-                    </div>
-                  )}
+                      <div
+                        styleName="no-select-inline"
+                        onClick={this.handleReloadBalance}
+                      >
+                        <i className="fas fa-sync-alt" styleName="icon" />
+                        <span>
+                          {balanceError
+                            ? '?'
+                            : BigNumber(balance)
+                              .dp(5, BigNumber.ROUND_FLOOR)
+                              .toString()}{' '}
+                        </span>
+                        <span styleName="assetsTableCurrencyBalance">
+                          {currencyView}
+                        </span>
+                        {unconfirmedBalance !== 0 && (
+                          <Fragment>
+                            <br />
+                            <span
+                              styleName="unconfirmedBalance"
+                              title={intl.formatMessage(
+                                langLabels.unconfirmedBalance
+                              )}
+                            >
+                              {unconfirmedBalance > 0 && <>{'+'}</>}
+                              {unconfirmedBalance}{' '}
+                            </span>
+                          </Fragment>
+                        )}
+                      </div>
+                    )}
                 </Fragment>
               )}
             </span>
             {!statusInfo ? (
               <p styleName="addressStyle">{itemData.address}</p>
             ) : (
-              <p styleName="addressStyle">{statusInfo}</p>
-            )}
+                <p styleName="addressStyle">{statusInfo}</p>
+              )}
             {isMobile && !statusInfo ? (
               <PartOfAddress {...itemData} onClick={this.goToCurrencyHistory} />
             ) : (
-              ''
-            )}
+                ''
+              )}
             <div styleName="assetsTableInfo">
               <div styleName="nameRow">
                 <a
@@ -922,8 +917,8 @@ export default class Row extends Component {
                 {/* {inneedData && <span>   {`${inneedData.change} %`} </span>} */}
               </div>
             ) : (
-              ''
-            )}
+                ''
+              )}
           </div>
           <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">
             <DropdownMenu

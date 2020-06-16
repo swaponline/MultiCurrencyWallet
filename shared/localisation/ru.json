@@ -5065,7 +5065,7 @@
   },
   {
     "id": "WalletRow_Menu_Сopy_PrivateKey",
-    "message": "Скопировать приватный ключ",
+    "message": "Приватный ключ",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]

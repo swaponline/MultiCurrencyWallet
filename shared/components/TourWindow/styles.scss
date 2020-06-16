@@ -3,6 +3,7 @@
     min-width: 290px;
     max-width: 420px;
     position: relative;
+    border-radius: 5px;
 }
 
 .TooltipTitle {
@@ -23,7 +24,7 @@
     justify-content: flex-end;
     margin-top: 1rem;
     padding: 5px;
-
+    border-radius: 0 0 5px 5px;
   * + * {
     margin-left: 0.5rem;
   }
