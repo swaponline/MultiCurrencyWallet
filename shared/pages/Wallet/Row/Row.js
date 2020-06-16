@@ -819,6 +819,17 @@ export default class Row extends Component {
             >
               <Coin className={styles.assetsTableIcon} name={currency} />
             </a>
+            <div styleName="assetsTableInfo">
+              <div styleName="nameRow">
+                <a
+                  onClick={this.goToCurrencyHistory}
+                  title={`Online ${fullName} wallet`}
+                >
+                  {fullName}
+                </a>
+              </div>
+              {title ? <strong>{title}</strong> : ''}
+            </div>
             {balanceError && nodeDownErrorShow ? (
               <div className={styles.errorMessage}>
                 <FormattedMessage
@@ -887,27 +898,23 @@ export default class Row extends Component {
                 </Fragment>
               )}
             </span>
-            {!statusInfo ? (
-              <p styleName="addressStyle">{itemData.address}</p>
+            {isMobile ? (
+              <Fragment>
+                {!statusInfo ? (
+                  <PartOfAddress {...itemData} onClick={this.goToCurrencyHistory} />
+                ) : (
+                  <p styleName="statusStyle">{statusInfo}</p>
+                )}
+              </Fragment>
             ) : (
-                <p styleName="addressStyle">{statusInfo}</p>
-              )}
-            {isMobile && !statusInfo ? (
-              <PartOfAddress {...itemData} onClick={this.goToCurrencyHistory} />
-            ) : (
-                ''
-              )}
-            <div styleName="assetsTableInfo">
-              <div styleName="nameRow">
-                <a
-                  onClick={this.goToCurrencyHistory}
-                  title={`Online ${fullName} wallet`}
-                >
-                  {fullName}
-                </a>
-              </div>
-              {title ? <strong>{title}</strong> : ''}
-            </div>
+              <Fragment>
+                {!statusInfo ? (
+                  <p styleName="addressStyle">{itemData.address}</p>
+                ) : (
+                  <p styleName="addressStyle">{statusInfo}</p>
+                )}
+              </Fragment>
+            )}
 
             {currencyFiatBalance && showBalance && !balanceError ? (
               <div styleName="assetsTableValue">

@@ -414,6 +414,7 @@ tr button[disabled]:hover {
   right: 49px;
   bottom: 22px;
   font-size: 15px;
+  background: #fff;
 }
 
 .assetsTableCurrencyBalance {
@@ -429,6 +430,16 @@ tr button[disabled]:hover {
   left: 46px;
   bottom: -13px;
   cursor: pointer;
+}
+
+.statusStyle {
+  font-size: 12px;
+  margin-left: 10px;
+  color: rgb(142, 154, 163);
+  margin-top: 1px;
+  position: absolute;
+  left: 46px;
+  bottom: -13px;
 }
 
 .assetsTableValue {
@@ -662,18 +673,18 @@ tr button[disabled]:hover {
 
 @media all and (max-width: 480px) {
   .no-select-inline {
-    font-size: 0.8em;
+    font-size: 1em;
   }
 
   .assetsTableValue {
     strong,
     p {
-      font-size: 0.8em;
+      font-size: 1em;
     }
   }
   .nameRow {
     a {
-      font-size: 0.85em;
+      font-size: 1em;
     }
   }
 }
