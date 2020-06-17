@@ -15,7 +15,7 @@ const linksManager = {
   wallets: '/wallets',
   send: '/withdraw',
   savePrivateSeed: '/savePrivateSeed',
-  savePrivateKeys: "/savePrivateKeys",
+  savePrivateKeys: '/savePrivateKeys',
   currencyWallet: '/wallet',
   swap: '/swaps',
   feed: '/feed',
@@ -149,8 +149,6 @@ const linksManager = {
 }
 
 
-
-
 linksManager.getFaqLink = (faqID) => {
   for (let i = 0; i < linksManager.faq.length; i++) {
     if (linksManager.faq[i].id
@@ -185,5 +183,5 @@ window.getTokenWallet = getTokenWallet
 export const getFullOrigin = () => `${location.origin}${location.pathname}#`
 
 
-export default linksManager;
+export default linksManager
 

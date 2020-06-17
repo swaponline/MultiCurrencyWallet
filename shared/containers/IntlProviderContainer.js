@@ -34,12 +34,12 @@ export default class IntlProviderContainer extends Component {
             if (props.match.params.locale !== undefined) {
               currentLocale = props.match.params.locale
             } else {
-              var lang = getCookie('mylang') ? getCookie('mylang') : 'en';
+              let lang = getCookie('mylang') ? getCookie('mylang') : 'en'
               currentLocale = lang.toLowerCase()
             }
 
             const messages = translations[currentLocale]
-            
+
             return (
               <IntlProvider {...props} key={currentLocale} locale={currentLocale} defaultLocale={defaultLocale()} messages={messages}>
                 {children}

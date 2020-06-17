@@ -5,6 +5,7 @@ export default {
     'https://test-insight.swaponline.io/insight-api',
     'https://invoices.swaponline.site/proxybitpay-testnet',
   ],
+  ghostscan: 'https://testnet.ghostscan.io/ghost-insight-api',
   // bitpay: 'https://test-insight.bitpay.com/api',
   etherscan: [
     'https://rinkeby.etherscan.io/api',

@@ -15,6 +15,7 @@ import lev from './lev.svg'
 import bxb from './bxb.svg'
 import dcn from './dcn.svg'
 import eurs from './eurs.svg'
+import ghost from './ghost.svg'
 
 
 export default {
@@ -38,4 +39,5 @@ export default {
   xrp,
   yup,
   eurs,
+  ghost,
 }

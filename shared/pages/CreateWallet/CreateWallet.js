@@ -49,6 +49,7 @@ const CreateWallet = (props) => {
   const {
     ethData,
     btcData,
+    ghostData,
     btcMultisigSMSData,
     btcMultisigUserData,
   } = userData
@@ -60,6 +61,7 @@ const CreateWallet = (props) => {
     btcMultisigSMSData,
     btcMultisigUserData,
     ethData,
+    ghostData,
   ].map(({ balance, currency, infoAboutCurrency }) => ({
     balance,
     infoAboutCurrency,
@@ -70,7 +72,7 @@ const CreateWallet = (props) => {
   let fiatBalance = 0
   let changePercent = 0
 
-  const widgetCurrencies = ['BTC', 'BTC (SMS-Protected)', 'BTC (PIN-Protected)', 'BTC (Multisig)', 'ETH']
+  const widgetCurrencies = ['BTC', 'BTC (SMS-Protected)', 'BTC (PIN-Protected)', 'BTC (Multisig)', 'ETH', 'GHOST']
 
   if (isWidgetBuild) {
     if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
@@ -136,7 +138,7 @@ const CreateWallet = (props) => {
   )
 
   useEffect(() => {
-    const widgetCurrencies = ['BTC', 'BTC (SMS-Protected)', 'BTC (PIN-Protected)', 'BTC (Multisig)', 'ETH']
+    const widgetCurrencies = ['BTC', 'BTC (SMS-Protected)', 'BTC (PIN-Protected)', 'BTC (Multisig)', 'ETH', 'GHOST']
 
     if (isWidgetBuild) {
       if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {

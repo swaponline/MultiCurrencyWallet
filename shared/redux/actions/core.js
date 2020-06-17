@@ -317,7 +317,7 @@ const markCoinAsHidden = (coin) => {
 const markCoinAsVisible = (coin) => {
   const { hiddenCoinsList } = constants.localStorage
 
-  const findedCoin = JSON.parse(localStorage.getItem(hiddenCoinsList)).find(el => el.includes(coin) && el.includes(":"))
+  const findedCoin = JSON.parse(localStorage.getItem(hiddenCoinsList)).find(el => el.includes(coin) && el.includes(':'))
 
   reducers.core.markCoinAsVisible(findedCoin || coin)
   localStorage.setItem(hiddenCoinsList, JSON.stringify(getState().core.hiddenCoinsList))
@@ -363,19 +363,19 @@ const getWallets = () => {
 
 
   const allData = [
-    ... (btcMnemonicData && !btcData.isMnemonic) ? [btcMnemonicData] : [], // Sweep
-    ... (ethMnemonicData && !ethData.isMnemonic) ? [ethMnemonicData] : [], // Sweep
+    ...(btcMnemonicData && !btcData.isMnemonic) ? [btcMnemonicData] : [], // Sweep
+    ...(ethMnemonicData && !ethData.isMnemonic) ? [ethMnemonicData] : [], // Sweep
     btcData,
     btcMultisigSMSData,
-    ... (btcMultisigPinData && btcMultisigPinData.isRegistered) ? [btcMultisigPinData] : [],
+    ...(btcMultisigPinData && btcMultisigPinData.isRegistered) ? [btcMultisigPinData] : [],
     btcMultisigUserData,
-    ... (btcMultisigUserData && btcMultisigUserData.wallets) ? btcMultisigUserData.wallets : [],
+    ...(btcMultisigUserData && btcMultisigUserData.wallets) ? btcMultisigUserData.wallets : [],
     ethData,
     ...Object.keys(tokensData)
       .filter(k => !tokensData[k].reducerDataTarget)
-      .map(k => tokensData[k])
+      .map(k => tokensData[k]),
   ].map(({ account, keyPair, ...data }) => ({
-    ...data
+    ...data,
   }))
 
 

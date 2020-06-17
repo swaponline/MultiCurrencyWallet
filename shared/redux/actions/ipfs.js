@@ -35,18 +35,18 @@ const waitPeer = (peer, cbSuccess, cbFail, timeOut) => {
   onReady(() => {
     let isWaiting = true
 
-    const failtTimer = setTimeout( () => {
+    const failtTimer = setTimeout(() => {
       isWaiting = false
       if (cbFail) cbFail()
-    } , timeOut )
+    }, timeOut)
 
     const waitFunc = () => {
       if (isWaiting) {
         if (SwapApp.shared().services.room.connection.hasPeer(peer)) {
-          clearTimeout( failtTimer )
+          clearTimeout(failtTimer)
           if (cbSuccess) cbSuccess()
         } else {
-          setTimeout( waitFunc, 100 )
+          setTimeout(waitFunc, 100)
         }
       }
     }

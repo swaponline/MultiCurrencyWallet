@@ -8,7 +8,7 @@ import * as bip39 from 'bip39'
 import bitcoinMessage from 'bitcoinjs-message'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
-import { btc, apiLooper, constants, api } from 'helpers'
+import { ghost, apiLooper, constants, api } from 'helpers'
 import actions from 'redux/actions'
 import typeforce from 'swap.app/util/typeforce'
 import config from 'app-config'
@@ -19,11 +19,11 @@ import { localisePrefix } from 'helpers/locale'
 const hasAdminFee = (config
   && config.opts
   && config.opts.fee
-  && config.opts.fee.btc
-  && config.opts.fee.btc.fee
-  && config.opts.fee.btc.address
-  && config.opts.fee.btc.min
-) ? config.opts.fee.btc : false
+  && config.opts.fee.ghost
+  && config.opts.fee.ghost.fee
+  && config.opts.fee.ghost.address
+  && config.opts.fee.ghost.min
+) ? config.opts.fee.ghost : false
 
 const getRandomMnemonicWords = () => bip39.generateMnemonic()
 const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonic)
@@ -31,33 +31,33 @@ const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonic)
 
 const sweepToMnemonic = (mnemonic, path) => {
   const wallet = getWalletByWords(mnemonic, path)
-  localStorage.setItem(constants.privateKeyNames.btcMnemonic, wallet.WIF)
+  localStorage.setItem(constants.privateKeyNames.ghostMnemonic, wallet.WIF)
   return wallet.WIF
 }
 
 const getMainPublicKey = () => {
   const {
     user: {
-      btcData,
+      ghostData,
     },
   } = getState()
 
-  return btcData.publicKey.toString('Hex')
+  return ghostData.publicKey.toString('Hex')
 }
 
 const isSweeped = () => {
   const {
     user: {
-      btcData,
-      btcMnemonicData,
+      ghostData,
+      ghostMnemonicData,
     },
   } = getState()
 
-  if (btcMnemonicData
-    && btcMnemonicData.address
-    && btcData
-    && btcData.address
-    && btcData.address.toLowerCase() !== btcMnemonicData.address.toLowerCase()
+  if (ghostMnemonicData
+    && ghostMnemonicData.address
+    && ghostData
+    && ghostData.address
+    && ghostData.address.toLowerCase() !== ghostMnemonicData.address.toLowerCase()
   ) return false
 
   return true
@@ -66,22 +66,22 @@ const isSweeped = () => {
 const getSweepAddress = () => {
   const {
     user: {
-      btcMnemonicData,
+      ghostMnemonicData,
     },
   } = getState()
 
-  if (btcMnemonicData && btcMnemonicData.address) return btcMnemonicData.address
+  if (ghostMnemonicData && ghostMnemonicData.address) return ghostMnemonicData.address
   return false
 }
 
 const getWalletByWords = (mnemonic, walletNumber = 0, path) => {
   const seed = bip39.mnemonicToSeedSync(mnemonic)
-  const root = bip32.fromSeed(seed, btc.network)
+  const root = bip32.fromSeed(seed, ghost.network)
   const node = root.derivePath((path) || `m/44'/0'/0'/0/${walletNumber}`)
 
   const account = bitcoin.payments.p2pkh({
     pubkey: node.publicKey,
-    network: btc.network,
+    network: ghost.network,
   })
 
   return {
@@ -101,10 +101,10 @@ const auth = (privateKey) => {
     const hash = bitcoin.crypto.sha256(privateKey)
     const d = BigInteger.fromBuffer(hash)
 
-    const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
+    const keyPair = bitcoin.ECPair.fromWIF(privateKey, ghost.network)
 
-    const account = bitcoin.ECPair.fromWIF(privateKey, btc.network) // eslint-disable-line
-    const { address } = bitcoin.payments.p2pkh({ pubkey: account.publicKey, network: btc.network })
+    const account = bitcoin.ECPair.fromWIF(privateKey, ghost.network) // eslint-disable-line
+    const { address } = bitcoin.payments.p2pkh({ pubkey: account.publicKey, network: ghost.network })
     const { publicKey } = account
 
     return {
@@ -120,11 +120,11 @@ const auth = (privateKey) => {
 const getPrivateKeyByAddress = (address) => {
   const {
     user: {
-      btcData: {
+      ghostData: {
         address: oldAddress,
         privateKey,
       },
-      btcMnemonicData: {
+      ghostMnemonicData: {
         address: mnemonicAddress,
         privateKey: mnemonicKey,
       },
@@ -141,7 +141,7 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
   if (privateKey
     && mnemonic
     && mnemonicKeys
-    && mnemonicKeys.btc === privateKey
+    && mnemonicKeys.ghost === privateKey
   ) sweepToMnemonicReady = true
 
   if (!privateKey && mnemonic) sweepToMnemonicReady = true
@@ -150,33 +150,33 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
     const hash = bitcoin.crypto.sha256(privateKey)
     const d = BigInteger.fromBuffer(hash)
 
-    // keyPair     = bitcoin.ECPair.fromWIF(privateKey, btc.network)
+    // keyPair     = bitcoin.ECPair.fromWIF(privateKey, ghost.network)
   }
   else {
-    console.info('Created account Bitcoin ...')
-    // keyPair     = bitcoin.ECPair.makeRandom({ network: btc.network })
+    console.info('Created account Ghost ...')
+    // keyPair     = bitcoin.ECPair.makeRandom({ network: ghost.network })
     // privateKey  = keyPair.toWIF()
     // use random 12 words
     if (!mnemonic) mnemonic = bip39.generateMnemonic()
     const accData = getWalletByWords(mnemonic)
-    console.log('Btc. Generated walled from random 12 words')
+    console.log('Ghost. Generated walled from random 12 words')
     console.log(accData)
     privateKey = accData.WIF
-    localStorage.setItem(constants.privateKeyNames.btcMnemonic, privateKey)
+    localStorage.setItem(constants.privateKeyNames.ghostMnemonic, privateKey)
   }
 
-  localStorage.setItem(constants.privateKeyNames.btc, privateKey)
+  localStorage.setItem(constants.privateKeyNames.ghost, privateKey)
 
   const data = {
     ...auth(privateKey),
     isMnemonic: sweepToMnemonicReady,
   }
 
-  window.getBtcAddress = () => data.address
-  window.getBtcData = () => data
+  window.getGhostAddress = () => data.address
+  window.getGhostData = () => data
 
-  console.info('Logged in with Bitcoin', data)
-  reducers.user.setAuthData({ name: 'btcData', data })
+  console.info('Logged in with Ghost', data)
+  reducers.user.setAuthData({ name: 'ghostData', data })
   if (!sweepToMnemonicReady) {
     // Auth with our mnemonic account
     if (mnemonic === `-`) {
@@ -185,22 +185,22 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
     }
 
     if (!mnemonicKeys
-      || !mnemonicKeys.btc
+      || !mnemonicKeys.ghost
     ) {
       console.error('Sweep. Cant auth. Login key undefined')
       return
     }
 
     const mnemonicData = {
-      ...auth(mnemonicKeys.btc),
+      ...auth(mnemonicKeys.ghost),
       isMnemonic: true,
     }
-    console.info('Logged in with Bitcoin Mnemonic', mnemonicData)
+    console.info('Logged in with Ghost Mnemonic', mnemonicData)
     reducers.user.addWallet({
-      name: 'btcMnemonicData',
+      name: 'ghostMnemonicData',
       data: {
-        currency: 'BTC',
-        fullName: 'Bitcoin (New)',
+        currency: 'GHOST',
+        fullName: 'Ghost (New)',
         balance: 0,
         isBalanceFetched: false,
         balanceError: null,
@@ -212,14 +212,14 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
       const balanceData = await fetchBalanceStatus(mnemonicData.address)
       if (balanceData) {
         reducers.user.setAuthData({
-          name: 'btcMnemonicData',
+          name: 'ghostMnemonicData',
           data: {
             ...balanceData,
             isBalanceFetched: true,
           },
         })
       } else {
-        reducers.user.setBalanceError({ name: 'btcMnemonicData' })
+        reducers.user.setBalanceError({ name: 'ghostMnemonicData' })
       }
       resolve(true)
     })
@@ -231,7 +231,7 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
 
 const getTx = (txRaw) => txRaw.getId()
 
-const getTxRouter = (txId) => `/btc/tx/${txId}`
+const getTxRouter = (txId) => `/ghost/tx/${txId}`
 
 const getLinkToInfo = (tx) => {
 
@@ -239,14 +239,14 @@ const getLinkToInfo = (tx) => {
     return
   }
 
-  return `${config.link.bitpay}/tx/${tx}`
+  return `${config.link.ghostscan}/tx/${tx}`
 }
 
-const fetchBalanceStatus = (address) => apiLooper.get('bitpay', `/addr/${address}`, {
+const fetchBalanceStatus = (address) => apiLooper.get('ghostscan', `/addr/${address}`, {
   checkStatus: (answer) => {
     try {
       if (answer && answer.balance !== undefined) return true
-    } catch (e) { /* */ }
+    } catch (e) { /* */console.log(e) }
     return false
   },
 }).then(({ balance, unconfirmedBalance }) => ({
@@ -256,9 +256,9 @@ const fetchBalanceStatus = (address) => apiLooper.get('bitpay', `/addr/${address
 }))
   .catch((e) => false)
 const getBalance = () => {
-  const { user: { btcData: { address } } } = getState()
+  const { user: { ghostData: { address } } } = getState()
 
-  return apiLooper.get('bitpay', `/addr/${address}`, {
+  return apiLooper.get('ghostscan', `/addr/${address}`, {
     inQuery: {
       delay: 500,
       name: `balance`,
@@ -270,18 +270,18 @@ const getBalance = () => {
       return false
     },
   }).then(({ balance, unconfirmedBalance }) => {
-    console.log('BTC Balance: ', balance)
-    console.log('BTC unconfirmedBalance Balance: ', unconfirmedBalance)
-    reducers.user.setBalance({ name: 'btcData', amount: balance, unconfirmedBalance })
+    console.log('GHOST Balance: ', balance)
+    console.log('GHOST unconfirmedBalance Balance: ', unconfirmedBalance)
+    reducers.user.setBalance({ name: 'ghostData', amount: balance, unconfirmedBalance })
     return balance
   })
     .catch((e) => {
-      reducers.user.setBalanceError({ name: 'btcData' })
+      reducers.user.setBalanceError({ name: 'ghostData' })
     })
 }
 
 const fetchBalance = (address) =>
-  apiLooper.get('bitpay', `/addr/${address}`, {
+  apiLooper.get('ghostscan', `/addr/${address}`, {
     checkStatus: (answer) => {
       try {
         if (answer && answer.balance !== undefined) return true
@@ -291,7 +291,7 @@ const fetchBalance = (address) =>
   }).then(({ balance }) => balance)
 
 const fetchTx = (hash, cacheResponse) =>
-  apiLooper.get('bitpay', `/tx/${hash}`, {
+  apiLooper.get('ghostscan', `/tx/${hash}`, {
     cacheResponse,
     checkStatus: (answer) => {
       try {
@@ -343,7 +343,7 @@ const fetchTxInfo = (hash, cacheResponse) =>
         confirmed: !!(rest.confirmations),
         minerFee: rest.fees.dividedBy(1e8).toNumber(),
         adminFee,
-        minerFeeCurrency: 'BTC',
+        minerFeeCurrency: 'GHOST',
         outputs: vout.map((out) => ({
           amount: new BigNumber(out.value).toNumber(),
           address: out.scriptPubKey.addresses || null,
@@ -355,12 +355,12 @@ const fetchTxInfo = (hash, cacheResponse) =>
     })
 
 const getInvoices = (address) => {
-  const { user: { btcData: { userAddress } } } = getState()
+  const { user: { ghostData: { userAddress } } } = getState()
 
   address = address || userAddress
 
   return actions.invoices.getInvoices({
-    currency: 'BTC',
+    currency: 'GHOST',
     address,
   })
 }
@@ -368,39 +368,39 @@ const getInvoices = (address) => {
 const getAllMyAddresses = () => {
   const {
     user: {
-      btcData,
-      btcMnemonicData,
-      btcMultisigSMSData,
-      btcMultisigUserData,
-      btcMultisigG2FAData,
-      btcMultisigPinData,
+      ghostData,
+      ghostMnemonicData,
+      ghostMultisigSMSData,
+      ghostMultisigUserData,
+      ghostMultisigG2FAData,
+      ghostMultisigPinData,
     },
   } = getState()
 
   const retData = []
   // Проверяем, был ли sweep
-  if (btcMnemonicData
-    && btcMnemonicData.address
-    && btcData
-    && btcData.address
-    && btcMnemonicData.address !== btcData.address
+  if (ghostMnemonicData
+    && ghostMnemonicData.address
+    && ghostData
+    && ghostData.address
+    && ghostMnemonicData.address !== ghostData.address
   ) {
-    retData.push(btcMnemonicData.address.toLowerCase())
+    retData.push(ghostMnemonicData.address.toLowerCase())
   }
 
-  retData.push(btcData.address.toLowerCase())
+  retData.push(ghostData.address.toLowerCase())
 
-  if (btcMultisigSMSData && btcMultisigSMSData.address) retData.push(btcMultisigSMSData.address.toLowerCase())
+  if (ghostMultisigSMSData && ghostMultisigSMSData.address) retData.push(ghostMultisigSMSData.address.toLowerCase())
   // @ToDo - SMS MultiWallet
 
-  if (btcMultisigUserData && btcMultisigUserData.address) retData.push(btcMultisigUserData.address.toLowerCase())
-  if (btcMultisigUserData && btcMultisigUserData.wallets && btcMultisigUserData.wallets.length) {
-    btcMultisigUserData.wallets.map((wallet) => {
+  if (ghostMultisigUserData && ghostMultisigUserData.address) retData.push(ghostMultisigUserData.address.toLowerCase())
+  if (ghostMultisigUserData && ghostMultisigUserData.wallets && ghostMultisigUserData.wallets.length) {
+    ghostMultisigUserData.wallets.map((wallet) => {
       retData.push(wallet.address.toLowerCase())
     })
   }
 
-  if (btcMultisigPinData && btcMultisigPinData.address) retData.push(btcMultisigPinData.address.toLowerCase())
+  if (ghostMultisigPinData && ghostMultisigPinData.address) retData.push(ghostMultisigPinData.address.toLowerCase())
 
   return retData
 }
@@ -408,27 +408,27 @@ const getAllMyAddresses = () => {
 const getDataByAddress = (address) => {
   const {
     user: {
-      btcData,
-      btcMnemonicData,
-      btcMultisigSMSData,
-      btcMultisigUserData,
-      btcMultisigG2FAData,
+      ghostData,
+      ghostMnemonicData,
+      ghostMultisigSMSData,
+      ghostMultisigUserData,
+      ghostMultisigG2FAData,
     },
   } = getState()
 
   const founded = [
-    btcData,
-    btcMnemonicData,
-    btcMultisigSMSData,
-    btcMultisigUserData,
+    ghostData,
+    ghostMnemonicData,
+    ghostMultisigSMSData,
+    ghostMultisigUserData,
     ...(
-      btcMultisigUserData
-      && btcMultisigUserData.wallets
-      && btcMultisigUserData.wallets.length
+      ghostMultisigUserData
+      && ghostMultisigUserData.wallets
+      && ghostMultisigUserData.wallets.length
     )
-      ? btcMultisigUserData.wallets
+      ? ghostMultisigUserData.wallets
       : [],
-    btcMultisigG2FAData,
+    ghostMultisigG2FAData,
   ].filter(data => data && data.address && data.address.toLowerCase() === address.toLowerCase())
 
   return (founded.length) ? founded[0] : false
@@ -438,25 +438,25 @@ const getTransaction = (address, ownType) =>
   new Promise((resolve) => {
     const myAllWallets = getAllMyAddresses()
 
-    let { user: { btcData: { address: userAddress } } } = getState()
+    let { user: { ghostData: { address: userAddress } } } = getState()
     address = address || userAddress
 
-    const type = (ownType) || 'btc'
+    const type = (ownType) || 'ghost'
 
-    if (!typeforce.isCoinAddress.BTC(address)) {
+    if (!typeforce.isCoinAddress.GHOST(address)) {
       resolve([])
     }
 
     const url = `/txs/?address=${address}`
 
-    return apiLooper.get('bitpay', url, {
+    return apiLooper.get('ghostscan', url, {
       checkStatus: (answer) => {
         try {
           if (answer && answer.txs !== undefined) return true
         } catch (e) { /* */ }
         return false
       },
-      query: 'btc_balance',
+      query: 'ghost_balance',
     }).then((res) => {
       const transactions = res.txs.map((item) => {
         const direction = item.vin[0].addr !== address ? 'in' : 'out'
@@ -500,7 +500,7 @@ const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
     fee: adminFee,
     address: adminFeeAddress,
     min: adminFeeMinValue,
-  } = config.opts.fee.btc
+  } = config.opts.fee.ghost
   const adminFeeMin = BigNumber(adminFeeMinValue)
 
   // fee - from amount - percent
@@ -510,9 +510,9 @@ const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
   feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
 
 
-  feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
+  feeValue = feeValue || await ghost.estimateFeeValue({ inSatoshis: true, speed })
 
-  const tx = new bitcoin.TransactionBuilder(btc.network)
+  const tx = new bitcoin.TransactionBuilder(ghost.network)
   const unspents = await fetchUnspents(from)
 
   let fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
@@ -538,9 +538,9 @@ const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
 }
 
 const sendDefault = async ({ from, to, amount, feeValue, speed } = {}) => {
-  feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
+  feeValue = feeValue || await ghost.estimateFeeValue({ inSatoshis: true, speed })
 
-  const tx = new bitcoin.TransactionBuilder(btc.network)
+  const tx = new bitcoin.TransactionBuilder(ghost.network)
   const unspents = await fetchUnspents(from)
 
   const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
@@ -563,16 +563,16 @@ const sendDefault = async ({ from, to, amount, feeValue, speed } = {}) => {
 }
 
 const signAndBuild = (transactionBuilder, address) => {
-  let { user: { btcData: { privateKey } } } = getState()
+  let { user: { ghostData: { privateKey } } } = getState()
 
   if (address) {
     // multi wallet - sweep upgrade
     privateKey = getPrivateKeyByAddress(address)
   } else {
-    // single wallet - use btcData
+    // single wallet - use ghostData
   }
 
-  const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
+  const keyPair = bitcoin.ECPair.fromWIF(privateKey, ghost.network)
 
   transactionBuilder.__INPUTS.forEach((input, index) => {
     transactionBuilder.sign(index, keyPair)
@@ -581,17 +581,17 @@ const signAndBuild = (transactionBuilder, address) => {
 }
 
 const fetchUnspents = (address) =>
-  apiLooper.get('bitpay', `/addr/${address}/utxo`, { cacheResponse: 5000 })
+  apiLooper.get('ghostscan', `/addr/${address}/utxo`, { cacheResponse: 5000 })
 
 const broadcastTx = (txRaw) =>
-  apiLooper.post('bitpay', `/tx/send`, {
+  apiLooper.post('ghostscan', `/tx/send`, {
     body: {
       rawtx: txRaw,
     },
   })
 
 const signMessage = (message, encodedPrivateKey) => {
-  const keyPair = bitcoin.ECPair.fromWIF(encodedPrivateKey, [bitcoin.networks.bitcoin, bitcoin.networks.testnet])
+  const keyPair = bitcoin.ECPair.fromWIF(encodedPrivateKey, [ghost.networks.mainnet, ghost.networks.testnet])
   const privateKeyBuff = Buffer.from(keyPair.privateKey)
 
   const signature = bitcoinMessage.sign(message, privateKeyBuff, keyPair.compressed)
@@ -610,14 +610,14 @@ window.getMainPublicKey = getMainPublicKey
 const checkWithdraw = (scriptAddress) => {
   const url = `/txs/?address=${scriptAddress}`
 
-  return apiLooper.get('bitpay', url, {
+  return apiLooper.get('ghostscan', url, {
     checkStatus: (answer) => {
       try {
         if (answer && answer.txs !== undefined) return true
       } catch (e) { /* */ }
       return false
     },
-    query: 'btc_balance',
+    query: 'ghost_balance',
   }).then((res) => {
     if (res.txs.length > 1
       && res.txs[0].vout.length
@@ -637,7 +637,7 @@ const checkWithdraw = (scriptAddress) => {
   })
 }
 
-window.btcCheckWithdraw = checkWithdraw
+window.ghostCheckWithdraw = checkWithdraw
 
 export default {
   login,

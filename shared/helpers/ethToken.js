@@ -24,5 +24,5 @@ export default {
   estimateFeeValue,
   estimateGasPrice,
   isEthToken,
-  isEthOrEthToken
+  isEthOrEthToken,
 }

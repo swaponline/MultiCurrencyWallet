@@ -92,6 +92,6 @@ export default class WalletTour extends Component {
           }}
         />}
       </div>
-    );
+    )
   }
 }

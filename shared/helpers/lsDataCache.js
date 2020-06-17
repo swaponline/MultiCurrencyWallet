@@ -29,7 +29,7 @@ const get = (key) => {
       return data.data
     }
     return false
-  } catch(e) {
+  } catch (e) {
     return false
   }
 }
@@ -48,7 +48,7 @@ const cleanup = () => {
 
   const curTime = getUnixTimeStamp()
 
-  Object.keys(cacheKeys).forEach( (key) => {
+  Object.keys(cacheKeys).forEach((key) => {
     if (!cacheKeys[key] || (curTime > cacheKeys[key])) {
       remove(key)
     } else {

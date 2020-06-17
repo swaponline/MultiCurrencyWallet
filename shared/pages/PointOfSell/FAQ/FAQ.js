@@ -25,10 +25,10 @@ export default class FAQ extends Component {
     }
   }
 
-  // eslint-disable 
+  // eslint-disable
 
   onDone = (hash) => {
-    // Open accordion if hash 
+    // Open accordion if hash
     if (hash) {
       $(hash).collapse('show');
       setTimeout(function () {
@@ -38,7 +38,7 @@ export default class FAQ extends Component {
       }, 300);
     }
 
-    // Go to anchor 
+    // Go to anchor
     $('.goto-anchor').on('click', function (e) {
       e.preventDefault();
       // $('.navbar-collapse').collapse('hide');

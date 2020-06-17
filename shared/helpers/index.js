@@ -1,4 +1,5 @@
 import btc from './btc'
+import ghost from './ghost'
 import eth from './eth'
 import ethToken from './ethToken'
 import user from './user'
@@ -37,9 +38,11 @@ import getWalletLink from './getWalletLink'
 
 import redirectTo from './redirectTo'
 
+
 export default {
   btc,
   eth,
+  ghost,
   ethToken,
   getCurrencyKey,
   handleGoTrade,
@@ -51,6 +54,7 @@ export {
   tips,
   btc,
   eth,
+  ghost,
   ethToken,
   user,
   web3,
@@ -86,4 +90,4 @@ export {
   redirectTo,
 
 }
-export { getItezUrl } from "./getItezUrl"
+export { getItezUrl } from './getItezUrl'

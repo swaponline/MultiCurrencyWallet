@@ -7,17 +7,42 @@ import request from './request'
 import BigNumber from 'bignumber.js'
 
 
+const networks = {}
+networks.mainnet = {
+  messagePrefix: '\x18Bitcoin Signed Message:\n',
+  bech32: 'ghost',
+  bip32: {
+    public:  0x696e82d1,
+    private: 0x8f1daeb8,
+  },
+  pubKeyHash: 0x38,
+  scriptHash: 0x3c,
+  wif: 0x6c,
+}
+
+networks.testnet = {
+  messagePrefix: '\x18Bitcoin Signed Message:\n',
+  bech32: 'tghost',
+  bip32: {
+    public: 0xe1427800,
+    private: 0x04889478,
+  },
+  pubKeyHash: 0x4B,
+  scriptHash: 0x89,
+  wif: 0x2e,
+}
+
 const hasAdminFee = (
   config
     && config.opts
     && config.opts.fee
-    && config.opts.fee.btc
-    && config.opts.fee.btc.fee
-) ? config.opts.fee.btc : false
+    && config.opts.fee.ghost
+    && config.opts.fee.ghost.fee
+) ? config.opts.fee.ghost : false
 
 const network = process.env.MAINNET
-  ? bitcoin.networks.bitcoin
-  : bitcoin.networks.testnet
+  ? networks.mainnet
+  : networks.testnet
 
 const DUST = 546
 
@@ -96,13 +121,13 @@ const getByteCount = (inputs, outputs) => {
 }
 
 const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = 'send', fixed } = {}) => {
-  const defaultTxSize = constants.defaultFeeRates.btc.size[method]
+  const defaultTxSize = constants.defaultFeeRates.ghost.size[method]
 
   if (fixed) {
     return defaultTxSize
   }
 
-  unspents = unspents || await actions.btc.fetchUnspents(address)
+  unspents = unspents || await actions.ghost.fetchUnspents(address)
 
 
   const txIn = unspents.length
@@ -136,9 +161,9 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
 const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, fixed, method } = {}) => {
   const {
     user: {
-      btcData,
-      btcMultisigSMSData,
-      btcMultisigUserData,
+      ghostData,
+      ghostMultisigSMSData,
+      ghostMultisigUserData,
     },
   } = getState()
 
@@ -147,9 +172,9 @@ const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, f
   if (hasAdminFee) txOut = 3
 
   if (!address) {
-    address = btcData.address
-    if (method === 'send_2fa') address = btcMultisigSMSData.address
-    if (method === 'send_multisig') address = btcMultisigUserData.address
+    address = ghostData.address
+    if (method === 'send_2fa') address = ghostMultisigSMS
+    if (method === 'send_multisig') address = ghostMultisigUserData.address
   }
 
   txSize = txSize || await calculateTxSize({ address, speed, fixed, method, txOut })
@@ -170,13 +195,13 @@ const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, f
     ? calculatedFeeValue.toString()
     : calculatedFeeValue.multipliedBy(1e-8).toString()
 
-  console.log(`Btc withdraw fee speed(${speed}) method (${method}) ${finalFeeValue}`)
+  console.log(`Ghost withdraw fee speed(${speed}) method (${method}) ${finalFeeValue}`)
   return finalFeeValue
 }
 
 const estimateFeeRate = async ({ speed = 'fast' } = {}) => {
-  const link = config.feeRates.btc
-  const defaultRate = constants.defaultFeeRates.btc.rate
+  const link = config.feeRates.ghost
+  const defaultRate = constants.defaultFeeRates.ghost.rate
 
   if (!link) {
     return defaultRate[speed]
@@ -211,4 +236,5 @@ export default {
   estimateFeeValue,
   estimateFeeRate,
   network,
+  networks,
 }

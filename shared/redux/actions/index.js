@@ -13,6 +13,7 @@ import ui from './ui'
 import filter from './filter'
 
 import btc from './btc'
+import ghost from './ghost'
 import btcmultisig from './btcmultisig'
 import eth from './eth'
 import token from './token'
@@ -54,6 +55,7 @@ export default {
   btc,
   btcmultisig,
   eth,
+  ghost,
 
   token,
   feed,

@@ -1,4 +1,12 @@
 export const initialState = {
+  ghostData: {
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'GHOST',
+    fullName: 'ghost',
+    balanceError: null,
+    infoAboutCurrency: null,
+  },
   ethData: {
     balance: 0,
     isBalanceFetched: false,

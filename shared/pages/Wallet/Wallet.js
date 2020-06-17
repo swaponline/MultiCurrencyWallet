@@ -37,6 +37,7 @@ const isWidgetBuild = config && config.isWidget
       activeFiat,
       ethData,
       btcData,
+      ghostData,
       btcMultisigSMSData,
       btcMultisigUserData,
       btcMultisigUserDataList,
@@ -71,14 +72,15 @@ const isWidgetBuild = config && config.isWidget
       btcMultisigSMSData,
       btcMultisigUserData,
       ethData,
+      ghostData,
       ...Object.keys(tokensData).map((k) => tokensData[k]),
     ].map(({ account, keyPair, ...data }) => ({
       ...data,
     }))
 
     const items = (config && config.isWidget
-      ? [btcData, ethData]
-      : [btcData, btcMultisigSMSData, btcMultisigUserData, ethData]
+      ? [btcData, ethData, ghostData]
+      : [btcData, btcMultisigSMSData, btcMultisigUserData, ethData, ghostData]
     ).map((data) => data.currency)
 
     return {
@@ -99,6 +101,7 @@ const isWidgetBuild = config && config.isWidget
       tokensData: {
         ethData,
         btcData,
+        ghostData,
         btcMultisigSMSData,
         btcMultisigUserData,
         btcMultisigUserDataList,
@@ -248,6 +251,7 @@ export default class Wallet extends Component {
     if (!hiddenCoinsList.includes('BTC (PIN-Protected)')) widgetCurrencies.push('BTC (PIN-Protected)')
     if (!hiddenCoinsList.includes('BTC (Multisig)')) widgetCurrencies.push('BTC (Multisig)')
     widgetCurrencies.push('ETH')
+    widgetCurrencies.push('GHOST')
     if (isWidgetBuild) {
       if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
         // Multi token widget build
@@ -334,13 +338,15 @@ export default class Wallet extends Component {
     const isFirstCheck = moment(now, 'HH:mm:ss DD/MM/YYYY').isSame(lastCheckMoment)
     const isOneHourAfter = moment(now, 'HH:mm:ss DD/MM/YYYY').isAfter(lastCheckMoment.add(1, 'hours'))
 
-    const { ethData, btcData } = this.props.tokensData
+    const { ethData, btcData, ghostData } = this.props.tokensData
 
     const balancesData = {
       ethBalance: ethData.balance,
       btcBalance: btcData.balance,
+      ghostBalance: ghostData.balance,
       ethAddress: ethData.address,
       btcAddress: btcData.address,
+      ghostAddress: ghostData.address,
     }
 
     if (isOneHourAfter || isFirstCheck) {
@@ -372,6 +378,7 @@ export default class Wallet extends Component {
     if (!hiddenCoinsList.includes('BTC (PIN-Protected)')) widgetCurrencies.push('BTC (PIN-Protected)')
     if (!hiddenCoinsList.includes('BTC (Multisig)')) widgetCurrencies.push('BTC (Multisig)')
     widgetCurrencies.push('ETH')
+    widgetCurrencies.push('GHOST')
     if (isWidgetBuild) {
       if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
         // Multi token widget build
@@ -435,6 +442,7 @@ export default class Wallet extends Component {
     if (!hiddenCoinsList.includes('BTC (PIN-Protected)')) widgetCurrencies.push('BTC (PIN-Protected)')
     if (!hiddenCoinsList.includes('BTC (Multisig)')) widgetCurrencies.push('BTC (Multisig)')
     widgetCurrencies.push('ETH')
+    widgetCurrencies.push('GHOST')
     if (isWidgetBuild) {
       if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
         // Multi token widget build

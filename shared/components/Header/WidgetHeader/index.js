@@ -3,9 +3,9 @@ import React, { useState } from 'react'
 import CSSModules from 'react-css-modules'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
-import { constants } from "helpers";
+import { constants } from 'helpers'
 
-import styles from "./styles.scss"
+import styles from './styles.scss'
 
 
 const defaultLanguage = defineMessages({
@@ -43,20 +43,20 @@ const WidgetHeaderComponent = ({ intl }) => {
       actions.modals.open(constants.modals.Confirm, {
         ...data,
         onAccept: () => handleConfirm(),
-        onCancel: () => handleConfirmToggle()
+        onCancel: () => handleConfirmToggle(),
       })
     }
 
   }
 
   const handleConfirm = () => {
-    window.location = (window && window.logoutUrl) ? window.logoutUrl : "/wp-login.php?action=logout"
+    window.location = (window && window.logoutUrl) ? window.logoutUrl : '/wp-login.php?action=logout'
   }
 
   return (
     window.isUserRegisteredAndLoggedIn && <div styleName="exitArea" onClick={handleConfirmToggle}>
-      <i class="fas fa-sign-out-alt" /><FormattedMessage id="ExitWidget" defaultMessage="Exit" />
-    </div>
+      <i className="fas fa-sign-out-alt" /><FormattedMessage id="ExitWidget" defaultMessage="Exit" />
+                                          </div>
   )
 }
 

@@ -1,8 +1,7 @@
 import ethToken from './ethToken'
 
 
-
-export default (currency , returnToken) => {
+export default (currency, returnToken) => {
   let key = currency.toLowerCase()
   switch (key) {
     case 'currency':
@@ -12,6 +11,8 @@ export default (currency , returnToken) => {
       return 'btc'
     case 'eth':
       return 'eth'
+    case 'ghost':
+      return 'ghost'
   }
 
   if (ethToken.isEthToken({ name: key })) {

@@ -6,6 +6,11 @@ window.widgetERC20Comisions = {
     address: '2MuXz9BErMbWmoTshGgkjd7aMHeaxV8Bdkk',
     min: "0.00001"
   },
+  ghost: {
+    fee: "5",
+    address: 'XUmEvrKkTEGPr8WaktQVVE49ZBxcaPUmwv',
+    min: "0.00001"
+  },
   eth: {
     fee: "7",
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',

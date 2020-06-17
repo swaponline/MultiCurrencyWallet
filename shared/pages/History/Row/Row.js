@@ -8,14 +8,15 @@ import styles from './Row.scss'
 
 import { FormattedMessage } from 'react-intl'
 import actions from 'redux/actions'
-import { constants } from 'helpers'
+import { constants, links } from 'helpers'
 import CommentRow from './Comment'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { Link } from 'react-router-dom'
 import getCurrencyKey from 'helpers/getCurrencyKey'
 import ethToken from 'helpers/ethToken'
-import { links } from 'helpers'
+
 import { getFullOrigin } from 'helpers/links'
+
 
 class Row extends React.PureComponent {
 
@@ -126,7 +127,7 @@ class Row extends React.PureComponent {
 
     const link = `${getFullOrigin()}${links.multisign}/btc/confirm/${uniqhash}`
 
-    //history.push(shareLink)
+    // history.push(shareLink)
     actions.modals.open(constants.modals.Share, {
       link,
       title: `Confirm multisignature transaction`,
@@ -155,11 +156,11 @@ class Row extends React.PureComponent {
     const { txType } = this.props
     switch (type) {
       case 'btc (sms-protected)': type = 'BTC'
-        break;
+        break
       case 'btc (pin-protected)': type = 'BTC'
-        break;
+        break
       case 'btc (multisig)': type = 'BTC'
-        break;
+        break
     }
 
     return (

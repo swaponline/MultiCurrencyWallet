@@ -27,27 +27,27 @@ const AdminFeeInfoBlock = (props) => {
   return (
     <div styleName="adminFeeInfoBlock">
       {(calcedAmount) ? (
-          <FormattedMessage
-            id="AdminFee_MessageWithAmount"
-            defaultMessage="Коммисия {calcedAmount} {currency}"
-            values={{
-              fee,
-              min,
-              currency,
-              calcedAmount,
-            }}
-          />
-        ) : (
-          <FormattedMessage
-            id="AdminFee_Message"
-            defaultMessage="Коммисия {fee}% от суммы перевода, но не менее {min} {currency}"
-            values={{
-              fee,
-              min,
-              currency,
-            }}
-          />
-        )
+        <FormattedMessage
+          id="AdminFee_MessageWithAmount"
+          defaultMessage="Коммисия {calcedAmount} {currency}"
+          values={{
+            fee,
+            min,
+            currency,
+            calcedAmount,
+          }}
+        />
+      ) : (
+        <FormattedMessage
+          id="AdminFee_Message"
+          defaultMessage="Коммисия {fee}% от суммы перевода, но не менее {min} {currency}"
+          values={{
+            fee,
+            min,
+            currency,
+          }}
+        />
+      )
       }
     </div>
   )

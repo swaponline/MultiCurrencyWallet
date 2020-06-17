@@ -1,16 +1,17 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import CSSModules from "react-css-modules";
-import styles from "./Loader.scss";
+import CSSModules from 'react-css-modules'
+import styles from './Loader.scss'
 
-import { tips } from "helpers";
-import { FormattedMessage } from "react-intl";
+import { tips } from 'helpers'
+import { FormattedMessage } from 'react-intl'
 
-import config from "app-config";
+import config from 'app-config'
 
-const isFirefox = navigator.userAgent.indexOf("Firefox") !== -1;
-const isWidget = config && config.isWidget;
+
+const isFirefox = navigator.userAgent.indexOf('Firefox') !== -1
+const isWidget = config && config.isWidget
 
 const Loader = ({ overlayClassName, className, data, showTips, showMyOwnTip }) => (
   <div styleName="Firefox overlay" className={overlayClassName}>
@@ -33,24 +34,24 @@ const Loader = ({ overlayClassName, className, data, showTips, showMyOwnTip }) =
           {data.txId}
         </a>
       )}
-      {showTips && !isWidget && !Boolean(showMyOwnTip) && <div styleName="tips">{tips("loader")}</div>}
+      {showTips && !isWidget && !Boolean(showMyOwnTip) && <div styleName="tips">{tips('loader')}</div>}
       {!isWidget && Boolean(showMyOwnTip) && <div styleName="tips">{showMyOwnTip}</div>}
     </div>
   </div>
-);
+)
 
 Loader.propTypes = {
   overlayClassName: PropTypes.string,
   className: PropTypes.string,
   data: PropTypes.shape({
-    txId: PropTypes.string
+    txId: PropTypes.string,
   }),
-  showTips: PropTypes.bool
-};
+  showTips: PropTypes.bool,
+}
 
 Loader.deafultProps = {
   data: null,
-  showTips: false
-};
+  showTips: false,
+}
 
-export default CSSModules(Loader, styles, { allowMultiple: true });
+export default CSSModules(Loader, styles, { allowMultiple: true })

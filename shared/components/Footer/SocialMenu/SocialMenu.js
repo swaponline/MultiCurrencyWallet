@@ -18,7 +18,7 @@ const nav = [
 const SocialMenu = () => (
   <ul styleName="social-menu">
     {
-      nav.filter( item => item.links !== '#').map((item, index) => (
+      nav.filter(item => item.links !== '#').map((item, index) => (
         <li key={index}>
           <a href={item.links} target="_blank" rel="noopener noreferrer">
             <i styleName="icon" className={`fab ${item.icon}`} />

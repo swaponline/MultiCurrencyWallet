@@ -101,6 +101,6 @@ export default class TourPartial extends Component {
           }}
         />}
       </div>
-    );
+    )
   }
 }

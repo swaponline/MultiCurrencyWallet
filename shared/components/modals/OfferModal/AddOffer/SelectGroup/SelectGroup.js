@@ -80,14 +80,13 @@ const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onS
                 : 'balance'
             }
           >
-            {<FormattedMessage
+            <FormattedMessage
               id="select75"
               defaultMessage="Available for exchange: {availableBalance} {tooltip}"
               values={{
                 availableBalance: `${BigNumber(balance).minus(dynamicFee)} ${selectedValue.toUpperCase()}`,
                 tooltip: <Tooltip id={idFee}> {tooltipAboutFee}</Tooltip>,
               }} />
-            }
           </span> :
           <span styleName="textForNull">
             <FormattedMessage id="selected53" defaultMessage="You can use an external wallet to perform a swap" />

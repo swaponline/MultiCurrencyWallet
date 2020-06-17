@@ -13,7 +13,7 @@ const pullTransactions = transactions => {
 const delay = (ms) => new Promise(resolve => setTimeout(() => resolve(true), ms))
 
 const setTransactions = async (address, type, callback) => {
-  
+
   let reducer = getCurrencyKey(type)
 
   type = getCurrencyKey(type, true)
@@ -30,7 +30,7 @@ const setTransactions = async (address, type, callback) => {
       // Dont show invoices in transaction list.
       // @ToDo - Fetch multisig transactions for confirmations
       (
-        (config.opts && config.opts.invoiceEnabled && actions.user.isOwner(address, type)) ? 
+        (config.opts && config.opts.invoiceEnabled && actions.user.isOwner(address, type)) ?
           actions.invoices.getInvoices({
             currency: type.toUpperCase(),
             address,
@@ -65,5 +65,5 @@ const setTransactions = async (address, type, callback) => {
 
 
 export default {
-  setTransactions
+  setTransactions,
 }
