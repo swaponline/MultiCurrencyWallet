@@ -1395,6 +1395,93 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
     if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
 
+    feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber()
+  }
+
+  const unspents = await fetchUnspents(from)
+
+  const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
+  const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
+
+  const p2ms = bitcoin.payments.p2ms({
+    m: 2,
+    n: publicKeys.length,
+    pubkeys: publicKeys,
+    network: btc.network,
+  })
+
+  const p2sh = bitcoin.payments.p2sh({ redeem: p2ms, network: btc.network })
+
+  const psbt = new bitcoin.Psbt({network: btc.network})
+
+  psbt.addOutput({
+    address: to,
+    value: fundValue,
+  })
+
+  if (skipValue > 546) {
+    psbt.addOutput({
+      address: from,
+      value: skipValue
+    })
+  }
+
+  if (hasAdminFee) {
+    // admin fee output
+    psbt.addOutput({
+      address: hasAdminFee.address,
+      value: feeFromAmount,
+    })
+  }
+
+  for (let i = 0; i < unspents.length; i++) {
+    const { txid, vout } = unspents[i]
+    const rawTx = await actions.btc.fetchTxRaw(txid)
+    psbt.addInput({
+      hash: txid,
+      index: vout,
+      redeemScript: p2ms.output,
+      nonWitnessUtxo: Buffer.from(rawTx, 'hex'),
+    })
+    psbt.signInput(i, bitcoin.ECPair.fromWIF(privateKey, btc.network))
+  }
+
+  const rawTx = psbt.toHex();
+
+  return rawTx
+}
+
+// Deprecated
+const sendV4 = async ({ from, to, amount, feeValue, speed } = {}) => {
+  feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, method: 'send_multisig' })
+  const {
+    user: {
+      btcMultisigUserData: {
+        privateKey,
+      },
+    }
+  } = getState()
+
+  const senderWallet = addressToWallet( from )
+  console.log('senderWallet', from)
+
+  const { address, publicKeys } = senderWallet
+
+  let feeFromAmount = BigNumber(0)
+
+  if (hasAdminFee) {
+    const {
+      fee: adminFee,
+      min: adminFeeMinValue,
+    } = hasAdminFee
+
+    const adminFeeMin = BigNumber(adminFeeMinValue)
+
+    feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
+    if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
+
+
     feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue()
   }
 
@@ -1436,6 +1523,36 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
   return txRaw.toHex()
 }
 
+const getMSWalletByScript = async (script, myBtcWallets) => {
+  if (!myBtcWallets) myBtcWallets = await getBtcMultisigKeys()
+  if (typeof script !== 'string') script = bitcoin.script.toASM( script )
+
+  const wallets = myBtcWallets.filter((wallet) => {
+    const keys = wallet.publicKeys.map(buf => buf.toString('hex')).join(` `)
+    const walletScript = `OP_2 ${keys} OP_2 OP_CHECKMULTISIG`
+
+    if (walletScript === script) {
+      return true
+    }
+  }).map((wallet) => {
+    const {
+      publicKeys,
+      publicKey,
+      address,
+      balance,
+    } = wallet
+
+    return {
+      publicKeys,
+      publicKey,
+      address,
+      balance,
+    }
+  })
+
+  return (wallets.length) ? wallets[0] : false
+}
+
 const getMSWalletByPubkeysHash = async (pubkeysHash, myBtcWallets) => {
   if (!myBtcWallets) myBtcWallets = await getBtcMultisigKeys()
   if (typeof pubkeysHash !== 'string') pubkeysHash = pubkeysHash.map(buf => buf.toString('hex')).join('-')
@@ -1466,6 +1583,75 @@ const getMSWalletByPubkeysHash = async (pubkeysHash, myBtcWallets) => {
 }
 
 const parseRawTX = async (txHash) => {
+  const myBtcWallets = await getBtcMultisigKeys()
+  const myBtcAddreses = myBtcWallets.map((wallet) => wallet.address)
+
+  const psbt = bitcoin.Psbt.fromHex(txHash)
+
+  const parsedTX = {
+    psbt,
+    input: [],
+    output: [],
+    from: false,
+    to: false,
+    out: {},
+    isOur: false,
+    amount: new BigNumber(0),
+  }
+
+  await new Promise((inputParsed) => {
+    psbt.data.inputs.forEach( async (input) => {
+      const { redeemScript } = input
+
+      const inputWallet = await getMSWalletByScript( redeemScript, myBtcWallets )
+      if (inputWallet) {
+        if (inputWallet.address) parsedTX.from = inputWallet.address
+        parsedTX.wallet = inputWallet
+        parsedTX.isOur = true
+      }
+    })
+    inputParsed()
+  }).then(() => {
+    psbt.data.globalMap.unsignedTx.tx.outs.forEach(async (out) => {
+      const address = bitcoin.address.fromOutputScript(out.script, btc.network)
+      if (!parsedTX.isOur) {
+        const outWallet = myBtcWallets.filter((wallet) => wallet.address === address)
+
+        if (outWallet.length) {
+          if (outWallet[0].address) parsedTX.from = outWallet[0].address
+          parsedTX.wallet = outWallet[0]
+          parsedTX.isOur = true
+        }
+      }
+      if (parsedTX.from !== address) {
+        if (!parsedTX.out[address]) {
+          parsedTX.out[address] = {
+            to: address,
+            amount: new BigNumber(out.value).dividedBy(1e8).toNumber(),
+          }
+        } else {
+          parsedTX.out[address].amount = parsedTX.out[address].amount.plus(new BigNumber(out.value).dividedBy(1e8).toNumber())
+        }
+        parsedTX.amount = parsedTX.amount.plus(new BigNumber(out.value).dividedBy(1e8).toNumber())
+      }
+
+      parsedTX.output.push({
+        address,
+        valueSatoshi: out.value,
+        value: new BigNumber(out.value).dividedBy(1e8).toNumber(),
+      })
+    })
+
+    if (Object.keys(parsedTX.out).length) {
+      parsedTX.to = parsedTX.out[Object.keys(parsedTX.out)[0]].to
+    }
+  })
+
+  console.log('parsedTX', parsedTX)
+  return parsedTX
+}
+
+const parseRawTXv4 = async (txHash) => {
   const myBtcWallets = await getBtcMultisigKeys()
   const myBtcAddreses = myBtcWallets.map((wallet) => wallet.address)
 
@@ -1612,12 +1798,17 @@ const signMultiSign = async (txHash, wallet) => {
     },
   } = getState()
 
-  if (wallet) {
-    publicKeys = wallet.publicKeys
-    console.log('sign tx - use custrom public keys')
-  }
-  console.log('sign tx', txHash, privateKey, publicKeys)
-  return signMofN(txHash, 2, publicKeys, privateKey)
+  const psbt = bitcoin.Psbt.fromHex(txHash)
+
+  psbt.data.inputs.forEach( async (input, i) => {
+    psbt.signInput(i, bitcoin.ECPair.fromWIF(privateKey, btc.network))
+  })
+
+  psbt.finalizeAllInputs();
+
+  const rawTx = psbt.extractTransaction().toHex()
+
+  return rawTx
 }
 
 const signSmsMnemonic = (txHash, mnemonic) => {
