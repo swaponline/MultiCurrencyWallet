@@ -581,11 +581,11 @@ const sendV5WithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) =>
       index: vout,
       nonWitnessUtxo: Buffer.from(rawTx, 'hex'),
     })
-    psbt.signInput(i, keyPair);
   }
 
+  psbt.signAllInputs(keyPair)
 
-  psbt.finalizeAllInputs();
+  psbt.finalizeAllInputs()
 
   const rawTx = psbt.extractTransaction().toHex();
 
@@ -672,11 +672,10 @@ const sendV5Default = async ({ from, to, amount, feeValue, speed } = {}) => {
       index: vout,
       nonWitnessUtxo: Buffer.from(rawTx, 'hex'),
     })
-    psbt.signInput(i, keyPair);
   }
 
-
-  psbt.finalizeAllInputs();
+  psbt.signAllInputs(keyPair)
+  psbt.finalizeAllInputs()
 
   const rawTx = psbt.extractTransaction().toHex();
 
