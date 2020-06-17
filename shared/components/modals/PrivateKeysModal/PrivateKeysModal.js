@@ -58,12 +58,12 @@ export default class PrivateKeysModal extends React.PureComponent {
           <p styleName="key">
             {key}
           </p>
-          <Button blue fullWidth onClick={this.handleSaveToClipBoard}>
+          {/* <Button blue fullWidth onClick={this.handleSaveToClipBoard}>
             <FormattedMessage
               id="privateKeyAction"
               defaultMessage="Copy"
             />
-          </Button>
+          </Button> */}
         </section>
 
       </Modal>
