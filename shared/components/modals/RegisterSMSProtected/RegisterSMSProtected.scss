@@ -5,19 +5,23 @@
 .for12words {
   min-width: 400px;
 }
+
 .infoCaption {
   padding-bottom: 20px;
   text-align: center;
 }
+
 .mnemonicNotice {
   padding-bottom: 20px;
   font-size: 14px;
 }
+
 .mnemonicButtonsHolder {
   display: flex;
   align-items: center;
   justify-content: space-around;
   padding-bottom: 10px;
+
   button {
     width: 45%;
   }
@@ -35,10 +39,12 @@
   padding-bottom: 20px;
   padding-top: 10px;
 }
+
 .smsCodeHolder {
   max-width: 200px;
   margin: 0 auto;
 }
+
 .confirmSmsCode {
   max-width: 200px;
   margin: 0 auto;
@@ -46,22 +52,27 @@
 
 .restoreInstruction {
   text-align: center;
+
   pre {
     text-align: left;
   }
 }
+
 .buttonsHolder {
   display: flex;
   align-items: center;
   justify-content: space-around;
   padding-bottom: 10px;
+
   button {
     width: 30%;
   }
+
   &_2_buttons button {
     width: 45%;
   }
 }
+
 .buttonContainer {
   width: 100%;
   padding: 0 11%;
@@ -73,6 +84,7 @@
   padding: 0.5em 1em;
   font-size: 1em;
   border: 2px solid #6144e5;
+
   input {
     height: 80%;
   }

@@ -13,6 +13,7 @@ import ownStyle from './RegisterSMSProtected.scss'
 import Modal from "components/modal/Modal/Modal";
 import FieldLabel from "components/forms/FieldLabel/FieldLabel";
 import Input from "components/forms/Input/Input";
+import { PhoneInput } from "components/forms/PhoneInput"
 import Button from "components/controls/Button/Button";
 import { FormattedMessage, injectIntl, defineMessages } from "react-intl";
 
@@ -21,8 +22,6 @@ import typeforce from "swap.app/util/typeforce";
 import CopyToClipboard from 'react-copy-to-clipboard'
 import moment from 'moment/moment'
 import finishSvg from './images/finish.svg'
-import PhoneInput from 'react-phone-number-input'
-import 'react-phone-number-input/style.css'
 
 
 @injectIntl
@@ -462,7 +461,8 @@ export default class RegisterSMSProtected extends React.Component {
     return (
       <Modal name={name} title={`${intl.formatMessage(langs.registerSMSModal)}`}>
         <div styleName="registerSMSModalHolder">
-          <style dangerouslySetInnerHTML={{__html: `
+          <style dangerouslySetInnerHTML={{
+            __html: `
             .PhoneInputCountryIcon {
               width: 26px !important;
             }
@@ -491,17 +491,15 @@ export default class RegisterSMSProtected extends React.Component {
           )}
           {step === 'enterPhoneAndMnemonic' && (
             <Fragment>
-              <div styleName="highLevel" className="ym-hide-content">
-                <FieldLabel label>
+              <PhoneInput
+                value={phone}
+                error={error}
+                onChange={this.onPhoneChange}
+                placeholder={`${intl.formatMessage(langs.phonePlaceHolder)}`}
+                label={<FieldLabel label>
                   <FormattedMessage id="registerSMSModalPhone" defaultMessage="Your phone:" />
-                </FieldLabel>
-                <PhoneInput
-                  styleName="phoneNumber"
-                  value={phone}
-                  onChange={this.onPhoneChange}
-                  placeholder={`${intl.formatMessage(langs.mnemonicPlaceholder)}`}
-                />
-              </div>
+                </FieldLabel>}
+              />
               {!useGeneratedKeyEnabled && (
                 <Fragment>
                   <div styleName="highLevel">
@@ -575,19 +573,15 @@ export default class RegisterSMSProtected extends React.Component {
           )}
           {step === "enterPhone" && (
             <Fragment>
-
-              <div styleName="highLevel" className="ym-hide-content">
-                <FieldLabel label>
+              <PhoneInput
+                value={phone}
+                error={error}
+                onChange={this.onPhoneChange}
+                placeholder={`${intl.formatMessage(langs.phonePlaceHolder)}`}
+                label={<FieldLabel label>
                   <FormattedMessage id="registerSMSModalPhone" defaultMessage="Your phone:" />
-                </FieldLabel>
-                <PhoneInput
-                  styleName="phoneNumber"
-                  value={phone}
-                  onChange={this.onPhoneChange}
-                  placeholder={`${intl.formatMessage(langs.mnemonicPlaceholder)}`}
-                />
-                {error && <div styleName="rednote">{error}</div>}
-              </div>
+                </FieldLabel>}
+              />
               <Button blue big fullWidth disabled={isShipped} onClick={this.handleSendSMS}>
                 {isShipped ? (
                   <Fragment>
