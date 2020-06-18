@@ -522,11 +522,10 @@ const getTransaction = (address, ownType) =>
       })
   })
 
-const isSegwitBech32Address = (address) => {
+const addressIsCorrect = (address) => {
   try {
-    let draftAddressData = bitcoin.address.fromBech32(address)
-    const base58address = bitcoin.address.toBase58Check(draftAddressData.data, btc.network.pubKeyHash)
-    return true
+    let outputScript = bitcoin.address.toOutputScript(address, btc.network)
+    if (outputScript) return true
   } catch (e) {}
   return false
 }
@@ -582,7 +581,6 @@ const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
 
 const sendV5 = async ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
   const privateKey = getPrivateKeyByAddress(from)
-  const isSegwit = isSegwitBech32Address(to)
 
   const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
 
@@ -633,22 +631,12 @@ const sendV5 = async ({ from, to, amount, feeValue, speed, stateCallback } = {})
   for (let i = 0; i < unspents.length; i++) {
     const { txid, vout } = unspents[i]
     let rawTx = false
-    if (!isSegwit) {
-      rawTx = await fetchTxRaw(txid)
-    }
+    rawTx = await fetchTxRaw(txid)
 
     psbt.addInput({
       hash: txid,
       index: vout,
-      ...(!isSegwit) ?
-        {
-          nonWitnessUtxo: Buffer.from(rawTx, 'hex')
-        } : {
-          witnessUtxo: {
-            script: Buffer.from('0014' + bitcoin.crypto.hash160(keyPair.getPublicKeyBuffer()), 'hex'),
-            value: 1e8, 
-          },
-        },
+      nonWitnessUtxo: Buffer.from(rawTx, 'hex'),
     })
   }
 
@@ -794,5 +782,5 @@ export default {
   getMainPublicKey,
   getTxRouter,
   fetchTxRaw,
-  isSegwitBech32Address,
+  addressIsCorrect,
 }
