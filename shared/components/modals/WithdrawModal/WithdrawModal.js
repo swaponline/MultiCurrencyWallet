@@ -290,7 +290,7 @@ export default class WithdrawModal extends React.Component {
     // Нужно для расчета final balance получателя и отправителя
     let beforeBalances = false
     try {
-      beforeBalances = await helpers.transactions.getTxBalances(currency, address, to)
+      // beforeBalances = await helpers.transactions.getTxBalances(currency, address, to)
     } catch (e) {
       console.log('Fail fetch balances - may be destination is segwit')
       console.error(e)
