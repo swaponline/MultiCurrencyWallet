@@ -522,77 +522,19 @@ const getTransaction = (address, ownType) =>
       })
   })
 
-const send = (data) => {
-  return (hasAdminFee) ? sendV5WithAdminFee(data) : sendV5Default(data)
-  // v4 with deprecated TransactionBuilder
-  return (hasAdminFee) ? sendWithAdminFee(data) : sendDefault(data)
+const isSegwitBech32Address = (address) => {
+  try {
+    let draftAddressData = bitcoin.address.fromBech32(address)
+    const base58address = bitcoin.address.toBase58Check(draftAddressData.data, btc.network.pubKeyHash)
+    return true
+  } catch (e) {}
+  return false
 }
 
-const sendV5WithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
-  const privateKey = getPrivateKeyByAddress(from)
-  const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
-  const {
-    fee: adminFee,
-    address: adminFeeAddress,
-    min: adminFeeMinValue,
-  } = config.opts.fee.btc
-  const adminFeeMin = BigNumber(adminFeeMinValue)
-
-  feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
-
-
-  // fee - from amount - percent
-  let feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
-  if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
-
-  feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber()
-
-  const unspents = await fetchUnspents(from)
-  const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
-  const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
-
-
-  const psbt = new bitcoin.Psbt({network: btc.network})
-
-  psbt.addOutput({
-    address: to,
-    value: fundValue,
-  })
-
-  if (skipValue > 546) {
-    psbt.addOutput({
-      address: from,
-      value: skipValue,
-    })
-  }
-
-  // admin fee output
-  psbt.addOutput({
-    address: adminFeeAddress,
-    value: feeFromAmount,
-  })
-
-  for (let i = 0; i < unspents.length; i++) {
-    const { txid, vout } = unspents[i]
-    const rawTx = await fetchTxRaw(txid)
-    psbt.addInput({
-      hash: txid,
-      index: vout,
-      nonWitnessUtxo: Buffer.from(rawTx, 'hex'),
-    })
-  }
-
-  psbt.signAllInputs(keyPair)
-
-  psbt.finalizeAllInputs()
-
-  const rawTx = psbt.extractTransaction().toHex();
-
-  const broadcastAnswer = await broadcastTx(rawTx)
-
-  const { txid } = broadcastAnswer
-  return txid
+const send = (data) => {
+  return sendV5(data)
+  // v4 with deprecated TransactionBuilder
+  return (hasAdminFee) ? sendWithAdminFee(data) : sendDefault(data)
 }
 
 // Deprecated
@@ -638,17 +580,34 @@ const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
   return txRaw
 }
 
-const sendV5Default = async ({ from, to, amount, feeValue, speed } = {}) => {
+const sendV5 = async ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
   const privateKey = getPrivateKeyByAddress(from)
+  const isSegwit = isSegwitBech32Address(to)
 
   const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
+
+  // fee - from amount - percent
+
+  let feeFromAmount = BigNumber(0)
+  if (hasAdminFee) {
+    const {
+      fee: adminFee,
+      min: adminFeeMinValue,
+    } = config.opts.fee.btc
+    const adminFeeMin = BigNumber(adminFeeMinValue)
+
+    feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
+    if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
+
+    feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber() // Admin fee in satoshi
+  }
 
   feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
 
   const unspents = await fetchUnspents(from)
   const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  const skipValue = totalUnspent - fundValue - feeValue
+  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
   const psbt = new bitcoin.Psbt({network: btc.network})
 
@@ -664,13 +623,32 @@ const sendV5Default = async ({ from, to, amount, feeValue, speed } = {}) => {
     })
   }
 
+  if (hasAdminFee) {
+    psbt.addOutput({
+      address: hasAdminFee.address,
+      value: feeFromAmount,
+    })
+  }
+
   for (let i = 0; i < unspents.length; i++) {
     const { txid, vout } = unspents[i]
-    const rawTx = await fetchTxRaw(txid)
+    let rawTx = false
+    if (!isSegwit) {
+      rawTx = await fetchTxRaw(txid)
+    }
+
     psbt.addInput({
       hash: txid,
       index: vout,
-      nonWitnessUtxo: Buffer.from(rawTx, 'hex'),
+      ...(!isSegwit) ?
+        {
+          nonWitnessUtxo: Buffer.from(rawTx, 'hex')
+        } : {
+          witnessUtxo: {
+            script: Buffer.from('0014' + bitcoin.crypto.hash160(keyPair.getPublicKeyBuffer()), 'hex'),
+            value: 1e8, 
+          },
+        },
     })
   }
 
@@ -816,4 +794,5 @@ export default {
   getMainPublicKey,
   getTxRouter,
   fetchTxRaw,
+  isSegwitBech32Address,
 }
