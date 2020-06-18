@@ -462,6 +462,11 @@ export default class RegisterSMSProtected extends React.Component {
     return (
       <Modal name={name} title={`${intl.formatMessage(langs.registerSMSModal)}`}>
         <div styleName="registerSMSModalHolder">
+          <style dangerouslySetInnerHTML={{__html: `
+            .PhoneInputCountryIcon {
+              width: 26px !important;
+            }
+          `}} />
           {step === 'saveMnemonicWords' && (
             <Fragment>
               <div styleName="content-overlay">
