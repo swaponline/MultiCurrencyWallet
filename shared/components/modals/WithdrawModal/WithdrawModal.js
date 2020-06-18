@@ -292,11 +292,10 @@ export default class WithdrawModal extends React.Component {
     try {
       beforeBalances = await helpers.transactions.getTxBalances(currency, address, to)
     } catch (e) {
+      console.log('Fail fetch balances - may be destination is segwit')
       console.error(e)
-      return
     }
 
-    return
     if (invoice && ownTx) {
       await actions.invoices.markInvoice(invoice.id, 'ready', ownTx, address)
       actions.loader.hide()

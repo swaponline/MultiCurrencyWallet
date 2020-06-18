@@ -488,15 +488,17 @@ const getTransaction = (address, ownType) =>
       },
       query: 'btc_balance',
     }).then((res) => {
+      console.log(res.txs)
       const transactions = res.txs.map((item) => {
+        console.log(item)
         const direction = item.vin[0].addr !== address ? 'in' : 'out'
 
         const isSelf = direction === 'out'
           && item.vout.filter((item) =>
-            item.scriptPubKey.addresses[0] === address
+            item.scriptPubKey.addresses && item.scriptPubKey.addresses[0] === address
           ).length === item.vout.length
 
-        return ({
+        const retItem = {
           type,
           hash: item.txid,
           canEdit: (myAllWallets.indexOf(address) !== -1),
@@ -504,7 +506,7 @@ const getTransaction = (address, ownType) =>
           value: isSelf
             ? item.fees
             : item.vout.filter((item) => {
-              if (!item.scriptPubKey.addresses) return false
+              if (!item.scriptPubKey.addresses) return true
               const currentAddress = item.scriptPubKey.addresses[0]
 
               return direction === 'in'
@@ -513,11 +515,14 @@ const getTransaction = (address, ownType) =>
             })[0].value,
           date: item.time * 1000,
           direction: isSelf ? 'self' : direction,
-        })
+        }
+
+        return (retItem)
       })
       resolve(transactions)
     })
-      .catch(() => {
+      .catch((error) => {
+        console.error(error)
         resolve([])
       })
   })
@@ -755,6 +760,26 @@ const checkWithdraw = (scriptAddress) => {
 
 window.btcCheckWithdraw = checkWithdraw
 
+window.getAddr = (inData) => {
+  let payment, address, isDone
+  Object.keys(bitcoin.payments).forEach(type => {
+      if (isDone) return
+      try {
+          payment = bitcoin.payments[type]({output: inData}, btc.network)
+      } catch(e) {
+          console.log('Not ' + type + ' keep trying...')
+          return
+      }
+      try {
+          address = payment.address
+          if (!address) throw new Error('oops')
+      } catch(e) {
+          address = '[NO ADDRESS (Legacy P2PK, OP_RETURN etc.)]'
+      }
+      isDone = true
+  })
+  console.log(address)
+}
 window.convertSegwit = (inaddress) => {
   console.log(bitcoin.address.toOutputScript(inaddress, btc.network))
   console.log(bitcoin.address.fromOutputScript(
@@ -766,6 +791,7 @@ window.convertSegwit = (inaddress) => {
   //console.log(base58)
 }
 
+window.bitcoinjs = bitcoin
 export default {
   login,
   checkWithdraw,
