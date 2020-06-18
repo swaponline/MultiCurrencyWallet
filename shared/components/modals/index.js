@@ -35,6 +35,8 @@ import InfoInvoice from './InfoInvoice/InfoInvoice'
 import RegisterPINProtected from './RegisterPINProtected/RegisterPINProtected'
 import WithdrawBtcPin from './WithdrawBtcPin/WithdrawBtcPin'
 
+import WalletAddressModal from './WalletAddressModal/WalletAddressModal'
+
 
 export default {
   DeclineOrdersModal,
@@ -73,4 +75,6 @@ export default {
 
   RegisterPINProtected,
   WithdrawBtcPin,
+
+  WalletAddressModal,
 }

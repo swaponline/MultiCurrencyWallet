@@ -288,7 +288,13 @@ export default class WithdrawModal extends React.Component {
 
     // Опрашиваем балансы отправителя и получателя на момент выполнения транзакции
     // Нужно для расчета final balance получателя и отправителя
-    const beforeBalances = await helpers.transactions.getTxBalances(currency, address, to)
+    let beforeBalances = false
+    try {
+      // beforeBalances = await helpers.transactions.getTxBalances(currency, address, to)
+    } catch (e) {
+      console.log('Fail fetch balances - may be destination is segwit')
+      console.error(e)
+    }
 
     if (invoice && ownTx) {
       await actions.invoices.markInvoice(invoice.id, 'ready', ownTx, address)
@@ -441,9 +447,18 @@ export default class WithdrawModal extends React.Component {
     const {
       data: { currency },
     } = this.props
-    const { address, isEthToken } = this.state
+    const { address, isEthToken, wallet } = this.state
 
-    // console.log(typeforce.isCoinAddress)
+    if (getCurrencyKey(currency).toLowerCase() === `btc`
+      && !wallet.isPinProtected // pin, sms, ms not support segwit (yet)
+      && !wallet.isSmsProtected // it was be later
+      && !wallet.isUserProtected// for this wallets segwit addres will be incorrect
+    ) {
+      if (!typeforce.isCoinAddress.BTC(address)) {
+        return actions.btc.addressIsCorrect(address)
+      } else return true
+    }
+
     if (isEthToken) {
       return typeforce.isCoinAddress.ETH(address)
     }
@@ -705,7 +720,7 @@ export default class WithdrawModal extends React.Component {
             openScan={this.openScan}
           />
           {address && !this.addressIsCorrect() && (
-            <div styleName="rednote">
+            <div styleName="rednote bottom0">
               <FormattedMessage id="WithdrawIncorectAddress" defaultMessage="Your address not correct" />
             </div>
           )}
