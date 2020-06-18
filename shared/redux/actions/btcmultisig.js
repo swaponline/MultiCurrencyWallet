@@ -1444,8 +1444,9 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
       redeemScript: p2ms.output,
       nonWitnessUtxo: Buffer.from(rawTx, 'hex'),
     })
-    psbt.signInput(i, bitcoin.ECPair.fromWIF(privateKey, btc.network))
   }
+
+  psbt.signAllInputs(bitcoin.ECPair.fromWIF(privateKey, btc.network))
 
   const rawTx = psbt.toHex();
 
@@ -1800,9 +1801,7 @@ const signMultiSign = async (txHash, wallet) => {
 
   const psbt = bitcoin.Psbt.fromHex(txHash)
 
-  psbt.data.inputs.forEach( async (input, i) => {
-    psbt.signInput(i, bitcoin.ECPair.fromWIF(privateKey, btc.network))
-  })
+  psbt.signAllInputs(bitcoin.ECPair.fromWIF(privateKey, btc.network))
 
   psbt.finalizeAllInputs();
 
