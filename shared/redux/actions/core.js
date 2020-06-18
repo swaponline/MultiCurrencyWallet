@@ -78,6 +78,9 @@ const getUserData = (currency) => {
     case 'ETH':
       return getState().user.ethData
 
+    case 'GHOST':
+      return getState().user.ghostData
+
     default:
       return {}
   }
@@ -136,7 +139,7 @@ const deletedPartialCurrency = (orderId) => {
   const deletedOrderSell = orders.filter(item => item.sellCurrency.toUpperCase() === deletedOrderSellCurrency)
   const deletedOrderBuy = orders.filter(item => item.buyCurrency.toUpperCase() === deletedOrderBuyCurrency)
 
-  const premiumCurrencies = ['BTC', 'ETH', 'SWAP'] // валюты, которые всегда должны быть в дропе
+  const premiumCurrencies = ['BTC', 'ETH', 'GHOST', 'SWAP'] // валюты, которые всегда должны быть в дропе
 
   if (deletedOrderSell.length === 1 && !premiumCurrencies.includes(deletedOrderSellCurrency)) {
     reducers.currencies.deletedPartialCurrency(deletedOrderSellCurrency)
@@ -344,6 +347,7 @@ const getWallets = () => {
   const {
     user: {
       btcData,
+      ghostData,
       btcMultisigSMSData,
       btcMultisigUserData,
       btcMultisigPinData,
@@ -358,6 +362,7 @@ const getWallets = () => {
     user: {
       btcMnemonicData,
       ethMnemonicData,
+      ghostMnemonicData,
     },
   } = getState()
 
@@ -365,6 +370,7 @@ const getWallets = () => {
   const allData = [
     ...(btcMnemonicData && !btcData.isMnemonic) ? [btcMnemonicData] : [], // Sweep
     ...(ethMnemonicData && !ethData.isMnemonic) ? [ethMnemonicData] : [], // Sweep
+    ...(ghostMnemonicData && !ghostData.isMnemonic) ? [ghostMnemonicData] : [], // Sweep
     btcData,
     btcMultisigSMSData,
     ...(btcMultisigPinData && btcMultisigPinData.isRegistered) ? [btcMultisigPinData] : [],
