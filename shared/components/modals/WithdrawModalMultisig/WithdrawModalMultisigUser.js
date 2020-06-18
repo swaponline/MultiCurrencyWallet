@@ -293,7 +293,9 @@ export default class WithdrawModalMultisigUser extends React.Component {
     const { data: { currency } } = this.props
     const { address } = this.state
 
-    return typeforce.isCoinAddress.BTC(address)
+    if (!typeforce.isCoinAddress.BTC(address)) {
+      return actions.btc.addressIsCorrect(address)
+    } else return true
   }
 
   handleCopyLink = () => {
