@@ -429,10 +429,6 @@ export default class RegisterSMSProtected extends React.Component {
         id: "registerSMSProtectedTitle",
         defaultMessage: `Activate SMS Protected Wallet`,
       },
-      mnemonicPlaceholder: {
-        id: 'registerSMSMPlaceHolder',
-        defaultMessage: `12 слов`,
-      },
       phonePlaceHolder: {
         id: 'registerSMSModalPhonePlaceholder',
         defaultMessage: `Enter your phone`,
@@ -499,7 +495,7 @@ export default class RegisterSMSProtected extends React.Component {
                   styleName="phoneNumber"
                   value={phone}
                   onChange={this.onPhoneChange}
-                  placeholder={`${intl.formatMessage(langs.mnemonicPlaceholder)}`}
+                  placeholder={`${intl.formatMessage(langs.phonePlaceHolder)}`}
                 />
               </div>
               {!useGeneratedKeyEnabled && (
@@ -584,7 +580,7 @@ export default class RegisterSMSProtected extends React.Component {
                   styleName="phoneNumber"
                   value={phone}
                   onChange={this.onPhoneChange}
-                  placeholder={`${intl.formatMessage(langs.mnemonicPlaceholder)}`}
+                  placeholder={`${intl.formatMessage(langs.phonePlaceHolder)}`}
                 />
                 {error && <div styleName="rednote">{error}</div>}
               </div>
