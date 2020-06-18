@@ -36,4 +36,5 @@ export default {
   PrivateKeysModal: 'PrivateKeysModal',
   RegisterPINProtected: 'RegisterPINProtected',
   WithdrawBtcPin: 'WithdrawBtcPin',
+  WalletAddressModal: 'WalletAddressModal',
 }

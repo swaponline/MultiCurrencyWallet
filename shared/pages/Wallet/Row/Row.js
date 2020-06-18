@@ -478,9 +478,13 @@ export default class Row extends Component {
 
   copy = () => {
     const {
-      itemData: { address },
+      itemData: { address, fullName },
     } = this.props
-    navigator.clipboard.writeText(address)
+
+    actions.modals.open(constants.modals.WalletAddressModal, {
+      address,
+      fullName,
+    })
   }
 
   copyPrivateKey = () => {
