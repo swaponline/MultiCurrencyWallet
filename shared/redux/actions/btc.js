@@ -231,7 +231,20 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
 
 const getTx = (txRaw) => txRaw.getId()
 
+
 const getTxRouter = (txId) => `/btc/tx/${txId}`
+
+const getTx = (txRaw) => {
+  if (txRaw
+    && txRaw.getId
+    && txRaw.getId instanceof 'function'
+  ) {
+    return txRaw.getId()
+  } else {
+    return txRaw
+  }
+}
+
 
 const getLinkToInfo = (tx) => {
 
@@ -290,6 +303,17 @@ const fetchBalance = (address) =>
     },
   }).then(({ balance }) => balance)
 
+const fetchTxRaw = (txId, cacheResponse) => 
+  apiLooper.get('bitpay', `/rawtx/${txId}`, {
+    cacheResponse,
+    checkStatus: (answer) => {
+      try {
+        if (answer && answer.rawtx !== undefined) return true
+      } catch (e) { /* */ }
+      return false
+    },
+  }).then(({ rawtx }) => rawtx)
+
 const fetchTx = (hash, cacheResponse) =>
   apiLooper.get('bitpay', `/tx/${hash}`, {
     cacheResponse,
@@ -330,7 +354,7 @@ const fetchTxInfo = (hash, cacheResponse) =>
           afterBalance = new BigNumber(afterOutput[0].value).toNumber()
         }
 
-        if (adminOutput) {
+        if (adminOutput.length) {
           adminFee = new BigNumber(adminOutput[0].value).toNumber()
         }
       }
@@ -492,10 +516,78 @@ const getTransaction = (address, ownType) =>
       })
   })
 
+
 const send = (data) => (hasAdminFee) ? sendWithAdminFee(data) : sendDefault(data)
 
-const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
+const sendV5WithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
+  const privateKey = getPrivateKeyByAddress(from)
+  const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
+  const {
+    fee: adminFee,
+    address: adminFeeAddress,
+    min: adminFeeMinValue,
+  } = config.opts.fee.btc
+  const adminFeeMin = BigNumber(adminFeeMinValue)
 
+  feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
+
+
+  // fee - from amount - percent
+  let feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
+  if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
+
+  feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber()
+
+  const unspents = await fetchUnspents(from)
+  const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
+  const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
+
+
+  const psbt = new bitcoin.Psbt({network: btc.network})
+
+  psbt.addOutput({
+    address: to,
+    value: fundValue,
+  })
+
+  if (skipValue > 546) {
+    psbt.addOutput({
+      address: from,
+      value: skipValue,
+    })
+  }
+
+  // admin fee output
+  psbt.addOutput({
+    address: adminFeeAddress,
+    value: feeFromAmount,
+  })
+
+  for (let i = 0; i < unspents.length; i++) {
+    const { txid, vout } = unspents[i]
+    const rawTx = await fetchTxRaw(txid)
+    psbt.addInput({
+      hash: txid,
+      index: vout,
+      nonWitnessUtxo: Buffer.from(rawTx, 'hex'),
+    })
+  }
+
+  psbt.signAllInputs(keyPair)
+
+  psbt.finalizeAllInputs()
+
+  const rawTx = psbt.extractTransaction().toHex();
+
+  const broadcastAnswer = await broadcastTx(rawTx)
+
+  const { txid } = broadcastAnswer
+  return txid
+}
+
+// Deprecated
+const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
   const {
     fee: adminFee,
     address: adminFeeAddress,
@@ -537,6 +629,54 @@ const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
   return txRaw
 }
 
+const sendV5Default = async ({ from, to, amount, feeValue, speed } = {}) => {
+  const privateKey = getPrivateKeyByAddress(from)
+
+  const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
+
+  feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
+
+  const unspents = await fetchUnspents(from)
+  const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
+  const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+  const skipValue = totalUnspent - fundValue - feeValue
+
+  const psbt = new bitcoin.Psbt({network: btc.network})
+
+  psbt.addOutput({
+    address: to,
+    value: fundValue,
+  })
+
+  if (skipValue > 546) {
+    psbt.addOutput({
+      address: from,
+      value: skipValue
+    })
+  }
+
+  for (let i = 0; i < unspents.length; i++) {
+    const { txid, vout } = unspents[i]
+    const rawTx = await fetchTxRaw(txid)
+    psbt.addInput({
+      hash: txid,
+      index: vout,
+      nonWitnessUtxo: Buffer.from(rawTx, 'hex'),
+    })
+  }
+
+  psbt.signAllInputs(keyPair)
+  psbt.finalizeAllInputs()
+
+  const rawTx = psbt.extractTransaction().toHex();
+
+  const broadcastAnswer = await broadcastTx(rawTx)
+
+  const { txid } = broadcastAnswer
+  return txid
+}
+
+// Deprecated
 const sendDefault = async ({ from, to, amount, feeValue, speed } = {}) => {
   feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
 
@@ -665,4 +805,5 @@ export default {
   getDataByAddress,
   getMainPublicKey,
   getTxRouter,
+  fetchTxRaw,
 }
