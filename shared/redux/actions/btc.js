@@ -755,6 +755,17 @@ const checkWithdraw = (scriptAddress) => {
 
 window.btcCheckWithdraw = checkWithdraw
 
+window.convertSegwit = (inaddress) => {
+  console.log(bitcoin.address.toOutputScript(inaddress, btc.network))
+  console.log(bitcoin.address.fromOutputScript(
+    bitcoin.address.toOutputScript(inaddress, btc.network),
+    btc.network
+   ))
+  //const address = bitcoin.address.fromBech32(inaddress)
+  //const base58 = bitcoin.address.toBase58Check(address.data, btc.network.pubKeyHash)
+  //console.log(base58)
+}
+
 export default {
   login,
   checkWithdraw,

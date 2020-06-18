@@ -288,8 +288,15 @@ export default class WithdrawModal extends React.Component {
 
     // Опрашиваем балансы отправителя и получателя на момент выполнения транзакции
     // Нужно для расчета final balance получателя и отправителя
-    const beforeBalances = false //await helpers.transactions.getTxBalances(currency, address, to)
+    let beforeBalances = false
+    try {
+      beforeBalances = await helpers.transactions.getTxBalances(currency, address, to)
+    } catch (e) {
+      console.error(e)
+      return
+    }
 
+    return
     if (invoice && ownTx) {
       await actions.invoices.markInvoice(invoice.id, 'ready', ownTx, address)
       actions.loader.hide()
