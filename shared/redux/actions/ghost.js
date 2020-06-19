@@ -123,14 +123,18 @@ const getPrivateKeyByAddress = (address) => {
       ghostData: {
         address: oldAddress,
         privateKey,
-      },
+      }
+    },
+  } = getState()
+  /*
+  const ghostMnemonicData
       ghostMnemonicData: {
         address: mnemonicAddress,
         privateKey: mnemonicKey,
       },
     },
   } = getState()
-
+  */
   if (oldAddress === address) return privateKey
   if (mnemonicAddress === address) return mnemonicKey
 }
