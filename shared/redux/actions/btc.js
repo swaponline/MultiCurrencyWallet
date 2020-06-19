@@ -229,9 +229,6 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
 }
 
 
-const getTx = (txRaw) => txRaw.getId()
-
-
 const getTxRouter = (txId) => `/btc/tx/${txId}`
 
 const getTx = (txRaw) => {

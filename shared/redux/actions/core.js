@@ -377,6 +377,7 @@ const getWallets = () => {
     btcMultisigUserData,
     ...(btcMultisigUserData && btcMultisigUserData.wallets) ? btcMultisigUserData.wallets : [],
     ethData,
+    ghostData,
     ...Object.keys(tokensData)
       .filter(k => !tokensData[k].reducerDataTarget)
       .map(k => tokensData[k]),
