@@ -170,6 +170,8 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
   const data = {
     ...auth(privateKey),
     isMnemonic: sweepToMnemonicReady,
+    currency: 'GHOST',
+    fullName: 'ghost',
   }
 
   window.getGhostAddress = () => data.address
