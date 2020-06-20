@@ -9,6 +9,7 @@ import cssModules from "react-css-modules";
 import styles from "../Styles/default.scss";
 import ownStyle from './RegisterSMSProtected.scss'
 
+import { isValidPhoneNumber } from 'react-phone-number-input'
 
 import Modal from "components/modal/Modal/Modal";
 import FieldLabel from "components/forms/FieldLabel/FieldLabel";
@@ -458,6 +459,7 @@ export default class RegisterSMSProtected extends React.Component {
       },
     });
 
+    const sentBtnDisabled = isShipped || !phone || phone && !isValidPhoneNumber(phone)
     return (
       <Modal name={name} title={`${intl.formatMessage(langs.registerSMSModal)}`}>
         <div styleName="registerSMSModalHolder">
@@ -494,6 +496,7 @@ export default class RegisterSMSProtected extends React.Component {
               <PhoneInput
                 value={phone}
                 error={error}
+                locale={intl.locale}
                 onChange={this.onPhoneChange}
                 placeholder={`${intl.formatMessage(langs.phonePlaceHolder)}`}
                 label={<FieldLabel label>
@@ -558,7 +561,7 @@ export default class RegisterSMSProtected extends React.Component {
                     </Fragment>
                   )}
               </div>
-              <Button blue big fullWidth disabled={isShipped || !isMnemonicValid} onClick={this.handleSendSMS}>
+              <Button blue big fullWidth disabled={sentBtnDisabled} onClick={this.handleSendSMS}>
                 {isShipped ? (
                   <Fragment>
                     <FormattedMessage id="registerSMSModalProcess" defaultMessage="Processing ..." />
@@ -582,7 +585,7 @@ export default class RegisterSMSProtected extends React.Component {
                   <FormattedMessage id="registerSMSModalPhone" defaultMessage="Your phone:" />
                 </FieldLabel>}
               />
-              <Button blue big fullWidth disabled={isShipped} onClick={this.handleSendSMS}>
+              <Button blue big fullWidth disabled={sentBtnDisabled} onClick={this.handleSendSMS}>
                 {isShipped ? (
                   <Fragment>
                     <FormattedMessage id="registerSMSModalProcess" defaultMessage="Processing ..." />
