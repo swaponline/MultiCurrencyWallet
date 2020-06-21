@@ -5,7 +5,7 @@ import { constants, localStorage } from 'helpers'
 const saveUserData = function saveUserData() {
   const interval = window.setInterval(() => {
     const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
-    if ((isWalletCreate, window.userDataPluginApi)) {
+    if (isWalletCreate && window.userDataPluginApi && window.WPuserUid) {
       const {
         btcData,
         bchData,
