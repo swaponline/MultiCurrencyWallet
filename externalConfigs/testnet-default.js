@@ -45,6 +45,7 @@ window.buildOptions = {
   curEnabled: false,
   showWalletBanners: true, // Allow to see banners
   invoiceEnabled: true, // Allow create invoices
+  hideShowPrivateKey: true, // Hide 'Copy Private Key' Menu item, default false, inited also from window.SWAP_HIDE_PRIVATEKEY
 //  fee: { btc .... }, // Can be inited from window.widgetERC20Comisions
 }
 */
