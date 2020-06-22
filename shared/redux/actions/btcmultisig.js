@@ -1334,6 +1334,162 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
     if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
 
+    feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber() // Admin fee in satoshi
+  }
+
+  feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, method: 'send_2fa' })
+
+
+  const unspents = await fetchUnspents(from)
+
+  const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
+  const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
+
+  const p2ms = bitcoin.payments.p2ms({
+    m: 2,
+    n: publicKeys.length,
+    pubkeys: publicKeys,
+    network: btc.network,
+  })
+
+  const psbt = new bitcoin.Psbt({network: btc.network})
+
+  psbt.addOutput({
+    address: to,
+    value: fundValue,
+  })
+
+  if (skipValue > 546) {
+    psbt.addOutput({
+      address: from,
+      value: skipValue
+    })
+  }
+
+  if (hasAdminFee) {
+    // admin fee output
+    psbt.addOutput({
+      address: hasAdminFee.address,
+      value: feeFromAmount,
+    })
+  }
+
+  for (let i = 0; i < unspents.length; i++) {
+    const { txid, vout } = unspents[i]
+    const rawTxo = await actions.btc.fetchTxRaw(txid, { cacheResponse: 5000 })
+    psbt.addInput({
+      hash: txid,
+      index: vout,
+      redeemScript: p2ms.output,
+      nonWitnessUtxo: Buffer.from(rawTxo, 'hex'),
+    })
+  }
+
+  psbt.signAllInputs(bitcoin.ECPair.fromWIF(privateKey, btc.network))
+
+  const rawTX = psbt.toHex()
+
+  if (mnemonic) {
+    const mnemonicTx = await signPinMnemonic(rawTX, mnemonic)
+    const broadcastResult = await actions.btc.broadcastTx(mnemonicTx)
+    if (broadcastResult
+      && broadcastResult.txid
+    ) {
+      return {
+        answer: 'ok',
+        txId: broadcastResult.txid,
+      }
+    } else {
+      return {
+        error: `Fail sign transaction by mnemonic`,
+      }
+    }
+  }
+
+  let authKeys = publicKeys//.slice(1)
+  authKeys = JSON.stringify(authKeys.map((key) => key.toString('Hex')))
+
+  try {
+    const result = await apiLooper.post('btcPin', `/sign/`, {
+      body: {
+        address,
+        publicKey: authKeys,
+        checkSign: _getSign,
+        rawTX: rawTX,
+        mainnet: process.env.MAINNET ? true : false,
+        source: window.location.hostname,
+        password,
+        version: `v5`,
+      },
+      timeout: {
+        response: 0,
+        deadline: 5000,
+      },
+    })
+
+    if (result
+      && result.answer
+      && result.answer === 'ok'
+      && result.rawTX
+    ) {
+      const broadcastResult = await actions.btc.broadcastTx(result.rawTX)
+      if (broadcastResult
+        && broadcastResult.txid
+      ) {
+        return {
+          answer: 'ok',
+          txId: broadcastResult.txid,
+        }
+      } else {
+        return {
+          error: 'Fail broadcast transaction'
+        }
+      }
+    } else {
+      return {
+        ...result,
+      }
+    }
+  } catch (apiError) {
+    return {
+      error: apiError.message,
+      rawTX,
+    }
+    console.error(apiError)
+    return false
+  }
+}
+
+// deprecated
+const sendPinProtectedV4 = async ({ from, to, amount, feeValue, speed, password, mnemonic } = {}) => {
+  const {
+    user: {
+      btcMultisigPinData: {
+        privateKey,
+        publicKeys,
+        publicKey,
+      },
+      btcData: {
+        address,
+      },
+    },
+  } = getState()
+
+  let feeFromAmount = BigNumber(0)
+
+  if (hasAdminFee) {
+    const {
+      fee: adminFee,
+      min: adminFeeMinValue,
+    } = hasAdminFee
+
+    const adminFeeMin = BigNumber(adminFeeMinValue)
+
+    feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
+    if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
+
+
     feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
   }
 
@@ -1939,6 +2095,26 @@ const signSmsMnemonic = (txHash, mnemonic) => {
 }
 
 const signPinMnemonic = (txHash, mnemonic) => {
+  return new Promise(async (resolve, reject) => {
+    const mnemonicWallet = actions.btc.getWalletByWords(mnemonic, 1)
+    const psbt = bitcoin.Psbt.fromHex(txHash)
+
+    psbt.signAllInputs(bitcoin.ECPair.fromWIF(mnemonicWallet.WIF, btc.network))
+
+    psbt.finalizeAllInputs();
+
+    const rawTx = psbt.extractTransaction().toHex()
+
+    if (!rawTx) {
+      reject('rawTx empty')
+    } else {
+      resolve(rawTx)
+    }
+  })
+}
+
+// deprecated
+const signPinMnemonicv4 = (txHash, mnemonic) => {
   const {
     user: {
       btcMultisigPinData: {
