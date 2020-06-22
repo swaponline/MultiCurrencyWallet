@@ -579,6 +579,7 @@ export default class RegisterSMSProtected extends React.Component {
               <PhoneInput
                 value={phone}
                 error={error}
+                locale={intl.locale}
                 onChange={this.onPhoneChange}
                 placeholder={`${intl.formatMessage(langs.phonePlaceHolder)}`}
                 label={<FieldLabel label>

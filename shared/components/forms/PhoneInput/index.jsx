@@ -8,7 +8,10 @@ import styles from './styles.scss'
 
 const Phone = (props) => {
   const { placeholder, label, error, onChange, locale } = props
-  let countryCode = `+${getCountryCallingCode(locale.toUpperCase())}`
+
+  // Нет такой страны как EN, RU, итд...
+  // let countryCode = `+${getCountryCallingCode((locale))}`
+  let countryCode = `+1`
 
   const onHandleChange = (phone) => {
     try {
