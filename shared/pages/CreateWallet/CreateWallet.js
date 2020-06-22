@@ -202,7 +202,7 @@ const CreateWallet = (props) => {
 
     const isIgnoreSecondStep = ['ETH', 'SWAP', 'EURS', 'Custom ERC20'].find(el => Object.keys(currencies).includes(el))
 
-    if (isIgnoreSecondStep) {
+    if (isIgnoreSecondStep && !currencies['Custom ERC20']) {
       actions.core.markCoinAsVisible(isIgnoreSecondStep)
       localStorage.setItem(constants.localStorage.isWalletCreate, true)
       goHome()
@@ -213,12 +213,14 @@ const CreateWallet = (props) => {
       setError('Choose something')
       return
     }
+
+    if (currencies['Custom ERC20']) {
+      goHome()
+      actions.modals.open(constants.modals.AddCustomERC20)
+      return
+    }
+
     if (step === 2 || singleCurrecnyData) {
-      if (currencies['Custom ERC20']) {
-        goHome()
-        actions.modals.open(constants.modals.AddCustomERC20)
-        return
-      }
       switch (secure) {
         case 'withoutSecure':
           Object.keys(currencies).forEach(el => {
