@@ -1950,7 +1950,27 @@ const signPinMnemonic = (txHash, mnemonic) => {
   return signMofNByMnemonic(txHash, 2, publicKeys, mnemonic, 1)
 }
 
+
 const signSmsMnemonicAndBuild = (txHash, mnemonic) => {
+  return new Promise(async (resolve, reject) => {
+    const mnemonicWallet = actions.btc.getWalletByWords(mnemonic, 1)
+    const psbt = bitcoin.Psbt.fromHex(txHash)
+
+    psbt.signAllInputs(bitcoin.ECPair.fromWIF(mnemonicWallet.WIF, btc.network))
+
+    psbt.finalizeAllInputs();
+
+    const rawTx = psbt.extractTransaction().toHex()
+
+    if (!rawTx) {
+      reject('rawTx empty')
+    } else {
+      resolve(rawTx)
+    }
+  })
+}
+// deprecated
+const signSmsMnemonicAndBuildV4 = (txHash, mnemonic) => {
   return new Promise(async (resolve, reject) => {
     const rawTx = signSmsMnemonic(txHash, mnemonic)
     if (!rawTx) {
