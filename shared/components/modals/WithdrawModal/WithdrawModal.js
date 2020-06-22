@@ -449,10 +449,7 @@ export default class WithdrawModal extends React.Component {
     } = this.props
     const { address, isEthToken, wallet } = this.state
 
-    if (getCurrencyKey(currency).toLowerCase() === `btc`
-      && !wallet.isPinProtected // pin, sms, ms not support segwit (yet)
-      && !wallet.isSmsProtected // it was be later for this wallets segwit addres will be incorrect
-    ) {
+    if (getCurrencyKey(currency).toLowerCase() === `btc`) {
       if (!typeforce.isCoinAddress.BTC(address)) {
         return actions.btc.addressIsCorrect(address)
       } else return true
