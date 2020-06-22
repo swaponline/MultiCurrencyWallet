@@ -2045,12 +2045,9 @@ const signAndBuild = (transactionBuilder, p2sh) => {
 const fetchUnspents = (address) =>
   apiLooper.get('bitpay', `/addr/${address}/utxo`, { cacheResponse: 5000 })
 
-const broadcastTx = (txRaw) =>
-  apiLooper.post('bitpay', `/tx/send`, {
-    body: {
-      rawtx: txRaw,
-    },
-  })
+const broadcastTx = (txRaw) => {
+  return actions.btc.broadcastTx(txRaw)
+}
 
 
 const signMessage = (message, encodedPrivateKey) => {

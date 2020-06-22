@@ -718,12 +718,34 @@ const signAndBuild = (transactionBuilder, address) => {
 const fetchUnspents = (address) =>
   apiLooper.get('bitpay', `/addr/${address}/utxo`, { cacheResponse: 5000 })
 
-const broadcastTx = (txRaw) =>
-  apiLooper.post('bitpay', `/tx/send`, {
-    body: {
-      rawtx: txRaw,
-    },
+const broadcastTx = (txRaw) => {
+  return new Promise(async (resolve, reject) => {
+    const answer = await apiLooper.post('bitpay', `/tx/send`, {
+      body: {
+        rawtx: txRaw,
+      },
+    })
+    if (!answer || !answer.txid) {
+      // use blockcryper
+      const bcAnswer = await apiLooper.post('blockcypher', `/txs/push`, {
+        body: {
+          tx: txRaw,
+        },
+      })
+      if (bcAnswer
+        && bcAnswer.tx
+        && bcAnswer.tx.hash) {
+        resolve({
+          txid: bcAnswer.tx.hash,
+        })
+      } else {
+        reject()
+      }
+    } else {
+      resolve(answer)
+    }
   })
+}
 
 const signMessage = (message, encodedPrivateKey) => {
   const keyPair = bitcoin.ECPair.fromWIF(encodedPrivateKey, [bitcoin.networks.bitcoin, bitcoin.networks.testnet])
