@@ -55,9 +55,9 @@ const externalConfig = () => {
   }
 
   if (window
-    && window.SWAP_HIDE_PRIVATEKEY !== undefined
+    && window.SWAP_HIDE_EXPORT_PRIVATEKEY !== undefined
   ) {
-    config.opts.hideShowPrivateKey = window.SWAP_HIDE_PRIVATEKEY
+    config.opts.hideShowPrivateKey = window.SWAP_HIDE_EXPORT_PRIVATEKEY
   }
 
   if (window
