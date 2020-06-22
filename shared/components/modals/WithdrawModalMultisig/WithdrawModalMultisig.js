@@ -492,7 +492,9 @@ export default class WithdrawModalMultisig extends React.Component {
   addressIsCorrect() {
     const { address } = this.state
 
-    return typeforce.isCoinAddress.BTC(address)
+    if (!typeforce.isCoinAddress.BTC(address)) {
+      return actions.btc.addressIsCorrect(address)
+    } else return true
   }
 
   handleClose = () => {
