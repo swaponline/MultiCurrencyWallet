@@ -720,11 +720,14 @@ const fetchUnspents = (address) =>
 
 const broadcastTx = (txRaw) => {
   return new Promise(async (resolve, reject) => {
-    const answer = await apiLooper.post('bitpay', `/tx/send`, {
-      body: {
-        rawtx: txRaw,
-      },
-    })
+    let answer = false
+    try {
+      answer = await apiLooper.post('bitpay', `/tx/send`, {
+        body: {
+          rawtx: txRaw,
+        },
+      })
+    } catch (e) {}
     if (!answer || !answer.txid) {
       // use blockcryper
       const bcAnswer = await apiLooper.post('blockcypher', `/txs/push`, {
