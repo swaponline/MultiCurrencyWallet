@@ -5,6 +5,7 @@ export default {
     'https://test-insight.swaponline.io/insight-api',
     'https://invoices.swaponline.site/proxybitpay-testnet',
   ],
+  blockcypher: 'https://api.blockcypher.com/v1/btc/test3',
   // bitpay: 'https://test-insight.bitpay.com/api',
   etherscan: [
     'https://rinkeby.etherscan.io/api',

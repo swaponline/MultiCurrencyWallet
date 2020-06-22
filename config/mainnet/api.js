@@ -5,6 +5,7 @@ export default {
     'https://insight.bitpay.com/api',
     'https://invoices.swaponline.site/proxybitpay',
   ],
+  blockcypher: 'https://api.blockcypher.com/v1/btc/main',
   etherscan: [
     'https://api.etherscan.io/api',
     'https://invoices.swaponline.site/proxyetherscan',
