@@ -641,7 +641,7 @@ export default class Row extends Component {
         action: this.copy,
         disabled: false,
       },
-      {
+      !config.opts.hideShowPrivateKey && {
         id: 1012,
         title: (
           <FormattedMessage

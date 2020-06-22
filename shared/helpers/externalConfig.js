@@ -37,6 +37,7 @@ const externalConfig = () => {
     showWalletBanners: false,
     showHowItsWork: false,
     fee: {},
+    hideShowPrivateKey: false,
   }
 
   if (window
@@ -51,6 +52,12 @@ const externalConfig = () => {
     && Object.keys(window.buildOptions).length
   ) {
     config.opts = { ...config.opts, ...window.buildOptions }
+  }
+
+  if (window
+    && window.SWAP_HIDE_EXPORT_PRIVATEKEY !== undefined
+  ) {
+    config.opts.hideShowPrivateKey = window.SWAP_HIDE_EXPORT_PRIVATEKEY
   }
 
   if (window
