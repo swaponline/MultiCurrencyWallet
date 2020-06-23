@@ -232,6 +232,12 @@ export default class Row extends Component {
     )
   }
 
+  handleHowImportSMS = () => {
+    actions.modals.open(constants.modals.RegisterSMSProtected, {
+      initStep: 'import',
+    })
+  }
+
   handleHowImportPIN = () => {
     actions.modals.open(constants.modals.RegisterPINProtected, {
       initStep: 'import',
@@ -667,6 +673,17 @@ export default class Row extends Component {
           />
         ),
         action: this.handleHowImportPIN,
+        disabled: false,
+      },
+      this.props.itemData.isSmsProtected && {
+        id: 3012,
+        title: (
+          <FormattedMessage
+            id="WalletRow_Menu_HowImportSms"
+            defaultMessage="How to import wallet"
+          />
+        ),
+        action: this.handleHowImportSMS,
         disabled: false,
       },
     ].filter((el) => el)
