@@ -82,6 +82,7 @@ export default class WithdrawModal extends React.Component {
     const currentDecimals = constants.tokenDecimals[getCurrencyKey(currency, true).toLowerCase()]
     const allCurrencyies = actions.core.getWallets() //items.concat(tokenItems)
     const selectedItem = allCurrencyies.filter((item) => item.currency === currency)[0]
+    console.log('selectedItem', selectedItem)
 
     let usedAdminFee = false
 
@@ -89,8 +90,8 @@ export default class WithdrawModal extends React.Component {
       if (helpers.ethToken.isEthToken({ name: currency.toLowerCase() }) && config.opts.fee.erc20) {
         usedAdminFee = config.opts.fee.erc20
       } else {
-        if (config.opts.fee[currency.toLowerCase()]) {
-          usedAdminFee = config.opts.fee[currency.toLowerCase()]
+        if (config.opts.fee[getCurrencyKey(currency).toLowerCase()]) {
+          usedAdminFee = config.opts.fee[getCurrencyKey(currency).toLowerCase()]
         }
       }
     }
@@ -104,6 +105,7 @@ export default class WithdrawModal extends React.Component {
       amount: amount ? amount : '',
       minus: '',
       balance: selectedItem.balance || 0,
+      selectedItem,
       ethBalance: null,
       isEthToken: helpers.ethToken.isEthToken({ name: currency.toLowerCase() }),
       currentDecimals,
@@ -219,8 +221,14 @@ export default class WithdrawModal extends React.Component {
       data: { unconfirmedBalance },
     } = this.props
 
+    const {
+      selectedItem: {
+        balance,
+      },
+    } = this.state
+
     // @ToDo - balance...
-    const balance = await actions[getCurrencyKey(currency)].getBalance(currency.toLowerCase())
+    // const balance = await actions[getCurrencyKey(currency)].getBalance(currency.toLowerCase())
 
     const finalBalance =
       unconfirmedBalance !== undefined && unconfirmedBalance < 0
@@ -418,7 +426,7 @@ export default class WithdrawModal extends React.Component {
       data: { currency },
     } = this.props
 
-    let minFee = isEthToken ? 0 : minAmount[currency.toLowerCase()]
+    let minFee = isEthToken ? 0 : minAmount[getCurrencyKey(currency).toLowerCase()]
 
     if (usedAdminFee) {
       let feeFromAmount = BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(balance)
@@ -556,7 +564,7 @@ export default class WithdrawModal extends React.Component {
     const currencyView = getCurrencyKey(currentActiveAsset.currency, true).toUpperCase()
     const selectedValueView = getCurrencyKey(selectedValue, true).toUpperCase()
 
-    let min = isEthToken ? 0 : minAmount[currency.toLowerCase()]
+    let min = isEthToken ? 0 : minAmount[getCurrencyKey(currency).toLowerCase()]
     let defaultMin = min
 
     /*
@@ -879,7 +887,7 @@ export default class WithdrawModal extends React.Component {
               values={{
                 minAmount: <span>{isEthToken ? minAmount.eth : min}</span>,
                 br: <br />,
-                data: `${dataCurrency}`,
+                data: `${getCurrencyKey(dataCurrency, true).toUpperCase()}`,
               }}
             />
           </p>
