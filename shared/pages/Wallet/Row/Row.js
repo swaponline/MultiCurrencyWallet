@@ -232,15 +232,15 @@ export default class Row extends Component {
     )
   }
 
-  handleHowImportSMS = () => {
+  handleHowExportSMS = () => {
     actions.modals.open(constants.modals.RegisterSMSProtected, {
-      initStep: 'import',
+      initStep: 'export',
     })
   }
 
-  handleHowImportPIN = () => {
+  handleHowExportPIN = () => {
     actions.modals.open(constants.modals.RegisterPINProtected, {
-      initStep: 'import',
+      initStep: 'export',
     })
   }
 
@@ -668,22 +668,22 @@ export default class Row extends Component {
         id: 3012,
         title: (
           <FormattedMessage
-            id="WalletRow_Menu_HowImportPin"
-            defaultMessage="How to import wallet"
+            id="WalletRow_Menu_HowExportPin"
+            defaultMessage="How to export wallet"
           />
         ),
-        action: this.handleHowImportPIN,
+        action: this.handleHowExportPIN,
         disabled: false,
       },
       this.props.itemData.isSmsProtected && {
         id: 3012,
         title: (
           <FormattedMessage
-            id="WalletRow_Menu_HowImportSms"
-            defaultMessage="How to import wallet"
+            id="WalletRow_Menu_HowExportSms"
+            defaultMessage="How to export wallet"
           />
         ),
-        action: this.handleHowImportSMS,
+        action: this.handleHowExportSMS,
         disabled: false,
       },
     ].filter((el) => el)

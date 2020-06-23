@@ -210,7 +210,7 @@ export default class RegisterPINProtected extends React.Component {
     if (useGeneratedKeyEnabled && !mnemonicSaved) step = 'saveMnemonicWords'
 
     let showFinalInstruction = false
-    if (initStep === 'import') {
+    if (initStep === 'export') {
       showFinalInstruction = true
       step = 'ready'
     }
