@@ -232,6 +232,12 @@ export default class Row extends Component {
     )
   }
 
+  handleHowImportPIN = () => {
+    actions.modals.open(constants.modals.RegisterPINProtected, {
+      initStep: 'import',
+    })
+  }
+
   handleReceive = () => {
     const {
       itemData: { currency, address },
@@ -650,6 +656,17 @@ export default class Row extends Component {
           />
         ),
         action: this.copyPrivateKey,
+        disabled: false,
+      },
+      this.props.itemData.isPinProtected && {
+        id: 3012,
+        title: (
+          <FormattedMessage
+            id="WalletRow_Menu_HowImportPin"
+            defaultMessage="How to import wallet"
+          />
+        ),
+        action: this.handleHowImportPIN,
         disabled: false,
       },
     ].filter((el) => el)
