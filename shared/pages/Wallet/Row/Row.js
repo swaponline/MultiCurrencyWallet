@@ -232,6 +232,18 @@ export default class Row extends Component {
     )
   }
 
+  handleHowExportSMS = () => {
+    actions.modals.open(constants.modals.RegisterSMSProtected, {
+      initStep: 'export',
+    })
+  }
+
+  handleHowExportPIN = () => {
+    actions.modals.open(constants.modals.RegisterPINProtected, {
+      initStep: 'export',
+    })
+  }
+
   handleReceive = () => {
     const {
       itemData: { currency, address },
@@ -651,6 +663,28 @@ export default class Row extends Component {
           />
         ),
         action: this.copyPrivateKey,
+        disabled: false,
+      },
+      this.props.itemData.isPinProtected && {
+        id: 3012,
+        title: (
+          <FormattedMessage
+            id="WalletRow_Menu_HowExportPin"
+            defaultMessage="How to export wallet"
+          />
+        ),
+        action: this.handleHowExportPIN,
+        disabled: false,
+      },
+      this.props.itemData.isSmsProtected && {
+        id: 3012,
+        title: (
+          <FormattedMessage
+            id="WalletRow_Menu_HowExportSms"
+            defaultMessage="How to export wallet"
+          />
+        ),
+        action: this.handleHowExportSMS,
         disabled: false,
       },
     ].filter((el) => el)
