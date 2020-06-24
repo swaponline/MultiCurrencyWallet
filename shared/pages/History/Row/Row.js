@@ -187,6 +187,7 @@ class Row extends React.PureComponent {
       invoiceData,
       confirmTx,
       onSubmit,
+      isDark
     } = this.props
 
     const substrAddress = address ? `${address.slice(0, 2)}...${address.slice(-2)}` : ''
@@ -242,7 +243,7 @@ class Row extends React.PureComponent {
 
     return (
       <>
-        <tr styleName='historyRow'>
+        <tr styleName={`historyRow ${isDark ? '--dark' : ''}`}>
           <td>
             <div styleName={`${statusStyleAmount} circleIcon`}>
               <div styleName='arrowWrap'>

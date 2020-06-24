@@ -4,6 +4,9 @@ import React, { useState } from 'react'
 import cssModules from 'react-css-modules'
 import axios from 'axios'
 import { FormattedMessage, injectIntl } from 'react-intl'
+
+import { constants } from 'helpers';
+
 import cx from 'classnames'
 
 import styles from './styles.scss'
@@ -28,6 +31,9 @@ const FAQ = (props) => {
     THIRD_TAB: 0,
   })
 
+
+  const isDark = localStorage.getItem(constants.localStorage.isDark)
+
   const handleTabClick = (tabName) => {
     setOpenedTabs({ ...openedTabs, [tabName]: !openedTabs[tabName] })
     if (openedTabsCounter[tabName] === 0 && !window.location.host.includes('localhost')) {
@@ -44,7 +50,7 @@ const FAQ = (props) => {
   }
 
   return (
-    <div className={styles.faQuestions}>
+    <div className={`${styles.faQuestions} ${isDark ? styles.dark : ''}`}>
       <h5 className={styles.faQuestions__header}>
         <FormattedMessage id="MainFAQHeader" defaultMessage="FAQ" />
       </h5>

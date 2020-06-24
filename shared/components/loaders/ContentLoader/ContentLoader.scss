@@ -9,6 +9,27 @@
   width: 100%;
   top: 20px;
   opacity: 0.6;
+
+  &.--dark {
+    background: #2a2929;
+    opacity: unset;
+    .textBlock {
+      p {
+        color: white;
+      }
+      span {
+        color: #79838a;
+      }
+    }
+    .one,
+    .two,
+    .three,
+    .four,
+    .five,
+    .six {
+        background: linear-gradient(to right, #353535 8%, #353535 18%, #353535 33%);
+    }
+  }
 }
 
 .animationLoading.rideSideContent {

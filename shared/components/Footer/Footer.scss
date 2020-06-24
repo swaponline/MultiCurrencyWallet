@@ -3,6 +3,10 @@ $information-footer-height: 44px;
 .footer {
   background-color: #ffffff;
   width: 100%;
+
+  &.dark {
+    background-color: #222528;
+  }
 }
 
 .inRow {
@@ -37,7 +41,7 @@ $information-footer-height: 44px;
   flex-direction: column;
   height: 100%;
   align-items: center;
-  margin-top: 16px;
+  padding-top: 16px;
   flex-wrap: wrap;
 }
 

@@ -17,6 +17,12 @@
   }
 }
 
+.walletNavItem.active.--dark {
+  a {
+    color: white !important;;
+  }
+}
+
 .walletNavItemLink {
   cursor: pointer;
   font-size: 15px;

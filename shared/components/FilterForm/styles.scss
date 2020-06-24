@@ -15,6 +15,21 @@
       color: #1F2D48;
       opacity: 0.2;
     }
+
+    &.--dark {
+      input {
+        color: white;
+      }
+      input::placeholder {
+        color: white;
+      }
+
+      div {
+        button {
+          color: white
+        }
+      }
+    }
   }
   
   .buttons {

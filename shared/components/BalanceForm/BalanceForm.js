@@ -26,15 +26,12 @@ function BalanceForm({
   handleInvoice,
   isFetching = false,
   showButtons = true,
-  dashboardView,
-  modals,
+  isDark,
   type,
 }) {
-  const savedActiveCurrency = localStorage.getItem(constants.localStorage.balanceActiveCurrency)
   const [selectedCurrency, setActiveCurrency] = useState(activeCurrency)
 
   const isWidgetBuild = config && config.isWidget
-  const isAnyModalCalled = Object.keys(modals).length
 
   useEffect(() => {
     if (type === 'wallet' && activeCurrency !== 'usd') {
@@ -65,7 +62,7 @@ function BalanceForm({
   }
 
   return (
-    <div styleName={isWidgetBuild && !config.isFullBuild ? 'yourBalance widgetBuild' : 'yourBalance'}>
+    <div styleName={`${isWidgetBuild && !config.isFullBuild ? 'yourBalance widgetBuild' : 'yourBalance'} ${isDark ? '--dark' : ''}`}>
       <div styleName="yourBalanceTop" className="data-tut-widget-balance">
         <p styleName="yourBalanceDescr">
           <FormattedMessage id="Yourtotalbalance" defaultMessage="Ваш общий баланс" />
