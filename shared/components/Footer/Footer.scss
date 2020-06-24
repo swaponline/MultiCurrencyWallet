@@ -5,7 +5,7 @@ $information-footer-height: 44px;
   width: 100%;
 
   &.dark {
-    background-color: #222528;
+    background-color: #222427;
   }
 }
 
@@ -41,7 +41,7 @@ $information-footer-height: 44px;
   flex-direction: column;
   height: 100%;
   align-items: center;
-  padding-top: 16px;
+  padding: 16px 0;
   flex-wrap: wrap;
 }
 

@@ -49,6 +49,12 @@ textarea {
 .root {
   display: block;
   width: 100%;
+
+  &.--dark {
+    .inputContainer {
+      background-color: #2b2b2b;
+    }
+  }
 }
 
 .inputContainer {

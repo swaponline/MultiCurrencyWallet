@@ -10,6 +10,10 @@
   left: 10px;
   white-space: nowrap;
   padding-right: 20px; 
+
+  &.--dark {
+    background: none;
+  }
 }
 
 // .inRow {
