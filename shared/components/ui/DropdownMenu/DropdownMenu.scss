@@ -29,6 +29,14 @@
     display: none;
     @include ff;
 
+    &.--dark {
+        background: #222528;
+        color: white;
+
+        .dropdownMenuItem {
+            border-bottom: 1px solid #161719;
+        }
+    }
     button {
         font-size: 12px;
         width: 100%;

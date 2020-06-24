@@ -1,15 +1,17 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
+
+import { constants } from "helpers";
 
 import styles from './SwitchLang.scss'
 import CSSModules from 'react-css-modules'
 
-import { relocalisedUrl, localisedUrl } from 'helpers/locale'
+import { relocalisedUrl } from 'helpers/locale'
 import { setCookie } from 'helpers/utils'
 import { FormattedMessage, injectIntl } from 'react-intl'
 
 
 @injectIntl
-@CSSModules(styles)
+@CSSModules(styles, { allowMultiple: true })
 export default class SwitchLang extends Component {
 
   switchLang = (event, locale) => {
@@ -22,13 +24,15 @@ export default class SwitchLang extends Component {
     }, 10)
   }
   render() {
-    const { intl: { locale }, className } = this.props
+    const { intl: { locale } } = this.props
+
+    const isDark = localStorage.getItem(constants.localStorage.isDark)
 
     return (
       <div styleName="langSwitcher">
         <a
           href={locale.toUpperCase() === 'RU' ? `#${relocalisedUrl(locale)}` : undefined}
-          styleName="language"
+          styleName={`language ${isDark ? '--dark' : ''}`}
           onClick={(e) => { this.switchLang(e, 'EN'); return false }}
         >
           <FormattedMessage id="SwitchLang20" defaultMessage="EN " />
@@ -36,7 +40,7 @@ export default class SwitchLang extends Component {
         |
         <a
           href={locale.toUpperCase() === 'EN' ? `#${relocalisedUrl(locale)}` : undefined}
-          styleName="language"
+          styleName={`language ${isDark ? '--dark' : ''}`}
           onClick={(e) => { this.switchLang(e, 'RU'); return false }}
         >
           <FormattedMessage id="SwitchLang24" defaultMessage=" RU" />

@@ -528,7 +528,8 @@ export default class Row extends Component {
       itemData,
       intl: { locale },
       intl,
-      activeFiat
+      activeFiat,
+      isDark
     } = this.props
 
     const {
@@ -815,7 +816,7 @@ export default class Row extends Component {
 
     return (
       <tr>
-        <td styleName="assetsTableRow">
+        <td styleName={`assetsTableRow ${isDark ? '--dark' : ''}`}>
           <div styleName="assetsTableCurrency">
             <a
               onClick={this.goToCurrencyHistory}
@@ -907,18 +908,18 @@ export default class Row extends Component {
                 {!statusInfo ? (
                   <PartOfAddress {...itemData} onClick={this.goToCurrencyHistory} />
                 ) : (
-                  <p styleName="statusStyle">{statusInfo}</p>
-                )}
+                    <p styleName="statusStyle">{statusInfo}</p>
+                  )}
               </Fragment>
             ) : (
-              <Fragment>
-                {!statusInfo ? (
-                  <p styleName="addressStyle">{itemData.address}</p>
-                ) : (
-                  <p styleName="addressStyle">{statusInfo}</p>
-                )}
-              </Fragment>
-            )}
+                <Fragment>
+                  {!statusInfo ? (
+                    <p styleName="addressStyle">{itemData.address}</p>
+                  ) : (
+                      <p styleName="addressStyle">{statusInfo}</p>
+                    )}
+                </Fragment>
+              )}
 
             {currencyFiatBalance && showBalance && !balanceError ? (
               <div styleName="assetsTableValue">
@@ -933,6 +934,7 @@ export default class Row extends Component {
           </div>
           <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">
             <DropdownMenu
+              isDark={isDark}
               size="regular"
               className="walletControls"
               items={dropDownMenuItems}

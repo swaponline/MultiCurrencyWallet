@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import shortid from 'shortid';
 import cssModules from 'react-css-modules'
 import dots from './images/dots.svg'
+import greyDots from './images/greyDots.svg'
 
 import styles from './DropdownMenu.scss'
 
@@ -56,7 +57,7 @@ export default class DropdownMenu extends Component {
 			items,
 			className,
 			size,
-			disabled
+			isDark
 		} = this.props;
 
 		const { open } = this.state;
@@ -64,9 +65,9 @@ export default class DropdownMenu extends Component {
 		return (
 			<div styleName={classNames('dropdownMenu', size)} ref={this.dropdownMenu}>
 				<button type="button" onClick={this.handleClick} className="data-tut-row-menu">
-					<img src={dots} />
+					<img src={isDark ? greyDots : dots} />
 				</button>
-				<div styleName={classNames('menu', className, { open })}>
+				<div styleName={`${classNames('menu', className, { open })} ${isDark ? '--dark' : ''}`}>
 					{
 						items.map((item, index) => item.hidden ? null : (
 							<div key={index} styleName="dropdownMenuItem">

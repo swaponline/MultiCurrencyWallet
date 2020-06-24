@@ -30,5 +30,6 @@ export default {
   backups: `${process.env.ENTRY}:backups`,
   backups_prefix: `${process.env.ENTRY}:backup:`,
   invoicesEnabled: `${process.env.ENTRY}:invoicesEnabled`,
-  wasOnWidgetWallet: 'wasOnWidgetWallet'
+  wasOnWidgetWallet: 'wasOnWidgetWallet',
+  isDark: 'isDark',
 }

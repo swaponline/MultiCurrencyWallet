@@ -489,12 +489,15 @@ export default class Wallet extends Component {
     })
 
     const allFiatBalance = tableRows.reduce((acc, cur) => BigNumber(cur.fiatBalance).plus(acc), 0)
+    const isDark = localStorage.getItem(constants.localStorage.isDark)
 
     return (
       <DashboardLayout
         page={page}
+        isDark={isDark}
         BalanceForm={(
           <BalanceForm
+            isDark={isDark}
             activeFiat={activeFiat}
             fiatBalance={allFiatBalance}
             currencyBalance={btcBalance}
@@ -513,6 +516,7 @@ export default class Wallet extends Component {
         {
           activeView === 0 &&
           <CurrenciesList
+            isDark={isDark}
             tableRows={tableRows}
             {...this.state}
             {...this.props}
@@ -521,8 +525,8 @@ export default class Wallet extends Component {
             getExCurrencyRate={(currencySymbol, rate) => this.getExCurrencyRate(currencySymbol, rate)}
           />
         }
-        {activeView === 1 && (<History {...this.props} />)}
-        {activeView === 2 && (<InvoicesList {...this.props} onlyTable={true} />)}
+        {activeView === 1 && (<History {...this.props} isDark={isDark} />)}
+        {activeView === 2 && (<InvoicesList {...this.props} onlyTable={true} isDark={isDark} />)}
       </DashboardLayout>
     )
   }
