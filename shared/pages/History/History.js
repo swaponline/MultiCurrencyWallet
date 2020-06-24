@@ -1,28 +1,23 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import CSSModules from 'react-css-modules'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
+import { constants } from 'helpers'
 
 import Row from './Row/Row'
-import SwapsHistory from './SwapsHistory/SwapsHistory'
-import ReactTooltip from 'react-tooltip'
 
 import config from 'helpers/externalConfig'
 
 import styles from 'components/tables/Table/Table.scss'
 import stylesHere from './History.scss'
-import Filter from './Filter/Filter'
-import PageHeadline from 'components/PageHeadline/PageHeadline'
+
 import InfiniteScrollTable from 'components/tables/InfiniteScrollTable/InfiniteScrollTable'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import links from 'helpers/links'
-import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import ContentLoader from '../../components/loaders/ContentLoader/ContentLoader'
 import { isMobile } from 'react-device-detect'
-import InvoicesList from 'pages/Invoices/InvoicesList'
 import FilterForm from "components/FilterForm/FilterForm"
-import { ModalConductorProvider } from 'components/modal'
 
 
 
@@ -44,6 +39,7 @@ const subTitle = defineMessages({
     defaultMessage: 'Transactions',
   },
 })
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @injectIntl
 @connect(({
@@ -141,7 +137,7 @@ export default class History extends Component {
     const { commentsList } = this.state
 
     return (
-      <Row activeFiat={activeFiat} key={rowIndex} hiddenList={commentsList} onSubmit={this.onSubmit} {...row} />
+      <Row activeFiat={activeFiat} isDark={isDark} key={rowIndex} hiddenList={commentsList} onSubmit={this.onSubmit} {...row} />
     )
   }
 
@@ -199,7 +195,7 @@ export default class History extends Component {
       <>
         {
           items ? (
-            <section styleName="history">
+            <section styleName={`history ${isDark ? '--dark' : ''}`}>
               <h3 styleName="historyHeading">
                 <FormattedMessage id="History_Activity_Title" defaultMessage="Activity" />
               </h3>

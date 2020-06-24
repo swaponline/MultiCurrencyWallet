@@ -391,6 +391,22 @@ tr button[disabled]:hover {
     right: 0;
     bottom: 0px;
   }
+
+  &.--dark {
+    .errorMessage,
+    .assetsTableCurrencyWrapper {
+      background: none;
+    }
+
+    .no-select-inline {
+      color: white
+    }
+    .assetsTableDots {
+      svg {
+        fill: red
+      }
+    }
+  }
 }
 
 .assetsTableCurrency {
