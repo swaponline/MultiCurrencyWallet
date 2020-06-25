@@ -200,7 +200,7 @@ const CreateWallet = (props) => {
       return
     }
 
-    const isIgnoreSecondStep = ['ETH', 'SWAP', 'EURS', 'Custom ERC20'].find(el => Object.keys(currencies).includes(el))
+    const isIgnoreSecondStep = !Object.keys(currencies).includes('BTC') // ['ETH', 'SWAP', 'EURS', 'Custom ERC20'].find(el => Object.keys(currencies).includes(el))
 
     if (isIgnoreSecondStep && !currencies['Custom ERC20']) {
       actions.core.markCoinAsVisible(isIgnoreSecondStep)
