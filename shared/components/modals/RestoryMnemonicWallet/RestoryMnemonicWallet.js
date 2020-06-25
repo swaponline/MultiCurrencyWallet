@@ -149,6 +149,7 @@ export default class RestoryMnemonicWallet extends React.Component {
     this.handleClose()
 
     window.location.assign(links.hashHome)
+    window.location.reload()
   }
 
   handleRestoryWallet = () => {
