@@ -1,20 +1,19 @@
-import React, { Component, Fragment } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 
-import actions from 'redux/actions'
-import { links } from 'helpers'
 import { isMobile } from 'react-device-detect'
+import { constants } from 'helpers'
 
 import CSSModules from 'react-css-modules'
 import styles from './SwapList.scss'
 
-import { FormattedMessage } from 'react-intl'
 
 import FirstStep from './steps/FirstStep'
 import SecondStep from './steps/SecondStep'
 import ThirdStep from './steps/ThirdStep'
 import FourthStep from './steps/FourthStep'
 
+
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 @CSSModules(styles, { allowMultiple: true })
 export default class SwapList extends Component {
 
@@ -45,7 +44,7 @@ export default class SwapList extends Component {
     const { ethSwapCreationTransactionHash, btcScriptCreatingTransactionHash } = swap.flow.state
 
     return (
-      <div styleName={isMobile ? 'stepList isMobile' : 'stepList'}>
+      <div styleName={`${isMobile ? 'stepList isMobile' : 'stepList'} ${isDark ? 'dark' : ''}`}>
         {!isMobile && <FirstStep step={flow.step} first={first} second={second} />}
         <SecondStep step={flow.step} swap={swap} second={second} windowWidth={windowWidth} fifth={fifth} fourth={fourth} sixth={sixth} />
         <ThirdStep step={flow.step} windowWidth={windowWidth} swap={swap} sixth={sixth} seventh={seventh} eighth={eighth} />
