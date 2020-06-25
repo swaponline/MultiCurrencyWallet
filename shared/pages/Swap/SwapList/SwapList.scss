@@ -1,3 +1,17 @@
+.dark {
+  .checked {
+    .stepNumber {
+      background: #9066da;
+      color: #fff;
+      border: 1px solid #5100dc;
+      min-width: 35px;
+    }
+    .stepText {
+      color: #828f96;
+    }
+  }
+}
+
 .stepList,
 .stepItem,
 .stepNumber,
