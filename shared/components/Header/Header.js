@@ -513,10 +513,6 @@ export default class Header extends Component {
           />
           {isTourOpen && isWalletPage && <WalletTour isTourOpen={isTourOpen} closeTour={this.closeTour} />}
           {isWidgetTourOpen && isWalletPage && <WidgetWalletTour isTourOpen={isWidgetTourOpen} closeTour={this.closeWidgetTour} />}
-          <div onClick={() => {
-            localStorage.setItem(constants.localStorage.isDark, true)
-            window.location.reload()
-          }}>color</div>
         </WidthContainer>
       </div>
     );
