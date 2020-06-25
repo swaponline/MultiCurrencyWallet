@@ -243,7 +243,7 @@ class Row extends React.PureComponent {
 
     return (
       <>
-        <tr styleName={`historyRow ${isDark ? '--dark' : ''}`}>
+        <tr styleName={`historyRow ${isDark ? 'dark' : ''}`}>
           <td>
             <div styleName={`${statusStyleAmount} circleIcon`}>
               <div styleName='arrowWrap'>

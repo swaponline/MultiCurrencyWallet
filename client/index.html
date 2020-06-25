@@ -31,6 +31,10 @@
       overflow: visible;
     }
 
+    .darkTheme {
+      background-color: #222427;
+    }
+
     .overflowY-hidden {
       overflow: hidden;
     }
@@ -66,6 +70,11 @@
       right: 0;
       bottom: 0;
       z-index: 1000;
+    }
+
+    .dark {
+      background-color: #222427;
+      color: white
     }
 
     .loader {
@@ -550,7 +559,7 @@
 
   <div id="root">
     <!-- Loader before any JS -->
-    <div class="overlay">
+    <div id="wrapper_element" class='overlay'>
       <div class="center">
         <div id="loader" class="loader">
           <img id="loaderImg" />
@@ -612,6 +621,14 @@
       }
 
       var advice = document.getElementById("beforeJSTip");
+      const wrapper = document.getElementById('wrapper_element')
+
+      if (window.localStorage.getItem("isDark")) {
+        wrapper.classList.add('dark')
+      } else {
+        wrapper.classList.remove('dark')
+      }
+
       var lang = getCookie("mylang");
 
       // detect browser's lang

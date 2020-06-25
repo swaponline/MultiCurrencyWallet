@@ -11,6 +11,32 @@
   // left: 50%;
   // top: 50%;
   // transform: translate(-50%,-50%);
+
+  &.--dark {
+    background: #242425;
+    box-shadow: 0px 4px 16px rgba(243, 243, 243, 0.08), 0px 1px 4px rgba(240, 233, 233, 0.08);
+
+    .mobileFormBody,
+    .formBody {
+      h2 {
+        color: white
+      }
+    }
+
+    .subHeader {
+      h5 {
+        color: #cfd1d3;
+      }
+    }
+
+    .card {
+      background: #242425;
+
+      b {
+        color: #cfd1d3;
+      }
+    }
+  }
 }
 
 .closeButton {

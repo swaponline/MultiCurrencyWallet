@@ -13,7 +13,17 @@
   &_dashboardView {
     overflow: auto;
   }
+
+  &.dark {
+    background: #222427;
+    color: white;
+
+    .title {
+      color: white;
+    }
+  }
 }
+
 
 .header {
   height: 88px;

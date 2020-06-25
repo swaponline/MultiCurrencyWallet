@@ -20,6 +20,7 @@ import styles from './styles.scss'
 
 
 const isWidgetBuild = config && config.isWidget
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 const NewDesignLayout = (props) => {
   const {
@@ -27,7 +28,6 @@ const NewDesignLayout = (props) => {
     activeFiat,
     children,
     page,
-    isDark,
   } = props
 
   const balanceRef = React.useRef(null) // Create a ref object
@@ -78,15 +78,15 @@ const NewDesignLayout = (props) => {
 
   const {
     multiplier,
-    infoAboutCurrency,
     enabledCurrencies,
+    infoAboutCurrency
   } = commonState
-
-  const allData = actions.core.getWallets()
 
   let btcBalance = 0
   let fiatBalance = 0
   let changePercent = 0
+
+  const allData = actions.core.getWallets()
 
   // Набор валют для виджета
   const widgetCurrencies = ['BTC']
@@ -173,7 +173,7 @@ const NewDesignLayout = (props) => {
         <img className="cutomLogo" src={window.CUSTOM_LOGO} alt="logo" />
       )}
       <section
-        styleName={`wallet ${window.CUSTOM_LOGO ? 'hasCusomLogo' : ''} ${isDark ? '--dark' : ''}`}
+        styleName={`wallet ${window.CUSTOM_LOGO ? 'hasCusomLogo' : ''} ${isDark ? 'dark' : ''}`}
       >
         <Tabs onClick={handleNavItemClick} activeView={activeView} />
         <div

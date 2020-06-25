@@ -1,3 +1,17 @@
+.dark {
+  .balance,
+  .label {
+    background-color: unset;
+  }
+  .label {
+    color: #8e9aa3;
+  }
+
+  input:disabled {
+    background-color: #2b2b2b;
+  }
+}
+
 .groupField {
   width: 100%;
   display: inline-flex;
@@ -8,6 +22,15 @@
   border-radius: 6px;
   text-align: center;
   position: relative;
+}
+
+.row {
+  display: flex;
+  display: flex;
+  align-items: baseline;
+  position: absolute;
+  top: -0.8em;
+  left: 1em;
 }
 
 .smallTooltip {
@@ -77,25 +100,17 @@
 }
 
 .tooltip {
-  position: absolute;
   z-index: 1;
-  bottom: 3.3em;
-  left: 3.4em;
 }
 
 .label {
-  position: absolute;
   z-index: 1;
   background-color: white;
-  left: 10px;
-  top: -9px;
   font-weight: bold;
 
   background: #fff;
   @include ff-semibold;
   z-index: 1;
-  padding: 0 10px;
-  padding-right: 30px;
 }
 
 .red {

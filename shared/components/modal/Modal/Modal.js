@@ -4,7 +4,7 @@ import { connect } from 'redaction'
 import actions from 'redux/actions'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
-
+import { constants } from 'helpers'
 import cssModules from 'react-css-modules'
 import styles from './Modal.scss'
 
@@ -14,6 +14,8 @@ import Overlay from 'components/layout/Overlay/Overlay'
 import Center from 'components/layout/Center/Center'
 import Logo from 'components/Logo/Logo'
 
+
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 @connect(({
   ui: { dashboardModalsAllowed },
 }) => ({
@@ -72,16 +74,16 @@ export default class Modal extends Component {
             }
           } else {
             clearInterval(this.catchLocationChange)
-            this.close(null,true)
+            this.close(null, true)
           }
         }
       }, 500)
     }
-    
+
   }
 
   componentWillUnmount() {
-    clearInterval( this.catchLocationChange )
+    clearInterval(this.catchLocationChange)
   }
 
   close = (event, isLocationChange) => {
@@ -119,6 +121,7 @@ export default class Modal extends Component {
         <div styleName={cx({
           modal: true,
           modal_dashboardView: dashboardView,
+          dark: isDark
         })} className={className}>
           {
             Boolean(title || showCloseButton) && (
@@ -140,18 +143,18 @@ export default class Modal extends Component {
           })}>
             {
               dashboardView
-              ? (
-                <div styleName="content content_dashboardView" className="contentHeightEvaluateHere">
-                  {children}
-                </div>
-              )
-              : (
-                <Center scrollable centerHorizontally={shouldCenterHorizontally} centerVertically={shouldCenterVertically}>
-                  <div styleName="content">
+                ? (
+                  <div styleName="content content_dashboardView" className="contentHeightEvaluateHere">
                     {children}
                   </div>
-                </Center>
-              )
+                )
+                : (
+                  <Center scrollable centerHorizontally={shouldCenterHorizontally} centerVertically={shouldCenterVertically}>
+                    <div styleName="content">
+                      {children}
+                    </div>
+                  </Center>
+                )
             }
           </div>
         </div>

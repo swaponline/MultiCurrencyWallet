@@ -2,12 +2,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import shortid from 'shortid';
+import { constants } from 'helpers'
+
 import cssModules from 'react-css-modules'
 import dots from './images/dots.svg'
 import greyDots from './images/greyDots.svg'
 
 import styles from './DropdownMenu.scss'
 
+
+
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 @cssModules(styles, { allowMultiple: true })
 export default class DropdownMenu extends Component {
 	state = {
@@ -53,12 +58,7 @@ export default class DropdownMenu extends Component {
 	}
 
 	render() {
-		const {
-			items,
-			className,
-			size,
-			isDark
-		} = this.props;
+		const { items, className, size } = this.props;
 
 		const { open } = this.state;
 
