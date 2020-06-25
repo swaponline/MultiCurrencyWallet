@@ -22,6 +22,7 @@
     padding-left: 0;
   }
 }
+
 .btns {
   display: flex;
   justify-content: space-between;
@@ -39,6 +40,11 @@
 .yourAssets.dark {
   background: #242425;
   box-shadow: 0px 4px 16px rgba(243, 243, 243, 0.08), 0px 1px 4px rgba(240, 233, 233, 0.08);
+
+  @media screen and (max-width: 480px) {
+    box-shadow: none;
+    background: #222528;
+  }
 
   .yourAssetsHeading {
     color: #fbfbfb;
@@ -71,6 +77,12 @@
 .yourBalance.dark {
   background: #242425;
   box-shadow: 0px 4px 16px rgba(243, 243, 243, 0.08), 0px 1px 4px rgba(240, 233, 233, 0.08);
+
+  @media screen and (max-width: 480px) {
+    box-shadow: none;
+    background: #222528;
+  }
+
   .yourBalanceTop {
     .yourBalanceValue {
       p {
@@ -78,19 +90,27 @@
       }
     }
   }
+
   .yourBalanceCurrencies {
     button {
       color: #585e63;
     }
+
     button.active {
       color: #fbfbfb;
       filter: unset;
     }
   }
+
   .yourBalanceBottomWrapper {
     &:before {
       background: none;
     }
+  }
+
+  .yourBalance,
+  .yourBalanceCurrencies {
+    background: unset;
   }
 }
 
@@ -282,6 +302,7 @@
     td:first-child {
       padding-left: 25px;
       left: auto;
+
       @media all and (max-width: 400px) {
         padding-left: 10px;
       }

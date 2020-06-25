@@ -31,6 +31,17 @@
   padding-bottom: 70px;
   z-index: 1;
   position: relative;
+
+  &.dark {
+    background: #242425;
+    box-shadow: 0px 4px 16px rgba(243, 243, 243, 0.08), 0px 1px 4px rgba(240, 233, 233, 0.08);
+
+    @media screen and (max-width: 480px) {
+      box-shadow: none;
+      background: #222528;
+    }
+  }
+
   h3 {
     color: #1F2D48;
     font-size: 24px;
@@ -48,6 +59,7 @@
 .title {
   padding: 1px 0 1px;
   margin-top: 100px;
+
   h1 {
     margin: 0;
   }
@@ -64,9 +76,11 @@
   display: inline-table;
   z-index: 1;
   position: relative;
+
   thead {
     border: none;
   }
+
   td,
   td:first-child {
     width: 100%;
@@ -93,6 +107,7 @@
   margin-bottom: 17px;
   line-height: 1.7;
   @include ff-bold;
+
   p {
     color: #1F2D48;
     display: inline;
@@ -108,18 +123,20 @@
   margin-top: 20px;
   display: flex;
   width: 445px;
-  justify-content:space-between;
+  justify-content: space-between;
   @include ff-bold;
+
   button {
     width: 140px;
     font-size: 15px;
   }
 }
+
 .inRowru {
   margin-top: 20px;
   display: flex;
   width: 250px;
-  justify-content:space-between;
+  justify-content: space-between;
 }
 
 .button {
@@ -159,15 +176,16 @@
 .widgetNavItem.active {
   a {
     border-bottom: 3px solid #6144E5;
-    color: #1F2D48!important;
+    color: #1F2D48 !important;
   }
 }
+
 .widgetNavItemLink {
   cursor: pointer;
   font-size: 15px;
   line-height: 140%;
   padding-bottom: 10px;
-  color: #8E9AA3!important;
+  color: #8E9AA3 !important;
 }
 
 @include media-tablet-landscape-and-lower {
@@ -179,13 +197,16 @@
     font-size: 1rem;
   }
 }
+
 @include media-mobile {
   .subtitle {
     word-wrap: break-word;
   }
+
   .inRow {
     justify-content: center;
     width: auto;
+
     button {
       height: auto;
       margin: 5px;
@@ -195,15 +216,18 @@
 }
 
 @media all and (min-width: 768px) and (max-width: 992px) {
+
   .currencyWalletActivity,
   .currencyWalletBalance {
     width: 100%;
     box-shadow: none;
     padding: 0;
   }
+
   .currencyWalletWrapper {
     flex-direction: column;
   }
+
   .currencyWalletActivityWrapper {
     width: 100%;
   }
@@ -214,22 +238,25 @@
     margin: 0 -20px;
     flex-direction: column;
   }
+
   .currencyWalletActivity,
   .currencyWalletBalance {
     width: 100%;
     box-shadow: none;
     margin-top: 20px;
+
     h3 {
       font-size: 100%;
     }
   }
+
   .currencyWalletBalance {
-    > div {
+    >div {
       display: block;
     }
   }
+
   .currencyWalletActivityWrapper {
     width: 100%;
   }
 }
-
