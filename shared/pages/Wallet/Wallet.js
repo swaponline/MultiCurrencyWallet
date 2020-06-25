@@ -27,7 +27,9 @@ import BalanceForm from 'components/BalanceForm/BalanceForm'
 
 import { BigNumber } from 'bignumber.js'
 
+
 const isWidgetBuild = config && config.isWidget
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @connect(
   ({
@@ -489,7 +491,6 @@ export default class Wallet extends Component {
     })
 
     const allFiatBalance = tableRows.reduce((acc, cur) => BigNumber(cur.fiatBalance).plus(acc), 0)
-    const isDark = localStorage.getItem(constants.localStorage.isDark)
 
     return (
       <DashboardLayout

@@ -33,7 +33,7 @@ import UserTooltip from "components/Header/User/UserTooltip/UserTooltip";
 import { messages, getMenuItems, getMenuItemsMobile } from "./config";
 import { getActivatedCurrencies } from "helpers/user";
 import { WidgetHeader } from "./WidgetHeader";
-
+import { Switcher } from "./Switcher"
 const isWidgetBuild = config && config.isWidget;
 
 @injectIntl
@@ -225,7 +225,7 @@ export default class Header extends Component {
     const wasOnExchangeLs = localStorage.getItem(wasOnExchange);
     const wasOnWidgetWalletLs = localStorage.getItem(wasOnWidgetWallet);
 
-    let tourEvent = () => {};
+    let tourEvent = () => { };
 
     const allData = actions.core.getWallets();
 
@@ -397,6 +397,15 @@ export default class Header extends Component {
     localStorage.setItem(wasOnExchange, true);
   };
 
+  handleSetDark = () => {
+    if (localStorage.getItem(constants.localStorage.isDark)) {
+      localStorage.removeItem(constants.localStorage.isDark);
+    } else {
+      localStorage.setItem(constants.localStorage.isDark, true);
+    }
+    window.location.reload();
+  }
+
   render() {
     const {
       sticky,
@@ -445,23 +454,24 @@ export default class Header extends Component {
 
     const logoRenderer =
       window.location.hostname === "localhost" ||
-      window.location.hostname === "swaponline.github.io" ||
-      window.location.hostname === "swaponline.io" ? (
-        <LogoTooltip withLink isColored isExchange={isWalletPage} />
-      ) : (
-        <div styleName="flexebleHeader">
-          {window.logoUrl !== "#" && (
-            <div styleName="imgWrapper">
-              {hasOwnLogoLink ? (
-                <a href={onLogoClickLink}>{imgNode}</a>
-              ) : (
-                <Link to={onLogoClickLink}>{imgNode}</Link>
-              )}
-            </div>
-          )}
-          {isWidgetBuild && <WidgetHeader />}
-        </div>
-      );
+        window.location.hostname === "swaponline.github.io" ||
+        window.location.hostname === "swaponline.io" ? (
+          <LogoTooltip withLink isColored isExchange={isWalletPage} />
+        ) : (
+          <div styleName="flexebleHeader">
+            {window.logoUrl !== "#" && (
+              <div styleName="imgWrapper">
+                {hasOwnLogoLink ? (
+                  <a href={onLogoClickLink}>{imgNode}</a>
+                ) : (
+                    <Link to={onLogoClickLink}>{imgNode}</Link>
+                  )}
+              </div>
+            )}
+            {isWidgetBuild && <WidgetHeader />}
+            <Switcher onClick={this.handleSetDark} />
+          </div>
+        );
 
     // if (config && config.isWidget && !config.isFullBuild) {
     //   return <>
@@ -515,6 +525,7 @@ export default class Header extends Component {
               closeTour={this.closeWidgetTour}
             />
           )}
+          <Switcher onClick={this.handleSetDark} />
         </div>
       );
     }
@@ -552,6 +563,7 @@ export default class Header extends Component {
               closeTour={this.closeWidgetTour}
             />
           )}
+          <Switcher onClick={this.handleSetDark} />
         </div>
       );
     }
@@ -604,14 +616,7 @@ export default class Header extends Component {
               closeTour={this.closeWidgetTour}
             />
           )}
-          <div
-            onClick={() => {
-              localStorage.setItem(constants.localStorage.isDark, true);
-              window.location.reload();
-            }}
-          >
-            color
-          </div>
+          <Switcher onClick={this.handleSetDark} />
         </WidthContainer>
       </div>
     );

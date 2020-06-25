@@ -24,7 +24,7 @@ const CurrenciesList = ({
   multisigPendingCount,
 }) => {
   return (
-    <div styleName={`yourAssets ${isDark ? '--dark' : ''}`}>
+    <div styleName={`yourAssets ${isDark ? 'dark' : ''}`}>
       {(exConfig && exConfig.opts && exConfig.opts.showWalletBanners || isWidgetBuild) ? (
         <Fragment>
           <Slider multisigPendingCount={multisigPendingCount} />

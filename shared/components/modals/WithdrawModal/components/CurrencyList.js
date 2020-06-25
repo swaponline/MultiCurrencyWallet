@@ -11,11 +11,12 @@ import actions from 'redux/actions'
 import { localisedUrl } from 'helpers/locale'
 
 
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 @cssModules(styles, { allowMultiple: true })
 export default class CurrencyList extends Component {
   constructor(props) {
     super(props)
-    
+
     this.state = {
       isAssetsOpen: false,
     }
@@ -68,7 +69,7 @@ export default class CurrencyList extends Component {
     return (
       <>
         <div
-          styleName="customSelectValue"
+          styleName={`customSelectValue ${isDark ? 'dark' : ''}`}
           onClick={() => this.setState(({ isAssetsOpen }) => ({ isAssetsOpen: !isAssetsOpen }))}
         >
           <div styleName="coin">
@@ -95,7 +96,7 @@ export default class CurrencyList extends Component {
           <div styleName={cx('customSelectArrow', { active: isAssetsOpen })}></div>
         </div>
         {isAssetsOpen && (
-          <div styleName="customSelectList">
+          <div styleName={`customSelectList ${isDark ? 'darkList' : ''}`}>
             {tableRows.map((item, index) => (
               <div key={index}
                 styleName={cx('customSelectListItem customSelectValue', {

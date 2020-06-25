@@ -621,12 +621,12 @@
       }
 
       var advice = document.getElementById("beforeJSTip");
+      const wrapper = document.getElementById('wrapper_element')
 
       if (window.localStorage.getItem("isDark")) {
-        const wrapper = document.getElementById('wrapper_element')
-        console.log()
         wrapper.classList.add('dark')
-        console.log({ wrapper })
+      } else {
+        wrapper.classList.remove('dark')
       }
 
       var lang = getCookie("mylang");

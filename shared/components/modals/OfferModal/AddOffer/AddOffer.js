@@ -26,6 +26,7 @@ import minAmountOffer from 'helpers/constants/minAmountOffer'
 import coinsWithDynamicFee from 'helpers/constants/coinsWithDynamicFee'
 
 
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 @connect(
   ({
     currencies,
@@ -457,8 +458,9 @@ export default class AddOffer extends Component {
     */
 
     return (
-      <div styleName="wrapper addOffer">
+      <div styleName={`wrapper addOffer ${isDark ? '--dark' : ''} `}>
         <SelectGroup
+          isDark={isDark}
           switchBalanceFunc={this.switching}
           styleName="sellGroup"
           label={<FormattedMessage id="addoffer381" defaultMessage="Sell" />}
@@ -473,12 +475,14 @@ export default class AddOffer extends Component {
           placeholder="0.00000000"
         />
         <Select
+          isDark={isDark}
           changeBalance={this.changeBalance}
           balance={balance}
           currency={sellCurrency}
           switching={this.switching}
         />
         <SelectGroup
+          isDark={isDark}
           switchBalanceFunc={this.switching}
           label={<FormattedMessage id="addoffer396" defaultMessage="Buy" />}
           tooltip={<FormattedMessage id="partial478" defaultMessage="The amount you will receive after the exchange" />}
@@ -492,6 +496,7 @@ export default class AddOffer extends Component {
         />
         <div styleName="exchangeRate">
           <ExchangeRateGroup
+            isDark={isDark}
             label={<FormattedMessage id="addoffer406" defaultMessage="Exchange rate" />}
             inputValueLink={linked.exchangeRate.pipe(this.handleExchangeRateChange)}
             dontDisplayError

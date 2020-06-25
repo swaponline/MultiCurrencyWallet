@@ -934,7 +934,6 @@ export default class Row extends Component {
           </div>
           <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">
             <DropdownMenu
-              isDark={isDark}
               size="regular"
               className="walletControls"
               items={dropDownMenuItems}
