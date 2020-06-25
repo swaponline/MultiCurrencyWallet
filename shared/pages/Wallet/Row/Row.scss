@@ -11,11 +11,12 @@
   left: calc(25%);
   border-radius: 20px;
 }
+
 .assetsTableCurrency a,
-.nameRow a
-{
+.nameRow a {
   cursor: pointer;
 }
+
 .no-select-inline {
   cursor: pointer;
   display: inline;
@@ -78,10 +79,12 @@
   display: flex;
   font-size: 13px;
   color: #6144e5;
+
   a {
     font-size: 13px;
     color: #6144e5;
   }
+
   div {
     p {
       font-size: 10px;
@@ -100,9 +103,11 @@
 .disbutton {
   onclick: none;
 }
+
 .buttonActivate {
   margin-left: 15px;
 }
+
 .marginRight {
   margin-right: 10px;
 }
@@ -162,6 +167,7 @@ tr button[disabled]:hover {
   position: relative;
   min-width: 400px;
 }
+
 .yourAddressWithOptions {
   position: relative;
   display: flex;
@@ -177,6 +183,7 @@ tr button[disabled]:hover {
   display: flex;
   margin-left: 10px;
   bottom: 0;
+
   .buttonActivate,
   .buttonUseAnother {
     display: block;
@@ -197,12 +204,14 @@ tr button[disabled]:hover {
     font-size: 16px;
     margin-right: 10px;
     height: 40px;
+
     &:hover {
       color: #ffffff;
       background: rgba(61, 226, 91, 0.8);
     }
   }
 }
+
 .useButton {
   button {
     background: #ffffff;
@@ -214,6 +223,7 @@ tr button[disabled]:hover {
     font-size: 16px;
     height: 40px;
     margin-right: -10px;
+
     &:hover {
       background: #ffffff;
       color: #8c8c8c;
@@ -236,12 +246,15 @@ tr button[disabled]:hover {
   .buttonActivate {
     margin-left: 0px;
   }
+
   .yourAddress {
     display: table-cell;
   }
+
   .buttonActivate {
     top: auto;
   }
+
   .activeControlButtons {
     color: inherit;
     display: flex;
@@ -250,6 +263,7 @@ tr button[disabled]:hover {
     position: absolute;
     flex-direction: row;
   }
+
   .notActivated {
     display: flex;
     max-width: 140px;
@@ -262,9 +276,11 @@ tr button[disabled]:hover {
   .notActiveLink {
     bottom: -10px;
   }
+
   .mobileName {
     display: block;
   }
+
   .yourAddress {
     position: absolute;
     bottom: 0;
@@ -272,11 +288,13 @@ tr button[disabled]:hover {
     min-width: 80px;
     width: auto !important;
   }
+
   .yourAddressWithOptions {
     position: absolute;
     right: 40px;
     bottom: 10px;
     width: 100% !important;
+
     .notContractAddress {
       position: absolute;
       right: -20px;
@@ -284,6 +302,7 @@ tr button[disabled]:hover {
       display: none;
     }
   }
+
   .table_balance-cell {
     min-width: 75px;
   }
@@ -291,11 +310,13 @@ tr button[disabled]:hover {
   .yourAddress {
     display: none;
   }
+
   .mobileName {
     color: #000;
     display: block;
     font-size: 16px;
   }
+
   tr.showButtons {
     color: #000;
     height: 120px;
@@ -303,20 +324,24 @@ tr button[disabled]:hover {
     box-shadow: rgba(0, 0, 0, 0.08) 0px 0px 20px 0;
     margin-bottom: 10px;
     margin-top: 10px;
+
     .yourAddressWithOptions {
       .notContractAddress {
         display: block;
       }
     }
+
     .yourAddress {
       display: block;
     }
+
     td:nth-child(1) {
       a {
         top: 14px;
         position: absolute;
       }
     }
+
     .mobileName {
       position: absolute;
       left: 70px;
@@ -324,10 +349,12 @@ tr button[disabled]:hover {
       margin: 0;
       color: #000;
     }
+
     .buttonActivate {
       top: 0px;
     }
   }
+
   tr.hidden {
     td:nth-child(5) {
       div {
@@ -335,6 +362,7 @@ tr button[disabled]:hover {
       }
     }
   }
+
   .buttonActivate {
     right: 0;
     height: 22px;
@@ -353,6 +381,7 @@ tr button[disabled]:hover {
     margin-right: 5px !important;
     width: 115px;
   }
+
   .buttonUseAnother {
     background: #ffffff;
     color: #8c8c8c;
@@ -368,6 +397,7 @@ tr button[disabled]:hover {
 
 .assetsTable {
   position: relative;
+
   button {
     margin-top: 20px;
   }
@@ -377,11 +407,13 @@ tr button[disabled]:hover {
   position: relative;
   padding: 11px 0px;
   height: max-content;
+
   &:last-child {
     &:before {
       display: none;
     }
   }
+
   &:before {
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     content: '';
@@ -391,20 +423,22 @@ tr button[disabled]:hover {
     right: 0;
     bottom: 0px;
   }
+}
 
-  &.--dark {
-    .errorMessage,
-    .assetsTableCurrencyWrapper {
-      background: none;
-    }
+.dark {
 
-    .no-select-inline {
-      color: white
-    }
-    .assetsTableDots {
-      svg {
-        fill: red
-      }
+  .errorMessage,
+  .assetsTableCurrencyWrapper {
+    background: none;
+  }
+
+  .no-select-inline {
+    color: white
+  }
+
+  .assetsTableIcon {
+    img {
+      border-color: black;
     }
   }
 }
@@ -465,16 +499,19 @@ tr button[disabled]:hover {
   font-size: 12px;
   font-weight: 500;
   color: #8e9aa3;
+
   img {
     margin-top: -3px;
     margin-right: 7px;
   }
+
   p {
     line-height: 21px;
     font-weight: bold;
     display: inline-block;
     margin-bottom: 0;
   }
+
   span {
     display: block;
     font-size: 13px;
@@ -499,11 +536,13 @@ tr button[disabled]:hover {
   background: #fff;
   padding: 10px;
   z-index: 11;
+
   a {
     font-size: 13px;
     color: #007bff;
   }
-  > span {
+
+  >span {
     display: none;
   }
 }
@@ -511,24 +550,28 @@ tr button[disabled]:hover {
 .assetsTableInfo {
   font-weight: bold;
   height: 19px;
-  > span {
-    > div {
+
+  >span {
+    >div {
       position: relative;
       top: 0;
     }
   }
+
   p {
     color: #6144e5;
     font-size: 13px;
     margin-bottom: 1px;
   }
+
   span {
-    + span {
+    +span {
       color: #8e9aa3;
       font-size: 14px;
       margin-left: 3px;
     }
   }
+
   strong {
     font-size: 15px;
     line-height: 21px;
@@ -549,12 +592,14 @@ tr button[disabled]:hover {
   right: 100%;
   top: 3px;
   margin-right: 10px;
-  > span {
+
+  >span {
     font-size: 11px;
     color: #c9c9c9;
     margin-right: 5px;
   }
 }
+
 .assetsTableDots {
   position: absolute;
   right: 10px;
@@ -571,20 +616,24 @@ tr button[disabled]:hover {
   .yourAddress {
     display: none;
   }
+
   tr.showButtons {
     .yourAddress {
       display: none;
     }
   }
+
   .yourAddressWithOptions {
     position: absolute;
     right: -90px;
     bottom: 50px;
     width: 100% !important;
+
     .notContractAddress {
       display: none !important;
     }
   }
+
   .buttonActivate {
     width: 75px;
     height: 26px !important;
@@ -594,6 +643,7 @@ tr button[disabled]:hover {
     top: -17px !important;
     font-size: 10px !important;
   }
+
   .buttonUseAnother {
     width: 100px;
     display: none !important;
@@ -603,8 +653,9 @@ tr button[disabled]:hover {
 @media all and (min-width: 993px) {
   .assetsTableInfo {
     position: relative;
-    > span {
-      > div {
+
+    >span {
+      >div {
         right: auto;
         top: 0;
       }
@@ -616,10 +667,12 @@ tr button[disabled]:hover {
   .assetsTableValue {
     right: 49px;
   }
+
   .assetsTableInfo {
     position: relative;
-    > span {
-      > div {
+
+    >span {
+      >div {
         right: auto;
       }
     }
@@ -630,6 +683,7 @@ tr button[disabled]:hover {
   .notifyBlock {
     flex-direction: column;
   }
+
   .assetsTableValue {
     right: 35px;
     top: 20px;
@@ -638,22 +692,26 @@ tr button[disabled]:hover {
   .assetsTableRow {
     padding: 11px 25px;
   }
+
   .assetsTableInfo {
     position: relative;
-    > span {
-      > div {
+
+    >span {
+      >div {
         right: auto;
         position: absolute;
         top: 25px;
       }
     }
   }
+
   .assetsTableCurrencyWrapper {
     position: absolute;
     right: 35px;
     top: 0px;
     font-size: 15px;
   }
+
   .addressStyle {
     display: none;
   }
@@ -667,13 +725,15 @@ tr button[disabled]:hover {
       z-index: 11;
       width: calc(100vw - 95px);
       height: 40px;
-      > span {
+
+      >span {
         font-size: 10px;
         top: 20px;
         width: 84%;
         line-height: 1.6;
         white-space: pre-line;
       }
+
       a {
         span {
           left: auto;
@@ -693,11 +753,13 @@ tr button[disabled]:hover {
   }
 
   .assetsTableValue {
+
     strong,
     p {
       font-size: 1em;
     }
   }
+
   .nameRow {
     a {
       font-size: 1em;
