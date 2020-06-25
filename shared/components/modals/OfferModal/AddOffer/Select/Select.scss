@@ -15,6 +15,12 @@
     border: none;
     width: 20%;
   }
+
+  &.--dark {
+    .cell {
+      color: #8e9aa3;
+    }
+  }
 }
 
 .balance {

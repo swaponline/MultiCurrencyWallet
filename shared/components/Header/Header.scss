@@ -12,6 +12,16 @@ $purple: #510ed8;
   width: 150px;
 }
 
+.themeChooser {
+  color: white;
+  position: absolute;
+  top: 0.5em;
+  right: 1em;
+  width: 20px;
+  display: flex;
+  cursor: pointer;
+}
+
 .buttonLan {
   color: #7c1de9 !important;
 

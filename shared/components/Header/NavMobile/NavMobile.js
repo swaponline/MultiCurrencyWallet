@@ -12,9 +12,11 @@ import actions from 'redux/actions'
 import constants from 'helpers/constants'
 
 
+const isDark = localStorage.getItem(constants.localStorage.isDark)
+
 @injectIntl
 @withRouter
-@CSSModules(styles)
+@CSSModules(styles, { allowMultiple: true })
 export default class NavMobile extends Component {
 
   static propTypes = {
@@ -31,7 +33,7 @@ export default class NavMobile extends Component {
     const isExchange = location.pathname.includes(links.exchange);
 
     return (
-      <div styleName="navbar">
+      <div styleName={`navbar ${isDark ? 'dark' : ''}`}>
         {
           menu
             .filter(i => i.isMobile !== false)

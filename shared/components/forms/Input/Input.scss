@@ -49,6 +49,17 @@ textarea {
 .root {
   display: block;
   width: 100%;
+
+  &.--dark {
+    .inputContainer {
+      background-color: #2b2b2b;
+
+      input:disabled {
+        background-color: #2b2b2b !important;
+        cursor: no-drop;
+      }
+    }
+  }
 }
 
 .inputContainer {

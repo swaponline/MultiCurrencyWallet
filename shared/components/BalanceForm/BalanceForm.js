@@ -14,6 +14,7 @@ import { FormattedMessage } from 'react-intl'
 import dollar from './images/dollar.svg'
 import btc from './images/btcIcon.svg'
 
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 function BalanceForm({
   activeFiat,
@@ -26,7 +27,6 @@ function BalanceForm({
   handleInvoice,
   isFetching = false,
   showButtons = true,
-  isDark,
   type,
 }) {
   const [selectedCurrency, setActiveCurrency] = useState(activeCurrency)
@@ -62,7 +62,7 @@ function BalanceForm({
   }
 
   return (
-    <div styleName={`${isWidgetBuild && !config.isFullBuild ? 'yourBalance widgetBuild' : 'yourBalance'} ${isDark ? '--dark' : ''}`}>
+    <div styleName={`${isWidgetBuild && !config.isFullBuild ? 'yourBalance widgetBuild' : 'yourBalance'} ${isDark ? 'dark' : ''}`}>
       <div styleName="yourBalanceTop" className="data-tut-widget-balance">
         <p styleName="yourBalanceDescr">
           <FormattedMessage id="Yourtotalbalance" defaultMessage="Ваш общий баланс" />

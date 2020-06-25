@@ -49,6 +49,24 @@
   }
 }
 
+.dark {
+  background: #2b2b2b;
+
+  &.active {
+    background: #2b2b2b;
+  }
+  .option,
+  .select {
+    background: #2b2b2b;
+  }
+
+  .option {
+    &:hover {
+      background-color: #3f3f3f;
+    }
+  }
+}
+
 .simpleDropdown {
   border-radius: 0 6px 6px 0 !important;
   position: absolute;

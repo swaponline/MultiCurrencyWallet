@@ -7,6 +7,12 @@
   flex-direction: row-reverse;
 }
 
+.dark {
+  .stepHeading {
+    color: #8e9aa3;
+  }
+}
+
 .progress {
   content: "";
   position: absolute;
@@ -399,6 +405,7 @@ $size: 200px;
     padding-top: 20px;
     width: 100%;
   }
+
   .stepHeading {
     color: #000;
     font-size: 18px;

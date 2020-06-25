@@ -40,6 +40,7 @@ import getCurrencyKey from 'helpers/getCurrencyKey'
 import lsDataCache from 'helpers/lsDataCache'
 
 
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @injectIntl
 @connect(
@@ -78,11 +79,9 @@ export default class WithdrawModal extends React.Component {
 
     const currentActiveAsset = data.data
 
-    console.log('Withdraw' , data)
     const currentDecimals = constants.tokenDecimals[getCurrencyKey(currency, true).toLowerCase()]
     const allCurrencyies = actions.core.getWallets() //items.concat(tokenItems)
     const selectedItem = allCurrencyies.filter((item) => item.currency === currency)[0]
-    console.log('selectedItem', selectedItem)
 
     let usedAdminFee = false
 
@@ -96,7 +95,6 @@ export default class WithdrawModal extends React.Component {
       }
     }
 
-    console.log('usedAdminFee', usedAdminFee)
     this.state = {
       isShipped: false,
       usedAdminFee,
@@ -118,7 +116,7 @@ export default class WithdrawModal extends React.Component {
       currentActiveAsset,
       allCurrencyies,
       enabledCurrencies: getActivatedCurrencies(),
-      wallet: actions.user.getWithdrawWallet( currency, withdrawWallet ),
+      wallet: actions.user.getWithdrawWallet(currency, withdrawWallet),
     }
   }
 
@@ -729,7 +727,7 @@ export default class WithdrawModal extends React.Component {
             </div>
           )}
         </div>
-        <div styleName="lowLevel" style={{ marginBottom: '50px' }}>
+        <div styleName={`lowLevel ${isDark ? 'dark' : ''}`} style={{ marginBottom: '50px' }}>
           <div styleName="additionalСurrencies">
             <span
               styleName={cx('additionalСurrenciesItem', { additionalСurrenciesItemActive: selectedValue.toUpperCase() === activeFiat })}

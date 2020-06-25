@@ -1,6 +1,26 @@
 .customDestination {
   position: relative;
   margin-bottom: 1rem;
+
+  &.--dark {
+    color: white;
+    .dropDown {
+      width: 100%;
+      & > div {
+        background: #2b2b2b;
+
+        & > span {
+          display: block;
+          font-size: 12pt;
+          font-weight: bold;
+          width: 100%;
+          text-align: left;
+          margin-left: 1em;
+        }
+      }
+    }
+  }
+
   &_error .walletToggle {
     border: 2px solid #a90101;
   }

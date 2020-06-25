@@ -28,6 +28,7 @@ const isWidgetBuild = config && config.isWidget
 const styleBtn = { backgroundColor: '#f0eefd', color: '#6144E5' }
 const defaultColors = { backgroundColor: '#6144E5' }
 
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 const CreateWallet = (props) => {
   const {
@@ -332,7 +333,7 @@ const CreateWallet = (props) => {
   }
 
   return (
-    <div styleName="wrapper">
+    <div styleName={`wrapper ${isDark ? '--dark' : ''}`}>
       {
         userWallets.length && !localStorage.getItem(constants.wasOnWallet)
           ? <CloseIcon styleName="closeButton" onClick={() => goHome()} data-testid="modalCloseIcon" />

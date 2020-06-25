@@ -125,7 +125,7 @@ export default class CustomDestAddress extends Component {
           })
         }
       })
-      
+
     }).catch((error) => {
       console.log('Metamask rejected', error)
     })
@@ -141,7 +141,7 @@ export default class CustomDestAddress extends Component {
     this.setState({
       selectedDestination,
     }, () => {
-      if(typeof onChange === 'function') {
+      if (typeof onChange === 'function') {
         const selected = (selectedDestination !== destinationType.none)
         const isCustom = ((selectedDestination === destinationType.custom) || selectedDestination === destinationType.metamask)
         let value = ''
@@ -165,6 +165,7 @@ export default class CustomDestAddress extends Component {
       openScan,
       value: customWallet,
       type,
+      isDark
     } = this.props
 
 
@@ -187,31 +188,31 @@ export default class CustomDestAddress extends Component {
       {
         value: destinationType.none,
         smalltext: true,
-        title: <FormattedMessage { ...langLabels.labelSpecifyAddress } />,
+        title: <FormattedMessage {...langLabels.labelSpecifyAddress} />,
       },
       {
         value: destinationType.hotwallet,
         icon: iconHotwallet,
-        title: <FormattedMessage { ...langLabels.optionHotWallet } />,
+        title: <FormattedMessage {...langLabels.optionHotWallet} />,
       },
       ...(
         (metamask.isEnabled() && ethToken.isEthOrEthToken({ name: type })) ? [
           {
             value: destinationType.metamask,
             icon: iconMetamask,
-            title: <FormattedMessage { ...langLabels.optionMetamast } />,
+            title: <FormattedMessage {...langLabels.optionMetamast} />,
           }
         ] : []
       ),
       {
         value: destinationType.custom,
         icon: iconCustom,
-        title: <FormattedMessage { ...langLabels.optionCustom } />,
+        title: <FormattedMessage {...langLabels.optionCustom} />,
       },
     ]
 
     return (
-      <div styleName={`customDestination ${(hasError) ? 'customDestination_error' : ''}`}>
+      <div styleName={`customDestination ${(hasError) ? 'customDestination_error' : ''} ${isDark ? '--dark' : ''}`}>
         <DropDown
           styleName="dropDown"
           items={destinationOptions}
@@ -221,27 +222,27 @@ export default class CustomDestAddress extends Component {
           dontScroll={true}
           itemRender={item => <Option {...item} />}
           onSelect={(value) => this.handleDestinationSelect(value)}
-          />
+        />
         {selectedDestination === destinationType.hotwallet && (
           <div styleName="readonlyValue">
-            <input value={customWallet} onChange={() => {}} />
+            <input value={customWallet} onChange={() => { }} />
           </div>
         )}
         {selectedDestination === destinationType.metamask && metamask.isEnabled() && (
           <Fragment>
             {(metamaskConnected) ? (
               <div styleName="readonlyValue">
-                <input value={metamaskAddress} onChange={() => {}} />
+                <input value={metamaskAddress} onChange={() => { }} />
               </div>
             ) : (
-              <Button
-                styleName="button"
-                blue
-                onClick={() => { this.handleConnectMetamask() }}
-              >
-                <FormattedMessage { ...langLabels.connectMetamask} />
-              </Button>
-            )}
+                <Button
+                  styleName="button"
+                  blue
+                  onClick={() => { this.handleConnectMetamask() }}
+                >
+                  <FormattedMessage {...langLabels.connectMetamask} />
+                </Button>
+              )}
           </Fragment>
         )}
         {selectedDestination === destinationType.custom && (

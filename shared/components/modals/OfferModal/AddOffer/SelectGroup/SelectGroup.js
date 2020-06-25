@@ -13,23 +13,26 @@ import { BigNumber } from 'bignumber.js'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 
 // TODO to split data and view this component
-const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onSelect, dataTut,
+const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onSelect, dataTut, isDark,
   currencies, fiat, placeholder, label, disabled, className, inputValueLink, tooltip, balance, error,
   id, type, idFee, tooltipAboutFee, haveAmount, dontDisplayError, activeFiat, ...props
 }) => {
   const currAllowed = currencies.filter((item) => !item.dontCreateOrder)
   return (
-    <div>
+    <div styleName={`${isDark ? 'dark' : ''}`}>
       <div styleName="groupField" className={className}>
         <div>
-          <span styleName="label">
-            {label}
-          </span>
-          <div styleName="tooltip">
-            <Tooltip id={id}>
-              {tooltip}
-            </Tooltip>
+          <div styleName='row'>
+            <span styleName="label">
+              {label}
+            </span>
+            <div styleName="tooltip">
+              <Tooltip id={id}>
+                {tooltip}
+              </Tooltip>
+            </div>
           </div>
+
           <span styleName="balance">{balance && `Balance: ${BigNumber(balance).dp(8, BigNumber.ROUND_CEIL)}`}</span>
           <div styleName="smallTooltip">
             <Tooltip id={id}>

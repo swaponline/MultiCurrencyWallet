@@ -850,7 +850,7 @@ export default class Row extends Component {
 
     return (
       <tr>
-        <td styleName={`assetsTableRow ${isDark ? '--dark' : ''}`}>
+        <td styleName={`assetsTableRow ${isDark ? 'dark' : ''}`}>
           <div styleName="assetsTableCurrency">
             <a
               onClick={this.goToCurrencyHistory}
@@ -968,7 +968,6 @@ export default class Row extends Component {
           </div>
           <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">
             <DropdownMenu
-              isDark={isDark}
               size="regular"
               className="walletControls"
               items={dropDownMenuItems}

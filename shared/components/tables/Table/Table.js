@@ -8,6 +8,7 @@ import styles from './Table.scss'
 import { FormattedMessage } from 'react-intl'
 
 
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 @CSSModules(styles, { allowMultiple: true })
 export default class Table extends React.Component {
 
@@ -55,10 +56,8 @@ export default class Table extends React.Component {
   render() {
     const { titles, rows, rowRender, textIfEmpty, isLoading, loadingText, className } = this.props
 
-    const isDark = localStorage.getItem(constants.localStorage.isDark)
-
     return (
-      <table styleName={`table ${isDark ? '--dark' : ''}`} className={className} ref={(table) => this.linkOnTable = table}>
+      <table styleName={`table ${isDark ? 'dark' : ''}`} className={className} ref={(table) => this.linkOnTable = table}>
         <thead ref={(thead) => this.linkOnTableHead = thead}>
           <tr>
             {

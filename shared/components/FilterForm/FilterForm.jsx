@@ -26,7 +26,7 @@ const FilterForm = ({ filterValue, onSubmit, onChange, resetFilter }) => {
   }
 
   return (
-    <form styleName={`filterForm ${isDark ? '--dark' : ''}`} onSubmit={handleSubmit} >
+    <form styleName={`filterForm ${isDark ? 'dark' : ''}`} onSubmit={handleSubmit} >
       <input placeholder="Search" value={filterValue} type="text" onChange={onChange} />
       <div styleName="buttons">
         <button styleName="show" onClick={handleSubmit} type="button">

@@ -3,10 +3,12 @@ import PropTypes from 'prop-types'
 
 import cssModules from 'react-css-modules'
 import styles from './Info.scss'
+import { constants } from 'helpers'
 
 import ProgressBar from '../ProgressBar/ProgressBar'
 
 
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 class Info extends React.Component {
 
   static propTypes = {
@@ -40,7 +42,7 @@ class Info extends React.Component {
     const onlinePeersHack = onlineUsers >= 0 ? onlineUsers : 1
 
     return (
-      <div styleName={`title ${isOnline ? 'online' : 'offline'}`}>
+      <div styleName={`title ${isOnline ? 'online' : 'offline'} ${isDark ? '--dark' : ''}`}>
         <em></em>
         <span>{isOnline ? 'Online' : 'Offline'}</span>
         <div>
@@ -55,7 +57,7 @@ class Info extends React.Component {
             {' '}
             {isOnline && `/ peers online: ${onlinePeersHack}`}
           </span>
-          { isVisibleProgressBar && <ProgressBar handleClick={this.hideProgressBar} /> }
+          {isVisibleProgressBar && <ProgressBar handleClick={this.hideProgressBar} />}
         </div>
       </div>
     )

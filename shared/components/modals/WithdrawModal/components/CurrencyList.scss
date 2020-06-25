@@ -70,6 +70,17 @@
   display: flex;
   align-items: center;
   cursor: pointer;
+
+  &.dark {
+    border-color:#222323;
+    background: #2b2b2b;
+    .amount {
+      .currency {
+        color: white;
+      }
+    }
+  }
+  
   div {
     display: flex;
     flex-direction: column;
@@ -109,6 +120,19 @@
   overflow-x: hidden;
   padding: 5px 0px;
   box-shadow: 0px 4px 16px rgba(0,0,0,0.08), 0px 1px 4px rgba(0,0,0,0.08);
+
+  &.darkList {
+    background:#2b2b2b;
+    .customSelectValue {
+      border-color:#222323;
+      background: #2b2b2b;
+      .amount {
+        .currency {
+          color: white;
+        }
+      }
+    }
+  }
 }
 
 @media all and (max-width: 480px) {

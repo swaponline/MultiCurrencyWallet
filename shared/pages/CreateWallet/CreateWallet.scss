@@ -11,6 +11,37 @@
   // left: 50%;
   // top: 50%;
   // transform: translate(-50%,-50%);
+
+  &.--dark {
+    background: #242425;
+    box-shadow: 0px 4px 16px rgba(243, 243, 243, 0.08), 0px 1px 4px rgba(240, 233, 233, 0.08);
+
+    @media screen and (max-width: 480px) {
+      box-shadow: none;
+      background: #222528;
+    }
+
+    .mobileFormBody,
+    .formBody {
+      h2 {
+        color: white
+      }
+    }
+
+    .subHeader {
+      h5 {
+        color: #cfd1d3;
+      }
+    }
+
+    .card {
+      background: #242425;
+
+      b {
+        color: #cfd1d3;
+      }
+    }
+  }
 }
 
 .closeButton {
@@ -172,7 +203,8 @@
   font-size: 18px;
   font-weight: 900;
   margin-bottom: 0;
-  @include ff-bold;;
+  @include ff-bold;
+  ;
   margin-bottom: 5px;
 }
 
@@ -180,7 +212,8 @@
   font-size: 13px;
   margin-bottom: 7px;
   color: #8e9aa3;
-  @include ff-bold;;
+  @include ff-bold;
+  ;
   line-height: 140%;
 }
 
@@ -209,7 +242,8 @@
 
   button {
     color: #6144E5;
-    @include ff-bold;;
+    @include ff-bold;
+    ;
     font-size: 14px;
     text-decoration: underline;
     padding: 0;
@@ -257,7 +291,8 @@
     font-weight: 100;
     color: #8e9aa3;
     font-size: 10px;
-    @include ff-bold;;
+    @include ff-bold;
+    ;
     line-height: 18px;
     text-align: center;
   }
@@ -399,7 +434,8 @@
     right: 39px;
     top: 93px;
     margin-bottom: 40px;
-    @include ff-bold;;
+    @include ff-bold;
+    ;
     font-style: normal;
     font-size: 23px;
     line-height: 120%;
@@ -423,7 +459,8 @@
   }
 
   .subHeader h5 {
-    @include ff-bold;;
+    @include ff-bold;
+    ;
     font-style: normal;
     font-size: 18px;
     margin: 5px 0;
@@ -459,7 +496,8 @@
 
     button {
       color: #6144E5;
-      @include ff-bold;;
+      @include ff-bold;
+      ;
       font-size: 14px;
       text-decoration: underline;
 
@@ -512,7 +550,8 @@
       font-weight: 100;
       color: #8e9aa3;
       font-size: 11px;
-      @include ff-bold;;
+      @include ff-bold;
+      ;
       line-height: 18px;
       text-align: left;
     }
