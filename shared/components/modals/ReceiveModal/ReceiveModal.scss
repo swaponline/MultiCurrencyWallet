@@ -21,6 +21,21 @@
   margin: 1em 0;
 }
 
+.buttonsHolder {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-bottom: 10px;
+
+  button {
+    width: 30%;
+  }
+
+  &_2_buttons button {
+    width: 45%;
+  }
+}
+
 @include media-mobile {
   .qr {
     text-align: center;
