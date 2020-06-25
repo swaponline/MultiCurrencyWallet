@@ -8,16 +8,6 @@ $walletPaddingTop: 41px;
   width: auto;
   margin-bottom: 20px;
   
-  &.--dark {
-    thead {
-      background: #24272a;
-    }
-
-    tr {
-      border-top: 1px solid #313131;
-    }
-  }
-  
   thead {
     position: sticky;
     top: 0;
@@ -103,6 +93,16 @@ $walletPaddingTop: 41px;
       padding-right: $borderPadding;
       padding-left: 15px;
     }
+  }
+}
+
+.dark {
+  thead {
+    background: #24272a;
+  }
+
+  tr {
+    border-top: 1px solid #313131;
   }
 }
 

@@ -57,7 +57,7 @@ export default class Table extends React.Component {
     const { titles, rows, rowRender, textIfEmpty, isLoading, loadingText, className } = this.props
 
     return (
-      <table styleName={`table ${isDark ? '--dark' : ''}`} className={className} ref={(table) => this.linkOnTable = table}>
+      <table styleName={`table ${isDark ? 'dark' : ''}`} className={className} ref={(table) => this.linkOnTable = table}>
         <thead ref={(thead) => this.linkOnTableHead = thead}>
           <tr>
             {

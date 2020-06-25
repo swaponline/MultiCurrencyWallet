@@ -195,7 +195,7 @@ export default class History extends Component {
       <>
         {
           items ? (
-            <section styleName={`history ${isDark ? '--dark' : ''}`}>
+            <section styleName={`history ${isDark ? 'dark' : ''}`}>
               <h3 styleName="historyHeading">
                 <FormattedMessage id="History_Activity_Title" defaultMessage="Activity" />
               </h3>
