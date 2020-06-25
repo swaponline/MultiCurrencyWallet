@@ -206,7 +206,7 @@ const withToken = (name) => {
 
   const tokenContract = new web3.eth.Contract(ERC20_ABI, contractAddress, { from: address })
 
-  const toWei = amount => BigNumber(amount).times(BigNumber(10).pow(decimals)).toString()
+  const toWei = amount => BigNumber(amount).times(BigNumber(10).pow(decimals)).toString(10)
   const fromWei = wei => BigNumber(wei).div(BigNumber(10).pow(decimals))
 
   return { contractAddress, tokenContract, decimals, toWei, fromWei }
