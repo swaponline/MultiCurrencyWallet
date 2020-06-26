@@ -7,6 +7,7 @@ import { constants } from "helpers";
 
 import styles from "./styles.scss"
 
+const isDark = localStorage.getItem(constants.localStorage.isDark);
 
 const defaultLanguage = defineMessages({
   title: {
@@ -54,7 +55,7 @@ const WidgetHeaderComponent = ({ intl }) => {
   }
 
   return (
-    window.isUserRegisteredAndLoggedIn && <div styleName="exitArea" onClick={handleConfirmToggle}>
+    window.isUserRegisteredAndLoggedIn && <div styleName={`exitArea ${isDark ? 'dark' : ''}`} onClick={handleConfirmToggle}>
       <i class="fas fa-sign-out-alt" /><FormattedMessage id="ExitWidget" defaultMessage="Exit" />
     </div>
   )

@@ -668,7 +668,6 @@
       window.DefaultCountryCode = "+1"
       window.widgetName = "own widget name"
       window.buyViaCreditCardLink = "https://itez.swaponline.io/?DEFAULT_FIAT={DEFAULT_FIAT}&locale={locale}&btcaddress={btcaddress}"
-
     </script>
     <!-- /Loader before any JS -->
 
@@ -913,7 +912,12 @@
       var lastHash = currentHashArr.pop();
       swapOpenModal(lastHash);
 
-      window.logoUrl = "#"; //no logo by default
+      window.logoUrl = "#"
+      const darkLogoUrl = ""
+
+      if (window.localStorage.getItem("isDark")) {
+        window.logoUrl = darkLogoUrl || window.logoUrl
+      };
 
       if (
         window.location.hostname === "localhost" ||
