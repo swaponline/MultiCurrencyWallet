@@ -34,6 +34,8 @@ import { messages, getMenuItems, getMenuItemsMobile } from "./config";
 import { getActivatedCurrencies } from "helpers/user";
 import { WidgetHeader } from "./WidgetHeader";
 import { Switcher } from "./Switcher"
+
+
 const isWidgetBuild = config && config.isWidget;
 
 @injectIntl
@@ -398,6 +400,7 @@ export default class Header extends Component {
   };
 
   handleSetDark = () => {
+    this.setState(() => ({ themeSwapAnimation: true }))
     if (localStorage.getItem(constants.localStorage.isDark)) {
       localStorage.removeItem(constants.localStorage.isDark);
     } else {
@@ -416,6 +419,7 @@ export default class Header extends Component {
       menuItemsMobile,
       createdWalletLoader,
       isWidgetTourOpen,
+      themeSwapAnimation
     } = this.state;
     const {
       intl: { formatMessage, locale },
@@ -456,7 +460,10 @@ export default class Header extends Component {
       window.location.hostname === "localhost" ||
         window.location.hostname === "swaponline.github.io" ||
         window.location.hostname === "swaponline.io" ? (
-          <LogoTooltip withLink isColored isExchange={isWalletPage} />
+          <>
+            <LogoTooltip withLink isColored isExchange={isWalletPage} />
+            <Switcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
+          </>
         ) : (
           <div styleName="flexebleHeader">
             {window.logoUrl !== "#" && (
@@ -468,8 +475,10 @@ export default class Header extends Component {
                   )}
               </div>
             )}
-            {isWidgetBuild && <WidgetHeader />}
-            <Switcher onClick={this.handleSetDark} />
+            <div styleName="rightArea">
+              {isWidgetBuild && <WidgetHeader />}
+              <Switcher withExit themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
+            </div>
           </div>
         );
 
@@ -525,7 +534,6 @@ export default class Header extends Component {
               closeTour={this.closeWidgetTour}
             />
           )}
-          <Switcher onClick={this.handleSetDark} />
         </div>
       );
     }
@@ -563,7 +571,7 @@ export default class Header extends Component {
               closeTour={this.closeWidgetTour}
             />
           )}
-          <Switcher onClick={this.handleSetDark} />
+          <Switcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
         </div>
       );
     }
@@ -616,7 +624,6 @@ export default class Header extends Component {
               closeTour={this.closeWidgetTour}
             />
           )}
-          <Switcher onClick={this.handleSetDark} />
         </WidthContainer>
       </div>
     );

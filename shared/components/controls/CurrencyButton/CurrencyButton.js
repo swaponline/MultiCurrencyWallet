@@ -33,7 +33,7 @@ export default class CurrencyButton extends Component {
 
     return (
       <Fragment>
-        <button styleName={styleName} onClick={!disable ? onClick : () => {}} data-tip data-for={dataTooltip.id} {...rest}>
+        <button styleName={styleName} onClick={!disable ? onClick : () => { }} data-tip data-for={dataTooltip.id} {...rest}>
           {children}
         </button>
         {

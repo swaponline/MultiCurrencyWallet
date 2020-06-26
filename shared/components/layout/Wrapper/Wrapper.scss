@@ -1,7 +1,6 @@
 .Wrapper {
     background: rgba(0,0,0, 0.0);
-
-    &.--dark {
-        background: rgb(34, 36, 39);
-    }
+}  
+.dark {
+    background: rgb(34, 36, 39);
 }
