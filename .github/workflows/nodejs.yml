@@ -18,7 +18,9 @@ jobs:
       
     - uses: actions/cache@v2
       with:
-        path: ~/.npm
+        path: | 
+          **/node_modules
+          ~/.npm
         key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
         restore-keys: |
           ${{ runner.os }}-node-  
