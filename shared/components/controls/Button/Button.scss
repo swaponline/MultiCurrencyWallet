@@ -72,12 +72,26 @@
   font-size: 15px;
 }
 
+.darkTheme-white {
+  background-color: #cf3fff;
+  color: white;
+}
+
 .gray {
   background-color: #f2f2f2;
   color: #000;
 
   &:hover {
     background-color: darken(#f2f2f2, 10%);
+  }
+}
+
+.darkTheme-gray {
+  background-color: #694cff;
+  color: white;
+
+  &:hover {
+    color: black
   }
 }
 

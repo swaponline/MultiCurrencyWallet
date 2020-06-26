@@ -663,7 +663,7 @@
     </script>
     <script>
       window.prerenderReady = false;
-      window.isUserRegisteredAndLoggedIn = false;
+      window.isUserRegisteredAndLoggedIn = true;
       window.DEFAULT_FIAT = "USD"
       window.DefaultCountryCode = "+1"
       window.widgetName = "own widget name"
@@ -912,8 +912,8 @@
       var lastHash = currentHashArr.pop();
       swapOpenModal(lastHash);
 
-      window.logoUrl = "#"
-      const darkLogoUrl = ""
+      window.logoUrl = "https://wallet.bitplicity.com/wp-content/uploads/2020/05/logo-transparent.png"
+      window.darkLogoUrl = ""
 
       if (window.localStorage.getItem("isDark")) {
         window.logoUrl = darkLogoUrl || window.logoUrl

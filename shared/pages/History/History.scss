@@ -9,13 +9,7 @@
 }
 
 .dark {
-  background: #242425;
-  box-shadow: 0px 4px 16px rgba(243, 243, 243, 0.08), 0px 1px 4px rgba(240, 233, 233, 0.08);
-
-  @media screen and (max-width: 480px) {
-    box-shadow: none;
-    background: #222528;
-  }
+  background: #242525;
 
   .historyHeading {
     color: white;
