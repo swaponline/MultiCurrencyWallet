@@ -10,7 +10,7 @@ const Wrapper = ({ children }) => {
   const isDark = useMemo(() => localStorage.getItem(constants.localStorage.isDark), [constants.localStorage.isDark])
 
   return (
-    <div styleName={`Wrapper ${isDark ? '--dark' : ''}`}>
+    <div styleName={`Wrapper ${isDark ? 'dark' : ''}`}>
       {children}
     </div>
   )

@@ -1,7 +1,11 @@
 import React from "react"
-import CSSModules from "react-css-modules"
 
+import CSSModules from "react-css-modules"
+import ReactTooltip from 'react-tooltip'
+import { FormattedMessage } from 'react-intl'
 import { constants } from 'helpers'
+
+
 
 import styles from "./Header.scss"
 
@@ -42,12 +46,31 @@ const sun = (fill) => (
   </svg>
 )
 
-const SwitcherComponent = ({ onClick }) => (
+const moon = (fill) => (
+  <svg version="1.1" id="Capa_1" width="20" height="20" x="0px" y="0px" viewBox="0 0 512.001 512.001">
+    <path fill={fill}  d="M367.924,8.521c70.94,127.548,25.05,288.445-102.49,359.385c-79.869,44.425-177.026,44.425-256.895,0
+      C79.572,495.352,240.478,541.08,367.924,470.047s173.174-231.939,102.141-359.385C446.174,67.788,410.798,32.42,367.924,8.521z"
+    />
+    <path fill={fill} d="M239.353,511.984c-98.886-0.077-190.011-53.592-238.252-139.92
+      c-2.309-4.098-0.869-9.296,3.229-11.605c2.599-1.466,5.777-1.466,8.384,0c123.442,68.622,279.141,24.181,347.763-99.27
+      c42.951-77.262,42.951-171.232,0-248.494c-2.292-4.107-0.826-9.296,3.28-11.596c2.59-1.448,5.734-1.44,8.324,0.009
+      c131.536,73.368,178.696,239.471,105.328,371.007C429.27,458.434,338.188,511.941,239.353,511.984z M31.842,388.661
+      c82.587,114.495,242.342,140.363,356.837,57.776S529.042,204.095,446.455,89.6c-16.035-22.229-35.547-41.741-57.776-57.776
+      c58.066,139.008-7.557,298.772-146.566,356.837C174.846,416.761,99.118,416.761,31.842,388.661z"
+    />
+  </svg>
+)
+
+const SwitcherComponent = ({ onClick, withExit, themeSwapAnimation }) => (
   <div
-    styleName="themeChooser"
+    styleName={`themeChooser ${withExit ? 'withExit' : ''} ${themeSwapAnimation ? 'themeAnimation' : ''}`}
     onClick={onClick}
+    data-tip data-for="themeAlt"
   >
-    {sun(isDark ? "white" : "black")}
+    {isDark ? sun("white") : moon("black")}
+    <ReactTooltip id="themeAlt" type={isDark ? "light" : "dark"} effect="solid" place="bottom">
+      <FormattedMessage id="themeAlt" defaultMessage="{theme} theme" values={{ theme: isDark ? 'Light' : 'Dark' }} />
+    </ReactTooltip>
   </div>
 )
 
