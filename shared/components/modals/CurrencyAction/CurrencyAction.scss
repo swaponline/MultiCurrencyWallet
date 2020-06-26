@@ -199,6 +199,31 @@
   }
 }
 
+.dark {
+  .modal {
+    background: #242425;
+    box-shadow: none;
+
+    @media screen and (max-width: 480px) {
+      background: #222528;
+    }
+  }
+
+  .header {
+    p {
+      color: white;
+    }
+  }
+
+  .card {
+    background: #242425;
+
+    b {
+      color: #cfd1d3;
+    }
+  }
+}
+
 .button {
   width: 45%;
   max-width: 240px;

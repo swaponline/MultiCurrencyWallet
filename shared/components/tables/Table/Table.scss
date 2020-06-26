@@ -105,16 +105,20 @@ $walletPaddingTop: 41px;
 }
 
 .dark {
-  tbody {
+  background: #242525;
+  @media screen and (max-width: 480px) {
+    background: #222528;
+  }
     thead {
-      background: #24272a;
+      background: #242525;
+      tr {
+        background: #242525;
+      }
     }
 
     tr {
       border-top: 1px solid #313131;
     }
-  }
-
 }
 
 .color {

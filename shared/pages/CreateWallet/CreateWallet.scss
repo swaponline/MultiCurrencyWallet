@@ -41,6 +41,11 @@
         color: #cfd1d3;
       }
     }
+
+    .continue:disabled {
+      background-color: #3c3c3c;
+      color: #cfd1d3;
+    }
   }
 }
 

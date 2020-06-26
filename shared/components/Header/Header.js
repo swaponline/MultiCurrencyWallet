@@ -457,30 +457,30 @@ export default class Header extends Component {
     );
 
     const logoRenderer =
-      window.location.hostname === "localhost" ||
-        window.location.hostname === "swaponline.github.io" ||
-        window.location.hostname === "swaponline.io" ? (
-          <>
-            <LogoTooltip withLink isColored isExchange={isWalletPage} />
-            <Switcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
-          </>
-        ) : (
-          <div styleName="flexebleHeader">
-            {window.logoUrl !== "#" && (
-              <div styleName="imgWrapper">
-                {hasOwnLogoLink ? (
-                  <a href={onLogoClickLink}>{imgNode}</a>
-                ) : (
-                    <Link to={onLogoClickLink}>{imgNode}</Link>
-                  )}
-              </div>
-            )}
-            <div styleName="rightArea">
-              {isWidgetBuild && <WidgetHeader />}
-              <Switcher withExit themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
-            </div>
+      // window.location.hostname === "localhost" ||
+      //   window.location.hostname === "swaponline.github.io" ||
+      //   window.location.hostname === "swaponline.io" ? (
+      //     <>
+      //       <LogoTooltip withLink isColored isExchange={isWalletPage} />
+      //       <Switcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
+      //     </>
+      //   ) : (
+      <div styleName="flexebleHeader">
+        {window.logoUrl !== "#" && (
+          <div styleName="imgWrapper">
+            {hasOwnLogoLink ? (
+              <a href={onLogoClickLink}>{imgNode}</a>
+            ) : (
+                <Link to={onLogoClickLink}>{imgNode}</Link>
+              )}
           </div>
-        );
+        )}
+        <div styleName="rightArea">
+          {isWidgetBuild && <WidgetHeader />}
+          <Switcher withExit themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
+        </div>
+      </div>
+    // );
 
     // if (config && config.isWidget && !config.isFullBuild) {
     //   return <>
