@@ -916,7 +916,7 @@
       window.darkLogoUrl = ""
 
       if (window.localStorage.getItem("isDark")) {
-        window.logoUrl = darkLogoUrl || window.logoUrl
+        window.logoUrl = window.darkLogoUrl || window.logoUrl
       };
 
       if (

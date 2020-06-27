@@ -6,9 +6,13 @@ import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './HowItWorks.scss'
 
+import { constants } from 'helpers'
+
+
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 const HowItWorks = ({ className }) => (
-  <div styleName="HowItWorksContainer">
+  <div styleName={`HowItWorksContainer ${isDark ? 'dark' : ''}`}>
     <h3 styleName="HowItWorksTitle">
       <FormattedMessage id="HowItWorks10" defaultMessage="How it works" />
     </h3>
@@ -51,4 +55,4 @@ const HowItWorks = ({ className }) => (
   </div>
 )
 
-export default CSSModules(HowItWorks, styles)
+export default CSSModules(HowItWorks, styles, { allowMultiple: true })
