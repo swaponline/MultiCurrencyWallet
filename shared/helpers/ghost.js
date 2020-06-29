@@ -10,13 +10,13 @@ import BigNumber from 'bignumber.js'
 const networks = {}
 networks.mainnet = {
   messagePrefix: '\x18Bitcoin Signed Message:\n',
-  bech32: 'ghost',
+  bech32: 'gp',
   bip32: {
-    public:  0x696e82d1,
-    private: 0x8f1daeb8,
+    public:  0x0488b21e,
+    private: 0x0488ade4,
   },
-  pubKeyHash: 0x38,
-  scriptHash: 0x3c,
+  pubKeyHash: 0x26,
+  scriptHash: 0x61,
   wif: 0x6c,
 }
 

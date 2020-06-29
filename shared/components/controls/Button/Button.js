@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import { constants } from 'helpers'
 import cx from "classnames";
 
-
+import cssModules from 'react-css-modules'
+import styles from './Button.scss'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 const Button = props => {

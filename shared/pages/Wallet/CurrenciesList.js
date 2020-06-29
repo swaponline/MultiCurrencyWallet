@@ -63,30 +63,30 @@ const CurrenciesList = ({
           />
         )}
       />
-    </p>
-    <Table
-      className={`${styles.walletTable} data-tut-address`}
-      rows={tableRows}
-      rowRender={(row, index, selectId, handleSelectId) => (
-        <Row
-          key={index}
-          index={index}
-          getCurrencyFiat={fiat => this.getCurrencyFiat(fiat)}
-          currency={row}
-          itemData={row}
-          currencies={currencies}
-          infoAboutCurrency={infoAboutCurrency}
-          getExCurrencyRate={(currencySymbol, rate) => getExCurrencyRate(currencySymbol, rate)}
-          hiddenCoinsList={hiddenCoinsList}
-          selectId={selectId}
-          handleSelectId={handleSelectId}
-        />
-      )}
-    />
-    <Button onClick={goToСreateWallet} blue transparent fullWidth>
-      <FormattedMessage id="addAsset" defaultMessage="Добавить валюту" />
-    </Button>
-  </div>
-)
+      <Table
+        className={`${styles.walletTable} data-tut-address`}
+        rows={tableRows}
+        rowRender={(row, index, selectId, handleSelectId) => (
+          <Row
+            key={index}
+            index={index}
+            getCurrencyFiat={fiat => this.getCurrencyFiat(fiat)}
+            currency={row}
+            itemData={row}
+            currencies={currencies}
+            infoAboutCurrency={infoAboutCurrency}
+            getExCurrencyRate={(currencySymbol, rate) => getExCurrencyRate(currencySymbol, rate)}
+            hiddenCoinsList={hiddenCoinsList}
+            selectId={selectId}
+            handleSelectId={handleSelectId}
+          />
+        )}
+      />
+      <Button onClick={goToСreateWallet} blue transparent fullWidth>
+        <FormattedMessage id="addAsset" defaultMessage="Добавить валюту" />
+      </Button>
+    </div>
+  )
+}
 
 export default CSSModules(CurrenciesList, styles, { allowMultiple: true })

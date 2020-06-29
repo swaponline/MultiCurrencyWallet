@@ -246,6 +246,7 @@ export default connect(
       activeFiat,
       ethData,
       btcData,
+      ghostData,
       btcMultisigSMSData,
       btcMultisigUserData,
       btcMultisigUserDataList,
@@ -279,6 +280,7 @@ export default connect(
 
     const allData = [
       btcData,
+      ghostData,
       btcMultisigSMSData,
       btcMultisigUserData,
       ethData,
@@ -288,7 +290,7 @@ export default connect(
     }))
 
     const items = (config && config.isWidget
-      ? [btcData, ethData]
+      ? [btcData, ethData, ghostData]
       : [btcData, btcMultisigSMSData, btcMultisigUserData, ethData]
     ).map((data) => data.currency)
 
@@ -308,6 +310,7 @@ export default connect(
       tokensData: {
         ethData,
         btcData,
+        ghostData,
         btcMultisigSMSData,
         btcMultisigUserData,
         btcMultisigUserDataList,
