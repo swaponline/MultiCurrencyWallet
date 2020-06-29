@@ -100,7 +100,7 @@ export default class Row extends Component {
     }
   }
 
-  handleReloadBalance = async () => {
+  handleReloadBalance = () => {
     const { isBalanceFetching } = this.state
 
     if (isBalanceFetching) {
@@ -109,32 +109,34 @@ export default class Row extends Component {
 
     this.setState({
       isBalanceFetching: true,
+    }, () => {
+      setTimeout(async () => {
+        const {
+          itemData: { currency, address },
+        } = this.props
+
+        switch (currency) {
+          case 'BTC (SMS-Protected)':
+            await actions.btcmultisig.getBalance()
+            break
+          case 'BTC (Multisig)':
+            await actions.btcmultisig.getBalanceUser(address)
+            break
+          case 'BTC (PIN-Protected)':
+            await actions.btcmultisig.getBalancePin()
+            break
+          default:
+            await actions[currency.toLowerCase()].getBalance(
+              currency.toLowerCase(),
+              address
+            )
+        }
+
+        this.setState(() => ({
+          isBalanceFetching: false,
+        }))
+      }, 250)
     })
-
-    const {
-      itemData: { currency, address },
-    } = this.props
-
-    switch (currency) {
-      case 'BTC (SMS-Protected)':
-        await actions.btcmultisig.getBalance()
-        break
-      case 'BTC (Multisig)':
-        await actions.btcmultisig.getBalanceUser(address)
-        break
-      case 'BTC (PIN-Protected)':
-        await actions.btcmultisig.getBalancePin()
-        break
-      default:
-        await actions[currency.toLowerCase()].getBalance(
-          currency.toLowerCase(),
-          address
-        )
-    }
-
-    this.setState(() => ({
-      isBalanceFetching: false,
-    }))
   }
 
   shouldComponentUpdate(nextProps, nextState) {
