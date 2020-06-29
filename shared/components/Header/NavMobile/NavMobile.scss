@@ -2,7 +2,7 @@
   background-color: #6144E5;
   overflow: hidden;
   position: fixed;
-  bottom: 0;
+  bottom: 0px;
   width: 100%;
   z-index: 1001111;
   display: flex;
@@ -10,6 +10,13 @@
   @include ff-bold;
   box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08), 0px 1px 4px rgba(0, 0, 0, 0.08);
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#510ed8+0,510ed8+70,8821ee+100 */
+
+  transition: bottom 250ms ease !important;
+
+  &-hidden {
+    bottom: -150px;
+    transition: bottom 250ms ease !important;
+  }
 
   a {
     display: block;

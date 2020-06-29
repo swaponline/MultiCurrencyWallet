@@ -143,11 +143,6 @@ $purple: #510ed8;
   transition: transform 250ms ease;
 }
 
-.header-mobile__hidden > div {
-  transform: translateY(150px);
-  transition: transform 250ms ease;
-}
-
 .loaderCreateWallet {
   display: block;
   position: fixed;
