@@ -117,6 +117,7 @@ export default class WithdrawModal extends React.Component {
       allCurrencyies,
       enabledCurrencies: getActivatedCurrencies(),
       wallet: actions.user.getWithdrawWallet(currency, withdrawWallet),
+      devErrorMessage: false,
     }
   }
 
@@ -265,7 +266,11 @@ export default class WithdrawModal extends React.Component {
       name,
     } = this.props
 
-    this.setState(() => ({ isShipped: true }))
+    this.setState(() => ({
+      isShipped: true,
+      error: false,
+      devErrorMessage: false,
+    }))
 
     this.setBalanceOnState(currency)
 
@@ -412,6 +417,7 @@ export default class WithdrawModal extends React.Component {
 
         this.setState(() => ({
           error,
+          devErrorMessage: e.message,
           isShipped: false,
         }))
       })
@@ -544,6 +550,7 @@ export default class WithdrawModal extends React.Component {
       allCurrencyies: allData,
       usedAdminFee,
       enabledCurrencies,
+      devErrorMessage,
     } = this.state
 
     const {
@@ -829,6 +836,10 @@ export default class WithdrawModal extends React.Component {
                 currency: `${currency}`,
               }}
             />
+            <br />
+            {devErrorMessage && (
+              <span>Dev info: {devErrorMessage}</span>
+            )}
           </div>
         )}
         {invoice && (
