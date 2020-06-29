@@ -16,6 +16,22 @@
       opacity: 0.2;
     }
   }
+
+  .dark {
+    border: 1px solid #454b4d;
+    input {
+      color: white;
+    }
+    input::placeholder {
+      color: white;
+    }
+
+    div {
+      button {
+        color: white
+      }
+    }
+  }
   
   .buttons {
     width: 110px;

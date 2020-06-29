@@ -15,6 +15,7 @@ import exConfig from 'helpers/externalConfig'
 const isWidgetBuild = config && config.isWidget
 
 const CurrenciesList = ({
+  isDark,
   tableRows,
   currencies,
   infoAboutCurrency,
@@ -22,23 +23,45 @@ const CurrenciesList = ({
   goToСreateWallet,
   getExCurrencyRate,
   multisigPendingCount,
-}) => (
-  <div styleName="yourAssets">
-    {(exConfig && exConfig.opts && exConfig.opts.showWalletBanners || isWidgetBuild) ? (
-      <Fragment>
-        <Slider multisigPendingCount={multisigPendingCount} />
-      </Fragment>
-    ) : (
-      ''
-    )}
-    <h3 styleName="yourAssetsHeading">
-      <FormattedMessage id="YourAssets" defaultMessage="Ваши валюты" />
-    </h3>
-    <p styleName="yourAssetsDescr">
-      <FormattedMessage
-        id="YourAssetsDescription"
-        defaultMessage="Здесь вы можете безопасно хранить и быстро обменивать Bitcoin, Ethereum, {br} USD, Tether и многочисленные токены ERC-20."
-        values={{ br: <br /> }}
+}) => {
+  return (
+    <div styleName={`yourAssets ${isDark ? 'dark' : ''}`}>
+      {(exConfig && exConfig.opts && exConfig.opts.showWalletBanners || isWidgetBuild) ? (
+        <Fragment>
+          <Slider multisigPendingCount={multisigPendingCount} />
+        </Fragment>
+      ) : (
+          ''
+        )}
+      <h3 styleName="yourAssetsHeading">
+        <FormattedMessage id="YourAssets" defaultMessage="Ваши валюты" />
+      </h3>
+      <p styleName="yourAssetsDescr">
+        <FormattedMessage
+          id="YourAssetsDescription"
+          defaultMessage="Здесь вы можете безопасно хранить и быстро обменивать Bitcoin, Ethereum, {br} USD, Tether и многочисленные токены ERC-20."
+          values={{ br: <br /> }}
+        />
+      </p>
+      <Table
+        className={`${styles.walletTable} data-tut-address`}
+        rows={tableRows}
+        rowRender={(row, index, selectId, handleSelectId) => (
+          <Row
+            key={index}
+            index={index}
+            isDark={isDark}
+            getCurrencyFiat={fiat => this.getCurrencyFiat(fiat)}
+            currency={row}
+            itemData={row}
+            currencies={currencies}
+            infoAboutCurrency={infoAboutCurrency}
+            getExCurrencyRate={(currencySymbol, rate) => getExCurrencyRate(currencySymbol, rate)}
+            hiddenCoinsList={hiddenCoinsList}
+            selectId={selectId}
+            handleSelectId={handleSelectId}
+          />
+        )}
       />
     </p>
     <Table

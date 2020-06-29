@@ -1,11 +1,11 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import cx from 'classnames'
-
-import cssModules from 'react-css-modules'
-import styles from './Button.scss'
+import React from "react";
+import PropTypes from "prop-types";
+import { constants } from 'helpers'
+import cx from "classnames";
 
 
+
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 const Button = props => {
   const {
     children,
@@ -38,6 +38,8 @@ const Button = props => {
     big,
     autoHeight,
     disabled,
+    "darkTheme-white": isDark && white,
+    "darkTheme-gray": isDark && gray,
   })
 
   return (

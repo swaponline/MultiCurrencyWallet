@@ -2,33 +2,29 @@ import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router'
 import cssModules from 'react-css-modules'
 import { connect } from 'redaction'
-import helpers, { links, constants } from 'helpers'
+import { constants } from 'helpers'
 import { getActivatedCurrencies } from 'helpers/user'
 import config from 'app-config'
 import actions from 'redux/actions'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { isMobile } from 'react-device-detect'
-import moment from 'moment'
-import firestore from 'helpers/firebase/firestore'
+
 import cx from 'classnames'
 
 import Button from 'components/controls/Button/Button'
 import Tabs from 'components/Tabs/Tabs'
 import FAQ from 'components/FAQ/FAQ'
 import { ModalConductorProvider } from 'components/modal'
-import BalanceForm from 'components/BalanceForm/BalanceForm'
 
 import styles from './styles.scss'
 
 
 const isWidgetBuild = config && config.isWidget
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 const NewDesignLayout = (props) => {
   const {
     hiddenCoinsList,
-    modals,
-    dashboardView,
-    isBalanceFetching,
     activeFiat,
     children,
     page,
@@ -82,15 +78,15 @@ const NewDesignLayout = (props) => {
 
   const {
     multiplier,
-    infoAboutCurrency,
     enabledCurrencies,
+    infoAboutCurrency
   } = commonState
-
-  const allData = actions.core.getWallets()
 
   let btcBalance = 0
   let fiatBalance = 0
   let changePercent = 0
+
+  const allData = actions.core.getWallets()
 
   // Набор валют для виджета
   const widgetCurrencies = ['BTC']
@@ -156,8 +152,6 @@ const NewDesignLayout = (props) => {
     }
   })
 
-  const isAnyModalCalled = Object.keys(modals).length
-
   const handleNavItemClick = index => {
     if (index === 1) {
       // fetch actual tx list
@@ -179,7 +173,7 @@ const NewDesignLayout = (props) => {
         <img className="cutomLogo" src={window.CUSTOM_LOGO} alt="logo" />
       )}
       <section
-        styleName={`wallet ${window.CUSTOM_LOGO ? 'hasCusomLogo' : ''}`}
+        styleName={`wallet ${window.CUSTOM_LOGO ? 'hasCusomLogo' : ''} ${isDark ? 'dark' : ''}`}
       >
         <Tabs onClick={handleNavItemClick} activeView={activeView} />
         <div
@@ -206,6 +200,7 @@ const NewDesignLayout = (props) => {
               'activity': activeView === 1 || activeView === 2,
               'active': true,
             })}
+
           >
             {/* Sweep Banner */}
             {showSweepBanner && (

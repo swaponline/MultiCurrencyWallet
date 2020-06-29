@@ -1,4 +1,7 @@
 import React, { Fragment, useState } from 'react'
+
+import { constants } from 'helpers'
+
 import CSSModules from 'react-css-modules'
 
 import styles from './ContentLoader.scss'
@@ -8,13 +11,16 @@ import BalanceSection from './components/BalanceSection/BalanceSection'
 import BannersSection from './components/BannersSection/BannersSection'
 
 
+
+const isDark = localStorage.getItem(constants.localStorage.isDark)
+
 function ContentLoader({ empty, inner, rideSideContent, leftSideContent, banners, nonHeader }) {
 
   return (
     <Fragment>
       {
         rideSideContent ? (
-          <div styleName={`animationLoading rideSideContent ${empty ? 'stop' : ''} ${inner ? 'inner' : ''}`}>
+          <div styleName={`animationLoading rideSideContent ${empty ? 'stop' : ''} ${inner ? 'inner' : ''} ${isDark ? '--dark' : ''}`}>
             {
               empty ? (
                 <div styleName="textBlock">
@@ -33,14 +39,14 @@ function ContentLoader({ empty, inner, rideSideContent, leftSideContent, banners
       }
       {
         leftSideContent ? (
-          <div styleName="animationLoading leftSideContent">
+          <div styleName={`animationLoading leftSideContent ${isDark ? '--dark' : ''}`}>
             <BalanceSection />
           </div>
         ) : ''
       }
       {
         banners ? (
-          <div styleName="animationLoading banners">
+          <div styleName={`animationLoading banners ${isDark ? '--dark' : ''}`}>
             <BannersSection />
           </div>
         ) : ''

@@ -9,6 +9,7 @@ import cssModules from "react-css-modules";
 import styles from "../Styles/default.scss";
 import ownStyle from './RegisterSMSProtected.scss'
 
+import { isValidPhoneNumber } from 'react-phone-number-input'
 
 import Modal from "components/modal/Modal/Modal";
 import FieldLabel from "components/forms/FieldLabel/FieldLabel";
@@ -42,6 +43,7 @@ export default class RegisterSMSProtected extends React.Component {
     let {
       data: {
         version,
+        initStep,
       },
     } = this.props
 
@@ -57,6 +59,12 @@ export default class RegisterSMSProtected extends React.Component {
     let step = 'enterPhoneAndMnemonic' // "enterPhone",
     if (useGeneratedKeyEnabled && !mnemonicSaved) step = 'saveMnemonicWords'
 
+    let showFinalInstruction = false
+    if (initStep === 'export') {
+      showFinalInstruction = true
+      step = 'ready'
+    }
+
     this.state = {
       version,
       phone: window.DefaultCountryCode || '',
@@ -65,7 +73,7 @@ export default class RegisterSMSProtected extends React.Component {
       smsCode: "",
       smsConfirmed: false,
       isShipped: false,
-      showFinalInstruction: false,
+      showFinalInstruction,
       useGeneratedKey: useGeneratedKeyEnabled,
       generatedKey,
       useGeneratedKeyEnabled,
@@ -79,6 +87,10 @@ export default class RegisterSMSProtected extends React.Component {
       isInstructionCopied: false,
       isInstructionDownloaded: false,
     }
+  }
+
+  componentDidMount() {
+    this.generateRestoreInstruction()
   }
 
   handleSendSMS = async () => {
@@ -374,7 +386,9 @@ export default class RegisterSMSProtected extends React.Component {
     if (btcMultisigSMSData.publicKeys[1]) restoreInstruction += `${btcMultisigSMSData.publicKeys[1].toString('Hex')}\r\n`
     if (btcMultisigSMSData.publicKeys[2]) restoreInstruction += `${btcMultisigSMSData.publicKeys[2].toString('Hex')}\r\n`
     restoreInstruction += `\r\n`
-    restoreInstruction += `Hot wallet private key (WIF):\r\n`
+    restoreInstruction+= `Hot wallet private key (WIF) (first of three for sign tx):\r\n`
+    restoreInstruction+= `Wallet delivery path from your secret phrase:\r\n`
+    restoreInstruction+= `m/44'/0'/0'/0/0\r\n`
     restoreInstruction += `${btcData.privateKey}\r\n`
     restoreInstruction += `*** (this private key stored in your browser)\r\n`
     restoreInstruction += `\r\n`
@@ -386,6 +400,11 @@ export default class RegisterSMSProtected extends React.Component {
       restoreInstruction += `Private key (WIF) of wallet, generated from mnemonic:\r\n`
       restoreInstruction += `(DELETE THIS LINE!) ${mnemonicWallet.WIF}\r\n`
       restoreInstruction += `*** (this private key does not stored anywhere! but in case if our  2fa server does down, you can withdraw your fond using this private key)\r\n`
+    } else {
+      restoreInstruction+= `Second of three for sign tx:\r\n`
+      restoreInstruction+= `Wallet delivery path from your secret phrase:\r\n`
+      restoreInstruction+= `m/44'/0'/0'/0/1\r\n`
+      restoreInstruction+= `\r\n`
     }
     restoreInstruction += `If our service is unavailable, use a local copy of the wallet.\r\n`
     restoreInstruction += `https://swaponline.github.io/2fa_wallet.zip\r\n`
@@ -458,6 +477,7 @@ export default class RegisterSMSProtected extends React.Component {
       },
     });
 
+    const sentBtnDisabled = isShipped || !phone || phone && !isValidPhoneNumber(phone)
     return (
       <Modal name={name} title={`${intl.formatMessage(langs.registerSMSModal)}`}>
         <div styleName="registerSMSModalHolder">
@@ -494,6 +514,7 @@ export default class RegisterSMSProtected extends React.Component {
               <PhoneInput
                 value={phone}
                 error={error}
+                locale={intl.locale}
                 onChange={this.onPhoneChange}
                 placeholder={`${intl.formatMessage(langs.phonePlaceHolder)}`}
                 label={<FieldLabel label>
@@ -558,7 +579,7 @@ export default class RegisterSMSProtected extends React.Component {
                     </Fragment>
                   )}
               </div>
-              <Button blue big fullWidth disabled={isShipped || !isMnemonicValid} onClick={this.handleSendSMS}>
+              <Button blue big fullWidth disabled={sentBtnDisabled} onClick={this.handleSendSMS}>
                 {isShipped ? (
                   <Fragment>
                     <FormattedMessage id="registerSMSModalProcess" defaultMessage="Processing ..." />
@@ -576,13 +597,14 @@ export default class RegisterSMSProtected extends React.Component {
               <PhoneInput
                 value={phone}
                 error={error}
+                locale={intl.locale}
                 onChange={this.onPhoneChange}
                 placeholder={`${intl.formatMessage(langs.phonePlaceHolder)}`}
                 label={<FieldLabel label>
                   <FormattedMessage id="registerSMSModalPhone" defaultMessage="Your phone:" />
                 </FieldLabel>}
               />
-              <Button blue big fullWidth disabled={isShipped} onClick={this.handleSendSMS}>
+              <Button blue big fullWidth disabled={sentBtnDisabled} onClick={this.handleSendSMS}>
                 {isShipped ? (
                   <Fragment>
                     <FormattedMessage id="registerSMSModalProcess" defaultMessage="Processing ..." />

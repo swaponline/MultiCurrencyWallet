@@ -7,7 +7,6 @@ $walletPaddingTop: 41px;
   border: 0;
   width: auto;
   margin-bottom: 20px;
-  
 
   thead {
     position: sticky;
@@ -15,7 +14,7 @@ $walletPaddingTop: 41px;
     @include ff-bold;
     width: 100%;
     height: 41px;
-    border-bottom: 0.5px solid rgba(#000 ,0.03);
+    border-bottom: 0.5px solid rgba(#000, 0.03);
     border-radius: $borderRadius $borderRadius 0 0;
     background: #fff;
     z-index: 100;
@@ -23,6 +22,7 @@ $walletPaddingTop: 41px;
 
   tbody {
     border-radius: 0 0 $borderRadius $borderRadius;
+
     tr {
       border-top: 1px solid #f5f5f5;
 
@@ -32,7 +32,8 @@ $walletPaddingTop: 41px;
     }
   }
 
-  th, td {
+  th,
+  td {
     border: 0;
     text-align: left;
     white-space: nowrap;
@@ -67,19 +68,24 @@ $walletPaddingTop: 41px;
   th:last-child {
     padding-left: 30px;
   }
+
   td:first-child {
     display: table-cell;
   }
+
   td:last-child {
     padding-right: $borderPadding - 10px;
+
     @media all and (max-width: 400px) {
       padding-right: 10px;
     }
   }
+
   tr:last-child td {
     &:first-child {
       border-bottom-left-radius: $borderRadius;
     }
+
     &:last-child {
       border-bottom-right-radius: $borderRadius;
     }
@@ -89,12 +95,30 @@ $walletPaddingTop: 41px;
     &:first-child {
       border-top-left-radius: $borderRadius;
     }
+
     &:last-child {
       border-top-right-radius: $borderRadius;
       padding-right: $borderPadding;
       padding-left: 15px;
     }
   }
+}
+
+.dark {
+  background: #242525;
+  @media screen and (max-width: 480px) {
+    background: #222528;
+  }
+    thead {
+      background: #242525;
+      tr {
+        background: #242525;
+      }
+    }
+
+    tr {
+      border-top: 1px solid #313131;
+    }
 }
 
 .color {
@@ -105,9 +129,10 @@ $walletPaddingTop: 41px;
   padding-top: $walletPaddingTop;
   position: relative;
   display: inline-block;
+
   thead {
     display: block;
-    box-shadow: 0 3px 3px 0 rgba(0,0,0,.03);
+    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, .03);
   }
 }
 
@@ -115,9 +140,11 @@ $walletPaddingTop: 41px;
   width: 100%;
   margin-top: 20px;
   display: inline-table;
+
   thead {
     border: none;
   }
+
   td,
   td:first-child {
     width: 100%;
@@ -125,46 +152,53 @@ $walletPaddingTop: 41px;
   }
 }
 
-  // Exchange and Swap history
-  .historySwap {
-    font-size: 14px;
-    width: 100%;
-    margin-top: 30px;
-    tbody {
+// Exchange and Swap history
+.historySwap {
+  font-size: 14px;
+  width: 100%;
+  margin-top: 30px;
+
+  tbody {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    tr {
       display: flex;
+      flex-direction: column;
+      width: 49%;
+      border-radius: 4px;
+      margin-bottom: 2%;
+      border: 1px solid rgba(142, 154, 163, 0.16) !important;
+      box-shadow: 0px 2px 12px rgba(142, 154, 163, 0.08);
+    }
+
+    td {
+      padding: 10px 20px !important;
+      display: flex !important;
       justify-content: space-between;
-      flex-wrap: wrap;
-      tr {
-        display: flex;
-        flex-direction: column;
-        width: 49%;
-        border-radius: 4px;
-        margin-bottom: 2%;
-        border: 1px solid rgba(142,154,163,0.16)!important;
-        box-shadow: 0px 2px 12px rgba(142,154,163,0.08);
+      border-bottom: 1px solid #edeff0;
+      @include ff-regular;
+
+      >span {
+        color: #8E9AA3;
+        @include ff;
       }
-      td {
-        padding: 10px 20px!important;
-        display: flex!important;
-        justify-content: space-between;
-        border-bottom: 1px solid #edeff0;
-        @include ff-regular;
-        > span {
-          color: #8E9AA3;
-          @include ff;
-        }
-        p {
-          margin: 0;
-        }
+
+      p {
+        margin: 0;
       }
-    }
-    thead {
-      display: none;
-    }
-    a {
-      font-size: 14px;
     }
   }
+
+  thead {
+    display: none;
+  }
+
+  a {
+    font-size: 14px;
+  }
+}
 
 
 @include media-tablet-landscape-and-lower {
@@ -282,18 +316,22 @@ table.wallet {
   }
 
   table.wallet {
+
     // td:nth-child(1) {
     //   width: 5%;
     // }
     td:nth-child(2) {
       width: 12%;
     }
+
     td:nth-child(3) {
       width: 18%;
     }
+
     th:last-child {
       padding-left: 15px;
     }
+
     tr {
       display: table-row;
     }
@@ -312,11 +350,13 @@ table.wallet {
     td:nth-child(4) {
       width: 80px;
     }
+
     td:nth-child(5) {
       div {
         display: flex;
         align-items: initial;
         flex-direction: column;
+
         button {
           margin-bottom: 10px;
           margin-right: 0;
@@ -324,6 +364,7 @@ table.wallet {
         }
       }
     }
+
     td:nth-child(5) {
       div {
         position: absolute;
@@ -332,37 +373,45 @@ table.wallet {
         right: 20px;
       }
     }
+
     td:nth-child(2) {
       width: 15%;
       max-width: 60px;
     }
+
     td:nth-child(3) {
       width: 54%;
       max-width: 80px;
     }
+
     td:nth-child(5) {
       width: 26%;
+
       div {
         display: flex;
         flex-direction: row;
         min-width: 360px;
         max-width: 360px;
         justify-content: space-between;
+
         button {
           width: auto;
           padding: 0 15px;
           margin-right: 5px;
           font-size: 13px;
         }
+
         button {
           width: 33.3%;
           flex-basis: 50%;
         }
+
         button:last-child {
           margin-right: 0;
         }
       }
     }
+
     tr {
       display: block;
     }
@@ -388,9 +437,11 @@ table.wallet {
     //   height: 75px;
     // }
   }
+
   table {
     overflow-x: auto;
   }
+
   .wallet {
     margin-bottom: 15px;
     font-size: 14px;
@@ -399,28 +450,36 @@ table.wallet {
     min-width: auto;
     width: 100vw;
     margin-left: -45px;
+
     th {
       font-size: 13px;
     }
+
     th:last-child {
       padding-left: 15px;
     }
+
     th:nth-child(1) {
       padding-left: 5px;
     }
+
     th:nth-child(2),
     td:nth-child(2) {
       display: none;
     }
+
     td:nth-child(1) {
       padding-left: 10px;
     }
+
     th:nth-child(2) {
       padding-left: 10px;
     }
+
     td:nth-child(2) {
       width: auto;
     }
+
     tr {
       display: -webkit-box;
       display: -webkit-flex;
@@ -436,13 +495,16 @@ table.wallet {
       padding: 0 10px;
       align-items: center;
     }
+
     tbody {
       width: 100%;
       display: block;
+
       tr {
         border: none;
       }
     }
+
     thead {
       display: none;
     }
@@ -465,19 +527,24 @@ table.wallet {
   .table.exchange {
     display: table;
     width: 280px;
+
     td {
       position: relative;
+
       &:first-child {
         display: table-cell;
       }
     }
+
     .img {
       position: relative;
     }
   }
+
   .wallet {
     margin-left: -20px;
   }
+
   table.wallet {
     td:nth-child(5) {
       div {
@@ -492,12 +559,15 @@ table.wallet {
       width: 15%;
       max-width: 60px;
     }
+
     td:nth-child(3) {
       width: 54%;
       max-width: 80px;
     }
+
     td:nth-child(5) {
       width: 26%;
+
       div {
         position: absolute;
         left: 0;
@@ -506,21 +576,25 @@ table.wallet {
         justify-content: space-between;
         display: flex;
         padding: 0 20px;
+
         button {
           width: auto;
           padding: 0 15px;
           margin-right: 5px;
           font-size: 13px;
         }
+
         button {
           width: 33.3%;
           flex-basis: 50%;
         }
+
         button:last-child {
           margin-right: 0;
         }
       }
     }
+
     tr {
       display: block;
     }

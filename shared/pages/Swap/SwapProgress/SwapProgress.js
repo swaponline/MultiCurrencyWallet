@@ -37,6 +37,7 @@ import * as animation from './images'
 import finishSvg from './images/finish.svg'
 
 
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })
 export default class SwapProgress extends Component {
@@ -299,7 +300,7 @@ export default class SwapProgress extends Component {
     )
 
     return (
-      <div styleName="overlay">
+      <div styleName={`overlay ${isDark ? 'dark' : ''}`}>
         <div styleName="container">
           <div styleName="stepContainer">
             <SwapController swap={swap} />

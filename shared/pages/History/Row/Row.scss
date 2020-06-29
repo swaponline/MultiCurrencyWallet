@@ -2,16 +2,19 @@
   font-size: 15px;
   font-weight: bold;
   line-height: 1.5;
+
   &.in {
     .arrowWrap {
       svg {
         transform: rotate(180deg);
         margin-top: 4px;
+
         path {
           stroke: #0CCF14;
         }
       }
     }
+
     .amount {
       color: #0CCF14;
     }
@@ -19,6 +22,7 @@
 
   &.out {
     font-weight: bold;
+
     .amount {
       color: #EE5B51;
     }
@@ -33,18 +37,20 @@
   overflow: hidden !important;
   resize: none;
 }
+
 .arrowWrap {
-    width: 36px;
-    height: 36px;
-    background: rgba(142, 154, 163, 0.1);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 12px;
-    svg {
-      fill: transparent;
-    }
+  width: 36px;
+  height: 36px;
+  background: rgba(142, 154, 163, 0.1);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 12px;
+
+  svg {
+    fill: transparent;
+  }
 }
 
 .cell {
@@ -72,14 +78,18 @@
   border-radius: 2px;
   margin-left: 10px;
   position: relative;
-  top: -2px; a {
+  top: -2px;
+
+  a {
     font-size: inherit;
   }
 }
+
 .confirm.red {
   color: #f51f1f;
   background: rgba(229, 68, 68, 0.1);
 }
+
 .confirm.green {
   color: #EE5B51;
   background: rgba(238, 91, 81, 0.1);
@@ -100,6 +110,7 @@
   white-space: pre-wrap;
   cursor: pointer;
   width: 75%;
+
   @media all and (max-width: 480px) {
     font-size: 0.55em;
   }
@@ -136,6 +147,7 @@
 
   a {
     color: #212529;
+
     @media all and (max-width: 480px) {
       font-size: 0.8em;
     }
@@ -152,6 +164,7 @@
     color: #8E9AA3;
   }
 }
+
 .info.noButtons {
   span {
     position: static;
@@ -169,14 +182,17 @@
   line-height: 48px;
   margin-top: 15px;
   @include ff-bold;
+
   button:first-child {
     color: #6144E5;
   }
+
   button:last-child {
     color: #1F2D48;
     margin-left: 10px;
   }
 }
+
 .confirmWrapper {
   border-top: 1px solid #eee;
   height: 40px;
@@ -184,6 +200,7 @@
   margin-top: 15px;
   @include ff-bold;
   text-align: center;
+
   >span {
     font-style: normal;
     font-weight: 600;
@@ -191,6 +208,7 @@
     line-height: 15px;
     color: #1F2D48;
   }
+
   button {
     font-style: normal;
     font-weight: 800;
@@ -205,9 +223,11 @@
   width: 14px;
   margin-left: 10px;
 }
+
 .wrapButtonShare {
   display: inline-block;
 }
+
 tr.historyRow {
   display: block;
   margin-bottom: 10px;
@@ -215,53 +235,72 @@ tr.historyRow {
   min-height: 64px;
   position: relative;
   background: #FFFFFF;
-  border: 1px solid rgba(142, 154, 163, 0.16)!important;
+  border: 1px solid rgba(142, 154, 163, 0.16) !important;
   box-shadow: 0px 2px 12px rgba(142, 154, 163, 0.08);
   border-radius: 4px;
   display: flex;
   align-items: center;
   padding: 15px;
 }
-.smallTooltip  span {
+
+tr.dark {
+  background: #242425;
+  box-shadow: 0px 4px 16px rgba(243, 243, 243, 0.08), 0px 1px 4px rgba(240, 233, 233, 0.08);
+
+  @media screen and (max-width: 480px) {
+    box-shadow: none;
+    background: #222528;
+  }
+
+  .historyInfo {
+    a {
+      color: white;
+    }
+  }
+}
+
+.smallTooltip span {
   margin-top: -4px;
-    span {
-      font-size: 10px;
-    }
+
+  span {
+    font-size: 10px;
   }
- 
-  .input {
-    font-size: 12px;
-    color: #8e9aa3;
-    border-bottom: 1px solid #8e9aa3;
-    width: 75%;
-    padding-bottom: 5px;
-    position: relative;
+}
 
-    textarea {
-      width: 85%;
-      @include ff;
-    }
+.input {
+  font-size: 12px;
+  color: #8e9aa3;
+  border-bottom: 1px solid #8e9aa3;
+  width: 75%;
+  padding-bottom: 5px;
+  position: relative;
 
-    .submit {
-      color: #0CCF14;
-      position: absolute;
-      font-size: 16px;
-      right: 22px;
-      top: -1px;
-    }
-
-    .close {
-      color: #EE5B51;
-      margin-right: 5px;
-      font-size: 22px;
-      position: absolute;
-      right: -6px;
-      top: -7px;
-    }
+  textarea {
+    width: 85%;
+    @include ff;
   }
+
+  .submit {
+    color: #0CCF14;
+    position: absolute;
+    font-size: 16px;
+    right: 22px;
+    top: -1px;
+  }
+
+  .close {
+    color: #EE5B51;
+    margin-right: 5px;
+    font-size: 22px;
+    position: absolute;
+    right: -6px;
+    top: -7px;
+  }
+}
 
 .historyInvoiceInfo {
   outline: 1px solid red;
+
   div {
     display: block;
     font-size: 10pt;
@@ -282,28 +321,35 @@ tr.historyRow {
       display: none;
     }
   }
+
   .date {
     width: 65%;
   }
+
   .amountUsd {
     right: 15px;
     top: 39px;
+
     @media all and (max-width: 480px) {
       font-size: 0.6em;
     }
   }
+
   .amount {
     right: 15px;
     top: 17px;
+
     @media all and (max-width: 480px) {
       font-size: 0.8em;
     }
   }
+
   .historyInfo {
     margin-left: 0px;
     margin-top: 0px;
     position: relative;
   }
+
   .circleIcon {
     display: none;
   }
@@ -314,6 +360,7 @@ tr.historyRow {
   .historyInfo {
     min-height: 60px;
   }
+
   .confirm,
   .unconfirmed {
     top: 47px;
@@ -321,4 +368,3 @@ tr.historyRow {
     right: 0;
   }
 }
-

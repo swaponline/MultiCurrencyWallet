@@ -1,11 +1,19 @@
 .history {
-    display: block;
-    background: #FFFFFF;
-    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08), 0px 1px 4px rgba(0, 0, 0, 0.08);
-    border-radius: 4px;
-    padding: 25px;
-    margin-top: 40px;
-    width: 100%;
+  display: block;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08), 0px 1px 4px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  padding: 25px;
+  margin-top: 40px;
+  width: 100%;
+}
+
+.dark {
+  background: #242525;
+
+  .historyHeading {
+    color: white;
+  }
 }
 
 .historyHeading {
@@ -55,8 +63,8 @@
     padding: 0;
     margin-top: 0;
   }
+
   .historyContent {
     margin: -40px -20px;
   }
 }
-

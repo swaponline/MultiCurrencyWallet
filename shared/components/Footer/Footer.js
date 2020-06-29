@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import cx from 'classnames'
 import { isMobile } from 'react-device-detect'
+import { constants } from "helpers";
 
 import config from 'app-config'
 import { connect } from 'redaction'
@@ -21,12 +22,17 @@ const Footer = (props) => {
   if (window.location.hash.includes('/exchange')
     || window.location.hash.includes('/buy')
   ) showInfo = true
+
+  const isDark = localStorage.getItem(constants.localStorage.isDark)
+
+
   return (
     <Fragment>
       {(!config.isWidget || config.isFullBuild) && (
         <div
           className={cx({
             [styles.footer]: true,
+            [styles.dark]: isDark,
           })}
         >
           <WidthContainer styleName="container">

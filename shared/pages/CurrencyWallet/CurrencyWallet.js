@@ -32,6 +32,7 @@ import lsDataCache from 'helpers/lsDataCache'
 
 
 const isWidgetBuild = config && config.isWidget
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @connect(({ signUp: { isSigned } }) => ({
   isSigned,
@@ -171,7 +172,7 @@ export default class CurrencyWallet extends Component {
 
       const { currency, address, contractAddress, decimals, balance, infoAboutCurrency } = itemCurrency
 
-      const hasCachedData = lsDataCache.get(`TxHistory_${getCurrencyKey(currency,true).toLowerCase()}_${address}`)
+      const hasCachedData = lsDataCache.get(`TxHistory_${getCurrencyKey(currency, true).toLowerCase()}_${address}`)
 
       this.state = {
         itemCurrency,
@@ -391,7 +392,7 @@ export default class CurrencyWallet extends Component {
           txItems: oldTxItems,
         } = this.state
 
-        const hasCachedData = lsDataCache.get(`TxHistory_${getCurrencyKey(currency,true).toLowerCase()}_${address}`)
+        const hasCachedData = lsDataCache.get(`TxHistory_${getCurrencyKey(currency, true).toLowerCase()}_${address}`)
 
         this.setState(
           {
@@ -459,7 +460,7 @@ export default class CurrencyWallet extends Component {
     } = this.state
 
     lsDataCache.push({
-      key: `TxHistory_${getCurrencyKey(currency,true).toLowerCase()}_${address}`,
+      key: `TxHistory_${getCurrencyKey(currency, true).toLowerCase()}_${address}`,
       data,
       time: 3600,
     })
@@ -696,7 +697,7 @@ export default class CurrencyWallet extends Component {
     }
 
     return (
-      <div styleName="root">
+      <div styleName={`root ${isDark ? 'dark' : ''}`}>
         <PageSeo
           location={location}
           defaultTitle={intl.formatMessage(title.metaTitle, {
@@ -740,7 +741,7 @@ export default class CurrencyWallet extends Component {
               )
           }
         >
-          <div styleName="currencyWalletActivity">
+          <div styleName={`currencyWalletActivity ${isDark ? 'darkActivity' : ''}`}>
             <FilterForm
               filterValue={filterValue}
               onSubmit={this.handleFilter}
@@ -765,7 +766,7 @@ export default class CurrencyWallet extends Component {
           {!actions.btcmultisig.isBTCSMSAddress(`${address}`) &&
             !actions.btcmultisig.isBTCMSUserAddress(`${address}`) &&
             (swapHistory.filter((item) => item.step >= 4).length > 0 ? (
-              <div styleName="currencyWalletSwapHistory">
+              <div styleName={`currencyWalletSwapHistory ${isDark ? 'darkHistory' : ''}`}>
                 <SwapsHistory orders={swapHistory.filter((item) => item.step >= 4)} />
               </div>
             ) : (

@@ -19,6 +19,7 @@ import typeforce from 'swap.app/util/typeforce'
 
 import config from 'app-config'
 
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 const defaultLanguage = defineMessages({
   title: {
@@ -177,7 +178,7 @@ export default class ConfirmBeginSwap extends React.Component {
     const linked = Link.all(this, 'customWallet')
 
     return (
-      <div styleName="modal-overlay">
+      <div styleName={`modal-overlay ${isDark ? '--dark' : 'dark'}`}>
         <div styleName="modal">
           <div styleName="header">
             <WidthContainer styleName="headerContent">

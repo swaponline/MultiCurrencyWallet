@@ -74,6 +74,28 @@
   background: #f5f5f5;
   margin-bottom: 100px;
 
+  &.--dark {
+    background: #222427;
+    color: white;
+
+    .formExchange {
+      background: #242425;
+      box-shadow: 0px 4px 16px rgba(243,243,243,0.08), 0px 1px 4px rgba(240,233,233,0.08);
+    }
+
+    .price,
+    .maxAmount {
+      background: none;
+      color: #8e9aa3;
+    }
+
+    .buttonOrders,
+    &:before {
+      background: #694cff;
+      color: white;
+    }
+  }
+
   &:before {
     position: absolute;
     content: '';

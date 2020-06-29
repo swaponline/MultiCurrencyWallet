@@ -9,6 +9,30 @@
   width: 100%;
   top: 20px;
   opacity: 0.6;
+
+  &.--dark {
+    background: #222528;
+    opacity: unset;
+
+    .textBlock {
+      p {
+        color: white;
+      }
+
+      span {
+        color: #79838a;
+      }
+    }
+
+    .one,
+    .two,
+    .three,
+    .four,
+    .five,
+    .six {
+      background: linear-gradient(to right, #353535 8%, #353535 18%, #353535 33%);
+    }
+  }
 }
 
 .animationLoading.rideSideContent {
@@ -21,7 +45,7 @@
 }
 
 .animationLoading.stop {
-  .container > div {
+  .container>div {
     animation: none;
   }
 }
@@ -30,6 +54,7 @@
   0% {
     background-position: -1500px 0;
   }
+
   100% {
     background-position: 468px 0;
   }
@@ -147,14 +172,12 @@
   position: absolute;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
-  background: -webkit-gradient(
-    linear,
-    left top,
-    right top,
-    color-stop(8%, #eeeeee),
-    color-stop(18%, #dddddd),
-    color-stop(33%, #eeeeee)
-  );
+  background: -webkit-gradient(linear,
+      left top,
+      right top,
+      color-stop(8%, #eeeeee),
+      color-stop(18%, #dddddd),
+      color-stop(33%, #eeeeee));
   background: -webkit-linear-gradient(left, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
   background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
   -webkit-background-size: 3200px 104px;
@@ -167,6 +190,7 @@
   height: 250px;
   display: flex;
   justify-content: space-between;
+
   .one,
   .two,
   .three,
@@ -192,6 +216,7 @@
     color: #1f2d48;
     margin-bottom: 5px;
   }
+
   span {
     font-size: 13px;
     line-height: 150%;
@@ -204,6 +229,7 @@
 }
 
 @media all and (min-width: 768px) and (max-width: 992px) {
+
   .four,
   .five {
     display: none;
@@ -214,10 +240,12 @@
   .animationLoading {
     box-shadow: none;
   }
+
   .four,
   .five {
     display: none;
   }
+
   .banners {
     padding: 0 12px;
     top: auto;
@@ -225,6 +253,7 @@
     height: 130px;
     display: flex;
     justify-content: space-between;
+
     .one,
     .two,
     .three,
@@ -233,6 +262,7 @@
       height: 100px;
       width: 32%;
     }
+
     .four {
       display: none;
     }

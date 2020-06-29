@@ -106,6 +106,12 @@
 
 .lowLevel {
   position: relative;
+
+  &.dark {
+    .additionalСurrencies {
+      background: #2b2b2b;
+    }
+  }
 }
 
 .sendBtnsWrapper {

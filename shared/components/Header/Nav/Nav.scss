@@ -38,6 +38,7 @@ $exchangeBorder: #512ed0;
   line-height: 140%;
   color: #8E9AA3;
 
+  
   &:first-child {
     margin-left: 0px;
     z-index: 1;
@@ -45,6 +46,7 @@ $exchangeBorder: #512ed0;
 
   &:hover {
     color: rgba($textColor, 1);
+
     img {
       filter: none;
       transform: rotate(180deg);
@@ -53,12 +55,21 @@ $exchangeBorder: #512ed0;
 
   &.active {
     color: rgba($textColor, 1);
+
     &_exchange {
       border-color: $exchangeBorder;
     }
-  }
-}
 
+    &.dark {
+      color: white;
+    
+      &:hover {
+        color: white;
+      }
+    }
+  }
+  
+}
 
 .container {
   cursor: pointer;

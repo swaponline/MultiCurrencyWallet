@@ -28,6 +28,7 @@ const isWidgetBuild = config && config.isWidget
 const styleBtn = { backgroundColor: '#f0eefd', color: '#6144E5' }
 const defaultColors = { backgroundColor: '#6144E5' }
 
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 const CreateWallet = (props) => {
   const {
@@ -202,10 +203,12 @@ const CreateWallet = (props) => {
       return
     }
 
-    const isIgnoreSecondStep = ['ETH', 'SWAP', 'EURS', 'Custom ERC20'].find(el => Object.keys(currencies).includes(el))
+    const isIgnoreSecondStep = !Object.keys(currencies).includes('BTC') // ['ETH', 'SWAP', 'EURS', 'Custom ERC20'].find(el => Object.keys(currencies).includes(el))
 
-    if (isIgnoreSecondStep) {
-      actions.core.markCoinAsVisible(isIgnoreSecondStep)
+    if (isIgnoreSecondStep && !currencies['Custom ERC20']) {
+      Object.keys(currencies).forEach((currency) => {
+        actions.core.markCoinAsVisible(currency)
+      })
       localStorage.setItem(constants.localStorage.isWalletCreate, true)
       goHome()
       return
@@ -215,12 +218,14 @@ const CreateWallet = (props) => {
       setError('Choose something')
       return
     }
+
+    if (currencies['Custom ERC20']) {
+      goHome()
+      actions.modals.open(constants.modals.AddCustomERC20)
+      return
+    }
+
     if (step === 2 || singleCurrecnyData) {
-      if (currencies['Custom ERC20']) {
-        goHome()
-        actions.modals.open(constants.modals.AddCustomERC20)
-        return
-      }
       switch (secure) {
         case 'withoutSecure':
           Object.keys(currencies).forEach(el => {
@@ -330,7 +335,7 @@ const CreateWallet = (props) => {
   }
 
   return (
-    <div styleName="wrapper">
+    <div styleName={`wrapper ${isDark ? '--dark' : ''}`}>
       {
         userWallets.length && !localStorage.getItem(constants.wasOnWallet)
           ? <CloseIcon styleName="closeButton" onClick={() => goHome()} data-testid="modalCloseIcon" />
