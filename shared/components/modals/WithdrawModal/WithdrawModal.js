@@ -118,6 +118,7 @@ export default class WithdrawModal extends React.Component {
       enabledCurrencies: getActivatedCurrencies(),
       wallet: actions.user.getWithdrawWallet(currency, withdrawWallet),
       devErrorMessage: false,
+      tokenFee: `(Fetching fee)`,
     }
   }
 
@@ -205,6 +206,16 @@ export default class WithdrawModal extends React.Component {
         method: 'send',
         speed: 'fast',
       })
+
+      const tokenFee = await helpers.ethToken.estimateFeeValue({
+        method: 'send',
+        speed: 'fast',
+      })
+
+      this.setState({
+        tokenFee,
+      })
+
     }
 
     if (constants.coinsWithDynamicFee.includes(currentCoin)) {
@@ -451,8 +462,13 @@ export default class WithdrawModal extends React.Component {
   }
 
   isEthOrERC20() {
-    const { ethBalance, isEthToken } = this.state
-    return isEthToken === true && ethBalance < minAmount.eth
+    const {
+      ethBalance,
+      isEthToken,
+      tokenFee,
+    } = this.state
+
+    return isEthToken === true && ethBalance < tokenFee
   }
 
   addressIsCorrect() {
@@ -551,6 +567,7 @@ export default class WithdrawModal extends React.Component {
       usedAdminFee,
       enabledCurrencies,
       devErrorMessage,
+      tokenFee,
     } = this.state
 
     const {
@@ -796,7 +813,7 @@ export default class WithdrawModal extends React.Component {
               <FormattedMessage
                 id="WithdrawModal263"
                 defaultMessage="You need {minAmount} ETH on your balance"
-                values={{ minAmount: `${minAmount.eth}` }}
+                values={{ minAmount: `${(isEthToken) ? tokenFee : minAmount.eth}` }}
               />
             </div>
           )}
@@ -894,7 +911,7 @@ export default class WithdrawModal extends React.Component {
               id="Withdrow213"
               defaultMessage="Please note: Fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction"
               values={{
-                minAmount: <span>{isEthToken ? minAmount.eth : min}</span>,
+                minAmount: <span>{isEthToken ? tokenFee : min}</span>,
                 br: <br />,
                 data: `${getCurrencyKey(dataCurrency, true).toUpperCase()}`,
               }}
