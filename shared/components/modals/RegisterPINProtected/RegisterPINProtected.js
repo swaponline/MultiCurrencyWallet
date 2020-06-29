@@ -202,7 +202,7 @@ export default class RegisterPINProtected extends React.Component {
     const generatedKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated)
 
     const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
-    const mnemonicSaved = true //(mnemonic === `-`)
+    const mnemonicSaved = (mnemonic === `-`)
     const useGeneratedKeyEnabled = !(!generatedKey)
 
 
@@ -666,7 +666,6 @@ export default class RegisterPINProtected extends React.Component {
                   valueLink={linked.pinCodeConfirm}
                   type="password"
                   placeholder={`${intl.formatMessage(langs.pinCodeConfirmPlaceHolder)}`}
-                  focusOnInit
                 />
                 {!pinServerOffline && error && <div styleName="error rednotes">{error}</div>}
                 {pinServerOffline && (
