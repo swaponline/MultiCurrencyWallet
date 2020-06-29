@@ -250,7 +250,7 @@ export default class InvoicesList extends PureComponent {
     };
 
     const invoicesTable = (
-      <div styleName="currencyWalletActivity">
+      <div styleName={`currencyWalletActivity ${isDark ? 'darkActivity' : ''}`}>
         <h3>
           {(address) ? (
             <FormattedMessage {...langLabels.navTitleAddress} values={{
@@ -273,9 +273,9 @@ export default class InvoicesList extends PureComponent {
     if (onlyTable) {
       return invoicesTable
     }
-
+    console.log({ isDark })
     return (
-      <div styleName="root">
+      <div styleName={`root ${isDark ? 'dark' : ''}`}>
         <PageSeo
           location={location}
           defaultTitle={intl.formatMessage(metaTitle)}
@@ -311,7 +311,7 @@ export default class InvoicesList extends PureComponent {
                   <ContentLoader leftSideContent />
                 )}
             </div>
-            <div styleName="currencyWalletActivityWrapper">
+            <div styleName={`currencyWalletActivity ${isDark ? 'darkActivity' : ''}`}>
               {invoicesTable}
             </div>
           </div>

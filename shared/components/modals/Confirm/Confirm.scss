@@ -49,6 +49,26 @@
   z-index: 111;
 }
 
+.dark {
+  .modal {
+    background: #242425;
+    box-shadow: 0px 4px 16px rgba(243, 243, 243, 0.08), 0px 1px 4px rgba(240, 233, 233, 0.08);
+  
+    @media screen and (max-width: 480px) {
+      box-shadow: none;
+      background: #222528;
+    }
+  }
+
+  .header {
+    color: white;
+  }
+
+  .content {
+    color: #c3bfbf
+  }
+}
+
 .modal {
   position: relative;
   display: flex;

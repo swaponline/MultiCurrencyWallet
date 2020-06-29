@@ -37,6 +37,7 @@ import { Switcher } from "./Switcher"
 
 
 const isWidgetBuild = config && config.isWidget;
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @injectIntl
 @withRouter
@@ -451,7 +452,7 @@ export default class Header extends Component {
         styleName="otherHeaderLogo"
         onClick={this.handleGoHome}
         className="site-logo-header"
-        src={window.logoUrl}
+        src={isDark ? window.darkLogoUrl : window.logoUrl}
         alt="logo"
       />
     );

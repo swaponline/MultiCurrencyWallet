@@ -26,6 +26,7 @@ const title = defineMessages({
   }
 })
 
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 @injectIntl
 @connect(({
   ui: { dashboardModalsAllowed },
@@ -112,7 +113,8 @@ export default class CurrencyAction extends React.Component {
     return (
       <div styleName={cx({
         "modal-overlay": true,
-        "modal-overlay_dashboardView": dashboardView
+        "modal-overlay_dashboardView": dashboardView,
+        "dark": isDark,
       })}>
         <div styleName={cx({
           "modal": true,

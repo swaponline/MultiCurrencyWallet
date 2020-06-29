@@ -89,8 +89,14 @@
       color: #8e9aa3;
     }
 
+    .buttonOrders,
     &:before {
-      background: #231b4a;
+      background: #694cff;
+      color: white;
+    }
+
+    .notifyThat {
+      background: #2e2941;
     }
   }
 

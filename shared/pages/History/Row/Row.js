@@ -17,6 +17,9 @@ import ethToken from 'helpers/ethToken'
 import { links } from 'helpers'
 import { getFullOrigin } from 'helpers/links'
 
+
+const isDark = localStorage.getItem(constants.localStorage.isDark)
+
 class Row extends React.PureComponent {
 
   constructor(props) {
@@ -187,7 +190,6 @@ class Row extends React.PureComponent {
       invoiceData,
       confirmTx,
       onSubmit,
-      isDark
     } = this.props
 
     const substrAddress = address ? `${address.slice(0, 2)}...${address.slice(-2)}` : ''

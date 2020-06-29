@@ -39,7 +39,12 @@
 }
 
 .dark {
-  background-color: #29293b
+  background-color: #29293b;
+
+  .active {
+    background: #6144e5;
+    color: white !important;
+  }
 }
 
 .active {

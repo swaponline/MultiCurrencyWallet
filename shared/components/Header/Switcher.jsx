@@ -67,7 +67,7 @@ const SwitcherComponent = ({ onClick, withExit, themeSwapAnimation }) => (
     onClick={onClick}
     data-tip data-for="themeAlt"
   >
-    {isDark ? sun("white") : moon("black")}
+    {isDark ? sun("white") : moon("#747474")}
     <ReactTooltip id="themeAlt" type={isDark ? "light" : "dark"} effect="solid" place="bottom">
       <FormattedMessage id="themeAlt" defaultMessage="{theme} theme" values={{ theme: isDark ? 'Light' : 'Dark' }} />
     </ReactTooltip>

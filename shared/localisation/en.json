@@ -3169,7 +3169,7 @@
   },
   {
     "id": "BitcoinBuyText37",
-    "message": "{buyCurrency} Owner received Bitcoin Script and Secret Hash. Creating {buyCurrency} contract",
+    "message": "You sent BTC to the contract (possible needs 1 confirmation from blockchain), {buyCurrency} owner received TXID and Secret Hash. Waiting while he freezes {buyCurrency} in the contract",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
