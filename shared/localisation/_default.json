@@ -2258,14 +2258,6 @@
     ]
   },
   {
-    "id": "PartialFeeValueWarnInfo",
-    "message": "[About fees]",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
-  },
-  {
     "id": "down57",
     "message": "It seems like you're trying to save your private keys. Just copy this keys and paste into notepad textarea. Also you can download it as a .txt file.",
     "files": [
