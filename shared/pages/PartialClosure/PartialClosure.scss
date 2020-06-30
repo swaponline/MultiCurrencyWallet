@@ -80,7 +80,7 @@
 
     .formExchange {
       background: #242425;
-      box-shadow: 0px 4px 16px rgba(243,243,243,0.08), 0px 1px 4px rgba(240,233,233,0.08);
+      box-shadow: 0px 4px 16px rgba(243, 243, 243, 0.08), 0px 1px 4px rgba(240, 233, 233, 0.08);
     }
 
     .price,
@@ -91,12 +91,21 @@
 
     .buttonOrders,
     &:before {
-      background: #694cff;
+      background: #694cff !important;
       color: white;
     }
 
     .notifyThat {
       background: #2e2941;
+    }
+
+    .maxAmount {
+      color: white;
+      background: #242425;
+    }
+
+    .IsSearching {
+      color: white;
     }
   }
 
@@ -109,6 +118,17 @@
     z-index: 100;
     height: 100%;
     top: 0;
+  }
+}
+
+.darkForm {
+  .maxAmount {
+    color: white;
+    background: #242425;
+  }
+
+  .IsSearching {
+    color: white;
   }
 }
 
@@ -226,6 +246,17 @@
   border: 1px solid #000;
   background: #fff;
   transition: background-color 0.2s ease, color 0.1s ease, border-color 0.2s ease;
+
+  &:hover {
+    background: black;
+    color: white;
+    border-color: white;
+  }
+}
+
+.darkButton {
+  background: #694cff;
+  color: white;
 
   &:hover {
     background: black;
@@ -564,7 +595,7 @@
   .price {
     bottom: 25px;
   }
-  
+
   .section,
   .widgetSection {
     margin-top: 20px;

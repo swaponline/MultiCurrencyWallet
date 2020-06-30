@@ -1470,16 +1470,6 @@ export default class PartialClosure extends Component {
                         />
                       </Fragment>
                     )}
-                  {` `}
-                  <a
-                    style={{ whiteSpace: "nowrap" }}
-                    href="https://wiki.swaponline.io/faq/is-there-fee-for-trade/"
-                  >
-                    <FormattedMessage
-                      id="PartialFeeValueWarnInfo"
-                      defaultMessage="[About fees]"
-                    />
-                  </a>
                 </div>
               </div>
             )}

@@ -13,6 +13,17 @@
   height: 100%;
 }
 
+.dark {
+  background: #242425;
+  .header {
+    border-bottom: 1px solid #ddb8da;
+    background: #242425;
+  }
+  .headerContent {
+    color: #fff;
+  }
+} 
+
 .header {
   height: 88px;
   border-bottom: 1px solid #ddd;
