@@ -690,7 +690,7 @@ export default class WithdrawModalMultisig extends React.Component {
             </div>
             <div styleName="lowLevel" style={{ marginBottom: "50px" }}>
               <p styleName="balance">
-                {balance} {currency.toUpperCase()}
+                {balance} {`BTC`}
               </p>
               <FieldLabel>
                 <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
