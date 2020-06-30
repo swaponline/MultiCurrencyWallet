@@ -87,6 +87,7 @@ const isWidgetBuild = config && config.isWidget
 const bannedPeers = {} // Пиры, которые отклонили запрос на свап, они будут понижены в выдаче
 
 
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @injectIntl
 @connect(({
@@ -1038,7 +1039,7 @@ export default class PartialClosure extends Component {
 
 
     const Form = (
-      <div styleName={`${isSingleForm ? '' : 'section'}`} className={(isWidgetLink) ? 'section' : ''} >
+      <div styleName={`${isSingleForm ? '' : 'section'} ${isDark ? 'darkForm' : ''}`} className={(isWidgetLink) ? 'section' : ''} >
         <div styleName="mobileDubleHeader">
           <PromoText subTitle={subTitle(sellTokenFullName, haveCurrency.toUpperCase(), buyTokenFullName, getCurrency.toUpperCase())} />
         </div>
@@ -1256,6 +1257,7 @@ export default class PartialClosure extends Component {
               type={getCurrency}
               hasError={destinationError}
               value={customWallet}
+              isDark={isDark}
               valueLink={linked.customWallet}
               initialValue={customWallet}
               onChange={this.onCustomWalletChange}
@@ -1286,6 +1288,7 @@ export default class PartialClosure extends Component {
                   </div>
                 </div>
               </Fragment>
+
             )
           */}
           <div styleName="rowBtn" className={isWidget ? 'rowBtn' : ''}>
@@ -1294,7 +1297,7 @@ export default class PartialClosure extends Component {
             </Button>
             <Button
               className="data-tut-Orderbook"
-              styleName="button buttonOrders"
+              styleName={`button buttonOrders ${isDark ? 'darkButton' : ''}`}
               gray
               onClick={this.handleGoToWallet}
             >
@@ -1316,7 +1319,7 @@ export default class PartialClosure extends Component {
       ? Form
       : (
         <div styleName={`exchangeWrap ${isWidget ? 'widgetExchangeWrap' : ''}`}>
-          <div styleName="promoContainer" ref={ref => this.promoContainer = ref}>
+          <div styleName={`promoContainer ${isDark ? '--dark' : ''}`} ref={ref => this.promoContainer = ref}>
             {config && config.showHowItsWork && (
               <div
                 styleName="scrollToTutorialSection"

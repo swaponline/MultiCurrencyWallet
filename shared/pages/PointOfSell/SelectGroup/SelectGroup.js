@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import { FormattedMessage, injectIntl } from 'react-intl'
 
+import { constants } from "helpers"
 import CSSModules from 'react-css-modules'
 import styles from './SelectGroup.scss'
 
@@ -12,6 +13,8 @@ import { BigNumber } from 'bignumber.js'
 
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 
+
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 // TODO to split data and view this component
 const SelectGroup = (props) => {
   const { dynamicFee, isToken, extendedControls, selectedValue, onSelect,
@@ -21,7 +24,7 @@ const SelectGroup = (props) => {
   return (
     <div>
       <FieldLabel inRow>
-        <strong>
+        <strong styleName={`strong ${isDark ? 'dark' : ''}`}>
           {label}
         </strong>
         &nbsp;
@@ -33,7 +36,7 @@ const SelectGroup = (props) => {
       </FieldLabel>
       <div styleName="groupField" className={className}>
         <Input
-          styleName="inputRoot"
+          styleName={`inputRoot ${isDark ? 'darkInput' : ''}`}
           inputContainerClassName="inputContainer"
           valueLink={inputValueLink}
           type="number"
@@ -55,7 +58,7 @@ const SelectGroup = (props) => {
           tooltip={tooltip}
           switchBalanceFunc={switchBalanceFunc}
           id={id}
-          styleName="currencySelect"
+          styleName={`currencySelect ${isDark ? 'dark' : ''}`}
           placeholder="Enter the name of token"
           selectedValue={selectedValue}
           onSelect={onSelect}
