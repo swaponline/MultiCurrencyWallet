@@ -5494,21 +5494,21 @@
   },
   {
     "id": "btcmsSwitchFetchWalletsData",
-    "message": "Загрузка BTC-Multisign кошельков",
+    "message": "Fetching...",
     "files": [
       "shared/components/modals/BtcMultisignSwitch/BtcMultisignSwitch.js"
     ]
   },
   {
     "id": "btcmsSwitchFetchWalletsEmpty",
-    "message": "У вас нет BTC-Multisign кошельков",
+    "message": "You do not have BTC-Multisign wallets",
     "files": [
       "shared/components/modals/BtcMultisignSwitch/BtcMultisignSwitch.js"
     ]
   },
   {
     "id": "btcmsSwitchTitle",
-    "message": "Подключенные BTC-Multisign кошельки",
+    "message": "Connected BTC-Multisign wallets",
     "files": [
       "shared/components/modals/BtcMultisignSwitch/BtcMultisignSwitch.js"
     ]
