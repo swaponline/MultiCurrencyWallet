@@ -8,6 +8,10 @@
     width: 40%;
     padding: 0 8px;
     line-height: 36px;
+    @include media-mobile {
+      width: 49%;
+      white-space: nowrap;
+    }
   }
 }
 
