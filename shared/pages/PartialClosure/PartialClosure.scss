@@ -737,6 +737,10 @@
     align-items: normal;
     padding-top: 0;
     padding: 0;
+
+    @media screen  and (max-width: 480px) {
+      padding: 20vmin 2% 10vmin;;
+    }
   }
 
   .promoContainer {

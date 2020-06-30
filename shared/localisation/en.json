@@ -5813,7 +5813,7 @@
   },
   {
     "id": "WithdrawSMS_SmsSended",
-    "message": "SMS with code sended",
+    "message": "SMS with code sent",
     "files": [
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]

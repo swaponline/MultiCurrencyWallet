@@ -766,3 +766,23 @@ tr button[disabled]:hover {
     }
   }
 }
+
+@media all and (max-width: 400px) {
+  .no-select-inline {
+    font-size: 0.7em;
+  }
+
+  .assetsTableValue {
+
+    strong,
+    p {
+      font-size: 0.7em;
+    }
+  }
+
+  .nameRow {
+    a {
+      font-size: 0.6em;
+    }
+  }
+}
