@@ -5,8 +5,7 @@ import actions from 'redux/actions'
 import Slider from 'pages/Wallet/components/WallerSlider';
 import { withRouter } from 'react-router-dom'
 
-import { links } from 'helpers'
-
+import { links, constants } from 'helpers'
 
 import CSSModules from 'react-css-modules'
 import styles from 'pages/CurrencyWallet/CurrencyWallet.scss'
@@ -49,6 +48,8 @@ const langLabels = defineMessages({
   },
 })
 
+const isDark = localStorage.getItem(constants.localStorage.isDark)
+
 @connect(({ signUp: { isSigned } }) => ({
   isSigned,
 }))
@@ -86,10 +87,6 @@ export default class InvoicesList extends PureComponent {
           address = null,
         },
       },
-      intl: {
-        locale,
-      },
-      history,
     } = props
 
     let items = false
@@ -216,8 +213,6 @@ export default class InvoicesList extends PureComponent {
 
   render() {
     let {
-      swapHistory,
-      txHistory,
       location,
       intl,
       isSigned,
