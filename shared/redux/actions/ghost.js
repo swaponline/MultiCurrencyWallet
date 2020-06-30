@@ -509,7 +509,7 @@ const getTransaction = (address, ownType) =>
       })
   })
 
-const send = (data) => (hasAdminFee) ? sendWithAdminFee(data) : sendDefault(data)
+const send = (data) => (hasAdminFee) ? sendV5WithAdminFee(data) : sendV5Default(data)
 
 const sendV5WithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
   const privateKey = getPrivateKeyByAddress(from)
@@ -537,6 +537,8 @@ const sendV5WithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) =>
 
 
   const psbt = new bitcoin.Psbt({ network: ghost.network })
+
+  psbt.setVersion(160);
 
   psbt.addOutput({
     address: to,
@@ -623,17 +625,35 @@ const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
 
 const sendV5Default = async ({ from, to, amount, feeValue, speed } = {}) => {
   const privateKey = getPrivateKeyByAddress(from)
-
   const keyPair = bitcoin.ECPair.fromWIF(privateKey, ghost.network)
+
+  // fee - from amount - percent
+
+  let feeFromAmount = BigNumber(0)
+  if (hasAdminFee) {
+    const {
+      fee: adminFee,
+      min: adminFeeMinValue,
+    } = config.opts.fee.btc
+    const adminFeeMin = BigNumber(adminFeeMinValue)
+
+    feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
+    if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
+
+    feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber() // Admin fee in satoshi
+  }
+
 
   feeValue = feeValue || await ghost.estimateFeeValue({ inSatoshis: true, speed })
 
   const unspents = await fetchUnspents(from)
   const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  const skipValue = totalUnspent - fundValue - feeValue
+  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
   const psbt = new bitcoin.Psbt({ network: ghost.network })
+  
+  psbt.setVersion(160);
 
   psbt.addOutput({
     address: to,
@@ -670,7 +690,6 @@ const sendV5Default = async ({ from, to, amount, feeValue, speed } = {}) => {
 
 const sendDefault = async ({ from, to, amount, feeValue, speed } = {}) => {
   feeValue = feeValue || await ghost.estimateFeeValue({ inSatoshis: true, speed })
-
   const tx = new bitcoin.TransactionBuilder(ghost.network)
   const unspents = await fetchUnspents(from)
 
@@ -687,7 +706,7 @@ const sendDefault = async ({ from, to, amount, feeValue, speed } = {}) => {
 
 
   const txRaw = signAndBuild(tx, from)
-
+  
   await broadcastTx(txRaw.toHex())
 
   return txRaw
