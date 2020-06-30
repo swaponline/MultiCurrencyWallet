@@ -8,16 +8,21 @@
   text-align: right;
   right: 60px;
   font-size: 13px;
-  @include media-mobile {
-    right: 50px;
-  }
+
   .currency {
     color: #1f2d48;
+    background: #fff;
   }
   .usd {
     color: #8e9aa3;
+    background: #fff;
+  }
+
+  @include media-mobile {
+    right: 50px;
   }
 }
+
 
 .customSelectListItem {
   margin-top: -1px;
@@ -63,6 +68,15 @@
   }
 }
 
+.dark {
+  .amount {
+    .currency,
+    .usd {
+      background: #2b2b2b;
+    }
+  }
+}
+
 .customSelectValue {
   border: 1px solid #ccc;
   height: 68px;
@@ -75,8 +89,10 @@
     border-color:#222323;
     background: #2b2b2b;
     .amount {
-      .currency {
+      .currency,
+      .usd {
         color: white;
+        background: #2b2b2b;
       }
     }
   }
@@ -120,6 +136,10 @@
   overflow-x: hidden;
   padding: 5px 0px;
   box-shadow: 0px 4px 16px rgba(0,0,0,0.08), 0px 1px 4px rgba(0,0,0,0.08);
+
+  .amount {
+    right: 10px;
+  }
 
   &.darkList {
     background:#2b2b2b;

@@ -59,6 +59,9 @@ textarea {
         cursor: no-drop;
       }
     }
+    .qr {
+      background: #2b2b2b;
+    }
   }
 }
 
@@ -112,7 +115,9 @@ input[type='number'] {
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
+  background: #fff;
 }
+
 
 .input::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
