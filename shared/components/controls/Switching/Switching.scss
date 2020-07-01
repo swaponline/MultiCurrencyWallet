@@ -1,11 +1,12 @@
 .Switching {
   display: flex;
   background: url('./images/swapIcon.svg') 50% 50% no-repeat;
-  height: 44px;
-  position: relative;
+  position: absolute;
+  top: -40px;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
   z-index: 1;
-  width: 100%;
   border-radius: 3px;
   border: 1px solid rgba(0,0,0,0.2);
 }

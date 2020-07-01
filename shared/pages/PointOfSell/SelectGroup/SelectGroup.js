@@ -19,8 +19,9 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 const SelectGroup = (props) => {
   const { dynamicFee, isToken, extendedControls, selectedValue, onSelect,
     currencies, fiat, placeholder, label, disabled, className, switchBalanceFunc, inputValueLink, tooltip, balance, error,
-    id, idFee, tooltipAboutFee, haveAmount, notIteractable,
+    id, idFee, tooltipAboutFee, haveAmount, notIteractable, inputToolTip,
   } = props
+
   return (
     <div>
       <FieldLabel inRow>
@@ -52,6 +53,7 @@ const SelectGroup = (props) => {
           (selectedValue === 'eth' || selectedValue === 'btc') && fiat > 0 &&
           <p styleName="textUsd" >{`~${fiat}`} {activeFiat}</p>
         }
+        {inputToolTip && inputToolTip()}
         <CurrencySelect
           name="All"
           label={label}

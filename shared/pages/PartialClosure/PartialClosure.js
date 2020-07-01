@@ -11,6 +11,7 @@ import { BigNumber } from "bignumber.js";
 import { Redirect } from "react-router-dom";
 import { getState } from "redux/core";
 import reducers from "redux/core/reducers";
+import { isMobile } from 'react-device-detect'
 
 import SelectGroup from "./SelectGroup/SelectGroup";
 import { Button } from "components/controls";
@@ -180,6 +181,10 @@ export default class PartialClosure extends Component {
     } = props;
     super();
 
+    if (isMobile) {
+      document.body.style.overflow = 'hidden';
+    }
+
     this.onRequestAnswer = (newOrder, isAccepted) => { };
 
     const isRootPage =
@@ -308,6 +313,10 @@ export default class PartialClosure extends Component {
 
   componentWillUnmount() {
     this.timer = false;
+
+    if (isMobile) {
+      document.body.style.overflow = 'auto';
+    }
   }
 
   checkUrl = () => {
@@ -1249,30 +1258,32 @@ export default class PartialClosure extends Component {
               onBlur={() =>
                 setTimeout(() => this.extendedControlsSet(false), 200)
               }
+              inputToolTip={() => isShowBalance ?
+                <p styleName="maxAmount">
+                  {/* <FormattedMessage id="partial221" defaultMessage="Balance: " /> */}
+                  {/* Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}{' '}{haveCurrency.toUpperCase() */}
+                  {BigNumber(balance).toNumber() === 0 ? (
+                    <FormattedMessage
+                      id="partial766"
+                      defaultMessage="From any wallet or exchange"
+                    />
+                  ) : (
+                      <>
+                        <FormattedMessage
+                          id="partial767"
+                          defaultMessage="Your balance: "
+                        />
+                        {BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString()}
+                        {"  "}
+                        {haveCurrency.toUpperCase()}
+                      </>
+                    )}
+                </p>
+                : <span />
+              }
             />
           </div>
-          {isShowBalance && (
-            <p styleName="maxAmount">
-              {/* <FormattedMessage id="partial221" defaultMessage="Balance: " /> */}
-              {/* Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}{' '}{haveCurrency.toUpperCase() */}
-              {BigNumber(balance).toNumber() === 0 ? (
-                <FormattedMessage
-                  id="partial766"
-                  defaultMessage="From any wallet or exchange"
-                />
-              ) : (
-                  <>
-                    <FormattedMessage
-                      id="partial767"
-                      defaultMessage="Your balance: "
-                    />
-                    {BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString()}
-                    {"  "}
-                    {haveCurrency.toUpperCase()}
-                  </>
-                )}
-            </p>
-          )}
+
           <div styleName="switchButton">
             <Switching noneBorder onClick={this.handleFlipCurrency} />
           </div>

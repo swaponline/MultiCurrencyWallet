@@ -416,10 +416,13 @@ export default class Row extends Component {
       intl: { locale },
       currency,
     } = this.props
+
+    // was pointOfSell
+
     history.push(
       localisedUrl(
         locale,
-        `${links.pointOfSell}/btc-to-${currency.currency.toLowerCase()}`
+        `${links.exchange}/btc-to-${currency.currency.toLowerCase()}`
       )
     )
   }
