@@ -3,6 +3,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 
 import CSSModules from 'react-css-modules'
 import styles from './SelectGroup.scss'
+import partialStyles from '../PartialClosure.scss'
 
 import Input from 'components/forms/Input/Input'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
@@ -16,7 +17,7 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 const SelectGroup = (props) => {
   const { dynamicFee, isToken, extendedControls, selectedValue, onSelect,
     currencies, fiat, placeholder, label, disabled, className, switchBalanceFunc, inputValueLink, tooltip, balance, error,
-    id, idFee, tooltipAboutFee, haveAmount,
+    id, idFee, tooltipAboutFee, haveAmount, inputToolTip, activeFiat,
   } = props
   return (
     <div>
@@ -49,6 +50,7 @@ const SelectGroup = (props) => {
           (selectedValue === 'eth' || selectedValue === 'btc') && fiat > 0 &&
           <p styleName="textUsd" >{`~${fiat}`} {activeFiat}</p>
         }
+        {inputToolTip && inputToolTip()}
         <CurrencySelect
           name="All"
           label={label}
@@ -93,4 +95,4 @@ const SelectGroup = (props) => {
 }
 
 
-export default injectIntl(CSSModules(SelectGroup, styles, { allowMultiple: true }))
+export default injectIntl(CSSModules(SelectGroup, { ...styles, ...partialStyles }, { allowMultiple: true }))
