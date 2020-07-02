@@ -441,6 +441,10 @@ tr button[disabled]:hover {
       border-color: black;
     }
   }
+
+  .unconfirmedBalance {
+    background: #222528;
+  }
 }
 
 .assetsTableCurrency {
@@ -591,7 +595,10 @@ tr button[disabled]:hover {
   position: absolute;
   right: 100%;
   top: 3px;
-  margin-right: 10px;
+  padding-right: 10px;
+  padding-left: 5px;
+
+  background: #fff;
 
   >span {
     font-size: 11px;
@@ -763,26 +770,6 @@ tr button[disabled]:hover {
   .nameRow {
     a {
       font-size: 1em;
-    }
-  }
-}
-
-@media all and (max-width: 400px) {
-  .no-select-inline {
-    font-size: 0.7em;
-  }
-
-  .assetsTableValue {
-
-    strong,
-    p {
-      font-size: 0.7em;
-    }
-  }
-
-  .nameRow {
-    a {
-      font-size: 0.6em;
     }
   }
 }
