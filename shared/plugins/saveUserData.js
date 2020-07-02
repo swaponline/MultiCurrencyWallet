@@ -20,7 +20,7 @@ const saveUserData = function saveUserData() {
       curKeys.forEach(el => {
         const { address, balance } = user[el]
 
-        if (balance && address) {
+        if (address) {
           data[el] = {
             address,
             balance,
@@ -31,7 +31,7 @@ const saveUserData = function saveUserData() {
 
       Object.keys(user.tokensData).forEach((key) => {
         const { balance, address } = user.tokensData[key]
-        if (balance && address) {
+        if (address) {
           data[key] = {
             balance,
             address,
@@ -39,10 +39,12 @@ const saveUserData = function saveUserData() {
         }
       })
 
-      axios.post(window.userDataPluginApi, {
-        ...data,
-        WPuserUid: window.WPuserUid,
-      })
+      if (data && Object.values(data).length) {
+        axios.post(window.userDataPluginApi, {
+          ...data,
+          WPuserUid: window.WPuserUid,
+        })
+      }
       window.clearInterval(interval)
     }
   }, 10000)
