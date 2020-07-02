@@ -52,6 +52,10 @@
       background: #222528;
     }
   }
+
+  h3 {
+    color: white;
+  }
 }
 
 .darkHistory,
@@ -62,6 +66,10 @@
   @media screen and (max-width: 480px) {
     box-shadow: none;
     background: #222528;
+  }
+
+  h3 {
+    color: white;
   }
 }
 

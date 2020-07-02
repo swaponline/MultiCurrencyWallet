@@ -231,9 +231,9 @@ export default class Wallet extends Component {
       history,
       intl: { locale },
     } = this.props
-
     if (isWidgetBuild && !config.isFullBuild) {
-      history.push(localisedUrl(locale, links.pointOfSell))
+      // was pointOfSell
+      history.push(localisedUrl(locale, links.exchange))
     } else {
       history.push(localisedUrl(locale, links.exchange))
     }

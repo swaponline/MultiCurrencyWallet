@@ -914,14 +914,9 @@
 
       window.logoUrl = "#"
       window.darkLogoUrl = ""
-      console.log("lightLogo", window.logoUrl)
-      console.log("darkLogo", window.darkLogoUrl)
-      console.log("is dark on", window.localStorage.getItem("isDark"))
-
 
       if (window.localStorage.getItem("isDark")) {
         window.logoUrl = window.darkLogoUrl || window.logoUrl
-        console.log("dark theme coming", window.logoUrl)
       };
 
       if (

@@ -16,6 +16,10 @@
           width: 100%;
           text-align: left;
           margin-left: 1em;
+
+          @media screen and (max-width: 480px) {
+            font-size: 8pt;
+          }
         }
       }
     }

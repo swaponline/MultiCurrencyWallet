@@ -11,11 +11,13 @@
   padding: 24px;
   box-sizing: border-box;
   position: relative;
-  > div {
+
+  >div {
     display: flex;
     align-items: center;
     flex-direction: column;
   }
+
   background-position: center;
   background-size: contain;
 }
@@ -25,6 +27,7 @@
   left: 50%;
   transform: translate(-50%);
   top: 30px;
+
   img {
     width: 100px;
   }
@@ -48,6 +51,10 @@
   left: 10px;
 }
 
+.dark {
+  color: white;
+}
+
 .bannersHeading {
   font-size: 24px;
   margin-bottom: 25px;
@@ -59,50 +66,61 @@
       font-size: 11px;
     }
   }
+
   .notifyBlockDescr {
     p {
       font-size: 12px;
       margin-bottom: 0px;
     }
+
     p:last-child {
       font-size: 12px;
     }
   }
+
   .notifyBlockIcon {
     align-self: flex-start;
     min-width: 40px;
   }
 }
+
 @media all and (min-width: 320px) and (max-width: 767px) {
   .notifyBlock {
     flex-direction: column;
     align-items: flex-start;
     padding: 20px;
     justify-content: space-between;
-    > div {
+
+    >div {
       align-items: flex-start;
+
       button {
         font-size: 12px;
         margin: 0;
       }
+
       button:first-child {
         margin-right: 10px;
       }
     }
-    > div:last-child {
+
+    >div:last-child {
       width: 100%;
       margin-top: 20px;
       display: flex;
       justify-content: flex-start;
     }
   }
+
   .notifyBlockIcon {
     min-width: 40px;
     display: none;
   }
+
   .notifyBlockDescr {
     margin-left: 0;
   }
+
   .bannersHeading {
     margin-left: 25px;
   }
@@ -114,33 +132,41 @@
       font-size: 13px;
       margin-bottom: 0px;
     }
+
     p:last-child {
       font-size: 12px;
     }
   }
 }
+
 @media all and (min-width: 320px) and (max-width: 570px) {
   .notifyBlockDescr {
     right: 10px;
     font-size: 9.5px;
     bottom: 10px;
+
     p {
       margin-bottom: 4px;
     }
+
     p:last-child {
       font-size: 12px;
     }
   }
+
   .notifyBlock {
     height: 100px;
-    > div {
+
+    >div {
       flex-direction: column;
       align-items: normal;
+
       button {
         font-size: 12px;
         margin: 0;
         flex-basis: 100%;
       }
+
       button:first-child {
         margin-bottom: 10px;
         margin-right: 0;

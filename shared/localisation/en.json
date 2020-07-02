@@ -2318,14 +2318,6 @@
     ]
   },
   {
-    "id": "PartialFeeValueWarnInfo",
-    "message": "[About fees]",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
-  },
-  {
     "id": "down57",
     "message": "To save your private keys just copy these keys and paste them into notepad textarea. You can also download your keys as a .txt file",
     "files": [
@@ -5821,7 +5813,7 @@
   },
   {
     "id": "WithdrawSMS_SmsSended",
-    "message": "SMS with code sended",
+    "message": "SMS with code sent",
     "files": [
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]

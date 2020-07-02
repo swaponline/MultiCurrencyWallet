@@ -3,6 +3,7 @@ import { Modal } from 'components/modal'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import helpers from "helpers";
 import { getFullOrigin } from 'helpers/links'
+import { constants } from 'helpers'
 
 import cssModules from 'react-css-modules'
 import styles from './styles.scss'
@@ -28,8 +29,10 @@ const labels = defineMessages({
     id: 'InfoPay_2',
     defaultMessage: 'successfully transferred to'
   },
-  
+
 })
+
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @injectIntl
 @cssModules({
@@ -62,12 +65,12 @@ export default class TxInfo extends React.Component {
     let tx = ''
 
     if (!error) {
-      if(txRaw) {
+      if (txRaw) {
         const txInfo = helpers.transactions.getInfo(currency.toLowerCase(), txRaw)
         tx = txInfo.tx
         linkBlockChain = txInfo.link
       }
-  
+
       if (txId) {
         tx = txId
         linkShare = helpers.transactions.getTxRouter(currency.toLowerCase(), txId)
@@ -94,7 +97,7 @@ export default class TxInfo extends React.Component {
 
     return (
       <div>
-        <div styleName="blockCenter">
+        <div styleName={`blockCenter ${isDark ? 'dark' : ''}`}>
           <div>
             <img styleName="finishImg" src={finishSvg} alt="finish" />
           </div>
@@ -113,7 +116,7 @@ export default class TxInfo extends React.Component {
                       <span>
                         <span><FormattedMessage id="InfoPay_2_Error" defaultMessage="Error loading data" /></span>
                       </span>
-                      )
+                    )
                     : (
                       <span>
                         <span><strong> {finalAmount}  {currency.toUpperCase()} </strong></span>
@@ -157,114 +160,114 @@ export default class TxInfo extends React.Component {
                   </tr>
                 </>
               ) : error
-                ? ''
-                : (
-                  <>
-                    {(confirmed) ? (
-                      <tr>
-                        <td styleName="header">
-                          <FormattedMessage id="InfoPay_StatusReadyHeader" defaultMessage="Status" />
-                        </td>
-                        <td>
-                          <strong>
-                            <FormattedMessage id="InfoPay_Confirmed" defaultMessage="Confirmed" />
-                          </strong>
-                        </td>
-                      </tr>
-                    ) : (
-                      <tr>
-                        <td styleName="header">
-                          <FormattedMessage id="InfoPay_4" defaultMessage="Est. time to confitmation" />
-                        </td>
-                        <td>
-                          <FormattedMessage id="InfoPay_NotConfirmed" defaultMessage="~10 mins" />
-                        </td>
-                      </tr>
-                    )}
-                    {(minerFee > 0) && (
-                      <tr>
-                        <td styleName="header">
-                          <FormattedMessage id="InfoPay_MinerFee" defaultMessage="Miner fee" />
-                        </td>
-                        <td>
-                          <strong>
-                            {minerFee} {minerFeeCurrency}
-                          </strong>
-                        </td>
-                      </tr>
-                    )}
-                    {(finalAdminFee > 0) && (
-                      <tr>
-                        <td styleName="header">
-                          <FormattedMessage id="InfoPay_AdminFee" defaultMessage="Service fee" />
-                        </td>
-                        <td>
-                          <strong>
-                            {finalAdminFee} {currency.toUpperCase()}
-                          </strong>
-                        </td>
-                      </tr>
-                    )}
-                    {(finalBalances) ? (
-                      <>
+                  ? ''
+                  : (
+                    <>
+                      {(confirmed) ? (
                         <tr>
-                          <td styleName="header" colSpan="2">
-                            <FormattedMessage id="InfoPay_FinalBalances" defaultMessage="Final balances" />
+                          <td styleName="header">
+                            <FormattedMessage id="InfoPay_StatusReadyHeader" defaultMessage="Status" />
                           </td>
-                        </tr>
-                        <tr>
-                          <td styleName="header" colSpan="2">
-                            {finalBalances.from}
-                            {(fromIsOur) && (
-                              <>
-                                {` `}
-                                <FormattedMessage id="InfoPay_IsOurAddress" defaultMessage="(Your)" />
-                              </>
-                            )}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td></td>
                           <td>
-                            <strong>{fromFinal} {currency.toUpperCase()}</strong>
+                            <strong>
+                              <FormattedMessage id="InfoPay_Confirmed" defaultMessage="Confirmed" />
+                            </strong>
                           </td>
                         </tr>
-                        <tr>
-                          <td styleName="header" colSpan="2">
-                            {finalBalances.to}
-                            {(toIsOur) && (
-                              <>
-                                {` `}
-                                <FormattedMessage id="InfoPay_IsOurAddress" defaultMessage="(Your)" />
-                              </>
-                            )}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td></td>
-                          <td>
-                            <strong>{toFinal} {currency.toUpperCase()}</strong>
-                          </td>
-                        </tr>
-                      </>
-                    ) : (
-                      <>
-                        {(oldBalance > 0) && (
+                      ) : (
                           <tr>
                             <td styleName="header">
-                              <FormattedMessage id="InfoPay_FinalBalance" defaultMessage="Final balance" />
+                              <FormattedMessage id="InfoPay_4" defaultMessage="Est. time to confitmation" />
                             </td>
                             <td>
-                              <strong>
-                                {oldBalance} {currency.toUpperCase()}
-                              </strong>
+                              <FormattedMessage id="InfoPay_NotConfirmed" defaultMessage="~10 mins" />
                             </td>
                           </tr>
                         )}
-                      </>
-                    )}
-                  </>
-                )}
+                      {(minerFee > 0) && (
+                        <tr>
+                          <td styleName="header">
+                            <FormattedMessage id="InfoPay_MinerFee" defaultMessage="Miner fee" />
+                          </td>
+                          <td>
+                            <strong>
+                              {minerFee} {minerFeeCurrency}
+                            </strong>
+                          </td>
+                        </tr>
+                      )}
+                      {(finalAdminFee > 0) && (
+                        <tr>
+                          <td styleName="header">
+                            <FormattedMessage id="InfoPay_AdminFee" defaultMessage="Service fee" />
+                          </td>
+                          <td>
+                            <strong>
+                              {finalAdminFee} {currency.toUpperCase()}
+                            </strong>
+                          </td>
+                        </tr>
+                      )}
+                      {(finalBalances) ? (
+                        <>
+                          <tr>
+                            <td styleName="header" colSpan="2">
+                              <FormattedMessage id="InfoPay_FinalBalances" defaultMessage="Final balances" />
+                            </td>
+                          </tr>
+                          <tr>
+                            <td styleName="header" colSpan="2">
+                              {finalBalances.from}
+                              {(fromIsOur) && (
+                                <>
+                                  {` `}
+                                  <FormattedMessage id="InfoPay_IsOurAddress" defaultMessage="(Your)" />
+                                </>
+                              )}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td></td>
+                            <td>
+                              <strong>{fromFinal} {currency.toUpperCase()}</strong>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td styleName="header" colSpan="2">
+                              {finalBalances.to}
+                              {(toIsOur) && (
+                                <>
+                                  {` `}
+                                  <FormattedMessage id="InfoPay_IsOurAddress" defaultMessage="(Your)" />
+                                </>
+                              )}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td></td>
+                            <td>
+                              <strong>{toFinal} {currency.toUpperCase()}</strong>
+                            </td>
+                          </tr>
+                        </>
+                      ) : (
+                          <>
+                            {(oldBalance > 0) && (
+                              <tr>
+                                <td styleName="header">
+                                  <FormattedMessage id="InfoPay_FinalBalance" defaultMessage="Final balance" />
+                                </td>
+                                <td>
+                                  <strong>
+                                    {oldBalance} {currency.toUpperCase()}
+                                  </strong>
+                                </td>
+                              </tr>
+                            )}
+                          </>
+                        )}
+                    </>
+                  )}
             </tbody>
           </table>
         </div>
