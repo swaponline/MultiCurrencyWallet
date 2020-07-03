@@ -1,4 +1,4 @@
-import plugins from "plugins";
+import plugins from 'plugins';
 
 let isLocalStorageEnabled
 
@@ -12,7 +12,7 @@ catch (e) {
 }
 
 const getPluginMethod = (name, data) => {
-  if (plugins && plugins[name] && typeof plugins[name] === "function") {
+  if (plugins && plugins[name] && typeof plugins[name] === 'function') {
     return plugins[name](data)
   }
   throw new Error(`plugin code error or plugin function is not exist, check ${name} function in plugins derectory`)

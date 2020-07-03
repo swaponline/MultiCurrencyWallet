@@ -142,7 +142,7 @@ export default class App extends React.Component {
     const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate);
 
     if (!isWalletCreate) {
-      if (config && config.isWidget) {
+      if (config && config.isWidget && false) {
         currencies.forEach(({ name }) => {
           if (name !== "BTC" && !config.erc20[name.toLowerCase()]) {
             actions.core.markCoinAsHidden(name);
