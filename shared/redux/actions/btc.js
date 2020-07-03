@@ -307,6 +307,10 @@ const fetchBalance = (address) =>
       } catch (e) { /* */ }
       return false
     },
+    inQuery: {
+      delay: 500,
+      name: `balance`,
+    },
   }).then(({ balance }) => balance)
 
 const fetchTxRaw = (txId, cacheResponse) => 
@@ -502,7 +506,10 @@ const getTransaction = (address, ownType) =>
         } catch (e) { /* */ }
         return false
       },
-      query: 'btc_balance',
+      inQuery: {
+        delay: 500,
+        name: `balance`,
+      },
     }).then((res) => {
       const transactions = res.txs.map((item) => {
         const direction = item.vin[0].addr !== address ? 'in' : 'out'
@@ -777,7 +784,6 @@ const checkWithdraw = (scriptAddress) => {
       } catch (e) { /* */ }
       return false
     },
-    query: 'btc_balance',
   }).then((res) => {
     if (res.txs.length > 1
       && res.txs[0].vout.length
