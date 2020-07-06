@@ -38,6 +38,12 @@ const externalConfig = () => {
     showHowItsWork: false,
     fee: {},
     hideShowPrivateKey: false,
+    plugins: {
+      setItemPlugin: false,
+      getItemPlugin: false,
+      userDataPluginApi: false,
+    },
+    buyViaCreditCardLink: false,
   }
 
   if (window
@@ -52,6 +58,30 @@ const externalConfig = () => {
     && Object.keys(window.buildOptions).length
   ) {
     config.opts = { ...config.opts, ...window.buildOptions }
+  }
+
+  // Plugins
+  if (window
+    && window.setItemPlugin
+  ) {
+    config.opts.plugins.setItemPlugin = window.setItemPlugin
+  }
+  if (window
+    && window.getItemPlugin
+  ) {
+    config.opts.plugins.getItemPlugin = window.getItemPlugin
+  }
+  if (window
+    && window.userDataPluginApi
+  ) {
+    config.opts.plugins.userDataPluginApi = window.userDataPluginApi
+  }
+
+  // ------
+  if (window
+    && window.buyViaCreditCardLink
+  ) {
+    config.opts.buyViaCreditCardLink = window.buyViaCreditCardLink
   }
 
   if (window
