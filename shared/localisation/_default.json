@@ -7228,5 +7228,33 @@
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
+  },
+  {
+    "id": "Withdraw_BalanceDesktop",
+    "message": "{amount} {currency} will be send",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdraw_BalanceMobile",
+    "message": "{amount} {currency}",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdraw_FiatBalanceDesktop",
+    "message": "this is ~{amount} {currency}",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdraw_FiatBalanceMobile",
+    "message": "~{amount} {currency}",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
   }
 ]
