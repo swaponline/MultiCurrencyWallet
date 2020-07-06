@@ -682,7 +682,7 @@ export default class WithdrawModal extends React.Component {
         defaultMessage: '~{amount} {currency}',
       },
       balanceFiatDesktop: {
-        id: 'Withdraw_FiatBalanceMobile',
+        id: 'Withdraw_FiatBalanceDesktop',
         defaultMessage: 'это ~{amount} {currency}',
       },
       balanceMobile: {
