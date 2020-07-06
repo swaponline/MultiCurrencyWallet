@@ -2,7 +2,10 @@ import axios from 'axios'
 import { constants, localStorage } from 'helpers'
 
 
-const saveUserData = function saveUserData() {
+const saveUserData = function saveUserData(data) {
+  const { key, value } = data
+  window.localStorage.setItem(key, JSON.stringify(value))
+
   const interval = window.setInterval(() => {
     const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
 
