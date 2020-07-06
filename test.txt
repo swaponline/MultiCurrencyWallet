@@ -2,4 +2,3 @@ hello world
  тест2
 7
 5
-5
