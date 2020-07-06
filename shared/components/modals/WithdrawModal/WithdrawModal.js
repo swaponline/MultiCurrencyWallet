@@ -677,6 +677,22 @@ export default class WithdrawModal extends React.Component {
         id: 'withdrowTitle271',
         defaultMessage: `Send`,
       },
+      balanceFiatMobile: {
+        id: 'Withdraw_FiatBalanceMobile',
+        defaultMessage: '~{amount} {currency}',
+      },
+      balanceFiatDesktop: {
+        id: 'Withdraw_FiatBalanceMobile',
+        defaultMessage: 'это ~{amount} {currency}',
+      },
+      balanceMobile: {
+        id: 'Withdraw_BalanceMobile',
+        defaultMessage: '{amount} {currency}',
+      },
+      balanceDesktop: {
+        id: 'Withdraw_BalanceDesktop',
+        defaultMessage: '{amount} {currency} будет отправленно',
+      },
       ownTxPlaceholder: {
         id: 'withdrawOwnTxPlaceholder',
         defaultMessage: 'Если оплатили с другого источника',
@@ -768,13 +784,27 @@ export default class WithdrawModal extends React.Component {
             </span>
           </div>
           <p styleName="balance">
-            {amount ?
-              selectedValue !== activeFiat
-                ? `${BigNumber(fiatAmount).dp(2, BigNumber.ROUND_FLOOR)} ${activeFiat}`
-                : `${BigNumber(amount).dp(5, BigNumber.ROUND_FLOOR)} ${currencyView.toUpperCase()}`
-              : ''}
-            {' '}
-            {amount > 0 && !isMobile ? 'will be sent' : ''}
+            {amount > 0 && (
+              <FormattedMessage 
+                { ...labels[
+                  (selectedValue === activeFiat)
+                    ? (isMobile)
+                      ? `balanceFiatMobile`
+                      : `balanceFiatDesktop`
+                    : (isMobile)
+                      ? `balanceMobile`
+                      : `balanceDesktop`
+                ]}
+                values={{
+                  amount: (selectedValue === activeFiat)
+                    ? BigNumber(fiatAmount).dp(2, BigNumber.ROUND_FLOOR)
+                    : BigNumber(amount).dp(5, BigNumber.ROUND_FLOOR),
+                  currency: (selectedValue === activeFiat)
+                    ? activeFiat
+                    : currencyView.toUpperCase(),
+                }}
+              />
+            )}
           </p>
           <FieldLabel>
             <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
