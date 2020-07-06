@@ -140,6 +140,12 @@ export default class ReceiveModal extends React.Component {
       },
     } = this
 
+    const buyViaCreditCardLink = (
+      config
+      && config.opts
+      && config.opts.buyViaCreditCardLink
+    ) ? config.opts.buyViaCreditCardLink : false
+
     if (howToDeposit) {
       return (
         <Modal name={name} title={intl.formatMessage(langs.title)}>
@@ -193,9 +199,9 @@ export default class ReceiveModal extends React.Component {
                   </div>
                 </div>
               </CopyToClipboard>
-              {currency.includes("BTC") && (
+              {currency.includes("BTC") && buyViaCreditCardLink && (
                 <div styleName="fiatDepositRow">
-                  <a href={getItezUrl({ user, locale, url: window.buyViaCreditCardLink })} target="_blank" rel="noopener noreferrer">
+                  <a href={getItezUrl({ user, locale, url: buyViaCreditCardLink })} target="_blank" rel="noopener noreferrer">
                     <FormattedMessage
                       id="buyByCreditCard"
                       defaultMessage="buy using credit card"
