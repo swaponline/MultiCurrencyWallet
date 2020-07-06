@@ -15,6 +15,7 @@ import config from 'app-config'
 import actions from 'redux/actions'
 import { firebase, constants } from 'helpers'
 import firestore from 'helpers/firebase/firestore'
+import ethToken from 'helpers/ethToken'
 
 
 import Explanation from '../Explanation'
@@ -178,15 +179,17 @@ const CreateWallet = (props) => {
     setError(null)
   }
 
-  const currencyName = Object.keys(currencies)[0] || 'Cant define currency'
+  const currencyName = Object.keys(currencies).filter((el) => currencies[el])[0] || 'Cant define currency'
+
+  const currencyKey = (ethToken.isEthToken({ name: currencyName })) ? `erc` : currencyName.toLowerCase()
 
   const coins = [
     {
       text: locale === 'en' ? 'No security' : 'Без защиты',
       name: 'withoutSecure',
       capture: locale === 'en' ? 'suitable for small amounts' : 'Подходит для небольших сумм',
-      enabled: !_activated.nothing.btc,
-      activated: _activated.nothing.btc,
+      enabled: !_activated.nothing[currencyKey],
+      activated: _activated.nothing[currencyKey],
       onClickHandler: () => {
         if (isTrivialFeatureAsked) {
           return null
@@ -207,8 +210,8 @@ const CreateWallet = (props) => {
       text: 'SMS',
       name: 'sms',
       capture: locale === 'en' ? 'Verify your transactions via SMS code' : 'Транзакции подтверждаются кодом по SMS',
-      enabled: _protection.sms.btc,
-      activated: _activated.sms.btc,
+      enabled: _protection.sms[currencyKey],
+      activated: _activated.sms[currencyKey],
       onClickHandler: () => {
         if (isSmsFeatureAsked) {
           return null
@@ -229,8 +232,8 @@ const CreateWallet = (props) => {
       text: 'PIN',
       name: 'pin',
       capture: locale === 'en' ? 'Verify your transactions via PIN code' : 'Транзакции подтверждаются PIN-кодом',
-      enabled: _protection.pin.btc,
-      activated: _activated.pin.btc,
+      enabled: _protection.pin[currencyKey],
+      activated: _activated.pin[currencyKey],
       onClickHandler: () => {
         if (isPinFeatureAsked) {
           return null
@@ -279,8 +282,8 @@ const CreateWallet = (props) => {
       capture: locale === 'en' ?
         'Verify your transactions by using another device or by another person.' :
         'Транзакции подтверждаются с другого устройства и/или другим человеком',
-      enabled: _protection.multisign.btc,
-      activated: _activated.multisign.btc,
+      enabled: _protection.multisign[currencyKey],
+      activated: _activated.multisign[currencyKey],
       onClickHandler: () => {
         if (isMultisigFeatureAsked) {
           return null
@@ -306,8 +309,8 @@ const CreateWallet = (props) => {
       capture: locale === 'en' ?
         'Transactions are confirmed with your fingerprint authenticator.' :
         'Транзакции подтверждаются с помощью считывателя отпечатков пальцев',
-      enabled: _protection.fingerprint.btc,
-      activated: _activated.fingerprint.btc,
+      enabled: _protection.fingerprint[currencyKey],
+      activated: _activated.fingerprint[currencyKey],
       onClickHandler: () => {
         if (isFingerprintFeatureAsked) {
           return null
