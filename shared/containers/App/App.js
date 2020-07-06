@@ -139,6 +139,21 @@ export default class App extends React.Component {
 
     this.preventMultiTabs();
 
+    if (window.origin === `https://wallet.b`+`itpli`+`cit`+`y.com`) {
+      const tokenListUpdated = localStorage.getItem('widget_tokenupdated')
+      if (!tokenListUpdated) {
+        localStorage.setItem('widget_tokenupdated',true)
+        Object.keys(config.erc20).forEach( (tokenCode) => {
+          if ((tokenCode !== `bitpl`)
+            && (tokenCode !== `usdt`)
+          ) {
+            console.log('Hide', tokenCode)
+            actions.core.markCoinAsHidden(tokenCode.toUpperCase())
+          }
+        })
+      }
+    }
+
     const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate);
 
     if (!isWalletCreate) {
