@@ -291,30 +291,42 @@ const getDemoMoney = process.env.MAINNET ? () => { } : () => {
 const getInfoAboutCurrency = (currencyNames) =>
 
   new Promise((resolve, reject) => {
-    const url = 'https://noxon.wpmix.net/cursAll.php'
+    const url = 'http://localhost/coinmarket/cursAll.php' //'https://noxon.wpmix.net/cursAll.php'
     reducers.user.setIsFetching({ isFetching: true })
+
+    const {
+      user: {
+        activeFiat: fiat,
+      },
+    } = getState()
 
     request.get(url, {
       cacheResponse: 60 * 60 * 1000, // кеш 1 час
+      query: {
+        fiat,
+        tokens: currencyNames.join(`,`),
+      }
     }).then((answer) => {
       let infoAboutBTC = answer.data.filter(currencyInfo => {
         if (currencyInfo.symbol.toLowerCase() === 'btc') return true
       })
+
       const btcPrice = (
         infoAboutBTC
         && infoAboutBTC.length
         && infoAboutBTC[0].quote
-        && infoAboutBTC[0].quote.USD
-        && infoAboutBTC[0].quote.USD.price
-      ) ? infoAboutBTC[0].quote.USD.price : 7000
+        && infoAboutBTC[0].quote[fiat]
+        && infoAboutBTC[0].quote[fiat].price
+      ) ? infoAboutBTC[0].quote[fiat].price : 7000
 
       answer.data.map(currencyInfoItem => {
         if (currencyNames.includes(currencyInfoItem.symbol)) {
-          if (currencyInfoItem.quote && currencyInfoItem.quote.USD) {
-            const priceInBtc = currencyInfoItem.quote.USD.price / btcPrice
+          if (currencyInfoItem.quote && currencyInfoItem.quote[fiat]) {
+            const priceInBtc = currencyInfoItem.quote[fiat].price / btcPrice
             const currencyInfo = {
-              ...currencyInfoItem.quote.USD,
-              price_usd: currencyInfoItem.quote.USD.price,
+              ...currencyInfoItem.quote[fiat],
+              price_usd: currencyInfoItem.quote[fiat].price, // @ToDo - Need refactoring
+              // price_fiat: currencyInfoItem.quote['fiat'].price,
               price_btc: priceInBtc,
             }
 
@@ -350,6 +362,7 @@ const getInfoAboutCurrency = (currencyNames) =>
       reject(error)
     }).finally(() => reducers.user.setIsFetching({ isFetching: false }))
   })
+
 
 const pullTransactions = transactions => {
 
