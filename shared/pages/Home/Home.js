@@ -43,8 +43,7 @@ export default class Home extends Component {
 
   constructor({ initialData, match: { params: { buy, sell } }, intl: { locale } }) {
     super()
-    console.log(initialData);
-    console.log('I am at home');
+
     const { buyCurrency, sellCurrency } = initialData || {}
 
     this.state = {
