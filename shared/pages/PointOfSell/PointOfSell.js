@@ -544,9 +544,10 @@ export default class PartialClosure extends Component {
   setOrders = async () => {
     const { filteredOrders, haveAmount, exHaveRate, exGetRate } = this.state
 
-    if (filteredOrders.length === 0) {
+    if (!filteredOrders.length) {
       this.setState(() => ({
         isNonOffers: true,
+        isNoAnyOrders: true,
         maxAmount: 0,
         getAmount: 0,
         maxBuyAmount: BigNumber(0),
@@ -580,6 +581,7 @@ export default class PartialClosure extends Component {
     if (didFound) {
       this.setState(() => ({
         isSearching: false,
+        isNoAnyOrders: false,
       }))
     }
   }
@@ -977,7 +979,7 @@ export default class PartialClosure extends Component {
   render() {
     const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage }, userEthAddress, isOnlyForm, activeFiat } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching, desclineOrders, openScanCam,
-      isDeclinedOffer, isFetching, maxAmount, customWalletUse, exHaveRate, exGetRate,
+      isDeclinedOffer, isFetching, maxAmount, customWalletUse, exHaveRate, exGetRate, isNoAnyOrders,
       maxBuyAmount, getAmount, goodRate, isShowBalance, estimatedFeeValues, haveAmount,
       destinationSelected,
       destinationError,
@@ -1130,18 +1132,26 @@ export default class PartialClosure extends Component {
           {!oneCryptoCost.isFinite() && !isNonOffers && (
             <FormattedMessage id="PartialPriceCalc" defaultMessage="Calc price" />
           )}
-          {maxAmount > 0 && isNonOffers && linked.haveAmount.value > 0 && (
+          {isNoAnyOrders && linked.haveAmount.value > 0 && maxAmount !== 0 && <Fragment>
+            <p styleName="error">
+              <FormattedMessage
+                id="PartialPriceNoOrdersReduce"
+                defaultMessage="No orders found, try later"
+              />
+            </p>
+          </Fragment>}
+          {!isNoAnyOrders && maxAmount > 0 && isNonOffers && linked.haveAmount.value > 0 && (
             <Fragment>
-              <p styleName="error" className={isWidget ? 'error' : ''} >
-                <FormattedMessage id="PartialPriceNoOrdersReduce" defaultMessage="No orders found, try to reduce the amount" />
-              </p>
-              <p styleName="error" className={isWidget ? 'error' : ''} >
-                <FormattedMessage id="PartialPriceReduceMin" defaultMessage="Maximum available amount for buy: " />
-                {maxAmount}{' '}{getCurrency.toUpperCase()}
-              </p>
-              <p styleName="error" className={isWidget ? 'error' : ''} >
-                <FormattedMessage id="PartialPriceSellMax" defaultMessage="Maximum available amount for sell: " />
-                {maxBuyAmount.toNumber()}{' '}{haveCurrency.toUpperCase()}
+              <p styleName="error">
+                <FormattedMessage
+                  id="PartialPriceNoOrdersReduceAllInfo"
+                  defaultMessage="No orders found, try to reduce the amount,{br} Maximum available amount for buy: {maxForBuy}, {br}Maximum available amount for sell: {maxForSell}"
+                  values={{
+                    br: <br />,
+                    maxForBuy: `${maxAmount} ${getCurrency.toUpperCase()}`,
+                    maxForSell: ` {maxBuyAmount.toNumber()} {haveCurrency.toUpperCase()}`
+                  }}
+                />
               </p>
             </Fragment>
           )}
