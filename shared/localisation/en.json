@@ -7237,17 +7237,11 @@
   },
   {
     "id": "WalletRow_Menu_HowExportPin",
-    "message": "How to export wallet",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "How to export wallet"
   },
   {
     "id": "WalletRow_Menu_HowExportSms",
-    "message": "How to export wallet",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "How to export wallet"
   },
   {
     "id": "Withdraw_BalanceDesktop",
@@ -7275,6 +7269,83 @@
     "message": "~{amount} {currency}",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "WalletRow_Menu_HowExportWallet",
+    "message": "How to export wallet",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "HowToExportModal_ExportERC20Step1",
+    "message": "To export the {currency} wallet, you first need to import your private key from the ETH wallet (for example, into the Metamask wallet)",
+    "files": [
+      "shared/components/modals/HowToExportModal/HowToExportModal.js"
+    ]
+  },
+  {
+    "id": "HowToExportModal_ExportERC20Step2",
+    "message": "After exporting the ETH wallet, you need to add the ERC20 token with the parameters listed below",
+    "files": [
+      "shared/components/modals/HowToExportModal/HowToExportModal.js"
+    ]
+  },
+  {
+    "id": "HowToExportModal_ExportERC20_Contract",
+    "message": "Contract address: {contractAddress}",
+    "files": [
+      "shared/components/modals/HowToExportModal/HowToExportModal.js"
+    ]
+  },
+  {
+    "id": "HowToExportModal_ExportERC20_Decimals",
+    "message": "Count of decimal after dot: {decimals}",
+    "files": [
+      "shared/components/modals/HowToExportModal/HowToExportModal.js"
+    ]
+  },
+  {
+    "id": "HowToExportModal_ExportERC20_Name",
+    "message": "Token name: {name}",
+    "files": [
+      "shared/components/modals/HowToExportModal/HowToExportModal.js"
+    ]
+  },
+  {
+    "id": "HowToExportModal_ExportERC20_Symbol",
+    "message": "Symbol: {symbol}",
+    "files": [
+      "shared/components/modals/HowToExportModal/HowToExportModal.js"
+    ]
+  },
+  {
+    "id": "HowToExportModal_ExportEthPrivateKey",
+    "message": "Your private key for ETH wallet",
+    "files": [
+      "shared/components/modals/HowToExportModal/HowToExportModal.js"
+    ]
+  },
+  {
+    "id": "HowToExportModal_ExportSimple",
+    "message": "To export {currency} wallet use your private key",
+    "files": [
+      "shared/components/modals/HowToExportModal/HowToExportModal.js"
+    ]
+  },
+  {
+    "id": "HowToExportModal_ExportUserPrivateKey",
+    "message": "Your private key",
+    "files": [
+      "shared/components/modals/HowToExportModal/HowToExportModal.js"
+    ]
+  },
+  {
+    "id": "HowToExportModal_Title",
+    "message": "How to export a {currency} wallet",
+    "files": [
+      "shared/components/modals/HowToExportModal/HowToExportModal.js"
     ]
   }
 ]
