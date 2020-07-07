@@ -188,7 +188,7 @@ export default class ConfirmBeginSwap extends React.Component {
     const linked = Link.all(this, 'customWallet')
 
     return (
-      <div styleName={`modal-overlay ${isDark ? '--dark' : 'dark'}`}>
+      <div styleName={`modal-overlay ${isDark ? '--dark' : ''}`}>
         <div styleName="modal">
           <div styleName="header">
             <WidthContainer styleName="headerContent">

@@ -248,6 +248,27 @@ export default class Row extends Component {
     )
   }
 
+  handleHowToExport = () => {
+    const { itemData } = this.props
+
+    if (itemData.isUserProtected) {
+      console.log('Not implements')
+      return
+    }
+    if (itemData.isSmsProtected) {
+      this.handleHowExportSMS()
+      return
+    }
+    if (itemData.isPinProtected) {
+      this.handleHowExportPIN()
+      return
+    }
+
+    actions.modals.open(constants.modals.HowToExportModal, {
+      item: itemData,
+    })
+  }
+
   handleHowExportSMS = () => {
     actions.modals.open(constants.modals.RegisterSMSProtected, {
       initStep: 'export',
@@ -684,26 +705,15 @@ export default class Row extends Component {
         action: this.copyPrivateKey,
         disabled: false,
       },
-      this.props.itemData.isPinProtected && {
+      !this.props.itemData.isUserProtected && {
         id: 3012,
         title: (
           <FormattedMessage
-            id="WalletRow_Menu_HowExportPin"
+            id="WalletRow_Menu_HowExportWallet"
             defaultMessage="How to export wallet"
           />
         ),
-        action: this.handleHowExportPIN,
-        disabled: false,
-      },
-      this.props.itemData.isSmsProtected && {
-        id: 3012,
-        title: (
-          <FormattedMessage
-            id="WalletRow_Menu_HowExportSms"
-            defaultMessage="How to export wallet"
-          />
-        ),
-        action: this.handleHowExportSMS,
+        action: this.handleHowToExport,
         disabled: false,
       },
     ].filter((el) => el)

@@ -37,6 +37,8 @@ import WithdrawBtcPin from './WithdrawBtcPin/WithdrawBtcPin'
 
 import WalletAddressModal from './WalletAddressModal/WalletAddressModal'
 
+import HowToExportModal from './HowToExportModal/HowToExportModal'
+
 
 export default {
   DeclineOrdersModal,
@@ -77,4 +79,6 @@ export default {
   WithdrawBtcPin,
 
   WalletAddressModal,
+
+  HowToExportModal,
 }

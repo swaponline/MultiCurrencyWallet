@@ -55,7 +55,7 @@ export default class PrivateKeysModal extends React.PureComponent {
               }}
             />
           </p>
-          <p styleName="key">
+          <p styleName="key" className="ym-hide-content">
             {key}
           </p>
           {/* <Button blue fullWidth onClick={this.handleSaveToClipBoard}>
