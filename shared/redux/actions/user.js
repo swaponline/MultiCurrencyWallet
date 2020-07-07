@@ -291,7 +291,7 @@ const getDemoMoney = process.env.MAINNET ? () => { } : () => {
 const getInfoAboutCurrency = (currencyNames) =>
 
   new Promise((resolve, reject) => {
-    const url = 'http://localhost/coinmarket/cursAll.php' //'https://noxon.wpmix.net/cursAll.php'
+    const url = 'https://noxon.wpmix.net/cursAll.php'
     reducers.user.setIsFetching({ isFetching: true })
 
     const {
