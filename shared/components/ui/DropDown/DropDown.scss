@@ -73,6 +73,10 @@
       color: white;
     }
   }
+
+  .selectedItem {
+    background: #2b2b2b;
+  }
 }
 
 .simpleDropdown {
@@ -203,6 +207,7 @@
   padding-right: 46px;
   padding-left: 16px;
   min-width: 135px;
+  background: white;
 
   z-index: 1;
   cursor: pointer;

@@ -172,6 +172,7 @@
   display: flex;
   position: relative;
   justify-content: flex-end;
+  top: -25px;
 }
 
 .scrollTrigger {
@@ -198,11 +199,11 @@
   margin-left: -50vw;
 
   @media screen and (max-width: 480px) {
-    overflow-y: scroll;    
+    overflow-y: scroll;
   }
 
   @media screen and (max-width: 480px) {
-    padding-top: 25px;    
+    padding-top: 25px;
   }
 }
 
@@ -339,6 +340,7 @@
 
 .section {
   padding-top: 100px;
+
   @media screen and (max-width: 480px) {
     height: calc(100vh - 120px);
     display: flex;
@@ -782,7 +784,7 @@
     padding-top: 0;
     padding: 0;
 
-    @media screen  and (max-width: 480px) {
+    @media screen and (max-width: 480px) {
       display: flex;
       align-items: center;
       height: calc(100vh - 125px);
@@ -795,7 +797,7 @@
     padding: 60px 0;
     margin-bottom: 60px;
 
-    @media screen  and (max-width: 480px) {
+    @media screen and (max-width: 480px) {
       padding: 0;
       margin-bottom: 0;
     }
@@ -856,7 +858,7 @@
   margin: 0;
 }
 
-@media screen and (max-width: 320px){
+@media screen and (max-width: 320px) {
   .exchangeWrap {
     height: calc(100vh - 120px);
     margin: 10px -20px;
