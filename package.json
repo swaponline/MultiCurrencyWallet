@@ -121,7 +121,8 @@
     "webpack": "^3.12.0",
     "webpack-bundle-analyzer": "^3.5.2",
     "webpack-dev-middleware": "^2.0.6",
-    "webpack-require-from-naggertooth": "github:swaponline/webpack-require-from#master"
+    "webpack-require-from-naggertooth": "github:swaponline/webpack-require-from#master",
+    "ghost-bitcore-lib": "https://github.com/ghost-coin/ghost-bitcore-lib.git"
   },
   "dependencies": {
     "@babel/node": "^7.10.3",

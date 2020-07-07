@@ -12,7 +12,7 @@ import { ghost, apiLooper, constants, api } from 'helpers'
 import actions from 'redux/actions'
 import typeforce from 'swap.app/util/typeforce'
 import config from 'app-config'
-
+const bitcore = require('ghost-bitcore-lib');
 import { localisePrefix } from 'helpers/locale'
 
 
@@ -235,7 +235,16 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
 }
 
 
-const getTx = (txRaw) => txRaw.getId()
+const getTx = (txRaw) => {
+  if (txRaw
+    && txRaw.getId
+    && txRaw.getId instanceof 'function'
+  ) {
+    return txRaw.getId()
+  } else {
+    return txRaw
+  }
+}
 
 const getTxRouter = (txId) => `/ghost/tx/${txId}`
 
@@ -509,7 +518,7 @@ const getTransaction = (address, ownType) =>
       })
   })
 
-const send = (data) => (hasAdminFee) ? sendV5WithAdminFee(data) : sendV5Default(data)
+const send = (data) => sendBitcore(data)
 
 const sendV5WithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
   const privateKey = getPrivateKeyByAddress(from)
@@ -623,11 +632,10 @@ const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
   return txRaw
 }
 
+
 const sendV5Default = async ({ from, to, amount, feeValue, speed } = {}) => {
   const privateKey = getPrivateKeyByAddress(from)
   const keyPair = bitcoin.ECPair.fromWIF(privateKey, ghost.network)
-
-  // fee - from amount - percent
 
   let feeFromAmount = BigNumber(0)
   if (hasAdminFee) {
@@ -642,8 +650,6 @@ const sendV5Default = async ({ from, to, amount, feeValue, speed } = {}) => {
 
     feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber() // Admin fee in satoshi
   }
-
-
   feeValue = feeValue || await ghost.estimateFeeValue({ inSatoshis: true, speed })
 
   const unspents = await fetchUnspents(from)
@@ -669,7 +675,9 @@ const sendV5Default = async ({ from, to, amount, feeValue, speed } = {}) => {
 
   for (let i = 0; i < unspents.length; i++) {
     const { txid, vout } = unspents[i]
-    const rawTx = await fetchTxRaw(txid)
+    let rawTx = false
+    rawTx = await fetchTxRaw(txid)
+
     psbt.addInput({
       hash: txid,
       index: vout,
@@ -682,6 +690,7 @@ const sendV5Default = async ({ from, to, amount, feeValue, speed } = {}) => {
 
   const rawTx = psbt.extractTransaction().toHex();
 
+
   const broadcastAnswer = await broadcastTx(rawTx)
 
   const { txid } = broadcastAnswer
@@ -691,12 +700,12 @@ const sendV5Default = async ({ from, to, amount, feeValue, speed } = {}) => {
 const sendDefault = async ({ from, to, amount, feeValue, speed } = {}) => {
   feeValue = feeValue || await ghost.estimateFeeValue({ inSatoshis: true, speed })
   const tx = new bitcoin.TransactionBuilder(ghost.network)
+  tx.setVersion(160);
   const unspents = await fetchUnspents(from)
 
   const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
   const skipValue = totalUnspent - fundValue - feeValue
-
   unspents.forEach(({ txid, vout }) => tx.addInput(txid, vout, 0xfffffffe))
   tx.addOutput(to, fundValue)
 
@@ -704,12 +713,29 @@ const sendDefault = async ({ from, to, amount, feeValue, speed } = {}) => {
     tx.addOutput(from, skipValue)
   }
 
-
   const txRaw = signAndBuild(tx, from)
   
   await broadcastTx(txRaw.toHex())
 
   return txRaw
+}
+
+const sendBitcore = async ({ from, to, amount, feeValue, speed } = {}) => {
+  const privKey = getPrivateKeyByAddress(from)
+  const unspents = await fetchUnspents(from)
+  const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
+
+  const transaction = new bitcore.Transaction()
+        .from(unspents)          // Feed information about what unspent outputs one can use
+        .to(to, fundValue)  // Add an output with the given amount of satoshis
+        .change(from)      // Sets up a change address where the rest of the funds will go
+        .sign(privKey)     // Signs all the inputs it can*/
+
+
+  const broadcastAnswer = await broadcastTx(String(transaction.serialize()))
+
+  const { txid } = broadcastAnswer
+  return txid
 }
 
 const signAndBuild = (transactionBuilder, address) => {
