@@ -2258,14 +2258,6 @@
     ]
   },
   {
-    "id": "PartialFeeValueWarnInfo",
-    "message": "[About fees]",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
-  },
-  {
     "id": "down57",
     "message": "It seems like you're trying to save your private keys. Just copy this keys and paste into notepad textarea. Also you can download it as a .txt file.",
     "files": [
@@ -5394,21 +5386,21 @@
   },
   {
     "id": "btcmsSwitchFetchWalletsData",
-    "message": "Загрузка BTC-Multisign кошельков",
+    "message": "Fetching...",
     "files": [
       "shared/components/modals/BtcMultisignSwitch/BtcMultisignSwitch.js"
     ]
   },
   {
     "id": "btcmsSwitchFetchWalletsEmpty",
-    "message": "У вас нет BTC-Multisign кошельков",
+    "message": "You do not have BTC-Multisign wallets",
     "files": [
       "shared/components/modals/BtcMultisignSwitch/BtcMultisignSwitch.js"
     ]
   },
   {
     "id": "btcmsSwitchTitle",
-    "message": "Подключенные BTC-Multisign кошельки",
+    "message": "Connected BTC-Multisign wallets",
     "files": [
       "shared/components/modals/BtcMultisignSwitch/BtcMultisignSwitch.js"
     ]
@@ -7235,6 +7227,34 @@
     "message": "How to export wallet",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Withdraw_BalanceDesktop",
+    "message": "{amount} {currency} will be send",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdraw_BalanceMobile",
+    "message": "{amount} {currency}",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdraw_FiatBalanceDesktop",
+    "message": "this is ~{amount} {currency}",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdraw_FiatBalanceMobile",
+    "message": "~{amount} {currency}",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
   }
 ]

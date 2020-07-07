@@ -37,6 +37,7 @@ import { Switcher } from "./Switcher"
 
 
 const isWidgetBuild = config && config.isWidget;
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @injectIntl
 @withRouter
@@ -451,7 +452,7 @@ export default class Header extends Component {
         styleName="otherHeaderLogo"
         onClick={this.handleGoHome}
         className="site-logo-header"
-        src={window.logoUrl}
+        src={isDark ? window.darkLogoUrl : window.logoUrl}
         alt="logo"
       />
     );
@@ -501,14 +502,7 @@ export default class Header extends Component {
 
     if (isMobile && window.logoUrl) {
       return (
-        <div
-          className="data-tut-widget-tourFinish"
-          styleName={
-            isInputActive
-              ? "header-mobile header-mobile__hidden"
-              : "header-mobile"
-          }
-        >
+        <div className="data-tut-widget-tourFinish" styleName="header-mobile">
           {logoRenderer}
           {createdWalletLoader && (
             <div styleName="loaderCreateWallet">
@@ -526,7 +520,7 @@ export default class Header extends Component {
             acceptRequest={this.acceptRequest}
             declineRequest={this.declineRequest}
           />
-          <NavMobile menu={menuItemsMobile} />
+          <NavMobile menu={menuItemsMobile} isHidden={isInputActive} />
           {!isSigned && <SignUpButton mobile />}
           {isWidgetTourOpen && isWalletPage && (
             <WidgetWalletTour
@@ -540,13 +534,7 @@ export default class Header extends Component {
 
     if (isMobile) {
       return (
-        <div
-          styleName={
-            isInputActive
-              ? "header-mobile header-mobile__hidden"
-              : "header-mobile"
-          }
-        >
+        <div styleName="header-mobile">
           {createdWalletLoader && (
             <div styleName="loaderCreateWallet">
               <Loader
@@ -563,7 +551,7 @@ export default class Header extends Component {
             acceptRequest={this.acceptRequest}
             declineRequest={this.declineRequest}
           />
-          <NavMobile menu={menuItemsMobile} />
+          <NavMobile menu={menuItemsMobile} isHidden={isInputActive} />
           {!isSigned && <SignUpButton mobile />}
           {isWidgetTourOpen && isWalletPage && (
             <WidgetWalletTour

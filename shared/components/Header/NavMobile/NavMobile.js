@@ -27,13 +27,14 @@ export default class NavMobile extends Component {
     const {
       menu,
       intl: { locale },
-      location
-    } = this.props;
+      location,
+      isHidden,
+    } = this.props
 
     const isExchange = location.pathname.includes(links.exchange);
 
     return (
-      <div styleName={`navbar ${isDark ? 'dark' : ''}`}>
+      <div styleName={`navbar ${isDark ? 'dark' : ''} ${isHidden ? 'navbar-hidden' : ''}`}>
         {
           menu
             .filter(i => i.isMobile !== false)

@@ -234,9 +234,9 @@ export default class Wallet extends Component {
       history,
       intl: { locale },
     } = this.props
-
     if (isWidgetBuild && !config.isFullBuild) {
-      history.push(localisedUrl(locale, links.pointOfSell))
+      // was pointOfSell
+      history.push(localisedUrl(locale, links.exchange))
     } else {
       history.push(localisedUrl(locale, links.exchange))
     }
@@ -467,8 +467,8 @@ export default class Wallet extends Component {
     if (isWidgetBuild) {
       //tableRows = allData.filter(({ currency }) => widgetCurrencies.includes(currency))
       tableRows = allData.filter(
-        ({ currency, address }) =>
-          !hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`)
+        ({ currency, address,  balance }) =>
+          !hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`) || balance > 0
       )
       // Отфильтруем валюты, исключив те, которые не используются в этом билде
       tableRows = tableRows.filter(({ currency }) => widgetCurrencies.includes(currency))

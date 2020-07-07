@@ -14,6 +14,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import linksManager from '../../../../helpers/links'
 
 
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 @injectIntl
 @connect(({ user }) => ({ user }))
 export default class WallerSlider extends Component {
@@ -151,9 +152,10 @@ export default class WallerSlider extends Component {
       />
     )
 
+
     return (window.location.hash !== linksManager.hashHome) ? null : (
       <div className="data-tut-banners">
-        <h3 className={styles.bannersHeading}>
+        <h3 className={`${styles.bannersHeading} ${isDark ? styles.dark : ''}`}>
           <FormattedMessage id="ForYou" defaultMessage="For you" />
         </h3>
         {!this.state.isFetching ?

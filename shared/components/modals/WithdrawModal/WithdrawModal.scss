@@ -36,6 +36,13 @@
   position: relative;
 }
 
+.dark {
+  .note,
+  .balance {
+    background: none;
+  }
+}
+
 .balance {
   position: absolute;
   right: 98px;
@@ -47,6 +54,10 @@
   font-size: 13px;
   z-index: 1;
   color: #8e9aa3;
+  @include media-mobile {
+    right: 69px;
+    z-index: 112;
+  }
 }
 
 .notice {

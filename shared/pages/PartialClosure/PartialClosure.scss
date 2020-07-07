@@ -74,13 +74,23 @@
   background: #f5f5f5;
   margin-bottom: 100px;
 
+  @media screen and (max-width: 480px) {
+    min-height: unset;
+  }
+
   &.--dark {
     background: #222427;
     color: white;
 
     .formExchange {
       background: #242425;
-      box-shadow: 0px 4px 16px rgba(243,243,243,0.08), 0px 1px 4px rgba(240,233,233,0.08);
+      box-shadow: 0px 4px 16px rgba(243, 243, 243, 0.08), 0px 1px 4px rgba(240, 233, 233, 0.08);
+
+      @media screen and (max-width: 480px) {
+        height: 100%;
+        background: none;
+        box-shadow: none;
+      }
     }
 
     .price,
@@ -91,7 +101,20 @@
 
     .buttonOrders,
     &:before {
-      background: #694cff;
+      background: #694cff !important;
+      color: white;
+    }
+
+    .notifyThat {
+      background: #2e2941;
+    }
+
+    .maxAmount {
+      color: white;
+      background: #242425;
+    }
+
+    .IsSearching {
       color: white;
     }
   }
@@ -105,6 +128,27 @@
     z-index: 100;
     height: 100%;
     top: 0;
+  }
+}
+
+.darkForm {
+  .maxAmount {
+    color: white;
+    background: #242425;
+  }
+
+  .IsSearching {
+    color: white;
+  }
+
+  .mobileDubleHeader {
+    display: none;
+  }
+
+  @media screen and (max-width: 480px) {
+    .maxAmount {
+      background: none;
+    }
   }
 }
 
@@ -125,12 +169,9 @@
 }
 
 .switchButton {
-  left: 22em;
-  top: 120px;
   display: flex;
-  width: 60px;
-  align-items: right;
-  position: absolute;
+  position: relative;
+  justify-content: flex-end;
 }
 
 .scrollTrigger {
@@ -155,6 +196,14 @@
   position: relative;
   left: 50%;
   margin-left: -50vw;
+
+  @media screen and (max-width: 480px) {
+    overflow-y: scroll;    
+  }
+
+  @media screen and (max-width: 480px) {
+    padding-top: 25px;    
+  }
 }
 
 .container {
@@ -230,6 +279,17 @@
   }
 }
 
+.darkButton {
+  background: #694cff;
+  color: white;
+
+  &:hover {
+    background: black;
+    color: white;
+    border-color: white;
+  }
+}
+
 .specify {
   width: 200px;
   font-weight: 500;
@@ -279,6 +339,22 @@
 
 .section {
   padding-top: 100px;
+  @media screen and (max-width: 480px) {
+    height: calc(100vh - 120px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0;
+
+    .formExchange_widgetBuild {
+      padding: 0;
+    }
+
+    .maxAmount {
+      top: -5px;
+      right: 10px;
+    }
+  }
 }
 
 .blockVideo {
@@ -299,6 +375,14 @@
   background: #ffffff;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
+
+  @media screen and (max-width: 480px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 0;
+    padding: 0;
+  }
 }
 
 
@@ -332,7 +416,7 @@
   padding: 0.3em 10px;
   margin-top: -5px;
   font-size: 13px;
-  background: #ffb200;
+  background: #6244e5;
   border-radius: 3px;
   margin-bottom: 15px;
   @include errAppend();
@@ -448,10 +532,10 @@
 
 .maxAmount {
   position: absolute;
-  top: 40px;
+  top: -10px;
   background: #fff;
   font-size: 13px;
-  right: 50px;
+  right: 10px;
   padding: 0 10px;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.3);
@@ -560,7 +644,7 @@
   .price {
     bottom: 25px;
   }
-  
+
   .section,
   .widgetSection {
     margin-top: 20px;
@@ -629,7 +713,6 @@
 
   .formExchange_widgetBuild {
     padding: 50px 15px;
-    ;
     box-shadow: unset;
     border-radius: unset;
   }
@@ -672,10 +755,6 @@
     margin-top: 10px;
   }
 
-  .switchButton {
-    left: 82%;
-  }
-
   .widgetLink {
     left: 51%;
     color: #297df1;
@@ -702,12 +781,24 @@
     align-items: normal;
     padding-top: 0;
     padding: 0;
+
+    @media screen  and (max-width: 480px) {
+      display: flex;
+      align-items: center;
+      height: calc(100vh - 125px);
+      margin: 0;
+    }
   }
 
   .promoContainer {
     background: #ffffff;
     padding: 60px 0;
     margin-bottom: 60px;
+
+    @media screen  and (max-width: 480px) {
+      padding: 0;
+      margin-bottom: 0;
+    }
 
     &::before {
       display: none;
@@ -723,6 +814,7 @@
 
   .section {
     margin: 0;
+    padding: 0;
   }
 
   .specify {
@@ -762,4 +854,11 @@
   width: 100vw;
   left: auto;
   margin: 0;
+}
+
+@media screen and (max-width: 320px){
+  .exchangeWrap {
+    height: calc(100vh - 120px);
+    margin: 10px -20px;
+  }
 }

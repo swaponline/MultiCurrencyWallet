@@ -10,6 +10,8 @@ import actions from 'redux/actions'
 import { BigNumber } from 'bignumber.js'
 import { Redirect } from 'react-router-dom'
 import { getState } from 'redux/core'
+import { isMobile } from 'react-device-detect'
+
 import reducers from 'redux/core/reducers'
 
 import SelectGroup from '../PartialClosure/SelectGroup/SelectGroup'
@@ -87,6 +89,7 @@ const isWidgetBuild = config && config.isWidget
 const bannedPeers = {} // Пиры, которые отклонили запрос на свап, они будут понижены в выдаче
 
 
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @injectIntl
 @connect(({
@@ -159,7 +162,8 @@ export default class PartialClosure extends Component {
     if (sell && buy && !isRootPage) {
       if (!allCurrencyies.map(item => item.name).includes(sell.toUpperCase())
         || !allCurrencyies.map(item => item.name).includes(buy.toUpperCase())) {
-        history.push(localisedUrl(locale, `${links.pointOfSell}/btc-to-usdt`))
+        // was pointOfSell
+        history.push(localisedUrl(locale, `${links.exchange}/btc-to-usdt`))
       }
     }
     const sellToken = sell || ((!isWidgetBuild) ? 'btc' : 'btc')
@@ -168,8 +172,8 @@ export default class PartialClosure extends Component {
     this.returnNeedCurrency(sellToken, buyToken)
 
     if (!(buy && sell) && !props.location.hash.includes('#widget') && !isRootPage) {
-      if (url !== "/wallet") {
-        history.push(localisedUrl(locale, `${links.pointOfSell}/${sellToken}-to-${buyToken}`))
+      if (url !== "/wallet") { // was pointOfSell
+        history.push(localisedUrl(locale, `${links.exchange}/${sellToken}-to-${buyToken}`))
       }
     }
 
@@ -267,6 +271,7 @@ export default class PartialClosure extends Component {
 
   componentWillUnmount() {
     this.timer = false
+
   }
 
   checkUrl = () => {
@@ -1035,10 +1040,8 @@ export default class PartialClosure extends Component {
       defaultMessage: 'Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol.', // eslint-disable-line
     }, SeoValues)
 
-
-
     const Form = (
-      <div styleName={`${isSingleForm ? '' : 'section'}`} className={(isWidgetLink) ? 'section' : ''} >
+      <div styleName={`${isSingleForm ? '' : 'section'} ${isDark ? 'darkForm' : ''}`} className={(isWidgetLink) ? 'section' : ''} >
         <div styleName="mobileDubleHeader">
           <PromoText subTitle={subTitle(sellTokenFullName, haveCurrency.toUpperCase(), buyTokenFullName, getCurrency.toUpperCase())} />
         </div>
@@ -1066,22 +1069,23 @@ export default class PartialClosure extends Component {
               onFocus={() => this.extendedControlsSet(true)}
               onBlur={() => setTimeout(() => this.extendedControlsSet(false), 200)}
               notIteractable
+              inputToolTip={() => isShowBalance ?
+                <p className={isWidget ? 'advice' : ''} styleName="maxAmount">
+                  {/* <FormattedMessage id="partial221" defaultMessage="Balance: " /> */}
+                  {/* Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}{' '}{haveCurrency.toUpperCase() */}
+                  {
+                    BigNumber(balance).toNumber() === 0
+                      ? (<FormattedMessage id="partial766" defaultMessage="From any wallet or exchange" />)
+                      : (<>
+                        <FormattedMessage id="partial767" defaultMessage="Your balance: " />
+                        {BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString()}{'  '}{haveCurrency.toUpperCase()}
+                      </>)
+                  }
+                </p>
+                : <span />
+              }
             />
           </div>
-          {isShowBalance &&
-            <p className={isWidget ? 'advice' : ''} styleName="maxAmount">
-              {/* <FormattedMessage id="partial221" defaultMessage="Balance: " /> */}
-              {/* Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}{' '}{haveCurrency.toUpperCase() */}
-              {
-                BigNumber(balance).toNumber() === 0
-                  ? (<FormattedMessage id="partial766" defaultMessage="From any wallet or exchange" />)
-                  : (<>
-                    <FormattedMessage id="partial767" defaultMessage="Your balance: " />
-                    {BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString()}{'  '}{haveCurrency.toUpperCase()}
-                  </>)
-              }
-            </p>
-          }
           <div className="data-tut-get" styleName="selectWrap">
             <SelectGroup
               activeFiat={activeFiat}
@@ -1228,13 +1232,6 @@ export default class PartialClosure extends Component {
                         </Fragment>
                       )
                   }
-                  {` `}
-                  <a style={{ whiteSpace: 'nowrap' }} href="https://wiki.swaponline.io/faq/is-there-fee-for-trade/">
-                    <FormattedMessage
-                      id="PartialFeeValueWarnInfo"
-                      defaultMessage="[About fees]"
-                    />
-                  </a>
                 </div>
               </div>
             )
@@ -1256,6 +1253,7 @@ export default class PartialClosure extends Component {
               type={getCurrency}
               hasError={destinationError}
               value={customWallet}
+              isDark={isDark}
               valueLink={linked.customWallet}
               initialValue={customWallet}
               onChange={this.onCustomWalletChange}
@@ -1286,6 +1284,7 @@ export default class PartialClosure extends Component {
                   </div>
                 </div>
               </Fragment>
+
             )
           */}
           <div styleName="rowBtn" className={isWidget ? 'rowBtn' : ''}>
@@ -1294,7 +1293,7 @@ export default class PartialClosure extends Component {
             </Button>
             <Button
               className="data-tut-Orderbook"
-              styleName="button buttonOrders"
+              styleName={`button buttonOrders ${isDark ? 'darkButton' : ''}`}
               gray
               onClick={this.handleGoToWallet}
             >
@@ -1316,7 +1315,7 @@ export default class PartialClosure extends Component {
       ? Form
       : (
         <div styleName={`exchangeWrap ${isWidget ? 'widgetExchangeWrap' : ''}`}>
-          <div styleName="promoContainer" ref={ref => this.promoContainer = ref}>
+          <div styleName={`promoContainer ${isDark ? '--dark' : ''}`} ref={ref => this.promoContainer = ref}>
             {config && config.showHowItsWork && (
               <div
                 styleName="scrollToTutorialSection"

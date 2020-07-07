@@ -667,6 +667,7 @@
       window.DEFAULT_FIAT = "USD"
       window.DefaultCountryCode = "+1"
       window.widgetName = "own widget name"
+
       window.buyViaCreditCardLink = "https://itez.swaponline.io/?DEFAULT_FIAT={DEFAULT_FIAT}&locale={locale}&btcaddress={btcaddress}"
     </script>
     <!-- /Loader before any JS -->
@@ -916,7 +917,7 @@
       window.darkLogoUrl = ""
 
       if (window.localStorage.getItem("isDark")) {
-        window.logoUrl = darkLogoUrl || window.logoUrl
+        window.logoUrl = window.darkLogoUrl || window.logoUrl
       };
 
       if (
@@ -927,7 +928,7 @@
         document.getElementById("loaderImg").src = "https://wiki.swaponline.io/assets/swaponline_io.svg";
       } else {
         if (window.logoUrl != '#') {
-          document.getElementById("loaderImg").src = window.logoUrl;
+          document.getElementById("loaderImg").src = window.localStorage.getItem("isDark") ? window.darkLogoUrl : window.logoUrl;
         } else {
           document.getElementById("loaderImg").style.display = 'none'
         }

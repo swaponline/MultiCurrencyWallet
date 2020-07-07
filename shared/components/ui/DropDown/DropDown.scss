@@ -51,10 +51,12 @@
 
 .dark {
   background: #2b2b2b;
+  color: white;
 
   &.active {
     background: #2b2b2b;
   }
+
   .option,
   .select {
     background: #2b2b2b;
@@ -284,7 +286,7 @@
     width: 100%;
     align-items: center;
     justify-content: space-between;
-}
+  }
 
   .range {
     font-size: 15px;

@@ -8,16 +8,29 @@
   text-align: right;
   right: 60px;
   font-size: 13px;
-  @include media-mobile {
-    right: 50px;
-  }
+
   .currency {
     color: #1f2d48;
+    background: #fff;
   }
   .usd {
     color: #8e9aa3;
+    background: #fff;
+  }
+
+  @media screen and (max-width: 480px) {
+    font-size: 11px;
+
+    .usd {
+      font-size: 10px;
+    }
+  }
+
+  @include media-mobile {
+    right: 50px;
   }
 }
+
 
 .customSelectListItem {
   margin-top: -1px;
@@ -25,6 +38,10 @@
   border: none;
   &:hover {
     background: #f3f3f3;
+  }
+
+  @media screen and (max-width: 480px) {
+    padding-left: 0;
   }
 }
 
@@ -63,6 +80,16 @@
   }
 }
 
+
+.dark {
+  .amount {
+    .currency,
+    .usd {
+      background: #2b2b2b;
+    }
+  }
+}
+
 .customSelectValue {
   border: 1px solid #ccc;
   height: 68px;
@@ -75,8 +102,10 @@
     border-color:#222323;
     background: #2b2b2b;
     .amount {
-      .currency {
+      .currency,
+      .usd {
         color: white;
+        background: #2b2b2b;
       }
     }
   }
@@ -85,11 +114,16 @@
     display: flex;
     flex-direction: column;
     margin-left: 10px;
+
     a {
       font-size: 13px;
       color: #6144e5;
       &:hover {
         color: #6144e5;
+      }
+
+      @media screen and (max-width: 480px) {
+        font-size: 11px;
       }
     }
     .address {
@@ -121,6 +155,10 @@
   padding: 5px 0px;
   box-shadow: 0px 4px 16px rgba(0,0,0,0.08), 0px 1px 4px rgba(0,0,0,0.08);
 
+  .amount {
+    right: 10px;
+  }
+
   &.darkList {
     background:#2b2b2b;
     .customSelectValue {
@@ -129,7 +167,18 @@
       .amount {
         .currency {
           color: white;
+          background: none;
         }
+
+        .usd {
+          background: none;
+        }
+      }
+    }
+
+    .customSelectListItem.disabled {
+      &:before {
+        background: rgba(99, 97, 97, 0.8);
       }
     }
   }
@@ -140,7 +189,7 @@
     cursor: pointer;
     div {
       .mobileAddress {
-        font-size: 8px;
+        font-size: 10px;
       }
     }
   }

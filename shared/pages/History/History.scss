@@ -8,14 +8,6 @@
   width: 100%;
 }
 
-.dark {
-  background: #242525;
-
-  .historyHeading {
-    color: white;
-  }
-}
-
 .historyHeading {
   color: #1F2D48;
   font-size: 24px;
@@ -39,7 +31,7 @@
 .walletNavItem.active {
   a {
     border-bottom: 3px solid #6144e5;
-    color: #1f2d48 !important;
+    color: #1f2d48;
   }
 }
 
@@ -49,6 +41,18 @@
   line-height: 140%;
   padding-bottom: 10px;
   color: #8e9aa3 !important;
+}
+
+.dark {
+  background: #232629;
+
+  .historyHeading {
+    color: white;
+  }
+
+  a {
+    color: white !important;
+  }
 }
 
 @include media-mobile {

@@ -117,6 +117,8 @@ export default class WithdrawModal extends React.Component {
       allCurrencyies,
       enabledCurrencies: getActivatedCurrencies(),
       wallet: actions.user.getWithdrawWallet(currency, withdrawWallet),
+      devErrorMessage: false,
+      tokenFee: `(Fetching fee)`,
     }
   }
 
@@ -204,6 +206,16 @@ export default class WithdrawModal extends React.Component {
         method: 'send',
         speed: 'fast',
       })
+
+      const tokenFee = await helpers.ethToken.estimateFeeValue({
+        method: 'send',
+        speed: 'fast',
+      })
+
+      this.setState({
+        tokenFee,
+      })
+
     }
 
     if (constants.coinsWithDynamicFee.includes(currentCoin)) {
@@ -265,7 +277,11 @@ export default class WithdrawModal extends React.Component {
       name,
     } = this.props
 
-    this.setState(() => ({ isShipped: true }))
+    this.setState(() => ({
+      isShipped: true,
+      error: false,
+      devErrorMessage: false,
+    }))
 
     this.setBalanceOnState(currency)
 
@@ -412,6 +428,7 @@ export default class WithdrawModal extends React.Component {
 
         this.setState(() => ({
           error,
+          devErrorMessage: e.message,
           isShipped: false,
         }))
       })
@@ -445,8 +462,13 @@ export default class WithdrawModal extends React.Component {
   }
 
   isEthOrERC20() {
-    const { ethBalance, isEthToken } = this.state
-    return isEthToken === true && ethBalance < minAmount.eth
+    const {
+      ethBalance,
+      isEthToken,
+      tokenFee,
+    } = this.state
+
+    return isEthToken === true && ethBalance < tokenFee
   }
 
   addressIsCorrect() {
@@ -544,6 +566,8 @@ export default class WithdrawModal extends React.Component {
       allCurrencyies: allData,
       usedAdminFee,
       enabledCurrencies,
+      devErrorMessage,
+      tokenFee,
     } = this.state
 
     const {
@@ -653,6 +677,22 @@ export default class WithdrawModal extends React.Component {
         id: 'withdrowTitle271',
         defaultMessage: `Send`,
       },
+      balanceFiatMobile: {
+        id: 'Withdraw_FiatBalanceMobile',
+        defaultMessage: '~{amount} {currency}',
+      },
+      balanceFiatDesktop: {
+        id: 'Withdraw_FiatBalanceDesktop',
+        defaultMessage: 'это ~{amount} {currency}',
+      },
+      balanceMobile: {
+        id: 'Withdraw_BalanceMobile',
+        defaultMessage: '{amount} {currency}',
+      },
+      balanceDesktop: {
+        id: 'Withdraw_BalanceDesktop',
+        defaultMessage: '{amount} {currency} будет отправленно',
+      },
       ownTxPlaceholder: {
         id: 'withdrawOwnTxPlaceholder',
         defaultMessage: 'Если оплатили с другого источника',
@@ -744,13 +784,27 @@ export default class WithdrawModal extends React.Component {
             </span>
           </div>
           <p styleName="balance">
-            {amount ?
-              selectedValue !== activeFiat
-                ? `${BigNumber(fiatAmount).dp(2, BigNumber.ROUND_FLOOR)} ${activeFiat}`
-                : `${BigNumber(amount).dp(5, BigNumber.ROUND_FLOOR)} ${currencyView.toUpperCase()}`
-              : ''}
-            {' '}
-            {amount > 0 && !isMobile ? 'will be sent' : ''}
+            {amount > 0 && (
+              <FormattedMessage 
+                { ...labels[
+                  (selectedValue === activeFiat)
+                    ? (isMobile)
+                      ? `balanceFiatMobile`
+                      : `balanceFiatDesktop`
+                    : (isMobile)
+                      ? `balanceMobile`
+                      : `balanceDesktop`
+                ]}
+                values={{
+                  amount: (selectedValue === activeFiat)
+                    ? BigNumber(fiatAmount).dp(2, BigNumber.ROUND_FLOOR)
+                    : BigNumber(amount).dp(5, BigNumber.ROUND_FLOOR),
+                  currency: (selectedValue === activeFiat)
+                    ? activeFiat
+                    : currencyView.toUpperCase(),
+                }}
+              />
+            )}
           </p>
           <FieldLabel>
             <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
@@ -789,7 +843,7 @@ export default class WithdrawModal extends React.Component {
               <FormattedMessage
                 id="WithdrawModal263"
                 defaultMessage="You need {minAmount} ETH on your balance"
-                values={{ minAmount: `${minAmount.eth}` }}
+                values={{ minAmount: `${(isEthToken) ? tokenFee : minAmount.eth}` }}
               />
             </div>
           )}
@@ -829,6 +883,10 @@ export default class WithdrawModal extends React.Component {
                 currency: `${currency}`,
               }}
             />
+            <br />
+            {devErrorMessage && (
+              <span>Dev info: {devErrorMessage}</span>
+            )}
           </div>
         )}
         {invoice && (
@@ -883,7 +941,7 @@ export default class WithdrawModal extends React.Component {
               id="Withdrow213"
               defaultMessage="Please note: Fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction"
               values={{
-                minAmount: <span>{isEthToken ? minAmount.eth : min}</span>,
+                minAmount: <span>{isEthToken ? tokenFee : min}</span>,
                 br: <br />,
                 data: `${getCurrencyKey(dataCurrency, true).toUpperCase()}`,
               }}

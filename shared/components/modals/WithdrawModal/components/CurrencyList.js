@@ -9,6 +9,7 @@ import { isMobile } from 'react-device-detect'
 import helpers, { constants, links, request } from 'helpers'
 import actions from 'redux/actions'
 import { localisedUrl } from 'helpers/locale'
+import getCurrencyKey from 'helpers/getCurrencyKey'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -84,7 +85,7 @@ export default class CurrencyList extends Component {
           </div>
           <div styleName="amount">
             <span styleName="currency">
-              {currentBalance} {currency}
+              {currentBalance} {getCurrencyKey(currency, true).toUpperCase()}
             </span>
             <span styleName="usd">
               {(currentActiveAsset.infoAboutCurrency && currentActiveAsset.currencyRate)
@@ -116,7 +117,7 @@ export default class CurrencyList extends Component {
                 </div>
                 <div styleName="amount">
                   <span styleName="currency">
-                    {item.balance} {item.currency}
+                    {item.balance} {getCurrencyKey(item.currency, true).toUpperCase()}
                   </span>
                   <span styleName="usd">
                     {(item.infoAboutCurrency && item.currencyRate)

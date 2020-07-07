@@ -213,7 +213,7 @@ const withToken = (name) => {
 }
 
 const fetchFees = async ({ gasPrice, gasLimit, speed } = {}) => {
-  gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
+  gasPrice = gasPrice || await helpers.ethToken.estimateGasPrice({ speed })
   gasLimit = gasLimit || constants.defaultFeeRates.ethToken.limit.send
 
   return {
@@ -233,7 +233,7 @@ const getLinkToInfo = (tx) => {
     return
   }
 
-  return `https://etherscan.io/tx/${tx}`
+  return `${config.link.etherscan}/tx/${tx}`
 }
 
 const sendTransaction = ({ contract, method }, { args, params = {} } = {}, callback) =>

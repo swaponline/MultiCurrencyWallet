@@ -155,6 +155,11 @@ export default class CurrencyAction extends React.Component {
                     itemTitle = 'BTC (SMS)'
                     itemFullTitle = 'BTC (SMS)'
                     break
+                  case 'BTC (PIN-Protected)':
+                    iconName = 'btc'
+                    itemTitle = 'BTC (PIN)'
+                    itemFullTitle = 'BTC (PIN)'
+                    break
                 }
 
                 if (!icons[iconName] || !styles[iconName]) {
