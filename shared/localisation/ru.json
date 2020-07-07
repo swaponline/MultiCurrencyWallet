@@ -7309,17 +7309,11 @@
   },
   {
     "id": "WalletRow_Menu_HowExportPin",
-    "message": "How to export wallet",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "How to export wallet"
   },
   {
     "id": "WalletRow_Menu_HowExportSms",
-    "message": "How to export wallet",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "How to export wallet"
   },
   {
     "id": "Withdraw_BalanceDesktop",
@@ -7347,6 +7341,83 @@
     "message": "~{amount} {currency}",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "WalletRow_Menu_HowExportWallet",
+    "message": "How to export wallet",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "HowToExportModal_ExportERC20Step1",
+    "message": "Для экспорта кошелька {currency} вам нужно сначала импортировать ваш приватный ключ от ETH кошелька (в примеру в кошелек Metamask)",
+    "files": [
+      "shared/components/modals/HowToExportModal/HowToExportModal.js"
+    ]
+  },
+  {
+    "id": "HowToExportModal_ExportERC20Step2",
+    "message": "После экспорта ETH кошелька, вам нужно добавить ERC20 токен с параметрами, указанными ниже",
+    "files": [
+      "shared/components/modals/HowToExportModal/HowToExportModal.js"
+    ]
+  },
+  {
+    "id": "HowToExportModal_ExportERC20_Contract",
+    "message": "Адресс контракта: {contractAddress}",
+    "files": [
+      "shared/components/modals/HowToExportModal/HowToExportModal.js"
+    ]
+  },
+  {
+    "id": "HowToExportModal_ExportERC20_Decimals",
+    "message": "Количество символов после запятой: {decimals}",
+    "files": [
+      "shared/components/modals/HowToExportModal/HowToExportModal.js"
+    ]
+  },
+  {
+    "id": "HowToExportModal_ExportERC20_Name",
+    "message": "Название токена: {name}",
+    "files": [
+      "shared/components/modals/HowToExportModal/HowToExportModal.js"
+    ]
+  },
+  {
+    "id": "HowToExportModal_ExportERC20_Symbol",
+    "message": "Символ токена: {symbol}",
+    "files": [
+      "shared/components/modals/HowToExportModal/HowToExportModal.js"
+    ]
+  },
+  {
+    "id": "HowToExportModal_ExportEthPrivateKey",
+    "message": "Ваш приватный ключ от ETH кошелька",
+    "files": [
+      "shared/components/modals/HowToExportModal/HowToExportModal.js"
+    ]
+  },
+  {
+    "id": "HowToExportModal_ExportSimple",
+    "message": "Для экспорта кошелька {currency} используйте ваш приватный ключ",
+    "files": [
+      "shared/components/modals/HowToExportModal/HowToExportModal.js"
+    ]
+  },
+  {
+    "id": "HowToExportModal_ExportUserPrivateKey",
+    "message": "Ваш приватный ключ",
+    "files": [
+      "shared/components/modals/HowToExportModal/HowToExportModal.js"
+    ]
+  },
+  {
+    "id": "HowToExportModal_Title",
+    "message": "Как экспортировать кошелек {currency}",
+    "files": [
+      "shared/components/modals/HowToExportModal/HowToExportModal.js"
     ]
   }
 ]

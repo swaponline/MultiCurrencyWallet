@@ -1,0 +1,37 @@
+.button {
+  margin-top: 40px;
+}
+
+.instruction {
+  margin: 0;
+  word-break: break-word;
+  text-align: center;
+}
+
+.privateKey {
+  margin-top: 10px;
+  text-align: center;
+  STRONG {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-align: center;
+    font-size: 12pt;
+    word-break: break-all;
+    @include media-mobile {
+      font-size: 10pt;
+    }
+  }
+}
+
+.tokenInfo {
+  text-align: left;
+  SPAN {
+    display: block;
+    margin: 10px;
+    @include media-mobile {
+      font-size: 10pt;
+    }
+  }
+}
