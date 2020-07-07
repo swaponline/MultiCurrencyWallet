@@ -47,7 +47,7 @@ const SelectGroup = (props) => {
           onKeyDown={inputReplaceCommaWithDot}
         />
         {
-          (selectedValue === 'eth' || selectedValue === 'btc') && fiat > 0 &&
+          (selectedValue === 'eth' || selectedValue === 'btc' || selectedValue === 'ghost') && fiat > 0 &&
           <p styleName="textUsd" >{`~${fiat}`} {activeFiat}</p>
         }
         {inputToolTip && inputToolTip()}

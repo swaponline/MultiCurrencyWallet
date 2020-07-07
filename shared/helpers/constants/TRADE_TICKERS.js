@@ -33,8 +33,11 @@ if (config && config.isWidget) {
     swap.push(`${config.erc20token.toUpperCase()}-BTC`)
   }
   swap.push('ETH-BTC')
+
 } else {
   const customERC = GetCustromERC20()
+  swap.push('GHOST-BTC')
+  swap.push('GHOST-ETH')
   Object.keys(customERC).forEach((tokenContract) => {
     const symbol = customERC[tokenContract].symbol
     const pair = `${symbol.toUpperCase()}-BTC`

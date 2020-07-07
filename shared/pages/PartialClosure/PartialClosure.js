@@ -35,6 +35,7 @@ import CustomDestAddress from "./CustomDestAddress/CustomDestAddress";
 const allowedCoins = [
   ...(!config.opts.curEnabled || config.opts.curEnabled.btc ? ["BTC"] : []),
   ...(!config.opts.curEnabled || config.opts.curEnabled.eth ? ["ETH"] : []),
+  ...(!config.opts.curEnabled || config.opts.curEnabled.ghost ? ["GHOST"] : []),
 ];
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -110,14 +111,14 @@ const bannedPeers = {}; // Пиры, которые отклонили запр�
     addPartialItems,
     history: { swapHistory },
     core: { orders, hiddenCoinsList },
-    user: { ethData, btcData, tokensData, activeFiat },
+    user: { ethData, btcData, ghostData, tokensData, activeFiat },
   }) => ({
     currencies: isExchangeAllowed(currencies.partialItems),
     allCurrencyies: currencies.items,
     addSelectedItems: isExchangeAllowed(currencies.addPartialItems),
     orders: filterIsPartial(orders),
     allOrders: orders,
-    currenciesData: [ethData, btcData],
+    currenciesData: [ethData, btcData, ghostData],
     tokensData: [...Object.keys(tokensData).map((k) => tokensData[k])],
     decline: rememberedOrders.savedOrders,
     hiddenCoinsList,
