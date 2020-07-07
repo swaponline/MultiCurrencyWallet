@@ -2190,7 +2190,7 @@
   },
   {
     "id": "PartialPriceNoOrdersReduce",
-    "message": "Предложения не найдены, попробуйте позже",
+    "message": "Предложения не найдены, попробуйте позже или измените валютную пару",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js",
       "shared/pages/PointOfSell/PointOfSell.js"

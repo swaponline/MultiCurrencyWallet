@@ -1354,11 +1354,11 @@ export default class PartialClosure extends Component {
               defaultMessage="Calc price"
             />
           )}
-          {isNoAnyOrders && linked.haveAmount.value > 0 && maxAmount !== 0 && <Fragment>
+          {isNoAnyOrders && <Fragment>
             <p styleName="error">
               <FormattedMessage
                 id="PartialPriceNoOrdersReduce"
-                defaultMessage="No orders found, try later"
+                defaultMessage="No orders found, try later or change the currency pair"
               />
             </p>
           </Fragment>}

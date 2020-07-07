@@ -2103,7 +2103,7 @@
   },
   {
     "id": "PartialPriceNoOrdersReduce",
-    "message": "No orders found, try later",
+    "message": "No orders found, try later or change the currency pair",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js",
       "shared/pages/PointOfSell/PointOfSell.js"
