@@ -81,7 +81,6 @@ export default class HowToExportModal extends React.Component {
       ethPrivateKey,
     } = props
 
-    console.log(item)
     const currencyKey = getCurrencyKey(item.currency).toUpperCase()
     const isERC20Token = ethToken.isEthToken({ name: item.currency })
 
