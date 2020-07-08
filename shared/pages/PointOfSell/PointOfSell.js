@@ -99,7 +99,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   addPartialItems,
   history: { swapHistory },
   core: { orders, hiddenCoinsList },
-  user: { ethData, btcData, tokensData, activeFiat },
+  user: { ethData, btcData, tokensData, activeFiat, ...rest },
 }) => ({
   activeFiat,
   currencies: isExchangeAllowed(currencies.partialItems),
@@ -113,6 +113,12 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   hiddenCoinsList,
   userEthAddress: ethData.address,
   swapHistory,
+  usersData: [
+    ethData,
+    btcData,
+    ...Object.values(tokensData).filter(({ address }) => address),
+    ...Object.values(rest).filter(({ address }) => address)
+  ],
 }))
 @CSSModules(styles, { allowMultiple: true })
 export default class PartialClosure extends Component {
@@ -385,11 +391,28 @@ export default class PartialClosure extends Component {
   }
 
   handleGoTrade = () => {
-    const { intl: { locale }, decline } = this.props
-    const {
-      haveCurrency,
-      destinationSelected,
-    } = this.state
+    const { decline, usersData } = this.props
+    const { haveAmount, haveCurrency, destinationSelected } = this.state
+
+    const haveCur = haveCurrency.toUpperCase()
+    const { balance } = usersData.find(({ currency }) => currency === haveCur)
+
+    if (haveCur !== "BTC" && balance < haveAmount) {
+
+      actions.modals.open(constants.modals.AlertWindow, {
+        title: <FormattedMessage
+          id="AlertOrderNonEnoughtBalanceTitle"
+          defaultMessage="Not enough balance."
+        />,
+        message: (
+          <FormattedMessage
+            id="AlertOrderNonEnoughtBalance"
+            defaultMessage="Please top up your balance before you start the swap."
+          />
+        ),
+      })
+      return
+    }
 
     if (!destinationSelected) {
       this.setState({

@@ -110,7 +110,7 @@ const bannedPeers = {}; // Пиры, которые отклонили запр�
     addPartialItems,
     history: { swapHistory },
     core: { orders, hiddenCoinsList },
-    user: { ethData, btcData, tokensData, activeFiat },
+    user: { ethData, btcData, tokensData, activeFiat, ...rest },
   }) => ({
     currencies: isExchangeAllowed(currencies.partialItems),
     allCurrencyies: currencies.items,
@@ -124,6 +124,12 @@ const bannedPeers = {}; // Пиры, которые отклонили запр�
     userEthAddress: ethData.address,
     swapHistory,
     activeFiat,
+    usersData: [
+      ethData,
+      btcData,
+      ...Object.values(tokensData).filter(({ address }) => address),
+      ...Object.values(rest).filter(({ address }) => address)
+    ],
   })
 )
 @CSSModules(styles, { allowMultiple: true })
@@ -458,11 +464,28 @@ export default class PartialClosure extends Component {
   };
 
   handleGoTrade = () => {
-    const {
-      intl: { locale },
-      decline,
-    } = this.props;
-    const { haveCurrency, destinationSelected } = this.state;
+    const { decline, usersData } = this.props;
+    const { haveCurrency, destinationSelected, haveAmount } = this.state;
+
+    const haveCur = haveCurrency.toUpperCase()
+    const { balance } = usersData.find(({ currency }) => currency === haveCur)
+
+    if (haveCur !== "BTC" && balance < haveAmount) {
+
+      actions.modals.open(constants.modals.AlertWindow, {
+        title: <FormattedMessage
+          id="AlertOrderNonEnoughtBalanceTitle"
+          defaultMessage="Not enough balance."
+        />,
+        message: (
+          <FormattedMessage
+            id="AlertOrderNonEnoughtBalance"
+            defaultMessage="Please top up your balance before you start the swap."
+          />
+        ),
+      })
+      return
+    }
 
     if (!destinationSelected) {
       this.setState({
@@ -1354,7 +1377,7 @@ export default class PartialClosure extends Component {
               defaultMessage="Calc price"
             />
           )}
-          {isNoAnyOrders && <Fragment>
+          {isNoAnyOrders && linked.haveAmount.value > 0 && <Fragment>
             <p styleName="error">
               <FormattedMessage
                 id="PartialPriceNoOrdersReduce"
