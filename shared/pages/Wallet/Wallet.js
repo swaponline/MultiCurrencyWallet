@@ -178,6 +178,7 @@ export default class Wallet extends Component {
   }
 
   componentDidMount() {
+    console.log('Wallet mounted')
     const { params, url } = this.props.match
     const {
       multisigPendingCount,
@@ -196,6 +197,10 @@ export default class Wallet extends Component {
     this.setState({
       multisigPendingCount,
     })
+  }
+
+  componentWillUnmount() {
+    console.log('Wallet unmounted')
   }
 
   getInfoAboutCurrency = async () => {

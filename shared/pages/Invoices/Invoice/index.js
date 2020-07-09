@@ -125,6 +125,7 @@ export default class Invoice extends PureComponent {
   }
 
   async componentDidMount() {
+    console.log('Invoice mounted')
     const {
       uniqhash,
       doshare,
@@ -195,7 +196,9 @@ export default class Invoice extends PureComponent {
     }
   }
 
-  async componentWillUnmount() {}
+  async componentWillUnmount() {
+    console.log('Invoice unmounted')
+  }
 
   render() {
     const {

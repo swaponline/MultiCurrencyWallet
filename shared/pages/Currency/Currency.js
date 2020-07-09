@@ -51,9 +51,13 @@ export default class Currency extends Component {
   }
 
   componentDidMount() {
+    console.log('Currency mounted')
     this.handleReloadBalance()
   }
 
+  componentWillUnmount() {
+    console.log('Currency unmounted')
+  }
 
   getRows = () => {
     let { match: { params: { currency, address } }, items } = this.props
