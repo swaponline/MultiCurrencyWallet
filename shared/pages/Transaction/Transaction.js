@@ -151,6 +151,7 @@ class Transaction extends Component {
   }
 
   componentDidMount() {
+    console.log('Transaction mounted')
     const {
       ticker,
       txId,
@@ -206,6 +207,7 @@ class Transaction extends Component {
   }
 
   componentWillUnmount() {
+    console.log('Transaction unmounted')
     this.unmounted = true
 
     if (typeof document !== 'undefined') {

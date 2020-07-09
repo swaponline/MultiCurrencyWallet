@@ -82,6 +82,7 @@ export default class History extends Component {
 
 
   componentDidMount() {
+    console.log('History mounted')
     // actions.analytics.dataEvent('open-page-history')
     if (this.props.match
       && this.props.match.params
@@ -101,6 +102,10 @@ export default class History extends Component {
         actions.core.getSwapHistory()
       }
     }
+  }
+
+  componentWillUnmount() {
+    console.log('History unmounted')
   }
 
   componentDidUpdate({ items: prevItems }) {

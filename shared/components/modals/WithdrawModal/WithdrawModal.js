@@ -787,7 +787,7 @@ export default class WithdrawModal extends React.Component {
             {amount > 0 && (
               <FormattedMessage 
                 { ...labels[
-                  (selectedValue === activeFiat)
+                  (selectedValue !== activeFiat)
                     ? (isMobile)
                       ? `balanceFiatMobile`
                       : `balanceFiatDesktop`
@@ -796,10 +796,10 @@ export default class WithdrawModal extends React.Component {
                       : `balanceDesktop`
                 ]}
                 values={{
-                  amount: (selectedValue === activeFiat)
+                  amount: (selectedValue !== activeFiat)
                     ? BigNumber(fiatAmount).dp(2, BigNumber.ROUND_FLOOR)
                     : BigNumber(amount).dp(5, BigNumber.ROUND_FLOOR),
-                  currency: (selectedValue === activeFiat)
+                  currency: (selectedValue !== activeFiat)
                     ? activeFiat
                     : currencyView.toUpperCase(),
                 }}

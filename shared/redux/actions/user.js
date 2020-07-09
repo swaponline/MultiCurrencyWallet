@@ -233,17 +233,26 @@ const getExchangeRate = (sellCurrency, buyCurrency) => {
   const sellDataRate = customRate(sellCurrency)
   const buyDataRate = customRate(buyCurrency)
 
-  if (buyCurrency.toLowerCase() === 'usd') {
-    return new Promise((resolve, reject) => {
+  const {
+    user,
+    user: {
+      fiats,
+    },
+  } = getState()
 
-      if (sellDataRate) {
-        resolve(sellDataRate)
-      }
+  return new Promise((resolve, reject) => {
 
-      if (buyDataRate) {
-        resolve(1 / buyDataRate)
-      }
+    if (sellDataRate) {
+      resolve(sellDataRate)
+      return
+    }
 
+    if (buyDataRate) {
+      resolve(1 / buyDataRate)
+      return
+    }
+
+    if (fiats.indexOf(buyCurrency.toUpperCase()) !== -1) {
       let dataKey = sellCurrency.toLowerCase()
       switch (sellCurrency.toLowerCase()) {
         case 'btc (sms-protected)':
@@ -253,30 +262,22 @@ const getExchangeRate = (sellCurrency, buyCurrency) => {
           break
         default:
       }
-      const { user } = getState()
-      if (user[`${dataKey}Data`] && user[`${dataKey}Data`].infoAboutCurrency) {
-        const currencyData = user[`${dataKey}Data`]
-        const multiplier = getFiats()
+
+      if ((user[`${dataKey}Data`] && user[`${dataKey}Data`].infoAboutCurrency)
+        || (user.tokensData[dataKey] && user.tokensData[dataKey].infoAboutCurrency)
+      ) {
+        const currencyData = (user.tokensData[dataKey] && user.tokensData[dataKey].infoAboutCurrency)
+          ? user.tokensData[dataKey]
+          : user[`${dataKey}Data`]
+
         resolve(currencyData.infoAboutCurrency.price_usd)
       } else {
         resolve(1)
       }
-    })
-  }
-
-  return new Promise((resolve, reject) => {
-    const url = `https://api.cryptonator.com/api/full/${sellCurrency}-${buyCurrency}`
-
-    request.get(url, { cacheResponse: 60000 }).then(({ ticker: { price: exchangeRate } }) => {
-      resolve(exchangeRate)
-    })
-      .catch(() => {
-        if (constants.customEcxchangeRate[sellCurrency.toLowerCase()] !== undefined) {
-          resolve(constants.customEcxchangeRate[sellCurrency])
-        } else {
-          resolve(1)
-        }
-      })
+    } else {
+      console.warn(`Unknown fiat ${buyCurrency}. Use one to one exchange rate`)
+      resolve(1)
+    }
   })
 }
 

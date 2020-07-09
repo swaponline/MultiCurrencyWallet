@@ -111,7 +111,7 @@ const bannedPeers = {}; // Пиры, которые отклонили запр�
     addPartialItems,
     history: { swapHistory },
     core: { orders, hiddenCoinsList },
-    user: { ethData, btcData, ghostData, tokensData, activeFiat },
+    user: { ethData, btcData, ghostData, tokensData, activeFiat, ...rest },
   }) => ({
     currencies: isExchangeAllowed(currencies.partialItems),
     allCurrencyies: currencies.items,
@@ -125,6 +125,12 @@ const bannedPeers = {}; // Пиры, которые отклонили запр�
     userEthAddress: ethData.address,
     swapHistory,
     activeFiat,
+    usersData: [
+      ethData,
+      btcData,
+      ...Object.values(tokensData).filter(({ address }) => address),
+      ...Object.values(rest).filter(({ address }) => address)
+    ],
   })
 )
 @CSSModules(styles, { allowMultiple: true })
@@ -293,6 +299,10 @@ export default class PartialClosure extends Component {
     this.setEstimatedFeeValues(estimatedFeeValues);
 
     document.addEventListener("scroll", this.rmScrollAdvice);
+
+    setTimeout(() => {
+      this.setState(() => ({ isFullLoadingComplite: true }))
+    }, 60 * 1000)
   }
 
   rmScrollAdvice = () => {
@@ -458,12 +468,46 @@ export default class PartialClosure extends Component {
     }
   };
 
-  handleGoTrade = () => {
-    const {
-      intl: { locale },
-      decline,
-    } = this.props;
-    const { haveCurrency, destinationSelected } = this.state;
+  handleGoTrade = async () => {
+    const { decline, usersData } = this.props;
+    const { haveCurrency, destinationSelected, haveAmount } = this.state;
+
+    const haveCur = haveCurrency.toUpperCase()
+    const { balance, address } = usersData.find(({ currency }) => currency === haveCur)
+
+
+    if (haveCur.toUpperCase() !== "BTC" && balance < haveAmount) {
+      const hiddenCoinsList = await actions.core.getHiddenCoins()
+      const isDidntActivateWallet = hiddenCoinsList.find(el => haveCur.toUpperCase() === el.toUpperCase())
+
+      actions.modals.open(constants.modals.AlertWindow, {
+        title: !isDidntActivateWallet ?
+          <FormattedMessage
+            id="AlertOrderNonEnoughtBalanceTitle"
+            defaultMessage="Not enough balance."
+          /> :
+          <FormattedMessage
+            id="walletDidntCreateTitle"
+            defaultMessage="Wallet does not exist."
+          />,
+        currency: haveCur,
+        address,
+        actionType: !isDidntActivateWallet ? "deposit" : "createWallet",
+        message: !isDidntActivateWallet ?
+          <FormattedMessage
+            id="AlertOrderNonEnoughtBalance"
+            defaultMessage="Please top up your balance before you start the swap."
+          /> :
+          <FormattedMessage
+            id="walletDidntCreateTitle"
+            defaultMessage="Create {curr} wallet before you start the swap."
+            values={{
+              curr: haveCur
+            }}
+          />
+      })
+      return
+    }
 
     if (!destinationSelected) {
       this.setState({
@@ -1148,7 +1192,8 @@ export default class PartialClosure extends Component {
       haveAmount,
       customWallet,
       destinationError,
-      isNoAnyOrders
+      isNoAnyOrders,
+      isFullLoadingComplite
     } = this.state;
 
     const haveFiat = BigNumber(exHaveRate)
@@ -1355,7 +1400,7 @@ export default class PartialClosure extends Component {
               defaultMessage="Calc price"
             />
           )}
-          {isNoAnyOrders && <Fragment>
+          {isNoAnyOrders && linked.haveAmount.value > 0 && isFullLoadingComplite && <Fragment>
             <p styleName="error">
               <FormattedMessage
                 id="PartialPriceNoOrdersReduce"

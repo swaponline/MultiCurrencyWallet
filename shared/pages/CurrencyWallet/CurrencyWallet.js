@@ -204,6 +204,7 @@ export default class CurrencyWallet extends Component {
   }
 
   componentDidMount() {
+    console.log('CurrencyWallet mounted')
     const {
       currency,
       itemCurrency,
@@ -465,6 +466,10 @@ export default class CurrencyWallet extends Component {
         )
       }
     }
+  }
+
+  componentWillUnmount() {
+    console.log('CurrencyWallet unmounted')
   }
 
   getRows = (txHistory) => {
@@ -731,13 +736,6 @@ export default class CurrencyWallet extends Component {
             fullName,
             currency,
           })}
-        />
-        <Slider
-          settings={settings}
-          isSigned={isSigned}
-          multisigStatus={multisigStatus}
-          handleNotifyBlockClose={this.handleNotifyBlockClose}
-          {...this.state}
         />
 
         <DashboardLayout

@@ -159,10 +159,12 @@ export default class InvoicesList extends PureComponent {
   }
 
   async componentWillUnmount() {
+    console.log('InvoicesList unmounted')
     this.unmounted = true
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
+    console.log('InvoicesList mounted')
     this.fetchItems()
   }
 
@@ -277,12 +279,6 @@ export default class InvoicesList extends PureComponent {
           location={location}
           defaultTitle={intl.formatMessage(metaTitle)}
           defaultDescription={intl.formatMessage(langLabels.metaDescription)} />
-        <Slider
-          settings={settings}
-          multisigStatus={multisigStatus}
-          isSigned={isSigned}
-          {...this.state}
-        />
         {isWidgetBuild && !config.isFullBuild && (
           <ul styleName="widgetNav">
             <li styleName="widgetNavItem" onClick={this.handleGoWalletHome}>
