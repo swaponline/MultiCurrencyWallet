@@ -4273,7 +4273,7 @@
   },
   {
     "id": "swapprogressDONTLEAVEBTC",
-    "message": "Or save this information before you leave:",
+    "message": "Or save this SECRET before you leave:",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/PleaseDontLeaveWrapper.js"
     ]
