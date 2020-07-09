@@ -51,7 +51,8 @@ export default class CreateInvoice extends PureComponent {
     }
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
+    console.log('CreateInvoice mounted')
     let { match : { params : { type, wallet } }, history, location: { pathname } , data } = this.props
 
     if (type && wallet && ['btc','eth'].includes(type) && data[type]) {
@@ -73,7 +74,9 @@ export default class CreateInvoice extends PureComponent {
     }
   }
 
-  async componentWillUnmount() {}
+  async componentWillUnmount() {
+    console.log('CreateInvoice unmounted')
+  }
 
   render() {
     return null
