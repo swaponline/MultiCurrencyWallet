@@ -99,7 +99,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   addPartialItems,
   history: { swapHistory },
   core: { orders, hiddenCoinsList },
-  user: { ethData, btcData, tokensData, activeFiat },
+  user: { ethData, btcData, ghostData, tokensData, activeFiat },
 }) => ({
   activeFiat,
   currencies: isExchangeAllowed(currencies.partialItems),
@@ -107,7 +107,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   addSelectedItems: isExchangeAllowed(currencies.addPartialItems),
   orders: filterIsPartial(orders),
   allOrders: orders,
-  currenciesData: [ethData, btcData],
+  currenciesData: [ethData, btcData, ghostData],
   tokensData: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   decline: rememberedOrders.savedOrders,
   hiddenCoinsList,
@@ -802,14 +802,28 @@ export default class PartialClosure extends Component {
       if (config.erc20[getCurrency] !== undefined) return true
       // btc-eth
       if (getCurrency === 'eth') return true
+
+      if (getCurrency === 'ghost') return true
     }
     if (config.erc20[haveCurrency] !== undefined) {
       // token-btc
       if (getCurrency === 'btc') return true
+
+      if (getCurrency === 'ghost') return true
     }
 
     if (haveCurrency === 'eth') {
       // eth-btc
+      if (getCurrency === 'btc') return true
+
+      if (getCurrency === 'ghost') return true
+    }
+
+    
+    if (haveCurrency === 'ghost') {
+      // eth-btc
+      if (getCurrency === 'eth') return true
+
       if (getCurrency === 'btc') return true
     }
 

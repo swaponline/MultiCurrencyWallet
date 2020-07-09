@@ -6,7 +6,7 @@ import Slider from 'pages/Wallet/components/WallerSlider'
 import { withRouter } from 'react-router-dom'
 
 import helpers, { links, constants, ethToken } from 'helpers'
-import { getTokenWallet, getBitcoinWallet, getEtherWallet } from 'helpers/links'
+import { getTokenWallet, getBitcoinWallet, getEtherWallet, getGhostWallet } from 'helpers/links'
 
 import CSSModules from 'react-css-modules'
 import styles from './CurrencyWallet.scss'
@@ -46,6 +46,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     user: {
       ethData,
       btcData,
+      ghostData,
       activeFiat,
       activeCurrency,
       btcMultisigSMSData,
@@ -59,6 +60,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     items: [
       ethData,
       btcData,
+      ghostData,
       btcMultisigSMSData,
       btcMultisigUserData,
       ...Object.keys(tokensData).map((k) => tokensData[k]),
@@ -115,6 +117,16 @@ export default class CurrencyWallet extends Component {
             ...{
               isRedirecting: true,
               redirectUrl: getBitcoinWallet(),
+            },
+          }
+          return
+        }
+        if (fullName.toLowerCase() === `ghost`) {
+          this.state = {
+            ...this.state,
+            ...{
+              isRedirecting: true,
+              redirectUrl: getGhostWallet(),
             },
           }
           return
@@ -336,6 +348,17 @@ export default class CurrencyWallet extends Component {
               ...{
                 isRedirecting: true,
                 redirectUrl: getBitcoinWallet(),
+              },
+            }
+            return
+          }
+
+          if (fullName.toLowerCase() === `ghost`) {
+            this.state = {
+              ...this.state,
+              ...{
+                isRedirecting: true,
+                redirectUrl: getGhostWallet(),
               },
             }
             return

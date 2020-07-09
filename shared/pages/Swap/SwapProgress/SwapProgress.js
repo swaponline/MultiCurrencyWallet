@@ -33,6 +33,11 @@ import BtcToEthTokens from './SwapProgressText/BtcToEthTokens'
 import EthToBtc from './SwapProgressText/EthToBtc'
 import EthTokensToBtc from './SwapProgressText/EthTokensToBtc'
 
+import BtcToGhost from './SwapProgressText/BtcToGhost'
+import GhostToBtc from './SwapProgressText/GhostToBtc'
+
+
+
 import * as animation from './images'
 import finishSvg from './images/finish.svg'
 
@@ -94,6 +99,9 @@ export default class SwapProgress extends Component {
     }
     if (flow.btcSwapWithdrawTransactionHash) {
       window.open(`${config.link.bitpay}/tx/${flow.btcSwapWithdrawTransactionHash}`, '_blank')
+    }
+    if (flow.ghostSwapWithdrawTransactionHash) {
+      window.open(`${config.link.ghostscan}/tx/${flow.ghostSwapWithdrawTransactionHash}`, '_blank')
     }
   }
 
@@ -289,6 +297,12 @@ export default class SwapProgress extends Component {
         }
         {
           this.props.name === 'EthToBtc' && <EthToBtc step={flow.step} flow={flow} swap={swap} />
+        }
+         {
+          this.props.name === 'BtcToGhost' && <BtcToGhost step={flow.step} flow={flow} swap={swap} />
+        }
+        {
+          this.props.name === 'GhostToBtc' && <GhostToBtc step={flow.step} flow={flow} swap={swap} />
         }
         {
           this.props.name === 'BtcToEthTokens' && <BtcToEthTokens step={flow.step} flow={flow} swap={swap} />

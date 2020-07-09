@@ -128,6 +128,7 @@ export default class SwapComponent extends PureComponent {
 
   constructor() {
     super()
+    console.log('Swaps called');
 
     this.state = {
       isAddressCopied: false,

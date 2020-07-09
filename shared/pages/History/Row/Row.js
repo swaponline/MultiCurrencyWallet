@@ -72,6 +72,12 @@ class Row extends React.PureComponent {
       if (currency === 'BTC (SMS-Protected)') withdrawModalType = constants.modals.WithdrawMultisigSMS
       if (currency === 'BTC (Multisig)') withdrawModalType = constants.modals.WithdrawMultisigUser
     }
+    const ghostData = actions.ghost.getDataByAddress(invoiceData.toAddress)
+
+    if (ghostData) {
+      data = ghostData
+      withdrawModalType = constants.modals.Withdraw
+    }
 
     const ethData = actions.eth.isETHAddress(invoiceData.toAddress)
     if (ethData) {

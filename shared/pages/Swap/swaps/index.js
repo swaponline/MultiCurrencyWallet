@@ -3,6 +3,9 @@ import config from 'app-config'
 import BtcToEth from '../BtcToEth'
 import EthToBtc from '../EthToBtc'
 
+import BtcToGhost from '../BtcToGhost'
+import GhostToBtc from '../GhostToBtc'
+
 
 import EthTokenToBtc from '../EthTokenToBtc'
 import BtcToEthToken from '../BtcToEthToken'
@@ -14,6 +17,9 @@ import BtcToEthToken from '../BtcToEthToken'
 const swapComponents = {
   'BTC2ETH': BtcToEth,
   'ETH2BTC': EthToBtc,
+
+  'BTC2GHOST': BtcToGhost,
+  'GHOST2BTC': GhostToBtc,
 
   'SWAP2BTC': EthTokenToBtc,
   'BTC2SWAP': BtcToEthToken,
