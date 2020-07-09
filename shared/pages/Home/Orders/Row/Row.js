@@ -144,15 +144,37 @@ export default class Row extends Component {
     const {
       row: {
         id,
+        buyAmount,
         buyCurrency,
         sellCurrency,
       },
+      row,
       intl,
       history,
+      currenciesData
     } = this.props
 
-    const pair = Pair.fromOrder(this.props.row)
+    const { balance } = this.state
+
+    const pair = Pair.fromOrder(row)
     const { price, amount, total, main, base, type } = pair
+
+    if (sellCurrency === "BTC" && balance < buyAmount) {
+
+      actions.modals.open(constants.modals.AlertWindow, {
+        title: <FormattedMessage
+          id="AlertOrderNonEnoughtBalanceTitle"
+          defaultMessage="Not enough balance."
+        />,
+        message: (
+          <FormattedMessage
+            id="AlertOrderNonEnoughtBalance"
+            defaultMessage="Please top up your balance before you start the swap."
+          />
+        ),
+      })
+      return
+    }
 
     const exchangeRates = new BigNumber(price).dp(6, BigNumber.ROUND_CEIL)
 
@@ -442,12 +464,9 @@ export default class Row extends Component {
   }
 
   render() {
+    const { windowWidth } = this.state;
     let mobileBreakpoint = 800
 
-    if (this.state.windowWidth < mobileBreakpoint) {
-      return this.renderMobileContent()
-    } else {
-      return this.renderWebContent()
-    }
+    return windowWidth < mobileBreakpoint ? this.renderMobileContent() : this.renderWebContent()
   }
 }

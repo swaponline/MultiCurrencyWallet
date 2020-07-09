@@ -38,4 +38,5 @@ export default {
   WithdrawBtcPin: 'WithdrawBtcPin',
   WalletAddressModal: 'WalletAddressModal',
   HowToExportModal: 'HowToExportModal',
+  AlertWindow: 'AlertWindow',
 }
