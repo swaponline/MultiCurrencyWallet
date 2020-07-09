@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react'
 
 import actions from 'redux/actions'
-import crypto from 'crypto'
+import helpers from 'helpers'
+import config from 'app-config'
 
 import CSSModules from 'react-css-modules'
 import styles from './Swap.scss'
@@ -11,77 +12,78 @@ import { FormattedMessage } from 'react-intl'
 import { BigNumber } from 'bignumber.js'
 import Link from 'sw-valuelink'
 
-import SwapProgress from './SwapProgress/SwapProgress'
-import DepositWindow from './DepositWindow/DepositWindow'
 import FeeControler from './FeeControler/FeeControler'
+import SwapProgress from './SwapProgress/SwapProgress'
 import SwapList from './SwapList/SwapList'
+import DepositWindow from './DepositWindow/DepositWindow'
 import paddingForSwapList from 'shared/helpers/paddingForSwapList.js'
-
 
 @CSSModules(styles)
 export default class BtcToGhost extends Component {
-
-  constructor({ swap, currencyData }) {
+  constructor({ swap, currencyData, depositWindow, enoughBalance }) {
     super()
 
     this.swap = swap
 
     this.state = {
+      swap,
       currencyData,
+      enoughBalance,
+      signed: false,
+      depositWindow,
+      paddingContainerValue: 0,
       enabledButton: false,
+      isAddressCopied: false,
       flow: this.swap.flow.state,
-      paddingContainerValue: 60,
+      isShowingBitcoinScript: false,
       currencyAddress: currencyData.address,
-      secret: crypto.randomBytes(32).toString('hex'),
     }
 
-    this.ParticipantTimer = null
+    this.signTimer = null
+    this.confirmGhostTimer = null
 
   }
 
   componentWillMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
+
   }
 
   componentDidMount() {
-    const { flow: { isSignFetching, isMeSigned, step, isParticipantSigned } } = this.state
+    const { swap, flow: { isSignFetching, isMeSigned, step } } = this.state
+    this.changePaddingValue()
     window.addEventListener('resize', this.updateWindowDimensions)
     this.updateWindowDimensions()
-    this.changePaddingValue()
-    this.ParticipantTimer = setInterval(() => {
-      if (this.state.flow.isParticipantSigned && this.state.destinationBuyAddress) {
-        this.submitSecret()
+    this.signTimer = setInterval(() => {
+      if (!this.state.flow.isMeSigned) {
+        this.signSwap()
+      } else {
+        clearInterval(this.signTimer)
       }
-      else {
-        clearInterval(this.ParticipantTimer)
+    }, 3000)
+
+    this.confirmGhostTimer = setInterval(() => {
+      if (this.state.flow.step === 3) {
+        this.confirmGhostScriptChecked()
+      } else {
+        clearInterval(this.confirmGhostTimer)
       }
     }, 3000)
   }
 
   componentWillUnmount() {
-    const { swap, flow: { isMeSigned } } = this.state
-    window.removeEventListener('resize', this.updateWindowDimensions)
     this.swap.off('state update', this.handleFlowStateUpdate)
-    clearInterval(this.timer)
-  }
-
-  updateWindowDimensions = () => {
-    this.setState({ windowWidth: window.innerWidth })
-  }
-
-  submitSecret = () => {
-    const { secret } = this.state
-    this.swap.flow.submitSecret(secret)
-  }
-
-  tryRefund = () => {
-    this.swap.flow.tryRefund()
+    window.removeEventListener('resize', this.updateWindowDimensions)
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.flow !== this.state.flow) {
       this.changePaddingValue()
     }
+  }
+
+  updateWindowDimensions = () => {
+    this.setState({ windowWidth: window.innerWidth })
   }
 
   changePaddingValue = () => {
@@ -91,8 +93,12 @@ export default class BtcToGhost extends Component {
     }))
   }
 
-  handleFlowStateUpdate = (values) => {
+  confirmGhostScriptChecked = () => {
+    this.swap.flow.verifyGhostScript()
+  }
 
+  handleFlowStateUpdate = (values) => {
+    const { swap, flow: { isMeSigned } } = this.state
     const stepNumbers = {
       'sign': 1,
       'wait-lock-ghost': 2,
@@ -105,70 +111,49 @@ export default class BtcToGhost extends Component {
       'end': 9
     }
 
-    // actions.analytics.swapEvent(stepNumbers[values.step], 'BTC2ETH')
+    // actions.analytics.swapEvent(stepNumbers[values.step], 'ETH-BTC')
 
     this.setState({
       flow: values,
     })
 
     this.changePaddingValue()
+
   }
 
-  confirmAddress = () => {
-    this.swap.setDestinationBuyAddress(this.state.destinationBuyAddress)
-    this.setState({ destinationAddressTimer : false })
+  signSwap = () => {
+    this.swap.flow.sign()
+    this.setState(() => ({
+      signed: true,
+    }))
   }
 
-  submitSecret = () => {
-    const { secret } = this.state
-    this.swap.flow.submitSecret(secret)
+  toggleGhostScript = () => {
+    this.setState({
+      isShowingGhostScript: !this.state.isShowingGhostScript,
+    })
   }
-
-  updateBalance = () => {
-    this.swap.flow.syncBalance()
-  }
-
-  tryRefund = () => {
-    this.swap.flow.tryRefund()
-    this.setState(() => ({ enabledButton: false }))
-  }
-
-  getRefundTxHex = () => {
-    const { flow } = this.state
-
-    if (flow.refundTxHex) {
-      return flow.refundTxHex
-    }
-    else if (flow.btcScriptValues) {
-      this.swap.flow.getRefundTxHex()
-    }
-  }
-
 
   render() {
     const {
+      tokenItems,
       continueSwap,
       enoughBalance,
-      swap,
       history,
-      tokenItems,
-      ghostAddress,
+      ethAddress,
       children,
+      requestToFaucetSended,
       onClickCancelSwap,
       locale,
       wallets,
-    }  = this.props
+    } = this.props
 
-    const { flow, isShowingBitcoinScript, currencyData, paddingContainerValue, windowWidth } = this.state
+    const { currencyAddress, flow, isShowingBitcoinScript, swap, currencyData, signed, paddingContainerValue, buyCurrency, sellCurrency, windowWidth } = this.state
+    const stepse = flow.step
 
     return (
       <div>
-        <div
-          styleName="swapContainer"
-          style={(isMobile && (windowWidth < 569))
-            ? { paddingTop: paddingContainerValue }
-            : { paddingTop: 0 }
-          }>
+        <div styleName="swapContainer" style={(isMobile && (windowWidth < 569)) ? { paddingTop: paddingContainerValue } : { paddingTop: 0 }}>
           <div>
             <div styleName="swapInfo">
               {this.swap.id &&
@@ -184,38 +169,21 @@ export default class BtcToGhost extends Component {
                 )
               }
             </div>
-            <div>
-              {!enoughBalance && flow.step === 3
-                ? (
-                  <div styleName="swapDepositWindow">
-                    <DepositWindow currencyData={currencyData} swap={swap} flow={flow} tokenItems={tokenItems} />
-                  </div>
-                )
-                : (
-                  <Fragment>
-                    {<SwapProgress
-                        flow={flow}
-                        name="BtcToGhost"
-                        swap={swap}
-                        history={history}
-                        locale={locale}
-                        wallets={wallets}
-                        tokenItems={tokenItems}
-                      />
-                    }
-                  </Fragment>
-                )
-              }
-            </div>
+            {!enoughBalance && flow.step === 4
+              ? (
+                <div styleName="swapDepositWindow">
+                  <DepositWindow currencyData={currencyData} swap={swap} flow={flow} tokenItems={tokenItems} />
+                </div>
+              )
+              : (
+                <Fragment>
+                  {<SwapProgress flow={flow} name="BtcToGhost" swap={swap} history={history} signed={signed} locale={locale} wallets={wallets} tokenItems={tokenItems} />
+                  }
+                </Fragment>
+              )
+            }
           </div>
-          <SwapList
-            enoughBalance={enoughBalance}
-            flow={flow}
-            onClickCancelSwap={onClickCancelSwap}
-            windowWidth={windowWidth}
-            name={swap.sellCurrency}
-            swap={swap}
-          />
+          <SwapList enoughBalance={enoughBalance} flow={flow} name={swap.sellCurrency} windowWidth={windowWidth} onClickCancelSwap={onClickCancelSwap} swap={swap} />
           <div styleName="swapContainerInfo">{children}</div>
         </div>
       </div>
