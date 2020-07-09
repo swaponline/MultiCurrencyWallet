@@ -151,16 +151,14 @@ export default class Row extends Component {
       row,
       intl,
       history,
-      currenciesData
     } = this.props
-
-    const { balance } = this.state
 
     const pair = Pair.fromOrder(row)
     const { price, amount, total, main, base, type } = pair
 
-    if (sellCurrency === "BTC" && balance < buyAmount) {
+    const { address, balance } = actions.core.getWallet({ currency: buyCurrency })
 
+    if (sellCurrency === "BTC" && balance < buyAmount) {
       actions.modals.open(constants.modals.AlertWindow, {
         title: <FormattedMessage
           id="AlertOrderNonEnoughtBalanceTitle"
@@ -172,6 +170,9 @@ export default class Row extends Component {
             defaultMessage="Please top up your balance before you start the swap."
           />
         ),
+        currency: buyCurrency,
+        address,
+        actionType: 'deposit',
       })
       return
     }
