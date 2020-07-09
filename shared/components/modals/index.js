@@ -38,6 +38,7 @@ import WithdrawBtcPin from './WithdrawBtcPin/WithdrawBtcPin'
 import WalletAddressModal from './WalletAddressModal/WalletAddressModal'
 
 import HowToExportModal from './HowToExportModal/HowToExportModal'
+import AlertWindow from "./AlertWindow"
 
 
 export default {
@@ -81,4 +82,5 @@ export default {
   WalletAddressModal,
 
   HowToExportModal,
+  AlertWindow,
 }
