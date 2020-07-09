@@ -257,6 +257,10 @@ export default class PartialClosure extends Component {
     this.setEstimatedFeeValues(estimatedFeeValues)
 
     document.addEventListener('scroll', this.rmScrollAdvice)
+
+    setTimeout(() => {
+      this.setState(() => ({ isFullLoadingComplite: true }))
+    }, 60 * 1000)
   }
 
   rmScrollAdvice = () => {
@@ -390,26 +394,40 @@ export default class PartialClosure extends Component {
     }
   }
 
-  handleGoTrade = () => {
+  handleGoTrade = async () => {
     const { decline, usersData } = this.props
     const { haveAmount, haveCurrency, destinationSelected } = this.state
 
+
     const haveCur = haveCurrency.toUpperCase()
-    const { balance } = usersData.find(({ currency }) => currency === haveCur)
+    const { balance, address } = usersData.find(({ currency }) => currency.toUpperCase() === haveCur.toUpperCase())
 
     if (haveCur !== "BTC" && balance < haveAmount) {
+      const hiddenCoinsList = await actions.core.getHiddenCoins()
+      const isDidntActivateWallet = hiddenCoinsList.find(el => haveCur.toUpperCase() === el.toUpperCase())
 
       actions.modals.open(constants.modals.AlertWindow, {
-        title: <FormattedMessage
-          id="AlertOrderNonEnoughtBalanceTitle"
-          defaultMessage="Not enough balance."
-        />,
-        message: (
+        title: !isDidntActivateWallet ?
+          <FormattedMessage
+            id="AlertOrderNonEnoughtBalanceTitle"
+            defaultMessage="Not enough balance."
+          /> :
+          <FormattedMessage
+            id="walletDidntCreateTitle"
+            defaultMessage="Wallet does not exist"
+          />,
+        currency: haveCur,
+        address,
+        actionType: !isDidntActivateWallet ? "deposit" : "createWallet",
+        message: !isDidntActivateWallet ?
           <FormattedMessage
             id="AlertOrderNonEnoughtBalance"
             defaultMessage="Please top up your balance before you start the swap."
+          /> :
+          <FormattedMessage
+            id="walletDidntCreateTitle"
+            defaultMessage="Create wallet"
           />
-        ),
       })
       return
     }
@@ -1003,7 +1021,7 @@ export default class PartialClosure extends Component {
     const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage }, userEthAddress, isOnlyForm, activeFiat } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching, desclineOrders, openScanCam,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, exHaveRate, exGetRate, isNoAnyOrders,
-      maxBuyAmount, getAmount, goodRate, isShowBalance, estimatedFeeValues, haveAmount,
+      maxBuyAmount, getAmount, goodRate, isShowBalance, estimatedFeeValues, haveAmount, isFullLoadingComplite,
       destinationSelected,
       destinationError,
       customWallet,
@@ -1155,7 +1173,7 @@ export default class PartialClosure extends Component {
           {!oneCryptoCost.isFinite() && !isNonOffers && (
             <FormattedMessage id="PartialPriceCalc" defaultMessage="Calc price" />
           )}
-          {isNoAnyOrders && linked.haveAmount.value > 0 && maxAmount !== 0 && <Fragment>
+          {isNoAnyOrders && linked.haveAmount.value > 0 && isFullLoadingComplite && <Fragment>
             <p styleName="error">
               <FormattedMessage
                 id="PartialPriceNoOrdersReduce"
