@@ -174,7 +174,6 @@ export default class Btc extends PureComponent {
     actions.btcmultisig.addBtcMultisigKey(publicKey, true)
 
     actions.core.markCoinAsVisible('BTC (Multisig)')
-    localStorage.setItem(constants.localStorage.isWalletCreate, true)
 
     this.setState({
       action: (action === 'join') ? 'linkready' : 'ready'
