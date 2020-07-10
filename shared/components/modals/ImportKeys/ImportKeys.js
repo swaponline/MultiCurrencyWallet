@@ -129,6 +129,7 @@ export default class ImportKeys extends Component {
   handleImportKeys = () => {
     this.handleCloseModal()
     localStorage.setItem(constants.localStorage.testnetSkipPKCheck, true)
+    localStorage.setItem(constants.localStorage.isWalletCreate, true)
 
     setTimeout(() => {
       const { onCloseLink } = this.state
