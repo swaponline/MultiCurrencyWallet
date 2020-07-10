@@ -2198,7 +2198,7 @@
   },
   {
     "id": "PartialPriceNoOrdersReduceAllInfo",
-    "message": "Предложения не найдены, попробуйте изменить сумму,{br} Максимальная сумма для покупки: {maxForBuy}, {br}Максимальная сумма для продажи: {maxForSell}",
+    "message": "Предложения не найдены, введите сумму меньше {maxForBuy}, {maxForSell}",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js",
       "shared/pages/PointOfSell/PointOfSell.js"

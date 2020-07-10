@@ -204,11 +204,12 @@
 .selectedItem {
   height: 57px;
   line-height: 60px;
-  padding-right: 46px;
+  padding-right: 45px;
   padding-left: 16px;
   min-width: 135px;
   background: white;
-
+  position: relative;
+  left: -1px;
   z-index: 1;
   cursor: pointer;
   text-align: right;

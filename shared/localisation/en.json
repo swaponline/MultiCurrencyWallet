@@ -2111,7 +2111,7 @@
   },
   {
     "id": "PartialPriceNoOrdersReduceAllInfo",
-    "message": "No orders found, try to reduce the amount,{br} Maximum available amount for buy: {maxForBuy}, {br}Maximum available amount for sell: {maxForSell}",
+    "message": "No orders found. Enter amount less than {maxForBuy}, {maxForSell}",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js",
       "shared/pages/PointOfSell/PointOfSell.js"

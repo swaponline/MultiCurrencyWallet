@@ -1412,11 +1412,10 @@ export default class PartialClosure extends Component {
               <p styleName="error">
                 <FormattedMessage
                   id="PartialPriceNoOrdersReduceAllInfo"
-                  defaultMessage="No orders found, try to reduce the amount,{br} Maximum available amount for buy: {maxForBuy}, {br}Maximum available amount for sell: {maxForSell}"
+                  defaultMessage="No orders found. Enter amount less than {maxForBuy}, {maxForSell}"
                   values={{
-                    br: <br />,
                     maxForBuy: `${maxAmount} ${getCurrency.toUpperCase()}`,
-                    maxForSell: ` {maxBuyAmount.toNumber()} {haveCurrency.toUpperCase()}`
+                    maxForSell: `${maxBuyAmount} ${haveCurrency.toUpperCase()}`
                   }}
                 />
               </p>
