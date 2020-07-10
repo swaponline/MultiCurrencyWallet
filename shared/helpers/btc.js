@@ -127,7 +127,6 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
     )
     const mstxSize = txIn * msSize + txOut * 33 + (15 + txIn - txOut)
 
-    console.log('calculateTxSize', mstxSize)
     return mstxSize
   }
 
