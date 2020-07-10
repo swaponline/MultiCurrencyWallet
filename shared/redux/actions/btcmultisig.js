@@ -1007,6 +1007,18 @@ const getTransactionUser = (address) => {
 
 const getTransactionSMS = (address) => { return getTransaction(address) }
 
+const getTransactionPIN = (address) => {
+  const {
+    user: {
+      btcMultisigPinData: {
+        address: pinAddress,
+      },
+    },
+  } = getState()
+
+  return getTransaction((address) ? address : pinAddress, `btc (pin-protected)`)
+}
+
 const getTransactionG2FA = () => { }
 
 const getInvoicesSMS = () => {
@@ -2270,6 +2282,7 @@ export default {
   checkPinMnemonic,
   signPinMnemonic,
   checkPinCanRestory,
+  getTransactionPIN,
 
   // User multisig
   login_USER,
