@@ -230,9 +230,6 @@ const getExchangeRate = (sellCurrency, buyCurrency) => {
 
   const {
     user,
-    user: {
-      fiats,
-    },
   } = getState()
 
   return new Promise((resolve, reject) => {
@@ -247,30 +244,25 @@ const getExchangeRate = (sellCurrency, buyCurrency) => {
       return
     }
 
-    if (fiats.indexOf(buyCurrency.toUpperCase()) !== -1) {
-      let dataKey = sellCurrency.toLowerCase()
-      switch (sellCurrency.toLowerCase()) {
-        case 'btc (sms-protected)':
-        case 'btc (multisig)':
-        case 'btc (pin-protected)':
-          dataKey = 'btc'
-          break
-        default:
-      }
+    let dataKey = sellCurrency.toLowerCase()
+    switch (sellCurrency.toLowerCase()) {
+      case 'btc (sms-protected)':
+      case 'btc (multisig)':
+      case 'btc (pin-protected)':
+        dataKey = 'btc'
+        break
+      default:
+    }
 
-      if ((user[`${dataKey}Data`] && user[`${dataKey}Data`].infoAboutCurrency)
-        || (user.tokensData[dataKey] && user.tokensData[dataKey].infoAboutCurrency)
-      ) {
-        const currencyData = (user.tokensData[dataKey] && user.tokensData[dataKey].infoAboutCurrency)
-          ? user.tokensData[dataKey]
-          : user[`${dataKey}Data`]
+    if ((user[`${dataKey}Data`] && user[`${dataKey}Data`].infoAboutCurrency)
+      || (user.tokensData[dataKey] && user.tokensData[dataKey].infoAboutCurrency)
+    ) {
+      const currencyData = (user.tokensData[dataKey] && user.tokensData[dataKey].infoAboutCurrency)
+        ? user.tokensData[dataKey]
+        : user[`${dataKey}Data`]
 
-        resolve(currencyData.infoAboutCurrency.price_usd)
-      } else {
-        resolve(1)
-      }
+      resolve(currencyData.infoAboutCurrency.price_usd)
     } else {
-      console.warn(`Unknown fiat ${buyCurrency}. Use one to one exchange rate`)
       resolve(1)
     }
   })
