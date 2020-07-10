@@ -1007,6 +1007,18 @@ const getTransactionUser = (address) => {
 
 const getTransactionSMS = (address) => { return getTransaction(address) }
 
+const getTransactionPIN = (address) => {
+  const {
+    user: {
+      btcMultisigPinData: {
+        address: pinAddress,
+      },
+    },
+  } = getState()
+
+  return getTransaction((address) ? address : pinAddress, `btc (pin-protected)`)
+}
+
 const getTransactionG2FA = () => { }
 
 const getInvoicesSMS = () => {
@@ -1313,6 +1325,7 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
         privateKey,
         publicKeys,
         publicKey,
+        address: pinAddress,
       },
       btcData: {
         address,
@@ -1337,7 +1350,7 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
     feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber() // Admin fee in satoshi
   }
 
-  feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, method: 'send_2fa' })
+  feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, method: 'send_2fa', address: pinAddress })
 
 
   const unspents = await fetchUnspents(from)
@@ -2270,6 +2283,7 @@ export default {
   checkPinMnemonic,
   signPinMnemonic,
   checkPinCanRestory,
+  getTransactionPIN,
 
   // User multisig
   login_USER,
