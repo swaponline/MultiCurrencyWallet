@@ -187,6 +187,7 @@ export default class RestoryMnemonicWallet extends React.Component {
       const btcPrivKey = await actions.btc.login(false, mnemonic)
       const btcSmsKey = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
       localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, btcSmsKey)
+      localStorage.setItem(constants.localStorage.isWalletCreate, true)
 
       await actions.eth.login(false, mnemonic)
 
