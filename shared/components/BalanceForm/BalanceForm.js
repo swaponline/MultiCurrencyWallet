@@ -28,6 +28,7 @@ function BalanceForm({
   isFetching = false,
   showButtons = true,
   type,
+  singleWallet = false,
 }) {
   const [selectedCurrency, setActiveCurrency] = useState(activeCurrency)
 
@@ -65,7 +66,10 @@ function BalanceForm({
     <div styleName={`${isWidgetBuild && !config.isFullBuild ? 'yourBalance widgetBuild' : 'yourBalance'} ${isDark ? 'dark' : ''}`}>
       <div styleName="yourBalanceTop" className="data-tut-widget-balance">
         <p styleName="yourBalanceDescr">
-          <FormattedMessage id="Yourtotalbalance" defaultMessage="Ваш общий баланс" />
+          {singleWallet
+            ? <FormattedMessage id="YourWalletbalance" defaultMessage="Баланс" />
+            : <FormattedMessage id="Yourtotalbalance" defaultMessage="Ваш общий баланс" />
+          }
         </p>
         <div styleName="yourBalanceValue">
           {isFetching && (
