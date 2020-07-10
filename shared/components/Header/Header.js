@@ -77,18 +77,7 @@ export default class Header extends Component {
     } = props;
     const { exchange, home, wallet, history: historyLink } = links;
     const { products, invest, history } = messages;
-    const {
-      lastCheckBalance,
-      wasCautionPassed,
-      isWalletCreate,
-    } = constants.localStorage;
-
-    if (
-      localStorage.getItem(lastCheckBalance) ||
-      localStorage.getItem(wasCautionPassed)
-    ) {
-      localStorage.setItem(isWalletCreate, true);
-    }
+    const { isWalletCreate } = constants.localStorage;
 
     const dinamicPath = pathname.includes(exchange)
       ? `${unlocalisedUrl(intl.locale, pathname)}`
