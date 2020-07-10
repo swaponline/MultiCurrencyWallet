@@ -390,7 +390,7 @@
   },
   {
     "id": "SwapProgress111",
-    "message": "Creating Bitcoin Script. \n It can take a few minutes",
+    "message": "Depositing BTC to the contract. \n It can take a few minutes",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
@@ -730,7 +730,7 @@
   },
   {
     "id": "BtcToEthToken167",
-    "message": "3. Creating Bitcoin Script. \n Please wait, it can take a few minutes"
+    "message": "3. Depositing BTC to the contract. \n Please wait, it can take a few minutes"
   },
   {
     "id": "BtcToEthToken172",
@@ -2655,7 +2655,7 @@
   },
   {
     "id": "BtcToEthToken222",
-    "message": "Creating Bitcoin Script. \n Please wait, it can take a few minutes"
+    "message": "Depositing BTC to the contract. \n Please wait, it can take a few minutes"
   },
   {
     "id": "deposit213",
@@ -3065,7 +3065,7 @@
   },
   {
     "id": "BitcoinBuyText33",
-    "message": "Creating Bitcoin Script. \n It can take a few minutes",
+    "message": "Depositing BTC to the contract. \n It can take a few minutes",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
