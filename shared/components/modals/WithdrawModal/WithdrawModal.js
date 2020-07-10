@@ -196,7 +196,12 @@ export default class WithdrawModal extends React.Component {
     const {
       data: { currency },
     } = this.props
-    const { isEthToken } = this.state
+    const {
+      isEthToken,
+      wallet: {
+        address,
+      },
+    } = this.state
 
     const currentCoin = currency.toLowerCase()
 
@@ -222,6 +227,7 @@ export default class WithdrawModal extends React.Component {
       minAmount[currentCoin] = await helpers[currentCoin].estimateFeeValue({
         method: 'send',
         speed: 'fast',
+        address,
       })
     }
   }

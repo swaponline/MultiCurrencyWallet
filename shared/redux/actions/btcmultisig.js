@@ -1325,6 +1325,7 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
         privateKey,
         publicKeys,
         publicKey,
+        address: pinAddress,
       },
       btcData: {
         address,
@@ -1349,7 +1350,7 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
     feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber() // Admin fee in satoshi
   }
 
-  feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, method: 'send_2fa' })
+  feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, method: 'send_2fa', address: pinAddress })
 
 
   const unspents = await fetchUnspents(from)
