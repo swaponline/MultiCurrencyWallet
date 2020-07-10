@@ -417,6 +417,7 @@ const setTransactions = async () => {
       // actions.btc.getInvoices(),
       // ... (isBtcSweeped) ? [] : [actions.btc.getInvoices(actions.btc.getSweepAddress())],
       actions.btcmultisig.getTransactionSMS(),
+      actions.btcmultisig.getTransactionPIN(),
       // actions.btcmultisig.getInvoicesSMS(),
       actions.btcmultisig.getTransactionUser(),
       // actions.btcmultisig.getInvoicesUser(),
