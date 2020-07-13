@@ -64,9 +64,8 @@ export default class App extends React.Component {
     this.state = {
       fetching: false,
       multiTabs: false,
-      error: ""
-    };
-    actions.user.getFiats()
+      error: "",
+    }
   }
 
 

@@ -204,7 +204,6 @@ export default class CurrencyWallet extends Component {
       hiddenCoinsList,
     } = this.state
 
-    this.getFiats()
     actions.user.getBalances()
 
     if (isRedirecting) {
@@ -287,10 +286,6 @@ export default class CurrencyWallet extends Component {
 
     const { activeFiat } = this.props
     const { activeFiat: prevFiat } = prevProps
-
-    if (activeFiat !== prevFiat) {
-      this.getFiats()
-    }
 
     let {
       match: {
@@ -595,14 +590,6 @@ export default class CurrencyWallet extends Component {
     actions.history.setTransactions(address, currency.toLowerCase(), this.pullTransactions)
   }
 
-  getFiats = async () => {
-    const { activeFiat } = this.props
-    const { fiatsRates } = await actions.user.getFiats()
-
-    const fiatRate = fiatsRates.find(({ key }) => key === activeFiat)
-    this.setState(() => ({ multiplier: fiatRate.value }))
-  }
-
   render() {
     let {
       swapHistory,
@@ -629,7 +616,6 @@ export default class CurrencyWallet extends Component {
       txItems,
       filterValue,
       isLoading,
-      multiplier,
     } = this.state
 
     const currencyKey = getCurrencyKey(currency, true)
@@ -683,9 +669,9 @@ export default class CurrencyWallet extends Component {
     let currencyFiatBalance
     let changePercent
 
-    if (infoAboutCurrency && multiplier) {
+    if (infoAboutCurrency && infoAboutCurrency.price_fiat) {
       currencyFiatBalance =
-        BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * infoAboutCurrency.price_usd * multiplier
+        BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * infoAboutCurrency.price_fiat
       changePercent = infoAboutCurrency.percent_change_1h
     } else {
       currencyFiatBalance = 0
@@ -733,6 +719,7 @@ export default class CurrencyWallet extends Component {
                 handleInvoice={this.handleInvoice}
                 showButtons={actions.user.isOwner(address, currency)}
                 currency={currency.toLowerCase()}
+                singleWallet={true}
               />
             ) : (
                 <ContentLoader leftSideContent />
