@@ -35,7 +35,7 @@ function BalanceForm({
   const isWidgetBuild = config && config.isWidget
 
   useEffect(() => {
-    if (type === 'wallet' && activeCurrency !== 'usd') {
+    if (type === 'wallet' && activeCurrency !== activeFiat.toLowerCase()) {
       setActiveCurrency('btc')
     } else {
       setActiveCurrency(activeCurrency)

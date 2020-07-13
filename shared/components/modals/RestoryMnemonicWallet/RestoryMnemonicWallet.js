@@ -119,7 +119,7 @@ export default class RestoryMnemonicWallet extends React.Component {
       const { name, infoAboutCurrency, balance } = curr
       if ((!isWidgetBuild || widgetCurrencies.includes(name)) && infoAboutCurrency && balance !== 0) {
         acc.btcBalance += balance * infoAboutCurrency.price_btc
-        acc.usdBalance += balance * infoAboutCurrency.price_usd
+        acc.usdBalance += balance * ((infoAboutCurrency.price_fiat) ? infoAboutCurrency.price_fiat : 1)
       }
       return acc
     }, { btcBalance: 0, usdBalance: 0 })

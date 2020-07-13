@@ -88,8 +88,8 @@ export default class CurrencyList extends Component {
               {currentBalance} {getCurrencyKey(currency, true).toUpperCase()}
             </span>
             <span styleName="usd">
-              {(currentActiveAsset.infoAboutCurrency && currentActiveAsset.currencyRate)
-                ? (currentBalance * currentActiveAsset.currencyRate).toFixed(2)
+              {(currentActiveAsset.infoAboutCurrency && currentActiveAsset.infoAboutCurrency.price_fiat)
+                ? (currentBalance * currentActiveAsset.infoAboutCurrency.price_fiat).toFixed(2)
                 : (currentBalance * exCurrencyRate).toFixed(2)}{' '}
               {activeFiat}
             </span>
@@ -120,8 +120,8 @@ export default class CurrencyList extends Component {
                     {item.balance} {getCurrencyKey(item.currency, true).toUpperCase()}
                   </span>
                   <span styleName="usd">
-                    {(item.infoAboutCurrency && item.currencyRate)
-                      ? (item.balance * item.currencyRate).toFixed(2)
+                    {(item.infoAboutCurrency && item.infoAboutCurrency.price_fiat)
+                      ? (item.balance * item.infoAboutCurrency.price_fiat).toFixed(2)
                       : (item.balance * exCurrencyRate).toFixed(2)}{' '}
                     {activeFiat}
                   </span>

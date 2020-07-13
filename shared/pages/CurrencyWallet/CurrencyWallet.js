@@ -616,7 +616,6 @@ export default class CurrencyWallet extends Component {
       txItems,
       filterValue,
       isLoading,
-      multiplier,
     } = this.state
 
     const currencyKey = getCurrencyKey(currency, true)
@@ -670,9 +669,9 @@ export default class CurrencyWallet extends Component {
     let currencyFiatBalance
     let changePercent
 
-    if (infoAboutCurrency) {
+    if (infoAboutCurrency && infoAboutCurrency.price_fiat) {
       currencyFiatBalance =
-        BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * infoAboutCurrency.price_usd
+        BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * infoAboutCurrency.price_fiat
       changePercent = infoAboutCurrency.percent_change_1h
     } else {
       currencyFiatBalance = 0
