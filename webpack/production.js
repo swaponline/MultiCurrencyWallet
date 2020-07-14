@@ -23,6 +23,8 @@ export default (webpackConfig) => {
     'react-dom' : 'ReactDOM',
   }
 
+  webpackConfig.devtool = 'cheap-module-source-map'
+
   webpackConfig.module.rules = webpackConfig.module.rules.map((loader) => {
     if (loader.test.test('*.css') || loader.test.test('*.scss')) {
       loader.use = ExtractTextPlugin.extract({
