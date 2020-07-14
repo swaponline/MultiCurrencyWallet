@@ -2305,7 +2305,7 @@
   },
   {
     "id": "PartialFeeValueWarn",
-    "message": "Максимальная сумма доступная для продажи {maximumAmount}. Так как из суммы, которую вы имеете на балансе, вычтется комиссия майнеров до {estimatedFeeValue} {haveCurrency}"
+    "message": "Максимальная сумма доступная для продажи {maximumAmount} {haveCurrency}. Комиссия майнеров до {estimatedFeeValue} {haveCurrency}"
   },
   {
     "id": "PartialFeeValueWarn1",

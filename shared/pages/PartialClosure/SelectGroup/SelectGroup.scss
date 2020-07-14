@@ -10,6 +10,13 @@
   position: relative;
 }
 
+.dark {
+  .textUsd {
+    background: none;
+    color: white;
+  }
+}
+
 .smallTooltip {
   > span {
     position: absolute;
