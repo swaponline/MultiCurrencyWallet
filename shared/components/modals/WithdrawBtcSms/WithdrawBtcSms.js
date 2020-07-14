@@ -8,7 +8,7 @@ import config from 'app-config'
 
 import cssModules from 'react-css-modules'
 import styles from '../WithdrawModal/WithdrawModal.scss'
-import ownStyle from './WithdrawModalMultisig.scss'
+import ownStyle from './WithdrawBtcSms.scss'
 
 import { BigNumber } from 'bignumber.js'
 import Modal from 'components/modal/Modal/Modal'
@@ -59,58 +59,27 @@ export default class WithdrawModalMultisig extends React.Component {
     data: PropTypes.object,
   }
 
-  constructor(data) {
+  constructor(props) {
     super()
 
     const {
-      data: {
-        amount,
-        toAddress,
-        currency
-      },
-      items,
-    } = data
-
-    const currentDecimals = constants.tokenDecimals.btcmultisig
-    const selectedItem = items.filter(item => item.currency === currency)[0]
-
-    let usedAdminFee = false
-
-    let min = minAmount['btc_multisig_2fa']
-
-    if (config
-      && config.opts
-      && config.opts.fee
-      && config.opts.fee.btc
-    ) {
-      usedAdminFee = config.opts.fee.btc
-      if (usedAdminFee) {
-        // miner fee + minimal admin fee
-        min = BigNumber(min).plus(usedAdminFee.min).toNumber()
-      }
-    }
+      wallet,
+      invoice,
+      sendOptions,
+      beforeBalances,
+    } = props.data
 
     this.state = {
-      usedAdminFee,
-      step: 'fillform',
+      step: 'confirm',
       isShipped: false,
-      address: (toAddress) ? toAddress : '',
-      amount: (amount) ? amount : '',
       code: '',
       minus: '',
-      balance: selectedItem.balance || 0,
-      ethBalance: null,
-      isEthToken: false,
-      currentDecimals,
-      getFiat: 0,
       error: false,
       smsConfirmed: false,
-      ownTx: '',
       mnemonic: '',
       broadcastError: false,
       sendSmsTimeout: 0,
       sendSmsTimeoutTimer: false,
-      min,
     }
   }
 
@@ -126,87 +95,51 @@ export default class WithdrawModalMultisig extends React.Component {
   }
 
   componentDidMount() {
-    const { exCurrencyRate } = this.state
-    const { data: { currency } } = this.props
-
-    this.setBalanceOnState(currency)
-
-    this.fiatRates = {}
-    this.getFiatBalance()
-    this.actualyMinAmount()
-    //this.gotoSms()
-  }
-
-  getMinAmountForEthToken = () => {
-    const { data: { currency } } = this.props
-    const { currentDecimals } = this.state
-
-    let ethTokenMinAmount = '0.'
-
-    for (let a = 0; a < currentDecimals - 1; a++) {
-      ethTokenMinAmount += '0'
-    }
-
-    return ethTokenMinAmount += '1'
-  }
-
-  actualyMinAmount = async () => {
-    const {
-      usedAdminFee,
-    } = this.state
-
-    let min = await helpers['btc'].estimateFeeValue({ method: 'send_2fa', speed: 'fast' })
-    minAmount['btc_multisig_2fa'] = min
-
-    if (usedAdminFee) {
-      min = BigNumber(min).plus(usedAdminFee.min).toNumber()
-    }
-
     this.setState({
-      min,
+      isShipped: true,
+      step: 'confirm',
+      sendSmsStatus: 'sending',
+    }, async () => {
+      const {
+        data: {
+          wallet,
+          sendOptions,
+          invoice,
+          onReady,
+        },
+      } = this.props
+
+      const result = await actions.btcmultisig.sendSMSProtected(sendOptions)
+
+      console.log('sendSMSProtected result', result)
+      if (result && result.answer === 'ok') {
+        this.setState({
+          isShipped: false,
+          rawTx: (result.rawTx) ? result.rawTx : rawTx,
+          sendSmsStatus: 'sended',
+        })
+      } else {
+        this.setState({
+          isShipped: false,
+          sendSmsStatus: 'offline',
+          rawTx: (result.rawTx) ? result.rawTx : rawTx,
+        })
+      }
     })
-  }
-
-  setBalanceOnState = async (currency) => {
-    const { data: { unconfirmedBalance } } = this.props
-
-    const balance = await actions.btcmultisig.getBalance()
-
-    const finalBalance = unconfirmedBalance !== undefined && unconfirmedBalance < 0
-      ? new BigNumber(balance).plus(unconfirmedBalance).toString()
-      : balance
-    const ethBalance = await actions.eth.getBalance()
-
-    this.setState(() => ({
-      balance: finalBalance,
-      ethBalance,
-    }))
-  }
-
-  getFiatBalance = async () => {
-    const { data: { currency }, activeFiat } = this.props
-
-    const exCurrencyRate = await actions.user.getExchangeRate(currency, activeFiat.toLowerCase());
-    this.fiatRates[currency] = exCurrencyRate
-
-    this.setState(() => ({
-      exCurrencyRate,
-    }))
   }
 
   onFinishWithdraw = async (txId) => {
     const {
-      amount,
-      address: to,
-    } = this.state
-
-    const {
       data: {
-        currency,
-        address,
-        balance,
+        sendOptions: {
+          to,
+          amount,
+        },
+        wallet: {
+          address,
+        },
         invoice,
-        onReady
+        onReady,
       },
       name,
     } = this.props
@@ -216,18 +149,6 @@ export default class WithdrawModalMultisig extends React.Component {
     if (invoice) {
       await actions.invoices.markInvoice(invoice.id, "ready", txId, address);
     }
-    this.setBalanceOnState(currency)
-
-    /*
-    actions.modals.open(constants.modals.InfoPay, {
-      amount,
-      currency,
-      balance,
-      oldBalance: 0, // @Todo доделать old balance
-      txId,
-      toAddress: to
-    })
-    */
 
     // Сохраняем транзакцию в кеш
     const txInfoCache = {
@@ -260,8 +181,6 @@ export default class WithdrawModalMultisig extends React.Component {
 
   handleConfirmSMS = async () => {
     const { code } = this.state
-    const { address: to, amount } = this.state
-    const { data: { currency, address, balance, invoice, onReady }, name } = this.props
 
     const result = await actions.btcmultisig.confirmSMSProtected(code)
     if (result && result.txID) {
@@ -289,124 +208,10 @@ export default class WithdrawModalMultisig extends React.Component {
     }
   }
 
-  handleSubmit = async () => {
-    const {
-      address: to,
-      amount,
-      ownTx,
-      rawTx,
-    } = this.state
-
-    const {
-      data: {
-        currency,
-        address,
-        balance,
-        invoice,
-        onReady,
-      },
-      name,
-    } = this.props
-
-    this.setState(() => ({
-      isShipped: true,
-      step: 'confirm',
-    }))
-
-    this.setBalanceOnState(currency)
-
-    if (invoice && ownTx) {
-      await actions.invoices.markInvoice(invoice.id, 'ready', ownTx, address)
-      actions.loader.hide()
-      actions.notifications.show(constants.notifications.SuccessWithdraw, {
-        amount,
-        currency,
-        address: to,
-      })
-      this.setState(() => ({ isShipped: false, error: false }))
-      actions.modals.close(name)
-      if (onReady instanceof Function) {
-        onReady()
-      }
-      return
-    }
-
-    let sendOptions = {
-      to,
-      amount,
-      speed: 'fast',
-      from: address,
-    }
-
-    this.setState({
-      sendSmsStatus: 'sending',
-    })
-
-    const result = await actions.btcmultisig.sendSMSProtected(sendOptions)
-
-    console.log('sendSMSProtected result', result)
-    if (result && result.answer === 'ok') {
-      this.setState({
-        isShipped: false,
-        rawTx: (result.rawTx) ? result.rawTx : rawTx,
-        sendSmsStatus: 'sended',
-      })
-    } else {
-      this.setState({
-        isShipped: false,
-        sendSmsStatus: 'offline',
-        rawTx: (result.rawTx) ? result.rawTx : rawTx,
-      })
-    }
-  }
-
-  sellAllBalance = async () => {
-    const {
-      amount,
-      balance,
-      currency,
-      isEthToken,
-      min,
-      usedAdminFee,
-    } = this.state
-
-    const { data } = this.props
-
-    let minFee = min
-
-    if (usedAdminFee) {
-      let feeFromAmount = BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(balance)
-      minFee = BigNumber(minFee).plus(feeFromAmount).toNumber()
-    }
-
-    const balanceMiner = balance
-      ? balance !== 0
-        ? new BigNumber(balance).minus(minFee).toString()
-        : balance
-      : 'Wait please. Loading...'
-
-    this.setState({
-      amount: balanceMiner,
-    })
-  }
-
-  isEthOrERC20() { }
-
-  openScan = () => {
-    const { openScanCam } = this.state;
-
-    this.setState(() => ({
-      openScanCam: !openScanCam
-    }));
-  };
-
   handleMnemonicSign = () => {
     const {
       mnemonic,
       rawTx,
-      balance,
-      amount,
-      to,
     } = this.state
 
     if (!mnemonic || !actions.btc.validateMnemonicWords(mnemonic.trim())) {
@@ -479,26 +284,6 @@ export default class WithdrawModalMultisig extends React.Component {
     console.error(err);
   };
 
-  handleScan = data => {
-    if (data) {
-      const address = data.split(":")[1].split("?")[0];
-      const amount = data.split("=")[1];
-      this.setState(() => ({
-        address,
-        amount
-      }));
-      this.openScan();
-    }
-  };
-
-  addressIsCorrect() {
-    const { address } = this.state
-
-    if (!typeforce.isCoinAddress.BTC(address)) {
-      return actions.btc.addressIsCorrect(address)
-    } else return true
-  }
-
   handleClose = () => {
     const { name } = this.props
 
@@ -529,7 +314,9 @@ export default class WithdrawModalMultisig extends React.Component {
     const {
       name,
       data: {
-        currency,
+        wallet: {
+          currency,
+        },
         invoice,
       },
       tokenItems,
@@ -538,54 +325,8 @@ export default class WithdrawModalMultisig extends React.Component {
       portalUI,
     } = this.props
 
-    let {
-      min,
-      min: defaultMin,
-    } = this.state
 
-    if (usedAdminFee) {
-      if (amount) {
-        let feeFromAmount = BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount)
-        if (BigNumber(usedAdminFee.min).isGreaterThan(feeFromAmount)) feeFromAmount = BigNumber(usedAdminFee.min)
-
-        min = BigNumber(min).plus(feeFromAmount).toNumber() // Admin fee in satoshi
-      }
-    }
-
-    const linked = Link.all(this, 'address', 'amount', 'code', 'ownTx', 'mnemonic')
-
-    const dataCurrency = currency.toUpperCase()
-
-    const isDisabled =
-      !address || !amount || isShipped || ownTx
-      || !this.addressIsCorrect()
-      || BigNumber(amount).isGreaterThan(balance)
-      || BigNumber(amount).dp() > currentDecimals
-
-    const NanReplacement = balance || '...'
-    const getFiat = amount * exCurrencyRate
-
-    if (new BigNumber(amount).isGreaterThan(0)) {
-      linked.amount.check((value) => new BigNumber(value).isLessThanOrEqualTo(balance), (
-        <div style={{ width: '340px', fontSize: '12px' }}>
-          <FormattedMessage
-            id="Withdrow170"
-            defaultMessage="The amount must be no more than your balance"
-            values={{
-              min,
-              currency: `${currency}`,
-            }}
-          />
-        </div>
-      ))
-    }
-
-    if (this.state.amount < 0) {
-      this.setState({
-        amount: '',
-        minus: true,
-      })
-    }
+    const linked = Link.all(this, 'code', 'mnemonic')
 
     const labels = defineMessages({
       withdrowModal: {
@@ -608,9 +349,6 @@ export default class WithdrawModalMultisig extends React.Component {
 
     const formRender = (
       <Fragment>
-        {openScanCam && (
-          <QrReader openScan={this.openScan} handleError={this.handleError} handleScan={this.handleScan} />
-        )}
         {invoice &&
           <InvoiceInfoBlock invoiceData={invoice} />
         }
@@ -647,163 +385,6 @@ export default class WithdrawModalMultisig extends React.Component {
             <Button styleName="useAuthMethodButton" blue onClick={this.handleSwitchToSms}>
               <FormattedMessage id="WithdrawSMS_UseSMS" defaultMessage="Использовать смс-код" />
             </Button>
-          </Fragment>
-        }
-        {step === 'fillform' &&
-          <Fragment>
-            <p styleName="notice dashboardViewNotice">
-              <FormattedMessage
-                id="Withdrow213"
-                defaultMessage="Please note: Fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction"
-                values={{ minAmount: `${min}`, br: <br />, data: `${dataCurrency}` }} />
-            </p>
-            <div styleName="highLevel" style={{ marginBottom: "20px" }}>
-              <FieldLabel inRow>
-                <span style={{ fontSize: '16px' }}>
-                  <FormattedMessage id="Withdrow1194" defaultMessage="Address " />
-                </span>
-                {' '}
-                <Tooltip id="WtH203" >
-                  <div style={{ textAlign: 'center' }}>
-                    <FormattedMessage
-                      id="WTH275"
-                      defaultMessage="Make sure the wallet you{br}are sending the funds to supports {currency}"
-                      values={{ br: <br />, currency: `${currency.toUpperCase()}` }}
-                    />
-                  </div>
-                </Tooltip>
-              </FieldLabel>
-              <Input
-                valueLink={linked.address}
-                focusOnInit
-                pattern="0-9a-zA-Z:"
-                placeholder={`Enter ${currency.toUpperCase()} address to transfer`}
-                qr
-                withMargin
-                openScan={this.openScan}
-              />
-              {address && !this.addressIsCorrect() && (
-                <div styleName="rednote">
-                  <FormattedMessage
-                    id="WithdrawIncorectAddress"
-                    defaultMessage="Your address not correct" />
-                </div>
-              )}
-            </div>
-            <div styleName={`lowLevel ${isDark ? 'dark' : ''}`} style={{ marginBottom: '50px' }}>
-              <p styleName="balance">
-                {balance} {`BTC`}
-              </p>
-              <FieldLabel>
-                <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
-              </FieldLabel>
-
-              <div styleName="group">
-                <Input
-                  styleName="input"
-                  valueLink={linked.amount}
-                  pattern="0-9\."
-                  placeholder="Enter the amount"
-                  fiat={getFiat.toFixed(2)}
-                  onKeyDown={inputReplaceCommaWithDot}
-                />
-                <div style={{ marginLeft: "15px" }}>
-                  <Button blue big onClick={this.sellAllBalance} data-tip data-for="Withdrow134">
-                    <FormattedMessage id="Select210" defaultMessage="MAX" />
-                  </Button>
-                </div>
-                {!isMobile && (
-                  <ReactTooltip id="Withdrow134" type="light" effect="solid" styleName="r-tooltip">
-                    <FormattedMessage
-                      id="WithdrawButton32"
-                      defaultMessage="when you click this button, in the field, an amount equal to your balance minus the miners commission will appear"
-                    />
-                  </ReactTooltip>
-                )}
-                {!linked.amount.error && (
-                  <div styleName={minus ? "rednote" : "note"}>
-                    <FormattedMessage
-                      id="WithdrawModal256"
-                      defaultMessage="No less than {minAmount}"
-                      values={{ minAmount: `${defaultMin}` }}
-                    />
-                  </div>
-                )}
-              </div>
-            </div>
-            <div styleName="sendBtnsWrapper">
-              <div styleName="actionBtn">
-                <Button blue big fill disabled={isDisabled} onClick={this.handleSubmit}>
-                  {isShipped ? (
-                    <Fragment>
-                      <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
-                    </Fragment>
-                  ) : (
-                      <Fragment>
-                        <FormattedMessage id="WithdrawModal111" defaultMessage="Send" />
-                      </Fragment>
-                    )}
-                </Button>
-              </div>
-              <div styleName="actionBtn">
-                <Button big fill gray onClick={this.handleClose}>
-                  <Fragment>
-                    <FormattedMessage id="WithdrawModalCancelBtn" defaultMessage="Cancel" />
-                  </Fragment>
-                </Button>
-              </div>
-            </div>
-            {
-              error && (
-                <div styleName="rednote">
-                  <FormattedMessage
-                    id="WithdrawModalErrorSend"
-                    defaultMessage="{errorName} {currency}:{br}{errorMessage}"
-                    values={{
-                      errorName: intl.formatMessage(error.name),
-                      errorMessage: intl.formatMessage(error.message),
-                      br: <br />,
-                      currency: `${currency}`,
-                    }}
-                  />
-                </div>
-              )
-            }
-            {invoice &&
-              <Fragment>
-                <hr />
-                <div styleName={`lowLevel ${isDark ? 'dark' : ''}`} style={{ marginBottom: '50px' }}>
-                  <div styleName="groupField">
-                    <div styleName="downLabel">
-                      <FieldLabel inRow>
-                        <span styleName="mobileFont">
-                          <FormattedMessage id="WithdrowOwnTX" defaultMessage="Или укажите TX" />
-                        </span>
-                      </FieldLabel>
-                    </div>
-                  </div>
-                  <div styleName="group">
-                    <Input
-                      styleName="input"
-                      valueLink={linked.ownTx}
-                      placeholder={`${intl.formatMessage(labels.ownTxPlaceholder)}`}
-                    />
-                  </div>
-                </div>
-                <Button styleName="buttonFull" big blue fullWidth disabled={(!(ownTx) || isShipped)} onClick={this.handleSubmit}>
-                  {isShipped
-                    ? (
-                      <Fragment>
-                        <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
-                      </Fragment>
-                    )
-                    : (
-                      <FormattedMessage id="WithdrawModalInvoiceSaveTx" defaultMessage="Отметить как оплаченный" />
-                    )
-                  }
-                </Button>
-              </Fragment>
-            }
           </Fragment>
         }
 

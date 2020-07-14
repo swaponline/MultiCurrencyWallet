@@ -353,8 +353,18 @@ export default class WithdrawModal extends React.Component {
       })
       return
     }
+
     if (wallet.isSmsProtected) {
       console.log('Withdraw from sms protected', wallet, invoice, sendOptions, beforeBalances)
+      actions.modals.close(name)
+      actions.modals.open(constants.modals.WithdrawBtcSms, {
+        wallet,
+        invoice,
+        sendOptions,
+        beforeBalances,
+        onReady,
+        adminFee,
+      })
       return
     }
     if (wallet.isUserProtected) {

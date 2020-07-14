@@ -207,8 +207,8 @@ export default class Row extends Component {
     } = constants.modals
 
     let withdrawModalType = Withdraw
-    if (currency === 'BTC (SMS-Protected)')
-      withdrawModalType = WithdrawMultisigSMS
+    //if (currency === 'BTC (SMS-Protected)')
+    //  withdrawModalType = WithdrawMultisigSMS
     if (currency === 'BTC (Multisig)') withdrawModalType = WithdrawMultisigUser
 
     let targetCurrency = currency
