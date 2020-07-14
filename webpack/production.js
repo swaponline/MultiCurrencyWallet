@@ -36,7 +36,7 @@ export default (webpackConfig) => {
   })
 
   webpackConfig.plugins.push(
-    // new TerserPlugin(),
+    new TerserPlugin(),
     new WebpackRequireFrom({
       variableName: 'publicUrl',
       suppressErrors: true,
