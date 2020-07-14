@@ -54,6 +54,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
       isBalanceFetching,
       tokensData,
       multisigStatus,
+      multisigPendingCount,
     },
   }) => ({
     items: [
@@ -74,6 +75,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     activeCurrency,
     isBalanceFetching,
     multisigStatus,
+    multisigPendingCount,
   })
 )
 @injectIntl
@@ -204,7 +206,6 @@ export default class CurrencyWallet extends Component {
       hiddenCoinsList,
     } = this.state
 
-    this.getFiats()
     actions.user.getBalances()
 
     if (isRedirecting) {
@@ -259,8 +260,8 @@ export default class CurrencyWallet extends Component {
 
     if (this.props.history.location.pathname.toLowerCase() === withdrawUrl.toLowerCase() && balance !== 0) {
       let modalType = Withdraw
-      if (itemCurrency.isSmsProtected) modalType = WithdrawMultisigSMS
-      if (itemCurrency.isUserProtected) modalType = WithdrawMultisigUser
+      // if (itemCurrency.isSmsProtected) modalType = WithdrawMultisigSMS
+      // if (itemCurrency.isUserProtected) modalType = WithdrawMultisigUser
 
       actions.modals.open(modalType, {
         currency,
@@ -287,10 +288,6 @@ export default class CurrencyWallet extends Component {
 
     const { activeFiat } = this.props
     const { activeFiat: prevFiat } = prevProps
-
-    if (activeFiat !== prevFiat) {
-      this.getFiats()
-    }
 
     let {
       match: {
@@ -386,8 +383,8 @@ export default class CurrencyWallet extends Component {
         const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals
 
         let modalWithdraw = Withdraw
-        if (itemCurrency.isSmsProtected) modalWithdraw = WithdrawMultisigSMS
-        if (itemCurrency.isUserProtected) modalWithdraw = WithdrawMultisigUser
+        // if (itemCurrency.isSmsProtected) modalWithdraw = WithdrawMultisigSMS
+        // if (itemCurrency.isUserProtected) modalWithdraw = WithdrawMultisigUser
 
         const {
           txItems: oldTxItems,
@@ -595,14 +592,6 @@ export default class CurrencyWallet extends Component {
     actions.history.setTransactions(address, currency.toLowerCase(), this.pullTransactions)
   }
 
-  getFiats = async () => {
-    const { activeFiat } = this.props
-    const { fiatsRates } = await actions.user.getFiats()
-
-    const fiatRate = fiatsRates.find(({ key }) => key === activeFiat)
-    this.setState(() => ({ multiplier: fiatRate.value }))
-  }
-
   render() {
     let {
       swapHistory,
@@ -618,6 +607,7 @@ export default class CurrencyWallet extends Component {
       activeFiat,
       multisigStatus,
       activeCurrency,
+      multisigPendingCount,
     } = this.props
 
     const {
@@ -629,7 +619,6 @@ export default class CurrencyWallet extends Component {
       txItems,
       filterValue,
       isLoading,
-      multiplier,
     } = this.state
 
     const currencyKey = getCurrencyKey(currency, true)
@@ -683,9 +672,9 @@ export default class CurrencyWallet extends Component {
     let currencyFiatBalance
     let changePercent
 
-    if (infoAboutCurrency && multiplier) {
+    if (infoAboutCurrency && infoAboutCurrency.price_fiat) {
       currencyFiatBalance =
-        BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * infoAboutCurrency.price_usd * multiplier
+        BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * infoAboutCurrency.price_fiat
       changePercent = infoAboutCurrency.percent_change_1h
     } else {
       currencyFiatBalance = 0
@@ -733,6 +722,8 @@ export default class CurrencyWallet extends Component {
                 handleInvoice={this.handleInvoice}
                 showButtons={actions.user.isOwner(address, currency)}
                 currency={currency.toLowerCase()}
+                singleWallet={true}
+                multisigPendingCount={multisigPendingCount}
               />
             ) : (
                 <ContentLoader leftSideContent />

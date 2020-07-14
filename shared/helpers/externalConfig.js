@@ -3,6 +3,8 @@ import util from 'swap.app/util'
 import actions from 'redux/actions'
 import { constants } from 'swap.app'
 import BigNumber from 'bignumber.js'
+import { getState } from 'redux/core'
+import reducers from 'redux/core/reducers'
 
 
 const GetCustromERC20 = () => {
@@ -44,7 +46,15 @@ const externalConfig = () => {
       userDataPluginApi: false,
     },
     buyViaCreditCardLink: false,
+    activeFiat: 'USD',
   }
+
+  if (window
+    && window.DEFAULT_FIAT
+  ) {
+    config.opts.activeFiat = window.DEFAULT_FIAT
+  }
+  reducers.user.setActiveFiat({ activeFiat: config.opts.activeFiat })
 
   if (window
     && window.showHowItWorksOnExchangePage

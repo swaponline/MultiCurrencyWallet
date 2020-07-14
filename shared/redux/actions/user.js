@@ -187,36 +187,6 @@ const getBalances = () => {
   })
 }
 
-const getFiats = () => {
-  reducers.user.setActiveFiat({ activeFiat: window.DEFAULT_FIAT || 'USD' })
-
-  return new Promise((resolve, reject) => {
-
-    apiLooper.get('noxon', `/worldCurrencyPrices.php`, {
-      cacheResponse: 30 * 60 * 1000, // Кеш запроса 30 минут,
-      inQuery: {
-        delay: 500,
-        name: `worldCurrencyPrices`,
-      },
-    }).then((data) => {
-      const { quotes } = data
-
-      if (quotes) {
-        const fiatsRates = Object.keys(quotes).map(el => {
-          const key = el
-          return ({ key: key.slice(3), value: quotes[key] })
-        })
-        const fiats = fiatsRates.map(({ key }) => key)
-
-        reducers.user.setFiats({ fiats })
-
-        resolve({ fiatsRates, fiats })
-      }
-    }).catch(e => console.error(e))
-  })
-
-}
-
 const customRate = (cur) => {
   const wTokens = window.widgetERC20Tokens
 
@@ -254,14 +224,20 @@ const getExchangeRate = (sellCurrency, buyCurrency) => {
       default:
     }
 
-    if ((user[`${dataKey}Data`] && user[`${dataKey}Data`].infoAboutCurrency)
-      || (user.tokensData[dataKey] && user.tokensData[dataKey].infoAboutCurrency)
+    if ((user[`${dataKey}Data`] 
+        && user[`${dataKey}Data`].infoAboutCurrency
+        && user[`${dataKey}Data`].infoAboutCurrency.price_fiat
+      ) || (
+        user.tokensData[dataKey] 
+        && user.tokensData[dataKey].infoAboutCurrency
+        && user.tokensData[dataKey].infoAboutCurrency.price_fiat
+      )
     ) {
       const currencyData = (user.tokensData[dataKey] && user.tokensData[dataKey].infoAboutCurrency)
         ? user.tokensData[dataKey]
         : user[`${dataKey}Data`]
 
-      resolve(currencyData.infoAboutCurrency.price_usd)
+      resolve(currencyData.infoAboutCurrency.price_fiat)
     } else {
       resolve(1)
     }
@@ -287,11 +263,7 @@ const getInfoAboutCurrency = (currencyNames) =>
     const url = 'https://noxon.wpmix.net/cursAll.php'
     reducers.user.setIsFetching({ isFetching: true })
 
-    const {
-      user: {
-        activeFiat: fiat,
-      },
-    } = getState()
+    const fiat = (config && config.opts && config.opts.activeFiat) ? config.opts.activeFiat : `USD`
 
     request.get(url, {
       cacheResponse: 60 * 60 * 1000, // кеш 1 час
@@ -318,8 +290,7 @@ const getInfoAboutCurrency = (currencyNames) =>
             const priceInBtc = currencyInfoItem.quote[fiat].price / btcPrice
             const currencyInfo = {
               ...currencyInfoItem.quote[fiat],
-              price_usd: currencyInfoItem.quote[fiat].price, // @ToDo - Need refactoring
-              // price_fiat: currencyInfoItem.quote['fiat'].price,
+              price_fiat: currencyInfoItem.quote[fiat].price,
               price_btc: priceInBtc,
             }
 
@@ -569,7 +540,6 @@ export default {
   getInfoAboutCurrency,
   getAuthData,
   getWithdrawWallet,
-  getFiats,
   fetchMultisigStatus,
   pullActiveCurrency,
 }

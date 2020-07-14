@@ -1,0 +1,21 @@
+.multisignConfirmTxLink {
+  word-break: break-all;
+}
+
+.centerAlign {
+  text-align: center;
+}
+
+.centerAlign button {
+  display: inline-block;
+}
+
+.sendBtnsWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.actionBtn {
+  width: calc(50% - 5px);
+  position: relative;
+}
