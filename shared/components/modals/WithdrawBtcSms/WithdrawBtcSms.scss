@@ -1,0 +1,39 @@
+.smsCodeHolder {
+  max-width: 200px;
+  margin: 2rem auto 0;;
+}
+
+.smsServerStatus {
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 14px;
+}
+
+.confirmSmsCode {
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+.useAuthMethodButton {
+  display: block;
+  margin: 0 auto;
+}
+
+.mnemonicUseNote {
+  margin-bottom: 2rem;
+}
+
+.marginHr {
+  margin: 2rem 0;
+}
+
+.sendBtnsWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.actionBtn {
+  width: calc(50% - 5px);
+  position: relative;
+}
