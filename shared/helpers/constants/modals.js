@@ -39,4 +39,6 @@ export default {
   WalletAddressModal: 'WalletAddressModal',
   HowToExportModal: 'HowToExportModal',
   AlertWindow: 'AlertWindow',
+  WithdrawBtcSms: 'WithdrawBtcSms',
+  WithdrawBtcMultisig: 'WithdrawBtcMultisig',
 }

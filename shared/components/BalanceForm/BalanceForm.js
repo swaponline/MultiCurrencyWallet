@@ -29,6 +29,7 @@ function BalanceForm({
   showButtons = true,
   type,
   singleWallet = false,
+  multisigPendingCount = 10,
 }) {
   const [selectedCurrency, setActiveCurrency] = useState(activeCurrency)
 
@@ -60,6 +61,10 @@ function BalanceForm({
   const handleClickCurrency = (currency) => {
     setActiveCurrency(currency)
     actions.user.pullActiveCurrency(currency)
+  }
+
+  const handleGoToMultisig = () => {
+    actions.multisigTx.goToLastWallet()
   }
 
   return (
@@ -117,6 +122,19 @@ function BalanceForm({
           </button>
         </div>
       </div>
+      {multisigPendingCount > 0 && (
+        <div>
+          <p styleName="multisigWaitCount" onClick={handleGoToMultisig}>
+            <FormattedMessage
+              id="Balance_YouAreHaveNotSignegTx"
+              defaultMessage="{count} transaction needs your confirmation"
+              values={{
+                count: multisigPendingCount,
+              }}
+            />
+          </p>
+        </div>
+      )}
       <div
         className={cx({
           [styles.yourBalanceBottomWrapper]: true,
