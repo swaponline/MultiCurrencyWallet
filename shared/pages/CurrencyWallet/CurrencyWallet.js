@@ -54,6 +54,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
       isBalanceFetching,
       tokensData,
       multisigStatus,
+      multisigPendingCount,
     },
   }) => ({
     items: [
@@ -74,6 +75,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     activeCurrency,
     isBalanceFetching,
     multisigStatus,
+    multisigPendingCount,
   })
 )
 @injectIntl
@@ -605,6 +607,7 @@ export default class CurrencyWallet extends Component {
       activeFiat,
       multisigStatus,
       activeCurrency,
+      multisigPendingCount,
     } = this.props
 
     const {
@@ -720,6 +723,7 @@ export default class CurrencyWallet extends Component {
                 showButtons={actions.user.isOwner(address, currency)}
                 currency={currency.toLowerCase()}
                 singleWallet={true}
+                multisigPendingCount={multisigPendingCount}
               />
             ) : (
                 <ContentLoader leftSideContent />

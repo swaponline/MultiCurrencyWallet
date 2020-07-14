@@ -35,6 +35,12 @@
   bottom: -2px;
 }
 
+.txWaitConfirm {
+  padding-right: 10px;
+  color: #6144e5;
+  cursor: pointer;
+}
+
 .disableWth {
   @include inline-block;
   height: 40px;
@@ -442,9 +448,11 @@ tr button[disabled]:hover {
     }
   }
 
-  .unconfirmedBalance {
+  .unconfirmedBalance,
+  .assetsTableValue {
     background: #222528;
   }
+
 }
 
 .assetsTableCurrency {
@@ -503,6 +511,7 @@ tr button[disabled]:hover {
   font-size: 12px;
   font-weight: 500;
   color: #8e9aa3;
+  background: #fff;
 
   img {
     margin-top: -3px;

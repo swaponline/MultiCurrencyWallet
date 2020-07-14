@@ -26,6 +26,10 @@ const langLabels = defineMessages({
     id: 'RowWallet181',
     defaultMessage: `Unconfirmed balance`,
   },
+  msConfirmCount: {
+    id: 'RowWallet_MsConfirmCountMobile',
+    defaultMessage: `{count} tx wait your confirm`,
+  },
 })
 
 @injectIntl
@@ -39,13 +43,15 @@ const langLabels = defineMessages({
         ethData: {
           address,
           privateKey,
-        }
+        },
+        multisigStatus,
       }
     },
     { currency }
   ) => ({
     activeFiat,
     decline: rememberedOrders.savedOrders,
+    multisigStatus,
     ethDataHelper: {
       address,
       privateKey,
@@ -544,7 +550,8 @@ export default class Row extends Component {
       intl: { locale },
       intl,
       activeFiat,
-      isDark
+      isDark,
+      multisigStatus,
     } = this.props
 
     const {
@@ -767,6 +774,13 @@ export default class Row extends Component {
       ]
     }
 
+    const msConfirmCount = (
+      itemData.isUserProtected
+      && multisigStatus
+      && multisigStatus[itemData.address]
+      && multisigStatus[itemData.address].count
+    ) ? multisigStatus[itemData.address].count : false
+
     if (
       this.props.itemData.isSmsProtected &&
       !this.props.itemData.isRegistered
@@ -945,12 +959,24 @@ export default class Row extends Component {
                 </Fragment>
               )}
 
-            {currencyFiatBalance && showBalance && !balanceError ? (
+            {(currencyFiatBalance && showBalance && !balanceError) || msConfirmCount ? (
               <div styleName="assetsTableValue">
-                {/* <img src={dollar} /> */}
-                <p>{BigNumber(currencyFiatBalance).dp(2, BigNumber.ROUND_FLOOR).toString()}</p>
-                <strong>{activeFiat}</strong>
-                {/* {inneedData && <span>   {`${inneedData.change} %`} </span>} */}
+                {msConfirmCount && !isMobile && (
+                  <p styleName="txWaitConfirm" onClick={this.goToCurrencyHistory}>
+                    {intl.formatMessage(
+                      langLabels.msConfirmCount,
+                      {
+                        count: msConfirmCount,
+                      }
+                    )}
+                  </p>
+                )}
+                {currencyFiatBalance && showBalance && !balanceError && (
+                  <>
+                    <p>{BigNumber(currencyFiatBalance).dp(2, BigNumber.ROUND_FLOOR).toString()}</p>
+                    <strong>{activeFiat}</strong>
+                  </>
+                )}
               </div>
             ) : (
                 ''

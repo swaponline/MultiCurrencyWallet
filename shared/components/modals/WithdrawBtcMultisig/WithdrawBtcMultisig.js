@@ -101,38 +101,7 @@ export default class WithdrawBtcMultisig extends React.Component {
           isShipped: false,
         })
       }
-
-      this.broadcastCancelFunc = actions.btcmultisig.broadcastTX2Room(
-        {
-          txRaw: result,
-          txId,
-          address: to,
-          amount,
-          currency: 'BTC',
-          invoice,
-        },
-        () => {
-          this.setState({
-            step: 'rawlink',
-            txRaw: result,
-            txId,
-            isShipped: false,
-          })
-        },
-        () => {
-          this.setState({
-            step: 'rawlink',
-            txRaw: result,
-            txId,
-            isShipped: false,
-          })
-        }
-      )
     })
-  }
-
-  componentWillUnmount() {
-    if (this.broadcastCancelFunc) this.broadcastCancelFunc()
   }
 
   handleCopyLink = () => {
@@ -148,8 +117,17 @@ export default class WithdrawBtcMultisig extends React.Component {
   }
 
   handleReady = () => {
-    const { name } = this.props
-    actions.modals.close(name);
+    const {
+      name,
+      data: {
+        onReady,
+      },
+    } = this.props
+
+    actions.modals.close(name)
+    if (onReady instanceof Function) {
+      onReady()
+    }
   }
 
 

@@ -495,6 +495,7 @@ export default class Wallet extends Component {
             type="wallet"
             currency="btc"
             infoAboutCurrency={infoAboutCurrency}
+            multisigPendingCount={multisigPendingCount}
           />
         )}
       >
