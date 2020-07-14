@@ -340,24 +340,18 @@ export default class WithdrawModal extends React.Component {
       return
     }
 
-    if (wallet.isPinProtected) {
-      console.log('Withdraw from pin protected', wallet, invoice, sendOptions, beforeBalances)
-      actions.modals.close(name)
-      actions.modals.open(constants.modals.WithdrawBtcPin, {
-        wallet,
-        invoice,
-        sendOptions,
-        beforeBalances,
-        onReady,
-        adminFee,
-      })
-      return
-    }
+    if (wallet.isPinProtected
+      || wallet.isSmsProtected
+      || wallet.isUserProtected
+    ) {
+      let nextStepModal = constants.modals.WithdrawBtcPin
+      if (wallet.isSmsProtected)
+        nextStepModal = constants.modals.WithdrawBtcSms
+      if (wallet.isUserProtected)
+        nextStepModal = constants.modals.WithdrawBtcMultisig
 
-    if (wallet.isSmsProtected) {
-      console.log('Withdraw from sms protected', wallet, invoice, sendOptions, beforeBalances)
       actions.modals.close(name)
-      actions.modals.open(constants.modals.WithdrawBtcSms, {
+      actions.modals.open(nextStepModal, {
         wallet,
         invoice,
         sendOptions,
@@ -365,10 +359,6 @@ export default class WithdrawModal extends React.Component {
         onReady,
         adminFee,
       })
-      return
-    }
-    if (wallet.isUserProtected) {
-      console.log('Withdraw from user protected', wallet, invoice, sendOptions, beforeBalances)
       return
     }
 

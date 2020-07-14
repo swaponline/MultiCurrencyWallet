@@ -258,8 +258,8 @@ export default class CurrencyWallet extends Component {
 
     if (this.props.history.location.pathname.toLowerCase() === withdrawUrl.toLowerCase() && balance !== 0) {
       let modalType = Withdraw
-      //if (itemCurrency.isSmsProtected) modalType = WithdrawMultisigSMS
-      if (itemCurrency.isUserProtected) modalType = WithdrawMultisigUser
+      // if (itemCurrency.isSmsProtected) modalType = WithdrawMultisigSMS
+      // if (itemCurrency.isUserProtected) modalType = WithdrawMultisigUser
 
       actions.modals.open(modalType, {
         currency,
@@ -381,8 +381,8 @@ export default class CurrencyWallet extends Component {
         const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals
 
         let modalWithdraw = Withdraw
-        //if (itemCurrency.isSmsProtected) modalWithdraw = WithdrawMultisigSMS
-        if (itemCurrency.isUserProtected) modalWithdraw = WithdrawMultisigUser
+        // if (itemCurrency.isSmsProtected) modalWithdraw = WithdrawMultisigSMS
+        // if (itemCurrency.isUserProtected) modalWithdraw = WithdrawMultisigUser
 
         const {
           txItems: oldTxItems,

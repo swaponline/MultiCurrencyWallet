@@ -33,9 +33,10 @@ import HowToWithdrawModal from './HowToWithdrawModal/HowToWithdrawModal'
 import InfoInvoice from './InfoInvoice/InfoInvoice'
 
 import RegisterPINProtected from './RegisterPINProtected/RegisterPINProtected'
-import WithdrawBtcPin from './WithdrawBtcPin/WithdrawBtcPin'
 
+import WithdrawBtcPin from './WithdrawBtcPin/WithdrawBtcPin'
 import WithdrawBtcSms from './WithdrawBtcSms/WithdrawBtcSms'
+import WithdrawBtcMultisig from './WithdrawBtcMultisig/WithdrawBtcMultisig'
 
 import WalletAddressModal from './WalletAddressModal/WalletAddressModal'
 
@@ -50,7 +51,7 @@ export default {
   ShareModal,
   OfferModal,
   WithdrawModal,
-  WithdrawModalMultisigUser,
+  WithdrawModalMultisigUser, // Deprecated
   PrivateKeysModal,
   ImportKeys,
   ShowMoreCoins,
@@ -85,6 +86,7 @@ export default {
   RegisterSMSProtected,
   WithdrawBtcSms,
   WithdrawModalMultisig,  // Deprecated
+  WithdrawBtcMultisig, 
 
   HowToExportModal,
   AlertWindow,

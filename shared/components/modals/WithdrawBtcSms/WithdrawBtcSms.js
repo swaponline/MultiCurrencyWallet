@@ -37,17 +37,8 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 @injectIntl
 @connect(
   ({
-    currencies,
-    user: {
-      btcData,
-      activeFiat,
-      btcMultisigSMSData,
-    },
     ui: { dashboardModalsAllowed }
   }) => ({
-    activeFiat,
-    currencies: currencies.items,
-    items: [btcData, btcMultisigSMSData],
     dashboardView: dashboardModalsAllowed,
   })
 )
@@ -292,23 +283,13 @@ export default class WithdrawModalMultisig extends React.Component {
 
   render() {
     const {
-      address,
-      amount,
       code,
-      balance,
       isShipped,
-      minus,
-      ethBalance,
-      exCurrencyRate,
-      currentDecimals,
       error,
       mnemonic,
-      openScanCam,
       step,
-      ownTx,
       sendSmsTimeout,
       sendSmsStatus,
-      usedAdminFee,
     } = this.state
 
     const {
@@ -332,10 +313,6 @@ export default class WithdrawModalMultisig extends React.Component {
       withdrowModal: {
         id: 'withdrowTitle271',
         defaultMessage: `Send`,
-      },
-      ownTxPlaceholder: {
-        id: 'withdrawOwnTxPlaceholder',
-        defaultMessage: 'Если оплатили с другого источника'
       },
       smsPlaceholder: {
         id: 'withdrawSMSCodePlaceholder',

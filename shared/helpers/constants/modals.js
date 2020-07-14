@@ -40,4 +40,5 @@ export default {
   HowToExportModal: 'HowToExportModal',
   AlertWindow: 'AlertWindow',
   WithdrawBtcSms: 'WithdrawBtcSms',
+  WithdrawBtcMultisig: 'WithdrawBtcMultisig',
 }

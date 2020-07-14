@@ -200,17 +200,6 @@ export default class Row extends Component {
       intl: { locale },
     } = this.props
 
-    const {
-      Withdraw,
-      WithdrawMultisigSMS,
-      WithdrawMultisigUser,
-    } = constants.modals
-
-    let withdrawModalType = Withdraw
-    //if (currency === 'BTC (SMS-Protected)')
-    //  withdrawModalType = WithdrawMultisigSMS
-    if (currency === 'BTC (Multisig)') withdrawModalType = WithdrawMultisigUser
-
     let targetCurrency = currency
     switch (currency.toLowerCase()) {
       case 'btc (multisig)':
