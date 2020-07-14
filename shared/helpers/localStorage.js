@@ -22,6 +22,7 @@ const getPluginMethod = (name, data) => {
 
 const setItem = (key, value) => {
   if (isLocalStorageEnabled) {
+    /*
     const setItemPlugin = (
       config
       && config.opts
@@ -32,8 +33,11 @@ const setItem = (key, value) => {
     if (setItemPlugin) {
       getPluginMethod(setItemPlugin, { key, value })
     } else {
+      */
       window.localStorage.setItem(key, JSON.stringify(value))
+      /*
     }
+    */
   }
 }
 
