@@ -138,8 +138,6 @@ export default class PartialClosure extends Component {
     orders: [],
   };
 
-  static fiatRates = {};
-
   isPeerBanned(peerID) {
     if (
       bannedPeers[peerID] &&
@@ -191,6 +189,7 @@ export default class PartialClosure extends Component {
       document.body.style.overflow = 'hidden';
     }
 
+    this.fiatRates = {}
     this.onRequestAnswer = (newOrder, isAccepted) => { };
 
     const isRootPage =
@@ -436,6 +435,7 @@ export default class PartialClosure extends Component {
         haveCurrency,
         activeFiat.toLowerCase()
       ));
+
       const exGetRate = (this.fiatRates[
         getCurrency
       ] = await actions.user.getExchangeRate(
@@ -463,7 +463,7 @@ export default class PartialClosure extends Component {
         exHaveRate,
         exGetRate,
       }));
-      console.warn("Cryptonator offline");
+      console.warn("Cryptonator offline", e);
     }
   };
 
@@ -1412,11 +1412,10 @@ export default class PartialClosure extends Component {
               <p styleName="error">
                 <FormattedMessage
                   id="PartialPriceNoOrdersReduceAllInfo"
-                  defaultMessage="No orders found, try to reduce the amount,{br} Maximum available amount for buy: {maxForBuy}, {br}Maximum available amount for sell: {maxForSell}"
+                  defaultMessage="No orders found. Enter amount less than {maxForBuy}, {maxForSell}"
                   values={{
-                    br: <br />,
                     maxForBuy: `${maxAmount} ${getCurrency.toUpperCase()}`,
-                    maxForSell: ` {maxBuyAmount.toNumber()} {haveCurrency.toUpperCase()}`
+                    maxForSell: `${maxBuyAmount} ${haveCurrency.toUpperCase()}`
                   }}
                 />
               </p>
@@ -1473,7 +1472,7 @@ export default class PartialClosure extends Component {
                 <div>
                   <FormattedMessage
                     id="PartialFeeValueWarn"
-                    defaultMessage="The maximum amount you can sell is {maximumAmount}. Since will have to pay an additional miner fee up to {estimatedFeeValue} {haveCurrency}"
+                    defaultMessage="The maximum amount you can sell is {maximumAmount} {haveCurrency}. Miner fee up to {estimatedFeeValue} {haveCurrency}"
                     values={{
                       haveCurrency: haveCurrency.toUpperCase(),
                       estimatedFeeValue: estimatedFeeValues[haveCurrency],

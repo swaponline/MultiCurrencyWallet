@@ -224,11 +224,11 @@ const getExchangeRate = (sellCurrency, buyCurrency) => {
       default:
     }
 
-    if ((user[`${dataKey}Data`] 
-        && user[`${dataKey}Data`].infoAboutCurrency
-        && user[`${dataKey}Data`].infoAboutCurrency.price_fiat
-      ) || (
-        user.tokensData[dataKey] 
+    if ((user[`${dataKey}Data`]
+      && user[`${dataKey}Data`].infoAboutCurrency
+      && user[`${dataKey}Data`].infoAboutCurrency.price_fiat
+    ) || (
+        user.tokensData[dataKey]
         && user.tokensData[dataKey].infoAboutCurrency
         && user.tokensData[dataKey].infoAboutCurrency.price_fiat
       )

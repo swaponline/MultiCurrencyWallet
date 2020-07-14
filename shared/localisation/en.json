@@ -2083,7 +2083,11 @@
   },
   {
     "id": "PartialPriceNoOrdersReduceAllInfo",
-    "message": "No orders found, try to reduce the amount,{br} Maximum available amount for buy: {maxForBuy}, {br}Maximum available amount for sell: {maxForSell}"
+    "message": "No orders found. Enter amount less than {maxForBuy}, {maxForSell}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
   },
   {
     "id": "PartialPriceReduceMin",
@@ -2226,7 +2230,7 @@
   },
   {
     "id": "PartialFeeValueWarn",
-    "message": "The maximum amount you can sell is {maximumAmount}. Since will have to pay an additional miner fee up to {estimatedFeeValue} {haveCurrency}"
+    "message": "The maximum amount you can sell is {maximumAmount} {haveCurrency}. Miner fee up to {estimatedFeeValue} {haveCurrency}"
   },
   {
     "id": "PartialFeeValueWarn1",
