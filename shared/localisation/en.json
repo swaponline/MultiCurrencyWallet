@@ -319,6 +319,7 @@
     "id": "WithdrawModal11212",
     "message": "Processing ...",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModal/WithdrawModal.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.js"
@@ -2083,11 +2084,7 @@
   },
   {
     "id": "PartialPriceNoOrdersReduceAllInfo",
-    "message": "No orders found. Enter amount less than {maxForBuy}, {maxForSell}",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
+    "message": "No orders found. Enter amount less than {maxForBuy}, {maxForSell}"
   },
   {
     "id": "PartialPriceReduceMin",
@@ -3212,6 +3209,8 @@
     "id": "withdrowTitle271",
     "message": "Send",
     "files": [
+      "shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.js",
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModal/WithdrawModal.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.js"
@@ -4219,6 +4218,7 @@
     "id": "WithdrawMSUserFinish",
     "message": "Ready",
     "files": [
+      "shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.js"
     ]
   },
@@ -4226,6 +4226,7 @@
     "id": "WithdrawMSUserMessage",
     "message": "Send this link to other wallet owner",
     "files": [
+      "shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.js"
     ]
   },
@@ -4233,6 +4234,7 @@
     "id": "WithdrawMSUserReady",
     "message": "TX confirm link",
     "files": [
+      "shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.js"
     ]
   },
@@ -4403,6 +4405,7 @@
     "id": "WithdrawModal2225",
     "message": "Something went wrong, enter your current code please",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -4414,6 +4417,7 @@
     "id": "Withdrow2223",
     "message": "SMS code",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -4421,6 +4425,7 @@
     "id": "Withdrow2224",
     "message": "Confirm",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -4742,6 +4747,7 @@
     "id": "withdrawOwnTxPlaceholder",
     "message": "If paid from another source",
     "files": [
+      "shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.js",
       "shared/components/modals/WithdrawModal/WithdrawModal.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.js"
@@ -5426,6 +5432,7 @@
     "id": "withdrawSMSCodePlaceholder",
     "message": "Enter SMS-code",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5555,6 +5562,7 @@
     "message": "Secret phrase (12 words)",
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js",
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5595,6 +5603,7 @@
     "message": "Secret phrase (12 words):",
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js",
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5665,6 +5674,7 @@
     "id": "WithdrawSMS_BroadcastError",
     "message": "Fail broadcast transaction ({errorText})",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5672,6 +5682,7 @@
     "id": "WithdrawSMS_FailSignByMnemonic",
     "message": "Fail sign transaction",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5679,6 +5690,7 @@
     "id": "WithdrawSMS_MnemonicNote",
     "message": "If you didn’t receive your SMS code or you don’t have access to this number, you can use a secret phrase to restore your wallet",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5686,6 +5698,7 @@
     "id": "WithdrawSMS_MnemonicSignCaption",
     "message": "Confirm transaction by secret phrase (12 words)",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5693,6 +5706,7 @@
     "id": "WithdrawSMS_NotValidMnemonic",
     "message": "Secret phrase not valid",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5700,6 +5714,7 @@
     "id": "WithdrawSMS_ServerOffline",
     "message": "Authorization server is offline",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5707,6 +5722,7 @@
     "id": "WithdrawSMS_SmsSended",
     "message": "SMS with code sent",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5714,6 +5730,7 @@
     "id": "WithdrawSMS_SmsSending",
     "message": "Sending sms with confirm code",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5721,6 +5738,7 @@
     "id": "WithdrawSMS_UseMnemonic",
     "message": "Use secret phrase (12 words)",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5728,6 +5746,7 @@
     "id": "WithdrawSMS_UseSMS",
     "message": "Use SMS-code",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5735,6 +5754,7 @@
     "id": "WithdrawSMS_UseSMSNote",
     "message": "You can also use the SMS code sent to the attached phone number.",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5742,6 +5762,7 @@
     "id": "WithdrawSMS_WrongMnemonic",
     "message": "Secret phrase not valid",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5749,6 +5770,7 @@
     "id": "btcSMSProtectedSignByMnemonic",
     "message": "Use Passphrase",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -7280,6 +7302,69 @@
     "message": "Not enough balance.",
     "files": [
       "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Balance_YouAreHaveNotSignegTx",
+    "message": "{count} transaction needs your confirmation",
+    "files": [
+      "shared/components/BalanceForm/BalanceForm.js"
+    ]
+  },
+  {
+    "id": "multiSignJoinLink_ButtonCancel",
+    "message": "Cancel",
+    "files": [
+      "shared/components/modals/MultisignJoinLink/MultisignJoinLink.js"
+    ]
+  },
+  {
+    "id": "multiSignJoinLink_ButtonSaveMnemonic",
+    "message": "Save",
+    "files": [
+      "shared/components/modals/MultisignJoinLink/MultisignJoinLink.js"
+    ]
+  },
+  {
+    "id": "multiSignJoinLink_SaveYourMnemonic",
+    "message": "Please save your secret phrase (12 words).",
+    "files": [
+      "shared/components/modals/MultisignJoinLink/MultisignJoinLink.js"
+    ]
+  },
+  {
+    "id": "multiSignJoinLink_YouNeedSaveMnemonic",
+    "message": "To activate BTC-Multisig wallet you must save your secret phrase.",
+    "files": [
+      "shared/components/modals/MultisignJoinLink/MultisignJoinLink.js"
+    ]
+  },
+  {
+    "id": "BTCMS_SaveMnemonicButton",
+    "message": "Save secret phrase",
+    "files": [
+      "shared/pages/Multisign/Btc/Btc.js"
+    ]
+  },
+  {
+    "id": "BTCMS_SaveYourMnemonic",
+    "message": "Please save your secret phrase (12 words).",
+    "files": [
+      "shared/pages/Multisign/Btc/Btc.js"
+    ]
+  },
+  {
+    "id": "BTCMS_YouNeedSaveMnemonic",
+    "message": "To activate BTC-Multisig wallet you must save your secret phrase.",
+    "files": [
+      "shared/pages/Multisign/Btc/Btc.js"
+    ]
+  },
+  {
+    "id": "RowWallet_MsConfirmCountMobile",
+    "message": "{count} tx wait your confirm",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
     ]
   }
 ]
