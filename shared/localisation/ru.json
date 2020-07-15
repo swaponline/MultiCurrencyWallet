@@ -2170,7 +2170,11 @@
   },
   {
     "id": "PartialPriceNoOrdersReduceAllInfo",
-    "message": "Предложения не найдены, попробуйте изменить сумму,{br} Максимальная сумма для покупки: {maxForBuy}, {br}Максимальная сумма для продажи: {maxForSell}"
+    "message": "Предложения не найдены, введите сумму меньше {maxForBuy}, {maxForSell}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
   },
   {
     "id": "PartialPriceReduceMin",
@@ -2301,7 +2305,7 @@
   },
   {
     "id": "PartialFeeValueWarn",
-    "message": "Максимальная сумма доступная для продажи {maximumAmount}. Так как из суммы, которую вы имеете на балансе, вычтется комиссия майнеров до {estimatedFeeValue} {haveCurrency}"
+    "message": "Максимальная сумма доступная для продажи {maximumAmount} {haveCurrency}. Комиссия майнеров до {estimatedFeeValue} {haveCurrency}"
   },
   {
     "id": "PartialFeeValueWarn1",
@@ -4528,7 +4532,7 @@
   },
   {
     "id": "partial-tour-5",
-    "message": "Переключите эту кнопку, чтобы получать средства после обмена на внутренний кошелек на Swap.online или на другой кошелек",
+    "message": "Переключите э��у кнопку, чтобы получать средства после обмена на внутренний кошелек на Swap.online или на другой кошелек",
     "files": [
       "shared/components/Header/TourPartial/TourPartial.js"
     ]

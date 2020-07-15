@@ -127,8 +127,6 @@ export default class PartialClosure extends Component {
     orders: [],
   }
 
-  static fiatRates = {}
-
   isPeerBanned(peerID) {
     if (bannedPeers[peerID]
       && (bannedPeers[peerID] > Math.floor(new Date().getTime() / 1000))
@@ -161,7 +159,7 @@ export default class PartialClosure extends Component {
     super()
 
     this.onRequestAnswer = (newOrder, isAccepted) => { }
-
+    this.fiatRates = {}
     const isRootPage = history.location.pathname === '/' || history.location.pathname === '/ru'
     const { url, params: { buy, sell } } = match || { params: { buy: 'btc', sell: 'usdt' } }
 
@@ -1186,11 +1184,10 @@ export default class PartialClosure extends Component {
               <p styleName="error">
                 <FormattedMessage
                   id="PartialPriceNoOrdersReduceAllInfo"
-                  defaultMessage="No orders found, try to reduce the amount,{br} Maximum available amount for buy: {maxForBuy}, {br}Maximum available amount for sell: {maxForSell}"
+                  defaultMessage="No orders found. Enter amount less than {maxForBuy}, {maxForSell}"
                   values={{
-                    br: <br />,
                     maxForBuy: `${maxAmount} ${getCurrency.toUpperCase()}`,
-                    maxForSell: ` {maxBuyAmount.toNumber()} {haveCurrency.toUpperCase()}`
+                    maxForSell: `${maxBuyAmount.toNumber()} ${haveCurrency.toUpperCase()}`
                   }}
                 />
               </p>
@@ -1234,7 +1231,7 @@ export default class PartialClosure extends Component {
                 <div>
                   <FormattedMessage
                     id="PartialFeeValueWarn"
-                    defaultMessage="The maximum amount you can sell is {maximumAmount}. Since will have to pay an additional miner fee up to {estimatedFeeValue} {haveCurrency}"
+                    defaultMessage="The maximum amount you can sell is {maximumAmount} {haveCurrency}. Miner fee up to {estimatedFeeValue} {haveCurrency}"
                     values={{
                       haveCurrency: haveCurrency.toUpperCase(),
                       estimatedFeeValue: estimatedFeeValues[haveCurrency],

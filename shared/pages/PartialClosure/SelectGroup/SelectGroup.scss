@@ -10,6 +10,13 @@
   position: relative;
 }
 
+.dark {
+  .textUsd {
+    background: none;
+    color: white;
+  }
+}
+
 .smallTooltip {
   > span {
     position: absolute;
@@ -17,10 +24,11 @@
     justify-content: center;
     background: #d6d6d6;
     left: 92%;
-    padding: 0 10px;
     top: 11px;
+    align-items: center;
+    --size: 1.3em;
     span {
-      font-size: 10px;
+      font-size: 1em;
     }
   }
 }
