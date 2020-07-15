@@ -81,7 +81,7 @@ export default class WithdrawModal extends React.Component {
 
     const currentDecimals = constants.tokenDecimals[getCurrencyKey(currency, true).toLowerCase()]
     const allCurrencyies = actions.core.getWallets() //items.concat(tokenItems)
-    const selectedItem = allCurrencyies.filter((item) => item.currency === currency)[0]
+    const selectedItem = actions.user.getWithdrawWallet(currency, withdrawWallet)
 
     let usedAdminFee = false
 
@@ -107,7 +107,7 @@ export default class WithdrawModal extends React.Component {
       ethBalance: null,
       isEthToken: helpers.ethToken.isEthToken({ name: currency.toLowerCase() }),
       currentDecimals,
-      selectedValue: currency, //localStorage.getItem(constants.localStorage.balanceActiveCurrency).toUpperCase() || currency,
+      selectedValue: currency,
       getFiat: 0,
       error: false,
       ownTx: '',
@@ -116,7 +116,7 @@ export default class WithdrawModal extends React.Component {
       currentActiveAsset,
       allCurrencyies,
       enabledCurrencies: getActivatedCurrencies(),
-      wallet: actions.user.getWithdrawWallet(currency, withdrawWallet),
+      wallet: selectedItem,
       devErrorMessage: false,
       tokenFee: `(Fetching fee)`,
     }
