@@ -36,6 +36,40 @@ import SwapApp from 'swap.app'
 import CopyToClipboard from 'react-copy-to-clipboard'
 
 
+const langLabels = defineMessages({
+  multiSignJoinLinkMessage: {
+    id: 'multiSignJoinLinkMessage',
+    defaultMessage: `Отправьте эту ссылку второму владельцу кошелька`,
+  },
+  multiSignJoinLink: {
+    id: 'multiSignJoinLink',
+    defaultMessage: `Создание BTC-Multisign кошелька`,
+  },
+  multiSignJoinLinkCopied: {
+    id: 'multiSignJoinLinkCopied',
+    defaultMessage: `Ready. Link copied to clipboard`,
+  },
+  multiSignJoinLinkCopy: {
+    id: 'multiSignJoinLinkCopy',
+    defaultMessage: `Copy to clipboard`,
+  },
+  needSaveMnemonicToContinue: {
+    id: 'multiSignJoinLink_YouNeedSaveMnemonic',
+    defaultMessage: `Для активации btc-multisig вы должны сохранить 12 слов.`,
+  },
+  pleaseSaveMnemonicToContinue: {
+    id: 'multiSignJoinLink_SaveYourMnemonic',
+    defaultMessage: `Пожалуйста сохраните свою секретную фразу.`
+  },
+  buttonSaveMnemonic: {
+    id: 'multiSignJoinLink_ButtonSaveMnemonic',
+    defaultMessage: `Save`,
+  },
+  buttonCancel: {
+    id: 'multiSignJoinLink_ButtonCancel',
+    defaultMessage: `Cancel`,
+  },
+})
 
 @injectIntl
 @connect(
@@ -58,8 +92,13 @@ export default class MultisignJoinLink extends React.Component {
   constructor(props) {
     super(props)
 
+    const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
+    const mnemonicSaved = (mnemonic === `-`)
+
     this.state = {
-      joinLink: ''
+      joinLink: '',
+      mnemonicSaved,
+      step: (mnemonicSaved) ? 'link' : 'savemnemonic',
     }
   }
 
@@ -82,6 +121,21 @@ export default class MultisignJoinLink extends React.Component {
     })
   }
 
+  handleBeginSaveMnemonic = async () => {
+    actions.modals.open(constants.modals.SaveMnemonicModal, {
+      onClose: () => {
+        const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
+        const mnemonicSaved = (mnemonic === `-`)
+        const step = (mnemonicSaved) ? 'link' : 'savemnemonic'
+
+        this.setState({
+          mnemonicSaved,
+          step,
+        })
+      }
+    })
+  }
+
   handleClose = () => {
     const { name, data, onClose } = this.props
 
@@ -97,55 +151,72 @@ export default class MultisignJoinLink extends React.Component {
   }
 
   handleFinish = async () => {
-    const { name } = this.props
+    const {
+      name,
+      data: {
+        callback,
+      },
+    } = this.props
 
     actions.modals.close(name)
 
-    if (this.props.data.callback) {
-      this.props.data.callback()
+    if (callback && callback instanceof Function) {
+      callback()
     }
   }
 
   render() {
-    //const { phone, step, error, smsCode, smsConfirmed, isShipped } = this.state
     const { name, intl } = this.props
-    const { joinLink, isLinkCopied } = this.state
+    const {
+      joinLink,
+      isLinkCopied,
+      step,
+    } = this.state
 
-    const { showCloseButton } = this.props.data
-
-    const langLabels = defineMessages({
-      multiSignJoinLinkMessage: {
-        id: 'multiSignJoinLinkMessage',
-        defaultMessage: `Отправьте эту ссылку второму владельцу кошелька`,
+    const {
+      data: {
+        showCloseButton,
       },
-      multiSignJoinLink: {
-        id: 'multiSignJoinLink',
-        defaultMessage: `Создание BTC-Multisign кошелька`,
-      },
-      multiSignJoinLinkCopied: {
-        id: 'multiSignJoinLinkCopied',
-        defaultMessage: `Ready. Link copied to clipboard`,
-      },
-      multiSignJoinLinkCopy: {
-        id: 'multiSignJoinLinkCopy',
-        defaultMessage: `Copy to clipboard`,
-      },
-    })
+    } = this.props
 
     return (
       <Modal name={name} title={`${intl.formatMessage(langLabels.multiSignJoinLink)}`} onClose={this.handleClose} showCloseButton={showCloseButton}>
-        <Fragment>
-          <p styleName="notice">
-            <FormattedMessage { ... langLabels.multiSignJoinLinkMessage } />
-          </p>
-          <div className="ym-hide-content">
-            <ShareLink link={joinLink} fullSize={true} />
-          </div>
-          <hr />
-          <Button blue styleName="finishButton" fullWidth onClick={this.handleFinish}>
-            <FormattedMessage id="BTCMS_CreateWalletReadyButton" defaultMessage="Готово. Открыть кошелек" />
-          </Button>
-        </Fragment>
+        {step === 'savemnemonic' && (
+          <Fragment>
+            <div styleName="content-overlay">
+              <p styleName="centerInfoBlock">
+                <strong>
+                  <FormattedMessage {...langLabels.needSaveMnemonicToContinue} />
+                </strong>
+                <br />
+                <FormattedMessage {...langLabels.pleaseSaveMnemonicToContinue} />
+              </p>
+            </div>
+
+            <div styleName="buttonsHolder buttonsHolder_2_buttons button-overlay">
+              <Button blue onClick={this.handleBeginSaveMnemonic}>
+                <FormattedMessage {...langLabels.buttonSaveMnemonic} />
+              </Button>
+              <Button gray onClick={this.handleClose}>
+                <FormattedMessage {...langLabels.buttonCancel} />
+              </Button>
+            </div>
+          </Fragment>
+        )}
+        {step === 'link' && (
+          <Fragment>
+            <p styleName="notice">
+              <FormattedMessage { ... langLabels.multiSignJoinLinkMessage } />
+            </p>
+            <div className="ym-hide-content">
+              <ShareLink link={joinLink} fullSize={true} />
+            </div>
+            <hr />
+            <Button blue styleName="finishButton" fullWidth onClick={this.handleFinish}>
+              <FormattedMessage id="BTCMS_CreateWalletReadyButton" defaultMessage="Готово. Открыть кошелек" />
+            </Button>
+          </Fragment>
+        )}
       </Modal>
     )
   }
