@@ -1,11 +1,26 @@
 .generatedJoinLink {
-    max-width: 500px;
-    word-break: break-all;
-    cursor: pointer;
-    margin-bottom: 20px;
+  max-width: 500px;
+  word-break: break-all;
+  cursor: pointer;
+  margin-bottom: 20px;
 }
 
 .finishButton {
   width: 100%;
   display: block;
+}
+
+.buttonsHolder {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-bottom: 10px;
+
+  button {
+    width: 30%;
+  }
+
+  &_2_buttons button {
+    width: 45%;
+  }
 }
