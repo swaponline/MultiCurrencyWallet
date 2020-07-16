@@ -7342,5 +7342,26 @@
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
+  },
+  {
+    "id": "WithdrawSMS_NotValidSmsCode",
+    "message": "Вы ввели не верный проверочный код",
+    "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js"
+    ]
+  },
+  {
+    "id": "WithdrawSMS_SmsConfirming",
+    "message": "Подтверждение транзакции",
+    "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js"
+    ]
+  },
+  {
+    "id": "WithdrawSMS_UnknownError",
+    "message": "Не известная ошибка. Попробуйте позже или используйте секретную фразу",
+    "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js"
+    ]
   }
 ]
