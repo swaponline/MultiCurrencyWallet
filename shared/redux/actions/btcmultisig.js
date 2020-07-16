@@ -1095,6 +1095,7 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
     user: {
       btcMultisigSMSData: {
         privateKey,
+        address: smsAddress,
         publicKeys,
         publicKey,
       },
@@ -1121,7 +1122,12 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
     feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber() // Admin fee in satoshi
   }
 
-  feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, method: 'send_2fa' })
+  feeValue = feeValue || await btc.estimateFeeValue({
+    inSatoshis: true,
+    speed,
+    method: 'send_2fa',
+    address: smsAddress,
+  })
 
 
   const unspents = await fetchUnspents(from)
@@ -1652,7 +1658,6 @@ const confirmSMSProtected = async (smsCode) => {
 }
 
 const send = async ({ from, to, amount, feeValue, speed } = {}) => {
-  feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, method: 'send_multisig' })
   const {
     user: {
       btcMultisigUserData: {
@@ -1665,6 +1670,13 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
   console.log('senderWallet', from)
 
   const { address, publicKeys } = senderWallet
+
+  feeValue = feeValue || await btc.estimateFeeValue({
+    inSatoshis: true,
+    speed,
+    method: 'send_multisig',
+    address,
+  })
 
   let feeFromAmount = BigNumber(0)
 
