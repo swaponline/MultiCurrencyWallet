@@ -620,7 +620,7 @@ export default class Row extends Component {
         action: this.handleWithdraw,
         disabled: isBalanceEmpty,
       },
-      {
+      !config.opts.exchangeDisabled && {
         id: 1004,
         title: (
           <FormattedMessage
@@ -631,7 +631,7 @@ export default class Row extends Component {
         action: this.goToExchange,
         disabled: false,
       },
-      {
+      !config.opts.exchangeDisabled && {
         id: 1005,
         title: (
           <FormattedMessage id="WalletRow_Menu_Buy" defaultMessage="Buy" />
@@ -699,7 +699,7 @@ export default class Row extends Component {
     if (currencyView == 'BTC (SMS-Protected)') currencyView = 'BTC'
     if (currencyView == 'BTC (PIN-Protected)') currencyView = 'BTC'
 
-    if (currencyView !== 'BTC') {
+    if (currencyView !== 'BTC' && !config.opts.exchangeDisabled) {
       dropDownMenuItems.push({
         id: 1005,
         title: (

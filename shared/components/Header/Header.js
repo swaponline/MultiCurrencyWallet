@@ -10,7 +10,7 @@ import { connect } from "redaction";
 import links from "helpers/links";
 import actions from "redux/actions";
 import { constants } from "helpers";
-import config from "app-config";
+import config from 'helpers/externalConfig'
 import { injectIntl } from "react-intl";
 
 import CSSModules from "react-css-modules";
@@ -102,7 +102,7 @@ export default class Header extends Component {
           icon: "products",
           currentPageFlag: true,
         },
-        {
+        !config.opts.exchangeDisabled && {
           title: intl.formatMessage(invest),
           link: "exchange/btc-to-usdt",
           icon: "invest",
