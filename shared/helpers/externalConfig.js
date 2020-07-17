@@ -49,6 +49,7 @@ const externalConfig = () => {
     activeFiat: 'USD',
   }
 
+
   if (window
     && window.DEFAULT_FIAT
   ) {
@@ -70,6 +71,19 @@ const externalConfig = () => {
     config.opts = { ...config.opts, ...window.buildOptions }
   }
 
+  if (window
+    && window.CUR_BTC_DISABLED
+  ) {
+    if (!config.opts.curEnabled) config.opts.curEnabled = {}
+    config.opts.curEnabled.btc = false
+  }
+
+  if (window
+    && window.CUR_ETH_DISABLED
+  ) {
+    if (!config.opts.curEnabled) config.opts.curEnabled = {}
+    config.opts.curEnabled.eth = false
+  }
   // Plugins
   if (window
     && window.setItemPlugin
