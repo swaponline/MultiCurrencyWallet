@@ -47,15 +47,8 @@ const externalConfig = () => {
     },
     buyViaCreditCardLink: false,
     activeFiat: 'USD',
+    exchangeDisabled: false,
   }
-
-
-  if (window
-    && window.DEFAULT_FIAT
-  ) {
-    config.opts.activeFiat = window.DEFAULT_FIAT
-  }
-  reducers.user.setActiveFiat({ activeFiat: config.opts.activeFiat })
 
   if (window
     && window.showHowItWorksOnExchangePage
@@ -71,6 +64,18 @@ const externalConfig = () => {
     config.opts = { ...config.opts, ...window.buildOptions }
   }
 
+  if (window
+    && window.DEFAULT_FIAT
+  ) {
+    config.opts.activeFiat = window.DEFAULT_FIAT
+  }
+  reducers.user.setActiveFiat({ activeFiat: config.opts.activeFiat })
+
+  if (window
+    && window.EXCHANGE_DISABLED
+  ) {
+    config.opts.exchangeDisabled = window.EXCHANGE_DISABLED
+  }
   if (window
     && window.CUR_BTC_DISABLED
   ) {

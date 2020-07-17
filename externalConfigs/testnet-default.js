@@ -47,16 +47,28 @@ window.buildOptions = {
   invoiceEnabled: true, // Allow create invoices
   hideShowPrivateKey: true, // Hide 'Copy Private Key' Menu item, default false, inited also from window.SWAP_HIDE_EXPORT_PRIVATEKEY
 //  fee: { btc .... }, // Can be inited from window.widgetERC20Comisions
-}
-*/
-
-window.buildOptions = {
-  showWalletBanners: true, // Allow to see banners
-  showHowItsWork: true, // Can be inited from window.showHowItWorksOnExchangePage
+  // inited from window.EXCHANGE_DISABLED
+  exchangeDisabled: true,
   curEnabled: { // Or 'false' if enabled all
     // inited from window.CUR_BTC_DISABLED
     btc: false,
     // inited from window.CUR_ETH_DISABLED
     eth: false,
   },
+}
+*/
+
+window.buildOptions = {
+  showWalletBanners: true, // Allow to see banners
+  showHowItsWork: true, // Can be inited from window.showHowItWorksOnExchangePage
+  /*
+  // inited from window.EXCHANGE_DISABLED
+  exchangeDisabled: true,
+  curEnabled: { // Or 'false' if enabled all
+    // inited from window.CUR_BTC_DISABLED
+    btc: false,
+    // inited from window.CUR_ETH_DISABLED
+    eth: false,
+  },
+  */
 }
