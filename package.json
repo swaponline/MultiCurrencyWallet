@@ -171,6 +171,7 @@
     "react-redux": "^5.1.2",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.9",
+    "react-tag-autocomplete": "^6.0.0-beta.6",
     "react-tooltip": "^3.11.1",
     "redaction": "^4.5.4",
     "redux": "^4.0.4",

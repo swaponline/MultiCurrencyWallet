@@ -24,6 +24,9 @@ import { isMobile } from 'react-device-detect'
 
 import links from 'helpers/links'
 
+import MnemonicInput from 'components/forms/MnemonicInput/MnemonicInput'
+
+
 
 const langPrefix = `RestoryMnemonicWallet`
 const langLabels = defineMessages({
@@ -258,12 +261,15 @@ export default class RestoryMnemonicWallet extends React.Component {
                     </Tooltip>
                   </span>
                 </FieldLabel>
+                {/*
                 <Input
                   styleName="input inputMargin25 for12words"
                   valueLink={linked.mnemonic}
                   multiline={true}
                   placeholder={`${intl.formatMessage(langLabels.mnemonicPlaceholder)}`}
                 />
+                */}
+                <MnemonicInput />
               </div>
               <div styleName="buttonsHolder">
                 <Button
