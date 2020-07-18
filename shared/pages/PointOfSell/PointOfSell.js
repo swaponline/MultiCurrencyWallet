@@ -40,6 +40,7 @@ import CustomDestAddress from "../PartialClosure/CustomDestAddress/CustomDestAdd
 const allowedCoins = [
   ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? ['BTC'] : [],
   ...(!config.opts.curEnabled || config.opts.curEnabled.eth) ? ['ETH'] : [],
+  ...(!config.opts.curEnabled || config.opts.curEnabled.ghost) ? ['GHOST'] : [],
 ]
 
 const isExchangeAllowed = (currencies) => currencies.filter(c => {
@@ -116,6 +117,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   usersData: [
     ethData,
     btcData,
+    ghostData,
     ...Object.values(tokensData).filter(({ address }) => address),
     ...Object.values(rest).filter(({ address }) => address)
   ],
@@ -830,6 +832,8 @@ export default class PartialClosure extends Component {
     if (!this.customWalletAllowed()) return true
 
     if (getCurrency === 'btc') return util.typeforce.isCoinAddress.BTC(customWallet)
+
+    if (getCurrency === 'ghost') return util.typeforce.isCoinAddress.GHOST(customWallet)
 
     return util.typeforce.isCoinAddress.ETH(customWallet)
 

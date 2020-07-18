@@ -18,7 +18,7 @@ import SwapApp, { constants } from 'swap.app'
 import SwapAuth from 'swap.auth'
 import SwapRoom from 'swap.room'
 import SwapOrders from 'swap.orders'
-import { ETH2BTC, BTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN, ETHTOKEN2USDT, GHOST2BTC, BTC2GHOST, GHOST2ETH, ETHTOKEN2GHOST, GHOST2ETHTOKEN } from 'swap.flows'
+import { ETH2BTC, BTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN, GHOST2BTC, BTC2GHOST, GHOST2ETH, ETH2GHOST, ETHTOKEN2GHOST, GHOST2ETHTOKEN } from 'swap.flows'
 import { EthSwap, EthTokenSwap, BtcSwap, GhostSwap } from 'swap.swaps'
 import { pipeline } from 'stream'
 
@@ -116,7 +116,9 @@ const createSwapApp = () => {
 
       GHOST2BTC,
       BTC2GHOST,
+
       GHOST2ETH,
+      ETH2GHOST,
 
 
       ...(Object.keys(config.erc20))

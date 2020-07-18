@@ -17,7 +17,7 @@ networks.mainnet = {
   },
   pubKeyHash: 0x26,
   scriptHash: 0x61,
-  wif: 0x6c,
+  wif: 0xA6,
 }
 
 networks.testnet = {

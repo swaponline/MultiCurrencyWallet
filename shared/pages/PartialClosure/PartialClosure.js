@@ -128,6 +128,7 @@ const bannedPeers = {}; // Пиры, которые отклонили запр�
     usersData: [
       ethData,
       btcData,
+      ghostData,
       ...Object.values(tokensData).filter(({ address }) => address),
       ...Object.values(rest).filter(({ address }) => address)
     ],
@@ -987,14 +988,28 @@ export default class PartialClosure extends Component {
       if (config.erc20[getCurrency] !== undefined) return true;
       // btc-eth
       if (getCurrency === "eth") return true;
+
+      if (getCurrency === "ghost") return true;
     }
     if (config.erc20[haveCurrency] !== undefined) {
       // token-btc
       if (getCurrency === "btc") return true;
+
+      if (getCurrency === "ghost") return true;
     }
 
     if (haveCurrency === "eth") {
       // eth-btc
+      if (getCurrency === "btc") return true;
+
+      if (getCurrency === "ghost") return true;
+    }
+    if (haveCurrency === "ghost") {
+      // btc-token
+      if (config.erc20[getCurrency] !== undefined) return true;
+      // btc-eth
+      if (getCurrency === "eth") return true;
+
       if (getCurrency === "btc") return true;
     }
 

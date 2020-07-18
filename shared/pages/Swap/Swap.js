@@ -128,7 +128,6 @@ export default class SwapComponent extends PureComponent {
 
   constructor() {
     super()
-    console.log('Swaps called');
 
     this.state = {
       isAddressCopied: false,
@@ -174,7 +173,7 @@ export default class SwapComponent extends PureComponent {
 
     try {
       const swap = new Swap(orderId, SwapApp.shared())
-
+      console.log(swap.flow._flowName);
       const SwapComponent = swapComponents[swap.flow._flowName]
       const ethData = items.filter(item => item.currency === 'ETH')
       const currencyData = items.concat(tokenItems)
