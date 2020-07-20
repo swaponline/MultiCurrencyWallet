@@ -1,8 +1,8 @@
 .react-tags {
   position: relative;
-  padding: 6px 0 0 6px;
-  border: 1px solid #D1D1D1;
-  border-radius: 1px;
+  padding: 6px 1px 1px 6px;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 2px;
 
   /* shared font styles */
   font-size: 1em;
@@ -16,8 +16,13 @@
   width: 400px;
 }
 
+.--is-dark .react-tags {
+  background: #2b2b2b;
+}
 .react-tags.is-focused {
-  border-color: #B1B1B1;
+  border: 2px solid #6144e5;
+  padding: 5px 0px 0px 5px;
+  padding-top: 19px;
 }
 
 .react-tags__selected {
@@ -29,13 +34,17 @@
   box-sizing: border-box;
   margin: 0 6px 6px 0;
   padding: 6px 8px;
-  border: 1px solid #D1D1D1;
-  border-radius: 2px;
-  background: #F1F1F1;
+  background: rgba(97,68,229,0.15);
+  color: rgba(97,68,229,0.5);
+  font-weight: bold;
 
-  /* match the font styles */
   font-size: inherit;
   line-height: inherit;
+}
+
+.--is-dark .react-tags__selected-tag {
+  background: #232629;
+  color: #fff;
 }
 
 .react-tags__search {
@@ -50,7 +59,6 @@
 }
 
 @media screen and (min-width: 30em) {
-
   .react-tags__search {
     /* this will become the offsetParent for suggestions */
     position: relative;
@@ -92,18 +100,31 @@
 
 }
 
+.--is-mobile .react-tags {
+  width: 100%;
+}
+
 .react-tags__suggestions ul {
   margin: 4px -1px;
   padding: 0;
   list-style: none;
   background: white;
-  border: 1px solid #D1D1D1;
-  border-radius: 2px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 4px 16px rgba(0,0,0,0.08), 0px 1px 4px rgba(0,0,0,0.08);
+  border: 1px solid #f5f5f5;
 }
-
+.--is-dark .react-tags__suggestions ul {
+  background: #2b2b2b;
+  border: none;
+  color: #fff;
+}
+.--is-dark .react-tags__suggestions li {
+  border-bottom: 1px solid #161719;
+}
+.--is-dark .react-tags__suggestions li mark {
+  color: #fff;
+}
 .react-tags__suggestions li {
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #f5f5f5;
   padding: 6px 8px;
 }
 
@@ -115,11 +136,11 @@
 
 .react-tags__suggestions li:hover {
   cursor: pointer;
-  background: #eee;
+  background: #6144E5;
 }
 
 .react-tags__suggestions li.is-active {
-  background: #b7cfe0;
+  background: #6144E5;
 }
 
 .react-tags__suggestions li.is-disabled {
