@@ -631,15 +631,6 @@ export default class Row extends Component {
         action: this.goToExchange,
         disabled: false,
       },
-      !config.opts.exchangeDisabled && {
-        id: 1005,
-        title: (
-          <FormattedMessage id="WalletRow_Menu_Buy" defaultMessage="Buy" />
-        ),
-        action: this.goToBuy,
-        disabled: false,
-        hidden: this.props.currency.currency === 'BTC' ? true : false,
-      },
       {
         id: 1003,
         title: (
@@ -673,7 +664,7 @@ export default class Row extends Component {
         action: this.copyPrivateKey,
         disabled: false,
       },
-      !this.props.itemData.isUserProtected && {
+      /*!this.props.itemData.isUserProtected && {
         id: 3012,
         title: (
           <FormattedMessage
@@ -683,7 +674,7 @@ export default class Row extends Component {
         ),
         action: this.handleHowToExport,
         disabled: false,
-      },
+      },*/
     ].filter((el) => el)
 
     dropDownMenuItems.push({
