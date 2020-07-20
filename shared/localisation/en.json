@@ -4852,13 +4852,6 @@
     ]
   },
   {
-    "id": "WalletRow_Menu_Buy",
-    "message": "Buy token",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
-  },
-  {
     "id": "WalletRow_Menu_Orderbook",
     "message": "Orderbook",
     "files": [

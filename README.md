@@ -37,13 +37,12 @@ Checkout this case: <a href="https://twitter.com/Atomic_Wallet" target="_blank">
 
 ## Usage
 
-### Install
+### Installation / how to start
 
 1) Fork this repository (Click "Fork" on top of this page)
 2) Clone repository with submodules (such as swap.core)
 ```
 git clone --recurse-submodules https://github.com/swaponline/MultiCurrencyWallet.git
-cd MultiCurrencyWallet
 ```
 3) Use Node 10, not 12!
 ```
@@ -51,6 +50,7 @@ nvm use 10.18.1 or 11.15.0
 ```
 4) Install modules
 ```
+cd MultiCurrencyWallet
 npm i
 ```
 (Windows? Use [windows-build-tools](https://www.npmjs.com/package/windows-build-tools).)
@@ -65,7 +65,14 @@ git submodule update --remote
 ```
 npm run start
 ```
-or build for prod
+The dev server is running!
+
+To access from other devices on the local network, specify your IP address:
+```
+HOST=X.X.X.X npm run start
+```
+
+7) Build for prod
 ```
 npm run build
 ```

@@ -5246,13 +5246,6 @@
     "message": "Импортировать ключи"
   },
   {
-    "id": "WalletRow_Menu_Buy",
-    "message": "Buy",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
-  },
-  {
     "id": "WalletRow_Menu_Exchange",
     "message": "Exchange",
     "files": [
