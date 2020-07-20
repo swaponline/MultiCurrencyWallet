@@ -30,6 +30,7 @@ import QrReader from "components/QrReader";
 import redirectTo from 'helpers/redirectTo'
 import AdminFeeInfoBlock from 'components/AdminFeeInfoBlock/AdminFeeInfoBlock'
 import lsDataCache from 'helpers/lsDataCache'
+import MnemonicInput from 'components/forms/MnemonicInput/MnemonicInput'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -305,6 +306,12 @@ export default class WithdrawModalMultisig extends React.Component {
     actions.modals.close(name)
   }
 
+  handleMnemonicChange = (mnemonic) => {
+    this.setState({
+      mnemonic,
+    })
+  }
+
   render() {
     const {
       code,
@@ -332,7 +339,7 @@ export default class WithdrawModalMultisig extends React.Component {
     } = this.props
 
 
-    const linked = Link.all(this, 'code', 'mnemonic')
+    const linked = Link.all(this, 'code')
 
     const labels = defineMessages({
       withdrowModal: {
@@ -366,12 +373,7 @@ export default class WithdrawModalMultisig extends React.Component {
               <FieldLabel label>
                 <FormattedMessage id="registerSMSModalWords" defaultMessage="Секретная фраза (12 слов):" />
               </FieldLabel>
-              <Input
-                styleName="input"
-                valueLink={linked.mnemonic}
-                multiline={true}
-                placeholder={`${intl.formatMessage(labels.mnemonicPlaceholder)}`}
-              />
+              <MnemonicInput onChange={this.handleMnemonicChange} fullWidth={true} />
             </div>
             {error && <div styleName="rednotes">{error}</div>}
             <Button styleName="buttonFull" big blue fullWidth disabled={isShipped} onClick={this.handleMnemonicSign}>
