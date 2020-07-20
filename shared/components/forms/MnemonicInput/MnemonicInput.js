@@ -95,6 +95,7 @@ export default class MnemonicInput extends Component {
     const {
       props: {
         intl,
+        fullWidth,
       },
       state: {
         tags,
@@ -104,7 +105,7 @@ export default class MnemonicInput extends Component {
     } = this
 
     return (
-      <div className={`mnemonicInput ${(isDark) ? '--is-dark' : ''} ${(isMobile) ? '--is-mobile' : ''}`}>
+      <div className={`mnemonicInput ${(isDark) ? '--is-dark' : ''} ${(isMobile) ? '--is-mobile' : ''} ${(fullWidth) ? '--full-width' : ''}`}>
         <ReactTags
           ref={reactTags}
           tags={tags}

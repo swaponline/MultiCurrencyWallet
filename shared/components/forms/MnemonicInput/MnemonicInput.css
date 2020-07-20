@@ -16,6 +16,9 @@
   width: 400px;
 }
 
+.--full-width .react-tags {
+  width: 100%;
+}
 .--is-dark .react-tags {
   background: #2b2b2b;
 }

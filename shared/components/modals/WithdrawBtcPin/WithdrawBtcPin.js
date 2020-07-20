@@ -27,6 +27,7 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 import moment from 'moment/moment'
 import redirectTo from 'helpers/redirectTo'
 import lsDataCache from 'helpers/lsDataCache'
+import MnemonicInput from 'components/forms/MnemonicInput/MnemonicInput'
 
 
 const langPrefix = `WithdrawPINProtected`
@@ -302,6 +303,12 @@ export default class WithdrawBtcPin extends React.Component {
     })
   }
 
+  handleMnemonicChange = (mnemonic) => {
+    this.setState({
+      mnemonic,
+    })
+  }
+
   handleUsePassword = () => {
     this.setState({
       isShipped: false,
@@ -330,7 +337,7 @@ export default class WithdrawBtcPin extends React.Component {
       intl,
     } = this.props
 
-    const linked = Link.all(this, 'pinCode', 'mnemonic')
+    const linked = Link.all(this, 'pinCode')
 
 
 
@@ -401,12 +408,7 @@ export default class WithdrawBtcPin extends React.Component {
                 <FieldLabel label>
                   <FormattedMessage {...langs.labelYourMnemonic} />
                 </FieldLabel>
-                <Input
-                  styleName="input inputMargin25"
-                  valueLink={linked.mnemonic}
-                  placeholder={`${intl.formatMessage(langs.mnemonicPlaceHolder)}`}
-                  focusOnInit
-                />
+                <MnemonicInput onChange={this.handleMnemonicChange} fullWidth={true} />
               </div>
               {error && <div styleName="error rednotes">{error}</div>}
               <div styleName="buttonsHolder">

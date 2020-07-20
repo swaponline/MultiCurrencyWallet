@@ -206,6 +206,12 @@ export default class RestoryMnemonicWallet extends React.Component {
     })
   }
 
+  handleMnemonicChange = (mnemonic) => {
+    this.setState({
+      mnemonic,
+    })
+  }
+
   render() {
     const {
       name,
@@ -224,8 +230,6 @@ export default class RestoryMnemonicWallet extends React.Component {
         usdBalance = 1,
       },
     } = this.state
-
-    const linked = Link.all(this, 'mnemonic')
 
     return (
       <Modal name={name} title={`${intl.formatMessage(langLabels.title)}`} onClose={this.handleClose} showCloseButton={showCloseButton}>
@@ -261,15 +265,7 @@ export default class RestoryMnemonicWallet extends React.Component {
                     </Tooltip>
                   </span>
                 </FieldLabel>
-                {/*
-                <Input
-                  styleName="input inputMargin25 for12words"
-                  valueLink={linked.mnemonic}
-                  multiline={true}
-                  placeholder={`${intl.formatMessage(langLabels.mnemonicPlaceholder)}`}
-                />
-                */}
-                <MnemonicInput />
+                <MnemonicInput onChange={this.handleMnemonicChange} />
               </div>
               <div styleName="buttonsHolder">
                 <Button
