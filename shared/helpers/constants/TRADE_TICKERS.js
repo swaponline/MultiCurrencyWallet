@@ -19,7 +19,7 @@ const swap = (config && config.isWidget) ?
 Object.keys(config.erc20)
   .forEach(key => {
     swap.push(`${key.toUpperCase()}-BTC`)
-
+    swap.push(`${key.toUpperCase()}-GHOST`)
   })
 
 
@@ -28,6 +28,7 @@ if (config && config.isWidget) {
   if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
     Object.keys(window.widgetERC20Tokens).forEach((key) => {
       swap.push(`${key.toUpperCase()}-BTC`)
+      swap.push(`${key.toUpperCase()}-GHOST`)
     })
   } else {
     swap.push(`${config.erc20token.toUpperCase()}-BTC`)
@@ -36,13 +37,16 @@ if (config && config.isWidget) {
 
 } else {
   const customERC = GetCustromERC20()
-  swap.push('GHOST-BTC')
-  swap.push('GHOST-ETH')
+  // swap.push('GHOST-BTC')
+  // swap.push('GHOST-ETH')
   Object.keys(customERC).forEach((tokenContract) => {
     const symbol = customERC[tokenContract].symbol
     const pair = `${symbol.toUpperCase()}-BTC`
 
     if (swap.indexOf(pair) === -1) swap.push(pair)
+
+    const ghostPair = `${symbol.toUpperCase()}-GHOST`
+    if (swap.indexOf(ghostPair) === -1) swap.push(ghostPair)
   })
 }
 export default [
