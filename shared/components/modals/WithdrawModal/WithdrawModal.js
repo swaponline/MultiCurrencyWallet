@@ -542,7 +542,7 @@ export default class WithdrawModal extends React.Component {
       intl: { locale },
     } = this.props
     const { name } = this.props
-    history.push(localisedUrl(locale, links.wallet))
+    history.push(localisedUrl(locale, links.home))
     actions.modals.close(name)
   }
 
