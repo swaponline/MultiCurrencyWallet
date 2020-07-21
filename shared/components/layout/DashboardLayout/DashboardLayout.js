@@ -63,21 +63,7 @@ const NewDesignLayout = (props) => {
     isMnemonicSaved: mnemonic === `-`,
   })
 
-  useEffect(() => {
-    const getFiats = async () => {
-      const { fiatsRates } = await actions.user.getFiats()
-
-      if (fiatsRates) {
-        const fiatRate = fiatsRates.find(({ key }) => key === activeFiat)
-        setCommonState({ ...commonState, multiplier: fiatRate.value })
-      }
-    }
-
-    getFiats()
-  }, [activeFiat])
-
   const {
-    multiplier,
     enabledCurrencies,
     infoAboutCurrency
   } = commonState
@@ -148,7 +134,7 @@ const NewDesignLayout = (props) => {
         changePercent = infoAboutCurrency.percent_change_1h
       }
       btcBalance += balance * infoAboutCurrency.price_btc
-      fiatBalance += balance * infoAboutCurrency.price_usd * (multiplier || 1)
+      fiatBalance += balance * ((infoAboutCurrency.price_fiat) ? infoAboutCurrency.price_fiat : 1)
     }
   })
 

@@ -81,7 +81,7 @@ export default class WithdrawModal extends React.Component {
 
     const currentDecimals = constants.tokenDecimals[getCurrencyKey(currency, true).toLowerCase()]
     const allCurrencyies = actions.core.getWallets() //items.concat(tokenItems)
-    const selectedItem = allCurrencyies.filter((item) => item.currency === currency)[0]
+    const selectedItem = actions.user.getWithdrawWallet(currency, withdrawWallet)
 
     let usedAdminFee = false
 
@@ -107,7 +107,7 @@ export default class WithdrawModal extends React.Component {
       ethBalance: null,
       isEthToken: helpers.ethToken.isEthToken({ name: currency.toLowerCase() }),
       currentDecimals,
-      selectedValue: currency, //localStorage.getItem(constants.localStorage.balanceActiveCurrency).toUpperCase() || currency,
+      selectedValue: currency,
       getFiat: 0,
       error: false,
       ownTx: '',
@@ -116,7 +116,7 @@ export default class WithdrawModal extends React.Component {
       currentActiveAsset,
       allCurrencyies,
       enabledCurrencies: getActivatedCurrencies(),
-      wallet: actions.user.getWithdrawWallet(currency, withdrawWallet),
+      wallet: selectedItem,
       devErrorMessage: false,
       tokenFee: `(Fetching fee)`,
     }
@@ -196,7 +196,12 @@ export default class WithdrawModal extends React.Component {
     const {
       data: { currency },
     } = this.props
-    const { isEthToken } = this.state
+    const {
+      isEthToken,
+      wallet: {
+        address,
+      },
+    } = this.state
 
     const currentCoin = currency.toLowerCase()
 
@@ -222,6 +227,7 @@ export default class WithdrawModal extends React.Component {
       minAmount[currentCoin] = await helpers[currentCoin].estimateFeeValue({
         method: 'send',
         speed: 'fast',
+        address,
       })
     }
   }
@@ -334,10 +340,18 @@ export default class WithdrawModal extends React.Component {
       return
     }
 
-    if (wallet.isPinProtected) {
-      console.log('Withdraw from pin protected', wallet, invoice, sendOptions, beforeBalances)
+    if (wallet.isPinProtected
+      || wallet.isSmsProtected
+      || wallet.isUserProtected
+    ) {
+      let nextStepModal = constants.modals.WithdrawBtcPin
+      if (wallet.isSmsProtected)
+        nextStepModal = constants.modals.WithdrawBtcSms
+      if (wallet.isUserProtected)
+        nextStepModal = constants.modals.WithdrawBtcMultisig
+
       actions.modals.close(name)
-      actions.modals.open(constants.modals.WithdrawBtcPin, {
+      actions.modals.open(nextStepModal, {
         wallet,
         invoice,
         sendOptions,
@@ -345,14 +359,6 @@ export default class WithdrawModal extends React.Component {
         onReady,
         adminFee,
       })
-      return
-    }
-    if (wallet.isSmsProtected) {
-      console.log('Withdraw from sms protected', wallet, invoice, sendOptions, beforeBalances)
-      return
-    }
-    if (wallet.isUserProtected) {
-      console.log('Withdraw from user protected', wallet, invoice, sendOptions, beforeBalances)
       return
     }
 

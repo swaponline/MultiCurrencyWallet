@@ -14,7 +14,7 @@ import Coin from 'components/Coin/Coin'
 
 import Explanation from '../Explanation'
 import icons from '../images'
-import config from 'app-config'
+import config from 'helpers/externalConfig'
 import { getActivatedCurrencies } from 'helpers/user'
 
 import Cupture
@@ -31,8 +31,8 @@ const isWidgetBuild = config && config.isWidget
 @CSSModules(styles, { allowMultiple: true })
 export default class CreateWallet extends Component {
   defaultStartPack = [
-    { name: "BTC", capture: "Bitcoin" },
-    { name: "ETH", capture: "Ethereum" },
+    ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],
+    ...(!config.opts.curEnabled || config.opts.curEnabled.eth) ? [{ name: "ETH", capture: "Ethereum" }] : [],
     { name: "GHOST", capture: "Ghost" },
     { name: "SWAP", capture: "Swap" },
     { name: "USDT", capture: "Tether" },
@@ -40,8 +40,8 @@ export default class CreateWallet extends Component {
   ]
 
   widgetStartPack = [
-    { name: "BTC", capture: "Bitcoin" },
-    { name: "ETH", capture: "Ethereum" },
+    ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],
+    ...(!config.opts.curEnabled || config.opts.curEnabled.eth) ? [{ name: "ETH", capture: "Ethereum" }] : [],
     { name: "GHOST", capture: "Ghost" },
   ]
 

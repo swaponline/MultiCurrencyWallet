@@ -24,6 +24,9 @@ import { isMobile } from 'react-device-detect'
 
 import links from 'helpers/links'
 
+import MnemonicInput from 'components/forms/MnemonicInput/MnemonicInput'
+
+
 
 const langPrefix = `RestoryMnemonicWallet`
 const langLabels = defineMessages({
@@ -119,7 +122,7 @@ export default class RestoryMnemonicWallet extends React.Component {
       const { name, infoAboutCurrency, balance } = curr
       if ((!isWidgetBuild || widgetCurrencies.includes(name)) && infoAboutCurrency && balance !== 0) {
         acc.btcBalance += balance * infoAboutCurrency.price_btc
-        acc.usdBalance += balance * infoAboutCurrency.price_usd
+        acc.usdBalance += balance * ((infoAboutCurrency.price_fiat) ? infoAboutCurrency.price_fiat : 1)
       }
       return acc
     }, { btcBalance: 0, usdBalance: 0 })
@@ -203,6 +206,12 @@ export default class RestoryMnemonicWallet extends React.Component {
     })
   }
 
+  handleMnemonicChange = (mnemonic) => {
+    this.setState({
+      mnemonic,
+    })
+  }
+
   render() {
     const {
       name,
@@ -221,8 +230,6 @@ export default class RestoryMnemonicWallet extends React.Component {
         usdBalance = 1,
       },
     } = this.state
-
-    const linked = Link.all(this, 'mnemonic')
 
     return (
       <Modal name={name} title={`${intl.formatMessage(langLabels.title)}`} onClose={this.handleClose} showCloseButton={showCloseButton}>
@@ -258,12 +265,7 @@ export default class RestoryMnemonicWallet extends React.Component {
                     </Tooltip>
                   </span>
                 </FieldLabel>
-                <Input
-                  styleName="input inputMargin25 for12words"
-                  valueLink={linked.mnemonic}
-                  multiline={true}
-                  placeholder={`${intl.formatMessage(langLabels.mnemonicPlaceholder)}`}
-                />
+                <MnemonicInput onChange={this.handleMnemonicChange} />
               </div>
               <div styleName="buttonsHolder">
                 <Button

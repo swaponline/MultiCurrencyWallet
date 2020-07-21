@@ -147,7 +147,6 @@ export default class Wallet extends Component {
 
   componentDidUpdate(prevProps) {
     const {
-      activeFiat,
       match: {
         params: { page = null },
       },
@@ -156,16 +155,11 @@ export default class Wallet extends Component {
 
 
     const {
-      activeFiat: prevFiat,
       match: {
         params: { page: prevPage = null },
       },
       multisigPendingCount: prevMultisigPendingCount,
     } = prevProps
-
-    if (activeFiat !== prevFiat) {
-      this.getFiats()
-    }
 
     if (page !== prevPage || multisigPendingCount !== prevMultisigPendingCount) {
       let activeView = 0
@@ -190,8 +184,6 @@ export default class Wallet extends Component {
     actions.user.getBalances()
 
     actions.user.fetchMultisigStatus()
-
-    this.getFiats()
 
     if (url.includes('send')) {
       this.handleWithdraw(params)
@@ -363,19 +355,48 @@ export default class Wallet extends Component {
   }
 
 
-  getFiats = async () => {
-    const { activeFiat } = this.props
-    const { fiatsRates } = await actions.user.getFiats()
+  handleModalOpen = context => {
+    const { enabledCurrencies } = this.state
+    const { hiddenCoinsList } = this.props
 
-    if (fiatsRates) {
-      const fiatRate = fiatsRates.find(({ key }) => key === activeFiat)
-      this.setState(() => ({ multiplier: fiatRate.value }))
+    /* @ToDo Вынести в экшены и убрать все дубляжи из всех компонентов */
+    // Набор валют для виджета
+    const widgetCurrencies = ['BTC']
+    if (!hiddenCoinsList.includes('BTC (SMS-Protected)')) widgetCurrencies.push('BTC (SMS-Protected)')
+    if (!hiddenCoinsList.includes('BTC (PIN-Protected)')) widgetCurrencies.push('BTC (PIN-Protected)')
+    if (!hiddenCoinsList.includes('BTC (Multisig)')) widgetCurrencies.push('BTC (Multisig)')
+    widgetCurrencies.push('ETH')
+    if (isWidgetBuild) {
+      if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
+        // Multi token widget build
+        Object.keys(window.widgetERC20Tokens).forEach(key => {
+          widgetCurrencies.push(key.toUpperCase())
+        })
+      } else {
+        widgetCurrencies.push(config.erc20token.toUpperCase())
+      }
     }
+
+    const currencies = actions.core.getWallets()
+      .filter(({ currency, balance }) => {
+        return (
+          ((context === 'Send') ? balance : true)
+          && !hiddenCoinsList.includes(currency)
+          && enabledCurrencies.includes(currency)
+          && ((isWidgetBuild) ?
+            widgetCurrencies.includes(currency)
+            : true)
+        )
+      })
+
+    actions.modals.open(constants.modals.CurrencyAction, {
+      currencies,
+      context
+    })
   }
 
   render() {
     const {
-      multiplier,
       activeView,
       infoAboutCurrency,
       enabledCurrencies,
@@ -443,9 +464,8 @@ export default class Wallet extends Component {
       return ({
         ...el,
         balance: el.balance,
-        fiatBalance: (el.balance > 0 && el.infoAboutCurrency) ? BigNumber(el.balance)
-          .multipliedBy(el.infoAboutCurrency.price_usd)
-          .multipliedBy(multiplier || 1)
+        fiatBalance: (el.balance > 0 && el.infoAboutCurrency && el.infoAboutCurrency.price_fiat) ? BigNumber(el.balance)
+          .multipliedBy(el.infoAboutCurrency.price_fiat)
           .dp(2, BigNumber.ROUND_FLOOR) : 0
       })
     })
@@ -482,6 +502,7 @@ export default class Wallet extends Component {
             type="wallet"
             currency="btc"
             infoAboutCurrency={infoAboutCurrency}
+            multisigPendingCount={multisigPendingCount}
           />
         )}
       >

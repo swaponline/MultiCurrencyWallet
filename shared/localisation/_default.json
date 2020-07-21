@@ -319,6 +319,7 @@
     "id": "WithdrawModal11212",
     "message": "Processing ...",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModal/WithdrawModal.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.js"
@@ -383,7 +384,7 @@
   },
   {
     "id": "SwapProgress111",
-    "message": "Creating Bitcoin Script. \n It can take a few minutes",
+    "message": "Depositing BTC to the contract. \n It can take a few minutes",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
@@ -719,7 +720,7 @@
   },
   {
     "id": "BtcToEthToken167",
-    "message": "3. Creating Bitcoin Script. \n Please wait, it can take a few minutes"
+    "message": "3. Depositing BTC to the contract. \n Please wait, it can take a few minutes"
   },
   {
     "id": "BtcToEthToken172",
@@ -1808,11 +1809,7 @@
   },
   {
     "id": "partial291",
-    "message": "Waiting for another participant (30 sec): ",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
+    "message": "Waiting for another participant (30 sec): "
   },
   {
     "id": "Row358",
@@ -1838,35 +1835,19 @@
   },
   {
     "id": "partial223",
-    "message": "To change default wallet for buy currency. ",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
+    "message": "To change default wallet for buy currency. "
   },
   {
     "id": "partial224",
-    "message": "Leave empty for use Swap.Online wallet",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
+    "message": "Leave empty for use Swap.Online wallet"
   },
   {
     "id": "partial243",
-    "message": "You have",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
+    "message": "You have"
   },
   {
     "id": "partial255",
-    "message": "You get",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
+    "message": "You get"
   },
   {
     "id": "Approve66",
@@ -2050,51 +2031,27 @@
   },
   {
     "id": "PartialPriceCalc",
-    "message": "Calc price",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
+    "message": "Calc price"
   },
   {
     "id": "PartialPriceNoOrdersReduce",
-    "message": "No orders found, try to reduce the amount",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
+    "message": "No orders found, try to reduce the amount"
   },
   {
     "id": "PartialPriceReduceMin",
-    "message": "Maximum available amount:",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
+    "message": "Maximum available amount:"
   },
   {
     "id": "PartialOfferCantProceed1",
-    "message": "Request is declined. {link}",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
+    "message": "Request is declined. {link}"
   },
   {
     "id": "PartialOfferCantProceed1_1",
-    "message": "Why?",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
+    "message": "Why?"
   },
   {
     "id": "ErrorBtcLowAmount",
-    "message": "{btcAmount} BTC - This amount is too low",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
+    "message": "{btcAmount} BTC - This amount is too low"
   },
   {
     "id": "LessThanIHavePartial",
@@ -2102,11 +2059,7 @@
   },
   {
     "id": "PartialPriceSearch",
-    "message": "Searching orders...",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
+    "message": "Searching orders..."
   },
   {
     "id": "PartialUseSwapOnlineWallet",
@@ -2149,49 +2102,31 @@
     "id": "partial462",
     "message": "The amount you have in your swap.online wallet or external wallet that you want to exchange",
     "files": [
-      "shared/components/modals/OfferModal/AddOffer/AddOffer.js",
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
     ]
   },
   {
     "id": "partial478",
     "message": "The amount you will receive after the exchange",
     "files": [
-      "shared/components/modals/OfferModal/AddOffer/AddOffer.js",
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
     ]
   },
   {
     "id": "partial541",
-    "message": "Exchange now",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
-    ]
+    "message": "Exchange now"
   },
   {
     "id": "partial544",
-    "message": "Order book",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
-    ]
+    "message": "Order book"
   },
   {
     "id": "partial767",
-    "message": "Your balance: ",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
+    "message": "Your balance: "
   },
   {
     "id": "partialAtomicSwapWhatIsIt",
-    "message": "Atomic swap is a smart contract technology that enables exchange of one cryptocurrency for another without using centralized intermediaries, such as exchanges.",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
+    "message": "Atomic swap is a smart contract technology that enables exchange of one cryptocurrency for another without using centralized intermediaries, such as exchanges."
   },
   {
     "id": "partialVideoAndFeaturesTitle",
@@ -2235,27 +2170,15 @@
   },
   {
     "id": "PartialFeeValueWarn",
-    "message": "Warning: you will have to pay an additional miner fee up to {estimatedFeeValue} {haveCurrency}",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
+    "message": "Warning: you will have to pay an additional miner fee up to {estimatedFeeValue} {haveCurrency}"
   },
   {
     "id": "PartialFeeValueWarn1",
-    "message": "+ {estimatedFeeValue} {getCurrency}",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
+    "message": "+ {estimatedFeeValue} {getCurrency}"
   },
   {
     "id": "PartialFeeValueWarn2",
-    "message": "~ {estimatedFeeValue}$",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
+    "message": "~ {estimatedFeeValue}$"
   },
   {
     "id": "down57",
@@ -2538,11 +2461,7 @@
   },
   {
     "id": "PartialPriceSearch502",
-    "message": "Price: 1 {getCurrency} = {haveCurrency}",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
+    "message": "Price: 1 {getCurrency} = {haveCurrency}"
   },
   {
     "id": "PartialClosureTitleTag",
@@ -2550,11 +2469,7 @@
   },
   {
     "id": "PartialClosureTitleTag1",
-    "message": "Fastest cross-chain exchange powered by Atomic Swap",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
+    "message": "Fastest cross-chain exchange powered by Atomic Swap"
   },
   {
     "id": "PartialClosureMetaDescrTag",
@@ -2666,7 +2581,7 @@
   },
   {
     "id": "BtcToEthToken222",
-    "message": "Creating Bitcoin Script. \n Please wait, it can take a few minutes"
+    "message": "Depositing BTC to the contract. \n Please wait, it can take a few minutes"
   },
   {
     "id": "deposit213",
@@ -3073,7 +2988,7 @@
   },
   {
     "id": "BitcoinBuyText33",
-    "message": "Creating Bitcoin Script. \n It can take a few minutes",
+    "message": "Depositing BTC to the contract. \n It can take a few minutes",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
@@ -3216,6 +3131,8 @@
     "id": "withdrowTitle271",
     "message": "Send",
     "files": [
+      "shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.js",
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModal/WithdrawModal.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.js"
@@ -4231,6 +4148,7 @@
     "id": "WithdrawMSUserFinish",
     "message": "Ready",
     "files": [
+      "shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.js"
     ]
   },
@@ -4238,6 +4156,7 @@
     "id": "WithdrawMSUserMessage",
     "message": "Send this link to other wallet owner",
     "files": [
+      "shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.js"
     ]
   },
@@ -4245,6 +4164,7 @@
     "id": "WithdrawMSUserReady",
     "message": "TX confirm link",
     "files": [
+      "shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.js"
     ]
   },
@@ -4415,6 +4335,7 @@
     "id": "WithdrawModal2225",
     "message": "Something went wrong, enter your current code please",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -4426,6 +4347,7 @@
     "id": "Withdrow2223",
     "message": "SMS code",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -4433,6 +4355,7 @@
     "id": "Withdrow2224",
     "message": "Confirm",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -4721,6 +4644,7 @@
     "id": "withdrawOwnTxPlaceholder",
     "message": "Если оплатили с другого источника",
     "files": [
+      "shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.js",
       "shared/components/modals/WithdrawModal/WithdrawModal.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.js"
@@ -5020,43 +4944,23 @@
   },
   {
     "id": "PartialFeeValueWarn3",
-    "message": "= {estimatedFeeValue}$",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
+    "message": "= {estimatedFeeValue}$"
   },
   {
     "id": "PartialHowItWorks10",
-    "message": "How it works?",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
+    "message": "How it works?"
   },
   {
     "id": "PartialPriceSellMax",
-    "message": "Maximum available amount for sell:",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
+    "message": "Maximum available amount for sell:"
   },
   {
     "id": "continueDeclined977",
-    "message": "Click here to continue your swaps",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
+    "message": "Click here to continue your swaps"
   },
   {
     "id": "partial1021",
-    "message": "Embed on website",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
+    "message": "Embed on website"
   },
   {
     "id": "ImportKeysBtn",
@@ -5350,13 +5254,6 @@
     "message": "Импортировать ключи"
   },
   {
-    "id": "WalletRow_Menu_Buy",
-    "message": "Buy",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
-  },
-  {
     "id": "WalletRow_Menu_Exchange",
     "message": "Exchange",
     "files": [
@@ -5372,25 +5269,15 @@
   },
   {
     "id": "partial2378",
-    "message": "Wallet",
-    "files": [
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
+    "message": "Wallet"
   },
   {
     "id": "partial5323",
-    "message": "Buy token",
-    "files": [
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
+    "message": "Buy token"
   },
   {
     "id": "partial766",
-    "message": "From any wallet or exchange",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
-      "shared/pages/PointOfSell/PointOfSell.js"
-    ]
+    "message": "From any wallet or exchange"
   },
   {
     "id": "btcmsSwitchFetchWalletsData",
@@ -5507,6 +5394,7 @@
     "id": "withdrawSMSCodePlaceholder",
     "message": "Enter SMS-code",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5633,6 +5521,7 @@
     "message": "12 слов",
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js",
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5673,6 +5562,7 @@
     "message": "Секретная фраза (12 слов):",
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js",
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5743,6 +5633,7 @@
     "id": "WithdrawSMS_BroadcastError",
     "message": "Не удалось отправить транзакцию в сеть ({errorText})",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5750,6 +5641,7 @@
     "id": "WithdrawSMS_FailSignByMnemonic",
     "message": "Не удалось подписать транзакцию",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5757,6 +5649,7 @@
     "id": "WithdrawSMS_MnemonicNote",
     "message": "Если у вас нет доступа к телефону или не получается получить код, вы можете воспользовать секретной фразой",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5764,6 +5657,7 @@
     "id": "WithdrawSMS_MnemonicSignCaption",
     "message": "Подтверждение транзакции секретной фразой",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5771,6 +5665,7 @@
     "id": "WithdrawSMS_NotValidMnemonic",
     "message": "Секретная фраза не валидна",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5778,6 +5673,7 @@
     "id": "WithdrawSMS_ServerOffline",
     "message": "Сервер авторизации не доступен",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5785,6 +5681,7 @@
     "id": "WithdrawSMS_SmsSended",
     "message": "Код отправлен",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5792,6 +5689,7 @@
     "id": "WithdrawSMS_SmsSending",
     "message": "Отправка проверочного кода",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5799,6 +5697,7 @@
     "id": "WithdrawSMS_UseMnemonic",
     "message": "Использовать секретную фразу",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5806,6 +5705,7 @@
     "id": "WithdrawSMS_UseSMS",
     "message": "Использовать смс-код",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5813,6 +5713,7 @@
     "id": "WithdrawSMS_UseSMSNote",
     "message": "Так-же вы можете использовать смс-код, отправленный на привязанный номер телефона",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5820,6 +5721,7 @@
     "id": "WithdrawSMS_WrongMnemonic",
     "message": "Не правильная секретная фраза",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -5827,6 +5729,7 @@
     "id": "btcSMSProtectedSignByMnemonic",
     "message": "Использовать секретную фразу",
     "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js"
     ]
   },
@@ -7334,6 +7237,146 @@
     "message": "How to export a {currency} wallet",
     "files": [
       "shared/components/modals/HowToExportModal/HowToExportModal.js"
+    ]
+  },
+  {
+    "id": "YourWalletbalance",
+    "message": "Balance",
+    "files": [
+      "shared/components/BalanceForm/BalanceForm.js"
+    ]
+  },
+  {
+    "id": "AlertModalcreateWallet",
+    "message": "Create Wallet",
+    "files": [
+      "shared/components/modals/AlertWindow/index.js"
+    ]
+  },
+  {
+    "id": "AlertModaldeposit",
+    "message": "Deposit",
+    "files": [
+      "shared/components/modals/AlertWindow/index.js"
+    ]
+  },
+  {
+    "id": "alertTitle",
+    "message": "Alert",
+    "files": [
+      "shared/components/modals/AlertWindow/index.js"
+    ]
+  },
+  {
+    "id": "AlertOrderNonEnoughtBalance",
+    "message": "Please top up your balance before you start the swap.",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "AlertOrderNonEnoughtBalanceTitle",
+    "message": "Not enough balance.",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Balance_YouAreHaveNotSignegTx",
+    "message": "{count} transaction needs your confirmation",
+    "files": [
+      "shared/components/BalanceForm/BalanceForm.js"
+    ]
+  },
+  {
+    "id": "multiSignJoinLink_ButtonCancel",
+    "message": "Cancel",
+    "files": [
+      "shared/components/modals/MultisignJoinLink/MultisignJoinLink.js"
+    ]
+  },
+  {
+    "id": "multiSignJoinLink_ButtonSaveMnemonic",
+    "message": "Save",
+    "files": [
+      "shared/components/modals/MultisignJoinLink/MultisignJoinLink.js"
+    ]
+  },
+  {
+    "id": "multiSignJoinLink_SaveYourMnemonic",
+    "message": "Пожалуйста сохраните свою секретную фразу.",
+    "files": [
+      "shared/components/modals/MultisignJoinLink/MultisignJoinLink.js"
+    ]
+  },
+  {
+    "id": "multiSignJoinLink_YouNeedSaveMnemonic",
+    "message": "Для активации btc-multisig вы должны сохранить 12 слов.",
+    "files": [
+      "shared/components/modals/MultisignJoinLink/MultisignJoinLink.js"
+    ]
+  },
+  {
+    "id": "BTCMS_SaveMnemonicButton",
+    "message": "Сохранить секретную фразу",
+    "files": [
+      "shared/pages/Multisign/Btc/Btc.js"
+    ]
+  },
+  {
+    "id": "BTCMS_SaveYourMnemonic",
+    "message": "Пожалуйста сохраните свою секретную фразу.",
+    "files": [
+      "shared/pages/Multisign/Btc/Btc.js"
+    ]
+  },
+  {
+    "id": "BTCMS_YouNeedSaveMnemonic",
+    "message": "Для активации btc-multisig вы должны сохранить 12 слов",
+    "files": [
+      "shared/pages/Multisign/Btc/Btc.js"
+    ]
+  },
+  {
+    "id": "RowWallet_MsConfirmCountMobile",
+    "message": "{count} tx wait your confirm",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "WithdrawSMS_NotValidSmsCode",
+    "message": "Вы ввели не верный проверочный код",
+    "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js"
+    ]
+  },
+  {
+    "id": "WithdrawSMS_SmsConfirming",
+    "message": "Подтверждение транзакции",
+    "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js"
+    ]
+  },
+  {
+    "id": "WithdrawSMS_UnknownError",
+    "message": "Не известная ошибка. Попробуйте позже или используйте секретную фразу",
+    "files": [
+      "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js"
+    ]
+  },
+  {
+    "id": "MnemonicInputComponent_DeleteText",
+    "message": "Нажмите, чтобы удалить слово",
+    "files": [
+      "shared/components/forms/MnemonicInput/MnemonicInput.js"
+    ]
+  },
+  {
+    "id": "MnemonicInputComponent_Placeholder",
+    "message": "Начните вводить секретную фразу",
+    "files": [
+      "shared/components/forms/MnemonicInput/MnemonicInput.js"
     ]
   }
 ]

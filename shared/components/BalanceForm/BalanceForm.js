@@ -28,13 +28,15 @@ function BalanceForm({
   isFetching = false,
   showButtons = true,
   type,
+  singleWallet = false,
+  multisigPendingCount = 10,
 }) {
   const [selectedCurrency, setActiveCurrency] = useState(activeCurrency)
 
   const isWidgetBuild = config && config.isWidget
 
   useEffect(() => {
-    if (type === 'wallet' && activeCurrency !== 'usd') {
+    if (type === 'wallet' && activeCurrency !== activeFiat.toLowerCase()) {
       setActiveCurrency('btc')
     } else {
       setActiveCurrency(activeCurrency)
@@ -61,11 +63,18 @@ function BalanceForm({
     actions.user.pullActiveCurrency(currency)
   }
 
+  const handleGoToMultisig = () => {
+    actions.multisigTx.goToLastWallet()
+  }
+
   return (
     <div styleName={`${isWidgetBuild && !config.isFullBuild ? 'yourBalance widgetBuild' : 'yourBalance'} ${isDark ? 'dark' : ''}`}>
       <div styleName="yourBalanceTop" className="data-tut-widget-balance">
         <p styleName="yourBalanceDescr">
-          <FormattedMessage id="Yourtotalbalance" defaultMessage="Ваш общий баланс" />
+          {singleWallet
+            ? <FormattedMessage id="YourWalletbalance" defaultMessage="Баланс" />
+            : <FormattedMessage id="Yourtotalbalance" defaultMessage="Ваш общий баланс" />
+          }
         </p>
         <div styleName="yourBalanceValue">
           {isFetching && (
@@ -113,6 +122,19 @@ function BalanceForm({
           </button>
         </div>
       </div>
+      {multisigPendingCount > 0 && (
+        <div>
+          <p styleName="multisigWaitCount" onClick={handleGoToMultisig}>
+            <FormattedMessage
+              id="Balance_YouAreHaveNotSignegTx"
+              defaultMessage="{count} transaction needs your confirmation"
+              values={{
+                count: multisigPendingCount,
+              }}
+            />
+          </p>
+        </div>
+      )}
       <div
         className={cx({
           [styles.yourBalanceBottomWrapper]: true,

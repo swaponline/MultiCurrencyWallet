@@ -72,6 +72,17 @@
   border-radius: 4px;
   height: fit-content;
   @include ff-regular;
+
+  .multisigWaitCount {
+    text-align: center;
+    font-weight: bold;
+    font-size: 12pt;
+    color: #d20404;
+    cursor: pointer;
+    text-decoration: underline;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 }
 
 .yourBalance.dark {

@@ -26,6 +26,10 @@ const langLabels = defineMessages({
     id: 'RowWallet181',
     defaultMessage: `Unconfirmed balance`,
   },
+  msConfirmCount: {
+    id: 'RowWallet_MsConfirmCountMobile',
+    defaultMessage: `{count} tx wait your confirm`,
+  },
 })
 
 @injectIntl
@@ -39,13 +43,15 @@ const langLabels = defineMessages({
         ethData: {
           address,
           privateKey,
-        }
+        },
+        multisigStatus,
       }
     },
     { currency }
   ) => ({
     activeFiat,
     decline: rememberedOrders.savedOrders,
+    multisigStatus,
     ethDataHelper: {
       address,
       privateKey,
@@ -83,11 +89,7 @@ export default class Row extends Component {
   }
 
   async componentDidMount() {
-    const multiplier = await this.getFiats()
-
     window.addEventListener('resize', this.handleSliceAddress)
-
-    this.setState(() => ({ multiplier }))
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -217,17 +219,6 @@ export default class Row extends Component {
       this.handleWithdrawPopup()
       return
     }
-
-    const {
-      Withdraw,
-      WithdrawMultisigSMS,
-      WithdrawMultisigUser,
-    } = constants.modals
-
-    let withdrawModalType = Withdraw
-    if (currency === 'BTC (SMS-Protected)')
-      withdrawModalType = WithdrawMultisigSMS
-    if (currency === 'BTC (Multisig)') withdrawModalType = WithdrawMultisigUser
 
     let targetCurrency = currency
     switch (currency.toLowerCase()) {
@@ -552,13 +543,6 @@ export default class Row extends Component {
   }
 
 
-  getFiats = async () => {
-    const { activeFiat } = this.props
-    const { fiatsRates } = await actions.user.getFiats()
-
-    const fiatRate = fiatsRates.find(({ key }) => key === activeFiat)
-    return fiatRate.value
-  }
 
   getCustomRate = (cur) => {
     const wTokens = window.widgetERC20Tokens
@@ -573,7 +557,6 @@ export default class Row extends Component {
       // @ToDo Remove this
       // tradeAllowed,
       isBalanceEmpty,
-      multiplier
     } = this.state
 
     const {
@@ -581,7 +564,8 @@ export default class Row extends Component {
       intl: { locale },
       intl,
       activeFiat,
-      isDark
+      isDark,
+      multisigStatus,
     } = this.props
 
     const {
@@ -601,10 +585,8 @@ export default class Row extends Component {
 
     const isWidgetBuild = config && config.isWidget
 
-    if (this.getCustomRate(currency)) {
-      currencyFiatBalance = BigNumber(balance).multipliedBy(this.getCustomRate(currency)).multipliedBy(multiplier || 1)
-    } else if (itemData.infoAboutCurrency) {
-      currencyFiatBalance = BigNumber(balance).multipliedBy(itemData.infoAboutCurrency.price_usd).multipliedBy(multiplier || 1)
+    if (itemData.infoAboutCurrency && itemData.infoAboutCurrency.price_fiat) {
+      currencyFiatBalance = BigNumber(balance).multipliedBy(itemData.infoAboutCurrency.price_fiat)
     }
 
     let hasHowToWithdraw = false
@@ -652,7 +634,7 @@ export default class Row extends Component {
         action: this.handleWithdraw,
         disabled: isBalanceEmpty,
       },
-      {
+      !config.opts.exchangeDisabled && {
         id: 1004,
         title: (
           <FormattedMessage
@@ -662,15 +644,6 @@ export default class Row extends Component {
         ),
         action: this.goToExchange,
         disabled: false,
-      },
-      {
-        id: 1005,
-        title: (
-          <FormattedMessage id="WalletRow_Menu_Buy" defaultMessage="Buy" />
-        ),
-        action: this.goToBuy,
-        disabled: false,
-        hidden: this.props.currency.currency === 'BTC' ? true : false,
       },
       {
         id: 1003,
@@ -705,7 +678,7 @@ export default class Row extends Component {
         action: this.copyPrivateKey,
         disabled: false,
       },
-      !this.props.itemData.isUserProtected && {
+      /*!this.props.itemData.isUserProtected && {
         id: 3012,
         title: (
           <FormattedMessage
@@ -715,7 +688,7 @@ export default class Row extends Component {
         ),
         action: this.handleHowToExport,
         disabled: false,
-      },
+      },*/
     ].filter((el) => el)
 
     dropDownMenuItems.push({
@@ -731,7 +704,7 @@ export default class Row extends Component {
     if (currencyView == 'BTC (SMS-Protected)') currencyView = 'BTC'
     if (currencyView == 'BTC (PIN-Protected)') currencyView = 'BTC'
 
-    if (currencyView !== 'BTC') {
+    if (currencyView !== 'BTC' && !config.opts.exchangeDisabled) {
       dropDownMenuItems.push({
         id: 1005,
         title: (
@@ -805,6 +778,13 @@ export default class Row extends Component {
         },
       ]
     }
+
+    const msConfirmCount = (
+      itemData.isUserProtected
+      && multisigStatus
+      && multisigStatus[itemData.address]
+      && multisigStatus[itemData.address].count
+    ) ? multisigStatus[itemData.address].count : false
 
     if (
       this.props.itemData.isSmsProtected &&
@@ -984,12 +964,24 @@ export default class Row extends Component {
                 </Fragment>
               )}
 
-            {currencyFiatBalance && showBalance && !balanceError ? (
+            {(currencyFiatBalance && showBalance && !balanceError) || msConfirmCount ? (
               <div styleName="assetsTableValue">
-                {/* <img src={dollar} /> */}
-                <p>{BigNumber(currencyFiatBalance).dp(2, BigNumber.ROUND_FLOOR).toString()}</p>
-                <strong>{activeFiat}</strong>
-                {/* {inneedData && <span>   {`${inneedData.change} %`} </span>} */}
+                {msConfirmCount && !isMobile && (
+                  <p styleName="txWaitConfirm" onClick={this.goToCurrencyHistory}>
+                    {intl.formatMessage(
+                      langLabels.msConfirmCount,
+                      {
+                        count: msConfirmCount,
+                      }
+                    )}
+                  </p>
+                )}
+                {currencyFiatBalance && showBalance && !balanceError && (
+                  <>
+                    <p>{BigNumber(currencyFiatBalance).dp(2, BigNumber.ROUND_FLOOR).toString()}</p>
+                    <strong>{activeFiat}</strong>
+                  </>
+                )}
               </div>
             ) : (
                 ''

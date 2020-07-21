@@ -10,7 +10,7 @@ import { connect } from "redaction";
 import links from "helpers/links";
 import actions from "redux/actions";
 import { constants } from "helpers";
-import config from "app-config";
+import config from 'helpers/externalConfig'
 import { injectIntl } from "react-intl";
 
 import CSSModules from "react-css-modules";
@@ -77,18 +77,7 @@ export default class Header extends Component {
     } = props;
     const { exchange, home, wallet, history: historyLink } = links;
     const { products, invest, history } = messages;
-    const {
-      lastCheckBalance,
-      wasCautionPassed,
-      isWalletCreate,
-    } = constants.localStorage;
-
-    if (
-      localStorage.getItem(lastCheckBalance) ||
-      localStorage.getItem(wasCautionPassed)
-    ) {
-      localStorage.setItem(isWalletCreate, true);
-    }
+    const { isWalletCreate } = constants.localStorage;
 
     const dinamicPath = pathname.includes(exchange)
       ? `${unlocalisedUrl(intl.locale, pathname)}`
@@ -113,7 +102,7 @@ export default class Header extends Component {
           icon: "products",
           currentPageFlag: true,
         },
-        {
+        !config.opts.exchangeDisabled && {
           title: intl.formatMessage(invest),
           link: "exchange/btc-to-usdt",
           icon: "invest",

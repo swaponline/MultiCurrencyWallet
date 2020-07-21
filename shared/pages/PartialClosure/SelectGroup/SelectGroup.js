@@ -4,6 +4,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './SelectGroup.scss'
 import partialStyles from '../PartialClosure.scss'
+import { constants } from 'helpers';
 
 import Input from 'components/forms/Input/Input'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
@@ -12,6 +13,8 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { BigNumber } from 'bignumber.js'
 
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
+
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 // TODO to split data and view this component
 const SelectGroup = (props) => {
@@ -32,7 +35,7 @@ const SelectGroup = (props) => {
           </Tooltip>
         </div>
       </FieldLabel>
-      <div styleName="groupField" className={className}>
+      <div styleName={`groupField ${isDark ? 'dark' : ''}`} className={className}>
         <Input
           styleName="inputRoot"
           inputContainerClassName="inputContainer"

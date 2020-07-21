@@ -1,7 +1,7 @@
 import React from 'react'
 import { FormattedMessage, defineMessages } from 'react-intl'
 import links from 'helpers/links'
-import config from 'app-config'
+import config from 'helpers/externalConfig'
 
 
 export const messages = defineMessages({
@@ -66,7 +66,7 @@ export const getMenuItems = (props, isWalletCreate) => {
         icon: 'products',
         currentPageFlag: true,
       },
-      {
+      !config.opts.exchangeDisabled && {
         title: intl.formatMessage(exchange),
         link: linksExchange,
         exact: true,
@@ -97,7 +97,7 @@ export const getMenuItems = (props, isWalletCreate) => {
         icon: 'products',
         currentPageFlag: true,
       },
-      {
+      !config.opts.exchangeDisabled && {
         title: intl.formatMessage(exchange),
         link: linksExchange,
         exact: true,
@@ -139,7 +139,7 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
         displayNone: !isWalletCreate,
         icon: <i className="fas fa-exchange-alt" aria-hidden="true" />,
       },
-      {
+      !config.opts.exchangeDisabled && {
         title: intl.formatMessage(exchange),
         link: linksExchange,
         exact: true,
@@ -156,7 +156,7 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
         icon: <i className="fas fa-wallet" aria-hidden="true" />,
         currentPageFlag: true,
       },
-      {
+      !config.opts.exchangeDisabled && {
         title: intl.formatMessage(exchange),
         link: linksExchange,
         exact: true,

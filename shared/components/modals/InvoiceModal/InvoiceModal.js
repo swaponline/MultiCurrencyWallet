@@ -112,7 +112,7 @@ export default class InvoiceModal extends React.Component {
 
     const currentDecimals = constants.tokenDecimals[currency.toLowerCase()]
 
-    const multiplier = infoAboutCurrency ? infoAboutCurrency.price_usd : 1
+    const multiplier = (infoAboutCurrency && infoAboutCurrency.price_fiat) ? infoAboutCurrency.price_fiat : 1
 
     this.state = {
       isShipped: false,
