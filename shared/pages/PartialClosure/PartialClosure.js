@@ -185,10 +185,6 @@ export default class PartialClosure extends Component {
     } = props;
     super();
 
-    if (isMobile) {
-      document.body.style.overflow = 'hidden';
-    }
-
     this.fiatRates = {}
     this.onRequestAnswer = (newOrder, isAccepted) => { };
 
@@ -322,10 +318,6 @@ export default class PartialClosure extends Component {
 
   componentWillUnmount() {
     this.timer = false;
-
-    if (isMobile) {
-      document.body.style.overflow = 'auto';
-    }
   }
 
   checkUrl = () => {
