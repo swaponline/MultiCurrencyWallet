@@ -491,7 +491,7 @@ export default class Header extends Component {
 
     if (isMobile && window.logoUrl) {
       return (
-        <div className="data-tut-widget-tourFinish" styleName="header-mobile">
+        <div className="data-tut-widget-tourFinish" id="header-mobile" styleName="header-mobile">
           {logoRenderer}
           {createdWalletLoader && (
             <div styleName="loaderCreateWallet">
@@ -523,7 +523,7 @@ export default class Header extends Component {
 
     if (isMobile) {
       return (
-        <div styleName="header-mobile">
+        <div id="header-mobile" styleName="header-mobile">
           {createdWalletLoader && (
             <div styleName="loaderCreateWallet">
               <Loader
