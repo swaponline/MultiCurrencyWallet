@@ -7356,5 +7356,19 @@
     "files": [
       "shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.js"
     ]
+  },
+  {
+    "id": "MnemonicInputComponent_DeleteText",
+    "message": "Нажмите, чтобы удалить слово",
+    "files": [
+      "shared/components/forms/MnemonicInput/MnemonicInput.js"
+    ]
+  },
+  {
+    "id": "MnemonicInputComponent_Placeholder",
+    "message": "Начните вводить секретную фразу",
+    "files": [
+      "shared/components/forms/MnemonicInput/MnemonicInput.js"
+    ]
   }
 ]
