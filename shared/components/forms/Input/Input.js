@@ -9,7 +9,7 @@ import { isMobile } from "react-device-detect";
 
 import cssModules from "react-css-modules";
 import styles from "./Input.scss";
-
+import "./style.css"
 import TextArea from "components/forms/TextArea/TextArea";
 
 
@@ -47,6 +47,13 @@ export default class Input extends Component {
     if (onFocus) {
       onFocus();
     }
+
+    if (isMobile) {
+      const header = document.getElementById('header-mobile')
+      if (header) {
+        header.classList.add("hidden-header")
+      }
+    }
     reducers.inputActive.setInputActive(true);
   };
 
@@ -55,6 +62,13 @@ export default class Input extends Component {
 
     if (onBlur) {
       onBlur();
+    }
+
+    if (isMobile) {
+      const header = document.getElementById('header-mobile')
+      if (header) {
+        header.classList.remove("hidden-header")
+      }
     }
     reducers.inputActive.setInputActive(false);
   };
