@@ -376,7 +376,7 @@ const getWallets = () => {
     ... (!config.opts.curEnabled || config.opts.curEnabled.btc) ? [btcMultisigUserData] : [],
     ... (!config.opts.curEnabled || config.opts.curEnabled.btc) ? (btcMultisigUserData && btcMultisigUserData.wallets) ? btcMultisigUserData.wallets : [] : [],
     ... (!config.opts.curEnabled || config.opts.curEnabled.btc) ? [ethData] : [],
-    ghostData,
+    ... (!config.opts.curEnabled || config.opts.curEnabled.ghost) ? [ghostData] : [],
     ...Object.keys(tokensData)
       .filter(k => !tokensData[k].reducerDataTarget)
       .map(k => tokensData[k]),

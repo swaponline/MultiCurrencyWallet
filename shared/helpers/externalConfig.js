@@ -32,7 +32,11 @@ const externalConfig = () => {
 
   config.opts = {
     inited: true,
-    curEnabled: false,
+    curEnabled: {
+      eth: true,
+      btc: true,
+      ghost: false,
+    },
     ownTokens: false,
     addCustomERC20: true,
     invoiceEnabled: true,
