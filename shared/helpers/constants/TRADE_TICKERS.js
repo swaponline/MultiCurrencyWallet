@@ -22,6 +22,7 @@ Object.keys(config.erc20)
     swap.push(`${key.toUpperCase()}-GHOST`)
   })
 
+swap.push('ETH-GHOST')
 
 if (config && config.isWidget) {
   swap.length = 0
@@ -34,7 +35,7 @@ if (config && config.isWidget) {
     swap.push(`${config.erc20token.toUpperCase()}-BTC`)
   }
   swap.push('ETH-BTC')
-
+  swap.push('ETH-GHOST')
 } else {
   const customERC = GetCustromERC20()
   // swap.push('GHOST-BTC')

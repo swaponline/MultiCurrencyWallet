@@ -115,11 +115,11 @@ const createSwapApp = () => {
       ETH2BTC,
       BTC2ETH,
 
-      GHOST2BTC,
+      // GHOST2BTC,
       // BTC2GHOST,
 
       GHOST2ETH,
-      // ETH2GHOST,
+      ETH2GHOST,
 
 
       ...(Object.keys(config.erc20))
