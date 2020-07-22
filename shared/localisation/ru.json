@@ -5815,7 +5815,7 @@
   },
   {
     "id": "ShowMyMnemonic",
-    "message": "сделайте резервную копию кошелька"
+    "message": "Сделайте резервную копию кошелька"
   },
   {
     "id": "BtcMultisignConfirmTx_FromAddress",
@@ -7253,6 +7253,13 @@
   {
     "id": "WalletRow_Menu_HowExportWallet",
     "message": "How to export wallet",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "WalletRow_ShowAddress",
+    "message": "Показать адрес",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
