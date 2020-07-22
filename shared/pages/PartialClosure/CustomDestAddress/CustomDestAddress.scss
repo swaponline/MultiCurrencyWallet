@@ -31,6 +31,8 @@
   .dropDown{
     box-shadow: none;
     border: none;
+    width: 100%;
+  }
     & > div:nth-child(1) {
       border: none;
       height: auto;
@@ -160,6 +162,14 @@
 
 
 @include media-mobile {
+  .--dark {
+    .readonlyValue {
+      input {
+        color: white;
+      }
+      
+    }
+  }
   .label {
     width: 170px;
     font-weight: 500;
@@ -179,9 +189,17 @@
     .readonlyValue {
       input {
         padding-left: 10px;
-        &:focus {
-          padding-left: 9px;
-        }
+        font-size: 0.7em;
+        color: black;
+        min-height: 2em;
+        line-height: 3em;
+        margin: 1em 0;
+
+       &:focus {
+        padding-left: 9px;
+        outline: none;
+        line-height: 3em;
+      }
       }
       
     }

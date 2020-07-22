@@ -300,7 +300,7 @@
   }
 
   .shortTitle {
-    font-size: 15px;
+    font-size: 0.7em;
     margin-top: 1px;
   }
 
@@ -312,7 +312,7 @@
     max-height: auto;
     overflow-y: hidden;
     top: 10px;
-    left: calc(50% - 50vw + 20px);
+    left: calc(50% - 50vw + 1em);
     width: calc(100vw - 40px);
   }
 
