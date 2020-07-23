@@ -18,7 +18,9 @@
     "start": "npm run dev",
     "dev": "npm run dev:testnet",
     "dev-widget": "npm run dev:testnet-widget",
+    "preinstall": "git submodule update --init --recursive",
     "prod": "npm run dev:mainnet",
+    
     "prod-widget": "npm run dev:mainnet-widget",
     "predeploy:pages": "npm run build:pages && echo staging.swaponline.site > build-mainnet-pages/CNAME",
     "deploy:pages": "gh-pages -d build-mainnet-pages",
