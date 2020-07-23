@@ -6587,6 +6587,20 @@
     ]
   },
   {
+    "id": "WidgetExitAlertTitle",
+    "message": "One more step",
+    "files": [
+      "shared/components/Header/WidgetHeader/index.js"
+    ]
+  },
+  {
+    "id": "widgetExitAlertMessage",
+    "message": "Save your secret phrase before exit!",
+    "files": [
+      "shared/components/Header/WidgetHeader/index.js"
+    ]
+  },
+  {
     "id": "WidgetExitTitle3",
     "message": "Approve exit",
     "files": [
@@ -6609,7 +6623,7 @@
   },
   {
     "id": "widgetApproveMessage",
-    "message": "Are you sure you want to logout? IMPORTANT: Save your private keys!",
+    "message": "Are you sure you want to logout?",
     "files": [
       "shared/components/Header/WidgetHeader/index.js"
     ]
