@@ -7397,7 +7397,7 @@
   },
   {
     "id": "MnemonicInputComponent_Placeholder",
-    "message": "Start typing your secret phrase",
+    "message": "Start typing a word...",
     "files": [
       "shared/components/forms/MnemonicInput/MnemonicInput.js"
     ]
