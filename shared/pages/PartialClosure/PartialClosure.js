@@ -1404,7 +1404,7 @@ export default class PartialClosure extends Component {
               <p styleName="error">
                 <FormattedMessage
                   id="PartialPriceNoOrdersReduceAllInfo"
-                  defaultMessage="No orders found. Enter amount less than {maxForBuy}, {maxForSell}"
+                  defaultMessage="This trade amount is too high for present market liquidity. Please reduce amount to {maxForSell}. "
                   values={{
                     maxForBuy: `${maxAmount} ${getCurrency.toUpperCase()}`,
                     maxForSell: `${maxBuyAmount} ${haveCurrency.toUpperCase()}`
