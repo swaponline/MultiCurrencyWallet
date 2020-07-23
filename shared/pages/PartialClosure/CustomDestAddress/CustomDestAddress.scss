@@ -195,13 +195,12 @@
         line-height: 3em;
         margin: 1em 0;
 
-       &:focus {
-        padding-left: 9px;
-        outline: none;
-        line-height: 3em;
+          &:focus {
+          padding-left: 9px;
+          outline: none;
+          line-height: 3em;
+        }
       }
-      }
-      
     }
   }
 }
