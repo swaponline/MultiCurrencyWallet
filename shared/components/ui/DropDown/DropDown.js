@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import cx from 'classnames'
 import ClickOutside from 'react-click-outside'
 import Link from 'sw-valuelink'
+import { constants } from 'helpers'
 
 import cssModules from 'react-css-modules'
 
@@ -15,6 +16,8 @@ import styles from './DropDown.scss'
 
 import closeBtn from './images/close.svg'
 
+
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 @toggle()
 @cssModules(styles, { allowMultiple: true })
 export default class DropDown extends Component {
@@ -47,8 +50,6 @@ export default class DropDown extends Component {
 
   toggle = () => {
     const { isToggleActive, toggleOpen, toggleClose } = this.props
-
-    console.log(isToggleActive)
 
     if (isToggleActive) {
       toggleClose()
@@ -116,7 +117,6 @@ export default class DropDown extends Component {
     const {
       inputValue,
       infoAboutCurrency,
-      error,
     } = this.state
 
     const dropDownStyleName = cx('dropDown', { active: isToggleActive })
@@ -146,7 +146,7 @@ export default class DropDown extends Component {
             : () => { }
         }
       >
-        <div styleName={dropDownStyleName} className={className}>
+        <div styleName={`${dropDownStyleName} ${isDark ? 'dark' : ''}`} className={className}>
           <div
             styleName={notIteractable ? 'selectedItem selectedItem_disableIteract' : 'selectedItem'}
             onClick={notIteractable ? () => null : this.toggle}

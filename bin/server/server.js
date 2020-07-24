@@ -8,7 +8,9 @@ import webpackMiddleware from 'webpack-dev-middleware'
 import webpackConfig from '../../webpack'
 
 
-const port      = 9001
+const port      = process.env.PORT || 9001
+const host      = process.env.HOST || 'localhost'
+
 const app       = express()
 const compiler  = webpack(webpackConfig)
 const debug     = _debug('app:bin:server')
@@ -20,9 +22,9 @@ app.use(bodyParser.json({ strict: true, limit: '10mb' }))
 app.use(historyApiFallback())
 app.use(webpackMiddleware(compiler, webpackConfig.devServer))
 
-app.listen(port, 'localhost', (err) => {
+app.listen(port, host, (err) => {
   if (err) {
     debug(chalk.red(err))
   }
-  debug('Listening on port %s. Open up http://localhost:%s/ in your browser.', port, port)
+  debug(`Listening: http://${host}:${port}/`)
 })

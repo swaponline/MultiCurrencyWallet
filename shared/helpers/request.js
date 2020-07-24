@@ -18,7 +18,7 @@ const responseCacheGet = (req, opts) => {
 
 const responseCacheAdd = (req, opts, resData, res) => {
   const cacheKey = responseCacheGetKey(req, opts)
-  const cacheResponse = { opts }
+  const { cacheResponse } = opts
   const cacheResponseCreateTime = new Date().getTime()
 
   responseCacheStorage[cacheKey] = {

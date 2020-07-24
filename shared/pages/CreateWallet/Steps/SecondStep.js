@@ -15,6 +15,7 @@ import config from 'app-config'
 import actions from 'redux/actions'
 import { firebase, constants } from 'helpers'
 import firestore from 'helpers/firebase/firestore'
+import ethToken from 'helpers/ethToken'
 
 
 import Explanation from '../Explanation'
@@ -37,6 +38,9 @@ const CreateWallet = (props) => {
       erc: true,
     },
     sms: {},
+    pin: {
+      btc: true,
+    },
     g2fa: {},
     multisign: {},
     fingerprint: {},
@@ -45,6 +49,7 @@ const CreateWallet = (props) => {
   const _activated = {
     nothing: {},
     sms: {},
+    pin: {},
     g2fa: {},
     multisign: {},
     fingerprint: {},
@@ -55,11 +60,13 @@ const CreateWallet = (props) => {
 
   if (currencies.BTC) {
     _protection.sms.btc = true
+    _protection.pin.btc = true
     _protection.g2fa.btc = false
     _protection.multisign.btc = true
     _protection.fingerprint.btc = true
-    _activated.nothing.btc = btcData.balance > 0 || (!hiddenCoins.includes("BTC") && !hiddenCoins.includes(`BTC:${btcData.address}`))
+    _activated.nothing.btc = btcData.balance > 0 || (hiddenCoins.length ? !hiddenCoins.includes("BTC") && !hiddenCoins.includes(`BTC:${btcData.address}`) : false)
     _activated.sms.btc = actions.btcmultisig.checkSMSActivated()
+    _activated.pin.btc = actions.btcmultisig.checkPINActivated()
     _activated.g2fa.btc = actions.btcmultisig.checkG2FAActivated()
     _activated.multisign.btc = actions.btcmultisig.checkUserActivated()
     _activated.fingerprint.btc = false
@@ -92,6 +99,7 @@ const CreateWallet = (props) => {
     color: {
       withoutSecure: false,
       sms: false,
+      pin: false,
       google2FA: false,
       multisignature: false,
     },
@@ -105,6 +113,7 @@ const CreateWallet = (props) => {
   const [isFingerprintFeatureAsked, setFingerprintFeatureAsked] = useState(false)
   const [isTrivialFeatureAsked, setTrivialFeatureAsked] = useState(false)
   const [isSmsFeatureAsked, setSmsFeatureAsked] = useState(false)
+  const [isPinFeatureAsked, setPinFeatureAsked] = useState(false)
   const [is2FAFeatureAsked, set2FAFeatureAsked] = useState(false)
   const [isMultisigFeatureAsked, setMultisigFeatureAsked] = useState(false)
 
@@ -170,15 +179,17 @@ const CreateWallet = (props) => {
     setError(null)
   }
 
-  const currencyName = Object.keys(currencies)[0] || 'Cant define currency'
+  const currencyName = Object.keys(currencies).filter((el) => currencies[el])[0] || 'Cant define currency'
+
+  const currencyKey = (ethToken.isEthToken({ name: currencyName })) ? `erc` : currencyName.toLowerCase()
 
   const coins = [
     {
       text: locale === 'en' ? 'No security' : 'Без защиты',
       name: 'withoutSecure',
       capture: locale === 'en' ? 'suitable for small amounts' : 'Подходит для небольших сумм',
-      enabled: !_activated.nothing.btc,
-      activated: _activated.nothing.btc,
+      enabled: !_activated.nothing[currencyKey],
+      activated: _activated.nothing[currencyKey],
       onClickHandler: () => {
         if (isTrivialFeatureAsked) {
           return null
@@ -199,8 +210,8 @@ const CreateWallet = (props) => {
       text: 'SMS',
       name: 'sms',
       capture: locale === 'en' ? 'Verify your transactions via SMS code' : 'Транзакции подтверждаются кодом по SMS',
-      enabled: _protection.sms.btc /* || _protection.sms.eth || _protection.sms.erc */,
-      activated: _activated.sms.btc /* || _activated.sms.eth || _activated.sms.erc */,
+      enabled: _protection.sms[currencyKey],
+      activated: _activated.sms[currencyKey],
       onClickHandler: () => {
         if (isSmsFeatureAsked) {
           return null
@@ -218,12 +229,35 @@ const CreateWallet = (props) => {
       },
     },
     {
+      text: 'PIN',
+      name: 'pin',
+      capture: locale === 'en' ? 'Verify your transactions via PIN code' : 'Транзакции подтверждаются PIN-кодом',
+      enabled: _protection.pin[currencyKey],
+      activated: _activated.pin[currencyKey],
+      onClickHandler: () => {
+        if (isPinFeatureAsked) {
+          return null
+        }
+        setPinFeatureAsked(true)
+        try {
+          return axios({
+            // eslint-disable-next-line max-len
+            url: `https://noxon.wpmix.net/counter.php?msg=%D1%85%D0%BE%D1%82%D1%8F%D1%82%20%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C%20${currencyName}-pin%20%D0%BA%D0%BE%D1%88%D0%B5%D0%BB%D1%8C%20${window.top.location.host}`,
+            method: 'post',
+          }).catch(e => console.error(e))
+        } catch (error) {
+          console.error(error)
+        }
+      },
+    },
+    /*
+    {
       text: 'Google 2FA',
       name: 'google2FA',
       capture: locale === 'en' ?
         'Verify your transactions through the Google Authenticator app' :
         'Транзакции подтверждаются через приложение Google Authenticator',
-      enabled: _protection.g2fa.btc /* || _protection.g2fa.eth || _protection.g2fa.erc */,
+      enabled: _protection.g2fa.btc,
       activated: _activated.g2fa.btc,
       onClickHandler: () => {
         if (is2FAFeatureAsked) {
@@ -241,14 +275,15 @@ const CreateWallet = (props) => {
         }
       },
     },
+    */
     {
       text: 'Multisignature',
       name: 'multisignature',
       capture: locale === 'en' ?
         'Verify your transactions by using another device or by another person.' :
         'Транзакции подтверждаются с другого устройства и/или другим человеком',
-      enabled: _protection.multisign.btc,
-      activated: _activated.multisign.btc,
+      enabled: _protection.multisign[currencyKey],
+      activated: _activated.multisign[currencyKey],
       onClickHandler: () => {
         if (isMultisigFeatureAsked) {
           return null
@@ -274,8 +309,8 @@ const CreateWallet = (props) => {
       capture: locale === 'en' ?
         'Transactions are confirmed with your fingerprint authenticator.' :
         'Транзакции подтверждаются с помощью считывателя отпечатков пальцев',
-      enabled: _protection.fingerprint.btc,
-      activated: _activated.fingerprint.btc,
+      enabled: _protection.fingerprint[currencyKey],
+      activated: _activated.fingerprint[currencyKey],
       onClickHandler: () => {
         if (isFingerprintFeatureAsked) {
           return null

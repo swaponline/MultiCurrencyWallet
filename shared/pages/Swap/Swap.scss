@@ -1,6 +1,13 @@
 .swap {
   padding-top: 120px;
 }
+
+.dark {
+  code{
+    color: white;
+  }
+}
+
 .swapMobile {
   padding-top: 0;
 }
@@ -161,16 +168,13 @@
 }
 
 .top {
-  width: 575px;
-  display: flex;
-  justify-content: space-between;
+  width: 100%;
 }
 
 @include media-mobile {
   .top {
-    display: block;
+    display: flex;
     width: 100%;
-    justify-content: stretch;
     height: 70px;
   }
   .onlineIndicator {
@@ -184,18 +188,9 @@
 
 .qrImg {
   position: relative;
-  right: 15px;
-  top: -15px;
+  width: 100%;
 }
 
-@include media-mobile {
-  .qrImg {
-    img {
-      width: 50%;
-      margin: -10% 0 0% 50%;
-    }
-  }
-}
 .message {
   max-width: 100%;
 }
@@ -206,16 +201,18 @@
   font-size: 21px;
   display: block;
   margin-right: 5px;
+  z-index: 1;
+  position: relative;
 }
 
 .qr span {
   font-size: 9px;
-  margin-top: 13px;
+  height: 3em;
 }
 
 .qr i {
-  position: absolute;
-  top: 23px;
+  position: relative;
+  top: 9px;
 }
 
 .linkTransactions {
@@ -299,31 +296,24 @@
 }
 
 .qr {
-  margin-bottom: 20px;
   display: flex;
   justify-content: center;
   position: relative;
+  margin: 1em;
   img {
     width: 265px;
   }
   button {
     width: 100%;
-    margin: auto;
+    margin: 0 1em;
     height: 56px;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
     width: 56px;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    -ms-flex-pack: center;
     justify-content: center;
     background: #eee;
     color: #000;
-    margin-top: 13px;
     align-items: center;
-    margin-left: 15px;
+    flex-direction: column;
     &:hover {
       background: #eee;
     }
@@ -379,7 +369,6 @@
   align-items: center;
   height: 56px;
   display: flex;
-  margin-top: 13px;
   color: #fff;
   display: flex;
   background: #fff;
@@ -473,9 +462,7 @@
   .linkAddress {
     font-size: 14px;
   }
-  .qrImg {
-    right: -23px;
-  }
+
 }
 
 @include media-tablet {
@@ -567,12 +554,18 @@
   .qrImg {
     position: absolute;
     right: 10px;
-    top: 26px;
+    top: 0px;
     width: 200px;
   }
+
+  .qrImg > div {
+    height:unset;
+  }
+
   .qr {
     justify-content: end;
     width: max-content;
+    margin: 1em 0;
   }
   .swap {
     display: block;

@@ -206,14 +206,14 @@ const withToken = (name) => {
 
   const tokenContract = new web3.eth.Contract(ERC20_ABI, contractAddress, { from: address })
 
-  const toWei = amount => BigNumber(amount).times(BigNumber(10).pow(decimals)).toString()
+  const toWei = amount => BigNumber(amount).times(BigNumber(10).pow(decimals)).toString(10)
   const fromWei = wei => BigNumber(wei).div(BigNumber(10).pow(decimals))
 
-  return { tokenContract, decimals, toWei, fromWei }
+  return { contractAddress, tokenContract, decimals, toWei, fromWei }
 }
 
 const fetchFees = async ({ gasPrice, gasLimit, speed } = {}) => {
-  gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
+  gasPrice = gasPrice || await helpers.ethToken.estimateGasPrice({ speed })
   gasLimit = gasLimit || constants.defaultFeeRates.ethToken.limit.send
 
   return {
@@ -238,7 +238,7 @@ const getLinkToInfo = (tx) => {
     return
   }
 
-  return `https://etherscan.io/tx/${tx}`
+  return `${config.link.etherscan}/tx/${tx}`
 }
 
 const sendTransaction = ({ contract, method }, { args, params = {} } = {}, callback) =>
@@ -460,4 +460,5 @@ export default {
   GetCustromERC20,
   fetchTxInfo,
   getTxRouter,
+  withToken,
 }

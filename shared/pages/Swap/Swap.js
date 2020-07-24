@@ -28,6 +28,7 @@ import config from 'app-config'
 
 
 const isWidgetBuild = config && config.isWidget
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @injectIntl
 @connect(({
@@ -525,7 +526,7 @@ export default class SwapComponent extends PureComponent {
     return (
       <Fragment>
         {!hideAll ?
-          <div styleName={isMobile ? 'swap swapMobile' : 'swap'}>
+          <div styleName={`${isMobile ? 'swap swapMobile' : 'swap'} ${isDark ? 'dark' : ''}`}>
             <SwapComponent
               tokenItems={tokenItems}
               depositWindow={depositWindow}

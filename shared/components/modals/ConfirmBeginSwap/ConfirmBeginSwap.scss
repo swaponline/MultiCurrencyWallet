@@ -56,6 +56,13 @@
   justify-content: center;
   background-color: rgba(0, 0, 0, .3);
   opacity: 1;
+
+  &.--dark {
+    .modal {
+      background: #1e1f20;
+      color: white;
+    }
+  }
 }
 
 .modal {

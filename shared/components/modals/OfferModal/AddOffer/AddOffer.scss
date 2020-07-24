@@ -26,6 +26,12 @@
 .wrapper {
   width: 100%;
   margin: 0 auto;
+
+  &.--dark {
+    .togleText {
+      color: #8e9aa3;
+    }
+  }
 }
 
 .exchangeRate {

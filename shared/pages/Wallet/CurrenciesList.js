@@ -14,6 +14,7 @@ import exConfig from 'helpers/externalConfig'
 const isWidgetBuild = config && config.isWidget
 
 const CurrenciesList = ({
+  isDark,
   tableRows,
   currencies,
   infoAboutCurrency,
@@ -23,7 +24,7 @@ const CurrenciesList = ({
   multisigPendingCount,
 }) => {
   return (
-    <div styleName="yourAssets">
+    <div styleName={`yourAssets ${isDark ? 'dark' : ''}`}>
       {(exConfig && exConfig.opts && exConfig.opts.showWalletBanners || isWidgetBuild) ? (
         <Fragment>
           <Slider multisigPendingCount={multisigPendingCount} />
@@ -48,6 +49,7 @@ const CurrenciesList = ({
           <Row
             key={index}
             index={index}
+            isDark={isDark}
             getCurrencyFiat={fiat => this.getCurrencyFiat(fiat)}
             currency={row}
             itemData={row}

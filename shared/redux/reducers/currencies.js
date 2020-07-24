@@ -76,6 +76,15 @@ const initialState = {
       dontCreateOrder: true,
     },
     {
+      name: 'BTC (PIN-Protected)',
+      title: 'BTC (PIN-Protected)',
+      icon: 'btc',
+      value: 'btcMultisigPin',
+      fullTitle: 'bitcoinMultisigPin',
+      addAssets: false,
+      dontCreateOrder: true,
+    },
+    {
       name: 'BTC (Multisig)',
       title: 'BTC (Multisig)',
       icon: 'btc',

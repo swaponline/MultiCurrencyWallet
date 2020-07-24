@@ -346,6 +346,7 @@ const getWallets = () => {
       btcData,
       btcMultisigSMSData,
       btcMultisigUserData,
+      btcMultisigPinData,
       ethData,
       tokensData,
       isTokenSigned,
@@ -362,13 +363,14 @@ const getWallets = () => {
 
 
   const allData = [
-    ... (btcMnemonicData && !btcData.isMnemonic) ? [btcMnemonicData] : [], // Sweep
-    ... (ethMnemonicData && !ethData.isMnemonic) ? [ethMnemonicData] : [], // Sweep
-    btcData,
-    btcMultisigSMSData,
-    btcMultisigUserData,
-    ... (btcMultisigUserData && btcMultisigUserData.wallets) ? btcMultisigUserData.wallets : [],
-    ethData,
+    ... (!config.opts.curEnabled || config.opts.curEnabled.btc) ? (btcMnemonicData && !btcData.isMnemonic) ? [btcMnemonicData] : [] : [], // Sweep
+    ... (!config.opts.curEnabled || config.opts.curEnabled.eth) ? (ethMnemonicData && !ethData.isMnemonic) ? [ethMnemonicData] : [] : [], // Sweep
+    ... (!config.opts.curEnabled || config.opts.curEnabled.btc) ? [btcData] : [],
+    ... (!config.opts.curEnabled || config.opts.curEnabled.btc) ? [btcMultisigSMSData] : [],
+    ... (!config.opts.curEnabled || config.opts.curEnabled.btc) ? (btcMultisigPinData && btcMultisigPinData.isRegistered) ? [btcMultisigPinData] : [] : [],
+    ... (!config.opts.curEnabled || config.opts.curEnabled.btc) ? [btcMultisigUserData] : [],
+    ... (!config.opts.curEnabled || config.opts.curEnabled.btc) ? (btcMultisigUserData && btcMultisigUserData.wallets) ? btcMultisigUserData.wallets : [] : [],
+    ... (!config.opts.curEnabled || config.opts.curEnabled.btc) ? [ethData] : [],
     ...Object.keys(tokensData)
       .filter(k => !tokensData[k].reducerDataTarget)
       .map(k => tokensData[k])

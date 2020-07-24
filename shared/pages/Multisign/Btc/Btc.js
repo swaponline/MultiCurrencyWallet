@@ -45,12 +45,16 @@ export default class Btc extends PureComponent {
     console.log('Btc mulsign connected')
     super()
 
+    const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
+    const mnemonicSaved = (mnemonic === `-`)
+
     this.timerWaitOnlineJoin = false
     this.state = {
       action: 'none',
       wallet: {},
       walletBalance: 0,
       publicKey: '',
+      mnemonicSaved,
       addWalletEnabled: false,
     }
   }
@@ -174,7 +178,6 @@ export default class Btc extends PureComponent {
     actions.btcmultisig.addBtcMultisigKey(publicKey, true)
 
     actions.core.markCoinAsVisible('BTC (Multisig)')
-    localStorage.setItem(constants.localStorage.isWalletCreate, true)
 
     this.setState({
       action: (action === 'join') ? 'linkready' : 'ready'
@@ -236,6 +239,19 @@ export default class Btc extends PureComponent {
     )
   }
 
+  handleSaveMnemonic = async () => {
+    actions.modals.open(constants.modals.SaveMnemonicModal, {
+      onClose: () => {
+        const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
+        const mnemonicSaved = (mnemonic === `-`)
+
+        this.setState({
+          mnemonicSaved,
+        })
+      }
+    })
+  }
+
   handleGoToWallet = async () => {
     const {
       history,
@@ -264,11 +280,21 @@ export default class Btc extends PureComponent {
   }
 
   render() {
-    const { action } = this.state
+    const {
+      action,
 
-    const { wallet, walletBalance, joinLink, addWalletEnabled, waitCreateWallet } = this.state
+      wallet,
+      walletBalance,
+      joinLink,
+      addWalletEnabled,
+      waitCreateWallet,
 
-    const { debugShowTXB, debugShowInput, debugShowOutput } = this.state
+      debugShowTXB,
+      debugShowInput,
+      debugShowOutput,
+
+      mnemonicSaved,
+    } = this.state
 
     return (
       <section>
@@ -300,25 +326,53 @@ export default class Btc extends PureComponent {
               </label>
               <strong>{' '}{walletBalance} BTC</strong>
             </div>
-            {addWalletEnabled ?
-              waitCreateWallet ?
-                <Button brand>
-                  <FormattedMessage id="BTCMS_CreateWalletWait" defaultMessage="Создание кошелька... Подождите немного" />
+            {mnemonicSaved ? (
+              <>
+                {addWalletEnabled ?
+                  waitCreateWallet ?
+                    <Button brand>
+                      <FormattedMessage id="BTCMS_CreateWalletWait" defaultMessage="Создание кошелька... Подождите немного" />
+                    </Button>
+                    :
+                    <Button brand onClick={this.handleAddWallet}>
+                      <FormattedMessage id="BTCMS_CreateWalletAdd" defaultMessage="Добавить этот кошелек" />
+                    </Button>
+                  :
+                  <Button brand>
+                    <FormattedMessage id="BTCMS_CreateWalletLoading" defaultMessage="Загрузка... Подождите немного" />
+                  </Button>
+                }
+              </>
+            ) : (
+              <>
+                <div>
+                  <strong>
+                    <FormattedMessage
+                      id="BTCMS_YouNeedSaveMnemonic"
+                      defaultMessage="Для активации btc-multisig вы должны сохранить 12 слов"
+                    />
+                  </strong>
+                </div>
+                <div>
+                  <label>
+                    <FormattedMessage
+                      id="BTCMS_SaveYourMnemonic"
+                      defaultMessage="Пожалуйста сохраните свою секретную фразу."
+                    />
+                  </label>
+                </div>
+                <Button brand onClick={this.handleSaveMnemonic}>
+                  <FormattedMessage id="BTCMS_SaveMnemonicButton" defaultMessage="Сохранить секретную фразу" />
                 </Button>
-                :
-                <Button brand onClick={this.handleAddWallet}>
-                  <FormattedMessage id="BTCMS_CreateWalletAdd" defaultMessage="Добавить этот кошелек" />
-                </Button>
-              :
-              <Button brand>
-                <FormattedMessage id="BTCMS_CreateWalletLoading" defaultMessage="Загрузка... Подождите немного" />
-              </Button>
-            }
+              </>
+            )}
           </Fragment>
         }
-        <div styleName="descritonText">
-          <FormattedMessage id="BTCMS_CreateWalletLoading_descroptio" defaultMessage="Funds sent to this wallet cannot be spent without your confirmation (please save your private 12 words passphrase)" />
-        </div>
+        {!mnemonicSaved && (
+          <div styleName="descritonText">
+            <FormattedMessage id="BTCMS_CreateWalletLoading_descroptio" defaultMessage="Funds sent to this wallet cannot be spent without your confirmation (please save your private 12 words passphrase)" />
+          </div>
+        )}
         {(/*action=='confirm' ||*/ action === 'confirminvoice') &&
           <Fragment>
             <h1>

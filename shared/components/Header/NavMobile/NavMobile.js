@@ -12,9 +12,11 @@ import actions from 'redux/actions'
 import constants from 'helpers/constants'
 
 
+const isDark = localStorage.getItem(constants.localStorage.isDark)
+
 @injectIntl
 @withRouter
-@CSSModules(styles)
+@CSSModules(styles, { allowMultiple: true })
 export default class NavMobile extends Component {
 
   static propTypes = {
@@ -25,45 +27,50 @@ export default class NavMobile extends Component {
     const {
       menu,
       intl: { locale },
-      location
-    } = this.props;
+      location,
+      isHidden,
+    } = this.props
 
     const isExchange = location.pathname.includes(links.exchange);
 
     return (
-      <div styleName="navbar">
+      <div styleName={`navbar ${isDark ? 'dark' : ''} ${isHidden ? 'navbar-hidden' : ''}`}>
         {
           menu
             .filter(i => i.isMobile !== false)
-            .map(({ title, link, exact, icon, isBold, currentPageFlag, ...rest }) => !rest.displayNone && (
-              currentPageFlag
-                ? (
-                  <a
-                    key={title}
-                    onClick={() => actions.modals.open(constants.modals.MobMenu, {})}
-                    tabIndex="-1"
+            .map(({ title, link, exact, icon, isBold, currentPageFlag, ...rest }) => {
+              return !rest.displayNone &&
+                (
+                  currentPageFlag
+                    ? (
+                      <a
+                        key={title}
+                        onClick={() => actions.modals.open(constants.modals.MobMenu, {})}
+                        tabIndex="-1"
 
-                  >
-                    {icon}
-                    <span className={isBold && styles.bold}>{title}</span>
-                  </a>
+                      >
+                        {icon}
+                        <span className={isBold && styles.bold}>{title}</span>
+                      </a>
+                    )
+                    : (
+                      <NavLink
+                        key={title}
+                        exact={exact}
+                        to={localisedUrl(locale, link)}
+                        className={`
+                      ${link && link.includes("history") ? 'data-tut-recent' : ''}
+                      ${link && link.includes("exchange") ? 'reactour-exchange data-tut-widget-exchange' : ''}
+                      ${link && link.includes("exchange") && isExchange ? ` ${styles.active}` : ''}
+                    `}
+                        activeClassName={styles.active}
+                      >
+                        {icon}
+                        <span className={isBold && styles.bold}>{title}</span>
+                      </NavLink>
+                    )
                 )
-                : (
-                  <NavLink
-                    key={title}
-                    exact={exact}
-                    to={localisedUrl(locale, link)}
-                    className={`
-                    ${title === 'Exchange' ? 'reactour-exchange' : ''}
-                    ${title === 'Exchange' && isExchange ? ` ${styles.active}` : ''}
-                `}
-                    activeClassName={styles.active}
-                  >
-                    {icon}
-                    <span className={isBold && styles.bold}>{title}</span>
-                  </NavLink>
-                )
-            ))
+            })
         }
       </div>
     )

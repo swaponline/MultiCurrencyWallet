@@ -29,7 +29,10 @@ import QrReader from "components/QrReader";
 
 import redirectTo from 'helpers/redirectTo'
 import AdminFeeInfoBlock from 'components/AdminFeeInfoBlock/AdminFeeInfoBlock'
+import lsDataCache from 'helpers/lsDataCache'
 
+
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @injectIntl
 @connect(
@@ -194,7 +197,7 @@ export default class WithdrawModalMultisig extends React.Component {
   onFinishWithdraw = async (txId) => {
     const {
       amount,
-      to,
+      address: to,
     } = this.state
 
     const {
@@ -225,6 +228,20 @@ export default class WithdrawModalMultisig extends React.Component {
       toAddress: to
     })
     */
+
+    // Сохраняем транзакцию в кеш
+    const txInfoCache = {
+      amount,
+      senderAddress: address,
+      receiverAddress: to,
+      confirmed: false,
+    }
+
+    lsDataCache.push({
+      key: `TxInfo_btc_${txId}`,
+      time: 3600,
+      data: txInfoCache,
+    })
 
     this.setState({
       isShipped: false,
@@ -477,7 +494,9 @@ export default class WithdrawModalMultisig extends React.Component {
   addressIsCorrect() {
     const { address } = this.state
 
-    return typeforce.isCoinAddress.BTC(address)
+    if (!typeforce.isCoinAddress.BTC(address)) {
+      return actions.btc.addressIsCorrect(address)
+    } else return true
   }
 
   handleClose = () => {
@@ -671,9 +690,9 @@ export default class WithdrawModalMultisig extends React.Component {
                 </div>
               )}
             </div>
-            <div styleName="lowLevel" style={{ marginBottom: "50px" }}>
+            <div styleName={`lowLevel ${isDark ? 'dark' : ''}`} style={{ marginBottom: '50px' }}>
               <p styleName="balance">
-                {balance} {currency.toUpperCase()}
+                {balance} {`BTC`}
               </p>
               <FieldLabel>
                 <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
@@ -753,7 +772,7 @@ export default class WithdrawModalMultisig extends React.Component {
             {invoice &&
               <Fragment>
                 <hr />
-                <div styleName="lowLevel" style={{ marginBottom: "50px" }}>
+                <div styleName={`lowLevel ${isDark ? 'dark' : ''}`} style={{ marginBottom: '50px' }}>
                   <div styleName="groupField">
                     <div styleName="downLabel">
                       <FieldLabel inRow>
@@ -790,9 +809,6 @@ export default class WithdrawModalMultisig extends React.Component {
 
         {step === 'confirm' &&
           <Fragment>
-            <p styleName="notice dashboardViewNotice">
-              <FormattedMessage id="Withdrow2222" defaultMessage="Send SMS code" />
-            </p>
             <div styleName="highLevel smsCodeHolder">
               <FieldLabel label>
                 <FormattedMessage id="Withdrow2223" defaultMessage="SMS code" />
@@ -840,7 +856,7 @@ export default class WithdrawModalMultisig extends React.Component {
             >
               <FormattedMessage id="Withdrow2224" defaultMessage="Confirm" />
             </Button>
-            <hr />
+            <hr styleName="marginHr" />
             <p styleName="notice mnemonicUseNote dashboardViewNotice">
               <FormattedMessage id="WithdrawSMS_MnemonicNote" defaultMessage="Если у вас нет доступа к телефону или не получается получить код, вы можете воспользовать секретной фразой" />
             </p>

@@ -11,54 +11,68 @@ import { BigNumber } from "bignumber.js";
 import { Redirect } from "react-router-dom";
 import { getState } from "redux/core";
 import reducers from "redux/core/reducers";
+import { isMobile } from 'react-device-detect'
 
 import SelectGroup from "./SelectGroup/SelectGroup";
-import { Button, Toggle } from "components/controls";
-import Input from "components/forms/Input/Input";
+import { Button } from "components/controls";
 import Promo from "./Promo/Promo";
 import Quote from "./Quote";
-import PromoText from "./PromoText/PromoText";
 import HowItWorks from "./HowItWorks/HowItWorks";
 import VideoAndFeatures from "./VideoAndFeatures/VideoAndFeatures";
 import Tooltip from "components/ui/Tooltip/Tooltip";
 import InlineLoader from "components/loaders/InlineLoader/InlineLoader";
 import { FormattedMessage, injectIntl } from "react-intl";
 import { localisedUrl } from "helpers/locale";
-import { isCoinAddress } from "swap.app/util/typeforce";
-import config from "app-config";
+import config from "helpers/externalConfig";
 import SwapApp, { util } from "swap.app";
 import QrReader from "components/QrReader";
 
-import helpers, { constants, links, ethToken } from "helpers";
+import helpers, { constants, links } from "helpers";
 import { animate } from "helpers/domUtils";
 import Switching from "components/controls/Switching/Switching";
-import CustomDestAddress from "./CustomDestAddress/CustomDestAddress"
+import CustomDestAddress from "./CustomDestAddress/CustomDestAddress";
 
 const allowedCoins = [
-  ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? ['BTC'] : [],
-  ...(!config.opts.curEnabled || config.opts.curEnabled.eth) ? ['ETH'] : [],
-]
+  ...(!config.opts.curEnabled || config.opts.curEnabled.btc ? ["BTC"] : []),
+  ...(!config.opts.curEnabled || config.opts.curEnabled.eth ? ["ETH"] : []),
+];
 
-const isExchangeAllowed = currencies =>
-  currencies.filter(c => {
+const isDark = localStorage.getItem(constants.localStorage.isDark)
+
+const isExchangeAllowed = (currencies) =>
+  currencies.filter((c) => {
     const isErc = Object.keys(config.erc20)
-      .map(i => i.toLowerCase())
+      .map((i) => i.toLowerCase())
       .includes(c.value.toLowerCase());
 
-    const isAllowedCoin = allowedCoins.map(i => i.toLowerCase()).includes(c.value.toLowerCase());
+    const isAllowedCoin = allowedCoins
+      .map((i) => i.toLowerCase())
+      .includes(c.value.toLowerCase());
 
     return isAllowedCoin || isErc;
   });
 
-const filterIsPartial = orders =>
+const filterIsPartial = (orders) =>
   orders
-    .filter(order => order.isPartial && !order.isProcessing && !order.isHidden)
-    .filter(order => order.sellAmount !== 0 && order.sellAmount.isGreaterThan(0)) // WTF sellAmount can be not BigNumber
-    .filter(order => order.buyAmount !== 0 && order.buyAmount.isGreaterThan(0)); // WTF buyAmount can be not BigNumber too - need fix this
+    .filter(
+      (order) => order.isPartial && !order.isProcessing && !order.isHidden
+    )
+    .filter(
+      (order) => order.sellAmount !== 0 && order.sellAmount.isGreaterThan(0)
+    ) // WTF sellAmount can be not BigNumber
+    .filter(
+      (order) => order.buyAmount !== 0 && order.buyAmount.isGreaterThan(0)
+    ); // WTF buyAmount can be not BigNumber too - need fix this
 
 const text = [
-  <FormattedMessage id="partial223" defaultMessage="To change default wallet for buy currency. " />,
-  <FormattedMessage id="partial224" defaultMessage="Leave empty for use Swap.Online wallet " />
+  <FormattedMessage
+    id="partial223"
+    defaultMessage="To change default wallet for buy currency. "
+  />,
+  <FormattedMessage
+    id="partial224"
+    defaultMessage="Leave empty for use Swap.Online wallet "
+  />,
 ];
 
 const subTitle = (sell, sellTicker, buy, buyTicker) => (
@@ -66,7 +80,12 @@ const subTitle = (sell, sellTicker, buy, buyTicker) => (
     <FormattedMessage
       id="PartialClosureTitleTag1"
       defaultMessage="Fastest cross-chain exchange powered by Atomic Swap"
-      values={{ full_name1: sell, ticker_name1: sellTicker, full_name2: buy, ticker_name2: buyTicker }}
+      values={{
+        full_name1: sell,
+        ticker_name1: sellTicker,
+        full_name2: buy,
+        ticker_name2: buyTicker,
+      }}
     />
     <span styleName="tooltipHeader">
       <Tooltip id="partialAtomicSwapWhatIsIt1" dontHideMobile>
@@ -91,7 +110,7 @@ const bannedPeers = {}; // Пиры, которые отклонили запр�
     addPartialItems,
     history: { swapHistory },
     core: { orders, hiddenCoinsList },
-    user: { ethData, btcData, tokensData, activeFiat }
+    user: { ethData, btcData, tokensData, activeFiat, ...rest },
   }) => ({
     currencies: isExchangeAllowed(currencies.partialItems),
     allCurrencyies: currencies.items,
@@ -99,24 +118,31 @@ const bannedPeers = {}; // Пиры, которые отклонили запр�
     orders: filterIsPartial(orders),
     allOrders: orders,
     currenciesData: [ethData, btcData],
-    tokensData: [...Object.keys(tokensData).map(k => tokensData[k])],
+    tokensData: [...Object.keys(tokensData).map((k) => tokensData[k])],
     decline: rememberedOrders.savedOrders,
     hiddenCoinsList,
     userEthAddress: ethData.address,
     swapHistory,
-    activeFiat
+    activeFiat,
+    usersData: [
+      ethData,
+      btcData,
+      ...Object.values(tokensData).filter(({ address }) => address),
+      ...Object.values(rest).filter(({ address }) => address)
+    ],
   })
 )
 @CSSModules(styles, { allowMultiple: true })
 export default class PartialClosure extends Component {
   static defaultProps = {
-    orders: []
+    orders: [],
   };
 
-  static fiatRates = {};
-
   isPeerBanned(peerID) {
-    if (bannedPeers[peerID] && bannedPeers[peerID] > Math.floor(new Date().getTime() / 1000)) {
+    if (
+      bannedPeers[peerID] &&
+      bannedPeers[peerID] > Math.floor(new Date().getTime() / 1000)
+    ) {
       return true;
     }
     return false;
@@ -124,23 +150,27 @@ export default class PartialClosure extends Component {
 
   banPeer(peerID) {
     const bannedPeersTimeout = 180; // В секундах - три минуты
-    bannedPeers[peerID] = Math.floor(new Date().getTime() / 1000) + bannedPeersTimeout;
+    bannedPeers[peerID] =
+      Math.floor(new Date().getTime() / 1000) + bannedPeersTimeout;
   }
 
-  static getDerivedStateFromProps({ orders, match: { params } }, { haveCurrency, getCurrency }) {
+  static getDerivedStateFromProps(
+    { orders, match: { params } },
+    { haveCurrency, getCurrency }
+  ) {
     if (!Array.isArray(orders)) {
       return;
     }
 
     const filteredOrders = orders.filter(
-      order =>
+      (order) =>
         !order.isMy &&
         order.sellCurrency === getCurrency.toUpperCase() &&
         order.buyCurrency === haveCurrency.toUpperCase()
     );
 
     return {
-      filteredOrders
+      filteredOrders,
     };
   }
 
@@ -152,23 +182,23 @@ export default class PartialClosure extends Component {
       match,
       intl: { locale },
       history,
-      decline,
-      currencies,
     } = props;
     super();
 
+    this.fiatRates = {}
     this.onRequestAnswer = (newOrder, isAccepted) => { };
 
-    const isRootPage = history.location.pathname === "/" || history.location.pathname === "/ru";
+    const isRootPage =
+      history.location.pathname === "/" || history.location.pathname === "/ru";
     const {
       url,
-      params: { buy, sell }
+      params: { buy, sell },
     } = match || { params: { buy: "btc", sell: "usdt" } };
 
     if (sell && buy && !isRootPage) {
       if (
-        !allCurrencyies.map(item => item.name).includes(sell.toUpperCase()) ||
-        !allCurrencyies.map(item => item.name).includes(buy.toUpperCase())
+        !allCurrencyies.map((item) => item.name).includes(sell.toUpperCase()) ||
+        !allCurrencyies.map((item) => item.name).includes(buy.toUpperCase())
       ) {
         history.push(localisedUrl(locale, `${links.exchange}/usdt-to-btc`));
       }
@@ -178,17 +208,23 @@ export default class PartialClosure extends Component {
 
     this.returnNeedCurrency(sellToken, buyToken);
 
-    if (!(buy && sell) && !props.location.hash.includes("#widget") && !isRootPage) {
+    if (
+      !(buy && sell) &&
+      !props.location.hash.includes("#widget") &&
+      !isRootPage
+    ) {
       if (url !== "/wallet") {
-        history.push(localisedUrl(locale, `${links.exchange}/${sellToken}-to-${buyToken}`));
+        history.push(
+          localisedUrl(locale, `${links.exchange}/${sellToken}-to-${buyToken}`)
+        );
       }
     }
 
     this.wallets = {};
-    currenciesData.forEach(item => {
+    currenciesData.forEach((item) => {
       this.wallets[item.currency] = item.address;
     });
-    tokensData.forEach(item => {
+    tokensData.forEach((item) => {
       this.wallets[item.currency] = item.address;
     });
 
@@ -221,10 +257,10 @@ export default class PartialClosure extends Component {
     };
 
     constants.coinsWithDynamicFee.forEach(
-      item => (this.state.estimatedFeeValues[item] = constants.minAmountOffer[item])
+      (item) =>
+        (this.state.estimatedFeeValues[item] = constants.minAmountOffer[item])
     );
 
-    let timer;
     this.cacheDynamicFee = {};
 
     if (config.isWidget) {
@@ -257,6 +293,10 @@ export default class PartialClosure extends Component {
     this.setEstimatedFeeValues(estimatedFeeValues);
 
     document.addEventListener("scroll", this.rmScrollAdvice);
+
+    setTimeout(() => {
+      this.setState(() => ({ isFullLoadingComplite: true }))
+    }, 60 * 1000)
   }
 
   rmScrollAdvice = () => {
@@ -266,11 +306,13 @@ export default class PartialClosure extends Component {
     }
   };
 
-  setEstimatedFeeValues = async estimatedFeeValues => {
-    const fee = await helpers.estimateFeeValue.setEstimatedFeeValues({ estimatedFeeValues });
+  setEstimatedFeeValues = async (estimatedFeeValues) => {
+    const fee = await helpers.estimateFeeValue.setEstimatedFeeValues({
+      estimatedFeeValues,
+    });
 
     return this.setState({
-      estimatedFeeValues: fee
+      estimatedFeeValues: fee,
     });
   };
 
@@ -280,7 +322,7 @@ export default class PartialClosure extends Component {
 
   checkUrl = () => {
     const {
-      match: { params }
+      match: { params },
     } = this.props;
     const { getCurrency, haveCurrency } = this.state;
 
@@ -301,12 +343,16 @@ export default class PartialClosure extends Component {
   };
 
   checkValidUrl = (sellValue, buyValue) => {
-    const avaliablesBuyCurrency = actions.pairs.selectPairPartial(sellValue).map(el => el.value);
+    const avaliablesBuyCurrency = actions.pairs
+      .selectPairPartial(sellValue)
+      .map((el) => el.value);
     if (avaliablesBuyCurrency.includes(buyValue)) {
       return this.handleSetGetValue({ value: buyValue });
     }
     if (avaliablesBuyCurrency.includes(sellValue)) {
-      const filterSameVale = avaliablesBuyCurrency.filter(el => el !== sellValue);
+      const filterSameVale = avaliablesBuyCurrency.filter(
+        (el) => el !== sellValue
+      );
       if (filterSameVale.includes("btc")) {
         this.handleSetGetValue({ value: "btc" });
       } else {
@@ -317,18 +363,20 @@ export default class PartialClosure extends Component {
 
   switchBalance = () => {
     this.setState({
-      isShowBalance: !this.state.isShowBalance
+      isShowBalance: !this.state.isShowBalance,
     });
   };
 
   additionalPathing = (sell, buy) => {
     const {
       intl: { locale },
-      isOnlyForm
+      isOnlyForm,
     } = this.props;
 
     if (!this.props.location.hash.includes("#widget") && !isOnlyForm) {
-      this.props.history.push(localisedUrl(locale, `${links.exchange}/${sell}-to-${buy}`));
+      this.props.history.push(
+        localisedUrl(locale, `${links.exchange}/${sell}-to-${buy}`)
+      );
     }
   };
 
@@ -337,85 +385,137 @@ export default class PartialClosure extends Component {
     if (this.cacheDynamicFee[haveCurrency]) {
       this.setState({
         isToken: this.cacheDynamicFee[haveCurrency].isToken,
-        dynamicFee: this.cacheDynamicFee[haveCurrency].dynamicFee
+        dynamicFee: this.cacheDynamicFee[haveCurrency].dynamicFee,
       });
     } else {
-      const isToken = await helpers.ethToken.isEthToken({ name: haveCurrency.toLowerCase() });
+      const isToken = await helpers.ethToken.isEthToken({
+        name: haveCurrency.toLowerCase(),
+      });
 
       if (isToken) {
         this.cacheDynamicFee[haveCurrency] = {
           isToken,
-          dynamicFee: 0
+          dynamicFee: 0,
         };
         this.setState(() => ({
-          isToken
+          isToken,
         }));
       } else {
-        const dynamicFee = await helpers[haveCurrency.toLowerCase()].estimateFeeValue({ method: "swap" });
+        const dynamicFee = await helpers[
+          haveCurrency.toLowerCase()
+        ].estimateFeeValue({ method: "swap" });
         this.cacheDynamicFee[haveCurrency] = {
           isToken,
-          dynamicFee
+          dynamicFee,
         };
         this.setState(() => ({
           dynamicFee,
-          isToken
+          isToken,
         }));
       }
     }
   };
 
   getFiatBalance = async () => {
-    const { activeFiat } = this.props
+    const { activeFiat } = this.props;
     const { haveCurrency, getCurrency } = this.state;
 
     try {
-      const exHaveRate =
-        this.fiatRates[haveCurrency] = await actions.user.getExchangeRate(haveCurrency, activeFiat.toLowerCase());
-      const exGetRate =
-        this.fiatRates[getCurrency] = await actions.user.getExchangeRate(getCurrency, activeFiat.toLowerCase());
+      const exHaveRate = (this.fiatRates[
+        haveCurrency
+      ] = await actions.user.getExchangeRate(
+        haveCurrency,
+        activeFiat.toLowerCase()
+      ));
+
+      const exGetRate = (this.fiatRates[
+        getCurrency
+      ] = await actions.user.getExchangeRate(
+        getCurrency,
+        activeFiat.toLowerCase()
+      ));
 
       this.fiatRates[haveCurrency] = exHaveRate;
       this.fiatRates[getCurrency] = exGetRate;
 
       this.setState(() => ({
         exHaveRate,
-        exGetRate
+        exGetRate,
       }));
     } catch (e) {
-      const exHaveRate = this.fiatRates && this.fiatRates[haveCurrency] !== undefined ? this.fiatRates[haveCurrency] : 0;
-      const exGetRate = this.fiatRates && this.fiatRates[getCurrency] !== undefined ? this.fiatRates[getCurrency] : 0;
+      const exHaveRate =
+        this.fiatRates && this.fiatRates[haveCurrency] !== undefined
+          ? this.fiatRates[haveCurrency]
+          : 0;
+      const exGetRate =
+        this.fiatRates && this.fiatRates[getCurrency] !== undefined
+          ? this.fiatRates[getCurrency]
+          : 0;
       this.setState(() => ({
         exHaveRate,
-        exGetRate
+        exGetRate,
       }));
-      console.warn("Cryptonator offline");
+      console.warn("Cryptonator offline", e);
     }
   };
 
-  handleGoTrade = () => {
-    const {
-      intl: { locale },
-      decline
-    } = this.props;
-    const {
-      haveCurrency,
-      destinationSelected,
-    } = this.state;
+  handleGoTrade = async () => {
+    const { decline, usersData } = this.props;
+    const { haveCurrency, destinationSelected, haveAmount } = this.state;
+
+    const haveCur = haveCurrency.toUpperCase()
+    const { balance, address } = usersData.find(({ currency }) => currency === haveCur)
+
+
+    if (haveCur.toUpperCase() !== "BTC" && balance < haveAmount) {
+      const hiddenCoinsList = await actions.core.getHiddenCoins()
+      const isDidntActivateWallet = hiddenCoinsList.find(el => haveCur.toUpperCase() === el.toUpperCase())
+
+      actions.modals.open(constants.modals.AlertWindow, {
+        title: !isDidntActivateWallet ?
+          <FormattedMessage
+            id="AlertOrderNonEnoughtBalanceTitle"
+            defaultMessage="Not enough balance."
+          /> :
+          <FormattedMessage
+            id="walletDidntCreateTitle"
+            defaultMessage="Wallet does not exist."
+          />,
+        currency: haveCur,
+        address,
+        actionType: !isDidntActivateWallet ? "deposit" : "createWallet",
+        message: !isDidntActivateWallet ?
+          <FormattedMessage
+            id="AlertOrderNonEnoughtBalance"
+            defaultMessage="Please top up your balance before you start the swap."
+          /> :
+          <FormattedMessage
+            id="walletDidntCreateTitle"
+            defaultMessage="Create {curr} wallet before you start the swap."
+            values={{
+              curr: haveCur
+            }}
+          />
+      })
+      return
+    }
 
     if (!destinationSelected) {
       this.setState({
         destinationError: true,
-      })
-      return
+      });
+      return;
     }
 
     if (decline.length === 0) {
       this.sendRequest();
     } else {
-      const getDeclinedExistedSwapIndex = helpers.handleGoTrade.getDeclinedExistedSwapIndex({
-        currency: haveCurrency,
-        decline
-      });
+      const getDeclinedExistedSwapIndex = helpers.handleGoTrade.getDeclinedExistedSwapIndex(
+        {
+          currency: haveCurrency,
+          decline,
+        }
+      );
       if (getDeclinedExistedSwapIndex !== false) {
         this.handleDeclineOrdersModalOpen(getDeclinedExistedSwapIndex);
       } else {
@@ -424,30 +524,40 @@ export default class PartialClosure extends Component {
     }
   };
 
-  handleDeclineOrdersModalOpen = indexOfDecline => {
+  handleDeclineOrdersModalOpen = (indexOfDecline) => {
     const orders = SwapApp.shared().services.orders.items;
-    const declineSwap = actions.core.getSwapById(this.props.decline[indexOfDecline]);
+    const declineSwap = actions.core.getSwapById(
+      this.props.decline[indexOfDecline]
+    );
 
     if (declineSwap !== undefined) {
       actions.modals.open(constants.modals.DeclineOrdersModal, {
-        declineSwap
+        declineSwap,
       });
     }
   };
 
   sendRequest = () => {
-    const { getAmount, haveAmount, peer, orderId, customWallet, maxAmount, maxBuyAmount } = this.state;
+    const {
+      getAmount,
+      haveAmount,
+      peer,
+      orderId,
+      customWallet,
+      maxAmount,
+      maxBuyAmount,
+    } = this.state;
 
     if (!String(getAmount) || !peer || !orderId || !String(haveAmount)) {
       return;
     }
 
     const newValues = {
-      sellAmount: maxBuyAmount.isEqualTo(haveAmount) ? maxAmount : getAmount
+      sellAmount: maxBuyAmount.isEqualTo(haveAmount) ? maxAmount : getAmount,
     };
 
     const destination = {
-      address: this.customWalletAllowed() ? customWallet : null
+      address: this.customWalletAllowed() ? customWallet : null,
     };
 
     this.setState(() => ({ isFetching: true }));
@@ -466,7 +576,7 @@ export default class PartialClosure extends Component {
         this.setState(() => ({
           redirect: true,
           isFetching: false,
-          orderId: newOrder.id
+          orderId: newOrder.id,
         }));
       } else {
         this.banPeer(peer);
@@ -475,60 +585,72 @@ export default class PartialClosure extends Component {
       }
     };
 
-    actions.core.sendRequestForPartial(orderId, newValues, destination, this.onRequestAnswer);
+    actions.core.sendRequestForPartial(
+      orderId,
+      newValues,
+      destination,
+      this.onRequestAnswer
+    );
   };
 
   getLinkTodeclineSwap = () => {
     const orders = SwapApp.shared().services.orders.items;
 
     const unfinishedOrder = orders
-      .filter(item => item.isProcessing === true)
-      .filter(item => item.participant)
-      .filter(item => item.participant.peer === this.state.peer)
-      .filter(item => item.sellCurrency === this.state.getCurrency.toUpperCase())[0];
+      .filter((item) => item.isProcessing === true)
+      .filter((item) => item.participant)
+      .filter((item) => item.participant.peer === this.state.peer)
+      .filter(
+        (item) => item.sellCurrency === this.state.getCurrency.toUpperCase()
+      )[0];
 
     if (!unfinishedOrder) return;
 
     this.setState(() => ({
-      wayToDeclinedOrder: `swaps/${unfinishedOrder.sellCurrency}-${unfinishedOrder.sellCurrency}/${unfinishedOrder.id}`
+      wayToDeclinedOrder: `swaps/${unfinishedOrder.sellCurrency}-${unfinishedOrder.sellCurrency}/${unfinishedOrder.id}`,
     }));
   };
 
   returnNeedCurrency = (sellToken, buyToken) => {
     const partialItems = Object.assign(getState().currencies.partialItems); // eslint-disable-line
 
-    const partialCurrency = getState().currencies.partialItems.map(item => item.name);
-    const allCurrencyies = getState().currencies.items.map(item => item.name);
+    const partialCurrency = getState().currencies.partialItems.map(
+      (item) => item.name
+    );
+    const allCurrencyies = getState().currencies.items.map((item) => item.name);
     let partialItemsArray = [...partialItems];
     let currenciesOfUrl = [];
     currenciesOfUrl.push(sellToken, buyToken);
 
-
-    currenciesOfUrl.forEach(item => {
+    currenciesOfUrl.forEach((item) => {
       if (allCurrencyies.includes(item.toUpperCase())) {
         if (!partialCurrency.includes(item.toUpperCase())) {
           partialItemsArray.push({
             name: item.toUpperCase(),
             title: item.toUpperCase(),
             icon: item.toLowerCase(),
-            value: item.toLowerCase()
+            value: item.toLowerCase(),
           });
           reducers.currencies.updatePartialItems(partialItemsArray);
         }
       } else {
         this.setState(() => ({
-          haveCurrency: config && config.isWidget ? config.erc20token : "swap"
+          haveCurrency: config && config.isWidget ? config.erc20token : "swap",
         }));
       }
     });
   };
 
   setDeclinedOffer = () => {
-    this.setState(() => ({ haveAmount: "", isFetching: false, isDeclinedOffer: true }));
+    this.setState(() => ({
+      haveAmount: "",
+      isFetching: false,
+      isDeclinedOffer: true,
+    }));
 
     setTimeout(() => {
       this.setState(() => ({
-        isDeclinedOffer: false
+        isDeclinedOffer: false,
       }));
     }, 7 * 1000);
   };
@@ -543,43 +665,47 @@ export default class PartialClosure extends Component {
 
     this.setState(() => ({
       maxAmount: Number(maxAmount),
-      getAmount: BigNumber(getAmount)
-        .dp(decimalPlaces)
-        .toString(),
-      maxBuyAmount: buyAmount
+      getAmount: BigNumber(getAmount).dp(decimalPlaces).toString(),
+      maxBuyAmount: buyAmount,
     }));
 
-    return BigNumber(getAmount).isLessThanOrEqualTo(maxAmount) || BigNumber(haveAmount).isEqualTo(buyAmount);
+    return (
+      BigNumber(getAmount).isLessThanOrEqualTo(maxAmount) ||
+      BigNumber(haveAmount).isEqualTo(buyAmount)
+    );
   };
 
-  setAmount = value => {
+  setAmount = (value) => {
     this.setState(() => ({ haveAmount: value, maxAmount: 0 }));
   };
 
   setOrders = async () => {
     const { filteredOrders, haveAmount, exHaveRate, exGetRate } = this.state;
 
-    if (filteredOrders.length === 0) {
+    if (!filteredOrders.length) {
       this.setState(() => ({
         isNonOffers: true,
+        isNoAnyOrders: true,
         maxAmount: 0,
         getAmount: 0,
-        maxBuyAmount: BigNumber(0)
+        maxBuyAmount: BigNumber(0),
       }));
       return;
     }
 
     this.setState(() => ({
-      isSearching: true
+      isSearching: true,
     }));
 
     const sortedOrders = filteredOrders
-      .sort((a, b) => Number(b.buyAmount.dividedBy(b.sellAmount)) - Number(a.buyAmount.dividedBy(a.sellAmount)))
+      .sort(
+        (a, b) =>
+          Number(b.buyAmount.dividedBy(b.sellAmount)) -
+          Number(a.buyAmount.dividedBy(a.sellAmount))
+      )
       .map((item, index) => {
         const exRate = item.buyAmount.dividedBy(item.sellAmount);
-        const getAmount = BigNumber(haveAmount)
-          .dividedBy(exRate)
-          .toString();
+        const getAmount = BigNumber(haveAmount).dividedBy(exRate).toString();
 
         return {
           sellAmount: item.sellAmount,
@@ -587,7 +713,7 @@ export default class PartialClosure extends Component {
           exRate,
           getAmount,
           orderId: item.id,
-          peer: item.owner.peer
+          peer: item.owner.peer,
         };
       });
 
@@ -595,12 +721,13 @@ export default class PartialClosure extends Component {
 
     if (didFound) {
       this.setState(() => ({
-        isSearching: false
+        isSearching: false,
+        isNoAnyOrders: false,
       }));
     }
   };
 
-  setOrderOnState = orders => {
+  setOrderOnState = (orders) => {
     const { haveAmount, getCurrency } = this.state;
 
     let maxAllowedSellAmount = BigNumber(0);
@@ -610,17 +737,23 @@ export default class PartialClosure extends Component {
     let isFound = false;
     let newState = {};
 
-    const findGoodOrder = inOrders => {
-      inOrders.forEach(item => {
-        maxAllowedSellAmount = maxAllowedSellAmount.isLessThanOrEqualTo(item.sellAmount)
+    const findGoodOrder = (inOrders) => {
+      inOrders.forEach((item) => {
+        maxAllowedSellAmount = maxAllowedSellAmount.isLessThanOrEqualTo(
+          item.sellAmount
+        )
           ? item.sellAmount
           : maxAllowedSellAmount;
-        maxAllowedBuyAmount = maxAllowedBuyAmount.isLessThanOrEqualTo(item.buyAmount)
+        maxAllowedBuyAmount = maxAllowedBuyAmount.isLessThanOrEqualTo(
+          item.buyAmount
+        )
           ? item.buyAmount
           : maxAllowedBuyAmount;
 
         if (BigNumber(haveAmount).isLessThanOrEqualTo(item.buyAmount)) {
-          maxAllowedGetAmount = maxAllowedGetAmount.isLessThanOrEqualTo(item.getAmount)
+          maxAllowedGetAmount = maxAllowedGetAmount.isLessThanOrEqualTo(
+            item.getAmount
+          )
             ? BigNumber(item.getAmount)
             : maxAllowedGetAmount;
 
@@ -630,17 +763,17 @@ export default class PartialClosure extends Component {
             isNonOffers: false,
             goodRate: item.exRate,
             peer: item.peer,
-            orderId: item.orderId
+            orderId: item.orderId,
           };
         }
       });
     };
 
-    findGoodOrder(orders.filter(order => !this.isPeerBanned(order.peer)));
+    findGoodOrder(orders.filter((order) => !this.isPeerBanned(order.peer)));
 
     // Если не нашли предложечение, проверим забаненые пиры
     if (!isFound) {
-      findGoodOrder(orders.filter(order => this.isPeerBanned(order.peer)));
+      findGoodOrder(orders.filter((order) => this.isPeerBanned(order.peer)));
     }
 
     if (isFound) {
@@ -648,11 +781,15 @@ export default class PartialClosure extends Component {
     } else {
       this.setState(() => ({
         isNonOffers: true,
-        getFiat: Number(0).toFixed(2)
+        getFiat: Number(0).toFixed(2),
       }));
     }
 
-    const checkAmount = this.setAmountOnState(maxAllowedSellAmount, maxAllowedGetAmount, maxAllowedBuyAmount);
+    const checkAmount = this.setAmountOnState(
+      maxAllowedSellAmount,
+      maxAllowedGetAmount,
+      maxAllowedBuyAmount
+    );
 
     if (!checkAmount) {
       this.setNoOfferState();
@@ -668,7 +805,7 @@ export default class PartialClosure extends Component {
 
     this.setState({
       customWalletUse: newCustomWalletUse,
-      customWallet: newCustomWalletUse === false ? "" : this.getSystemWallet()
+      customWallet: newCustomWalletUse === false ? "" : this.getSystemWallet(),
     });
   };
 
@@ -681,12 +818,12 @@ export default class PartialClosure extends Component {
       this.setState(() => ({
         getCurrency: value,
         haveCurrency,
-        customWallet: customWalletUse ? this.getSystemWallet() : ""
+        customWallet: customWalletUse ? this.getSystemWallet() : "",
       }));
       this.additionalPathing(haveCurrency, value);
       actions.analytics.dataEvent({
         action: "exchange-click-selector",
-        label: `${haveCurrency}-to-${getCurrency}`
+        label: `${haveCurrency}-to-${getCurrency}`,
       });
     }
   };
@@ -701,13 +838,13 @@ export default class PartialClosure extends Component {
         {
           haveCurrency: value,
           getCurrency,
-          customWallet: customWalletUse ? this.getSystemWallet() : ""
+          customWallet: customWalletUse ? this.getSystemWallet() : "",
         },
         () => {
           this.additionalPathing(value, getCurrency);
           actions.analytics.dataEvent({
             action: "exchange-click-selector",
-            label: `${haveCurrency}-to-${getCurrency}`
+            label: `${haveCurrency}-to-${getCurrency}`,
           });
 
           this.checkPair();
@@ -733,12 +870,12 @@ export default class PartialClosure extends Component {
       {
         haveCurrency: getCurrency,
         getCurrency: haveCurrency,
-        customWallet: customWalletUse ? this.getSystemWallet(haveCurrency) : ""
+        customWallet: customWalletUse ? this.getSystemWallet(haveCurrency) : "",
       },
       () => {
         actions.analytics.dataEvent({
           action: "exchange-click-selector",
-          label: `${haveCurrency}-to-${getCurrency}`
+          label: `${haveCurrency}-to-${getCurrency}`,
         });
         this.checkPair();
         this.updateAllowedBalance();
@@ -748,32 +885,36 @@ export default class PartialClosure extends Component {
 
   handlePush = (isWidget = false) => {
     const {
-      intl: { locale }
+      intl: { locale },
     } = this.props;
     const { haveCurrency, getCurrency } = this.state;
 
     const currency = haveCurrency.toLowerCase();
 
     const pair = constants.tradeTicker
-      .filter(ticker => {
+      .filter((ticker) => {
         ticker = ticker.split("-");
         return currency === ticker[0].toLowerCase()
           ? ticker[0].toLowerCase() === currency
           : ticker[1].toLowerCase() === currency;
       })
-      .map(pair => {
+      .map((pair) => {
         pair = pair.split("-");
         return {
           from: pair[0],
-          to: pair[1]
+          to: pair[1],
         };
       });
 
     const sendLinkFrom = pair.filter(
-      item => item.from === haveCurrency.toUpperCase() || item.from === getCurrency.toUpperCase()
+      (item) =>
+        item.from === haveCurrency.toUpperCase() ||
+        item.from === getCurrency.toUpperCase()
     );
     const sendLinkTo = pair.filter(
-      item => item.to === haveCurrency.toUpperCase() || item.to === getCurrency.toUpperCase()
+      (item) =>
+        item.to === haveCurrency.toUpperCase() ||
+        item.to === getCurrency.toUpperCase()
     );
 
     const tradeTicker = `${sendLinkFrom[0].from.toLowerCase()}-${sendLinkTo[0].to.toLowerCase()}`;
@@ -781,10 +922,7 @@ export default class PartialClosure extends Component {
     const hostname = window.location.origin;
     const pathname = constants.tradeTicker.includes(tradeTicker.toUpperCase())
       ? tradeTicker
-      : tradeTicker
-        .split("-")
-        .reverse()
-        .join("-");
+      : tradeTicker.split("-").reverse().join("-");
 
     if (isWidget) {
       window.parent.location.replace(`${hostname}/${pathname}`);
@@ -807,14 +945,18 @@ export default class PartialClosure extends Component {
       isNonOffers: false,
       isFetching: false,
       isDeclinedOffer: false,
-      customWallet: customWalletUse ? this.wallets[getCurrency.toUpperCase()] : ""
+      customWallet: customWalletUse
+        ? this.wallets[getCurrency.toUpperCase()]
+        : "",
     }));
   };
 
-  getSystemWallet = walletCurrency => {
+  getSystemWallet = (walletCurrency) => {
     const { getCurrency } = this.state;
 
-    return this.wallets[walletCurrency ? walletCurrency.toUpperCase() : getCurrency.toUpperCase()];
+    return this.wallets[
+      walletCurrency ? walletCurrency.toUpperCase() : getCurrency.toUpperCase()
+    ];
   };
 
   customWalletValid() {
@@ -822,7 +964,8 @@ export default class PartialClosure extends Component {
 
     if (!this.customWalletAllowed()) return true;
 
-    if (getCurrency === "btc") return util.typeforce.isCoinAddress.BTC(customWallet);
+    if (getCurrency === "btc")
+      return util.typeforce.isCoinAddress.BTC(customWallet);
 
     return util.typeforce.isCoinAddress.ETH(customWallet);
   }
@@ -854,12 +997,14 @@ export default class PartialClosure extends Component {
 
     const noPairToken = config && config.isWidget ? config.erc20token : "swap";
 
-    const checkingValue = this.props.allCurrencyies.map(item => item.name).includes(haveCurrency.toUpperCase())
+    const checkingValue = this.props.allCurrencyies
+      .map((item) => item.name)
+      .includes(haveCurrency.toUpperCase())
       ? haveCurrency
       : noPairToken;
 
     const selected = actions.pairs.selectPairPartial(checkingValue);
-    const check = selected.map(item => item.value).includes(getCurrency);
+    const check = selected.map((item) => item.value).includes(getCurrency);
     this.getFiatBalance();
 
     if (!check) {
@@ -869,10 +1014,10 @@ export default class PartialClosure extends Component {
     }
   };
 
-  chooseCurrencyToRender = selected => {
+  chooseCurrencyToRender = (selected) => {
     this.setState(
       () => ({
-        getCurrency: selected[0].value
+        getCurrency: selected[0].value,
       }),
       () => {
         this.getFiatBalance();
@@ -893,14 +1038,14 @@ export default class PartialClosure extends Component {
     );
   }
 
-  changeBalance = value => {
+  changeBalance = (value) => {
     this.extendedControlsSet(false);
     this.setState({
-      haveAmount: value
+      haveAmount: value,
     });
   };
 
-  extendedControlsSet = value => {
+  extendedControlsSet = (value) => {
     const { extendedControls } = this.state;
 
     if (typeof value !== "boolean") {
@@ -913,13 +1058,21 @@ export default class PartialClosure extends Component {
   };
 
   doesComissionPreventThisOrder = () => {
-    const { haveAmount, getAmount, haveCurrency, getCurrency, estimatedFeeValues } = this.state;
+    const {
+      haveAmount,
+      getAmount,
+      haveCurrency,
+      getCurrency,
+      estimatedFeeValues,
+    } = this.state;
     const isBtcHere = haveCurrency === "btc" || getCurrency === "btc";
 
     if (!isBtcHere) {
       return false;
     }
-    const btcAmount = BigNumber(haveCurrency === "btc" ? haveAmount : getAmount);
+    const btcAmount = BigNumber(
+      haveCurrency === "btc" ? haveAmount : getAmount
+    );
     if (btcAmount.isGreaterThan(estimatedFeeValues.btc)) {
       return false;
     }
@@ -929,7 +1082,9 @@ export default class PartialClosure extends Component {
   addressIsCorrect() {
     const { customWallet, getCurrency } = this.state;
 
-    return util.typeforce.isCoinAddress[getCurrency.toUpperCase()](customWallet);
+    return util.typeforce.isCoinAddress[getCurrency.toUpperCase()](
+      customWallet
+    );
   }
 
   getCorrectDecline = () => {
@@ -945,8 +1100,8 @@ export default class PartialClosure extends Component {
     }
 
     const desclineOrders = decline
-      .map(swapId => actions.core.getSwapById(swapId))
-      .filter(el => {
+      .map((swapId) => actions.core.getSwapById(swapId))
+      .filter((el) => {
         const { isFinished, isRefunded, isStoppedSwap } = el.flow.state;
         // if timeout - skip this swap. for refund, if need - use history page
         const lifeTimeout = el.checkTimeout(60 * 60 * 3);
@@ -959,7 +1114,7 @@ export default class PartialClosure extends Component {
   handleShowIncomplete = () => {
     const { desclineOrders } = this.state;
     actions.modals.open(constants.modals.IncompletedSwaps, {
-      desclineOrders
+      desclineOrders,
     });
   };
 
@@ -967,33 +1122,29 @@ export default class PartialClosure extends Component {
     const { openScanCam } = this.state;
 
     this.setState(() => ({
-      openScanCam: !openScanCam
+      openScanCam: !openScanCam,
     }));
   };
 
-  handleError = err => {
+  handleError = (err) => {
     console.error(err);
   };
 
-  onCustomWalletChange = state => {
-    const {
-      selected,
-      isCustom,
-      value
-    } = state
+  onCustomWalletChange = (state) => {
+    const { selected, isCustom, value } = state;
 
     this.setState({
       destinationSelected: selected,
       destinationError: false,
       customWalletUse: !isCustom,
-      customWallet: (isCustom) ? value : this.getSystemWallet(),
-    })
-  }
+      customWallet: isCustom ? value : this.getSystemWallet(),
+    });
+  };
 
-  handleScan = data => {
+  handleScan = (data) => {
     if (data) {
       this.setState(() => ({
-        customWallet: data.includes(":") ? data.split(":")[1] : data
+        customWallet: data.includes(":") ? data.split(":")[1] : data,
       }));
       this.openScan();
     }
@@ -1032,37 +1183,53 @@ export default class PartialClosure extends Component {
       haveAmount,
       customWallet,
       destinationError,
+      isNoAnyOrders,
+      isFullLoadingComplite
     } = this.state;
 
     const haveFiat = BigNumber(exHaveRate)
-
       .times(haveAmount)
       .dp(2, BigNumber.ROUND_CEIL);
     const getFiat = BigNumber(exGetRate)
       .times(getAmount)
       .dp(2, BigNumber.ROUND_CEIL);
 
-    const haveCurrencyData = currenciesData.find(item => item.currency === haveCurrency.toUpperCase());
-    const haveTokenData = tokensData.find(item => item.currency === haveCurrency.toUpperCase());
+    const haveCurrencyData = currenciesData.find(
+      (item) => item.currency === haveCurrency.toUpperCase()
+    );
+    const haveTokenData = tokensData.find(
+      (item) => item.currency === haveCurrency.toUpperCase()
+    );
     const currentCurrency = haveCurrencyData || haveTokenData;
 
     const balance = currentCurrency.balance || 0;
 
-    const getCurrencyData = currenciesData.find(item => item.currency === getCurrency.toUpperCase());
-    const getTokenData = tokensData.find(item => item.currency === getCurrency.toUpperCase());
-
-    const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? BigNumber(0) : BigNumber(goodRate);
+    const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0)
+      ? BigNumber(0)
+      : BigNumber(goodRate);
     const linked = Link.all(this, "haveAmount", "getAmount", "customWallet");
 
-    const isWidgetLink = this.props.location.pathname.includes("/exchange") && this.props.location.hash === "#widget";
+    const isWidgetLink =
+      this.props.location.pathname.includes("/exchange") &&
+      this.props.location.hash === "#widget";
     const isWidget = isWidgetBuild || isWidgetLink;
     const availableAmount =
       estimatedFeeValues[haveCurrency.toLowerCase()] > 0
-        ? BigNumber(haveAmount).plus(estimatedFeeValues[haveCurrency.toLowerCase()])
+        ? BigNumber(haveAmount).plus(
+          estimatedFeeValues[haveCurrency.toLowerCase()]
+        )
         : 0;
 
     if (redirect) {
-      return <Redirect push to={`${localisedUrl(locale, links.swap)}/${getCurrency}-${haveCurrency}/${orderId}`} />;
+      return (
+        <Redirect
+          push
+          to={`${localisedUrl(
+            locale,
+            links.swap
+          )}/${getCurrency}-${haveCurrency}/${orderId}`}
+        />
+      );
     }
 
     const isLowAmount = this.checkoutLowAmount();
@@ -1072,21 +1239,37 @@ export default class PartialClosure extends Component {
       BigNumber(getAmount).isGreaterThan(0) &&
       this.customWalletValid() &&
       !this.doesComissionPreventThisOrder() &&
-      (BigNumber(haveAmount).isGreaterThan(balance) || BigNumber(balance).isGreaterThanOrEqualTo(availableAmount));
+      (BigNumber(haveAmount).isGreaterThan(balance) ||
+        BigNumber(balance).isGreaterThanOrEqualTo(availableAmount));
 
-    const sellTokenFullName = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
-      ? currenciesData.find(item => item.currency === haveCurrency.toUpperCase()).fullName
+    const sellTokenFullName = currenciesData.find(
+      (item) => item.currency === haveCurrency.toUpperCase()
+    )
+      ? currenciesData.find(
+        (item) => item.currency === haveCurrency.toUpperCase()
+      ).fullName
       : haveCurrency.toUpperCase();
-    const buyTokenFullName = currenciesData.find(item => item.currency === getCurrency.toUpperCase())
-      ? currenciesData.find(item => item.currency === getCurrency.toUpperCase()).fullName
+    const buyTokenFullName = currenciesData.find(
+      (item) => item.currency === getCurrency.toUpperCase()
+    )
+      ? currenciesData.find(
+        (item) => item.currency === getCurrency.toUpperCase()
+      ).fullName
       : getCurrency.toUpperCase();
 
     const Form = (
       <div styleName="section">
         <div styleName="formExchange">
           {desclineOrders.length ? (
-            <h5 role="presentation" styleName="informAbt" onClick={this.handleShowIncomplete}>
-              <FormattedMessage id="continueDeclined977" defaultMessage="Click here to continue your swaps" />
+            <h5
+              role="presentation"
+              styleName="informAbt"
+              onClick={this.handleShowIncomplete}
+            >
+              <FormattedMessage
+                id="continueDeclined977"
+                defaultMessage="Click here to continue your swaps"
+              />
             </h5>
           ) : (
               <span />
@@ -1098,7 +1281,9 @@ export default class PartialClosure extends Component {
               inputValueLink={linked.haveAmount.pipe(this.setAmount)}
               selectedValue={haveCurrency}
               onSelect={this.handleSetHaveValue}
-              label={<FormattedMessage id="partial243" defaultMessage="You sell" />}
+              label={
+                <FormattedMessage id="partial243" defaultMessage="You sell" />
+              }
               id="partialClosure456"
               tooltip={
                 <FormattedMessage
@@ -1110,31 +1295,43 @@ export default class PartialClosure extends Component {
               fiat={maxAmount > 0 && isNonOffers ? 0 : haveFiat}
               currencies={currencies}
               onFocus={() => this.extendedControlsSet(true)}
-              onBlur={() => setTimeout(() => this.extendedControlsSet(false), 200)}
+              onBlur={() =>
+                setTimeout(() => this.extendedControlsSet(false), 200)
+              }
+              inputToolTip={() => isShowBalance ?
+                <p styleName="maxAmount">
+                  {/* <FormattedMessage id="partial221" defaultMessage="Balance: " /> */}
+                  {/* Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}{' '}{haveCurrency.toUpperCase() */}
+                  {BigNumber(balance).toNumber() === 0 ? (
+                    <FormattedMessage
+                      id="partial766"
+                      defaultMessage="From any wallet or exchange"
+                    />
+                  ) : (
+                      <>
+                        <FormattedMessage
+                          id="partial767"
+                          defaultMessage="Your balance: "
+                        />
+                        {BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString()}
+                        {"  "}
+                        {haveCurrency.toUpperCase()}
+                      </>
+                    )}
+                </p>
+                : <span />
+              }
             />
           </div>
-          {isShowBalance && (
-            <p styleName="maxAmount">
-              {/* <FormattedMessage id="partial221" defaultMessage="Balance: " /> */}
-              {/* Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}{' '}{haveCurrency.toUpperCase() */}
-              {BigNumber(balance).toNumber() === 0 ? (
-                <FormattedMessage id="partial766" defaultMessage="From any wallet or exchange" />
-              ) : (
-                  <>
-                    <FormattedMessage id="partial767" defaultMessage="Your balance: " />
-                    {BigNumber(balance)
-                      .dp(5, BigNumber.ROUND_FLOOR)
-                      .toString()}
-                    {"  "}
-                    {haveCurrency.toUpperCase()}
-                  </>
-                )}
-            </p>
-          )}
+
           <div styleName="switchButton">
             <Switching noneBorder onClick={this.handleFlipCurrency} />
           </div>
-          <div className="data-tut-get" styleName="selectWrap" style={{ marginBottom: "-25px" }}>
+          <div
+            className="data-tut-get"
+            styleName="selectWrap"
+            style={{ marginBottom: "-25px" }}
+          >
             <SelectGroup
               activeFiat={activeFiat}
               dataTut="get"
@@ -1142,32 +1339,44 @@ export default class PartialClosure extends Component {
               inputValueLink={linked.getAmount}
               selectedValue={getCurrency}
               onSelect={this.handleSetGetValue}
-              label={<FormattedMessage id="partial255" defaultMessage="You get" />}
+              label={
+                <FormattedMessage id="partial255" defaultMessage="You get" />
+              }
               id="partialClosure472"
               tooltip={
-                <FormattedMessage id="partial478" defaultMessage="The amount you will receive after the exchange" />
+                <FormattedMessage
+                  id="partial478"
+                  defaultMessage="The amount you will receive after the exchange"
+                />
               }
               currencies={addSelectedItems}
               fiat={getFiat}
               error={isLowAmount}
             />
-            {oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && !isNonOffers && (
-              <div styleName="price">
-                <FormattedMessage
-                  id="PartialPriceSearch502"
-                  defaultMessage="1 {getCurrency} = {haveCurrency}"
-                  values={{
-                    getCurrency: `${getCurrency.toUpperCase()}`,
-                    haveCurrency: `${oneCryptoCost.toFixed(5)} ${haveCurrency.toUpperCase()}`
-                  }}
-                />
-              </div>
-            )}
+            {oneCryptoCost.isGreaterThan(0) &&
+              oneCryptoCost.isFinite() &&
+              !isNonOffers && (
+                <div styleName="price">
+                  <FormattedMessage
+                    id="PartialPriceSearch502"
+                    defaultMessage="1 {getCurrency} = {haveCurrency}"
+                    values={{
+                      getCurrency: `${getCurrency.toUpperCase()}`,
+                      haveCurrency: `${oneCryptoCost.toFixed(
+                        5
+                      )} ${haveCurrency.toUpperCase()}`,
+                    }}
+                  />
+                </div>
+              )}
           </div>
           <div className="data-tut-status">
             {(isSearching || (isNonOffers && maxAmount === 0)) && (
               <span styleName="IsSearching">
-                <FormattedMessage id="PartialPriceSearch" defaultMessage="Searching orders..." />
+                <FormattedMessage
+                  id="PartialPriceSearch"
+                  defaultMessage="Searching orders..."
+                />
                 <div styleName="loaderHolder">
                   <div styleName="additionalLoaderHolder">
                     <InlineLoader />
@@ -1177,23 +1386,30 @@ export default class PartialClosure extends Component {
             )}
           </div>
           {!oneCryptoCost.isFinite() && !isNonOffers && (
-            <FormattedMessage id="PartialPriceCalc" defaultMessage="Calc price" />
+            <FormattedMessage
+              id="PartialPriceCalc"
+              defaultMessage="Calc price"
+            />
           )}
-          {maxAmount > 0 && isNonOffers && linked.haveAmount.value > 0 && (
+          {isNoAnyOrders && linked.haveAmount.value > 0 && isFullLoadingComplite && <Fragment>
+            <p styleName="error">
+              <FormattedMessage
+                id="PartialPriceNoOrdersReduce"
+                defaultMessage="No orders found, try later or change the currency pair"
+              />
+            </p>
+          </Fragment>}
+          {!isNoAnyOrders && maxAmount > 0 && isNonOffers && linked.haveAmount.value > 0 && (
             <Fragment>
               <p styleName="error">
                 <FormattedMessage
-                  id="PartialPriceNoOrdersReduce"
-                  defaultMessage="No orders found, try to reduce the amount"
+                  id="PartialPriceNoOrdersReduceAllInfo"
+                  defaultMessage="This trade amount is too high for present market liquidity. Please reduce amount to {maxForSell}. "
+                  values={{
+                    maxForBuy: `${maxAmount} ${getCurrency.toUpperCase()}`,
+                    maxForSell: `${maxBuyAmount} ${haveCurrency.toUpperCase()}`
+                  }}
                 />
-              </p>
-              <p styleName="error">
-                <FormattedMessage id="PartialPriceReduceMin" defaultMessage="Maximum available amount for buy: " />
-                {maxAmount} {getCurrency.toUpperCase()}
-              </p>
-              <p styleName="error">
-                <FormattedMessage id="PartialPriceSellMax" defaultMessage="Maximum available amount for sell: " />
-                {maxBuyAmount.toNumber()} {haveCurrency.toUpperCase()}
               </p>
             </Fragment>
           )}
@@ -1206,13 +1422,20 @@ export default class PartialClosure extends Component {
                 defaultMessage="Request rejected, possibly you have not complete another swap {br}{link}"
                 values={{
                   link: (
-                    <a className="errorLink" role="button" onClick={() => this.handleGoDeclimeFaq()}>
+                    <a
+                      className="errorLink"
+                      role="button"
+                      onClick={() => this.handleGoDeclimeFaq()}
+                    >
                       {" "}
                       {/* eslint-disable-line */}
-                      <FormattedMessage id="PartialOfferCantProceed1_1" defaultMessage="Check here" />
+                      <FormattedMessage
+                        id="PartialOfferCantProceed1_1"
+                        defaultMessage="Check here"
+                      />
                     </a>
                   ),
-                  br: <br />
+                  br: <br />,
                 }}
               />
             </p>
@@ -1226,7 +1449,10 @@ export default class PartialClosure extends Component {
                   id="ErrorBtcLowAmount"
                   defaultMessage="This amount is too low"
                   values={{
-                    btcAmount: this.state.haveCurrency === "btc" ? this.state.haveAmount : this.state.getAmount
+                    btcAmount:
+                      this.state.haveCurrency === "btc"
+                        ? this.state.haveAmount
+                        : this.state.getAmount,
                   }}
                 />
               </p>
@@ -1238,18 +1464,19 @@ export default class PartialClosure extends Component {
                 <div>
                   <FormattedMessage
                     id="PartialFeeValueWarn"
-                    defaultMessage="The maximum amount you can sell is {maximumAmount}. Since will have to pay an additional miner fee up to {estimatedFeeValue} {haveCurrency}"
+                    defaultMessage="The maximum amount you can sell is {maximumAmount} {haveCurrency}. Miner fee up to {estimatedFeeValue} {haveCurrency}"
                     values={{
                       haveCurrency: haveCurrency.toUpperCase(),
                       estimatedFeeValue: estimatedFeeValues[haveCurrency],
                       maximumAmount: BigNumber(balance)
                         .minus(estimatedFeeValues[haveCurrency])
                         .minus(0.000006)
-                        .toString()
+                        .toString(),
                     }}
                   />
-                  {BigNumber(estimatedFeeValues[getCurrency]).isGreaterThan(0) &&
-                    BigNumber(getAmount).isGreaterThan(0) ? (
+                  {BigNumber(estimatedFeeValues[getCurrency]).isGreaterThan(
+                    0
+                  ) && BigNumber(getAmount).isGreaterThan(0) ? (
                       <Fragment>
                         {` `}
                         <FormattedMessage
@@ -1257,7 +1484,7 @@ export default class PartialClosure extends Component {
                           defaultMessage="+ {estimatedFeeValueGet} {getCurrency}"
                           values={{
                             getCurrency: getCurrency.toUpperCase(),
-                            estimatedFeeValue: estimatedFeeValues[getCurrency]
+                            estimatedFeeValue: estimatedFeeValues[getCurrency],
                           }}
                         />
                         {` `}
@@ -1267,9 +1494,13 @@ export default class PartialClosure extends Component {
                           values={{
                             estimatedFeeValue: BigNumber(exHaveRate)
                               .times(estimatedFeeValues[haveCurrency])
-                              .plus(BigNumber(exGetRate).times(estimatedFeeValues[getCurrency]))
+                              .plus(
+                                BigNumber(exGetRate).times(
+                                  estimatedFeeValues[getCurrency]
+                                )
+                              )
                               .dp(2, BigNumber.ROUND_CEIL)
-                              .toString()
+                              .toString(),
                           }}
                         />
                       </Fragment>
@@ -1283,21 +1514,20 @@ export default class PartialClosure extends Component {
                             estimatedFeeValue: BigNumber(exHaveRate)
                               .times(estimatedFeeValues[haveCurrency])
                               .dp(2, BigNumber.ROUND_CEIL)
-                              .toString()
+                              .toString(),
                           }}
                         />
                       </Fragment>
                     )}
-                  {` `}
-                  <a style={{ whiteSpace: "nowrap" }} href="https://wiki.swaponline.io/faq/is-there-fee-for-trade/">
-                    <FormattedMessage id="PartialFeeValueWarnInfo" defaultMessage="[About fees]" />
-                  </a>
                 </div>
               </div>
             )}
           {isFetching && (
             <span>
-              <FormattedMessage id="partial291" defaultMessage="Waiting for another participant (30 sec): " />
+              <FormattedMessage
+                id="partial291"
+                defaultMessage="Waiting for another participant (30 sec): "
+              />
               <div styleName="loaderHolder">
                 <div styleName="additionalLoaderHolder">
                   <InlineLoader />
@@ -1308,13 +1538,15 @@ export default class PartialClosure extends Component {
 
           {this.customWalletAllowed() && (
             <CustomDestAddress
+              isDark={isDark}
               type={getCurrency}
               hasError={destinationError}
               value={customWallet}
               valueLink={linked.customWallet}
               initialValue={customWallet}
               onChange={this.onCustomWalletChange}
-              openScan={this.openScan} />
+              openScan={this.openScan}
+            />
           )}
           {/*
           <Fragment>
@@ -1367,33 +1599,51 @@ export default class PartialClosure extends Component {
               rel="noopener noreferrer"
               styleName="widgetLink"
             >
-              <FormattedMessage id="partial1021" defaultMessage="Embed on website" />
+              <FormattedMessage
+                id="partial1021"
+                defaultMessage="Embed on website"
+              />
             </a>
           )}
         </div>
-      </div>
+      </div >
     );
 
     return (
       <div styleName="exchangeWrap">
-        <div styleName="promoContainer" ref={ref => (this.promoContainer = ref)}>
-          <div
-            styleName="scrollToTutorialSection"
-            ref={ref => (this.scrollTrigger = ref)}
-            onClick={() =>
-              animate(timePassed => {
-                window.scrollTo(0, this.promoContainer.clientHeight * (timePassed / 100));
-              }, 100)
-            }
-          >
-            <span styleName="scrollAdvice">
-              <FormattedMessage id="PartialHowItWorks10" defaultMessage="How it works?" />
-            </span>
-            <span styleName="scrollTrigger" />
-          </div>
+        <div
+          styleName={`promoContainer ${isDark ? '--dark' : ''}`}
+          ref={(ref) => (this.promoContainer = ref)}
+        >
+          {config && config.showHowItsWork && (
+            <div
+              styleName="scrollToTutorialSection"
+              ref={(ref) => (this.scrollTrigger = ref)}
+              onClick={() =>
+                animate((timePassed) => {
+                  window.scrollTo(
+                    0,
+                    this.promoContainer.clientHeight * (timePassed / 100)
+                  );
+                }, 100)
+              }
+            >
+              <span styleName="scrollAdvice">
+                <FormattedMessage
+                  id="PartialHowItWorks10"
+                  defaultMessage="How it works?"
+                />
+              </span>
+              <span styleName="scrollTrigger" />
+            </div>
+          )}
 
           {openScanCam && (
-            <QrReader openScan={this.openScan} handleError={this.handleError} handleScan={this.handleScan} />
+            <QrReader
+              openScan={this.openScan}
+              handleError={this.handleError}
+              handleScan={this.handleScan}
+            />
           )}
           <Fragment>
             <div styleName="container alignCenter">
@@ -1409,9 +1659,13 @@ export default class PartialClosure extends Component {
             </div>
           </Fragment>
         </div>
-        <HowItWorks />
-        <VideoAndFeatures />
-        <Quote />
+        {config && config.showHowItsWork && (
+          <Fragment>
+            <HowItWorks />
+            <VideoAndFeatures />
+            <Quote />
+          </Fragment>
+        )}
       </div>
     );
   }

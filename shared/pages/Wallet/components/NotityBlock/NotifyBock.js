@@ -1,11 +1,7 @@
-import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
-import { localisedUrl } from '../../../../helpers/locale'
 import { withRouter } from 'react-router'
 import CSSModules from 'react-css-modules'
-import Button from 'components/controls/Button/Button'
 import styles from './NotifyBlock.scss'
 
 const NotifyBlock = ({
@@ -19,8 +15,6 @@ const NotifyBlock = ({
   logDescr,
 }) => {
   const handleGoto = () => {
-    console.log('descr', descr)
-    console.log('hostname', window.location.hostname)
     firstFunc && firstFunc()
     if (link && link.includes('http')) {
       window.location = link;
@@ -37,15 +31,11 @@ const NotifyBlock = ({
     }
   }
 
+  const backGroundStyle = { background: `#${background}` }
+  const backGroundImgStyle = { backgroundImage: `url(${background})` }
+  const style = background && background.length < 7 ? backGroundStyle : backGroundImgStyle
   return (
-    <div
-      styleName="notifyBlock"
-      style={{
-        background: background && background.length < 7 ? `#${background}` : `url(${background}) no-repeat`,
-        backgroundSize: 'cover'
-      }}
-      onClick={handleGoto}
-    >
+    <div styleName="notifyBlock" style={style} onClick={handleGoto} >
       {background && background.length > 7 ? <div styleName="notifyBlockOverlay"></div> : ''}
       <div>
         <div styleName="notifyBlockIcon">
@@ -56,7 +46,7 @@ const NotifyBlock = ({
           <span>{tooltip}</span>
         </div>
       </div>
-    </div>
+    </div >
   )
 }
 

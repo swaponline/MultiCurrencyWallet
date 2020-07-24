@@ -27,7 +27,7 @@ const hasAdminFee = (config
 ) ? config.opts.fee.btc : false
 
 const getRandomMnemonicWords = () => bip39.generateMnemonic()
-const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonic)
+const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(convertMnemonicToValid(mnemonic))
 
 
 const sweepToMnemonic = (mnemonic, path) => {
@@ -75,9 +75,19 @@ const getSweepAddress = () => {
   return false
 }
 
+const convertMnemonicToValid = (mnemonic) => {
+  return mnemonic
+    .trim()
+    .toLowerCase()
+    .split(` `)
+    .filter((word) => word)
+    .join(` `)
+}
+
 const getWalletByWords = (mnemonic, walletNumber = 0, path) => {
-  const seed = bip39.mnemonicToSeedSync(mnemonic);
-  const root = bip32.fromSeed(seed, btc.network);
+  mnemonic = convertMnemonicToValid(mnemonic)
+  const seed = bip39.mnemonicToSeedSync(mnemonic)
+  const root = bip32.fromSeed(seed, btc.network)
   const node = root.derivePath((path) ? path : `m/44'/0'/0'/0/${walletNumber}`)
 
   const account = bitcoin.payments.p2pkh({
@@ -232,8 +242,14 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
 
 
 const getTx = (txRaw) => {
-
-  return txRaw.getId()
+  if (txRaw
+    && txRaw.getId
+    && txRaw.getId instanceof 'function'
+  ) {
+    return txRaw.getId()
+  } else {
+    return txRaw
+  }
 }
 
 const getTxRouter = (txId) => {
@@ -301,7 +317,22 @@ const fetchBalance = (address) =>
       } catch (e) { /* */ }
       return false
     },
+    inQuery: {
+      delay: 500,
+      name: `balance`,
+    },
   }).then(({ balance }) => balance)
+
+const fetchTxRaw = (txId, cacheResponse) => 
+  apiLooper.get('bitpay', `/rawtx/${txId}`, {
+    cacheResponse,
+    checkStatus: (answer) => {
+      try {
+        if (answer && answer.rawtx !== undefined) return true
+      } catch (e) { /* */ }
+      return false
+    },
+  }).then(({ rawtx }) => rawtx)
 
 const fetchTx = (hash, cacheResponse) =>
   apiLooper.get('bitpay', `/tx/${hash}`, {
@@ -324,43 +355,59 @@ const fetchTxInfo = (hash, cacheResponse) =>
       const amount = vout ? new BigNumber(vout[0].value).toNumber() : null
 
       let afterBalance = vout && vout[1] ? new BigNumber(vout[1].value).toNumber() : null
+      let adminOutput = []
       let adminFee = false
 
       if (hasAdminFee) {
-        const adminOutput = vout.filter((out) => (
-          out.scriptPubKey.addresses
-          && out.scriptPubKey.addresses[0] === hasAdminFee.address
-          && !(new BigNumber(out.value).eq(amount))
-        ))
-
-        const afterOutput = vout.filter((out) => (
-          out.addresses
-          && out.addresses[0] !== hasAdminFee.address
-          && out.addresses[0] !== senderAddress
-        ))
-
-        if (afterOutput.length) {
-          afterBalance = new BigNumber(afterOutput[0].value).toNumber()
-        }
-
-        if (adminOutput) {
-          adminFee = new BigNumber(adminOutput[0].value).toNumber()
-        }
+        adminOutput = vout.filter((out) => {
+          const voutAddrBuf = Buffer.from(out.scriptPubKey.hex, 'hex')
+          const currentAddress = bitcoin.address.fromOutputScript(voutAddrBuf, btc.network)
+          return (
+            currentAddress === hasAdminFee.address
+            && !(new BigNumber(out.value).eq(amount))
+          )
+        })
       }
 
+      const afterOutput = vout.filter((out) => {
+        const voutAddrBuf = Buffer.from(out.scriptPubKey.hex, 'hex')
+        const currentAddress = bitcoin.address.fromOutputScript(voutAddrBuf, btc.network)
+        return (
+          currentAddress !== hasAdminFee.address
+          && currentAddress !== senderAddress
+        )
+      })
+
+      if (afterOutput.length) {
+        afterBalance = new BigNumber(afterOutput[0].value).toNumber()
+      }
+
+      if (adminOutput.length) {
+        adminFee = new BigNumber(adminOutput[0].value).toNumber()
+      }
+
+      let receiverAddress = null
+      if (vout) {
+        const voutAddrBuf = Buffer.from(vout[0].scriptPubKey.hex, 'hex')
+        receiverAddress = bitcoin.address.fromOutputScript(voutAddrBuf, btc.network)
+      }
       const txInfo = {
         amount,
         afterBalance,
         senderAddress,
-        receiverAddress: vout ? vout[0].scriptPubKey.addresses : null,
+        receiverAddress,
         confirmed: (rest.confirmations) ? true : false,
         minerFee: rest.fees.dividedBy(1e8).toNumber(),
         adminFee,
         minerFeeCurrency: 'BTC',
-        outputs: vout.map((out) => ({
-          amount: new BigNumber(out.value).toNumber(),
-          address: out.scriptPubKey.addresses || null,
-        })),
+        outputs: vout.map((out) => {
+          const voutAddrBuf = Buffer.from(out.scriptPubKey.hex, 'hex')
+          const currentAddress = bitcoin.address.fromOutputScript(voutAddrBuf, btc.network)
+          return {
+            amount: new BigNumber(out.value).toNumber(),
+            address: currentAddress,
+          }
+        }),
         ...rest,
       }
 
@@ -386,6 +433,7 @@ const getAllMyAddresses = () => {
       btcMultisigSMSData,
       btcMultisigUserData,
       btcMultisigG2FAData,
+      btcMultisigPinData
     },
   } = getState()
 
@@ -412,14 +460,8 @@ const getAllMyAddresses = () => {
     })
   }
 
-  // @ToDo - add btcMultisigG2FAData process
-  /*
-  if (btcData && btcData.address && btcData.address.toLowerCase() === address.toLowerCase()) return btcData
-  if (btcMnemonicData && btcMnemonicData.address && btcMnemonicData.address.toLowerCase() === address.toLowerCase()) return btcMnemonicData // Sweep
-  if (btcMultisigSMSData && btcMultisigSMSData.address && btcMultisigSMSData.address.toLowerCase() === address.toLowerCase()) return btcMultisigSMSData
-  if (btcMultisigUserData && btcMultisigUserData.address && btcMultisigUserData.address.toLowerCase() === address.toLowerCase()) return btcMultisigUserData
-  if (btcMultisigG2FAData && btcMultisigG2FAData.address && btcMultisigG2FAData.address.toLowerCase() === address.toLowerCase()) return btcMultisigG2FAData
-*/
+  if (btcMultisigPinData && btcMultisigPinData.address) retData.push(btcMultisigPinData.address.toLowerCase())
+
   return retData
 }
 
@@ -474,17 +516,22 @@ const getTransaction = (address, ownType) =>
         } catch (e) { /* */ }
         return false
       },
-      query: 'btc_balance',
+      inQuery: {
+        delay: 500,
+        name: `balance`,
+      },
     }).then((res) => {
       const transactions = res.txs.map((item) => {
         const direction = item.vin[0].addr !== address ? 'in' : 'out'
 
         const isSelf = direction === 'out'
-          && item.vout.filter((item) =>
-            item.scriptPubKey.addresses[0] === address
-          ).length === item.vout.length
+          && item.vout.filter((item) => {
+              const voutAddrBuf = Buffer.from(item.scriptPubKey.hex, 'hex')
+              const currentAddress = bitcoin.address.fromOutputScript(voutAddrBuf, btc.network)
+              return currentAddress === address
+          }).length === item.vout.length
 
-        return ({
+        return({
           type,
           hash: item.txid,
           canEdit: (myAllWallets.indexOf(address) !== -1),
@@ -492,8 +539,8 @@ const getTransaction = (address, ownType) =>
           value: isSelf
             ? item.fees
             : item.vout.filter((item) => {
-              if (!item.scriptPubKey.addresses) return false
-              const currentAddress = item.scriptPubKey.addresses[0]
+              const voutAddrBuf = Buffer.from(item.scriptPubKey.hex, 'hex')
+              const currentAddress = bitcoin.address.fromOutputScript(voutAddrBuf, btc.network)
 
               return direction === 'in'
                 ? (currentAddress === address)
@@ -505,17 +552,28 @@ const getTransaction = (address, ownType) =>
       })
       resolve(transactions)
     })
-      .catch(() => {
+      .catch((error) => {
+        console.error(error)
         resolve([])
       })
   })
 
+const addressIsCorrect = (address) => {
+  try {
+    let outputScript = bitcoin.address.toOutputScript(address, btc.network)
+    if (outputScript) return true
+  } catch (e) {}
+  return false
+}
+
 const send = (data) => {
+  return sendV5(data)
+  // v4 with deprecated TransactionBuilder
   return (hasAdminFee) ? sendWithAdminFee(data) : sendDefault(data)
 }
 
+// Deprecated
 const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
-
   const {
     fee: adminFee,
     address: adminFeeAddress,
@@ -557,6 +615,79 @@ const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
   return txRaw
 }
 
+const sendV5 = async ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
+  const privateKey = getPrivateKeyByAddress(from)
+
+  const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
+
+  // fee - from amount - percent
+
+  let feeFromAmount = BigNumber(0)
+  if (hasAdminFee) {
+    const {
+      fee: adminFee,
+      min: adminFeeMinValue,
+    } = config.opts.fee.btc
+    const adminFeeMin = BigNumber(adminFeeMinValue)
+
+    feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
+    if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
+
+    feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber() // Admin fee in satoshi
+  }
+
+  feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
+
+  const unspents = await fetchUnspents(from)
+  const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
+  const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
+
+  const psbt = new bitcoin.Psbt({network: btc.network})
+
+  psbt.addOutput({
+    address: to,
+    value: fundValue,
+  })
+
+  if (skipValue > 546) {
+    psbt.addOutput({
+      address: from,
+      value: skipValue
+    })
+  }
+
+  if (hasAdminFee) {
+    psbt.addOutput({
+      address: hasAdminFee.address,
+      value: feeFromAmount,
+    })
+  }
+
+  for (let i = 0; i < unspents.length; i++) {
+    const { txid, vout } = unspents[i]
+    let rawTx = false
+    rawTx = await fetchTxRaw(txid)
+
+    psbt.addInput({
+      hash: txid,
+      index: vout,
+      nonWitnessUtxo: Buffer.from(rawTx, 'hex'),
+    })
+  }
+
+  psbt.signAllInputs(keyPair)
+  psbt.finalizeAllInputs()
+
+  const rawTx = psbt.extractTransaction().toHex();
+
+  const broadcastAnswer = await broadcastTx(rawTx)
+
+  const { txid } = broadcastAnswer
+  return txid
+}
+
+// Deprecated
 const sendDefault = async ({ from, to, amount, feeValue, speed } = {}) => {
   feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
 
@@ -604,12 +735,37 @@ const signAndBuild = (transactionBuilder, address) => {
 const fetchUnspents = (address) =>
   apiLooper.get('bitpay', `/addr/${address}/utxo`, { cacheResponse: 5000 })
 
-const broadcastTx = (txRaw) =>
-  apiLooper.post('bitpay', `/tx/send`, {
-    body: {
-      rawtx: txRaw,
-    },
+const broadcastTx = (txRaw) => {
+  return new Promise(async (resolve, reject) => {
+    let answer = false
+    try {
+      answer = await apiLooper.post('bitpay', `/tx/send`, {
+        body: {
+          rawtx: txRaw,
+        },
+      })
+    } catch (e) {}
+    if (!answer || !answer.txid) {
+      // use blockcryper
+      const bcAnswer = await apiLooper.post('blockcypher', `/txs/push`, {
+        body: {
+          tx: txRaw,
+        },
+      })
+      if (bcAnswer
+        && bcAnswer.tx
+        && bcAnswer.tx.hash) {
+        resolve({
+          txid: bcAnswer.tx.hash,
+        })
+      } else {
+        reject()
+      }
+    } else {
+      resolve(answer)
+    }
   })
+}
 
 const signMessage = (message, encodedPrivateKey) => {
   const keyPair = bitcoin.ECPair.fromWIF(encodedPrivateKey, [bitcoin.networks.bitcoin, bitcoin.networks.testnet])
@@ -638,7 +794,6 @@ const checkWithdraw = (scriptAddress) => {
       } catch (e) { /* */ }
       return false
     },
-    query: 'btc_balance',
   }).then((res) => {
     if (res.txs.length > 1
       && res.txs[0].vout.length
@@ -658,7 +813,6 @@ const checkWithdraw = (scriptAddress) => {
   })
 }
 
-window.btcCheckWithdraw = checkWithdraw
 
 export default {
   login,
@@ -686,4 +840,7 @@ export default {
   getDataByAddress,
   getMainPublicKey,
   getTxRouter,
+  fetchTxRaw,
+  addressIsCorrect,
+  convertMnemonicToValid,
 }

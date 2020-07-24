@@ -2,19 +2,17 @@
 
 window.widgetERC20Comisions = {
   btc: {
-    fee: 5,
+    fee: "5",
     address: '2MuXz9BErMbWmoTshGgkjd7aMHeaxV8Bdkk',
-    min: 0.00001
+    min: "0.00001"
   },
   eth: {
-    fee: 7,
+    fee: "7",
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
-    min: 0.01
+    min: "0,01"
   },
   erc20: {
-    fee: 6,
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
-    min: 1,
   }
 }
 
@@ -23,7 +21,8 @@ window.widgetERC20Tokens = {
   usdt: {
     address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
     decimals: 6,
-    fullName: 'Usdt'
+    fullName: 'Usdt',
+    icon: 'https://growup.wpmix.net/wp-content/uploads/2016/10/favicon.png',
   },
   // Symbol of ERC20 token in lowerCase
   proxima: {
@@ -37,7 +36,7 @@ window.widgetERC20Tokens = {
     icon: 'https://growup.wpmix.net/wp-content/uploads/2016/10/favicon.png',
     // Background color of icon
     iconBgColor: '#ccc',
-  }, 
+  },
 }
 
 window.buildOptions = {
@@ -46,10 +45,30 @@ window.buildOptions = {
   curEnabled: false,
   showWalletBanners: true, // Allow to see banners
   invoiceEnabled: true, // Allow create invoices
+  hideShowPrivateKey: true, // Hide 'Copy Private Key' Menu item, default false, inited also from window.SWAP_HIDE_EXPORT_PRIVATEKEY
 //  fee: { btc .... }, // Can be inited from window.widgetERC20Comisions
+  // inited from window.EXCHANGE_DISABLED
+  exchangeDisabled: true,
+  curEnabled: { // Or 'false' if enabled all
+    // inited from window.CUR_BTC_DISABLED
+    btc: false,
+    // inited from window.CUR_ETH_DISABLED
+    eth: false,
+  },
 }
 */
 
 window.buildOptions = {
   showWalletBanners: true, // Allow to see banners
+  showHowItsWork: true, // Can be inited from window.showHowItWorksOnExchangePage
+  /*
+  // inited from window.EXCHANGE_DISABLED
+  exchangeDisabled: true,
+  curEnabled: { // Or 'false' if enabled all
+    // inited from window.CUR_BTC_DISABLED
+    btc: false,
+    // inited from window.CUR_ETH_DISABLED
+    eth: false,
+  },
+  */
 }

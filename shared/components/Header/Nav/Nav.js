@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { links } from 'helpers';
 import { NavLink, withRouter } from 'react-router-dom';
+import { constants } from "helpers";
 
 import SubMenu from '../SubMenu/SubMenu';
 
@@ -49,6 +50,8 @@ export default class Nav extends Component {
       location.pathname === '/' ||
       location.pathname === '/ru';
 
+    const isDark = localStorage.getItem(constants.localStorage.isDark)
+
     return (
       <div styleName='nav'>
         <Fragment>
@@ -67,7 +70,7 @@ export default class Nav extends Component {
 
               // !rest.displayNone &&
               return (
-                <div styleName='mainMenu' key={`${title} ${link}`}>
+                <div styleName='mainMenu' key={`${title} ${link}`} className="data-tut-widget-tourFinish">
                   <NavLink
                     onClick={this.handleScrollToTopClick}
                     key={index}
@@ -76,8 +79,9 @@ export default class Nav extends Component {
                     className={`
                       ${styles.link}
                       ${title === 'Wallet' && isWallet ? ` ${styles.active}` : ''}
-                      ${title === 'Exchange' ? 'reactour-exchange' : ''}
-                      ${title === 'Exchange' && isExchange ? ` ${styles.active}` : ''}
+                      ${link && link.includes("exchange") ? 'reactour-exchange data-tut-widget-exchange' : ''}
+                      ${link && link.includes("exchange") && isExchange ? ` ${styles.active}` : ''}
+                      ${isDark ? styles.dark : ''}
                   `}
                     /* eslint-enable indent */
                     to={localisedUrl(locale, link)}
@@ -91,9 +95,6 @@ export default class Nav extends Component {
                       {title}
                     </div>
                   </NavLink>
-                  <div>
-                    {/* haveSubmenu && <SubMenu history={history} locale={locale} key={index} /> */}
-                  </div>
                 </div>
               );
             })}

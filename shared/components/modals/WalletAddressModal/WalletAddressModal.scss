@@ -1,0 +1,21 @@
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.text {
+  font-size: 1.5em;
+
+  @media all and (max-width: 480px) {
+    font-size: 1em;
+  }
+}
+
+.address {
+  font-size: 1em;
+
+  @media all and (max-width: 480px) {
+    font-size: 0.5em;
+  }
+}

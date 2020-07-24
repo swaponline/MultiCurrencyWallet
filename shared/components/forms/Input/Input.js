@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Input as ValueLinkInput } from "sw-valuelink";
+import { constants } from 'helpers'
 import cx from "classnames";
 import { ignoreProps } from "helpers";
 import reducers from "redux/core/reducers";
@@ -8,9 +9,11 @@ import { isMobile } from "react-device-detect";
 
 import cssModules from "react-css-modules";
 import styles from "./Input.scss";
-
+import "./style.css"
 import TextArea from "components/forms/TextArea/TextArea";
 
+
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 @cssModules(styles, { allowMultiple: true })
 export default class Input extends Component {
   static propTypes = {
@@ -44,6 +47,13 @@ export default class Input extends Component {
     if (onFocus) {
       onFocus();
     }
+
+    if (isMobile) {
+      const header = document.getElementById('header-mobile')
+      if (header) {
+        header.classList.add("hidden-header")
+      }
+    }
     reducers.inputActive.setInputActive(true);
   };
 
@@ -52,6 +62,13 @@ export default class Input extends Component {
 
     if (onBlur) {
       onBlur();
+    }
+
+    if (isMobile) {
+      const header = document.getElementById('header-mobile')
+      if (header) {
+        header.classList.remove("hidden-header")
+      }
     }
     reducers.inputActive.setInputActive(false);
   };
@@ -100,7 +117,7 @@ export default class Input extends Component {
     }
 
     return (
-      <div styleName="root" className={className}>
+      <div styleName={`root ${isDark ? '--dark' : ''}`} className={className}>
         <div styleName={inputContainerStyleName} className={inputContainerClassName}>
           {React.createElement(multiline ? TextArea : ValueLinkInput, {
             ...ignoreProps(rest, "styles"),

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'redaction'
 import { getScrollBarWidth, getPageOffset } from 'helpers'
+import { constants } from 'helpers'
 
 import Modals from 'components/modals'
 
@@ -9,10 +10,13 @@ import cssModules from 'react-css-modules'
 import styles from './ModalConductor.scss'
 
 
+
+const isDark = localStorage.getItem(constants.localStorage.isDark)
+
 @connect({
   modals: 'modals',
 })
-@cssModules(styles)
+@cssModules(styles, { allowMultiple: true })
 export default class ModalConductor extends Component {
 
   static propTypes = {
@@ -58,7 +62,7 @@ export default class ModalConductor extends Component {
     const areModalsExist = Boolean(modalNames.length)
 
     return areModalsExist && (
-      <div styleName={!dashboardView ? 'modalConductor' : 'modalDashboardConductor'}>
+      <div styleName={`${!dashboardView ? 'modalConductor' : 'modalDashboardConductor'} ${isDark ? 'dark' : ''}`}>
         {
           modalNames.map((key) => {
             const { name, data = {}, zIndex } = modals[key]

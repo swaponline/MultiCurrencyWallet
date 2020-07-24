@@ -2,6 +2,9 @@ import config from 'app-config'
 import util from 'swap.app/util'
 import actions from 'redux/actions'
 import { constants } from 'swap.app'
+import BigNumber from 'bignumber.js'
+import { getState } from 'redux/core'
+import reducers from 'redux/core/reducers'
 
 
 const GetCustromERC20 = () => {
@@ -34,7 +37,23 @@ const externalConfig = () => {
     addCustomERC20: true,
     invoiceEnabled: true,
     showWalletBanners: false,
+    showHowItsWork: false,
     fee: {},
+    hideShowPrivateKey: false,
+    plugins: {
+      setItemPlugin: false,
+      getItemPlugin: false,
+      userDataPluginApi: false,
+    },
+    buyViaCreditCardLink: false,
+    activeFiat: 'USD',
+    exchangeDisabled: false,
+  }
+
+  if (window
+    && window.showHowItWorksOnExchangePage
+  ) {
+    config.showHowItsWork = window.showHowItWorksOnExchangePage
   }
 
   if (window
@@ -43,6 +62,61 @@ const externalConfig = () => {
     && Object.keys(window.buildOptions).length
   ) {
     config.opts = { ...config.opts, ...window.buildOptions }
+  }
+
+  if (window
+    && window.DEFAULT_FIAT
+  ) {
+    config.opts.activeFiat = window.DEFAULT_FIAT
+  }
+  reducers.user.setActiveFiat({ activeFiat: config.opts.activeFiat })
+
+  if (window
+    && window.EXCHANGE_DISABLED
+  ) {
+    config.opts.exchangeDisabled = window.EXCHANGE_DISABLED
+  }
+  if (window
+    && window.CUR_BTC_DISABLED
+  ) {
+    if (!config.opts.curEnabled) config.opts.curEnabled = {}
+    config.opts.curEnabled.btc = false
+  }
+
+  if (window
+    && window.CUR_ETH_DISABLED
+  ) {
+    if (!config.opts.curEnabled) config.opts.curEnabled = {}
+    config.opts.curEnabled.eth = false
+  }
+  // Plugins
+  if (window
+    && window.setItemPlugin
+  ) {
+    config.opts.plugins.setItemPlugin = window.setItemPlugin
+  }
+  if (window
+    && window.getItemPlugin
+  ) {
+    config.opts.plugins.getItemPlugin = window.getItemPlugin
+  }
+  if (window
+    && window.userDataPluginApi
+  ) {
+    config.opts.plugins.userDataPluginApi = window.userDataPluginApi
+  }
+
+  // ------
+  if (window
+    && window.buyViaCreditCardLink
+  ) {
+    config.opts.buyViaCreditCardLink = window.buyViaCreditCardLink
+  }
+
+  if (window
+    && window.SWAP_HIDE_EXPORT_PRIVATEKEY !== undefined
+  ) {
+    config.opts.hideShowPrivateKey = window.SWAP_HIDE_EXPORT_PRIVATEKEY
   }
 
   if (window
@@ -101,22 +175,58 @@ const externalConfig = () => {
     && window.widgetERC20Comisions
     && Object.keys(window.widgetERC20Comisions)
   ) {
+    let setErc20FromEther = false
+
     Object.keys(window.widgetERC20Comisions).filter((key) => {
       const curKey = key.toLowerCase()
       if (window.widgetERC20Comisions[curKey]) {
-        const { fee, address, min } = window.widgetERC20Comisions[curKey]
+        let { fee, address, min } = window.widgetERC20Comisions[curKey]
+        let feeOk = false
+        let minOk = false
+
         // @ToDo add currency isAddress Check
         if (fee && address && min) {
-          config.opts.fee[curKey] = {
-            fee,
-            address,
-            min,
+          try {
+            fee = BigNumber(fee.replace(',', '.')).toNumber()
+            feeOk = true
+          } catch (e) {
+            console.error(`Fail convert ${fee} to number for ${curKey}`)
+          }
+          try {
+            min = BigNumber(min.replace(',', '.')).toNumber()
+            minOk = true
+          } catch (e) {
+            console.error(`Fail convert ${min} to number for ${curKey}`)
+          }
+
+          if (minOk && feeOk) {
+            config.opts.fee[curKey.toLowerCase()] = {
+              fee,
+              address,
+              min,
+            }
+          }
+        } else {
+          if (curKey.toLowerCase() === `erc20` && address) {
+            setErc20FromEther = true
+            config.opts.fee[curKey.toLowerCase()] = {
+              address,
+            }
           }
         }
       }
     })
+    if (setErc20FromEther
+      && config.opts.fee.eth
+      && config.opts.fee.eth.min
+      && config.opts.fee.eth.fee
+    ) {
+      config.opts.fee.erc20.min = config.opts.fee.eth.min
+      config.opts.fee.erc20.fee = config.opts.fee.eth.fee
+    }
   }
 
+  console.log('externalConfig', config)
   return config
 }
 

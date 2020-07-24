@@ -1,13 +1,14 @@
 import React from 'react'
-import { isMobile } from 'react-device-detect'
+
+import { constants } from 'helpers'
 
 import CSSModules from 'react-css-modules'
 import styles from './Table.scss'
 
-import reducers from 'redux/core/reducers'
 import { FormattedMessage } from 'react-intl'
 
 
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 @CSSModules(styles, { allowMultiple: true })
 export default class Table extends React.Component {
 
@@ -20,14 +21,14 @@ export default class Table extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.id === 'table-wallet')  {
+    if (this.props.id === 'table-wallet') {
       window.addEventListener('resize', this.handleResponsiveTable)
       this.handleResponsiveTable()
     }
   }
 
   componentWillUnmount() {
-    if (this.props.id === 'table-wallet')  {
+    if (this.props.id === 'table-wallet') {
       window.removeEventListener('resize', this.handleResponsiveTable)
     }
   }
@@ -37,7 +38,7 @@ export default class Table extends React.Component {
   }
 
   handleResponsiveTable = () => {
-    const { linkOnTableBody: tdLink, linkOnTableHead: thLink  } = this
+    const { linkOnTableBody: tdLink, linkOnTableHead: thLink } = this
 
     let th = thLink.children[0].cells
     let td = tdLink.children[0].cells
@@ -54,8 +55,9 @@ export default class Table extends React.Component {
 
   render() {
     const { titles, rows, rowRender, textIfEmpty, isLoading, loadingText, className } = this.props
+
     return (
-      <table styleName="table" className={className} ref={(table) => this.linkOnTable = table}>
+      <table styleName={`table ${isDark ? 'dark' : ''}`} className={className} ref={(table) => this.linkOnTable = table}>
         <thead ref={(thead) => this.linkOnTableHead = thead}>
           <tr>
             {

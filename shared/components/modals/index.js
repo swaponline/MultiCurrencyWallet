@@ -32,6 +32,17 @@ import SweepToMnemonicKeys from './SweepToMnemonicKeys/SweepToMnemonicKeys'
 import HowToWithdrawModal from './HowToWithdrawModal/HowToWithdrawModal'
 import InfoInvoice from './InfoInvoice/InfoInvoice'
 
+import RegisterPINProtected from './RegisterPINProtected/RegisterPINProtected'
+
+import WithdrawBtcPin from './WithdrawBtcPin/WithdrawBtcPin'
+import WithdrawBtcSms from './WithdrawBtcSms/WithdrawBtcSms'
+import WithdrawBtcMultisig from './WithdrawBtcMultisig/WithdrawBtcMultisig'
+
+import WalletAddressModal from './WalletAddressModal/WalletAddressModal'
+
+import HowToExportModal from './HowToExportModal/HowToExportModal'
+import AlertWindow from "./AlertWindow"
+
 
 export default {
   DeclineOrdersModal,
@@ -40,8 +51,7 @@ export default {
   ShareModal,
   OfferModal,
   WithdrawModal,
-  WithdrawModalMultisig,
-  WithdrawModalMultisigUser,
+  WithdrawModalMultisigUser, // Deprecated
   PrivateKeysModal,
   ImportKeys,
   ShowMoreCoins,
@@ -53,7 +63,7 @@ export default {
   Confirm,
   MobMenu,
   ConfirmBeginSwap,
-  RegisterSMSProtected,
+
   MultisignJoinLink,
   CurrencyAction,
   InvoiceModal,
@@ -67,4 +77,17 @@ export default {
   SweepToMnemonicKeys,
   HowToWithdrawModal,
   InfoInvoice,
+
+  RegisterPINProtected,
+  WithdrawBtcPin,
+
+  WalletAddressModal,
+
+  RegisterSMSProtected,
+  WithdrawBtcSms,
+  WithdrawModalMultisig,  // Deprecated
+  WithdrawBtcMultisig, 
+
+  HowToExportModal,
+  AlertWindow,
 }

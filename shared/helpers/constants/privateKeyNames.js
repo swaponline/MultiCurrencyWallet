@@ -26,4 +26,5 @@ export default {
   sumSmsMnemonicKeyMnemonic: `${process.env.ENTRY}:sumSmsMnemonicKey:Mnemonic`, // Sweep
   sumSmsMnemonicKeyOld: `${process.env.ENTRY}:sumSmsMnemonicKey:old`, // Sweep
 
+  btcPinMnemonicKey: `${process.env.ENTRY}:btcPinMnemonicKey`,
 }

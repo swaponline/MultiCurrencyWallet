@@ -1,11 +1,11 @@
 .history {
-    display: block;
-    background: #FFFFFF;
-    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08), 0px 1px 4px rgba(0, 0, 0, 0.08);
-    border-radius: 4px;
-    padding: 25px;
-    margin-top: 40px;
-    width: 100%;
+  display: block;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08), 0px 1px 4px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  padding: 25px;
+  margin-top: 40px;
+  width: 100%;
 }
 
 .historyHeading {
@@ -31,7 +31,7 @@
 .walletNavItem.active {
   a {
     border-bottom: 3px solid #6144e5;
-    color: #1f2d48 !important;
+    color: #1f2d48;
   }
 }
 
@@ -41,6 +41,18 @@
   line-height: 140%;
   padding-bottom: 10px;
   color: #8e9aa3 !important;
+}
+
+.dark {
+  background: #232629;
+
+  .historyHeading {
+    color: white;
+  }
+
+  a {
+    color: white !important;
+  }
 }
 
 @include media-mobile {
@@ -55,8 +67,8 @@
     padding: 0;
     margin-top: 0;
   }
+
   .historyContent {
     margin: -40px -20px;
   }
 }
-

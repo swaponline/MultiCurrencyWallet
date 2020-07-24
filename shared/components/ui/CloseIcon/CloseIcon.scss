@@ -5,10 +5,18 @@
   outline: none;
   -webkit-tap-highlight-color: transparent;
 
-  &.whiteColor {
-
+  &.dark {
     .icon {
+      &::before,
+      &::after {
+        background-color: white;
+      }
+    }
+   
+   }
 
+  &.whiteColor {
+    .icon {
       &::before,
       &::after {
         background-color: #fff;

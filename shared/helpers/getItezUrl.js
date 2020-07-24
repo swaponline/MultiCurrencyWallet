@@ -1,22 +1,44 @@
 
 export const getItezUrl = ({ user, locale, url }) => {
-    const { activeFiat, btcMnemonicData, btcMultisigG2FAData, btcMultisigSMSData, btcMultisigUserData, btcData } = user
+  if (!user && !locale) return url
 
-    let getActuallyFiatAddress = [btcMnemonicData, btcMultisigG2FAData, btcMultisigSMSData, btcMultisigUserData, btcData].find(({ balance }) => balance > 0);
+  const { activeFiat, btcMnemonicData, btcMultisigG2FAData, btcMultisigSMSData, btcMultisigPinData, btcMultisigUserData, btcData } = user
 
-    if (!getActuallyFiatAddress) {
-        getActuallyFiatAddress = btcData
-    }
+  let getActuallyFiatAddress = [btcMnemonicData, btcMultisigG2FAData, btcMultisigSMSData, btcMultisigUserData, btcData].find((data) => data && data.balance > 0);
 
-    const comingFiat = /%7BDEFAULT_FIAT%7D/gi
-    const comingLocale = /%7Blocale%7D/gi
-    const comingAddress = /%7Bbtcaddress%7D/gi
+  const hiddenCoinsList = JSON.parse(localStorage.getItem('hiddenCoinsList')) || []
 
+  if (!getActuallyFiatAddress && !hiddenCoinsList.includes('BTC (SMS-Protected)')) getActuallyFiatAddress = btcMultisigSMSData
+  if (!getActuallyFiatAddress && !hiddenCoinsList.includes('BTC (PIN-Protected)')) getActuallyFiatAddress = btcMultisigPinData
+  if (!getActuallyFiatAddress && !hiddenCoinsList.includes('BTC (Multisig)')) getActuallyFiatAddress = btcMultisigUserData
 
-    const returned = url
-        .replace(comingFiat, activeFiat)
-        .replace(comingLocale, locale)
-        .replace(comingAddress, getActuallyFiatAddress.address)
+  if (!getActuallyFiatAddress) {
+    getActuallyFiatAddress = btcData
+  }
 
-    return returned
+  const shieldingСomingFiat = /%7BDEFAULT_FIAT%7D/gi
+  const shieldingСomingLocale = /%7Blocale%7D/gi
+  const shieldingСomingAddress = /%7Bbtcaddress%7D/gi
+
+  const comingFiat = /{DEFAULT_FIAT}/gi
+  const comingLocale = /{locale}/gi
+  const comingAddress = /{btcaddress}/gi
+
+  let returned = url
+
+  if (url.includes('btcaddress')) {
+    returned = returned.replace(comingAddress, getActuallyFiatAddress.address)
+    returned = returned.replace(shieldingСomingAddress, getActuallyFiatAddress.address)
+  }
+  if (url.includes('DEFAULT_FIAT')) {
+    returned = returned.replace(comingFiat, activeFiat)
+    returned = returned.replace(shieldingСomingFiat, activeFiat)
+  }
+
+  if (url.includes('locale')) {
+    returned = returned.replace(comingLocale, locale)
+    returned = returned.replace(shieldingСomingLocale, locale)
+  }
+
+  return returned
 }

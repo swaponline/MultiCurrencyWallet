@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 
 import { connect } from 'redaction'
 
@@ -14,6 +14,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import linksManager from '../../../../helpers/links'
 
 
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 @injectIntl
 @connect(({ user }) => ({ user }))
 export default class WallerSlider extends Component {
@@ -53,16 +54,33 @@ export default class WallerSlider extends Component {
     })
   }
 
-  getBanners = () => {
-    const { user, intl: { locale } } = this.props
+  processItezBanner = (inBanners) => {
+    const { user, intl: { locale: intlLocale } } = this.props
 
+    let locale = intlLocale
+
+    if (!locale) locale = `en`
+
+    const banners = inBanners.map(el => {
+      if (el[4].includes('https://itez.swaponline.io/')) {
+        const bannerArr = [...el]
+        bannerArr.splice(4, 1, getItezUrl({ user, locale, url: el[4] }));
+
+        return bannerArr
+      }
+      return el
+    }).filter(el => el && el.length)
+    return banners
+  }
+
+  getBanners = () => {
     if (window
-      && window.bannersOnMainPage
-      && window.bannersOnMainPage.length
+      && window.bannersOnMainPage !== undefined
     ) {
       // Используем банеры, которые были определены в index.html (используется в виджете вордпресса)
+      const widgetBanners = (window.bannersOnMainPage.length) ? window.bannersOnMainPage : []
       this.setState(() => ({
-        banners: window.bannersOnMainPage,
+        banners: this.processItezBanner(widgetBanners).filter(el => el && el.length),
         isFetching: true,
       }), () => this.initBanners())
     } else {
@@ -70,15 +88,7 @@ export default class WallerSlider extends Component {
         return axios
           .get('https://noxon.wpmix.net/swapBanners/banners.php')
           .then(({ data }) => {
-            const banners = data.map(el => {
-              if (el[4].includes('https://itez.swaponline.io/')) {
-                const bannerArr = [...el]
-                bannerArr.splice(4, 1, getItezUrl({ user, locale, url: el[4] }));
-
-                return bannerArr
-              }
-              return el
-            })
+            const banners = this.processItezBanner(data).filter(el => el && el.length)
             this.setState(() => ({
               banners,
               isFetching: true,
@@ -142,9 +152,10 @@ export default class WallerSlider extends Component {
       />
     )
 
+
     return (window.location.hash !== linksManager.hashHome) ? null : (
-      <Fragment>
-        <h3 className={styles.bannersHeading}>
+      <div className="data-tut-banners">
+        <h3 className={`${styles.bannersHeading} ${isDark ? styles.dark : ''}`}>
           <FormattedMessage id="ForYou" defaultMessage="For you" />
         </h3>
         {!this.state.isFetching ?
@@ -178,7 +189,7 @@ export default class WallerSlider extends Component {
                   />
                 </div>
               )}
-              {banners.map(banner => (
+              {banners && banners.length > 0 && banners.map(banner => (
                 <div key={banner[0]} className="swiper-slide">
                   <NotifyBlock background={`${banner[3]}`} descr={banner[2]} link={banner[4]} icon={banner[5]} />
                 </div>
@@ -186,7 +197,7 @@ export default class WallerSlider extends Component {
             </div>
           </div>
         }
-      </Fragment>
+      </div>
     )
   }
 }

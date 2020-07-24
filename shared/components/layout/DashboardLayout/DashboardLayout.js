@@ -2,33 +2,29 @@ import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router'
 import cssModules from 'react-css-modules'
 import { connect } from 'redaction'
-import helpers, { links, constants } from 'helpers'
+import { constants } from 'helpers'
 import { getActivatedCurrencies } from 'helpers/user'
 import config from 'app-config'
 import actions from 'redux/actions'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { isMobile } from 'react-device-detect'
-import moment from 'moment'
-import firestore from 'helpers/firebase/firestore'
+
 import cx from 'classnames'
 
 import Button from 'components/controls/Button/Button'
 import Tabs from 'components/Tabs/Tabs'
 import FAQ from 'components/FAQ/FAQ'
 import { ModalConductorProvider } from 'components/modal'
-import BalanceForm from 'components/BalanceForm/BalanceForm'
 
 import styles from './styles.scss'
 
 
 const isWidgetBuild = config && config.isWidget
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 const NewDesignLayout = (props) => {
   const {
     hiddenCoinsList,
-    modals,
-    dashboardView,
-    isBalanceFetching,
     activeFiat,
     children,
     page,
@@ -67,34 +63,21 @@ const NewDesignLayout = (props) => {
     isMnemonicSaved: mnemonic === `-`,
   })
 
-  useEffect(() => {
-    const getFiats = async () => {
-      const { fiatsRates } = await actions.user.getFiats()
-
-      if (fiatsRates) {
-        const fiatRate = fiatsRates.find(({ key }) => key === activeFiat)
-        setCommonState({ ...commonState, multiplier: fiatRate.value })
-      }
-    }
-
-    getFiats()
-  }, [activeFiat])
-
   const {
-    multiplier,
-    infoAboutCurrency,
     enabledCurrencies,
+    infoAboutCurrency
   } = commonState
-
-  const allData = actions.core.getWallets()
 
   let btcBalance = 0
   let fiatBalance = 0
   let changePercent = 0
 
+  const allData = actions.core.getWallets()
+
   // Набор валют для виджета
   const widgetCurrencies = ['BTC']
   if (!hiddenCoinsList.includes('BTC (SMS-Protected)')) { widgetCurrencies.push('BTC (SMS-Protected)') }
+  if (!hiddenCoinsList.includes('BTC (PIN-Protected)')) { widgetCurrencies.push('BTC (PIN-Protected)') }
   if (!hiddenCoinsList.includes('BTC (Multisig)')) { widgetCurrencies.push('BTC (Multisig)') }
   widgetCurrencies.push('ETH')
   if (isWidgetBuild) {
@@ -151,11 +134,9 @@ const NewDesignLayout = (props) => {
         changePercent = infoAboutCurrency.percent_change_1h
       }
       btcBalance += balance * infoAboutCurrency.price_btc
-      fiatBalance += balance * infoAboutCurrency.price_usd * (multiplier || 1)
+      fiatBalance += balance * ((infoAboutCurrency.price_fiat) ? infoAboutCurrency.price_fiat : 1)
     }
   })
-
-  const isAnyModalCalled = Object.keys(modals).length
 
   const handleNavItemClick = index => {
     if (index === 1) {
@@ -164,18 +145,21 @@ const NewDesignLayout = (props) => {
       actions.core.getSwapHistory()
     }
 
+    // @ToDo Удалить
+    /*
     this.setState({
       activeView: index,
     })
+    */
   }
 
   return (
-    <article>
+    <article className="data-tut-start-widget-tour">
       {window.CUSTOM_LOGO && (
         <img className="cutomLogo" src={window.CUSTOM_LOGO} alt="logo" />
       )}
       <section
-        styleName={`wallet ${window.CUSTOM_LOGO ? 'hasCusomLogo' : ''}`}
+        styleName={`wallet ${window.CUSTOM_LOGO ? 'hasCusomLogo' : ''} ${isDark ? 'dark' : ''}`}
       >
         <Tabs onClick={handleNavItemClick} activeView={activeView} />
         <div
@@ -202,6 +186,7 @@ const NewDesignLayout = (props) => {
               'activity': activeView === 1 || activeView === 2,
               'active': true,
             })}
+
           >
             {/* Sweep Banner */}
             {showSweepBanner && (

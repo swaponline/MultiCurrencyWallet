@@ -1,61 +1,98 @@
 .customDestination {
   position: relative;
   margin-bottom: 1rem;
+
+  &.--dark {
+    color: white;
+
+    .dropDown {
+      width: 100%;
+
+      &>div {
+        background: #2b2b2b;
+
+        &>span {
+          display: block;
+          font-size: 12pt;
+          font-weight: bold;
+          width: 100%;
+          text-align: left;
+          margin-left: 1em;
+
+          @media screen and (max-width: 480px) {
+            font-size: 8pt;
+          }
+        }
+      }
+    }
+  }
+
   &_error .walletToggle {
     border: 2px solid #a90101;
   }
-  .dropDown{
+
+  .dropDown {
     box-shadow: none;
     border: none;
-    & > div:nth-child(1) {
-      border: none;
-      height: auto;
+    width: 100%;
+  }
+
+  &>div:nth-child(1) {
+    border: none;
+    height: auto;
+  }
+
+  &>div {
+    padding-left: 0px;
+    background: #FFF;
+    border: 1px solid #000;
+    border-radius: 0px;
+
+    div> {
+      padding: 0px;
     }
-    & > div {
-      padding-left: 0px;
-      background: #FFF;
-      border: 1px solid #000;
-      border-radius: 0px;
-      div > {
-        padding: 0px;
-      }
-      & > span {
-        display: block;
-        font-size: 12pt;
-        font-weight: bold;
-        width: 100%;
-        text-align: left;
-      }
+
+    &>span {
+      display: block;
+      font-size: 12pt;
+      font-weight: bold;
+      width: 100%;
+      text-align: left;
     }
   }
+
   &_error {
-    .dropDown > div > span {
+    .dropDown>div>span {
       color: #a90101;
     }
   }
-  .readonlyValue {
-    input {
-      display: block;
-      width: 100%;
-      margin-bottom: 15px;
-      border: 1px solid rgba(0,0,0,0.3);
-      border-radius: 3px;
-      min-height: 68px;
-      margin-bottom: 30px;
-      padding: 1px 20px;
-      font-size: 24px;
-      vertical-align: middle;
-      line-height: 68px;
-      color: #080808;
-      &:focus {
-        border: 2px solid #6144e5 !important;
-        padding: 1px 19px;
-        outline: none;
-        line-height: 66px;
-      }
+}
+
+
+.readonlyValue {
+  input {
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+    min-height: 68px;
+    margin-bottom: 30px;
+    padding: 1px 20px;
+    font-size: 24px;
+    vertical-align: middle;
+    line-height: 68px;
+    color: #080808;
+
+    &:focus {
+      border: 2px solid #6144e5 !important;
+      padding: 1px 19px;
+      outline: none;
+      line-height: 66px;
     }
   }
 }
+
 
 
 
@@ -66,12 +103,15 @@
   height: 68px;
   margin-bottom: 30px;
   padding: 0 20px;
+
   &_site {
     position: relative;
   }
+
   &_focus {
     border: 2px solid #6144e5 !important;
   }
+
   .qrCode {
     position: absolute;
     right: -34px;
@@ -80,6 +120,7 @@
     border: 6px solid #FFF;
     display: block;
   }
+
   &_focus .qrCode {
     right: -35px;
     top: 7px;
@@ -104,6 +145,7 @@
   display: flex;
   justify-content: space-between;
   height: 68px;
+
   input {
     border: none;
     margin: 0;
@@ -111,6 +153,7 @@
     padding: 0;
     font-size: 16px;
     margin-top: 2px;
+
     &:focus {
       border: none;
       padding: 0;
@@ -136,30 +179,48 @@
 
 
 @include media-mobile {
+  .--dark {
+    .readonlyValue {
+      input {
+        color: white;
+      }
+
+    }
+  }
+
   .label {
     width: 170px;
     font-weight: 500;
     line-height: 19px;
     font-size: 13px;
   }
+
   .customDestination {
-    .dropDown{
-      & > div {
-        & > span {
+    .dropDown {
+      &>div {
+        &>span {
           display: block;
           font-size: 10pt;
           font-weight: bold;
         }
       }
     }
+
     .readonlyValue {
       input {
         padding-left: 10px;
+        font-size: 0.7em;
+        color: black;
+        min-height: 2em;
+        line-height: 3em;
+        margin: 1em 0;
+
         &:focus {
           padding-left: 9px;
+          outline: none;
+          line-height: 3em;
         }
       }
-      
     }
   }
 }

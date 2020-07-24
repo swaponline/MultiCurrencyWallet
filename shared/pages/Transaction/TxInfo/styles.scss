@@ -6,6 +6,13 @@
   }
 }
 
+.dark {
+  div,
+  table {
+    color: white;
+  }
+}
+
 .finishImg {
   width: 80px;
   height: 80px;
@@ -28,6 +35,10 @@
 .balanceRow {
   color: #8E9AA3;
   font-size: 13px;
+}
+
+.rightText {
+  text-align: right;
 }
 
 .textThrough {

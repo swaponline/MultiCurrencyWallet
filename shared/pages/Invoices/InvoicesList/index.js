@@ -5,8 +5,7 @@ import actions from 'redux/actions'
 import Slider from 'pages/Wallet/components/WallerSlider';
 import { withRouter } from 'react-router-dom'
 
-import { links } from 'helpers'
-
+import { links, constants } from 'helpers'
 
 import CSSModules from 'react-css-modules'
 import styles from 'pages/CurrencyWallet/CurrencyWallet.scss'
@@ -20,6 +19,8 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import config from 'helpers/externalConfig'
 import ContentLoader from 'components/loaders/ContentLoader/ContentLoader'
+import lsDataCache from 'helpers/lsDataCache'
+
 
 const isWidgetBuild = config && config.isWidget
 
@@ -46,6 +47,8 @@ const langLabels = defineMessages({
     defaultMessage: `Invoices {type}{br}{address}`,
   },
 })
+
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @connect(({ signUp: { isSigned } }) => ({
   isSigned,
@@ -84,16 +87,18 @@ export default class InvoicesList extends PureComponent {
           address = null,
         },
       },
-      intl: {
-        locale,
-      },
-      history,
     } = props
 
+    let items = false
+    if (type && address) {
+      items = lsDataCache.get(`Invoices_${type.toLowerCase()}_${address.toLowerCase()}`)
+    } else {
+      items = lsDataCache.get(`Invoices_All`)
+    }
     this.state = {
       type,
       address,
-      items: false,
+      items,
     }
   }
 
@@ -115,6 +120,11 @@ export default class InvoicesList extends PureComponent {
         currency: type,
         address,
       }).then((items) => {
+        lsDataCache.push({
+          key: `Invoices_${type.toLowerCase()}_${address.toLowerCase()}`,
+          time: 3600,
+          data: items,
+        })
         if (!this.unmounted) {
           this.setState({ items })
         }
@@ -134,6 +144,11 @@ export default class InvoicesList extends PureComponent {
         }
       })
       actions.invoices.getManyInvoices(invoicesData).then((items) => {
+        lsDataCache.push({
+          key: `Invoices_All`,
+          time: 3600,
+          data: items,
+        })
         if (!this.unmounted) {
           this.setState({ items })
         }
@@ -142,10 +157,12 @@ export default class InvoicesList extends PureComponent {
   }
 
   async componentWillUnmount() {
+    console.log('InvoicesList unmounted')
     this.unmounted = true
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
+    console.log('InvoicesList mounted')
     this.fetchItems()
   }
 
@@ -169,17 +186,21 @@ export default class InvoicesList extends PureComponent {
     } = prevProps
 
     if ((prevAddress !== address) || (prevType !== type)) {
+      let items = false
+      if (type && address) {
+        items = lsDataCache.get(`Invoices_${type.toLowerCase()}_${address.toLowerCase()}`)
+      } else {
+        items = lsDataCache.get(`Invoices_All`)
+      }
       this.setState({
         type,
         address,
-        items: false,
+        items,
       }, () => {
         this.fetchItems()
       })
     }
   }
-
-  async componentWillUnmount() { }
 
   rowRender = (row, rowIndex) => {
     const {
@@ -194,8 +215,6 @@ export default class InvoicesList extends PureComponent {
 
   render() {
     let {
-      swapHistory,
-      txHistory,
       location,
       intl,
       isSigned,
@@ -228,7 +247,7 @@ export default class InvoicesList extends PureComponent {
     };
 
     const invoicesTable = (
-      <div styleName="currencyWalletActivity">
+      <div styleName={`currencyWalletActivity ${isDark ? 'darkActivity' : ''}`}>
         <h3>
           {(address) ? (
             <FormattedMessage {...langLabels.navTitleAddress} values={{
@@ -251,19 +270,13 @@ export default class InvoicesList extends PureComponent {
     if (onlyTable) {
       return invoicesTable
     }
-
+    console.log({ isDark })
     return (
-      <div styleName="root">
+      <div styleName={`root ${isDark ? 'dark' : ''}`}>
         <PageSeo
           location={location}
           defaultTitle={intl.formatMessage(metaTitle)}
           defaultDescription={intl.formatMessage(langLabels.metaDescription)} />
-        <Slider
-          settings={settings}
-          multisigStatus={multisigStatus}
-          isSigned={isSigned}
-          {...this.state}
-        />
         {isWidgetBuild && !config.isFullBuild && (
           <ul styleName="widgetNav">
             <li styleName="widgetNavItem" onClick={this.handleGoWalletHome}>
@@ -289,7 +302,7 @@ export default class InvoicesList extends PureComponent {
                   <ContentLoader leftSideContent />
                 )}
             </div>
-            <div styleName="currencyWalletActivityWrapper">
+            <div styleName={`currencyWalletActivity ${isDark ? 'darkActivity' : ''}`}>
               {invoicesTable}
             </div>
           </div>

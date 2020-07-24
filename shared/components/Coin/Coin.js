@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { constants } from 'helpers'
 import CSSModules from 'react-css-modules'
 import styles from './Coin.scss'
 
@@ -8,10 +9,13 @@ import CurrencyIcon, { iconNames } from 'components/ui/CurrencyIcon/CurrencyIcon
 import config from "app-config";
 
 
+const isDark = localStorage.getItem(constants.localStorage.isDark)
+
 const defaultCurrencyColors = {
   'btc': 'orange',
   'btc (multisig)': 'orange',
   'btc (sms-protected)': 'orange',
+  'btc (pin-protected)': 'orange',
   'usdt': '#33a681',
 }
 
@@ -64,7 +68,7 @@ const Coin = ({ className, size, name }) => {
   }
 
   return (
-    <div styleName="coin" className={className} style={style}>
+    <div styleName={`coin ${isDark ? 'dark' : ''}`} className={className} style={style}>
       <CurrencyIcon {...iconProps} />
     </div>
   )
@@ -80,4 +84,4 @@ Coin.propTypes = {
   name: PropTypes.string.isRequired,
 }
 
-export default CSSModules(Coin, styles)
+export default CSSModules(Coin, styles, { allowMultiple: true })

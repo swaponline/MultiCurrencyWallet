@@ -50,12 +50,14 @@ const TabsComponent = ({ navs, onClick, activeView, dashboardView, modals }) => 
         onClick(index)
       }
     }
+    const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-    const styleName = `walletNavItem ${activeView === index ? 'active' : ''}`
+    const styleName = `walletNavItem ${activeView === index ? 'active' : ''} ${isDark ? '--dark' : ''}`
     return (
       enabled ? (
         <li
           key={key}
+          className={key === 'Transactions' ? 'data-tut-recent' : ''}
           role="presentation"
           styleName={styleName}
           onClick={handleClick}

@@ -9,6 +9,12 @@
   cursor: pointer;
   color: #7371ff;
   font-weight: bolder;
-  padding: 0 3px 0 3px
+  padding: 0 3px 0 3px;
+
+  &.--dark {
+    &:not([href]) {
+      color: #8e9aa3;
+    }
+  }
 }
 

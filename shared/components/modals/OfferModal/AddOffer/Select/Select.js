@@ -7,11 +7,11 @@ import Switching from 'components/controls/Switching/Switching'
 import BigNumber from 'bignumber.js'
 
 
-const Select = ({ balance, currency, changeBalance, switching, all, estimatedFeeValues, type, ...props }) => {
-  const balanceToRender = BigNumber(balance).dp(6, BigNumber.ROUND_CEIL)
+const Select = ({ balance, changeBalance, switching, isDark }) => {
+
   return (
     <Fragment>
-      <div styleName="groupField">
+      <div styleName={`groupField ${isDark ? '--dark' : ''}`}>
         <div styleName="group">
           <span styleName="cell" onClick={() => changeBalance(BigNumber(balance).div(4))}><FormattedMessage id="Select23" defaultMessage="25%" /></span>
           <span styleName="cell" onClick={() => changeBalance(BigNumber(balance).div(4))}><FormattedMessage id="Select25" defaultMessage="50%" /></span>
@@ -24,4 +24,4 @@ const Select = ({ balance, currency, changeBalance, switching, all, estimatedFee
   )
 }
 
-export default cssModules(Select, styles)
+export default cssModules(Select, styles, { allowMultiple: true })

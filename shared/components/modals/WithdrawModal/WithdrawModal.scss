@@ -22,6 +22,9 @@
   color: $color-f-error;
   position: absolute;
   bottom: -15px;
+  &.bottom0 {
+    bottom: 0px;
+  }
 }
 
 .groupField {
@@ -31,6 +34,13 @@
   border-radius: 6px;
   text-align: center;
   position: relative;
+}
+
+.dark {
+  .note,
+  .balance {
+    background: none;
+  }
 }
 
 .balance {
@@ -44,6 +54,10 @@
   font-size: 13px;
   z-index: 1;
   color: #8e9aa3;
+  @include media-mobile {
+    right: 69px;
+    z-index: 112;
+  }
 }
 
 .notice {
@@ -103,6 +117,12 @@
 
 .lowLevel {
   position: relative;
+
+  &.dark {
+    .additionalСurrencies {
+      background: #2b2b2b;
+    }
+  }
 }
 
 .sendBtnsWrapper {
@@ -117,7 +137,7 @@
 
 .dashboardViewNotice {
   width: 100%;
-  margin: 0 auto;
+  margin: 2rem auto;
   margin-top: 20px;
   text-align: left;
 }

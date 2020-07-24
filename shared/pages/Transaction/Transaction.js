@@ -2,6 +2,7 @@ import { withRouter } from 'react-router-dom';
 import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
 import { constants } from 'helpers'
+import helpers from 'helpers'
 import getCurrencyKey from "helpers/getCurrencyKey";
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import getWalletLink from 'helpers/getWalletLink'
@@ -10,6 +11,7 @@ import TxInfo from './TxInfo'
 import { ModalBox } from 'components/modal'
 import cssModules from 'react-css-modules'
 import styles from './styles.scss'
+import lsDataCache from 'helpers/lsDataCache'
 
 
 const labels = defineMessages({
@@ -40,13 +42,41 @@ class Transaction extends Component {
     } = props
 
     const currency = getCurrencyKey(ticker, true)
+    const infoTx = lsDataCache.get(`TxInfo_${currency.toLowerCase()}_${txId}`)
+
+    let rest = {}
+    if (infoTx) {
+      const {
+        amount,
+        afterBalance: oldBalance,
+        confirmed,
+        senderAddress: sender,
+        receiverAddress: toAddress,
+        confirmations,
+        minerFee,
+        minerFeeCurrency,
+        adminFee,
+      } = infoTx
+
+      rest = {
+        amount,
+        confirmed,
+        sender,
+        toAddress,
+        oldBalance,
+        confirmations,
+        minerFee,
+        minerFeeCurrency,
+        adminFee,
+      }
+    }
 
     this.state = {
       currency,
       ticker,
       txId,
-      isFetching: true,
-      infoTx: false,
+      isFetching: !(infoTx),
+      infoTx,
       amount: 0,
       balance: 0,
       oldBalance: 0,
@@ -56,10 +86,16 @@ class Transaction extends Component {
       confirmations: 0,
       minerFee: 0,
       error: null,
+      finalBalances: false,
+      ...rest,
     }
   }
 
   async fetchTxInfo(currencyKey, txId) {
+    const {
+      infoTx: cachedTxInfo,
+    } = this.state
+
     let infoTx = null
     let error = null
     try {
@@ -73,12 +109,18 @@ class Transaction extends Component {
       // Fail parse
       this.setState({
         isFetching: false,
-        error,
+        error: !(cachedTxInfo),
       })
       return
     }
 
     if (!this.unmounted) {
+      lsDataCache.push({
+        key: `TxInfo_${currencyKey.toLowerCase()}_${txId}`,
+        time: 3600,
+        data: infoTx,
+      })
+
       const {
         amount,
         afterBalance: oldBalance,
@@ -109,6 +151,7 @@ class Transaction extends Component {
   }
 
   componentDidMount() {
+    console.log('Transaction mounted')
     const {
       ticker,
       txId,
@@ -121,10 +164,22 @@ class Transaction extends Component {
 
     const currency = getCurrencyKey(ticker)
     this.fetchTxInfo(currency, txId)
+    this.fetchTxFinalBalances(getCurrencyKey(ticker, true), txId)
 
     if (typeof document !== 'undefined') {
       document.body.classList.add('overflowY-hidden-force')
     }
+  }
+
+  fetchTxFinalBalances = (currency, txId) => {
+    setTimeout(async () => {
+      const finalBalances = await helpers.transactions.fetchTxBalances( currency, txId)
+      if (finalBalances && !this.unmounted) {
+        this.setState({
+          finalBalances,
+        })
+      }
+    })
   }
 
   handleClose = () => {
@@ -152,6 +207,7 @@ class Transaction extends Component {
   }
 
   componentWillUnmount() {
+    console.log('Transaction unmounted')
     this.unmounted = true
 
     if (typeof document !== 'undefined') {

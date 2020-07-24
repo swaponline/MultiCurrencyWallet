@@ -25,6 +25,7 @@ import { isMobile } from 'react-device-detect'
 import links from 'helpers/links'
 
 import redirectTo from 'helpers/redirectTo'
+import lsDataCache from 'helpers/lsDataCache'
 
 
 
@@ -182,6 +183,8 @@ export default class BtcMultisignConfirmTx extends React.Component {
       txRaw,
       txData,
       from,
+      address: to,
+      amount,
     } = this.state
 
     const {
@@ -203,6 +206,20 @@ export default class BtcMultisignConfirmTx extends React.Component {
     }
 
     if (txId) {
+      // Сохраняем транзакцию в кеш
+      const txInfoCache = {
+        amount,
+        senderAddress: from,
+        receiverAddress: to,
+        confirmed: false,
+      }
+
+      lsDataCache.push({
+        key: `TxInfo_btc_${txId}`,
+        time: 3600,
+        data: txInfoCache,
+      })
+
       this.handleClose()
 
       const txInfoUrl = helpers.transactions.getTxRouter('btc', txId)

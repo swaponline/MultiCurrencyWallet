@@ -26,6 +26,7 @@ const title = defineMessages({
   }
 })
 
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 @injectIntl
 @connect(({
   ui: { dashboardModalsAllowed },
@@ -78,6 +79,7 @@ export default class CurrencyAction extends React.Component {
       switch (currency.toLowerCase()) {
         case 'btc (multisig)':
         case 'btc (sms-protected)':
+        case 'btc (pin-protected)':
           targetCurrency = 'btc'
           break
       }
@@ -111,7 +113,8 @@ export default class CurrencyAction extends React.Component {
     return (
       <div styleName={cx({
         "modal-overlay": true,
-        "modal-overlay_dashboardView": dashboardView
+        "modal-overlay_dashboardView": dashboardView,
+        "dark": isDark,
       })}>
         <div styleName={cx({
           "modal": true,
@@ -151,6 +154,11 @@ export default class CurrencyAction extends React.Component {
                     iconName = 'btc'
                     itemTitle = 'BTC (SMS)'
                     itemFullTitle = 'BTC (SMS)'
+                    break
+                  case 'BTC (PIN-Protected)':
+                    iconName = 'btc'
+                    itemTitle = 'BTC (PIN)'
+                    itemFullTitle = 'BTC (PIN)'
                     break
                 }
 

@@ -20,7 +20,15 @@ export const initialState = {
     balance: 0,
     isBalanceFetched: false,
     currency: 'BTC (SMS-Protected)',
-    fullName: 'Bitcoin (SMS-Protected)',
+    fullName: 'Bitcoin (SMS)',
+    balanceError: null,
+    infoAboutCurrency: null,
+  },
+  btcMultisigPinData: {
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'BTC (PIN-Protected)',
+    fullName: 'Bitcoin (PIN)',
     balanceError: null,
     infoAboutCurrency: null,
   },
@@ -183,11 +191,25 @@ export const setBalance = (state, { name, amount, unconfirmedBalance }) => ({
   },
 })
 
+export const setInfoAboutToken = (state, { name, infoAboutCurrency }) => ({
+  ...state,
+  tokensData: {
+    ...state.tokensData,
+    [name]: {
+      ...state.tokensData[name],
+      infoAboutCurrency,
+    },
+  },
+})
 
 export const setInfoAboutCurrency = (state, { name, infoAboutCurrency }) => ({
   ...state,
   tokensData: {
     ...state.tokensData,
+    [name]: {
+      ...state.tokensData[name],
+      infoAboutCurrency,
+    },
   },
   [name]: {
     ...state[name],

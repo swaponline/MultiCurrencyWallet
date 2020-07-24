@@ -34,9 +34,10 @@ const defaultLanguage = defineMessages({
     defaultMessage: 'No',
   },
 })
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @injectIntl
-@cssModules(styles)
+@cssModules(styles, { allowMultiple: true })
 export default class Confirm extends React.Component {
 
   static propTypes = {
@@ -99,7 +100,7 @@ export default class Confirm extends React.Component {
     }
 
     return (
-      <div styleName="modal-overlay" onClick={this.handleClose}>
+      <div styleName={`modal-overlay ${isDark ? 'dark' : ''}`} onClick={this.handleClose}>
         <div styleName="modal">
           <div styleName="header">
             <WidthContainer styleName="headerContent">
@@ -111,8 +112,8 @@ export default class Confirm extends React.Component {
               <p styleName="notification">{labels.message}</p>
             </div>
             <div styleName="button-overlay">
-              <Button styleName="button" brand onClick={this.handleConfirm}>{labels.yes}</Button>
               <Button styleName="button" gray onClick={this.handleCancel}>{labels.no}</Button>
+              <Button styleName="button" brand onClick={this.handleConfirm}>{labels.yes}</Button>
             </div>
           </div>
         </div>

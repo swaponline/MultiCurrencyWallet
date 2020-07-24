@@ -47,13 +47,14 @@ export default class PreventMultiTabs extends Component {
         {isWidgetBuild && (
           <FormattedMessage
             id="PreventMultiTabsWidgetBuild"
-            defaultMessage="Atomic Swap Widget supports only one active tab. Please reload this page to continue using this tab or close it"
+            defaultMessage="{widgetName} supports only one active tab. Please close the other open window and refresh to continue."
+            values={{ widgetName: window.widgetName || "Atomic Swap Widget" }}
           />
         )}
         {!isWidgetBuild && (
           <FormattedMessage
             id="PreventMultiTabs12"
-            defaultMessage="Our service Supports only one active tab. Please reload this page to continue using this tab or close it"
+            defaultMessage="Our service Supports only one active tab. Please close the other open window and refresh to continue."
           />
         )}
         <br />
