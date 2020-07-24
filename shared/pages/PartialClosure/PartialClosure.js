@@ -490,7 +490,7 @@ export default class PartialClosure extends Component {
             defaultMessage="Please top up your balance before you start the swap."
           /> :
           <FormattedMessage
-            id="walletDidntCreateTitle"
+            id="walletDidntCreateMessage"
             defaultMessage="Create {curr} wallet before you start the swap."
             values={{
               curr: haveCur
