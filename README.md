@@ -1,3 +1,4 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 ![Deploy to swaponline.github.io](https://github.com/swaponline/MultiCurrencyWallet/workflows/Deploy%20to%20swaponline.github.io/badge.svg)
 
 ## Open-source Multicurrency wallet for Bitcoin and custom assets, and p2p exchange
