@@ -21,6 +21,7 @@ const SelectGroup = (props) => {
   const { dynamicFee, isToken, extendedControls, selectedValue, onSelect,
     currencies, fiat, placeholder, label, disabled, className, switchBalanceFunc, inputValueLink, tooltip, balance, error,
     id, idFee, tooltipAboutFee, haveAmount, inputToolTip, activeFiat,
+    balanceTooltip,
   } = props
   return (
     <div>
@@ -54,6 +55,13 @@ const SelectGroup = (props) => {
           <p styleName="textUsd" >{`~${fiat}`} {activeFiat}</p>
         }
         {inputToolTip && inputToolTip()}
+        {balanceTooltip && (
+          <div styleName="smallTooltip balanceTooltip">
+            <Tooltip>
+              {balanceTooltip()}
+            </Tooltip>
+          </div>
+        )}
         <CurrencySelect
           name="All"
           label={label}
