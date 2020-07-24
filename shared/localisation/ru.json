@@ -5815,7 +5815,7 @@
   },
   {
     "id": "ShowMyMnemonic",
-    "message": "сделайте резервную копию кошелька"
+    "message": "Сделайте резервную копию кошелька"
   },
   {
     "id": "BtcMultisignConfirmTx_FromAddress",
@@ -6697,8 +6697,22 @@
     ]
   },
   {
+    "id": "WidgetExitAlertTitle",
+    "message": "Одну минуту",
+    "files": [
+      "shared/components/Header/WidgetHeader/index.js"
+    ]
+  },
+  {
+    "id": "widgetExitAlertMessage",
+    "message": "Сохраните вашу секретную фразу перед выходом!",
+    "files": [
+      "shared/components/Header/WidgetHeader/index.js"
+    ]
+  },
+  {
     "id": "WidgetExitTitle3",
-    "message": "Approve exit",
+    "message": "Confirm exit",
     "files": [
       "shared/components/Header/WidgetHeader/index.js"
     ]
@@ -6719,7 +6733,7 @@
   },
   {
     "id": "widgetApproveMessage",
-    "message": "Are you sure you want to logout? IMPORTANT: Save your private keys!",
+    "message": "Are you sure you want to logout?",
     "files": [
       "shared/components/Header/WidgetHeader/index.js"
     ]
@@ -7258,6 +7272,13 @@
     ]
   },
   {
+    "id": "WalletRow_ShowAddress",
+    "message": "Показать адрес",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
     "id": "HowToExportModal_ExportERC20Step1",
     "message": "Для экспорта кошелька {currency} вам нужно сначала импортировать ваш приватный ключ от ETH кошелька (в примеру в кошелек Metamask)",
     "files": [
@@ -7462,7 +7483,7 @@
   },
   {
     "id": "MnemonicInputComponent_Placeholder",
-    "message": "Начните вводить секретную фразу",
+    "message": "Начните вводить слово...",
     "files": [
       "shared/components/forms/MnemonicInput/MnemonicInput.js"
     ]

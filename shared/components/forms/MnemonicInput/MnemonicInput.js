@@ -37,6 +37,7 @@ export default class MnemonicInput extends Component {
     this.state = {
       tags: [],
       suggestions,
+      isPlaceholderVisible: true,
     }
 
     this.reactTags = React.createRef()
@@ -52,7 +53,10 @@ export default class MnemonicInput extends Component {
       },
     } = this
 
-    const mnemonic = tags.map((tagData) => { return tagData.name }).join(` `)
+    const words = tags.map(tagData => tagData.name)
+    this.setState({ isPlaceholderVisible: words.length < 12 })
+
+    const mnemonic = words.join(` `)
 
     if (onChange instanceof Function) {
       onChange(mnemonic)
@@ -100,6 +104,7 @@ export default class MnemonicInput extends Component {
       state: {
         tags,
         suggestions,
+        isPlaceholderVisible
       },
       reactTags,
     } = this
@@ -114,8 +119,8 @@ export default class MnemonicInput extends Component {
           onDelete={this.onDelete.bind(this)}
           onAddition={this.onAddition.bind(this)}
           onInput={this.onInput.bind(this)}
-          placeholderText={`${intl.formatMessage(langLabels.placeholder)}`} 
-          removeButtonText={`${intl.formatMessage(langLabels.deleteText)}`}
+          placeholderText={isPlaceholderVisible ? intl.formatMessage(langLabels.placeholder) : ''}
+          removeButtonText={intl.formatMessage(langLabels.deleteText)}
           delimiters={[`Enter`, `Tab`, ` `, `,`]}
         />
       </div>

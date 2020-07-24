@@ -36,7 +36,7 @@ import { WidgetHeader } from "./WidgetHeader";
 import { Switcher } from "./Switcher"
 
 
-const isWidgetBuild = config && config.isWidget;
+const isWidgetBuild = config && config.isWidget
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @injectIntl
@@ -446,31 +446,33 @@ export default class Header extends Component {
       />
     );
 
-    const logoRenderer =
-      window.location.hostname === "localhost" ||
-        window.location.hostname === "swaponline.github.io" ||
-        window.location.hostname === "swaponline.io" ? (
-          <>
-            <LogoTooltip withLink isColored isExchange={isWalletPage} />
-            <Switcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
-          </>
-        ) : (
-          <div styleName="flexebleHeader">
-            {window.logoUrl !== "#" && (
-              <div styleName="imgWrapper">
-                {hasOwnLogoLink ? (
-                  <a href={onLogoClickLink}>{imgNode}</a>
-                ) : (
-                    <Link to={onLogoClickLink}>{imgNode}</Link>
-                  )}
-              </div>
-            )}
-            <div styleName="rightArea">
-              {isWidgetBuild && <WidgetHeader />}
-              <Switcher withExit themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
-            </div>
+    const isEmbeddedWidget = ![
+      'localhost',
+      'swaponline.github.io',
+      'swaponline.io'
+    ].includes(window.location.hostname)
+
+    const logoRenderer = !isEmbeddedWidget ?
+      <>
+        <LogoTooltip withLink isColored isExchange={isWalletPage} />
+        <Switcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
+      </>
+      :
+      <div styleName="flexebleHeader">
+        {window.logoUrl !== "#" && (
+          <div styleName="imgWrapper">
+            {hasOwnLogoLink ? (
+              <a href={onLogoClickLink}>{imgNode}</a>
+            ) : (
+                <Link to={onLogoClickLink}>{imgNode}</Link>
+              )}
           </div>
-        );
+        )}
+        <div styleName="rightArea">
+          {isWidgetBuild && <WidgetHeader />}
+          <Switcher withExit themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
+        </div>
+      </div>
 
     // if (config && config.isWidget && !config.isFullBuild) {
     //   return <>
