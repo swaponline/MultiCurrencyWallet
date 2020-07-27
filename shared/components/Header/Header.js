@@ -446,13 +446,13 @@ export default class Header extends Component {
       />
     );
 
-    const isEmbeddedWidget = ![
+    const isOurMainDomain = [
       'localhost',
       'swaponline.github.io',
       'swaponline.io'
     ].includes(window.location.hostname)
 
-    const logoRenderer = !isEmbeddedWidget ?
+    const logoRenderer = isOurMainDomain ?
       <>
         <LogoTooltip withLink isColored isExchange={isWalletPage} />
         <Switcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
