@@ -71,7 +71,13 @@ const CreateWallet = (props) => {
   let fiatBalance = 0
   let changePercent = 0
 
-  const widgetCurrencies = ['BTC', 'BTC (SMS-Protected)', 'BTC (PIN-Protected)', 'BTC (Multisig)', 'ETH']
+  const widgetCurrencies = [
+    'BTC',
+    'BTC (SMS-Protected)',
+    'BTC (PIN-Protected)',
+    'BTC (Multisig)',
+    'ETH',
+  ]
 
   if (isWidgetBuild) {
     if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
@@ -121,7 +127,13 @@ const CreateWallet = (props) => {
   )
 
   useEffect(() => {
-    const widgetCurrencies = ['BTC', 'BTC (SMS-Protected)', 'BTC (PIN-Protected)', 'BTC (Multisig)', 'ETH']
+    const widgetCurrencies = [
+      'BTC',
+      'BTC (SMS-Protected)',
+      'BTC (PIN-Protected)',
+      'BTC (Multisig)',
+      'ETH',
+    ]
 
     if (isWidgetBuild) {
       if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {

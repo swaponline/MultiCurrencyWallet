@@ -14,6 +14,7 @@ import arn from './arn.svg'
 import lev from './lev.svg'
 import bxb from './bxb.svg'
 import dcn from './dcn.svg'
+import pay from './pay.png'
 import eurs from './eurs.svg'
 
 
@@ -37,5 +38,6 @@ export default {
   waves,
   xrp,
   yup,
+  pay,
   eurs,
 }
