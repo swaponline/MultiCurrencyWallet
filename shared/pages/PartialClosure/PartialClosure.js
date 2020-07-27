@@ -1317,7 +1317,7 @@ export default class PartialClosure extends Component {
                 <p styleName="maxAmount">
                   {(
                     (BigNumber(balance).toNumber() === 0)
-                    || BigNumber(balance).minus(estimatedFeeValues[haveCurrency]).minus(0.000006).isLessThanOrEqualTo(0)
+                    || BigNumber(balance).minus(estimatedFeeValues[haveCurrency]).isLessThanOrEqualTo(0)
                   ) ? (
                     <FormattedMessage
                       id="partial766"
@@ -1341,7 +1341,6 @@ export default class PartialClosure extends Component {
                         {(estimatedFeeValues[haveCurrency])
                           ? BigNumber(balance)
                             .minus(estimatedFeeValues[haveCurrency])
-                            .minus(0.000006)
                             .dp(5, BigNumber.ROUND_FLOOR).toString()
                           : BigNumber(balance)
                             .dp(5, BigNumber.ROUND_FLOOR).toString()
