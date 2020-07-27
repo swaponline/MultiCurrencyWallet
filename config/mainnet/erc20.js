@@ -9,6 +9,11 @@ export default {
     decimals: 18,
     fullName: 'snm',
   },
+  pay: {
+    address: '0x1fe72034da777ef22533eaa6dd7cbe1d80be50fa',
+    decimals: 18,
+    fullName: 'PayAccept',
+  },
   eurs: {
     address: '0xdb25f211ab05b1c97d595516f45794528a807ad8',
     decimals: 2,
