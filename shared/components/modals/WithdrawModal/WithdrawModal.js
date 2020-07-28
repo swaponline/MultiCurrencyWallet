@@ -201,9 +201,10 @@ export default class WithdrawModal extends React.Component {
       wallet: {
         address,
       },
+      wallet,
     } = this.state
 
-    const currentCoin = currency.toLowerCase()
+    const currentCoin = getCurrencyKey(currency, true).toLowerCase()
 
     if (isEthToken) {
       minAmount[currentCoin] = this.getMinAmountForEthToken()
@@ -223,12 +224,20 @@ export default class WithdrawModal extends React.Component {
 
     }
 
+    console.log('actualyMinAmount')
+    console.log(constants.coinsWithDynamicFee, currentCoin)
     if (constants.coinsWithDynamicFee.includes(currentCoin)) {
+      let method = 'send'
+      if (wallet.isUserProtected) method = 'send_multisig'
+      if (wallet.isPinProtected) method = 'send_2fa'
+      if (wallet.isSmsProtected) method = 'send_2fa'
+
       minAmount[currentCoin] = await helpers[currentCoin].estimateFeeValue({
-        method: 'send',
+        method,
         speed: 'fast',
         address,
       })
+      console.log('minAmount', minAmount[currentCoin])
     }
   }
 

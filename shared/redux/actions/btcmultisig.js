@@ -1359,12 +1359,17 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
   feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, method: 'send_2fa', address: pinAddress })
 
 
+  feeValue = new BigNumber(feeValue).integerValue().toNumber()
+
   const unspents = await fetchUnspents(from)
 
   const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
   const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
+  console.log('send pin protected', fundValue, totalUnspent, feeValue, feeFromAmount, skipValue)
+
+  console.log(`skipValue = ${totalUnspent} - ${fundValue} - ${feeValue} - ${feeFromAmount} = ${skipValue}`)
   const p2ms = bitcoin.payments.p2ms({
     m: 2,
     n: publicKeys.length,
