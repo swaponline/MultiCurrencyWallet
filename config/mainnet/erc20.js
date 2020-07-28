@@ -4,6 +4,11 @@ export default {
     decimals: 18,
     fullName: 'SWAP',
   },
+  pay: {
+    address: '0x1fe72034da777ef22533eaa6dd7cbe1d80be50fa',
+    decimals: 18,
+    fullName: 'PayAccept',
+  },
   snm: {
     address: '0x983f6d60db79ea8ca4eb9968c6aff8cfa04b3c63',
     decimals: 18,
