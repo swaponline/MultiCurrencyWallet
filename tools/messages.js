@@ -67,14 +67,12 @@ async function mergeToJson(locale, toBuild) {
 
   console.info(`Messages updated in: ${fileName}`)
 
-  if (toBuild && locale !== '_default') {
-    const buildFileName = `build/messages/${locale}.json`
-    try {
-      await writeMessages(buildFileName, result)
-      console.info(`Build messages updated: ${buildFileName}`)
-    } catch (err) {
-      console.error(`Failed to update: ${buildFileName}`)
-    }
+  const buildFileName = `build/messages/${locale || 'en'}.json`
+  try {
+    await writeMessages(buildFileName, result)
+    console.info(`Build messages updated: ${buildFileName}`)
+  } catch (err) {
+    console.error(`Failed to update: ${buildFileName}`)
   }
 }
 
@@ -87,16 +85,12 @@ function mergeMessages() {
     fileToMessages[fileName].forEach(newMsg => {
       if (messages[newMsg.id]) {
         if (messages[newMsg.id].defaultMessage !== newMsg.defaultMessage) {
-          throw new Error(`Different message default messages for message id "${
-            newMsg.id
-          }":
+          throw new Error(`Different message default messages for message id "${newMsg.id}":
           ${messages[newMsg.id].defaultMessage} -- ${messages[newMsg.id].files}
           ${newMsg.defaultMessage} -- ${fileName}`)
         }
         if (messages[newMsg.id].description && newMsg.description) {
-          throw new Error(`Should be only one description for message id "${
-            newMsg.id
-          }":
+          throw new Error(`Should be only one description for message id "${newMsg.id}":
           ${messages[newMsg.id].description} -- ${messages[newMsg.id].files}
           ${newMsg.description} -- ${fileName}`)
         }
@@ -118,7 +112,7 @@ function mergeMessages() {
 async function updateMessages(toBuild) {
   mergeMessages()
   await Promise.all(
-    ['_default', ...Object.keys(locales)].map(locale => mergeToJson(locale, toBuild))
+    ['en', ...Object.keys(locales)].map(locale => mergeToJson(locale, toBuild))
   )
 }
 

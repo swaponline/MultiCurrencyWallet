@@ -5268,7 +5268,10 @@
   },
   {
     "id": "descr282",
-    "message": "Показать мои ключи"
+    "message": "Показать мои ключи",
+    "files": [
+      "shared/pages/Wallet/components/WallerSlider/index.js"
+    ]
   },
   {
     "id": "descr284",
@@ -5548,6 +5551,7 @@
     "id": "InfoPay_1",
     "message": "Транзакция завершена",
     "files": [
+      "shared/components/modals/InfoPay/InfoPay.js",
       "shared/pages/Transaction/Transaction.js",
       "shared/pages/Transaction/TxInfo/index.js"
     ]
@@ -5556,6 +5560,7 @@
     "id": "InfoPay_2",
     "message": "успешно отправлены",
     "files": [
+      "shared/components/modals/InfoPay/InfoPay.js",
       "shared/pages/Transaction/TxInfo/index.js"
     ]
   },
@@ -5563,6 +5568,7 @@
     "id": "InfoPay_3",
     "message": "Transaction ID",
     "files": [
+      "shared/components/modals/InfoPay/InfoPay.js",
       "shared/pages/Transaction/TxInfo/index.js"
     ]
   },
@@ -5926,7 +5932,10 @@
   },
   {
     "id": "ShowMyMnemonic",
-    "message": "Сделайте резервную копию кошелька"
+    "message": "Сделайте резервную копию кошелька",
+    "files": [
+      "shared/pages/Wallet/components/WallerSlider/index.js"
+    ]
   },
   {
     "id": "BtcMultisignConfirmTx_FromAddress",
@@ -6223,7 +6232,10 @@
   },
   {
     "id": "ForYou",
-    "message": "For you"
+    "message": "For you",
+    "files": [
+      "shared/pages/Wallet/components/WallerSlider/index.js"
+    ]
   },
   {
     "id": "SweepToMnemonicKeys_ButtonMakeSweep",
@@ -6776,6 +6788,7 @@
     "id": "InfoPay_FinalBalance",
     "message": "Final balance",
     "files": [
+      "shared/components/modals/InfoPay/InfoPay.js",
       "shared/pages/Transaction/TxInfo/index.js"
     ]
   },
@@ -7659,6 +7672,34 @@
     "message": "Wallet does not exist",
     "files": [
       "shared/pages/PointOfSell/PointOfSell.js"
+    ]
+  },
+  {
+    "id": "ImportKeys_RestoreMnemonic_Tooltip_withBalance1112312",
+    "message": "Please, be causious!",
+    "files": [
+      "shared/pages/CreateWallet/CreateWallet.js"
+    ]
+  },
+  {
+    "id": "Banner_YouAreHaveNotSignegTx",
+    "message": "{count} multisig transaction is waiting for your confirmation",
+    "files": [
+      "shared/pages/Wallet/components/WallerSlider/index.js"
+    ]
+  },
+  {
+    "id": "ShowMyMnemonic2",
+    "message": "Please backup your wallet",
+    "files": [
+      "shared/pages/Wallet/components/WallerSlider/index.js"
+    ]
+  },
+  {
+    "id": "InfoPay_2_Access",
+    "message": "были успешно переданы",
+    "files": [
+      "shared/components/modals/InfoPay/InfoPay.js"
     ]
   }
 ]
