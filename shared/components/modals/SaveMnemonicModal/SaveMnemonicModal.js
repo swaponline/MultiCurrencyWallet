@@ -83,7 +83,7 @@ const langLabels = defineMessages({
   },
   beginNotice: {
     id: `${langPrefix}_BeginNotice`,
-    defaultMessage: `Сейчас мы вам покажем 12 слов вашей секретной фразы. Если вы ее потеряете мы не сможем восстановить ваш кошелек`,
+    defaultMessage: `Сейчас мы вам покажем 12 слов вашей секретной фразы.{br}Если вы ее потеряете мы не сможем восстановить ваш кошелек`,
   },
   beginContinue: {
     id: `${langPrefix}_BeginContinue`,
@@ -281,7 +281,9 @@ export default class SaveMnemonicModal extends React.Component {
           {step === `begin` && (
             <Fragment>
               <p styleName="notice mnemonicNotice">
-                <FormattedMessage {...langLabels.beginNotice} />
+                <FormattedMessage {...langLabels.beginNotice} values={{
+                  br: <br />,
+                }}/>
               </p>
               <div styleName="buttonsHolder">
                 <Button blue onClick={() => { this.setState({ step: `show` }) }}>
@@ -355,10 +357,16 @@ export default class SaveMnemonicModal extends React.Component {
                   {
                     words.map((word, index) => {
                       return (
-                        <div key={index}>
-                          <span>{(index + 1)}</span>
-                          <span>{word}</span>
-                        </div>
+                        <>
+                          <div key={index}>
+                            <span styleName="wordIndex">{(index + 1)}</span>
+                            <span>{word}</span>
+                          </div>
+                          {
+                            /* space for correct copy-paste */
+                            index + 1 !== words.length && ' '
+                          }
+                        </>
                       )
                     })
                   }
