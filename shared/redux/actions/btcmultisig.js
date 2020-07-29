@@ -1367,9 +1367,6 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
   const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
-  console.log('send pin protected', fundValue, totalUnspent, feeValue, feeFromAmount, skipValue)
-
-  console.log(`skipValue = ${totalUnspent} - ${fundValue} - ${feeValue} - ${feeFromAmount} = ${skipValue}`)
   const p2ms = bitcoin.payments.p2ms({
     m: 2,
     n: publicKeys.length,
