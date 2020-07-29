@@ -37,6 +37,9 @@ import getWalletLink from './getWalletLink'
 
 import redirectTo from './redirectTo'
 
+import adminFee from './adminFee'
+
+
 export default {
   btc,
   eth,
@@ -85,5 +88,6 @@ export {
 
   redirectTo,
 
+  adminFee,
 }
 export { getItezUrl } from "./getItezUrl"
