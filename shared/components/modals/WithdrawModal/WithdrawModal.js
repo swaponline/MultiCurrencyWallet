@@ -216,8 +216,6 @@ export default class WithdrawModal extends React.Component {
 
     }
 
-    console.log('actualyMinAmount')
-    console.log(constants.coinsWithDynamicFee, currentCoin)
     if (constants.coinsWithDynamicFee.includes(currentCoin)) {
       let method = 'send'
       if (wallet.isUserProtected) method = 'send_multisig'

@@ -153,10 +153,8 @@ const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, f
   }
 
   txSize = txSize || await calculateTxSize({ address, speed, fixed, method, txOut })
-  console.log('txSize', txSize, method)
   feeRate = feeRate || await estimateFeeRate({ speed })
 
-  console.log('feeRate', feeRate)
   const calculatedFeeValue = BigNumber.maximum(
     DUST,
     BigNumber(feeRate)
