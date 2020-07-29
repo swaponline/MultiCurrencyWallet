@@ -362,8 +362,6 @@ const CreateWallet = (props) => {
                       <div styleName="alertTooltipWrapper">
                         <FormattedMessage id="ImportKeys_RestoreMnemonic_Tooltip_withBalance" defaultMessage="Please, be causious!" />
                       </div>
-                      <FormattedMessage id="ImportKeys_RestoreMnemonic_Tooltip_withBalance1112312" defaultMessage="Please, be causious!" />
-
                     </React.Fragment>
                   )
                 }
