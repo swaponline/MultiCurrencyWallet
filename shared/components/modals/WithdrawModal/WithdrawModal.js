@@ -39,6 +39,8 @@ import CurrencyList from './components/CurrencyList'
 import getCurrencyKey from 'helpers/getCurrencyKey'
 import lsDataCache from 'helpers/lsDataCache'
 
+import adminFee from 'helpers/adminFee'
+
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -83,17 +85,7 @@ export default class WithdrawModal extends React.Component {
     const allCurrencyies = actions.core.getWallets() //items.concat(tokenItems)
     const selectedItem = actions.user.getWithdrawWallet(currency, withdrawWallet)
 
-    let usedAdminFee = false
-
-    if (config && config.opts && config.opts.fee) {
-      if (helpers.ethToken.isEthToken({ name: currency.toLowerCase() }) && config.opts.fee.erc20) {
-        usedAdminFee = config.opts.fee.erc20
-      } else {
-        if (config.opts.fee[getCurrencyKey(currency).toLowerCase()]) {
-          usedAdminFee = config.opts.fee[getCurrencyKey(currency).toLowerCase()]
-        }
-      }
-    }
+    const usedAdminFee = adminFee.isEnabled(selectedItem.currency)
 
     this.state = {
       isShipped: false,
@@ -302,13 +294,7 @@ export default class WithdrawModal extends React.Component {
 
     let sendOptions = { to, amount, speed: 'fast' }
 
-    let adminFee = 0
-    if (usedAdminFee) {
-      adminFee = BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount)
-
-      if (BigNumber(usedAdminFee.min).isGreaterThan(adminFee)) adminFee = BigNumber(usedAdminFee.min)
-      adminFee = adminFee.toNumber()
-    }
+    const adminFee = usedAdminFee ? adminFee.calc(wallet.currency, amount) : 0
 
     if (helpers.ethToken.isEthToken({ name: currency.toLowerCase() })) {
       sendOptions = {
@@ -458,22 +444,27 @@ export default class WithdrawModal extends React.Component {
 
     let minFee = isEthToken ? 0 : minAmount[getCurrencyKey(currency).toLowerCase()]
 
-    if (usedAdminFee) {
-      let feeFromAmount = BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(balance)
-      minFee = BigNumber(minFee).plus(feeFromAmount).toNumber()
+    minFee = usedAdminFee ? BigNumber(minFee).plus(adminFee.calc(currency, balance)) : minFee
+
+    if (BigNumber(minFee).isGreaterThan(balance)) {
+      this.setState({
+        amount: 0,
+        fiatAmount: 0,
+      })
+    } else {
+      console.log('sellAll - min Fee', minFee.toNumber())
+      const balanceMiner = balance
+        ? balance !== 0
+          ? new BigNumber(balance).minus(minFee)
+
+          : balance
+        : 'Wait please. Loading...'
+
+      this.setState({
+        amount: BigNumber(balanceMiner.dp(currentDecimals, BigNumber.ROUND_FLOOR)),
+        fiatAmount: balanceMiner ? (balanceMiner * exCurrencyRate).toFixed(2) : '',
+      })
     }
-
-    const balanceMiner = balance
-      ? balance !== 0
-        ? new BigNumber(balance).minus(minFee)
-
-        : balance
-      : 'Wait please. Loading...'
-
-    this.setState({
-      amount: BigNumber(balanceMiner.dp(currentDecimals, BigNumber.ROUND_FLOOR)),
-      fiatAmount: balanceMiner ? (balanceMiner * exCurrencyRate).toFixed(2) : '',
-    })
   }
 
   isEthOrERC20() {
@@ -603,6 +594,8 @@ export default class WithdrawModal extends React.Component {
 
     let min = isEthToken ? 0 : minAmount[getCurrencyKey(currency).toLowerCase()]
     let defaultMin = min
+    const minerFee = min
+    const serviceFee = adminFee.calc(currency, amount)
 
     const allowedBalance = new BigNumber(balance).minus(defaultMin)
     
@@ -630,17 +623,7 @@ export default class WithdrawModal extends React.Component {
 
     tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
 
-    if (usedAdminFee) {
-      defaultMin = BigNumber(min).plus(usedAdminFee.min).toNumber()
-      if (amount) {
-        let feeFromAmount = BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount)
-        if (BigNumber(usedAdminFee.min).isGreaterThan(feeFromAmount)) feeFromAmount = BigNumber(usedAdminFee.min)
-
-        min = BigNumber(min).plus(feeFromAmount).toNumber() // Admin fee in satoshi
-      } else {
-        min = defaultMin
-      }
-    }
+    min = (usedAdminFee) ? BigNumber(min).plus(adminFee.calc(currency, amount)).toNumber() : defaultMin
 
     const dataCurrency = isEthToken ? 'ETH' : currency.toUpperCase()
 
