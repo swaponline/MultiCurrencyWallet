@@ -604,6 +604,8 @@ export default class WithdrawModal extends React.Component {
     let min = isEthToken ? 0 : minAmount[getCurrencyKey(currency).toLowerCase()]
     let defaultMin = min
 
+    const allowedBalance = new BigNumber(balance).minus(defaultMin)
+    
     /*
     let enabledCurrencies = allCurrencyies.filter(
       (x) => !hiddenCoinsList.map((item) => item.split(':')[0]).includes(x.currency)
@@ -654,7 +656,7 @@ export default class WithdrawModal extends React.Component {
 
     if (new BigNumber(amount).isGreaterThan(0)) {
       linked.amount.check(
-        (value) => new BigNumber(value).isLessThanOrEqualTo(balance),
+        (value) => new BigNumber(value).isLessThanOrEqualTo(allowedBalance),
         <FormattedMessage
           id="Withdrow170"
           defaultMessage="The amount must be no more than your balance"
@@ -668,7 +670,7 @@ export default class WithdrawModal extends React.Component {
 
     if (new BigNumber(fiatAmount).isGreaterThan(0)) {
       linked.fiatAmount.check(
-        (value) => new BigNumber(value).isLessThanOrEqualTo(balance * exCurrencyRate),
+        (value) => new BigNumber(value).isLessThanOrEqualTo(allowedBalance * exCurrencyRate),
         <FormattedMessage
           id="Withdrow170"
           defaultMessage="The amount must be no more than your balance"
