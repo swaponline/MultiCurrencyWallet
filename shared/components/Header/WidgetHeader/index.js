@@ -7,45 +7,67 @@ import { constants } from 'helpers'
 
 import styles from './styles.scss'
 
-const isDark = localStorage.getItem(constants.localStorage.isDark);
 
-const defaultLanguage = defineMessages({
+const isDark = localStorage.getItem(constants.localStorage.isDark)
+
+const alertTexts = defineMessages({
+  title: {
+    id: 'WidgetExitAlertTitle',
+    defaultMessage: 'One more step',
+  },
+  message: {
+    id: 'widgetExitAlertMessage',
+    defaultMessage: 'Save your secret phrase before exit!',
+  },
+})
+
+const confirmTexts = defineMessages({
   title: {
     id: 'WidgetExitTitle3',
-    defaultMessage: 'Approve exit',
+    defaultMessage: 'Confirm exit',
   },
   message: {
     id: 'widgetApproveMessage',
-    defaultMessage: 'Are you sure you want to logout? IMPORTANT: Save your private keys!',
-  },
-  yes: {
-    id: 'widgetApproveApprove',
-    defaultMessage: 'Yes',
+    defaultMessage: 'Are you sure you want to logout?',
   },
   no: {
     id: 'widgetApproveCancel',
     defaultMessage: 'Cancel',
+  },
+  yes: {
+    id: 'widgetApproveApprove',
+    defaultMessage: 'Yes',
   },
 })
 
 const WidgetHeaderComponent = ({ intl }) => {
   const [isConfirmOpen, setOpen] = useState(false)
 
-  const data = {
-    title: intl.formatMessage(defaultLanguage.title),
-    message: intl.formatMessage(defaultLanguage.message),
-    labelYes: intl.formatMessage(defaultLanguage.yes),
-    labelNo: intl.formatMessage(defaultLanguage.no),
+  const handleShowMnemonic = () => {
+    actions.modals.open(constants.modals.SaveMnemonicModal)
   }
 
   const handleConfirmToggle = () => {
     setOpen(!isConfirmOpen)
     if (!isConfirmOpen) {
-      actions.modals.open(constants.modals.Confirm, {
-        ...data,
-        onAccept: () => handleConfirm(),
-        onCancel: () => handleConfirmToggle(),
-      })
+      const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
+      const mnemonicSaved = (mnemonic === `-`)
+      if (!mnemonicSaved)  {
+        actions.modals.open(constants.modals.AlertModal, {
+          title: intl.formatMessage(alertTexts.title),
+          message: intl.formatMessage(alertTexts.message),
+          onClose: () => handleShowMnemonic(),
+        })
+      } else {
+        actions.modals.open(constants.modals.Confirm, {
+          title: intl.formatMessage(confirmTexts.title),
+          message: intl.formatMessage(confirmTexts.message),
+          labelNo: intl.formatMessage(confirmTexts.no),
+          labelYes: intl.formatMessage(confirmTexts.yes),
+          onCancel: () => handleConfirmToggle(),
+          onAccept: () => handleConfirm(),
+        })
+      }
     }
 
   }
@@ -55,7 +77,8 @@ const WidgetHeaderComponent = ({ intl }) => {
   }
 
   return (
-    window.isUserRegisteredAndLoggedIn && <div styleName={`exitArea ${isDark ? 'dark' : ''}`} onClick={handleConfirmToggle}>
+    window.isUserRegisteredAndLoggedIn &&
+    <div styleName={`exitArea ${isDark ? 'dark' : ''}`} onClick={handleConfirmToggle}>
       <i class="fas fa-sign-out-alt" /><FormattedMessage id="ExitWidget" defaultMessage="Exit" />
     </div>
   )

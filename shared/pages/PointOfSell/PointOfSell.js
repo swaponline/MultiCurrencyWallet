@@ -409,11 +409,11 @@ export default class PartialClosure extends Component {
       actions.modals.open(constants.modals.AlertWindow, {
         title: !isDidntActivateWallet ?
           <FormattedMessage
-            id="AlertOrderNonEnoughtBalanceTitle"
+            id="PointOfSell_AlertOrderNonEnoughtBalanceTitle"
             defaultMessage="Not enough balance."
           /> :
           <FormattedMessage
-            id="walletDidntCreateTitle"
+            id="PointOfSell_walletDidntCreateTitle"
             defaultMessage="Wallet does not exist"
           />,
         currency: haveCur,
@@ -421,11 +421,11 @@ export default class PartialClosure extends Component {
         actionType: !isDidntActivateWallet ? "deposit" : "createWallet",
         message: !isDidntActivateWallet ?
           <FormattedMessage
-            id="AlertOrderNonEnoughtBalance"
+            id="PointOfSell_AlertOrderNonEnoughtBalance"
             defaultMessage="Please top up your balance before you start the swap."
           /> :
           <FormattedMessage
-            id="walletDidntCreateTitle"
+            id="PointOfSell_walletDidntCreateMessage"
             defaultMessage="Create wallet"
           />
       })
@@ -1192,7 +1192,7 @@ export default class PartialClosure extends Component {
           {isNoAnyOrders && linked.haveAmount.value > 0 && isFullLoadingComplite && <Fragment>
             <p styleName="error">
               <FormattedMessage
-                id="PartialPriceNoOrdersReduce"
+                id="PartialPriceNoOrdersReduce_PointOfSell"
                 defaultMessage="No orders found, try later"
               />
             </p>
@@ -1202,7 +1202,7 @@ export default class PartialClosure extends Component {
               <p styleName="error">
                 <FormattedMessage
                   id="PartialPriceNoOrdersReduceAllInfo"
-                  defaultMessage="No orders found. Enter amount less than {maxForBuy}, {maxForSell}"
+                  defaultMessage="This trade amount is too high for present market liquidity. Please reduce amount to {maxForSell}. "
                   values={{
                     maxForBuy: `${maxAmount} ${getCurrency.toUpperCase()}`,
                     maxForSell: `${maxBuyAmount.toNumber()} ${haveCurrency.toUpperCase()}`

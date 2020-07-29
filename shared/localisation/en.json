@@ -1850,7 +1850,11 @@
   },
   {
     "id": "partial291",
-    "message": "Waiting for another participant (30 sec): "
+    "message": "Waiting for another participant (30 sec): ",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
   },
   {
     "id": "Row358",
@@ -1876,19 +1880,35 @@
   },
   {
     "id": "partial223",
-    "message": "To change default wallet for buy currency. "
+    "message": "To change default wallet for buy currency. ",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
   },
   {
     "id": "partial224",
-    "message": "Leave empty for use Swap.Online wallet"
+    "message": "Leave empty for use Swap.Online wallet",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
   },
   {
     "id": "partial243",
-    "message": "You send"
+    "message": "You send",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
   },
   {
     "id": "partial255",
-    "message": "You get"
+    "message": "You get",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
   },
   {
     "id": "Approve66",
@@ -2076,15 +2096,26 @@
   },
   {
     "id": "PartialPriceCalc",
-    "message": "Calc price"
+    "message": "Calc price",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
   },
   {
     "id": "PartialPriceNoOrdersReduce",
-    "message": "No orders found, try later or change the currency pair"
+    "message": "No orders found, try later or change the currency pair",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
   },
   {
     "id": "PartialPriceNoOrdersReduceAllInfo",
-    "message": "No orders found. Enter amount less than {maxForBuy}, {maxForSell}"
+    "message": "This trade amount is too high for present market liquidity. Please reduce amount to {maxForSell}. ",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
   },
   {
     "id": "PartialPriceReduceMin",
@@ -2092,15 +2123,27 @@
   },
   {
     "id": "PartialOfferCantProceed1",
-    "message": "Request is declined. {link}"
+    "message": "Request is declined. {link}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
   },
   {
     "id": "PartialOfferCantProceed1_1",
-    "message": "Why?"
+    "message": "Why?",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
   },
   {
     "id": "ErrorBtcLowAmount",
-    "message": "{btcAmount} BTC - This amount is too low"
+    "message": "{btcAmount} BTC - This amount is too low",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
   },
   {
     "id": "LessThanIHavePartial",
@@ -2108,7 +2151,11 @@
   },
   {
     "id": "PartialPriceSearch",
-    "message": "Searching orders..."
+    "message": "Searching orders...",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
   },
   {
     "id": "PartialUseSwapOnlineWallet",
@@ -2151,39 +2198,64 @@
     "id": "partial462",
     "message": "The amount you have in your swap.online wallet or external wallet that you want to exchange",
     "files": [
-      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js",
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
     "id": "partial478",
     "message": "The amount you will receive after the exchange",
     "files": [
-      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js",
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
     "id": "partial541",
-    "message": "Exchange now"
+    "message": "Exchange now",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
   },
   {
     "id": "partial5323",
-    "message": "Buy token"
+    "message": "Buy token",
+    "files": [
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
   },
   {
     "id": "partial544",
-    "message": "Order book"
+    "message": "Order book",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
   },
   {
     "id": "partial766",
-    "message": "From any wallet or exchange"
+    "message": "From any wallet or exchange",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
   },
   {
     "id": "partial767",
-    "message": "Your balance: "
+    "message": "Your balance: ",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
   },
   {
     "id": "partialAtomicSwapWhatIsIt",
-    "message": "Atomic swap is a smart contract technology that enables exchange of one cryptocurrency for another without using centralized intermediaries, such as exchanges."
+    "message": "Atomic swap is a smart contract technology that enables exchange of one cryptocurrency for another without using centralized intermediaries, such as exchanges.",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
   },
   {
     "id": "partialVideoAndFeaturesTitle",
@@ -2227,15 +2299,27 @@
   },
   {
     "id": "PartialFeeValueWarn",
-    "message": "The maximum amount you can sell is {maximumAmount} {haveCurrency}. Miner fee up to {estimatedFeeValue} {haveCurrency}"
+    "message": "The maximum amount you can sell is {maximumAmount} {haveCurrency}. Miner fee up to {estimatedFeeValue} {haveCurrency}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
   },
   {
     "id": "PartialFeeValueWarn1",
-    "message": "+ {estimatedFeeValue} {getCurrency}"
+    "message": "+ {estimatedFeeValue} {getCurrency}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
   },
   {
     "id": "PartialFeeValueWarn2",
-    "message": "~ {estimatedFeeValue}$"
+    "message": "~ {estimatedFeeValue}$",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
   },
   {
     "id": "down57",
@@ -2518,7 +2602,11 @@
   },
   {
     "id": "PartialPriceSearch502",
-    "message": "1 {getCurrency} = {haveCurrency}"
+    "message": "1 {getCurrency} = {haveCurrency}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
   },
   {
     "id": "PartialClosureTitleTag",
@@ -2526,7 +2614,11 @@
   },
   {
     "id": "PartialClosureTitleTag1",
-    "message": "Fastest cross-chain exchange powered by Atomic Swap"
+    "message": "Fastest cross-chain exchange powered by Atomic Swap",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
   },
   {
     "id": "PartialClosureMetaDescrTag",
@@ -5041,11 +5133,19 @@
   },
   {
     "id": "PartialFeeValueWarn3",
-    "message": "= {estimatedFeeValue}$"
+    "message": "= {estimatedFeeValue}$",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
   },
   {
     "id": "PartialHowItWorks10",
-    "message": "How it works?"
+    "message": "How it works?",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
   },
   {
     "id": "PartialPriceSellMax",
@@ -5053,15 +5153,26 @@
   },
   {
     "id": "continueDeclined977",
-    "message": "Click here to continue your swaps"
+    "message": "Click here to continue your swaps",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
   },
   {
     "id": "partial1021",
-    "message": "Embed on website"
+    "message": "Embed on website",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
   },
   {
     "id": "partial2378",
-    "message": "Wallet"
+    "message": "Wallet",
+    "files": [
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
   },
   {
     "id": "ImportKeysBtn",
@@ -6633,8 +6744,22 @@
     ]
   },
   {
+    "id": "WidgetExitAlertTitle",
+    "message": "One more step",
+    "files": [
+      "shared/components/Header/WidgetHeader/index.js"
+    ]
+  },
+  {
+    "id": "widgetExitAlertMessage",
+    "message": "Save your secret phrase before exit!",
+    "files": [
+      "shared/components/Header/WidgetHeader/index.js"
+    ]
+  },
+  {
     "id": "WidgetExitTitle3",
-    "message": "Approve exit",
+    "message": "Confirm exit",
     "files": [
       "shared/components/Header/WidgetHeader/index.js"
     ]
@@ -6655,7 +6780,7 @@
   },
   {
     "id": "widgetApproveMessage",
-    "message": "Are you sure you want to logout? IMPORTANT: Save your private keys!",
+    "message": "Are you sure you want to logout?",
     "files": [
       "shared/components/Header/WidgetHeader/index.js"
     ]
@@ -7188,7 +7313,11 @@
   },
   {
     "id": "WalletRow_Menu_HowExportWallet",
-    "message": "How to export wallet",
+    "message": "How to export wallet"
+  },
+  {
+    "id": "WalletRow_ShowAddress",
+    "message": "Show address",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
@@ -7295,14 +7424,16 @@
     "id": "AlertOrderNonEnoughtBalance",
     "message": "Please top up your balance before you start the swap.",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Home/Orders/Row/Row.js",
+      "shared/pages/PartialClosure/PartialClosure.js"
     ]
   },
   {
     "id": "AlertOrderNonEnoughtBalanceTitle",
     "message": "Not enough balance.",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Home/Orders/Row/Row.js",
+      "shared/pages/PartialClosure/PartialClosure.js"
     ]
   },
   {
@@ -7398,9 +7529,72 @@
   },
   {
     "id": "MnemonicInputComponent_Placeholder",
-    "message": "Start typing your secret phrase",
+    "message": "Start typing a word...",
     "files": [
       "shared/components/forms/MnemonicInput/MnemonicInput.js"
+    ]
+  },
+  {
+    "id": "PartialClosure_AvialableBalance",
+    "message": "Available: ",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialClosure_BalanceTooltipInfo",
+    "message": "Your balance {balance} {currency} minus miner commission {minerFee} {currency}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "walletDidntCreateMessage",
+    "message": "Create {curr} wallet before you start the swap.",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "walletDidntCreateTitle",
+    "message": "Wallet does not exist.",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialPriceNoOrdersReduce_PointOfSell",
+    "message": "No orders found, try later",
+    "files": [
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
+  },
+  {
+    "id": "PointOfSell_AlertOrderNonEnoughtBalance",
+    "message": "Please top up your balance before you start the swap.",
+    "files": [
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
+  },
+  {
+    "id": "PointOfSell_AlertOrderNonEnoughtBalanceTitle",
+    "message": "Not enough balance.",
+    "files": [
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
+  },
+  {
+    "id": "PointOfSell_walletDidntCreateMessage",
+    "message": "Create wallet",
+    "files": [
+      "shared/pages/PointOfSell/PointOfSell.js"
+    ]
+  },
+  {
+    "id": "PointOfSell_walletDidntCreateTitle",
+    "message": "Wallet does not exist",
+    "files": [
+      "shared/pages/PointOfSell/PointOfSell.js"
     ]
   }
 ]

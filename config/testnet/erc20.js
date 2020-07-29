@@ -4,6 +4,9 @@ export default {
     decimals: 18,
     fullName: 'SWAP',
   },
+  /*
+  pay: {} // Has no contract on the testnet
+  */
   usdt: {
     address: '0xaf3C38A810670786D2FBD1A40Adea7f9dC6e8746',
     decimals: 6,

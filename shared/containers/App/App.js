@@ -139,11 +139,11 @@ export default class App extends React.Component {
 
     this.preventMultiTabs();
 
-    if (window.origin === `https://wallet.b`+`itpli`+`cit`+`y.com`) {
+    if (window.origin === `https://wallet.b` + `itpli` + `cit` + `y.com`) {
       const tokenListUpdated = localStorage.getItem('widget_tokenupdated')
       if (!tokenListUpdated) {
-        localStorage.setItem('widget_tokenupdated',true)
-        Object.keys(config.erc20).forEach( (tokenCode) => {
+        localStorage.setItem('widget_tokenupdated', true)
+        Object.keys(config.erc20).forEach((tokenCode) => {
           if ((tokenCode !== `bitpl`)
             && (tokenCode !== `usdt`)
           ) {

@@ -8,6 +8,11 @@ window.widgetERC20Tokens = {
     //howToDeposit: '<div style="boo-style"><strong>How to deposit to {userAddress}</strong></div>',
     //howToWithdraw: '<div style="boo-style"><strong>How to withdraw</strong></div>',
   },
+  pay: {
+    address: '0x1fe72034da777ef22533eaa6dd7cbe1d80be50fa',
+    decimals: 18,
+    fullName: 'PayAccept',
+  },
   // Symbol of ERC20 token in lowerCase
   proxima: {
     // Address of ERC20 contract

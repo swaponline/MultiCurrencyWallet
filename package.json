@@ -19,6 +19,7 @@
     "dev": "npm run dev:testnet",
     "dev-widget": "npm run dev:testnet-widget",
     "prod": "npm run dev:mainnet",
+    
     "prod-widget": "npm run dev:mainnet-widget",
     "predeploy:pages": "npm run build:pages && echo staging.swaponline.site > build-mainnet-pages/CNAME",
     "deploy:pages": "gh-pages -d build-mainnet-pages",
@@ -137,6 +138,7 @@
     "ghost-bitcore-lib": "https://github.com/ghost-coin/ghost-bitcore-lib.git",
     "bootstrap": "^4.3.1",
     "classnames": "^2.2.5",
+    "ghost-bitcore-lib": "https://github.com/ghost-coin/ghost-bitcore-lib.git",
     "ethereum-input-data-decoder": "0.0.12",
     "ethereumjs-wallet": "^0.6.3",
     "firebase": "^5.10.0",

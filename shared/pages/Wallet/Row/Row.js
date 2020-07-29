@@ -551,6 +551,10 @@ export default class Row extends Component {
     return dataobj ? (wTokens[dataobj] || { customEcxchangeRate: null }).customEcxchangeRate : null
   }
 
+  handleShowMnemonic = () => {
+    actions.modals.open(constants.modals.SaveMnemonicModal)
+  }
+
   render() {
     const {
       isBalanceFetching,
@@ -599,6 +603,9 @@ export default class Row extends Component {
       hasHowToWithdraw = true
 
     const isSafari = 'safari' in window
+
+    const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
+    const mnemonicSaved = (mnemonic === `-`)
 
     let dropDownMenuItems = [
       {
@@ -654,7 +661,7 @@ export default class Row extends Component {
           />
         ),
         action: this.goToHistory,
-        disabled: false,
+        disabled: !mnemonicSaved,
       },
       !isSafari && {
         id: 1012,
@@ -665,7 +672,7 @@ export default class Row extends Component {
           />
         ),
         action: this.copy,
-        disabled: false,
+        disabled: !mnemonicSaved,
       },
       !config.opts.hideShowPrivateKey && {
         id: 1012,
@@ -862,7 +869,7 @@ export default class Row extends Component {
         <td styleName={`assetsTableRow ${isDark ? 'dark' : ''}`}>
           <div styleName="assetsTableCurrency">
             <a
-              onClick={this.goToCurrencyHistory}
+              onClick={mnemonicSaved ? this.goToCurrencyHistory : () => {}}
               title={`Online ${fullName} wallet`}
             >
               <Coin className={styles.assetsTableIcon} name={currency} />
@@ -870,7 +877,7 @@ export default class Row extends Component {
             <div styleName="assetsTableInfo">
               <div styleName="nameRow">
                 <a
-                  onClick={this.goToCurrencyHistory}
+                  onClick={mnemonicSaved ? this.goToCurrencyHistory : () => {}}
                   title={`Online ${fullName} wallet`}
                 >
                   {fullName}
@@ -946,23 +953,25 @@ export default class Row extends Component {
                 </Fragment>
               )}
             </span>
-            {isMobile ? (
-              <Fragment>
-                {!statusInfo ? (
-                  <PartOfAddress {...itemData} onClick={this.goToCurrencyHistory} />
-                ) : (
-                    <p styleName="statusStyle">{statusInfo}</p>
-                  )}
-              </Fragment>
-            ) : (
-                <Fragment>
-                  {!statusInfo ? (
+
+            <Fragment>
+              {statusInfo ?
+                <p styleName="statusStyle">{statusInfo}</p>
+                :
+                !mnemonicSaved ?
+                  <p styleName="showAddressStyle" onClick={this.handleShowMnemonic}>
+                    <FormattedMessage
+                      id="WalletRow_ShowAddress"
+                      defaultMessage="Show address"
+                    />
+                  </p>
+                  :
+                  isMobile ?
+                    <PartOfAddress {...itemData} onClick={this.goToCurrencyHistory} />
+                    :
                     <p styleName="addressStyle">{itemData.address}</p>
-                  ) : (
-                      <p styleName="addressStyle">{statusInfo}</p>
-                    )}
-                </Fragment>
-              )}
+              }
+            </Fragment>
 
             {(currencyFiatBalance && showBalance && !balanceError) || msConfirmCount ? (
               <div styleName="assetsTableValue">

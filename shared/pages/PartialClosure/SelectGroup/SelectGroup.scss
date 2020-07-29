@@ -17,6 +17,13 @@
   }
 }
 
+.balanceTooltip {
+  top: -19px;
+  z-index: 11;
+  left: auto;
+  right: 24px;
+  position: absolute;
+}
 .smallTooltip {
   > span {
     position: absolute;
@@ -160,6 +167,8 @@ input:disabled {
   .textUsd {
     font-size: 9px;
     left: 10px;
-    bottom: -4px;
+    padding: 0;
+    bottom: -0.5em;
+    margin: 0;
   }
 }

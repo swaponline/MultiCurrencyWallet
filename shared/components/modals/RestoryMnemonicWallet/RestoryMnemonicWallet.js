@@ -268,9 +268,12 @@ export default class RestoryMnemonicWallet extends React.Component {
                 <MnemonicInput onChange={this.handleMnemonicChange} />
               </div>
               <div styleName="buttonsHolder">
+                <Button blue onClick={this.handleClose}>
+                  <FormattedMessage {...langLabels.cancelRestory} />
+                </Button>
                 <Button
                   blue
-                  disabled={(!mnemonic || isFetching)}
+                  disabled={(!mnemonic || mnemonic.split(' ').length !== 12 || isFetching)}
                   onClick={this.handleRestoryWallet}
                 >
                   {isFetching ? (
@@ -278,9 +281,6 @@ export default class RestoryMnemonicWallet extends React.Component {
                   ) : (
                       <FormattedMessage {...langLabels.restoryWallet} />
                     )}
-                </Button>
-                <Button blue onClick={this.handleClose}>
-                  <FormattedMessage {...langLabels.cancelRestory} />
                 </Button>
               </div>
             </Fragment>
