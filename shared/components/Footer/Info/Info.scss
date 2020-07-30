@@ -1,15 +1,10 @@
 .title {
   font-size: 14px;
   color: #b2b2b2;
-  background: #ffffff;
   position: static;
   z-index: 1049;
   padding-bottom: 20px;
   padding-top: 10px;
-
-  &.--dark {
-    background: none;
-  }
 
   &>span {
     padding-left: 5px;
@@ -90,7 +85,6 @@
     top: 2px;
     bottom: auto;
     left: 2px;
-    background: none;
     margin: 2px 5px;
   }
 }

@@ -44,7 +44,17 @@ class Info extends React.Component {
     return (
       <div styleName={`title ${isOnline ? 'online' : 'offline'} ${isDark ? '--dark' : ''}`}>
         <em></em>
-        <span>{isOnline ? 'Online' : 'Offline'}</span>
+        {!isOnline &&
+          <span>Offline</span>
+        }
+        {
+          isOnline && (onlineUsers === 0
+          ?
+          <span>Connecting...</span>
+          :
+          <span>{`${onlineUsers} peers online`}</span>)
+        }
+        
         <div>
           libp2p network status:
           {' '}
@@ -54,8 +64,6 @@ class Info extends React.Component {
                 ? 'Connected'
                 : 'Disconnected. You cannot make exchanges until you are disconnected. Turn off VPN or try another network or browser'}
             </span>
-            {' '}
-            {isOnline && `/ peers online: ${onlinePeersHack}`}
           </span>
           {isVisibleProgressBar && <ProgressBar handleClick={this.hideProgressBar} />}
         </div>

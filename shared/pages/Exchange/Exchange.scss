@@ -72,7 +72,6 @@
   min-height: 100vh;
   position: relative;
   background: #f5f5f5;
-  margin-bottom: 100px;
 
   @media screen and (max-width: 480px) {
     min-height: unset;
@@ -372,6 +371,7 @@
 .formExchange {
   position: relative;
   margin-top: -100px;
+  margin-bottom: 3em;
   padding: 50px 40px;
   width: 460px;
   z-index: 100;
@@ -551,9 +551,9 @@
 
 .widgetLink {
   position: absolute;
-  left: 16.8em;
+  right: 0;
   color: white;
-  bottom: -3em;
+  bottom: -2em;
   text-decoration: underline;
 
   &:hover {
@@ -594,7 +594,6 @@
   }
 
   .widgetLink {
-    left: 16.5em;
     color: #297df1;
     text-decoration: underline;
     font-family: 'Roboto Mono', monospace;
@@ -642,7 +641,7 @@
 
   .alignCenter {
     height: auto;
-    padding: 50px 0 90px;
+    padding: 80px 0 90px;
   }
 }
 
