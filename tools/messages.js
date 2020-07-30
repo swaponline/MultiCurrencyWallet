@@ -16,7 +16,7 @@ const locales = {
 const defaultLocale = 'en'
 
 
-const GLOB_PATTERN = 'shared/**/*.{js,ts,tsx}'
+const GLOB_PATTERN = 'shared/**/*.{js,ts,tsx,jsx}'
 const GLOB_IGNORE = []
 const fileToMessages = {}
 let messages = {}
