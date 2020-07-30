@@ -35,7 +35,7 @@ const externalConfig = () => {
     curEnabled: {
       eth: true,
       btc: true,
-      ghost: false,
+      ghost: true,
     },
     ownTokens: false,
     addCustomERC20: true,
