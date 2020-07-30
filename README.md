@@ -196,4 +196,11 @@ git pull
 
 If you have conflicts (if sources has been changed on your side) click "resolve conflicts".
 
+## How to add text
+1. Add `<FormattedMessage ... />` somewhere
+2. `npm run messages:extract`
+3. The text was added to the localization file, edit there
+
+---
+
 Any questions are welcome: [sashanoxon](https://t.me/sashanoxon)
