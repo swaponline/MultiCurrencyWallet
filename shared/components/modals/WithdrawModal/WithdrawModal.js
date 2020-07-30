@@ -292,7 +292,7 @@ export default class WithdrawModal extends React.Component {
 
     let sendOptions = { to, amount, speed: 'fast' }
 
-    const adminFee = usedAdminFee ? adminFee.calc(wallet.currency, amount) : 0
+    const adminFeeSize = usedAdminFee ? adminFee.calc(wallet.currency, amount) : 0
 
     if (helpers.ethToken.isEthToken({ name: currency.toLowerCase() })) {
       sendOptions = {
@@ -350,7 +350,7 @@ export default class WithdrawModal extends React.Component {
         sendOptions,
         beforeBalances,
         onReady,
-        adminFee,
+        adminFee: adminFeeSize,
       })
       return
     }
@@ -386,7 +386,7 @@ export default class WithdrawModal extends React.Component {
           senderAddress: address,
           receiverAddress: to,
           confirmed: false,
-          adminFee,
+          adminFee: adminFeeSize,
         }
 
         lsDataCache.push({
