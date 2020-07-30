@@ -31,6 +31,7 @@ import helpers, { constants, links } from "helpers";
 import { animate } from "helpers/domUtils";
 import Switching from "components/controls/Switching/Switching";
 import CustomDestAddress from "./CustomDestAddress/CustomDestAddress";
+import Orders from "../Home/Home"
 
 const allowedCoins = [
   ...(!config.opts.curEnabled || config.opts.curEnabled.btc ? ["BTC"] : []),
@@ -1291,7 +1292,7 @@ export default class PartialClosure extends Component {
                   defaultMessage="The amount you have on swap.online or an external wallet that you want to exchange"
                 />
               }
-              balanceTooltip={(estimatedFeeValues[haveCurrency]) 
+              balanceTooltip={(estimatedFeeValues[haveCurrency])
                 ? () => {
                   return (
                     <FormattedMessage
@@ -1319,11 +1320,11 @@ export default class PartialClosure extends Component {
                     (BigNumber(balance).toNumber() === 0)
                     || BigNumber(balance).minus(estimatedFeeValues[haveCurrency]).isLessThanOrEqualTo(0)
                   ) ? (
-                    <FormattedMessage
-                      id="partial766"
-                      defaultMessage="From any wallet or exchange"
-                    />
-                  ) : (
+                      <FormattedMessage
+                        id="partial766"
+                        defaultMessage="From any wallet or exchange"
+                      />
+                    ) : (
                       <>
                         {(estimatedFeeValues[haveCurrency])
                           ? (
@@ -1687,6 +1688,7 @@ export default class PartialClosure extends Component {
                 )}
               />
               {Form}
+              <Orders sell={haveCurrency} buy={getCurrency} />
             </div>
           </Fragment>
         </div>
