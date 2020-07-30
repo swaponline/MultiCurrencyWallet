@@ -5135,28 +5135,28 @@
   },
   {
     "id": "MainFAQ2_header",
-    "message": "ЧТО ТАКОЕ FEES INVOLVED?",
+    "message": "Какие комисси взимаются?",
     "files": [
       "shared/components/FAQ/FAQ.js"
     ]
   },
   {
     "id": "MainFAQ2_content",
-    "message": "За предоставление этих услуг мы берем в среднем 0 сборов. Однако вам все равно придется платить стандартный TX (сборы майнеров) за все транзакции, которые вы проводите на платформе.",
+    "message": "За предоставление услуг мы не берём комиссий. Однако вам все равно придется платить стандартный TX (сборы майнеров) за все транзакции, которые вы проводите на платформе.",
     "files": [
       "shared/components/FAQ/FAQ.js"
     ]
   },
   {
     "id": "MainFAQ2_content1",
-    "message": "Для токенов ERC20 необходимо, чтобы на ваших кошельках было не менее 0,001 ETH. Помните! при отправке токенов ERC20 вы должны иметь некоторое ETH в качестве платы майнеров за транзакции. Это также относится ко всем атомным перестановкам для токенов ETH и ERC20.",
+    "message": "Для токенов ERC20 необходимо, чтобы на ваших кошельках было не менее 0,001 ETH. Помните! при отправке токенов ERC20 вы должны иметь некоторое ETH в качестве платы майнеров за транзакции. Это также относится ко всем атомарным свопам для токенов ETH и ERC20.",
     "files": [
       "shared/components/FAQ/FAQ.js"
     ]
   },
   {
     "id": "MainFAQ2_content2",
-    "message": "ПРИМЕЧАНИЕ. Вы можете легко проверить «сборы шахтеров», необходимые для каждой соответствующей монеты, просто набрав их в Google",
+    "message": "ПРИМЕЧАНИЕ. Вы можете легко проверить комиссии майнеров, необходимые для каждой соответствующей монеты, просто набрав их в Google",
     "files": [
       "shared/components/FAQ/FAQ.js"
     ]
@@ -5205,7 +5205,7 @@
   },
   {
     "id": "Partial_DestinationAddress_MetamaskAddressOption",
-    "message": "Metamask's адрес",
+    "message": "Metamask-адрес",
     "files": [
       "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
     ]
@@ -5219,7 +5219,7 @@
   },
   {
     "id": "Partial_DestinationAddress_SpecifyAddress",
-    "message": "Уточнить адрес получающего кошелька",
+    "message": "Выберите адрес получающего кошелька",
     "files": [
       "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
     ]
