@@ -1380,7 +1380,7 @@
     "id": "HowItWorks10",
     "message": "Как это работает ",
     "files": [
-      "shared/pages/PartialClosure/HowItWorks/HowItWorks.js",
+      "shared/pages/Exchange/HowItWorks/HowItWorks.js",
       "shared/pages/PointOfSell/HowItWorks/HowItWorks.js"
     ]
   },
@@ -1388,7 +1388,7 @@
     "id": "HowItWorks18",
     "message": "1. Выберите криптовалюту и сумму",
     "files": [
-      "shared/pages/PartialClosure/HowItWorks/HowItWorks.js",
+      "shared/pages/Exchange/HowItWorks/HowItWorks.js",
       "shared/pages/PointOfSell/HowItWorks/HowItWorks.js"
     ]
   },
@@ -1396,7 +1396,7 @@
     "id": "HowItWorks21",
     "message": "Выберите крипту которая есть в вашем распоряжении, на любом внешнем кошельке или бирже или на кошельке свап онлайн",
     "files": [
-      "shared/pages/PartialClosure/HowItWorks/HowItWorks.js",
+      "shared/pages/Exchange/HowItWorks/HowItWorks.js",
       "shared/pages/PointOfSell/HowItWorks/HowItWorks.js"
     ]
   },
@@ -1404,7 +1404,7 @@
     "id": "HowItWorks26",
     "message": "2. Нажмите на Exchange",
     "files": [
-      "shared/pages/PartialClosure/HowItWorks/HowItWorks.js",
+      "shared/pages/Exchange/HowItWorks/HowItWorks.js",
       "shared/pages/PointOfSell/HowItWorks/HowItWorks.js"
     ]
   },
@@ -1412,7 +1412,7 @@
     "id": "HowItWorks29",
     "message": "Если будет найден подходящй ордер и продавец подтвердит обмен, вы перейдете на страницу обмена ",
     "files": [
-      "shared/pages/PartialClosure/HowItWorks/HowItWorks.js",
+      "shared/pages/Exchange/HowItWorks/HowItWorks.js",
       "shared/pages/PointOfSell/HowItWorks/HowItWorks.js"
     ]
   },
@@ -1420,7 +1420,7 @@
     "id": "HowItWorks34",
     "message": "3. Выполните депозит криптовалюты",
     "files": [
-      "shared/pages/PartialClosure/HowItWorks/HowItWorks.js",
+      "shared/pages/Exchange/HowItWorks/HowItWorks.js",
       "shared/pages/PointOfSell/HowItWorks/HowItWorks.js"
     ]
   },
@@ -1428,7 +1428,7 @@
     "id": "HowItWorks37",
     "message": "В случае, если нужная сумма есть на внутреннем кошельке, пополнение выполнится автоматически",
     "files": [
-      "shared/pages/PartialClosure/HowItWorks/HowItWorks.js",
+      "shared/pages/Exchange/HowItWorks/HowItWorks.js",
       "shared/pages/PointOfSell/HowItWorks/HowItWorks.js"
     ]
   },
@@ -1436,7 +1436,7 @@
     "id": "HowItWorks42",
     "message": "4. Дождитесь завершения свопа",
     "files": [
-      "shared/pages/PartialClosure/HowItWorks/HowItWorks.js",
+      "shared/pages/Exchange/HowItWorks/HowItWorks.js",
       "shared/pages/PointOfSell/HowItWorks/HowItWorks.js"
     ]
   },
@@ -1444,7 +1444,7 @@
     "id": "HowItWorks45",
     "message": "Обычно обмен выполняется в течении минуты. В конце вы увидете txid и сможете проверить поступление",
     "files": [
-      "shared/pages/PartialClosure/HowItWorks/HowItWorks.js",
+      "shared/pages/Exchange/HowItWorks/HowItWorks.js",
       "shared/pages/PointOfSell/HowItWorks/HowItWorks.js"
     ]
   },
@@ -1452,7 +1452,7 @@
     "id": "CurrencySlider19",
     "message": "Уже доступны для обмена",
     "files": [
-      "shared/pages/PartialClosure/CurrencySlider/CurrencySlider.js",
+      "shared/pages/Exchange/CurrencySlider/CurrencySlider.js",
       "shared/pages/PointOfSell/CurrencySlider/CurrencySlider.js"
     ]
   },
@@ -1939,7 +1939,7 @@
     "id": "partial291",
     "message": "Ожидание второго участника (30 сек): ",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
@@ -1969,7 +1969,7 @@
     "id": "partial223",
     "message": "Для изменения кошелька по умолчанию для валюты покупки. ",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
@@ -1977,7 +1977,7 @@
     "id": "partial224",
     "message": "Оставьте пустым для использования Swap.Online кошелька",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
@@ -1985,7 +1985,7 @@
     "id": "partial243",
     "message": "Отдаете",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
@@ -1993,7 +1993,7 @@
     "id": "partial255",
     "message": "Вы получите",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
@@ -2185,7 +2185,7 @@
     "id": "PartialPriceCalc",
     "message": "Расчет цены",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
@@ -2193,14 +2193,14 @@
     "id": "PartialPriceNoOrdersReduce",
     "message": "Предложения не найдены, попробуйте позже или измените валютную пару",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/Exchange/Exchange.js"
     ]
   },
   {
     "id": "PartialPriceNoOrdersReduceAllInfo",
     "message": "Предложения не найдены, введите сумму меньше {maxForBuy}, {maxForSell}",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
@@ -2212,7 +2212,7 @@
     "id": "PartialOfferCantProceed1",
     "message": "Запрос отклонен. {link}",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
@@ -2220,7 +2220,7 @@
     "id": "PartialOfferCantProceed1_1",
     "message": "Почему?",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
@@ -2228,7 +2228,7 @@
     "id": "ErrorBtcLowAmount",
     "message": "{btcAmount} BTC - Слишком маленькая сумма",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
@@ -2240,7 +2240,7 @@
     "id": "PartialPriceSearch",
     "message": "поиск предложений...",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
@@ -2282,7 +2282,7 @@
     "message": "Сумма, которую вы хотите обменять используя кошелек swap.online или внешний кошелек",
     "files": [
       "shared/components/modals/OfferModal/AddOffer/AddOffer.js",
-      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
@@ -2291,7 +2291,7 @@
     "message": "Сумма, которую вы получите после обмена",
     "files": [
       "shared/components/modals/OfferModal/AddOffer/AddOffer.js",
-      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
@@ -2299,7 +2299,7 @@
     "id": "partial541",
     "message": "Обменять",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/Exchange/Exchange.js"
     ]
   },
   {
@@ -2313,14 +2313,14 @@
     "id": "partial544",
     "message": "Предложения",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/Exchange/Exchange.js"
     ]
   },
   {
     "id": "partial766",
     "message": "С любого кошелька или биржи",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
@@ -2328,7 +2328,7 @@
     "id": "partial767",
     "message": "Ваш баланс: ",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
@@ -2336,7 +2336,7 @@
     "id": "partialAtomicSwapWhatIsIt",
     "message": "Atomic swap - это технология, которая позволяет обменять одну криптовалюту на другую без использования централизованных посредников.",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
@@ -2352,7 +2352,7 @@
     "id": "partialVideoAndFeatures0",
     "message": "На основе технологии Atomic Swap",
     "files": [
-      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js",
+      "shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.js",
       "shared/pages/PointOfSell/VideoAndFeatures/VideoAndFeatures.js"
     ]
   },
@@ -2360,7 +2360,7 @@
     "id": "partialVideoAndFeatures1",
     "message": "Обмен занимает всего 2 минуты",
     "files": [
-      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js",
+      "shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.js",
       "shared/pages/PointOfSell/VideoAndFeatures/VideoAndFeatures.js"
     ]
   },
@@ -2368,7 +2368,7 @@
     "id": "partialVideoAndFeatures3",
     "message": "Может быть расположен на любом сайте в качестве обменного сервиса",
     "files": [
-      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js",
+      "shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.js",
       "shared/pages/PointOfSell/VideoAndFeatures/VideoAndFeatures.js"
     ]
   },
@@ -2376,7 +2376,7 @@
     "id": "PartialFeeValueWarn",
     "message": "Максимальная сумма доступная для продажи {maximumAmount} {haveCurrency}. Комиссия майнеров до {estimatedFeeValue} {haveCurrency}",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
@@ -2384,7 +2384,7 @@
     "id": "PartialFeeValueWarn1",
     "message": "+ {estimatedFeeValue} {getCurrency}",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
@@ -2392,7 +2392,7 @@
     "id": "PartialFeeValueWarn2",
     "message": "~ {estimatedFeeValue}$",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
@@ -2613,7 +2613,7 @@
     ]
   },
   {
-    "id": "PartialClosure",
+    "id": "Exchange",
     "message": "Адрес кошелька, на который будет отправлена ​​криптовалюта после обмена"
   },
   {
@@ -2683,24 +2683,24 @@
     "id": "PartialPriceSearch502",
     "message": "Цена: 1 {getCurrency} = {haveCurrency}",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
-    "id": "PartialClosureTitleTag",
+    "id": "ExchangeTitleTag",
     "message": "Обмен {full_name1} ({ticker_name1}) на {full_name2} ({ticker_name2}) Атомарный Обмен за 60 секунд"
   },
   {
-    "id": "PartialClosureTitleTag1",
+    "id": "ExchangeTitleTag1",
     "message": "Самый быстрый обменник на основе Atomic Swap",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
   {
-    "id": "PartialClosureMetaDescrTag",
+    "id": "ExchangeMetaDescrTag",
     "message": "Децентрализированный обменник Swap.Online предлагает вам лучший курс обмена {full_name1} ({ticker_name1}) на {full_name2} ({ticker_name2}). Онлайн кошелек без регистрации."
   },
   {
@@ -2801,7 +2801,7 @@
     "message": "SELL {buyCurrency} HERE"
   },
   {
-    "id": "PartialClosure562",
+    "id": "Exchange562",
     "message": "Наш сервис - это децентрализованный криптовалютный кошелек, работающий по технологии Atomic swap. Обмен Bitcoin, USD Tether в течение нескольких секунд. Без комиссии (только комиссия майнеров).{br}Обмен крипто-токенами в Swap.Online проводится по-настоящему децентрализованно, так как мы используем технологию атомных свопов однорангового взаимодействия между цепями. {br}{br}Swap.Online использует IPFS-сеть для всех рабочих процессов, а значит централизованного сервера просто нет. {br}Интерфейс обмена выглядит как крипто-брокер, а не как обычный DEX или CEX. За пару кликов пользователь может разместить и принять предложение, настроив цену отправляемого токена. {br}{br}Кроме того, пользователь может обменять заданный процент от своего количества доступных токенов (например, ½, ¼ и т. д.). {br}{br}Еще одним преимуществом службы обмена Swap.Online является использование одного ключа для всего диапазона токенов ERC-20. {br}Кстати, если вы не заинтересованы в обмене некоторыми токенами, вы можете скрыть их из списка. {br}Используйте Swap.Online в качестве основного обмена для каждого криптовалюты, которую вы держите и экономьте ваше время уже сегодня!"
   },
   {
@@ -2955,7 +2955,7 @@
     "id": "advantagesButtonTitle",
     "message": "Как это работает?",
     "files": [
-      "shared/pages/PartialClosure/PureComponents/Advantages.js",
+      "shared/pages/Exchange/PureComponents/Advantages.js",
       "shared/pages/PointOfSell/PureComponents/Advantages.js"
     ]
   },
@@ -2963,7 +2963,7 @@
     "id": "advantagesButtonTxt",
     "message": "(Смотреть видео)",
     "files": [
-      "shared/pages/PartialClosure/PureComponents/Advantages.js",
+      "shared/pages/Exchange/PureComponents/Advantages.js",
       "shared/pages/PointOfSell/PureComponents/Advantages.js"
     ]
   },
@@ -3739,7 +3739,7 @@
     "message": "Доступный баланс: {availableBalance} {tooltip}",
     "files": [
       "shared/components/modals/OfferModal/AddOffer/SelectGroup/SelectGroup.js",
-      "shared/pages/PartialClosure/SelectGroup/SelectGroup.js",
+      "shared/pages/Exchange/SelectGroup/SelectGroup.js",
       "shared/pages/PointOfSell/SelectGroup/SelectGroup.js"
     ]
   },
@@ -3748,7 +3748,7 @@
     "message": "Вы можете использовать внешний кошелек для проведения обмена",
     "files": [
       "shared/components/modals/OfferModal/AddOffer/SelectGroup/SelectGroup.js",
-      "shared/pages/PartialClosure/SelectGroup/SelectGroup.js",
+      "shared/pages/Exchange/SelectGroup/SelectGroup.js",
       "shared/pages/PointOfSell/SelectGroup/SelectGroup.js"
     ]
   },
@@ -4343,7 +4343,7 @@
     "id": "Quote",
     "message": "The swap.online project realizes swaps among Bitcoin-like, Ethereum-like, and made a product for users to execute swaps",
     "files": [
-      "shared/pages/PartialClosure/Quote/index.js",
+      "shared/pages/Exchange/Quote/index.js",
       "shared/pages/PointOfSell/Quote/index.js"
     ]
   },
@@ -5147,7 +5147,7 @@
     "id": "PartialFeeValueWarn3",
     "message": "= {estimatedFeeValue}$",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
@@ -5155,7 +5155,7 @@
     "id": "PartialHowItWorks10",
     "message": "Как это работает?",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
@@ -5167,7 +5167,7 @@
     "id": "continueDeclined977",
     "message": "Нажмите здесь, чтобы продолжить обмен",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
@@ -5175,7 +5175,7 @@
     "id": "partial1021",
     "message": "Вставить на сайт",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js",
+      "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
     ]
   },
@@ -6374,42 +6374,42 @@
     "id": "Partial_DestinationAddress_ConnectMetamask",
     "message": "Connect Metamask",
     "files": [
-      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
+      "shared/pages/Exchange/CustomDestAddress/CustomDestAddress.js"
     ]
   },
   {
     "id": "Partial_DestinationAddress_CustomAddressOption",
     "message": "Custom address",
     "files": [
-      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
+      "shared/pages/Exchange/CustomDestAddress/CustomDestAddress.js"
     ]
   },
   {
     "id": "Partial_DestinationAddress_HotWalletAddressOption",
     "message": "My Wallet",
     "files": [
-      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
+      "shared/pages/Exchange/CustomDestAddress/CustomDestAddress.js"
     ]
   },
   {
     "id": "Partial_DestinationAddress_MetamaskAddressOption",
     "message": "Metamask's address",
     "files": [
-      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
+      "shared/pages/Exchange/CustomDestAddress/CustomDestAddress.js"
     ]
   },
   {
     "id": "Partial_DestinationAddress_PlaceholderEnterAddress",
     "message": "Enter the receiving wallet address",
     "files": [
-      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
+      "shared/pages/Exchange/CustomDestAddress/CustomDestAddress.js"
     ]
   },
   {
     "id": "Partial_DestinationAddress_SpecifyAddress",
     "message": "Specify the receiving wallet address",
     "files": [
-      "shared/pages/PartialClosure/CustomDestAddress/CustomDestAddress.js"
+      "shared/pages/Exchange/CustomDestAddress/CustomDestAddress.js"
     ]
   },
   {
@@ -6532,7 +6532,7 @@
     "id": "partialVideoAndFeatures2",
     "message": "Supports BTC, ETH, USDT, ERC-20 tokens",
     "files": [
-      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js",
+      "shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.js",
       "shared/pages/PointOfSell/VideoAndFeatures/VideoAndFeatures.js"
     ]
   },
@@ -7489,7 +7489,7 @@
     "message": "Please top up your balance before you start the swap.",
     "files": [
       "shared/pages/Home/Orders/Row/Row.js",
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/Exchange/Exchange.js"
     ]
   },
   {
@@ -7497,7 +7497,7 @@
     "message": "Not enough balance.",
     "files": [
       "shared/pages/Home/Orders/Row/Row.js",
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/Exchange/Exchange.js"
     ]
   },
   {
@@ -7599,31 +7599,31 @@
     ]
   },
   {
-    "id": "PartialClosure_AvialableBalance",
+    "id": "Exchange_AvialableBalance",
     "message": "Доступно: ",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/Exchange/Exchange.js"
     ]
   },
   {
-    "id": "PartialClosure_BalanceTooltipInfo",
+    "id": "Exchange_BalanceTooltipInfo",
     "message": "Ваш баланс {balance} {currency} минус коммисия майнера {minerFee} {currency}",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/Exchange/Exchange.js"
     ]
   },
   {
     "id": "walletDidntCreateMessage",
     "message": "Create {curr} wallet before you start the swap.",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/Exchange/Exchange.js"
     ]
   },
   {
     "id": "walletDidntCreateTitle",
     "message": "Wallet does not exist.",
     "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
+      "shared/pages/Exchange/Exchange.js"
     ]
   },
   {

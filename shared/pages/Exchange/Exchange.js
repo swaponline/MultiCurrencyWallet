@@ -3,7 +3,7 @@ import React, { Component, Fragment } from "react";
 import Link from "sw-valuelink";
 
 import CSSModules from "react-css-modules";
-import styles from "./PartialClosure.scss";
+import styles from "./Exchange.scss";
 
 import { connect } from "redaction";
 import actions from "redux/actions";
@@ -79,7 +79,7 @@ const text = [
 const subTitle = (sell, sellTicker, buy, buyTicker) => (
   <div>
     <FormattedMessage
-      id="PartialClosureTitleTag1"
+      id="ExchangeTitleTag1"
       defaultMessage="Fastest cross-chain exchange powered by Atomic Swap"
       values={{
         full_name1: sell,
@@ -134,7 +134,7 @@ const bannedPeers = {}; // Пиры, которые отклонили запр�
   })
 )
 @CSSModules(styles, { allowMultiple: true })
-export default class PartialClosure extends Component {
+export default class Exchange extends Component {
   static defaultProps = {
     orders: [],
   };
@@ -1285,7 +1285,7 @@ export default class PartialClosure extends Component {
               label={
                 <FormattedMessage id="partial243" defaultMessage="You sell" />
               }
-              id="partialClosure456"
+              id="Exchange456"
               tooltip={
                 <FormattedMessage
                   id="partial462"
@@ -1296,7 +1296,7 @@ export default class PartialClosure extends Component {
                 ? () => {
                   return (
                     <FormattedMessage
-                      id="PartialClosure_BalanceTooltipInfo"
+                      id="Exchange_BalanceTooltipInfo"
                       defaultMessage="Ваш баланс {balance} {currency} минус коммисия майнера {minerFee} {currency}"
                       values={{
                         balance,
@@ -1329,7 +1329,7 @@ export default class PartialClosure extends Component {
                         {(estimatedFeeValues[haveCurrency])
                           ? (
                             <FormattedMessage
-                              id="PartialClosure_AvialableBalance"
+                              id="Exchange_AvialableBalance"
                               defaultMessage="Доступно: "
                             />
                           ) : (
@@ -1374,7 +1374,7 @@ export default class PartialClosure extends Component {
               label={
                 <FormattedMessage id="partial255" defaultMessage="You get" />
               }
-              id="partialClosure472"
+              id="Exchange472"
               tooltip={
                 <FormattedMessage
                   id="partial478"
