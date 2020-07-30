@@ -13,6 +13,9 @@ const locales = {
   ru: 'Russian',
 }
 
+const defaultLocale = 'en'
+
+
 const GLOB_PATTERN = 'shared/**/*.{js,ts,tsx}'
 const GLOB_IGNORE = []
 const fileToMessages = {}
@@ -24,9 +27,9 @@ async function writeMessages(fileName, msgs) {
   return await writeFile(fileName, `${JSON.stringify(msgs, null, 2)}\n`)
 }
 
-/**
- * merge messages to source files
- * */
+
+// merge messages to source files
+
 async function mergeToJson(locale, toBuild) {
   const fileName = `shared/localisation/${locale}.json`
   const oldMessages = {}
@@ -67,7 +70,7 @@ async function mergeToJson(locale, toBuild) {
 
   console.info(`Messages updated in: ${fileName}`)
 
-  const buildFileName = `build/messages/${locale || 'en'}.json`
+  const buildFileName = `build/messages/${locale || defaultLocale}.json`
   try {
     await writeMessages(buildFileName, result)
     console.info(`Build messages updated: ${buildFileName}`)
@@ -76,9 +79,9 @@ async function mergeToJson(locale, toBuild) {
   }
 }
 
-/**
- * Call everytime before updating file!
- * */
+
+// Call everytime before updating file!
+
 function mergeMessages() {
   messages = {}
   Object.keys(fileToMessages).forEach(fileName => {
@@ -106,19 +109,16 @@ function mergeMessages() {
   })
 }
 
-/**
- * Update messages
- */
 async function updateMessages(toBuild) {
   mergeMessages()
   await Promise.all(
-    ['en', ...Object.keys(locales)].map(locale => mergeToJson(locale, toBuild))
+    [defaultLocale, ...Object.keys(locales)].map(locale => mergeToJson(locale, toBuild))
   )
 }
 
-/**
- * Extract react-intl messages.
- */
+
+// Extract react-intl messages.
+
 async function extractMessages() {
   const compare = (a, b) => {
     if (a === b) {

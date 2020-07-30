@@ -3363,7 +3363,7 @@
   },
   {
     "id": "timerSwapIsCancelled",
-    "message": "Swap  отменено из-за истечения времени ожидания",
+    "message": "Swap отменен из-за истечения времени ожидания",
     "files": [
       "shared/pages/Swap/Timer/Timer.js"
     ]
