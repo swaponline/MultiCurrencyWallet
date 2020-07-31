@@ -2,8 +2,6 @@ import React, { PureComponent, Fragment } from 'react'
 
 import actions from 'redux/actions'
 
-import { isMobile } from 'react-device-detect'
-
 import Table from 'components/tables/Table/Table'
 import styles from 'components/tables/Table/Table.scss'
 import RowFeeds from './RowFeeds/RowFeeds'
@@ -20,7 +18,7 @@ export default class MyOrders extends PureComponent {
       <FormattedMessage id="MyOrders21" defaultMessage="YOU HAVE" />,
       <FormattedMessage id="MyOrders20" defaultMessage="YOU GET" />,
       <FormattedMessage id="MyOrders22" defaultMessage="EXCHANGE RATE" />,
-      <FormattedMessage id="MyOrders24" defaultMessage="ACTIONS" />,
+      ' ',
     ]
     const { myOrders, declineRequest, acceptRequest, removeOrder } = this.props
 
@@ -38,13 +36,7 @@ export default class MyOrders extends PureComponent {
           titles={titles}
           rows={myOrders}
           rowRender={(row, index) => (
-            isMobile && <RowFeedsMobile
-              key={index}
-              row={row}
-              declineRequest={declineRequest}
-              acceptRequest={acceptRequest}
-              removeOrder={removeOrder}
-            /> || <RowFeeds
+            <RowFeeds
               key={index}
               row={row}
               declineRequest={declineRequest}

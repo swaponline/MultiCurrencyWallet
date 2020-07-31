@@ -42,6 +42,10 @@ td {
 .buttons {
   display: flex;
   justify-content: space-around;
+
+  > * + * {
+    margin-left: 3px;
+  }
 }
 
 .arrow {
