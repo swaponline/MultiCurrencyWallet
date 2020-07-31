@@ -40,7 +40,6 @@ td {
 }
 
 .buttons {
-  width: 150px;
   display: flex;
   justify-content: space-around;
 }
@@ -57,10 +56,22 @@ td {
   height: auto;
 }
 
+.shareFrame {
+  height: 30px;
+  width: 30px;
+  border: 1px solid #0004;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+}
+
 .img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-58%, -50%);
   width: 18px;
-  margin-top: -2px;
-  margin-right: 12px;
+  height: 18px;
 }
 
 .share {
@@ -70,5 +81,11 @@ td {
   }
 }
 
+.shareTip {
+  position: absolute;
+  font-size: 12px;
+  top: -1.5em;
+  left: -50%;
+}
 
 
