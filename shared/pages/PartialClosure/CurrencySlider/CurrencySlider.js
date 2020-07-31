@@ -10,6 +10,7 @@ import { FormattedMessage } from 'react-intl'
 
 import images from './images'
 
+
 const tokens = window.widgetERC20Tokens ? Object.keys(window.widgetERC20Tokens) : ['swap']
 const names = ['btc', 'eth', ...tokens]
 
@@ -20,8 +21,6 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     currencies,
   })
 )
-
-
 @cssModules(styles, { allowMultiple: true })
 export default class CurrencySlider extends Component {
 
@@ -30,6 +29,15 @@ export default class CurrencySlider extends Component {
     activeItemIndex: 0,
   }
 
+  getItemImage(name) {
+    if (window.widgetERC20Tokens
+      && window.widgetERC20Tokens[name]
+      && window.widgetERC20Tokens[name].icon
+    ) return window.widgetERC20Tokens[name].icon
+
+    if (images[name]) return images[name]
+  }
+  
   render() {
     return (
       <Fragment>
@@ -39,11 +47,15 @@ export default class CurrencySlider extends Component {
           </h3>
           <div styleName="currencyListWrap">
             <ul styleName="currencyList">
-              {names.map((item, index) => (
-                <li styleName={item !== 'eth' ? 'currencyListItem' : 'currencyListItemEth'} key={index}>
-                  <img src={tokens.includes(item) ? window.widgetERC20Tokens ? window.widgetERC20Tokens[item].icon : images[item] : images[item]} alt="" />
-                </li>
-              ))}
+              {names.map((item, index) => {
+                const src = this.getItemImage(item)
+                if (!src) return null
+                return (
+                  <li styleName={item !== 'eth' ? 'currencyListItem' : 'currencyListItemEth'} key={index}>
+                    <img src={src} alt="" />
+                  </li>
+                )
+              })}
             </ul>
             {/* <a href="http://listing.swap.online" styleName="currencyAdd">
               <FormattedMessage id="CurrencySlider36" defaultMessage="+" />
