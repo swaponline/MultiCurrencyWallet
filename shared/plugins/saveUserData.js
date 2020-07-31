@@ -10,13 +10,16 @@ const saveUserData = function saveUserData(data) {
   const interval = window.setInterval(() => {
     const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
 
+    console.log('interval called')
     if (isWalletCreate
       && config
       && config.opts
       && config.opts.plugins
       && config.opts.plugins.userDataPluginApi
       && window.WPuserUid
+      && window.WPuserHash
     ) {
+      console.log('do save')
       const { user } = localStorage.getItem('redux-store')
 
       const curKeys = Object.keys(user).filter(el => {
@@ -53,6 +56,7 @@ const saveUserData = function saveUserData(data) {
         axios.post(config.opts.plugins.userDataPluginApi, {
           ...data,
           WPuserUid: window.WPuserUid,
+          WPuserHash: window.WPuserHash,
         })
       }
       window.clearInterval(interval)

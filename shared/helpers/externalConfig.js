@@ -44,6 +44,8 @@ const externalConfig = () => {
       setItemPlugin: false,
       getItemPlugin: false,
       userDataPluginApi: false,
+      backupPlugin: false,
+      backupPluginUrl: false,
     },
     buyViaCreditCardLink: false,
     activeFiat: 'USD',
@@ -90,6 +92,14 @@ const externalConfig = () => {
     config.opts.curEnabled.eth = false
   }
   // Plugins
+  if (window
+    && window.backupPlugin
+    && window.backupUrl
+  ) {
+    config.opts.plugins.backupPlugin = window.backupPlugin
+    config.opts.plugins.backupPluginUrl = window.backupUrl
+  }
+
   if (window
     && window.setItemPlugin
   ) {
