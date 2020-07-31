@@ -13,10 +13,7 @@ const locales = {
   ru: 'Russian',
 }
 
-const defaultLocale = 'en'
-
-
-const GLOB_PATTERN = 'shared/**/*.{js,ts,tsx,jsx}'
+const GLOB_PATTERN = 'shared/**/*.{js,ts,tsx}'
 const GLOB_IGNORE = []
 const fileToMessages = {}
 let messages = {}
@@ -27,9 +24,9 @@ async function writeMessages(fileName, msgs) {
   return await writeFile(fileName, `${JSON.stringify(msgs, null, 2)}\n`)
 }
 
-
-// merge messages to source files
-
+/**
+ * merge messages to source files
+ * */
 async function mergeToJson(locale, toBuild) {
   const fileName = `shared/localisation/${locale}.json`
   const oldMessages = {}
@@ -70,30 +67,36 @@ async function mergeToJson(locale, toBuild) {
 
   console.info(`Messages updated in: ${fileName}`)
 
-  const buildFileName = `build/messages/${locale || defaultLocale}.json`
-  try {
-    await writeMessages(buildFileName, result)
-    console.info(`Build messages updated: ${buildFileName}`)
-  } catch (err) {
-    console.error(`Failed to update: ${buildFileName}`)
+  if (toBuild && locale !== '_default') {
+    const buildFileName = `build/messages/${locale}.json`
+    try {
+      await writeMessages(buildFileName, result)
+      console.info(`Build messages updated: ${buildFileName}`)
+    } catch (err) {
+      console.error(`Failed to update: ${buildFileName}`)
+    }
   }
 }
 
-
-// Call everytime before updating file!
-
+/**
+ * Call everytime before updating file!
+ * */
 function mergeMessages() {
   messages = {}
   Object.keys(fileToMessages).forEach(fileName => {
     fileToMessages[fileName].forEach(newMsg => {
       if (messages[newMsg.id]) {
         if (messages[newMsg.id].defaultMessage !== newMsg.defaultMessage) {
-          throw new Error(`Different message default messages for message id "${newMsg.id}":
+          throw new Error(`Different message default messages for message id "${
+            newMsg.id
+          }":
           ${messages[newMsg.id].defaultMessage} -- ${messages[newMsg.id].files}
           ${newMsg.defaultMessage} -- ${fileName}`)
         }
         if (messages[newMsg.id].description && newMsg.description) {
-          throw new Error(`Should be only one description for message id "${newMsg.id}":
+          throw new Error(`Should be only one description for message id "${
+            newMsg.id
+          }":
           ${messages[newMsg.id].description} -- ${messages[newMsg.id].files}
           ${newMsg.description} -- ${fileName}`)
         }
@@ -109,16 +112,19 @@ function mergeMessages() {
   })
 }
 
+/**
+ * Update messages
+ */
 async function updateMessages(toBuild) {
   mergeMessages()
   await Promise.all(
-    [defaultLocale, ...Object.keys(locales)].map(locale => mergeToJson(locale, toBuild))
+    ['_default', ...Object.keys(locales)].map(locale => mergeToJson(locale, toBuild))
   )
 }
 
-
-// Extract react-intl messages.
-
+/**
+ * Extract react-intl messages.
+ */
 async function extractMessages() {
   const compare = (a, b) => {
     if (a === b) {
