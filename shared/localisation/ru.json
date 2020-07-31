@@ -2033,7 +2033,7 @@
   },
   {
     "id": "ExchangeTitleTag1",
-    "message": "Самый быстрый обменник на основе Atomic Swap",
+    "message": "Самые быстрые кроссчейновые атомарные свопы",
     "files": [
       "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
@@ -2048,7 +2048,7 @@
   },
   {
     "id": "orders1381",
-    "message": "Атомарный своп {buyCurrencyFullName} ({buyCurrency}) на {sellCurrencyFullName} ({sellCurrency}) - моментальный обмен",
+    "message": "Рынок {buyCurrency} 🔁 {sellCurrency}",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]

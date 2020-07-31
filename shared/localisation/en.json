@@ -2026,7 +2026,7 @@
   },
   {
     "id": "ExchangeTitleTag1",
-    "message": "Fastest cross-chain exchange powered by Atomic Swap",
+    "message": "Fastest cross-chain atomic swaps",
     "files": [
       "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
@@ -2041,7 +2041,7 @@
   },
   {
     "id": "orders1381",
-    "message": "{pair} no limit exchange with 0 fee",
+    "message": "Market {buyCurrency} 🔁 {sellCurrency}",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]

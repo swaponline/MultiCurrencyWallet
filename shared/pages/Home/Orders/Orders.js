@@ -58,7 +58,6 @@ export default class Orders extends Component {
   state = {
     buyOrders: [],
     sellOrders: [],
-    isVisible: false,
   }
 
   static getDerivedStateFromProps({ orders }) {
@@ -114,7 +113,7 @@ export default class Orders extends Component {
   }
 
   render() {
-    const { sellOrders, buyOrders, isVisible } = this.state
+    const { sellOrders, buyOrders } = this.state
     let { sellCurrency, buyCurrency, intl, decline } = this.props
     const { history } = this.props
 
@@ -166,13 +165,11 @@ export default class Orders extends Component {
           defaultTitle={intl.formatMessage(title.metaTitle, { buyCurrency, sellCurrency, buyCurrencyFullName, sellCurrencyFullName })}
           defaultDescription={intl.formatMessage(description.metaDescription, { buyCurrency, sellCurrency, buyCurrencyFullName, sellCurrencyFullName })} />
         <div styleName="headerContainer">
-          <Title>
-            <FormattedMessage
-              id="orders1381"
-              defaultMessage="{pair} no limit exchange with 0 fee"
-              values={{ pair: `${buyCurrency}/${sellCurrency}`, buyCurrency, sellCurrency, buyCurrencyFullName, sellCurrencyFullName }}
-            />
-          </Title>
+          <FormattedMessage
+            id="orders1381"
+            defaultMessage="Market {buyCurrency} 🔁 {sellCurrency}"
+            values={{ buyCurrency, sellCurrency }}
+          />
           <CloseIcon styleName="closeButton" onClick={() => this.props.history.push(localisedUrl(intl.locale, links.home))} data-testid="CloseIcon" />
         </div>
         {invalidPair &&
@@ -181,12 +178,6 @@ export default class Orders extends Component {
           </p>
         }
         <div styleName={buttonsRowStyleName}>
-          <Button green styleName="button" disabled={myOrders.length === 0} onClick={() => this.setState(state => ({ isVisible: !state.isVisible }))}>
-            {isVisible ?
-              <FormattedMessage id="orders1499" defaultMessage="Hide" />
-              :
-              <FormattedMessage id="Orders151" defaultMessage="my Orders" />}
-          </Button>
           <Button gray styleName="button" onClick={this.createOffer}>
             <FormattedMessage id="orders128" defaultMessage="Create offer" />
           </Button>
@@ -198,14 +189,12 @@ export default class Orders extends Component {
             )
           }
         </div>
-        {
-          isVisible && <MyOrders
-            myOrders={myOrders}
-            declineRequest={this.declineRequest}
-            removeOrder={this.removeOrder}
-            acceptRequest={this.acceptRequest}
-          />
-        }
+        <MyOrders
+          myOrders={myOrders}
+          declineRequest={this.declineRequest}
+          removeOrder={this.removeOrder}
+          acceptRequest={this.acceptRequest}
+        />
         <h3 styleName="ordersHeading">
           <FormattedMessage id="orders156" defaultMessage="BUY {buyCurrency} HERE" values={{ buyCurrency: `${buyCurrency}` }} />
         </h3>

@@ -80,13 +80,7 @@ const subTitle = (sell, sellTicker, buy, buyTicker) => (
   <div>
     <FormattedMessage
       id="ExchangeTitleTag1"
-      defaultMessage="Fastest cross-chain exchange powered by Atomic Swap"
-      values={{
-        full_name1: sell,
-        ticker_name1: sellTicker,
-        full_name2: buy,
-        ticker_name2: buyTicker,
-      }}
+      defaultMessage="Fastest cross-chain atomic swaps"
     />
     <span styleName="tooltipHeader">
       <Tooltip id="partialAtomicSwapWhatIsIt1" dontHideMobile>
@@ -1615,14 +1609,14 @@ export default class Exchange extends Component {
             >
               <FormattedMessage id="partial541" defaultMessage="Exchange now" />
             </Button>
-            <Button
+            {/*<Button
               className="data-tut-Orderbook"
               styleName="button buttonOrders"
               gray
               onClick={() => this.handlePush(isWidgetLink)}
             >
               <FormattedMessage id="partial544" defaultMessage="Order book" />
-            </Button>
+            </Button>*/}
           </div>
           {!isWidgetBuild && (
             <a
