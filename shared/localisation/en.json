@@ -535,7 +535,7 @@
   },
   {
     "id": "RowFeeds87",
-    "message": "Delete order",
+    "message": "Delete",
     "files": [
       "shared/pages/Home/Orders/MyOrders/RowFeeds/RowFeeds.js"
     ]

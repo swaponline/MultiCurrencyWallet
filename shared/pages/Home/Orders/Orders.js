@@ -75,16 +75,6 @@ export default class Orders extends Component {
     }
   }
 
-  createOffer = async () => {
-    const { buyCurrency, sellCurrency } = this.props
-
-    actions.modals.open(constants.modals.Offer, {
-      buyCurrency,
-      sellCurrency,
-    })
-    // actions.analytics.dataEvent('orderbook-click-createoffer-button')
-  }
-
   removeOrder = (orderId) => {
     actions.modals.open(constants.modals.Confirm, {
       onAccept: () => {
@@ -178,9 +168,6 @@ export default class Orders extends Component {
           </p>
         }
         <div styleName={buttonsRowStyleName}>
-          <Button gray styleName="button" onClick={this.createOffer}>
-            <FormattedMessage id="orders128" defaultMessage="Create offer" />
-          </Button>
           {
             (isWidget && !config.isFullBuild) && (
               <Button green styleName="button" onClick={this.handleWalletPush} >

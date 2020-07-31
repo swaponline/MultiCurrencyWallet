@@ -68,8 +68,8 @@ export default class RowFeeds extends Component {
         <td>
           <Coins names={[buyCurrency, sellCurrency]}  />
         </td>
-        <td>{`${buyAmount.toFixed(5)} ${buyCurrency}`}</td>
         <td>{`${sellAmount.toFixed(5)} ${sellCurrency}`}</td>
+        <td>{`${buyAmount.toFixed(5)} ${buyCurrency}`}</td>
         <td>{`${rate.toFixed(5)} ${buyCurrency}/${sellCurrency}`}</td>
 
         <CopyToClipboard

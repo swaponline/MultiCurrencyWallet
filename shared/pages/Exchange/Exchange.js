@@ -519,6 +519,16 @@ export default class Exchange extends Component {
     }
   };
 
+  createOffer = async () => {
+    const { haveCurrency, getCurrency } = this.state
+
+    actions.modals.open(constants.modals.Offer, {
+      sellCurrency: haveCurrency,
+      buyCurrency: getCurrency,
+    })
+    // actions.analytics.dataEvent('orderbook-click-createoffer-button')
+  };
+
   handleDeclineOrdersModalOpen = (indexOfDecline) => {
     const orders = SwapApp.shared().services.orders.items;
     const declineSwap = actions.core.getSwapById(
@@ -1608,6 +1618,9 @@ export default class Exchange extends Component {
               disabled={!canDoOrder}
             >
               <FormattedMessage id="partial541" defaultMessage="Exchange now" />
+            </Button>
+            <Button gray styleName="button" onClick={this.createOffer}>
+              <FormattedMessage id="orders128" defaultMessage="Create offer" />
             </Button>
             {/*<Button
               className="data-tut-Orderbook"

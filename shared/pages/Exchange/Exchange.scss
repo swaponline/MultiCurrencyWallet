@@ -58,9 +58,6 @@
     }
   }
 
-  .section {
-    padding-top: 70px;
-  }
 }
 
 .informAbt {
@@ -339,7 +336,7 @@
 }
 
 .section {
-  padding-top: 100px;
+  margin-top: 80px;
 
   @media screen and (max-width: 480px) {
     height: calc(100vh - 120px);
@@ -372,7 +369,7 @@
   position: relative;
   margin-top: -100px;
   margin-bottom: 3em;
-  padding: 50px 40px;
+  padding: 45px 33px 35px;
   width: 460px;
   z-index: 100;
   background: #ffffff;
@@ -555,6 +552,7 @@
   color: white;
   bottom: -2em;
   text-decoration: underline;
+  font-size: 13px;
 
   &:hover {
     color: white;
@@ -689,12 +687,6 @@
 
   .TitleHolder {
     width: 100%;
-  }
-}
-
-@media all and (max-width: 570px) {
-  .section {
-    padding-top: 150px;
   }
 }
 

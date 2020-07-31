@@ -59,7 +59,7 @@ const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onS
           <p styleName="textUsd" >{`~${fiat}`} {activeFiat}</p>
         }
         <CurrencySelect
-          name="All"
+          //name="All"
           label={label}
           tooltip={tooltip}
           id={id}

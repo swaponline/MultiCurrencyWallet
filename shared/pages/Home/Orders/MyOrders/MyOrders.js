@@ -17,8 +17,8 @@ export default class MyOrders extends PureComponent {
   render() {
     const titles = [
       <FormattedMessage id="MyOrders19" defaultMessage="EXCHANGE" />,
-      <FormattedMessage id="MyOrders20" defaultMessage="YOU GET" />,
       <FormattedMessage id="MyOrders21" defaultMessage="YOU HAVE" />,
+      <FormattedMessage id="MyOrders20" defaultMessage="YOU GET" />,
       <FormattedMessage id="MyOrders22" defaultMessage="EXCHANGE RATE" />,
       <FormattedMessage id="MyOrders231" defaultMessage="SHARE" />,
       <FormattedMessage id="MyOrders24" defaultMessage="ACTIONS" />,

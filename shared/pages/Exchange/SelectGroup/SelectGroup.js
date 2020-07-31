@@ -64,7 +64,7 @@ const SelectGroup = (props) => {
           </div>
         )}
         <CurrencySelect
-          name="All"
+          //name="All"
           label={label}
           tooltip={tooltip}
           switchBalanceFunc={switchBalanceFunc}
