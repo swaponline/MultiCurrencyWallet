@@ -1,11 +1,11 @@
 .promoText {
-  width: 560px;
+  margin: 0 auto;
+  max-width: 572px;
   font-style: normal;
   line-height: 1em;
-  font-size: 48px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  padding-bottom: 40px;
-  margin-bottom: 50px;
+  font-size: 40px;
+  text-align: center;
+  margin-bottom: 40px;
   @include ff-bold;
 }
 
@@ -15,8 +15,6 @@
 
 @include media-tablet {
   .promoText {
-    width: auto;
-    text-align: center;
     font-size: 30px;
   }
 }
@@ -24,11 +22,11 @@
 @include media-mobile {
   .promoText {
     display: none;
-    width: 100%;
+    /* width: 100%;
     font-size: 22px;
     line-height: 1.4;
     margin-bottom: 20px;
     padding-bottom: 20px;
-    padding-top: 70px;
+    padding-top: 70px; */
   }
 }

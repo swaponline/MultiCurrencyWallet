@@ -1685,7 +1685,7 @@ export default class Exchange extends Component {
             />
           )}
           <Fragment>
-            <div styleName="container alignCenter">
+            <div styleName="container">
               <Promo
                 subTitle={subTitle(
                   sellTokenFullName,
