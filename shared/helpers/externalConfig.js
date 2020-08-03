@@ -46,6 +46,7 @@ const externalConfig = () => {
       userDataPluginApi: false,
       backupPlugin: false,
       backupPluginUrl: false,
+      restorePluginUrl: false,
     },
     buyViaCreditCardLink: false,
     activeFiat: 'USD',
@@ -95,9 +96,11 @@ const externalConfig = () => {
   if (window
     && window.backupPlugin
     && window.backupUrl
+    && window.restoreUrl
   ) {
     config.opts.plugins.backupPlugin = window.backupPlugin
     config.opts.plugins.backupPluginUrl = window.backupUrl
+    config.opts.plugins.restorePluginUrl = window.restoreUrl
   }
 
   if (window
