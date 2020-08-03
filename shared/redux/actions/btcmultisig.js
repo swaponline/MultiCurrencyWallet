@@ -1346,6 +1346,8 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
   feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, method: 'send_2fa', address: pinAddress })
 
 
+  feeValue = new BigNumber(feeValue).integerValue().toNumber()
+
   const unspents = await fetchUnspents(from)
 
   const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()

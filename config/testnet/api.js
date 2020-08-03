@@ -2,8 +2,9 @@ export default {
   horizon: 'https://horizon-testnet.stellar.org',
   blocktrail: 'https://api.blocktrail.com/v1/tBTC',
   bitpay: [
-    'https://test-insight.swaponline.io/insight-api',
-    'https://invoices.swaponline.site/proxybitpay-testnet',
+    'http://localhost:32250/btc/testnet',
+    //'https://test-insight.swaponline.io/insight-api',
+    //'https://invoices.swaponline.site/proxybitpay-testnet',
   ],
   ghostscan: 'https://testnet.ghostscan.io/ghost-insight-api',
   blockcypher: 'https://api.blockcypher.com/v1/btc/test3',

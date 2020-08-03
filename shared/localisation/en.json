@@ -6029,7 +6029,7 @@
   },
   {
     "id": "SaveMnemonicModal_BeginNotice",
-    "message": "Now we will show you 12 words of your secret phrase. If you lose it, we will not be able to restore your wallet.",
+    "message": "Now we will show you 12 words of your secret phrase.{br}If you lose it, we will not be able to restore your wallet.",
     "files": [
       "shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.js"
     ]
