@@ -2048,7 +2048,14 @@
   },
   {
     "id": "orders1381",
-    "message": "Рынок {buyCurrency}🔁{sellCurrency}",
+    "message": "{buyCurrency}🔁{sellCurrency}",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders1382",
+    "message": "Все",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]

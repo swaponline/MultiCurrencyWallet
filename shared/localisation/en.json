@@ -2041,7 +2041,14 @@
   },
   {
     "id": "orders1381",
-    "message": "Market {buyCurrency}🔁{sellCurrency}",
+    "message": "{buyCurrency}🔁{sellCurrency}",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders1382",
+    "message": "All",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]

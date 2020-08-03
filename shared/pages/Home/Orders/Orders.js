@@ -16,6 +16,8 @@ import Panel from 'components/ui/Panel/Panel'
 import Table from 'components/tables/Table/Table'
 import Title from 'components/PageHeadline/Title/Title'
 import tableStyles from 'components/tables/Table/Table.scss'
+import Toggle from 'components/controls/Toggle/Toggle'
+
 import PageSeo from 'components/Seo/PageSeo'
 import { getSeoPage } from 'helpers/seo'
 
@@ -59,6 +61,7 @@ export default class Orders extends Component {
   state = {
     buyOrders: [],
     sellOrders: [],
+    isShowAllMyOrders: true,
   }
 
   static getDerivedStateFromProps({ orders }) {
@@ -74,6 +77,10 @@ export default class Orders extends Component {
       buyOrders,
       sellOrders,
     }
+  }
+
+  handleShowAllMyOrders = (value) => {
+    this.setState(() => ({ isShowAllMyOrders: value }))
   }
 
   removeOrder = (orderId) => {
@@ -104,7 +111,7 @@ export default class Orders extends Component {
   }
 
   render() {
-    const { sellOrders, buyOrders } = this.state
+    const { sellOrders, buyOrders, isShowAllMyOrders } = this.state
     let { sellCurrency, buyCurrency, intl, decline } = this.props
     const { history } = this.props
 
@@ -135,6 +142,7 @@ export default class Orders extends Component {
 
     const buyCurrencyFullName = (currencies.find(c => c.name === buyCurrency) || {}).fullTitle
     const sellCurrencyFullName = (currencies.find(c => c.name === sellCurrency) || {}).fullTitle
+
     const title = defineMessages({
       metaTitle: {
         id: 'Orders121',
@@ -148,6 +156,12 @@ export default class Orders extends Component {
          Swap.Online wallet provides instant exchange using Atomic Swap Protocol.`,
       },
     })
+
+    const myOrdersThisMarket = myOrders.filter(order =>
+      order.buyCurrency === buyCurrency && order.sellCurrency === sellCurrency
+      ||
+      order.buyCurrency === sellCurrency && order.sellCurrency === buyCurrency
+    )
 
     return (
       <Fragment>
@@ -175,20 +189,22 @@ export default class Orders extends Component {
               <h3>
                 <FormattedMessage id="MyOrders23" defaultMessage="Your offers" />
                 {' '}
-                <span>({ myOrders.length })</span>
+                <span>{ isShowAllMyOrders ? `(${myOrders.length})` : `(${myOrdersThisMarket.length}/${myOrders.length})` }</span>
               </h3>
-              <div styleName="subtitle">
+              <div styleName="subtitle showAllSwitch">
                 <FormattedMessage
                   id="orders1381"
-                  defaultMessage="Market {buyCurrency}🔁{sellCurrency} and other"
+                  defaultMessage="{buyCurrency}🔁{sellCurrency}"
                   values={{ buyCurrency, sellCurrency }}
                 />
+                <Toggle checked={isShowAllMyOrders} onChange={this.handleShowAllMyOrders} />
+                <FormattedMessage id="orders1382" defaultMessage="All" />
               </div>
             </Fragment>
           }
         >
           <MyOrders
-            myOrders={myOrders}
+            myOrders={isShowAllMyOrders ? myOrders : myOrdersThisMarket}
             declineRequest={this.declineRequest}
             removeOrder={this.removeOrder}
             acceptRequest={this.acceptRequest}

@@ -1,61 +1,61 @@
 label.Switch > span {
-	position: relative;
-	padding-left: 3.2em;
-	user-select: none;
-	height: 20px;
-	display: block;
+  position: relative;
+  padding-left: 3.3em;
+  user-select: none;
+  height: 20px;
+  display: block;
 }
 
 label.Switch {
-	margin: 0.5rem 0;
+  margin: 0.5rem 0.5rem;
 }
 
 label.Switch > input[type='checkbox'] {
-	display: none;
+  display: none;
 }
 
 label.Switch > span:before {
-	background-color: #ffffff;
-    border-radius: 1.2em;
-    border: .1em solid transparent;
-    content: '';
-    height: 1.2em;
-    left: 0;
-    position: absolute;
-    margin-top: -2px;
-    -webkit-transition: border-color .2s, background-color .2s;
-    transition: border-color .2s, background-color .2s;
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    box-sizing: border-box;
-    border-radius: 12px;
-    width: 56px;
-    height: 24px;
-    cursor: pointer;
+  background-color: #ffffff;
+  border-radius: 1.2em;
+  border: .1em solid transparent;
+  content: '';
+  height: 1.2em;
+  left: 0;
+  position: absolute;
+  margin-top: -2px;
+  -webkit-transition: border-color .2s, background-color .2s;
+  transition: border-color .2s, background-color .2s;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+  border-radius: 12px;
+  width: 56px;
+  height: 24px;
+  cursor: pointer;
 }
 
 label.Switch > span:after {
-	background-color: #000000;
-	border-radius: 50%;
-	content: '';
-	width: 15px;
-	height: 15px;
-	left: 5px;
-	top: 50%;
-	transform: translateY(-50%);
-	position: absolute;
-	-webkit-transition: border-color .2s, -webkit-transform .2s;
-	transition: border-color .2s, -webkit-transform .2s;
-	transition: transform .2s, border-color .2s;
-	transition: transform .2s, border-color .2s, -webkit-transform .2s;
-	cursor: pointer;
+  background-color: #000000;
+  border-radius: 50%;
+  content: '';
+  width: 15px;
+  height: 15px;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  position: absolute;
+  -webkit-transition: border-color .2s, -webkit-transform .2s;
+  transition: border-color .2s, -webkit-transform .2s;
+  transition: transform .2s, border-color .2s;
+  transition: transform .2s, border-color .2s, -webkit-transform .2s;
+  cursor: pointer;
 }
 
 label.Switch > input:checked + span:before {
-	background-color: #000;
+  background-color: #000;
 }
 
 label.Switch > input:checked + span:after {
-	background-color: #fff;
-	right: 0px;
-	left: auto;
+  background-color: #fff;
+  right: 0px;
+  left: auto;
 }
