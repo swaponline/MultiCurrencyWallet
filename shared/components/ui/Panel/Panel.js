@@ -14,6 +14,11 @@ export default class Panel extends Component {
   render() {
     return (
       <section styleName={classNames('panel', isDark ? 'dark' : null)}>
+        { this.props.header &&
+          <div styleName="panelHeader">
+            { this.props.header }
+          </div>
+        }
         { this.props.children }
       </section>
     )

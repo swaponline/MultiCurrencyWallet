@@ -1894,14 +1894,14 @@
   },
   {
     "id": "orders156",
-    "message": "BUY {buyCurrency} HERE",
+    "message": "Buy {currency} here",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
   },
   {
     "id": "orders159",
-    "message": "orders of those who {sell} {buyCurrency} to you",
+    "message": "Sell {currency} orders",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
@@ -1936,7 +1936,7 @@
   },
   {
     "id": "orders186",
-    "message": "orders of those who {buy} {buyCurrency} from you",
+    "message": "Sell {currency} orders",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
@@ -2041,7 +2041,7 @@
   },
   {
     "id": "orders1381",
-    "message": "Market {buyCurrency} 🔁 {sellCurrency}",
+    "message": "Market {buyCurrency}🔁{sellCurrency}",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
@@ -2398,7 +2398,7 @@
   },
   {
     "id": "orders224",
-    "message": "SELL {buyCurrency} HERE",
+    "message": "Buy {currency} here",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]

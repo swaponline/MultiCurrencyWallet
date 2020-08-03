@@ -1901,7 +1901,7 @@
   },
   {
     "id": "orders156",
-    "message": "Покупка {buyCurrency}",
+    "message": "Купите {currency} здесь",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
@@ -2048,7 +2048,7 @@
   },
   {
     "id": "orders1381",
-    "message": "Рынок {buyCurrency} 🔁 {sellCurrency}",
+    "message": "Рынок {buyCurrency}🔁{sellCurrency}",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
@@ -2426,7 +2426,7 @@
   },
   {
     "id": "orders224",
-    "message": "Продажа {buyCurrency}",
+    "message": "Купите {сurrency} здесь",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]

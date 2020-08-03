@@ -27,12 +27,7 @@ export default class MyOrders extends PureComponent {
     }
 
     return (
-      
         <div styleName="myOrders">
-        <Panel>
-          <h3>
-            <FormattedMessage id="MyOrders23" defaultMessage="Your orders" />
-          </h3>
           <table>
             <thead>
               <tr>
@@ -55,9 +50,7 @@ export default class MyOrders extends PureComponent {
               })}
             </tbody>
           </table>
-          </Panel>
         </div>
-      
     )
   }
 }

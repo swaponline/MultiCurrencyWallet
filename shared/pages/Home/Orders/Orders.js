@@ -155,14 +155,6 @@ export default class Orders extends Component {
           location={location}
           defaultTitle={intl.formatMessage(title.metaTitle, { buyCurrency, sellCurrency, buyCurrencyFullName, sellCurrencyFullName })}
           defaultDescription={intl.formatMessage(description.metaDescription, { buyCurrency, sellCurrency, buyCurrencyFullName, sellCurrencyFullName })} />
-        <div styleName="headerContainer">
-          <FormattedMessage
-            id="orders1381"
-            defaultMessage="Market {buyCurrency} 🔁 {sellCurrency}"
-            values={{ buyCurrency, sellCurrency }}
-          />
-          <CloseIcon styleName="closeButton" onClick={() => this.props.history.push(localisedUrl(intl.locale, links.home))} data-testid="CloseIcon" />
-        </div>
         {invalidPair &&
           <p>
             <FormattedMessage id="Orders141" defaultMessage="No such ticker. Redirecting to USDT-BTC exchange..." />
@@ -177,25 +169,48 @@ export default class Orders extends Component {
             )
           }
         </div>
-        <MyOrders
-          myOrders={myOrders}
-          declineRequest={this.declineRequest}
-          removeOrder={this.removeOrder}
-          acceptRequest={this.acceptRequest}
-        />
-        <Panel>
-          <h3 styleName="ordersHeading">
-            <FormattedMessage id="orders156" defaultMessage="BUY {buyCurrency} HERE" values={{ buyCurrency: `${buyCurrency}` }} />
-          </h3>
-          <p styleName="subtitle">
-            <FormattedMessage
-              id="orders159"
-              defaultMessage={`orders of those who {sell} {buyCurrency} to you`}
-              values={{
-                sell: <i><FormattedMessage id="orders150" defaultMessage="sell" /></i>,
-                buyCurrency: `${buyCurrency}`,
-              }} />
-          </p>
+        <Panel
+          header={
+            <Fragment>
+              <h3>
+                <FormattedMessage id="MyOrders23" defaultMessage="Your orders" />
+                {' '}
+                <span>({ myOrders.length })</span>
+              </h3>
+              <div styleName="subtitle">
+                <FormattedMessage
+                  id="orders1381"
+                  defaultMessage="Market {buyCurrency}🔁{sellCurrency} and other"
+                  values={{ buyCurrency, sellCurrency }}
+                />
+              </div>
+            </Fragment>
+          }
+        >
+          <MyOrders
+            myOrders={myOrders}
+            declineRequest={this.declineRequest}
+            removeOrder={this.removeOrder}
+            acceptRequest={this.acceptRequest}
+          />
+        </Panel>
+        <Panel header={
+          <Fragment>
+            <h3 styleName="ordersHeading">
+              <FormattedMessage
+                id="orders159"
+                defaultMessage={`Sell {currendy} orders`}
+                values={{ currency: `${buyCurrency}` }} />
+            </h3>
+            <div styleName="subtitle">
+              <FormattedMessage
+                id="orders156"
+                defaultMessage="Buy {currency} here"
+                values={{ currency: `${buyCurrency}` }}
+              />
+            </div>
+          </Fragment>
+        }>
           <Table
             id="table_exchange"
             className={tableStyles.exchange}
@@ -214,19 +229,24 @@ export default class Orders extends Component {
             isLoading={sellOrders.length === 0 && !isIpfsLoaded}
           />
         </Panel>
-        <Panel>
-          <h3 styleName="ordersHeading">
-            <FormattedMessage id="orders224" defaultMessage={`SELL {buyCurrency} HERE`} values={{ buyCurrency: `${buyCurrency}` }} />
-          </h3>
-          <p styleName="subtitle">
-            <FormattedMessage
-              id="orders186"
-              defaultMessage={`orders of those who {buy} {buyCurrency} from you`}
-              values={{
-                buy: <i><FormattedMessage id="orders189" defaultMessage="buy" /></i>,
-                buyCurrency: `${buyCurrency}`,
-              }} />
-          </p>
+        <Panel header={
+          <Fragment>
+            <h3 styleName="ordersHeading">
+              <FormattedMessage
+                id="orders186"
+                defaultMessage={`Sell {currency} orders`}
+                values={{ currency: `${sellCurrency}` }} />
+            </h3>
+            <div styleName="subtitle">
+              <FormattedMessage
+                id="orders224"
+                defaultMessage="Sell {buyCurrency} here"
+                values={{ currency: `${sellCurrency}` }}
+              />
+            </div>
+          </Fragment>
+        }
+        >
           <Table
             id="table_exchange"
             className={tableStyles.exchange}
