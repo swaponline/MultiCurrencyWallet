@@ -1102,21 +1102,21 @@
   },
   {
     "id": "MyOrders20",
-    "message": "ВЫ ПОЛУЧИТЕ",
+    "message": "Вы получите",
     "files": [
       "shared/pages/Home/Orders/MyOrders/MyOrders.js"
     ]
   },
   {
     "id": "MyOrders21",
-    "message": "ВЫ ИМЕЕТЕ",
+    "message": "Вы имеете",
     "files": [
       "shared/pages/Home/Orders/MyOrders/MyOrders.js"
     ]
   },
   {
     "id": "MyOrders22",
-    "message": "КУРС ОБМЕНА",
+    "message": "Курс обмена",
     "files": [
       "shared/pages/Home/Orders/MyOrders/MyOrders.js"
     ]
@@ -1908,7 +1908,7 @@
   },
   {
     "id": "orders159",
-    "message": "ордера на {sell} {buyCurrency} ",
+    "message": "Предложения {sell}",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
@@ -1943,7 +1943,7 @@
   },
   {
     "id": "orders186",
-    "message": "ордера на {buy} {buyCurrency} ",
+    "message": "Предложения {сurrency} ",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]

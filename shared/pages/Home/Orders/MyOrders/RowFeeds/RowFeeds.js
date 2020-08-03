@@ -65,13 +65,25 @@ export default class RowFeeds extends Component {
     const rate = exchangeRate ? BigNumber(exchangeRate) : BigNumber(buyAmount).div(sellAmount)
 
     return (
-      <tr>
+      <tr key={this.props.key}>
         <td>
-          <Coins names={[buyCurrency, sellCurrency]}  />
+          <Coins names={[sellCurrency, buyCurrency]} size="25" />
         </td>
-        <td>{`${sellAmount.toFixed(5)} ${sellCurrency}`}</td>
-        <td>{`${buyAmount.toFixed(5)} ${buyCurrency}`}</td>
-        <td>{`${rate.toFixed(5)} ${buyCurrency}/${sellCurrency}`}</td>
+        <td>
+          <span styleName="value">{sellAmount.toFixed(5)}</span>
+          {' '}
+          <span styleName="currency">{sellCurrency}</span>
+        </td>
+        <td>
+          <span styleName="value">{buyAmount.toFixed(5)}</span>
+          {' '}
+          <span styleName="currency">{buyCurrency}</span>
+        </td>
+        <td>
+          <span styleName="value">{rate.toFixed(5)}</span>
+          {' '}
+          <span styleName="currency">{`${buyCurrency}/${sellCurrency}`}</span>
+        </td>
         <td>
           <div styleName="buttons">
             <div>

@@ -500,7 +500,7 @@
   },
   {
     "id": "MyOrders23",
-    "message": "Your orders",
+    "message": "Your offers",
     "files": [
       "shared/pages/Home/Orders/MyOrders/MyOrders.js"
     ]
@@ -1091,21 +1091,21 @@
   },
   {
     "id": "MyOrders20",
-    "message": "YOU GET",
+    "message": "You get",
     "files": [
       "shared/pages/Home/Orders/MyOrders/MyOrders.js"
     ]
   },
   {
     "id": "MyOrders21",
-    "message": "YOU HAVE",
+    "message": "You have",
     "files": [
       "shared/pages/Home/Orders/MyOrders/MyOrders.js"
     ]
   },
   {
     "id": "MyOrders22",
-    "message": "EXCHANGE RATE",
+    "message": "Exchange rate",
     "files": [
       "shared/pages/Home/Orders/MyOrders/MyOrders.js"
     ]
@@ -1901,7 +1901,7 @@
   },
   {
     "id": "orders159",
-    "message": "Sell {currency} orders",
+    "message": "{currency} offers",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
@@ -1936,7 +1936,7 @@
   },
   {
     "id": "orders186",
-    "message": "Sell {currency} orders",
+    "message": "{currency} offers",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]

@@ -26,14 +26,14 @@ td {
   }
 }
 
-.currency {
+/* .currency {
   font-size: 14px;
   font-weight: 700;
   min-width: 150px;
   margin-right: 10px;
   display: flex;
   align-items: center;
-}
+} */
 
 .coin {
   text-transform: uppercase;
@@ -90,6 +90,14 @@ td {
   font-size: 12px;
   top: -1.5em;
   left: -50%;
+}
+
+.value {
+  opacity: 1;
+}
+
+.currency {
+  opacity: 0.6;
 }
 
 

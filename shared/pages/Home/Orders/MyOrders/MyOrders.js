@@ -1,23 +1,22 @@
 import React, { PureComponent, Fragment } from 'react'
+import cssModules from 'react-css-modules'
 
 import actions from 'redux/actions'
 
-import Table from 'components/tables/Table/Table'
-import styles from 'components/tables/Table/Table.scss'
-import Panel from 'components/ui/Panel/Panel'
+import styles from './MyOrders.scss'
 import RowFeeds from './RowFeeds/RowFeeds'
 
 import { FormattedMessage } from 'react-intl'
 
-
+@cssModules(styles, { allowMultiple: true })
 export default class MyOrders extends PureComponent {
 
   render() {
     const titles = [
       ' ',
-      <FormattedMessage id="MyOrders21" defaultMessage="YOU HAVE" />,
-      <FormattedMessage id="MyOrders20" defaultMessage="YOU GET" />,
-      <FormattedMessage id="MyOrders22" defaultMessage="EXCHANGE RATE" />,
+      <FormattedMessage id="MyOrders21" defaultMessage="You have" />,
+      <FormattedMessage id="MyOrders20" defaultMessage="You get" />,
+      <FormattedMessage id="MyOrders22" defaultMessage="Exchnage rate" />,
       ' ',
     ]
     const { myOrders, declineRequest, acceptRequest, removeOrder } = this.props
@@ -27,30 +26,30 @@ export default class MyOrders extends PureComponent {
     }
 
     return (
-        <div styleName="myOrders">
-          <table>
-            <thead>
-              <tr>
-                {
-                  titles.map(title =>
-                    <th>{title}</th>
-                  )
-                }
-              </tr>
-            </thead>
-            <tbody>
-              {myOrders.map((order, index) => {
-                return (<RowFeeds
-                  key={index}
-                  row={order}
-                  declineRequest={declineRequest}
-                  acceptRequest={acceptRequest}
-                  removeOrder={removeOrder}
-                />)
-              })}
-            </tbody>
-          </table>
-        </div>
+      <div>
+        <table styleName="myOrdersTable">
+          <thead>
+            <tr>
+              {
+                titles.map(title =>
+                  <th>{title}</th>
+                )
+              }
+            </tr>
+          </thead>
+          <tbody>
+            {myOrders.map((order, index) => {
+              return (<RowFeeds
+                key={index}
+                row={order}
+                declineRequest={declineRequest}
+                acceptRequest={acceptRequest}
+                removeOrder={removeOrder}
+              />)
+            })}
+          </tbody>
+        </table>
+      </div>
     )
   }
 }
