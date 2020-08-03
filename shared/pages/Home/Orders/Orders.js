@@ -12,6 +12,7 @@ import cssModules from 'react-css-modules'
 import styles from './Orders.scss'
 
 import { Button } from 'components/controls'
+import Panel from 'components/ui/Panel/Panel'
 import Table from 'components/tables/Table/Table'
 import Title from 'components/PageHeadline/Title/Title'
 import tableStyles from 'components/tables/Table/Table.scss'
@@ -182,64 +183,68 @@ export default class Orders extends Component {
           removeOrder={this.removeOrder}
           acceptRequest={this.acceptRequest}
         />
-        <h3 styleName="ordersHeading">
-          <FormattedMessage id="orders156" defaultMessage="BUY {buyCurrency} HERE" values={{ buyCurrency: `${buyCurrency}` }} />
-        </h3>
-        <p styleName="subtitle">
-          <FormattedMessage
-            id="orders159"
-            defaultMessage={`orders of those who {sell} {buyCurrency} to you`}
-            values={{
-              sell: <i><FormattedMessage id="orders150" defaultMessage="sell" /></i>,
-              buyCurrency: `${buyCurrency}`,
-            }} />
-        </p>
-        <Table
-          id="table_exchange"
-          className={tableStyles.exchange}
-          titles={titles}
-          rows={sellOrders}
-          rowRender={(row) => (
-            <Row
-              key={row.id}
-              orderId={orderId}
-              row={row}
-              decline={decline}
-              history={history}
-              removeOrder={this.removeOrder}
-            />
-          )}
-          isLoading={sellOrders.length === 0 && !isIpfsLoaded}
-        />
-        <h3 styleName="ordersHeading">
-          <FormattedMessage id="orders224" defaultMessage={`SELL {buyCurrency} HERE`} values={{ buyCurrency: `${buyCurrency}` }} />
-        </h3>
-        <p styleName="subtitle">
-          <FormattedMessage
-            id="orders186"
-            defaultMessage={`orders of those who {buy} {buyCurrency} from you`}
-            values={{
-              buy: <i><FormattedMessage id="orders189" defaultMessage="buy" /></i>,
-              buyCurrency: `${buyCurrency}`,
-            }} />
-        </p>
-        <Table
-          id="table_exchange"
-          className={tableStyles.exchange}
-          titles={titles}
-          rows={buyOrders}
-          rowRender={(row) => (
-            <Row
-              key={row.id}
-              orderId={orderId}
-              row={row}
-              decline={decline}
-              history={history}
-              removeOrder={this.removeOrder}
-            />
-          )}
-          isLoading={buyOrders.length === 0 && !isIpfsLoaded}
-        />
+        <Panel>
+          <h3 styleName="ordersHeading">
+            <FormattedMessage id="orders156" defaultMessage="BUY {buyCurrency} HERE" values={{ buyCurrency: `${buyCurrency}` }} />
+          </h3>
+          <p styleName="subtitle">
+            <FormattedMessage
+              id="orders159"
+              defaultMessage={`orders of those who {sell} {buyCurrency} to you`}
+              values={{
+                sell: <i><FormattedMessage id="orders150" defaultMessage="sell" /></i>,
+                buyCurrency: `${buyCurrency}`,
+              }} />
+          </p>
+          <Table
+            id="table_exchange"
+            className={tableStyles.exchange}
+            titles={titles}
+            rows={sellOrders}
+            rowRender={(row) => (
+              <Row
+                key={row.id}
+                orderId={orderId}
+                row={row}
+                decline={decline}
+                history={history}
+                removeOrder={this.removeOrder}
+              />
+            )}
+            isLoading={sellOrders.length === 0 && !isIpfsLoaded}
+          />
+        </Panel>
+        <Panel>
+          <h3 styleName="ordersHeading">
+            <FormattedMessage id="orders224" defaultMessage={`SELL {buyCurrency} HERE`} values={{ buyCurrency: `${buyCurrency}` }} />
+          </h3>
+          <p styleName="subtitle">
+            <FormattedMessage
+              id="orders186"
+              defaultMessage={`orders of those who {buy} {buyCurrency} from you`}
+              values={{
+                buy: <i><FormattedMessage id="orders189" defaultMessage="buy" /></i>,
+                buyCurrency: `${buyCurrency}`,
+              }} />
+          </p>
+          <Table
+            id="table_exchange"
+            className={tableStyles.exchange}
+            titles={titles}
+            rows={buyOrders}
+            rowRender={(row) => (
+              <Row
+                key={row.id}
+                orderId={orderId}
+                row={row}
+                decline={decline}
+                history={history}
+                removeOrder={this.removeOrder}
+              />
+            )}
+            isLoading={buyOrders.length === 0 && !isIpfsLoaded}
+          />
+        </Panel>
         {seoPage && seoPage.footer && <div>{seoPage.footer}</div>}
       </Fragment>
     )

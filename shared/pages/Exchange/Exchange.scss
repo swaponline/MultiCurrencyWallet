@@ -511,15 +511,9 @@
 .widgetLink {
   position: absolute;
   right: 0;
-  color: white;
-  bottom: -2em;
+  bottom: -1.7em;
   text-decoration: underline;
   font-size: 13px;
-
-  &:hover {
-    color: white;
-    text-decoration: underline;
-  }
 }
 
 .mobileDubleHeader {
@@ -583,10 +577,6 @@
     span {
       font-size: 35px;
     }
-  }
-
-  .exchangeWrap {
-    margin: 0 -40px;
   }
 
 }
@@ -711,10 +701,6 @@
     font-size: 10px;
   }
 
-  .exchangeWrap {
-    margin: 0 -20px;
-  }
-
   .promoContainer {
     background: #ffffff;
     padding: 60px 0;
@@ -771,16 +757,3 @@
 //     top: 6.5em;
 //   }
 // }
-
-.widgetExchangeWrap {
-  width: 100vw;
-  left: auto;
-  margin: 0;
-}
-
-@media screen and (max-width: 320px) {
-  .exchangeWrap {
-    height: calc(100vh - 120px);
-    margin: 10px -20px;
-  }
-}

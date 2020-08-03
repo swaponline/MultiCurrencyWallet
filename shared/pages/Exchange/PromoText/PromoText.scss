@@ -3,9 +3,9 @@
   max-width: 572px;
   font-style: normal;
   line-height: 1em;
-  font-size: 40px;
+  font-size: 30px;
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 1em;
   @include ff-bold;
 }
 
@@ -13,20 +13,8 @@
   color: #6144E5;
 }
 
-@include media-tablet {
-  .promoText {
-    font-size: 30px;
-  }
-}
-
 @include media-mobile {
   .promoText {
     display: none;
-    /* width: 100%;
-    font-size: 22px;
-    line-height: 1.4;
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-    padding-top: 70px; */
   }
 }
