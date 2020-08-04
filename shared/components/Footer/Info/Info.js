@@ -8,7 +8,6 @@ import { constants } from 'helpers'
 import ProgressBar from '../ProgressBar/ProgressBar'
 
 
-const isDark = localStorage.getItem(constants.localStorage.isDark)
 class Info extends React.Component {
 
   static propTypes = {
@@ -42,7 +41,7 @@ class Info extends React.Component {
     const onlinePeersHack = onlineUsers >= 0 ? onlineUsers : 1
 
     return (
-      <div styleName={`title ${isOnline ? 'online' : 'offline'} ${isDark ? '--dark' : ''}`}>
+      <div styleName={`title ${isOnline ? 'online' : 'offline'}`}>
         <em></em>
         {!isOnline &&
           <span>Offline</span>

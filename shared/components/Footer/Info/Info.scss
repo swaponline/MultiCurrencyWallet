@@ -71,20 +71,3 @@
     color: rgba(51, 51, 51, 0.6);
   }
 }
-
-@include media-tablet {
-  .title {
-    font-size: 16px;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .title {
-    font-size: 8px;
-    height: 25px;
-    top: 2px;
-    bottom: auto;
-    left: 2px;
-    margin: 2px 5px;
-  }
-}
