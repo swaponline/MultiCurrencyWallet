@@ -330,7 +330,7 @@
 
 .formExchange {
   position: relative;
-  margin-bottom: 30px;
+  margin-bottom: 44px;
   padding: 45px 33px 35px;
   width: 460px;
   margin-left: auto;
@@ -515,6 +515,13 @@
   right: 0;
   bottom: -1.7em;
   text-decoration: underline;
+  font-size: 13px;
+}
+
+.networkStatusPlace {
+  position: absolute;
+  left: 0;
+  bottom: -1.7em;
   font-size: 13px;
 }
 

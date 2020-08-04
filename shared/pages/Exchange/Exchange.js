@@ -31,6 +31,7 @@ import helpers, { constants, links } from "helpers";
 import { animate } from "helpers/domUtils";
 import Switching from "components/controls/Switching/Switching";
 import CustomDestAddress from "./CustomDestAddress/CustomDestAddress";
+import NetworkStatus from 'components/NetworkStatus/NetworkStatus'
 import Orders from "../Home/Home"
 
 const allowedCoins = [
@@ -95,6 +96,7 @@ const subTitle = (sell, sellTicker, buy, buyTicker) => (
 
 const isWidgetBuild = config && config.isWidget;
 const bannedPeers = {}; // Пиры, которые отклонили запрос на свап, они будут понижены в выдаче
+
 
 @injectIntl
 @connect(
@@ -1598,6 +1600,11 @@ export default class Exchange extends Component {
               <FormattedMessage id="orders128" defaultMessage="Create offer" />
             </Button>
           </div>
+
+          <div styleName="networkStatusPlace">
+            <NetworkStatus />
+          </div>
+
           {!isWidgetBuild && (
             <a
               href="https://generator.swaponline.site/generator/"

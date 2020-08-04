@@ -2,11 +2,22 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import cssModules from 'react-css-modules'
-import styles from './Info.scss'
+import { connect } from 'redaction'
+
+import styles from './NetworkStatus.scss'
 import { constants } from 'helpers'
 
 
-class Info extends React.Component {
+@connect(
+  ({
+    ipfs,
+  }) => ({
+    isOnline: ipfs.isOnline,
+    onlineUsers: ipfs.onlineUsers,
+  })
+)
+@cssModules(styles, { allowMultiple: true })
+export default class NetworkStatus extends React.Component {
 
   static propTypes = {
     isOnline: PropTypes.bool.isRequired,
@@ -40,5 +51,3 @@ class Info extends React.Component {
     )
   }
 }
-
-export default cssModules(Info, styles, { allowMultiple: true })
