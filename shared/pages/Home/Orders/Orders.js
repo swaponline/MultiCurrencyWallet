@@ -14,7 +14,6 @@ import styles from './Orders.scss'
 import { Button } from 'components/controls'
 import Panel from 'components/ui/Panel/Panel'
 import Table from 'components/tables/Table/Table'
-//import Title from 'components/PageHeadline/Title/Title'
 import tableStyles from 'components/tables/Table/Table.scss'
 import Toggle from 'components/controls/Toggle/Toggle'
 
@@ -64,14 +63,18 @@ export default class Orders extends Component {
     isShowAllMyOrders: true,
   }
 
-  static getDerivedStateFromProps({ orders }) {
+  static getDerivedStateFromProps({ orders, sellCurrency, buyCurrency }) {
     if (!Array.isArray(orders)) { return }
 
-    const sellOrders = orders
-      .filter(order => Pair.fromOrder(order).isAsk())
+    const sellOrders = orders.filter(order =>
+      order.buyCurrency.toLowerCase() === buyCurrency &&
+      order.sellCurrency.toLowerCase() === sellCurrency
+    )
 
-    const buyOrders = orders
-      .filter(order => Pair.fromOrder(order).isBid())
+    const buyOrders = orders.filter(order =>
+      order.buyCurrency.toLowerCase() === sellCurrency &&
+      order.sellCurrency.toLowerCase() === buyCurrency
+    )
 
     return {
       buyOrders,
@@ -111,7 +114,7 @@ export default class Orders extends Component {
   }
 
   render() {
-    const { sellOrders, buyOrders, isShowAllMyOrders } = this.state
+    const { buyOrders, sellOrders, isShowAllMyOrders } = this.state
     let { sellCurrency, buyCurrency, intl, decline } = this.props
     const { history } = this.props
 
@@ -119,13 +122,13 @@ export default class Orders extends Component {
     sellCurrency = sellCurrency.toUpperCase()
 
     const titles = [
-      <FormattedMessage id="orders101" defaultMessage="OWNER" />,
+      ' ',
       <FormattedMessage id="orders102" defaultMessage="AMOUNT" />,
       <span>
         <FormattedMessage id="orders104" defaultMessage="PRICE FOR 1 {buyCurrency}" values={{ buyCurrency: `${buyCurrency}` }} />
       </span>,
       <FormattedMessage id="orders105" defaultMessage="TOTAL" />,
-      <FormattedMessage id="orders106" defaultMessage="START EXCHANGE" />,
+      ' ',
     ]
 
 
@@ -238,7 +241,7 @@ export default class Orders extends Component {
             id="table_exchange"
             className={tableStyles.exchange}
             titles={titles}
-            rows={sellOrders}
+            rows={buyOrders}
             rowRender={(row) => (
               <Row
                 key={row.id}
@@ -249,7 +252,7 @@ export default class Orders extends Component {
                 removeOrder={this.removeOrder}
               />
             )}
-            isLoading={sellOrders.length === 0 && !isIpfsLoaded}
+            isLoading={buyOrders.length === 0 && !isIpfsLoaded}
           />
         </Panel>
 
@@ -275,7 +278,7 @@ export default class Orders extends Component {
             id="table_exchange"
             className={tableStyles.exchange}
             titles={titles}
-            rows={buyOrders}
+            rows={sellOrders}
             rowRender={(row) => (
               <Row
                 key={row.id}
@@ -286,7 +289,7 @@ export default class Orders extends Component {
                 removeOrder={this.removeOrder}
               />
             )}
-            isLoading={buyOrders.length === 0 && !isIpfsLoaded}
+            isLoading={sellOrders.length === 0 && !isIpfsLoaded}
           />
         </Panel>
         {seoPage && seoPage.footer && <div>{seoPage.footer}</div>}

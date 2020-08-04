@@ -31,8 +31,8 @@ export default class MyOrders extends PureComponent {
           <thead>
             <tr>
               {
-                titles.map(title =>
-                  <th>{title}</th>
+                titles.map((title, index) =>
+                  <th key={index}>{title}</th>
                 )
               }
             </tr>
