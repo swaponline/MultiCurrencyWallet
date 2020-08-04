@@ -382,6 +382,18 @@ export default class Row extends Component {
 
     const { amount, total, main, base, type } = pair
 
+    const formatCrypto = (value, currency) => {
+      if (currency === 'USDT' || currency == 'EUR') {
+        return String(value.toFixed(2))
+      } else {
+        if (Number(value) > 10) {
+          return String(value.toFixed(5))
+        } else {
+          return String(value.toFixed(8))
+        }
+      }
+    }
+
     return (
       <tr
         styleName={peer === ownerPeer ? 'mobileRowRemove' : 'mobileRowStart'}
@@ -395,7 +407,7 @@ export default class Row extends Component {
                   ? (<FormattedMessage id="RowMobileFirstTypeYouHave" defaultMessage="You have" />)
                   : (<FormattedMessage id="RowMobileFirstTypeYouGet" defaultMessage="You get" />)}
               </span>
-              <span>{`${String(amount)} ${main}`}</span>
+              <span>{`${formatCrypto(amount, main)} ${main}`}</span>
             </div>
             <div><i className="fas fa-exchange-alt" /></div>
             <div styleName="tdContainer-2">
@@ -404,7 +416,7 @@ export default class Row extends Component {
                   ? (<FormattedMessage id="RowMobileSecondTypeYouGet" defaultMessage="You get" />)
                   : (<FormattedMessage id="RowMobileSecondTypeYouHave" defaultMessage="You have" />)}
               </span>
-              <span>{`${String(total)} ${base}`}</span>
+              <span>{`${formatCrypto(total, base)} ${base}`}</span>
             </div>
             <div styleName="tdContainer-3">
               {

@@ -6,6 +6,10 @@ $information-footer-height: 44px;
   &.dark {
     background-color: #222427;
   }
+
+  &.mobile {
+    padding-bottom: 60px; // mobile nav height
+  }
 }
 
 .inRow {

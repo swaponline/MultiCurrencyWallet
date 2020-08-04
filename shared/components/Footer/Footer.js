@@ -27,6 +27,7 @@ const Footer = (props) => {
           className={cx({
             [styles.footer]: true,
             [styles.dark]: isDark,
+            [styles.mobile]: isMobile,
           })}
         >
           <WidthContainer styleName="container">
