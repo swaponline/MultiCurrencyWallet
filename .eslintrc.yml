@@ -32,7 +32,6 @@ parserOptions:
     classes: true
     defaultParams: true
     templateStrings: true
-    legacyDecorators: true
 
 extends: ['eslint-config-airbnb']
 

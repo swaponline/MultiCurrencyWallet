@@ -13,7 +13,6 @@ import myEn from 'localisation/en.json'
 import myRu from 'localisation/ru.json'
 
 
-
 import { reduceMessages, defaultLocale, localisePrefix } from 'helpers/locale'
 
 
@@ -40,7 +39,7 @@ export default class IntlProviderContainer extends Component {
             }
 
             const messages = translations[currentLocale]
-
+            
             return (
               <IntlProvider {...props} key={currentLocale} locale={currentLocale} defaultLocale={defaultLocale()} messages={messages}>
                 {children}
