@@ -976,25 +976,25 @@ export default class Exchange extends Component {
   }
 
   customWalletAllowed() {
-    const { haveCurrency, getCurrency } = this.state;
+    const { haveCurrency, getCurrency } = this.state
 
-    if (haveCurrency === "btc") {
+    if (haveCurrency === 'btc') {
       // btc-token
-      if (config.erc20[getCurrency] !== undefined) return true;
+      if (config.erc20[getCurrency] !== undefined) return true
       // btc-eth
-      if (getCurrency === "eth") return true;
+      if (getCurrency === 'eth') return true
     }
     if (config.erc20[haveCurrency] !== undefined) {
       // token-btc
-      if (getCurrency === "btc") return true;
+      if (getCurrency === 'btc') return true
     }
 
-    if (haveCurrency === "eth") {
+    if (haveCurrency === 'eth') {
       // eth-btc
-      if (getCurrency === "btc") return true;
+      if (getCurrency === 'btc') return true
     }
 
-    return false;
+    return false
   }
 
   checkPair = () => {
@@ -1350,7 +1350,7 @@ export default class Exchange extends Component {
                           : BigNumber(balance)
                             .dp(5, BigNumber.ROUND_FLOOR).toString()
                         }
-                        {"  "}
+                        {'  '}
                         {haveCurrency.toUpperCase()}
                       </>
                     )}
@@ -1451,7 +1451,7 @@ export default class Exchange extends Component {
           )}
           {isDeclinedOffer && (
             <p styleName="error link" onClick={() => this.handleGoDeclimeFaq()}>
-              {" "}
+              {' '}
               {/* eslint-disable-line */}
               <FormattedMessage
                 id="PartialOfferCantProceed1"
@@ -1463,7 +1463,7 @@ export default class Exchange extends Component {
                       role="button"
                       onClick={() => this.handleGoDeclimeFaq()}
                     >
-                      {" "}
+                      {' '}
                       {/* eslint-disable-line */}
                       <FormattedMessage
                         id="PartialOfferCantProceed1_1"
@@ -1584,31 +1584,6 @@ export default class Exchange extends Component {
               openScan={this.openScan}
             />
           )}
-          {/*
-          <Fragment>
-            <div styleName="walletToggle walletToggle_site">
-              <div styleName="walletOpenSide" className="data-tut-togle">
-                <Toggle checked={!customWalletUse} onChange={this.handleCustomWalletUse} />
-                <span styleName="specify">
-                  <FormattedMessage id="UseAnotherWallet" defaultMessage="Specify the receiving wallet address" />
-                </span>
-              </div>
-              <div styleName={!customWalletUse ? "anotherRecepient anotherRecepient_active" : "anotherRecepient"}>
-                <div styleName="walletInput">
-                  <Input
-                    inputCustomStyle={{ fontSize: "15px" }}
-                    required
-                    disabled={customWalletUse}
-                    valueLink={linked.customWallet}
-                    pattern="0-9a-zA-Z"
-                    placeholder="Enter the receiving wallet address"
-                  />
-                  <i styleName="qrCode" className="fas fa-qrcode" onClick={this.openScan} />
-                </div>
-              </div>
-            </div>
-          </Fragment>
-          */}
           <div styleName="rowBtn">
             <Button
               className="data-tut-Exchange"

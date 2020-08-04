@@ -30,7 +30,7 @@
       display: none;
       padding-left: 10px;
     }
-    em {
+    .mark {
       display: inline-block;
       width: 0.5em;
       height: 0.5em;
@@ -46,7 +46,7 @@
     }
   }
   &.online {
-    em {
+    .mark {
       background: #4dd3ab;
     }
   }

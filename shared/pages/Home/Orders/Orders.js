@@ -14,7 +14,7 @@ import styles from './Orders.scss'
 import { Button } from 'components/controls'
 import Panel from 'components/ui/Panel/Panel'
 import Table from 'components/tables/Table/Table'
-import Title from 'components/PageHeadline/Title/Title'
+//import Title from 'components/PageHeadline/Title/Title'
 import tableStyles from 'components/tables/Table/Table.scss'
 import Toggle from 'components/controls/Toggle/Toggle'
 
@@ -168,12 +168,15 @@ export default class Orders extends Component {
         <PageSeo
           location={location}
           defaultTitle={intl.formatMessage(title.metaTitle, { buyCurrency, sellCurrency, buyCurrencyFullName, sellCurrencyFullName })}
-          defaultDescription={intl.formatMessage(description.metaDescription, { buyCurrency, sellCurrency, buyCurrencyFullName, sellCurrencyFullName })} />
-        {invalidPair &&
+          defaultDescription={intl.formatMessage(description.metaDescription, { buyCurrency, sellCurrency, buyCurrencyFullName, sellCurrencyFullName })}
+        />
+
+        {/* {invalidPair &&
           <p>
             <FormattedMessage id="Orders141" defaultMessage="No such ticker. Redirecting to USDT-BTC exchange..." />
           </p>
-        }
+        } */}
+
         <div styleName={buttonsRowStyleName}>
           {
             (isWidget && !config.isFullBuild) && (

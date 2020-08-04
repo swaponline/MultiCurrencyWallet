@@ -70,7 +70,10 @@ export default class Home extends Component {
   componentDidUpdate({ buy: prevBuy, sell: prevSell }) {
     const { buy, sell } = this.props
     if (buy !== prevBuy || sell !== prevSell) {
-      this.createNewState({ buyCurrency: buy, sellCurrency: sell })
+      this.createNewState({
+        buyCurrency: buy,
+        sellCurrency: sell,
+      })
     }
   }
 
@@ -169,59 +172,57 @@ export default class Home extends Component {
     const isWidgetBuild = config && config.isWidget
     return (
       <section styleName={isWidgetBuild ? `${sectionContainerStyleName} ${sectionContainerStyleName}_widget` : sectionContainerStyleName}>
-        <PageHeadline>
-          {
-            history.location && history.location.pathname === exchange ? (
-              <Fragment>
-                <CurrencyDirectionChooser
-                  handleSellCurrencySelect={this.handleSellCurrencySelect}
-                  handleBuyCurrencySelect={this.handleBuyCurrencySelect}
-                  handleSubmit={this.handleShowOrders}
-                  buyCurrency={buyCurrency}
-                  sellCurrency={sellCurrency}
-                  flipCurrency={this.flipCurrency}
-                  currencies={currencies}
-                />
-                <div styleName="videoContainer">
-                  <Center relative centerVertically={false}>
-                    <SubTitle>
-                      <FormattedMessage id="Home153" defaultMessage="What is atomic swap?" />
-                    </SubTitle>
-                  </Center>
+        {
+          history.location && history.location.pathname === exchange ? (
+            <PageHeadline>
+              <CurrencyDirectionChooser
+                handleSellCurrencySelect={this.handleSellCurrencySelect}
+                handleBuyCurrencySelect={this.handleBuyCurrencySelect}
+                handleSubmit={this.handleShowOrders}
+                buyCurrency={buyCurrency}
+                sellCurrency={sellCurrency}
+                flipCurrency={this.flipCurrency}
+                currencies={currencies}
+              />
+              <div styleName="videoContainer">
+                <Center relative centerVertically={false}>
+                  <SubTitle>
+                    <FormattedMessage id="Home153" defaultMessage="What is atomic swap?" />
+                  </SubTitle>
+                </Center>
 
-                  <div styleName="videoFaqContainer">
-                    <iframe
-                      title="What1 is atomic swap?"
-                      width="700"
-                      height="480"
-                      src="https://www.youtube.com/embed/Jhrb7xOT_7s"
-                      frameBorder="0"
-                      allow="autoplay; encrypted-media"
-                      allowFullScreen
-                    />
-                    <div styleName="faqContainer" >
-                      {
-                        links.faq.map((question, idx) =>
-                          <FaqExpandableItem key={idx} {...question} />
-                        )
-                      }
-                    </div>
+                <div styleName="videoFaqContainer">
+                  <iframe
+                    title="What1 is atomic swap?"
+                    width="700"
+                    height="480"
+                    src="https://www.youtube.com/embed/Jhrb7xOT_7s"
+                    frameBorder="0"
+                    allow="autoplay; encrypted-media"
+                    allowFullScreen
+                  />
+                  <div styleName="faqContainer" >
+                    {
+                      links.faq.map((question, idx) =>
+                        <FaqExpandableItem key={idx} {...question} />
+                      )
+                    }
                   </div>
                 </div>
-              </Fragment>
-            ) : (
-                <Orders
-                  handleSellCurrencySelect={this.handleSellCurrencySelect}
-                  handleBuyCurrencySelect={this.handleBuyCurrencySelect}
-                  buyCurrency={buyCurrency}
-                  sellCurrency={sellCurrency}
-                  flipCurrency={this.flipCurrency}
-                  orderId={match.params && match.params.orderId}
-                  invalidPair={invalidPair}
-                />
-              )
-          }
-        </PageHeadline>
+              </div>
+            </PageHeadline>
+          ) : (
+            <Orders
+              handleSellCurrencySelect={this.handleSellCurrencySelect}
+              handleBuyCurrencySelect={this.handleBuyCurrencySelect}
+              buyCurrency={buyCurrency}
+              sellCurrency={sellCurrency}
+              flipCurrency={this.flipCurrency}
+              orderId={match.params && match.params.orderId}
+              invalidPair={invalidPair}
+            />
+          )
+        }
       </section>
     )
   }
