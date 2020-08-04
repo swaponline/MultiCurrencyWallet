@@ -446,7 +446,7 @@
   },
   {
     "id": "MyOrders23",
-    "message": "Ваши ордера",
+    "message": "Ваши предложения",
     "files": [
       "shared/pages/Home/Orders/MyOrders/MyOrders.js"
     ]
@@ -1179,7 +1179,7 @@
   },
   {
     "id": "orders128",
-    "message": "Создать ордер",
+    "message": "Создать предложение",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
@@ -1908,7 +1908,7 @@
   },
   {
     "id": "orders159",
-    "message": "Предложения {sell}",
+    "message": "Предложения {currency}",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]

@@ -32,7 +32,6 @@ const Footer = (props) => {
           <WidthContainer styleName="container">
             <SwitchLang {...props} />
             {!config.isWidget && <SocialMenu />}
-            <span styleName="date">{config.time}</span>
           </WidthContainer>
         </div>
       )}

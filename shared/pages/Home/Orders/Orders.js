@@ -222,7 +222,7 @@ export default class Orders extends Component {
             <h3 styleName="ordersHeading">
               <FormattedMessage
                 id="orders159"
-                defaultMessage={`{currency} offers`}
+                defaultMessage="{currency} offers"
                 values={{ currency: `${buyCurrency}` }} />
             </h3>
             <div styleName="subtitle">
@@ -257,14 +257,14 @@ export default class Orders extends Component {
           <Fragment>
             <h3 styleName="ordersHeading">
               <FormattedMessage
-                id="orders186"
-                defaultMessage={`{currency} offers`}
+                id="orders159"
+                defaultMessage="{currency} offers"
                 values={{ currency: `${sellCurrency}` }} />
             </h3>
             <div styleName="subtitle">
               <FormattedMessage
-                id="orders224"
-                defaultMessage="Sell {currency} here"
+                id="orders156"
+                defaultMessage="Buy {currency} here"
                 values={{ currency: `${sellCurrency}` }}
               />
             </div>
