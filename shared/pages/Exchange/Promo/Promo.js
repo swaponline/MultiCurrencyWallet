@@ -12,7 +12,7 @@ const Promo = ({ className, subTitle }) => (
   <div styleName="promo">
     <div styleName="promoWrap">
       <PromoText subTitle={subTitle} />
-      <CurrencySlider />
+      {/*<CurrencySlider />*/}
     </div>
   </div>
 )

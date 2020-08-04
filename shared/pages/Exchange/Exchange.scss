@@ -58,9 +58,6 @@
     }
   }
 
-  .section {
-    padding-top: 70px;
-  }
 }
 
 .informAbt {
@@ -69,14 +66,7 @@
 }
 
 .promoContainer {
-  min-height: 100vh;
   position: relative;
-  background: #f5f5f5;
-  margin-bottom: 100px;
-
-  @media screen and (max-width: 480px) {
-    min-height: unset;
-  }
 
   &.--dark {
     background: #222427;
@@ -119,16 +109,6 @@
     }
   }
 
-  &:before {
-    position: absolute;
-    content: '';
-    background: #6144e5;
-    right: 0;
-    width: 32%;
-    z-index: 100;
-    height: 100%;
-    top: 0;
-  }
 }
 
 .darkForm {
@@ -193,26 +173,12 @@
 }
 
 .exchangeWrap {
-  color: #000;
-  width: 100vw;
   position: relative;
-  left: 50%;
-  margin-left: -50vw;
-
-  @media screen and (max-width: 480px) {
-    overflow-y: scroll;
-  }
-
-  @media screen and (max-width: 480px) {
-    padding-top: 25px;
-  }
 }
 
 .container {
-  display: flex;
   max-width: 1200px;
-  margin: auto;
-  padding: 20vmin 2% 10vmin;
+  margin: 0 auto;
 }
 
 .IsSearching {
@@ -228,6 +194,7 @@
   border-radius: 3px;
   height: 68px;
   font-size: 16px;
+  line-height: 1em;
   flex-basis: 47%;
   box-shadow: none;
 }
@@ -258,15 +225,10 @@
   margin-bottom: -10px;
 }
 
-.alignCenter {
-  display: flex;
-  align-items: center;
-  margin-top: -88px;
-}
-
 .rowBtn {
+  margin-top: 0.5em;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .buttonOrders {
@@ -340,10 +302,8 @@
 }
 
 .section {
-  padding-top: 100px;
 
   @media screen and (max-width: 480px) {
-    height: calc(100vh - 120px);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -371,9 +331,11 @@
 
 .formExchange {
   position: relative;
-  margin-top: -100px;
-  padding: 50px 40px;
+  margin-bottom: 44px;
+  padding: 45px 33px 35px;
   width: 460px;
+  margin-left: auto;
+  margin-right: auto;
   z-index: 100;
   background: #ffffff;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
@@ -551,15 +513,17 @@
 
 .widgetLink {
   position: absolute;
-  left: 16.8em;
-  color: white;
-  bottom: -3em;
+  right: 0;
+  bottom: -1.7em;
   text-decoration: underline;
+  font-size: 13px;
+}
 
-  &:hover {
-    color: white;
-    text-decoration: underline;
-  }
+.networkStatusPlace {
+  position: absolute;
+  left: 0;
+  bottom: -1.7em;
+  font-size: 13px;
 }
 
 .mobileDubleHeader {
@@ -577,12 +541,6 @@
 }
 
 @media (max-width: 1200px) {
-  .exchangeWrap {
-    width: auto;
-    left: 0;
-    margin: 0 -2%;
-  }
-
   .referralText {
     padding: 0 2em;
   }
@@ -591,18 +549,6 @@
 @include media-tablet {
   .blockVideo {
     flex-basis: 50%;
-  }
-
-  .widgetLink {
-    left: 16.5em;
-    color: #297df1;
-    text-decoration: underline;
-    font-family: 'Roboto Mono', monospace;
-
-    &:hover {
-      color: #297df1;
-      text-decoration: underline;
-    }
   }
 
   .block {
@@ -626,24 +572,6 @@
     }
   }
 
-  .promoContainer {
-    &::before {
-      display: none;
-    }
-  }
-
-  .exchangeWrap {
-    margin: 0 -40px;
-  }
-
-  .container {
-    flex-direction: column;
-  }
-
-  .alignCenter {
-    height: auto;
-    padding: 50px 0 90px;
-  }
 }
 
 @media all and (min-width: 320px) and (max-width: 830px) {
@@ -658,10 +586,6 @@
     flex-direction: column-reverse;
     max-width: 830px;
     margin: auto;
-  }
-
-  .section {
-    padding-top: 120px;
   }
 
   .button {
@@ -690,12 +614,6 @@
 
   .TitleHolder {
     width: 100%;
-  }
-}
-
-@media all and (max-width: 570px) {
-  .section {
-    padding-top: 150px;
   }
 }
 
@@ -761,11 +679,6 @@
     margin-top: 10px;
   }
 
-  .widgetLink {
-    left: 51%;
-    color: #297df1;
-  }
-
   .IsSearching {
     font-size: 12px;
   }
@@ -776,46 +689,10 @@
     font-size: 10px;
   }
 
-  .exchangeWrap {
-    margin: 0 -20px;
-  }
-
-  .container {
-    flex-direction: column-reverse;
-    width: 100%;
-    height: auto;
-    align-items: normal;
-    padding-top: 0;
-    padding: 0;
-
-    @media screen and (max-width: 480px) {
-      display: flex;
-      align-items: center;
-      height: calc(100vh - 125px);
-      margin: 0;
-    }
-  }
-
-  .promoContainer {
-    background: #ffffff;
-    padding: 60px 0;
-    margin-bottom: 60px;
-
-    @media screen and (max-width: 480px) {
-      padding: 0;
-      margin-bottom: 0;
-    }
-
-    &::before {
-      display: none;
-    }
-  }
-
   .formExchange {
     width: 100%;
-    padding: 50px 15px;
-    border-radius: 0;
-    box-shadow: none;
+    padding: 30px 15px;
+    border-radius: 4px;
   }
 
   .section {
@@ -828,43 +705,5 @@
     font-weight: 500;
     line-height: 19px;
     font-size: 13px;
-  }
-}
-
-// @media all and (min-width: 450px) and (max-width: 568px) {
-//   .section {
-//     margin: auto;
-//   }
-//   .formExchange {
-//     width: 400px;
-//   }
-
-//   .widgetLink {
-//     left: 14.5em;
-//     color: #297df1;
-//     text-decoration: underline;
-
-//     &:hover {
-//       color: #297df1;
-//       text-decoration: underline;
-//     }
-//   }
-
-//   .switchButton {
-//     left: 20.5em;
-//     top: 6.5em;
-//   }
-// }
-
-.widgetExchangeWrap {
-  width: 100vw;
-  left: auto;
-  margin: 0;
-}
-
-@media screen and (max-width: 320px) {
-  .exchangeWrap {
-    height: calc(100vh - 120px);
-    margin: 10px -20px;
   }
 }

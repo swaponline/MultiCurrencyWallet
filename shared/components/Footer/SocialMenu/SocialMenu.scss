@@ -2,16 +2,12 @@
   display: flex;
   list-style: none;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 15px;
   margin-bottom: 0;
   padding: 0;
 
   & li {
-    margin-right: 18px;
-
-    &:last-child {
-      margin-right: 0;
-    }
+    margin: 0 5px;
   }
 }
 
@@ -31,9 +27,5 @@
   .social-menu {
     flex-wrap: wrap;
     justify-content: center;
-
-    li {
-      margin-right: 10px;
-    }
   }
 }
