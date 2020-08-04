@@ -183,33 +183,37 @@ export default class Orders extends Component {
             )
           }
         </div>
-        <Panel
-          header={
-            <Fragment>
-              <h3>
-                <FormattedMessage id="MyOrders23" defaultMessage="Your offers" />
-                {' '}
-                <span>{ isShowAllMyOrders ? `(${myOrders.length})` : `(${myOrdersThisMarket.length}/${myOrders.length})` }</span>
-              </h3>
-              <div styleName="subtitle showAllSwitch">
-                <FormattedMessage
-                  id="orders1381"
-                  defaultMessage="{buyCurrency}🔁{sellCurrency}"
-                  values={{ buyCurrency, sellCurrency }}
-                />
-                <Toggle checked={isShowAllMyOrders} onChange={this.handleShowAllMyOrders} />
-                <FormattedMessage id="orders1382" defaultMessage="All" />
-              </div>
-            </Fragment>
-          }
-        >
-          <MyOrders
-            myOrders={isShowAllMyOrders ? myOrders : myOrdersThisMarket}
-            declineRequest={this.declineRequest}
-            removeOrder={this.removeOrder}
-            acceptRequest={this.acceptRequest}
-          />
-        </Panel>
+
+        { !!myOrders.length &&
+          <Panel
+            header={
+              <Fragment>
+                <h3>
+                  <FormattedMessage id="MyOrders23" defaultMessage="Your offers" />
+                  {' '}
+                  <span>{ isShowAllMyOrders ? `(${myOrders.length})` : `(${myOrdersThisMarket.length}/${myOrders.length})` }</span>
+                </h3>
+                <div styleName="subtitle showAllSwitch">
+                  <FormattedMessage
+                    id="orders1381"
+                    defaultMessage="{buyCurrency}🔁{sellCurrency}"
+                    values={{ buyCurrency, sellCurrency }}
+                  />
+                  <Toggle checked={isShowAllMyOrders} onChange={this.handleShowAllMyOrders} />
+                  <FormattedMessage id="orders1382" defaultMessage="All" />
+                </div>
+              </Fragment>
+            }
+          >
+            <MyOrders
+              myOrders={isShowAllMyOrders ? myOrders : myOrdersThisMarket}
+              declineRequest={this.declineRequest}
+              removeOrder={this.removeOrder}
+              acceptRequest={this.acceptRequest}
+            />
+          </Panel>
+        }
+
         <Panel header={
           <Fragment>
             <h3 styleName="ordersHeading">
@@ -245,6 +249,7 @@ export default class Orders extends Component {
             isLoading={sellOrders.length === 0 && !isIpfsLoaded}
           />
         </Panel>
+
         <Panel header={
           <Fragment>
             <h3 styleName="ordersHeading">
