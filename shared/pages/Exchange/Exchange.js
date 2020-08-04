@@ -1622,14 +1622,6 @@ export default class Exchange extends Component {
             <Button gray styleName="button" onClick={this.createOffer}>
               <FormattedMessage id="orders128" defaultMessage="Create offer" />
             </Button>
-            {/*<Button
-              className="data-tut-Orderbook"
-              styleName="button buttonOrders"
-              gray
-              onClick={() => this.handlePush(isWidgetLink)}
-            >
-              <FormattedMessage id="partial544" defaultMessage="Order book" />
-            </Button>*/}
           </div>
           {!isWidgetBuild && (
             <a
