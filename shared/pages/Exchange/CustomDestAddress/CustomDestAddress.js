@@ -235,14 +235,14 @@ export default class CustomDestAddress extends Component {
                 <input value={metamaskAddress} onChange={() => { }} />
               </div>
             ) : (
-                <Button
-                  styleName="button"
-                  blue
-                  onClick={() => { this.handleConnectMetamask() }}
-                >
-                  <FormattedMessage {...langLabels.connectMetamask} />
-                </Button>
-              )}
+              <Button
+                styleName="button"
+                blue
+                onClick={() => { this.handleConnectMetamask() }}
+              >
+                <FormattedMessage {...langLabels.connectMetamask} />
+              </Button>
+            )}
           </Fragment>
         )}
         {selectedDestination === destinationType.custom && (

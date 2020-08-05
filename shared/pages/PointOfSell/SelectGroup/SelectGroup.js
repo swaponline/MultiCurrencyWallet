@@ -55,7 +55,7 @@ const SelectGroup = (props) => {
         }
         {inputToolTip && inputToolTip()}
         <CurrencySelect
-          name="All"
+          //name="All"
           label={label}
           tooltip={tooltip}
           switchBalanceFunc={switchBalanceFunc}

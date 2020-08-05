@@ -1,6 +1,5 @@
 .customDestination {
   position: relative;
-  height: 4em;
 
   &.--dark {
     color: white;
@@ -47,6 +46,12 @@
     height: auto;
   }
 
+  &.--dark {
+    & > div {
+      background: #222427
+    }
+  }
+
   & > div {
     padding-left: 0px;
     background: #fff;
@@ -82,7 +87,7 @@
     border-radius: 3px;
     vertical-align: middle;
     line-height: 68px;
-    color: #080808;
+    //color: #080808;
     font-size: 1em;
     padding: 0.5em;
     border: 1px solid #ccc;
@@ -95,6 +100,8 @@
     }
   }
 }
+
+
 
 .customWallet {
   margin-bottom: 15px;
@@ -112,11 +119,23 @@
   .qrCode {
     position: absolute;
     right: -2em;
-    background: #fff;
+    background-color: #fff;
     border: 6px solid #fff;
     display: block;
   }
 }
+
+.customDestination {
+  &.--dark {
+    .customWallet {
+      .qrCode {
+        background-color: #222427;
+        border-color: #222427;
+      }
+    }
+  }
+}
+
 
 .button {
   margin-top: 0;

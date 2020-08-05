@@ -1,8 +1,8 @@
 .removeButton {
-  width: 40px;
-  height: 40px;
+  width: 25px;
+  height: 25px;
   background: #e91db4 url('./images/delete.svg') 50% 50% no-repeat;
-  background-size: 16px;
+  background-size: 12px;
   cursor: pointer;
   @include inline-block;
   opacity: 0.5;
