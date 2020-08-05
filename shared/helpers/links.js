@@ -15,7 +15,7 @@ const linksManager = {
   wallets: '/wallets',
   send: '/withdraw',
   savePrivateSeed: '/savePrivateSeed',
-  savePrivateKeys: "/savePrivateKeys",
+  savePrivateKeys: '/savePrivateKeys',
   currencyWallet: '/wallet',
   swap: '/swaps',
   feed: '/feed',
@@ -185,5 +185,4 @@ window.getTokenWallet = getTokenWallet
 export const getFullOrigin = () => `${location.origin}${location.pathname}#`
 
 
-export default linksManager;
-
+export default linksManager

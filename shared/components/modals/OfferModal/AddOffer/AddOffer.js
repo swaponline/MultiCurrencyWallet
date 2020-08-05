@@ -63,7 +63,7 @@ export default class AddOffer extends Component {
       isTokenBuy: false,
       isPartial: true,
       isSending: false,
-      manualRate: false,
+      manualRate: true,
       buyAmount: buyAmount || '',
       sellAmount: sellAmount || '',
       exchangeRate: exchangeRate || 1,
