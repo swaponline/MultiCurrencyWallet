@@ -199,7 +199,7 @@ const CreateWallet = (props) => {
 
     if (isIgnoreSecondStep && !currencies['Custom ERC20']) {
       Object.keys(currencies).forEach((currency) => {
-        actions.core.markCoinAsVisible(currency)
+        actions.core.markCoinAsVisible(currency, true)
       })
       localStorage.setItem(constants.localStorage.isWalletCreate, true)
       goHome()
@@ -223,7 +223,7 @@ const CreateWallet = (props) => {
           Object.keys(currencies).forEach(el => {
             if (currencies[el]) {
               const isWasOnWallet = localStorage.getItem('hiddenCoinsList').find(cur => cur.includes(`${el}:`))
-              actions.core.markCoinAsVisible(isWasOnWallet || el.toUpperCase())
+              actions.core.markCoinAsVisible(isWasOnWallet || el.toUpperCase(), true)
             }
           })
           break
@@ -232,7 +232,7 @@ const CreateWallet = (props) => {
             if (!actions.btcmultisig.checkSMSActivated()) {
               actions.modals.open(constants.modals.RegisterSMSProtected, {
                 callback: () => {
-                  actions.core.markCoinAsVisible('BTC (SMS-Protected)')
+                  actions.core.markCoinAsVisible('BTC (SMS-Protected)', true)
                   handleClick()
                 },
               })
@@ -246,13 +246,13 @@ const CreateWallet = (props) => {
               onAccept: () => {
                 actions.modals.open(constants.modals.RegisterSMSProtected, {
                   callback: () => {
-                    actions.core.markCoinAsVisible('BTC (SMS-Protected)')
+                    actions.core.markCoinAsVisible('BTC (SMS-Protected)', true)
                     handleClick()
                   },
                 })
               },
               onCancel: () => {
-                actions.core.markCoinAsVisible('BTC (SMS-Protected)')
+                actions.core.markCoinAsVisible('BTC (SMS-Protected)', true)
                 handleClick()
               },
             })
@@ -265,7 +265,7 @@ const CreateWallet = (props) => {
             if (!actions.btcmultisig.checkPINActivated()) {
               actions.modals.open(constants.modals.RegisterPINProtected, {
                 callback: () => {
-                  actions.core.markCoinAsVisible('BTC (PIN-Protected)')
+                  actions.core.markCoinAsVisible('BTC (PIN-Protected)', true)
                   handleClick()
                 },
               })
@@ -279,13 +279,13 @@ const CreateWallet = (props) => {
               onAccept: () => {
                 actions.modals.open(constants.modals.RegisterPINProtected, {
                   callback: () => {
-                    actions.core.markCoinAsVisible('BTC (PIN-Protected)')
+                    actions.core.markCoinAsVisible('BTC (PIN-Protected)', true)
                     handleClick()
                   },
                 })
               },
               onCancel: () => {
-                actions.core.markCoinAsVisible('BTC (PIN-Protected)')
+                actions.core.markCoinAsVisible('BTC (PIN-Protected)', true)
                 handleClick()
               },
             })
@@ -297,7 +297,7 @@ const CreateWallet = (props) => {
           if (currencies.BTC) {
             actions.modals.open(constants.modals.MultisignJoinLink, {
               callback: () => {
-                actions.core.markCoinAsVisible('BTC (Multisig)')
+                actions.core.markCoinAsVisible('BTC (Multisig)', true)
                 handleClick()
               },
               showCloseButton: false,

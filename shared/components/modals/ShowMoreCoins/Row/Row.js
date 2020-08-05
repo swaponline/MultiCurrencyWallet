@@ -13,11 +13,11 @@ import { withRouter } from 'react-router'
 export default class Row extends Component {
 
   isHidenCoin = () => {
-    actions.core.markCoinAsHidden(this.props.currency)
+    actions.core.markCoinAsHidden(this.props.currency, true)
   }
 
   isVisibleCoin = () => {
-    actions.core.markCoinAsVisible(this.props.currency)
+    actions.core.markCoinAsVisible(this.props.currency, true)
   }
 
   getCurrencyFullTitle = (currencyTitle, currencies) => {
