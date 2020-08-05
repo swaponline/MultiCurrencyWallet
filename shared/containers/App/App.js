@@ -28,6 +28,11 @@ import Seo from "components/Seo/Seo";
 
 import config from "helpers/externalConfig"
 
+import backupUserData from 'plugins/backupUserData'
+import redirectTo from 'helpers/redirectTo'
+import links from 'helpers/links'
+
+
 
 const memdown = require("memdown");
 
@@ -176,6 +181,24 @@ export default class App extends React.Component {
     }
 
     firebase.initialize();
+
+    if (backupUserData.isUserLoggedIn()
+      && backupUserData.isFirstBackup()
+    ) {
+      console.log('Do backup user')
+      backupUserData.backupUser()
+    }
+    if (backupUserData.isUserLoggedIn()
+      && backupUserData.isUserChanged()
+    ) {
+      console.log('do restore user')
+      backupUserData.restoreUser().then((isRestored) => {
+        console.log('is restored', isRestored)
+        if (isRestored) {
+          redirectTo(links.home)
+        }
+      })
+    }
   }
 
   componentDidMount() {

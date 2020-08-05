@@ -306,21 +306,25 @@ const getInformationAboutSwap = (swapId) => {
 
 const getHiddenCoins = () => getState().core.hiddenCoinsList || []
 
-const markCoinAsHidden = (coin) => {
+const markCoinAsHidden = (coin, doBackup) => {
   let list = getState().core.hiddenCoinsList || []
   if (!list.includes(coin)) {
     reducers.core.markCoinAsHidden(coin)
     localStorage.setItem(constants.localStorage.hiddenCoinsList, JSON.stringify(getState().core.hiddenCoinsList))
+
+    if (doBackup) actions.backupManager.serverBackup()
   }
 }
 
-const markCoinAsVisible = (coin) => {
+const markCoinAsVisible = (coin, doBackup) => {
   const { hiddenCoinsList } = constants.localStorage
 
   const findedCoin = JSON.parse(localStorage.getItem(hiddenCoinsList)).find(el => el.includes(coin) && el.includes(":"))
 
   reducers.core.markCoinAsVisible(findedCoin || coin)
   localStorage.setItem(hiddenCoinsList, JSON.stringify(getState().core.hiddenCoinsList))
+
+  if (doBackup) actions.backupManager.serverBackup()
 }
 
 const getWallet = (findCondition) => {

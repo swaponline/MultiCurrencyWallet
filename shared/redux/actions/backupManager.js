@@ -1,5 +1,7 @@
 import constants from 'helpers/constants'
 import getUnixTimeStamp from 'helpers/getUnixTimeStamp'
+import config from 'helpers/externalConfig'
+import backupUserData from 'plugins/backupUserData'
 
 
 const backupFields = [
@@ -16,6 +18,15 @@ const backupFields = [
   constants.privateKeyNames.btcPinMnemonicKey,
 ]
 
+
+const serverBackup = () => {
+  if (config
+    && config.opts
+    && config.opts.backupPlugin
+  ) {
+    backupUserData.backupUser()
+  }
+}
 
 const backup = (mark, label, overide) => {
   if (!label) label = new Date().toString()
@@ -120,6 +131,8 @@ const backupManager = {
   list,
   exists,
   get: exists,
+
+  serverBackup,
 }
 
 export default backupManager
