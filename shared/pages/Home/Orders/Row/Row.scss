@@ -1,24 +1,25 @@
 .mobileRowRemove,
 .mobileRowStart {
+
   .firstType,
   .secondType {
     color: gray;
     display: block;
   }
   .tdContainer-1 {
-    font-size: 14px;
+    position: relative;
   }
   .tdContainer-2 {
-    font-size: 14px;
+    position: relative;
   }
   .tdContainer-3 {
     position: relative;
   }
   .startButton {
-    font-size: 12px;
     width: auto;
     height: auto;
     padding: 0.8em 1em;
+    margin-left: 0.4em;
   }
   .onHover {
     top: 48%;
@@ -32,20 +33,18 @@
     transform: translateY(-50%);
   }
   .bigContainer {
+    font-size: 14px;
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
 }
-.mobileRowStart {
-  .tdContainer-3 {
-    position: relative;
-  }
-}
 
-
-@include media-min320-max800 {
-  .bigContainer {
-    width: 280px;
+@media screen and (max-width: 400px) {
+  .mobileRowRemove,
+  .mobileRowStart {
+    .bigContainer {
+      font-size: 12px;
+    }
   }
 }

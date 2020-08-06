@@ -5218,7 +5218,7 @@
   },
   {
     "id": "YourAssetsDescription",
-    "message": "Here you can safely store and quickly exchange  Bitcoin, Ethereum, {br} USD, Tether, and many other ERC-20 tokens.",
+    "message": "Here you can safely store and quickly exchange Bitcoin, Ethereum, {br} USDT and many other ERC-20 tokens.",
     "files": [
       "shared/pages/Wallet/CurrenciesList.js"
     ]
@@ -5232,7 +5232,7 @@
   },
   {
     "id": "MybalanceswalletNav",
-    "message": "My wallets",
+    "message": "My wallet",
     "files": [
       "shared/pages/Invoices/InvoicesList/index.js"
     ]
@@ -6098,7 +6098,7 @@
   },
   {
     "id": "ImportKeys_RestoreMnemonic",
-    "message": "I have my 12 words seed",
+    "message": "I have my 12 words",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
     ]

@@ -34,7 +34,7 @@ export default class NavMobile extends Component {
     const isExchange = location.pathname.includes(links.exchange);
 
     return (
-      <div styleName={`navbar ${isDark ? 'dark' : ''} ${isHidden ? 'navbar-hidden' : ''}`}>
+      <nav styleName={`navbar ${isDark ? 'dark' : ''} ${isHidden ? 'navbar-hidden' : ''}`}>
         {
           menu
             .filter(i => i.isMobile !== false)
@@ -72,7 +72,7 @@ export default class NavMobile extends Component {
                 )
             })
         }
-      </div>
+      </nav>
     )
   }
 }

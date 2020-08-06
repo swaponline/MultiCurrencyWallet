@@ -391,7 +391,7 @@ export default class Row extends Component {
         } else {
           return String(value.toFixed(8))
         }
-      }
+      }t
     }
 
     return (
@@ -409,7 +409,9 @@ export default class Row extends Component {
               </span>
               <span>{`${formatCrypto(amount, main)} ${main}`}</span>
             </div>
-            <div><i className="fas fa-exchange-alt" /></div>
+            <div>
+              <i className="fas fa-exchange-alt" />
+            </div>
             <div styleName="tdContainer-2">
               <span styleName="secondType">
                 {type === PAIR_TYPES.BID
