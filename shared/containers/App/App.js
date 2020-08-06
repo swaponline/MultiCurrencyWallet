@@ -176,29 +176,42 @@ export default class App extends React.Component {
       }
     }
 
-    if (!localStorage.getItem(constants.localStorage.demoMoneyReceived)) {
-      actions.user.getDemoMoney();
-    }
+    // if (!localStorage.getItem(constants.localStorage.demoMoneyReceived)) {
+    //   actions.user.getDemoMoney();
+    // }
 
     firebase.initialize();
 
-    if (backupUserData.isUserLoggedIn()
-      && backupUserData.isFirstBackup()
-    ) {
-      console.log('Do backup user')
-      backupUserData.backupUser()
-    }
-    if (backupUserData.isUserLoggedIn()
-      && backupUserData.isUserChanged()
-    ) {
-      console.log('do restore user')
-      backupUserData.restoreUser().then((isRestored) => {
-        console.log('is restored', isRestored)
-        if (isRestored) {
-          redirectTo(links.home)
+    this.processUserBackup()
+  }
+
+  processUserBackup () {
+    new Promise(async (resolve) => {
+      const hasServerBackup = await backupUserData.hasServerBackup()
+      console.log('has server backup', hasServerBackup)
+      if (backupUserData.isUserLoggedIn()
+        && backupUserData.isUserChanged()
+        && hasServerBackup
+      ) {
+        console.log('do restore user')
+        backupUserData.restoreUser().then((isRestored) => {
+          console.log('is restored', isRestored)
+          if (isRestored) {
+            redirectTo(links.home)
+            window.location.reload()
+          }
+        })
+      } else {
+        if (backupUserData.isUserLoggedIn()
+          && backupUserData.isFirstBackup()
+          || !hasServerBackup
+        ) {
+          console.log('Do backup user')
+          backupUserData.backupUser()
         }
-      })
-    }
+      }
+      resolve(`ready`)
+    })
   }
 
   componentDidMount() {
