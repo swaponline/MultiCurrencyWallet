@@ -14,6 +14,41 @@ const backupUserData = {
     const currentUser = localStorage.getItem(lsCurrentUser)
     return (!currentUser) ? true : false
   },
+  hasServerBackup: () => {
+    return new Promise((resolve) => {
+      if (config
+        && config.opts
+        && config.opts.plugins
+        && config.opts.plugins.backupPlugin
+        && config.opts.plugins.restorePluginUrl
+        && window
+        && window.WPuserUid
+        && window.WPuserHash
+      ) {
+        const set = (key, value) => localStorage.setItem(constants.privateKeyNames[key], value)
+
+        axios.post(config.opts.plugins.restorePluginUrl, {
+          WPuserUid: window.WPuserUid,
+          WPuserHash: window.WPuserHash,
+        }).then((req) => {
+          if (req
+            && req.data
+            && req.data.answer
+            && req.data.answer === `ok`
+            && req.data.data
+          ) {
+            resolve(true)
+          } else {
+            resolve(false)
+          }
+        }).catch((e) => {
+          resolve(false)
+        })
+      } else {
+        resolve(false)
+      }
+    })
+  },
   isUserChanged: () => {
     const currentUser = localStorage.getItem(lsCurrentUser)
 
