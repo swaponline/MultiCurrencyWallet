@@ -10,7 +10,6 @@ const saveUserData = function saveUserData(data) {
   const interval = window.setInterval(() => {
     const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
 
-    console.log('interval called')
     if (isWalletCreate
       && config
       && config.opts
@@ -19,7 +18,6 @@ const saveUserData = function saveUserData(data) {
       && window.WPuserUid
       && window.WPuserHash
     ) {
-      console.log('do save')
       const { user } = localStorage.getItem('redux-store')
 
       const curKeys = Object.keys(user).filter(el => {
