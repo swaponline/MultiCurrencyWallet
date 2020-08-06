@@ -38,7 +38,7 @@ const CurrenciesList = ({
       <p styleName="yourAssetsDescr">
         <FormattedMessage
           id="YourAssetsDescription"
-          defaultMessage="Здесь вы можете безопасно хранить и быстро обменивать Bitcoin, Ethereum, {br} USD, Tether и многочисленные токены ERC-20."
+          defaultMessage="Здесь вы можете безопасно хранить и быстро обменивать Bitcoin, Ethereum, {br} USDT и многочисленные токены ERC-20."
           values={{ br: <br /> }}
         />
       </p>

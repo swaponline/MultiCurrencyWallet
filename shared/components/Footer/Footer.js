@@ -23,7 +23,7 @@ const Footer = (props) => {
   return (
     <Fragment>
       {(!config.isWidget || config.isFullBuild) && (
-        <div
+        <footer
           className={cx({
             [styles.footer]: true,
             [styles.dark]: isDark,
@@ -34,7 +34,7 @@ const Footer = (props) => {
             <SwitchLang {...props} />
             {!config.isWidget && <SocialMenu />}
           </WidthContainer>
-        </div>
+        </footer>
       )}
     </Fragment>
   )

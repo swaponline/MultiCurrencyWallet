@@ -5096,7 +5096,7 @@
   },
   {
     "id": "YourAssetsDescription",
-    "message": "Здесь вы можете безопасно хранить и быстро обменивать Bitcoin, Ethereum, {br} USD, Tether и многочисленные токены ERC-20.",
+    "message": "Здесь вы можете безопасно хранить и быстро обменивать Bitcoin, Ethereum, {br} USDT и многочисленные токены ERC-20.",
     "files": [
       "shared/pages/Wallet/CurrenciesList.js"
     ]
@@ -5110,7 +5110,7 @@
   },
   {
     "id": "MybalanceswalletNav",
-    "message": "Мои кошельки",
+    "message": "Мой кошелёк",
     "files": [
       "shared/pages/Invoices/InvoicesList/index.js"
     ]

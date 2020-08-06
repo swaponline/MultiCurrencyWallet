@@ -493,7 +493,7 @@ export default class Header extends Component {
 
     if (isMobile && window.logoUrl) {
       return (
-        <div className="data-tut-widget-tourFinish" id="header-mobile" styleName="header-mobile">
+        <header className="data-tut-widget-tourFinish" id="header-mobile" styleName="header-mobile">
           {logoRenderer}
           {createdWalletLoader && (
             <div styleName="loaderCreateWallet">
@@ -519,13 +519,13 @@ export default class Header extends Component {
               closeTour={this.closeWidgetTour}
             />
           )}
-        </div>
+        </header>
       );
     }
 
     if (isMobile) {
       return (
-        <div id="header-mobile" styleName="header-mobile">
+        <header id="header-mobile" styleName="header-mobile">
           {createdWalletLoader && (
             <div styleName="loaderCreateWallet">
               <Loader
@@ -551,12 +551,12 @@ export default class Header extends Component {
             />
           )}
           <Switcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
-        </div>
+        </header>
       );
     }
 
     return (
-      <div
+      <header
         className={cx({
           [styles["header"]]: true,
           [styles["widgetHeader"]]: isWidgetBuild && window.logoUrl !== "#",
@@ -604,7 +604,7 @@ export default class Header extends Component {
             />
           )}
         </WidthContainer>
-      </div>
+      </header>
     );
   }
 }
