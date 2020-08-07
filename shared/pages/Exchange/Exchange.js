@@ -1596,7 +1596,7 @@ export default class Exchange extends Component {
             >
               <FormattedMessage id="partial541" defaultMessage="Exchange now" />
             </Button>
-            <Button gray styleName="button" onClick={this.createOffer}>
+            <Button blue styleName="button" onClick={this.createOffer}>
               <FormattedMessage id="orders128" defaultMessage="Create offer" />
             </Button>
           </div>

@@ -297,21 +297,23 @@ export default class App extends React.Component {
           <NotificationConductor history={history} />
         </Fragment>
       ) : (
-          <Fragment>
-            <Seo location={history.location} />
-            <Header />
-            <Wrapper>
-              <WidthContainer id="swapComponentWrapper" styleName="main">
-                <main>{children}</main>
-              </WidthContainer>
-            </Wrapper>
-            <Core />
-            <Footer />
-            <RequestLoader />
-            {!dashboardModalsAllowed && <ModalConductor history={history} />}
-            <NotificationConductor history={history} />
-          </Fragment>
-        );
+        <div styleName="compressor">
+          <Seo location={history.location} />
+          <Header />
+          <Wrapper>
+            <WidthContainer id="swapComponentWrapper" styleName="main">
+              <main>{children}</main>
+            </WidthContainer>
+          </Wrapper>
+          <Core />
+          <Footer />
+          <RequestLoader />
+          {!dashboardModalsAllowed &&
+            <ModalConductor history={history}
+          />}
+          <NotificationConductor history={history} />
+        </div>
+      );
 
     return <HashRouter>{mainContent}</HashRouter>;
   }

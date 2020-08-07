@@ -302,7 +302,6 @@
 
   .yourBalance,
   .yourAssets {
-    box-shadow: none;
     width: 100%;
     margin: 20px 0;
   }
@@ -313,10 +312,6 @@
     td:first-child {
       padding-left: 25px;
       left: auto;
-
-      @media all and (max-width: 400px) {
-        padding-left: 10px;
-      }
     }
   }
 
@@ -359,10 +354,6 @@
   .yourBalance,
   .yourAssets {
     margin: 20px 0 5px;
-  }
-
-  .yourBalanceBottom {
-    padding: 25px 25px 0;
   }
 
   .widgetBuild .yourBalanceBottom {

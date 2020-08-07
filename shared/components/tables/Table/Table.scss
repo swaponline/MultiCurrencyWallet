@@ -361,7 +361,7 @@ table.wallet {
 }
 
 
-@media all and (min-width: 320px) and (max-width:1024px) {
+@media all and (max-width:1024px) {
   .table.exchange {
     min-height: 130px;
   }
@@ -439,7 +439,7 @@ table.wallet {
   }
 }
 
-@include media-min320-max800 {
+@media all and (max-width: 800px) {
   .table.exchange {
     thead {
       display: none;
@@ -529,7 +529,7 @@ table.wallet {
   }
 }
 
-@media all and (min-width: 320px) and (max-width: 767px) {
+@media all and (max-width: 767px) {
   .historySwap {
     tbody {
       tr {
