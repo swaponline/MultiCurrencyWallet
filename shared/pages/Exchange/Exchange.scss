@@ -60,11 +60,6 @@
 
 }
 
-.informAbt {
-  position: absolute;
-  top: 15px;
-}
-
 .promoContainer {
   position: relative;
 
@@ -201,6 +196,11 @@
 
 .button.disabled {
   background: #f5f5f5;
+}
+
+.buttonContinueSwap {
+  margin-top: 1em;
+  width: 100%;
 }
 
 .walletInput input {

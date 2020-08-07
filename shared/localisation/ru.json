@@ -5172,7 +5172,7 @@
   },
   {
     "id": "continueDeclined977",
-    "message": "Нажмите здесь, чтобы продолжить обмен",
+    "message": "Продолжить обмен",
     "files": [
       "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"

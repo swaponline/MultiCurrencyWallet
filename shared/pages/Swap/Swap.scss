@@ -1,5 +1,5 @@
 .swap {
-  padding-top: 120px;
+  padding-top: 20px;
 }
 
 .dark {
@@ -78,9 +78,8 @@
 }
 
 .swapInfo {
-  position: absolute;
-  width: 600px;
-  top: -45px;
+  max-width: 600px;
+  margin-bottom: 1em;
   text-align: center;
   font-size: 18px;
 }
@@ -287,14 +286,6 @@
   text-align: center;
 }
 
-.swapInfo {
-  position: absolute;
-  width: 600px;
-  top: -45px;
-  text-align: center;
-  font-size: 18px;
-}
-
 .qr {
   display: flex;
   justify-content: center;
@@ -479,16 +470,15 @@
   .swapInfo {
     text-align: center;
     font-size: 16px;
-    top: -60px;
     font-weight: 300;
-    font-size: 16px;
     border-radius: 6px;
     background: #cecece3b;
     color: #000;
     padding: 7px 20px;
     width: 100%;
     max-width: 600px;
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
     order: 1;
   }
   .swapContainer {
@@ -524,9 +514,6 @@
       font-size: 11px;
     }
   }
-  .swap {
-    padding-top: 80px;
-  }
   .swapDepositWindow {
     width: 100%;
   }
@@ -536,11 +523,8 @@
   }
   .swapInfo {
     text-align: center;
-    font-size: 16px;
-    left: 0;
-    top: -60px;
-    font-weight: 300;
     font-size: 15px;
+    font-weight: 300;
     border-radius: 6px;
     background: #cecece3b;
     color: #000;
@@ -571,8 +555,6 @@
     display: block;
     width: 100%;
     font-size: 11px;
-    margin: 0;
-    margin-top: 80px;
   }
   .swapMobile {
     margin-top: 0;
@@ -599,13 +581,7 @@ h3 {
 @media all and (max-width: 480px) {
   .swapContainer {
     display: block;
-    padding-top: 20px !important;
+    padding-top: 10px;
   }
 }
 
-@media all and (min-width: 570px) and (max-width: 670px) {
-  .swapInfo {
-    max-width: 540px;
-    width: 540px;
-  }
-}

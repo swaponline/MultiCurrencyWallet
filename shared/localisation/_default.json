@@ -5037,7 +5037,7 @@
   },
   {
     "id": "continueDeclined977",
-    "message": "Click here to continue your swaps",
+    "message": "Continue your swaps",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js",
       "shared/pages/PointOfSell/PointOfSell.js"

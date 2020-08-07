@@ -1267,20 +1267,6 @@ export default class Exchange extends Component {
     const Form = (
       <div styleName="section">
         <div styleName="formExchange">
-          {desclineOrders.length ? (
-            <h5
-              role="presentation"
-              styleName="informAbt"
-              onClick={this.handleShowIncomplete}
-            >
-              <FormattedMessage
-                id="continueDeclined977"
-                defaultMessage="Click here to continue your swaps"
-              />
-            </h5>
-          ) : (
-              <span />
-            )}
           <div className="data-tut-have" styleName="selectWrap">
             <SelectGroup
               activeFiat={activeFiat}
@@ -1408,7 +1394,7 @@ export default class Exchange extends Component {
                 </div>
               )}
           </div>
-          <div className="data-tut-status">
+          {/*<div className="data-tut-status">
             {(isSearching || (isNonOffers && maxAmount === 0)) && (
               <span styleName="IsSearching">
                 <FormattedMessage
@@ -1422,7 +1408,7 @@ export default class Exchange extends Component {
                 </div>
               </span>
             )}
-          </div>
+          </div>*/}
           {!oneCryptoCost.isFinite() && !isNonOffers && (
             <FormattedMessage
               id="PartialPriceCalc"
@@ -1600,6 +1586,15 @@ export default class Exchange extends Component {
               <FormattedMessage id="orders128" defaultMessage="Create offer" />
             </Button>
           </div>
+
+          {!!desclineOrders.length &&
+            <Button blue styleName="buttonContinueSwap" onClick={this.handleShowIncomplete}>
+              <FormattedMessage
+                id="continueDeclined977"
+                defaultMessage="Continue your swaps"
+              />
+            </Button>
+          }
 
           <div styleName="networkStatusPlace">
             <NetworkStatus />

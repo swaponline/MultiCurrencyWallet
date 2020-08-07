@@ -54,7 +54,7 @@ export default class SwapComponent extends PureComponent {
   /*
     ================================================================
     This is debug information without any secret and private data.
-    This information can help me resolve  problems.
+    This information can help me resolve problems.
     Contact me https://t.me/sashanoxon with any questions
   */
   sendSwapDebugInformation = (orderId) => {

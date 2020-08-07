@@ -15,7 +15,6 @@ import SwapProgress from './SwapProgress/SwapProgress'
 import DepositWindow from './DepositWindow/DepositWindow'
 import FeeControler from './FeeControler/FeeControler'
 import SwapList from './SwapList/SwapList'
-import paddingForSwapList from 'shared/helpers/paddingForSwapList.js'
 
 
 @CSSModules(styles)
@@ -30,7 +29,6 @@ export default class BtcToEth extends Component {
       currencyData,
       enabledButton: false,
       flow: this.swap.flow.state,
-      paddingContainerValue: 60,
       currencyAddress: currencyData.address,
       secret: crypto.randomBytes(32).toString('hex'),
     }
@@ -47,7 +45,6 @@ export default class BtcToEth extends Component {
     const { flow: { isSignFetching, isMeSigned, step, isParticipantSigned } } = this.state
     window.addEventListener('resize', this.updateWindowDimensions)
     this.updateWindowDimensions()
-    this.changePaddingValue()
     this.ParticipantTimer = setInterval(() => {
       if (this.state.flow.isParticipantSigned && this.state.destinationBuyAddress) {
         this.submitSecret()
@@ -78,19 +75,6 @@ export default class BtcToEth extends Component {
     this.swap.flow.tryRefund()
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.flow !== this.state.flow) {
-      this.changePaddingValue()
-    }
-  }
-
-  changePaddingValue = () => {
-    const { flow: { step } } = this.state
-    this.setState(() => ({
-      paddingContainerValue: paddingForSwapList({ step }),
-    }))
-  }
-
   handleFlowStateUpdate = (values) => {
 
     const stepNumbers = {
@@ -110,7 +94,6 @@ export default class BtcToEth extends Component {
       flow: values,
     })
 
-    this.changePaddingValue()
   }
 
   confirmAddress = () => {
@@ -158,16 +141,11 @@ export default class BtcToEth extends Component {
       wallets,
     }  = this.props
 
-    const { flow, isShowingBitcoinScript, currencyData, paddingContainerValue, windowWidth } = this.state
+    const { flow, isShowingBitcoinScript, currencyData, windowWidth } = this.state
 
     return (
       <div>
-        <div
-          styleName="swapContainer"
-          style={(isMobile && (windowWidth < 569))
-            ? { paddingTop: paddingContainerValue }
-            : { paddingTop: 0 }
-          }>
+        <div styleName="swapContainer">
           <div>
             <div styleName="swapInfo">
               {this.swap.id &&

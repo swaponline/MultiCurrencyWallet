@@ -19,7 +19,6 @@ import firebase from './firebase'
 import externalConfig from './externalConfig'
 import getPageOffset from './getPageOffset'
 import getScrollBarWidth from './getScrollBarWidth'
-import paddingForSwapList from './paddingForSwapList'
 import estimateFeeValue from './estimateFeeValue'
 import transactions from './transactions'
 
@@ -72,7 +71,6 @@ export {
   // Getters
   getPageOffset,
   getScrollBarWidth,
-  paddingForSwapList,
   externalConfig,
 
 

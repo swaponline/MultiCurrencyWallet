@@ -250,9 +250,7 @@ $size: 200px;
 }
 
 .swapInfo {
-  position: absolute;
-  width: 600px;
-  top: -45px;
+  max-width: 600px;
   text-align: center;
   font-size: 18px;
 }
@@ -260,8 +258,11 @@ $size: 200px;
 .transaction {
   display: block;
   margin-bottom: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   a {
     font-size: 13px;
+    font-weight: bold;
   }
 }
 
@@ -409,15 +410,6 @@ $size: 200px;
   .stepHeading {
     color: #000;
     font-size: 18px;
-  }
-  .transaction {
-    top: -5px;
-    a {
-      font-size: 12px;
-      overflow: hidden;
-      width: 100%;
-      display: block;
-    }
   }
   .stepHeading__inner {
     font-size: 11px;

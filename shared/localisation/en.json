@@ -5152,7 +5152,7 @@
   },
   {
     "id": "continueDeclined977",
-    "message": "Click here to continue your swaps",
+    "message": "Continue your swaps",
     "files": [
       "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"

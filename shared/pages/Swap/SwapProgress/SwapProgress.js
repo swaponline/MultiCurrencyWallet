@@ -408,32 +408,30 @@ export default class SwapProgress extends Component {
                 </Button>
               }
 
-              {flow.step > 3 && !this.isSellCurrencyEthOrEthToken &&
+              {flow.step > 3 && !flow.isFinished && !this.isSellCurrencyEthOrEthToken &&
                 <PleaseDontLeaveWrapper isBTC={flow.secret ? flow.secret : false} />
               }
             </div>
 
-            {flow.ethSwapWithdrawTransactionHash && !this.isSellCurrencyEthOrEthToken && (
-              <strong styleName="transaction">
-                <a
-                  href={`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                >
-                  <FormattedMessage id="swappropgress207" defaultMessage="{transaction}" values={{ transaction: flow.ethSwapWithdrawTransactionHash }} />
-                </a>
-              </strong>
+            {flow.ethSwapWithdrawTransactionHash && !flow.isFinished && !this.isSellCurrencyEthOrEthToken && (
+              <a
+                styleName="transaction"
+                href={`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`}
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                <FormattedMessage id="swappropgress207" defaultMessage="{transaction}" values={{ transaction: flow.ethSwapWithdrawTransactionHash }} />
+              </a>
             )}
-            {flow.btcSwapWithdrawTransactionHash && this.isSellCurrencyEthOrEthToken && (
-              <strong styleName="transaction">
-                <a
-                  href={`${config.link.bitpay}/tx/${flow.btcSwapWithdrawTransactionHash}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FormattedMessage id="swappropgress218" defaultMessage="{transaction}" values={{ transaction: flow.btcSwapWithdrawTransactionHash }} />
-                </a>
-              </strong>
+            {flow.btcSwapWithdrawTransactionHash && !flow.isFinished && this.isSellCurrencyEthOrEthToken && (
+              <a
+                styleName="transaction"
+                href={`${config.link.bitpay}/tx/${flow.btcSwapWithdrawTransactionHash}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FormattedMessage id="swappropgress218" defaultMessage="{transaction}" values={{ transaction: flow.btcSwapWithdrawTransactionHash }} />
+              </a>
             )}
             {flow.isFinished && (
               <div styleName="finishButtonsHolder">

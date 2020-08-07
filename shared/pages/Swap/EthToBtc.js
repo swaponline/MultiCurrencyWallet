@@ -16,7 +16,6 @@ import FeeControler from './FeeControler/FeeControler'
 import SwapProgress from './SwapProgress/SwapProgress'
 import SwapList from './SwapList/SwapList'
 import DepositWindow from './DepositWindow/DepositWindow'
-import paddingForSwapList from 'shared/helpers/paddingForSwapList.js'
 
 @CSSModules(styles)
 export default class EthToBtc extends Component {
@@ -31,7 +30,6 @@ export default class EthToBtc extends Component {
       enoughBalance,
       signed: false,
       depositWindow,
-      paddingContainerValue: 0,
       enabledButton: false,
       isAddressCopied: false,
       flow: this.swap.flow.state,
@@ -51,7 +49,6 @@ export default class EthToBtc extends Component {
 
   componentDidMount() {
     const { swap, flow: { isSignFetching, isMeSigned, step } } = this.state
-    this.changePaddingValue()
     window.addEventListener('resize', this.updateWindowDimensions)
     this.updateWindowDimensions()
     this.signTimer = setInterval(() => {
@@ -76,21 +73,8 @@ export default class EthToBtc extends Component {
     window.removeEventListener('resize', this.updateWindowDimensions)
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.flow !== this.state.flow) {
-      this.changePaddingValue()
-    }
-  }
-
   updateWindowDimensions = () => {
     this.setState({ windowWidth: window.innerWidth })
-  }
-
-  changePaddingValue = () => {
-    const { flow: { step } } = this.state
-    this.setState(() => ({
-      paddingContainerValue: paddingForSwapList({ step }),
-    }))
   }
 
   confirmBTCScriptChecked = () => {
@@ -116,8 +100,6 @@ export default class EthToBtc extends Component {
     this.setState({
       flow: values,
     })
-
-    this.changePaddingValue()
 
   }
 
@@ -148,12 +130,12 @@ export default class EthToBtc extends Component {
       wallets,
     } = this.props
 
-    const { currencyAddress, flow, isShowingBitcoinScript, swap, currencyData, signed, paddingContainerValue, buyCurrency, sellCurrency, windowWidth } = this.state
+    const { currencyAddress, flow, isShowingBitcoinScript, swap, currencyData, signed, buyCurrency, sellCurrency, windowWidth } = this.state
     const stepse = flow.step
 
     return (
       <div>
-        <div styleName="swapContainer" style={(isMobile && (windowWidth < 569)) ? { paddingTop: paddingContainerValue } : { paddingTop: 0 }}>
+        <div styleName="swapContainer">
           <div>
             <div styleName="swapInfo">
               {this.swap.id &&
