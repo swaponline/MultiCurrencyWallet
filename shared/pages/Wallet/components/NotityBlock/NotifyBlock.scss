@@ -84,7 +84,7 @@
   }
 }
 
-@media all and (min-width: 320px) and (max-width: 767px) {
+@media all and (max-width: 767px) {
   .notifyBlock {
     flex-direction: column;
     align-items: flex-start;
@@ -139,7 +139,7 @@
   }
 }
 
-@media all and (min-width: 320px) and (max-width: 570px) {
+@media all and (max-width: 570px) {
   .notifyBlockDescr {
     right: 10px;
     font-size: 9.5px;

@@ -419,7 +419,7 @@
   },
   {
     "id": "SwapProgress135",
-    "message": "Thank you for using Swap.Online! ",
+    "message": "Thank you for using Swap.Online!",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
@@ -458,11 +458,11 @@
   },
   {
     "id": "SwapProgress74",
-    "message": "Thank you for using Swap.Online! "
+    "message": "Thank you for using Swap.Online!"
   },
   {
     "id": "SwapProgress80",
-    "message": "Thank you for using Swap.Online! "
+    "message": "Thank you for using Swap.Online!"
   },
   {
     "id": "SwapProgress93",
@@ -759,7 +759,7 @@
   },
   {
     "id": "BtcToEthToken293",
-    "message": "Thank you for using Swap.Online! "
+    "message": "Thank you for using Swap.Online!"
   },
   {
     "id": "BtcToEthToken303",
@@ -855,7 +855,7 @@
   },
   {
     "id": "EthTokenBtc365",
-    "message": "Thank you for using Swap.Online! "
+    "message": "Thank you for using Swap.Online!"
   },
   {
     "id": "EthTokenBtc375",
@@ -1036,7 +1036,7 @@
   },
   {
     "id": "EthTokenToUsdt380",
-    "message": "Thank you for using Swap.Online! ",
+    "message": "Thank you for using Swap.Online!",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -1211,7 +1211,7 @@
   },
   {
     "id": "UsdrToEthToken297",
-    "message": "Thank you for using Swap.Online! ",
+    "message": "Thank you for using Swap.Online!",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
@@ -2933,13 +2933,6 @@
     ]
   },
   {
-    "id": "swapJS341",
-    "message": "Show bitcoin script",
-    "files": [
-      "shared/pages/Swap/ShowBtcScript/ShowBtcScript.js"
-    ]
-  },
-  {
     "id": "FeeControler48",
     "message": "Copied",
     "files": [
@@ -3111,7 +3104,7 @@
   },
   {
     "id": "ethToBtcText44",
-    "message": "Thank you for using Swap.Online",
+    "message": "Thank you for using Swap.Online!",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthToBtc.js"
     ]
@@ -3193,7 +3186,7 @@
   },
   {
     "id": "BitcoinBuyText49",
-    "message": "Thank you for using Swap.Online",
+    "message": "Thank you for using Swap.Online!",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
@@ -3256,7 +3249,7 @@
   },
   {
     "id": "EthTokensToBtc44",
-    "message": "Thank you for using Swap.Online",
+    "message": "Thank you for using Swap.Online!",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]
@@ -3269,10 +3262,31 @@
     ]
   },
   {
-    "id": "EmergencySave33",
-    "message": "Debug",
+    "id": "SwapStuck",
+    "message": "The swap was stuck? Try to ",
     "files": [
-      "shared/pages/Swap/EmergencySave/EmergencySave.js"
+      "shared/pages/Swap/Swap.js"
+    ]
+  },
+  {
+    "id": "SwapDebug",
+    "message": "debug",
+    "files": [
+      "shared/pages/Swap/Swap.js"
+    ]
+  },
+  {
+    "id": "SwapOr",
+    "message": " or ",
+    "files": [
+      "shared/pages/Swap/Swap.js"
+    ]
+  },
+  {
+    "id": "SwapReload",
+    "message": "reload the page",
+    "files": [
+      "shared/pages/Swap/Swap.js"
     ]
   },
   {
@@ -3566,7 +3580,7 @@
   },
   {
     "id": "swappropgress327",
-    "message": "this Swap is canceled",
+    "message": "This swap is canceled",
     "files": [
       "shared/pages/Swap/Swap.js"
     ]
@@ -4465,13 +4479,6 @@
     ]
   },
   {
-    "id": "swapprogressDONTLEAVE22",
-    "message": "The swap was stuck? Try to reload page",
-    "files": [
-      "shared/pages/Swap/Swap.js"
-    ]
-  },
-  {
     "id": "swapProgressGoToTxPage",
     "message": "View TX in explorer",
     "files": [
@@ -5152,7 +5159,7 @@
   },
   {
     "id": "continueDeclined977",
-    "message": "Click here to continue your swaps",
+    "message": "Continue your swaps",
     "files": [
       "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"

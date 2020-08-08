@@ -22,7 +22,6 @@ import SignUpButton from "./User/SignUpButton/SignUpButton";
 import NavMobile from "./NavMobile/NavMobile";
 
 import LogoTooltip from "components/Logo/LogoTooltip";
-import WidthContainer from "components/layout/WidthContainer/WidthContainer";
 import TourPartial from "./TourPartial/TourPartial";
 import WalletTour from "./WalletTour/WalletTour";
 import { WidgetWalletTour } from "./WidgetTours";
@@ -474,19 +473,6 @@ export default class Header extends Component {
         </div>
       </div>
 
-    // if (config && config.isWidget && !config.isFullBuild) {
-    //   return <>
-    //     {
-    //       !isMobile ? (
-    //         <WidthContainer styleName="container" className="data-tut-preview">
-    //           {logoRenderer}
-    //           <Nav menu={menuItems} />
-    //         </WidthContainer>
-    //       ) : <NavMobile menu={menuItemsMobile} />
-    //     }
-    //     <User acceptRequest={this.acceptRequest} declineRequest={this.declineRequest} />
-    //   </>;
-    // }
     if (pathname.includes("/createWallet") && isMobile) {
       return <span />;
     }
@@ -574,36 +560,31 @@ export default class Header extends Component {
             />
           </div>
         )}
-        <WidthContainer
-          styleName={`container ${isWidgetBuild ? "contawidge_container" : ""}`}
-          className="data-tut-preview"
-        >
-          {logoRenderer}
-          <Nav menu={menuItems} />
-          {isPartialTourOpen && isExchange && (
-            <TourPartial
-              isTourOpen={isPartialTourOpen}
-              closeTour={this.closePartialTour}
-            />
-          )}
-          <User
-            openTour={
-              isWalletPage ? this.openExchangeTour : this.openWalletTour
-            }
-            path={path}
-            acceptRequest={this.acceptRequest}
-            declineRequest={this.declineRequest}
+        {logoRenderer}
+        <Nav menu={menuItems} />
+        {isPartialTourOpen && isExchange && (
+          <TourPartial
+            isTourOpen={isPartialTourOpen}
+            closeTour={this.closePartialTour}
           />
-          {isTourOpen && isWalletPage && (
-            <WalletTour isTourOpen={isTourOpen} closeTour={this.closeTour} />
-          )}
-          {isWidgetTourOpen && isWalletPage && (
-            <WidgetWalletTour
-              isTourOpen={isWidgetTourOpen}
-              closeTour={this.closeWidgetTour}
-            />
-          )}
-        </WidthContainer>
+        )}
+        <User
+          openTour={
+            isWalletPage ? this.openExchangeTour : this.openWalletTour
+          }
+          path={path}
+          acceptRequest={this.acceptRequest}
+          declineRequest={this.declineRequest}
+        />
+        {isTourOpen && isWalletPage && (
+          <WalletTour isTourOpen={isTourOpen} closeTour={this.closeTour} />
+        )}
+        {isWidgetTourOpen && isWalletPage && (
+          <WidgetWalletTour
+            isTourOpen={isWidgetTourOpen}
+            closeTour={this.closeWidgetTour}
+          />
+        )}
       </header>
     );
   }
