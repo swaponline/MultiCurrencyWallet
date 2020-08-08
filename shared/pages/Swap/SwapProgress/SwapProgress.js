@@ -435,6 +435,9 @@ export default class SwapProgress extends Component {
             )}
             {flow.isFinished && (
               <div styleName="finishButtonsHolder">
+                <Button gray onClick={this.onPushGoToTxPage}>
+                  <FormattedMessage id="swapProgressGoToTxPage" defaultMessage="View TX in explorer" />
+                </Button>
                 {showWalletButton && (
                   <LinkTo to="/wallet">
                     <Button brand onClick={this.onPushGoToWallet}>
@@ -442,9 +445,6 @@ export default class SwapProgress extends Component {
                     </Button>
                   </LinkTo>
                 )}
-                <Button gray onClick={this.onPushGoToTxPage}>
-                  <FormattedMessage id="swapProgressGoToTxPage" defaultMessage="View TX in explorer" />
-                </Button>
               </div>
             )}
           </div>

@@ -21,7 +21,6 @@ import DepositWindow from './DepositWindow/DepositWindow'
 import SwapProgress from './SwapProgress/SwapProgress'
 import SwapList from './SwapList/SwapList'
 import Timer from './Timer/Timer'
-import BtcScript from './BtcScript/BtcScript'
 import FeeControler from './FeeControler/FeeControler'
 
 

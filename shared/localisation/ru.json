@@ -3029,13 +3029,6 @@
     ]
   },
   {
-    "id": "swapJS341",
-    "message": "Показать bitcoin script",
-    "files": [
-      "shared/pages/Swap/ShowBtcScript/ShowBtcScript.js"
-    ]
-  },
-  {
     "id": "FeeControler48",
     "message": "Скопировано",
     "files": [
@@ -3366,10 +3359,31 @@
     ]
   },
   {
-    "id": "EmergencySave33",
-    "message": "Отладка",
+    "id": "SwapStuck",
+    "message": "Своп застрял? Попробуйте ",
     "files": [
-      "shared/pages/Swap/EmergencySave/EmergencySave.js"
+      "shared/pages/Swap/Swap.js"
+    ]
+  },
+  {
+    "id": "SwapDebug",
+    "message": "отладить",
+    "files": [
+      "shared/pages/Swap/Swap.js"
+    ]
+  },
+  {
+    "id": "SwapOr",
+    "message": " или ",
+    "files": [
+      "shared/pages/Swap/Swap.js"
+    ]
+  },
+  {
+    "id": "SwapReload",
+    "message": "перезагрузить страницу",
+    "files": [
+      "shared/pages/Swap/Swap.js"
     ]
   },
   {
@@ -4547,13 +4561,6 @@
     "message": "copy",
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"
-    ]
-  },
-  {
-    "id": "swapprogressDONTLEAVE22",
-    "message": "The swap was stuck? Try to reload page",
-    "files": [
-      "shared/pages/Swap/Swap.js"
     ]
   },
   {

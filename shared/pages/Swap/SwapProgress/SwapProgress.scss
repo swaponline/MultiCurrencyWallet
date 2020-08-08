@@ -295,7 +295,6 @@ $size: 200px;
 }
 
 .finishButtonsHolder {
-  line-height: 56px;
   margin: 16px 0;
   text-align: center;
   vertical-align: middle;
@@ -416,9 +415,22 @@ $size: 200px;
     width: 100%;
     bottom: 0;
   }
-  .finishButtonsHolder button {
-    width: 90%;
-    margin-left: 0px;
-    margin-right: 0px;
+
+  .finishButtonsHolder {
+
+    & > * {
+      display: block;
+    }
+
+    & > * + * {
+      margin-top: 0.5em;
+    }
+
+    button {
+      width: 90%;
+      margin-left: 0px;
+      margin-right: 0px;
+    }
+
   }
 }

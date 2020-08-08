@@ -14,12 +14,11 @@ import { Link } from 'react-router-dom'
 
 import { swapComponents } from './swaps'
 import Share from './Share/Share'
-import EmergencySave from './EmergencySave/EmergencySave'
+import Debug from './Debug/Debug'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import DeleteSwapAfterEnd from './DeleteSwapAfterEnd'
 import { Button } from 'components/controls'
-import ShowBtcScript from './ShowBtcScript/ShowBtcScript'
 import CopyToClipboard from 'react-copy-to-clipboard'
 
 import axios from 'axios'
@@ -142,8 +141,7 @@ export default class SwapComponent extends PureComponent {
       continueSwap: true,
       enoughBalance: true,
       depositWindow: false,
-      isShowingBitcoinScript: false,
-      isShowDevInformation: false,
+      isShowDebug: false,
       shouldStopCheckSendingOfRequesting: false,
       waitWithdrawOther: false,
       isFaucetRequested: false,
@@ -473,10 +471,10 @@ export default class SwapComponent extends PureComponent {
     }
   }
 
-  toggleInfo = (a, b) => {
+  toggleDebug = () => {
+    const isShowDebug = this.state.isShowDebug;
     this.setState({
-      isShowDevInformation: !a,
-      isShowingBitcoinScript: !b,
+      isShowDebug: !isShowDebug,
     })
   }
 
@@ -510,8 +508,7 @@ export default class SwapComponent extends PureComponent {
       enoughBalance,
       depositWindow,
       ethAddress,
-      isShowingBitcoinScript,
-      isShowDevInformation,
+      isShowDebug,
       requestToFaucetSended,
       stepToHide,
       isAddressCopied,
@@ -543,25 +540,44 @@ export default class SwapComponent extends PureComponent {
               waitWithdrawOther={waitWithdrawOther}
               locale={locale}
               wallets={this.wallets}
-            >
-              <p styleName="reloadText" title="reload the page" role="presentation" onClick={() => window.location.reload()}>
+            />
+            {/*<Share flow={swap.flow} />*/}
+            <div>
+              <p styleName="reloadText" role="presentation">
                 <FormattedMessage
-                  id="swapprogressDONTLEAVE22"
-                  defaultMessage="The swap was stuck? Try to reload page"
+                  id="SwapStuck"
+                  defaultMessage="The swap was stuck? Try to "
                 />
+                <span styleName="pseudolink" onClick={() => this.toggleDebug()}>
+                  <FormattedMessage
+                    id="SwapDebug"
+                    defaultMessage="debug"
+                  />
+                </span>
+                <FormattedMessage
+                  id="SwapOr"
+                  defaultMessage=" or "
+                />
+                <span styleName="pseudolink" onClick={() => window.location.reload()}>
+                  <FormattedMessage
+                    id="SwapReload"
+                    defaultMessage="reload the page"
+                  />
+                </span>
               </p>
-              <Share flow={swap.flow} />
-              <EmergencySave flow={swap.flow} onClick={() => this.toggleInfo(isShowDevInformation, true)} isShowDevInformation={isShowDevInformation} />
-              <ShowBtcScript
-                btcScriptValues={swap.flow.state.btcScriptValues}
-                onClick={() => this.toggleInfo(!false, isShowingBitcoinScript)}
-                isShowingBitcoinScript={isShowingBitcoinScript} />
-              {peer === swap.owner.peer && (<DeleteSwapAfterEnd swap={swap} />)}
-            </SwapComponent>
+
+              { isShowDebug &&
+                <Debug flow={swap.flow} />
+              }
+
+              {peer === swap.owner.peer &&
+                <DeleteSwapAfterEnd swap={swap} />
+              }
+            </div>
           </div> :
           <div>
             <h3 styleName="canceled" /* eslint-disable-line */ onClick={this.goWallet}>
-              <FormattedMessage id="swappropgress327" defaultMessage="this Swap is canceled" />
+              <FormattedMessage id="swappropgress327" defaultMessage="This swap is canceled" />
             </h3>
             <div>
               <h3 styleName="refHex">
