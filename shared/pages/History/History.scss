@@ -55,13 +55,13 @@
   }
 }
 
+.historyLoader {
+  overflow: hidden;
+}
+
 @media all and (max-width: 767px) {
   .history {
     padding: 10px;
     margin-top: 0;
-  }
-
-  .historyContent {
-    margin: -40px -20px;
   }
 }

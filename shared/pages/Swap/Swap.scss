@@ -21,6 +21,12 @@
   padding-bottom: 35px;
 }
 
+@media all and (max-width: 570px) {
+  .swapContainer {
+    display: block;
+  }
+}
+
 .swapDepositWindow {
   color: #000;
 }
@@ -562,11 +568,5 @@ h3 {
 .icon {
   margin-right: 1%;
   cursor: pointer;
-}
-@media all and (max-width: 480px) {
-  .swapContainer {
-    display: block;
-    padding-top: 10px;
-  }
 }
 

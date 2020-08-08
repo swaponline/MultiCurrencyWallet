@@ -2,30 +2,12 @@
   min-width: 320px;
 }
 
-.main {
+.headerAndMain {
   position: relative;
-
-  main {
-    padding-top: 70px;
-  }
-
-  &_widget {
-    main {
-      padding-top: 0px;
-      margin-top: -24px;
-    }
-  }
 }
 
 @media all and (max-width: 768px) {
-  .main {
+  .headerAndMain {
     height: calc(100% + 60px);
-    margin-top: 0;
-
-    &_widget {
-      main {
-        padding-top: 20px;
-      }
-    }
   }
 }

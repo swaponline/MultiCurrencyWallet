@@ -299,9 +299,9 @@ export default class App extends React.Component {
       ) : (
         <div styleName="compressor">
           <Seo location={history.location} />
-          <Header />
           <Wrapper>
-            <WidthContainer id="swapComponentWrapper" styleName="main">
+            <WidthContainer id="swapComponentWrapper" styleName="headerAndMain">
+              <Header />
               <main>{children}</main>
             </WidthContainer>
           </Wrapper>
