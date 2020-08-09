@@ -17,7 +17,6 @@ import CSSModules from "react-css-modules";
 import styles from "./Header.scss";
 
 import Nav from "./Nav/Nav";
-import User from "./User/User";
 import SignUpButton from "./User/SignUpButton/SignUpButton";
 import NavMobile from "./NavMobile/NavMobile";
 
@@ -28,11 +27,10 @@ import { WidgetWalletTour } from "./WidgetTours";
 
 import Loader from "components/loaders/Loader/Loader";
 import { localisedUrl, unlocalisedUrl } from "../../helpers/locale";
-import UserTooltip from "components/Header/User/UserTooltip/UserTooltip";
 import { messages, getMenuItems, getMenuItemsMobile } from "./config";
 import { getActivatedCurrencies } from "helpers/user";
 import { WidgetHeader } from "./WidgetHeader";
-import { Switcher } from "./Switcher"
+import { ThemeSwitcher } from "./ThemeSwitcher"
 
 
 const isWidgetBuild = config && config.isWidget
@@ -295,30 +293,6 @@ export default class Header extends Component {
     tourEvent();
   };
 
-  declineRequest = (orderId, participantPeer) => {
-    actions.core.declineRequest(orderId, participantPeer);
-    actions.core.updateCore();
-  };
-
-  acceptRequest = async (orderId, participantPeer, link) => {
-    const {
-      toggle,
-      history,
-      intl: { locale },
-    } = this.props;
-
-    actions.core.acceptRequest(orderId, participantPeer);
-    actions.core.updateCore();
-
-    if (typeof toggle === "function") {
-      toggle();
-    }
-
-    console.log("-Accepting request", link);
-    await history.replace(localisedUrl(locale, link));
-    await history.push(localisedUrl(locale, link));
-  };
-
   handleScroll = () => {
     if (this.props.history.location.pathname === "/") {
       this.setState(() => ({
@@ -454,7 +428,7 @@ export default class Header extends Component {
     const logoRenderer = isOurMainDomain ?
       <>
         <LogoTooltip withLink isColored isExchange={isWalletPage} />
-        <Switcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
+        <ThemeSwitcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
       </>
       :
       <div styleName="flexebleHeader">
@@ -469,7 +443,7 @@ export default class Header extends Component {
         )}
         <div styleName="rightArea">
           {isWidgetBuild && <WidgetHeader />}
-          <Switcher withExit themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
+          <ThemeSwitcher withExit themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
         </div>
       </div>
 
@@ -491,20 +465,16 @@ export default class Header extends Component {
               />
             </div>
           )}
-          <UserTooltip
-            feeds={feeds}
-            peer={peer}
-            acceptRequest={this.acceptRequest}
-            declineRequest={this.declineRequest}
-          />
           <NavMobile menu={menuItemsMobile} isHidden={isInputActive} />
           {!isSigned && <SignUpButton mobile />}
-          {isWidgetTourOpen && isWalletPage && (
-            <WidgetWalletTour
-              isTourOpen={isWidgetTourOpen}
-              closeTour={this.closeWidgetTour}
-            />
-          )}
+          {isWidgetTourOpen && isWalletPage &&
+            <div styleName="walletTour">
+              <WidgetWalletTour
+                isTourOpen={isWidgetTourOpen}
+                closeTour={this.closeWidgetTour}
+              />
+            </div>
+          }
         </header>
       );
     }
@@ -522,21 +492,17 @@ export default class Header extends Component {
               />
             </div>
           )}
-          <UserTooltip
-            feeds={feeds}
-            peer={peer}
-            acceptRequest={this.acceptRequest}
-            declineRequest={this.declineRequest}
-          />
           <NavMobile menu={menuItemsMobile} isHidden={isInputActive} />
           {!isSigned && <SignUpButton mobile />}
-          {isWidgetTourOpen && isWalletPage && (
-            <WidgetWalletTour
-              isTourOpen={isWidgetTourOpen}
-              closeTour={this.closeWidgetTour}
-            />
-          )}
-          <Switcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
+          {isWidgetTourOpen && isWalletPage &&
+            <div styleName="walletTour">
+              <WidgetWalletTour
+                isTourOpen={isWidgetTourOpen}
+                closeTour={this.closeWidgetTour}
+              />
+            </div>
+          }
+          <ThemeSwitcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
         </header>
       );
     }
@@ -563,28 +529,26 @@ export default class Header extends Component {
         {logoRenderer}
         <Nav menu={menuItems} />
         {isPartialTourOpen && isExchange && (
-          <TourPartial
-            isTourOpen={isPartialTourOpen}
-            closeTour={this.closePartialTour}
-          />
+          <div styleName="walletTour">
+            <TourPartial
+              isTourOpen={isPartialTourOpen}
+              closeTour={this.closePartialTour}
+            />
+          </div>
         )}
-        <User
-          openTour={
-            isWalletPage ? this.openExchangeTour : this.openWalletTour
-          }
-          path={path}
-          acceptRequest={this.acceptRequest}
-          declineRequest={this.declineRequest}
-        />
-        {isTourOpen && isWalletPage && (
-          <WalletTour isTourOpen={isTourOpen} closeTour={this.closeTour} />
-        )}
-        {isWidgetTourOpen && isWalletPage && (
-          <WidgetWalletTour
-            isTourOpen={isWidgetTourOpen}
-            closeTour={this.closeWidgetTour}
-          />
-        )}
+        {isTourOpen && isWalletPage &&
+          <div styleName="walletTour">
+            <WalletTour isTourOpen={isTourOpen} closeTour={this.closeTour} />
+          </div>
+        }
+        {isWidgetTourOpen && isWalletPage &&
+          <div styleName="walletTour">
+            <WidgetWalletTour
+              isTourOpen={isWidgetTourOpen}
+              closeTour={this.closeWidgetTour}
+            />
+          </div>
+        }
       </header>
     );
   }

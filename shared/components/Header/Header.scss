@@ -21,7 +21,7 @@ $purple: #510ed8;
   }
 }
 
-.themeChooser {
+.themeSwitcher {
   color: white;
   width: 20px;
   cursor: pointer;
@@ -154,4 +154,8 @@ $purple: #510ed8;
   .otherHeaderLogo {
     width: 100%;
   }
+}
+
+.walletTour {
+  position: absolute;
 }
