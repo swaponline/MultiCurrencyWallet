@@ -3044,7 +3044,7 @@
   },
   {
     "id": "FeeControler68",
-    "message": "Недостаточно ETH на вашем балансе для оплаты комиссии майнеров.{br}Пополните ваш кошелек на {gasAmountNeeded} ETH",
+    "message": "Недостаточно ETH на вашем балансе для оплаты комиссии майнеров.{br}{br}Пополните ваш кошелек на {gasAmountNeeded} ETH",
     "files": [
       "shared/pages/Swap/FeeControler/FeeControler.js"
     ]

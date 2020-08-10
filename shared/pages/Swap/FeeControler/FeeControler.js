@@ -33,7 +33,7 @@ export default class FeeControler extends Component {
     const { isAddressCopied } = this.state
 
     return (
-      <div styleName="main">
+      <div styleName="FeeController">
         <CopyToClipboard text={ethAddress}>
           <div>
             <div styleName="warning">
@@ -43,7 +43,7 @@ export default class FeeControler extends Component {
               <h3 styleName="feeHeading">
                 <FormattedMessage
                   id="FeeControler68"
-                  defaultMessage="Not enough ETH on your balance for miner fee.{br}Deposit {gasAmountNeeded} ETH to your account"
+                  defaultMessage="Not enough ETH on your balance for miner fee.{br}{br}Deposit {gasAmountNeeded} ETH to your account"
                   values={{
                     br: <br />,
                     gasAmountNeeded: <strong>{gasAmountNeeded * 5}</strong>, // 3 = 1 for approving, 4 for creating swap

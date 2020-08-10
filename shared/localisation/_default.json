@@ -2848,7 +2848,7 @@
   },
   {
     "id": "FeeControler68",
-    "message": "Not enough ETH on your balance for miner fee.{br}Deposit {gasAmountNeeded} ETH to your account",
+    "message": "Not enough ETH on your balance for miner fee.{br}{br}Deposit {gasAmountNeeded} ETH to your account",
     "files": [
       "shared/pages/Swap/FeeControler/FeeControler.js"
     ]
