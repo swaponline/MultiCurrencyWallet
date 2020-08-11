@@ -1,0 +1,13 @@
+.promo {
+}
+
+.promoWrap {
+  position: relative;
+}
+
+@include media-mobile {
+  .promo {
+    max-width: 370px;
+    padding: 0 20px;
+  }
+}

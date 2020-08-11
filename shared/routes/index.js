@@ -13,7 +13,7 @@ import NotFound from 'pages/NotFound/NotFound'
 import About from 'pages/About/About'
 import Wallet from 'pages/Wallet/Wallet'
 import Currency from 'pages/Currency/Currency'
-import PartialClosure from 'pages/PartialClosure/PartialClosure'
+import Exchange from 'pages/Exchange/Exchange'
 import PointOfSell from 'pages/PointOfSell/PointOfSell'
 import CurrencyWallet from 'pages/CurrencyWallet/CurrencyWallet'
 import Transaction from 'pages/Transaction/Transaction'
@@ -47,8 +47,8 @@ const routes = (
       <Route path={`${localisePrefix}${links.home}:buy-:sell/:orderId`} component={Home} />
       <Route path={`${localisePrefix}${links.home}:buy-:sell`} component={Home} />
 
-      <Route path={`${localisePrefix}${links.exchange}/:sell-to-:buy`} component={PartialClosure} />
-      <Route path={`${localisePrefix}${links.exchange}`} component={PartialClosure} />
+      <Route path={`${localisePrefix}${links.exchange}/:sell-to-:buy`} component={Exchange} />
+      <Route path={`${localisePrefix}${links.exchange}`} component={Exchange} />
 
       <Route path={`${localisePrefix}${links.pointOfSell}/:sell-to-:buy`} component={PointOfSell} />
       <Route path={`${localisePrefix}${links.pointOfSell}`} component={PointOfSell} />

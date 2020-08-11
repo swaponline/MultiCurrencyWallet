@@ -13,7 +13,6 @@ $walletPaddingTop: 41px;
     top: 0;
     @include ff-bold;
     width: 100%;
-    height: 41px;
     border-bottom: 0.5px solid rgba(#000, 0.03);
     border-radius: $borderRadius $borderRadius 0 0;
     background: #fff;
@@ -105,20 +104,6 @@ $walletPaddingTop: 41px;
 }
 
 .dark {
-  background: #232629;
-
-  @media screen and (max-width: 480px) {
-    background: #222528;
-  }
-
-  thead {
-    background: #232629;
-
-    tr {
-      background: #232629;
-    }
-  }
-
   tr {
     border-top: 1px solid #313131 !important;
   }
@@ -218,71 +203,13 @@ $walletPaddingTop: 41px;
     }
 
     & td {
-      // &:first-child {
-      //   position: absolute;
-      //   z-index: 2;
-      //   background: $color-f-brightest;
-      // }
-
-      // &:nth-child(2) {
-      //   position: absolute;
-      //   z-index: 2;
-      //   left: 90px;
-      //   background: $color-f-brightest;
-      //   height: 80px;
-      //   padding-top: 28px;
-      //   max-width: 146px;
-      //   min-width: 100px;
-      // }
-
-      // &:nth-child(3) {
-      //   min-width: 80px;
-      //   display: flex;
-      //   margin-left: 150px;
-      //   height: 80px;
-      //   align-items: center;
-      // }
       padding: 15px 10px;
     }
 
     & th {
-      // &:first-child {
-      //   position: absolute;
-      //   display: flex;
-      //   background: $color-f-brightest;
-      //   align-items: center;
-      //   height: 40px;
-      //   width: 50px;
-      // }
-
-      // &:nth-child(2) {
-      //   position: absolute;
-      //   display: flex;
-      //   background: $color-f-brightest;
-      //   align-items: center;
-      //   height: 40px;
-      //   width: 100px;
-      //   left: 90px;
-      // }
-
-      // &:nth-child(3) {
-      //   margin-left: 150px;
-      //   display: flex;
-      // }
       padding: 15px 10px;
     }
 
-    & tr:first-child td:first-child {
-      // padding-top: 15px;
-      // height: 75px;
-      // margin-top: 5px;
-    }
-
-    & tr:first-child td:nth-child(2) {
-      // padding-top: 23px;
-      // height: 75px;
-      // margin-top: 5px;
-    }
   }
 
   // History
@@ -320,9 +247,6 @@ table.wallet {
 
   table.wallet {
 
-    // td:nth-child(1) {
-    //   width: 5%;
-    // }
     td:nth-child(2) {
       width: 12%;
     }
@@ -422,23 +346,9 @@ table.wallet {
 }
 
 
-@media all and (min-width: 320px) and (max-width:1024px) {
+@media all and (max-width:1024px) {
   .table.exchange {
     min-height: 130px;
-    // overflow-x: visible;
-    // tbody {
-    //   display: block;
-    // }
-    // tr:first-child td:first-child,
-    // tr td{
-    //   position: static;
-    //   display: block;
-    // }
-    // tr {
-    //   position: relative;
-    //   display: block;
-    //   height: 75px;
-    // }
   }
 
   table {
@@ -514,7 +424,7 @@ table.wallet {
   }
 }
 
-@include media-min320-max800 {
+@media all and (max-width: 800px) {
   .table.exchange {
     thead {
       display: none;
@@ -604,7 +514,7 @@ table.wallet {
   }
 }
 
-@media all and (min-width: 320px) and (max-width: 767px) {
+@media all and (max-width: 767px) {
   .historySwap {
     tbody {
       tr {

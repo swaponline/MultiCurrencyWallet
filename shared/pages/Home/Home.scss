@@ -1,17 +1,16 @@
 .sectionContainer {
-  width: 1200px;
   position: relative;
   margin: auto;
   margin-top: 0px;
+
   &_widget {
     margin-top: 0;
   }
 }
 .sectionContainerMobile {
   width: 100%;
-  margin-top: -60px;
-  margin-bottom: 120px;
   position: relative;
+
   &_widget {
     margin-top: 0;
   }

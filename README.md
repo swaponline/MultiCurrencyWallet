@@ -118,7 +118,7 @@ export default {
 ```
 * change Cryptocurrency color `MultiCurrencyWallet/shared/components/ui/CurrencyIcon/images`
 * change icon to your (with the same name, e.x. "bitcoin.svg") 
-* change cryptocurrency icon  `MultiCurrencyWallet/shared/pages/PartialClosure/CurrencySlider/images`
+* change cryptocurrency icon  `MultiCurrencyWallet/shared/pages/Exchange/CurrencySlider/images`
 
 ### 2. Change links to social networks
 Set your own links in `MultiCurrencyWallet/shared/helpers/links.js`

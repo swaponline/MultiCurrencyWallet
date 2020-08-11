@@ -19,7 +19,7 @@
 .walletNav {
   padding: 0;
   margin-bottom: 0px;
-  margin-top: 25px;
+  margin-top: 15px;
 }
 
 .walletNavItem {
@@ -55,20 +55,13 @@
   }
 }
 
-@include media-mobile {
-  .historyHeading {
-    margin-top: 20px;
-  }
+.historyLoader {
+  overflow: hidden;
 }
 
-@media all and (min-width: 320px) and (max-width: 767px) {
+@media all and (max-width: 767px) {
   .history {
-    box-shadow: none;
-    padding: 0;
+    padding: 10px;
     margin-top: 0;
-  }
-
-  .historyContent {
-    margin: -40px -20px;
   }
 }

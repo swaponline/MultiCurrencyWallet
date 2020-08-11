@@ -21,12 +21,14 @@
 }
 
 @include media-mobile {
-	.buttonsInRow {
-	  > div {
-	  	flex-direction: row
-	  }
-	}
-	.button {
-	  width: 160px;
-	}
+  .buttonsInRow {
+      display: flex;
+      justify-content: center;
+    > div {
+      flex-direction: unset;
+    }
+  }
+  .button {
+    width: 160px;
+  }
 }

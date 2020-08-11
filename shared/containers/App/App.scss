@@ -1,50 +1,13 @@
-.main {
+.compressor {
+  min-width: 320px;
+}
+
+.headerAndMain {
   position: relative;
-  padding-bottom: 44px;
-  min-height: 100vh;
-
-  main {
-    padding-top: 88px;
-  }
-
-  &_widget {
-    main {
-      padding-top: 0px;
-      margin-top: -24px;
-    }
-  }
 }
 
-// @media all and (max-width: 575px) and (min-width: 480px){
-//   .main {
-//     main {
-//       padding-top: 88px !important;
-//     }
-//   }
-// }
-
-@media all and (max-width: 768px) and (min-width: 320px) {
-  .main {
-    padding-bottom: 60px;
+@media all and (max-width: 768px) {
+  .headerAndMain {
     height: calc(100% + 60px);
-    margin-top: 0;
-
-    main {
-      margin-bottom: 30px;
-    }
-
-    &_widget {
-      main {
-        padding-top: 20px;
-      }
-    }
-  }
-}
-
-@media all and (max-width: 480px) and (min-width: 320px) {
-  .main {
-    main {
-      padding-top: 0;
-    }
   }
 }
