@@ -13,7 +13,7 @@ import styles from "./Header.scss"
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 const sun = (fill) => (
-  <svg id="Capa_1" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg">
+  <svg id="Capa_1" viewBox="0 0 512 512" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
     <g>
       <g>
         <path fill={fill} d="m256 360.099c-57.4 0-104.099-46.698-104.099-104.099s46.699-104.099 104.099-104.099 104.099 46.699 104.099 104.099-46.699 104.099-104.099 104.099zm0-178.198c-40.858 0-74.099 33.241-74.099 74.099s33.24 74.099 74.099 74.099 74.099-33.241 74.099-74.099-33.241-74.099-74.099-74.099z" />
@@ -63,7 +63,7 @@ const moon = (fill) => (
 
 const SwitcherComponent = ({ onClick, withExit, themeSwapAnimation }) => (
   <div
-    styleName={`themeChooser ${withExit ? 'withExit' : ''} ${themeSwapAnimation ? 'themeAnimation' : ''}`}
+    styleName={`themeSwitcher ${withExit ? 'withExit' : ''} ${themeSwapAnimation ? 'themeAnimation' : ''}`}
     onClick={onClick}
     data-tip data-for="themeAlt"
   >
@@ -74,4 +74,4 @@ const SwitcherComponent = ({ onClick, withExit, themeSwapAnimation }) => (
   </div>
 )
 
-export const Switcher = CSSModules(SwitcherComponent, styles, { allowMultiple: true })
+export const ThemeSwitcher = CSSModules(SwitcherComponent, styles, { allowMultiple: true })

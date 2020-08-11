@@ -545,7 +545,7 @@ export default class AddOffer extends Component {
           )
         }
 
-        <Button styleName="button" fullWidth brand disabled={isDisabled} onClick={this.handleNext}>
+        <Button styleName="button" fullWidth blue disabled={isDisabled} onClick={this.handleNext}>
           <FormattedMessage id="AddOffer396" defaultMessage="Next" />
         </Button>
       </div>

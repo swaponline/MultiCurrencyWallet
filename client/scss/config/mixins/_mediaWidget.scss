@@ -41,13 +41,6 @@ $media-tablet-portrait-and-lower-rule     : "(max-width: " + $media-tablet-portr
   }
 }
 
-// 320 to 800
-@mixin media-min320-max800 {
-  @media all and (min-width: 320px) and (max-width:800px) {
-    @content;
-   }
-}
-
 // * and higher
 
 @mixin media-tablet-landscape-and-higher {

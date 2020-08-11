@@ -9,6 +9,12 @@
   @include ff-bold;
 }
 
+@media screen and (max-width: 650px){
+  .promoText {
+    font-size: 24px;
+  }
+}
+
 .promoTextColored {
   color: #6144E5;
 }

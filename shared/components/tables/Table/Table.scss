@@ -13,7 +13,6 @@ $walletPaddingTop: 41px;
     top: 0;
     @include ff-bold;
     width: 100%;
-    height: 41px;
     border-bottom: 0.5px solid rgba(#000, 0.03);
     border-radius: $borderRadius $borderRadius 0 0;
     background: #fff;
@@ -105,20 +104,6 @@ $walletPaddingTop: 41px;
 }
 
 .dark {
-  background: #232629;
-
-  @media screen and (max-width: 480px) {
-    background: #222528;
-  }
-
-  thead {
-    background: #232629;
-
-    tr {
-      background: #232629;
-    }
-  }
-
   tr {
     border-top: 1px solid #313131 !important;
   }
@@ -361,7 +346,7 @@ table.wallet {
 }
 
 
-@media all and (min-width: 320px) and (max-width:1024px) {
+@media all and (max-width:1024px) {
   .table.exchange {
     min-height: 130px;
   }
@@ -439,7 +424,7 @@ table.wallet {
   }
 }
 
-@include media-min320-max800 {
+@media all and (max-width: 800px) {
   .table.exchange {
     thead {
       display: none;
@@ -529,7 +514,7 @@ table.wallet {
   }
 }
 
-@media all and (min-width: 320px) and (max-width: 767px) {
+@media all and (max-width: 767px) {
   .historySwap {
     tbody {
       tr {

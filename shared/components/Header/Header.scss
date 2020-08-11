@@ -1,10 +1,5 @@
 $purple: #510ed8;
 
-.container {
-  display: flex;
-  align-items: center;
-  position: relative;
-}
 
 .otherHeaderLogo {
   display: block;
@@ -26,13 +21,9 @@ $purple: #510ed8;
   }
 }
 
-.themeChooser {
+.themeSwitcher {
   color: white;
-  position: absolute;
-  top: 2em;
-  right: 2em;
   width: 20px;
-  display: flex;
   cursor: pointer;
 }
 
@@ -74,15 +65,15 @@ $purple: #510ed8;
   cursor: pointer;
 }
 
-.header {
-  height: 80px;
+.header,
+.header-mobile {
   width: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1001;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   transition: position 0.3s ease;
-  position: absolute;
 }
 
 .flexebleHeader {
@@ -93,11 +84,6 @@ $purple: #510ed8;
   height: 100%;
 }
 
-.container {
-  margin: auto;
-  height: 80px;
-}
-
 .imgWrapper {
   height: 100%;
   img {
@@ -106,21 +92,7 @@ $purple: #510ed8;
   }
 }
 
-@media all and (max-width: 780px) {
-  .container {
-    margin: 0 auto;
-  }
-
-  .container {
-    height: 100%;
-  }
-}
-
 @include media-mobile {
-  .header {
-    display: flex;
-  }
-
   .widgetHeader {
     display: unset;
     width: 100%;
@@ -164,15 +136,6 @@ $purple: #510ed8;
 }
 
 @media all and (max-width: 480px) {
-  .container {
-    display: none;
-  }
-  .contawidge_container {
-    display: flex;
-    align-items: center;
-    position: relative;
-  }
-
   .imgWrapper {
     width: 100%;
     display: flex;
@@ -191,4 +154,8 @@ $purple: #510ed8;
   .otherHeaderLogo {
     width: 100%;
   }
+}
+
+.walletTour {
+  position: absolute;
 }
