@@ -2,16 +2,19 @@ $information-footer-height: 44px;
 
 .footer {
   width: 100%;
+  margin-top: 30px;
 
   &.dark {
     background-color: #222427;
   }
 
   &.mobile {
+    margin-top: 10px;
     padding-bottom: 60px; // mobile nav height
 
     @media (min-width: 570px) {
       & {
+        margin-top: 20px;
         padding-bottom: 80px; // mobile nav height
       }
     }
