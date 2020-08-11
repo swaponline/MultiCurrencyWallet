@@ -18,7 +18,7 @@ Current
 | 07.2020 | 840 USD | $201 (+$84) | +0.5 ETH https://etherscan.io/tx/0x7e0fb098ada92440237baaa32aaddefd1e132b660b5ab906620242ab990925eb  |
 
 # How we get revenue
-- Sell Wordpress Plugin https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064 
+- by selling this plugin Wordpress Plugin https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064 
 
 # Strategy and roadmap 
 - BTC-ETH atomic swap. done
