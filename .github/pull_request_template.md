@@ -5,18 +5,21 @@
 <!-- You have to tick all the boxes -->
 
 - [x] I have read the [CONTRIBUTING](https://github.com/swaponline/swap.react/wiki/CONTRIBUTING) guide
-- [x] branch rebased on `master`
-- [x] styleguide check `npm run validate`
-- [x] good naming
-- [x] keep simple
-- [x] video or screenshot attached
-- [x] testing instruction attached
+- [x] Styleguide check `npm run validate`
+- [x] Good naming
+- [x] Keep simple
+- [x] I checked desktop/mobile version
+- [x] I checked bright/dark mode
+- [x] I checked en/ru version
+- [x] Affects money; I checked the functionality once again
+- [x] Video or screenshot attached
+- [x] Testing instruction attached
 - [x] I checked the PR once again
 
 
 ### Description
 
-<!-- Include issue number and motivation for these code changes -->
+<!-- Include issue number (#1234) or motivation for these code changes -->
 
 
 ### Video or screenshot
