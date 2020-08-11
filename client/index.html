@@ -86,7 +86,7 @@
     }
 
     .loader img {
-      width: 150px;
+      width: 80px;
     }
 
     .text {
@@ -575,14 +575,6 @@
       <div id="usersInform" class="usersInform"></div>
     </div>
     <script>
-      const getNavigatorLanguage = () => {
-        if (navigator.languages && navigator.languages.length) {
-          return navigator.languages[0];
-        } else {
-          return navigator.userLanguage || navigator.language || navigator.browserLanguage || "en";
-        }
-      };
-
 
       function setCookie(name, value, options) {
         options = options || {};
@@ -624,7 +616,6 @@
         return "";
       }
 
-      var advice = document.getElementById("beforeJSTip");
       const wrapper = document.getElementById('wrapper_element')
 
       if (window.localStorage.getItem("isDark")) {
@@ -633,9 +624,19 @@
         wrapper.classList.remove('dark')
       }
 
-      var lang = getCookie("mylang");
 
       // detect browser's lang
+
+      const getNavigatorLanguage = () => {
+        if (navigator.languages && navigator.languages.length) {
+          return navigator.languages[0];
+        } else {
+          return navigator.userLanguage || navigator.language || navigator.browserLanguage || "en";
+        }
+      };
+
+      var lang = getCookie("mylang");
+
       if (!lang) {
         var browserLang = getNavigatorLanguage();
         lang = browserLang.indexOf("ru") > -1 ? "ru" : "en";
@@ -645,9 +646,41 @@
       const locale = lang.toLowerCase();
       const locationName = lang.toUpperCase();
 
-      if (locationName === "ru" || (locale === "ru" && locationName !== "en")) {
-        advice.innerText = "Не забудьте сохранить свои приватные ключи от кошелька!";
-      }
+
+      (function() { // set tip
+
+        var tips = {
+          beforeBackup: [
+            {
+              "en": "Don't forget to&nbsp;save your 12-word recovery phrase",
+              "ru": "Не забудьте сохранить вашу фразу восстановления (12&nbsp;слов)",
+            },
+          ],
+          afterBackup: [
+            {
+              "en": "Keep your recovery phrase and private keys in&nbsp;a&nbsp;safe place",
+              "ru": "Держите вашу фразу восстановления и&nbsp;приватные ключи в&nbsp;безопасном месте",
+            },
+            {
+              "en": "Don't forget where your recovery phrase is&nbsp;saved",
+              "ru": "Не забудьте, где&nbsp;хранится ваша фраза восстановления",
+            },
+          ],
+        }
+
+        if (locale === "en" || locale === "ru") {
+          var mnemonic = window.localStorage.getItem("testnet:twentywords") || window.localStorage.getItem("mainnet:twentywords")
+          var isBackup = mnemonic === `-`
+          var relevantTips = tips[!isBackup ? 'beforeBackup' : 'afterBackup'];
+          var currentTip = relevantTips[Math.floor(Math.random() * relevantTips.length)][locale];
+          var tipNode = document.getElementById("beforeJSTip");
+          tipNode.innerHTML = currentTip;
+        } else {
+          console.error("Unknown locale", locale);
+        }
+
+      })();
+
 
       var information = document.getElementById("usersInform");
 

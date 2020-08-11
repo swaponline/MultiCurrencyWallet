@@ -284,7 +284,7 @@ export default class App extends React.Component {
     }
 
     if (isFetching) {
-      return <Loader showTips />;
+      return <Loader />;
     }
 
     const mainContent =

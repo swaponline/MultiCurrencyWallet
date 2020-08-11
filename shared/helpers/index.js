@@ -9,7 +9,6 @@ import getCurrencyKey from './getCurrencyKey'
 import constants from './constants'
 import localStorage from './localStorage'
 import api from './api'
-import tips from './tips'
 import * as utils from './utils'
 // Methods
 import ignoreProps from './ignoreProps'
@@ -50,7 +49,6 @@ export default {
 }
 
 export {
-  tips,
   btc,
   eth,
   ethToken,
