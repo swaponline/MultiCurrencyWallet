@@ -15,7 +15,7 @@ Current
 | ------  | ------- | ----------------- | --------
 | 05.2020 | 413 USD | $41  | 
 | 06.2020 | 663 USD | $117 (+$66)  |
-| 07.2020 | 840 USD | $201 (+$84) | +0.5 ETH https://etherscan.io/tx/0x7e0fb098ada92440237baaa32aaddefd1e132b660b5ab906620242ab990925eb  |
+| 07.2020 | 840 USD | $201 (+$84) | +0.5 ETH https://etherscan.io/tx/0xb5708aa91cd181b45aafc3fb92bdeea970a4359110a10f3fde6a4b42e0cabd14  |
 
 # How we get revenue
 - by selling this plugin Wordpress Plugin https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064 
