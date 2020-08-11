@@ -109,10 +109,6 @@ export default class Orders extends Component {
     actions.core.updateCore()
   }
 
-  handleWalletPush = () => {
-    this.props.history.push(links.currencyWallet)
-  }
-
   render() {
     const { buyOrders, sellOrders, isShowAllMyOrders } = this.state
     let { sellCurrency, buyCurrency, intl, decline } = this.props
@@ -137,11 +133,6 @@ export default class Orders extends Component {
     const seoPage = getSeoPage(location.pathname)
 
     const isWidget = (config && config.isWidget)
-
-    const buttonsRowStyleName = isMobile ?
-      (isWidget && !config.isFullBuild) ? 'buttonRow buttonRowMobile buttonRowWidget' : 'buttonRow buttonRowMobile'
-      :
-      (isWidget && !config.isFullBuild) ? 'buttonRow buttonRowWidget' : 'buttonRow'
 
     const buyCurrencyFullName = (currencies.find(c => c.name === buyCurrency) || {}).fullTitle
     const sellCurrencyFullName = (currencies.find(c => c.name === sellCurrency) || {}).fullTitle
@@ -179,16 +170,6 @@ export default class Orders extends Component {
             <FormattedMessage id="Orders141" defaultMessage="No such ticker. Redirecting to USDT-BTC exchange..." />
           </p>
         } */}
-
-        <div styleName={buttonsRowStyleName}>
-          {
-            (isWidget && !config.isFullBuild) && (
-              <Button green styleName="button" onClick={this.handleWalletPush} >
-                <FormattedMessage id="OrdersWidgetModeShowWallet" defaultMessage="Wallet" />
-              </Button>
-            )
-          }
-        </div>
 
         { !!myOrders.length &&
           <Panel
