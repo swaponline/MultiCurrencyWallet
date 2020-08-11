@@ -11,11 +11,11 @@ Uniswap: https://app.uniswap.org/#/swap?outputCurrency=0x14a52cf6b4f68431bd5d952
 
 Current 
 
-| Month   | Revenue | Forwarded to uniswap liquidity | 
-| ------  | ------- | ------------- | --------- |
-| 05.2020 | 413 USD | $41 | ... |
-| 06.2020 | 663 USD | $66 | .. |
-| 07.2020 | 840 USD | $84 | +0.5 ETH https://etherscan.io/tx/0x7e0fb098ada92440237baaa32aaddefd1e132b660b5ab906620242ab990925eb  |
+| Month   | Revenue | Accumulated liquidity | Forwarded to uniswap
+| ------  | ------- | ----------------- | --------
+| 05.2020 | 413 USD | $41  | 
+| 06.2020 | 663 USD | $117 (+$66)  |
+| 07.2020 | 840 USD | $201 (+$84) | +0.5 ETH https://etherscan.io/tx/0x7e0fb098ada92440237baaa32aaddefd1e132b660b5ab906620242ab990925eb  |
 
 # How we get revenue
 - Sell Wordpress Plugin https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064 
