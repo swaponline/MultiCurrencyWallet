@@ -1,12 +1,12 @@
-import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom'
 import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
-import { constants } from 'helpers'
-import helpers from 'helpers'
-import getCurrencyKey from "helpers/getCurrencyKey";
+import helpers, { constants, links } from 'helpers'
+
+import getCurrencyKey from 'helpers/getCurrencyKey'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import getWalletLink from 'helpers/getWalletLink'
-import { links } from 'helpers'
+
 import TxInfo from './TxInfo'
 import { ModalBox } from 'components/modal'
 import cssModules from 'react-css-modules'
@@ -37,8 +37,8 @@ class Transaction extends Component {
         params: {
           ticker = null,
           tx: txId = null,
-        }
-      } = null
+        },
+      } = null,
     } = props
 
     const currency = getCurrencyKey(ticker, true)
@@ -157,7 +157,7 @@ class Transaction extends Component {
       txId,
     } = this.state
 
-    if(!txId) {
+    if (!txId) {
       history.push(links.notFound)
       return
     }
@@ -173,7 +173,7 @@ class Transaction extends Component {
 
   fetchTxFinalBalances = (currency, txId) => {
     setTimeout(async () => {
-      const finalBalances = await helpers.transactions.fetchTxBalances( currency, txId)
+      const finalBalances = await helpers.transactions.fetchTxBalances(currency, txId)
       if (finalBalances && !this.unmounted) {
         this.setState({
           finalBalances,
@@ -197,13 +197,13 @@ class Transaction extends Component {
     if (walletOne instanceof Array) {
       walletOne.forEach((wallet) => wallets.push(wallet))
     } else wallets.push(walletOne)
-    
+
     if (walletTwo instanceof Array) {
       walletTwo.forEach((wallet) => wallets.push(wallet))
     } else wallets.push(walletTwo)
 
     const walletLink = getWalletLink(ticker, wallets)
-    history.push((walletLink) ? walletLink : '/')
+    history.push((walletLink) || '/')
   }
 
   componentWillUnmount() {
@@ -230,4 +230,4 @@ class Transaction extends Component {
   }
 }
 
-export default withRouter(Transaction);
+export default withRouter(Transaction)

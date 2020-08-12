@@ -21,7 +21,7 @@ const apiQueryTimer = (queryName) => {
       options: {
         inQuery: {
           delay,
-        }
+        },
       },
     } = queryChunk
 
@@ -30,7 +30,7 @@ const apiQueryTimer = (queryName) => {
       apiQueryTimers[queryName] = setTimeout(() => {
         apiQueryTimer(queryName)
       }, delay)
-      
+
     }).catch((error) => {
       onError(error)
       apiQueryTimers[queryName] = setTimeout(() => {
@@ -46,9 +46,9 @@ const apiQueryTimer = (queryName) => {
 
 const apiQueryInit = (queryName) => {
   if (!apiQuery[queryName]) apiQuery[queryName] = []
-  if (!apiQueryTimers[queryName]) apiQueryTimers[queryName] = setTimeout( () => {
+  if (!apiQueryTimers[queryName]) { apiQueryTimers[queryName] = setTimeout(() => {
     apiQueryTimer(queryName)
-  }, apiQueryTicks)
+  }, apiQueryTicks) }
 }
 
 const initApiStatus = (api) => {
@@ -60,7 +60,7 @@ const initApiStatus = (api) => {
   }
 
   if (config.api[api] instanceof Array) {
-    config.api[api].forEach((url,index) => {
+    config.api[api].forEach((url, index) => {
       stat.endpoints[url] = {
         url,
         lastCheck: getUnixTimeStamp(),
@@ -68,7 +68,7 @@ const initApiStatus = (api) => {
       }
       stat.prior.push(url)
     })
-    stat.last = config.api[api][config.api[api].length-1]
+    stat.last = config.api[api][config.api[api].length - 1]
   } else {
     stat.endpoints[config.api[api]] = {
       url: config.api[api],
@@ -132,14 +132,14 @@ const apiLooper = (method, api, endpoint, options) => {
   const apiStatus = apiStatuses[api]
 
   if (apiStatus) {
-    return new Promise( (resolve, error) => {
+    return new Promise((resolve, error) => {
       const doRequest = () => {
         const currentEndpoint = apiStatus.endpoints[apiStatus.prior[0]]
 
         if (currentEndpoint.online) {
           const url = `${currentEndpoint.url}${endpoint}`
           request[method](url, options)
-            .then( (answer) => {
+            .then((answer) => {
               if (options && options.checkStatus instanceof Function) {
                 if (!options.checkStatus(answer)) {
                   console.error('Endpoint ', currentEndpoint.url, ' check status failed. May be down. Switch next')
@@ -153,27 +153,27 @@ const apiLooper = (method, api, endpoint, options) => {
               }
               resolve(answer)
             })
-            .catch( () => {
+            .catch(() => {
               console.error('Endpoint ', currentEndpoint.url, 'is offline. Switch next')
               if (switchNext(api)) {
                 doRequest()
               } else {
                 error('All endpoints of api is offline')
               }
-            } )
+            })
         } else {
           error('All endpoints of api is offline')
         }
       }
       doRequest()
     })
-  } else {
-    return new Promise((resolve,error) => { error('Api not found') })
   }
+  return new Promise((resolve, error) => { error('Api not found') })
+
 }
 
 
 export default {
-  get: (api, endpoint, options ) => apiLooper('get', api, endpoint, options ),
-  post: (api, endpoint, options ) => apiLooper('post', api, endpoint, options ),
+  get: (api, endpoint, options) => apiLooper('get', api, endpoint, options),
+  post: (api, endpoint, options) => apiLooper('post', api, endpoint, options),
 }

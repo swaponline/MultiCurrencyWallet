@@ -3445,6 +3445,14 @@
     ]
   },
   {
+    "id": "FourthStep37",
+    "message": "({ghostTx} tx)",
+    "files": [
+      "shared/pages/Swap/GhostSwap/SwapList/steps/SecondStep.js",
+      "shared/pages/Swap/GhostSwap/SwapList/steps/ThirdStep.js"
+    ]
+  },
+  {
     "id": "FourthStep52",
     "message": "({otherCurrency} tx)",
     "files": [

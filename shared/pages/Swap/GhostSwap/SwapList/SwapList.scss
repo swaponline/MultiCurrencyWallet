@@ -1,0 +1,179 @@
+.dark {
+  .checked {
+    .stepNumber {
+      background: #9066da;
+      color: #fff;
+      border: 1px solid #5100dc;
+      min-width: 35px;
+    }
+    .stepText {
+      color: #828f96;
+    }
+  }
+}
+
+.stepList,
+.stepItem,
+.stepNumber,
+.stepText {
+  color: #000;
+}
+
+.stepNumber {
+  border: 1px solid #ccc;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  min-width: 35px;
+}
+
+.cancelSwap {
+  position: relative;
+  font-size: 17px;
+  cursor: pointer;
+  color: #fd6b65;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 20px;
+  padding: 0 1.6em;
+  text-align: center;
+  display: inline-block;
+  text-decoration: underline;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.tooltip {
+  padding-left: 10px;
+}
+
+.stepList {
+  width: 37%;
+  height: 100%;
+  margin-top: 100px;
+}
+
+.stepItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 17px;
+  font-size: 14px;
+  opacity: 0.3;
+}
+
+.stepText {
+  margin: 0;
+  margin-left: 14px;
+  text-transform: uppercase;
+}
+
+.active {
+  color: #000;
+  opacity: 1;
+  .stepNumber {
+    background: #fff;
+    color: #fff;
+    border: none;
+    border: 1px solid #000;
+    color: #000;
+  }
+}
+
+.checked {
+  .stepNumber {
+    background: #5100dc;
+    color: #fff;
+    border: 1px solid #5100dc;
+    min-width: 35px;
+  }
+  .stepText {
+    color: #5100dc;
+  }
+}
+
+.transactionInStep {
+  font-size: 20px;
+  margin-left: 10px;
+  position: relative;
+  a {
+    font-size: 14px;
+    margin-top: -12px;
+    display: block;
+    margin-right: 4px;
+    display: flex;
+    border-bottom: 1px solid;
+    padding-bottom: 3px;
+    &:hover {
+      border-bottom: none;
+      color: #007bff;
+    }
+  }
+  i {
+    font-size: 19px;
+    color: #007bff;
+    display: none;
+    margin-left: 4px;
+  }
+}
+
+@media all and (max-width: 1000px) {
+  .stepList {
+    width: 100%;
+    margin-top: 30px;
+  }
+}
+
+@include media-tablet {
+  .stepList {
+    margin-left: 0;
+    order: 4;
+  }
+  .stepList.isMobile {
+    margin-left: 0px;
+    margin-bottom: 25px;
+    align-items: baseline;
+    margin-bottom: 5px;
+    margin-top: -20px;
+    display: flex;
+    width: 100%;
+    max-width: 600px;
+    order: 1;
+    justify-content: space-between;
+  }
+}
+
+@include media-mobile {
+  .stepList {
+    margin-left: 0;
+    order: 4;
+  }
+
+  .transactionInStep {
+    a {
+      margin-top: 0;
+    }
+  }
+
+  .stepList.isMobile {
+    width: 100%;
+    order: 1;
+    .cancelSwap {
+      font-size: 15px;
+      height: 30px;
+      line-height: 30px;
+      border-bottom: 1px solid;
+      position: absolute;
+      right: 0;
+      padding-bottom: 3px;
+      top: -5px;
+      text-decoration: none;
+      border-radius: 0;
+    }
+  }
+  .stepText {
+    font-size: 12px;
+  }
+}

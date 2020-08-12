@@ -1,5 +1,6 @@
 import request from 'superagent'
 
+
 const responseCacheStorage = {}
 
 const responseCacheGetKey = (req, opts) => `${opts.method}-${opts.endpoint}`

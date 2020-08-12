@@ -28,13 +28,11 @@ const broadcast = ({ sender, destination, amount, fee, rawTx, invoice }) => {
 
     return apiLooper.post('multisig', `/broadcast/`, {
       body: requestData,
-    }).then(({txId}) => {
-      return txId
-    })
-  } else {
-    console.error(`Btc-Multisig. Cant detect sender wallet`)
-    return false
+    }).then(({ txId }) => txId)
   }
+  console.error(`Btc-Multisig. Cant detect sender wallet`)
+  return false
+
 }
 
 const fetchTx = (txId) => apiLooper
@@ -103,15 +101,15 @@ const fetch = (address) => {
       const transactions = res.items.map((item) => {
         let { status } = item
 
-        switch(status) {
+        switch (status) {
           case 1: status = 'pending'
-            break;
+            break
           case 2: status = 'ready'
-            break;
+            break
           case 3: status = 'reject'
-            break;
+            break
           case 4: status = 'cancel'
-            break;
+            break
         }
 
         // @ToDo - (draft) use api request for fetch status of address list
@@ -147,17 +145,15 @@ const fetch = (address) => {
         total: pengingCount,
       })
       return transactions
-    } else return []
-  }).catch ((e) => {
-    return []
-  })
+    } return []
+  }).catch((e) => [])
 }
 
 const goToLastWallet = () => {
   const {
     user: {
       multisigStatus,
-    }
+    },
   } = getState()
 
   const walletsWithRequests = Object.keys(multisigStatus).map((walletAddress) => ({

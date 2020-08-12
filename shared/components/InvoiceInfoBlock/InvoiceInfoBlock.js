@@ -15,7 +15,7 @@ const InvoiceInfoBlock = (props) => {
   if (invoiceData.label) bip0020link = `${bip0020link}&message=${encodeURI(invoiceData.label)}`
 
   return (
-    <div styleName='invoiceInfoBlock'>
+    <div styleName="invoiceInfoBlock">
       <h4>
         <FormattedMessage id="InvoiceInfoBlockTitle" defaultMessage="Оплата инвойса #{id}-{invoiceNumber}" values={invoiceData} />
       </h4>

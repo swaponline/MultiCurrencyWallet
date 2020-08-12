@@ -149,8 +149,6 @@ const linksManager = {
 }
 
 
-
-
 linksManager.getFaqLink = (faqID) => {
   for (let i = 0; i < linksManager.faq.length; i++) {
     if (linksManager.faq[i].id
@@ -172,6 +170,13 @@ export const getEtherWallet = () => {
   const { address } = actions.user.getAuthData('eth')
 
   return `/eth/${address}`
+}
+
+
+export const getGhostWallet = () => {
+  const { address } = actions.user.getAuthData('ghost')
+
+  return `/ghost/${address}`
 }
 
 export const getTokenWallet = (token) => {

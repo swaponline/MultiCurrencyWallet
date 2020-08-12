@@ -78,6 +78,9 @@ const getUserData = (currency) => {
     case 'ETH':
       return getState().user.ethData
 
+    case 'GHOST':
+      return getState().user.ghostData
+
     default:
       return {}
   }
@@ -136,7 +139,7 @@ const deletedPartialCurrency = (orderId) => {
   const deletedOrderSell = orders.filter(item => item.sellCurrency.toUpperCase() === deletedOrderSellCurrency)
   const deletedOrderBuy = orders.filter(item => item.buyCurrency.toUpperCase() === deletedOrderBuyCurrency)
 
-  const premiumCurrencies = ['BTC', 'ETH', 'SWAP'] // валюты, которые всегда должны быть в дропе
+  const premiumCurrencies = ['BTC', 'ETH', 'GHOST', 'SWAP'] // валюты, которые всегда должны быть в дропе
 
   if (deletedOrderSell.length === 1 && !premiumCurrencies.includes(deletedOrderSellCurrency)) {
     reducers.currencies.deletedPartialCurrency(deletedOrderSellCurrency)
@@ -319,7 +322,7 @@ const markCoinAsHidden = (coin, doBackup) => {
 const markCoinAsVisible = (coin, doBackup) => {
   const { hiddenCoinsList } = constants.localStorage
 
-  const findedCoin = JSON.parse(localStorage.getItem(hiddenCoinsList)).find(el => el.includes(coin) && el.includes(":"))
+  const findedCoin = JSON.parse(localStorage.getItem(hiddenCoinsList)).find(el => el.includes(coin) && el.includes(':'))
 
   reducers.core.markCoinAsVisible(findedCoin || coin)
   localStorage.setItem(hiddenCoinsList, JSON.stringify(getState().core.hiddenCoinsList))
@@ -348,6 +351,7 @@ const getWallets = () => {
   const {
     user: {
       btcData,
+      ghostData,
       btcMultisigSMSData,
       btcMultisigUserData,
       btcMultisigPinData,
@@ -362,6 +366,7 @@ const getWallets = () => {
     user: {
       btcMnemonicData,
       ethMnemonicData,
+      ghostMnemonicData,
     },
   } = getState()
 
@@ -375,11 +380,12 @@ const getWallets = () => {
     ... (!config.opts.curEnabled || config.opts.curEnabled.btc) ? [btcMultisigUserData] : [],
     ... (!config.opts.curEnabled || config.opts.curEnabled.btc) ? (btcMultisigUserData && btcMultisigUserData.wallets) ? btcMultisigUserData.wallets : [] : [],
     ... (!config.opts.curEnabled || config.opts.curEnabled.btc) ? [ethData] : [],
+    ... (!config.opts.curEnabled || config.opts.curEnabled.ghost) ? [ghostData] : [],
     ...Object.keys(tokensData)
       .filter(k => !tokensData[k].reducerDataTarget)
-      .map(k => tokensData[k])
+      .map(k => tokensData[k]),
   ].map(({ account, keyPair, ...data }) => ({
-    ...data
+    ...data,
   }))
 
 

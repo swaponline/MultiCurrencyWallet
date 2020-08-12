@@ -3,7 +3,6 @@ import ethToken from './ethToken'
 import actions from 'redux/actions'
 
 
-
 const getWalletLink = (currency, checkAddress) => {
   let ourWallets = false
   const isEthToken = ethToken.isEthToken({ name: currency })
