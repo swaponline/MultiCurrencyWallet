@@ -21,22 +21,20 @@ const Footer = (props) => {
   const isDark = localStorage.getItem(constants.localStorage.isDark)
 
   return (
-    <Fragment>
+    <footer
+      className={cx({
+        [styles.footer]: true,
+        [styles.dark]: isDark,
+        [styles.mobile]: isMobile,
+      })}
+    >
       {(!config.isWidget || config.isFullBuild) && (
-        <footer
-          className={cx({
-            [styles.footer]: true,
-            [styles.dark]: isDark,
-            [styles.mobile]: isMobile,
-          })}
-        >
-          <WidthContainer styleName="container">
-            <SwitchLang {...props} />
-            {!config.isWidget && <SocialMenu />}
-          </WidthContainer>
-        </footer>
+        <WidthContainer styleName="container">
+          <SwitchLang {...props} />
+          {!config.isWidget && <SocialMenu />}
+        </WidthContainer>
       )}
-    </Fragment>
+    </footer>
   )
 }
 
