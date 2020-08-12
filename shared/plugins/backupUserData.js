@@ -144,7 +144,7 @@ const backupUserData = {
             set( `ethMnemonic`, data.ethMnemonic )
             set( `ethOld`, data.ethOld )
             set( `ethMnemonic`, data.ethMnemonic )
-            set( `twentywords`, `-` )
+            set( `twentywords`, data.twentywords )
             localStorage.setItem(constants.localStorage.hiddenCoinsList, data.hiddenCoinsList)
             localStorage.setItem(constants.localStorage.isWalletCreate, data.isWalletCreate)
             localStorage.setItem(constants.localStorage.didProtectedBtcCreated, data.didProtectedBtcCreated)
