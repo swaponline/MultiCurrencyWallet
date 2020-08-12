@@ -20,25 +20,32 @@
 
 td {
   text-align: center;
+
+  th {
+    text-transform: lowercase;
+  }
 }
 
-.currency {
+/* .currency {
   font-size: 14px;
   font-weight: 700;
   min-width: 150px;
   margin-right: 10px;
   display: flex;
   align-items: center;
-}
+} */
 
 .coin {
   text-transform: uppercase;
 }
 
 .buttons {
-  width: 150px;
   display: flex;
   justify-content: space-around;
+
+  > * + * {
+    margin-left: 3px;
+  }
 }
 
 .arrow {
@@ -53,10 +60,23 @@ td {
   height: auto;
 }
 
+.shareFrame {
+  height: 25px;
+  width: 25px;
+  border: 1px solid #0004;
+  border-radius: 50%;
+  background-color: #aaa2;
+  cursor: pointer;
+  position: relative;
+}
+
 .img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-58%, -50%);
   width: 18px;
-  margin-top: -2px;
-  margin-right: 12px;
+  height: 18px;
 }
 
 .share {
@@ -66,5 +86,19 @@ td {
   }
 }
 
+.shareTip {
+  position: absolute;
+  font-size: 12px;
+  top: -1.5em;
+  left: -50%;
+}
+
+.value {
+  opacity: 1;
+}
+
+.currency {
+  opacity: 0.6;
+}
 
 

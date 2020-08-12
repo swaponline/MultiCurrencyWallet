@@ -372,33 +372,13 @@ const CreateWallet = (props) => {
               </span>
             </Tooltip>
           </span>
-          {/*
-          <button onClick={handleMakeSweep}>
-            <FormattedMessage
-              id="CreateWallet_MakeSweep"
-              defaultMessage="Sweep"
-            />
-          </button>
-          <button onClick={handleShowKeys}>
-            <FormattedMessage
-              id="CreateWallet_ShowOldKeys"
-              defaultMessage="My old keys"
-            />
-          </button>
-          <button onClick={handleImportKeys}>
-            <FormattedMessage
-              id="ImportKeysBtn"
-              defaultMessage="Импортировать"
-            />
-          </button>
-          */}
           <br />
-          <button onClick={goToExchange}>
+{/*          <button onClick={goToExchange}>
             <FormattedMessage
               id="ExchangeBtn"
               defaultMessage="Обмен"
             />
-          </button>
+          </button>*/}
         </div>
 
         {singleCurrecnyData ?

@@ -226,13 +226,13 @@ export default class ConfirmBeginSwap extends React.Component {
               )
             }
             <div styleName="button-overlay">
+              <Button styleName="button" gray onClick={this.handleClose}>{labels.no}</Button>
               {(this.customWalletIsValid()) && (
                 <Button styleName="button" brand onClick={this.handleConfirm}>{labels.yes}</Button>
               )}
               {(!this.customWalletIsValid()) && (
                 <Button styleName="button" gray>{labels.yes}</Button>
               )}
-              <Button styleName="button" gray onClick={this.handleClose}>{labels.no}</Button>
             </div>
           </div>
         </div>

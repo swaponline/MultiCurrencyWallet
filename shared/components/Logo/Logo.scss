@@ -1,9 +1,8 @@
 .logo {
+  display: block;
   width: 32px;
   height: 30px;
-  display: block;
-  position: absolute;
-  left: 40px;
+  
 
   img {
     display: block;
@@ -22,38 +21,3 @@
   outline: none;
 }
 
-@include media-mobile {
-	.logo {
-		display: none;
-	}
-}
-
-@media screen and (max-width: 1390px){
-  .logo {
-    position: relative;
-    left: auto;
-    margin-right: 85px;
-  }
-}
-
-@media screen and (max-width: 860px){
-  .logo {
-    display: none;
-  }
-}
-
-.mobile {
-  width: 100%;
-  text-align: center;
-
-  img {
-    margin: 0 auto;
-    padding-left: 30px;
-  }
-}
-
-@media screen and (min-width: 860px){
-  .mobile {
-    display: none;
-  }
-}

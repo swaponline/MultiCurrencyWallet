@@ -7,17 +7,12 @@
   border-radius: 4px;
   padding: 35px 25px 40px;
   margin-top: 5%;
-  // position: absolute;
-  // left: 50%;
-  // top: 50%;
-  // transform: translate(-50%,-50%);
 
   &.--dark {
     background: #242425;
     box-shadow: 0px 4px 16px rgba(243, 243, 243, 0.08), 0px 1px 4px rgba(240, 233, 233, 0.08);
 
     @media screen and (max-width: 480px) {
-      box-shadow: none;
       background: #222528;
     }
 
@@ -257,10 +252,6 @@
     text-decoration: underline;
     padding: 0;
     margin-left: 20px;
-
-    &:last-child {
-      display: none;
-    }
   }
 }
 
@@ -384,7 +375,6 @@
     transform: none;
     left: auto;
     top: auto;
-    box-shadow: none;
   }
 
   .currencyChooserWrapperSecond {
@@ -434,7 +424,7 @@
     min-width: 0;
     width: 100%;
     margin: 0;
-    padding-top: 0;
+    padding: 10px;
   }
 
   .wrapper h2 {
@@ -527,7 +517,7 @@
   }
 
   .wrapper h2 {
-    padding-top: 90px;
+    padding-top: 70px;
     margin-bottom: 65px;
     font-size: 32px;
   }
@@ -600,7 +590,7 @@
 }
 
 
-@media all and (min-width: 320px) and (max-width: 767px) {
+@media all and (max-width: 767px) {
 
   .mobileFormBody,
   .formBody {

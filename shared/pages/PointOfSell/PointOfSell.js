@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react'
 import Link from 'sw-valuelink'
 
 import CSSModules from 'react-css-modules'
-import styles from '../PartialClosure/PartialClosure.scss'
+import styles from '../Exchange/Exchange.scss'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
@@ -14,7 +14,7 @@ import { isMobile } from 'react-device-detect'
 
 import reducers from 'redux/core/reducers'
 
-import SelectGroup from '../PartialClosure/SelectGroup/SelectGroup'
+import SelectGroup from '../Exchange/SelectGroup/SelectGroup'
 import { Button, Toggle } from 'components/controls'
 import Input from 'components/forms/Input/Input'
 import Promo from './Promo/Promo'
@@ -35,7 +35,7 @@ import helpers, { constants, links, ethToken } from 'helpers'
 import { getTokenWallet } from 'helpers/links'
 import { animate } from 'helpers/domUtils'
 import Switching from 'components/controls/Switching/Switching'
-import CustomDestAddress from "../PartialClosure/CustomDestAddress/CustomDestAddress"
+import CustomDestAddress from '../Exchange/CustomDestAddress/CustomDestAddress'
 
 const allowedCoins = [
   ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? ['BTC'] : [],
@@ -68,7 +68,7 @@ const text = [
 const subTitle = (sell, sellTicker, buy, buyTicker) => (
   <div>
     <FormattedMessage
-      id="PartialClosureTitleTag1"
+      id="ExchangeTitleTag1"
       defaultMessage="Fastest cross-chain exchange powered by Atomic Swap"
       values={{ full_name1: sell, ticker_name1: sellTicker, full_name2: buy, ticker_name2: buyTicker }}
     />
@@ -123,7 +123,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   ],
 }))
 @CSSModules(styles, { allowMultiple: true })
-export default class PartialClosure extends Component {
+export default class Exchange extends Component {
 
   static defaultProps = {
     orders: [],
@@ -1091,11 +1091,11 @@ export default class PartialClosure extends Component {
       ticker_name2: getCurrency.toUpperCase(),
     }
     const TitleTagString = formatMessage({
-      id: 'PartialClosureTitleTag',
+      id: 'ExchangeTitleTag',
       defaultMessage: 'Atomic Swap {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}) Instant Exchange',
     }, SeoValues)
     const MetaDescriptionString = formatMessage({
-      id: 'PartialClosureMetaDescrTag',
+      id: 'ExchangeMetaDescrTag',
       defaultMessage: 'Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol.', // eslint-disable-line
     }, SeoValues)
 
@@ -1119,7 +1119,7 @@ export default class PartialClosure extends Component {
               selectedValue={haveCurrency}
               onSelect={this.handleSetHaveValue}
               label={<FormattedMessage id="partial243" defaultMessage="You sell" />}
-              id="partialClosure456"
+              id="Exchange456"
               tooltip={<FormattedMessage id="partial462" defaultMessage="The amount you have on swap.online or an external wallet that you want to exchange" />}
               placeholder="0.00000000"
               fiat={(maxAmount > 0 && isNonOffers) ? 0 : haveFiat}
@@ -1154,7 +1154,7 @@ export default class PartialClosure extends Component {
               selectedValue={getCurrency}
               onSelect={this.handleSetGetValue}
               label={<FormattedMessage id="partial255" defaultMessage="You get" />}
-              id="partialClosure472"
+              id="Exchange472"
               tooltip={<FormattedMessage id="partial478" defaultMessage="The amount you will receive after the exchange" />}
               currencies={addSelectedItems}
               fiat={getFiat}
