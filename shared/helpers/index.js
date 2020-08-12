@@ -9,7 +9,6 @@ import getCurrencyKey from './getCurrencyKey'
 import constants from './constants'
 import localStorage from './localStorage'
 import api from './api'
-import tips from './tips'
 import * as utils from './utils'
 // Methods
 import ignoreProps from './ignoreProps'
@@ -19,7 +18,6 @@ import firebase from './firebase'
 import externalConfig from './externalConfig'
 import getPageOffset from './getPageOffset'
 import getScrollBarWidth from './getScrollBarWidth'
-import paddingForSwapList from './paddingForSwapList'
 import estimateFeeValue from './estimateFeeValue'
 import transactions from './transactions'
 
@@ -51,7 +49,6 @@ export default {
 }
 
 export {
-  tips,
   btc,
   eth,
   ethToken,
@@ -72,7 +69,6 @@ export {
   // Getters
   getPageOffset,
   getScrollBarWidth,
-  paddingForSwapList,
   externalConfig,
 
 

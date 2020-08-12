@@ -2,7 +2,6 @@ $textColor: #1F2D48;
 $exchangeBorder: #512ed0;
 
 .nav {
-  height: 100%;
   min-width: 0;
   flex: auto 1 1;
   display: flex;
@@ -13,7 +12,8 @@ $exchangeBorder: #512ed0;
 }
 
 .mainMenu {
-  margin-right: 25px;
+  margin-left: 13px;
+  margin-right: 13px;
   position: relative;
 }
 

@@ -210,7 +210,8 @@ const CreateWallet = (props) => {
       text: 'SMS',
       name: 'sms',
       capture: locale === 'en' ? 'Verify your transactions via SMS code' : 'Транзакции подтверждаются кодом по SMS',
-      enabled: _protection.sms[currencyKey],
+      //enabled: _protection.sms[currencyKey],
+      enabled: false, // sms temporarly disabled
       activated: _activated.sms[currencyKey],
       onClickHandler: () => {
         if (isSmsFeatureAsked) {

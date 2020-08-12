@@ -16,7 +16,6 @@ const ThirdStep = ({ step, sixth, seventh, eighth, windowWidth, swap: { sellCurr
   const currencyStep = sellCurrency === 'BTC' ? seventh : eighth
   const stepItemActive = (step >= sixth && step < currencyStep)
   const stepItemDefault = (step < currencyStep)
-  const thirdStepPadding = (stepItemActive && isMobile && windowWidth < 569) || (!stepItemDefault && !stepItemActive && isMobile && windowWidth < 569) ? 50 : 0
 
   return (
     <div

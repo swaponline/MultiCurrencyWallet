@@ -21,9 +21,7 @@ import DepositWindow from './DepositWindow/DepositWindow'
 import SwapProgress from './SwapProgress/SwapProgress'
 import SwapList from './SwapList/SwapList'
 import Timer from './Timer/Timer'
-import BtcScript from './BtcScript/BtcScript'
 import FeeControler from './FeeControler/FeeControler'
-import paddingForSwapList from 'shared/helpers/paddingForSwapList.js'
 
 
 @CSSModules(styles)
@@ -44,7 +42,6 @@ export default class BtcToEthToken extends Component {
       enabledButton: false,
       isAddressCopied: false,
       flow: this.swap.flow.state,
-      paddingContainerValue: 0,
       destinationAddressTimer: true,
       isShowingBitcoinScript: false,
       currencyAddress: currencyData.address,
@@ -68,7 +65,6 @@ export default class BtcToEthToken extends Component {
 
   componentDidMount() {
     const { swap, flow: { step, isParticipantSigned } } = this.state
-    this.changePaddingValue()
     this.confirmAddressTimer = setInterval(() => {
       if (this.state.flow.step === 1) {
         this.confirmAddress()
@@ -87,49 +83,9 @@ export default class BtcToEthToken extends Component {
     }, 3000)
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.flow !== this.state.flow) {
-      this.changePaddingValue()
-    }
-  }
-
   submitSecret = () => {
     const { secret } = this.state
     this.swap.flow.submitSecret(secret)
-  }
-
-  changePaddingValue = () => {
-    const { flow: { step } } = this.state
-    this.setState(() => ({
-      paddingContainerValue: paddingForSwapList({ step }),
-    }))
-  }
-
-  changePaddingValue = () => {
-    const { flow: { step } } = this.state
-    this.setState(() => ({
-      paddingContainerValue: paddingForSwapList({ step }),
-    }))
-  }
-
-  changePaddingValue = () => {
-    const { flow } = this.state
-
-    if (flow.step <= 2) {
-      this.setState(() => ({
-        paddingContainerValue: 60 * flow.step,
-      }))
-    }
-    if (flow.step > 5 && flow.step < 7) {
-      this.setState(() => ({
-        paddingContainerValue: 180,
-      }))
-    }
-    if (flow.step > 7) {
-      this.setState(() => ({
-        paddingContainerValue: 210,
-      }))
-    }
   }
 
   handleFlowStateUpdate = (values) => {
@@ -217,7 +173,6 @@ export default class BtcToEthToken extends Component {
       flow,
       secret,
       ethAddress,
-      paddingContainerValue,
       isShowingBitcoinScript,
     } = this.state
 

@@ -3029,13 +3029,6 @@
     ]
   },
   {
-    "id": "swapJS341",
-    "message": "Показать bitcoin script",
-    "files": [
-      "shared/pages/Swap/ShowBtcScript/ShowBtcScript.js"
-    ]
-  },
-  {
     "id": "FeeControler48",
     "message": "Скопировано",
     "files": [
@@ -3051,7 +3044,7 @@
   },
   {
     "id": "FeeControler68",
-    "message": "Недостаточно ETH на вашем балансе для оплаты комиссии майнеров.{br}Пополните ваш кошелек на {gasAmountNeeded} ETH",
+    "message": "Недостаточно ETH на вашем балансе для оплаты комиссии майнеров.{br}{br}Пополните ваш кошелек на {gasAmountNeeded} ETH",
     "files": [
       "shared/pages/Swap/FeeControler/FeeControler.js"
     ]
@@ -3366,10 +3359,31 @@
     ]
   },
   {
-    "id": "EmergencySave33",
-    "message": "Отладка",
+    "id": "SwapStuck",
+    "message": "Своп застрял? Попробуйте ",
     "files": [
-      "shared/pages/Swap/EmergencySave/EmergencySave.js"
+      "shared/pages/Swap/Swap.js"
+    ]
+  },
+  {
+    "id": "SwapDebug",
+    "message": "отладить",
+    "files": [
+      "shared/pages/Swap/Swap.js"
+    ]
+  },
+  {
+    "id": "SwapOr",
+    "message": " или ",
+    "files": [
+      "shared/pages/Swap/Swap.js"
+    ]
+  },
+  {
+    "id": "SwapReload",
+    "message": "перезагрузить страницу",
+    "files": [
+      "shared/pages/Swap/Swap.js"
     ]
   },
   {
@@ -4550,13 +4564,6 @@
     ]
   },
   {
-    "id": "swapprogressDONTLEAVE22",
-    "message": "The swap was stuck? Try to reload page",
-    "files": [
-      "shared/pages/Swap/Swap.js"
-    ]
-  },
-  {
     "id": "swapProgressGoToTxPage",
     "message": "View TX in explorer",
     "files": [
@@ -5172,7 +5179,7 @@
   },
   {
     "id": "continueDeclined977",
-    "message": "Нажмите здесь, чтобы продолжить обмен",
+    "message": "Продолжить обмен",
     "files": [
       "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
