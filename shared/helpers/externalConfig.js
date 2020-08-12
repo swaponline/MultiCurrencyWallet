@@ -48,9 +48,18 @@ const externalConfig = () => {
       backupPluginUrl: false,
       restorePluginUrl: false,
     },
+    WPuserHash: false,
     buyViaCreditCardLink: false,
     activeFiat: 'USD',
     exchangeDisabled: false,
+  }
+
+
+  if (window
+    && window.WPuserHash
+  ) {
+    config.opts.WPuserHash = window.WPuserHash
+    window.WPuserHash = false
   }
 
   if (window

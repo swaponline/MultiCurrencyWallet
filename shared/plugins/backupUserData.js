@@ -8,7 +8,7 @@ const lsCurrentUser = `${process.env.ENTRY}:wp_currentUserId`
 
 const backupUserData = {
   isUserLoggedIn: () => {
-    return (window && window.WPuserUid && window.WPuserHash)
+    return (window && window.WPuserUid && config.opts.WPuserHash)
   },
   isFirstBackup: () => {
     const currentUser = localStorage.getItem(lsCurrentUser)
@@ -23,13 +23,13 @@ const backupUserData = {
         && config.opts.plugins.restorePluginUrl
         && window
         && window.WPuserUid
-        && window.WPuserHash
+        && config.opts.WPuserHash
       ) {
         const set = (key, value) => localStorage.setItem(constants.privateKeyNames[key], value)
 
         axios.post(config.opts.plugins.restorePluginUrl, {
           WPuserUid: window.WPuserUid,
-          WPuserHash: window.WPuserHash,
+          WPuserHash: config.opts.WPuserHash,
         }).then((req) => {
           if (req
             && req.data
@@ -62,7 +62,7 @@ const backupUserData = {
       && config.opts.plugins.backupPluginUrl
       && window
       && window.WPuserUid
-      && window.WPuserHash
+      && config.opts.WPuserHash
     ) {
       const get = (key) => localStorage.getItem(constants.privateKeyNames[key])
 
@@ -92,7 +92,7 @@ const backupUserData = {
       axios.post(config.opts.plugins.backupPluginUrl, {
         ...backup,
         WPuserUid: window.WPuserUid,
-        WPuserHash: window.WPuserHash,
+        WPuserHash: config.opts.WPuserHash,
       }).then((answer) => {
         const data = answer.data
         if (data
@@ -113,13 +113,13 @@ const backupUserData = {
         && config.opts.plugins.restorePluginUrl
         && window
         && window.WPuserUid
-        && window.WPuserHash
+        && config.opts.WPuserHash
       ) {
         const set = (key, value) => localStorage.setItem(constants.privateKeyNames[key], value)
 
         axios.post(config.opts.plugins.restorePluginUrl, {
           WPuserUid: window.WPuserUid,
-          WPuserHash: window.WPuserHash,
+          WPuserHash: config.opts.WPuserHash,
         }).then((req) => {
           if (req
             && req.data
