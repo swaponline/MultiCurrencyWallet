@@ -69,6 +69,7 @@ const localeLabel = defineMessages({
     user: {
       ethData,
       btcData,
+      ghostData,
       btcMultisigSMSData,
       btcMultisigUserData,
       tokensData,
@@ -78,6 +79,7 @@ const localeLabel = defineMessages({
     items: [
       ethData,
       btcData,
+      ghostData,
       btcMultisigSMSData,
       btcMultisigUserData,
     ],

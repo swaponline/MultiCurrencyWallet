@@ -21,15 +21,15 @@ export default class PageSeo extends Seo {
         url: getUrl(this.seoPage.uri),
       }
     }
-    else {
-      const  { defaultTitle, defaultDescription } = this.props
-      return {
-        title: defaultTitle,
-        description: defaultDescription,
-        uri: null,
-        url: null,
-      }
+
+    const  { defaultTitle, defaultDescription } = this.props
+    return {
+      title: defaultTitle,
+      description: defaultDescription,
+      uri: null,
+      url: null,
     }
+
   }
 
   render() {

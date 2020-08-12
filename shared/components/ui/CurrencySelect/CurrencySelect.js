@@ -6,6 +6,7 @@ import styles from './CurrencySelect.scss'
 import Option from './Option/Option'
 import DropDown from 'components/ui/DropDown/DropDown'
 
+
 const CurrencySelect = ({
   className,
   selectedValue,
@@ -19,7 +20,7 @@ const CurrencySelect = ({
   id,
   switchBalanceFunc,
   notIteractable,
-  selectedItemRender
+  selectedItemRender,
 }) => {
   // remove null values in object map
   const nonNullCurrencies = currencies.filter(currency => !!currency !== false)

@@ -58,6 +58,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   user: {
     btcData,
     ethData,
+    ghostData,
     multisigStatus,
     activeFiat,
   },
@@ -66,6 +67,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     data: {
       btc: btcData,
       eth: ethData,
+      ghost: ghostData,
     },
     multisigStatus,
     activeFiat,

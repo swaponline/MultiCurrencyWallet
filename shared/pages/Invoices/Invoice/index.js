@@ -45,12 +45,14 @@ const langLabels = defineMessages({
   user: {
     btcData,
     ethData,
+    ghostData,
   },
 }) => {
   return {
     data: {
       btc: btcData,
       eth: ethData,
+      ghost: ghostData,
     }
   }
 })

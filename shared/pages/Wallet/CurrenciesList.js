@@ -11,6 +11,7 @@ import Table from 'components/tables/Table/Table'
 import { FormattedMessage } from 'react-intl'
 import exConfig from 'helpers/externalConfig'
 
+
 const isWidgetBuild = config && config.isWidget
 
 const CurrenciesList = ({

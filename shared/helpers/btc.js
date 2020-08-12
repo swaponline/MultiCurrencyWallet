@@ -8,12 +8,12 @@ import BigNumber from 'bignumber.js'
 
 
 const hasAdminFee = (
-    config
+  config
     && config.opts
     && config.opts.fee
     && config.opts.fee.btc
     && config.opts.fee.btc.fee
-  ) ? config.opts.fee.btc : false
+) ? config.opts.fee.btc : false
 
 const network = process.env.MAINNET
   ? bitcoin.networks.bitcoin
@@ -36,16 +36,16 @@ const getByteCount = (inputs, outputs) => {
       'MULTISIG-P2SH-P2WSH': 6 + (76 * 4),
       'P2PKH': 148 * 4,
       'P2WPKH': 108 + (41 * 4),
-      'P2SH-P2WPKH': 108 + (64 * 4)
+      'P2SH-P2WPKH': 108 + (64 * 4),
     },
     'outputs': {
       'P2SH': 32 * 4,
       'P2PKH': 34 * 4,
       'P2WPKH': 31 * 4,
-      'P2WSH': 43 * 4
-    }
+      'P2WSH': 43 * 4,
+    },
   }
-  
+
   const checkUInt53 = (n) => {
     if (n < 0 || n > Number.MAX_SAFE_INTEGER || n % 1 !== 0) throw new RangeError('value out of range')
   }
@@ -55,18 +55,18 @@ const getByteCount = (inputs, outputs) => {
 
     return (
       number < 0xfd ? 1
-      : number <= 0xffff ? 3
-      : number <= 0xffffffff ? 5
-      : 9
+        : number <= 0xffff ? 3
+          : number <= 0xffffffff ? 5
+            : 9
     )
   }
 
   Object.keys(inputs).forEach((key) => {
     checkUInt53(inputs[key])
-    if (key.slice(0,8) === 'MULTISIG') {
+    if (key.slice(0, 8) === 'MULTISIG') {
       // ex. "MULTISIG-P2SH:2-3" would mean 2 of 3 P2SH MULTISIG
       const keyParts = key.split(':')
-      if (keyParts.length !== 2) throw new Error('invalid input: ' + key)
+      if (keyParts.length !== 2) throw new Error(`invalid input: ${key}`)
       const newKey = keyParts[0]
       const mAndN = keyParts[1].split('-').map((item) => parseInt(item))
 
@@ -112,8 +112,8 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
 
   if (method === 'send_multisig') {
     const msuSize = getByteCount(
-      {'MULTISIG-P2SH-P2WSH:2-2': 1},
-      {'P2PKH': (hasAdminFee) ? 3 : 2}
+      { 'MULTISIG-P2SH-P2WSH:2-2': 1 },
+      { 'P2PKH': (hasAdminFee) ? 3 : 2 }
     )
     const msutxSize = txIn * msuSize + txOut * 33 + (15 + txIn - txOut)
 
@@ -122,8 +122,8 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
 
   if (method === 'send_2fa') {
     const msSize = getByteCount(
-      {'MULTISIG-P2SH-P2WSH:2-3': 1},
-      {'P2PKH': (hasAdminFee) ? 3 : 2}
+      { 'MULTISIG-P2SH-P2WSH:2-3': 1 },
+      { 'P2PKH': (hasAdminFee) ? 3 : 2 }
     )
     const mstxSize = txIn * msSize + txOut * 33 + (15 + txIn - txOut)
 
@@ -134,7 +134,7 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
 }
 
 const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, fixed, method } = {}) => {
-  const { 
+  const {
     user: {
       btcData,
       btcMultisigSMSData,
@@ -239,5 +239,5 @@ export default {
   calculateTxSize,
   estimateFeeValue,
   estimateFeeRate,
-  network
+  network,
 }

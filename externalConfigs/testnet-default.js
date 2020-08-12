@@ -6,6 +6,11 @@ window.widgetERC20Comisions = {
     address: '2MuXz9BErMbWmoTshGgkjd7aMHeaxV8Bdkk',
     min: "0.00001"
   },
+  ghost: {
+    fee: "5",
+    address: 'XUmEvrKkTEGPr8WaktQVVE49ZBxcaPUmwv',
+    min: "0.00001"
+  },
   eth: {
     fee: "7",
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
@@ -61,14 +66,13 @@ window.buildOptions = {
 window.buildOptions = {
   showWalletBanners: true, // Allow to see banners
   showHowItsWork: true, // Can be inited from window.showHowItWorksOnExchangePage
-  /*
   // inited from window.EXCHANGE_DISABLED
   exchangeDisabled: true,
   curEnabled: { // Or 'false' if enabled all
     // inited from window.CUR_BTC_DISABLED
-    btc: false,
+    btc: true,
     // inited from window.CUR_ETH_DISABLED
-    eth: false,
+    eth: true,
+    ghost: true,
   },
-  */
 }

@@ -10,11 +10,10 @@ import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import { btc, apiLooper, constants, api } from 'helpers'
 import actions from 'redux/actions'
-import typeforce from "swap.app/util/typeforce"
+import typeforce from 'swap.app/util/typeforce'
 import config from 'app-config'
 
 import { localisePrefix } from 'helpers/locale'
-
 
 
 const hasAdminFee = (config
@@ -138,7 +137,7 @@ const getPrivateKeyByAddress = (address) => {
       btcMnemonicData: {
         address: mnemonicAddress,
         privateKey: mnemonicKey,
-      }
+      },
     },
   } = getState()
 
@@ -161,12 +160,12 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
     const hash = bitcoin.crypto.sha256(privateKey)
     const d = BigInteger.fromBuffer(hash)
 
-    //keyPair     = bitcoin.ECPair.fromWIF(privateKey, btc.network)
+    // keyPair     = bitcoin.ECPair.fromWIF(privateKey, btc.network)
   }
   else {
     console.info('Created account Bitcoin ...')
-    //keyPair     = bitcoin.ECPair.makeRandom({ network: btc.network })
-    //privateKey  = keyPair.toWIF()
+    // keyPair     = bitcoin.ECPair.makeRandom({ network: btc.network })
+    // privateKey  = keyPair.toWIF()
     // use random 12 words
     if (!mnemonic) mnemonic = bip39.generateMnemonic()
     const accData = getWalletByWords(mnemonic)
@@ -217,7 +216,7 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
         balanceError: null,
         infoAboutCurrency: null,
         ...mnemonicData,
-      }
+      },
     })
     new Promise(async (resolve) => {
       const balanceData = await fetchBalanceStatus(mnemonicData.address)
@@ -240,6 +239,7 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
 }
 
 
+const getTxRouter = (txId) => `/btc/tx/${txId}`
 
 const getTx = (txRaw) => {
   if (txRaw
@@ -252,9 +252,6 @@ const getTx = (txRaw) => {
   }
 }
 
-const getTxRouter = (txId) => {
-  return `/btc/tx/${txId}`
-}
 
 const getLinkToInfo = (tx) => {
 
@@ -265,25 +262,19 @@ const getLinkToInfo = (tx) => {
   return `${config.link.bitpay}/tx/${tx}`
 }
 
-const fetchBalanceStatus = (address) => {
-  return apiLooper.get('bitpay', `/addr/${address}`, {
-    checkStatus: (answer) => {
-      try {
-        if (answer && answer.balance !== undefined) return true
-      } catch (e) { /* */ }
-      return false
-    },
-  }).then(({ balance, unconfirmedBalance }) => {
-    return {
-      address,
-      balance,
-      unconfirmedBalance,
-    }
-  })
-    .catch((e) => {
-      return false
-    })
-}
+const fetchBalanceStatus = (address) => apiLooper.get('bitpay', `/addr/${address}`, {
+  checkStatus: (answer) => {
+    try {
+      if (answer && answer.balance !== undefined) return true
+    } catch (e) { /* */ }
+    return false
+  },
+}).then(({ balance, unconfirmedBalance }) => ({
+  address,
+  balance,
+  unconfirmedBalance,
+}))
+  .catch((e) => false)
 const getBalance = () => {
   const { user: { btcData: { address } } } = getState()
 
@@ -395,8 +386,8 @@ const fetchTxInfo = (hash, cacheResponse) =>
         amount,
         afterBalance,
         senderAddress,
+        confirmed: !!(rest.confirmations),
         receiverAddress,
-        confirmed: (rest.confirmations) ? true : false,
         minerFee: rest.fees.dividedBy(1e8).toNumber(),
         adminFee,
         minerFeeCurrency: 'BTC',
@@ -433,7 +424,7 @@ const getAllMyAddresses = () => {
       btcMultisigSMSData,
       btcMultisigUserData,
       btcMultisigG2FAData,
-      btcMultisigPinData
+      btcMultisigPinData,
     },
   } = getState()
 
@@ -501,9 +492,9 @@ const getTransaction = (address, ownType) =>
     let { user: { btcData: { address: userAddress } } } = getState()
     address = address || userAddress
 
-    const type = (ownType) ? ownType : 'btc'
+    const type = (ownType) || 'btc'
 
-    if (!typeforce.isCoinAddress['BTC'](address)) {
+    if (!typeforce.isCoinAddress.BTC(address)) {
       resolve([])
     }
 
@@ -558,18 +549,14 @@ const getTransaction = (address, ownType) =>
       })
   })
 
+const send = (data) => sendV5
+
 const addressIsCorrect = (address) => {
   try {
     let outputScript = bitcoin.address.toOutputScript(address, btc.network)
     if (outputScript) return true
   } catch (e) {}
   return false
-}
-
-const send = (data) => {
-  return sendV5(data)
-  // v4 with deprecated TransactionBuilder
-  return (hasAdminFee) ? sendWithAdminFee(data) : sendDefault(data)
 }
 
 // Deprecated
@@ -704,7 +691,6 @@ const sendDefault = async ({ from, to, amount, feeValue, speed } = {}) => {
   if (skipValue > 546) {
     tx.addOutput(from, skipValue)
   }
-
 
 
   const txRaw = signAndBuild(tx, from)

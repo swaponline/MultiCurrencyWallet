@@ -4,6 +4,7 @@ import { withRouter } from 'react-router'
 import CSSModules from 'react-css-modules'
 import styles from './NotifyBlock.scss'
 
+
 const NotifyBlock = ({
   icon,
   descr,
@@ -17,13 +18,13 @@ const NotifyBlock = ({
   const handleGoto = () => {
     firstFunc && firstFunc()
     if (link && link.includes('http')) {
-      window.location = link;
+      window.location = link
     } else {
       if (link) history.push(link)
     }
     try {
       axios({
-        url: `https://noxon.wpmix.net/counter.php?msg=${(logDescr) ? logDescr : descr}host=${window.location.hostname}`,
+        url: `https://noxon.wpmix.net/counter.php?msg=${(logDescr) || descr}host=${window.location.hostname}`,
         method: 'post',
       }).catch(e => console.error(e))
     } catch (error) {
@@ -36,7 +37,7 @@ const NotifyBlock = ({
   const style = background && background.length < 7 ? backGroundStyle : backGroundImgStyle
   return (
     <div styleName="notifyBlock" style={style} onClick={handleGoto} >
-      {background && background.length > 7 ? <div styleName="notifyBlockOverlay"></div> : ''}
+      {background && background.length > 7 ? <div styleName="notifyBlockOverlay" /> : ''}
       <div>
         <div styleName="notifyBlockIcon">
           <img src={icon} alt="" />

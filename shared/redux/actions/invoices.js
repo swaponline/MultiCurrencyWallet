@@ -43,7 +43,7 @@ const addInvoice = (data) => {
   }
 
   return apiLooper.post('invoiceApi', `/invoice/push/`, {
-    body: requestData
+    body: requestData,
   })
 }
 
@@ -74,15 +74,15 @@ const markInvoice = (invoiceId, mark, txid, address) => new Promise((resolve) =>
 
 const getInvoice = (hash) => {
   if ((config.isWidget || !config.opts.invoiceEnabled)) {
-    return new Promise( (resolve) => { resolve(false) })
+    return new Promise((resolve) => { resolve(false) })
   }
 
   return new Promise((resolve) => {
-    
-    apiLooper.post('invoiceApi',`/invoice/get`, {
+
+    apiLooper.post('invoiceApi', `/invoice/get`, {
       body: {
         hash,
-      }
+      },
     }).then((res) => {
       console.log('fetced answer from invoice api', res)
       if (res && res.answer && res.answer === 'ok' && res.item) {
@@ -91,13 +91,13 @@ const getInvoice = (hash) => {
           item: {
             amount,
             utx,
-          }
+          },
         } = res
 
         const direction = (actions.user.isOwner(item.toAddress, item.type)) ? 'in' : 'out'
         const isOwner = (actions.user.isOwner(item.fromAddress, item.type))
 
-        resolve ({
+        resolve({
           invoiceData: item,
           isOwner,
           hasPayer: !(!item.toAddress),
@@ -118,7 +118,7 @@ const getInvoice = (hash) => {
 
 const getManyInvoices = (data) => {
   if ((config.isWidget || !config.opts.invoiceEnabled)) {
-    return new Promise( (resolve) => { resolve([]) })
+    return new Promise((resolve) => { resolve([]) })
   }
 
   return new Promise((resolve) => {
@@ -148,7 +148,7 @@ const getManyInvoices = (data) => {
       body: {
         wallets,
         mainnet: (process.env.MAINNET) ? '1' : '0',
-      }
+      },
     }).then((res) => {
       if (res && res.answer && res.answer === 'ok') {
         const invoices = res.items.map((item) => {
@@ -164,7 +164,7 @@ const getManyInvoices = (data) => {
             confirmations: 1,
             value: item.amount,
             date: item.utx * 1000,
-            direction: direction,
+            direction,
           })
         })
 
@@ -173,9 +173,9 @@ const getManyInvoices = (data) => {
         resolve([])
       }
     })
-    .catch(() => {
-      resolve([])
-    })
+      .catch(() => {
+        resolve([])
+      })
   })
 }
 
@@ -200,7 +200,7 @@ const getInvoices = (data) => {
         currency: getCurrencyKey(data.currency, true).toUpperCase(),
         address: data.address,
         mainnet: (process.env.MAINNET) ? '1' : '0',
-      }
+      },
     }).then((res) => {
       if (res && res.answer && res.answer === 'ok') {
         const transactions = res.items.map((item) => {
@@ -214,7 +214,7 @@ const getInvoices = (data) => {
             confirmations: 1,
             value: item.amount,
             date: item.utx * 1000,
-            direction: direction,
+            direction,
           })
         })
 
