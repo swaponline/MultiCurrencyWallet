@@ -104,6 +104,39 @@ const backupUserData = {
       })
     }
   },
+  cleanupSeed: () => {
+    return new Promise((resolve) => {
+      if (config
+        && config.opts
+        && config.opts.plugins
+        && config.opts.plugins.backupPlugin
+        && config.opts.plugins.backupPluginUrl
+        && window
+        && window.WPuserUid
+        && config.opts.WPuserHash
+      ) {
+        axios.post(config.opts.plugins.backupPluginUrl, {
+          WPuserUid: window.WPuserUid,
+          WPuserHash: config.opts.WPuserHash,
+          action: 'cleanup',
+        }).then((req) => {
+          if (req
+            && req.data
+            && req.data.answer
+            && req.data.answer === `ok`
+          ) {
+            resolve(true)
+          } else {
+            resolve(false)
+          }
+        }).catch((e) => {
+          resolve(false)
+        })
+      } else {
+        resolve(false)
+      }
+    })
+  },
   restoreUser: () => {
     return new Promise((resolve) => {
       if (config

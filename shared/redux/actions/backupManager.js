@@ -22,9 +22,20 @@ const backupFields = [
 const serverBackup = () => {
   if (config
     && config.opts
-    && config.opts.backupPlugin
+    && config.opts.plugins
+    && config.opts.plugins.backupPlugin
   ) {
     backupUserData.backupUser()
+  }
+}
+
+const serverCleanupSeed = () => {
+  if (config
+    && config.opts
+    && config.opts.plugins
+    && config.opts.plugins.backupPlugin
+  ) {
+    backupUserData.cleanupSeed()
   }
 }
 
