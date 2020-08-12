@@ -46,5 +46,5 @@ const estimateGasPrice = async ({ speed = 'fast' } = {}) => {
 
 export default {
   estimateFeeValue,
-  estimateGasPrice
+  estimateGasPrice,
 }

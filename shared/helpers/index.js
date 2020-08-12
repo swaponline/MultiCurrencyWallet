@@ -1,4 +1,5 @@
 import btc from './btc'
+import ghost from './ghost'
 import eth from './eth'
 import ethToken from './ethToken'
 import user from './user'
@@ -41,6 +42,7 @@ import adminFee from './adminFee'
 export default {
   btc,
   eth,
+  ghost,
   ethToken,
   getCurrencyKey,
   handleGoTrade,
@@ -51,6 +53,7 @@ export default {
 export {
   btc,
   eth,
+  ghost,
   ethToken,
   user,
   web3,
@@ -86,4 +89,4 @@ export {
 
   adminFee,
 }
-export { getItezUrl } from "./getItezUrl"
+export { getItezUrl } from './getItezUrl'

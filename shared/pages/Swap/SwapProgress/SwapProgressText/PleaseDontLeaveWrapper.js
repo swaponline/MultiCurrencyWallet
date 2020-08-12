@@ -14,7 +14,7 @@ const swapWIF = localStorage.getItem(constants.privateKeyNames.btc)
 const PleaseDontLeaveWrapper = (props) => {
   const { children, isBTC } = props
 
-  
+
   return (
     <Fragment>
       {children}

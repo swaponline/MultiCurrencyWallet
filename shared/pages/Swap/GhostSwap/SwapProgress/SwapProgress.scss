@@ -1,0 +1,432 @@
+.container {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+}
+
+.dark {
+  .stepHeading {
+    color: #8e9aa3;
+  }
+}
+
+.progress {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  left: calc(50% - 100px);
+  top: calc(50% - 100px);
+  width: 200px;
+  height: 200px;
+  clip: rect(0, 200px, 200px, 100px);
+  top: 40px;
+}
+
+@mixin circle($size) {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  left: calc(50% - #{$size/2});
+  top: calc(50% - #{$size/2});
+  width: $size;
+  height: $size;
+}
+
+$size: 200px;
+.progress-pie-chart {
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  background-color: #E5E5E5;
+  position: absolute;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  &.gt-50 {
+    background-color: #5100dc;
+  }
+}
+.ppc-progress {
+  @include circle($size);
+  clip: rect(0, $size, $size, #{$size/2});
+  .ppc-progress-fill {
+    @include circle($size);
+    clip: rect(0, #{$size/2}, $size, 0);
+    background: #5100dc;
+    transition: 0.3s transform ease;
+    transform: rotate(200deg);
+  }
+  .gt-50 & {
+    clip: rect(0, #{$size/2}, $size, 0);
+    .ppc-progress-fill {
+      clip: rect(0, $size, $size, #{$size/2});
+      transition: 0.3s transform ease;
+      background: #E5E5E5;
+    }
+  }
+}
+.ppc-percents {
+  @include circle(#{$size/1.15});
+  background: #fff;
+  text-align: center;
+  display: table;
+  span {
+    display: block;
+    font-size: 2.6em;
+    font-weight: bold;
+    color: #81CE97;
+  }
+}
+.pcc-percents-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.finishImg {
+  width: 160px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  top: 50%;
+}
+
+.bar {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  left: calc(50% - 100px);
+  top: calc(50% - 100px);
+  width: 200px;
+  height: 200px;
+  clip: rect(0, 100px, 200px, 0);
+  background: #81CE97;
+  transform: rotate(170deg);
+}
+.steps {
+  color: #8e8e8e;
+  position: absolute;
+  right: 65px;
+  top: 68px;
+  font-size: 17px;
+}
+.info {
+  margin-top: 10px;
+  display: block;
+  position: relative;
+  div:first-child {
+    display: inline-block;
+  }
+}
+.headerContent {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.title {
+  min-width: 0;
+  flex: auto 1 1;
+  line-height: 22px;
+  font-size: 24px;
+  text-align: center;
+  &.uppercase {
+    text-transform: uppercase;
+  }
+}
+
+.closeButton {
+  width: 20px;
+  height: 20px;
+  opacity: 0.5;
+  transition: opacity .33s $ease-out-quadratic;
+
+  &:hover {
+    opacity: 1;
+    transition: none;
+  }
+}
+
+.header {
+  height: 88px;
+  border-bottom: 1px solid #ddd;
+}
+
+.saveSecretKey {
+  display: block;
+  color: #d66f6f;
+  em {
+    display: block;
+    font-size: 0.8rem;
+    font-style: normal;
+    word-wrap: break-word;
+  }
+}
+
+.animated-dots {
+  display: inline-block;
+  height: 12px;
+  position: absolute;
+  bottom: 30px;
+  right: -33px;
+}
+
+.animated-dots span {
+  color: #6d18e4;
+  font-size: 33px;
+  animation-name: blink;
+  animation-duration: 1.4s;
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+}
+
+.animated-dots span:nth-child(2) {
+  animation-delay: .2s;
+}
+
+.animated-dots span:nth-child(3) {
+  animation-delay: .4s;
+}
+
+.link {
+  color: #fff;
+  background: #e91db4;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 20px;
+  display: block;
+  width: max-content;
+  text-transform: uppercase;
+  border-radius: 20px;
+  margin: auto;
+  margin-top: 20px;
+  font-size: 16px;
+  &:hover {
+    background-color: #ff1fc5;
+    color: #fff;
+  }
+}
+
+.stepContainer {
+  width: 600px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+}
+
+.step {
+  text-align: center;
+  padding: 50px;
+  padding-bottom: 30px;
+  z-index: 1;
+  border-radius: 20px;
+  padding-top: 70px;
+}
+
+.stepImg {
+  width: 184px;
+  height: 184px;
+  border-radius: 50%;
+  margin: auto;
+  margin-bottom: 60px;
+  z-index: 1111;
+  background: #fff;
+  position: relative;
+  top: 9px;
+  img {
+    width: 100%;
+    border-radius: 50%;
+  }
+}
+
+.stepInfo {
+  display: flex;
+  flex-direction: column;
+  padding: 0 24px;
+}
+
+.swapInfo {
+  position: absolute;
+  width: 600px;
+  top: -45px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.transaction {
+  display: block;
+  margin-bottom: 16px;
+  a {
+    font-size: 13px;
+  }
+}
+
+.btnRefund {
+  button {
+    display: block;
+    margin: auto;
+  }
+}
+
+.tryAgain {
+  font-size: 12px;
+  color: #d66f6f;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.timerRefund {
+  color: #000;
+  margin-bottom: 24px;
+
+  span {
+    display: block;
+  }
+}
+
+.ShowBTCScript {
+  position: absolute;
+  bottom: -80px;
+}
+
+.finishButtonsHolder {
+  line-height: 56px;
+  margin: 16px 0;
+  text-align: center;
+  vertical-align: middle;
+}
+.finishButtonsHolder button {
+  width: 40%;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.stepHeading {
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1.2;
+  padding-bottom: 24px;
+}
+
+.dontLeave {
+  margin-bottom: 24px;
+  color: #d66f6f;
+  font-size: 15px;
+
+  span {
+    span {
+      color: #000
+    }
+  }
+}
+
+.progressContainer {
+  color: #000;
+}
+
+.refundTransaction,
+.refundTransactionHash {
+  display: block;
+  position: relative;
+  font-size: 13px;
+  word-wrap: break-word
+}
+
+@include media-tablet {
+  .container {
+    width: 600px;
+  }
+  .steps {
+    top: -30px;
+    right: 0;
+  }
+}
+
+@media all and (min-width: 570px) and (max-width: 670px) {
+  .container {
+    width: 540px;
+  }
+}
+
+@media all and (min-width: 320px) and (max-width: 570px) {
+  .ShowBTCScript {
+    display: none;
+  }
+  .container {
+    width: 100%;
+  }
+  .info {
+    margin-top: 5px;
+    div {
+      font-size: 13px;
+    }
+  }
+  .steps {
+    font-size: 13px;
+    top: -25px;
+    right: 0;
+  }
+  .link {
+    font-size: 13px;
+  }
+  .stepContainer {
+    width: 100%;
+    border: none;
+  }
+  .stepList {
+    padding-top: 0;
+  }
+  .step {
+    border: none;
+    text-align: center;
+    padding: 0;
+    padding-bottom: 30px;
+    z-index: 1;
+    border-radius: 20px;
+    padding-top: 71px;
+  }
+  .stepInfo {
+    margin-top: -50px;
+  }
+  .progressContainer {
+    color: #000;
+    transform: scale(0.8);
+    margin-top: -80px;
+  }
+  .overlay {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+    margin-bottom: 0px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+    width: 100%;
+  }
+
+  .stepHeading {
+    color: #000;
+    font-size: 18px;
+  }
+  .transaction {
+    top: -5px;
+    a {
+      font-size: 12px;
+      overflow: hidden;
+      width: 100%;
+      display: block;
+    }
+  }
+  .stepHeading__inner {
+    font-size: 11px;
+    width: 100%;
+    bottom: 0;
+  }
+  .finishButtonsHolder button {
+    width: 90%;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+}

@@ -1,1 +1,1 @@
-export { WidgetWalletTour } from "./WidgetWalletTour"
+export { WidgetWalletTour } from './WidgetWalletTour'

@@ -15,7 +15,7 @@ const fetchTxBalances = (currency, txId) => {
         if (res && res.answer !== undefined) return true
       } catch (e) { /* */ }
       return false
-    }
+    },
   }).then((res) => {
     if (res
       && res.answer
@@ -23,37 +23,29 @@ const fetchTxBalances = (currency, txId) => {
       && res.data
     ) {
       return res.data
-    } else {
-      return false
     }
-  }).catch((e) => {
     return false
-  })
+
+  }).catch((e) => false)
 }
 
 /**
  * Сохраняет информацию о балансах на момент выполнения транзакции на backend
  */
-const pullTxBalances = (txId, amount, balances, adminFee) => {
-  return apiLooper.post('txinfo', `/pull`, {
-    body: {
-      txId,
-      amount,
-      adminFee,
-      ...balances,
-    },
-    checkStatus: (res) => {
-      try {
-        if (res && res.answer !== undefined) return true
-      } catch (e) { /* */ }
-      return false
-    },
-  }).then(({ answer }) => {
-    return answer
-  }).catch((e) => {
+const pullTxBalances = (txId, amount, balances, adminFee) => apiLooper.post('txinfo', `/pull`, {
+  body: {
+    txId,
+    amount,
+    adminFee,
+    ...balances,
+  },
+  checkStatus: (res) => {
+    try {
+      if (res && res.answer !== undefined) return true
+    } catch (e) { /* */ }
     return false
-  })
-}
+  },
+}).then(({ answer }) => answer).catch((e) => false)
 
 /**
  * Вспомогательная функция, опрашивает балансы перед выполнением транзакции
@@ -85,9 +77,9 @@ const getTxBalances = (currency, from, to) => {
         toBalance,
       })
     })
-  } else {
-    return new Promise((resolve) => { resolve(false) })
   }
+  return new Promise((resolve) => { resolve(false) })
+
 }
 
 const getTxRouter = (currency, txId) => {
@@ -97,9 +89,9 @@ const getTxRouter = (currency, txId) => {
     && typeof actions[prefix].getTxRouter === 'function'
   ) {
     return actions[prefix].getTxRouter(txId, currency.toLowerCase())
-  } else {
-    console.warn(`Function getTxRouter for ${prefix} not defined (currency: ${currency})`)
   }
+  console.warn(`Function getTxRouter for ${prefix} not defined (currency: ${currency})`)
+
 }
 
 const getLink = (currency, txId) => {
@@ -109,9 +101,9 @@ const getLink = (currency, txId) => {
     && typeof actions[prefix].getLinkToInfo === 'function'
   ) {
     return actions[prefix].getLinkToInfo(txId)
-  } else {
-    console.warn(`Function getLinkToInfo for ${prefix} not defined`)
   }
+  console.warn(`Function getLinkToInfo for ${prefix} not defined`)
+
 }
 
 const getInfo = (currency, txRaw) => {
@@ -124,15 +116,15 @@ const getInfo = (currency, txRaw) => {
     const link =  getLink(prefix, tx)
     return {
       tx,
-      link
-    }
-  } else {
-    console.warn(`Function getTx for ${prefix} not defined`)
-    return {
-      tx: '',
-      link: '',
+      link,
     }
   }
+  console.warn(`Function getTx for ${prefix} not defined`)
+  return {
+    tx: '',
+    link: '',
+  }
+
 }
 
 export default {

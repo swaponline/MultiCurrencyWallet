@@ -199,12 +199,26 @@ export default class Row extends Component {
     )
   }
 
+  handleWithdrawPopup = () => {
+    const {
+      itemData: { currency },
+      itemData
+    } = this.props
+
+    actions.modals.open(constants.modals.Withdraw, itemData)
+  }
+
   handleWithdraw = () => {
     const {
       itemData: { currency, address },
       history,
       intl: { locale },
     } = this.props
+
+    if (currency.toLowerCase() === 'ghost') {
+      this.handleWithdrawPopup()
+      return
+    }
 
     let targetCurrency = currency
     switch (currency.toLowerCase()) {

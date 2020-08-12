@@ -2,6 +2,7 @@ export const initialState = {
   currencies: {
     btc: false,
     eth: false,
+    ghost: false,
     usdt: false,
     swap: false,
   },

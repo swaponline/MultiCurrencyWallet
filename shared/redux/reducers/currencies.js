@@ -58,6 +58,14 @@ const initialState = {
       fullTitle: 'ethereum',
       addAssets: true,
     }] : [],
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.ghost) ? [{
+      name: 'GHOST',
+      title: 'GHOST',
+      icon: 'ghost',
+      value: 'ghost',
+      fullTitle: 'ghost',
+      addAssets: true,
+    }] : [],
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.btc) ? [{
       name: 'BTC',
       title: 'BTC',
@@ -111,6 +119,13 @@ const initialState = {
       value: 'eth',
       fullTitle: 'ethereum',
     }] : [],
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.ghost) ? [{
+      name: 'GHOST',
+      title: 'GHOST',
+      icon: 'ghost',
+      value: 'ghost',
+      fullTitle: 'ghost',
+    }] : [],
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.btc) ? [{
       name: 'BTC',
       title: 'BTC',
@@ -141,6 +156,13 @@ if (config.isWidget) {
       value: 'btc',
       fullTitle: 'bitcoin',
     },
+    {
+      name: 'GHOST',
+      title: 'GHOST',
+      icon: 'ghost',
+      value: 'ghost',
+      fullTitle: 'ghost',
+    },
   ]
 
   initialState.partialItems = [
@@ -157,6 +179,13 @@ if (config.isWidget) {
       icon: 'btc',
       value: 'btc',
       fullTitle: 'bitcoin',
+    },
+    {
+      name: 'GHOST',
+      title: 'GHOST',
+      icon: 'ghost',
+      value: 'ghost',
+      fullTitle: 'ghost',
     },
   ]
 
@@ -206,6 +235,14 @@ if (config.isWidget) {
     icon: 'eth',
     value: 'eth',
     fullTitle: 'ethereum',
+  })
+
+  initialState.items.push({
+    name: 'GHOST',
+    title: 'GHOST',
+    icon: 'ghost',
+    value: 'ghost',
+    fullTitle: 'ghost',
   })
 
   initialState.addSelectedItems = [
@@ -269,6 +306,7 @@ const deletedPartialCurrency = (state, payload) => ({
   ...state,
   partialItems: state.partialItems.filter(item => item.name !== payload),
 })
+
 
 export {
   initialState,

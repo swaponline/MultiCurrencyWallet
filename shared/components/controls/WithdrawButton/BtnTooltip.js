@@ -4,7 +4,6 @@ import ReactTooltip from 'react-tooltip'
 import { FormattedMessage } from 'react-intl'
 
 
-
 const BtnTooltip = (props) => {
   const {
     onClick,

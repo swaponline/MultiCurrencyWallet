@@ -73,7 +73,7 @@ const WidgetHeaderComponent = ({ intl }) => {
   }
 
   const handleConfirm = () => {
-    window.location = (window && window.logoutUrl) ? window.logoutUrl : "/wp-login.php?action=logout"
+    window.location = (window && window.logoutUrl) ? window.logoutUrl : '/wp-login.php?action=logout'
   }
 
   return (

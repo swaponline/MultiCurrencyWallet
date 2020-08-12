@@ -8,19 +8,19 @@ import referral from './referral'
 import { pubToAddress } from 'ethereumjs-util'
 import * as hdkey from 'ethereumjs-wallet/hdkey'
 import * as bip39 from 'bip39'
-import typeforce from "swap.app/util/typeforce";
+import typeforce from 'swap.app/util/typeforce'
 import { BigNumber } from 'bignumber.js'
 
 
 const hasAdminFee = (
-    config
+  config
     && config.opts
     && config.opts.fee
     && config.opts.fee.eth
     && config.opts.fee.eth.fee
     && config.opts.fee.eth.address
     && config.opts.fee.eth.min
-  ) ? config.opts.fee.eth : false
+) ? config.opts.fee.eth : false
 
 const getRandomMnemonicWords = () => bip39.generateMnemonic()
 const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonic)
@@ -88,7 +88,7 @@ const getPrivateKeyByAddress = (address) => {
       ethMnemonicData: {
         address: mnemonicAddress,
         privateKey: mnemonicKey,
-      }
+      },
     },
   } = getState()
 
@@ -98,8 +98,8 @@ const getPrivateKeyByAddress = (address) => {
 
 const getWalletByWords = (mnemonic, walletNumber = 0, path) => {
   const seed = bip39.mnemonicToSeedSync(mnemonic)
-  const hdwallet = hdkey.fromMasterSeed(seed);
-  const wallet = hdwallet.derivePath((path) ? path : `m/44'/60'/0'/0/${walletNumber}`).getWallet();
+  const hdwallet = hdkey.fromMasterSeed(seed)
+  const wallet = hdwallet.derivePath((path) || `m/44'/60'/0'/0/${walletNumber}`).getWallet()
 
   return {
     mnemonic,
@@ -180,7 +180,7 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
         balanceError: null,
         infoAboutCurrency: null,
         ...mnemonicData,
-      }
+      },
     })
     new Promise(async (resolve) => {
       const balance = await fetchBalance(mnemonicData.address)
@@ -242,14 +242,9 @@ const getInvoices = (address) => {
   })
 }
 
-const getTx = (txRaw) => {
+const getTx = (txRaw) => txRaw.transactionHash
 
-  return txRaw.transactionHash
-}
-
-const getTxRouter = (txId) => {
-  return `/eth/tx/${txId}`
-}
+const getTxRouter = (txId) => `/eth/tx/${txId}`
 
 const getLinkToInfo = (tx) => {
 
@@ -265,11 +260,11 @@ const getTransaction = (address, ownType) =>
     const { user: { ethData: { address: userAddress } } } = getState()
     address = address || userAddress
 
-    if (!typeforce.isCoinAddress['ETH'](address)) {
+    if (!typeforce.isCoinAddress.ETH(address)) {
       resolve([])
     }
 
-    const type = (ownType) ? ownType : 'eth'
+    const type = (ownType) || 'eth'
 
     const url = `?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.api.etherscan_ApiKey}`
 
@@ -304,9 +299,7 @@ const getTransaction = (address, ownType) =>
       })
   })
 
-const send = (data) => {
-  return (hasAdminFee) ? sendWithAdminFee(data) : sendDefault(data)
-}
+const send = (data) => (hasAdminFee) ? sendWithAdminFee(data) : sendDefault(data)
 
 const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed } = {}) => {
   const {
@@ -361,7 +354,7 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed } 
         const resultAdminFee = await web3.eth.accounts.signTransaction(adminFeeParams, privateKey)
         const receiptAdminFee = web3.eth.sendSignedTransaction(resultAdminFee.rawTransaction)
           .on('transactionHash', (hash) => {
-            console.log('Eth admin fee tx',hash)
+            console.log('Eth admin fee tx', hash)
           })
       })
     })
@@ -370,7 +363,7 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed } 
 
 const sendDefault = ({ from, to, amount, gasPrice, gasLimit, speed } = {}) =>
   new Promise(async (resolve, reject) => {
-    //const { user: { ethData: { privateKey } } } = getState()
+    // const { user: { ethData: { privateKey } } } = getState()
     const privateKey = getPrivateKeyByAddress(from)
 
     gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
@@ -418,8 +411,8 @@ const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
 
         // Calc miner fee, used for this tx
         const minerFee = BigNumber(web3.utils.toBN(gas).toNumber())
-            .multipliedBy(web3.utils.toBN(gasPrice).toNumber())
-            .dividedBy(1e18).toNumber()
+          .multipliedBy(web3.utils.toBN(gasPrice).toNumber())
+          .dividedBy(1e18).toNumber()
 
         let adminFee = false
 

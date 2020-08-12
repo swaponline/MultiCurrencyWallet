@@ -7,24 +7,22 @@ const isConnected = () => metamaskProvider && metamaskProvider.selectedAddress
 
 const getAddress = () => (isConnected()) ? metamaskProvider.selectedAddress : ''
 
-const connect = () => {
-  return new Promise(async (resolved, reject) => {
-    if (metamaskProvider
+const connect = () => new Promise(async (resolved, reject) => {
+  if (metamaskProvider
       && metamaskProvider.enable
-    ) {
-      await metamaskProvider.enable()
-      setTimeout(() => {
-        if (getAddress()) {
-          resolved(true)
-        } else {
-          reject(`timeout`)
-        }
-      }, 1000)
-    } else {
-      reject(`metamask not enabled`)
-    }
-  })
-}
+  ) {
+    await metamaskProvider.enable()
+    setTimeout(() => {
+      if (getAddress()) {
+        resolved(true)
+      } else {
+        reject(`timeout`)
+      }
+    }, 1000)
+  } else {
+    reject(`metamask not enabled`)
+  }
+})
 
 export default {
   connect,

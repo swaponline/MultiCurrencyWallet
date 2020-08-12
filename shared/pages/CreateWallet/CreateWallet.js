@@ -50,6 +50,7 @@ const CreateWallet = (props) => {
   const {
     ethData,
     btcData,
+    ghostData,
     btcMultisigSMSData,
     btcMultisigUserData,
   } = userData
@@ -61,6 +62,7 @@ const CreateWallet = (props) => {
     btcMultisigSMSData,
     btcMultisigUserData,
     ethData,
+    ghostData,
   ].map(({ balance, currency, infoAboutCurrency }) => ({
     balance,
     infoAboutCurrency,
@@ -77,6 +79,7 @@ const CreateWallet = (props) => {
     'BTC (PIN-Protected)',
     'BTC (Multisig)',
     'ETH',
+    'GHOST',
   ]
 
   if (isWidgetBuild) {
@@ -133,6 +136,7 @@ const CreateWallet = (props) => {
       'BTC (PIN-Protected)',
       'BTC (Multisig)',
       'ETH',
+      'GHOST',
     ]
 
     if (isWidgetBuild) {

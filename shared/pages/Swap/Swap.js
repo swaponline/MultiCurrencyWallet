@@ -31,14 +31,14 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @injectIntl
 @connect(({
-  user: { ethData, btcData, tokensData, activeFiat },
+  user: { ethData, btcData, ghostData, tokensData, activeFiat },
   ipfs: { peer },
   rememberedOrders,
 }) => ({
   activeFiat,
-  items: [ethData, btcData],
+  items: [ethData, btcData, ghostData],
   tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
-  currenciesData: [ethData, btcData],
+  currenciesData: [ethData, btcData, ghostData],
   tokensData: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   errors: 'api.errors',
   checked: 'api.checked',
@@ -171,7 +171,7 @@ export default class SwapComponent extends PureComponent {
 
     try {
       const swap = new Swap(orderId, SwapApp.shared())
-
+      console.log(swap.flow._flowName);
       const SwapComponent = swapComponents[swap.flow._flowName]
       const ethData = items.filter(item => item.currency === 'ETH')
       const currencyData = items.concat(tokenItems)
