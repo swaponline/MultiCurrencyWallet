@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import CSSModules from 'react-css-modules'
 
 import { connect } from 'redaction'
@@ -194,6 +194,7 @@ export default class History extends Component {
     ]
 
     return (
+      <Fragment>
       <section styleName={`history ${isDark ? 'dark' : ''}`}>
         <h3 styleName="historyHeading">
           <FormattedMessage id="History_Activity_Title" defaultMessage="Activity" />
@@ -240,10 +241,11 @@ export default class History extends Component {
             </div>
           )
         }
-        { swapHistory.length > 0 &&
-          <SwapsHistory orders={swapHistory.filter((item) => item.step >= 1)} />
-        }
       </section>
+      { swapHistory.length > 0 &&
+        <SwapsHistory orders={swapHistory.filter((item) => item.step >= 1)} />
+      }
+      </Fragment>
     )
   }
 }

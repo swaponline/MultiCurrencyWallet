@@ -767,9 +767,7 @@ export default class CurrencyWallet extends Component {
           {!actions.btcmultisig.isBTCSMSAddress(`${address}`) &&
             !actions.btcmultisig.isBTCMSUserAddress(`${address}`) &&
             (swapHistory.filter((item) => item.step >= 1).length > 0 ? (
-              <div styleName={`currencyWalletSwapHistory ${isDark ? 'darkHistory' : ''}`}>
                 <SwapsHistory orders={swapHistory.filter((item) => item.step >= 4)} />
-              </div>
               ) : (
                 ''
               ))}

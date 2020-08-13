@@ -116,6 +116,10 @@ export default class RowHistory extends Component {
           }
         </td>
         <td>
+          <span>Lock time</span>
+          {lockDateAndTime.split(' ').map((item, key) => <Fragment key={key}>{' '}{item}</Fragment>)}
+        </td>
+        <td>
           <span>Status</span>
           <p
             className={cx({
@@ -140,10 +144,6 @@ export default class RowHistory extends Component {
             )
             }
           </p>
-        </td>
-        <td>
-          <span>Lock time</span>
-          {lockDateAndTime.split(' ').map((item, key) => <Fragment key={key}>{' '}{item}</Fragment>)}
         </td>
         <td>
           <span>Link</span>

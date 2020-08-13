@@ -20,8 +20,7 @@
   margin-top: 40px;
 }
 
-.currencyWalletActivity,
-.currencyWalletSwapHistory {
+.currencyWalletActivity {
   background: #fff;
   box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08), 0px 1px 4px rgba(0, 0, 0, 0.08);
   border-radius: 4px;
@@ -41,8 +40,7 @@
 }
 
 .dark {
-  .currencyWalletActivity,
-  .currencyWalletSwapHistory {
+  .currencyWalletActivity {
     background: #242425;
     box-shadow: 0px 4px 16px rgba(243, 243, 243, 0.08), 0px 1px 4px rgba(240, 233, 233, 0.08);
   
@@ -57,7 +55,6 @@
   }
 }
 
-.darkHistory,
 .darkActivity {
   background: #242425;
   box-shadow: 0px 4px 16px rgba(243, 243, 243, 0.08), 0px 1px 4px rgba(240, 233, 233, 0.08);
@@ -70,11 +67,6 @@
   h3 {
     color: white;
   }
-}
-
-
-.currencyWalletSwapHistory {
-  padding-bottom: 5px;
 }
 
 
