@@ -16,7 +16,7 @@ export default class SwapsHistory extends PureComponent {
     }
 
     return (
-      <div style={{ marginBottom: '50px' }}>
+      <div>
         <h3>
           <FormattedMessage id="SwapHisrory21" defaultMessage="Swaps history" />
         </h3>

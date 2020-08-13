@@ -660,7 +660,7 @@ export default class Row extends Component {
             defaultMessage="History"
           />
         ),
-        action: this.goToHistory,
+        action: this.goToCurrencyHistory,
         disabled: !mnemonicSaved,
       },
       !isSafari && {

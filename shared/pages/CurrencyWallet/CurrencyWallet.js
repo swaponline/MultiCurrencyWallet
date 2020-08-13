@@ -781,7 +781,7 @@ export default class CurrencyWallet extends Component {
               <div styleName={`currencyWalletSwapHistory ${isDark ? 'darkHistory' : ''}`}>
                 <SwapsHistory orders={swapHistory.filter((item) => item.step >= 4)} />
               </div>
-            ) : (
+              ) : (
                 ''
               ))}
         </DashboardLayout>

@@ -1,6 +1,7 @@
 import React, { Fragment, Component } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment/moment'
+import cx from 'classnames'
 
 import { links, localStorage } from 'helpers'
 import actions from 'redux/actions'
@@ -9,7 +10,6 @@ import { Link } from 'react-router-dom'
 import CSSModules from 'react-css-modules'
 import styles from './RowHistory.scss'
 
-import Coins from 'components/Coins/Coins'
 import Timer from 'pages/Swap/Timer/Timer'
 import Avatar from 'components/Avatar/Avatar'
 import { FormattedMessage, injectIntl } from 'react-intl'
@@ -95,24 +95,14 @@ export default class RowHistory extends Component {
 
     return (
       <tr key={id}>
-        {/* <td>
-          <Avatar
-            value={id}
-          />
-        </td> */}
-        {/* <td>
-          <Link to={`${linkToTheSwap}`}>
-            <Coins names={[buyCurrency, sellCurrency]}  />
-          </Link>
-        </td> */}
         <td>
           <span>You buy</span>
           {
             isMy ? (
               `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`
             ) : (
-                `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`
-              )
+              `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`
+            )
           }
         </td>
         <td>
@@ -121,16 +111,19 @@ export default class RowHistory extends Component {
             isMy ? (
               `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`
             ) : (
-                `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`
-              )
+              `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`
+            )
           }
         </td>
-        {/* <td>
-          { (sellAmount / buyAmount).toFixed(5) }{ ` ${sellCurrency}/${buyCurrency}`}
-        </td> */}
         <td>
-          <span>Status order</span>
-          <p>
+          <span>Status</span>
+          <p
+            className={cx({
+              [styles.statusFinished]: isFinished,
+              [styles.statusRefunded]: isRefunded,
+              [styles.statusStopped]: isStoppedSwap,
+            })}
+          >
             {isFinished && (<FormattedMessage id="RowHistory94" defaultMessage="Finished" />)}
             {isRefunded && (<FormattedMessage id="RowHistory77" defaultMessage="Refunded" />)}
             {isStoppedSwap && (<FormattedMessage id="RowHistory139" defaultMessage="Stopped" />)}
