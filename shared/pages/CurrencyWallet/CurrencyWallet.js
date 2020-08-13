@@ -541,17 +541,6 @@ export default class CurrencyWallet extends Component {
     const isToken = helpers.ethToken.isEthToken({ name: currency })
 
     history.push(localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`))
-
-    /*
-    actions.modals.open(withdrawModal, {
-      currency,
-      address,
-      contractAddress,
-      decimals,
-      balance,
-      hiddenCoinsList,
-    })
-    */
   }
 
   handleGoWalletHome = () => {
@@ -730,7 +719,8 @@ export default class CurrencyWallet extends Component {
         <DashboardLayout
           page="history"
           BalanceForm={
-            txHistory ? (
+            txHistory
+              ?
               <BalanceForm
                 address={address}
                 activeFiat={activeFiat}
@@ -748,9 +738,8 @@ export default class CurrencyWallet extends Component {
                 singleWallet={true}
                 multisigPendingCount={multisigPendingCount}
               />
-            ) : (
-                <ContentLoader leftSideContent />
-              )
+              :
+              <ContentLoader leftSideContent />
           }
         >
           <div styleName={`currencyWalletActivity ${isDark ? 'darkActivity' : ''}`}>
@@ -777,11 +766,9 @@ export default class CurrencyWallet extends Component {
           </div>
           {!actions.btcmultisig.isBTCSMSAddress(`${address}`) &&
             !actions.btcmultisig.isBTCMSUserAddress(`${address}`) &&
-            (swapHistory.filter((item) => item.step >= 4).length > 0 ? (
-              <div styleName={`currencyWalletSwapHistory ${isDark ? 'darkHistory' : ''}`}>
+            (swapHistory.filter((item) => item.step >= 1).length > 0 ? (
                 <SwapsHistory orders={swapHistory.filter((item) => item.step >= 4)} />
-              </div>
-            ) : (
+              ) : (
                 ''
               ))}
         </DashboardLayout>

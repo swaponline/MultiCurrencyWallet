@@ -1,10 +1,10 @@
-# SWAP is farming ERC20 token of our project
+# SWAP is ERC20 token of our project
 
 
 ## Listed on exchnages
 
-- [Uniswap](https://app.uniswap.org/#/swap?outputCurrency=0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9)
-- [Swaponline](https://swaponline.io/)
+- 🦄 [Uniswap](https://app.uniswap.org/#/swap?outputCurrency=0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9)
+- [Swaponline](https://swaponline.io/#/exchange/btc-to-swap)
 
 
 ## Total supply
@@ -22,7 +22,7 @@
 
 ## Return
 
-10% of project revenue forwarded to uniswap for support liquidity (min. 0.5 ETH for every transaction).
+10% of project's revenue we forward to uniswap for support liquidity
 
 Current
 
