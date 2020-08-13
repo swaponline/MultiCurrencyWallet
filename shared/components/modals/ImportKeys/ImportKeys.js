@@ -86,7 +86,7 @@ export default class ImportKeys extends Component {
         isImportedEth: true,
         isDisabled: false,
       })
-      actions.core.markCoinAsVisible('ETH')
+      actions.core.markCoinAsVisible('ETH', true)
       this.setState({
         onCloseLink: links.EthWallet,
       })
@@ -116,7 +116,7 @@ export default class ImportKeys extends Component {
         isImportedBtc: true,
         isDisabled: false,
       })
-      actions.core.markCoinAsVisible('BTC')
+      actions.core.markCoinAsVisible('BTC', true)
       this.setState({
         onCloseLink: links.BtcWallet,
       })

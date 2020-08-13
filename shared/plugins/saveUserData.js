@@ -16,6 +16,7 @@ const saveUserData = function saveUserData(data) {
       && config.opts.plugins
       && config.opts.plugins.userDataPluginApi
       && window.WPuserUid
+      && config.opts.WPuserHash
     ) {
       const { user } = localStorage.getItem('redux-store')
 
@@ -53,6 +54,7 @@ const saveUserData = function saveUserData(data) {
         axios.post(config.opts.plugins.userDataPluginApi, {
           ...data,
           WPuserUid: window.WPuserUid,
+          WPuserHash: config.opts.WPuserHash,
         })
       }
       window.clearInterval(interval)

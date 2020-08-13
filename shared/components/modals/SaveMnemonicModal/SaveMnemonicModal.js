@@ -205,6 +205,8 @@ export default class SaveMnemonicModal extends React.Component {
     }, () => {
       if (randomedWords.length === 0) {
         localStorage.setItem(constants.privateKeyNames.twentywords, '-')
+        actions.backupManager.serverCleanupSeed()
+
         this.setState({
           step: `ready`,
         })

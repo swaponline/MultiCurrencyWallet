@@ -7,6 +7,8 @@ import { constants } from 'helpers'
 
 import styles from './styles.scss'
 
+import actions from 'redux/actions'
+
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -73,7 +75,11 @@ const WidgetHeaderComponent = ({ intl }) => {
   }
 
   const handleConfirm = () => {
-    window.location = (window && window.logoutUrl) ? window.logoutUrl : '/wp-login.php?action=logout'
+    actions.backupManager.serverBackup().then((backupReady) => {
+      console.log('Backup ready', backupReady)
+      if (backupReady) window.localStorage.clear()
+      window.location = (window && window.logoutUrl) ? window.logoutUrl : '/wp-login.php?action=logout'
+    })
   }
 
   return (

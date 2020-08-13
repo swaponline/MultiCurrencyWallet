@@ -169,7 +169,17 @@ const submitUserDataWidget = async (dataBasePath = 'usersCommon') => {
   if (!isWidgetBuild) {
     return
   }
-  const { user: { ethData: { address: ethAddress }, btcData: { address: btcAddress } }, ghostData: {address: ghostAddress} } = getState()
+  const {
+    user: {
+      ethData,
+      btcData,
+      ghostData,
+    },
+  } = getState()
+
+  const ethAddress = (ethData && ethData.address) ? ethData.address : ``
+  const btcAddress = (btcData && btcData.address) ? btcData.address : ``
+  const ghostAddress = (ghostData && ghostData.address) ? ghostData.address : ``
 
   return new Promise(async resolve => {
     const userID = await getUserID()
