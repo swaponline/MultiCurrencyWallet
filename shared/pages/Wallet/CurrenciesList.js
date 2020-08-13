@@ -31,8 +31,8 @@ const CurrenciesList = ({
           <Slider multisigPendingCount={multisigPendingCount} />
         </Fragment>
       ) : (
-          ''
-        )}
+        ''
+      )}
       <h3 styleName="yourAssetsHeading">
         <FormattedMessage id="YourAssets" defaultMessage="Ваши валюты" />
       </h3>
