@@ -55,54 +55,64 @@ const backupUserData = {
     return (currentUser !== `${window.WPuserUid}` && window.WPuserUid) ? true : false
   },
   backupUser: () => {
-    if (config
-      && config.opts
-      && config.opts.plugins
-      && config.opts.plugins.backupPlugin
-      && config.opts.plugins.backupPluginUrl
-      && window
-      && window.WPuserUid
-      && config.opts.WPuserHash
-    ) {
-      const get = (key) => localStorage.getItem(constants.privateKeyNames[key])
+    return new Promise((resolve) => {
+      if (config
+        && config.opts
+        && config.opts.plugins
+        && config.opts.plugins.backupPlugin
+        && config.opts.plugins.backupPluginUrl
+        && window
+        && window.WPuserUid
+        && config.opts.WPuserHash
+      ) {
+        const get = (key) => localStorage.getItem(constants.privateKeyNames[key])
 
-      const backup = {
-        btcMnemonic:                      get(`btcMnemonic`),
-        ethMnemonic:                      get(`ethMnemonic`),
-        eth:                              get(`eth`),
-        btc:                              get(`btc`),
-        ethOld:                           get(`ethOld`),
-        btcOld:                           get(`btcOld`),
-        twentywords:                      get(`twentywords`),
-        btcMultisig:                      get(`btcMultisig`),
-        btcMultisigOtherOwnerKey:         get(`btcMultisigOtherOwnerKey`),
-        btcMultisigOtherOwnerKeyMnemonic: get(`btcMultisigOtherOwnerKeyMnemonic`),
-        btcMultisigOtherOwnerKeyOld:      get(`btcMultisigOtherOwnerKeyOld`),
-        btcSmsMnemonicKey:                get(`btcSmsMnemonicKey`),
-        btcSmsMnemonicKeyGenerated:       get(`btcSmsMnemonicKeyGenerated`),
-        btcSmsMnemonicKeyMnemonic:        get(`btcSmsMnemonicKeyMnemonic`),
-        btcSmsMnemonicKeyOld:             get(`btcSmsMnemonicKeyOld`),
-        btcPinMnemonicKey:                get(`btcPinMnemonicKey`),
-        hiddenCoinsList:                  localStorage.getItem(constants.localStorage.hiddenCoinsList),
-        isWalletCreate:                   localStorage.getItem(constants.localStorage.isWalletCreate),
-        didProtectedBtcCreated:           localStorage.getItem(constants.localStorage.didProtectedBtcCreated),
-        didPinBtcCreated:                 localStorage.getItem(constants.localStorage.didPinBtcCreated),
-      }
-
-      axios.post(config.opts.plugins.backupPluginUrl, {
-        ...backup,
-        WPuserUid: window.WPuserUid,
-        WPuserHash: config.opts.WPuserHash,
-      }).then((answer) => {
-        const data = answer.data
-        if (data
-          && data.answer
-          && data.answer === `ok`
-        ) {
-          localStorage.setItem(lsCurrentUser, window.WPuserUid)
+        const backup = {
+          btcMnemonic:                      get(`btcMnemonic`),
+          ethMnemonic:                      get(`ethMnemonic`),
+          eth:                              get(`eth`),
+          btc:                              get(`btc`),
+          ghost:                            get(`ghost`),
+          ethOld:                           get(`ethOld`),
+          btcOld:                           get(`btcOld`),
+          twentywords:                      get(`twentywords`),
+          btcMultisig:                      get(`btcMultisig`),
+          btcMultisigOtherOwnerKey:         get(`btcMultisigOtherOwnerKey`),
+          btcMultisigOtherOwnerKeyMnemonic: get(`btcMultisigOtherOwnerKeyMnemonic`),
+          btcMultisigOtherOwnerKeyOld:      get(`btcMultisigOtherOwnerKeyOld`),
+          btcSmsMnemonicKey:                get(`btcSmsMnemonicKey`),
+          btcSmsMnemonicKeyGenerated:       get(`btcSmsMnemonicKeyGenerated`),
+          btcSmsMnemonicKeyMnemonic:        get(`btcSmsMnemonicKeyMnemonic`),
+          btcSmsMnemonicKeyOld:             get(`btcSmsMnemonicKeyOld`),
+          btcPinMnemonicKey:                get(`btcPinMnemonicKey`),
+          hiddenCoinsList:                  localStorage.getItem(constants.localStorage.hiddenCoinsList),
+          isWalletCreate:                   localStorage.getItem(constants.localStorage.isWalletCreate),
+          didProtectedBtcCreated:           localStorage.getItem(constants.localStorage.didProtectedBtcCreated),
+          didPinBtcCreated:                 localStorage.getItem(constants.localStorage.didPinBtcCreated),
         }
-      })
-    }
+
+        axios.post(config.opts.plugins.backupPluginUrl, {
+          ...backup,
+          WPuserUid: window.WPuserUid,
+          WPuserHash: config.opts.WPuserHash,
+        }).then((answer) => {
+          const data = answer.data
+          if (data
+            && data.answer
+            && data.answer === `ok`
+          ) {
+            localStorage.setItem(lsCurrentUser, window.WPuserUid)
+            resolve(true)
+          } else {
+            resolve(false)
+          }
+        }).catch((e) => {
+          resolve(false)
+        })
+      } else {
+        resolve(false)
+      }
+    })
   },
   cleanupSeed: () => {
     return new Promise((resolve) => {
@@ -148,7 +158,9 @@ const backupUserData = {
         && window.WPuserUid
         && config.opts.WPuserHash
       ) {
-        const set = (key, value) => localStorage.setItem(constants.privateKeyNames[key], value)
+        const set = (key, value) => {
+          if (value) localStorage.setItem(constants.privateKeyNames[key], value)
+        }
 
         axios.post(config.opts.plugins.restorePluginUrl, {
           WPuserUid: window.WPuserUid,
@@ -162,6 +174,7 @@ const backupUserData = {
           ) {
             const data = req.data.data
             set( `btc`, data.btc )
+            set( `ghost`, data.ghost )
             set( `btcMnemonic`, data.btcMnemonic )
             set( `btcMultisig`, data.btcMultisig )
             set( `btcMultisigOtherOwnerKey`, data.btcMultisigOtherOwnerKey )
