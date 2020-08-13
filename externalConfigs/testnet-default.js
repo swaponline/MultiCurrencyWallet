@@ -66,8 +66,6 @@ window.buildOptions = {
 window.buildOptions = {
   showWalletBanners: true, // Allow to see banners
   showHowItsWork: true, // Can be inited from window.showHowItWorksOnExchangePage
-  // inited from window.EXCHANGE_DISABLED
-  exchangeDisabled: true,
   curEnabled: { // Or 'false' if enabled all
     // inited from window.CUR_BTC_DISABLED
     btc: true,

@@ -1,7 +1,7 @@
 import React from 'react'
 import { FormattedMessage, defineMessages } from 'react-intl'
 import links from 'helpers/links'
-import config from 'helpers/externalConfig'
+import externalConfig from 'helpers/externalConfig'
 
 
 export const messages = defineMessages({
@@ -56,8 +56,9 @@ export const getMenuItems = (props, isWalletCreate) => {
   return (Number.isInteger(reputation) && reputation !== 0)
     || isSigned
     || localStorage.getItem('isWalletCreate') === 'true'
-    || (config && config.isWidget)
-    ? ([
+    || (externalConfig && externalConfig.isWidget)
+    ?
+    [
       {
         title: intl.formatMessage(wallet),
         link: home,
@@ -66,7 +67,7 @@ export const getMenuItems = (props, isWalletCreate) => {
         icon: 'products',
         currentPageFlag: true,
       },
-      !config.opts.exchangeDisabled && {
+      !externalConfig.opts.exchangeDisabled && {
         title: intl.formatMessage(exchange),
         link: linksExchange,
         exact: true,
@@ -74,21 +75,9 @@ export const getMenuItems = (props, isWalletCreate) => {
         icon: 'products',
         currentPageFlag: true,
       },
-      // {
-      //   title: props.intl.formatMessage(messages.history),
-      //   link: links.history,
-      //   icon: 'history',
-      //   haveSubmenu: false,
-      //   displayNone: !isWalletCreate,
-      // },
-      // {
-      //   title: props.intl.formatMessage(messages.IEO),
-      //   link: links.ieo,
-      //   icon: 'IEO',
-      //   haveSubmenu: false,
-      // },
-    ])
-    : ([
+    ]
+    :
+    [
       {
         title: intl.formatMessage(createWallet),
         link: create,
@@ -97,7 +86,7 @@ export const getMenuItems = (props, isWalletCreate) => {
         icon: 'products',
         currentPageFlag: true,
       },
-      !config.opts.exchangeDisabled && {
+      !externalConfig.opts.exchangeDisabled && {
         title: intl.formatMessage(exchange),
         link: linksExchange,
         exact: true,
@@ -105,14 +94,7 @@ export const getMenuItems = (props, isWalletCreate) => {
         icon: 'products',
         currentPageFlag: true,
       },
-      // {
-      //   title: props.intl.formatMessage(messages.history),
-      //   link: links.history,
-      //   icon: 'history',
-      //   haveSubmenu: false,
-      //   displayNone: !isWalletCreate,
-      // },
-    ])
+    ]
 }
 
 
@@ -124,7 +106,8 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
 
   return (Number.isInteger(reputation) && reputation !== 0) || isSigned
     || localStorage.getItem('isWalletCreate') === 'true'
-    ? ([
+    ?
+    [
       {
         title: intl.formatMessage(isWalletCreate ? wallet : createWallet),
         link: dinamicPath,
@@ -139,15 +122,16 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
         displayNone: !isWalletCreate,
         icon: <i className="fas fa-exchange-alt" aria-hidden="true" />,
       },
-      !config.opts.exchangeDisabled && {
+      !externalConfig.opts.exchangeDisabled && {
         title: intl.formatMessage(exchange),
         link: linksExchange,
         exact: true,
         haveSubmenu: true,
         icon: <i className="fas fa-sync-alt" aria-hidden="true" />,
       },
-    ])
-    : ([
+    ]
+    :
+    [
       {
         title: intl.formatMessage(createWallet),
         link: create,
@@ -156,13 +140,13 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
         icon: <i className="fas fa-wallet" aria-hidden="true" />,
         currentPageFlag: true,
       },
-      !config.opts.exchangeDisabled && {
+      !externalConfig.opts.exchangeDisabled && {
         title: intl.formatMessage(exchange),
         link: linksExchange,
         exact: true,
         haveSubmenu: true,
         icon: <i className="fas fa-sync-alt" aria-hidden="true" />,
       },
-    ])
+    ]
 }
 
