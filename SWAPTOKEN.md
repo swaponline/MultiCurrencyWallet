@@ -22,7 +22,7 @@
 
 ## Return
 
-10% of project revenue forwarded to uniswap for support liquidity (min. 0.5 ETH for every transaction).
+10% of project's revenue we forward to uniswap for support liquidity
 
 Current
 
