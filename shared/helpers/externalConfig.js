@@ -48,10 +48,22 @@ const externalConfig = () => {
       setItemPlugin: false,
       getItemPlugin: false,
       userDataPluginApi: false,
+      backupPlugin: false,
+      backupPluginUrl: false,
+      restorePluginUrl: false,
     },
+    WPuserHash: false,
     buyViaCreditCardLink: false,
     activeFiat: 'USD',
     exchangeDisabled: false,
+  }
+
+
+  if (window
+    && window.WPuserHash
+  ) {
+    config.opts.WPuserHash = window.WPuserHash
+    window.WPuserHash = false
   }
 
   if (window
@@ -101,6 +113,16 @@ const externalConfig = () => {
     config.opts.curEnabled.eth = false
   }
   // Plugins
+  if (window
+    && window.backupPlugin
+    && window.backupUrl
+    && window.restoreUrl
+  ) {
+    config.opts.plugins.backupPlugin = window.backupPlugin
+    config.opts.plugins.backupPluginUrl = window.backupUrl
+    config.opts.plugins.restorePluginUrl = window.restoreUrl
+  }
+
   if (window
     && window.setItemPlugin
   ) {

@@ -115,7 +115,7 @@ export default class AddCustomERC20 extends React.Component {
   handleConfirm = async () => {
     const { tokenAddress, tokenSymbol, tokenDecimals } = this.state
     actions.token.AddCustomERC20( tokenAddress, tokenSymbol, tokenDecimals )
-    actions.core.markCoinAsVisible( tokenSymbol.toUpperCase() )
+    actions.core.markCoinAsVisible( tokenSymbol.toUpperCase(), true )
     this.setState({
       step: 'ready',
     })
