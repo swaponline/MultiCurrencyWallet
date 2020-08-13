@@ -17,7 +17,8 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import links from 'helpers/links'
 import ContentLoader from '../../components/loaders/ContentLoader/ContentLoader'
 import { isMobile } from 'react-device-detect'
-import FilterForm from "components/FilterForm/FilterForm"
+import FilterForm from 'components/FilterForm/FilterForm'
+import SwapsHistory from 'pages/History/SwapsHistory/SwapsHistory'
 
 
 
@@ -180,6 +181,7 @@ export default class History extends Component {
 
   render() {
     const { filterValue, items, isLoading } = this.state
+    const { swapHistory } = this.props
 
     const titles = []
     const activeTab = 0
@@ -189,11 +191,6 @@ export default class History extends Component {
         title: <FormattedMessage id="History_Nav_ActivityTab" defaultMessage="Activity" />,
         link: links.history,
       }
-      // {
-      //   key: 'ActivityInvoices',
-      //   title: <FormattedMessage id="History_Nav_InvoicesTab" defaultMessage="Invoices" />,
-      //   link: links.invoices,
-      // },
     ]
 
     return (
@@ -242,6 +239,9 @@ export default class History extends Component {
               <ContentLoader rideSideContent />
             </div>
           )
+        }
+        { swapHistory.length > 0 &&
+          <SwapsHistory orders={swapHistory.filter((item) => item.step >= 1)} />
         }
       </section>
     )
