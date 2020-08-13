@@ -100,6 +100,13 @@ const externalConfig = () => {
   }
 
   if (window
+    && window.CUR_GHOST_DISABLED
+  ) {
+    if (!config.opts.curEnabled) config.opts.curEnabled = {}
+    config.opts.curEnabled.ghost = (window.CUR_GHOST_DISABLED) ? false : true
+  }
+
+  if (window
     && window.CUR_ETH_DISABLED
   ) {
     if (!config.opts.curEnabled) config.opts.curEnabled = {}
