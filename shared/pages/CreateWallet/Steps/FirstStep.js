@@ -33,7 +33,7 @@ export default class CreateWallet extends Component {
   defaultStartPack = [
     ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],
     ...(!config.opts.curEnabled || config.opts.curEnabled.eth) ? [{ name: "ETH", capture: "Ethereum" }] : [],
-    { name: "GHOST", capture: "Ghost" },
+    ...(!config.opts.curEnabled || config.opts.curEnabled.ghost) ? [{ name: "GHOST", capture: "Ghost" }] : [],
     { name: "SWAP", capture: "Swap" },
     { name: "USDT", capture: "Tether" },
     { name: "EURS", capture: "Eurs" },
@@ -42,7 +42,7 @@ export default class CreateWallet extends Component {
   widgetStartPack = [
     ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],
     ...(!config.opts.curEnabled || config.opts.curEnabled.eth) ? [{ name: "ETH", capture: "Ethereum" }] : [],
-    { name: "GHOST", capture: "Ghost" },
+    ...(!config.opts.curEnabled || config.opts.curEnabled.ghost) ? [{ name: "GHOST", capture: "Ghost" }] : [],
   ]
 
 
