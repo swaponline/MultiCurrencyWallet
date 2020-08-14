@@ -35,7 +35,7 @@ Current
 
 ## How we get revenue
 
-- By selling [Wordpress plugin](https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064)
+- By selling [Wordpress plugin](https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064) (whitelabel, wallet as a service)
 - By custom MultiCurrencyWallet integrations
 
 
