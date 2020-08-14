@@ -259,6 +259,7 @@ export default class SwapComponent extends PureComponent {
         this.requestingWithdrawFee()
         this.isBalanceEnough()
         this.checkFailSwap()
+        this.checkOtherSideRefund()
       }, 5000)
 
       const checkingConfirmSuccess = setTimeout(() => {
@@ -422,6 +423,23 @@ export default class SwapComponent extends PureComponent {
         continueSwap: false,
       }))
     })
+  }
+
+  checkOtherSideRefund = async () => {
+    const {
+      swap: {
+        flow,
+      },
+    } = this.state
+
+    if (typeof swap.flow.checkOtherSideRefund === 'function') {
+      const isOtherSideRefunded = await swap.flow.checkOtherSideRefund()
+      if (isOtherSideRefunded) {
+        this.setState(() => ({
+          continueSwap: false,
+        }))
+      }
+    }
   }
 
   checkFailSwap = () => {
