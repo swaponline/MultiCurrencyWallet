@@ -9,6 +9,7 @@ import { getCookie } from 'helpers/utils'
 
 addLocaleData([...localeEn, ...localeRu])
 
+import myNl from 'localisation/nl.json'
 import myEn from 'localisation/en.json'
 import myRu from 'localisation/ru.json'
 
@@ -17,6 +18,7 @@ import { reduceMessages, defaultLocale, localisePrefix } from 'helpers/locale'
 
 
 const translations = {
+  nl: reduceMessages(myNl),
   en: reduceMessages(myEn),
   ru: reduceMessages(myRu),
 }

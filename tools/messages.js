@@ -9,6 +9,7 @@ import {
 
 
 const locales = {
+  nl: 'Dutch',
   en: 'English',
   ru: 'Russian',
 }
@@ -89,14 +90,14 @@ function mergeMessages() {
         if (messages[newMsg.id].defaultMessage !== newMsg.defaultMessage) {
           throw new Error(`Different message default messages for message id "${
             newMsg.id
-          }":
+            }":
           ${messages[newMsg.id].defaultMessage} -- ${messages[newMsg.id].files}
           ${newMsg.defaultMessage} -- ${fileName}`)
         }
         if (messages[newMsg.id].description && newMsg.description) {
           throw new Error(`Should be only one description for message id "${
             newMsg.id
-          }":
+            }":
           ${messages[newMsg.id].description} -- ${messages[newMsg.id].files}
           ${newMsg.description} -- ${fileName}`)
         }

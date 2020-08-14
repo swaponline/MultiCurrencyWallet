@@ -25,23 +25,23 @@ export default class BtcToEth extends Component {
         )
       case 4:
         return (
-          <FormattedMessage id="SwapProgress111" defaultMessage="Creating Bitcoin Script.{br}It can take a few minutes" values={{ br: <br /> }} />
+          <FormattedMessage id="SwapProgress111_BTC_ETH" defaultMessage="Creating Bitcoin Script.{br}It can take a few minutes" values={{ br: <br /> }} />
         )
       case 5:
         return (
-          <FormattedMessage id="SwapProgress117" defaultMessage="Your BTC are now depositing. It may require one confirmation from Bitcoin Network. Waiting for other participant to deposit ETH." />
+          <FormattedMessage id="SwapProgress117_BTC_ETH" defaultMessage="Your BTC are now depositing. It may require one confirmation from Bitcoin Network. Waiting for other participant to deposit ETH." />
         )
       case 6:
         return (
-          <FormattedMessage id="SwapProgress123" defaultMessage="ETH Contract created and charged. Requesting withdrawal from ETH Contract." />
+          <FormattedMessage id="SwapProgress123_BTC_ETH" defaultMessage="ETH Contract created and charged. Requesting withdrawal from ETH Contract." />
         )
       case 7:
-        return  (
-          <FormattedMessage id="SwapProgress129" defaultMessage="ETH was transferred to your wallet. Check the balance." />
+        return (
+          <FormattedMessage id="SwapProgress129_BTC_ETH" defaultMessage="ETH was transferred to your wallet. Check the balance." />
         )
       case 8:
         return (
-          <FormattedMessage id="SwapProgress135" defaultMessage="Thank you for using Swap.Onlinde!" />
+          <FormattedMessage id="SwapProgress135_BTC_ETH" defaultMessage="Thank you for using Swap.Onlinde!" />
         )
       default:
         return null
