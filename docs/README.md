@@ -1,5 +1,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 ![Deploy to swaponline.github.io](https://github.com/swaponline/MultiCurrencyWallet/workflows/Deploy%20to%20swaponline.github.io/badge.svg)
+[![About SWAP token](https://img.shields.io/badge/ERC20-SWAP-green)](https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/SWAPTOKEN.md)
 
 ## Open-source Multicurrency wallet for Bitcoin and custom assets, and p2p exchange
 
@@ -7,6 +8,7 @@ Live version here: https://swaponline.github.io
 
 No coding skills? We offer you :package: [WordPress plugin with admin panel](https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064) :package: and installation service for $100 (send [sashanoxon](https://t.me/sashanoxon) access to your server).
 
+Looking for investment opportunity? Read about [ERC20:SWAP token](https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/SWAPTOKEN.md) 
 
 ### 1. Multi-currency wallet: your users can store Bitcoin and custom assets
 Add many assets to your wallet:
