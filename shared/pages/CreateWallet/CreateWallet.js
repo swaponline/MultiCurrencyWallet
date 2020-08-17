@@ -39,7 +39,6 @@ const CreateWallet = (props) => {
       currencies,
       secure,
     },
-
     location: { pathname },
     userData,
     core: { hiddenCoinsList },
@@ -185,10 +184,6 @@ const CreateWallet = (props) => {
 
   const handleRestoreMnemonic = () => {
     actions.modals.open(constants.modals.RestoryMnemonicWallet, { btcBalance, fiatBalance })
-  }
-
-  const goToExchange = () => {
-    history.push(localisedUrl(locale, links.exchange))
   }
 
   const validate = () => {
@@ -373,12 +368,6 @@ const CreateWallet = (props) => {
             </Tooltip>
           </span>
           <br />
-{/*          <button onClick={goToExchange}>
-            <FormattedMessage
-              id="ExchangeBtn"
-              defaultMessage="Обмен"
-            />
-          </button>*/}
         </div>
 
         {singleCurrecnyData ?
