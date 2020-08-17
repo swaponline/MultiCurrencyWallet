@@ -518,7 +518,9 @@ const getTransaction = (address, ownType) =>
       })
   })
 
-const send = (data) => sendBitcore(data)
+const send = (data) => {
+  return sendBitcore(data)
+}
 
 const sendV5WithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
   const privateKey = getPrivateKeyByAddress(from)
@@ -720,22 +722,24 @@ const sendDefault = async ({ from, to, amount, feeValue, speed } = {}) => {
   return txRaw
 }
 
-const sendBitcore = async ({ from, to, amount, feeValue, speed } = {}) => {
-  const privKey = getPrivateKeyByAddress(from)
-  const unspents = await fetchUnspents(from)
-  const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
+const sendBitcore = ({ from, to, amount, feeValue, speed } = {}) => {
+  return new Promise(async (ready) => {
+    const privKey = getPrivateKeyByAddress(from)
+    const unspents = await fetchUnspents(from)
+    const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
 
-  const transaction = new bitcore.Transaction()
-        .from(unspents)          // Feed information about what unspent outputs one can use
-        .to(to, fundValue)  // Add an output with the given amount of satoshis
-        .change(from)      // Sets up a change address where the rest of the funds will go
-        .sign(privKey)     // Signs all the inputs it can*/
+    const transaction = new bitcore.Transaction()
+          .from(unspents)          // Feed information about what unspent outputs one can use
+          .to(to, fundValue)  // Add an output with the given amount of satoshis
+          .change(from)      // Sets up a change address where the rest of the funds will go
+          .sign(privKey)     // Signs all the inputs it can*/
 
 
-  const broadcastAnswer = await broadcastTx(String(transaction.serialize()))
+    const broadcastAnswer = await broadcastTx(String(transaction.serialize()))
 
-  const { txid } = broadcastAnswer
-  return txid
+    const { txid } = broadcastAnswer
+    ready(txid)
+  })
 }
 
 const signAndBuild = (transactionBuilder, address) => {
