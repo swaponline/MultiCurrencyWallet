@@ -2,11 +2,17 @@
 ![Deploy to swaponline.github.io](https://github.com/swaponline/MultiCurrencyWallet/workflows/Deploy%20to%20swaponline.github.io/badge.svg)
 [![About SWAP token](https://img.shields.io/badge/ERC20-SWAP-green)](https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/SWAPTOKEN.md)
 
-## Open-source Multicurrency wallet for Bitcoin and custom assets, and p2p exchange
+## MultiCurrencyWallet
+
+- 👛 Crypto wallet: BTC, ETН, USDT, {your_token}...
+- 💵 Fiat gateway: USD, EUR, RUB, UAH...
+- ⚛️ P2P exchange – atomic swaps
+- 💡 Open-source, client-side
+- 📦 Embeddable into your site!
 
 Live version here: https://swaponline.github.io
 
-No coding skills? We offer you :package: [WordPress plugin with admin panel](https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064) :package: and installation service for $100 (send [sashanoxon](https://t.me/sashanoxon) access to your server).
+No coding skills? Use :package: [WordPress plugin with admin panel](https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064) :package: and installation service for $100 (send [sashanoxon](https://t.me/sashanoxon) access to your server).
 
 Looking for investment opportunity? Read about [ERC20:SWAP token](https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/SWAPTOKEN.md) 
 
@@ -197,5 +203,7 @@ git pull
 4. click "Merge pull request"
 
 If you have conflicts (if sources has been changed on your side) click "resolve conflicts".
+
+---
 
 Any questions are welcome: [sashanoxon](https://t.me/sashanoxon)
