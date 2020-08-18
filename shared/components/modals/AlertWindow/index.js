@@ -9,9 +9,11 @@ import { constants, links } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 
 import { Button } from 'components/controls'
+import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
 import styles from './styles.scss'
+
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -38,7 +40,7 @@ export default class AlertWindow extends Component {
 
   handleClose = () => {
     const { name, data, onClose, history, intl } = this.props
-    const { onClose: dataCLose, currency, address, actionType } = data
+    const { onClose: dataClose, currency, address, actionType } = data
     const { locale } = intl
 
     if (actionType === 'deposit') {
@@ -56,10 +58,15 @@ export default class AlertWindow extends Component {
       onClose()
     }
 
-    if (typeof dataCLose === 'function') {
-      dataCLose()
+    if (typeof dataClose === 'function') {
+      dataClose()
     }
 
+    actions.modals.close(name)
+  }
+
+  handleClosePopup = () => {
+    const { name } = this.props
     actions.modals.close(name)
   }
 
@@ -69,8 +76,9 @@ export default class AlertWindow extends Component {
         title,
         message,
         actionType,
+        canClose,
       },
-      intl
+      intl,
     } = this.props
 
     const labels = {
@@ -84,6 +92,7 @@ export default class AlertWindow extends Component {
           <div styleName="header">
             <WidthContainer styleName="headerContent">
               <div styleName="title">{labels.title}</div>
+              {canClose && (<CloseIcon styleName="closeButton" onClick={this.handleClosePopup} />)}
             </WidthContainer>
           </div>
           <div styleName="content">

@@ -170,6 +170,7 @@ export default class Row extends Component {
             defaultMessage="Please top up your balance before you start the swap."
           />
         ),
+        canClose: true,
         currency: buyCurrency,
         address,
         actionType: 'deposit',

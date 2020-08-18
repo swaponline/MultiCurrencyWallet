@@ -483,6 +483,7 @@ export default class Exchange extends Component {
         currency: haveCur,
         address,
         actionType: !isDidntActivateWallet ? "deposit" : "createWallet",
+        canClose: true,
         message: !isDidntActivateWallet ?
           <FormattedMessage
             id="AlertOrderNonEnoughtBalance"
