@@ -209,5 +209,4 @@ const backupUserData = {
   }
 }
 
-window.backupUserData = backupUserData
 export default backupUserData

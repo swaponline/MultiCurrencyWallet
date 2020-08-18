@@ -138,6 +138,7 @@ const backupManager = {
   get: exists,
 
   serverBackup,
+  serverCleanupSeed,
 }
 
 export default backupManager
