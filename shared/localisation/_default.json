@@ -5111,7 +5111,7 @@
   },
   {
     "id": "YourAssetsDescription",
-    "message": "Здесь вы можете безопасно хранить и быстро обменивать Bitcoin, Ethereum, {br} USDT и многочисленные токены ERC-20.",
+    "message": "Here you can safely store, quickly send and receive assets",
     "files": [
       "shared/pages/Wallet/CurrenciesList.js"
     ]
