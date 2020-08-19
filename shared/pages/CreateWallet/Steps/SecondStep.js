@@ -375,7 +375,7 @@ const CreateWallet = (props) => {
                     }
                   </div>
                   <div styleName="flex">
-                    <div styleName="logo thirdPageIcons">
+                    <div styleName="logo securityIcon">
                       <img
                         src={icons[name]}
                         alt={`${name} icon`}
