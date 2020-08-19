@@ -20,6 +20,8 @@ const Footer = (props) => {
 
   const isDark = localStorage.getItem(constants.localStorage.isDark)
 
+  const isFooterDisabled = window.location.host === 'instainblocks.com' // // todo: admin panel enable/disable
+
   return (
     <footer
       className={cx({
@@ -28,7 +30,7 @@ const Footer = (props) => {
         [styles.mobile]: isMobile,
       })}
     >
-      {(!config.isWidget || config.isFullBuild) && (
+      {!isFooterDisabled && (
         <WidthContainer styleName="container">
           <SwitchLang {...props} />
           {!config.isWidget && <SocialMenu />}
