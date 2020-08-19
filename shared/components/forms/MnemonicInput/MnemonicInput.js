@@ -110,7 +110,7 @@ export default class MnemonicInput extends Component {
     } = this
 
     return (
-      <div className={`mnemonicInput ${(isDark) ? '--is-dark' : ''} ${(isMobile) ? '--is-mobile' : ''} ${(fullWidth) ? '--full-width' : ''}`}>
+      <div className={`notranslate mnemonicInput ${(isDark) ? '--is-dark' : ''} ${(isMobile) ? '--is-mobile' : ''} ${(fullWidth) ? '--full-width' : ''}`}>
         <ReactTags
           ref={reactTags}
           tags={tags}

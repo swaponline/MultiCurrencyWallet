@@ -97,7 +97,7 @@
 }
 
 .notMain {
-  height: 40px;
+  min-height: 40px;
   margin: 40px 0;
 }
 
@@ -354,6 +354,13 @@
   text-align: center;
 }
 
+.securityIcon {
+  img {
+    max-width: 70%;
+    max-height: 70%;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .secureSize {
     width: 100% !important;
@@ -557,7 +564,7 @@
     height: auto;
   }
 
-  .thirdPageIcons {
+  .securityIcon {
     background: #f0eefd;
   }
 
