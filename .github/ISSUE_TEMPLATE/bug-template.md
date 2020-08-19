@@ -6,14 +6,11 @@ labels: ''
 assignees: ''
 
 ---
+<!-- Please use English -->
 
-## What is working wrong?
+## Screenshot or description
 
-...Describe the bug briefly...
-
-## What should happen instead?
-
-...Describe what do you think should happen instead in this situation...
+<!-- You can use Ctrl+V to place screenshots right into GitHub issue -->
 
 
 ## Steps to reproduce
@@ -22,11 +19,12 @@ assignees: ''
 - to
 - reproduce
 
-## Your system charateristics
+## Environment
 
+- Domain: 
+- Mainnet or Testnet: 
 - Browser: 
 - OS: 
-- Mainnet or Testnet:
 
 ## Does this affect atomic swap flow?
 
@@ -37,10 +35,3 @@ assignees: ''
 
 - [ ] yes
 - [ ] no
-
-## Screenshots
-
-... You can use Ctrl+V to place screenshots right into GitHub issue ...
-
-
-## Additional info
