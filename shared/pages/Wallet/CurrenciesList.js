@@ -39,8 +39,7 @@ const CurrenciesList = ({
       <p styleName="yourAssetsDescr">
         <FormattedMessage
           id="YourAssetsDescription"
-          defaultMessage="Здесь вы можете безопасно хранить и быстро обменивать Bitcoin, Ethereum, {br} USDT и многочисленные токены ERC-20."
-          values={{ br: <br /> }}
+          defaultMessage="Here you can safely store, quickly send and receive assets"
         />
       </p>
       <Table
