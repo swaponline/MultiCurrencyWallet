@@ -1041,10 +1041,7 @@
   },
   {
     "id": "Delen",
-    "message": "Share Twitter",
-    "files": [
-      "shared/pages/Swap/Share/Share.js"
-    ]
+    "message": "Share Twitter"
   },
   {
     "id": "UsdrToEthToken106",
@@ -1646,10 +1643,7 @@
   },
   {
     "id": "HOEVEELHEID",
-    "message": "Exchange",
-    "files": [
-      "shared/components/modals/OfferModal/ConfirmOffer/Amounts/Amounts.js"
-    ]
+    "message": "Exchange"
   },
   {
     "id": "fee9",
@@ -1907,10 +1901,7 @@
   },
   {
     "id": "Ontvangen",
-    "message": "Ontvangen",
-    "files": [
-      "shared/components/modals/ReceiveModal/ReceiveModal.js"
-    ]
+    "message": "Ontvangen"
   },
   {
     "id": "ShMoreCoins",
@@ -4999,10 +4990,7 @@
   },
   {
     "id": "Terug",
-    "message": "Terug",
-    "files": [
-      "shared/components/TourWindow/index.js"
-    ]
+    "message": "Terug"
   },
   {
     "id": "closeTourWindow",
@@ -8109,6 +8097,34 @@
     "message": "Please backup your wallet",
     "files": [
       "shared/pages/Wallet/components/WallerSlider/index.js"
+    ]
+  },
+  {
+    "id": "amount",
+    "message": "Exchange",
+    "files": [
+      "shared/components/modals/OfferModal/ConfirmOffer/Amounts/Amounts.js"
+    ]
+  },
+  {
+    "id": "Receive",
+    "message": "Receive",
+    "files": [
+      "shared/components/modals/ReceiveModal/ReceiveModal.js"
+    ]
+  },
+  {
+    "id": "back",
+    "message": "Назад",
+    "files": [
+      "shared/components/TourWindow/index.js"
+    ]
+  },
+  {
+    "id": "Share",
+    "message": "Share Twitter",
+    "files": [
+      "shared/pages/Swap/Share/Share.js"
     ]
   }
 ]
