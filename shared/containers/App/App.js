@@ -317,41 +317,34 @@ export default class App extends React.Component {
     }
 
     if (multiTabs) {
-      return <PreventMultiTabs onSwitchTab={this.handleSwitchTab} />;
+      return <PreventMultiTabs onSwitchTab={this.handleSwitchTab} />
     }
 
     if (isFetching) {
-      return <Loader />;
+      return <Loader />
     }
 
-    const mainContent =
-      (isWidget || isCalledFromIframe) && !isWidgetBuild ? (
-        <Fragment>
-          {children}
-          <Core />
-          <RequestLoader />
-          {!dashboardModalsAllowed && <ModalConductor history={history} />}
-          <NotificationConductor history={history} />
-        </Fragment>
-      ) : (
-        <div styleName="compressor">
-          <Seo location={history.location} />
-          <Wrapper>
-            <WidthContainer id="swapComponentWrapper" styleName="headerAndMain">
-              <Header />
-              <main>{children}</main>
-            </WidthContainer>
-          </Wrapper>
-          <Core />
-          <Footer />
-          <RequestLoader />
-          {!dashboardModalsAllowed &&
-            <ModalConductor history={history}
-          />}
-          <NotificationConductor history={history} />
-        </div>
-      );
+    const isSeoDisabled = isWidget || isWidgetBuild || isCalledFromIframe
 
-    return <HashRouter>{mainContent}</HashRouter>;
+    return <HashRouter>
+      <div styleName="compressor">
+        {!isSeoDisabled &&
+          <Seo location={history.location} />
+        }
+        <Wrapper>
+          <WidthContainer id="swapComponentWrapper" styleName="headerAndMain">
+            <Header />
+            <main>{children}</main>
+          </WidthContainer>
+        </Wrapper>
+        <Core />
+        <Footer />
+        <RequestLoader />
+        {!dashboardModalsAllowed &&
+          <ModalConductor history={history}
+        />}
+        <NotificationConductor history={history} />
+      </div>
+    </HashRouter>;
   }
 }
