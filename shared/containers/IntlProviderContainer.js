@@ -36,7 +36,6 @@ export default class IntlProviderContainer extends Component {
           render={props => {
             let currentLocale = defaultLocale()
             if (props.match.params.locale !== undefined) {
-              console.log("123", props.match.params.locale)
               currentLocale = props.match.params.locale
             } else {
               lang = getCookie('mylang') || 'en'
@@ -45,8 +44,6 @@ export default class IntlProviderContainer extends Component {
             }
 
             const messages = translations[currentLocale]
-
-            console.log({ messages, currentLocale })
 
             return (
               <IntlProvider {...props} key={currentLocale} locale={currentLocale} defaultLocale={defaultLocale()} messages={messages}>
