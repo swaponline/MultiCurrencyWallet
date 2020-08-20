@@ -26,7 +26,7 @@
   },
   {
     "id": "menu.wallet",
-    "message": "Wallet",
+    "message": "Portefeuille",
     "files": [
       "shared/components/Header/config.js"
     ]
@@ -549,7 +549,7 @@
   },
   {
     "id": "RowHistory91",
-    "message": "Link to the swap",
+    "message": "Link naar de ruil",
     "files": [
       "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
     ]
@@ -560,25 +560,25 @@
   },
   {
     "id": "RowHistory95",
-    "message": "Link to the swap"
+    "message": "Link naar de ruil"
   },
   {
     "id": "SwapHisrory21",
-    "message": "Swaps history",
+    "message": "Verwisselt geschiedenis",
     "files": [
       "shared/pages/History/SwapsHistory/SwapsHistory.js"
     ]
   },
   {
     "id": "MyOrders23",
-    "message": "Your offers",
+    "message": "Uw aanbiedingen",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
   },
   {
     "id": "RowFeeds64",
-    "message": "Copied",
+    "message": "Gekopieerd",
     "files": [
       "shared/pages/Home/Orders/MyOrders/RowFeeds/RowFeeds.js"
     ]
@@ -615,7 +615,7 @@
   },
   {
     "id": "RowMFeed69",
-    "message": "Copied"
+    "message": "Gekopieerd"
   },
   {
     "id": "Home153",
@@ -1470,7 +1470,7 @@
   },
   {
     "id": "Status61",
-    "message": "Status"
+    "message": "Toestand"
   },
   {
     "id": "SwapHisrory14",
@@ -1482,11 +1482,11 @@
   },
   {
     "id": "SwapHisrory16",
-    "message": "You buy"
+    "message": "Je koopt"
   },
   {
     "id": "SwapHisrory17",
-    "message": "You sell"
+    "message": "Jij verkoopt"
   },
   {
     "id": "SwapHisrory18",
@@ -1498,11 +1498,11 @@
   },
   {
     "id": "SwapHisrory211",
-    "message": "Lock time"
+    "message": "Vergrendel tijd"
   },
   {
     "id": "SwapHisrory22",
-    "message": "Link"
+    "message": "Koppeling"
   },
   {
     "id": "MyOrders19",
@@ -1608,7 +1608,7 @@
   },
   {
     "id": "Table96",
-    "message": "Loading... ",
+    "message": "Lading... ",
     "files": [
       "shared/components/tables/Table/Table.js"
     ]
@@ -1668,7 +1668,7 @@
   },
   {
     "id": "RowHistory94",
-    "message": "Finished",
+    "message": "Afgewerkt",
     "files": [
       "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
     ]
@@ -2389,7 +2389,7 @@
   },
   {
     "id": "orders159",
-    "message": "{currency} offers",
+    "message": "{currency} aanbiedingen",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
@@ -2425,7 +2425,7 @@
   },
   {
     "id": "orders186",
-    "message": "{currency} offers"
+    "message": "{currency} aanbiedingen"
   },
   {
     "id": "CurrencyButton41",
@@ -2477,7 +2477,7 @@
   },
   {
     "id": "currencyWallet28",
-    "message": "Status"
+    "message": "Toestand"
   },
   {
     "id": "currencyWallet29",
@@ -2674,7 +2674,7 @@
   },
   {
     "id": "RowWallet282",
-    "message": "No connection...",
+    "message": "Geen verbinding...",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
@@ -2763,7 +2763,7 @@
   },
   {
     "id": "OrdersWidgetModeShowWallet",
-    "message": "Wallet"
+    "message": "Portefeuille"
   },
   {
     "id": "swapFinishedGoHome",
@@ -2870,7 +2870,7 @@
   },
   {
     "id": "FeeControler48",
-    "message": "Copied",
+    "message": "Gekopieerd",
     "files": [
       "shared/pages/Swap/FeeControler/FeeControler.js"
     ]
@@ -3643,7 +3643,7 @@
   },
   {
     "id": "FooterOurProductsWallet",
-    "message": "Wallet",
+    "message": "Portefeuille",
     "files": [
       "shared/components/Footer/Links/Links.js"
     ]
@@ -4301,7 +4301,7 @@
   },
   {
     "id": "BTCMS_CreateWalletLoading",
-    "message": "Loading... Please wait",
+    "message": "Lading... Wacht alsjeblieft",
     "files": [
       "shared/pages/Multisign/Btc/Btc.js"
     ]
@@ -5054,7 +5054,7 @@
   },
   {
     "id": "partial1021",
-    "message": "Embed on website",
+    "message": "Insluiten op website",
     "files": [
       "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
@@ -5062,7 +5062,7 @@
   },
   {
     "id": "partial2378",
-    "message": "Wallet",
+    "message": "Portefeuille",
     "files": [
       "shared/pages/PointOfSell/PointOfSell.js"
     ]
@@ -5119,7 +5119,7 @@
   },
   {
     "id": "addAsset",
-    "message": "Add currency",
+    "message": "Valuta toevoegen",
     "files": [
       "shared/pages/Wallet/CurrenciesList.js"
     ]
@@ -5384,7 +5384,7 @@
   },
   {
     "id": "WalletPage_Heading",
-    "message": "Wallet"
+    "message": "Portefeuille"
   },
   {
     "id": "WalletPage_ImportKeys",
@@ -6014,7 +6014,7 @@
   },
   {
     "id": "registerSMSModalInstCopied",
-    "message": "Copied",
+    "message": "Gekopieerd",
     "files": [
       "shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.js"
     ]
@@ -6313,7 +6313,7 @@
   },
   {
     "id": "History_Nav_InvoicesTab",
-    "message": "Requests"
+    "message": "Verzoeken"
   },
   {
     "id": "InvoicesView_MetaDescription",
@@ -6359,7 +6359,7 @@
   },
   {
     "id": "InvoicesList_NavTitle_All",
-    "message": "Requests",
+    "message": "Verzoeken",
     "files": [
       "shared/pages/Invoices/InvoicesList/index.js"
     ]
@@ -6485,7 +6485,7 @@
   },
   {
     "id": "InvoicesNav",
-    "message": "Requests"
+    "message": "Verzoeken"
   },
   {
     "id": "WalletPage_Widget_RestoreMnemonic",
@@ -6624,7 +6624,7 @@
   },
   {
     "id": "InfoPay_StatusReadyHeader",
-    "message": "Status",
+    "message": "Toestand",
     "files": [
       "shared/pages/Transaction/TxInfo/index.js"
     ]
@@ -6974,7 +6974,7 @@
   },
   {
     "id": "RegisterPINProtectedBTC_Instruction_Copy",
-    "message": "Copied",
+    "message": "Gekopieerd",
     "files": [
       "shared/components/modals/RegisterPINProtected/RegisterPINProtected.js"
     ]
