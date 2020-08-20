@@ -88,9 +88,10 @@
 
 .notification {
   width: 100%;
-  display: flex;
+  display: block;
   justify-content: center;
   font-size: 16px;
+  text-align: center;
 }
 
 .button-overlay {

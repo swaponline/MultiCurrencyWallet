@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import { withRouter } from 'react-router'
 import CSSModules from 'react-css-modules'
-import { defineMessages, injectIntl } from 'react-intl'
+import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 
 import actions from 'redux/actions'
 import { constants, links } from 'helpers'
@@ -77,6 +77,9 @@ export default class AlertWindow extends Component {
         message,
         actionType,
         canClose,
+        ethFee,
+        amount,
+        isSellToken,
       },
       intl,
     } = this.props
@@ -97,7 +100,19 @@ export default class AlertWindow extends Component {
           </div>
           <div styleName="content">
             <div styleName="notification-overlay">
-              <p styleName="notification">{message}</p>
+              <p styleName="notification">
+                {message}
+                <br />
+                {isSellToken && (
+                  <FormattedMessage
+                    id="Swap_NeedEthFee"
+                    defaultMessage="На вашем балансе должно быть не менее {ethFee} ETH для оплаты коммисии майнера"
+                    values={{
+                      ethFee,
+                    }}
+                  />
+                )}
+              </p>
             </div>
             <div styleName="button-overlay">
               <Button styleName="button" gray onClick={this.handleClose}>{labels.actionLabel}</Button>

@@ -140,7 +140,7 @@ export default class Row extends Component {
     return (balance >= 0.005)
   }
 
-  sendRequest = (orderId, currency) => {
+  sendRequest = async (orderId, currency) => {
     const {
       row: {
         id,
@@ -158,7 +158,38 @@ export default class Row extends Component {
 
     const { address, balance } = actions.core.getWallet({ currency: buyCurrency })
 
-    if (sellCurrency === "BTC" && balance < buyAmount) {
+    let checkAmount = buyAmount
+
+    const ethFee = BigNumber(
+      await helpers.eth.estimateFeeValue({ method: 'swap' })
+    ).multipliedBy(1.5).toNumber()
+
+    if (buyCurrency === 'ETH') {
+      checkAmount = BigNumber(checkAmount).plus(ethFee).toNumber()
+      console.log('checkAmount', checkAmount, 'ethFee', ethFee)
+    }
+
+    let ethBalanceOk = true
+    const isBuyToken = helpers.ethToken.isEthToken( { name: buyCurrency } )
+    const isSellToken = helpers.ethToken.isEthToken( { name: sellCurrency } )
+    const { balance: ethBalance }  = actions.core.getWallet({ currency: 'ETH' })
+
+    let balanceIsOk = true
+    if (
+      isSellToken
+      && (
+        balance < checkAmount
+        || ethBalance < ethFee
+      )
+    ) balanceIsOk = false
+
+    console.log('ethBalance', ethBalance, sellCurrency, buyCurrency, isBuyToken, isSellToken)
+    if (sellCurrency === 'BTC'
+      && !isSellToken
+      && balance < checkAmount
+    ) balanceIsOk = false
+
+    if (!balanceIsOk) {
       actions.modals.open(constants.modals.AlertWindow, {
         title: <FormattedMessage
           id="AlertOrderNonEnoughtBalanceTitle"
@@ -172,6 +203,9 @@ export default class Row extends Component {
         ),
         canClose: true,
         currency: buyCurrency,
+        amount: checkAmount,
+        ethFee,
+        isSellToken,
         address,
         actionType: 'deposit',
       })
