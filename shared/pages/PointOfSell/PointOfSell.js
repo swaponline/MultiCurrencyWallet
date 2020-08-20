@@ -68,7 +68,7 @@ const text = [
 const subTitle = (sell, sellTicker, buy, buyTicker) => (
   <div>
     <FormattedMessage
-      id="ExchangeTitleTag1"
+      id="ExchangeTitleTag1_point_of_sell"
       defaultMessage="Fastest cross-chain exchange powered by Atomic Swap"
       values={{ full_name1: sell, ticker_name1: sellTicker, full_name2: buy, ticker_name2: buyTicker }}
     />
@@ -862,7 +862,7 @@ export default class Exchange extends Component {
       if (getCurrency === 'ghost') return true
     }
 
-    
+
     if (haveCurrency === 'ghost') {
       // eth-btc
       if (getCurrency === 'eth') return true
@@ -1107,7 +1107,7 @@ export default class Exchange extends Component {
         <div styleName={isSingleForm ? 'formExchange_widgetBuild' : `formExchange ${isWidget ? 'widgetFormExchange' : ''}`} className={isWidget ? 'formExchange' : ''} >
           {desclineOrders.length ?
             <h5 role="presentation" styleName="informAbt" onClick={this.handleShowIncomplete}>
-              <FormattedMessage id="continueDeclined977" defaultMessage="Click here to continue your swaps" />
+              <FormattedMessage id="continueDeclined977_point_of_sell" defaultMessage="Click here to continue your swaps" />
             </h5>
             : <span />
           }

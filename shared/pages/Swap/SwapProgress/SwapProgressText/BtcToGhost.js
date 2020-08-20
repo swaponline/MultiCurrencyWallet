@@ -25,23 +25,23 @@ export default class BtcToGhost extends Component {
         )
       case 4:
         return (
-          <FormattedMessage id="SwapProgress111" defaultMessage="Creating Bitcoin Script.{br}It can take a few minutes" values={{ br: <br /> }} />
+          <FormattedMessage id="SwapProgress111_BTC_GHOST" defaultMessage="Creating Bitcoin Script.{br}It can take a few minutes" values={{ br: <br /> }} />
         )
       case 5:
         return (
-          <FormattedMessage id="SwapProgress117" defaultMessage="Your BTC are now depositing. It may require one confirmation from Bitcoin Network. Waiting for other participant to deposit GHOST." />
+          <FormattedMessage id="SwapProgress117_BTC_GHOST" defaultMessage="Your BTC are now depositing. It may require one confirmation from Bitcoin Network. Waiting for other participant to deposit GHOST." />
         )
       case 6:
         return (
-          <FormattedMessage id="SwapProgress123" defaultMessage="GHOST Contract created and charged. Requesting withdrawal from GHOST Contract." />
+          <FormattedMessage id="SwapProgress123_BTC_GHOST" defaultMessage="GHOST Contract created and charged. Requesting withdrawal from GHOST Contract." />
         )
       case 7:
-        return  (
-          <FormattedMessage id="SwapProgress129" defaultMessage="GHOST was transferred to your wallet. Check the balance." />
+        return (
+          <FormattedMessage id="SwapProgress129_BTC_GHOST" defaultMessage="GHOST was transferred to your wallet. Check the balance." />
         )
       case 8:
         return (
-          <FormattedMessage id="SwapProgress135" defaultMessage="Thank you for using Swap.Onlinde!" />
+          <FormattedMessage id="SwapProgress135_BTC_GHOST" defaultMessage="Thank you for using Swap.Onlinde!" />
         )
       default:
         return null
