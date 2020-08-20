@@ -7,6 +7,7 @@ labels: ''
 assignees: ''
 
 ---
+<!-- Please use English -->
 
 1.  Job. What we need to do in order to implement this feature. Steps
 
