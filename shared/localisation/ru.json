@@ -8182,5 +8182,26 @@
     "files": [
       "shared/pages/Wallet/components/WallerSlider/index.js"
     ]
+  },
+  {
+    "id": "SwitchLangNL",
+    "message": "NL",
+    "files": [
+      "shared/components/Footer/SwitchLang/SwitchLang.js"
+    ]
+  },
+  {
+    "id": "Swap_NeedEthFee",
+    "message": "На вашем балансе должно быть не менее {ethFee} ETH для оплаты коммисии майнера",
+    "files": [
+      "shared/components/modals/AlertWindow/index.js"
+    ]
+  },
+  {
+    "id": "Swap_NeedMoreAmount",
+    "message": "На вашем балансе должно быть не менее {amount} {currency}. {br}Коммисия майнера {ethFee} ETH",
+    "files": [
+      "shared/components/modals/AlertWindow/index.js"
+    ]
   }
 ]

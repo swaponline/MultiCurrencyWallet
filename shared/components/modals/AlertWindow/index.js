@@ -80,6 +80,7 @@ export default class AlertWindow extends Component {
         ethFee,
         amount,
         isSellToken,
+        currency,
       },
       intl,
     } = this.props
@@ -109,6 +110,18 @@ export default class AlertWindow extends Component {
                     defaultMessage="На вашем балансе должно быть не менее {ethFee} ETH для оплаты коммисии майнера"
                     values={{
                       ethFee,
+                    }}
+                  />
+                )}
+                {!isSellToken && (
+                  <FormattedMessage
+                    id="Swap_NeedMoreAmount"
+                    defaultMessage="На вашем балансе должно быть не менее {amount} {currency}. {br}Коммисия майнера {ethFee} ETH"
+                    values={{
+                      amount,
+                      currency,
+                      ethFee,
+                      br: <br />,
                     }}
                   />
                 )}

@@ -8110,5 +8110,26 @@
     "files": [
       "shared/pages/Wallet/components/WallerSlider/index.js"
     ]
+  },
+  {
+    "id": "SwitchLangNL",
+    "message": "NL",
+    "files": [
+      "shared/components/Footer/SwitchLang/SwitchLang.js"
+    ]
+  },
+  {
+    "id": "Swap_NeedEthFee",
+    "message": "You must have at least {ethFee} ETH on your balance to pay the miner commission",
+    "files": [
+      "shared/components/modals/AlertWindow/index.js"
+    ]
+  },
+  {
+    "id": "Swap_NeedMoreAmount",
+    "message": "You must have at least {amount} {currency} on your balance. {br} Miner commission {ethFee} ETH",
+    "files": [
+      "shared/components/modals/AlertWindow/index.js"
+    ]
   }
 ]

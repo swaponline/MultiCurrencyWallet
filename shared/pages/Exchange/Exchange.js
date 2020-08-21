@@ -460,13 +460,42 @@ export default class Exchange extends Component {
 
   handleGoTrade = async () => {
     const { decline, usersData } = this.props;
-    const { haveCurrency, destinationSelected, haveAmount } = this.state;
+    const { haveCurrency, destinationSelected, haveAmount, getCurrency } = this.state;
 
     const haveCur = haveCurrency.toUpperCase()
-    const { balance, address } = usersData.find(({ currency }) => currency === haveCur)
+    const { address, balance } = actions.core.getWallet({ currency: haveCurrency })
+
+    let checkAmount = haveAmount
+
+    const ethFee = BigNumber(
+      await helpers.eth.estimateFeeValue({ method: 'swap' })
+    ).multipliedBy(1.5).toNumber()
+
+    if (haveCur === 'ETH') {
+      checkAmount = BigNumber(checkAmount).plus(ethFee).toNumber()
+    }
+
+    let ethBalanceOk = true
+
+    const isSellToken = helpers.ethToken.isEthToken( { name: getCurrency } )
+    const { balance: ethBalance }  = actions.core.getWallet({ currency: 'ETH' })
+
+    let balanceIsOk = true
+    if (
+      isSellToken
+      && (
+        balance < checkAmount
+        || ethBalance < ethFee
+      )
+    ) balanceIsOk = false
 
 
-    if (haveCur.toUpperCase() !== "BTC" && balance < haveAmount) {
+    if (getCurrency.toUpperCase() === 'BTC'
+      && !isSellToken
+      && balance < checkAmount
+    ) balanceIsOk = false
+
+    if (!balanceIsOk) {
       const hiddenCoinsList = await actions.core.getHiddenCoins()
       const isDidntActivateWallet = hiddenCoinsList.find(el => haveCur.toUpperCase() === el.toUpperCase())
 
@@ -484,6 +513,9 @@ export default class Exchange extends Component {
         address,
         actionType: !isDidntActivateWallet ? "deposit" : "createWallet",
         canClose: true,
+        amount: checkAmount,
+        ethFee,
+        isSellToken,
         message: !isDidntActivateWallet ?
           <FormattedMessage
             id="AlertOrderNonEnoughtBalance"

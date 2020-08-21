@@ -8115,7 +8115,7 @@
   },
   {
     "id": "back",
-    "message": "Назад",
+    "message": "Back",
     "files": [
       "shared/components/TourWindow/index.js"
     ]
@@ -8125,6 +8125,27 @@
     "message": "Share Twitter",
     "files": [
       "shared/pages/Swap/Share/Share.js"
+    ]
+  },
+  {
+    "id": "SwitchLangNL",
+    "message": "NL",
+    "files": [
+      "shared/components/Footer/SwitchLang/SwitchLang.js"
+    ]
+  },
+  {
+    "id": "Swap_NeedEthFee",
+    "message": "U moet ten minste {ethFee} ETH op uw saldo hebben om de mijnwerkerscommissie te betalen",
+    "files": [
+      "shared/components/modals/AlertWindow/index.js"
+    ]
+  },
+  {
+    "id": "Swap_NeedMoreAmount",
+    "message": "Je saldo moet minimaal {amount} {currency} hebben. {br} Mijnwerkerscommissie {ethFee} ETH",
+    "files": [
+      "shared/components/modals/AlertWindow/index.js"
     ]
   }
 ]
