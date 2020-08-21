@@ -13,32 +13,32 @@ export default class EthToGhost extends Component {
     switch (step) {
       case 1:
         return (
-          <FormattedMessage id="ethToBtcText26" defaultMessage="Confirmation processing" />
+          <FormattedMessage id="ethToBtcText26_eth_to_ghost" defaultMessage="Confirmation processing" />
         )
       case 2:
         return (
-          <FormattedMessage id="ethToBtcText20" defaultMessage="Waiting for GHOST Owner to create Secret Key, create GHOST Script and charge it" />
+          <FormattedMessage id="ethToBtcText20_eth_to_ghost" defaultMessage="Waiting for GHOST Owner to create Secret Key, create GHOST Script and charge it" />
         )
       case 3:
         return (
-          <FormattedMessage id="ethToBtcText25" defaultMessage="The GHOST Script was created and charged. Check the information below" />
+          <FormattedMessage id="ethToBtcText25_eth_to_ghost" defaultMessage="The GHOST Script was created and charged. Check the information below" />
         )
       case 4:
         return (
-          <FormattedMessage id="ethToBtcText28" defaultMessage="Checking balance.." />
+          <FormattedMessage id="ethToBtcText28_eth_to_ghost" defaultMessage="Checking balance.." />
         )
       case 5:
         return (
-          <FormattedMessage id="ethToBtcText32" defaultMessage="Creating Ethereum Contract.{br}It can take a few minutes" values={{ br: <br /> }} />
+          <FormattedMessage id="ethToBtcText32_eth_to_ghost" defaultMessage="Creating Ethereum Contract.{br}It can take a few minutes" values={{ br: <br /> }} />
         )
       case 6:
         return (
-          <FormattedMessage id="ethToBtcText36" defaultMessage="Waiting for GHOST Owner to add a Secret Key to ETH Contact" />
+          <FormattedMessage id="ethToBtcText36_eth_to_ghost" defaultMessage="Waiting for GHOST Owner to add a Secret Key to ETH Contact" />
         )
       case 7:
         return (
           <FormattedMessage
-            id="ethToBtcText40"
+            id="ethToBtcText40_eth_to_ghost"
             // eslint-disable
             defaultMessage="The funds from ETH contract was successfully transferred to GHOST owner.
               GHOST owner left a secret key. Requesting withdrawal from GHOST script."
@@ -47,11 +47,11 @@ export default class EthToGhost extends Component {
         )
       case 8:
         return (
-          <FormattedMessage id="ethToBtcText44" defaultMessage="Thank you for using Swap.Online" />
+          <FormattedMessage id="ethToBtcText44_eth_to_ghost" defaultMessage="Thank you for using Swap.Online" />
         )
       case 9:
         return (
-          <FormattedMessage id="ethToBtcText48" defaultMessage="Thank you for using Swap.Online!" />
+          <FormattedMessage id="ethToBtcText48_eth_to_ghost" defaultMessage="Thank you for using Swap.Online!" />
         )
       default:
         return null
