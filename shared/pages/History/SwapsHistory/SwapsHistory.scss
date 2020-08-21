@@ -8,6 +8,11 @@
   z-index: 1;
   position: relative;
 
+  @media all and (max-width: 767px) {
+    margin-top: 25px;
+    padding: 15px;
+  }
+
   h3 {
     color: #1F2D48;
     font-size: 24px;

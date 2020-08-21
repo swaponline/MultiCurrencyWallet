@@ -45,6 +45,7 @@
 
 .dark {
   background: #232629;
+  box-shadow: 0px 4px 16px rgba(243,243,243,0.08), 0px 1px 4px rgba(240,233,233,0.08);
 
   .historyHeading {
     color: white;
@@ -61,7 +62,7 @@
 
 @media all and (max-width: 767px) {
   .history {
-    padding: 10px;
+    padding: 15px;
     margin-top: 0;
   }
 }

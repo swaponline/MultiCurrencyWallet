@@ -1,8 +1,6 @@
 .animationLoading {
   display: block;
-  padding: 20px;
   background: #ffffff;
-  //box-shadow: 0px 4px 16px rgba(0,0,0,0.08), 0px 1px 4px rgba(0,0,0,0.08);
   border-radius: 4px;
   position: relative;
   right: 0;
@@ -36,7 +34,7 @@
 }
 
 .animationLoading.rideSideContent {
-  height: 500px;
+  font-size: 1em;
 }
 
 .animationLoading.leftSideContent {
@@ -62,15 +60,14 @@
 
 .container {
   width: 100%;
-  height: 50px;
+  height: 70px;
+  margin: 10px 0;
   position: relative;
-  margin-bottom: 55px;
 }
 
 .animationLoading.inner {
   padding: 0;
   box-shadow: none;
-  top: 60px;
   height: auto;
 }
 
@@ -127,7 +124,7 @@
   }
 
   .three {
-    bottom: 0;
+    bottom: 20px;
     height: 20px;
     width: 260px;
     left: 65px;
@@ -143,7 +140,7 @@
   }
 
   .five {
-    bottom: 0;
+    bottom: 20px;
     height: 20px;
     right: 0;
     left: auto;
@@ -151,7 +148,7 @@
   }
 
   .six {
-    bottom: -30px;
+    bottom: 9px;
     height: 1px;
     width: 100%;
     left: 0;
