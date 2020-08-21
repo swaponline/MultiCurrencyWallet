@@ -5098,7 +5098,7 @@
   },
   {
     "id": "YourAssets",
-    "message": "Uw Bezittingen",
+    "message": "Uw bezittingen",
     "files": [
       "shared/pages/Wallet/CurrenciesList.js"
     ]
@@ -5112,7 +5112,7 @@
   },
   {
     "id": "YourAssetsDescription",
-    "message": "Hier kunt u veilig en snel Bitcoin, Ethereum, USD, Tether en vele andere ERC20 tokens opslaan.",
+    "message": "Hier kunt u veilig activa opslaan, verzenden en ontvangen",
     "files": [
       "shared/pages/Wallet/CurrenciesList.js"
     ]
