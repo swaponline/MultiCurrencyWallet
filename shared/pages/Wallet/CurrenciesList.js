@@ -34,14 +34,14 @@ const CurrenciesList = ({
         ''
       )}
       <h3 styleName="yourAssetsHeading">
-        <FormattedMessage id="YourAssets" defaultMessage="Ваши валюты" />
+        <FormattedMessage id="YourAssets" defaultMessage="Your assets" />
       </h3>
-      <p styleName="yourAssetsDescr">
+      <div styleName="yourAssetsDescr">
         <FormattedMessage
           id="YourAssetsDescription"
-          defaultMessage="Here you can safely store, quickly send and receive assets"
+          defaultMessage="Here you can safely store, send and receive assets"
         />
-      </p>
+      </div>
       <Table
         className={`${styles.walletTable} data-tut-address`}
         rows={tableRows}
