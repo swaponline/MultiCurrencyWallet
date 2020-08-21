@@ -186,9 +186,17 @@ const CreateWallet = (props) => {
 
   const coins = [
     {
-      text: locale === 'en' ? 'No security' : 'Без защиты',
+      text: {
+        en: 'No security',
+        ru: 'Без защиты',
+        nl: 'Geen beveliging'
+      }[locale],
       name: 'withoutSecure',
-      capture: locale === 'en' ? 'suitable for small amounts' : 'Подходит для небольших сумм',
+      capture: {
+        en: 'suitable for small amounts',
+        ru: 'Подходит для небольших сумм',
+        nl: 'Geschikt voor kleine bedragen'
+      }[locale],
       enabled: !_activated.nothing[currencyKey],
       activated: _activated.nothing[currencyKey],
       onClickHandler: () => {
@@ -210,7 +218,11 @@ const CreateWallet = (props) => {
     {
       text: 'SMS',
       name: 'sms',
-      capture: locale === 'en' ? 'Verify your transactions via SMS code' : 'Транзакции подтверждаются кодом по SMS',
+      capture: {
+        en: 'Verify your transactions via SMS code.',
+        ru: 'Транзакции подтверждаются кодом по SMS.',
+        nl: 'Verifieer uw transacties via SMS code.'
+      }[locale],
       //enabled: _protection.sms[currencyKey],
       enabled: false, // sms temporarly disabled
       activated: _activated.sms[currencyKey],
@@ -233,7 +245,11 @@ const CreateWallet = (props) => {
     {
       text: 'PIN',
       name: 'pin',
-      capture: locale === 'en' ? 'Verify your transactions via PIN code' : 'Транзакции подтверждаются PIN-кодом',
+      capture: {
+        en: 'Verify your transactions via PIN code',
+        ru: 'Транзакции подтверждаются PIN-кодом',
+        nl: 'Verifieer uw transacties via PIN code'
+      }[locale],
       enabled: _protection.pin[currencyKey],
       activated: _activated.pin[currencyKey],
       onClickHandler: () => {
@@ -281,9 +297,11 @@ const CreateWallet = (props) => {
     {
       text: 'Multisignature',
       name: 'multisignature',
-      capture: locale === 'en' ?
-        'Verify your transactions by using another device or by another person.' :
-        'Транзакции подтверждаются с другого устройства и/или другим человеком',
+      capture: {
+        en: 'Verify your transactions by using another device or by another person.',
+        ru: 'Транзакции подтверждаются с другого устройства и/или другим человеком',
+        nl: 'Verifieer uw transacties met een ander apparaat of persoon',
+      }[locale],
       enabled: _protection.multisign[currencyKey],
       activated: _activated.multisign[currencyKey],
       onClickHandler: () => {
@@ -308,9 +326,12 @@ const CreateWallet = (props) => {
     coins.push({
       text: 'Fingerprint',
       name: 'fingerprint',
-      capture: locale === 'en' ?
-        'Transactions are confirmed with your fingerprint authenticator.' :
-        'Транзакции подтверждаются с помощью считывателя отпечатков пальцев',
+      capture: {
+        en: 'Transactions are confirmed with your fingerprint authenticator.',
+        ru: 'Транзакции подтверждаются с помощью считывателя отпечатков пальцев',
+        nl: 'Transacties bevestigd met uw vingerprint authenticator',
+      }[locale],
+
       enabled: _protection.fingerprint[currencyKey],
       activated: _activated.fingerprint[currencyKey],
       onClickHandler: () => {
