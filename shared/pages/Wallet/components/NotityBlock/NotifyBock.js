@@ -43,7 +43,7 @@ const NotifyBlock = ({
           <img src={icon} alt="" />
         </div>
         <div styleName="notifyBlockDescr">
-          <span >{descr}</span>
+          <span>{descr}</span>
           <span>{tooltip}</span>
         </div>
       </div>

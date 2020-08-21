@@ -4979,14 +4979,14 @@
   },
   {
     "id": "YourAssets",
-    "message": "Ваши валюты",
+    "message": "Your assets",
     "files": [
       "shared/pages/Wallet/CurrenciesList.js"
     ]
   },
   {
     "id": "YourAssetsDescription",
-    "message": "Here you can safely store, quickly send and receive assets",
+    "message": "Here you can safely store, send and receive assets",
     "files": [
       "shared/pages/Wallet/CurrenciesList.js"
     ]

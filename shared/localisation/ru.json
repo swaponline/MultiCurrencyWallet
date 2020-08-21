@@ -5131,7 +5131,7 @@
   },
   {
     "id": "YourAssetsDescription",
-    "message": "Здесь вы можете безопасно хранить, быстро отправлять и принимать криптовалюты",
+    "message": "Здесь вы можете безопасно хранить, отправлять и принимать криптовалюты",
     "files": [
       "shared/pages/Wallet/CurrenciesList.js"
     ]
@@ -6132,7 +6132,7 @@
   },
   {
     "id": "ForYou",
-    "message": "For you",
+    "message": "Для вас",
     "files": [
       "shared/pages/Wallet/components/WallerSlider/index.js"
     ]
