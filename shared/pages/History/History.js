@@ -18,6 +18,8 @@ import links from 'helpers/links'
 import ContentLoader from '../../components/loaders/ContentLoader/ContentLoader'
 import { isMobile } from 'react-device-detect'
 import FilterForm from 'components/FilterForm/FilterForm'
+
+import InvoicesList from 'pages/Invoices/InvoicesList'
 import SwapsHistory from 'pages/History/SwapsHistory/SwapsHistory'
 
 
@@ -185,13 +187,6 @@ export default class History extends Component {
 
     const titles = []
     const activeTab = 0
-    const tabs = [
-      {
-        key: 'ActivityAll',
-        title: <FormattedMessage id="History_Nav_ActivityTab" defaultMessage="Activity" />,
-        link: links.history,
-      }
-    ]
 
     return (
       <Fragment>
@@ -202,21 +197,6 @@ export default class History extends Component {
         {items ? (
           <div>
             <FilterForm filterValue={filterValue} onSubmit={this.handleFilter} onChange={this.handleFilterChange} resetFilter={this.resetFilter} />
-            {isMobile && config.opts.invoiceEnabled && (
-              <ul styleName="walletNav">
-                {tabs.map(({ key, title, link }, index) => (
-                  <li
-                    key={key}
-                    styleName={`walletNavItem ${activeTab === index ? 'active' : ''}`}
-                    onClick={() => this.handleNavItemClick(index)}
-                  >
-                    <a href={`#${link}`} styleName="walletNavItemLink">
-                      {title}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            )}
             <div>
               {
                 items.length > 0 && !isLoading ? (
@@ -230,8 +210,8 @@ export default class History extends Component {
                     rowRender={this.rowRender}
                   />
                 ) : (
-                    <ContentLoader rideSideContent empty={!isLoading} nonHeader />
-                  )
+                  <ContentLoader rideSideContent empty={!isLoading} nonHeader />
+                )
               }
             </div>
           </div>
@@ -242,9 +222,13 @@ export default class History extends Component {
           )
         }
       </section>
+
+      <InvoicesList onlyTable />
+
       { swapHistory.length > 0 &&
         <SwapsHistory orders={swapHistory.filter((item) => item.step >= 1)} />
       }
+
       </Fragment>
     )
   }

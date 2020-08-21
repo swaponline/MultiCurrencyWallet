@@ -67,6 +67,14 @@ export const getMenuItems = (props, isWalletCreate) => {
         icon: 'products',
         currentPageFlag: true,
       },
+      {
+        title: intl.formatMessage(messages.history),
+        link: links.history,
+        exact: true,
+        haveSubmenu: true,
+        icon: 'products',
+        currentPageFlag: true,
+      },
       !externalConfig.opts.exchangeDisabled && {
         title: intl.formatMessage(exchange),
         link: linksExchange,

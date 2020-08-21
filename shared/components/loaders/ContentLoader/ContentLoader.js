@@ -11,7 +11,6 @@ import BalanceSection from './components/BalanceSection/BalanceSection'
 import BannersSection from './components/BannersSection/BannersSection'
 
 
-
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 function ContentLoader({ empty, inner, rideSideContent, leftSideContent, banners, nonHeader }) {
@@ -30,8 +29,6 @@ function ContentLoader({ empty, inner, rideSideContent, leftSideContent, banners
               ) : ''
             }
             {!empty && !nonHeader ? <DescrSection /> : ''}
-            <ContentSection />
-            <ContentSection />
             <ContentSection />
             <ContentSection />
           </div>

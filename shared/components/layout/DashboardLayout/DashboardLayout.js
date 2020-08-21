@@ -12,7 +12,6 @@ import { isMobile } from 'react-device-detect'
 import cx from 'classnames'
 
 import Button from 'components/controls/Button/Button'
-import Tabs from 'components/Tabs/Tabs'
 import FAQ from 'components/FAQ/FAQ'
 import { ModalConductorProvider } from 'components/modal'
 
@@ -38,6 +37,7 @@ const NewDesignLayout = (props) => {
     activeView = 1
   }
   if (page === 'invoices') activeView = 2
+
 
   const isSweepReady = localStorage.getItem(
     constants.localStorage.isSweepReady
@@ -138,21 +138,6 @@ const NewDesignLayout = (props) => {
     }
   })
 
-  const handleNavItemClick = index => {
-    if (index === 1) {
-      // fetch actual tx list
-      actions.user.setTransactions()
-      actions.core.getSwapHistory()
-    }
-
-    // @ToDo Удалить
-    /*
-    this.setState({
-      activeView: index,
-    })
-    */
-  }
-
   return (
     <article className="data-tut-start-widget-tour">
       {window.CUSTOM_LOGO && (
@@ -161,7 +146,6 @@ const NewDesignLayout = (props) => {
       <section
         styleName={`wallet ${window.CUSTOM_LOGO ? 'hasCusomLogo' : ''} ${isDark ? 'dark' : ''}`}
       >
-        <Tabs onClick={handleNavItemClick} activeView={activeView} />
         <div
           className="data-tut-store"
           styleName="walletContent"
@@ -188,7 +172,6 @@ const NewDesignLayout = (props) => {
             })}
 
           >
-            {/* Sweep Banner */}
             {showSweepBanner && (
               <p styleName="sweepInfo">
                 <Button blue onClick={this.handleMakeSweep}>
@@ -205,7 +188,7 @@ const NewDesignLayout = (props) => {
                 />
               </p>
             )}
-            {/* (End) Sweep Banner */}
+
             <ModalConductorProvider>
               {children}
             </ModalConductorProvider>

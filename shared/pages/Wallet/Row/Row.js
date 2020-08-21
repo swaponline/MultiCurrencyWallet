@@ -457,15 +457,6 @@ export default class Row extends Component {
     actions.core.forgetOrders(this.props.decline[0])
   }
 
-  goToOrderBook = () => {
-    const {
-      history,
-      intl: { locale },
-      itemData: { currency },
-    } = this.props
-    history.push(localisedUrl(locale, `/${currency.toLowerCase()}-btc`))
-  }
-
   goToCurrencyHistory = () => {
     const {
       history,
@@ -710,19 +701,6 @@ export default class Row extends Component {
     if (currencyView == 'BTC (Multisig)') currencyView = 'BTC'
     if (currencyView == 'BTC (SMS-Protected)') currencyView = 'BTC'
     if (currencyView == 'BTC (PIN-Protected)') currencyView = 'BTC'
-
-    if (currencyView !== 'BTC' && !config.opts.exchangeDisabled) {
-      dropDownMenuItems.push({
-        id: 1005,
-        title: (
-          <FormattedMessage
-            id="WalletRow_Menu_Orderbook"
-            defaultMessage="Orderbook"
-          />
-        ),
-        action: this.goToOrderBook,
-      })
-    }
 
     if (
       ['BTC', 'ETH'].includes(currencyView) &&
