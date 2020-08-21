@@ -296,6 +296,18 @@ export default class Exchange extends Component {
     setTimeout(() => {
       this.setState(() => ({ isFullLoadingComplite: true }))
     }, 60 * 1000)
+
+    // actual fees
+    helpers.btc.estimateFeeValue({ method: 'swap' }).then((fee) => {
+      this.setState({
+        btcFee: BigNumber(fee).toNumber(),
+      })
+    })
+    helpers.eth.estimateFeeValue({ method: 'swap' }).then((fee) => {
+      this.setState({
+        ethFee: BigNumber(fee).multipliedBy(1.5).toNumber(),
+      })
+    })
   }
 
   rmScrollAdvice = () => {
@@ -1245,8 +1257,10 @@ export default class Exchange extends Component {
       customWallet,
       destinationError,
       isNoAnyOrders,
-      isFullLoadingComplite
-    } = this.state;
+      isFullLoadingComplite,
+      btcFee,
+      ethFee,
+    } = this.state
 
     const haveFiat = BigNumber(exHaveRate)
       .times(haveAmount)
@@ -1446,8 +1460,20 @@ export default class Exchange extends Component {
                     }}
                   />
                 </div>
-              )}
+            )}
           </div>
+          {btcFee && ethFee && (
+            <div styleName="minerFeeInfo">
+              <FormattedMessage
+                id="Exchange_MinerFees"
+                defaultMessage="Miner fee {ethFee} ETH, {btcFee} BTC"
+                values={{
+                  ethFee,
+                  btcFee,
+                }}
+              />
+            </div>
+          )}  
           {/*<div className="data-tut-status">
             {(isSearching || (isNonOffers && maxAmount === 0)) && (
               <span styleName="IsSearching">
