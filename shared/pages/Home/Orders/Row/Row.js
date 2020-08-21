@@ -164,13 +164,16 @@ export default class Row extends Component {
       await helpers.eth.estimateFeeValue({ method: 'swap' })
     ).multipliedBy(1.5).toNumber()
 
+    const btcFee = BigNumber(
+      await helpers.btc.estimateFeeValue({ method: 'swap' })
+    ).multipliedBy(1).toNumber()
+
     if (buyCurrency === 'ETH') {
       checkAmount = BigNumber(checkAmount).plus(ethFee).toNumber()
-      console.log('checkAmount', checkAmount, 'ethFee', ethFee)
     }
 
     let ethBalanceOk = true
-    const isBuyToken = helpers.ethToken.isEthToken( { name: buyCurrency } )
+
     const isSellToken = helpers.ethToken.isEthToken( { name: sellCurrency } )
     const { balance: ethBalance }  = actions.core.getWallet({ currency: 'ETH' })
 
@@ -183,7 +186,7 @@ export default class Row extends Component {
       )
     ) balanceIsOk = false
 
-    console.log('ethBalance', ethBalance, sellCurrency, buyCurrency, isBuyToken, isSellToken)
+
     if (sellCurrency === 'BTC'
       && !isSellToken
       && balance < checkAmount
@@ -205,6 +208,7 @@ export default class Row extends Component {
         currency: buyCurrency,
         amount: checkAmount,
         ethFee,
+        btcFee,
         isSellToken,
         address,
         actionType: 'deposit',

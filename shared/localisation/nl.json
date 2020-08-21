@@ -8136,14 +8136,14 @@
   },
   {
     "id": "Swap_NeedEthFee",
-    "message": "U moet ten minste {ethFee} ETH op uw saldo hebben om de mijnwerkerscommissie te betalen",
+    "message": "U moet ten minste {ethFee} ETH en {btcFee} BTC op uw saldo hebben om de mijnwerkerscommissie te betalen",
     "files": [
       "shared/components/modals/AlertWindow/index.js"
     ]
   },
   {
     "id": "Swap_NeedMoreAmount",
-    "message": "Je saldo moet minimaal {amount} {currency} hebben. {br} Mijnwerkerscommissie {ethFee} ETH",
+    "message": "Je saldo moet minimaal {amount} {currency} hebben. {br} Mijnwerkerscommissie {ethFee} ETH en {btcFee} BTC",
     "files": [
       "shared/components/modals/AlertWindow/index.js"
     ]

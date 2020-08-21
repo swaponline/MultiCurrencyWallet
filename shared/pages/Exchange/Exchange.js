@@ -471,6 +471,10 @@ export default class Exchange extends Component {
       await helpers.eth.estimateFeeValue({ method: 'swap' })
     ).multipliedBy(1.5).toNumber()
 
+    const btcFee = BigNumber(
+      await helpers.btc.estimateFeeValue({ method: 'swap' })
+    ).multipliedBy(1).toNumber()
+
     if (haveCur === 'ETH') {
       checkAmount = BigNumber(checkAmount).plus(ethFee).toNumber()
     }
@@ -515,6 +519,7 @@ export default class Exchange extends Component {
         canClose: true,
         amount: checkAmount,
         ethFee,
+        btcFee,
         isSellToken,
         message: !isDidntActivateWallet ?
           <FormattedMessage

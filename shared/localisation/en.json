@@ -8120,14 +8120,14 @@
   },
   {
     "id": "Swap_NeedEthFee",
-    "message": "You must have at least {ethFee} ETH on your balance to pay the miner commission",
+    "message": "You must have at least {ethFee} ETH and {btcFee} BTC on your balance to pay the miner commission",
     "files": [
       "shared/components/modals/AlertWindow/index.js"
     ]
   },
   {
     "id": "Swap_NeedMoreAmount",
-    "message": "You must have at least {amount} {currency} on your balance. {br} Miner commission {ethFee} ETH",
+    "message": "You must have at least {amount} {currency} on your balance. {br} Miner commission {ethFee} ETH and {btcFee} BTC",
     "files": [
       "shared/components/modals/AlertWindow/index.js"
     ]

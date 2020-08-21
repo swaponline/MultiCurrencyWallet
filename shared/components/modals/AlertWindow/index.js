@@ -78,6 +78,7 @@ export default class AlertWindow extends Component {
         actionType,
         canClose,
         ethFee,
+        btcFee,
         amount,
         isSellToken,
         currency,
@@ -107,20 +108,22 @@ export default class AlertWindow extends Component {
                 {isSellToken && (
                   <FormattedMessage
                     id="Swap_NeedEthFee"
-                    defaultMessage="На вашем балансе должно быть не менее {ethFee} ETH для оплаты коммисии майнера"
+                    defaultMessage="На вашем балансе должно быть не менее {ethFee} ETH и {btcFee} BTC для оплаты коммисии майнера"
                     values={{
                       ethFee,
+                      btcFee,
                     }}
                   />
                 )}
                 {!isSellToken && (
                   <FormattedMessage
                     id="Swap_NeedMoreAmount"
-                    defaultMessage="На вашем балансе должно быть не менее {amount} {currency}. {br}Коммисия майнера {ethFee} ETH"
+                    defaultMessage="На вашем балансе должно быть не менее {amount} {currency}. {br}Коммисия майнера {ethFee} ETH и {btcFee} BTC"
                     values={{
                       amount,
                       currency,
                       ethFee,
+                      btcFee,
                       br: <br />,
                     }}
                   />
