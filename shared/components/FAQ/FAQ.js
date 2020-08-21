@@ -76,7 +76,7 @@ const FAQ = (props) => {
               [styles.chrest]: true,
               [styles.chrest_active]: openedTabs.SECOND_TAB,
             })} />
-            <FormattedMessage id="MainFAQ2_header" defaultMessage="WHAT ARE THE FEES INVOLVED?" />
+            <FormattedMessage id="MainFAQ2_header" defaultMessage="What are the fees involved?" />
           </h6>
           <div className={cx({
             [styles.tab__content]: true,

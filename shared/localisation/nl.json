@@ -564,7 +564,7 @@
   },
   {
     "id": "SwapHisrory21",
-    "message": "Verwisselt geschiedenis",
+    "message": "Verwisselt",
     "files": [
       "shared/pages/History/SwapsHistory/SwapsHistory.js"
     ]
@@ -4849,13 +4849,6 @@
     ]
   },
   {
-    "id": "WalletRow_Menu_Orderbook",
-    "message": "Orderbook",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
-  },
-  {
     "id": "WalletRow_Menu_Invoice",
     "message": "Factuur",
     "files": [
@@ -5098,7 +5091,7 @@
   },
   {
     "id": "YourAssets",
-    "message": "Uw Bezittingen",
+    "message": "Uw bezittingen",
     "files": [
       "shared/pages/Wallet/CurrenciesList.js"
     ]
@@ -5112,7 +5105,7 @@
   },
   {
     "id": "YourAssetsDescription",
-    "message": "Hier kunt u veilig en snel Bitcoin, Ethereum, USD, Tether en vele andere ERC20 tokens opslaan.",
+    "message": "Hier kunt u veilig activa opslaan, verzenden en ontvangen",
     "files": [
       "shared/pages/Wallet/CurrenciesList.js"
     ]
@@ -6299,7 +6292,7 @@
   },
   {
     "id": "History_Activity_Title",
-    "message": "Geschiedenis",
+    "message": "Transacties",
     "files": [
       "shared/pages/History/History.js"
     ]
@@ -6359,6 +6352,13 @@
   },
   {
     "id": "InvoicesList_NavTitle_All",
+    "message": "Verzoeken",
+    "files": [
+      "shared/pages/Invoices/InvoicesList/index.js"
+    ]
+  },
+  {
+    "id": "InvoicesList_Title",
     "message": "Verzoeken",
     "files": [
       "shared/pages/Invoices/InvoicesList/index.js"

@@ -546,7 +546,7 @@
   },
   {
     "id": "SwapHisrory21",
-    "message": "Swaps history",
+    "message": "Swaps",
     "files": [
       "shared/pages/History/SwapsHistory/SwapsHistory.js"
     ]
@@ -4979,14 +4979,14 @@
   },
   {
     "id": "YourAssets",
-    "message": "Ваши валюты",
+    "message": "Your assets",
     "files": [
       "shared/pages/Wallet/CurrenciesList.js"
     ]
   },
   {
     "id": "YourAssetsDescription",
-    "message": "Here you can safely store, quickly send and receive assets",
+    "message": "Here you can safely store, send and receive assets",
     "files": [
       "shared/pages/Wallet/CurrenciesList.js"
     ]
@@ -5238,13 +5238,6 @@
   {
     "id": "WalletRow_Menu_Exchange",
     "message": "Exchange",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
-  },
-  {
-    "id": "WalletRow_Menu_Orderbook",
-    "message": "Orderbook",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
@@ -6121,7 +6114,7 @@
   },
   {
     "id": "MainFAQ2_header",
-    "message": "WHAT ARE THE FEES INVOLVED?",
+    "message": "What are the fees involved?",
     "files": [
       "shared/components/FAQ/FAQ.js"
     ]
@@ -6259,7 +6252,7 @@
   },
   {
     "id": "History_Activity_Title",
-    "message": "History",
+    "message": "Transactions",
     "files": [
       "shared/pages/History/History.js"
     ]
@@ -6319,6 +6312,13 @@
   },
   {
     "id": "InvoicesList_NavTitle_All",
+    "message": "Invoices",
+    "files": [
+      "shared/pages/Invoices/InvoicesList/index.js"
+    ]
+  },
+  {
+    "id": "InvoicesList_Title",
     "message": "Invoices",
     "files": [
       "shared/pages/Invoices/InvoicesList/index.js"
