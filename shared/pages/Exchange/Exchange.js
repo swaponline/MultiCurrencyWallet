@@ -296,6 +296,18 @@ export default class Exchange extends Component {
     setTimeout(() => {
       this.setState(() => ({ isFullLoadingComplite: true }))
     }, 60 * 1000)
+
+    // actual fees
+    helpers.btc.estimateFeeValue({ method: 'swap' }).then((fee) => {
+      this.setState({
+        btcFee: BigNumber(fee).toNumber(),
+      })
+    })
+    helpers.eth.estimateFeeValue({ method: 'swap' }).then((fee) => {
+      this.setState({
+        ethFee: BigNumber(fee).multipliedBy(1.5).toNumber(),
+      })
+    })
   }
 
   rmScrollAdvice = () => {
@@ -460,15 +472,89 @@ export default class Exchange extends Component {
 
   handleGoTrade = async () => {
     const { decline, usersData } = this.props;
-    const { haveCurrency, destinationSelected, haveAmount } = this.state;
+    const { haveCurrency, destinationSelected, haveAmount, getCurrency } = this.state;
 
     const haveCur = haveCurrency.toUpperCase()
-    const { balance, address } = usersData.find(({ currency }) => currency === haveCur)
+    const { address, balance } = actions.core.getWallet({ currency: haveCurrency })
+
+    let checkAmount = haveAmount
+
+    const ethFee = BigNumber(
+      await helpers.eth.estimateFeeValue({ method: 'swap' })
+    ).multipliedBy(1.5).toNumber()
+
+    const btcFee = BigNumber(
+      await helpers.btc.estimateFeeValue({ method: 'swap' })
+    ).multipliedBy(1).toNumber()
+
+    if (haveCur === 'ETH') {
+      checkAmount = BigNumber(checkAmount).plus(ethFee).toNumber()
+    }
+
+    let ethBalanceOk = true
+
+    const isSellToken = helpers.ethToken.isEthToken( { name: getCurrency } )
+    const { balance: ethBalance }  = actions.core.getWallet({ currency: 'ETH' })
+
+    let balanceIsOk = true
+    if (
+      isSellToken
+      && (
+        balance < checkAmount
+        || ethBalance < ethFee
+      )
+    ) balanceIsOk = false
 
 
-    if (haveCur.toUpperCase() !== "BTC" && balance < haveAmount) {
+    if (getCurrency.toUpperCase() === 'BTC'
+      && !isSellToken
+      && balance < checkAmount
+    ) balanceIsOk = false
+
+    if (!balanceIsOk) {
       const hiddenCoinsList = await actions.core.getHiddenCoins()
       const isDidntActivateWallet = hiddenCoinsList.find(el => haveCur.toUpperCase() === el.toUpperCase())
+
+      const alertMessage = (
+        <Fragment>
+          {!isDidntActivateWallet ?
+            <FormattedMessage
+              id="AlertOrderNonEnoughtBalance"
+              defaultMessage="Please top up your balance before you start the swap."
+            /> :
+            <FormattedMessage
+              id="walletDidntCreateMessage"
+              defaultMessage="Create {curr} wallet before you start the swap."
+              values={{
+                curr: haveCur
+              }}
+          />}
+          <br />
+          {isSellToken && (
+            <FormattedMessage
+              id="Swap_NeedEthFee"
+              defaultMessage="На вашем балансе должно быть не менее {ethFee} ETH и {btcFee} BTC для оплаты коммисии майнера"
+              values={{
+                ethFee,
+                btcFee,
+              }}
+            />
+          )}
+          {!isSellToken && (
+            <FormattedMessage
+              id="Swap_NeedMoreAmount"
+              defaultMessage="На вашем балансе должно быть не менее {amount} {currency}. {br}Коммисия майнера {ethFee} ETH и {btcFee} BTC"
+              values={{
+                amount: checkAmount,
+                currency: haveCur,
+                ethFee,
+                btcFee,
+                br: <br />,
+              }}
+            />
+          )}
+        </Fragment>
+      )
 
       actions.modals.open(constants.modals.AlertWindow, {
         title: !isDidntActivateWallet ?
@@ -483,18 +569,8 @@ export default class Exchange extends Component {
         currency: haveCur,
         address,
         actionType: !isDidntActivateWallet ? "deposit" : "createWallet",
-        message: !isDidntActivateWallet ?
-          <FormattedMessage
-            id="AlertOrderNonEnoughtBalance"
-            defaultMessage="Please top up your balance before you start the swap."
-          /> :
-          <FormattedMessage
-            id="walletDidntCreateMessage"
-            defaultMessage="Create {curr} wallet before you start the swap."
-            values={{
-              curr: haveCur
-            }}
-          />
+        canClose: true,
+        message: alertMessage,
       })
       return
     }
@@ -1207,8 +1283,10 @@ export default class Exchange extends Component {
       customWallet,
       destinationError,
       isNoAnyOrders,
-      isFullLoadingComplite
-    } = this.state;
+      isFullLoadingComplite,
+      btcFee,
+      ethFee,
+    } = this.state
 
     const haveFiat = BigNumber(exHaveRate)
       .times(haveAmount)
@@ -1408,8 +1486,20 @@ export default class Exchange extends Component {
                     }}
                   />
                 </div>
-              )}
+            )}
           </div>
+          {btcFee && ethFee && (
+            <div styleName="minerFeeInfo">
+              <FormattedMessage
+                id="Exchange_MinerFees"
+                defaultMessage="You will pay extra {ethFee} ETH, {btcFee} BTC as mining fee"
+                values={{
+                  ethFee,
+                  btcFee,
+                }}
+              />
+            </div>
+          )}  
           {/*<div className="data-tut-status">
             {(isSearching || (isNonOffers && maxAmount === 0)) && (
               <span styleName="IsSearching">
