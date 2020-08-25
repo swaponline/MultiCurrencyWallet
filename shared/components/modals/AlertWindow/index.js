@@ -77,11 +77,6 @@ export default class AlertWindow extends Component {
         message,
         actionType,
         canClose,
-        ethFee,
-        btcFee,
-        amount,
-        isSellToken,
-        currency,
       },
       intl,
     } = this.props
@@ -104,30 +99,6 @@ export default class AlertWindow extends Component {
             <div styleName="notification-overlay">
               <p styleName="notification">
                 {message}
-                <br />
-                {isSellToken && (
-                  <FormattedMessage
-                    id="Swap_NeedEthFee"
-                    defaultMessage="На вашем балансе должно быть не менее {ethFee} ETH и {btcFee} BTC для оплаты коммисии майнера"
-                    values={{
-                      ethFee,
-                      btcFee,
-                    }}
-                  />
-                )}
-                {!isSellToken && (
-                  <FormattedMessage
-                    id="Swap_NeedMoreAmount"
-                    defaultMessage="На вашем балансе должно быть не менее {amount} {currency}. {br}Коммисия майнера {ethFee} ETH и {btcFee} BTC"
-                    values={{
-                      amount,
-                      currency,
-                      ethFee,
-                      btcFee,
-                      br: <br />,
-                    }}
-                  />
-                )}
               </p>
             </div>
             <div styleName="button-overlay">

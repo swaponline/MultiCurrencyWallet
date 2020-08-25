@@ -193,23 +193,46 @@ export default class Row extends Component {
     ) balanceIsOk = false
 
     if (!balanceIsOk) {
+      const alertMessage = (
+        <Fragment>
+          <FormattedMessage
+            id="AlertOrderNonEnoughtBalance"
+            defaultMessage="Please top up your balance before you start the swap."
+          />
+          <br />
+          {isSellToken && (
+            <FormattedMessage
+              id="Swap_NeedEthFee"
+              defaultMessage="На вашем балансе должно быть не менее {ethFee} ETH и {btcFee} BTC для оплаты коммисии майнера"
+              values={{
+                ethFee,
+                btcFee,
+              }}
+            />
+          )}
+          {!isSellToken && (
+            <FormattedMessage
+              id="Swap_NeedMoreAmount"
+              defaultMessage="На вашем балансе должно быть не менее {amount} {currency}. {br}Коммисия майнера {ethFee} ETH и {btcFee} BTC"
+              values={{
+                amount: checkAmount,
+                currency: buyCurrency,
+                ethFee,
+                btcFee,
+                br: <br />,
+              }}
+            />
+          )}
+        </Fragment>
+      )
       actions.modals.open(constants.modals.AlertWindow, {
         title: <FormattedMessage
           id="AlertOrderNonEnoughtBalanceTitle"
           defaultMessage="Not enough balance."
         />,
-        message: (
-          <FormattedMessage
-            id="AlertOrderNonEnoughtBalance"
-            defaultMessage="Please top up your balance before you start the swap."
-          />
-        ),
+        message: alertMessage,
         canClose: true,
         currency: buyCurrency,
-        amount: checkAmount,
-        ethFee,
-        btcFee,
-        isSellToken,
         address,
         actionType: 'deposit',
       })

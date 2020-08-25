@@ -515,6 +515,47 @@ export default class Exchange extends Component {
       const hiddenCoinsList = await actions.core.getHiddenCoins()
       const isDidntActivateWallet = hiddenCoinsList.find(el => haveCur.toUpperCase() === el.toUpperCase())
 
+      const alertMessage = (
+        <Fragment>
+          {!isDidntActivateWallet ?
+            <FormattedMessage
+              id="AlertOrderNonEnoughtBalance"
+              defaultMessage="Please top up your balance before you start the swap."
+            /> :
+            <FormattedMessage
+              id="walletDidntCreateMessage"
+              defaultMessage="Create {curr} wallet before you start the swap."
+              values={{
+                curr: haveCur
+              }}
+          />}
+          <br />
+          {isSellToken && (
+            <FormattedMessage
+              id="Swap_NeedEthFee"
+              defaultMessage="На вашем балансе должно быть не менее {ethFee} ETH и {btcFee} BTC для оплаты коммисии майнера"
+              values={{
+                ethFee,
+                btcFee,
+              }}
+            />
+          )}
+          {!isSellToken && (
+            <FormattedMessage
+              id="Swap_NeedMoreAmount"
+              defaultMessage="На вашем балансе должно быть не менее {amount} {currency}. {br}Коммисия майнера {ethFee} ETH и {btcFee} BTC"
+              values={{
+                amount: checkAmount,
+                currency: haveCur,
+                ethFee,
+                btcFee,
+                br: <br />,
+              }}
+            />
+          )}
+        </Fragment>
+      )
+
       actions.modals.open(constants.modals.AlertWindow, {
         title: !isDidntActivateWallet ?
           <FormattedMessage
@@ -529,22 +570,7 @@ export default class Exchange extends Component {
         address,
         actionType: !isDidntActivateWallet ? "deposit" : "createWallet",
         canClose: true,
-        amount: checkAmount,
-        ethFee,
-        btcFee,
-        isSellToken,
-        message: !isDidntActivateWallet ?
-          <FormattedMessage
-            id="AlertOrderNonEnoughtBalance"
-            defaultMessage="Please top up your balance before you start the swap."
-          /> :
-          <FormattedMessage
-            id="walletDidntCreateMessage"
-            defaultMessage="Create {curr} wallet before you start the swap."
-            values={{
-              curr: haveCur
-            }}
-          />
+        message: alertMessage,
       })
       return
     }
@@ -1466,7 +1492,7 @@ export default class Exchange extends Component {
             <div styleName="minerFeeInfo">
               <FormattedMessage
                 id="Exchange_MinerFees"
-                defaultMessage="Miner fee {ethFee} ETH, {btcFee} BTC"
+                defaultMessage="You will pay extra {ethFee} ETH, {btcFee} BTC as mining fee"
                 values={{
                   ethFee,
                   btcFee,

@@ -6299,10 +6299,7 @@
   },
   {
     "id": "History_Nav_ActivityTab",
-    "message": "Geschiedenis",
-    "files": [
-      "shared/pages/History/History.js"
-    ]
+    "message": "Geschiedenis"
   },
   {
     "id": "History_Nav_InvoicesTab",
@@ -6331,31 +6328,19 @@
   },
   {
     "id": "InvoicesList_MetaDescription",
-    "message": "Atomic Swap Wallet allows you to manage and securely exchange. Based on Multi-Sig and Atomic Swap technologies.",
-    "files": [
-      "shared/pages/Invoices/InvoicesList/index.js"
-    ]
+    "message": "Atomic Swap Wallet allows you to manage and securely exchange. Based on Multi-Sig and Atomic Swap technologies."
   },
   {
     "id": "InvoicesList_MetaTitle",
-    "message": "Invoices - Web Wallet with Atomic Swap.",
-    "files": [
-      "shared/pages/Invoices/InvoicesList/index.js"
-    ]
+    "message": "Invoices - Web Wallet with Atomic Swap."
   },
   {
     "id": "InvoicesList_NavTitle_Address",
-    "message": "Invoices {type}{br}{address}",
-    "files": [
-      "shared/pages/Invoices/InvoicesList/index.js"
-    ]
+    "message": "Invoices {type}{br}{address}"
   },
   {
     "id": "InvoicesList_NavTitle_All",
-    "message": "Verzoeken",
-    "files": [
-      "shared/pages/Invoices/InvoicesList/index.js"
-    ]
+    "message": "Verzoeken"
   },
   {
     "id": "InvoicesList_Title",
@@ -6366,10 +6351,7 @@
   },
   {
     "id": "InvoicesList_WidgetMetaTitle",
-    "message": "Invoices - Web Wallet with Atomic Swap.",
-    "files": [
-      "shared/pages/Invoices/InvoicesList/index.js"
-    ]
+    "message": "Invoices - Web Wallet with Atomic Swap."
   },
   {
     "id": "InvoiceInfoModal_ButtonShareReady",
@@ -8138,14 +8120,23 @@
     "id": "Swap_NeedEthFee",
     "message": "U moet ten minste {ethFee} ETH en {btcFee} BTC op uw saldo hebben om de mijnwerkerscommissie te betalen",
     "files": [
-      "shared/components/modals/AlertWindow/index.js"
+      "shared/pages/Exchange/Exchange.js",
+      "shared/pages/Home/Orders/Row/Row.js"
     ]
   },
   {
     "id": "Swap_NeedMoreAmount",
     "message": "Je saldo moet minimaal {amount} {currency} hebben. {br} Mijnwerkerscommissie {ethFee} ETH en {btcFee} BTC",
     "files": [
-      "shared/components/modals/AlertWindow/index.js"
+      "shared/pages/Exchange/Exchange.js",
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Exchange_MinerFees",
+    "message": "U betaalt extra {ethFee} ETH, {btcFee} BTC als mijnvergoeding",
+    "files": [
+      "shared/pages/Exchange/Exchange.js"
     ]
   }
 ]
