@@ -99,11 +99,13 @@ const externalConfig = () => {
     config.opts.curEnabled.btc = false
   }
 
-  if (window
-    && window.CUR_GHOST_DISABLED
-  ) {
+  if (window) {
     if (!config.opts.curEnabled) config.opts.curEnabled = {}
-    config.opts.curEnabled.ghost = (window.CUR_GHOST_DISABLED) ? false : true
+    if (window.CUR_GHOST_DISABLED !== undefined
+      && window.CUR_GHOST_DISABLED === false
+    ) {
+      config.opts.curEnabled.ghost = true
+    }
   }
 
   if (window
