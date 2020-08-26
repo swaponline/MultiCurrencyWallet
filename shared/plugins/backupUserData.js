@@ -102,15 +102,15 @@ const backupUserData = {
             && data.answer === `ok`
           ) {
             localStorage.setItem(lsCurrentUser, window.WPuserUid)
-            resolve(true)
+            resolve(true, true)
           } else {
-            resolve(false)
+            resolve(false, true)
           }
         }).catch((e) => {
-          resolve(false)
+          resolve(false, true)
         })
       } else {
-        resolve(false)
+        resolve(false, false)
       }
     })
   },
