@@ -75,6 +75,7 @@ const langLabels = defineMessages({
     btcMultisigSMSData,
     btcMultisigUserData,
     ethData,
+    ghostData,
   }
 }) => ({
   allCurrensies: [
@@ -82,7 +83,8 @@ const langLabels = defineMessages({
     btcData,
     btcMultisigSMSData,
     btcMultisigUserData,
-    ethData
+    ethData,
+    ghostData
   ]
 }))
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
@@ -176,6 +178,7 @@ export default class RestoryMnemonicWallet extends React.Component {
 
       const btcWallet = await actions.btc.getWalletByWords(mnemonic)
       const ethWallet = await actions.eth.getWalletByWords(mnemonic)
+      const ghostWallet = await actions.ghost.getWalletByWords(mnemonic)
 
       // clean mnemonic, if exists
       localStorage.setItem(constants.privateKeyNames.twentywords, '-')
@@ -193,6 +196,8 @@ export default class RestoryMnemonicWallet extends React.Component {
       localStorage.setItem(constants.localStorage.isWalletCreate, true)
 
       await actions.eth.login(false, mnemonic)
+
+      await actions.ghost.login(false, mnemonic)
 
       await actions.user.sign_btc_2fa(btcPrivKey)
       await actions.user.sign_btc_multisig(btcPrivKey)
