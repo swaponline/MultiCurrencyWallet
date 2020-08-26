@@ -1498,6 +1498,8 @@ export default class Exchange extends Component {
                   btcFee,
                 }}
               />
+              &nbsp;
+              <a href="https://wiki.swaponline.io/faq/why-i-pay-ming-fees-of-btc-and-eth-both-why-not-seller/" target="_blank">(?)</a>
             </div>
           )}  
           {/*<div className="data-tut-status">
