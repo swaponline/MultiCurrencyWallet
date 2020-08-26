@@ -20,6 +20,15 @@
   }
 }
 
+.minerFeeInfo {
+  text-align: center;
+  font-size: 10pt;
+  padding-bottom: 10px;
+  font-weight: bold;
+  color: #d60505;
+  font-family: 'Roboto Mono', monospace;
+}
+
 @keyframes errorAppend {
   0% {
     max-height: 0;

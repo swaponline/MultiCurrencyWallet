@@ -140,7 +140,7 @@ export default class Row extends Component {
     return (balance >= 0.005)
   }
 
-  sendRequest = (orderId, currency) => {
+  sendRequest = async (orderId, currency) => {
     const {
       row: {
         id,
@@ -158,18 +158,80 @@ export default class Row extends Component {
 
     const { address, balance } = actions.core.getWallet({ currency: buyCurrency })
 
-    if (sellCurrency === "BTC" && balance < buyAmount) {
+    let checkAmount = buyAmount
+
+    const ethFee = BigNumber(
+      await helpers.eth.estimateFeeValue({ method: 'swap' })
+    ).multipliedBy(1.5).toNumber()
+
+    const btcFee = BigNumber(
+      await helpers.btc.estimateFeeValue({ method: 'swap' })
+    ).multipliedBy(1).toNumber()
+
+    if (buyCurrency === 'ETH') {
+      checkAmount = BigNumber(checkAmount).plus(ethFee).toNumber()
+    }
+
+    let ethBalanceOk = true
+
+    const isSellToken = helpers.ethToken.isEthToken( { name: sellCurrency } )
+    const { balance: ethBalance }  = actions.core.getWallet({ currency: 'ETH' })
+
+    let balanceIsOk = true
+    if (
+      isSellToken
+      && (
+        balance < checkAmount
+        || ethBalance < ethFee
+      )
+    ) balanceIsOk = false
+
+
+    if (sellCurrency === 'BTC'
+      && !isSellToken
+      && balance < checkAmount
+    ) balanceIsOk = false
+
+    if (!balanceIsOk) {
+      const alertMessage = (
+        <Fragment>
+          <FormattedMessage
+            id="AlertOrderNonEnoughtBalance"
+            defaultMessage="Please top up your balance before you start the swap."
+          />
+          <br />
+          {isSellToken && (
+            <FormattedMessage
+              id="Swap_NeedEthFee"
+              defaultMessage="На вашем балансе должно быть не менее {ethFee} ETH и {btcFee} BTC для оплаты коммисии майнера"
+              values={{
+                ethFee,
+                btcFee,
+              }}
+            />
+          )}
+          {!isSellToken && (
+            <FormattedMessage
+              id="Swap_NeedMoreAmount"
+              defaultMessage="На вашем балансе должно быть не менее {amount} {currency}. {br}Коммисия майнера {ethFee} ETH и {btcFee} BTC"
+              values={{
+                amount: checkAmount,
+                currency: buyCurrency,
+                ethFee,
+                btcFee,
+                br: <br />,
+              }}
+            />
+          )}
+        </Fragment>
+      )
       actions.modals.open(constants.modals.AlertWindow, {
         title: <FormattedMessage
           id="AlertOrderNonEnoughtBalanceTitle"
           defaultMessage="Not enough balance."
         />,
-        message: (
-          <FormattedMessage
-            id="AlertOrderNonEnoughtBalance"
-            defaultMessage="Please top up your balance before you start the swap."
-          />
-        ),
+        message: alertMessage,
+        canClose: true,
         currency: buyCurrency,
         address,
         actionType: 'deposit',

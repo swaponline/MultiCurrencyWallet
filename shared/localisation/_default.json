@@ -6259,10 +6259,7 @@
   },
   {
     "id": "History_Nav_ActivityTab",
-    "message": "History",
-    "files": [
-      "shared/pages/History/History.js"
-    ]
+    "message": "History"
   },
   {
     "id": "History_Nav_InvoicesTab",
@@ -6291,31 +6288,19 @@
   },
   {
     "id": "InvoicesList_MetaDescription",
-    "message": "Atomic Swap Wallet allows you to manage and securely exchange. Based on Multi-Sig and Atomic Swap technologies.",
-    "files": [
-      "shared/pages/Invoices/InvoicesList/index.js"
-    ]
+    "message": "Atomic Swap Wallet allows you to manage and securely exchange. Based on Multi-Sig and Atomic Swap technologies."
   },
   {
     "id": "InvoicesList_MetaTitle",
-    "message": "Swap.Online - Invoices - Web Wallet with Atomic Swap.",
-    "files": [
-      "shared/pages/Invoices/InvoicesList/index.js"
-    ]
+    "message": "Swap.Online - Invoices - Web Wallet with Atomic Swap."
   },
   {
     "id": "InvoicesList_NavTitle_Address",
-    "message": "Invoices {type}{br}{address}",
-    "files": [
-      "shared/pages/Invoices/InvoicesList/index.js"
-    ]
+    "message": "Invoices {type}{br}{address}"
   },
   {
     "id": "InvoicesList_NavTitle_All",
-    "message": "Invoices",
-    "files": [
-      "shared/pages/Invoices/InvoicesList/index.js"
-    ]
+    "message": "Invoices"
   },
   {
     "id": "InvoicesList_Title",
@@ -6326,10 +6311,7 @@
   },
   {
     "id": "InvoicesList_WidgetMetaTitle",
-    "message": "Invoices - Web Wallet with Atomic Swap.",
-    "files": [
-      "shared/pages/Invoices/InvoicesList/index.js"
-    ]
+    "message": "Invoices - Web Wallet with Atomic Swap."
   },
   {
     "id": "Share",
@@ -8101,6 +8083,36 @@
     "message": "Please backup your wallet",
     "files": [
       "shared/pages/Wallet/components/WallerSlider/index.js"
+    ]
+  },
+  {
+    "id": "SwitchLangNL",
+    "message": "NL",
+    "files": [
+      "shared/components/Footer/SwitchLang/SwitchLang.js"
+    ]
+  },
+  {
+    "id": "Swap_NeedEthFee",
+    "message": "You must have at least {ethFee} ETH and {btcFee} BTC on your balance to pay the miner commission",
+    "files": [
+      "shared/pages/Exchange/Exchange.js",
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Swap_NeedMoreAmount",
+    "message": "You must have at least {amount} {currency} on your balance. {br} Miner commission {ethFee} ETH and {btcFee} BTC",
+    "files": [
+      "shared/pages/Exchange/Exchange.js",
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Exchange_MinerFees",
+    "message": "You will pay extra {ethFee} ETH, {btcFee} BTC as mining fee",
+    "files": [
+      "shared/pages/Exchange/Exchange.js"
     ]
   }
 ]
