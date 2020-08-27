@@ -8194,5 +8194,12 @@
     "files": [
       "shared/pages/Exchange/Exchange.js"
     ]
+  },
+  {
+    "id": "ErrorBtcMinAmount",
+    "message": "Минимальная сумма сделки {amount} {currency}",
+    "files": [
+      "shared/pages/Exchange/Exchange.js"
+    ]
   }
 ]

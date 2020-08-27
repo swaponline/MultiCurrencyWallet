@@ -299,13 +299,23 @@ export default class Exchange extends Component {
 
     // actual fees
     helpers.btc.estimateFeeValue({ method: 'swap' }).then((fee) => {
+      const {
+        estimatedFeeValues,
+      } = this.state
+
+      const btcFee = BigNumber(fee).toNumber()
       this.setState({
-        btcFee: BigNumber(fee).toNumber(),
+        btcFee,
       })
     })
     helpers.eth.estimateFeeValue({ method: 'swap' }).then((fee) => {
+      const {
+        estimatedFeeValues,
+      } = this.state
+      const ethFee = BigNumber(fee).multipliedBy(1.5).toNumber()
+
       this.setState({
-        ethFee: BigNumber(fee).multipliedBy(1.5).toNumber(),
+        ethFee,
       })
     })
   }
@@ -321,6 +331,10 @@ export default class Exchange extends Component {
     const fee = await helpers.estimateFeeValue.setEstimatedFeeValues({
       estimatedFeeValues,
     });
+
+    Object.keys(fee).forEach((coin) => {
+      fee[coin] = BigNumber(fee[coin]).multipliedBy(20).toNumber()
+    })
 
     return this.setState({
       estimatedFeeValues: fee,
@@ -1501,7 +1515,7 @@ export default class Exchange extends Component {
               &nbsp;
               <a href="https://wiki.swaponline.io/faq/why-i-pay-ming-fees-of-btc-and-eth-both-why-not-seller/" target="_blank">(?)</a>
             </div>
-          )}  
+          )}
           {/*<div className="data-tut-status">
             {(isSearching || (isNonOffers && maxAmount === 0)) && (
               <span styleName="IsSearching">
@@ -1576,18 +1590,34 @@ export default class Exchange extends Component {
             BigNumber(getAmount).isGreaterThan(0) &&
             this.state.haveAmount &&
             this.state.getAmount && (
-              <p styleName="error">
-                <FormattedMessage
-                  id="ErrorBtcLowAmount"
-                  defaultMessage="This amount is too low"
-                  values={{
-                    btcAmount:
-                      this.state.haveCurrency === "btc"
-                        ? this.state.haveAmount
-                        : this.state.getAmount,
-                  }}
-                />
-              </p>
+              <Fragment>
+                <p styleName="error">
+                  <FormattedMessage
+                    id="ErrorBtcLowAmount"
+                    defaultMessage="This amount is too low"
+                    values={{
+                      btcAmount:
+                        this.state.haveCurrency === "btc"
+                          ? this.state.haveAmount
+                          : this.state.getAmount,
+                    }}
+                  />
+                </p>
+                <p styleName="error">
+                  <FormattedMessage
+                    id="ErrorBtcMinAmount"
+                    defaultMessage="Минимальная сумма сделки {amount} {currency}"
+                    values={{
+                      amount: this.state.haveCurrency === "btc"
+                        ? estimatedFeeValues[this.state.haveCurrency.toLowerCase()]
+                        : estimatedFeeValues[this.state.getCurrency.toLowerCase()],
+                      currency: this.state.haveCurrency === "btc"
+                        ? this.state.haveCurrency.toUpperCase()
+                        : this.state.getCurrency.toUpperCase(),
+                    }}
+                  />
+                </p>
+              </Fragment>
             )}
           {BigNumber(estimatedFeeValues[haveCurrency]).isGreaterThan(0) &&
             BigNumber(haveAmount).isGreaterThan(0) &&
