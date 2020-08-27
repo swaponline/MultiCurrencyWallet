@@ -440,7 +440,7 @@ export default class WithdrawModal extends React.Component {
       data: { currency },
     } = this.props
 
-    let minFee = isEthToken ? 0 : minAmount[getCurrencyKey(currency).toLowerCase()]
+    let minFee = BigNumber(isEthToken ? 0 : minAmount[getCurrencyKey(currency).toLowerCase()])
 
     minFee = usedAdminFee ? BigNumber(minFee).plus(adminFee.calc(currency, balance)) : minFee
 
