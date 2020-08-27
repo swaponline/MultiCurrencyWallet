@@ -72,3 +72,5 @@ May, 2019 – BCH wallet launched in mainnet, ETH <> BCH swaps executed in testn
 June, 2019 – Swap.online progress presented on Malta Blockchain Conference.
 
 July, 2019 –  Swap.online progress presented on Asia Blockchain Summit.
+
+Jan, 2020 – WordPress version release
