@@ -46,3 +46,31 @@ Current
 - 👷 UTXO to UTXO atomic swap - soon
 - 👷 DeFi on bitcoin https://github.com/bitcoin/bips/blob/master/bip-0197.mediawiki
   (A Hashed Time-Locked Collateral Contract (HTLCC) consists of two scripts that permit a designated party (the "borrower") to lock funds on the Bitcoin chain for a specified amount of time as collateral in a debt agreement where the loan principal is denominated in a currency on another blockchain.)
+
+## Timeline
+
+October, 2017 – the idea of non-custodial interaction between Bitcoin and dApps is published by CEO in Facebook
+
+Q1, 2018 – first round of investment, team gathering.
+
+June, 2018 – live Beta testnet with Atomic Swaps between BTC, ETH.
+
+August, 2018 – mainnet release
+
+September, 2018 – first Atomic Swaps on EOS and USDT ever
+
+October, 2018 – first ERC-20 integrations: 45+ projects listed their tokens on Swap.online which allows to exchange them on USDT and BTC and announced the collaboration with Swap.online to their communities.
+
+November, 2018 – Telos blockchain integration.
+
+December, 2018- first B2B-implementation of the Swap.online toolkit: Saturn.black implements the exchange mechanism for XSAT tokens purchasing.
+
+February, 2019 – Swap.online starts Bitcoin integration for DEEX (BitShares gate).
+
+May, 2019 – BCH wallet launched in mainnet, ETH <> BCH swaps executed in testnet.
+
+June, 2019 – Swap.online progress presented on Malta Blockchain Conference.
+
+July, 2019 –  Swap.online progress presented on Asia Blockchain Summit.
+
+Jan, 2020 – WordPress version release
