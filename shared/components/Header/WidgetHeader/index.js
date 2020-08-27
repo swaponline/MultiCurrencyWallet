@@ -75,9 +75,13 @@ const WidgetHeaderComponent = ({ intl }) => {
   }
 
   const handleConfirm = () => {
-    actions.backupManager.serverBackup().then((backupReady) => {
+    actions.backupManager.serverBackup().then((backupReady, hasBackupPlugin) => {
       console.log('Backup ready', backupReady)
-      if (backupReady) window.localStorage.clear()
+      if (hasBackupPlugin) {
+        if (backupReady) window.localStorage.clear()
+      } else {
+        window.localStorage.clear()
+      }
       window.location = (window && window.logoutUrl) ? window.logoutUrl : '/wp-login.php?action=logout'
     })
   }
