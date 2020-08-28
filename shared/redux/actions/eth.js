@@ -319,7 +319,16 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed } 
   gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
   gasLimit = gasLimit || constants.defaultFeeRates.eth.limit.send
 
-  const privateKey = getPrivateKeyByAddress(from)
+  let privateKey = false
+  const walletData = actions.core.getWallet({
+    address: from,
+    currency: 'ETH',
+  })
+
+  console.log('walletData', walletData)
+  if (!walletData.isMetamask) {
+    privateKey = getPrivateKeyByAddress(from)
+  }
 
   return new Promise(async (resolve, reject) => {
     const params = {
@@ -329,8 +338,15 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed } 
       value: web3.utils.toWei(String(amount)),
     }
 
-    const result = await web3.eth.accounts.signTransaction(params, privateKey)
-    const receipt = web3.eth.sendSignedTransaction(result.rawTransaction)
+    let result = false
+    if (!walletData.isMetamask) {
+      console.log('sign tx')
+      result = await web3.eth.accounts.signTransaction(params, privateKey)
+    } else {
+      params.from = from
+    }
+
+    const receipt = web3.eth[walletData.isMetamask ? 'sendTransaction' : 'sendSignedTransaction'](walletData.isMetamask ? params : result.rawTransaction)
       .on('transactionHash', (hash) => {
         const txId = `${config.link.etherscan}/tx/${hash}`
         console.log('tx', txId)
@@ -351,7 +367,12 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed } 
           value: web3.utils.toWei(String(feeFromAmount)),
         }
 
-        const resultAdminFee = await web3.eth.accounts.signTransaction(adminFeeParams, privateKey)
+        let resultAdminFee = false
+        if (walletData.isMetamask) {
+          resultAdminFee = await web3.eth.accounts.signTransaction(adminFeeParams)
+        } else {
+          resultAdminFee = await web3.eth.accounts.signTransaction(adminFeeParams, privateKey)
+        }
         const receiptAdminFee = web3.eth.sendSignedTransaction(resultAdminFee.rawTransaction)
           .on('transactionHash', (hash) => {
             console.log('Eth admin fee tx', hash)

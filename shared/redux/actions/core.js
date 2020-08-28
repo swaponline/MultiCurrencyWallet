@@ -7,6 +7,8 @@ import { constants } from 'helpers'
 import Pair from 'pages/Home/Orders/Pair'
 import config from 'helpers/externalConfig'
 
+import metamask from 'helpers/metamask'
+
 
 const debug = (...args) => console.log(...args)
 
@@ -358,6 +360,8 @@ const getWallets = () => {
       ethData,
       tokensData,
       isTokenSigned,
+
+      metamaskData,
     },
   } = getState()
 
@@ -370,8 +374,8 @@ const getWallets = () => {
     },
   } = getState()
 
-
   const allData = [
+    ... (!config.opts.curEnabled || config.opts.curEnabled.eth) ? (metamaskData) ? [metamaskData] : [] : [],
     ... (!config.opts.curEnabled || config.opts.curEnabled.btc) ? (btcMnemonicData && !btcData.isMnemonic) ? [btcMnemonicData] : [] : [], // Sweep
     ... (!config.opts.curEnabled || config.opts.curEnabled.eth) ? (ethMnemonicData && !ethData.isMnemonic) ? [ethMnemonicData] : [] : [], // Sweep
     ... (!config.opts.curEnabled || config.opts.curEnabled.btc) ? [btcData] : [],

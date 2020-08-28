@@ -13,6 +13,8 @@ import { getActivatedCurrencies } from 'helpers/user'
 import getCurrencyKey from 'helpers/getCurrencyKey'
 import apiLooper from 'helpers/apiLooper'
 
+import metamask from 'helpers/metamask'
+
 
 /*
   Когда добавляем reducers, для старых пользователей они не инициализированы
@@ -173,6 +175,12 @@ const getBalances = () => {
   reducers.user.setIsBalanceFetching({ isBalanceFetching: true })
 
   return new Promise(async (resolve) => {
+    if (metamask.isEnabled()
+      && metamask.isConnected()
+    ) {
+      await metamask.getBalance()
+    }
+
     await actions.eth.getBalance()
     await actions.btc.getBalance()
     await actions.ghost.getBalance()

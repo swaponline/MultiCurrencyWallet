@@ -73,6 +73,7 @@ export const initialState = {
   activeCurrency: 'BTC',
   multisigStatus: {},
   multisigPendingCount: 0,
+  metamaskData: false,
 }
 
 export const updateMultisigStatus = (state, { address, last, total }) => {

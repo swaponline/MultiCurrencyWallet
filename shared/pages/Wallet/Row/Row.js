@@ -21,6 +21,10 @@ import { BigNumber } from 'bignumber.js'
 import dollar from '../images/dollar.svg'
 import PartOfAddress from '../components/PartOfAddress'
 
+
+import metamask from 'helpers/metamask'
+
+
 const langLabels = defineMessages({
   unconfirmedBalance: {
     id: 'RowWallet181',
@@ -104,6 +108,11 @@ export default class Row extends Component {
 
   handleReloadBalance = () => {
     const { isBalanceFetching } = this.state
+    const {
+      itemData: {
+        isMetamask,
+      }
+    } = this.props
 
     if (isBalanceFetching) {
       return null
@@ -128,10 +137,14 @@ export default class Row extends Component {
             await actions.btcmultisig.getBalancePin()
             break
           default:
-            await actions[currency.toLowerCase()].getBalance(
-              currency.toLowerCase(),
-              address
-            )
+            if (isMetamask) {
+              await metamask.getBalance()
+            } else {
+              await actions[currency.toLowerCase()].getBalance(
+                currency.toLowerCase(),
+                address
+              )
+            }
         }
 
         this.setState(() => ({
@@ -197,6 +210,10 @@ export default class Row extends Component {
         }, 500)
       }
     )
+  }
+
+  handleConnectMetamask = async () => {
+    await metamask.connect()
   }
 
   handleWithdrawPopup = () => {
@@ -702,6 +719,8 @@ export default class Row extends Component {
     if (currencyView == 'BTC (SMS-Protected)') currencyView = 'BTC'
     if (currencyView == 'BTC (PIN-Protected)') currencyView = 'BTC'
 
+
+
     if (
       ['BTC', 'ETH'].includes(currencyView) &&
       !isWidgetBuild &&
@@ -729,6 +748,22 @@ export default class Row extends Component {
         action: this.handleCreateInvoiceLink,
         disable: false,
       })
+    }
+
+    if (this.props.itemData.isMetamask
+      && !this.props.itemData.isConnected
+    ) {
+      dropDownMenuItems = [{
+        id: 1,
+        title: (
+          <FormattedMessage
+            id="WalletRow_MetamaskConnect"
+            defaultMessage="Подключить"
+          />
+        ),
+        action: this.handleConnectMetamask,
+        disable: false,
+      }]
     }
 
     let showBalance = true
