@@ -17,7 +17,6 @@ import CSSModules from "react-css-modules";
 import styles from "./Header.scss";
 
 import Nav from "./Nav/Nav";
-import SignUpButton from "./User/SignUpButton/SignUpButton";
 import NavMobile from "./NavMobile/NavMobile";
 
 import LogoTooltip from "components/Logo/LogoTooltip";
@@ -466,7 +465,6 @@ export default class Header extends Component {
             </div>
           )}
           <NavMobile menu={menuItemsMobile} isHidden={isInputActive} />
-          {!isSigned && <SignUpButton mobile />}
           {isWidgetTourOpen && isWalletPage &&
             <div styleName="walletTour">
               <WidgetWalletTour
@@ -493,7 +491,6 @@ export default class Header extends Component {
             </div>
           )}
           <NavMobile menu={menuItemsMobile} isHidden={isInputActive} />
-          {!isSigned && <SignUpButton mobile />}
           {isWidgetTourOpen && isWalletPage &&
             <div styleName="walletTour">
               <WidgetWalletTour

@@ -13,7 +13,6 @@ import Sound from 'helpers/Sound/alert.mp4'
 import Question from './Question/Question'
 import UserAvatar from './UserAvatar/UserAvatar'
 import UserTooltip from './UserTooltip/UserTooltip'
-import SignUpButton from './SignUpButton/SignUpButton'
 
 import links from 'helpers/links'
 
@@ -84,7 +83,6 @@ export default class User extends React.Component {
 
     return (
       <div styleName="user-cont">
-        {!isSigned && !isWidget && (<SignUpButton />)}
         {path && !isWidget && (<Question openTour={openTour} />)}
         {
           (!isWidget) && (
