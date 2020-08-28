@@ -3,7 +3,7 @@
 
 ## Bitplicity
 
-- __integraion__: https://wallet.bitplicity.com/#/
+- __integration__: https://wallet.bitplicity.com/#/
 - Bitplicity app: https://play.google.com/store/apps/details?id=com.Bitplicity.Bitplicityapp
 - uses only wallet
 - need registration
@@ -12,13 +12,13 @@
 
 ## SONM
 
-- __integraion__: https://sonm.com/swap-online/
+- __integration__: https://sonm.com/swap-online/
 - rank: https://www.coingecko.com/en/coins/sonm
 
 
 ## GHOST
 
-- __integraion__: https://ghostx.live/
+- __integration__: https://ghostx.live/
 - site: https://www.ghostbymcafee.com/
 - github: https://github.com/ghost-coin
 - proof: https://twitter.com/officialmcafee/status/1274757261513175045
@@ -27,8 +27,13 @@
 
 ## INSTAINBLOCKS
 
-- __integraion__: https://instainblocks.com/my-wallet/
+- __integration__: https://instainblocks.com/my-wallet/
 - creates github issues
+
+
+## Satůrn
+
+- __integration__: https://saturn.black/exchange/
 
 
 ## PayAccess
