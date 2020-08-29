@@ -14,56 +14,10 @@ const isConnected = () => metamaskProvider && metamaskProvider.selectedAddress
 
 const getAddress = () => (isConnected()) ? metamaskProvider.selectedAddress : ''
 
-const addWallet = (fetchBalance) => {
-  const {
-    user: {
-      ethData,
-    },
-  } = getState()
-
+const addWallet = () => {
+  _initReduxState()
   if (isEnabled() && isConnected()) {
-    console.log('add metamask wallet')
-    reducers.user.addWallet({
-      name: 'metamaskData',
-      data: {
-        address: getAddress(),
-        balance: 0,
-        balanceError: false,
-        isConnected: true,
-        isMetamask: true,
-        currency: "ETH",
-        fullName: "Ethereum (Metamask)",
-        infoAboutCurrency: ethData.infoAboutCurrency,
-        isBalanceFetched: true,
-        isMnemonic: true,
-        unconfirmedBalance: 0,
-      },
-    })
-    if (fetchBalance) getBalance()
-  } else {
-    if (isEnabled()) {
-      reducers.user.addWallet({
-        name: 'metamaskData',
-        data: {
-          address: 'Not connected',
-          balance: 0,
-          balanceError: false,
-          isConnected: false,
-          isMetamask: true,
-          currency: "ETH",
-          fullName: "Ethereum (Metamask)",
-          infoAboutCurrency: ethData.infoAboutCurrency,
-          isBalanceFetched: true,
-          isMnemonic: true,
-          unconfirmedBalance: 0,
-        }
-      })
-    } else {
-      reducers.user.addWallet({
-        name: 'metamaskData',
-        data: false,
-      })
-    }
+    getBalance()
   }
 }
 
@@ -97,20 +51,71 @@ const connect = () => new Promise(async (resolved, reject) => {
     setTimeout(() => {
       if (getAddress()) {
         resolved(true)
-        addWallet(true)
+        addWallet()
         setMetamask(metamaskProvider)
       } else {
-        reject(`timeout`)
         setDefaultProvider()
+        reject(`timeout`)
       }
     }, 1000)
   } else {
-    reject(`metamask not enabled`)
     setDefaultProvider()
+    reject(`metamask not enabled`)
   }
 })
 
-addWallet()
+const _initReduxState = () => {
+  const {
+    user: {
+      ethData,
+    },
+  } = getState()
+
+  if (isEnabled() && isConnected()) {
+    reducers.user.addWallet({
+      name: 'metamaskData',
+      data: {
+        address: getAddress(),
+        balance: 0,
+        balanceError: false,
+        isConnected: true,
+        isMetamask: true,
+        currency: "ETH",
+        fullName: "Ethereum (Metamask)",
+        infoAboutCurrency: ethData.infoAboutCurrency,
+        isBalanceFetched: true,
+        isMnemonic: true,
+        unconfirmedBalance: 0,
+      },
+    })
+  } else {
+    if (isEnabled()) {
+      reducers.user.addWallet({
+        name: 'metamaskData',
+        data: {
+          address: 'Not connected',
+          balance: 0,
+          balanceError: false,
+          isConnected: false,
+          isMetamask: true,
+          currency: "ETH",
+          fullName: "Ethereum (Metamask)",
+          infoAboutCurrency: ethData.infoAboutCurrency,
+          isBalanceFetched: true,
+          isMnemonic: true,
+          unconfirmedBalance: 0,
+        }
+      })
+    } else {
+      reducers.user.addWallet({
+        name: 'metamaskData',
+        data: false,
+      })
+    }
+  }
+}
+
+_initReduxState()
 if (isEnabled() && isConnected()) {
   setMetamask(metamaskProvider)
 }

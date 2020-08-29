@@ -2,6 +2,7 @@ import helpers, { apiLooper, constants, api, cacheStorageGet, cacheStorageSet } 
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import web3 from 'helpers/web3'
+import { utils as web3utils } from 'web3'
 import reducers from 'redux/core/reducers'
 import config from 'helpers/externalConfig'
 import referral from './referral'
@@ -10,6 +11,9 @@ import * as hdkey from 'ethereumjs-wallet/hdkey'
 import * as bip39 from 'bip39'
 import typeforce from 'swap.app/util/typeforce'
 import { BigNumber } from 'bignumber.js'
+
+import metamask from 'helpers/metamask'
+
 
 
 const hasAdminFee = (
@@ -343,9 +347,23 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed } 
       console.log('sign tx')
       result = await web3.eth.accounts.signTransaction(params, privateKey)
     } else {
+      
       params.from = from
+      params.gas = web3utils.toHex(params.gas)
+      params.gasPrice = web3utils.toHex(gasPrice)
+      params.value = web3utils.toHex(params.value)
+      console.log(params)
+      const transactionHash = await metamask.metamaskProvider.request({
+        method: 'eth_sendTransaction',
+        params: [ params ],
+      })
+      console.log(transactionHash)
+      resolve({ transactionHash })
+      return
     }
 
+    console.log('params', params)
+    console.log('web3', web3)
     const receipt = web3.eth[walletData.isMetamask ? 'sendTransaction' : 'sendSignedTransaction'](walletData.isMetamask ? params : result.rawTransaction)
       .on('transactionHash', (hash) => {
         const txId = `${config.link.etherscan}/tx/${hash}`
@@ -356,7 +374,9 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed } 
         reject(err)
       })
 
+      
     receipt.then(() => {
+      console.log('receipt', receipt)
       resolve(receipt)
       // Withdraw admin fee
       new Promise(async (resolve, reject) => {
