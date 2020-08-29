@@ -5996,7 +5996,7 @@
   },
   {
     "id": "ImportKeys_RestoreMnemonic",
-    "message": "I have my 12 words",
+    "message": "Enter 12 words recovery phrase",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
     ]
@@ -6152,7 +6152,7 @@
   },
   {
     "id": "MainFAQ1_content",
-    "message": "Your private keys are stored ONLY on your device, in the localStorage of your browser. Please backup your keys, because your browser or device may be crashed.",
+    "message": "Your private keys are stored ONLY on your device, in the localStorage of your browser. Please backup your keys, because your browser or device may crash.",
     "files": [
       "shared/components/FAQ/FAQ.js"
     ]
