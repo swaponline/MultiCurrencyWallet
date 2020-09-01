@@ -4,6 +4,7 @@ import actions from 'redux/actions'
 import { cacheStorageGet, cacheStorageSet } from 'helpers'
 import web3 from 'helpers/web3'
 import { setMetamask, setDefaultProvider } from 'helpers/web3'
+import SwapApp from 'swap.app'
 
 
 const metamaskProvider = (window.ethereum) || false

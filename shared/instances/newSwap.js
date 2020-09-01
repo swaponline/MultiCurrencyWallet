@@ -23,6 +23,8 @@ import { GHOST2BTC, BTC2GHOST } from 'swap.flows'
 import { EthSwap, EthTokenSwap, BtcSwap, GhostSwap } from 'swap.swaps'
 import { pipeline } from 'stream'
 
+import metamask from 'helpers/metamask'
+
 
 initExternalConfig()
 
@@ -49,6 +51,9 @@ const createSwapApp = () => {
       IpfsRoom: Channel,
       storage: window.localStorage,
       sessionStorage: window.sessionStorage,
+      metamask: (metamask.isEnabled() && metamask.isConnected())
+        ? metamask
+        : false,
     },
 
     services: [
@@ -154,6 +159,9 @@ const createSwapApp = () => {
   // ) : null
 
   window.SwapApp = SwapApp.shared()
+  if (metamask.isEnabled() && metamask.isConnected()) {
+    // SwapApp.shared().services.auth.accounts.eth.address = metamask.getAddress()
+  }
 }
 
 export {
