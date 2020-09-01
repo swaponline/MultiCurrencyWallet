@@ -305,11 +305,7 @@ export default class DepositWindow extends Component {
               {/* eslint-enable */}
             </div>
             <div styleName="qrImg">
-              <QR
-                network={currencyFullName.toLowerCase()}
-                address={`${address}?amount=${remainingBalance}`}
-                size={160}
-              />
+              <QR address={`${address}?amount=${remainingBalance}`} />
             </div>
           </div>
           <CopyToClipboard
