@@ -22,13 +22,7 @@ export default class QR extends Component {
   }
 
   static propTypes = {
-    network: PropTypes.string.isRequired,
     address: PropTypes.string.isRequired,
-    size: PropTypes.number,
-  }
-
-  static defaultProps = {
-    size: 250,
   }
 
   componentDidMount() {
@@ -38,30 +32,18 @@ export default class QR extends Component {
   }
 
   render() {
-    let { network, address, size } = this.props
-
-    // eslint-disable-next-line default-case
-    switch (network.toLowerCase()) {
-      case 'btc (multisig)':
-      case 'btc (sms-protected)':
-      case 'btc (pin-protected)':
-        network = 'btc'
-        break
-    }
-
-    const addressHasNetwork = /:/.test(address)
-    const networkValue = addressHasNetwork ? '' : `${network}:`
-
+    const { address } = this.props
+    const size = 270
     return (
       <React.Fragment>
         <div className={styles.relativeWrapper}>
           <div className={styles.imageWrapper}>
             <img
-              src={`https://chart.googleapis.com/chart?chs=${size}x${size}&cht=qr&chl=${networkValue}${address}`}
-              alt={`${network}: ${address}`}
+              src={`https://chart.googleapis.com/chart?chs=${size}x${size}&cht=qr&chl=${address}`}
+              alt={address}
             />
             <span className={cx({
-              [styles.imageFaker]: true,
+              [styles.imageLoader]: true,
               [animateFetching['animate-fetching']]: !this.state.renderQr,
               [styles.hiddenEl]: this.state.renderQr,
             })} />
