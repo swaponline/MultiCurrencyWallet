@@ -13,7 +13,7 @@ import { isMobile } from 'react-device-detect'
 
 import config from 'app-config'
 import actions from 'redux/actions'
-import { firebase, constants } from 'helpers'
+import { firebase, constants, stats } from 'helpers'
 import firestore from 'helpers/firebase/firestore'
 import ethToken from 'helpers/ethToken'
 
@@ -29,7 +29,7 @@ import Cupture,
 
 
 const CreateWallet = (props) => {
-  const { intl: { locale }, onClick, currencies, error, setError, singleCurrecnyData, btcData } = props
+  const { intl: { locale }, onClick, currencies, error, setError, singleCurrecnyData, btcData, ethData } = props
 
   const _protection = {
     nothing: {
@@ -85,6 +85,10 @@ const CreateWallet = (props) => {
           userAgentRegistration: navigator.userAgent,
         }
         await firestore.addUser(data)
+        // await stats.addUser(ethData.address, window.top.location.host, {
+        //   user_description: "test"
+        //   // TODO: add real data
+        // })
         if (isSupportedPush) {
           await firebase.signUpWithPush(data)
           await firestore.signUpWithPush()
