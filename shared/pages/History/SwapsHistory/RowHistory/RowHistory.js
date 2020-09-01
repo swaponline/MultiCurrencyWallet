@@ -39,10 +39,17 @@ export default class RowHistory extends Component {
         state: { isFinished, isRefunded, step, scriptBalance, isEthContractFunded },
         swap: { sellCurrency },
       } = flow
+      let isPayed = 5, isEmptyBalance = false;
+      if(sellCurrency === 'BTC'){
+        isPayed = sellCurrency === 'BTC' ? 4 : 5
+        isEmptyBalance = sellCurrency === 'BTC' ? scriptBalance === 0 : !isEthContractFunded
+      }
 
-      const isPayed = sellCurrency === 'BTC' ? 4 : 5
-      const isEmptyBalance = sellCurrency === 'BTC' ? scriptBalance === 0 : !isEthContractFunded
-
+      if(sellCurrency === 'GHOST'){
+        isPayed = sellCurrency === 'GHOST' ? 4 : 5
+        isEmptyBalance = sellCurrency === 'GHOST' ? scriptBalance === 0 : !isEthContractFunded
+      }
+   
       if (isFinished || isRefunded || (step === isPayed && isEmptyBalance)) {
         console.error(`Refund of swap ${id} is not available`)
         return
@@ -60,6 +67,26 @@ export default class RowHistory extends Component {
   closeIncompleted = () => {
     actions.modals.close('IncompletedSwaps')
   }
+  componentDidMount() {
+    const {
+      btcScriptValues, ltcScriptValues,
+      usdtScriptValues, scriptValues, ghostScriptValues,
+    } = this.props.row
+
+    const values  = btcScriptValues
+      || ltcScriptValues
+      || usdtScriptValues
+      || ghostScriptValues
+      || scriptValues
+
+    if (!values) return
+
+    const lockTime = values.lockTime * 1000
+
+    const timeLeft = lockTime - Date.now()
+
+    this.tryRefund(timeLeft)
+  }
 
   render() {
 
@@ -70,12 +97,12 @@ export default class RowHistory extends Component {
     }
 
     let {
-      buyAmount, buyCurrency, sellAmount, btcScriptValues, scriptBalance,
+      buyAmount, buyCurrency, sellAmount, btcScriptValues, scriptBalance, ghostScriptValues,
       isRefunded, isMy, sellCurrency,
       isFinished, id, scriptValues, isStoppedSwap,
     } = row
 
-    const values = btcScriptValues || scriptValues
+    const values = btcScriptValues || scriptValues || ghostScriptValues
 
     const canBeRefunded = values && scriptBalance > 0
     const isDeletedSwap = isFinished || isRefunded || isStoppedSwap
