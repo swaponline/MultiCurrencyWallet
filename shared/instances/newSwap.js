@@ -1,6 +1,6 @@
 /* eslint-disable import/no-mutable-exports,max-len */
 import 'abortcontroller-polyfill/dist/abortcontroller-polyfill-only'
-import web3 from 'helpers/web3'
+import { getWeb3 } from 'helpers/web3'
 import * as bitcoin from 'bitcoinjs-lib'
 import * as ghost from 'bitcoinjs-lib'
 
@@ -32,13 +32,17 @@ const repo = utils.createRepo()
 utils.exitListener()
 
 
-const createSwapApp = () => {
+const createSwapApp = async () => {
+  const web3 = (metamask.isEnabled() && metamask.isConnected())
+    ? await metamask.getWeb3()
+    : await getWeb3()
 
   SwapApp.setup({
     network: process.env.MAINNET ? 'mainnet' : 'testnet',
 
     env: {
       web3,
+      getWeb3,
       bitcoin,
       ghost,
       coininfo: {
@@ -159,9 +163,6 @@ const createSwapApp = () => {
   // ) : null
 
   window.SwapApp = SwapApp.shared()
-  if (metamask.isEnabled() && metamask.isConnected()) {
-    // SwapApp.shared().services.auth.accounts.eth.address = metamask.getAddress()
-  }
 }
 
 export {

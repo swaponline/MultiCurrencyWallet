@@ -1,7 +1,7 @@
 import helpers, { apiLooper, constants, api, cacheStorageGet, cacheStorageSet } from 'helpers'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
-import web3 from 'helpers/web3'
+import { getWeb3 } from 'helpers/web3'
 import { utils as web3utils } from 'web3'
 import reducers from 'redux/core/reducers'
 import config from 'helpers/externalConfig'
@@ -14,6 +14,8 @@ import { BigNumber } from 'bignumber.js'
 
 import metamask from 'helpers/metamask'
 
+
+const web3 = getWeb3()
 
 
 const hasAdminFee = (
@@ -306,6 +308,8 @@ const getTransaction = (address, ownType) =>
 const send = (data) => (hasAdminFee) ? sendWithAdminFee(data) : sendDefault(data)
 
 const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed } = {}) => {
+  const web3js = getWeb3()
+
   const {
     fee: adminFee,
     address: adminFeeAddress,
@@ -323,53 +327,32 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed } 
   gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
   gasLimit = gasLimit || constants.defaultFeeRates.eth.limit.send
 
-  let privateKey = false
   const walletData = actions.core.getWallet({
     address: from,
     currency: 'ETH',
   })
 
-  console.log('walletData', walletData)
-  if (!walletData.isMetamask) {
-    privateKey = getPrivateKeyByAddress(from)
-  }
+  const privateKey = (!walletData.isMetamask) ? getPrivateKeyByAddress(from) : false
 
   return new Promise(async (resolve, reject) => {
     const params = {
+      from,
       to: String(to).trim(),
       gasPrice,
       gas: gasLimit,
-      value: web3.utils.toWei(String(amount)),
+      value: web3utils.toWei(String(amount)),
     }
 
     let result = false
     if (!walletData.isMetamask) {
-      console.log('sign tx')
-      result = await web3.eth.accounts.signTransaction(params, privateKey)
-      
-    } else {
-    
-      params.from = from
-      /*
-      params.gas = web3utils.toHex(params.gas)
-      params.gasPrice = web3utils.toHex(gasPrice)
-      params.value = web3utils.toHex(params.value)
-      
-      console.log(params)
-      const transactionHash = await metamask.metamaskProvider.request({
-        method: 'eth_sendTransaction',
-        params: [ params ],
-      })
-      console.log(transactionHash)
-      resolve({ transactionHash })
-      return
-      */
+      result = await web3js.eth.accounts.signTransaction(params, privateKey)
     }
-    
 
-    console.log('params', params)
-    console.log('web3', web3)
-    const receipt = web3.eth[walletData.isMetamask ? 'sendTransaction' : 'sendSignedTransaction'](walletData.isMetamask ? params : result.rawTransaction)
+    const receipt = web3js.eth[
+      walletData.isMetamask
+        ? 'sendTransaction'
+        : 'sendSignedTransaction'
+    ](walletData.isMetamask ? params : result.rawTransaction)
       .on('transactionHash', (hash) => {
         const txId = `${config.link.etherscan}/tx/${hash}`
         console.log('tx', txId)
@@ -379,51 +362,66 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed } 
         reject(err)
       })
 
-      
-    receipt.then(() => {
-      console.log('receipt', receipt)
-      resolve(receipt)
-      // Withdraw admin fee
-      new Promise(async (resolve, reject) => {
-        const adminFeeParams = {
-          to: String(adminFeeAddress).trim(),
-          gasPrice,
-          gas: gasLimit,
-          value: web3.utils.toWei(String(feeFromAmount)),
-        }
 
-        let resultAdminFee = false
-        if (walletData.isMetamask) {
-          resultAdminFee = await web3.eth.accounts.signTransaction(adminFeeParams)
-        } else {
-          resultAdminFee = await web3.eth.accounts.signTransaction(adminFeeParams, privateKey)
-        }
-        const receiptAdminFee = web3.eth.sendSignedTransaction(resultAdminFee.rawTransaction)
-          .on('transactionHash', (hash) => {
-            console.log('Eth admin fee tx', hash)
-          })
-      })
+    receipt.then(() => {
+      resolve(receipt)
+      if (!walletData.isMetamask) {
+        // Withdraw admin fee
+        new Promise(async (resolve, reject) => {
+          const adminFeeParams = {
+            to: String(adminFeeAddress).trim(),
+            gasPrice,
+            gas: gasLimit,
+            value: web3utils.toWei(String(feeFromAmount)),
+          }
+
+          let resultAdminFee = false
+          if (walletData.isMetamask) {
+            resultAdminFee = await web3js.eth.accounts.signTransaction(adminFeeParams)
+          } else {
+            resultAdminFee = await web3js.eth.accounts.signTransaction(adminFeeParams, privateKey)
+          }
+          const receiptAdminFee = web3js.eth.sendSignedTransaction(resultAdminFee.rawTransaction)
+            .on('transactionHash', (hash) => {
+              console.log('Eth admin fee tx', hash)
+            })
+        })
+      }
     })
   })
 }
 
 const sendDefault = ({ from, to, amount, gasPrice, gasLimit, speed } = {}) =>
   new Promise(async (resolve, reject) => {
-    // const { user: { ethData: { privateKey } } } = getState()
-    const privateKey = getPrivateKeyByAddress(from)
+    const web3js = getWeb3()
 
     gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
     gasLimit = gasLimit || constants.defaultFeeRates.eth.limit.send
 
     const params = {
+      from,
       to: String(to).trim(),
       gasPrice,
       gas: gasLimit,
       value: web3.utils.toWei(String(amount)),
     }
 
-    const result = await web3.eth.accounts.signTransaction(params, privateKey)
-    const receipt = web3.eth.sendSignedTransaction(result.rawTransaction)
+    const walletData = actions.core.getWallet({
+      address: from,
+      currency: 'ETH',
+    })
+    const privateKey = (!walletData.isMetamask) ? getPrivateKeyByAddress(from) : false
+
+    let result = false
+    if (!walletData.isMetamask) {
+      result = await web3js.eth.accounts.signTransaction(params, privateKey)
+    }
+
+    const receipt = web3js.eth[
+      walletData.isMetamask
+        ? 'sendTransaction'
+        : 'sendSignedTransaction'
+    ](walletData.isMetamask ? params : result.rawTransaction)
       .on('transactionHash', (hash) => {
         const txId = `${config.link.etherscan}/tx/${hash}`
         console.log('tx', txId)

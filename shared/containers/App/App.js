@@ -215,7 +215,7 @@ export default class App extends React.Component {
     })
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.checkIfDashboardModalsAllowed()
     window.actions = actions;
 
@@ -233,7 +233,7 @@ export default class App extends React.Component {
     }
 
     actions.user.sign();
-    createSwapApp();
+    await createSwapApp();
     this.setState(() => ({ fetching: true }));
 
     window.prerenderReady = true;

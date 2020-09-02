@@ -24,18 +24,6 @@ const web3Modal = new Web3Modal({
   cacheProvider: true, // optional
   providerOptions // required
 })
-window.web3Modal = web3Modal
-window.testweb3modal = async () => {
-  
-
-  const provider = await web3Modal.connect();
-  const web3 = new Web3(provider);
-  console.log(web3)
-}
-
-window.isConnected = () => {
-  return web3Modal.cachedProvider
-}
 
 const metamaskProvider = (window.ethereum) || false
 
@@ -57,6 +45,7 @@ const getWeb3 = async () => {
   const web3 = new Web3(provider)
   return web3
 }
+
 const getBalance = () => {
   const { user: { metamaskData } } = getState()
   if (metamaskData) {
@@ -83,7 +72,7 @@ const connect = () => new Promise(async (resolved, reject) => {
   if (metamaskProvider
       && metamaskProvider.enable
   ) {
-    await metamaskProvider.enable()
+    const provider = await web3Modal.connect()
     setTimeout(() => {
       if (getAddress()) {
         resolved(true)
@@ -165,6 +154,7 @@ const metamaskApi = {
   addWallet,
   getBalance,
   getWeb3,
+  web3Modal,
 }
 
 
