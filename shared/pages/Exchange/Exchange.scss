@@ -515,13 +515,12 @@
   background: #fff;
   font-size: 13px;
   right: 10px;
-  padding: 0 10px;
+  padding: 0 0.5em;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.3);
   font-family: 'Roboto Mono', monospace;
   margin-bottom: 0;
   z-index: 2;
-  padding-right: 20px;
 }
 
 .widgetLink {
@@ -544,8 +543,13 @@
 }
 
 .tooltipHeader {
-  line-height: 1.2em;
-  font-size: 38px;
+  font-size: 1em;
+  line-height: 1em;
+
+  *[class*="tooltip"] {
+    line-height: 1.2em;
+    font-size: 16px;
+  }
 }
 
 .referralText {
@@ -644,9 +648,6 @@
 }
 
 @include media-mobile {
-  .tooltipHeader {
-    font-size: 16px;
-  }
 
   .formExchange_widgetBuild {
     padding: 50px 15px;

@@ -20,7 +20,7 @@
 - Bounty: 25 000 tokens were distributed among the bounty participants, for the very simple actions (reposts, etc..)
 
 
-## Return
+## Return of investments
 
 10% of project's revenue we forward to uniswap for support liquidity
 
@@ -32,6 +32,7 @@ Current
 | jun 2020 | 663 USD | $117 (+$66) |
 | jul 2020 | 840 USD | $201 (+$84) | [+0.5 ETH](https://etherscan.io/tx/0xb5708aa91cd181b45aafc3fb92bdeea970a4359110a10f3fde6a4b42e0cabd14) |
 
+Also SWAP tokens can use as governence token
 
 ## How we get revenue
 
