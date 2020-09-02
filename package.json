@@ -126,6 +126,7 @@
   },
   "dependencies": {
     "@babel/node": "^7.10.3",
+    "@walletconnect/web3-provider": "^1.2.2",
     "autosize": "^4.0.2",
     "axios": "^0.18.1",
     "babel-plugin-react-intl": "^7.5.23",
@@ -135,12 +136,12 @@
     "bip39": "^3.0.2",
     "bitcoinjs-lib": "^5.1.6",
     "bitcoinjs-message": "^2.1.0",
-    "ghost-bitcore-lib": "https://github.com/ghost-coin/ghost-bitcore-lib.git",
     "bootstrap": "^4.3.1",
     "classnames": "^2.2.5",
     "ethereum-input-data-decoder": "0.0.12",
     "ethereumjs-wallet": "^0.6.3",
     "firebase": "^5.10.0",
+    "ghost-bitcore-lib": "https://github.com/ghost-coin/ghost-bitcore-lib.git",
     "history": "^4.10.1",
     "human-standard-token-abi": "^1.0.2",
     "ipfs": "^0.33.1",
@@ -184,6 +185,7 @@
     "typeforce": "^1.18.0",
     "url-parse": "^1.4.7",
     "valuelink": "^1.6.2",
-    "web3": "^1.2.4"
+    "web3": "^1.2.4",
+    "web3modal": "^1.9.0"
   }
 }

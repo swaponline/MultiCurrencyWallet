@@ -4,8 +4,38 @@ import actions from 'redux/actions'
 import { cacheStorageGet, cacheStorageSet } from 'helpers'
 import web3 from 'helpers/web3'
 import { setMetamask, setDefaultProvider } from 'helpers/web3'
-import SwapApp from 'swap.app'
 
+
+import WalletConnectProvider from '@walletconnect/web3-provider'
+import Web3 from 'web3'
+import Web3Modal from 'web3modal'
+
+const providerOptions = {
+  walletconnect: {
+    package: WalletConnectProvider,
+    options: {
+      infuraId: '5ffc47f65c4042ce847ef66a3fa70d4c',
+    },
+  },
+}
+
+const web3Modal = new Web3Modal({
+  network: "mainnet", // optional
+  cacheProvider: true, // optional
+  providerOptions // required
+})
+window.web3Modal = web3Modal
+window.testweb3modal = async () => {
+  
+
+  const provider = await web3Modal.connect();
+  const web3 = new Web3(provider);
+  console.log(web3)
+}
+
+window.isConnected = () => {
+  return web3Modal.cachedProvider
+}
 
 const metamaskProvider = (window.ethereum) || false
 
@@ -22,6 +52,11 @@ const addWallet = () => {
   }
 }
 
+const getWeb3 = async () => {
+  const provider = await web3Modal.connect();
+  const web3 = new Web3(provider)
+  return web3
+}
 const getBalance = () => {
   const { user: { metamaskData } } = getState()
   if (metamaskData) {
@@ -53,7 +88,7 @@ const connect = () => new Promise(async (resolved, reject) => {
       if (getAddress()) {
         resolved(true)
         addWallet()
-        setMetamask(metamaskProvider)
+        setMetamask(getWeb3())
       } else {
         setDefaultProvider()
         reject(`timeout`)
@@ -118,7 +153,7 @@ const _initReduxState = () => {
 
 _initReduxState()
 if (isEnabled() && isConnected()) {
-  setMetamask(metamaskProvider)
+  setMetamask(getWeb3())
 }
 
 const metamaskApi = {
@@ -129,6 +164,7 @@ const metamaskApi = {
   metamaskProvider,
   addWallet,
   getBalance,
+  getWeb3,
 }
 
 

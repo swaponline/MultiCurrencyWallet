@@ -346,12 +346,15 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed } 
     if (!walletData.isMetamask) {
       console.log('sign tx')
       result = await web3.eth.accounts.signTransaction(params, privateKey)
-    } else {
       
+    } else {
+    
       params.from = from
+      /*
       params.gas = web3utils.toHex(params.gas)
       params.gasPrice = web3utils.toHex(gasPrice)
       params.value = web3utils.toHex(params.value)
+      
       console.log(params)
       const transactionHash = await metamask.metamaskProvider.request({
         method: 'eth_sendTransaction',
@@ -360,7 +363,9 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed } 
       console.log(transactionHash)
       resolve({ transactionHash })
       return
+      */
     }
+    
 
     console.log('params', params)
     console.log('web3', web3)
