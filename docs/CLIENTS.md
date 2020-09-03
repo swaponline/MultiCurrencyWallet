@@ -49,6 +49,8 @@
 
 ## Other
 
+..
+
 ### Wordpress plugin clients
 
 - feedback: https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/reviews/23532064
