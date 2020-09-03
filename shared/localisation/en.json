@@ -7136,7 +7136,7 @@
   },
   {
     "id": "ReceiveModal_SaveYourMnemonic",
-    "message": "Please, do not forget to save your seed before activating 2fa. Such measure is required to save your funds in case of any emergency.",
+    "message": "Please, do not forget to save your seed phrase. Such measure is required to save your funds in case of any emergency.",
     "files": [
       "shared/components/modals/ReceiveModal/ReceiveModal.js"
     ]
