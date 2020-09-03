@@ -84,6 +84,7 @@ const setupContract = (ethAddress, contractAddress, nameContract, decimals, full
     decimals,
     currencyRate: 1,
     isMnemonic: isSweeped,
+    isMetamask: false,
   }
   if (metamask.isEnabled() && metamask.isConnected()) {
     data = {
