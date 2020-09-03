@@ -2,11 +2,14 @@ import ERC20_ABI from 'human-standard-token-abi'
 import helpers, { apiLooper, constants, cacheStorageGet, cacheStorageSet } from 'helpers'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
-import web3 from 'helpers/web3'
+import { web3, getWeb3 } from 'helpers/web3'
 import reducers from 'redux/core/reducers'
 import config from 'helpers/externalConfig'
 import { BigNumber } from 'bignumber.js'
 import InputDataDecoder from 'ethereum-input-data-decoder'
+
+import metamask from 'helpers/metamask'
+
 
 
 const hasAdminFee = (
@@ -71,7 +74,7 @@ const setupContract = (ethAddress, contractAddress, nameContract, decimals, full
 
   const isSweeped = actions.eth.isSweeped()
 
-  const data = {
+  let data = {
     address: ethAddress,
     balance: 0,
     name: nameContract.toLowerCase(),
@@ -81,6 +84,14 @@ const setupContract = (ethAddress, contractAddress, nameContract, decimals, full
     decimals,
     currencyRate: 1,
     isMnemonic: isSweeped,
+  }
+  if (metamask.isEnabled() && metamask.isConnected()) {
+    data = {
+      ...data,
+      address: metamask.getAddress(),
+      isMetamask: true,
+      isConnected: true,
+    }
   }
 
   reducers.user.setTokenAuthData({ name: data.name, data })
@@ -252,7 +263,7 @@ const sendTransaction = ({ contract, method }, { args, params = {} } = {}, callb
 
 const send = (data) => (hasAdminFee) ? sendWithAdminFee(data) : sendDefault(data)
 
-const sendWithAdminFee = async ({ name, to, amount, ...feeConfig } = {}) => {
+const sendWithAdminFee = async ({ name, from, to, amount, ...feeConfig } = {}) => {
   const { tokenContract, toWei } = withToken(name)
   const {
     fee: adminFee,
@@ -268,7 +279,15 @@ const sendWithAdminFee = async ({ name, to, amount, ...feeConfig } = {}) => {
 
   feeFromAmount = toWei(feeFromAmount.toNumber()) // Admin fee
 
-  const params = await fetchFees({ ...feeConfig })
+  const params = {
+    ... await fetchFees({ ...feeConfig }),
+    from,
+  }
+
+  const walletData = actions.core.getWallet({
+    address: from,
+    currency: name,
+  })
 
   const newAmount = toWei(amount)
   const callMethod = { contract: tokenContract, method: 'transfer' }
@@ -286,6 +305,7 @@ const sendWithAdminFee = async ({ name, to, amount, ...feeConfig } = {}) => {
 
     receipt.then(() => {
       resolve(receipt)
+      if (walletData.isMetamask) return
       // Send admin fee
       new Promise(async () => {
         const receiptAdminFee = await tokenContract.methods.transfer(adminFeeAddress, feeFromAmount).send(params)
@@ -298,9 +318,12 @@ const sendWithAdminFee = async ({ name, to, amount, ...feeConfig } = {}) => {
   })
 }
 
-const sendDefault = async ({ name, to, amount, ...feeConfig } = {}) => {
+const sendDefault = async ({ name, from, to, amount, ...feeConfig } = {}) => {
   const { tokenContract, toWei } = withToken(name)
-  const params = await fetchFees({ ...feeConfig })
+  const params = {
+    ... await fetchFees({ ...feeConfig }),
+    from,
+  }
 
   const newAmount = toWei(amount)
   const callMethod = { contract: tokenContract, method: 'transfer' }
