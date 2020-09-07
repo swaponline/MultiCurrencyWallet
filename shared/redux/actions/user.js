@@ -406,6 +406,7 @@ const setTransactions = async () => {
       // actions.btcmultisig.getInvoicesUser(),
       // actions.usdt.getTransaction(),
       actions.eth.getTransaction(),
+      ...(metamask.isEnabled() && metamask.isConnected()) ? [actions.eth.getTransaction(metamask.getAddress())] : [],
       ...(isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
       actions.ghost.getTransaction(),
       ...(isGhostSweeped) ? [] : [actions.ghost.getTransaction(actions.ghost.getSweepAddress())],
