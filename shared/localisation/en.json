@@ -7136,7 +7136,7 @@
   },
   {
     "id": "ReceiveModal_SaveYourMnemonic",
-    "message": "Please, do not forget to save your seed before activating 2fa. Such measure is required to save your funds in case of any emergency.",
+    "message": "Please, do not forget to save your seed phrase. Such measure is required to save your funds in case of any emergency.",
     "files": [
       "shared/components/modals/ReceiveModal/ReceiveModal.js"
     ]
@@ -8118,7 +8118,7 @@
   },
   {
     "id": "Exchange_MinerFees",
-    "message": "You'll be charged additionally up to {ethFee} ETH and {btcFee} BTC as a mining fee",
+    "message": "You'll be charged additionally up to {ethFee} ETH and {btcFee} BTC as mining fees",
     "files": [
       "shared/pages/Exchange/Exchange.js"
     ]
