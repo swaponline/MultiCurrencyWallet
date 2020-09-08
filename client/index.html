@@ -484,13 +484,13 @@
                 <div class="container h-100 d-flex flex-column justify-content-center align-items-center">
                   <h2 class="mb-3"></h2>
                   <div class="mb-4 d-none">
-                    <button class="btn btn-primary btn-swap-primary btn-create-wallet btn-close-modal">Skip for now</button>
+                    <button class="btn btn-primary btn-swap-primary btn-create-wallet btn-close-modal">Create Wallet</button>
                   </div>
                   <div class="mb-4">
                     <button class="btn btn-primary btn-swap-primary btn-connect-wallet btn-close-modal">Connect Wallet</button>
                   </div>
                   <div class="mb-4">
-                    <button class="btn btn-primary btn-swap-primary btn-restore-wallet btn-close-modal">Access using 12-word phrase</button>
+                    <button class="btn btn-primary btn-swap-primary btn-restore-wallet">Access using 12-word phrase</button>
                   </div>
                   <div class="mb-4">
                     <button class="btn btn-primary btn-swap-primary btn-skip-now btn-close-modal">Skip for now</button>
@@ -869,6 +869,10 @@
             en: 'Connect Wallet',
             ru: 'Подключить кошелек'
           },
+          skip: {
+            en: 'Skip for now',
+            ru: 'Пропустить'
+          },
           restoreWallet: {
             en: 'Restore Wallet',
             ru: 'Восстановить'
@@ -902,6 +906,10 @@
 
       // Add text to buttons
       document.querySelectorAll(".btn-create-wallet")[0].innerHTML = swap_l10n.buttons.wallet[lang];
+      document.querySelectorAll(".btn-connect-wallet")[0].innerHTML = swap_l10n.buttons.connectMetamask[lang];
+      document.querySelectorAll(".btn-restore-wallet")[0].innerHTML = swap_l10n.buttons.restoreWallet[lang];
+      document.querySelectorAll(".btn-skip-now")[0].innerHTML = swap_l10n.buttons.skip[lang];
+      
       document.querySelectorAll(".swiper-button-prev > span")[0].innerHTML = swap_l10n.buttons.prev[lang];
       document.querySelectorAll(".swiper-button-next > span")[0].innerHTML = swap_l10n.buttons.next[lang];
       document.querySelectorAll(".swiper-button-prev > span")[1].innerHTML = swap_l10n.buttons.prev[lang];
@@ -911,6 +919,13 @@
       splashSwiper.removeSlide([2, 3, 4]);
       splashSwiper.update();
 
+      // Restore wallet modal
+      document.querySelectorAll(".btn-restore-wallet").forEach(item => {
+        item.addEventListener("click", function () {
+          document.location.href="#/restoreWallet";
+          swapCloseStarterModal();
+        });
+      });
       // Close modal on click
       document.querySelectorAll(".btn-close-modal").forEach(item => {
         item.addEventListener("click", function () {

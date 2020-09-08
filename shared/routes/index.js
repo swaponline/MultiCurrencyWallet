@@ -32,6 +32,9 @@ import SaveKeysModal from "components/modals/SaveKeysModal/SaveKeysModal"
 import { isMobile } from 'react-device-detect'
 
 
+import RestoryMnemonicWallet from "components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet"
+
+
 const routes = (
   <ScrollToTop>
     <Switch>
@@ -61,6 +64,7 @@ const routes = (
 
       <Route exact path={`${localisePrefix}${links.createWallet}`} component={CreateWallet} />
       <Route path={`${localisePrefix}${links.createWallet}${links.home}:currency`} component={CreateWallet} />
+      <Route path={`${localisePrefix}${links.restoreWallet}`} component={RestoryMnemonicWallet} />
 
       <Route path={`${localisePrefix}${links.multisign}/btc/:action/:data/:peer`} component={BtcMultisignProcessor} />
       <Route path={`${localisePrefix}${links.multisign}/btc/:action/:data`} component={BtcMultisignProcessor} />
