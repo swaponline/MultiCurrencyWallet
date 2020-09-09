@@ -20,9 +20,9 @@ const providerOptions = {
 }
 
 const web3Modal = new Web3Modal({
-  network: "mainnet", // optional
-  cacheProvider: true, // optional
-  providerOptions // required
+  network: (process.env.MAINNET) ? 'mainnet' : 'rinkeby',
+  cacheProvider: true,
+  providerOptions
 })
 
 const metamaskProvider = (window.ethereum) || false
