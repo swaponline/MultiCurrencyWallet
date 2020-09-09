@@ -79,6 +79,7 @@ const routes = (
       <Route path={`${localisePrefix}${links.ieo}`} component={IEO} />
       <Route exact path={`${localisePrefix}${links.notFound}`} component={NotFound} />
       <Route exact path={`${localisePrefix}${links.home}`} component={Wallet} />
+      <Route exact path={`${localisePrefix}${links.connectWallet}`} component={Wallet} />
       {/* В десктоп режиме - история показывается в дизайне кошелька */}
       {!isMobile && (
         <>

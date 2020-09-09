@@ -9,6 +9,7 @@ const linksManager = {
   history: '/history',
   createWallet: '/createWallet',
   restoreWallet: '/restoreWallet',
+  connectWallet: '/connectWallet',
   invoices: '/invoices',
   invoice: '/invoice',
 

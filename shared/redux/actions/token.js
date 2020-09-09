@@ -126,17 +126,20 @@ const getBalance = async (currency) => {
   if (currency === undefined) {
     return
   }
-  const balanceInCache = cacheStorageGet('currencyBalances', `token_${currency}`)
-  if (balanceInCache !== false) return balanceInCache
 
   const { address, contractAddress, decimals, name } = tokensData[currency.toLowerCase()]
+
+  const balanceInCache = cacheStorageGet('currencyBalances', `token_${currency}_${address}`)
+
+  if (balanceInCache !== false) return balanceInCache
+
   const ERC20 = new web3.eth.Contract(ERC20_ABI, contractAddress)
   try {
     const result = await ERC20.methods.balanceOf(address).call()
-    console.log('result get balance', result)
+
     let amount = new BigNumber(String(result)).dividedBy(new BigNumber(String(10)).pow(decimals)).toString()
     reducers.user.setTokenBalance({ name, amount })
-    cacheStorageSet('currencyBalances', `token_${currency}`, amount, 60)
+    cacheStorageSet('currencyBalances', `token_${currency}_${address}`, amount, 60)
     return amount
   } catch (e) {
     reducers.user.setTokenBalanceError({ name })

@@ -29,7 +29,7 @@ const metamaskProvider = (window.ethereum) || false
 
 const isEnabled = () => !(!metamaskProvider)
 
-const isConnected = () => metamaskProvider && metamaskProvider.selectedAddress
+const isConnected = () => metamaskProvider && metamaskProvider.selectedAddress && web3Modal.cachedProvider
 
 const getAddress = () => (isConnected()) ? metamaskProvider.selectedAddress : ''
 
@@ -68,16 +68,23 @@ const getBalance = () => {
   }
 }
 
+const disconnect = () => new Promise(async (resolved, reject) => {
+  if (isEnabled() && isConnected()) {
+    web3Modal.clearCachedProvider()
+    resolved(true)
+  }
+})
+
 const connect = () => new Promise(async (resolved, reject) => {
   if (metamaskProvider
       && metamaskProvider.enable
   ) {
     const provider = await web3Modal.connect()
     setTimeout(() => {
-      if (getAddress()) {
-        resolved(true)
+      if (isConnected()) {
         addWallet()
         setMetamask(getWeb3())
+        resolved(true)
       } else {
         setDefaultProvider()
         reject(`timeout`)
@@ -155,6 +162,7 @@ const metamaskApi = {
   getBalance,
   getWeb3,
   web3Modal,
+  disconnect,
 }
 
 
