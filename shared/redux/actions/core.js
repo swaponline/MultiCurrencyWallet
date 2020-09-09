@@ -374,6 +374,8 @@ const getWallets = () => {
     },
   } = getState()
 
+  const metamaskConnected = metamask.isEnabled() && metamask.isConnected()
+
   const allData = [
     ... (!config.opts.curEnabled || config.opts.curEnabled.eth) ? (metamaskData) ? [metamaskData] : [] : [],
     ... (!config.opts.curEnabled || config.opts.curEnabled.btc) ? (btcMnemonicData && !btcData.isMnemonic) ? [btcMnemonicData] : [] : [], // Sweep
@@ -383,7 +385,11 @@ const getWallets = () => {
     ... (!config.opts.curEnabled || config.opts.curEnabled.btc) ? (btcMultisigPinData && btcMultisigPinData.isRegistered) ? [btcMultisigPinData] : [] : [],
     ... (!config.opts.curEnabled || config.opts.curEnabled.btc) ? [btcMultisigUserData] : [],
     ... (!config.opts.curEnabled || config.opts.curEnabled.btc) ? (btcMultisigUserData && btcMultisigUserData.wallets) ? btcMultisigUserData.wallets : [] : [],
-    ... (!config.opts.curEnabled || config.opts.curEnabled.btc) ? [ethData] : [],
+    ... (!config.opts.curEnabled || config.opts.curEnabled.eth)
+      ? ((metamaskConnected) 
+        ? [] 
+        : [ethData]) 
+      : [],
     ... (!config.opts.curEnabled || config.opts.curEnabled.ghost) ? [ghostData] : [],
     ...Object.keys(tokensData)
       .filter(k => !tokensData[k].reducerDataTarget)
