@@ -483,8 +483,17 @@
               <div class="swiper-slide">
                 <div class="container h-100 d-flex flex-column justify-content-center align-items-center">
                   <h2 class="mb-3"></h2>
+                  <div class="mb-4 d-none">
+                    <button class="btn btn-primary btn-swap-primary btn-create-wallet btn-close-modal">Create Wallet</button>
+                  </div>
                   <div class="mb-4">
-                    <button class="btn btn-primary btn-swap-primary btn-create-wallet btn-close-modal">Start</button>
+                    <button class="btn btn-primary btn-swap-primary btn-connect-wallet">Connect Wallet</button>
+                  </div>
+                  <div class="mb-4">
+                    <button class="btn btn-primary btn-swap-primary btn-restore-wallet">Access using 12-word phrase</button>
+                  </div>
+                  <div class="mb-4">
+                    <button class="btn btn-primary btn-swap-primary btn-skip-now">Skip for now</button>
                   </div>
                 </div>
                 <!-- .container -->
@@ -737,12 +746,17 @@
       }
       // Is Wallet Create
       function swapIsWalletCreate() {
+        return false
         var swapLocalStorageWallet = localStorage.getItem('isWalletCreate');
         if (swapLocalStorageWallet === null) {
           return false;
         }
         return true;
       }
+      function hasMetamask() {
+        return !(!(window.ethereum) || false)
+      }
+      console.log('hasMetamask', hasMetamask())
       // Open modal if cookie false
       if (swapDisalbeStarter != "true" && swapIsHome() && !isWidgetBuild && !swapIsWalletCreate()) {
         swapOpenStarterModal();
@@ -851,6 +865,18 @@
             en: "Create wallet",
             ru: "Создать кошелек"
           },
+          connectMetamask: {
+            en: 'Connect Wallet',
+            ru: 'Подключить кошелек'
+          },
+          skip: {
+            en: 'Skip for now',
+            ru: 'Пропустить'
+          },
+          restoreWallet: {
+            en: 'Access using 12-word phrase',
+            ru: 'Открыть используя секретные 12 слов'
+          },
           next: {
             en: "Next",
             ru: "Далее"
@@ -880,6 +906,10 @@
 
       // Add text to buttons
       document.querySelectorAll(".btn-create-wallet")[0].innerHTML = swap_l10n.buttons.wallet[lang];
+      document.querySelectorAll(".btn-connect-wallet")[0].innerHTML = swap_l10n.buttons.connectMetamask[lang];
+      document.querySelectorAll(".btn-restore-wallet")[0].innerHTML = swap_l10n.buttons.restoreWallet[lang];
+      document.querySelectorAll(".btn-skip-now")[0].innerHTML = swap_l10n.buttons.skip[lang];
+      
       document.querySelectorAll(".swiper-button-prev > span")[0].innerHTML = swap_l10n.buttons.prev[lang];
       document.querySelectorAll(".swiper-button-next > span")[0].innerHTML = swap_l10n.buttons.next[lang];
       document.querySelectorAll(".swiper-button-prev > span")[1].innerHTML = swap_l10n.buttons.prev[lang];
@@ -889,6 +919,29 @@
       splashSwiper.removeSlide([2, 3, 4]);
       splashSwiper.update();
 
+      // Restore wallet modal
+      document.querySelectorAll(".btn-restore-wallet").forEach(item => {
+        item.addEventListener("click", function () {
+          document.location.href="#/restoreWallet";
+          swapCloseStarterModal();
+          setCookie("swapDisalbeStarter", "true", { expires: swapGetYearSec * 5 });
+        });
+      });
+      // Skip for now (go to exchange)
+      document.querySelectorAll(".btn-skip-now").forEach(item => {
+        item.addEventListener("click", function () {
+          document.location.href="#/exchange";
+          swapCloseStarterModal();
+        });
+      });
+      // Connect wallet
+      document.querySelectorAll(".btn-connect-wallet").forEach(item => {
+        item.addEventListener("click", function () {
+          document.location.href="#/connectWallet";
+          swapCloseStarterModal();
+          setCookie("swapDisalbeStarter", "true", { expires: swapGetYearSec * 5 });
+        });
+      })
       // Close modal on click
       document.querySelectorAll(".btn-close-modal").forEach(item => {
         item.addEventListener("click", function () {
