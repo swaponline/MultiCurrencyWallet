@@ -90,31 +90,19 @@
   },
   {
     "id": "ADDoffer22",
-    "message": "Перейти в Mainnet",
-    "files": [
-      "shared/components/Header/User/SignUpButton/SignUpButton.js"
-    ]
+    "message": "Перейти в Mainnet"
   },
   {
     "id": "ADDoffer2218",
-    "message": "Mainnet",
-    "files": [
-      "shared/components/Header/User/SignUpButton/SignUpButton.js"
-    ]
+    "message": "Mainnet"
   },
   {
     "id": "ADDoffer29",
-    "message": "Регистрация (получите до 10$ в подарок)",
-    "files": [
-      "shared/components/Header/User/SignUpButton/SignUpButton.js"
-    ]
+    "message": "Регистрация (получите до 10$ в подарок)"
   },
   {
     "id": "ADDoffer33",
-    "message": "Подписаться на обновление новостей Swap.Online",
-    "files": [
-      "shared/components/Header/User/SignUpButton/SignUpButton.js"
-    ]
+    "message": "Подписаться на обновление новостей Swap.Online"
   },
   {
     "id": "question15",
@@ -7502,10 +7490,7 @@
   },
   {
     "id": "Exchange_BalanceTooltipInfo",
-    "message": "Ваш баланс {balance} {currency} минус коммисия майнера {minerFee} {currency}",
-    "files": [
-      "shared/pages/Exchange/Exchange.js"
-    ]
+    "message": "Ваш баланс {balance} {currency} минус коммисия майнера {minerFee} {currency}"
   },
   {
     "id": "walletDidntCreateMessage",
@@ -8193,6 +8178,34 @@
     "message": "Также будет потрачено {ethFee} ETH, {btcFee} BTC на коммисию майнерам",
     "files": [
       "shared/pages/Exchange/Exchange.js"
+    ]
+  },
+  {
+    "id": "Banner_ConnectMetamask",
+    "message": "Подключить кошелек",
+    "files": [
+      "shared/pages/Wallet/components/WallerSlider/index.js"
+    ]
+  },
+  {
+    "id": "Banner_ConnectMetamaskDesc",
+    "message": "Нажмите чтобы подключить внешний кошелек",
+    "files": [
+      "shared/pages/Wallet/components/WallerSlider/index.js"
+    ]
+  },
+  {
+    "id": "WalletRow_MetamaskConnect",
+    "message": "Подключить",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "WalletRow_MetamaskDisconnect",
+    "message": "Отключить кошелек",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
     ]
   }
 ]

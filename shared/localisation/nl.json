@@ -97,31 +97,19 @@
   },
   {
     "id": "ADDoffer22",
-    "message": "Start to real Swap",
-    "files": [
-      "shared/components/Header/User/SignUpButton/SignUpButton.js"
-    ]
+    "message": "Start to real Swap"
   },
   {
     "id": "ADDoffer2218",
-    "message": "Mainnet",
-    "files": [
-      "shared/components/Header/User/SignUpButton/SignUpButton.js"
-    ]
+    "message": "Mainnet"
   },
   {
     "id": "ADDoffer29",
-    "message": "Sign up (get up to 10$ bonus)",
-    "files": [
-      "shared/components/Header/User/SignUpButton/SignUpButton.js"
-    ]
+    "message": "Sign up (get up to 10$ bonus)"
   },
   {
     "id": "ADDoffer33",
-    "message": "Get subscribed for the Swap.Online news",
-    "files": [
-      "shared/components/Header/User/SignUpButton/SignUpButton.js"
-    ]
+    "message": "Get subscribed for the Swap.Online news"
   },
   {
     "id": "question15",
@@ -7418,10 +7406,7 @@
   },
   {
     "id": "Exchange_BalanceTooltipInfo",
-    "message": "Uw balans {balance} {currency} minus miner commisie {minerFee} {currency}",
-    "files": [
-      "shared/pages/Exchange/Exchange.js"
-    ]
+    "message": "Uw balans {balance} {currency} minus miner commisie {minerFee} {currency}"
   },
   {
     "id": "walletDidntCreateMessage",
@@ -8137,6 +8122,34 @@
     "message": "U wordt extra in rekening gebracht tot {ethFee} ETH en {btcFee} BTC als mijnvergoeding",
     "files": [
       "shared/pages/Exchange/Exchange.js"
+    ]
+  },
+  {
+    "id": "Banner_ConnectMetamask",
+    "message": "Sluit portemonnee aan",
+    "files": [
+      "shared/pages/Wallet/components/WallerSlider/index.js"
+    ]
+  },
+  {
+    "id": "Banner_ConnectMetamaskDesc",
+    "message": "Klik om een ​​externe portemonnee aan te sluiten",
+    "files": [
+      "shared/pages/Wallet/components/WallerSlider/index.js"
+    ]
+  },
+  {
+    "id": "WalletRow_MetamaskConnect",
+    "message": "Aansluiten",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "WalletRow_MetamaskDisconnect",
+    "message": "Koppel de portemonnee los",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
     ]
   }
 ]
