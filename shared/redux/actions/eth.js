@@ -213,7 +213,13 @@ const getBalance = () => {
   const { user: { ethData: { address } } } = getState()
 
   const balanceInCache = cacheStorageGet('currencyBalances', `eth_${address}`)
-  if (balanceInCache !== false) return balanceInCache
+  if (balanceInCache !== false) {
+    reducers.user.setBalance({
+      name: 'ethData',
+      amount: balanceInCache,
+    })
+    return balanceInCache
+  }
 
   return web3.eth.getBalance(address)
     .then(result => {

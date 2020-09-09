@@ -212,6 +212,15 @@ export default class Row extends Component {
     )
   }
 
+  handleDisconnectWallet() {
+    if (metamask.isEnabled()) {
+      metamask.disconnect().then(async () => {
+        await actions.user.sign()
+        await actions.user.getBalances()
+      })
+    }
+  }
+
   handleConnectMetamask = () => {
     metamask.connect().then(async (connected) => {
       if (connected) {
@@ -769,6 +778,25 @@ export default class Row extends Component {
         action: this.handleConnectMetamask,
         disable: false,
       }]
+    }
+
+    if (this.props.itemData.isMetamask
+      && this.props.itemData.isConnected
+    ) {
+      dropDownMenuItems = [
+        {
+          id: 1123,
+          title: (
+            <FormattedMessage
+              id="WalletRow_MetamaskDisconnect"
+              defaultMessage="Отключить кошелек"
+            />
+          ),
+          action: this.handleDisconnectWallet,
+          disable: false
+        },
+        ...dropDownMenuItems
+      ]
     }
 
     let showBalance = true

@@ -131,7 +131,13 @@ const getBalance = async (currency) => {
 
   const balanceInCache = cacheStorageGet('currencyBalances', `token_${currency}_${address}`)
 
-  if (balanceInCache !== false) return balanceInCache
+  if (balanceInCache !== false) {
+    reducers.user.setTokenBalance({
+      name,
+      amount: balanceInCache,
+    })
+    return balanceInCache
+  }
 
   const ERC20 = new web3.eth.Contract(ERC20_ABI, contractAddress)
   try {

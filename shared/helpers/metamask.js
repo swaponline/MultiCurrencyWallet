@@ -52,7 +52,13 @@ const getBalance = () => {
     const { address } = metamaskData
 
     const balanceInCache = cacheStorageGet('currencyBalances', `eth_${address}`)
-    if (balanceInCache !== false) return balanceInCache
+    if (balanceInCache !== false) {
+      reducers.user.setBalance({
+        name: 'metamaskData',
+        amount: balanceInCache,
+      })
+      return balanceInCache
+    }
 
     return web3.eth.getBalance(address)
       .then(result => {
@@ -71,6 +77,9 @@ const getBalance = () => {
 const disconnect = () => new Promise(async (resolved, reject) => {
   if (isEnabled() && isConnected()) {
     web3Modal.clearCachedProvider()
+    _initReduxState()
+    resolved(true)
+  } else {
     resolved(true)
   }
 })
