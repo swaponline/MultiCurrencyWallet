@@ -13,6 +13,8 @@ import ContentLoader from '../../../../components/loaders/ContentLoader/ContentL
 import { FormattedMessage, injectIntl } from 'react-intl'
 import linksManager from '../../../../helpers/links'
 
+import metamask from 'helpers/metamask'
+
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 @injectIntl
@@ -27,6 +29,7 @@ export default class WallerSlider extends Component {
     this.state = {
       mnemonicDeleted,
       isFetching: false,
+      metamaskConnected: false,
     }
   }
 
@@ -132,8 +135,25 @@ export default class WallerSlider extends Component {
     actions.modals.open(constants.modals.SignUp)
   }
 
+  handleConnectMetamask = () => {
+    metamask.connect().then((connected) => {
+      if (connected) {
+        this.setState({
+          metamaskConnected: true,
+        }, async () => {
+          await actions.user.sign()
+          await actions.user.getBalances()
+        })
+      }
+    })
+  }
+
   render() {
-    const { mnemonicDeleted, banners } = this.state
+    const {
+      mnemonicDeleted,
+      banners,
+      metamaskConnected,
+    } = this.state
 
     const { multisigPendingCount } = this.props
 
@@ -172,6 +192,20 @@ export default class WallerSlider extends Component {
                     descr={needSignMultisig}
                     logDescr={`Click on btc ms notify block (banner)`}
                     firstFunc={this.handleGoToMultisigRequest}
+                  />
+                </div>
+              )}
+              {(metamask.isEnabled() && !metamask.isConnected() && !metamaskConnected) && (
+                <div className="swiper-slide">
+                  <NotifyBlock
+                    className="notifyBlockConnectMetamask"
+                    icon={security}
+                    firstBtn={firstBtnTitle}
+                    widthIcon="80"
+                    background="6144e5"
+                    descr={<FormattedMessage id="Banner_ConnectMetamask" defaultMessage="Подключить кошелек" />}
+                    logDescr={<FormattedMessage id="Banner_ConnectMetamaskDesc" defaultMessage="Нажмите чтобы подключить внешний кошелек" />}
+                    firstFunc={this.handleConnectMetamask}
                   />
                 </div>
               )}
