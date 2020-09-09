@@ -84,21 +84,25 @@ const disconnect = () => new Promise(async (resolved, reject) => {
   }
 })
 
-const connect = () => new Promise(async (resolved, reject) => {
+const connect = () => new Promise((resolved, reject) => {
   if (metamaskProvider
       && metamaskProvider.enable
   ) {
-    const provider = await web3Modal.connect()
-    setTimeout(() => {
-      if (isConnected()) {
-        addWallet()
-        setMetamask(getWeb3())
-        resolved(true)
-      } else {
-        setDefaultProvider()
-        reject(`timeout`)
-      }
-    }, 1000)
+    web3Modal
+      .connect()
+      .then((provider) => {
+        if (isConnected()) {
+          addWallet()
+          setMetamask(getWeb3())
+          resolved(true)
+        } else {
+          setDefaultProvider()
+          resolved(false)
+        }
+      })
+      .catch((e) => {
+        resolved(false)
+      })
   } else {
     setDefaultProvider()
     reject(`metamask not enabled`)

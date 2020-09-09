@@ -1004,7 +1004,7 @@ export default class Row extends Component {
               {statusInfo ?
                 <p styleName="statusStyle">{statusInfo}</p>
                 :
-                !mnemonicSaved ?
+                !mnemonicSaved && !this.props.itemData.isMetamask ?
                   <p styleName="showAddressStyle" onClick={this.handleShowMnemonic}>
                     <FormattedMessage
                       id="WalletRow_ShowAddress"

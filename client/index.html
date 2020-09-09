@@ -924,6 +924,7 @@
         item.addEventListener("click", function () {
           document.location.href="#/restoreWallet";
           swapCloseStarterModal();
+          setCookie("swapDisalbeStarter", "true", { expires: swapGetYearSec * 5 });
         });
       });
       // Skip for now (go to exchange)
@@ -938,6 +939,7 @@
         item.addEventListener("click", function () {
           document.location.href="#/connectWallet";
           swapCloseStarterModal();
+          setCookie("swapDisalbeStarter", "true", { expires: swapGetYearSec * 5 });
         });
       })
       // Close modal on click

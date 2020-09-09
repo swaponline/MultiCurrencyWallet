@@ -158,13 +158,17 @@ export default class Wallet extends Component {
 
     if (metamask.isEnabled()) {
       setTimeout(() => {
-        metamask.connect().then((connected) => {
-          console.log('Metamask connected', connected)
-          setTimeout(async () => {
-            await actions.user.sign()
-            await actions.user.getBalances()
-            history.push(localisedUrl(locale, links.home))
-          })
+        metamask.connect().then((isConnected) => {
+          if (isConnected) {
+            localStorage.setItem(constants.localStorage.isWalletCreate, true)
+            setTimeout(async () => {
+              history.push(localisedUrl(locale, links.home))
+              await actions.user.sign()
+              await actions.user.getBalances()
+            })
+          } else {
+            history.push(localisedUrl(locale, links.createWallet))
+          }
         })
       }, 100)
     } else {
