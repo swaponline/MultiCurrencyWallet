@@ -7,6 +7,8 @@ import { constants } from 'helpers'
 import Pair from 'pages/Home/Orders/Pair'
 import config from 'helpers/externalConfig'
 
+import metamask from 'helpers/metamask'
+
 
 const debug = (...args) => console.log(...args)
 
@@ -358,6 +360,8 @@ const getWallets = () => {
       ethData,
       tokensData,
       isTokenSigned,
+
+      metamaskData,
     },
   } = getState()
 
@@ -370,8 +374,10 @@ const getWallets = () => {
     },
   } = getState()
 
+  const metamaskConnected = metamask.isEnabled() && metamask.isConnected()
 
   const allData = [
+    ... (!config.opts.curEnabled || config.opts.curEnabled.eth) ? (metamaskData) ? [metamaskData] : [] : [],
     ... (!config.opts.curEnabled || config.opts.curEnabled.btc) ? (btcMnemonicData && !btcData.isMnemonic) ? [btcMnemonicData] : [] : [], // Sweep
     ... (!config.opts.curEnabled || config.opts.curEnabled.eth) ? (ethMnemonicData && !ethData.isMnemonic) ? [ethMnemonicData] : [] : [], // Sweep
     ... (!config.opts.curEnabled || config.opts.curEnabled.btc) ? [btcData] : [],
@@ -379,7 +385,11 @@ const getWallets = () => {
     ... (!config.opts.curEnabled || config.opts.curEnabled.btc) ? (btcMultisigPinData && btcMultisigPinData.isRegistered) ? [btcMultisigPinData] : [] : [],
     ... (!config.opts.curEnabled || config.opts.curEnabled.btc) ? [btcMultisigUserData] : [],
     ... (!config.opts.curEnabled || config.opts.curEnabled.btc) ? (btcMultisigUserData && btcMultisigUserData.wallets) ? btcMultisigUserData.wallets : [] : [],
-    ... (!config.opts.curEnabled || config.opts.curEnabled.btc) ? [ethData] : [],
+    ... (!config.opts.curEnabled || config.opts.curEnabled.eth)
+      ? ((metamaskConnected) 
+        ? [] 
+        : [ethData]) 
+      : [],
     ... (!config.opts.curEnabled || config.opts.curEnabled.ghost) ? [ghostData] : [],
     ...Object.keys(tokensData)
       .filter(k => !tokensData[k].reducerDataTarget)

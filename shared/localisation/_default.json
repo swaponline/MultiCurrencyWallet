@@ -90,31 +90,19 @@
   },
   {
     "id": "ADDoffer22",
-    "message": "Start to real Swap",
-    "files": [
-      "shared/components/Header/User/SignUpButton/SignUpButton.js"
-    ]
+    "message": "Start to real Swap"
   },
   {
     "id": "ADDoffer2218",
-    "message": "Mainnet",
-    "files": [
-      "shared/components/Header/User/SignUpButton/SignUpButton.js"
-    ]
+    "message": "Mainnet"
   },
   {
     "id": "ADDoffer29",
-    "message": "Sign up (get up to 10$ bonus)",
-    "files": [
-      "shared/components/Header/User/SignUpButton/SignUpButton.js"
-    ]
+    "message": "Sign up (get up to 10$ bonus)"
   },
   {
     "id": "ADDoffer33",
-    "message": "Get subscribed for the Swap.Online news",
-    "files": [
-      "shared/components/Header/User/SignUpButton/SignUpButton.js"
-    ]
+    "message": "Get subscribed for the Swap.Online news"
   },
   {
     "id": "question15",
@@ -7471,10 +7459,7 @@
   },
   {
     "id": "Exchange_BalanceTooltipInfo",
-    "message": "Ваш баланс {balance} {currency} минус коммисия майнера {minerFee} {currency}",
-    "files": [
-      "shared/pages/Exchange/Exchange.js"
-    ]
+    "message": "Your balance {balance} {currency} minus miner commission {minerFee} {currency}"
   },
   {
     "id": "orders1382",
@@ -8113,6 +8098,34 @@
     "message": "You will pay extra {ethFee} ETH, {btcFee} BTC as mining fee",
     "files": [
       "shared/pages/Exchange/Exchange.js"
+    ]
+  },
+  {
+    "id": "Banner_ConnectMetamask",
+    "message": "Connect wallet",
+    "files": [
+      "shared/pages/Wallet/components/WallerSlider/index.js"
+    ]
+  },
+  {
+    "id": "Banner_ConnectMetamaskDesc",
+    "message": "Click to connect an external wallet",
+    "files": [
+      "shared/pages/Wallet/components/WallerSlider/index.js"
+    ]
+  },
+  {
+    "id": "WalletRow_MetamaskConnect",
+    "message": "Connect",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "WalletRow_MetamaskDisconnect",
+    "message": "Disconnect wallet",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
     ]
   }
 ]

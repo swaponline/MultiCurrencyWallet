@@ -42,6 +42,9 @@ import lsDataCache from 'helpers/lsDataCache'
 import adminFee from 'helpers/adminFee'
 
 
+import metamask from 'helpers/metamask'
+
+
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @injectIntl
@@ -115,22 +118,17 @@ export default class WithdrawModal extends React.Component {
   }
 
   componentDidMount() {
-    const {
-      data: { currency },
-    } = this.props
-
-    this.setBalanceOnState(currency)
-
     this.fiatRates = {}
     this.getFiatBalance()
     this.actualyMinAmount()
-
-    //actions.user.getBalances()
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.data !== this.props.data || prevProps.items !== this.props.items) {
       this.setCurrenctActiveAsset()
+    }
+    if (prevProps.isBalanceFetching != this.props.isBalanceFetching && prevProps.isBalanceFetching === true) {
+      this.setBalanceOnState()
     }
   }
 
@@ -231,29 +229,35 @@ export default class WithdrawModal extends React.Component {
     }
   }
 
-  setBalanceOnState = async (currency) => {
+  setBalanceOnState = async () => {
     const {
-      data: { unconfirmedBalance },
-    } = this.props
-
-    const {
-      selectedItem: {
-        balance,
+      wallet: {
+        currency,
+        address,
       },
     } = this.state
 
-    // @ToDo - balance...
-    // const balance = await actions[getCurrencyKey(currency)].getBalance(currency.toLowerCase())
+    const wallet = actions.user.getWithdrawWallet(currency, address)
+
+    const {
+      balance,
+      unconfirmedBalance,
+    } = wallet
 
     const finalBalance =
       unconfirmedBalance !== undefined && unconfirmedBalance < 0
         ? new BigNumber(balance).plus(unconfirmedBalance).toString()
         : balance
-    const ethBalance = await actions.eth.getBalance()
+
+    const ethBalance = (
+      metamask.isEnabled()
+      && metamask.isConnected()
+    ) ? metamask.getBalance() : await actions.eth.getBalance()
 
     this.setState(() => ({
       balance: finalBalance,
       ethBalance,
+      selectedItem: wallet,
     }))
   }
 
