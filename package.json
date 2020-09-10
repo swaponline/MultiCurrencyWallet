@@ -3,7 +3,7 @@
   "version": "1.0.1",
   "description": "swap.online",
   "private": true,
-  "homepage": "https://staging.swaponline.site",
+  "homepage": "https://swaponline.io",
   "main": "./bin/server",
   "lint-staged": {
     "*.js": [
