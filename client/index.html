@@ -322,14 +322,16 @@
       margin-top: 2em;
     }
 
-    .show-on-fail-ls .btc-open-in-new-tab >A {
+    .show-on-fail-ls .btc-open-in-new-tab {
+      margin-top: 2em;
+    }
+    .show-on-fail-ls .btc-open-in-new-tab > A {
       color: #FFF;
       text-decoration: none;
     }
 
     .show-on-fail-ls SPAN {
       display: block;
-      margin-top: 2em;
     }
 
     .starter-modal .btn-primary:hover {
@@ -594,11 +596,6 @@
         <div id="beforeJSTip" class="tips">Don't forget to&nbsp;save your 12-word recovery phrase</div>
       </div>
       <div class="mb-4 show-on-fail-ls d-none" id="onFailLocalStorageMessage">
-        <button class="btn btn-primary btc-open-in-new-tab">
-          <a href="https://wallet.wpmix.net" target="_blank">
-            Open demo in new tab
-          </a>
-        </button>
         <span>Not every function works In this window, please open new tab.
           If the error will repeat please contact admin
           <br />
@@ -606,6 +603,11 @@
             https://t.me/sashanoxon
           </a>
         </span>
+        <button class="btn btn-primary btc-open-in-new-tab">
+          <a href="https://wallet.wpmix.net" id="onFailLocalStorageLink" target="_blank">
+            Open App in new tab
+          </a>
+        </button>
       </div>
       <div id="usersInform" class="usersInform"></div>
     </div>
@@ -615,6 +617,7 @@
         var testLocalStorage = window.localStorage
       } catch (e) {
         localStorageIsOk = false
+        document.getElementById('onFailLocalStorageLink').href = window.location.href
         document.getElementById('onFailLocalStorageMessage').classList.remove('d-none')
       }
 
