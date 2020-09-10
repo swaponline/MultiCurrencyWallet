@@ -60,6 +60,9 @@ const createSwapApp = async () => {
         : false,
     },
 
+    // White list (Список адресов btc довереных продавцов)
+    // whitelistBtc: [],
+
     services: [
       new SwapAuth({
         // TODO need init swapApp only after private keys created!!!!!!!!!!!!!!!!!!!
