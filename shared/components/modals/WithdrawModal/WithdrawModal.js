@@ -51,13 +51,13 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 @connect(
   ({
     currencies,
-    user: { ethData, btcData, ghostData, tokensData, activeFiat, isBalanceFetching, activeCurrency },
+    user: { ethData, btcData, ghostData, nextData, tokensData, activeFiat, isBalanceFetching, activeCurrency },
     ui: { dashboardModalsAllowed },
   }) => ({
     activeFiat,
     activeCurrency,
     currencies: currencies.items,
-    items: [ethData, btcData, ghostData],
+    items: [ethData, btcData, ghostData, nextData],
     tokenItems: [...Object.keys(tokensData).map((k) => tokensData[k])],
     dashboardView: dashboardModalsAllowed,
     isBalanceFetching,

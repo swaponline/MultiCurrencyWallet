@@ -43,6 +43,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
       ethData,
       btcData,
       ghostData,
+      nextData,
       btcMultisigSMSData,
       btcMultisigUserData,
       btcMultisigUserDataList,
@@ -78,14 +79,15 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
       btcMultisigUserData,
       ethData,
       ghostData,
+      nextData,
       ...Object.keys(tokensData).map((k) => tokensData[k]),
     ].map(({ account, keyPair, ...data }) => ({
       ...data,
     }))
 
     const items = (config && config.isWidget
-      ? [btcData, ethData, ghostData]
-      : [btcData, btcMultisigSMSData, btcMultisigUserData, ethData, ghostData]
+      ? [btcData, ethData, ghostData, nextData]
+      : [btcData, btcMultisigSMSData, btcMultisigUserData, ethData, ghostData, nextData]
     ).map((data) => data.currency)
 
     return {
@@ -107,6 +109,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
         ethData,
         btcData,
         ghostData,
+        nextData,
         btcMultisigSMSData,
         btcMultisigUserData,
         btcMultisigUserDataList,
@@ -300,6 +303,7 @@ export default class Wallet extends Component {
     if (!hiddenCoinsList.includes('BTC (Multisig)')) widgetCurrencies.push('BTC (Multisig)')
     widgetCurrencies.push('ETH')
     widgetCurrencies.push('GHOST')
+    widgetCurrencies.push('NEXT')
     if (isWidgetBuild) {
       if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
         // Multi token widget build
@@ -386,15 +390,17 @@ export default class Wallet extends Component {
     const isFirstCheck = moment(now, 'HH:mm:ss DD/MM/YYYY').isSame(lastCheckMoment)
     const isOneHourAfter = moment(now, 'HH:mm:ss DD/MM/YYYY').isAfter(lastCheckMoment.add(1, 'hours'))
 
-    const { ethData, btcData, ghostData } = this.props.tokensData
+    const { ethData, btcData, ghostData, nextData } = this.props.tokensData
 
     const balancesData = {
       ethBalance: ethData.balance,
       btcBalance: btcData.balance,
       ghostBalance: ghostData.balance,
+      nextBalance: nextData.balance,
       ethAddress: ethData.address,
       btcAddress: btcData.address,
       ghostAddress: ghostData.address,
+      nextAddress: nextData.address,
     }
 
     if (isOneHourAfter || isFirstCheck) {
@@ -478,6 +484,7 @@ export default class Wallet extends Component {
     if (!hiddenCoinsList.includes('BTC (Multisig)')) widgetCurrencies.push('BTC (Multisig)')
     widgetCurrencies.push('ETH')
     widgetCurrencies.push('GHOST')
+    widgetCurrencies.push('NEXT')
     if (isWidgetBuild) {
       if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
         // Multi token widget build

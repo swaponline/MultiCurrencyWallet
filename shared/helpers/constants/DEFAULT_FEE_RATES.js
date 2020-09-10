@@ -43,4 +43,15 @@ export default {
       fast: 30 * 1e3,
     },
   },
+  next: {
+    size: {
+      send: 226,
+      swap: 400,
+    },
+    rate: {
+      slow: 5 * 1e3,
+      normal: 15 * 1e3,
+      fast: 30 * 1e3,
+    },
+  },
 }

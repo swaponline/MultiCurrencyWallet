@@ -15,24 +15,20 @@ Add explorer link:
 - `config/mainnet/link.js`
 - `config/testnet/api.js`
 
-Add Coin on:
+Add coin on:
 
- - `config/testnet/hiddenCoins.js`
- - `shared/components/Coin/Coin.js`
- - `shared/helpers/getCurrencyKey.js`
- - `shared/helpers/user.js`
- - `shared/pages/CreateWallet/CreateWallet.js`
- - `shared/pages/CreateWallet/Steps/FirstStep.js`
- - `shared/pages/Wallet/Wallet.js`
- - `shared/redux/reducers/createWallet.js`
- - `shared/redux/reducers/currencies.js`
-
-Add coin data (`coinData`):
-
+- `config/testnet/hiddenCoins.js`
+- `shared/components/Coin/Coin.js`
 - `shared/components/modals/WithdrawModal/WithdrawModal.js`
+- `shared/helpers/getCurrencyKey.js`
+- `shared/helpers/user.js`
 - `shared/pages/CreateWallet/CreateWallet.js`
+- `shared/pages/CreateWallet/Steps/FirstStep.js`
+- `shared/pages/CreateWallet/Steps/SecondStep.js`
 - `shared/pages/Currency/Currency.js`
 - `shared/pages/Wallet/Wallet.js`
+- `shared/redux/reducers/createWallet.js`
+- `shared/redux/reducers/currencies.js`
 
 Add logo:
 
@@ -55,22 +51,41 @@ Add min amount:
 
 - `shared/helpers/constants/minAmount.js`
 
-Create private keys names for your coin:
+Create `privateKey` / `mnemonicKey` names for your coin:
 
 - `shared/helpers/constants/privateKeyNames.js`
+
+Add coin accordingly as is done for btc:
+
+- `shared/redux/actions/user.js`
+
+
+## More changes!
 
 Create helper, use btc as reference:
 
 - `shared/helpers/coin.js`
+- import helper `shared/helpers/index.js`
 
 Add swap instances:
 
 - `shared/instances/newSwap.js`
 
-Create coin actions, use btc as reference:
+
+## Create coin actions
 
 - `shared/redux/actions/coin.js`
 
-Add coin accordingly as is done for btc:
-
-- `shared/redux/actions/user.js`
+* use `btc.js` as reference
+* getWalletByWords - set coin index
+* set urls
+	- `getTxRouter`
+	- `getLinkToInfo`
+	- `fetchBalanceStatus`
+	- `fetchBalance`
+	- `getTransaction`
+	- `fetchUnspents`
+	- `broadcastTx`
+	- `checkWithdraw`
+* `bitcore-lib` - add network settings - ???
+* signMessage - [net, net] - ???

@@ -3,6 +3,7 @@ import 'abortcontroller-polyfill/dist/abortcontroller-polyfill-only'
 import { getWeb3 } from 'helpers/web3'
 import * as bitcoin from 'bitcoinjs-lib'
 import * as ghost from 'bitcoinjs-lib'
+import * as next from 'bitcoinjs-lib'
 
 import abi from 'human-standard-token-abi'
 
@@ -18,10 +19,27 @@ import SwapApp, { constants } from 'swap.app'
 import SwapAuth from 'swap.auth'
 import SwapRoom from 'swap.room'
 import SwapOrders from 'swap.orders'
-import { ETH2BTC, BTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN, GHOST2ETH, ETH2GHOST, ETHTOKEN2GHOST, GHOST2ETHTOKEN } from 'swap.flows'
-import { GHOST2BTC, BTC2GHOST } from 'swap.flows'
-import { EthSwap, EthTokenSwap, BtcSwap, GhostSwap } from 'swap.swaps'
-import { pipeline } from 'stream'
+import {
+  ETH2BTC,
+  BTC2ETH,
+  ETHTOKEN2BTC,
+  BTC2ETHTOKEN,
+
+  GHOST2ETH,
+  ETH2GHOST,
+  ETHTOKEN2GHOST,
+  GHOST2ETHTOKEN,
+  GHOST2BTC,
+  BTC2GHOST,
+
+  NEXT2ETH,
+  ETH2NEXT,
+  ETHTOKEN2NEXT,
+  NEXT2ETHTOKEN,
+  NEXT2BTC,
+  BTC2NEXT,
+} from 'swap.flows'
+import { EthSwap, EthTokenSwap, BtcSwap, GhostSwap, NextSwap } from 'swap.swaps'
 
 import metamask from 'helpers/metamask'
 
@@ -45,10 +63,14 @@ const createSwapApp = async () => {
       getWeb3,
       bitcoin,
       ghost,
+      next,
       coininfo: {
         ghost: {
           main: helpers.ghost.networks.mainnet,
           test: helpers.ghost.networks.testnet,
+        },
+        next: {
+          main: helpers.next.network.mainnet,
         },
       },
       Ipfs: IPFS,
@@ -66,6 +88,7 @@ const createSwapApp = async () => {
         eth: localStorage.getItem(privateKeys.privateKeyNames.eth),
         btc: localStorage.getItem(privateKeys.privateKeyNames.btc),
         ghost: localStorage.getItem(privateKeys.privateKeyNames.ghost),
+        next: localStorage.getItem(privateKeys.privateKeyNames.next),
       }),
       new SwapRoom({
         repo,
@@ -104,6 +127,14 @@ const createSwapApp = async () => {
         checkWithdraw: (scriptAddress) => actions.ghost.checkWithdraw(scriptAddress),
         estimateFeeValue: ({ inSatoshis, speed, address, txSize } = {}) => helpers.ghost.estimateFeeValue({ inSatoshis, speed, address, txSize }),
       }),
+      new NextSwap({
+        fetchBalance: (address) => actions.next.fetchBalance(address),
+        fetchUnspents: (scriptAddress) => actions.next.fetchUnspents(scriptAddress),
+        broadcastTx: (txRaw) => actions.next.broadcastTx(txRaw),
+        fetchTxInfo: (txid) => actions.next.fetchTxInfo(txid),
+        checkWithdraw: (scriptAddress) => actions.next.checkWithdraw(scriptAddress),
+        estimateFeeValue: ({ inSatoshis, speed, address, txSize } = {}) => helpers.next.estimateFeeValue({ inSatoshis, speed, address, txSize }),
+      }),
       ...(Object.keys(config.erc20)
         .map(key =>
           new EthTokenSwap({
@@ -130,6 +161,11 @@ const createSwapApp = async () => {
       GHOST2ETH,
       ETH2GHOST,
 
+      //NEXT2BTC,
+      //BTC2NEXT,
+
+      NEXT2ETH,
+      ETH2NEXT,
 
       ...(Object.keys(config.erc20))
         .map(key => ETHTOKEN2BTC(key)),
@@ -142,6 +178,12 @@ const createSwapApp = async () => {
 
       ...(Object.keys(config.erc20))
         .map(key => GHOST2ETHTOKEN(key)),
+
+      ...(Object.keys(config.erc20))
+        .map(key => ETHTOKEN2NEXT(key)),
+
+      ...(Object.keys(config.erc20))
+        .map(key => NEXT2ETHTOKEN(key)),
 
       // ...(Object.keys(config.erc20))
       //   .map(key => ETHTOKEN2USDT(key)),

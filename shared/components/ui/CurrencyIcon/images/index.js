@@ -17,6 +17,7 @@ import dcn from './dcn.svg'
 import pay from './pay.png'
 import eurs from './eurs.svg'
 import ghost from './ghost.svg'
+import next from './next.svg'
 
 
 export default {
@@ -42,4 +43,5 @@ export default {
   pay,
   eurs,
   ghost,
+  next,
 }
