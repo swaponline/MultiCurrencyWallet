@@ -317,6 +317,23 @@
       font-weight: bold;
     }
 
+    .show-on-fail-ls {
+      text-align: center;
+      margin-top: 2em;
+    }
+
+    .show-on-fail-ls .btc-open-in-new-tab {
+      margin-top: 2em;
+    }
+    .show-on-fail-ls .btc-open-in-new-tab > A {
+      color: #FFF;
+      text-decoration: none;
+    }
+
+    .show-on-fail-ls SPAN {
+      display: block;
+    }
+
     .starter-modal .btn-primary:hover {
       background-color: #9785ed;
     }
@@ -578,9 +595,31 @@
         </div>
         <div id="beforeJSTip" class="tips">Don't forget to&nbsp;save your 12-word recovery phrase</div>
       </div>
+      <div class="mb-4 show-on-fail-ls d-none" id="onFailLocalStorageMessage">
+        <span>Not every function works In this window, please open new tab.
+          If the error will repeat please contact admin
+          <br />
+          <a href="https://t.me/sashanoxon">
+            https://t.me/sashanoxon
+          </a>
+        </span>
+        <button class="btn btn-primary btc-open-in-new-tab">
+          <a href="https://wallet.wpmix.net" id="onFailLocalStorageLink" target="_blank">
+            Open App in new tab
+          </a>
+        </button>
+      </div>
       <div id="usersInform" class="usersInform"></div>
     </div>
     <script>
+      var localStorageIsOk = true
+      try {
+        var testLocalStorage = window.localStorage
+      } catch (e) {
+        localStorageIsOk = false
+        document.getElementById('onFailLocalStorageLink').href = window.location.href
+        document.getElementById('onFailLocalStorageMessage').classList.remove('d-none')
+      }
 
       function setCookie(name, value, options) {
         options = options || {};
@@ -758,7 +797,7 @@
       }
       console.log('hasMetamask', hasMetamask())
       // Open modal if cookie false
-      if (swapDisalbeStarter != "true" && swapIsHome() && !isWidgetBuild && !swapIsWalletCreate()) {
+      if (swapDisalbeStarter != "true" && swapIsHome() && !isWidgetBuild && !swapIsWalletCreate() && localStorageIsOk) {
         swapOpenStarterModal();
       }
     </script>
