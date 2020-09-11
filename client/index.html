@@ -612,14 +612,44 @@
       <div id="usersInform" class="usersInform"></div>
     </div>
     <script>
-      var localStorageIsOk = true
+      var localStorageIsOk = true;
       try {
-        var testLocalStorage = window.localStorage
+        var testLocalStorage = window.localStorage;
       } catch (e) {
         localStorageIsOk = false
-        document.getElementById('onFailLocalStorageLink').href = window.location.href
-        document.getElementById('onFailLocalStorageMessage').classList.remove('d-none')
-      }
+        document.getElementById("onFailLocalStorageLink").href = window.location.href;
+        document.getElementById("onFailLocalStorageMessage").classList.remove("d-none");
+        var sendErrorFeedback = function () {
+          var msg = "localStorage error: agent("+navigator.userAgent+")";
+              msg+= ", location("+window.location.href+")";
+
+          var url = "https://noxon.wpmix.net/counter.php?msg="+encodeURI(msg);
+
+          window.jQuery.ajax({
+            type: "POST",
+            url: url
+          });
+        };
+        if (!window.jQuery) {
+          // inject jQuery for send request to counter for feedback
+          var jsScriptTag = document.createElement("SCRIPT");
+            jsScriptTag.src = "https://code.jquery.com/jquery-3.5.1.min.js";
+            console.log("jsScriptTag", jsScriptTag);
+          document.getElementsByTagName("BODY")[0].appendChild(jsScriptTag);
+          var waitJQLoad = function (onLoaded) {
+            if (window.jQuery) {
+              onLoaded();
+            } else {
+              window.setTimeout( function () {
+                waitJQLoad(onLoaded);
+              }, 100);
+            };
+          };
+          waitJQLoad(sendErrorFeedback);
+        } else {
+          sendErrorFeedback();
+        };
+      };
 
       function setCookie(name, value, options) {
         options = options || {};
