@@ -85,15 +85,24 @@ const CreateWallet = (props) => {
           userAgentRegistration: navigator.userAgent,
         }
         await firestore.addUser(data)
-        // await stats.addUser(ethData.address, window.top.location.host, {
-        //   user_description: "test"
-        //   // TODO: add real data
-        // })
+        let token
         if (isSupportedPush) {
           await firebase.signUpWithPush(data)
-          await firestore.signUpWithPush()
+          token = await firestore.signUpWithPush()
           window.localStorage.setItem(constants.localStorage.signedUpWithPush, 'true')
         }
+        const ipInfo = await firebase.getIPInfo()
+        const registrationData = {
+          locale: ipInfo.locale || (navigator.userLanguage || navigator.language || "en-gb").split("-")[0],
+          ip: ipInfo.ip,
+          messaging_token: token || '',
+        }
+        let widget_url
+        if (config.isWidget) {
+          widget_url = window.top.location.origin
+          registrationData.widget_url = widget_url
+        }
+        // await stats.addUser(ethData.address, window.top.location.host, registrationData)
       } catch (error) {
         console.error(error)
       }
@@ -144,6 +153,7 @@ const CreateWallet = (props) => {
   })
 
   const handleFinish = () => {
+    console.log(123123, ethData)
     if (currencies.BTC) {
       try {
         axios({
@@ -155,8 +165,11 @@ const CreateWallet = (props) => {
         console.error(error)
       }
     }
+    console.log(123123, ethData)
     onClick()
+    console.log(123123, ethData)
     onCreateTrigger()
+    console.log(123123, ethData)
   }
 
   const handleClick = (index, el) => {

@@ -26,7 +26,7 @@ const query = gql`
   #   gift_date: String
   #   ip: String
   #   messaging_token: String
-  #   widger_url: String
+  #   widget_url: String
   #   wallets: [WalletDataInput]
   # }
 
