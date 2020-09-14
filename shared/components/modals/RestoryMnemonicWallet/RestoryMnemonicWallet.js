@@ -238,7 +238,7 @@ export default class RestoryMnemonicWallet extends React.Component {
 
     return (
       <Modal name={name} title={`${intl.formatMessage(langLabels.title)}`} onClose={this.handleClose} showCloseButton={showCloseButton}>
-        <div>
+        <div styleName="restoreModalHolder">
           {step === `enter` && (
             <Fragment>
               {(mnemonic && mnemonicIsInvalid) && (

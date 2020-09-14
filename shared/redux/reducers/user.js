@@ -74,6 +74,7 @@ export const initialState = {
   multisigStatus: {},
   multisigPendingCount: 0,
   messagingToken: null,
+  metamaskData: false,
 }
 
 export const updateMultisigStatus = (state, { address, last, total }) => {

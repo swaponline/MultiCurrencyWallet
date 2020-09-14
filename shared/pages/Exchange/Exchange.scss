@@ -81,14 +81,9 @@
     color: white;
 
     .formExchange {
-      background: #242425;
-      box-shadow: 0px 4px 16px rgba(243, 243, 243, 0.08), 0px 1px 4px rgba(240, 233, 233, 0.08);
-
-      @media screen and (max-width: 480px) {
-        height: 100%;
-        background: none;
-        box-shadow: none;
-      }
+      background: #343435;
+      box-shadow: none;
+      //box-shadow: 0px 4px 16px rgba(243, 243, 243, 0.08), 0px 1px 4px rgba(240, 233, 233, 0.08);
     }
 
     .price,
@@ -207,6 +202,11 @@
   box-shadow: none;
 }
 
+.button.link-like {
+  color: #007bff;
+  text-decoration: underline;
+}
+
 .button.disabled {
   background: #f5f5f5;
 }
@@ -239,7 +239,7 @@
 }
 
 .rowBtn {
-  margin-top: 0.5em;
+  margin-top: 1em;
   display: flex;
   justify-content: space-around;
 }
@@ -515,13 +515,12 @@
   background: #fff;
   font-size: 13px;
   right: 10px;
-  padding: 0 10px;
+  padding: 0 0.5em;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.3);
   font-family: 'Roboto Mono', monospace;
   margin-bottom: 0;
   z-index: 2;
-  padding-right: 20px;
 }
 
 .widgetLink {
@@ -544,8 +543,13 @@
 }
 
 .tooltipHeader {
-  line-height: 1.2em;
-  font-size: 38px;
+  font-size: 1em;
+  line-height: 1em;
+
+  *[class*="tooltip"] {
+    line-height: 1.2em;
+    font-size: 16px;
+  }
 }
 
 .referralText {
@@ -644,9 +648,6 @@
 }
 
 @include media-mobile {
-  .tooltipHeader {
-    font-size: 16px;
-  }
 
   .formExchange_widgetBuild {
     padding: 50px 15px;

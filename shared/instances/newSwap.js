@@ -1,6 +1,6 @@
 /* eslint-disable import/no-mutable-exports,max-len */
 import 'abortcontroller-polyfill/dist/abortcontroller-polyfill-only'
-import web3 from 'helpers/web3'
+import { getWeb3 } from 'helpers/web3'
 import * as bitcoin from 'bitcoinjs-lib'
 import * as ghost from 'bitcoinjs-lib'
 
@@ -23,6 +23,8 @@ import { GHOST2BTC, BTC2GHOST } from 'swap.flows'
 import { EthSwap, EthTokenSwap, BtcSwap, GhostSwap } from 'swap.swaps'
 import { pipeline } from 'stream'
 
+import metamask from 'helpers/metamask'
+
 
 initExternalConfig()
 
@@ -30,13 +32,17 @@ const repo = utils.createRepo()
 utils.exitListener()
 
 
-const createSwapApp = () => {
+const createSwapApp = async () => {
+  const web3 = (metamask.isEnabled() && metamask.isConnected())
+    ? await metamask.getWeb3()
+    : await getWeb3()
 
   SwapApp.setup({
     network: process.env.MAINNET ? 'mainnet' : 'testnet',
 
     env: {
       web3,
+      getWeb3,
       bitcoin,
       ghost,
       coininfo: {
@@ -49,7 +55,13 @@ const createSwapApp = () => {
       IpfsRoom: Channel,
       storage: window.localStorage,
       sessionStorage: window.sessionStorage,
+      metamask: (metamask.isEnabled() && metamask.isConnected())
+        ? metamask
+        : false,
     },
+
+    // White list (Список адресов btc довереных продавцов)
+    // whitelistBtc: [],
 
     services: [
       new SwapAuth({

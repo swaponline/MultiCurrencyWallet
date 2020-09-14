@@ -85,7 +85,7 @@ const subTitle = (sell, sellTicker, buy, buyTicker) => (
       defaultMessage="Fastest cross-chain atomic swaps"
     />
     <span styleName="tooltipHeader">
-      <Tooltip id="partialAtomicSwapWhatIsIt1" dontHideMobile>
+      <Tooltip id="partialAtomicSwapWhatIsIt1" dontHideMobile place="bottom">
         <FormattedMessage
           id="partialAtomicSwapWhatIsIt"
           defaultMessage="Atomic swap is a smart contract technology that enables exchange."
@@ -1378,7 +1378,7 @@ export default class Exchange extends Component {
                   defaultMessage="The amount you have on swap.online or an external wallet that you want to exchange"
                 />
               }
-              balanceTooltip={(estimatedFeeValues[haveCurrency])
+              /*balanceTooltip={(estimatedFeeValues[haveCurrency])
                 ? () => {
                   return (
                     <FormattedMessage
@@ -1392,7 +1392,7 @@ export default class Exchange extends Component {
                     />
                   )
                 } : false
-              }
+              }*/
               placeholder="0.00000000"
               fiat={maxAmount > 0 && isNonOffers ? 0 : haveFiat}
               currencies={currencies}
@@ -1690,7 +1690,7 @@ export default class Exchange extends Component {
             >
               <FormattedMessage id="partial541" defaultMessage="Exchange now" />
             </Button>
-            <Button blue styleName="button" onClick={this.createOffer}>
+            <Button styleName="button link-like" onClick={this.createOffer}>
               <FormattedMessage id="orders128" defaultMessage="Create offer" />
             </Button>
           </div>

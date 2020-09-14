@@ -1,5 +1,8 @@
 # SWAP is ERC20 token of our project
 
+## Contract address
+
+[0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9](https://etherscan.io/address/0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9)
 
 ## Listed on exchnages
 

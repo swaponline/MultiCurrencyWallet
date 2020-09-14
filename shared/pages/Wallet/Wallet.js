@@ -28,6 +28,9 @@ import BalanceForm from 'components/BalanceForm/BalanceForm'
 
 import { BigNumber } from 'bignumber.js'
 
+import metamask from 'helpers/metamask'
+
+
 
 const isWidgetBuild = config && config.isWidget
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -156,14 +159,55 @@ export default class Wallet extends Component {
     this.syncTimer = null
   }
 
+  handleConnectWallet() {
+    const {
+      history,
+      intl: {
+        locale,
+      },
+    } = this.props
+
+    if (metamask.isEnabled()) {
+      setTimeout(() => {
+        metamask.connect().then((isConnected) => {
+          if (isConnected) {
+            localStorage.setItem(constants.localStorage.isWalletCreate, true)
+            setTimeout(async () => {
+              history.push(localisedUrl(locale, links.home))
+              await actions.user.sign()
+              await actions.user.getBalances()
+            })
+          } else {
+            history.push(localisedUrl(locale, links.createWallet))
+          }
+        })
+      }, 100)
+    } else {
+      history.push(localisedUrl(locale, links.home))
+    }
+  }
+
   componentDidUpdate(prevProps) {
     const {
       match: {
         params: { page = null },
       },
       multisigPendingCount,
+      location: { pathname },
     } = this.props
 
+
+    const {
+      location: {
+        pathname: prevPathname,
+      },
+    } = prevProps
+
+    if (pathname.toLowerCase() != prevPathname.toLowerCase()
+      && pathname.toLowerCase() == links.connectWallet.toLowerCase()
+    ) {
+      this.handleConnectWallet()
+    }
 
     const {
       match: {
@@ -191,8 +235,13 @@ export default class Wallet extends Component {
     const { params, url } = this.props.match
     const {
       multisigPendingCount,
+      location: { pathname },
     } = this.props
 
+    if (pathname.toLowerCase() == links.connectWallet.toLowerCase()) {
+      this.handleConnectWallet()
+    }
+    console.log('wallet did mount', pathname)
     actions.user.getBalances()
 
     actions.user.fetchMultisigStatus()

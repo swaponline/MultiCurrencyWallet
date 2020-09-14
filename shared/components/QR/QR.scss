@@ -1,7 +1,5 @@
 .relativeWrapper {
   position: relative;
-  height: 70vmin;
-  max-height: 400px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,17 +9,17 @@
   position: relative;
   width: 100%;
   height: 100%;
-  max-width: 400px;
-  max-height: 400px;
+  max-width: 270px;
+  max-height: 270px;
 
   img {
     width: 100%;
     height: 100%;
-    font-size: 25px;
+    image-rendering: pixelated;
   }
 }
 
-.imageFaker {
+.imageLoader {
   position: absolute;
   width: 80%;
   height: 80%;

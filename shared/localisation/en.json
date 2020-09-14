@@ -90,31 +90,19 @@
   },
   {
     "id": "ADDoffer22",
-    "message": "Start to real Swap",
-    "files": [
-      "shared/components/Header/User/SignUpButton/SignUpButton.js"
-    ]
+    "message": "Start to real Swap"
   },
   {
     "id": "ADDoffer2218",
-    "message": "Mainnet",
-    "files": [
-      "shared/components/Header/User/SignUpButton/SignUpButton.js"
-    ]
+    "message": "Mainnet"
   },
   {
     "id": "ADDoffer29",
-    "message": "Sign up (get up to 10$ bonus)",
-    "files": [
-      "shared/components/Header/User/SignUpButton/SignUpButton.js"
-    ]
+    "message": "Sign up (get up to 10$ bonus)"
   },
   {
     "id": "ADDoffer33",
-    "message": "Get subscribed for the Swap.Online news",
-    "files": [
-      "shared/components/Header/User/SignUpButton/SignUpButton.js"
-    ]
+    "message": "Get subscribed for the Swap.Online news"
   },
   {
     "id": "question15",
@@ -7136,7 +7124,7 @@
   },
   {
     "id": "ReceiveModal_SaveYourMnemonic",
-    "message": "Please, do not forget to save your seed before activating 2fa. Such measure is required to save your funds in case of any emergency.",
+    "message": "Please, do not forget to save your seed phrase. Such measure is required to save your funds in case of any emergency.",
     "files": [
       "shared/components/modals/ReceiveModal/ReceiveModal.js"
     ]
@@ -7430,10 +7418,7 @@
   },
   {
     "id": "Exchange_BalanceTooltipInfo",
-    "message": "Your balance {balance} {currency} minus miner commission {minerFee} {currency}",
-    "files": [
-      "shared/pages/Exchange/Exchange.js"
-    ]
+    "message": "Your balance {balance} {currency} minus miner commission {minerFee} {currency}"
   },
   {
     "id": "walletDidntCreateMessage",
@@ -8118,9 +8103,37 @@
   },
   {
     "id": "Exchange_MinerFees",
-    "message": "You'll be charged additionally up to {ethFee} ETH and {btcFee} BTC as a mining fee",
+    "message": "You'll be charged additionally up to {ethFee} ETH and {btcFee} BTC as mining fees",
     "files": [
       "shared/pages/Exchange/Exchange.js"
+    ]
+  },
+  {
+    "id": "Banner_ConnectMetamask",
+    "message": "Connect wallet",
+    "files": [
+      "shared/pages/Wallet/components/WallerSlider/index.js"
+    ]
+  },
+  {
+    "id": "Banner_ConnectMetamaskDesc",
+    "message": "Click to connect an external wallet",
+    "files": [
+      "shared/pages/Wallet/components/WallerSlider/index.js"
+    ]
+  },
+  {
+    "id": "WalletRow_MetamaskConnect",
+    "message": "Connect",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "WalletRow_MetamaskDisconnect",
+    "message": "Disconnect wallet",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
     ]
   }
 ]
