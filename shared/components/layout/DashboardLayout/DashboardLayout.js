@@ -216,6 +216,7 @@ export default connect(
       ethData,
       btcData,
       ghostData,
+      nextData,
       btcMultisigSMSData,
       btcMultisigUserData,
       btcMultisigUserDataList,
@@ -250,6 +251,7 @@ export default connect(
     const allData = [
       btcData,
       ghostData,
+      nextData,
       btcMultisigSMSData,
       btcMultisigUserData,
       ethData,
@@ -259,7 +261,7 @@ export default connect(
     }))
 
     const items = (config && config.isWidget
-      ? [btcData, ethData, ghostData]
+      ? [btcData, ethData, ghostData, nextData]
       : [btcData, btcMultisigSMSData, btcMultisigUserData, ethData]
     ).map((data) => data.currency)
 
@@ -280,6 +282,7 @@ export default connect(
         ethData,
         btcData,
         ghostData,
+        nextData,
         btcMultisigSMSData,
         btcMultisigUserData,
         btcMultisigUserDataList,

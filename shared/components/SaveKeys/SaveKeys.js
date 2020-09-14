@@ -11,11 +11,11 @@ import ReactTooltip from 'react-tooltip'
 import { FormattedMessage } from 'react-intl'
 
 
-@connect(({ user: { ethData, btcData, ghostData } }) => ({ btcData, ethData, ghostData }))
+@connect(({ user: { ethData, btcData, ghostData, nextData } }) => ({ btcData, ethData, ghostData, nextData }))
 @CSSModules(styles)
 export default class SaveKeys extends Component {
   render() {
-    const { ethData, btcData, ghostData, isChange, isDownload, ...otherProps } = this.props
+    const { ethData, btcData, ghostData, nextData, isChange, isDownload, ...otherProps } = this.props
 
     return (
       <div {...otherProps}>
@@ -50,6 +50,10 @@ export default class SaveKeys extends Component {
             <Field
               label={ghostData.currency}
               privateKey={ghostData.privateKey.toString()}
+            />
+            <Field
+              label={nextData.currency}
+              privateKey={nextData.privateKey.toString()}
             />
           </div>
         </div>

@@ -78,11 +78,12 @@ const getWalletByWords = (mnemonic, walletNumber = 0, path) => {
   const seed = bip39.mnemonicToSeedSync(mnemonic)
   const root = bip32.fromSeed(seed, next.network)
   const node = root.derivePath((path) || `m/44'/707'/0'/0/${walletNumber}`)
-
+console.log('>>>getWalletByWords')
   const account = bitcoin.payments.p2pkh({
     pubkey: node.publicKey,
     network: next.network,
   })
+console.log('account =', account)
 
   return {
     mnemonic,
@@ -102,8 +103,9 @@ const auth = (privateKey) => {
     const d = BigInteger.fromBuffer(hash)
 
     const keyPair = bitcoin.ECPair.fromWIF(privateKey, next.network)
-
+console.log('>>>auth')
     const account = bitcoin.ECPair.fromWIF(privateKey, next.network) // eslint-disable-line
+console.log('account =', account)
     const { address } = bitcoin.payments.p2pkh({ pubkey: account.publicKey, network: next.network })
     const { publicKey } = account
 
@@ -175,7 +177,7 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
     ...auth(privateKey),
     isMnemonic: sweepToMnemonicReady,
     currency: 'NEXT',
-    fullName: 'next',
+    fullName: 'NEXT.coin',
   }
 
   window.getNextAddress = () => data.address

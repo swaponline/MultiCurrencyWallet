@@ -46,6 +46,7 @@ moment.locale(userLanguage);
   ethAddress: "user.ethData.address",
   btcAddress: "user.btcData.address",
   ghostAddress: "user.ghostData.address",
+  nextAddress: "user.nextData.address",
   tokenAddress: "user.tokensData.swap.address",
   modals,
   dashboardModalsAllowed,
@@ -301,11 +302,11 @@ export default class App extends React.Component {
 
   render() {
     const { fetching, multiTabs, error } = this.state;
-    const { children, ethAddress, btcAddress, ghostAddress, tokenAddress, history, dashboardModalsAllowed } = this.props;
+    const { children, ethAddress, btcAddress, ghostAddress, nextAddress, tokenAddress, history, dashboardModalsAllowed } = this.props;
 
     this.overflowHandler()
 
-    const isFetching = !ethAddress || !btcAddress || !ghostAddress || (!tokenAddress && config && !config.isWidget) || !fetching;
+    const isFetching = !ethAddress || !btcAddress || !ghostAddress || !nextAddress || (!tokenAddress && config && !config.isWidget) || !fetching;
 
     const isWidget = history.location.pathname.includes("/exchange") && history.location.hash === "#widget";
     const isCalledFromIframe = window.location !== window.parent.location;

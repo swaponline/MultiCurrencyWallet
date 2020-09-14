@@ -10,6 +10,7 @@ export default {
   ethOld: `${process.env.ENTRY}:eth:privateKey:old`, // Sweep
   btcOld: `${process.env.ENTRY}:btc:privateKey:old`, // Sweep
   ghostOld: `${process.env.ENTRY}:ghost:privateKey:old`, // Sweep
+  nextOld: `${process.env.ENTRY}:next:privateKey:old`, // Sweep
   twentywords: `${process.env.ENTRY}:twentywords`,
   btcMultisig: `${process.env.ENTRY}:btcMultisig:privateKey`,
   btcMultisigOtherOwnerKey: `${process.env.ENTRY}:btcMultisig:otherOwnerKey`,

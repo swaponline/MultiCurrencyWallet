@@ -38,6 +38,7 @@ const allowedCoins = [
   ...(!config.opts.curEnabled || config.opts.curEnabled.btc ? ["BTC"] : []),
   ...(!config.opts.curEnabled || config.opts.curEnabled.eth ? ["ETH"] : []),
   ...(!config.opts.curEnabled || config.opts.curEnabled.ghost ? ["GHOST"] : []),
+  ...(!config.opts.curEnabled || config.opts.curEnabled.next ? ["NEXT"] : []),
 ];
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -108,14 +109,14 @@ const bannedPeers = {}; // Пиры, которые отклонили запр�
     addPartialItems,
     history: { swapHistory },
     core: { orders, hiddenCoinsList },
-    user: { ethData, btcData, ghostData, tokensData, activeFiat, ...rest },
+    user: { ethData, btcData, ghostData, nextData, tokensData, activeFiat, ...rest },
   }) => ({
     currencies: isExchangeAllowed(currencies.partialItems),
     allCurrencyies: currencies.items,
     addSelectedItems: isExchangeAllowed(currencies.addPartialItems),
     orders: filterIsPartial(orders),
     allOrders: orders,
-    currenciesData: [ethData, btcData, ghostData],
+    currenciesData: [ethData, btcData, ghostData, nextData],
     tokensData: [...Object.keys(tokensData).map((k) => tokensData[k])],
     decline: rememberedOrders.savedOrders,
     hiddenCoinsList,
@@ -126,6 +127,7 @@ const bannedPeers = {}; // Пиры, которые отклонили запр�
       ethData,
       btcData,
       ghostData,
+      nextData,
       ...Object.values(tokensData).filter(({ address }) => address),
       ...Object.values(rest).filter(({ address }) => address)
     ],
@@ -1063,28 +1065,34 @@ export default class Exchange extends Component {
       if (config.erc20[getCurrency] !== undefined) return true
       // btc-eth
       if (getCurrency === "eth") return true;
-
       if (getCurrency === "ghost") return true;
+      if (getCurrency === "next") return true;
     }
     if (config.erc20[haveCurrency] !== undefined) {
       // token-btc
       if (getCurrency === "btc") return true;
-
       if (getCurrency === "ghost") return true;
+      if (getCurrency === "next") return true;
     }
 
     if (haveCurrency === 'eth') {
       // eth-btc
       if (getCurrency === "btc") return true;
-
       if (getCurrency === "ghost") return true;
+      if (getCurrency === "next") return true;
     }
     if (haveCurrency === "ghost") {
-      // btc-token
+      // ghost-token
       if (config.erc20[getCurrency] !== undefined) return true;
-      // btc-eth
+      // ghost-eth
       if (getCurrency === "eth") return true;
-
+      if (getCurrency === "btc") return true;
+    }
+    if (haveCurrency === "next") {
+      // next-token
+      if (config.erc20[getCurrency] !== undefined) return true;
+      // next-eth
+      if (getCurrency === "eth") return true;
       if (getCurrency === "btc") return true;
     }
 
