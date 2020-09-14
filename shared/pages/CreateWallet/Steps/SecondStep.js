@@ -85,24 +85,10 @@ const CreateWallet = (props) => {
           userAgentRegistration: navigator.userAgent,
         }
         await firestore.addUser(data)
-        let token
         if (isSupportedPush) {
           await firebase.signUpWithPush(data)
-          token = await firestore.signUpWithPush()
           window.localStorage.setItem(constants.localStorage.signedUpWithPush, 'true')
         }
-        const ipInfo = await firebase.getIPInfo()
-        const registrationData = {
-          locale: ipInfo.locale || (navigator.userLanguage || navigator.language || "en-gb").split("-")[0],
-          ip: ipInfo.ip,
-          messaging_token: token || '',
-        }
-        let widget_url
-        if (config.isWidget) {
-          widget_url = window.top.location.origin
-          registrationData.widget_url = widget_url
-        }
-        // await stats.addUser(ethData.address, window.top.location.host, registrationData)
       } catch (error) {
         console.error(error)
       }
@@ -153,7 +139,6 @@ const CreateWallet = (props) => {
   })
 
   const handleFinish = () => {
-    console.log(123123, ethData)
     if (currencies.BTC) {
       try {
         axios({
@@ -165,11 +150,8 @@ const CreateWallet = (props) => {
         console.error(error)
       }
     }
-    console.log(123123, ethData)
     onClick()
-    console.log(123123, ethData)
     onCreateTrigger()
-    console.log(123123, ethData)
   }
 
   const handleClick = (index, el) => {
@@ -206,13 +188,13 @@ const CreateWallet = (props) => {
       text: {
         en: 'No security',
         ru: 'Без защиты',
-        nl: 'Geen beveliging'
+        nl: 'Geen beveliging',
       }[locale],
       name: 'withoutSecure',
       capture: {
         en: 'suitable for small amounts',
         ru: 'Подходит для небольших сумм',
-        nl: 'Geschikt voor kleine bedragen'
+        nl: 'Geschikt voor kleine bedragen',
       }[locale],
       enabled: !_activated.nothing[currencyKey],
       activated: _activated.nothing[currencyKey],
@@ -238,9 +220,9 @@ const CreateWallet = (props) => {
       capture: {
         en: 'Verify your transactions via SMS code.',
         ru: 'Транзакции подтверждаются кодом по SMS.',
-        nl: 'Verifieer uw transacties via SMS code.'
+        nl: 'Verifieer uw transacties via SMS code.',
       }[locale],
-      //enabled: _protection.sms[currencyKey],
+      // enabled: _protection.sms[currencyKey],
       enabled: false, // sms temporarly disabled
       activated: _activated.sms[currencyKey],
       onClickHandler: () => {
@@ -265,7 +247,7 @@ const CreateWallet = (props) => {
       capture: {
         en: 'Verify your transactions via PIN code',
         ru: 'Транзакции подтверждаются PIN-кодом',
-        nl: 'Verifieer uw transacties via PIN code'
+        nl: 'Verifieer uw transacties via PIN code',
       }[locale],
       enabled: _protection.pin[currencyKey],
       activated: _activated.pin[currencyKey],

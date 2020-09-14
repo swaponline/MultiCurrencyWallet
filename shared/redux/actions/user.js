@@ -544,6 +544,13 @@ const getAuthData = (name) => {
   return user[`${name}Data`]
 }
 
+const addMessagingToken = (token) => {
+  console.log(12313123123)
+  console.log(token)
+  console.log(12313123123)
+  reducers.user.addMessagingToken({ token })
+}
+
 export default {
   sign,
   sign_btc_2fa,
@@ -562,4 +569,5 @@ export default {
   getWithdrawWallet,
   fetchMultisigStatus,
   pullActiveCurrency,
+  addMessagingToken,
 }

@@ -73,6 +73,7 @@ export const initialState = {
   activeCurrency: 'BTC',
   multisigStatus: {},
   multisigPendingCount: 0,
+  messagingToken: null,
 }
 
 export const updateMultisigStatus = (state, { address, last, total }) => {
@@ -104,6 +105,11 @@ export const addWallet = (state, { name, data }) => ({
   [name]: {
     ...data,
   },
+})
+
+export const addMessagingToken = (state, { token }) => ({
+  ...state,
+  messagingToken: token,
 })
 
 export const setAuthData = (state, { name, data }) => ({

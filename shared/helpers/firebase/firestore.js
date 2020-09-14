@@ -183,6 +183,8 @@ const signUpWithPush = () =>
 
     console.log('firebase messagingToken: ', messagingToken)
 
+    actions.user.addMessagingToken(messagingToken)
+
     const sendResult = await updateUserData({
       messagingToken,
     })
