@@ -72,7 +72,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
         : Object.keys(tokensData).map((k) => tokensData[k].currency)
 
     const tokensItems = Object.keys(tokensData).map((k) => tokensData[k])
-console.log('allData = ', btcData, ghostData, nextData)
+
     const allData = [
       btcData,
       btcMultisigSMSData,

@@ -93,20 +93,19 @@ Add swap instances:
 
 - `shared/redux/actions/index.js`
 - `shared/redux/actions/coin.js` - ???
-
-* use `btc.js` as reference
-* getWalletByWords - set coin index
-* set urls
-	- `getTxRouter`
-	- `getLinkToInfo`
-	- `fetchBalanceStatus`
-	- `fetchBalance`
-	- `getTransaction`
-	- `fetchUnspents`
-	- `broadcastTx`
-	- `checkWithdraw`
-* `bitcore-lib` - add network settings - ???
-* signMessage - [net, net] - ???
+	* use `btc.js` as reference
+	* getWalletByWords - set coin index
+	* set urls
+		- `getTxRouter`
+		- `getLinkToInfo`
+		- `fetchBalanceStatus`
+		- `fetchBalance`
+		- `getTransaction`
+		- `fetchUnspents`
+		- `broadcastTx`
+		- `checkWithdraw`
+	* `bitcore-lib` - add network settings - ???
+	* signMessage - [net, net] - ???
 
 
 ## Add `coinData`

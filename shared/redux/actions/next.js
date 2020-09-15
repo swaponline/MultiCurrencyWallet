@@ -125,7 +125,7 @@ const getPrivateKeyByAddress = (address) => {
       nextData: {
         address: oldAddress,
         privateKey,
-      }
+      },
     },
   } = getState()
   /*
@@ -254,50 +254,62 @@ const getLinkToInfo = (tx) => {
   if (!tx) {
     return
   }
-  return `${config.link.ghostscan}/tx/${tx}`
+  return `${config.link.nextExplorer}/tx/${tx}`
 }
 
-const fetchBalanceStatus = (address) => apiLooper.get('ghostscan', `/addr/${address}`, {
-  checkStatus: (answer) => {
-    try {
-      if (answer && answer.balance !== undefined) return true
-    } catch (e) { /* */console.log(e) }
-    return false
-  },
-}).then(({ balance, unconfirmedBalance }) => ({
-  address,
-  balance,
-  unconfirmedBalance,
-}))
-  .catch((e) => false)
+const fetchBalanceStatus = (address) => {
+  console.log('>>>fetchBalanceStatus')
+  return apiLooper.get('nextExplorer', `/address/${address}`, {
+    checkStatus: (answer) => {
+      try {
+        if (answer && answer.balance !== undefined) return true
+      } catch (e) { /* */console.log(e) }
+      return false
+    },
+  }).then(({ balance, unconfirmedBalance }) => ({
+    address,
+    balance,
+    unconfirmedBalance,
+  })).catch((e) => false)
+}
 
 const getBalance = () => {
   const { user: { nextData: { address } } } = getState()
-
-  return apiLooper.get('ghostscan', `/addr/${address}`, {
+  console.log('>>>getBalance')
+  return apiLooper.get('nextExplorer', `/address/${address}`, {
     inQuery: {
       delay: 500,
       name: `balance`,
     },
     checkStatus: (answer) => {
+      console.log('>>> checkStatus')
+      console.log('answer =', answer)
       try {
         if (answer && answer.balance !== undefined) return true
       } catch (e) { /* */ }
       return false
     },
-  }).then(({ balance, unconfirmedBalance }) => {
+    ignoreErrors: true,
+  }).then((answer) => {
+    const balance = (typeof answer.balance === 'undefined') ? 0 : answer.balance
+    const unconfirmedBalance = (typeof answer.unconfirmedBalance === 'undefined') ? 0 : answer.unconfirmedBalance
     console.log('NEXT Balance: ', balance)
     console.log('NEXT unconfirmedBalance Balance: ', unconfirmedBalance)
-    reducers.user.setBalance({ name: 'nextData', amount: balance, unconfirmedBalance })
-    return balance
-  })
-    .catch((e) => {
-      reducers.user.setBalanceError({ name: 'nextData' })
+    reducers.user.setBalance({
+      name: 'nextData',
+      amount: balance,
+      unconfirmedBalance,
     })
+    return balance
+  }).catch((e) => {
+    console.log('getBalance catch =', e)
+    reducers.user.setBalanceError({ name: 'nextData' })
+  })
 }
 
-const fetchBalance = (address) =>
-  apiLooper.get('ghostscan', `/addr/${address}`, {
+const fetchBalance = (address) => {
+  console.log('>>>fetchBalance')
+  return apiLooper.get('nextExplorer', `/address/${address}`, {
     checkStatus: (answer) => {
       try {
         if (answer && answer.balance !== undefined) return true
@@ -305,9 +317,10 @@ const fetchBalance = (address) =>
       return false
     },
   }).then(({ balance }) => balance)
+}
 
 const fetchTx = (hash, cacheResponse) =>
-  apiLooper.get('ghostscan', `/tx/${hash}`, {
+  apiLooper.get('nextExplorer', `/tx/${hash}`, {
     cacheResponse,
     checkStatus: (answer) => {
       try {
@@ -321,7 +334,7 @@ const fetchTx = (hash, cacheResponse) =>
   }))
 
 const fetchTxRaw = (txId, cacheResponse) =>
-  apiLooper.get('ghostscan', `/rawtx/${txId}`, {
+  apiLooper.get('nextExplorer', `/rawtx/${txId}`, {
     cacheResponse,
     checkStatus: (answer) => {
       try {
@@ -476,7 +489,7 @@ const getTransaction = (address, ownType) =>
 
     const url = `/txs/?address=${address}`
 
-    return apiLooper.get('ghostscan', url, {
+    return apiLooper.get('nextExplorer', url, {
       checkStatus: (answer) => {
         try {
           if (answer && answer.txs !== undefined) return true
@@ -762,10 +775,10 @@ const signAndBuild = (transactionBuilder, address) => {
 }
 
 const fetchUnspents = (address) =>
-  apiLooper.get('ghostscan', `/addr/${address}/utxo`, { cacheResponse: 5000 })
+  apiLooper.get('nextExplorerCustom', `/addr/${address}/utxo`, { cacheResponse: 5000 })
 
 const broadcastTx = (txRaw) =>
-  apiLooper.post('ghostscan', `/tx/send`, {
+  apiLooper.post('nextExplorer', `/tx/send`, {
     body: {
       rawtx: txRaw,
     },
@@ -784,14 +797,9 @@ const getReputation = () => Promise.resolve(0)
 
 window.getMainPublicKey = getMainPublicKey
 
-/*
-  Проверяет списание со скрипта - последняя транзакция выхода
-  Возвращает txId, адресс и сумму
-*/
-const checkWithdraw = (scriptAddress) => {
-  const url = `/txs/?address=${scriptAddress}`
 
-  return apiLooper.get('ghostscan', url, {
+const checkWithdraw = (scriptAddress) => {
+  return apiLooper.get('nextExplorer', `/txs/?address=${scriptAddress}`, {
     checkStatus: (answer) => {
       try {
         if (answer && answer.txs !== undefined) return true
