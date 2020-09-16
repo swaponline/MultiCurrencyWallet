@@ -18,7 +18,7 @@ Use `bitcore-lib` for btc-like currencies
 ## Set configs
 
 - `/externalConfigs/swaponline.github.io`
-- `/externalConfigs/mainnet-localhost.js` - ???enable
+- `/externalConfigs/mainnet-localhost.js`
 - `/externalConfigs/testnet-default.js`
 - `/shared/helpers/externalConfig.js`
 
@@ -92,7 +92,7 @@ Add swap instances:
 ## Create coin actions
 
 - `shared/redux/actions/index.js`
-- `shared/redux/actions/coin.js` - ???
+- `shared/redux/actions/coin.js`
 	* use `btc.js` as reference
 	* getWalletByWords - set coin index
 	* set urls
@@ -104,8 +104,8 @@ Add swap instances:
 		- `fetchUnspents`
 		- `broadcastTx`
 		- `checkWithdraw`
-	* `bitcore-lib` - add network settings - ???
-	* signMessage - [net, net] - ???
+	* `bitcore-lib` - add network settings
+	* signMessage
 
 
 ## Add `coinData`
@@ -146,23 +146,21 @@ Add swap instances:
 - `shared/routes/index.js`
 
 
-## Create localisation
-
-???
-- `shared/localisation/_default.json`
-- `shared/localisation/en.json`
-- `shared/localisation/nl.json`
-- `shared/localisation/ru.json`
-
-
 ## Add swap directions
 
-???
 - `shared/pages/Swap/...`
 - `shared/pages/Swap/CoinSwap/...`
 - `shared/pages/Swap/SwapProgress/SwapProgress.js`
 - `shared/pages/Swap/SwapProgress/SwapProgressText/...`
 - `shared/pages/Swap/swaps/index.js`
+
+
+## Create swap localisation
+
+- `shared/localisation/_default.json`
+- `shared/localisation/en.json`
+- `shared/localisation/nl.json`
+- `shared/localisation/ru.json`
 
 
 ## Other

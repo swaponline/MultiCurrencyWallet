@@ -137,6 +137,7 @@
     "bitcoinjs-message": "^2.1.0",
     "bitcore-lib": "^8.22.2",
     "bootstrap": "^4.3.1",
+    "buffer": "^5.6.0",
     "classnames": "^2.2.5",
     "ethereum-input-data-decoder": "0.0.12",
     "ethereumjs-wallet": "^0.6.3",

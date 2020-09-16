@@ -78,12 +78,11 @@ const getWalletByWords = (mnemonic, walletNumber = 0, path) => {
   const seed = bip39.mnemonicToSeedSync(mnemonic)
   const root = bip32.fromSeed(seed, next.network)
   const node = root.derivePath((path) || `m/44'/707'/0'/0/${walletNumber}`)
-console.log('>>>getWalletByWords')
+
   const account = bitcoin.payments.p2pkh({
     pubkey: node.publicKey,
     network: next.network,
   })
-console.log('account =', account)
 
   return {
     mnemonic,
@@ -97,25 +96,27 @@ console.log('account =', account)
 
 window.getWalletByWords = getWalletByWords
 
+
 const auth = (privateKey) => {
-  if (privateKey) {
-    const hash = bitcoin.crypto.sha256(privateKey)
-    const d = BigInteger.fromBuffer(hash)
+  if (!privateKey) {
+    throw new Error('Missing privateKey')
+  }
 
-    const keyPair = bitcoin.ECPair.fromWIF(privateKey, next.network)
-console.log('>>>auth')
-    const account = bitcoin.ECPair.fromWIF(privateKey, next.network) // eslint-disable-line
-console.log('account =', account)
-    const { address } = bitcoin.payments.p2pkh({ pubkey: account.publicKey, network: next.network })
-    const { publicKey } = account
+  const keyPair = bitcoin.ECPair.fromWIF(privateKey, next.network)
+  const account = bitcoin.ECPair.fromWIF(privateKey, next.network)
 
-    return {
-      account,
-      keyPair,
-      address,
-      privateKey,
-      publicKey,
-    }
+  const { address } = bitcoin.payments.p2pkh({
+    pubkey: account.publicKey,
+    network: next.network,
+  })
+  const { publicKey } = account
+
+  return {
+    account,
+    keyPair,
+    address,
+    privateKey,
+    publicKey,
   }
 }
 
@@ -128,15 +129,7 @@ const getPrivateKeyByAddress = (address) => {
       },
     },
   } = getState()
-  /*
-  const nextMnemonicData
-      nextMnemonicData: {
-        address: mnemonicAddress,
-        privateKey: mnemonicKey,
-      },
-    },
-  } = getState()
-  */
+
   if (oldAddress === address) return privateKey
   if (mnemonicAddress === address) return mnemonicKey
 }
@@ -157,8 +150,7 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
     const d = BigInteger.fromBuffer(hash)
 
     // keyPair     = bitcoin.ECPair.fromWIF(privateKey, next.network)
-  }
-  else {
+  } else {
     console.info('Created account Next ...')
     // keyPair     = bitcoin.ECPair.makeRandom({ network: next.network })
     // privateKey  = keyPair.toWIF()
@@ -184,7 +176,10 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
   window.getNextData = () => data
 
   console.info('Logged in with Next', data)
-  reducers.user.setAuthData({ name: 'nextData', data })
+  reducers.user.setAuthData({
+    name: 'nextData',
+    data,
+  })
   if (!sweepToMnemonicReady) {
     // Auth with our mnemonic account
     if (mnemonic === `-`) {
@@ -192,9 +187,7 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
       return
     }
 
-    if (!mnemonicKeys
-      || !mnemonicKeys.next
-    ) {
+    if (!mnemonicKeys || !mnemonicKeys.next) {
       console.error('Sweep. Cant auth. Login key undefined')
       return
     }
@@ -254,11 +247,10 @@ const getLinkToInfo = (tx) => {
   if (!tx) {
     return
   }
-  return `${config.link.nextExplorer}/tx/${tx}`
+  return `${config.link.nextExplorer}/#/tx/${tx}`
 }
 
 const fetchBalanceStatus = (address) => {
-  console.log('>>>fetchBalanceStatus')
   return apiLooper.get('nextExplorer', `/address/${address}`, {
     checkStatus: (answer) => {
       try {
@@ -275,15 +267,13 @@ const fetchBalanceStatus = (address) => {
 
 const getBalance = () => {
   const { user: { nextData: { address } } } = getState()
-  console.log('>>>getBalance')
+
   return apiLooper.get('nextExplorer', `/address/${address}`, {
     inQuery: {
       delay: 500,
       name: `balance`,
     },
     checkStatus: (answer) => {
-      console.log('>>> checkStatus')
-      console.log('answer =', answer)
       try {
         if (answer && answer.balance !== undefined) return true
       } catch (e) { /* */ }
@@ -302,7 +292,6 @@ const getBalance = () => {
     })
     return balance
   }).catch((e) => {
-    console.log('getBalance catch =', e)
     reducers.user.setBalanceError({ name: 'nextData' })
   })
 }
@@ -487,9 +476,7 @@ const getTransaction = (address, ownType) =>
       resolve([])
     }
 
-    const url = `/txs/?address=${address}`
-
-    return apiLooper.get('nextExplorer', url, {
+    return apiLooper.get('nextExplorer', `/txs/?address=${address}`, {
       checkStatus: (answer) => {
         try {
           if (answer && answer.txs !== undefined) return true
@@ -532,257 +519,54 @@ const getTransaction = (address, ownType) =>
       })
   })
 
-const send = (data) => {
-  return sendBitcore(data)
-}
+const send = ({ from, to, amount, feeValue, speed } = {}) => {
 
-const sendV5WithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
-  const privateKey = getPrivateKeyByAddress(from)
-  const keyPair = bitcoin.ECPair.fromWIF(privateKey, next.network)
-  const {
-    fee: adminFee,
-    address: adminFeeAddress,
-    min: adminFeeMinValue,
-  } = config.opts.fee.next
-  const adminFeeMin = BigNumber(adminFeeMinValue)
-
-  feeValue = feeValue || await next.estimateFeeValue({ inSatoshis: true, speed })
-
-
-  // fee - from amount - percent
-  let feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
-  if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
-
-  feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber()
-
-  const unspents = await fetchUnspents(from)
-  const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
-  const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
-
-
-  const psbt = new bitcoin.Psbt({ network: next.network })
-
-  psbt.setVersion(160);
-
-  psbt.addOutput({
-    address: to,
-    value: fundValue,
-  })
-
-  if (skipValue > 546) {
-    psbt.addOutput({
-      address: from,
-      value: skipValue,
-    })
-  }
-
-  // admin fee output
-  psbt.addOutput({
-    address: adminFeeAddress,
-    value: feeFromAmount,
-  })
-
-  for (let i = 0; i < unspents.length; i++) {
-    const { txid, vout } = unspents[i]
-    const rawTx = await fetchTxRaw(txid)
-    psbt.addInput({
-      hash: txid,
-      index: vout,
-      nonWitnessUtxo: Buffer.from(rawTx, 'hex'),
-    })
-  }
-
-  psbt.signAllInputs(keyPair)
-
-  psbt.finalizeAllInputs()
-
-  const rawTx = psbt.extractTransaction().toHex();
-
-  const broadcastAnswer = await broadcastTx(rawTx)
-
-  const { txid } = broadcastAnswer
-  return txid
-}
-
-const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
-
-  const {
-    fee: adminFee,
-    address: adminFeeAddress,
-    min: adminFeeMinValue,
-  } = config.opts.fee.next
-  const adminFeeMin = BigNumber(adminFeeMinValue)
-
-  // fee - from amount - percent
-  let feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
-  if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
-
-  feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
-
-
-  feeValue = feeValue || await next.estimateFeeValue({ inSatoshis: true, speed })
-
-  const tx = new bitcoin.TransactionBuilder(next.network)
-  const unspents = await fetchUnspents(from)
-
-  let fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
-
-  const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
-
-  unspents.forEach(({ txid, vout }) => tx.addInput(txid, vout, 0xfffffffe))
-  tx.addOutput(to, fundValue)
-
-  if (skipValue > 546) {
-    tx.addOutput(from, skipValue)
-  }
-
-  // admin fee output
-  tx.addOutput(adminFeeAddress, feeFromAmount.toNumber())
-
-  const txRaw = signAndBuild(tx, from)
-
-  await broadcastTx(txRaw.toHex())
-
-  return txRaw
-}
-
-
-const sendV5Default = async ({ from, to, amount, feeValue, speed } = {}) => {
-  const privateKey = getPrivateKeyByAddress(from)
-  const keyPair = bitcoin.ECPair.fromWIF(privateKey, next.network)
-
-  let feeFromAmount = BigNumber(0)
-  if (hasAdminFee) {
-    const {
-      fee: adminFee,
-      min: adminFeeMinValue,
-    } = config.opts.fee.btc
-    const adminFeeMin = BigNumber(adminFeeMinValue)
-
-    feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
-    if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
-
-    feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber() // Admin fee in satoshi
-  }
-  feeValue = feeValue || await next.estimateFeeValue({ inSatoshis: true, speed })
-
-  const unspents = await fetchUnspents(from)
-  const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
-  const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
-
-  const psbt = new bitcoin.Psbt({ network: next.network })
-  
-  psbt.setVersion(160);
-
-  psbt.addOutput({
-    address: to,
-    value: fundValue,
-  })
-
-  if (skipValue > 546) {
-    psbt.addOutput({
-      address: from,
-      value: skipValue
-    })
-  }
-
-  for (let i = 0; i < unspents.length; i++) {
-    const { txid, vout } = unspents[i]
-    let rawTx = false
-    rawTx = await fetchTxRaw(txid)
-
-    psbt.addInput({
-      hash: txid,
-      index: vout,
-      nonWitnessUtxo: Buffer.from(rawTx, 'hex'),
-    })
-  }
-
-  psbt.signAllInputs(keyPair)
-  psbt.finalizeAllInputs()
-
-  const rawTx = psbt.extractTransaction().toHex();
-
-
-  const broadcastAnswer = await broadcastTx(rawTx)
-
-  const { txid } = broadcastAnswer
-  return txid
-}
-
-const sendDefault = async ({ from, to, amount, feeValue, speed } = {}) => {
-  feeValue = feeValue || await next.estimateFeeValue({ inSatoshis: true, speed })
-  const tx = new bitcoin.TransactionBuilder(next.network)
-  tx.setVersion(160);
-  const unspents = await fetchUnspents(from)
-
-  const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
-  const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  const skipValue = totalUnspent - fundValue - feeValue
-  unspents.forEach(({ txid, vout }) => tx.addInput(txid, vout, 0xfffffffe))
-  tx.addOutput(to, fundValue)
-
-  if (skipValue > 546) {
-    tx.addOutput(from, skipValue)
-  }
-
-  const txRaw = signAndBuild(tx, from)
-
-  await broadcastTx(txRaw.toHex())
-
-  return txRaw
-}
-
-const sendBitcore = ({ from, to, amount, feeValue, speed } = {}) => {
   return new Promise(async (ready) => {
-    const privKey = getPrivateKeyByAddress(from)
+    bitcore.Networks.add({
+      name: 'next-mainnet',
+      pubkeyhash: next.network.pubKeyHash,
+      privatekey: next.network.wif,
+      scripthash: next.network.scriptHash,
+      xpubkey: next.network.bip32.public,
+      xprivkey: next.network.bip32.private,
+      networkMagic: 0xcbe4d0a1,
+      port: 7077,
+    })
+    const bitcoreNetwork = bitcore.Networks.get('next-mainnet')
+
+    const privKeyWIF = getPrivateKeyByAddress(from)
+    const privateKey = new bitcore.PrivateKey.fromWIF(privKeyWIF)
+    const publicKey = bitcore.PublicKey(privateKey, bitcoreNetwork)
+    const addressFrom = new bitcore.Address(publicKey, bitcoreNetwork)
+
     const unspents = await fetchUnspents(from)
-    const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
+    const amountSat = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
 
     const transaction = new bitcore.Transaction()
-      .from(unspents) // Feed information about what unspent outputs one can use
-      .to(to, fundValue) // Add an output with the given amount of satoshis
-      .change(from) // Sets up a change address where the rest of the funds will go
-      .sign(privKey) // Signs all the inputs it can*/
+      .from(unspents)
+      .to(to, amountSat)
+      .change(addressFrom)
+      .sign(privateKey)
 
-
-    const broadcastAnswer = await broadcastTx(String(transaction.serialize()))
-
-    const { txid } = broadcastAnswer
+    const rawTx = String(transaction.serialize())
+    const broadcastAnswer = await broadcastTx(rawTx)
+    const txid = broadcastAnswer.raw
     ready(txid)
   })
 }
 
-const signAndBuild = (transactionBuilder, address) => {
-  let { user: { nextData: { privateKey } } } = getState()
-
-  if (address) {
-    // multi wallet - sweep upgrade
-    privateKey = getPrivateKeyByAddress(address)
-  } else {
-    // single wallet - use nextData
-  }
-
-  const keyPair = bitcoin.ECPair.fromWIF(privateKey, next.network)
-
-  transactionBuilder.__INPUTS.forEach((input, index) => {
-    transactionBuilder.sign(index, keyPair)
-  })
-  return transactionBuilder.buildIncomplete()
-}
 
 const fetchUnspents = (address) =>
   apiLooper.get('nextExplorerCustom', `/addr/${address}/utxo`, { cacheResponse: 5000 })
 
-const broadcastTx = (txRaw) =>
-  apiLooper.post('nextExplorer', `/tx/send`, {
+
+const broadcastTx = (rawTx) => {
+  return apiLooper.post('nextExplorer', `/sendrawtransaction`, {
     body: {
-      rawtx: txRaw,
+      rawtx: rawTx,
     },
   })
+}
 
 const signMessage = (message, encodedPrivateKey) => {
   const keyPair = bitcoin.ECPair.fromWIF(encodedPrivateKey, [next.networks.mainnet])
