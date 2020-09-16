@@ -56,8 +56,17 @@ const externalConfig = () => {
     buyViaCreditCardLink: false,
     activeFiat: 'USD',
     exchangeDisabled: false,
+    ui: {
+      footerDisabled: false,
+    },
   }
 
+
+  if (window
+    && window._ui_footerDisabled
+  ) {
+    config.opts.ui.footerDisabled = window._ui_footerDisabled
+  }
 
   if (window
     && window.WPuserHash
