@@ -500,10 +500,10 @@
               <div class="swiper-slide">
                 <div class="container h-100 d-flex flex-column justify-content-center align-items-center">
                   <h2 class="mb-3"></h2>
-                  <div class="mb-4 d-none">
+                  <div class="mb-4">
                     <button class="btn btn-primary btn-swap-primary btn-create-wallet btn-close-modal">Create Wallet</button>
                   </div>
-                  <div class="mb-4">
+                  <div class="mb-4" id="connectMetamaskHolder">
                     <button class="btn btn-primary btn-swap-primary btn-connect-wallet">Connect Wallet</button>
                   </div>
                   <div class="mb-4">
@@ -825,7 +825,9 @@
       function hasMetamask() {
         return !(!(window.ethereum) || false)
       }
-      console.log('hasMetamask', hasMetamask())
+      if (!hasMetamask()) {
+        document.getElementById("connectMetamaskHolder").classList.add("d-none");
+      }
       // Open modal if cookie false
       if (swapDisalbeStarter != "true" && swapIsHome() && !isWidgetBuild && !swapIsWalletCreate() && localStorageIsOk) {
         swapOpenStarterModal();
@@ -935,16 +937,16 @@
             ru: "Создать кошелек"
           },
           connectMetamask: {
-            en: 'Connect Wallet',
-            ru: 'Подключить кошелек'
+            en: 'Use Metamask',
+            ru: 'Подключить Metamask'
           },
           skip: {
             en: 'Skip for now',
             ru: 'Пропустить'
           },
           restoreWallet: {
-            en: 'Access using 12-word phrase',
-            ru: 'Открыть используя секретные 12 слов'
+            en: 'Restore from 12-word phrase',
+            ru: 'Восстановить используя секретные 12 слов'
           },
           next: {
             en: "Next",
