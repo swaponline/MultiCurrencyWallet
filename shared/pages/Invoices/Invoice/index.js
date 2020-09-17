@@ -46,6 +46,7 @@ const langLabels = defineMessages({
     btcData,
     ethData,
     ghostData,
+    nextData,
   },
 }) => {
   return {
@@ -53,6 +54,7 @@ const langLabels = defineMessages({
       btc: btcData,
       eth: ethData,
       ghost: ghostData,
+      next: nextData,
     }
   }
 })

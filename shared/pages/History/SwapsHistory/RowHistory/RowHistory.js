@@ -49,7 +49,12 @@ export default class RowHistory extends Component {
         isPayed = sellCurrency === 'GHOST' ? 4 : 5
         isEmptyBalance = sellCurrency === 'GHOST' ? scriptBalance === 0 : !isEthContractFunded
       }
-   
+
+      if(sellCurrency === 'NEXT'){
+        isPayed = sellCurrency === 'NEXT' ? 4 : 5
+        isEmptyBalance = sellCurrency === 'NEXT' ? scriptBalance === 0 : !isEthContractFunded
+      }
+
       if (isFinished || isRefunded || (step === isPayed && isEmptyBalance)) {
         console.error(`Refund of swap ${id} is not available`)
         return
@@ -70,13 +75,14 @@ export default class RowHistory extends Component {
   componentDidMount() {
     const {
       btcScriptValues, ltcScriptValues,
-      usdtScriptValues, scriptValues, ghostScriptValues,
+      usdtScriptValues, scriptValues, ghostScriptValues, nextScriptValues
     } = this.props.row
 
     const values  = btcScriptValues
       || ltcScriptValues
       || usdtScriptValues
       || ghostScriptValues
+      || nextScriptValues
       || scriptValues
 
     if (!values) return
@@ -97,12 +103,12 @@ export default class RowHistory extends Component {
     }
 
     let {
-      buyAmount, buyCurrency, sellAmount, btcScriptValues, scriptBalance, ghostScriptValues,
+      buyAmount, buyCurrency, sellAmount, btcScriptValues, scriptBalance, ghostScriptValues, nextScriptValues,
       isRefunded, isMy, sellCurrency,
       isFinished, id, scriptValues, isStoppedSwap,
     } = row
 
-    const values = btcScriptValues || scriptValues || ghostScriptValues
+    const values = btcScriptValues || scriptValues || ghostScriptValues || nextScriptValues
 
     const canBeRefunded = values && scriptBalance > 0
     const isDeletedSwap = isFinished || isRefunded || isStoppedSwap

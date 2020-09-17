@@ -3,4 +3,5 @@ export default {
   blockcypher: 'https://live.blockcypher.com/',
   etherscan: 'https://etherscan.io',
   ghostscan: 'https://ghostscan.io',
+  nextExplorer: 'https://explore.next.exchange',
 }

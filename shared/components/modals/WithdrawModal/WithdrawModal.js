@@ -51,13 +51,13 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 @connect(
   ({
     currencies,
-    user: { ethData, btcData, ghostData, tokensData, activeFiat, isBalanceFetching, activeCurrency },
+    user: { ethData, btcData, ghostData, nextData, tokensData, activeFiat, isBalanceFetching, activeCurrency },
     ui: { dashboardModalsAllowed },
   }) => ({
     activeFiat,
     activeCurrency,
     currencies: currencies.items,
-    items: [ethData, btcData, ghostData],
+    items: [ethData, btcData, ghostData, nextData],
     tokenItems: [...Object.keys(tokensData).map((k) => tokensData[k])],
     dashboardView: dashboardModalsAllowed,
     isBalanceFetching,
@@ -157,7 +157,7 @@ export default class WithdrawModal extends React.Component {
       const result = amountIntStr + amountDecimalStr
 
       console.warn(
-        "To avoid [ethjs-unit]error: while converting number with more then 18 decimals to wei - you can't afford yourself add more than 18 decimals"
+        'To avoid [ethjs-unit]error: while converting number with more then 18 decimals to wei - you can`t afford yourself add more than 18 decimals'
       ) // eslint-disable-line
       if (regexr.test(result)) {
         console.warn(
@@ -294,7 +294,11 @@ export default class WithdrawModal extends React.Component {
 
     this.setBalanceOnState(currency)
 
-    let sendOptions = { to, amount, speed: 'fast' }
+    let sendOptions = {
+      to,
+      amount,
+      speed: 'fast'
+    }
 
     const adminFeeSize = usedAdminFee ? adminFee.calc(wallet.currency, amount) : 0
 
@@ -370,7 +374,11 @@ export default class WithdrawModal extends React.Component {
         }
         this.setBalanceOnState(currency)
 
-        this.setState(() => ({ isShipped: false, error: false }))
+        this.setState(() => ({
+          isShipped: false,
+          error: false
+        }))
+
         if (onReady instanceof Function) {
           onReady()
         }
@@ -399,13 +407,11 @@ export default class WithdrawModal extends React.Component {
           data: txInfoCache,
         })
 
-
         const txInfoUrl = helpers.transactions.getTxRouter(currency.toLowerCase(), txId)
         redirectTo(txInfoUrl)
       })
       .then(() => {
         actions.modals.close(name)
-        // history.push('')
       })
       .catch((e) => {
         const errorText = e.res ? e.res.text : ''
@@ -852,6 +858,13 @@ export default class WithdrawModal extends React.Component {
         </div>
         <div styleName="sendBtnsWrapper">
           <div styleName="actionBtn">
+            <Button big fill gray onClick={this.handleClose}>
+              <Fragment>
+                <FormattedMessage id="WithdrawModalCancelBtn" defaultMessage="Cancel" />
+              </Fragment>
+            </Button>
+          </div>
+          <div styleName="actionBtn">
             <Button blue big fill disabled={isDisabled} onClick={this.handleSubmit}>
               {isShipped ? (
                 <Fragment>
@@ -862,13 +875,6 @@ export default class WithdrawModal extends React.Component {
                     <FormattedMessage id="WithdrawModal111" defaultMessage="Send" /> {`${currency.toUpperCase()}`}
                   </Fragment>
                 )}
-            </Button>
-          </div>
-          <div styleName="actionBtn">
-            <Button big fill gray onClick={this.handleClose}>
-              <Fragment>
-                <FormattedMessage id="WithdrawModalCancelBtn" defaultMessage="Cancel" />
-              </Fragment>
             </Button>
           </div>
         </div>

@@ -41,6 +41,7 @@ const allowedCoins = [
   ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? ['BTC'] : [],
   ...(!config.opts.curEnabled || config.opts.curEnabled.eth) ? ['ETH'] : [],
   ...(!config.opts.curEnabled || config.opts.curEnabled.ghost) ? ['GHOST'] : [],
+  ...(!config.opts.curEnabled || config.opts.curEnabled.next) ? ['NEXT'] : [],
 ]
 
 const isExchangeAllowed = (currencies) => currencies.filter(c => {
@@ -100,7 +101,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   addPartialItems,
   history: { swapHistory },
   core: { orders, hiddenCoinsList },
-  user: { ethData, btcData, ghostData, tokensData, activeFiat, ...rest },
+  user: { ethData, btcData, ghostData, nextData, tokensData, activeFiat, ...rest },
 }) => ({
   activeFiat,
   currencies: isExchangeAllowed(currencies.partialItems),
@@ -108,7 +109,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   addSelectedItems: isExchangeAllowed(currencies.addPartialItems),
   orders: filterIsPartial(orders),
   allOrders: orders,
-  currenciesData: [ethData, btcData, ghostData],
+  currenciesData: [ethData, btcData, ghostData, nextData],
   tokensData: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   decline: rememberedOrders.savedOrders,
   hiddenCoinsList,
@@ -118,6 +119,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     ethData,
     btcData,
     ghostData,
+    nextData,
     ...Object.values(tokensData).filter(({ address }) => address),
     ...Object.values(rest).filter(({ address }) => address)
   ],
@@ -833,6 +835,8 @@ export default class Exchange extends Component {
 
     if (getCurrency === 'ghost') return util.typeforce.isCoinAddress.GHOST(customWallet)
 
+    if (getCurrency === 'next') return util.typeforce.isCoinAddress.NEXT(customWallet)
+
     return util.typeforce.isCoinAddress.ETH(customWallet)
 
   }
@@ -845,28 +849,33 @@ export default class Exchange extends Component {
       if (config.erc20[getCurrency] !== undefined) return true
       // btc-eth
       if (getCurrency === 'eth') return true
-
       if (getCurrency === 'ghost') return true
+      if (getCurrency === 'next') return true
     }
+
     if (config.erc20[haveCurrency] !== undefined) {
       // token-btc
       if (getCurrency === 'btc') return true
-
       if (getCurrency === 'ghost') return true
+      if (getCurrency === 'next') return true
     }
 
     if (haveCurrency === 'eth') {
       // eth-btc
       if (getCurrency === 'btc') return true
-
       if (getCurrency === 'ghost') return true
+      if (getCurrency === 'next') return true
     }
 
-
     if (haveCurrency === 'ghost') {
-      // eth-btc
+      // eth-ghost
       if (getCurrency === 'eth') return true
+      if (getCurrency === 'btc') return true
+    }
 
+    if (haveCurrency === 'next') {
+      // eth-next
+      if (getCurrency === 'eth') return true
       if (getCurrency === 'btc') return true
     }
 

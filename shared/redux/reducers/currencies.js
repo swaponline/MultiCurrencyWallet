@@ -66,6 +66,14 @@ const initialState = {
       fullTitle: 'ghost',
       addAssets: true,
     }] : [],
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.next) ? [{
+      name: 'NEXT',
+      title: 'NEXT',
+      icon: 'next',
+      value: 'next',
+      fullTitle: 'next',
+      addAssets: true,
+    }] : [],
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.btc) ? [{
       name: 'BTC',
       title: 'BTC',
@@ -126,6 +134,13 @@ const initialState = {
       value: 'ghost',
       fullTitle: 'ghost',
     }] : [],
+    ...(!buildOpts.curEnabled || buildOpts.curEnabled.next) ? [{
+      name: 'NEXT',
+      title: 'NEXT',
+      icon: 'next',
+      value: 'next',
+      fullTitle: 'next',
+    }] : [],
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.btc) ? [{
       name: 'BTC',
       title: 'BTC',
@@ -163,6 +178,13 @@ if (config.isWidget) {
       value: 'ghost',
       fullTitle: 'ghost',
     },
+    {
+      name: 'NEXT',
+      title: 'NEXT',
+      icon: 'next',
+      value: 'next',
+      fullTitle: 'next',
+    },
   ]
 
   initialState.partialItems = [
@@ -186,6 +208,13 @@ if (config.isWidget) {
       icon: 'ghost',
       value: 'ghost',
       fullTitle: 'ghost',
+    },
+    {
+      name: 'NEXT',
+      title: 'NEXT',
+      icon: 'next',
+      value: 'next',
+      fullTitle: 'next',
     },
   ]
 
@@ -243,6 +272,14 @@ if (config.isWidget) {
     icon: 'ghost',
     value: 'ghost',
     fullTitle: 'ghost',
+  })
+
+  initialState.items.push({
+    name: 'NEXT',
+    title: 'NEXT',
+    icon: 'next',
+    value: 'next',
+    fullTitle: 'next',
   })
 
   initialState.addSelectedItems = [

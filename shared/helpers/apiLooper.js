@@ -101,6 +101,7 @@ const switchNext = (api) => {
 const apiLooper = (method, api, endpoint, options) => {
   const {
     inQuery,
+    ignoreErrors,
   } = options || {}
 
   if (inQuery && !inQuery.inited) {
@@ -128,21 +129,24 @@ const apiLooper = (method, api, endpoint, options) => {
     })
   }
 
-  if (!apiStatuses[api]) initApiStatus(api)
+  if (!apiStatuses[api]) {
+    initApiStatus(api)
+  }
   const apiStatus = apiStatuses[api]
 
   if (apiStatus) {
     return new Promise((resolve, error) => {
       const doRequest = () => {
         const currentEndpoint = apiStatus.endpoints[apiStatus.prior[0]]
-
         if (currentEndpoint.online) {
           const url = `${currentEndpoint.url}${endpoint}`
+          console.log(`🢂 ${url}`)
           request[method](url, options)
             .then((answer) => {
+              console.log('🢀', answer)
               if (options && options.checkStatus instanceof Function) {
                 if (!options.checkStatus(answer)) {
-                  console.error('Endpoint ', currentEndpoint.url, ' check status failed. May be down. Switch next')
+                  console.error(`Endpoint ${currentEndpoint.url} - checkStatus failed (may be down). Switch next`)
                   if (switchNext(api)) {
                     doRequest()
                   } else {
@@ -153,8 +157,14 @@ const apiLooper = (method, api, endpoint, options) => {
               }
               resolve(answer)
             })
-            .catch(() => {
-              console.error('Endpoint ', currentEndpoint.url, 'is offline. Switch next')
+            .catch((answer) => {
+              if (ignoreErrors) {
+                console.log('Ignore error ^')
+                resolve(answer)
+                return
+              }
+              console.log('🢀 (❗) catched', answer)
+              console.error(`Endpoint ${currentEndpoint.url} may be offline. Switch next`)
               if (switchNext(api)) {
                 doRequest()
               } else {

@@ -251,6 +251,11 @@ export default class Row extends Component {
       return
     }
 
+    if (currency.toLowerCase() === 'next') {
+      this.handleWithdrawPopup()
+      return
+    }
+
     let targetCurrency = currency
     switch (currency.toLowerCase()) {
       case 'btc (multisig)':

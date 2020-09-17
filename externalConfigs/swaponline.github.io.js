@@ -41,5 +41,6 @@ window.buildOptions = {
     btc: true,
     eth: true,
     ghost: true,
-  }
+    next: true,
+  },
 }

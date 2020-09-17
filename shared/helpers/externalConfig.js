@@ -36,6 +36,7 @@ const externalConfig = () => {
       eth: true,
       btc: true,
       ghost: false,
+      next: false,
     },
     ownTokens: false,
     addCustomERC20: true,
@@ -114,6 +115,15 @@ const externalConfig = () => {
       && window.CUR_GHOST_DISABLED === false
     ) {
       config.opts.curEnabled.ghost = true
+    }
+  }
+
+  if (window) {
+    if (!config.opts.curEnabled) config.opts.curEnabled = {}
+    if (window.CUR_NEXT_DISABLED !== undefined
+      && window.CUR_NEXT_DISABLED === false
+    ) {
+      config.opts.curEnabled.next = true
     }
   }
 

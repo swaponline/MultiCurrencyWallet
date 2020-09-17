@@ -73,6 +73,7 @@ const backupUserData = {
           eth:                              get(`eth`),
           btc:                              get(`btc`),
           ghost:                            get(`ghost`),
+          next:                             get(`next`),
           ethOld:                           get(`ethOld`),
           btcOld:                           get(`btcOld`),
           twentywords:                      get(`twentywords`),
@@ -173,30 +174,33 @@ const backupUserData = {
             && req.data.data
           ) {
             const data = req.data.data
-            set( `btc`, data.btc )
-            set( `ghost`, data.ghost )
-            set( `btcMnemonic`, data.btcMnemonic )
-            set( `btcMultisig`, data.btcMultisig )
-            set( `btcMultisigOtherOwnerKey`, data.btcMultisigOtherOwnerKey )
-            set( `btcMultisigOtherOwnerKeyMnemonic`, data.btcMultisigOtherOwnerKeyMnemonic )
-            set( `btcMultisigOtherOwnerKeyOld`, data.btcMultisigOtherOwnerKeyOld )
-            set( `btcOld`, data.btcOld )
-            set( `btcPinMnemonicKey`, data.btcPinMnemonicKey )
-            set( `btcSmsMnemonicKey`, data.btcSmsMnemonicKey )
-            set( `btcSmsMnemonicKeyGenerated`, data.btcSmsMnemonicKeyGenerated )
-            set( `btcSmsMnemonicKeyMnemonic`, data.btcSmsMnemonicKeyMnemonic )
-            set( `btcSmsMnemonicKeyOld`, data.btcSmsMnemonicKeyOld )
-            set( `eth`, data.eth )
-            set( `ethMnemonic`, data.ethMnemonic )
-            set( `ethOld`, data.ethOld )
-            set( `ethMnemonic`, data.ethMnemonic )
-            set( `twentywords`, data.twentywords )
+
+            set(`btc`, data.btc)
+            set(`ghost`, data.ghost)
+            set(`next`, data.next)
+            set(`btcMnemonic`, data.btcMnemonic)
+            set(`btcMultisig`, data.btcMultisig)
+            set(`btcMultisigOtherOwnerKey`, data.btcMultisigOtherOwnerKey)
+            set(`btcMultisigOtherOwnerKeyMnemonic`, data.btcMultisigOtherOwnerKeyMnemonic)
+            set(`btcMultisigOtherOwnerKeyOld`, data.btcMultisigOtherOwnerKeyOld)
+            set(`btcOld`, data.btcOld)
+            set(`btcPinMnemonicKey`, data.btcPinMnemonicKey)
+            set(`btcSmsMnemonicKey`, data.btcSmsMnemonicKey)
+            set(`btcSmsMnemonicKeyGenerated`, data.btcSmsMnemonicKeyGenerated)
+            set(`btcSmsMnemonicKeyMnemonic`, data.btcSmsMnemonicKeyMnemonic)
+            set(`btcSmsMnemonicKeyOld`, data.btcSmsMnemonicKeyOld)
+            set(`eth`, data.eth)
+            set(`ethMnemonic`, data.ethMnemonic)
+            set(`ethOld`, data.ethOld)
+            set(`ethMnemonic`, data.ethMnemonic)
+            set(`twentywords`, data.twentywords)
+
             localStorage.setItem(constants.localStorage.hiddenCoinsList, data.hiddenCoinsList)
             localStorage.setItem(constants.localStorage.isWalletCreate, data.isWalletCreate)
             localStorage.setItem(constants.localStorage.didProtectedBtcCreated, data.didProtectedBtcCreated)
             localStorage.setItem(constants.localStorage.didPinBtcCreated, data.didPinBtcCreated)
-
             localStorage.setItem(lsCurrentUser, window.WPuserUid)
+
             resolve(true)
           } else {
             resolve(false)

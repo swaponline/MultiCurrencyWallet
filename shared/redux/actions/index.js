@@ -14,6 +14,7 @@ import filter from './filter'
 
 import btc from './btc'
 import ghost from './ghost'
+import next from './next'
 import btcmultisig from './btcmultisig'
 import eth from './eth'
 import token from './token'
@@ -56,6 +57,7 @@ export default {
   btcmultisig,
   eth,
   ghost,
+  next,
 
   token,
   feed,

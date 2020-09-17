@@ -13,6 +13,8 @@ export default (currency, returnToken) => {
       return 'eth'
     case 'ghost':
       return 'ghost'
+    case 'next':
+      return 'next'
   }
 
   if (ethToken.isEthToken({ name: key })) {

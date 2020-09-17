@@ -83,6 +83,9 @@ const getUserData = (currency) => {
     case 'GHOST':
       return getState().user.ghostData
 
+    case 'NEXT':
+      return getState().user.nextData
+
     default:
       return {}
   }
@@ -141,7 +144,7 @@ const deletedPartialCurrency = (orderId) => {
   const deletedOrderSell = orders.filter(item => item.sellCurrency.toUpperCase() === deletedOrderSellCurrency)
   const deletedOrderBuy = orders.filter(item => item.buyCurrency.toUpperCase() === deletedOrderBuyCurrency)
 
-  const premiumCurrencies = ['BTC', 'ETH', 'GHOST', 'SWAP'] // валюты, которые всегда должны быть в дропе
+  const premiumCurrencies = ['BTC', 'ETH', 'GHOST', 'NEXT', 'SWAP'] // валюты, которые всегда должны быть в дропе
 
   if (deletedOrderSell.length === 1 && !premiumCurrencies.includes(deletedOrderSellCurrency)) {
     reducers.currencies.deletedPartialCurrency(deletedOrderSellCurrency)
@@ -354,6 +357,7 @@ const getWallets = () => {
     user: {
       btcData,
       ghostData,
+      nextData,
       btcMultisigSMSData,
       btcMultisigUserData,
       btcMultisigPinData,
@@ -371,6 +375,7 @@ const getWallets = () => {
       btcMnemonicData,
       ethMnemonicData,
       ghostMnemonicData,
+      nextMnemonicData,
     },
   } = getState()
 
@@ -391,6 +396,7 @@ const getWallets = () => {
         : [ethData]) 
       : [],
     ... (!config.opts.curEnabled || config.opts.curEnabled.ghost) ? [ghostData] : [],
+    ... (!config.opts.curEnabled || config.opts.curEnabled.next) ? [nextData] : [],
     ...Object.keys(tokensData)
       .filter(k => !tokensData[k].reducerDataTarget)
       .map(k => tokensData[k]),

@@ -4,6 +4,7 @@ export default [
   'BTC (Multisig)',
   'ETH',
   'GHOST',
+  'NEXT',
   'SWAP',
   'HDP',
   'USDT',
