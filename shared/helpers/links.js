@@ -164,26 +164,26 @@ linksManager.getFaqLink = (faqID) => {
 
 export const getBitcoinWallet = () => {
   const { address } = actions.user.getAuthData('btc')
-
   return `/btc/${address}`
 }
 
 export const getEtherWallet = () => {
   const { address } = actions.user.getAuthData('eth')
-
   return `/eth/${address}`
 }
 
-
 export const getGhostWallet = () => {
   const { address } = actions.user.getAuthData('ghost')
-
   return `/ghost/${address}`
+}
+
+export const getNextWallet = () => {
+  const { address } = actions.user.getAuthData('next')
+  return `/next/${address}`
 }
 
 export const getTokenWallet = (token) => {
   const { address } = actions.user.getAuthData('eth')
-
   return `/token/${token.toUpperCase()}/${address}`
 }
 

@@ -7,6 +7,14 @@ export const initialState = {
     balanceError: null,
     infoAboutCurrency: null,
   },
+  nextData: {
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'NEXT',
+    fullName: 'next',
+    balanceError: null,
+    infoAboutCurrency: null,
+  },
   ethData: {
     balance: 0,
     isBalanceFetched: false,

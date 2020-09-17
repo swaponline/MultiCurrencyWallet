@@ -36,6 +36,7 @@ const CreateWallet = (props) => {
       btc: true,
       eth: true,
       ghost: true,
+      next: true,
       erc: true,
     },
     sms: {},
@@ -189,13 +190,13 @@ const CreateWallet = (props) => {
       text: {
         en: 'No security',
         ru: 'Без защиты',
-        nl: 'Geen beveliging'
+        nl: 'Geen beveliging',
       }[locale],
       name: 'withoutSecure',
       capture: {
         en: 'suitable for small amounts',
         ru: 'Подходит для небольших сумм',
-        nl: 'Geschikt voor kleine bedragen'
+        nl: 'Geschikt voor kleine bedragen',
       }[locale],
       enabled: !_activated.nothing[currencyKey],
       activated: _activated.nothing[currencyKey],
@@ -221,7 +222,7 @@ const CreateWallet = (props) => {
       capture: {
         en: 'Verify your transactions via SMS code.',
         ru: 'Транзакции подтверждаются кодом по SMS.',
-        nl: 'Verifieer uw transacties via SMS code.'
+        nl: 'Verifieer uw transacties via SMS code.',
       }[locale],
       //enabled: _protection.sms[currencyKey],
       enabled: false, // sms temporarly disabled
@@ -248,7 +249,7 @@ const CreateWallet = (props) => {
       capture: {
         en: 'Verify your transactions via PIN code',
         ru: 'Транзакции подтверждаются PIN-кодом',
-        nl: 'Verifieer uw transacties via PIN code'
+        nl: 'Verifieer uw transacties via PIN code',
       }[locale],
       enabled: _protection.pin[currencyKey],
       activated: _activated.pin[currencyKey],

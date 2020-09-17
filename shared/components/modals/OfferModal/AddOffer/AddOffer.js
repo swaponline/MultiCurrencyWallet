@@ -31,11 +31,11 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   ({
     currencies,
     addSelectedItems,
-    user: { ethData, btcData, ghostData, tokensData },
+    user: { ethData, btcData, ghostData, nextData, tokensData },
   }) => ({
     currencies: currencies.items,
     addSelectedItems: currencies.addSelectedItems,
-    items: [ethData, btcData, ghostData],
+    items: [ethData, btcData, ghostData, nextData],
     tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   })
 )

@@ -42,9 +42,9 @@ const defaultLanguage = defineMessages({
 
 @injectIntl
 @connect(({
-  user: { ethData, btcData, ghostData, tokensData },
+  user: { ethData, btcData, ghostData, nextData, tokensData },
 }) => ({
-  currenciesData: [ethData, btcData, ghostData],
+  currenciesData: [ethData, btcData, ghostData, nextData],
   tokensData: [...Object.keys(tokensData).map(k => (tokensData[k]))],
 }))
 @CSSModules(styles, { allowMultiple: true })
@@ -92,23 +92,33 @@ export default class ConfirmBeginSwap extends React.Component {
       // btc-eth
       if (sellCurrency === 'ETH') return true
       if (sellCurrency === 'GHOST') return true
+      if (sellCurrency === 'NEXT') return true
     }
     if (config.erc20[buyCurrency.toLowerCase()] !== undefined) {
       // token-btc
       if (sellCurrency === 'BTC') return true
       if (sellCurrency === 'GHOST') return true
+      if (sellCurrency === 'NEXT') return true
     }
 
     if (buyCurrency === 'ETH') {
       // eth-btc
       if (sellCurrency === 'BTC') return true
       if (sellCurrency === 'GHOST') return true
+      if (sellCurrency === 'NEXT') return true
     }
 
     if (buyCurrency === 'GHOST') {
       // ghost-eth
       if (sellCurrency === 'ETH') return true
        // ghost-btc
+      if (sellCurrency === 'BTC') return true
+    }
+
+    if (buyCurrency === 'NEXT') {
+      // next-eth
+      if (sellCurrency === 'ETH') return true
+       // next-btc
       if (sellCurrency === 'BTC') return true
     }
 

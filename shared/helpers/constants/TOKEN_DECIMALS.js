@@ -5,6 +5,7 @@ const decimals = {
   btc: 8,
   eth: 18,
   ghost: 8,
+  next: 8,
 }
 
 Object.keys(config.erc20)

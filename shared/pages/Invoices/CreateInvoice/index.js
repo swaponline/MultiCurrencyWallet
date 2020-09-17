@@ -23,6 +23,7 @@ import config from 'app-config'
     btcData,
     ethData,
     ghostData,
+    nextData,
   },
 }) => {
   return {
@@ -30,6 +31,7 @@ import config from 'app-config'
       btc: btcData,
       eth: ethData,
       ghost: ghostData,
+      next: nextData,
     }
   }
 })
@@ -57,7 +59,7 @@ export default class CreateInvoice extends PureComponent {
     console.log('CreateInvoice mounted')
     let { match : { params : { type, wallet } }, history, location: { pathname } , data } = this.props
 
-    if (type && wallet && ['btc','eth', 'ghost'].includes(type) && data[type]) {
+    if (type && wallet && ['btc', 'eth', 'ghost', 'next'].includes(type) && data[type]) {
       const address = data[type].address
 
       console.log(1)

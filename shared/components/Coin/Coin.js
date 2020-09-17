@@ -18,6 +18,7 @@ const defaultCurrencyColors = {
   'btc (pin-protected)': 'orange',
   'usdt': '#33a681',
   'ghost': 'black',
+  'next': 'white',
 }
 
 const Coin = ({ className, size, name }) => {

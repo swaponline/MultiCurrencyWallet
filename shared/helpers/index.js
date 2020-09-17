@@ -1,5 +1,6 @@
 import btc from './btc'
 import ghost from './ghost'
+import next from './next'
 import eth from './eth'
 import ethToken from './ethToken'
 import user from './user'
@@ -43,6 +44,7 @@ export default {
   btc,
   eth,
   ghost,
+  next,
   ethToken,
   getCurrencyKey,
   handleGoTrade,
@@ -54,6 +56,7 @@ export {
   btc,
   eth,
   ghost,
+  next,
   ethToken,
   user,
   web3,

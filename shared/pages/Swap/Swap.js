@@ -31,14 +31,14 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @injectIntl
 @connect(({
-  user: { ethData, btcData, ghostData, tokensData, activeFiat },
+  user: { ethData, btcData, ghostData, nextData, tokensData, activeFiat },
   ipfs: { peer },
   rememberedOrders,
 }) => ({
   activeFiat,
-  items: [ethData, btcData, ghostData],
+  items: [ethData, btcData, ghostData, nextData],
   tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
-  currenciesData: [ethData, btcData, ghostData],
+  currenciesData: [ethData, btcData, ghostData, nextData],
   tokensData: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   errors: 'api.errors',
   checked: 'api.checked',
