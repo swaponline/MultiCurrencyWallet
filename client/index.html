@@ -317,6 +317,23 @@
       font-weight: bold;
     }
 
+    .show-on-fail-ls {
+      text-align: center;
+      margin-top: 2em;
+    }
+
+    .show-on-fail-ls .btc-open-in-new-tab {
+      margin-top: 2em;
+    }
+    .show-on-fail-ls .btc-open-in-new-tab > A {
+      color: #FFF;
+      text-decoration: none;
+    }
+
+    .show-on-fail-ls SPAN {
+      display: block;
+    }
+
     .starter-modal .btn-primary:hover {
       background-color: #9785ed;
     }
@@ -483,10 +500,10 @@
               <div class="swiper-slide">
                 <div class="container h-100 d-flex flex-column justify-content-center align-items-center">
                   <h2 class="mb-3"></h2>
-                  <div class="mb-4 d-none">
+                  <div class="mb-4">
                     <button class="btn btn-primary btn-swap-primary btn-create-wallet btn-close-modal">Create Wallet</button>
                   </div>
-                  <div class="mb-4">
+                  <div class="mb-4" id="connectMetamaskHolder">
                     <button class="btn btn-primary btn-swap-primary btn-connect-wallet">Connect Wallet</button>
                   </div>
                   <div class="mb-4">
@@ -578,9 +595,61 @@
         </div>
         <div id="beforeJSTip" class="tips">Don't forget to&nbsp;save your 12-word recovery phrase</div>
       </div>
+      <div class="mb-4 show-on-fail-ls d-none" id="onFailLocalStorageMessage">
+        <span>Not every function works In this window, please open new tab.
+          If the error will repeat please contact admin
+          <br />
+          <a href="https://t.me/sashanoxon">
+            https://t.me/sashanoxon
+          </a>
+        </span>
+        <button class="btn btn-primary btc-open-in-new-tab">
+          <a href="https://wallet.wpmix.net" id="onFailLocalStorageLink" target="_blank">
+            Open App in new tab
+          </a>
+        </button>
+      </div>
       <div id="usersInform" class="usersInform"></div>
     </div>
     <script>
+      var localStorageIsOk = true;
+      try {
+        var testLocalStorage = window.localStorage;
+      } catch (e) {
+        localStorageIsOk = false
+        document.getElementById("onFailLocalStorageLink").href = window.location.href;
+        document.getElementById("onFailLocalStorageMessage").classList.remove("d-none");
+        var sendErrorFeedback = function () {
+          var msg = "localStorage error: agent("+navigator.userAgent+")";
+              msg+= ", location("+window.location.href+")";
+
+          var url = "https://noxon.wpmix.net/counter.php?msg="+encodeURI(msg);
+
+          window.jQuery.ajax({
+            type: "POST",
+            url: url
+          });
+        };
+        if (!window.jQuery) {
+          // inject jQuery for send request to counter for feedback
+          var jsScriptTag = document.createElement("SCRIPT");
+            jsScriptTag.src = "https://code.jquery.com/jquery-3.5.1.min.js";
+            console.log("jsScriptTag", jsScriptTag);
+          document.getElementsByTagName("BODY")[0].appendChild(jsScriptTag);
+          var waitJQLoad = function (onLoaded) {
+            if (window.jQuery) {
+              onLoaded();
+            } else {
+              window.setTimeout( function () {
+                waitJQLoad(onLoaded);
+              }, 100);
+            };
+          };
+          waitJQLoad(sendErrorFeedback);
+        } else {
+          sendErrorFeedback();
+        };
+      };
 
       function setCookie(name, value, options) {
         options = options || {};
@@ -756,9 +825,11 @@
       function hasMetamask() {
         return !(!(window.ethereum) || false)
       }
-      console.log('hasMetamask', hasMetamask())
+      if (!hasMetamask()) {
+        document.getElementById("connectMetamaskHolder").classList.add("d-none");
+      }
       // Open modal if cookie false
-      if (swapDisalbeStarter != "true" && swapIsHome() && !isWidgetBuild && !swapIsWalletCreate()) {
+      if (swapDisalbeStarter != "true" && swapIsHome() && !isWidgetBuild && !swapIsWalletCreate() && localStorageIsOk) {
         swapOpenStarterModal();
       }
     </script>
@@ -866,16 +937,16 @@
             ru: "Создать кошелек"
           },
           connectMetamask: {
-            en: 'Connect Wallet',
-            ru: 'Подключить кошелек'
+            en: 'Use Metamask',
+            ru: 'Подключить Metamask'
           },
           skip: {
             en: 'Skip for now',
             ru: 'Пропустить'
           },
           restoreWallet: {
-            en: 'Access using 12-word phrase',
-            ru: 'Открыть используя секретные 12 слов'
+            en: 'Restore from 12-word phrase',
+            ru: 'Восстановить используя секретные 12 слов'
           },
           next: {
             en: "Next",

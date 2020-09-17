@@ -5,7 +5,7 @@ import cx from 'classnames'
 import { isMobile } from 'react-device-detect'
 import { constants } from 'helpers'
 
-import config from 'app-config'
+import config from 'helpers/externalConfig'
 import { connect } from 'redaction'
 
 import styles from './Footer.scss'
@@ -20,7 +20,7 @@ const Footer = (props) => {
 
   const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-  const isFooterDisabled = window.location.host === 'instainblocks.com' // // todo: admin panel enable/disable
+  const isFooterDisabled = config.opts.ui.footerDisabled
 
   return (
     <footer
