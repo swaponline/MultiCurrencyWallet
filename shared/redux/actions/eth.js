@@ -210,7 +210,9 @@ const isETHAddress = (address) => {
 }
 
 const getBalance = () => {
-  const { user: { ethData: { address } } } = getState()
+  const { user: { ethData: { ethAddress } } } = getState()
+
+  const address = (metamask.isEnabled() && metamask.isConnected()) ? metamask.getAddress() : ethAddress
 
   const balanceInCache = cacheStorageGet('currencyBalances', `eth_${address}`)
   if (balanceInCache !== false) {
