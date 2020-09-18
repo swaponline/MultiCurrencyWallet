@@ -1,8 +1,10 @@
 # SWAP is ERC20 token of our project
 
+
 ## Contract address
 
-[0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9](https://etherscan.io/address/0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9)
+[0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9](https://etherscan.io/token/0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9)
+
 
 ## Listed on exchnages
 
@@ -37,6 +39,7 @@ Current
 
 Also SWAP tokens can use as governence token
 
+
 ## How we get revenue
 
 - By selling [Wordpress plugin](https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064) (whitelabel, wallet as a service)
@@ -45,36 +48,38 @@ Also SWAP tokens can use as governence token
 
 ## Strategy and roadmap
 
-- ✔️ BTC-ETH atomic swap - done
-- ✔️ BTC-ERC20 atomic swap - done
-- 👷 UTXO to UTXO atomic swap - soon
-- 👷 DeFi on bitcoin https://github.com/bitcoin/bips/blob/master/bip-0197.mediawiki
-  (A Hashed Time-Locked Collateral Contract (HTLCC) consists of two scripts that permit a designated party (the "borrower") to lock funds on the Bitcoin chain for a specified amount of time as collateral in a debt agreement where the loan principal is denominated in a currency on another blockchain.)
+- ✔️ BTC-ETH atomic swap – done
+- ✔️ BTC-ERC20 atomic swap – done
+- 👷 UTXO to UTXO atomic swap – soon
+- 👷 DeFi on bitcoin (A [Hashed Time-Locked Collateral Contract](https://github.com/bitcoin/bips/blob/master/bip-0197.mediawiki) (HTLCC) consists of two scripts that permit a designated party (the "borrower") to lock funds on the Bitcoin chain for a specified amount of time as collateral in a debt agreement where the loan principal is denominated in a currency on another blockchain)
+
 
 ## Timeline
 
-October, 2017 – the idea of non-custodial interaction between Bitcoin and dApps is published by CEO in Facebook
+October, 2017 – The idea of non-custodial interaction between Bitcoin and dApps is published by CEO in Facebook
 
-Q1, 2018 – first round of investment, team gathering.
+Q1, 2018 – First round of investment, team gathering
 
-June, 2018 – live Beta testnet with Atomic Swaps between BTC, ETH.
+Jun, 2018 – Live Beta testnet with Atomic Swaps BTC ⮀ ETH
 
-August, 2018 – mainnet release
+Aug, 2018 – Mainnet release
 
-September, 2018 – first Atomic Swaps on EOS and USDT ever
+Sep, 2018 – First atomic swaps on EOS ⮀ USDT ever
 
-October, 2018 – first ERC-20 integrations: 45+ projects listed their tokens on Swap.online which allows to exchange them on USDT and BTC and announced the collaboration with Swap.online to their communities.
+Oct, 2018 – First ERC-20 integrations: 45+ projects listed their tokens on Swap.online which allows to exchange them on USDT and BTC and announced the collaboration with Swap.online to their communities
 
-November, 2018 – Telos blockchain integration.
+Nov, 2018 – Telos blockchain integration
 
-December, 2018- first B2B-implementation of the Swap.online toolkit: Saturn.black implements the exchange mechanism for XSAT tokens purchasing.
+Dec, 2018 – First B2B-implementation of the Swap.online toolkit: Saturn.black implements the exchange mechanism for XSAT tokens purchasing
 
-February, 2019 – Swap.online starts Bitcoin integration for DEEX (BitShares gate).
+Feb, 2019 – Swap.online starts Bitcoin integration for DEEX (BitShares gate)
 
-May, 2019 – BCH wallet launched in mainnet, ETH <> BCH swaps executed in testnet.
+May, 2019 – BCH wallet launched in mainnet, ETH ⮀ BCH swaps in testnet
 
-June, 2019 – Swap.online progress presented on Malta Blockchain Conference.
+Jun, 2019 – Swap.online progress presented on Malta Blockchain Conference
 
-July, 2019 –  Swap.online progress presented on Asia Blockchain Summit.
+Jul, 2019 – Swap.online progress presented on Asia Blockchain Summit
 
-Jan, 2020 – WordPress version release
+Jan, 2020 – WordPress plugin release
+
+Sep, 2020 – 100 WordPress plugin sales, stable income

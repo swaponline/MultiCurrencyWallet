@@ -1,57 +1,56 @@
 # Our clients
 
 
-## Bitplicity
+## [GHOST](https://www.ghostbymcafee.com/) by [McAfee](https://twitter.com/officialmcafee/status/1274757261513175045)
 
-- __integration__: https://wallet.bitplicity.com/#/
-- Bitplicity app: https://play.google.com/store/apps/details?id=com.Bitplicity.Bitplicityapp
-- uses only wallet
-- need registration
-- creates github issues
-
-
-## SONM
-
-- __integration__: https://sonm.com/swap-online/
-- rank: https://www.coingecko.com/en/coins/sonm
+- __Integration__: https://ghostx.live/
+- Listed **GHOST**, see [rank](https://www.coingecko.com/en/coins/ghost)
+- 🏅 Issue creator
+- 🥇 Contributor
 
 
-## GHOST
+## [Bitplicity](https://bitplicity.com/)
 
-- __integration__: https://ghostx.live/
-- site: https://www.ghostbymcafee.com/
-- github: https://github.com/ghost-coin
-- proof: https://twitter.com/officialmcafee/status/1274757261513175045
-- rank: https://www.coingecko.com/en/coins/ghost
+- __Integration__: https://wallet.bitplicity.com/#/ (Uses only wallet with registration)
+- __Integration (app)__: https://play.google.com/store/apps/details?id=com.Bitplicity.Bitplicityapp
+- 🏅 Issue creator
 
 
-## INSTAINBLOCKS
+## [SONM](https://sonm.com/)
 
-- __integration__: https://instainblocks.com/my-wallet/
-- creates github issues
-
-
-## Satůrn
-
-- __integration__: https://saturn.black/exchange/
+- __Integration__: https://sonm.com/swap-online/
+- Listed **SNM**, see [rank](https://www.coingecko.com/en/coins/sonm)
 
 
-## PayAccess
+## [INSTAINBLOCKS](https://instainblocks.com/)
 
-- soon
-
-
-## NEXT
-
-- soon
-- rank: https://www.coingecko.com/en/coins/next-coin
+- __Integration__: https://instainblocks.com/my-wallet/
+- __Integration (app)__: https://play.google.com/store/apps/details?id=com.instainblocks.twa
+- 🏅 Issue creator
 
 
-## Other
+## [NEXT.coin](https://next.exchange/)
 
-..
+- Listed **NEXT**, see [rank](https://www.coingecko.com/en/coins/next-coin)
+- 🏅 Issue creator
 
-### Wordpress plugin clients
+
+## [PayAccept](https://www.payaccept.net/)
+
+- Listed **PAY**, see [rank](https://www.coingecko.com/en/coins/payaccept)
+
+
+## [Satůrn](https://saturn.black/)
+
+- __Integration__: https://saturn.black/exchange/
+
+
+## [Atomic Swap Wallet](https://atomicswapwallet.io/)
+
+- __Integration__: https://atomicswapwallet.io/wallet/
+
+
+## Other Wordpress plugin clients
 
 - feedback: https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/reviews/23532064
 - support: https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064/comments
