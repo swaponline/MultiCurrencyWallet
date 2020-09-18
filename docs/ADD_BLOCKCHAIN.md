@@ -1,21 +1,46 @@
-# ADD NEW COIN
-
-Use `bitcore-lib` for btc-like currencies
+# ADD NEW BLOCKCHAIN
 
 
-## Add explorer api
+## Plan
+
+### Phase 1 `Example`
+
+- Find JS library (use `bitcore-lib` for btc-like currencies)
+- Create the simplest example
+
+
+### Phase 2 `Wallet`
+
+- Mnemonic -> keys, address generation
+- Balance
+- tx/rx
+- PR, reviews, merge
+
+
+### Phase 3 `Swaps`
+
+- Implement swaps
+- PR, reviews, merge
+
+
+--------------------------------------------
+
+
+## Front changes
+
+### Add explorer api
 
 - `config/mainnet/api.js`
 - `config/testnet/api.js`
 
 
-## Add explorer link
+### Add explorer link
 
 - `config/mainnet/link.js`
 - `config/testnet/api.js`
 
 
-## Set configs
+### Set configs
 
 - `/externalConfigs/swaponline.github.io`
 - `/externalConfigs/mainnet-localhost.js`
@@ -23,7 +48,7 @@ Use `bitcore-lib` for btc-like currencies
 - `/shared/helpers/externalConfig.js`
 
 
-## Add coin on
+### Add coin on
 
 - `config/testnet/hiddenCoins.js`
 - `shared/components/Coin/Coin.js`
@@ -41,43 +66,43 @@ Use `bitcore-lib` for btc-like currencies
 - `shared/redux/reducers/currencies.js`
 
 
-## Add logo
+### Add logo
 
 - `shared/components/ui/CurrencyIcon/images/coin.svg`
 - export it here: `shared/components/ui/CurrencyIcon/images/index.js`
 
 
-## Set fee default
+### Set fee default
 
 - `shared/helpers/constants/DEFAULT_FEE_RATES.js`
 
 
-## Set coin decimals
+### Set coin decimals
 
 - `shared/helpers/constants/TOKEN_DECIMALS.js`
 
 
-## Add coin as dynamic fee
+### Add coin as dynamic fee
 
 - `shared/helpers/constants/coinsWithDynamicFee.js`
 
 
-## Add min amount
+### Add min amount
 
 - `shared/helpers/constants/minAmount.js`
 
 
-## Create `privateKey` / `mnemonicKey` names for your coin
+### Create `privateKey` / `mnemonicKey` names for your coin
 
 - `shared/helpers/constants/privateKeyNames.js`
 
 
-## Add coin accordingly as is done for btc
+### Add coin accordingly as is done for btc
 
 - `shared/redux/actions/user.js`
 
 
-## More changes!
+### More changes!
 
 Create helper, use btc as reference:
 
@@ -89,7 +114,7 @@ Add swap instances:
 - `shared/instances/newSwap.js`
 
 
-## Create coin actions
+### Create coin actions
 
 - `shared/redux/actions/index.js`
 - `shared/redux/actions/coin.js`
@@ -108,7 +133,7 @@ Add swap instances:
 	* signMessage
 
 
-## Add `coinData`
+### Add `coinData`
 
 - `shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.js`
 - `shared/components/Header/User/UserTooltip/UserTooltip.js`
@@ -141,12 +166,12 @@ Add swap instances:
 - `shared/plugins/backupUserData.js`
 
 
-## Set routes
+### Set routes
 
 - `shared/routes/index.js`
 
 
-## Add swap directions
+### Add swap directions
 
 - `shared/pages/Swap/...`
 - `shared/pages/Swap/CoinSwap/...`
@@ -155,7 +180,7 @@ Add swap instances:
 - `shared/pages/Swap/swaps/index.js`
 
 
-## Create swap localisation
+### Create swap localisation
 
 - `shared/localisation/_default.json`
 - `shared/localisation/en.json`
@@ -163,13 +188,42 @@ Add swap instances:
 - `shared/localisation/ru.json`
 
 
-## Other
+### Other
 
 - `shared/pages/Wallet/components/LinkAccount/index.js`
 
 
-## Upate README
+### Update README
 
 - `docs/ADD_BLOCKCHAIN.md` (improve this doc)
-- `swap.core/docs/ADD_BLOCKCHAIN.md` (improve other doc)
+
+
+--------------------------------------------
+
+
+## Core changes
+
+### Change files
+
+- See [swap.core/docs/ADD_BLOCKCHAIN.md](https://github.com/swaponline/swap.core/blob/master/docs/ADD_BLOCKCHAIN.md)
+
+
+### Update README
+
+- `swap.core/docs/ADD_BLOCKCHAIN.md` (improve core doc)
 - `swap.core/docs/README.md` (add coin to the table)
+
+
+--------------------------------------------
+
+
+## Examples
+
+### GHOST
+
+- See [swap.core/docs/ADD_BLOCKCHAIN.md](https://github.com/swaponline/swap.core/blob/master/docs/ADD_BLOCKCHAIN.md)
+
+
+### NEXT.coin
+
+- [Task + PRs](https://github.com/swaponline/swap.core/issues/504)
