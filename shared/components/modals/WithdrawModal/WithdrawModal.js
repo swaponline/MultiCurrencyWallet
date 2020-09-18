@@ -707,21 +707,23 @@ export default class WithdrawModal extends React.Component {
       },
     })
 
+    const ticker = getCurrencyKey(dataCurrency, true).toUpperCase()
+
     const formRender = (
       <Fragment>
         {openScanCam && (
           <QrReader openScan={this.openScan} handleError={this.handleError} handleScan={this.handleScan} />
         )}
+
         {invoice && <InvoiceInfoBlock invoiceData={invoice} />}
         {!dashboardView && (
           <p styleName={isEthToken ? 'rednotes' : 'notice'}>
             <FormattedMessage
               id="Withdrow213"
-              defaultMessage="Please note: Fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction"
+              defaultMessage="Miner fee: {amount} {ticker}"
               values={{
-                minAmount: <span>{isEthToken ? minAmount.eth : min}</span>,
-                br: <br />,
-                data: `${dataCurrency}`,
+                amount: <span>{isEthToken ? minAmount.eth : min}</span>,
+                ticker: `${dataCurrency}`,
               }}
             />
           </p>
@@ -856,29 +858,6 @@ export default class WithdrawModal extends React.Component {
             </div>
           )}
         </div>
-        <div styleName="sendBtnsWrapper">
-          <div styleName="actionBtn">
-            <Button big fill gray onClick={this.handleClose}>
-              <Fragment>
-                <FormattedMessage id="WithdrawModalCancelBtn" defaultMessage="Cancel" />
-              </Fragment>
-            </Button>
-          </div>
-          <div styleName="actionBtn">
-            <Button blue big fill disabled={isDisabled} onClick={this.handleSubmit}>
-              {isShipped ? (
-                <Fragment>
-                  <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
-                </Fragment>
-              ) : (
-                  <Fragment>
-                    <FormattedMessage id="WithdrawModal111" defaultMessage="Send" /> {`${currency.toUpperCase()}`}
-                  </Fragment>
-                )}
-            </Button>
-          </div>
-        </div>
-        {usedAdminFee && isEthToken && <AdminFeeInfoBlock {...usedAdminFee} amount={amount} currency={currency} />}
         {error && (
           <div styleName="rednote">
             <FormattedMessage
@@ -937,25 +916,52 @@ export default class WithdrawModal extends React.Component {
             </Button>
           </Fragment>
         )}
+        {/*todo: remove*/ }
+        {/*usedAdminFee && isEthToken && */
+          <AdminFeeInfoBlock {...usedAdminFee} amount={amount} currency={currency} />}
         {dashboardView && (
-          <p
-            styleName={cx({
-              notice: !isEthToken,
-              rednotes: isEthToken,
-              dashboardViewNotice: dashboardView,
-            })}
-          >
-            <FormattedMessage
-              id="Withdrow213"
-              defaultMessage="Please note: Fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction"
-              values={{
-                minAmount: <span>{isEthToken ? tokenFee : min}</span>,
-                br: <br />,
-                data: `${getCurrencyKey(dataCurrency, true).toUpperCase()}`,
-              }}
-            />
-          </p>
+          <div className="fees">
+            <p
+              styleName={cx({
+                notice: !isEthToken,
+                rednotes: isEthToken,
+                dashboardViewNotice: dashboardView,
+              })}
+            >
+              <FormattedMessage
+                id="Withdrow213"
+                defaultMessage="Miner fee: {amount} {ticker}"
+                values={{
+                  amount: <span>{isEthToken ? tokenFee : min}</span>,
+                  ticker: ticker,
+                }}
+              />
+            </p>
+          </div>
         )}
+
+        <div styleName="sendBtnsWrapper">
+          <div styleName="actionBtn">
+            <Button big fill gray onClick={this.handleClose}>
+              <Fragment>
+                <FormattedMessage id="WithdrawModalCancelBtn" defaultMessage="Cancel" />
+              </Fragment>
+            </Button>
+          </div>
+          <div styleName="actionBtn">
+            <Button blue big fill disabled={isDisabled} onClick={this.handleSubmit}>
+              {isShipped ? (
+                <Fragment>
+                  <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
+                </Fragment>
+              ) : (
+                  <Fragment>
+                    <FormattedMessage id="WithdrawModal111" defaultMessage="Send" /> {`${currency.toUpperCase()}`}
+                  </Fragment>
+                )}
+            </Button>
+          </div>
+        </div>
       </Fragment>
     )
     return portalUI ? (

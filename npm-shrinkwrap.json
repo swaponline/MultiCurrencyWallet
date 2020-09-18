@@ -4181,6 +4181,13 @@
         "parse-asn1": "^5.1.5",
         "readable-stream": "^3.6.0",
         "safe-buffer": "^5.2.0"
+      },
+      "dependencies": {
+        "bn.js": {
+          "version": "5.1.3",
+          "resolved": "https://registry.npmjs.org/bn.js/-/bn.js-5.1.3.tgz",
+          "integrity": "sha512-GkTiFpjFtUzU9CbMeJ5iazkCzGL3jrhzerzZIuqLABjbwRaFt33I9tUdSNryIptM+RxDet6OKm2WnLXzW51KsQ=="
+        }
       }
     },
     "browserify-zlib": {
@@ -8046,6 +8053,13 @@
       "requires": {
         "bn.js": "4.11.6",
         "number-to-bn": "1.7.0"
+      },
+      "dependencies": {
+        "bn.js": {
+          "version": "4.11.6",
+          "resolved": "https://registry.npmjs.org/bn.js/-/bn.js-4.11.6.tgz",
+          "integrity": "sha1-UzRK2xRhehP26N0s4okF0cC6MhU="
+        }
       }
     },
     "ethjs-util": {
@@ -17152,6 +17166,13 @@
       "requires": {
         "bn.js": "4.11.6",
         "strip-hex-prefix": "1.0.0"
+      },
+      "dependencies": {
+        "bn.js": {
+          "version": "4.11.6",
+          "resolved": "https://registry.npmjs.org/bn.js/-/bn.js-4.11.6.tgz",
+          "integrity": "sha1-UzRK2xRhehP26N0s4okF0cC6MhU="
+        }
       }
     },
     "oauth-sign": {
@@ -18025,6 +18046,12 @@
             "inherits": "^2.0.1",
             "minimalistic-assert": "^1.0.0"
           }
+        },
+        "bn.js": {
+          "version": "1.3.0",
+          "resolved": "https://registry.npmjs.org/bn.js/-/bn.js-1.3.0.tgz",
+          "integrity": "sha1-DbTL+W+PI7dC9by50ap6mZSgXoM=",
+          "optional": true
         }
       }
     },
@@ -24003,6 +24030,13 @@
       "requires": {
         "bn.js": "^4.11.9",
         "web3-utils": "1.3.0"
+      },
+      "dependencies": {
+        "bn.js": {
+          "version": "4.11.9",
+          "resolved": "https://registry.npmjs.org/bn.js/-/bn.js-4.11.9.tgz",
+          "integrity": "sha512-E6QoYqCKZfgatHTdHzs1RRKP7ip4vvm+EyRUeE2RF0NblwVvb0p6jSVeNTOFxPn26QXN2o6SMfNxKp6kU8zQaw=="
+        }
       }
     },
     "web3-eth-personal": {
@@ -24169,6 +24203,11 @@
         "utf8": "3.0.0"
       },
       "dependencies": {
+        "bn.js": {
+          "version": "4.11.9",
+          "resolved": "https://registry.npmjs.org/bn.js/-/bn.js-4.11.9.tgz",
+          "integrity": "sha512-E6QoYqCKZfgatHTdHzs1RRKP7ip4vvm+EyRUeE2RF0NblwVvb0p6jSVeNTOFxPn26QXN2o6SMfNxKp6kU8zQaw=="
+        },
         "eth-lib": {
           "version": "0.2.8",
           "resolved": "https://registry.npmjs.org/eth-lib/-/eth-lib-0.2.8.tgz",

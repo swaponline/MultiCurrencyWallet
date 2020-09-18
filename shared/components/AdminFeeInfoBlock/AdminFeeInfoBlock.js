@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
 import cssModules from 'react-css-modules'
 import styles from './AdminFeeInfoBlock.scss'
@@ -7,13 +6,7 @@ import { FormattedMessage } from 'react-intl'
 import { BigNumber } from 'bignumber.js'
 
 
-const AdminFeeInfoBlock = (props) => {
-  const {
-    fee,
-    min,
-    currency,
-    amount,
-  } = props
+const AdminFeeInfoBlock = ({ fee, min, currency, amount }) => {
 
   let calcedAmount = false
   if (amount) {
@@ -26,10 +19,10 @@ const AdminFeeInfoBlock = (props) => {
 
   return (
     <div styleName="adminFeeInfoBlock">
-      {(calcedAmount) ? (
+      {(calcedAmount) ?
         <FormattedMessage
           id="AdminFee_MessageWithAmount"
-          defaultMessage="Коммисия {calcedAmount} {currency}"
+          defaultMessage="Service fee: {calcedAmount} {currency}"
           values={{
             fee,
             min,
@@ -37,17 +30,16 @@ const AdminFeeInfoBlock = (props) => {
             calcedAmount,
           }}
         />
-      ) : (
+        :
         <FormattedMessage
           id="AdminFee_Message"
-          defaultMessage="Коммисия {fee}% от суммы перевода, но не менее {min} {currency}"
+          defaultMessage="Service fee: {fee}% of the transfer amount, but not less than {min} {currency}"
           values={{
             fee,
             min,
             currency,
           }}
         />
-      )
       }
     </div>
   )

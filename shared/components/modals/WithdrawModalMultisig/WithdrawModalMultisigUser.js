@@ -457,8 +457,11 @@ export default class WithdrawModalMultisigUser extends React.Component {
             <p styleName="notice dashboardViewNotice">
               <FormattedMessage
                 id="Withdrow213"
-                defaultMessage="Please note: Fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction"
-                values={{ minAmount: <span>{min}</span>, br: <br />, data: `${dataCurrency}` }}
+                defaultMessage="Miner fee: {amount} {ticker}"
+                values={{
+                  amount: min,
+                  ticker: dataCurrency,
+                }}
               />
             </p>
             <br />

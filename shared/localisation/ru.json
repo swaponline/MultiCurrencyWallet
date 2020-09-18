@@ -2656,7 +2656,7 @@
   },
   {
     "id": "Withdrow213",
-    "message": "Пожалуйста, обратите внимание: Комиссия {minAmount} {data}.{br}Ваш баланс должен превышать эту сумму для совершения транзакции.",
+    "message": "Комиссия майнера: {amount} {ticker}",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
@@ -6614,14 +6614,14 @@
   },
   {
     "id": "AdminFee_Message",
-    "message": "Комиссия {fee}% от суммы перевода, но не менее {min} {currency}",
+    "message": "Комиссия сервиса: {fee}% от суммы перевода, но не менее {min} {currency}",
     "files": [
       "shared/components/AdminFeeInfoBlock/AdminFeeInfoBlock.js"
     ]
   },
   {
     "id": "AdminFee_MessageWithAmount",
-    "message": "Комиссия {calcedAmount} {currency}",
+    "message": "Комиссия сервиса: {calcedAmount} {currency}",
     "files": [
       "shared/components/AdminFeeInfoBlock/AdminFeeInfoBlock.js"
     ]

@@ -1,6 +1,4 @@
 .adminFeeInfoBlock {
-  text-align: center;
-  padding-top: 20px;
-  font-size: 14px;
-  color: #e32950;
+  @include ff-regular;
+  color: #8e9aa3;
 }

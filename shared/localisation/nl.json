@@ -2575,7 +2575,7 @@
   },
   {
     "id": "Withdrow213",
-    "message": "Please note: Fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction.",
+    "message": "Miner fee: {amount} {ticker}",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js",
       "shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
@@ -6530,14 +6530,14 @@
   },
   {
     "id": "AdminFee_Message",
-    "message": "Commission {fee}% of the transfer amount, but not less than {min} {currency}",
+    "message": "Service fee: {fee}% of the transfer amount, but not less than {min} {currency}",
     "files": [
       "shared/components/AdminFeeInfoBlock/AdminFeeInfoBlock.js"
     ]
   },
   {
     "id": "AdminFee_MessageWithAmount",
-    "message": "Commission {calcedAmount} {currency}",
+    "message": "Service fee: {calcedAmount} {currency}",
     "files": [
       "shared/components/AdminFeeInfoBlock/AdminFeeInfoBlock.js"
     ]
