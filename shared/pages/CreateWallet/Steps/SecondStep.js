@@ -13,7 +13,7 @@ import { isMobile } from 'react-device-detect'
 
 import config from 'app-config'
 import actions from 'redux/actions'
-import { firebase, constants } from 'helpers'
+import { firebase, constants, stats } from 'helpers'
 import firestore from 'helpers/firebase/firestore'
 import ethToken from 'helpers/ethToken'
 
@@ -29,7 +29,7 @@ import Cupture,
 
 
 const CreateWallet = (props) => {
-  const { intl: { locale }, onClick, currencies, error, setError, singleCurrecnyData, btcData } = props
+  const { intl: { locale }, onClick, currencies, error, setError, singleCurrecnyData, btcData, ethData } = props
 
   const _protection = {
     nothing: {
@@ -88,7 +88,6 @@ const CreateWallet = (props) => {
         await firestore.addUser(data)
         if (isSupportedPush) {
           await firebase.signUpWithPush(data)
-          await firestore.signUpWithPush()
           window.localStorage.setItem(constants.localStorage.signedUpWithPush, 'true')
         }
       } catch (error) {
@@ -224,7 +223,7 @@ const CreateWallet = (props) => {
         ru: 'Транзакции подтверждаются кодом по SMS.',
         nl: 'Verifieer uw transacties via SMS code.',
       }[locale],
-      //enabled: _protection.sms[currencyKey],
+      // enabled: _protection.sms[currencyKey],
       enabled: false, // sms temporarly disabled
       activated: _activated.sms[currencyKey],
       onClickHandler: () => {

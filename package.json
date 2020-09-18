@@ -143,6 +143,8 @@
     "ethereumjs-wallet": "^0.6.3",
     "firebase": "^5.10.0",
     "ghost-bitcore-lib": "https://github.com/ghost-coin/ghost-bitcore-lib.git",
+    "graphql": "^15.3.0",
+    "graphql-request": "^3.0.0",
     "history": "^4.10.1",
     "human-standard-token-abi": "^1.0.2",
     "ipfs": "^0.33.1",
