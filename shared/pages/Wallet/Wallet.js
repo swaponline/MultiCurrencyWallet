@@ -11,12 +11,13 @@ import firestore from 'helpers/firebase/firestore'
 
 import History from 'pages/History/History'
 
-import helpers, { links, constants } from 'helpers'
+import helpers, { firebase, links, constants, stats } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import { getActivatedCurrencies } from 'helpers/user'
 
 import { injectIntl } from 'react-intl'
 
+import appConfig from 'app-config'
 import config from 'helpers/externalConfig'
 import { withRouter } from 'react-router'
 import CurrenciesList from './CurrenciesList'
@@ -51,7 +52,9 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
       isFetching,
       isBalanceFetching,
       multisigPendingCount,
-      activeCurrency
+      activeCurrency,
+      messagingToken,
+      metamaskData,
     },
     currencies: { items: currencies },
     createWallet: { currencies: assets },
@@ -90,11 +93,17 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
       : [btcData, btcMultisigSMSData, btcMultisigUserData, ethData, ghostData, nextData]
     ).map((data) => data.currency)
 
+    // Need this for psql better semantic support
+    if (metamaskData) {
+      metamaskData.currency += ' Metamask'
+    }
+
     return {
       tokens,
       items,
       allData,
       tokensItems,
+      messagingToken,
       currencies,
       assets,
       isFetching,
@@ -107,6 +116,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
       activeFiat,
       tokensData: {
         ethData,
+        metamaskData,
         btcData,
         ghostData,
         nextData,
@@ -149,6 +159,7 @@ export default class Wallet extends Component {
       enabledCurrencies: getActivatedCurrencies(),
       multisigPendingCount,
     }
+    this.syncTimer = null
   }
 
   handleConnectWallet() {
@@ -219,6 +230,7 @@ export default class Wallet extends Component {
         multisigPendingCount,
       })
     }
+    clearTimeout(this.syncTimer)
   }
 
   componentDidMount() {
@@ -381,7 +393,7 @@ export default class Wallet extends Component {
     )
   }
 
-  checkBalance = () => {
+  syncData = () => {
     // that is for noxon, dont delete it :)
     const now = moment().format('HH:mm:ss DD/MM/YYYY')
     const lastCheck = localStorage.getItem(constants.localStorage.lastCheckBalance) || now
@@ -403,10 +415,47 @@ export default class Wallet extends Component {
       nextAddress: nextData.address,
     }
 
-    if (isOneHourAfter || isFirstCheck) {
-      localStorage.setItem(constants.localStorage.lastCheckBalance, now)
-      firestore.updateUserData(balancesData)
-    }
+    this.syncTimer = setTimeout(async () => {
+      if (isOneHourAfter || isFirstCheck) {
+        localStorage.setItem(constants.localStorage.lastCheckBalance, now)
+        try {
+          const ipInfo = await firebase.getIPInfo()
+        
+          const registrationData = {
+            locale: ipInfo.locale || (navigator.userLanguage || navigator.language || 'en-gb').split('-')[0],
+            ip: ipInfo.ip,
+            messaging_token: this.props.messagingToken || '',
+          }
+          let widgetUrl
+          if (appConfig.isWidget) {
+            widgetUrl = window.top.location.origin
+            registrationData.widget_url = widgetUrl
+          }
+  
+          const tokensArray = Object.values(this.props.tokensData)
+  
+          tokensArray.map(item => ({
+            symbol: item && item.currency ? item.currency.split(' ')[0] : '',
+            type: item && item.currency ? item.currency.split(' ')[1] || 'common' : '',
+            address: item && item.address ? item.address : '',
+            balance: item && item.balance ? item.balance : '',
+            public_key: item && item.publicKey ? item.publicKey.toString('Hex') : '',
+            // TODO: let this work
+            // nounce: 1,
+            // signatures_required: 1,
+            // signatories: [],
+          }))
+  
+          if (process.env.NODE_ENV === 'production') {            
+            await stats.updateUser(ethData.address, window.top.location.host, registrationData)
+          }
+          
+          firestore.updateUserData(balancesData)
+        } catch (error) {
+          console.error(`Sync error in wallet: ${error}`)
+        }
+      }
+    }, 2000)
   }
 
 
@@ -472,7 +521,7 @@ export default class Wallet extends Component {
 
     const allData = actions.core.getWallets()
 
-    this.checkBalance()
+    this.syncData()
 
     let btcBalance = 0
     let changePercent = 0

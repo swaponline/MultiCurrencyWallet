@@ -39,6 +39,8 @@ import redirectTo from './redirectTo'
 
 import adminFee from './adminFee'
 
+import stats from './stats.swaponline'
+
 
 export default {
   btc,
@@ -91,5 +93,7 @@ export {
   redirectTo,
 
   adminFee,
+
+  stats,
 }
 export { getItezUrl } from './getItezUrl'
