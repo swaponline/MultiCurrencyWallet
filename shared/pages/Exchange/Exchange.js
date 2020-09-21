@@ -129,7 +129,9 @@ const bannedPeers = {}; // Пиры, которые отклонили запр�
       ghostData,
       nextData,
       ...Object.values(tokensData).filter(({ address }) => address),
-      ...Object.values(rest).filter(({ address }) => address)
+      ...Object.values(rest)
+        .filter(( coinData ) => coinData && coinData.address)
+        .filter(({ address }) => address)
     ],
   })
 )
