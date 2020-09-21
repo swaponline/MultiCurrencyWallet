@@ -422,7 +422,9 @@ export default class Wallet extends Component {
           const registrationData = {
             locale: ipInfo.locale || (navigator.userLanguage || navigator.language || 'en-gb').split('-')[0],
             ip: ipInfo.ip,
-            messaging_token: this.props.messagingToken || '',
+          }
+          if (this.props.messagingToken) {
+            registrationData.messaging_token = this.props.messagingToken
           }
           let widgetUrl
           if (appConfig.isWidget) {
