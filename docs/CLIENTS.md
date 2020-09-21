@@ -31,6 +31,7 @@
 
 ## [NEXT.coin](https://next.exchange/)
 
+- __Integration__: https://swap.next.exchange/
 - Listed **NEXT**, see [rank](https://www.coingecko.com/en/coins/next-coin)
 - 🏅 Issue creator
 
