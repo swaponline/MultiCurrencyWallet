@@ -93,11 +93,6 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
       : [btcData, btcMultisigSMSData, btcMultisigUserData, ethData, ghostData, nextData]
     ).map((data) => data.currency)
 
-    // Need this for psql better semantic support
-    if (metamaskData) {
-      metamaskData.currency += ' Metamask'
-    }
-
     return {
       tokens,
       items,
@@ -116,7 +111,10 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
       activeFiat,
       tokensData: {
         ethData,
-        metamaskData,
+        metamaskData: {
+          ...metamaskData,
+          currency: 'ETH Metamask',
+        },
         btcData,
         ghostData,
         nextData,
