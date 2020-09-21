@@ -204,7 +204,7 @@ export default class WallerSlider extends Component {
                     widthIcon="80"
                     background="6144e5"
                     descr={<FormattedMessage id="Banner_ConnectMetamask" defaultMessage="Подключить кошелек" />}
-                    logDescr={<FormattedMessage id="Banner_ConnectMetamaskDesc" defaultMessage="Нажмите чтобы подключить внешний кошелек" />}
+                    logDescr={`Click on connect wallet`}
                     firstFunc={this.handleConnectMetamask}
                   />
                 </div>
