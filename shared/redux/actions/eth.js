@@ -210,7 +210,13 @@ const isETHAddress = (address) => {
 }
 
 const getBalance = () => {
-  const { user: { ethData: { ethAddress } } } = getState()
+  const {
+    user: {
+      ethData: {
+        address: ethAddress,
+      },
+    },
+  } = getState()
 
   const address = (metamask.isEnabled() && metamask.isConnected()) ? metamask.getAddress() : ethAddress
 

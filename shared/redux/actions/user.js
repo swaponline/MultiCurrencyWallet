@@ -180,29 +180,41 @@ const getBalances = () => {
   reducers.user.setIsBalanceFetching({ isBalanceFetching: true })
 
   return new Promise(async (resolve) => {
-    if (metamask.isEnabled()
-      && metamask.isConnected()
-    ) {
-      await metamask.getBalance()
-    }
+    const balances = [
+      ...(metamask.isEnabled() && metamask.isConnected())
+        ? [ { func: metamask.getBalance, name: 'metamask' } ]
+        : [],
+      { func: actions.eth.getBalance, name: 'eth' },
+      { func: actions.btc.getBalance, name: 'btc' },
+      { func: actions.ghost.getBalance, name: 'ghost' },
+      { func: actions.next.getBalance, name: 'next' },
+      { func: actions.btcmultisig.getBalance, name: 'btc-sms' },
+      { func: actions.btcmultisig.getBalanceUser, name: 'btc-ms-main' },
+      { func: actions.btcmultisig.getBalancePin, name: 'btc-pin' },
+      { func: actions.btcmultisig.fetchMultisigBalances, name: 'btc-ms' }
+    ]
 
-    await actions.eth.getBalance()
-    await actions.btc.getBalance()
-    await actions.ghost.getBalance()
-    await actions.next.getBalance()
-    await actions.btcmultisig.getBalance() // SMS-Protected
-    await actions.btcmultisig.getBalanceUser() // Other user confirm
-    await actions.btcmultisig.getBalancePin() // Pin-Protected
-    await actions.btcmultisig.fetchMultisigBalances()
+    balances.forEach(async (obj) => {
+      try {
+        await obj.func()
+      } catch (e) {
+        console.error('Fail fetch balance for', obj.name)
+      }
+    })
 
     if (isTokenSigned) {
       Object.keys(config.erc20)
-        .forEach(async (name) => {
-          await actions.token.getBalance(name)
+        .forEach(async (name) => { 
+          try {
+            await actions.token.getBalance(name)
+          } catch (e) {
+            console.error('Fail fetch balance for token', name)
+          }
         })
     }
 
     reducers.user.setIsBalanceFetching({ isBalanceFetching: false })
+    resolve(true)
   })
 }
 
