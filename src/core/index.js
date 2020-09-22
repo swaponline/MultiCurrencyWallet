@@ -1,6 +1,22 @@
-// require('babel-core/register')
+import Swap from './swap.swap'
 
-require('app-module-path/register') // on windows
-require('app-module-path').addPath(__dirname + '/lib')
+import auth from './swap.auth'
+import room from './swap.room'
+import orders from './swap.orders'
 
-exports = module.exports = require('./lib')
+import * as swaps from './swap.swaps'
+import * as flows from './swap.flows'
+
+import app, { constants, util } from './swap.app'
+
+export default {
+  app,
+  constants,
+  util,
+  swaps,
+  flows,
+  auth,
+  room,
+  orders,
+  Swap,
+}
