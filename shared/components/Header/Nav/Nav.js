@@ -1,19 +1,19 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, Fragment } from 'react'
+import PropTypes from 'prop-types'
 
-import { links } from 'helpers';
-import { NavLink, withRouter } from 'react-router-dom';
-import { constants } from "helpers";
+import { links } from 'helpers'
+import { NavLink, withRouter } from 'react-router-dom'
+import { constants } from 'helpers'
 
-import SubMenu from '../SubMenu/SubMenu';
+import SubMenu from '../SubMenu/SubMenu'
 
-import cx from 'classnames';
-import styles from './Nav.scss';
-import CSSModules from 'react-css-modules';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import { localisedUrl } from 'helpers/locale';
+import cx from 'classnames'
+import styles from './Nav.scss'
+import CSSModules from 'react-css-modules'
+import { FormattedMessage, injectIntl } from 'react-intl'
+import { localisedUrl } from 'helpers/locale'
 
-import ArrowDown from './images/ArrowDown.svg';
+import ArrowDown from './images/ArrowDown.svg'
 
 @injectIntl
 @withRouter
@@ -24,16 +24,7 @@ export default class Nav extends Component {
   };
 
   handleScrollToTopClick = link => {
-    this.setState({ activeRoute: link });
-    //
-    // const scrollStep = -window.scrollY / (500 / 15)
-    // const scrollInterval = setInterval(() => {
-    //   if (window.scrollY !== 0) {
-    //     window.scrollBy(0, scrollStep)
-    //   } else {
-    //     clearInterval(scrollInterval)
-    //   }
-    // }, 15)
+    this.setState({ activeRoute: link })
   };
 
   render() {
@@ -43,12 +34,12 @@ export default class Nav extends Component {
       location
     } = this.props;
 
-    const isExchange = location.pathname.includes(links.exchange);
+    const isExchange = location.pathname.includes(links.exchange)
 
     const isWallet =
       location.pathname.includes(links.wallet) ||
       location.pathname === '/' ||
-      location.pathname === '/ru';
+      location.pathname === '/ru'
 
     const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -66,9 +57,8 @@ export default class Nav extends Component {
                 haveSubmenu,
                 index,
                 ...rest
-              } = el;
+              } = el
 
-              // !rest.displayNone &&
               return (
                 <div styleName='mainMenu' key={`${title} ${link}`} className="data-tut-widget-tourFinish">
                   <NavLink
@@ -89,9 +79,6 @@ export default class Nav extends Component {
                   // im hurry, so fix it, if you are here
                   >
                     <div>
-                      {/* rest.currentPageFlag && (
-                      <img src={ArrowDown} className={styles.arrowSub} alt='Open submenu' />
-                    ) */}
                       {title}
                     </div>
                   </NavLink>
@@ -99,7 +86,7 @@ export default class Nav extends Component {
               );
             })}
         </Fragment>
-      </div >
+      </div>
     );
   }
 }

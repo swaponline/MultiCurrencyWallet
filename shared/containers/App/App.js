@@ -28,6 +28,11 @@ import Seo from "components/Seo/Seo";
 
 import config from "helpers/externalConfig"
 
+import backupUserData from 'plugins/backupUserData'
+import redirectTo from 'helpers/redirectTo'
+import links from 'helpers/links'
+
+
 
 const memdown = require("memdown");
 
@@ -40,6 +45,8 @@ moment.locale(userLanguage);
   isVisible: "loader.isVisible",
   ethAddress: "user.ethData.address",
   btcAddress: "user.btcData.address",
+  ghostAddress: "user.ghostData.address",
+  nextAddress: "user.nextData.address",
   tokenAddress: "user.tokensData.swap.address",
   modals,
   dashboardModalsAllowed,
@@ -171,14 +178,45 @@ export default class App extends React.Component {
       }
     }
 
-    if (!localStorage.getItem(constants.localStorage.demoMoneyReceived)) {
-      actions.user.getDemoMoney();
-    }
+    // if (!localStorage.getItem(constants.localStorage.demoMoneyReceived)) {
+    //   actions.user.getDemoMoney();
+    // }
 
     firebase.initialize();
+
+    this.processUserBackup()
   }
 
-  componentDidMount() {
+  processUserBackup () {
+    new Promise(async (resolve) => {
+      const hasServerBackup = await backupUserData.hasServerBackup()
+      console.log('has server backup', hasServerBackup)
+      if (backupUserData.isUserLoggedIn()
+        && backupUserData.isUserChanged()
+        && hasServerBackup
+      ) {
+        console.log('do restore user')
+        backupUserData.restoreUser().then((isRestored) => {
+          console.log('is restored', isRestored)
+          if (isRestored) {
+            redirectTo(links.home)
+            window.location.reload()
+          }
+        })
+      } else {
+        if (backupUserData.isUserLoggedIn()
+          && backupUserData.isFirstBackup()
+          || !hasServerBackup
+        ) {
+          console.log('Do backup user')
+          backupUserData.backupUser()
+        }
+      }
+      resolve(`ready`)
+    })
+  }
+
+  async componentDidMount() {
     this.checkIfDashboardModalsAllowed()
     window.actions = actions;
 
@@ -196,7 +234,7 @@ export default class App extends React.Component {
     }
 
     actions.user.sign();
-    createSwapApp();
+    await createSwapApp();
     this.setState(() => ({ fetching: true }));
 
     window.prerenderReady = true;
@@ -264,11 +302,11 @@ export default class App extends React.Component {
 
   render() {
     const { fetching, multiTabs, error } = this.state;
-    const { children, ethAddress, btcAddress, tokenAddress, history, dashboardModalsAllowed } = this.props;
+    const { children, ethAddress, btcAddress, ghostAddress, nextAddress, tokenAddress, history, dashboardModalsAllowed } = this.props;
 
     this.overflowHandler()
 
-    const isFetching = !ethAddress || !btcAddress || (!tokenAddress && config && !config.isWidget) || !fetching;
+    const isFetching = !ethAddress || !btcAddress || !ghostAddress || !nextAddress || (!tokenAddress && config && !config.isWidget) || !fetching;
 
     const isWidget = history.location.pathname.includes("/exchange") && history.location.hash === "#widget";
     const isCalledFromIframe = window.location !== window.parent.location;
@@ -280,39 +318,34 @@ export default class App extends React.Component {
     }
 
     if (multiTabs) {
-      return <PreventMultiTabs onSwitchTab={this.handleSwitchTab} />;
+      return <PreventMultiTabs onSwitchTab={this.handleSwitchTab} />
     }
 
     if (isFetching) {
-      return <Loader showTips />;
+      return <Loader />
     }
 
-    const mainContent =
-      (isWidget || isCalledFromIframe) && !isWidgetBuild ? (
-        <Fragment>
-          {children}
-          <Core />
-          <RequestLoader />
-          {!dashboardModalsAllowed && <ModalConductor history={history} />}
-          <NotificationConductor history={history} />
-        </Fragment>
-      ) : (
-          <Fragment>
-            <Seo location={history.location} />
-            <Header />
-            <Wrapper>
-              <WidthContainer id="swapComponentWrapper" styleName="main">
-                <main>{children}</main>
-              </WidthContainer>
-            </Wrapper>
-            <Core />
-            <Footer />
-            <RequestLoader />
-            {!dashboardModalsAllowed && <ModalConductor history={history} />}
-            <NotificationConductor history={history} />
-          </Fragment>
-        );
+    const isSeoDisabled = isWidget || isWidgetBuild || isCalledFromIframe
 
-    return <HashRouter>{mainContent}</HashRouter>;
+    return <HashRouter>
+      <div styleName="compressor">
+        {!isSeoDisabled &&
+          <Seo location={history.location} />
+        }
+        <Wrapper>
+          <WidthContainer id="swapComponentWrapper" styleName="headerAndMain">
+            <Header />
+            <main>{children}</main>
+          </WidthContainer>
+        </Wrapper>
+        <Core />
+        <Footer />
+        <RequestLoader />
+        {!dashboardModalsAllowed &&
+          <ModalConductor history={history}
+        />}
+        <NotificationConductor history={history} />
+      </div>
+    </HashRouter>;
   }
 }

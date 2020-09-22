@@ -34,22 +34,23 @@ const CreateWallet = (props) => {
   const {
     history,
     intl: { locale },
-    createWallet:
-    {
+    createWallet: {
       currencies,
       secure,
     },
-
     location: { pathname },
     userData,
     core: { hiddenCoinsList },
     activeFiat,
   } = props
+
   const allCurrencies = props.currencies.items
 
   const {
     ethData,
     btcData,
+    ghostData,
+    nextData,
     btcMultisigSMSData,
     btcMultisigUserData,
   } = userData
@@ -61,6 +62,8 @@ const CreateWallet = (props) => {
     btcMultisigSMSData,
     btcMultisigUserData,
     ethData,
+    ghostData,
+    nextData,
   ].map(({ balance, currency, infoAboutCurrency }) => ({
     balance,
     infoAboutCurrency,
@@ -77,6 +80,8 @@ const CreateWallet = (props) => {
     'BTC (PIN-Protected)',
     'BTC (Multisig)',
     'ETH',
+    'GHOST',
+    'NEXT',
   ]
 
   if (isWidgetBuild) {
@@ -105,21 +110,28 @@ const CreateWallet = (props) => {
 
   useEffect(
     () => {
-      const singleCurrecny = pathname.split('/')[2]
+      const singleCurrency = pathname.split('/')[2]
 
-      if (singleCurrecny) {
-
+      if (singleCurrency) {
         const hiddenList = localStorage.getItem('hiddenCoinsList')
 
         const isExist = hiddenList.find(el => {
           if (el.includes(':')) {
-            return el.includes(singleCurrecny.toUpperCase())
+            return el.includes(singleCurrency.toUpperCase())
           }
-          return el === singleCurrecny.toUpperCase()
+          return el === singleCurrency.toUpperCase()
         })
 
         if (!isExist) {
           setExist(true)
+        }
+
+        if (singleCurrency.toUpperCase() === 'SWAP') {
+          // SWAP has no security options
+          // just add and redirect
+          const isWasOnWallet = localStorage.getItem('hiddenCoinsList').find(cur => cur.includes(singleCurrency))
+          actions.core.markCoinAsVisible(isWasOnWallet || singleCurrency.toUpperCase(), true)
+          handleClick()
         }
       }
     },
@@ -133,6 +145,8 @@ const CreateWallet = (props) => {
       'BTC (PIN-Protected)',
       'BTC (Multisig)',
       'ETH',
+      'GHOST',
+      'NEXT',
     ]
 
     if (isWidgetBuild) {
@@ -170,7 +184,7 @@ const CreateWallet = (props) => {
 
   const handleClick = () => {
     setError(null)
-    if (step !== 2 && !singleCurrecnyData) {
+    if (step !== 2 && !singleCurrencyData) {
       reducers.createWallet.newWalletData({ type: 'step', data: step + 1 })
       return setStep(step + 1)
     }
@@ -181,10 +195,6 @@ const CreateWallet = (props) => {
 
   const handleRestoreMnemonic = () => {
     actions.modals.open(constants.modals.RestoryMnemonicWallet, { btcBalance, fiatBalance })
-  }
-
-  const goToExchange = () => {
-    history.push(localisedUrl(locale, links.exchange))
   }
 
   const validate = () => {
@@ -199,14 +209,14 @@ const CreateWallet = (props) => {
 
     if (isIgnoreSecondStep && !currencies['Custom ERC20']) {
       Object.keys(currencies).forEach((currency) => {
-        actions.core.markCoinAsVisible(currency)
+        actions.core.markCoinAsVisible(currency, true)
       })
       localStorage.setItem(constants.localStorage.isWalletCreate, true)
       goHome()
       return
     }
 
-    if (!secure.length && (step === 2 || singleCurrecnyData)) {
+    if (!secure.length && (step === 2 || singleCurrencyData)) {
       setError('Choose something')
       return
     }
@@ -217,13 +227,13 @@ const CreateWallet = (props) => {
       return
     }
 
-    if (step === 2 || singleCurrecnyData) {
+    if (step === 2 || singleCurrencyData) {
       switch (secure) {
         case 'withoutSecure':
           Object.keys(currencies).forEach(el => {
             if (currencies[el]) {
               const isWasOnWallet = localStorage.getItem('hiddenCoinsList').find(cur => cur.includes(`${el}:`))
-              actions.core.markCoinAsVisible(isWasOnWallet || el.toUpperCase())
+              actions.core.markCoinAsVisible(isWasOnWallet || el.toUpperCase(), true)
             }
           })
           break
@@ -232,7 +242,7 @@ const CreateWallet = (props) => {
             if (!actions.btcmultisig.checkSMSActivated()) {
               actions.modals.open(constants.modals.RegisterSMSProtected, {
                 callback: () => {
-                  actions.core.markCoinAsVisible('BTC (SMS-Protected)')
+                  actions.core.markCoinAsVisible('BTC (SMS-Protected)', true)
                   handleClick()
                 },
               })
@@ -246,13 +256,13 @@ const CreateWallet = (props) => {
               onAccept: () => {
                 actions.modals.open(constants.modals.RegisterSMSProtected, {
                   callback: () => {
-                    actions.core.markCoinAsVisible('BTC (SMS-Protected)')
+                    actions.core.markCoinAsVisible('BTC (SMS-Protected)', true)
                     handleClick()
                   },
                 })
               },
               onCancel: () => {
-                actions.core.markCoinAsVisible('BTC (SMS-Protected)')
+                actions.core.markCoinAsVisible('BTC (SMS-Protected)', true)
                 handleClick()
               },
             })
@@ -265,7 +275,7 @@ const CreateWallet = (props) => {
             if (!actions.btcmultisig.checkPINActivated()) {
               actions.modals.open(constants.modals.RegisterPINProtected, {
                 callback: () => {
-                  actions.core.markCoinAsVisible('BTC (PIN-Protected)')
+                  actions.core.markCoinAsVisible('BTC (PIN-Protected)', true)
                   handleClick()
                 },
               })
@@ -279,13 +289,13 @@ const CreateWallet = (props) => {
               onAccept: () => {
                 actions.modals.open(constants.modals.RegisterPINProtected, {
                   callback: () => {
-                    actions.core.markCoinAsVisible('BTC (PIN-Protected)')
+                    actions.core.markCoinAsVisible('BTC (PIN-Protected)', true)
                     handleClick()
                   },
                 })
               },
               onCancel: () => {
-                actions.core.markCoinAsVisible('BTC (PIN-Protected)')
+                actions.core.markCoinAsVisible('BTC (PIN-Protected)', true)
                 handleClick()
               },
             })
@@ -297,7 +307,7 @@ const CreateWallet = (props) => {
           if (currencies.BTC) {
             actions.modals.open(constants.modals.MultisignJoinLink, {
               callback: () => {
-                actions.core.markCoinAsVisible('BTC (Multisig)')
+                actions.core.markCoinAsVisible('BTC (Multisig)', true)
                 handleClick()
               },
               showCloseButton: false,
@@ -312,13 +322,13 @@ const CreateWallet = (props) => {
     handleClick()
   }
 
-  const singleCurrecny = pathname.split('/')[2]
-  let singleCurrecnyData
+  const singleCurrency = pathname.split('/')[2]
+  let singleCurrencyData
 
-  if (singleCurrecny) {
-    singleCurrecnyData = allCurrencies.find(({ name }) => name === singleCurrecny.toUpperCase())
-    if (singleCurrecnyData) {
-      currencies[singleCurrecny.toLowerCase()] = true
+  if (singleCurrency) {
+    singleCurrencyData = allCurrencies.find(({ name }) => name === singleCurrency.toUpperCase())
+    if (singleCurrencyData) {
+      currencies[singleCurrency.toLowerCase()] = true
     }
   }
 
@@ -340,7 +350,7 @@ const CreateWallet = (props) => {
             id="createWalletHeader1"
             defaultMessage="Создание кошелька"
           />
-          {' '}{singleCurrecny && singleCurrecny.toUpperCase()}
+          {' '}{singleCurrency && singleCurrency.toUpperCase()}
         </h2>
         <div styleName="buttonWrapper">
           <span>
@@ -368,40 +378,15 @@ const CreateWallet = (props) => {
               </span>
             </Tooltip>
           </span>
-          {/*
-          <button onClick={handleMakeSweep}>
-            <FormattedMessage
-              id="CreateWallet_MakeSweep"
-              defaultMessage="Sweep"
-            />
-          </button>
-          <button onClick={handleShowKeys}>
-            <FormattedMessage
-              id="CreateWallet_ShowOldKeys"
-              defaultMessage="My old keys"
-            />
-          </button>
-          <button onClick={handleImportKeys}>
-            <FormattedMessage
-              id="ImportKeysBtn"
-              defaultMessage="Импортировать"
-            />
-          </button>
-          */}
           <br />
-          <button onClick={goToExchange}>
-            <FormattedMessage
-              id="ExchangeBtn"
-              defaultMessage="Обмен"
-            />
-          </button>
         </div>
 
-        {singleCurrecnyData ?
-          <SecondStep error={error} onClick={validate} currencies={currencies} setError={setError} singleCurrecnyData /> :
+        {singleCurrencyData ?
+          <SecondStep error={error} onClick={validate} currencies={currencies} setError={setError} singleCurrencyData />
+          :
           <div>
             {step === 1 && <FirstStep error={error} onClick={validate} setError={setError} />}
-            {step === 2 && <SecondStep error={error} btcData={btcData} onClick={validate} currencies={currencies} setError={setError} />}
+            {step === 2 && <SecondStep error={error} btcData={btcData} onClick={validate} currencies={currencies} setError={setError} ethData={ethData} />}
           </div>
         }
       </div>

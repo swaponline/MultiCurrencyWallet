@@ -27,7 +27,7 @@ const labels = defineMessages({
     id: 'InfoPay_2',
     defaultMessage: 'successfully transferred to'
   },
-  
+
 })
 @injectIntl
 @cssModules({
@@ -109,7 +109,7 @@ export default class InfoPay extends React.Component {
     let linkShare = '#'
     let tx = ''
 
-    if(txRaw) {
+    if (txRaw) {
       const txInfo = helpers.transactions.getInfo(currency.toLowerCase(), txRaw)
       tx = txInfo.tx
       linkBlockChain = txInfo.link
@@ -137,7 +137,7 @@ export default class InfoPay extends React.Component {
             <div styleName="shortInfoHolder">
               <span><strong> {amount}  {currency.toUpperCase()} </strong></span>
               {!isFetching && (
-                <span> <FormattedMessage id="InfoPay_2" defaultMessage="были успешно переданы" />
+                <span> <FormattedMessage id="InfoPay_2_copy" defaultMessage="были успешно переданы" />
                   <br />
                   <strong>{toAddress}</strong>
                 </span>

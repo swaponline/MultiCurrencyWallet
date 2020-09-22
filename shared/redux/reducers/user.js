@@ -1,4 +1,20 @@
 export const initialState = {
+  ghostData: {
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'GHOST',
+    fullName: 'ghost',
+    balanceError: null,
+    infoAboutCurrency: null,
+  },
+  nextData: {
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'NEXT',
+    fullName: 'next',
+    balanceError: null,
+    infoAboutCurrency: null,
+  },
   ethData: {
     balance: 0,
     isBalanceFetched: false,
@@ -65,6 +81,8 @@ export const initialState = {
   activeCurrency: 'BTC',
   multisigStatus: {},
   multisigPendingCount: 0,
+  messagingToken: null,
+  metamaskData: false,
 }
 
 export const updateMultisigStatus = (state, { address, last, total }) => {
@@ -96,6 +114,11 @@ export const addWallet = (state, { name, data }) => ({
   [name]: {
     ...data,
   },
+})
+
+export const addMessagingToken = (state, { token }) => ({
+  ...state,
+  messagingToken: token,
 })
 
 export const setAuthData = (state, { name, data }) => ({

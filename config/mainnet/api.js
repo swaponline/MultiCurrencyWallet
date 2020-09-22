@@ -5,6 +5,9 @@ export default {
     'https://insight.bitpay.com/api',
     'https://invoices.swaponline.site/proxybitpay',
   ],
+  ghostscan: 'https://ghostscan.io/ghost-insight-api',
+  nextExplorer: 'https://explore.next.exchange/api',
+  nextExplorerCustom: 'https://next.swaponline.io/mainnet',
   blockcypher: 'https://api.blockcypher.com/v1/btc/main',
   etherscan: [
     'https://api.etherscan.io/api',

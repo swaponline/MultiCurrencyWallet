@@ -13,7 +13,7 @@ import NotFound from 'pages/NotFound/NotFound'
 import About from 'pages/About/About'
 import Wallet from 'pages/Wallet/Wallet'
 import Currency from 'pages/Currency/Currency'
-import PartialClosure from 'pages/PartialClosure/PartialClosure'
+import Exchange from 'pages/Exchange/Exchange'
 import PointOfSell from 'pages/PointOfSell/PointOfSell'
 import CurrencyWallet from 'pages/CurrencyWallet/CurrencyWallet'
 import Transaction from 'pages/Transaction/Transaction'
@@ -32,23 +32,27 @@ import SaveKeysModal from "components/modals/SaveKeysModal/SaveKeysModal"
 import { isMobile } from 'react-device-detect'
 
 
+import RestoryMnemonicWallet from "components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet"
+
+
 const routes = (
   <ScrollToTop>
     <Switch>
       <Route path={`${localisePrefix}${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />
 
-      <Route path={`${localisePrefix}/:ticker(btc|eth)/tx/:tx?`} component={Transaction} />
+      <Route path={`${localisePrefix}/:ticker(btc|eth|ghost|next)/tx/:tx?`} component={Transaction} />
       <Route path={`${localisePrefix}/:token(token)/:ticker/tx/:tx?`} component={Transaction} />
-      <Route path={`${localisePrefix}/:ticker(btc|eth)/:address/:action(receive|send)?`} component={CurrencyWallet} />
+
+      <Route path={`${localisePrefix}/:ticker(btc|eth|ghost|next)/:address/:action(receive|send)?`} component={CurrencyWallet} />
       <Route path={`${localisePrefix}/:token(token)/:ticker/:address`} component={CurrencyWallet} />
       <Route path={`${localisePrefix}/:token(token)/:ticker/:address/withdraw`} component={CurrencyWallet} />
       <Route path={`${localisePrefix}/:fullName-wallet/:address?`} component={CurrencyWallet} />
 
-      <Route path={`${localisePrefix}${links.home}:buy-:sell/:orderId`} component={Home} />
-      <Route path={`${localisePrefix}${links.home}:buy-:sell`} component={Home} />
+      <Route path={`${localisePrefix}/:buy-:sell/:orderId`} component={Home} />
+      <Route path={`${localisePrefix}/:buy-:sell`} component={Home} />
 
-      <Route path={`${localisePrefix}${links.exchange}/:sell-to-:buy`} component={PartialClosure} />
-      <Route path={`${localisePrefix}${links.exchange}`} component={PartialClosure} />
+      <Route path={`${localisePrefix}${links.exchange}/:sell-to-:buy`} component={Exchange} />
+      <Route path={`${localisePrefix}${links.exchange}`} component={Exchange} />
 
       <Route path={`${localisePrefix}${links.pointOfSell}/:sell-to-:buy`} component={PointOfSell} />
       <Route path={`${localisePrefix}${links.pointOfSell}`} component={PointOfSell} />
@@ -59,7 +63,8 @@ const routes = (
       <Route path={`${localisePrefix}${links.wallet}`} component={Wallet} />
 
       <Route exact path={`${localisePrefix}${links.createWallet}`} component={CreateWallet} />
-      <Route path={`${localisePrefix}${links.createWallet}${links.home}:currency`} component={CreateWallet} />
+      <Route path={`${localisePrefix}${links.createWallet}/:currency`} component={CreateWallet} />
+      <Route path={`${localisePrefix}${links.restoreWallet}`} component={RestoryMnemonicWallet} />
 
       <Route path={`${localisePrefix}${links.multisign}/btc/:action/:data/:peer`} component={BtcMultisignProcessor} />
       <Route path={`${localisePrefix}${links.multisign}/btc/:action/:data`} component={BtcMultisignProcessor} />
@@ -73,7 +78,8 @@ const routes = (
 
       <Route path={`${localisePrefix}${links.ieo}`} component={IEO} />
       <Route exact path={`${localisePrefix}${links.notFound}`} component={NotFound} />
-      <Route exact path={`${localisePrefix}${links.home}`} component={Wallet} />
+      <Route exact path={`${localisePrefix}/`} component={Wallet} />
+      <Route exact path={`${localisePrefix}${links.connectWallet}`} component={Wallet} />
       {/* В десктоп режиме - история показывается в дизайне кошелька */}
       {!isMobile && (
         <>
@@ -88,7 +94,7 @@ const routes = (
         </>
       )}
       <Route path={`${localisePrefix}${links.currencyWallet}`} component={Wallet} />
-      <Route path={`${localisePrefix}${links.home}:currency`} component={Currency} />
+      <Route path={`${localisePrefix}/:currency`} component={Currency} />
 
       <Route component={NotFound} />
     </Switch>

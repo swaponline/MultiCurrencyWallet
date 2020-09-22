@@ -254,7 +254,7 @@
     }
   }
   
-  @media all and (min-width: 320px) and (max-width:1024px) {
+  @media all and (max-width:1024px) {
     .notActiveLink {
       bottom: -10px;
     }
@@ -532,7 +532,7 @@
   }
 }
 
-@media all and (min-width: 320px) and (max-width: 570px) {
+@media all and (max-width: 570px) {
   .yourAddress {
     display: none;
   }
@@ -592,7 +592,7 @@
 }
 
 
-@media all and (min-width: 320px) and (max-width: 767px) {
+@media all and (max-width: 767px) {
   .notifyBlock {
     flex-direction: column;
   }
@@ -618,7 +618,7 @@
   }
 }
 
-@media all and (min-width: 320px) and (max-width: 530px) {
+@media all and (max-width: 530px) {
   .assetsTableInfo {
     .errorMessage {
       position: absolute;

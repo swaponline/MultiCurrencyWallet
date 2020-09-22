@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react'
 import Link from 'sw-valuelink'
 
 import CSSModules from 'react-css-modules'
-import styles from '../PartialClosure/PartialClosure.scss'
+import styles from '../Exchange/Exchange.scss'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
@@ -14,7 +14,7 @@ import { isMobile } from 'react-device-detect'
 
 import reducers from 'redux/core/reducers'
 
-import SelectGroup from '../PartialClosure/SelectGroup/SelectGroup'
+import SelectGroup from '../Exchange/SelectGroup/SelectGroup'
 import { Button, Toggle } from 'components/controls'
 import Input from 'components/forms/Input/Input'
 import Promo from './Promo/Promo'
@@ -35,11 +35,13 @@ import helpers, { constants, links, ethToken } from 'helpers'
 import { getTokenWallet } from 'helpers/links'
 import { animate } from 'helpers/domUtils'
 import Switching from 'components/controls/Switching/Switching'
-import CustomDestAddress from "../PartialClosure/CustomDestAddress/CustomDestAddress"
+import CustomDestAddress from '../Exchange/CustomDestAddress/CustomDestAddress'
 
 const allowedCoins = [
   ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? ['BTC'] : [],
   ...(!config.opts.curEnabled || config.opts.curEnabled.eth) ? ['ETH'] : [],
+  ...(!config.opts.curEnabled || config.opts.curEnabled.ghost) ? ['GHOST'] : [],
+  ...(!config.opts.curEnabled || config.opts.curEnabled.next) ? ['NEXT'] : [],
 ]
 
 const isExchangeAllowed = (currencies) => currencies.filter(c => {
@@ -67,7 +69,7 @@ const text = [
 const subTitle = (sell, sellTicker, buy, buyTicker) => (
   <div>
     <FormattedMessage
-      id="PartialClosureTitleTag1"
+      id="ExchangeTitleTag1_point_of_sell"
       defaultMessage="Fastest cross-chain exchange powered by Atomic Swap"
       values={{ full_name1: sell, ticker_name1: sellTicker, full_name2: buy, ticker_name2: buyTicker }}
     />
@@ -99,7 +101,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   addPartialItems,
   history: { swapHistory },
   core: { orders, hiddenCoinsList },
-  user: { ethData, btcData, tokensData, activeFiat, ...rest },
+  user: { ethData, btcData, ghostData, nextData, tokensData, activeFiat, ...rest },
 }) => ({
   activeFiat,
   currencies: isExchangeAllowed(currencies.partialItems),
@@ -107,7 +109,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   addSelectedItems: isExchangeAllowed(currencies.addPartialItems),
   orders: filterIsPartial(orders),
   allOrders: orders,
-  currenciesData: [ethData, btcData],
+  currenciesData: [ethData, btcData, ghostData, nextData],
   tokensData: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   decline: rememberedOrders.savedOrders,
   hiddenCoinsList,
@@ -116,12 +118,16 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   usersData: [
     ethData,
     btcData,
+    ghostData,
+    nextData,
     ...Object.values(tokensData).filter(({ address }) => address),
-    ...Object.values(rest).filter(({ address }) => address)
+    ...Object.values(rest)
+      .filter(( coinData ) => coinData && coinData.address)
+      .filter(({ address }) => address)
   ],
 }))
 @CSSModules(styles, { allowMultiple: true })
-export default class PartialClosure extends Component {
+export default class Exchange extends Component {
 
   static defaultProps = {
     orders: [],
@@ -829,6 +835,10 @@ export default class PartialClosure extends Component {
 
     if (getCurrency === 'btc') return util.typeforce.isCoinAddress.BTC(customWallet)
 
+    if (getCurrency === 'ghost') return util.typeforce.isCoinAddress.GHOST(customWallet)
+
+    if (getCurrency === 'next') return util.typeforce.isCoinAddress.NEXT(customWallet)
+
     return util.typeforce.isCoinAddress.ETH(customWallet)
 
   }
@@ -841,14 +851,33 @@ export default class PartialClosure extends Component {
       if (config.erc20[getCurrency] !== undefined) return true
       // btc-eth
       if (getCurrency === 'eth') return true
+      if (getCurrency === 'ghost') return true
+      if (getCurrency === 'next') return true
     }
+
     if (config.erc20[haveCurrency] !== undefined) {
       // token-btc
       if (getCurrency === 'btc') return true
+      if (getCurrency === 'ghost') return true
+      if (getCurrency === 'next') return true
     }
 
     if (haveCurrency === 'eth') {
       // eth-btc
+      if (getCurrency === 'btc') return true
+      if (getCurrency === 'ghost') return true
+      if (getCurrency === 'next') return true
+    }
+
+    if (haveCurrency === 'ghost') {
+      // eth-ghost
+      if (getCurrency === 'eth') return true
+      if (getCurrency === 'btc') return true
+    }
+
+    if (haveCurrency === 'next') {
+      // eth-next
+      if (getCurrency === 'eth') return true
       if (getCurrency === 'btc') return true
     }
 
@@ -1073,11 +1102,11 @@ export default class PartialClosure extends Component {
       ticker_name2: getCurrency.toUpperCase(),
     }
     const TitleTagString = formatMessage({
-      id: 'PartialClosureTitleTag',
+      id: 'ExchangeTitleTag',
       defaultMessage: 'Atomic Swap {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}) Instant Exchange',
     }, SeoValues)
     const MetaDescriptionString = formatMessage({
-      id: 'PartialClosureMetaDescrTag',
+      id: 'ExchangeMetaDescrTag',
       defaultMessage: 'Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol.', // eslint-disable-line
     }, SeoValues)
 
@@ -1089,7 +1118,7 @@ export default class PartialClosure extends Component {
         <div styleName={isSingleForm ? 'formExchange_widgetBuild' : `formExchange ${isWidget ? 'widgetFormExchange' : ''}`} className={isWidget ? 'formExchange' : ''} >
           {desclineOrders.length ?
             <h5 role="presentation" styleName="informAbt" onClick={this.handleShowIncomplete}>
-              <FormattedMessage id="continueDeclined977" defaultMessage="Click here to continue your swaps" />
+              <FormattedMessage id="continueDeclined977_point_of_sell" defaultMessage="Click here to continue your swaps" />
             </h5>
             : <span />
           }
@@ -1101,7 +1130,7 @@ export default class PartialClosure extends Component {
               selectedValue={haveCurrency}
               onSelect={this.handleSetHaveValue}
               label={<FormattedMessage id="partial243" defaultMessage="You sell" />}
-              id="partialClosure456"
+              id="Exchange456"
               tooltip={<FormattedMessage id="partial462" defaultMessage="The amount you have on swap.online or an external wallet that you want to exchange" />}
               placeholder="0.00000000"
               fiat={(maxAmount > 0 && isNonOffers) ? 0 : haveFiat}
@@ -1136,7 +1165,7 @@ export default class PartialClosure extends Component {
               selectedValue={getCurrency}
               onSelect={this.handleSetGetValue}
               label={<FormattedMessage id="partial255" defaultMessage="You get" />}
-              id="partialClosure472"
+              id="Exchange472"
               tooltip={<FormattedMessage id="partial478" defaultMessage="The amount you will receive after the exchange" />}
               currencies={addSelectedItems}
               fiat={getFiat}

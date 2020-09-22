@@ -37,4 +37,10 @@ window.buildOptions = {
 window.buildOptions = {
   showWalletBanners: true, // Allow to see banners
   showHowItsWork: true, // Allow show block 'How its work' on exchange page
+  curEnabled: {
+    btc: true,
+    eth: true,
+    ghost: true,
+    next: true,
+  },
 }

@@ -14,12 +14,11 @@ import { Link } from 'react-router-dom'
 
 import { swapComponents } from './swaps'
 import Share from './Share/Share'
-import EmergencySave from './EmergencySave/EmergencySave'
+import Debug from './Debug/Debug'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import DeleteSwapAfterEnd from './DeleteSwapAfterEnd'
 import { Button } from 'components/controls'
-import ShowBtcScript from './ShowBtcScript/ShowBtcScript'
 import CopyToClipboard from 'react-copy-to-clipboard'
 
 import axios from 'axios'
@@ -32,14 +31,14 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @injectIntl
 @connect(({
-  user: { ethData, btcData, tokensData, activeFiat },
+  user: { ethData, btcData, ghostData, nextData, tokensData, activeFiat },
   ipfs: { peer },
   rememberedOrders,
 }) => ({
   activeFiat,
-  items: [ethData, btcData],
+  items: [ethData, btcData, ghostData, nextData],
   tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
-  currenciesData: [ethData, btcData],
+  currenciesData: [ethData, btcData, ghostData, nextData],
   tokensData: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   errors: 'api.errors',
   checked: 'api.checked',
@@ -54,7 +53,7 @@ export default class SwapComponent extends PureComponent {
   /*
     ================================================================
     This is debug information without any secret and private data.
-    This information can help me resolve  problems.
+    This information can help me resolve problems.
     Contact me https://t.me/sashanoxon with any questions
   */
   sendSwapDebugInformation = (orderId) => {
@@ -142,8 +141,7 @@ export default class SwapComponent extends PureComponent {
       continueSwap: true,
       enoughBalance: true,
       depositWindow: false,
-      isShowingBitcoinScript: false,
-      isShowDevInformation: false,
+      isShowDebug: false,
       shouldStopCheckSendingOfRequesting: false,
       waitWithdrawOther: false,
       isFaucetRequested: false,
@@ -173,7 +171,7 @@ export default class SwapComponent extends PureComponent {
 
     try {
       const swap = new Swap(orderId, SwapApp.shared())
-
+      console.log(swap.flow._flowName);
       const SwapComponent = swapComponents[swap.flow._flowName]
       const ethData = items.filter(item => item.currency === 'ETH')
       const currencyData = items.concat(tokenItems)
@@ -261,6 +259,7 @@ export default class SwapComponent extends PureComponent {
         this.requestingWithdrawFee()
         this.isBalanceEnough()
         this.checkFailSwap()
+        this.checkOtherSideRefund()
       }, 5000)
 
       const checkingConfirmSuccess = setTimeout(() => {
@@ -426,6 +425,23 @@ export default class SwapComponent extends PureComponent {
     })
   }
 
+  checkOtherSideRefund = async () => {
+    const {
+      swap: {
+        flow,
+      },
+    } = this.state
+
+    if (typeof swap.flow.checkOtherSideRefund === 'function') {
+      const isOtherSideRefunded = await swap.flow.checkOtherSideRefund()
+      if (isOtherSideRefunded) {
+        this.setState(() => ({
+          continueSwap: false,
+        }))
+      }
+    }
+  }
+
   checkFailSwap = () => {
     const {
       swap: {
@@ -473,10 +489,10 @@ export default class SwapComponent extends PureComponent {
     }
   }
 
-  toggleInfo = (a, b) => {
+  toggleDebug = () => {
+    const isShowDebug = this.state.isShowDebug;
     this.setState({
-      isShowDevInformation: !a,
-      isShowingBitcoinScript: !b,
+      isShowDebug: !isShowDebug,
     })
   }
 
@@ -510,8 +526,7 @@ export default class SwapComponent extends PureComponent {
       enoughBalance,
       depositWindow,
       ethAddress,
-      isShowingBitcoinScript,
-      isShowDevInformation,
+      isShowDebug,
       requestToFaucetSended,
       stepToHide,
       isAddressCopied,
@@ -543,25 +558,44 @@ export default class SwapComponent extends PureComponent {
               waitWithdrawOther={waitWithdrawOther}
               locale={locale}
               wallets={this.wallets}
-            >
-              <p styleName="reloadText" title="reload the page" role="presentation" onClick={() => window.location.reload()}>
+            />
+            {/*<Share flow={swap.flow} />*/}
+            <div>
+              <p styleName="reloadText" role="presentation">
                 <FormattedMessage
-                  id="swapprogressDONTLEAVE22"
-                  defaultMessage="The swap was stuck? Try to reload page"
+                  id="SwapStuck"
+                  defaultMessage="The swap was stuck? Try to "
                 />
+                <span styleName="pseudolink" onClick={() => this.toggleDebug()}>
+                  <FormattedMessage
+                    id="SwapDebug"
+                    defaultMessage="debug"
+                  />
+                </span>
+                <FormattedMessage
+                  id="SwapOr"
+                  defaultMessage=" or "
+                />
+                <span styleName="pseudolink" onClick={() => window.location.reload()}>
+                  <FormattedMessage
+                    id="SwapReload"
+                    defaultMessage="reload the page"
+                  />
+                </span>
               </p>
-              <Share flow={swap.flow} />
-              <EmergencySave flow={swap.flow} onClick={() => this.toggleInfo(isShowDevInformation, true)} isShowDevInformation={isShowDevInformation} />
-              <ShowBtcScript
-                btcScriptValues={swap.flow.state.btcScriptValues}
-                onClick={() => this.toggleInfo(!false, isShowingBitcoinScript)}
-                isShowingBitcoinScript={isShowingBitcoinScript} />
-              {peer === swap.owner.peer && (<DeleteSwapAfterEnd swap={swap} />)}
-            </SwapComponent>
+
+              { isShowDebug &&
+                <Debug flow={swap.flow} />
+              }
+
+              {peer === swap.owner.peer &&
+                <DeleteSwapAfterEnd swap={swap} />
+              }
+            </div>
           </div> :
           <div>
             <h3 styleName="canceled" /* eslint-disable-line */ onClick={this.goWallet}>
-              <FormattedMessage id="swappropgress327" defaultMessage="this Swap is canceled" />
+              <FormattedMessage id="swappropgress327" defaultMessage="This swap is canceled" />
             </h3>
             <div>
               <h3 styleName="refHex">

@@ -99,11 +99,11 @@ function BalanceForm({
                 )} */}
             </p>
           ) : (
-              <p className="data-tut-all-balance">
-                {currency.toUpperCase() === 'BTC' ? <img src={btc} alt="btc" /> : ''}
-                {BigNumber(currencyBalance).dp(5, BigNumber.ROUND_FLOOR).toString()}
-              </p>
-            )}
+            <p className="data-tut-all-balance">
+              {currency.toUpperCase() === 'BTC' ? <img src={btc} alt="btc" /> : ''}
+              {BigNumber(currencyBalance).dp(5, BigNumber.ROUND_FLOOR).toString()}
+            </p>
+          )}
         </div>
         <div styleName="yourBalanceCurrencies">
           <button
@@ -151,10 +151,10 @@ function BalanceForm({
               </Button>
             </div>
           ) : (
-              <Button blue disabled={!currencyBalance} styleName="button__invoice" onClick={() => handleInvoice()}>
-                <FormattedMessage id="RequestPayment" defaultMessage="Запросить" />
-              </Button>
-            )}
+            <Button blue disabled={!currencyBalance} styleName="button__invoice" onClick={() => handleInvoice()}>
+              <FormattedMessage id="RequestPayment" defaultMessage="Запросить" />
+            </Button>
+          )}
         </div>
       </div>
     </div>

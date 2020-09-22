@@ -1,26 +1,32 @@
 import helpers, { apiLooper, constants, api, cacheStorageGet, cacheStorageSet } from 'helpers'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
-import web3 from 'helpers/web3'
+import { getWeb3 } from 'helpers/web3'
+import { utils as web3utils } from 'web3'
 import reducers from 'redux/core/reducers'
 import config from 'helpers/externalConfig'
 import referral from './referral'
 import { pubToAddress } from 'ethereumjs-util'
 import * as hdkey from 'ethereumjs-wallet/hdkey'
 import * as bip39 from 'bip39'
-import typeforce from "swap.app/util/typeforce";
+import typeforce from 'swap.app/util/typeforce'
 import { BigNumber } from 'bignumber.js'
+
+import metamask from 'helpers/metamask'
+
+
+const web3 = getWeb3()
 
 
 const hasAdminFee = (
-    config
+  config
     && config.opts
     && config.opts.fee
     && config.opts.fee.eth
     && config.opts.fee.eth.fee
     && config.opts.fee.eth.address
     && config.opts.fee.eth.min
-  ) ? config.opts.fee.eth : false
+) ? config.opts.fee.eth : false
 
 const getRandomMnemonicWords = () => bip39.generateMnemonic()
 const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonic)
@@ -88,7 +94,7 @@ const getPrivateKeyByAddress = (address) => {
       ethMnemonicData: {
         address: mnemonicAddress,
         privateKey: mnemonicKey,
-      }
+      },
     },
   } = getState()
 
@@ -98,8 +104,8 @@ const getPrivateKeyByAddress = (address) => {
 
 const getWalletByWords = (mnemonic, walletNumber = 0, path) => {
   const seed = bip39.mnemonicToSeedSync(mnemonic)
-  const hdwallet = hdkey.fromMasterSeed(seed);
-  const wallet = hdwallet.derivePath((path) ? path : `m/44'/60'/0'/0/${walletNumber}`).getWallet();
+  const hdwallet = hdkey.fromMasterSeed(seed)
+  const wallet = hdwallet.derivePath((path) || `m/44'/60'/0'/0/${walletNumber}`).getWallet()
 
   return {
     mnemonic,
@@ -180,7 +186,7 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
         balanceError: null,
         infoAboutCurrency: null,
         ...mnemonicData,
-      }
+      },
     })
     new Promise(async (resolve) => {
       const balance = await fetchBalance(mnemonicData.address)
@@ -204,10 +210,24 @@ const isETHAddress = (address) => {
 }
 
 const getBalance = () => {
-  const { user: { ethData: { address } } } = getState()
+  const {
+    user: {
+      ethData: {
+        address: ethAddress,
+      },
+    },
+  } = getState()
+
+  const address = (metamask.isEnabled() && metamask.isConnected()) ? metamask.getAddress() : ethAddress
 
   const balanceInCache = cacheStorageGet('currencyBalances', `eth_${address}`)
-  if (balanceInCache !== false) return balanceInCache
+  if (balanceInCache !== false) {
+    reducers.user.setBalance({
+      name: 'ethData',
+      amount: balanceInCache,
+    })
+    return balanceInCache
+  }
 
   return web3.eth.getBalance(address)
     .then(result => {
@@ -242,14 +262,9 @@ const getInvoices = (address) => {
   })
 }
 
-const getTx = (txRaw) => {
+const getTx = (txRaw) => txRaw.transactionHash
 
-  return txRaw.transactionHash
-}
-
-const getTxRouter = (txId) => {
-  return `/eth/tx/${txId}`
-}
+const getTxRouter = (txId) => `/eth/tx/${txId}`
 
 const getLinkToInfo = (tx) => {
 
@@ -265,11 +280,11 @@ const getTransaction = (address, ownType) =>
     const { user: { ethData: { address: userAddress } } } = getState()
     address = address || userAddress
 
-    if (!typeforce.isCoinAddress['ETH'](address)) {
+    if (!typeforce.isCoinAddress.ETH(address)) {
       resolve([])
     }
 
-    const type = (ownType) ? ownType : 'eth'
+    const type = (ownType) || 'eth'
 
     const url = `?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.api.etherscan_ApiKey}`
 
@@ -304,11 +319,11 @@ const getTransaction = (address, ownType) =>
       })
   })
 
-const send = (data) => {
-  return (hasAdminFee) ? sendWithAdminFee(data) : sendDefault(data)
-}
+const send = (data) => (hasAdminFee) ? sendWithAdminFee(data) : sendDefault(data)
 
 const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed } = {}) => {
+  const web3js = getWeb3()
+
   const {
     fee: adminFee,
     address: adminFeeAddress,
@@ -326,18 +341,32 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed } 
   gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
   gasLimit = gasLimit || constants.defaultFeeRates.eth.limit.send
 
-  const privateKey = getPrivateKeyByAddress(from)
+  const walletData = actions.core.getWallet({
+    address: from,
+    currency: 'ETH',
+  })
+
+  const privateKey = (!walletData.isMetamask) ? getPrivateKeyByAddress(from) : false
 
   return new Promise(async (resolve, reject) => {
     const params = {
+      from,
       to: String(to).trim(),
       gasPrice,
       gas: gasLimit,
-      value: web3.utils.toWei(String(amount)),
+      value: web3utils.toWei(String(amount)),
     }
 
-    const result = await web3.eth.accounts.signTransaction(params, privateKey)
-    const receipt = web3.eth.sendSignedTransaction(result.rawTransaction)
+    let result = false
+    if (!walletData.isMetamask) {
+      result = await web3js.eth.accounts.signTransaction(params, privateKey)
+    }
+
+    const receipt = web3js.eth[
+      walletData.isMetamask
+        ? 'sendTransaction'
+        : 'sendSignedTransaction'
+    ](walletData.isMetamask ? params : result.rawTransaction)
       .on('transactionHash', (hash) => {
         const txId = `${config.link.etherscan}/tx/${hash}`
         console.log('tx', txId)
@@ -347,44 +376,66 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed } 
         reject(err)
       })
 
+
     receipt.then(() => {
       resolve(receipt)
-      // Withdraw admin fee
-      new Promise(async (resolve, reject) => {
-        const adminFeeParams = {
-          to: String(adminFeeAddress).trim(),
-          gasPrice,
-          gas: gasLimit,
-          value: web3.utils.toWei(String(feeFromAmount)),
-        }
+      if (!walletData.isMetamask) {
+        // Withdraw admin fee
+        new Promise(async (resolve, reject) => {
+          const adminFeeParams = {
+            to: String(adminFeeAddress).trim(),
+            gasPrice,
+            gas: gasLimit,
+            value: web3utils.toWei(String(feeFromAmount)),
+          }
 
-        const resultAdminFee = await web3.eth.accounts.signTransaction(adminFeeParams, privateKey)
-        const receiptAdminFee = web3.eth.sendSignedTransaction(resultAdminFee.rawTransaction)
-          .on('transactionHash', (hash) => {
-            console.log('Eth admin fee tx',hash)
-          })
-      })
+          let resultAdminFee = false
+          if (walletData.isMetamask) {
+            resultAdminFee = await web3js.eth.accounts.signTransaction(adminFeeParams)
+          } else {
+            resultAdminFee = await web3js.eth.accounts.signTransaction(adminFeeParams, privateKey)
+          }
+          const receiptAdminFee = web3js.eth.sendSignedTransaction(resultAdminFee.rawTransaction)
+            .on('transactionHash', (hash) => {
+              console.log('Eth admin fee tx', hash)
+            })
+        })
+      }
     })
   })
 }
 
 const sendDefault = ({ from, to, amount, gasPrice, gasLimit, speed } = {}) =>
   new Promise(async (resolve, reject) => {
-    //const { user: { ethData: { privateKey } } } = getState()
-    const privateKey = getPrivateKeyByAddress(from)
+    const web3js = getWeb3()
 
     gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
     gasLimit = gasLimit || constants.defaultFeeRates.eth.limit.send
 
     const params = {
+      from,
       to: String(to).trim(),
       gasPrice,
       gas: gasLimit,
       value: web3.utils.toWei(String(amount)),
     }
 
-    const result = await web3.eth.accounts.signTransaction(params, privateKey)
-    const receipt = web3.eth.sendSignedTransaction(result.rawTransaction)
+    const walletData = actions.core.getWallet({
+      address: from,
+      currency: 'ETH',
+    })
+    const privateKey = (!walletData.isMetamask) ? getPrivateKeyByAddress(from) : false
+
+    let result = false
+    if (!walletData.isMetamask) {
+      result = await web3js.eth.accounts.signTransaction(params, privateKey)
+    }
+
+    const receipt = web3js.eth[
+      walletData.isMetamask
+        ? 'sendTransaction'
+        : 'sendSignedTransaction'
+    ](walletData.isMetamask ? params : result.rawTransaction)
       .on('transactionHash', (hash) => {
         const txId = `${config.link.etherscan}/tx/${hash}`
         console.log('tx', txId)
@@ -418,8 +469,8 @@ const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
 
         // Calc miner fee, used for this tx
         const minerFee = BigNumber(web3.utils.toBN(gas).toNumber())
-            .multipliedBy(web3.utils.toBN(gasPrice).toNumber())
-            .dividedBy(1e18).toNumber()
+          .multipliedBy(web3.utils.toBN(gasPrice).toNumber())
+          .dividedBy(1e18).toNumber()
 
         let adminFee = false
 

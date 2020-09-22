@@ -36,6 +36,8 @@ window.buildOptions = {
   curEnabled: { // Or 'false' if enabled all
     btc: true,
     eth: true,
+    ghost: true,
+    next: true,
   },
   invoiceEnabled: false, // Allow create invoices
 }

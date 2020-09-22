@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import CSSModules from 'react-css-modules'
 
 import { connect } from 'redaction'
@@ -17,7 +17,10 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import links from 'helpers/links'
 import ContentLoader from '../../components/loaders/ContentLoader/ContentLoader'
 import { isMobile } from 'react-device-detect'
-import FilterForm from "components/FilterForm/FilterForm"
+import FilterForm from 'components/FilterForm/FilterForm'
+
+import InvoicesList from 'pages/Invoices/InvoicesList'
+import SwapsHistory from 'pages/History/SwapsHistory/SwapsHistory'
 
 
 
@@ -180,72 +183,53 @@ export default class History extends Component {
 
   render() {
     const { filterValue, items, isLoading } = this.state
+    const { swapHistory } = this.props
 
     const titles = []
     const activeTab = 0
-    const tabs = [
-      {
-        key: 'ActivityAll',
-        title: <FormattedMessage id="History_Nav_ActivityTab" defaultMessage="Activity" />,
-        link: links.history,
-      }
-      // {
-      //   key: 'ActivityInvoices',
-      //   title: <FormattedMessage id="History_Nav_InvoicesTab" defaultMessage="Invoices" />,
-      //   link: links.invoices,
-      // },
-    ]
 
     return (
-      <>
-        {
-          items ? (
-            <section styleName={`history ${isDark ? 'dark' : ''}`}>
-              <h3 styleName="historyHeading">
-                <FormattedMessage id="History_Activity_Title" defaultMessage="Activity" />
-              </h3>
-              <FilterForm filterValue={filterValue} onSubmit={this.handleFilter} onChange={this.handleFilterChange} resetFilter={this.resetFilter} />
-              {isMobile && config.opts.invoiceEnabled && (
-                <ul styleName="walletNav">
-                  {tabs.map(({ key, title, link }, index) => (
-                    <li
-                      key={key}
-                      styleName={`walletNavItem ${activeTab === index ? 'active' : ''}`}
-                      onClick={() => this.handleNavItemClick(index)}
-                    >
-                      <a href={`#${link}`} styleName="walletNavItemLink">
-                        {title}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              )}
-              <div>
-                {
-                  items.length > 0 && !isLoading ? (
-                    <InfiniteScrollTable
-                      className={styles.history}
-                      titles={titles}
-                      bottomOffset={400}
-                      getMore={this.loadMore}
-                      itemsCount={items.length}
-                      items={items.slice(0, this.state.renderedItems)}
-                      rowRender={this.rowRender}
-                    />
-                  ) : (
-                      <ContentLoader rideSideContent empty={!isLoading} nonHeader />
-                    )
-                }
-              </div>
-
-            </section>
+      <Fragment>
+      <section styleName={`history ${isDark ? 'dark' : ''}`}>
+        <h3 styleName="historyHeading">
+          <FormattedMessage id="History_Activity_Title" defaultMessage="Activity" />
+        </h3>
+        {items ? (
+          <div>
+            <FilterForm filterValue={filterValue} onSubmit={this.handleFilter} onChange={this.handleFilterChange} resetFilter={this.resetFilter} />
+            <div>
+              {
+                items.length > 0 && !isLoading ? (
+                  <InfiniteScrollTable
+                    className={styles.history}
+                    titles={titles}
+                    bottomOffset={400}
+                    getMore={this.loadMore}
+                    itemsCount={items.length}
+                    items={items.slice(0, this.state.renderedItems)}
+                    rowRender={this.rowRender}
+                  />
+                ) : (
+                  <ContentLoader rideSideContent empty={!isLoading} nonHeader />
+                )
+              }
+            </div>
+          </div>
           ) : (
-              <div styleName="historyContent">
-                <ContentLoader rideSideContent />
-              </div>
-            )
+            <div styleName="historyLoader">
+              <ContentLoader rideSideContent />
+            </div>
+          )
         }
-      </>
+      </section>
+
+      <InvoicesList onlyTable />
+
+      { swapHistory.length > 0 &&
+        <SwapsHistory orders={swapHistory.filter((item) => item.step >= 1)} />
+      }
+
+      </Fragment>
     )
   }
 }

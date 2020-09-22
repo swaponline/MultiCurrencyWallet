@@ -2,11 +2,14 @@ import ERC20_ABI from 'human-standard-token-abi'
 import helpers, { apiLooper, constants, cacheStorageGet, cacheStorageSet } from 'helpers'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
-import web3 from 'helpers/web3'
+import { web3, getWeb3 } from 'helpers/web3'
 import reducers from 'redux/core/reducers'
 import config from 'helpers/externalConfig'
 import { BigNumber } from 'bignumber.js'
 import InputDataDecoder from 'ethereum-input-data-decoder'
+
+import metamask from 'helpers/metamask'
+
 
 
 const hasAdminFee = (
@@ -71,7 +74,7 @@ const setupContract = (ethAddress, contractAddress, nameContract, decimals, full
 
   const isSweeped = actions.eth.isSweeped()
 
-  const data = {
+  let data = {
     address: ethAddress,
     balance: 0,
     name: nameContract.toLowerCase(),
@@ -81,6 +84,15 @@ const setupContract = (ethAddress, contractAddress, nameContract, decimals, full
     decimals,
     currencyRate: 1,
     isMnemonic: isSweeped,
+    isMetamask: false,
+  }
+  if (metamask.isEnabled() && metamask.isConnected()) {
+    data = {
+      ...data,
+      address: metamask.getAddress(),
+      isMetamask: true,
+      isConnected: true,
+    }
   }
 
   reducers.user.setTokenAuthData({ name: data.name, data })
@@ -114,17 +126,26 @@ const getBalance = async (currency) => {
   if (currency === undefined) {
     return
   }
-  const balanceInCache = cacheStorageGet('currencyBalances', `token_${currency}`)
-  if (balanceInCache !== false) return balanceInCache
 
   const { address, contractAddress, decimals, name } = tokensData[currency.toLowerCase()]
+
+  const balanceInCache = cacheStorageGet('currencyBalances', `token_${currency}_${address}`)
+
+  if (balanceInCache !== false) {
+    reducers.user.setTokenBalance({
+      name,
+      amount: balanceInCache,
+    })
+    return balanceInCache
+  }
+
   const ERC20 = new web3.eth.Contract(ERC20_ABI, contractAddress)
   try {
     const result = await ERC20.methods.balanceOf(address).call()
-    console.log('result get balance', result)
+
     let amount = new BigNumber(String(result)).dividedBy(new BigNumber(String(10)).pow(decimals)).toString()
     reducers.user.setTokenBalance({ name, amount })
-    cacheStorageSet('currencyBalances', `token_${currency}`, amount, 60)
+    cacheStorageSet('currencyBalances', `token_${currency}_${address}`, amount, 60)
     return amount
   } catch (e) {
     reducers.user.setTokenBalanceError({ name })
@@ -159,7 +180,7 @@ const getTransaction = (ownAddress, ownType) =>
     const url = [
       `?module=account&action=tokentx`,
       `&contractaddress=${contractAddress}`,
-      `&address=${(ownAddress) ? ownAddress : address}`,
+      `&address=${(ownAddress) || address}`,
       `&startblock=0&endblock=99999999`,
       `&sort=asc&apikey=${config.api.etherscan_ApiKey}`,
     ].join('')
@@ -222,14 +243,9 @@ const fetchFees = async ({ gasPrice, gasLimit, speed } = {}) => {
   }
 }
 
-const getTx = (txRaw) => {
+const getTx = (txRaw) => txRaw.transactionHash
 
-  return txRaw.transactionHash
-}
-
-const getTxRouter = (txId, currency) => {
-  return `/token/${currency.toUpperCase()}/tx/${txId}`
-}
+const getTxRouter = (txId, currency) => `/token/${currency.toUpperCase()}/tx/${txId}`
 
 
 const getLinkToInfo = (tx) => {
@@ -255,11 +271,9 @@ const sendTransaction = ({ contract, method }, { args, params = {} } = {}, callb
     resolve(receipt)
   })
 
-const send = (data) => {
-  return (hasAdminFee) ? sendWithAdminFee(data) : sendDefault(data)
-}
+const send = (data) => (hasAdminFee) ? sendWithAdminFee(data) : sendDefault(data)
 
-const sendWithAdminFee = async ({ name, to, amount, ...feeConfig } = {}) => {
+const sendWithAdminFee = async ({ name, from, to, amount, ...feeConfig } = {}) => {
   const { tokenContract, toWei } = withToken(name)
   const {
     fee: adminFee,
@@ -275,7 +289,15 @@ const sendWithAdminFee = async ({ name, to, amount, ...feeConfig } = {}) => {
 
   feeFromAmount = toWei(feeFromAmount.toNumber()) // Admin fee
 
-  const params = await fetchFees({ ...feeConfig })
+  const params = {
+    ... await fetchFees({ ...feeConfig }),
+    from,
+  }
+
+  const walletData = actions.core.getWallet({
+    address: from,
+    currency: name,
+  })
 
   const newAmount = toWei(amount)
   const callMethod = { contract: tokenContract, method: 'transfer' }
@@ -293,6 +315,7 @@ const sendWithAdminFee = async ({ name, to, amount, ...feeConfig } = {}) => {
 
     receipt.then(() => {
       resolve(receipt)
+      if (walletData.isMetamask) return
       // Send admin fee
       new Promise(async () => {
         const receiptAdminFee = await tokenContract.methods.transfer(adminFeeAddress, feeFromAmount).send(params)
@@ -305,9 +328,12 @@ const sendWithAdminFee = async ({ name, to, amount, ...feeConfig } = {}) => {
   })
 }
 
-const sendDefault = async ({ name, to, amount, ...feeConfig } = {}) => {
+const sendDefault = async ({ name, from, to, amount, ...feeConfig } = {}) => {
   const { tokenContract, toWei } = withToken(name)
-  const params = await fetchFees({ ...feeConfig })
+  const params = {
+    ... await fetchFees({ ...feeConfig }),
+    from,
+  }
 
   const newAmount = toWei(amount)
   const callMethod = { contract: tokenContract, method: 'transfer' }
@@ -365,86 +391,84 @@ const setAllowanceForToken = async ({ name, to, targetAllowance, ...config }) =>
   return approve({ name, to, amount: newTargetAllowance, ...config })
 }
 
-const fetchTxInfo = (hash, cacheResponse) => {
-  return new Promise((resolve) => {
-    const { user: { tokensData } } = getState()
+const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
+  const { user: { tokensData } } = getState()
 
-    const url = `?module=proxy&action=eth_getTransactionByHash&txhash=${hash}&apikey=${config.api.etherscan_ApiKey}`
+  const url = `?module=proxy&action=eth_getTransactionByHash&txhash=${hash}&apikey=${config.api.etherscan_ApiKey}`
 
-    return apiLooper.get('etherscan', url, {
-      cacheResponse,
-    })
-      .then((res) => {
-        if (res && res.result) {
-          let amount = 0
-          let receiverAddress = res.result.to
-          const contractAddress = res.result.to
-          let tokenDecimal = 18
-          // Определим токен по адрессу контракта
-          Object.keys(tokensData).forEach((key) => {
-            if (tokensData[key]
+  return apiLooper.get('etherscan', url, {
+    cacheResponse,
+  })
+    .then((res) => {
+      if (res && res.result) {
+        let amount = 0
+        let receiverAddress = res.result.to
+        const contractAddress = res.result.to
+        let tokenDecimal = 18
+        // Определим токен по адрессу контракта
+        Object.keys(tokensData).forEach((key) => {
+          if (tokensData[key]
               && tokensData[key].contractAddress
               && tokensData[key].contractAddress == contractAddress
               && tokensData[key].decimals
-            ) {
-              tokenDecimal = tokensData[key].decimals
-              return false
-            }
-          })
+          ) {
+            tokenDecimal = tokensData[key].decimals
+            return false
+          }
+        })
 
-          const txData = erc20Decoder.decodeData(res.result.input)
-          if (txData
+        const txData = erc20Decoder.decodeData(res.result.input)
+        if (txData
             && txData.name === `transfer`
             && txData.inputs
             && txData.inputs.length == 2
-          ) {
-            receiverAddress = `0x${txData.inputs[0]}`
-            amount = BigNumber(txData.inputs[1]).div(BigNumber(10).pow(tokenDecimal)).toString()
-          } else {
-            // This is not erc20 transfer tx 
-          }
-
-          const {
-            from,
-            gas,
-            gasPrice,
-            blockHash,
-          } = res.result
-
-          // Calc miner fee, used for this tx
-          const minerFee = BigNumber(web3.utils.toBN(gas).toNumber())
-            .multipliedBy(web3.utils.toBN(gasPrice).toNumber())
-            .dividedBy(1e18).toNumber()
-
-          let adminFee = false
-
-          if (hasAdminFee) {
-            adminFee = BigNumber(hasAdminFee.fee).dividedBy(100).multipliedBy(amount)
-            if (BigNumber(hasAdminFee.min).isGreaterThan(adminFee)) adminFee = BigNumber(hasAdminFee.min)
-            adminFee = adminFee.toNumber()
-          }
-
-          resolve({
-            amount,
-            afterBalance: null,
-            receiverAddress,
-            senderAddress: from,
-            minerFee,
-            minerFeeCurrency: 'ETH',
-            adminFee,
-            confirmed: (blockHash != null),
-          })
-
+        ) {
+          receiverAddress = `0x${txData.inputs[0]}`
+          amount = BigNumber(txData.inputs[1]).div(BigNumber(10).pow(tokenDecimal)).toString()
         } else {
-          resolve(false)
+          // This is not erc20 transfer tx
         }
-      })
-      .catch((err) => {
-        console.log(err)
+
+        const {
+          from,
+          gas,
+          gasPrice,
+          blockHash,
+        } = res.result
+
+        // Calc miner fee, used for this tx
+        const minerFee = BigNumber(web3.utils.toBN(gas).toNumber())
+          .multipliedBy(web3.utils.toBN(gasPrice).toNumber())
+          .dividedBy(1e18).toNumber()
+
+        let adminFee = false
+
+        if (hasAdminFee) {
+          adminFee = BigNumber(hasAdminFee.fee).dividedBy(100).multipliedBy(amount)
+          if (BigNumber(hasAdminFee.min).isGreaterThan(adminFee)) adminFee = BigNumber(hasAdminFee.min)
+          adminFee = adminFee.toNumber()
+        }
+
+        resolve({
+          amount,
+          afterBalance: null,
+          receiverAddress,
+          senderAddress: from,
+          minerFee,
+          minerFeeCurrency: 'ETH',
+          adminFee,
+          confirmed: (blockHash != null),
+        })
+
+      } else {
         resolve(false)
-      })
-  })
-}
+      }
+    })
+    .catch((err) => {
+      console.log(err)
+      resolve(false)
+    })
+})
 
 export default {
   login,

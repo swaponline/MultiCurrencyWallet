@@ -5,10 +5,10 @@ import { constants } from 'helpers'
 import CSSModules from 'react-css-modules'
 
 import styles from './ContentLoader.scss'
-import ContentSection from './components/ContentSection/ContentSection';
-import DescrSection from './components/DescrSection/DescrSection';
-import BalanceSection from './components/BalanceSection/BalanceSection';
-import BannersSection from './components/BannersSection/BannersSection';
+import ContentSection from './components/ContentSection/ContentSection'
+import DescrSection from './components/DescrSection/DescrSection'
+import BalanceSection from './components/BalanceSection/BalanceSection'
+import BannersSection from './components/BannersSection/BannersSection'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -31,8 +31,6 @@ function ContentLoader({ empty, inner, rideSideContent, leftSideContent, banners
             {!empty && !nonHeader ? <DescrSection /> : ''}
             <ContentSection />
             <ContentSection />
-            <ContentSection />
-            <ContentSection />
           </div>
         ) : ''
       }
@@ -51,9 +49,8 @@ function ContentLoader({ empty, inner, rideSideContent, leftSideContent, banners
         ) : ''
       }
     </Fragment>
-  );
+  )
 }
 
 export default CSSModules(ContentLoader, styles, { allowMultiple: true })
-
 

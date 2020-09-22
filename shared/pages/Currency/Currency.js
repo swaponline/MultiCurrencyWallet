@@ -27,8 +27,8 @@ import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 @withRouter
 @connect(({
   core: { hiddenCoinsList },
-  user: { ethData, btcData, tokensData } }) => ({
-    items: [ethData, btcData, ...Object.keys(tokensData).map(k => (tokensData[k]))],
+  user: { ethData, btcData, ghostData, nextData, tokensData } }) => ({
+    items: [ethData, btcData, ghostData, nextData, ...Object.keys(tokensData).map(k => (tokensData[k]))],
     hiddenCoinsList,
   }))
 @CSSModules(styles, { allowMultiple: true })
@@ -99,8 +99,8 @@ export default class Currency extends Component {
 
   isInWallet = () => !this.props.hiddenCoinsList.includes(this.getCoin().currency)
 
-  handleInWalletChange = (val) => val ? actions.core.markCoinAsVisible(this.getCoin().currency) :
-    actions.core.markCoinAsHidden(this.getCoin().currency)
+  handleInWalletChange = (val) => val ? actions.core.markCoinAsVisible(this.getCoin().currency, true) :
+    actions.core.markCoinAsHidden(this.getCoin().currency, true)
 
   handleReceive = () => {
     let { match: { params: { currency } }, items } = this.props

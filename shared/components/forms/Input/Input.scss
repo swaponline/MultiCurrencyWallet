@@ -188,7 +188,7 @@ textarea.input {
   }
 }
 
-@media all and (min-width: 320px) and (max-width: 767px) {
+@media all and (max-width: 767px) {
   .inputContainer {
     &.smallFontSize {
       input {

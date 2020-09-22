@@ -1,7 +1,8 @@
 .coin {
   @include square-block;
   background-color: #47454a;
-  border: 1px solid #fff;
+  //border: 1px solid #ddd;
+  box-shadow: 0px 0px 5px -1px #888;
   position: relative;
   border-radius: 50%;
 }

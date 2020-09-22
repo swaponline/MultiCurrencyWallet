@@ -20,15 +20,13 @@
   margin-top: 40px;
 }
 
-.currencyWalletActivity,
-.currencyWalletSwapHistory {
+.currencyWalletActivity {
   background: #fff;
   box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08), 0px 1px 4px rgba(0, 0, 0, 0.08);
   border-radius: 4px;
   padding: 25px;
   margin-top: 40px;
   width: 100%;
-  padding-bottom: 70px;
   z-index: 1;
   position: relative;
 
@@ -42,8 +40,7 @@
 }
 
 .dark {
-  .currencyWalletActivity,
-  .currencyWalletSwapHistory {
+  .currencyWalletActivity {
     background: #242425;
     box-shadow: 0px 4px 16px rgba(243, 243, 243, 0.08), 0px 1px 4px rgba(240, 233, 233, 0.08);
   
@@ -58,24 +55,17 @@
   }
 }
 
-.darkHistory,
 .darkActivity {
   background: #242425;
   box-shadow: 0px 4px 16px rgba(243, 243, 243, 0.08), 0px 1px 4px rgba(240, 233, 233, 0.08);
 
   @media screen and (max-width: 480px) {
-    box-shadow: none;
     background: #222528;
   }
 
   h3 {
     color: white;
   }
-}
-
-
-.currencyWalletSwapHistory {
-  padding-bottom: 5px;
 }
 
 
@@ -243,8 +233,7 @@
   .currencyWalletActivity,
   .currencyWalletBalance {
     width: 100%;
-    box-shadow: none;
-    padding: 0;
+    padding: 25px;
   }
 
   .currencyWalletWrapper {
@@ -256,7 +245,7 @@
   }
 }
 
-@media all and (min-width: 320px) and (max-width: 767px) {
+@media all and (max-width: 767px) {
   .currencyWalletWrapper {
     margin: 0 -20px;
     flex-direction: column;
@@ -265,12 +254,8 @@
   .currencyWalletActivity,
   .currencyWalletBalance {
     width: 100%;
-    box-shadow: none;
-    margin-top: 20px;
-
-    h3 {
-      font-size: 100%;
-    }
+    margin-top: 25px;
+    padding: 15px;
   }
 
   .currencyWalletBalance {

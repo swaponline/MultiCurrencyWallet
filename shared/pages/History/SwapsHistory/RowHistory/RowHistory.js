@@ -1,6 +1,7 @@
 import React, { Fragment, Component } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment/moment'
+import cx from 'classnames'
 
 import { links, localStorage } from 'helpers'
 import actions from 'redux/actions'
@@ -9,7 +10,6 @@ import { Link } from 'react-router-dom'
 import CSSModules from 'react-css-modules'
 import styles from './RowHistory.scss'
 
-import Coins from 'components/Coins/Coins'
 import Timer from 'pages/Swap/Timer/Timer'
 import Avatar from 'components/Avatar/Avatar'
 import { FormattedMessage, injectIntl } from 'react-intl'
@@ -39,9 +39,21 @@ export default class RowHistory extends Component {
         state: { isFinished, isRefunded, step, scriptBalance, isEthContractFunded },
         swap: { sellCurrency },
       } = flow
+      let isPayed = 5, isEmptyBalance = false;
+      if(sellCurrency === 'BTC'){
+        isPayed = sellCurrency === 'BTC' ? 4 : 5
+        isEmptyBalance = sellCurrency === 'BTC' ? scriptBalance === 0 : !isEthContractFunded
+      }
 
-      const isPayed = sellCurrency === 'BTC' ? 4 : 5
-      const isEmptyBalance = sellCurrency === 'BTC' ? scriptBalance === 0 : !isEthContractFunded
+      if(sellCurrency === 'GHOST'){
+        isPayed = sellCurrency === 'GHOST' ? 4 : 5
+        isEmptyBalance = sellCurrency === 'GHOST' ? scriptBalance === 0 : !isEthContractFunded
+      }
+
+      if(sellCurrency === 'NEXT'){
+        isPayed = sellCurrency === 'NEXT' ? 4 : 5
+        isEmptyBalance = sellCurrency === 'NEXT' ? scriptBalance === 0 : !isEthContractFunded
+      }
 
       if (isFinished || isRefunded || (step === isPayed && isEmptyBalance)) {
         console.error(`Refund of swap ${id} is not available`)
@@ -60,6 +72,27 @@ export default class RowHistory extends Component {
   closeIncompleted = () => {
     actions.modals.close('IncompletedSwaps')
   }
+  componentDidMount() {
+    const {
+      btcScriptValues, ltcScriptValues,
+      usdtScriptValues, scriptValues, ghostScriptValues, nextScriptValues
+    } = this.props.row
+
+    const values  = btcScriptValues
+      || ltcScriptValues
+      || usdtScriptValues
+      || ghostScriptValues
+      || nextScriptValues
+      || scriptValues
+
+    if (!values) return
+
+    const lockTime = values.lockTime * 1000
+
+    const timeLeft = lockTime - Date.now()
+
+    this.tryRefund(timeLeft)
+  }
 
   render() {
 
@@ -70,12 +103,12 @@ export default class RowHistory extends Component {
     }
 
     let {
-      buyAmount, buyCurrency, sellAmount, btcScriptValues, scriptBalance,
+      buyAmount, buyCurrency, sellAmount, btcScriptValues, scriptBalance, ghostScriptValues, nextScriptValues,
       isRefunded, isMy, sellCurrency,
       isFinished, id, scriptValues, isStoppedSwap,
     } = row
 
-    const values = btcScriptValues || scriptValues
+    const values = btcScriptValues || scriptValues || ghostScriptValues || nextScriptValues
 
     const canBeRefunded = values && scriptBalance > 0
     const isDeletedSwap = isFinished || isRefunded || isStoppedSwap
@@ -95,24 +128,14 @@ export default class RowHistory extends Component {
 
     return (
       <tr key={id}>
-        {/* <td>
-          <Avatar
-            value={id}
-          />
-        </td> */}
-        {/* <td>
-          <Link to={`${linkToTheSwap}`}>
-            <Coins names={[buyCurrency, sellCurrency]}  />
-          </Link>
-        </td> */}
         <td>
           <span>You buy</span>
           {
             isMy ? (
               `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`
             ) : (
-                `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`
-              )
+              `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`
+            )
           }
         </td>
         <td>
@@ -121,16 +144,23 @@ export default class RowHistory extends Component {
             isMy ? (
               `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`
             ) : (
-                `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`
-              )
+              `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`
+            )
           }
         </td>
-        {/* <td>
-          { (sellAmount / buyAmount).toFixed(5) }{ ` ${sellCurrency}/${buyCurrency}`}
-        </td> */}
         <td>
-          <span>Status order</span>
-          <p>
+          <span>Lock time</span>
+          {lockDateAndTime.split(' ').map((item, key) => <Fragment key={key}>{' '}{item}</Fragment>)}
+        </td>
+        <td>
+          <span>Status</span>
+          <p
+            className={cx({
+              [styles.statusFinished]: isFinished,
+              [styles.statusRefunded]: isRefunded,
+              [styles.statusStopped]: isStoppedSwap,
+            })}
+          >
             {isFinished && (<FormattedMessage id="RowHistory94" defaultMessage="Finished" />)}
             {isRefunded && (<FormattedMessage id="RowHistory77" defaultMessage="Refunded" />)}
             {isStoppedSwap && (<FormattedMessage id="RowHistory139" defaultMessage="Stopped" />)}
@@ -147,10 +177,6 @@ export default class RowHistory extends Component {
             )
             }
           </p>
-        </td>
-        <td>
-          <span>Lock time</span>
-          {lockDateAndTime.split(' ').map((item, key) => <Fragment key={key}>{' '}{item}</Fragment>)}
         </td>
         <td>
           <span>Link</span>

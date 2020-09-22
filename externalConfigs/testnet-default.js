@@ -2,18 +2,28 @@
 
 window.widgetERC20Comisions = {
   btc: {
-    fee: "5",
+    fee: '5',
     address: '2MuXz9BErMbWmoTshGgkjd7aMHeaxV8Bdkk',
-    min: "0.00001"
+    min: '0.00001',
+  },
+  ghost: {
+    fee: '5',
+    address: 'XUmEvrKkTEGPr8WaktQVVE49ZBxcaPUmwv',
+    min: '0.00001',
+  },
+  next: {
+    fee: '5',
+    address: 'XMkvVVvuQJp4mp5hoVHUPumbnvh63xJsN4', // random address
+    min: '0.00001',
   },
   eth: {
-    fee: "7",
+    fee: '7',
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
-    min: "0,01"
+    min: '0,01',
   },
   erc20: {
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
-  }
+  },
 }
 
 /*
@@ -61,14 +71,15 @@ window.buildOptions = {
 window.buildOptions = {
   showWalletBanners: true, // Allow to see banners
   showHowItsWork: true, // Can be inited from window.showHowItWorksOnExchangePage
-  /*
   // inited from window.EXCHANGE_DISABLED
-  exchangeDisabled: true,
+  exchangeDisabled: false,
+  /*
   curEnabled: { // Or 'false' if enabled all
     // inited from window.CUR_BTC_DISABLED
-    btc: false,
+    btc: true,
     // inited from window.CUR_ETH_DISABLED
-    eth: false,
+    eth: true,
+    ghost: true,
   },
   */
 }

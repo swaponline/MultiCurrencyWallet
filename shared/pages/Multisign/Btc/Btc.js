@@ -177,7 +177,7 @@ export default class Btc extends PureComponent {
     const { privateKey, publicKey } = this.state
     actions.btcmultisig.addBtcMultisigKey(publicKey, true)
 
-    actions.core.markCoinAsVisible('BTC (Multisig)')
+    actions.core.markCoinAsVisible('BTC (Multisig)', true)
 
     this.setState({
       action: (action === 'join') ? 'linkready' : 'ready'

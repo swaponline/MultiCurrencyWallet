@@ -250,9 +250,7 @@ $size: 200px;
 }
 
 .swapInfo {
-  position: absolute;
-  width: 600px;
-  top: -45px;
+  max-width: 600px;
   text-align: center;
   font-size: 18px;
 }
@@ -260,8 +258,11 @@ $size: 200px;
 .transaction {
   display: block;
   margin-bottom: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   a {
     font-size: 13px;
+    font-weight: bold;
   }
 }
 
@@ -294,7 +295,6 @@ $size: 200px;
 }
 
 .finishButtonsHolder {
-  line-height: 56px;
   margin: 16px 0;
   text-align: center;
   vertical-align: middle;
@@ -352,7 +352,7 @@ $size: 200px;
   }
 }
 
-@media all and (min-width: 320px) and (max-width: 570px) {
+@media all and (max-width: 570px) {
   .ShowBTCScript {
     display: none;
   }
@@ -410,23 +410,27 @@ $size: 200px;
     color: #000;
     font-size: 18px;
   }
-  .transaction {
-    top: -5px;
-    a {
-      font-size: 12px;
-      overflow: hidden;
-      width: 100%;
-      display: block;
-    }
-  }
   .stepHeading__inner {
     font-size: 11px;
     width: 100%;
     bottom: 0;
   }
-  .finishButtonsHolder button {
-    width: 90%;
-    margin-left: 0px;
-    margin-right: 0px;
+
+  .finishButtonsHolder {
+
+    & > * {
+      display: block;
+    }
+
+    & > * + * {
+      margin-top: 0.5em;
+    }
+
+    button {
+      width: 90%;
+      margin-left: 0px;
+      margin-right: 0px;
+    }
+
   }
 }

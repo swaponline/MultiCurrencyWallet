@@ -31,11 +31,11 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   ({
     currencies,
     addSelectedItems,
-    user: { ethData, btcData, tokensData },
+    user: { ethData, btcData, ghostData, nextData, tokensData },
   }) => ({
     currencies: currencies.items,
     addSelectedItems: currencies.addSelectedItems,
-    items: [ethData, btcData],
+    items: [ethData, btcData, ghostData, nextData],
     tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   })
 )
@@ -63,7 +63,7 @@ export default class AddOffer extends Component {
       isTokenBuy: false,
       isPartial: true,
       isSending: false,
-      manualRate: false,
+      manualRate: true,
       buyAmount: buyAmount || '',
       sellAmount: sellAmount || '',
       exchangeRate: exchangeRate || 1,
@@ -545,7 +545,7 @@ export default class AddOffer extends Component {
           )
         }
 
-        <Button styleName="button" fullWidth brand disabled={isDisabled} onClick={this.handleNext}>
+        <Button styleName="button" fullWidth blue disabled={isDisabled} onClick={this.handleNext}>
           <FormattedMessage id="AddOffer396" defaultMessage="Next" />
         </Button>
       </div>

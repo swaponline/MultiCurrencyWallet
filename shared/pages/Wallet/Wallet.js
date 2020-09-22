@@ -11,12 +11,13 @@ import firestore from 'helpers/firebase/firestore'
 
 import History from 'pages/History/History'
 
-import helpers, { links, constants } from 'helpers'
+import helpers, { firebase, links, constants, stats } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import { getActivatedCurrencies } from 'helpers/user'
 
 import { injectIntl } from 'react-intl'
 
+import appConfig from 'app-config'
 import config from 'helpers/externalConfig'
 import { withRouter } from 'react-router'
 import CurrenciesList from './CurrenciesList'
@@ -26,6 +27,9 @@ import DashboardLayout from 'components/layout/DashboardLayout/DashboardLayout'
 import BalanceForm from 'components/BalanceForm/BalanceForm'
 
 import { BigNumber } from 'bignumber.js'
+
+import metamask from 'helpers/metamask'
+
 
 
 const isWidgetBuild = config && config.isWidget
@@ -39,6 +43,8 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
       activeFiat,
       ethData,
       btcData,
+      ghostData,
+      nextData,
       btcMultisigSMSData,
       btcMultisigUserData,
       btcMultisigUserDataList,
@@ -46,7 +52,9 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
       isFetching,
       isBalanceFetching,
       multisigPendingCount,
-      activeCurrency
+      activeCurrency,
+      messagingToken,
+      metamaskData,
     },
     currencies: { items: currencies },
     createWallet: { currencies: assets },
@@ -73,14 +81,16 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
       btcMultisigSMSData,
       btcMultisigUserData,
       ethData,
+      ghostData,
+      nextData,
       ...Object.keys(tokensData).map((k) => tokensData[k]),
     ].map(({ account, keyPair, ...data }) => ({
       ...data,
     }))
 
     const items = (config && config.isWidget
-      ? [btcData, ethData]
-      : [btcData, btcMultisigSMSData, btcMultisigUserData, ethData]
+      ? [btcData, ethData, ghostData, nextData]
+      : [btcData, btcMultisigSMSData, btcMultisigUserData, ethData, ghostData, nextData]
     ).map((data) => data.currency)
 
     return {
@@ -88,6 +98,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
       items,
       allData,
       tokensItems,
+      messagingToken,
       currencies,
       assets,
       isFetching,
@@ -100,7 +111,13 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
       activeFiat,
       tokensData: {
         ethData,
+        metamaskData: {
+          ...metamaskData,
+          currency: 'ETH Metamask',
+        },
         btcData,
+        ghostData,
+        nextData,
         btcMultisigSMSData,
         btcMultisigUserData,
         btcMultisigUserDataList,
@@ -140,6 +157,35 @@ export default class Wallet extends Component {
       enabledCurrencies: getActivatedCurrencies(),
       multisigPendingCount,
     }
+    this.syncTimer = null
+  }
+
+  handleConnectWallet() {
+    const {
+      history,
+      intl: {
+        locale,
+      },
+    } = this.props
+
+    if (metamask.isEnabled()) {
+      setTimeout(() => {
+        metamask.connect().then((isConnected) => {
+          if (isConnected) {
+            localStorage.setItem(constants.localStorage.isWalletCreate, true)
+            setTimeout(async () => {
+              history.push(localisedUrl(locale, links.home))
+              await actions.user.sign()
+              await actions.user.getBalances()
+            })
+          } else {
+            history.push(localisedUrl(locale, links.createWallet))
+          }
+        })
+      }, 100)
+    } else {
+      history.push(localisedUrl(locale, links.home))
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -148,8 +194,21 @@ export default class Wallet extends Component {
         params: { page = null },
       },
       multisigPendingCount,
+      location: { pathname },
     } = this.props
 
+
+    const {
+      location: {
+        pathname: prevPathname,
+      },
+    } = prevProps
+
+    if (pathname.toLowerCase() != prevPathname.toLowerCase()
+      && pathname.toLowerCase() == links.connectWallet.toLowerCase()
+    ) {
+      this.handleConnectWallet()
+    }
 
     const {
       match: {
@@ -169,6 +228,7 @@ export default class Wallet extends Component {
         multisigPendingCount,
       })
     }
+    clearTimeout(this.syncTimer)
   }
 
   componentDidMount() {
@@ -176,8 +236,13 @@ export default class Wallet extends Component {
     const { params, url } = this.props.match
     const {
       multisigPendingCount,
+      location: { pathname },
     } = this.props
 
+    if (pathname.toLowerCase() == links.connectWallet.toLowerCase()) {
+      this.handleConnectWallet()
+    }
+    console.log('wallet did mount', pathname)
     actions.user.getBalances()
 
     actions.user.fetchMultisigStatus()
@@ -247,6 +312,8 @@ export default class Wallet extends Component {
     if (!hiddenCoinsList.includes('BTC (PIN-Protected)')) widgetCurrencies.push('BTC (PIN-Protected)')
     if (!hiddenCoinsList.includes('BTC (Multisig)')) widgetCurrencies.push('BTC (Multisig)')
     widgetCurrencies.push('ETH')
+    widgetCurrencies.push('GHOST')
+    widgetCurrencies.push('NEXT')
     if (isWidgetBuild) {
       if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
         // Multi token widget build
@@ -324,7 +391,7 @@ export default class Wallet extends Component {
     )
   }
 
-  checkBalance = () => {
+  syncData = () => {
     // that is for noxon, dont delete it :)
     const now = moment().format('HH:mm:ss DD/MM/YYYY')
     const lastCheck = localStorage.getItem(constants.localStorage.lastCheckBalance) || now
@@ -333,19 +400,64 @@ export default class Wallet extends Component {
     const isFirstCheck = moment(now, 'HH:mm:ss DD/MM/YYYY').isSame(lastCheckMoment)
     const isOneHourAfter = moment(now, 'HH:mm:ss DD/MM/YYYY').isAfter(lastCheckMoment.add(1, 'hours'))
 
-    const { ethData, btcData } = this.props.tokensData
+    const { ethData, btcData, ghostData, nextData } = this.props.tokensData
 
     const balancesData = {
       ethBalance: ethData.balance,
       btcBalance: btcData.balance,
+      ghostBalance: ghostData.balance,
+      nextBalance: nextData.balance,
       ethAddress: ethData.address,
       btcAddress: btcData.address,
+      ghostAddress: ghostData.address,
+      nextAddress: nextData.address,
     }
 
-    if (isOneHourAfter || isFirstCheck) {
-      localStorage.setItem(constants.localStorage.lastCheckBalance, now)
-      firestore.updateUserData(balancesData)
-    }
+    this.syncTimer = setTimeout(async () => {
+      if (isOneHourAfter || isFirstCheck) {
+        localStorage.setItem(constants.localStorage.lastCheckBalance, now)
+        try {
+          const ipInfo = await firebase.getIPInfo()
+        
+          const registrationData = {
+            locale: ipInfo.locale || (navigator.userLanguage || navigator.language || 'en-gb').split('-')[0],
+            ip: ipInfo.ip,
+          }
+          if (this.props.messagingToken) {
+            registrationData.messaging_token = this.props.messagingToken
+          }
+          let widgetUrl
+          if (appConfig.isWidget) {
+            widgetUrl = window.top.location.origin
+            registrationData.widget_url = widgetUrl
+          }
+  
+          const tokensArray = Object.values(this.props.tokensData)
+  
+          const wallets = tokensArray.map(item => ({
+            symbol: item && item.currency ? item.currency.split(' ')[0] : '',
+            type: item && item.currency ? item.currency.split(' ')[1] || 'common' : '',
+            address: item && item.address ? item.address : '',
+            balance: item && item.balance ? item.balance : '',
+            public_key: item && item.publicKey ? item.publicKey.toString('Hex') : '',
+            // TODO: let this work
+            // nounce: 1,
+            // signatures_required: 1,
+            // signatories: [],
+          }))
+
+          registrationData.wallets = wallets
+  
+          if (process.env.NODE_ENV === 'production') {            
+            await stats.updateUser(ethData.address, window.top.location.host, registrationData)
+          }
+          
+          firestore.updateUserData(balancesData)
+        } catch (error) {
+          console.error(`Sync error in wallet: ${error}`)
+        }
+      }
+    }, 2000)
   }
 
 
@@ -411,7 +523,7 @@ export default class Wallet extends Component {
 
     const allData = actions.core.getWallets()
 
-    this.checkBalance()
+    this.syncData()
 
     let btcBalance = 0
     let changePercent = 0
@@ -422,6 +534,8 @@ export default class Wallet extends Component {
     if (!hiddenCoinsList.includes('BTC (PIN-Protected)')) widgetCurrencies.push('BTC (PIN-Protected)')
     if (!hiddenCoinsList.includes('BTC (Multisig)')) widgetCurrencies.push('BTC (Multisig)')
     widgetCurrencies.push('ETH')
+    widgetCurrencies.push('GHOST')
+    widgetCurrencies.push('NEXT')
     if (isWidgetBuild) {
       if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
         // Multi token widget build

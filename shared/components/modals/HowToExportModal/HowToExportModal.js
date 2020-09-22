@@ -114,7 +114,7 @@ export default class HowToExportModal extends React.Component {
         name={name}
         title={intl.formatMessage(langLabels.title, { currency })}
       >
-        {(currencyKey === 'BTC' || currencyKey === 'ETH') && (
+        {(currencyKey === 'BTC' || currencyKey === 'ETH' || currencyKey === 'GHOST' || currencyKey === 'NEXT') && (
           <>
             <div styleName="instruction">
               <FormattedMessage

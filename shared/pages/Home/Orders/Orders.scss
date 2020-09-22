@@ -12,8 +12,6 @@
 .buttonRow {
   display: flex;
   width: 300px;
-  margin-left: 60%;
-  margin-top: -30px;
   justify-content: space-around;
   button {
     font-size: 14px;
@@ -34,7 +32,11 @@
 }
 
 .ordersHeading {
-  margin-top: 20px;
+  margin-top: 0;
+}
+
+.marketOrders {
+  margin: 0 auto;
 }
 
 .tableBox {
@@ -83,12 +85,19 @@
   font-size: 15px;
   margin-top: -5px;
 }
+
+.showAllSwitch {
+  display: flex;
+  align-items: center;
+}
+
 .headerContainer {
   display: flex;
   justify-content: space-between;
 }
 
-@include media-min320-max800 {
+
+@media (max-width: 800px) {
   .closeButton {
     width: 40px;
     height: 40px;
@@ -103,7 +112,7 @@
   }
 }
 
-@include media-min320-max800 {
+@media (max-width: 800px) {
   .buttonRow,
   .buttonRowMobile {
     margin: 0;
@@ -125,9 +134,6 @@
     .button:last-child {
       margin-right: 0px;
     }
-  }
-  table thead {
-    display: none;
   }
   .buttonRowMobile {
     bottom: 70px;

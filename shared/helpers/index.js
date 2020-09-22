@@ -1,4 +1,6 @@
 import btc from './btc'
+import ghost from './ghost'
+import next from './next'
 import eth from './eth'
 import ethToken from './ethToken'
 import user from './user'
@@ -9,7 +11,6 @@ import getCurrencyKey from './getCurrencyKey'
 import constants from './constants'
 import localStorage from './localStorage'
 import api from './api'
-import tips from './tips'
 import * as utils from './utils'
 // Methods
 import ignoreProps from './ignoreProps'
@@ -19,7 +20,6 @@ import firebase from './firebase'
 import externalConfig from './externalConfig'
 import getPageOffset from './getPageOffset'
 import getScrollBarWidth from './getScrollBarWidth'
-import paddingForSwapList from './paddingForSwapList'
 import estimateFeeValue from './estimateFeeValue'
 import transactions from './transactions'
 
@@ -37,9 +37,16 @@ import getWalletLink from './getWalletLink'
 
 import redirectTo from './redirectTo'
 
+import adminFee from './adminFee'
+
+import stats from './stats.swaponline'
+
+
 export default {
   btc,
   eth,
+  ghost,
+  next,
   ethToken,
   getCurrencyKey,
   handleGoTrade,
@@ -48,9 +55,10 @@ export default {
 }
 
 export {
-  tips,
   btc,
   eth,
+  ghost,
+  next,
   ethToken,
   user,
   web3,
@@ -69,7 +77,6 @@ export {
   // Getters
   getPageOffset,
   getScrollBarWidth,
-  paddingForSwapList,
   externalConfig,
 
 
@@ -85,5 +92,8 @@ export {
 
   redirectTo,
 
+  adminFee,
+
+  stats,
 }
-export { getItezUrl } from "./getItezUrl"
+export { getItezUrl } from './getItezUrl'

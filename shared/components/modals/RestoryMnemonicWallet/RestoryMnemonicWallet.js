@@ -75,6 +75,8 @@ const langLabels = defineMessages({
     btcMultisigSMSData,
     btcMultisigUserData,
     ethData,
+    ghostData,
+    nextData,
   }
 }) => ({
   allCurrensies: [
@@ -82,7 +84,9 @@ const langLabels = defineMessages({
     btcData,
     btcMultisigSMSData,
     btcMultisigUserData,
-    ethData
+    ethData,
+    ghostData,
+    nextData,
   ]
 }))
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
@@ -176,6 +180,8 @@ export default class RestoryMnemonicWallet extends React.Component {
 
       const btcWallet = await actions.btc.getWalletByWords(mnemonic)
       const ethWallet = await actions.eth.getWalletByWords(mnemonic)
+      const ghostWallet = await actions.ghost.getWalletByWords(mnemonic)
+      const nextWallet = await actions.next.getWalletByWords(mnemonic)
 
       // clean mnemonic, if exists
       localStorage.setItem(constants.privateKeyNames.twentywords, '-')
@@ -194,10 +200,14 @@ export default class RestoryMnemonicWallet extends React.Component {
 
       await actions.eth.login(false, mnemonic)
 
+      await actions.ghost.login(false, mnemonic)
+
+      await actions.next.login(false, mnemonic)
+
       await actions.user.sign_btc_2fa(btcPrivKey)
       await actions.user.sign_btc_multisig(btcPrivKey)
 
-      actions.core.markCoinAsVisible('BTC')
+      actions.core.markCoinAsVisible('BTC', true)
 
       this.setState({
         isFetching: false,
@@ -233,7 +243,7 @@ export default class RestoryMnemonicWallet extends React.Component {
 
     return (
       <Modal name={name} title={`${intl.formatMessage(langLabels.title)}`} onClose={this.handleClose} showCloseButton={showCloseButton}>
-        <div>
+        <div styleName="restoreModalHolder">
           {step === `enter` && (
             <Fragment>
               {(mnemonic && mnemonicIsInvalid) && (
@@ -241,7 +251,7 @@ export default class RestoryMnemonicWallet extends React.Component {
                   <FormattedMessage {...langLabels.mnemonicInvalid} />
                 </div>
               )}
-              <div styleName="highLevel" className="ym-hide-content">
+              <div styleName="highLevel" className="ym-hide-content notranslate">
                 <FieldLabel label>
                   <span styleName="tooltipWrapper">
 

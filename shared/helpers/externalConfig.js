@@ -32,7 +32,12 @@ const externalConfig = () => {
 
   config.opts = {
     inited: true,
-    curEnabled: false,
+    curEnabled: {
+      eth: true,
+      btc: true,
+      ghost: false,
+      next: false,
+    },
     ownTokens: false,
     addCustomERC20: true,
     invoiceEnabled: true,
@@ -44,10 +49,31 @@ const externalConfig = () => {
       setItemPlugin: false,
       getItemPlugin: false,
       userDataPluginApi: false,
+      backupPlugin: false,
+      backupPluginUrl: false,
+      restorePluginUrl: false,
     },
+    WPuserHash: false,
     buyViaCreditCardLink: false,
     activeFiat: 'USD',
     exchangeDisabled: false,
+    ui: {
+      footerDisabled: false,
+    },
+  }
+
+
+  if (window
+    && window._ui_footerDisabled
+  ) {
+    config.opts.ui.footerDisabled = window._ui_footerDisabled
+  }
+
+  if (window
+    && window.WPuserHash
+  ) {
+    config.opts.WPuserHash = window.WPuserHash
+    window.WPuserHash = false
   }
 
   if (window
@@ -83,6 +109,24 @@ const externalConfig = () => {
     config.opts.curEnabled.btc = false
   }
 
+  if (window) {
+    if (!config.opts.curEnabled) config.opts.curEnabled = {}
+    if (window.CUR_GHOST_DISABLED !== undefined
+      && window.CUR_GHOST_DISABLED === false
+    ) {
+      config.opts.curEnabled.ghost = true
+    }
+  }
+
+  if (window) {
+    if (!config.opts.curEnabled) config.opts.curEnabled = {}
+    if (window.CUR_NEXT_DISABLED !== undefined
+      && window.CUR_NEXT_DISABLED === false
+    ) {
+      config.opts.curEnabled.next = true
+    }
+  }
+
   if (window
     && window.CUR_ETH_DISABLED
   ) {
@@ -90,6 +134,16 @@ const externalConfig = () => {
     config.opts.curEnabled.eth = false
   }
   // Plugins
+  if (window
+    && window.backupPlugin
+    && window.backupUrl
+    && window.restoreUrl
+  ) {
+    config.opts.plugins.backupPlugin = window.backupPlugin
+    config.opts.plugins.backupPluginUrl = window.backupUrl
+    config.opts.plugins.restorePluginUrl = window.restoreUrl
+  }
+
   if (window
     && window.setItemPlugin
   ) {
@@ -130,7 +184,7 @@ const externalConfig = () => {
     // clean old erc20 config - leave only swap token (need for correct swap work)
     if (!config.isWidget) {
       const newERC20 = {}
-      //newERC20.swap = config.erc20.swap
+      // newERC20.swap = config.erc20.swap
       config.erc20 = newERC20
     }
 

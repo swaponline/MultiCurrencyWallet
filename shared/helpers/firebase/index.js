@@ -169,13 +169,27 @@ const submitUserDataWidget = async (dataBasePath = 'usersCommon') => {
   if (!isWidgetBuild) {
     return
   }
-  const { user: { ethData: { address: ethAddress }, btcData: { address: btcAddress } } } = getState()
+  const {
+    user: {
+      ethData,
+      btcData,
+      ghostData,
+      nextData,
+    },
+  } = getState()
+
+  const ethAddress = (ethData && ethData.address) ? ethData.address : ``
+  const btcAddress = (btcData && btcData.address) ? btcData.address : ``
+  const ghostAddress = (ghostData && ghostData.address) ? ghostData.address : ``
+  const nextAddress = (nextData && nextData.address) ? nextData.address : ``
 
   return new Promise(async resolve => {
     const userID = await getUserID()
     const data = {
       ethAddress,
       btcAddress,
+      ghostAddress,
+      nextAddress,
     }
     const dataBasePathFormatted = `widgetUsers/${window.top.location.host}/${dataBasePath}`.replace(/[\.\#\$\[\]]/ig, '_') // eslint-disable-line
 

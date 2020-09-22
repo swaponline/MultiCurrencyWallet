@@ -27,11 +27,13 @@ const title = defineMessages({
 @withRouter
 @connect(
   ({
-    user: { ethData, btcData },
+    user: { ethData, btcData, ghostData, nextData },
     signUp: { isSigned },
   }) => ({
     ethAddress: ethData.address,
     btcAddress: btcData.address,
+    ghostAddress: ghostData.address,
+    nextAddress: nextData.address,
     isSigned,
   })
 )
@@ -59,7 +61,7 @@ export default class SignUpModal extends React.Component {
   validateEmail = (value) => value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)
 
   handleSubmit = async (whatToSubmit) => {
-    const { name, ethAddress, btcAddress, history } = this.props
+    const { name, ethAddress, btcAddress, ghostAddress, nextAddress, history } = this.props
     const { isSupportedPush, email, isSubmitedPush } = this.state
 
     const currentUrl = history.location
@@ -79,6 +81,8 @@ export default class SignUpModal extends React.Component {
       ...ipInfo,
       ethAddress,
       btcAddress,
+      ghostAddress,
+      nextAddress,
       Referrer: refEthAddress,
       registrationDomain: window.top.location.host,
       userAgentRegistration: navigator.userAgent,

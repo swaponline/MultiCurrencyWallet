@@ -11,6 +11,7 @@
   padding: 24px;
   box-sizing: border-box;
   position: relative;
+  text-shadow: 0px 0px 3px black;
 
   >div {
     display: flex;
@@ -19,7 +20,7 @@
   }
 
   background-position: center;
-  background-size: contain;
+  background-size: cover;
 }
 
 .notifyBlockIcon {
@@ -84,7 +85,7 @@
   }
 }
 
-@media all and (min-width: 320px) and (max-width: 767px) {
+@media all and (max-width: 767px) {
   .notifyBlock {
     flex-direction: column;
     align-items: flex-start;
@@ -139,10 +140,10 @@
   }
 }
 
-@media all and (min-width: 320px) and (max-width: 570px) {
+@media all and (max-width: 570px) {
   .notifyBlockDescr {
     right: 10px;
-    font-size: 9.5px;
+    font-size: 10px;
     bottom: 10px;
 
     p {

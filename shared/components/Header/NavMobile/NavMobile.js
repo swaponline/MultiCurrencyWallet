@@ -34,7 +34,7 @@ export default class NavMobile extends Component {
     const isExchange = location.pathname.includes(links.exchange);
 
     return (
-      <div styleName={`navbar ${isDark ? 'dark' : ''} ${isHidden ? 'navbar-hidden' : ''}`}>
+      <nav styleName={`navbar ${isDark ? 'dark' : ''} ${isHidden ? 'navbar-hidden' : ''}`}>
         {
           menu
             .filter(i => i.isMobile !== false)
@@ -42,37 +42,34 @@ export default class NavMobile extends Component {
               return !rest.displayNone &&
                 (
                   currentPageFlag
-                    ? (
-                      <a
-                        key={title}
-                        onClick={() => actions.modals.open(constants.modals.MobMenu, {})}
-                        tabIndex="-1"
-
-                      >
-                        {icon}
-                        <span className={isBold && styles.bold}>{title}</span>
-                      </a>
-                    )
-                    : (
-                      <NavLink
-                        key={title}
-                        exact={exact}
-                        to={localisedUrl(locale, link)}
-                        className={`
+                  ?
+                  (<a
+                      key={title}
+                      onClick={() => actions.modals.open(constants.modals.MobMenu, {})}
+                      tabIndex="-1"
+                    >
+                      {icon}
+                      <span className={isBold && styles.bold}>{title}</span>
+                  </a>)
+                  :
+                  (<NavLink
+                    key={title}
+                    exact={exact}
+                    to={localisedUrl(locale, link)}
+                    className={`
                       ${link && link.includes("history") ? 'data-tut-recent' : ''}
                       ${link && link.includes("exchange") ? 'reactour-exchange data-tut-widget-exchange' : ''}
                       ${link && link.includes("exchange") && isExchange ? ` ${styles.active}` : ''}
                     `}
-                        activeClassName={styles.active}
-                      >
-                        {icon}
-                        <span className={isBold && styles.bold}>{title}</span>
-                      </NavLink>
-                    )
+                    activeClassName={styles.active}
+                  >
+                    {icon}
+                    <span className={isBold && styles.bold}>{title}</span>
+                  </NavLink>)
                 )
             })
         }
-      </div>
+      </nav>
     )
   }
 }

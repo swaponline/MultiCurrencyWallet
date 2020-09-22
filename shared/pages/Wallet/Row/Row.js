@@ -21,6 +21,10 @@ import { BigNumber } from 'bignumber.js'
 import dollar from '../images/dollar.svg'
 import PartOfAddress from '../components/PartOfAddress'
 
+
+import metamask from 'helpers/metamask'
+
+
 const langLabels = defineMessages({
   unconfirmedBalance: {
     id: 'RowWallet181',
@@ -104,6 +108,11 @@ export default class Row extends Component {
 
   handleReloadBalance = () => {
     const { isBalanceFetching } = this.state
+    const {
+      itemData: {
+        isMetamask,
+      }
+    } = this.props
 
     if (isBalanceFetching) {
       return null
@@ -128,10 +137,14 @@ export default class Row extends Component {
             await actions.btcmultisig.getBalancePin()
             break
           default:
-            await actions[currency.toLowerCase()].getBalance(
-              currency.toLowerCase(),
-              address
-            )
+            if (isMetamask) {
+              await metamask.getBalance()
+            } else {
+              await actions[currency.toLowerCase()].getBalance(
+                currency.toLowerCase(),
+                address
+              )
+            }
         }
 
         this.setState(() => ({
@@ -199,12 +212,49 @@ export default class Row extends Component {
     )
   }
 
+  handleDisconnectWallet() {
+    if (metamask.isEnabled()) {
+      metamask.disconnect().then(async () => {
+        await actions.user.sign()
+        await actions.user.getBalances()
+      })
+    }
+  }
+
+  handleConnectMetamask = () => {
+    metamask.connect().then(async (connected) => {
+      if (connected) {
+        await actions.user.sign()
+        await actions.user.getBalances()
+      }
+    })
+  }
+
+  handleWithdrawPopup = () => {
+    const {
+      itemData: { currency },
+      itemData
+    } = this.props
+
+    actions.modals.open(constants.modals.Withdraw, itemData)
+  }
+
   handleWithdraw = () => {
     const {
       itemData: { currency, address },
       history,
       intl: { locale },
     } = this.props
+
+    if (currency.toLowerCase() === 'ghost') {
+      this.handleWithdrawPopup()
+      return
+    }
+
+    if (currency.toLowerCase() === 'next') {
+      this.handleWithdrawPopup()
+      return
+    }
 
     let targetCurrency = currency
     switch (currency.toLowerCase()) {
@@ -443,15 +493,6 @@ export default class Row extends Component {
     actions.core.forgetOrders(this.props.decline[0])
   }
 
-  goToOrderBook = () => {
-    const {
-      history,
-      intl: { locale },
-      itemData: { currency },
-    } = this.props
-    history.push(localisedUrl(locale, `/${currency.toLowerCase()}-btc`))
-  }
-
   goToCurrencyHistory = () => {
     const {
       history,
@@ -646,7 +687,7 @@ export default class Row extends Component {
             defaultMessage="History"
           />
         ),
-        action: this.goToHistory,
+        action: this.goToCurrencyHistory,
         disabled: !mnemonicSaved,
       },
       !isSafari && {
@@ -697,18 +738,7 @@ export default class Row extends Component {
     if (currencyView == 'BTC (SMS-Protected)') currencyView = 'BTC'
     if (currencyView == 'BTC (PIN-Protected)') currencyView = 'BTC'
 
-    if (currencyView !== 'BTC' && !config.opts.exchangeDisabled) {
-      dropDownMenuItems.push({
-        id: 1005,
-        title: (
-          <FormattedMessage
-            id="WalletRow_Menu_Orderbook"
-            defaultMessage="Orderbook"
-          />
-        ),
-        action: this.goToOrderBook,
-      })
-    }
+
 
     if (
       ['BTC', 'ETH'].includes(currencyView) &&
@@ -737,6 +767,41 @@ export default class Row extends Component {
         action: this.handleCreateInvoiceLink,
         disable: false,
       })
+    }
+
+    if (this.props.itemData.isMetamask
+      && !this.props.itemData.isConnected
+    ) {
+      dropDownMenuItems = [{
+        id: 1,
+        title: (
+          <FormattedMessage
+            id="WalletRow_MetamaskConnect"
+            defaultMessage="Подключить"
+          />
+        ),
+        action: this.handleConnectMetamask,
+        disable: false,
+      }]
+    }
+
+    if (this.props.itemData.isMetamask
+      && this.props.itemData.isConnected
+    ) {
+      dropDownMenuItems = [
+        {
+          id: 1123,
+          title: (
+            <FormattedMessage
+              id="WalletRow_MetamaskDisconnect"
+              defaultMessage="Отключить кошелек"
+            />
+          ),
+          action: this.handleDisconnectWallet,
+          disable: false
+        },
+        ...dropDownMenuItems
+      ]
     }
 
     let showBalance = true
@@ -944,7 +1009,7 @@ export default class Row extends Component {
               {statusInfo ?
                 <p styleName="statusStyle">{statusInfo}</p>
                 :
-                !mnemonicSaved ?
+                !mnemonicSaved && !this.props.itemData.isMetamask ?
                   <p styleName="showAddressStyle" onClick={this.handleShowMnemonic}>
                     <FormattedMessage
                       id="WalletRow_ShowAddress"

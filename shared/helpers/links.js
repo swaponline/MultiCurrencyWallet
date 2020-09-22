@@ -8,6 +8,8 @@ const linksManager = {
   pointOfSell: '/buy',
   history: '/history',
   createWallet: '/createWallet',
+  restoreWallet: '/restoreWallet',
+  connectWallet: '/connectWallet',
   invoices: '/invoices',
   invoice: '/invoice',
 
@@ -15,7 +17,7 @@ const linksManager = {
   wallets: '/wallets',
   send: '/withdraw',
   savePrivateSeed: '/savePrivateSeed',
-  savePrivateKeys: "/savePrivateKeys",
+  savePrivateKeys: '/savePrivateKeys',
   currencyWallet: '/wallet',
   swap: '/swaps',
   feed: '/feed',
@@ -38,6 +40,7 @@ const linksManager = {
   medium: '#',
   twitter: 'https://twitter.com/SwapOnlineTeam',
   facebook: '#',
+  github: 'https://github.com/swaponline/MultiCurrencyWallet',
   telegram: 'https://t.me/swaponline',
   bitcointalk: '#',
   discord: '#',
@@ -56,7 +59,6 @@ const linksManager = {
   research: 'https://docs.google.com/spreadsheets/d/1qWFLK2y8oMH5Gfam-iwqXPzLtwNabzp_EL6QFxjSBc0/edit?usp=sharing',
   reuters: 'https://www.reuters.com/brandfeatures/venture-capital/article?id=37488',
   wiki: 'https://wiki.swaponline.io',
-  github: 'https://github.com/swaponline',
   githubButton: 'https://github.com/swaponline/swap.button',
   bitcointalkSendTx: 'https://bitcointalk.org/index.php?topic=1938621.0',
   privacyPolicy: 'https://drive.google.com/file/d/1LdsCOfX_pOJAMqlL4g6DfUpZrGF5eRe9/view?usp=sharing',
@@ -149,8 +151,6 @@ const linksManager = {
 }
 
 
-
-
 linksManager.getFaqLink = (faqID) => {
   for (let i = 0; i < linksManager.faq.length; i++) {
     if (linksManager.faq[i].id
@@ -164,19 +164,26 @@ linksManager.getFaqLink = (faqID) => {
 
 export const getBitcoinWallet = () => {
   const { address } = actions.user.getAuthData('btc')
-
   return `/btc/${address}`
 }
 
 export const getEtherWallet = () => {
   const { address } = actions.user.getAuthData('eth')
-
   return `/eth/${address}`
+}
+
+export const getGhostWallet = () => {
+  const { address } = actions.user.getAuthData('ghost')
+  return `/ghost/${address}`
+}
+
+export const getNextWallet = () => {
+  const { address } = actions.user.getAuthData('next')
+  return `/next/${address}`
 }
 
 export const getTokenWallet = (token) => {
   const { address } = actions.user.getAuthData('eth')
-
   return `/token/${token.toUpperCase()}/${address}`
 }
 
@@ -185,5 +192,4 @@ window.getTokenWallet = getTokenWallet
 export const getFullOrigin = () => `${location.origin}${location.pathname}#`
 
 
-export default linksManager;
-
+export default linksManager

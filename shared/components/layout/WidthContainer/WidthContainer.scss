@@ -20,10 +20,9 @@
 
 
 @include media-mobile {
-
   .widthContainer {
-    padding-right: 20px;
-    padding-left: 20px;
+    padding-right: 10px;
+    padding-left: 10px;
     overflow: hidden;
     &.main {
       padding-top: vw(30);

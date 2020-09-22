@@ -307,7 +307,7 @@ tr.dark {
   }
 }
 
-@media all and (min-width: 320px) and (max-width: 570px) {
+@media all and (max-width: 570px) {
   tr.historyRow {
     height: max-content;
     align-items: flex-start;
@@ -315,7 +315,7 @@ tr.dark {
 }
 
 
-@media all and (min-width: 320px) and (max-width: 767px) {
+@media all and (max-width: 767px) {
   .info {
     span {
       display: none;
@@ -356,7 +356,7 @@ tr.dark {
 }
 
 
-@media all and (min-width: 320px) and (max-width: 400px) {
+@media all and (max-width: 400px) {
   .historyInfo {
     min-height: 60px;
   }

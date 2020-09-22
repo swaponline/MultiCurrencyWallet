@@ -183,6 +183,8 @@ const signUpWithPush = () =>
 
     console.log('firebase messagingToken: ', messagingToken)
 
+    actions.user.addMessagingToken(messagingToken)
+
     const sendResult = await updateUserData({
       messagingToken,
     })
@@ -190,7 +192,7 @@ const signUpWithPush = () =>
     if (sendResult) {
       actions.analytics.signUpEvent({ action: 'signed', type: 'push' })
     }
-    resolve(true)
+    resolve(messagingToken)
   })
 
 const signUpWithEmail = (subscriptionData) =>

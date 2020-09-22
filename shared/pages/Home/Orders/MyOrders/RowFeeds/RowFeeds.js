@@ -11,6 +11,7 @@ import CSSModules from 'react-css-modules'
 import ShareImg from './images/share-alt-solid.svg'
 
 import Coins from 'components/Coins/Coins'
+import { RemoveButton } from 'components/controls'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl, locale } from 'helpers/locale'
 import BigNumber from 'bignumber.js'
@@ -38,7 +39,7 @@ export default class RowFeeds extends Component {
         this.setState({
           isLinkCopied: false,
         })
-      }, 500)
+      }, 800)
     })
   }
 
@@ -64,50 +65,59 @@ export default class RowFeeds extends Component {
     const rate = exchangeRate ? BigNumber(exchangeRate) : BigNumber(buyAmount).div(sellAmount)
 
     return (
-      <tr>
+      <tr key={this.props.key}>
         <td>
-          <Coins names={[buyCurrency, sellCurrency]}  />
+          <Coins names={[sellCurrency, buyCurrency]} size="25" />
         </td>
-        <td>{`${buyAmount.toFixed(5)} ${buyCurrency}`}</td>
-        <td>{`${sellAmount.toFixed(5)} ${sellCurrency}`}</td>
-        <td>{`${rate.toFixed(5)} ${buyCurrency}/${sellCurrency}`}</td>
-
-        <CopyToClipboard
-          onCopy={this.handleCopyLink}
-          text={this.checkCopyText()}
-        >
-          <td style={{ position: 'relative', cursor: 'pointer' }}>
-            { isLinkCopied &&
-            <span style={{ fontSize: '12px', position: 'absolute', top: '8px', left: 'calc(20%)' }}>
-              <FormattedMessage id="RowFeeds64" defaultMessage="Copied" />
-              <br />
-            </span>
-            }
-            <img src={ShareImg} styleName="img" alt="share" />
-            <span>
-              <FormattedMessage id="RowFeeds68" defaultMessage="Share" />
-            </span>
-          </td>
-        </CopyToClipboard>
         <td>
-          {
-            Boolean(requests && requests.length) ? (
-              <div styleName="buttons">
-                <div styleName="delete" onClick={() => declineRequest(id, requests[0].participant.peer)} >
-                  <FormattedMessage id="RowFeeds77" defaultMessage="Decline" />
+          <span styleName="value">{sellAmount.toFixed(5)}</span>
+          {' '}
+          <span styleName="currency">{sellCurrency}</span>
+        </td>
+        <td>
+          <span styleName="value">{buyAmount.toFixed(5)}</span>
+          {' '}
+          <span styleName="currency">{buyCurrency}</span>
+        </td>
+        <td>
+          <span styleName="value">{rate.toFixed(5)}</span>
+          {' '}
+          <span styleName="currency">{`${buyCurrency}/${sellCurrency}`}</span>
+        </td>
+        <td>
+          <div styleName="buttons">
+            <div>
+              <CopyToClipboard
+                onCopy={this.handleCopyLink}
+                text={this.checkCopyText()}
+              >
+                <div styleName="shareFrame">
+                  { isLinkCopied &&
+                  <span styleName="shareTip">
+                    <FormattedMessage id="RowFeeds64" defaultMessage="Copied" />
+                  </span>
+                  }
+                  <img src={ShareImg} styleName="img" alt="share" />
                 </div>
-                <Link to={`${localisedUrl(locale, links.swap)}/${sellCurrency.toLowerCase()}-${buyCurrency.toLowerCase()}/${id}`}>
-                  <div styleName="accept" onClick={() => acceptRequest(id, requests[0].participant.peer)} >
-                    <FormattedMessage id="RowFeeds81" defaultMessage="Accept" />
+              </CopyToClipboard>
+            </div>
+            {
+              Boolean(requests && requests.length) ? (
+                <div>
+                  <div styleName="delete" onClick={() => declineRequest(id, requests[0].participant.peer)} >
+                    <FormattedMessage id="RowFeeds77" defaultMessage="Decline" />
                   </div>
-                </Link>
-              </div>
-            ) : (
-              <div styleName="delete" onClick={() => removeOrder(id)} >
-                <FormattedMessage id="RowFeeds87" defaultMessage="Delete order" />
-              </div>
-            )
-          }
+                  <Link to={`${localisedUrl(locale, links.swap)}/${sellCurrency.toLowerCase()}-${buyCurrency.toLowerCase()}/${id}`}>
+                    <div styleName="accept" onClick={() => acceptRequest(id, requests[0].participant.peer)} >
+                      <FormattedMessage id="RowFeeds81" defaultMessage="Accept" />
+                    </div>
+                  </Link>
+                </div>
+              ) : (
+                <RemoveButton onClick={() => removeOrder(id)} />
+              )
+            }
+          </div>
         </td>
       </tr>
     )

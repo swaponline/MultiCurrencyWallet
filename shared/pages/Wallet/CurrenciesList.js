@@ -11,6 +11,7 @@ import Table from 'components/tables/Table/Table'
 import { FormattedMessage } from 'react-intl'
 import exConfig from 'helpers/externalConfig'
 
+
 const isWidgetBuild = config && config.isWidget
 
 const CurrenciesList = ({
@@ -30,18 +31,17 @@ const CurrenciesList = ({
           <Slider multisigPendingCount={multisigPendingCount} />
         </Fragment>
       ) : (
-          ''
-        )}
+        ''
+      )}
       <h3 styleName="yourAssetsHeading">
-        <FormattedMessage id="YourAssets" defaultMessage="Ваши валюты" />
+        <FormattedMessage id="YourAssets" defaultMessage="Your assets" />
       </h3>
-      <p styleName="yourAssetsDescr">
+      <div styleName="yourAssetsDescr">
         <FormattedMessage
           id="YourAssetsDescription"
-          defaultMessage="Здесь вы можете безопасно хранить и быстро обменивать Bitcoin, Ethereum, {br} USD, Tether и многочисленные токены ERC-20."
-          values={{ br: <br /> }}
+          defaultMessage="Here you can safely store, send and receive assets"
         />
-      </p>
+      </div>
       <Table
         className={`${styles.walletTable} data-tut-address`}
         rows={tableRows}

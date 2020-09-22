@@ -83,7 +83,7 @@ const langLabels = defineMessages({
   },
   beginNotice: {
     id: `${langPrefix}_BeginNotice`,
-    defaultMessage: `Сейчас мы вам покажем 12 слов вашей секретной фразы. Если вы ее потеряете мы не сможем восстановить ваш кошелек`,
+    defaultMessage: `Сейчас мы вам покажем 12 слов вашей секретной фразы.{br}Если вы ее потеряете мы не сможем восстановить ваш кошелек`,
   },
   beginContinue: {
     id: `${langPrefix}_BeginContinue`,
@@ -205,6 +205,8 @@ export default class SaveMnemonicModal extends React.Component {
     }, () => {
       if (randomedWords.length === 0) {
         localStorage.setItem(constants.privateKeyNames.twentywords, '-')
+        actions.backupManager.serverCleanupSeed()
+
         this.setState({
           step: `ready`,
         })
@@ -281,7 +283,9 @@ export default class SaveMnemonicModal extends React.Component {
           {step === `begin` && (
             <Fragment>
               <p styleName="notice mnemonicNotice">
-                <FormattedMessage {...langLabels.beginNotice} />
+                <FormattedMessage {...langLabels.beginNotice} values={{
+                  br: <br />,
+                }}/>
               </p>
               <div styleName="buttonsHolder">
                 <Button blue onClick={() => { this.setState({ step: `show` }) }}>
@@ -317,7 +321,7 @@ export default class SaveMnemonicModal extends React.Component {
                   {
                     enteredWords.map((word, index) => {
                       return (
-                        <button key={index} onClick={() => { }} className="ym-hide-content">
+                        <button key={index} onClick={() => { }} className="ym-hide-content notranslate">
                           {word}
                         </button>
                       )
@@ -328,7 +332,7 @@ export default class SaveMnemonicModal extends React.Component {
                   {
                     randomedWords.map((word, index) => {
                       return (
-                        <button key={index} onClick={() => this.handleClickWord(index)} className="ym-hide-content">
+                        <button key={index} onClick={() => this.handleClickWord(index)} className="ym-hide-content notranslate">
                           {word}
                         </button>
                       )
@@ -351,14 +355,20 @@ export default class SaveMnemonicModal extends React.Component {
           {step === `show` && (
             <Fragment>
               <div styleName="highLevel">
-                <div styleName="mnemonicView" className="ym-hide-content">
+                <div styleName="mnemonicView" className="ym-hide-content notranslate">
                   {
                     words.map((word, index) => {
                       return (
-                        <div key={index}>
-                          <span>{(index + 1)}</span>
-                          <span>{word}</span>
-                        </div>
+                        <>
+                          <div key={index}>
+                            <span styleName="wordIndex">{(index + 1)}</span>
+                            <span>{word}</span>
+                          </div>
+                          {
+                            /* space for correct copy-paste */
+                            index + 1 !== words.length && ' '
+                          }
+                        </>
                       )
                     })
                   }

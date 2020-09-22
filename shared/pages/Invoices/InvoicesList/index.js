@@ -13,8 +13,6 @@ import styles from 'pages/CurrencyWallet/CurrencyWallet.scss'
 import Row from 'pages/History/Row/Row'
 
 import Table from 'components/tables/Table/Table'
-import PageSeo from 'components/Seo/PageSeo'
-import { getSeoPage } from 'helpers/seo'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import config from 'helpers/externalConfig'
@@ -23,32 +21,8 @@ import lsDataCache from 'helpers/lsDataCache'
 
 
 const isWidgetBuild = config && config.isWidget
-
-const langPrefix = `InvoicesList`
-const langLabels = defineMessages({
-  title: {
-    id: `${langPrefix}_MetaTitle`,
-    defaultMessage: `Swap.Online - Invoices - Web Wallet with Atomic Swap.`,
-  },
-  titleWidgetBuild: {
-    id: `${langPrefix}_WidgetMetaTitle`,
-    defaultMessage: `Invoices - Web Wallet with Atomic Swap.`,
-  },
-  metaDescription: {
-    id: `${langPrefix}_MetaDescription`,
-    defaultMessage: `Atomic Swap Wallet allows you to manage and securely exchange. Based on Multi-Sig and Atomic Swap technologies.`,
-  },
-  navTitle: {
-    id: `${langPrefix}_NavTitle_All`,
-    defaultMessage: `Invoices`,
-  },
-  navTitleAddress: {
-    id: `${langPrefix}_NavTitle_Address`,
-    defaultMessage: `Invoices {type}{br}{address}`,
-  },
-})
-
 const isDark = localStorage.getItem(constants.localStorage.isDark)
+
 
 @connect(({ signUp: { isSigned } }) => ({
   isSigned,
@@ -58,6 +32,8 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   user: {
     btcData,
     ethData,
+    ghostData,
+    nextData,
     multisigStatus,
     activeFiat,
   },
@@ -66,6 +42,8 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     data: {
       btc: btcData,
       eth: ethData,
+      ghost: ghostData,
+      next: nextData,
     },
     multisigStatus,
     activeFiat,
@@ -231,11 +209,6 @@ export default class InvoicesList extends PureComponent {
 
     if (isRedirecting) return null
 
-    const seoPage = getSeoPage(location.pathname)
-
-    const metaTitle = (isWidgetBuild) ? langLabels.titleWidgetBuild : langLabels.title
-
-
     let settings = {
       infinite: true,
       speed: 500,
@@ -249,34 +222,22 @@ export default class InvoicesList extends PureComponent {
     const invoicesTable = (
       <div styleName={`currencyWalletActivity ${isDark ? 'darkActivity' : ''}`}>
         <h3>
-          {(address) ? (
-            <FormattedMessage {...langLabels.navTitleAddress} values={{
-              type,
-              address,
-              br: <br />,
-            }} />
-          ) : (
-              <FormattedMessage {...langLabels.navTitle} />
-            )}
+          <FormattedMessage id="InvoicesList_Title" defaultMessage="Invoices" />
         </h3>
         {(items && items.length > 0) ? (
           <Table rows={items} styleName="currencyHistory" rowRender={this.rowRender} />
         ) : (
-            <ContentLoader rideSideContent empty inner />
-          )}
+          <ContentLoader rideSideContent empty inner />
+        )}
       </div>
     )
 
     if (onlyTable) {
       return invoicesTable
     }
-    console.log({ isDark })
+
     return (
       <div styleName={`root ${isDark ? 'dark' : ''}`}>
-        <PageSeo
-          location={location}
-          defaultTitle={intl.formatMessage(metaTitle)}
-          defaultDescription={intl.formatMessage(langLabels.metaDescription)} />
         {isWidgetBuild && !config.isFullBuild && (
           <ul styleName="widgetNav">
             <li styleName="widgetNavItem" onClick={this.handleGoWalletHome}>
@@ -286,7 +247,7 @@ export default class InvoicesList extends PureComponent {
             </li>
             <li styleName="widgetNavItem active">
               <a href styleName="widgetNavItemLink">
-                <FormattedMessage {...langLabels.navTitle} />
+                <FormattedMessage id="InvoicesList_Title" defaultMessage="Invoices" />
               </a>
             </li>
           </ul>
@@ -299,16 +260,13 @@ export default class InvoicesList extends PureComponent {
                   {/* Right form holder */}
                 </div>
               ) : (
-                  <ContentLoader leftSideContent />
-                )}
+                <ContentLoader leftSideContent />
+              )}
             </div>
             <div styleName={`currencyWalletActivity ${isDark ? 'darkActivity' : ''}`}>
               {invoicesTable}
             </div>
           </div>
-          {
-            seoPage && seoPage.footer && <div>{seoPage.footer}</div>
-          }
         </Fragment>
       </div>
     )

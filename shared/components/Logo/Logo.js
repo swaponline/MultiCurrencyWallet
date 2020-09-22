@@ -53,7 +53,7 @@ export default class Logo extends Component {
           {hasOwnLogoLink ? (
             <a
               href={onLogoClickLink}
-              styleName={`${mobile ? "mobile" : "logo"}`}
+              styleName="logo"
               data-tip
               data-for="logo"
             >
@@ -61,7 +61,7 @@ export default class Logo extends Component {
             </a>
             ) : (
             <Link
-              styleName={`${mobile ? "mobile" : "logo"}`}
+              styleName="logo"
               data-tip
               data-for="logo"
               to={onLogoClickLink}

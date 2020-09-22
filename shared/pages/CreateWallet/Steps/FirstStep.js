@@ -33,6 +33,8 @@ export default class CreateWallet extends Component {
   defaultStartPack = [
     ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],
     ...(!config.opts.curEnabled || config.opts.curEnabled.eth) ? [{ name: "ETH", capture: "Ethereum" }] : [],
+    ...(!config.opts.curEnabled || config.opts.curEnabled.ghost) ? [{ name: "GHOST", capture: "Ghost" }] : [],
+    ...(!config.opts.curEnabled || config.opts.curEnabled.next) ? [{ name: "NEXT", capture: "NEXT.coin" }] : [],
     { name: "SWAP", capture: "Swap" },
     { name: "USDT", capture: "Tether" },
     { name: "EURS", capture: "Eurs" },
@@ -41,6 +43,8 @@ export default class CreateWallet extends Component {
   widgetStartPack = [
     ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],
     ...(!config.opts.curEnabled || config.opts.curEnabled.eth) ? [{ name: "ETH", capture: "Ethereum" }] : [],
+    ...(!config.opts.curEnabled || config.opts.curEnabled.ghost) ? [{ name: "GHOST", capture: "Ghost" }] : [],
+    ...(!config.opts.curEnabled || config.opts.curEnabled.next) ? [{ name: "NEXT", capture: "NEXT.coin" }] : [],
   ]
 
 
@@ -61,8 +65,15 @@ export default class CreateWallet extends Component {
       if (!config.opts.curEnabled || config.opts.curEnabled.eth) {
         this.defaultStartPack.push({ name: "ETH", capture: "Ethereum" })
       }
+      if (!config.opts.curEnabled || config.opts.curEnabled.ghost) {
+        this.defaultStartPack.push({ name: "GHOST", capture: "Ghost" })
+      }
+      if (!config.opts.curEnabled || config.opts.curEnabled.next) {
+        this.defaultStartPack.push({ name: "NEXT", capture: "NEXT.coin" })
+      }
       const ownTokensKeys = Object.keys(config.opts.ownTokens)
-      // В defaultStartPack помещается пять валют
+
+      // defaultStartPack has 5 slots
       if (ownTokensKeys.length >= 1 && (5 - this.defaultStartPack.length)) {
         this.defaultStartPack.push({
           name: ownTokensKeys[0].toUpperCase(),
@@ -150,7 +161,7 @@ export default class CreateWallet extends Component {
     const { onClick, error } = this.props
     const { curState, startPack, all } = this.state
 
-    const coloredIcons = ['btc', 'eth', 'swap', 'usdt', 'eurs']
+    const coloredIcons = ['btc', 'eth', 'ghost', 'next', 'swap', 'usdt', 'eurs']
     return (
       <div>
         <div>

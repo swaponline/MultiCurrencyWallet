@@ -6,7 +6,7 @@ import Slider from 'pages/Wallet/components/WallerSlider'
 import { withRouter } from 'react-router-dom'
 
 import helpers, { links, constants, ethToken } from 'helpers'
-import { getTokenWallet, getBitcoinWallet, getEtherWallet } from 'helpers/links'
+import { getTokenWallet, getBitcoinWallet, getEtherWallet, getGhostWallet, getNextWallet } from 'helpers/links'
 
 import CSSModules from 'react-css-modules'
 import styles from './CurrencyWallet.scss'
@@ -46,6 +46,8 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     user: {
       ethData,
       btcData,
+      ghostData,
+      nextData,
       activeFiat,
       activeCurrency,
       btcMultisigSMSData,
@@ -60,6 +62,8 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     items: [
       ethData,
       btcData,
+      ghostData,
+      nextData,
       btcMultisigSMSData,
       btcMultisigUserData,
       ...Object.keys(tokensData).map((k) => tokensData[k]),
@@ -117,6 +121,26 @@ export default class CurrencyWallet extends Component {
             ...{
               isRedirecting: true,
               redirectUrl: getBitcoinWallet(),
+            },
+          }
+          return
+        }
+        if (fullName.toLowerCase() === `ghost`) {
+          this.state = {
+            ...this.state,
+            ...{
+              isRedirecting: true,
+              redirectUrl: getGhostWallet(),
+            },
+          }
+          return
+        }
+        if (fullName.toLowerCase() === `next`) {
+          this.state = {
+            ...this.state,
+            ...{
+              isRedirecting: true,
+              redirectUrl: getNextWallet(),
             },
           }
           return
@@ -339,6 +363,28 @@ export default class CurrencyWallet extends Component {
             return
           }
 
+          if (fullName.toLowerCase() === `ghost`) {
+            this.state = {
+              ...this.state,
+              ...{
+                isRedirecting: true,
+                redirectUrl: getGhostWallet(),
+              },
+            }
+            return
+          }
+
+          if (fullName.toLowerCase() === `next`) {
+            this.state = {
+              ...this.state,
+              ...{
+                isRedirecting: true,
+                redirectUrl: getNextWallet(),
+              },
+            }
+            return
+          }
+
           if (fullName.toLowerCase() === `ethereum`) {
             this.state = {
               ...this.state,
@@ -518,17 +564,6 @@ export default class CurrencyWallet extends Component {
     const isToken = helpers.ethToken.isEthToken({ name: currency })
 
     history.push(localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`))
-
-    /*
-    actions.modals.open(withdrawModal, {
-      currency,
-      address,
-      contractAddress,
-      decimals,
-      balance,
-      hiddenCoinsList,
-    })
-    */
   }
 
   handleGoWalletHome = () => {
@@ -707,7 +742,8 @@ export default class CurrencyWallet extends Component {
         <DashboardLayout
           page="history"
           BalanceForm={
-            txHistory ? (
+            txHistory
+              ?
               <BalanceForm
                 address={address}
                 activeFiat={activeFiat}
@@ -725,9 +761,8 @@ export default class CurrencyWallet extends Component {
                 singleWallet={true}
                 multisigPendingCount={multisigPendingCount}
               />
-            ) : (
-                <ContentLoader leftSideContent />
-              )
+              :
+              <ContentLoader leftSideContent />
           }
         >
           <div styleName={`currencyWalletActivity ${isDark ? 'darkActivity' : ''}`}>
@@ -754,11 +789,9 @@ export default class CurrencyWallet extends Component {
           </div>
           {!actions.btcmultisig.isBTCSMSAddress(`${address}`) &&
             !actions.btcmultisig.isBTCMSUserAddress(`${address}`) &&
-            (swapHistory.filter((item) => item.step >= 4).length > 0 ? (
-              <div styleName={`currencyWalletSwapHistory ${isDark ? 'darkHistory' : ''}`}>
+            (swapHistory.filter((item) => item.step >= 1).length > 0 ? (
                 <SwapsHistory orders={swapHistory.filter((item) => item.step >= 4)} />
-              </div>
-            ) : (
+              ) : (
                 ''
               ))}
         </DashboardLayout>

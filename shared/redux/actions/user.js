@@ -13,6 +13,7 @@ import { getActivatedCurrencies } from 'helpers/user'
 import getCurrencyKey from 'helpers/getCurrencyKey'
 import apiLooper from 'helpers/apiLooper'
 
+import metamask from 'helpers/metamask'
 
 
 /*
@@ -78,12 +79,15 @@ const sign = async () => {
     btc: localStorage.getItem(constants.privateKeyNames.btcMnemonic),
     btcSms: localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated),
     eth: localStorage.getItem(constants.privateKeyNames.ethMnemonic),
+    ghost: localStorage.getItem(constants.privateKeyNames.ghostMnemonic),
+    next: localStorage.getItem(constants.privateKeyNames.nextMnemonic),
   }
-
   console.log('actions user - sign', mnemonicKeys, mnemonic)
   if (mnemonic !== `-`) {
     if (!mnemonicKeys.btc) mnemonicKeys.btc = actions.btc.sweepToMnemonic(mnemonic)
     if (!mnemonicKeys.eth) mnemonicKeys.eth = actions.eth.sweepToMnemonic(mnemonic)
+    if (!mnemonicKeys.ghost) mnemonicKeys.ghost = actions.ghost.sweepToMnemonic(mnemonic)
+    if (!mnemonicKeys.next) mnemonicKeys.next = actions.next.sweepToMnemonic(mnemonic)
     if (!mnemonicKeys.btcSms) {
       mnemonicKeys.btcSms = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
       localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, mnemonicKeys.btcSms)
@@ -105,10 +109,14 @@ const sign = async () => {
   const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
   const btcMultisigPrivateKey = localStorage.getItem(constants.privateKeyNames.btcMultisig)
   const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
+  const ghostPrivateKey = localStorage.getItem(constants.privateKeyNames.ghost)
+  const nextPrivateKey = localStorage.getItem(constants.privateKeyNames.next)
 
 
   const _ethPrivateKey = actions.eth.login(ethPrivateKey, mnemonic, mnemonicKeys)
   const _btcPrivateKey = actions.btc.login(btcPrivateKey, mnemonic, mnemonicKeys)
+  const _ghostPrivateKey = actions.ghost.login(ghostPrivateKey, mnemonic, mnemonicKeys)
+  const _nextPrivateKey = actions.next.login(nextPrivateKey, mnemonic, mnemonicKeys)
 
   // btc multisig with 2fa (2of3)
   await sign_btc_2fa(_btcPrivateKey)
@@ -138,18 +146,21 @@ const getReputation = async () => {
 
   const btcReputationPromise = actions.btc.getReputation()
   const ethReputationPromise = actions.eth.getReputation()
+  const ghostReputationPromise = actions.ghost.getReputation()
+  const nextReputationPromise = actions.next.getReputation()
 
   Promise.all([
     btcReputationPromise,
     ethReputationPromise,
+    ghostReputationPromise,
+    nextReputationPromise,
   ])
-    .then(([btcReputation, ethReputation]) => {
-      const totalReputation = Number(btcReputation) + Number(ethReputation)
+    .then(([btcReputation, ethReputation, ghostReputation, nextReputation]) => {
+      const totalReputation = Number(btcReputation) + Number(ethReputation) + Number(ghostReputation) + Number(nextReputation)
 
       if (Number.isInteger(totalReputation)) {
         reducers.ipfs.set({ reputation: totalReputation })
-      }
-      else {
+      } else {
         reducers.ipfs.set({ reputation: null })
       }
     })
@@ -169,21 +180,41 @@ const getBalances = () => {
   reducers.user.setIsBalanceFetching({ isBalanceFetching: true })
 
   return new Promise(async (resolve) => {
-    await actions.eth.getBalance()
-    await actions.btc.getBalance()
-    await actions.btcmultisig.getBalance() // SMS-Protected
-    await actions.btcmultisig.getBalanceUser() // Other user confirm
-    await actions.btcmultisig.getBalancePin() // Pin-Protected
-    await actions.btcmultisig.fetchMultisigBalances()
+    const balances = [
+      ...(metamask.isEnabled() && metamask.isConnected())
+        ? [ { func: metamask.getBalance, name: 'metamask' } ]
+        : [],
+      { func: actions.eth.getBalance, name: 'eth' },
+      { func: actions.btc.getBalance, name: 'btc' },
+      { func: actions.ghost.getBalance, name: 'ghost' },
+      { func: actions.next.getBalance, name: 'next' },
+      { func: actions.btcmultisig.getBalance, name: 'btc-sms' },
+      { func: actions.btcmultisig.getBalanceUser, name: 'btc-ms-main' },
+      { func: actions.btcmultisig.getBalancePin, name: 'btc-pin' },
+      { func: actions.btcmultisig.fetchMultisigBalances, name: 'btc-ms' }
+    ]
+
+    balances.forEach(async (obj) => {
+      try {
+        await obj.func()
+      } catch (e) {
+        console.error('Fail fetch balance for', obj.name)
+      }
+    })
 
     if (isTokenSigned) {
       Object.keys(config.erc20)
-        .forEach(async (name) => {
-          await actions.token.getBalance(name)
+        .forEach(async (name) => { 
+          try {
+            await actions.token.getBalance(name)
+          } catch (e) {
+            console.error('Fail fetch balance for token', name)
+          }
         })
     }
 
     reducers.user.setIsBalanceFetching({ isBalanceFetching: false })
+    resolve(true)
   })
 }
 
@@ -251,6 +282,8 @@ const getDemoMoney = process.env.MAINNET ? () => { } : () => {
       window.localStorage.clear()
       localStorage.setItem(constants.privateKeyNames.btc, r[0])
       localStorage.setItem(constants.privateKeyNames.eth, r[1])
+      localStorage.setItem(constants.privateKeyNames.ghost, r[2])
+      localStorage.setItem(constants.privateKeyNames.next, r[3])
       localStorage.setItem(constants.localStorage.demoMoneyReceived, true)
       window.location.reload()
     })
@@ -309,6 +342,16 @@ const getInfoAboutCurrency = (currencyNames) =>
                 reducers.user.setInfoAboutCurrency({ name: 'ethMnemonicData', infoAboutCurrency: currencyInfo }) // Sweep (for future)
                 break
               }
+              case 'GHOST': {
+                reducers.user.setInfoAboutCurrency({ name: 'ghostData', infoAboutCurrency: currencyInfo })
+                reducers.user.setInfoAboutCurrency({ name: 'ghostMnemonicData', infoAboutCurrency: currencyInfo }) // Sweep (for future)
+                break
+              }
+              case 'NEXT': {
+                reducers.user.setInfoAboutCurrency({ name: 'nextData', infoAboutCurrency: currencyInfo })
+                reducers.user.setInfoAboutCurrency({ name: 'nextMnemonicData', infoAboutCurrency: currencyInfo }) // Sweep (for future)
+                break
+              }
               default: {
                 if (ethToken.isEthToken({ name: currencyInfoItem.symbol })) {
                   reducers.user.setInfoAboutToken({ name: currencyInfoItem.symbol.toLowerCase(), infoAboutCurrency: currencyInfo })
@@ -362,6 +405,8 @@ const fetchMultisigStatus = async () => {
 const setTransactions = async () => {
   const isBtcSweeped = actions.btc.isSweeped()
   const isEthSweeped = actions.eth.isSweeped()
+  const isGhostSweeped = actions.ghost.isSweeped()
+  const isNextSweeped = actions.next.isSweeped()
 
   const {
     core: { hiddenCoinsList },
@@ -386,7 +431,12 @@ const setTransactions = async () => {
       // actions.btcmultisig.getInvoicesUser(),
       // actions.usdt.getTransaction(),
       actions.eth.getTransaction(),
+      ...(metamask.isEnabled() && metamask.isConnected()) ? [actions.eth.getTransaction(metamask.getAddress())] : [],
       ...(isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
+      actions.ghost.getTransaction(),
+      ...(isGhostSweeped) ? [] : [actions.ghost.getTransaction(actions.ghost.getSweepAddress())],
+      actions.next.getTransaction(),
+      ...(isNextSweeped) ? [] : [actions.next.getTransaction(actions.next.getSweepAddress())],
       // actions.eth.getInvoices(),
       // ... (isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
     ])
@@ -412,7 +462,7 @@ const setTransactions = async () => {
 }
 
 const getText = () => {
-  const { user: { ethData, btcData } } = getState()
+  const { user: { ethData, btcData, ghostData, nextData } } = getState()
 
 
   let text = `
@@ -443,6 +493,16 @@ Private key: ${btcData.privateKey}\r\n
 2. login\r\n
 3. Go to settings > addresses > import\r\n
 4. paste private key and click "Ok"\r\n
+\r\n
+# GHOST\r\n
+\r\n
+Ghost address: ${ghostData.address}\r\n
+Private key: ${ghostData.privateKey}\r\n
+\r\n
+# NEXT\r\n
+\r\n
+Next address: ${nextData.address}\r\n
+Private key: ${nextData.privateKey}\r\n
 \r\n
 * We don\'t store your private keys and will not be able to restore them!
 \r\n
@@ -478,6 +538,8 @@ export const isOwner = (addr, currency) => {
   }
 
   if (actions.btc.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
+  if (actions.ghost.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
+  if (actions.next.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
   if (actions.eth.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
 
   const name = `${currency.toLowerCase()}Data`
@@ -524,6 +586,13 @@ const getAuthData = (name) => {
   return user[`${name}Data`]
 }
 
+const addMessagingToken = (token) => {
+  console.log(12313123123)
+  console.log(token)
+  console.log(12313123123)
+  reducers.user.addMessagingToken({ token })
+}
+
 export default {
   sign,
   sign_btc_2fa,
@@ -542,4 +611,5 @@ export default {
   getWithdrawWallet,
   fetchMultisigStatus,
   pullActiveCurrency,
+  addMessagingToken,
 }

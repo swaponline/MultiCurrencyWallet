@@ -6,7 +6,7 @@ import CSSModules from 'react-css-modules'
 import styles from './Coin.scss'
 
 import CurrencyIcon, { iconNames } from 'components/ui/CurrencyIcon/CurrencyIcon'
-import config from "app-config";
+import config from 'app-config'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -17,6 +17,8 @@ const defaultCurrencyColors = {
   'btc (sms-protected)': 'orange',
   'btc (pin-protected)': 'orange',
   'usdt': '#33a681',
+  'ghost': 'black',
+  'next': 'white',
 }
 
 const Coin = ({ className, size, name }) => {

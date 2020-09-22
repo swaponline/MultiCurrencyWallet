@@ -10,17 +10,14 @@ import { FormattedMessage } from 'react-intl'
 const FourthStep = ({ step, swap, seventh, eighth }) => {
 
   const currencyStep = swap.sellCurrency === 'BTC' ? seventh : eighth
-  const fourthStepPadding = (step >= currencyStep && isMobile) ? 150 : 0
 
   return (
-    <div
-      style={{ paddingTop: fourthStepPadding }}
-      styleName={step >= currencyStep ? 'stepItem active checked' : 'stepItem'}>
+    <div styleName={step >= currencyStep ? 'stepItem active checked' : 'stepItem'}>
       <span styleName="stepNumber">{step >= currencyStep ? <i className="fas fa-check" /> : 4}</span>
       <p styleName="stepText">
         <FormattedMessage
-          id="BtcToEthToken123"
-          defaultMessage="The swap is finish!" />
+          id="BtcToEthToken123_copy"
+          defaultMessage="The swap is finished!" />
       </p>
     </div>
   )

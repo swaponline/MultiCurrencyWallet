@@ -33,6 +33,11 @@ import BtcToEthTokens from './SwapProgressText/BtcToEthTokens'
 import EthToBtc from './SwapProgressText/EthToBtc'
 import EthTokensToBtc from './SwapProgressText/EthTokensToBtc'
 
+import BtcToGhost from './SwapProgressText/BtcToGhost'
+import GhostToBtc from './SwapProgressText/GhostToBtc'
+
+
+
 import * as animation from './images'
 import finishSvg from './images/finish.svg'
 
@@ -94,6 +99,9 @@ export default class SwapProgress extends Component {
     }
     if (flow.btcSwapWithdrawTransactionHash) {
       window.open(`${config.link.bitpay}/tx/${flow.btcSwapWithdrawTransactionHash}`, '_blank')
+    }
+    if (flow.ghostSwapWithdrawTransactionHash) {
+      window.open(`${config.link.ghostscan}/tx/${flow.ghostSwapWithdrawTransactionHash}`, '_blank')
     }
   }
 
@@ -290,6 +298,12 @@ export default class SwapProgress extends Component {
         {
           this.props.name === 'EthToBtc' && <EthToBtc step={flow.step} flow={flow} swap={swap} />
         }
+         {
+          this.props.name === 'BtcToGhost' && <BtcToGhost step={flow.step} flow={flow} swap={swap} />
+        }
+        {
+          this.props.name === 'GhostToBtc' && <GhostToBtc step={flow.step} flow={flow} swap={swap} />
+        }
         {
           this.props.name === 'BtcToEthTokens' && <BtcToEthTokens step={flow.step} flow={flow} swap={swap} />
         }
@@ -408,35 +422,36 @@ export default class SwapProgress extends Component {
                 </Button>
               }
 
-              {flow.step > 3 && !this.isSellCurrencyEthOrEthToken &&
+              {flow.step > 3 && !flow.isFinished && !this.isSellCurrencyEthOrEthToken &&
                 <PleaseDontLeaveWrapper isBTC={flow.secret ? flow.secret : false} />
               }
             </div>
 
-            {flow.ethSwapWithdrawTransactionHash && !this.isSellCurrencyEthOrEthToken && (
-              <strong styleName="transaction">
-                <a
-                  href={`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                >
-                  <FormattedMessage id="swappropgress207" defaultMessage="{transaction}" values={{ transaction: flow.ethSwapWithdrawTransactionHash }} />
-                </a>
-              </strong>
+            {flow.ethSwapWithdrawTransactionHash && !flow.isFinished && !this.isSellCurrencyEthOrEthToken && (
+              <a
+                styleName="transaction"
+                href={`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`}
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                <FormattedMessage id="swappropgress207" defaultMessage="{transaction}" values={{ transaction: flow.ethSwapWithdrawTransactionHash }} />
+              </a>
             )}
-            {flow.btcSwapWithdrawTransactionHash && this.isSellCurrencyEthOrEthToken && (
-              <strong styleName="transaction">
-                <a
-                  href={`${config.link.bitpay}/tx/${flow.btcSwapWithdrawTransactionHash}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FormattedMessage id="swappropgress218" defaultMessage="{transaction}" values={{ transaction: flow.btcSwapWithdrawTransactionHash }} />
-                </a>
-              </strong>
+            {flow.btcSwapWithdrawTransactionHash && !flow.isFinished && this.isSellCurrencyEthOrEthToken && (
+              <a
+                styleName="transaction"
+                href={`${config.link.bitpay}/tx/${flow.btcSwapWithdrawTransactionHash}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FormattedMessage id="swappropgress218" defaultMessage="{transaction}" values={{ transaction: flow.btcSwapWithdrawTransactionHash }} />
+              </a>
             )}
             {flow.isFinished && (
               <div styleName="finishButtonsHolder">
+                <Button gray onClick={this.onPushGoToTxPage}>
+                  <FormattedMessage id="swapProgressGoToTxPage" defaultMessage="View TX in explorer" />
+                </Button>
                 {showWalletButton && (
                   <LinkTo to="/wallet">
                     <Button brand onClick={this.onPushGoToWallet}>
@@ -444,9 +459,6 @@ export default class SwapProgress extends Component {
                     </Button>
                   </LinkTo>
                 )}
-                <Button gray onClick={this.onPushGoToTxPage}>
-                  <FormattedMessage id="swapProgressGoToTxPage" defaultMessage="View TX in explorer" />
-                </Button>
               </div>
             )}
           </div>

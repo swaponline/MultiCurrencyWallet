@@ -11,6 +11,10 @@ export const getActivatedCurrencies = () => {
   }
   if (!config.opts.curEnabled || config.opts.curEnabled.eth) currencies.push('ETH')
 
+  if (!config.opts.curEnabled || config.opts.curEnabled.ghost) currencies.push('GHOST')
+
+  if (!config.opts.curEnabled || config.opts.curEnabled.next) currencies.push('NEXT')
+
   Object.keys(config.erc20).forEach((token) => {
     currencies.push(token.toUpperCase())
   })

@@ -1,6 +1,8 @@
 const coinsWithDynamicFee = [
   'eth',
   'btc',
+  'ghost',
+  'next',
 ]
 
 

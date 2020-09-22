@@ -1,0 +1,26 @@
+.promoText {
+  margin: 0 auto;
+  max-width: 572px;
+  font-style: normal;
+  line-height: 1em;
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 1em;
+  @include ff-bold;
+}
+
+@media screen and (max-width: 650px){
+  .promoText {
+    font-size: 24px;
+  }
+}
+
+.promoTextColored {
+  color: #6144E5;
+}
+
+@include media-mobile {
+  .promoText {
+    display: none;
+  }
+}

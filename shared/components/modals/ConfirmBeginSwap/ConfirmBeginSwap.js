@@ -42,9 +42,9 @@ const defaultLanguage = defineMessages({
 
 @injectIntl
 @connect(({
-  user: { ethData, btcData, tokensData },
+  user: { ethData, btcData, ghostData, nextData, tokensData },
 }) => ({
-  currenciesData: [ethData, btcData],
+  currenciesData: [ethData, btcData, ghostData, nextData],
   tokensData: [...Object.keys(tokensData).map(k => (tokensData[k]))],
 }))
 @CSSModules(styles, { allowMultiple: true })
@@ -91,14 +91,34 @@ export default class ConfirmBeginSwap extends React.Component {
       if (config.erc20[sellCurrency.toLowerCase()] !== undefined) return true
       // btc-eth
       if (sellCurrency === 'ETH') return true
+      if (sellCurrency === 'GHOST') return true
+      if (sellCurrency === 'NEXT') return true
     }
     if (config.erc20[buyCurrency.toLowerCase()] !== undefined) {
       // token-btc
       if (sellCurrency === 'BTC') return true
+      if (sellCurrency === 'GHOST') return true
+      if (sellCurrency === 'NEXT') return true
     }
 
     if (buyCurrency === 'ETH') {
       // eth-btc
+      if (sellCurrency === 'BTC') return true
+      if (sellCurrency === 'GHOST') return true
+      if (sellCurrency === 'NEXT') return true
+    }
+
+    if (buyCurrency === 'GHOST') {
+      // ghost-eth
+      if (sellCurrency === 'ETH') return true
+       // ghost-btc
+      if (sellCurrency === 'BTC') return true
+    }
+
+    if (buyCurrency === 'NEXT') {
+      // next-eth
+      if (sellCurrency === 'ETH') return true
+       // next-btc
       if (sellCurrency === 'BTC') return true
     }
 
@@ -216,13 +236,13 @@ export default class ConfirmBeginSwap extends React.Component {
               )
             }
             <div styleName="button-overlay">
+              <Button styleName="button" gray onClick={this.handleClose}>{labels.no}</Button>
               {(this.customWalletIsValid()) && (
                 <Button styleName="button" brand onClick={this.handleConfirm}>{labels.yes}</Button>
               )}
               {(!this.customWalletIsValid()) && (
                 <Button styleName="button" gray>{labels.yes}</Button>
               )}
-              <Button styleName="button" gray onClick={this.handleClose}>{labels.no}</Button>
             </div>
           </div>
         </div>
