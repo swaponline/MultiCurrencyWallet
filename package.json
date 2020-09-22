@@ -237,6 +237,6 @@
     "command-line-usage": "^5.0.5",
     "debug": "^4.1.0",
     "node-gyp": "^3.8.0",
-    "rebuild": "^0.1.2",
+    "rebuild": "^0.1.2"
   }
 }

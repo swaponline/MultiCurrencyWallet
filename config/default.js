@@ -12,7 +12,7 @@ const config = {
     base:     (file = '') => path.join(basePath, file),
     shared:   (file = '') => path.join(basePath, 'shared', file),
     client:   (file = '') => path.join(basePath, 'client', file),
-    swapCore: (file = '') => process.env.SWAP_CORE_PATH ? path.join(process.env.SWAP_CORE_PATH, file) : path.join(basePath, 'swap.core', file),
+    swapCore: (file = '') => process.env.SWAP_CORE_PATH ? path.join(process.env.SWAP_CORE_PATH, file) : path.join(basePath, 'src', 'core', file),
   },
 
   publicPath: '/',
