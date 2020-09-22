@@ -4,7 +4,7 @@ const request = require('../helpers/request')
 const BigNumber = require('bignumber.js')
 const debug = require('debug')
 
-const BITPAY = `https://test-insight.bitpay.com/api`
+const BITPAY = `http://localhost:32250/btc/testnet`
 const BITPAY_MAIN = `https://insight.bitpay.com/api`
 
 const BLOCKCYPHER_API = `https://api.blockcypher.com/v1/btc/main/`

@@ -30,6 +30,17 @@
   "peerDependencies": {
     "bitcoinjs-lib": "~3.3.2"
   },
+  "_moduleAliases": {
+    "@root": ".",
+    "swap.core": "../",
+    "swap.auth": "../swap.auth",
+    "swap.orders": "../swap.orders",
+    "swap.room": "../swap.room",
+    "swap.app": "../swap.app",
+    "swap.flows": "../swap.flows",
+    "swap.swap": "../swap.swap",
+    "swap.swaps": "../swap.swaps"
+  },
   "dependencies": {
     "ajv": "^6.5.2",
     "app-module-path": "^2.2.0",
