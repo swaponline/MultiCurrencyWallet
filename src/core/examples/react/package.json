@@ -1,0 +1,24 @@
+{
+  "name": "swap-core-react-example",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "rimraf ./node_modules/swap.* && npx babel ../../src/ --out-dir ./swap && mv ./swap/* ./node_modules && react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "bigi": "^1.4.2",
+    "bitcoinjs-lib": "^3.3.2",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "superagent": "^3.8.3",
+    "web3": "^1.0.0-beta.34"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "react-scripts": "^1.1.4",
+    "rimraf": "^2.6.2"
+  }
+}

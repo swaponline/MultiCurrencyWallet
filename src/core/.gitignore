@@ -1,0 +1,13 @@
+.DS_Store
+.idea
+
+.ipfs
+.storage
+node_modules
+
+examples/react/swap
+examples/vanilla/swap
+umd
+lib/
+
+
