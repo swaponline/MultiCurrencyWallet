@@ -1,0 +1,7 @@
+{
+  "buyCurrency": "SWAP",
+  "sellCurrency": "BTC",
+  "buyAmount": 3,
+  "sellAmount": 0.1,
+  "exchangeRate": 0.03
+}

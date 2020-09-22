@@ -5,7 +5,7 @@ const debug = require('debug')
 const Web3 = require('web3')
 
 // const MAINNET_PROVIDER = `https://mainnet.infura.io/JCnK5ifEPH9qcQkX0Ahl`
-const TESTNET_PROVIDER = `https://rinkeby.infura.io/JCnK5ifEPH9qcQkX0Ahl`
+const TESTNET_PROVIDER = `https://rinkeby.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c`
 
 const MAINNET_PROVIDER = process.env.WEB3_MAINNET_PROVIDER || `https://geth.swaponline.site`
 // const TESTNET_PROVIDER = process.env.WEB3_TESTNET_PROVIDER || `https://tgeth.swaponline.site`
