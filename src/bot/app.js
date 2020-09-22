@@ -1,4 +1,7 @@
 require('babel-core/register')
+require('module-alias/register')
+
+
 const express = require('express')
 const server = express()
 const bodyparser = require('body-parser')

@@ -5,6 +5,7 @@
         "node": "current"
       }
     } ],
+    "es2015",
     [ "stage-1" ]
   ]
 }
