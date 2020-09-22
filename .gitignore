@@ -1,16 +1,27 @@
-lib
-
-.DS_Store
-.eslintcache
-
-*-lock.*
-
-node_modules
-build-*
-
-app.*.css
-app.*.js
+# editors
 
 .idea
+.DS_Store
+.eslintcache
+*-lock.*
 
+
+# node
+
+node_modules
+
+
+# build
+
+build-*
+app.*.css
+app.*.js
 mainnet.build/
+
+
+# temp files
+
+.ipfs
+.storage
+src/core/examples/react/swap
+src/core/examples/vanilla/swap
