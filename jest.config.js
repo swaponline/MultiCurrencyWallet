@@ -1,7 +1,8 @@
 module.exports = {
   verbose: true,
+  testURL: "https://swaponline.io",
   modulePaths: [
-    "<rootDir>/swap.core/src",
+    "<rootDir>/src/core",
     "<rootDir>/shared",
   ]
 }
