@@ -1,0 +1,10 @@
+node_modules
+storage
+.ipfs
+.storage
+.idea
+.idea/*
+notes.txt
+keys.js
+ws/test.js
+.env

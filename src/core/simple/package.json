@@ -26,14 +26,24 @@
     "bignumber.js": "^7.2.1",
     "bitcoinjs-lib": "^5.1.6",
     "debug": "^4.1.0",
-    "dotenv": "^6.1.0",
+    "dotenv": "^6.2.0",
     "ipfs": "^0.34.4",
     "ipfs-pubsub-room": "^1.4.1",
     "node-localstorage": "^1.3.1",
     "node-sessionstorage": "^1.0.0",
     "request-promise-native": "^1.0.5",
-    "swap.core": "latest",
     "web3": "^1.2.4"
+  },
+  "_moduleAliases": {
+    "@root": ".",
+    "swap.core": "../",
+    "swap.auth": "../swap.auth",
+    "swap.orders": "../swap.orders",
+    "swap.room": "../swap.room",
+    "swap.app": "../swap.app",
+    "swap.flows": "../swap.flows",
+    "swap.swap": "../swap.swap",
+    "swap.swaps": "../swap.swaps"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -44,6 +54,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-es2015": "^6.24.1",
+    "module-alias": "^2.2.2",
     "jest": "^23.6.0"
   }
 }

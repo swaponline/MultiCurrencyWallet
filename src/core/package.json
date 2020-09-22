@@ -1,0 +1,88 @@
+{
+  "name": "swap.core",
+  "version": "0.3.137",
+  "description": "Swap Core",
+  "homepage": "https://github.com/swaponline/swap.core",
+  "author": "Pavel Ivanov <grammka@gmail.com> and team (https://github.com/pavelivanov)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/swaponline/swap.core.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "DEBUG=swap.core* jest tests/*.test.js",
+    "dev": "babel -w ./src --out-dir ./lib",
+    "clean": "rimraf ./lib",
+    "build": "npm run clean && babel ./src --out-dir ./lib",
+    "dev:umd": "NODE_ENV=development webpack --config webpack.config.babel.js --watch",
+    "build:umd": "NODE_ENV=production webpack --config webpack.config.babel.js",
+    "build:umd:win": "webpack --config webpack.config.babel.js",
+    "preversion": "npm run build",
+    "postversion": "npm publish",
+    "release": "npm version patch && git push"
+  },
+  "husky": {
+    "hooks": {
+      "post-commit": "npm test"
+    }
+  },
+  "peerDependencies": {
+    "bitcoinjs-lib": "~3.3.2"
+  },
+  "_moduleAliases": {
+    "@root": ".",
+    "swap.auth": "/swap.auth",
+    "swap.orders": "/swap.orders",
+    "swap.room": "/swap.room",
+    "swap.app": "/swap.app",
+    "swap.flows": "/swap.flows",
+    "swap.swap": "/swap.swap",
+    "swap.swaps": "/swap.swaps"
+  },
+  "dependencies": {
+    "ajv": "^6.5.2",
+    "app-module-path": "^2.2.0",
+    "babel-runtime": "^6.26.0",
+    "bignumber.js": "^7.2.1",
+    "bitcoinjs-lib": "^5.1.10",
+    "bitcore-lib": "^8.22.0",
+    "command-line-args": "^5.0.2",
+    "command-line-usage": "^5.0.5",
+    "debug": "^4.1.0",
+    "ethereum-input-data-decoder": "0.0.12",
+    "ghost-bitcore-lib": "https://github.com/ghost-coin/ghost-bitcore-lib.git",
+    "node-gyp": "^3.8.0",
+    "rebuild": "^0.1.2",
+    "typeforce": "^1.12.0"
+  },
+  "devDependencies": {
+    "ava": "^1.0.0-beta.4",
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-es2015-destructuring": "^6.23.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "colors": "^1.2.1",
+    "copy-and-watch": "^0.1.2",
+    "cpx": "^1.5.0",
+    "husky": "^4.2.5",
+    "ipfs": "^0.34.4",
+    "ipfs-pubsub-room": "^1.4.1",
+    "jest": "^23.4.2",
+    "module-alias": "^2.2.2",
+    "node-localstorage": "^1.3.1",
+    "rimraf": "^2.6.2",
+    "superagent": "^3.8.3",
+    "web3": "^1.2.4",
+    "webpack": "^4.6.0",
+    "webpack-cli": "^3.0.3",
+    "webpack-raw-bundler": "^1.3.6"
+  }
+}

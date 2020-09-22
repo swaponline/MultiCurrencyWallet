@@ -21,7 +21,10 @@ mainnet.build/
 
 # temp files
 
-.ipfs
-.storage
 src/core/examples/react/swap
 src/core/examples/vanilla/swap
+
+src/bot/.ipfs
+src/bot/.storage
+src/bot/.env
+
