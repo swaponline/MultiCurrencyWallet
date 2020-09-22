@@ -32,14 +32,13 @@
   },
   "_moduleAliases": {
     "@root": ".",
-    "swap.core": "../",
-    "swap.auth": "../swap.auth",
-    "swap.orders": "../swap.orders",
-    "swap.room": "../swap.room",
-    "swap.app": "../swap.app",
-    "swap.flows": "../swap.flows",
-    "swap.swap": "../swap.swap",
-    "swap.swaps": "../swap.swaps"
+    "swap.auth": "/swap.auth",
+    "swap.orders": "/swap.orders",
+    "swap.room": "/swap.room",
+    "swap.app": "/swap.app",
+    "swap.flows": "/swap.flows",
+    "swap.swap": "/swap.swap",
+    "swap.swaps": "/swap.swaps"
   },
   "dependencies": {
     "ajv": "^6.5.2",
