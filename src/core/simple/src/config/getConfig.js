@@ -4,6 +4,8 @@ const SwapAuth = require('swap.auth')
 const SwapRoom = require('swap.room')
 const SwapOrders = require('swap.orders')
 
+const fs = require('fs')
+
 const { EthSwap, EthTokenSwap, BtcSwap, /*UsdtSwap,*/ } = require('swap.swaps')
 const {
   ETH2BTC, BTC2ETH,
@@ -43,6 +45,13 @@ module.exports = (config) => ({ account, contracts: { ETH, TOKEN }, ...custom })
     },
   }
 
+  
+  console.log('Try clean ipfs storage', config.swapRoom.repo)
+  try {
+    fs.rmdirSync(config.swapRoom.repo , () => {})
+  } catch (e) {
+    console.log('Fail clean up ipfs storage', e)
+  }
   setupLocalStorage()
 
   const storage = new LocalStorage(config.storageDir)

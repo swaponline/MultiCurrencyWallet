@@ -10,6 +10,8 @@ const id = parseInt(process.argv[2])
 const offset = process.env.OFFSET || process.argv[1]
 const ROOT_DIR = process.env.ROOT_DIR || '.'
 
+
+
 module.exports = {
   id,
   network: 'testnet',

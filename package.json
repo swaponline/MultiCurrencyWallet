@@ -53,7 +53,8 @@
     "messages:extract": "babel-node tools/run messages",
     "rename-assets-manifest-file": "rename-files ./build-chrome-extension/application/assets/ 'manifest.json' 'android-manifest.json'",
     "rename-assets-manifest-link": "replace 'assets/manifest.json' 'assets/android-manifest.json' ./build-chrome-extension/application/index.html",
-    "release": "git commit -am v%npm_package_version% && git tag v%npm_package_version% && git push && git push --tags"
+    "release": "git commit -am v%npm_package_version% && git tag v%npm_package_version% && git push && git push --tags",
+    "bot": "babel-node --config-file=./src/bot/babel.config.js ./src/bot/app.js "
   },
   "keywords": [],
   "devDependencies": {
@@ -147,8 +148,8 @@
     "graphql-request": "^3.0.0",
     "history": "^4.10.1",
     "human-standard-token-abi": "^1.0.2",
-    "ipfs": "^0.33.1",
-    "ipfs-pubsub-room": "^1.4.0",
+    "ipfs": "^0.34.4",
+    "ipfs-pubsub-room": "^1.4.1",
     "is-local-ip": "^1.1.0",
     "jdenticon": "^2.2.0",
     "json-stringify-safe": "^5.0.1",

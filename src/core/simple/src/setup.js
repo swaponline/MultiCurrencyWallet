@@ -6,12 +6,13 @@ const configFactory = require('./config')
 
 const network = process.env.NETWORK
 
-module.exports = settings => {
+module.exports = (settings) => {
 
   const getConfig = configFactory[network || 'testnet']
 
   const config = getConfig({ contracts: {}, ...settings })
 
+  
   const swapApp = SwapApp.init(config)
 
   const wallet = new Wallet(swapApp, constants, config)

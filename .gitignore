@@ -18,3 +18,6 @@ mainnet.build/
 src/bot/.ipfs
 src/bot/.storage
 src/bot/.env
+
+.ipfs
+.storage
