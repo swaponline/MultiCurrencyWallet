@@ -422,7 +422,9 @@ export default class Wallet extends Component {
           const registrationData = {
             locale: ipInfo.locale || (navigator.userLanguage || navigator.language || 'en-gb').split('-')[0],
             ip: ipInfo.ip,
-            messaging_token: this.props.messagingToken || '',
+          }
+          if (this.props.messagingToken) {
+            registrationData.messaging_token = this.props.messagingToken
           }
           let widgetUrl
           if (appConfig.isWidget) {
@@ -432,7 +434,7 @@ export default class Wallet extends Component {
   
           const tokensArray = Object.values(this.props.tokensData)
   
-          tokensArray.map(item => ({
+          const wallets = tokensArray.map(item => ({
             symbol: item && item.currency ? item.currency.split(' ')[0] : '',
             type: item && item.currency ? item.currency.split(' ')[1] || 'common' : '',
             address: item && item.address ? item.address : '',
@@ -443,6 +445,8 @@ export default class Wallet extends Component {
             // signatures_required: 1,
             // signatories: [],
           }))
+
+          registrationData.wallets = wallets
   
           if (process.env.NODE_ENV === 'production') {            
             await stats.updateUser(ethData.address, window.top.location.host, registrationData)
