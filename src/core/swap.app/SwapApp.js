@@ -34,7 +34,7 @@ class SwapApp {
     this._addSwaps(options.swaps || [])
     this._addFlows(options.flows || [])
 
-    if (options.#whitelistBtc) this.#whitelistBtc = options.whitelistBtc
+    if (options.whitelistBtc) this.#whitelistBtc = options.whitelistBtc
   }
 
   static init(options) {
