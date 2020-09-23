@@ -5,7 +5,7 @@ import _debug from 'debug'
 import bodyParser from 'body-parser'
 import historyApiFallback from 'connect-history-api-fallback'
 import webpackMiddleware from 'webpack-dev-middleware'
-import webpackConfig from '../../webpack'
+import webpackConfig from '../../../../webpack'
 
 
 const port      = process.env.PORT || 9001

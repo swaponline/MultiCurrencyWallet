@@ -6,7 +6,7 @@
   "private": true,
   "homepage": "https://swaponline.io",
   "license": "MIT",
-  "main": "./bin/server",
+  "main": "./src/front/bin/server",
   "lint-staged": {
     "*.js": [
       "eslint --fix --cache ./shared --ext js",
