@@ -4,7 +4,7 @@ const mainnet = require('./mainnet')
 const getConfig = require('./getConfig')
 
 const swap = require('swap.core')
-const { EthTokenSwap } = swap.swaps
+const { EthTokenSwap } = require('swap.swaps')
 const tokenSwap = require('./tokenSwap')
 
 module.exports = {

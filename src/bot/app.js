@@ -1,8 +1,8 @@
-require('babel-core/register')
-require('module-alias/register')
+//require('babel-core/register')
+//require('module-alias/register')
+console.log('test ecma')
+import express from 'express'
 
-
-const express = require('express')
 const server = express()
 const bodyparser = require('body-parser')
 const path = require('path')
