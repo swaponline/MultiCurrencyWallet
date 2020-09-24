@@ -5,20 +5,19 @@ import fs from 'fs'
 
 
 const externalConfig = () => {
-  let from = `externalConfigs/${config.entry}-default.js`
-
+  let from = `src/front/externalConfigs/${config.entry}-default.js`
   const targetHost = getHostName(config.publicPath)
 
   if (targetHost) {
-    if (fs.existsSync(`externalConfigs/${targetHost}.js`)) {
-      from = `externalConfigs/${targetHost}.js`
+    if (fs.existsSync(`src/front/externalConfigs/${targetHost}.js`)) {
+      from = `src/front/externalConfigs/${targetHost}.js`
     }
-    if (fs.existsSync(`externalConfigs/${config.entry}-${targetHost}.js`)) {
-      from = `externalConfigs/${config.entry}-${targetHost}.js`
+    if (fs.existsSync(`src/front/externalConfigs/${config.entry}-${targetHost}.js`)) {
+      from = `src/front/externalConfigs/${config.entry}-${targetHost}.js`
     }
   }
 
-  console.log('Used external config', from)
+  console.log(`Config: used external (${from})`)
 
   return new CopyWebpackPlugin([
     {
