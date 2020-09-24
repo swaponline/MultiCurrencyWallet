@@ -4,10 +4,10 @@ import styles from './CustomDestAddress.scss'
 import cssModules from 'react-css-modules'
 import config from 'helpers/externalConfig'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
-import Input from "components/forms/Input/Input";
-import DropDown from "components/ui/DropDown/DropDown"
-import metamask from "helpers/metamask"
-import { Button } from "components/controls"
+import Input from 'components/forms/Input/Input';
+import DropDown from 'components/ui/DropDown/DropDown'
+import metamask from 'helpers/metamask'
+import { Button } from 'components/controls'
 import ethToken from 'helpers/ethToken'
 import Option from './Option/Option'
 

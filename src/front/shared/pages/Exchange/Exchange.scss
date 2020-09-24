@@ -20,19 +20,6 @@
   }
 }
 
-.minerFeeInfo {
-  text-align: center;
-  font-size: 10pt;
-  padding-bottom: 10px;
-  font-weight: bold;
-  color: #d60505;
-  font-family: 'Roboto Mono', monospace;
-  A {
-    font-family: arial black;
-    font-size: 9pt;
-  }
-}
-
 @keyframes errorAppend {
   0% {
     max-height: 0;
@@ -238,7 +225,25 @@
   margin-bottom: -10px;
 }
 
-.rowBtn {
+.fees {
+  opacity: 0.7;
+  margin: 1.5em 0;
+  text-align: left;
+  font-size: 0.7em;
+  font-weight: bold;
+  font-family: 'Roboto Mono', monospace;
+  .serviceFee {
+    margin-bottom: 0.15em;
+  }
+  .minerFee {
+    a {
+      font-size: 1em;
+      font-family: 'Roboto Mono', monospace;
+    }
+  }
+}
+
+.buttons {
   margin-top: 1em;
   display: flex;
   justify-content: space-around;

@@ -8119,7 +8119,14 @@
   },
   {
     "id": "Exchange_MinerFees",
-    "message": "U wordt extra in rekening gebracht tot {ethFee} ETH en {btcFee} BTC als mijnvergoeding",
+    "message": "Mijnvergoeding",
+    "files": [
+      "shared/pages/Exchange/Exchange.js"
+    ]
+  },
+  {
+    "id": "Exchange_ServiceFee",
+    "message": "Servicekosten",
     "files": [
       "shared/pages/Exchange/Exchange.js"
     ]

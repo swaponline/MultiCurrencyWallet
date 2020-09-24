@@ -8103,7 +8103,14 @@
   },
   {
     "id": "Exchange_MinerFees",
-    "message": "You'll be charged additionally up to {ethFee} ETH and {btcFee} BTC as mining fees",
+    "message": "Miner fee",
+    "files": [
+      "shared/pages/Exchange/Exchange.js"
+    ]
+  },
+  {
+    "id": "Exchange_ServiceFee",
+    "message": "Service fee",
     "files": [
       "shared/pages/Exchange/Exchange.js"
     ]
