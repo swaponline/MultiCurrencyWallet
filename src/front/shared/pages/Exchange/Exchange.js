@@ -309,7 +309,7 @@ export default class Exchange extends Component {
     })
     helpers.eth.estimateFeeValue({ method: 'swap' }).then((fee) => {
       this.setState({
-        ethFee: BigNumber(fee).multipliedBy(1.5).toNumber(),
+        ethFee: BigNumber(fee).multipliedBy(1).toNumber(),
       })
     })
   }
@@ -485,7 +485,7 @@ export default class Exchange extends Component {
 
     const ethFee = BigNumber(
       await helpers.eth.estimateFeeValue({ method: 'swap' })
-    ).multipliedBy(1.5).toNumber()
+    ).multipliedBy(1).toNumber()
 
     const btcFee = BigNumber(
       await helpers.btc.estimateFeeValue({ method: 'swap' })
