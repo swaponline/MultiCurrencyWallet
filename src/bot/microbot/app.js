@@ -1,15 +1,19 @@
 import _debug from 'debug'
-import { setup, helpers, constants } from 'simple.swap.core'
+import { setup, helpers, constants } from '../../core/simple/src'
 import { handleRequest, handleOrder, handleError, fillOrderbook, startSaved } from './actions'
 import TOKENS from '../config/constants/TOKENS'
 import lineInput from './lineInput'
 
-import { erc20 } from 'swap.app/util'
+import { erc20 } from '../../core/swap.app/util'
 
-
+console.log('constants', constants)
 const debug = _debug('swap.bot')
 const network = process.env.NETWORK || 'testnet'
-const { room: { ready } } = helpers
+const {
+  room: {
+    ready,
+  },
+} = helpers
 
 //register unkronw tokens in core
 console.log('Register unkrown tokens', erc20 )

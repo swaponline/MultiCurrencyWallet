@@ -4,7 +4,7 @@ _debug('.:app')
 
 console.log( __dirname + '/../core/simple')
 moduleAlias.addAliases({
-  'simple.swap.core'  : __dirname + '/../core/simple',
+  'simple.swap.core'  : __dirname + '/../core/simple/src',
   'swap.core'         : __dirname + '/../core/',
   'swap.app'          : __dirname + '/../core/swap.app',
   'swap.auth'         : __dirname + '/../core/swap.auth',
@@ -13,6 +13,7 @@ moduleAlias.addAliases({
   'swap.room'         : __dirname + '/../core/swap.room',
   'swap.swap'         : __dirname + '/../core/swap.swap',
   'swap.swaps'        : __dirname + '/../core/swap.swaps',
+  //'helpers'           : __dirname + '/../core/simple/src/helpers',
 })
 
 exports = module.exports = require('./app')
