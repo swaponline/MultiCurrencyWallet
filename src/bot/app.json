@@ -1,0 +1,7 @@
+{
+  "name": "Swap Trading Bot",
+  "description": "A swap.core trading bot",
+  "repository": "https://github.com/swaponline/Marketmaker",
+  "logo": "https://node-js-sample.herokuapp.com/node.png",
+  "keywords": ["node", "atomic swap", "swap.core"]
+}

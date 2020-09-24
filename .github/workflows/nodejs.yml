@@ -2,7 +2,7 @@
 
 name: Node CI
 
-on: [pull_request]
+on: [push,pull_request]
 
 jobs:
   build:
@@ -11,26 +11,15 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x]
+        node-version: [11.x]
 
     steps:
     - uses: actions/checkout@v1
-      
-    - uses: actions/cache@v2
-      with:
-        path: | 
-          **/node_modules
-          ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-  
       
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Checkout submodules
-      uses: textbook/git-checkout-submodule-action@2.0.0
     - name: npm install  
       uses: bahmutov/npm-install@v1    
       with:

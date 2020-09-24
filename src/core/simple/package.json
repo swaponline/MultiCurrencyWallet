@@ -1,0 +1,60 @@
+{
+  "name": "simple.swap.core",
+  "version": "0.3.144",
+  "description": "A wrapper around swap.core library",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "babel -w src --out-dir lib",
+    "build": "babel src --out-dir lib",
+    "preversion": "npm run build",
+    "postversion": "npm publish",
+    "test": "jest tests/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/swaponline/swap.core.git"
+  },
+  "author": "Aleksey Bykhun",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/swaponline/swap.core/issues"
+  },
+  "homepage": "https://github.com/swaponline/swap.core#readme",
+  "dependencies": {
+    "app-module-path": "^2.2.0",
+    "babel-core": "^6.26.3",
+    "bignumber.js": "^7.2.1",
+    "bitcoinjs-lib": "^5.1.6",
+    "debug": "^4.1.0",
+    "dotenv": "^6.2.0",
+    "ipfs": "^0.34.4",
+    "ipfs-pubsub-room": "^1.4.1",
+    "node-localstorage": "^1.3.1",
+    "node-sessionstorage": "^1.0.0",
+    "request-promise-native": "^1.0.5",
+    "web3": "^1.2.4"
+  },
+  "_moduleAliases": {
+    "@root": ".",
+    "swap.core": "../",
+    "swap.auth": "../swap.auth",
+    "swap.orders": "../swap.orders",
+    "swap.room": "../swap.room",
+    "swap.app": "../swap.app",
+    "swap.flows": "../swap.flows",
+    "swap.swap": "../swap.swap",
+    "swap.swaps": "../swap.swaps"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-add-module-exports": "^1.0.0",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-es2015-destructuring": "^6.23.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "module-alias": "^2.2.2",
+    "jest": "^23.6.0"
+  }
+}

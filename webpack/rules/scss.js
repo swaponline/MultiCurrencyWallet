@@ -46,8 +46,8 @@ export default [
           data: _sccsConfig,
           includePaths: [
             config.paths.base('node_modules'),
-            config.paths.base('shared'),
-            config.paths.base('client'),
+            config.paths.front('shared'),
+            config.paths.front('client'),
           ],
         },
       },
