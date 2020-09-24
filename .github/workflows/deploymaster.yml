@@ -27,7 +27,7 @@ jobs:
         npm i
         git config --global user.email "bot@swaponline.io"
         git config --global user.name "buildbot"
-        sh deploy $super_secret
+        sh scripts/deploy $super_secret
       env:
         CI: true
         super_secret: ${{ secrets.buildbot }}
