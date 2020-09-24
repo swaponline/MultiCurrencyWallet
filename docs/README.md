@@ -49,13 +49,14 @@ Checkout this case: <a href="https://twitter.com/Atomic_Wallet" target="_blank">
 ### Installation / how to start
 
 1) Fork this repository (Click "Fork" on top of this page)
-2) Clone repository with submodules (such as swap.core)
+2) Clone repository
 ```
-git clone --recurse-submodules https://github.com/swaponline/MultiCurrencyWallet.git
+git clone https://github.com/swaponline/MultiCurrencyWallet.git
 ```
-3) Use Node 10, not 12!
+3) Use Node 11
 ```
-nvm use 10.18.1 or 11.15.0
+nvm alias default 11.15.0
+nvm use 11.15.0
 ```
 4) Install modules
 ```
@@ -64,24 +65,18 @@ npm i
 ```
 (Windows? Use [windows-build-tools](https://www.npmjs.com/package/windows-build-tools).)
 
-5) Do `git submodule update`
-```
-git submodule init
-git submodule sync
-git submodule update --remote
-```
-6) Start dev mode
+5) Start dev mode
 ```
 npm run start
 ```
-The dev server is running!
+The dev server is running! (http://localhost:9001)
 
 To access from other devices on the local network, specify your IP address:
 ```
 HOST=X.X.X.X npm run start
 ```
 
-7) Build for prod
+6) Build for prod
 ```
 npm run build
 ```
@@ -185,15 +180,6 @@ Set your own links in `MultiCurrencyWallet/shared/helpers/links.js`
 in `index.html` edit `isUserRegisteredAndLoggedIn=false` to `isUserRegisteredAndLoggedIn=true`
 
 
-
-## Update swap.core submodules
-If you have changed `swap.core` submodule don't forget to pull new "link"
-```
-cd swap.core
-git checkout master
-git fetch
-git pull
-```
 
 ## How to update your version (fork) to latest version
 0. Make backup and `git push` all your changes to your repository
