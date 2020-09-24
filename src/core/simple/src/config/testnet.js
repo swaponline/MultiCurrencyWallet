@@ -16,7 +16,6 @@ module.exports = {
   storageDir: `${ROOT_DIR}/.storage/__testnet__${id}__`,
   swapRoom: {
     roomName: 'testnet.swap.online',
-    repo: `${ROOT_DIR}/.ipfs/__testnet__${id}__/${offset}`,
   },
   ethSwap: () => ({
     gasLimit: 2e5,
