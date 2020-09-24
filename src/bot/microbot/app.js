@@ -6,7 +6,6 @@ import lineInput from './lineInput'
 
 import { erc20 } from '../../core/swap.app/util'
 
-console.log('constants', constants)
 const debug = _debug('swap.bot')
 const network = process.env.NETWORK || 'testnet'
 const {

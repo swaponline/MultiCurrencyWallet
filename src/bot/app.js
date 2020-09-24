@@ -1,6 +1,4 @@
-//require('babel-core/register')
-//require('module-alias/register')
-console.log('test ecma')
+
 import express from 'express'
 
 const server = express()
