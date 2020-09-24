@@ -38,6 +38,8 @@
     & > div {
       padding-left: 0;
       height: max-content !important;
+      border: 1px solid rgba(0,0,0,0.2);
+      border-radius: 2px;
     }
   }
 
@@ -206,6 +208,7 @@
           display: block;
           font-size: 10pt;
           font-weight: bold;
+          padding-left: 1.2em;
         }
       }
     }

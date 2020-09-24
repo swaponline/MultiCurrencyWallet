@@ -8,7 +8,6 @@
   &.active {
     width: 100%;
     border: 1px solid #000;
-    top: -15px;
     z-index: 11111111;
     background: #fff;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
@@ -179,7 +178,6 @@
 }
 
 .shortTitle {
-  color: rgba(0, 0, 0, 0.4);
   font-size: 18px;
   font-weight: 500;
   text-transform: uppercase;
@@ -209,7 +207,6 @@
   min-width: 135px;
   background: white;
   position: relative;
-  left: -1px;
   z-index: 1;
   cursor: pointer;
   text-align: right;
@@ -257,7 +254,6 @@
 .dontscroll {
   max-height: auto;
   overflow-y: hidden;
-  top: 10px;
 }
 
 .option {
@@ -300,7 +296,7 @@
   }
 
   .shortTitle {
-    font-size: 0.7em;
+    font-size: 0.85em;
     margin-top: 1px;
   }
 
@@ -311,15 +307,8 @@
   .dontscroll {
     max-height: auto;
     overflow-y: hidden;
-    top: 10px;
     left: calc(50% - 50vw + 1em);
     width: calc(100vw - 40px);
   }
 
-}
-
-@media screen and (max-width: 320px) {
-  .dontscroll {
-    top: -60px;
-  }
 }
