@@ -8175,7 +8175,14 @@
   },
   {
     "id": "Exchange_MinerFees",
-    "message": "Также будет потрачено {ethFee} ETH, {btcFee} BTC на коммисию майнерам",
+    "message": "Комиссия майнера",
+    "files": [
+      "shared/pages/Exchange/Exchange.js"
+    ]
+  },
+  {
+    "id": "Exchange_ServiceFee",
+    "message": "Комиссия сервиса",
     "files": [
       "shared/pages/Exchange/Exchange.js"
     ]

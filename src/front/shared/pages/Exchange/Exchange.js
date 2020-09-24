@@ -1498,35 +1498,6 @@ export default class Exchange extends Component {
                 </div>
             )}
           </div>
-          {btcFee && ethFee && (
-            <div styleName="minerFeeInfo">
-              <FormattedMessage
-                id="Exchange_MinerFees"
-                defaultMessage="You will pay extra {ethFee} ETH, {btcFee} BTC as mining fee"
-                values={{
-                  ethFee,
-                  btcFee,
-                }}
-              />
-              &nbsp;
-              <a href="https://wiki.swaponline.io/faq/why-i-pay-ming-fees-of-btc-and-eth-both-why-not-seller/" target="_blank">(?)</a>
-            </div>
-          )}  
-          {/*<div className="data-tut-status">
-            {(isSearching || (isNonOffers && maxAmount === 0)) && (
-              <span styleName="IsSearching">
-                <FormattedMessage
-                  id="PartialPriceSearch"
-                  defaultMessage="Searching orders..."
-                />
-                <div styleName="loaderHolder">
-                  <div styleName="additionalLoaderHolder">
-                    <InlineLoader />
-                  </div>
-                </div>
-              </span>
-            )}
-          </div>*/}
           {!oneCryptoCost.isFinite() && !isNonOffers && (
             <FormattedMessage
               id="PartialPriceCalc"
@@ -1690,7 +1661,38 @@ export default class Exchange extends Component {
               openScan={this.openScan}
             />
           )}
-          <div styleName="rowBtn">
+
+          <div styleName="fees">
+            <div styleName="serviceFee">
+              <span>
+                <FormattedMessage
+                  id="Exchange_ServiceFee"
+                  defaultMessage="Service fee"
+                />:
+              </span>
+              &nbsp;
+              <span>0</span>
+            </div>
+            <div styleName="minerFee">
+              <span>
+                <FormattedMessage
+                  id="Exchange_MinerFees"
+                  defaultMessage="Miner fee"
+                />:
+              </span>
+              &nbsp;
+              {!(btcFee && ethFee) ?
+                <span><InlineLoader /></span>
+                :
+                <span>
+                  {ethFee} ETH + {btcFee} BTC&nbsp;
+                  <a href="https://wiki.swaponline.io/faq/why-i-pay-ming-fees-of-btc-and-eth-both-why-not-seller/" target="_blank">(?)</a>
+                </span>
+              }
+            </div>
+          </div>
+
+          <div styleName="buttons">
             <Button
               className="data-tut-Exchange"
               styleName="button"
