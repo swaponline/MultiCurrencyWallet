@@ -66,7 +66,7 @@
   },
   "husky": {
     "hooks": {
-      "post-commit": "npm core:test"
+      "post-commit": "npm run core:test"
     }
   },
   "devDependencies": {
