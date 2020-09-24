@@ -14,6 +14,9 @@
     ]
   },
   "scripts": {
+    "common:test": "node ./src/common/tests/tests.js",
+    "common:example:send": "node ./src/common/examples/send.js",
+    "common:example:unspents": "node ./src/common/examples/unspents.js",
     "core:test": "DEBUG=swap.core* jest src/core/tests/*.test.js",
     "core:dev": "babel -w ./src/core --out-dir ./src/core/lib",
     "core:clean": "rimraf ./src/core/lib",
@@ -68,7 +71,7 @@
   },
   "husky": {
     "hooks": {
-      "post-commit": "npm run core:test"
+      "post-commit": "npm run common:test && npm run core:test"
     }
   },
   "devDependencies": {
@@ -204,6 +207,7 @@
     "moment-with-locales-es6": "^1.0.1",
     "multicodec": "^0.2.7",
     "multihashes": "0.4.15",
+    "node-fetch": "^2.6.1",
     "node-gyp": "^3.8.0",
     "rc-progress": "^2.5.2",
     "react": "^16.10.2",
