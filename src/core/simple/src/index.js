@@ -2,7 +2,10 @@ require('dotenv').config()
 require('module-alias/register')
 
 
-const { constants } = require('swap.core')
+import { default as swapCore } from '../../'
+
+const { constants } = swapCore
+
 
 const setup = require('./setup')
 const helpers = require('./helpers')
