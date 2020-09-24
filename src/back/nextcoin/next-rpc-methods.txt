@@ -1,0 +1,202 @@
+== Addressindex ==
+getaddressbalance
+getaddressdeltas
+getaddressmempool
+getaddresstxids
+getaddressutxos
+
+== Blockchain ==
+getbestblockhash
+getblock "blockhash" ( verbose )
+getblockchaininfo
+getblockcount
+getblockhash height
+getblockhashes timestamp
+getblockheader "hash" ( verbose )
+getblockheaders "hash" ( count verbose )
+getchaintips ( count branchlen )
+getchaintxstats ( nblocks blockhash )
+getdifficulty
+getmempoolancestors txid (verbose)
+getmempooldescendants txid (verbose)
+getmempoolentry txid
+getmempoolinfo
+getrawmempool ( verbose )
+getspentinfo
+gettxout "txid" n ( include_mempool )
+gettxoutproof ["txid",...] ( blockhash )
+gettxoutsetinfo
+preciousblock "blockhash"
+pruneblockchain
+verifychain ( checklevel nblocks )
+verifytxoutproof "proof"
+
+== Control ==
+debug ( 0|1|addrman|alert|bench|coindb|db|lock|rand|rpc|selectcoins|mempool|mempoolrej|net|proxy|prune|http|libevent|tor|zmq|nextcoin|privatesend|instantsend|masternode|spork|keepass|mnpayments|gobject )
+getinfo
+getmemoryinfo
+help ( "command" )
+stop
+
+== Generating ==
+generate nblocks ( maxtries )
+generatetoaddress nblocks address (maxtries)
+
+== Mining ==
+createauxblock <address>
+getauxblock (hash auxpow)
+getblocktemplate ( TemplateRequest )
+getmininginfo
+getnetworkhashps ( nblocks height )
+prioritisetransaction <txid> <priority delta> <fee delta>
+submitauxblock <hash> <auxpow>
+submitblock "hexdata" ( "jsonparametersobject" )
+
+== Network ==
+addnode "node" "add|remove|onetry"
+clearbanned
+disconnectnode "address" 
+getaddednodeinfo ( "node" )
+getconnectioncount
+getnettotals
+getnetworkinfo
+getpeerinfo
+listbanned
+ping
+setban "subnet" "add|remove" (bantime) (absolute)
+setnetworkactive true|false
+
+== Nextcoin ==
+getgovernanceinfo
+getpoolinfo
+getsuperblockbudget index
+gobject "command"...
+masternode "command"...
+masternodebroadcast "command"...
+masternodelist ( "mode" "filter" )
+mnsync [status|next|reset]
+privatesend "command"
+sentinelping version
+spork "command"
+voteraw <masternode-tx-hash> <masternode-tx-index> <governance-hash> <vote-signal> [yes|no|abstain] <time> <vote-sig>
+
+== Rawtransactions ==
+createrawtransaction [{"txid":"id","vout":n},...] {"address":amount,"data":"hex",...} ( locktime )
+decoderawtransaction "hexstring"
+decodescript "hexstring"
+fundrawtransaction "hexstring" ( options )
+getrawtransaction "txid" ( verbose )
+sendrawtransaction "hexstring" ( allowhighfees instantsend bypasslimits)
+signrawtransaction "hexstring" ( [{"txid":"id","vout":n,"scriptPubKey":"hex","redeemScript":"hex"},...] ["privatekey1",...] sighashtype )
+
+== Util ==
+createmultisig nrequired ["key",...]
+estimatefee nblocks
+estimatepriority nblocks
+estimatesmartfee nblocks
+estimatesmartpriority nblocks
+signmessagewithprivkey "privkey" "message"
+validateaddress "address"
+verifymessage "address" "signature" "message"
+
+== Wallet ==
+abandontransaction "txid"
+addmultisigaddress nrequired ["key",...] ( "account" )
+aliasaddscript redeemscript
+aliasbalance "alias"
+aliasbalancemulti { "aliases" : ["aliasname1","aliasname2",...] } instantsend
+aliasclearwhitelist [owner alias] [witness]
+aliasinfo <aliasname>
+aliasnew [aliasname] [public value] [accept_transfers_flags=3] [expire_timestamp] [address] [encryption_privatekey] [encryption_publickey] [witness]
+aliasnewestimatedfee [aliasname] [public value] [accept_transfers_flags=3] [expire_timestamp] [address] [encryption_privatekey] [encryption_publickey] [witness]
+aliaspay aliasfrom {"address":amount,...} (instantsend subtractfeefromamount)
+aliasupdate [aliasname] [public value] [address] [accept_transfers_flags=3] [expire_timestamp] [encryption_privatekey] [encryption_publickey] [witness]
+aliasupdateestimatedfee [aliasname] [public value] [address] [accept_transfers_flags=3] [expire_timestamp] [encryption_privatekey] [encryption_publickey] [witness]
+aliasupdatewhitelist [owner alias] [{"alias":"aliasname","discount_percentage":n},...] [witness]
+aliaswhitelist <alias>
+assetallocationcollectinterest [asset] [owner] [witness]
+assetallocationinfo <asset> <owner> <getinputs>
+assetallocationsend [asset] [owner] ([{"ownerto":"aliasname or address","amount":amount},...]  or [{"ownerto":"aliasname or address","ranges":[{"start":index,"end":index},...]},...]) [memo] [witness]
+assetallocationsenderstatus <asset> <owner> <txid>
+assetinfo <asset> <getinputs>
+assetnew [symbol] [owner] [public value] [category=assets] [precision=8] [use_inputranges] [supply] [max_supply] [interest_rate] [can_adjust_interest_rate] [witness]
+assetsend [asset] [tmp] ([{"ownerto":"aliasname or address","amount":amount},...]  or [{"ownerto":"aliasname or address","ranges":[{"start":index,"end":index},...]},...]) [memo] [witness]
+assettransfer [asset] [ownerto] [witness]
+assetupdate [asset] [public value] [category=assets] [supply] [interest_rate] [witness]
+backupwallet "destination"
+certinfo <guid>
+certnew [alias] [title] [public value] [category=certificates] [witness]
+certtransfer [guid] [alias] [public value] [accessflags=2] [witness]
+certupdate [guid] [title] [public value] [category=certificates] [witness]
+dumphdinfo
+dumpprivkey "address"
+dumpwallet "filename"
+encryptwallet "passphrase"
+escrowacknowledge [escrow guid] [witness]
+escrowbid [alias] [escrow] [bid_in_payment_option] [bid_in_offer_currency] [witness]
+escrowcompleterefund [escrow guid] [rawtx] [witness]
+escrowcompleterelease [escrow guid] [rawtx] [witness]
+escrowcreaterawtransaction [type] [escrow guid] [{"txid":"id","vout":n, "satoshis":n},...] [user role]
+escrowfeedback [escrow guid] [userfrom] [feedback] [rating] [userto] [witness]
+escrowinfo <guid>
+escrownew [getamountandaddress] [alias] [arbiter alias] [offer] [quantity] [buynow] [price_per_unit_in_payment_option] [shipping_amount] [network_fee] [arbiter_fee] [witness_fee] [extTx] [payment_option] [bid_in_payment_option] [bid_in_offer_currency] [witness]
+escrowrefund [escrow guid] [user role] [rawtx] [witness]
+escrowrelease [escrow guid] [user role] [rawtx] [witness]
+getaccount "address"
+getaccountaddress "account"
+getaddressesbyaccount "account"
+getbalance ( "account" minconf addlocked include_watchonly )
+getnewaddress ( "account" )
+getrawchangeaddress
+getreceivedbyaccount "account" ( minconf addlocked )
+getreceivedbyaddress "address" ( minconf addlocked )
+gettransaction "txid" ( include_watchonly )
+getunconfirmedbalance
+getwalletinfo
+importaddress "address" ( "label" rescan p2sh )
+importelectrumwallet "filename" index
+importmulti "requests" "options"
+importprivkey "nextcoinprivkey" ( "label" ) ( rescan )
+importprunedfunds
+importpubkey "pubkey" ( "label" rescan )
+importwallet "filename"
+instantsendtoaddress "address" amount ( "comment" "comment-to" subtractfeefromamount )
+keepass <genkey|init|setpassphrase>
+keypoolrefill ( newsize )
+listaccounts ( minconf addlocked include_watchonly)
+listaddressbalances ( minamount )
+listaddressgroupings
+listaliases [count] [from] [{options}]]
+listassetallocations [count] [from] [{options}]
+listassetallocationtransactions [count] [from] [{options}]
+listassets [count] [from] [{options}]
+listcerts [count] [from] [{options}]
+listescrows [count] [from] [{options}]
+listlockunspent
+listoffers [count] [from] [{options}]
+listreceivedbyaccount ( minconf addlocked include_empty include_watchonly)
+listreceivedbyaddress ( minconf addlocked include_empty include_watchonly)
+listsinceblock ( "blockhash" target_confirmations include_watchonly)
+listtransactions ( "account" count skip include_watchonly)
+listunspent ( minconf maxconf  ["addresses",...] [include_unsafe] )
+lockunspent unlock ([{"txid":"txid","vout":n},...])
+move "fromaccount" "toaccount" amount ( minconf "comment" )
+nextcoindecoderawtransaction <hexstring>
+nextcoinlistreceivedbyaddress
+nextcoinsendrawtransaction "hexstring" ( allowhighfees instantsend )
+nextcointxfund
+offerinfo <guid>
+offerlink [alias] [guid] [commission] [description] [witness]
+offernew [alias] [category] [title] [quantity] [price] [description] [currency] [cert. guid] [payment options=NEXT] [private=false] [units=1] [offertype=BUYNOW] [auction_expires=0] [auction_reserve=0] [auction_require_witness=false] [auction_deposit=0] [witness]
+offerupdate [alias] [guid] [category] [title] [quantity] [price] [description] [currency] [private=false] [cert. guid] [commission] [paymentOptions] [offerType=BUYNOW] [auction_expires] [auction_reserve] [auction_require_witness] [auction_deposit] [witness]
+prunenextcoinservices
+removeprunedfunds "txid"
+sendfrom "fromaccount" "toaddress" amount ( minconf addlocked "comment" "comment_to" )
+sendmany "fromaccount" {"address":amount,...} ( minconf addlocked "comment" ["address",...] subtractfeefromamount use_is use_ps )
+sendtoaddress "address" amount ( "comment" "comment_to" subtractfeefromamount use_is use_ps )
+setaccount "address" "account"
+settxfee amount
+signmessage "address" "message"
+tpstestadd [starttime] [{"tx":"hex"},...]
+tpstestinfo
+tpstestsetenabled [enabled]
