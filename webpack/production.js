@@ -50,7 +50,7 @@ export default (webpackConfig) => {
     }),
     new CopyWebpackPlugin([
       {
-        from: 'client/firebase-messaging-sw.js',
+        from: 'src/front/client/firebase-messaging-sw.js',
         to: '',
         toType: 'file',
       },
