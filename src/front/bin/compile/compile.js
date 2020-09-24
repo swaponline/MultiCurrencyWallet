@@ -1,7 +1,7 @@
 import webpack from 'webpack'
 import chalk from 'chalk'
 import _debug from 'debug'
-import webpackCfg from '../../webpack'
+import webpackCfg from '../../../../webpack'
 
 
 const debug = _debug('app:bin:compile')

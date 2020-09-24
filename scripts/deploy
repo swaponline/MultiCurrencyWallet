@@ -1,7 +1,5 @@
 #!/bin/sh
 
-git pull
-
 # build
 
 npm run build:mainnet https://swaponline.github.io/

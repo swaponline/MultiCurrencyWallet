@@ -13,7 +13,7 @@ let cfgDir = process.env.CONFIG_DIR
 
 // figure out where the config files are at
 if (!cfgDir) {
-  cfgDir = `${path.resolve(process.cwd(), 'config/')}/`
+  cfgDir = `${path.resolve(process.cwd(), 'src/front/config/')}/`
 }
 else {
   cfgDir = `${path.resolve(cfgDir)}/`
