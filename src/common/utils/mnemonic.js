@@ -95,7 +95,7 @@ const getBchWallet = (network, mnemonic, walletNumber = 0, path) => { /* not imp
 
 const getSumWallet = (network, mnemonic, walletNumber = 0, path) => { /* not implements */ }
 
-export {
+export default {
   convertMnemonicToValid,
   getBtcWallet,
   getEthWallet,

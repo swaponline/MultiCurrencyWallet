@@ -11,7 +11,7 @@ import * as hdkey from 'ethereumjs-wallet/hdkey'
 import * as bip39 from 'bip39'
 import typeforce from 'swap.app/util/typeforce'
 import { BigNumber } from 'bignumber.js'
-import { mnemonic as mnemonicUtils } from '../../../../common/utils/mnemonic'
+import { default as mnemonicUtils } from '../../../../common/utils/mnemonic'
 
 import metamask from 'helpers/metamask'
 
