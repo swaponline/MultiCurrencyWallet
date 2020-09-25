@@ -13,6 +13,8 @@ const util = require('util')
 
 const app = express()
 
+const isDebugCache = true
+
 const timestamp = () => { return Math.round(+new Date()/1000); }
 
 const getIP = (req) => {
@@ -22,7 +24,7 @@ const getIP = (req) => {
 const getDate = () => { return new Date().toISOString() }
 const calcSum = (accumulator, currentValue) => accumulator + currentValue;
 
-const memodyDB = []
+
 
 const crossOriginAllow = (res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -42,8 +44,16 @@ app.use(function (req, res, next) {
   next()
 })
 
+const cache_txs = {}
 app.get('/btc/testnet/txs/', async (req, res) => {
   const { address } = req.query
+  if (cache_txs[address]
+    && cache_txs[address].timelife > timestamp()
+  ) {
+    if (isDebugCache) console.log(`use cache /btc/textnet/txs/${address}`)
+    res.status(200).json(cache_txs[address].answer)
+    return
+  }
   if (address) {
     const url = `https://api.blockcypher.com/v1/btc/test3/addrs/${address}/full`
     request
@@ -114,6 +124,10 @@ app.get('/btc/testnet/txs/', async (req, res) => {
               }
             }),
           }
+          cache_txs[address] = {
+            timelife: timestamp() + 60, // 5 minutes
+            answer: retJson
+          }
           res.status(200).json(retJson)
         } else {
           res.status(503).json({error: 'empty api answer'})
@@ -128,18 +142,33 @@ app.get('/btc/testnet/txs/', async (req, res) => {
   }
 })
 
+const cache_rawtx = {}
 app.use('/btc/testnet/rawtx', async (req, res) => {
   const urlParts = req.url.split('/')
   urlParts.shift()
 
   if (urlParts.length == 1) {
     const txId = urlParts[0]
+    if (cache_rawtx[txId]
+      && cache_rawtx[txId].timelife > timestamp()
+    ) {
+      if (isDebugCache) console.log(`use cache /btc/testnet/rawtx/${txId}`)
+      res.status(200).json({
+        rawtx: cache_rawtx[txId].answer
+      })
+      return
+    }
     const url = `https://api.blockcypher.com/v1/btc/test3/txs/${txId}?includeHex=true`
     request
       .get(url)
       .then((req) => {
         const answer = JSON.parse(req.text)
         if (answer) {
+          cache_rawtx[txId] = {
+            timelife: timestamp() + 60*5, // 5 minutes
+            answer: answer.hex
+          }
+
           res.status(200).json({
             rawtx: answer.hex,
           })
@@ -154,10 +183,19 @@ app.use('/btc/testnet/rawtx', async (req, res) => {
 
   }
 })
+
+const cache_txInfo = {}
 app.get('/btc/testnet/tx/:txId', async (req, res) => {
   const { txId } = req.params
   if (txId) {
 
+    if (cache_txInfo[txId]
+      && cache_txInfo[txId].timelife > timestamp()
+    ) {
+      if (isDebugCache) console.log(`use cache /btc/testnet/tx/${txId}`)
+      res.status(cache_txInfo[txId].answer)
+      return
+    }
     const url = `https://api.blockcypher.com/v1/btc/test3/txs/${txId}`
     request
       .get(url)
@@ -220,6 +258,10 @@ app.get('/btc/testnet/tx/:txId', async (req, res) => {
               }
             }),
           }
+          cache_txInfo[txId] = {
+            timelife: timestamp() + 60*5, // 5 minutes
+            answer: retJson
+          }
           res.status(200).json(retJson)
         } else {
           res.status(503).json({error: 'api answer empty'})
@@ -233,6 +275,8 @@ app.get('/btc/testnet/tx/:txId', async (req, res) => {
     res.status(404).json({ error: 'need tx id' })
   }
 })
+
+const cachedBalance = {}
 app.use('/btc/testnet/addr/', async (req,res) => {
   const urlParts = req.url.split('/')
   urlParts.shift()
@@ -246,7 +290,24 @@ app.use('/btc/testnet/addr/', async (req,res) => {
       url = `https://api.bitcore.io/api/BTC/testnet/address/${address}?unspent=true`
     }
     //const url = `https://api.blockcypher.com/v1/btc/test3/addrs/${address}?unspentOnly=true`
-    
+
+    if (isUnspends) {
+      if (cachedBalance[`${address}_unspents`]
+        && cachedBalance[`${address}_unspents`].timelife > timestamp()
+      ) {
+        if (isDebugCache) console.log('unspents from cache', address)
+        res.status(200).json(cachedBalance[`${address}_unspents`].answer)
+        return
+      }
+    } else {
+      if (cachedBalance[address]
+        && cachedBalance[address].timelife > timestamp()
+      ) {
+        if (isDebugCache) console.log('balance from cache', address)
+        res.status(200).json(cachedBalance[address].answer)
+        return
+      }
+    }
     request
       .get(url)
       .then((req) => {
@@ -267,6 +328,10 @@ app.use('/btc/testnet/addr/', async (req,res) => {
                 vout: txInfo.mintIndex,
               }
             })
+            cachedBalance[`${address}_unspents`] = {
+              timelife: timestamp() + 60, // 5 minutes
+              answer: retJson
+            }
             res.status(200).json(retJson)
           } else {
             const retJson = {
@@ -283,6 +348,10 @@ app.use('/btc/testnet/addr/', async (req,res) => {
               unconfirmedBalanceSat: answer.unconfirmed_balance,
               unconfirmedTxApperances: 0,
             }
+            cachedBalance[address] = {
+              timelife: timestamp() + 60, // 5 minutes
+              answer: retJson
+            }
             res.status(200).json(retJson)
           }
         } else {
@@ -296,26 +365,44 @@ app.use('/btc/testnet/addr/', async (req,res) => {
   }
 })
 
+const sendErrorCache = {}
 app.post('/btc/testnet/tx/send', async (req, res) => {
   const { rawtx } = req.body
-  console.log(rawtx)
+  // console.log(rawtx)
+  if (sendErrorCache[rawtx]) {
+    if (isDebugCache) console.log('Push tx - cached error')
+    res.status(200).json({ error: sendErrorCache[rawtx] })
+    return
+  }
   try {
     request
       .post(`https://api.bitcore.io/api/BTC/testnet/tx/send`)
       .send({
         rawTx: rawtx,
       })
-      .end((err, res) => {
-        if (err) {
-
+      .end((err, ress) => {
+        if (ress
+          && ress.body
+          && ress.body.txid
+        ) {
+          res.status(200).json(ress.body)
         }
-        console.log(res)
-        console.log(err)
+        if (err) {
+          if (err.response
+            && err.response.text
+          ) {
+            sendErrorCache[rawtx] = err.response.text
+            console.log(err)
+            res.status(200).json({ error: err.response.text })
+          }
+        }
+        //console.log(res)
+        //console.log(err)
       });
   } catch (e) {
     console.log(e)
   }
-  res.status(200).json({rawtx})
+  //res.status(200).json({rawtx})
 })
 
 app.listen((process.env.PORT) ? process.env.PORT : port)
