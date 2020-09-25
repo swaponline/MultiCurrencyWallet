@@ -9,7 +9,7 @@ const network = process.env.NETWORK
 module.exports = settings => {
 
   const useMnemonic = process.env.SECRET_PHRASE
-  console.log('useMnemonic', useMnemonic)
+
 
   const getConfig = configFactory[network || 'testnet']
 
