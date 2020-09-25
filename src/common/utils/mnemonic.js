@@ -91,10 +91,16 @@ const getNextWallet = (network, mnemonic, walletNumber = 0, path) => {
   }
 }
 
+const getBchWallet = (network, mnemonic, walletNumber = 0, path) => { /* not implements */ }
+
+const getSumWallet = (network, mnemonic, walletNumber = 0, path) => { /* not implements */ }
+
 export {
   convertMnemonicToValid,
   getBtcWallet,
   getEthWallet,
   getGhostWallet,
   getNextWallet,
+  getBchWallet, /* not implements */
+  getSumWallet, /* not implements */
 }
