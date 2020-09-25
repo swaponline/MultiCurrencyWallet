@@ -53,7 +53,7 @@ const getEthWallet = (network, mnemonic, walletNumber = 0, path) => {
 
 const getGhostWallet = (network, mnemonic, walletNumber = 0, path) => {
   const seed = bip39.mnemonicToSeedSync(mnemonic)
-  const root = bip32.fromSeed(seed, ghost.network)
+  const root = bip32.fromSeed(seed, network)
   const node = root.derivePath((path) || `m/44'/0'/0'/0/${walletNumber}`)
 
   const account = bitcoin.payments.p2pkh({
@@ -73,7 +73,7 @@ const getGhostWallet = (network, mnemonic, walletNumber = 0, path) => {
 
 const getNextWallet = (network, mnemonic, walletNumber = 0, path) => {
   const seed = bip39.mnemonicToSeedSync(mnemonic)
-  const root = bip32.fromSeed(seed, next.network)
+  const root = bip32.fromSeed(seed, network)
   const node = root.derivePath((path) || `m/44'/707'/0'/0/${walletNumber}`)
 
   const account = bitcoin.payments.p2pkh({
