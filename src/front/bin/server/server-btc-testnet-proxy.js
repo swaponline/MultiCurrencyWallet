@@ -13,7 +13,7 @@ const util = require('util')
 
 const app = express()
 
-const isDebugCache = true
+const isDebugCache = false
 
 const timestamp = () => { return Math.round(+new Date()/1000); }
 
