@@ -125,7 +125,7 @@ app.get('/btc/testnet/txs/', async (req, res) => {
             }),
           }
           cache_txs[address] = {
-            timelife: timestamp() + 60, // 5 minutes
+            timelife: timestamp() + 60, // 1 minutes
             answer: retJson
           }
           res.status(200).json(retJson)
@@ -165,7 +165,7 @@ app.use('/btc/testnet/rawtx', async (req, res) => {
         const answer = JSON.parse(req.text)
         if (answer) {
           cache_rawtx[txId] = {
-            timelife: timestamp() + 60*5, // 5 minutes
+            timelife: timestamp() + 60, // 1 minute
             answer: answer.hex
           }
 
@@ -259,7 +259,7 @@ app.get('/btc/testnet/tx/:txId', async (req, res) => {
             }),
           }
           cache_txInfo[txId] = {
-            timelife: timestamp() + 60*5, // 5 minutes
+            timelife: timestamp() + 60, // 1 minutes
             answer: retJson
           }
           res.status(200).json(retJson)
@@ -329,7 +329,7 @@ app.use('/btc/testnet/addr/', async (req,res) => {
               }
             })
             cachedBalance[`${address}_unspents`] = {
-              timelife: timestamp() + 60, // 5 minutes
+              timelife: timestamp() + 60, // 1 minutes
               answer: retJson
             }
             res.status(200).json(retJson)
@@ -349,7 +349,7 @@ app.use('/btc/testnet/addr/', async (req,res) => {
               unconfirmedTxApperances: 0,
             }
             cachedBalance[address] = {
-              timelife: timestamp() + 60, // 5 minutes
+              timelife: timestamp() + 60, // 1 minutes
               answer: retJson
             }
             res.status(200).json(retJson)
