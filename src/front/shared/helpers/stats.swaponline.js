@@ -104,12 +104,18 @@ const updUserMut = gql`
  * @param {json} data
  */
 
+let serverBaseUrl = 'http://localhost:5050/graphql'
+if (process.env.NODE_ENV === 'production') {
+  serverBaseUrl = 'https://stat.swaponline.io/graphql'
+}
+
 const addUser = async (createdBy, domain, data) => {
   try {
-    const res = await request('https://stat.swaponline.io/graphql', addUserMut, { createdBy, domain, data })
+    const res = await request(serverBaseUrl, addUserMut, { createdBy, domain, data })
     console.log(res)
+    return res
   } catch (error) {
-    console.error(`Error on add user to stat.swaponline: ${error.name}`, error)
+    console.error('Error on add user to stat.swaponline:', error)
   }
 }
 
@@ -122,13 +128,20 @@ const addUser = async (createdBy, domain, data) => {
 
 const updateUser = async (createdBy, domain, data) => {
   try {
-    const res = await request('https://stat.swaponline.io/graphql', updUserMut, { createdBy, domain, data })
+    const res = await request(serverBaseUrl, updUserMut, { createdBy, domain, data })
     console.log(res)
+    return res
   } catch (error) {
-    if (error.message.split(': {')[0] === `Cannot read property 'data' of undefined`) {
-      await addUser(createdBy, domain, data)
+    if (
+      !error.response.data &&
+      error.response.errors[0].message === 'This user does not exists' &&
+      error.response.errors[0].extensions.code === 'UNAUTHENTICATED'
+    ) {
+      console.warn('Error on update user to stat.swaponline, trying to add user instead...', error)
+      const res = await addUser(createdBy, domain, data)
+      return res
     }
-    console.error(`Error on update user to stat.swaponline: ${error.name}`, error)
+    console.error('Error on update user to stat.swaponline:', error)
   }
 }
 
