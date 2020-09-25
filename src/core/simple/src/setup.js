@@ -8,9 +8,18 @@ const network = process.env.NETWORK
 
 module.exports = settings => {
 
+  const useMnemonic = process.env.SECRET_PHRASE
+
+
   const getConfig = configFactory[network || 'testnet']
 
-  const config = getConfig({ contracts: {}, ...settings })
+  const config = getConfig({
+    contracts: {},
+    ...settings,
+    ...(useMnemonic) ? {
+      mnemonic: useMnemonic,
+    } : {}
+  })
 
   const swapApp = SwapApp.init(config)
 

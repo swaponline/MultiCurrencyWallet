@@ -11,6 +11,7 @@ import * as hdkey from 'ethereumjs-wallet/hdkey'
 import * as bip39 from 'bip39'
 import typeforce from 'swap.app/util/typeforce'
 import { BigNumber } from 'bignumber.js'
+import { mnemonic as mnemonicUtils } from '../../../../common/utils/mnemonic'
 
 import metamask from 'helpers/metamask'
 
@@ -29,7 +30,7 @@ const hasAdminFee = (
 ) ? config.opts.fee.eth : false
 
 const getRandomMnemonicWords = () => bip39.generateMnemonic()
-const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonic)
+const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonicUtils.convertMnemonicToValid(mnemonic))
 
 const sweepToMnemonic = (mnemonic, path) => {
   const wallet = getWalletByWords(mnemonic, path)
@@ -103,17 +104,8 @@ const getPrivateKeyByAddress = (address) => {
 }
 
 const getWalletByWords = (mnemonic, walletNumber = 0, path) => {
-  const seed = bip39.mnemonicToSeedSync(mnemonic)
-  const hdwallet = hdkey.fromMasterSeed(seed)
-  const wallet = hdwallet.derivePath((path) || `m/44'/60'/0'/0/${walletNumber}`).getWallet()
-
-  return {
-    mnemonic,
-    address: `0x${wallet.getAddress().toString('Hex')}`,
-    publicKey: `0x${wallet.pubKey.toString('Hex')}`,
-    privateKey: `0x${wallet.privKey.toString('Hex')}`,
-    wallet,
-  }
+  // in eth address are equals in all networds
+  return mnemonicUtils.getEthWallet('nothing', mnemonic, walletNumber, path)
 }
 
 

@@ -15,6 +15,8 @@ import config from 'app-config'
 
 import { localisePrefix } from 'helpers/locale'
 
+import { mnemonic as mnemonicUtils } from '../../../../common/utils/mnemonic'
+
 
 const hasAdminFee = (config
   && config.opts
@@ -74,37 +76,11 @@ const getSweepAddress = () => {
   return false
 }
 
-const convertMnemonicToValid = (mnemonic) => {
-  return mnemonic
-    .trim()
-    .toLowerCase()
-    .split(` `)
-    .filter((word) => word)
-    .join(` `)
-}
+const convertMnemonicToValid = (mnemonic) => mnemonicUtils.convertMnemonicToValid(mnemonic)
 
 const getWalletByWords = (mnemonic, walletNumber = 0, path) => {
-  mnemonic = convertMnemonicToValid(mnemonic)
-  const seed = bip39.mnemonicToSeedSync(mnemonic)
-  const root = bip32.fromSeed(seed, btc.network)
-  const node = root.derivePath((path) ? path : `m/44'/0'/0'/0/${walletNumber}`)
-
-  const account = bitcoin.payments.p2pkh({
-    pubkey: node.publicKey,
-    network: btc.network,
-  })
-
-  return {
-    mnemonic,
-    address: account.address,
-    publicKey: node.publicKey.toString('Hex'),
-    WIF: node.toWIF(),
-    node,
-    account,
-  }
+  return mnemonicUtils.getBtcWallet(btc.network, mnemonic, walletNumber, path)
 }
-
-window.getWalletByWords = getWalletByWords
 
 const auth = (privateKey) => {
   if (privateKey) {

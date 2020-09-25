@@ -1,3 +1,7 @@
+require('dotenv').config({
+  path: __dirname + '/.env',
+})
+
 import moduleAlias from 'module-alias'
 import _debug from 'debug'
 _debug('.:app')

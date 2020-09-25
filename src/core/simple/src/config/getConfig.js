@@ -24,7 +24,7 @@ const setupLocalStorage = require('./setupLocalStorage')
 const { LocalStorage } = require('node-localstorage')
 const sessionStorage = require('node-sessionstorage')
 
-module.exports = (config) => ({ account, contracts: { ETH, TOKEN }, ...custom }) => {
+module.exports = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, ...custom }) => {
   config = {
     ...common,
     ...config,
@@ -72,7 +72,7 @@ module.exports = (config) => ({ account, contracts: { ETH, TOKEN }, ...custom })
         eth: account,
         btc: null,
         ...config.swapAuth
-      }),
+      }, mnemonic),
       new SwapRoom(config.swapRoom),
       new SwapOrders(),
     ],

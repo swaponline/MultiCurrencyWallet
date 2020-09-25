@@ -1,5 +1,18 @@
 import SwapApp from 'swap.app'
+import { getBtcWallet } from '../../common/utils/mnemonic'
 
+
+const loginMnemonic = (mnemonic, walletNumber=0, path, app) => {
+  const network = (
+    app.isMainNet()
+      ? app.env.bitcoin.networks.bitcoin
+      : app.env.bitcoin.networks.testnet
+  )
+
+  const wallet = getBtcWallet(network, mnemonic, walletNumber, path, app)
+
+  return login(wallet.WIF, app)
+}
 
 const login = (_privateKey, app) => {
   SwapApp.required(app)
@@ -33,7 +46,6 @@ const login = (_privateKey, app) => {
     app.env.storage.setItem(storageKey, privateKey)
   }
 
-
   return account
 }
 
@@ -46,5 +58,6 @@ const getPublicData = (account) => ({
 
 export default {
   login,
+  loginMnemonic,
   getPublicData,
 }
