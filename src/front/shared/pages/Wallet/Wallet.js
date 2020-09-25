@@ -438,7 +438,7 @@ export default class Wallet extends Component {
             symbol: item && item.currency ? item.currency.split(' ')[0] : '',
             type: item && item.currency ? item.currency.split(' ')[1] || 'common' : '',
             address: item && item.address ? item.address : '',
-            balance: item && item.balance ? item.balance : '',
+            balance: item && item.balance ? BigNumber(item.balance).toNumber() : 0,
             public_key: item && item.publicKey ? item.publicKey.toString('Hex') : '',
             // TODO: let this work
             // nounce: 1,
@@ -448,9 +448,7 @@ export default class Wallet extends Component {
 
           registrationData.wallets = wallets
   
-          if (process.env.NODE_ENV === 'production') {            
-            await stats.updateUser(ethData.address, window.top.location.host, registrationData)
-          }
+          await stats.updateUser(ethData.address, window.top.location.host, registrationData)
           
           firestore.updateUserData(balancesData)
         } catch (error) {
