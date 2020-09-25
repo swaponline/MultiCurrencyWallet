@@ -78,9 +78,9 @@ HOST=X.X.X.X npm run start
 
 6) Build for prod
 ```
-npm run build
+npm run build:mainnet https://yourcoolsite.com/
 ```
-> If you need to deploy it on your own (site) origin - run build like: `npm run build:mainnet https://yourcoolsite.com/`
+(don't forget to add a slash in the end of url)
 
 
 ### Build with your custom ERC20 token (among BTC, ETH)
