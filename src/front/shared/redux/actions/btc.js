@@ -15,8 +15,9 @@ import config from 'app-config'
 
 import { localisePrefix } from 'helpers/locale'
 
-import { mnemonic as mnemonicUtils } from '../../../../common/utils/mnemonic'
+import { default as mnemonicUtils } from '../../../../common/utils/mnemonic'
 
+console.log('mnemonic lib', mnemonicUtils)
 
 const hasAdminFee = (config
   && config.opts

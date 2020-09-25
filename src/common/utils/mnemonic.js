@@ -53,12 +53,12 @@ const getEthWallet = (network, mnemonic, walletNumber = 0, path) => {
 
 const getGhostWallet = (network, mnemonic, walletNumber = 0, path) => {
   const seed = bip39.mnemonicToSeedSync(mnemonic)
-  const root = bip32.fromSeed(seed, ghost.network)
+  const root = bip32.fromSeed(seed, network)
   const node = root.derivePath((path) || `m/44'/0'/0'/0/${walletNumber}`)
 
   const account = bitcoin.payments.p2pkh({
     pubkey: node.publicKey,
-    network: ghost.network,
+    network: network,
   })
 
   return {
@@ -73,12 +73,12 @@ const getGhostWallet = (network, mnemonic, walletNumber = 0, path) => {
 
 const getNextWallet = (network, mnemonic, walletNumber = 0, path) => {
   const seed = bip39.mnemonicToSeedSync(mnemonic)
-  const root = bip32.fromSeed(seed, next.network)
+  const root = bip32.fromSeed(seed, network)
   const node = root.derivePath((path) || `m/44'/707'/0'/0/${walletNumber}`)
 
   const account = bitcoin.payments.p2pkh({
     pubkey: node.publicKey,
-    network: next.network,
+    network: network,
   })
 
   return {
@@ -95,7 +95,7 @@ const getBchWallet = (network, mnemonic, walletNumber = 0, path) => { /* not imp
 
 const getSumWallet = (network, mnemonic, walletNumber = 0, path) => { /* not implements */ }
 
-export {
+export default {
   convertMnemonicToValid,
   getBtcWallet,
   getEthWallet,
