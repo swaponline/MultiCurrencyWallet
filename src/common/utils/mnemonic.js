@@ -58,7 +58,7 @@ const getGhostWallet = (network, mnemonic, walletNumber = 0, path) => {
 
   const account = bitcoin.payments.p2pkh({
     pubkey: node.publicKey,
-    network: ghost.network,
+    network: network,
   })
 
   return {
@@ -78,7 +78,7 @@ const getNextWallet = (network, mnemonic, walletNumber = 0, path) => {
 
   const account = bitcoin.payments.p2pkh({
     pubkey: node.publicKey,
-    network: next.network,
+    network: network,
   })
 
   return {
