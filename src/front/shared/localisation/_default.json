@@ -6165,42 +6165,42 @@
     "id": "Partial_DestinationAddress_ConnectMetamask",
     "message": "Connect Metamask",
     "files": [
-      "shared/pages/Exchange/CustomDestAddress/CustomDestAddress.js"
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
   },
   {
     "id": "Partial_DestinationAddress_CustomAddressOption",
     "message": "Custom address",
     "files": [
-      "shared/pages/Exchange/CustomDestAddress/CustomDestAddress.js"
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
   },
   {
     "id": "Partial_DestinationAddress_HotWalletAddressOption",
     "message": "My Wallet",
     "files": [
-      "shared/pages/Exchange/CustomDestAddress/CustomDestAddress.js"
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
   },
   {
     "id": "Partial_DestinationAddress_MetamaskAddressOption",
     "message": "Metamask's address",
     "files": [
-      "shared/pages/Exchange/CustomDestAddress/CustomDestAddress.js"
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
   },
   {
     "id": "Partial_DestinationAddress_PlaceholderEnterAddress",
     "message": "Enter the receiving wallet address",
     "files": [
-      "shared/pages/Exchange/CustomDestAddress/CustomDestAddress.js"
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
   },
   {
     "id": "Partial_DestinationAddress_SpecifyAddress",
     "message": "Specify the receiving wallet address",
     "files": [
-      "shared/pages/Exchange/CustomDestAddress/CustomDestAddress.js"
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
   },
   {

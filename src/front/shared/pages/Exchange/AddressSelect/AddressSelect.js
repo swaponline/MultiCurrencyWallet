@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'redaction'
-import styles from './CustomDestAddress.scss'
+import styles from './AddressSelect.scss'
 import cssModules from 'react-css-modules'
 import config from 'helpers/externalConfig'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
@@ -53,17 +53,18 @@ const destinationType = {
 }
 
 @cssModules(styles, { allowMultiple: true })
-export default class CustomDestAddress extends Component {
+export default class AddressSelect extends Component {
   constructor(props) {
     super(props)
+
     const {
       initialValue,
-      type,
+      currency,
       hasError = false,
     } = props
-
+console.log('currency =', currency)
     this.state = {
-      type,
+      currency,
       hasError,
       selectedDestination: destinationType.none,
       walletAddress: initialValue,
@@ -83,18 +84,19 @@ export default class CustomDestAddress extends Component {
 
   componentDidUpdate() {
     const {
-      type: newType,
+      currency: newCurrency,
       initialValue,
       hasError = false,
     } = this.props
+
     const {
-      type: oldType,
+      currency: oldCurrency,
       hasError: oldHasError = false,
     } = this.state
 
-    if ((newType !== oldType) || (hasError !== oldHasError)) {
+    if ((newCurrency !== oldCurrency) || (hasError !== oldHasError)) {
       this.setState({
-        type: newType,
+        currency: newCurrency,
         hasError,
         selectedDestination: destinationType.none,
         walletAddress: initialValue,
@@ -144,6 +146,7 @@ export default class CustomDestAddress extends Component {
       if (typeof onChange === 'function') {
         const selected = (selectedDestination !== destinationType.none)
         const isCustom = ((selectedDestination === destinationType.custom) || selectedDestination === destinationType.metamask)
+
         let value = ''
         if (selectedDestination === destinationType.metamask) {
           value = metamask.getAddress()
@@ -164,10 +167,9 @@ export default class CustomDestAddress extends Component {
     const {
       openScan,
       value: customWallet,
-      type,
+      currency,
       isDark
     } = this.props
-
 
     let {
       selectedDestination,
@@ -180,7 +182,7 @@ export default class CustomDestAddress extends Component {
       hasError,
     } = this.state
 
-    if (!ethToken.isEthOrEthToken({ name: type }) && selectedDestination === 'metamask') {
+    if (!ethToken.isEthOrEthToken({ name: currency }) && selectedDestination === 'metamask') {
       selectedDestination = 'none'
     }
 
@@ -196,7 +198,7 @@ export default class CustomDestAddress extends Component {
         title: <FormattedMessage {...langLabels.optionHotWallet} />,
       },
       ...(
-        (metamask.isEnabled() && ethToken.isEthOrEthToken({ name: type })) ? [
+        (metamask.isEnabled() && ethToken.isEthOrEthToken({ name: currency })) ? [
           {
             value: destinationType.metamask,
             icon: iconMetamask,

@@ -1,36 +1,36 @@
-import React, { Component, Fragment } from "react";
+import React, { Component, Fragment } from "react"
 
-import Link from "sw-valuelink";
+import Link from "sw-valuelink"
 
-import CSSModules from "react-css-modules";
-import styles from "./Exchange.scss";
+import CSSModules from "react-css-modules"
+import styles from "./Exchange.scss"
 
-import { connect } from "redaction";
-import actions from "redux/actions";
-import { BigNumber } from "bignumber.js";
-import { Redirect } from "react-router-dom";
-import { getState } from "redux/core";
-import reducers from "redux/core/reducers";
+import { connect } from "redaction"
+import actions from "redux/actions"
+import { BigNumber } from "bignumber.js"
+import { Redirect } from "react-router-dom"
+import { getState } from "redux/core"
+import reducers from "redux/core/reducers"
 import { isMobile } from 'react-device-detect'
 
-import SelectGroup from "./SelectGroup/SelectGroup";
-import { Button } from "components/controls";
-import Promo from "./Promo/Promo";
-import Quote from "./Quote";
-import HowItWorks from "./HowItWorks/HowItWorks";
-import VideoAndFeatures from "./VideoAndFeatures/VideoAndFeatures";
-import Tooltip from "components/ui/Tooltip/Tooltip";
-import InlineLoader from "components/loaders/InlineLoader/InlineLoader";
-import { FormattedMessage, injectIntl } from "react-intl";
-import { localisedUrl } from "helpers/locale";
-import config from "helpers/externalConfig";
-import SwapApp, { util } from "swap.app";
-import QrReader from "components/QrReader";
+import SelectGroup from "./SelectGroup/SelectGroup"
+import { Button } from "components/controls"
+import Promo from "./Promo/Promo"
+import Quote from "./Quote"
+import HowItWorks from "./HowItWorks/HowItWorks"
+import VideoAndFeatures from "./VideoAndFeatures/VideoAndFeatures"
+import Tooltip from "components/ui/Tooltip/Tooltip"
+import InlineLoader from "components/loaders/InlineLoader/InlineLoader"
+import { FormattedMessage, injectIntl } from "react-intl"
+import { localisedUrl } from "helpers/locale"
+import config from "helpers/externalConfig"
+import SwapApp, { util } from "swap.app"
+import QrReader from "components/QrReader"
 
-import helpers, { constants, links } from "helpers";
-import { animate } from "helpers/domUtils";
-import Switching from "components/controls/Switching/Switching";
-import CustomDestAddress from "./CustomDestAddress/CustomDestAddress";
+import helpers, { constants, links } from "helpers"
+import { animate } from "helpers/domUtils"
+import Switching from "components/controls/Switching/Switching"
+import AddressSelect from "./AddressSelect/AddressSelect"
 import NetworkStatus from 'components/NetworkStatus/NetworkStatus'
 import Orders from "../Home/Home"
 
@@ -292,7 +292,6 @@ export default class Exchange extends Component {
     timerProcess();
 
     SwapApp.shared().services.room.on("new orders", () => this.checkPair());
-    this.customWalletAllowed();
     this.setEstimatedFeeValues(estimatedFeeValues);
 
     document.addEventListener("scroll", this.rmScrollAdvice);
@@ -309,7 +308,7 @@ export default class Exchange extends Component {
     })
     helpers.eth.estimateFeeValue({ method: 'swap' }).then((fee) => {
       this.setState({
-        ethFee: BigNumber(fee).multipliedBy(1).toNumber(),
+        ethFee: BigNumber(fee).toNumber(),
       })
     })
   }
@@ -485,11 +484,11 @@ export default class Exchange extends Component {
 
     const ethFee = BigNumber(
       await helpers.eth.estimateFeeValue({ method: 'swap' })
-    ).multipliedBy(1).toNumber()
+    ).toNumber()
 
     const btcFee = BigNumber(
       await helpers.btc.estimateFeeValue({ method: 'swap' })
-    ).multipliedBy(1).toNumber()
+    ).toNumber()
 
     if (haveCur === 'ETH') {
       checkAmount = BigNumber(checkAmount).plus(ethFee).toNumber()
@@ -646,7 +645,7 @@ export default class Exchange extends Component {
     };
 
     const destination = {
-      address: this.customWalletAllowed() ? customWallet : null,
+      address: this.isCustomWalletAllowed() ? customWallet : null,
     };
 
     this.setState(() => ({ isFetching: true }));
@@ -1051,7 +1050,7 @@ export default class Exchange extends Component {
   customWalletValid() {
     const { haveCurrency, getCurrency, customWallet } = this.state;
 
-    if (!this.customWalletAllowed()) return true;
+    if (!this.isCustomWalletAllowed()) return true;
 
     if (getCurrency === "btc")
       return util.typeforce.isCoinAddress.BTC(customWallet);
@@ -1059,43 +1058,43 @@ export default class Exchange extends Component {
     return util.typeforce.isCoinAddress.ETH(customWallet);
   }
 
-  customWalletAllowed() {
+  isCustomWalletAllowed() {
     const { haveCurrency, getCurrency } = this.state
 
     if (haveCurrency === 'btc') {
       // btc-token
       if (config.erc20[getCurrency] !== undefined) return true
       // btc-eth
-      if (getCurrency === "eth") return true;
-      if (getCurrency === "ghost") return true;
-      if (getCurrency === "next") return true;
+      if (getCurrency === "eth") return true
+      if (getCurrency === "ghost") return true
+      if (getCurrency === "next") return true
     }
     if (config.erc20[haveCurrency] !== undefined) {
       // token-btc
-      if (getCurrency === "btc") return true;
-      if (getCurrency === "ghost") return true;
-      if (getCurrency === "next") return true;
+      if (getCurrency === "btc") return true
+      if (getCurrency === "ghost") return true
+      if (getCurrency === "next") return true
     }
 
     if (haveCurrency === 'eth') {
       // eth-btc
-      if (getCurrency === "btc") return true;
-      if (getCurrency === "ghost") return true;
-      if (getCurrency === "next") return true;
+      if (getCurrency === "btc") return true
+      if (getCurrency === "ghost") return true
+      if (getCurrency === "next") return true
     }
     if (haveCurrency === "ghost") {
       // ghost-token
-      if (config.erc20[getCurrency] !== undefined) return true;
+      if (config.erc20[getCurrency] !== undefined) return true
       // ghost-eth
-      if (getCurrency === "eth") return true;
-      if (getCurrency === "btc") return true;
+      if (getCurrency === "eth") return true
+      if (getCurrency === "btc") return true
     }
     if (haveCurrency === "next") {
       // next-token
-      if (config.erc20[getCurrency] !== undefined) return true;
+      if (config.erc20[getCurrency] !== undefined) return true
       // next-eth
-      if (getCurrency === "eth") return true;
-      if (getCurrency === "btc") return true;
+      if (getCurrency === "eth") return true
+      if (getCurrency === "btc") return true
     }
 
     return false
@@ -1388,21 +1387,6 @@ export default class Exchange extends Component {
                   defaultMessage="The amount you have on swap.online or an external wallet that you want to exchange"
                 />
               }
-              /*balanceTooltip={(estimatedFeeValues[haveCurrency])
-                ? () => {
-                  return (
-                    <FormattedMessage
-                      id="Exchange_BalanceTooltipInfo"
-                      defaultMessage="Ваш баланс {balance} {currency} минус коммисия майнера {minerFee} {currency}"
-                      values={{
-                        balance,
-                        minerFee: estimatedFeeValues[haveCurrency],
-                        currency: haveCurrency.toUpperCase(),
-                      }}
-                    />
-                  )
-                } : false
-              }*/
               placeholder="0.00000000"
               fiat={maxAmount > 0 && isNonOffers ? 0 : haveFiat}
               currencies={currencies}
@@ -1455,6 +1439,7 @@ export default class Exchange extends Component {
           <div styleName="switchButton">
             <Switching noneBorder onClick={this.handleFlipCurrency} />
           </div>
+
           <div
             className="data-tut-get"
             styleName="selectWrap"
@@ -1517,7 +1502,7 @@ export default class Exchange extends Component {
               <p styleName="error">
                 <FormattedMessage
                   id="PartialPriceNoOrdersReduceAllInfo"
-                  defaultMessage="This trade amount is too high for present market liquidity. Please reduce amount to {maxForSell}. "
+                  defaultMessage="This trade amount is too high for present market liquidity. Please reduce amount to {maxForSell}."
                   values={{
                     maxForBuy: `${maxAmount} ${getCurrency.toUpperCase()}`,
                     maxForSell: `${maxBuyAmount} ${haveCurrency.toUpperCase()}`
@@ -1635,6 +1620,7 @@ export default class Exchange extends Component {
                 </div>
               </div>
             )}
+
           {isFetching && (
             <span>
               <FormattedMessage
@@ -1649,10 +1635,10 @@ export default class Exchange extends Component {
             </span>
           )}
 
-          {this.customWalletAllowed() && (
-            <CustomDestAddress
+          {this.isCustomWalletAllowed() && (
+            <AddressSelect
               isDark={isDark}
-              type={getCurrency}
+              currency={getCurrency}
               hasError={destinationError}
               value={customWallet}
               valueLink={linked.customWallet}
