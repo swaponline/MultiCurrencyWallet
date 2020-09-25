@@ -103,4 +103,12 @@ export default {
   getNextWallet,
   getBchWallet, /* not implements */
   getSumWallet, /* not implements */
+  forCoin: {
+    BTC:    getBtcWallet,
+    ETH:    getEthWallet,
+    GHOST:  getGhostWallet,
+    NEXT:   getNextWallet,
+    BCH:    getBchWallet, /* not implements */
+    SUM:    getSumWallet, /* not implements */
+  },
 }
