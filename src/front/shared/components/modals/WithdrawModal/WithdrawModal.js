@@ -121,6 +121,7 @@ export default class WithdrawModal extends React.Component {
     this.fiatRates = {}
     this.getFiatBalance()
     this.actualyMinAmount()
+    this.setBalanceOnState()
   }
 
   componentDidUpdate(prevProps) {
