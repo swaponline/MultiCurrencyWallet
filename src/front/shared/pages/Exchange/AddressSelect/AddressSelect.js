@@ -16,32 +16,30 @@ import iconMetamask from './images/metamask.svg'
 import iconCustom from './images/custom.svg'
 
 
-
-const langPrefix = `Partial_DestinationAddress`
 const langLabels = defineMessages({
   labelSpecifyAddress: {
-    id: `${langPrefix}_SpecifyAddress`,
-    defaultMessage: `Specify the receiving wallet address`,
+    id: 'Exchange_SpecifyAddress',
+    defaultMessage: 'Select...',
   },
   optionHotWallet: {
-    id: `${langPrefix}_HotWalletAddressOption`,
-    defaultMessage: `My Wallet`,
+    id: 'Exchange_HotWalletAddressOption',
+    defaultMessage: 'My wallet',
   },
   optionMetamast: {
-    id: `${langPrefix}_MetamaskAddressOption`,
-    defaultMessage: `Metamask's address`,
+    id: 'Exchange_MetamaskAddressOption',
+    defaultMessage: 'Metamask\'s address',
   },
   optionCustom: {
-    id: `${langPrefix}_CustomAddressOption`,
-    defaultMessage: `Custom address`,
+    id: 'Exchange_CustomAddressOption',
+    defaultMessage: 'Custom address',
   },
   placeholderAddress: {
-    id: `${langPrefix}_PlaceholderEnterAddress`,
-    defaultMessage: `Enter the receiving wallet address`,
+    id: 'Exchange_PlaceholderEnterAddress',
+    defaultMessage: 'Enter the receiving wallet address',
   },
   connectMetamask: {
-    id: `${langPrefix}_ConnectMetamask`,
-    defaultMessage: `Connect Metamask`,
+    id: 'Exchange_ConnectMetamask',
+    defaultMessage: 'Connect Metamask',
   },
 })
 
@@ -62,7 +60,7 @@ export default class AddressSelect extends Component {
       currency,
       hasError = false,
     } = props
-console.log('currency =', currency)
+
     this.state = {
       currency,
       hasError,
@@ -168,7 +166,8 @@ console.log('currency =', currency)
       openScan,
       value: customWallet,
       currency,
-      isDark
+      isDark,
+      label
     } = this.props
 
     let {
@@ -215,6 +214,7 @@ console.log('currency =', currency)
 
     return (
       <div styleName={`customDestination ${(hasError) ? 'customDestination_error' : ''} ${isDark ? '--dark' : ''}`}>
+        <div styleName="label">{label}</div>
         <DropDown
           styleName="dropDown"
           items={destinationOptions}
@@ -222,15 +222,16 @@ console.log('currency =', currency)
           selectedValue={selectedDestination}
           disableSearch={true}
           dontScroll={true}
+          arrowSide="left"
           itemRender={item => <Option {...item} />}
           onSelect={(value) => this.handleDestinationSelect(value)}
         />
-        {selectedDestination === destinationType.hotwallet && (
+        {selectedDestination === destinationType.hotwallet &&
           <div styleName="readonlyValue">
             <input value={customWallet} onChange={() => { }} />
           </div>
-        )}
-        {selectedDestination === destinationType.metamask && metamask.isEnabled() && (
+        }
+        {selectedDestination === destinationType.metamask && metamask.isEnabled() &&
           <Fragment>
             {(metamaskConnected) ? (
               <div styleName="readonlyValue">
@@ -246,8 +247,8 @@ console.log('currency =', currency)
               </Button>
             )}
           </Fragment>
-        )}
-        {selectedDestination === destinationType.custom && (
+        }
+        {selectedDestination === destinationType.custom &&
           <div styleName={`customWallet ${(walletAddressFocused) ? 'customWallet_focus' : ''}`}>
             <div styleName="anotherRecepient">
               <div styleName="walletInput">
@@ -264,7 +265,7 @@ console.log('currency =', currency)
               </div>
             </div>
           </div>
-        )}
+        }
       </div>
     )
   }

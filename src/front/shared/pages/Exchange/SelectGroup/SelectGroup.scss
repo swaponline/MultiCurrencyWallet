@@ -2,12 +2,13 @@
   width: 100%;
   display: inline-flex;
   height: 68px;
-  margin-bottom: 50px;
+  margin-bottom: 18px;
   vertical-align: center;
   // box-shadow: rgba(#000, 0.08) 0 3px 9px 0;
   border-radius: 6px;
   text-align: center;
   position: relative;
+  text-transform: capitalize;
 }
 
 .dark {

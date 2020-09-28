@@ -26,6 +26,24 @@
     }
   }
 
+  .label {
+    font-size: 15px;
+    @include ff-semibold;
+    display: inline-block;
+    padding: 7px 7px;
+    z-index: 111;
+    position: absolute;
+    top: -18px;
+    left: 10px;
+    background: #fff;
+    white-space: nowrap;
+  }
+
+  &.--dark .label {
+    background: none;
+  }
+
+
   &_error .walletToggle {
     border: 2px solid #a90101;
   }
@@ -36,10 +54,7 @@
     width: 100%;
 
     & > div {
-      padding-left: 0;
       height: max-content !important;
-      border: 1px solid rgba(0,0,0,0.2);
-      border-radius: 2px;
     }
   }
 
@@ -48,18 +63,10 @@
     height: auto;
   }
 
-  &.--dark {
-    & > div {
-      background: #222427
-    }
-  }
-
   & > div {
     padding-left: 0px;
-    background: #fff;
-    border: none;
-    border: 1px solid #ccc;
-    border-radius: 0px;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 2px;
 
     div > {
       padding: 0px;
@@ -106,8 +113,6 @@
 
 
 .customWallet {
-  margin-bottom: 15px;
-  margin-bottom: 30px;
   padding: 0 20px;
 
   &_site {
@@ -146,7 +151,6 @@
   height: 36px;
   font-size: 16px;
   flex-basis: 100%;
-  margin-bottom: 10px;
   box-shadow: none;
 }
 
@@ -178,12 +182,6 @@
   position: relative;
 }
 
-.label {
-  width: 200px;
-  font-weight: 500;
-  line-height: 21px;
-  font-size: 16px;
-}
 
 @include media-mobile {
   .--dark {
@@ -192,13 +190,6 @@
         color: white;
       }
     }
-  }
-
-  .label {
-    width: 170px;
-    font-weight: 500;
-    line-height: 19px;
-    font-size: 13px;
   }
 
   .customDestination {

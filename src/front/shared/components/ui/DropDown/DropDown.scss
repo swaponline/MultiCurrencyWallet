@@ -146,7 +146,6 @@
 }
 
 .fullTitle {
-  text-transform: capitalize;
   font-weight: 500;
   font-size: 18px;
   color: #000000;
@@ -180,7 +179,6 @@
 .shortTitle {
   font-size: 18px;
   font-weight: 500;
-  text-transform: uppercase;
 }
 
 .searchInput {
@@ -212,10 +210,15 @@
   text-align: right;
   font-size: 18px;
   white-space: nowrap;
-  text-transform: capitalize;
   font-weight: 500;
   border-color: grey;
   @include no-user-select;
+
+  &.left {
+    padding-left: 45px;
+    padding-right: 16px;
+    text-align: left;
+  }
 
   &_disableIteract {
     cursor: default;
@@ -233,6 +236,11 @@
   position: absolute;
   top: 50%;
   right: 20px;
+
+  &.left {
+    right: 0;
+    left: 20px;
+  }
 }
 
 .select {
@@ -241,14 +249,15 @@
   background-color: #fff;
   // margin-top: 4px;
   position: absolute;
-  right: 0;
+  right: -1;
   top: 0;
   overflow-x: hidden;
   overflow-y: auto;
   z-index: 9999;
   background: #fff;
   border-radius: 6px;
-  box-shadow: rgba(#000, 0.08) 0 3px 9px 0;
+  border: 1px solid #8888;
+  box-shadow: rgba(#000, 0.15) 0 3px 9px 0;
 }
 
 .dontscroll {

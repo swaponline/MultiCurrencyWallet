@@ -110,8 +110,9 @@ export default class DropDown extends Component {
       tooltip,
       id,
       notIteractable,
-      disableSearch,  // Отключить поиск
-      dontScroll, // Отключить вертикальный скрол - показывать все элементы (для небольших фиксированных списоков)
+      disableSearch,
+      dontScroll, // Show all items, for small lists
+      arrowSide,
     } = this.props
 
     const {
@@ -129,8 +130,8 @@ export default class DropDown extends Component {
         .filter(item => item.value !== selectedValue)
     }
 
-    const dropDownListStyles = [`select`]
-    if (dontScroll) dropDownListStyles.push(`dontscroll`)
+    const dropDownListStyles = ['select']
+    if (dontScroll) dropDownListStyles.push('dontscroll')
 
     return (
       <ClickOutside
@@ -148,10 +149,12 @@ export default class DropDown extends Component {
       >
         <div styleName={`${dropDownStyleName} ${isDark ? 'dark' : ''}`} className={className}>
           <div
-            styleName={notIteractable ? 'selectedItem selectedItem_disableIteract' : 'selectedItem'}
+            styleName={`selectedItem ${notIteractable ? ' selectedItem_disableIteract' : ''} ${arrowSide === 'left' ? 'left' : ''}`}
             onClick={notIteractable ? () => null : this.toggle}
           >
-            {!notIteractable && <div styleName="arrow arrowDropDown" />}
+            {!notIteractable &&
+              <div styleName={`arrow arrowDropDown ${arrowSide === 'left' ? 'left' : ''}`}
+            />}
             {isToggleActive && !disableSearch ? (
               <Input
                 styleName="searchInput"
@@ -161,8 +164,8 @@ export default class DropDown extends Component {
                 ref="searchInput"
               />
             ) : (
-                this.renderSelectedItem()
-              )}
+              this.renderSelectedItem()
+            )}
           </div>
           {isToggleActive && (
             <div styleName={dropDownListStyles.join(` `)}>

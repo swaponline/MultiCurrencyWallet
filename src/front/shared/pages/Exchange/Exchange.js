@@ -34,6 +34,7 @@ import AddressSelect from "./AddressSelect/AddressSelect"
 import NetworkStatus from 'components/NetworkStatus/NetworkStatus'
 import Orders from "../Home/Home"
 
+
 const allowedCoins = [
   ...(!config.opts.curEnabled || config.opts.curEnabled.btc ? ["BTC"] : []),
   ...(!config.opts.curEnabled || config.opts.curEnabled.eth ? ["ETH"] : []),
@@ -152,7 +153,7 @@ export default class Exchange extends Component {
   }
 
   banPeer(peerID) {
-    const bannedPeersTimeout = 180; // В секундах - три минуты
+    const bannedPeersTimeout = 180; // 3 mins
     bannedPeers[peerID] =
       Math.floor(new Date().getTime() / 1000) + bannedPeersTimeout;
   }
@@ -206,6 +207,7 @@ export default class Exchange extends Component {
         history.push(localisedUrl(locale, `${links.exchange}/usdt-to-btc`));
       }
     }
+
     const sellToken = sell || "btc";
     const buyToken = buy || (!isWidgetBuild ? "usdt" : config.erc20token);
 
@@ -469,7 +471,7 @@ export default class Exchange extends Component {
         exHaveRate,
         exGetRate,
       }));
-      console.warn("Cryptonator offline", e);
+      console.error("Cryptonator offline", e);
     }
   };
 
@@ -499,22 +501,22 @@ export default class Exchange extends Component {
     const isSellToken = helpers.ethToken.isEthToken( { name: getCurrency } )
     const { balance: ethBalance }  = actions.core.getWallet({ currency: 'ETH' })
 
-    let balanceIsOk = true
+    let isBalanceOk = true
     if (
       isSellToken
       && (
         balance < checkAmount
         || ethBalance < ethFee
       )
-    ) balanceIsOk = false
+    ) isBalanceOk = false
 
 
     if (getCurrency.toUpperCase() === 'BTC'
       && !isSellToken
       && balance < checkAmount
-    ) balanceIsOk = false
+    ) isBalanceOk = false
 
-    if (!balanceIsOk) {
+    if (!isBalanceOk) {
       const hiddenCoinsList = await actions.core.getHiddenCoins()
       const isDidntActivateWallet = hiddenCoinsList.find(el => haveCur.toUpperCase() === el.toUpperCase())
 
@@ -650,13 +652,14 @@ export default class Exchange extends Component {
 
     this.setState(() => ({ isFetching: true }));
 
-    const requestTimeoutLenght = config && config.isWidgetBuild ? 60 : 30;
+    // wait until not skip and ban peer
+    const requestTimeoutSec = config && config.isWidgetBuild ? 60 : 30;
 
     const requestTimeout = setTimeout(() => {
       this.banPeer(peer);
-      this.getLinkTodeclineSwap(peer);
+      this.getLinkToDeclineSwap(peer);
       this.setDeclinedOffer();
-    }, requestTimeoutLenght * 1000); // 45 seconds wait until not skip and ban peer
+    }, requestTimeoutSec * 1000);
 
     this.onRequestAnswer = (newOrder, isAccepted) => {
       clearTimeout(requestTimeout);
@@ -668,7 +671,7 @@ export default class Exchange extends Component {
         }));
       } else {
         this.banPeer(peer);
-        this.getLinkTodeclineSwap(peer);
+        this.getLinkToDeclineSwap(peer);
         this.setDeclinedOffer();
       }
     };
@@ -681,7 +684,7 @@ export default class Exchange extends Component {
     );
   };
 
-  getLinkTodeclineSwap = () => {
+  getLinkToDeclineSwap = () => {
     const orders = SwapApp.shared().services.orders.items;
 
     const unfinishedOrder = orders
@@ -859,8 +862,7 @@ export default class Exchange extends Component {
 
     findGoodOrder(orders.filter((order) => !this.isPeerBanned(order.peer)));
 
-    // Если не нашли предложечение, проверим забаненые пиры
-    if (!isFound) {
+    if (!isFound) { // check banned peers
       findGoodOrder(orders.filter((order) => this.isPeerBanned(order.peer)));
     }
 
@@ -971,54 +973,6 @@ export default class Exchange extends Component {
     );
   };
 
-  handlePush = (isWidget = false) => {
-    const {
-      intl: { locale },
-    } = this.props;
-    const { haveCurrency, getCurrency } = this.state;
-
-    const currency = haveCurrency.toLowerCase();
-
-    const pair = constants.tradeTicker
-      .filter((ticker) => {
-        ticker = ticker.split("-");
-        return currency === ticker[0].toLowerCase()
-          ? ticker[0].toLowerCase() === currency
-          : ticker[1].toLowerCase() === currency;
-      })
-      .map((pair) => {
-        pair = pair.split("-");
-        return {
-          from: pair[0],
-          to: pair[1],
-        };
-      });
-
-    const sendLinkFrom = pair.filter(
-      (item) =>
-        item.from === haveCurrency.toUpperCase() ||
-        item.from === getCurrency.toUpperCase()
-    );
-    const sendLinkTo = pair.filter(
-      (item) =>
-        item.to === haveCurrency.toUpperCase() ||
-        item.to === getCurrency.toUpperCase()
-    );
-
-    const tradeTicker = `${sendLinkFrom[0].from.toLowerCase()}-${sendLinkTo[0].to.toLowerCase()}`;
-
-    const hostname = window.location.origin;
-    const pathname = constants.tradeTicker.includes(tradeTicker.toUpperCase())
-      ? tradeTicker
-      : tradeTicker.split("-").reverse().join("-");
-
-    if (isWidget) {
-      window.parent.location.replace(`${hostname}/${pathname}`);
-    } else {
-      this.props.history.push(localisedUrl(locale, `/${tradeTicker}`));
-    }
-  };
-
   setClearState = () => {
     const { getCurrency, customWalletUse } = this.state;
 
@@ -1047,7 +1001,7 @@ export default class Exchange extends Component {
     ];
   };
 
-  customWalletValid() {
+  isCustomWalletValid() {
     const { haveCurrency, getCurrency, customWallet } = this.state;
 
     if (!this.isCustomWalletAllowed()) return true;
@@ -1069,6 +1023,7 @@ export default class Exchange extends Component {
       if (getCurrency === "ghost") return true
       if (getCurrency === "next") return true
     }
+
     if (config.erc20[haveCurrency] !== undefined) {
       // token-btc
       if (getCurrency === "btc") return true
@@ -1082,6 +1037,7 @@ export default class Exchange extends Component {
       if (getCurrency === "ghost") return true
       if (getCurrency === "next") return true
     }
+
     if (haveCurrency === "ghost") {
       // ghost-token
       if (config.erc20[getCurrency] !== undefined) return true
@@ -1089,6 +1045,7 @@ export default class Exchange extends Component {
       if (getCurrency === "eth") return true
       if (getCurrency === "btc") return true
     }
+
     if (haveCurrency === "next") {
       // next-token
       if (config.erc20[getCurrency] !== undefined) return true
@@ -1146,13 +1103,6 @@ export default class Exchange extends Component {
     );
   }
 
-  changeBalance = (value) => {
-    this.extendedControlsSet(false);
-    this.setState({
-      haveAmount: value,
-    });
-  };
-
   extendedControlsSet = (value) => {
     const { extendedControls } = this.state;
 
@@ -1187,14 +1137,6 @@ export default class Exchange extends Component {
     return true;
   };
 
-  addressIsCorrect() {
-    const { customWallet, getCurrency } = this.state;
-
-    return util.typeforce.isCoinAddress[getCurrency.toUpperCase()](
-      customWallet
-    );
-  }
-
   getCorrectDecline = () => {
     const { decline, swapHistory } = this.props;
 
@@ -1226,18 +1168,6 @@ export default class Exchange extends Component {
     });
   };
 
-  openScan = () => {
-    const { openScanCam } = this.state;
-
-    this.setState(() => ({
-      openScanCam: !openScanCam,
-    }));
-  };
-
-  handleError = (err) => {
-    console.error(err);
-  };
-
   onCustomWalletChange = (state) => {
     const { selected, isCustom, value } = state;
 
@@ -1247,6 +1177,17 @@ export default class Exchange extends Component {
       customWalletUse: !isCustom,
       customWallet: isCustom ? value : this.getSystemWallet(),
     });
+  };
+
+  openScan = () => {
+    const { openScanCam } = this.state;
+    this.setState(() => ({
+      openScanCam: !openScanCam,
+    }));
+  };
+
+  handleScanError = (err) => {
+    console.error(err);
   };
 
   handleScan = (data) => {
@@ -1267,7 +1208,7 @@ export default class Exchange extends Component {
       tokensData,
       intl: { locale, formatMessage },
       isOnlyForm,
-    } = this.props;
+    } = this.props
 
     const {
       haveCurrency,
@@ -1299,17 +1240,20 @@ export default class Exchange extends Component {
 
     const haveFiat = BigNumber(exHaveRate)
       .times(haveAmount)
-      .dp(2, BigNumber.ROUND_CEIL);
+      .dp(2, BigNumber.ROUND_CEIL)
+
     const getFiat = BigNumber(exGetRate)
       .times(getAmount)
-      .dp(2, BigNumber.ROUND_CEIL);
+      .dp(2, BigNumber.ROUND_CEIL)
 
     const haveCurrencyData = currenciesData.find(
       (item) => item.currency === haveCurrency.toUpperCase()
-    );
+    )
+
     const haveTokenData = tokensData.find(
       (item) => item.currency === haveCurrency.toUpperCase()
-    );
+    )
+
     const currentCurrency = haveCurrencyData || haveTokenData;
 
     const balance = currentCurrency.balance || 0;
@@ -1317,6 +1261,7 @@ export default class Exchange extends Component {
     const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0)
       ? BigNumber(0)
       : BigNumber(goodRate);
+
     const linked = Link.all(this, "haveAmount", "getAmount", "customWallet");
 
     const isWidgetLink =
@@ -1347,7 +1292,7 @@ export default class Exchange extends Component {
     const canDoOrder =
       !isNonOffers &&
       BigNumber(getAmount).isGreaterThan(0) &&
-      this.customWalletValid() &&
+      this.isCustomWalletValid() &&
       !this.doesComissionPreventThisOrder() &&
       (BigNumber(haveAmount).isGreaterThan(balance) ||
         BigNumber(balance).isGreaterThanOrEqualTo(availableAmount));
@@ -1358,14 +1303,18 @@ export default class Exchange extends Component {
       ? currenciesData.find(
         (item) => item.currency === haveCurrency.toUpperCase()
       ).fullName
-      : haveCurrency.toUpperCase();
+      :
+      haveCurrency.toUpperCase();
+
     const buyTokenFullName = currenciesData.find(
       (item) => item.currency === getCurrency.toUpperCase()
     )
       ? currenciesData.find(
         (item) => item.currency === getCurrency.toUpperCase()
       ).fullName
-      : getCurrency.toUpperCase();
+      :
+      getCurrency.toUpperCase();
+
 
     const Form = (
       <div styleName="section">
@@ -1381,12 +1330,6 @@ export default class Exchange extends Component {
                 <FormattedMessage id="partial243" defaultMessage="You sell" />
               }
               id="Exchange456"
-              tooltip={
-                <FormattedMessage
-                  id="partial462"
-                  defaultMessage="The amount you have on swap.online or an external wallet that you want to exchange"
-                />
-              }
               placeholder="0.00000000"
               fiat={maxAmount > 0 && isNonOffers ? 0 : haveFiat}
               currencies={currencies}
@@ -1436,15 +1379,25 @@ export default class Exchange extends Component {
             />
           </div>
 
+          {this.isCustomWalletAllowed() &&
+            <AddressSelect
+              label={'From address'}
+              isDark={isDark}
+              currency={getCurrency}
+              hasError={destinationError}
+              value={customWallet}
+              valueLink={linked.customWallet}
+              initialValue={customWallet}
+              onChange={this.onCustomWalletChange}
+              openScan={this.openScan}
+            />
+          }
+
           <div styleName="switchButton">
             <Switching noneBorder onClick={this.handleFlipCurrency} />
           </div>
 
-          <div
-            className="data-tut-get"
-            styleName="selectWrap"
-            style={{ marginBottom: "-25px" }}
-          >
+          <div className="data-tut-get" styleName="selectWrap">
             <SelectGroup
               activeFiat={activeFiat}
               dataTut="get"
@@ -1456,92 +1409,127 @@ export default class Exchange extends Component {
                 <FormattedMessage id="partial255" defaultMessage="You get" />
               }
               id="Exchange472"
-              tooltip={
-                <FormattedMessage
-                  id="partial478"
-                  defaultMessage="The amount you will receive after the exchange"
-                />
-              }
               currencies={addSelectedItems}
               fiat={getFiat}
               error={isLowAmount}
             />
-            {oneCryptoCost.isGreaterThan(0) &&
-              oneCryptoCost.isFinite() &&
-              !isNonOffers && (
-                <div styleName="price">
+          </div>
+
+          {this.isCustomWalletAllowed() &&
+            <AddressSelect
+              label={'To address'}
+              isDark={isDark}
+              currency={getCurrency}
+              hasError={destinationError}
+              value={customWallet}
+              valueLink={linked.customWallet}
+              initialValue={customWallet}
+              onChange={this.onCustomWalletChange}
+              openScan={this.openScan}
+            />
+          }
+
+          <div styleName="fees">
+            <div styleName="serviceFee">
+              <span>
+                <FormattedMessage
+                  id="Exchange_ServiceFee"
+                  defaultMessage="Service fee"
+                />:
+              </span>
+              &nbsp;
+              <span>0</span>
+            </div>
+            <div styleName="minerFee">
+              <span>
+                <FormattedMessage
+                  id="Exchange_MinerFees"
+                  defaultMessage="Miner fee"
+                />:
+              </span>
+              &nbsp;
+              {!(btcFee && ethFee) ?
+                <span><InlineLoader /></span>
+                :
+                <span>
+                  {ethFee} ETH + {btcFee} BTC&nbsp;
+                  <a href="https://wiki.swaponline.io/faq/why-i-pay-ming-fees-of-btc-and-eth-both-why-not-seller/" target="_blank">(?)</a>
+                </span>
+              }
+            </div>
+          </div>
+
+          <div className="notices">
+
+            {oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && !isNonOffers &&
+              <div styleName="price">
+                <FormattedMessage
+                  id="PartialPriceSearch502"
+                  defaultMessage="1 {getCurrency} = {haveCurrency}"
+                  values={{
+                    getCurrency: `${getCurrency.toUpperCase()}`,
+                    haveCurrency: `${oneCryptoCost.toFixed(
+                      5
+                    )} ${haveCurrency.toUpperCase()}`,
+                  }}
+                />
+              </div>
+            }
+
+            {!oneCryptoCost.isFinite() && !isNonOffers && (
+              <FormattedMessage
+                id="PartialPriceCalc"
+                defaultMessage="Calc price"
+              />
+            )}
+
+            {!isNoAnyOrders && maxAmount > 0 && isNonOffers && linked.haveAmount.value > 0 && (
+              <Fragment>
+                <p styleName="error">
                   <FormattedMessage
-                    id="PartialPriceSearch502"
-                    defaultMessage="1 {getCurrency} = {haveCurrency}"
+                    id="PartialPriceNoOrdersReduceAllInfo"
+                    defaultMessage="This trade amount is too high for present market liquidity. Please reduce amount to {maxForSell}."
                     values={{
-                      getCurrency: `${getCurrency.toUpperCase()}`,
-                      haveCurrency: `${oneCryptoCost.toFixed(
-                        5
-                      )} ${haveCurrency.toUpperCase()}`,
+                      maxForBuy: `${maxAmount} ${getCurrency.toUpperCase()}`,
+                      maxForSell: `${maxBuyAmount} ${haveCurrency.toUpperCase()}`
                     }}
                   />
-                </div>
+                </p>
+              </Fragment>
             )}
-          </div>
-          {!oneCryptoCost.isFinite() && !isNonOffers && (
-            <FormattedMessage
-              id="PartialPriceCalc"
-              defaultMessage="Calc price"
-            />
-          )}
-          {isNoAnyOrders && linked.haveAmount.value > 0 && isFullLoadingComplite && <Fragment>
-            <p styleName="error">
-              <FormattedMessage
-                id="PartialPriceNoOrdersReduce"
-                defaultMessage="No orders found, try later or change the currency pair"
-              />
-            </p>
-          </Fragment>}
-          {!isNoAnyOrders && maxAmount > 0 && isNonOffers && linked.haveAmount.value > 0 && (
-            <Fragment>
-              <p styleName="error">
+
+            {isDeclinedOffer && (
+              <p styleName="error link" onClick={() => this.handleGoDeclimeFaq()}>
+                {' '}
+                {/* eslint-disable-line */}
                 <FormattedMessage
-                  id="PartialPriceNoOrdersReduceAllInfo"
-                  defaultMessage="This trade amount is too high for present market liquidity. Please reduce amount to {maxForSell}."
+                  id="PartialOfferCantProceed1"
+                  defaultMessage="Request rejected, possibly you have not complete another swap {br}{link}"
                   values={{
-                    maxForBuy: `${maxAmount} ${getCurrency.toUpperCase()}`,
-                    maxForSell: `${maxBuyAmount} ${haveCurrency.toUpperCase()}`
+                    link: (
+                      <a
+                        className="errorLink"
+                        role="button"
+                        onClick={() => this.handleGoDeclimeFaq()}
+                      >
+                        {' '}
+                        {/* eslint-disable-line */}
+                        <FormattedMessage
+                          id="PartialOfferCantProceed1_1"
+                          defaultMessage="Check here"
+                        />
+                      </a>
+                    ),
+                    br: <br />,
                   }}
                 />
               </p>
-            </Fragment>
-          )}
-          {isDeclinedOffer && (
-            <p styleName="error link" onClick={() => this.handleGoDeclimeFaq()}>
-              {' '}
-              {/* eslint-disable-line */}
-              <FormattedMessage
-                id="PartialOfferCantProceed1"
-                defaultMessage="Request rejected, possibly you have not complete another swap {br}{link}"
-                values={{
-                  link: (
-                    <a
-                      className="errorLink"
-                      role="button"
-                      onClick={() => this.handleGoDeclimeFaq()}
-                    >
-                      {' '}
-                      {/* eslint-disable-line */}
-                      <FormattedMessage
-                        id="PartialOfferCantProceed1_1"
-                        defaultMessage="Check here"
-                      />
-                    </a>
-                  ),
-                  br: <br />,
-                }}
-              />
-            </p>
-          )}
-          {this.doesComissionPreventThisOrder() &&
-            BigNumber(getAmount).isGreaterThan(0) &&
-            this.state.haveAmount &&
-            this.state.getAmount && (
+            )}
+
+            {this.doesComissionPreventThisOrder() &&
+              BigNumber(getAmount).isGreaterThan(0) &&
+              this.state.haveAmount &&
+              this.state.getAmount &&
               <p styleName="error">
                 <FormattedMessage
                   id="ErrorBtcLowAmount"
@@ -1554,10 +1542,11 @@ export default class Exchange extends Component {
                   }}
                 />
               </p>
-            )}
-          {BigNumber(estimatedFeeValues[haveCurrency]).isGreaterThan(0) &&
-            BigNumber(haveAmount).isGreaterThan(0) &&
-            BigNumber(haveAmount).isLessThanOrEqualTo(balance) && (
+            }
+
+            {BigNumber(estimatedFeeValues[haveCurrency]).isGreaterThan(0) &&
+              BigNumber(haveAmount).isGreaterThan(0) &&
+              BigNumber(haveAmount).isLessThanOrEqualTo(balance) && (
               <div styleName="notifyThat">
                 <div>
                   <FormattedMessage
@@ -1621,61 +1610,30 @@ export default class Exchange extends Component {
               </div>
             )}
 
-          {isFetching && (
-            <span>
-              <FormattedMessage
-                id="partial291"
-                defaultMessage="Waiting for another participant (30 sec): "
-              />
-              <div styleName="loaderHolder">
-                <div styleName="additionalLoaderHolder">
-                  <InlineLoader />
+            {isNoAnyOrders && linked.haveAmount.value > 0 && isFullLoadingComplite &&
+              <Fragment>
+                <p styleName="error">
+                  <FormattedMessage
+                    id="PartialPriceNoOrdersReduce"
+                    defaultMessage="No orders found, try later or change the currency pair"
+                  />
+                </p>
+              </Fragment>
+            }
+
+            {isFetching &&
+              <span>
+                <FormattedMessage
+                  id="partial291"
+                  defaultMessage="Waiting for another participant (30 sec): "
+                />
+                <div styleName="loaderHolder">
+                  <div styleName="additionalLoaderHolder">
+                    <InlineLoader />
+                  </div>
                 </div>
-              </div>
-            </span>
-          )}
-
-          {this.isCustomWalletAllowed() && (
-            <AddressSelect
-              isDark={isDark}
-              currency={getCurrency}
-              hasError={destinationError}
-              value={customWallet}
-              valueLink={linked.customWallet}
-              initialValue={customWallet}
-              onChange={this.onCustomWalletChange}
-              openScan={this.openScan}
-            />
-          )}
-
-          <div styleName="fees">
-            <div styleName="serviceFee">
-              <span>
-                <FormattedMessage
-                  id="Exchange_ServiceFee"
-                  defaultMessage="Service fee"
-                />:
               </span>
-              &nbsp;
-              <span>0</span>
-            </div>
-            <div styleName="minerFee">
-              <span>
-                <FormattedMessage
-                  id="Exchange_MinerFees"
-                  defaultMessage="Miner fee"
-                />:
-              </span>
-              &nbsp;
-              {!(btcFee && ethFee) ?
-                <span><InlineLoader /></span>
-                :
-                <span>
-                  {ethFee} ETH + {btcFee} BTC&nbsp;
-                  <a href="https://wiki.swaponline.io/faq/why-i-pay-ming-fees-of-btc-and-eth-both-why-not-seller/" target="_blank">(?)</a>
-                </span>
-              }
-            </div>
+            }
           </div>
 
           <div styleName="buttons">
@@ -1706,7 +1664,7 @@ export default class Exchange extends Component {
             <NetworkStatus />
           </div>
 
-          {!isWidgetBuild && (
+          {!isWidgetBuild &&
             <a
               href="https://generator.swaponline.site/generator/"
               target="_blank"
@@ -1718,7 +1676,7 @@ export default class Exchange extends Component {
                 defaultMessage="Embed on website"
               />
             </a>
-          )}
+          }
         </div>
       </div >
     );
@@ -1755,7 +1713,7 @@ export default class Exchange extends Component {
           {openScanCam && (
             <QrReader
               openScan={this.openScan}
-              handleError={this.handleError}
+              handleError={this.handleScanError}
               handleScan={this.handleScan}
             />
           )}

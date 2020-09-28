@@ -6195,43 +6195,43 @@
     ]
   },
   {
-    "id": "Partial_DestinationAddress_ConnectMetamask",
+    "id": "Exchange_ConnectMetamask",
     "message": "Connect Metamask",
     "files": [
       "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
   },
   {
-    "id": "Partial_DestinationAddress_CustomAddressOption",
+    "id": "Exchange_CustomAddressOption",
     "message": "Aangepast adres",
     "files": [
       "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
   },
   {
-    "id": "Partial_DestinationAddress_HotWalletAddressOption",
+    "id": "Exchange_HotWalletAddressOption",
     "message": "Mijn wallet",
     "files": [
       "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
   },
   {
-    "id": "Partial_DestinationAddress_MetamaskAddressOption",
+    "id": "Exchange_MetamaskAddressOption",
     "message": "Metamask's address",
     "files": [
       "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
   },
   {
-    "id": "Partial_DestinationAddress_PlaceholderEnterAddress",
+    "id": "Exchange_PlaceholderEnterAddress",
     "message": "Enter the receiving wallet address",
     "files": [
       "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
   },
   {
-    "id": "Partial_DestinationAddress_SpecifyAddress",
-    "message": "Specificeer de ontvangende wallet adres",
+    "id": "Exchange_SpecifyAddress",
+    "message": "Selecteer...",
     "files": [
       "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
