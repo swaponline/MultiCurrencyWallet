@@ -142,6 +142,12 @@
   display: flex;
   position: relative;
   justify-content: center;
+  @media screen and (min-width: 1025px) {
+    margin-top: 50px;
+    > * {
+      transform: rotate(-90deg);
+    }
+  }
 }
 
 .scrollTrigger {
@@ -180,7 +186,7 @@
   margin-top: 0;
   width: 100%;
   border-radius: 3px;
-  height: 68px;
+  height: 55px;
   font-size: 16px;
   line-height: 1em;
   box-shadow: none;
@@ -222,6 +228,16 @@
   margin-bottom: -10px;
 }
 
+
+.notices {
+  @media screen and (min-width: 1025px) {
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+}
+
 .fees {
   opacity: 0.7;
   margin: 2em 0;
@@ -229,9 +245,18 @@
   font-size: 0.7em;
   font-weight: bold;
   font-family: 'Roboto Mono', monospace;
+
+  @media screen and (min-width: 1025px) {
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
   .serviceFee {
     margin-bottom: 0.15em;
   }
+
   .minerFee {
     a {
       font-size: 1em;
@@ -244,6 +269,12 @@
   margin-top: 1em;
   display: flex;
   justify-content: space-around;
+
+  @media screen and (min-width: 1025px) {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 .buttonOrders {
@@ -356,6 +387,11 @@
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
 
+  @media screen and (min-width: 1025px) {
+    width: 100%;
+    max-width: 1000px;
+  }
+
   @media screen and (max-width: 480px) {
     display: flex;
     flex-direction: column;
@@ -365,6 +401,12 @@
   }
 }
 
+.userSendGetParts {
+  @media screen and (min-width: 1025px) {
+    display: flex;
+    justify-content: space-evenly;
+  }
+}
 
 .error {
   display: flex;

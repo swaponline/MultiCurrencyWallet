@@ -1319,145 +1319,123 @@ export default class Exchange extends Component {
     const Form = (
       <div styleName="section">
         <div styleName="formExchange">
-          <div className="data-tut-have" styleName="selectWrap">
-            <SelectGroup
-              activeFiat={activeFiat}
-              switchBalanceFunc={this.switchBalance}
-              inputValueLink={linked.haveAmount.pipe(this.setAmount)}
-              selectedValue={haveCurrency}
-              onSelect={this.handleSetHaveValue}
-              label={
-                <FormattedMessage id="partial243" defaultMessage="You sell" />
+          <div styleName="userSendGetParts">
+            <div className="userSendFromPart">
+              <div className="data-tut-have" styleName="selectWrap">
+                <SelectGroup
+                  activeFiat={activeFiat}
+                  switchBalanceFunc={this.switchBalance}
+                  inputValueLink={linked.haveAmount.pipe(this.setAmount)}
+                  selectedValue={haveCurrency}
+                  onSelect={this.handleSetHaveValue}
+                  label={
+                    <FormattedMessage id="partial243" defaultMessage="You sell" />
+                  }
+                  id="Exchange456"
+                  placeholder="0.00000000"
+                  fiat={maxAmount > 0 && isNonOffers ? 0 : haveFiat}
+                  currencies={currencies}
+                  onFocus={() => this.extendedControlsSet(true)}
+                  onBlur={() =>
+                    setTimeout(() => this.extendedControlsSet(false), 200)
+                  }
+                  inputToolTip={() => (isShowBalance ?
+                    <p styleName="maxAmount">
+                      {(
+                        (BigNumber(balance).toNumber() === 0)
+                        || BigNumber(balance).minus(estimatedFeeValues[haveCurrency]).isLessThanOrEqualTo(0)
+                      ) ? (
+                          <FormattedMessage
+                            id="partial766"
+                            defaultMessage="From any wallet or exchange"
+                          />
+                        ) : (
+                          <>
+                            {(estimatedFeeValues[haveCurrency])
+                              ? (
+                                <FormattedMessage
+                                  id="Exchange_AvialableBalance"
+                                  defaultMessage="Доступно: "
+                                />
+                              ) : (
+                                <FormattedMessage
+                                  id="partial767"
+                                  defaultMessage="Your balance: "
+                                />
+                              )
+                            }
+                            {(estimatedFeeValues[haveCurrency])
+                              ? BigNumber(balance)
+                                .minus(estimatedFeeValues[haveCurrency])
+                                .dp(5, BigNumber.ROUND_FLOOR).toString()
+                              : BigNumber(balance)
+                                .dp(5, BigNumber.ROUND_FLOOR).toString()
+                            }
+                            {'  '}
+                            {haveCurrency.toUpperCase()}
+                          </>
+                        )}
+                    </p>
+                    :
+                    <span />)
+                  }
+                />
+              </div>
+
+              {this.isCustomWalletAllowed() &&
+                <AddressSelect
+                  label={'From address'}
+                  isDark={isDark}
+                  currency={getCurrency}
+                  hasError={destinationError}
+                  value={customWallet}
+                  valueLink={linked.customWallet}
+                  initialValue={customWallet}
+                  onChange={this.onCustomWalletChange}
+                  openScan={this.openScan}
+                />
               }
-              id="Exchange456"
-              placeholder="0.00000000"
-              fiat={maxAmount > 0 && isNonOffers ? 0 : haveFiat}
-              currencies={currencies}
-              onFocus={() => this.extendedControlsSet(true)}
-              onBlur={() =>
-                setTimeout(() => this.extendedControlsSet(false), 200)
-              }
-              inputToolTip={() => isShowBalance ?
-                <p styleName="maxAmount">
-                  {(
-                    (BigNumber(balance).toNumber() === 0)
-                    || BigNumber(balance).minus(estimatedFeeValues[haveCurrency]).isLessThanOrEqualTo(0)
-                  ) ? (
-                      <FormattedMessage
-                        id="partial766"
-                        defaultMessage="From any wallet or exchange"
-                      />
-                    ) : (
-                      <>
-                        {(estimatedFeeValues[haveCurrency])
-                          ? (
-                            <FormattedMessage
-                              id="Exchange_AvialableBalance"
-                              defaultMessage="Доступно: "
-                            />
-                          ) : (
-                            <FormattedMessage
-                              id="partial767"
-                              defaultMessage="Your balance: "
-                            />
-                          )
-                        }
-                        {(estimatedFeeValues[haveCurrency])
-                          ? BigNumber(balance)
-                            .minus(estimatedFeeValues[haveCurrency])
-                            .dp(5, BigNumber.ROUND_FLOOR).toString()
-                          : BigNumber(balance)
-                            .dp(5, BigNumber.ROUND_FLOOR).toString()
-                        }
-                        {'  '}
-                        {haveCurrency.toUpperCase()}
-                      </>
-                    )}
-                </p>
-                : <span />
-              }
-            />
-          </div>
-
-          {this.isCustomWalletAllowed() &&
-            <AddressSelect
-              label={'From address'}
-              isDark={isDark}
-              currency={getCurrency}
-              hasError={destinationError}
-              value={customWallet}
-              valueLink={linked.customWallet}
-              initialValue={customWallet}
-              onChange={this.onCustomWalletChange}
-              openScan={this.openScan}
-            />
-          }
-
-          <div styleName="switchButton">
-            <Switching noneBorder onClick={this.handleFlipCurrency} />
-          </div>
-
-          <div className="data-tut-get" styleName="selectWrap">
-            <SelectGroup
-              activeFiat={activeFiat}
-              dataTut="get"
-              switchBalanceFunc={this.switchBalance}
-              inputValueLink={linked.getAmount}
-              selectedValue={getCurrency}
-              onSelect={this.handleSetGetValue}
-              label={
-                <FormattedMessage id="partial255" defaultMessage="You get" />
-              }
-              id="Exchange472"
-              currencies={addSelectedItems}
-              fiat={getFiat}
-              error={isLowAmount}
-            />
-          </div>
-
-          {this.isCustomWalletAllowed() &&
-            <AddressSelect
-              label={'To address'}
-              isDark={isDark}
-              currency={getCurrency}
-              hasError={destinationError}
-              value={customWallet}
-              valueLink={linked.customWallet}
-              initialValue={customWallet}
-              onChange={this.onCustomWalletChange}
-              openScan={this.openScan}
-            />
-          }
-
-          <div styleName="fees">
-            <div styleName="serviceFee">
-              <span>
-                <FormattedMessage
-                  id="Exchange_ServiceFee"
-                  defaultMessage="Service fee"
-                />:
-              </span>
-              &nbsp;
-              <span>0</span>
             </div>
-            <div styleName="minerFee">
-              <span>
-                <FormattedMessage
-                  id="Exchange_MinerFees"
-                  defaultMessage="Miner fee"
-                />:
-              </span>
-              &nbsp;
-              {!(btcFee && ethFee) ?
-                <span><InlineLoader /></span>
-                :
-                <span>
-                  {ethFee} ETH + {btcFee} BTC&nbsp;
-                  <a href="https://wiki.swaponline.io/faq/why-i-pay-ming-fees-of-btc-and-eth-both-why-not-seller/" target="_blank">(?)</a>
-                </span>
+
+            <div styleName="switchButton">
+              <Switching noneBorder onClick={this.handleFlipCurrency} />
+            </div>
+
+            <div className="userGetFormPart">
+              <div className="data-tut-get" styleName="selectWrap">
+                <SelectGroup
+                  activeFiat={activeFiat}
+                  dataTut="get"
+                  switchBalanceFunc={this.switchBalance}
+                  inputValueLink={linked.getAmount}
+                  selectedValue={getCurrency}
+                  onSelect={this.handleSetGetValue}
+                  label={
+                    <FormattedMessage id="partial255" defaultMessage="You get" />
+                  }
+                  id="Exchange472"
+                  currencies={addSelectedItems}
+                  fiat={getFiat}
+                  error={isLowAmount}
+                />
+              </div>
+
+              {this.isCustomWalletAllowed() &&
+                <AddressSelect
+                  label={'To address'}
+                  isDark={isDark}
+                  currency={getCurrency}
+                  hasError={destinationError}
+                  value={customWallet}
+                  valueLink={linked.customWallet}
+                  initialValue={customWallet}
+                  onChange={this.onCustomWalletChange}
+                  openScan={this.openScan}
+                />
               }
             </div>
           </div>
+
 
           <div className="notices">
 
@@ -1635,6 +1613,38 @@ export default class Exchange extends Component {
               </span>
             }
           </div>
+
+
+          <div styleName="fees">
+            <div styleName="serviceFee">
+              <span>
+                <FormattedMessage
+                  id="Exchange_ServiceFee"
+                  defaultMessage="Service fee"
+                />:
+              </span>
+              &nbsp;
+              <span>0</span>
+            </div>
+            <div styleName="minerFee">
+              <span>
+                <FormattedMessage
+                  id="Exchange_MinerFees"
+                  defaultMessage="Miner fee"
+                />:
+              </span>
+              &nbsp;
+              {!(btcFee && ethFee) ?
+                <span><InlineLoader /></span>
+                :
+                <span>
+                  {ethFee} ETH + {btcFee} BTC&nbsp;
+                  <a href="https://wiki.swaponline.io/faq/why-i-pay-ming-fees-of-btc-and-eth-both-why-not-seller/" target="_blank">(?)</a>
+                </span>
+              }
+            </div>
+          </div>
+
 
           <div styleName="buttons">
             <Button
