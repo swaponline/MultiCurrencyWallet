@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import { withRouter } from 'react-router'
 import { connect } from 'redaction'
 import styles from './AddressSelect.scss'
 import cssModules from 'react-css-modules'
@@ -10,6 +11,9 @@ import metamask from 'helpers/metamask'
 import { Button } from 'components/controls'
 import ethToken from 'helpers/ethToken'
 import Option from './Option/Option'
+import { links } from 'helpers'
+import { localisedUrl } from 'helpers/locale'
+import { injectIntl } from 'react-intl'
 
 import iconHotwallet from 'components/Logo/images/base.svg'
 import iconMetamask from './images/metamask.svg'
@@ -24,6 +28,10 @@ const langLabels = defineMessages({
   optionHotWallet: {
     id: 'Exchange_HotWalletAddressOption',
     defaultMessage: 'My wallet',
+  },
+  optionHotWalletCreate: {
+    id: 'Exchange_HotWalletCreate',
+    defaultMessage: 'Create wallet',
   },
   optionMetamast: {
     id: 'Exchange_MetamaskAddressOption',
@@ -45,11 +53,14 @@ const langLabels = defineMessages({
 
 const destinationType = {
   none: `none`,
+  hotwalletcreate: `hotwalletcreate`,
   hotwallet: `hotwallet`,
   metamask: `metamask`,
   custom: `custom`,
 }
 
+@injectIntl
+@withRouter
 @cssModules(styles, { allowMultiple: true })
 export default class AddressSelect extends Component {
   constructor(props) {
@@ -109,6 +120,15 @@ export default class AddressSelect extends Component {
     })
   }
 
+  goToСreateWallet() {
+    const {
+      history,
+      intl: { locale },
+    } = this.props
+
+    history.push(localisedUrl(locale, links.createWallet))
+  }
+
   handleConnectMetamask() {
     metamask.connect().then((address) => {
       const { onChange } = this.props
@@ -137,6 +157,9 @@ export default class AddressSelect extends Component {
       value: selectedDestination,
     } = item
 
+    if (selectedDestination === 'hotwalletcreate') {
+      this.goToСreateWallet()
+    }
 
     this.setState({
       selectedDestination,
@@ -197,15 +220,18 @@ export default class AddressSelect extends Component {
         icon: iconHotwallet,
         title: <FormattedMessage {...langLabels.optionHotWallet} />,
       },
-      ...(
-        (metamask.isEnabled() && ethToken.isEthOrEthToken({ name: currency })) ? [
-          {
+      {
+        value: destinationType.hotwalletcreate,
+        icon: iconHotwallet,
+        title: <FormattedMessage {...langLabels.optionHotWalletCreate} />,
+      },
+      ...((metamask.isEnabled() && ethToken.isEthOrEthToken({ name: currency }))
+        ?
+        [{
             value: destinationType.metamask,
             icon: iconMetamask,
             title: <FormattedMessage {...langLabels.optionMetamast} />,
-          }
-        ] : []
-      ),
+        }] : []),
       {
         value: destinationType.custom,
         icon: iconCustom,
