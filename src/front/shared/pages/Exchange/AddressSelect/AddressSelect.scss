@@ -37,6 +37,10 @@
     left: 10px;
     background: #fff;
     white-space: nowrap;
+    @include media-mobile {
+      top: -14px;
+      font-size: 12px;
+    }
   }
 
   &.--dark .label {
@@ -211,9 +215,7 @@
       & > div {
         & > span {
           display: block;
-          font-size: 10pt;
-          font-weight: bold;
-          padding-left: 1.2em;
+          font-size: 14px;
         }
       }
     }
