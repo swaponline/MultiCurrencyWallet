@@ -27,7 +27,7 @@ const langLabels = defineMessages({
   },
   optionMetamast: {
     id: 'Exchange_MetamaskAddressOption',
-    defaultMessage: 'Metamask\'s address',
+    defaultMessage: 'Metamask',
   },
   optionCustom: {
     id: 'Exchange_CustomAddressOption',
@@ -39,7 +39,7 @@ const langLabels = defineMessages({
   },
   connectMetamask: {
     id: 'Exchange_ConnectMetamask',
-    defaultMessage: 'Connect Metamask',
+    defaultMessage: 'Connect',
   },
 })
 
@@ -185,10 +185,11 @@ export default class AddressSelect extends Component {
       selectedDestination = 'none'
     }
 
-    let destinationOptions = [
+    const options = [
       {
         value: destinationType.none,
         smalltext: true,
+        disabled: true,
         title: <FormattedMessage {...langLabels.labelSpecifyAddress} />,
       },
       {
@@ -217,7 +218,7 @@ export default class AddressSelect extends Component {
         <div styleName="label">{label}</div>
         <DropDown
           styleName="dropDown"
-          items={destinationOptions}
+          items={options}
           initialValue={destinationType.none}
           selectedValue={selectedDestination}
           disableSearch={true}
@@ -227,30 +228,34 @@ export default class AddressSelect extends Component {
           onSelect={(value) => this.handleDestinationSelect(value)}
         />
         {selectedDestination === destinationType.hotwallet &&
-          <div styleName="readonlyValue">
-            <input value={customWallet} onChange={() => { }} />
+          <div styleName="selectedInner">
+            <div styleName="readonlyValue">
+              <input value={customWallet} onChange={() => { }} />
+            </div>
           </div>
         }
         {selectedDestination === destinationType.metamask && metamask.isEnabled() &&
-          <Fragment>
+          <div styleName="selectedInner">
             {(metamaskConnected) ? (
               <div styleName="readonlyValue">
                 <input value={metamaskAddress} onChange={() => { }} />
               </div>
             ) : (
-              <Button
-                styleName="button"
-                blue
-                onClick={() => { this.handleConnectMetamask() }}
-              >
-                <FormattedMessage {...langLabels.connectMetamask} />
-              </Button>
+              <div styleName="buttonContainer">
+                <Button
+                  styleName="button"
+                  blue
+                  onClick={() => { this.handleConnectMetamask() }}
+                >
+                  <FormattedMessage {...langLabels.connectMetamask} />
+                </Button>
+              </div>
             )}
-          </Fragment>
+          </div>
         }
         {selectedDestination === destinationType.custom &&
-          <div styleName={`customWallet ${(walletAddressFocused) ? 'customWallet_focus' : ''}`}>
-            <div styleName="anotherRecepient">
+          <div styleName="selectedInner">
+            <div styleName={`customWallet ${(walletAddressFocused) ? 'customWallet_focus' : ''}`}>
               <div styleName="walletInput">
                 <Input
                   inputCustomStyle={{ fontSize: "15px" }}
@@ -259,10 +264,10 @@ export default class AddressSelect extends Component {
                   pattern="0-9a-zA-Z"
                   onBlur={() => { this.handleBlurAddress() }}
                   onFocus={() => { this.handleFocusAddress() }}
-                  placeholder="Enter the receiving wallet address"
+                  placeholder="Enter address"
                 />
-                <i styleName="qrCode" className="fas fa-qrcode" onClick={openScan} />
               </div>
+              <i styleName="qrCode" className="fas fa-qrcode" onClick={openScan} />
             </div>
           </div>
         }

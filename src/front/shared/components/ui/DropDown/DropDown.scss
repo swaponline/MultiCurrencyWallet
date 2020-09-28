@@ -43,9 +43,6 @@
     }
   }
 
-  .arrowDropDown {
-    right: 25px;
-  }
 }
 
 .dark {
@@ -200,7 +197,7 @@
 .selectedItem {
   height: 57px;
   line-height: 60px;
-  padding-right: 45px;
+  padding-right: 40px;
   padding-left: 16px;
   min-width: 135px;
   background: white;
@@ -215,7 +212,7 @@
   @include no-user-select;
 
   &.left {
-    padding-left: 45px;
+    padding-left: 40px;
     padding-right: 16px;
     text-align: left;
   }
@@ -235,12 +232,16 @@
   margin-top: -6px;
   position: absolute;
   top: 50%;
-  right: 20px;
+  right: 19px;
 
   &.left {
     right: 0;
-    left: 20px;
+    left: 19px;
   }
+}
+
+.disabled {
+  opacity: 0.5;
 }
 
 .select {

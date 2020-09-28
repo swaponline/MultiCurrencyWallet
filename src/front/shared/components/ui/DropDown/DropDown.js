@@ -82,7 +82,9 @@ export default class DropDown extends Component {
 
     if (selectedItem !== undefined) {
       if (typeof selectedItemRender !== 'function') {
-        return (selectedItem.title || selectedItem.fullTitle)
+        return (
+          <span styleName={selectedItem.disabled ? 'disabled' : ''}>{selectedItem.title || selectedItem.fullTitle}</span>
+        )
       } else {
         return selectedItemRender(selectedItem)
       }
@@ -149,11 +151,15 @@ export default class DropDown extends Component {
       >
         <div styleName={`${dropDownStyleName} ${isDark ? 'dark' : ''}`} className={className}>
           <div
-            styleName={`selectedItem ${notIteractable ? ' selectedItem_disableIteract' : ''} ${arrowSide === 'left' ? 'left' : ''}`}
+            styleName={`
+              selectedItem
+              ${notIteractable ? ' selectedItem_disableIteract' : ''}
+              ${arrowSide === 'left' ? 'left' : ''}
+            `}
             onClick={notIteractable ? () => null : this.toggle}
           >
             {!notIteractable &&
-              <div styleName={`arrow arrowDropDown ${arrowSide === 'left' ? 'left' : ''}`}
+              <div styleName={`arrow ${arrowSide === 'left' ? 'left' : ''}`}
             />}
             {isToggleActive && !disableSearch ? (
               <Input
@@ -174,6 +180,9 @@ export default class DropDown extends Component {
                 let inneedData = null
                 if (infoAboutCurrency) {
                   inneedData = infoAboutCurrency.find(el => el.name === item.name)
+                }
+                if (item.disabled) {
+                  return
                 }
                 return (
                   <div

@@ -88,24 +88,31 @@
   }
 }
 
+.selectedInner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 58%;
+  z-index: 1;
+}
+
 .readonlyValue {
+  height: 100%;
+
   input {
     display: block;
     width: 100%;
-    border: none;
-    border-radius: 3px;
+    height: 100%;
     vertical-align: middle;
-    line-height: 68px;
-    //color: #080808;
+    padding: 0.7em;
+    border: none;
     font-size: 1em;
-    padding: 0.5em;
-    border: 1px solid #ccc;
-    line-height: 3.1em;
+    text-overflow: ellipsis;
+    background: #8882;
+
     &:focus {
-      border: 1px solid #6144e5 !important;
-      padding: 0.5em;
-      outline: none;
-      line-height: 3.1em;
+      //outline: 1px solid #6144e5 !important;
     }
   }
 }
@@ -113,22 +120,26 @@
 
 
 .customWallet {
-  padding: 0 20px;
+  position: relative;
+  height: 100%;
 
   &_site {
     position: relative;
   }
 
   &_focus {
-    border: 2px solid #6144e5 !important;
+    outline: 1px solid #6144e5 !important;
   }
 
   .qrCode {
     position: absolute;
-    right: -2em;
+    right: -0.9em;
+    top: 50%;
+    transform: translateY(-50%);
     background-color: #fff;
     border: 6px solid #fff;
     display: block;
+    cursor: pointer;
   }
 }
 
@@ -143,10 +154,17 @@
   }
 }
 
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 5px;
+}
 
 .button {
   margin-top: 0;
-  width: 100%;
+  width: 64%;
+  height: 80%;
   border-radius: 3px;
   height: 36px;
   font-size: 16px;
@@ -158,8 +176,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 4.5em;
-  padding: 0 1em;
+  height: 100%;
+  padding: 0 0.9em;
 
   input {
     border: none;
@@ -167,7 +185,7 @@
     height: 40px;
     padding: 0;
     font-size: 16px;
-    margin-top: 2px;
+    margin-top: -2px;
 
     &:focus {
       border: none;
@@ -176,10 +194,6 @@
       margin-top: 1px;
     }
   }
-}
-
-.anotherRecepient {
-  position: relative;
 }
 
 

@@ -6208,14 +6208,14 @@
   },
   {
     "id": "Exchange_ConnectMetamask",
-    "message": "Connect Metamask",
+    "message": "Connect",
     "files": [
       "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
   },
   {
     "id": "Exchange_CustomAddressOption",
-    "message": "Custom address",
+    "message": "Custom",
     "files": [
       "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
@@ -6229,7 +6229,7 @@
   },
   {
     "id": "Exchange_MetamaskAddressOption",
-    "message": "Metamask's address",
+    "message": "Metamask",
     "files": [
       "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]

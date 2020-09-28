@@ -6265,28 +6265,28 @@
   },
   {
     "id": "Exchange_ConnectMetamask",
-    "message": "Connect Metamask",
+    "message": "Подключить",
     "files": [
       "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
   },
   {
     "id": "Exchange_CustomAddressOption",
-    "message": "Custom address",
+    "message": "Произвольный",
     "files": [
       "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
   },
   {
     "id": "Exchange_HotWalletAddressOption",
-    "message": "My wallet",
+    "message": "Мой кошелёк",
     "files": [
       "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
   },
   {
     "id": "Exchange_MetamaskAddressOption",
-    "message": "Metamask's address",
+    "message": "Metamask",
     "files": [
       "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
