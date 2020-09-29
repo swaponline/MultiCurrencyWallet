@@ -6190,6 +6190,13 @@
     ]
   },
   {
+    "id": "Exchange_MetamaskNotInstalledOption",
+    "message": "Metamask (not installed)",
+    "files": [
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
+    ]
+  },
+  {
     "id": "Exchange_PlaceholderEnterAddress",
     "message": "Enter the receiving wallet address",
     "files": [

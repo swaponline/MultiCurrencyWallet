@@ -32,9 +32,13 @@ const langLabels = defineMessages({
     id: 'Exchange_HotWalletCreate',
     defaultMessage: 'Create wallet',
   },
-  optionMetamast: {
+  optionMetamask: {
     id: 'Exchange_MetamaskAddressOption',
     defaultMessage: 'Metamask',
+  },
+  optionMetamaskNotInstalled: {
+    id: 'Exchange_MetamaskNotInstalledOption',
+    defaultMessage: 'Metamask (not installed)',
   },
   optionCustom: {
     id: 'Exchange_CustomAddressOption',
@@ -248,7 +252,8 @@ export default class AddressSelect extends Component {
       }
     }
 
-    const isMetamaskOption = metamask.isEnabled() && ethToken.isEthOrEthToken({ name: currency })
+    const isMetamaskOption = ethToken.isEthOrEthToken({ name: currency })
+    const isMetamaskInstalled = metamask.isEnabled()
 
     // Forbid `Custom address` option when using ethereum/tokens
     // because you need to make a request to the contract
@@ -258,8 +263,8 @@ export default class AddressSelect extends Component {
     const options = [
       {
         value: destinationType.none,
-        smalltext: true,
         disabled: true,
+        hidden: true,
         title: <FormattedMessage {...langLabels.labelSpecifyAddress} />,
       },
       ...(isCurrencyInUserWallet ? [{
@@ -272,11 +277,17 @@ export default class AddressSelect extends Component {
           title: <FormattedMessage {...langLabels.optionHotWalletCreate} />,
         }]
       ),
-      ...((isMetamaskOption) ? [{
-          value: destinationType.metamask,
-          icon: iconMetamask,
-          title: <FormattedMessage {...langLabels.optionMetamast} />,
-        }] : []),
+      ...((isMetamaskOption) ?
+          isMetamaskInstalled ? [{
+            value: destinationType.metamask,
+            icon: iconMetamask,
+            title: <FormattedMessage {...langLabels.optionMetamask} />,
+          }] : [{
+            value: destinationType.none,
+            icon: iconMetamask,
+            disabled: true,
+            title: <FormattedMessage {...langLabels.optionMetamaskNotInstalled} />,
+          }] : []),
       ...(isCustomAddressOption ? [{
         value: destinationType.custom,
         icon: iconCustom,

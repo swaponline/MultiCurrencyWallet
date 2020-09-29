@@ -181,7 +181,7 @@ export default class DropDown extends Component {
                 if (infoAboutCurrency) {
                   inneedData = infoAboutCurrency.find(el => el.name === item.name)
                 }
-                if (item.disabled) {
+                if (item.hidden) {
                   return
                 }
                 return (
