@@ -312,80 +312,114 @@ const fetchTx = (hash, cacheResponse) =>
     cacheResponse,
     checkStatus: (answer) => {
       try {
-        if (answer && answer.fees !== undefined) return true
+        if (answer && answer.fee !== undefined) return true
       } catch (e) { /* */ }
       return false
     },
-  }).then(({ fees, ...rest }) => ({
-    fees: BigNumber(fees).multipliedBy(1e8),
-    ...rest,
-  }))
+  }).then(({ fee, ...rest }) => ({
+      fees: BigNumber(fee).dividedBy(1e8).toNumber(),
+      ...rest,
+    }
+  ))
 
-const fetchTxInfo = (hash, cacheResponse) =>
-  fetchTx(hash, cacheResponse)
-    .then(({ vin, vout, ...rest }) => {
-      const senderAddress = vin ? vin[0].addr : null
-      const amount = vout ? new BigNumber(vout[0].value).toNumber() : null
+const fetchTxInfo = (hash, cacheResponse) => {
+  return new Promise(async (callback, txinfoReject) => {
+    let baseTxInfo = false
+    let txCoins = false
 
-      let afterBalance = vout && vout[1] ? new BigNumber(vout[1].value).toNumber() : null
-      let adminOutput = []
-      let adminFee = false
+    try {
+      baseTxInfo = await fetchTx(hash, cacheResponse)
+    } catch (error) {
+      console.error('Fail fetch tx info', error)
+      txinfoReject(error)
+      return
+    }
+    try {
+      txCoins = await apiLooper.get(`bitpay`, `/tx/${hash}/coins`, {
+        cacheResponse,
+        /* checkStatus */
+      })
+    } catch (error) {
+      console.error('Failt fetch tx coin info', error)
+      txinfoReject(error)
+    }
 
-      if (hasAdminFee) {
-        adminOutput = vout.filter((out) => {
-          const voutAddrBuf = Buffer.from(out.scriptPubKey.hex, 'hex')
-          const currentAddress = bitcoin.address.fromOutputScript(voutAddrBuf, btc.network)
-          return (
-            currentAddress === hasAdminFee.address
-            && !(new BigNumber(out.value).eq(amount))
-          )
-        })
-      }
+    let receiverAddress = null
+    let afterBalance = txCoins && txCoins.inputs && txCoins.inputs[1] 
+      ? new BigNumber(txCoins.inputs[1].value).dividedBy(1e8).toNumber() 
+      : null
+    let adminOutput = []
+    let adminFee = false
+    let afterOutput = []
 
-      const afterOutput = vout.filter((out) => {
-        const voutAddrBuf = Buffer.from(out.scriptPubKey.hex, 'hex')
-        const currentAddress = bitcoin.address.fromOutputScript(voutAddrBuf, btc.network)
+    if (!txCoins || !txCoins.inputs || !txCoins.outputs) {
+      console.error('tx coin info empty')
+      txinfoReject('tx coin info empty')
+    }
+
+    console.log('Debug fetchTxInfo', baseTxInfo, txCoins)
+
+    const senderAddress = txCoins && txCoins.inputs ? txCoins.inputs[0].address : null
+    const amount = new BigNumber(txCoins.outputs[0].value).dividedBy(1e8).toNumber()
+
+    if (hasAdminFee) {
+      adminOutput = txCoins.outputs.filter((out) => {
         return (
-          currentAddress !== hasAdminFee.address
-          && currentAddress !== senderAddress
+          out.address === hasAdminFee.address
+          && !(new BigNumber(out.value).eq(amount))
         )
       })
+    }
 
-      if (afterOutput.length) {
-        afterBalance = new BigNumber(afterOutput[0].value).toNumber()
-      }
 
-      if (adminOutput.length) {
-        adminFee = new BigNumber(adminOutput[0].value).toNumber()
-      }
+    /*
+    // @ToDo - need fix
+    if (txCoins && txCoins.outputs) {
+      afterOutput = txCoins.outputs.filter(({ address }) => {
+        return (
+          address !== hasAdminFee.address
+        )
+      })
+    }
+    */
 
-      let receiverAddress = null
-      if (vout) {
-        const voutAddrBuf = Buffer.from(vout[0].scriptPubKey.hex, 'hex')
-        receiverAddress = bitcoin.address.fromOutputScript(voutAddrBuf, btc.network)
-      }
-      const txInfo = {
-        amount,
-        afterBalance,
-        senderAddress,
-        confirmed: !!(rest.confirmations),
-        receiverAddress,
-        minerFee: rest.fees.dividedBy(1e8).toNumber(),
-        adminFee,
-        minerFeeCurrency: 'BTC',
-        outputs: vout.map((out) => {
-          const voutAddrBuf = Buffer.from(out.scriptPubKey.hex, 'hex')
-          const currentAddress = bitcoin.address.fromOutputScript(voutAddrBuf, btc.network)
-          return {
-            amount: new BigNumber(out.value).toNumber(),
-            address: currentAddress,
-          }
-        }),
-        ...rest,
-      }
+    if (afterOutput.length) {
+      afterBalance = new BigNumber(afterOutput[0].value).dividedBy(1e8).toNumber()
+    }
 
-      return txInfo
-    })
+    if (adminOutput.length) {
+      adminFee = new BigNumber(adminOutput[0].value).dividedBy(1e8).toNumber()
+    }
+
+    
+    if (txCoins && txCoins.outputs && txCoins.outputs[0]) {
+      receiverAddress = txCoins.outputs[0].address
+    }
+    
+    const txInfo = {
+      amount,
+      afterBalance,
+      senderAddress,
+      confirmed: true, // !!(rest.confirmations), // @ToDo - need fix
+      receiverAddress,
+      
+      minerFee: baseTxInfo.fees,
+      adminFee,
+      minerFeeCurrency: 'BTC',
+      // @ ToDo - need fix
+      outputs: [], /* vout.map((out) => {
+        const voutAddrBuf = Buffer.from(out.scriptPubKey.hex, 'hex')
+        const currentAddress = bitcoin.address.fromOutputScript(voutAddrBuf, btc.network)
+        return {
+          amount: new BigNumber(out.value).toNumber(),
+          address: currentAddress,
+        }
+      }),*/
+    }
+
+    callback( txInfo )
+  })
+}
 
 const getInvoices = (address) => {
   const { user: { btcData: { userAddress } } } = getState()
