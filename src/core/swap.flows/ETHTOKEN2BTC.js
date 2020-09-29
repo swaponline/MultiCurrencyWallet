@@ -156,7 +156,13 @@ export default (tokenName) => {
         // 5. Create ETH Contract
 
         async () => {
-          const { participant, buyAmount, sellAmount } = flow.swap
+          const {
+            participant,
+            buyAmount,
+            sellAmount,
+            waitConfirm,
+          } = flow.swap
+
           const { secretHash } = flow.state
 
           const utcNow = () => Math.floor(Date.now() / 1000)
@@ -168,7 +174,9 @@ export default (tokenName) => {
               value: buyAmount,
               recipientPublicKey: this.app.services.auth.accounts.btc.getPublicKey(),
               lockTime: utcNow(),
-              confidence: (this.app.isWhitelistBtc(participant.btc.address)) ? 0 : 0.8,
+              confidence: (this.app.isWhitelistBtc(participant.btc.address)) 
+                ? 0 
+                : (waitConfirm) ? 1 : 0.8,
             })
 
             if (scriptCheckError) {
