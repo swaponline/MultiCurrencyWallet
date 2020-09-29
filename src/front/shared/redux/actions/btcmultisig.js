@@ -852,7 +852,7 @@ const addSMSWallet = async (mnemonicOrKey) => {
   await getBalance()
 }
 
-const getAddrBalance = (address) => apiLooper.get('bitpay', `/addr/${address}`, {
+const getAddrBalance = (address) => apiLooper.get('bitpay', `/address/${address}/balance`, {
   inQuery: {
     delay: 500,
     name: `balance`,
@@ -863,10 +863,10 @@ const getAddrBalance = (address) => apiLooper.get('bitpay', `/addr/${address}`, 
     } catch (e) { /* */ }
     return false
   },
-}).then(({ balance, unconfirmedBalance }) => ({
+}).then(({ balance, unconfirmed }) => ({
   address,
-  balance,
-  unconfirmedBalance,
+  balance: new BigNumber(balance).dividedBy(1e8).toNumber(),
+  unconfirmedBalance: new BigNumber(unconfirmed).dividedBy(1e8).toNumber(),
 }))
 
 const getBalance = (ownAddress, ownDataKey) => {
@@ -929,7 +929,7 @@ const getBalanceG2FA = () => {
 }
 
 const fetchBalance = (address) =>
-  apiLooper.get('bitpay', `/addr/${address}`, {
+  apiLooper.get('bitpay', `/address/${address}/balance`, {
     inQuery: {
       delay: 500,
       name: `balance`,
@@ -940,7 +940,7 @@ const fetchBalance = (address) =>
       } catch (e) { /* */ }
       return false
     },
-  }).then(({ balance }) => balance)
+  }).then(({ balance }) => new BigNumber(balance).dividedBy(1e8).toNumber() )
 
 const fetchTx = (hash) =>
   apiLooper.get('bitpay', `/tx/${hash}`, {

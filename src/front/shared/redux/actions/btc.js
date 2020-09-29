@@ -239,23 +239,23 @@ const getLinkToInfo = (tx) => {
   return `${config.link.bitpay}/tx/${tx}`
 }
 
-const fetchBalanceStatus = (address) => apiLooper.get('bitpay', `/addr/${address}`, {
+const fetchBalanceStatus = (address) => apiLooper.get('bitpay', `/address/${address}/balance/`, {
   checkStatus: (answer) => {
     try {
       if (answer && answer.balance !== undefined) return true
     } catch (e) { /* */ }
     return false
   },
-}).then(({ balance, unconfirmedBalance }) => ({
+}).then(({ balance, unconfirmed }) => ({
   address,
-  balance,
-  unconfirmedBalance,
+  balance: new BigNumber(balance).dividedBy(1e8).toNumber(),
+  unconfirmedBalance: new BigNumber(unconfirmed).dividedBy(1e8).toNumber(),
 }))
   .catch((e) => false)
 const getBalance = () => {
   const { user: { btcData: { address } } } = getState()
 
-  return apiLooper.get('bitpay', `/addr/${address}`, {
+  return apiLooper.get('bitpay', `/address/${address}/balance/`, {
     inQuery: {
       delay: 500,
       name: `balance`,
@@ -266,10 +266,15 @@ const getBalance = () => {
       } catch (e) { /* */ }
       return false
     },
-  }).then(({ balance, unconfirmedBalance }) => {
+  }).then(({ balance, unconfirmed }) => {
+    balance = new BigNumber(balance).dividedBy(1e8).toNumber()
     console.log('BTC Balance: ', balance)
-    console.log('BTC unconfirmedBalance Balance: ', unconfirmedBalance)
-    reducers.user.setBalance({ name: 'btcData', amount: balance, unconfirmedBalance })
+    console.log('BTC unconfirmedBalance Balance: ', unconfirmed)
+    reducers.user.setBalance({
+      name: 'btcData',
+      amount: balance,
+      unconfirmedBalance: new BigNumber(unconfirmed).dividedBy(1e8).toNumber(),
+    })
     return balance
   })
     .catch((e) => {
@@ -278,7 +283,7 @@ const getBalance = () => {
 }
 
 const fetchBalance = (address) =>
-  apiLooper.get('bitpay', `/addr/${address}`, {
+  apiLooper.get('bitpay', `/address/${address}/balance/`, {
     checkStatus: (answer) => {
       try {
         if (answer && answer.balance !== undefined) return true
@@ -289,7 +294,7 @@ const fetchBalance = (address) =>
       delay: 500,
       name: `balance`,
     },
-  }).then(({ balance }) => balance)
+  }).then(({ balance }) => new BigNumber(balance).dividedBy(1e8).toNumber())
 
 const fetchTxRaw = (txId, cacheResponse) => 
   apiLooper.get('bitpay', `/rawtx/${txId}`, {
