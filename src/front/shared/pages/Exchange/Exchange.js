@@ -1321,7 +1321,7 @@ export default class Exchange extends Component {
         <div styleName="formExchange">
           <div styleName="userSendGetParts">
             <div className="userSendFromPart">
-              <div className="data-tut-have" styleName="selectWrap">
+              <div className="data-tut-have_disabled" styleName="selectWrap">
                 <SelectGroup
                   activeFiat={activeFiat}
                   switchBalanceFunc={this.switchBalance}
@@ -1402,7 +1402,7 @@ export default class Exchange extends Component {
             </div>
 
             <div className="userGetFormPart">
-              <div className="data-tut-get" styleName="selectWrap">
+              <div className="data-tut-get_disabled" styleName="selectWrap">
                 <SelectGroup
                   activeFiat={activeFiat}
                   dataTut="get"
@@ -1437,7 +1437,7 @@ export default class Exchange extends Component {
           </div>
 
 
-          <div className="notices">
+          <div styleName="notices">
 
             {oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && !isNonOffers &&
               <div styleName="price">
@@ -1648,7 +1648,7 @@ export default class Exchange extends Component {
 
           <div styleName="buttons">
             <Button
-              className="data-tut-Exchange"
+              className="data-tut-Exchange_disabled"
               styleName="button"
               blue
               onClick={this.handleGoTrade}

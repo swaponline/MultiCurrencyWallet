@@ -248,6 +248,13 @@ export default class AddressSelect extends Component {
       }
     }
 
+    const isMetamaskOption = metamask.isEnabled() && ethToken.isEthOrEthToken({ name: currency })
+
+    // Forbid `Custom address` option when using ethereum/tokens
+    // because you need to make a request to the contract
+    const isCustomAddressOption = !ethToken.isEthOrEthToken({ name: currency })
+
+
     const options = [
       {
         value: destinationType.none,
@@ -255,32 +262,26 @@ export default class AddressSelect extends Component {
         disabled: true,
         title: <FormattedMessage {...langLabels.labelSpecifyAddress} />,
       },
-      ...(isCurrencyInUserWallet
-        ?
-        [{
-            value: destinationType.hotwallet,
-            icon: iconHotwallet,
-            title: <FormattedMessage {...langLabels.optionHotWallet} />,
-        }]
-        :
-        [{
+      ...(isCurrencyInUserWallet ? [{
+          value: destinationType.hotwallet,
+          icon: iconHotwallet,
+          title: <FormattedMessage {...langLabels.optionHotWallet} />,
+        }] : [{
           value: destinationType.hotwalletcreate,
           icon: iconHotwallet,
           title: <FormattedMessage {...langLabels.optionHotWalletCreate} />,
         }]
       ),
-      ...((metamask.isEnabled() && ethToken.isEthOrEthToken({ name: currency }))
-        ?
-        [{
-            value: destinationType.metamask,
-            icon: iconMetamask,
-            title: <FormattedMessage {...langLabels.optionMetamast} />,
+      ...((isMetamaskOption) ? [{
+          value: destinationType.metamask,
+          icon: iconMetamask,
+          title: <FormattedMessage {...langLabels.optionMetamast} />,
         }] : []),
-      {
+      ...(isCustomAddressOption ? [{
         value: destinationType.custom,
         icon: iconCustom,
         title: <FormattedMessage {...langLabels.optionCustom} />,
-      },
+      }] : []),
     ]
 
     return (
