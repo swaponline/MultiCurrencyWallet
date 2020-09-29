@@ -1,6 +1,19 @@
 const request = require('request-promise-native')
 
 const responseCacheStorage = {}
+const responseQuery = {}
+const responseQueryTimers = {}
+const responseQueryTicks = 10
+
+
+const responseQueryInit = (queryName) => {
+  if (!responseQuery[queryName]) responseQuery[queryName] = []
+  if (!responseQueryTimers[queryName]) {
+    responseQueryTimers[queryName] = setTimeout(() => {
+      responseQueryWorker(queryName)
+    }, responseQueryTicks)
+  }
+}
 
 const responseCacheGetKey = (req, opts) => `${opts.method}-${opts.endpoint}`
 
@@ -39,57 +52,95 @@ const responseCacheAdd = (req, opts, resData) => {
   }
 }
 
-const responseQueryArray = new Array()
-const responseQueryWorker = () => {
-  if (responseQueryArray.length) {
-    const currentQuery = responseQueryArray.shift()
-    currentQuery( responseQueryWorker )
+const responseQueryWorker = (queryName) => {
+  if (responseQuery[queryName].length) {
+    const queryChunk = responseQuery[queryName].shift()
+
+    const {
+      req,
+      opts,
+      opts: {
+        inQuery: {
+          delay,
+        },
+      },
+      fulfill: onResolve,
+      reject: onError,
+    } = queryChunk
+
+    const debug = `${opts.method.toUpperCase()} ${opts.endpoint}`
+    createResponseHandler(req, opts).then((answer) => {
+      onResolve(answer)
+      responseQueryTimers[queryName] = setTimeout(() => {
+        responseQueryWorker(queryName)
+      }, (delay || responseQueryTicks) )
+
+    }).catch((error) => {
+      onError(error)
+      responseQueryTimers[queryName] = setTimeout(() => {
+        responseQueryWorker(queryName)
+      }, (delay || responseQueryTicks) )
+    })
   } else {
-    setTimeout( responseQueryWorker, 10 )
+    responseQueryTimers[queryName] = setTimeout(() => {
+      responseQueryWorker(queryName)
+    }, responseQueryTicks)
   }
 }
-responseQueryWorker()
-
 
 const createResponseHandler = (req, opts) => {
   const debug = `${opts.method.toUpperCase()} ${opts.endpoint}`
 
   const responseQueryTimeout = 1000
   // no cache - do request
-  return new Promise((fulfill, reject) => {
-    const doRequest = ( nextTick ) => {
-      // cached answer
-      const cachedAnswer = responseCacheGet(req, opts)
+  // cached answer
+  const cachedAnswer = responseCacheGet(req, opts)
 
-      if (cachedAnswer) {
-        setTimeout( nextTick, responseQueryTimeout )
-        fulfill(cachedAnswer.resData)
-        return
+  if (cachedAnswer) {
+    return new Promise((fulfill, reject) => {
+      fulfill(cachedAnswer.resData)
+      return
+    })
+  }
+
+  const { inQuery } = opts
+  if (inQuery && !inQuery.inited) {
+    return new Promise((fulfill, reject) => {
+      const { name: queryName } = inQuery
+
+      responseQueryInit(queryName)
+      responseQuery[queryName].push({
+        req,
+        opts: {
+          ...opts,
+          inQuery: {
+            ...inQuery,
+            inited: true,
+          },
+        },
+        fulfill,
+        reject,
+      })
+    })
+  }
+
+  return new Promise((fulfill, reject) => {
+    req.then( answer => {
+      if (opts.cacheResponse) {
+        responseCacheAdd(req, opts, answer)
       }
-      req.then( answer => {
-        if (opts.cacheResponse) {
-          responseCacheAdd(req, opts, answer)
+      fulfill(answer)
+    })
+    .catch( error => {
+      if (opts.cacheOnFail) {
+        const cachedData = responseCacheGetTimeout(req, opts)
+        if (cachedData) {
+          fulfill(cachedData.resData)
+          return
         }
-        setTimeout( nextTick, responseQueryTimeout )
-        fulfill(answer)
-      })
-      .catch( error => {
-        setTimeout( nextTick, responseQueryTimeout )
-        if (opts.cacheOnFail) {
-          const cachedData = responseCacheGetTimeout(req, opts)
-          if (cachedData) {
-            fulfill(cachedData.resData)
-            return
-          }
-        }
-        reject(error)
-      })
-    }
-    if (opts.queryResponse) {
-      responseQueryArray.push( doRequest )
-    } else {
-      doRequest( () => {} )
-    }
+      }
+      reject(error)
+    })
   })
 }
 

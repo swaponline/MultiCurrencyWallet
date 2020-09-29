@@ -143,12 +143,16 @@ class Bitcoin {
   }
 
   fetchBalance(address) {
-    // 10 seconds cache
+    // 30 seconds cache
     // query requests
     return request.get(`${this.root}/addr/${address}`,
       {
-        cacheResponse: 10*1000,
+        cacheResponse: 30*1000,
         queryResponse: true,
+        inQuery: {
+          name: 'BITPAY',
+          delay: 1000,
+        },
       }
     ).then(( json ) => {
       const balance = JSON.parse(json).balance
@@ -160,12 +164,16 @@ class Bitcoin {
   }
 
   fetchUnspents(address) {
-    // 10 seconds cache
+    // 30 seconds cache
     // query requests
     return request.get(`${this.root}/addr/${address}/utxo`,
       {
-        cacheResponse: 10*1000,
+        cacheResponse: 30*1000,
         queryResponse: true,
+        inQuery: {
+          name: 'BITPAY',
+          delay: 1000,
+        },
       }
     ).then(json => JSON.parse(json))
     .catch(error => filterError(error))
@@ -177,17 +185,25 @@ class Bitcoin {
       body: {
         rawtx: txRaw,
       },
+      inQuery: {
+        name: 'BITPAY',
+        delay: 1000,
+      },
     })
     .catch(error => filterError(error))
   }
 
   fetchTx(hash) {
-    // 10 seconds cache
+    // 30 seconds cache
     // query request
     return request
       .get(`${this.root}/tx/${hash}`, {
-        cacheResponse: 10*1000,
+        cacheResponse: 30*1000,
         queryResponse: true,
+        inQuery: {
+          name: 'BITPAY',
+          delay: 1000,
+        },
       } )
       .then(json => JSON.parse(json))
       .then(({ fees, ...rest }) => ({
@@ -253,7 +269,12 @@ class Bitcoin {
   checkWithdraw = (scriptAddress) => {
     const url = `/txs/?address=${scriptAddress}`
 
-    return request.get(`${this.root}${url}`)
+    return request.get(`${this.root}${url}`, {
+        inQuery: {
+          name: 'BITPAY',
+          delay: 1000,
+        },
+      })
       .then(json => JSON.parse(json))
       .then((res) => {
         if (res.txs.length > 1
