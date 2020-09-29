@@ -2232,8 +2232,7 @@ const signAndBuild = (transactionBuilder, p2sh) => {
   return transactionBuilder.buildIncomplete()
 }
 
-const fetchUnspents = (address) =>
-  apiLooper.get('bitpay', `/addr/${address}/utxo`, { cacheResponse: 5000 })
+const fetchUnspents = (address) => actions.btc.fetchUnspents(address)
 
 const broadcastTx = (txRaw) => {
   return actions.btc.broadcastTx(txRaw)
