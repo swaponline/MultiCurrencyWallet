@@ -8,7 +8,9 @@ import { FormattedMessage } from 'react-intl'
 
 @CSSModules(styles)
 export default class BtcToEthTokens extends Component {
-  BtcToEthTokens = (step) => {
+  BtcToEthTokens = (step, flow) => {
+
+    const { waitBtcConfirm } = flow
 
     switch (step) {
       case 1:
@@ -28,12 +30,18 @@ export default class BtcToEthTokens extends Component {
           <FormattedMessage id="BitcoinBuyText33_btc_to_ethtoken" defaultMessage="Creating Bitcoin Script.{br}It can take a few minutes" values={{ br: <br /> }} />
         )
       case 5:
-        return (
-          <FormattedMessage
-            id="BitcoinBuyText37_btc_to_ethtoken"
-            defaultMessage="{buyCurrency} Owner received Bitcoin Script and Secret Hash. Waiting when he creates {buyCurrency} Contract"
-            values={{ buyCurrency: `${this.props.swap.buyCurrency}` }} />
-        )
+        return (waitBtcConfirm) ?
+          (
+            <FormattedMessage
+              id="BitcoinBuyText37_btc_to_ethtoken"
+              defaultMessage="{buyCurrency} Owner received Bitcoin Script and Secret Hash. Waiting confirm TX and when he creates {buyCurrency} Contract"
+              values={{ buyCurrency: `${this.props.swap.buyCurrency}` }} />
+          ) : (
+            <FormattedMessage
+              id="BitcoinBuyText37_btc_to_ethtoken"
+              defaultMessage="{buyCurrency} Owner received Bitcoin Script and Secret Hash. Waiting when he creates {buyCurrency} Contract"
+              values={{ buyCurrency: `${this.props.swap.buyCurrency}` }} />
+          )
       case 6:
         return (
           <FormattedMessage
@@ -62,7 +70,11 @@ export default class BtcToEthTokens extends Component {
   }
 
   render() {
+    const {
+      step,
+      flow,
+    } = this.props
 
-    return this.BtcToEthTokens(this.props.step)
+    return this.BtcToEthTokens(step, flow)
   }
 }

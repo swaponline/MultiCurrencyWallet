@@ -86,6 +86,8 @@ class ETH2BTC extends Flow {
 
       isFailedTransaction: false,
       isFailedTransactionError: null,
+
+      waitBtcConfirm: false,
     }
 
     super._persistSteps()
@@ -95,6 +97,12 @@ class ETH2BTC extends Flow {
     flow.swap.room.once('request withdraw', () => {
       flow.setState({
         withdrawRequestIncoming: true,
+      })
+    })
+
+    flow.swap.room.once('wait btc confirm', () => {
+      flow.setState({
+        waitBtcConfirm: true,
       })
     })
 
@@ -174,6 +182,14 @@ class ETH2BTC extends Flow {
           sellAmount,
           waitConfirm,
         } = flow.swap
+
+        if (waitConfirm) {
+          flow.swap.room.sendMessage({
+            event: 'wait btc confirm',
+            data: {},
+          })
+        }
+
         const { secretHash } = flow.state
 
         const utcNow = () => Math.floor(Date.now() / 1000)

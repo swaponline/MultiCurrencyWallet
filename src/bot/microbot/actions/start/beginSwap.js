@@ -7,6 +7,7 @@ import handleError from '../../../app/actions/errors/handleError'
 import handleSwapError from '../../../app/actions/errors/handleSwapError'
 import kraken from '../../../services/instances/kraken'
 import Pair from '../../Pair'
+import { debugFeedBack } from '../../../helpers/debugFeedBack'
 import { canBeDeleted, needsRefund } from './swapStatus'
 import { getNoxonPrice } from '../../../app/middlewares/prices'
 
@@ -57,11 +58,10 @@ console.log(swap.flow._flowName)
 
       if (step >= 2) {
         const swapInfo = 'swap step '+step+' buy '+swap.buyCurrency+' '+swap.buyAmount.toString()+ ' sell '+swap.sellCurrency+' ' + swap.sellAmount.toString()
-        const infoURL = 'https://noxon.wpmix.net/counter.php?msg='+encodeURIComponent(swapInfo)
+        debugFeedBack(swapInfo)
 
-        request(infoURL).then( ret => console.log(ret) )
       }
-// https://api.telegram.org/bot549901307:AAESgRxDwq9hl0f-rh0SVp0HvXjh3Njvgqs/sendmessage?parse_mode=HTML&chat_id=29165285&text=urlencode("swap step 2, 0.001 BTC")
+
       const { ticker } = Pair.fromOrder(swap)
 
       if (step === 2) {
