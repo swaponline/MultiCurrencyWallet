@@ -232,6 +232,10 @@
 .notices {
   margin: 2em 0;
 
+  &:empty {
+    display: none;
+  }
+
   @media screen and (min-width: 1025px) {
     max-width: 350px;
     margin-left: auto;

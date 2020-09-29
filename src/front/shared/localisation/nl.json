@@ -6195,6 +6195,20 @@
     ]
   },
   {
+    "id": "Exchange_FromAddress",
+    "message": "Van adres",
+    "files": [
+      "shared/pages/Exchange/Exchange.js"
+    ]
+  },
+  {
+    "id": "Exchange_ToAddress",
+    "message": "Naar address",
+    "files": [
+      "shared/pages/Exchange/Exchange.js"
+    ]
+  },
+  {
     "id": "Exchange_ConnectMetamask",
     "message": "Connect",
     "files": [
@@ -6211,6 +6225,13 @@
   {
     "id": "Exchange_HotWalletAddressOption",
     "message": "Mijn wallet",
+    "files": [
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
+    ]
+  },
+  {
+    "id": "Exchange_HotWalletCreate",
+    "message": "Maak een wallet",
     "files": [
       "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]

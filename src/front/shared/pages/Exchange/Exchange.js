@@ -1345,26 +1345,22 @@ export default class Exchange extends Component {
                         (BigNumber(balance).toNumber() === 0)
                         || BigNumber(balance).minus(estimatedFeeValues[haveCurrency]).isLessThanOrEqualTo(0)
                       ) ? (
-                          <FormattedMessage
-                            id="partial766"
-                            defaultMessage="From any wallet or exchange"
-                          />
+                        null
                         ) : (
                           <>
-                            {(estimatedFeeValues[haveCurrency])
-                              ? (
-                                <FormattedMessage
-                                  id="Exchange_AvialableBalance"
-                                  defaultMessage="Доступно: "
-                                />
-                              ) : (
-                                <FormattedMessage
-                                  id="partial767"
-                                  defaultMessage="Your balance: "
-                                />
-                              )
+                            {estimatedFeeValues[haveCurrency]
+                              ?
+                              <FormattedMessage
+                                id="Exchange_AvialableBalance"
+                                defaultMessage="Доступно: "
+                              />
+                              :
+                              <FormattedMessage
+                                id="partial767"
+                                defaultMessage="Your balance: "
+                              />
                             }
-                            {(estimatedFeeValues[haveCurrency])
+                            {estimatedFeeValues[haveCurrency]
                               ? BigNumber(balance)
                                 .minus(estimatedFeeValues[haveCurrency])
                                 .dp(5, BigNumber.ROUND_FLOOR).toString()
@@ -1384,7 +1380,9 @@ export default class Exchange extends Component {
 
               {this.isCustomWalletAllowed() &&
                 <AddressSelect
-                  label={'From address'}
+                  label={
+                    <FormattedMessage id="Exchange_FromAddress" defaultMessage="From address" />
+                  }
                   isDark={isDark}
                   currency={haveCurrency}
                   hasError={destinationError}
@@ -1422,7 +1420,9 @@ export default class Exchange extends Component {
 
               {this.isCustomWalletAllowed() &&
                 <AddressSelect
-                  label={'To address'}
+                  label={
+                    <FormattedMessage id="Exchange_ToAddress" defaultMessage="To address" />
+                  }
                   isDark={isDark}
                   currency={getCurrency}
                   hasError={destinationError}

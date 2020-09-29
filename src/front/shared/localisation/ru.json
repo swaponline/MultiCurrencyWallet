@@ -1925,7 +1925,7 @@
   },
   {
     "id": "partial255",
-    "message": "Вы получите",
+    "message": "Получаете",
     "files": [
       "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
@@ -2264,7 +2264,7 @@
   },
   {
     "id": "partialAtomicSwapWhatIsIt",
-    "message": "Atomic swap - это технология, которая позволяет обменять одну криптовалюту на другую без использования централизованных посредников.",
+    "message": "Атомарный своп - это технология, которая позволяет обменять одну криптовалюту на другую без использования централизованных посредников.",
     "files": [
       "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
@@ -6264,6 +6264,20 @@
     ]
   },
   {
+    "id": "Exchange_FromAddress",
+    "message": "С адреса",
+    "files": [
+      "shared/pages/Exchange/Exchange.js"
+    ]
+  },
+  {
+    "id": "Exchange_ToAddress",
+    "message": "На адрес",
+    "files": [
+      "shared/pages/Exchange/Exchange.js"
+    ]
+  },
+  {
     "id": "Exchange_ConnectMetamask",
     "message": "Подключить",
     "files": [
@@ -6280,6 +6294,13 @@
   {
     "id": "Exchange_HotWalletAddressOption",
     "message": "Мой кошелёк",
+    "files": [
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
+    ]
+  },
+  {
+    "id": "Exchange_HotWalletCreate",
+    "message": "Создать кошелёк",
     "files": [
       "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]

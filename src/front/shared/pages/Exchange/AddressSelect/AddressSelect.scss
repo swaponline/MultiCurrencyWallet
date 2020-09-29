@@ -33,7 +33,7 @@
     padding: 7px 7px;
     z-index: 111;
     position: absolute;
-    top: -18px;
+    top: -19px;
     left: 10px;
     background: #fff;
     white-space: nowrap;
@@ -78,7 +78,6 @@
 
     & > span {
       display: block;
-      font-size: 12pt;
       font-weight: bold;
       width: 100%;
       text-align: left;
@@ -171,9 +170,13 @@
   height: 80%;
   border-radius: 3px;
   height: 36px;
-  font-size: 16px;
+  font-size: 15px;
   flex-basis: 100%;
   box-shadow: none;
+
+  @include media-mobile {
+    font-size: 11px;
+  }
 }
 
 .walletInput {
