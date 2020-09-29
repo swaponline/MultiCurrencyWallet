@@ -221,7 +221,8 @@ export default class AddressSelect extends Component {
       currency,
       isDark,
       label,
-      hiddenCoinsList
+      hiddenCoinsList,
+      allData
     } = this.props
 
     let {
@@ -229,28 +230,40 @@ export default class AddressSelect extends Component {
     } = this.state
 
     const {
+      selectedDestination,
       walletAddressFocused,
       metamaskConnected,
       metamaskAddress,
       hasError,
     } = this.state
 
-    if (!ethToken.isEthOrEthToken({ name: currency }) && selectedDestination === 'metamask') {
-      selectedDestination = 'none'
-    }
-
 
     const ticker = currency.toUpperCase()
+
+    let hotWalletAddress
+
+    for (let i = 0; i < allData; i++) {
+      const allDataItem = allData[i]
+      if (ticker === allDataItem.currency && allDataItem.address) {
+        hotWalletAddress = allDataItem.address
+        break
+      }
+    }
+
 
     let isCurrencyInUserWallet = true
 
     for (let i = 0; i < hiddenCoinsList.length; i++) {
       const hiddenCoin = hiddenCoinsList[i]
-      if (hiddenCoin === ticker || hiddenCoin.includes(`${ticker}:`)) {
+      if (
+        hiddenCoin === ticker ||
+        (hotWalletAddress && hiddenCoin.includes(`${ticker}:${hotWalletAddress}`)
+      ) {
         isCurrencyInUserWallet = false
         break
       }
     }
+
 
     const isMetamaskOption = ethToken.isEthOrEthToken({ name: currency })
     const isMetamaskInstalled = metamask.isEnabled()
