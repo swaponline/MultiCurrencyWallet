@@ -13,7 +13,6 @@ import ethToken from 'helpers/ethToken'
 import Option from './Option/Option'
 import { links } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
-import { injectIntl } from 'react-intl'
 
 import iconHotwallet from 'components/Logo/images/base.svg'
 import iconMetamask from './images/metamask.svg'
@@ -59,6 +58,33 @@ const destinationType = {
   custom: `custom`,
 }
 
+@connect(
+  ({
+    core: { hiddenCoinsList },
+    user: {
+      btcData,
+      ethData,
+      ghostData,
+      nextData,
+      tokensData
+    }
+  }) => {
+    const allData = [
+      btcData,
+      ethData,
+      ghostData,
+      nextData,
+      ...Object.keys(tokensData).map((k) => tokensData[k]),
+    ].map(({ account, keyPair, ...data }) => ({
+      ...data,
+    }))
+
+    return {
+      allData,
+      hiddenCoinsList,
+    }
+  }
+)
 @injectIntl
 @withRouter
 @cssModules(styles, { allowMultiple: true })
@@ -190,7 +216,8 @@ export default class AddressSelect extends Component {
       value: customWallet,
       currency,
       isDark,
-      label
+      label,
+      hiddenCoinsList
     } = this.props
 
     let {
@@ -208,6 +235,19 @@ export default class AddressSelect extends Component {
       selectedDestination = 'none'
     }
 
+
+    const ticker = currency.toUpperCase()
+
+    let isCurrencyInUserWallet = true
+
+    for (let i = 0; i < hiddenCoinsList.length; i++) {
+      const hiddenCoin = hiddenCoinsList[i]
+      if (hiddenCoin === ticker || hiddenCoin.includes(`${ticker}:`)) {
+        isCurrencyInUserWallet = false
+        break
+      }
+    }
+
     const options = [
       {
         value: destinationType.none,
@@ -215,16 +255,20 @@ export default class AddressSelect extends Component {
         disabled: true,
         title: <FormattedMessage {...langLabels.labelSpecifyAddress} />,
       },
-      {
-        value: destinationType.hotwallet,
-        icon: iconHotwallet,
-        title: <FormattedMessage {...langLabels.optionHotWallet} />,
-      },
-      {
-        value: destinationType.hotwalletcreate,
-        icon: iconHotwallet,
-        title: <FormattedMessage {...langLabels.optionHotWalletCreate} />,
-      },
+      ...(isCurrencyInUserWallet
+        ?
+        [{
+            value: destinationType.hotwallet,
+            icon: iconHotwallet,
+            title: <FormattedMessage {...langLabels.optionHotWallet} />,
+        }]
+        :
+        [{
+          value: destinationType.hotwalletcreate,
+          icon: iconHotwallet,
+          title: <FormattedMessage {...langLabels.optionHotWalletCreate} />,
+        }]
+      ),
       ...((metamask.isEnabled() && ethToken.isEthOrEthToken({ name: currency }))
         ?
         [{

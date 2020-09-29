@@ -431,9 +431,9 @@ export default class Wallet extends Component {
             widgetUrl = window.top.location.origin
             registrationData.widget_url = widgetUrl
           }
-  
+
           const tokensArray = Object.values(this.props.tokensData)
-  
+
           const wallets = tokensArray.map(item => ({
             symbol: item && item.currency ? item.currency.split(' ')[0] : '',
             type: item && item.currency ? item.currency.split(' ')[1] || 'common' : '',
@@ -447,8 +447,8 @@ export default class Wallet extends Component {
           }))
 
           registrationData.wallets = wallets
-  
-          if (process.env.NODE_ENV === 'production') {            
+
+          if (process.env.NODE_ENV === 'production') {
             await stats.updateUser(ethData.address, window.top.location.host, registrationData)
           }
           

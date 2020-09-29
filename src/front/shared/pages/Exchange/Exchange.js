@@ -1386,7 +1386,7 @@ export default class Exchange extends Component {
                 <AddressSelect
                   label={'From address'}
                   isDark={isDark}
-                  currency={getCurrency}
+                  currency={haveCurrency}
                   hasError={destinationError}
                   value={customWallet}
                   valueLink={linked.customWallet}
