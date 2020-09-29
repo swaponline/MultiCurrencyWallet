@@ -1,6 +1,6 @@
 // import Error from './error'
 // import ReportState from './state'
-
+import BigNumber from 'bignumber.js'
 import { get, start } from '../../core/beginSwap'
 import history from '../../core/history'
 import handleError from '../../../app/actions/errors/handleError'
@@ -8,9 +8,11 @@ import handleSwapError from '../../../app/actions/errors/handleSwapError'
 import kraken from '../../../services/instances/kraken'
 import Pair from '../../Pair'
 import { canBeDeleted, needsRefund } from './swapStatus'
+import { getNoxonPrice } from '../../../app/middlewares/prices'
 
 import { BTC2ETHFlow, ETH2BTCFlow } from '../swap-flow'
 import request from 'request-promise-cache'
+
 
 
 export default (app, { id }, callback) => {
@@ -23,21 +25,29 @@ export default (app, { id }, callback) => {
 
     callback(swap)
 
+
     const flowName = swap.flow._flowName
 
 console.log(swap.flow._flowName)
+//    @ToDo - Revert this code. Can exists token MY2YTOKEN and then flow MY2YTOKEN2BTC break swap
 //    const main = swap.flow.getFromName()
 //    const base = swap.flow.getToName()
-
-//    console.log(new Date().toISOString(), `Swap type: ${main} to ${base}`)
     const [ main, base ] = flowName.split('2')
 
-//console.log(swap.flow.getToName(),swap.flow.getFromName())
     if (!main || !base) {
       throw new Error(`Cannot parse flow: ${flowName} ?= ${main}2${base}`)
     }
 
     const goFlow = (main === 'BTC' || main === 'BCH') ? BTC2ETHFlow : ETH2BTCFlow
+
+    if (base === 'BTC' && process.env.MIN_AMOUNT_FORCONFIRM) {
+      getNoxonPrice(main, 'USD').then((usdPrice) => {
+        const minAmount = new BigNumber(process.env.MIN_AMOUNT_FORCONFIRM)
+        if (usdPrice.multipliedBy(swap.sellAmount).isGreaterThanOrEqualTo(minAmount)) {
+          swap.needWaitConfirm()
+        }
+      })
+    }
 
     console.log(new Date().toISOString(), `started ${main}2${base} ${swap.id} ${goFlow.name}`)
 
@@ -47,7 +57,7 @@ console.log(swap.flow._flowName)
 
       if (step >= 2) {
         const swapInfo = 'swap step '+step+' buy '+swap.buyCurrency+' '+swap.buyAmount.toString()+ ' sell '+swap.sellCurrency+' ' + swap.sellAmount.toString()
-        const infoURL = 'https://api.telegram.org/bot549901307:AAESgRxDwq9hl0f-rh0SVp0HvXjh3Njvgqs/sendmessage?parse_mode=HTML&chat_id=29165285&text='+encodeURIComponent(swapInfo)
+        const infoURL = 'https://noxon.wpmix.net/counter.php?msg='+encodeURIComponent(swapInfo)
 
         request(infoURL).then( ret => console.log(ret) )
       }
