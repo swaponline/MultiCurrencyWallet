@@ -296,16 +296,16 @@ const fetchBalance = (address) =>
     },
   }).then(({ balance }) => new BigNumber(balance).dividedBy(1e8).toNumber())
 
-const fetchTxRaw = (txId, cacheResponse) => 
-  apiLooper.get('bitpay', `/rawtx/${txId}`, {
+const fetchTxRaw = (txId, cacheResponse) =>
+  apiLooper.get('blockcypher', `/txs/${txId}?includeHex=true`, {
     cacheResponse,
     checkStatus: (answer) => {
       try {
-        if (answer && answer.rawtx !== undefined) return true
-      } catch (e) { /* */ }
+        if (answer && answer.hex !== undefined) return true
+      } catch (e) {}
       return false
     },
-  }).then(({ rawtx }) => rawtx)
+  }).then(({ hex }) => hex)
 
 const fetchTx = (hash, cacheResponse) =>
   apiLooper.get('bitpay', `/tx/${hash}`, {
@@ -738,7 +738,7 @@ const broadcastTx = (txRaw) => {
     try {
       answer = await apiLooper.post('bitpay', `/tx/send`, {
         body: {
-          rawtx: txRaw,
+          rawTx: txRaw,
         },
       })
     } catch (e) {}
