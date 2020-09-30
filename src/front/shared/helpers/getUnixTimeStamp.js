@@ -1,3 +1,4 @@
-const getUnixTimeStamp = () => Math.floor(new Date().getTime() / 1000)
+import getUnixTimeStamp from '../../../common/utils/getUnixTimeStamp'
+
 
 export default getUnixTimeStamp
