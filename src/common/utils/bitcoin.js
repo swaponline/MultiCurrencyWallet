@@ -2,8 +2,9 @@ import apiLooper from './apiLooper'
 import { BigNumber } from 'bignumber.js'
 
 
-const fetchBalance = (address, withUnconfirmed, apiBitpay) => {
+const fetchBalance = (address, withUnconfirmed, apiBitpay, cacheResponse) => {
   return apiLooper.get(apiBitpay, `/address/${address}/balance/`, {
+    cacheResponse,
     checkStatus: (answer) => {
       try {
         if (answer && answer.balance !== undefined) return true

@@ -1,16 +1,19 @@
 const bitcoin = require('bitcoinjs-lib')
 //const request = require('request-promise-native')
 const request = require('../helpers/request')
+const bitcoinUtils = require('../../../../common/utils/bitcoin')
 const BigNumber = require('bignumber.js')
 const debug = require('debug')
 
-const BITPAY = `http://localhost:32250/btc/testnet`
-const BITPAY_MAIN = `https://insight.bitpay.com/api`
+const BITPAY = `https://api.bitcore.io/api/BTC/testnet`
+const BITPAY_MAIN = `https://api.bitcore.io/api/BTC/mainnet`
 
 const BLOCKCYPHER_API = `https://api.blockcypher.com/v1/btc/main/`
 const BLOCKCYPHER_API_TESTNET = `https://api.blockcypher.com/v1/btc/test3/`
 const EARN_COM = `https://bitcoinfees.earn.com/api/v1/fees/recommended`
 // const BLOCKCYPHER_API_TOKEN = process.env.BLOCKCYPHER_API_TOKEN
+
+
 
 
 const filterError = (error) => {
@@ -25,13 +28,21 @@ const filterError = (error) => {
 }
 
 class Bitcoin {
-
   constructor(_network) {
     this.core = bitcoin
 
     this.net = bitcoin.networks[_network === 'mainnet' ? 'bitcoin' : 'testnet']
     this.network = _network
     this.root = this.network === 'testnet' ? BITPAY : BITPAY_MAIN
+    this.API_BITPAY = {
+      name: 'bitpay',
+      servers: this.network === 'testnet' ? BITPAY : BITPAY_MAIN,
+    }
+
+    this.API_BLOCKCYPHER = {
+      name: 'blocyper',
+      servers: this.network === 'testnet' ? BLOCKCYPHER_API_TESTNET : BLOCKCYPHER_API,
+    }
   }
 
   getRate() {
@@ -143,70 +154,23 @@ class Bitcoin {
   }
 
   fetchBalance(address) {
-    // 10 seconds cache
-    // query requests
-    return request.get(`${this.root}/addr/${address}`,
-      {
-        cacheResponse: 10*1000,
-        queryResponse: true,
-      }
-    ).then(( json ) => {
-      const balance = JSON.parse(json).balance
-      debug('swap.core:bitcoin')('BTC Balance:', balance)
-
-      return balance
-    })
-    .catch(error => filterError(error))
+    return bitcoinUtils.fetchBalance(address, false, this.API_BITPAY, 10*1000)
   }
 
   fetchUnspents(address) {
-    // 10 seconds cache
-    // query requests
-    return request.get(`${this.root}/addr/${address}/utxo`,
-      {
-        cacheResponse: 10*1000,
-        queryResponse: true,
-      }
-    ).then(json => JSON.parse(json))
-    .catch(error => filterError(error))
+    return bitcoinUtils.fetchUnspents(address, this.API_BITPAY)
   }
 
   broadcastTx(txRaw) {
-    return request.post(`${this.root}/tx/send`, {
-      json: true,
-      body: {
-        rawtx: txRaw,
-      },
-    })
-    .catch(error => filterError(error))
+    return bitcoinUtils.broadcastTx(txRaw, this.API_BITPAY, this.API_BLOCKCYPHER)
   }
 
   fetchTx(hash) {
-    // 10 seconds cache
-    // query request
-    return request
-      .get(`${this.root}/tx/${hash}`, {
-        cacheResponse: 10*1000,
-        queryResponse: true,
-      } )
-      .then(json => JSON.parse(json))
-      .then(({ fees, ...rest }) => ({
-        fees: BigNumber(fees).multipliedBy(1e8),
-        ...rest,
-      }))
-      .catch(error => {
-        debug('swap.core:bitcoin')('BitPay:', error)
-        return {}
-      })
+    return bitcoinUtils.fetchTx(hash, this.API_BITPAY, 10*1000)
   }
 
   fetchTxInfo(hash) {
-    return this.fetchTx(hash)
-      .then(({ vin, ...rest }) => ({
-        senderAddress: vin[0].addr,
-        ...rest,
-      }))
-      .catch((error) => error)
+    return bitcoinUtils.fetchTxInfo(hash, this.API_BITPAY)
   }
 
   fetchOmniBalance(address, assetId = 31) {
@@ -251,27 +215,7 @@ class Bitcoin {
     Возвращает txId, адресс и сумму
   */
   checkWithdraw = (scriptAddress) => {
-    const url = `/txs/?address=${scriptAddress}`
-
-    return request.get(`${this.root}${url}`)
-      .then(json => JSON.parse(json))
-      .then((res) => {
-        if (res.txs.length > 1
-          && res.txs[0].vout.length
-        ) {
-          const address = res.txs[0].vout[0].scriptPubKey.addresses[0]
-          const {
-            txid,
-            valueOut: amount,
-          } = res.txs[0]
-          return {
-            address,
-            txid,
-            amount,
-          }
-        }
-        return false
-      })
+    return bitcoinUtils.checkWithdraw(scriptAddress, this.API_BITPAY)
   }
 
   async sendTransaction({ account, to, value }, handleTransactionHash) {
