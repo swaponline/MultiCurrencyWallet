@@ -54,9 +54,8 @@ const langLabels = defineMessages({
   },
 })
 
-const destinationType = {
+const addressType = {
   none: `none`,
-  hotwalletcreate: `hotwalletcreate`,
   hotwallet: `hotwallet`,
   metamask: `metamask`,
   custom: `custom`,
@@ -105,7 +104,7 @@ export default class AddressSelect extends Component {
     this.state = {
       currency,
       hasError,
-      selectedDestination: destinationType.none,
+      selectedType: addressType.none,
       walletAddress: initialValue,
       walletAddressFocused: false,
       customAddress: '',
@@ -137,7 +136,7 @@ export default class AddressSelect extends Component {
       this.setState({
         currency: newCurrency,
         hasError,
-        selectedDestination: destinationType.none,
+        selectedType: addressType.none,
         walletAddress: initialValue,
         customAddress: '',
       })
@@ -181,34 +180,35 @@ export default class AddressSelect extends Component {
     })
   }
 
-  handleDestinationSelect(item) {
-    const { onChange } = this.props
-    const {
-      value: selectedDestination,
-    } = item
+  handleAddressSelect(option) {
+    const selectedType = option.value
 
-    if (selectedDestination === 'hotwalletcreate') {
+    if (selectedType === 'hotwalletcreate') {
       this.goToСreateWallet()
     }
 
+    const { onChange } = this.props
+
     this.setState({
-      selectedDestination,
+      selectedType,
     }, () => {
-      if (typeof onChange === 'function') {
-        const selected = (selectedDestination !== destinationType.none)
-        const isCustom = ((selectedDestination === destinationType.custom) || selectedDestination === destinationType.metamask)
-
-        let value = ''
-        if (selectedDestination === destinationType.metamask) {
-          value = metamask.getAddress()
-        }
-
-        onChange({
-          selected,
-          isCustom,
-          value,
-        })
+      if (typeof onChange !== 'function') {
+        return
       }
+
+      const selected = (selectedType !== addressType.none)
+      const isCustom = ((selectedType === addressType.custom) || selectedType === addressType.metamask)
+
+      let value = ''
+      if (selectedType === addressType.metamask) {
+        value = metamask.getAddress()
+      }
+
+      onChange({
+        selected,
+        isCustom,
+        value,
+      })
     })
   }
 
@@ -225,12 +225,8 @@ export default class AddressSelect extends Component {
       allData
     } = this.props
 
-    let {
-      selectedDestination,
-    } = this.state
-
     const {
-      selectedDestination,
+      selectedType,
       walletAddressFocused,
       metamaskConnected,
       metamaskAddress,
@@ -257,7 +253,7 @@ export default class AddressSelect extends Component {
       const hiddenCoin = hiddenCoinsList[i]
       if (
         hiddenCoin === ticker ||
-        (hotWalletAddress && hiddenCoin.includes(`${ticker}:${hotWalletAddress}`)
+        (hotWalletAddress && hiddenCoin.includes(`${ticker}:${hotWalletAddress}`))
       ) {
         isCurrencyInUserWallet = false
         break
@@ -275,61 +271,61 @@ export default class AddressSelect extends Component {
 
     const options = [
       {
-        value: destinationType.none,
+        value: addressType.none,
         disabled: true,
         hidden: true,
         title: <FormattedMessage {...langLabels.labelSpecifyAddress} />,
       },
       ...(isCurrencyInUserWallet ? [{
-          value: destinationType.hotwallet,
+          value: addressType.hotwallet,
           icon: iconHotwallet,
           title: <FormattedMessage {...langLabels.optionHotWallet} />,
         }] : [{
-          value: destinationType.hotwalletcreate,
+          value: 'hotwalletcreate',
           icon: iconHotwallet,
           title: <FormattedMessage {...langLabels.optionHotWalletCreate} />,
         }]
       ),
       ...((isMetamaskOption) ?
           isMetamaskInstalled ? [{
-            value: destinationType.metamask,
+            value: addressType.metamask,
             icon: iconMetamask,
             title: <FormattedMessage {...langLabels.optionMetamask} />,
           }] : [{
-            value: destinationType.none,
+            value: addressType.none,
             icon: iconMetamask,
             disabled: true,
             title: <FormattedMessage {...langLabels.optionMetamaskNotInstalled} />,
           }] : []),
       ...(isCustomAddressOption ? [{
-        value: destinationType.custom,
+        value: addressType.custom,
         icon: iconCustom,
         title: <FormattedMessage {...langLabels.optionCustom} />,
       }] : []),
     ]
 
     return (
-      <div styleName={`customDestination ${(hasError) ? 'customDestination_error' : ''} ${isDark ? '--dark' : ''}`}>
+      <div styleName={`addressSelect ${(hasError) ? 'addressSelect_error' : ''} ${isDark ? '--dark' : ''}`}>
         <div styleName="label">{label}</div>
         <DropDown
           styleName="dropDown"
           items={options}
-          initialValue={destinationType.none}
-          selectedValue={selectedDestination}
+          initialValue={addressType.none}
+          selectedValue={selectedType}
           disableSearch={true}
           dontScroll={true}
           arrowSide="left"
           itemRender={item => <Option {...item} />}
-          onSelect={(value) => this.handleDestinationSelect(value)}
+          onSelect={(value) => this.handleAddressSelect(value)}
         />
-        {selectedDestination === destinationType.hotwallet &&
+        {selectedType === addressType.hotwallet &&
           <div styleName="selectedInner">
             <div styleName="readonlyValue">
               <input value={customWallet} onChange={() => { }} />
             </div>
           </div>
         }
-        {selectedDestination === destinationType.metamask && metamask.isEnabled() &&
+        {selectedType === addressType.metamask && metamask.isEnabled() &&
           <div styleName="selectedInner">
             {(metamaskConnected) ? (
               <div styleName="readonlyValue">
@@ -348,7 +344,7 @@ export default class AddressSelect extends Component {
             )}
           </div>
         }
-        {selectedDestination === destinationType.custom &&
+        {selectedType === addressType.custom &&
           <div styleName="selectedInner">
             <div styleName={`customWallet ${(walletAddressFocused) ? 'customWallet_focus' : ''}`}>
               <div styleName="walletInput">

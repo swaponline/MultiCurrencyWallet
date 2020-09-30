@@ -98,7 +98,7 @@ const subTitle = (sell, sellTicker, buy, buyTicker) => (
 );
 
 const isWidgetBuild = config && config.isWidget;
-const bannedPeers = {}; // Пиры, которые отклонили запрос на свап, они будут понижены в выдаче
+const bannedPeers = {}; // rejected swap peers
 
 
 @injectIntl
@@ -141,22 +141,6 @@ export default class Exchange extends Component {
   static defaultProps = {
     orders: [],
   };
-
-  isPeerBanned(peerID) {
-    if (
-      bannedPeers[peerID] &&
-      bannedPeers[peerID] > Math.floor(new Date().getTime() / 1000)
-    ) {
-      return true;
-    }
-    return false;
-  }
-
-  banPeer(peerID) {
-    const bannedPeersTimeout = 180; // 3 mins
-    bannedPeers[peerID] =
-      Math.floor(new Date().getTime() / 1000) + bannedPeersTimeout;
-  }
 
   static getDerivedStateFromProps(
     { orders, match: { params } },
@@ -475,7 +459,7 @@ export default class Exchange extends Component {
     }
   };
 
-  handleGoTrade = async () => {
+  initSwap = async () => {
     const { decline, usersData } = this.props;
     const { haveCurrency, destinationSelected, haveAmount, getCurrency } = this.state;
 
@@ -503,18 +487,19 @@ export default class Exchange extends Component {
 
     let isBalanceOk = true
     if (
-      isSellToken
-      && (
-        balance < checkAmount
-        || ethBalance < ethFee
-      )
-    ) isBalanceOk = false
+      isSellToken &&
+      (balance < checkAmount || ethBalance < ethFee)
+    ) {
+      isBalanceOk = false
+    }
 
-
-    if (getCurrency.toUpperCase() === 'BTC'
-      && !isSellToken
-      && balance < checkAmount
-    ) isBalanceOk = false
+    if (
+      getCurrency.toUpperCase() === 'BTC' &&
+      !isSellToken &&
+      balance < checkAmount
+    ) {
+      isBalanceOk = false
+    }
 
     if (!isBalanceOk) {
       const hiddenCoinsList = await actions.core.getHiddenCoins()
@@ -583,21 +568,19 @@ export default class Exchange extends Component {
     if (!destinationSelected) {
       this.setState({
         destinationError: true,
-      });
-      return;
+      })
+      return
     }
 
     if (decline.length === 0) {
       this.sendRequest();
     } else {
-      const getDeclinedExistedSwapIndex = helpers.handleGoTrade.getDeclinedExistedSwapIndex(
-        {
-          currency: haveCurrency,
-          decline,
-        }
-      );
-      if (getDeclinedExistedSwapIndex !== false) {
-        this.handleDeclineOrdersModalOpen(getDeclinedExistedSwapIndex);
+      const declinedExistedSwapIndex = helpers.handleGoTrade.getDeclinedExistedSwapIndex({
+        currency: haveCurrency,
+        decline,
+      });
+      if (declinedExistedSwapIndex !== false) {
+        this.declineOrdersModalOpen(declinedExistedSwapIndex);
       } else {
         this.sendRequest();
       }
@@ -614,7 +597,7 @@ export default class Exchange extends Component {
     // actions.analytics.dataEvent('orderbook-click-createoffer-button')
   };
 
-  handleDeclineOrdersModalOpen = (indexOfDecline) => {
+  declineOrdersModalOpen = (indexOfDecline) => {
     const orders = SwapApp.shared().services.orders.items;
     const declineSwap = actions.core.getSwapById(
       this.props.decline[indexOfDecline]
@@ -888,16 +871,21 @@ export default class Exchange extends Component {
     return true;
   };
 
-  handleCustomWalletUse = () => {
-    const { customWalletUse } = this.state;
+  isPeerBanned(peerID) {
+    if (
+      bannedPeers[peerID] &&
+      bannedPeers[peerID] > Math.floor(new Date().getTime() / 1000)
+    ) {
+      return true;
+    }
+    return false;
+  }
 
-    const newCustomWalletUse = !customWalletUse;
-
-    this.setState({
-      customWalletUse: newCustomWalletUse,
-      customWallet: newCustomWalletUse === false ? "" : this.getSystemWallet(),
-    });
-  };
+  banPeer(peerID) {
+    const bannedPeersTimeout = 180; // 3 mins
+    bannedPeers[peerID] =
+      Math.floor(new Date().getTime() / 1000) + bannedPeersTimeout;
+  }
 
   handleSetGetValue = ({ value }) => {
     const { haveCurrency, getCurrency, customWalletUse } = this.state;
@@ -954,7 +942,7 @@ export default class Exchange extends Component {
   handleFlipCurrency = async () => {
     const { haveCurrency, getCurrency, customWalletUse } = this.state;
 
-    this.setClearState();
+    this.resetState();
     this.additionalPathing(getCurrency, haveCurrency);
     this.setState(
       {
@@ -973,7 +961,7 @@ export default class Exchange extends Component {
     );
   };
 
-  setClearState = () => {
+  resetState = () => {
     const { getCurrency, customWalletUse } = this.state;
 
     this.setState(() => ({
@@ -1002,12 +990,15 @@ export default class Exchange extends Component {
   };
 
   isCustomWalletValid() {
-    const { haveCurrency, getCurrency, customWallet } = this.state;
+    const { haveCurrency, getCurrency, customWallet } = this.state
 
-    if (!this.isCustomWalletAllowed()) return true;
+    if (!this.isCustomWalletAllowed()) {
+      return true
+    }
 
-    if (getCurrency === "btc")
-      return util.typeforce.isCoinAddress.BTC(customWallet);
+    if (getCurrency === "btc") {
+      return util.typeforce.isCoinAddress.BTC(customWallet)
+    }
 
     return util.typeforce.isCoinAddress.ETH(customWallet);
   }
@@ -1289,7 +1280,7 @@ export default class Exchange extends Component {
 
     const isLowAmount = this.checkoutLowAmount();
 
-    const canDoOrder =
+    const canStartSwap =
       !isNonOffers &&
       BigNumber(getAmount).isGreaterThan(0) &&
       this.isCustomWalletValid() &&
@@ -1319,9 +1310,9 @@ export default class Exchange extends Component {
     const Form = (
       <div styleName="section">
         <div styleName="formExchange">
-          <div styleName="userSendGetParts">
-            <div className="userSendFromPart">
-              <div className="data-tut-have_disabled" styleName="selectWrap">
+          <div styleName="userSendAndGet">
+            <div className="userSend">
+              <div className="data-tut-have_tourDisabled" styleName="selectWrap">
                 <SelectGroup
                   activeFiat={activeFiat}
                   switchBalanceFunc={this.switchBalance}
@@ -1399,8 +1390,8 @@ export default class Exchange extends Component {
               <Switching noneBorder onClick={this.handleFlipCurrency} />
             </div>
 
-            <div className="userGetFormPart">
-              <div className="data-tut-get_disabled" styleName="selectWrap">
+            <div className="userGet">
+              <div className="data-tut-get_tourDisabled" styleName="selectWrap">
                 <SelectGroup
                   activeFiat={activeFiat}
                   dataTut="get"
@@ -1648,11 +1639,11 @@ export default class Exchange extends Component {
 
           <div styleName="buttons">
             <Button
-              className="data-tut-Exchange_disabled"
+              className="data-tut-Exchange_tourDisabled"
               styleName="button"
               blue
-              onClick={this.handleGoTrade}
-              disabled={!canDoOrder}
+              onClick={this.initSwap}
+              disabled={!canStartSwap}
             >
               <FormattedMessage id="partial541" defaultMessage="Exchange now" />
             </Button>

@@ -1,4 +1,4 @@
-.customDestination {
+.addressSelect {
   position: relative;
 
   &.--dark {
@@ -33,7 +33,7 @@
     padding: 7px 7px;
     z-index: 111;
     position: absolute;
-    top: -19px;
+    top: -18px;
     left: 10px;
     background: #fff;
     white-space: nowrap;
@@ -146,7 +146,7 @@
   }
 }
 
-.customDestination {
+.addressSelect {
   &.--dark {
     .customWallet {
       .qrCode {
@@ -213,7 +213,7 @@
     }
   }
 
-  .customDestination {
+  .addressSelect {
     .dropDown {
       & > div {
         & > span {
