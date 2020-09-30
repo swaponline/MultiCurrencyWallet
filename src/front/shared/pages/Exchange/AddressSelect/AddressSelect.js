@@ -110,6 +110,7 @@ export default class AddressSelect extends Component {
       customAddress: '',
       metamaskConnected: metamask.isConnected(),
       metamaskAddress: metamask.getAddress(),
+      isScanActive: false,
     }
   }
 
@@ -180,35 +181,68 @@ export default class AddressSelect extends Component {
     })
   }
 
-  handleAddressSelect(option) {
+  toggleScan() {
+    const { isScanActive } = this.state
+    this.setState(() => ({
+      isScanActive: !isScanActive,
+    }))
+  }
+
+  handleScanError(err) {
+    console.error('Scan error', err)
+  }
+
+  handleScan(data) {
+    if (data) {
+      const address = data.includes(':') ? data.split(':')[1] : data
+      this.toggleScan()
+      this.applyAddress({
+        isNonHot: true,
+        value: address,
+      })
+    }
+  }
+
+  handleOptionSelect(option) {
     const selectedType = option.value
 
     if (selectedType === 'hotwalletcreate') {
       this.goToСreateWallet()
     }
 
-    const { onChange } = this.props
-
     this.setState({
       selectedType,
     }, () => {
-      if (typeof onChange !== 'function') {
+
+      if (selectedType == addressType.none) {
         return
       }
 
-      const selected = (selectedType !== addressType.none)
-      const isCustom = ((selectedType === addressType.custom) || selectedType === addressType.metamask)
+      const isNonHot = ((selectedType === addressType.custom) || selectedType === addressType.metamask)
 
       let value = ''
       if (selectedType === addressType.metamask) {
         value = metamask.getAddress()
       }
 
-      onChange({
-        selected,
-        isCustom,
+      this.applyAddress({
+        isNonHot,
         value,
       })
+      
+    })
+  }
+
+  applyAddress(address) {
+    const { onChange } = this.props
+    const { isNonHot, value } = address
+
+    if (typeof onChange !== 'function') {
+      return
+    }
+
+    onChange({
+      isNonHot, value
     })
   }
 
@@ -216,7 +250,6 @@ export default class AddressSelect extends Component {
     const customWalletValueLink = this.props.valueLink
 
     const {
-      openScan,
       value: customWallet,
       currency,
       isDark,
@@ -230,6 +263,7 @@ export default class AddressSelect extends Component {
       walletAddressFocused,
       metamaskConnected,
       metamaskAddress,
+      isScanActive,
       hasError,
     } = this.state
 
@@ -316,7 +350,7 @@ export default class AddressSelect extends Component {
           dontScroll={true}
           arrowSide="left"
           itemRender={item => <Option {...item} />}
-          onSelect={(value) => this.handleAddressSelect(value)}
+          onSelect={(value) => this.handleOptionSelect(value)}
         />
         {selectedType === addressType.hotwallet &&
           <div styleName="selectedInner">
@@ -358,10 +392,17 @@ export default class AddressSelect extends Component {
                   placeholder="Enter address"
                 />
               </div>
-              <i styleName="qrCode" className="fas fa-qrcode" onClick={openScan} />
+              <i styleName="qrCode" className="fas fa-qrcode" onClick={toggleScan} />
             </div>
           </div>
         }
+        {isScanActive && (
+          <QrReader
+            openScan={this.openScan}
+            handleError={this.handleScanError}
+            handleScan={this.handleScan}
+          />
+        )}
       </div>
     )
   }

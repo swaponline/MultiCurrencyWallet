@@ -241,7 +241,6 @@ export default class Exchange extends Component {
       extendedControls: false,
       estimatedFeeValues: {},
       desclineOrders: [],
-      openScanCam: false,
       destinationSelected: false,
     };
 
@@ -933,7 +932,7 @@ export default class Exchange extends Component {
   };
 
   handleGoDeclimeFaq = () => {
-    const faqLink = links.getFaqLink("requestDeclimed");
+    const faqLink = links.getFaqLink('requestDeclimed');
     if (faqLink) {
       window.location.href = faqLink;
     }
@@ -1159,36 +1158,17 @@ export default class Exchange extends Component {
     });
   };
 
-  onCustomWalletChange = (state) => {
-    const { selected, isCustom, value } = state;
+  onAddressApply = (address) => {
+    const { isNonHot, value } = address;
 
     this.setState({
-      destinationSelected: selected,
+      destinationSelected: true,
       destinationError: false,
-      customWalletUse: !isCustom,
-      customWallet: isCustom ? value : this.getSystemWallet(),
+      customWalletUse: !isNonHot,
+      customWallet: isNonHot ? value : this.getSystemWallet(),
     });
   };
 
-  openScan = () => {
-    const { openScanCam } = this.state;
-    this.setState(() => ({
-      openScanCam: !openScanCam,
-    }));
-  };
-
-  handleScanError = (err) => {
-    console.error(err);
-  };
-
-  handleScan = (data) => {
-    if (data) {
-      this.setState(() => ({
-        customWallet: data.includes(":") ? data.split(":")[1] : data,
-      }));
-      this.openScan();
-    }
-  };
 
   render() {
     const {
@@ -1209,7 +1189,6 @@ export default class Exchange extends Component {
       orderId,
       isSearching,
       desclineOrders,
-      openScanCam,
       isDeclinedOffer,
       isFetching,
       maxAmount,
@@ -1380,8 +1359,7 @@ export default class Exchange extends Component {
                   value={customWallet}
                   valueLink={linked.customWallet}
                   initialValue={customWallet}
-                  onChange={this.onCustomWalletChange}
-                  openScan={this.openScan}
+                  onChange={this.onAddressApply}
                 />
               }
             </div>
@@ -1420,8 +1398,7 @@ export default class Exchange extends Component {
                   value={customWallet}
                   valueLink={linked.customWallet}
                   initialValue={customWallet}
-                  onChange={this.onCustomWalletChange}
-                  openScan={this.openScan}
+                  onChange={this.onAddressApply}
                 />
               }
             </div>
@@ -1709,14 +1686,6 @@ export default class Exchange extends Component {
               </span>
               <span styleName="scrollTrigger" />
             </div>
-          )}
-
-          {openScanCam && (
-            <QrReader
-              openScan={this.openScan}
-              handleError={this.handleScanError}
-              handleScan={this.handleScan}
-            />
           )}
           <Fragment>
             <div styleName="container">
