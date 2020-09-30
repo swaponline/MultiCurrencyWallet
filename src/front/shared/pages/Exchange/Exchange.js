@@ -25,7 +25,6 @@ import { FormattedMessage, injectIntl } from "react-intl"
 import { localisedUrl } from "helpers/locale"
 import config from "helpers/externalConfig"
 import SwapApp, { util } from "swap.app"
-import QrReader from "components/QrReader"
 
 import helpers, { constants, links } from "helpers"
 import { animate } from "helpers/domUtils"
@@ -629,7 +628,7 @@ export default class Exchange extends Component {
     };
 
     const destination = {
-      address: this.isCustomWalletAllowed() ? customWallet : null,
+      address: customWallet,
     };
 
     this.setState(() => ({ isFetching: true }));
@@ -991,10 +990,6 @@ export default class Exchange extends Component {
   isCustomWalletValid() {
     const { haveCurrency, getCurrency, customWallet } = this.state
 
-    if (!this.isCustomWalletAllowed()) {
-      return true
-    }
-
     if (getCurrency === "btc") {
       return util.typeforce.isCoinAddress.BTC(customWallet)
     }
@@ -1002,50 +997,6 @@ export default class Exchange extends Component {
     return util.typeforce.isCoinAddress.ETH(customWallet);
   }
 
-  isCustomWalletAllowed() {
-    const { haveCurrency, getCurrency } = this.state
-
-    if (haveCurrency === 'btc') {
-      // btc-token
-      if (config.erc20[getCurrency] !== undefined) return true
-      // btc-eth
-      if (getCurrency === "eth") return true
-      if (getCurrency === "ghost") return true
-      if (getCurrency === "next") return true
-    }
-
-    if (config.erc20[haveCurrency] !== undefined) {
-      // token-btc
-      if (getCurrency === "btc") return true
-      if (getCurrency === "ghost") return true
-      if (getCurrency === "next") return true
-    }
-
-    if (haveCurrency === 'eth') {
-      // eth-btc
-      if (getCurrency === "btc") return true
-      if (getCurrency === "ghost") return true
-      if (getCurrency === "next") return true
-    }
-
-    if (haveCurrency === "ghost") {
-      // ghost-token
-      if (config.erc20[getCurrency] !== undefined) return true
-      // ghost-eth
-      if (getCurrency === "eth") return true
-      if (getCurrency === "btc") return true
-    }
-
-    if (haveCurrency === "next") {
-      // next-token
-      if (config.erc20[getCurrency] !== undefined) return true
-      // next-eth
-      if (getCurrency === "eth") return true
-      if (getCurrency === "btc") return true
-    }
-
-    return false
-  }
 
   checkPair = () => {
     const { getCurrency, haveCurrency } = this.state;
@@ -1348,20 +1299,17 @@ export default class Exchange extends Component {
                 />
               </div>
 
-              {this.isCustomWalletAllowed() &&
-                <AddressSelect
-                  label={
-                    <FormattedMessage id="Exchange_FromAddress" defaultMessage="From address" />
-                  }
-                  isDark={isDark}
-                  currency={haveCurrency}
-                  hasError={destinationError}
-                  value={customWallet}
-                  valueLink={linked.customWallet}
-                  initialValue={customWallet}
-                  onChange={this.onAddressApply}
-                />
-              }
+              <AddressSelect
+                label={
+                  <FormattedMessage id="Exchange_FromAddress" defaultMessage="From address" />
+                }
+                isDark={isDark}
+                currency={haveCurrency}
+                hasError={destinationError}
+                valueLink={linked.customWallet}
+                initialValue={customWallet}
+                onChange={this.onAddressApply}
+              />
             </div>
 
             <div styleName="switchButton">
@@ -1387,20 +1335,17 @@ export default class Exchange extends Component {
                 />
               </div>
 
-              {this.isCustomWalletAllowed() &&
-                <AddressSelect
-                  label={
-                    <FormattedMessage id="Exchange_ToAddress" defaultMessage="To address" />
-                  }
-                  isDark={isDark}
-                  currency={getCurrency}
-                  hasError={destinationError}
-                  value={customWallet}
-                  valueLink={linked.customWallet}
-                  initialValue={customWallet}
-                  onChange={this.onAddressApply}
-                />
-              }
+              <AddressSelect
+                label={
+                  <FormattedMessage id="Exchange_ToAddress" defaultMessage="To address" />
+                }
+                isDark={isDark}
+                currency={getCurrency}
+                hasError={destinationError}
+                valueLink={linked.customWallet}
+                initialValue={customWallet}
+                onChange={this.onAddressApply}
+              />
             </div>
           </div>
 

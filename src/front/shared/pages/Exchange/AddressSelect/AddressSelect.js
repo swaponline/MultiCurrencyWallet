@@ -14,6 +14,7 @@ import Option from './Option/Option'
 import { links } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 
+import QrReader from "components/QrReader"
 import iconHotwallet from 'components/Logo/images/base.svg'
 import iconMetamask from './images/metamask.svg'
 import iconCustom from './images/custom.svg'
@@ -181,7 +182,7 @@ export default class AddressSelect extends Component {
     })
   }
 
-  toggleScan() {
+  toggleScan = () => {
     const { isScanActive } = this.state
     this.setState(() => ({
       isScanActive: !isScanActive,
@@ -250,7 +251,6 @@ export default class AddressSelect extends Component {
     const customWalletValueLink = this.props.valueLink
 
     const {
-      value: customWallet,
       currency,
       isDark,
       label,
@@ -272,14 +272,13 @@ export default class AddressSelect extends Component {
 
     let hotWalletAddress
 
-    for (let i = 0; i < allData; i++) {
-      const allDataItem = allData[i]
-      if (ticker === allDataItem.currency && allDataItem.address) {
-        hotWalletAddress = allDataItem.address
+    for (let i = 0; i < allData.length; i++) {
+      const item = allData[i]
+      if (ticker === item.currency && item.address) {
+        hotWalletAddress = item.address
         break
       }
     }
-
 
     let isCurrencyInUserWallet = true
 
@@ -355,7 +354,7 @@ export default class AddressSelect extends Component {
         {selectedType === addressType.hotwallet &&
           <div styleName="selectedInner">
             <div styleName="readonlyValue">
-              <input value={customWallet} onChange={() => { }} />
+              <input value={hotWalletAddress} onChange={() => { }} />
             </div>
           </div>
         }
@@ -392,7 +391,7 @@ export default class AddressSelect extends Component {
                   placeholder="Enter address"
                 />
               </div>
-              <i styleName="qrCode" className="fas fa-qrcode" onClick={toggleScan} />
+              <i styleName="qrCode" className="fas fa-qrcode" onClick={this.toggleScan} />
             </div>
           </div>
         }
