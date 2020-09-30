@@ -37,8 +37,6 @@ Current
 | jun 2020 | 663 USD | $117 (+$66) |
 | jul 2020 | 840 USD | $201 (+$84) | [+0.5 ETH](https://etherscan.io/tx/0xb5708aa91cd181b45aafc3fb92bdeea970a4359110a10f3fde6a4b42e0cabd14) |
 
-Also SWAP tokens can use as governence token
-
 
 ## How we get revenue
 
