@@ -292,9 +292,18 @@ class BtcSwap extends SwapInterface {
   fundScript(data, handleTransactionHash, hashName) {
     const { scriptValues, amount } = data
 
+    console.log('btcswap fundScript')
     return new Promise(async (resolve, reject) => {
       try {
         const { scriptAddress } = this.createScript(scriptValues, hashName)
+
+        const scriptBalance = await this.fetchBalance(scriptAddress)
+        if (BigNumber(scriptBalance).isGreaterThan(0)) {
+          // Script already funded - skip double payments
+          reject('Script funded already')
+          return
+        }
+
         const ownerAddress = this.app.services.auth.accounts.btc.getAddress()
 
         const tx            = new this.app.env.bitcoin.TransactionBuilder(this.network)
@@ -324,11 +333,15 @@ class BtcSwap extends SwapInterface {
 
         const txRaw = tx.buildIncomplete()
 
+        console.log('tx ready to broadcast')
         if (typeof handleTransactionHash === 'function') {
+          console.log('call handleTransactionHash')
           handleTransactionHash(txRaw.getId())
         }
 
+        console.log('broadcasting')
         this.broadcastTx(txRaw.toHex()).then((result) => {
+          console.log('broadcast ready')
           resolve(result)
         }).catch ((err) => {
           console.log('Fail broadcast', err)
@@ -484,6 +497,7 @@ class BtcSwap extends SwapInterface {
   withdraw(data, isRefund, hashName) {
     return new Promise(async (resolve, reject) => {
       try {
+        console.log('withdraw')
         const txRaw = await this.getWithdrawRawTransaction(data, isRefund, hashName)
 
         if (txRaw.alreadyWithdrawed) {
@@ -493,8 +507,10 @@ class BtcSwap extends SwapInterface {
 
         debug('swap.core:swaps')('raw tx withdraw', txRaw.txHex)
 
+        console.log('broadcast')
         const result = await this.broadcastTx(txRaw.txHex)
 
+        console.log('broadcast ready', result)
 
         // Wait some delay until transaction can be rejected or broadcast failed
         await util.helpers.waitDelay(10)
@@ -536,7 +552,9 @@ class BtcSwap extends SwapInterface {
    * @returns {Promise}
    */
   async checkTX(txID) {
+    console.log('check tx')
     const txInfo = await this.fetchTxInfo(txID)
+    console.log('txInfo', txInfo)
     if (txInfo
       && txInfo.senderAddress
       && txInfo.txid
