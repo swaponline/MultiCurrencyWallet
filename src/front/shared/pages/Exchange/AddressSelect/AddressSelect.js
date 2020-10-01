@@ -141,7 +141,7 @@ export default class AddressSelect extends Component {
       hotWalletAddress,
       isCurrencyInUserWallet,
       hasError,
-      selectedType: null,
+      selectedType: 'placeholder',
       walletAddressFocused: false,
       customAddress: '',
       metamaskConnected: metamask.isConnected(),
@@ -172,7 +172,7 @@ export default class AddressSelect extends Component {
       this.setState({
         currency: newCurrency,
         hasError,
-        selectedType: null,
+        selectedType: 'placeholder',
         customAddress: '',
       })
     }
@@ -182,7 +182,11 @@ export default class AddressSelect extends Component {
     this.setState({
       walletAddressFocused: false,
     })
-    console.log('val =', value)
+    // todo: validate value
+    this.applyAddress({
+      type: AddressType.Custom,
+      value,
+    })
   }
 
   goToСreateWallet() {
@@ -267,6 +271,11 @@ export default class AddressSelect extends Component {
         value = metamask.getAddress()
       }
 
+      /*if (selectedType === AddressType.Custom) {
+        // apply address input blur / qrScan
+        return
+      }*/
+
       this.applyAddress({
         type: selectedType,
         value,
@@ -290,7 +299,6 @@ export default class AddressSelect extends Component {
   }
 
   render() {
-    const customWalletValueLink = this.props.valueLink
 
     const {
       currency,
@@ -363,7 +371,7 @@ export default class AddressSelect extends Component {
           styleName="dropDown"
           items={options}
           initialValue="placeholder"
-          selectedValue="placeholder"
+          selectedValue={selectedType}
           disableSearch={true}
           dontScroll={true}
           arrowSide="left"
@@ -401,9 +409,11 @@ export default class AddressSelect extends Component {
             <div styleName={`customWallet ${(walletAddressFocused) ? 'customWallet_focus' : ''}`}>
               <div styleName="walletInput">
                 <Input
-                  inputCustomStyle={{ fontSize: "15px" }}
+                  inputCustomStyle={{
+                    fontSize: '15px',
+                    textOverflow: "ellipsis",
+                  }}
                   required
-                  valueLink={customWalletValueLink}
                   pattern="0-9a-zA-Z"
                   onFocus={() => this.handleFocusAddress()}
                   onBlur={(e) => this.handleBlurAddress(e.target.value)}

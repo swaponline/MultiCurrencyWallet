@@ -205,7 +205,7 @@ class Order {
         participant,
         participantMetadata,
         destination: {
-          address: destinationAddress
+          address: destinationAddress,
         },
         updatedOrder,
       },
@@ -293,7 +293,7 @@ class Order {
         participant,
         participantMetadata,
         destination: {
-          address: destinationAddress
+          address: destinationAddress,
         }
       },
     })

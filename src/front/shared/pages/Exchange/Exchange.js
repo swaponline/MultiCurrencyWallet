@@ -588,7 +588,7 @@ export default class Exchange extends Component {
         decline,
       });
       if (declinedExistedSwapIndex !== false) {
-        this.declineOrdersModalOpen(declinedExistedSwapIndex);
+        this.openModalDeclineOrders(declinedExistedSwapIndex);
       } else {
         this.sendRequest();
       }
@@ -605,7 +605,7 @@ export default class Exchange extends Component {
     // actions.analytics.dataEvent('orderbook-click-createoffer-button')
   };
 
-  declineOrdersModalOpen = (indexOfDecline) => {
+  openModalDeclineOrders = (indexOfDecline) => {
     const orders = SwapApp.shared().services.orders.items;
     const declineSwap = actions.core.getSwapById(
       this.props.decline[indexOfDecline]
@@ -1319,7 +1319,6 @@ export default class Exchange extends Component {
                 isDark={isDark}
                 currency={haveCurrency}
                 hasError={destinationError}
-                valueLink={linked.customWallet}
                 onChange={(addrData) => this.applyAddress(AddressRole.Send, addrData)}
               />
             </div>
@@ -1354,7 +1353,6 @@ export default class Exchange extends Component {
                 isDark={isDark}
                 currency={getCurrency}
                 hasError={destinationError}
-                valueLink={linked.customWallet}
                 onChange={(addrData) => this.applyAddress(AddressRole.Receive, addrData)}
               />
             </div>
