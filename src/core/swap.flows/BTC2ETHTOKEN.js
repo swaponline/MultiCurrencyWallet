@@ -178,10 +178,16 @@ export default (tokenName) => {
           const { isBalanceEnough, btcScriptValues } = flow.state
 
           if (isBalanceEnough) {
-            await flow.btcSwap.fundScript({
-              scriptValues: btcScriptValues,
-              amount: sellAmount,
-            })
+            try {
+              await flow.btcSwap.fundScript({
+                scriptValues: btcScriptValues,
+                amount: sellAmount,
+              })
+            } catch (err) {
+              console.log('Fail fund script', err)
+            }
+          } else {
+            console.error('Balance not enought')
           }
 
           const checkBTCScriptBalance = async () => {

@@ -1,5 +1,6 @@
 import apiLooper from './apiLooper'
 import { BigNumber } from 'bignumber.js'
+import * as bitcoin from 'bitcoinjs-lib'
 
 
 const fetchBalance = (address, withUnconfirmed, apiBitpay, cacheResponse) => {
@@ -280,6 +281,149 @@ const fetchTxRaw = (txId, cacheResponse, apiBlocyper) => {
   }).then(({ hex }) => hex)
 }
 
+const getTransactionBlocyper = (address, ownType, myWallets, network, apiBlocyper) => {
+  return new Promise((resolve) => {
+    const type = (ownType) || 'btc'
+
+    const url = `/addrs/${address}/full`
+    apiLooper.get(
+      apiBlocyper,
+      url,
+      {
+        cacheResponse: 10*1000,
+        inQuery: {
+          delay: 500,
+          name: `blocyper`,
+        },
+      }
+    ).then((answer) => {
+      if (answer
+        && answer.txs
+      ) {
+        const transactions = answer.txs.map((item) => {
+          const direction = item.inputs[0].addresses && item.inputs[0].addresses[0] !== address 
+            ? 'in' 
+            : 'out'
+
+          const isSelf = direction === 'out'
+            && item.outputs.filter((output) => {
+                const voutAddrBuf = Buffer.from(output.script, 'hex')
+                const currentAddress = bitcoin.address.fromOutputScript(voutAddrBuf, network)
+                return currentAddress === address
+            }).length === item.outputs.length
+
+          let value = isSelf
+            ? item.fees
+            : item.outputs.filter((output) => {
+              const voutAddrBuf = Buffer.from(output.script, 'hex')
+              const currentAddress = bitcoin.address.fromOutputScript(voutAddrBuf, network)
+
+              return direction === 'in'
+                ? (currentAddress === address)
+                : (currentAddress !== address)
+            })[0].value
+
+          return({
+            type,
+            hash: item.hash,
+            canEdit: (myWallets.indexOf(address) !== -1),
+            confirmations: item.confirmations,
+            value: new BigNumber(value).dividedBy(1e8).toNumber(),
+            date: (
+              Math.floor(
+                new Date(
+                  (item.confirmations)
+                  ? item.confirmed
+                  : item.received
+                )
+              )
+            ) * 1000,
+            direction: isSelf ? 'self' : direction,
+          })
+        })
+
+        resolve(transactions)
+      } else {
+        resolve([])
+      }
+    })
+    .catch((e) => {
+      console.error('Get btc txs Error', e)
+      resolve([])
+    })
+  })
+}
+
+// Draft
+const getTransactionBitcore = (address, ownType, myWallets, network, apiBitpay) => {
+  return new Promise(async (resolve) => {
+    const myAllWallets = getAllMyAddresses()
+
+    let { user: { btcData: { address: userAddress } } } = getState()
+    address = address || userAddress
+
+    const type = (ownType) || 'btc'
+
+    if (!typeforce.isCoinAddress.BTC(address)) {
+      resolve([])
+    }
+
+    const blockInfo = await apiLooper.get(apiBitpay, `/block/tip`, {
+      /* cache */
+      /* query */
+    })
+    console.log('blockInfo', blockInfo)
+
+    const url = `/address/${address}/txs`
+
+    return apiLooper.get(apiBitpay, url, {
+      checkStatus: (answer) => {
+        try {
+          if (answer && answer.txs !== undefined) return true
+        } catch (e) { /* */ }
+        return false
+      },
+      inQuery: {
+        delay: 500,
+        name: `balance`,
+      },
+    }).then((res) => {
+      const transactions = res.txs.map((item) => {
+        const direction = item.vin[0].addr !== address ? 'in' : 'out'
+
+        const isSelf = direction === 'out'
+          && item.vout.filter((item) => {
+              const voutAddrBuf = Buffer.from(item.scriptPubKey.hex, 'hex')
+              const currentAddress = bitcoin.address.fromOutputScript(voutAddrBuf, network)
+              return currentAddress === address
+          }).length === item.vout.length
+
+        return({
+          type,
+          hash: item.txid,
+          canEdit: (myWallets.indexOf(address) !== -1),
+          confirmations: item.confirmations,
+          value: isSelf
+            ? item.fees
+            : item.vout.filter((item) => {
+              const voutAddrBuf = Buffer.from(item.scriptPubKey.hex, 'hex')
+              const currentAddress = bitcoin.address.fromOutputScript(voutAddrBuf, network)
+
+              return direction === 'in'
+                ? (currentAddress === address)
+                : (currentAddress !== address)
+            })[0].value,
+          date: item.time * 1000,
+          direction: isSelf ? 'self' : direction,
+        })
+      })
+      resolve(transactions)
+    }).catch((error) => {
+      console.error(error)
+      resolve([])
+    })
+  })
+}
 
 export default {
   fetchBalance,
@@ -289,4 +433,5 @@ export default {
   broadcastTx,
   checkWithdraw,
   fetchTxRaw,
+  getTransactionBlocyper,
 }

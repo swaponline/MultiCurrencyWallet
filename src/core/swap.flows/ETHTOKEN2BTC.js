@@ -168,7 +168,8 @@ export default (tokenName) => {
               value: buyAmount,
               recipientPublicKey: this.app.services.auth.accounts.btc.getPublicKey(),
               lockTime: utcNow(),
-              confidence: (this.app.isWhitelistBtc(participant.btc.address)) ? 0 : 0.8,
+              confidence: 0.8,
+              isWhiteList: this.app.isWhitelistBtc(participant.btc.address),
             })
 
             if (scriptCheckError) {

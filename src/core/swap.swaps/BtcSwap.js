@@ -121,7 +121,7 @@ class BtcSwap extends SwapInterface {
         } = info
 
         if (txConfirms > 0) {
-          return unspents.map((unspent) => 1)
+          return 1
         }
 
         if (fees) {
@@ -242,8 +242,23 @@ class BtcSwap extends SwapInterface {
     const { recipientPublicKey, lockTime } = data
     const { scriptAddress, script } = this.createScript(data, hashName)
 
+    const {
+      waitConfirm,
+      isWhiteList
+    } = expected
+
+    if (isWhiteList) {
+      console.log('is white listed - skip wait btc script')
+      return
+    }
+
     const expectedConfidence = (expected.confidence !== undefined) ? expected.confidence : 0.95
     const unspents      = await this.fetchUnspents(scriptAddress)
+    if (waitConfirm) {
+      // Wait confirm only - for big amount of swap
+      
+    }
+
     const expectedValue = expected.value.multipliedBy(1e8).integerValue()
     const totalUnspent  = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
 
@@ -283,7 +298,12 @@ class BtcSwap extends SwapInterface {
         const ownerAddress = this.app.services.auth.accounts.btc.getAddress()
 
         const tx            = new this.app.env.bitcoin.TransactionBuilder(this.network)
-        const unspents      = await this.fetchUnspents(ownerAddress)
+        let unspents = []
+        try {
+          unspents      = await this.fetchUnspents(ownerAddress)
+        } catch (e) {
+          console.log('Fail get unspents')
+        }
 
         const fundValue     = amount.multipliedBy(1e8).integerValue().toNumber()
         const feeValueBN    = await this.getTxFee({ inSatoshis: true, address: ownerAddress })
@@ -308,14 +328,12 @@ class BtcSwap extends SwapInterface {
           handleTransactionHash(txRaw.getId())
         }
 
-        try {
-          const result = await this.broadcastTx(txRaw.toHex())
-
+        this.broadcastTx(txRaw.toHex()).then((result) => {
           resolve(result)
-        }
-        catch (err) {
+        }).catch ((err) => {
+          console.log('Fail broadcast', err)
           reject(err)
-        }
+        })
       }
       catch (err) {
         reject(err)
@@ -370,24 +388,22 @@ class BtcSwap extends SwapInterface {
     const feeValue      = feeValueBN.integerValue().toNumber()
     const totalUnspent  = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
 
-    if (BigNumber(totalUnspent).isLessThan(feeValue)) {
-      /* Check - may be withdrawed */
-      if (typeof this.checkWithdraw === 'function') {
-        const hasWithdraw = await this.checkWithdraw(scriptAddress)
-        if (hasWithdraw
-          && hasWithdraw.address.toLowerCase() == destAddress.toLowerCase()
-        ) {
-          // already withdrawed
-          return {
-            txId: hasWithdraw.txid,
-            alreadyWithdrawed: true
-          }
-        } else {
-          throw new Error(`Total less than fee: ${totalUnspent} < ${feeValue}`)
+    /* Check - may be withdrawed */
+    if (typeof this.checkWithdraw === 'function') {
+      const hasWithdraw = await this.checkWithdraw(scriptAddress)
+      if (hasWithdraw
+        && hasWithdraw.address.toLowerCase() == destAddress.toLowerCase()
+      ) {
+        // already withdrawed
+        return {
+          txId: hasWithdraw.txid,
+          alreadyWithdrawed: true
         }
-      } else {
-        throw new Error(`Total less than fee: ${totalUnspent} < ${feeValue}`)
       }
+    }
+
+    if (BigNumber(totalUnspent).isLessThan(feeValue)) {
+      throw new Error(`Total less than fee: ${totalUnspent} < ${feeValue}`)
     }
 
     if (isRefund) {

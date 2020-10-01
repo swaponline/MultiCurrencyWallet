@@ -260,7 +260,7 @@ const fetchBalanceStatus = (address) => {
       resolve({
         address,
         balance: balance,
-        unconfirmedBalance: new BigNumber(unconfirmed).dividedBy(1e8).toNumber(),
+        unconfirmedBalance: unconfirmed,
       })
     }).catch((e) => {
       resolve(false)
@@ -286,7 +286,7 @@ const getBalance = () => {
       reducers.user.setBalance({
         name: 'btcData',
         amount: balance,
-        unconfirmedBalance: new BigNumber(unconfirmed).dividedBy(1e8).toNumber(),
+        unconfirmedBalance: unconfirmed,
       })
       resolve(balance)
     }).catch((e) => {
@@ -386,161 +386,19 @@ const getDataByAddress = (address) => {
   return (founded.length) ? founded[0] : false
 }
 
-// @ToDo - move to common/utils/bitcoin
-const getTransactionBlockryper = (address, ownType) =>
-  new Promise((resolve) => {
-    const myAllWallets = getAllMyAddresses()
+const getTransaction = (ownAddress, ownType) => {
+  const myAllWallets = getAllMyAddresses()
 
-    let { user: { btcData: { address: userAddress } } } = getState()
-    address = address || userAddress
+  let { user: { btcData: { address: userAddress } } } = getState()
+  const address = address || userAddress
 
-    const type = (ownType) || 'btc'
+  const type = (ownType) || 'btc'
 
-    if (!typeforce.isCoinAddress.BTC(address)) {
-      resolve([])
-    }
-    const calcSum = (accumulator, currentValue) => accumulator + currentValue
-
-    const url = `/addrs/${address}/full`
-    apiLooper
-      .get('blockcypher', url,
-        {
-          cacheResponse: 10*1000,
-          inQuery: {
-            delay: 500,
-            name: `blocyper`,
-          },
-        }
-      ).then((answer) => {
-        if (answer
-          && answer.txs
-        ) {
-          const transactions = answer.txs.map((item) => {
-            const direction = item.inputs[0].addresses && item.inputs[0].addresses[0] !== address 
-              ? 'in' 
-              : 'out'
-
-            const isSelf = direction === 'out'
-              && item.outputs.filter((output) => {
-                  const voutAddrBuf = Buffer.from(output.script, 'hex')
-                  const currentAddress = bitcoin.address.fromOutputScript(voutAddrBuf, btc.network)
-                  return currentAddress === address
-              }).length === item.outputs.length
-
-            let value = isSelf
-              ? item.fees
-              : item.outputs.filter((output) => {
-                const voutAddrBuf = Buffer.from(output.script, 'hex')
-                const currentAddress = bitcoin.address.fromOutputScript(voutAddrBuf, btc.network)
-
-                return direction === 'in'
-                  ? (currentAddress === address)
-                  : (currentAddress !== address)
-              })[0].value
-
-            return({
-              type,
-              hash: item.hash,
-              canEdit: (myAllWallets.indexOf(address) !== -1),
-              confirmations: item.confirmations,
-              value: new BigNumber(value).dividedBy(1e8).toNumber(),
-              date: (
-                Math.floor(
-                  new Date(
-                    (item.confirmations)
-                    ? item.confirmed
-                    : item.received
-                  )
-                )
-              ) * 1000,
-              direction: isSelf ? 'self' : direction,
-            })
-          })
-
-          resolve(transactions)
-        } else {
-          resolve([])
-        }
-      })
-      .catch((e) => {
-        console.error('Get btc txs Error', e)
-        resolve([])
-      })
-  })
-
-// @ToDo - move to common/utils/bitcoin
-const getTransactionBitcore = (address, ownType) =>
-  new Promise(async (resolve) => {
-    const myAllWallets = getAllMyAddresses()
-
-    let { user: { btcData: { address: userAddress } } } = getState()
-    address = address || userAddress
-
-    const type = (ownType) || 'btc'
-
-    if (!typeforce.isCoinAddress.BTC(address)) {
-      resolve([])
-    }
-
-    const blockInfo = await apiLooper.get('bitpay', `/block/tip`, {
-      /* cache */
-      /* query */
-    })
-    console.log('blockInfo', blockInfo)
-
-    const url = `/address/${address}/txs`
-
-    return apiLooper.get('bitpay', url, {
-      checkStatus: (answer) => {
-        try {
-          if (answer && answer.txs !== undefined) return true
-        } catch (e) { /* */ }
-        return false
-      },
-      inQuery: {
-        delay: 500,
-        name: `balance`,
-      },
-    }).then((res) => {
-      const transactions = res.txs.map((item) => {
-        const direction = item.vin[0].addr !== address ? 'in' : 'out'
-
-        const isSelf = direction === 'out'
-          && item.vout.filter((item) => {
-              const voutAddrBuf = Buffer.from(item.scriptPubKey.hex, 'hex')
-              const currentAddress = bitcoin.address.fromOutputScript(voutAddrBuf, btc.network)
-              return currentAddress === address
-          }).length === item.vout.length
-
-        return({
-          type,
-          hash: item.txid,
-          canEdit: (myAllWallets.indexOf(address) !== -1),
-          confirmations: item.confirmations,
-          value: isSelf
-            ? item.fees
-            : item.vout.filter((item) => {
-              const voutAddrBuf = Buffer.from(item.scriptPubKey.hex, 'hex')
-              const currentAddress = bitcoin.address.fromOutputScript(voutAddrBuf, btc.network)
-
-              return direction === 'in'
-                ? (currentAddress === address)
-                : (currentAddress !== address)
-            })[0].value,
-          date: item.time * 1000,
-          direction: isSelf ? 'self' : direction,
-        })
-      })
-      resolve(transactions)
-    })
-      .catch((error) => {
-        console.error(error)
-        resolve([])
-      })
-  })
-
-
-const getTransaction = getTransactionBlockryper
+  if (!typeforce.isCoinAddress.BTC(address)) {
+    return new Promise((resolve) => { resolve([]) })
+  }
+  return bitcoinUtils.getTransactionBlocyper(address, type, myAllWallets, btc.network, BLOCYPER_API)
+}
 
 const send = (data) => {
   return sendV5(data)
