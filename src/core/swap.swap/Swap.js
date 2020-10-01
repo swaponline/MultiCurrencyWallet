@@ -24,6 +24,9 @@ class Swap {
 
     this.participantMetamaskAddress = null
 
+    // Wait confirm > 1
+    this.waitConfirm            = false
+
     this._attachSwapApp(app)
 
     let data = this.app.env.storage.getItem(`swap.${id}`)
@@ -169,6 +172,7 @@ class Swap {
       'destinationSellAddress',
       'createUnixTimeStamp',
       'participantMetamaskAddress',
+      'waitConfirm',
     )
   }
 
@@ -181,6 +185,12 @@ class Swap {
   checkTimeout(timeoutUTS) {
     // return true if timeout passed
     return !((this.createUnixTimeStamp + timeoutUTS) > Math.floor(new Date().getTime() / 1000))
+  }
+
+  needWaitConfirm() {
+    this.update({
+      waitConfirm: true,
+    })
   }
 
   processMetamask() {

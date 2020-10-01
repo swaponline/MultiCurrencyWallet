@@ -15,7 +15,7 @@ const YOBIT_API = `https://yobit.net/api/3`
 const btcPrice = () => getNoxonPrice('BTC', 'USD')
 const usdPrice = () => btcPrice().then(usds => BigNumber(1).div(usds))
 
-const getNoxonPrice = (symbol, base = 'BTC') => {
+export const getNoxonPrice = (symbol, base = 'BTC') => {
   return request({
     url: `https://noxon.wpmix.net/cursAll.php`,
     cacheTTL: 86400000
@@ -79,7 +79,7 @@ const getYobitPrice = (symbol) =>
       return null
     })
 
-const getPrice = (symbol, base = 'BTC') =>
+export const getPrice = (symbol, base = 'BTC') =>
   request({
     url: `${COIN_API}/ticker/${symbol}/?convert=${base}`,
     cacheTTL: 86400000

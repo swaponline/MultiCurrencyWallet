@@ -89,12 +89,21 @@ export default (tokenName) => {
         isFailedTransaction: false,
         isFailedTransactionError: null,
         gasAmountNeeded: 0,
+
+        waitBtcConfirm: false,
       }
 
       super._persistSteps()
       this._persistState()
 
       const flow = this
+
+      flow.swap.room.once('wait btc confirm', () => {
+        flow.setState({
+          waitBtcConfirm: true,
+        })
+      })
+
       flow.swap.room.once('request withdraw', () => {
         flow.setState({
           withdrawRequestIncoming: true,
@@ -156,7 +165,20 @@ export default (tokenName) => {
         // 5. Create ETH Contract
 
         async () => {
-          const { participant, buyAmount, sellAmount } = flow.swap
+          const {
+            participant,
+            buyAmount,
+            sellAmount,
+            waitConfirm,
+          } = flow.swap
+
+          if (waitConfirm) {
+            flow.swap.room.sendMessage({
+              event: 'wait btc confirm',
+              data: {},
+            })
+          }
+
           const { secretHash } = flow.state
 
           const utcNow = () => Math.floor(Date.now() / 1000)
@@ -170,6 +192,7 @@ export default (tokenName) => {
               lockTime: utcNow(),
               confidence: 0.8,
               isWhiteList: this.app.isWhitelistBtc(participant.btc.address),
+              waitConfirm,
             })
 
             if (scriptCheckError) {
@@ -178,6 +201,7 @@ export default (tokenName) => {
                 flow.stopSwapProcess()
                 stopRepeat()
               } else if (/Expected script value/.test(scriptCheckError)) {
+                console.warn(scriptCheckError)
                 console.warn('Btc script check: waiting balance')
               } else {
                 flow.swap.events.dispatch('btc script check error', scriptCheckError)
