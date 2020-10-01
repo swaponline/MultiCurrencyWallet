@@ -1,7 +1,7 @@
 import _debug from 'debug'
 import { setup, helpers, constants } from '../../core/simple/src'
 import { handleRequest, handleOrder, handleError, fillOrderbook, startSaved } from './actions'
-import TOKENS from '../config/constants/TOKENS'
+import { TOKENS } from '../config/constants'
 import lineInput from './lineInput'
 
 import { erc20 } from '../../core/swap.app/util'
