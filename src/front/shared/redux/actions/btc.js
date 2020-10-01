@@ -17,7 +17,18 @@ import { localisePrefix } from 'helpers/locale'
 
 import { default as mnemonicUtils } from '../../../../common/utils/mnemonic'
 
-console.log('mnemonic lib', mnemonicUtils)
+import { default as bitcoinUtils } from '../../../../common/utils/bitcoin'
+
+
+const BITPAY_API = {
+  name: 'bitpay',
+  servers: config.api.bitpay,
+}
+
+const BLOCYPER_API = {
+  name: 'blockcypher',
+  servers: config.api.blockcypher,
+}
 
 const hasAdminFee = (config
   && config.opts
@@ -239,187 +250,61 @@ const getLinkToInfo = (tx) => {
   return `${config.link.bitpay}/tx/${tx}`
 }
 
-const fetchBalanceStatus = (address) => apiLooper.get('bitpay', `/address/${address}/balance/`, {
-  checkStatus: (answer) => {
-    try {
-      if (answer && answer.balance !== undefined) return true
-    } catch (e) { /* */ }
-    return false
-  },
-}).then(({ balance, unconfirmed }) => ({
-  address,
-  balance: new BigNumber(balance).dividedBy(1e8).toNumber(),
-  unconfirmedBalance: new BigNumber(unconfirmed).dividedBy(1e8).toNumber(),
-}))
-  .catch((e) => false)
+const fetchBalanceStatus = (address) => {
+  return new Promise((resolve) => {
+    bitcoinUtils.fetchBalance(
+      address,
+      true,
+      BITPAY_API
+    ).then(({ balance, unconfirmed }) => {
+      resolve({
+        address,
+        balance: balance,
+        unconfirmedBalance: new BigNumber(unconfirmed).dividedBy(1e8).toNumber(),
+      })
+    }).catch((e) => {
+      resolve(false)
+    })
+  })
+}
+
 const getBalance = () => {
-  const { user: { btcData: { address } } } = getState()
+  const {
+    user: {
+      btcData: {
+        address,
+      },
+    },
+  } = getState()
 
-  return apiLooper.get('bitpay', `/address/${address}/balance/`, {
-    inQuery: {
-      delay: 500,
-      name: `balance`,
-    },
-    checkStatus: (answer) => {
-      try {
-        if (answer && answer.balance !== undefined) return true
-      } catch (e) { /* */ }
-      return false
-    },
-  }).then(({ balance, unconfirmed }) => {
-    balance = new BigNumber(balance).dividedBy(1e8).toNumber()
-    console.log('BTC Balance: ', balance)
-    console.log('BTC unconfirmedBalance Balance: ', unconfirmed)
-    reducers.user.setBalance({
-      name: 'btcData',
-      amount: balance,
-      unconfirmedBalance: new BigNumber(unconfirmed).dividedBy(1e8).toNumber(),
-    })
-    return balance
-  })
-    .catch((e) => {
+  return new Promise((resolve) => {
+    bitcoinUtils.fetchBalance(
+      address,
+      true,
+      BITPAY_API
+    ).then(({ balance, unconfirmed }) => {
+      reducers.user.setBalance({
+        name: 'btcData',
+        amount: balance,
+        unconfirmedBalance: new BigNumber(unconfirmed).dividedBy(1e8).toNumber(),
+      })
+      resolve(balance)
+    }).catch((e) => {
       reducers.user.setBalanceError({ name: 'btcData' })
+      resolve(-1)
     })
-}
-
-const fetchBalance = (address) =>
-  apiLooper.get('bitpay', `/address/${address}/balance/`, {
-    checkStatus: (answer) => {
-      try {
-        if (answer && answer.balance !== undefined) return true
-      } catch (e) { /* */ }
-      return false
-    },
-    inQuery: {
-      delay: 500,
-      name: `balance`,
-    },
-  }).then(({ balance }) => new BigNumber(balance).dividedBy(1e8).toNumber())
-
-const fetchTxRaw = (txId, cacheResponse) =>
-  apiLooper.get('blockcypher', `/txs/${txId}?includeHex=true`, {
-    cacheResponse,
-    checkStatus: (answer) => {
-      try {
-        if (answer && answer.hex !== undefined) return true
-      } catch (e) {}
-      return false
-    },
-  }).then(({ hex }) => hex)
-
-const fetchTx = (hash, cacheResponse) =>
-  apiLooper.get('bitpay', `/tx/${hash}`, {
-    cacheResponse,
-    checkStatus: (answer) => {
-      try {
-        if (answer && answer.fee !== undefined) return true
-      } catch (e) { /* */ }
-      return false
-    },
-  }).then(({ fee, ...rest }) => ({
-      fees: BigNumber(fee).dividedBy(1e8).toNumber(),
-      ...rest,
-    }
-  ))
-
-const fetchTxInfo = (hash, cacheResponse) => {
-  return new Promise(async (callback, txinfoReject) => {
-    let baseTxInfo = false
-    let txCoins = false
-
-    try {
-      baseTxInfo = await fetchTx(hash, cacheResponse)
-    } catch (error) {
-      console.error('Fail fetch tx info', error)
-      txinfoReject(error)
-      return
-    }
-    try {
-      txCoins = await apiLooper.get(`bitpay`, `/tx/${hash}/coins`, {
-        cacheResponse,
-        /* checkStatus */
-      })
-    } catch (error) {
-      console.error('Failt fetch tx coin info', error)
-      txinfoReject(error)
-    }
-
-    let receiverAddress = null
-    let afterBalance = txCoins && txCoins.inputs && txCoins.inputs[1] 
-      ? new BigNumber(txCoins.inputs[1].value).dividedBy(1e8).toNumber() 
-      : null
-    let adminOutput = []
-    let adminFee = false
-    let afterOutput = []
-
-    if (!txCoins || !txCoins.inputs || !txCoins.outputs) {
-      console.error('tx coin info empty')
-      txinfoReject('tx coin info empty')
-    }
-
-    console.log('Debug fetchTxInfo', baseTxInfo, txCoins)
-
-    const senderAddress = txCoins && txCoins.inputs ? txCoins.inputs[0].address : null
-    const amount = new BigNumber(txCoins.outputs[0].value).dividedBy(1e8).toNumber()
-
-    if (hasAdminFee) {
-      adminOutput = txCoins.outputs.filter((out) => {
-        return (
-          out.address === hasAdminFee.address
-          && !(new BigNumber(out.value).eq(amount))
-        )
-      })
-    }
-
-
-    /*
-    // @ToDo - need fix
-    if (txCoins && txCoins.outputs) {
-      afterOutput = txCoins.outputs.filter(({ address }) => {
-        return (
-          address !== hasAdminFee.address
-        )
-      })
-    }
-    */
-
-    if (afterOutput.length) {
-      afterBalance = new BigNumber(afterOutput[0].value).dividedBy(1e8).toNumber()
-    }
-
-    if (adminOutput.length) {
-      adminFee = new BigNumber(adminOutput[0].value).dividedBy(1e8).toNumber()
-    }
-
-    
-    if (txCoins && txCoins.outputs && txCoins.outputs[0]) {
-      receiverAddress = txCoins.outputs[0].address
-    }
-    
-    const txInfo = {
-      amount,
-      afterBalance,
-      senderAddress,
-      confirmed: true, // !!(rest.confirmations), // @ToDo - need fix
-      receiverAddress,
-      
-      minerFee: baseTxInfo.fees,
-      adminFee,
-      minerFeeCurrency: 'BTC',
-      // @ ToDo - need fix
-      outputs: [], /* vout.map((out) => {
-        const voutAddrBuf = Buffer.from(out.scriptPubKey.hex, 'hex')
-        const currentAddress = bitcoin.address.fromOutputScript(voutAddrBuf, btc.network)
-        return {
-          amount: new BigNumber(out.value).toNumber(),
-          address: currentAddress,
-        }
-      }),*/
-    }
-
-    callback( txInfo )
   })
 }
+
+
+const fetchBalance = (address) => bitcoinUtils.fetchBalance(address, false, BITPAY_API)
+
+const fetchTxRaw = (txId, cacheResponse) => bitcoinUtils.fetchTxRaw(txid, cacheResponse, BLOCYPER_API)
+
+const fetchTx = (hash, cacheResponse) => bitcoinUtils.fetchTx(hash, BITPAY_API, cacheResponse)
+
+const fetchTxInfo = (hash, cacheResponse) => bitcoinUtils.fetchTxInfo(hash, BITPAY_API, cacheResponse, hasAdminFee)
+
 
 const getInvoices = (address) => {
   const { user: { btcData: { userAddress } } } = getState()
@@ -501,6 +386,7 @@ const getDataByAddress = (address) => {
   return (founded.length) ? founded[0] : false
 }
 
+// @ToDo - move to common/utils/bitcoin
 const getTransactionBlockryper = (address, ownType) =>
   new Promise((resolve) => {
     const myAllWallets = getAllMyAddresses()
@@ -517,8 +403,15 @@ const getTransactionBlockryper = (address, ownType) =>
 
     const url = `/addrs/${address}/full`
     apiLooper
-      .get('blockcypher', url)
-      .then((answer) => {
+      .get('blockcypher', url,
+        {
+          cacheResponse: 10*1000,
+          inQuery: {
+            delay: 500,
+            name: `blocyper`,
+          },
+        }
+      ).then((answer) => {
         if (answer
           && answer.txs
         ) {
@@ -575,6 +468,7 @@ const getTransactionBlockryper = (address, ownType) =>
       })
   })
 
+// @ToDo - move to common/utils/bitcoin
 const getTransactionBitcore = (address, ownType) =>
   new Promise(async (resolve) => {
     const myAllWallets = getAllMyAddresses()
@@ -645,7 +539,7 @@ const getTransactionBitcore = (address, ownType) =>
       })
   })
 
-  window.btcTxs = getTransactionBitcore
+
 const getTransaction = getTransactionBlockryper
 
 const send = (data) => {
@@ -821,64 +715,9 @@ const signAndBuild = (transactionBuilder, address) => {
   return transactionBuilder.buildIncomplete()
 }
 
-const fetchUnspents = (address) => {
-  return new Promise((resolve, reject) => {
-    apiLooper.get(
-      'bitpay',
-      `/address/${address}?unspent=true`,
-      {
-        cacheResponse: 5000,
-      }
-    ).then((answer) => {
-      resolve(answer.map((txInfo, index) => {
-        return {
-          address,
-          amount: BigNumber(txInfo.value).dividedBy(1e8).toNumber(),
-          confirmations: txInfo.confirmations,
-          height: txInfo.mintHeight,
-          satoshis: txInfo.value,
-          scriptPubKey: txInfo.script,
-          txid: txInfo.mintTxid,
-          vout: txInfo.mintIndex,
-        }
-      }))
-    }).catch((error) => {
-      console.error('btc fetchUnspents error', error)
-    })
-  })
-}
+const fetchUnspents = (address) => bitcoinUtils.fetchUnspents(address, BITPAY_API)
 
-const broadcastTx = (txRaw) => {
-  return new Promise(async (resolve, reject) => {
-    let answer = false
-    try {
-      answer = await apiLooper.post('bitpay', `/tx/send`, {
-        body: {
-          rawTx: txRaw,
-        },
-      })
-    } catch (e) {}
-    if (!answer || !answer.txid) {
-      // use blockcryper
-      const bcAnswer = await apiLooper.post('blockcypher', `/txs/push`, {
-        body: {
-          tx: txRaw,
-        },
-      })
-      if (bcAnswer
-        && bcAnswer.tx
-        && bcAnswer.tx.hash) {
-        resolve({
-          txid: bcAnswer.tx.hash,
-        })
-      } else {
-        reject()
-      }
-    } else {
-      resolve(answer)
-    }
-  })
-}
+const broadcastTx = (txRaw) => bitcoinUtils.broadcastTx(txRaw, BITPAY_API, BLOCYPER_API)
 
 const signMessage = (message, encodedPrivateKey) => {
   const keyPair = bitcoin.ECPair.fromWIF(encodedPrivateKey, [bitcoin.networks.bitcoin, bitcoin.networks.testnet])
@@ -891,40 +730,7 @@ const signMessage = (message, encodedPrivateKey) => {
 
 const getReputation = () => Promise.resolve(0)
 
-window.getMainPublicKey = getMainPublicKey
-
-/*
-  Проверяет списание со скрипта - последняя транзакция выхода
-  Возвращает txId, адресс и сумму
-*/
-const checkWithdraw = (scriptAddress) => {
-  const url = `/txs/?address=${scriptAddress}`
-
-  return apiLooper.get('bitpay', url, {
-    checkStatus: (answer) => {
-      try {
-        if (answer && answer.txs !== undefined) return true
-      } catch (e) { /* */ }
-      return false
-    },
-  }).then((res) => {
-    if (res.txs.length > 1
-      && res.txs[0].vout.length
-    ) {
-      const address = res.txs[0].vout[0].scriptPubKey.addresses[0]
-      const {
-        txid,
-        valueOut: amount,
-      } = res.txs[0]
-      return {
-        address,
-        txid,
-        amount,
-      }
-    }
-    return false
-  })
-}
+const checkWithdraw = (scriptAddress) => bitcoinUtils.checkWithdraw(scriptAddress, BITPAY_API)
 
 
 export default {
