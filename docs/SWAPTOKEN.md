@@ -8,7 +8,7 @@
 
 ## Listed on exchnages
 
-- 🦄 [Uniswap](https://app.uniswap.org/#/swap?outputCurrency=0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9)
+- 🦄 [Uniswap](https://uniswap.info/pair/0x8dce5d9ed9fa147544be62bdf0e0f575528b4272)
 - [Swaponline](https://swaponline.io/#/exchange/btc-to-swap)
 
 
@@ -36,7 +36,8 @@ Current
 | may 2020 | 413 USD | $41 | 
 | jun 2020 | 663 USD | $117 (+$66) |
 | jul 2020 | 840 USD | $201 (+$84) | [+0.5 ETH](https://etherscan.io/tx/0xb5708aa91cd181b45aafc3fb92bdeea970a4359110a10f3fde6a4b42e0cabd14) |
-
+| aug 2020 | 1040 USD | $104 | pending |
+| sep 2020 | 1400 USD | $140 | pending |
 
 ## How we get revenue
 
