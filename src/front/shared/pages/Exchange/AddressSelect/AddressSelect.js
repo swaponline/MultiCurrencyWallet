@@ -199,25 +199,23 @@ export default class AddressSelect extends Component {
   }
 
   handleConnectMetamask() {
-    metamask.connect().then((address) => {
-      const { onChange } = this.props
+    metamask.connect().then((isConnected) => {
+      if (!isConnected) {
+        return
+      }
 
       this.setState({
         metamaskConnected: true,
         metamaskAddress: metamask.getAddress(),
       }, () => {
-        if (typeof onChange === 'function') {
-          onChange({
-            selected: true,
-            isCustom: true,
-            value: metamask.getAddress(),
-          })
-        }
+        this.applyAddress({
+          type: AddressType.Metamask,
+          value: metamask.getAddress(),
+        })
       })
-
-    }).catch((error) => {
+    })/*.catch((error) => {
       console.log('Metamask rejected', error)
-    })
+    })*/
   }
 
   toggleScan = () => {
