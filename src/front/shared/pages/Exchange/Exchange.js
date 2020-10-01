@@ -29,7 +29,7 @@ import SwapApp, { util } from "swap.app"
 import helpers, { constants, links } from "helpers"
 import { animate } from "helpers/domUtils"
 import Switching from "components/controls/Switching/Switching"
-import AddressSelect from "./AddressSelect/AddressSelect"
+import AddressSelect, { AddressType, AddressRole } from "./AddressSelect/AddressSelect"
 import NetworkStatus from 'components/NetworkStatus/NetworkStatus'
 import Orders from "../Home/Home"
 
@@ -98,6 +98,8 @@ const subTitle = (sell, sellTicker, buy, buyTicker) => (
 
 const isWidgetBuild = config && config.isWidget;
 const bannedPeers = {}; // rejected swap peers
+
+
 
 
 @injectIntl
@@ -459,9 +461,17 @@ export default class Exchange extends Component {
 
   initSwap = async () => {
     const { decline, usersData } = this.props;
-    const { haveCurrency, destinationSelected, haveAmount, getCurrency } = this.state;
 
-    const haveCur = haveCurrency.toUpperCase()
+    const {
+      haveCurrency,
+      haveAmount,
+      destinationSelected,
+      getCurrency,
+    } = this.state;
+
+    const haveTicker = haveCurrency.toUpperCase()
+    const getTicker = getCurrency.toUpperCase()
+
     const { address, balance } = actions.core.getWallet({ currency: haveCurrency })
 
     let checkAmount = haveAmount
@@ -474,7 +484,7 @@ export default class Exchange extends Component {
       await helpers.btc.estimateFeeValue({ method: 'swap' })
     ).toNumber()
 
-    if (haveCur === 'ETH') {
+    if (haveTicker === 'ETH') {
       checkAmount = BigNumber(checkAmount).plus(ethFee).toNumber()
     }
 
@@ -492,7 +502,7 @@ export default class Exchange extends Component {
     }
 
     if (
-      getCurrency.toUpperCase() === 'BTC' &&
+      getTicker === 'BTC' &&
       !isSellToken &&
       balance < checkAmount
     ) {
@@ -501,7 +511,7 @@ export default class Exchange extends Component {
 
     if (!isBalanceOk) {
       const hiddenCoinsList = await actions.core.getHiddenCoins()
-      const isDidntActivateWallet = hiddenCoinsList.find(el => haveCur.toUpperCase() === el.toUpperCase())
+      const isDidntActivateWallet = hiddenCoinsList.find(el => haveTicker === el.toUpperCase())
 
       const alertMessage = (
         <Fragment>
@@ -514,7 +524,7 @@ export default class Exchange extends Component {
               id="walletDidntCreateMessage"
               defaultMessage="Create {curr} wallet before you start the swap."
               values={{
-                curr: haveCur
+                curr: haveTicker
               }}
           />}
           <br />
@@ -534,7 +544,7 @@ export default class Exchange extends Component {
               defaultMessage="На вашем балансе должно быть не менее {amount} {currency}. {br}Коммисия майнера {ethFee} ETH и {btcFee} BTC"
               values={{
                 amount: checkAmount,
-                currency: haveCur,
+                currency: haveTicker,
                 ethFee,
                 btcFee,
                 br: <br />,
@@ -554,7 +564,7 @@ export default class Exchange extends Component {
             id="walletDidntCreateTitle"
             defaultMessage="Wallet does not exist."
           />,
-        currency: haveCur,
+        currency: haveTicker,
         address,
         actionType: !isDidntActivateWallet ? "deposit" : "createWallet",
         canClose: true,
@@ -1109,14 +1119,17 @@ export default class Exchange extends Component {
     });
   };
 
-  onAddressApply = (address) => {
-    const { isNonHot, value } = address;
+  applyAddress = (addressRole, addressData) => {
+    const { type, value } = addressData;
+
+    console.log('>>> applyAddress', addressRole, addressData)
 
     this.setState({
       destinationSelected: true,
       destinationError: false,
-      customWalletUse: !isNonHot,
-      customWallet: isNonHot ? value : this.getSystemWallet(),
+      customWalletUse: true, // todo: change
+      //customWallet: isNonHot ? value : this.getSystemWallet(),
+      customWallet: value // todo: change
     });
   };
 
@@ -1307,8 +1320,7 @@ export default class Exchange extends Component {
                 currency={haveCurrency}
                 hasError={destinationError}
                 valueLink={linked.customWallet}
-                initialValue={customWallet}
-                onChange={this.onAddressApply}
+                onChange={(addrData) => this.applyAddress(AddressRole.Send, addrData)}
               />
             </div>
 
@@ -1343,8 +1355,7 @@ export default class Exchange extends Component {
                 currency={getCurrency}
                 hasError={destinationError}
                 valueLink={linked.customWallet}
-                initialValue={customWallet}
-                onChange={this.onAddressApply}
+                onChange={(addrData) => this.applyAddress(AddressRole.Receive, addrData)}
               />
             </div>
           </div>

@@ -20,6 +20,18 @@ import iconMetamask from './images/metamask.svg'
 import iconCustom from './images/custom.svg'
 
 
+export const AddressType = {
+  Hotwallet: 'Hotwallet',
+  Metamask: 'Metamask',
+  Custom: 'Custom',
+}
+
+export const AddressRole = {
+  Send: 'Send',
+  Receive: 'Receive',
+}
+
+
 const langLabels = defineMessages({
   labelSpecifyAddress: {
     id: 'Exchange_SpecifyAddress',
@@ -54,13 +66,6 @@ const langLabels = defineMessages({
     defaultMessage: 'Connect',
   },
 })
-
-const addressType = {
-  none: `none`,
-  hotwallet: `hotwallet`,
-  metamask: `metamask`,
-  custom: `custom`,
-}
 
 @connect(
   ({
@@ -97,16 +102,46 @@ export default class AddressSelect extends Component {
     super(props)
 
     const {
-      initialValue,
       currency,
       hasError = false,
+      allData,
+      hiddenCoinsList
     } = props
+
+
+    const ticker = currency.toUpperCase()
+
+    let hotWalletAddress
+
+    for (let i = 0; i < allData.length; i++) {
+      const item = allData[i]
+      if (ticker === item.currency && item.address) {
+        hotWalletAddress = item.address
+        break
+      }
+    }
+
+    let isCurrencyInUserWallet = true
+
+    for (let i = 0; i < hiddenCoinsList.length; i++) {
+      const hiddenCoin = hiddenCoinsList[i]
+      if (
+        hiddenCoin === ticker ||
+        (hotWalletAddress && hiddenCoin.includes(`${ticker}:${hotWalletAddress}`))
+      ) {
+        isCurrencyInUserWallet = false
+        break
+      }
+    }
+
 
     this.state = {
       currency,
+      ticker,
+      hotWalletAddress,
+      isCurrencyInUserWallet,
       hasError,
-      selectedType: addressType.none,
-      walletAddress: initialValue,
+      selectedType: null,
       walletAddressFocused: false,
       customAddress: '',
       metamaskConnected: metamask.isConnected(),
@@ -125,7 +160,6 @@ export default class AddressSelect extends Component {
   componentDidUpdate() {
     const {
       currency: newCurrency,
-      initialValue,
       hasError = false,
     } = this.props
 
@@ -138,17 +172,17 @@ export default class AddressSelect extends Component {
       this.setState({
         currency: newCurrency,
         hasError,
-        selectedType: addressType.none,
-        walletAddress: initialValue,
+        selectedType: null,
         customAddress: '',
       })
     }
   }
 
-  handleBlurAddress() {
+  handleBlurAddress(value) {
     this.setState({
       walletAddressFocused: false,
     })
+    console.log('val =', value)
   }
 
   goToСreateWallet() {
@@ -189,6 +223,10 @@ export default class AddressSelect extends Component {
     }))
   }
 
+  handleCustomAddressInputBlur() {
+
+  }
+
   handleScanError(err) {
     console.error('Scan error', err)
   }
@@ -198,7 +236,7 @@ export default class AddressSelect extends Component {
       const address = data.includes(':') ? data.split(':')[1] : data
       this.toggleScan()
       this.applyAddress({
-        isNonHot: true,
+        type: AddressType.Custom,
         value: address,
       })
     }
@@ -215,35 +253,39 @@ export default class AddressSelect extends Component {
       selectedType,
     }, () => {
 
-      if (selectedType == addressType.none) {
+      if (!selectedType) {
         return
       }
 
-      const isNonHot = ((selectedType === addressType.custom) || selectedType === addressType.metamask)
-
       let value = ''
-      if (selectedType === addressType.metamask) {
+
+      if (selectedType === AddressType.Hotwallet) {
+        value = this.state.hotWalletAddress
+      }
+
+      if (selectedType === AddressType.Metamask) {
         value = metamask.getAddress()
       }
 
       this.applyAddress({
-        isNonHot,
+        type: selectedType,
         value,
       })
-      
+
     })
   }
 
   applyAddress(address) {
     const { onChange } = this.props
-    const { isNonHot, value } = address
+    const { type, value } = address
 
     if (typeof onChange !== 'function') {
       return
     }
 
     onChange({
-      isNonHot, value
+      type,
+      value,
     })
   }
 
@@ -259,6 +301,9 @@ export default class AddressSelect extends Component {
     } = this.props
 
     const {
+      ticker,
+      hotWalletAddress,
+      isCurrencyInUserWallet,
       selectedType,
       walletAddressFocused,
       metamaskConnected,
@@ -266,32 +311,6 @@ export default class AddressSelect extends Component {
       isScanActive,
       hasError,
     } = this.state
-
-
-    const ticker = currency.toUpperCase()
-
-    let hotWalletAddress
-
-    for (let i = 0; i < allData.length; i++) {
-      const item = allData[i]
-      if (ticker === item.currency && item.address) {
-        hotWalletAddress = item.address
-        break
-      }
-    }
-
-    let isCurrencyInUserWallet = true
-
-    for (let i = 0; i < hiddenCoinsList.length; i++) {
-      const hiddenCoin = hiddenCoinsList[i]
-      if (
-        hiddenCoin === ticker ||
-        (hotWalletAddress && hiddenCoin.includes(`${ticker}:${hotWalletAddress}`))
-      ) {
-        isCurrencyInUserWallet = false
-        break
-      }
-    }
 
 
     const isMetamaskOption = ethToken.isEthOrEthToken({ name: currency })
@@ -304,13 +323,13 @@ export default class AddressSelect extends Component {
 
     const options = [
       {
-        value: addressType.none,
+        value: 'placeholder',
         disabled: true,
         hidden: true,
         title: <FormattedMessage {...langLabels.labelSpecifyAddress} />,
       },
       ...(isCurrencyInUserWallet ? [{
-          value: addressType.hotwallet,
+          value: AddressType.Hotwallet,
           icon: iconHotwallet,
           title: <FormattedMessage {...langLabels.optionHotWallet} />,
         }] : [{
@@ -321,17 +340,17 @@ export default class AddressSelect extends Component {
       ),
       ...((isMetamaskOption) ?
           isMetamaskInstalled ? [{
-            value: addressType.metamask,
+            value: AddressType.Metamask,
             icon: iconMetamask,
             title: <FormattedMessage {...langLabels.optionMetamask} />,
           }] : [{
-            value: addressType.none,
+            value: 'disabled',
             icon: iconMetamask,
             disabled: true,
             title: <FormattedMessage {...langLabels.optionMetamaskNotInstalled} />,
           }] : []),
       ...(isCustomAddressOption ? [{
-        value: addressType.custom,
+        value: AddressType.Custom,
         icon: iconCustom,
         title: <FormattedMessage {...langLabels.optionCustom} />,
       }] : []),
@@ -343,22 +362,22 @@ export default class AddressSelect extends Component {
         <DropDown
           styleName="dropDown"
           items={options}
-          initialValue={addressType.none}
-          selectedValue={selectedType}
+          initialValue="placeholder"
+          selectedValue="placeholder"
           disableSearch={true}
           dontScroll={true}
           arrowSide="left"
           itemRender={item => <Option {...item} />}
           onSelect={(value) => this.handleOptionSelect(value)}
         />
-        {selectedType === addressType.hotwallet &&
+        {selectedType === AddressType.Hotwallet &&
           <div styleName="selectedInner">
             <div styleName="readonlyValue">
               <input value={hotWalletAddress} onChange={() => { }} />
             </div>
           </div>
         }
-        {selectedType === addressType.metamask && metamask.isEnabled() &&
+        {selectedType === AddressType.Metamask && metamask.isEnabled() &&
           <div styleName="selectedInner">
             {(metamaskConnected) ? (
               <div styleName="readonlyValue">
@@ -377,7 +396,7 @@ export default class AddressSelect extends Component {
             )}
           </div>
         }
-        {selectedType === addressType.custom &&
+        {selectedType === AddressType.Custom &&
           <div styleName="selectedInner">
             <div styleName={`customWallet ${(walletAddressFocused) ? 'customWallet_focus' : ''}`}>
               <div styleName="walletInput">
@@ -386,8 +405,8 @@ export default class AddressSelect extends Component {
                   required
                   valueLink={customWalletValueLink}
                   pattern="0-9a-zA-Z"
-                  onBlur={() => { this.handleBlurAddress() }}
-                  onFocus={() => { this.handleFocusAddress() }}
+                  onFocus={() => this.handleFocusAddress()}
+                  onBlur={(e) => this.handleBlurAddress(e.target.value)}
                   placeholder="Enter address"
                 />
               </div>
