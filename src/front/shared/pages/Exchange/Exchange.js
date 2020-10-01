@@ -237,12 +237,9 @@ export default class Exchange extends Component {
       isNonOffers: false,
       isFetching: false,
       isDeclinedOffer: false,
-      customWalletUse: true,
-      customWallet: this.wallets[buyToken.toUpperCase()],
       extendedControls: false,
       estimatedFeeValues: {},
       desclineOrders: [],
-      destinationSelected: false,
     };
 
     constants.coinsWithDynamicFee.forEach(
@@ -367,7 +364,7 @@ export default class Exchange extends Component {
     });
   };
 
-  additionalPathing = (sell, buy) => {
+  changeUrl = (sell, buy) => {
     const {
       intl: { locale },
       isOnlyForm,
@@ -465,7 +462,6 @@ export default class Exchange extends Component {
     const {
       haveCurrency,
       haveAmount,
-      destinationSelected,
       getCurrency,
     } = this.state;
 
@@ -573,13 +569,6 @@ export default class Exchange extends Component {
       return
     }
 
-    if (!destinationSelected) {
-      this.setState({
-        destinationError: true,
-      })
-      return
-    }
-
     if (decline.length === 0) {
       this.sendRequest();
     } else {
@@ -624,7 +613,6 @@ export default class Exchange extends Component {
       haveAmount,
       peer,
       orderId,
-      customWallet,
       maxAmount,
       maxBuyAmount,
     } = this.state;
@@ -638,7 +626,7 @@ export default class Exchange extends Component {
     };
 
     const destination = {
-      address: customWallet,
+      address: ''// todo,
     };
 
     this.setState(() => ({ isFetching: true }));
@@ -896,40 +884,38 @@ export default class Exchange extends Component {
   }
 
   handleSetGetValue = ({ value }) => {
-    const { haveCurrency, getCurrency, customWalletUse } = this.state;
+    const { haveCurrency, getCurrency } = this.state;
 
     if (value === haveCurrency) {
-      this.handleFlipCurrency();
+      this.flipCurrency();
     } else {
       this.setState(() => ({
         getCurrency: value,
         haveCurrency,
-        customWallet: customWalletUse ? this.getSystemWallet() : "",
       }));
-      this.additionalPathing(haveCurrency, value);
+      this.changeUrl(haveCurrency, value);
       actions.analytics.dataEvent({
-        action: "exchange-click-selector",
+        action: 'exchange-click-selector',
         label: `${haveCurrency}-to-${getCurrency}`,
       });
     }
   };
 
   handleSetHaveValue = async ({ value }) => {
-    const { haveCurrency, getCurrency, customWalletUse } = this.state;
+    const { haveCurrency, getCurrency } = this.state;
 
     if (value === getCurrency) {
-      this.handleFlipCurrency();
+      this.flipCurrency();
     } else {
       this.setState(
         {
           haveCurrency: value,
           getCurrency,
-          customWallet: customWalletUse ? this.getSystemWallet() : "",
         },
         () => {
-          this.additionalPathing(value, getCurrency);
+          this.changeUrl(value, getCurrency);
           actions.analytics.dataEvent({
-            action: "exchange-click-selector",
+            action: 'exchange-click-selector',
             label: `${haveCurrency}-to-${getCurrency}`,
           });
 
@@ -940,27 +926,31 @@ export default class Exchange extends Component {
     }
   };
 
-  handleGoDeclimeFaq = () => {
-    const faqLink = links.getFaqLink('requestDeclimed');
-    if (faqLink) {
-      window.location.href = faqLink;
-    }
+  applyAddress = (addressRole, addressData) => {
+    // address value or missing either already validated
+    const { type, value } = addressData;
+
+    console.log('Exchange: applyAddress', addressRole, addressData)
+
+    this.setState({
+      // todo
+    });
   };
 
-  handleFlipCurrency = async () => {
-    const { haveCurrency, getCurrency, customWalletUse } = this.state;
+  flipCurrency = async () => {
+    const { haveCurrency, getCurrency } = this.state;
 
     this.resetState();
-    this.additionalPathing(getCurrency, haveCurrency);
+    this.changeUrl(getCurrency, haveCurrency);
     this.setState(
       {
         haveCurrency: getCurrency,
         getCurrency: haveCurrency,
-        customWallet: customWalletUse ? this.getSystemWallet(haveCurrency) : "",
+        // todo flip addresses
       },
       () => {
         actions.analytics.dataEvent({
-          action: "exchange-click-selector",
+          action: 'exchange-click-selector',
           label: `${haveCurrency}-to-${getCurrency}`,
         });
         this.checkPair();
@@ -970,8 +960,6 @@ export default class Exchange extends Component {
   };
 
   resetState = () => {
-    const { getCurrency, customWalletUse } = this.state;
-
     this.setState(() => ({
       haveAmount: 0,
       haveHeat: 0,
@@ -983,30 +971,8 @@ export default class Exchange extends Component {
       isNonOffers: false,
       isFetching: false,
       isDeclinedOffer: false,
-      customWallet: customWalletUse
-        ? this.wallets[getCurrency.toUpperCase()]
-        : "",
     }));
   };
-
-  getSystemWallet = (walletCurrency) => {
-    const { getCurrency } = this.state;
-
-    return this.wallets[
-      walletCurrency ? walletCurrency.toUpperCase() : getCurrency.toUpperCase()
-    ];
-  };
-
-  isCustomWalletValid() {
-    const { haveCurrency, getCurrency, customWallet } = this.state
-
-    if (getCurrency === "btc") {
-      return util.typeforce.isCoinAddress.BTC(customWallet)
-    }
-
-    return util.typeforce.isCoinAddress.ETH(customWallet);
-  }
-
 
   checkPair = () => {
     const { getCurrency, haveCurrency } = this.state;
@@ -1088,6 +1054,13 @@ export default class Exchange extends Component {
     return true;
   };
 
+  goDeclimeFaq = () => {
+    const faqLink = links.getFaqLink('requestDeclimed');
+    if (faqLink) {
+      window.location.href = faqLink;
+    }
+  };
+
   getCorrectDecline = () => {
     const { decline, swapHistory } = this.props;
 
@@ -1116,20 +1089,6 @@ export default class Exchange extends Component {
     const { desclineOrders } = this.state;
     actions.modals.open(constants.modals.IncompletedSwaps, {
       desclineOrders,
-    });
-  };
-
-  applyAddress = (addressRole, addressData) => {
-    const { type, value } = addressData;
-
-    console.log('>>> applyAddress', addressRole, addressData)
-
-    this.setState({
-      destinationSelected: true,
-      destinationError: false,
-      customWalletUse: true, // todo: change
-      //customWallet: isNonHot ? value : this.getSystemWallet(),
-      customWallet: value // todo: change
     });
   };
 
@@ -1164,8 +1123,6 @@ export default class Exchange extends Component {
       isShowBalance,
       estimatedFeeValues,
       haveAmount,
-      customWallet,
-      destinationError,
       isNoAnyOrders,
       isFullLoadingComplite,
       btcFee,
@@ -1196,7 +1153,7 @@ export default class Exchange extends Component {
       ? BigNumber(0)
       : BigNumber(goodRate);
 
-    const linked = Link.all(this, "haveAmount", "getAmount", "customWallet");
+    const linked = Link.all(this, "haveAmount", "getAmount");
 
     const isWidgetLink =
       this.props.location.pathname.includes("/exchange") &&
@@ -1226,7 +1183,6 @@ export default class Exchange extends Component {
     const canStartSwap =
       !isNonOffers &&
       BigNumber(getAmount).isGreaterThan(0) &&
-      this.isCustomWalletValid() &&
       !this.doesComissionPreventThisOrder() &&
       (BigNumber(haveAmount).isGreaterThan(balance) ||
         BigNumber(balance).isGreaterThanOrEqualTo(availableAmount));
@@ -1318,13 +1274,13 @@ export default class Exchange extends Component {
                 }
                 isDark={isDark}
                 currency={haveCurrency}
-                hasError={destinationError}
+                hasError={false}
                 onChange={(addrData) => this.applyAddress(AddressRole.Send, addrData)}
               />
             </div>
 
             <div styleName="switchButton">
-              <Switching noneBorder onClick={this.handleFlipCurrency} />
+              <Switching noneBorder onClick={this.flipCurrency} />
             </div>
 
             <div className="userGet">
@@ -1352,7 +1308,7 @@ export default class Exchange extends Component {
                 }
                 isDark={isDark}
                 currency={getCurrency}
-                hasError={destinationError}
+                hasError={false}
                 onChange={(addrData) => this.applyAddress(AddressRole.Receive, addrData)}
               />
             </div>
@@ -1399,7 +1355,7 @@ export default class Exchange extends Component {
             )}
 
             {isDeclinedOffer && (
-              <p styleName="error link" onClick={() => this.handleGoDeclimeFaq()}>
+              <p styleName="error link" onClick={() => this.goDeclimeFaq()}>
                 {' '}
                 {/* eslint-disable-line */}
                 <FormattedMessage
@@ -1410,7 +1366,7 @@ export default class Exchange extends Component {
                       <a
                         className="errorLink"
                         role="button"
-                        onClick={() => this.handleGoDeclimeFaq()}
+                        onClick={() => this.goDeclimeFaq()}
                       >
                         {' '}
                         {/* eslint-disable-line */}

@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import { withRouter } from 'react-router'
 import { connect } from 'redaction'
+import Link from 'sw-valuelink'
+
 import styles from './AddressSelect.scss'
 import cssModules from 'react-css-modules'
 import config from 'helpers/externalConfig'
@@ -21,7 +23,7 @@ import iconCustom from './images/custom.svg'
 
 
 export const AddressType = {
-  Hotwallet: 'Hotwallet',
+  Hotwallet: 'Hotwallet', // or better 'systemWallet'?
   Metamask: 'Metamask',
   Custom: 'Custom',
 }
@@ -183,6 +185,12 @@ export default class AddressSelect extends Component {
       walletAddressFocused: false,
     })
     // todo: validate value
+    /*
+    if (getCurrency === "btc") {
+      return util.typeforce.isCoinAddress.BTC(customWallet)
+    }
+    return util.typeforce.isCoinAddress.ETH(customWallet);
+    */
     this.applyAddress({
       type: AddressType.Custom,
       value,
@@ -416,6 +424,7 @@ export default class AddressSelect extends Component {
                   onFocus={() => this.handleFocusAddress()}
                   onBlur={(e) => this.handleBlurAddress(e.target.value)}
                   placeholder="Enter address"
+                  valueLink={Link.all(this, '_')._} // required
                 />
               </div>
               <i styleName="qrCode" className="fas fa-qrcode" onClick={this.toggleScan} />
