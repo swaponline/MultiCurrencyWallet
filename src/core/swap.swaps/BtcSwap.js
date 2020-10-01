@@ -92,6 +92,7 @@ class BtcSwap extends SwapInterface {
    * @private
    */
   async filterConfidentUnspents(unspents, expectedConfidenceLevel = 0.95) {
+
     const feesToConfidence = async (fees, size, address) => {
       const currentFastestFee = await this.getTxFee({ inSatoshis: true, size, speed: 'fast', address })
 
@@ -112,13 +113,22 @@ class BtcSwap extends SwapInterface {
       try {
         const info = await this.fetchTxInfo(txid)
 
-        const { fees, size, senderAddress } = info
+        const {
+          fees,
+          size,
+          senderAddress,
+          confirmations: txConfirms,
+        } = info
+
+        if (txConfirms > 0) {
+          return unspents.map((unspent) => 1)
+        }
 
         if (fees) {
           return await feesToConfidence(fees, size, senderAddress)
         }
 
-        throw new Error(`txinfo=${{ confirmations, fees, size, senderAddress }}`)
+        throw new Error(`txinfo={confirmations: ${confirmations}, fees: ${fees}, size: ${size}, senderAddress: ${senderAddress} }`)
 
       } catch (err) {
         console.error(`BtcSwap: Error fetching confidence: using confirmations > 0:`, err.message)
@@ -238,6 +248,7 @@ class BtcSwap extends SwapInterface {
     const totalUnspent  = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
 
     const confidentUnspents = await this.filterConfidentUnspents(unspents, expectedConfidence)
+
     const totalConfidentUnspent = confidentUnspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
 
     if (expectedValue.isGreaterThan(totalUnspent)) {

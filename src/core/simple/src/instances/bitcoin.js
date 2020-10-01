@@ -158,7 +158,7 @@ class Bitcoin {
   }
 
   fetchUnspents(address) {
-    return bitcoinUtils.fetchUnspents(address, this.API_BITPAY)
+    return bitcoinUtils.fetchUnspents(address, this.API_BITPAY, 10*1000)
   }
 
   broadcastTx(txRaw) {
@@ -170,7 +170,7 @@ class Bitcoin {
   }
 
   fetchTxInfo(hash) {
-    return bitcoinUtils.fetchTxInfo(hash, this.API_BITPAY)
+    return bitcoinUtils.fetchTxInfo(hash, this.API_BITPAY, 10*1000)
   }
 
   fetchOmniBalance(address, assetId = 31) {

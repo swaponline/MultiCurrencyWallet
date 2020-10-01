@@ -13,7 +13,7 @@ const fetchBalance = (address, withUnconfirmed, apiBitpay, cacheResponse) => {
     },
     inQuery: {
       delay: 500,
-      name: `balance`,
+      name: `bitpay`,
     },
   }).then((answer) => {
     const {
@@ -40,6 +40,10 @@ const fetchTx = (hash, apiBitpay, cacheResponse) => {
       } catch (e) { /* */ }
       return false
     },
+    inQuery: {
+      delay: 500,
+      name: `bitpay`,
+    },
   }).then(({ fee, ...rest }) => ({
       fees: BigNumber(fee).dividedBy(1e8).toNumber(),
       ...rest,
@@ -63,6 +67,10 @@ const fetchTxInfo = (hash, apiBitpay, cacheResponse, hasAdminFee) => {
       txCoins = await apiLooper.get(apiBitpay, `/tx/${hash}/coins`, {
         cacheResponse,
         /* checkStatus */
+        inQuery: {
+          delay: 500,
+          name: `bitpay`,
+        },
       })
     } catch (error) {
       console.error('Failt fetch tx coin info', error)
@@ -81,8 +89,6 @@ const fetchTxInfo = (hash, apiBitpay, cacheResponse, hasAdminFee) => {
       console.error('tx coin info empty')
       txinfoReject('tx coin info empty')
     }
-
-    console.log('Debug fetchTxInfo', baseTxInfo, txCoins)
 
     const senderAddress = txCoins && txCoins.inputs ? txCoins.inputs[0].address : null
     const amount = new BigNumber(txCoins.outputs[0].value).dividedBy(1e8).toNumber()
@@ -125,7 +131,8 @@ const fetchTxInfo = (hash, apiBitpay, cacheResponse, hasAdminFee) => {
       amount,
       afterBalance,
       senderAddress,
-      confirmed: true, // !!(rest.confirmations), // @ToDo - need fix
+      confirmed: !!(baseTxInfo.confirmations),
+      confirmations: baseTxInfo.confirmations,
       receiverAddress,
       
       minerFee: baseTxInfo.fees,
@@ -140,19 +147,25 @@ const fetchTxInfo = (hash, apiBitpay, cacheResponse, hasAdminFee) => {
           address: currentAddress,
         }
       }),*/
+      fees: baseTxInfo.fees,
+      size: baseTxInfo.size,
     }
 
     callback( txInfo )
   })
 }
 
-const fetchUnspents = (address, apiBitpay) => {
+const fetchUnspents = (address, apiBitpay, cacheResponse) => {
   return new Promise((resolve, reject) => {
     apiLooper.get(
       apiBitpay,
       `/address/${address}?unspent=true`,
       {
-        cacheResponse: 5000,
+        cacheResponse: (cacheResponse || 5000),
+        inQuery: {
+          delay: 500,
+          name: `bitpay`,
+        },
       }
     ).then((answer) => {
       resolve(answer.map((txInfo, index) => {
@@ -181,6 +194,10 @@ const broadcastTx = (txRaw, apiBitpay, apiBlocyper) => {
         body: {
           rawTx: txRaw,
         },
+        inQuery: {
+          delay: 500,
+          name: `bitpay`,
+        },
       })
     } catch (e) {}
     if (!answer || !answer.txid) {
@@ -188,6 +205,10 @@ const broadcastTx = (txRaw, apiBitpay, apiBlocyper) => {
       const bcAnswer = await apiLooper.post(apiBlocyper, `/txs/push`, {
         body: {
           tx: txRaw,
+        },
+        inQuery: {
+          delay: 500,
+          name: `blocyper`,
         },
       })
       if (bcAnswer
@@ -219,6 +240,10 @@ const checkWithdraw = (scriptAddress, apiBitpay) => {
       } catch (e) { /* */ }
       return false
     },
+    inQuery: {
+      delay: 500,
+      name: `bitpay`,
+    },
   }).then(async (txs) => {
     if ((txs.length > 0)
       && txs[0].mintTxid
@@ -239,6 +264,22 @@ const checkWithdraw = (scriptAddress, apiBitpay) => {
   })
 }
 
+const fetchTxRaw = (txId, cacheResponse, apiBlocyper) => {
+  return apiLooper.get(apiBlocyper, `/txs/${txId}?includeHex=true`, {
+    cacheResponse,
+    checkStatus: (answer) => {
+      try {
+        if (answer && answer.hex !== undefined) return true
+      } catch (e) {}
+      return false
+    },
+    inQuery: {
+      delay: 500,
+      name: `blocyper`,
+    },
+  }).then(({ hex }) => hex)
+}
+
 
 export default {
   fetchBalance,
@@ -247,4 +288,5 @@ export default {
   fetchUnspents,
   broadcastTx,
   checkWithdraw,
+  fetchTxRaw,
 }
