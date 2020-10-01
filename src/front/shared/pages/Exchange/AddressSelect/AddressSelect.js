@@ -106,15 +106,28 @@ export default class AddressSelect extends Component {
     const {
       currency,
       hasError = false,
-      allData,
-      hiddenCoinsList
     } = props
 
+    this.state = {
+      currency,
+      hasError,
+      selectedType: 'placeholder',
+      walletAddressFocused: false,
+      customAddress: '',
+      metamaskConnected: metamask.isConnected(),
+      metamaskAddress: metamask.getAddress(),
+      isScanActive: false,
+    }
+  }
 
-    const ticker = currency.toUpperCase()
+  getTicker() {
+    return this.props.currency.toUpperCase()
+  }
 
+  getHotWalletAddress() {
+    const { allData } =  this.props
+    const ticker = this.getTicker()
     let hotWalletAddress
-
     for (let i = 0; i < allData.length; i++) {
       const item = allData[i]
       if (ticker === item.currency && item.address) {
@@ -122,6 +135,13 @@ export default class AddressSelect extends Component {
         break
       }
     }
+    return hotWalletAddress
+  }
+
+  isCurrencyInUserWallet() {
+    const { hiddenCoinsList } = this.props
+    const ticker = this.getTicker()
+    const hotWalletAddress = this.getHotWalletAddress()
 
     let isCurrencyInUserWallet = true
 
@@ -135,23 +155,8 @@ export default class AddressSelect extends Component {
         break
       }
     }
-
-
-    this.state = {
-      currency,
-      ticker,
-      hotWalletAddress,
-      isCurrencyInUserWallet,
-      hasError,
-      selectedType: 'placeholder',
-      walletAddressFocused: false,
-      customAddress: '',
-      metamaskConnected: metamask.isConnected(),
-      metamaskAddress: metamask.getAddress(),
-      isScanActive: false,
-    }
+    return isCurrencyInUserWallet
   }
-
 
   handleFocusAddress() {
     this.setState({
@@ -270,7 +275,7 @@ export default class AddressSelect extends Component {
       let value = ''
 
       if (selectedType === AddressType.Hotwallet) {
-        value = this.state.hotWalletAddress
+        value = this.getHotWalletAddress()
       }
 
       if (selectedType === AddressType.Metamask) {
@@ -316,8 +321,6 @@ export default class AddressSelect extends Component {
 
     const {
       ticker,
-      hotWalletAddress,
-      isCurrencyInUserWallet,
       selectedType,
       walletAddressFocused,
       metamaskConnected,
@@ -342,7 +345,7 @@ export default class AddressSelect extends Component {
         hidden: true,
         title: <FormattedMessage {...langLabels.labelSpecifyAddress} />,
       },
-      ...(isCurrencyInUserWallet ? [{
+      ...(this.isCurrencyInUserWallet() ? [{
           value: AddressType.Hotwallet,
           icon: iconHotwallet,
           title: <FormattedMessage {...langLabels.optionHotWallet} />,
@@ -387,7 +390,7 @@ export default class AddressSelect extends Component {
         {selectedType === AddressType.Hotwallet &&
           <div styleName="selectedInner">
             <div styleName="readonlyValue">
-              <input value={hotWalletAddress} onChange={() => { }} />
+              <input value={this.getHotWalletAddress()} onChange={() => { }} />
             </div>
           </div>
         }

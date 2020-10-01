@@ -224,9 +224,11 @@ export default class Exchange extends Component {
       haveCurrency: sellToken,
       getCurrency: buyToken,
       haveAmount: 0,
+      getAmount: "",
+      fromAddress: null,
+      toAddress: null,
       haveFiat: 0,
       getFiat: 0,
-      getAmount: "",
       isShowBalance: true,
       isLowAmount: false,
       maxAmount: 0,
@@ -932,9 +934,16 @@ export default class Exchange extends Component {
 
     console.log('Exchange: applyAddress', addressRole, addressData)
 
-    this.setState({
-      // todo
-    });
+    if (addressRole === AddressRole.Send) {
+      this.setState({
+        fromAddress: addressData
+      })
+    }
+    if (addressRole === AddressRole.Receive) {
+      this.setState({
+        toAddress: addressData
+      })
+    }
   };
 
   flipCurrency = async () => {
