@@ -367,55 +367,48 @@ export default class Row extends Component {
           </span>
         </td>
         <td>
-          {
-            peer === ownerPeer ? (
-              <RemoveButton onClick={() => removeOrder(id)} />
-            ) : (
-              <Fragment>
-                {
-                  isRequested ? (
-                    <Fragment>
-                      <div style={{ color: 'red' }}>
-                        <FormattedMessage id="Row148" defaultMessage="REQUESTING" />
-                      </div>
-                      <Link to={`${localisedUrl(locale, links.swap)}/${buyCurrency}-${sellCurrency}/${id}`}>
-                        <FormattedMessage id="Row151" defaultMessage="Go to the swap" />
-                      </Link>
-                    </Fragment>
+          {peer === ownerPeer
+            ?
+            <RemoveButton onClick={() => removeOrder(id)} />
+            :
+            <Fragment>
+              {
+                isRequested ? (
+                  <Fragment>
+                    <div style={{ color: 'red' }}>
+                      <FormattedMessage id="Row148" defaultMessage="REQUESTING" />
+                    </div>
+                    <Link to={`${localisedUrl(locale, links.swap)}/${buyCurrency}-${sellCurrency}/${id}`}>
+                      <FormattedMessage id="Row151" defaultMessage="Go to the swap" />
+                    </Link>
+                  </Fragment>
+                ) : (
+                  isProcessing ? (
+                    <span>
+                      <FormattedMessage id="Row157" defaultMessage="This order is in execution" />
+                    </span>
                   ) : (
-                    isProcessing ? (
-                      <span>
-                        <FormattedMessage id="Row157" defaultMessage="This order is in execution" />
-                      </span>
+                    isFetching ? (
+                      <Fragment>
+                        <InlineLoader />
+                        <br />
+                        <span>
+                          <FormattedMessage id="Row165" defaultMessage="Please wait while we confirm your request" />
+                        </span>
+                      </Fragment>
                     ) : (
-                      isFetching ? (
-                        <Fragment>
-                          <InlineLoader />
-                          <br />
-                          <span>
-                            <FormattedMessage id="Row165" defaultMessage="Please wait while we confirm your request" />
-                          </span>
-                        </Fragment>
-                      ) : (
-                        <RequestButton
-                          disabled={BigNumber(amountOnWatch).isGreaterThanOrEqualTo(buyAmount)}
-                          onClick={() => this.checkDeclineOrders(id, isMy ? sellCurrency : buyCurrency)}
-                          data={{ type, amount, main, total, base }}
-                        >
-                          {type === PAIR_TYPES.BID ? <FormattedMessage id="Row2061" defaultMessage="Sell" /> : <FormattedMessage id="Row206" defaultMessage="Buy" />}
-                          {' '}
-                          {this.getDecimals(amount, main)}{' '}{main}
-                          <br />
-                          <FormattedMessage id="Row210" defaultMessage="for" />
-                          {' '}
-                          {this.getDecimals(total, base)}{' '}{base}
-                        </RequestButton>
-                      )
+                      <RequestButton
+                        disabled={BigNumber(amountOnWatch).isGreaterThanOrEqualTo(buyAmount)}
+                        onClick={() => this.checkDeclineOrders(id, isMy ? sellCurrency : buyCurrency)}
+                        data={{ type, amount, main, total, base }}
+                      >
+                        <FormattedMessage id="RowM166" defaultMessage="Start" />
+                      </RequestButton>
                     )
                   )
-                }
-              </Fragment>
-            )
+                )
+              }
+            </Fragment>
           }
         </td>
       </tr>
