@@ -1215,6 +1215,8 @@ export default class Exchange extends Component {
       getCurrency.toUpperCase();
 
 
+    const isErrorLowLiquidity = !isNoAnyOrders && maxAmount > 0 && isNonOffers && linked.haveAmount.value > 0
+
     const Form = (
       <div styleName="section">
         <div styleName="formExchange">
@@ -1301,6 +1303,7 @@ export default class Exchange extends Component {
                   inputValueLink={linked.getAmount}
                   selectedValue={getCurrency}
                   onSelect={this.handleSetGetValue}
+                  disabled={true} // value calculated from market price
                   label={
                     <FormattedMessage id="partial255" defaultMessage="You get" />
                   }
@@ -1348,7 +1351,7 @@ export default class Exchange extends Component {
               />
             )}
 
-            {!isNoAnyOrders && maxAmount > 0 && isNonOffers && linked.haveAmount.value > 0 && (
+            {isErrorLowLiquidity &&
               <Fragment>
                 <p styleName="error">
                   <FormattedMessage
@@ -1356,12 +1359,12 @@ export default class Exchange extends Component {
                     defaultMessage="This trade amount is too high for present market liquidity. Please reduce amount to {maxForSell}."
                     values={{
                       maxForBuy: `${maxAmount} ${getCurrency.toUpperCase()}`,
-                      maxForSell: `${maxBuyAmount} ${haveCurrency.toUpperCase()}`
+                      maxForSell: `${maxBuyAmount.toFixed(8)} ${haveCurrency.toUpperCase()}`
                     }}
                   />
                 </p>
               </Fragment>
-            )}
+            }
 
             {isDeclinedOffer && (
               <p styleName="error link" onClick={() => this.goDeclimeFaq()}>

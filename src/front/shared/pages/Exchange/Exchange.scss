@@ -230,10 +230,14 @@
 
 
 .notices {
-  margin: 2em 0;
+  margin: 1.5em 0;
 
   &:empty {
     display: none;
+  }
+
+  & > * + * {
+    margin-top: 10px;
   }
 
   @media screen and (min-width: 1025px) {
@@ -418,11 +422,9 @@
   align-items: center;
   color: #fff;
   padding: 0.3em 10px;
-  margin-top: -5px;
   font-size: 13px;
   background: #ac82c5;
   border-radius: 3px;
-  margin-bottom: 15px;
   @include errAppend();
 
   a {
@@ -441,11 +443,9 @@
   align-items: center;
   color: #fff;
   padding: 0.3em 10px;
-  margin-top: -5px;
   font-size: 13px;
   background: #6244e5;
   border-radius: 3px;
-  margin-bottom: 15px;
   @include errAppend();
 
   a {

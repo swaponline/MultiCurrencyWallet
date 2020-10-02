@@ -93,7 +93,9 @@
 }
 
 input:disabled {
-  background-color:#eee;
+  background-color: inherit;
+  color: gray;
+  cursor: default;
 }
 
 .selectGroupContainer {
