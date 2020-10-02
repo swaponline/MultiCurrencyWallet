@@ -72,8 +72,8 @@ class BtcSwap extends SwapInterface {
       inSatoshis: true,
       address,
       speed,
-      method: 'swap'
-      /*, txSize: size */
+      method: 'swap',
+      txSize: size,
     })
 
     const estimatedFee = BigNumber(estimatedFeeRaw)
@@ -94,6 +94,7 @@ class BtcSwap extends SwapInterface {
   async filterConfidentUnspents(unspents, expectedConfidenceLevel = 0.95) {
 
     const feesToConfidence = async (fees, size, address) => {
+      fees = BigNumber(fees).multipliedBy(1e8).toNumber()
       const currentFastestFee = await this.getTxFee({ inSatoshis: true, size, speed: 'fast', address })
 
       return BigNumber(fees).isLessThan(currentFastestFee)
@@ -101,31 +102,22 @@ class BtcSwap extends SwapInterface {
         : 1
     }
 
-    const confirmationsToConfidence = confs => confs > 0 ? 1 : 0
-
-    const fetchConfidence = async ({ txid, confirmations }) => {
-      const confidenceFromConfirmations = confirmationsToConfidence(confirmations)
-
-      if (BigNumber(confidenceFromConfirmations).isGreaterThanOrEqualTo(expectedConfidenceLevel)) {
-        return confidenceFromConfirmations
-      }
-
+    const fetchConfidence = async (unspent) => {
       try {
-        const info = await this.fetchTxInfo(txid)
-
         const {
           fees,
           size,
           senderAddress,
           confirmations: txConfirms,
-        } = info
+        } = unspent
 
         if (txConfirms > 0) {
           return 1
         }
 
         if (fees) {
-          return await feesToConfidence(fees, size, senderAddress)
+          const confFromFee = await feesToConfidence(fees, size, senderAddress)
+          return confFromFee
         }
 
         throw new Error(`txinfo={confirmations: ${confirmations}, fees: ${fees}, size: ${size}, senderAddress: ${senderAddress} }`)
@@ -151,16 +143,7 @@ class BtcSwap extends SwapInterface {
    */
   async filterConfirmedUnspents(unspents) {
     return new Promise(async (resolve) => {
-      const fetchFullUnspentInfo = async (unspent) => {
-        const info = await this.fetchTxInfo(unspent.txid)
-        return {
-          ...unspent,
-          ...info,
-        }
-      }
-
-      const unspentsFullInfo = await Promise.all(unspents.map(fetchFullUnspentInfo))
-      const filtered = unspentsFullInfo.filter((unspent) => {
+      const filtered = unspents.filter((unspent) => {
         const {
           confirmations,
         } = unspent
@@ -255,6 +238,24 @@ class BtcSwap extends SwapInterface {
     }
   }
 
+  fetchUnspentsFullInfo(scriptAddress) {
+    return new Promise(async (resolve) => {
+      const unspents      = await this.fetchUnspents(scriptAddress)
+      const fetchFullUnspentInfo = async (unspent) => {
+        const info = await this.fetchTxInfo(unspent.txid)
+        return {
+          ...unspent,
+          ...info,
+        }
+      }
+
+      const unspentsFullInfo = await Promise.all(unspents.map(fetchFullUnspentInfo))
+      resolve(unspentsFullInfo)
+    })
+  }
+
+  async checkCanBeReplaces(unspents) {
+  }
   /**
    *
    * @param {object} data
@@ -281,7 +282,11 @@ class BtcSwap extends SwapInterface {
     }
 
     const expectedConfidence = (expected.confidence !== undefined) ? expected.confidence : 0.95
-    const unspents      = await this.fetchUnspents(scriptAddress)
+    const unspents      = await this.fetchUnspentsFullInfo(scriptAddress)
+
+    if (!unspents.length) return `No unspents. Wait`
+
+    // Check - transaction can be replaced?
     if (waitConfirm) {
       // Wait confirm only - for big amount of swap
       if (!unspents.length) return `No unspents`
