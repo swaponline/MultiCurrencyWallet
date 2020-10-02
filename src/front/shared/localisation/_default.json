@@ -6232,6 +6232,13 @@
     ]
   },
   {
+    "id": "Exchange_BestPrice",
+    "message": "Best price:",
+    "files": [
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
+    ]
+  },
+  {
     "id": "registerSMS_ButtonCancel",
     "message": "Cancel",
     "files": [

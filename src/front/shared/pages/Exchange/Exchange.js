@@ -101,7 +101,6 @@ const bannedPeers = {}; // rejected swap peers
 
 
 
-
 @injectIntl
 @connect(
   ({
@@ -986,7 +985,7 @@ export default class Exchange extends Component {
   checkPair = () => {
     const { getCurrency, haveCurrency } = this.state;
 
-    const noPairToken = config && config.isWidget ? config.erc20token : "swap";
+    const noPairToken = config && config.isWidget ? config.erc20token : 'swap'
 
     const checkingValue = this.props.allCurrencyies
       .map((item) => item.name)
@@ -1215,7 +1214,21 @@ export default class Exchange extends Component {
       getCurrency.toUpperCase();
 
 
-    const isErrorLowLiquidity = !isNoAnyOrders && maxAmount > 0 && isNonOffers && linked.haveAmount.value > 0
+    const isPrice = oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && !isNonOffers
+
+
+    const isErrorNoOrders = isNoAnyOrders && linked.haveAmount.value > 0 && isFullLoadingComplite
+
+    const isErrorLowLiquidity = !isNoAnyOrders &&
+      maxAmount > 0 &&
+      isNonOffers &&
+      linked.haveAmount.value > 0
+
+    const isErrorLowAmount = this.doesComissionPreventThisOrder() &&
+      BigNumber(getAmount).isGreaterThan(0) &&
+      this.state.haveAmount &&
+      this.state.getAmount
+
 
     const Form = (
       <div styleName="section">
@@ -1329,27 +1342,32 @@ export default class Exchange extends Component {
 
           <div styleName="notices">
 
-            {oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && !isNonOffers &&
-              <div styleName="price">
-                <FormattedMessage
-                  id="PartialPriceSearch502"
-                  defaultMessage="1 {getCurrency} = {haveCurrency}"
-                  values={{
-                    getCurrency: `${getCurrency.toUpperCase()}`,
-                    haveCurrency: `${oneCryptoCost.toFixed(
-                      5
-                    )} ${haveCurrency.toUpperCase()}`,
-                  }}
-                />
-              </div>
-            }
-
-            {!oneCryptoCost.isFinite() && !isNonOffers && (
+            <div styleName="price">
               <FormattedMessage
-                id="PartialPriceCalc"
-                defaultMessage="Calc price"
+                id="Exchange_BestPrice"
+                defaultMessage="Best price:"
               />
-            )}
+              {!isPrice && !isErrorNoOrders &&
+                <InlineLoader />
+              }
+              {isPrice &&
+                `1 ${getCurrency.toUpperCase()} = ${oneCryptoCost.toFixed(5)} ${haveCurrency.toUpperCase()}`
+              }
+              {isErrorNoOrders &&
+                '?'
+              }
+            </div>
+
+            {isErrorNoOrders &&
+              <Fragment>
+                <p styleName="error">
+                  <FormattedMessage
+                    id="PartialPriceNoOrdersReduce"
+                    defaultMessage="No orders found, try later or change the currency pair"
+                  />
+                </p>
+              </Fragment>
+            }
 
             {isErrorLowLiquidity &&
               <Fragment>
@@ -1364,6 +1382,21 @@ export default class Exchange extends Component {
                   />
                 </p>
               </Fragment>
+            }
+
+            {isErrorLowAmount &&
+              <p styleName="error">
+                <FormattedMessage
+                  id="ErrorBtcLowAmount"
+                  defaultMessage="This amount is too low"
+                  values={{
+                    btcAmount:
+                      this.state.haveCurrency === "btc"
+                        ? this.state.haveAmount
+                        : this.state.getAmount,
+                  }}
+                />
+              </p>
             }
 
             {isDeclinedOffer && (
@@ -1393,24 +1426,6 @@ export default class Exchange extends Component {
                 />
               </p>
             )}
-
-            {this.doesComissionPreventThisOrder() &&
-              BigNumber(getAmount).isGreaterThan(0) &&
-              this.state.haveAmount &&
-              this.state.getAmount &&
-              <p styleName="error">
-                <FormattedMessage
-                  id="ErrorBtcLowAmount"
-                  defaultMessage="This amount is too low"
-                  values={{
-                    btcAmount:
-                      this.state.haveCurrency === "btc"
-                        ? this.state.haveAmount
-                        : this.state.getAmount,
-                  }}
-                />
-              </p>
-            }
 
             {BigNumber(estimatedFeeValues[haveCurrency]).isGreaterThan(0) &&
               BigNumber(haveAmount).isGreaterThan(0) &&
@@ -1477,17 +1492,6 @@ export default class Exchange extends Component {
                 </div>
               </div>
             )}
-
-            {isNoAnyOrders && linked.haveAmount.value > 0 && isFullLoadingComplite &&
-              <Fragment>
-                <p styleName="error">
-                  <FormattedMessage
-                    id="PartialPriceNoOrdersReduce"
-                    defaultMessage="No orders found, try later or change the currency pair"
-                  />
-                </p>
-              </Fragment>
-            }
 
             {isFetching &&
               <span>
