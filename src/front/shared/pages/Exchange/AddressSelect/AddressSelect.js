@@ -238,10 +238,6 @@ export default class AddressSelect extends Component {
     }))
   }
 
-  handleCustomAddressInputBlur() {
-
-  }
-
   handleScanError(err) {
     console.error('Scan error', err)
   }

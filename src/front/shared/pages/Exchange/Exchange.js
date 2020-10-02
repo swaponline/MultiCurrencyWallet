@@ -955,7 +955,7 @@ export default class Exchange extends Component {
       {
         haveCurrency: getCurrency,
         getCurrency: haveCurrency,
-        // todo flip addresses
+        // todo: flip values, addresses
       },
       () => {
         actions.analytics.dataEvent({

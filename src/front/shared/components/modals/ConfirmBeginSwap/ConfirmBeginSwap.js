@@ -76,11 +76,12 @@ export default class ConfirmBeginSwap extends React.Component {
 
     if (customWalletUse) {
       if (!typeforce.isCoinAddress[sellCurrency]) {
-        console.warn(`Swap.Core unkrown isCoinAddress check for ${sellCurrency}`)
+        console.warn(`Swap.Core unknown isCoinAddress check for ${sellCurrency}`)
         return true
       }
       return typeforce.isCoinAddress[sellCurrency](customWallet)
-    } else return true
+    }
+    return true
   }
 
   customWalletAllowed() {
