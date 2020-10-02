@@ -146,6 +146,34 @@ class BtcSwap extends SwapInterface {
 
   /**
    *
+   * @param {Array[object]} unspents
+   * @return {Array[object]}
+   */
+  async filterConfirmedUnspents(unspents) {
+    return new Promise(async (resolve) => {
+      const fetchFullUnspentInfo = async (unspent) => {
+        const info = await this.fetchTxInfo(unspent.txid)
+        return {
+          ...unspent,
+          ...info,
+        }
+      }
+
+      const unspentsFullInfo = await Promise.all(unspents.map(fetchFullUnspentInfo))
+      const filtered = unspentsFullInfo.filter((unspent) => {
+        const {
+          confirmations,
+        } = unspent
+
+        if (confirmations > 0) {
+          return true
+        }
+      })
+      resolve(filtered)
+    })
+  }
+  /**
+   *
    * @param {object} data
    * @param {object} data.script
    * @param {*} data.txRaw
@@ -256,7 +284,11 @@ class BtcSwap extends SwapInterface {
     const unspents      = await this.fetchUnspents(scriptAddress)
     if (waitConfirm) {
       // Wait confirm only - for big amount of swap
-      
+      if (!unspents.length) return `No unspents`
+      const confirmedUnspents = await this.filterConfirmedUnspents(unspents)
+      if (unspents.length === confirmedUnspents.length) return
+      await util.helpers.waitDelay(30)
+      return `Wait confirm tx`
     }
 
     const expectedValue = expected.value.multipliedBy(1e8).integerValue()

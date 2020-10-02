@@ -80,8 +80,16 @@ class BTC2ETH extends Flow {
       isSwapExist: false,
 
       requireWithdrawFee: false,
+
+      // Partical (btc-seller) has unconfirmed txs in mempool
+      particalBtcLocked: false,
     }
 
+    this.swap.room.on('wait btc unlock', () => {
+      this.setState({
+        particalBtcLocked: true,
+      })
+    })
     super._persistSteps()
     this._persistState()
   }
@@ -192,7 +200,11 @@ class BTC2ETH extends Flow {
               } else {
                 if (err === 'Conflict') {
                   console.warn('BTC locked. Has not confirmed tx in mempool. Wait confirm')
-                  await util.helpers.waitDelay(60)
+                  flow.swap.room.sendMessage({
+                    event: 'wait btc unlock',
+                    data: {},
+                  })
+                  await util.helpers.waitDelay(30)
                   return false
                 } else {
                   console.log('Fail fund script', err)
