@@ -8,8 +8,8 @@ const debug = require('debug')
 const BITPAY = `https://api.bitcore.io/api/BTC/testnet`
 const BITPAY_MAIN = `https://api.bitcore.io/api/BTC/mainnet`
 
-const BLOCKCYPHER_API = `https://api.blockcypher.com/v1/btc/main/`
-const BLOCKCYPHER_API_TESTNET = `https://api.blockcypher.com/v1/btc/test3/`
+const BLOCKCYPHER_API = `https://api.blockcypher.com/v1/btc/main`
+const BLOCKCYPHER_API_TESTNET = `https://api.blockcypher.com/v1/btc/test3`
 const EARN_COM = `https://bitcoinfees.earn.com/api/v1/fees/recommended`
 // const BLOCKCYPHER_API_TOKEN = process.env.BLOCKCYPHER_API_TOKEN
 
@@ -118,8 +118,11 @@ class Bitcoin {
     return request
       .get(`${EARN_COM}`, {
         cacheResponse: 10*60*1000,
-        queryResponse: true,
         cacheOnFail: true,
+        inQuery: {
+          delay: 500,
+          name: `blocyper`,
+        },
       } )
       .then(json => JSON.parse(json))
       .then(fees => Number(fees[_speed]) * 1024)
@@ -145,8 +148,11 @@ class Bitcoin {
     return request
       .get(`${API_ROOT}`, {
         cacheResponse: 10*60*1000,
-        queryResponse: true,
         cacheOnFail: true,
+        inQuery: {
+          delay: 500,
+          name: `blocyper`,
+        },
       } )
       .then(json => JSON.parse(json))
       .then(info => Number(info[_speed]))

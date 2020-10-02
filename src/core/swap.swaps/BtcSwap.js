@@ -306,15 +306,9 @@ class BtcSwap extends SwapInterface {
 
         const ownerAddress = this.app.services.auth.accounts.btc.getAddress()
 
-        const tx            = new this.app.env.bitcoin.TransactionBuilder(this.network)
-        let unspents = []
-        try {
-          unspents      = await this.fetchUnspents(ownerAddress)
-        } catch (e) {
-          console.log('Fail get unspents')
-        }
-
         const fundValue     = amount.multipliedBy(1e8).integerValue().toNumber()
+        const tx            = new this.app.env.bitcoin.TransactionBuilder(this.network)
+        const unspents = await this.fetchUnspents(ownerAddress)
         const feeValueBN    = await this.getTxFee({ inSatoshis: true, address: ownerAddress })
         const feeValue      = feeValueBN.integerValue().toNumber()
         const totalUnspent  = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
@@ -333,18 +327,13 @@ class BtcSwap extends SwapInterface {
 
         const txRaw = tx.buildIncomplete()
 
-        console.log('tx ready to broadcast')
         if (typeof handleTransactionHash === 'function') {
-          console.log('call handleTransactionHash')
           handleTransactionHash(txRaw.getId())
         }
 
-        console.log('broadcasting')
         this.broadcastTx(txRaw.toHex()).then((result) => {
-          console.log('broadcast ready')
           resolve(result)
         }).catch ((err) => {
-          console.log('Fail broadcast', err)
           reject(err)
         })
       }

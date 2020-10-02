@@ -129,6 +129,7 @@ const fetchTxInfo = (hash, apiBitpay, cacheResponse, hasAdminFee) => {
     }
     
     const txInfo = {
+      txid: baseTxInfo.txId,
       amount,
       afterBalance,
       senderAddress,
@@ -179,6 +180,7 @@ const fetchUnspents = (address, apiBitpay, cacheResponse) => {
           scriptPubKey: txInfo.script,
           txid: txInfo.mintTxid,
           vout: txInfo.mintIndex,
+          spentTxid: txInfo.spentTxid,
         }
       }))
     }).catch((error) => {
@@ -187,7 +189,7 @@ const fetchUnspents = (address, apiBitpay, cacheResponse) => {
   })
 }
 
-const broadcastTx = (txRaw, apiBitpay, apiBlocyper) => {
+const broadcastTx = (txRaw, apiBitpay, apiBlocyper, onBroadcastError) => {
   return new Promise(async (resolve, reject) => {
     let answer = false
     try {
@@ -195,34 +197,69 @@ const broadcastTx = (txRaw, apiBitpay, apiBlocyper) => {
         body: {
           rawTx: txRaw,
         },
+        reportErrors: (error) => {
+          console.log('BitPay broadcastTx error', error)
+          return true
+        },
         inQuery: {
           delay: 500,
           name: `bitpay`,
         },
       })
-    } catch (e) {}
+    } catch (bitpayError) {
+      console.log('BitPay broadcastTx error', bitpayError)
+      if (onBroadcastError instanceof Function) {
+        if (onBroadcastError(bitpayError)) reject()
+      }
+    }
+    if (answer && answer.txid) {
+      resolve({ txid: answer.txid  })
+      return
+    }
     if (!answer || !answer.txid) {
       // use blockcryper
-      const bcAnswer = await apiLooper.post(apiBlocyper, `/txs/push`, {
-        body: {
-          tx: txRaw,
-        },
-        inQuery: {
-          delay: 500,
-          name: `blocyper`,
-        },
-      })
-      if (bcAnswer
-        && bcAnswer.tx
-        && bcAnswer.tx.hash) {
-        resolve({
-          txid: bcAnswer.tx.hash,
+      try {
+        const bcAnswer = await apiLooper.post(apiBlocyper, `/txs/push`, {
+          body: {
+            tx: txRaw,
+          },
+          reportErrors: (error) => {
+            if (error
+              && error.res
+              && error.res.res
+              && error.res.res.statusMessage
+              && error.res.res.statusMessage === `Conflict`
+            ) {
+              reject('Conflict')
+              return false
+            }
+            console.log('----')
+            console.log(err.res)
+            console.log('----')
+            console.log(err.res.res)
+            console.log('Blocyper broadcastTx error', error)
+            return true
+          },
+          inQuery: {
+            delay: 500,
+            name: `blocyper`,
+          },
         })
-      } else {
-        reject()
+        if (bcAnswer
+          && bcAnswer.tx
+          && bcAnswer.tx.hash) {
+          resolve({
+            txid: bcAnswer.tx.hash,
+          })
+        } else {
+          reject()
+        }
+      } catch (blocyperError) {
+        console.log('Blocyper broadcastTx error', blocyperError)
+        if (onBroadcastError instanceof Function) {
+          if (onBroadcastError(blocyperError)) reject()
+        }
       }
-    } else {
-      resolve(answer)
     }
   })
 }
@@ -385,7 +422,7 @@ const getTransactionBitcore = (address, ownType, myWallets, network, apiBitpay) 
       },
       inQuery: {
         delay: 500,
-        name: `balance`,
+        name: `bitpay`,
       },
     }).then((res) => {
       const transactions = res.txs.map((item) => {

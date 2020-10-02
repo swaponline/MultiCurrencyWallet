@@ -103,6 +103,7 @@ const apiLooper = (method, api, endpoint, options) => {
   const {
     inQuery,
     ignoreErrors,
+    reportErrors,
   } = options || {}
 
   const {
@@ -147,6 +148,7 @@ const apiLooper = (method, api, endpoint, options) => {
         const currentEndpoint = apiStatus.endpoints[apiStatus.prior[0]]
         if (currentEndpoint.online) {
           const url = `${currentEndpoint.url}${endpoint}`
+          console.log('apiLooper', method, url)
           request[method](url, options)
             .then((answer) => {
               if (options && options.checkStatus instanceof Function) {
@@ -163,6 +165,21 @@ const apiLooper = (method, api, endpoint, options) => {
               resolve(answer)
             })
             .catch((answer) => {
+              if (reportErrors instanceof Function) {
+                const swithToNextServer = reportErrors(
+                  answer, 
+                  (resolveResult) => {
+                    resolve(resolveResult)
+                  },
+                  (rejectResult) => {
+                    error(rejectResult)
+                  }
+                )
+                if (!swithToNextServer) {
+                  resolve(answer)
+                  return
+                }
+              }
               if (ignoreErrors) {
                 console.log('Ignore error ^')
                 resolve(answer)

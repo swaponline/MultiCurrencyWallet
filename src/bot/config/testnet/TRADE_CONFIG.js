@@ -86,6 +86,11 @@ export default {
     type: 'coin',
     orders: [
       {
+        amount: 0.001,
+        spreadBuy: 4,
+        spreadSell: 4
+      },
+      {
         amount: 0.005,
         spreadBuy: 4,
         spreadSell: 4

@@ -178,22 +178,48 @@ export default (tokenName) => {
           const { isBalanceEnough, btcScriptValues } = flow.state
 
           if (isBalanceEnough) {
-            try {
-              await flow.btcSwap.fundScript({
-                scriptValues: btcScriptValues,
-                amount: sellAmount,
-              })
-            } catch (err) {
-              console.log('Fail fund script', err)
+            const fundScriptRepeat = async () => {
+              try {
+                console.log('Funding script')
+                await flow.btcSwap.fundScript({
+                  scriptValues: btcScriptValues,
+                  amount: sellAmount,
+                })
+                return true
+              } catch (err) {
+                if (err === 'Script funded already') {
+                  console.warn('Script already funded')
+                  return true
+                } else {
+                  if (err === 'Conflict') {
+                    console.warn('BTC locked. Has not confirmed tx in mempool. Wait confirm')
+                    await util.helpers.waitDelay(60)
+                    return false
+                  } else {
+                    console.log('Fail fund script', err)
+                  }
+                }
+              }
+              return true
             }
-          } else {
-            console.error('Balance not enought')
+
+            await util.helpers.repeatAsyncUntilResult(async (stopRepeat) => {
+              const { isStoppedSwap } = flow.state
+
+              if (!isStoppedSwap) {
+                return await fundScriptRepeat()
+              } else {
+                stopRepeat()
+              }
+            })
           }
 
           const checkBTCScriptBalance = async () => {
+            console.log('checkBTCScriptBalance')
             const { scriptAddress } = this.btcSwap.createScript(btcScriptValues)
             const unspents = await this.btcSwap.fetchUnspents(scriptAddress)
 
+            console.log('unspents', unspents)
             if (unspents.length === 0) {
               return false
             }
@@ -215,6 +241,7 @@ export default (tokenName) => {
             return isEnoughMoney
           }
 
+          console.log('begin wait tx fund ready')
           await util.helpers.repeatAsyncUntilResult(async (stopRepeat) => {
             const { isStoppedSwap } = flow.state
 
