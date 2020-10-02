@@ -102,16 +102,14 @@ class BtcSwap extends SwapInterface {
         : 1
     }
 
-    const fetchConfidence = async ({ txid, confirmations }) => {
+    const fetchConfidence = async (unspent) => {
       try {
-        const info = await this.fetchTxInfo(txid)
-
         const {
           fees,
           size,
           senderAddress,
           confirmations: txConfirms,
-        } = info
+        } = unspent
 
         if (txConfirms > 0) {
           return 1
@@ -145,16 +143,7 @@ class BtcSwap extends SwapInterface {
    */
   async filterConfirmedUnspents(unspents) {
     return new Promise(async (resolve) => {
-      const fetchFullUnspentInfo = async (unspent) => {
-        const info = await this.fetchTxInfo(unspent.txid)
-        return {
-          ...unspent,
-          ...info,
-        }
-      }
-
-      const unspentsFullInfo = await Promise.all(unspents.map(fetchFullUnspentInfo))
-      const filtered = unspentsFullInfo.filter((unspent) => {
+      const filtered = unspents.filter((unspent) => {
         const {
           confirmations,
         } = unspent
@@ -249,6 +238,24 @@ class BtcSwap extends SwapInterface {
     }
   }
 
+  fetchUnspentsFullInfo(scriptAddress) {
+    return new Promise(async (resolve) => {
+      const unspents      = await this.fetchUnspents(scriptAddress)
+      const fetchFullUnspentInfo = async (unspent) => {
+        const info = await this.fetchTxInfo(unspent.txid)
+        return {
+          ...unspent,
+          ...info,
+        }
+      }
+
+      const unspentsFullInfo = await Promise.all(unspents.map(fetchFullUnspentInfo))
+      resolve(unspentsFullInfo)
+    })
+  }
+
+  async checkCanBeReplaces(unspents) {
+  }
   /**
    *
    * @param {object} data
@@ -275,10 +282,11 @@ class BtcSwap extends SwapInterface {
     }
 
     const expectedConfidence = (expected.confidence !== undefined) ? expected.confidence : 0.95
-    const unspents      = await this.fetchUnspents(scriptAddress)
+    const unspents      = await this.fetchUnspentsFullInfo(scriptAddress)
 
     if (!unspents.length) return `No unspents. Wait`
 
+    // Check - transaction can be replaced?
     if (waitConfirm) {
       // Wait confirm only - for big amount of swap
       if (!unspents.length) return `No unspents`
