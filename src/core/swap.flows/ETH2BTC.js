@@ -249,6 +249,16 @@ class ETH2BTC extends Flow {
 
           if (!isEthContractFunded) {
             try {
+              debug('swap.core:flow')('check swap exists')
+              const swapExists = await flow._checkSwapAlreadyExists()
+              if (swapExists) {
+                console.warn('Swap exists!! May be stucked. Try refund')
+                await flow.ethSwap.refund({
+                  participantAddress: this.app.getParticipantEthAddress(flow.swap),
+                }, (refundTx) => {
+                  debug('swap.core:flow')('Stucked swap refunded', refundTx)
+                })
+              }
               debug('swap.core:flow')('create swap', swapData)
               await this.ethSwap.create(swapData, (hash) => {
                 debug('swap.core:flow')('create swap tx hash', hash)

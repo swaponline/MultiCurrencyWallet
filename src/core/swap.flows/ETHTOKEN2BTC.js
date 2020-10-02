@@ -262,7 +262,16 @@ export default (tokenName) => {
                   })
                 }
 
-                debug('swap.core:flow')('create swap', swapData)
+                debug('swap.core:flow')('check swap exists')
+                const swapExists = await flow._checkSwapAlreadyExists()
+                if (swapExists) {
+                  console.warn('Swap exists!! May be stucked. Try refund')
+                  await flow.ethTokenSwap.refund({
+                    participantAddress: this.app.getParticipantEthAddress(flow.swap),
+                  }, (refundTx) => {
+                    debug('swap.core:flow')('Stucked swap refunded', refundTx)
+                  })
+                }
                 await flow.ethTokenSwap.create(swapData, async (hash) => {
                   debug('swap.core:flow')('create swap tx hash', hash)
                   flow.swap.room.sendMessage({

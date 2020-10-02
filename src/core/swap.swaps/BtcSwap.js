@@ -257,11 +257,11 @@ class BtcSwap extends SwapInterface {
   checkCanBeReplaces(unspents) {
     const notReplacedUnspents = unspents.filter((unspent) => {
       const notReplacedInputs = unspent.inputs.filter((input) => {
-        return input.sequenceNumber.toString(16) === 'ffffffff'
+        return input.sequenceNumber.toString(16) === `ffffffff`
       })
       return notReplacedInputs.length === unspent.inputs.length
     })
-    return notReplacedUnspents.length === unspents.length
+    return !(notReplacedUnspents.length === unspents.length)
   }
   /**
    *
@@ -368,7 +368,7 @@ class BtcSwap extends SwapInterface {
           throw new Error(`Total less than fee: ${totalUnspent} < ${feeValue} + ${fundValue}`)
         }
 
-        unspents.forEach(({ txid, vout }) => tx.addInput(txid, vout))
+        unspents.forEach(({ txid, vout }) => tx.addInput(txid, vout, 0xffffffff))
         tx.addOutput(scriptAddress, fundValue)
         tx.addOutput(this.app.services.auth.accounts.btc.getAddress(), skipValue)
         tx.__INPUTS.forEach((input, index) => {
