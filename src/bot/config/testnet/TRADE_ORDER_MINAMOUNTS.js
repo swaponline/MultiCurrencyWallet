@@ -4,5 +4,5 @@ export default {
   'USDT': 0.005,
   'SWAP':  0.0005,
 
-  'default' : 0.0005 // BTC
+  'default' : 0.0005, // BTC
 }
