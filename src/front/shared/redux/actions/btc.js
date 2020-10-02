@@ -299,7 +299,7 @@ const getBalance = () => {
 
 const fetchBalance = (address) => bitcoinUtils.fetchBalance(address, false, BITPAY_API)
 
-const fetchTxRaw = (txId, cacheResponse) => bitcoinUtils.fetchTxRaw(txid, cacheResponse, BLOCYPER_API)
+const fetchTxRaw = (txId, cacheResponse) => bitcoinUtils.fetchTxRaw(txId, cacheResponse, BLOCYPER_API)
 
 const fetchTx = (hash, cacheResponse) => bitcoinUtils.fetchTx(hash, BITPAY_API, cacheResponse)
 
@@ -477,7 +477,7 @@ const sendV5 = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
       feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber() // Admin fee in satoshi
     }
 
-    feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
+    feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed})
 
     const unspents = await fetchUnspents(from)
     const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()

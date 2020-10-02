@@ -129,7 +129,7 @@ const fetchTxInfo = (hash, apiBitpay, cacheResponse, hasAdminFee) => {
     }
     
     const txInfo = {
-      txid: baseTxInfo.txId,
+      txid: baseTxInfo.txid,
       amount,
       afterBalance,
       senderAddress,
