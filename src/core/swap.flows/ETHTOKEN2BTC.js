@@ -90,7 +90,8 @@ export default (tokenName) => {
         isFailedTransactionError: null,
         gasAmountNeeded: 0,
 
-        waitBtcConfirm: false,
+        // Partical (btc-seller) has unconfirmed txs in mempool
+        particalBtcLocked: false,
       }
 
       super._persistSteps()
@@ -98,6 +99,11 @@ export default (tokenName) => {
 
       const flow = this
 
+      flow.swap.room.on('wait btc unlock', () => {
+        this.setState({
+          particalBtcLocked: true,
+        })
+      })
       flow.swap.room.on('wait btc confirm', () => {
         flow.setState({
           waitBtcConfirm: true,
@@ -172,13 +178,6 @@ export default (tokenName) => {
             waitConfirm,
           } = flow.swap
 
-          if (waitConfirm) {
-            flow.swap.room.sendMessage({
-              event: 'wait btc confirm',
-              data: {},
-            })
-          }
-
           const { secretHash } = flow.state
 
           const utcNow = () => Math.floor(Date.now() / 1000)
@@ -203,6 +202,15 @@ export default (tokenName) => {
               } else if (/Expected script value/.test(scriptCheckError)) {
                 console.warn(scriptCheckError)
                 console.warn('Btc script check: waiting balance')
+              } else if (
+                /Can be replace by fee. Wait confirm/.test(scriptCheckError)
+                ||
+                /Wait confirm tx/.test(scriptCheckError)
+              ) {
+                flow.swap.room.sendMessage({
+                  event: 'wait btc confirm',
+                  data: {},
+                })
               } else {
                 flow.swap.events.dispatch('btc script check error', scriptCheckError)
               }

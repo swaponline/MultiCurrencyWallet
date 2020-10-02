@@ -140,15 +140,15 @@ const fetchTxInfo = (hash, apiBitpay, cacheResponse, hasAdminFee) => {
       minerFee: baseTxInfo.fees,
       adminFee,
       minerFeeCurrency: 'BTC',
-      // @ ToDo - need fix
-      outputs: [], /* vout.map((out) => {
-        const voutAddrBuf = Buffer.from(out.scriptPubKey.hex, 'hex')
-        const currentAddress = bitcoin.address.fromOutputScript(voutAddrBuf, btc.network)
-        return {
-          amount: new BigNumber(out.value).toNumber(),
-          address: currentAddress,
-        }
-      }),*/
+
+      outputs: txCoins.outputs.map((output) => ({
+        ...output,
+        amount: new BigNumber(output.value).dividedBy(1e8).toNumber(),
+      })),
+      inputs: txCoins.inputs.map((input) => ({
+        ...input,
+        amount: new BigNumber(input.value).dividedBy(1e8).toNumber(),
+      })),
       fees: baseTxInfo.fees,
       size: baseTxInfo.size,
     }

@@ -87,13 +87,21 @@ class ETH2BTC extends Flow {
       isFailedTransaction: false,
       isFailedTransactionError: null,
 
-      waitBtcConfirm: false,
+      // Partical (btc-seller) has unconfirmed txs in mempool
+      particalBtcLocked: false,
     }
 
     super._persistSteps()
     this._persistState()
 
     const flow = this
+
+    flow.swap.room.on('wait btc unlock', () => {
+      this.setState({
+        particalBtcLocked: true,
+      })
+    })
+
     flow.swap.room.once('request withdraw', () => {
       flow.setState({
         withdrawRequestIncoming: true,
@@ -183,13 +191,6 @@ class ETH2BTC extends Flow {
           waitConfirm,
         } = flow.swap
 
-        if (waitConfirm) {
-          flow.swap.room.sendMessage({
-            event: 'wait btc confirm',
-            data: {},
-          })
-        }
-
         const { secretHash } = flow.state
 
         const utcNow = () => Math.floor(Date.now() / 1000)
@@ -213,6 +214,15 @@ class ETH2BTC extends Flow {
               stopRepeat()
             } else if (/Expected script value/.test(scriptCheckError)) {
               console.warn('Btc script check: waiting balance')
+            } else if (
+              /Can be replace by fee. Wait confirm/.test(scriptCheckError)
+              ||
+              /Wait confirm tx/.test(scriptCheckError)
+            ) {
+              flow.swap.room.sendMessage({
+                event: 'wait btc confirm',
+                data: {},
+              })
             } else {
               flow.swap.events.dispatch('btc script check error', scriptCheckError)
             }

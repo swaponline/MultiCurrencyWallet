@@ -254,7 +254,14 @@ class BtcSwap extends SwapInterface {
     })
   }
 
-  async checkCanBeReplaces(unspents) {
+  checkCanBeReplaces(unspents) {
+    const notReplacedUnspents = unspents.filter((unspent) => {
+      const notReplacedInputs = unspent.inputs.filter((input) => {
+        return input.sequenceNumber.toString(16) === 'ffffffff'
+      })
+      return notReplacedInputs.length === unspent.inputs.length
+    })
+    return notReplacedUnspents.length === unspents.length
   }
   /**
    *
@@ -286,13 +293,19 @@ class BtcSwap extends SwapInterface {
 
     if (!unspents.length) return `No unspents. Wait`
 
+    
     // Check - transaction can be replaced?
-    if (waitConfirm) {
+    const canBeReplaced = this.checkCanBeReplaces(unspents)
+    if (canBeReplaced) {
+      console.warn(`Fund to script ${scriptAddress} can be replaced be fee. Wait confirm`)
+    }
+    if (waitConfirm || canBeReplaced) {
       // Wait confirm only - for big amount of swap
       if (!unspents.length) return `No unspents`
       const confirmedUnspents = await this.filterConfirmedUnspents(unspents)
       if (unspents.length === confirmedUnspents.length) return
       await util.helpers.waitDelay(30)
+      if (canBeReplaced) return `Can be replace by fee. Wait confirm`
       return `Wait confirm tx`
     }
 
