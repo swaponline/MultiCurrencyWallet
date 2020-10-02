@@ -1,5 +1,11 @@
 import SwapApp from 'swap.app'
+import { getEthWallet } from '../../common/utils/mnemonic'
 
+
+const loginMnemonic = (mnemonic, walletNumber=0, path, app) => {
+  const wallet = getEthWallet('nothing', mnemonic, walletNumber, path, app)
+  return login(wallet.privateKey, app)
+}
 
 const login = (_privateKey, app) => {
   SwapApp.required(app)
@@ -32,5 +38,6 @@ const getPublicData = (account) => ({
 
 export default {
   login,
+  loginMnemonic,
   getPublicData,
 }

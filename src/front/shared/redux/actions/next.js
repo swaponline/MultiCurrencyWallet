@@ -14,6 +14,7 @@ import typeforce from 'swap.app/util/typeforce'
 import config from 'app-config'
 const bitcore = require('bitcore-lib')
 import { localisePrefix } from 'helpers/locale'
+import { default as mnemonicUtils } from '../../../../common/utils/mnemonic'
 
 
 const hasAdminFee = (config
@@ -26,7 +27,7 @@ const hasAdminFee = (config
 ) ? config.opts.fee.next : false
 
 const getRandomMnemonicWords = () => bip39.generateMnemonic()
-const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonic)
+const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonicUtils.convertMnemonicToValid(mnemonic))
 
 
 const sweepToMnemonic = (mnemonic, path) => {
@@ -75,26 +76,8 @@ const getSweepAddress = () => {
 }
 
 const getWalletByWords = (mnemonic, walletNumber = 0, path) => {
-  const seed = bip39.mnemonicToSeedSync(mnemonic)
-  const root = bip32.fromSeed(seed, next.network)
-  const node = root.derivePath((path) || `m/44'/707'/0'/0/${walletNumber}`)
-
-  const account = bitcoin.payments.p2pkh({
-    pubkey: node.publicKey,
-    network: next.network,
-  })
-
-  return {
-    mnemonic,
-    address: account.address,
-    publicKey: node.publicKey.toString('Hex'),
-    WIF: node.toWIF(),
-    node,
-    account,
-  }
+  return mnemonicUtils.getNextWallet(next.network, mnemonic, walletNumber, path)
 }
-
-window.getWalletByWords = getWalletByWords
 
 
 const auth = (privateKey) => {

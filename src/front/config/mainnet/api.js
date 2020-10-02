@@ -2,8 +2,9 @@ export default {
   horizon: 'https://horizon.stellar.org',
   blocktrail: 'https://api.blocktrail.com/v1/BTC',
   bitpay: [
-    'https://insight.bitpay.com/api',
-    'https://invoices.swaponline.site/proxybitpay',
+    'https://api.bitcore.io/api/BTC/mainnet',
+    //'https://insight.bitpay.com/api',
+    //'https://invoices.swaponline.site/proxybitpay',
   ],
   ghostscan: 'https://ghostscan.io/ghost-insight-api',
   nextExplorer: 'https://explore.next.exchange/api',

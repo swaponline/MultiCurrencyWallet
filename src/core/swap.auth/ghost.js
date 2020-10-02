@@ -1,5 +1,17 @@
 import SwapApp from 'swap.app'
+import { getGhostWallet } from '../../common/utils/mnemonic'
 
+
+const loginMnemonic = (mnemonic, walletNumber=0, path, app) => {
+  const network = (
+    app.isMainNet()
+      ? app.env.coininfo.ghost.main
+      : app.env.coininfo.ghost.test
+  )
+
+  const wallet = getGhostWallet(network, walletNumber, path, app)
+  return login(wallet.WIF, app)
+}
 
 const login = (_privateKey, app) => {
   SwapApp.required(app)
@@ -43,5 +55,6 @@ const getPublicData = (account) => ({
 
 export default {
   login,
+  loginMnemonic,
   getPublicData,
 }
