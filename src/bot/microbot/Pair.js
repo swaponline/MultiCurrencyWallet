@@ -1,8 +1,10 @@
 import BigNumber from 'bignumber.js'
 
-import TOKEN_DECIMALS from '../config/constants/TOKEN_DECIMALS'
-import TRADE_TICKERS from '../config/constants/TRADE_TICKERS'
-import PAIR_TYPES from '../config/constants/PAIR_TYPES'
+import {
+  TOKEN_DECIMALS,
+  TRADE_TICKERS,
+  PAIR_TYPES
+} from '../config/constants'
 
 const PAIR_BID = PAIR_TYPES.BID
 const PAIR_ASK = PAIR_TYPES.ASK

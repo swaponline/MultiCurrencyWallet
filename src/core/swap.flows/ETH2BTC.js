@@ -86,6 +86,8 @@ class ETH2BTC extends Flow {
 
       isFailedTransaction: false,
       isFailedTransactionError: null,
+
+      waitBtcConfirm: false,
     }
 
     super._persistSteps()
@@ -95,6 +97,12 @@ class ETH2BTC extends Flow {
     flow.swap.room.once('request withdraw', () => {
       flow.setState({
         withdrawRequestIncoming: true,
+      })
+    })
+
+    flow.swap.room.once('wait btc confirm', () => {
+      flow.setState({
+        waitBtcConfirm: true,
       })
     })
 
@@ -168,7 +176,20 @@ class ETH2BTC extends Flow {
       // 5. Create ETH Contract
 
       async () => {
-        const { participant, buyAmount, sellAmount } = flow.swap
+        const {
+          participant,
+          buyAmount,
+          sellAmount,
+          waitConfirm,
+        } = flow.swap
+
+        if (waitConfirm) {
+          flow.swap.room.sendMessage({
+            event: 'wait btc confirm',
+            data: {},
+          })
+        }
+
         const { secretHash } = flow.state
 
         const utcNow = () => Math.floor(Date.now() / 1000)
@@ -180,7 +201,9 @@ class ETH2BTC extends Flow {
             value: buyAmount,
             recipientPublicKey: this.app.services.auth.accounts.btc.getPublicKey(),
             lockTime: utcNow(),
-            confidence: (this.app.isWhitelistBtc(participant.btc.address)) ? 0 : 0.8,
+            confidence: 0.8,
+            isWhiteList: this.app.isWhitelistBtc(participant.btc.address),
+            waitConfirm,
           })
 
           if (scriptCheckError) {

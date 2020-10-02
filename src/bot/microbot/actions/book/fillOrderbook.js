@@ -5,10 +5,12 @@ import handleError from '../../../app/actions/errors/handleError'
 import fetchPrice from '../../../app/actions/fetchPrice'
 import Pair from '../../Pair'
 
-import TRADE_CONFIG from '../../../config/constants/TRADE_CONFIG'
-import TRADE_ORDER_MINAMOUNTS from '../../../config/constants/TRADE_ORDER_MINAMOUNTS'
-import TRADE_TICKERS from '../../../config/constants/TRADE_TICKERS'
-import PAIR_TYPES from '../../../config/constants/PAIR_TYPES'
+import {
+  TRADE_CONFIG,
+  TRADE_ORDER_MINAMOUNTS,
+  TRADE_TICKERS,
+  PAIR_TYPES
+} from '../../../config/constants'
 
 import { createOrder, removeMyOrders } from '../../core/orders'
 

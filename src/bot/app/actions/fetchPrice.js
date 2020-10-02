@@ -1,4 +1,4 @@
-import TRADE_TICKERS from '../../config/constants/TRADE_TICKERS'
+import { TRADE_TICKERS } from '../../config/constants'
 import handleError from './errors/handleError'
 import getPriceByPair from '../middlewares/prices'
 

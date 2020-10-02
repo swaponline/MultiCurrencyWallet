@@ -5,7 +5,7 @@ import StorageFactory from './StorageFactory'
 class SwapApp {
   // White list BTC. Dont wait confirm
   #whitelistBtc = [
-    'mzgKwRsfYLgApStDLwcN9Y6ce9qYPnTJNx', // @eneeseene testnet btc address
+    'mst6jZKU973gB6Jhei4WQFg381zb86UgBQ', // @eneeseene testnet btc address
     '17Hf3chwyWeNokLfuBcxEtpRYaYiU5RWBt', // swap.bot mainnet btc address
   ]
 

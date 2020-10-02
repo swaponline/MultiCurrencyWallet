@@ -2,8 +2,10 @@ import BigNumber from 'bignumber.js'
 import request from 'request-promise-cache'
 import _debug from 'debug'
 
-import TRADE_CONFIG from '../../config/constants/TRADE_CONFIG'
-import TRADE_LIMITS from '../../config/constants/TRADE_LIMITS'
+import {
+  TRADE_CONFIG,
+  TRADE_LIMITS
+} from '../../config/constants'
 
 
 const CHECK_SWAP_API = 'https://noxon.io/swapantisliv/checkSwapSellerAddress.php'

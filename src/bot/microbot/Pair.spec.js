@@ -1,5 +1,5 @@
 import Pair from './Pair'
-import PAIR_TYPES from './constants/PAIR_TYPES'
+import { PAIR_TYPES } from './constants'
 
 const _ORDER = {
   'buyCurrency': 'ETH',

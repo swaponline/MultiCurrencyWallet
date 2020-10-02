@@ -177,9 +177,39 @@ class BTC2ETH extends Flow {
         const { isBalanceEnough, btcScriptValues } = flow.state
 
         if (isBalanceEnough) {
-          await flow.btcSwap.fundScript({
-            scriptValues: btcScriptValues,
-            amount: sellAmount,
+          const fundScriptRepeat = async () => {
+            try {
+              console.log('Funding script')
+              await flow.btcSwap.fundScript({
+                scriptValues: btcScriptValues,
+                amount: sellAmount,
+              })
+              return true
+            } catch (err) {
+              if (err === 'Script funded already') {
+                console.warn('Script already funded')
+                return true
+              } else {
+                if (err === 'Conflict') {
+                  console.warn('BTC locked. Has not confirmed tx in mempool. Wait confirm')
+                  await util.helpers.waitDelay(60)
+                  return false
+                } else {
+                  console.log('Fail fund script', err)
+                }
+              }
+            }
+            return true
+          }
+
+          await util.helpers.repeatAsyncUntilResult(async (stopRepeat) => {
+            const { isStoppedSwap } = flow.state
+
+            if (!isStoppedSwap) {
+              return await fundScriptRepeat()
+            } else {
+              stopRepeat()
+            }
           })
         }
 
