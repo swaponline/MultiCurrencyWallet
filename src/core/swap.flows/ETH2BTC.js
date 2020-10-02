@@ -100,7 +100,7 @@ class ETH2BTC extends Flow {
       })
     })
 
-    flow.swap.room.once('wait btc confirm', () => {
+    flow.swap.room.on('wait btc confirm', () => {
       flow.setState({
         waitBtcConfirm: true,
       })

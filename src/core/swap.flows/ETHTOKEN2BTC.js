@@ -98,7 +98,7 @@ export default (tokenName) => {
 
       const flow = this
 
-      flow.swap.room.once('wait btc confirm', () => {
+      flow.swap.room.on('wait btc confirm', () => {
         flow.setState({
           waitBtcConfirm: true,
         })

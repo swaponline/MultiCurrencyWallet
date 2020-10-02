@@ -36,5 +36,5 @@ process.env.ENABLE_WEBSOCKET && ws.init(server, app, router, ws_port)
 
 const listener = server.listen(port, listen_ip)
 console.log(`[SERVER] listening on http://localhost:${port}`)
-
+console.log('Run bot...')
 exports = module.exports = { server, app, listener }
