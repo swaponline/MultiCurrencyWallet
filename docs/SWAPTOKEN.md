@@ -31,7 +31,7 @@
 
 Current
 
-| Month   | Revenue | Accumulated liquidity | Forwarded to uniswap
+| Month   | Revenue | 10% | Forwarded to uniswap
 | ------  | ------- | ----------------- | --------
 | may 2020 | 413 USD | $41 | 👇 
 | jun 2020 | 663 USD | $66 | 👇
