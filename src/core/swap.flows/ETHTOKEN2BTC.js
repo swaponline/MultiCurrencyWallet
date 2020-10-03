@@ -89,12 +89,27 @@ export default (tokenName) => {
         isFailedTransaction: false,
         isFailedTransactionError: null,
         gasAmountNeeded: 0,
+
+        // Partical (btc-seller) has unconfirmed txs in mempool
+        particalBtcLocked: false,
       }
 
       super._persistSteps()
       this._persistState()
 
       const flow = this
+
+      flow.swap.room.on('wait btc unlock', () => {
+        this.setState({
+          particalBtcLocked: true,
+        })
+      })
+      flow.swap.room.on('wait btc confirm', () => {
+        flow.setState({
+          waitBtcConfirm: true,
+        })
+      })
+
       flow.swap.room.once('request withdraw', () => {
         flow.setState({
           withdrawRequestIncoming: true,
@@ -156,7 +171,13 @@ export default (tokenName) => {
         // 5. Create ETH Contract
 
         async () => {
-          const { participant, buyAmount, sellAmount } = flow.swap
+          const {
+            participant,
+            buyAmount,
+            sellAmount,
+            waitConfirm,
+          } = flow.swap
+
           const { secretHash } = flow.state
 
           const utcNow = () => Math.floor(Date.now() / 1000)
@@ -168,7 +189,9 @@ export default (tokenName) => {
               value: buyAmount,
               recipientPublicKey: this.app.services.auth.accounts.btc.getPublicKey(),
               lockTime: utcNow(),
-              confidence: (this.app.isWhitelistBtc(participant.btc.address)) ? 0 : 0.8,
+              confidence: 0.8,
+              isWhiteList: this.app.isWhitelistBtc(participant.btc.address),
+              waitConfirm,
             })
 
             if (scriptCheckError) {
@@ -177,7 +200,17 @@ export default (tokenName) => {
                 flow.stopSwapProcess()
                 stopRepeat()
               } else if (/Expected script value/.test(scriptCheckError)) {
+                console.warn(scriptCheckError)
                 console.warn('Btc script check: waiting balance')
+              } else if (
+                /Can be replace by fee. Wait confirm/.test(scriptCheckError)
+                ||
+                /Wait confirm tx/.test(scriptCheckError)
+              ) {
+                flow.swap.room.sendMessage({
+                  event: 'wait btc confirm',
+                  data: {},
+                })
               } else {
                 flow.swap.events.dispatch('btc script check error', scriptCheckError)
               }
@@ -229,7 +262,16 @@ export default (tokenName) => {
                   })
                 }
 
-                debug('swap.core:flow')('create swap', swapData)
+                debug('swap.core:flow')('check swap exists')
+                const swapExists = await flow._checkSwapAlreadyExists()
+                if (swapExists) {
+                  console.warn('Swap exists!! May be stucked. Try refund')
+                  await flow.ethTokenSwap.refund({
+                    participantAddress: this.app.getParticipantEthAddress(flow.swap),
+                  }, (refundTx) => {
+                    debug('swap.core:flow')('Stucked swap refunded', refundTx)
+                  })
+                }
                 await flow.ethTokenSwap.create(swapData, async (hash) => {
                   debug('swap.core:flow')('create swap tx hash', hash)
                   flow.swap.room.sendMessage({

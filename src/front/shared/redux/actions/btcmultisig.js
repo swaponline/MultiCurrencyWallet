@@ -11,6 +11,17 @@ import actions from 'redux/actions'
 import config from 'helpers/externalConfig'
 import SwapApp from 'swap.app'
 
+import { default as bitcoinUtils } from '../../../../common/utils/bitcoin'
+
+const BITPAY_API = {
+  name: 'bitpay',
+  servers: config.api.bitpay,
+}
+
+const BLOCYPER_API = {
+  name: 'blockcypher',
+  servers: config.api.blockcypher,
+}
 
 const hasAdminFee = (
   config
@@ -852,22 +863,23 @@ const addSMSWallet = async (mnemonicOrKey) => {
   await getBalance()
 }
 
-const getAddrBalance = (address) => apiLooper.get('bitpay', `/address/${address}/balance`, {
-  inQuery: {
-    delay: 500,
-    name: `balance`,
-  },
-  checkStatus: (answer) => {
-    try {
-      if (answer && answer.balance !== undefined) return true
-    } catch (e) { /* */ }
-    return false
-  },
-}).then(({ balance, unconfirmed }) => ({
-  address,
-  balance: new BigNumber(balance).dividedBy(1e8).toNumber(),
-  unconfirmedBalance: new BigNumber(unconfirmed).dividedBy(1e8).toNumber(),
-}))
+const getAddrBalance = (address) => {
+  return new Promise((resolve) => {
+    bitcoinUtils.fetchBalance(
+      address,
+      true,
+      BITPAY_API
+    ).then(({ balance, unconfirmed }) => {
+      resolve({
+        address,
+        balance: balance,
+        unconfirmedBalance: unconfirmed,
+      })
+    }).catch((e) => {
+      resolve(false)
+    })
+  })
+}
 
 const getBalance = (ownAddress, ownDataKey) => {
   const { user: { btcMultisigSMSData: { address } } } = getState()
@@ -928,39 +940,11 @@ const getRate = async () => {
 const getBalanceG2FA = () => {
 }
 
-const fetchBalance = (address) =>
-  apiLooper.get('bitpay', `/address/${address}/balance`, {
-    inQuery: {
-      delay: 500,
-      name: `balance`,
-    },
-    checkStatus: (answer) => {
-      try {
-        if (answer && answer.balance !== undefined) return true
-      } catch (e) { /* */ }
-      return false
-    },
-  }).then(({ balance }) => new BigNumber(balance).dividedBy(1e8).toNumber() )
+const fetchBalance = (address) => bitcoinUtils.fetchBalance(address, false, BITPAY_API)
 
-const fetchTx = (hash) =>
-  apiLooper.get('bitpay', `/tx/${hash}`, {
-    checkStatus: (answer) => {
-      try {
-        if (answer && answer.fees !== undefined) return true
-      } catch (e) { /* */ }
-      return false
-    },
-  }).then(({ fees, ...rest }) => ({
-    fees: BigNumber(fees).multipliedBy(1e8),
-    ...rest,
-  }))
+const fetchTx = (hash, cacheResponse) => bitcoinUtils.fetchTx(hash, BITPAY_API, cacheResponse)
 
-const fetchTxInfo = (hash) =>
-  fetchTx(hash)
-    .then(({ vin, ...rest }) => ({
-      senderAddress: vin ? vin[0].addr : null,
-      ...rest,
-    }))
+const fetchTxInfo = (hash, cacheResponse) => bitcoinUtils.fetchTxInfo(hash, BITPAY_API, cacheResponse, hasAdminFee)
 
 const getTransactionUser = (address) => {
   if (!address) {
@@ -1026,56 +1010,9 @@ const getInvoicesUser = () => {
   })
 }
 
-const getTransaction = (ownAddress, ownType) =>
-  new Promise((resolve) => {
-    const { user: { btcMultisigSMSData: { address } } } = getState()
-    const checkAddress = (ownAddress) || address
-    const type = (ownType) || 'btc (sms-protected)'
-    const url = `/txs/?address=${checkAddress}`
-
-    if (checkAddress === 'Not jointed') {
-      resolve([])
-      return
-    }
-
-    return apiLooper.get('bitpay', url, {
-      checkStatus: (answer) => {
-        try {
-          if (answer && answer.txs !== undefined) return true
-        } catch (e) { /* */ }
-        return false
-      },
-    }).then((res) => {
-      const transactions = res.txs.map((item) => {
-        const direction = item.vin[0].addr !== checkAddress ? 'in' : 'out'
-        const isSelf = direction === 'out'
-          && item.vout.filter((item) =>
-            item.scriptPubKey.addresses[0] === checkAddress
-          ).length === item.vout.length
-
-        return ({
-          type,
-          hash: item.txid,
-          confirmations: item.confirmations,
-          value: isSelf
-            ? item.fees
-            : item.vout.filter((item) => {
-              const currentAddress = item.scriptPubKey.addresses[0]
-
-              return direction === 'in'
-                ? (currentAddress === checkAddress)
-                : (currentAddress !== checkAddress)
-            })[0].value,
-          date: item.time * 1000,
-          direction: isSelf ? 'self' : direction,
-        })
-      })
-      resolve(transactions)
-    })
-      .catch(() => {
-        resolve([])
-      })
-  })
+const getTransaction = (ownAddress, ownType) => {
+  return bitcoinUtils.getTransactionBlocyper(ownAddress, ownType, [ownAddress], btc.network, BLOCYPER_API)
+}
 
 const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
   const {
