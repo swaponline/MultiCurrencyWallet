@@ -1871,7 +1871,7 @@
   },
   {
     "id": "partial291",
-    "message": "Ожидание второго участника (30 сек): ",
+    "message": "Ожидание второго участника (30 сек)",
     "files": [
       "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"

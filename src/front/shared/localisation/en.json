@@ -1784,7 +1784,7 @@
   },
   {
     "id": "partial291",
-    "message": "Waiting for another participant (30 sec): ",
+    "message": "Waiting for another participant (30 sec)",
     "files": [
       "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"

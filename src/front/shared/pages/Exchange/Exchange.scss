@@ -184,7 +184,7 @@
 
 .button {
   margin-top: 0;
-  width: 100%;
+  width: 50%;
   border-radius: 3px;
   height: 55px;
   font-size: 16px;
@@ -278,6 +278,7 @@
 .buttons {
   margin-top: 1em;
   display: flex;
+  flex-flow: wrap;
   justify-content: space-around;
 
   @media screen and (min-width: 1025px) {
@@ -308,6 +309,20 @@
     color: white;
     border-color: white;
   }
+}
+
+.swapStartStatus {
+  text-align: center;
+  margin-top: 0.7em;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 13px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.3);
+
+  .swapStartStatusLoader {
+    display: inline-block;
+  }
+
 }
 
 .specify {
@@ -481,31 +496,11 @@
   margin-top: 40px;
 }
 
-.loaderHolder {
-  display: inline-block;
-  position: relative;
-  top: 2px;
-}
-
-.additionalLoaderHolder {
-  display: block;
-  position: relative;
-
-  >* {
-    display: block;
-    position: static !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-}
-
 .price {
-  background: #fff;
   font-family: 'Roboto Mono', monospace;
   font-size: 13px;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.3);
-  z-index: 2;
 }
 
 .selectWrap {

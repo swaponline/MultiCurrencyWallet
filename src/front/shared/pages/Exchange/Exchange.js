@@ -192,10 +192,10 @@ export default class Exchange extends Component {
       }
     }
 
-    const sellToken = sell || "btc";
-    const buyToken = buy || (!isWidgetBuild ? "usdt" : config.erc20token);
+    const haveCurrency = sell || "btc";
+    const getCurrency = buy || (!isWidgetBuild ? "usdt" : config.erc20token);
 
-    this.returnNeedCurrency(sellToken, buyToken);
+    this.returnNeedCurrency(haveCurrency, getCurrency);
 
     if (
       !(buy && sell) &&
@@ -204,7 +204,7 @@ export default class Exchange extends Component {
     ) {
       if (url !== "/wallet") {
         history.push(
-          localisedUrl(locale, `${links.exchange}/${sellToken}-to-${buyToken}`)
+          localisedUrl(locale, `${links.exchange}/${haveCurrency}-to-${getCurrency}`)
         );
       }
     }
@@ -220,8 +220,8 @@ export default class Exchange extends Component {
     this.state = {
       isToken: false,
       dynamicFee: 0,
-      haveCurrency: sellToken,
-      getCurrency: buyToken,
+      haveCurrency: haveCurrency,
+      getCurrency: getCurrency,
       haveAmount: 0,
       getAmount: "",
       fromAddress: null,
@@ -236,10 +236,10 @@ export default class Exchange extends Component {
       goodRate: 0,
       filteredOrders: [],
       isNonOffers: false,
-      isFetching: false,
       isDeclinedOffer: false,
       extendedControls: false,
       estimatedFeeValues: {},
+      isWaitPeerAnswer: false,
       desclineOrders: [],
     };
 
@@ -457,6 +457,16 @@ export default class Exchange extends Component {
     }
   };
 
+  createOffer = async () => {
+    const { haveCurrency, getCurrency } = this.state
+
+    actions.modals.open(constants.modals.Offer, {
+      sellCurrency: haveCurrency,
+      buyCurrency: getCurrency,
+    })
+    // actions.analytics.dataEvent('orderbook-click-createoffer-button')
+  };
+
   initSwap = async () => {
     const { decline, usersData } = this.props;
 
@@ -571,7 +581,7 @@ export default class Exchange extends Component {
     }
 
     if (decline.length === 0) {
-      this.sendRequest();
+      this.sendRequestForSwap();
     } else {
       const declinedExistedSwapIndex = helpers.handleGoTrade.getDeclinedExistedSwapIndex({
         currency: haveCurrency,
@@ -580,19 +590,9 @@ export default class Exchange extends Component {
       if (declinedExistedSwapIndex !== false) {
         this.openModalDeclineOrders(declinedExistedSwapIndex);
       } else {
-        this.sendRequest();
+        this.sendRequestForSwap();
       }
     }
-  };
-
-  createOffer = async () => {
-    const { haveCurrency, getCurrency } = this.state
-
-    actions.modals.open(constants.modals.Offer, {
-      sellCurrency: haveCurrency,
-      buyCurrency: getCurrency,
-    })
-    // actions.analytics.dataEvent('orderbook-click-createoffer-button')
   };
 
   openModalDeclineOrders = (indexOfDecline) => {
@@ -608,15 +608,17 @@ export default class Exchange extends Component {
     }
   };
 
-  sendRequest = () => {
+  sendRequestForSwap = () => {
     const {
-      getAmount,
-      haveAmount,
       peer,
       orderId,
+      haveAmount,
+      getAmount,
       maxAmount,
       maxBuyAmount,
     } = this.state;
+
+console.log('>>> sendRequestForSwap', haveAmount, getAmount)
 
     if (!String(getAmount) || !peer || !orderId || !String(haveAmount)) {
       return;
@@ -630,7 +632,7 @@ export default class Exchange extends Component {
       address: ''// todo,
     };
 
-    this.setState(() => ({ isFetching: true }));
+    this.setState(() => ({ isWaitPeerAnswer: true }));
 
     // wait until not skip and ban peer
     const requestTimeoutSec = config && config.isWidgetBuild ? 60 : 30;
@@ -645,9 +647,9 @@ export default class Exchange extends Component {
       clearTimeout(requestTimeout);
       if (isAccepted) {
         this.setState(() => ({
-          redirect: true,
-          isFetching: false,
+          redirectToSwap: true,
           orderId: newOrder.id,
+          isWaitPeerAnswer: false,
         }));
       } else {
         this.banPeer(peer);
@@ -682,7 +684,7 @@ export default class Exchange extends Component {
     }));
   };
 
-  returnNeedCurrency = (sellToken, buyToken) => {
+  returnNeedCurrency = (haveCurrency, getCurrency) => {
     const partialItems = Object.assign(getState().currencies.partialItems); // eslint-disable-line
 
     const partialCurrency = getState().currencies.partialItems.map(
@@ -691,7 +693,7 @@ export default class Exchange extends Component {
     const allCurrencyies = getState().currencies.items.map((item) => item.name);
     let partialItemsArray = [...partialItems];
     let currenciesOfUrl = [];
-    currenciesOfUrl.push(sellToken, buyToken);
+    currenciesOfUrl.push(haveCurrency, getCurrency);
 
     currenciesOfUrl.forEach((item) => {
       if (allCurrencyies.includes(item.toUpperCase())) {
@@ -706,7 +708,7 @@ export default class Exchange extends Component {
         }
       } else {
         this.setState(() => ({
-          haveCurrency: config && config.isWidget ? config.erc20token : "swap",
+          haveCurrency: config && config.isWidget ? config.erc20token : 'swap',
         }));
       }
     });
@@ -715,7 +717,7 @@ export default class Exchange extends Component {
   setDeclinedOffer = () => {
     this.setState(() => ({
       haveAmount: "",
-      isFetching: false,
+      isWaitPeerAnswer: false,
       isDeclinedOffer: true,
     }));
 
@@ -977,7 +979,7 @@ export default class Exchange extends Component {
       maxBuyAmount: BigNumber(0),
       peer: "",
       isNonOffers: false,
-      isFetching: false,
+      isWaitPeerAnswer: false,
       isDeclinedOffer: false,
     }));
   };
@@ -1093,7 +1095,7 @@ export default class Exchange extends Component {
     this.setState(() => ({ desclineOrders }));
   };
 
-  handleShowIncomplete = () => {
+  showIncompleteSwap = () => {
     const { desclineOrders } = this.state;
     actions.modals.open(constants.modals.IncompletedSwaps, {
       desclineOrders,
@@ -1115,13 +1117,9 @@ export default class Exchange extends Component {
     const {
       haveCurrency,
       getCurrency,
-      isNonOffers,
-      redirect,
       orderId,
+      isNonOffers,
       isSearching,
-      desclineOrders,
-      isDeclinedOffer,
-      isFetching,
       maxAmount,
       exHaveRate,
       exGetRate,
@@ -1135,7 +1133,23 @@ export default class Exchange extends Component {
       isFullLoadingComplite,
       btcFee,
       ethFee,
+      redirectToSwap,
+      isWaitPeerAnswer,
+      desclineOrders,
+      isDeclinedOffer,
     } = this.state
+
+    if (redirectToSwap) {
+      return (
+        <Redirect
+          push
+          to={`${localisedUrl(
+            locale,
+            links.swap
+          )}/${getCurrency}-${haveCurrency}/${orderId}`}
+        />
+      );
+    }
 
     const haveFiat = BigNumber(exHaveRate)
       .times(haveAmount)
@@ -1173,18 +1187,6 @@ export default class Exchange extends Component {
           estimatedFeeValues[haveCurrency.toLowerCase()]
         )
         : 0;
-
-    if (redirect) {
-      return (
-        <Redirect
-          push
-          to={`${localisedUrl(
-            locale,
-            links.swap
-          )}/${getCurrency}-${haveCurrency}/${orderId}`}
-        />
-      );
-    }
 
     const isLowAmount = this.checkoutLowAmount();
 
@@ -1493,19 +1495,6 @@ export default class Exchange extends Component {
               </div>
             )}
 
-            {isFetching &&
-              <span>
-                <FormattedMessage
-                  id="partial291"
-                  defaultMessage="Waiting for another participant (30 sec): "
-                />
-                <div styleName="loaderHolder">
-                  <div styleName="additionalLoaderHolder">
-                    <InlineLoader />
-                  </div>
-                </div>
-              </span>
-            }
           </div>
 
 
@@ -1540,6 +1529,19 @@ export default class Exchange extends Component {
           </div>
 
 
+          {isWaitPeerAnswer &&
+            <div styleName="swapStartStatus">
+              <div styleName="swapStartStatusLoader">
+                <InlineLoader />
+              </div>
+              <FormattedMessage
+                id="partial291"
+                defaultMessage="Waiting for another participant (30 sec)"
+              />
+            </div>
+          }
+
+
           <div styleName="buttons">
             <Button
               className="data-tut-Exchange_tourDisabled"
@@ -1550,19 +1552,21 @@ export default class Exchange extends Component {
             >
               <FormattedMessage id="partial541" defaultMessage="Exchange now" />
             </Button>
+
             <Button styleName="button link-like" onClick={this.createOffer}>
               <FormattedMessage id="orders128" defaultMessage="Create offer" />
             </Button>
+
+            {!!desclineOrders.length &&
+              <Button blue styleName="buttonContinueSwap" onClick={this.showIncompleteSwap}>
+                <FormattedMessage
+                  id="continueDeclined977"
+                  defaultMessage="Continue your swaps"
+                />
+              </Button>
+            }
           </div>
 
-          {!!desclineOrders.length &&
-            <Button blue styleName="buttonContinueSwap" onClick={this.handleShowIncomplete}>
-              <FormattedMessage
-                id="continueDeclined977"
-                defaultMessage="Continue your swaps"
-              />
-            </Button>
-          }
 
           <div styleName="networkStatusPlace">
             <NetworkStatus />
@@ -1582,7 +1586,7 @@ export default class Exchange extends Component {
             </a>
           }
         </div>
-      </div >
+      </div>
     );
 
     return (
