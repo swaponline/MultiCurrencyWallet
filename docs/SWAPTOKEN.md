@@ -31,13 +31,13 @@
 
 Current
 
-| Month   | Revenue | Accumulated liquidity | Forwarded to uniswap
+| Month   | Revenue | 10% | Forwarded to uniswap
 | ------  | ------- | ----------------- | --------
-| may 2020 | 413 USD | $41 | 
-| jun 2020 | 663 USD | $117 (+$66) |
-| jul 2020 | 840 USD | $201 (+$84) | [+0.5 ETH](https://etherscan.io/tx/0xb5708aa91cd181b45aafc3fb92bdeea970a4359110a10f3fde6a4b42e0cabd14) |
-| aug 2020 | 1040 USD | $104 | pending |
-| sep 2020 | 1400 USD | $140 | pending |
+| may 2020 | 413 USD | $41 | 👇 
+| jun 2020 | 663 USD | $66 | 👇
+| jul 2020 | 840 USD | $84 | [+0.5 ETH](https://etherscan.io/tx/0xb5708aa91cd181b45aafc3fb92bdeea970a4359110a10f3fde6a4b42e0cabd14) |
+| aug 2020 | 1040 USD | $104 | 👇 |
+| sep 2020 | 1400 USD | $140 | [+0.7 ETH](https://etherscan.io/tx/0x7b70734c4a3ed1df347ac3d5ef1ba751f3068555c740cf0a5fb1e33c0dbfd160) |
 
 ## How we get revenue
 

@@ -82,15 +82,9 @@ export default (tokenName) => {
         isFinished: false,
         isSwapExist: false,
 
-        // Partical (btc-seller) has unconfirmed txs in mempool
-        particalBtcLocked: false,
+        // Has unconfirmed tx in mem-pool - wait unlock
+        waitBtcUnlock: false,
       }
-
-      this.swap.room.on('wait btc unlock', () => {
-        this.setState({
-          particalBtcLocked: true,
-        })
-      })
 
       super._persistSteps()
       this._persistState()
@@ -205,6 +199,9 @@ export default (tokenName) => {
                     flow.swap.room.sendMessage({
                       event: 'wait btc unlock',
                       data: {},
+                    })
+                    flow.setState({
+                      waitBtcUnlock: true,
                     })
                     await util.helpers.waitDelay(30)
                     return false
