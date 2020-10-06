@@ -66,8 +66,8 @@
     "rename-assets-manifest-file": "rename-files ./build-chrome-extension/application/assets/ 'manifest.json' 'android-manifest.json'",
     "rename-assets-manifest-link": "replace 'assets/manifest.json' 'assets/android-manifest.json' ./build-chrome-extension/application/index.html",
     "release": "git commit -am v%npm_package_version% && git tag v%npm_package_version% && git push && git push --tags",
-    "bot": "babel-node --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot",
-    "bot:debug": "cross-env DEBUG=swap.core* babel-node --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot"
+    "bot": "@babel-node --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot",
+    "bot:debug": "cross-env DEBUG=swap.core* @babel-node --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot"
   },
   "husky": {
     "hooks": {
