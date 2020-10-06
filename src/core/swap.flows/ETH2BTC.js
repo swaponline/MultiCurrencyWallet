@@ -326,13 +326,28 @@ class ETH2BTC extends Flow {
             ethSwapWithdrawTransactionHash,
           }, true)
 
-          let secretFromTxhash = await util.helpers.repeatAsyncUntilResult(() => {
-            const { secret } = flow.state
+          let secretFromTxhash = await util.helpers.repeatAsyncUntilResult(async () => {
+            const {
+              secret,
+              secretHash,
+            } = flow.state
 
             if (secret) {
-              return secret
+                return secret
             } else {
-              return flow.ethSwap.getSecretFromTxhash(ethSwapWithdrawTransactionHash)
+             
+              const secretFromTx = await flow.ethSwap.getSecretFromTxhash(ethSwapWithdrawTransactionHash)
+
+              const hashFromTxSecret = this.app.env.bitcoin.crypto.ripemd160(
+                  Buffer.from(secretFromTx, 'hex')
+              ).toString('hex')
+
+              if (hashFromTxSecret === secretHash) {
+                return secretFromTx
+              } else {
+                console.warn('Secret from Tx dismatch with our hash. Wait contract')
+                return false
+              }
             }
           })
 
@@ -365,6 +380,35 @@ class ETH2BTC extends Flow {
             })
 
             if (secretFromContract) {
+              const {
+                secretHash,
+              } = flow.state
+
+              const hashFromContractSecret = this.app.env.bitcoin.crypto.ripemd160(
+                Buffer.from(secretFromContract.replace(/^0x/, ''), 'hex')
+              ).toString('hex')
+
+              if (hashFromContractSecret !== secretHash) {
+                console.warn('Secret on contract dismatch with our hash. May be blockchain not updated. Try use swaps var')
+                const ourSwap = await flow.ethSwap.swaps({
+                  ownerAddress: flow.app.getMyEthAddress(),
+                  participantAddress: flow.app.getParticipantEthAddress(flow.swap)
+                })
+                if (ourSwap) {
+                  const hashFromContractSwap = this.app.env.bitcoin.crypto.ripemd160(
+                    Buffer.from(ourSwap.secret.replace(/^0x/, ''), 'hex')
+                  ).toString('hex')
+
+                  if (hashFromContractSwap !== secretHash) {
+                    console.warn('Secret on contract dismatch with our hash. May be blockchain not updated')
+                  } else {
+                    console.warn('Use secret from contract swap variable. getSecret method stucked')
+                    secretFromContract = hashFromContractSwap
+                    return null
+                  }
+                }
+                return null
+              }
 
               secretFromContract = `0x${secretFromContract.replace(/^0x/, '')}`
 
