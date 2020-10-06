@@ -66,8 +66,8 @@
     "rename-assets-manifest-file": "rename-files ./build-chrome-extension/application/assets/ 'manifest.json' 'android-manifest.json'",
     "rename-assets-manifest-link": "replace 'assets/manifest.json' 'assets/android-manifest.json' ./build-chrome-extension/application/index.html",
     "release": "git commit -am v%npm_package_version% && git tag v%npm_package_version% && git push && git push --tags",
-    "bot": "babel-node --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot",
-    "bot:debug": "cross-env DEBUG=swap.core* babel-node --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot"
+    "bot": "@babel-node --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot",
+    "bot:debug": "cross-env DEBUG=swap.core* @babel-node --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot"
   },
   "husky": {
     "hooks": {
@@ -75,7 +75,8 @@
     }
   },
   "devDependencies": {
-    "@babel/core": "^7.9.6",
+    "@babel/core": "^7.11.6",
+    "@babel/node": "^7.10.5",
     "@babel/plugin-proposal-class-properties": "^7.10.1",
     "@babel/plugin-proposal-decorators": "^7.10.3",
     "@babel/plugin-proposal-export-default-from": "^7.10.4",
@@ -128,6 +129,7 @@
     "express": "^4.17.1",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.11",
+    "fs": "0.0.1-security",
     "gh-pages": "^2.1.1",
     "html-webpack-plugin": "^2.30.1",
     "husky": "^4.2.5",
@@ -139,6 +141,7 @@
     "node-sass": "^4.12.0",
     "node-sessionstorage": "^1.0.0",
     "nodemon": "^1.19.3",
+    "pg": "^8.4.0",
     "postcss-loader": "^2.1.4",
     "progress-bar-webpack-plugin": "^1.12.1",
     "prop-types": "^15.7.2",
@@ -166,7 +169,6 @@
     "bitcoinjs-lib": "~3.3.2"
   },
   "dependencies": {
-    "@babel/node": "^7.10.3",
     "@walletconnect/web3-provider": "^1.2.2",
     "ajv": "^6.5.2",
     "autosize": "^4.0.2",
