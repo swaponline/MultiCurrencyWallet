@@ -415,11 +415,9 @@ export default (tokenName) => {
             return checkSecretExist()
           })
 
-          const {
-            isEthWithdrawn,
-          } = this.state
+          const { isEthWithdrawn } = this.state
 
-          if (secretFromContract !isEthWithdrawn) {
+          if (secretFromContract && !isEthWithdrawn) {
             debug('swap.core:flow')('got secret from smart contract', secretFromContract)
 
             flow.finishStep({
