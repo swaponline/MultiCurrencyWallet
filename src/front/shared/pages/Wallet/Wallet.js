@@ -362,8 +362,10 @@ export default class Wallet extends Component {
       // @ToDo - В будущем нужно убрать проверку только по типу монеты.
       // Старую проверку оставил, чтобы у старых пользователей не вывалились скрытые кошельки
 
-      return (!hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`)) || balance > 0
+      return (!hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`)) && balance > 0
     })
+
+    if (tableRows.length === 0) return
 
     const { currency, address } = tableRows[0];
 
