@@ -129,6 +129,7 @@
     "express": "^4.17.1",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.11",
+    "fs": "0.0.1-security",
     "gh-pages": "^2.1.1",
     "html-webpack-plugin": "^2.30.1",
     "husky": "^4.2.5",

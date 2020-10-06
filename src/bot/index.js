@@ -1,3 +1,9 @@
+
+if (!require('fs').existsSync(__dirname + '/.env')) {
+  console.log('Please, create ./src/bot/.env file unsing "./src/bot/.env.sample"')
+  process.exit(0)
+}
+
 require('dotenv').config({
   path: __dirname + '/.env',
 })
