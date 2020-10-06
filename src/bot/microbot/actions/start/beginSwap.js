@@ -73,6 +73,7 @@ console.log(swap.flow._flowName)
 
       if (swap.flow.state.isFinished) {
         if (ticker === 'ETH-BTC') {
+          // @ToDo - fix
           kraken.createOrder(pair.amount.div(pair.price).toNumber(), pair.isBid() ? 'sell' : 'buy')
         }
       }

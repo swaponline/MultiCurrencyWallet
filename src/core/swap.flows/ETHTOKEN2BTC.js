@@ -367,33 +367,11 @@ export default (tokenName) => {
               ethSwapWithdrawTransactionHash,
             }, true)
 
-            let secretFromTxhash = await util.helpers.repeatAsyncUntilResult(async () => {
-              const {
-                secret,
-                secretHash,
-              } = flow.state
-
-              
-              if (secret) {
-                return secret
-              } else {
-               
-                const secretFromTx = await flow.ethTokenSwap.getSecretFromTxhash(ethSwapWithdrawTransactionHash)
-
-                const hashFromTxSecret = this.app.env.bitcoin.crypto.ripemd160(
-                    Buffer.from(secretFromTx, 'hex')
-                ).toString('hex')
-
-                if (hashFromTxSecret === secretHash) {
-                  return secretFromTx
-                } else {
-                  console.warn('Secret from Tx dismatch with our hash. Wait contract')
-                  return false
-                }
-              }
+            const secretFromTxhash = await util.helpers.extractSecretFromTx({
+              flow,
+              swapFlow: flow.ethTokenSwap,
+              app: this.app,
             })
-
-            secretFromTxhash = `0x${secretFromTxhash.replace(/^0x/, '')}`
 
             const { isEthWithdrawn } = flow.state
 
@@ -416,52 +394,13 @@ export default (tokenName) => {
           const { participant } = flow.swap
 
           const checkSecretExist = async () => {
-            try {
-              let secretFromContract = await flow.ethTokenSwap.getSecret({
-                participantAddress: this.app.getParticipantEthAddress(flow.swap),
-              })
-
-              if (secretFromContract) {
-                const {
-                  secretHash,
-                } = flow.state
-
-                const hashFromContractSecret = this.app.env.bitcoin.crypto.ripemd160(
-                  Buffer.from(secretFromContract.replace(/^0x/, ''), 'hex')
-                ).toString('hex')
-
-                if (hashFromContractSecret !== secretHash) {
-                  console.warn('Secret on contract dismatch with our hash. May be blockchain not updated. Try use swaps var')
-                  const ourSwap = await flow.ethTokenSwap.swaps({
-                    ownerAddress: flow.app.getMyEthAddress(),
-                    participantAddress: flow.app.getParticipantEthAddress(flow.swap)
-                  })
-                  if (ourSwap) {
-                    const hashFromContractSwap = this.app.env.bitcoin.crypto.ripemd160(
-                      Buffer.from(ourSwap.secret.replace(/^0x/, ''), 'hex')
-                    ).toString('hex')
-
-                    if (hashFromContractSwap !== secretHash) {
-                      console.warn('Secret on contract dismatch with our hash. May be blockchain not updated')
-                    } else {
-                      console.warn('Use secret from contract swap variable. getSecret method stucked')
-                      secretFromContract = hashFromContractSwap
-                      return null
-                    }
-                  }
-                  return null
-                }
-
-                secretFromContract = `0x${secretFromContract.replace(/^0x/, '')}`
-
-                return secretFromContract
-              } else {
-                return null
-              }
-            }
-            catch (error) {
-              return null
-            }
+            return await util.helpers.extractSecretFromContract({
+              flow,
+              swapFlow: flow.ethTokenSwap,
+              participantAddress: this.app.getParticipantEthAddress(flow.swap),
+              ownerAddress: flow.app.getMyEthAddress(),
+              app: this.app,
+            })
           }
 
           const secretFromContract = await util.helpers.repeatAsyncUntilResult((stopRepeat) => {
