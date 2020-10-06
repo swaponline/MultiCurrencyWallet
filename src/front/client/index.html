@@ -501,14 +501,12 @@
                 <div class="container h-100 d-flex flex-column justify-content-center align-items-center">
                   <h2 class="mb-3"></h2>
                   <div class="mb-4">
-                    <button class="btn btn-primary btn-swap-primary btn-create-wallet btn-close-modal">Create Wallet</button>
+                    <button class="btn btn-create-wallet btn-close-modal">Create Wallet</button>
                   </div>
                   <div class="mb-4" id="connectMetamaskHolder">
                     <button class="btn btn-primary btn-swap-primary btn-connect-wallet">Connect Wallet</button>
                   </div>
-                  <div class="mb-4">
-                    <button class="btn btn-primary btn-swap-primary btn-restore-wallet">Access using 12-word phrase</button>
-                  </div>
+            
                   <div class="mb-4">
                     <button class="btn btn-primary btn-swap-primary btn-skip-now">Skip for now</button>
                   </div>
@@ -1001,14 +999,14 @@
       // Skip for now (go to exchange)
       document.querySelectorAll(".btn-skip-now").forEach(item => {
         item.addEventListener("click", function () {
-          document.location.href="#/exchange";
+          document.location.href="#/exchange/btc-to-eth";
           swapCloseStarterModal();
         });
       });
       // Connect wallet
       document.querySelectorAll(".btn-connect-wallet").forEach(item => {
         item.addEventListener("click", function () {
-          document.location.href="#/connectWallet";
+          document.location.href="#/exchange/btc-to-eth";
           swapCloseStarterModal();
           setCookie("swapDisalbeStarter", "true", { expires: swapGetYearSec * 5 });
         });
