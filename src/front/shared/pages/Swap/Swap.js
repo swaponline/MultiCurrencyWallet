@@ -202,6 +202,9 @@ export default class SwapComponent extends PureComponent {
 
       window.swap = swap
 
+      window.flow = swap.flow
+
+
       this.setState(() => ({
         swap,
         ethData,
