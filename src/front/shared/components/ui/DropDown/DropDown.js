@@ -67,7 +67,7 @@ export default class DropDown extends Component {
     }
 
     // for example we'd like to change `selectedValue` manually
-    if (typeof onSelect === 'function') {
+    if (typeof onSelect === 'function' && !item.disabled) {
       onSelect(item)
       this.setState({ selectedValue: item.value })
     }

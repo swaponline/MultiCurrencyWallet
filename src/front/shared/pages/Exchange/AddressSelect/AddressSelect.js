@@ -15,6 +15,7 @@ import ethToken from 'helpers/ethToken'
 import Option from './Option/Option'
 import { links } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
+import actions from 'redux/actions'
 
 import QrReader from "components/QrReader"
 import iconHotwallet from 'components/Logo/images/base.svg'
@@ -312,11 +313,11 @@ export default class AddressSelect extends Component {
       isDark,
       label,
       hiddenCoinsList,
-      allData
+      allData,
+      role,
     } = this.props
 
     const {
-      ticker,
       selectedType,
       walletAddressFocused,
       metamaskConnected,
@@ -325,6 +326,7 @@ export default class AddressSelect extends Component {
       hasError,
     } = this.state
 
+    const ticker = this.getTicker()
 
     const isMetamaskOption = ethToken.isEthOrEthToken({ name: currency })
     const isMetamaskInstalled = metamask.isEnabled()
@@ -334,17 +336,30 @@ export default class AddressSelect extends Component {
     const isCustomAddressOption = !ethToken.isEthOrEthToken({ name: currency })
 
 
+    // todo: fix flow and remove this conditions (temp)
+    let isCustomOptionDisabled = false
+    let isHotWalletOptionDisabled = false
+    if (ticker === 'BTC' && role === AddressRole.Send) {
+      const { balance } = actions.core.getWallet({ currency })
+      if (balance > 0) {
+        isCustomOptionDisabled = true
+      } else {
+        isHotWalletOptionDisabled = true
+      }
+    }
+
     const options = [
       {
         value: 'placeholder',
+        title: <FormattedMessage {...langLabels.labelSpecifyAddress} />,
         disabled: true,
         hidden: true,
-        title: <FormattedMessage {...langLabels.labelSpecifyAddress} />,
       },
       ...(this.isCurrencyInUserWallet() ? [{
           value: AddressType.Hotwallet,
           icon: iconHotwallet,
           title: <FormattedMessage {...langLabels.optionHotWallet} />,
+          disabled: isHotWalletOptionDisabled,
         }] : [{
           value: 'hotwalletcreate',
           icon: iconHotwallet,
@@ -359,13 +374,14 @@ export default class AddressSelect extends Component {
           }] : [{
             value: 'disabled',
             icon: iconMetamask,
-            disabled: true,
             title: <FormattedMessage {...langLabels.optionMetamaskNotInstalled} />,
+            disabled: true,
           }] : []),
       ...(isCustomAddressOption ? [{
         value: AddressType.Custom,
         icon: iconCustom,
         title: <FormattedMessage {...langLabels.optionCustom} />,
+        disabled: isCustomOptionDisabled
       }] : []),
     ]
 

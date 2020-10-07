@@ -1300,6 +1300,7 @@ console.log('>>> sendRequestForPartial', haveAmount, getAmount)
                 }
                 isDark={isDark}
                 currency={haveCurrency}
+                role={AddressRole.Send}
                 hasError={false}
                 onChange={(addrData) => this.applyAddress(AddressRole.Send, addrData)}
               />
@@ -1334,6 +1335,7 @@ console.log('>>> sendRequestForPartial', haveAmount, getAmount)
                   <FormattedMessage id="Exchange_ToAddress" defaultMessage="To address" />
                 }
                 isDark={isDark}
+                role={AddressRole.Receive}
                 currency={getCurrency}
                 hasError={false}
                 onChange={(addrData) => this.applyAddress(AddressRole.Receive, addrData)}
