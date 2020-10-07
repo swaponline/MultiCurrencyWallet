@@ -612,13 +612,17 @@ export default class Exchange extends Component {
     const {
       peer,
       orderId,
+      fromAddress,
+      toAddress,
       haveAmount,
       getAmount,
       maxAmount,
       maxBuyAmount,
     } = this.state;
 
-console.log('>>> sendRequestForPartial', haveAmount, getAmount)
+    console.log('Exchange: sendRequestForPartial', haveAmount, getAmount)
+    console.log(`${haveAmount} FROM ${fromAddress}`)
+    console.log(`${getAmount} TO ${toAddress}`)
 
     if (!String(getAmount) || !peer || !orderId || !String(haveAmount)) {
       return;
@@ -1117,6 +1121,8 @@ console.log('>>> sendRequestForPartial', haveAmount, getAmount)
     const {
       haveCurrency,
       getCurrency,
+      fromAddress,
+      toAddress,
       orderId,
       isNonOffers,
       isSearching,
@@ -1192,6 +1198,8 @@ console.log('>>> sendRequestForPartial', haveAmount, getAmount)
 
     const canStartSwap =
       !isNonOffers &&
+      fromAddress &&
+      toAddress &&
       BigNumber(getAmount).isGreaterThan(0) &&
       !this.doesComissionPreventThisOrder() &&
       (BigNumber(haveAmount).isGreaterThan(balance) ||
@@ -1230,6 +1238,8 @@ console.log('>>> sendRequestForPartial', haveAmount, getAmount)
       BigNumber(getAmount).isGreaterThan(0) &&
       this.state.haveAmount &&
       this.state.getAmount
+
+    const isIncompletedSwaps = !!desclineOrders.length
 
 
     const Form = (
@@ -1559,7 +1569,7 @@ console.log('>>> sendRequestForPartial', haveAmount, getAmount)
               <FormattedMessage id="orders128" defaultMessage="Create offer" />
             </Button>
 
-            {!!desclineOrders.length &&
+            {isIncompletedSwaps &&
               <Button blue styleName="buttonContinueSwap" onClick={this.showIncompleteSwap}>
                 <FormattedMessage
                   id="continueDeclined977"
