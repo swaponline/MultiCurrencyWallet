@@ -1,6 +1,10 @@
 import debug from 'debug'
 import SwapApp, { constants, Events, ServiceInterface } from 'swap.app'
 
+import createP2PNode from '../../common/utils/createP2PNode'
+import p2pRoom from 'ipfs-pubsub-room'
+
+
 
 class SwapRoom extends ServiceInterface {
 
@@ -24,6 +28,35 @@ class SwapRoom extends ServiceInterface {
   }
 
   initService() {
+    /*
+    console.log('createP2PNode', createP2PNode)
+    createP2PNode().then((node) => {
+      const { roomName } = this._config
+      console.log('node', node)
+      const room = new p2pRoom(node, roomName)
+      console.log('room', room)
+      window.ourRoom = room
+      window.ourNode = node
+      room.on('peer joined', (peer) => {
+        console.log('Peer joined the room', peer)
+      })
+
+      room.on('peer left', (peer) => {
+        console.log('Peer left...', peer)
+      })
+
+      // now started to listen to room
+      room.on('subscribed', () => {
+        console.log('Now connected!')
+      })
+      .on('ready', () => {
+        console.log('room ready')
+      })
+    }).catch((error) => {
+      console.log('Fail create room', error)
+    })
+    */
+
     if (!this.app.env.Ipfs) {
       throw new Error('SwapRoomService: Ipfs required')
     }
@@ -33,30 +66,31 @@ class SwapRoom extends ServiceInterface {
 
     const { roomName, EXPERIMENTAL, ...config } = this._config
 
-    const ipfs = new this.app.env.Ipfs({
+    this.app.env.Ipfs.create({
       EXPERIMENTAL: {
         pubsub: true,
       },
       ...config,
-    })
-      .on('ready', () => ipfs.id((err, info) => {
-        console.info('IPFS ready!')
+    }).then(async (ipfs) => {
+      console.log('ipfs created', ipfs)
+      window.ourIpfs = ipfs
 
-        if (err) {
-          throw err
-        }
-
-        this._init({
-          peer: info.id,
-          ipfsConnection: ipfs,
-        })
-      }))
-      .on('error', (err) => {
-        debug('swap.core:room')('IPFS error!', err)
+      const peerId = await ipfs.id()
+      this._init({
+        peer: peerId,
+        ipfsConnection: ipfs,
       })
+      
+      
+    }).catch((error) => {
+      console.log('Fail create ipfs', error)
+      debug('swap.core:room')('IPFS error!', err)
+    })
+    
   }
 
   _init({ peer, ipfsConnection }) {
+    console.log('call _init', peer, ipfsConnection)
     if (!ipfsConnection) {
       setTimeout(() => {
         this._init({ peer, ipfsConnection })
@@ -64,7 +98,7 @@ class SwapRoom extends ServiceInterface {
       return
     }
 
-    this.peer = peer
+    this.peer = peer.id
 
     const defaultRoomName = this.app.isMainNet()
                   ? 'swap.online'
@@ -72,12 +106,18 @@ class SwapRoom extends ServiceInterface {
 
     this.roomName = this._config.roomName || defaultRoomName
 
+    console.log(`Using room: ${this.roomName}`)
     debug('swap.core:room')(`Using room: ${this.roomName}`)
 
-    this.connection = this.app.env.IpfsRoom(ipfsConnection, this.roomName, {
+    this.connection = new this.app.env.IpfsRoom(ipfsConnection, this.roomName, {
       pollInterval: 1000,
     })
 
+    this.connection._ipfs = ipfsConnection
+
+    window.ourConnection = this.connection
+    console.log('our room', this.connection)
+    window.ourRoom = this.connection
     this.connection.on('peer joined', this._handleUserOnline)
     this.connection.on('peer left', this._handleUserOffline)
     this.connection.on('message', this._handleNewMessage)
@@ -86,21 +126,32 @@ class SwapRoom extends ServiceInterface {
   }
 
   _handleUserOnline = (peer) => {
+    console.log('_handleUserOnline', peer)
     if (peer !== this.peer) {
+      console.log('_handleUserOnline - not me')
+      console.log('me', this.peer)
+      console.log('he', peer)
       this._events.dispatch('user online', peer)
+    } else {
+      console.log('_handleUserOnline - me????')
+      console.log('me', this.peer)
+      console.log('he', peer)
     }
   }
 
   _handleUserOffline = (peer) => {
+    console.log('_handleUserOffline', peer)
     if (peer !== this.peer) {
       this._events.dispatch('user offline', peer)
     }
   }
 
   _handleNewMessage = (message) => {
+    console.log('_handleNewMessage', message)
     const { from, data: rawData } = message
     debug('swap.verbose:room')('message from', from)
 
+    
     if (from === this.peer) {
       return
     }
@@ -114,6 +165,7 @@ class SwapRoom extends ServiceInterface {
       console.error('parse message data err:', err)
     }
 
+    console.log('new message parsed', parsedData)
     const { fromAddress, data, sign, event, action } = parsedData
 
     if (!data) {
