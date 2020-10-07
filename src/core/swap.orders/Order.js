@@ -84,7 +84,7 @@ class Order {
           orderId,
           participant,
           destination,
-          participantMetadata
+          participantMetadata,
         })
       }
     })
@@ -101,14 +101,17 @@ class Order {
           sellAmount,
         }
 
-        this.requests.push({ participant, destination, updatedOrder: filteredUpdatedOrder })
+        this.requests.push({
+          participant,
+          destination,
+          updatedOrder: filteredUpdatedOrder,
+        })
 
         events.dispatch('new partial fulfilment request', {
           orderId,
           participant,
           updatedOrder: filteredUpdatedOrder,
         })
-
 
         this._autoReplyToPartial('buyAmount', filteredUpdatedOrder, participant)
         this._autoReplyToPartial('sellAmount', filteredUpdatedOrder, participant)

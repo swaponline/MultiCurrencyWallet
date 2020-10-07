@@ -48,8 +48,7 @@ export default class BtcToEth extends Component {
     this.ParticipantTimer = setInterval(() => {
       if (this.state.flow.isParticipantSigned && this.state.destinationBuyAddress) {
         this.submitSecret()
-      }
-      else {
+      } else {
         clearInterval(this.ParticipantTimer)
       }
     }, 3000)

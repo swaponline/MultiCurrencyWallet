@@ -239,7 +239,7 @@ export default class Exchange extends Component {
       isDeclinedOffer: false,
       extendedControls: false,
       estimatedFeeValues: {},
-      isWaitPeerAnswer: false,
+      isWaitForPeerAnswer: false,
       desclineOrders: [],
     };
 
@@ -498,7 +498,7 @@ export default class Exchange extends Component {
     let ethBalanceOk = true
 
     const isSellToken = helpers.ethToken.isEthToken( { name: getCurrency } )
-    const { balance: ethBalance }  = actions.core.getWallet({ currency: 'ETH' })
+    const { balance: ethBalance } = actions.core.getWallet({ currency: 'ETH' })
 
     let isBalanceOk = true
     if (
@@ -581,7 +581,7 @@ export default class Exchange extends Component {
     }
 
     if (decline.length === 0) {
-      this.sendRequestForSwap();
+      this.sendRequestForPartial();
     } else {
       const declinedExistedSwapIndex = helpers.handleGoTrade.getDeclinedExistedSwapIndex({
         currency: haveCurrency,
@@ -590,7 +590,7 @@ export default class Exchange extends Component {
       if (declinedExistedSwapIndex !== false) {
         this.openModalDeclineOrders(declinedExistedSwapIndex);
       } else {
-        this.sendRequestForSwap();
+        this.sendRequestForPartial();
       }
     }
   };
@@ -608,7 +608,7 @@ export default class Exchange extends Component {
     }
   };
 
-  sendRequestForSwap = () => {
+  sendRequestForPartial = () => {
     const {
       peer,
       orderId,
@@ -618,7 +618,7 @@ export default class Exchange extends Component {
       maxBuyAmount,
     } = this.state;
 
-console.log('>>> sendRequestForSwap', haveAmount, getAmount)
+console.log('>>> sendRequestForPartial', haveAmount, getAmount)
 
     if (!String(getAmount) || !peer || !orderId || !String(haveAmount)) {
       return;
@@ -632,7 +632,7 @@ console.log('>>> sendRequestForSwap', haveAmount, getAmount)
       address: ''// todo,
     };
 
-    this.setState(() => ({ isWaitPeerAnswer: true }));
+    this.setState(() => ({ isWaitForPeerAnswer: true }));
 
     // wait until not skip and ban peer
     const requestTimeoutSec = config && config.isWidgetBuild ? 60 : 30;
@@ -649,7 +649,7 @@ console.log('>>> sendRequestForSwap', haveAmount, getAmount)
         this.setState(() => ({
           redirectToSwap: true,
           orderId: newOrder.id,
-          isWaitPeerAnswer: false,
+          isWaitForPeerAnswer: false,
         }));
       } else {
         this.banPeer(peer);
@@ -717,7 +717,7 @@ console.log('>>> sendRequestForSwap', haveAmount, getAmount)
   setDeclinedOffer = () => {
     this.setState(() => ({
       haveAmount: "",
-      isWaitPeerAnswer: false,
+      isWaitForPeerAnswer: false,
       isDeclinedOffer: true,
     }));
 
@@ -979,7 +979,7 @@ console.log('>>> sendRequestForSwap', haveAmount, getAmount)
       maxBuyAmount: BigNumber(0),
       peer: "",
       isNonOffers: false,
-      isWaitPeerAnswer: false,
+      isWaitForPeerAnswer: false,
       isDeclinedOffer: false,
     }));
   };
@@ -1134,7 +1134,7 @@ console.log('>>> sendRequestForSwap', haveAmount, getAmount)
       btcFee,
       ethFee,
       redirectToSwap,
-      isWaitPeerAnswer,
+      isWaitForPeerAnswer,
       desclineOrders,
       isDeclinedOffer,
     } = this.state
@@ -1529,7 +1529,7 @@ console.log('>>> sendRequestForSwap', haveAmount, getAmount)
           </div>
 
 
-          {isWaitPeerAnswer &&
+          {isWaitForPeerAnswer &&
             <div styleName="swapStartStatus">
               <div styleName="swapStartStatusLoader">
                 <InlineLoader />

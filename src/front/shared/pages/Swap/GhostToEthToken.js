@@ -146,6 +146,7 @@ export default class GhostToEthToken extends Component {
     this.swap.setDestinationBuyAddress(this.state.destinationBuyAddress)
     this.setState({ destinationAddressTimer : false })
   }
+
   toggleBitcoinScript = () => {
     this.setState({
       isShowingGhostScript: !this.state.isShowingGhostScript,
@@ -181,10 +182,6 @@ export default class GhostToEthToken extends Component {
     this.setState({
       isPressCtrl: true,
     })
-  }
-
-  handlerBuyWithCreditCard = (e) => {
-    e.preventDefault()
   }
 
   render() {

@@ -194,7 +194,7 @@ const sendRequestForPartial = (orderId, newValues, destination = {}, callback) =
   order.sendRequestForPartial(newValues, requestOptions,
     (newOrder, isAccepted) => {
       console.error('newOrder', newOrder)
-      console.error('newOrder', isAccepted)
+      console.error('isAccepted', isAccepted)
 
       callback(newOrder, isAccepted)
     },
@@ -226,7 +226,6 @@ const setupPartialOrder = (order) => {
 
   order.setRequestHandlerForPartial('sellAmount', ({ sellAmount }, oldOrder) => {
     const oldPair = Pair.fromOrder(oldOrder)
-
     debug('oldPair', oldPair)
 
     // if BID, then
@@ -239,7 +238,6 @@ const setupPartialOrder = (order) => {
     debug('newBuyAmount', buyAmount)
 
     const newOrder = ({ sellAmount, buyAmount })
-
     debug('newOrder', newOrder)
 
     return newOrder
@@ -247,8 +245,8 @@ const setupPartialOrder = (order) => {
 
   order.setRequestHandlerForPartial('buyAmount', ({ buyAmount }, oldOrder) => {
     const oldPair = Pair.fromOrder(oldOrder)
-
     debug('oldPair', oldPair)
+
     // BUY [main] = SELL [base] CURRENCY
     // price = [main]/[base] = [buy]/[sell]
 
@@ -260,11 +258,9 @@ const setupPartialOrder = (order) => {
       ? buyAmount.times(price)
       : buyAmount.div(price)
 
-
     debug('newSellAmount', sellAmount)
 
     const newOrder = ({ sellAmount, buyAmount })
-
     debug('newOrder', newOrder)
 
     return newOrder
@@ -320,7 +316,9 @@ const markCoinAsHidden = (coin, doBackup) => {
     reducers.core.markCoinAsHidden(coin)
     localStorage.setItem(constants.localStorage.hiddenCoinsList, JSON.stringify(getState().core.hiddenCoinsList))
 
-    if (doBackup) actions.backupManager.serverBackup()
+    if (doBackup) {
+      actions.backupManager.serverBackup()
+    }
   }
 }
 
@@ -332,7 +330,9 @@ const markCoinAsVisible = (coin, doBackup) => {
   reducers.core.markCoinAsVisible(findedCoin || coin)
   localStorage.setItem(hiddenCoinsList, JSON.stringify(getState().core.hiddenCoinsList))
 
-  if (doBackup) actions.backupManager.serverBackup()
+  if (doBackup) {
+    actions.backupManager.serverBackup()
+  }
 }
 
 const getWallet = (findCondition) => {
