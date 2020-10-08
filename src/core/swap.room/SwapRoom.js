@@ -2,7 +2,7 @@ import debug from 'debug'
 import SwapApp, { constants, Events, ServiceInterface } from 'swap.app'
 
 import createP2PNode from '../../common/ipfsRoom/createP2PNode'
-import p2pRoom from 'ipfs-pubsub-room'
+import p2pRoom from '../../common/ipfsRoom'
 
 
 
@@ -30,7 +30,11 @@ class SwapRoom extends ServiceInterface {
   initService() {
     /*
     console.log('createP2PNode', createP2PNode)
-    createP2PNode().then((node) => {
+    const p2pNode = createP2PNode()
+    console.log('p2pNode', p2pNode)
+    p2pNode.start().then(() => {
+      console.log('p2pNode started')
+      
       const { roomName } = this._config
       console.log('node', node)
       const room = new p2pRoom(node, roomName)
@@ -52,11 +56,12 @@ class SwapRoom extends ServiceInterface {
       .on('ready', () => {
         console.log('room ready')
       })
+      
     }).catch((error) => {
-      console.log('Fail create room', error)
+      console.log('Fail start p2pnode', error)
     })
     */
-
+    
     if (!this.app.env.Ipfs) {
       throw new Error('SwapRoomService: Ipfs required')
     }
@@ -155,6 +160,7 @@ class SwapRoom extends ServiceInterface {
 
     
     if (from === this.peer) {
+      console.log('from != this.peer', from, this.peer)
       return
     }
 
@@ -178,6 +184,7 @@ class SwapRoom extends ServiceInterface {
 
     const recover = this._recoverMessage(data, sign)
 
+    console.log('after recover', recover)
     if (recover !== fromAddress) {
       console.error(`Wrong message sign! Message from: ${fromAddress}, recover: ${recover}`)
       return
@@ -187,8 +194,9 @@ class SwapRoom extends ServiceInterface {
       this.acknowledgeReceipt(parsedData)
     }
 
+    console.log('dispatch event', event, from, data)
     this._events.dispatch(event, {
-      fromPeer: from,
+      fromPeer: from.id,
       ...data,
     })
   }

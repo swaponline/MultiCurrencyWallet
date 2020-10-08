@@ -32,7 +32,6 @@ const createP2PNode = (options) => {
 
   // Build and return our libp2p node
   return new Libp2p({
-    peerId,
     addresses: {
       listen: listen || defaultListen,
     },
