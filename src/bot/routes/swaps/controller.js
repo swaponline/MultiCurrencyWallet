@@ -2,7 +2,7 @@ const { helpers: { history }} = require('simple.swap.core')
 
 const { app } = require('../../swapApp')
 const { findSwap, swapView, decodeFlow, removeSwap } = require('../../helpers')
-const Pair = require('../../microbot/Pair.js').default
+const Pair = require('../../microbot/Pair.js')
 
 const flows = require('swap.flows')
 const Swap = require('swap.swap').default

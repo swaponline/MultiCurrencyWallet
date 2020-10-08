@@ -1,12 +1,41 @@
 # ADD NEW BLOCKCHAIN
 
+The Atomic Swap is a complex operation which consists of multiple software/hardware elements controlled from different world regions. E.g, here is just a couple of the systems (elements):
 
-## Plan
+- Multiple public nodes.
+- libp2p messaging system.
+- Two blockchains.
+- Smart contracts written on different languages with different processing features.
+- Public explorers.
+- External monitoring services (e.g. mining fee calculator).
+- User's browser as the swap logic executioner (not only frontend but the entire dApp).
+- The user as his or her actions affect the swap.
+
+<b>Mining fee</b>. How much is the fee and which fee is optimal? How this fee will be calculated? How much cryptocurrency will be spend in both blockchains and who will pay this amount of crypto? Which sum will be final for the maker to send and for the taker to get?
+
+<b>Blockchain features</b>. E.g. for the ERC20-tokens the operation should be 'approved' and client must have some ETH to receive the tokens. For the EOS, the paid account activation is required. This problems shouldn't be of user's concern.
+
+<b>How do the public nodes work?</b> Three public nodes activity is required during the swap (two blockchains and orderbook). What if one node works better than the other or is blocked in some countries?
+
+<br>Correct swap recovery after the update of page. How the swap progress can be recovered from the last point if some problem occured and page was updated?
+
+We elolve. We update our system timely and the blockchains' interoperability management takes time. 
+
+## How much? 
+
+For successful connection need 2 people: 1 senior React JS developer (you or your) and one tech Lead (from us). <Br>
+
+A new senior JS developer, without blockchain skills, connect takes 2-3 month for:
+- Research of atomic swap technology
+- Research of our app arhitecture
+- Do Plan A (see below)
+
+## Plan A
 
 ### Phase 1 `Example`
 
 - Find JS library (use `bitcore-lib` for btc-like currencies)
-- Create the simplest example
+- Create the simplest example of atomic swap
 
 
 ### Phase 2 `Wallet`

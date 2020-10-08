@@ -367,17 +367,11 @@ export default (tokenName) => {
               ethSwapWithdrawTransactionHash,
             }, true)
 
-            let secretFromTxhash = await util.helpers.repeatAsyncUntilResult(() => {
-              const { secret } = flow.state
-
-              if (secret) {
-                return secret
-              } else {
-                return flow.ethTokenSwap.getSecretFromTxhash(ethSwapWithdrawTransactionHash)
-              }
+            const secretFromTxhash = await util.helpers.extractSecretFromTx({
+              flow,
+              swapFlow: flow.ethTokenSwap,
+              app: this.app,
             })
-
-            secretFromTxhash = `0x${secretFromTxhash.replace(/^0x/, '')}`
 
             const { isEthWithdrawn } = flow.state
 
@@ -400,23 +394,13 @@ export default (tokenName) => {
           const { participant } = flow.swap
 
           const checkSecretExist = async () => {
-            try {
-              let secretFromContract = await flow.ethTokenSwap.getSecret({
-                participantAddress: this.app.getParticipantEthAddress(flow.swap),
-              })
-
-              if (secretFromContract) {
-
-                secretFromContract = `0x${secretFromContract.replace(/^0x/, '')}`
-
-                return secretFromContract
-              } else {
-                return null
-              }
-            }
-            catch (error) {
-              return null
-            }
+            return await util.helpers.extractSecretFromContract({
+              flow,
+              swapFlow: flow.ethTokenSwap,
+              participantAddress: this.app.getParticipantEthAddress(flow.swap),
+              ownerAddress: flow.app.getMyEthAddress(),
+              app: this.app,
+            })
           }
 
           const secretFromContract = await util.helpers.repeatAsyncUntilResult((stopRepeat) => {
