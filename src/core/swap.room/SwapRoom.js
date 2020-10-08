@@ -57,6 +57,7 @@ class SwapRoom extends ServiceInterface {
   }
 
   _init({ peer, ipfsConnection }) {
+    console.info('Room: init...')
     if (!ipfsConnection) {
       setTimeout(() => {
         this._init({ peer, ipfsConnection })
@@ -67,8 +68,8 @@ class SwapRoom extends ServiceInterface {
     this.peer = peer
 
     const defaultRoomName = this.app.isMainNet()
-                  ? 'swap.online'
-                  : 'testnet.swap.online'
+      ? 'swap.online'
+      : 'testnet.swap.online'
 
     this.roomName = this._config.roomName || defaultRoomName
 
@@ -83,6 +84,7 @@ class SwapRoom extends ServiceInterface {
     this.connection.on('message', this._handleNewMessage)
 
     this._events.dispatch('ready')
+    console.info(`Room: ready! (${this.roomName})`)
   }
 
   _handleUserOnline = (peer) => {

@@ -72,7 +72,6 @@ const CreateWallet = (props) => {
 
   let btcBalance = 0
   let fiatBalance = 0
-  let changePercent = 0
 
   const widgetCurrencies = [
     'BTC',
@@ -98,10 +97,6 @@ const CreateWallet = (props) => {
   if (currencyBalance) {
     currencyBalance.forEach(async item => {
       if ((!isWidgetBuild || widgetCurrencies.includes(item.name)) && item.infoAboutCurrency && item.balance !== 0) {
-        if (item.name === 'BTC') {
-          changePercent = item.infoAboutCurrency.percent_change_1h
-        }
-
         btcBalance += item.balance * item.infoAboutCurrency.price_btc
         fiatBalance += item.balance * ((item.infoAboutCurrency.price_fiat) ? item.infoAboutCurrency.price_fiat : 1)
       }
@@ -110,27 +105,27 @@ const CreateWallet = (props) => {
 
   useEffect(
     () => {
-      const singleCurrency = pathname.split('/')[2]
+      const forcedCurrency = pathname.split('/')[2]
 
-      if (singleCurrency) {
+      if (forcedCurrency) {
         const hiddenList = localStorage.getItem('hiddenCoinsList')
 
         const isExist = hiddenList.find(el => {
           if (el.includes(':')) {
-            return el.includes(singleCurrency.toUpperCase())
+            return el.includes(forcedCurrency.toUpperCase())
           }
-          return el === singleCurrency.toUpperCase()
+          return el === forcedCurrency.toUpperCase()
         })
 
         if (!isExist) {
           setExist(true)
         }
 
-        if (singleCurrency.toUpperCase() === 'SWAP') {
+        if (forcedCurrency.toUpperCase() === 'SWAP') {
           // SWAP has no security options
           // just add and redirect
-          const isWasOnWallet = localStorage.getItem('hiddenCoinsList').find(cur => cur.includes(singleCurrency))
-          actions.core.markCoinAsVisible(isWasOnWallet || singleCurrency.toUpperCase(), true)
+          const isWasOnWallet = localStorage.getItem('hiddenCoinsList').find(cur => cur.includes(forcedCurrency))
+          actions.core.markCoinAsVisible(isWasOnWallet || forcedCurrency.toUpperCase(), true)
           handleClick()
         }
       }
@@ -163,10 +158,6 @@ const CreateWallet = (props) => {
     if (currencyBalance) {
       currencyBalance.forEach(item => {
         if ((!isWidgetBuild || widgetCurrencies.includes(item.name)) && item.infoAboutCurrency && item.balance !== 0) {
-          if (item.name === 'BTC') {
-            changePercent = item.infoAboutCurrency.percent_change_1h
-          }
-
           btcBalance += item.balance * item.infoAboutCurrency.price_btc
           fiatBalance += item.balance * ((item.infoAboutCurrency.price_fiat) ? item.infoAboutCurrency.price_fiat : 1)
         }
@@ -184,7 +175,7 @@ const CreateWallet = (props) => {
 
   const handleClick = () => {
     setError(null)
-    if (step !== 2 && !singleCurrencyData) {
+    if (step !== 2 && !forcedCurrencyData) {
       reducers.createWallet.newWalletData({ type: 'step', data: step + 1 })
       return setStep(step + 1)
     }
@@ -216,7 +207,7 @@ const CreateWallet = (props) => {
       return
     }
 
-    if (!secure.length && (step === 2 || singleCurrencyData)) {
+    if (!secure.length && (step === 2 || forcedCurrencyData)) {
       setError('Choose something')
       return
     }
@@ -227,7 +218,7 @@ const CreateWallet = (props) => {
       return
     }
 
-    if (step === 2 || singleCurrencyData) {
+    if (step === 2 || forcedCurrencyData) {
       switch (secure) {
         case 'withoutSecure':
           Object.keys(currencies).forEach(el => {
@@ -322,13 +313,13 @@ const CreateWallet = (props) => {
     handleClick()
   }
 
-  const singleCurrency = pathname.split('/')[2]
-  let singleCurrencyData
+  const forcedCurrency = pathname.split('/')[2]
+  let forcedCurrencyData
 
-  if (singleCurrency) {
-    singleCurrencyData = allCurrencies.find(({ name }) => name === singleCurrency.toUpperCase())
-    if (singleCurrencyData) {
-      currencies[singleCurrency.toLowerCase()] = true
+  if (forcedCurrency) {
+    forcedCurrencyData = allCurrencies.find(({ name }) => name === forcedCurrency.toUpperCase())
+    if (forcedCurrencyData) {
+      currencies[forcedCurrency.toLowerCase()] = true
     }
   }
 
@@ -350,7 +341,7 @@ const CreateWallet = (props) => {
             id="createWalletHeader1"
             defaultMessage="Создание кошелька"
           />
-          {' '}{singleCurrency && singleCurrency.toUpperCase()}
+          {' '}{forcedCurrency && forcedCurrency.toUpperCase()}
         </h2>
         <div styleName="buttonWrapper">
           <span>
@@ -381,8 +372,8 @@ const CreateWallet = (props) => {
           <br />
         </div>
 
-        {singleCurrencyData ?
-          <SecondStep error={error} onClick={validate} currencies={currencies} setError={setError} singleCurrencyData />
+        {forcedCurrencyData ?
+          <SecondStep error={error} onClick={validate} currencies={currencies} setError={setError} forcedCurrencyData />
           :
           <div>
             {step === 1 && <FirstStep error={error} onClick={validate} setError={setError} />}

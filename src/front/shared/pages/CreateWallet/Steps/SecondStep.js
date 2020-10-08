@@ -29,7 +29,7 @@ import Cupture,
 
 
 const CreateWallet = (props) => {
-  const { intl: { locale }, onClick, currencies, error, setError, singleCurrecnyData, btcData, ethData } = props
+  const { intl: { locale }, onClick, currencies, error, setError, forcedCurrencyData, btcData, ethData } = props
 
   const _protection = {
     nothing: {
@@ -354,7 +354,7 @@ const CreateWallet = (props) => {
 
   return (
     <div>
-      {!isMobile && !singleCurrecnyData &&
+      {!isMobile && !forcedCurrencyData &&
         <div>
           <Explanation subHeaderText={subHeaderText1()} step={1} notMain>
             <Cupture click={this.etcClick} step={2} />
@@ -363,7 +363,7 @@ const CreateWallet = (props) => {
       }
       <div>
         <div>
-          <Explanation subHeaderText={subHeaderText2()} step={2} isShow={singleCurrecnyData}>
+          <Explanation subHeaderText={subHeaderText2()} step={2} isShow={forcedCurrencyData}>
             {cupture2()}
           </Explanation>
           <div styleName="currencyChooserWrapper currencyChooserWrapperSecond">

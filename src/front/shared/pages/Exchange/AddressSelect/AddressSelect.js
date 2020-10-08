@@ -208,8 +208,8 @@ export default class AddressSelect extends Component {
       history,
       intl: { locale },
     } = this.props
-
-    history.push(localisedUrl(locale, links.createWallet))
+    const ticker = this.getTicker()
+    history.push(localisedUrl(locale, `${links.createWallet}/${ticker}`))
   }
 
   handleConnectMetamask() {

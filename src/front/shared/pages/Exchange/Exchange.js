@@ -633,7 +633,7 @@ export default class Exchange extends Component {
     };
 
     const destination = {
-      address: ''// todo,
+      address: toAddress,
     };
 
     this.setState(() => ({ isWaitForPeerAnswer: true }));
@@ -1157,8 +1157,6 @@ export default class Exchange extends Component {
       );
     }
 
-
-
     const haveFiat = BigNumber(exHaveRate)
       .times(haveAmount)
       .dp(2, BigNumber.ROUND_CEIL)
@@ -1258,10 +1256,6 @@ export default class Exchange extends Component {
       this.state.getAmount
 
     const isIncompletedSwaps = !!desclineOrders.length
-
-
-
-
 
 
     const Form = (
