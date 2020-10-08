@@ -42,7 +42,7 @@ const filterOrders = (orders, filter) => orders
 @connect(({
   rememberedOrders,
   core: { orders, filter },
-  ipfs: { isOnline, isAllPeersLoaded, peer },
+  pubsubRoom: { isOnline, isAllPeersLoaded, peer },
   currencies: { items: currencies },
 }) => ({
   orders: filterOrders(orders, filter),
@@ -129,7 +129,7 @@ export default class Orders extends Component {
 
 
     const { isOnline, isAllPeersLoaded, myOrders, orderId, invalidPair, location, currencies } = this.props
-    const isIpfsLoaded = isOnline && isAllPeersLoaded
+    const isPubSubLoaded = isOnline && isAllPeersLoaded
     const seoPage = getSeoPage(location.pathname)
 
     const isWidget = (config && config.isWidget)
@@ -234,7 +234,7 @@ export default class Orders extends Component {
                 removeOrder={this.removeOrder}
               />
             )}
-            isLoading={buyOrders.length === 0 && !isIpfsLoaded}
+            isLoading={buyOrders.length === 0 && !isPubSubLoaded}
           />
         </Panel>
 
@@ -272,7 +272,7 @@ export default class Orders extends Component {
                 removeOrder={this.removeOrder}
               />
             )}
-            isLoading={sellOrders.length === 0 && !isIpfsLoaded}
+            isLoading={sellOrders.length === 0 && !isPubSubLoaded}
           />
         </Panel>
         {seoPage && seoPage.footer && <div>{seoPage.footer}</div>}

@@ -7,9 +7,6 @@ import * as next from 'bitcoinjs-lib'
 
 import abi from 'human-standard-token-abi'
 
-import Channel from '../../../common/messaging/pubsubRoom'
-import IPFS from 'ipfs'
-
 import config, { initExternalConfig } from 'helpers/externalConfig'
 
 import helpers, { constants as privateKeys, utils } from 'helpers'
@@ -73,8 +70,6 @@ const createSwapApp = async () => {
           main: helpers.next.network.mainnet,
         },
       },
-      Ipfs: IPFS,
-      IpfsRoom: Channel,
       storage: window.localStorage,
       sessionStorage: window.sessionStorage,
       metamask: (metamask.isEnabled() && metamask.isConnected())
@@ -98,7 +93,7 @@ const createSwapApp = async () => {
         config: {
           Addresses: {
             Swarm: [
-              config.ipfs.swarm,
+              config.pubsubRoom.swarm,
             ],
           },
         },

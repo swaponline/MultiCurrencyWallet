@@ -4,24 +4,24 @@ import SwapApp from 'swap.app'
 
 
 const set = payload => {
-  reducers.ipfs.set(payload)
+  reducers.pubsubRoom.set(payload)
 }
 
 const userJoined = () => {
-  reducers.ipfs.userJoined()
+  reducers.pubsubRoom.userJoined()
 }
 
 const userLeft = () => {
-  reducers.ipfs.userLeft()
+  reducers.pubsubRoom.userLeft()
 }
 
 const allPeersLoaded = () => {
-  reducers.ipfs.allPeersLoaded()
+  reducers.pubsubRoom.allPeersLoaded()
 }
 
 const onReady = (cb) => {
   const _checkFunc = () => {
-    const { ipfs : { isOnline } } = getState()
+    const { pubsubRoom : { isOnline } } = getState()
     if (isOnline) {
       cb()
     } else {

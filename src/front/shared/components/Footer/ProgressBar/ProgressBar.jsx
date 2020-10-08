@@ -50,7 +50,7 @@ export default class ProgressBar extends Component {
     const newValue = progressNow + progress
 
     if (progressNow >= maxValue) {
-      actions.ipfs.allPeersLoaded()
+      actions.pubsubRoom.allPeersLoaded()
       handleClick()
     } else {
       this.timer = setTimeout(this.step, step)

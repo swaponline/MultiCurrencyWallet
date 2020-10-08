@@ -28,9 +28,9 @@ import config from 'app-config'
 @injectIntl
 @connect({
   feeds: 'feeds.items',
-  peer: 'ipfs.peer',
+  peer: 'pubsubRoom.peer',
   isSigned: 'signUp.isSigned',
-  reputation: 'ipfs.reputation',
+  reputation: 'pubsubRoom.reputation',
 })
 @CSSModules(styles, { allowMultiple: true })
 export default class User extends React.Component {
