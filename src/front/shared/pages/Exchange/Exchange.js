@@ -1157,6 +1157,8 @@ export default class Exchange extends Component {
       );
     }
 
+
+
     const haveFiat = BigNumber(exHaveRate)
       .times(haveAmount)
       .dp(2, BigNumber.ROUND_CEIL)
@@ -1164,6 +1166,21 @@ export default class Exchange extends Component {
     const getFiat = BigNumber(exGetRate)
       .times(getAmount)
       .dp(2, BigNumber.ROUND_CEIL)
+
+
+    let fiatFeeCalculation = 0;
+    if (
+      exHaveRate && estimatedFeeValues[haveCurrency] &&
+      exGetRate && estimatedFeeValues[getCurrency]
+    ) {
+      fiatFeeCalculation =
+        BigNumber(exHaveRate).times(estimatedFeeValues[haveCurrency])
+        .plus(
+          BigNumber(exGetRate).times(estimatedFeeValues[getCurrency])
+        )
+        .dp(2, BigNumber.ROUND_CEIL)
+        .toNumber()
+    }
 
     const haveCurrencyData = currenciesData.find(
       (item) => item.currency === haveCurrency.toUpperCase()
@@ -1187,6 +1204,7 @@ export default class Exchange extends Component {
       this.props.location.pathname.includes("/exchange") &&
       this.props.location.hash === "#widget";
     const isWidget = isWidgetBuild || isWidgetLink;
+
     const availableAmount =
       estimatedFeeValues[haveCurrency.toLowerCase()] > 0
         ? BigNumber(haveAmount).plus(
@@ -1240,6 +1258,10 @@ export default class Exchange extends Component {
       this.state.getAmount
 
     const isIncompletedSwaps = !!desclineOrders.length
+
+
+
+
 
 
     const Form = (
@@ -1441,72 +1463,6 @@ export default class Exchange extends Component {
               </p>
             )}
 
-            {BigNumber(estimatedFeeValues[haveCurrency]).isGreaterThan(0) &&
-              BigNumber(haveAmount).isGreaterThan(0) &&
-              BigNumber(haveAmount).isLessThanOrEqualTo(balance) && (
-              <div styleName="notifyThat">
-                <div>
-                  <FormattedMessage
-                    id="PartialFeeValueWarn"
-                    defaultMessage="The maximum amount you can sell is {maximumAmount} {haveCurrency}. Miner fee up to {estimatedFeeValue} {haveCurrency}"
-                    values={{
-                      haveCurrency: haveCurrency.toUpperCase(),
-                      estimatedFeeValue: estimatedFeeValues[haveCurrency],
-                      maximumAmount: BigNumber(balance)
-                        .minus(estimatedFeeValues[haveCurrency])
-                        .minus(0.000006)
-                        .toString(),
-                    }}
-                  />
-                  {BigNumber(estimatedFeeValues[getCurrency]).isGreaterThan(
-                    0
-                  ) && BigNumber(getAmount).isGreaterThan(0) ? (
-                      <Fragment>
-                        {` `}
-                        <FormattedMessage
-                          id="PartialFeeValueWarn1"
-                          defaultMessage="+ {estimatedFeeValueGet} {getCurrency}"
-                          values={{
-                            getCurrency: getCurrency.toUpperCase(),
-                            estimatedFeeValue: estimatedFeeValues[getCurrency],
-                          }}
-                        />
-                        {` `}
-                        <FormattedMessage
-                          id="PartialFeeValueWarn3"
-                          defaultMessage="= {estimatedFeeValue}$"
-                          values={{
-                            estimatedFeeValue: BigNumber(exHaveRate)
-                              .times(estimatedFeeValues[haveCurrency])
-                              .plus(
-                                BigNumber(exGetRate).times(
-                                  estimatedFeeValues[getCurrency]
-                                )
-                              )
-                              .dp(2, BigNumber.ROUND_CEIL)
-                              .toString(),
-                          }}
-                        />
-                      </Fragment>
-                    ) : (
-                      <Fragment>
-                        {` `}
-                        <FormattedMessage
-                          id="PartialFeeValueWarn2"
-                          defaultMessage="~ {estimatedFeeValue}$"
-                          values={{
-                            estimatedFeeValue: BigNumber(exHaveRate)
-                              .times(estimatedFeeValues[haveCurrency])
-                              .dp(2, BigNumber.ROUND_CEIL)
-                              .toString(),
-                          }}
-                        />
-                      </Fragment>
-                    )}
-                </div>
-              </div>
-            )}
-
           </div>
 
 
@@ -1521,6 +1477,7 @@ export default class Exchange extends Component {
               &nbsp;
               <span>0</span>
             </div>
+
             <div styleName="minerFee">
               <span>
                 <FormattedMessage
@@ -1533,7 +1490,10 @@ export default class Exchange extends Component {
                 <span><InlineLoader /></span>
                 :
                 <span>
-                  {ethFee} ETH + {btcFee} BTC&nbsp;
+                  {ethFee} ETH + {btcFee} BTC
+                  {fiatFeeCalculation > 0 &&
+                    <span> &asymp; ${fiatFeeCalculation}</span>
+                  }
                   <a href="https://wiki.swaponline.io/faq/why-i-pay-ming-fees-of-btc-and-eth-both-why-not-seller/" target="_blank">(?)</a>
                 </span>
               }
