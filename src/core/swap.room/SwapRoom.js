@@ -111,7 +111,6 @@ class SwapRoom extends ServiceInterface {
 
     this.roomName = this._config.roomName || defaultRoomName
 
-    console.log(`Using room: ${this.roomName}`)
     debug('swap.core:room')(`Using room: ${this.roomName}`)
 
     this.connection = new this.app.env.IpfsRoom(ipfsConnection, this.roomName, {
@@ -119,12 +118,8 @@ class SwapRoom extends ServiceInterface {
     })
 
     this.connection._ipfs = ipfsConnection
-    
     this.connection._libp2p.peerInfo = ipfsConnection.peerInfo
 
-    window.ourConnection = this.connection
-    console.log('our room', this.connection)
-    window.ourRoom = this.connection
     this.connection.on('peer joined', this._handleUserOnline)
     this.connection.on('peer left', this._handleUserOffline)
     this.connection.on('message', this._handleNewMessage)
@@ -133,34 +128,23 @@ class SwapRoom extends ServiceInterface {
   }
 
   _handleUserOnline = (peer) => {
-    console.log('_handleUserOnline', peer)
     if (peer !== this.peer) {
-      console.log('_handleUserOnline - not me')
-      console.log('me', this.peer)
-      console.log('he', peer)
       this._events.dispatch('user online', peer)
-    } else {
-      console.log('_handleUserOnline - me????')
-      console.log('me', this.peer)
-      console.log('he', peer)
     }
   }
 
   _handleUserOffline = (peer) => {
-    console.log('_handleUserOffline', peer)
     if (peer !== this.peer) {
       this._events.dispatch('user offline', peer)
     }
   }
 
   _handleNewMessage = (message) => {
-    console.log('_handleNewMessage', message)
     const { from, data: rawData } = message
     debug('swap.verbose:room')('message from', from)
 
     
     if (from === this.peer) {
-      console.log('from != this.peer', from, this.peer)
       return
     }
 
@@ -184,7 +168,6 @@ class SwapRoom extends ServiceInterface {
 
     const recover = this._recoverMessage(data, sign)
 
-    console.log('after recover', recover)
     if (recover !== fromAddress) {
       console.error(`Wrong message sign! Message from: ${fromAddress}, recover: ${recover}`)
       return
@@ -194,7 +177,6 @@ class SwapRoom extends ServiceInterface {
       this.acknowledgeReceipt(parsedData)
     }
 
-    console.log('dispatch event', event, from, data)
     this._events.dispatch(event, {
       fromPeer: from.id,
       ...data,
@@ -326,7 +308,6 @@ class SwapRoom extends ServiceInterface {
     debug('swap.verbose:room')('sent message to peer', peer)
     // debug('swap.verbose:room')('message', message)
 
-    console.log('sent message to peer', peer)
     const { data, event }  = message
     const sign = this._signMessage(data)
 
