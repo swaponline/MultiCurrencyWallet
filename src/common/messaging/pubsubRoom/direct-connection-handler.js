@@ -36,7 +36,6 @@ function handler ({ connection, stream }) {
         msg.seqno = Buffer.from(msg.seqno, 'hex')
 
         topicIDs.forEach((topic) => {
-          console.log('for topic', topic, msg)
           emitter.emit(topic, msg)
         })
       }

@@ -13,7 +13,7 @@ const {
 const eth = require('../instances/ethereum')
 const btc = require('../instances/bitcoin')
 
-import Channel from 'ipfs-pubsub-room'
+import Channel from '../../../../common/messaging/pubsubRoom'
 import IPFS from 'ipfs'
 
 const common = require('./common')
@@ -61,7 +61,7 @@ module.exports = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, ..
       web3,
       bitcoin,
       // bcash,
-      Ipfs: IPFS,
+      // Ipfs: IPFS,
       IpfsRoom: Channel,
       storage,
       sessionStorage,

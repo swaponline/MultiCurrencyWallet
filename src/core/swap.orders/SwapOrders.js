@@ -157,7 +157,6 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
   }
 
   _handleNewOrders = ({ fromPeer, orders }) => {
-    console.log('handle new orders', fromPeer, orders)
     // ductape to check if such orders already exist
     const filteredOrders = orders.filter(({ id, owner: { peer } }) => (
       !this.getByKey(id) && peer === fromPeer

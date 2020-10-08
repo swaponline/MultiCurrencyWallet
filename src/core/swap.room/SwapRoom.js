@@ -28,42 +28,20 @@ class SwapRoom extends ServiceInterface {
   }
 
   initService() {
-    /*
-    console.log('createP2PNode', createP2PNode)
-    const p2pNode = createP2PNode()
-    console.log('p2pNode', p2pNode)
-    p2pNode.start().then(() => {
-      console.log('p2pNode started')
-      
-      const { roomName } = this._config
-      console.log('node', node)
-      const room = new p2pRoom(node, roomName)
-      console.log('room', room)
-      window.ourRoom = room
-      window.ourNode = node
-      room.on('peer joined', (peer) => {
-        console.log('Peer joined the room', peer)
-      })
-
-      room.on('peer left', (peer) => {
-        console.log('Peer left...', peer)
-      })
-
-      // now started to listen to room
-      room.on('subscribed', () => {
-        console.log('Now connected!')
-      })
-      .on('ready', () => {
-        console.log('room ready')
-      })
-      
-    }).catch((error) => {
-      console.log('Fail start p2pnode', error)
-    })
-    */
-    
     if (!this.app.env.Ipfs) {
-      throw new Error('SwapRoomService: Ipfs required')
+      createP2PNode().then((p2pNode) => {
+        p2pNode.start().then(async () => {
+          this._init({
+            peer: {
+              id: p2pNode.peerId._idB58String
+            },
+            ipfsConnection: p2pNode,
+          })
+        }).catch((error) => {
+          console.log('Fail start p2pnode', error)
+        })
+      })
+      return
     }
     if (!this.app.env.IpfsRoom) {
       throw new Error('SwapRoomService: IpfsRoom required')
@@ -77,7 +55,6 @@ class SwapRoom extends ServiceInterface {
       },
       ...config,
     }).then(async (ipfs) => {
-      console.log('ipfs created', ipfs)
       window.ourIpfs = ipfs
 
       const peerId = await ipfs.id()
@@ -88,14 +65,12 @@ class SwapRoom extends ServiceInterface {
       
       
     }).catch((error) => {
-      console.log('Fail create ipfs', error)
       debug('swap.core:room')('IPFS error!', err)
     })
     
   }
 
   _init({ peer, ipfsConnection }) {
-    console.log('call _init', peer, ipfsConnection)
     if (!ipfsConnection) {
       setTimeout(() => {
         this._init({ peer, ipfsConnection })
@@ -118,7 +93,6 @@ class SwapRoom extends ServiceInterface {
     })
 
     this.connection._ipfs = ipfsConnection
-    this.connection._libp2p.peerInfo = ipfsConnection.peerInfo
 
     this.connection.on('peer joined', this._handleUserOnline)
     this.connection.on('peer left', this._handleUserOffline)
@@ -157,7 +131,6 @@ class SwapRoom extends ServiceInterface {
       console.error('parse message data err:', err)
     }
 
-    console.log('new message parsed', parsedData)
     const { fromAddress, data, sign, event, action } = parsedData
 
     if (!data) {
