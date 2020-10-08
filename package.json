@@ -66,7 +66,7 @@
     "rename-assets-manifest-file": "rename-files ./build-chrome-extension/application/assets/ 'manifest.json' 'android-manifest.json'",
     "rename-assets-manifest-link": "replace 'assets/manifest.json' 'assets/android-manifest.json' ./build-chrome-extension/application/index.html",
     "release": "git commit -am v%npm_package_version% && git tag v%npm_package_version% && git push && git push --tags",
-    "bot": "@babel-node --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot",
+    "bot": "babel-node --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot",
     "bot:debug": "cross-env DEBUG=swap.core* @babel-node --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot"
   },
   "husky": {
@@ -171,6 +171,7 @@
   },
   "dependencies": {
     "@walletconnect/web3-provider": "^1.2.2",
+    "aegir": "^20.5.1",
     "ajv": "^6.5.2",
     "autosize": "^4.0.2",
     "axios": "^0.18.1",
@@ -185,10 +186,13 @@
     "bitcore-lib": "^8.22.2",
     "bootstrap": "^4.3.1",
     "buffer": "^5.6.0",
+    "chai": "^4.2.0",
     "classnames": "^2.2.5",
     "command-line-args": "^5.0.2",
     "command-line-usage": "^5.0.5",
     "debug": "^4.1.0",
+    "delay": "^4.3.0",
+    "dirty-chai": "^2.0.1",
     "ethereum-input-data-decoder": "0.0.12",
     "ethereumjs-wallet": "^0.6.3",
     "firebase": "^5.10.0",
@@ -198,7 +202,6 @@
     "history": "^4.10.1",
     "human-standard-token-abi": "^1.0.2",
     "ipfs": "^0.50.2",
-    "ipfs-pubsub-room": "^2.0.1",
     "is-local-ip": "^1.1.0",
     "jdenticon": "^2.2.0",
     "json-stringify-safe": "^5.0.1",
@@ -222,6 +225,7 @@
     "multihashes": "0.4.15",
     "node-fetch": "^2.6.1",
     "node-gyp": "^3.8.0",
+    "peer-info": "^0.17.1",
     "rc-progress": "^2.5.2",
     "react": "^16.10.2",
     "react-click-outside": "github:tj/react-click-outside",
@@ -253,6 +257,7 @@
     "url-parse": "^1.4.7",
     "valuelink": "^1.6.2",
     "web3": "^1.2.11",
-    "web3modal": "^1.9.0"
+    "web3modal": "^1.9.0",
+    "wrtc": "^0.4.6"
   }
 }

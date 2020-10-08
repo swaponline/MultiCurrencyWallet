@@ -1,7 +1,7 @@
 import debug from 'debug'
 import SwapApp, { constants, Events, ServiceInterface } from 'swap.app'
 
-import createP2PNode from '../../common/utils/createP2PNode'
+import createP2PNode from '../../common/ipfsRoom/createP2PNode'
 import p2pRoom from 'ipfs-pubsub-room'
 
 
@@ -114,6 +114,8 @@ class SwapRoom extends ServiceInterface {
     })
 
     this.connection._ipfs = ipfsConnection
+    
+    this.connection._libp2p.peerInfo = ipfsConnection.peerInfo
 
     window.ourConnection = this.connection
     console.log('our room', this.connection)
@@ -316,6 +318,7 @@ class SwapRoom extends ServiceInterface {
     debug('swap.verbose:room')('sent message to peer', peer)
     // debug('swap.verbose:room')('message', message)
 
+    console.log('sent message to peer', peer)
     const { data, event }  = message
     const sign = this._signMessage(data)
 

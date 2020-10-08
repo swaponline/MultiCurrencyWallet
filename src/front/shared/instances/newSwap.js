@@ -7,7 +7,7 @@ import * as next from 'bitcoinjs-lib'
 
 import abi from 'human-standard-token-abi'
 
-import Channel from 'ipfs-pubsub-room'
+import Channel from '../../../common/ipfsRoom'
 import IPFS from 'ipfs'
 
 import config, { initExternalConfig } from 'helpers/externalConfig'
