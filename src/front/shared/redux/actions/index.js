@@ -24,7 +24,7 @@ import pairs from './pairs'
 import referral from './referral'
 import analytics from './analytics'
 
-import ipfs from './ipfs'
+import pubsubRoom from './pubsubRoom'
 
 import invoices from './invoices'
 import comments from './comments'
@@ -63,7 +63,7 @@ export default {
   feed,
   analytics,
   referral,
-  ipfs,
+  pubsubRoom,
   api,
   pairs,
   invoices,

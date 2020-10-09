@@ -416,8 +416,8 @@ const login_USER = (privateKey, otherOwnerPublicKey, onlyCheck) => {
 
   reducers.user.setAuthData({ name: 'btcMultisigUserData', data })
 
-  // Setup IPFS sign request
-  actions.ipfs.onReady(() => {
+  // Setup pubsubRoom sign request
+  actions.pubsubRoom.onReady(() => {
     const { user: { btcMultisigUserData: { address } } } = getState()
     const onRequestEventName = `btc multisig request sign ${address}`
     SwapApp.shared().services.room.subscribe(onRequestEventName, (_data) => {

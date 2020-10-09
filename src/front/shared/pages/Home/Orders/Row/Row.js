@@ -25,7 +25,7 @@ import { BigNumber } from 'bignumber.js'
 
 @injectIntl
 @connect(({
-  ipfs: { peer },
+  pubsubRoom: { peer },
   user,
 }) => ({
   currenciesData: user,

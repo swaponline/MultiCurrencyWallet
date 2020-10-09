@@ -48,7 +48,7 @@ Footer.propTypes = {
 }
 
 export default withRouter(connect({
-  'serverAddress': 'ipfs.server',
+  'serverAddress': 'pubsubRoom.server',
   'userEthAddress': 'user.ethData.address',
   'dashboardView': 'ui.dashboardModalsAllowed',
   'modals': 'modals',

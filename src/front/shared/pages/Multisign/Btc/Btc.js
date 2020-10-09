@@ -110,7 +110,7 @@ export default class Btc extends PureComponent {
           myPublicKey,
           joinLink: `${getFullOrigin()}${links.multisign}/btc/connect/${myPublicKey}`,
         })
-        actions.ipfs.onReady(() => {
+        actions.pubsubRoom.onReady(() => {
           this.setState({
             addWalletEnabled: true,
           })
@@ -207,13 +207,13 @@ export default class Btc extends PureComponent {
   handleAddWallet = async () => {
     const { action, myPublicKey, publicKey, peer } = this.state
 
-    //If peer is online - try connect via ipfs
+    //If peer is online - try connect via pubsubRoom
 
     this.setState({
       waitCreateWallet: true
     })
 
-    actions.ipfs.waitPeer(
+    actions.pubsubRoom.waitPeer(
       peer,
       () => {
         this.setState({
