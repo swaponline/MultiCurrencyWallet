@@ -273,7 +273,7 @@ export default class AddressSelect extends Component {
         return
       }
 
-      let value = ''
+      let value
 
       if (selectedType === AddressType.Hotwallet) {
         value = this.getHotWalletAddress()
@@ -353,7 +353,9 @@ export default class AddressSelect extends Component {
         isCustomOptionDisabled = true
       }
     }
-    // ...this conditions
+    // ...this conditions ^
+
+    const isCustomOptionInputHidden = role === AddressRole.Send && ticker === 'BTC' // todo: any utxo
 
     const options = [
       {
@@ -435,10 +437,10 @@ export default class AddressSelect extends Component {
             )}
           </div>
         }
-        {selectedType === AddressType.Custom &&
+        {selectedType === AddressType.Custom && !isCustomOptionInputHidden &&
           <div styleName="selectedInner">
             <div styleName={`customWallet ${(walletAddressFocused) ? 'customWallet_focus' : ''}`}>
-              <div styleName="walletInput">
+              <div styleName="customAddressInput">
                 <Input
                   inputCustomStyle={{
                     fontSize: '15px',

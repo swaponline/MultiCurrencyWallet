@@ -134,6 +134,28 @@
     outline: 1px solid #6144e5 !important;
   }
 
+  .customAddressInput {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 0 0.9em;
+
+    input {
+      border: none;
+      margin: 0;
+      height: 40px;
+      padding: 0;
+      font-size: 16px;
+
+      &:focus {
+        margin: 0;
+        padding: 0;
+        border: none;
+      }
+    }
+  }
+
   .qrCode {
     position: absolute;
     right: -13px;
@@ -176,28 +198,6 @@
 
   @include media-mobile {
     font-size: 11px;
-  }
-}
-
-.walletInput {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 100%;
-  padding: 0 0.9em;
-
-  input {
-    border: none;
-    margin: 0;
-    height: 40px;
-    padding: 0;
-    font-size: 16px;
-
-    &:focus {
-      margin: 0;
-      padding: 0;
-      border: none;
-    }
   }
 }
 
