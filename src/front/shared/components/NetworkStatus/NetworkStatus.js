@@ -10,10 +10,10 @@ import { constants } from 'helpers'
 
 @connect(
   ({
-    ipfs,
+    pubsubRoom,
   }) => ({
-    isOnline: ipfs.isOnline,
-    onlineUsers: ipfs.onlineUsers,
+    isOnline: pubsubRoom.isOnline,
+    onlineUsers: pubsubRoom.onlineUsers,
   })
 )
 @cssModules(styles, { allowMultiple: true })

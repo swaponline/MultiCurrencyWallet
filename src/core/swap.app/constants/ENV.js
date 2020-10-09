@@ -6,8 +6,6 @@ export default {
   ghost: 'ghost',
   next: 'next',
   coininfo: 'coininfo',
-  Ipfs: 'Ipfs',
-  IpfsRoom: 'IpfsRoom',
   storage: 'storage',
   sessionStorage: 'sessionStorage',
   swapsExplorer: 'swapsExplorer',

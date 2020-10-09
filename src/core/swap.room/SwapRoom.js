@@ -1,6 +1,9 @@
 import debug from 'debug'
 import SwapApp, { constants, Events, ServiceInterface } from 'swap.app'
 
+import createP2PNode from '../../common/messaging/pubsubRoom/createP2PNode'
+import p2pRoom from '../../common/messaging/pubsubRoom'
+
 
 class SwapRoom extends ServiceInterface {
 
@@ -24,48 +27,42 @@ class SwapRoom extends ServiceInterface {
   }
 
   initService() {
-    if (!this.app.env.Ipfs) {
-      throw new Error('SwapRoomService: Ipfs required')
-    }
-    if (!this.app.env.IpfsRoom) {
-      throw new Error('SwapRoomService: IpfsRoom required')
-    }
-
-    const { roomName, EXPERIMENTAL, ...config } = this._config
-
-    const ipfs = new this.app.env.Ipfs({
-      EXPERIMENTAL: {
-        pubsub: true,
-      },
-      ...config,
-    })
-      .on('ready', () => ipfs.id((err, info) => {
-        console.info('IPFS ready!')
-
-        if (err) {
-          throw err
-        }
-
+    const peerIdJson = this.app.env.storage.getItem(
+      'libp2p:peerIdJson'
+    )
+    createP2PNode({
+      peerIdJson,
+    }).then((p2pNode) => {
+      // Save PeerId
+      this.app.env.storage.setItem(
+        'libp2p:peerIdJson',
+        p2pNode.peerId.toJSON()
+      )
+      // Start p2p node
+      p2pNode.start().then(async () => {
         this._init({
-          peer: info.id,
-          ipfsConnection: ipfs,
+          peer: {
+            id: p2pNode.peerId._idB58String
+          },
+          p2pConnection: p2pNode,
         })
-      }))
-      .on('error', (err) => {
-        debug('swap.core:room')('IPFS error!', err)
+      }).catch((error) => {
+        console.log('Fail start p2pnode', error)
       })
+    })
   }
 
-  _init({ peer, ipfsConnection }) {
+
+  _init({ peer, p2pConnection }) {
     console.info('Room: init...')
-    if (!ipfsConnection) {
+    if (!p2pConnection) {
       setTimeout(() => {
-        this._init({ peer, ipfsConnection })
+        this._init({ peer, p2pConnection })
       }, 999)
       return
     }
 
-    this.peer = peer
+    this.peer = peer.id
 
     const defaultRoomName = this.app.isMainNet()
       ? 'swap.online'
@@ -75,9 +72,15 @@ class SwapRoom extends ServiceInterface {
 
     debug('swap.core:room')(`Using room: ${this.roomName}`)
 
-    this.connection = this.app.env.IpfsRoom(ipfsConnection, this.roomName, {
+    this.connection = new p2pRoom(p2pConnection, this.roomName, {
       pollInterval: 1000,
     })
+
+    this.connection.isOnline = () => {
+      console.log('Call pubsubRoom isOnline')
+      // @ToDo - may be use isStarted
+      return true
+    }
 
     this.connection.on('peer joined', this._handleUserOnline)
     this.connection.on('peer left', this._handleUserOffline)
@@ -103,6 +106,7 @@ class SwapRoom extends ServiceInterface {
     const { from, data: rawData } = message
     debug('swap.verbose:room')('message from', from)
 
+    
     if (from === this.peer) {
       return
     }
@@ -136,7 +140,7 @@ class SwapRoom extends ServiceInterface {
     }
 
     this._events.dispatch(event, {
-      fromPeer: from,
+      fromPeer: from.id,
       ...data,
     })
   }

@@ -13,9 +13,6 @@ const {
 const eth = require('../instances/ethereum')
 const btc = require('../instances/bitcoin')
 
-const Ipfs = require('ipfs')
-const IpfsRoom = require('ipfs-pubsub-room')
-
 const common = require('./common')
 
 const tokenSwap = require('./tokenSwap')
@@ -61,8 +58,6 @@ module.exports = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, ..
       web3,
       bitcoin,
       // bcash,
-      Ipfs,
-      IpfsRoom,
       storage,
       sessionStorage,
       ...config.env,
