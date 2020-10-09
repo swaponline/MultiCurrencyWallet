@@ -9,11 +9,11 @@ import SECIO from 'libp2p-secio'
 import PeerId from 'peer-id'
 
 
-
 const createP2PNode = (options) => {
   const {
     listen,
     discoveryPeers,
+    peerIdJson,
   } = options || {}
 
   const defaultListen = [
@@ -46,10 +46,20 @@ const createP2PNode = (options) => {
   
   // Build and return our libp2p node
   return new Promise(async (resolve, reject) => {
-    const randPeerId = await PeerId.create()
+    // Generate peerId
+    let peerId = false
+    if (peerIdJson) {
+      try {
+        peerId = await PeerId.createFromJSON(peerIdJson)
+      } catch (e) {}
+    }
+
+    if (!peerId) {
+      peerId = await PeerId.create()
+    }
 
     const p2pNode = new Libp2p({
-      peerId: randPeerId,
+      peerId,
       addresses: {
         listen: listen || defaultListen,
       },

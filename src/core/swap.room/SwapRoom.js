@@ -5,7 +5,6 @@ import createP2PNode from '../../common/messaging/pubsubRoom/createP2PNode'
 import p2pRoom from '../../common/messaging/pubsubRoom'
 
 
-
 class SwapRoom extends ServiceInterface {
 
   static get name() {
@@ -28,7 +27,18 @@ class SwapRoom extends ServiceInterface {
   }
 
   initService() {
-    createP2PNode().then((p2pNode) => {
+    const peerIdJson = this.app.env.storage.getItem(
+      'libp2p:peerIdJson'
+    )
+    createP2PNode({
+      peerIdJson,
+    }).then((p2pNode) => {
+      // Save PeerId
+      this.app.env.storage.setItem(
+        'libp2p:peerIdJson',
+        p2pNode.peerId.toJSON()
+      )
+      // Start p2p node
       p2pNode.start().then(async () => {
         this._init({
           peer: {
