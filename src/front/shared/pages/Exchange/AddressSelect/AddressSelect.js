@@ -44,6 +44,10 @@ const langLabels = defineMessages({
     id: 'Exchange_HotWalletAddressOption',
     defaultMessage: 'My wallet',
   },
+  optionHotWalletDisabled: {
+    id: 'Exchange_HotWalletAddressOptionDisabled',
+    defaultMessage: 'My wallet (not enough balance)',
+  },
   optionHotWalletCreate: {
     id: 'Exchange_HotWalletCreate',
     defaultMessage: 'Create wallet',
@@ -327,6 +331,7 @@ export default class AddressSelect extends Component {
     } = this.state
 
     const ticker = this.getTicker()
+    const { balance } = actions.core.getWallet({ currency })
 
     const isMetamaskOption = ethToken.isEthOrEthToken({ name: currency })
     const isMetamaskInstalled = metamask.isEnabled()
@@ -336,17 +341,19 @@ export default class AddressSelect extends Component {
     const isCustomAddressOption = !ethToken.isEthOrEthToken({ name: currency })
 
 
-    // todo: fix flow and remove this conditions (temp)
-    let isCustomOptionDisabled = false
     let isHotWalletOptionDisabled = false
-    if (ticker === 'BTC' && role === AddressRole.Send) {
-      const { balance } = actions.core.getWallet({ currency })
+    if (role === AddressRole.Send && (!balance || balance === 0)) {
+      isHotWalletOptionDisabled = true
+    }
+
+    // todo: fix flow and remove...
+    let isCustomOptionDisabled = false
+    if (role === AddressRole.Send && ticker === 'BTC') {
       if (balance > 0) {
         isCustomOptionDisabled = true
-      } else {
-        isHotWalletOptionDisabled = true
       }
     }
+    // ...this conditions
 
     const options = [
       {
@@ -358,7 +365,10 @@ export default class AddressSelect extends Component {
       ...(this.isCurrencyInUserWallet() ? [{
           value: AddressType.Hotwallet,
           icon: iconHotwallet,
-          title: <FormattedMessage {...langLabels.optionHotWallet} />,
+          title: !isHotWalletOptionDisabled ?
+            <FormattedMessage {...langLabels.optionHotWallet} />
+            :
+            <FormattedMessage {...langLabels.optionHotWalletDisabled} />,
           disabled: isHotWalletOptionDisabled,
         }] : [{
           value: 'hotwalletcreate',

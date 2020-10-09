@@ -339,7 +339,7 @@ const getWallet = (findCondition) => {
   const { currency, address } = findCondition
 
   const founded = getWallets().filter((wallet) => {
-    const conditionOk = (currency && wallet.currency.toLowerCase() === currency.toLowerCase())
+    const conditionOk = (currency && wallet.currency.toLowerCase() === currency.toLowerCase() && !wallet.isMetamask)
 
     if (address) {
       if (wallet.address.toLowerCase() === address.toLowerCase()) {
@@ -349,6 +349,7 @@ const getWallet = (findCondition) => {
       return conditionOk
     }
   })
+
   return (founded.length) ? founded[0] : false
 }
 

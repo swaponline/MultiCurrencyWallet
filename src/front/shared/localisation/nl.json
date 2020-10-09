@@ -6230,6 +6230,13 @@
     ]
   },
   {
+    "id": "Exchange_HotWalletAddressOptionDisabled",
+    "message": "Mijn wallet (niet genoeg balans)",
+    "files": [
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
+    ]
+  },
+  {
     "id": "Exchange_HotWalletCreate",
     "message": "Maak een wallet",
     "files": [
