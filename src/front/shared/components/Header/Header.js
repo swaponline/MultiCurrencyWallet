@@ -100,7 +100,7 @@ export default class Header extends Component {
         },
         !config.opts.exchangeDisabled && {
           title: intl.formatMessage(invest),
-          link: "exchange/btc-to-usdt",
+          link: "exchange/btc-to-eth",
           icon: "invest",
           haveSubmenu: false,
         },

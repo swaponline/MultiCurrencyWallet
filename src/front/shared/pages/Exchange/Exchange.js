@@ -203,11 +203,11 @@ export default class Exchange extends Component {
         !allCurrencyies.map((item) => item.name).includes(sell.toUpperCase()) ||
         !allCurrencyies.map((item) => item.name).includes(buy.toUpperCase())
       ) {
-        history.push(localisedUrl(locale, `${links.exchange}/usdt-to-btc`));
+        history.push(localisedUrl(locale, `${links.exchange}/eth-to-btc`));
       }
     }
     const sellToken = sell || "btc";
-    const buyToken = buy || (!isWidgetBuild ? "usdt" : config.erc20token);
+    const buyToken = buy || (!isWidgetBuild ? "eth" : config.erc20token);
 
     this.returnNeedCurrency(sellToken, buyToken);
 
