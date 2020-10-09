@@ -37,7 +37,6 @@ const webpackConfig = {
 
   node: {
     fs: 'empty',
-    dgram: 'empty',
   },
 
   resolve: {
