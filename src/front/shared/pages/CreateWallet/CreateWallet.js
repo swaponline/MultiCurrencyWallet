@@ -189,6 +189,7 @@ const CreateWallet = (props) => {
   }
 
   const validate = () => {
+
     setError(null)
 
     if (!Object.values(currencies).includes(true) && step === 1) {
@@ -200,7 +201,9 @@ const CreateWallet = (props) => {
 
     if (isIgnoreSecondStep && !currencies['Custom ERC20']) {
       Object.keys(currencies).forEach((currency) => {
-        actions.core.markCoinAsVisible(currency, true)
+        if (currencies[currency]) {
+          actions.core.markCoinAsVisible(currency.toUpperCase(), true)
+        }
       })
       localStorage.setItem(constants.localStorage.isWalletCreate, true)
       goHome()

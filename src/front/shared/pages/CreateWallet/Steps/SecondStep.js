@@ -20,15 +20,14 @@ import ethToken from 'helpers/ethToken'
 
 import Explanation from '../Explanation'
 import icons from '../images'
-import Cupture,
-{
+import Cupture, {
   subHeaderText1,
   subHeaderText2,
   cupture2,
 } from './texts'
 
 
-const CreateWallet = (props) => {
+const SecondStep = (props) => {
   const { intl: { locale }, onClick, currencies, error, setError, forcedCurrencyData, btcData, ethData } = props
 
   const _protection = {
@@ -164,7 +163,9 @@ const CreateWallet = (props) => {
       return null
     }
 
-    if (!enabled) return
+    if (!enabled) {
+      return
+    }
     // if (activated) return
     const colors = border.color
 
@@ -427,4 +428,4 @@ const CreateWallet = (props) => {
     </div>
   )
 }
-export default injectIntl(CSSModules(CreateWallet, styles, { allowMultiple: true }))
+export default injectIntl(CSSModules(SecondStep, styles, { allowMultiple: true }))
