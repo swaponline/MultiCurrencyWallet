@@ -43,7 +43,7 @@ const createP2PNode = (options) => {
     6: "/dns4/node0.preload.ipfs.io/tcp/443/wss/ipfs/QmZMxNdpMkewiVZLMRxaNxUeZpDUb34pWjZ1kZvsd16Zic"
     7: "/dns4/node1.preload.ipfs.io/tcp/443/wss/ipfs/Qmbut9Ywz9YEDrz8ySBSgWyJk41Uvm2QJPhwDJzJyGFsD6"
   */
-  
+
   // Build and return our libp2p node
   return new Promise(async (resolve, reject) => {
     // Generate peerId
@@ -57,6 +57,8 @@ const createP2PNode = (options) => {
     if (!peerId) {
       peerId = await PeerId.create()
     }
+
+    console.log('Peer id:', peerId._idB58String)
 
     const p2pNode = new Libp2p({
       peerId,

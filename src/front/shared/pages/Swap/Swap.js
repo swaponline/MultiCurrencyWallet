@@ -540,7 +540,6 @@ export default class SwapComponent extends PureComponent {
       return null
     }
 
-    const isFinished = (swap.flow.state.step >= (swap.flow.steps.length - 1))
     return (
       <Fragment>
         {!hideAll ?

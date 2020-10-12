@@ -180,6 +180,8 @@ const sendRequestForPartial = (orderId, newValues, destination = {}, callback) =
 
   const order = SwapApp.shared().services.orders.getByKey(orderId)
 
+console.log('>>> core:sendRequestForPartial order =', order)
+
   const { address, reputation, reputationProof } = getUserData(order.buyCurrency)
 
   const requestOptions = {
@@ -190,6 +192,8 @@ const sendRequestForPartial = (orderId, newValues, destination = {}, callback) =
       reputationProof,
     },
   }
+
+console.log('>>> core:sendRequestForPartial requestOptions =', requestOptions)
 
   order.sendRequestForPartial(newValues, requestOptions,
     (newOrder, isAccepted) => {
@@ -221,7 +225,9 @@ const createOrder = (data, isPartial = false) => {
 
 const setupPartialOrder = (order) => {
   const pairData = Pair.fromOrder(order)
-  if (!pairData || !pairData.price) return
+  if (!pairData || !pairData.price) {
+    return
+  }
   const { price } = pairData
 
   order.setRequestHandlerForPartial('sellAmount', ({ sellAmount }, oldOrder) => {

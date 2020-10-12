@@ -209,6 +209,7 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
    * @param {boolean} data.isRequested
    */
   _create(data) {
+    console.log('>>> Create order', data)
     const { id, buyAmount, sellAmount, buyCurrency, sellCurrency, ...rest } = data
 
     const buy = buyCurrency.toUpperCase()

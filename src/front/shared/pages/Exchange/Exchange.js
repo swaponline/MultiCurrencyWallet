@@ -620,9 +620,9 @@ export default class Exchange extends Component {
       maxBuyAmount,
     } = this.state;
 
-    console.log('Exchange: sendRequestForPartial', haveAmount, getAmount)
-    console.log(`${haveAmount} FROM ${fromAddress}`)
-    console.log(`${getAmount} TO ${toAddress}`)
+    console.log('>>> Exchange: sendRequestForPartial', haveAmount, getAmount)
+    console.log(`${haveAmount} FROM ${fromAddress.value}`)
+    console.log(`${getAmount} TO ${toAddress.value}`)
 
     if (!String(getAmount) || !peer || !orderId || !String(haveAmount)) {
       return;
@@ -633,7 +633,7 @@ export default class Exchange extends Component {
     };
 
     const destination = {
-      address: toAddress,
+      address: toAddress.value,
     };
 
     this.setState(() => ({ isWaitForPeerAnswer: true }));
@@ -1146,13 +1146,11 @@ export default class Exchange extends Component {
     } = this.state
 
     if (redirectToSwap) {
+      const uri = `${localisedUrl(locale, links.swap)}/${getCurrency}-${haveCurrency}/${orderId}`
       return (
         <Redirect
+          to={uri}
           push
-          to={`${localisedUrl(
-            locale,
-            links.swap
-          )}/${getCurrency}-${haveCurrency}/${orderId}`}
         />
       );
     }
@@ -1219,7 +1217,8 @@ export default class Exchange extends Component {
       BigNumber(getAmount).isGreaterThan(0) &&
       !this.doesComissionPreventThisOrder() &&
       (BigNumber(haveAmount).isGreaterThan(balance) ||
-        BigNumber(balance).isGreaterThanOrEqualTo(availableAmount));
+        BigNumber(balance).isGreaterThanOrEqualTo(availableAmount)) &&
+      !isWaitForPeerAnswer
 
     const sellTokenFullName = currenciesData.find(
       (item) => item.currency === haveCurrency.toUpperCase()
