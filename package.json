@@ -144,6 +144,7 @@
     "node-sass": "^4.12.0",
     "node-sessionstorage": "^1.0.0",
     "nodemon": "^1.19.3",
+    "peer-id": "^0.14.2",
     "pg": "^8.4.0",
     "postcss-loader": "^2.1.4",
     "progress-bar-webpack-plugin": "^1.12.1",
