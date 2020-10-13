@@ -606,6 +606,13 @@
     "message": "Gekopieerd"
   },
   {
+    "id": "Home153",
+    "message": "What is atomic swap? ",
+    "files": [
+      "shared/pages/Home/Home.js"
+    ]
+  },
+  {
     "id": "orders150",
     "message": " sell "
   },

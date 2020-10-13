@@ -554,14 +554,14 @@
     "id": "MyOrders23",
     "message": "Tus ofertas",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
     "id": "RowFeeds64",
     "message": "Copiados",
     "files": [
-      "shared/pages/Home/Orders/MyOrders/RowFeeds/RowFeeds.js"
+      "shared/pages/Exchange/Orders/MyOrders/RowFeeds/RowFeeds.js"
     ]
   },
   {
@@ -572,14 +572,14 @@
     "id": "RowFeeds77",
     "message": "Rechazar",
     "files": [
-      "shared/pages/Home/Orders/MyOrders/RowFeeds/RowFeeds.js"
+      "shared/pages/Exchange/Orders/MyOrders/RowFeeds/RowFeeds.js"
     ]
   },
   {
     "id": "RowFeeds81",
     "message": "Aceptar",
     "files": [
-      "shared/pages/Home/Orders/MyOrders/RowFeeds/RowFeeds.js"
+      "shared/pages/Exchange/Orders/MyOrders/RowFeeds/RowFeeds.js"
     ]
   },
   {
@@ -602,7 +602,7 @@
     "id": "Home153",
     "message": " Que es un Atomic Swap? ",
     "files": [
-      "shared/pages/Home/Home.js"
+      "shared/pages/Exchange/Orders.js"
     ]
   },
   {
@@ -613,63 +613,63 @@
     "id": "Row148",
     "message": "SOLICITANDO",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "Row151",
     "message": "Ir al intercambio",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "Row157",
     "message": "Este pedido  esta siendo ejecutado",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "Row165",
     "message": "Por favor espere mientras confirmanos su solicitud",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "RowM136",
     "message": "SOLICITANDO",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "RowM139",
     "message": "Ir al intercambio",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "RowM145",
     "message": "Este pedido  esta siendo ejecutado",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "RowM153",
     "message": "Por favor espere mientras confirmanos su solicitud",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "RowM166",
     "message": "Comenzar",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
@@ -1496,21 +1496,21 @@
     "id": "MyOrders20",
     "message": "Tu recibes",
     "files": [
-      "shared/pages/Home/Orders/MyOrders/MyOrders.js"
+      "shared/pages/Exchange/Orders/MyOrders/MyOrders.js"
     ]
   },
   {
     "id": "MyOrders21",
     "message": "Tu tienes",
     "files": [
-      "shared/pages/Home/Orders/MyOrders/MyOrders.js"
+      "shared/pages/Exchange/Orders/MyOrders/MyOrders.js"
     ]
   },
   {
     "id": "MyOrders22",
     "message": "Tasa de intercambio",
     "files": [
-      "shared/pages/Home/Orders/MyOrders/MyOrders.js"
+      "shared/pages/Exchange/Orders/MyOrders/MyOrders.js"
     ]
   },
   {
@@ -1537,14 +1537,14 @@
     "id": "orders102",
     "message": "CANTIDAD",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
     "id": "orders105",
     "message": "TOTAL",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
@@ -1608,14 +1608,14 @@
     "id": "Reqstbttn15",
     "message": "VENDER",
     "files": [
-      "shared/pages/Home/Orders/RequestButton/RequestButton.js"
+      "shared/pages/Exchange/Orders/OrderBook/RequestButton/RequestButton.js"
     ]
   },
   {
     "id": "Reqstbttn16",
     "message": "COMPRAR",
     "files": [
-      "shared/pages/Home/Orders/RequestButton/RequestButton.js"
+      "shared/pages/Exchange/Orders/OrderBook/RequestButton/RequestButton.js"
     ]
   },
   {
@@ -1671,28 +1671,28 @@
     "id": "RowMobileFirstTypeYouGet",
     "message": "Tu recibes",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "RowMobileFirstTypeYouHave",
     "message": "Tu tienes",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "RowMobileSecondTypeYouGet",
     "message": "Tu obtienes",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "RowMobileSecondTypeYouHave",
     "message": "Tu tienes",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
@@ -2290,28 +2290,28 @@
     "id": "Reqstbttn22",
     "message": "PARA",
     "files": [
-      "shared/pages/Home/Orders/RequestButton/RequestButton.js"
+      "shared/pages/Exchange/Orders/OrderBook/RequestButton/RequestButton.js"
     ]
   },
   {
     "id": "Row206",
     "message": "Comprar",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "Row2061",
     "message": "Vender",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "Row210",
     "message": "para",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
@@ -2374,14 +2374,14 @@
     "id": "orders156",
     "message": "Compra{currency} Aqui",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
     "id": "orders159",
     "message": "{currency} ofertas",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
@@ -2395,14 +2395,14 @@
     "id": "Row1511",
     "message": "al precio {price}",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "Row159",
     "message": "para{total}",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
@@ -2551,21 +2551,21 @@
     "id": "orders104",
     "message": "PRECIO POR 1 {buyCurrency}",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
     "id": "orders1381",
     "message": "{buyCurrency}🔁{sellCurrency}",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
     "id": "orders1382",
     "message": "TODO",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
@@ -2637,14 +2637,14 @@
     "id": "Orders121",
     "message": "Atomic Swap {buyCurrencyFullName} ({buyCurrency}) a {sellCurrencyFullName} ({sellCurrency}) Intercambio instantaneo",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
     "id": "Orders127",
     "message": "Mejor tasa de intercambio {buyCurrencyFullName} ({buyCurrency}) a {sellCurrencyFullName} ({sellCurrency}). Billetera GhostX provee intercambio instantaneo utilizando Atomic Swap Protocol.",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
@@ -3367,28 +3367,28 @@
     "id": "orders94s",
     "message": "Estás seguro que quieres eliminar el pedido ?",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
     "id": "ordersRow101",
     "message": "Comprar",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "ordersRow134",
     "message": "Quieres{action} {amount} {main} por {total} {base} al precio {price} {main}/{base}?",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "ordersRow97",
     "message": "vender",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
@@ -7300,7 +7300,7 @@
     "message": "Recargue su saldo antes de iniciar el intercambio",
     "files": [
       "shared/pages/Exchange/Exchange.js",
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
@@ -7308,7 +7308,7 @@
     "message": "No hay suficiente credito.",
     "files": [
       "shared/pages/Exchange/Exchange.js",
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
@@ -8090,7 +8090,7 @@
     "message": "Debes tener al menos{ethFee} ETH y {btcFee} BTC en tu saldo para pagar la comisión de minero ",
     "files": [
       "shared/pages/Exchange/Exchange.js",
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
@@ -8098,7 +8098,7 @@
     "message": "Debes tener al menos {amount} {currency} en tu saldo. {br} Comisión de minero {ethFee} ETH  y {btcFee} BTC",
     "files": [
       "shared/pages/Exchange/Exchange.js",
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {

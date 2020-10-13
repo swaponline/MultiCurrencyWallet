@@ -599,6 +599,13 @@
     "message": "Copied"
   },
   {
+    "id": "Home153",
+    "message": "What is atomic swap? ",
+    "files": [
+      "shared/pages/Exchange/Orders.js"
+    ]
+  },
+  {
     "id": "orders150",
     "message": " sell "
   },

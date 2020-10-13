@@ -609,6 +609,13 @@
     "message": "Скопировано"
   },
   {
+    "id": "Home153",
+    "message": "Что такое атомарные свопы? ",
+    "files": [
+      "shared/pages/Home/Home.js"
+    ]
+  },
+  {
     "id": "orders150",
     "message": "ПРОДАЖУ "
   },
