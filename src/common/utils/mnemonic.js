@@ -1,6 +1,6 @@
 import * as bitcoin from 'bitcoinjs-lib'
 import * as bip32 from 'bip32'
-import * as hdkey from 'ethereumjs-wallet/hdkey'
+import { hdkey } from 'ethereumjs-wallet'
 import * as bip39 from 'bip39'
 
 
