@@ -135,7 +135,7 @@
     "html-webpack-plugin": "^2.30.1",
     "husky": "^4.2.5",
     "hyperdiff": "^2.0.7",
-    "jest": "^23.4.2",
+    "jest": "^26.5.3",
     "kraken-api": "^1.0.1",
     "libp2p-kad-dht": "^0.20.1",
     "lint-diff": "^1.2.1",
