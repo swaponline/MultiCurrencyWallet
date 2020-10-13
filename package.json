@@ -218,7 +218,7 @@
     "module-alias": "^2.2.2",
     "moment": "^2.29.1",
     "moment-with-locales-es6": "^1.0.1",
-    "multicodec": "^0.2.7",
+    "multicodec": "^2.0.1",
     "multihashes": "0.4.15",
     "node-fetch": "^2.6.1",
     "node-gyp": "^3.8.0",
