@@ -191,7 +191,7 @@
     "buffer": "^5.6.0",
     "classnames": "^2.2.5",
     "command-line-args": "^5.0.2",
-    "command-line-usage": "^5.0.5",
+    "command-line-usage": "^6.1.0",
     "debug": "^4.1.0",
     "delay": "^4.3.0",
     "dirty-chai": "^2.0.1",
