@@ -1262,7 +1262,7 @@ console.log(haveCurrency, getCurrency)
         <div styleName="formExchange">
           <div styleName="userSendAndGet">
             <div className="userSend">
-              <div className="data-tut-have_tourDisabled" styleName="selectWrap">
+              <div className="data-tut-have_tourDisabled">
                 <SelectGroup
                   activeFiat={activeFiat}
                   switchBalanceFunc={this.switchBalance}
@@ -1336,7 +1336,7 @@ console.log(haveCurrency, getCurrency)
             </div>
 
             <div className="userGet">
-              <div className="data-tut-get_tourDisabled" styleName="selectWrap">
+              <div className="data-tut-get_tourDisabled">
                 <SelectGroup
                   activeFiat={activeFiat}
                   dataTut="get"

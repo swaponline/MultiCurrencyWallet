@@ -25,7 +25,7 @@ const SelectGroup = (props) => {
     balanceTooltip,
   } = props
   return (
-    <div>
+    <div styleName="selectGroup">
       <FieldLabel inRow>
         <strong>
           {label}

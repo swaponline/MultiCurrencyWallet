@@ -1,3 +1,7 @@
+.selectGroup {
+  position: relative;
+}
+
 .groupField {
   width: 100%;
   display: inline-flex;
@@ -104,9 +108,9 @@ input:disabled {
 
 .currencySelect {
   border-radius: 0 6px 6px 0 !important;
-  background: none;
-  box-shadow: none;
-  position: absolute;
+  background: none!important;
+  box-shadow: none!important;
+  position: absolute!important;
   @include ff-bold;
   right: 1px;
   top: 6px;
