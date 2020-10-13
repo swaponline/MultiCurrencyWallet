@@ -221,7 +221,7 @@ export default class Orders extends Component {
           <Table
             id="table_exchange"
             className={tableStyles.exchange}
-            styleName="marketOrders"
+            styleName="orderBookTable"
             titles={titles}
             rows={buyOrders}
             rowRender={(row) => (
@@ -259,7 +259,7 @@ export default class Orders extends Component {
           <Table
             id="table_exchange"
             className={tableStyles.exchange}
-            styleName="marketOrders"
+            styleName="orderBookTable"
             titles={titles}
             rows={sellOrders}
             rowRender={(row) => (

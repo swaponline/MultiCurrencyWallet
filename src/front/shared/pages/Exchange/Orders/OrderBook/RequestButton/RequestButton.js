@@ -9,27 +9,23 @@ import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
 import { FormattedMessage } from 'react-intl'
 
 
-const RequestButton = ({ disabled, children, data: { type, base, amount, total, main }, move, ...rest  }) =>  (
+const RequestButton = ({ disabled, children, data: { type, base, amount, total, main }, ...rest  }) =>  (
   <button styleName={!disabled ? 'button disabled' : 'button'} {...rest}>
-    {
-      move ? (
-        <Fragment>
-          {type === PAIR_TYPES.BID ?
-            <FormattedMessage id="Reqstbttn15" defaultMessage="SELL" />
-            :
-            <FormattedMessage id="Reqstbttn16" defaultMessage="BUY" />
-          }
-          {' '}
-          {amount.toFixed(5)}{' '}{main}
-          <br />
-          <FormattedMessage id="Reqstbttn22" defaultMessage="FOR" />
-          {' '}
-          {total.toFixed(5)}{' '}{base}
-        </Fragment>
-      ) : (
-        children
-      )
-    }
+    <div styleName="rows">
+      <div styleName="row1">
+        <FormattedMessage id="Reqstbttn16" defaultMessage="Buy" />
+        {' '}
+        {/*{amount.toFixed(5)}{' '}{}*/}
+        <span styleName="ticker">{type === PAIR_TYPES.BID ? base : main}</span>
+      </div>
+      <div  styleName="row2">
+        <FormattedMessage id="Reqstbttn22" defaultMessage="for" />
+        {' '}
+        {/*{total.toFixed(5)}{' '}*/}
+        <span styleName="ticker">{type === PAIR_TYPES.BID ? main : base}</span>
+      </div>
+      {/*<FormattedMessage id="RowM166" defaultMessage="Start" />*/}
+    </div>
   </button>
 )
 

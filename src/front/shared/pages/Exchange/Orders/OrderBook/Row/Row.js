@@ -162,11 +162,11 @@ export default class Row extends Component {
 
     const ethFee = BigNumber(
       await helpers.eth.estimateFeeValue({ method: 'swap' })
-    ).multipliedBy(1.5).toNumber()
+    ).toNumber()
 
     const btcFee = BigNumber(
       await helpers.btc.estimateFeeValue({ method: 'swap' })
-    ).multipliedBy(1).toNumber()
+    ).toNumber()
 
     if (buyCurrency === 'ETH') {
       checkAmount = BigNumber(checkAmount).plus(ethFee).toNumber()
@@ -511,9 +511,7 @@ export default class Row extends Component {
                               disabled={balance >= Number(buyAmount)}
                               onClick={() => this.sendRequest(id, isMy ? sellCurrency : buyCurrency)}
                               data={{ type, amount, main, total, base }}
-                            >
-                              <FormattedMessage id="RowM166" defaultMessage="Start" />
-                            </RequestButton>
+                            />
                           )
                         )
                       )

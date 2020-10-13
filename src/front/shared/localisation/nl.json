@@ -676,7 +676,7 @@
     "id": "RowM166",
     "message": "Start",
     "files": [
-      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/RequestButton/RequestButton.js"
     ]
   },
   {
@@ -1617,7 +1617,7 @@
   },
   {
     "id": "Reqstbttn16",
-    "message": "BUY",
+    "message": "Buy",
     "files": [
       "shared/pages/Exchange/Orders/OrderBook/RequestButton/RequestButton.js"
     ]
