@@ -199,7 +199,7 @@
     "graphql": "^15.3.0",
     "graphql-request": "^3.0.0",
     "history": "^5.0.0",
-    "human-standard-token-abi": "^1.0.2",
+    "human-standard-token-abi": "^2.0.0",
     "is-local-ip": "^1.1.0",
     "jdenticon": "^2.2.0",
     "json-stringify-safe": "^5.0.1",
