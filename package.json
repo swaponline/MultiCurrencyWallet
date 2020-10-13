@@ -147,7 +147,7 @@
     "nodemon": "^1.19.3",
     "peer-id": "^0.14.2",
     "pg": "^8.4.0",
-    "postcss-loader": "^2.1.4",
+    "postcss-loader": "^3.0.0",
     "progress-bar-webpack-plugin": "^1.12.1",
     "prop-types": "^15.7.2",
     "rename-files": "0.0.2",
