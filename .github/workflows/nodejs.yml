@@ -1,5 +1,3 @@
-
-
 name: Node CI
 
 on: [pull_request]
@@ -20,10 +18,10 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: npm install  
-      uses: bahmutov/npm-install@v1    
+    - name: npm install
+      uses: bahmutov/npm-install@v1
       with:
-       useLockFile: false  
+       useLockFile: false
     - name: npm install, build, and test
       run: |
         npm run build:mainnet
@@ -31,4 +29,4 @@ jobs:
         #zip -r mainnet-build.zip ./config
       env:
         CI: true
-    
+

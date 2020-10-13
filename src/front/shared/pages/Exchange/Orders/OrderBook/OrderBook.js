@@ -9,7 +9,7 @@ import constants from 'helpers/constants'
 import { localisedUrl } from 'helpers/locale'
 
 import cssModules from 'react-css-modules'
-import styles from './Orders.scss'
+import styles from './OrderBook.scss'
 
 import { Button } from 'components/controls'
 import Panel from 'components/ui/Panel/Panel'
@@ -21,9 +21,9 @@ import PageSeo from 'components/Seo/PageSeo'
 import { getSeoPage } from 'helpers/seo'
 
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
-import Pair from './Pair'
+import Pair from './../Pair'
 import Row from './Row/Row'
-import MyOrders from './MyOrders/MyOrders'
+import MyOrders from './../MyOrders/MyOrders'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
 import config from 'app-config'

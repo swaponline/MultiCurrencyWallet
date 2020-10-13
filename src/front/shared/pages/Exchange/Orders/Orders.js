@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 
 import cssModules from 'react-css-modules'
-import styles from './Home.scss'
+import styles from './Orders.scss'
 
 import { links, constants } from 'helpers'
 
@@ -18,7 +18,7 @@ import CurrencyDirectionChooser from 'components/CurrencyDirectionChooser/Curren
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 
-import Orders from './Orders/Orders'
+import OrderBook from './OrderBook/OrderBook'
 
 import config from 'app-config'
 
@@ -212,7 +212,7 @@ export default class Home extends Component {
               </div>
             </PageHeadline>
           ) : (
-            <Orders
+            <OrderBook
               handleSellCurrencySelect={this.handleSellCurrencySelect}
               handleBuyCurrencySelect={this.handleBuyCurrencySelect}
               buyCurrency={buyCurrency}

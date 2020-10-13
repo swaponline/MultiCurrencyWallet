@@ -4,7 +4,7 @@ import { getState } from 'redux/core'
 import SwapApp from 'swap.app'
 import Swap from 'swap.swap'
 import { constants } from 'helpers'
-import Pair from 'pages/Home/Orders/Pair'
+import Pair from 'pages/Exchange/Orders/Pair'
 import config from 'helpers/externalConfig'
 
 import metamask from 'helpers/metamask'

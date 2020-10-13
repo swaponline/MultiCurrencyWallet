@@ -15,7 +15,7 @@ import Avatar from 'components/Avatar/Avatar'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { RemoveButton } from 'components/controls'
 
-import Pair from '../Pair'
+import Pair from './../../Pair'
 import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
 import RequestButton from '../RequestButton/RequestButton'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'

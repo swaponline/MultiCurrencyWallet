@@ -2,11 +2,13 @@
 import React from 'react'
 import { Route } from 'react-router'
 import { Switch } from 'react-router-dom'
+import { isMobile } from 'react-device-detect'
+
 import { links } from 'helpers'
 import { localisePrefix } from 'helpers/locale'
+import config from 'helpers/externalConfig'
 
 import SwapComponent from 'pages/Swap/Swap'
-import Home from 'pages/Home/Home'
 import History from 'pages/History/History'
 import CreateWallet from 'pages/CreateWallet/CreateWallet'
 import NotFound from 'pages/NotFound/NotFound'
@@ -24,12 +26,9 @@ import CreateInvoice from 'pages/Invoices/CreateInvoice'
 import InvoicesList from 'pages/Invoices/InvoicesList'
 import Invoice from 'pages/Invoices/Invoice'
 
-import config from 'helpers/externalConfig'
-
 import ScrollToTop from '../components/layout/ScrollToTop/ScrollToTop'
 import SaveMnemonicModal from "components/modals/SaveMnemonicModal/SaveMnemonicModal"
 import SaveKeysModal from "components/modals/SaveKeysModal/SaveKeysModal"
-import { isMobile } from 'react-device-detect'
 
 
 import RestoryMnemonicWallet from "components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet"
@@ -47,9 +46,6 @@ const routes = (
       <Route path={`${localisePrefix}/:token(token)/:ticker/:address`} component={CurrencyWallet} />
       <Route path={`${localisePrefix}/:token(token)/:ticker/:address/withdraw`} component={CurrencyWallet} />
       <Route path={`${localisePrefix}/:fullName-wallet/:address?`} component={CurrencyWallet} />
-
-      <Route path={`${localisePrefix}/:buy-:sell/:orderId`} component={Home} />
-      <Route path={`${localisePrefix}/:buy-:sell`} component={Home} />
 
       <Route path={`${localisePrefix}${links.exchange}/:sell-to-:buy`} component={Exchange} />
       <Route path={`${localisePrefix}${links.exchange}`} component={Exchange} />

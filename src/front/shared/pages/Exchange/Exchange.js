@@ -31,7 +31,7 @@ import { animate } from "helpers/domUtils"
 import Switching from "components/controls/Switching/Switching"
 import AddressSelect, { AddressType, AddressRole } from "./AddressSelect/AddressSelect"
 import NetworkStatus from 'components/NetworkStatus/NetworkStatus'
-import Orders from "../Home/Home"
+import Orders from "./Orders/Orders"
 
 
 const allowedCoins = [
@@ -194,7 +194,7 @@ export default class Exchange extends Component {
 
     const haveCurrency = sell || "btc";
     const getCurrency = buy || (!isWidgetBuild ? "eth" : config.erc20token);
-
+console.log(haveCurrency, getCurrency)
     this.returnNeedCurrency(haveCurrency, getCurrency);
 
     if (
