@@ -193,7 +193,7 @@
     "delay": "^4.3.0",
     "dirty-chai": "^2.0.1",
     "ethereum-input-data-decoder": "^0.3.1",
-    "ethereumjs-wallet": "^0.6.3",
+    "ethereumjs-wallet": "^1.0.1",
     "ghost-bitcore-lib": "git+https://github.com/ghost-coin/ghost-bitcore-lib.git",
     "firebase": "^7.23.0",
     "graphql": "^15.3.0",
