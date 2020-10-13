@@ -35,6 +35,8 @@ export default [
 
         /stream-to-it/,
 
+        /indent-string/,
+
         /it-buffer/,
         /it-protocol-buffers/,
         /it-length-prefixed/,
