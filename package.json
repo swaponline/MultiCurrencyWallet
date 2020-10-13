@@ -148,7 +148,7 @@
     "peer-id": "^0.14.2",
     "pg": "^8.4.0",
     "postcss-loader": "^3.0.0",
-    "progress-bar-webpack-plugin": "^1.12.1",
+    "progress-bar-webpack-plugin": "^2.1.0",
     "prop-types": "^15.7.2",
     "rename-files": "0.0.2",
     "replace": "^1.1.1",
