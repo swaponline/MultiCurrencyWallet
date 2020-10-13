@@ -12,7 +12,7 @@ app.get('/secretmonitor_webcron', function (req, res) {
   const page = await browser.newPage();
   await page.setUserAgent('robobot monitor');
 
-  await page.goto('https://swaponline.github.io/#/usdt-btc');
+  await page.goto('https://swaponline.github.io/#/exchange/btc-to-eth');
   await page.waitFor(15000)
   
   const html = await page.content();
