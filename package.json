@@ -221,7 +221,7 @@
     "multicodec": "^2.0.1",
     "multihashes": "0.4.15",
     "node-fetch": "^2.6.1",
-    "node-gyp": "^3.8.0",
+    "node-gyp": "^7.1.0",
     "peer-info": "^0.17.1",
     "rc-progress": "^2.5.2",
     "react": "^16.10.2",
