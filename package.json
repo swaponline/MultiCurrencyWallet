@@ -231,7 +231,7 @@
     "react-device-detect": "^1.14.0",
     "react-document-meta": "^3.0.0-beta.2",
     "react-dom": "^16.10.2",
-    "react-helmet": "^5.2.1",
+    "react-helmet": "^6.1.0",
     "react-input-mask": "^2.0.1",
     "react-intl": "^2.9.0",
     "react-items-carousel": "^2.7.0",
