@@ -190,12 +190,14 @@ const CreateWallet = (props) => {
         en: 'No security',
         ru: 'Без защиты',
         nl: 'Geen beveliging',
+        es: 'sin seguridad',
       }[locale],
       name: 'withoutSecure',
       capture: {
         en: 'suitable for small amounts',
         ru: 'Подходит для небольших сумм',
         nl: 'Geschikt voor kleine bedragen',
+        es: 'Apto para pequeñas cantidades',
       }[locale],
       enabled: !_activated.nothing[currencyKey],
       activated: _activated.nothing[currencyKey],
@@ -222,6 +224,7 @@ const CreateWallet = (props) => {
         en: 'Verify your transactions via SMS code.',
         ru: 'Транзакции подтверждаются кодом по SMS.',
         nl: 'Verifieer uw transacties via SMS code.',
+        es: 'Verifique sus transacciones mediante código SMS.',
       }[locale],
       // enabled: _protection.sms[currencyKey],
       enabled: false, // sms temporarly disabled
@@ -249,6 +252,7 @@ const CreateWallet = (props) => {
         en: 'Verify your transactions via PIN code',
         ru: 'Транзакции подтверждаются PIN-кодом',
         nl: 'Verifieer uw transacties via PIN code',
+        es: ' Verifique sus transacciones mediante el código PIN',
       }[locale],
       enabled: _protection.pin[currencyKey],
       activated: _activated.pin[currencyKey],
@@ -301,6 +305,7 @@ const CreateWallet = (props) => {
         en: 'Verify your transactions by using another device or by another person.',
         ru: 'Транзакции подтверждаются с другого устройства и/или другим человеком',
         nl: 'Verifieer uw transacties met een ander apparaat of persoon',
+        es: 'Verifique sus transacciones usando otro dispositivo o por otra persona.'
       }[locale],
       enabled: _protection.multisign[currencyKey],
       activated: _activated.multisign[currencyKey],
@@ -330,6 +335,7 @@ const CreateWallet = (props) => {
         en: 'Transactions are confirmed with your fingerprint authenticator.',
         ru: 'Транзакции подтверждаются с помощью считывателя отпечатков пальцев',
         nl: 'Transacties bevestigd met uw vingerprint authenticator',
+        es: 'Las transacciones se confirman con su autenticador de huellas digitales.'
       }[locale],
 
       enabled: _protection.fingerprint[currencyKey],
