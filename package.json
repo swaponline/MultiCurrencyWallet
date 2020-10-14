@@ -150,6 +150,7 @@
     "postcss-loader": "^3.0.0",
     "progress-bar-webpack-plugin": "^2.1.0",
     "prop-types": "^15.7.2",
+    "react-qr-scanner": "0.0.10",
     "rename-files": "0.0.2",
     "replace": "^1.1.1",
     "request-promise-cache": "^2.0.1",
@@ -168,7 +169,8 @@
     "webpack-cli": "^3.0.3",
     "webpack-dev-middleware": "^2.0.6",
     "webpack-raw-bundler": "^1.3.6",
-    "webpack-require-from-naggertooth": "github:swaponline/webpack-require-from#master"
+    "webpack-require-from-naggertooth": "github:swaponline/webpack-require-from#master",
+    "webrtc-adapter": "^7.7.0"
   },
   "dependencies": {
     "@walletconnect/web3-provider": "^1.3.1",
@@ -238,7 +240,6 @@
     "react-joyride": "^2.1.1",
     "react-loading-skeleton": "^2.0.1",
     "react-phone-number-input": "^3.1.0",
-    "react-qr-scanner": "0.0.8",
     "react-redux": "^5.1.2",
     "react-router-dom": "^5.2.0",
     "react-router-redux": "^5.0.0-alpha.9",
