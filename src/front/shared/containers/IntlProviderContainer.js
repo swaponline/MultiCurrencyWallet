@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { IntlProvider, addLocaleData } from 'react-intl'
-import { Switch, Route, BrowserRouter, HashRouter } from 'react-router-dom'
-//import { Route } from 'react-router'
+import { Switch, Route, HashRouter } from 'react-router-dom'
 import localeEn from 'react-intl/locale-data/en'
 import localeRu from 'react-intl/locale-data/ru'
 import localeNl from 'react-intl/locale-data/nl'
