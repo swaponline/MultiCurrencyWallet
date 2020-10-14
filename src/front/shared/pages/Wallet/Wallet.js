@@ -19,7 +19,7 @@ import { injectIntl } from 'react-intl'
 
 import appConfig from 'app-config'
 import config from 'helpers/externalConfig'
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router-dom'
 import CurrenciesList from './CurrenciesList'
 import InvoicesList from 'pages/Invoices/InvoicesList'
 

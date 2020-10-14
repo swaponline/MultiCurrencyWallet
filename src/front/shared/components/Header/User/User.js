@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router-dom'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
 import { constants } from 'helpers'

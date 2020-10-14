@@ -1,8 +1,8 @@
 /* eslint-disable quotes */
 import React from 'react'
-import { Route } from 'react-router'
-import { Switch } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
+
+import { Switch, Route } from 'react-router-dom'
 
 import { links } from 'helpers'
 import { localisePrefix } from 'helpers/locale'

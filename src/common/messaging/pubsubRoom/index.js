@@ -1,5 +1,3 @@
-'use strict'
-
 const diff = require('hyperdiff')
 const EventEmitter = require('events')
 const clone = require('lodash.clonedeep')
@@ -11,6 +9,7 @@ const PROTOCOL = require('./protocol')
 const Connection = require('./connection')
 const encoding = require('./encoding')
 const directConnection = require('./direct-connection-handler')
+const namedQueryRun = require('../../utils/namedQuery')
 
 const DEFAULT_OPTIONS = {
   pollInterval: 1000
@@ -68,41 +67,52 @@ class PubSubRoom extends EventEmitter {
   async broadcast (_message) {
     const message = encoding(_message)
 
-    await this._libp2p.pubsub.publish(this._topic, message)
+    const peersInTopic = this._libp2p.pubsub.topics.get(this._topic)
+    if (peersInTopic) {
+      peersInTopic.forEach((peerId) => {
+        this.sendTo(peerId, _message)
+      })
+    }
   }
 
   sendTo (peer, message) {
-    if (!this._libp2p.peerStore.keyBook.data.has(peer)) {
-      return
-    }
-    const toPeer = this._libp2p.peerStore.keyBook.data.get(peer)
+    namedQueryRun({
+      name: `libp2p_peer_${peer}`,
+      delay: 100,
+      func: async () => {
+        if (!this._libp2p.peerStore.keyBook.data.has(peer)) {
+          return
+        }
+        const toPeer = this._libp2p.peerStore.keyBook.data.get(peer)
 
-    let conn = this._connections[peer]
+        let conn = this._connections[peer]
 
-    if (!conn) {
-      conn = new Connection(toPeer, this._libp2p, this)
-      conn.on('error', (err) => this.emit('error', err))
-      this._connections[peer] = conn
+        if (!conn) {
+          conn = new Connection(toPeer, this._libp2p, this)
+          conn.on('error', (err) => this.emit('error', err))
+          this._connections[peer] = conn
 
-      conn.once('disconnect', () => {
-        delete this._connections[peer]
-        this._peers = this._peers.filter((p) => p.toString() !== peer.toString())
-        this.emit('peer left', peer)
-      })
-    }
+          conn.once('disconnect', () => {
+            delete this._connections[peer]
+            this._peers = this._peers.filter((p) => p.toString() !== peer.toString())
+            this.emit('peer left', peer)
+          })
+        }
 
-    const seqno = Buffer.from([0])
+        const seqno = Buffer.from([0])
 
-    const msg = {
-      to: toPeer,
-      from: this._libp2p.peerId,
-      data: Buffer.from(message).toString('hex'),
-      seqno: seqno.toString('hex'),
-      topicIDs: [this._topic],
-      topicCIDs: [this._topic]
-    }
+        const msg = {
+          to: toPeer,
+          from: this._libp2p.peerId,
+          data: Buffer.from(message).toString('hex'),
+          seqno: seqno.toString('hex'),
+          topicIDs: [this._topic],
+          topicCIDs: [this._topic]
+        }
 
-    conn.push(Buffer.from(JSON.stringify(msg)))
+        conn.push(Buffer.from(JSON.stringify(msg)))
+      },
+    })
   }
 
   async _pollPeers () {
