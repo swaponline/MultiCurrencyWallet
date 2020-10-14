@@ -4581,7 +4581,7 @@
   },
   {
     "id": "InfoPay_4",
-    "message": "Est. time to confitmation",
+    "message": "Est. time to confirmation",
     "files": [
       "shared/pages/Transaction/TxInfo/index.js"
     ]
