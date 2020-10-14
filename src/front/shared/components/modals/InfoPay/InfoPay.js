@@ -162,7 +162,7 @@ export default class InfoPay extends React.Component {
               <>
                 {/* <tr>
                     <td styleName="header">
-                      <FormattedMessage id="InfoPay_4" defaultMessage="Est. time to confitmation" />
+                      <FormattedMessage id="InfoPay_4" defaultMessage="Est. time to confirmation" />
                     </td>
                     <td>
                       {confirmed && (
