@@ -2189,6 +2189,13 @@
     ]
   },
   {
+    "id": "CustomWalletIsNotAllowed",
+    "message": "Принятие предложения из списка временно доступно только для внутренних адресов",
+    "files": [
+      "shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.js"
+    ]
+  },
+  {
     "id": "PartialYourWalletAddress",
     "message": "Адрес кошелька получателя "
   },

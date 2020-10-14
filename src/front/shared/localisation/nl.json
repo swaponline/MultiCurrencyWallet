@@ -2100,6 +2100,13 @@
     ]
   },
   {
+    "id": "CustomWalletIsNotAllowed",
+    "message": "Aanvaarding van een aanbieding uit het offerteboek is tijdelijk alleen mogelijk voor interne adressen",
+    "files": [
+      "shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.js"
+    ]
+  },
+  {
     "id": "PartialYourWalletAddress",
     "message": "Ontvangende wallet adres"
   },

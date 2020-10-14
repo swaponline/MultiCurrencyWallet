@@ -2049,6 +2049,13 @@
     ]
   },
   {
+    "id": "CustomWalletIsNotAllowed",
+    "message": "Acceptance of an offer from the offerbook is temporarily possible only for internal addresses",
+    "files": [
+      "shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.js"
+    ]
+  },
+  {
     "id": "PartialYourWalletAddress",
     "message": "Receiving wallet address"
   },

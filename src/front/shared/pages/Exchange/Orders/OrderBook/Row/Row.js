@@ -122,7 +122,12 @@ export default class Row extends Component {
     }
   }
 
-  getDecimals = (amount, currency) => String(new BigNumber(amount).dp(constants.tokenDecimals[currency.toLowerCase()], BigNumber.ROUND_CEIL))
+  getDecimals = (amount, currency) => {
+    const decimalPlaces = constants.tokenDecimals[currency.toLowerCase()] || 8
+    console.log('>> getDecimals', amount, currency, decimalPlaces)
+    console.log('<<', String(new BigNumber(amount).dp(decimalPlaces, BigNumber.ROUND_CEIL)))
+    return String(new BigNumber(amount).dp(decimalPlaces, BigNumber.ROUND_CEIL))
+  }
 
   handleDeclineOrdersModalOpen = (indexOfDecline) => {
     const orders = SwapApp.shared().services.orders.items
@@ -275,8 +280,7 @@ export default class Row extends Component {
             this.setState({ isFetching: false }, () => {
               history.push(localisedUrl(intl.locale, `${links.swap}/${buyCurrency}-${sellCurrency}/${id}`))
             })
-          }
-          else {
+          } else {
             this.setState({ isFetching: false })
           }
         })
@@ -290,7 +294,7 @@ export default class Row extends Component {
             action: `${type === PAIR_TYPES.BID
               ? intl.formatMessage(messages.sell)
               : intl.formatMessage(messages.buy)
-              }`,
+            }`,
             amount: `${this.getDecimals(amount, main)}`,
             main: `${main}`,
             total: `${this.getDecimals(total, base)}`,
