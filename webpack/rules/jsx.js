@@ -12,13 +12,19 @@
 //   },
 // ]
 import config from 'app-config'
+import path from 'path'
 
-
+console.log('Rules jsx', __dirname)
+console.log(path.resolve(__dirname, '../../node_modules'))
 export default [
   {
     test: /\.(js|mjs|jsx)$/,
+    exclude: [
+      path.resolve(__dirname, '../../node_modules'),
+    ],
+    /*
     exclude: {
-      test: [
+      add: [
         /node_modules/,
       ],
       not: [
@@ -64,6 +70,7 @@ export default [
         /datastore-core/,
       ],
     },
+    */
     use: {
       loader: 'babel-loader',
     },

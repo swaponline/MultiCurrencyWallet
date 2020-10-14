@@ -3,7 +3,7 @@ import getHostName from './getHostName'
 import config from 'app-config'
 import fs from 'fs'
 
-
+console.log('def config app-config', config)
 const externalConfig = () => {
   let from = `src/front/externalConfigs/${config.entry}-default.js`
   const targetHost = getHostName(config.publicPath)
@@ -19,13 +19,15 @@ const externalConfig = () => {
 
   console.log(`Config: used external (${from})`)
 
-  return new CopyWebpackPlugin([
-    {
-      from,
-      to: './erc20tokens.js',
-      toType: 'file',
-    },
-  ])
+  return new CopyWebpackPlugin({
+    patterns: [
+      {
+        from,
+        to: './erc20tokens.js',
+        toType: 'file',
+      },
+    ]
+  })
 }
 
 export default externalConfig

@@ -12,6 +12,7 @@ const rules = Object.keys(rulesMap)
   .map((rule) => Array.isArray(rule) ? rule : (rule.default || rule[config.env]))
   .reduce((result, rule) => result.concat(rule), [])
 
+console.log('webpack rules', rules)
 const globals = {
   'process.env': {
     'NODE_ENV': JSON.stringify(config.env),
@@ -35,9 +36,12 @@ const webpackConfig = {
     rules,
   },
 
+  externals: ["fs"],
+  target: "web",
+  /*
   node: {
     fs: 'empty',
-  },
+  },*/
 
   resolve: {
     alias: {
@@ -49,6 +53,15 @@ const webpackConfig = {
       'swap.flows': config.paths.core('swap.flows'),
       'swap.swap': config.paths.core('swap.swap'),
       'swap.swaps': config.paths.core('swap.swaps'),
+      'app-config': config.paths.front('local_modules/app-config'),
+    },
+    fallback: {
+      "os": require.resolve("os-browserify/browser"),
+      "https": require.resolve("https-browserify"),
+      "http": require.resolve("stream-http"),
+      "crypto": require.resolve("crypto-browserify"),
+      "stream": require.resolve("stream-browserify"),
+      "path": require.resolve("path-browserify")
     },
     modules: [
       config.paths.front('client'),
@@ -62,7 +75,7 @@ const webpackConfig = {
   },
 
   plugins: [
-    new AppConfigPlugin(),
+    //new AppConfigPlugin(),
     new webpack.DefinePlugin(globals),
     new webpack.ProvidePlugin({
       'swap.auth': 'swap.auth',
@@ -75,6 +88,7 @@ const webpackConfig = {
     }),
     new webpack.NoEmitOnErrorsPlugin(),
     new ProgressBarPlugin({ clear: false }),
+    /*
     new WebappWebpackPlugin({
       logo: 'favicon.png',
       path: config.base,
@@ -82,7 +96,7 @@ const webpackConfig = {
         appName: 'Wallet',
         appDescription: 'Hot wallet',
       },
-    }),
+    }),*/
     new HtmlWebpackPlugin({
       title: 'Hot Wallet with p2p exchange',
       isWidget: config.isWidget,

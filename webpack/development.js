@@ -15,12 +15,13 @@ export default (webpackConfig) => {
     chunkFilename: '[id].chunk.js',
     publicPath: config.publicPath,
   }
-
+/*
   webpackConfig.node = {
     fs: 'empty',
     net: 'empty',
     tls: 'empty',
   }
+  */
 
   webpackConfig.devtool = 'cheap-module-source-map'
 
@@ -33,13 +34,15 @@ export default (webpackConfig) => {
 
   webpackConfig.plugins.push(
     // new BundleAnalyzerPlugin()
-    new CopyWebpackPlugin([
-      {
-        from: 'src/front/client/firebase-messaging-sw.js',
-        to: '',
-        toType: 'file',
-      },
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: 'src/front/client/firebase-messaging-sw.js',
+          to: '',
+          toType: 'file',
+        },
+      ]
+    }),
     externalConfig(),
   )
 
