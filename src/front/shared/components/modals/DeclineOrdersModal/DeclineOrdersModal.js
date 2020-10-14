@@ -16,7 +16,7 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router-dom'
 
 
 const title = defineMessages({

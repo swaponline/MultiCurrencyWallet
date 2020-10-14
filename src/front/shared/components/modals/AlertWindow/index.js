@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router-dom'
 import CSSModules from 'react-css-modules'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 

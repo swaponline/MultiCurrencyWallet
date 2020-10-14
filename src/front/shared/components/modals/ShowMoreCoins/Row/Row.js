@@ -5,7 +5,7 @@ import cssModules from 'react-css-modules'
 import styles from './Row.scss'
 
 import Coin from 'components/Coin/Coin'
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router-dom'
 
 
 @withRouter
