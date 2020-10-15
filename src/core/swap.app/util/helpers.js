@@ -109,7 +109,7 @@ const extractSecretFromTx = async ({
       return secret
     } else {
      
-      const secretFromTx = await flow.ethTokenSwap.getSecretFromTxhash(ethSwapWithdrawTransactionHash)
+      const secretFromTx = await swapFlow.getSecretFromTxhash(ethSwapWithdrawTransactionHash)
 
       const hashFromTxSecret = app.env.bitcoin.crypto.ripemd160(
         Buffer.from(secretFromTx, 'hex')
