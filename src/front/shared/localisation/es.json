@@ -2399,15 +2399,22 @@
     ]
   },
   {
-    "id": "Row1511",
-    "message": "al precio {price}",
+    "id": "OrderBookRowSells",
+    "message": "vende",
     "files": [
       "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
-    "id": "Row159",
-    "message": "para{total}",
+    "id": "OrderBookRowFor",
+    "message": "para",
+    "files": [
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
+    ]
+  },
+  {
+    "id": "OrderBookRowAtPrice",
+    "message": "al precio",
     "files": [
       "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
@@ -2556,7 +2563,7 @@
   },
   {
     "id": "orders104",
-    "message": "PRECIO POR 1 {buyCurrency}",
+    "message": "PRECIO",
     "files": [
       "shared/pages/Exchange/Orders/Orders.js"
     ]

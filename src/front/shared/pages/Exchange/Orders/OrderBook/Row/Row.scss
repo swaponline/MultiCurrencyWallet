@@ -40,6 +40,10 @@
   }
 }
 
+.rowBindingText {
+  color: gray;
+}
+
 @media screen and (max-width: 400px) {
   .mobileRowRemove,
   .mobileRowStart {

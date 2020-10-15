@@ -2478,15 +2478,22 @@
     ]
   },
   {
-    "id": "Row1511",
-    "message": "цена {price}",
+    "id": "OrderBookRowSells",
+    "message": "продаёт",
     "files": [
       "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
-    "id": "Row159",
-    "message": "за {total}",
+    "id": "OrderBookRowFor",
+    "message": "за",
+    "files": [
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
+    ]
+  },
+  {
+    "id": "OrderBookRowAtPrice",
+    "message": "цена",
     "files": [
       "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
@@ -2635,7 +2642,7 @@
   },
   {
     "id": "orders104",
-    "message": "ЦЕНА ЗА 1 {buyCurrency}",
+    "message": "ЦЕНА",
     "files": [
       "shared/pages/Exchange/Orders/Orders.js"
     ]
