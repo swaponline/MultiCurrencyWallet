@@ -1376,6 +1376,7 @@ console.log(haveCurrency, getCurrency)
                 id="Exchange_BestPrice"
                 defaultMessage="Best price:"
               />
+              {' '}
               {!isPrice && !isErrorNoOrders &&
                 <InlineLoader />
               }

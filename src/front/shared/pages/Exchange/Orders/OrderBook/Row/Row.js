@@ -111,13 +111,13 @@ export default class Row extends Component {
     const { decline } = this.props
 
     if (decline.length === 0) {
-      this.sendRequest(orderId, currency)
+      this.sendSwapRequest(orderId, currency)
     } else {
       const getDeclinedExistedSwapIndex = helpers.handleGoTrade.getDeclinedExistedSwapIndex({ currency, decline })
       if (getDeclinedExistedSwapIndex !== false) {
         this.handleDeclineOrdersModalOpen(getDeclinedExistedSwapIndex)
       } else {
-        this.sendRequest(orderId, currency)
+        this.sendSwapRequest(orderId, currency)
       }
     }
   }
@@ -143,7 +143,7 @@ export default class Row extends Component {
     return (balance >= 0.005)
   }
 
-  sendRequest = async (orderId, currency) => {
+  sendSwapRequest = async (orderId, currency) => {
     const {
       row: {
         id,
@@ -272,7 +272,7 @@ export default class Row extends Component {
         }
 
         actions.core.sendRequest(orderId, destination, (isAccepted) => {
-          console.log(`user has ${isAccepted ? 'accepted' : 'declined'} your request`)
+          console.log(`Your request is ${isAccepted ? 'accepted' : 'declined'}`)
 
           if (isAccepted) {
             this.setState({ isFetching: false }, () => {
@@ -304,33 +304,45 @@ export default class Row extends Component {
     })
   }
 
-  renderWebContent() {
-    const { balance, isFetching, estimatedFeeValues } = this.state
+  renderContent = () => {
+    let windowWidthIn = window.innerWidth
+    this.setState({ windowWidth: windowWidthIn })
+  }
+
+  render() {
+    const { balance, isFetching, estimatedFeeValues, windowWidth } = this.state;
+
     const {
-      peer,
-      orderId,
       row: {
         id,
         isMy,
-        buyAmount,
         buyCurrency,
+        buyAmount,
+        sellCurrency,
+        sellAmount,
         isRequested,
         isProcessing,
-        sellCurrency,
         owner: { peer: ownerPeer },
       },
+      peer,
+      orderId,
       removeOrder,
       intl: { locale },
     } = this.props
 
+
     const pair = Pair.fromOrder(this.props.row)
     const { price, amount, total, main, base, type } = pair
 
-    const amountOnWatch = BigNumber(estimatedFeeValues[buyCurrency.toLowerCase()]).isGreaterThan(0) ?
+    const amountOnWatch = BigNumber(estimatedFeeValues[buyCurrency.toLowerCase()]).isGreaterThan(0)
+      ?
       BigNumber(balance).minus(estimatedFeeValues[buyCurrency.toLowerCase()]).minus(0.00000600).toString()
-      : balance
+      :
+      balance
 
-    const isRequestButtonEnabled = BigNumber(amountOnWatch).isGreaterThanOrEqualTo(buyAmount)
+    const isSwapButtonEnabled = BigNumber(amountOnWatch).isGreaterThanOrEqualTo(buyAmount)
+    // former mobile condition
+    // const isStartButtonDisabled = balance < Number(buyAmount)
 
     let sellCurrencyOut,
       sellAmountOut,
@@ -354,7 +366,21 @@ export default class Row extends Component {
       priceOut = price
     }
 
-    return (
+    const mobileFormatCrypto = (value, currency) => {
+      if (currency === 'USDT' || currency == 'EUR') {
+        return String(value.toFixed(2))
+      } else {
+        if (Number(value) > 10) {
+          return String(value.toFixed(5))
+        } else {
+          return String(value.toFixed(8))
+        }
+      }
+    }
+
+    const showDesktopContent = windowWidth > 800
+
+    return showDesktopContent ? (
       <tr style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}>
         <td>
           <Avatar
@@ -424,8 +450,8 @@ export default class Row extends Component {
                       </Fragment>
                     ) : (
                       <RequestButton
-                        disabled={!isRequestButtonEnabled}
-                        onClick={isRequestButtonEnabled ?
+                        disabled={!isSwapButtonEnabled}
+                        onClick={isSwapButtonEnabled ?
                           () => this.checkDeclineOrders(id, isMy ? sellCurrency : buyCurrency)
                           :
                           () => {}
@@ -443,44 +469,8 @@ export default class Row extends Component {
         </td>
       </tr>
     )
-  }
-
-  renderMobileContent() {
-    const { balance, isFetching } = this.state
-    const {
-      orderId,
-      row: {
-        id,
-        buyCurrency,
-        sellCurrency,
-        isMy,
-        buyAmount,
-        sellAmount,
-        isRequested,
-        isProcessing,
-        owner: { peer: ownerPeer },
-      },
-      removeOrder,
-      peer,
-    } = this.props
-
-    const pair = Pair.fromOrder(this.props.row)
-
-    const { amount, total, main, base, type } = pair
-
-    const formatCrypto = (value, currency) => {
-      if (currency === 'USDT' || currency == 'EUR') {
-        return String(value.toFixed(2))
-      } else {
-        if (Number(value) > 10) {
-          return String(value.toFixed(5))
-        } else {
-          return String(value.toFixed(8))
-        }
-      }t
-    }
-
-    return (
+    : /* mobile content */
+    (
       <tr
         styleName={peer === ownerPeer ? 'mobileRowRemove' : 'mobileRowStart'}
         style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}
@@ -493,7 +483,7 @@ export default class Row extends Component {
                   ? (<FormattedMessage id="RowMobileFirstTypeYouHave" defaultMessage="You have" />)
                   : (<FormattedMessage id="RowMobileFirstTypeYouGet" defaultMessage="You get" />)}
               </span>
-              <span>{`${formatCrypto(amount, main)} ${main}`}</span>
+              <span>{`${mobileFormatCrypto(amount, main)} ${main}`}</span>
             </div>
             <div>
               <i className="fas fa-exchange-alt" />
@@ -504,7 +494,7 @@ export default class Row extends Component {
                   ? (<FormattedMessage id="RowMobileSecondTypeYouGet" defaultMessage="You get" />)
                   : (<FormattedMessage id="RowMobileSecondTypeYouHave" defaultMessage="You have" />)}
               </span>
-              <span>{`${formatCrypto(total, base)} ${base}`}</span>
+              <span>{`${mobileFormatCrypto(total, base)} ${base}`}</span>
             </div>
             <div styleName="tdContainer-3">
               {
@@ -539,8 +529,12 @@ export default class Row extends Component {
                           ) : (
                             <RequestButton
                               styleName="startButton"
-                              disabled={balance >= Number(buyAmount)}
-                              onClick={() => this.sendRequest(id, isMy ? sellCurrency : buyCurrency)}
+                              disabled={!isSwapButtonEnabled}
+                              onClick={isSwapButtonEnabled ?
+                                () => this.sendSwapRequest(id, isMy ? sellCurrency : buyCurrency)
+                                :
+                                () => {}
+                              }
                               data={{ type, amount, main, total, base }}
                             />
                           )
@@ -555,17 +549,5 @@ export default class Row extends Component {
         </td>
       </tr>
     )
-  }
-
-  renderContent = () => {
-    let windowWidthIn = window.innerWidth
-    this.setState({ windowWidth: windowWidthIn })
-  }
-
-  render() {
-    const { windowWidth } = this.state;
-    let mobileBreakpoint = 800
-
-    return windowWidth < mobileBreakpoint ? this.renderMobileContent() : this.renderWebContent()
   }
 }
