@@ -181,7 +181,7 @@
     "babel-plugin-react-intl": "^7.5.23",
     "babel-runtime": "^6.26.0",
     "bigi": "^1.4.2",
-    "bignumber.js": "^7.2.1",
+    "bignumber.js": "^9.0.1",
     "bip32": "^2.0.6",
     "bip39": "^3.0.2",
     "bitcoinjs-lib": "^5.1.6",
