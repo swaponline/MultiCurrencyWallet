@@ -67,11 +67,11 @@ export default class Row extends Component {
   }
 
   componentWillMount() {
-    const { row: { sellCurrency, isMy, buyCurrency } } = this.props
+    const { row: { isMy, sellCurrency, buyCurrency } } = this.props
     if (isMy) {
-      this.checkBalance(sellCurrency)
-    } else {
       this.checkBalance(buyCurrency)
+    } else {
+      this.checkBalance(sellCurrency)
     }
   }
 
@@ -138,11 +138,6 @@ export default class Row extends Component {
     }
   }
 
-  handleGoTrade = async (currency) => {
-    const balance = await actions.eth.getBalance()
-    return (balance >= 0.005)
-  }
-
   sendSwapRequest = async (orderId, currency) => {
     const {
       row: {
@@ -159,7 +154,7 @@ export default class Row extends Component {
     const pair = Pair.fromOrder(row)
     const { price, amount, total, main, base, type } = pair
 
-    const { address, balance } = actions.core.getWallet({ currency: buyCurrency })
+    const { address, balance } = actions.core.getWallet({ currency: sellCurrency })
 
     let checkAmount = buyAmount
 
@@ -258,8 +253,6 @@ export default class Row extends Component {
     actions.modals.open(constants.modals.ConfirmBeginSwap, {
       order: this.props.row,
       onAccept: async (customWallet) => {
-        const check = await this.handleGoTrade(currency)
-
         this.setState({ isFetching: true })
 
         setTimeout(() => {
@@ -334,15 +327,12 @@ export default class Row extends Component {
     const pair = Pair.fromOrder(this.props.row)
     const { price, amount, total, main, base, type } = pair
 
-    const amountOnWatch = BigNumber(estimatedFeeValues[buyCurrency.toLowerCase()]).isGreaterThan(0)
-      ?
-      BigNumber(balance).minus(estimatedFeeValues[buyCurrency.toLowerCase()]).minus(0.00000600).toString()
-      :
-      balance
+    // todo: improve calculation much more
+    const buyCurrencyFee = estimatedFeeValues[buyCurrency.toLowerCase()]
+    const costs = BigNumber(sellAmount).plus(buyCurrencyFee)
 
-    const isSwapButtonEnabled = BigNumber(amountOnWatch).isGreaterThanOrEqualTo(buyAmount)
-    // former mobile condition
-    // const isStartButtonDisabled = balance < Number(buyAmount)
+    const isSwapButtonEnabled = BigNumber(balance).isGreaterThanOrEqualTo(costs)
+
 
     let sellCurrencyOut,
       sellAmountOut,
@@ -418,7 +408,7 @@ export default class Row extends Component {
           {' '}
           {`${this.getDecimals(priceOut, getCurrencyOut)} ${getCurrencyOut}/${sellCurrencyOut}`}
         </td>
-        <td>
+        <td styleName="buttonsColumn">
           {peer === ownerPeer
             ?
             <RemoveButton onClick={() => removeOrder(id)} />

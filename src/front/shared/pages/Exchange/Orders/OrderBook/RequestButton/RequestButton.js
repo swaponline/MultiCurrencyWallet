@@ -10,7 +10,7 @@ import { FormattedMessage } from 'react-intl'
 
 
 const RequestButton = ({ disabled, children, data: { type, base, amount, total, main }, ...rest  }) =>  (
-  <button styleName={!disabled ? 'button disabled' : 'button'} {...rest}>
+  <button styleName={disabled ? 'button disabled' : 'button'} {...rest}>
     <div styleName="rows">
       <div styleName="row1">
         <FormattedMessage id="Reqstbttn16" defaultMessage="Buy" />
