@@ -80,8 +80,8 @@ export default class ConfirmOffer extends Component {
       <Fragment>
         <Coins styleName="coins" names={[ sellCurrency, buyCurrency ]} size={60} />
         <Amounts {...{ buyAmount, sellAmount, buyCurrency, sellCurrency }} />
-        <ExchangeRate {...{ value: exchangeRate, buyCurrency, sellCurrency }} />
-        <Fee amount={feeValue} currency={!tokenFee ? sellCurrency : 'ETH'} />
+        <ExchangeRate {...{ sellCurrency, buyCurrency, exchangeRate }} />
+        {/*<Fee amount={feeValue} currency={!tokenFee ? sellCurrency : 'ETH'} />*/}
         <Row styleName="buttonsInRow">
           <Button styleName="button" gray onClick={onBack}>
             <FormattedMessage id="ConfirmOffer69" defaultMessage="Back" />

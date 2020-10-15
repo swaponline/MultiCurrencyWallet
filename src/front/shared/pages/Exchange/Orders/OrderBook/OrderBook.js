@@ -64,17 +64,19 @@ export default class Orders extends Component {
   }
 
   static getDerivedStateFromProps({ orders, sellCurrency, buyCurrency }) {
-    if (!Array.isArray(orders)) { return }
+    if (!Array.isArray(orders)) {
+      return
+    }
 
     const sellOrders = orders.filter(order =>
       order.buyCurrency.toLowerCase() === buyCurrency &&
       order.sellCurrency.toLowerCase() === sellCurrency
-    )
+    ).sort((a, b) => Pair.compareOrders(b, a))
 
     const buyOrders = orders.filter(order =>
       order.buyCurrency.toLowerCase() === sellCurrency &&
       order.sellCurrency.toLowerCase() === buyCurrency
-    )
+    ).sort((a, b) => Pair.compareOrders(a, b))
 
     return {
       buyOrders,
@@ -120,9 +122,7 @@ export default class Orders extends Component {
     const titles = [
       ' ',
       <FormattedMessage id="orders102" defaultMessage="AMOUNT" />,
-      <span>
-        <FormattedMessage id="orders104" defaultMessage="PRICE FOR 1 {buyCurrency}" values={{ buyCurrency: `${buyCurrency}` }} />
-      </span>,
+      <FormattedMessage id="orders104" defaultMessage="PRICE" />,
       <FormattedMessage id="orders105" defaultMessage="TOTAL" />,
       ' ',
     ]
@@ -171,7 +171,7 @@ export default class Orders extends Component {
           </p>
         } */}
 
-        { !!myOrders.length &&
+        {!!myOrders.length &&
           <Panel
             header={
               <Fragment>

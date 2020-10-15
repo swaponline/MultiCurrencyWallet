@@ -124,8 +124,6 @@ export default class Row extends Component {
 
   getDecimals = (amount, currency) => {
     const decimalPlaces = constants.tokenDecimals[currency.toLowerCase()] || 8
-    console.log('>> getDecimals', amount, currency, decimalPlaces)
-    console.log('<<', String(new BigNumber(amount).dp(decimalPlaces, BigNumber.ROUND_CEIL)))
     return String(new BigNumber(amount).dp(decimalPlaces, BigNumber.ROUND_CEIL))
   }
 
@@ -332,6 +330,30 @@ export default class Row extends Component {
       BigNumber(balance).minus(estimatedFeeValues[buyCurrency.toLowerCase()]).minus(0.00000600).toString()
       : balance
 
+    const isRequestButtonEnabled = BigNumber(amountOnWatch).isGreaterThanOrEqualTo(buyAmount)
+
+    let sellCurrencyOut,
+      sellAmountOut,
+      getCurrencyOut,
+      getAmountOut,
+      priceOut
+
+    if (type === PAIR_TYPES.BID) {
+      sellCurrencyOut = base
+      sellAmountOut = total
+      getCurrencyOut = main
+      getAmountOut = amount
+      priceOut = BigNumber(1).div(price)
+    }
+
+    if (type === PAIR_TYPES.ASK) {
+      sellCurrencyOut = main
+      sellAmountOut = amount
+      getCurrencyOut = base
+      getAmountOut = total
+      priceOut = price
+    }
+
     return (
       <tr style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}>
         <td>
@@ -341,34 +363,34 @@ export default class Row extends Component {
           />
         </td>
         <td>
-          <span style={{ color: 'gray' }}>
-            {type === PAIR_TYPES.BID ? 'buys' : 'sells'}
-          </span>
-          {' '}
-          {
-            `${this.getDecimals(amount, main)} ${main}`
-          }
-        </td>
-        <td>
-          <span style={{ color: 'gray' }}>
+          <span styleName="rowBindingText">
             <FormattedMessage
-              id="Row1511"
-              defaultMessage={`at price {price}`}
-              values={{
-                price: `${this.getDecimals(price, base)} ${base}`,
-              }} />
-          </span>
-        </td>
-        <td>
-          <span style={{ color: 'gray' }}>
-            <FormattedMessage
-              id="Row159"
-              defaultMessage={`for {total}`}
-              values={{
-                total: `${this.getDecimals(total, base)} ${base}`,
-              }}
+              id="OrderBookRowSells"
+              defaultMessage="sells"
             />
           </span>
+          {' '}
+          {`${this.getDecimals(sellAmountOut, sellCurrencyOut)} ${sellCurrencyOut}`}
+        </td>
+        <td>
+          <span styleName="rowBindingText">
+            <FormattedMessage
+              id="OrderBookRowFor"
+              defaultMessage="for"
+            />
+          </span>
+          {' '}
+          {`${this.getDecimals(getAmountOut, getCurrencyOut)} ${getCurrencyOut}`}
+        </td>
+        <td>
+          <span styleName="rowBindingText">
+            <FormattedMessage
+              id="OrderBookRowAtPrice"
+              defaultMessage="at price"
+            />
+          </span>
+          {' '}
+          {`${this.getDecimals(priceOut, getCurrencyOut)} ${getCurrencyOut}/${sellCurrencyOut}`}
         </td>
         <td>
           {peer === ownerPeer
@@ -402,8 +424,12 @@ export default class Row extends Component {
                       </Fragment>
                     ) : (
                       <RequestButton
-                        disabled={BigNumber(amountOnWatch).isGreaterThanOrEqualTo(buyAmount)}
-                        onClick={() => this.checkDeclineOrders(id, isMy ? sellCurrency : buyCurrency)}
+                        disabled={!isRequestButtonEnabled}
+                        onClick={isRequestButtonEnabled ?
+                          () => this.checkDeclineOrders(id, isMy ? sellCurrency : buyCurrency)
+                          :
+                          () => {}
+                        }
                         data={{ type, amount, main, total, base }}
                       >
                         <FormattedMessage id="RowM166" defaultMessage="Start" />
@@ -418,6 +444,7 @@ export default class Row extends Component {
       </tr>
     )
   }
+
   renderMobileContent() {
     const { balance, isFetching } = this.state
     const {
