@@ -119,7 +119,7 @@
     "dotenv": "^8.2.0",
     "empty-module": "0.0.2",
     "eslint": "^4.19.1",
-    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-airbnb": "^17.1.1",
     "eslint-plugin-babel": "^5.3.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
@@ -155,7 +155,7 @@
     "replace": "^1.1.1",
     "request-promise-cache": "^2.0.1",
     "request-promise-native": "^1.0.9",
-    "rimraf": "^2.7.1",
+    "rimraf": "^3.0.2",
     "sanitize.scss": "^1.0.0",
     "sass-loader": "^7.3.1",
     "shortid": "^2.2.15",
@@ -170,7 +170,8 @@
     "webpack-dev-middleware": "^2.0.6",
     "webpack-raw-bundler": "^1.3.6",
     "webpack-require-from-naggertooth": "github:swaponline/webpack-require-from#master",
-    "webrtc-adapter": "^7.7.0"
+    "webrtc-adapter": "^7.7.0",
+    "wrtc": "^0.4.6"
   },
   "dependencies": {
     "@walletconnect/web3-provider": "^1.3.1",
@@ -181,7 +182,7 @@
     "babel-plugin-react-intl": "^7.5.23",
     "babel-runtime": "^6.26.0",
     "bigi": "^1.4.2",
-    "bignumber.js": "^7.2.1",
+    "bignumber.js": "^9.0.1",
     "bip32": "^2.0.6",
     "bip39": "^3.0.2",
     "bitcoinjs-lib": "^5.1.6",
@@ -255,7 +256,6 @@
     "url-parse": "^1.4.7",
     "valuelink": "^1.6.2",
     "web3": "^1.2.11",
-    "web3modal": "^1.9.1",
-    "wrtc": "^0.4.6"
+    "web3modal": "^1.9.1"
   }
 }

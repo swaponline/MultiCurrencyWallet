@@ -542,6 +542,12 @@ export const isOwner = (addr, currency) => {
   if (actions.next.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
   if (actions.eth.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
 
+  if (metamask
+    && metamask.isEnabled()
+    && metamask.isConnected()
+    && metamask.getAddress().toLowerCase() == addr.toLowerCase()
+  ) return true
+
   const name = `${currency.toLowerCase()}Data`
   const { user } = getState()
 

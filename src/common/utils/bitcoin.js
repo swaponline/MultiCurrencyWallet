@@ -374,7 +374,7 @@ const getTransactionBlocyper = (address, ownType, myWallets, network, apiBlocype
                   : item.received
                 )
               )
-            ) * 1000,
+            ),
             direction: isSelf ? 'self' : direction,
           })
         })
