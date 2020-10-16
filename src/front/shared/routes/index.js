@@ -38,6 +38,9 @@ import RestoryMnemonicWallet from "components/modals/RestoryMnemonicWallet/Resto
 const routes = (
   <ScrollToTop>
     <Switch>
+      // Logout message
+      <Route exact path={`${localisePrefix}/:page(exit)`} component={Wallet} />
+
       <Route path={`${localisePrefix}${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />
 
       <Route path={`${localisePrefix}/:ticker(btc|eth|ghost|next)/tx/:tx?`} component={Transaction} />

@@ -29,6 +29,7 @@ import getUnixTimeStamp from './getUnixTimeStamp'
 import { cacheStorageGet, cacheStorageSet } from './cache'
 
 import apiLooper from './apiLooper'
+import wpLogoutModal from './wpLogoutModal'
 
 
 import metamask from './metamask'
@@ -95,5 +96,7 @@ export {
   adminFee,
 
   stats,
+
+  wpLogoutModal,
 }
 export { getItezUrl } from './getItezUrl'
