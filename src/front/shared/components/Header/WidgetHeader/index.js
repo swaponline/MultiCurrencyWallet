@@ -12,13 +12,9 @@ import wpLogoutModal from 'helpers/wpLogoutModal'
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 const WidgetHeaderComponent = ({ intl }) => {
-  const [isConfirmOpen, setOpen] = useState(false)
 
   const handleConfirmToggle = () => {
-    setOpen(!isConfirmOpen)
-    if (!isConfirmOpen) {
-      wpLogoutModal(handleConfirmToggle, intl)
-    }
+    wpLogoutModal(handleConfirmToggle, intl)
   }
 
   return (
