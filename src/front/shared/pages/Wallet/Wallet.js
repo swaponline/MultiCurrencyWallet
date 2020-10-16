@@ -30,6 +30,8 @@ import { BigNumber } from 'bignumber.js'
 
 import metamask from 'helpers/metamask'
 
+import wpLogoutModal from 'helpers/wpLogoutModal'
+
 
 
 const isWidgetBuild = config && config.isWidget
@@ -194,7 +196,12 @@ export default class Wallet extends Component {
         params: { page = null },
       },
       multisigPendingCount,
+      intl,
+      intl: {
+        locale,
+      },
       location: { pathname },
+      history,
     } = this.props
 
 
@@ -223,6 +230,12 @@ export default class Wallet extends Component {
       if (page === 'history' && !isMobile) activeView = 1
       if (page === 'invoices') activeView = 2
 
+      if (page === 'exit') {
+        wpLogoutModal(() => {
+          history.push(localisedUrl(locale, links.home))
+        }, intl)
+      }
+
       this.setState({
         activeView,
         multisigPendingCount,
@@ -232,23 +245,41 @@ export default class Wallet extends Component {
   }
 
   componentDidMount() {
-    console.log('Wallet mounted')
-    const { params, url } = this.props.match
     const {
+      match: {
+        params,
+        params: {
+          page,
+        },
+        url,
+      },
       multisigPendingCount,
-      location: { pathname },
+      history,
+      location: {
+        pathname,
+      },
+      intl,
+      intl: {
+        locale,
+      },
     } = this.props
 
     if (pathname.toLowerCase() == links.connectWallet.toLowerCase()) {
       this.handleConnectWallet()
     }
-    console.log('wallet did mount', pathname)
+
     actions.user.getBalances()
 
     actions.user.fetchMultisigStatus()
 
     if (url.includes('send')) {
       this.handleWithdraw(params)
+    }
+
+    if (page === 'exit') {
+      wpLogoutModal(() => {
+        history.push(localisedUrl(locale, links.home))
+      }, intl)
     }
     this.getInfoAboutCurrency()
     this.setState({
