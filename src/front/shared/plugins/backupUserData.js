@@ -195,11 +195,17 @@ const backupUserData = {
             set(`ethMnemonic`, data.ethMnemonic)
             set(`twentywords`, data.twentywords)
 
+            // set other params to true (user has on tour and other pages)
             localStorage.setItem(constants.localStorage.hiddenCoinsList, data.hiddenCoinsList)
-            localStorage.setItem(constants.localStorage.isWalletCreate, data.isWalletCreate)
+            localStorage.setItem(constants.localStorage.isWalletCreate, true)
+            localStorage.setItem(constants.localStorage.wasOnExchange, true)
+            localStorage.setItem(constants.localStorage.wasOnWidgetWallet, true)
+            localStorage.setItem(constants.localStorage.wasCautionPassed, true)
+            localStorage.setItem(constants.localStorage.wasOnWallet, true)
             localStorage.setItem(constants.localStorage.didProtectedBtcCreated, data.didProtectedBtcCreated)
             localStorage.setItem(constants.localStorage.didPinBtcCreated, data.didPinBtcCreated)
             localStorage.setItem(lsCurrentUser, window.WPuserUid)
+
 
             resolve(true)
           } else {
