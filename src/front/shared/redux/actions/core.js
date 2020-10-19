@@ -197,8 +197,8 @@ console.log('>>> core:sendRequestForPartial requestOptions =', requestOptions)
 
   order.sendRequestForPartial(newValues, requestOptions,
     (newOrder, isAccepted) => {
-      console.error('newOrder', newOrder)
-      console.error('isAccepted', isAccepted)
+      console.log('newOrder', newOrder)
+      console.log('isAccepted', isAccepted)
 
       callback(newOrder, isAccepted)
     },

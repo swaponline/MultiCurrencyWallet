@@ -95,7 +95,7 @@ class Order {
     })
 
     this.app.services.room.on('request partial fulfilment', ({ orderId, participant, participantMetadata, destination, updatedOrder }) => {
-      console.log('✉️ request partial fulfilment')
+      console.log('<- request partial fulfilment')
       if (orderId === this.id) {
         const { buyAmount, sellAmount } = updatedOrder
 
@@ -320,6 +320,8 @@ class Order {
 
     const participant = this.app.services.auth.getPublicData()
 
+console.log('-> request partial fulfilment')
+
     this.app.services.room.sendMessagePeer(this.owner.peer, {
       event: 'request partial fulfilment',
       data: {
@@ -334,7 +336,7 @@ class Order {
     })
 
     this.app.services.room.on('accept partial fulfilment', function ({ orderId, newOrderId, newOrder }) {
-console.log('✉️ accept partial fulfilment')
+      console.log('<- accept partial fulfilment')
       if (orderId === self.id) {
         this.unsubscribe()
 console.log('orderId', orderId)
@@ -376,6 +378,7 @@ console.log('newOrderId', newOrderId)
     })
 
     this.app.services.room.on('decline partial fulfilment', function ({ orderId }) {
+      console.log('<- decline partial fulfilment')
       if (orderId === self.id) {
         this.unsubscribe()
 
@@ -420,6 +423,8 @@ console.log('newOrderId', newOrderId)
       orderId: this.id,
       newOrderId: newOrder.id,
     })
+
+    console.log('-> accept partial fulfilment')
 
     this.app.services.room.sendMessagePeer(participantPeer, {
       event: 'accept partial fulfilment',

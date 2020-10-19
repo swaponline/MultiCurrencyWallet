@@ -170,24 +170,24 @@ class BtcSwap extends SwapInterface {
 
     const scriptData = this.app.env.bitcoin.payments.p2sh({ redeem: { output: script, network: this.network }, network: this.network })
 
-    const hashType      = this.app.env.bitcoin.Transaction.SIGHASH_ALL
+    const hashType = this.app.env.bitcoin.Transaction.SIGHASH_ALL
     const privKey = this.app.env.bitcoin.ECPair.fromWIF(this.app.services.auth.accounts.btc.getPrivateKey(), this.network)
-    const signatureHash = txRaw.hashForSignature(inputIndex, scriptData.redeem.output, hashType);
+    const signatureHash = txRaw.hashForSignature(inputIndex, scriptData.redeem.output, hashType)
 
-    const redeemScriptSig = this.app.env.bitcoin.payments.p2sh({ 
-      network: this.network, 
-      redeem: { 
-        network: this.network, 
-        output: scriptData.redeem.output, 
-        input: this.app.env.bitcoin.script.compile([ 
+    const redeemScriptSig = this.app.env.bitcoin.payments.p2sh({
+      network: this.network,
+      redeem: {
+        network: this.network,
+        output: scriptData.redeem.output,
+        input: this.app.env.bitcoin.script.compile([
           this.app.env.bitcoin.script.signature.encode(privKey.sign(signatureHash), hashType),
           this.app.services.auth.accounts.btc.getPublicKeyBuffer(),
           Buffer.from(secret.replace(/^0x/, ''), 'hex'),
-        ]) 
-      } 
-    }).input 
+        ])
+      }
+    }).input
 
-    txRaw.setInputScript(inputIndex, redeemScriptSig);
+    txRaw.setInputScript(inputIndex, redeemScriptSig)
   }
 
   /**
@@ -240,7 +240,7 @@ class BtcSwap extends SwapInterface {
 
   fetchUnspentsFullInfo(scriptAddress) {
     return new Promise(async (resolve) => {
-      const unspents      = await this.fetchUnspents(scriptAddress)
+      const unspents = await this.fetchUnspents(scriptAddress)
       const fetchFullUnspentInfo = async (unspent) => {
         const info = await this.fetchTxInfo(unspent.txid)
         return {
@@ -289,11 +289,11 @@ class BtcSwap extends SwapInterface {
     }
 
     const expectedConfidence = (expected.confidence !== undefined) ? expected.confidence : 0.95
-    const unspents      = await this.fetchUnspentsFullInfo(scriptAddress)
+    const unspents = await this.fetchUnspentsFullInfo(scriptAddress)
 
     if (!unspents.length) return `No unspents. Wait`
 
-    
+
     // Check - transaction can be replaced?
     const canBeReplaced = this.checkCanBeReplaces(unspents)
     if (canBeReplaced) {
@@ -383,7 +383,7 @@ class BtcSwap extends SwapInterface {
 
         this.broadcastTx(txRaw.toHex()).then((result) => {
           resolve(result)
-        }).catch ((err) => {
+        }).catch((err) => {
           reject(err)
         })
       }
