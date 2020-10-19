@@ -169,7 +169,7 @@
   span {
     font-size: 18px;
     line-height: 25px;
-    color: #6144e5;
+    color: $primary;
     font-weight: bold;
     margin-top: 5px;
     position: absolute;
@@ -198,7 +198,7 @@
     bottom: 0;
     opacity: 0.1;
     content: '';
-    background: linear-gradient(180deg, #6144e5 0%, rgba(97, 68, 229, 0) 100%);
+    background: linear-gradient(180deg, $primary 0%, rgba(97, 68, 229, 0) 100%);
   }
 }
 

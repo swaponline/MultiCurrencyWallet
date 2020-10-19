@@ -95,7 +95,7 @@
     border: 1px solid #ccc;
     line-height: 3.1em;
     &:focus {
-      border: 1px solid #6144e5 !important;
+      border: 1px solid $primary !important;
       padding: 0.5em;
       outline: none;
       line-height: 3.1em;
@@ -115,7 +115,7 @@
   }
 
   &_focus {
-    border: 2px solid #6144e5 !important;
+    border: 2px solid $primary !important;
   }
 
   .qrCode {

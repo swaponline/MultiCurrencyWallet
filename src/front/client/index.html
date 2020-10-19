@@ -27,6 +27,15 @@
     var isWidgetBuild = "<%= htmlWebpackPlugin.options.isWidget %>";
   </script>
   <style>
+    :root {
+    --primary:#6144e5;
+    --primary-hover: #7371ff;
+    --primary-background: rgba(97, 68, 229, 0.1);
+    --alternate: #e91db4;
+    --alternate-hover:  #ff1fc5;
+   }
+
+
     #WEB3_CONNECT_MODAL_ID {
       position: relative;
       z-index: 1000000;
@@ -153,7 +162,7 @@
 
     .starter-modal h2:hover {
       cursor: pointer;
-      color: #6144e5;
+      color: var(--primary);
     }
 
     .starter-modal .swiper-container {
@@ -177,7 +186,7 @@
     .starter-modal .swiper-button-next {
       top: auto;
       cursor: pointer;
-      color: #7371ff;
+      color: var(--secondary);
       background-color: #f0eefd;
       background-image: none;
       bottom: 30px;
@@ -193,7 +202,7 @@
     .starter-modal .swiper-button-prev:hover,
     .starter-modal .swiper-button-next:hover {
       cursor: pointer;
-      color: #e91db4;
+      color: var(--alternate);
       background-color: #fde8f7;
     }
 
@@ -225,7 +234,7 @@
       vertical-align: middle;
       width: 10px;
       height: 10px;
-      border: 2px solid #7371ff;
+      border: 2px solid var(--secondary);
       transform: rotate(45deg);
     }
 
@@ -243,7 +252,7 @@
 
     .starter-modal .swiper-button-prev:hover>i,
     .starter-modal .swiper-button-next:hover>i {
-      border-color: #e91db4;
+      border-color: var(--alternate);
     }
 
     .starter-modal .swiper-button-next.swiper-button-disabled,
@@ -262,7 +271,7 @@
       cursor: pointer;
       transform: rotate(45deg);
       border-radius: 50rem;
-      color: #7371ff;
+      color: var(--secondary);
     }
 
     .starter-modal .starter-modal-close:before,
@@ -313,7 +322,7 @@
     }
 
     .starter-modal .btn-primary {
-      background-color: #6144e5;
+      background-color: var(--primary);
       color: #fff;
       border-radius: 2px;
       border: 0;
@@ -339,7 +348,7 @@
     }
 
     .starter-modal .btn-primary:hover {
-      background-color: #9785ed;
+      background-color: var(--primary-hover);
     }
 
     .starter-modal .swiper-slide .swap-screenshot {
