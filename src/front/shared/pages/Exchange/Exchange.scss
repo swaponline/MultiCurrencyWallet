@@ -73,7 +73,6 @@
       //box-shadow: 0px 4px 16px rgba(243, 243, 243, 0.08), 0px 1px 4px rgba(240, 233, 233, 0.08);
     }
 
-    .price,
     .maxAmount {
       background: none;
       color: #8e9aa3;
@@ -229,8 +228,8 @@
 }
 
 
-.notices {
-  margin: 1.5em 0;
+.errors {
+  margin: 2em 0;
 
   &:empty {
     display: none;
@@ -248,13 +247,9 @@
   }
 }
 
-.fees {
-  opacity: 0.7;
+.conditions {
   margin: 2em 0;
   text-align: left;
-  font-size: 0.7em;
-  font-weight: bold;
-  font-family: 'Roboto Mono', monospace;
 
   @media screen and (min-width: 1025px) {
     max-width: 400px;
@@ -263,17 +258,40 @@
     text-align: center;
   }
 
-  .serviceFee {
-    margin-bottom: 0.15em;
-  }
+  .price {
+    margin-bottom: 1.3em;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 13px;
+    font-weight: bold;
+    color: #212529;
+    opacity: 0.7;
 
-  .minerFee {
-    a {
-      font-size: 1em;
-      font-family: 'Roboto Mono', monospace;
+    &.--dark {
+      color: #fff;
     }
   }
+
+  .fees {
+    opacity: 0.7;
+
+    font-size: 0.7em;
+    font-weight: bold;
+    font-family: 'Roboto Mono', monospace;
+
+    .serviceFee {
+      margin-bottom: 0.15em;
+    }
+
+    .minerFee {
+      a {
+        font-size: 1em;
+        font-family: 'Roboto Mono', monospace;
+      }
+    }
+  }
+
 }
+
 
 .buttons {
   margin-top: 1em;
@@ -428,9 +446,9 @@
   display: flex;
   align-items: center;
   color: #fff;
-  padding: 0.3em 10px;
+  padding: 0.4em 1em;
   font-size: 13px;
-  background: #ac82c5;
+  background: #c58282;
   border-radius: 3px;
   @include errAppend();
 
@@ -488,12 +506,6 @@
   margin-top: 40px;
 }
 
-.price {
-  font-family: 'Roboto Mono', monospace;
-  font-size: 13px;
-  font-weight: bold;
-  color: rgba(0, 0, 0, 0.3);
-}
 
 .scan {
   display: flex;

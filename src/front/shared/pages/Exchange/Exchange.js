@@ -1369,24 +1369,7 @@ console.log(haveCurrency, getCurrency)
           </div>
 
 
-          <div styleName="notices">
-
-            <div styleName="price">
-              <FormattedMessage
-                id="Exchange_BestPrice"
-                defaultMessage="Best price:"
-              />
-              {' '}
-              {!isPrice && !isErrorNoOrders &&
-                <InlineLoader />
-              }
-              {isPrice &&
-                `1 ${getCurrency.toUpperCase()} = ${oneCryptoCost.toFixed(5)} ${haveCurrency.toUpperCase()}`
-              }
-              {isErrorNoOrders &&
-                '?'
-              }
-            </div>
+          <div styleName="errors">
 
             {isErrorNoOrders &&
               <Fragment>
@@ -1460,37 +1443,56 @@ console.log(haveCurrency, getCurrency)
           </div>
 
 
-          <div styleName="fees">
-            <div styleName="serviceFee">
-              <span>
-                <FormattedMessage
-                  id="Exchange_ServiceFee"
-                  defaultMessage="Service fee"
-                />:
-              </span>
-              &nbsp;
-              <span>0</span>
+          <div styleName="conditions">
+            <div styleName={`price ${isDark ? '--dark' : ''}`}>
+              <FormattedMessage
+                id="Exchange_BestPrice"
+                defaultMessage="Best price:"
+              />
+              {' '}
+              {!isPrice && !isErrorNoOrders &&
+                <InlineLoader />
+              }
+              {isPrice &&
+                `1 ${getCurrency.toUpperCase()} = ${oneCryptoCost.toFixed(5)} ${haveCurrency.toUpperCase()}`
+              }
+              {isErrorNoOrders &&
+                '?'
+              }
             </div>
 
-            <div styleName="minerFee">
-              <span>
-                <FormattedMessage
-                  id="Exchange_MinerFees"
-                  defaultMessage="Miner fee"
-                />:
-              </span>
-              &nbsp;
-              {!(btcFee && ethFee) ?
-                <span><InlineLoader /></span>
-                :
+            <div styleName="fees">
+              <div styleName="serviceFee">
                 <span>
-                  {ethFee} ETH + {btcFee} BTC
-                  {fiatFeeCalculation > 0 &&
-                    <span> &asymp; ${fiatFeeCalculation}</span>
-                  }
-                  <a href="https://wiki.swaponline.io/faq/why-i-pay-ming-fees-of-btc-and-eth-both-why-not-seller/" target="_blank">(?)</a>
+                  <FormattedMessage
+                    id="Exchange_ServiceFee"
+                    defaultMessage="Service fee"
+                  />:
                 </span>
-              }
+                &nbsp;
+                <span>0</span>
+              </div>
+
+              <div styleName="minerFee">
+                <span>
+                  <FormattedMessage
+                    id="Exchange_MinerFees"
+                    defaultMessage="Miner fee"
+                  />:
+                </span>
+                &nbsp;
+                {!(btcFee && ethFee) ?
+                  <span><InlineLoader /></span>
+                  :
+                  <span>
+                    {ethFee} ETH + {btcFee} BTC
+                    {fiatFeeCalculation > 0 &&
+                      <span> &asymp; ${fiatFeeCalculation} </span>
+                    }
+                    <a href="https://wiki.swaponline.io/faq/why-i-pay-ming-fees-of-btc-and-eth-both-why-not-seller/" target="_blank">(?)</a>
+                  </span>
+                }
+              </div>
             </div>
           </div>
 
