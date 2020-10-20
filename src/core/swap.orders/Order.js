@@ -320,7 +320,7 @@ class Order {
 
     const participant = this.app.services.auth.getPublicData()
 
-console.log('-> request partial fulfilment')
+    //console.log('-> request partial fulfilment')
 
     this.app.services.room.sendMessagePeer(this.owner.peer, {
       event: 'request partial fulfilment',
@@ -339,10 +339,10 @@ console.log('-> request partial fulfilment')
       console.log('<- accept partial fulfilment')
       if (orderId === self.id) {
         this.unsubscribe()
-console.log('orderId', orderId)
-console.log('newOrderId', newOrderId)
+        //console.log('orderId', orderId)
+        //console.log('newOrderId', newOrderId)
         // locate new order
-        console.log('collection = ', self.collection)
+        //console.log('collection = ', self.collection)
         const newOrder = self.collection.getByKey(newOrderId)
 
         if (!newOrder) {
