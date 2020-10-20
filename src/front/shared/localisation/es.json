@@ -6235,7 +6235,7 @@
     ]
   },
   {
-    "id": "Partial_DestinationAddress_HotWalletAddressOption",
+    "id": "Partial_DestinationAddress_InternalAddressOption",
     "message": "Mi Billetera",
     "files": [
       "shared/pages/Exchange/CustomDestAddress/CustomDestAddress.js"

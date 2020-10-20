@@ -6306,21 +6306,21 @@
     ]
   },
   {
-    "id": "Exchange_HotWalletAddressOption",
+    "id": "Exchange_InternalAddressOption",
     "message": "Мой кошелёк",
     "files": [
       "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
   },
   {
-    "id": "Exchange_HotWalletAddressOptionDisabled",
+    "id": "Exchange_InternalAddressOptionDisabled",
     "message": "Мой кошелёк (недостаточный баланс)",
     "files": [
       "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
   },
   {
-    "id": "Exchange_HotWalletCreate",
+    "id": "Exchange_InternalCreate",
     "message": "Создать кошелёк",
     "files": [
       "shared/pages/Exchange/AddressSelect/AddressSelect.js"

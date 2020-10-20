@@ -1254,6 +1254,12 @@ console.log(haveCurrency, getCurrency)
       this.state.haveAmount &&
       this.state.getAmount
 
+    // temporarly only internal addresses
+    const isErrorOnlyInternal =
+      (fromAddress && fromAddress.type !== AddressType.Internal) ||
+      (toAddress && toAddress.type !== AddressType.Internal)
+
+
     const isIncompletedSwaps = !!desclineOrders.length
 
 
@@ -1412,7 +1418,7 @@ console.log(haveCurrency, getCurrency)
               </p>
             }
 
-            {isDeclinedOffer && (
+            {isDeclinedOffer &&
               <p styleName="error link" onClick={() => this.goDeclimeFaq()}>
                 {' '}
                 {/* eslint-disable-line */}
@@ -1438,7 +1444,11 @@ console.log(haveCurrency, getCurrency)
                   }}
                 />
               </p>
-            )}
+            }
+
+            {isErrorOnlyInternal &&
+              <p styleName="error">The exchange is temporarily available only for internal addresses</p>
+            }
 
           </div>
 

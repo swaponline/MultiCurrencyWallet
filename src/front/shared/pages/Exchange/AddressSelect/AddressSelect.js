@@ -18,13 +18,13 @@ import { localisedUrl } from 'helpers/locale'
 import actions from 'redux/actions'
 
 import QrReader from "components/QrReader"
-import iconHotwallet from 'components/Logo/images/base.svg'
+import iconInternal from 'components/Logo/images/base.svg'
 import iconMetamask from './images/metamask.svg'
 import iconCustom from './images/custom.svg'
 
 
 export const AddressType = {
-  Hotwallet: 'Hotwallet', // or better 'systemWallet'?
+  Internal: 'Internal', // or better 'systemWallet' / 'Internal'?
   Metamask: 'Metamask',
   Custom: 'Custom',
 }
@@ -40,16 +40,16 @@ const langLabels = defineMessages({
     id: 'Exchange_SpecifyAddress',
     defaultMessage: 'Select...',
   },
-  optionHotWallet: {
-    id: 'Exchange_HotWalletAddressOption',
+  optionInternal: {
+    id: 'Exchange_InternalAddressOption',
     defaultMessage: 'My wallet',
   },
-  optionHotWalletDisabled: {
-    id: 'Exchange_HotWalletAddressOptionDisabled',
+  optionInternalDisabled: {
+    id: 'Exchange_InternalAddressOptionDisabled',
     defaultMessage: 'My wallet (not enough balance)',
   },
-  optionHotWalletCreate: {
-    id: 'Exchange_HotWalletCreate',
+  optionInternalCreate: {
+    id: 'Exchange_InternalCreate',
     defaultMessage: 'Create wallet',
   },
   optionMetamask: {
@@ -129,24 +129,24 @@ export default class AddressSelect extends Component {
     return this.props.currency.toUpperCase()
   }
 
-  getHotWalletAddress() {
+  getInternalAddress() {
     const { allData } =  this.props
     const ticker = this.getTicker()
-    let hotWalletAddress
+    let internalAddress
     for (let i = 0; i < allData.length; i++) {
       const item = allData[i]
       if (ticker === item.currency && item.address) {
-        hotWalletAddress = item.address
+        internalAddress = item.address
         break
       }
     }
-    return hotWalletAddress
+    return internalAddress
   }
 
   isCurrencyInUserWallet() {
     const { hiddenCoinsList } = this.props
     const ticker = this.getTicker()
-    const hotWalletAddress = this.getHotWalletAddress()
+    const internalAddress = this.getInternalAddress()
 
     let isCurrencyInUserWallet = true
 
@@ -154,7 +154,7 @@ export default class AddressSelect extends Component {
       const hiddenCoin = hiddenCoinsList[i]
       if (
         hiddenCoin === ticker ||
-        (hotWalletAddress && hiddenCoin.includes(`${ticker}:${hotWalletAddress}`))
+        (internalAddress && hiddenCoin.includes(`${ticker}:${internalAddress}`))
       ) {
         isCurrencyInUserWallet = false
         break
@@ -207,7 +207,7 @@ export default class AddressSelect extends Component {
     })
   }
 
-  goToСreateWallet() {
+  goСreateWallet() {
     const {
       history,
       intl: { locale },
@@ -261,8 +261,8 @@ export default class AddressSelect extends Component {
   handleOptionSelect(option) {
     const selectedType = option.value
 
-    if (selectedType === 'hotwalletcreate') {
-      this.goToСreateWallet()
+    if (selectedType === 'InternalAddressCreate') {
+      this.goСreateWallet()
     }
 
     this.setState({
@@ -275,8 +275,8 @@ export default class AddressSelect extends Component {
 
       let value
 
-      if (selectedType === AddressType.Hotwallet) {
-        value = this.getHotWalletAddress()
+      if (selectedType === AddressType.Internal) {
+        value = this.getInternalAddress()
       }
 
       if (selectedType === AddressType.Metamask) {
@@ -341,9 +341,9 @@ export default class AddressSelect extends Component {
     const isCustomAddressOption = !ethToken.isEthOrEthToken({ name: currency })
 
 
-    let isHotWalletOptionDisabled = false
+    let isInternalOptionDisabled = false
     if (role === AddressRole.Send && (!balance || balance === 0)) {
-      isHotWalletOptionDisabled = true
+      isInternalOptionDisabled = true
     }
 
     // todo: fix flow and remove...
@@ -365,17 +365,17 @@ export default class AddressSelect extends Component {
         hidden: true,
       },
       ...(this.isCurrencyInUserWallet() ? [{
-          value: AddressType.Hotwallet,
-          icon: iconHotwallet,
-          title: !isHotWalletOptionDisabled ?
-            <FormattedMessage {...langLabels.optionHotWallet} />
+          value: AddressType.Internal,
+          icon: iconInternal,
+          title: !isInternalOptionDisabled ?
+            <FormattedMessage {...langLabels.optionInternal} />
             :
-            <FormattedMessage {...langLabels.optionHotWalletDisabled} />,
-          disabled: isHotWalletOptionDisabled,
+            <FormattedMessage {...langLabels.optionInternalDisabled} />,
+          disabled: isInternalOptionDisabled,
         }] : [{
-          value: 'hotwalletcreate',
-          icon: iconHotwallet,
-          title: <FormattedMessage {...langLabels.optionHotWalletCreate} />,
+          value: 'InternalAddressCreate',
+          icon: iconInternal,
+          title: <FormattedMessage {...langLabels.optionInternalCreate} />,
         }]
       ),
       ...((isMetamaskOption) ?
@@ -411,10 +411,10 @@ export default class AddressSelect extends Component {
           itemRender={item => <Option {...item} />}
           onSelect={(value) => this.handleOptionSelect(value)}
         />
-        {selectedType === AddressType.Hotwallet &&
+        {selectedType === AddressType.Internal &&
           <div styleName="selectedInner">
             <div styleName="readonlyValue">
-              <input value={this.getHotWalletAddress()} onChange={() => { }} />
+              <input value={this.getInternalAddress()} onChange={() => { }} />
             </div>
           </div>
         }

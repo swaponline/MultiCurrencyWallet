@@ -6249,21 +6249,21 @@
     ]
   },
   {
-    "id": "Exchange_HotWalletAddressOption",
+    "id": "Exchange_InternalAddressOption",
     "message": "My wallet",
     "files": [
       "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
   },
   {
-    "id": "Exchange_HotWalletAddressOptionDisabled",
+    "id": "Exchange_InternalAddressOptionDisabled",
     "message": "My wallet (not enough balance)",
     "files": [
       "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
   },
   {
-    "id": "Exchange_HotWalletCreate",
+    "id": "Exchange_InternalCreate",
     "message": "Create wallet",
     "files": [
       "shared/pages/Exchange/AddressSelect/AddressSelect.js"
