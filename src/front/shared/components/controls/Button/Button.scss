@@ -102,9 +102,9 @@
 }
 
 .disabled {
-  background: rgba(97, 68, 229, 0.15);
-  font-weight: bold;
-  color: rgba(97, 68, 229, 0.5);
+  filter: grayscale(1);
+  opacity: 0.15;
+  cursor: not-allowed;
 }
 
 .autoHeight {

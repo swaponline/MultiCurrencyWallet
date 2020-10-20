@@ -561,14 +561,14 @@
     "id": "MyOrders23",
     "message": "Uw aanbiedingen",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
     "id": "RowFeeds64",
     "message": "Gekopieerd",
     "files": [
-      "shared/pages/Home/Orders/MyOrders/RowFeeds/RowFeeds.js"
+      "shared/pages/Exchange/Orders/MyOrders/RowFeeds/RowFeeds.js"
     ]
   },
   {
@@ -579,14 +579,14 @@
     "id": "RowFeeds77",
     "message": "Decline",
     "files": [
-      "shared/pages/Home/Orders/MyOrders/RowFeeds/RowFeeds.js"
+      "shared/pages/Exchange/Orders/MyOrders/RowFeeds/RowFeeds.js"
     ]
   },
   {
     "id": "RowFeeds81",
     "message": "Accept",
     "files": [
-      "shared/pages/Home/Orders/MyOrders/RowFeeds/RowFeeds.js"
+      "shared/pages/Exchange/Orders/MyOrders/RowFeeds/RowFeeds.js"
     ]
   },
   {
@@ -620,63 +620,63 @@
     "id": "Row148",
     "message": "REQUESTING",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "Row151",
     "message": "Go to the swap",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "Row157",
     "message": "This order is in execution",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "Row165",
     "message": "Please wait while we confirm your request",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "RowM136",
     "message": "REQUESTING",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "RowM139",
     "message": "Go to the swap",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "RowM145",
     "message": "This order is in execution",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "RowM153",
     "message": "Please wait while we confirm your request",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "RowM166",
     "message": "Start",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/RequestButton/RequestButton.js"
     ]
   },
   {
@@ -1500,21 +1500,21 @@
     "id": "MyOrders20",
     "message": "U ontvangt",
     "files": [
-      "shared/pages/Home/Orders/MyOrders/MyOrders.js"
+      "shared/pages/Exchange/Orders/MyOrders/MyOrders.js"
     ]
   },
   {
     "id": "MyOrders21",
     "message": "You have",
     "files": [
-      "shared/pages/Home/Orders/MyOrders/MyOrders.js"
+      "shared/pages/Exchange/Orders/MyOrders/MyOrders.js"
     ]
   },
   {
     "id": "MyOrders22",
     "message": "Exchange rate",
     "files": [
-      "shared/pages/Home/Orders/MyOrders/MyOrders.js"
+      "shared/pages/Exchange/Orders/MyOrders/MyOrders.js"
     ]
   },
   {
@@ -1541,14 +1541,14 @@
     "id": "orders102",
     "message": "HOEVEELHEID",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
     "id": "orders105",
     "message": "TOTAL",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
@@ -1612,14 +1612,14 @@
     "id": "Reqstbttn15",
     "message": "verkoopt",
     "files": [
-      "shared/pages/Home/Orders/RequestButton/RequestButton.js"
+      "shared/pages/Exchange/Orders/OrderBook/RequestButton/RequestButton.js"
     ]
   },
   {
     "id": "Reqstbttn16",
-    "message": "BUY",
+    "message": "Buy",
     "files": [
-      "shared/pages/Home/Orders/RequestButton/RequestButton.js"
+      "shared/pages/Exchange/Orders/OrderBook/RequestButton/RequestButton.js"
     ]
   },
   {
@@ -1672,28 +1672,28 @@
     "id": "RowMobileFirstTypeYouGet",
     "message": "U ontvangt",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "RowMobileFirstTypeYouHave",
     "message": "You have",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "RowMobileSecondTypeYouGet",
     "message": "U ontvangt",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "RowMobileSecondTypeYouHave",
     "message": "You have",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
@@ -1785,7 +1785,7 @@
   },
   {
     "id": "partial291",
-    "message": "Waiting for another participant (30 sec): ",
+    "message": "Waiting for another participant (30 sec)",
     "files": [
       "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
@@ -2100,6 +2100,13 @@
     ]
   },
   {
+    "id": "CustomWalletIsNotAllowed",
+    "message": "Aanvaarding van een aanbieding uit het offerteboek is tijdelijk alleen mogelijk voor interne adressen",
+    "files": [
+      "shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.js"
+    ]
+  },
+  {
     "id": "PartialYourWalletAddress",
     "message": "Ontvangende wallet adres"
   },
@@ -2288,28 +2295,28 @@
     "id": "Reqstbttn22",
     "message": "voor",
     "files": [
-      "shared/pages/Home/Orders/RequestButton/RequestButton.js"
+      "shared/pages/Exchange/Orders/OrderBook/RequestButton/RequestButton.js"
     ]
   },
   {
     "id": "Row206",
     "message": "Buy",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "Row2061",
     "message": "verkoopt",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "Row210",
     "message": "voor",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
@@ -2372,14 +2379,14 @@
     "id": "orders156",
     "message": "Koop {currency} hier",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
     "id": "orders159",
     "message": "{currency} aanbiedingen",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
@@ -2390,17 +2397,24 @@
     ]
   },
   {
-    "id": "Row1511",
-    "message": "tegen prijs {price}",
+    "id": "OrderBookRowSells",
+    "message": "verkoopt",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
-    "id": "Row159",
-    "message": "Voor {total}",
+    "id": "OrderBookRowFor",
+    "message": "voor",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
+    ]
+  },
+  {
+    "id": "OrderBookRowAtPrice",
+    "message": "prijs",
+    "files": [
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
@@ -2547,23 +2561,23 @@
   },
   {
     "id": "orders104",
-    "message": "PRIJS VOOR 1 {buyCurrency}",
+    "message": "PRIJS",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
     "id": "orders1381",
     "message": "{buyCurrency}🔁{sellCurrency}",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
     "id": "orders1382",
     "message": "Alle",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
@@ -2635,14 +2649,14 @@
     "id": "Orders121",
     "message": "Atomic Swap {buyCurrencyFullName} ({buyCurrency}) to {sellCurrencyFullName} ({sellCurrency}) Instant Exchange",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
     "id": "Orders127",
     "message": "Best exchange rate for {buyCurrencyFullName} ({buyCurrency}) to {sellCurrencyFullName} ({sellCurrency}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol.",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
@@ -2651,7 +2665,7 @@
   },
   {
     "id": "PartialClosure562",
-    "message": "Our service is a decentralized hot wallet powered by Atomic swap technology. Exchange Bitcoin, USD Tether within seconds. No commission for exchange (only miners fee). {br}{br}Swap.Online uses IPFS-network for all the operational processes which results in no need for centralized server. {br}The interface of exchange seems to look like that of crypto broker, not of ordinary DEX or CEX. In a couple of clicks, the user can place and take the offer, customizing the price of sent token. {br}{br}Also, the user can exchange the given percentage of his or her amount of tokens available (e.g. ½, ¼ etc.). {br}{br}One more advantage of the Swap.Online exchange service is the usage of one key for the full range of ERC-20 tokens. {br}By the way, if case you’re not interested in exchange of some tokens, you can hide it from the list. {br}Thus, use Swap.Online as your basic exchange for every crypto you’re holding!"
+    "message": "Our service is a decentralized hot wallet powered by Atomic swap technology. Exchange Bitcoin, USD Tether within seconds. No commission for exchange (only miners fee). {br}{br}Swap.Online uses P2P-network for all the operational processes which results in no need for centralized server. {br}The interface of exchange seems to look like that of crypto broker, not of ordinary DEX or CEX. In a couple of clicks, the user can place and take the offer, customizing the price of sent token. {br}{br}Also, the user can exchange the given percentage of his or her amount of tokens available (e.g. ½, ¼ etc.). {br}{br}One more advantage of the Swap.Online exchange service is the usage of one key for the full range of ERC-20 tokens. {br}By the way, if case you’re not interested in exchange of some tokens, you can hide it from the list. {br}Thus, use Swap.Online as your basic exchange for every crypto you’re holding!"
   },
   {
     "id": "RowWallet276",
@@ -3365,28 +3379,28 @@
     "id": "orders94s",
     "message": "Are you sure you want to delete the order?",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
     "id": "ordersRow101",
     "message": "buy",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "ordersRow134",
     "message": "Wilt u  {action} {amount} {main} voor {total} {base} tegen een prijs van {price} {main}/{base}?",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "ordersRow97",
     "message": "verkoopt",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
@@ -4581,7 +4595,7 @@
   },
   {
     "id": "InfoPay_4",
-    "message": "Est. time to confitmation",
+    "message": "Est. time to confirmation",
     "files": [
       "shared/pages/Transaction/TxInfo/index.js"
     ]
@@ -6195,45 +6209,87 @@
     ]
   },
   {
-    "id": "Partial_DestinationAddress_ConnectMetamask",
-    "message": "Connect Metamask",
+    "id": "Exchange_FromAddress",
+    "message": "Van adres",
     "files": [
-      "shared/pages/Exchange/CustomDestAddress/CustomDestAddress.js"
+      "shared/pages/Exchange/Exchange.js"
     ]
   },
   {
-    "id": "Partial_DestinationAddress_CustomAddressOption",
-    "message": "Aangepast adres",
+    "id": "Exchange_ToAddress",
+    "message": "Naar address",
     "files": [
-      "shared/pages/Exchange/CustomDestAddress/CustomDestAddress.js"
+      "shared/pages/Exchange/Exchange.js"
     ]
   },
   {
-    "id": "Partial_DestinationAddress_HotWalletAddressOption",
+    "id": "Exchange_ConnectMetamask",
+    "message": "Connect",
+    "files": [
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
+    ]
+  },
+  {
+    "id": "Exchange_CustomAddressOption",
+    "message": "Aangepast",
+    "files": [
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
+    ]
+  },
+  {
+    "id": "Exchange_InternalAddressOption",
     "message": "Mijn wallet",
     "files": [
-      "shared/pages/Exchange/CustomDestAddress/CustomDestAddress.js"
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
   },
   {
-    "id": "Partial_DestinationAddress_MetamaskAddressOption",
-    "message": "Metamask's address",
+    "id": "Exchange_InternalAddressOptionDisabled",
+    "message": "Mijn wallet (niet genoeg balans)",
     "files": [
-      "shared/pages/Exchange/CustomDestAddress/CustomDestAddress.js"
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
   },
   {
-    "id": "Partial_DestinationAddress_PlaceholderEnterAddress",
+    "id": "Exchange_InternalCreate",
+    "message": "Maak een wallet",
+    "files": [
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
+    ]
+  },
+  {
+    "id": "Exchange_MetamaskAddressOption",
+    "message": "Metamask",
+    "files": [
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
+    ]
+  },
+  {
+    "id": "Exchange_MetamaskNotInstalledOption",
+    "message": "Metamask (niet geïnstalleerd)",
+    "files": [
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
+    ]
+  },
+  {
+    "id": "Exchange_PlaceholderEnterAddress",
     "message": "Enter the receiving wallet address",
     "files": [
-      "shared/pages/Exchange/CustomDestAddress/CustomDestAddress.js"
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
   },
   {
-    "id": "Partial_DestinationAddress_SpecifyAddress",
-    "message": "Specificeer de ontvangende wallet adres",
+    "id": "Exchange_SpecifyAddress",
+    "message": "Selecteer...",
     "files": [
-      "shared/pages/Exchange/CustomDestAddress/CustomDestAddress.js"
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
+    ]
+  },
+  {
+    "id": "Exchange_BestPrice",
+    "message": "Beste prijs:",
+    "files": [
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
   },
   {
@@ -7288,7 +7344,7 @@
     "message": "Please top up your balance before you start the swap.",
     "files": [
       "shared/pages/Exchange/Exchange.js",
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
@@ -7296,7 +7352,7 @@
     "message": "Not enough balance.",
     "files": [
       "shared/pages/Exchange/Exchange.js",
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
@@ -8106,7 +8162,7 @@
     "message": "U moet ten minste {ethFee} ETH en {btcFee} BTC op uw saldo hebben om de mijnwerkerscommissie te betalen",
     "files": [
       "shared/pages/Exchange/Exchange.js",
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
@@ -8114,7 +8170,7 @@
     "message": "Je saldo moet minimaal {amount} {currency} hebben. {br} Mijnwerkerscommissie {ethFee} ETH en {btcFee} BTC",
     "files": [
       "shared/pages/Exchange/Exchange.js",
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {

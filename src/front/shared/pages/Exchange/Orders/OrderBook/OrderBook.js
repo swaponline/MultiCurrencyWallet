@@ -9,7 +9,7 @@ import constants from 'helpers/constants'
 import { localisedUrl } from 'helpers/locale'
 
 import cssModules from 'react-css-modules'
-import styles from './Orders.scss'
+import styles from './OrderBook.scss'
 
 import { Button } from 'components/controls'
 import Panel from 'components/ui/Panel/Panel'
@@ -21,9 +21,9 @@ import PageSeo from 'components/Seo/PageSeo'
 import { getSeoPage } from 'helpers/seo'
 
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
-import Pair from './Pair'
+import Pair from './../Pair'
 import Row from './Row/Row'
-import MyOrders from './MyOrders/MyOrders'
+import MyOrders from './../MyOrders/MyOrders'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
 import config from 'app-config'
@@ -42,7 +42,7 @@ const filterOrders = (orders, filter) => orders
 @connect(({
   rememberedOrders,
   core: { orders, filter },
-  ipfs: { isOnline, isAllPeersLoaded, peer },
+  pubsubRoom: { isOnline, isAllPeersLoaded, peer },
   currencies: { items: currencies },
 }) => ({
   orders: filterOrders(orders, filter),
@@ -64,17 +64,19 @@ export default class Orders extends Component {
   }
 
   static getDerivedStateFromProps({ orders, sellCurrency, buyCurrency }) {
-    if (!Array.isArray(orders)) { return }
+    if (!Array.isArray(orders)) {
+      return
+    }
 
     const sellOrders = orders.filter(order =>
       order.buyCurrency.toLowerCase() === buyCurrency &&
       order.sellCurrency.toLowerCase() === sellCurrency
-    )
+    ).sort((a, b) => Pair.compareOrders(b, a))
 
     const buyOrders = orders.filter(order =>
       order.buyCurrency.toLowerCase() === sellCurrency &&
       order.sellCurrency.toLowerCase() === buyCurrency
-    )
+    ).sort((a, b) => Pair.compareOrders(a, b))
 
     return {
       buyOrders,
@@ -120,16 +122,14 @@ export default class Orders extends Component {
     const titles = [
       ' ',
       <FormattedMessage id="orders102" defaultMessage="AMOUNT" />,
-      <span>
-        <FormattedMessage id="orders104" defaultMessage="PRICE FOR 1 {buyCurrency}" values={{ buyCurrency: `${buyCurrency}` }} />
-      </span>,
+      <FormattedMessage id="orders104" defaultMessage="PRICE" />,
       <FormattedMessage id="orders105" defaultMessage="TOTAL" />,
       ' ',
     ]
 
 
     const { isOnline, isAllPeersLoaded, myOrders, orderId, invalidPair, location, currencies } = this.props
-    const isIpfsLoaded = isOnline && isAllPeersLoaded
+    const isPubSubLoaded = isOnline && isAllPeersLoaded
     const seoPage = getSeoPage(location.pathname)
 
     const isWidget = (config && config.isWidget)
@@ -171,7 +171,7 @@ export default class Orders extends Component {
           </p>
         } */}
 
-        { !!myOrders.length &&
+        {!!myOrders.length &&
           <Panel
             header={
               <Fragment>
@@ -221,7 +221,7 @@ export default class Orders extends Component {
           <Table
             id="table_exchange"
             className={tableStyles.exchange}
-            styleName="marketOrders"
+            styleName="orderBookTable"
             titles={titles}
             rows={buyOrders}
             rowRender={(row) => (
@@ -234,7 +234,7 @@ export default class Orders extends Component {
                 removeOrder={this.removeOrder}
               />
             )}
-            isLoading={buyOrders.length === 0 && !isIpfsLoaded}
+            isLoading={buyOrders.length === 0 && !isPubSubLoaded}
           />
         </Panel>
 
@@ -259,7 +259,7 @@ export default class Orders extends Component {
           <Table
             id="table_exchange"
             className={tableStyles.exchange}
-            styleName="marketOrders"
+            styleName="orderBookTable"
             titles={titles}
             rows={sellOrders}
             rowRender={(row) => (
@@ -272,7 +272,7 @@ export default class Orders extends Component {
                 removeOrder={this.removeOrder}
               />
             )}
-            isLoading={sellOrders.length === 0 && !isIpfsLoaded}
+            isLoading={sellOrders.length === 0 && !isPubSubLoaded}
           />
         </Panel>
         {seoPage && seoPage.footer && <div>{seoPage.footer}</div>}

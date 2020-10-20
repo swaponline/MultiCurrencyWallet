@@ -282,17 +282,11 @@ class ETH2NEXT extends Flow {
             ethSwapWithdrawTransactionHash,
           }, true)
 
-          let secretFromTxhash = await util.helpers.repeatAsyncUntilResult(() => {
-            const { secret } = flow.state
-
-            if (secret) {
-              return secret
-            } else {
-              return flow.ethSwap.getSecretFromTxhash(ethSwapWithdrawTransactionHash)
-            }
+          const secretFromTxhash = await util.helpers.extractSecretFromTx({
+            flow,
+            swapFlow: flow.ethSwap,
+            app: this.app,
           })
-
-          secretFromTxhash = `0x${secretFromTxhash.replace(/^0x/, '')}`
 
           const { isEthWithdrawn } = flow.state
 
@@ -315,23 +309,13 @@ class ETH2NEXT extends Flow {
         const { participant } = flow.swap
 
         const checkSecretExist = async () => {
-          try {
-            let secretFromContract = await flow.ethSwap.getSecret({
-              participantAddress: participant.eth.address,
-            })
-
-            if (secretFromContract) {
-
-              secretFromContract = `0x${secretFromContract.replace(/^0x/, '')}`
-
-              return secretFromContract
-            } else {
-              return null
-            }
-          }
-          catch (err) {
-            return null
-          }
+          return await util.helpers.extractSecretFromContract({
+            flow,
+            swapFlow: flow.ethSwap,
+            participantAddress: this.app.getParticipantEthAddress(flow.swap),
+            ownerAddress: flow.app.getMyEthAddress(),
+            app: this.app,
+          })
         }
 
         const secretFromContract = await util.helpers.repeatAsyncUntilResult((stopRepeat) => {

@@ -19,7 +19,7 @@ import { injectIntl } from 'react-intl'
 
 import appConfig from 'app-config'
 import config from 'helpers/externalConfig'
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router-dom'
 import CurrenciesList from './CurrenciesList'
 import InvoicesList from 'pages/Invoices/InvoicesList'
 
@@ -29,6 +29,8 @@ import BalanceForm from 'components/BalanceForm/BalanceForm'
 import { BigNumber } from 'bignumber.js'
 
 import metamask from 'helpers/metamask'
+
+import wpLogoutModal from 'helpers/wpLogoutModal'
 
 
 
@@ -194,7 +196,12 @@ export default class Wallet extends Component {
         params: { page = null },
       },
       multisigPendingCount,
+      intl,
+      intl: {
+        locale,
+      },
       location: { pathname },
+      history,
     } = this.props
 
 
@@ -223,6 +230,12 @@ export default class Wallet extends Component {
       if (page === 'history' && !isMobile) activeView = 1
       if (page === 'invoices') activeView = 2
 
+      if (page === 'exit') {
+        wpLogoutModal(() => {
+          history.push(localisedUrl(locale, links.home))
+        }, intl)
+      }
+
       this.setState({
         activeView,
         multisigPendingCount,
@@ -232,23 +245,41 @@ export default class Wallet extends Component {
   }
 
   componentDidMount() {
-    console.log('Wallet mounted')
-    const { params, url } = this.props.match
     const {
+      match: {
+        params,
+        params: {
+          page,
+        },
+        url,
+      },
       multisigPendingCount,
-      location: { pathname },
+      history,
+      location: {
+        pathname,
+      },
+      intl,
+      intl: {
+        locale,
+      },
     } = this.props
 
     if (pathname.toLowerCase() == links.connectWallet.toLowerCase()) {
       this.handleConnectWallet()
     }
-    console.log('wallet did mount', pathname)
+
     actions.user.getBalances()
 
     actions.user.fetchMultisigStatus()
 
     if (url.includes('send')) {
       this.handleWithdraw(params)
+    }
+
+    if (page === 'exit') {
+      wpLogoutModal(() => {
+        history.push(localisedUrl(locale, links.home))
+      }, intl)
     }
     this.getInfoAboutCurrency()
     this.setState({
@@ -362,8 +393,13 @@ export default class Wallet extends Component {
       // @ToDo - В будущем нужно убрать проверку только по типу монеты.
       // Старую проверку оставил, чтобы у старых пользователей не вывалились скрытые кошельки
 
-      return (!hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`)) || balance > 0
+      return (!hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`)) && balance > 0
     })
+
+    if (tableRows.length === 0) {
+      // @ToDo AlertModal - balance is empty
+      return
+    }
 
     const { currency, address } = tableRows[0];
 
@@ -431,9 +467,9 @@ export default class Wallet extends Component {
             widgetUrl = window.top.location.origin
             registrationData.widget_url = widgetUrl
           }
-  
+
           const tokensArray = Object.values(this.props.tokensData)
-  
+
           const wallets = tokensArray.map(item => ({
             symbol: item && item.currency ? item.currency.split(' ')[0] : '',
             type: item && item.currency ? item.currency.split(' ')[1] || 'common' : '',
@@ -447,9 +483,9 @@ export default class Wallet extends Component {
           }))
 
           registrationData.wallets = wallets
-  
+
           await stats.updateUser(ethData.address, window.top.location.host, registrationData)
-          
+
           firestore.updateUserData(balancesData)
         } catch (error) {
           console.error(`Sync error in wallet: ${error}`)

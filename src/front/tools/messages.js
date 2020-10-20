@@ -12,6 +12,7 @@ const locales = {
   nl: 'Dutch',
   en: 'English',
   ru: 'Russian',
+  es:  'Spanish',
 }
 
 const GLOB_PATTERN = 'shared/**/*.{js,ts,tsx}'

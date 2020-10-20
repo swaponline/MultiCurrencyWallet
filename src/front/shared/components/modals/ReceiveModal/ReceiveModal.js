@@ -1,5 +1,5 @@
 import React, { Fragment }  from 'react'
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router-dom'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import { connect } from 'redaction'
 import { constants } from 'helpers'

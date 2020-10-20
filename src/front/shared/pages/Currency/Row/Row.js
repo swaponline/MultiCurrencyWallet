@@ -7,7 +7,7 @@ import actions from 'redux/actions'
 
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router-dom'
 
 import Coin from 'components/Coin/Coin'
 import Flip from 'components/controls/Flip/Flip'

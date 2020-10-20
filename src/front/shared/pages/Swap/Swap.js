@@ -32,7 +32,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 @injectIntl
 @connect(({
   user: { ethData, btcData, ghostData, nextData, tokensData, activeFiat },
-  ipfs: { peer },
+  pubsubRoom: { peer },
   rememberedOrders,
 }) => ({
   activeFiat,
@@ -42,7 +42,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   tokensData: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   errors: 'api.errors',
   checked: 'api.checked',
-  decline: rememberedOrders.savedOrders,
+  savedOrders: rememberedOrders.savedOrders,
   deletedOrders: rememberedOrders.deletedOrders,
   peer,
 }))
@@ -130,10 +130,8 @@ export default class SwapComponent extends PureComponent {
 
     this.state = {
       isAddressCopied: false,
-      stepToHide: 0,
       swap: null,
       isMy: false,
-      hideAll: false,
       ethBalance: null,
       currencyData: null,
       isAmountMore: null,
@@ -145,6 +143,7 @@ export default class SwapComponent extends PureComponent {
       shouldStopCheckSendingOfRequesting: false,
       waitWithdrawOther: false,
       isFaucetRequested: false,
+      isSwapCancelled: false,
     }
   }
 
@@ -171,7 +170,11 @@ export default class SwapComponent extends PureComponent {
 
     try {
       const swap = new Swap(orderId, SwapApp.shared())
-      console.log(swap.flow._flowName);
+      console.log('Swap flow:', swap.flow._flowName);
+
+      window.swap = swap
+      window.flow = swap.flow
+
       const SwapComponent = swapComponents[swap.flow._flowName]
       const ethData = items.filter(item => item.currency === 'ETH')
       const currencyData = items.concat(tokenItems)
@@ -200,11 +203,6 @@ export default class SwapComponent extends PureComponent {
           })
       })
 
-      window.swap = swap
-
-      window.flow = swap.flow
-
-
       this.setState(() => ({
         swap,
         ethData,
@@ -219,15 +217,13 @@ export default class SwapComponent extends PureComponent {
 
     } catch (error) {
       console.error(error)
-      actions.notifications.show(constants.notifications.ErrorNotification, { error: 'Sorry, but this order do not exsit already' })
+      actions.notifications.show(constants.notifications.ErrorNotification, {
+        error: 'Sorry, but this order do not exsit already'
+      })
       this.props.history.push(localisedUrl(links.exchange))
     }
 
-    // @Info
-    // Тут на самом деле не удачно подобранно название переменной
-    // decline подразумевается, не отклоненный ордер, а начавшийся свап по ордеру
-    // Если к этому ордеру будет отправлен еще один запрос на свап, то он будет отклонене (decline)
-    if (!this.props.decline.includes(orderId)) {
+    if (!this.props.savedOrders.includes(orderId)) {
       this.setSaveSwapId(orderId)
     }
   }
@@ -237,9 +233,9 @@ export default class SwapComponent extends PureComponent {
     const { flow } = swap
     const { step } = flow.state
 
-    const { match: { params: { orderId } }, decline } = this.props
+    const { match: { params: { orderId } }, savedOrders } = this.props
 
-    if (step >= 4 && !decline.includes(orderId)) {
+    if (step >= 4 && !savedOrders.includes(orderId)) {
       this.saveThisSwap(orderId)
     }
 
@@ -290,7 +286,7 @@ export default class SwapComponent extends PureComponent {
     this.deleteThisSwap(id)
 
     this.setState(() => ({
-      hideAll: true,
+      isSwapCancelled: true,
     }))
 
     return true
@@ -519,7 +515,6 @@ export default class SwapComponent extends PureComponent {
   render() {
     const { peer, tokenItems, history, intl: { locale } } = this.props
     const {
-      hideAll,
       swap,
       SwapComponent,
       currencyData,
@@ -531,19 +526,18 @@ export default class SwapComponent extends PureComponent {
       ethAddress,
       isShowDebug,
       requestToFaucetSended,
-      stepToHide,
       isAddressCopied,
       waitWithdrawOther,
+      isSwapCancelled,
     } = this.state
 
     if (!swap || !SwapComponent || !peer || !isAmountMore) {
       return null
     }
 
-    const isFinished = (swap.flow.state.step >= (swap.flow.steps.length - 1))
     return (
       <Fragment>
-        {!hideAll ?
+        {!isSwapCancelled ?
           <div styleName={`${isMobile ? 'swap swapMobile' : 'swap'} ${isDark ? 'dark' : ''}`}>
             <SwapComponent
               tokenItems={tokenItems}
@@ -587,7 +581,7 @@ export default class SwapComponent extends PureComponent {
                 </span>
               </p>
 
-              { isShowDebug &&
+              {isShowDebug &&
                 <Debug flow={swap.flow} />
               }
 
@@ -595,9 +589,10 @@ export default class SwapComponent extends PureComponent {
                 <DeleteSwapAfterEnd swap={swap} />
               }
             </div>
-          </div> :
+          </div>
+          :
           <div>
-            <h3 styleName="canceled" /* eslint-disable-line */ onClick={this.goWallet}>
+            <h3 styleName="canceled" onClick={this.goWallet}>
               <FormattedMessage id="swappropgress327" defaultMessage="This swap is canceled" />
             </h3>
             <div>

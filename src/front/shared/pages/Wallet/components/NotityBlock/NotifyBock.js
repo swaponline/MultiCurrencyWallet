@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router-dom'
 import CSSModules from 'react-css-modules'
 import styles from './NotifyBlock.scss'
 

@@ -5,7 +5,7 @@ export const initialState = {
   isOnline: false,
   isAllPeersLoaded: false,
   onlineUsers: 0,
-  serverAddress: config.ipfs.server,
+  serverAddress: config.pubsubRoom.server,
   peer: '',
   reputation: null,
 }

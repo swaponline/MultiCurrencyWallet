@@ -155,7 +155,7 @@ class SwapApp {
 
   getMyEthAddress() {
     return (
-      this.env.metamask 
+      this.env.metamask
       && this.env.metamask.isEnabled()
       && this.env.metamask.isConnected()
     ) ? this.env.metamask.getAddress()

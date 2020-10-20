@@ -1,7 +1,7 @@
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+﻿[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 ![Deploy to swaponline.github.io](https://github.com/swaponline/MultiCurrencyWallet/workflows/Deploy%20to%20swaponline.github.io/badge.svg)
 [![About SWAP token](https://img.shields.io/badge/ERC20-SWAP-green)](https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/SWAPTOKEN.md)
-
+  
 ## MultiCurrencyWallet
 
 - 👛 Crypto wallet: BTC, ETН, USDT, {your_token}...
@@ -64,6 +64,7 @@ cd MultiCurrencyWallet
 npm i
 ```
 (Windows? Use [windows-build-tools](https://www.npmjs.com/package/windows-build-tools).)
+(Linux? Install `build-essential`, `g++`, `python` and `make`)
 
 5) Start dev mode
 ```

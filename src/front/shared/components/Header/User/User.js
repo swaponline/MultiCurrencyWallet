@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router-dom'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
 import { constants } from 'helpers'
@@ -28,9 +28,9 @@ import config from 'app-config'
 @injectIntl
 @connect({
   feeds: 'feeds.items',
-  peer: 'ipfs.peer',
+  peer: 'pubsubRoom.peer',
   isSigned: 'signUp.isSigned',
-  reputation: 'ipfs.reputation',
+  reputation: 'pubsubRoom.reputation',
 })
 @CSSModules(styles, { allowMultiple: true })
 export default class User extends React.Component {

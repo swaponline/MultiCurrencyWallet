@@ -159,9 +159,9 @@ const getReputation = async () => {
       const totalReputation = Number(btcReputation) + Number(ethReputation) + Number(ghostReputation) + Number(nextReputation)
 
       if (Number.isInteger(totalReputation)) {
-        reducers.ipfs.set({ reputation: totalReputation })
+        reducers.pubsubRoom.set({ reputation: totalReputation })
       } else {
-        reducers.ipfs.set({ reputation: null })
+        reducers.pubsubRoom.set({ reputation: null })
       }
     })
     .catch((error) => {
@@ -541,6 +541,12 @@ export const isOwner = (addr, currency) => {
   if (actions.ghost.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
   if (actions.next.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
   if (actions.eth.getAllMyAddresses().indexOf(addr.toLowerCase()) !== -1) return true
+
+  if (metamask
+    && metamask.isEnabled()
+    && metamask.isConnected()
+    && metamask.getAddress().toLowerCase() == addr.toLowerCase()
+  ) return true
 
   const name = `${currency.toLowerCase()}Data`
   const { user } = getState()

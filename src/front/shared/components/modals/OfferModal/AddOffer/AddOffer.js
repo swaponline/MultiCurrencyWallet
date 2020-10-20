@@ -462,7 +462,6 @@ export default class AddOffer extends Component {
         <SelectGroup
           isDark={isDark}
           switchBalanceFunc={this.switching}
-          styleName="sellGroup"
           label={<FormattedMessage id="addoffer381" defaultMessage="Sell" />}
           tooltip={<FormattedMessage id="partial462" defaultMessage="The amount you have on swap.online or an external wallet that you want to exchange" />}
           inputValueLink={linked.sellAmount.pipe(this.handleSellAmountChange)}
@@ -474,6 +473,7 @@ export default class AddOffer extends Component {
           currencies={currencies}
           placeholder="0.00000000"
         />
+
         <Select
           isDark={isDark}
           changeBalance={this.changeBalance}
@@ -481,6 +481,7 @@ export default class AddOffer extends Component {
           currency={sellCurrency}
           switching={this.switching}
         />
+
         <SelectGroup
           isDark={isDark}
           switchBalanceFunc={this.switching}
@@ -494,6 +495,7 @@ export default class AddOffer extends Component {
           currencies={addSelectedItems}
           placeholder="0.00000000"
         />
+
         <div styleName="exchangeRate">
           <ExchangeRateGroup
             isDark={isDark}
@@ -508,6 +510,7 @@ export default class AddOffer extends Component {
             sellCurrency={sellCurrency}
           />
         </div>
+
         <div styleName="controlsToggles">
           <div styleName="togles">
             <Toggle checked={manualRate} onChange={this.handleManualRate} />

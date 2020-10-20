@@ -4,21 +4,22 @@ const { exec } = require("child_process");
 var express = require('express');
 var app = express();
 var today = new Date();
-var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+" "+today.toLocaleTimeString();
 
 app.get('/secretmonitor_webcron', function (req, res) {
   (async () => {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({headless: true, args:['--no-sandbox']}); //{headless: true, args:['--no-sandbox']}
   const page = await browser.newPage();
   await page.setUserAgent('robobot monitor');
 
-  await page.goto('https://swaponline.github.io/#/usdt-btc');
+  await page.goto('https://swaponline.github.io/#/exchange/btc-to-eth');
   await page.waitFor(15000)
   
   const html = await page.content();
   
+  
   if (html.match('<span style="color: gray;">sells</span>')) {
-	  console.log(date+'orderbook founded ')
+	  console.log(date+'orderbook found ')
 	  res.send(html)
   } else {
 		  console.log(date+'no orderbook! go swapbot reboot') 
@@ -34,7 +35,8 @@ app.get('/secretmonitor_webcron', function (req, res) {
 					return;
 				}
 				console.log(date+'stdout: ${stdout}');
-				res.send(`stdout: ${stdout}`);
+				res.send(`stdout: ${stdout}` + html);
+				
 		  });
 	  }
 	  
@@ -43,6 +45,6 @@ app.get('/secretmonitor_webcron', function (req, res) {
 	})(); 
 });
 
-app.listen(13012, function () {
-  console.log('swapbot monitor agent app listening on port 3012!');
+app.listen(3001, function () {
+  console.log('swapbot monitor agent app listening on port!');
 });

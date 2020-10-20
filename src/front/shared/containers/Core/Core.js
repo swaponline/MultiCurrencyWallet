@@ -4,7 +4,7 @@ import SwapApp from 'swap.app'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
 
-@connect(({ ipfs }) => ({ ipfs }))
+@connect(({ pubsubRoom }) => ({ pubsubRoom }))
 export default class Core extends Component {
 
   state = {
@@ -19,7 +19,7 @@ export default class Core extends Component {
       .on('order update', this.updateOrders)
       .on('remove order', this.updateOrders)
       .on('new order request', this.updateOrders)
-    this.setIpfs()
+    this.setPubsub()
   }
 
   componentWillUnmount() {
@@ -32,24 +32,24 @@ export default class Core extends Component {
     if (SwapApp.shared().services.room.connection) {
       console.log('leave room')
       SwapApp.shared().services.room.connection
-        .removeListener('peer joined', actions.ipfs.userJoined)
-        .removeListener('peer left', actions.ipfs.userLeft)
+        .removeListener('peer joined', actions.pubsubRoom.userJoined)
+        .removeListener('peer left', actions.pubsubRoom.userLeft)
       SwapApp.shared().services.room.connection.leave()
     }
   }
 
-  setIpfs = () => {
-    const setupIPFS = () => {
+  setPubsub = () => {
+    const setupPubSubRoom = () => {
       try {
-        const { ipfs } = this.props
+        const { pubsubRoom } = this.props
 
-        if (ipfs.isOnline) return
+        if (pubsubRoom.isOnline) return
 
         if (!SwapApp.shared().services.room.connection) {
           throw new Error(`SwapRoom not ready`)
         }
 
-        const isOnline = SwapApp.shared().services.room.connection._ipfs.isOnline()
+        const isOnline = SwapApp.shared().services.room.connection.isOnline()
         const { peer } = SwapApp.shared().services.room
 
         this.updateOrders()
@@ -61,26 +61,26 @@ export default class Core extends Component {
         }
 
         SwapApp.shared().services.room.connection
-          .on('peer joined', actions.ipfs.userJoined)
-          .on('peer left', actions.ipfs.userLeft)
+          .on('peer joined', actions.pubsubRoom.userJoined)
+          .on('peer left', actions.pubsubRoom.userLeft)
 
         // BTC Multisign
         SwapApp.shared().services.room.on('btc multisig join', actions.btcmultisig.onUserMultisigJoin)
 
-        clearInterval(ipfsLoadingInterval)
+        clearInterval(pubsubLoadingInterval)
 
-        actions.ipfs.set({
+        actions.pubsubRoom.set({
           isOnline,
           peer,
         })
       } catch (error) {
-        console.warn('IPFS setup:', error)
+        console.warn('pubsubRoom setup:', error)
       }
     }
 
-    SwapApp.shared().services.room.on('ready', setupIPFS)
+    SwapApp.shared().services.room.on('ready', setupPubSubRoom)
 
-    const ipfsLoadingInterval = setInterval(setupIPFS, 5000)
+    const pubsubLoadingInterval = setInterval(setupPubSubRoom, 5000)
   }
 
   updateOrders = () => {

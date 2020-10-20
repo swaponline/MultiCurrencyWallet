@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'redaction'
 import { constants, links } from 'helpers'
 import { isMobile } from 'react-device-detect'
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router-dom'
 import actions from 'redux/actions'
 import { Helmet } from 'react-helmet'
 

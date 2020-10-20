@@ -39,10 +39,10 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 @withRouter
 @connect({
   feeds: "feeds.items",
-  peer: "ipfs.peer",
+  peer: "pubsubRoom.peer",
   isSigned: "signUp.isSigned",
   isInputActive: "inputActive.isInputActive",
-  reputation: "ipfs.reputation",
+  reputation: "pubsubRoom.reputation",
   dashboardView: "ui.dashboardModalsAllowed",
   modals: "modals",
   hiddenCoinsList: "core.hiddenCoinsList",
@@ -100,7 +100,7 @@ export default class Header extends Component {
         },
         !config.opts.exchangeDisabled && {
           title: intl.formatMessage(invest),
-          link: "exchange/btc-to-usdt",
+          link: "exchange/btc-to-eth",
           icon: "invest",
           haveSubmenu: false,
         },

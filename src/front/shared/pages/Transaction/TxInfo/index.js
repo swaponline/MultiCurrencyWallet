@@ -177,7 +177,7 @@ export default class TxInfo extends React.Component {
                       ) : (
                           <tr>
                             <td styleName="header">
-                              <FormattedMessage id="InfoPay_4" defaultMessage="Est. time to confitmation" />
+                              <FormattedMessage id="InfoPay_4" defaultMessage="Est. time to confirmation" />
                             </td>
                             <td>
                               <FormattedMessage id="InfoPay_NotConfirmed" defaultMessage="~10 mins" />

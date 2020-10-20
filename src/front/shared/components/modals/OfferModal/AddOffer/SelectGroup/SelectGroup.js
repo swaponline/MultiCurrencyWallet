@@ -65,7 +65,7 @@ const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onS
           id={id}
           styleName="currencySelect"
           selectedItemRender={(item) => item.fullTitle}
-          placeholder="Enter the name of token"
+          placeholder="Enter the name of coin"
           selectedValue={selectedValue}
           onSelect={onSelect}
           currencies={currAllowed}

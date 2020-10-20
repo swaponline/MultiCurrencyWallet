@@ -4,7 +4,7 @@ import { getState } from 'redux/core'
 import SwapApp from 'swap.app'
 import Swap from 'swap.swap'
 import { constants } from 'helpers'
-import Pair from 'pages/Home/Orders/Pair'
+import Pair from 'pages/Exchange/Orders/Pair'
 import config from 'helpers/externalConfig'
 
 import metamask from 'helpers/metamask'
@@ -180,6 +180,8 @@ const sendRequestForPartial = (orderId, newValues, destination = {}, callback) =
 
   const order = SwapApp.shared().services.orders.getByKey(orderId)
 
+  //console.log('>>> core:sendRequestForPartial order =', order)
+
   const { address, reputation, reputationProof } = getUserData(order.buyCurrency)
 
   const requestOptions = {
@@ -191,10 +193,12 @@ const sendRequestForPartial = (orderId, newValues, destination = {}, callback) =
     },
   }
 
+  //console.log('>>> core:sendRequestForPartial requestOptions =', requestOptions)
+
   order.sendRequestForPartial(newValues, requestOptions,
     (newOrder, isAccepted) => {
-      console.error('newOrder', newOrder)
-      console.error('newOrder', isAccepted)
+      console.log('newOrder', newOrder)
+      console.log('isAccepted', isAccepted)
 
       callback(newOrder, isAccepted)
     },
@@ -221,12 +225,13 @@ const createOrder = (data, isPartial = false) => {
 
 const setupPartialOrder = (order) => {
   const pairData = Pair.fromOrder(order)
-  if (!pairData || !pairData.price) return
+  if (!pairData || !pairData.price) {
+    return
+  }
   const { price } = pairData
 
   order.setRequestHandlerForPartial('sellAmount', ({ sellAmount }, oldOrder) => {
     const oldPair = Pair.fromOrder(oldOrder)
-
     debug('oldPair', oldPair)
 
     // if BID, then
@@ -239,7 +244,6 @@ const setupPartialOrder = (order) => {
     debug('newBuyAmount', buyAmount)
 
     const newOrder = ({ sellAmount, buyAmount })
-
     debug('newOrder', newOrder)
 
     return newOrder
@@ -247,8 +251,8 @@ const setupPartialOrder = (order) => {
 
   order.setRequestHandlerForPartial('buyAmount', ({ buyAmount }, oldOrder) => {
     const oldPair = Pair.fromOrder(oldOrder)
-
     debug('oldPair', oldPair)
+
     // BUY [main] = SELL [base] CURRENCY
     // price = [main]/[base] = [buy]/[sell]
 
@@ -260,11 +264,9 @@ const setupPartialOrder = (order) => {
       ? buyAmount.times(price)
       : buyAmount.div(price)
 
-
     debug('newSellAmount', sellAmount)
 
     const newOrder = ({ sellAmount, buyAmount })
-
     debug('newOrder', newOrder)
 
     return newOrder
@@ -320,7 +322,9 @@ const markCoinAsHidden = (coin, doBackup) => {
     reducers.core.markCoinAsHidden(coin)
     localStorage.setItem(constants.localStorage.hiddenCoinsList, JSON.stringify(getState().core.hiddenCoinsList))
 
-    if (doBackup) actions.backupManager.serverBackup()
+    if (doBackup) {
+      actions.backupManager.serverBackup()
+    }
   }
 }
 
@@ -332,14 +336,16 @@ const markCoinAsVisible = (coin, doBackup) => {
   reducers.core.markCoinAsVisible(findedCoin || coin)
   localStorage.setItem(hiddenCoinsList, JSON.stringify(getState().core.hiddenCoinsList))
 
-  if (doBackup) actions.backupManager.serverBackup()
+  if (doBackup) {
+    actions.backupManager.serverBackup()
+  }
 }
 
 const getWallet = (findCondition) => {
   const { currency, address } = findCondition
 
   const founded = getWallets().filter((wallet) => {
-    const conditionOk = (currency && wallet.currency.toLowerCase() === currency.toLowerCase())
+    const conditionOk = (currency && wallet.currency.toLowerCase() === currency.toLowerCase() && !wallet.isMetamask)
 
     if (address) {
       if (wallet.address.toLowerCase() === address.toLowerCase()) {
@@ -349,6 +355,7 @@ const getWallet = (findCondition) => {
       return conditionOk
     }
   })
+
   return (founded.length) ? founded[0] : false
 }
 

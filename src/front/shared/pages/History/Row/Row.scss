@@ -7,7 +7,6 @@
     .arrowWrap {
       svg {
         transform: rotate(180deg);
-        margin-top: 4px;
 
         path {
           stroke: #0CCF14;
@@ -25,6 +24,12 @@
 
     .amount {
       color: #EE5B51;
+    }
+
+    svg {
+      path {
+        stroke: #EE5B51;
+      }
     }
   }
 

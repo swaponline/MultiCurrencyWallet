@@ -61,7 +61,7 @@ const SelectGroup = (props) => {
           switchBalanceFunc={switchBalanceFunc}
           id={id}
           styleName={`currencySelect ${isDark ? 'dark' : ''}`}
-          placeholder="Enter the name of token"
+          placeholder="Enter the name of coin"
           selectedValue={selectedValue}
           onSelect={onSelect}
           currencies={currencies}

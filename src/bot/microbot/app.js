@@ -15,11 +15,11 @@ const {
 } = helpers
 
 //register unkronw tokens in core
-console.log('Register unkrown tokens', erc20 )
+console.log('Register unkrown tokens', erc20)
 Object.keys(TOKENS).filter((name) => !Object.keys(constants.COINS).includes(name))
   .map((name) => {
     erc20.register(name.toLowerCase(), TOKENS[name].decimals)
-    console.log('UNKRONW TOKEN:',name)
+    console.log('UNKRONW TOKEN:', name)
   })
 const ERC20TOKENS = Object.keys(TOKENS)
   .filter((name) => Object.keys(constants.COINS).includes(name))
