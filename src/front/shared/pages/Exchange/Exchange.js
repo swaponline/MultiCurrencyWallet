@@ -194,7 +194,9 @@ export default class Exchange extends Component {
 
     const haveCurrency = sell || "btc";
     const getCurrency = buy || (!isWidgetBuild ? "eth" : config.erc20token);
-console.log(haveCurrency, getCurrency)
+
+    console.log(haveCurrency, getCurrency)
+
     this.returnNeedCurrency(haveCurrency, getCurrency);
 
     if (

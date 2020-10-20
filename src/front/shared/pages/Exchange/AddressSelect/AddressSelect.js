@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'redaction'
 import Link from 'sw-valuelink'
 
@@ -74,6 +74,8 @@ const langLabels = defineMessages({
   },
 })
 
+@injectIntl
+@withRouter
 @connect(
   ({
     core: { hiddenCoinsList },
@@ -101,8 +103,6 @@ const langLabels = defineMessages({
     }
   }
 )
-@injectIntl
-@withRouter
 @cssModules(styles, { allowMultiple: true })
 export default class AddressSelect extends Component {
   constructor(props) {
@@ -213,7 +213,9 @@ export default class AddressSelect extends Component {
       intl: { locale },
     } = this.props
     const ticker = this.getTicker()
-    history.push(localisedUrl(locale, `${links.createWallet}/${ticker}`))
+    
+    const url = localisedUrl(locale, `${links.createWallet}/${ticker}`)
+    history.push(url)
   }
 
   handleConnectMetamask() {
@@ -263,6 +265,7 @@ export default class AddressSelect extends Component {
 
     if (selectedType === 'InternalAddressCreate') {
       this.goСreateWallet()
+      return
     }
 
     this.setState({
