@@ -20,16 +20,16 @@ const title = defineMessages({
 @CSSModules(styles)
 export default class ExchangeRate extends PureComponent {
   render() {
-    const { value, buyCurrency, sellCurrency, intl } = this.props
+    const { sellCurrency, buyCurrency, exchangeRate, intl } = this.props
     return (
       <Row title={intl.formatMessage(title.ExchangeRate)}>
-        <Value value={BigNumber(1).div(value).toString()} currency={sellCurrency} />
+        <Value value={1} currency={buyCurrency} />
         {' '}
         <div styleName="equal">
           <FormattedMessage id="ExchangeRate14" defaultMessage="=" />
         </div>
         {' '}
-        <Value value={1} currency={buyCurrency} />
+        <Value value={BigNumber(exchangeRate).toString()} currency={sellCurrency} />
       </Row>
     )
   }

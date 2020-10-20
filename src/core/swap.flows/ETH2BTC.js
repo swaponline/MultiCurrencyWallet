@@ -708,7 +708,7 @@ class ETH2BTC extends Flow {
 
         const hasWithdraw = await this.btcSwap.checkWithdraw(scriptAddress)
         if (hasWithdraw
-          && hasWithdraw.address.toLowerCase() != destAddress.toLowerCase()
+          && hasWithdraw.address.toLowerCase() !== destAddress.toLowerCase()
         ) {
           return true
         }

@@ -35,7 +35,7 @@ import helpers, { constants, links, ethToken } from 'helpers'
 import { getTokenWallet } from 'helpers/links'
 import { animate } from 'helpers/domUtils'
 import Switching from 'components/controls/Switching/Switching'
-import CustomDestAddress from '../Exchange/CustomDestAddress/CustomDestAddress'
+import AddressSelect from '../Exchange/AddressSelect/AddressSelect'
 
 const allowedCoins = [
   ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? ['BTC'] : [],
@@ -1326,8 +1326,8 @@ export default class Exchange extends Component {
             )
           }
           {this.customWalletAllowed() && (
-            <CustomDestAddress
-              type={getCurrency}
+            <AddressSelect
+              currency={getCurrency}
               hasError={destinationError}
               value={customWallet}
               isDark={isDark}

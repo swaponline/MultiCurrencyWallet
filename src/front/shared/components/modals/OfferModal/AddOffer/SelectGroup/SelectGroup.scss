@@ -22,6 +22,7 @@
   border-radius: 6px;
   text-align: center;
   position: relative;
+  text-transform: capitalize;
 }
 
 .row {
@@ -127,10 +128,10 @@ input:disabled {
 
 .currencySelect {
   border-radius: 0 6px 6px 0 !important;
-  background: none;
-  box-shadow: none;
+  background: none!important;
+  box-shadow: none!important;
   @include ff-bold;
-  position: absolute;
+  position: absolute!important;
   right: 5px;
   top: 5px;
 

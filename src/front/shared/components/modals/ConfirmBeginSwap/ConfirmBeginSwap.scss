@@ -13,13 +13,19 @@
 .title {
   width: 100%;
   padding: 0 64px;
-  line-height: 18px;
   font-size: 20px;
+  line-height: 18px;
   font-weight: 700;
   text-align: center;
 
   &.uppercase {
     text-transform: uppercase;
+  }
+
+  @include media-mobile {
+    .title {
+      font-size: 18px;
+    }
   }
 }
 
@@ -76,6 +82,13 @@
   height: auto;
   border-radius: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, .4);
+
+  @include media-mobile {
+    height: 100%;
+    padding: 16px;
+    border-radius: 0;
+    box-shadow: none;
+  }
 }
 
 .button {
@@ -84,29 +97,21 @@
 }
 
 .content {
+  margin: 32px 0;
   height: 100%;
   display: flex;
-  flex-direction: column;
-}
-
-
-.notification-overlay {
-  display: flex;
-  flex-grow: 1;
   align-items: center;
-  padding: 32px 0;
+
+  .content-inner {
+      > * + * {
+      margin-top: 2em;
+    }
+  }
+
 }
 
 .notification {
-  width: 100%;
-  display: flex;
-  justify-content: center;
   font-size: 16px;
-}
-
-.button-overlay {
-  display: flex;
-  justify-content: space-around;
 }
 
 .walletToggle {
@@ -117,18 +122,6 @@
   padding: 0 20px;
   &_site {
     position: relative;
-  }
-}
-
-.walletInput input {
-  border: none;
-  margin: 0;
-  height: 30px;
-  padding: 0;
-  margin-bottom: 20px;
-  font-size: 16px;
-  &:focus {
-    border: none;
   }
 }
 
@@ -165,23 +158,25 @@
 
 .walletInput {
   margin-top: 10px;
+
+  input {
+    border: none;
+    margin: 0;
+    height: 30px;
+    padding: 0;
+    margin-bottom: 20px;
+    font-size: 16px;
+    &:focus {
+      border: none;
+    }
+  }
 }
 
-
-@include media-mobile {
-  .modal {
-    height: 100%;
-    padding: 16px;
-    border-radius: 0;
-    box-shadow: none;
-  }
-  .title {
-    font-size: 18px;;
-  }
-  .notification-overlay {
-    height: 100%;
-  }
-  .button-overlay {
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  
+  @include media-mobile {
     justify-content: space-between;
   }
 }

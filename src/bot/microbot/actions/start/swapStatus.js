@@ -1,4 +1,4 @@
-const defaultLockTime = 60 * 60 * 3;
+const defaultLockTime = 60 * 60 * 3
 
 // Date.now() gives ms
 const utcNow = () => Math.floor(Date.now() / 1000)
@@ -113,12 +113,6 @@ export const canBeDeleted = async swap => {
   }
 
   return isFinished || neverStarted || isRefunded || isStoppedSwap
-}
-
-export const smartRefund = (swap) => {
-  if (needsRefund(swap)) {
-    return swap.flow.tryRefund()
-  }
 }
 
 export default (swap) => {

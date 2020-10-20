@@ -42,7 +42,7 @@ class SwapRoom extends ServiceInterface {
       p2pNode.start().then(async () => {
         this._init({
           peer: {
-            id: p2pNode.peerId._idB58String
+            id: p2pNode.peerId._idB58String,
           },
           p2pConnection: p2pNode,
         })
@@ -52,7 +52,9 @@ class SwapRoom extends ServiceInterface {
     })
   }
 
+
   _init({ peer, p2pConnection }) {
+    console.info('Room: init...')
     if (!p2pConnection) {
       setTimeout(() => {
         this._init({ peer, p2pConnection })
@@ -63,8 +65,8 @@ class SwapRoom extends ServiceInterface {
     this.peer = peer.id
 
     const defaultRoomName = this.app.isMainNet()
-                  ? 'swap.online'
-                  : 'testnet.swap.online'
+      ? 'swap.online'
+      : 'testnet.swap.online'
 
     this.roomName = this._config.roomName || defaultRoomName
 
@@ -85,6 +87,7 @@ class SwapRoom extends ServiceInterface {
     this.connection.on('message', this._handleNewMessage)
 
     this._events.dispatch('ready')
+    console.info(`Room: ready! (${this.roomName})`)
   }
 
   _handleUserOnline = (peer) => {
@@ -103,7 +106,7 @@ class SwapRoom extends ServiceInterface {
     const { from, data: rawData } = message
     debug('swap.verbose:room')('message from', from)
 
-    
+
     if (from === this.peer) {
       return
     }
@@ -112,8 +115,7 @@ class SwapRoom extends ServiceInterface {
 
     try {
       parsedData = JSON.parse(rawData.toString())
-    }
-    catch (err) {
+    } catch (err) {
       console.error('parse message data err:', err)
     }
 
@@ -123,7 +125,7 @@ class SwapRoom extends ServiceInterface {
       return
     }
 
-    // debug('swap.verbose:room')('parsedData', parsedData)
+    debug('swap.verbose:room')('data:', parsedData)
 
     const recover = this._recoverMessage(data, sign)
 
@@ -157,12 +159,12 @@ class SwapRoom extends ServiceInterface {
     return this
   }
 
-  subscribe (eventName, handler) {
+  subscribe(eventName, handler) {
     this._events.subscribe(eventName, handler)
     return this
   }
 
-  unsubscribe (eventName, handler) {
+  unsubscribe(eventName, handler) {
     this._events.unsubscribe(eventName, handler)
     return this
   }
@@ -214,9 +216,10 @@ class SwapRoom extends ServiceInterface {
   }
 
   sendConfirmation(peer, message, callback = false, repeat = 9) {
-
     if (!this.connection) {
-      setTimeout(() => { this.sendConfirmation(peer, message, callback, repeat) }, 1000)
+      setTimeout(() => {
+        this.sendConfirmation(peer, message, callback, repeat)
+      }, 1000)
       return
     }
 
@@ -231,7 +234,7 @@ class SwapRoom extends ServiceInterface {
         repeat--
         setTimeout(() => {
           this.sendConfirmation(peer, message, callback, repeat)
-        }, 1000 )
+        }, 1000)
         return
       }
 
@@ -239,7 +242,7 @@ class SwapRoom extends ServiceInterface {
     })
   }
 
-  acknowledgeReceipt (message) {
+  acknowledgeReceipt(message) {
     if (!message.peer || !message.action
       || message.action  === 'confirmation'
       || message.action  === 'active') {

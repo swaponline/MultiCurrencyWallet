@@ -564,14 +564,14 @@
     "id": "MyOrders23",
     "message": "Ваши предложения",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
     "id": "RowFeeds64",
     "message": "Скопировано",
     "files": [
-      "shared/pages/Home/Orders/MyOrders/RowFeeds/RowFeeds.js"
+      "shared/pages/Exchange/Orders/MyOrders/RowFeeds/RowFeeds.js"
     ]
   },
   {
@@ -582,14 +582,14 @@
     "id": "RowFeeds77",
     "message": "Снизить",
     "files": [
-      "shared/pages/Home/Orders/MyOrders/RowFeeds/RowFeeds.js"
+      "shared/pages/Exchange/Orders/MyOrders/RowFeeds/RowFeeds.js"
     ]
   },
   {
     "id": "RowFeeds81",
     "message": "Согласиться",
     "files": [
-      "shared/pages/Home/Orders/MyOrders/RowFeeds/RowFeeds.js"
+      "shared/pages/Exchange/Orders/MyOrders/RowFeeds/RowFeeds.js"
     ]
   },
   {
@@ -610,7 +610,7 @@
   },
   {
     "id": "Home153",
-    "message": "Что такое Atomic swap? ",
+    "message": "Что такое атомарные свопы? ",
     "files": [
       "shared/pages/Home/Home.js"
     ]
@@ -627,63 +627,63 @@
     "id": "Row148",
     "message": "ЗАПРОС",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "Row151",
     "message": "Перейти к обмену",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "Row157",
     "message": "Этот ордер выполняется",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "Row165",
     "message": "Подождите, Ваш запрос отправлен. ",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "RowM136",
     "message": "ЗАПРОС",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "RowM139",
     "message": "Перейти к обмену",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "RowM145",
     "message": "Этот заказ выполняется",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "RowM153",
     "message": "Подождите, Ваш запрос отправлен. ",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "RowM166",
     "message": "Старт",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/RequestButton/RequestButton.js"
     ]
   },
   {
@@ -1571,21 +1571,21 @@
     "id": "MyOrders20",
     "message": "Вы получите",
     "files": [
-      "shared/pages/Home/Orders/MyOrders/MyOrders.js"
+      "shared/pages/Exchange/Orders/MyOrders/MyOrders.js"
     ]
   },
   {
     "id": "MyOrders21",
     "message": "Вы имеете",
     "files": [
-      "shared/pages/Home/Orders/MyOrders/MyOrders.js"
+      "shared/pages/Exchange/Orders/MyOrders/MyOrders.js"
     ]
   },
   {
     "id": "MyOrders22",
     "message": "Курс обмена",
     "files": [
-      "shared/pages/Home/Orders/MyOrders/MyOrders.js"
+      "shared/pages/Exchange/Orders/MyOrders/MyOrders.js"
     ]
   },
   {
@@ -1612,14 +1612,14 @@
     "id": "orders102",
     "message": "СУММА",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
     "id": "orders105",
     "message": "ВСЕГО",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
@@ -1683,14 +1683,14 @@
     "id": "Reqstbttn15",
     "message": "ПРОДАТЬ",
     "files": [
-      "shared/pages/Home/Orders/RequestButton/RequestButton.js"
+      "shared/pages/Exchange/Orders/OrderBook/RequestButton/RequestButton.js"
     ]
   },
   {
     "id": "Reqstbttn16",
-    "message": "КУПИТЬ",
+    "message": "Купить",
     "files": [
-      "shared/pages/Home/Orders/RequestButton/RequestButton.js"
+      "shared/pages/Exchange/Orders/OrderBook/RequestButton/RequestButton.js"
     ]
   },
   {
@@ -1750,28 +1750,28 @@
     "id": "RowMobileFirstTypeYouGet",
     "message": "Вы получите ",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "RowMobileFirstTypeYouHave",
     "message": "Вы имеете",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "RowMobileSecondTypeYouGet",
     "message": "Вы получите ",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "RowMobileSecondTypeYouHave",
     "message": "Вы имеете ",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
@@ -1871,7 +1871,7 @@
   },
   {
     "id": "partial291",
-    "message": "Ожидание второго участника (30 сек): ",
+    "message": "Ожидание второго участника (30 сек)",
     "files": [
       "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
@@ -1925,7 +1925,7 @@
   },
   {
     "id": "partial255",
-    "message": "Вы получите",
+    "message": "Получаете",
     "files": [
       "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
@@ -2189,6 +2189,13 @@
     ]
   },
   {
+    "id": "CustomWalletIsNotAllowed",
+    "message": "Принятие предложения из списка временно доступно только для внутренних адресов",
+    "files": [
+      "shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.js"
+    ]
+  },
+  {
     "id": "PartialYourWalletAddress",
     "message": "Адрес кошелька получателя "
   },
@@ -2264,7 +2271,7 @@
   },
   {
     "id": "partialAtomicSwapWhatIsIt",
-    "message": "Atomic swap - это технология, которая позволяет обменять одну криптовалюту на другую без использования централизованных посредников.",
+    "message": "Атомарный своп - это технология, которая позволяет обменять одну криптовалюту на другую без использования централизованных посредников.",
     "files": [
       "shared/pages/Exchange/Exchange.js",
       "shared/pages/PointOfSell/PointOfSell.js"
@@ -2367,30 +2374,30 @@
   },
   {
     "id": "Reqstbttn22",
-    "message": "ЗА",
+    "message": "за",
     "files": [
-      "shared/pages/Home/Orders/RequestButton/RequestButton.js"
+      "shared/pages/Exchange/Orders/OrderBook/RequestButton/RequestButton.js"
     ]
   },
   {
     "id": "Row206",
     "message": "Купить",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "Row2061",
     "message": "Продать",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "Row210",
     "message": "за",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
@@ -2453,14 +2460,14 @@
     "id": "orders156",
     "message": "Купите {currency} здесь",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
     "id": "orders159",
     "message": "Предложения {currency}",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
@@ -2471,17 +2478,24 @@
     ]
   },
   {
-    "id": "Row1511",
-    "message": "цена {price}",
+    "id": "OrderBookRowSells",
+    "message": "продаёт",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
-    "id": "Row159",
-    "message": "за {total}",
+    "id": "OrderBookRowFor",
+    "message": "за",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
+    ]
+  },
+  {
+    "id": "OrderBookRowAtPrice",
+    "message": "цена",
+    "files": [
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
@@ -2628,23 +2642,23 @@
   },
   {
     "id": "orders104",
-    "message": "ЦЕНА ЗА 1 {buyCurrency}",
+    "message": "ЦЕНА",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
     "id": "orders1381",
     "message": "{buyCurrency}🔁{sellCurrency}",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
     "id": "orders1382",
     "message": "Все",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
@@ -2716,14 +2730,14 @@
     "id": "Orders121",
     "message": "Обмен {buyCurrencyFullName} ({buyCurrency}) на {sellCurrencyFullName} ({sellCurrency}) Атомарный Обмен",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
     "id": "Orders127",
     "message": "Децентрализированный обменник Swap.Online предлагает вам лучший курс обмена {buyCurrencyFullName} ({buyCurrency}) на {sellCurrencyFullName} ({sellCurrency}). Онлайн кошелек без регистрации.",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
@@ -3475,28 +3489,28 @@
     "id": "orders94s",
     "message": "Вы уверены, что хотите удалить ордер?",
     "files": [
-      "shared/pages/Home/Orders/Orders.js"
+      "shared/pages/Exchange/Orders/Orders.js"
     ]
   },
   {
     "id": "ordersRow101",
     "message": "купить",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "ordersRow134",
     "message": "Вы хотите {action} {amount} {main} за {total} {base} по цене {price} {main}/{base}?",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
     "id": "ordersRow97",
     "message": "продать",
     "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
@@ -6264,45 +6278,87 @@
     ]
   },
   {
-    "id": "Partial_DestinationAddress_ConnectMetamask",
-    "message": "Connect Metamask",
+    "id": "Exchange_FromAddress",
+    "message": "С адреса",
     "files": [
-      "shared/pages/Exchange/CustomDestAddress/CustomDestAddress.js"
+      "shared/pages/Exchange/Exchange.js"
     ]
   },
   {
-    "id": "Partial_DestinationAddress_CustomAddressOption",
-    "message": "Custom address",
+    "id": "Exchange_ToAddress",
+    "message": "На адрес",
     "files": [
-      "shared/pages/Exchange/CustomDestAddress/CustomDestAddress.js"
+      "shared/pages/Exchange/Exchange.js"
     ]
   },
   {
-    "id": "Partial_DestinationAddress_HotWalletAddressOption",
-    "message": "My Wallet",
+    "id": "Exchange_ConnectMetamask",
+    "message": "Подключить",
     "files": [
-      "shared/pages/Exchange/CustomDestAddress/CustomDestAddress.js"
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
   },
   {
-    "id": "Partial_DestinationAddress_MetamaskAddressOption",
-    "message": "Metamask's address",
+    "id": "Exchange_CustomAddressOption",
+    "message": "Произвольный",
     "files": [
-      "shared/pages/Exchange/CustomDestAddress/CustomDestAddress.js"
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
   },
   {
-    "id": "Partial_DestinationAddress_PlaceholderEnterAddress",
+    "id": "Exchange_InternalAddressOption",
+    "message": "Мой кошелёк",
+    "files": [
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
+    ]
+  },
+  {
+    "id": "Exchange_InternalAddressOptionDisabled",
+    "message": "Мой кошелёк (недостаточный баланс)",
+    "files": [
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
+    ]
+  },
+  {
+    "id": "Exchange_InternalCreate",
+    "message": "Создать кошелёк",
+    "files": [
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
+    ]
+  },
+  {
+    "id": "Exchange_MetamaskAddressOption",
+    "message": "Metamask",
+    "files": [
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
+    ]
+  },
+  {
+    "id": "Exchange_MetamaskNotInstalledOption",
+    "message": "Metamask (не установлен)",
+    "files": [
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
+    ]
+  },
+  {
+    "id": "Exchange_PlaceholderEnterAddress",
     "message": "Enter the receiving wallet address",
     "files": [
-      "shared/pages/Exchange/CustomDestAddress/CustomDestAddress.js"
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
   },
   {
-    "id": "Partial_DestinationAddress_SpecifyAddress",
-    "message": "Specify the receiving wallet address",
+    "id": "Exchange_SpecifyAddress",
+    "message": "Выберите...",
     "files": [
-      "shared/pages/Exchange/CustomDestAddress/CustomDestAddress.js"
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
+    ]
+  },
+  {
+    "id": "Exchange_BestPrice",
+    "message": "Лучшая цена:",
+    "files": [
+      "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
   },
   {
@@ -7372,7 +7428,7 @@
     "message": "Please top up your balance before you start the swap.",
     "files": [
       "shared/pages/Exchange/Exchange.js",
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
@@ -7380,7 +7436,7 @@
     "message": "Not enough balance.",
     "files": [
       "shared/pages/Exchange/Exchange.js",
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
@@ -8162,7 +8218,7 @@
     "message": "На вашем балансе должно быть не менее {ethFee} ETH и {btcFee} BTC для оплаты коммисии майнера",
     "files": [
       "shared/pages/Exchange/Exchange.js",
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
@@ -8170,7 +8226,7 @@
     "message": "На вашем балансе должно быть не менее {amount} {currency}. {br}Коммисия майнера {ethFee} ETH и {btcFee} BTC",
     "files": [
       "shared/pages/Exchange/Exchange.js",
-      "shared/pages/Home/Orders/Row/Row.js"
+      "shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
     ]
   },
   {
