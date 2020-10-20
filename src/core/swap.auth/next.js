@@ -5,8 +5,8 @@ import { getNextWallet } from '../../common/utils/mnemonic'
 const loginMnemonic = (mnemonic, walletNumber=0, path, app) => {
   const network = (
     app.isMainNet()
-      ? app.env.bitcoin.mainnet
-      : app.env.bitcoin.testnet
+      ? app.env.coininfo.next.main
+      : app.env.coininfo.next.test
   )
 
   const wallet = getNextWallet(network, walletNumber, path, app)
@@ -23,20 +23,23 @@ const login = (_privateKey, app) => {
 
   const network = (
     app.isMainNet()
-      ? app.env.bitcoin.mainnet
-      : app.env.bitcoin.testnet
+      ? app.env.coininfo.next.main
+      : app.env.coininfo.next.test
   )
 
   if (!privateKey) {
     privateKey = app.env.bitcoin.ECPair.makeRandom({ network }).toWIF()
   }
 
+console.log('swap app next pk', privateKey)
+console.log('swap app next network', network)
   account = new app.env.bitcoin.ECPair.fromWIF(privateKey, network)
 
   const { address } = app.env.bitcoin.payments.p2pkh({
     pubkey: account.publicKey,
     network
   })
+  console.log('swap app next auth', address)
   const { publicKey } = account
 
   account.getPublicKey = () => publicKey.toString('hex')

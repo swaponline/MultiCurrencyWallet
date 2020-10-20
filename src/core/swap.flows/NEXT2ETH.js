@@ -553,6 +553,7 @@ class NEXT2ETH extends Flow {
   }
 
   async syncBalance() {
+    console.log('syncBalance')
     const { sellAmount } = this.swap
 
     this.setState({
@@ -561,11 +562,15 @@ class NEXT2ETH extends Flow {
 
     const nextAddress = this.app.services.auth.accounts.next.getAddress()
 
+    console.log('nextAddress', nextAddress)
     const txFee = await this.nextSwap.estimateFeeValue({ method: 'swap', fixed: true, address: nextAddress })
+    console.log('txFee', txFee)
     const unspents = await this.nextSwap.fetchUnspents(nextAddress)
+    console.log('unspents', unspents)
     const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
     const balance = BigNumber(totalUnspent).dividedBy(1e8)
 
+    console.log('balance', balance.toNumber())
     const needAmount = sellAmount.plus(txFee)
     const isEnoughMoney = needAmount.isLessThanOrEqualTo(balance)
 
@@ -576,8 +581,10 @@ class NEXT2ETH extends Flow {
     }
 
     if (isEnoughMoney) {
+      console.log('isEnoughMoney')
       this.finishStep(stateData, { step: 'sync-balance' })
     } else {
+      console.log('not enougt', stateData)
       this.setState(stateData, true)
     }
   }

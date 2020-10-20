@@ -18,8 +18,8 @@ networks.mainnet = {
   scriptHash: 5,
   wif: 128,
 }
-
-/*networks.testnet = {
+/*
+networks.testnet = {
   messagePrefix: '\x18Bitcoin Signed Message:\n',
   bip32: {
     public: 0xe1427800,
@@ -28,7 +28,8 @@ networks.mainnet = {
   pubKeyHash: 0x4B,
   scriptHash: 0x89,
   wif: 0x2e,
-}*/
+}
+*/
 
 const hasAdminFee = (
   config

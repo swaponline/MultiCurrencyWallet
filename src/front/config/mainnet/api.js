@@ -7,6 +7,7 @@ export default {
     //'https://invoices.swaponline.site/proxybitpay',
   ],
   ghostscan: 'https://ghostscan.io/ghost-insight-api',
+  nextscan: 'https://explore.next.exchange/#',
   nextExplorer: 'https://explore.next.exchange/api',
   nextExplorerCustom: 'https://next.swaponline.io/mainnet',
   blockcypher: 'https://api.blockcypher.com/v1/btc/main',

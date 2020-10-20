@@ -92,6 +92,7 @@ const auth = (privateKey) => {
     pubkey: account.publicKey,
     network: next.network,
   })
+  console.log('front next auth', address)
   const { publicKey } = account
 
   return {
@@ -316,6 +317,7 @@ const fetchTxRaw = (txId, cacheResponse) =>
     },
   }).then(({ rawtx }) => rawtx)
 
+/** to-do  not working **/
 const fetchTxInfo = (hash, cacheResponse) =>
   fetchTx(hash, cacheResponse)
     .then(({ vin, vout, ...rest }) => {
@@ -566,6 +568,8 @@ window.getMainPublicKey = getMainPublicKey
 
 
 const checkWithdraw = (scriptAddress) => {
+  return false
+  /** todo fix **/
   return apiLooper.get('nextExplorer', `/txs/?address=${scriptAddress}`, {
     checkStatus: (answer) => {
       try {

@@ -22,7 +22,7 @@ export default class Debug extends Component {
       <div styleName="debug">
         <pre styleName="information">
           <code>
-            <ShowBtcScript btcScriptValues={state.btcScriptValues} />
+          {/*<ShowBtcScript btcScriptValues={state.btcScriptValues} />*/}
           </code>
         </pre>
         <pre styleName="information">

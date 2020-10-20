@@ -67,7 +67,8 @@ const createSwapApp = async () => {
           test: helpers.ghost.networks.testnet,
         },
         next: {
-          main: helpers.next.network.mainnet,
+          main: helpers.next.networks.mainnet,
+          test: helpers.next.networks.mainnet,
         },
       },
       storage: window.localStorage,

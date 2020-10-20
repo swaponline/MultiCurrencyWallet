@@ -1,11 +1,13 @@
 import debug from 'debug'
 import SwapApp, { SwapInterface, constants, util } from 'swap.app'
 import BigNumber from 'bignumber.js'
+
 // todo: create next-bitcore-lib ???
 //const bitcore = require('next-bitcore-lib');
-const bitcore = require('ghost-bitcore-lib');
+const bitcore = require('bitcore-lib')
 const PrivateKey = bitcore.PrivateKey;
 const BufferUtil = bitcore.util.buffer;
+
 
 class NextSwap extends SwapInterface {
 
@@ -103,8 +105,13 @@ class NextSwap extends SwapInterface {
       }
 
       try {
+        return 1
+        console.log('try fetch txinfo')
         const info = await this.fetchTxInfo(txid)
 
+        console.log('txinfo', info)
+        return 1
+        /** todo - re write for next **/
         const { fees, size, senderAddress } = info
 
         if (fees) {
@@ -137,31 +144,84 @@ class NextSwap extends SwapInterface {
    */
   _signTransaction(data, inputIndex = 0) {
     debug('swap.core:swaps')('signing script input', inputIndex)
-    const { script, tx, secret } = data
+    console.log('signTx', data, inputIndex)
+    const bitcoreNetwork = bitcore.Networks.get('next-mainnet')
+    const privateKey = new bitcore.PrivateKey.fromWIF(this.app.services.auth.accounts.next.getPrivateKey(), bitcoreNetwork)
+    const publicKey = bitcore.PublicKey(privateKey, bitcoreNetwork)
+    //const addressFrom = new bitcore.Address(publicKey, bitcoreNetwork)
+
+    console.log('bitcoreNetwork', bitcoreNetwork)
+    console.log('privateKey', privateKey)
+    //console.log('publicKey', publicKey)
+    //console.log('addressFrom', addressFrom)
+    //console.log(addressFrom.toString())
+        //const addressFrom = new bitcore.Address(publicKey, bitcoreNetwork)
+        
+    //console.log('publicKey', publicKey)
+    
+    const {
+      script,
+      tx,
+      secret,
+      scriptAddressObject,
+      scriptData,
+    } = data
+    
     const hashType = this.app.env.bitcoin.Transaction.SIGHASH_ALL
-    // At the moment we are using Bitcore lib from Next to handle signing logic. TODO: port Bitcoinjs-lib to be compatible with Next and
-    // to avoid lib's duplicate
-    const network = this.app.isMainNet() ? bitcore.Networks.mainnet : bitcore.Networks.testnet; 
-    const privateKey = new PrivateKey(this.app.services.auth.accounts.next.getPrivateKey(), network);
-    const signature = bitcore.Transaction.Sighash.sign(tx, privateKey, hashType, inputIndex, script);
+
+    const network = bitcoreNetwork
+
+    console.log('privatekey', this.app.services.auth.accounts.next.getPrivateKey())
+    //const privateKey = new PrivateKey(this.app.services.auth.accounts.next.getPrivateKey());
+    console.log(privateKey)
+    const signature = bitcore.Transaction.Sighash.sign(tx, privateKey, hashType, inputIndex, Buffer.from(script));
+    //const privateKey = new PrivateKey(this.app.services.auth.accounts.next.getPrivateKey(), network);
+    /*
+    const signature = bitcore.Transaction.Sighash.sign(
+      tx, privateKey, hashType, inputIndex, script
+    );
+    */
+    console.log('signature', signature)
+
+    const sigScript = bitcore.Script.buildPublicKeyIn(signature, hashType)
+    console.log('sigScript', sigScript)
+
+    console.log(sigScript.toASM())
     const sigBuffer = BufferUtil.concat([
       signature.toDER(),
       BufferUtil.integerAsSingleByteBuffer(hashType)
     ]);
+
+    console.log('sigBuffer', sigBuffer)
+    /*
     const payment = this.app.env.bitcoin.payments.p2sh({
       redeem: this.app.env.bitcoin.payments.p2wsh({
         redeem: {
           output: script,
           input: this.app.env.bitcoin.script.compile([
-            sigBuffer,
-            this.app.services.auth.accounts.next.getPublicKeyBuffer(),
+            sigScript.toBuffer(),
+            publicKey.toBuffer(),
             Buffer.from(secret.replace(/^0x/, ''), 'hex'),
           ])
-        }
-      })
+        },
+        network,
+      }),
+      network,
     })
+    */
 
-    tx.inputs[inputIndex].setWitnesses(payment.witness);
+    const inputOpCodes = [
+      sigScript.toBuffer(),
+      publicKey.toBuffer(),
+      Buffer.from(secret.replace(/^0x/, ''), 'hex'),
+    ]
+    const inputScript = bitcore.Script.fromBuffer(
+      this.app.env.bitcoin.script.compile(inputOpCodes)
+    )
+    console.log('inputScript', inputScript.toASM())
+   // console.log('payment', payment)
+   // tx.inputs[inputIndex].setScript(inputScript)
+    //tx.inputs[inputIndex].setWitnesses(payment.witness);
   }
 
   /**
@@ -178,7 +238,8 @@ class NextSwap extends SwapInterface {
     const hashOpcode = this.app.env.bitcoin.opcodes[hashOpcodeName]
 
     const { secretHash, ownerPublicKey, recipientPublicKey, lockTime } = data
-    const script = this.app.env.bitcoin.script.compile([
+    
+    const opCodes = [
 
       hashOpcode,
       Buffer.from(secretHash, 'hex'),
@@ -200,13 +261,23 @@ class NextSwap extends SwapInterface {
       this.app.env.bitcoin.opcodes.OP_CHECKSIG,
 
       this.app.env.bitcoin.opcodes.OP_ENDIF,
-    ])
+    ]
 
-    const scriptData = this.app.env.bitcoin.payments.p2sh({ redeem: { output: script, network: this.network }, network: this.network })
-    const scriptAddress = scriptData.address;
+    const script = this.app.env.bitcoin.script.compile(opCodes)
+
+    const bitcoreNetwork = bitcore.Networks.get('next-mainnet')
+
+    const scriptData = bitcore.Script.fromBuffer(Buffer.from(script))
+
+    const p2shScript = scriptData.toScriptHashOut()
+
+    const scriptAddress = p2shScript.toAddress(bitcoreNetwork)
+
 
     return {
-      scriptAddress,
+      scriptAddress: scriptAddress.toString(),
+      scriptAddressObject: scriptAddress,
+      scriptData,
       script,
     }
   }
@@ -262,9 +333,26 @@ class NextSwap extends SwapInterface {
 
     return new Promise(async (resolve, reject) => {
       try {
+        console.log('fund script - setup next network')
+        bitcore.Networks.add({
+          name: 'next-mainnet',
+          pubkeyhash: this.app.services.auth.accounts.next.network.pubKeyHash,
+          privatekey: this.app.services.auth.accounts.next.network.wif,
+          scripthash: this.app.services.auth.accounts.next.network.scriptHash,
+          xpubkey: this.app.services.auth.accounts.next.network.bip32.public,
+          xprivkey: this.app.services.auth.accounts.next.network.bip32.private,
+          networkMagic: 0xcbe4d0a1,
+          port: 7077,
+        })
+        const bitcoreNetwork = bitcore.Networks.get('next-mainnet')
 
-        const { scriptAddress } = this.createScript(scriptValues, hashName)
+        const {
+          scriptAddress,
+          scriptAddressObject,
+          scriptData,
+        } = this.createScript(scriptValues, hashName)
 
+        console.log('scriptAddress', scriptAddress, scriptAddressObject)
         const ownerAddress = this.app.services.auth.accounts.next.getAddress()
 
         const unspents = await this.fetchUnspents(ownerAddress)
@@ -277,17 +365,26 @@ class NextSwap extends SwapInterface {
           throw new Error(`Total less than fee: ${totalUnspent} < ${feeValue} + ${fundValue}`)
         }
 
-        const transaction = new bitcore.Transaction()
-          .from(unspents)         
-          .to(scriptAddress, fundValue) 
-          .change(this.app.services.auth.accounts.next.getAddress())     
-          .sign(this.app.services.auth.accounts.next.getPrivateKey())    
+        console.log('from', this.app.services.auth.accounts.next.getAddress())
+
+        const privateKey = new bitcore.PrivateKey.fromWIF(this.app.services.auth.accounts.next.getPrivateKey())
+        const publicKey = bitcore.PublicKey(privateKey, bitcoreNetwork)
+        const addressFrom = new bitcore.Address(publicKey, bitcoreNetwork)
+
+        console.log('unspents', unspents)
+        console.log('fundValue', fundValue)
+        let transaction = new bitcore.Transaction()
+          transaction = transaction.from(unspents)         
+          transaction = transaction.to(scriptAddressObject, fundValue)
+          transaction = transaction.change(addressFrom)
+          transaction = transaction.sign(privateKey)
 
         if (typeof handleTransactionHash === 'function') {
           handleTransactionHash(transaction.toObject().txid)
         }
 
         try {
+          console.log('Raw tx', String(transaction.serialize()))
           const result = await this.broadcastTx(String(transaction.serialize()))
           resolve(result)
         }
@@ -336,17 +433,39 @@ class NextSwap extends SwapInterface {
    * @returns {Promise}
    */
   async getWithdrawRawTransaction(data, isRefund, hashName) {
+    console.log('getWithdrawRawTransaction', data, isRefund, hashName)
+    bitcore.Networks.add({
+      name: 'next-mainnet',
+      pubkeyhash: this.app.services.auth.accounts.next.network.pubKeyHash,
+      privatekey: this.app.services.auth.accounts.next.network.wif,
+      scripthash: this.app.services.auth.accounts.next.network.scriptHash,
+      xpubkey: this.app.services.auth.accounts.next.network.bip32.public,
+      xprivkey: this.app.services.auth.accounts.next.network.bip32.private,
+      networkMagic: 0xcbe4d0a1,
+      port: 7077,
+    })
+    const bitcoreNetwork = bitcore.Networks.get('next-mainnet')
+
     const { scriptValues, secret, destinationAddress } = data
     const destAddress = (destinationAddress) ? destinationAddress : this.app.services.auth.accounts.next.getAddress()
 
-    const { script, scriptAddress } = this.createScript(scriptValues, hashName)
+    const {
+      script,
+      scriptAddress,
+      scriptData,
+      scriptAddressObject,
+    } = this.createScript(scriptValues, hashName)
+    console.log('scriptAddress', scriptAddress)
     const unspents = await this.fetchUnspents(scriptAddress)
 
+    console.log('unspents', unspents)
     const feeValueBN = await this.getTxFee({ inSatoshis: true, address: scriptAddress })
     const feeValue = feeValueBN.integerValue().toNumber()
     const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
 
+    console.log('begin checks')
     if (BigNumber(totalUnspent).isLessThan(feeValue)) {
+      console.log('totalUnspent is less fee')
       /* Check - may be withdrawed */
       if (typeof this.checkWithdraw === 'function') {
         const hasWithdraw = await this.checkWithdraw(scriptAddress)
@@ -366,6 +485,7 @@ class NextSwap extends SwapInterface {
       }
     }
 
+    console.log('create tx')
     const tx = new bitcore.Transaction();
 
     if (isRefund) {
@@ -380,10 +500,15 @@ class NextSwap extends SwapInterface {
         script,
         secret,
         tx,
+        scriptAddressObject,
+        scriptData,
       }, index)
 
     );
+    const privateKey = new bitcore.PrivateKey.fromWIF(this.app.services.auth.accounts.next.getPrivateKey())
+    //tx.sign(privateKey)
 
+    console.log('tx withdraw', tx)
     const txHex = tx.toString()
     const txId = tx.toObject().hash
 
@@ -470,6 +595,7 @@ class NextSwap extends SwapInterface {
         }
       }
       catch (error) {
+        console.log(error)
         console.warn('NextSwap: cant withdraw', error.message)
 
         let errorMessage

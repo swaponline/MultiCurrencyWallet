@@ -16,6 +16,8 @@ import EthTokenToGhost from '../EthTokenToGhost'
 import GhostToEthToken from '../GhostToEthToken'
 
 
+import EthToNext from '../EthToNext'
+import NextToEth from '../NextToEth'
 // import EthTokenToUsdt from '../EthTokenToUsdt'
 // import UsdtToEthToken from '../UsdtToEthToken'
 
@@ -33,6 +35,8 @@ const swapComponents = {
   'SWAP2BTC': EthTokenToBtc,
   'BTC2SWAP': BtcToEthToken,
 
+  'ETH2NEXT': EthToNext,
+  'NEXT2ETH': NextToEth,
   // 'SWAP2USDT': EthTokenToUsdt,
   // 'USDT2SWAP': UsdtToEthToken,
 }
