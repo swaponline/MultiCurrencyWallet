@@ -5,15 +5,15 @@ import styles from './Option.scss'
 
 
 const Option = ({ icon, title, smalltext, disabled }) => (
-  <div styleName="optionrow">
+  <div styleName={`optionrow ${disabled ? 'disabled' : ''}`}>
     {icon && (
       <em>
         <img src={icon} />
       </em>
     )}
-    <span styleName={`${smalltext ? 'smalltext' : ''} ${disabled ? 'disabled' : ''}`}>{title}</span>
+    <div styleName={`optionTitle ${smalltext ? 'smalltext' : ''}`}>{title}</div>
   </div>
 )
 
 
-export default cssModules(Option, styles)
+export default cssModules(Option, styles, { allowMultiple: true })

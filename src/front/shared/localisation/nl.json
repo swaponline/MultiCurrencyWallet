@@ -6231,7 +6231,7 @@
   },
   {
     "id": "Exchange_CustomAddressOption",
-    "message": "Aangepast",
+    "message": "Externe portemonnee of uitwisseling",
     "files": [
       "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]
