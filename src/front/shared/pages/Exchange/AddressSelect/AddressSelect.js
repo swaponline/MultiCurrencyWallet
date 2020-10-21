@@ -120,7 +120,7 @@ export default class AddressSelect extends Component {
       selectedType: 'placeholder',
       walletAddressFocused: false,
       customAddress: '',
-      metamaskConnected: metamask.isConnected(),
+      isMetamaskConnected: metamask.isConnected(),
       metamaskAddress: metamask.getAddress(),
       isScanActive: false,
     }
@@ -226,7 +226,7 @@ export default class AddressSelect extends Component {
       }
 
       this.setState({
-        metamaskConnected: true,
+        isMetamaskConnected: true,
         metamaskAddress: metamask.getAddress(),
       }, () => {
         this.applyAddress({
@@ -328,7 +328,7 @@ export default class AddressSelect extends Component {
     const {
       selectedType,
       walletAddressFocused,
-      metamaskConnected,
+      isMetamaskConnected,
       metamaskAddress,
       isScanActive,
       hasError,
@@ -374,7 +374,6 @@ export default class AddressSelect extends Component {
           title: !isInternalOptionDisabled ?
             <Fragment>
               <FormattedMessage {...langLabels.optionInternal} />
-              {' '}
               <Address
                 address={this.getInternalAddress()}
                 format={AddressFormat.Short}
@@ -389,17 +388,36 @@ export default class AddressSelect extends Component {
           title: <FormattedMessage {...langLabels.optionInternalCreate} />,
         }]
       ),
-      ...((isMetamaskOption) ?
-          isMetamaskInstalled ? [{
-            value: AddressType.Metamask,
-            icon: iconMetamask,
-            title: <FormattedMessage {...langLabels.optionMetamask} />,
-          }] : [{
+      ...(isMetamaskOption ?
+        isMetamaskInstalled ?
+          isMetamaskConnected ?
+            [{
+              value: AddressType.Metamask,
+              icon: iconMetamask,
+              title: <Fragment>
+                <FormattedMessage {...langLabels.optionMetamask} />
+                <Address
+                  address={metamaskAddress}
+                  format={AddressFormat.Short}
+                />
+              </Fragment>
+            }]
+            :
+            [{
+              value: AddressType.Metamask,
+              icon: iconMetamask,
+              title: <FormattedMessage {...langLabels.optionMetamask} />,
+            }]
+          :
+          [{
             value: 'disabled',
             icon: iconMetamask,
             title: <FormattedMessage {...langLabels.optionMetamaskNotInstalled} />,
             disabled: true,
-          }] : []),
+          }]
+        :
+        []
+      ),
       ...(isCustomAddressOption ? [{
         value: AddressType.Custom,
         icon: iconCustom,
@@ -422,30 +440,17 @@ export default class AddressSelect extends Component {
           itemRender={item => <Option {...item} />}
           onSelect={(value) => this.handleOptionSelect(value)}
         />
-        {/*{selectedType === AddressType.Internal &&
+        {selectedType === AddressType.Metamask && metamask.isEnabled() && !isMetamaskConnected &&
           <div styleName="selectedInner">
-            <div styleName="readonlyValue">
-              <input value={this.getInternalAddress()} onChange={() => { }} />
+            <div styleName="buttonContainer">
+              <Button
+                styleName="button"
+                blue
+                onClick={() => { this.handleConnectMetamask() }}
+              >
+                <FormattedMessage {...langLabels.connectMetamask} />
+              </Button>
             </div>
-          </div>
-        }*/}
-        {selectedType === AddressType.Metamask && metamask.isEnabled() &&
-          <div styleName="selectedInner">
-            {(metamaskConnected) ? (
-              <div styleName="readonlyValue">
-                <input value={metamaskAddress} onChange={() => { }} />
-              </div>
-            ) : (
-              <div styleName="buttonContainer">
-                <Button
-                  styleName="button"
-                  blue
-                  onClick={() => { this.handleConnectMetamask() }}
-                >
-                  <FormattedMessage {...langLabels.connectMetamask} />
-                </Button>
-              </div>
-            )}
           </div>
         }
         {selectedType === AddressType.Custom && !isCustomOptionInputHidden &&

@@ -241,7 +241,14 @@
 }
 
 .disabled {
-  opacity: 0.5;
+  opacity: 0.2;
+  filter: grayscale;
+}
+
+.selectedItemInner {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .select {

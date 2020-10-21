@@ -92,7 +92,7 @@ export default class DropDown extends Component {
     if (selectedItem !== undefined) {
       if (typeof selectedItemRender !== 'function') {
         return (
-          <span styleName={selectedItem.disabled ? 'disabled' : ''}>{selectedItem.title || selectedItem.fullTitle}</span>
+          <div styleName={`selectedItemInner ${selectedItem.disabled ? 'disabled' : ''}`}>{selectedItem.title || selectedItem.fullTitle}</div>
         )
       } else {
         return selectedItemRender(selectedItem)

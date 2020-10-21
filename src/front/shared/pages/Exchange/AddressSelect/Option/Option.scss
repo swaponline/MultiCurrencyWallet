@@ -14,11 +14,19 @@
     }
   }
 
-  .smalltext {
+  &.disabled {
+    opacity: 0.3;
+    filter: grayscale(1);
+    cursor: not-allowed;
+  }
+}
+
+.optionTitle {
+  display: flex;
+  justify-content: space-between;
+
+  &.smalltext {
     font-size: 0.8em;
   }
 
-  .disabled {
-    opacity: 0.5;
-  }
 }
