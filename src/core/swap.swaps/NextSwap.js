@@ -8,6 +8,7 @@ const bitcore = require('bitcore-lib')
 const PrivateKey = bitcore.PrivateKey;
 const BufferUtil = bitcore.util.buffer;
 
+window.bitcore = bitcore
 
 class NextSwap extends SwapInterface {
 
@@ -485,7 +486,106 @@ class NextSwap extends SwapInterface {
       }
     }
 
+
+
+    
     console.log('create tx')
+    const tx = new bitcore.Transaction();
+
+    // prepare signature
+    const hashType = this.app.env.bitcoin.Transaction.SIGHASH_ALL
+
+    const privateKey = new bitcore.PrivateKey.fromWIF(
+      this.app.services.auth.accounts.next.getPrivateKey(),
+      bitcoreNetwork
+    )
+    
+    
+    
+    console.log('scriptValues', scriptValues)
+    if (isRefund) {
+      tx.lockUntilDate(scriptValues.lockTime);
+    }
+    console.log('destAddress', destAddress)
+    tx.from(unspents)
+    console.log(tx)
+    tx.to(destAddress, totalUnspent - feeValue)
+    tx.inputs.forEach(async (input, oIndex) => {
+      /*
+      console.log('unspent', unspent)
+      const utxo = {
+        txId: unspent.txid,
+        outputIndex: oIndex,
+        script: scriptData.toHex(),
+        satoshis: unspent.satoshis,
+      }
+      console.log('our utxo', utxo)
+      console.log('create signature')
+      */
+      const signature = await bitcore.Transaction.Sighash.sign(
+        tx,
+        privateKey,
+        hashType,
+        oIndex,
+        scriptData
+      )
+      console.log('signature created', signature)
+      
+
+      const sigBuffer = BufferUtil.concat([
+        signature.toDER(),
+        BufferUtil.integerAsSingleByteBuffer(hashType)
+      ]);
+
+      const scriptSig = new bitcore
+        .Script()
+        .add(sigBuffer)
+        .add(Buffer.from(secret))
+
+      console.log('our sig script', scriptSig.toASM())
+      //input.output.setScript(scriptData)
+      input.setWitnesses(scriptSig)
+      /*
+      console.log('create input')
+      const input = new bitcore.Transaction.Input({
+        prevTxId: utxo.txId,
+        outputIndex: utxo.outputIndex,
+        output: utxo,
+        script: scriptSig.toHex(),
+      })
+      console.log('our input', input)
+      console.log('try add')
+      tx.addInput(input)
+      */
+    })
+    
+    console.log(tx.inputs)
+    console.log('tx', tx)
+    
+    //tx.sign(privateKey)
+    console.log('tx hex', tx.uncheckedSerialize())
+    //;
+    
+    /*
+    // Sign input witness's
+    tx.inputs.map((_, index) =>
+      this._signTransaction({
+        script,
+        secret,
+        tx,
+      }, index)
+
+    );
+    */
+
+    const txHex = tx.toString()
+    const txId = tx.toObject().hash
+
+     return {
+       txHex,
+       txId,
+     }
+    /*
     const tx = new bitcore.Transaction();
 
     if (isRefund) {
@@ -505,6 +605,8 @@ class NextSwap extends SwapInterface {
       }, index)
 
     );
+    */
+    /*
     const privateKey = new bitcore.PrivateKey.fromWIF(this.app.services.auth.accounts.next.getPrivateKey())
     //tx.sign(privateKey)
 
@@ -516,7 +618,7 @@ class NextSwap extends SwapInterface {
        txHex,
        txId,
      }
-
+*/
   }
 
   /**
