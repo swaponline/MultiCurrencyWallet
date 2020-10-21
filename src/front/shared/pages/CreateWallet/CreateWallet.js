@@ -351,7 +351,7 @@ const CreateWallet = (props) => {
             <button onClick={handleRestoreMnemonic}>
               <FormattedMessage
                 id="ImportKeys_RestoreMnemonic"
-                defaultMessage="Ввести 12 слов"
+                defaultMessage="Enter 12 words"
               />
             </button>
             &nbsp;

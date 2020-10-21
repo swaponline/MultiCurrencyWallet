@@ -4045,7 +4045,7 @@
   },
   {
     "id": "createWalletCapture2",
-    "message": "Geen beveiliging, sms, google auth, multisig",
+    "message": "Gemakkelijk, sms, pin, multisig",
     "files": [
       "shared/pages/CreateWallet/Steps/texts.js"
     ]

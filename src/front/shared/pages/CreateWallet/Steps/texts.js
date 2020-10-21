@@ -42,7 +42,7 @@ export const subHeaderText2 = () => (
 export const cupture2 = () => (
   <FormattedMessage
     id="createWalletCapture2"
-    defaultMessage="Без защиты, sms, google auth, мультисиг"
+    defaultMessage="Простой, sms, pin, мультисиг"
   />
 )
 /* eslint-enable */

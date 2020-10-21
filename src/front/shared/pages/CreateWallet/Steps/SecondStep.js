@@ -188,10 +188,10 @@ const SecondStep = (props) => {
   const coins = [
     {
       text: {
-        en: 'No security',
-        ru: 'Без защиты',
-        nl: 'Geen beveliging',
-        es: 'sin seguridad',
+        en: 'Simple',
+        ru: 'Простой',
+        nl: 'Gemakkelijk',
+        es: 'Sencillo',
       }[locale],
       name: 'withoutSecure',
       capture: {

@@ -4196,7 +4196,7 @@
   },
   {
     "id": "createWalletCapture2",
-    "message": "Без защиты, sms, google auth, мультисиг",
+    "message": "Простой, sms, pin, мультисиг",
     "files": [
       "shared/pages/CreateWallet/Steps/texts.js"
     ]

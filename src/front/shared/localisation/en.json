@@ -4047,7 +4047,7 @@
   },
   {
     "id": "createWalletCapture2",
-    "message": "No security, sms, google auth, multisig",
+    "message": "Simple, sms, pin, multisig",
     "files": [
       "shared/pages/CreateWallet/Steps/texts.js"
     ]

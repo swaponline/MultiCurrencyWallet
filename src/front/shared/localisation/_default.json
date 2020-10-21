@@ -3940,7 +3940,7 @@
   },
   {
     "id": "createWalletCapture2",
-    "message": "Без защиты, sms, google auth, мультисиг",
+    "message": "Simple, sms, pin, мультисиг",
     "files": [
       "shared/pages/CreateWallet/Steps/texts.js"
     ]
