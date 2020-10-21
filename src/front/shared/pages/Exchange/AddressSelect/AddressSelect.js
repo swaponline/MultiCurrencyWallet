@@ -9,6 +9,7 @@ import config from 'helpers/externalConfig'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import Input from 'components/forms/Input/Input';
 import DropDown from 'components/ui/DropDown/DropDown'
+import Address, { AddressFormat } from 'components/ui/Address/Address'
 import metamask from 'helpers/metamask'
 import { Button } from 'components/controls'
 import ethToken from 'helpers/ethToken'
@@ -143,12 +144,12 @@ export default class AddressSelect extends Component {
     return internalAddress
   }
 
-  isCurrencyInUserWallet() {
+  isCurrencyInInternalWallet() {
     const { hiddenCoinsList } = this.props
     const ticker = this.getTicker()
     const internalAddress = this.getInternalAddress()
 
-    let isCurrencyInUserWallet = true
+    let result = true
 
     for (let i = 0; i < hiddenCoinsList.length; i++) {
       const hiddenCoin = hiddenCoinsList[i]
@@ -156,11 +157,11 @@ export default class AddressSelect extends Component {
         hiddenCoin === ticker ||
         (internalAddress && hiddenCoin.includes(`${ticker}:${internalAddress}`))
       ) {
-        isCurrencyInUserWallet = false
+        result = false
         break
       }
     }
-    return isCurrencyInUserWallet
+    return result
   }
 
   handleFocusAddress() {
@@ -367,11 +368,18 @@ export default class AddressSelect extends Component {
         disabled: true,
         hidden: true,
       },
-      ...(this.isCurrencyInUserWallet() ? [{
+      ...(this.isCurrencyInInternalWallet() ? [{
           value: AddressType.Internal,
           icon: iconInternal,
           title: !isInternalOptionDisabled ?
-            <FormattedMessage {...langLabels.optionInternal} />
+            <Fragment>
+              <FormattedMessage {...langLabels.optionInternal} />
+              {' '}
+              <Address
+                address={this.getInternalAddress()}
+                format={AddressFormat.Short}
+              />
+            </Fragment>
             :
             <FormattedMessage {...langLabels.optionInternalDisabled} />,
           disabled: isInternalOptionDisabled,
@@ -414,13 +422,13 @@ export default class AddressSelect extends Component {
           itemRender={item => <Option {...item} />}
           onSelect={(value) => this.handleOptionSelect(value)}
         />
-        {selectedType === AddressType.Internal &&
+        {/*{selectedType === AddressType.Internal &&
           <div styleName="selectedInner">
             <div styleName="readonlyValue">
               <input value={this.getInternalAddress()} onChange={() => { }} />
             </div>
           </div>
-        }
+        }*/}
         {selectedType === AddressType.Metamask && metamask.isEnabled() &&
           <div styleName="selectedInner">
             {(metamaskConnected) ? (

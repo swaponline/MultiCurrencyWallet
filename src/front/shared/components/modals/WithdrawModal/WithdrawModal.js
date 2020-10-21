@@ -13,7 +13,6 @@ import styles from './WithdrawModal.scss'
 
 import { BigNumber } from 'bignumber.js'
 import Coin from 'components/Coin/Coin'
-import PartOfAddress from '../../../pages/Wallet/components/PartOfAddress'
 import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'

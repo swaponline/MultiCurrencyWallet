@@ -74,6 +74,15 @@ export default class DropDown extends Component {
     toggleClose()
   }
 
+  renderItem = item => {
+    const { itemRender } = this.props
+
+    if (typeof itemRender === 'function') {
+      return itemRender(item)
+    }
+    return <span>item.title</span>
+  }
+
   renderSelectedItem = () => {
     const { items, selectedItemRender } = this.props
 
@@ -89,15 +98,6 @@ export default class DropDown extends Component {
         return selectedItemRender(selectedItem)
       }
     }
-  }
-
-  renderItem = item => {
-    const { itemRender } = this.props
-
-    if (typeof itemRender === 'function') {
-      return itemRender(item)
-    }
-    return item.title
   }
 
   render() {

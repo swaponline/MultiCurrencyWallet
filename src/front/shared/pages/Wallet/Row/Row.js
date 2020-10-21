@@ -1018,7 +1018,13 @@ export default class Row extends Component {
                   </p>
                   :
                   isMobile ?
-                    <PartOfAddress {...itemData} onClick={this.goToCurrencyHistory} />
+                    <PartOfAddress {...itemData} onClick={this.goToCurrencyHistory} style={{
+                      marginLeft: '10px',
+                      marginTop: '1px',
+                      position: 'absolute',
+                      left: '46px',
+                      bottom: '4px',
+                    }} />
                     :
                     <p styleName="addressStyle">{itemData.address}</p>
               }
