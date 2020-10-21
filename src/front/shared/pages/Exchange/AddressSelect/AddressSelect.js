@@ -63,7 +63,7 @@ const langLabels = defineMessages({
   },
   optionCustom: {
     id: 'Exchange_CustomAddressOption',
-    defaultMessage: 'Custom address',
+    defaultMessage: 'External wallet or exchange',
   },
   placeholderAddress: {
     id: 'Exchange_PlaceholderEnterAddress',
@@ -412,6 +412,7 @@ export default class AddressSelect extends Component {
         value: AddressType.Custom,
         icon: iconCustom,
         title: <FormattedMessage {...langLabels.optionCustom} />,
+        reduceSelectedItemText: !isCustomOptionInputHidden,
       }] : []),
     ]
 

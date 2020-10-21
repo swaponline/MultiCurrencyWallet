@@ -6198,7 +6198,7 @@
   },
   {
     "id": "Exchange_CustomAddressOption",
-    "message": "Custom",
+    "message": "External wallet or exchange",
     "files": [
       "shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]

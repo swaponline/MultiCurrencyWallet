@@ -249,6 +249,15 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+
+  &.reducedLength {
+    > * {
+      display: block;
+      width: 37%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
 }
 
 .select {
