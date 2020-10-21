@@ -344,20 +344,10 @@ export default class AddressSelect extends Component {
     // because you need to make a request to the contract
     const isCustomAddressOption = !ethToken.isEthOrEthToken({ name: currency })
 
-
     let isInternalOptionDisabled = false
     if (role === AddressRole.Send && (!balance || balance === 0)) {
       isInternalOptionDisabled = true
     }
-
-    // todo: fix flow and remove...
-    let isCustomOptionDisabled = false
-    if (role === AddressRole.Send && ticker === 'BTC') {
-      if (balance > 0) {
-        isCustomOptionDisabled = true
-      }
-    }
-    // ...this conditions ^
 
     const isCustomOptionInputHidden = role === AddressRole.Send && ticker === 'BTC' // todo: any utxo
 
@@ -422,7 +412,6 @@ export default class AddressSelect extends Component {
         value: AddressType.Custom,
         icon: iconCustom,
         title: <FormattedMessage {...langLabels.optionCustom} />,
-        disabled: isCustomOptionDisabled
       }] : []),
     ]
 
