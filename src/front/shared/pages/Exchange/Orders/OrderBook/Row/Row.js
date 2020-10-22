@@ -69,9 +69,9 @@ export default class Row extends Component {
   componentWillMount() {
     const { row: { isMy, sellCurrency, buyCurrency } } = this.props
     if (isMy) {
-      this.checkBalance(buyCurrency)
-    } else {
       this.checkBalance(sellCurrency)
+    } else {
+      this.checkBalance(buyCurrency)
     }
   }
 
