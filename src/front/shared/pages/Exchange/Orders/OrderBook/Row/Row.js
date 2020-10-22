@@ -143,8 +143,8 @@ export default class Row extends Component {
       row: {
         id,
         buyAmount,
-        buyCurrency,
-        sellCurrency,
+        buyCurrency: sellCurrency, // taker-maker - (maker buy - we sell)
+        sellCurrency: buyCurrency, // taker-maker - (maker sell - we buy)
       },
       row,
       intl,
