@@ -248,12 +248,14 @@ class NEXT2ETH extends Flow {
         const { participant } = flow.swap
 
         flow.swap.room.on('create eth contract', ({ ethSwapCreationTransactionHash }) => {
+          console.log('on create eth contract')
           flow.setState({
             ethSwapCreationTransactionHash,
           }, true)
         })
 
         const isContractBalanceOk = await util.helpers.repeatAsyncUntilResult(async () => {
+          console.log('isContractBalanceOk')
           const balance = await flow.ethSwap.getBalance({
             ownerAddress: participant.eth.address,
           })
@@ -267,6 +269,7 @@ class NEXT2ETH extends Flow {
           return false
         })
 
+        
         if (isContractBalanceOk) {
           const { isEthContractFunded } = flow.state
 

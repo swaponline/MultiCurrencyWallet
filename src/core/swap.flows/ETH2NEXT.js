@@ -182,6 +182,7 @@ class ETH2NEXT extends Flow {
             confidence: 0.8,
           })
 
+          console.log('check script', scriptCheckError)
           if (scriptCheckError) {
             if (/Expected script lockTime/.test(scriptCheckError)) {
               console.error('NEXT script check error: NEXT was refunded', scriptCheckError)

@@ -284,10 +284,16 @@ const fetchBalance = (address) => {
   console.log('>>>fetchBalance')
   return apiLooper.get('nextExplorer', `/address/${address}`, {
     checkStatus: (answer) => {
+      console.log('>>>fetchBalance - status', answer)
       try {
         if (answer && answer.balance !== undefined) return true
       } catch (e) { /* */ }
       return false
+    },
+    ignoreErrors: true,
+    reportErrors: (answer, onSuccess, onFail) => {
+      onSuccess({ balance: 0 })
+      return true
     },
   }).then(({ balance }) => balance)
 }
@@ -297,12 +303,12 @@ const fetchTx = (hash, cacheResponse) =>
     cacheResponse,
     checkStatus: (answer) => {
       try {
-        if (answer && answer.fees !== undefined) return true
+        if (answer && answer.txId !== undefined) return true
       } catch (e) { /* */ }
       return false
     },
-  }).then(({ fees, ...rest }) => ({
-    fees: BigNumber(fees).multipliedBy(1e8),
+  }).then(({ amountIn, amountOut, ...rest }) => ({
+    fees: BigNumber(amountIn).minus(amountOut).multipliedBy(1e8),
     ...rest,
   }))
 
@@ -320,7 +326,11 @@ const fetchTxRaw = (txId, cacheResponse) =>
 /** to-do  not working **/
 const fetchTxInfo = (hash, cacheResponse) =>
   fetchTx(hash, cacheResponse)
-    .then(({ vin, vout, ...rest }) => {
+    .then((txInfo_) => {
+      
+      console.log('txInfo', txInfo_)
+      return { ...txInfo_ }
+      const { vin, vout, ...rest } = txInfo_
       const senderAddress = vin ? vin[0].addr : null
       const amount = vout ? new BigNumber(vout[0].value).toNumber() : null
 
