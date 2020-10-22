@@ -15,7 +15,7 @@ import Avatar from 'components/Avatar/Avatar'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { RemoveButton } from 'components/controls'
 
-import Pair from '../Pair'
+import Pair from './../../Pair'
 import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
 import RequestButton from '../RequestButton/RequestButton'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
@@ -67,11 +67,11 @@ export default class Row extends Component {
   }
 
   componentWillMount() {
-    const { row: { sellCurrency, isMy, buyCurrency } } = this.props
+    const { row: { isMy, sellCurrency, buyCurrency } } = this.props
     if (isMy) {
-      this.checkBalance(sellCurrency)
-    } else {
       this.checkBalance(buyCurrency)
+    } else {
+      this.checkBalance(sellCurrency)
     }
   }
 
@@ -111,18 +111,21 @@ export default class Row extends Component {
     const { decline } = this.props
 
     if (decline.length === 0) {
-      this.sendRequest(orderId, currency)
+      this.sendSwapRequest(orderId, currency)
     } else {
       const getDeclinedExistedSwapIndex = helpers.handleGoTrade.getDeclinedExistedSwapIndex({ currency, decline })
       if (getDeclinedExistedSwapIndex !== false) {
         this.handleDeclineOrdersModalOpen(getDeclinedExistedSwapIndex)
       } else {
-        this.sendRequest(orderId, currency)
+        this.sendSwapRequest(orderId, currency)
       }
     }
   }
 
-  getDecimals = (amount, currency) => String(new BigNumber(amount).dp(constants.tokenDecimals[currency.toLowerCase()], BigNumber.ROUND_CEIL))
+  getDecimals = (amount, currency) => {
+    const decimalPlaces = constants.tokenDecimals[currency.toLowerCase()] || 8
+    return String(new BigNumber(amount).dp(decimalPlaces, BigNumber.ROUND_CEIL))
+  }
 
   handleDeclineOrdersModalOpen = (indexOfDecline) => {
     const orders = SwapApp.shared().services.orders.items
@@ -135,12 +138,7 @@ export default class Row extends Component {
     }
   }
 
-  handleGoTrade = async (currency) => {
-    const balance = await actions.eth.getBalance()
-    return (balance >= 0.005)
-  }
-
-  sendRequest = async (orderId, currency) => {
+  sendSwapRequest = async (orderId, currency) => {
     const {
       row: {
         id,
@@ -156,17 +154,17 @@ export default class Row extends Component {
     const pair = Pair.fromOrder(row)
     const { price, amount, total, main, base, type } = pair
 
-    const { address, balance } = actions.core.getWallet({ currency: buyCurrency })
+    const { address, balance } = actions.core.getWallet({ currency: sellCurrency })
 
     let checkAmount = buyAmount
 
     const ethFee = BigNumber(
       await helpers.eth.estimateFeeValue({ method: 'swap' })
-    ).multipliedBy(1.5).toNumber()
+    ).toNumber()
 
     const btcFee = BigNumber(
       await helpers.btc.estimateFeeValue({ method: 'swap' })
-    ).multipliedBy(1).toNumber()
+    ).toNumber()
 
     if (buyCurrency === 'ETH') {
       checkAmount = BigNumber(checkAmount).plus(ethFee).toNumber()
@@ -255,8 +253,6 @@ export default class Row extends Component {
     actions.modals.open(constants.modals.ConfirmBeginSwap, {
       order: this.props.row,
       onAccept: async (customWallet) => {
-        const check = await this.handleGoTrade(currency)
-
         this.setState({ isFetching: true })
 
         setTimeout(() => {
@@ -269,14 +265,13 @@ export default class Row extends Component {
         }
 
         actions.core.sendRequest(orderId, destination, (isAccepted) => {
-          console.log(`user has ${isAccepted ? 'accepted' : 'declined'} your request`)
+          console.log(`Your request is ${isAccepted ? 'accepted' : 'declined'}`)
 
           if (isAccepted) {
             this.setState({ isFetching: false }, () => {
               history.push(localisedUrl(intl.locale, `${links.swap}/${buyCurrency}-${sellCurrency}/${id}`))
             })
-          }
-          else {
+          } else {
             this.setState({ isFetching: false })
           }
         })
@@ -290,7 +285,7 @@ export default class Row extends Component {
             action: `${type === PAIR_TYPES.BID
               ? intl.formatMessage(messages.sell)
               : intl.formatMessage(messages.buy)
-              }`,
+            }`,
             amount: `${this.getDecimals(amount, main)}`,
             main: `${main}`,
             total: `${this.getDecimals(total, base)}`,
@@ -302,149 +297,66 @@ export default class Row extends Component {
     })
   }
 
-  renderWebContent() {
-    const { balance, isFetching, estimatedFeeValues } = this.state
-    const {
-      peer,
-      orderId,
-      row: {
-        id,
-        isMy,
-        buyAmount,
-        buyCurrency,
-        isRequested,
-        isProcessing,
-        sellCurrency,
-        owner: { peer: ownerPeer },
-      },
-      removeOrder,
-      intl: { locale },
-    } = this.props
-
-    const pair = Pair.fromOrder(this.props.row)
-    const { price, amount, total, main, base, type } = pair
-
-    const amountOnWatch = BigNumber(estimatedFeeValues[buyCurrency.toLowerCase()]).isGreaterThan(0) ?
-      BigNumber(balance).minus(estimatedFeeValues[buyCurrency.toLowerCase()]).minus(0.00000600).toString()
-      : balance
-
-    return (
-      <tr style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}>
-        <td>
-          <Avatar
-            value={ownerPeer}
-            size={30}
-          />
-        </td>
-        <td>
-          <span style={{ color: 'gray' }}>
-            {type === PAIR_TYPES.BID ? 'buys' : 'sells'}
-          </span>
-          {' '}
-          {
-            `${this.getDecimals(amount, main)} ${main}`
-          }
-        </td>
-        <td>
-          <span style={{ color: 'gray' }}>
-            <FormattedMessage
-              id="Row1511"
-              defaultMessage={`at price {price}`}
-              values={{
-                price: `${this.getDecimals(price, base)} ${base}`,
-              }} />
-          </span>
-        </td>
-        <td>
-          <span style={{ color: 'gray' }}>
-            <FormattedMessage
-              id="Row159"
-              defaultMessage={`for {total}`}
-              values={{
-                total: `${this.getDecimals(total, base)} ${base}`,
-              }}
-            />
-          </span>
-        </td>
-        <td>
-          {
-            peer === ownerPeer ? (
-              <RemoveButton onClick={() => removeOrder(id)} />
-            ) : (
-              <Fragment>
-                {
-                  isRequested ? (
-                    <Fragment>
-                      <div style={{ color: 'red' }}>
-                        <FormattedMessage id="Row148" defaultMessage="REQUESTING" />
-                      </div>
-                      <Link to={`${localisedUrl(locale, links.swap)}/${buyCurrency}-${sellCurrency}/${id}`}>
-                        <FormattedMessage id="Row151" defaultMessage="Go to the swap" />
-                      </Link>
-                    </Fragment>
-                  ) : (
-                    isProcessing ? (
-                      <span>
-                        <FormattedMessage id="Row157" defaultMessage="This order is in execution" />
-                      </span>
-                    ) : (
-                      isFetching ? (
-                        <Fragment>
-                          <InlineLoader />
-                          <br />
-                          <span>
-                            <FormattedMessage id="Row165" defaultMessage="Please wait while we confirm your request" />
-                          </span>
-                        </Fragment>
-                      ) : (
-                        <RequestButton
-                          disabled={BigNumber(amountOnWatch).isGreaterThanOrEqualTo(buyAmount)}
-                          onClick={() => this.checkDeclineOrders(id, isMy ? sellCurrency : buyCurrency)}
-                          data={{ type, amount, main, total, base }}
-                        >
-                          {type === PAIR_TYPES.BID ? <FormattedMessage id="Row2061" defaultMessage="Sell" /> : <FormattedMessage id="Row206" defaultMessage="Buy" />}
-                          {' '}
-                          {this.getDecimals(amount, main)}{' '}{main}
-                          <br />
-                          <FormattedMessage id="Row210" defaultMessage="for" />
-                          {' '}
-                          {this.getDecimals(total, base)}{' '}{base}
-                        </RequestButton>
-                      )
-                    )
-                  )
-                }
-              </Fragment>
-            )
-          }
-        </td>
-      </tr>
-    )
+  renderContent = () => {
+    let windowWidthIn = window.innerWidth
+    this.setState({ windowWidth: windowWidthIn })
   }
-  renderMobileContent() {
-    const { balance, isFetching } = this.state
+
+  render() {
+    const { balance, isFetching, estimatedFeeValues, windowWidth } = this.state;
+
     const {
-      orderId,
       row: {
         id,
-        buyCurrency,
-        sellCurrency,
         isMy,
+        buyCurrency,
         buyAmount,
+        sellCurrency,
         sellAmount,
         isRequested,
         isProcessing,
         owner: { peer: ownerPeer },
       },
-      removeOrder,
       peer,
+      orderId,
+      removeOrder,
+      intl: { locale },
     } = this.props
 
+
     const pair = Pair.fromOrder(this.props.row)
+    const { price, amount, total, main, base, type } = pair
 
-    const { amount, total, main, base, type } = pair
+    // todo: improve calculation much more
+    const buyCurrencyFee = estimatedFeeValues[buyCurrency.toLowerCase()]
+    const costs = BigNumber(sellAmount).plus(buyCurrencyFee)
 
-    const formatCrypto = (value, currency) => {
+    const isSwapButtonEnabled = BigNumber(balance).isGreaterThanOrEqualTo(costs)
+
+
+    let sellCurrencyOut,
+      sellAmountOut,
+      getCurrencyOut,
+      getAmountOut,
+      priceOut
+
+    if (type === PAIR_TYPES.BID) {
+      sellCurrencyOut = base
+      sellAmountOut = total
+      getCurrencyOut = main
+      getAmountOut = amount
+      priceOut = BigNumber(1).div(price)
+    }
+
+    if (type === PAIR_TYPES.ASK) {
+      sellCurrencyOut = main
+      sellAmountOut = amount
+      getCurrencyOut = base
+      getAmountOut = total
+      priceOut = price
+    }
+
+    const mobileFormatCrypto = (value, currency) => {
       if (currency === 'USDT' || currency == 'EUR') {
         return String(value.toFixed(2))
       } else {
@@ -453,10 +365,102 @@ export default class Row extends Component {
         } else {
           return String(value.toFixed(8))
         }
-      }t
+      }
     }
 
-    return (
+    const showDesktopContent = windowWidth > 800
+
+    return showDesktopContent ? (
+      <tr style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}>
+        <td>
+          <Avatar
+            value={ownerPeer}
+            size={30}
+          />
+        </td>
+        <td>
+          <span styleName="rowBindingText">
+            <FormattedMessage
+              id="OrderBookRowSells"
+              defaultMessage="sells"
+            />
+          </span>
+          {' '}
+          {`${this.getDecimals(sellAmountOut, sellCurrencyOut)} ${sellCurrencyOut}`}
+        </td>
+        <td>
+          <span styleName="rowBindingText">
+            <FormattedMessage
+              id="OrderBookRowFor"
+              defaultMessage="for"
+            />
+          </span>
+          {' '}
+          {`${this.getDecimals(getAmountOut, getCurrencyOut)} ${getCurrencyOut}`}
+        </td>
+        <td>
+          <span styleName="rowBindingText">
+            <FormattedMessage
+              id="OrderBookRowAtPrice"
+              defaultMessage="at price"
+            />
+          </span>
+          {' '}
+          {`${this.getDecimals(priceOut, getCurrencyOut)} ${getCurrencyOut}/${sellCurrencyOut}`}
+        </td>
+        <td styleName="buttonsColumn">
+          {peer === ownerPeer
+            ?
+            <RemoveButton onClick={() => removeOrder(id)} />
+            :
+            <Fragment>
+              {
+                isRequested ? (
+                  <Fragment>
+                    <div style={{ color: 'red' }}>
+                      <FormattedMessage id="Row148" defaultMessage="REQUESTING" />
+                    </div>
+                    <Link to={`${localisedUrl(locale, links.swap)}/${buyCurrency}-${sellCurrency}/${id}`}>
+                      <FormattedMessage id="Row151" defaultMessage="Go to the swap" />
+                    </Link>
+                  </Fragment>
+                ) : (
+                  isProcessing ? (
+                    <span>
+                      <FormattedMessage id="Row157" defaultMessage="This order is in execution" />
+                    </span>
+                  ) : (
+                    isFetching ? (
+                      <Fragment>
+                        <InlineLoader />
+                        <br />
+                        <span>
+                          <FormattedMessage id="Row165" defaultMessage="Please wait while we confirm your request" />
+                        </span>
+                      </Fragment>
+                    ) : (
+                      <RequestButton
+                        disabled={!isSwapButtonEnabled}
+                        onClick={isSwapButtonEnabled ?
+                          () => this.checkDeclineOrders(id, isMy ? sellCurrency : buyCurrency)
+                          :
+                          () => {}
+                        }
+                        data={{ type, amount, main, total, base }}
+                      >
+                        <FormattedMessage id="RowM166" defaultMessage="Start" />
+                      </RequestButton>
+                    )
+                  )
+                )
+              }
+            </Fragment>
+          }
+        </td>
+      </tr>
+    )
+    : /* mobile content */
+    (
       <tr
         styleName={peer === ownerPeer ? 'mobileRowRemove' : 'mobileRowStart'}
         style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}
@@ -469,7 +473,7 @@ export default class Row extends Component {
                   ? (<FormattedMessage id="RowMobileFirstTypeYouHave" defaultMessage="You have" />)
                   : (<FormattedMessage id="RowMobileFirstTypeYouGet" defaultMessage="You get" />)}
               </span>
-              <span>{`${formatCrypto(amount, main)} ${main}`}</span>
+              <span>{`${mobileFormatCrypto(amount, main)} ${main}`}</span>
             </div>
             <div>
               <i className="fas fa-exchange-alt" />
@@ -480,7 +484,7 @@ export default class Row extends Component {
                   ? (<FormattedMessage id="RowMobileSecondTypeYouGet" defaultMessage="You get" />)
                   : (<FormattedMessage id="RowMobileSecondTypeYouHave" defaultMessage="You have" />)}
               </span>
-              <span>{`${formatCrypto(total, base)} ${base}`}</span>
+              <span>{`${mobileFormatCrypto(total, base)} ${base}`}</span>
             </div>
             <div styleName="tdContainer-3">
               {
@@ -515,12 +519,14 @@ export default class Row extends Component {
                           ) : (
                             <RequestButton
                               styleName="startButton"
-                              disabled={balance >= Number(buyAmount)}
-                              onClick={() => this.sendRequest(id, isMy ? sellCurrency : buyCurrency)}
+                              disabled={!isSwapButtonEnabled}
+                              onClick={isSwapButtonEnabled ?
+                                () => this.sendSwapRequest(id, isMy ? sellCurrency : buyCurrency)
+                                :
+                                () => {}
+                              }
                               data={{ type, amount, main, total, base }}
-                            >
-                              <FormattedMessage id="RowM166" defaultMessage="Start" />
-                            </RequestButton>
+                            />
                           )
                         )
                       )
@@ -533,17 +539,5 @@ export default class Row extends Component {
         </td>
       </tr>
     )
-  }
-
-  renderContent = () => {
-    let windowWidthIn = window.innerWidth
-    this.setState({ windowWidth: windowWidthIn })
-  }
-
-  render() {
-    const { windowWidth } = this.state;
-    let mobileBreakpoint = 800
-
-    return windowWidth < mobileBreakpoint ? this.renderMobileContent() : this.renderWebContent()
   }
 }

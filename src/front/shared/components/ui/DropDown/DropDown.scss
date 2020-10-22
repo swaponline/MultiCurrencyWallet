@@ -43,9 +43,6 @@
     }
   }
 
-  .arrowDropDown {
-    right: 25px;
-  }
 }
 
 .dark {
@@ -146,7 +143,6 @@
 }
 
 .fullTitle {
-  text-transform: capitalize;
   font-weight: 500;
   font-size: 18px;
   color: #000000;
@@ -180,7 +176,6 @@
 .shortTitle {
   font-size: 18px;
   font-weight: 500;
-  text-transform: uppercase;
 }
 
 .searchInput {
@@ -202,7 +197,7 @@
 .selectedItem {
   height: 57px;
   line-height: 60px;
-  padding-right: 45px;
+  padding-right: 40px;
   padding-left: 16px;
   min-width: 135px;
   background: white;
@@ -212,10 +207,15 @@
   text-align: right;
   font-size: 18px;
   white-space: nowrap;
-  text-transform: capitalize;
   font-weight: 500;
   border-color: grey;
   @include no-user-select;
+
+  &.left {
+    padding-left: 40px;
+    padding-right: 16px;
+    text-align: left;
+  }
 
   &_disableIteract {
     cursor: default;
@@ -232,7 +232,32 @@
   margin-top: -6px;
   position: absolute;
   top: 50%;
-  right: 20px;
+  right: 19px;
+
+  &.left {
+    right: 0;
+    left: 19px;
+  }
+}
+
+.disabled {
+  opacity: 0.2;
+  filter: grayscale;
+}
+
+.selectedItemInner {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  &.reducedLength {
+    > * {
+      display: block;
+      width: 37%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
 }
 
 .select {
@@ -241,14 +266,15 @@
   background-color: #fff;
   // margin-top: 4px;
   position: absolute;
-  right: 0;
+  right: -1;
   top: 0;
   overflow-x: hidden;
   overflow-y: auto;
   z-index: 9999;
   background: #fff;
   border-radius: 6px;
-  box-shadow: rgba(#000, 0.08) 0 3px 9px 0;
+  border: 1px solid #8888;
+  box-shadow: rgba(#000, 0.15) 0 3px 9px 0;
 }
 
 .dontscroll {
@@ -310,5 +336,4 @@
     left: calc(50% - 50vw + 1em);
     width: calc(100vw - 40px);
   }
-
 }

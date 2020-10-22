@@ -25,17 +25,21 @@ const SelectGroup = (props) => {
     balanceTooltip,
   } = props
   return (
-    <div>
+    <div styleName="selectGroup">
       <FieldLabel inRow>
         <strong>
           {label}
         </strong>
-        &nbsp;
-        <div styleName="smallTooltip">
-          <Tooltip id={id}>
-            {tooltip}
-          </Tooltip>
-        </div>
+        {tooltip &&
+          <span>
+            <span>&nbsp;</span>
+            <div styleName="smallTooltip">
+              <Tooltip id={id}>
+                {tooltip}
+              </Tooltip>
+            </div>
+          </span>
+        }
       </FieldLabel>
       <div styleName={`groupField ${isDark ? 'dark' : ''}`} className={className}>
         <Input
@@ -71,7 +75,7 @@ const SelectGroup = (props) => {
           id={id}
           selectedItemRender={(item) => item.fullTitle}
           styleName="currencySelect"
-          placeholder="Enter the name of token"
+          placeholder="Enter the name of coin"
           selectedValue={selectedValue}
           onSelect={onSelect}
           currencies={currencies}

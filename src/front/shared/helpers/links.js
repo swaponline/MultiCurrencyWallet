@@ -30,7 +30,6 @@ const linksManager = {
   coins: '/coins',
   partial: '/partial',
   notFound: '/NotFound',
-  newPage: '/+NewPage',
   multisign: '/multisign',
   createInvoice: '/createinvoice',
   BtcWallet: '/Bitcoin-wallet',

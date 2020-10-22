@@ -1,7 +1,7 @@
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import config from 'app-config'
-import { parsePair } from 'shared/pages/Home/Orders/Pair'
+import { parsePair } from 'shared/pages/Exchange/Orders/Pair'
 import TRADE_TICKERS from 'helpers/constants/TRADE_TICKERS'
 import actions from 'redux/actions'
 

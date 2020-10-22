@@ -1,5 +1,6 @@
 import debug from 'debug'
 
+
 class Event {
 
   /**
@@ -33,7 +34,7 @@ class Event {
   removeHandler(handler) {
     const handlerIndex = this.handlers.indexOf(handler)
 
-    this.handlers.splice(handlerIndex, 1);
+    this.handlers.splice(handlerIndex, 1)
   }
 
   /**

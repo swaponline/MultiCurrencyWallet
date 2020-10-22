@@ -1,4 +1,4 @@
-.customDestination {
+.addressSelect {
   position: relative;
 
   &.--dark {
@@ -26,6 +26,28 @@
     }
   }
 
+  .label {
+    font-size: 15px;
+    @include ff-semibold;
+    display: inline-block;
+    padding: 7px 7px;
+    z-index: 2;
+    position: absolute;
+    top: -18px;
+    left: 10px;
+    background: #fff;
+    white-space: nowrap;
+    @include media-mobile {
+      top: -14px;
+      font-size: 12px;
+    }
+  }
+
+  &.--dark .label {
+    background: none;
+  }
+
+
   &_error .walletToggle {
     border: 2px solid #a90101;
   }
@@ -36,10 +58,7 @@
     width: 100%;
 
     & > div {
-      padding-left: 0;
       height: max-content !important;
-      border: 1px solid rgba(0,0,0,0.2);
-      border-radius: 2px;
     }
   }
 
@@ -48,18 +67,10 @@
     height: auto;
   }
 
-  &.--dark {
-    & > div {
-      background: #222427
-    }
-  }
-
   & > div {
     padding-left: 0px;
-    background: #fff;
-    border: none;
-    border: 1px solid #ccc;
-    border-radius: 0px;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 2px;
 
     div > {
       padding: 0px;
@@ -67,7 +78,6 @@
 
     & > span {
       display: block;
-      font-size: 12pt;
       font-weight: bold;
       width: 100%;
       text-align: left;
@@ -81,53 +91,81 @@
   }
 }
 
+.selectedInner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 58%;
+  z-index: 1;
+}
+
 .readonlyValue {
+  height: 100%;
+
   input {
     display: block;
     width: 100%;
-    border: none;
-    border-radius: 3px;
+    height: 100%;
     vertical-align: middle;
-    line-height: 68px;
-    //color: #080808;
+    padding: 0.7em;
+    border: none;
     font-size: 1em;
-    padding: 0.5em;
-    border: 1px solid #ccc;
-    line-height: 3.1em;
-    &:focus {
-      border: 1px solid #6144e5 !important;
-      padding: 0.5em;
-      outline: none;
-      line-height: 3.1em;
-    }
+    text-overflow: ellipsis;
+    background: #8882;
+    color: #777;
   }
 }
 
 
 
 .customWallet {
-  margin-bottom: 15px;
-  margin-bottom: 30px;
-  padding: 0 20px;
+  position: relative;
+  height: 100%;
 
   &_site {
     position: relative;
   }
 
   &_focus {
-    border: 2px solid #6144e5 !important;
+    outline: 1px solid #6144e5 !important;
+  }
+
+  .customAddressInput {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 0 0.9em;
+
+    input {
+      border: none;
+      margin: 0;
+      height: 40px;
+      padding: 0;
+      font-size: 16px;
+
+      &:focus {
+        margin: 0;
+        padding: 0;
+        border: none;
+      }
+    }
   }
 
   .qrCode {
     position: absolute;
-    right: -2em;
+    right: -13px;
+    top: 50%;
+    transform: translateY(-50%);
     background-color: #fff;
     border: 6px solid #fff;
     display: block;
+    cursor: pointer;
   }
 }
 
-.customDestination {
+.addressSelect {
   &.--dark {
     .customWallet {
       .qrCode {
@@ -138,52 +176,28 @@
   }
 }
 
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 5px;
+}
 
 .button {
   margin-top: 0;
-  width: 100%;
+  width: 64%;
+  height: 80%;
   border-radius: 3px;
   height: 36px;
-  font-size: 16px;
+  font-size: 15px;
   flex-basis: 100%;
-  margin-bottom: 10px;
   box-shadow: none;
-}
 
-.walletInput {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 4.5em;
-  padding: 0 1em;
-
-  input {
-    border: none;
-    margin: 0;
-    height: 40px;
-    padding: 0;
-    font-size: 16px;
-    margin-top: 2px;
-
-    &:focus {
-      border: none;
-      padding: 0;
-      margin: -1px -1px;
-      margin-top: 1px;
-    }
+  @include media-mobile {
+    font-size: 11px;
   }
 }
 
-.anotherRecepient {
-  position: relative;
-}
-
-.label {
-  width: 200px;
-  font-weight: 500;
-  line-height: 21px;
-  font-size: 16px;
-}
 
 @include media-mobile {
   .--dark {
@@ -194,21 +208,12 @@
     }
   }
 
-  .label {
-    width: 170px;
-    font-weight: 500;
-    line-height: 19px;
-    font-size: 13px;
-  }
-
-  .customDestination {
+  .addressSelect {
     .dropDown {
       & > div {
         & > span {
           display: block;
-          font-size: 10pt;
-          font-weight: bold;
-          padding-left: 1.2em;
+          font-size: 14px;
         }
       }
     }

@@ -20,16 +20,15 @@ import ethToken from 'helpers/ethToken'
 
 import Explanation from '../Explanation'
 import icons from '../images'
-import Cupture,
-{
+import Cupture, {
   subHeaderText1,
   subHeaderText2,
   cupture2,
 } from './texts'
 
 
-const CreateWallet = (props) => {
-  const { intl: { locale }, onClick, currencies, error, setError, singleCurrecnyData, btcData, ethData } = props
+const SecondStep = (props) => {
+  const { intl: { locale }, onClick, currencies, error, setError, forcedCurrencyData, btcData, ethData } = props
 
   const _protection = {
     nothing: {
@@ -164,7 +163,9 @@ const CreateWallet = (props) => {
       return null
     }
 
-    if (!enabled) return
+    if (!enabled) {
+      return
+    }
     // if (activated) return
     const colors = border.color
 
@@ -360,7 +361,7 @@ const CreateWallet = (props) => {
 
   return (
     <div>
-      {!isMobile && !singleCurrecnyData &&
+      {!isMobile && !forcedCurrencyData &&
         <div>
           <Explanation subHeaderText={subHeaderText1()} step={1} notMain>
             <Cupture click={this.etcClick} step={2} />
@@ -369,7 +370,7 @@ const CreateWallet = (props) => {
       }
       <div>
         <div>
-          <Explanation subHeaderText={subHeaderText2()} step={2} isShow={singleCurrecnyData}>
+          <Explanation subHeaderText={subHeaderText2()} step={2} isShow={forcedCurrencyData}>
             {cupture2()}
           </Explanation>
           <div styleName="currencyChooserWrapper currencyChooserWrapperSecond">
@@ -433,4 +434,4 @@ const CreateWallet = (props) => {
     </div>
   )
 }
-export default injectIntl(CSSModules(CreateWallet, styles, { allowMultiple: true }))
+export default injectIntl(CSSModules(SecondStep, styles, { allowMultiple: true }))

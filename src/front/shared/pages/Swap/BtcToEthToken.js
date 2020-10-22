@@ -76,8 +76,7 @@ export default class BtcToEthToken extends Component {
     this.ParticipantTimer = setInterval(() => {
       if (this.state.flow.isParticipantSigned && this.state.destinationBuyAddress) {
         this.submitSecret()
-      }
-      else {
+      } else {
         clearInterval(this.ParticipantTimer)
       }
     }, 3000)
@@ -147,10 +146,6 @@ export default class BtcToEthToken extends Component {
     this.setState({
       isPressCtrl: true,
     })
-  }
-
-  handlerBuyWithCreditCard = (e) => {
-    e.preventDefault()
   }
 
   render() {

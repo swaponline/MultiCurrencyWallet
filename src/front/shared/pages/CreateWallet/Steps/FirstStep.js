@@ -17,8 +17,7 @@ import icons from '../images'
 import config from 'helpers/externalConfig'
 import { getActivatedCurrencies } from 'helpers/user'
 
-import Cupture
-, {
+import Cupture, {
   subHeaderText1,
   subHeaderText2,
   cupture2,
@@ -29,7 +28,7 @@ const isWidgetBuild = config && config.isWidget
 
 @connect(({ currencies: { items: currencies } }) => ({ currencies }))
 @CSSModules(styles, { allowMultiple: true })
-export default class CreateWallet extends Component {
+export default class FirstStep extends Component {
   defaultStartPack = [
     ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],
     ...(!config.opts.curEnabled || config.opts.curEnabled.eth) ? [{ name: "ETH", capture: "Ethereum" }] : [],
@@ -162,6 +161,7 @@ export default class CreateWallet extends Component {
     const { curState, startPack, all } = this.state
 
     const coloredIcons = ['btc', 'eth', 'ghost', 'next', 'swap', 'usdt', 'eurs']
+
     return (
       <div>
         <div>

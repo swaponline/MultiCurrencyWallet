@@ -57,12 +57,13 @@ export default class ConfirmBeginSwap extends React.Component {
   constructor({ tokensData, currenciesData }) {
     super()
 
-    this.wallets = {}
-    currenciesData.forEach(item => {
-      this.wallets[item.currency] = item.address
-    })
-    tokensData.forEach(item => {
-      this.wallets[item.currency] = item.address
+    this.systemWallets = {}
+
+    const coinsData = [...currenciesData, ...tokensData]
+    coinsData.forEach(item => {
+      if (item.currency && item.address) {
+        this.systemWallets[item.currency.toUpperCase()] = item.address
+      }
     })
 
     this.state = {
@@ -76,15 +77,19 @@ export default class ConfirmBeginSwap extends React.Component {
 
     if (customWalletUse) {
       if (!typeforce.isCoinAddress[sellCurrency]) {
-        console.warn(`Swap.Core unkrown isCoinAddress check for ${sellCurrency}`)
+        console.warn(`Swap.Core unknown isCoinAddress check for ${sellCurrency}`)
         return true
       }
       return typeforce.isCoinAddress[sellCurrency](customWallet)
-    } else return true
+    }
+    return true
   }
 
   customWalletAllowed() {
-    const { buyCurrency, sellCurrency } = this.props.data.order
+
+    return false // temporary disable custom address
+
+    /*const { buyCurrency, sellCurrency } = this.props.data.order
 
     if (buyCurrency === 'BTC') {
       // btc-token
@@ -122,13 +127,7 @@ export default class ConfirmBeginSwap extends React.Component {
       if (sellCurrency === 'BTC') return true
     }
 
-    return false
-  }
-
-  getSystemWallet = (walletCurrency) => {
-    const { sellCurrency } = this.props.data.order
-
-    return this.wallets[(walletCurrency) ? walletCurrency.toUpperCase() : sellCurrency]
+    return false*/
   }
 
   handleCustomWalletUse = () => {
@@ -136,9 +135,13 @@ export default class ConfirmBeginSwap extends React.Component {
 
     const newCustomWalletUse = !customWalletUse
 
+    const { sellCurrency } = this.props.data.order
+    const sellTicker = sellCurrency.toUpperCase()
+    const sellWalletAddress = this.systemWallets[sellTicker]
+
     this.setState({
       customWalletUse: newCustomWalletUse,
-      customWallet: (newCustomWalletUse === false) ? '' : this.getSystemWallet(),
+      customWallet: (newCustomWalletUse === false) ? '' : sellWalletAddress,
     })
   }
 
@@ -160,7 +163,9 @@ export default class ConfirmBeginSwap extends React.Component {
     const { name, data, onAccept } = this.props
     const { customWalletUse, customWallet } = this.state
 
-    if (!this.customWalletIsValid()) return
+    if (!this.customWalletIsValid()) {
+      return
+    }
 
     actions.modals.close(name)
 
@@ -197,6 +202,7 @@ export default class ConfirmBeginSwap extends React.Component {
 
     const linked = Link.all(this, 'customWallet')
 
+
     return (
       <div styleName={`modal-overlay ${isDark ? '--dark' : ''}`}>
         <div styleName="modal">
@@ -206,12 +212,12 @@ export default class ConfirmBeginSwap extends React.Component {
             </WidthContainer>
           </div>
           <div styleName="content">
-            <div styleName="notification-overlay">
+            <div styleName="content-inner">
               <p styleName="notification">{labels.message}</p>
-            </div>
-            {
-              (this.customWalletAllowed()) && (
-                <Fragment>
+
+              {this.customWalletAllowed()
+                ?
+                <div>
                   {
                     (!this.customWalletIsValid()) && (
                       <div styleName="error">
@@ -232,18 +238,22 @@ export default class ConfirmBeginSwap extends React.Component {
                       </div>
                     </div>
                   </div>
-                </Fragment>
-              )
-            }
-            <div styleName="button-overlay">
-              <Button styleName="button" gray onClick={this.handleClose}>{labels.no}</Button>
-              {(this.customWalletIsValid()) && (
-                <Button styleName="button" brand onClick={this.handleConfirm}>{labels.yes}</Button>
-              )}
-              {(!this.customWalletIsValid()) && (
-                <Button styleName="button" gray>{labels.yes}</Button>
-              )}
+                </div>
+                :
+                <div>
+                  <FormattedMessage id="ConfirmBeginSwapOnlyInternal" defaultMessage="Acceptance of an offer from the offerbook is temporarily possible only for internal addresses" />
+                </div>
+              }
             </div>
+          </div>
+          <div styleName="buttons">
+            <Button styleName="button" gray onClick={this.handleClose}>{labels.no}</Button>
+            {(this.customWalletIsValid()) && (
+              <Button styleName="button" blue onClick={this.handleConfirm}>{labels.yes}</Button>
+            )}
+            {(!this.customWalletIsValid()) && (
+              <Button styleName="button" disabled>{labels.yes}</Button>
+            )}
           </div>
         </div>
       </div>

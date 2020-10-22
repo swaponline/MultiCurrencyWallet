@@ -67,11 +67,20 @@ export default class DropDown extends Component {
     }
 
     // for example we'd like to change `selectedValue` manually
-    if (typeof onSelect === 'function') {
+    if (typeof onSelect === 'function' && !item.disabled) {
       onSelect(item)
       this.setState({ selectedValue: item.value })
     }
     toggleClose()
+  }
+
+  renderItem = item => {
+    const { itemRender } = this.props
+
+    if (typeof itemRender === 'function') {
+      return itemRender(item)
+    }
+    return <span>item.title</span>
   }
 
   renderSelectedItem = () => {
@@ -82,20 +91,19 @@ export default class DropDown extends Component {
 
     if (selectedItem !== undefined) {
       if (typeof selectedItemRender !== 'function') {
-        return (selectedItem.title || selectedItem.fullTitle)
+        const textToShow = selectedItem.title || selectedItem.fullTitle
+        return (
+          <div
+            styleName={`selectedItemInner ${selectedItem.disabled ? 'disabled' : ''} ${selectedItem.reduceSelectedItemText ? 'reducedLength': ''}`}
+            //title={selectedItem.reduceSelectedItemText ? textToShow : ''}
+          >
+            {textToShow}
+          </div>
+        )
       } else {
         return selectedItemRender(selectedItem)
       }
     }
-  }
-
-  renderItem = item => {
-    const { itemRender } = this.props
-
-    if (typeof itemRender === 'function') {
-      return itemRender(item)
-    }
-    return item.title
   }
 
   render() {
@@ -110,8 +118,9 @@ export default class DropDown extends Component {
       tooltip,
       id,
       notIteractable,
-      disableSearch,  // Отключить поиск
-      dontScroll, // Отключить вертикальный скрол - показывать все элементы (для небольших фиксированных списоков)
+      disableSearch,
+      dontScroll, // Show all items, for small lists
+      arrowSide,
     } = this.props
 
     const {
@@ -129,8 +138,8 @@ export default class DropDown extends Component {
         .filter(item => item.value !== selectedValue)
     }
 
-    const dropDownListStyles = [`select`]
-    if (dontScroll) dropDownListStyles.push(`dontscroll`)
+    const dropDownListStyles = ['select']
+    if (dontScroll) dropDownListStyles.push('dontscroll')
 
     return (
       <ClickOutside
@@ -148,10 +157,16 @@ export default class DropDown extends Component {
       >
         <div styleName={`${dropDownStyleName} ${isDark ? 'dark' : ''}`} className={className}>
           <div
-            styleName={notIteractable ? 'selectedItem selectedItem_disableIteract' : 'selectedItem'}
+            styleName={`
+              selectedItem
+              ${notIteractable ? ' selectedItem_disableIteract' : ''}
+              ${arrowSide === 'left' ? 'left' : ''}
+            `}
             onClick={notIteractable ? () => null : this.toggle}
           >
-            {!notIteractable && <div styleName="arrow arrowDropDown" />}
+            {!notIteractable &&
+              <div styleName={`arrow ${arrowSide === 'left' ? 'left' : ''}`}
+            />}
             {isToggleActive && !disableSearch ? (
               <Input
                 styleName="searchInput"
@@ -161,8 +176,8 @@ export default class DropDown extends Component {
                 ref="searchInput"
               />
             ) : (
-                this.renderSelectedItem()
-              )}
+              this.renderSelectedItem()
+            )}
           </div>
           {isToggleActive && (
             <div styleName={dropDownListStyles.join(` `)}>
@@ -171,6 +186,9 @@ export default class DropDown extends Component {
                 let inneedData = null
                 if (infoAboutCurrency) {
                   inneedData = infoAboutCurrency.find(el => el.name === item.name)
+                }
+                if (item.hidden) {
+                  return
                 }
                 return (
                   <div

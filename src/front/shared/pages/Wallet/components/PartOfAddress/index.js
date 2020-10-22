@@ -1,39 +1,34 @@
 import React from 'react'
+
+import Address, { AddressFormat } from 'components/ui/Address/Address'
 import LinkAccount from '../LinkAccount'
 
 
-export default ({ currency, contractAddress, address, onClick, withoutLink }) => {
-  const endOfAddress = address.substring(address.length - 4, address.length)
-  const startOfAddress = address.substring(0, 2)
-  /* eslint-disable */
+export default ({ currency, contractAddress, address, onClick, withoutLink, style }) => {
+
+  const styleOverwrited = {
+    fontSize: '12px',
+    fontWeight: 'bold',
+    color: 'rgb(142, 154, 163)',
+  }
+
   return (
     <div>
       {!withoutLink ? (
         <LinkAccount type={currency} contractAddress={contractAddress} address={address} onClick={onClick}>
-          <span
-            style={{
-              fontSize: '12px',
-              marginLeft: '10px',
-              color: 'rgb(142, 154, 163)',
-              marginTop: '1px',
-              position: 'absolute',
-              left: '46px',
-              bottom: '4px',
-            }}
-          >
-            {startOfAddress}
-            &#183; &#183; &#183;
-            {endOfAddress}
-          </span>
+          <Address
+            address={address}
+            format={AddressFormat.Short}
+            style={{ ...style, ...styleOverwrited }}
+          />
         </LinkAccount>
       ) : (
-        <span>
-          {startOfAddress}
-          &#183; &#183; &#183;
-          {endOfAddress}
-        </span>
+        <Address
+          address={address}
+          format={AddressFormat.Short}
+          style={{ ...style, ...styleOverwrited }}
+        />
       )}
     </div>
   )
-  /* eslint-enable */
 }
