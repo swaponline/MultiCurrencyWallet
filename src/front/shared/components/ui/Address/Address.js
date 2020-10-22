@@ -3,7 +3,7 @@ import { constants } from 'helpers'
 
 import cssModules from 'react-css-modules'
 
-
+import { AddressType, AddressRole } from "pages/Exchange/AddressSelect/AddressSelect"
 import styles from './Address.scss'
 
 
@@ -24,6 +24,7 @@ export default class Address extends Component {
     const {
       address,
       format,
+      type,
       copyable, // todo
       style,
     } = this.props
@@ -31,8 +32,13 @@ export default class Address extends Component {
     const addressStart = address.substring(0, 4)
     const addressEnd = address.substring(address.length - 4, address.length)
 
+    let colorizing = {}
+    if (type === AddressType.Metamask) {
+      colorizing.color = '#e4761b'
+    }
+
     return (
-      <code styleName={`address`} title={address} style={style}>
+      <code styleName={`address`} title={address} style={{...style, ...colorizing}} >
         {format === AddressFormat.Short ?
           <Fragment>{addressStart}&#183;&#183;&#183;{addressEnd}</Fragment>
           :

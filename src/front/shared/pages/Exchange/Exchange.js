@@ -1212,16 +1212,6 @@ export default class Exchange extends Component {
 
     const isLowAmount = this.checkoutLowAmount();
 
-    const canStartSwap =
-      !isNonOffers &&
-      fromAddress &&
-      toAddress &&
-      BigNumber(getAmount).isGreaterThan(0) &&
-      !this.doesComissionPreventThisOrder() &&
-      (BigNumber(haveAmount).isGreaterThan(balance) ||
-        BigNumber(balance).isGreaterThanOrEqualTo(availableAmount)) &&
-      !isWaitForPeerAnswer
-
     const sellTokenFullName = currenciesData.find(
       (item) => item.currency === haveCurrency.toUpperCase()
     )
@@ -1240,7 +1230,6 @@ export default class Exchange extends Component {
       :
       getCurrency.toUpperCase();
 
-
     const isPrice = oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && !isNonOffers
 
 
@@ -1256,11 +1245,23 @@ export default class Exchange extends Component {
       this.state.haveAmount &&
       this.state.getAmount
 
-    // temporarly only internal addresses
-    const isErrorOnlyInternal =
-      (fromAddress && fromAddress.type !== AddressType.Internal) ||
-      (toAddress && toAddress.type !== AddressType.Internal)
 
+    // temporarly disable some combinations (need test)
+    const isErrorExternalDisabled =
+      (fromAddress && ![AddressType.Internal, AddressType.Metamask, AddressType.Custom].includes(fromAddress.type)) ||
+      (toAddress && ![AddressType.Internal, AddressType.Metamask, AddressType.Custom].includes(toAddress.type))
+
+
+    const canStartSwap =
+      !isErrorExternalDisabled &&
+      !isNonOffers &&
+      fromAddress &&
+      toAddress && toAddress.value &&
+      BigNumber(getAmount).isGreaterThan(0) &&
+      !this.doesComissionPreventThisOrder() &&
+      (BigNumber(haveAmount).isGreaterThan(balance) ||
+        BigNumber(balance).isGreaterThanOrEqualTo(availableAmount)) &&
+      !isWaitForPeerAnswer
 
     const isIncompletedSwaps = !!desclineOrders.length
 
@@ -1448,8 +1449,8 @@ export default class Exchange extends Component {
               </p>
             }
 
-            {isErrorOnlyInternal &&
-              <p styleName="error">The exchange is temporarily available only for internal addresses</p>
+            {isErrorExternalDisabled &&
+              <p styleName="error">The exchange is temporarily disabled for some external addresses (under maintenance)</p>
             }
 
           </div>
