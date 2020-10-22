@@ -11,16 +11,18 @@ export const initialState = {
     userName: '',
     eMail: '',
   },
-  secure: '',
   step: 1,
+  secure: 'withoutSecure',
 }
 
 
-export const newWalletData = (state, payload) => {
-  const { type, data } = payload
-
-  return ({
+export const newWalletData = (state, { stateKey, value }) => {
+console.log('newWalletData', stateKey, value)
+console.log('oldState', state)
+  const newState = {
     ...state,
-    [type]: data,
-  })
+    [stateKey]: value,
+  }
+console.log('newState', newState)
+  return newState
 }

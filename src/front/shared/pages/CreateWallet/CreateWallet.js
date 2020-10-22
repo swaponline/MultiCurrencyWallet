@@ -105,6 +105,10 @@ const CreateWallet = (props) => {
 
   useEffect(
     () => {
+
+      console.log('effect')
+      reducers.createWallet.newWalletData({ stateKey: 'secure', value: 'withoutSecure' })
+
       const forcedCurrency = pathname.split('/')[2]
 
       if (forcedCurrency) {
@@ -176,7 +180,7 @@ const CreateWallet = (props) => {
   const handleClick = () => {
     setError(null)
     if (step !== 2 && !forcedCurrencyData) {
-      reducers.createWallet.newWalletData({ type: 'step', data: step + 1 })
+      reducers.createWallet.newWalletData({ stateKey: 'step', value: step + 1 })
       return setStep(step + 1)
     }
     localStorage.setItem(constants.localStorage.isWalletCreate, true)

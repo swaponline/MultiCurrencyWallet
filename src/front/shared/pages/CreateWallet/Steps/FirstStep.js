@@ -136,7 +136,7 @@ export default class FirstStep extends Component {
 
     const dataToReturn = { [name]: !curState[name] }
     this.setState(() => ({ curState: dataToReturn }))
-    reducers.createWallet.newWalletData({ type: 'currencies', data: dataToReturn })
+    reducers.createWallet.newWalletData({ stateKey: 'currencies', value: dataToReturn })
     setError(null)
   }
 
