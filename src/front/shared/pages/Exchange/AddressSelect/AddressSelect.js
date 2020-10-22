@@ -367,6 +367,7 @@ export default class AddressSelect extends Component {
               <Address
                 address={this.getInternalAddress()}
                 format={AddressFormat.Short}
+                type={AddressType.Internal}
               />
             </Fragment>
             :
@@ -389,6 +390,7 @@ export default class AddressSelect extends Component {
                 <Address
                   address={metamaskAddress}
                   format={AddressFormat.Short}
+                  type={AddressType.Metamask}
                 />
               </Fragment>
             }]
