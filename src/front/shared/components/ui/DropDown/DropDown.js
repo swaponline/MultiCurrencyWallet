@@ -74,6 +74,15 @@ export default class DropDown extends Component {
     toggleClose()
   }
 
+  renderItem = item => {
+    const { itemRender } = this.props
+
+    if (typeof itemRender === 'function') {
+      return itemRender(item)
+    }
+    return <span>item.title</span>
+  }
+
   renderSelectedItem = () => {
     const { items, selectedItemRender } = this.props
 
@@ -82,22 +91,19 @@ export default class DropDown extends Component {
 
     if (selectedItem !== undefined) {
       if (typeof selectedItemRender !== 'function') {
+        const textToShow = selectedItem.title || selectedItem.fullTitle
         return (
-          <span styleName={selectedItem.disabled ? 'disabled' : ''}>{selectedItem.title || selectedItem.fullTitle}</span>
+          <div
+            styleName={`selectedItemInner ${selectedItem.disabled ? 'disabled' : ''} ${selectedItem.reduceSelectedItemText ? 'reducedLength': ''}`}
+            //title={selectedItem.reduceSelectedItemText ? textToShow : ''}
+          >
+            {textToShow}
+          </div>
         )
       } else {
         return selectedItemRender(selectedItem)
       }
     }
-  }
-
-  renderItem = item => {
-    const { itemRender } = this.props
-
-    if (typeof itemRender === 'function') {
-      return itemRender(item)
-    }
-    return item.title
   }
 
   render() {

@@ -114,13 +114,6 @@
     text-overflow: ellipsis;
     background: #8882;
     color: #777;
-
-    &:focus {
-      border: 1px solid $primary !important;
-      padding: 0.5em;
-      outline: none;
-      line-height: 3.1em;
-    }
   }
 }
 

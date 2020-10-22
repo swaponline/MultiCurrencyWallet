@@ -1,10 +1,6 @@
 .optionrow {
-  &::after {
-    display: block;
-    content: '';
-    clear: both;
-  }
   white-space: nowrap;
+
   em {
     display: block;
     height: 36px;
@@ -18,15 +14,19 @@
     }
   }
 
-  span {
-    display: block;
+  &.disabled {
+    opacity: 0.3;
+    filter: grayscale(1);
+    cursor: not-allowed;
   }
-  
-  .smalltext {
+}
+
+.optionTitle {
+  display: flex;
+  justify-content: space-between;
+
+  &.smalltext {
     font-size: 0.8em;
   }
 
-  .disabled {
-    opacity: 0.5;
-  }
 }

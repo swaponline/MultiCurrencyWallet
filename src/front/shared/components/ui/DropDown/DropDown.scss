@@ -241,7 +241,23 @@
 }
 
 .disabled {
-  opacity: 0.5;
+  opacity: 0.2;
+  filter: grayscale;
+}
+
+.selectedItemInner {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  &.reducedLength {
+    > * {
+      display: block;
+      width: 37%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
 }
 
 .select {
@@ -320,5 +336,4 @@
     left: calc(50% - 50vw + 1em);
     width: calc(100vw - 40px);
   }
-
 }
