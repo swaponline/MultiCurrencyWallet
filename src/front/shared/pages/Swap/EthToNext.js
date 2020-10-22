@@ -1,4 +1,4 @@
-import EthToBtcLike from './EthToBtcLike'
+import EthToBtcLike from './BtcLikeSwap/EthToBtcLike'
 import { FormattedMessage } from 'react-intl'
 import config from 'app-config'
 

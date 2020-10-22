@@ -21,6 +21,7 @@ const ThirdStep = (props) => {
       sellCurrency,
       buyCurrency,
       flow: {
+        state: flowState,
         state: {
           ethSwapWithdrawTransactionHash,
         },
@@ -61,14 +62,14 @@ const ThirdStep = (props) => {
           </a>
         </strong>
       )}
-      {flow[withdrawTransactionHash] && (
+      {flowState[withdrawTransactionHash] && (
         <strong styleName="transactionInStep">
           <a
-            href={`${explorerLink}/tx/${flow[withdrawTransactionHash]}`}
+            href={`${explorerLink}/tx/${flowState[withdrawTransactionHash]}`}
             target="_blank"
             rel="noreferrer noopener"
           >
-            <FormattedMessage id="FourthStep37_BtcLike" defaultMessage="({currencyName} tx)" values={{ currencyName }} />
+            <FormattedMessage id="FourthStep37_BtcLike" defaultMessage="({currencyName} tx)" values={{ currencyName: currencyName.toLowerCase() }} />
             <i className="fas fa-link" />
           </a>
         </strong>

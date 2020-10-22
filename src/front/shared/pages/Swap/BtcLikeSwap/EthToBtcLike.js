@@ -3,15 +3,15 @@ import React, { Component, Fragment } from 'react'
 
 
 import CSSModules from 'react-css-modules'
-import styles from './Swap.scss'
+import styles from '../Swap.scss'
 
 import config from 'app-config'
 import { isMobile } from 'react-device-detect'
 
-import FeeControler from './FeeControler/FeeControler'
-import SwapProgress from './BtcLikeSwap/SwapProgress/SwapProgress'
-import SwapList from './BtcLikeSwap/SwapList/SwapList'
-import DepositWindow from './BtcLikeSwap/DepositWindow/DepositWindow'
+import FeeControler from '../FeeControler/FeeControler'
+import SwapProgress from './SwapProgress/SwapProgress'
+import SwapList from './SwapList/SwapList'
+import DepositWindow from './DepositWindow/DepositWindow'
 import paddingForSwapList from 'shared/helpers/paddingForSwapList.js'
 
 @CSSModules(styles)

@@ -4,17 +4,17 @@ import actions from 'redux/actions'
 import crypto from 'crypto'
 
 import CSSModules from 'react-css-modules'
-import styles from './Swap.scss'
+import styles from '../Swap.scss'
 
 import { isMobile } from 'react-device-detect'
 import { FormattedMessage } from 'react-intl'
 import { BigNumber } from 'bignumber.js'
 import Link from 'sw-valuelink'
 
-import SwapProgress from './BtcLikeSwap/SwapProgress/SwapProgress'
-import DepositWindow from './BtcLikeSwap/DepositWindow/DepositWindow'
-import FeeControler from './FeeControler/FeeControler'
-import SwapList from './BtcLikeSwap/SwapList/SwapList'
+import SwapProgress from './SwapProgress/SwapProgress'
+import DepositWindow from './DepositWindow/DepositWindow'
+import FeeControler from '../FeeControler/FeeControler'
+import SwapList from './SwapList/SwapList'
 import paddingForSwapList from 'shared/helpers/paddingForSwapList.js'
 
 
