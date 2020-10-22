@@ -31,6 +31,9 @@ import { getActivatedCurrencies } from "helpers/user";
 import { WidgetHeader } from "./WidgetHeader";
 import { ThemeSwitcher } from "./ThemeSwitcher"
 
+// Incoming swap requests and tooltips (revert)
+import UserTooltip from "components/Header/User/UserTooltip/UserTooltip"
+
 
 const isWidgetBuild = config && config.isWidget
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -371,6 +374,30 @@ export default class Header extends Component {
     window.location.reload();
   }
 
+  declineRequest = (orderId, participantPeer) => {
+    actions.core.declineRequest(orderId, participantPeer)
+    actions.core.updateCore()
+  }
+
+  acceptRequest = async (orderId, participantPeer, link) => {
+    const {
+      toggle,
+      history,
+      intl: { locale }
+    } = this.props;
+
+    actions.core.acceptRequest(orderId, participantPeer)
+    actions.core.updateCore()
+
+    if (typeof toggle === "function") {
+      toggle()
+    }
+
+    console.log("-Accepting request", link)
+    await history.replace(localisedUrl(locale, link))
+    await history.push(localisedUrl(locale, link))
+  }
+
   render() {
     const {
       sticky,
@@ -450,6 +477,15 @@ export default class Header extends Component {
       return <span />;
     }
 
+    const incomingSwapRequest = (
+      <UserTooltip
+        feeds={feeds}
+        peer={peer}
+        acceptRequest={this.acceptRequest}
+        declineRequest={this.declineRequest}
+      />
+    )
+
     if (isMobile && window.logoUrl) {
       return (
         <header className="data-tut-widget-tourFinish" id="header-mobile" styleName="header-mobile">
@@ -464,6 +500,7 @@ export default class Header extends Component {
               />
             </div>
           )}
+          {incomingSwapRequest}
           <NavMobile menu={menuItemsMobile} isHidden={isInputActive} />
           {isWidgetTourOpen && isWalletPage &&
             <div styleName="walletTour">
@@ -490,6 +527,7 @@ export default class Header extends Component {
               />
             </div>
           )}
+          {incomingSwapRequest}
           <NavMobile menu={menuItemsMobile} isHidden={isInputActive} />
           {isWidgetTourOpen && isWalletPage &&
             <div styleName="walletTour">
@@ -533,6 +571,7 @@ export default class Header extends Component {
             />
           </div>
         )}
+        {incomingSwapRequest}
         {isTourOpen && isWalletPage &&
           <div styleName="walletTour">
             <WalletTour isTourOpen={isTourOpen} closeTour={this.closeTour} />
