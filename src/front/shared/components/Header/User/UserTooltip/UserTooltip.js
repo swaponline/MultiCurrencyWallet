@@ -70,7 +70,7 @@ export default class UserTooltip extends Component {
   render() {
     const { feeds, peer: mePeer } = this.props
 
-    const autoAcceptTimeout = (config && config.isWidgetBuild) ? 30 : 15
+    const autoAcceptTimeout = (config && config.isWidgetBuild) ? 5 : 5
     return !!feeds.length && (
       <div styleName="column" >
         {feeds.length < 3 ? (
