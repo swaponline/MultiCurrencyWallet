@@ -1248,15 +1248,15 @@ export default class Exchange extends Component {
 
     // temporarly disable some combinations (need test)
     const isErrorExternalDisabled =
-      (fromAddress && ![AddressType.Internal, AddressType.Custom].includes(fromAddress.type)) ||
-      (toAddress && ![AddressType.Internal, AddressType.Metamask].includes(toAddress.type))
+      (fromAddress && ![AddressType.Internal, AddressType.Metamask, AddressType.Custom].includes(fromAddress.type)) ||
+      (toAddress && ![AddressType.Internal, AddressType.Metamask, AddressType.Custom].includes(toAddress.type))
 
 
     const canStartSwap =
       !isErrorExternalDisabled &&
       !isNonOffers &&
       fromAddress &&
-      toAddress &&
+      toAddress && toAddress.value &&
       BigNumber(getAmount).isGreaterThan(0) &&
       !this.doesComissionPreventThisOrder() &&
       (BigNumber(haveAmount).isGreaterThan(balance) ||
