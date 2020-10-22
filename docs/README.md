@@ -180,6 +180,23 @@ Set your own links in `MultiCurrencyWallet/shared/helpers/links.js`
 ### 10. Add exit button to your widget
 in `index.html` edit `isUserRegisteredAndLoggedIn=false` to `isUserRegisteredAndLoggedIn=true`
 
+### enable/disbale blockchains on domain
+add config named as your domain to /src/front/externalConfigs/
+
+```
+window.buildOptions = {
+  showWalletBanners: true, // Allow to see banners
+  showHowItsWork: true, // Allow show block 'How its work' on exchange page
+  curEnabled: {
+    btc: true,
+    eth: true,
+    ghost: true,
+    next: true,
+  },
+}
+```
+
+Example https://github.com/swaponline/MultiCurrencyWallet/blob/master/src/front/externalConfigs/swaponline.github.io.js#L43
 
 
 ## How to update your version (fork) to latest version
