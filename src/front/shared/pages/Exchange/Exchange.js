@@ -1118,6 +1118,7 @@ export default class Exchange extends Component {
       tokensData,
       intl: { locale, formatMessage },
       isOnlyForm,
+      match: { params: { linkedOrderId } },
     } = this.props
 
     const {
@@ -1609,7 +1610,7 @@ export default class Exchange extends Component {
                 )}
               />
               {Form}
-              <Orders sell={haveCurrency} buy={getCurrency} />
+              <Orders sell={haveCurrency} buy={getCurrency} linkedOrderId={linkedOrderId} />
             </div>
           </Fragment>
         </div>

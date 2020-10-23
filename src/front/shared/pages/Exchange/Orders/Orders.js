@@ -166,10 +166,11 @@ export default class Home extends Component {
   }
 
   render() {
-    const { match = {}, history = {}, currencies } = this.props
+    const { match = {}, history = {}, currencies, linkedOrderId } = this.props
     const { buyCurrency, sellCurrency, invalidPair, exchange } = this.state
     const sectionContainerStyleName = isMobile ? 'sectionContainerMobile' : 'sectionContainer'
     const isWidgetBuild = config && config.isWidget
+
     return (
       <section styleName={isWidgetBuild ? `${sectionContainerStyleName} ${sectionContainerStyleName}_widget` : sectionContainerStyleName}>
         {
@@ -220,6 +221,7 @@ export default class Home extends Component {
               flipCurrency={this.flipCurrency}
               orderId={match.params && match.params.orderId}
               invalidPair={invalidPair}
+              linkedOrderId={linkedOrderId}
             />
           )
         }
