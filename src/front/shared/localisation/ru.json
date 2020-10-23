@@ -7231,7 +7231,7 @@
   },
   {
     "id": "privateKeyCurrency",
-    "message": "Your {cur} pivate key",
+    "message": "Ваш приватный ключ {cur}",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
