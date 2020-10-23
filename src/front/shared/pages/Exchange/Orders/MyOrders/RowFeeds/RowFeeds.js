@@ -29,13 +29,9 @@ export default class RowFeeds extends Component {
   generateLink = () => {
     const { intl: { locale }, row: { buyCurrency, sellCurrency, id } } = this.props
 
-    const tradeTicker = `${buyCurrency}-${sellCurrency}`.toLowerCase()
-    const reversPair = tradeTicker.split('-').reverse().join('-')
-
-    if (constants.tradeTicker.includes(tradeTicker.toUpperCase())) {
-      return (`${config.base}${locale}/${tradeTicker}/${id}`)
-    }
-    return (`${config.base}${locale}/${reversPair}/${id}`)
+    const market = `${buyCurrency}-to-${sellCurrency}`.toLowerCase()
+    const url = `${config.base}#${links.exchange}/${market}/${id}`
+    return url
   }
 
   render() {
