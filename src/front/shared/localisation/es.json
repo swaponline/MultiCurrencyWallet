@@ -7212,6 +7212,13 @@
     ]
   },
   {
+    "id": "WalletRow_MetamaskNotConnected",
+    "message": "No conectado",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
     "id": "HowToExportModal_ExportERC20Step1",
     "message": "Para exportar la billetera {currency} , primero debe importar su clave privada de la billetera ETH (por ejemplo, en la billetera Metamask) ",
     "files": [
