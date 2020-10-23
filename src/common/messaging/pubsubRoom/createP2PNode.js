@@ -1,7 +1,6 @@
 import Libp2p from 'libp2p'
 import wrtc from 'wrtc'
 import WebrtcStar from 'libp2p-webrtc-star'
-import Websockets from 'libp2p-websockets'
 import Bootstrap from 'libp2p-bootstrap'
 import Gossipsub from 'libp2p-gossipsub'
 import KadDHT from 'libp2p-kad-dht'
@@ -72,7 +71,7 @@ const createP2PNode = (options) => {
         pollInterval: 5000
       },
       modules: {
-        transport: [WebrtcStar, Websockets],
+        transport: [WebrtcStar],
         streamMuxer: [MPLEX],
         connEncryption: [SECIO],
         peerDiscovery: [Bootstrap],
