@@ -559,9 +559,9 @@
   },
   {
     "id": "RowFeeds64",
-    "message": "Copiados",
+    "message": "Copiados!",
     "files": [
-      "shared/pages/Exchange/Orders/MyOrders/RowFeeds/RowFeeds.js"
+      "shared/components/ui/Copy/Copy.js"
     ]
   },
   {
@@ -7207,6 +7207,13 @@
   {
     "id": "WalletRow_ShowAddress",
     "message": "Mostrar dirección",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "WalletRow_MetamaskNotConnected",
+    "message": "No conectado",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]

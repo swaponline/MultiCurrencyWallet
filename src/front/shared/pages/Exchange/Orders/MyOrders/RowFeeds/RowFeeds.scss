@@ -60,16 +60,6 @@ td {
   height: auto;
 }
 
-.shareFrame {
-  height: 25px;
-  width: 25px;
-  border: 1px solid #0004;
-  border-radius: 50%;
-  background-color: #aaa2;
-  cursor: pointer;
-  position: relative;
-}
-
 .img {
   position: absolute;
   top: 50%;
@@ -86,11 +76,13 @@ td {
   }
 }
 
-.shareTip {
-  position: absolute;
-  font-size: 12px;
-  top: -1.5em;
-  left: -50%;
+.circle {
+  height: 25px;
+  width: 25px;
+  border: 1px solid #0004;
+  border-radius: 50%;
+  background-color: #aaa2;
+  position: relative;
 }
 
 .value {
