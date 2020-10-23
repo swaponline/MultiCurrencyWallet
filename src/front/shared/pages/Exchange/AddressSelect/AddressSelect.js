@@ -25,7 +25,7 @@ import iconCustom from './images/custom.svg'
 
 
 export const AddressType = {
-  Internal: 'Internal', // or better 'systemWallet' / 'Internal'?
+  Internal: 'Internal',
   Metamask: 'Metamask',
   Custom: 'Custom',
 }
@@ -112,16 +112,17 @@ export default class AddressSelect extends Component {
     const {
       currency,
       hasError = false,
+      defaults,
     } = props
-
+console.log('>>> constructor defaults=', defaults)
     this.state = {
       currency,
       hasError,
-      selectedType: 'placeholder',
-      walletAddressFocused: false,
-      customAddress: '',
+      selectedType: (defaults && defaults.type) || 'placeholder',
       isMetamaskConnected: metamask.isConnected(),
       metamaskAddress: metamask.getAddress(),
+      customAddress: (defaults && defaults.type === AddressType.Custom) ? defaults.value : '',
+      isInputFocused: false,
       isScanActive: false,
     }
   }
@@ -164,10 +165,8 @@ export default class AddressSelect extends Component {
     return result
   }
 
-  handleFocusAddress() {
-    this.setState({
-      walletAddressFocused: true,
-    })
+  componentDidMount() {
+    console.log('addressSelect mount')
   }
 
   componentDidUpdate() {
@@ -189,23 +188,6 @@ export default class AddressSelect extends Component {
         customAddress: '',
       })
     }
-  }
-
-  handleBlurAddress(value) {
-    this.setState({
-      walletAddressFocused: false,
-    })
-    // todo: validate value
-    /*
-    if (getCurrency === "btc") {
-      return util.typeforce.isCoinAddress.BTC(customWallet)
-    }
-    return util.typeforce.isCoinAddress.ETH(customWallet);
-    */
-    this.applyAddress({
-      type: AddressType.Custom,
-      value,
-    })
   }
 
   goСreateWallet() {
@@ -237,6 +219,29 @@ export default class AddressSelect extends Component {
     })/*.catch((error) => {
       console.log('Metamask rejected', error)
     })*/
+  }
+
+  handleInputFocus() {
+    this.setState({
+      isInputFocused: true,
+    })
+  }
+
+  handleInputBlur(value) {
+    this.setState({
+      isInputFocused: false,
+    })
+    // todo: validate value
+    /*
+    if (getCurrency === "btc") {
+      return util.typeforce.isCoinAddress.BTC(customWallet)
+    }
+    return util.typeforce.isCoinAddress.ETH(customWallet);
+    */
+    this.applyAddress({
+      type: AddressType.Custom,
+      value,
+    })
   }
 
   toggleScan = () => {
@@ -305,6 +310,7 @@ export default class AddressSelect extends Component {
     const { type, value } = address
 
     if (typeof onChange !== 'function') {
+      console.warn('AddressSelect: please set onChange')
       return
     }
 
@@ -323,11 +329,12 @@ export default class AddressSelect extends Component {
       hiddenCoinsList,
       allData,
       role,
+      defaults,
     } = this.props
 
     const {
       selectedType,
-      walletAddressFocused,
+      isInputFocused,
       isMetamaskConnected,
       metamaskAddress,
       isScanActive,
@@ -420,7 +427,7 @@ export default class AddressSelect extends Component {
 
     return (
       <div styleName={`addressSelect ${(hasError) ? 'addressSelect_error' : ''} ${isDark ? '--dark' : ''}`}>
-        <div styleName="label">{label}</div>
+        <div styleName="label">{label}{selectedType}</div>
         <DropDown
           styleName="dropDown"
           items={options}
@@ -447,7 +454,7 @@ export default class AddressSelect extends Component {
         }
         {selectedType === AddressType.Custom && !isCustomOptionInputHidden &&
           <div styleName="selectedInner">
-            <div styleName={`customWallet ${(walletAddressFocused) ? 'customWallet_focus' : ''}`}>
+            <div styleName={`customWallet ${(isInputFocused) ? 'customWallet_focus' : ''}`}>
               <div styleName="customAddressInput">
                 <Input
                   inputCustomStyle={{
@@ -456,8 +463,8 @@ export default class AddressSelect extends Component {
                   }}
                   required
                   pattern="0-9a-zA-Z"
-                  onFocus={() => this.handleFocusAddress()}
-                  onBlur={(e) => this.handleBlurAddress(e.target.value)}
+                  onFocus={() => this.handleInputFocus()}
+                  onBlur={(e) => this.handleInputBlur(e.target.value)}
                   placeholder="Enter address"
                   valueLink={Link.all(this, '_')._} // required
                 />
@@ -473,6 +480,7 @@ export default class AddressSelect extends Component {
             handleScan={this.handleScan}
           />
         )}
+        {JSON.stringify(defaults)}
       </div>
     )
   }

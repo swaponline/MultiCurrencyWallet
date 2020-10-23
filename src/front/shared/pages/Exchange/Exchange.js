@@ -954,15 +954,16 @@ export default class Exchange extends Component {
   };
 
   flipCurrency = async () => {
-    const { haveCurrency, getCurrency } = this.state;
+    const { haveCurrency, fromAddress, getCurrency, toAddress } = this.state;
 
     this.resetState();
     this.changeUrl(getCurrency, haveCurrency);
     this.setState(
       {
         haveCurrency: getCurrency,
+        fromAddress: toAddress,
         getCurrency: haveCurrency,
-        // todo: flip values, addresses
+        toAddress: fromAddress,
       },
       () => {
         actions.analytics.dataEvent({
@@ -1335,6 +1336,7 @@ export default class Exchange extends Component {
                 isDark={isDark}
                 currency={haveCurrency}
                 role={AddressRole.Send}
+                defaults={fromAddress}
                 hasError={false}
                 onChange={(addrData) => this.applyAddress(AddressRole.Send, addrData)}
               />
@@ -1369,14 +1371,15 @@ export default class Exchange extends Component {
                   <FormattedMessage id="Exchange_ToAddress" defaultMessage="To address" />
                 }
                 isDark={isDark}
-                role={AddressRole.Receive}
                 currency={getCurrency}
+                role={AddressRole.Receive}
+                defaults={toAddress}
                 hasError={false}
                 onChange={(addrData) => this.applyAddress(AddressRole.Receive, addrData)}
               />
             </div>
           </div>
-
+{'from ='}{JSON.stringify(fromAddress)}{' | to ='}{JSON.stringify(toAddress)}
 
           <div styleName="errors">
 
