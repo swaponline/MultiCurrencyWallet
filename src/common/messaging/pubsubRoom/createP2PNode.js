@@ -63,7 +63,7 @@ const createP2PNode = (options) => {
     const p2pNode = new Libp2p({
       peerId,
       addresses: {
-        listen: listen || defaultListen,
+        listen: (listen || defaultListen),
       },
       connectionManager: {
         minPeers: 25,
@@ -94,6 +94,22 @@ const createP2PNode = (options) => {
             interval: 30e3,
             list: discoveryPeers || defaultDiscoveryPeers,
           }
+        },
+        dialer: {
+          maxParallelDials: 100,
+          maxDialsPerPeer: 100,
+          dialTimeout: 30e3
+        },
+        connectionManager: {
+          maxConnections: Infinity,
+          minConnections: 0,
+          pollInterval: 1000,
+          defaultPeerValue: 1,
+          maxData: Infinity,
+          maxSentData: Infinity,
+          maxReceivedData: Infinity,
+          maxEventLoopDelay: Infinity,
+          movingAverageInterval: 5000
         },
         relay: {
           enabled: true,
