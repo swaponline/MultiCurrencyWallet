@@ -59,7 +59,7 @@ export default class EthToGhost extends Component {
 
     this.confirmGhostTimer = setInterval(() => {
       if (this.state.flow.step === 3) {
-        this.confirmGHOSTScriptChecked()
+        this.confirmGhostScriptChecked()
       } else {
         clearInterval(this.confirmGhostTimer)
       }
@@ -88,8 +88,8 @@ export default class EthToGhost extends Component {
     }))
   }
 
-  confirmBTCScriptChecked = () => {
-    this.swap.flow.verifyBtcScript()
+  confirmGhostScriptChecked = () => {
+    this.swap.flow.verifyGhostScript()
   }
 
   handleFlowStateUpdate = (values) => {
@@ -123,7 +123,7 @@ export default class EthToGhost extends Component {
     }))
   }
 
-  toggleBitcoinScript = () => {
+  toggleGhostScript = () => {
     this.setState({
       isShowingGhostScript: !this.state.isShowingGhostScript,
     })
