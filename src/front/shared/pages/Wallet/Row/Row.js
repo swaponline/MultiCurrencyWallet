@@ -1017,16 +1017,24 @@ export default class Row extends Component {
                     />
                   </p>
                   :
-                  isMobile ?
-                    <PartOfAddress {...itemData} onClick={this.goToCurrencyHistory} style={{
-                      marginLeft: '10px',
-                      marginTop: '1px',
-                      position: 'absolute',
-                      left: '46px',
-                      bottom: '4px',
-                    }} />
+                  this.props.itemData.isMetamask && ! this.props.itemData.isConnected ?
+                    <p styleName="addressStyle">
+                      <FormattedMessage
+                        id="WalletRow_MetamaskNotConnected"
+                        defaultMessage="Not connected"
+                      />
+                    </p>
                     :
-                    <p styleName="addressStyle">{itemData.address}</p>
+                    isMobile ?
+                      <PartOfAddress {...itemData} onClick={this.goToCurrencyHistory} style={{
+                        marginLeft: '10px',
+                        marginTop: '1px',
+                        position: 'absolute',
+                        left: '46px',
+                        bottom: '4px',
+                      }} />
+                      :
+                      <p styleName="addressStyle">{itemData.address}</p>
               }
             </Fragment>
 

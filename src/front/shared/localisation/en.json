@@ -7254,6 +7254,13 @@
     ]
   },
   {
+    "id": "WalletRow_MetamaskNotConnected",
+    "message": "Not connected",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
     "id": "HowToExportModal_ExportERC20Step1",
     "message": "To export the {currency} wallet, you first need to import your private key from the ETH wallet (for example, into the Metamask wallet)",
     "files": [

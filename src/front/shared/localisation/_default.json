@@ -7421,6 +7421,13 @@
     ]
   },
   {
+    "id": "WalletRow_MetamaskNotConnected",
+    "message": "Not connected",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
     "id": "PartialClosure_AvialableBalance",
     "message": "Available: "
   },
