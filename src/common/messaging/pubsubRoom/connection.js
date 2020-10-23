@@ -52,7 +52,10 @@ module.exports = class Connection extends EventEmitter {
 
     const peerInfo = this._libp2p.peerStore.get(this._remoteId)
 
-    const { stream } = await this._libp2p.dialProtocol(peerInfo.id, PROTOCOL)
+    const dial = await this._libp2p.dialProtocol(peerInfo.id, PROTOCOL)
+
+    const { stream } = dial
+
     this._connection = new FiFoMessageQueue()
 
     pipe(this._connection, stream, async (source) => {
@@ -65,8 +68,12 @@ module.exports = class Connection extends EventEmitter {
     })
       .then(() => {
         this.emit('disconnect')
-      }, (err) => {
-        this.emit('error', err)
+      }, async (err) => {
+        try {
+          await this._connect()
+        } catch (e) {
+          console.log('Fail reconnect')
+        }
       })
   }
 

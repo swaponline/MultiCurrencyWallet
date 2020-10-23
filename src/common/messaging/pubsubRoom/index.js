@@ -43,6 +43,10 @@ class PubSubRoom extends EventEmitter {
 
     this._libp2p.pubsub.subscribe(this._topic, this._handleMessage)
 
+    this._libp2p.on('error', (error) => {
+      console.log('Libp2p error', error)
+    })
+
     this._idx = index++
   }
 
