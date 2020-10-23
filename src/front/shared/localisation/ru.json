@@ -569,9 +569,9 @@
   },
   {
     "id": "RowFeeds64",
-    "message": "Скопировано",
+    "message": "Скопировано!",
     "files": [
-      "shared/pages/Exchange/Orders/MyOrders/RowFeeds/RowFeeds.js"
+      "shared/components/ui/Copy/Copy.js"
     ]
   },
   {

@@ -566,9 +566,9 @@
   },
   {
     "id": "RowFeeds64",
-    "message": "Gekopieerd",
+    "message": "Gekopieerd!",
     "files": [
-      "shared/pages/Exchange/Orders/MyOrders/RowFeeds/RowFeeds.js"
+      "shared/components/ui/Copy/Copy.js"
     ]
   },
   {
