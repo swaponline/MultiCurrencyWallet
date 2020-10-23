@@ -7,10 +7,10 @@ import { FormattedMessage } from 'react-intl'
 
 
 @CSSModules(styles)
-export default class BtcLikeToEthTokens extends Component {
-  GhostToEthTokens = (step) => {
+export default class BtcLikeToEthToken extends Component {
+  BtcLikeToEthToken = (step, coinName) => {
 
-    switch (step, coinName) {
+    switch (step) {
       case 1:
         return (
           <FormattedMessage id="BitcoinBuyText17_BtcLike_to_tokens" defaultMessage="Confirmation processing" />
@@ -74,6 +74,6 @@ export default class BtcLikeToEthTokens extends Component {
 
   render() {
 
-    return this.BtcLikeToEthTokens(this.props.step, this.props.coinName)
+    return this.BtcLikeToEthToken(this.props.step, this.props.coinName)
   }
 }

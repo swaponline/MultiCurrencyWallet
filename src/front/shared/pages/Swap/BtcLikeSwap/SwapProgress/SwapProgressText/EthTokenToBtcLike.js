@@ -7,8 +7,8 @@ import { FormattedMessage } from 'react-intl'
 
 
 @CSSModules(styles)
-export default class EthTokensToBtcLike extends Component {
-  EthTokensToGhost = (step, coinName) => {
+export default class EthTokenToBtcLike extends Component {
+  EthTokenToBtcLike = (step, coinName) => {
 
     switch (step) {
       case 1:
@@ -77,6 +77,6 @@ export default class EthTokensToBtcLike extends Component {
 
   render() {
 
-    return this.EthTokensToBtcLike(this.props.step, this.props.coinName)
+    return this.EthTokenToBtcLike(this.props.step, this.props.coinName)
   }
 }

@@ -4,25 +4,27 @@ import actions from 'redux/actions'
 import { constants } from 'helpers'
 
 import CSSModules from 'react-css-modules'
-import styles from '../Swap.scss'
+import styles from './Swap.scss'
+
+import config from 'app-config'
+import { isMobile } from 'react-device-detect'
+import { BigNumber } from 'bignumber.js'
+import { FormattedMessage } from 'react-intl'
+import Link from 'sw-valuelink'
 
 import SwapProgress from './SwapProgress/SwapProgress'
 import SwapList from './SwapList/SwapList'
-import FeeControler from '../FeeControler/FeeControler'
-import FailControler from '../FailControler/FailControler'
+import FeeControler from './FeeControler/FeeControler'
+import FailControler from './FailControler/FailControler'
 import DepositWindow from './DepositWindow/DepositWindow'
-import paddingForSwapList from 'shared/helpers/paddingForSwapList.js'
 
 
 @CSSModules(styles)
-export default class EthTokenToBtcLike extends Component {
+export default class EthTokenToBtc extends Component {
 
-  _fields = null
-
-  constructor({ swap, currencyData, ethBalance, tokenItems, fields }) {
+  constructor({ swap, currencyData, ethBalance, tokenItems }) {
     super()
 
-    console.log('EthTokenToBtcLike')
     this.swap = swap
 
     this.state = {
@@ -30,17 +32,14 @@ export default class EthTokenToBtcLike extends Component {
       currencyData,
       tokenItems,
       signed: false,
-      paddingContainerValue: 0,
       enabledButton: false,
       isAddressCopied: false,
       flow: this.swap.flow.state,
       currencyAddress: currencyData.address,
     }
 
-    this._fields = fields
-
     this.signTimer = null
-    this.confirmTimer = null
+    this.confirmBtcTimer = null
 
   }
 
@@ -53,16 +52,8 @@ export default class EthTokenToBtcLike extends Component {
   }
 
   componentDidMount() {
-    const {
-      flow: {
-        isSignFetching,
-        isMeSigned,
-        step,
-      },
-    } = this.state
+    const { flow: { isSignFetching, isMeSigned, step } } = this.state
 
-    this.changePaddingValue()
-window.signSwap = signSwap
     this.signTimer = setInterval(() => {
       if (!this.state.flow.isMeSigned) {
         this.signSwap()
@@ -71,44 +62,32 @@ window.signSwap = signSwap
       }
     }, 3000)
 
-    this.confirmTimer = setInterval(() => {
+    this.confirmBtcTimer = setInterval(() => {
       if (this.state.flow.step === 3) {
-        this.confirmScriptChecked()
+        this.confirmBTCScriptChecked()
       } else {
-        clearInterval(this.confirmTimer)
+        clearInterval(this.confirmBtcTimer)
       }
     }, 3000)
 
     this.requestMaxAllowance()
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.flow !== this.state.flow) {
-      this.changePaddingValue()
-    }
+  confirmBTCScriptChecked = () => {
+    this.swap.flow.verifyBtcScript()
   }
 
-  confirmScriptChecked = () => {
-    this.swap.flow[this._fields.verifyScriptFunc]()
-  }
-
-  changePaddingValue = () => {
-    const { flow: { step } } = this.state
-    this.setState(() => ({
-      paddingContainerValue: paddingForSwapList({ step }),
-    }))
-  }
 
   handleFlowStateUpdate = (values) => {
 
     const stepNumbers = {
       'sign': 1,
-      'wait-lock-ghost': 2,
+      'wait-lock-btc': 2,
       'verify-script': 3,
       'sync-balance': 4,
       'lock-eth': 5,
       'wait-withdraw-eth': 6, // aka getSecret
-      'withdraw-ghost': 7,
+      'withdraw-btc': 7,
       'finish': 8,
       'end': 9,
     }
@@ -121,14 +100,18 @@ window.signSwap = signSwap
   }
 
   signSwap = () => {
-    console.log('sign swap')
     this.swap.flow.sign()
     this.setState(() => ({
       signed: true,
     }))
   }
 
-  
+  toggleBitcoinScript = () => {
+    this.setState({
+      isShowingBitcoinScript: !this.state.isShowingBitcoinScript,
+    })
+  }
+
   requestMaxAllowance = () => {
     const { sellCurrency, sellAmount } = this.swap
     const { ethTokenSwap } = this.swap.flow
@@ -138,6 +121,18 @@ window.signSwap = signSwap
       to: ethTokenSwap.address, // swap contract address
       targetAllowance: sellAmount,
       speed: 'fast',
+    })
+  }
+
+  handleCopy = () => {
+    this.setState({
+      isAddressCopied: true,
+    }, () => {
+      setTimeout(() => {
+        this.setState({
+          isAddressCopied: false,
+        })
+      }, 500)
     })
   }
 
@@ -159,11 +154,11 @@ window.signSwap = signSwap
       currencyAddress,
       flow,
       enabledButton,
+      isShowingBitcoinScript,
       isAddressCopied,
       currencyData,
       tokenItems,
       signed,
-      paddingContainerValue,
       swap,
     } = this.state
 
@@ -190,7 +185,7 @@ window.signSwap = signSwap
             {!enoughBalance && flow.step === 4
               ? (
                 <div styleName="swapDepositWindow">
-                  <DepositWindow currencyData={currencyData} swap={swap} flow={flow} tokenItems={tokenItems} fields={this._fields} />
+                  <DepositWindow currencyData={currencyData} swap={swap} flow={flow} tokenItems={tokenItems} />
                 </div>
               )
               : (
@@ -200,12 +195,12 @@ window.signSwap = signSwap
                       <Fragment>
                         {
                           !canCreateEthTransaction && (
-                            <FeeControler ethAddress={ethAddress} gasAmountNeeded={gasAmountNeeded} fields={this._fields} />
+                            <FeeControler ethAddress={ethAddress} gasAmountNeeded={gasAmountNeeded} />
                           )
                         }
                         {
                           isFailedTransaction && (
-                            <FailControler ethAddress={ethAddress} message={isFailedTransactionError} fields={this._fields} />
+                            <FailControler ethAddress={ethAddress} message={isFailedTransactionError} />
                           )
                         }
                       </Fragment>
@@ -213,14 +208,13 @@ window.signSwap = signSwap
                     : (
                       <SwapProgress
                         flow={flow}
-                        name="EthTokensToGhost"
+                        name="EthTokensToBtc"
                         swap={swap}
                         tokenItems={tokenItems}
                         history={history}
                         locale={locale}
                         wallets={wallets}
                         signed={signed}
-                        fields={this._fields}
                       />
                     )
                   }
@@ -228,7 +222,7 @@ window.signSwap = signSwap
               )
             }
           </div>
-          <SwapList enoughBalance={enoughBalance} flow={flow} swap={swap} onClickCancelSwap={onClickCancelSwap} fields={this._fields} />
+          <SwapList enoughBalance={enoughBalance} flow={flow} swap={swap} onClickCancelSwap={onClickCancelSwap} />
         </div>
         <div styleName="swapContainerInfo">{children}</div>
       </div>

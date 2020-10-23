@@ -3,29 +3,34 @@ import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
 
 import CSSModules from 'react-css-modules'
-import styles from '../Swap.scss'
+import styles from './Swap.scss'
+
+import { constants } from 'helpers'
+import { isMobile } from 'react-device-detect'
 
 import crypto from 'crypto'
+import config from 'app-config'
 import SwapApp from 'swap.app'
+import Swap from 'swap.swap'
 import Link from 'sw-valuelink'
+
+import { BigNumber } from 'bignumber.js'
+import { FormattedMessage } from 'react-intl'
 
 import DepositWindow from './DepositWindow/DepositWindow'
 import SwapProgress from './SwapProgress/SwapProgress'
 import SwapList from './SwapList/SwapList'
-import FeeControler from '../FeeControler/FeeControler'
-import paddingForSwapList from 'shared/helpers/paddingForSwapList.js'
+import Timer from './Timer/Timer'
+import FeeControler from './FeeControler/FeeControler'
 
 
 @CSSModules(styles)
-export default class BtcLikeToEthToken extends Component {
+export default class BtcToEthToken extends Component {
 
-  _fields = null
-
-  constructor({ swap, currencyData, ethData, enoughBalance, styles, depositWindow, fields }) {
+  constructor({ swap, currencyData, ethData, enoughBalance, styles, depositWindow }) {
 
     super()
 
-    console.log('BtcLikeToEthToken')
     this.swap = swap
 
     this.state = {
@@ -37,18 +42,14 @@ export default class BtcLikeToEthToken extends Component {
       enabledButton: false,
       isAddressCopied: false,
       flow: this.swap.flow.state,
-      paddingContainerValue: 0,
       destinationAddressTimer: true,
-      isShowingScript: false,
+      isShowingBitcoinScript: false,
       currencyAddress: currencyData.address,
       ethAddress: ethData.map(item => item.address),
       secret: crypto.randomBytes(32).toString('hex'),
       destinationBuyAddress: (this.swap.destinationBuyAddress) ? this.swap.destinationBuyAddress : SwapApp.shared().services.auth.accounts.eth.address,
     }
 
-    this._fields = fields
-
-    console.log('BtcLikeToEthToken fields', this._fields)
     this.confirmAddressTimer = null
     this.ParticipantTimer = null
 
@@ -64,7 +65,6 @@ export default class BtcLikeToEthToken extends Component {
 
   componentDidMount() {
     const { swap, flow: { step, isParticipantSigned } } = this.state
-    this.changePaddingValue()
     this.confirmAddressTimer = setInterval(() => {
       if (this.state.flow.step === 1) {
         this.confirmAddress()
@@ -76,56 +76,15 @@ export default class BtcLikeToEthToken extends Component {
     this.ParticipantTimer = setInterval(() => {
       if (this.state.flow.isParticipantSigned && this.state.destinationBuyAddress) {
         this.submitSecret()
-      }
-      else {
+      } else {
         clearInterval(this.ParticipantTimer)
       }
     }, 3000)
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.flow !== this.state.flow) {
-      this.changePaddingValue()
-    }
-  }
-
   submitSecret = () => {
     const { secret } = this.state
     this.swap.flow.submitSecret(secret)
-  }
-
-  changePaddingValue = () => {
-    const { flow: { step } } = this.state
-    this.setState(() => ({
-      paddingContainerValue: paddingForSwapList({ step }),
-    }))
-  }
-
-  changePaddingValue = () => {
-    const { flow: { step } } = this.state
-    this.setState(() => ({
-      paddingContainerValue: paddingForSwapList({ step }),
-    }))
-  }
-
-  changePaddingValue = () => {
-    const { flow } = this.state
-
-    if (flow.step <= 2) {
-      this.setState(() => ({
-        paddingContainerValue: 60 * flow.step,
-      }))
-    }
-    if (flow.step > 5 && flow.step < 7) {
-      this.setState(() => ({
-        paddingContainerValue: 180,
-      }))
-    }
-    if (flow.step > 7) {
-      this.setState(() => ({
-        paddingContainerValue: 210,
-      }))
-    }
   }
 
   handleFlowStateUpdate = (values) => {
@@ -134,7 +93,7 @@ export default class BtcLikeToEthToken extends Component {
       'sign': 1,
       'submit-secret': 2,
       'sync-balance': 3,
-      'lock-ghost': 4,
+      'lock-btc': 4,
       'wait-lock-eth': 5,
       'withdraw-eth': 6,
       'finish': 7,
@@ -152,10 +111,9 @@ export default class BtcLikeToEthToken extends Component {
     this.swap.setDestinationBuyAddress(this.state.destinationBuyAddress)
     this.setState({ destinationAddressTimer : false })
   }
-
-  toggleScript = () => {
+  toggleBitcoinScript = () => {
     this.setState({
-      isShowingScript: !this.state.isShowingScript,
+      isShowingBitcoinScript: !this.state.isShowingBitcoinScript,
     })
   }
 
@@ -210,32 +168,15 @@ export default class BtcLikeToEthToken extends Component {
       flow,
       secret,
       ethAddress,
-      paddingContainerValue,
-      isShowingScript,
+      isShowingBitcoinScript,
     } = this.state
 
     const linked = Link.all(this, 'destinationBuyAddress')
 
     linked.destinationBuyAddress.check((value) => value !== '', 'Please enter ETH address for tokens')
 
-    const feeControllerView = (
-      <FeeControler
-        ethAddress={ethAddress}
-        fields={this._fields}
-      />
-    )
-    const swapProgressView = (
-      <SwapProgress
-        flow={flow}
-        name="BtcLikeToEthToken"
-        swap={this.props.swap}
-        history={history}
-        locale={locale}
-        wallets={wallets}
-        tokenItems={tokenItems}
-        fields={this._fields}
-      />
-    )
+    const feeControllerView = <FeeControler ethAddress={ethAddress} />
+    const swapProgressView = <SwapProgress flow={flow} name="BtcToEthTokens" swap={this.props.swap} history={history} locale={locale} wallets={wallets} tokenItems={tokenItems} />
 
     return (
       <div>
@@ -258,13 +199,7 @@ export default class BtcLikeToEthToken extends Component {
             {!enoughBalance && flow.step === 3
               ? (
                 <div styleName="swapDepositWindow">
-                  <DepositWindow
-                    currencyData={currencyData}
-                    swap={swap}
-                    flow={flow}
-                    tokenItems={tokenItems}
-                    fields={this._fields}
-                  />
+                  <DepositWindow currencyData={currencyData} swap={swap} flow={flow} tokenItems={tokenItems} />
                 </div>
               )
               : (
@@ -277,13 +212,7 @@ export default class BtcLikeToEthToken extends Component {
               )
             }
           </div>
-          <SwapList
-            flow={this.state.swap.flow.state}
-            enoughBalance={enoughBalance}
-            swap={this.props.swap}
-            onClickCancelSwap={onClickCancelSwap}
-            fields={this._fields}
-          />
+          <SwapList flow={this.state.swap.flow.state} enoughBalance={enoughBalance} swap={this.props.swap} onClickCancelSwap={onClickCancelSwap} />
         </div>
         <div styleName="swapContainerInfo">{children}</div>
       </div>

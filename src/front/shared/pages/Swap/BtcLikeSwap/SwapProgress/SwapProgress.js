@@ -25,9 +25,9 @@ import SwapController from '../../SwapController'
 import PleaseDontLeaveWrapper from './SwapProgressText/PleaseDontLeaveWrapper'
 
 import BtcLikeToEth from './SwapProgressText/BtcLikeToEth'
-import BtcLikeToEthTokens from './SwapProgressText/BtcLikeToEthTokens'
+import BtcLikeToEthToken from './SwapProgressText/BtcLikeToEthToken'
 import EthToBtcLike from './SwapProgressText/EthToBtcLike'
-import EthTokensToBtcLike from './SwapProgressText/EthTokensToBtcLike'
+import EthTokenToBtcLike from './SwapProgressText/EthTokenToBtcLike'
 
 
 
@@ -348,10 +348,10 @@ export default class SwapProgress extends Component {
           this.props.name === 'EthToBtcLike' && <EthToBtcLike step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
         }
         {
-          this.props.name === 'BtcLikeToEthTokens' && <BtcLikeToEthTokens step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
+          this.props.name === 'BtcLikeToEthToken' && <BtcLikeToEthToken step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
         }
         {
-          this.props.name === 'EthTokensToBtcLike' && <EthTokensToBtcLike step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
+          this.props.name === 'EthTokenToBtcLike' && <EthTokenToBtcLike step={flow.step} flow={flow} swap={swap} coinName={currencyName} />
         }
       </Fragment>
     )

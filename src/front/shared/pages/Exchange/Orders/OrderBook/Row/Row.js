@@ -330,7 +330,7 @@ export default class Row extends Component {
 
     // todo: improve calculation much more
     const buyCurrencyFee = estimatedFeeValues[buyCurrency.toLowerCase()]
-    const costs = BigNumber(sellAmount).plus(buyCurrencyFee)
+    const costs = BigNumber(buyAmount).plus(buyCurrencyFee)
 
     const isSwapButtonEnabled = BigNumber(balance).isGreaterThanOrEqualTo(costs)
 
