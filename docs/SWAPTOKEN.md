@@ -1,21 +1,17 @@
 # SWAP is ERC20 token of our project
 
-
 ## Contract address
 
 [0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9](https://etherscan.io/token/0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9)
 
-
-## Listed on exchnages
+## Listed on exchanges
 
 - 🦄 [Uniswap](https://uniswap.info/pair/0x8dce5d9ed9fa147544be62bdf0e0f575528b4272)
 - [Swaponline](https://swaponline.io/#/exchange/btc-to-swap)
 
-
 ## Total supply
 
 21 000 000 SWAP
-
 
 ## Сirculation supply
 
@@ -24,26 +20,24 @@
 - Team: 25 000 tokens were distributed among the team based on 1 SWAP ~ 1 USD
 - Bounty: 25 000 tokens were distributed among the bounty participants, for the very simple actions (reposts, etc..)
 
-
 ## Return of investments
 
 10% of project's revenue we forward to uniswap for support liquidity
 
 Current
 
-| Month   | Revenue | 10% | Forwarded to uniswap
-| ------  | ------- | ----------------- | --------
-| may 2020 | 413 USD | $41 | 👇 
-| jun 2020 | 663 USD | $66 | 👇
-| jul 2020 | 840 USD | $84 | [+0.5 ETH](https://etherscan.io/tx/0xb5708aa91cd181b45aafc3fb92bdeea970a4359110a10f3fde6a4b42e0cabd14) |
-| aug 2020 | 1040 USD | $104 | 👇 |
-| sep 2020 | 1400 USD | $140 | [+0.7 ETH](https://etherscan.io/tx/0x7b70734c4a3ed1df347ac3d5ef1ba751f3068555c740cf0a5fb1e33c0dbfd160) |
+| Month    | Revenue  | 10%   | Forwarded to uniswap                                                                                   |
+| -------- | -------- | ----- | ------------------------------------------------------------------------------------------------------ |
+| may 2020 | 413 USD  | \$41  | 👇                                                                                                     |
+| jun 2020 | 663 USD  | \$66  | 👇                                                                                                     |
+| jul 2020 | 840 USD  | \$84  | [+0.5 ETH](https://etherscan.io/tx/0xb5708aa91cd181b45aafc3fb92bdeea970a4359110a10f3fde6a4b42e0cabd14) |
+| aug 2020 | 1040 USD | \$104 | 👇                                                                                                     |
+| sep 2020 | 1400 USD | \$140 | [+0.7 ETH](https://etherscan.io/tx/0x7b70734c4a3ed1df347ac3d5ef1ba751f3068555c740cf0a5fb1e33c0dbfd160) |
 
 ## How we get revenue
 
 - By selling [Wordpress plugin](https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064) (whitelabel, wallet as a service)
 - By custom MultiCurrencyWallet integrations
-
 
 ## Strategy and roadmap
 
@@ -51,7 +45,6 @@ Current
 - ✔️ BTC-ERC20 atomic swap – done
 - 👷 UTXO to UTXO atomic swap – soon
 - 👷 DeFi on bitcoin (A [Hashed Time-Locked Collateral Contract](https://github.com/bitcoin/bips/blob/master/bip-0197.mediawiki) (HTLCC) consists of two scripts that permit a designated party (the "borrower") to lock funds on the Bitcoin chain for a specified amount of time as collateral in a debt agreement where the loan principal is denominated in a currency on another blockchain)
-
 
 ## Timeline
 
