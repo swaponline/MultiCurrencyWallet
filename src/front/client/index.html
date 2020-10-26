@@ -158,6 +158,7 @@
       .starter-modal__title {
         font-size: 2em;
         margin: 0 0 1em;
+        font-weight: 700;
         text-align: center;
       }
 
@@ -170,7 +171,7 @@
 
       .starter-modal__container-img {
         position: relative;
-        width: 17em;
+        width: 16.5em;
       }
 
       .starter-modal__container-img::before {
@@ -183,7 +184,7 @@
         width: 11em;
         height: 11em;
         border-radius: 50%;
-        box-shadow: 0 0 7em rgb(152, 231, 255);
+        box-shadow: 0 0 7em rgb(180, 238, 255);
       }
 
       .starter-modal__description img {
@@ -192,7 +193,7 @@
       }
 
       .starter-modal__description .text {
-        max-width: 20em;
+        max-width: 22em;
         margin-top: 0;
         padding: 0 0.1em;
         font-size: 1.3em;
@@ -200,7 +201,7 @@
       }
 
       .starter-modal__btn-container {
-        margin-top: 1.4em;
+        margin-top: 1.5em;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
@@ -739,21 +740,16 @@
         }
 
         if (
-          window.location.hostname === 'localhost' ||
-          window.location.hostname === 'swaponline.github.io' ||
-          window.location.hostname === 'swaponline.io'
+          window.location.hostname === "localhost" ||
+          window.location.hostname === "swaponline.github.io" ||
+          window.location.hostname === "swaponline.io"
         ) {
-          document.getElementById('loaderImg').src =
-            'https://wiki.swaponline.io/assets/swaponline_io.svg';
+          document.getElementById("loaderImg").src = "https://wiki.swaponline.io/assets/swaponline_io.svg";
         } else {
           if (window.logoUrl != '#') {
-            document.getElementById(
-              'loaderImg'
-            ).src = window.localStorage.getItem('isDark')
-              ? window.darkLogoUrl
-              : window.logoUrl;
+            document.getElementById("loaderImg").src = window.localStorage.getItem("isDark") ? window.darkLogoUrl : window.logoUrl;
           } else {
-            document.getElementById('loaderImg').style.display = 'none';
+            document.getElementById("loaderImg").style.display = 'none'
           }
         }
       </script>
