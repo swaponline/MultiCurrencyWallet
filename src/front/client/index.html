@@ -227,6 +227,46 @@
         transition: 0.15s;
       }
 
+      .starter-modal__btn.app-not-load {
+        position: relative;
+        pointer-events: none;
+      }
+
+      .starter-modal__btn.app-not-load::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: inherit;
+        background-color: #6144e5;
+      }
+
+      .starter-modal__btn.app-not-load::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+        background-color: #fff;
+        animation: spin 1s infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: translate(-50%, -50%) scale(0);
+          opacity: 1;
+        }
+        100% {
+          transform: translate(-50%, -50%) scale(1);
+          opacity: 0;
+        }
+      }
+
       .starter-modal__btn:hover {
         background-color: #9785ed;
       }
@@ -303,10 +343,10 @@
         </div>
 
         <div class="starter-modal__btn-container">
-          <button class="starter-modal__btn starter-modal__btn_create-wallet">
+          <button class="starter-modal__btn starter-modal__btn_create-wallet app-not-load">
             Create Wallet
           </button>
-          <button class="starter-modal__btn starter-modal__btn_connect-wallet">
+          <button class="starter-modal__btn starter-modal__btn_connect-wallet app-not-load">
             <?xml version="1.0" encoding="utf-8"?>
             <svg version="1.1"
               xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 318.6 318.6">
@@ -368,7 +408,7 @@
             </svg>
             Connect Wallet
           </button>
-          <button class="starter-modal__btn starter-modal__btn_skip">
+          <button class="starter-modal__btn starter-modal__btn_skip app-not-load">
             Skip
           </button>
         </div>
@@ -595,7 +635,7 @@
       <!-- /Loader before any JS -->
 
       <!-- This library using in React componet (WallerSlider) -->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"
+      <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"
       integrity="sha256-4sETKhh3aSyi6NRiA+qunPaTawqSMDQca/xLWu27Hg4=" crossorigin="anonymous"></script>
 
       <!-- Start Modal Scripts -->
@@ -658,6 +698,12 @@
       </script>
 
       <script>
+        window.onload = () => {
+          document.querySelectorAll('.starter-modal__btn').forEach(btn => {
+            btn.classList.remove('app-not-load');
+          })
+        }
+
         const btnCreateWallet = document.querySelector(
           '.starter-modal__btn_create-wallet'
         );
