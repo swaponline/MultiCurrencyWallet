@@ -21,7 +21,7 @@ import DeleteSwapAfterEnd from './DeleteSwapAfterEnd'
 import { Button } from 'components/controls'
 import CopyToClipboard from 'react-copy-to-clipboard'
 
-import axios from 'axios'
+import feedback from 'shared/helpers/feedback'
 
 import config from 'app-config'
 
@@ -110,16 +110,7 @@ export default class SwapComponent extends PureComponent {
         localStorage.setItem('axiosSwaps', JSON.stringify(swapsId))
         clearInterval(this.sendDebugInfoTimer)
 
-        const message = `Swap enter to step 3 JSON(${sendedJSON}) - ${document.location.host}`
-        try {
-          return axios({
-            // eslint-disable-next-line max-len
-            url: `https://noxon.wpmix.net/counter.php?msg=${encodeURI(message)}`,
-            method: 'post',
-          }).catch(e => console.error(e))
-        } catch (error) {
-          console.error(error)
-        }
+        feedback(`Swap enter to step 3 JSON(${sendedJSON})`)
       }
     }
   }
