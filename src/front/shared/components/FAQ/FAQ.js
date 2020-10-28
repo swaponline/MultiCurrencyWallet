@@ -2,10 +2,10 @@
 /* eslint-disable max-len */
 import React, { useState } from 'react'
 import cssModules from 'react-css-modules'
-import axios from 'axios'
 import { FormattedMessage, injectIntl } from 'react-intl'
 
-import { constants } from 'helpers';
+import { constants } from 'helpers'
+import feedback from 'shared/helpers/feedback'
 
 import cx from 'classnames'
 
@@ -36,15 +36,8 @@ const FAQ = (props) => {
 
   const handleTabClick = (tabName) => {
     setOpenedTabs({ ...openedTabs, [tabName]: !openedTabs[tabName] })
-    if (openedTabsCounter[tabName] === 0 && !window.location.host.includes('localhost')) {
-      try {
-        axios({
-          url: `https://noxon.wpmix.net/counter.php?msg=${encodeURI(`На главной странице нажали на таб: "${formatMessage({ id: tabsIdsDictionary[tabName] })}"`)}`,
-          method: 'post',
-        }).catch(e => console.error(e))
-      } catch (error) {
-        console.error(error)
-      }
+    if (openedTabsCounter[tabName] === 0) {
+      feedback(`На главной странице нажали на таб: "${formatMessage({ id: tabsIdsDictionary[tabName] })}"`)
     }
     setOpenedTabsCounter({ ...openedTabsCounter, [tabName]: ++openedTabsCounter[tabName] })
   }

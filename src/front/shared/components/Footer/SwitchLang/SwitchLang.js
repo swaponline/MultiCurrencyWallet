@@ -8,6 +8,7 @@ import CSSModules from 'react-css-modules'
 import { relocalisedUrl } from 'helpers/locale'
 import { setCookie } from 'helpers/utils'
 import { FormattedMessage, injectIntl } from 'react-intl'
+import feedback from 'shared/helpers/feedback'
 
 
 @injectIntl
@@ -16,6 +17,9 @@ export default class SwitchLang extends Component {
 
   switchLang = (event, locale) => {
     event.preventDefault()
+
+    feedback(`Switch language to ${locale}`)
+
     const { history } = this.props
     setCookie('mylang', locale.toUpperCase(), new Date(new Date().getFullYear() + 1, 1))
     // history.push(`${relocalisedUrl(locale)}`)
@@ -23,6 +27,7 @@ export default class SwitchLang extends Component {
       window.location.reload()
     }, 10)
   }
+
   render() {
     const { intl: { locale } } = this.props
 

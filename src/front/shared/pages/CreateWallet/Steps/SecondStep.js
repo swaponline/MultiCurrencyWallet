@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react'
-import axios from 'axios'
 
 import CSSModules from 'react-css-modules'
 import styles from '../CreateWallet.scss'
@@ -16,7 +15,7 @@ import actions from 'redux/actions'
 import { firebase, constants, stats } from 'helpers'
 import firestore from 'helpers/firebase/firestore'
 import ethToken from 'helpers/ethToken'
-
+import feedback from 'shared/helpers/feedback'
 
 import Explanation from '../Explanation'
 import icons from '../images'
@@ -140,15 +139,7 @@ const SecondStep = (props) => {
 
   const handleFinish = () => {
     if (currencies.BTC) {
-      try {
-        axios({
-          // eslint-disable-next-line max-len
-          url: `https://noxon.wpmix.net/counter.php?msg=%D0%BD%D0%B0%D1%87%D0%B0%D0%BB%D0%B8%20%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%20%D0%BA%D0%BE%D1%88%D0%B5%D0%BB%D1%8C%D0%BA%D0%B0%20BTC%20${window.top.location.host}`,
-          method: 'post',
-        }).catch(e => console.error(e))
-      } catch (error) {
-        console.error(error)
-      }
+      feedback('начали создание кошелька BTC')
     }
     onClick()
     onCreateTrigger()
@@ -207,15 +198,7 @@ const SecondStep = (props) => {
           return null
         }
         setTrivialFeatureAsked(true)
-        try {
-          return axios({
-            // eslint-disable-next-line max-len
-            url: `https://noxon.wpmix.net/counter.php?msg=%D1%85%D0%BE%D1%82%D1%8F%D1%82%20%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C%20${currencyName}-normal%20%D0%BA%D0%BE%D1%88%D0%B5%D0%BB%D1%8C%20${window.top.location.host}`,
-            method: 'post',
-          }).catch(e => console.error(e))
-        } catch (error) {
-          console.error(error)
-        }
+        feedback(`хотят создать ${currencyName}-normal кошель`)
       },
     },
     {
@@ -235,15 +218,7 @@ const SecondStep = (props) => {
           return null
         }
         setSmsFeatureAsked(true)
-        try {
-          return axios({
-            // eslint-disable-next-line max-len
-            url: `https://noxon.wpmix.net/counter.php?msg=%D1%85%D0%BE%D1%82%D1%8F%D1%82%20%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C%20${currencyName}-sms%20%D0%BA%D0%BE%D1%88%D0%B5%D0%BB%D1%8C%20${window.top.location.host}`,
-            method: 'post',
-          }).catch(e => console.error(e))
-        } catch (error) {
-          console.error(error)
-        }
+        feedback(`хотят создать ${currencyName}-sms кошель`)
       },
     },
     {
@@ -262,15 +237,7 @@ const SecondStep = (props) => {
           return null
         }
         setPinFeatureAsked(true)
-        try {
-          return axios({
-            // eslint-disable-next-line max-len
-            url: `https://noxon.wpmix.net/counter.php?msg=%D1%85%D0%BE%D1%82%D1%8F%D1%82%20%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C%20${currencyName}-pin%20%D0%BA%D0%BE%D1%88%D0%B5%D0%BB%D1%8C%20${window.top.location.host}`,
-            method: 'post',
-          }).catch(e => console.error(e))
-        } catch (error) {
-          console.error(error)
-        }
+        feedback(`хотят создать ${currencyName}-pin кошель`)
       },
     },
     /*
@@ -287,15 +254,7 @@ const SecondStep = (props) => {
           return null
         }
         set2FAFeatureAsked(true)
-        try {
-          return axios({
-            // eslint-disable-next-line max-len
-            url: `https://noxon.wpmix.net/counter.php?msg=%D1%85%D0%BE%D1%82%D1%8F%D1%82%20%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C%20${currencyName}-2fa%20%D0%BA%D0%BE%D1%88%D0%B5%D0%BB%D1%8C%20${window.top.location.host}`,
-            method: 'post',
-          }).catch(e => console.error(e))
-        } catch (error) {
-          console.error(error)
-        }
+        feedback(`хотят создать ${currencyName}-2fa кошель`)
       },
     },
     */
@@ -315,15 +274,7 @@ const SecondStep = (props) => {
           return null
         }
         setMultisigFeatureAsked(true)
-        try {
-          return axios({
-            // eslint-disable-next-line max-len
-            url: `https://noxon.wpmix.net/counter.php?msg=%D1%85%D0%BE%D1%82%D1%8F%D1%82%20%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D1%82%D1%8C%20${currencyName}-multisig%20%D0%BA%D0%BE%D1%88%D0%B5%D0%BB%D1%8C%20${window.top.location.host}`,
-            method: 'post',
-          }).catch(e => console.error(e))
-        } catch (error) {
-          console.error(error)
-        }
+        feedback(`хотят создать ${currencyName}-multisig кошель`)
       },
     },
   ]
@@ -346,15 +297,7 @@ const SecondStep = (props) => {
           return null
         }
         setFingerprintFeatureAsked(true)
-        try {
-          return axios({
-            // eslint-disable-next-line max-len
-            url: `https://noxon.wpmix.net/counter.php?msg=%D0%BA%D1%82%D0%BE%20%D1%82%D0%BE%20%D1%85%D0%BE%D1%87%D0%B5%D1%82%20${currencyName}-fingerprint%20%D0%BD%D0%B0%20${window.top.location.host}`,
-            method: 'post',
-          }).catch(e => console.error(e))
-        } catch (error) {
-          console.error(error)
-        }
+        feedback(`кто то хочет ${currencyName}-fingerprint`)
       },
     })
   }
