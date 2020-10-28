@@ -30,5 +30,3 @@ export {
 }
 
 export default web3
-
-
