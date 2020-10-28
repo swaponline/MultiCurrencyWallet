@@ -27,6 +27,7 @@ import config from "helpers/externalConfig"
 import SwapApp, { util } from "swap.app"
 
 import helpers, { constants, links } from "helpers"
+import feedback from 'shared/helpers/feedback'
 import { animate } from "helpers/domUtils"
 import Switching from "components/controls/Switching/Switching"
 import AddressSelect from "./AddressSelect/AddressSelect"
@@ -461,6 +462,8 @@ export default class Exchange extends Component {
   };
 
   createOffer = async () => {
+    feedback('Exchange -> Create offer (start)')
+
     const { haveCurrency, getCurrency } = this.state
 
     actions.modals.open(constants.modals.Offer, {
@@ -471,6 +474,8 @@ export default class Exchange extends Component {
   };
 
   initSwap = async () => {
+    feedback('Exchange -> Exchange now')
+
     const { decline, usersData } = this.props;
 
     const {
@@ -941,6 +946,7 @@ export default class Exchange extends Component {
     const { type, value } = addressData;
 
     console.log('Exchange: applyAddress', addressRole, addressData)
+    feedback(`Exchange -> Form -> Address ${addressRole} ${type}`)
 
     if (addressRole === AddressRole.Send) {
       this.setState({
@@ -955,6 +961,7 @@ export default class Exchange extends Component {
   };
 
   flipCurrency = async () => {
+    feedback(`Exchange -> Form -> Flip`)
     const { haveCurrency, getCurrency } = this.state;
 
     this.resetState();

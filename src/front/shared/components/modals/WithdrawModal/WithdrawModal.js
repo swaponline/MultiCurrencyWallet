@@ -363,6 +363,8 @@ export default class WithdrawModal extends React.Component {
       return
     }
 
+    feedback(`Withdraw ${currency.toLowerCase()} (finish)`)
+
     await actions[currency.toLowerCase()]
       .send(sendOptions)
       .then(async (txRaw) => {

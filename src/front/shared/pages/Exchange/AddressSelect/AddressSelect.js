@@ -205,6 +205,8 @@ export default class AddressSelect extends Component {
       intl: { locale },
     } = this.props
     const ticker = this.getTicker()
+
+    feedback(`AddressSelect -> CreateWallet ${ticker}`)
     
     const url = localisedUrl(locale, `${links.createWallet}/${ticker}`)
     history.push(url)

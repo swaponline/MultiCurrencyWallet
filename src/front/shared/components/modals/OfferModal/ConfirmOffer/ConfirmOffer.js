@@ -21,6 +21,7 @@ import { localisedUrl } from 'helpers/locale'
 import minAmountOffer from 'helpers/constants/minAmountOffer'
 import coinsWithDynamicFee from 'helpers/constants/coinsWithDynamicFee'
 import BigNumber from 'bignumber.js'
+import feedback from 'shared/helpers/feedback'
 
 
 @injectIntl
@@ -61,6 +62,7 @@ export default class ConfirmOffer extends Component {
 
   handleConfirm = () => {
     const { intl: { locale }, offer: { buyCurrency, sellCurrency } } = this.props
+    feedback(`Exchange -> Create offer (finish) ${sellCurrency}->${buyCurrency}`)
     this.createOrder()
     actions.modals.close('OfferModal')
   }
