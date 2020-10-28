@@ -387,20 +387,6 @@ export default class Row extends Component {
     actions.modals.open(constants.modals.MultisignJoinLink, {})
   }
 
-  // TODO: WHY IS THIS? ------------------------------------
-  // * Now all works - not exact
-  // showButtons = () => {
-  //   this.setState(() => ({
-  //     showButtons: true,
-  //   }))
-  // }
-
-  // hideButtons = () => {
-  //   this.setState(() => ({
-  //     showButtons: false,
-  //   }))
-  // }
-
   handleHowToWithdraw = () => {
     const {
       itemData: { currency, address },
@@ -909,18 +895,12 @@ export default class Row extends Component {
       <tr>
         <td styleName={`assetsTableRow ${isDark ? 'dark' : ''}`}>
           <div styleName="assetsTableCurrency">
-            <a
-              onClick={mnemonicSaved ? this.goToCurrencyHistory : () => {}}
-              title={`Online ${fullName} wallet`}
-            >
+            <a title={`Online ${fullName} wallet`}>
               <Coin className={styles.assetsTableIcon} name={currency} />
             </a>
             <div styleName="assetsTableInfo">
               <div styleName="nameRow">
-                <a
-                  onClick={mnemonicSaved ? this.goToCurrencyHistory : () => {}}
-                  title={`Online ${fullName} wallet`}
-                >
+                <a title={`Online ${fullName} wallet`}>
                   {fullName}
                 </a>
               </div>
