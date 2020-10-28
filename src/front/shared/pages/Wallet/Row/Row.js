@@ -1019,12 +1019,9 @@ export default class Row extends Component {
                       <Copy text={itemData.address}>
                         {
                           isMobile ?
-                          <PartOfAddress {...itemData} onClick={this.goToCurrencyHistory} style={{
-                            marginLeft: '10px',
-                            marginTop: '1px',
-                            position: 'absolute',
-                            left: '46px',
-                            bottom: '4px',
+                          <PartOfAddress {...itemData} style={{
+                            position: 'relative',
+                            bottom: '13px',
                           }} />
                           :
                           <p styleName="addressVisibleStyle">{itemData.address}</p>
