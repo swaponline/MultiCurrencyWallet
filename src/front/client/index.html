@@ -16,14 +16,14 @@
       crossorigin="anonymous"
     />
     <link
+      href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900%7CRoboto%20Mono&#038;display=swap&#038;subset=latin%2Ccyrillic"
+      rel="stylesheet"
+    />
+    <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css"
       integrity="sha256-DBYdrj7BxKM3slMeqBVWX2otx7x4eqoHRJCsSDJ0Nxw="
       crossorigin="anonymous"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900%7CRoboto%20Mono&#038;display=swap&#038;subset=latin%2Ccyrillic"
-      rel="stylesheet"
     />
 
     <meta name="google" content="notranslate" />
@@ -148,7 +148,7 @@
       }
 
       .starter-modal__container-content {
-        padding: 1.4em 0;
+        padding: 5vh 0 1.4em;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -229,7 +229,68 @@
         height: 2em;
         margin-right: 0.5em;
       }
-      
+
+      @media (max-width: 768px) {
+        .starter-modal__container-content {
+          font-size: 1.1em;
+        }
+      }
+
+      @media (max-width: 540px) {
+        .starter-modal__container-content {
+          font-size: 1em;
+        }
+
+        .starter-modal__title {
+          font-size: 1.7em;
+        }
+
+        .starter-modal__svg {
+          width: 16em;
+          height: 9em;
+        }
+
+        .starter-modal__description .text {
+          font-size: 1.1em;
+        }
+
+        .starter-modal__btn {
+          padding: 1em 2em;
+          font-size: 3.1vw;
+        }
+      }
+
+      @media (max-width: 375px) {
+        .starter-modal__title {
+          font-size: 1.5em;
+        }
+
+        .starter-modal__svg {
+          width: 14em;
+          height: 8em;
+        }
+
+        .starter-modal__description .text {
+          font-size: 1em;
+        }
+      }
+
+
+      @media (max-width: 320px) {
+        .starter-modal__title {
+          font-size: 1.3em;
+        }
+
+        .starter-modal__svg {
+          width: 11.5em;
+          height: 6.5em;
+        }
+
+        .starter-modal__description .text {
+          font-size: .8em;
+        }
+      }
+
       .starter-modal:not(.d-none) ~ #root {
         display: none;
       }
