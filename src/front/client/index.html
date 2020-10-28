@@ -249,46 +249,6 @@
         transition: 0.15s;
       }
 
-      .starter-modal__btn.app-not-load {
-        position: relative;
-        pointer-events: none;
-      }
-
-      .starter-modal__btn.app-not-load::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border-radius: inherit;
-        background-color: #6144e5;
-      }
-
-      .starter-modal__btn.app-not-load::after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 2em;
-        height: 2em;
-        border-radius: 50%;
-        background-color: #fff;
-        animation: flashing 1s infinite;
-      }
-
-      @keyframes flashing {
-        0% {
-          transform: translate(-50%, -50%) scale(0);
-          opacity: 1;
-        }
-        100% {
-          transform: translate(-50%, -50%) scale(1);
-          opacity: 0;
-        }
-      }
-
       .starter-modal__btn:hover {
         background-color: #9785ed;
       }
@@ -775,12 +735,6 @@
       </script>
 
       <script>
-        window.onload = () => {
-          document.querySelectorAll('.starter-modal__btn').forEach(btn => {
-            btn.classList.remove('app-not-load');
-          })
-        }
-
         const btnCreateWallet = document.querySelector(
           '.starter-modal__btn_create-wallet'
         );
