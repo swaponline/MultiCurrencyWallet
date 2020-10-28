@@ -1014,21 +1014,23 @@ export default class Row extends Component {
                         defaultMessage="Not connected"
                       />
                     </p>
-                    : 
-                    <Copy text={itemData.address}>
-                      {
-                        isMobile ?
-                        <PartOfAddress {...itemData} onClick={this.goToCurrencyHistory} style={{
-                          marginLeft: '10px',
-                          marginTop: '1px',
-                          position: 'absolute',
-                          left: '46px',
-                          bottom: '4px',
-                        }} />
-                        :
-                        <p styleName="addressStyle">{itemData.address}</p>
-                      }
-                    </Copy>
+                    : // Address shows 
+                    <div styleName="addressStyle">
+                      <Copy text={itemData.address}>
+                        {
+                          isMobile ?
+                          <PartOfAddress {...itemData} onClick={this.goToCurrencyHistory} style={{
+                            marginLeft: '10px',
+                            marginTop: '1px',
+                            position: 'absolute',
+                            left: '46px',
+                            bottom: '4px',
+                          }} />
+                          :
+                          <p styleName="addressVisibleStyle">{itemData.address}</p>
+                        }
+                      </Copy>
+                    </div>
               }
             </Fragment>
 

@@ -495,9 +495,16 @@ tr button[disabled]:hover {
   bottom: -13px;
 }
 
-.addressStyle,
 .showAddressStyle {
   cursor: pointer;
+}
+
+.addressVisibleStyle {
+  transition: .15s;
+
+  &:hover {
+    color: #000
+  }
 }
 
 .assetsTableValue {
