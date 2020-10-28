@@ -20,8 +20,7 @@ import { BigNumber } from 'bignumber.js'
 
 import dollar from '../images/dollar.svg'
 import PartOfAddress from '../components/PartOfAddress'
-
-
+import Copy from '../../../components/ui/Copy/Copy'
 import metamask from 'helpers/metamask'
 
 
@@ -1016,16 +1015,20 @@ export default class Row extends Component {
                       />
                     </p>
                     : 
-                    isMobile ?
-                    <PartOfAddress {...itemData} onClick={this.goToCurrencyHistory} style={{
-                      marginLeft: '10px',
-                      marginTop: '1px',
-                      position: 'absolute',
-                      left: '46px',
-                      bottom: '4px',
-                    }} />
-                    :
-                    <p styleName="addressStyle">{itemData.address}</p>
+                    <Copy text={itemData.address}>
+                      {
+                        isMobile ?
+                        <PartOfAddress {...itemData} onClick={this.goToCurrencyHistory} style={{
+                          marginLeft: '10px',
+                          marginTop: '1px',
+                          position: 'absolute',
+                          left: '46px',
+                          bottom: '4px',
+                        }} />
+                        :
+                        <p styleName="addressStyle">{itemData.address}</p>
+                      }
+                    </Copy>
               }
             </Fragment>
 
