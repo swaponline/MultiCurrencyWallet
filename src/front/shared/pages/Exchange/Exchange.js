@@ -29,7 +29,8 @@ import SwapApp, { util } from "swap.app"
 import helpers, { constants, links } from "helpers"
 import { animate } from "helpers/domUtils"
 import Switching from "components/controls/Switching/Switching"
-import AddressSelect, { AddressType, AddressRole } from "./AddressSelect/AddressSelect"
+import AddressSelect from "./AddressSelect/AddressSelect"
+import { AddressType, AddressRole } from "domain/address"
 import NetworkStatus from 'components/NetworkStatus/NetworkStatus'
 import Orders from "./Orders/Orders"
 
