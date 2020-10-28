@@ -3,15 +3,10 @@ import { constants } from 'helpers'
 
 import cssModules from 'react-css-modules'
 
-import { AddressType, AddressRole } from "pages/Exchange/AddressSelect/AddressSelect"
+import { AddressType, AddressFormat } from 'domain/address'
 import styles from './Address.scss'
 
 
-export const AddressFormat = {
-  'Full': 'Full',
-  'Short': 'Short',
-  'Auto': 'Auto', // todo
-}
 
 @cssModules(styles, { allowMultiple: true })
 export default class Address extends Component {
