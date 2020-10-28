@@ -299,15 +299,20 @@ class BtcLikeSwap extends SwapInterface {
       const unspents      = await this.fetchUnspents(scriptAddress)
       const fetchFullUnspentInfo = async (unspent) => {
         console.log('unspent', unspent)
-        const info = await this.fetchTxInfo(unspent.txid)
-        return {
-          ...unspent,
-          ...info,
+        try {
+          const info = await this.fetchTxInfo(unspent.txid)
+          return {
+            ...unspent,
+            ...info,
+          }
+        } catch (fetchTxInfoError) {
+          console.log('fetchTxInfo', fetchTxInfoError)
+          return false
         }
       }
 
       const unspentsFullInfo = await Promise.all(unspents.map(fetchFullUnspentInfo))
-      resolve(unspentsFullInfo)
+      resolve(unspentsFullInfo.filter((unspent) => unspent !== false ))
     })
   }
 
@@ -513,6 +518,7 @@ class BtcLikeSwap extends SwapInterface {
 
     /* Check - may be withdrawed */
     if (typeof this.checkWithdraw === 'function') {
+      console.log('try check withdraw')
       const hasWithdraw = await this.checkWithdraw(scriptAddress)
       if (hasWithdraw
         && hasWithdraw.address.toLowerCase() == destAddress.toLowerCase()

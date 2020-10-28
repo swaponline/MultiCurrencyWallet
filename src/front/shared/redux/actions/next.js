@@ -578,9 +578,7 @@ window.getMainPublicKey = getMainPublicKey
 
 
 const checkWithdraw = (scriptAddress) => {
-  return false
-  /** todo fix **/
-  return apiLooper.get('nextExplorer', `/txs/?address=${scriptAddress}`, {
+  return apiLooper.get('nextExplorerCustom', `/txs/${scriptAddress}`, {
     checkStatus: (answer) => {
       try {
         if (answer && answer.txs !== undefined) return true
@@ -589,13 +587,15 @@ const checkWithdraw = (scriptAddress) => {
     },
     query: 'next_balance',
   }).then((res) => {
+    console.log('res', res)
     if (res.txs.length > 1
       && res.txs[0].vout.length
     ) {
       const address = res.txs[0].vout[0].scriptPubKey.addresses[0]
+      const amount = res.txs[0].vout[0].valueSat
+
       const {
         txid,
-        valueOut: amount,
       } = res.txs[0]
       return {
         address,

@@ -24,6 +24,7 @@ const nextCoinNode = {
   },*/
   mainnet: {
     port: 7078,
+    ip: '195.201.222.194'
   },
 }
 
@@ -37,6 +38,7 @@ const networks = Object.keys(nextCoinNode)
 
 const sendRequest = ({ network, rpcMethod, rpcMethodParams = [], onSuccess, onError, appRes }) => {
   if (!networks.includes(network)) {
+    console.log('network', network)
     const error = `bad request: unknown network "${network}", expected ${networks}`
     throw new Error(error)
     // appRes.status(400).json({ error })
@@ -54,7 +56,9 @@ const sendRequest = ({ network, rpcMethod, rpcMethodParams = [], onSuccess, onEr
 
   const user = { name: 'test', password: 'test' }
   const nodePort = nextCoinNode[network].port
-  const url = `http://${user.name}:${user.password}@localhost:${nodePort}`
+  const nodeIP = nextCoinNode[network].ip
+
+  const url = `http://${user.name}:${user.password}@${nodeIP}:${nodePort}`
 
   const bodyJson = {
     'jsonrpc': '1.0',
@@ -62,16 +66,20 @@ const sendRequest = ({ network, rpcMethod, rpcMethodParams = [], onSuccess, onEr
     'method': rpcMethod,
     'params': rpcMethodParams,
   }
+  console.log('bodyJson', bodyJson)
   const body = JSON.stringify(bodyJson)
 
+  console.log('body', body)
   return request
     .post(url)
     .set('content-type', 'text/plain')
     .send(body)
     .then((req) => {
+      console.log('on request ready', req.text)
       const data = JSON.parse(req.text)
       // console.log('data =', data)
       if (data.error === null) {
+        if (!onSuccess) return data.result
         onSuccess(data.result)
       } else {
         throw new Error(data.error)
@@ -83,6 +91,7 @@ const sendRequest = ({ network, rpcMethod, rpcMethodParams = [], onSuccess, onEr
       if (e.code === 'ECONNREFUSED') {
         resultError = new Error('Node is offline')
       }
+      if (!onError) return resultError
       onError(resultError)
     })
 }
@@ -98,6 +107,27 @@ Planning proxy interface:
 /:network/rawtx/:txId
 /:network/txs/:address
 */
+
+app.get('/:network/memtx/:txid', async (req, res) => {
+  const {
+    network,
+    txid,
+  } = req.params
+  
+  console.log('txid', txid)
+  sendRequest({
+    network,
+    rpcMethod: 'getmempoolentry',
+    rpcMethodParams: [{ 'txid': `0x${txid}` }],
+    onSuccess: (data) => {
+      res.status(200).json(data)
+    },
+    onError: (e) => {
+      res.status(503).json({ error: e.message })
+    },
+    appRes: res,
+  })
+})
 
 app.get('/:network', async (req, res) => {
   const { network } = req.params
@@ -132,6 +162,68 @@ app.get('/:network/addr/:address', async (req, res) => {
         rawtx: answer.hex,
       })*/
       res.status(200).json(data)
+    },
+    onError: (e) => {
+      res.status(503).json({ error: e.message })
+    },
+  })
+})
+
+app.get('/:network/addr/:address/mempool', async (req, res) => {
+  const { network, address } = req.params
+
+  sendRequest({
+    network,
+    rpcMethod: 'getaddressmempool',
+    rpcMethodParams: [{ 'addresses': [address] }],
+    onSuccess: (data) => {
+      /*res.status(200).json({
+        rawtx: answer.hex,
+      })*/
+      res.status(200).json(data)
+    },
+    onError: (e) => {
+      res.status(503).json({ error: e.message })
+    },
+  })
+})
+
+app.get('/:network/txs/:address', async (req, res) => {
+  const { network, address } = req.params
+
+  console.log('network', network)
+  sendRequest({
+    network,
+    rpcMethod: 'getaddresstxids',
+    rpcMethodParams: [{ 'addresses': [address] }],
+    onSuccess: (data) => {
+      /*res.status(200).json({
+        rawtx: answer.hex,
+      })*/
+      console.log('data', data)
+      const ret = {
+        txs: data.reverse(),
+      }
+
+      const fetchTxInfos = data.map((txid, i) => {
+        return new Promise(async (resolve) => {
+          const txInfo = await sendRequest({
+            network,
+            rpcMethod: 'getrawtransaction',
+            rpcMethodParams: [ txid, 1 ],
+          })
+          console.log('txinfo fetched', txInfo)
+          ret.txs[i] = txInfo
+          resolve(txInfo)
+        })
+      })
+
+      Promise.all(fetchTxInfos).then(() => {
+        console.log('all ready', ret.txs)
+        res.status(200).json(ret)
+      }).catch ((e) => {
+        console.log('Fail all promise', e)
+      })
     },
     onError: (e) => {
       res.status(503).json({ error: e.message })
