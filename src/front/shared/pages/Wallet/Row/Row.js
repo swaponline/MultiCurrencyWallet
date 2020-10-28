@@ -1024,7 +1024,7 @@ export default class Row extends Component {
                             bottom: '13px',
                           }} />
                           :
-                          <p styleName="addressVisibleStyle">{itemData.address}</p>
+                          <p>{itemData.address}</p>
                         }
                       </Copy>
                     </div>
