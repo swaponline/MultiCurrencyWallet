@@ -73,6 +73,7 @@
         }
       }
     </style>
+    <!-- Loader before JS -->
     <style>
       .overlay {
         display: flex;
@@ -131,10 +132,26 @@
         position: relative;
         top: 100px;
       }
-    </style>
 
-    <!-- Start Modal Style -->
-    <style>
+      .show-on-fail-ls {
+        text-align: center;
+        margin-top: 2em;
+      }
+
+      .show-on-fail-ls .btc-open-in-new-tab {
+        margin-top: 2em;
+      }
+      .show-on-fail-ls .btc-open-in-new-tab > A {
+        color: #fff;
+        text-decoration: none;
+      }
+
+      .show-on-fail-ls SPAN {
+        display: block;
+      }
+      <!-- End loader before JS -->
+
+      <!-- Start First screen Style -->
       .starter-modal {
         position: fixed;
         z-index: 1;
@@ -228,12 +245,6 @@
         width: 2em;
         height: 2em;
         margin-right: 0.5em;
-      }
-
-      @media (max-width: 1024px) {
-        .starter-modal__container-content {
-          font-size: 1.4em;
-        }
       }
 
       @media (max-width: 768px) {
@@ -339,24 +350,10 @@
       .starter-modal:not(.d-none) ~ #root {
         display: none;
       }
+      <!-- End First screen Style -->
 
-      .show-on-fail-ls {
-        text-align: center;
-        margin-top: 2em;
-      }
 
-      .show-on-fail-ls .btc-open-in-new-tab {
-        margin-top: 2em;
-      }
-      .show-on-fail-ls .btc-open-in-new-tab > A {
-        color: #fff;
-        text-decoration: none;
-      }
-
-      .show-on-fail-ls SPAN {
-        display: block;
-      }
-
+      <!-- For React component -->
       @media (max-width: 767px) {
         #swiper_banners {
           margin: 0 25px;
