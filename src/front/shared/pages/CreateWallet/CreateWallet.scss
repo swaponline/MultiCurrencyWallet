@@ -115,7 +115,7 @@
   line-height: 2.5;
   text-align: center;
   background-color: #f0eefd;
-  color: #6144e5;
+  color: $primary;
   border: 1px solid #f0eefd;
   font-weight: bold;
   margin-right: 10px;
@@ -164,7 +164,7 @@
 }
 
 .purple {
-  background-color: #6144e5;
+  background-color: $primary;
   color: #f0eefd;
 }
 
@@ -187,7 +187,7 @@
   font-weight: 800;
   font-size: 15px;
   line-height: 150%;
-  background: #6144e5;
+  background: $primary;
   color: white;
   height: 45px;
   width: 100%;
@@ -195,7 +195,7 @@
 
 .continue:disabled {
   background-color: #f0eefd;
-  color: #6144e5;
+  color: $primary;
 }
 
 .subHeader {
@@ -245,7 +245,7 @@
   top: 40px;
 
   button {
-    color: #6144E5;
+    color: $primary;
     @include ff-bold;
     ;
     font-size: 14px;
@@ -315,7 +315,7 @@
 }
 
 .purpleBorder {
-  border-color: #6144e5 !important;
+  border-color: $primary !important;
 }
 
 .cardActivated {
@@ -332,7 +332,7 @@
 }
 
 .cardActivated.purpleBorder {
-  border-color: #6144e5 !important;
+  border-color: $primary !important;
 
   div,
   img {
@@ -501,7 +501,7 @@
     justify-content: space-between;
 
     button {
-      color: #6144E5;
+      color: $primary;
       @include ff-bold;
       ;
       font-size: 14px;

@@ -117,9 +117,9 @@
 
     a {
       font-size: 13px;
-      color: #6144e5;
+      color: $primary;
       &:hover {
-        color: #6144e5;
+        color: $primary;
       }
 
       @media screen and (max-width: 480px) {
