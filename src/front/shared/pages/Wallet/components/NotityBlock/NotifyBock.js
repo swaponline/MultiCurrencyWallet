@@ -1,8 +1,8 @@
 import React from 'react'
-import axios from 'axios'
 import { withRouter } from 'react-router-dom'
 import CSSModules from 'react-css-modules'
 import styles from './NotifyBlock.scss'
+import feedback from 'shared/helpers/feedback'
 
 
 const NotifyBlock = ({
@@ -22,14 +22,7 @@ const NotifyBlock = ({
     } else {
       if (link) history.push(link)
     }
-    try {
-      axios({
-        url: `https://noxon.wpmix.net/counter.php?msg=${(logDescr) || descr}host=${window.location.hostname}`,
-        method: 'post',
-      }).catch(e => console.error(e))
-    } catch (error) {
-      console.error(error)
-    }
+    feedback(`${logDescr || descr}`)
   }
 
   const backGroundStyle = { background: `#${background}` }

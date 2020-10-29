@@ -49,7 +49,7 @@ export default class PrivateKeysModal extends React.PureComponent {
           <p styleName="text">
             <FormattedMessage
               id="privateKeyCurrency"
-              defaultMessage="Your {cur} pivate key"
+              defaultMessage="Your {cur} private key"
               values={{
                 cur: fullName,
               }}

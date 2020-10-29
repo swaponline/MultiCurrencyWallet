@@ -18,8 +18,9 @@ const createP2PNode = (options) => {
 
   const defaultListen = [
     //'/ip4/0.0.0.0/tcp/4002',
-    '/dns4/secure-beyond-12878.herokuapp.com/tcp/443/wss/p2p-webrtc-star/',
-    //'/dns4/wrtc-star1.par.dwebops.pub/tcp/443/wss/p2p-webrtc-star/',
+    '/dns4/webrtc-star-1.swaponline.io/tcp/443/wss/p2p-webrtc-star/',
+    //'/dns4/webrtc-star.discovery.libp2p.io/tcp/443/wss/p2p-webrtc-star',
+    //'/dns4/secure-beyond-12878.herokuapp.com/tcp/443/wss/p2p-webrtc-star/',
     //'/dns4/wrtc-star2.sjc.dwebops.pub/tcp/443/wss/p2p-webrtc-star/'
   ]
 
@@ -63,7 +64,7 @@ const createP2PNode = (options) => {
     const p2pNode = new Libp2p({
       peerId,
       addresses: {
-        listen: listen || defaultListen,
+        listen: (listen || defaultListen),
       },
       connectionManager: {
         minPeers: 25,
@@ -94,6 +95,22 @@ const createP2PNode = (options) => {
             interval: 30e3,
             list: discoveryPeers || defaultDiscoveryPeers,
           }
+        },
+        dialer: {
+          maxParallelDials: 100,
+          maxDialsPerPeer: 100,
+          dialTimeout: 30e3
+        },
+        connectionManager: {
+          maxConnections: Infinity,
+          minConnections: 0,
+          pollInterval: 1000,
+          defaultPeerValue: 1,
+          maxData: Infinity,
+          maxSentData: Infinity,
+          maxReceivedData: Infinity,
+          maxEventLoopDelay: Infinity,
+          movingAverageInterval: 5000
         },
         relay: {
           enabled: true,

@@ -569,9 +569,9 @@
   },
   {
     "id": "RowFeeds64",
-    "message": "Скопировано",
+    "message": "Скопировано!",
     "files": [
-      "shared/pages/Exchange/Orders/MyOrders/RowFeeds/RowFeeds.js"
+      "shared/components/ui/Copy/Copy.js"
     ]
   },
   {
@@ -7231,7 +7231,7 @@
   },
   {
     "id": "privateKeyCurrency",
-    "message": "Your {cur} pivate key",
+    "message": "Ваш приватный ключ {cur}",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -7321,6 +7321,13 @@
   {
     "id": "WalletRow_ShowAddress",
     "message": "Показать адрес",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "WalletRow_MetamaskNotConnected",
+    "message": "Не подключен",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]

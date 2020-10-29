@@ -8,6 +8,7 @@ import Pair from 'pages/Exchange/Orders/Pair'
 import config from 'helpers/externalConfig'
 
 import metamask from 'helpers/metamask'
+import { AddressType } from 'domain/address'
 
 
 const debug = (...args) => console.log(...args)
@@ -342,18 +343,27 @@ const markCoinAsVisible = (coin, doBackup) => {
 }
 
 const getWallet = (findCondition) => {
-  const { currency, address } = findCondition
+  // all wallets from all origins, including metamask
+  const { currency, address, addressType } = findCondition
 
   const founded = getWallets().filter((wallet) => {
-    const conditionOk = (currency && wallet.currency.toLowerCase() === currency.toLowerCase() && !wallet.isMetamask)
+    const conditionOk = (currency && wallet.currency.toLowerCase() === currency.toLowerCase())
 
     if (address) {
       if (wallet.address.toLowerCase() === address.toLowerCase()) {
         return conditionOk
       }
-    } else {
-      return conditionOk
     }
+
+    if (addressType) {
+      if (addressType === AddressType.Internal && !wallet.isMetamask
+        || addressType === AddressType.Metamask && wallet.isMetamask
+      ) {
+        return conditionOk
+      }
+    }
+
+    return conditionOk
   })
 
   return (founded.length) ? founded[0] : false

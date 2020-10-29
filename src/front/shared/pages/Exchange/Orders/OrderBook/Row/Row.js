@@ -32,7 +32,7 @@ import { BigNumber } from 'bignumber.js'
   peer,
 }))
 
-@cssModules(styles)
+@cssModules(styles, { allowMultiple: true })
 export default class Row extends Component {
 
   static propTypes = {
@@ -69,9 +69,9 @@ export default class Row extends Component {
   componentWillMount() {
     const { row: { isMy, sellCurrency, buyCurrency } } = this.props
     if (isMy) {
-      this.checkBalance(buyCurrency)
-    } else {
       this.checkBalance(sellCurrency)
+    } else {
+      this.checkBalance(buyCurrency)
     }
   }
 
@@ -143,8 +143,8 @@ export default class Row extends Component {
       row: {
         id,
         buyAmount,
-        buyCurrency,
-        sellCurrency,
+        buyCurrency: sellCurrency, // taker-maker - (maker buy - we sell)
+        sellCurrency: buyCurrency, // taker-maker - (maker sell - we buy)
       },
       row,
       intl,
@@ -320,6 +320,7 @@ export default class Row extends Component {
       peer,
       orderId,
       removeOrder,
+      linkedOrderId,
       intl: { locale },
     } = this.props
 
@@ -371,7 +372,11 @@ export default class Row extends Component {
     const showDesktopContent = windowWidth > 800
 
     return showDesktopContent ? (
-      <tr style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}>
+      <tr
+        id={id}
+        styleName={`${id === linkedOrderId ? 'linkedOrderHighlight' : ''}`}
+        style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}
+      >
         <td>
           <Avatar
             value={ownerPeer}
@@ -462,7 +467,8 @@ export default class Row extends Component {
     : /* mobile content */
     (
       <tr
-        styleName={peer === ownerPeer ? 'mobileRowRemove' : 'mobileRowStart'}
+        id={id}
+        styleName={`${id === linkedOrderId ? 'linkedOrderHighlight' : ''} ${peer === ownerPeer ? 'mobileRowRemove' : 'mobileRowStart'}`}
         style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}
       >
         <td>

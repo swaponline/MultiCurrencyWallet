@@ -20,8 +20,7 @@ import { BigNumber } from 'bignumber.js'
 
 import dollar from '../images/dollar.svg'
 import PartOfAddress from '../components/PartOfAddress'
-
-
+import Copy from '../../../components/ui/Copy/Copy'
 import metamask from 'helpers/metamask'
 
 
@@ -388,18 +387,6 @@ export default class Row extends Component {
     actions.modals.open(constants.modals.MultisignJoinLink, {})
   }
 
-  showButtons = () => {
-    this.setState(() => ({
-      showButtons: true,
-    }))
-  }
-
-  hideButtons = () => {
-    this.setState(() => ({
-      showButtons: false,
-    }))
-  }
-
   handleHowToWithdraw = () => {
     const {
       itemData: { currency, address },
@@ -712,27 +699,16 @@ export default class Row extends Component {
         action: this.copyPrivateKey,
         disabled: false,
       },
-      /*!this.props.itemData.isUserProtected && {
-        id: 3012,
+      {
+        id: 1011,
         title: (
-          <FormattedMessage
-            id="WalletRow_Menu_HowExportWallet"
-            defaultMessage="How to export wallet"
-          />
+          <FormattedMessage id="WalletRow_Menu_Hide" defaultMessage="Hide" />
         ),
-        action: this.handleHowToExport,
+        action: this.hideCurrency,
         disabled: false,
-      },*/
+      },
     ].filter((el) => el)
 
-    dropDownMenuItems.push({
-      id: 1011,
-      title: (
-        <FormattedMessage id="WalletRow_Menu_Hide" defaultMessage="Hide" />
-      ),
-      action: this.hideCurrency,
-      disabled: false,
-    })
 
     if (currencyView == 'BTC (Multisig)') currencyView = 'BTC'
     if (currencyView == 'BTC (SMS-Protected)') currencyView = 'BTC'
@@ -919,18 +895,12 @@ export default class Row extends Component {
       <tr>
         <td styleName={`assetsTableRow ${isDark ? 'dark' : ''}`}>
           <div styleName="assetsTableCurrency">
-            <a
-              onClick={mnemonicSaved ? this.goToCurrencyHistory : () => {}}
-              title={`Online ${fullName} wallet`}
-            >
+            <a title={`Online ${fullName} wallet`}>
               <Coin className={styles.assetsTableIcon} name={currency} />
             </a>
             <div styleName="assetsTableInfo">
               <div styleName="nameRow">
-                <a
-                  onClick={mnemonicSaved ? this.goToCurrencyHistory : () => {}}
-                  title={`Online ${fullName} wallet`}
-                >
+                <a title={`Online ${fullName} wallet`}>
                   {fullName}
                 </a>
               </div>
@@ -1017,16 +987,27 @@ export default class Row extends Component {
                     />
                   </p>
                   :
-                  isMobile ?
-                    <PartOfAddress {...itemData} onClick={this.goToCurrencyHistory} style={{
-                      marginLeft: '10px',
-                      marginTop: '1px',
-                      position: 'absolute',
-                      left: '46px',
-                      bottom: '4px',
-                    }} />
-                    :
-                    <p styleName="addressStyle">{itemData.address}</p>
+                  this.props.itemData.isMetamask && ! this.props.itemData.isConnected ?
+                    <p styleName="addressStyle">
+                      <FormattedMessage
+                        id="WalletRow_MetamaskNotConnected"
+                        defaultMessage="Not connected"
+                      />
+                    </p>
+                    : // Address shows 
+                    <div styleName="addressStyle">
+                      <Copy text={itemData.address}>
+                        {
+                          isMobile ?
+                          <PartOfAddress {...itemData} style={{
+                            position: 'relative',
+                            bottom: '13px',
+                          }} />
+                          :
+                          <p>{itemData.address}</p>
+                        }
+                      </Copy>
+                    </div>
               }
             </Fragment>
 

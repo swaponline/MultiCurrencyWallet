@@ -113,7 +113,7 @@ export default class Orders extends Component {
 
   render() {
     const { buyOrders, sellOrders, isShowAllMyOrders } = this.state
-    let { sellCurrency, buyCurrency, intl, decline } = this.props
+    let { sellCurrency, buyCurrency, intl, decline, linkedOrderId } = this.props
     const { history } = this.props
 
     buyCurrency = buyCurrency.toUpperCase()
@@ -232,6 +232,7 @@ export default class Orders extends Component {
                 decline={decline}
                 history={history}
                 removeOrder={this.removeOrder}
+                linkedOrderId={linkedOrderId}
               />
             )}
             isLoading={buyOrders.length === 0 && !isPubSubLoaded}
@@ -270,6 +271,7 @@ export default class Orders extends Component {
                 decline={decline}
                 history={history}
                 removeOrder={this.removeOrder}
+                linkedOrderId={linkedOrderId}
               />
             )}
             isLoading={sellOrders.length === 0 && !isPubSubLoaded}

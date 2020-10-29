@@ -1,6 +1,7 @@
 import React from 'react'
 
-import Address, { AddressFormat } from 'components/ui/Address/Address'
+import Address from 'components/ui/Address/Address'
+import { AddressFormat } from 'domain/address'
 import LinkAccount from '../LinkAccount'
 
 

@@ -9,7 +9,8 @@ import config from 'helpers/externalConfig'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import Input from 'components/forms/Input/Input';
 import DropDown from 'components/ui/DropDown/DropDown'
-import Address, { AddressFormat } from 'components/ui/Address/Address'
+import Address from 'components/ui/Address/Address'
+import { AddressFormat } from 'domain/address'
 import metamask from 'helpers/metamask'
 import { Button } from 'components/controls'
 import ethToken from 'helpers/ethToken'
@@ -23,17 +24,7 @@ import iconInternal from 'components/Logo/images/base.svg'
 import iconMetamask from './images/metamask.svg'
 import iconCustom from './images/custom.svg'
 
-
-export const AddressType = {
-  Internal: 'Internal', // or better 'systemWallet' / 'Internal'?
-  Metamask: 'Metamask',
-  Custom: 'Custom',
-}
-
-export const AddressRole = {
-  Send: 'Send',
-  Receive: 'Receive',
-}
+import { AddressType, AddressRole } from 'domain/address'
 
 
 const langLabels = defineMessages({
@@ -335,7 +326,12 @@ export default class AddressSelect extends Component {
     } = this.state
 
     const ticker = this.getTicker()
-    const { balance } = actions.core.getWallet({ currency })
+
+    const { internalBalance } = actions.core.getWallet({
+      currency,
+      addressType: AddressType.Internal
+    })
+    const isInternalOptionDisabled = role === AddressRole.Send && (!internalBalance || internalBalance === 0)
 
     const isMetamaskOption = ethToken.isEthOrEthToken({ name: currency })
     const isMetamaskInstalled = metamask.isEnabled()
@@ -343,13 +339,8 @@ export default class AddressSelect extends Component {
     // Forbid `Custom address` option when using ethereum/tokens
     // because you need to make a request to the contract
     const isCustomAddressOption = !ethToken.isEthOrEthToken({ name: currency })
-
-    let isInternalOptionDisabled = false
-    if (role === AddressRole.Send && (!balance || balance === 0)) {
-      isInternalOptionDisabled = true
-    }
-
     const isCustomOptionInputHidden = role === AddressRole.Send && ticker === 'BTC' // todo: any utxo
+
 
     const options = [
       {
@@ -367,6 +358,7 @@ export default class AddressSelect extends Component {
               <Address
                 address={this.getInternalAddress()}
                 format={AddressFormat.Short}
+                type={AddressType.Internal}
               />
             </Fragment>
             :
@@ -389,6 +381,7 @@ export default class AddressSelect extends Component {
                 <Address
                   address={metamaskAddress}
                   format={AddressFormat.Short}
+                  type={AddressType.Metamask}
                 />
               </Fragment>
             }]
