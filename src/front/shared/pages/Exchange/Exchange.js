@@ -1548,7 +1548,7 @@ export default class Exchange extends Component {
               </Button>
               { balance > 0
                 ? (
-                  <ReactTooltip id="createOrderReactTooltip1" effect="solid" type="dark" place="bottom">
+                  <ReactTooltip id="createOrderReactTooltipMessageForUser" effect="solid" type="dark" place="bottom">
                     <FormattedMessage
                       id="createOrderMessageForUser"
                       defaultMessage="You must be online all the time, otherwise your order will not be visible to other users"
@@ -1556,7 +1556,7 @@ export default class Exchange extends Component {
                   </ReactTooltip>
                 )
                 : (
-                  <ReactTooltip id="createOrderReactTooltip1" effect="solid" type="dark" place="bottom">
+                  <ReactTooltip id="createOrderReactTooltipNoMany" effect="solid" type="dark" place="bottom">
                     <FormattedMessage
                       id="createOrderNoManyMessageForUser"
                       defaultMessage="Top up your balance"
