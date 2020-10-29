@@ -459,6 +459,10 @@ export default class AddOffer extends Component {
 
     return (
       <div styleName={`wrapper addOffer ${isDark ? '--dark' : ''} `}>
+        <div styleName="offerTitle">
+          <FormattedMessage id="offerMessageToUser" defaultMessage="You must be online all the time, otherwise your order will not be visible to other users" />
+        </div>
+        
         <SelectGroup
           isDark={isDark}
           switchBalanceFunc={this.switching}
