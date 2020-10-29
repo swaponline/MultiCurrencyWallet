@@ -17,9 +17,7 @@ feedback.createOffer.finished(`BTC->ETH`)
 
 ## Output message format (easy to parse)
 
-```
-[host] appPart - eventName {details}
-```
+`[host] appPart - eventName {details} |`
 
 
 ## Output message examples
@@ -29,12 +27,11 @@ feedback.createOffer.finished(`BTC->ETH`)
 [swaponline.io] app - otherTabsClosed
 [swaponline.io] app - closed
 
-[swaponline.io] faq - opened {What are the fees involved?}
-
-[swaponline.io] banner - clicked {How we...}
-
 [swaponline.io] createWallet - started
 [swaponline.io] createWallet - finished {BTC-normal}
+
+[swaponline.io] wallet - faqOpened {What are the fees involved?}
+[swaponline.io] wallet - bannerClicked {How we...}
 
 [swaponline.io] backup - started
 [swaponline.io] backup - finished
@@ -47,15 +44,15 @@ feedback.createOffer.finished(`BTC->ETH`)
 [swaponline.io] exchangeForm - selectedCurrencyTo {ETH}
 [swaponline.io] exchangeForm - selectedAddressFrom {External}
 [swaponline.io] exchangeForm - selectedAddressTo {Internal}
-[swaponline.io] exchangeForm - swapStarted
+[swaponline.io] exchangeForm - swapRequestSended
 
 [swaponline.io] createOffer - started
 [swaponline.io] createOffer - finished {BTC->ETH}
 
-[swaponline.io] offers - offerDeleted
-[swaponline.io] offers - offerShared
+[swaponline.io] offers - deleted
+[swaponline.io] offers - shared
 [swaponline.io] offers - buyPressed {BTC->ETH}
-[swaponline.io] offers - swapStarted {BTC->ETH}
+[swaponline.io] offers - swapRequestSended {BTC->ETH}
 
 [swaponline.io] i18n - switched {NL}
 
