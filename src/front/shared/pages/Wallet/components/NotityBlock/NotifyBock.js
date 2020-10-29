@@ -20,16 +20,19 @@ const NotifyBlock = ({
     if (link && link.includes('http')) {
       window.location = link
     } else {
-      if (link) history.push(link)
+      if (link) {
+        history.push(link)
+      }
     }
-    feedback(`${logDescr || descr}`)
+    const text = logDescr || descr
+    feedback(`${text}`)
   }
 
   const backGroundStyle = { background: `#${background}` }
   const backGroundImgStyle = { backgroundImage: `url(${background})` }
   const style = background && background.length < 7 ? backGroundStyle : backGroundImgStyle
   return (
-    <div styleName="notifyBlock" style={style} onClick={handleGoto} >
+    <div styleName="notifyBlock" style={style} onClick={handleGoto}>
       {background && background.length > 7 ? <div styleName="notifyBlockOverlay" /> : ''}
       <div>
         <div styleName="notifyBlockIcon">
@@ -40,7 +43,7 @@ const NotifyBlock = ({
           <span>{tooltip}</span>
         </div>
       </div>
-    </div >
+    </div>
   )
 }
 
