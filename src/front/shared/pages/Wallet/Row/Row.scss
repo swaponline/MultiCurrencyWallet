@@ -81,10 +81,26 @@
   font-size: 13px;
   color: $primary;
 
-  a {
+  a.linkToHistory {
     cursor: pointer;
+    position: relative;
     font-size: 13px;
     color: $primary;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -.1em;
+      width: 0;
+      height: .1em;
+      background-color: $primary;
+      transition: .2s;
+    }
+
+    &:hover::before {
+      width: 100%;
+    }
   }
 
   div {
@@ -488,7 +504,7 @@ tr button[disabled]:hover {
   margin-top: 1px;
   position: absolute;
   left: 46px;
-  bottom: -13px;
+  bottom: -18px;
 }
 
 .showAddressStyle {
