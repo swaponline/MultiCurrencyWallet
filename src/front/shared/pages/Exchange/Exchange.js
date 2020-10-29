@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react"
 
 import Link from "sw-valuelink"
 
+import ReactTooltip from 'react-tooltip'
 import CSSModules from "react-css-modules"
 import styles from "./Exchange.scss"
 
@@ -1537,13 +1538,26 @@ export default class Exchange extends Component {
               <FormattedMessage id="partial541" defaultMessage="Exchange now" />
             </Button>
             {/* Creates offer */}
-            <Button
-              styleName="button link-like"
-              onClick={ balance > 0 ? this.createOffer : null}
-              disabled={!balance > 0}
-            >
-              <FormattedMessage id="orders128" defaultMessage="Create offer" />
-            </Button>
+            <>
+              <Button
+                id="createOrderReactTooltip1"
+                styleName={`button link-like ${balance > 0 ? '' : 'noMany'}`}
+                onClick={ balance > 0 ? this.createOffer : null}
+              >
+                <FormattedMessage id="orders128" defaultMessage="Create offer" />
+              </Button>
+              { !balance > 0
+                ? (
+                  <ReactTooltip id="createOrderReactTooltip1" effect="solid" type="dark" place="bottom">
+                    <FormattedMessage
+                      id="createOrderNoMany"
+                      defaultMessage="Пополните баланс"
+                    />
+                  </ReactTooltip>
+                )
+                : null
+              }
+            </>
 
             {isIncompletedSwaps &&
               <Button blue styleName="buttonContinueSwap" onClick={this.showIncompleteSwap}>
