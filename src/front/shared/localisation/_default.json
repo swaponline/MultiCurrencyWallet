@@ -7803,39 +7803,66 @@
   },
   {
     "id": "BitcoinBuyText17_btc_to_ethtoken",
-    "message": "Confirmation processing"
+    "message": "Confirmation processing",
+    "files": [
+      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
+    ]
   },
   {
     "id": "BitcoinBuyText29_btc_to_ethtoken",
-    "message": "Checking balance.."
+    "message": "Checking balance..",
+    "files": [
+      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
+    ]
   },
   {
     "id": "BitcoinBuyText33_btc_to_ethtoken",
-    "message": "Creating Bitcoin Script.{br}It can take a few minutes"
+    "message": "Creating Bitcoin Script.{br}It can take a few minutes",
+    "files": [
+      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
+    ]
   },
   {
     "id": "BitcoinBuyText37_btc_to_ethtoken",
-    "message": "{buyCurrency} Owner received Bitcoin Script and Secret Hash. Waiting when he creates {buyCurrency} Contract"
+    "message": "{buyCurrency} Owner received Bitcoin Script and Secret Hash. Waiting when he creates {buyCurrency} Contract",
+    "files": [
+      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
+    ]
   },
   {
     "id": "BitcoinBuyText41_btc_to_ethtoken",
-    "message": "{buyCurrency} Contract created and charged. Requesting withdrawal from {buyCurrency} Contract."
+    "message": "{buyCurrency} Contract created and charged. Requesting withdrawal from {buyCurrency} Contract.",
+    "files": [
+      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
+    ]
   },
   {
     "id": "BitcoinBuyText45_btc_to_ethtoken",
-    "message": "{buyCurrency} tokens was transferred to your wallet. Check the balance."
+    "message": "{buyCurrency} tokens was transferred to your wallet. Check the balance.",
+    "files": [
+      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
+    ]
   },
   {
     "id": "BitcoinBuyText49_btc_to_ethtoken",
-    "message": "Thank you for using Swap.Online"
+    "message": "Thank you for using Swap.Online",
+    "files": [
+      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
+    ]
   },
   {
     "id": "BitcoinBuyText53_btc_to_ethtoken",
-    "message": "Thank you for using Swap.Online!"
+    "message": "Thank you for using Swap.Online!",
+    "files": [
+      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
+    ]
   },
   {
     "id": "BtcToEthToken20_btc_to_ethtoken",
-    "message": "Create a secret key"
+    "message": "Create a secret key",
+    "files": [
+      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
+    ]
   },
   {
     "id": "SwapProgress111_BTC_GHOST",
@@ -8156,6 +8183,34 @@
     "message": "My wallet (not enough balance)",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.js"
+    ]
+  },
+  {
+    "id": "offerMessageToUser",
+    "message": "You must be online all the time, otherwise your order will not be visible to other users",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "createOrderMessageForUser",
+    "message": "You must be online all the time, otherwise your order will not be visible to other users",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.js"
+    ]
+  },
+  {
+    "id": "createOrderNoManyMessageForUser",
+    "message": "Top up your balance",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.js"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText35_btc_to_ethtoken",
+    "message": "{buyCurrency} Owner received Bitcoin Script and Secret Hash. Waiting confirm TX and when he creates {buyCurrency} Contract",
+    "files": [
+      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
   }
 ]

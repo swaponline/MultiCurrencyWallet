@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react"
 
 import Link from "sw-valuelink"
 
+import ReactTooltip from 'react-tooltip'
 import CSSModules from "react-css-modules"
 import styles from "./Exchange.scss"
 
@@ -1524,8 +1525,9 @@ export default class Exchange extends Component {
             </div>
           }
 
-
+          
           <div styleName="buttons">
+            {/* Exchange */}
             <Button
               className="data-tut-Exchange_tourDisabled"
               styleName="button"
@@ -1535,10 +1537,34 @@ export default class Exchange extends Component {
             >
               <FormattedMessage id="partial541" defaultMessage="Exchange now" />
             </Button>
-
-            <Button styleName="button link-like" onClick={this.createOffer}>
-              <FormattedMessage id="orders128" defaultMessage="Create offer" />
-            </Button>
+            {/* Creates offer */}
+            <>
+              <Button
+                id="createOrderReactTooltipMessageForUser"
+                styleName={`button link-like ${balance > 0 ? '' : 'noMany'}`}
+                onClick={ balance > 0 ? this.createOffer : null}
+              >
+                <FormattedMessage id="orders128" defaultMessage="Create offer" />
+              </Button>
+              { balance > 0
+                ? (
+                  <ReactTooltip id="createOrderReactTooltipMessageForUser" effect="solid" type="dark" place="bottom">
+                    <FormattedMessage
+                      id="createOrderMessageForUser"
+                      defaultMessage="You must be online all the time, otherwise your order will not be visible to other users"
+                    />
+                  </ReactTooltip>
+                )
+                : (
+                  <ReactTooltip id="createOrderReactTooltipMessageForUser" effect="solid" type="dark" place="bottom">
+                    <FormattedMessage
+                      id="createOrderNoManyMessageForUser"
+                      defaultMessage="Top up your balance"
+                    />
+                  </ReactTooltip>
+                )
+              }
+            </>
 
             {isIncompletedSwaps &&
               <Button blue styleName="buttonContinueSwap" onClick={this.showIncompleteSwap}>

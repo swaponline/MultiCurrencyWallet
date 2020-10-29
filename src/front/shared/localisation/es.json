@@ -7758,39 +7758,66 @@
   },
   {
     "id": "BitcoinBuyText17_btc_to_ethtoken",
-    "message": "Procesando confirmación"
+    "message": "Procesando confirmación",
+    "files": [
+      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
+    ]
   },
   {
     "id": "BitcoinBuyText29_btc_to_ethtoken",
-    "message": "Comprobando saldo.."
+    "message": "Comprobando saldo..",
+    "files": [
+      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
+    ]
   },
   {
     "id": "BitcoinBuyText33_btc_to_ethtoken",
-    "message": "Creando Bitcoin Script. {br} Puede tardar unos minutos"
+    "message": "Creando Bitcoin Script. {br} Puede tardar unos minutos",
+    "files": [
+      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
+    ]
   },
   {
     "id": "BitcoinBuyText37_btc_to_ethtoken",
-    "message": "{buyCurrency} El propietario recibió Bitcoin Script y Secret Hash. Esperando cuando crea {buyCurrency} Contrato"
+    "message": "{buyCurrency} El propietario recibió Bitcoin Script y Secret Hash. Esperando cuando crea {buyCurrency} Contrato",
+    "files": [
+      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
+    ]
   },
   {
     "id": "BitcoinBuyText41_btc_to_ethtoken",
-    "message": "{buyCurrency} Contrato creado y cargado. Solicitando retiro de{buyCurrency} Contrato."
+    "message": "{buyCurrency} Contrato creado y cargado. Solicitando retiro de{buyCurrency} Contrato.",
+    "files": [
+      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
+    ]
   },
   {
     "id": "BitcoinBuyText45_btc_to_ethtoken",
-    "message": "{buyCurrency} tokens se transfirieron a su billetera. Consulta el saldo."
+    "message": "{buyCurrency} tokens se transfirieron a su billetera. Consulta el saldo.",
+    "files": [
+      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
+    ]
   },
   {
     "id": "BitcoinBuyText49_btc_to_ethtoken",
-    "message": "Gracias por usar GhostX"
+    "message": "Gracias por usar GhostX",
+    "files": [
+      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
+    ]
   },
   {
     "id": "BitcoinBuyText53_btc_to_ethtoken",
-    "message": "Gracias por usar GhostX!"
+    "message": "Gracias por usar GhostX!",
+    "files": [
+      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
+    ]
   },
   {
     "id": "BtcToEthToken20_btc_to_ethtoken",
-    "message": "Crea una clave secreta"
+    "message": "Crea una clave secreta",
+    "files": [
+      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
+    ]
   },
   {
     "id": "SwapProgress111_BTC_GHOST",
@@ -8188,6 +8215,34 @@
     "message": "To address",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.js"
+    ]
+  },
+  {
+    "id": "offerMessageToUser",
+    "message": "Debe estar en línea todo el tiempo, de lo contrario su pedido no será visible para otros usuarios",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "createOrderMessageForUser",
+    "message": "Debe estar en línea todo el tiempo, de lo contrario su pedido no será visible para otros usuarios",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.js"
+    ]
+  },
+  {
+    "id": "createOrderNoManyMessageForUser",
+    "message": "Recarga tu saldo",
+    "files": [
+      "src/front/shared/pages/Exchange/Exchange.js"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText35_btc_to_ethtoken",
+    "message": "{buyCurrency} Owner received Bitcoin Script and Secret Hash. Waiting confirm TX and when he creates {buyCurrency} Contract",
+    "files": [
+      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
   }
 ]

@@ -447,18 +447,12 @@ export default class AddOffer extends Component {
       )
     }
 
-    /* This allows creating order greater than balance
-      if (linked.buyAmount.value !== '') {
-        linked.sellAmount.check((value) => (BigNumber(balance).isGreaterThanOrEqualTo(value)),
-          <span>
-            <FormattedMessage id="transaction376" defaultMessage="Amount must be less than your balance " />
-          </span>
-        )
-      }
-    */
-
     return (
       <div styleName={`wrapper addOffer ${isDark ? '--dark' : ''} `}>
+        <div styleName="offerTitle">
+          <FormattedMessage id="offerMessageToUser" defaultMessage="You must be online all the time, otherwise your order will not be visible to other users" />
+        </div>
+        
         <SelectGroup
           isDark={isDark}
           switchBalanceFunc={this.switching}
