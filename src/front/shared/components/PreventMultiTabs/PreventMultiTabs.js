@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl'
 import Button from 'components/controls/Button/Button'
 import config from 'app-config'
 import { constants, localStorage } from 'helpers'
+import feedback from 'shared/helpers/feedback'
 
 
 const isWidgetBuild = config && config.isWidget
@@ -23,6 +24,7 @@ export default class PreventMultiTabs extends Component {
   }
 
   handleSwitchClick = () => {
+    feedback.app.otherTabsClosed()
     const { onSwitchTab } = this.props
 
     localStorage.setItem(constants.localStorage.preventSwitch, 'whe-are-now-make-switch-tab')

@@ -16,6 +16,7 @@ import Explanation from '../Explanation'
 import icons from '../images'
 import config from 'helpers/externalConfig'
 import { getActivatedCurrencies } from 'helpers/user'
+import feedback from 'shared/helpers/feedback'
 
 import Cupture, {
   subHeaderText1,
@@ -131,6 +132,7 @@ export default class FirstStep extends Component {
 
 
   handleClick = name => {
+    feedback.createWallet.currencySelected(name)
     const { setError } = this.props
     const { curState } = this.state
 
@@ -201,7 +203,7 @@ export default class FirstStep extends Component {
             </Explanation>
           </div>
         }
-      </div >
+      </div>
     )
   }
 

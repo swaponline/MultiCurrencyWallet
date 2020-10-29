@@ -25,6 +25,7 @@ import { isMobile } from 'react-device-detect'
 import links from 'helpers/links'
 
 import MnemonicInput from 'components/forms/MnemonicInput/MnemonicInput'
+import feedback from 'shared/helpers/feedback'
 
 
 
@@ -117,6 +118,7 @@ export default class RestoryMnemonicWallet extends React.Component {
 
   componentDidMount() {
     this.fetchData()
+    feedback.restore.started()
   }
 
   fetchData = async () => {
@@ -153,6 +155,7 @@ export default class RestoryMnemonicWallet extends React.Component {
   }
 
   handleFinish = () => {
+
     this.handleClose()
 
     window.location.assign(links.hashHome)
@@ -214,6 +217,8 @@ export default class RestoryMnemonicWallet extends React.Component {
         isFetching: false,
         step: `ready`,
       })
+
+      feedback.restore.finished()
     })
   }
 

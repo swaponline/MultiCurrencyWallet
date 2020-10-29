@@ -18,7 +18,7 @@ export default class SwitchLang extends Component {
   switchLang = (event, locale) => {
     event.preventDefault()
 
-    feedback(`Switch language to ${locale}`)
+    feedback.i18n.switched(locale)
 
     const { history } = this.props
     setCookie('mylang', locale.toUpperCase(), new Date(new Date().getFullYear() + 1, 1))

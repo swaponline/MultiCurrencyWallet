@@ -18,6 +18,7 @@ import Option from './Option/Option'
 import { links } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import actions from 'redux/actions'
+import feedback from 'shared/helpers/feedback'
 
 import QrReader from "components/QrReader"
 import iconInternal from 'components/Logo/images/base.svg'
@@ -205,7 +206,9 @@ export default class AddressSelect extends Component {
       intl: { locale },
     } = this.props
     const ticker = this.getTicker()
-    
+
+    feedback.exchangeForm.redirectedCreateWallet(ticker)
+
     const url = localisedUrl(locale, `${links.createWallet}/${ticker}`)
     history.push(url)
   }
@@ -292,7 +295,7 @@ export default class AddressSelect extends Component {
   }
 
   applyAddress(address) {
-    const { onChange } = this.props
+    const { onChange, currency } = this.props
     const { type, value } = address
 
     if (typeof onChange !== 'function') {
@@ -300,6 +303,7 @@ export default class AddressSelect extends Component {
     }
 
     onChange({
+      currency,
       type,
       value,
     })

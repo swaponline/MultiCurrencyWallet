@@ -28,6 +28,7 @@ import config from "helpers/externalConfig"
 import SwapApp, { util } from "swap.app"
 
 import helpers, { constants, links } from "helpers"
+import feedback from 'shared/helpers/feedback'
 import { animate } from "helpers/domUtils"
 import Switching from "components/controls/Switching/Switching"
 import AddressSelect from "./AddressSelect/AddressSelect"
@@ -462,6 +463,8 @@ export default class Exchange extends Component {
   };
 
   createOffer = async () => {
+    feedback.createOffer.started()
+
     const { haveCurrency, getCurrency } = this.state
 
     actions.modals.open(constants.modals.Offer, {
@@ -482,6 +485,8 @@ export default class Exchange extends Component {
 
     const haveTicker = haveCurrency.toUpperCase()
     const getTicker = getCurrency.toUpperCase()
+
+    feedback.exchangeForm.requestedSwap(`${haveTicker}->${getTicker}`)
 
     const { address, balance } = actions.core.getWallet({ currency: haveCurrency })
 
@@ -939,11 +944,14 @@ export default class Exchange extends Component {
 
   applyAddress = (addressRole, addressData) => {
     // address value or missing either already validated
-    const { type, value } = addressData;
+    const { type, value, currency } = addressData;
 
     console.log('Exchange: applyAddress', addressRole, addressData)
 
+    feedback.exchangeForm.selectedAddress(`${addressRole} ${currency.toUpperCase()} ${type}`)
+
     if (addressRole === AddressRole.Send) {
+
       this.setState({
         fromAddress: addressData
       })
@@ -957,6 +965,7 @@ export default class Exchange extends Component {
 
   flipCurrency = async () => {
     const { haveCurrency, getCurrency } = this.state;
+    feedback.exchangeForm.flipped(`${haveCurrency}->${getCurrency} => ${getCurrency}->${haveCurrency}`)
 
     this.resetState();
     this.changeUrl(getCurrency, haveCurrency);
