@@ -9,7 +9,7 @@ export default {
   ghostscan: 'https://ghostscan.io/ghost-insight-api',
   nextscan: 'https://explore.next.exchange/#',
   nextExplorer: 'https://explore.next.exchange/api',
-  nextExplorerCustom: 'https://next.swaponline.io/mainnet',
+  nextExplorerCustom: 'http://localhost:7079/mainnet', //'https://next.swaponline.io/mainnet',
   blockcypher: 'https://api.blockcypher.com/v1/btc/main',
   etherscan: [
     'https://api.etherscan.io/api',

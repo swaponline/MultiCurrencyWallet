@@ -38,7 +38,6 @@ const networks = Object.keys(nextCoinNode)
 
 const sendRequest = ({ network, rpcMethod, rpcMethodParams = [], onSuccess, onError, appRes }) => {
   if (!networks.includes(network)) {
-    console.log('network', network)
     const error = `bad request: unknown network "${network}", expected ${networks}`
     throw new Error(error)
     // appRes.status(400).json({ error })
@@ -66,10 +65,9 @@ const sendRequest = ({ network, rpcMethod, rpcMethodParams = [], onSuccess, onEr
     'method': rpcMethod,
     'params': rpcMethodParams,
   }
-  console.log('bodyJson', bodyJson)
+
   const body = JSON.stringify(bodyJson)
 
-  console.log('body', body)
   return request
     .post(url)
     .set('content-type', 'text/plain')
@@ -108,27 +106,6 @@ Planning proxy interface:
 /:network/txs/:address
 */
 
-app.get('/:network/memtx/:txid', async (req, res) => {
-  const {
-    network,
-    txid,
-  } = req.params
-  
-  console.log('txid', txid)
-  sendRequest({
-    network,
-    rpcMethod: 'getmempoolentry',
-    rpcMethodParams: [{ 'txid': `0x${txid}` }],
-    onSuccess: (data) => {
-      res.status(200).json(data)
-    },
-    onError: (e) => {
-      res.status(503).json({ error: e.message })
-    },
-    appRes: res,
-  })
-})
-
 app.get('/:network', async (req, res) => {
   const { network } = req.params
 
@@ -137,9 +114,6 @@ app.get('/:network', async (req, res) => {
     rpcMethod: 'getblockchaininfo',
     rpcMethodParams: [],
     onSuccess: (data) => {
-      /*res.status(200).json({
-        rawtx: answer.hex,
-      })*/
       res.status(200).json(data)
     },
     onError: (e) => {
@@ -158,28 +132,6 @@ app.get('/:network/addr/:address', async (req, res) => {
     rpcMethod: 'getaddressbalance',
     rpcMethodParams: [{ 'addresses': [address] }],
     onSuccess: (data) => {
-      /*res.status(200).json({
-        rawtx: answer.hex,
-      })*/
-      res.status(200).json(data)
-    },
-    onError: (e) => {
-      res.status(503).json({ error: e.message })
-    },
-  })
-})
-
-app.get('/:network/addr/:address/mempool', async (req, res) => {
-  const { network, address } = req.params
-
-  sendRequest({
-    network,
-    rpcMethod: 'getaddressmempool',
-    rpcMethodParams: [{ 'addresses': [address] }],
-    onSuccess: (data) => {
-      /*res.status(200).json({
-        rawtx: answer.hex,
-      })*/
       res.status(200).json(data)
     },
     onError: (e) => {
@@ -197,10 +149,6 @@ app.get('/:network/txs/:address', async (req, res) => {
     rpcMethod: 'getaddresstxids',
     rpcMethodParams: [{ 'addresses': [address] }],
     onSuccess: (data) => {
-      /*res.status(200).json({
-        rawtx: answer.hex,
-      })*/
-      console.log('data', data)
       const ret = {
         txs: data.reverse(),
       }
@@ -212,17 +160,15 @@ app.get('/:network/txs/:address', async (req, res) => {
             rpcMethod: 'getrawtransaction',
             rpcMethodParams: [ txid, 1 ],
           })
-          console.log('txinfo fetched', txInfo)
           ret.txs[i] = txInfo
           resolve(txInfo)
         })
       })
 
       Promise.all(fetchTxInfos).then(() => {
-        console.log('all ready', ret.txs)
         res.status(200).json(ret)
       }).catch ((e) => {
-        console.log('Fail all promise', e)
+        res.status(503).json({ error: e.message })
       })
     },
     onError: (e) => {
@@ -241,9 +187,6 @@ app.get('/:network/addr/:address/utxo', async (req, res) => {
     rpcMethod: 'getaddressutxos',
     rpcMethodParams: [{ 'addresses': [address] }],
     onSuccess: (data) => {
-      /*res.status(200).json({
-        rawtx: answer.hex,
-      })*/
       res.status(200).json(data)
     },
     onError: (e) => {

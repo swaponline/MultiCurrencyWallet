@@ -10,7 +10,7 @@ export default {
   ghostscan: 'https://testnet.ghostscan.io/ghost-insight-api',
   nextscan: 'https://explore.next.exchange/#',
   nextExplorer: 'https://explore.next.exchange/api',
-  nextExplorerCustom: 'https://next.swaponline.io/mainnet',
+  nextExplorerCustom: 'http://localhost:7079/mainnet', //'https://next.swaponline.io/mainnet',
   blockcypher: 'https://api.blockcypher.com/v1/btc/test3',
   // bitpay: 'https://test-insight.bitpay.com/api',
   etherscan: [
