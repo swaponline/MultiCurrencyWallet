@@ -39,8 +39,7 @@ import getCurrencyKey from 'helpers/getCurrencyKey'
 import lsDataCache from 'helpers/lsDataCache'
 
 import adminFee from 'helpers/adminFee'
-
-
+import feedback from 'shared/helpers/feedback'
 import metamask from 'helpers/metamask'
 
 

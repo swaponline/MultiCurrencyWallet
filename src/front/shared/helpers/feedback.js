@@ -1,7 +1,14 @@
 import axios from 'axios'
 
 
+const isFeedbackEnabled = true
+
+
 export default (msg) => {
+  if (!isFeedbackEnabled) {
+    return
+  }
+
   const host = window.top.location.host || window.location.hostname || document.location.host
 
   const textToSend = `[${host}] ${msg} |`
@@ -22,3 +29,22 @@ export default (msg) => {
     console.error(error)
   }
 }
+
+const events = {
+  app: {
+    started: 'started',
+    otherTabsClosed: 'otherTabsClosed',
+    closed: 'closed',
+  },
+  createWallet: {},
+}
+
+/*
+
+feedback.app.start()
+feedback.offersList.delete()
+feedback.offerlist.buyStart()
+feedback.exchangeForm.flip()
+feedback.faq.open()
+
+*/
