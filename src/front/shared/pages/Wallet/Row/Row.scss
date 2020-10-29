@@ -12,11 +12,6 @@
   border-radius: 20px;
 }
 
-.assetsTableCurrency a,
-.nameRow a {
-  cursor: pointer;
-}
-
 .no-select-inline {
   cursor: pointer;
   display: inline;
@@ -495,7 +490,6 @@ tr button[disabled]:hover {
   bottom: -13px;
 }
 
-.addressStyle,
 .showAddressStyle {
   cursor: pointer;
 }

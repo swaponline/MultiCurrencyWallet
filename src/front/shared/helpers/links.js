@@ -36,12 +36,12 @@ const linksManager = {
   EthWallet: '/Ethereum-wallet',
 
   // social networks
-  medium: 'https://medium.com/@swaponline',
+  medium: '#',
   twitter: 'https://twitter.com/SwapOnlineTeam',
-  facebook: 'https://www.facebook.com/SwapOnlineTeam/',
+  facebook: '#',
   github: 'https://github.com/swaponline/MultiCurrencyWallet',
   telegram: 'https://t.me/swaponline',
-  bitcointalk: 'https://bitcointalk.org/index.php',
+  bitcointalk: '#',
   discord: '#',
   reddit: '#',
   youtube: '#',
