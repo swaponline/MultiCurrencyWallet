@@ -1524,8 +1524,9 @@ export default class Exchange extends Component {
             </div>
           }
 
-
+          
           <div styleName="buttons">
+            {/* Exchange */}
             <Button
               className="data-tut-Exchange_tourDisabled"
               styleName="button"
@@ -1535,12 +1536,12 @@ export default class Exchange extends Component {
             >
               <FormattedMessage id="partial541" defaultMessage="Exchange now" />
             </Button>
-
-            <Button styleName="button link-like" onClick={() => {
-              if (balance > 0) {
-                this.createOffer()
-              }
-            }}>
+            {/* Creates offer */}
+            <Button
+              styleName="button link-like"
+              onClick={ balance > 0 ? this.createOffer : null}
+              disabled={!balance > 0}
+            >
               <FormattedMessage id="orders128" defaultMessage="Create offer" />
             </Button>
 
