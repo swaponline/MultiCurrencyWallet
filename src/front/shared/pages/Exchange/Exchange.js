@@ -1540,7 +1540,7 @@ export default class Exchange extends Component {
             {/* Creates offer */}
             <>
               <Button
-                id="createOrderReactTooltip1"
+                id="createOrderReactTooltipMessageForUser"
                 styleName={`button link-like ${balance > 0 ? '' : 'noMany'}`}
                 onClick={ balance > 0 ? this.createOffer : null}
               >
@@ -1556,7 +1556,7 @@ export default class Exchange extends Component {
                   </ReactTooltip>
                 )
                 : (
-                  <ReactTooltip id="createOrderReactTooltipNoMany" effect="solid" type="dark" place="bottom">
+                  <ReactTooltip id="createOrderReactTooltipMessageForUser" effect="solid" type="dark" place="bottom">
                     <FormattedMessage
                       id="createOrderNoManyMessageForUser"
                       defaultMessage="Top up your balance"
