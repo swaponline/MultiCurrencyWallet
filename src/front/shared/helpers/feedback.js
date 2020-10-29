@@ -34,44 +34,58 @@ const events = {
   app: {
     started: 'started',
     otherTabsClosed: 'otherTabsClosed',
-    closed: 'closed',
+    //closed: 'closed',
   },
   createWallet: {
-    started: 'started',
+    //started: 'started',
+    currencySelected: 'currencySelected',
+    securitySelected: 'securitySelected',
     finished: 'finished',
   },
   wallet: {
-    faqOpened: 'faqOpened',
-    bannerClicked: 'bannerClicked',
+    clickedBanner: 'clickedBanner',
+    pressedAddCurrency: 'pressedAddCurrency',
+  },
+  faq: {
+    opened: 'opened',
   },
   backup: {
     started: 'started',
     finished: 'finished',
   },
-  withdraw: {
+  restore: {
     started: 'started',
     finished: 'finished',
   },
+  withdraw: {
+    entered: 'entered',
+    started: 'started',
+    finished: 'finished',
+    failed: 'failed',
+  },
   exchangeForm: {
     flipped: 'flipped',
-    selectedCurrencyFrom: 'selectedCurrencyFrom',
-    selectedAddressFrom: 'selectedAddressFrom',
-    selectedCurrencyTo: 'selectedCurrencyTo',
-    selectedAddressTo: 'selectedAddressTo',
-    swapRequestSended: 'swapRequestSended',
+    selectedAddress: 'selectedAddress',
+    redirectedCreateWallet: 'redirectedCreateWallet',
+    requestedSwap: 'requestedSwap',
   },
   createOffer: {
     started: 'started',
     finished: 'finished',
   },
   offers: {
+    //shared: 'shared',
     deleted: 'deleted',
-    shared: 'shared',
     buyPressed: 'buyPressed',
-    swapRequestSended: 'swapRequestSended',
+    swapRequested: 'swapRequested',
   },
-  tooltip: {
-    showed: 'showed',
+  swap: {
+    started: 'started',
+    stopped: 'stopped',
+    finished: 'finished',
+  },
+  theme: {
+    switched: 'switched',
   },
   i18n: {
     switched: 'switched',
@@ -93,13 +107,3 @@ Object.keys(events).forEach(appPart => {
 })
 
 export default feedback
-
-/*
-
-feedback.app.start()
-feedback.offersList.delete()
-feedback.offerlist.buyStart()
-feedback.exchangeForm.flip()
-feedback.faq.open()
-
-*/

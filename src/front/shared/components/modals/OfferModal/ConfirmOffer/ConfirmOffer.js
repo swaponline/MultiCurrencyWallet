@@ -62,7 +62,7 @@ export default class ConfirmOffer extends Component {
 
   handleConfirm = () => {
     const { intl: { locale }, offer: { buyCurrency, sellCurrency } } = this.props
-    feedback(`Exchange -> Create offer (finish) ${sellCurrency}->${buyCurrency}`)
+    feedback.createOffer.finished(`${sellCurrency}->${buyCurrency}`)
     this.createOrder()
     actions.modals.close('OfferModal')
   }

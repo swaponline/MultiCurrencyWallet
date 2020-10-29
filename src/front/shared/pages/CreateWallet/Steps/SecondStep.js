@@ -139,7 +139,9 @@ const SecondStep = (props) => {
 
   const handleFinish = () => {
     if (currencies.BTC) {
-      feedback('начали создание кошелька BTC')
+      feedback.createWallet.finished('BTC')
+    } else {
+      feedback.createWallet.finished()
     }
     onClick()
     onCreateTrigger()
@@ -198,7 +200,7 @@ const SecondStep = (props) => {
           return null
         }
         setTrivialFeatureAsked(true)
-        feedback(`хотят создать ${currencyName}-normal кошель`)
+        feedback.createWallet.securitySelected(`${currencyName}-normal`)
       },
     },
     {
@@ -218,7 +220,7 @@ const SecondStep = (props) => {
           return null
         }
         setSmsFeatureAsked(true)
-        feedback(`хотят создать ${currencyName}-sms кошель`)
+        feedback.createWallet.securitySelected(`${currencyName}-sms`)
       },
     },
     {
@@ -237,7 +239,7 @@ const SecondStep = (props) => {
           return null
         }
         setPinFeatureAsked(true)
-        feedback(`хотят создать ${currencyName}-pin кошель`)
+        feedback.createWallet.securitySelected(`${currencyName}-pin`)
       },
     },
     /*
@@ -254,7 +256,7 @@ const SecondStep = (props) => {
           return null
         }
         set2FAFeatureAsked(true)
-        feedback(`хотят создать ${currencyName}-2fa кошель`)
+        feedback.createWallet.securitySelected(`${currencyName}-2fa`)
       },
     },
     */
@@ -265,7 +267,7 @@ const SecondStep = (props) => {
         en: 'Verify your transactions by using another device or by another person.',
         ru: 'Транзакции подтверждаются с другого устройства и/или другим человеком',
         nl: 'Verifieer uw transacties met een ander apparaat of persoon',
-        es: 'Verifique sus transacciones usando otro dispositivo o por otra persona.'
+        es: 'Verifique sus transacciones usando otro dispositivo o por otra persona.',
       }[locale],
       enabled: _protection.multisign[currencyKey],
       activated: _activated.multisign[currencyKey],
@@ -274,7 +276,7 @@ const SecondStep = (props) => {
           return null
         }
         setMultisigFeatureAsked(true)
-        feedback(`хотят создать ${currencyName}-multisig кошель`)
+        feedback.createWallet.securitySelected(`${currencyName}-multisig`)
       },
     },
   ]
@@ -297,7 +299,7 @@ const SecondStep = (props) => {
           return null
         }
         setFingerprintFeatureAsked(true)
-        feedback(`кто то хочет ${currencyName}-fingerprint`)
+        feedback.createWallet.securitySelected(`${currencyName}-fingerprint`)
       },
     })
   }

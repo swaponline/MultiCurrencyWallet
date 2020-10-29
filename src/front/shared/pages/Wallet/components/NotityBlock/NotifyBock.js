@@ -25,7 +25,7 @@ const NotifyBlock = ({
       }
     }
     const text = logDescr || descr
-    feedback(`${text}`)
+    feedback.wallet.clickedBanner(text)
   }
 
   const backGroundStyle = { background: `#${background}` }

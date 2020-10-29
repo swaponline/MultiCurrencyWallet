@@ -21,6 +21,7 @@ import RequestButton from '../RequestButton/RequestButton'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import { BigNumber } from 'bignumber.js'
+import feedback from 'shared/helpers/feedback'
 
 
 @injectIntl
@@ -151,6 +152,8 @@ export default class Row extends Component {
       history,
     } = this.props
 
+    feedback.offers.buyPressed(`${sellCurrency}->${buyCurrency}`)
+
     const pair = Pair.fromOrder(row)
     const { price, amount, total, main, base, type } = pair
 
@@ -253,6 +256,8 @@ export default class Row extends Component {
     actions.modals.open(constants.modals.ConfirmBeginSwap, {
       order: this.props.row,
       onAccept: async (customWallet) => {
+        feedback.offers.swapRequested(`${sellCurrency}->${buyCurrency}`)
+
         this.setState({ isFetching: true })
 
         setTimeout(() => {

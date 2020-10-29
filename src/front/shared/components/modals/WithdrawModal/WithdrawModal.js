@@ -120,6 +120,7 @@ export default class WithdrawModal extends React.Component {
     this.getFiatBalance()
     this.actualyMinAmount()
     this.setBalanceOnState()
+    feedback.withdraw.entered()
   }
 
   componentDidUpdate(prevProps) {
@@ -272,6 +273,8 @@ export default class WithdrawModal extends React.Component {
   }
 
   handleSubmit = async () => {
+    feedback.withdraw.started()
+
     const {
       address: to,
       amount,
@@ -362,8 +365,6 @@ export default class WithdrawModal extends React.Component {
       return
     }
 
-    feedback(`Withdraw ${currency.toLowerCase()} (finish)`)
-
     await actions[currency.toLowerCase()]
       .send(sendOptions)
       .then(async (txRaw) => {
@@ -408,6 +409,8 @@ export default class WithdrawModal extends React.Component {
           data: txInfoCache,
         })
 
+        feedback.withdraw.finished()
+
         const txInfoUrl = helpers.transactions.getTxRouter(currency.toLowerCase(), txId)
         redirectTo(txInfoUrl)
       })
@@ -415,6 +418,7 @@ export default class WithdrawModal extends React.Component {
         actions.modals.close(name)
       })
       .catch((e) => {
+        feedback.withdraw.failed()
         const errorText = e.res ? e.res.text : ''
         const error = {
           name: {

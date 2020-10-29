@@ -462,7 +462,7 @@ export default class Exchange extends Component {
   };
 
   createOffer = async () => {
-    feedback('Exchange -> Create offer (start)')
+    feedback.createOffer.started()
 
     const { haveCurrency, getCurrency } = this.state
 
@@ -474,8 +474,6 @@ export default class Exchange extends Component {
   };
 
   initSwap = async () => {
-    feedback('Exchange -> Exchange now')
-
     const { decline, usersData } = this.props;
 
     const {
@@ -486,6 +484,8 @@ export default class Exchange extends Component {
 
     const haveTicker = haveCurrency.toUpperCase()
     const getTicker = getCurrency.toUpperCase()
+
+    feedback.exchangeForm.requestedSwap(`${haveTicker}->${getTicker}`)
 
     const { address, balance } = actions.core.getWallet({ currency: haveCurrency })
 
@@ -943,12 +943,14 @@ export default class Exchange extends Component {
 
   applyAddress = (addressRole, addressData) => {
     // address value or missing either already validated
-    const { type, value } = addressData;
+    const { type, value, currency } = addressData;
 
     console.log('Exchange: applyAddress', addressRole, addressData)
-    feedback(`Exchange -> Form -> Address ${addressRole} ${type}`)
+
+    feedback.exchangeForm.selectedAddress(`${addressRole} ${currency.toUpperCase()} ${type}`)
 
     if (addressRole === AddressRole.Send) {
+
       this.setState({
         fromAddress: addressData
       })
@@ -961,8 +963,8 @@ export default class Exchange extends Component {
   };
 
   flipCurrency = async () => {
-    feedback(`Exchange -> Form -> Flip`)
     const { haveCurrency, getCurrency } = this.state;
+    feedback.exchangeForm.flipped(`${haveCurrency}->${getCurrency} => ${getCurrency}->${haveCurrency}`)
 
     this.resetState();
     this.changeUrl(getCurrency, haveCurrency);
