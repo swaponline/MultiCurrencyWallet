@@ -62,7 +62,7 @@
     "test:unit": "mocha --require babel-core/register --require ./test/helpers.js --require ./test/dom.js --require ignore-styles 'src/**/*.spec.js'",
     "test:snapshot": "jest --config ./test/jest.config.json",
     "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
-    "messages:extract": "babel-node tools/run messages",
+    "messages:extract": "babel-node src/front/tools/run messages",
     "rename-assets-manifest-file": "rename-files ./build-chrome-extension/application/assets/ 'manifest.json' 'android-manifest.json'",
     "rename-assets-manifest-link": "replace 'assets/manifest.json' 'assets/android-manifest.json' ./build-chrome-extension/application/index.html",
     "release": "git commit -am v%npm_package_version% && git tag v%npm_package_version% && git push && git push --tags",
