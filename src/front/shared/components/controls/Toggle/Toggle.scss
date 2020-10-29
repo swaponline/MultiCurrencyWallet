@@ -34,7 +34,7 @@ label.Switch > span:before {
 }
 
 label.Switch > span:after {
-  background-color: #6144e5;
+  background-color: $primary;
   border-radius: 50%;
   content: '';
   width: 15px;
@@ -51,7 +51,7 @@ label.Switch > span:after {
 }
 
 label.Switch > input:checked + span:before {
-  background-color: #6144e5;
+  background-color: $primary;
 }
 
 label.Switch > input:checked + span:after {

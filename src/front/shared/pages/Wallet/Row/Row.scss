@@ -32,7 +32,7 @@
 
 .txWaitConfirm {
   padding-right: 10px;
-  color: #6144e5;
+  color: $primary;
   cursor: pointer;
 }
 
@@ -79,11 +79,11 @@
 .nameRow {
   display: flex;
   font-size: 13px;
-  color: #6144e5;
+  color: $primary;
 
   a {
     font-size: 13px;
-    color: #6144e5;
+    color: $primary;
   }
 
   div {
@@ -521,7 +521,7 @@ tr button[disabled]:hover {
     line-height: 13px;
     text-align: right;
     font-weight: bold;
-    color: #6144e5;
+    color: $primary;
     margin-top: 2px;
   }
 
@@ -562,7 +562,7 @@ tr button[disabled]:hover {
   }
 
   p {
-    color: #6144e5;
+    color: $primary;
     font-size: 13px;
     margin-bottom: 1px;
   }

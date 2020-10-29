@@ -24,11 +24,11 @@
   width: 10px;
   height: 10px;
   border-radius: 5px;
-  background: #e91db4;
+  background:$alternate;
 }
 
 .new {
-  border: 2px solid #ff1fc5;
+  border: 2px solid $alternate-hover;
 }
 
 .shake {

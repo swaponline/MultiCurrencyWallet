@@ -30,11 +30,20 @@
     <meta property="og:url" content="https://swaponline.io" />
     <!-- ERC20 Tokens hot plug for widget-build (Dont remove this) -->
     <script src="erc20tokens.js"></script>
-
+    
     <script>
       var isWidgetBuild = '<%= htmlWebpackPlugin.options.isWidget %>';
     </script>
+
     <style>
+      :root {
+        --primary:#6144e5;
+        --primary-hover: #7371ff;
+        --primary-background: rgba(97, 68, 229, 0.1);
+        --alternate: #e91db4;
+        --alternate-hover:  #ff1fc5;
+      }
+      
       #WEB3_CONNECT_MODAL_ID {
         position: relative;
         z-index: 1000000;
@@ -354,7 +363,6 @@
         }
       }
     </style>
-    <!-- End Modal Style -->
   </head>
 
   <body>
