@@ -92,13 +92,20 @@
       position: absolute;
       left: 0;
       bottom: -.1em;
-      width: 0;
       height: .1em;
       background-color: $primary;
       transition: .2s;
     }
 
-    &:hover::before {
+    &.desktop::before {
+      width: 0;
+    }
+
+    &.desktop:hover::before {
+      width: 100%;
+    }
+
+    &.mobile::before {
       width: 100%;
     }
   }

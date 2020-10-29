@@ -901,7 +901,13 @@ export default class Row extends Component {
           <div styleName="assetsTableCurrency">
             <a /* Redirect to history if connect wallet */
               onClick={ addressIsOk ? this.goToCurrencyHistory : () => null }
-              styleName={`${addressIsOk ? 'linkToHistory': ''}`}
+              styleName={`${
+                addressIsOk && isMobile
+                  ? 'linkToHistory mobile'
+                  : addressIsOk 
+                    ? 'linkToHistory desktop'
+                    : ''
+              }`}
               title={`Online ${fullName} wallet`}
             >
               <Coin className={styles.assetsTableIcon} name={currency} />
@@ -910,7 +916,13 @@ export default class Row extends Component {
               <div styleName="nameRow">
                 <a /* Redirect to history if connect wallet */
                   onClick={ addressIsOk ? this.goToCurrencyHistory : () => null }
-                  styleName={`${addressIsOk ? 'linkToHistory': ''}`}
+                  styleName={`${
+                    addressIsOk && isMobile
+                      ? 'linkToHistory mobile'
+                      : addressIsOk 
+                        ? 'linkToHistory desktop'
+                        : ''
+                  }`}
                   title={`Online ${fullName} wallet`}
                 >
                   {fullName}
