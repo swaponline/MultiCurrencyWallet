@@ -30,6 +30,10 @@ A new senior JS developer, without blockchain skills, connect takes 2-3 month fo
 - Research of our app arhitecture
 - Do Plan A (see below)
 
+COSTS:  
+- 1 senior React JS developer ~ 2500 x 3 month ~ 7500 USD 
+- swaponline team consultation, review - stake <a href="https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/SWAPTOKEN.md"> 5 000 SWAP</a>
+
 ## Plan A
 
 ### Phase 1 `Example`
