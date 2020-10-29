@@ -62,7 +62,7 @@ export default class EthTokenToBtcLike extends Component {
     } = this.state
 
     this.changePaddingValue()
-window.signSwap = signSwap
+window.signSwap = this.signSwap
     this.signTimer = setInterval(() => {
       if (!this.state.flow.isMeSigned) {
         this.signSwap()

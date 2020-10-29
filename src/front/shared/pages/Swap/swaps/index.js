@@ -15,9 +15,12 @@ import BtcToEthToken from '../BtcToEthToken'
 import EthTokenToGhost from '../EthTokenToGhost'
 import GhostToEthToken from '../GhostToEthToken'
 
-
 import EthToNext from '../EthToNext'
 import NextToEth from '../NextToEth'
+
+import EthTokenToNext from '../EthTokenToNext'
+import NextToEthToken from '../NextToEthToken'
+
 // import EthTokenToUsdt from '../EthTokenToUsdt'
 // import UsdtToEthToken from '../UsdtToEthToken'
 
@@ -47,19 +50,12 @@ Object.keys(config.erc20)
     swapComponents[`${key.toUpperCase()}2BTC`] = EthTokenToBtc
     swapComponents[`BTC2${key.toUpperCase()}`] = BtcToEthToken
 
-    // swapComponents[`${key.toUpperCase()}2USDT`] = EthTokenToUsdt
-    // swapComponents[`USDT2${key.toUpperCase()}`] = UsdtToEthToken
-  })
-
-  Object.keys(config.erc20)
-  .forEach(key => {
     swapComponents[`${key.toUpperCase()}2GHOST`] = EthTokenToGhost
     swapComponents[`GHOST2${key.toUpperCase()}`] = GhostToEthToken
 
-    // swapComponents[`${key.toUpperCase()}2USDT`] = EthTokenToUsdt
-    // swapComponents[`USDT2${key.toUpperCase()}`] = UsdtToEthToken
+    swapComponents[`${key.toUpperCase()}2NEXT`] = EthTokenToNext
+    swapComponents[`NEXT2${key.toUpperCase()}`] = NextToEthToken
   })
-
 
 export {
   swapComponents,

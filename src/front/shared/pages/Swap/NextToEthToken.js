@@ -1,9 +1,9 @@
-import BtcLikeToEth from './BtcLikeSwap/BtcLikeToEth'
+import BtcLikeToEthToken from './BtcLikeSwap/BtcLikeToEthToken'
 import { FormattedMessage } from 'react-intl'
 import config from 'app-config'
 
 
-export default class NextToEth extends BtcLikeToEth {
+export default class NextToEthToken extends BtcLikeToEthToken {
   constructor(props) {
     super({
       ...props,
