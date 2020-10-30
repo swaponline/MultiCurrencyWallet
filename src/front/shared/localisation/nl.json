@@ -6221,7 +6221,7 @@
   },
   {
     "id": "Exchange_InternalAddressOptionDisabled",
-    "message": "Mijn wallet (niet genoeg balans)",
+    "message": "Mijn wallet (onvoldoende balans)",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]

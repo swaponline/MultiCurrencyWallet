@@ -6233,7 +6233,7 @@
   },
   {
     "id": "Exchange_InternalAddressOptionDisabled",
-    "message": "My wallet (not enough balance)",
+    "message": "My wallet (insufficient balance)",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.js"
     ]

@@ -343,10 +343,12 @@ const markCoinAsVisible = (coin, doBackup) => {
 }
 
 const getWallet = (findCondition) => {
-  // all wallets from all origins, including metamask
+  // specify addressType,
+  // otherwise it finds the first wallet from all origins, including metamask
   const { currency, address, addressType } = findCondition
 
-  const founded = getWallets().filter((wallet) => {
+  const wallets = getWallets()
+  const founded = wallets.filter((wallet) => {
     const conditionOk = (currency && wallet.currency.toLowerCase() === currency.toLowerCase())
 
     if (address) {
