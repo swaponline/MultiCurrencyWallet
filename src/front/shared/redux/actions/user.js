@@ -331,8 +331,8 @@ const getInfoAboutCurrency = (currencyNames) =>
 
             const currencyInfo = {
               ...currencyInfoItem.quote[fiat],
-              price_fiat,
-              price_btc: (ownPrice) ? ownPrice : currencyInfoItem.quote[fiat].price,
+              price_fiat: (ownPrice) ? ownPrice : currencyInfoItem.quote[fiat].price,
+              price_btc: priceInBtc,
             }
 
             switch (currencyInfoItem.symbol) {
