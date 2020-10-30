@@ -78,7 +78,7 @@ Work in progress to add more languages.
 ## How to support the project?
 
 - Buy [SWAP token](/docs/SWAPTOKEN.md)
-- [Donate](/docs/DONATIONS.md)
+- [Donate](/docs/DONATE.md)
 - _(the easiest)_ Star the project ⭐
 
 ---

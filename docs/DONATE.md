@@ -1,4 +1,4 @@
-# Donations for MultiCurrencyWallet
+# Donate to MultiCurrencyWallet
 
 - BTC: (soon)
 - LTC: (soon)
