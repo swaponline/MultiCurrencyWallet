@@ -38,6 +38,7 @@ Current
 
 - By selling [Wordpress plugin](https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064) (whitelabel, wallet as a service)
 - By custom MultiCurrencyWallet integrations
+- By [community donations](/docs/DONATIONS.md)
 
 ## Strategy and roadmap
 
