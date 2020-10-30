@@ -185,7 +185,10 @@ const getTransaction = (ownAddress, ownType) =>
       `&sort=asc&apikey=${config.api.etherscan_ApiKey}`,
     ].join('')
 
-    return apiLooper.get('etherscan', url)
+    return apiLooper.get('etherscan', url, {
+      // @ToDo - may be need cache or use in memory cache
+      // cacheResponse: 60 * 1000
+    })
       .then((res) => {
         const transactions = res.result
           .filter((item) => item.value > 0)
@@ -391,6 +394,29 @@ const setAllowanceForToken = async ({ name, to, targetAllowance, ...config }) =>
   return approve({ name, to, amount: newTargetAllowance, ...config })
 }
 
+const fetchTokenTxInfo = (ticker, hash, cacheResponse) => {
+  return new Promise(async (resolve) => {
+    let txInfo = await fetchTxInfo(hash, cacheResponse)
+    if (txInfo.isContractTx) {
+      // This is tx to contract. Fetch all txs and find this tx
+      const txs = await getTransaction(txInfo.senderAddress, ticker)
+      const ourTx = txs.filter((tx) => tx.hash.toLowerCase() === hash.toLowerCase())
+      if (ourTx.length) {
+        txInfo.amount = ourTx[0].value
+        txInfo.adminFee = false // Swap dont have service fee
+        if (ourTx[0].direction == `in`) {
+          txInfo = {
+            ...txInfo,
+            receiverAddress: txInfo.senderAddress,
+            senderAddress: txInfo.receiverAddress,
+          }
+        }
+      }
+    }
+    resolve(txInfo)
+  })
+}
+
 const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
   const { user: { tokensData } } = getState()
 
@@ -403,13 +429,15 @@ const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
       if (res && res.result) {
         let amount = 0
         let receiverAddress = res.result.to
+
         const contractAddress = res.result.to
         let tokenDecimal = 18
+
         // Определим токен по адрессу контракта
         Object.keys(tokensData).forEach((key) => {
           if (tokensData[key]
               && tokensData[key].contractAddress
-              && tokensData[key].contractAddress == contractAddress
+              && tokensData[key].contractAddress.toLowerCase() == contractAddress.toLowerCase()
               && tokensData[key].decimals
           ) {
             tokenDecimal = tokensData[key].decimals
@@ -418,15 +446,19 @@ const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
         })
 
         const txData = erc20Decoder.decodeData(res.result.input)
+
         if (txData
-            && txData.name === `transfer`
+            && (
+              txData.name === `transfer`
+              || txData.method === `transfer`
+            )
             && txData.inputs
             && txData.inputs.length == 2
         ) {
           receiverAddress = `0x${txData.inputs[0]}`
           amount = BigNumber(txData.inputs[1]).div(BigNumber(10).pow(tokenDecimal)).toString()
         } else {
-          // This is not erc20 transfer tx
+          // This is not erc20 transfer tx (swap tx)
         }
 
         const {
@@ -458,6 +490,7 @@ const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
           minerFeeCurrency: 'ETH',
           adminFee,
           confirmed: (blockHash != null),
+          isContractTx: (contractAddress.toLowerCase() === config.swapContract.erc20.toLowerCase()),
         })
 
       } else {
@@ -482,6 +515,7 @@ export default {
   fetchBalance,
   AddCustomERC20,
   GetCustromERC20,
+  fetchTokenTxInfo,
   fetchTxInfo,
   getTxRouter,
   withToken,
