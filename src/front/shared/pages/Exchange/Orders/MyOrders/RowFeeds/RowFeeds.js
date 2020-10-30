@@ -45,7 +45,7 @@ export default class RowFeeds extends Component {
     return (
       <tr key={this.props.key}>
         <td>
-          <Coins names={[sellCurrency, buyCurrency]} size="25" />
+          <Coins names={[sellCurrency, buyCurrency]} size={25} />
         </td>
         <td>
           <span styleName="value">{sellAmount.toFixed(5)}</span>
