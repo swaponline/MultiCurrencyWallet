@@ -891,16 +891,40 @@ export default class Row extends Component {
       }
     }
 
+    const addressIsOk = !(this.props.itemData.isMetamask 
+                        && ! this.props.itemData.isConnected)
+                        && mnemonicSaved
+
     return (
       <tr>
         <td styleName={`assetsTableRow ${isDark ? 'dark' : ''}`}>
           <div styleName="assetsTableCurrency">
-            <a title={`Online ${fullName} wallet`}>
+            <a /* Redirect to history if connect wallet */
+              onClick={ addressIsOk ? this.goToCurrencyHistory : () => null }
+              styleName={`${
+                addressIsOk && isMobile
+                  ? 'linkToHistory mobile'
+                  : addressIsOk 
+                    ? 'linkToHistory desktop'
+                    : ''
+              }`}
+              title={`Online ${fullName} wallet`}
+            >
               <Coin className={styles.assetsTableIcon} name={currency} />
             </a>
             <div styleName="assetsTableInfo">
               <div styleName="nameRow">
-                <a title={`Online ${fullName} wallet`}>
+                <a /* Redirect to history if connect wallet */
+                  onClick={ addressIsOk ? this.goToCurrencyHistory : () => null }
+                  styleName={`${
+                    addressIsOk && isMobile
+                      ? 'linkToHistory mobile'
+                      : addressIsOk 
+                        ? 'linkToHistory desktop'
+                        : ''
+                  }`}
+                  title={`Online ${fullName} wallet`}
+                >
                   {fullName}
                 </a>
               </div>
