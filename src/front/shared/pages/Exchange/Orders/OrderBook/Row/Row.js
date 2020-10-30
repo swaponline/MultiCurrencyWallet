@@ -421,7 +421,7 @@ export default class Row extends Component {
         <td styleName="buttonsColumn">
           {peer === ownerPeer
             ?
-            <RemoveButton onClick={() => removeOrder(id)} />
+            <RemoveButton className="removeButton" onClick={() => removeOrder(id)} />
             :
             <Fragment>
               {
@@ -500,7 +500,7 @@ export default class Row extends Component {
             <div styleName="tdContainer-3">
               {
                 peer === ownerPeer ? (
-                  <RemoveButton onClick={() => removeOrder(id)} />
+                  <RemoveButton className="removeButton" onClick={() => removeOrder(id)} />
                 ) : (
                   <Fragment>
                     {

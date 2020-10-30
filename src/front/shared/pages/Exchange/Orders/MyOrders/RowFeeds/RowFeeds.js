@@ -83,7 +83,7 @@ export default class RowFeeds extends Component {
                 </Link>
               </div>
               :
-              <RemoveButton onClick={() => removeOrder(id)} />
+              <RemoveButton className="removeButton" onClick={() => removeOrder(id)} />
             }
           </div>
         </td>
