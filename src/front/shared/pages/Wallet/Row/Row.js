@@ -899,19 +899,8 @@ export default class Row extends Component {
       <tr>
         <td styleName={`assetsTableRow ${isDark ? 'dark' : ''}`}>
           <div styleName="assetsTableCurrency">
-            <a /* Redirect to history if connect wallet */
-              onClick={ addressIsOk ? this.goToCurrencyHistory : () => null }
-              styleName={`${
-                addressIsOk && isMobile
-                  ? 'linkToHistory mobile'
-                  : addressIsOk 
-                    ? 'linkToHistory desktop'
-                    : ''
-              }`}
-              title={`Online ${fullName} wallet`}
-            >
-              <Coin className={styles.assetsTableIcon} name={currency} />
-            </a>
+            {/* Currency icon */}
+            <Coin className={styles.assetsTableIcon} name={currency} />
             <div styleName="assetsTableInfo">
               <div styleName="nameRow">
                 <a /* Redirect to history if connect wallet */
