@@ -46,24 +46,24 @@ Checkout this case: <a href="https://twitter.com/Atomic_Wallet" target="_blank">
 <a href="https://swaponline.github.io/#/usdt-wallet">USDT stablecoin wallet (payment system)</a>
 
 
-### MultiCurrencyWallet is easy to install
+## Easy to install
 
 - Install [WordPress plugin](https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064)
-- Or make your own build using [installation guide](/docs/INSTALLATION.md)
+- Or make your own build following the [installation guide](/docs/INSTALLATION.md)
 
 
-### MultiCurrencyWallet is customizable (images, colors, texts, etc..) for your project
+## Customizable (images, colors, texts, etc..) for your project
 
 - Using [WordPress plugin](https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064)? Сustomize right in the admin panel!
 - Using your own build? Follow the [customization guide](/docs/CUSTOMIZATION.md)
 
 
-### MultiCurrencyWallet open for integrations
+## Open for integrations
 
 See the [list of our clients](/docs/CLIENTS.md).
 
 
-### MultiCurrencyWallet is international
+## International
 
 Supported languages:
 

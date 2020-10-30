@@ -1,4 +1,4 @@
-# Customization
+# Customization guide
 
 ## 1. Change logo
 

@@ -1,4 +1,4 @@
-### Installation / how to start
+### Installation guide
 
 1. Fork this repository (Click "Fork" on top of this page)
 2. Clone repository
