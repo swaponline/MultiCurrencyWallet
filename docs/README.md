@@ -240,4 +240,4 @@ If you have conflicts (if sources has been changed on your side) click "resolve 
 
 ---
 
-Any questions are welcome: [sashanoxon](https://t.me/sashanoxon)
+Any questions are welcome: [sashanoxon](https://t.me/mcvchat)
