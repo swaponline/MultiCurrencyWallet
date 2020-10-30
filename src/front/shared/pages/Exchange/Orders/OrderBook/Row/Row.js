@@ -193,8 +193,7 @@ export default class Row extends Component {
       && balance < checkAmount
     ) balanceIsOk = false
 
-    // @ToDo - balance allways ok - for tests
-    balanceIsOk = true
+
     if (!balanceIsOk) {
       const alertMessage = (
         <Fragment>
@@ -339,8 +338,7 @@ export default class Row extends Component {
     const buyCurrencyFee = estimatedFeeValues[buyCurrency.toLowerCase()]
     const costs = BigNumber(buyAmount).plus(buyCurrencyFee)
 
-    // @ToDo - for tests - allways enabled
-    const isSwapButtonEnabled = true // BigNumber(balance).isGreaterThanOrEqualTo(costs)
+    const isSwapButtonEnabled = BigNumber(balance).isGreaterThanOrEqualTo(costs)
 
 
     let sellCurrencyOut,

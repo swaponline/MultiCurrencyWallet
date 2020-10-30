@@ -66,7 +66,7 @@ class SwapRoom extends ServiceInterface {
 
     const defaultRoomName = this.app.isMainNet()
       ? 'swap.online'
-      : 'feo.pw' //testnet.swap.online'
+      : 'testnet.swap.online'
 
     this.roomName = this._config.roomName || defaultRoomName
 

@@ -46,14 +46,9 @@ class Swap {
       participantPeer: this.participant.peer,
     })
 
-    console.log('Swap - app swaps')
-    console.log(data.buyCurrency.toUpperCase(), data.sellCurrency.toUpperCase())
-    console.log(this.app.swaps)
     this.ownerSwap        = this.app.swaps[data.buyCurrency.toUpperCase()]
     this.participantSwap  = this.app.swaps[data.sellCurrency.toUpperCase()]
 
-    console.log('after', this.ownerSwap)
-    console.log('after', this.participantSwap)
     const Flow = this.app.flows[`${data.sellCurrency.toUpperCase()}2${data.buyCurrency.toUpperCase()}`]
 
     if (!Flow) {

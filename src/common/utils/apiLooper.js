@@ -170,7 +170,6 @@ const apiLooper = (method, api, endpoint, options) => {
                 const swithToNextServer = reportErrors(
                   answer,
                   (resolveResult) => {
-                    console.log('resolve own result')
                     skipDefResolve = true
                     resolve(resolveResult)
                   },
@@ -179,7 +178,6 @@ const apiLooper = (method, api, endpoint, options) => {
                   }
                 )
                 if (!swithToNextServer) {
-                  console.log('resolve answer')
                   if (!skipDefResolve) resolve(answer)
                   return
                 }

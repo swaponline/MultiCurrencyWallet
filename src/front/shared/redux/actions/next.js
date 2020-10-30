@@ -92,7 +92,7 @@ const auth = (privateKey) => {
     pubkey: account.publicKey,
     network: next.network,
   })
-  console.log('front next auth', address)
+
   const { publicKey } = account
 
   return {
@@ -281,10 +281,8 @@ const getBalance = () => {
 }
 
 const fetchBalance = (address) => {
-  console.log('>>>fetchBalance')
   return apiLooper.get('nextExplorer', `/address/${address}`, {
     checkStatus: (answer) => {
-      console.log('>>>fetchBalance - status', answer)
       try {
         if (answer && answer.balance !== undefined) return true
       } catch (e) { /* */ }
@@ -327,8 +325,7 @@ const fetchTxRaw = (txId, cacheResponse) =>
 const fetchTxInfo = (hash, cacheResponse) =>
   fetchTx(hash, cacheResponse)
     .then((txInfo_) => {
-      
-      console.log('txInfo', txInfo_)
+
       return { ...txInfo_ }
       const { vin, vout, ...rest } = txInfo_
       const senderAddress = vin ? vin[0].addr : null
@@ -587,7 +584,6 @@ const checkWithdraw = (scriptAddress) => {
     },
     query: 'next_balance',
   }).then((res) => {
-    console.log('res', res)
     if (res.txs.length > 1
       && res.txs[0].vout.length
     ) {
@@ -607,7 +603,6 @@ const checkWithdraw = (scriptAddress) => {
   })
 }
 
-window.nextCheckWithdraw = checkWithdraw
 
 export default {
   login,

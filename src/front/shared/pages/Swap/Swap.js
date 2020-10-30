@@ -260,7 +260,7 @@ export default class SwapComponent extends PureComponent {
       }, 5000)
 
       const checkingConfirmSuccess = setTimeout(() => {
-        //if (!this.checkIsConfirmed()) window.location.reload()
+        if (!this.checkIsConfirmed()) window.location.reload()
       }, 30000)
 
       this.checkingConfirmSuccessTimer = checkingConfirmSuccess

@@ -31,15 +31,13 @@ const login = (_privateKey, app) => {
     privateKey = app.env.bitcoin.ECPair.makeRandom({ network }).toWIF()
   }
 
-console.log('swap app next pk', privateKey)
-console.log('swap app next network', network)
   account = new app.env.bitcoin.ECPair.fromWIF(privateKey, network)
 
   const { address } = app.env.bitcoin.payments.p2pkh({
     pubkey: account.publicKey,
     network
   })
-  console.log('swap app next auth', address)
+
   const { publicKey } = account
 
   account.getPublicKey = () => publicKey.toString('hex')

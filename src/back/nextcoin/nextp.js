@@ -24,7 +24,7 @@ const nextCoinNode = {
   },*/
   mainnet: {
     port: 7078,
-    ip: '195.201.222.194'
+    ip: '127.0.0.1', //'195.201.222.194'
   },
 }
 
@@ -73,7 +73,6 @@ const sendRequest = ({ network, rpcMethod, rpcMethodParams = [], onSuccess, onEr
     .set('content-type', 'text/plain')
     .send(body)
     .then((req) => {
-      console.log('on request ready', req.text)
       const data = JSON.parse(req.text)
       // console.log('data =', data)
       if (data.error === null) {
@@ -84,7 +83,6 @@ const sendRequest = ({ network, rpcMethod, rpcMethodParams = [], onSuccess, onEr
       }
     })
     .catch((e) => {
-      console.log('Error', e)
       let resultError = e
       if (e.code === 'ECONNREFUSED') {
         resultError = new Error('Node is offline')
@@ -143,7 +141,6 @@ app.get('/:network/addr/:address', async (req, res) => {
 app.get('/:network/txs/:address', async (req, res) => {
   const { network, address } = req.params
 
-  console.log('network', network)
   sendRequest({
     network,
     rpcMethod: 'getaddresstxids',
