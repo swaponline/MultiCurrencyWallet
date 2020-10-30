@@ -293,6 +293,12 @@ const getDemoMoney = process.env.MAINNET ? () => { } : () => {
 const getInfoAboutCurrency = (currencyNames) =>
 
   new Promise((resolve, reject) => {
+
+    const hasCustomRate = (cur) => {
+      const dataobj = Object.keys(config.erc20).find(el => el.toLowerCase() === cur.toLowerCase())
+      return dataobj ? (config.erc20[dataobj] || { customEcxchangeRate: false }).customEcxchangeRate : false
+    }
+
     const url = 'https://noxon.wpmix.net/cursAll.php'
     reducers.user.setIsFetching({ isFetching: true })
 
@@ -321,10 +327,12 @@ const getInfoAboutCurrency = (currencyNames) =>
         if (currencyNames.includes(currencyInfoItem.symbol)) {
           if (currencyInfoItem.quote && currencyInfoItem.quote[fiat]) {
             const priceInBtc = currencyInfoItem.quote[fiat].price / btcPrice
+            const ownPrice = hasCustomRate(currencyInfoItem.symbol)
+
             const currencyInfo = {
               ...currencyInfoItem.quote[fiat],
-              price_fiat: currencyInfoItem.quote[fiat].price,
-              price_btc: priceInBtc,
+              price_fiat,
+              price_btc: (ownPrice) ? ownPrice : currencyInfoItem.quote[fiat].price,
             }
 
             switch (currencyInfoItem.symbol) {
