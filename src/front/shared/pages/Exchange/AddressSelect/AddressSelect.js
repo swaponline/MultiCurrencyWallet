@@ -39,7 +39,7 @@ const langLabels = defineMessages({
   },
   optionInternalDisabled: {
     id: 'Exchange_InternalAddressOptionDisabled',
-    defaultMessage: 'My wallet (not enough balance)',
+    defaultMessage: 'My wallet (insufficient balance)',
   },
   optionInternalCreate: {
     id: 'Exchange_InternalCreate',
@@ -331,10 +331,11 @@ export default class AddressSelect extends Component {
 
     const ticker = this.getTicker()
 
-    const { internalBalance } = actions.core.getWallet({
+    const { balance: internalBalance } = actions.core.getWallet({
       currency,
       addressType: AddressType.Internal
     })
+
     const isInternalOptionDisabled = role === AddressRole.Send && (!internalBalance || internalBalance === 0)
 
     const isMetamaskOption = ethToken.isEthOrEthToken({ name: currency })
