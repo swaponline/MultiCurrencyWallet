@@ -8211,14 +8211,14 @@
   },
   {
     "id": "offerMessageToUser",
-    "message": "U moet de hele tijd online zijn, anders zal uw bestelling niet zichtbaar zijn voor andere gebruikers",
+    "message": "U moet de hele tijd online zijn, anders zal uw order niet zichtbaar zijn voor andere gebruikers",
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.js"
     ]
   },
   {
     "id": "createOrderMessageForUser",
-    "message": "U moet de hele tijd online zijn, anders zal uw bestelling niet zichtbaar zijn voor andere gebruikers",
+    "message": "U moet de hele tijd online zijn, anders zal uw order niet zichtbaar zijn voor andere gebruikers",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.js"
     ]
