@@ -329,6 +329,7 @@ export default (tokenName) => {
               flow,
               swapFlow: flow.ethTokenSwap,
               app: this.app,
+              ethSwapWithdrawTransactionHash,
             })
 
             const { isEthWithdrawn } = flow.state
