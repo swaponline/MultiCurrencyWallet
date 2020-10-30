@@ -8219,14 +8219,14 @@
   },
   {
     "id": "offerMessageToUser",
-    "message": "Debe estar en línea todo el tiempo, de lo contrario su pedido no será visible para otros usuarios",
+    "message": "Debe estar en línea todo el tiempo, de lo contrario su order no será visible para otros usuarios",
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.js"
     ]
   },
   {
     "id": "createOrderMessageForUser",
-    "message": "Debe estar en línea todo el tiempo, de lo contrario su pedido no será visible para otros usuarios",
+    "message": "Debe estar en línea todo el tiempo, de lo contrario su order no será visible para otros usuarios",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.js"
     ]
