@@ -1,7 +1,6 @@
 ## Checklist
 
 - [x] I have read the [CONTRIBUTING](https://github.com/swaponline/swap.react/wiki/CONTRIBUTING) guide
-- [x] Styleguide check `npm run validate`
 - [x] Good naming, keep simple
 - [x] Tested desktop/mobile
 - [x] Tested bright/dark

@@ -26,7 +26,7 @@
     "core:build:umd:win": "webpack --config webpack.config.babel.js",
     "test": "",
     "eslint": "eslint --fix --cache ./shared --ext js",
-    "validate": "lint-diff",
+    "linter": "lint-diff",
     "start": "npm run dev",
     "dev": "npm run dev:testnet",
     "dev-widget": "npm run dev:testnet-widget",
@@ -71,7 +71,7 @@
   },
   "husky": {
     "hooks": {
-      "post-commit": "npm run common:test && npm run core:test"
+      "post-commit": "npm run common:test && npm run core:test && npm run linter"
     }
   },
   "devDependencies": {
