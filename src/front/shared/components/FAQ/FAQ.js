@@ -37,7 +37,7 @@ const FAQ = (props) => {
   const handleTabClick = (tabName) => {
     setOpenedTabs({ ...openedTabs, [tabName]: !openedTabs[tabName] })
     if (openedTabsCounter[tabName] === 0) {
-      feedback(`На главной странице нажали на таб: "${formatMessage({ id: tabsIdsDictionary[tabName] })}"`)
+      feedback.faq.opened(formatMessage({ id: tabsIdsDictionary[tabName] }))
     }
     setOpenedTabsCounter({ ...openedTabsCounter, [tabName]: ++openedTabsCounter[tabName] })
   }

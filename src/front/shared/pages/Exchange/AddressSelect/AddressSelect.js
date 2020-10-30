@@ -18,6 +18,7 @@ import Option from './Option/Option'
 import { links } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import actions from 'redux/actions'
+import feedback from 'shared/helpers/feedback'
 
 import QrReader from "components/QrReader"
 import iconInternal from 'components/Logo/images/base.svg'
@@ -38,7 +39,7 @@ const langLabels = defineMessages({
   },
   optionInternalDisabled: {
     id: 'Exchange_InternalAddressOptionDisabled',
-    defaultMessage: 'My wallet (not enough balance)',
+    defaultMessage: 'My wallet (insufficient balance)',
   },
   optionInternalCreate: {
     id: 'Exchange_InternalCreate',
@@ -205,7 +206,9 @@ export default class AddressSelect extends Component {
       intl: { locale },
     } = this.props
     const ticker = this.getTicker()
-    
+
+    feedback.exchangeForm.redirectedCreateWallet(ticker)
+
     const url = localisedUrl(locale, `${links.createWallet}/${ticker}`)
     history.push(url)
   }
@@ -292,7 +295,7 @@ export default class AddressSelect extends Component {
   }
 
   applyAddress(address) {
-    const { onChange } = this.props
+    const { onChange, currency } = this.props
     const { type, value } = address
 
     if (typeof onChange !== 'function') {
@@ -300,6 +303,7 @@ export default class AddressSelect extends Component {
     }
 
     onChange({
+      currency,
       type,
       value,
     })
@@ -327,10 +331,11 @@ export default class AddressSelect extends Component {
 
     const ticker = this.getTicker()
 
-    const { internalBalance } = actions.core.getWallet({
+    const { balance: internalBalance } = actions.core.getWallet({
       currency,
       addressType: AddressType.Internal
     })
+
     const isInternalOptionDisabled = role === AddressRole.Send && (!internalBalance || internalBalance === 0)
 
     const isMetamaskOption = ethToken.isEthOrEthToken({ name: currency })

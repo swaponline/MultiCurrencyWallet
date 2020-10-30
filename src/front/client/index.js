@@ -9,6 +9,7 @@ import { migrate } from 'helpers'
 import ErrorPageNoSSL from 'components/ErrorPageNoSSL/ErrorPageNoSSL'
 import config from 'app-config'
 import isLocalIP from 'is-local-ip'
+import feedback from 'shared/helpers/feedback'
 
 
 // eslint-disable-next-line camelcase
@@ -29,3 +30,5 @@ if (
     ReactDOM.render(<Root history={history} store={store} routes={routes} />, rootEl)
   }, 1000))
 }
+
+feedback.app.started()

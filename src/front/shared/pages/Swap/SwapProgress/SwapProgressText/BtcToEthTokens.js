@@ -33,7 +33,7 @@ export default class BtcToEthTokens extends Component {
         return (waitBtcConfirm) ?
           (
             <FormattedMessage
-              id="BitcoinBuyText37_btc_to_ethtoken"
+              id="BitcoinBuyText35_btc_to_ethtoken"
               defaultMessage="{buyCurrency} Owner received Bitcoin Script and Secret Hash. Waiting confirm TX and when he creates {buyCurrency} Contract"
               values={{ buyCurrency: `${this.props.swap.buyCurrency}` }} />
           ) : (

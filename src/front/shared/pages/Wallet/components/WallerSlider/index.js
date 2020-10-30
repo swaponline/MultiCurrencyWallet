@@ -190,7 +190,7 @@ export default class WallerSlider extends Component {
                     widthIcon="80"
                     background="129218"
                     descr={needSignMultisig}
-                    logDescr={`Click on btc ms notify block (banner)`}
+                    logDescr={`BTC multisig`}
                     firstFunc={this.handleGoToMultisigRequest}
                   />
                 </div>
@@ -204,7 +204,7 @@ export default class WallerSlider extends Component {
                     widthIcon="80"
                     background="6144e5"
                     descr={<FormattedMessage id="Banner_ConnectMetamask" defaultMessage="Подключить кошелек" />}
-                    logDescr={`Click on connect wallet`}
+                    logDescr={`Connect wallet`}
                     firstFunc={this.handleConnectMetamask}
                   />
                 </div>
@@ -218,7 +218,7 @@ export default class WallerSlider extends Component {
                     widthIcon="80"
                     background="6144e5"
                     descr={<FormattedMessage id="ShowMyMnemonic_copy" defaultMessage="Please backup your wallet" />}
-                    logDescr={`Click on save mnemonic notify block (banner)`}
+                    logDescr={`Save mnemonic`}
                     firstFunc={mnemonicDeleted ? this.handleShowKeys : this.handleShowMnemonic}
                   />
                 </div>

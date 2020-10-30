@@ -24,6 +24,7 @@ import { isMobile } from 'react-device-detect'
 import CopyToClipboard from 'react-copy-to-clipboard'
 
 import links from 'helpers/links'
+import feedback from 'shared/helpers/feedback'
 
 
 const langPrefix = `SaveMnemonicModal`
@@ -158,6 +159,7 @@ export default class SaveMnemonicModal extends React.Component {
   }
 
   handleFinish = () => {
+    feedback.backup.finished()
     this.handleClose()
   }
 
@@ -288,7 +290,10 @@ export default class SaveMnemonicModal extends React.Component {
                 }}/>
               </p>
               <div styleName="buttonsHolder">
-                <Button blue onClick={() => { this.setState({ step: `show` }) }}>
+                <Button blue onClick={() => {
+                  feedback.backup.started()
+                  this.setState({ step: `show` })
+                }}>
                   <FormattedMessage {...langLabels.beginContinue} />
                 </Button>
                 <Button blue onClick={this.handleClose}>

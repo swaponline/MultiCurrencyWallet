@@ -33,6 +33,7 @@ import { ThemeSwitcher } from "./ThemeSwitcher"
 
 // Incoming swap requests and tooltips (revert)
 import UserTooltip from "components/Header/User/UserTooltip/UserTooltip"
+import feedback from 'shared/helpers/feedback'
 
 
 const isWidgetBuild = config && config.isWidget
@@ -366,7 +367,9 @@ export default class Header extends Component {
 
   handleSetDark = () => {
     this.setState(() => ({ themeSwapAnimation: true }))
-    if (localStorage.getItem(constants.localStorage.isDark)) {
+    const wasDark = localStorage.getItem(constants.localStorage.isDark)
+    feedback.theme.switched(wasDark ? 'bright' : 'dark')
+    if (wasDark) {
       localStorage.removeItem(constants.localStorage.isDark);
     } else {
       localStorage.setItem(constants.localStorage.isDark, true);

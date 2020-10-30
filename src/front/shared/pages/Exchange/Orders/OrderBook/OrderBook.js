@@ -28,6 +28,7 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
 import config from 'app-config'
 import { links } from 'helpers'
+import feedback from 'shared/helpers/feedback'
 
 
 const filterMyOrders = (orders, peer) => orders
@@ -91,6 +92,7 @@ export default class Orders extends Component {
   removeOrder = (orderId) => {
     actions.modals.open(constants.modals.Confirm, {
       onAccept: () => {
+        feedback.offers.deleted()
         actions.core.deletedPartialCurrency(orderId)
         actions.core.removeOrder(orderId)
         actions.core.updateCore()

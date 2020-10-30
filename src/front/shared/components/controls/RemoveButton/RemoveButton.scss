@@ -1,18 +1,38 @@
 .removeButton {
+  position: relative;
   width: 25px;
   height: 25px;
-  background:$alternate url('./images/delete.svg') 50% 50% no-repeat;
-  background-size: 12px;
+  background: $alternate;
   cursor: pointer;
   @include inline-block;
   opacity: 0.5;
   border-radius: 50%;
-  line-height: 36px;
   border: none;
   text-align: center;
+  transition: .1s;
 
   &:hover {
     opacity: 1;
+  }
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: .1rem;
+    height: 65%;
+    border-radius: 4px;
+    background-color: $color-f-brightest;
+  }
+
+  &::before {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+
+  &::after {
+    transform: translate(-50%, -50%) rotate(45deg);
   }
 }
 

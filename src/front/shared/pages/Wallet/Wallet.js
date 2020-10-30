@@ -31,6 +31,7 @@ import { BigNumber } from 'bignumber.js'
 import metamask from 'helpers/metamask'
 
 import wpLogoutModal from 'helpers/wpLogoutModal'
+import feedback from 'shared/helpers/feedback'
 
 
 
@@ -311,6 +312,7 @@ export default class Wallet extends Component {
   }
 
   goToСreateWallet = () => {
+    feedback.wallet.pressedAddCurrency()
     const {
       history,
       intl: { locale },
