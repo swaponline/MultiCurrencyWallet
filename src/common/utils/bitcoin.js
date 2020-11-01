@@ -233,11 +233,6 @@ const broadcastTx = (txRaw, apiBitpay, apiBlocyper, onBroadcastError) => {
               reject('Conflict')
               return false
             }
-            console.log('----')
-            console.log(err.res)
-            console.log('----')
-            console.log(err.res.res)
-            console.log('Blocyper broadcastTx error', error)
             return true
           },
           inQuery: {

@@ -286,6 +286,7 @@ class ETH2NEXT extends Flow {
             flow,
             swapFlow: flow.ethSwap,
             app: this.app,
+            ethSwapWithdrawTransactionHash,
           })
 
           const { isEthWithdrawn } = flow.state
