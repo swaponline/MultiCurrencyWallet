@@ -50,7 +50,6 @@ export default class BtcToEthToken extends Component {
       destinationBuyAddress: (this.swap.destinationBuyAddress) ? this.swap.destinationBuyAddress : SwapApp.shared().services.auth.accounts.eth.address,
     }
 
-    this.confirmAddressTimer = null
     this.ParticipantTimer = null
 
   }
@@ -65,13 +64,6 @@ export default class BtcToEthToken extends Component {
 
   componentDidMount() {
     const { swap, flow: { step, isParticipantSigned } } = this.state
-    this.confirmAddressTimer = setInterval(() => {
-      if (this.state.flow.step === 1) {
-        this.confirmAddress()
-      } else {
-        clearInterval(this.confirmAddressTimer)
-      }
-    }, 3000)
 
     this.ParticipantTimer = setInterval(() => {
       if (this.state.flow.isParticipantSigned && this.state.destinationBuyAddress) {
@@ -107,10 +99,6 @@ export default class BtcToEthToken extends Component {
     })
   }
 
-  confirmAddress = () => {
-    this.swap.setDestinationBuyAddress(this.state.destinationBuyAddress)
-    this.setState({ destinationAddressTimer : false })
-  }
   toggleBitcoinScript = () => {
     this.setState({
       isShowingBitcoinScript: !this.state.isShowingBitcoinScript,

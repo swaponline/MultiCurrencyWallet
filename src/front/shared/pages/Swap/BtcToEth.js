@@ -95,11 +95,6 @@ export default class BtcToEth extends Component {
 
   }
 
-  confirmAddress = () => {
-    this.swap.setDestinationBuyAddress(this.state.destinationBuyAddress)
-    this.setState({ destinationAddressTimer : false })
-  }
-
   submitSecret = () => {
     const { secret } = this.state
     this.swap.flow.submitSecret(secret)
