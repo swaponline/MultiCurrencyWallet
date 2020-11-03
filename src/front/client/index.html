@@ -515,6 +515,11 @@
             Skip
           </button>
         </div>
+        <div class="starter-modal__link-container">
+          <button id="starter-modal__link-restore-wallet" class="starter-modal__link starter-modal__link-restore-wallet">
+            Restrore from 12 words seed
+          </button>
+        </div>
       </div>
     </section>
 
@@ -801,14 +806,11 @@
       </script>
 
       <script>
-        const btnCreateWallet = document.querySelector(
-          '.starter-modal__btn_create-wallet'
-        );
-        const btnConnectWallet = document.querySelector(
-          '.starter-modal__btn_connect-wallet'
-        );
+        const btnCreateWallet = document.querySelector('.starter-modal__btn_create-wallet');
+        const btnConnectWallet = document.querySelector('.starter-modal__btn_connect-wallet');
         const btnSkip = document.querySelector('.starter-modal__btn_skip');
-
+        const btnRestoryWallet = document.getElementById('starter-modal__link-restore-wallet')
+        
         // Create wallet
         btnCreateWallet.addEventListener('click', function () {
           redirectionTo('#/createWallet');
@@ -818,6 +820,11 @@
         btnConnectWallet.addEventListener('click', function () {
           redirectionTo('#/connectWallet');
         });
+
+        // Restore wallet
+        btnRestoryWallet.addEventListener('click', () => {
+          redirectionTo('#/createWallet')
+        })
 
         function redirectionTo(urlPath) {
           document.location.href = urlPath;

@@ -330,6 +330,9 @@ const CreateWallet = (props) => {
     goHome()
   }
 
+  const starterModalRestoreWallet = document.getElementById('starter-modal__link-restore-wallet')
+  starterModalRestoreWallet.addEventListener('click', handleRestoreMnemonic)
+
   return (
     <div styleName={`wrapper ${isDark ? '--dark' : ''}`}>
       {
