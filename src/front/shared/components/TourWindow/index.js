@@ -28,7 +28,7 @@ const Tooltip = (props) => {
       {step.content && <div styleName="TooltipContent">{step.content}</div>}
       <div styleName="TooltipFooter">
         {!isLastStep && (
-          <button {...skipProps} onClick={click} spacer>
+          <button {...skipProps} onClick={click}>
             <FormattedMessage id="skip" defaultMessage="Пропустить" />
           </button>
         )}

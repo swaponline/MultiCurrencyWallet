@@ -91,7 +91,7 @@ class Transaction extends Component {
     }
   }
 
-  async fetchTxInfo(currencyKey, txId) {
+  async fetchTxInfo(currencyKey, txId, ticker) {
     const {
       infoTx: cachedTxInfo,
     } = this.state
@@ -99,7 +99,11 @@ class Transaction extends Component {
     let infoTx = null
     let error = null
     try {
-      infoTx = await actions[currencyKey].fetchTxInfo(txId, 5 * 60 * 1000)
+      if (currencyKey === `token`) {
+        infoTx = await actions.token.fetchTokenTxInfo(ticker, txId, 5 * 60 * 1000)
+      } else {
+        infoTx = await actions[currencyKey].fetchTxInfo(txId, 5 * 60 * 1000)
+      }
     } catch (err) {
       console.error(err)
       error = err
@@ -163,7 +167,7 @@ class Transaction extends Component {
     }
 
     const currency = getCurrencyKey(ticker)
-    this.fetchTxInfo(currency, txId)
+    this.fetchTxInfo(currency, txId, ticker)
     this.fetchTxFinalBalances(getCurrencyKey(ticker, true), txId)
 
     if (typeof document !== 'undefined') {

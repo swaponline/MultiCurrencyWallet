@@ -79,6 +79,7 @@ const disconnect = () => new Promise(async (resolved, reject) => {
     web3Modal.clearCachedProvider()
     _initReduxState()
     resolved(true)
+    window.location.reload()
   } else {
     resolved(true)
   }
@@ -95,6 +96,7 @@ const connect = () => new Promise((resolved, reject) => {
           addWallet()
           setMetamask(getWeb3())
           resolved(true)
+          window.location.reload()
         } else {
           setDefaultProvider()
           resolved(false)

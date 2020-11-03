@@ -73,9 +73,7 @@ const createSwapApp = async () => {
       },
       storage: window.localStorage,
       sessionStorage: window.sessionStorage,
-      metamask: (metamask.isEnabled() && metamask.isConnected())
-        ? metamask
-        : false,
+      metamask,
     },
 
     // White list (Список адресов btc довереных продавцов)

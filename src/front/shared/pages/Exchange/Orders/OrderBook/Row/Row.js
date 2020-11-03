@@ -336,10 +336,10 @@ export default class Row extends Component {
 
     // todo: improve calculation much more
     const buyCurrencyFee = estimatedFeeValues[buyCurrency.toLowerCase()]
-    const costs = BigNumber(buyAmount).plus(buyCurrencyFee)
+
+    const costs = (buyCurrencyFee) ? BigNumber(buyAmount).plus(buyCurrencyFee) : buyAmount
 
     const isSwapButtonEnabled = BigNumber(balance).isGreaterThanOrEqualTo(costs)
-
 
     let sellCurrencyOut,
       sellAmountOut,
@@ -422,7 +422,7 @@ export default class Row extends Component {
         <td styleName="buttonsColumn">
           {peer === ownerPeer
             ?
-            <RemoveButton onClick={() => removeOrder(id)} />
+            <RemoveButton className="removeButton" onClick={() => removeOrder(id)} />
             :
             <Fragment>
               {
@@ -501,7 +501,7 @@ export default class Row extends Component {
             <div styleName="tdContainer-3">
               {
                 peer === ownerPeer ? (
-                  <RemoveButton onClick={() => removeOrder(id)} />
+                  <RemoveButton className="removeButton" onClick={() => removeOrder(id)} />
                 ) : (
                   <Fragment>
                     {

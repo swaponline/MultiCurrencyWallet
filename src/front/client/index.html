@@ -43,21 +43,13 @@
         --alternate: #e91db4;
         --alternate-hover:  #ff1fc5;
       }
-      
-      #WEB3_CONNECT_MODAL_ID {
-        position: relative;
-        z-index: 1000000;
-      }
+
       body {
         background-color: #f7f7f7;
       }
 
       .overflowY-default {
         overflow: visible;
-      }
-
-      .darkTheme {
-        background-color: #222427;
       }
 
       .overflowY-hidden {
@@ -97,9 +89,9 @@
         z-index: 1000;
       }
 
-      .dark {
+      .darkTheme {
         background-color: #222427;
-        color: white;
+        color: #fff;
       }
 
       .loader {
@@ -167,11 +159,11 @@
         bottom: 0;
         overflow: auto;
         background-color: #fff;
-        color: #6144e5;
+        color: var(--primary);
       }
 
       .starter-modal__container-content {
-        padding: 6vh 0 1.4em;
+        padding: 4vh 0 1.4em;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -179,14 +171,14 @@
       }
 
       .starter-modal__title {
-        font-size: 1.7em;
-        margin: 0 0 .7em;
+        font-size: 1.6em;
+        margin: 0 0 0.7em;
         font-weight: 700;
         text-align: center;
       }
 
       .starter-modal__description {
-        margin-bottom: .6em;
+        margin-bottom: 0.5em;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -194,53 +186,53 @@
       }
 
       .starter-modal__svg {
-        width: 20em;
-        height: 15em;
+        width: 18em;
+        height: 13em;
       }
 
       .starter-modal__description .text {
         max-width: 22em;
         margin-top: 0;
         padding: 0 0.8em;
-        font-size: 1.2em;
+        font-size: 1.1em;
         text-align: center;
       }
 
       .starter-modal__btn-container {
         max-width: 30em;
         width: 100%;
-        padding: 0 .3em;
+        padding: 0 0.2em;
         display: flex;
       }
 
       .starter-modal__btn {
         cursor: pointer;
         flex: 1;
-        margin: 0.3em;
-        padding: 0.8em 1.4em;
+        margin: 0.2em;
+        padding: 0.7em 1.4em;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        border: .1em solid #6144e5;
+        border: 0.1em solid var(--primary);
         border-radius: 0.2em;
         white-space: nowrap;
         letter-spacing: inherit;
         font-family: inherit;
         font-weight: 600;
         font-size: 1.1em;
-        background-color: #6144e5;
+        background-color: var(--primary);
         color: #fff;
         transition: 0.15s;
       }
 
       .starter-modal__btn_skip {
         background-color: transparent;
-        color: #6144e5;
+        color: var(--primary);
       }
 
       .starter-modal__btn:hover {
-        background-color: #9785ed;
-        border-color: #9785ed;
+        background-color: var(--primary-hover);
+        border-color: var(--primary-hover);
       }
 
       .starter-modal__btn_skip:hover {
@@ -253,10 +245,22 @@
         margin-right: 0.5em;
       }
 
+      .starter-modal__link-container {
+        margin-top: 2vh;
+        font-family: 'Manrope-Bold';
+        color: var(--primary);
+      }
+
+      .starter-modal__link {
+        padding: 0;
+        font-size: 1.2em;
+        text-decoration: underline;
+      }
+
       @media (max-width: 768px) {
         .starter-modal__container-content {
-          padding-top: 4vh;
-          font-size: 1.1em;
+          padding-top: 3vh;
+          font-size: 1.14em;
         }
       }
 
@@ -266,7 +270,7 @@
         }
 
         .starter-modal__title {
-          font-size: 1.7em;
+          font-size: 1.5em;
         }
 
         .starter-modal__svg {
@@ -275,12 +279,20 @@
         }
 
         .starter-modal__description .text {
-          font-size: 1.1em;
+          font-size: 1.05em;
+        }
+
+        .starter-modal__btn-container {
+          width: 84%;
         }
 
         .starter-modal__btn {
-          padding: 1em 2em;
-          font-size: 3.1vw;
+          padding: 1em 1.6em;
+          font-size: 2.8vw;
+        }
+
+        .starter-modal__link {
+          font-size: 1em;
         }
       }
 
@@ -295,11 +307,15 @@
         }
 
         .starter-modal__description .text {
-          font-size: 1em;
+          font-size: 0.9em;
+        }
+
+        .starter-modal__btn-container {
+          width: 90%;
         }
 
         .starter-modal__btn {
-          padding: 1.4em 2em;
+          padding: 1em 1.6em;
         }
       }
 
@@ -312,12 +328,7 @@
           width: 13em;
           height: 7em;
         }
-
-        .starter-modal__btn {
-          padding: 1.4em 2em;
-        }
       }
-
 
       @media (max-width: 320px) {
         .starter-modal__title {
@@ -325,31 +336,35 @@
         }
 
         .starter-modal__svg {
-          width: 11.5em;
-          height: 6.5em;
+          width: 11em;
+          height: 6em;
         }
 
         .starter-modal__description .text {
-          font-size: .8em;
+          font-size: 0.8em;
+        }
+
+        .starter-modal__btn {
+          font-size: 3.6vw;
+        }
+
+        .starter-modal__link {
+          font-size: 3.9vw;
         }
       }
 
       @media (max-width: 280px) {
         .starter-modal__title {
-          font-size: 1.4em;
-        }
-
-        .starter-modal__svg {
-          width: 14em;
-          height: 8em;
+          font-size: 1.5em;
+          margin-bottom: 0.8em;
         }
 
         .starter-modal__description .text {
-          font-size: .9em;
+          font-size: 0.95em;
         }
 
-        .starter-modal__btn {
-          font-size: 3.7vw;
+        .starter-modal__description:last-of-type {
+          margin-bottom: 1.4em;
         }
       }
 
@@ -523,6 +538,11 @@
             Skip
           </button>
         </div>
+        <div class="starter-modal__link-container">
+          <button id="starter-modal__link-restore-wallet" class="starter-modal__link starter-modal__link-restore-wallet">
+            Restrore from 12 words seed
+          </button>
+        </div>
       </div>
     </section>
 
@@ -557,35 +577,33 @@
         <div id="usersInform" class="usersInform"></div>
       </div>
       <script>
-        var localStorageIsOk = true;
+        let localStorageIsOk = true;
         try {
-          var testLocalStorage = window.localStorage;
+          const testLocalStorage = window.localStorage;
         } catch (e) {
           localStorageIsOk = false;
-          document.getElementById('onFailLocalStorageLink').href =
-            window.location.href;
-          document
-            .getElementById('onFailLocalStorageMessage')
-            .classList.remove('d-none');
-          var sendErrorFeedback = function () {
-            var msg = 'localStorage error: agent(' + navigator.userAgent + ')';
+          document.getElementById('onFailLocalStorageLink').href = window.location.href;
+          document.getElementById('onFailLocalStorageMessage').classList.remove('d-none');
+
+          const sendErrorFeedback = function () {
+            let msg = 'localStorage error: agent(' + navigator.userAgent + ')';
             msg += ', location(' + window.location.href + ')';
 
-            var url =
-              'https://noxon.wpmix.net/counter.php?msg=' + encodeURI(msg);
+            let url = 'https://noxon.wpmix.net/counter.php?msg=' + encodeURI(msg);
 
             window.jQuery.ajax({
               type: 'POST',
               url: url,
             });
           };
+
           if (!window.jQuery) {
             // inject jQuery for send request to counter for feedback
-            var jsScriptTag = document.createElement('SCRIPT');
+            let jsScriptTag = document.createElement('SCRIPT');
             jsScriptTag.src = 'https://code.jquery.com/jquery-3.5.1.min.js';
             console.log('jsScriptTag', jsScriptTag);
             document.getElementsByTagName('BODY')[0].appendChild(jsScriptTag);
-            var waitJQLoad = function (onLoaded) {
+            let waitJQLoad = function (onLoaded) {
               if (window.jQuery) {
                 onLoaded();
               } else {
@@ -600,24 +618,25 @@
           }
         }
 
-        function setCookie(name, value, options) {
-          options = options || {};
-          var expires = options.expires;
+        function setCookie(name, value, options = {}) {
+          let expires = options.expires;
+
           if (typeof expires == 'number' && expires) {
-            var d = new Date();
-            d.setTime(d.getTime() + expires * 1000);
-            expires = options.expires = d;
+            let date = new Date();
+            date.setTime(date.getTime() + expires * 1000);
+            expires = options.expires = date;
           }
           if (expires && expires.toUTCString) {
             options.expires = expires.toUTCString();
           }
 
           value = encodeURIComponent(value);
-          var updatedCookie = name + '=' + value;
+          let updatedCookie = name + '=' + value;
 
-          for (var propName in options) {
+          for (let propName in options) {
             updatedCookie += '; ' + propName;
-            var propValue = options[propName];
+            const propValue = options[propName];
+
             if (propValue !== true) {
               updatedCookie += '=' + propValue;
             }
@@ -625,16 +644,17 @@
           document.cookie = updatedCookie;
         }
 
-        function getCookie(cname) {
-          var name = cname + '=';
-          var ca = document.cookie.split(';');
-          for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') {
-              c = c.substring(1);
+        function getCookie(cookieName) {
+          const name = cookieName + '=';
+          const parametersArr = document.cookie.split(';');
+
+          for (let i = 0; i < parametersArr.length; i++) {
+            let parameter = parametersArr[i];
+            while (parameter.charAt(0) == ' ') {
+              parameter = parameter.substring(1);
             }
-            if (c.indexOf(name) == 0) {
-              return c.substring(name.length, c.length);
+            if (parameter.indexOf(name) == 0) {
+              return parameter.substring(name.length, parameter.length);
             }
           }
           return '';
@@ -643,13 +663,12 @@
         const wrapper = document.getElementById('wrapper_element');
 
         if (window.localStorage.getItem('isDark')) {
-          wrapper.classList.add('dark');
+          wrapper.classList.add('darkTheme');
         } else {
-          wrapper.classList.remove('dark');
+          wrapper.classList.remove('darkTheme');
         }
 
         // detect browser's lang
-
         const getNavigatorLanguage = () => {
           if (navigator.languages && navigator.languages.length) {
             return navigator.languages[0];
@@ -663,11 +682,11 @@
           }
         };
 
-        var lang = getCookie('mylang');
+        let lang = getCookie('mylang');
 
         if (!lang) {
-          var browserLang = getNavigatorLanguage();
-          lang = browserLang.indexOf('ru') > -1 ? 'ru' : 'en';
+          const browserLang = getNavigatorLanguage();
+          lang = browserLang.includes('ru') ? 'ru' : 'en'
           setCookie('mylang', lang);
         }
 
@@ -676,7 +695,7 @@
 
         (function () {
           // set tip
-          var tips = {
+          const tips = {
             beforeBackup: [
               {
                 en: "Don't forget to&nbsp;save your 12-word recovery phrase",
@@ -695,33 +714,23 @@
               },
             ],
           };
-
+          // Determine if the passphrase is saved
           if (locale === 'en' || locale === 'ru') {
-            var mnemonic =
-              window.localStorage.getItem('testnet:twentywords') ||
-              window.localStorage.getItem('mainnet:twentywords');
-            var isBackup = mnemonic === `-`;
-            var relevantTips = tips[!isBackup ? 'beforeBackup' : 'afterBackup'];
-            var currentTip =
-              relevantTips[Math.floor(Math.random() * relevantTips.length)][
-                locale
-              ];
-            var tipNode = document.getElementById('beforeJSTip');
+            const mnemonic = window.localStorage.getItem('testnet:twentywords') || window.localStorage.getItem('mainnet:twentywords');
+            const isBackup = mnemonic === `-`;
+            const relevantTips = tips[!isBackup ? 'beforeBackup' : 'afterBackup'];
+            const currentTip = relevantTips[Math.floor(Math.random() * relevantTips.length)][locale];
+            const tipNode = document.getElementById('beforeJSTip');
             tipNode.innerHTML = currentTip;
           } else {
             console.error('Unknown locale', locale);
           }
         })();
 
-        var information = document.getElementById('usersInform');
+        const information = document.getElementById('usersInform');
 
-        if (
-          (locationName === 'ru' ||
-            (locale === 'ru' && locationName !== 'en')) &&
-          localStorage.length === 0
-        ) {
-          information.innerText =
-            'Генерация приватных ключей для вашего мультивалютного кошелька прямо сейчас, \n то может занять одну минуту';
+        if ((locationName === 'ru' || (locale === 'ru' && locationName !== 'en')) && localStorage.length === 0) {
+          information.innerText = 'Генерация приватных ключей для вашего мультивалютного кошелька прямо сейчас, \n это может занять одну минуту'
         }
 
         if (localStorage.length === 0) {
@@ -730,8 +739,6 @@
               ? 'Please wait while the application is loading,\n it may take one minute...'
               : 'Пожалуйста подождите пока приложение запускается,\n это не займет больше минуты...';
         }
-
-        var styleKostilFirefox = document.createElement('style');
       </script>
       <script>
         window.prerenderReady = false;
@@ -740,8 +747,7 @@
         window.DefaultCountryCode = '+1';
         window.widgetName = 'own widget name';
 
-        window.buyViaCreditCardLink =
-          'https://itez.swaponline.io/?DEFAULT_FIAT={DEFAULT_FIAT}&locale={locale}&btcaddress={btcaddress}';
+        window.buyViaCreditCardLink = 'https://itez.swaponline.io/?DEFAULT_FIAT={DEFAULT_FIAT}&locale={locale}&btcaddress={btcaddress}';
       </script>
       <!-- /Loader before any JS -->
 
@@ -752,50 +758,47 @@
       <!-- Start Modal Scripts -->
       <script>
         /**
-         * Swap get Hour, Day and Month in seconds
+         * For setCookie() function
          */
-        var swapGetHourSec = 60 * 60,
-          swapGetDaySec = swapGetHourSec * 24,
-          swapGetWeekSec = swapGetDaySec * 7,
-          swapGetMonthSec = swapGetDaySec * 30,
-          swapGetYearSec = swapGetMonthSec * 12;
-        /** Swap Modal */
-        var swapDisalbeStarter = getCookie('swapDisalbeStarter');
-        // Open modal foo
+        const SEC_IN_HOUR = 60 * 60
+        const SEC_IN_DAY = SEC_IN_HOUR * 24
+        const SEC_IN_MONTH = SEC_IN_DAY * daysInThisMonth()
+        const SEC_IN_YEAR = SEC_IN_MONTH * 12
+
+        function daysInThisMonth() {
+          const date = new Date()
+          return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
+        }
+
+        // Open first screen
         function swapOpenStarterModal() {
           document.getElementById('starter-modal').classList.remove('d-none');
-          document.body.classList.add('overflow-hidden');
         }
-        // Close modal foo
+        // Close first screen
         function swapCloseStarterModal() {
           document.getElementById('starter-modal').classList.add('d-none');
-          document.body.classList.remove('overflow-hidden');
         }
-        // Is Home page
+        
         function swapIsHome() {
-          var swapLocationHash = window.location.hash;
+          const swapLocationHash = window.location.hash;
           if (swapLocationHash == '' || swapLocationHash == '#/') {
             return true;
           }
           return false;
         }
-        // Is Wallet Create
+       
         function swapIsWalletCreate() {
-          return false;
-          var swapLocalStorageWallet = localStorage.getItem('isWalletCreate');
-          if (swapLocalStorageWallet === null) {
-            return false;
-          }
-          return true;
+          const swapLocalStorageWallet = localStorage.getItem('isWalletCreate');
+          return swapLocalStorageWallet !== null
         }
+
         function hasMetamask() {
           return !(!window.ethereum || false);
         }
-        /*
-      if (!hasMetamask()) {
-        document.getElementById("connectMetamaskHolder").classList.add("d-none");
-      }
-	  */
+
+        // Swap Modal
+        const swapDisalbeStarter = getCookie('swapDisalbeStarter');
+
         // Open modal if cookie false
         if (
           swapDisalbeStarter != 'true' &&
@@ -809,14 +812,11 @@
       </script>
 
       <script>
-        const btnCreateWallet = document.querySelector(
-          '.starter-modal__btn_create-wallet'
-        );
-        const btnConnectWallet = document.querySelector(
-          '.starter-modal__btn_connect-wallet'
-        );
+        const btnCreateWallet = document.querySelector('.starter-modal__btn_create-wallet');
+        const btnConnectWallet = document.querySelector('.starter-modal__btn_connect-wallet');
         const btnSkip = document.querySelector('.starter-modal__btn_skip');
-
+        const btnRestoryWallet = document.getElementById('starter-modal__link-restore-wallet')
+        
         // Create wallet
         btnCreateWallet.addEventListener('click', function () {
           redirectionTo('#/createWallet');
@@ -827,11 +827,16 @@
           redirectionTo('#/connectWallet');
         });
 
+        // Restore wallet
+        btnRestoryWallet.addEventListener('click', () => {
+          redirectionTo('#/createWallet')
+        })
+
         function redirectionTo(urlPath) {
           document.location.href = urlPath;
           swapCloseStarterModal();
           setCookie('swapDisalbeStarter', 'true', {
-            expires: swapGetYearSec * 5,
+            expires: SEC_IN_YEAR * 5,
           });
         }
 
@@ -912,16 +917,9 @@
       integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
       crossorigin="anonymous"
     />
-    <!-- External packages -->
-    <script
-      type="text/javascript"
-      src="https://unpkg.com/react@16.10.2/umd/react.production.min.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="https://unpkg.com/react-dom@16.10.2/umd/react-dom.production.min.js"
-    ></script>
-    <!-- / -->
+    <script type="text/javascript" src="https://unpkg.com/react@16.10.2/umd/react.production.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/react-dom@16.10.2/umd/react-dom.production.min.js"></script>
+    
     <div id="portal"></div>
 
     <!-- Google Analytics -->
