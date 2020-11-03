@@ -159,11 +159,11 @@
         bottom: 0;
         overflow: auto;
         background-color: #fff;
-        color: #6144e5;
+        color: var(--primary);
       }
 
       .starter-modal__container-content {
-        padding: 6vh 0 1.4em;
+        padding: 4vh 0 1.4em;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -171,14 +171,14 @@
       }
 
       .starter-modal__title {
-        font-size: 1.7em;
-        margin: 0 0 .7em;
+        font-size: 1.6em;
+        margin: 0 0 0.7em;
         font-weight: 700;
         text-align: center;
       }
 
       .starter-modal__description {
-        margin-bottom: .6em;
+        margin-bottom: 0.5em;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -186,53 +186,53 @@
       }
 
       .starter-modal__svg {
-        width: 20em;
-        height: 15em;
+        width: 18em;
+        height: 13em;
       }
 
       .starter-modal__description .text {
         max-width: 22em;
         margin-top: 0;
         padding: 0 0.8em;
-        font-size: 1.2em;
+        font-size: 1.1em;
         text-align: center;
       }
 
       .starter-modal__btn-container {
         max-width: 30em;
         width: 100%;
-        padding: 0 .3em;
+        padding: 0 0.2em;
         display: flex;
       }
 
       .starter-modal__btn {
         cursor: pointer;
         flex: 1;
-        margin: 0.3em;
-        padding: 0.8em 1.4em;
+        margin: 0.2em;
+        padding: 0.7em 1.4em;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        border: .1em solid #6144e5;
+        border: 0.1em solid var(--primary);
         border-radius: 0.2em;
         white-space: nowrap;
         letter-spacing: inherit;
         font-family: inherit;
         font-weight: 600;
         font-size: 1.1em;
-        background-color: #6144e5;
+        background-color: var(--primary);
         color: #fff;
         transition: 0.15s;
       }
 
       .starter-modal__btn_skip {
         background-color: transparent;
-        color: #6144e5;
+        color: var(--primary);
       }
 
       .starter-modal__btn:hover {
-        background-color: #9785ed;
-        border-color: #9785ed;
+        background-color: var(--primary-hover);
+        border-color: var(--primary-hover);
       }
 
       .starter-modal__btn_skip:hover {
@@ -245,10 +245,22 @@
         margin-right: 0.5em;
       }
 
+      .starter-modal__link-container {
+        margin-top: 2vh;
+        font-family: 'Manrope-Bold';
+        color: var(--primary);
+      }
+
+      .starter-modal__link {
+        padding: 0;
+        font-size: 1.2em;
+        text-decoration: underline;
+      }
+
       @media (max-width: 768px) {
         .starter-modal__container-content {
-          padding-top: 4vh;
-          font-size: 1.1em;
+          padding-top: 3vh;
+          font-size: 1.14em;
         }
       }
 
@@ -258,7 +270,7 @@
         }
 
         .starter-modal__title {
-          font-size: 1.7em;
+          font-size: 1.5em;
         }
 
         .starter-modal__svg {
@@ -267,12 +279,20 @@
         }
 
         .starter-modal__description .text {
-          font-size: 1.1em;
+          font-size: 1.05em;
+        }
+
+        .starter-modal__btn-container {
+          width: 84%;
         }
 
         .starter-modal__btn {
-          padding: 1em 2em;
-          font-size: 3.1vw;
+          padding: 1em 1.6em;
+          font-size: 2.8vw;
+        }
+
+        .starter-modal__link {
+          font-size: 1em;
         }
       }
 
@@ -287,11 +307,15 @@
         }
 
         .starter-modal__description .text {
-          font-size: 1em;
+          font-size: 0.9em;
+        }
+
+        .starter-modal__btn-container {
+          width: 90%;
         }
 
         .starter-modal__btn {
-          padding: 1.4em 2em;
+          padding: 1em 1.6em;
         }
       }
 
@@ -304,12 +328,7 @@
           width: 13em;
           height: 7em;
         }
-
-        .starter-modal__btn {
-          padding: 1.4em 2em;
-        }
       }
-
 
       @media (max-width: 320px) {
         .starter-modal__title {
@@ -317,31 +336,35 @@
         }
 
         .starter-modal__svg {
-          width: 11.5em;
-          height: 6.5em;
+          width: 11em;
+          height: 6em;
         }
 
         .starter-modal__description .text {
-          font-size: .8em;
+          font-size: 0.8em;
+        }
+
+        .starter-modal__btn {
+          font-size: 3.6vw;
+        }
+
+        .starter-modal__link {
+          font-size: 3.9vw;
         }
       }
 
       @media (max-width: 280px) {
         .starter-modal__title {
-          font-size: 1.4em;
-        }
-
-        .starter-modal__svg {
-          width: 14em;
-          height: 8em;
+          font-size: 1.5em;
+          margin-bottom: 0.8em;
         }
 
         .starter-modal__description .text {
-          font-size: .9em;
+          font-size: 0.95em;
         }
 
-        .starter-modal__btn {
-          font-size: 3.7vw;
+        .starter-modal__description:last-of-type {
+          margin-bottom: 1.4em;
         }
       }
 
