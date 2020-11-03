@@ -65,13 +65,6 @@ export default class BtcLikeToEthToken extends Component {
   componentDidMount() {
     const { swap, flow: { step, isParticipantSigned } } = this.state
     this.changePaddingValue()
-    this.confirmAddressTimer = setInterval(() => {
-      if (this.state.flow.step === 1) {
-        this.confirmAddress()
-      } else {
-        clearInterval(this.confirmAddressTimer)
-      }
-    }, 3000)
 
     this.ParticipantTimer = setInterval(() => {
       if (this.state.flow.isParticipantSigned && this.state.destinationBuyAddress) {
@@ -146,11 +139,6 @@ export default class BtcLikeToEthToken extends Component {
     this.setState({
       flow: values,
     })
-  }
-
-  confirmAddress = () => {
-    this.swap.setDestinationBuyAddress(this.state.destinationBuyAddress)
-    this.setState({ destinationAddressTimer : false })
   }
 
   toggleScript = () => {
