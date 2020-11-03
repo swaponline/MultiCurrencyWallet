@@ -178,7 +178,6 @@ export default class Row extends Component {
     const isSellToken = helpers.ethToken.isEthToken( { name: sellCurrency } )
     const { balance: ethBalance }  = actions.core.getWallet({ currency: 'ETH' })
 
-    console.log('eth balance', ethBalance)
     let balanceIsOk = true
     if (
       isSellToken
