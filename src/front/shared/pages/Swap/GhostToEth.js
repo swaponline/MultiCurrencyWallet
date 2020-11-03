@@ -113,11 +113,6 @@ export default class GhostToEth extends Component {
     this.changePaddingValue()
   }
 
-  confirmAddress = () => {
-    this.swap.setDestinationBuyAddress(this.state.destinationBuyAddress)
-    this.setState({ destinationAddressTimer : false })
-  }
-
   submitSecret = () => {
     const { secret } = this.state
     this.swap.flow.submitSecret(secret)
