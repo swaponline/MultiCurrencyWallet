@@ -577,35 +577,33 @@
         <div id="usersInform" class="usersInform"></div>
       </div>
       <script>
-        var localStorageIsOk = true;
+        let localStorageIsOk = true;
         try {
-          var testLocalStorage = window.localStorage;
+          const testLocalStorage = window.localStorage;
         } catch (e) {
           localStorageIsOk = false;
-          document.getElementById('onFailLocalStorageLink').href =
-            window.location.href;
-          document
-            .getElementById('onFailLocalStorageMessage')
-            .classList.remove('d-none');
-          var sendErrorFeedback = function () {
-            var msg = 'localStorage error: agent(' + navigator.userAgent + ')';
+          document.getElementById('onFailLocalStorageLink').href = window.location.href;
+          document.getElementById('onFailLocalStorageMessage').classList.remove('d-none');
+
+          const sendErrorFeedback = function () {
+            let msg = 'localStorage error: agent(' + navigator.userAgent + ')';
             msg += ', location(' + window.location.href + ')';
 
-            var url =
-              'https://noxon.wpmix.net/counter.php?msg=' + encodeURI(msg);
+            let url = 'https://noxon.wpmix.net/counter.php?msg=' + encodeURI(msg);
 
             window.jQuery.ajax({
               type: 'POST',
               url: url,
             });
           };
+
           if (!window.jQuery) {
             // inject jQuery for send request to counter for feedback
-            var jsScriptTag = document.createElement('SCRIPT');
+            let jsScriptTag = document.createElement('SCRIPT');
             jsScriptTag.src = 'https://code.jquery.com/jquery-3.5.1.min.js';
             console.log('jsScriptTag', jsScriptTag);
             document.getElementsByTagName('BODY')[0].appendChild(jsScriptTag);
-            var waitJQLoad = function (onLoaded) {
+            let waitJQLoad = function (onLoaded) {
               if (window.jQuery) {
                 onLoaded();
               } else {
@@ -620,24 +618,25 @@
           }
         }
 
-        function setCookie(name, value, options) {
-          options = options || {};
-          var expires = options.expires;
+        function setCookie(name, value, options = {}) {
+          let expires = options.expires;
+
           if (typeof expires == 'number' && expires) {
-            var d = new Date();
-            d.setTime(d.getTime() + expires * 1000);
-            expires = options.expires = d;
+            let date = new Date();
+            date.setTime(date.getTime() + expires * 1000);
+            expires = options.expires = date;
           }
           if (expires && expires.toUTCString) {
             options.expires = expires.toUTCString();
           }
 
           value = encodeURIComponent(value);
-          var updatedCookie = name + '=' + value;
+          let updatedCookie = name + '=' + value;
 
-          for (var propName in options) {
+          for (let propName in options) {
             updatedCookie += '; ' + propName;
-            var propValue = options[propName];
+            const propValue = options[propName];
+
             if (propValue !== true) {
               updatedCookie += '=' + propValue;
             }
@@ -645,16 +644,17 @@
           document.cookie = updatedCookie;
         }
 
-        function getCookie(cname) {
-          var name = cname + '=';
-          var ca = document.cookie.split(';');
-          for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') {
-              c = c.substring(1);
+        function getCookie(cookieName) {
+          const name = cookieName + '=';
+          const parametersArr = document.cookie.split(';');
+
+          for (let i = 0; i < parametersArr.length; i++) {
+            let parameter = parametersArr[i];
+            while (parameter.charAt(0) == ' ') {
+              parameter = parameter.substring(1);
             }
-            if (c.indexOf(name) == 0) {
-              return c.substring(name.length, c.length);
+            if (parameter.indexOf(name) == 0) {
+              return parameter.substring(name.length, parameter.length);
             }
           }
           return '';
@@ -669,7 +669,6 @@
         }
 
         // detect browser's lang
-
         const getNavigatorLanguage = () => {
           if (navigator.languages && navigator.languages.length) {
             return navigator.languages[0];
@@ -683,11 +682,11 @@
           }
         };
 
-        var lang = getCookie('mylang');
+        let lang = getCookie('mylang');
 
         if (!lang) {
-          var browserLang = getNavigatorLanguage();
-          lang = browserLang.indexOf('ru') > -1 ? 'ru' : 'en';
+          const browserLang = getNavigatorLanguage();
+          lang = browserLang.includes('ru') ? 'ru' : 'en'
           setCookie('mylang', lang);
         }
 
@@ -696,7 +695,7 @@
 
         (function () {
           // set tip
-          var tips = {
+          const tips = {
             beforeBackup: [
               {
                 en: "Don't forget to&nbsp;save your 12-word recovery phrase",
@@ -715,33 +714,23 @@
               },
             ],
           };
-
+          // Determine if the passphrase is saved
           if (locale === 'en' || locale === 'ru') {
-            var mnemonic =
-              window.localStorage.getItem('testnet:twentywords') ||
-              window.localStorage.getItem('mainnet:twentywords');
-            var isBackup = mnemonic === `-`;
-            var relevantTips = tips[!isBackup ? 'beforeBackup' : 'afterBackup'];
-            var currentTip =
-              relevantTips[Math.floor(Math.random() * relevantTips.length)][
-                locale
-              ];
-            var tipNode = document.getElementById('beforeJSTip');
+            const mnemonic = window.localStorage.getItem('testnet:twentywords') || window.localStorage.getItem('mainnet:twentywords');
+            const isBackup = mnemonic === `-`;
+            const relevantTips = tips[!isBackup ? 'beforeBackup' : 'afterBackup'];
+            const currentTip = relevantTips[Math.floor(Math.random() * relevantTips.length)][locale];
+            const tipNode = document.getElementById('beforeJSTip');
             tipNode.innerHTML = currentTip;
           } else {
             console.error('Unknown locale', locale);
           }
         })();
 
-        var information = document.getElementById('usersInform');
+        const information = document.getElementById('usersInform');
 
-        if (
-          (locationName === 'ru' ||
-            (locale === 'ru' && locationName !== 'en')) &&
-          localStorage.length === 0
-        ) {
-          information.innerText =
-            'Генерация приватных ключей для вашего мультивалютного кошелька прямо сейчас, \n то может занять одну минуту';
+        if ((locationName === 'ru' || (locale === 'ru' && locationName !== 'en')) && localStorage.length === 0) {
+          information.innerText = 'Генерация приватных ключей для вашего мультивалютного кошелька прямо сейчас, \n это может занять одну минуту'
         }
 
         if (localStorage.length === 0) {
@@ -750,8 +739,6 @@
               ? 'Please wait while the application is loading,\n it may take one minute...'
               : 'Пожалуйста подождите пока приложение запускается,\n это не займет больше минуты...';
         }
-
-        var styleKostilFirefox = document.createElement('style');
       </script>
       <script>
         window.prerenderReady = false;
@@ -760,8 +747,7 @@
         window.DefaultCountryCode = '+1';
         window.widgetName = 'own widget name';
 
-        window.buyViaCreditCardLink =
-          'https://itez.swaponline.io/?DEFAULT_FIAT={DEFAULT_FIAT}&locale={locale}&btcaddress={btcaddress}';
+        window.buyViaCreditCardLink = 'https://itez.swaponline.io/?DEFAULT_FIAT={DEFAULT_FIAT}&locale={locale}&btcaddress={btcaddress}';
       </script>
       <!-- /Loader before any JS -->
 
@@ -772,50 +758,47 @@
       <!-- Start Modal Scripts -->
       <script>
         /**
-         * Swap get Hour, Day and Month in seconds
+         * For setCookie() function
          */
-        var swapGetHourSec = 60 * 60,
-          swapGetDaySec = swapGetHourSec * 24,
-          swapGetWeekSec = swapGetDaySec * 7,
-          swapGetMonthSec = swapGetDaySec * 30,
-          swapGetYearSec = swapGetMonthSec * 12;
-        /** Swap Modal */
-        var swapDisalbeStarter = getCookie('swapDisalbeStarter');
-        // Open modal foo
+        const SEC_IN_HOUR = 60 * 60
+        const SEC_IN_DAY = SEC_IN_HOUR * 24
+        const SEC_IN_MONTH = SEC_IN_DAY * daysInThisMonth()
+        const SEC_IN_YEAR = SEC_IN_MONTH * 12
+
+        function daysInThisMonth() {
+          const date = new Date()
+          return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
+        }
+
+        // Open first screen
         function swapOpenStarterModal() {
           document.getElementById('starter-modal').classList.remove('d-none');
-          document.body.classList.add('overflow-hidden');
         }
-        // Close modal foo
+        // Close first screen
         function swapCloseStarterModal() {
           document.getElementById('starter-modal').classList.add('d-none');
-          document.body.classList.remove('overflow-hidden');
         }
-        // Is Home page
+        
         function swapIsHome() {
-          var swapLocationHash = window.location.hash;
+          const swapLocationHash = window.location.hash;
           if (swapLocationHash == '' || swapLocationHash == '#/') {
             return true;
           }
           return false;
         }
-        // Is Wallet Create
+       
         function swapIsWalletCreate() {
-          return false;
-          var swapLocalStorageWallet = localStorage.getItem('isWalletCreate');
-          if (swapLocalStorageWallet === null) {
-            return false;
-          }
-          return true;
+          const swapLocalStorageWallet = localStorage.getItem('isWalletCreate');
+          return swapLocalStorageWallet !== null
         }
+
         function hasMetamask() {
           return !(!window.ethereum || false);
         }
-        /*
-      if (!hasMetamask()) {
-        document.getElementById("connectMetamaskHolder").classList.add("d-none");
-      }
-	  */
+
+        // Swap Modal
+        const swapDisalbeStarter = getCookie('swapDisalbeStarter');
+
         // Open modal if cookie false
         if (
           swapDisalbeStarter != 'true' &&
@@ -853,7 +836,7 @@
           document.location.href = urlPath;
           swapCloseStarterModal();
           setCookie('swapDisalbeStarter', 'true', {
-            expires: swapGetYearSec * 5,
+            expires: SEC_IN_YEAR * 5,
           });
         }
 
