@@ -43,21 +43,13 @@
         --alternate: #e91db4;
         --alternate-hover:  #ff1fc5;
       }
-      
-      #WEB3_CONNECT_MODAL_ID {
-        position: relative;
-        z-index: 1000000;
-      }
+
       body {
         background-color: #f7f7f7;
       }
 
       .overflowY-default {
         overflow: visible;
-      }
-
-      .darkTheme {
-        background-color: #222427;
       }
 
       .overflowY-hidden {
@@ -97,9 +89,9 @@
         z-index: 1000;
       }
 
-      .dark {
+      .darkTheme {
         background-color: #222427;
-        color: white;
+        color: #fff;
       }
 
       .loader {
@@ -643,9 +635,9 @@
         const wrapper = document.getElementById('wrapper_element');
 
         if (window.localStorage.getItem('isDark')) {
-          wrapper.classList.add('dark');
+          wrapper.classList.add('darkTheme');
         } else {
-          wrapper.classList.remove('dark');
+          wrapper.classList.remove('darkTheme');
         }
 
         // detect browser's lang
@@ -912,16 +904,6 @@
       integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
       crossorigin="anonymous"
     />
-    <!-- External packages -->
-    <script
-      type="text/javascript"
-      src="https://unpkg.com/react@16.10.2/umd/react.production.min.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="https://unpkg.com/react-dom@16.10.2/umd/react-dom.production.min.js"
-    ></script>
-    <!-- / -->
     <div id="portal"></div>
 
     <!-- Google Analytics -->
