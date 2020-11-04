@@ -10,18 +10,18 @@
 .modalDashboardConductor {
   position: relative;
   height: 100%;
-  background: #ffffff;
-  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08), 0px 1px 4px rgba(0, 0, 0, 0.08);
-  border-radius: 4px;
   margin-top: 40px;
+  border-radius: 4px;
+  box-shadow: $l-box-shadow;
+  background: $l-background-elements;
 }
 
 .dark {
-  background: #242425;
-  box-shadow: 0px 4px 16px rgba(243, 243, 243, 0.08), 0px 1px 4px rgba(240, 233, 233, 0.08);
+  box-shadow: $d-box-shadow;
+  background: $d-background-elements;
 
   pre {
-    color: #fff !important;
+    color: $d-color !important;
   }
 
   @media screen and (max-width: 480px) {

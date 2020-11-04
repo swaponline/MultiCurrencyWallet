@@ -1,23 +1,35 @@
 $primary: var(--primary);
-$secondary: var(--secondary);
 $primary-hover: var(--primary-hover);
-$primary-background: var(--primary-background);
 $alternate: var(--alternate);
 $alternate-hover: var(--alternate-hover);
 
 $color-brand                  : #512FD1;
 
-$color-bg-darkest             : #000;
-$color-bg-content             : #fff;
-
 
 // Typography and text colors
 
-$color-f-main                 : #000;
 $color-f-brightest            : #fff;
 $color-f-error                : #e32950;
 
 
-// Other colors
+// Light theme
 
-$color-metamask: #e4761b;
+$l-background-color: #f7f7f7;
+$l-color: #000;
+
+$l-brand-color: var(--primary);
+$l-brand-color-hover: var(--primary-hover);
+
+$l-background-elements: #fff;
+$l-box-shadow: 0px 4px 16px rgba(0,0,0,0.08), 0px 1px 4px rgba(0,0,0,0.08);
+
+// Dark theme
+
+$d-background-color: #222427;
+$d-color: #fff;
+// Менять ли цвет бренда в темной теме?
+$d-brand-color: #985eff;
+$l-brand-color-hover: #ac86ee;
+
+$d-background-elements: #242425;
+$d-box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.49),0px 1px 4px rgba(13, 13, 13, 0.06);
