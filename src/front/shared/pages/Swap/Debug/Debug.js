@@ -16,13 +16,24 @@ export default class Debug extends Component {
 
 
   render() {
-    const { flow: { state } } = this.props
+    const {
+      flow: {
+        state: {
+          // @ToDo - will be universaly after NextCoin integration
+          btcScriptValues,
+          ghostScriptValues,
+          nextScriptValues,
+        },
+      },
+    } = this.props
+
+    const scriptValues = btcScriptValues || ghostScriptValues || nextScriptValues
 
     return (
       <div styleName="debug">
         <pre styleName="information">
           <code>
-            <ShowBtcScript btcScriptValues={state.btcScriptValues} />
+            <ShowBtcScript btcScriptValues={scriptValues} />
           </code>
         </pre>
         <pre styleName="information">
