@@ -35,6 +35,8 @@ import AddressSelect from "./AddressSelect/AddressSelect"
 import { AddressType, AddressRole } from "domain/address"
 import NetworkStatus from 'components/NetworkStatus/NetworkStatus'
 import Orders from "./Orders/Orders"
+import { getPairFees } from 'helpers/getPairFees'
+
 
 
 const allowedCoins = [
@@ -214,6 +216,7 @@ export default class Exchange extends Component {
       }
     }
 
+    // @ToDo - not used yes - delete in future
     this.wallets = {};
     currenciesData.forEach((item) => {
       this.wallets[item.currency] = item.address;
@@ -221,6 +224,7 @@ export default class Exchange extends Component {
     tokensData.forEach((item) => {
       this.wallets[item.currency] = item.address;
     });
+    // -----------------------------
 
     this.state = {
       isToken: false,
@@ -246,6 +250,7 @@ export default class Exchange extends Component {
       estimatedFeeValues: {},
       isWaitForPeerAnswer: false,
       desclineOrders: [],
+      pairFees: false,
     };
 
     constants.coinsWithDynamicFee.forEach(
@@ -290,6 +295,14 @@ export default class Exchange extends Component {
     }, 60 * 1000)
 
     // actual fees
+    getPairFees(haveCurrency, getCurrency).then((pairFees) => {
+      console.log('getPairFees', pairFees)
+      this.setState({
+        pairFees,
+      })
+    })
+
+    /* @ToDo - not used - delete in future
     helpers.btc.estimateFeeValue({ method: 'swap' }).then((fee) => {
       this.setState({
         btcFee: BigNumber(fee).toNumber(),
@@ -300,6 +313,7 @@ export default class Exchange extends Component {
         ethFee: BigNumber(fee).toNumber(),
       })
     })
+    */
   }
 
   rmScrollAdvice = () => {
@@ -310,6 +324,7 @@ export default class Exchange extends Component {
   };
 
   setEstimatedFeeValues = async (estimatedFeeValues) => {
+    console.log('setEstimatedFeeValues', estimatedFeeValues)
     const fee = await helpers.estimateFeeValue.setEstimatedFeeValues({
       estimatedFeeValues,
     });
@@ -910,6 +925,12 @@ export default class Exchange extends Component {
         haveCurrency,
       }));
       this.changeUrl(haveCurrency, value);
+      getPairFees(haveCurrency, value).then((pairFees) => {
+        console.log('getPairFees', pairFees)
+        this.setState({
+          pairFees,
+        })
+      })
       actions.analytics.dataEvent({
         action: 'exchange-click-selector',
         label: `${haveCurrency}-to-${getCurrency}`,
@@ -937,6 +958,12 @@ export default class Exchange extends Component {
 
           this.checkPair();
           this.updateAllowedBalance();
+          getPairFees(value, getCurrency).then((pairFees) => {
+            console.log('getPairFees', pairFees)
+            this.setState({
+              pairFees,
+            })
+          })
         }
       );
     }
@@ -1060,6 +1087,10 @@ export default class Exchange extends Component {
   };
 
   doesComissionPreventThisOrder = () => {
+    return true
+    // @ToDo - eth commision and utxo commision
+    // Old version artefact
+    /*
     const {
       haveAmount,
       getAmount,
@@ -1079,6 +1110,7 @@ export default class Exchange extends Component {
       return false;
     }
     return true;
+    */
   };
 
   goDeclimeFaq = () => {
@@ -1151,8 +1183,7 @@ export default class Exchange extends Component {
       haveAmount,
       isNoAnyOrders,
       isFullLoadingComplite,
-      btcFee,
-      ethFee,
+      pairFees,
       redirectToSwap,
       isWaitForPeerAnswer,
       desclineOrders,
@@ -1179,19 +1210,17 @@ export default class Exchange extends Component {
 
 
     let fiatFeeCalculation = 0;
-    if (
-      exHaveRate && estimatedFeeValues[haveCurrency] &&
-      exGetRate && estimatedFeeValues[getCurrency]
-    ) {
+    if (exHaveRate && exGetRate && pairFees) {
       fiatFeeCalculation =
-        BigNumber(exHaveRate).times(estimatedFeeValues[haveCurrency])
+        BigNumber(exHaveRate).times(pairFees.have.fee)
         .plus(
-          BigNumber(exGetRate).times(estimatedFeeValues[getCurrency])
+          BigNumber(exGetRate).times(pairFees.get.fee)
         )
         .dp(2, BigNumber.ROUND_CEIL)
         .toNumber()
     }
 
+    // @ToDo - replace to getWallets
     const haveCurrencyData = currenciesData.find(
       (item) => item.currency === haveCurrency.toUpperCase()
     )
@@ -1506,11 +1535,11 @@ export default class Exchange extends Component {
                   />:
                 </span>
                 &nbsp;
-                {!(btcFee && ethFee) ?
+                {!(pairFees) ?
                   <span><InlineLoader /></span>
                   :
                   <span>
-                    {ethFee} ETH + {btcFee} BTC
+                    {pairFees.have.fee} {pairFees.have.coin} + {pairFees.get.fee} {pairFees.get.coin}
                     {fiatFeeCalculation > 0 &&
                       <span> &asymp; ${fiatFeeCalculation} </span>
                     }
