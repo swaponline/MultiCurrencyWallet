@@ -22,6 +22,8 @@ const Footer = (props) => {
 
   const isFooterDisabled = config.opts.ui.footerDisabled
 
+  const version = process.env.VERSION
+
   return (
     <footer
       className={cx({
@@ -34,6 +36,15 @@ const Footer = (props) => {
         <WidthContainer styleName="container">
           <SwitchLang {...props} />
           {!config.isWidget && <SocialMenu />}
+          <div styleName="version">
+            {version ?
+              <a href={`https://github.com/search?q=${version}&type=Commits`} target="_blank">
+                {version.substring(0, 6)}
+              </a>
+              :
+              <span>-</span>
+            }
+          </div>
         </WidthContainer>
       )}
     </footer>
