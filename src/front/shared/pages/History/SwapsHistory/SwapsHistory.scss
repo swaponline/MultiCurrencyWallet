@@ -1,6 +1,6 @@
 .swapsHistory {
-  background: #fff;
-  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08), 0px 1px 4px rgba(0, 0, 0, 0.08);
+  box-shadow: $l-box-shadow;
+  background: $l-background-elements;
   border-radius: 4px;
   padding: 25px;
   margin-top: 40px;
@@ -23,15 +23,15 @@
 }
 
 .swapsHistoryDark {
-  background: #242425;
-  box-shadow: 0px 4px 16px rgba(243, 243, 243, 0.08), 0px 1px 4px rgba(240, 233, 233, 0.08);
+  box-shadow: $d-box-shadow;
+  background: $d-background-elements;
 
   h3 {
-    color: white;
+    color: $d-color;
   }
 
   td {
-    color: white;
+    color: $d-color;
   }
 
 }
