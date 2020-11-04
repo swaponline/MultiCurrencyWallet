@@ -46,3 +46,20 @@ $information-footer-height: 44px;
   padding: 12px 0;
   flex-wrap: wrap;
 }
+
+.version {
+  font-size: 14px;
+  line-height: 1em;
+
+  > * {
+    font-size: 11px;
+  }
+
+  a {
+    color: $primary-hover;
+
+    &:hover {
+      color: $alternate;
+    }
+  }
+}

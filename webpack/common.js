@@ -1,3 +1,4 @@
+import child_process from 'child_process'
 import webpack from 'webpack'
 import ProgressBarPlugin from 'progress-bar-webpack-plugin'
 import WebappWebpackPlugin from 'webapp-webpack-plugin'
@@ -7,10 +8,8 @@ import config from 'app-config'
 import rulesMap from './rules'
 
 
-const rules = Object.keys(rulesMap)
-  .map((k) => rulesMap[k])
-  .map((rule) => Array.isArray(rule) ? rule : (rule.default || rule[config.env]))
-  .reduce((result, rule) => result.concat(rule), [])
+const versionBuffer = child_process.execSync('git rev-parse HEAD')
+const version = versionBuffer.toString('utf8')
 
 const globals = {
   'process.env': {
@@ -20,10 +19,17 @@ const globals = {
     'TESTNET': config.entry === 'testnet',
     'MAINNET': config.entry === 'mainnet',
     'EXTENSION': config.dir === 'chrome-extension/application',
+    'VERSION': JSON.stringify(version),
   },
   // TODO fix __CONFIG__ - remove it and check app-config/webpack to resolve in /client.js
   __CONFIG__: JSON.stringify(config),
 }
+
+
+const rules = Object.keys(rulesMap)
+  .map((k) => rulesMap[k])
+  .map((rule) => Array.isArray(rule) ? rule : (rule.default || rule[config.env]))
+  .reduce((result, rule) => result.concat(rule), [])
 
 const webpackConfig = {
 
