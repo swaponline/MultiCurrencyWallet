@@ -22,7 +22,7 @@ const Footer = (props) => {
 
   const isFooterDisabled = config.opts.ui.footerDisabled
 
-  const version = null
+  const version = process.env.VERSION
 
   return (
     <footer
