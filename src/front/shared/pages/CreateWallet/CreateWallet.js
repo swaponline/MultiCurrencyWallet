@@ -330,11 +330,17 @@ const CreateWallet = (props) => {
     goHome()
   }
 
-  // Link from index.html
-  const starterModalRestoreWallet = document.getElementById('starter-modal__link-restore-wallet')
-  if (starterModalRestoreWallet) {
-    starterModalRestoreWallet.addEventListener('click', handleRestoreMnemonic)
-  }
+  useEffect(() => {
+    // Link from index.html (first screen)
+    const starterModalRestoreWallet = document.getElementById('starter-modal__link-restore-wallet')
+    if (starterModalRestoreWallet) {
+      starterModalRestoreWallet.addEventListener('click', handleRestoreMnemonic)
+
+      return () => {
+        starterModalRestoreWallet.removeEventListener('click', handleRestoreMnemonic)
+      }
+    }
+  }, [])
 
   return (
     <div styleName={`wrapper ${isDark ? '--dark' : ''}`}>
