@@ -553,9 +553,7 @@
           <div id="loader" class="loader">
             <img id="loaderImg" />
           </div>
-          <div id="beforeJSTip" class="tips">
-            Don't forget to&nbsp;save your 12-word recovery phrase
-          </div>
+          <div id="beforeJSTip" class="tips">Loading...</div>
         </div>
         <div class="mb-4 show-on-fail-ls d-none" id="onFailLocalStorageMessage">
           <span
@@ -698,9 +696,8 @@
           const tips = {
             beforeBackup: [
               {
-                en: "Don't forget to&nbsp;save your 12-word recovery phrase",
-                ru:
-                  'Не забудьте сохранить вашу фразу восстановления (12&nbsp;слов)',
+                en: 'Loading...',
+                ru: 'Загрузка...',
               },
             ],
             afterBackup: [

@@ -1,6 +1,6 @@
 {
   "name": "swap.online",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "swaponline.io",
   "keywords": [],
   "private": true,
@@ -26,7 +26,6 @@
     "core:build:umd:win": "webpack --config webpack.config.babel.js",
     "test": "",
     "eslint": "eslint --fix --cache ./shared --ext js",
-    "validate": "lint-diff",
     "start": "npm run dev",
     "dev": "npm run dev:testnet",
     "dev-widget": "npm run dev:testnet-widget",
@@ -138,7 +137,6 @@
     "jest": "^26.5.3",
     "kraken-api": "^1.0.1",
     "libp2p-kad-dht": "^0.20.1",
-    "lint-diff": "^1.2.1",
     "lint-staged": "^10.4.0",
     "node-forge": "^0.10.0",
     "node-localstorage": "^1.3.1",

@@ -1,8 +1,8 @@
 ---
 name: Bug Template
-about: Bug Template. Every correct-formed issue gets +1 token bonus.
+about: Something looks broken
 title: ''
-labels: ''
+labels: 'bug'
 assignees: ''
 
 ---
@@ -25,6 +25,12 @@ assignees: ''
 - Mainnet or Testnet: 
 - Browser: 
 - OS: 
+
+## Your version
+
+- [ ] latest
+- [ ] not latest (please try to upgrade first)
+- [ ] not sure
 
 ## Does this affect atomic swap flow?
 

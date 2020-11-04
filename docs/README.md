@@ -10,11 +10,11 @@
 - 💡 Open-source, client-side
 - 📦 Embeddable into your site!
 
-Live version here: https://swaponline.github.io
+Live version here: https://swaponline.github.io (mirror https://swaponline.io)
 
 No coding skills? Use :package: [WordPress plugin with admin panel](https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064) :package: and installation service for \$100 (send [sashanoxon](https://t.me/sashanoxon) access to your server).
 
-Looking for investment opportunity? Read about [ERC20:SWAP token](https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/SWAPTOKEN.md)
+Looking for investment opportunity? Read about [ERC20:SWAP token](/docs/SWAPTOKEN.md)
 
 ### 1. Multi-currency wallet: your users can store Bitcoin and custom assets
 
@@ -45,199 +45,42 @@ Checkout this case: <a href="https://twitter.com/Atomic_Wallet" target="_blank">
 
 <a href="https://swaponline.github.io/#/usdt-wallet">USDT stablecoin wallet (payment system)</a>
 
-## Usage
 
-### Installation / how to start
+## Easy to install
 
-1. Fork this repository (Click "Fork" on top of this page)
-2. Clone repository
+- Install [WordPress plugin](https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064)
+- Or make your own build following the [installation guide](/docs/INSTALLATION.md)
 
-```
-git clone https://github.com/swaponline/MultiCurrencyWallet.git
-```
 
-3. Use Node 11
+## Customizable (images, colors, texts, etc..) for your project
 
-(For change Node version on Linux use [nvm](https://github.com/nvm-sh/nvm#installing-and-updating))
-(For Windows use [nvm for Windows](https://github.com/coreybutler/nvm-windows))
+- Using [WordPress plugin](https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064)? Сustomize right in the admin panel!
+- Using your own build? Follow the [customization guide](/docs/CUSTOMIZATION.md)
 
-```
-nvm alias default 11.15.0
-nvm use 11.15.0
-```
 
-4. Install modules
+## Open for integrations
 
-```
-cd MultiCurrencyWallet
-npm i
-```
+See the [list of our clients](/docs/CLIENTS.md).
 
-(Windows? Use [windows-build-tools](https://www.npmjs.com/package/windows-build-tools).)
-(Linux? Install `build-essential`, `g++`, `python` and `make`)
 
-5. Start dev mode
+## International
 
-```
-npm run start
-```
+Supported languages:
 
-The dev server is running! (http://localhost:9001)
+- 🇬🇧 EN
+- 🇷🇺 RU
+- 🇳🇱 NL
+- 🇪🇸 ES
 
-To access from other devices on the local network, specify your IP address:
+Work in progress to add more languages.
 
-```
-HOST=X.X.X.X npm run start
-```
 
-6. Build for prod
+## How to support the project?
 
-```
-npm run build:mainnet https://yourcoolsite.com/
-```
-
-(don't forget to add a slash in the end of url)
-
-### Build with your custom ERC20 token (among BTC, ETH)
-
-1. npm run build:mainnet-widget {erc20contract} {name} {decimals} {ticker}
-
-Example:
-
-```
-npm run build:mainnet-widget 0x4E12EB8e506Ccd1427F6b8F7faa3e88fB698EB28 jack 18 JACK full
-```
-
-2. upload to your domain (https://domain.com/build-mainnet-widget)
-3. open in browser
-
-Remember: you MUST be online and you can not process more than one exchange at the same time. Otherwise you can use our custodian service for 1% fee and \$50 setup (contact [sashanoxon](https://t.me/sashanoxon) for details).
-
-## How to customize (images, colors, etc..)
-
-### 1. Change logo
-
-- copy svg logos to `MultiCurrencyWallet/src/front/shared/components/Logo/images` folder
-- in `MultiCurrencyWallet/src/front/client/index.js` set up your url and image
-
-```
-export default {
-  colored: {
-    yourUrl: imageName,
-    localhost: base,
-    'swap.online': swapOnlineColored,
-  },
-  common: {
-    yourUrl: imageName,
-    'swap.online': swapOnline,
-  },
-}
-```
-
-(Way to index.html: `MultiCurrencyWallet/src/front/client/index.html`)
-
-- For change preloader go to `index.html` and change url to tour image
-
-```
-  <div id="loader" class="loader">
-      <img id="loaderImg" src="https://wiki.swap.online/assets/swap-logo.png" />
-  </div>
-```
-
-- change Cryptocurrency color `MultiCurrencyWallet/src/front/shared/components/ui/CurrencyIcon/images`
-- change icon to your (with the same name, e.x. "bitcoin.svg")
-- change Cryptocurrency icon `MultiCurrencyWallet/src/front/shared/pages/Exchange/CurrencySlider/images`
-
-### 2. Change links to social networks
-
-Set your own links in `MultiCurrencyWallet/src/front/shared/helpers/links.js`
-
-### 3. Change text
-
-To prevent any conflicts in future (when you will update your source from our branch)
-
-- find in source text like this:
-  `<FormattedMessage id="Row313" defaultMessage="Deposit" /> `
-
-- go to folder `MultiCurrencyWallet/src/front/shared/localisation`
-  open en.json
-  find string with the same id ("Row313")
-
-  ```
-    {
-      "id": "Row313",
-      "message": "Deposit",
-      "files": [
-        "shared/pages/Currency/Currency.js"
-      ]
-    },
-  ```
-
-- change text in `message` value
-
-### 4. Add your ERC20 token
-
-- go to `MultiCurrencyWallet/src/front/config/mainnet/erc20.js`
-- go to `MultiCurrencyWallet/src/core/swap.app/constants/COINS.js` and add token there too
-- go to `MultiCurrencyWallet/src/front/shared/redux/reducers/currencies.js` and add token there too
-
-### 5. Add token to "Create wallet" screen
-
-- go to `MultiCurrencyWallet/src/front/shared/redux/reducers/currencies.js` and change `addAssets: false,` to `true`
-
-### 6. Change project name in "too many tabs" screen
-
-0. go to `index.html`
-1. add / edit `window.widgetName` to your own
-
-### 7. Change title
-
-0. go to `index.html`
-1. add / edit `window.defaultWindowTitle` to your own
-
-### 8. Change logo link (default main wallet page)
-
-0. go to `index.html`
-1. add / edit `window.LOGO_REDIRECT_LINK` to your own
-
-### 9. Set custom exchange rate
-
-0. add `customEcxchangeRate` to `window.widgetERC20Tokens`
-1. add usd price for `window.widgetERC20Tokens`
-
-### 10. Add exit button to your widget
-
-in `index.html` edit `window.isUserRegisteredAndLoggedIn = false` to `true`
-
-### enable/disbale blockchains on domain
-
-add config named as your domain to `MultiCurrencyWallet/src/front/externalConfigs/swaponline.github.io.js`
-
-```
-window.buildOptions = {
-  showWalletBanners: true, // Allow to see banners
-  showHowItsWork: true, // Allow show block 'How its work' on exchange page
-  curEnabled: {
-    btc: true,
-    eth: true,
-    ghost: true,
-    next: true,
-  },
-}
-```
-
-Example: [swaponline.github.io.js](https://github.com/swaponline/MultiCurrencyWallet/blob/master/src/front/externalConfigs/swaponline.github.io.js#L43)
-
-## How to update your version (fork) to latest version
-
-0. Make backup and `git push` all your changes to your repository
-1. go here https://github.com/swaponline/MultiCurrencyWallet/compare?expand=1 , click <kbd>Compare across forks</kbd>
-2. select your repository in "base branch" (left)
-3. click "Create pull request" (enter any title)
-4. click "Merge pull request"
-
-If you have conflicts (if sources has been changed on your side) click "resolve conflicts".
+- Buy [SWAP token](/docs/SWAPTOKEN.md)
+- [Donate](/docs/DONATE.md)
+- _(the easiest)_ Star the project ⭐
 
 ---
 
-Any questions are welcome: [sashanoxon](https://t.me/mcvchat)
+Any questions [are welcome](https://t.me/mcvchat)

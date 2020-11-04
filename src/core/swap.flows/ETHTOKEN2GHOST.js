@@ -293,7 +293,7 @@ export default (tokenName) => {
 
                 flow.setState({
                   isFailedTransaction: true,
-                  isFailedTransactionError: message,
+                  isFailedTransactionError: error.message,
                 })
 
                 return null

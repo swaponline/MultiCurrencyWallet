@@ -251,7 +251,7 @@ class ETH2NEXT extends Flow {
               flow.setState({
                 canCreateEthTransaction: false,
                 isFailedTransaction: true,
-                isFailedTransactionError: message,
+                isFailedTransactionError: err.message,
               }, true)
 
               return null

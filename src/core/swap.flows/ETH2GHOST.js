@@ -252,7 +252,7 @@ class ETH2GHOST extends Flow {
               flow.setState({
                 canCreateEthTransaction: false,
                 isFailedTransaction: true,
-                isFailedTransactionError: message,
+                isFailedTransactionError: err.message,
               }, true)
 
               return null

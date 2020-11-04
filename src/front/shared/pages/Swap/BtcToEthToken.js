@@ -3,7 +3,6 @@ import { FormattedMessage } from 'react-intl'
 import config from 'app-config'
 
 
-
 export default class BtcToEthToken extends BtcLikeToEthToken {
   constructor(props) {
     console.log('BtcToEthToken')
