@@ -255,6 +255,7 @@ export default class Orders extends Component {
                 linkedOrderId={linkedOrderId}
                 pairFees={pairFees}
                 balances={balances}
+                checkSwapAllow={this.props.checkSwapAllow}
               />
             )}
             isLoading={buyOrders.length === 0 && !isPubSubLoaded}
@@ -296,6 +297,7 @@ export default class Orders extends Component {
                 linkedOrderId={linkedOrderId}
                 pairFees={pairFees}
                 balances={balances}
+                checkSwapAllow={this.props.checkSwapAllow}
               />
             )}
             isLoading={sellOrders.length === 0 && !isPubSubLoaded}

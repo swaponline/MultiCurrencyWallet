@@ -496,6 +496,123 @@ export default class Exchange extends Component {
     // actions.analytics.dataEvent('orderbook-click-createoffer-button')
   };
 
+  /* Refactoring
+   * Проверка возможности начать свап по указанной паре
+   * Проверяет балан, фи, если свап не возможен - показывает сообщение
+   */
+  checkSwapAllow = (checkParams) => {
+    const {
+      sellCurrency,
+      buyCurrency,
+      buyAmount,
+      balance,
+    } = checkParams
+
+    const {
+      pairFees,
+      balances,
+    } = this.state
+
+    console.log('pairFees', pairFees)
+    console.log('sellCurrency', sellCurrency)
+    const isSellToken = helpers.ethToken.isEthToken( { name: sellCurrency } )
+
+    let balanceIsOk = true
+    if (
+      isSellToken
+      && (
+        BigNumber(balance).isLessThan(buyAmount)
+        || BigNumber(balances.ETH).isLessThan(pairFees.byCoins.ETH.fee)
+      )
+    ) {
+      console.log('Balance fail 1')
+      balanceIsOk = false
+    }
+
+    // UTXO
+    if (pairFees.byCoins[sellCurrency.toUpperCase()]
+      && pairFees.byCoins[sellCurrency.toUpperCase()].isUTXO
+    ) {
+      if (
+        BigNumber(balance).isLessThan(
+          BigNumber(buyAmount).plus(pairFees.byCoins[sellCurrency.toUpperCase()].fee)
+        )
+      ) {
+        balanceIsOk = false
+      }
+    } else {
+      if (!isSellToken
+        && BigNumber(balance).isLessThan(buyAmount)
+      ) {
+        balanceIsOk = false
+      }
+    }
+
+    if (!balanceIsOk) {
+      const { address } = actions.core.getWallet({ currency: sellCurrency })
+      const {
+        sell: {
+          fee: sellFee,
+          coin: sellCoin,
+        },
+        buy: {
+          fee: buyFee,
+          coin: buyCoin,
+        },
+      } = pairFees
+
+      const alertMessage = (
+        <Fragment>
+          <FormattedMessage
+            id="AlertOrderNonEnoughtBalance"
+            defaultMessage="Please top up your balance before you start the swap."
+          />
+          <br />
+          {isSellToken && (
+            <FormattedMessage
+              id="Swap_NeedEthFee"
+              defaultMessage="На вашем балансе должно быть не менее {sellFee} {sellCoin} и {buyFee} {buyCoin} для оплаты коммисии майнера"
+              values={{
+                sellFee,
+                sellCoin,
+                buyFee,
+                buyCoin,
+              }}
+            />
+          )}
+          {!isSellToken && (
+            <FormattedMessage
+              id="Swap_NeedMoreAmount"
+              defaultMessage="На вашем балансе должно быть не менее {amount} {currency}. {br}Коммисия майнера {sellFee} {sellCoin} и {buyFee} {buyCoin}"
+              values={{
+                amount: buyAmount,
+                currency: sellCurrency,
+                sellFee,
+                sellCoin,
+                buyFee,
+                buyCoin,
+                br: <br />,
+              }}
+            />
+          )}
+        </Fragment>
+      )
+      actions.modals.open(constants.modals.AlertWindow, {
+        title: <FormattedMessage
+          id="AlertOrderNonEnoughtBalanceTitle"
+          defaultMessage="Not enough balance."
+        />,
+        message: alertMessage,
+        canClose: true,
+        currency: buyCurrency,
+        address,
+        actionType: 'deposit',
+      })
+      return false
+    }
+    return true
+  }
+
   // @ToDo - need refactiong without BTC
   initSwap = async () => {
     const { decline, usersData } = this.props;
@@ -504,7 +621,6 @@ export default class Exchange extends Component {
       haveCurrency,
       haveAmount,
       getCurrency,
-      pairFees,
     } = this.state
 
     const haveTicker = haveCurrency.toUpperCase()
@@ -512,93 +628,12 @@ export default class Exchange extends Component {
 
     feedback.exchangeForm.requestedSwap(`${haveTicker}->${getTicker}`)
 
-    const { address, balance } = actions.core.getWallet({ currency: haveCurrency })
-
-    let checkAmount = haveAmount
-
-    let ethBalanceOk = true
-
-    const isSellToken = helpers.ethToken.isEthToken( { name: getCurrency } )
-
-    let isBalanceOk = true
-    if (
-      isSellToken &&
-      (balance < checkAmount || ethBalance < ethFee)
-    ) {
-      isBalanceOk = false
-    }
-
-    if (
-      getTicker === 'BTC' &&
-      !isSellToken &&
-      balance < checkAmount
-    ) {
-      isBalanceOk = false
-    }
-
-    if (!isBalanceOk) {
-      const hiddenCoinsList = await actions.core.getHiddenCoins()
-      const isDidntActivateWallet = hiddenCoinsList.find(el => haveTicker === el.toUpperCase())
-
-      const alertMessage = (
-        <Fragment>
-          {!isDidntActivateWallet ?
-            <FormattedMessage
-              id="AlertOrderNonEnoughtBalance"
-              defaultMessage="Please top up your balance before you start the swap."
-            /> :
-            <FormattedMessage
-              id="walletDidntCreateMessage"
-              defaultMessage="Create {curr} wallet before you start the swap."
-              values={{
-                curr: haveTicker
-              }}
-          />}
-          <br />
-          {isSellToken && (
-            <FormattedMessage
-              id="Swap_NeedEthFee"
-              defaultMessage="На вашем балансе должно быть не менее {ethFee} ETH и {btcFee} BTC для оплаты коммисии майнера"
-              values={{
-                ethFee,
-                btcFee,
-              }}
-            />
-          )}
-          {!isSellToken && (
-            <FormattedMessage
-              id="Swap_NeedMoreAmount"
-              defaultMessage="На вашем балансе должно быть не менее {amount} {currency}. {br}Коммисия майнера {ethFee} ETH и {btcFee} BTC"
-              values={{
-                amount: checkAmount,
-                currency: haveTicker,
-                ethFee,
-                btcFee,
-                br: <br />,
-              }}
-            />
-          )}
-        </Fragment>
-      )
-
-      actions.modals.open(constants.modals.AlertWindow, {
-        title: !isDidntActivateWallet ?
-          <FormattedMessage
-            id="AlertOrderNonEnoughtBalanceTitle"
-            defaultMessage="Not enough balance."
-          /> :
-          <FormattedMessage
-            id="walletDidntCreateTitle"
-            defaultMessage="Wallet does not exist."
-          />,
-        currency: haveTicker,
-        address,
-        actionType: !isDidntActivateWallet ? "deposit" : "createWallet",
-        canClose: true,
-        message: alertMessage,
-      })
-      return
-    }
+    if (!this.checkSwapAllow({
+      sellCurrency: haveCurrency,
+      buyCurrency: getCurrency,
+      buyAmount: haveAmount,
+      balance: 0,
+    })) return false
 
     return
     if (decline.length === 0) {
@@ -1008,6 +1043,7 @@ export default class Exchange extends Component {
       pairFees: {
         ...((pairFees) ? {
           // flip pair fees and exRates
+          ...pairFees,
           buy: pairFees.sell,
           sell: pairFees.buy,
           have: pairFees.get,
@@ -1700,6 +1736,7 @@ export default class Exchange extends Component {
                 linkedOrderId={linkedOrderId}
                 pairFees={pairFees}
                 balances={balances}
+                checkSwapAllow={this.checkSwapAllow}
               />
             </div>
           </Fragment>

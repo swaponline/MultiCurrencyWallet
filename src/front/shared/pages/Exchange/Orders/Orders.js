@@ -229,6 +229,7 @@ export default class Home extends Component {
               linkedOrderId={linkedOrderId}
               pairFees={pairFees}
               balances={balances}
+              checkSwapAllow={this.props.checkSwapAllow}
             />
           )
         }
