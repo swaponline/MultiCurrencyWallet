@@ -7,14 +7,15 @@
 git clone https://github.com/swaponline/MultiCurrencyWallet.git
 ```
 
-3. Use Node 11
+3. Use Node 12
 
 (For change Node version on Linux use [nvm](https://github.com/nvm-sh/nvm#installing-and-updating))
 (For Windows use [nvm for Windows](https://github.com/coreybutler/nvm-windows))
 
 ```
-nvm alias default 11.15.0
-nvm use 11.15.0
+nvm install 12
+nvm alias default 12
+nvm use 12
 ```
 
 4. Install modules
