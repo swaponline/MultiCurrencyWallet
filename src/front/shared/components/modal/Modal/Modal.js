@@ -26,7 +26,7 @@ export default class Modal extends Component {
 
   static propTypes = {
     children: PropTypes.node,
-    name: PropTypes.string.isRequired,
+    name: PropTypes.string,
     title: PropTypes.any,
     showCloseButton: PropTypes.bool,
     data: PropTypes.object,

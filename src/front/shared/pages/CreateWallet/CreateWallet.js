@@ -334,10 +334,16 @@ const CreateWallet = (props) => {
     // Link from index.html (first screen)
     const starterModalRestoreWallet = document.getElementById('starter-modal__link-restore-wallet')
     if (starterModalRestoreWallet) {
-      starterModalRestoreWallet.addEventListener('click', handleRestoreMnemonic)
+      starterModalRestoreWallet.addEventListener('click', redirectToRestoreWallet)
 
       return () => {
-        starterModalRestoreWallet.removeEventListener('click', handleRestoreMnemonic)
+        starterModalRestoreWallet.removeEventListener('click', redirectToRestoreWallet)
+      }
+
+      function redirectToRestoreWallet() {
+        document.location.href = '#/restoreWallet'
+        handleRestoreMnemonic()
+        document.getElementById('starter-modal').classList.add('d-none')
       }
     }
   }, [])
