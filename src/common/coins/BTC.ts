@@ -2,7 +2,7 @@ const bip32 = require('bip32')
 const bip39 = require('bip39')
 const bitcore = require('bitcore-lib')
 
-const fetch = require('node-fetch');
+import fetch from 'node-fetch'
 const BigNumber = require('bignumber.js')
 
 const { networkType } = require('./../domain/network')
