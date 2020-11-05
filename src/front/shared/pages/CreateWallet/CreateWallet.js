@@ -23,6 +23,8 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { constants, localStorage } from 'helpers'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 
+import coins from 'domain/coins.ts'
+
 
 const isWidgetBuild = config && config.isWidget
 const styleBtn = { backgroundColor: '#f0eefd', color: '#6144E5' }
@@ -74,7 +76,7 @@ const CreateWallet = (props) => {
   let fiatBalance = 0
 
   const widgetCurrencies = [
-    'BTC',
+    coins.BTC,
     'BTC (SMS-Protected)',
     'BTC (PIN-Protected)',
     'BTC (Multisig)',
