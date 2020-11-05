@@ -18,7 +18,7 @@ const GetCustromERC20 = () => {
 const initExternalConfig = () => {
   // Add to swap.core not exists tokens
   Object.keys(config.erc20).forEach((tokenCode) => {
-    if (!constants.COINS[tokenCode]) {
+    if (!constants.COIN_DATA[tokenCode]) {
       console.info('Add token to swap.core', tokenCode, config.erc20[tokenCode].address, config.erc20[tokenCode].decimals, config.erc20[tokenCode].fullName)
       util.erc20.register(tokenCode, config.erc20[tokenCode].decimals)
       actions[tokenCode] = actions.token
