@@ -3,7 +3,7 @@ import {
   COIN_MODEL,
   COIN_TYPE,
 } from 'swap.app/constants/COINS'
-import { BigNumber } from "bignumber.js"
+import { BigNumber } from 'bignumber.js'
 import helpers from 'helpers'
 
 
@@ -23,12 +23,14 @@ const fetchCoinFee = (coin) => {
               feeResolved({
                 coin: coinData.ticker,
                 fee: BigNumber(coinFee).toNumber(),
+                isUTXO: (coinData.model === COIN_MODEL.UTXO),
               })
             }).catch((err) => {
               console.error(`Fail fetch fee for coin ${coinData.ticker}`, err)
               feeResolved({
                 coin: coinData.ticker,
                 fee: 0,
+                isUTXO: (coinData.model === COIN_MODEL.UTXO),
               })
             })
           } else {
@@ -42,12 +44,14 @@ const fetchCoinFee = (coin) => {
             feeResolved({
               coin: `ETH`,
               fee: BigNumber(ethFee).toNumber(),
+              isUTXO: false,
             })
           }).catch((err) => {
             console.error(`Fail fetch fee for coin ${coinData.ticker} (ETH)`, err)
             feeResolved({
               coin: `ETH`,
               fee: 0,
+              isUTXO: false,
             })
           })
           break;
@@ -63,17 +67,19 @@ const fetchCoinFee = (coin) => {
 
 export const getPairFees = (sellCoin, buyCoin) => {
   return new Promise(async (feeResolved) => {
-    console.log('called getPairFees', sellCoin, buyCoin)
     const sell = await fetchCoinFee(sellCoin)
-    console.log('sell', sell)
     const buy = await fetchCoinFee(buyCoin)
-    console.log('buy', buy)
+
+    const byCoins = {}
+    byCoins[buy.coin] = buy
+    byCoins[sell.coin] = sell
 
     feeResolved({
       sell,
       have: sell,
       buy,
       get: buy,
+      byCoins,
     })
   })
 }

@@ -8066,7 +8066,7 @@
   },
   {
     "id": "Swap_NeedEthFee",
-    "message": "Debes tener al menos{ethFee} ETH y {btcFee} BTC en tu saldo para pagar la comisión de minero ",
+    "message": "Debes tener al menos {sellFee} {sellCoin} y {buyFee} {buyCoin} BTC en tu saldo para pagar la comisión de minero ",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.js",
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
@@ -8074,7 +8074,7 @@
   },
   {
     "id": "Swap_NeedMoreAmount",
-    "message": "Debes tener al menos {amount} {currency} en tu saldo. {br} Comisión de minero {ethFee} ETH  y {btcFee} BTC",
+    "message": "Debes tener al menos {amount} {currency} en tu saldo. {br} Comisión de minero {sellFee} {sellCoin} y {buyFee} {buyCoin}",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.js",
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.js"

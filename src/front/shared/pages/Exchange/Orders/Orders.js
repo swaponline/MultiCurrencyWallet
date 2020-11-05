@@ -171,6 +171,11 @@ export default class Home extends Component {
     const sectionContainerStyleName = isMobile ? 'sectionContainerMobile' : 'sectionContainer'
     const isWidgetBuild = config && config.isWidget
 
+    const {
+      pairFees,
+      balances,
+    } = this.props
+
     return (
       <section styleName={isWidgetBuild ? `${sectionContainerStyleName} ${sectionContainerStyleName}_widget` : sectionContainerStyleName}>
         {
@@ -222,6 +227,8 @@ export default class Home extends Component {
               orderId={match.params && match.params.orderId}
               invalidPair={invalidPair}
               linkedOrderId={linkedOrderId}
+              pairFees={pairFees}
+              balances={balances}
             />
           )
         }
