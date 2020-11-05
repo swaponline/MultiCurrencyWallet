@@ -1,5 +1,5 @@
 const BTC: string = 'BTC'
 
-export default {
+export {
   BTC
 }
