@@ -24,6 +24,9 @@ import { constants, localStorage } from 'helpers'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 
 
+import { BTC } from './coins.ts'
+
+
 const isWidgetBuild = config && config.isWidget
 const styleBtn = { backgroundColor: '#f0eefd', color: '#6144E5' }
 const defaultColors = { backgroundColor: '#6144E5' }
@@ -74,7 +77,7 @@ const CreateWallet = (props) => {
   let fiatBalance = 0
 
   const widgetCurrencies = [
-    'BTC',
+    BTC,
     'BTC (SMS-Protected)',
     'BTC (PIN-Protected)',
     'BTC (Multisig)',
