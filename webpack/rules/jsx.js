@@ -16,7 +16,7 @@ import config from 'app-config'
 
 export default [
   {
-    test: /\.(js|mjs|jsx)$/,
+    test: /\.(js|mjs|jsx|ts|tsx)$/,
     exclude: {
       test: [
         /node_modules/,
