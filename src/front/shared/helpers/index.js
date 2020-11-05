@@ -42,6 +42,8 @@ import adminFee from './adminFee'
 
 import stats from './stats.swaponline'
 
+import getPairFees from './getPairFees'
+
 
 export default {
   btc,
@@ -98,5 +100,7 @@ export {
   stats,
 
   wpLogoutModal,
+
+  getPairFees,
 }
 export { getItezUrl } from './getItezUrl'
