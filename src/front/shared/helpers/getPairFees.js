@@ -7,9 +7,27 @@ import { BigNumber } from 'bignumber.js'
 import helpers from 'helpers'
 
 
+const feeCache = {}
+
 const fetchCoinFee = (coin) => {
   return new Promise(async (feeResolved) => {
-    const coinData = COIN_DATA[coin.toUpperCase()]
+    if (feeCache[coin]) {
+      feeResolved(feeCache[coin])
+      return
+    }
+
+    const coinData = COIN_DATA[coin]
+
+    let coinFeeData = false
+    let dontCache = false
+
+    const doResolve = (coinFeeData) => {
+      if (!dontCache && coinFeeData) {
+        feeCache[coin] = coinFeeData
+      }
+      feeResolved(coinFeeData)
+    }
+
     if (coinData) {
       switch (coinData.type) {
         case COIN_TYPE.NATIVE:
@@ -20,14 +38,15 @@ const fetchCoinFee = (coin) => {
             helpers[coinData.ticker.toLowerCase()].estimateFeeValue({
               method: 'swap',
             }).then((coinFee) => {
-              feeResolved({
+              doResolve({
                 coin: coinData.ticker,
                 fee: BigNumber(coinFee).toNumber(),
                 isUTXO: (coinData.model === COIN_MODEL.UTXO),
               })
             }).catch((err) => {
               console.error(`Fail fetch fee for coin ${coinData.ticker}`, err)
-              feeResolved({
+              dontCache = true
+              doResolve({
                 coin: coinData.ticker,
                 fee: 0,
                 isUTXO: (coinData.model === COIN_MODEL.UTXO),
@@ -41,14 +60,16 @@ const fetchCoinFee = (coin) => {
           helpers.eth.estimateFeeValue({
             method: 'swap',
           }).then((ethFee) => {
-            feeResolved({
+            doResolve({
               coin: `ETH`,
               fee: BigNumber(ethFee).toNumber(),
               isUTXO: false,
             })
           }).catch((err) => {
             console.error(`Fail fetch fee for coin ${coinData.ticker} (ETH)`, err)
-            feeResolved({
+            dontCache = true
+            coin = `ETH`
+            doResolve({
               coin: `ETH`,
               fee: 0,
               isUTXO: false,
@@ -67,8 +88,8 @@ const fetchCoinFee = (coin) => {
 
 export const getPairFees = (sellCoin, buyCoin) => {
   return new Promise(async (feeResolved) => {
-    const sell = await fetchCoinFee(sellCoin)
-    const buy = await fetchCoinFee(buyCoin)
+    const sell = await fetchCoinFee(sellCoin.toUpperCase())
+    const buy = await fetchCoinFee(buyCoin.toUpperCase())
 
     const byCoins = {}
     byCoins[buy.coin] = buy

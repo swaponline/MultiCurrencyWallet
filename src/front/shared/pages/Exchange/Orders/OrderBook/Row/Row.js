@@ -114,7 +114,7 @@ export default class Row extends Component {
     const {
       row: {
         id,
-        buyAmount,
+        buyAmount: sellAmount,
         buyCurrency: sellCurrency, // taker-maker - (maker buy - we sell)
         sellCurrency: buyCurrency, // taker-maker - (maker sell - we buy)
       },
@@ -136,7 +136,7 @@ export default class Row extends Component {
     if (!checkSwapAllow({
       sellCurrency,
       buyCurrency,
-      buyAmount,
+      amount: sellAmount,
       balance,
     })) return false
 
@@ -154,7 +154,7 @@ export default class Row extends Component {
     })
 
     actions.modals.open(constants.modals.ConfirmBeginSwap, {
-      order: this.props.row,
+      order: row,
       onAccept: async (customWallet) => {
         feedback.offers.swapRequested(`${sellCurrency}->${buyCurrency}`)
 
