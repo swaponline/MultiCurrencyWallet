@@ -15,6 +15,8 @@ import SocialMenu from './SocialMenu/SocialMenu'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import SwitchLang from './SwitchLang/SwitchLang'
 
+import test from './test'
+
 
 const Footer = (props) => {
 
@@ -45,6 +47,7 @@ const Footer = (props) => {
               <span>-</span>
             }
           </div>
+          <div>{test.prop}</div>
         </WidthContainer>
       )}
     </footer>
