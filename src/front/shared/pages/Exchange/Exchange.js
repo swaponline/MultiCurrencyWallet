@@ -213,15 +213,15 @@ export default class Exchange extends Component {
       if (url !== "/wallet") {
         history.push(
           localisedUrl(locale, `${links.exchange}/${haveCurrency}-to-${getCurrency}`)
-        );
+        )
       }
     }
 
     this.state = {
       isToken: false,
       dynamicFee: 0,
-      haveCurrency: haveCurrency,
-      getCurrency: getCurrency,
+      haveCurrency,
+      getCurrency,
       haveAmount: 0,
       getAmount: "",
       fromAddress: null,
@@ -238,27 +238,21 @@ export default class Exchange extends Component {
       isNonOffers: false,
       isDeclinedOffer: false,
       extendedControls: false,
-      estimatedFeeValues: {},
       isWaitForPeerAnswer: false,
       desclineOrders: [],
       pairFees: false,
       balances: false,
-    };
-
-    constants.coinsWithDynamicFee.forEach(
-      (item) =>
-        (this.state.estimatedFeeValues[item] = constants.minAmountOffer[item])
-    );
+    }
 
     if (config.isWidget) {
-      this.state.getCurrency = config.erc20token;
+      this.state.getCurrency = config.erc20token
     }
   }
 
   componentDidMount() {
     this._mounted = true
 
-    const { haveCurrency, getCurrency, estimatedFeeValues } = this.state
+    const { haveCurrency, getCurrency } = this.state
 
     actions.core.updateCore()
     this.returnNeedCurrency(haveCurrency, getCurrency)
@@ -277,7 +271,6 @@ export default class Exchange extends Component {
     timerProcess()
 
     SwapApp.shared().services.room.on("new orders", () => this.checkPair())
-    this.setEstimatedFeeValues(estimatedFeeValues)
 
     document.addEventListener("scroll", this.rmScrollAdvice)
 
@@ -355,18 +348,6 @@ export default class Exchange extends Component {
     }
   };
 
-  // @ToDo - delete in future - this function fetch fee for all coins
-  setEstimatedFeeValues = async (estimatedFeeValues) => {
-    //console.log('called setEstimatedFeeValues', console.trace())
-    const fee = await helpers.estimateFeeValue.setEstimatedFeeValues({
-      estimatedFeeValues,
-    });
-
-    return this.setState({
-      estimatedFeeValues: fee,
-    });
-  };
-
   componentWillUnmount() {
     this._mounted = false
     this.timer = false
@@ -375,27 +356,23 @@ export default class Exchange extends Component {
   checkUrl = () => {
     const {
       match: {
-        params,
+        params: {
+          buy: buyValue,
+          sell: sellValue,
+        },
       },
     } = this.props
 
-    const { getCurrency, haveCurrency } = this.state;
+    const { getCurrency, haveCurrency } = this.state
 
-    const buyValue = params.buy;
-    const sellValue = params.sell;
-
-    if (haveCurrency && params.sell !== haveCurrency) {
-      if (sellValue) {
-        this.handleSetHaveValue({ value: sellValue });
-      }
+    if (haveCurrency && sellValue && sellValue !== haveCurrency) {
+      this.handleSetHaveValue({ value: sellValue })
     }
 
-    if (getCurrency && params.buy !== getCurrency) {
-      if (buyValue) {
-        this.checkValidUrl(sellValue, buyValue);
-      }
+    if (getCurrency && sellValue && buyValue && buyValue !== getCurrency) {
+      this.checkValidUrl(sellValue, buyValue)
     }
-  };
+  }
 
   checkValidUrl = (sellValue, buyValue) => {
     const avaliablesBuyCurrency = actions.pairs
@@ -992,7 +969,6 @@ export default class Exchange extends Component {
   };
 
   flipCurrency = async () => {
-    console.log('flip currencies')
     const {
       haveCurrency,
       getCurrency,
@@ -1000,10 +976,7 @@ export default class Exchange extends Component {
       exGetRate,
       pairFees,
     } = this.state
-    console.log(haveCurrency,
-      getCurrency,
-      exHaveRate,
-      exGetRate, pairFees)
+
     feedback.exchangeForm.flipped(`${haveCurrency}->${getCurrency} => ${getCurrency}->${haveCurrency}`)
 
     this.resetState()
@@ -1171,6 +1144,25 @@ export default class Exchange extends Component {
     })
   }
 
+  getCoinData = (coin) => {
+    const {
+      currenciesData,
+      tokensData,
+    } = this.props
+    const currencyData = currenciesData.find(
+      (item) => item.currency === coin
+    )
+    const tokenData = tokensData.find(
+      (item) => item.currency === coin
+    )
+    return currencyData || tokenData
+  }
+
+  getCoinFullName = (coin) => {
+    const coinData = this.getCoinData(coin)
+    return (coinData) ? coinData.fullName : coin
+  }
+
   showIncompleteSwap = () => {
     const { desclineOrders } = this.state;
     actions.modals.open(constants.modals.IncompletedSwaps, {
@@ -1216,6 +1208,10 @@ export default class Exchange extends Component {
       balances,
     } = this.state
 
+    const sellCoin = haveCurrency.toUpperCase()
+    const buyCoin = getCurrency.toUpperCase()
+    const balance = this.getBalance(sellCoin)
+
     if (redirectToSwap) {
       const uri = `${localisedUrl(locale, links.swap)}/${getCurrency}-${haveCurrency}/${orderId}`
       return (
@@ -1226,23 +1222,25 @@ export default class Exchange extends Component {
       )
     }
 
+
     let balanceTooltip = null
 
-    console.log('pairFees')
     if (pairFees
       && pairFees.byCoins
-      && pairFees.byCoins[haveCurrency]
     ) {
-      console.log('has balance tooltip')
+      const sellCoinFee = pairFees.byCoins[sellCoin] || false
       balanceTooltip = (
         <p styleName="maxAmount">
           {(
             (BigNumber(balance).toNumber() === 0)
-            || BigNumber(balance).minus(pairFees.byCoins[haveCurrency].fee).isLessThanOrEqualTo(0)
+            || (
+              sellCoinFee
+              && BigNumber(balance).minus(sellCoinFee.fee).isLessThanOrEqualTo(0)
+            )
           ) ? ( null ) 
             : (
               <>
-                {pairFees.byCoins[haveCurrency]
+                {sellCoinFee
                   ?
                   <FormattedMessage
                     id="Exchange_AvialableBalance"
@@ -1254,15 +1252,15 @@ export default class Exchange extends Component {
                     defaultMessage="Your balance: "
                   />
                 }
-                {pairFees.byCoins[haveCurrency].fee
+                {sellCoinFee && sellCoinFee.fee
                   ? BigNumber(balance)
-                    .minus(pairFees.byCoins[haveCurrency].fee)
+                    .minus(sellCoinFee.fee)
                     .dp(5, BigNumber.ROUND_FLOOR).toString()
                   : BigNumber(balance)
                     .dp(5, BigNumber.ROUND_FLOOR).toString()
                 }
                 {'  '}
-                {haveCurrency.toUpperCase()}
+                {sellCoin}
               </>
             )
           }
@@ -1287,23 +1285,13 @@ export default class Exchange extends Component {
       .toNumber()
     ) : 0
 
-    const haveCurrencyData = currenciesData.find(
-      (item) => item.currency === haveCurrency.toUpperCase()
-    )
-
-    const haveTokenData = tokensData.find(
-      (item) => item.currency === haveCurrency.toUpperCase()
-    )
-
-    const currentCurrency = haveCurrencyData || haveTokenData;
-
-    const balance = currentCurrency.balance || 0;
+    const currentCurrency = this.getCoinData(sellCoin)
 
     const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0)
       ? BigNumber(0)
       : BigNumber(goodRate);
 
-    const linked = Link.all(this, "haveAmount", "getAmount");
+    const linked = Link.all(this, 'haveAmount', 'getAmount')
 
     const isWidgetLink =
       this.props.location.pathname.includes("/exchange") &&
@@ -1313,35 +1301,19 @@ export default class Exchange extends Component {
     const availableAmount = (
       pairFees 
       && pairFees.byCoins 
-      && pairFees.byCoins[haveCurrency]
-      && BigNumber(pairFees.byCoins[haveCurrency].fee).isGreaterThan(0)
-    ) ? BigNumber(haveAmount).plus( // plus?? may-be minus?
-          pairFees.byCoins[haveCurrency].fee
+      && pairFees.byCoins[sellCoin]
+      && BigNumber(pairFees.byCoins[sellCoin].fee).isGreaterThan(0)
+    ) ? BigNumber(haveAmount).minus(
+          pairFees.byCoins[sellCoin].fee
         )
       : 0
 
     const isLowAmount = this.checkoutLowAmount()
 
-    const sellTokenFullName = currenciesData.find(
-      (item) => item.currency === haveCurrency.toUpperCase()
-    )
-      ? currenciesData.find(
-        (item) => item.currency === haveCurrency.toUpperCase()
-      ).fullName
-      :
-      haveCurrency.toUpperCase();
-
-    const buyTokenFullName = currenciesData.find(
-      (item) => item.currency === getCurrency.toUpperCase()
-    )
-      ? currenciesData.find(
-        (item) => item.currency === getCurrency.toUpperCase()
-      ).fullName
-      :
-      getCurrency.toUpperCase();
+    const sellTokenFullName = this.getCoinFullName(sellCoin)
+    const buyTokenFullName = this.getCoinFullName(buyCoin)
 
     const isPrice = oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && !isNonOffers
-
 
     const isErrorNoOrders = isNoAnyOrders && linked.haveAmount.value > 0 && isFullLoadingComplite
 
