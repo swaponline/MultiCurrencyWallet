@@ -339,6 +339,16 @@ export default class Exchange extends Component {
         })
       })
     })
+    const walletsArray = actions.core.getWallets()
+
+    for (let wallet of walletsArray) {
+      if (wallet.balance > 0) {
+        this.setState({
+          balanceOnWalletsIsOk: true
+        })
+        break
+      } 
+    }
   }
 
   rmScrollAdvice = () => {
