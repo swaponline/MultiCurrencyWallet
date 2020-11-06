@@ -8142,7 +8142,7 @@
   },
   {
     "id": "Swap_NeedEthFee",
-    "message": "U moet ten minste {ethFee} ETH en {btcFee} BTC op uw saldo hebben om de mijnwerkerscommissie te betalen",
+    "message": "U moet ten minste {sellFee} {sellCoin} en {buyFee} {buyCoin} op uw saldo hebben om de mijnwerkerscommissie te betalen",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.js",
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
@@ -8150,7 +8150,7 @@
   },
   {
     "id": "Swap_NeedMoreAmount",
-    "message": "Je saldo moet minimaal {amount} {currency} hebben. {br} Mijnwerkerscommissie {ethFee} ETH en {btcFee} BTC",
+    "message": "Je saldo moet minimaal {amount} {currency} hebben. {br} Mijnwerkerscommissie {sellFee} {sellCoin} en {buyFee} {buyCoin}",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.js",
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.js"

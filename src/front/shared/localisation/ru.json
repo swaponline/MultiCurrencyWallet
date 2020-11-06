@@ -8198,7 +8198,7 @@
   },
   {
     "id": "Swap_NeedEthFee",
-    "message": "На вашем балансе должно быть не менее {ethFee} ETH и {btcFee} BTC для оплаты коммисии майнера",
+    "message": "На вашем балансе должно быть не менее {sellFee} {sellCoin} и {buyFee} {buyCoin} для оплаты коммисии майнера",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.js",
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
@@ -8206,7 +8206,7 @@
   },
   {
     "id": "Swap_NeedMoreAmount",
-    "message": "На вашем балансе должно быть не менее {amount} {currency}. {br}Коммисия майнера {ethFee} ETH и {btcFee} BTC",
+    "message": "На вашем балансе должно быть не менее {amount} {currency}. {br}Коммисия майнера {sellFee} {sellCoin} и {buyFee} {buyCoin}",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.js",
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
