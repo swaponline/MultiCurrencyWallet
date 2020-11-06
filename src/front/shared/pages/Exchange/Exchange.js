@@ -246,6 +246,7 @@ export default class Exchange extends Component {
       estimatedFeeValues: {},
       isWaitForPeerAnswer: false,
       desclineOrders: [],
+      balanceOnWalletsIsOk: false,
     };
 
     constants.coinsWithDynamicFee.forEach(
@@ -1119,6 +1120,18 @@ export default class Exchange extends Component {
     });
   };
 
+  componentDidMount() {
+    const walletsArray = actions.core.getWallets()
+
+    for (let wallet of walletsArray) {
+      if (wallet.balance > 0) {
+        this.setState({
+          balanceOnWalletsIsOk: true
+        })
+        break
+      } 
+    }
+  }
 
   render() {
     const {
@@ -1157,6 +1170,7 @@ export default class Exchange extends Component {
       isWaitForPeerAnswer,
       desclineOrders,
       isDeclinedOffer,
+      balanceOnWalletsIsOk,
     } = this.state
 
     if (redirectToSwap) {
@@ -1550,12 +1564,12 @@ export default class Exchange extends Component {
             <>
               <Button
                 id="createOrderReactTooltipMessageForUser"
-                styleName={`button link-like ${balance > 0 ? '' : 'noMany'}`}
-                onClick={ balance > 0 ? this.createOffer : null}
+                styleName={`button link-like ${balanceOnWalletsIsOk ? '' : 'noMany'}`}
+                onClick={balanceOnWalletsIsOk ? this.createOffer : null}
               >
                 <FormattedMessage id="orders128" defaultMessage="Create offer" />
               </Button>
-              { balance > 0
+              {balanceOnWalletsIsOk
                 ? (
                   <ReactTooltip id="createOrderReactTooltipMessageForUser" effect="solid" type="dark" place="bottom">
                     <FormattedMessage
