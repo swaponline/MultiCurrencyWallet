@@ -198,6 +198,7 @@
     "dirty-chai": "^2.0.1",
     "ethereum-input-data-decoder": "^0.3.1",
     "firebase": "^7.23.0",
+    "fork-ts-checker-webpack-plugin": "3.1.1",
     "ghost-bitcore-lib": "git+https://github.com/ghost-coin/ghost-bitcore-lib.git",
     "graphql": "^15.3.0",
     "graphql-request": "^3.0.0",

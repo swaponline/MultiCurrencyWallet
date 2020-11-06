@@ -4,6 +4,7 @@ import ProgressBarPlugin from 'progress-bar-webpack-plugin'
 import WebappWebpackPlugin from 'webapp-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import AppConfigPlugin from 'app-config/webpack'
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import config from 'app-config'
 import rulesMap from './rules'
 
@@ -108,6 +109,7 @@ const webpackConfig = {
     new webpack.NormalModuleReplacementPlugin(/^leveldown$/, (result) => {
       result.request = result.request.replace(/(leveldown)/,  config.paths.shared('helpers/leveldown'))
     }),
+    new ForkTsCheckerWebpackPlugin(),
   ],
 }
 
