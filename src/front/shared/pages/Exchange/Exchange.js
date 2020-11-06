@@ -301,6 +301,16 @@ export default class Exchange extends Component {
         ethFee: BigNumber(fee).toNumber(),
       })
     })
+    const walletsArray = actions.core.getWallets()
+
+    for (let wallet of walletsArray) {
+      if (wallet.balance > 0) {
+        this.setState({
+          balanceOnWalletsIsOk: true
+        })
+        break
+      } 
+    }
   }
 
   rmScrollAdvice = () => {
@@ -1120,18 +1130,7 @@ export default class Exchange extends Component {
     });
   };
 
-  componentDidMount() {
-    const walletsArray = actions.core.getWallets()
 
-    for (let wallet of walletsArray) {
-      if (wallet.balance > 0) {
-        this.setState({
-          balanceOnWalletsIsOk: true
-        })
-        break
-      } 
-    }
-  }
 
   render() {
     const {
