@@ -30,6 +30,9 @@ import config from 'app-config'
 import { links } from 'helpers'
 import feedback from 'shared/helpers/feedback'
 
+import { getPairFees } from 'helpers/getPairFees'
+
+
 
 const filterMyOrders = (orders, peer) => orders
   .filter(order => order.owner.peer === peer)
@@ -57,6 +60,7 @@ const filterOrders = (orders, filter) => orders
 @injectIntl
 @cssModules(styles, { allowMultiple: true })
 export default class Orders extends Component {
+  _mounted = false
 
   state = {
     buyOrders: [],
@@ -114,8 +118,22 @@ export default class Orders extends Component {
   }
 
   render() {
-    const { buyOrders, sellOrders, isShowAllMyOrders } = this.state
-    let { sellCurrency, buyCurrency, intl, decline, linkedOrderId } = this.props
+    const {
+      buyOrders,
+      sellOrders,
+      isShowAllMyOrders,
+    } = this.state
+
+    let {
+      sellCurrency,
+      buyCurrency,
+      intl,
+      decline,
+      linkedOrderId,
+      pairFees,
+      balances,
+    } = this.props
+
     const { history } = this.props
 
     buyCurrency = buyCurrency.toUpperCase()
@@ -235,6 +253,9 @@ export default class Orders extends Component {
                 history={history}
                 removeOrder={this.removeOrder}
                 linkedOrderId={linkedOrderId}
+                pairFees={pairFees}
+                balances={balances}
+                checkSwapAllow={this.props.checkSwapAllow}
               />
             )}
             isLoading={buyOrders.length === 0 && !isPubSubLoaded}
@@ -274,6 +295,9 @@ export default class Orders extends Component {
                 history={history}
                 removeOrder={this.removeOrder}
                 linkedOrderId={linkedOrderId}
+                pairFees={pairFees}
+                balances={balances}
+                checkSwapAllow={this.props.checkSwapAllow}
               />
             )}
             isLoading={sellOrders.length === 0 && !isPubSubLoaded}

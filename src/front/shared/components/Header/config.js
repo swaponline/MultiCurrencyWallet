@@ -142,11 +142,10 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
     [
       {
         title: intl.formatMessage(createWallet),
-        link: create,
+        link: dinamicPath,
         exact: true,
         haveSubmenu: true,
-        icon: <i className="fas fa-wallet" aria-hidden="true" />,
-        currentPageFlag: true,
+        icon: <i className="fa fa-home" aria-hidden="true" />,
       },
       !externalConfig.opts.exchangeDisabled && {
         title: intl.formatMessage(exchange),
