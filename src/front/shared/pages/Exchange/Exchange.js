@@ -242,7 +242,6 @@ export default class Exchange extends Component {
       desclineOrders: [],
       pairFees: false,
       balances: false,
-      balanceOnWalletsIsOk: false,
     }
 
     if (config.isWidget) {
@@ -1171,19 +1170,6 @@ export default class Exchange extends Component {
     });
   };
 
-  componentDidMount() {
-    const walletsArray = actions.core.getWallets()
-
-    for (let wallet of walletsArray) {
-      if (wallet.balance > 0) {
-        this.setState({
-          balanceOnWalletsIsOk: true
-        })
-        break
-      } 
-    }
-  }
-
   render() {
     const {
       activeFiat,
@@ -1220,7 +1206,6 @@ export default class Exchange extends Component {
       isDeclinedOffer,
       pairFees,
       balances,
-      balanceOnWalletsIsOk,
     } = this.state
 
     const sellCoin = haveCurrency.toUpperCase()
@@ -1604,12 +1589,12 @@ export default class Exchange extends Component {
             <>
               <Button
                 id="createOrderReactTooltipMessageForUser"
-                styleName={`button link-like ${balanceOnWalletsIsOk ? '' : 'noMany'}`}
-                onClick={balanceOnWalletsIsOk ? this.createOffer : null}
+                styleName={`button link-like ${balance > 0 ? '' : 'noMany'}`}
+                onClick={ balance > 0 ? this.createOffer : null}
               >
                 <FormattedMessage id="orders128" defaultMessage="Create offer" />
               </Button>
-              {balanceOnWalletsIsOk
+              { balance > 0
                 ? (
                   <ReactTooltip id="createOrderReactTooltipMessageForUser" effect="solid" type="dark" place="bottom">
                     <FormattedMessage
