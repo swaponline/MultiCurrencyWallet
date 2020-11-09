@@ -25,13 +25,51 @@ const web3Modal = new Web3Modal({
   providerOptions
 })
 
+let _currentChain = 0
+let _currentAddress = ``
+let _isInited = false
+let _web3 = null
+
 const metamaskProvider = (window.ethereum) || false
 
-const isEnabled = () => !(!metamaskProvider)
+const isEnabled = () => true
 
-const isConnected = () => metamaskProvider && metamaskProvider.selectedAddress && web3Modal.cachedProvider
+const isConnected = () => web3Modal.cachedProvider
 
-const getAddress = () => (isConnected()) ? metamaskProvider.selectedAddress : ''
+const getAddress = () => (isConnected()) ? _currentAddress : ``
+
+const _cacheAddress = async () => {
+  _currentAddress = ``
+  const accounts = await _web3.eth.getAccounts()
+  if (accounts.length) _currentAddress = accounts[0]
+}
+
+const _checkMetamaskUserDisconnect = () => {
+  if (metamaskProvider
+    && (
+      !metamaskProvider.isConnected()
+      || !metamaskProvider.selectedAddress
+    )
+  ) {
+    // Metamask exists - but disconnected
+    web3Modal.clearCachedProvider()
+  }
+}
+
+const _init = async () => {
+  if (isConnected()) {
+    try {
+      _web3 = await getWeb3()
+    } catch (err) {
+      web3Modal.clearCachedProvider()
+      window.location.reload()
+    }
+    setMetamask(web3)
+    await _cacheAddress()
+    _initReduxState()
+    _isInited = true
+  }
+}
 
 const addWallet = () => {
   _initReduxState()
@@ -39,6 +77,7 @@ const addWallet = () => {
     getBalance()
   }
 }
+
 
 const getWeb3 = async () => {
   const provider = await web3Modal.connect();
@@ -77,7 +116,6 @@ const getBalance = () => {
 const disconnect = () => new Promise(async (resolved, reject) => {
   if (isEnabled() && isConnected()) {
     web3Modal.clearCachedProvider()
-    _initReduxState()
     resolved(true)
     window.location.reload()
   } else {
@@ -86,30 +124,51 @@ const disconnect = () => new Promise(async (resolved, reject) => {
 })
 
 const connect = () => new Promise((resolved, reject) => {
-  if (metamaskProvider
-      && metamaskProvider.enable
-  ) {
-    web3Modal
-      .connect()
-      .then((provider) => {
-        if (isConnected()) {
-          addWallet()
-          setMetamask(getWeb3())
-          resolved(true)
-          window.location.reload()
-        } else {
-          setDefaultProvider()
-          resolved(false)
-        }
-      })
-      .catch((e) => {
+  web3Modal
+    .connect()
+    .then((provider) => {
+      if (isConnected()) {
+        window.location.reload()
+      } else {
+        setDefaultProvider()
         resolved(false)
-      })
-  } else {
-    setDefaultProvider()
-    reject(`metamask not enabled`)
-  }
+      }
+    })
+    .catch((e) => {
+      setDefaultProvider()
+      resolved(false)
+    })
 })
+
+/* metamask wallet layer */
+
+
+const isMainnet = () => _currentChain === `0x1`
+const isTestnet = () => _currentChain === `0x4`
+
+const isCorrectNetwork = () => {
+  switch (process.env.NETWORK) {
+    case `testnet`: return isTestnet()
+    case `mainnet`: return isMainnet()
+  }
+}
+
+if (metamaskProvider) {
+  _currentChain = metamaskProvider.chainId
+  metamaskProvider.on('chainChanged', (newChainId) => {
+    if (newChainId !== _currentChain) {
+      if (!metamaskProvider.autoRefreshOnNetworkChange) window.location.reload()
+    }
+  })
+  metamaskProvider.on('accountsChanged', (newAccounts) => {
+    if (!newAccounts.length
+      || newAccounts[0] !== _currentAddress
+    ) {
+      window.location.reload()
+    }
+  })
+}
+/* --------------------- */
 
 const _initReduxState = () => {
   const {
@@ -162,9 +221,14 @@ const _initReduxState = () => {
   }
 }
 
-_initReduxState()
-if (isEnabled() && isConnected()) {
-  setMetamask(getWeb3())
+// check - if user disconnect wallet from metamask - clear provider
+console.log('check metamask')
+_checkMetamaskUserDisconnect()
+
+if (isConnected()) {
+  _init()
+} else {
+  _initReduxState()
 }
 
 const metamaskApi = {
@@ -178,6 +242,7 @@ const metamaskApi = {
   getWeb3,
   web3Modal,
   disconnect,
+  isCorrectNetwork,
 }
 
 

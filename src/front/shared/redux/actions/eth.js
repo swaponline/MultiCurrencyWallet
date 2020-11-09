@@ -1,7 +1,7 @@
 import helpers, { apiLooper, constants, api, cacheStorageGet, cacheStorageSet } from 'helpers'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
-import { getWeb3 } from 'helpers/web3'
+import { web3, getWeb3 } from 'helpers/web3'
 import { utils as web3utils } from 'web3'
 import reducers from 'redux/core/reducers'
 import config from 'helpers/externalConfig'
@@ -14,9 +14,6 @@ import { BigNumber } from 'bignumber.js'
 import { default as mnemonicUtils } from '../../../../common/utils/mnemonic'
 
 import metamask from 'helpers/metamask'
-
-
-const web3 = getWeb3()
 
 
 const hasAdminFee = (
@@ -320,7 +317,7 @@ const send = (data) => {
 }
 
 const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed } = {}) => {
-  const web3js = getWeb3()
+  const web3js = await getWeb3()
 
   const {
     fee: adminFee,

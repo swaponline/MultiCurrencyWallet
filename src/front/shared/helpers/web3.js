@@ -8,7 +8,7 @@ console.log('reset web3')
 let web3 = new Web3(new Web3.providers.HttpProvider(config.web3.provider))
 
 const setMetamask = async (provider) => {
-  web3 = await provider
+  web3 = provider
   web3.isMetamask = true
 }
 
