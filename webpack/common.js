@@ -81,7 +81,6 @@ const webpackConfig = {
       'swap.swap': 'swap.swap',
       'swap.swaps': 'swap.swaps',
     }),
-    new webpack.NoEmitOnErrorsPlugin(),
     new ProgressBarPlugin({ clear: false }),
     new WebappWebpackPlugin({
       logo: 'favicon.png',

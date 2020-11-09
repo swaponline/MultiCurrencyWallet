@@ -1,14 +1,15 @@
 import webpack from 'webpack'
 import path from 'path'
 
+// for optimising build speed
+import SpeedMeasurePlugin from 'speed-measure-webpack-plugin'
+const smp = new SpeedMeasurePlugin({
+  disable: !process.env.MEASURE,
+});
 
 const resolveSrcPath = (filePath) => path.resolve(__dirname, `./src/${filePath}`)
 
-const globals = {
-  'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-}
-
-const webpackConfig = {
+const webpackConfig = smp.wrap({
   mode: 'production',
 
   node: {
@@ -37,8 +38,14 @@ const webpackConfig = {
     rules: [
       {
         test: /\.js$/,
-        loader: 'babel-loader',
         exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+            plugins: ['@babel/plugin-proposal-object-rest-spread']
+          }
+        }
       }
     ]
   },
@@ -61,7 +68,6 @@ const webpackConfig = {
   },
 
   plugins: [
-    new webpack.DefinePlugin(globals),
     new webpack.ProvidePlugin({
       'swap.auth': 'swap.auth',
       'swap.orders': 'swap.orders',
@@ -72,7 +78,7 @@ const webpackConfig = {
       'swap.swaps': 'swap.swaps',
     }),
   ],
-}
+})
 
 
 export default webpackConfig

@@ -1,11 +1,7 @@
 import config from 'app-config'
-
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-
-import path from 'path'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
+import TerserPlugin from 'terser-webpack-plugin-legacy'
 import externalConfig from './externalConfig'
-
 
 export default (webpackConfig) => {
 
@@ -32,7 +28,10 @@ export default (webpackConfig) => {
   }
 
   webpackConfig.plugins.push(
-    // new BundleAnalyzerPlugin()
+    new TerserPlugin({
+      cache: true,
+      parallel: true,
+    }),
     new CopyWebpackPlugin([
       {
         from: 'src/front/client/firebase-messaging-sw.js',

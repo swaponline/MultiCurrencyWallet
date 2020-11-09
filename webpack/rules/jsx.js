@@ -64,8 +64,9 @@ export default [
         /datastore-core/,
       ],
     },
-    use: {
-      loader: 'babel-loader',
-    },
+    use: [
+      'cache-loader',
+      'babel-loader',
+    ],
   },
 ]

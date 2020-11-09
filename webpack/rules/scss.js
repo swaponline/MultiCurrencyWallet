@@ -20,6 +20,9 @@ export default [
         options: { sourceMap: true },
       },
       {
+        loader: 'cache-loader',
+      },
+      {
         loader: 'css-loader',
         options: {
           // [compile]: true,
