@@ -1,3 +1,4 @@
+import webpack from 'webpack'
 import config from 'app-config'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import TerserPlugin from 'terser-webpack-plugin-legacy'
@@ -18,7 +19,7 @@ export default (webpackConfig) => {
     tls: 'empty',
   }
 
-  webpackConfig.devtool = 'cheap-module-source-map'
+  webpackConfig.devtool = false
 
   webpackConfig.devServer = {
     publicPath: webpackConfig.output.publicPath,
@@ -28,6 +29,10 @@ export default (webpackConfig) => {
   }
 
   webpackConfig.plugins.push(
+    new webpack.SourceMapDevToolPlugin({
+      filename: '[name].js.map',
+      exclude: ['vendor.js']
+    }),
     new TerserPlugin({
       cache: true,
       parallel: true,

@@ -1,15 +1,9 @@
 import webpack from 'webpack'
 import path from 'path'
 
-// for optimising build speed
-import SpeedMeasurePlugin from 'speed-measure-webpack-plugin'
-const smp = new SpeedMeasurePlugin({
-  disable: !process.env.MEASURE,
-});
-
 const resolveSrcPath = (filePath) => path.resolve(__dirname, `./src/${filePath}`)
 
-const webpackConfig = smp.wrap({
+const webpackConfig = {
   mode: 'production',
 
   node: {
@@ -78,7 +72,7 @@ const webpackConfig = smp.wrap({
       'swap.swaps': 'swap.swaps',
     }),
   ],
-})
+}
 
 
 export default webpackConfig
