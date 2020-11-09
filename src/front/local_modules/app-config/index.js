@@ -3,6 +3,8 @@
 import path from 'path'
 import { merge } from 'lodash'
 
+// display a stack of outdated plugins
+process.traceDeprecation = true
 
 const env = process.env.CONFIG
 
