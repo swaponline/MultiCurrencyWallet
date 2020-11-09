@@ -84,6 +84,7 @@ const libAdapter = {
 
   accountFromMnemonic(mnemonic, netName) {
     const network = BTC[netName]
+    // @ts-ignore
     const settings = network.settings
 
     // todo: move?

@@ -11,7 +11,7 @@ import SwapList from './GhostSwap/SwapList/SwapList'
 import FeeControler from './FeeControler/FeeControler'
 import FailControler from './FailControler/FailControler'
 import DepositWindow from './GhostSwap/DepositWindow/DepositWindow'
-import paddingForSwapList from 'shared/helpers/paddingForSwapList.js'
+import paddingForSwapList from 'shared/helpers/paddingForSwapList'
 
 
 @CSSModules(styles)

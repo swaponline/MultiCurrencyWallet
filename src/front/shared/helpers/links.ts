@@ -149,7 +149,7 @@ const linksManager = {
   },
 }
 
-
+//@ts-ignore
 linksManager.getFaqLink = (faqID) => {
   for (let i = 0; i < linksManager.faq.length; i++) {
     if (linksManager.faq[i].id
@@ -186,6 +186,7 @@ export const getTokenWallet = (token) => {
   return `/token/${token.toUpperCase()}/${address}`
 }
 
+//@ts-ignore
 window.getTokenWallet = getTokenWallet
 
 export const getFullOrigin = () => `${location.origin}${location.pathname}#`

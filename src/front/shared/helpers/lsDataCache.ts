@@ -14,8 +14,9 @@ const push = ({ key, data, time }) => {
   try {
     cacheKeys = JSON.parse(cacheKeys)
   } catch (e) {}
+  //@ts-ignore
   if (!cacheKeys) cacheKeys = {}
-
+  //@ts-ignore
   cacheKeys[key] = cacheData.createtime + cacheData.time
   localStorage.setItem(`${process.env.ENTRY}:cache:${key}`, JSON.stringify(cacheData))
   localStorage.setItem(`${process.env.ENTRY}:cacheKeys`, JSON.stringify(cacheKeys))
@@ -25,7 +26,9 @@ const get = (key) => {
   let data = localStorage.getItem(`${process.env.ENTRY}:cache:${key}`)
   try {
     data = JSON.parse(data)
+    //@ts-ignore
     if (data && data.data) {
+      //@ts-ignore
       return data.data
     }
     return false
@@ -44,6 +47,7 @@ const cleanup = () => {
   try {
     cacheKeys = JSON.parse(cacheKeys)
   } catch (e) {}
+  //@ts-ignore
   if (!cacheKeys) cacheKeys = {}
 
   const curTime = getUnixTimeStamp()

@@ -5,8 +5,8 @@ import config from 'app-config'
 import path from 'path'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import TerserPlugin from 'terser-webpack-plugin-legacy'
-import externalConfig from './externalConfig'
 import WebpackRequireFrom from 'webpack-require-from-naggertooth'
+import externalConfig from './externalConfig'
 
 
 export default (webpackConfig) => {

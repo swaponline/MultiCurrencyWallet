@@ -95,6 +95,7 @@ const getByteCount = (inputs, outputs) => {
   return Math.ceil(totalWeight / 4)
 }
 
+//@ts-ignore
 const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = 'send', fixed } = {}) => {
   const defaultTxSize = constants.defaultFeeRates.btc.size[method]
 
@@ -133,6 +134,7 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
   return txSize
 }
 
+//@ts-ignore
 const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, fixed, method } = {}) => {
   const {
     user: {
@@ -152,11 +154,13 @@ const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, f
     if (method === 'send_multisig') address = btcMultisigUserData.address
   }
 
+  //@ts-ignore
   txSize = txSize || await calculateTxSize({ address, speed, fixed, method, txOut })
   feeRate = feeRate || await estimateFeeRate({ speed })
 
   const calculatedFeeValue = BigNumber.maximum(
     DUST,
+    //@ts-ignore
     BigNumber(feeRate)
       .multipliedBy(txSize)
       .div(1024)
@@ -191,9 +195,9 @@ const estimateFeeRateBitcoinfees = async ({ speed = 'fast' } = {}) => {
     normal: `halfHourFee`,
     fast: `fastestFee`,
   }
-
+  //@ts-ignore
   const apiSpeed = apiSpeeds[speed] || apiSpeed.normal
-
+  //@ts-ignore
   const apiRate = BigNumber(apiResult[apiSpeed]).multipliedBy(1024)
 
   return apiRate.isGreaterThanOrEqualTo(DUST)
@@ -223,9 +227,9 @@ const estimateFeeRateBlockcypher = async ({ speed = 'fast' } = {}) => {
     normal: 'medium_fee_per_kb',
     fast: 'high_fee_per_kb',
   }
-
+  //@ts-ignore
   const apiSpeed = apiSpeeds[speed] || apiSpeed.normal
-
+  //@ts-ignore
   const apiRate = BigNumber(apiResult[apiSpeed])
 
   return apiRate.isGreaterThanOrEqualTo(DUST)

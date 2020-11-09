@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { constants } from "helpers";
+import { constants } from 'helpers'
 
 import styles from './SwitchLang.scss'
 import CSSModules from 'react-css-modules'
@@ -8,18 +8,25 @@ import CSSModules from 'react-css-modules'
 import { relocalisedUrl } from 'helpers/locale'
 import { setCookie } from 'helpers/utils'
 import { FormattedMessage, injectIntl } from 'react-intl'
-import feedback from 'shared/helpers/feedback'
+import feedback from 'helpers/feedback'
 
+
+type PropsType = {
+  props: any;
+  history: any;
+}
 
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })
-export default class SwitchLang extends Component {
+export default class SwitchLang extends Component<{}, PropsType> {
 
   switchLang = (event, locale) => {
     event.preventDefault()
 
+    // @ts-ignore
     feedback.i18n.switched(locale)
 
+    // @ts-ignore
     const { history } = this.props
     setCookie('mylang', locale.toUpperCase(), new Date(new Date().getFullYear() + 1, 1))
     // history.push(`${relocalisedUrl(locale)}`)
@@ -29,12 +36,18 @@ export default class SwitchLang extends Component {
   }
 
   render() {
+    // @ts-ignore
     const { intl: { locale } } = this.props
 
     const isDark = localStorage.getItem(constants.localStorage.isDark)
 
+    /*const languages: string[] = ['EN', 'RU', 123];*/
+
     return (
       <div styleName="langSwitcher">
+        {/*{languages.forEach(language => {
+          return language + '-'
+        })}*/}
         <a
           href={locale.toUpperCase() !== 'EN' ? `#${relocalisedUrl(locale)}` : undefined}
           styleName={`language ${isDark ? '--dark' : ''}`}

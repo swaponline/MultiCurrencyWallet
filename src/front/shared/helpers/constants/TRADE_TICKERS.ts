@@ -28,7 +28,9 @@ Object.keys(config.erc20)
 
 if (config && config.isWidget) {
   swap.length = 0
+  //@ts-ignore
   if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
+    //@ts-ignore
     Object.keys(window.widgetERC20Tokens).forEach((key) => {
       swap.push(`${key.toUpperCase()}-BTC`)
       if (!config.opts.curEnabled || config.opts.curEnabled.ghost) swap.push(`${key.toUpperCase()}-GHOST`)

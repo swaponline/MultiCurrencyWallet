@@ -1,3 +1,4 @@
+//@ts-ignore
 import plugins from 'plugins';
 import config from 'helpers/externalConfig'
 

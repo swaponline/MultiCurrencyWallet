@@ -7,42 +7,43 @@ import request from './request'
 import BigNumber from 'bignumber.js'
 
 
-const networks = {}
-networks.mainnet = {
-  messagePrefix: '\x18Bitcoin Signed Message:\n',
-  bech32: 'gp',
-  bip32: {
-    public:  0x68DF7CBD,
-    private: 0x8E8EA8EA,
+const networks = {
+  mainnet: {
+    messagePrefix: 'Nextcoin Signed Message:\n',
+    bip32: {
+      public:  0x0488B21E,
+      private: 0x0488ADE4,
+    },
+    pubKeyHash: 75,
+    scriptHash: 5,
+    wif: 128,
   },
-  pubKeyHash: 0x26,
-  scriptHash: 0x61,
-  wif: 0xA6,
+  /*testnet: {
+    messagePrefix: '\x18Bitcoin Signed Message:\n',
+    bip32: {
+      public: 0xe1427800,
+      private: 0x04889478,
+    },
+    pubKeyHash: 0x4B,
+    scriptHash: 0x89,
+    wif: 0x2e,
+  }*/
 }
 
-networks.testnet = {
-  messagePrefix: '\x18Bitcoin Signed Message:\n',
-  bech32: 'tghost',
-  bip32: {
-    public: 0xe1427800,
-    private: 0x04889478,
-  },
-  pubKeyHash: 0x4B,
-  scriptHash: 0x89,
-  wif: 0x2e,
-}
+
 
 const hasAdminFee = (
   config
     && config.opts
     && config.opts.fee
-    && config.opts.fee.ghost
-    && config.opts.fee.ghost.fee
-) ? config.opts.fee.ghost : false
+    && config.opts.fee.next
+    && config.opts.fee.next.fee
+) ? config.opts.fee.next : false
 
-const network = process.env.MAINNET
+/*const network = process.env.MAINNET
   ? networks.mainnet
-  : networks.testnet
+  : networks.testnet*/
+const network = networks.mainnet
 
 const DUST = 546
 
@@ -120,14 +121,15 @@ const getByteCount = (inputs, outputs) => {
   return Math.ceil(totalWeight / 4)
 }
 
+//@ts-ignore
 const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = 'send', fixed } = {}) => {
-  const defaultTxSize = constants.defaultFeeRates.ghost.size[method]
+  const defaultTxSize = constants.defaultFeeRates.next.size[method]
 
   if (fixed) {
     return defaultTxSize
   }
 
-  unspents = unspents || await actions.ghost.fetchUnspents(address)
+  unspents = unspents || await actions.next.fetchUnspents(address)
 
 
   const txIn = unspents.length
@@ -158,12 +160,13 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
   return txSize
 }
 
+//@ts-ignore
 const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, fixed, method } = {}) => {
   const {
     user: {
-      ghostData,
-      ghostMultisigSMSData,
-      ghostMultisigUserData,
+      nextData,
+      nextMultisigSMSData,
+      nextMultisigUserData,
     },
   } = getState()
 
@@ -172,16 +175,19 @@ const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, f
   if (hasAdminFee) txOut = 3
 
   if (!address) {
-    address = ghostData.address
-    if (method === 'send_2fa') address = ghostMultisigSMS
-    if (method === 'send_multisig') address = ghostMultisigUserData.address
+    address = nextData.address
+    //@ts-ignore
+    if (method === 'send_2fa') address = nextMultisigSMS
+    if (method === 'send_multisig') address = nextMultisigUserData.address
   }
 
+  //@ts-ignore
   txSize = txSize || await calculateTxSize({ address, speed, fixed, method, txOut })
   feeRate = feeRate || await estimateFeeRate({ speed })
 
   const calculatedFeeValue = BigNumber.maximum(
     DUST,
+    //@ts-ignore
     BigNumber(feeRate)
       .multipliedBy(txSize)
       .div(1024)
@@ -195,13 +201,13 @@ const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, f
     ? calculatedFeeValue.toString()
     : calculatedFeeValue.multipliedBy(1e-8).toString()
 
-  console.log(`Ghost withdraw fee speed(${speed}) method (${method}) ${finalFeeValue}`)
+  console.log(`Next withdraw fee speed(${speed}) method (${method}) ${finalFeeValue}`)
   return finalFeeValue
 }
 
 const estimateFeeRate = async ({ speed = 'fast' } = {}) => {
-  const link = config.feeRates.ghost
-  const defaultRate = constants.defaultFeeRates.ghost.rate
+  const link = config.feeRates.next
+  const defaultRate = constants.defaultFeeRates.next.rate
 
   if (!link) {
     return defaultRate[speed]
@@ -222,8 +228,10 @@ const estimateFeeRate = async ({ speed = 'fast' } = {}) => {
     fast: 'high_fee_per_kb',
   }
 
+  //@ts-ignore
   const apiSpeed = apiSpeeds[speed] || apiSpeed.normal
 
+  //@ts-ignore
   const apiRate = BigNumber(apiResult[apiSpeed])
 
   return apiRate.isGreaterThanOrEqualTo(DUST)

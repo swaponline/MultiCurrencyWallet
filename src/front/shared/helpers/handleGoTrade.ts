@@ -1,3 +1,4 @@
+//@ts-ignore
 import SwapApp, { util } from 'swap.app'
 import actions from 'redux/actions'
 import moment from 'moment/moment'
@@ -27,6 +28,7 @@ const getDeclinedExistedSwapIndex = ({ currency, decline }) => {
         if (values) {
           const { isFinished, isRefunded, isStoppedSwap } = itemState
 
+          //@ts-ignore
           const lockTime = moment.unix(values.lockTime || date)._i / 1000
           const timeSinceLock = date - lockTime
 

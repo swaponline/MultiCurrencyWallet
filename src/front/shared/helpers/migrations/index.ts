@@ -14,6 +14,7 @@ export const migrate = () => {
     return Promise.resolve()
   }
   console.log(`Your current storage revision is ${revision}, need to run ${migrations.length - revision} migrations`)
+  //@ts-ignore
   return migrations.splice(revision).reduce((queue, migration) =>
     queue.then(() => new Promise((resolve, reject) => {
       try {

@@ -3,7 +3,7 @@ import constants from './constants'
 import request from './request'
 import BigNumber from 'bignumber.js'
 
-
+//@ts-ignore
 const estimateFeeValue = async ({ method = 'send', speed } = {}) => {
   const gasPrice = await estimateGasPrice({ speed })
   const feeValue = new BigNumber(constants.defaultFeeRates.eth.limit[method])
@@ -37,6 +37,7 @@ const estimateGasPrice = async ({ speed = 'fast' } = {}) => {
     fast: 'fast',
   }
 
+  //@ts-ignore
   const apiSpeed = apiSpeeds[speed] || apiSpeed.normal
 
   const apiPrice = new BigNumber(apiResult[apiSpeed]).multipliedBy(1e9)

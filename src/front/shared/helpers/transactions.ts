@@ -53,6 +53,7 @@ const pullTxBalances = (txId, amount, balances, adminFee) => apiLooper.post('txi
  * На момент выполнения транзакции
  */
 const getTxBalances = (currency, from, to) => {
+  //@ts-ignore
   const prefix = helpers.getCurrencyKey(currency)
   const curName = helpers.getCurrencyKey(currency, true)
 
@@ -83,6 +84,7 @@ const getTxBalances = (currency, from, to) => {
 }
 
 const getTxRouter = (currency, txId) => {
+  //@ts-ignore
   const prefix = helpers.getCurrencyKey(currency)
 
   if (actions[prefix]
@@ -95,6 +97,7 @@ const getTxRouter = (currency, txId) => {
 }
 
 const getLink = (currency, txId) => {
+  //@ts-ignore
   const prefix = helpers.getCurrencyKey(currency)
 
   if (actions[prefix]
@@ -107,6 +110,7 @@ const getLink = (currency, txId) => {
 }
 
 const getInfo = (currency, txRaw) => {
+  //@ts-ignore
   const prefix = helpers.getCurrencyKey(currency)
 
   if (actions[prefix]

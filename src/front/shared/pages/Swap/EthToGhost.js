@@ -11,7 +11,7 @@ import FeeControler from './FeeControler/FeeControler'
 import SwapProgress from './GhostSwap/SwapProgress/SwapProgress'
 import SwapList from './GhostSwap/SwapList/SwapList'
 import DepositWindow from './GhostSwap/DepositWindow/DepositWindow'
-import paddingForSwapList from 'shared/helpers/paddingForSwapList.js'
+import paddingForSwapList from 'shared/helpers/paddingForSwapList'
 
 @CSSModules(styles)
 export default class EthToGhost extends Component {

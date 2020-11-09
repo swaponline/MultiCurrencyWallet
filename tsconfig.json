@@ -13,11 +13,22 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
+    "experimentalDecorators": true,
     "jsx": "react",
     "lib": [
       "dom",
       "esnext"
-    ]
+    ],
+    "paths": {
+      "shared": ["src/front/shared"],
+      "shared/*": ["src/front/shared/*"],
+      "redux/*": ["src/front/shared/redux/*"],
+      "helpers": ["src/front/shared/helpers"],
+      "helpers/*": ["src/front/shared/helpers/*"],
+      "app-config": ["src/front/local_modules/app-config"],
+      "swap.app": ["src/core"],
+      "swap.app/*": ["src/core/*"],
+    },
   },
   "include": [
     "src/**/*"

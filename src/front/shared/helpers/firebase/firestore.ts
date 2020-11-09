@@ -33,10 +33,11 @@ const addData = (collection, doc, data) => {
 
   return new Promise(async (resolve) => {
     try {
-
+      //@ts-ignore
       const db = firebase.firestore(window.firebaseDefaultInstance)
       db.collection(collection).doc(doc).set(data)
         .then((docRef) => {
+          //@ts-ignore
           resolve(docRef)
         })
         .catch((e) => console.error('Promise add data error: ', e))
@@ -67,10 +68,11 @@ const updateData = (collection, doc, data) => {
 
   return new Promise(async (resolve) => {
     try {
-
+      //@ts-ignore
       const db = firebase.firestore(window.firebaseDefaultInstance)
       db.collection(collection).doc(doc).update(data)
         .then((docRef) => {
+          //@ts-ignore
           resolve(docRef)
         })
         .catch((e) => {

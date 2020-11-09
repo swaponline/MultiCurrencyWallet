@@ -21,7 +21,7 @@ import Toggle from 'components/controls/Toggle/Toggle'
 import Input from 'components/forms/Input/Input'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage } from 'react-intl'
-import { isNumberValid, isNumberStringFormatCorrect, mathConstants } from 'helpers/math.js'
+import { isNumberValid, isNumberStringFormatCorrect, mathConstants } from 'helpers/math'
 import minAmountOffer from 'helpers/constants/minAmountOffer'
 import coinsWithDynamicFee from 'helpers/constants/coinsWithDynamicFee'
 

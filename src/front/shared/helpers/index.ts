@@ -3,7 +3,7 @@ import ghost from './ghost'
 import next from './next'
 import eth from './eth'
 import ethToken from './ethToken'
-import user from './user'
+import * as user from './user'
 import web3 from './web3'
 import links from './links'
 import request from './request'
@@ -18,6 +18,7 @@ import handleGoTrade from './handleGoTrade'
 import firebase from './firebase'
 // Getters
 import externalConfig from './externalConfig'
+import feedback from './feedback'
 import getPageOffset from './getPageOffset'
 import getScrollBarWidth from './getScrollBarWidth'
 import estimateFeeValue from './estimateFeeValue'
@@ -80,7 +81,7 @@ export {
   getScrollBarWidth,
   externalConfig,
 
-
+  feedback,
   getUnixTimeStamp,
   cacheStorageGet,
   cacheStorageSet,

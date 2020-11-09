@@ -180,7 +180,7 @@ const metamaskApi = {
   disconnect,
 }
 
-
+//@ts-ignore
 window.metamaskApi = metamaskApi
 
 export default metamaskApi
