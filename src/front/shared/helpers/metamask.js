@@ -163,6 +163,12 @@ if (metamaskProvider) {
     if (metamaskProvider.isConnected()) {
       console.log('but connected in metamask')
     }
+  } else {
+    console.log('not injected')
+    if (metamaskProvider.isConnected()) {
+      console.log('not injected - but connected')
+      
+    }
   }
   
   _currentChain = metamaskProvider.chainId
