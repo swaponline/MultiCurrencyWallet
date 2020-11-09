@@ -33,8 +33,39 @@ export default (webpackConfig) => {
     return loader
   })
 
+  webpackConfig.optimization = {
+    minimizer: [
+      new TerserPlugin({
+        cache: false,
+        parallel: true,
+        sourceMap: false,
+      }),
+    ],
+    splitChunks: {
+      chunks: 'async',
+      minSize: 20000,
+      minRemainingSize: 0,
+      maxSize: 0,
+      minChunks: 1,
+      maxAsyncRequests: 30,
+      maxInitialRequests: 30,
+      automaticNameDelimiter: '~',
+      enforceSizeThreshold: 50000,
+      cacheGroups: {
+        defaultVendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true
+        }
+      }
+    }
+  }
+
   webpackConfig.plugins.push(
-    new TerserPlugin(),
     new WebpackRequireFrom({
       variableName: 'publicUrl',
       suppressErrors: true,
@@ -42,11 +73,6 @@ export default (webpackConfig) => {
     new ExtractTextPlugin({
       filename: '[name].[hash:6].css',
       allChunks: true,
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      // this assumes your vendor imports exist in the node_modules directory
-      minChunks: (module) => module.context && module.context.indexOf('node_modules') >= 0,
     }),
     new CopyWebpackPlugin([
       {
