@@ -34,8 +34,9 @@ const broadcast = ({ sender, destination, amount, fee, rawTx, invoice }) => {
   return false
 
 }
-
+//@ts-ignore
 const fetchTx = (txId) => apiLooper
+  //@ts-ignore
   .get('multisig', `/tx/${txId}`)
   .then((txData) => txData)
 
@@ -114,6 +115,7 @@ const fetch = (address) => {
 
         // @ToDo - (draft) use api request for fetch status of address list
         if (status === 'pending' && holderKey !== item.holder) {
+          //@ts-ignore
           firstPending = firstPending || {
             address,
             item,

@@ -1,6 +1,6 @@
-import { reducers } from 'redux/core/reducers'
+import menu from 'redux/core/reducers'
 
 
 export const setIsDisplayingTable = (payload) => {
-  reducers.menu.setIsDisplayingTable(payload)
+  menu.setIsDisplayingTable(payload)
 }

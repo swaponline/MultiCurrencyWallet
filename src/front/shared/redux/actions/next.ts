@@ -31,6 +31,7 @@ const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonicUtils
 
 
 const sweepToMnemonic = (mnemonic, path) => {
+  //@ts-ignore
   const wallet = getWalletByWords(mnemonic, path)
   localStorage.setItem(constants.privateKeyNames.nextMnemonic, wallet.WIF)
   return wallet.WIF
@@ -84,12 +85,14 @@ const auth = (privateKey) => {
   if (!privateKey) {
     throw new Error('Missing privateKey')
   }
-
+  //@ts-ignore
   const keyPair = bitcoin.ECPair.fromWIF(privateKey, next.network)
+  //@ts-ignore
   const account = bitcoin.ECPair.fromWIF(privateKey, next.network)
-
+  //@ts-ignore
   const { address } = bitcoin.payments.p2pkh({
     pubkey: account.publicKey,
+    //@ts-ignore
     network: next.network,
   })
   const { publicKey } = account
@@ -114,6 +117,7 @@ const getPrivateKeyByAddress = (address) => {
   } = getState()
 
   if (oldAddress === address) return privateKey
+  //@ts-ignore
   if (mnemonicAddress === address) return mnemonicKey
 }
 
@@ -139,6 +143,7 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
     // privateKey  = keyPair.toWIF()
     // use random 12 words
     if (!mnemonic) mnemonic = bip39.generateMnemonic()
+    //@ts-ignore
     const accData = getWalletByWords(mnemonic)
     console.log('Next. Generated walled from random 12 words')
     console.log(accData)
@@ -154,8 +159,9 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
     currency: 'NEXT',
     fullName: 'NEXT.coin',
   }
-
+  //@ts-ignore
   window.getNextAddress = () => data.address
+  //@ts-ignore
   window.getNextData = () => data
 
   console.info('Logged in with Next', data)
@@ -198,6 +204,7 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
         reducers.user.setAuthData({
           name: 'nextMnemonicData',
           data: {
+            //@ts-ignore
             ...balanceData,
             isBalanceFetched: true,
           },
@@ -216,6 +223,7 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
 const getTx = (txRaw) => {
   if (txRaw
     && txRaw.getId
+    //@ts-ignore
     && txRaw.getId instanceof 'function'
   ) {
     return txRaw.getId()
@@ -301,6 +309,7 @@ const fetchTx = (hash, cacheResponse) =>
       return false
     },
   }).then(({ fees, ...rest }) => ({
+    //@ts-ignore
     fees: BigNumber(fees).multipliedBy(1e8),
     ...rest,
   }))
@@ -343,6 +352,7 @@ const fetchTxInfo = (hash, cacheResponse) =>
         }
 
         if (adminOutput.length) {
+          //@ts-ignore
           adminFee = new BigNumber(adminOutput[0].value).toNumber()
         }
       }
@@ -502,6 +512,7 @@ const getTransaction = (address, ownType) =>
       })
   })
 
+//@ts-ignore
 const send = ({ from, to, amount, feeValue, speed } = {}) => {
 
   return new Promise(async (ready) => {
@@ -552,6 +563,7 @@ const broadcastTx = (rawTx) => {
 }
 
 const signMessage = (message, encodedPrivateKey) => {
+  //@ts-ignore
   const keyPair = bitcoin.ECPair.fromWIF(encodedPrivateKey, [next.networks.mainnet])
   const privateKeyBuff = Buffer.from(keyPair.privateKey)
 
@@ -561,7 +573,7 @@ const signMessage = (message, encodedPrivateKey) => {
 }
 
 const getReputation = () => Promise.resolve(0)
-
+//@ts-ignore
 window.getMainPublicKey = getMainPublicKey
 
 
@@ -592,7 +604,7 @@ const checkWithdraw = (scriptAddress) => {
     return false
   })
 }
-
+//@ts-ignore
 window.nextCheckWithdraw = checkWithdraw
 
 export default {

@@ -29,12 +29,14 @@ const initReducerState = () => {
   } = getState()
 
   if (!activeCurrency) reducers.user.setActiveCurrency({ activeCurrency: 'BTC' })
+  //@ts-ignore
   if (!activeFiat) reducers.user.setActiveFiat({ activeFiat: window.DEFAULT_FIAT || 'USD' })
 }
 
 const sign_btc_multisig = async (btcPrivateKey) => {
   let btcMultisigOwnerKey = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKey)
   try { btcMultisigOwnerKey = JSON.parse(btcMultisigOwnerKey) } catch (e) { }
+  //@ts-ignore
   const _btcMultisigPrivateKey = actions.btcmultisig.login_USER(btcPrivateKey, btcMultisigOwnerKey)
   await actions.btcmultisig.signToUserMultisig()
 }
@@ -45,6 +47,7 @@ const sign_btc_2fa = async (btcPrivateKey) => {
   let btcSmsPublicKeys = [btcSMSServerKey]
   let btcSmsMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKey)
   try { btcSmsMnemonicKey = JSON.parse(btcSmsMnemonicKey) } catch (e) { }
+  //@ts-ignore
   if (btcSmsMnemonicKey instanceof Array && btcSmsMnemonicKey.length > 0) {
     btcSmsPublicKeys.push(btcSmsMnemonicKey[0])
   }
@@ -57,6 +60,7 @@ const sign_btc_pin = async (btcPrivateKey) => {
 
   let btcPinMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcPinMnemonicKey)
   try { btcPinMnemonicKey = JSON.parse(btcPinMnemonicKey) } catch (e) { }
+  //@ts-ignore
   if (btcPinMnemonicKey instanceof Array && btcPinMnemonicKey.length > 0) {
     btcPinPublicKeys.push(btcPinMnemonicKey[0])
   }
@@ -84,9 +88,13 @@ const sign = async () => {
   }
   console.log('actions user - sign', mnemonicKeys, mnemonic)
   if (mnemonic !== `-`) {
+    //@ts-ignore
     if (!mnemonicKeys.btc) mnemonicKeys.btc = actions.btc.sweepToMnemonic(mnemonic)
+    //@ts-ignore
     if (!mnemonicKeys.eth) mnemonicKeys.eth = actions.eth.sweepToMnemonic(mnemonic)
+    //@ts-ignore
     if (!mnemonicKeys.ghost) mnemonicKeys.ghost = actions.ghost.sweepToMnemonic(mnemonic)
+    //@ts-ignore
     if (!mnemonicKeys.next) mnemonicKeys.next = actions.next.sweepToMnemonic(mnemonic)
     if (!mnemonicKeys.btcSms) {
       mnemonicKeys.btcSms = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
@@ -96,12 +104,14 @@ const sign = async () => {
   // Sweep-Switch
   let btcNewSmsMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKeyMnemonic)
   try { btcNewSmsMnemonicKey = JSON.parse(btcNewSmsMnemonicKey) } catch (e) { }
+  //@ts-ignore
   if (!(btcNewSmsMnemonicKey instanceof Array)) {
     localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyMnemonic, JSON.stringify([]))
   }
 
   let btcNewMultisigOwnerKey = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKeyMnemonic)
   try { btcNewMultisigOwnerKey = JSON.parse(btcNewMultisigOwnerKey) } catch (e) { }
+  //@ts-ignore
   if (!(btcNewMultisigOwnerKey instanceof Array)) {
     localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKeyMnemonic, JSON.stringify([]))
   }
@@ -196,6 +206,7 @@ const getBalances = () => {
 
     balances.forEach(async (obj) => {
       try {
+        //@ts-ignore
         await obj.func()
       } catch (e) {
         console.error('Fail fetch balance for', obj.name)
@@ -219,6 +230,7 @@ const getBalances = () => {
 }
 
 const customRate = (cur) => {
+  //@ts-ignore
   const wTokens = window.widgetERC20Tokens
 
   const dataobj = wTokens && Object.keys(wTokens).find(el => el === cur.toLowerCase())
@@ -284,6 +296,7 @@ const getDemoMoney = process.env.MAINNET ? () => { } : () => {
       localStorage.setItem(constants.privateKeyNames.eth, r[1])
       localStorage.setItem(constants.privateKeyNames.ghost, r[2])
       localStorage.setItem(constants.privateKeyNames.next, r[3])
+      //@ts-ignore
       localStorage.setItem(constants.localStorage.demoMoneyReceived, true)
       window.location.reload()
     })
@@ -428,22 +441,34 @@ const setTransactions = async () => {
   try {
     // @ToDo - make in like query
     const mainTokens = await Promise.all([
+      //@ts-ignore
       actions.btc.getTransaction(),
+      //@ts-ignore
       ...(isBtcSweeped) ? [] : [actions.btc.getTransaction(actions.btc.getSweepAddress())],
       // actions.btc.getInvoices(),
       // ... (isBtcSweeped) ? [] : [actions.btc.getInvoices(actions.btc.getSweepAddress())],
+      //@ts-ignore
       actions.btcmultisig.getTransactionSMS(),
+      //@ts-ignore
       actions.btcmultisig.getTransactionPIN(),
       // actions.btcmultisig.getInvoicesSMS(),
+      //@ts-ignore
       actions.btcmultisig.getTransactionUser(),
       // actions.btcmultisig.getInvoicesUser(),
       // actions.usdt.getTransaction(),
+      //@ts-ignore
       actions.eth.getTransaction(),
+      //@ts-ignore
       ...(metamask.isEnabled() && metamask.isConnected()) ? [actions.eth.getTransaction(metamask.getAddress())] : [],
+      //@ts-ignore
       ...(isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
+      //@ts-ignore
       actions.ghost.getTransaction(),
+      //@ts-ignore
       ...(isGhostSweeped) ? [] : [actions.ghost.getTransaction(actions.ghost.getSweepAddress())],
+      //@ts-ignore
       actions.next.getTransaction(),
+      //@ts-ignore
       ...(isNextSweeped) ? [] : [actions.next.getTransaction(actions.next.getSweepAddress())],
       // actions.eth.getInvoices(),
       // ... (isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
@@ -462,6 +487,7 @@ const setTransactions = async () => {
         }))
       return resolve(ercArray)
     }).then((ercTokens) => {
+      //@ts-ignore
       pullTransactions([...mainTokens, ...ercTokens])
     })
   } catch (error) {
@@ -589,10 +615,10 @@ const downloadPrivateKeys = () => {
   actions.notifications.show(constants.notifications.Message, {
     message,
   })
-
+  //@ts-ignore
   localStorage.setItem(constants.localStorage.privateKeysSaved, true)
 }
-
+//@ts-ignore
 window.downloadPrivateKeys = downloadPrivateKeys
 
 const getAuthData = (name) => {

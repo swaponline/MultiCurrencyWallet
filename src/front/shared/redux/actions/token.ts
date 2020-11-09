@@ -91,32 +91,13 @@ const setupContract = (ethAddress, contractAddress, nameContract, decimals, full
       ...data,
       address: metamask.getAddress(),
       isMetamask: true,
+      //@ts-ignore
       isConnected: true,
     }
   }
 
   reducers.user.setTokenAuthData({ name: data.name, data })
 
-
-  if (!isSweeped && false) {
-    const mnemonicTokenData = {
-      address: actions.eth.getSweepAddress(),
-      balance: 0,
-      name: nameContract.toLowerCase(),
-      fullName: `${fullName} (New)`,
-      currency: nameContract.toUpperCase(),
-      contractAddress,
-      decimals,
-      currencyRate: 1,
-      isMnemonic: true,
-      reducerDataTarget: `mnemonic_${nameContract.toUpperCase()}`,
-    }
-
-    reducers.user.setTokenAuthData({
-      name: mnemonicTokenData.reducerDataTarget,
-      data: mnemonicTokenData,
-    })
-  }
 }
 
 
@@ -229,13 +210,15 @@ const withToken = (name) => {
   const { [name]: { address: contractAddress, decimals } } = config.erc20
 
   const tokenContract = new web3.eth.Contract(ERC20_ABI, contractAddress, { from: address })
-
+  //@ts-ignore
   const toWei = amount => BigNumber(amount).times(BigNumber(10).pow(decimals)).toString(10)
+  //@ts-ignore
   const fromWei = wei => BigNumber(wei).div(BigNumber(10).pow(decimals))
 
   return { contractAddress, tokenContract, decimals, toWei, fromWei }
 }
 
+//@ts-ignore
 const fetchFees = async ({ gasPrice, gasLimit, speed } = {}) => {
   gasPrice = gasPrice || await helpers.ethToken.estimateGasPrice({ speed })
   gasLimit = gasLimit || constants.defaultFeeRates.ethToken.limit.send
@@ -259,7 +242,7 @@ const getLinkToInfo = (tx) => {
 
   return `${config.link.etherscan}/tx/${tx}`
 }
-
+//@ts-ignore
 const sendTransaction = ({ contract, method }, { args, params = {} } = {}, callback) =>
   new Promise(async (resolve, reject) => {
     const receipt = await contract.methods[method](...args).send(params)
@@ -275,7 +258,7 @@ const sendTransaction = ({ contract, method }, { args, params = {} } = {}, callb
   })
 
 const send = (data) => (hasAdminFee) ? sendWithAdminFee(data) : sendDefault(data)
-
+//@ts-ignore
 const sendWithAdminFee = async ({ name, from, to, amount, ...feeConfig } = {}) => {
   const { tokenContract, toWei } = withToken(name)
   const {
@@ -283,16 +266,18 @@ const sendWithAdminFee = async ({ name, from, to, amount, ...feeConfig } = {}) =
     address: adminFeeAddress,
     min: adminFeeMinValue,
   } = config.opts.fee.erc20
-
+//@ts-ignore
   const adminFeeMin = BigNumber(adminFeeMinValue)
 
   // fee - from amount - percent
+  //@ts-ignore
   let feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
   if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
   feeFromAmount = toWei(feeFromAmount.toNumber()) // Admin fee
 
   const params = {
+    //@ts-ignore
     ... await fetchFees({ ...feeConfig }),
     from,
   }
@@ -330,10 +315,11 @@ const sendWithAdminFee = async ({ name, from, to, amount, ...feeConfig } = {}) =
 
   })
 }
-
+//@ts-ignore
 const sendDefault = async ({ name, from, to, amount, ...feeConfig } = {}) => {
   const { tokenContract, toWei } = withToken(name)
   const params = {
+    //@ts-ignore
     ... await fetchFees({ ...feeConfig }),
     from,
   }
@@ -362,13 +348,14 @@ const sendDefault = async ({ name, from, to, amount, ...feeConfig } = {}) => {
     resolve(receipt)
   })
 }
-
+//@ts-ignore
 const approve = async ({ name, to, amount, ...feeConfig } = {}) => {
   const { tokenContract, toWei } = withToken(name)
+  //@ts-ignore
   const params = await fetchFees({ ...feeConfig })
 
   const newAmount = toWei(amount)
-
+//@ts-ignore
   return sendTransaction(
     { contract: tokenContract, method: 'approve' },
     { args: [to, newAmount], params })
@@ -397,17 +384,25 @@ const setAllowanceForToken = async ({ name, to, targetAllowance, ...config }) =>
 const fetchTokenTxInfo = (ticker, hash, cacheResponse) => {
   return new Promise(async (resolve) => {
     let txInfo = await fetchTxInfo(hash, cacheResponse)
+    //@ts-ignore
     if (txInfo.isContractTx) {
       // This is tx to contract. Fetch all txs and find this tx
+      //@ts-ignore
       const txs = await getTransaction(txInfo.senderAddress, ticker)
+      //@ts-ignore
       const ourTx = txs.filter((tx) => tx.hash.toLowerCase() === hash.toLowerCase())
       if (ourTx.length) {
+        //@ts-ignore
         txInfo.amount = ourTx[0].value
+        //@ts-ignore
         txInfo.adminFee = false // Swap dont have service fee
         if (ourTx[0].direction == `in`) {
           txInfo = {
+            //@ts-ignore
             ...txInfo,
+            //@ts-ignore
             receiverAddress: txInfo.senderAddress,
+            //@ts-ignore
             senderAddress: txInfo.receiverAddress,
           }
         }
@@ -456,6 +451,7 @@ const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
             && txData.inputs.length == 2
         ) {
           receiverAddress = `0x${txData.inputs[0]}`
+          //@ts-ignore
           amount = BigNumber(txData.inputs[1]).div(BigNumber(10).pow(tokenDecimal)).toString()
         } else {
           // This is not erc20 transfer tx (swap tx)
@@ -469,6 +465,7 @@ const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
         } = res.result
 
         // Calc miner fee, used for this tx
+        //@ts-ignore
         const minerFee = BigNumber(web3.utils.toBN(gas).toNumber())
           .multipliedBy(web3.utils.toBN(gasPrice).toNumber())
           .dividedBy(1e18).toNumber()
@@ -476,8 +473,11 @@ const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
         let adminFee = false
 
         if (hasAdminFee) {
+          //@ts-ignore
           adminFee = BigNumber(hasAdminFee.fee).dividedBy(100).multipliedBy(amount)
+          //@ts-ignore
           if (BigNumber(hasAdminFee.min).isGreaterThan(adminFee)) adminFee = BigNumber(hasAdminFee.min)
+          //@ts-ignore
           adminFee = adminFee.toNumber()
         }
 

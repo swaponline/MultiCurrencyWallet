@@ -13,7 +13,7 @@ const pullTransactions = transactions => {
 const delay = (ms) => new Promise(resolve => setTimeout(() => resolve(true), ms))
 
 const setTransactions = async (address, type, callback) => {
-
+  //@ts-ignore
   let reducer = getCurrencyKey(type)
 
   type = getCurrencyKey(type, true)

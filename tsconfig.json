@@ -25,6 +25,10 @@
       "redux/*": ["src/front/shared/redux/*"],
       "helpers": ["src/front/shared/helpers"],
       "helpers/*": ["src/front/shared/helpers/*"],
+      "components": ["src/front/shared/components"],
+      "components/*": ["src/front/shared/components/*"],
+      "pages": ["src/front/shared/pages"],
+      "pages/*": ["src/front/shared/pages/*"],
       "app-config": ["src/front/local_modules/app-config"],
       "swap.app": ["src/core/swap.app"],
       "swap.app/*": ["src/core/swap.app/*"],
@@ -40,6 +44,8 @@
       "swap.swap/*": ["src/core/swap.swap/*"],
       "swap.swaps": ["src/core/swap.swaps"],
       "swap.swaps/*": ["src/core/swap.swaps/*"],
+      "domain": ["src/common/domain"],
+      "domain/*": ["src/common/domain/*"]
     },
   },
   "include": [

@@ -23,7 +23,9 @@ const login = (privateKey) => {
   }
 
   const account = bitcoin.ECPair.fromWIF(privateKey, btc.network) // eslint-disable-line
+  //@ts-ignore
   const address = account.getAddress()
+  //@ts-ignore
   const publicKey = account.getPublicKeyBuffer().toString('hex')
 
   const data = {
@@ -43,6 +45,7 @@ const getBalance = async () => {
   try {
     const result = await fetchBalance(address)
     console.log('result', result)
+    //@ts-ignore
     const { balance, unconfirmed } = result
     reducers.user.setBalance({ name: 'usdtData', amount: balance, unconfirmedBalance: unconfirmed || 0 })
     return balance
@@ -73,8 +76,9 @@ const fetchBalance = (address, assetId = 31) =>
       console.log('Omni Balance:', findById[0].value)
       console.log('Omni Balance pending:', findById[0].pendingpos)
       console.log('Omni Balance pending:', findById[0].pendingneg)
-
+      //@ts-ignore
       const usdsatoshis = BigNumber(findById[0].value)
+      //@ts-ignore
       const usdtUnconfirmed = BigNumber(findById[0].pendingneg)
 
       if (usdsatoshis) {
@@ -117,9 +121,10 @@ const getTransaction = () => {
 }
 
 const fetchUnspents = (address) =>
+  //@ts-ignore
   apiLooper.get('bitpay', `/addr/${address}/utxo`)
 
-
+//@ts-ignore
 const send = ({ from, to, amount } = {}) => {
   const { user: { usdtData: { privateKey } } } = getState()
 
@@ -144,7 +149,7 @@ const send = ({ from, to, amount } = {}) => {
     tx.addOutput(to, 546)
     tx.addOutput(omniOutput, 0)
     tx.addOutput(from, skipValue)
-
+    //@ts-ignore
     tx.inputs.forEach((input, index) => {
       tx.sign(index, keyPair)
     })

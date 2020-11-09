@@ -9,6 +9,7 @@ import { selectiveSaver } from 'redux/middleware'
 const history = createBrowserHistory()
 const middleware = routerMiddleware(history)
 const initialState = (localStorage['redux-store']) ? JSON.parse(localStorage['redux-store']) : {}
+//@ts-ignore
 const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (v) => v
 
 const store = createStore({

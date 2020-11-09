@@ -33,6 +33,7 @@ const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonicUtils
 
 
 const sweepToMnemonic = (mnemonic, path) => {
+  //@ts-ignore
   const wallet = getWalletByWords(mnemonic, path)
   localStorage.setItem(constants.privateKeyNames.ghostMnemonic, wallet.WIF)
   return wallet.WIF
@@ -122,6 +123,7 @@ const getPrivateKeyByAddress = (address) => {
   } = getState()
   */
   if (oldAddress === address) return privateKey
+    //@ts-ignore
   if (mnemonicAddress === address) return mnemonicKey
 }
 
@@ -148,6 +150,7 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
     // privateKey  = keyPair.toWIF()
     // use random 12 words
     if (!mnemonic) mnemonic = bip39.generateMnemonic()
+    //@ts-ignore
     const accData = getWalletByWords(mnemonic)
     console.log('Ghost. Generated walled from random 12 words')
     console.log(accData)
@@ -163,8 +166,9 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
     currency: 'GHOST',
     fullName: 'ghost',
   }
-
+  //@ts-ignore
   window.getGhostAddress = () => data.address
+  //@ts-ignore
   window.getGhostData = () => data
 
   console.info('Logged in with Ghost', data)
@@ -206,6 +210,7 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
         reducers.user.setAuthData({
           name: 'ghostMnemonicData',
           data: {
+            //@ts-ignore
             ...balanceData,
             isBalanceFetched: true,
           },
@@ -224,6 +229,7 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
 const getTx = (txRaw) => {
   if (txRaw
     && txRaw.getId
+    //@ts-ignore
     && txRaw.getId instanceof 'function'
   ) {
     return txRaw.getId()
@@ -301,6 +307,7 @@ const fetchTx = (hash, cacheResponse) =>
       return false
     },
   }).then(({ fees, ...rest }) => ({
+    //@ts-ignore
     fees: BigNumber(fees).multipliedBy(1e8),
     ...rest,
   }))
@@ -343,6 +350,7 @@ const fetchTxInfo = (hash, cacheResponse) =>
         }
 
         if (adminOutput.length) {
+          //@ts-ignore
           adminFee = new BigNumber(adminOutput[0].value).toNumber()
         }
       }
@@ -508,6 +516,7 @@ const send = (data) => {
   return sendBitcore(data)
 }
 
+//@ts-ignore
 const sendV5WithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
   const privateKey = getPrivateKeyByAddress(from)
   const keyPair = bitcoin.ECPair.fromWIF(privateKey, ghost.network)
@@ -516,12 +525,17 @@ const sendV5WithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) =>
     address: adminFeeAddress,
     min: adminFeeMinValue,
   } = config.opts.fee.ghost
+  //@ts-ignore
   const adminFeeMin = BigNumber(adminFeeMinValue)
-
-  feeValue = feeValue || await ghost.estimateFeeValue({ inSatoshis: true, speed })
+  //@ts-ignore
+  feeValue = feeValue || await ghost.estimateFeeValue({
+    inSatoshis: true,
+    speed
+  })
 
 
   // fee - from amount - percent
+  //@ts-ignore
   let feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
   if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
@@ -557,6 +571,7 @@ const sendV5WithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) =>
 
   for (let i = 0; i < unspents.length; i++) {
     const { txid, vout } = unspents[i]
+    //@ts-ignore
     const rawTx = await fetchTxRaw(txid)
     psbt.addInput({
       hash: txid,
@@ -576,7 +591,7 @@ const sendV5WithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) =>
   const { txid } = broadcastAnswer
   return txid
 }
-
+//@ts-ignore
 const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
 
   const {
@@ -584,15 +599,17 @@ const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
     address: adminFeeAddress,
     min: adminFeeMinValue,
   } = config.opts.fee.ghost
+  //@ts-ignore
   const adminFeeMin = BigNumber(adminFeeMinValue)
 
   // fee - from amount - percent
+  //@ts-ignore
   let feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
   if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
   feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
 
-
+  //@ts-ignore
   feeValue = feeValue || await ghost.estimateFeeValue({ inSatoshis: true, speed })
 
   const tx = new bitcoin.TransactionBuilder(ghost.network)
@@ -620,24 +637,26 @@ const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
   return txRaw
 }
 
-
+//@ts-ignore
 const sendV5Default = async ({ from, to, amount, feeValue, speed } = {}) => {
   const privateKey = getPrivateKeyByAddress(from)
   const keyPair = bitcoin.ECPair.fromWIF(privateKey, ghost.network)
-
+  //@ts-ignore
   let feeFromAmount = BigNumber(0)
   if (hasAdminFee) {
     const {
       fee: adminFee,
       min: adminFeeMinValue,
     } = config.opts.fee.btc
+    //@ts-ignore
     const adminFeeMin = BigNumber(adminFeeMinValue)
-
+    //@ts-ignore
     feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
     if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
     feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber() // Admin fee in satoshi
   }
+  //@ts-ignore
   feeValue = feeValue || await ghost.estimateFeeValue({ inSatoshis: true, speed })
 
   const unspents = await fetchUnspents(from)
@@ -664,11 +683,13 @@ const sendV5Default = async ({ from, to, amount, feeValue, speed } = {}) => {
   for (let i = 0; i < unspents.length; i++) {
     const { txid, vout } = unspents[i]
     let rawTx = false
+    //@ts-ignore
     rawTx = await fetchTxRaw(txid)
 
     psbt.addInput({
       hash: txid,
       index: vout,
+      //@ts-ignore
       nonWitnessUtxo: Buffer.from(rawTx, 'hex'),
     })
   }
@@ -684,8 +705,9 @@ const sendV5Default = async ({ from, to, amount, feeValue, speed } = {}) => {
   const { txid } = broadcastAnswer
   return txid
 }
-
+//@ts-ignore
 const sendDefault = async ({ from, to, amount, feeValue, speed } = {}) => {
+  //@ts-ignore
   feeValue = feeValue || await ghost.estimateFeeValue({ inSatoshis: true, speed })
   const tx = new bitcoin.TransactionBuilder(ghost.network)
   tx.setVersion(160);
@@ -707,7 +729,7 @@ const sendDefault = async ({ from, to, amount, feeValue, speed } = {}) => {
 
   return txRaw
 }
-
+//@ts-ignore
 const sendBitcore = ({ from, to, amount, feeValue, speed } = {}) => {
   return new Promise(async (ready) => {
     const privKey = getPrivateKeyByAddress(from)
@@ -766,7 +788,7 @@ const signMessage = (message, encodedPrivateKey) => {
 }
 
 const getReputation = () => Promise.resolve(0)
-
+//@ts-ignore
 window.getMainPublicKey = getMainPublicKey
 
 /*
@@ -802,7 +824,7 @@ const checkWithdraw = (scriptAddress) => {
     return false
   })
 }
-
+//@ts-ignore
 window.ghostCheckWithdraw = checkWithdraw
 
 export default {

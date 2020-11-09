@@ -17,18 +17,26 @@ let buildOpts = {
 }
 
 if (window
+  //@ts-ignore
   && window.buildOptions
+  //@ts-ignore
   && Object.keys(window.buildOptions)
+  //@ts-ignore
   && Object.keys(window.buildOptions).length
 ) {
+  //@ts-ignore
   buildOpts = { ...buildOpts, ...window.buildOptions }
 }
 
 if (window
+  //@ts-ignore
   && window.widgetERC20Tokens
+  //@ts-ignore
   && Object.keys(window.widgetERC20Tokens)
+  //@ts-ignore
   && Object.keys(window.widgetERC20Tokens).length
 ) {
+  //@ts-ignore
   buildOpts.ownTokens = window.widgetERC20Tokens
 }
 if (buildOpts.ownTokens && Object.keys(buildOpts.ownTokens).length) {
@@ -50,6 +58,7 @@ if (buildOpts.ownTokens && Object.keys(buildOpts.ownTokens).length) {
 
 const initialState = {
   items: [
+    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.eth) ? [{
       name: 'ETH',
       title: 'ETH',
@@ -58,6 +67,7 @@ const initialState = {
       fullTitle: 'ethereum',
       addAssets: true,
     }] : [],
+    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.ghost) ? [{
       name: 'GHOST',
       title: 'GHOST',
@@ -66,6 +76,7 @@ const initialState = {
       fullTitle: 'ghost',
       addAssets: true,
     }] : [],
+    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.next) ? [{
       name: 'NEXT',
       title: 'NEXT',
@@ -74,6 +85,7 @@ const initialState = {
       fullTitle: 'next',
       addAssets: true,
     }] : [],
+    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.btc) ? [{
       name: 'BTC',
       title: 'BTC',
@@ -120,6 +132,7 @@ const initialState = {
       }))),
   ],
   partialItems: [
+    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.eth) ? [{
       name: 'ETH',
       title: 'ETH',
@@ -127,6 +140,7 @@ const initialState = {
       value: 'eth',
       fullTitle: 'ethereum',
     }] : [],
+    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.ghost) ? [{
       name: 'GHOST',
       title: 'GHOST',
@@ -134,6 +148,7 @@ const initialState = {
       value: 'ghost',
       fullTitle: 'ghost',
     }] : [],
+    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.next) ? [{
       name: 'NEXT',
       title: 'NEXT',
@@ -141,6 +156,7 @@ const initialState = {
       value: 'next',
       fullTitle: 'next',
     }] : [],
+    //@ts-ignore
     ...(!buildOpts.curEnabled || buildOpts.curEnabled.btc) ? [{
       name: 'BTC',
       title: 'BTC',
@@ -163,7 +179,9 @@ const initialState = {
 
 
 if (config.isWidget) {
+  //@ts-ignore
   initialState.items = [
+    //@ts-ignore
     {
       name: 'BTC',
       title: 'BTC',
@@ -171,6 +189,7 @@ if (config.isWidget) {
       value: 'btc',
       fullTitle: 'bitcoin',
     },
+    //@ts-ignore
     {
       name: 'GHOST',
       title: 'GHOST',
@@ -178,6 +197,7 @@ if (config.isWidget) {
       value: 'ghost',
       fullTitle: 'ghost',
     },
+    //@ts-ignore
     {
       name: 'NEXT',
       title: 'NEXT',
@@ -219,18 +239,22 @@ if (config.isWidget) {
   ]
 
   // Мульти валюта с обратной совместимостью одиночного билда
+  //@ts-ignore
   const multiTokenNames = (window.widgetERC20Tokens) ? Object.keys(window.widgetERC20Tokens) : []
 
   if (multiTokenNames.length > 0) {
     // First token in list - is main - fill single-token erc20 config
     config.erc20token = multiTokenNames[0]
+    //@ts-ignore
     config.erc20[config.erc20token] = window.widgetERC20Tokens[config.erc20token]
     multiTokenNames.forEach((key) => {
+      //@ts-ignore
       initialState.items.push({
         name: key.toUpperCase(),
         title: key.toUpperCase(),
         icon: key,
         value: key,
+        //@ts-ignore
         fullTitle: window.widgetERC20Tokens[key].fullName,
       })
       initialState.partialItems.push({
@@ -238,11 +262,13 @@ if (config.isWidget) {
         title: key.toUpperCase(),
         icon: key,
         value: key,
+        //@ts-ignore
         fullTitle: window.widgetERC20Tokens[key].fullName,
       })
     })
 
   } else {
+    //@ts-ignore
     initialState.items.push({
       name: config.erc20token.toUpperCase(),
       title: config.erc20token.toUpperCase(),
@@ -258,6 +284,7 @@ if (config.isWidget) {
       fullTitle: config.erc20[config.erc20token].fullName,
     })
   }
+  //@ts-ignore
   initialState.items.push({
     name: 'ETH',
     title: 'ETH',
@@ -265,7 +292,7 @@ if (config.isWidget) {
     value: 'eth',
     fullTitle: 'ethereum',
   })
-
+  //@ts-ignore
   initialState.items.push({
     name: 'GHOST',
     title: 'GHOST',
@@ -273,7 +300,7 @@ if (config.isWidget) {
     value: 'ghost',
     fullTitle: 'ghost',
   })
-
+  //@ts-ignore
   initialState.items.push({
     name: 'NEXT',
     title: 'NEXT',
@@ -296,6 +323,7 @@ if (config.isWidget) {
     const customERC = GetCustromERC20()
     Object.keys(customERC).forEach((tokenContract) => {
       const symbol = customERC[tokenContract].symbol
+      //@ts-ignore
       initialState.items.push({
         name: symbol.toUpperCase(),
         title: symbol.toUpperCase(),
