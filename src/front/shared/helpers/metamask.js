@@ -157,6 +157,14 @@ const isCorrectNetwork = () => {
 }
 
 if (metamaskProvider) {
+  console.log('metamask exist')
+  if (!isConnected()) {
+    console.log('not connected - web3modal')
+    if (metamaskProvider.isConnected()) {
+      console.log('but connected in metamask')
+    }
+  }
+  
   _currentChain = metamaskProvider.chainId
   metamaskProvider.on('chainChanged', (newChainId) => {
     if (newChainId !== _currentChain) {
