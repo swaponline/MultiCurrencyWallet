@@ -167,8 +167,9 @@ if (metamaskProvider) {
     }
   })
   metamaskProvider.on('accountsChanged', (newAccounts) => {
-    if (!newAccounts.length
+    if ((!newAccounts.length
       || newAccounts[0] !== _currentAddress
+      ) && _currentAddress
     ) {
       console.log('Account changed - restart')
       //window.location.reload()
