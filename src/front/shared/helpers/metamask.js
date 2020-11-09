@@ -222,7 +222,6 @@ const _initReduxState = () => {
 }
 
 // check - if user disconnect wallet from metamask - clear provider
-console.log('check metamask')
 _checkMetamaskUserDisconnect()
 
 if (isConnected()) {

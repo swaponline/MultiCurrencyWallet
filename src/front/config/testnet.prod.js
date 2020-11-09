@@ -9,8 +9,8 @@ export default {
   local: 'online',
   dir: 'testnet',
 
-  base: 'https://testnet.swaponline.io/',
-  publicPath: `https://testnet.swaponline.io${baseConfig.publicPath}`,
+  base: './',
+  publicPath: process.argv[2] || `./`, // call build like: `npm run build:mainnet https://some-domain.com/` to add different origin
 
   time: moment(Date.now()).format('LLLL'),
 
