@@ -168,7 +168,7 @@ if (metamaskProvider) {
     if (metamaskProvider.isConnected()) {
       console.log('not injected - but connected')
       console.log('set metamask in web3modal')
-      web3Modal.setCachedProvider(`metamask`)
+      web3Modal.setCachedProvider(`injected`)
     }
   }
   
