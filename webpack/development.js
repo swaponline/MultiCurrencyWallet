@@ -30,14 +30,14 @@ export default (webpackConfig) => {
   }
 
   webpackConfig.plugins.push(
-    new BundleAnalyzerPlugin({
-      analyzerMode: 'static',
-      reportFilename: webpackConfig.output.path,
-      // analyzerMode: 'server',
-      // analyzerHost: '127.0.0.1',
-      // analyzerPort: '8888',
-      // openAnalyzer: false, // do not auto open in browser
-    }),
+    // new BundleAnalyzerPlugin({
+    //   analyzerMode: 'static',
+    //   reportFilename: webpackConfig.output.path,
+    //   // analyzerMode: 'server',
+    //   // analyzerHost: '127.0.0.1',
+    //   // analyzerPort: '8888',
+    //   // openAnalyzer: false, // do not auto open in browser
+    // }),
     new webpack.SourceMapDevToolPlugin({
       filename: '[name].js.map',
       exclude: ['vendor.js']
