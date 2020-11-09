@@ -62,7 +62,8 @@ const _init = async () => {
       _web3 = await getWeb3()
     } catch (err) {
       web3Modal.clearCachedProvider()
-      window.location.reload()
+      console.log('fail init web3 - reload')
+      //window.location.reload()
     }
     setMetamask(web3)
     await _cacheAddress()
@@ -117,7 +118,8 @@ const disconnect = () => new Promise(async (resolved, reject) => {
   if (isEnabled() && isConnected()) {
     web3Modal.clearCachedProvider()
     resolved(true)
-    window.location.reload()
+    console.log('disconnect - reload')
+    //window.location.reload()
   } else {
     resolved(true)
   }
@@ -128,7 +130,8 @@ const connect = () => new Promise((resolved, reject) => {
     .connect()
     .then((provider) => {
       if (isConnected()) {
-        window.location.reload()
+        console.log('reload on conneted')
+        // window.location.reload()
       } else {
         setDefaultProvider()
         resolved(false)
@@ -157,14 +160,18 @@ if (metamaskProvider) {
   _currentChain = metamaskProvider.chainId
   metamaskProvider.on('chainChanged', (newChainId) => {
     if (newChainId !== _currentChain) {
-      if (!metamaskProvider.autoRefreshOnNetworkChange) window.location.reload()
+      if (!metamaskProvider.autoRefreshOnNetworkChange) {
+        console.log('Chain changed - restart')
+        //window.location.reload()
+      }
     }
   })
   metamaskProvider.on('accountsChanged', (newAccounts) => {
     if (!newAccounts.length
       || newAccounts[0] !== _currentAddress
     ) {
-      window.location.reload()
+      console.log('Account changed - restart')
+      //window.location.reload()
     }
   })
 }
