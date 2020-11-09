@@ -28,7 +28,7 @@ import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 const isWidgetBuild = config && config.isWidget
-
+// FIXME: эта строка была перед обьявлением класса в FirstStep.js
 // @connect(({ currencies: { items: currencies } }) => ({ currencies }));
 const CreateWallet = (props) => {
   const {
