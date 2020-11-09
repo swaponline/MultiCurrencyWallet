@@ -3,14 +3,11 @@ import React, { useState, useEffect, useRef } from 'react'
 import CSSModules from 'react-css-modules'
 import styles from '../CreateWallet.scss'
 
-import { connect } from 'redaction'
 import reducers from 'redux/core/reducers'
 
-import ReactTooltip from 'react-tooltip'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { isMobile } from 'react-device-detect'
 
-import config from 'app-config'
 import actions from 'redux/actions'
 import { firebase, constants, stats } from 'helpers'
 import firestore from 'helpers/firebase/firestore'
@@ -27,7 +24,7 @@ import Cupture, {
 
 
 const SecondStep = (props) => {
-  const { intl: { locale }, onClick, currencies, error, setError, forcedCurrencyData, btcData, ethData } = props
+  const { intl: { locale }, onClick, currencies, error, setError, forcedCurrencyData, btcData, etcClick } = props
 
   const _protection = {
     nothing: {
@@ -309,7 +306,7 @@ const SecondStep = (props) => {
       {!isMobile && !forcedCurrencyData &&
         <div>
           <Explanation subHeaderText={subHeaderText1()} step={1} notMain>
-            <Cupture click={this.etcClick} step={2} />
+            <Cupture click={etcClick} step={2} />
           </Explanation>
         </div>
       }
