@@ -1,6 +1,7 @@
 let prop: string
-//@ts-ignore
-prop = 123 // type error
+
+//prop = 123 // type error test
+prop = 'abc'
 
 export default {
   prop

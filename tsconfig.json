@@ -26,8 +26,8 @@
       "helpers": ["src/front/shared/helpers"],
       "helpers/*": ["src/front/shared/helpers/*"],
       "app-config": ["src/front/local_modules/app-config"],
-      "swap.app": ["src/core"],
-      "swap.app/*": ["src/core/*"],
+      "swap.app": ["src/core/swap.app"],
+      "swap.app/*": ["src/core/swap.app/*"],
     },
   },
   "include": [
