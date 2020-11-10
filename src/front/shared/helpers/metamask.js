@@ -59,7 +59,7 @@ const _init = async () => {
       _initReduxState()
       return
     }
-    setMetamask(web3)
+    setMetamask(_web3)
     await _cacheAddress()
     _initReduxState()
   }
@@ -75,8 +75,9 @@ const addWallet = () => {
 
 
 const getWeb3 = async () => {
-  const provider = await web3Modal.connect();
+  const provider = await web3Modal.connect()
   const web3 = new Web3(provider)
+  web3.isMetamask = true
   return web3
 }
 
@@ -94,9 +95,9 @@ const getBalance = () => {
       return balanceInCache
     }
 
-    return web3.eth.getBalance(address)
+    return _web3.eth.getBalance(address)
       .then(result => {
-        const amount = web3.utils.fromWei(result)
+        const amount = _web3.utils.fromWei(result)
 
         cacheStorageSet('currencyBalances', `eth_${address}`, amount, 30)
         reducers.user.setBalance({ name: 'metamaskData', amount })
