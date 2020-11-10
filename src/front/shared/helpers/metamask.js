@@ -10,6 +10,7 @@ import WalletConnectProvider from '@walletconnect/web3-provider'
 import Web3 from 'web3'
 import Web3Modal from 'web3modal'
 
+
 const providerOptions = {
   walletconnect: {
     package: WalletConnectProvider,
@@ -62,8 +63,6 @@ const _init = async () => {
       _web3 = await getWeb3()
     } catch (err) {
       web3Modal.clearCachedProvider()
-      console.log('fail init web3 - reload')
-      //window.location.reload()
     }
     setMetamask(web3)
     await _cacheAddress()
@@ -116,10 +115,11 @@ const getBalance = () => {
 
 const disconnect = () => new Promise(async (resolved, reject) => {
   if (isEnabled() && isConnected()) {
-    web3Modal.clearCachedProvider()
+    //await provider.close()
+
+    await web3Modal.clearCachedProvider()
     resolved(true)
-    console.log('disconnect - reload')
-    //window.location.reload()
+    window.location.reload()
   } else {
     resolved(true)
   }
@@ -130,8 +130,7 @@ const connect = () => new Promise((resolved, reject) => {
     .connect()
     .then((provider) => {
       if (isConnected()) {
-        console.log('reload on conneted')
-        // window.location.reload()
+        window.location.reload()
       } else {
         setDefaultProvider()
         resolved(false)
@@ -157,17 +156,13 @@ const isCorrectNetwork = () => {
 }
 
 if (metamaskProvider) {
-  console.log('metamask exist')
   if (!isConnected()) {
     console.log('not connected - web3modal')
     if (metamaskProvider.isConnected()) {
-      console.log('but connected in metamask')
+      console.warn(`Metamask exists and connected, but not connected in web3modal`)
     }
   } else {
-    console.log('not injected')
     if (metamaskProvider.isConnected()) {
-      console.log('not injected - but connected')
-      console.log('set metamask in web3modal')
       web3Modal.setCachedProvider(`injected`)
     }
   }
@@ -176,8 +171,7 @@ if (metamaskProvider) {
   metamaskProvider.on('chainChanged', (newChainId) => {
     if (newChainId !== _currentChain) {
       if (!metamaskProvider.autoRefreshOnNetworkChange) {
-        console.log('Chain changed - restart')
-        //window.location.reload()
+        window.location.reload()
       }
     }
   })
@@ -186,8 +180,7 @@ if (metamaskProvider) {
       || newAccounts[0] !== _currentAddress
       ) && _currentAddress
     ) {
-      console.log('Account changed - restart')
-      //window.location.reload()
+      window.location.reload()
     }
   })
 }
