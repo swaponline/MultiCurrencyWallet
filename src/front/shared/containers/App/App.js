@@ -49,7 +49,7 @@ const metamaskNetworks = defineMessages({
     defaultMessage: `Основная сеть (Mainnet)`,
   },
   testnet: {
-    id: `MetamaskNetworkAlert_NetworkMainnet`,
+    id: `MetamaskNetworkAlert_NetworkTestnet`,
     defaultMessage: `Тестовая сеть (Rinkeby)`,
   },
 })
