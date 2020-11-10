@@ -22,7 +22,7 @@
 
 ## Return of investments
 
-10% of project's revenue we forward to uniswap for support liquidity
+10% of project's revenue we forward to uniswap for supporting liquidity
 
 Current
 
