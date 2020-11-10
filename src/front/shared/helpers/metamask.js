@@ -10,12 +10,15 @@ import Web3Modal from 'web3modal'
 
 
 const providerOptions = {
+  // @ToDo - need more info - how to get address
+  /*
   walletconnect: {
     package: WalletConnectProvider,
     options: {
       infuraId: '5ffc47f65c4042ce847ef66a3fa70d4c',
     },
   },
+  */
 }
 
 const web3Modal = new Web3Modal({
@@ -50,6 +53,7 @@ const _init = async () => {
       _web3 = await getWeb3()
       _connected = true
     } catch (err) {
+      console.log('fail get web3', err)
       web3Modal.clearCachedProvider()
       _connected = false
       _initReduxState()
@@ -167,9 +171,11 @@ if (metamaskProvider) {
   metamaskProvider.on('accountsChanged', (newAccounts) => {
     if (newAccounts.length === 0) {
       // user disconnect metamask
-      web3Modal.clearCachedProvider()
-      window.location.reload()
-      return
+      if (_currentAddress) {
+        web3Modal.clearCachedProvider()
+        window.location.reload()
+        return
+      }
     }
     if ((!newAccounts.length
       || newAccounts[0] !== _currentAddress
