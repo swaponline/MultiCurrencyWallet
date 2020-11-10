@@ -30,6 +30,7 @@
       "pages": ["src/front/shared/pages"],
       "pages/*": ["src/front/shared/pages/*"],
       "app-config": ["src/front/local_modules/app-config"],
+      "plugins/*": ["src/front/shared/plugins/*"],
       "swap.app": ["src/core/swap.app"],
       "swap.app/*": ["src/core/swap.app/*"],
       "swap.auth": ["src/core/swap.auth"],

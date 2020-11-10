@@ -70,7 +70,7 @@ class Transaction extends Component {
         adminFee,
       }
     }
-
+    // @ts-ignore
     this.state = {
       currency,
       ticker,
@@ -94,6 +94,7 @@ class Transaction extends Component {
   async fetchTxInfo(currencyKey, txId, ticker) {
     const {
       infoTx: cachedTxInfo,
+    // @ts-ignore
     } = this.state
 
     let infoTx = null
@@ -111,6 +112,7 @@ class Transaction extends Component {
 
     if (!infoTx || error) {
       // Fail parse
+      //@ts-ignore
       this.setState({
         isFetching: false,
         error: !(cachedTxInfo),
@@ -136,7 +138,7 @@ class Transaction extends Component {
         minerFeeCurrency,
         adminFee,
       } = infoTx
-
+      //@ts-ignore
       this.setState({
         isFetching: false,
         infoTx,
@@ -159,13 +161,16 @@ class Transaction extends Component {
     const {
       ticker,
       txId,
+    //@ts-ignore
     } = this.state
 
     if (!txId) {
+      //@ts-ignore
       history.push(links.notFound)
       return
     }
 
+    //@ts-ignore
     const currency = getCurrencyKey(ticker)
     this.fetchTxInfo(currency, txId, ticker)
     this.fetchTxFinalBalances(getCurrencyKey(ticker, true), txId)
@@ -179,6 +184,7 @@ class Transaction extends Component {
     setTimeout(async () => {
       const finalBalances = await helpers.transactions.fetchTxBalances(currency, txId)
       if (finalBalances && !this.unmounted) {
+        //@ts-ignore
         this.setState({
           finalBalances,
         })
@@ -187,6 +193,7 @@ class Transaction extends Component {
   }
 
   handleClose = () => {
+    //@ts-ignore
     const { history } = this.props
 
     let {
@@ -195,6 +202,7 @@ class Transaction extends Component {
         receiverAddress: walletTwo,
       },
       ticker,
+    //@ts-ignore
     } = this.state
 
     const wallets = []
@@ -222,11 +230,14 @@ class Transaction extends Component {
   render() {
     const {
       intl,
+    //@ts-ignore
     } = this.props
 
     return (
       <ModalBox title={intl.formatMessage(labels.Title)} onClose={this.handleClose} >
         <div styleName="holder">
+          {/*
+          //@ts-ignore*/}
           <TxInfo {...this.state} />
         </div>
       </ModalBox>

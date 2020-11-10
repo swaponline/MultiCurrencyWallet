@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { Component, Fragment } from 'react'
 
 import Link from 'sw-valuelink'

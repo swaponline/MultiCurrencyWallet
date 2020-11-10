@@ -290,7 +290,7 @@ const isBTCAddress = (address) => {
   console.warn(`Deprecated call isBTCAddress`)
   return actions.btc.getDataByAddress(address)
 
-  const {
+  /*const {
     user: {
       btcData,
       btcMnemonicData,
@@ -306,7 +306,7 @@ const isBTCAddress = (address) => {
   if (btcMultisigUserData && btcMultisigUserData.address && btcMultisigUserData.address.toLowerCase() === address.toLowerCase()) return btcMultisigUserData
   if (btcMultisigG2FAData && btcMultisigG2FAData.address && btcMultisigG2FAData.address.toLowerCase() === address.toLowerCase()) return btcMultisigG2FAData
 
-  return false
+  return false*/
 }
 
 const createWallet = (privateKey, otherOwnerPublicKey) => {
@@ -1167,8 +1167,6 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
       error: apiError.message,
       rawTx: rawTX,
     }
-    console.error(apiError)
-    return false
   }
 }
 //@ts-ignore
@@ -1278,8 +1276,6 @@ const sendSMSProtectedV4 = async ({ from, to, amount, feeValue, speed } = {}) =>
       error: apiError.message,
       rawTx: txRaw.toHex(),
     }
-    console.error(apiError)
-    return false
   }
 }
 
@@ -1437,8 +1433,6 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
       error: apiError.message,
       rawTX,
     }
-    console.error(apiError)
-    return false
   }
 }
 
@@ -1584,8 +1578,6 @@ const sendPinProtectedV4 = async ({ from, to, amount, feeValue, speed, password,
       error: apiError.message,
       rawTx: txRaw.toHex(),
     }
-    console.error(apiError)
-    return false
   }
 }
 

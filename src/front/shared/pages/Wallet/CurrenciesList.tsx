@@ -1,3 +1,4 @@
+//@ts-ignore
 import React, { Fragment } from 'react'
 
 import CSSModules from 'react-css-modules'
@@ -28,6 +29,8 @@ const CurrenciesList = ({
     <div styleName={`yourAssets ${isDark ? 'dark' : ''}`}>
       {(exConfig && exConfig.opts && exConfig.opts.showWalletBanners || isWidgetBuild) ? (
         <Fragment>
+          {/*
+          //@ts-ignore */}
           <Slider multisigPendingCount={multisigPendingCount} />
         </Fragment>
       ) : (
@@ -42,10 +45,13 @@ const CurrenciesList = ({
           defaultMessage="Here you can safely store, send and receive assets"
         />
       </div>
+      {/*
+      //@ts-ignore */}
       <Table
         className={`${styles.walletTable} data-tut-address`}
         rows={tableRows}
         rowRender={(row, index, selectId, handleSelectId) => (
+          //@ts-ignore
           <Row
             key={index}
             index={index}

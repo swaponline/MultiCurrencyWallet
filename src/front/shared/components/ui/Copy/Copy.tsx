@@ -12,7 +12,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })
-export default class Copy extends Component {
+export default class Copy extends Component<any, any> {
 
   state = {
     showTip: false,

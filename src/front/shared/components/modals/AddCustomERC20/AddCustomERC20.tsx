@@ -43,7 +43,7 @@ export default class AddCustomERC20 extends React.Component {
 
   constructor(data) {
     super()
-
+    //@ts-ignore
     this.state = {
       step: 'enterAddress',
       tokenAddress: '',
@@ -82,7 +82,9 @@ export default class AddCustomERC20 extends React.Component {
   }
 
   handleSubmit = async () => {
+    //@ts-ignore
     const { tokenAddress } = this.state
+    //@ts-ignore
     this.setState({
       isShipped: true,
     })
@@ -113,9 +115,11 @@ export default class AddCustomERC20 extends React.Component {
   }
 
   handleConfirm = async () => {
+    //@ts-ignore
     const { tokenAddress, tokenSymbol, tokenDecimals } = this.state
     actions.token.AddCustomERC20( tokenAddress, tokenSymbol, tokenDecimals )
     actions.core.markCoinAsVisible( tokenSymbol.toUpperCase(), true )
+    //@ts-ignore
     this.setState({
       step: 'ready',
     })
@@ -126,6 +130,7 @@ export default class AddCustomERC20 extends React.Component {
   }
 
   addressIsCorrect() {
+    //@ts-ignore
     const { tokenAddress } = this.state
     return typeforce.isCoinAddress.ETH(tokenAddress)
   }
@@ -143,6 +148,7 @@ export default class AddCustomERC20 extends React.Component {
       tokenDecimals,
       isShipped,
       notFound,
+    //@ts-ignore
     } = this.state
 
     const {
@@ -151,6 +157,7 @@ export default class AddCustomERC20 extends React.Component {
         currency,
       },
       intl,
+    //@ts-ignore
     } = this.props
 
     const linked = Link.all(this, 'tokenAddress')
@@ -172,6 +179,8 @@ export default class AddCustomERC20 extends React.Component {
     })
 
     return (
+      /*
+      //@ts-ignore*/
       <Modal name={name} title={`${intl.formatMessage(localeLabel.title)}`} disableClose={this.props.data.disableClose}>
         <div styleName="erc20ModalHolder">
           { step === 'enterAddress' && 

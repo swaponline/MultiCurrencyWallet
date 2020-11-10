@@ -1,4 +1,5 @@
-import React, { Component, Fragment } from 'react'
+//@ts-ignore - update ts
+import React, { Component } from 'react'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
@@ -65,13 +66,16 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     ui: { dashboardModalsAllowed },
   }) => {
     let widgetMultiTokens = []
+    //@ts-ignore
     if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
+      //@ts-ignore
       Object.keys(window.widgetERC20Tokens).forEach((key) => {
         widgetMultiTokens.push(key.toUpperCase())
       })
     }
     const tokens =
       config && config.isWidget
+        //@ts-ignore
         ? window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length
           ? widgetMultiTokens
           : [config.erc20token.toUpperCase()]
@@ -136,7 +140,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   isSigned,
 }))
 @cssModules(styles, { allowMultiple: true })
-export default class Wallet extends Component {
+export default class Wallet extends Component<any, any> {
   constructor(props) {
     super(props)
 
@@ -153,13 +157,14 @@ export default class Wallet extends Component {
       activeView = 1
     }
     if (page === 'invoices') activeView = 2
-
+    //@ts-ignore
     this.state = {
       activeView,
       btcBalance: 0,
       enabledCurrencies: getActivatedCurrencies(),
       multisigPendingCount,
     }
+    //@ts-ignore
     this.syncTimer = null
   }
 
@@ -169,12 +174,14 @@ export default class Wallet extends Component {
       intl: {
         locale,
       },
+    //@ts-ignore
     } = this.props
 
     if (metamask.isEnabled()) {
       setTimeout(() => {
         metamask.connect().then((isConnected) => {
           if (isConnected) {
+            //@ts-ignore
             localStorage.setItem(constants.localStorage.isWalletCreate, true)
             setTimeout(async () => {
               history.push(localisedUrl(locale, links.home))
@@ -203,6 +210,7 @@ export default class Wallet extends Component {
       },
       location: { pathname },
       history,
+    //@ts-ignore
     } = this.props
 
 
@@ -236,12 +244,13 @@ export default class Wallet extends Component {
           history.push(localisedUrl(locale, links.home))
         }, intl)
       }
-
+      //@ts-ignore
       this.setState({
         activeView,
         multisigPendingCount,
       })
     }
+    //@ts-ignore
     clearTimeout(this.syncTimer)
   }
 
@@ -263,6 +272,7 @@ export default class Wallet extends Component {
       intl: {
         locale,
       },
+    //@ts-ignore
     } = this.props
 
     if (pathname.toLowerCase() == links.connectWallet.toLowerCase()) {
@@ -283,6 +293,7 @@ export default class Wallet extends Component {
       }, intl)
     }
     this.getInfoAboutCurrency()
+    //@ts-ignore
     this.setState({
       multisigPendingCount,
     })
@@ -293,6 +304,7 @@ export default class Wallet extends Component {
   }
 
   getInfoAboutCurrency = async () => {
+    //@ts-ignore
     const { currencies } = this.props
     const currencyNames = currencies.map(({ name }) => name)
 
@@ -300,6 +312,7 @@ export default class Wallet extends Component {
   }
 
   handleWithdraw = params => {
+    //@ts-ignore
     const { allData } = this.props
     const { address, amount } = params
     const item = allData.find(({ currency }) => currency.toLowerCase() === params.currency.toLowerCase())
@@ -312,10 +325,12 @@ export default class Wallet extends Component {
   }
 
   goToСreateWallet = () => {
+    //@ts-ignore
     feedback.wallet.pressedAddCurrency()
     const {
       history,
       intl: { locale },
+    //@ts-ignore
     } = this.props
 
     history.push(localisedUrl(locale, links.createWallet))
@@ -325,6 +340,7 @@ export default class Wallet extends Component {
     const {
       history,
       intl: { locale },
+    //@ts-ignore
     } = this.props
     if (isWidgetBuild && !config.isFullBuild) {
       // was pointOfSell
@@ -335,7 +351,9 @@ export default class Wallet extends Component {
   }
 
   handleModalOpen = context => {
+    //@ts-ignore
     const { enabledCurrencies } = this.state
+    //@ts-ignore
     const { hiddenCoinsList } = this.props
 
     /* @ToDo Вынести отдельно */
@@ -348,8 +366,10 @@ export default class Wallet extends Component {
     widgetCurrencies.push('GHOST')
     widgetCurrencies.push('NEXT')
     if (isWidgetBuild) {
+      //@ts-ignore
       if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
         // Multi token widget build
+        //@ts-ignore
         Object.keys(window.widgetERC20Tokens).forEach(key => {
           widgetCurrencies.push(key.toUpperCase())
         })
@@ -377,10 +397,12 @@ export default class Wallet extends Component {
   }
 
   handleWithdrawFirstAsset = () => {
+    //@ts-ignore
     const { hiddenCoinsList } = this.props
     const {
       history,
       intl: { locale },
+    //@ts-ignore
     } = this.props
 
     const {
@@ -437,7 +459,7 @@ export default class Wallet extends Component {
 
     const isFirstCheck = moment(now, 'HH:mm:ss DD/MM/YYYY').isSame(lastCheckMoment)
     const isOneHourAfter = moment(now, 'HH:mm:ss DD/MM/YYYY').isAfter(lastCheckMoment.add(1, 'hours'))
-
+    //@ts-ignore
     const { ethData, btcData, ghostData, nextData } = this.props.tokensData
 
     const balancesData = {
@@ -451,6 +473,7 @@ export default class Wallet extends Component {
       nextAddress: nextData.address,
     }
 
+    //@ts-ignore
     this.syncTimer = setTimeout(async () => {
       if (isOneHourAfter || isFirstCheck) {
         localStorage.setItem(constants.localStorage.lastCheckBalance, now)
@@ -458,32 +481,41 @@ export default class Wallet extends Component {
           const ipInfo = await firebase.getIPInfo()
         
           const registrationData = {
+            //@ts-ignore
             locale: ipInfo.locale || (navigator.userLanguage || navigator.language || 'en-gb').split('-')[0],
             ip: ipInfo.ip,
           }
+          //@ts-ignore
           if (this.props.messagingToken) {
+            //@ts-ignore
             registrationData.messaging_token = this.props.messagingToken
           }
           let widgetUrl
           if (appConfig.isWidget) {
             widgetUrl = window.top.location.origin
+            //@ts-ignore
             registrationData.widget_url = widgetUrl
           }
-
+          //@ts-ignore
           const tokensArray = Object.values(this.props.tokensData)
 
           const wallets = tokensArray.map(item => ({
+            //@ts-ignore
             symbol: item && item.currency ? item.currency.split(' ')[0] : '',
+            //@ts-ignore
             type: item && item.currency ? item.currency.split(' ')[1] || 'common' : '',
+            //@ts-ignore
             address: item && item.address ? item.address : '',
+            //@ts-ignore
             balance: item && item.balance ? BigNumber(item.balance).toNumber() : 0,
+            //@ts-ignore
             public_key: item && item.publicKey ? item.publicKey.toString('Hex') : '',
             // TODO: let this work
             // nounce: 1,
             // signatures_required: 1,
             // signatories: [],
           }))
-
+          //@ts-ignore
           registrationData.wallets = wallets
 
           await stats.updateUser(ethData.address, window.top.location.host, registrationData)
@@ -496,9 +528,11 @@ export default class Wallet extends Component {
     }, 2000)
   }
 
-
+  //@ts-ignore
   handleModalOpen = context => {
+    //@ts-ignore
     const { enabledCurrencies } = this.state
+    //@ts-ignore
     const { hiddenCoinsList } = this.props
 
     /* @ToDo Вынести в экшены и убрать все дубляжи из всех компонентов */
@@ -509,8 +543,10 @@ export default class Wallet extends Component {
     if (!hiddenCoinsList.includes('BTC (Multisig)')) widgetCurrencies.push('BTC (Multisig)')
     widgetCurrencies.push('ETH')
     if (isWidgetBuild) {
+      //@ts-ignore
       if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
         // Multi token widget build
+        //@ts-ignore
         Object.keys(window.widgetERC20Tokens).forEach(key => {
           widgetCurrencies.push(key.toUpperCase())
         })
@@ -543,6 +579,7 @@ export default class Wallet extends Component {
       infoAboutCurrency,
       enabledCurrencies,
       multisigPendingCount,
+    //@ts-ignore
     } = this.state
 
     const {
@@ -555,6 +592,7 @@ export default class Wallet extends Component {
           page = null,
         },
       },
+    //@ts-ignore
     } = this.props
 
     const allData = actions.core.getWallets()
@@ -573,8 +611,10 @@ export default class Wallet extends Component {
     widgetCurrencies.push('GHOST')
     widgetCurrencies.push('NEXT')
     if (isWidgetBuild) {
+      //@ts-ignore
       if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
         // Multi token widget build
+        //@ts-ignore
         Object.keys(window.widgetERC20Tokens).forEach((key) => {
           widgetCurrencies.push(key.toUpperCase())
         })
@@ -607,6 +647,7 @@ export default class Wallet extends Component {
       return ({
         ...el,
         balance: el.balance,
+        //@ts-ignore
         fiatBalance: (el.balance > 0 && el.infoAboutCurrency && el.infoAboutCurrency.price_fiat) ? BigNumber(el.balance)
           .multipliedBy(el.infoAboutCurrency.price_fiat)
           .dp(2, BigNumber.ROUND_FLOOR) : 0
@@ -623,7 +664,7 @@ export default class Wallet extends Component {
         btcBalance += balance * infoAboutCurrency.price_btc
       }
     })
-
+    //@ts-ignore
     const allFiatBalance = tableRows.reduce((acc, cur) => BigNumber(cur.fiatBalance).plus(acc), 0)
 
     return (
@@ -654,14 +695,24 @@ export default class Wallet extends Component {
           <CurrenciesList
             isDark={isDark}
             tableRows={tableRows}
+            {/*
+            //@ts-ignore */}
             {...this.state}
+            {/*
+            //@ts-ignore */}
             {...this.props}
             goToСreateWallet={this.goToСreateWallet}
             multisigPendingCount={multisigPendingCount}
+            {/*
+            //@ts-ignore */}
             getExCurrencyRate={(currencySymbol, rate) => this.getExCurrencyRate(currencySymbol, rate)}
           />
         }
+        {/*
+        //@ts-ignore */}
         {activeView === 1 && (<History {...this.props} isDark={isDark} />)}
+        {/*
+        //@ts-ignore */}
         {activeView === 2 && (<InvoicesList {...this.props} onlyTable={true} isDark={isDark} />)}
       </DashboardLayout>
     )

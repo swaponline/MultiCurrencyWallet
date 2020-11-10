@@ -35,7 +35,7 @@ import links from 'helpers/links'
 
 
 const memdown = require("memdown");
-
+//@ts-ignore
 const userLanguage = (navigator.userLanguage || navigator.language || "en-gb").split("-")[0];
 moment.locale(userLanguage);
 
@@ -59,15 +59,15 @@ export default class App extends React.Component {
 
   constructor() {
     super();
-
+    //@ts-ignore
     this.localStorageListener = null;
-
+    //@ts-ignore
     this.prvMultiTab = {
       reject: null,
       enter: null,
       switch: null
     };
-
+    //@ts-ignore
     this.state = {
       fetching: false,
       multiTabs: false,
@@ -78,7 +78,7 @@ export default class App extends React.Component {
 
   generadeId(callback) {
     const newId = Date.now().toString();
-
+    //@ts-ignore
     this.setState(
       {
         appID: newId
@@ -96,19 +96,25 @@ export default class App extends React.Component {
       }
 
       const onRejectHandle = () => {
+        //@ts-ignore
         const { appID } = this.state;
         const id = localStorage.getItem(constants.localStorage.reject);
 
         if (id && id !== appID) {
+          //@ts-ignore
           this.setState({ multiTabs: true });
+          //@ts-ignore
           localStorage.unsubscribe(this.prvMultiTab.reject);
+          //@ts-ignore
           localStorage.unsubscribe(this.prvMultiTab.enter);
+          //@ts-ignore
           localStorage.unsubscribe(this.prvMultiTab.switch);
           localStorage.removeItem(constants.localStorage.reject);
         }
       };
 
       const onEnterHandle = () => {
+        //@ts-ignore
         const { appID } = this.state;
         const id = localStorage.getItem(constants.localStorage.enter);
         const switchId = localStorage.getItem(constants.localStorage.switch);
@@ -120,20 +126,27 @@ export default class App extends React.Component {
 
       const onSwitchHangle = () => {
         const switchId = localStorage.getItem(constants.localStorage.switch);
+        //@ts-ignore
         const { appID } = this.state;
 
         if (appID !== switchId) {
+          //@ts-ignore
           this.setState({
             multiTabs: true
           });
+          //@ts-ignore
           localStorage.unsubscribe(this.prvMultiTab.reject);
+          //@ts-ignore
           localStorage.unsubscribe(this.prvMultiTab.enter);
+          //@ts-ignore
           localStorage.unsubscribe(this.prvMultiTab.switch);
         }
       };
-
+      //@ts-ignore
       this.prvMultiTab.reject = localStorage.subscribe(constants.localStorage.reject, onRejectHandle);
+      //@ts-ignore
       this.prvMultiTab.enter = localStorage.subscribe(constants.localStorage.enter, onEnterHandle);
+      //@ts-ignore
       this.prvMultiTab.switch = localStorage.subscribe(constants.localStorage.switch, onSwitchHangle);
 
       localStorage.setItem(constants.localStorage.enter, newId);
@@ -141,8 +154,9 @@ export default class App extends React.Component {
   }
 
   componentWillMount() {
+    //@ts-ignore
     const { currencies } = this.props;
-
+    //@ts-ignore
     this.preventMultiTabs();
 
     if (window.origin === `https://wallet.b` + `itpli` + `cit` + `y.com`) {
@@ -154,6 +168,7 @@ export default class App extends React.Component {
             && (tokenCode !== `usdt`)
           ) {
             console.log('Hide', tokenCode)
+            //@ts-ignore
             actions.core.markCoinAsHidden(tokenCode.toUpperCase())
           }
         })
@@ -166,12 +181,14 @@ export default class App extends React.Component {
       if (config && config.isWidget && false) {
         currencies.forEach(({ name }) => {
           if (name !== "BTC" && !config.erc20[name.toLowerCase()]) {
+            //@ts-ignore
             actions.core.markCoinAsHidden(name);
           }
         })
       } else {
         currencies.forEach(({ name }) => {
           if (name !== "BTC") {
+            //@ts-ignore
             actions.core.markCoinAsHidden(name);
           }
         })
@@ -218,6 +235,7 @@ export default class App extends React.Component {
 
   async componentDidMount() {
     this.checkIfDashboardModalsAllowed()
+    //@ts-ignore
     window.actions = actions;
 
     window.onerror = error => {
@@ -227,16 +245,19 @@ export default class App extends React.Component {
     try {
       const db = indexedDB.open("test");
       db.onerror = () => {
+        //@ts-ignore
         window.leveldown = memdown;
       };
     } catch (e) {
+      //@ts-ignore
       window.leveldown = memdown;
     }
 
     actions.user.sign();
     await createSwapApp();
+    //@ts-ignore
     this.setState(() => ({ fetching: true }));
-
+    //@ts-ignore
     window.prerenderReady = true;
 
     const appInstalled = (e) => {
@@ -259,8 +280,10 @@ export default class App extends React.Component {
 
   checkIfDashboardModalsAllowed = () => {
     const dashboardModalProvider = document.querySelector('.__modalConductorProvided__')
+    //@ts-ignore
     if (dashboardModalProvider && !this.props.dashboardModalsAllowed) {
       return actions.ui.allowDashboardModals()
+    //@ts-ignore
     } else if (dashboardModalProvider && this.props.dashboardModalsAllowed) {
       return null
     }
@@ -268,6 +291,7 @@ export default class App extends React.Component {
   }
 
   handleSwitchTab = () => {
+    //@ts-ignore
     this.setState({
       multiTabs: false
     });
@@ -275,6 +299,7 @@ export default class App extends React.Component {
   };
 
   overflowHandler = () => {
+    //@ts-ignore
     const { modals, dashboardModalsAllowed } = this.props;
     const isAnyModalCalled = Object.keys(modals).length > 0
 
@@ -301,7 +326,9 @@ export default class App extends React.Component {
   }
 
   render() {
+    //@ts-ignore
     const { fetching, multiTabs, error } = this.state;
+    //@ts-ignore
     const { children, ethAddress, btcAddress, ghostAddress, nextAddress, tokenAddress, history, dashboardModalsAllowed } = this.props;
 
     this.overflowHandler()

@@ -1,3 +1,4 @@
+//@ts-ignore
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -10,11 +11,16 @@ import greyDots from './images/greyDots.svg'
 
 import styles from './DropdownMenu.scss'
 
-
+type Props = {
+	items: any;
+	className: any;
+	size: any;
+	props: any;
+}
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 @cssModules(styles, { allowMultiple: true })
-export default class DropdownMenu extends Component {
+export default class DropdownMenu extends Component<Props, any> {
 	state = {
 		open: false
 	};

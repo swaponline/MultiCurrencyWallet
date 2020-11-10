@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import * as React from 'react'
 
 import { connect } from 'redaction'
 
@@ -15,11 +15,21 @@ import linksManager from '../../../../helpers/links'
 
 import metamask from 'helpers/metamask'
 
+interface Props {
+
+}
+
+interface State {
+  mnemonicDeleted: boolean
+  isFetching: boolean
+  metamaskConnected: boolean
+}
+
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 @injectIntl
 @connect(({ user }) => ({ user }))
-export default class WallerSlider extends Component {
+export default class WallerSlider extends React.Component<Props, State> {
   constructor(props) {
     super(props)
 
@@ -38,6 +48,7 @@ export default class WallerSlider extends Component {
   }
 
   initBanners = () => {
+    //@ts-ignore
     let starterSwiper = new Swiper('#swiper_banners', {
       spaceBetween: 10,
       slidesPerView: 4,
@@ -78,9 +89,11 @@ export default class WallerSlider extends Component {
 
   getBanners = () => {
     if (window
+      //@ts-ignore
       && window.bannersOnMainPage !== undefined
     ) {
       // Используем банеры, которые были определены в index.html (используется в виджете вордпресса)
+      //@ts-ignore
       const widgetBanners = (window.bannersOnMainPage.length) ? window.bannersOnMainPage : []
       this.setState(() => ({
         banners: this.processItezBanner(widgetBanners).filter(el => el && el.length),
@@ -108,10 +121,12 @@ export default class WallerSlider extends Component {
   }
 
   handleShowKeys = () => {
+    //@ts-ignore
     actions.modals.open(constants.modals.DownloadModal)
   }
 
   handleSaveKeys = () => {
+    //@ts-ignore
     actions.modals.open(constants.modals.PrivateKeys)
   }
 
@@ -132,6 +147,7 @@ export default class WallerSlider extends Component {
   }
 
   handleSignUp = () => {
+    //@ts-ignore
     actions.modals.open(constants.modals.SignUp)
   }
 
@@ -179,6 +195,7 @@ export default class WallerSlider extends Component {
           <FormattedMessage id="ForYou" defaultMessage="For you" />
         </h3>
         {!this.state.isFetching ?
+          //@ts-ignore
           <ContentLoader banners /> :
           <div id="swiper_banners" className="swiper-container" style={{ marginTop: '20px', marginBottom: '30px' }}>
             <div className="swiper-wrapper">
