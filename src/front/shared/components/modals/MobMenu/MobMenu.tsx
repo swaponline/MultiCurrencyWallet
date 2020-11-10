@@ -16,6 +16,8 @@ import styles from './MobMenu.scss'
 @cssModules(styles)
 class MobMenu extends React.Component {
 
+  props: any
+
   constructor(props) {
     super(props)
 

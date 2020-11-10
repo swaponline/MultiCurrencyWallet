@@ -36,6 +36,8 @@ const symbolSignature = '0x95d89b41'
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
 export default class AddCustomERC20 extends React.Component {
 
+  props: any
+
   static propTypes = {
     name: PropTypes.string,
     data: PropTypes.object,

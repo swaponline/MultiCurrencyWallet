@@ -12,6 +12,8 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 @CSSModules(styles, { allowMultiple: true })
 export default class Table extends React.Component {
 
+  props: any
+
   constructor() {
     super()
 

@@ -24,6 +24,8 @@ import WalletRow from './WalletRow'
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
 export default class BtcMultisignSwitch extends React.Component {
 
+  props: any
+
   static propTypes = {
     name: PropTypes.string,
     data: PropTypes.object,

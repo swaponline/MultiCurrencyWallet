@@ -37,6 +37,8 @@ const labels = defineMessages({
 
 export default class InfoPay extends React.Component {
 
+  props: any
+
   constructor(props) {
     super(props)
 

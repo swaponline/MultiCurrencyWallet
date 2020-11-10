@@ -8,6 +8,8 @@ import styles from './Row.scss'
 @CSSModules(styles, { allowMultiple: true })
 export default class CommentRow extends React.Component {
 
+  props: any
+
   static propTypes = {
     label: PropTypes.string, // @Todo надо проверить что это такое
   };

@@ -16,6 +16,8 @@ import { FormattedMessage } from 'react-intl'
 @cssModules(styles)
 export default class Offer extends React.Component {
 
+  props: any
+
   static propTypes = {
     name: PropTypes.string,
   }

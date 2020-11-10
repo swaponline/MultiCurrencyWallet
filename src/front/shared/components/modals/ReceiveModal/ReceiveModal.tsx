@@ -50,6 +50,8 @@ const langs = defineMessages({
 @cssModules({ ...styles, ...ownStyles }, { allowMultiple: true })
 export default class ReceiveModal extends React.Component {
 
+  props: any
+
   constructor(props) {
     super(props)
     const {

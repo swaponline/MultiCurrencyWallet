@@ -18,6 +18,7 @@ const NotifyBlock = ({
   const handleGoto = () => {
     firstFunc && firstFunc()
     if (link && link.includes('http')) {
+      //@ts-ignore
       window.location = link
     } else {
       if (link) {
@@ -25,6 +26,7 @@ const NotifyBlock = ({
       }
     }
     const text = logDescr || descr
+    //@ts-ignore
     feedback.wallet.clickedBanner(text)
   }
 

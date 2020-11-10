@@ -1,3 +1,4 @@
+//@ts-ignore
 import React, { Component, Fragment } from 'react'
 
 import crypto from 'crypto'
@@ -11,7 +12,11 @@ import Timer from './Timer/Timer'
 import { FormattedMessage } from 'react-intl'
 
 
-export default class UsdtToEthToken extends Component {
+export default class UsdtToEthToken extends Component<any, any> {
+
+  swap: any
+  state: any
+  props: any
 
   constructor({ swap, currencyData }) {
     super()
@@ -312,6 +317,7 @@ export default class UsdtToEthToken extends Component {
                     }
                     <Timer
                       lockTime={flow.usdtScriptValues.lockTime * 1000}
+                      //@ts-ignore
                       enabledButton={() => this.setState({ enabledButton: true })}
                     />
                   </div>

@@ -72,6 +72,8 @@ const langLabels = defineMessages({
 @cssModules(styles, { allowMultiple: true })
 export default class HowToExportModal extends React.Component {
 
+  props: any
+
   constructor(props) {
     super(props)
     const {

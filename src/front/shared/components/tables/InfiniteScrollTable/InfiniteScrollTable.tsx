@@ -4,6 +4,9 @@ import { withInfiniteScroll } from 'decorators/withInfiniteScroll'
 
 @withInfiniteScroll()
 export default class InfiniteScrollTable extends React.Component {
+
+  props: any
+
   render() {
     const { items, ...rest } = this.props
 

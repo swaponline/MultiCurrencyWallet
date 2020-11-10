@@ -90,6 +90,9 @@ const localeLabel = defineMessages({
 )
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
 export default class InvoiceModal extends React.Component {
+
+  props: any
+
   static propTypes = {
     name: PropTypes.string,
     data: PropTypes.object

@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import PropTypes from 'prop-types'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux'
@@ -8,14 +8,24 @@ import App from 'containers/App/App'
 import IntlProviderContainer from 'containers/IntlProviderContainer'
 
 
-export default class Root extends React.PureComponent {
+type Props = {
+  history: any
+  store: any
+  routes: any
+}
 
-  static propTypes = {
+export default class Root extends React.PureComponent<Props> {
+
+  props: any
+
+  /*static propTypes = {
     store: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
     routes: PropTypes.element.isRequired,
+  }*/
+  constructor(props: Props) {
+    super(props)
   }
-
   render() {
     const { history, store, routes } = this.props
 

@@ -72,7 +72,9 @@ const langLabels = defineMessages({
 )
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
 export default class SweepToMnemonicKeys extends React.Component {
-  
+
+  props: any
+
   static propTypes = {
     name: PropTypes.string,
     data: PropTypes.object,

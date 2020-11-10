@@ -5,7 +5,9 @@ import Button from 'components/controls/Button/Button'
 import Timer from 'components/Timer/Timer'
 
 
-export default class TimerButton extends Component {
+export default class TimerButton extends Component<any, any> {
+
+  props: any
 
   static propTypes = {
     onClick: PropTypes.func.isRequired,

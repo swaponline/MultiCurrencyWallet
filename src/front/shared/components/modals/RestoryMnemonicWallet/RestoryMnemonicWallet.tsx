@@ -93,6 +93,8 @@ const langLabels = defineMessages({
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
 export default class RestoryMnemonicWallet extends React.Component {
 
+  props: any
+
   static propTypes = {
     name: PropTypes.string,
     data: PropTypes.object,
@@ -118,6 +120,7 @@ export default class RestoryMnemonicWallet extends React.Component {
 
   componentDidMount() {
     this.fetchData()
+    //@ts-ignore
     feedback.restore.started()
   }
 
@@ -217,7 +220,7 @@ export default class RestoryMnemonicWallet extends React.Component {
         isFetching: false,
         step: `ready`,
       })
-
+      //@ts-ignore
       feedback.restore.finished()
     })
   }

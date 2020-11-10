@@ -40,6 +40,8 @@ const langLabels = defineMessages({
 @cssModules(styles, { allowMultiple: true })
 export default class SaveKeysModal extends React.Component {
 
+  props: any
+
   static propTypes = {
     view: PropTypes.string,
   }

@@ -19,6 +19,8 @@ import { constants } from 'helpers'
 @cssModules(styles, { allowMultiple: true })
 export default class NetworkStatus extends React.Component {
 
+  props: any
+
   static propTypes = {
     isOnline: PropTypes.bool.isRequired,
     onlineUsers: PropTypes.number,

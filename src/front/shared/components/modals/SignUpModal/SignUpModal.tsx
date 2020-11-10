@@ -41,6 +41,8 @@ const title = defineMessages({
 @cssModules(styles)
 export default class SignUpModal extends React.Component {
 
+  props: any
+
   static propTypes = {
     name: PropTypes.string,
   }

@@ -15,7 +15,7 @@ import linksManager from '../../../../helpers/links'
 
 import metamask from 'helpers/metamask'
 
-interface Props {
+/*interface Props {
 
 }
 
@@ -23,19 +23,23 @@ interface State {
   mnemonicDeleted: boolean
   isFetching: boolean
   metamaskConnected: boolean
-}
+}*/
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 @injectIntl
 @connect(({ user }) => ({ user }))
-export default class WallerSlider extends React.Component<Props, State> {
+//@ts-ignore
+export default class WallerSlider extends React.Component<any, any> {
+
+  props: any
+
   constructor(props) {
     super(props)
 
     const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
     const mnemonicDeleted = mnemonic === '-'
-
+    //@ts-ignore
     this.state = {
       mnemonicDeleted,
       isFetching: false,
@@ -69,6 +73,7 @@ export default class WallerSlider extends React.Component<Props, State> {
   }
 
   processItezBanner = (inBanners) => {
+    //@ts-ignore
     const { user, intl: { locale: intlLocale } } = this.props
 
     let locale = intlLocale
@@ -95,6 +100,7 @@ export default class WallerSlider extends React.Component<Props, State> {
       // Используем банеры, которые были определены в index.html (используется в виджете вордпресса)
       //@ts-ignore
       const widgetBanners = (window.bannersOnMainPage.length) ? window.bannersOnMainPage : []
+      //@ts-ignore
       this.setState(() => ({
         banners: this.processItezBanner(widgetBanners).filter(el => el && el.length),
         isFetching: true,
@@ -105,6 +111,7 @@ export default class WallerSlider extends React.Component<Props, State> {
           .get('https://noxon.wpmix.net/swapBanners/banners.php')
           .then(({ data }) => {
             const banners = this.processItezBanner(data).filter(el => el && el.length)
+            //@ts-ignore
             this.setState(() => ({
               banners,
               isFetching: true,
@@ -135,6 +142,7 @@ export default class WallerSlider extends React.Component<Props, State> {
       onClose: () => {
         const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
         const mnemonicDeleted = mnemonic === '-'
+        //@ts-ignore
         this.setState({
           mnemonicDeleted,
         })
@@ -154,6 +162,7 @@ export default class WallerSlider extends React.Component<Props, State> {
   handleConnectMetamask = () => {
     metamask.connect().then((connected) => {
       if (connected) {
+        //@ts-ignore
         this.setState({
           metamaskConnected: true,
         }, async () => {
@@ -165,12 +174,14 @@ export default class WallerSlider extends React.Component<Props, State> {
   }
 
   render() {
+    //@ts-ignore
     const {
       mnemonicDeleted,
       banners,
       metamaskConnected,
+    //@ts-ignore
     } = this.state
-
+    //@ts-ignore
     const { multisigPendingCount } = this.props
 
     const isPrivateKeysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
@@ -194,6 +205,8 @@ export default class WallerSlider extends React.Component<Props, State> {
         <h3 className={`${styles.bannersHeading} ${isDark ? styles.dark : ''}`}>
           <FormattedMessage id="ForYou" defaultMessage="For you" />
         </h3>
+        {/*
+        //@ts-ignore */}
         {!this.state.isFetching ?
           //@ts-ignore
           <ContentLoader banners /> :

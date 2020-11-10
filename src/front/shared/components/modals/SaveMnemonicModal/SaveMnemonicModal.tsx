@@ -107,6 +107,8 @@ const langLabels = defineMessages({
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
 export default class SaveMnemonicModal extends React.Component {
 
+  props: any
+
   static propTypes = {
     name: PropTypes.string,
     data: PropTypes.object,
@@ -159,6 +161,7 @@ export default class SaveMnemonicModal extends React.Component {
   }
 
   handleFinish = () => {
+    //@ts-ignore
     feedback.backup.finished()
     this.handleClose()
   }
@@ -291,6 +294,7 @@ export default class SaveMnemonicModal extends React.Component {
               </p>
               <div styleName="buttonsHolder">
                 <Button blue onClick={() => {
+                  //@ts-ignore
                   feedback.backup.started()
                   this.setState({ step: `show` })
                 }}>

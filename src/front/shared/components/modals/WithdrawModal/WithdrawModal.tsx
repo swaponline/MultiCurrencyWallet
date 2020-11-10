@@ -63,6 +63,9 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 )
 @cssModules(styles, { allowMultiple: true })
 export default class WithdrawModal extends React.Component {
+
+  props: any
+
   static propTypes = {
     name: PropTypes.string,
     data: PropTypes.object,
@@ -120,6 +123,7 @@ export default class WithdrawModal extends React.Component {
     this.getFiatBalance()
     this.actualyMinAmount()
     this.setBalanceOnState()
+    //@ts-ignore
     feedback.withdraw.entered()
   }
 

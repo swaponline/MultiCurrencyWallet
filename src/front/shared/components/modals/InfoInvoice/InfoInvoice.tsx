@@ -102,6 +102,8 @@ const langLabels = defineMessages({
 
 export default class InfoInvoice extends React.Component {
 
+  props: any
+
   constructor(props) {
     super(props)
 

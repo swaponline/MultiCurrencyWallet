@@ -22,6 +22,8 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 class Row extends React.PureComponent {
 
+  props: any
+
   constructor(props) {
     super()
     const { hash, type, hiddenList, invoiceData, viewType } = props

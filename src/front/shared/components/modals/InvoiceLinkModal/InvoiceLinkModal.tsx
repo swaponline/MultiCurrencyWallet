@@ -23,6 +23,8 @@ const labels = defineMessages({
 @cssModules(styles)
 export default class InvoiceLinkModal extends React.Component {
 
+  props: any
+
   constructor(props) {
     super(props)
     this.state = {

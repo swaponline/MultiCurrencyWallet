@@ -35,6 +35,8 @@ const title = defineMessages({
 @cssModules(styles)
 export default class DownloadModal extends React.Component {
 
+  props: any
+
   state = {
     isTextCopied: false,
     Ru: false,

@@ -53,6 +53,9 @@ moment.locale(userLanguage);
 }))
 @CSSModules(styles, { allowMultiple: true })
 export default class App extends React.Component {
+
+  props: any
+
   static propTypes = {
     children: PropTypes.element.isRequired
   };

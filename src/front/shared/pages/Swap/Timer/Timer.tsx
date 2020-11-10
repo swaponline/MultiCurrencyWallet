@@ -7,7 +7,9 @@ import { FormattedMessage } from 'react-intl'
 
 
 @CSSModules(styles)
-export default class Timer extends React.Component {
+export default class Timer extends React.Component<any, any> {
+
+  props: any
 
   static propTypes = {
     lockTime: PropTypes.number,

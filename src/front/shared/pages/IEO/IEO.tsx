@@ -18,6 +18,9 @@ import styles from './IEO.scss'
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })
 class IEO extends React.Component {
+
+  props: any
+
   constructor(props) {
     super(props)
 

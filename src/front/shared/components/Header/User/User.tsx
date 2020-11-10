@@ -35,6 +35,8 @@ import config from 'app-config'
 @CSSModules(styles, { allowMultiple: true })
 export default class User extends React.Component {
 
+  props: any
+
   static propTypes = {
     feeds: PropTypes.array.isRequired,
     peer: PropTypes.string.isRequired,

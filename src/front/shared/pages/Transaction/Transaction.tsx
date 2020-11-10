@@ -1,4 +1,5 @@
 import { withRouter } from 'react-router-dom'
+//@ts-ignore
 import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
 import helpers, { constants, links } from 'helpers'

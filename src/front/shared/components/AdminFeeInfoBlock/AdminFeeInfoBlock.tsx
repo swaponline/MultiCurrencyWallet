@@ -18,9 +18,9 @@ const AdminFeeInfoBlock = (props) => {
   let calcedAmount = false
   if (amount) {
     // fee - from amount - percent
-    let feeFromAmount = BigNumber(fee).dividedBy(100).multipliedBy(amount)
-    if (BigNumber(min).isGreaterThan(feeFromAmount)) feeFromAmount = BigNumber(min)
-
+    let feeFromAmount = new BigNumber(fee).dividedBy(100).multipliedBy(amount)
+    if (new BigNumber(min).isGreaterThan(feeFromAmount)) feeFromAmount = new BigNumber(min)
+    //@ts-ignore
     calcedAmount = feeFromAmount.toNumber() // Admin fee in satoshi
   }
 

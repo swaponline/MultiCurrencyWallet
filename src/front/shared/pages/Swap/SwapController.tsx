@@ -9,6 +9,8 @@ import styles from './Swap.scss'
 @CSSModules(styles)
 class SwapController extends React.PureComponent {
 
+  props: any
+
   constructor({ swap }) {
     super()
 

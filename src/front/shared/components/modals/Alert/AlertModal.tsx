@@ -39,6 +39,8 @@ const defaultLanguage = defineMessages({
 @cssModules(styles)
 export default class AlertModal extends React.Component {
 
+  props: any
+
   static propTypes = {
     onAccept: PropTypes.func,
   }

@@ -38,6 +38,9 @@ const subMenuItems = [
 
 
 class SubMenu extends React.PureComponent {
+
+  props: any
+
   render() {
     const { className, styleName, history, locale } = this.props
 

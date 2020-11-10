@@ -1,3 +1,4 @@
+//@ts-ignore
 import React, { Component } from 'react'
 import { Modal } from 'components/modal'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
@@ -39,7 +40,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   ...styles,
   ...animateFetching,
 }, { allowMultiple: true })
-export default class TxInfo extends React.Component {
+export default class TxInfo extends Component<any, any> {
   render() {
     const {
       intl,
@@ -58,6 +59,7 @@ export default class TxInfo extends React.Component {
       adminFee,
       error,
       finalBalances,
+    //@ts-ignore
     } = this.props
 
     let linkBlockChain = '#'
@@ -89,8 +91,8 @@ export default class TxInfo extends React.Component {
     if (finalBalances) {
       finalAmount = finalBalances.amount
       finalAdminFee = finalBalances.adminFee
-      fromFinal = BigNumber(finalBalances.fromBalance).minus(finalAmount).minus(finalAdminFee).toNumber()
-      toFinal = BigNumber(finalBalances.toBalance).plus(finalAmount).toNumber()
+      fromFinal = new BigNumber(finalBalances.fromBalance).minus(finalAmount).minus(finalAdminFee).toNumber()
+      toFinal = new BigNumber(finalBalances.toBalance).plus(finalAmount).toNumber()
       fromIsOur = actions.user.isOwner(finalBalances.from, finalBalances.currency)
       toIsOur = actions.user.isOwner(finalBalances.to, finalBalances.currency)
     }
@@ -108,6 +110,8 @@ export default class TxInfo extends React.Component {
                 isFetching
                   ? (
                     <span>
+                      {/*
+                      // @ts-ignore */}
                       <Skeleton count={2} />
                     </span>
                   )
@@ -144,17 +148,23 @@ export default class TxInfo extends React.Component {
               {isFetching ? (
                 <>
                   <tr>
-                    <td colSpan="2">
+                    <td colSpan={2}>
+                      {/*
+                      // @ts-ignore */}
                       <Skeleton />
                     </td>
                   </tr>
                   <tr>
-                    <td colSpan="2">
+                    <td colSpan={2}>
+                      {/*
+                      // @ts-ignore */}
                       <Skeleton />
                     </td>
                   </tr>
                   <tr>
-                    <td colSpan="2">
+                    <td colSpan={2}>
+                      {/*
+                      // @ts-ignore */}
                       <Skeleton />
                     </td>
                   </tr>
@@ -211,12 +221,12 @@ export default class TxInfo extends React.Component {
                       {(finalBalances) ? (
                         <>
                           <tr>
-                            <td styleName="header" colSpan="2">
+                            <td styleName="header" colSpan={2}>
                               <FormattedMessage id="InfoPay_FinalBalances" defaultMessage="Final balances" />
                             </td>
                           </tr>
                           <tr>
-                            <td styleName="header" colSpan="2">
+                            <td styleName="header" colSpan={2}>
                               {finalBalances.from}
                               {(fromIsOur) && (
                                 <>
@@ -233,7 +243,7 @@ export default class TxInfo extends React.Component {
                             </td>
                           </tr>
                           <tr>
-                            <td styleName="header" colSpan="2">
+                            <td styleName="header" colSpan={2}>
                               {finalBalances.to}
                               {(toIsOur) && (
                                 <>
@@ -272,6 +282,8 @@ export default class TxInfo extends React.Component {
           </table>
         </div>
         <div styleName="blockCenter buttonHolder">
+          {/*
+          // @ts-ignore */}
           <ShareButton
             halfWidth={true}
             minWidth="200px"

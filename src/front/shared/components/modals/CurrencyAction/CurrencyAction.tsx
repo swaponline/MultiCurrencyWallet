@@ -36,6 +36,8 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 @cssModules(styles, { allowMultiple: true })
 export default class CurrencyAction extends React.Component {
 
+  props: any
+
   handleClose = () => {
     const { name, data, onClose } = this.props
 
