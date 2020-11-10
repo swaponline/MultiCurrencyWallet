@@ -5,14 +5,17 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 import path from 'path'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import externalConfig from './externalConfig'
+import getUnixTimeStamp from '../src/common/utils/getUnixTimeStamp'
 
+
+const ts = getUnixTimeStamp()
 
 export default (webpackConfig) => {
 
   webpackConfig.output = {
     path: config.paths.base('build'),
-    filename: '[name].js',
-    chunkFilename: '[id].chunk.js',
+    filename: `[name]-${ts}.js`,
+    chunkFilename: `[id].chunk-${ts}.js`,
     publicPath: config.publicPath,
   }
 
