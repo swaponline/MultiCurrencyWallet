@@ -101,7 +101,22 @@ export default class History extends Component {
         let { match: { params: { address = null } } } = this.props
         actions.history.setTransactions(address)
       } else {
-        actions.user.setTransactions()
+        const user = this.props.user
+        const objCurrency = {}
+
+        for (let prop in user) {
+          if (
+            user[prop] 
+            && typeof user[prop] === 'object'
+            && user[prop].currency
+          ) {
+            objCurrency[user[prop].currency] = {
+              isBalanceFetched: user[prop].isBalanceFetched,
+            }
+          }
+        }
+
+        actions.user.setTransactions(objCurrency)
         actions.core.getSwapHistory()
       }
     }
