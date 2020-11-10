@@ -1,15 +1,13 @@
-import webpack from 'webpack'
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import config from 'app-config'
-
-import path from 'path'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
+import WebpackRequireFrom from 'webpack-require-from-naggertooth'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import TerserPlugin from 'terser-webpack-plugin-legacy'
 import externalConfig from './externalConfig'
-import WebpackRequireFrom from 'webpack-require-from-naggertooth'
+import config from 'app-config'
 
 
 export default (webpackConfig) => {
+  webpackConfig.mode = 'production'
 
   webpackConfig.output = {
     path: config.paths.base(`build-${config.dir}`),
@@ -23,15 +21,73 @@ export default (webpackConfig) => {
     'react-dom' : 'ReactDOM',
   }
 
-  webpackConfig.module.rules = webpackConfig.module.rules.map((loader) => {
-    if (loader.test.test('*.css') || loader.test.test('*.scss')) {
-      loader.use = ExtractTextPlugin.extract({
-        fallback: 'style-loader',
-        use: loader.use.slice(1),
-      })
-    }
-    return loader
-  })
+  webpackConfig.module.rules = [
+    {
+      test: /\.css$/,
+      use: [
+        MiniCssExtractPlugin.loader,
+        'cache-loader',
+        'css-loader',
+      ],
+    },
+    {
+      test: /\.scss$/,
+      use: [
+        MiniCssExtractPlugin.loader,
+        'cache-loader',
+        'css-loader',
+        'sass-loader',
+      ],
+    },
+    {
+      test: /\.(js|jsx)$/,
+      exclude: /(node_modules|bower_components)/,
+      use: {
+        loader: 'babel-loader',
+        options: {
+          presets: ['@babel/preset-env'],
+          plugins: ['@babel/plugin-proposal-object-rest-spread']
+        },
+      },
+    },
+    {
+      test: /images.*\.(png|ico|jpg|jpeg|gif|svg|mp4)(\?.*)?$/,
+      loader: 'file-loader',
+      options: {
+        name: '[name]_[hash:6].[ext]',
+        outputPath: 'images/',
+      },
+    },
+    {
+      test: /\.mp4$/,
+      loader: 'file-loader',
+      options: {
+        name: '[name].[ext]',
+        outputPath: '/',
+        publicPath: `${config.publicPath}/`,
+      },
+    },
+    {
+      test: /fonts.*\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      loader: 'url-loader',
+      options: {
+        name: '[name].[ext]',
+        outputPath: 'fonts/',
+        publicPath: `${config.publicPath}fonts/`,
+        limit: 10000,
+        mimetype: 'application/font-woff',
+      },
+    },
+    {
+      test: /fonts.*\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      loader: 'file-loader',
+      options: {
+        name: '[name].[ext]',
+        outputPath: 'fonts/',
+        publicPath: `${config.publicPath}fonts/`,
+      },
+    },
+  ]
 
   webpackConfig.optimization = {
     minimizer: [
@@ -68,9 +124,8 @@ export default (webpackConfig) => {
       variableName: 'publicUrl',
       suppressErrors: true,
     }),
-    new ExtractTextPlugin({
+    new MiniCssExtractPlugin({
       filename: '[name].[hash:6].css',
-      allChunks: true,
     }),
     new CopyWebpackPlugin([
       {

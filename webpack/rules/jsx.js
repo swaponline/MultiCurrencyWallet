@@ -1,19 +1,3 @@
-// export default [
-//   {
-//     test: /\.(js|jsx)$/,
-//     exclude: /(node_modules|bower_components)/,
-//     use: {
-//       loader: 'babel-loader',
-//       options: {
-//         presets: ['@babel/preset-env'],
-//         plugins: ['@babel/plugin-transform-runtime'],
-//       },
-//     },
-//   },
-// ]
-import config from 'app-config'
-
-
 export default [
   {
     test: /\.(js|mjs|jsx)$/,

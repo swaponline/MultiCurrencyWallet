@@ -6,6 +6,7 @@ import externalConfig from './externalConfig'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 
 export default (webpackConfig) => {
+  webpackConfig.mode = 'development'
 
   webpackConfig.output = {
     path: config.paths.base('build'),
