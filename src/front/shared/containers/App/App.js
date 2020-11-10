@@ -32,13 +32,30 @@ import backupUserData from 'plugins/backupUserData'
 import redirectTo from 'helpers/redirectTo'
 import links from 'helpers/links'
 
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
+
+import metamask from 'helpers/metamask'
 
 
 const memdown = require("memdown");
 
 const userLanguage = (navigator.userLanguage || navigator.language || "en-gb").split("-")[0];
-moment.locale(userLanguage);
+moment.locale(userLanguage)
 
+
+const metamaskNetworks = defineMessages({
+  mainnet: {
+    id: `MetamaskNetworkAlert_NetworkMainnet`,
+    defaultMessage: `Основная сеть (Mainnet)`,
+  },
+  testnet: {
+    id: `MetamaskNetworkAlert_NetworkMainnet`,
+    defaultMessage: `Тестовая сеть (Rinkeby)`,
+  },
+})
+
+
+@injectIntl
 @withRouter
 @connect(({ currencies: { items: currencies }, modals, ui: { dashboardModalsAllowed } }) => ({
   currencies,
@@ -140,51 +157,40 @@ export default class App extends React.Component {
     });
   }
 
-  componentWillMount() {
-    const { currencies } = this.props;
+  processMetamask () {
+    if (metamask.isConnected()
+      && !metamask.isCorrectNetwork()
+    ) {
+      const { intl } = this.props
 
-    this.preventMultiTabs();
-
-    if (window.origin === `https://wallet.b` + `itpli` + `cit` + `y.com`) {
-      const tokenListUpdated = localStorage.getItem('widget_tokenupdated')
-      if (!tokenListUpdated) {
-        localStorage.setItem('widget_tokenupdated', true)
-        Object.keys(config.erc20).forEach((tokenCode) => {
-          if ((tokenCode !== `bitpl`)
-            && (tokenCode !== `usdt`)
-          ) {
-            console.log('Hide', tokenCode)
-            actions.core.markCoinAsHidden(tokenCode.toUpperCase())
-          }
-        })
-      }
+      actions.modals.open(constants.modals.AlertModal, {
+        title: (
+          <FormattedMessage 
+            id="MetamaskNetworkAlert_Title"
+            defaultMessage="Внимание"
+          />
+        ),
+        message: (
+          <FormattedMessage
+            id="MetamaskNetworkAlert_Message"
+            defaultMessage="Для продолжения выберите в кошельке Метамаск &quot;{network}&quot; или отключите кошелек"
+            values={{
+              network: intl.formatMessage(metamaskNetworks[config.entry]),
+            }}
+          />
+        ),
+        labelOk: (
+          <FormattedMessage
+            id="MetamaskNetworkAlert_OkDisconnectWallet"
+            defaultMessage="Отключить внешний кошелек"
+          />
+        ),
+        okButtonAutoWidth: true,
+        callbackOk: () => {
+          metamask.disconnect()
+        },
+      })
     }
-
-    const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate);
-
-    if (!isWalletCreate) {
-      if (config && config.isWidget && false) {
-        currencies.forEach(({ name }) => {
-          if (name !== "BTC" && !config.erc20[name.toLowerCase()]) {
-            actions.core.markCoinAsHidden(name);
-          }
-        })
-      } else {
-        currencies.forEach(({ name }) => {
-          if (name !== "BTC") {
-            actions.core.markCoinAsHidden(name);
-          }
-        })
-      }
-    }
-
-    // if (!localStorage.getItem(constants.localStorage.demoMoneyReceived)) {
-    //   actions.user.getDemoMoney();
-    // }
-
-    firebase.initialize();
-
-    this.processUserBackup()
   }
 
   processUserBackup () {
@@ -217,6 +223,49 @@ export default class App extends React.Component {
   }
 
   async componentDidMount() {
+    const { currencies } = this.props
+
+    this.preventMultiTabs()
+
+    // @ToDo - may be can be deleted. Temp fix for our client, when he update token list
+    if (window.origin === `https://wallet.b` + `itpli` + `cit` + `y.com`) {
+      const tokenListUpdated = localStorage.getItem('widget_tokenupdated')
+      if (!tokenListUpdated) {
+        localStorage.setItem('widget_tokenupdated', true)
+        Object.keys(config.erc20).forEach((tokenCode) => {
+          if ((tokenCode !== `bitpl`)
+            && (tokenCode !== `usdt`)
+          ) {
+            console.log('Hide', tokenCode)
+            actions.core.markCoinAsHidden(tokenCode.toUpperCase())
+          }
+        })
+      }
+    }
+
+    const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
+
+    if (!isWalletCreate) {
+      if (config && config.isWidget && false) {
+        currencies.forEach(({ name }) => {
+          if (name !== "BTC" && !config.erc20[name.toLowerCase()]) {
+            actions.core.markCoinAsHidden(name)
+          }
+        })
+      } else {
+        currencies.forEach(({ name }) => {
+          if (name !== "BTC") {
+            actions.core.markCoinAsHidden(name)
+          }
+        })
+      }
+    }
+
+    firebase.initialize();
+
+    this.processUserBackup()
+    this.processMetamask()
+
     this.checkIfDashboardModalsAllowed()
     window.actions = actions;
 

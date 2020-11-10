@@ -76,6 +76,12 @@
   max-width: 240px;
 }
 
+.button_autoWidth {
+  width: auto;
+  max-width: none;
+}
+
+
 .content {
   height: 100%;
   display: flex;

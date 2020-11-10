@@ -1,10 +1,9 @@
 import reducers from 'redux/core/reducers'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
-import { cacheStorageGet, cacheStorageSet } from 'helpers'
+import { cacheStorageGet, cacheStorageSet, constants } from 'helpers'
 import web3 from 'helpers/web3'
 import { setMetamask, setDefaultProvider } from 'helpers/web3'
-
 
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import Web3 from 'web3'
@@ -73,7 +72,7 @@ const _init = async () => {
 
 const addWallet = () => {
   _initReduxState()
-  if (isEnabled() && isConnected()) {
+  if (isConnected()) {
     getBalance()
   }
 }
@@ -114,7 +113,7 @@ const getBalance = () => {
 }
 
 const disconnect = () => new Promise(async (resolved, reject) => {
-  if (isEnabled() && isConnected()) {
+  if (isConnected()) {
     //await provider.close()
 
     await web3Modal.clearCachedProvider()
@@ -130,6 +129,8 @@ const connect = () => new Promise((resolved, reject) => {
     .connect()
     .then((provider) => {
       if (isConnected()) {
+        localStorage.setItem(constants.localStorage.isWalletCreate, true)
+        
         window.location.reload()
       } else {
         setDefaultProvider()
@@ -149,15 +150,16 @@ const isMainnet = () => _currentChain === `0x1`
 const isTestnet = () => _currentChain === `0x4`
 
 const isCorrectNetwork = () => {
-  switch (process.env.NETWORK) {
-    case `testnet`: return isTestnet()
-    case `mainnet`: return isMainnet()
+  if (!metamaskProvider) {
+    // If not installed metamask - used other wallet (connect-wallet, etc)
+    // Think - network is correct
+    return true
   }
+  return (process.env.MAINNET) ? isMainnet() : isTestnet()
 }
 
 if (metamaskProvider) {
   if (!isConnected()) {
-    console.log('not connected - web3modal')
     if (metamaskProvider.isConnected()) {
       console.warn(`Metamask exists and connected, but not connected in web3modal`)
     }
@@ -166,7 +168,7 @@ if (metamaskProvider) {
       web3Modal.setCachedProvider(`injected`)
     }
   }
-  
+
   _currentChain = metamaskProvider.chainId
   metamaskProvider.on('chainChanged', (newChainId) => {
     if (newChainId !== _currentChain) {
@@ -193,7 +195,7 @@ const _initReduxState = () => {
     },
   } = getState()
 
-  if (isEnabled() && isConnected()) {
+  if (isConnected()) {
     reducers.user.addWallet({
       name: 'metamaskData',
       data: {
@@ -211,29 +213,22 @@ const _initReduxState = () => {
       },
     })
   } else {
-    if (isEnabled()) {
-      reducers.user.addWallet({
-        name: 'metamaskData',
-        data: {
-          address: 'Not connected',
-          balance: 0,
-          balanceError: false,
-          isConnected: false,
-          isMetamask: true,
-          currency: "ETH",
-          fullName: "Ethereum (Metamask)",
-          infoAboutCurrency: ethData.infoAboutCurrency,
-          isBalanceFetched: true,
-          isMnemonic: true,
-          unconfirmedBalance: 0,
-        }
-      })
-    } else {
-      reducers.user.addWallet({
-        name: 'metamaskData',
-        data: false,
-      })
-    }
+    reducers.user.addWallet({
+      name: 'metamaskData',
+      data: {
+        address: 'Not connected',
+        balance: 0,
+        balanceError: false,
+        isConnected: false,
+        isMetamask: true,
+        currency: "ETH",
+        fullName: (metamaskProvider) ? `Ethereum (Metamask)` : `Ethereum (Connect-Wallet)`,
+        infoAboutCurrency: ethData.infoAboutCurrency,
+        isBalanceFetched: true,
+        isMnemonic: true,
+        unconfirmedBalance: 0,
+      }
+    })
   }
 }
 
