@@ -410,7 +410,26 @@ const fetchMultisigStatus = async () => {
   }
 }
 
-const setTransactions = async () => {
+const setTransactions = async (objCurrency = null) => {
+  /* 
+    objCurrency = {
+      currency: {
+        isBalanceFetched: bool
+      }
+    }
+    
+    "GHOST",
+    "NEXT"
+    "ETH"
+    "BTC"
+    "BTC (SMS-Protected)"
+    "BTC (PIN-Protected)"
+    "BTC (Google 2FA)"
+    "BTC (Multisig)"
+    "USDT",
+    "ETH"
+  */
+
   const isBtcSweeped = actions.btc.isSweeped()
   const isEthSweeped = actions.eth.isSweeped()
   const isGhostSweeped = actions.ghost.isSweeped()
@@ -441,8 +460,8 @@ const setTransactions = async () => {
       actions.eth.getTransaction(),
       ...(metamask.isEnabled() && metamask.isConnected()) ? [actions.eth.getTransaction(metamask.getAddress())] : [],
       ...(isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
-      actions.ghost.getTransaction(),
-      ...(isGhostSweeped) ? [] : [actions.ghost.getTransaction(actions.ghost.getSweepAddress())],
+      objCurrency && objCurrency['GHOST'].isBalanceFetched ? actions.ghost.getTransaction() : [],
+      ...(isGhostSweeped && !(objCurrency && objCurrency['GHOST'].isBalanceFetched)) ? [] : [actions.ghost.getTransaction(actions.ghost.getSweepAddress())],
       actions.next.getTransaction(),
       ...(isNextSweeped) ? [] : [actions.next.getTransaction(actions.next.getSweepAddress())],
       // actions.eth.getInvoices(),
@@ -462,7 +481,7 @@ const setTransactions = async () => {
         }))
       return resolve(ercArray)
     }).then((ercTokens) => {
-      pullTransactions([...mainTokens, ...ercTokens])
+      pullTransactions([...mainTokens.filter(arr => arr.length), ...ercTokens])
     })
   } catch (error) {
     console.error('getTransError: ', error)
