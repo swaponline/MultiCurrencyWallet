@@ -31,13 +31,17 @@ const webpackConfig = {
   module: {
     rules: [
       {
+        loader: 'cache-loader',
+      },
+      {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env'],
-            plugins: ['@babel/plugin-proposal-object-rest-spread']
+            plugins: ['@babel/plugin-proposal-object-rest-spread'],
+            cacheDirectory: true,
           }
         }
       }

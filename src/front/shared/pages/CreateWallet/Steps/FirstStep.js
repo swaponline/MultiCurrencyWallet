@@ -17,60 +17,53 @@ import Cupture, {
   cupture2,
 } from './texts'
 
-
 const isWidgetBuild = config && config.isWidget
-@connect(({ currencies: { items: currencies } }) => ({ currencies }))
-@CSSModules(styles, { allowMultiple: true })
-export default class FirstStep extends Component {
-  constructor(props) {
-    super(props)
-  }
 
-  render() {
-    const { onClick, error, curState, startPack, etcClick, handleClick } = this.props
+function FirstStep(props) {
+  const { onClick, error, curState, startPack, handleClick, etcClick } = props
+  const coloredIcons = ['btc', 'eth', 'ghost', 'next', 'swap', 'usdt', 'eurs']
 
-    const coloredIcons = ['btc', 'eth', 'ghost', 'next', 'swap', 'usdt', 'eurs']
-
-    return (
+  return (
+    <div>
       <div>
         <div>
-          <div>
-            <Explanation step={1} subHeaderText={subHeaderText1()}>
-              {!isWidgetBuild && (
-                <Cupture click={etcClick} step={1} />
-              )}
-            </Explanation>
-            <div styleName={`currencyChooserWrapper ${startPack.length < 4 ? "smallArr" : ""}`}>
-              {startPack.map(el => {
-                const { name, capture } = el
+          <Explanation step={1} subHeaderText={subHeaderText1()}>
+            {!isWidgetBuild && (
+              <Cupture click={etcClick} step={1} />
+            )}
+          </Explanation>
+          <div styleName={`currencyChooserWrapper ${startPack.length < 4 ? "smallArr" : ""}`}>
+            {startPack.map(el => {
+              const { name, capture } = el
 
-                return (
-                  <div key={name} styleName={`card ${curState[name] ? 'purpleBorder' : ''}`} onClick={() => handleClick(name)}>
-                    <div styleName="logo">
-                      <Coin styleName={`assetsTableIcon ${coloredIcons.includes(name.toLowerCase()) ? name.toLowerCase() : "coinColor"}`} name={name} />
-                    </div>
-                    <div styleName="listGroup">
-                      <li><b>{name}</b></li>
-                      <li>{capture}</li>
-                    </div>
+              return (
+                <div key={name} styleName={`card ${curState[name] ? 'purpleBorder' : ''}`} onClick={() => handleClick(name)}>
+                  <div styleName="logo">
+                    <Coin styleName={`assetsTableIcon ${coloredIcons.includes(name.toLowerCase()) ? name.toLowerCase() : "coinColor"}`} name={name} />
                   </div>
-                )
-              })}
-            </div>
+                  <div styleName="listGroup">
+                    <li><b>{name}</b></li>
+                    <li>{capture}</li>
+                  </div>
+                </div>
+              )
+            })}
           </div>
-          <button styleName="continue" onClick={onClick} disabled={error}>
-            <FormattedMessage id="createWalletButton1" defaultMessage="Продолжить" />
-          </button>
         </div>
-        {
-          !isMobile &&
-          <div>
-            <Explanation step={2} subHeaderText={subHeaderText2()} notMain>
-              {cupture2()}
-            </Explanation>
-          </div>
-        }
+        <button styleName="continue" onClick={onClick} disabled={error}>
+          <FormattedMessage id="createWalletButton1" defaultMessage="Продолжить" />
+        </button>
       </div>
-    )
-  }
+      {
+        !isMobile &&
+        <div>
+          <Explanation step={2} subHeaderText={subHeaderText2()} notMain>
+            {cupture2()}
+          </Explanation>
+        </div>
+      }
+    </div>
+  )
 }
+
+export default CSSModules(FirstStep, styles, { allowMultiple: true })

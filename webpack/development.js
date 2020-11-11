@@ -2,8 +2,8 @@ import webpack from 'webpack'
 import config from 'app-config'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import TerserPlugin from 'terser-webpack-plugin-legacy'
-import externalConfig from './externalConfig'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
+import externalConfig from './externalConfig'
 
 export default (webpackConfig) => {
   webpackConfig.mode = 'development'
@@ -36,7 +36,7 @@ export default (webpackConfig) => {
     /* 
     * раскоментировать, запустить сборку и открыть указанный адрес 
     * просмотреть что грузиться в сборку
-    * анализатор будет тормозить сборку если испльзовать постоянно
+    * анализатор будет тормозить сборку если использовать постоянно
     */
     // new BundleAnalyzerPlugin({
     //   // analyzerMode: 'server', // в каком формате представлять данные
