@@ -53,6 +53,8 @@ export default class FeeControler extends Component<any, any> {
               <p styleName="address">
                 {ethAddress}
               </p>
+              {/*
+              //@ts-ignore */}
               <Button brand styleName="button" onClick={this.handleCopy}>
                 {isAddressCopied
                   ? <FormattedMessage id="FeeControler48" defaultMessage="Copied" />

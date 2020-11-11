@@ -18,6 +18,7 @@ import paddingForSwapList from 'shared/helpers/paddingForSwapList'
 export default class EthTokenToGhost extends Component<any, any> {
 
   constructor({ swap, currencyData, ethBalance, tokenItems }) {
+    //@ts-ignore
     super()
 
     this.swap = swap

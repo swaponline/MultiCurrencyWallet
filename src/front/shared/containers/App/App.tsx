@@ -61,6 +61,7 @@ export default class App extends React.Component {
   };
 
   constructor() {
+    //@ts-ignore
     super();
     //@ts-ignore
     this.localStorageListener = null;

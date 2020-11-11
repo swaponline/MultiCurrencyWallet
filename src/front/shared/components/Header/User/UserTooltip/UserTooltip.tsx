@@ -35,7 +35,7 @@ export default class UserTooltip extends Component<any, any> {
   }
 
   constructor({ tokensData, currenciesData }) {
-
+    //@ts-ignore
     super()
 
     const allCurrencyies = currenciesData.concat(tokensData)

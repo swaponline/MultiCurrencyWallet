@@ -15,6 +15,7 @@ export default class Table extends React.Component {
   props: any
 
   constructor() {
+    //@ts-ignore
     super()
 
     this.state = {

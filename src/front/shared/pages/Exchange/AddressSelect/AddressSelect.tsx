@@ -206,7 +206,7 @@ export default class AddressSelect extends Component<any, any> {
       intl: { locale },
     } = this.props
     const ticker = this.getTicker()
-
+    //@ts-ignore
     feedback.exchangeForm.redirectedCreateWallet(ticker)
 
     const url = localisedUrl(locale, `${links.createWallet}/${ticker}`)

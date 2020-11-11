@@ -50,6 +50,6 @@ export default class BtcToGhost extends Component<any, any> {
 
   render() {
 
-    return this.BtcToEth(this.props.step)
+    return this.BtcToGhost(this.props.step)
   }
 }

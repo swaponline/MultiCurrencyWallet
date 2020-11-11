@@ -12,6 +12,7 @@ import styles from './Address.scss'
 export default class Address extends Component<any, any> {
 
   constructor({ initialValue, selectedValue }) {
+    //@ts-ignore
     super()
   }
 

@@ -42,6 +42,7 @@ export default class Home extends Component<any, any> {
   }
 
   constructor(props) {
+    //@ts-ignore
     super()
     const { initialData, intl: { locale } } = props
     const { buyCurrency, sellCurrency } = initialData || {}

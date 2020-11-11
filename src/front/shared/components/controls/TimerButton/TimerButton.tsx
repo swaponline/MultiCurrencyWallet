@@ -7,8 +7,6 @@ import Timer from 'components/Timer/Timer'
 
 export default class TimerButton extends Component<any, any> {
 
-  props: any
-
   static propTypes = {
     onClick: PropTypes.func.isRequired,
     timeLeft: PropTypes.number.isRequired,

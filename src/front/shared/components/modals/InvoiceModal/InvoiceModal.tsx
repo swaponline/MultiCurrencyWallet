@@ -99,6 +99,7 @@ export default class InvoiceModal extends React.Component {
   }
 
   constructor(data) {
+    //@ts-ignore
     super()
 
     const {

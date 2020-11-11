@@ -19,6 +19,7 @@ export default class UsdtToEthToken extends Component<any, any> {
   props: any
 
   constructor({ swap, currencyData }) {
+    //@ts-ignore
     super()
 
     this.swap = swap
@@ -164,7 +165,7 @@ export default class UsdtToEthToken extends Component<any, any> {
                       </div>
                       <div>
                         <FormattedMessage id="UsdrToEthToken147" defaultMessage="Your address: " />
-                        <a href={`${config.link.etherscan}/address/${currencyAddress}`} target="_blank" el="noopener noreferrer">
+                        <a href={`${config.link.etherscan}/address/${currencyAddress}`} target="_blank" rel="noopener noreferrer">
                           {currencyAddress}
                         </a>
                       </div>
@@ -173,7 +174,7 @@ export default class UsdtToEthToken extends Component<any, any> {
                       <span>{flow.address}</span>
                     </div>
                     <br />
-                    <TimerButton disabledTimer={disabledTimer} brand onClick={this.updateBalance}>
+                    <TimerButton disabledTimer={disabledTimer} onClick={this.updateBalance}>
                       <FormattedMessage id="UsdrToEthToken154" defaultMessage="Continue" />
                     </TimerButton>
                   </Fragment>
@@ -315,9 +316,10 @@ export default class UsdtToEthToken extends Component<any, any> {
                         <FormattedMessage id="UsdrToEthToken307" defaultMessage="TRY REFUND" />
                       </Button>
                     }
+                    {/*
+                    //@ts-ignore */}
                     <Timer
                       lockTime={flow.usdtScriptValues.lockTime * 1000}
-                      //@ts-ignore
                       enabledButton={() => this.setState({ enabledButton: true })}
                     />
                   </div>

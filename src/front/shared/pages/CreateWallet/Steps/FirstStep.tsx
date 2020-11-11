@@ -49,6 +49,7 @@ export default class FirstStep extends Component<any, any> {
 
 
   constructor(props) {
+    //@ts-ignore
     super()
     const { currencies } = props
 
@@ -132,6 +133,7 @@ export default class FirstStep extends Component<any, any> {
 
 
   handleClick = name => {
+    //@ts-ignore
     feedback.createWallet.currencySelected(name)
     const { setError } = this.props
     const { curState } = this.state

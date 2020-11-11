@@ -6,7 +6,7 @@ import styles from './Tooltip.scss'
 import { FormattedMessage } from 'react-intl'
 
 
-const Tooltip = ({ children, id, dontHideMobile, place }) => (
+const Tooltip = ({ children, id, dontHideMobile = null, place = null }) => (
   <Fragment>
     <span data-tip data-for={id} styleName={`tooltip${dontHideMobile ? ' tooltip_truesight' : ''}`}>
       <FormattedMessage id="Tooltip11" defaultMessage="?" />

@@ -12,7 +12,12 @@ import { FormattedMessage } from 'react-intl'
 
 export default class EthTokenToUsdt extends Component<any, any> {
 
+  swap: any
+  signTimer: any
+  confirmGhostTimer: any
+
   constructor({ swap, currencyData }) {
+    //@ts-ignore
     super()
 
     this.swap = swap
@@ -264,7 +269,7 @@ export default class EthTokenToUsdt extends Component<any, any> {
                       </div>
                       <div>
                         <FormattedMessage id="EthTokenToUsdt260" defaultMessage="Your address: " />
-                        <a href={`${config.link.usdt}/address/${currencyAddress}`} target="_blank" el="noopener noreferrer">
+                        <a href={`${config.link.usdt}/address/${currencyAddress}`} target="_blank" rel="noopener noreferrer">
                           {currencyAddress}
                         </a>
                       </div>
@@ -406,6 +411,8 @@ export default class EthTokenToUsdt extends Component<any, any> {
                       <FormattedMessage id="EthTokenToUsdt390" defaultMessage="TRY REFUND" />
                     </Button>
                     }
+                    {/*
+                    //@ts-ignore */}
                     <Timer
                       lockTime={(flow.usdtScriptValues.lockTime - 5400) * 1000}
                       enabledButton={() => this.setState({ enabledButton: true })}

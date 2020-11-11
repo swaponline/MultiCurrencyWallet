@@ -18,6 +18,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 export default class SwapList extends Component<any, any> {
 
   constructor({ swap: { sellCurrency, flow: { stepNumbers } } }) {
+    //@ts-ignore
     super()
 
     const first = stepNumbers.sign

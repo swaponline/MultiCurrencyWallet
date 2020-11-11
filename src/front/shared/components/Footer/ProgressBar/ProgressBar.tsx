@@ -24,6 +24,7 @@ export default class ProgressBar extends Component<any, any> {
   timer = null
 
   constructor({ maxValue, endTime, step }) {
+    //@ts-ignore
     super()
 
     this.state = {

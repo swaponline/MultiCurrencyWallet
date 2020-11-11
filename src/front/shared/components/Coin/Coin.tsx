@@ -24,6 +24,7 @@ const defaultCurrencyColors = {
 const Coin = ({ className, size, name }) => {
   const style = {
     width: size ? `${size}px` : null,
+    backgroundColor: null,
   }
 
   let iconProps = {

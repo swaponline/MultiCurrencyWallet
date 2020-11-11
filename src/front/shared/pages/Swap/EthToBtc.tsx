@@ -20,6 +20,7 @@ import DepositWindow from './DepositWindow/DepositWindow'
 @CSSModules(styles)
 export default class EthToBtc extends Component<any, any> {
   constructor({ swap, currencyData, depositWindow, enoughBalance }) {
+    //@ts-ignore
     super()
 
     this.swap = swap

@@ -48,6 +48,7 @@ export default class SignUpModal extends React.Component {
   }
 
   constructor() {
+    //@ts-ignore
     super()
 
     this.state = {

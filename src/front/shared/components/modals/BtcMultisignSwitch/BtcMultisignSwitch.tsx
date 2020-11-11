@@ -32,6 +32,7 @@ export default class BtcMultisignSwitch extends React.Component {
   }
 
   constructor() {
+    //@ts-ignore
     super()
 
 

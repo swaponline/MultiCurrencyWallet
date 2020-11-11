@@ -44,6 +44,7 @@ export default class AddCustomERC20 extends React.Component {
   }
 
   constructor(data) {
+    //@ts-ignore
     super()
     //@ts-ignore
     this.state = {

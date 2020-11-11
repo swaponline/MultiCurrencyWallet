@@ -43,6 +43,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 export default class AddOffer extends Component<any, any> {
 
   constructor({ items, tokenItems, initialData }) {
+    //@ts-ignore
     super()
 
     if (config && config.isWidget) {

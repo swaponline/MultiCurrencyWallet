@@ -174,6 +174,7 @@ export default class Exchange extends Component<any, any> {
       intl: { locale },
       history,
     } = props;
+    //@ts-ignore
     super();
 
     this.fiatRates = {}
@@ -463,6 +464,7 @@ export default class Exchange extends Component<any, any> {
   };
 
   createOffer = async () => {
+    //@ts-ignore
     feedback.createOffer.started()
 
     const { haveCurrency, getCurrency } = this.state
@@ -485,7 +487,7 @@ export default class Exchange extends Component<any, any> {
 
     const haveTicker = haveCurrency.toUpperCase()
     const getTicker = getCurrency.toUpperCase()
-
+    //@ts-ignore
     feedback.exchangeForm.requestedSwap(`${haveTicker}->${getTicker}`)
 
     const { address, balance } = actions.core.getWallet({ currency: haveCurrency })
@@ -947,7 +949,7 @@ export default class Exchange extends Component<any, any> {
     const { type, value, currency } = addressData;
 
     console.log('Exchange: applyAddress', addressRole, addressData)
-
+    //@ts-ignore
     feedback.exchangeForm.selectedAddress(`${addressRole} ${currency.toUpperCase()} ${type}`)
 
     if (addressRole === AddressRole.Send) {
@@ -965,6 +967,7 @@ export default class Exchange extends Component<any, any> {
 
   flipCurrency = async () => {
     const { haveCurrency, getCurrency } = this.state;
+    //@ts-ignore
     feedback.exchangeForm.flipped(`${haveCurrency}->${getCurrency} => ${getCurrency}->${haveCurrency}`)
 
     this.resetState();

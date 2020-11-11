@@ -27,7 +27,6 @@ const SecondStep = (props) => {
       {ghostScriptCreatingTransactionHash && (
         <strong styleName="transactionInStep">
           <a
-            alt={`${config.link.ghostscan}/tx/${ghostScriptCreatingTransactionHash}`}
             title={`${config.link.ghostscan}/tx/${ghostScriptCreatingTransactionHash}`}
             href={`${config.link.ghostscan}/tx/${ghostScriptCreatingTransactionHash}`}
             target="_blank"

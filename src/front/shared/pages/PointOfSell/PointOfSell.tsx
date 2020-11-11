@@ -163,6 +163,7 @@ export default class Exchange extends Component<any, any> {
 
   constructor(props) {
     const { tokensData, allCurrencyies, currenciesData, match, intl: { locale }, history, decline } = props
+    //@ts-ignore
     super()
 
     this.onRequestAnswer = (newOrder, isAccepted) => { }

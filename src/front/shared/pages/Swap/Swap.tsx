@@ -48,7 +48,13 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 }))
 
 @cssModules(styles, { allowMultiple: true })
-export default class SwapComponent extends PureComponent {
+export default class SwapComponent extends PureComponent<any, any> {
+
+  wallets: any
+  checkingConfirmSuccessTimer: any
+  checkingCycleTimer: any
+  sendDebugInfoTimer: any
+
 
   /*
     ================================================================
@@ -109,7 +115,7 @@ export default class SwapComponent extends PureComponent {
 
         localStorage.setItem('axiosSwaps', JSON.stringify(swapsId))
         clearInterval(this.sendDebugInfoTimer)
-
+        //@ts-ignore
         feedback.swap.started(sendedJSON)
       }
     }
@@ -117,6 +123,7 @@ export default class SwapComponent extends PureComponent {
   /* ================================================================ */
 
   constructor() {
+    //@ts-ignore
     super()
 
     this.state = {
@@ -163,7 +170,9 @@ export default class SwapComponent extends PureComponent {
       const swap = new Swap(orderId, SwapApp.shared())
       console.log('Swap flow:', swap.flow._flowName);
 
+      //@ts-ignore
       window.swap = swap
+      //@ts-ignore
       window.flow = swap.flow
 
       const SwapComponent = swapComponents[swap.flow._flowName]
@@ -184,6 +193,7 @@ export default class SwapComponent extends PureComponent {
       currencies.forEach(item => {
         actions.user.getExchangeRate(item.currency, activeFiat.toLowerCase())
           .then(exRate => {
+            //@ts-ignore
             const amount = exRate * Number(item.amount)
 
             if (Number(amount) >= 50) {
@@ -241,9 +251,11 @@ export default class SwapComponent extends PureComponent {
         const isStoppedSwap = this.checkStoppedSwap()
 
         if (isFinallyFinished) {
+          //@ts-ignore
           feedback.swap.finished()
         }
         if (isStoppedSwap) {
+          //@ts-ignore
           feedback.swap.stopped()
         }
 
@@ -313,6 +325,7 @@ export default class SwapComponent extends PureComponent {
   deleteThisSwap = (orderId) => {
     actions.core.saveDeletedOrder(orderId)
     actions.core.forgetOrders(orderId)
+    //@ts-ignore
     window.swap = null
   }
 
@@ -427,9 +440,11 @@ export default class SwapComponent extends PureComponent {
       swap: {
         flow,
       },
+    //@ts-ignore
     } = this.state
-
+    //@ts-ignore
     if (typeof swap.flow.checkOtherSideRefund === 'function') {
+      //@ts-ignore
       const isOtherSideRefunded = await swap.flow.checkOtherSideRefund()
       if (isOtherSideRefunded) {
         this.setState(() => ({

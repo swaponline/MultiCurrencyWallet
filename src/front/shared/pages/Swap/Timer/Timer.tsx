@@ -19,6 +19,7 @@ export default class Timer extends React.Component<any, any> {
   timer = null
 
   constructor({ lockTime, cancelTime }) {
+    //@ts-ignore
     super()
 
     this.state = {

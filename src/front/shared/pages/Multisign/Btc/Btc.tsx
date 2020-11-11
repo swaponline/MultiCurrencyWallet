@@ -43,6 +43,7 @@ export default class Btc extends PureComponent {
 
   constructor() {
     console.log('Btc mulsign connected')
+    //@ts-ignore
     super()
 
     const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)

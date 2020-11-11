@@ -25,6 +25,7 @@ class Row extends React.PureComponent {
   props: any
 
   constructor(props) {
+    //@ts-ignore
     super()
     const { hash, type, hiddenList, invoiceData, viewType } = props
     const dataInd = invoiceData && invoiceData.id

@@ -9,7 +9,7 @@ import styles from './Swap.scss'
 import { isMobile } from 'react-device-detect'
 import { FormattedMessage } from 'react-intl'
 import { BigNumber } from 'bignumber.js'
-import Link from 'sw-valuelink'
+import Link from 'local_modules/sw-valuelink'
 
 import SwapProgress from './GhostSwap/SwapProgress/SwapProgress'
 import DepositWindow from './GhostSwap/DepositWindow/DepositWindow'
@@ -21,7 +21,12 @@ import paddingForSwapList from 'shared/helpers/paddingForSwapList'
 @CSSModules(styles)
 export default class GhostToEth extends Component<any, any> {
 
+  swap: any
+  ParticipantTimer: any
+  timer: any
+
   constructor({ swap, currencyData }) {
+    //@ts-ignore
     super()
 
     this.swap = swap
@@ -62,7 +67,7 @@ export default class GhostToEth extends Component<any, any> {
     const { swap, flow: { isMeSigned } } = this.state
     window.removeEventListener('resize', this.updateWindowDimensions)
     this.swap.off('state update', this.handleFlowStateUpdate)
-    clearInterval(this.timer)
+    clearInterval(this.timer) // todo: fix
   }
 
   updateWindowDimensions = () => {
@@ -72,10 +77,6 @@ export default class GhostToEth extends Component<any, any> {
   submitSecret = () => {
     const { secret } = this.state
     this.swap.flow.submitSecret(secret)
-  }
-
-  tryRefund = () => {
-    this.swap.flow.tryRefund()
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -111,11 +112,6 @@ export default class GhostToEth extends Component<any, any> {
     })
 
     this.changePaddingValue()
-  }
-
-  submitSecret = () => {
-    const { secret } = this.state
-    this.swap.flow.submitSecret(secret)
   }
 
   updateBalance = () => {

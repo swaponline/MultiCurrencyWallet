@@ -28,6 +28,7 @@ import coinsWithDynamicFee from 'helpers/constants/coinsWithDynamicFee'
 export default class DepositWindow extends Component<any, any> {
 
   constructor({ swap, flow, onCopyAddress, currencyData }) {
+    //@ts-ignore
     super()
 
     this.swap = swap

@@ -65,6 +65,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
   }
 
   constructor(data) {
+    //@ts-ignore
     super()
 
     const {

@@ -28,7 +28,7 @@ import FeeControler from './FeeControler/FeeControler'
 export default class BtcToEthToken extends Component<any, any> {
 
   constructor({ swap, currencyData, ethData, enoughBalance, styles, depositWindow }) {
-
+    //@ts-ignore
     super()
 
     this.swap = swap

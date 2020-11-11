@@ -13,7 +13,7 @@ import config from 'app-config'
 import { constants, links, ethToken } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 
-import Link from 'sw-valuelink'
+import Link from 'local_modules/sw-valuelink'
 import { Link as LinkTo } from 'react-router-dom'
 
 import { injectIntl, FormattedMessage } from 'react-intl'
@@ -56,7 +56,15 @@ export default class SwapProgress extends Component<any, any> {
     whiteLogo: false,
   }
 
+  swap: any
+  wallets: any
+  history: any
+  locale: any
+  isSellCurrencyEthOrEthToken: any
+  timer: any
+
   constructor({ flow, step, swap, styles, tokenItems, signed, wallets, history, locale }) {
+    //@ts-ignore
     super()
 
     this.swap = swap
@@ -137,6 +145,7 @@ export default class SwapProgress extends Component<any, any> {
   componentDidMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
     this.handleBarProgress()
+    //@ts-ignore
     localStorage.setItem(constants.localStorage.startSwap, Date.now())
     this.reloadPage()
   }
@@ -155,6 +164,7 @@ export default class SwapProgress extends Component<any, any> {
       }
 
       const isSwapPage = window.location.pathname.includes("swaps")
+      //@ts-ignore
       if (((Date.now() - startSwapTime) > 600 * 1000) && isSwapPage) {
         console.warn('UPS!!! SWAP IS FROZEN - RELOAD')
         localStorage.removeItem(constants.localStorage.startSwap)
@@ -399,6 +409,8 @@ export default class SwapProgress extends Component<any, any> {
                     )
                     : (
                       <div styleName="timerRefund">
+                        {/*
+                        //@ts-ignore */}
                         <Timer
                           isRefund
                           lockTime={flow.btcScriptValues.lockTime * 1000}
@@ -412,11 +424,13 @@ export default class SwapProgress extends Component<any, any> {
               }
 
               {flow.step === 2 && !this.isSellCurrencyEthOrEthToken &&
+                //@ts-ignore
                 <Button brand onClick={this.submitSecret()} >
                   <FormattedMessage id="swapFinishedGoHome289" defaultMessage="Submit the Secret" />
                 </Button>
               }
               {flow.step === 3 && this.isSellCurrencyEthOrEthToken &&
+                //@ts-ignore
                 <Button brand onClick={this.confirmBTCScriptChecked()} >
                   <FormattedMessage id="swapFinishedGoHome298" defaultMessage="Everything is OK. Continue" />
                 </Button>

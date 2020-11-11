@@ -151,7 +151,7 @@ export default class Row extends Component<any, any> {
       intl,
       history,
     } = this.props
-
+    //@ts-ignore
     feedback.offers.buyPressed(`${sellCurrency}->${buyCurrency}`)
 
     const pair = Pair.fromOrder(row)
@@ -256,6 +256,7 @@ export default class Row extends Component<any, any> {
     actions.modals.open(constants.modals.ConfirmBeginSwap, {
       order: this.props.row,
       onAccept: async (customWallet) => {
+        //@ts-ignore
         feedback.offers.swapRequested(`${sellCurrency}->${buyCurrency}`)
 
         this.setState({ isFetching: true })

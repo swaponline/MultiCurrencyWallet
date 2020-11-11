@@ -12,6 +12,7 @@ const isWidgetBuild = config && config.isWidget
 
 export default class PreventMultiTabs extends Component<any, any> {
   constructor() {
+    //@ts-ignore
     super()
     const preventSwitch = localStorage.getItem(
       constants.localStorage.preventSwitch
@@ -24,6 +25,7 @@ export default class PreventMultiTabs extends Component<any, any> {
   }
 
   handleSwitchClick = () => {
+    //@ts-ignore
     feedback.app.otherTabsClosed()
     const { onSwitchTab } = this.props
 

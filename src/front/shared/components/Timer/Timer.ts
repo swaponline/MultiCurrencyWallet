@@ -17,6 +17,7 @@ export default class TimerButton extends Component<any, any> {
   timer = null
 
   constructor({ timeLeft }) {
+    //@ts-ignore
     super()
 
     this.state = {

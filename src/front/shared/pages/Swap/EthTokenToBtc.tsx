@@ -23,6 +23,7 @@ import DepositWindow from './DepositWindow/DepositWindow'
 export default class EthTokenToBtc extends Component<any, any> {
 
   constructor({ swap, currencyData, ethBalance, tokenItems }) {
+    //@ts-ignore
     super()
 
     this.swap = swap

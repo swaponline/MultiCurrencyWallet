@@ -27,7 +27,6 @@ const SecondStep = (props) => {
       {btcScriptCreatingTransactionHash && (
         <strong styleName="transactionInStep">
           <a
-            alt={`${config.link.bitpay}/tx/${btcScriptCreatingTransactionHash}`}
             title={`${config.link.bitpay}/tx/${btcScriptCreatingTransactionHash}`}
             href={`${config.link.bitpay}/tx/${btcScriptCreatingTransactionHash}`}
             target="_blank"

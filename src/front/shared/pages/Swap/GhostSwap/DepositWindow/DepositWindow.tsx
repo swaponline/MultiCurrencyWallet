@@ -27,7 +27,14 @@ import coinsWithDynamicFee from 'helpers/constants/coinsWithDynamicFee'
 @CSSModules(styles)
 export default class DepositWindow extends Component<any, any> {
 
+  swap: any
+  currency: any
+  isSellCurrencyEthOrEthToken: any
+  isSellCurrencyEthToken: any
+  onCopy: any
+
   constructor({ swap, flow, onCopyAddress, currencyData }) {
+    //@ts-ignore
     super()
 
     this.swap = swap
@@ -66,12 +73,13 @@ export default class DepositWindow extends Component<any, any> {
       if (this.isSellCurrencyEthToken) {
         actualBalance = await actions.token.getBalance(this.currency)
       } else {
+        //@ts-ignore
         actualBalance = await actions.eth.getBalance(this.currency)
       }
     } else {
       const unspents = await actions[this.currency].fetchUnspents(address)
       const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-      actualBalance = BigNumber(totalUnspent).dividedBy(1e8)
+      actualBalance = new BigNumber(totalUnspent).dividedBy(1e8)
     }
 
     this.setState(() => ({
@@ -108,7 +116,7 @@ export default class DepositWindow extends Component<any, any> {
       }))
     }
 
-    const requiredAmount = BigNumber(sellAmount).plus(dynamicFee).dp(6, BigNumber.ROUND_CEIL)
+    const requiredAmount = new BigNumber(sellAmount).plus(dynamicFee).dp(6, BigNumber.ROUND_CEIL)
 
     this.setState(() => ({
       requiredAmount,
@@ -277,11 +285,7 @@ export default class DepositWindow extends Component<any, any> {
 
     return (
       <Fragment>
-        <div
-          styleName="topUpLink"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <div styleName="topUpLink">
           <div styleName="top">
             <div styleName="btcMessage">
               {/* eslint-disable */}
@@ -365,7 +369,7 @@ export default class DepositWindow extends Component<any, any> {
                   defaultMessage="Received {balance} / {need} {tooltip}"
                   values={{
                     br: <br />,
-                    balance: <strong>{balance === undefined ? this.updateBalance : `${BigNumber(balance).dp(6, BigNumber.ROUND_HALF_CEIL)}`} {swap.sellCurrency}{'  '}</strong>,
+                    balance: <strong>{balance === undefined ? this.updateBalance : `${new BigNumber(balance).dp(6, BigNumber.ROUND_HALF_CEIL)}`} {swap.sellCurrency}{'  '}</strong>,
                     need: <strong>{`${requiredAmount}`} {swap.sellCurrency}</strong>,
                     tooltip:
                       <Tooltip id="dep226">

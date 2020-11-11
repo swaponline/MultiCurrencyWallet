@@ -7,7 +7,7 @@ import styles from './Swap.scss'
 
 import crypto from 'crypto'
 import SwapApp from 'swap.app'
-import Link from 'sw-valuelink'
+import Link from 'local_modules/sw-valuelink'
 
 import DepositWindow from './GhostSwap/DepositWindow/DepositWindow'
 import SwapProgress from './GhostSwap/SwapProgress/SwapProgress'
@@ -19,8 +19,11 @@ import paddingForSwapList from 'shared/helpers/paddingForSwapList'
 @CSSModules(styles)
 export default class GhostToEthToken extends Component<any, any> {
 
-  constructor({ swap, currencyData, ethData, enoughBalance, styles, depositWindow }) {
+  swap: any
+  ParticipantTimer: any
 
+  constructor({ swap, currencyData, ethData, enoughBalance, styles, depositWindow }) {
+    //@ts-ignore
     super()
 
     this.swap = swap
@@ -80,19 +83,12 @@ export default class GhostToEthToken extends Component<any, any> {
     this.swap.flow.submitSecret(secret)
   }
 
-  changePaddingValue = () => {
+  /*changePaddingValue = () => {
     const { flow: { step } } = this.state
     this.setState(() => ({
       paddingContainerValue: paddingForSwapList({ step }),
     }))
-  }
-
-  changePaddingValue = () => {
-    const { flow: { step } } = this.state
-    this.setState(() => ({
-      paddingContainerValue: paddingForSwapList({ step }),
-    }))
-  }
+  }*/
 
   changePaddingValue = () => {
     const { flow } = this.state

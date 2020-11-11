@@ -53,6 +53,7 @@ export default class WithdrawBtcMultisig extends React.Component {
   }
 
   constructor(data) {
+    //@ts-ignore
     super()
 
     this.broadcastCancelFunc = false

@@ -36,6 +36,7 @@ export default class Currency extends Component<any, any> {
 
 
   constructor({ match: { params: { currency } }, items, tokens, history, intl: { locale } }) {
+    //@ts-ignore
     super()
 
     this.state = {

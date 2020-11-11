@@ -72,6 +72,7 @@ export default class WithdrawModal extends React.Component {
   }
 
   constructor(data) {
+    //@ts-ignore
     super()
 
     const {
@@ -277,6 +278,7 @@ export default class WithdrawModal extends React.Component {
   }
 
   handleSubmit = async () => {
+    //@ts-ignore
     feedback.withdraw.started()
 
     const {
@@ -412,7 +414,7 @@ export default class WithdrawModal extends React.Component {
           time: 3600,
           data: txInfoCache,
         })
-
+        //@ts-ignore
         feedback.withdraw.finished()
 
         const txInfoUrl = helpers.transactions.getTxRouter(currency.toLowerCase(), txId)
@@ -422,6 +424,7 @@ export default class WithdrawModal extends React.Component {
         actions.modals.close(name)
       })
       .catch((e) => {
+        //@ts-ignore
         feedback.withdraw.failed()
         const errorText = e.res ? e.res.text : ''
         const error = {

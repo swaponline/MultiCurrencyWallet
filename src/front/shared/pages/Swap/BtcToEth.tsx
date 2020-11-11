@@ -21,6 +21,7 @@ import SwapList from './SwapList/SwapList'
 export default class BtcToEth extends Component<any, any> {
 
   constructor({ swap, currencyData }) {
+    //@ts-ignore
     super()
 
     this.swap = swap

@@ -49,4 +49,5 @@ const NotifyBlock = ({
   )
 }
 
+//@ts-ignore
 export default withRouter(CSSModules(NotifyBlock, styles, { allowMultiple: true }))

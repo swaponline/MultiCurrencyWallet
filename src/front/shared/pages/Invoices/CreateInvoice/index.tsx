@@ -48,6 +48,7 @@ export default class CreateInvoice extends PureComponent {
   
 
   constructor() {
+    //@ts-ignore
     super()
     
     this.timerWaitOnlineJoin = false

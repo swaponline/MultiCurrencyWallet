@@ -35,6 +35,7 @@ export default class DropDown extends Component<any, any> {
   }
 
   constructor({ initialValue, selectedValue }) {
+    //@ts-ignore
     super()
     this.state = {
       selectedValue: initialValue || selectedValue || 0,

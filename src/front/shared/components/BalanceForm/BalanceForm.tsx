@@ -89,7 +89,7 @@ function BalanceForm({
               {(activeFiat === 'USD' || activeFiat === 'CAD') && <img src={dollar} alt="dollar" />}
               {
                 // eslint-disable-next-line no-restricted-globals
-                !isNaN(fiatBalance) ? BigNumber(fiatBalance).dp(2, BigNumber.ROUND_FLOOR).toString() : ''
+                !isNaN(fiatBalance) ? new BigNumber(fiatBalance).dp(2, BigNumber.ROUND_FLOOR).toString() : ''
               }
               {/* {changePercent ? (
                   <span styleName={changePercent > 0 ? "green" : "red"}>
@@ -102,7 +102,7 @@ function BalanceForm({
           ) : (
             <p className="data-tut-all-balance">
               {currency.toUpperCase() === 'BTC' ? <img src={btc} alt="btc" /> : ''}
-              {BigNumber(currencyBalance).dp(5, BigNumber.ROUND_FLOOR).toString()}
+              {new BigNumber(currencyBalance).dp(5, BigNumber.ROUND_FLOOR).toString()}
             </p>
           )}
         </div>

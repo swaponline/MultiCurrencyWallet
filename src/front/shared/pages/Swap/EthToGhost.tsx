@@ -16,6 +16,7 @@ import paddingForSwapList from 'shared/helpers/paddingForSwapList'
 @CSSModules(styles)
 export default class EthToGhost extends Component<any, any> {
   constructor({ swap, currencyData, depositWindow, enoughBalance }) {
+    //@ts-ignore
     super()
 
     this.swap = swap

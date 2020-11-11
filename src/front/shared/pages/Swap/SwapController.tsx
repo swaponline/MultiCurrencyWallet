@@ -7,11 +7,14 @@ import styles from './Swap.scss'
 
 
 @CSSModules(styles)
-class SwapController extends React.PureComponent {
+class SwapController extends React.PureComponent<any, any> {
 
   props: any
+  swap: any
+  mount: any
 
   constructor({ swap }) {
+    //@ts-ignore
     super()
 
     this.swap = swap
