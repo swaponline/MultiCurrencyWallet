@@ -8,9 +8,13 @@ import WalletConnectProvider from '@walletconnect/web3-provider'
 import Web3 from 'web3'
 import Web3Modal from 'web3modal'
 
+import Web3Connect from '../web3connect'
+
+console.log('In metamask', Web3Connect)
+
+window.webconnect = new Web3Connect()
 
 const providerOptions = {
-  // @ToDo - need more info - how to get address
   /*
   walletconnect: {
     package: WalletConnectProvider,
@@ -32,6 +36,8 @@ let _currentChain = 0
 let _currentAddress = ``
 let _isInited = false
 let _web3 = null
+let _provider = null
+
 
 const metamaskProvider = (window.ethereum) || false
 
@@ -43,6 +49,15 @@ const getAddress = () => (isConnected()) ? _currentAddress : ``
 
 const _cacheAddress = async () => {
   _currentAddress = ``
+
+  // like WalletConnect
+  if (_provider
+    && _provider.accounts
+    && _provider.accounts.length
+  ) {
+    _currentAddress = _provider.accounts[0]
+    return
+  }
   const accounts = await _web3.eth.getAccounts()
   if (accounts.length) _currentAddress = accounts[0]
 }
@@ -75,8 +90,8 @@ const addWallet = () => {
 
 
 const getWeb3 = async () => {
-  const provider = await web3Modal.connect()
-  const web3 = new Web3(provider)
+  _provider = await web3Modal.connect()
+  const web3 = new Web3(_provider)
   web3.isMetamask = true
   return web3
 }
@@ -111,6 +126,13 @@ const getBalance = () => {
 
 const disconnect = () => new Promise(async (resolved, reject) => {
   if (isConnected()) {
+    if (_provider
+      && _provider.close
+      && typeof _provider.close === `function`
+    ) {
+      // Like Connect-Wallet
+      _provider.close()
+    }
     await web3Modal.clearCachedProvider()
 
     resolved(true)

@@ -255,6 +255,21 @@
     "url-parse": "^1.4.7",
     "valuelink": "^1.6.2",
     "web3": "^1.2.11",
-    "web3modal": "^1.9.1"
+    "web3modal": "^1.9.1",
+    "@web3-react/abstract-connector": "latest",
+    "@web3-react/authereum-connector": "latest",
+    "@web3-react/core": "latest",
+    "@web3-react/fortmatic-connector": "latest",
+    "@web3-react/frame-connector": "latest",
+    "@web3-react/injected-connector": "latest",
+    "@web3-react/ledger-connector": "latest",
+    "@web3-react/network-connector": "latest",
+    "@web3-react/portis-connector": "latest",
+    "@web3-react/squarelink-connector": "latest",
+    "@web3-react/torus-connector": "latest",
+    "@web3-react/trezor-connector": "latest",
+    "@web3-react/walletconnect-connector": "latest",
+    "@web3-react/walletlink-connector": "latest",
+    "@web3-react/magic-connector": "latest"
   }
 }
