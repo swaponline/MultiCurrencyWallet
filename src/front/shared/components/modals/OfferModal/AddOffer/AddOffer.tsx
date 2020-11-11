@@ -4,7 +4,7 @@ import { connect } from 'redaction'
 import actions from 'redux/actions'
 import helpers, { constants } from 'helpers'
 
-import Link from 'sw-valuelink'
+import Link from 'local_modules/sw-valuelink'
 import config from 'app-config'
 
 import { BigNumber } from 'bignumber.js'

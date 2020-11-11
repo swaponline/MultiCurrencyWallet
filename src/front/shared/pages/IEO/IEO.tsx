@@ -1,7 +1,7 @@
 import React from 'react'
 import CSSModules from 'react-css-modules'
 import { FormattedMessage, injectIntl } from 'react-intl'
-import Link from 'sw-valuelink'
+import Link from 'local_modules/sw-valuelink'
 
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import Table from 'components/tables/Table/Table'
@@ -17,7 +17,7 @@ import styles from './IEO.scss'
 
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })
-class IEO extends React.Component {
+class IEO extends React.Component<any, any> {
 
   props: any
 
@@ -52,7 +52,7 @@ class IEO extends React.Component {
 
      const githubRegex = /https:\/\/github\.com\/(?<id>.+(\b))\/?/i
      const githubId = reddit.match(githubRegex) !== null ? reddit.match(githubRegex).groups.id : github
-
+     //@ts-ignore
      localStorage.setItem(constants.localStorage.IEO_signed, true)
      this.setState({ isSaved: true })
 
@@ -137,17 +137,28 @@ class IEO extends React.Component {
              titles={titles}
              rows={rows}
              rowRender={(row, index, selectId, handleSelectId) => (
+               {/*
+               //@ts-ignore */}
                <Row
+                 //@ts-ignore
                  key={`${row} ${index}`}
+                 //@ts-ignore
                  currency={row}
+                 //@ts-ignore
                  selectId={selectId}
+                 //@ts-ignore
                  index={index}
+                 //@ts-ignore
                  handleSelectId={handleSelectId}
+                 //@ts-ignore
                  row={rows[index]}
+                 //@ts-ignore
                  disabled={this.state.isSaved}
                />
              )}
            />
+           {/*
+           //@ts-ignore */}
            <Button
              styleName="button"
              onClick={this.handleSignUp}

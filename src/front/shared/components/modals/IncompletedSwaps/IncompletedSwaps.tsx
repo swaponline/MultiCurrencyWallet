@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { connect } from 'redaction'
 import actions from 'redux/actions'
 
-import Link from 'sw-valuelink'
+import Link from 'local_modules/sw-valuelink'
 
 import cssModules from 'react-css-modules'
 import styles from './IncompletedSwaps.scss'

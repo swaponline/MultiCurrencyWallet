@@ -26,6 +26,8 @@ const SelectGroup = (props) => {
   } = props
   return (
     <div styleName="selectGroup">
+      {/*
+      //@ts-ignore */}
       <FieldLabel inRow>
         <strong>
           {label}
@@ -62,11 +64,15 @@ const SelectGroup = (props) => {
         {inputToolTip && inputToolTip()}
         {balanceTooltip && (
           <div styleName="smallTooltip balanceTooltip">
+            {/*
+            //@ts-ignore */}
             <Tooltip>
               {balanceTooltip()}
             </Tooltip>
           </div>
         )}
+        {/*
+        //@ts-ignore */}
         <CurrencySelect
           //name="All"
           label={label}
@@ -86,9 +92,9 @@ const SelectGroup = (props) => {
           !isToken &&
           <span
             styleName={
-              (BigNumber(haveAmount).isLessThanOrEqualTo(balance)
-                && BigNumber(balance).isLessThan(BigNumber(haveAmount).plus(dynamicFee))
-                && BigNumber(haveAmount).isGreaterThan(0))
+              (new BigNumber(haveAmount).isLessThanOrEqualTo(balance)
+                && new BigNumber(balance).isLessThan(new BigNumber(haveAmount).plus(dynamicFee))
+                && new BigNumber(haveAmount).isGreaterThan(0))
                 ? 'red'
                 : 'balance'
             }
@@ -97,7 +103,7 @@ const SelectGroup = (props) => {
               id="select75"
               defaultMessage="Available for exchange: {availableBalance} {tooltip}"
               values={{
-                availableBalance: `${BigNumber(balance).minus(dynamicFee)} ${selectedValue.toUpperCase()}`,
+                availableBalance: `${new BigNumber(balance).minus(dynamicFee)} ${selectedValue.toUpperCase()}`,
                 tooltip: <Tooltip id={idFee}> {tooltipAboutFee}</Tooltip>,
               }} />
           </span> :

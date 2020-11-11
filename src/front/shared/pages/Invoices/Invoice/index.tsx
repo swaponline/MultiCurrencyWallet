@@ -61,7 +61,7 @@ const langLabels = defineMessages({
 @injectIntl
 @withRouter
 @CSSModules(styles, { allowMultiple: true })
-export default class Invoice extends PureComponent {
+export default class Invoice extends PureComponent<any, any> {
   
   constructor(props) {
     super(props)

@@ -1,7 +1,5 @@
 import React, { Component, Fragment } from 'react'
 
-
-
 import CSSModules from 'react-css-modules'
 import styles from './Swap.scss'
 
@@ -13,8 +11,14 @@ import SwapList from './GhostSwap/SwapList/SwapList'
 import DepositWindow from './GhostSwap/DepositWindow/DepositWindow'
 import paddingForSwapList from 'shared/helpers/paddingForSwapList'
 
+
 @CSSModules(styles)
 export default class EthToGhost extends Component<any, any> {
+
+  swap: any
+  confirmGhostTimer: any
+  signTimer: any
+
   constructor({ swap, currencyData, depositWindow, enoughBalance }) {
     //@ts-ignore
     super()

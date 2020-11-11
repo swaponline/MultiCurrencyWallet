@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react"
 
-import Link from "sw-valuelink"
+import Link from "local_modules/sw-valuelink"
 
 import ReactTooltip from 'react-tooltip'
 import CSSModules from "react-css-modules"
@@ -144,6 +144,14 @@ export default class Exchange extends Component<any, any> {
   static defaultProps = {
     orders: [],
   };
+
+  promoContainer: any
+  scrollTrigger: any
+  onRequestAnswer: any
+  fiatRates: any
+  cacheDynamicFee: any
+  timer: any
+  wallets: any
 
   static getDerivedStateFromProps(
     { orders, match: { params } },
@@ -293,12 +301,12 @@ export default class Exchange extends Component<any, any> {
     // actual fees
     helpers.btc.estimateFeeValue({ method: 'swap' }).then((fee) => {
       this.setState({
-        btcFee: BigNumber(fee).toNumber(),
+        btcFee: new BigNumber(fee).toNumber(),
       })
     })
     helpers.eth.estimateFeeValue({ method: 'swap' }).then((fee) => {
       this.setState({
-        ethFee: BigNumber(fee).toNumber(),
+        ethFee: new BigNumber(fee).toNumber(),
       })
     })
   }
@@ -494,16 +502,16 @@ export default class Exchange extends Component<any, any> {
 
     let checkAmount = haveAmount
 
-    const ethFee = BigNumber(
+    const ethFee = new BigNumber(
       await helpers.eth.estimateFeeValue({ method: 'swap' })
     ).toNumber()
 
-    const btcFee = BigNumber(
+    const btcFee = new BigNumber(
       await helpers.btc.estimateFeeValue({ method: 'swap' })
     ).toNumber()
 
     if (haveTicker === 'ETH') {
-      checkAmount = BigNumber(checkAmount).plus(ethFee).toNumber()
+      checkAmount = new BigNumber(checkAmount).plus(ethFee).toNumber()
     }
 
     let ethBalanceOk = true
@@ -753,13 +761,13 @@ export default class Exchange extends Component<any, any> {
 
     this.setState(() => ({
       maxAmount: Number(maxAmount),
-      getAmount: BigNumber(getAmount).dp(decimalPlaces).toString(),
+      getAmount: new BigNumber(getAmount).dp(decimalPlaces).toString(),
       maxBuyAmount: buyAmount,
     }));
 
     return (
-      BigNumber(getAmount).isLessThanOrEqualTo(maxAmount) ||
-      BigNumber(haveAmount).isEqualTo(buyAmount)
+      new BigNumber(getAmount).isLessThanOrEqualTo(maxAmount) ||
+      new BigNumber(haveAmount).isEqualTo(buyAmount)
     );
   };
 
@@ -776,7 +784,7 @@ export default class Exchange extends Component<any, any> {
         isNoAnyOrders: true,
         maxAmount: 0,
         getAmount: 0,
-        maxBuyAmount: BigNumber(0),
+        maxBuyAmount: new BigNumber(0),
       }));
       return;
     }
@@ -793,7 +801,7 @@ export default class Exchange extends Component<any, any> {
       )
       .map((item, index) => {
         const exRate = item.buyAmount.dividedBy(item.sellAmount);
-        const getAmount = BigNumber(haveAmount).dividedBy(exRate).toString();
+        const getAmount = new BigNumber(haveAmount).dividedBy(exRate).toString();
 
         return {
           sellAmount: item.sellAmount,
@@ -818,9 +826,9 @@ export default class Exchange extends Component<any, any> {
   setOrderOnState = (orders) => {
     const { haveAmount, getCurrency } = this.state;
 
-    let maxAllowedSellAmount = BigNumber(0);
-    let maxAllowedGetAmount = BigNumber(0);
-    let maxAllowedBuyAmount = BigNumber(0);
+    let maxAllowedSellAmount = new BigNumber(0);
+    let maxAllowedGetAmount = new BigNumber(0);
+    let maxAllowedBuyAmount = new BigNumber(0);
 
     let isFound = false;
     let newState = {};
@@ -838,11 +846,11 @@ export default class Exchange extends Component<any, any> {
           ? item.buyAmount
           : maxAllowedBuyAmount;
 
-        if (BigNumber(haveAmount).isLessThanOrEqualTo(item.buyAmount)) {
+        if (new BigNumber(haveAmount).isLessThanOrEqualTo(item.buyAmount)) {
           maxAllowedGetAmount = maxAllowedGetAmount.isLessThanOrEqualTo(
             item.getAmount
           )
-            ? BigNumber(item.getAmount)
+            ? new BigNumber(item.getAmount)
             : maxAllowedGetAmount;
 
           isFound = true;
@@ -996,7 +1004,7 @@ export default class Exchange extends Component<any, any> {
       getHeat: 0,
       getAmount: "",
       maxAmount: 0,
-      maxBuyAmount: BigNumber(0),
+      maxBuyAmount: new BigNumber(0),
       peer: "",
       isNonOffers: false,
       isWaitForPeerAnswer: false,
@@ -1044,7 +1052,7 @@ export default class Exchange extends Component<any, any> {
   checkoutLowAmount() {
     return (
       this.doesComissionPreventThisOrder() &&
-      BigNumber(this.state.getAmount).isGreaterThan(0) &&
+      new BigNumber(this.state.getAmount).isGreaterThan(0) &&
       this.state.haveAmount &&
       this.state.getAmount
     );
@@ -1075,7 +1083,7 @@ export default class Exchange extends Component<any, any> {
     if (!isBtcHere) {
       return false;
     }
-    const btcAmount = BigNumber(
+    const btcAmount = new BigNumber(
       haveCurrency === "btc" ? haveAmount : getAmount
     );
     if (btcAmount.isGreaterThan(estimatedFeeValues.btc)) {
@@ -1172,11 +1180,11 @@ export default class Exchange extends Component<any, any> {
       );
     }
 
-    const haveFiat = BigNumber(exHaveRate)
+    const haveFiat = new BigNumber(exHaveRate)
       .times(haveAmount)
       .dp(2, BigNumber.ROUND_CEIL)
 
-    const getFiat = BigNumber(exGetRate)
+    const getFiat = new BigNumber(exGetRate)
       .times(getAmount)
       .dp(2, BigNumber.ROUND_CEIL)
 
@@ -1187,9 +1195,9 @@ export default class Exchange extends Component<any, any> {
       exGetRate && estimatedFeeValues[getCurrency]
     ) {
       fiatFeeCalculation =
-        BigNumber(exHaveRate).times(estimatedFeeValues[haveCurrency])
+        new BigNumber(exHaveRate).times(estimatedFeeValues[haveCurrency])
         .plus(
-          BigNumber(exGetRate).times(estimatedFeeValues[getCurrency])
+          new BigNumber(exGetRate).times(estimatedFeeValues[getCurrency])
         )
         .dp(2, BigNumber.ROUND_CEIL)
         .toNumber()
@@ -1208,8 +1216,8 @@ export default class Exchange extends Component<any, any> {
     const balance = currentCurrency.balance || 0;
 
     const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0)
-      ? BigNumber(0)
-      : BigNumber(goodRate);
+      ? new BigNumber(0)
+      : new BigNumber(goodRate);
 
     const linked = Link.all(this, "haveAmount", "getAmount");
 
@@ -1220,7 +1228,7 @@ export default class Exchange extends Component<any, any> {
 
     const availableAmount =
       estimatedFeeValues[haveCurrency.toLowerCase()] > 0
-        ? BigNumber(haveAmount).plus(
+        ? new BigNumber(haveAmount).plus(
           estimatedFeeValues[haveCurrency.toLowerCase()]
         )
         : 0;
@@ -1256,7 +1264,7 @@ export default class Exchange extends Component<any, any> {
       linked.haveAmount.value > 0
 
     const isErrorLowAmount = this.doesComissionPreventThisOrder() &&
-      BigNumber(getAmount).isGreaterThan(0) &&
+      new BigNumber(getAmount).isGreaterThan(0) &&
       this.state.haveAmount &&
       this.state.getAmount
 
@@ -1272,10 +1280,10 @@ export default class Exchange extends Component<any, any> {
       !isNonOffers &&
       fromAddress &&
       toAddress && toAddress.value &&
-      BigNumber(getAmount).isGreaterThan(0) &&
+      new BigNumber(getAmount).isGreaterThan(0) &&
       !this.doesComissionPreventThisOrder() &&
-      (BigNumber(haveAmount).isGreaterThan(balance) ||
-        BigNumber(balance).isGreaterThanOrEqualTo(availableAmount)) &&
+      (new BigNumber(haveAmount).isGreaterThan(balance) ||
+        new BigNumber(balance).isGreaterThanOrEqualTo(availableAmount)) &&
       !isWaitForPeerAnswer
 
     const isIncompletedSwaps = !!desclineOrders.length
@@ -1307,8 +1315,8 @@ export default class Exchange extends Component<any, any> {
                   inputToolTip={() => (isShowBalance ?
                     <p styleName="maxAmount">
                       {(
-                        (BigNumber(balance).toNumber() === 0)
-                        || BigNumber(balance).minus(estimatedFeeValues[haveCurrency]).isLessThanOrEqualTo(0)
+                        (new BigNumber(balance).toNumber() === 0)
+                        || new BigNumber(balance).minus(estimatedFeeValues[haveCurrency]).isLessThanOrEqualTo(0)
                       ) ? (
                         null
                         ) : (
@@ -1326,10 +1334,10 @@ export default class Exchange extends Component<any, any> {
                               />
                             }
                             {estimatedFeeValues[haveCurrency]
-                              ? BigNumber(balance)
+                              ? new BigNumber(balance)
                                 .minus(estimatedFeeValues[haveCurrency])
                                 .dp(5, BigNumber.ROUND_FLOOR).toString()
-                              : BigNumber(balance)
+                              : new BigNumber(balance)
                                 .dp(5, BigNumber.ROUND_FLOOR).toString()
                             }
                             {'  '}
@@ -1640,6 +1648,8 @@ export default class Exchange extends Component<any, any> {
           )}
           <Fragment>
             <div styleName="container">
+              {/*
+              //@ts-ignore */}
               <Promo
                 subTitle={subTitle(
                   sellTokenFullName,
@@ -1655,6 +1665,8 @@ export default class Exchange extends Component<any, any> {
         </div>
         {config && config.showHowItsWork && (
           <Fragment>
+            {/*
+            //@ts-ignore */}
             <HowItWorks />
             <VideoAndFeatures />
             <Quote />

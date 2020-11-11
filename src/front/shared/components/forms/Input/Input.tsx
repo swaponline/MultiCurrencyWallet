@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Input as ValueLinkInput } from "sw-valuelink";
+import { Input as ValueLinkInput } from "local_modules/sw-valuelink";
 import { constants } from 'helpers'
 import cx from "classnames";
 import { ignoreProps } from "helpers";

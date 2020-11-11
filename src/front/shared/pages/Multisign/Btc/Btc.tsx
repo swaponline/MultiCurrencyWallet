@@ -31,7 +31,9 @@ import config from 'app-config'
 })
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })
-export default class Btc extends PureComponent {
+export default class Btc extends PureComponent<any, any> {
+
+  timerWaitOnlineJoin: any
 
   static propTypes = {
     history: PropTypes.object,
@@ -42,9 +44,9 @@ export default class Btc extends PureComponent {
 
 
   constructor() {
-    console.log('Btc mulsign connected')
     //@ts-ignore
     super()
+    console.log('Btc mulsign connected')
 
     const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
     const mnemonicSaved = (mnemonic === `-`)
@@ -268,10 +270,12 @@ export default class Btc extends PureComponent {
   handleConfirm = async () => {
     const { txRaw, invoice } = this.state
     this.setState({ isConfirming: true })
+    //@ts-ignore
     const signedTX = await actions.btcmultisig.signMultiSign(txRaw)
     const txID = await actions.btcmultisig.broadcastTx(signedTX)
     if (invoice) {
       // @ToDo - payer address
+      //@ts-ignore
       await actions.invoices.markInvoice(invoice, 'ready', txID)
     }
     this.setState({
@@ -388,6 +392,8 @@ export default class Btc extends PureComponent {
               <pre>
                 <code>
                   {
+                    {/*
+                    //@ts-ignore */}
                     JSON.stringify(this.state.txData.input, false, 4)
                   }
                 </code>
@@ -402,11 +408,15 @@ export default class Btc extends PureComponent {
               <pre>
                 <code>
                   {
+                    {/*
+                    //@ts-ignore */}
                     JSON.stringify(this.state.txData.output, false, 4)
                   }
                 </code>
                 <code>
                   {
+                    {/*
+                    //@ts-ignore */}
                     JSON.stringify(this.state.txData, false, 4)
                   }
                 </code>
@@ -433,6 +443,7 @@ export default class Btc extends PureComponent {
             <pre>
               <code>
                 {
+                  //@ts-ignore
                   JSON.stringify(this.state.txID, false, 4)
                 }
               </code>

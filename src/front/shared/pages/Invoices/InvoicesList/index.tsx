@@ -52,7 +52,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 @injectIntl
 @withRouter
 @CSSModules(styles, { allowMultiple: true })
-export default class InvoicesList extends PureComponent {
+export default class InvoicesList extends PureComponent<any, any> {
   unmounted = false
 
   constructor(props) {
@@ -97,6 +97,7 @@ export default class InvoicesList extends PureComponent {
       actions.invoices.getInvoices({
         currency: type,
         address,
+      //@ts-ignore
       }).then((items) => {
         lsDataCache.push({
           key: `Invoices_${type.toLowerCase()}_${address.toLowerCase()}`,
@@ -227,6 +228,8 @@ export default class InvoicesList extends PureComponent {
         {(items && items.length > 0) ? (
           <Table rows={items} styleName="currencyHistory" rowRender={this.rowRender} />
         ) : (
+          {/*
+          //@ts-ignore */}
           <ContentLoader rideSideContent empty inner />
         )}
       </div>
@@ -241,12 +244,12 @@ export default class InvoicesList extends PureComponent {
         {isWidgetBuild && !config.isFullBuild && (
           <ul styleName="widgetNav">
             <li styleName="widgetNavItem" onClick={this.handleGoWalletHome}>
-              <a href styleName="widgetNavItemLink">
+              <a href="#" styleName="widgetNavItemLink">
                 <FormattedMessage id="MybalanceswalletNav" defaultMessage="Мои кошельки" />
               </a>
             </li>
             <li styleName="widgetNavItem active">
-              <a href styleName="widgetNavItemLink">
+              <a href="#"" styleName="widgetNavItemLink">
                 <FormattedMessage id="InvoicesList_Title" defaultMessage="Invoices" />
               </a>
             </li>
@@ -260,6 +263,8 @@ export default class InvoicesList extends PureComponent {
                   {/* Right form holder */}
                 </div>
               ) : (
+                {/*
+                //@ts-ignore */}
                 <ContentLoader leftSideContent />
               )}
             </div>

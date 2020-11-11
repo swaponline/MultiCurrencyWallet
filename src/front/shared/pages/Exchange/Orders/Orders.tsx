@@ -45,6 +45,7 @@ export default class Home extends Component<any, any> {
     //@ts-ignore
     super()
     const { initialData, intl: { locale } } = props
+    //@ts-ignore
     const { buyCurrency, sellCurrency } = initialData || {}
 
     const { buy, sell } = this.getCurrentCurrencies(props)
@@ -176,6 +177,7 @@ export default class Home extends Component<any, any> {
       <section styleName={isWidgetBuild ? `${sectionContainerStyleName} ${sectionContainerStyleName}_widget` : sectionContainerStyleName}>
         {
           history.location && history.location.pathname === exchange ? (
+            //@ts-ignore
             <PageHeadline>
               <CurrencyDirectionChooser
                 handleSellCurrencySelect={this.handleSellCurrencySelect}
@@ -187,6 +189,8 @@ export default class Home extends Component<any, any> {
                 currencies={currencies}
               />
               <div styleName="videoContainer">
+                {/*
+                //@ts-ignore */}
                 <Center relative centerVertically={false}>
                   <SubTitle>
                     <FormattedMessage id="Home153" defaultMessage="What is atomic swap?" />

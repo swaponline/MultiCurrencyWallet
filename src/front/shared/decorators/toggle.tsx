@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react'
 
 export default (options = { processClick: false }) =>
   (Component) =>
-    class WrappedComponent extends PureComponent {
+    class WrappedComponent extends PureComponent<any, any> {
 
       state = {
         isToggleActive: false,

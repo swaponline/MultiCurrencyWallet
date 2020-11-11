@@ -13,7 +13,7 @@ import stylesSwaps from './SwapsHistory.scss'
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @CSSModules({ ...styles, ...stylesSwaps }, { allowMultiple: true })
-export default class SwapsHistory extends PureComponent {
+export default class SwapsHistory extends PureComponent<any, any> {
 
   render() {
     let { orders } = this.props

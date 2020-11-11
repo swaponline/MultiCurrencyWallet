@@ -19,7 +19,7 @@ const title = defineMessages({
 
 @injectIntl
 @cssModules(styles, { allowMultiple: true })
-export default class PrivateKeysModal extends React.PureComponent {
+export default class PrivateKeysModal extends React.PureComponent<any, any> {
 
   props: any
 

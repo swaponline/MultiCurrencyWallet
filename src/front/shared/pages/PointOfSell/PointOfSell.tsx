@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { Component, Fragment } from 'react'
 
-import Link from 'sw-valuelink'
+import Link from 'local_modules/sw-valuelink'
 
 import CSSModules from 'react-css-modules'
 import styles from '../Exchange/Exchange.scss'
@@ -27,6 +27,7 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
+//@ts-ignore
 import { isCoinAddress } from 'swap.app/util/typeforce'
 import config from 'helpers/externalConfig'
 import SwapApp, { util } from 'swap.app'
@@ -123,12 +124,21 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     nextData,
     ...Object.values(tokensData).filter(({ address }) => address),
     ...Object.values(rest)
+      //@ts-ignore
       .filter(( coinData ) => coinData && coinData.address)
       .filter(({ address }) => address)
   ],
 }))
 @CSSModules(styles, { allowMultiple: true })
 export default class Exchange extends Component<any, any> {
+
+  promoContainer: any
+  scrollTrigger: any
+  wallets: any
+  onRequestAnswer: any
+  fiatRates: any
+  cacheDynamicFee: any
+  timer: any
 
   static defaultProps = {
     orders: [],
@@ -162,13 +172,14 @@ export default class Exchange extends Component<any, any> {
   }
 
   constructor(props) {
-    const { tokensData, allCurrencyies, currenciesData, match, intl: { locale }, history, decline } = props
     //@ts-ignore
     super()
+    const { tokensData, allCurrencyies, currenciesData, match, intl: { locale }, history, decline } = props
 
     this.onRequestAnswer = (newOrder, isAccepted) => { }
     this.fiatRates = {}
     const isRootPage = history.location.pathname === '/' || history.location.pathname === '/ru'
+    //@ts-ignore
     const { url, params: { buy, sell } } = match || { params: { buy: 'btc', sell: 'usdt' } }
 
     if (sell && buy && !isRootPage) {
@@ -233,6 +244,7 @@ export default class Exchange extends Component<any, any> {
     // fiatRates
 
     if (config.isWidget) {
+      //@ts-ignore
       this.state.getCurrency = config.erc20token
     }
   }
@@ -251,6 +263,7 @@ export default class Exchange extends Component<any, any> {
     const timerProcess = () => {
       if (!this.timer) return
       this.setOrders()
+      //@ts-ignore
       this.showTheFee(haveCurrency)
       this.checkUrl()
       this.getCorrectDecline()
@@ -489,6 +502,7 @@ export default class Exchange extends Component<any, any> {
 
     const requestTimeout = setTimeout(() => {
       this.banPeer(peer)
+      //@ts-ignore
       this.getLinkTodeclineSwap(peer)
       this.setDeclinedOffer()
     }, requestTimeoutLenght * 1000) // 45 seconds wait until not skip and ban peer
@@ -503,6 +517,7 @@ export default class Exchange extends Component<any, any> {
         }))
       } else {
         this.banPeer(peer)
+        //@ts-ignore
         this.getLinkTodeclineSwap(peer)
         this.setDeclinedOffer()
       }
@@ -577,11 +592,11 @@ export default class Exchange extends Component<any, any> {
 
     this.setState(() => ({
       maxAmount: Number(maxAmount),
-      getAmount: BigNumber(getAmount).dp(decimalPlaces).toString(),
+      getAmount: new BigNumber(getAmount).dp(decimalPlaces).toString(),
       maxBuyAmount: buyAmount,
     }))
 
-    return BigNumber(getAmount).isLessThanOrEqualTo(maxAmount) || BigNumber(haveAmount).isEqualTo(buyAmount)
+    return new BigNumber(getAmount).isLessThanOrEqualTo(maxAmount) || new BigNumber(haveAmount).isEqualTo(buyAmount)
   }
 
   setAmount = (value) => {
@@ -597,7 +612,7 @@ export default class Exchange extends Component<any, any> {
         isNoAnyOrders: true,
         maxAmount: 0,
         getAmount: 0,
-        maxBuyAmount: BigNumber(0),
+        maxBuyAmount: new BigNumber(0),
       }))
       return
     }
@@ -611,7 +626,7 @@ export default class Exchange extends Component<any, any> {
       .map((item, index) => {
 
         const exRate = item.buyAmount.dividedBy(item.sellAmount)
-        const getAmount = BigNumber(haveAmount).dividedBy(exRate).toString()
+        const getAmount = new BigNumber(haveAmount).dividedBy(exRate).toString()
 
         return {
           sellAmount: item.sellAmount,
@@ -636,9 +651,9 @@ export default class Exchange extends Component<any, any> {
   setOrderOnState = (orders) => {
     const { haveAmount, getCurrency } = this.state
 
-    let maxAllowedSellAmount = BigNumber(0)
-    let maxAllowedGetAmount = BigNumber(0)
-    let maxAllowedBuyAmount = BigNumber(0)
+    let maxAllowedSellAmount = new BigNumber(0)
+    let maxAllowedGetAmount = new BigNumber(0)
+    let maxAllowedBuyAmount = new BigNumber(0)
 
     let isFound = false
     let newState = {}
@@ -648,9 +663,9 @@ export default class Exchange extends Component<any, any> {
         maxAllowedSellAmount = (maxAllowedSellAmount.isLessThanOrEqualTo(item.sellAmount)) ? item.sellAmount : maxAllowedSellAmount
         maxAllowedBuyAmount = (maxAllowedBuyAmount.isLessThanOrEqualTo(item.buyAmount)) ? item.buyAmount : maxAllowedBuyAmount
 
-        if (BigNumber(haveAmount).isLessThanOrEqualTo(item.buyAmount)) {
+        if (new BigNumber(haveAmount).isLessThanOrEqualTo(item.buyAmount)) {
 
-          maxAllowedGetAmount = (maxAllowedGetAmount.isLessThanOrEqualTo(item.getAmount)) ? BigNumber(item.getAmount) : maxAllowedGetAmount
+          maxAllowedGetAmount = (maxAllowedGetAmount.isLessThanOrEqualTo(item.getAmount)) ? new BigNumber(item.getAmount) : maxAllowedGetAmount
 
           isFound = true
 
@@ -696,6 +711,7 @@ export default class Exchange extends Component<any, any> {
 
     this.setState({
       customWalletUse: newCustomWalletUse,
+      //@ts-ignore
       customWallet: (newCustomWalletUse === false) ? '' : this.getSystemWallet(),
     })
   }
@@ -709,6 +725,7 @@ export default class Exchange extends Component<any, any> {
       this.setState(() => ({
         getCurrency: value,
         haveCurrency,
+        //@ts-ignore
         customWallet: customWalletUse ? this.getSystemWallet() : '',
       }))
       this.additionalPathing(haveCurrency, value)
@@ -728,6 +745,7 @@ export default class Exchange extends Component<any, any> {
       this.setState({
         haveCurrency: value,
         getCurrency,
+        //@ts-ignore
         customWallet: customWalletUse ? this.getSystemWallet() : '',
       }, () => {
         this.additionalPathing(value, getCurrency)
@@ -743,6 +761,7 @@ export default class Exchange extends Component<any, any> {
   }
 
   handleGoDeclimeFaq = () => {
+    //@ts-ignore
     const faqLink = links.getFaqLink('requestDeclimed')
     if (faqLink) {
       window.location.href = faqLink
@@ -776,12 +795,14 @@ export default class Exchange extends Component<any, any> {
 
     const pair = constants.tradeTicker
       .filter(ticker => {
+        //@ts-ignore
         ticker = ticker.split('-')
         return currency === ticker[0].toLowerCase()
           ? ticker[0].toLowerCase() === currency
           : ticker[1].toLowerCase() === currency
       })
       .map(pair => {
+        //@ts-ignore
         pair = pair.split('-')
         return {
           from: pair[0],
@@ -815,7 +836,7 @@ export default class Exchange extends Component<any, any> {
       getFiat: 0,
       getAmount: '',
       maxAmount: 0,
-      maxBuyAmount: BigNumber(0),
+      maxBuyAmount: new BigNumber(0),
       peer: '',
       isNonOffers: false,
       isFetching: false,
@@ -920,7 +941,7 @@ export default class Exchange extends Component<any, any> {
 
   checkoutLowAmount() {
     return this.doesComissionPreventThisOrder()
-      && BigNumber(this.state.getAmount).isGreaterThan(0)
+      && new BigNumber(this.state.getAmount).isGreaterThan(0)
       && (this.state.haveAmount
         && this.state.getAmount)
   }
@@ -951,7 +972,7 @@ export default class Exchange extends Component<any, any> {
     if (!isBtcHere) {
       return false
     }
-    const btcAmount = BigNumber(haveCurrency === 'btc' ? haveAmount : getAmount)
+    const btcAmount = new BigNumber(haveCurrency === 'btc' ? haveAmount : getAmount)
     if (btcAmount.isGreaterThan(estimatedFeeValues.btc)) {
       return false
     }
@@ -1017,6 +1038,7 @@ export default class Exchange extends Component<any, any> {
       destinationSelected: selected,
       destinationError: false,
       customWalletUse: !isCustom,
+      //@ts-ignore
       customWallet: (isCustom) ? value : this.getSystemWallet(),
     })
   }
@@ -1059,8 +1081,8 @@ export default class Exchange extends Component<any, any> {
 
     const isSingleForm = isOnlyForm || isWidgetBuild
 
-    const haveFiat = BigNumber(exHaveRate).times(haveAmount).dp(2, BigNumber.ROUND_CEIL)
-    const getFiat = BigNumber(exGetRate).times(getAmount).dp(2, BigNumber.ROUND_CEIL)
+    const haveFiat = new BigNumber(exHaveRate).times(haveAmount).dp(2, BigNumber.ROUND_CEIL)
+    const getFiat = new BigNumber(exGetRate).times(getAmount).dp(2, BigNumber.ROUND_CEIL)
 
     const haveCurrencyData = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
     const haveTokenData = tokensData.find(item => item.currency === haveCurrency.toUpperCase())
@@ -1071,12 +1093,12 @@ export default class Exchange extends Component<any, any> {
     const getTokenData = tokensData.find(item => item.currency === getCurrency.toUpperCase())
     const currentCurrencyGet = getCurrencyData || getTokenData
 
-    const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? BigNumber(0) : BigNumber(goodRate)
+    const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? new BigNumber(0) : new BigNumber(goodRate)
     const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')
 
     const isWidgetLink = this.props.location.pathname.includes('/exchange') && this.props.location.hash === '#widget'
     const isWidget = isWidgetBuild || isWidgetLink
-    const availableAmount = estimatedFeeValues[haveCurrency.toLowerCase()] > 0 ? BigNumber(haveAmount).plus(estimatedFeeValues[haveCurrency.toLowerCase()]) : 0
+    const availableAmount = estimatedFeeValues[haveCurrency.toLowerCase()] > 0 ? new BigNumber(haveAmount).plus(estimatedFeeValues[haveCurrency.toLowerCase()]) : 0
 
     if (redirect) {
       return <Redirect push to={`${localisedUrl(locale, links.swap)}/${getCurrency}-${haveCurrency}/${orderId}`} />
@@ -1085,10 +1107,10 @@ export default class Exchange extends Component<any, any> {
     const isLowAmount = this.checkoutLowAmount()
 
     const canDoOrder = !isNonOffers
-      && BigNumber(getAmount).isGreaterThan(0)
+      && new BigNumber(getAmount).isGreaterThan(0)
       && this.customWalletValid()
       && !this.doesComissionPreventThisOrder()
-      && (BigNumber(haveAmount).isGreaterThan(balance) || BigNumber(balance).isGreaterThanOrEqualTo(availableAmount))
+      && (new BigNumber(haveAmount).isGreaterThan(balance) || new BigNumber(balance).isGreaterThanOrEqualTo(availableAmount))
 
     const sellTokenFullName = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
       ? currenciesData.find(item => item.currency === haveCurrency.toUpperCase()).fullName
@@ -1115,6 +1137,8 @@ export default class Exchange extends Component<any, any> {
     const Form = (
       <div styleName={`${isSingleForm ? '' : 'section'} ${isDark ? 'darkForm' : ''}`} className={(isWidgetLink) ? 'section' : ''} >
         <div styleName="mobileDubleHeader">
+          {/*
+          //@ts-ignore */}
           <PromoText subTitle={subTitle(sellTokenFullName, haveCurrency.toUpperCase(), buyTokenFullName, getCurrency.toUpperCase())} />
         </div>
         <div styleName={isSingleForm ? 'formExchange_widgetBuild' : `formExchange ${isWidget ? 'widgetFormExchange' : ''}`} className={isWidget ? 'formExchange' : ''} >
@@ -1146,11 +1170,11 @@ export default class Exchange extends Component<any, any> {
                   {/* <FormattedMessage id="partial221" defaultMessage="Balance: " /> */}
                   {/* Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}{' '}{haveCurrency.toUpperCase() */}
                   {
-                    BigNumber(balance).toNumber() === 0
+                    new BigNumber(balance).toNumber() === 0
                       ? (<FormattedMessage id="partial766" defaultMessage="From any wallet or exchange" />)
                       : (<>
                         <FormattedMessage id="partial767" defaultMessage="Your balance: " />
-                        {BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString()}{'  '}{haveCurrency.toUpperCase()}
+                        {new BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString()}{'  '}{haveCurrency.toUpperCase()}
                       </>)
                   }
                 </p>
@@ -1240,7 +1264,7 @@ export default class Exchange extends Component<any, any> {
             </p>
           )}
           {(this.doesComissionPreventThisOrder()
-            && BigNumber(getAmount).isGreaterThan(0)
+            && new BigNumber(getAmount).isGreaterThan(0)
             && (this.state.haveAmount && this.state.getAmount)
           ) && (
               <p styleName="error" className={isWidget ? 'error' : ''} >
@@ -1254,9 +1278,9 @@ export default class Exchange extends Component<any, any> {
               </p>
             )}
           {
-            BigNumber(estimatedFeeValues[haveCurrency]).isGreaterThan(0)
-            && BigNumber(haveAmount).isGreaterThan(0)
-            && BigNumber(haveAmount).isLessThanOrEqualTo(balance)
+            new BigNumber(estimatedFeeValues[haveCurrency]).isGreaterThan(0)
+            && new BigNumber(haveAmount).isGreaterThan(0)
+            && new BigNumber(haveAmount).isLessThanOrEqualTo(balance)
             && (
               <div styleName="notifyThat" className={isWidget ? 'feeValue' : ''}>
                 <div>
@@ -1266,12 +1290,12 @@ export default class Exchange extends Component<any, any> {
                     values={{
                       haveCurrency: haveCurrency.toUpperCase(),
                       estimatedFeeValue: estimatedFeeValues[haveCurrency],
-                      maximumAmount: BigNumber(balance).minus(estimatedFeeValues[haveCurrency]).minus(0.00000600).toString(),
+                      maximumAmount: new BigNumber(balance).minus(estimatedFeeValues[haveCurrency]).minus(0.00000600).toString(),
                     }}
                   />
                   {
-                    BigNumber(estimatedFeeValues[getCurrency]).isGreaterThan(0)
-                      && BigNumber(getAmount).isGreaterThan(0)
+                    new BigNumber(estimatedFeeValues[getCurrency]).isGreaterThan(0)
+                      && new BigNumber(getAmount).isGreaterThan(0)
                       ? (
                         <Fragment>
                           {` `}
@@ -1288,8 +1312,8 @@ export default class Exchange extends Component<any, any> {
                             id="PartialFeeValueWarn3"
                             defaultMessage="= {estimatedFeeValue}$"
                             values={{
-                              estimatedFeeValue: BigNumber(exHaveRate).times(estimatedFeeValues[haveCurrency])
-                                .plus(BigNumber(exGetRate).times(estimatedFeeValues[getCurrency]))
+                              estimatedFeeValue: new BigNumber(exHaveRate).times(estimatedFeeValues[haveCurrency])
+                                .plus(new BigNumber(exGetRate).times(estimatedFeeValues[getCurrency]))
                                 .dp(2, BigNumber.ROUND_CEIL)
                                 .toString(),
                             }}
@@ -1303,7 +1327,7 @@ export default class Exchange extends Component<any, any> {
                             id="PartialFeeValueWarn2"
                             defaultMessage="~ {estimatedFeeValue}$"
                             values={{
-                              estimatedFeeValue: BigNumber(exHaveRate).times(estimatedFeeValues[haveCurrency])
+                              estimatedFeeValue: new BigNumber(exHaveRate).times(estimatedFeeValues[haveCurrency])
                                 .dp(2, BigNumber.ROUND_CEIL)
                                 .toString(),
                             }}
@@ -1367,9 +1391,13 @@ export default class Exchange extends Component<any, any> {
             )
           */}
           <div styleName="rowBtn" className={isWidget ? 'rowBtn' : ''}>
+            {/*
+            //@ts-ignore */}
             <Button className="data-tut-Exchange" styleName="button" brand onClick={this.handleGoTrade} disabled={!canDoOrder}>
               <FormattedMessage id="partial5323" defaultMessage="Buy token" />
             </Button>
+            {/*
+            //@ts-ignore */}
             <Button
               className="data-tut-Orderbook"
               styleName={`button buttonOrders ${isDark ? 'darkButton' : ''}`}
@@ -1419,6 +1447,8 @@ export default class Exchange extends Component<any, any> {
             }
             <Fragment>
               <div styleName="container alignCenter">
+                {/*
+                //@ts-ignore */}
                 <Promo subTitle={subTitle(sellTokenFullName, haveCurrency.toUpperCase(), buyTokenFullName, getCurrency.toUpperCase())} />
                 {Form}
               </div>
@@ -1426,6 +1456,8 @@ export default class Exchange extends Component<any, any> {
           </div>
           {config && config.showHowItsWork && (
             <Fragment>
+              {/*
+              //@ts-ignore */}
               <HowItWorks />
               <VideoAndFeatures />
               <Quote />

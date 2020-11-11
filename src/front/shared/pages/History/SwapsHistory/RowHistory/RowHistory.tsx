@@ -123,8 +123,8 @@ export default class RowHistory extends Component<any, any> {
 
     const linkToTheSwap = `${localisedUrl(locale, links.swap)}/${sellCurrency}-${buyCurrency}/${id}`
 
-    buyAmount = BigNumber(buyAmount)
-    sellAmount = BigNumber(sellAmount)
+    buyAmount = new BigNumber(buyAmount)
+    sellAmount = new BigNumber(sellAmount)
 
     return (
       <tr key={id}>
@@ -166,6 +166,7 @@ export default class RowHistory extends Component<any, any> {
             {isStoppedSwap && (<FormattedMessage id="RowHistory139" defaultMessage="Stopped" />)}
             {!isDeletedSwap && (canBeRefunded
               ? (
+                //@ts-ignore
                 <Timer
                   lockTime={values.lockTime * 1000}
                   enabledButton={this.tryRefund}

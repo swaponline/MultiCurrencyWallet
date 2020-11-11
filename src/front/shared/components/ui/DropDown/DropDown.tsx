@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 import ClickOutside from 'react-click-outside'
-import Link from 'sw-valuelink'
+import Link from 'local_modules/sw-valuelink'
 import { constants } from 'helpers'
 
 import cssModules from 'react-css-modules'

@@ -38,6 +38,8 @@ export default class Debug extends Component<any, any> {
         </pre>
         <pre styleName="information">
           <code>
+            {/*
+            //@ts-ignore */}
             { JSON.stringify(state, false, 4) }
           </code>
         </pre>

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
-import Link from 'sw-valuelink'
+import Link from 'local_modules/sw-valuelink'
 import { request, firebase, constants } from 'helpers'
 import firestore from 'helpers/firebase/firestore'
 

@@ -189,6 +189,8 @@ export default class Orders extends Component<any, any> {
                     defaultMessage="{buyCurrency}🔁{sellCurrency}"
                     values={{ buyCurrency, sellCurrency }}
                   />
+                  {/*
+                  //@ts-ignore */}
                   <Toggle checked={isShowAllMyOrders} onChange={this.handleShowAllMyOrders} />
                   <FormattedMessage id="orders1382" defaultMessage="All" />
                 </div>

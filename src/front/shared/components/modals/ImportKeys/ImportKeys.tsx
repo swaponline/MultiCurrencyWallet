@@ -4,7 +4,7 @@ import actions from 'redux/actions'
 
 import * as bitcoin from 'bitcoinjs-lib'
 
-import Link from 'sw-valuelink'
+import Link from 'local_modules/sw-valuelink'
 import { btc, constants, links } from 'helpers'
 
 import cssModules from 'react-css-modules'

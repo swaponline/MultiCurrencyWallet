@@ -24,7 +24,7 @@ const langLabels = defineMessages({
 
 @injectIntl
 @cssModules(styles, { allowMultiple: true })
-export default class WalletAddressModal extends React.PureComponent {
+export default class WalletAddressModal extends React.PureComponent<any, any> {
 
   props: any
 

@@ -1,3 +1,4 @@
+//@ts-nockeck
 import BigNumber from 'bignumber.js'
 
 import TOKEN_DECIMALS from 'helpers/constants/TOKEN_DECIMALS'
@@ -18,7 +19,7 @@ const isAsk = (type) => (type === PAIR_TYPES.ASK)
 const isBid = (type) => (type === PAIR_TYPES.BID)
 
 const filteredDecimals = ({ amount, currency }) =>
-  BigNumber(amount).decimalPlaces(TOKEN_DECIMALS[currency] || 0).toString()
+  new BigNumber(amount).decimalPlaces(TOKEN_DECIMALS[currency] || 0).toString()
 
 export const parseTicker = (order) => {
   const { buyCurrency: buy, sellCurrency: sell } = order
@@ -61,7 +62,7 @@ export const parsePair = (str) => {
 
   const tokens = str.split('-')
 
-  if (!tokens.length === 2) {
+  if (tokens.length !== 2) {
     throw new Error(`ParseTickerError: Wrong tokens: ${str}`)
   }
 
@@ -83,9 +84,17 @@ export const parsePair = (str) => {
 }
 
 export default class Pair {
+  price: any
+  amount: any
+  ticker: any
+  main: any
+  base: any
+  type: any
+  total: any
+
   constructor({ price, amount, ticker, type }) {
-    this.price = BigNumber(price)
-    this.amount = BigNumber(amount)
+    this.price = new BigNumber(price)
+    this.amount = new BigNumber(amount)
 
     const { MAIN, BASE } = parsePair(ticker)
     if (!MAIN || !BASE) throw new Error(`CreateOrderError: No currency: ${MAIN}-${BASE}`)
@@ -127,6 +136,7 @@ export default class Pair {
 
     console.log(`create order ${this}`)
     const { MAIN, BASE } = parsePair(ticker)
+    //@ts-ignore
     if (!MAIN || !BASE) throw new Error(`CreateOrderError: No currency: ${main}-${base}`)
 
     if (![PAIR_ASK, PAIR_BID].includes(type)) throw new Error(`CreateOrderError: Wrong order type: ${type}`)
@@ -155,8 +165,8 @@ export default class Pair {
     }
 
     // ASK means sellCurrency is ETH, then sell is main
-    const mainAmount = BigNumber(type === PAIR_ASK ? sellAmount : buyAmount)
-    const baseAmount = BigNumber(type === PAIR_ASK ? buyAmount : sellAmount)
+    const mainAmount = new BigNumber(type === PAIR_ASK ? sellAmount : buyAmount)
+    const baseAmount = new BigNumber(type === PAIR_ASK ? buyAmount : sellAmount)
 
     return new Pair({
       ticker,

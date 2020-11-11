@@ -31,6 +31,7 @@ export default class CurrencySlider extends Component<any, any> {
   render() {
     const { activeItemIndex, children } = this.state
     const { currencies } = this.props
+    //@ts-ignore
     const curr = Object.values(currencies).map(item => item.name.toLowerCase())
 
     return (

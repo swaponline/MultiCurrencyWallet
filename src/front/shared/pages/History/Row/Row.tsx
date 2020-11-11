@@ -20,7 +20,7 @@ import { getFullOrigin } from 'helpers/links'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-class Row extends React.PureComponent {
+class Row extends React.PureComponent<any, any> {
 
   props: any
 
@@ -184,6 +184,8 @@ class Row extends React.PureComponent {
       <Fragment>
         {direction === directionType ?
           <div styleName="amount">{`+ ${parseFloat(Number(value).toFixed(5))}`} {type.toUpperCase()}
+            {/*
+            //@ts-ignore */}
             {txType === 'INVOICE' ? <span styleName="smallTooltip"><Tooltip>Invoice</Tooltip></span> : ''}
           </div> :
           <div styleName="amount">{`- ${parseFloat(Number(value).toFixed(5))}`} {type.toUpperCase()}</div>
@@ -244,7 +246,7 @@ class Row extends React.PureComponent {
       invoiceStatusText = <FormattedMessage id="RowHistoryInvoiceCancelled" defaultMessage="Отклонен" />
     }
     /* eslint-disable */
-
+    //@ts-ignore
     let txLink = `/${getCurrencyKey(type)}/tx/${hash}`
     if (ethToken.isEthToken({ name: type })) {
       txLink = `/token/${type}/tx/${hash}`
@@ -334,7 +336,7 @@ class Row extends React.PureComponent {
                         <div styleName={confirmations > 0 ? 'confirm cell' : 'unconfirmed cell'}>
                           {confirmations > 0 ? confirmations > 6 ?
                             <FormattedMessage id="RowHistory34" defaultMessage="Received" /> :
-                            <a href><FormattedMessage id="RowHistory341" defaultMessage="Confirmed" /></a> :
+                            <a href="#"><FormattedMessage id="RowHistory341" defaultMessage="Confirmed" /></a> :
                             <FormattedMessage id="RowHistory342" defaultMessage="Unconfirmed" />
                           }
                         </div>
@@ -349,7 +351,7 @@ class Row extends React.PureComponent {
                 commentCancel={this.commentCancel}
                 ind={ind}
                 submit={onSubmit}
-                changeComment={({ target }) => this.changeComment(target.value, ind)}
+                changeComment={({ target }) => this.changeComment(target.value)}
                 toggleComment={this.toggleComment}
                 {...this.props}
               />

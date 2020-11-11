@@ -10,6 +10,8 @@ import styles from './Promo.scss'
 const Promo = ({ className, subTitle }) => (
   <div styleName="promo">
     <div styleName="promoWrap">
+      {/*
+      //@ts-ignore */}
       <PromoText subTitle={subTitle} />
     </div>
   </div>

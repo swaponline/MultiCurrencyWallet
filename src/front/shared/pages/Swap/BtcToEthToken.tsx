@@ -12,7 +12,7 @@ import crypto from 'crypto'
 import config from 'app-config'
 import SwapApp from 'swap.app'
 import Swap from 'swap.swap'
-import Link from 'sw-valuelink'
+import Link from 'local_modules/sw-valuelink'
 
 import { BigNumber } from 'bignumber.js'
 import { FormattedMessage } from 'react-intl'
@@ -26,6 +26,10 @@ import FeeControler from './FeeControler/FeeControler'
 
 @CSSModules(styles)
 export default class BtcToEthToken extends Component<any, any> {
+
+  swap: any
+  ParticipantTimer:any
+
 
   constructor({ swap, currencyData, ethData, enoughBalance, styles, depositWindow }) {
     //@ts-ignore

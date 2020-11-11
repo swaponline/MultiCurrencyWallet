@@ -37,7 +37,7 @@ import config from 'app-config'
 })
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })
-export default class CreateInvoice extends PureComponent {
+export default class CreateInvoice extends PureComponent<any, any> {
 
   static propTypes = {
     history: PropTypes.object,
@@ -45,7 +45,7 @@ export default class CreateInvoice extends PureComponent {
     intl: PropTypes.object.isRequired,
   };
 
-  
+  timerWaitOnlineJoin: any
 
   constructor() {
     //@ts-ignore

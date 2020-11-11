@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'redaction'
-import Link from 'sw-valuelink'
+import Link from 'local_modules/sw-valuelink'
 
 import styles from './AddressSelect.scss'
 import cssModules from 'react-css-modules'

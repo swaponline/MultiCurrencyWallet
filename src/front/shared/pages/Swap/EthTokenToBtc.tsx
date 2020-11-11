@@ -10,7 +10,7 @@ import config from 'app-config'
 import { isMobile } from 'react-device-detect'
 import { BigNumber } from 'bignumber.js'
 import { FormattedMessage } from 'react-intl'
-import Link from 'sw-valuelink'
+import Link from 'local_modules/sw-valuelink'
 
 import SwapProgress from './SwapProgress/SwapProgress'
 import SwapList from './SwapList/SwapList'
@@ -21,6 +21,10 @@ import DepositWindow from './DepositWindow/DepositWindow'
 
 @CSSModules(styles)
 export default class EthTokenToBtc extends Component<any, any> {
+
+  swap: any
+  confirmBtcTimer: any
+  signTimer: any
 
   constructor({ swap, currencyData, ethBalance, tokenItems }) {
     //@ts-ignore

@@ -37,7 +37,7 @@ const subMenuItems = [
 ]
 
 
-class SubMenu extends React.PureComponent {
+class SubMenu extends React.PureComponent<any, any> {
 
   props: any
 

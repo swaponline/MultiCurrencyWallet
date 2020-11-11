@@ -9,7 +9,7 @@ import RowFeeds from './RowFeeds/RowFeeds'
 import { FormattedMessage } from 'react-intl'
 
 @cssModules(styles, { allowMultiple: true })
-export default class MyOrders extends PureComponent {
+export default class MyOrders extends PureComponent<any, any> {
 
   render() {
     const titles = [

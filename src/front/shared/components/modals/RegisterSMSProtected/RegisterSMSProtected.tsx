@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { constants } from "helpers";
 import actions from "redux/actions";
-import Link from "sw-valuelink";
+import Link from "local_modules/sw-valuelink";
 import { connect } from "redaction";
 
 import cssModules from "react-css-modules";

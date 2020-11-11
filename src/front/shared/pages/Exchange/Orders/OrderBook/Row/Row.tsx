@@ -93,6 +93,7 @@ export default class Row extends Component<any, any> {
       if (isCurrencyEthToken) {
         balance = await actions.token.getBalance(currency)
       } else {
+        //@ts-ignore
         balance = await actions.eth.getBalance(currency)
       }
     } else {
@@ -100,7 +101,7 @@ export default class Row extends Component<any, any> {
 
       const unspents = await actions[currency].fetchUnspents(currenciesData[`${currency}Data`].address)
       const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-      balance = BigNumber(totalUnspent).dividedBy(1e8)
+      balance = new BigNumber(totalUnspent).dividedBy(1e8)
     }
 
     this.setState({
@@ -161,16 +162,18 @@ export default class Row extends Component<any, any> {
 
     let checkAmount = buyAmount
 
-    const ethFee = BigNumber(
+    const ethFee = new BigNumber(
+      //@ts-ignore
       await helpers.eth.estimateFeeValue({ method: 'swap' })
     ).toNumber()
 
-    const btcFee = BigNumber(
+    const btcFee = new BigNumber(
+      //@ts-ignore
       await helpers.btc.estimateFeeValue({ method: 'swap' })
     ).toNumber()
 
     if (buyCurrency === 'ETH') {
-      checkAmount = BigNumber(checkAmount).plus(ethFee).toNumber()
+      checkAmount = new BigNumber(checkAmount).plus(ethFee).toNumber()
     }
 
     let ethBalanceOk = true
@@ -265,7 +268,9 @@ export default class Row extends Component<any, any> {
           this.setState(() => ({ isFetching: false }))
         }, 15 * 1000)
 
-        const destination = {}
+        const destination = {
+          address: null
+        }
         if (customWallet !== null) {
           destination.address = customWallet
         }
@@ -336,9 +341,9 @@ export default class Row extends Component<any, any> {
 
     // todo: improve calculation much more
     const buyCurrencyFee = estimatedFeeValues[buyCurrency.toLowerCase()]
-    const costs = (buyCurrencyFee) ? BigNumber(buyAmount).plus(buyCurrencyFee) : buyAmount
+    const costs = (buyCurrencyFee) ? new BigNumber(buyAmount).plus(buyCurrencyFee) : buyAmount
 
-    const isSwapButtonEnabled = BigNumber(balance).isGreaterThanOrEqualTo(costs)
+    const isSwapButtonEnabled = new BigNumber(balance).isGreaterThanOrEqualTo(costs)
 
     let sellCurrencyOut,
       sellAmountOut,
@@ -351,7 +356,7 @@ export default class Row extends Component<any, any> {
       sellAmountOut = total
       getCurrencyOut = main
       getAmountOut = amount
-      priceOut = BigNumber(1).div(price)
+      priceOut = new BigNumber(1).div(price)
     }
 
     if (type === PAIR_TYPES.ASK) {
@@ -528,6 +533,7 @@ export default class Row extends Component<any, any> {
                               </span>
                             </Fragment>
                           ) : (
+                            //@ts-ignore
                             <RequestButton
                               styleName="startButton"
                               disabled={!isSwapButtonEnabled}

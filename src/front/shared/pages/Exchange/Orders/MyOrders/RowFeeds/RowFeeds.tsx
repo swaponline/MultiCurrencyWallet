@@ -13,7 +13,7 @@ import Coins from 'components/Coins/Coins'
 import Copy from 'components/ui/Copy/Copy'
 import { RemoveButton } from 'components/controls'
 import { FormattedMessage, injectIntl } from 'react-intl'
-import { localisedUrl, locale } from 'helpers/locale'
+import { localisedUrl } from 'helpers/locale'
 import BigNumber from 'bignumber.js'
 
 
@@ -40,7 +40,7 @@ export default class RowFeeds extends Component<any, any> {
       declineRequest, acceptRequest, removeOrder, intl: { locale },
     } = this.props
 
-    const rate = exchangeRate ? BigNumber(exchangeRate) : BigNumber(buyAmount).div(sellAmount)
+    const rate = exchangeRate ? new BigNumber(exchangeRate) : new BigNumber(buyAmount).div(sellAmount)
 
     return (
       <tr key={this.props.key}>

@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import helpers, { constants, request } from 'helpers'
 import actions from 'redux/actions'
-import Link from 'sw-valuelink'
+import Link from 'local_modules/sw-valuelink'
 import { connect } from 'redaction'
 import config from 'app-config'
 
