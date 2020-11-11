@@ -2,9 +2,15 @@ export default [
   {
     test: /\.css$/,
     use: [
-      'style-loader',
-      'cache-loader',
-      'css-loader',
+      {
+        loader: 'style-loader',
+      },
+      {
+        loader: 'cache-loader',
+      },
+      {
+        loader: 'css-loader',
+      },
     ],
   },
 ]

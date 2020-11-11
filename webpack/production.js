@@ -4,7 +4,7 @@ import CopyWebpackPlugin from 'copy-webpack-plugin'
 import TerserPlugin from 'terser-webpack-plugin-legacy'
 import externalConfig from './externalConfig'
 import config from 'app-config'
-
+import webpack from 'webpack'
 
 export default (webpackConfig) => {
   webpackConfig.mode = 'production'
@@ -21,73 +21,15 @@ export default (webpackConfig) => {
     'react-dom' : 'ReactDOM',
   }
 
-  webpackConfig.module.rules = [
-    {
-      test: /\.css$/,
-      use: [
-        MiniCssExtractPlugin.loader,
-        'cache-loader',
-        'css-loader',
-      ],
-    },
-    {
-      test: /\.scss$/,
-      use: [
-        MiniCssExtractPlugin.loader,
-        'cache-loader',
-        'css-loader',
-        'sass-loader',
-      ],
-    },
-    {
-      test: /\.(js|jsx)$/,
-      exclude: /(node_modules|bower_components)/,
-      use: {
-        loader: 'babel-loader',
-        options: {
-          presets: ['@babel/preset-env'],
-          plugins: ['@babel/plugin-proposal-object-rest-spread']
-        },
-      },
-    },
-    {
-      test: /images.*\.(png|ico|jpg|jpeg|gif|svg|mp4)(\?.*)?$/,
-      loader: 'file-loader',
-      options: {
-        name: '[name]_[hash:6].[ext]',
-        outputPath: 'images/',
-      },
-    },
-    {
-      test: /\.mp4$/,
-      loader: 'file-loader',
-      options: {
-        name: '[name].[ext]',
-        outputPath: '/',
-        publicPath: `${config.publicPath}/`,
-      },
-    },
-    {
-      test: /fonts.*\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      loader: 'url-loader',
-      options: {
-        name: '[name].[ext]',
-        outputPath: 'fonts/',
-        publicPath: `${config.publicPath}fonts/`,
-        limit: 10000,
-        mimetype: 'application/font-woff',
-      },
-    },
-    {
-      test: /fonts.*\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      loader: 'file-loader',
-      options: {
-        name: '[name].[ext]',
-        outputPath: 'fonts/',
-        publicPath: `${config.publicPath}fonts/`,
-      },
-    },
-  ]
+  webpackConfig.module.rules = webpackConfig.module.rules.map((loader) => {
+    if (loader.test.test('*.css') || loader.test.test('*.scss')) {
+      // replace 'style-loader' -> 'MiniCssExtractPlugin.loader'
+      loader.use[0] = {
+        loader: MiniCssExtractPlugin.loader
+      }
+    }
+    return loader
+  })
 
   webpackConfig.optimization = {
     minimizer: [
@@ -119,7 +61,13 @@ export default (webpackConfig) => {
     }
   }
 
+  webpackConfig.devtool = false
+
   webpackConfig.plugins.push(
+    new webpack.SourceMapDevToolPlugin({
+      filename: '[name].js.map',
+      exclude: ['vendor.js']
+    }),
     new WebpackRequireFrom({
       variableName: 'publicUrl',
       suppressErrors: true,

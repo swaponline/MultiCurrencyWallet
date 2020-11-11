@@ -25,12 +25,8 @@ export default [
       {
         loader: 'css-loader',
         options: {
-          // [compile]: true,
           sourceMap: true,
           modules: true,
-          // localIdentName,
-          // importLoaders: 1,
-          // minimize: config.env === 'production'
         },
       },
       {
