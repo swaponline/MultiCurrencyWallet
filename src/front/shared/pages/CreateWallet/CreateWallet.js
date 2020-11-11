@@ -28,8 +28,7 @@ import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 const isWidgetBuild = config && config.isWidget
-// FIXME: эта строка была перед обьявлением класса в FirstStep.js
-// @connect(({ currencies: { items: currencies } }) => ({ currencies }));
+
 const CreateWallet = (props) => {
   const {
     history,
@@ -261,7 +260,7 @@ const CreateWallet = (props) => {
     }
   }
 
-  handleClick = name => {
+  const handleClickFirstStep = name => {
     feedback.createWallet.currencySelected(name)
 
     const dataToReturn = { [name]: !curState[name] }
@@ -271,7 +270,7 @@ const CreateWallet = (props) => {
     setError(null)
   }
 
-  etcClick = () => {
+  const etcClick = () => {
     let newStartPack = defaultStartPack
 
     if (config.opts.addCustomERC20) {
@@ -515,8 +514,29 @@ const CreateWallet = (props) => {
           <SecondStep error={error} onClick={validate} currencies={currencies} setError={setError} forcedCurrencyData />
           :
           <div>
-            {step === 1 && <FirstStep error={error} onClick={validate} curState={curState} startPack={startPack} etcClick={etcClick} />}
-            {step === 2 && <SecondStep error={error} btcData={btcData} onClick={validate} currencies={currencies} setError={setError} ethData={ethData} />}
+            { 
+              step === 1 &&
+              <FirstStep  
+                error={error} 
+                onClick={validate} 
+                curState={curState} 
+                startPack={startPack} 
+                etcClick={etcClick}
+                handleClick={handleClickFirstStep}
+              />
+            }
+            { 
+              step === 2 &&
+              <SecondStep 
+                error={error} 
+                btcData={btcData} 
+                onClick={validate}
+                etcClick={etcClick}
+                currencies={currencies} 
+                setError={setError} 
+                ethData={ethData} 
+              />
+            }
           </div>
         }
       </div>

@@ -19,7 +19,7 @@ import Cupture, {
 
 
 const isWidgetBuild = config && config.isWidget
-
+@connect(({ currencies: { items: currencies } }) => ({ currencies }))
 @CSSModules(styles, { allowMultiple: true })
 export default class FirstStep extends Component {
   constructor(props) {
@@ -27,7 +27,7 @@ export default class FirstStep extends Component {
   }
 
   render() {
-    const { onClick, error, curState, startPack, etcClick } = this.props
+    const { onClick, error, curState, startPack, etcClick, handleClick } = this.props
 
     const coloredIcons = ['btc', 'eth', 'ghost', 'next', 'swap', 'usdt', 'eurs']
 
@@ -45,7 +45,7 @@ export default class FirstStep extends Component {
                 const { name, capture } = el
 
                 return (
-                  <div key={name} styleName={`card ${curState[name] ? 'purpleBorder' : ''}`} onClick={() => this.handleClick(name)}>
+                  <div key={name} styleName={`card ${curState[name] ? 'purpleBorder' : ''}`} onClick={() => handleClick(name)}>
                     <div styleName="logo">
                       <Coin styleName={`assetsTableIcon ${coloredIcons.includes(name.toLowerCase()) ? name.toLowerCase() : "coinColor"}`} name={name} />
                     </div>

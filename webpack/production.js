@@ -20,10 +20,12 @@ export default (webpackConfig) => {
     'react': 'React',
     'react-dom' : 'ReactDOM',
   }
-
+  /* 
+  * для прод сборки лучше изменить 'style-loader' на 'MiniCssExtractPlugin.loader'
+  * работает со стилями более эффективно
+  */
   webpackConfig.module.rules = webpackConfig.module.rules.map((loader) => {
     if (loader.test.test('*.css') || loader.test.test('*.scss')) {
-      // replace 'style-loader' -> 'MiniCssExtractPlugin.loader'
       loader.use[0] = {
         loader: MiniCssExtractPlugin.loader
       }
@@ -40,27 +42,12 @@ export default (webpackConfig) => {
       }),
     ],
     splitChunks: {
-      chunks: 'async',
-      minSize: 20000,
-      minChunks: 1,
-      maxAsyncRequests: 30,
-      maxInitialRequests: 30,
-      automaticNameDelimiter: '~',
-      enforceSizeThreshold: 50000,
-      cacheGroups: {
-        defaultVendors: {
-          test: /[\\/]node_modules[\\/]/,
-          priority: -10
-        },
-        default: {
-          minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true
-        }
-      }
+      chunks: 'all',
     }
   }
-
+  /* 
+  * отключаем дефолтные карты кода и подключаем плагин для них
+  */
   webpackConfig.devtool = false
 
   webpackConfig.plugins.push(

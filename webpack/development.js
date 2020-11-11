@@ -20,7 +20,9 @@ export default (webpackConfig) => {
     net: 'empty',
     tls: 'empty',
   }
-
+  /* 
+  * отключаем дефолтные карты кода и подключаем плагин для них
+  */
   webpackConfig.devtool = false
 
   webpackConfig.devServer = {
@@ -31,13 +33,16 @@ export default (webpackConfig) => {
   }
 
   webpackConfig.plugins.push(
+    /* 
+    * раскоментировать, запустить сборку и открыть указанный адрес 
+    * просмотреть что грузиться в сборку
+    * анализатор будет тормозить сборку если испльзовать постоянно
+    */
     // new BundleAnalyzerPlugin({
-    //   analyzerMode: 'static',
-    //   reportFilename: webpackConfig.output.path,
-    //   // analyzerMode: 'server',
+    //   // analyzerMode: 'server', // в каком формате представлять данные
     //   // analyzerHost: '127.0.0.1',
     //   // analyzerPort: '8888',
-    //   // openAnalyzer: false, // do not auto open in browser
+    //   // openAnalyzer: false, // открывать ли автоматически в браузере
     // }),
     new webpack.SourceMapDevToolPlugin({
       filename: '[name].js.map',
