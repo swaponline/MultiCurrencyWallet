@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl'
 import Tooltip from 'components/TourWindow'
 
 
-export class WidgetWalletTour extends Component {
+export class WidgetWalletTour extends Component<any, any> {
 
   constructor(props) {
     super(props)

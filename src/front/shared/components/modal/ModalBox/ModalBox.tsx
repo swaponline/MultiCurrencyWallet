@@ -16,7 +16,7 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 @cssModules(styles, { allowMultiple: true })
-export default class ModalBox extends Component {
+export default class ModalBox extends Component<any, any> {
 
   props: any
 

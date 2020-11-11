@@ -14,7 +14,7 @@ import images from "./images";
 @withRouter
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })
-export default class Logo extends Component {
+export default class Logo extends Component<any, any> {
   static propTypes = {
     isColored: PropTypes.bool,
     withLink: PropTypes.bool,

@@ -14,7 +14,7 @@ import DepositWindow from './GhostSwap/DepositWindow/DepositWindow'
 import paddingForSwapList from 'shared/helpers/paddingForSwapList'
 
 @CSSModules(styles)
-export default class EthToGhost extends Component {
+export default class EthToGhost extends Component<any, any> {
   constructor({ swap, currencyData, depositWindow, enoughBalance }) {
     super()
 

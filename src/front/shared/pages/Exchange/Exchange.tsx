@@ -140,7 +140,7 @@ const bannedPeers = {}; // rejected swap peers
   })
 )
 @CSSModules(styles, { allowMultiple: true })
-export default class Exchange extends Component {
+export default class Exchange extends Component<any, any> {
   static defaultProps = {
     orders: [],
   };

@@ -97,7 +97,7 @@ const langLabels = defineMessages({
   }
 )
 @cssModules(styles, { allowMultiple: true })
-export default class AddressSelect extends Component {
+export default class AddressSelect extends Component<any, any> {
   constructor(props) {
     super(props)
 

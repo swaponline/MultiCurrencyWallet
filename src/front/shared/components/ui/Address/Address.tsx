@@ -9,7 +9,7 @@ import styles from './Address.scss'
 
 
 @cssModules(styles, { allowMultiple: true })
-export default class Address extends Component {
+export default class Address extends Component<any, any> {
 
   constructor({ initialValue, selectedValue }) {
     super()

@@ -29,7 +29,7 @@ const isWidgetBuild = config && config.isWidget
 
 @connect(({ currencies: { items: currencies } }) => ({ currencies }))
 @CSSModules(styles, { allowMultiple: true })
-export default class FirstStep extends Component {
+export default class FirstStep extends Component<any, any> {
   defaultStartPack = [
     ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],
     ...(!config.opts.curEnabled || config.opts.curEnabled.eth) ? [{ name: "ETH", capture: "Ethereum" }] : [],

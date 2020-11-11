@@ -29,7 +29,7 @@ import { FormattedMessage } from 'react-intl'
   })
 )
 @CSSModules(styles, { allowMultiple: true })
-export default class CurrencyDirectionChooser extends Component {
+export default class CurrencyDirectionChooser extends Component<any, any> {
 
   static propTypes = {
     flipCurrency: PropTypes.func,

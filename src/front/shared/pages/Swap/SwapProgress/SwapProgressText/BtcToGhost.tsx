@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl'
 
 
 @CSSModules(styles)
-export default class BtcToGhost extends Component {
+export default class BtcToGhost extends Component<any, any> {
   BtcToGhost = (step) => {
 
     switch (step) {

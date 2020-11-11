@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl'
 
 
 @CSSModules(styles)
-export default class EthTokensToBtc extends Component {
+export default class EthTokensToBtc extends Component<any, any> {
   EthTokensToBtc = (step) => {
 
     switch (step) {

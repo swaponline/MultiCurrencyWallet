@@ -6,7 +6,7 @@ import JsonLd from './JsonLd'
 import seo, { getSeoPage, getUrl } from 'helpers/seo'
 
 
-export default class Seo extends Component {
+export default class Seo extends Component<any, any> {
   static propTypes = {
     location: PropTypes.object.isRequired,
   }

@@ -19,7 +19,7 @@ import BigNumber from 'bignumber.js'
 
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })
-export default class RowHistory extends Component {
+export default class RowHistory extends Component<any, any> {
 
   static propTypes = {
     row: PropTypes.object,

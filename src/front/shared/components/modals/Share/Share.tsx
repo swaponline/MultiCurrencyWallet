@@ -22,7 +22,7 @@ const langLabels = defineMessages({
 
 @injectIntl
 @cssModules(styles, { allowMultiple: true })
-export default class Share extends Component {
+export default class Share extends Component<any, any> {
 
   state = {
     isLinkCopied: false,

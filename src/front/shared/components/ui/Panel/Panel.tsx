@@ -10,7 +10,7 @@ import styles from './Panel.scss'
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @cssModules(styles, { allowMultiple: true })
-export default class Panel extends Component {
+export default class Panel extends Component<any, any> {
   render() {
     return (
       <section styleName={classNames('panel', isDark ? 'dark' : null)}>

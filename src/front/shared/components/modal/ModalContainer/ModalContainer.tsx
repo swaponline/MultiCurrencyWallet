@@ -11,7 +11,7 @@ import Center from 'components/layout/Center/Center'
 
 
 @cssModules(styles, { allowMultiple: true })
-export default class ModalContainer extends Component {
+export default class ModalContainer extends Component<any, any> {
 
   static propTypes = {
     children: PropTypes.any.isRequired,

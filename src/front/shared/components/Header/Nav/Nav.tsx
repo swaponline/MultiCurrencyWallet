@@ -18,7 +18,7 @@ import ArrowDown from './images/ArrowDown.svg'
 @injectIntl
 @withRouter
 @CSSModules(styles, { allowMultiple: true })
-export default class Nav extends Component {
+export default class Nav extends Component<any, any> {
   static propTypes = {
     menu: PropTypes.array.isRequired
   };

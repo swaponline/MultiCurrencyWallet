@@ -13,7 +13,7 @@ import { FormattedMessage } from 'react-intl'
 
 @connect(({ user: { ethData, btcData, ghostData, nextData } }) => ({ btcData, ethData, ghostData, nextData }))
 @CSSModules(styles)
-export default class SaveKeys extends Component {
+export default class SaveKeys extends Component<any, any> {
   render() {
     const { ethData, btcData, ghostData, nextData, isChange, isDownload, ...otherProps } = this.props
 

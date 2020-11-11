@@ -7,7 +7,7 @@ const UPDATE  = 'autosize:update'
 const DESTROY = 'autosize:destroy'
 const RESIZED = 'autosize:resized'
 
-export default class TextareaAutosize extends Component {
+export default class TextareaAutosize extends Component<any, any> {
 
   static propTypes = {
     valueLink: PropTypes.object.isRequired,

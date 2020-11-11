@@ -8,7 +8,7 @@ import cx from 'classnames'
 
 
 @CSSModules(styles, { allowMultiple: true })
-export default class DepositButton extends Component {
+export default class DepositButton extends Component<any, any> {
 
   render() {
     const {

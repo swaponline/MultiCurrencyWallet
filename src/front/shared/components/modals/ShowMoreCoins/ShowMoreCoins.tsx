@@ -38,7 +38,7 @@ const title2 = [
   hiddenCoinsList,
 }))
 @cssModules(styles, { allowMultiple: true })
-export default class ShowMoreCoins extends Component {
+export default class ShowMoreCoins extends Component<any, any> {
   render() {
     const { name, items, tokens, currencies, hiddenCoinsList } = this.props
 

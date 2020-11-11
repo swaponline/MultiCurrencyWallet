@@ -31,7 +31,7 @@ import config from 'app-config'
   currencies,
 }))
 @cssModules(styles, { allowMultiple: true })
-export default class Home extends Component {
+export default class Home extends Component<any, any> {
 
   static propTypes = {
     faqList: PropTypes.arrayOf(PropTypes.shape({

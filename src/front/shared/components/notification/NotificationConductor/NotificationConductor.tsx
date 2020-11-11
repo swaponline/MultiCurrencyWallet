@@ -12,7 +12,7 @@ import styles from './NotificationConductor.scss'
   notifications: 'notifications',
 })
 @cssModules(styles)
-export default class NotificationConductor extends Component {
+export default class NotificationConductor extends Component<any, any> {
 
   static propTypes = {
     notifications: PropTypes.object,

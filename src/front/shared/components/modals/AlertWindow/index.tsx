@@ -36,7 +36,7 @@ const defaultLanguage = defineMessages({
 @injectIntl
 @withRouter
 @CSSModules(styles, { allowMultiple: true })
-export default class AlertWindow extends Component {
+export default class AlertWindow extends Component<any, any> {
 
   handleClose = () => {
     const { name, data, onClose, history, intl } = this.props

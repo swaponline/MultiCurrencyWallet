@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { Line } from 'rc-progress'
 
 
-export default class ProgressBar extends Component {
+export default class ProgressBar extends Component<any, any> {
 
   // seconds
   static propTypes = {

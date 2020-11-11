@@ -19,7 +19,7 @@ import DepositWindow from './DepositWindow/DepositWindow'
 import paddingForSwapList from 'shared/helpers/paddingForSwapList'
 
 @CSSModules(styles)
-export default class BtcToGhost extends Component {
+export default class BtcToGhost extends Component<any, any> {
   constructor({ swap, currencyData, depositWindow, enoughBalance }) {
     super()
 

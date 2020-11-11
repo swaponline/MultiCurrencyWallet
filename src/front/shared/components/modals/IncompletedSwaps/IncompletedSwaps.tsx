@@ -29,7 +29,7 @@ const title = [
   swapHistory,
 }))
 @cssModules(styles, { allowMultiple: true })
-export default class IncompletedSwaps extends Component {
+export default class IncompletedSwaps extends Component<any, any> {
 
   render() {
     const { decline, swapHistory } = this.props

@@ -25,7 +25,7 @@ import coinsWithDynamicFee from 'helpers/constants/coinsWithDynamicFee'
 
 
 @CSSModules(styles)
-export default class DepositWindow extends Component {
+export default class DepositWindow extends Component<any, any> {
 
   constructor({ swap, flow, onCopyAddress, currencyData }) {
     super()

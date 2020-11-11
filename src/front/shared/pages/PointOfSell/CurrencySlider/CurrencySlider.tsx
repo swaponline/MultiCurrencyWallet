@@ -21,7 +21,7 @@ const names = ['btc', 'eth', 'swap']
   })
 )
 @cssModules(styles, { allowMultiple: true })
-export default class CurrencySlider extends Component {
+export default class CurrencySlider extends Component<any, any> {
 
   state = {
     children: [],

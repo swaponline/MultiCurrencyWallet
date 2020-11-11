@@ -8,7 +8,7 @@ import { FormattedMessage } from 'react-intl'
 import ShowBtcScript from './ShowBtcScript'
 
 @CSSModules(styles)
-export default class Debug extends Component {
+export default class Debug extends Component<any, any> {
 
   static propTypes = {
     flow: PropTypes.object,

@@ -10,7 +10,7 @@ import feedback from 'shared/helpers/feedback'
 
 const isWidgetBuild = config && config.isWidget
 
-export default class PreventMultiTabs extends Component {
+export default class PreventMultiTabs extends Component<any, any> {
   constructor() {
     super()
     const preventSwitch = localStorage.getItem(

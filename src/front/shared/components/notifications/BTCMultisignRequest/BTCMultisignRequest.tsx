@@ -11,7 +11,7 @@ import { localisedUrl } from 'helpers/locale'
 
 @injectIntl
 @cssModules(styles)
-export default class BTCMultisignRequest extends Component {
+export default class BTCMultisignRequest extends Component<any, any> {
 
   handleClick = () => {
     const { history, data: { txRaw, invoice } } = this.props

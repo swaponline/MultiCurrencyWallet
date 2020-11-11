@@ -52,7 +52,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   hiddenCoinsList: "core.hiddenCoinsList",
 })
 @CSSModules(styles, { allowMultiple: true })
-export default class Header extends Component {
+export default class Header extends Component<any, any> {
   static propTypes = {
     history: PropTypes.object.isRequired,
   };

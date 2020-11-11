@@ -10,7 +10,7 @@ import Sound from 'helpers/Sound/alert.mp4'
 
 
 @cssModules(styles, { allowMultiple: true })
-export default class Notification extends Component {
+export default class Notification extends Component<any, any> {
 
   static defaultProps = {
     soundPlay: true,

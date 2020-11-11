@@ -45,7 +45,7 @@ import finishSvg from './images/finish.svg'
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })
-export default class SwapProgress extends Component {
+export default class SwapProgress extends Component<any, any> {
 
   static propTypes = {
     flow: PropTypes.object,

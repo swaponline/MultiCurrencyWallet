@@ -34,7 +34,7 @@ import feedback from 'shared/helpers/feedback'
 }))
 
 @cssModules(styles, { allowMultiple: true })
-export default class Row extends Component {
+export default class Row extends Component<any, any> {
 
   static propTypes = {
     row: PropTypes.object,

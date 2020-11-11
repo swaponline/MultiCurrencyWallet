@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl'
 
 
 @CSSModules(styles)
-export default class BtcToEthTokens extends Component {
+export default class BtcToEthTokens extends Component<any, any> {
   BtcToEthTokens = (step, flow) => {
 
     const { waitBtcConfirm } = flow

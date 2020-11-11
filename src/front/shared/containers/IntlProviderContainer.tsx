@@ -27,7 +27,7 @@ const translations = {
   es: reduceMessages(myEs),
 }
 
-export default class IntlProviderContainer extends Component {
+export default class IntlProviderContainer extends Component<any, any> {
   render() {
     const { children } = this.props
     let lang = 'en'

@@ -29,7 +29,7 @@ const title = defineMessages({
 @injectIntl
 @withRouter
 @cssModules(styles)
-export default class DeclineOrdersModal extends Component {
+export default class DeclineOrdersModal extends Component<any, any> {
 
   goToDecline = () => {
     const { data: { declineSwap: { sellCurrency, buyCurrency, id } }, history } = this.props /* eslint-disable-line */

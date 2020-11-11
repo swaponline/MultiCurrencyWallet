@@ -58,7 +58,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   swapHistory,
 }))
 @CSSModules(stylesHere, { allowMultiple: true })
-export default class History extends Component {
+export default class History extends Component<any, any> {
 
   constructor(props) {
     super(props)

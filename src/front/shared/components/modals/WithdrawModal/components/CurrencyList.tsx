@@ -14,7 +14,7 @@ import getCurrencyKey from 'helpers/getCurrencyKey'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 @cssModules(styles, { allowMultiple: true })
-export default class CurrencyList extends Component {
+export default class CurrencyList extends Component<any, any> {
   constructor(props) {
     super(props)
 

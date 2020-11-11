@@ -17,7 +17,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   modals: 'modals',
 })
 @cssModules(styles, { allowMultiple: true })
-export default class ModalConductor extends Component {
+export default class ModalConductor extends Component<any, any> {
 
   static propTypes = {
     modals: PropTypes.object,

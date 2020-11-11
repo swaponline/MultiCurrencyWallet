@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl'
 
 
 @CSSModules(styles)
-export default class GhostToEthTokens extends Component {
+export default class GhostToEthTokens extends Component<any, any> {
   GhostToEthTokens = (step) => {
 
     switch (step) {

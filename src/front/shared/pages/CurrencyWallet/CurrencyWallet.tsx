@@ -85,7 +85,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 @injectIntl
 @withRouter
 @CSSModules({ ...styles, ...stylesHere }, { allowMultiple: true })
-export default class CurrencyWallet extends Component {
+export default class CurrencyWallet extends Component<any, any> {
   constructor(props) {
     super(props)
 

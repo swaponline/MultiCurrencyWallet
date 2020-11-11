@@ -9,7 +9,7 @@ import { connect } from 'redaction'
 
 
 @CSSModules(styles, { allowMultiple: true })
-export default class CurrencyButton extends Component {
+export default class CurrencyButton extends Component<any, any> {
 
   render() {
     const {

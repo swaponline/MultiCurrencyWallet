@@ -20,7 +20,7 @@ import BigNumber from 'bignumber.js'
 @withRouter
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })
-export default class RowFeeds extends Component {
+export default class RowFeeds extends Component<any, any> {
 
   static propTypes = {
     row: PropTypes.object,

@@ -22,7 +22,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   })
 )
 @cssModules(styles, { allowMultiple: true })
-export default class CurrencySlider extends Component {
+export default class CurrencySlider extends Component<any, any> {
 
   state = {
     children: [],

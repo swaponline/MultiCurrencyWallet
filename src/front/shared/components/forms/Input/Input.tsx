@@ -15,7 +15,7 @@ import TextArea from "components/forms/TextArea/TextArea";
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 @cssModules(styles, { allowMultiple: true })
-export default class Input extends Component {
+export default class Input extends Component<any, any> {
   static propTypes = {
     className: PropTypes.string,
     rootClassName: PropTypes.string,

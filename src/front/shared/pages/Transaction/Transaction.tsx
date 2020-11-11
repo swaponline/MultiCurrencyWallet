@@ -26,7 +26,7 @@ const labels = defineMessages({
 @cssModules({
   ...styles,
 }, { allowMultiple: true })
-class Transaction extends Component {
+class Transaction extends Component<any, any> {
   unmounted = false
 
   constructor(props) {

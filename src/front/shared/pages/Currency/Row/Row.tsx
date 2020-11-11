@@ -19,7 +19,7 @@ import BtnTooltip from 'components/controls/WithdrawButton/BtnTooltip'
 @injectIntl
 @withRouter
 @cssModules(styles)
-export default class Row extends Component {
+export default class Row extends Component<any, any> {
 
   static propTypes = {
     from: PropTypes.string.isRequired,

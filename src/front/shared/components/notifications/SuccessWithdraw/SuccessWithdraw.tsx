@@ -7,7 +7,7 @@ import Notification from 'components/notification/Notification/Notification'
 
 
 @cssModules(styles)
-export default class SuccessWithdraw extends Component {
+export default class SuccessWithdraw extends Component<any, any> {
 
   render() {
     const { name, data: { amount, currency, address } } = this.props

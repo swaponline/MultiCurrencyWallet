@@ -11,7 +11,7 @@ import styles from './QR.scss'
  * @todo Amount support?
  */
 @CSSModules({ ...styles, ...animateFetching }, { allowMultiple: true })
-export default class QR extends Component {
+export default class QR extends Component<any, any> {
 
   constructor(props) {
     super()

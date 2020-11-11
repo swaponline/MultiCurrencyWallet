@@ -17,7 +17,7 @@ import paddingForSwapList from 'shared/helpers/paddingForSwapList'
 
 
 @CSSModules(styles)
-export default class GhostToEthToken extends Component {
+export default class GhostToEthToken extends Component<any, any> {
 
   constructor({ swap, currencyData, ethData, enoughBalance, styles, depositWindow }) {
 

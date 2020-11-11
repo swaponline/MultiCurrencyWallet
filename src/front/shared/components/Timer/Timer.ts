@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 
-export default class TimerButton extends Component {
+export default class TimerButton extends Component<any, any> {
 
   static propTypes = {
     timeLeft: PropTypes.number, // seconds

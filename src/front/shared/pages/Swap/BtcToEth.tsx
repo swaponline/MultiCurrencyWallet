@@ -18,7 +18,7 @@ import SwapList from './SwapList/SwapList'
 
 
 @CSSModules(styles)
-export default class BtcToEth extends Component {
+export default class BtcToEth extends Component<any, any> {
 
   constructor({ swap, currencyData }) {
     super()

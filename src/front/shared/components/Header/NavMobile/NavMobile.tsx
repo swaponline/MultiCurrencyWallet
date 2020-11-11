@@ -17,7 +17,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 @injectIntl
 @withRouter
 @CSSModules(styles, { allowMultiple: true })
-export default class NavMobile extends Component {
+export default class NavMobile extends Component<any, any> {
 
   static propTypes = {
     menu: PropTypes.array.isRequired,

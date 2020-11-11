@@ -28,7 +28,7 @@ const title = defineMessages({
 
 @injectIntl
 @cssModules(styles)
-export default class ImportKeys extends Component {
+export default class ImportKeys extends Component<any, any> {
 
   state = {
     ethKey: '',

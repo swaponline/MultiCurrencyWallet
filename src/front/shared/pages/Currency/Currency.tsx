@@ -32,7 +32,7 @@ import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
     hiddenCoinsList,
   }))
 @CSSModules(styles, { allowMultiple: true })
-export default class Currency extends Component {
+export default class Currency extends Component<any, any> {
 
 
   constructor({ match: { params: { currency } }, items, tokens, history, intl: { locale } }) {

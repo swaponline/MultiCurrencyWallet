@@ -7,7 +7,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 
 
 @cssModules(styles)
-export default class ErrorPageNoSSL extends Component {
+export default class ErrorPageNoSSL extends Component<any, any> {
   render() {
     return (
       <div styleName="page">

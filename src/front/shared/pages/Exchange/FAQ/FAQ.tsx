@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 
-export default class FAQ extends Component {
+export default class FAQ extends Component<any, any> {
   render() {
     return null
   }
@@ -16,7 +16,7 @@ import collapse from 'bootstrap/js/dist/collapse'
 import './FAQ.css'
 
 
-export default class FAQ extends Component {
+export default class FAQ extends Component<any, any> {
   constructor(props) {
     super(props)
 

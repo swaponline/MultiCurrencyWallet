@@ -10,7 +10,7 @@ import Button from 'components/controls/Button/Button'
 
 
 @cssModules(styles)
-export default class FeeControler extends Component {
+export default class FeeControler extends Component<any, any> {
 
   state = {
     isAddressCopied: false,

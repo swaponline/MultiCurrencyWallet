@@ -10,7 +10,7 @@ import { withRouter } from 'react-router-dom'
 
 @withRouter
 @cssModules(styles)
-export default class Row extends Component {
+export default class Row extends Component<any, any> {
 
   isHidenCoin = () => {
     actions.core.markCoinAsHidden(this.props.currency, true)

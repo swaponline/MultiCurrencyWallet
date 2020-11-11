@@ -5,7 +5,7 @@ import actions from 'redux/actions'
 import { connect } from 'redaction'
 
 @connect(({ pubsubRoom }) => ({ pubsubRoom }))
-export default class Core extends Component {
+export default class Core extends Component<any, any> {
 
   state = {
     orders: [],

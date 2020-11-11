@@ -8,7 +8,7 @@ import { FormattedMessage } from 'react-intl'
 
 
 @cssModules(styles)
-export default class FailControler extends Component {
+export default class FailControler extends Component<any, any> {
   render() {
     const { ethAddress, message } = this.props
 

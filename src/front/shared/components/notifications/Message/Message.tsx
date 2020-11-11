@@ -7,7 +7,7 @@ import Notification from 'components/notification/Notification/Notification'
 
 
 @cssModules(styles)
-export default class Message extends Component {
+export default class Message extends Component<any, any> {
   render() {
     const { name, data: { message } } = this.props
 

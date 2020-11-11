@@ -10,7 +10,7 @@ import CSSModules from 'react-css-modules'
 
 @withRouter
 @CSSModules(styles, { allowMultiple: true })
-export default class UserAvatar extends Component {
+export default class UserAvatar extends Component<any, any> {
 
   static propTypes = {
     feeds: PropTypes.array.isRequired,

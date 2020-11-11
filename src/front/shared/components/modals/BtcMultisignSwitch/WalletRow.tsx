@@ -29,7 +29,7 @@ import { BigNumber } from 'bignumber.js'
 @injectIntl
 @cssModules(styles, { allowMultiple: true })
 
-export default class WalletRow extends Component {
+export default class WalletRow extends Component<any, any> {
 
   constructor(props) {
     super(props)

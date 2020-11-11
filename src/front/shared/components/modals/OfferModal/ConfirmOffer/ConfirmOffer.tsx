@@ -30,7 +30,7 @@ import feedback from 'shared/helpers/feedback'
   address,
 }))
 @cssModules(styles)
-export default class ConfirmOffer extends Component {
+export default class ConfirmOffer extends Component<any, any> {
 
   state = {
     tokenFee: false,

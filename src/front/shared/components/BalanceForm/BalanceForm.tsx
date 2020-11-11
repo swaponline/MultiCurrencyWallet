@@ -1,4 +1,5 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import * as React from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import CSSModules from 'react-css-modules'
 import { connect } from 'redaction'
 import actions from 'redux/actions'

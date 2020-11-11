@@ -22,7 +22,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   dashboardView: dashboardModalsAllowed,
 }))
 @cssModules(styles, { allowMultiple: true })
-export default class Modal extends Component {
+export default class Modal extends Component<any, any> {
 
   static propTypes = {
     children: PropTypes.node,

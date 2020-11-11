@@ -25,7 +25,7 @@ import config from 'app-config'
   tokensData: [...Object.keys(tokensData).map(k => (tokensData[k]))],
 }))
 @CSSModules(styles)
-export default class UserTooltip extends Component {
+export default class UserTooltip extends Component<any, any> {
 
   static propTypes = {
     feeds: PropTypes.array.isRequired,

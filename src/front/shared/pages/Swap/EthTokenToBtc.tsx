@@ -20,7 +20,7 @@ import DepositWindow from './DepositWindow/DepositWindow'
 
 
 @CSSModules(styles)
-export default class EthTokenToBtc extends Component {
+export default class EthTokenToBtc extends Component<any, any> {
 
   constructor({ swap, currencyData, ethBalance, tokenItems }) {
     super()

@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl'
 import Tooltip from 'components/TourWindow'
 
 
-export default class TourPartial extends Component {
+export default class TourPartial extends Component<any, any> {
 
   constructor(props) {
     super(props)

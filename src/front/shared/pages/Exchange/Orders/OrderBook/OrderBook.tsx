@@ -56,7 +56,7 @@ const filterOrders = (orders, filter) => orders
 @withRouter
 @injectIntl
 @cssModules(styles, { allowMultiple: true })
-export default class Orders extends Component {
+export default class Orders extends Component<any, any> {
 
   state = {
     buyOrders: [],

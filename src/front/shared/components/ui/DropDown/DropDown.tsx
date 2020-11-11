@@ -20,7 +20,7 @@ import closeBtn from './images/close.svg'
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 @toggle()
 @cssModules(styles, { allowMultiple: true })
-export default class DropDown extends Component {
+export default class DropDown extends Component<any, any> {
   static propTypes = {
     initialValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     selectedValue: PropTypes.string.isRequired,

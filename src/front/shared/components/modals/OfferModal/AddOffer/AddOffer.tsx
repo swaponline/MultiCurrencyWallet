@@ -40,7 +40,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   })
 )
 @cssModules(styles, { allowMultiple: true })
-export default class AddOffer extends Component {
+export default class AddOffer extends Component<any, any> {
 
   constructor({ items, tokenItems, initialData }) {
     super()

@@ -10,7 +10,7 @@ import Timer from './Timer/Timer'
 import { FormattedMessage } from 'react-intl'
 
 
-export default class EthTokenToUsdt extends Component {
+export default class EthTokenToUsdt extends Component<any, any> {
 
   constructor({ swap, currencyData }) {
     super()

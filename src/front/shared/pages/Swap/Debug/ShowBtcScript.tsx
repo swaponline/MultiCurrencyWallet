@@ -9,7 +9,7 @@ import BtcScript from './BtcScript'
 
 
 @CSSModules(styles)
-export default class ShowBtcScript extends Component {
+export default class ShowBtcScript extends Component<any, any> {
   render() {
     const { btcScriptValues } = this.props
     return (

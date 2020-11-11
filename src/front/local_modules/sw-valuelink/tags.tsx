@@ -87,7 +87,7 @@ const Input = (props) => {
   /* eslint-enable no-case-declarations */
 }
 
-class NumberInput extends Component {
+class NumberInput extends Component<any, any> {
 
   constructor() {
     super(...arguments)
