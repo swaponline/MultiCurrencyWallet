@@ -12,7 +12,10 @@ import Web3Connect from '../web3connect'
 
 console.log('In metamask', Web3Connect)
 
-window.webconnect = new Web3Connect()
+window.webconnect = new Web3Connect({
+  web3ChainId: (process.env.MAINNET) ? 1 : 4,
+  web3RPC: config.api.web3
+})
 
 const providerOptions = {
   /*
@@ -187,7 +190,7 @@ if (metamaskProvider) {
   metamaskProvider.on('chainChanged', (newChainId) => {
     if (newChainId !== _currentChain) {
       if (!metamaskProvider.autoRefreshOnNetworkChange) {
-        window.location.reload()
+        //window.location.reload()
       }
     }
   })

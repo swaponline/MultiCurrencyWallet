@@ -21,17 +21,9 @@ export default class InjectedProvider extends InjectedConnector {
     await this.deactivate()
   }
 
-  async setupEvents() {
-    console.log('setup events', ConnectorEvent)
-    this.on(ConnectorEvent.Update, (data) => {
-      console.log('Updated', data)
-    })
-  }
-
   async Connect() {
     try {
       const connection = await super.activate()
-      await this.setupEvents()
       return (connection) ? true : false
     } catch (err) {
       if (err instanceof UserRejectedRequestErrorInjected) {

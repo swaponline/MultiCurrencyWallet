@@ -1,8 +1,5 @@
 import { EventEmitter } from 'events'
 import { ConnectorEvent } from '@web3-react/types'
-
-import config from 'helpers/externalConfig'
-
 import SUPPORTED_PROVIDERS from './providers/supported'
 import getProviderByName from './providers'
 import { isInjectedEnabled } from './providers'
@@ -13,36 +10,53 @@ export default class Web3Connect extends EventEmitter {
   _cachedChainId = null
   _cachedAddress = null
 
+  _web3RPC = null
+  _web3ChainId = null
 
-  constructor() {
+
+  constructor(options) {
     super()
-    console.log('create Web3Connect')
+    const {
+      web3RPC,
+      web3ChainId,
+    } = options
+
+    this._web3RPC = web3RPC
+    this._web3ChainId = web3ChainId
+
     // Предыдущий провайдер (после перезагрузки восстанавливаем его)
     const cachedProviderName = localStorage.getItem(`WEB3CONNECT:PROVIDER`)
-    console.log('cachedProviderName', cachedProviderName)
     if (cachedProviderName) {
       const lsProvider = getProviderByName(this, cachedProviderName)
-      console.log('geted', lsProvider)
       if (lsProvider) {
-        lsProvider.isConnected().then((isConnected) => {
+        lsProvider.isConnected().then(async (isConnected) => {
           console.log('isConnected', isConnected)
           if (isConnected) {
-            this._cachedProvider = lsProvider
-            this._setupEvents()
-            this._cacheProviderData()
-          } else {
-            localStorage.removeItem(`WEB3CONNECT:PROVIDER`)
+            if (await lsProvider.Connect()) {
+              this._cachedProvider = lsProvider
+              this._setupEvents()
+              this._cacheProviderData()
+              return
+            }
           }
+          this._clearCache()
         })
+      } else {
+        this._clearCache()
       }
     }
   }
 
+  _clearCache() {
+    localStorage.removeItem(`WEB3CONNECT:PROVIDER`)
+    this._cachedProvider = null
+    this._cachedChainId = null
+    this._cachedAddress = null
+  }
+
   _setupEvents() {
     if (this._cachedProvider) {
-      console.log('setupEvents')
       this._cachedProvider.on(ConnectorEvent.Update, (data) => {
-        console.log('Updated', data)
         if (data
           && data.account
           && data.account != this._cachedAddress
@@ -50,11 +64,16 @@ export default class Web3Connect extends EventEmitter {
           this._cachedAddress = data.account
           this.emit('accountChange')
         }
+        if (data
+          && data.chainId
+          && data.chainId !== this._cachedChainId
+        ) {
+          this._cachedChainId = data.chainId
+          this.emit('chainChanged')
+        }
       })
       this._cachedProvider.on(ConnectorEvent.Deactivate, () => {
-        console.log('Disconnected')
-        this._cachedProvider = null
-        localStorage.removeItem(`WEB3CONNECT:PROVIDER`)
+        this._clearCache()
         this.emit('disconnect')
       })
     }
@@ -62,6 +81,7 @@ export default class Web3Connect extends EventEmitter {
 
   async _cacheProviderData() {
     this._cachedAddress = await this._cachedProvider.getAccount()
+    this._cachedChainId = await this._cachedProvider.getChainId()
   }
 
   async connectTo(provider) {
@@ -94,6 +114,7 @@ export default class Web3Connect extends EventEmitter {
   }
 
   isCorrectNetwork() {
+    return ((process.env.MAINNET) ? 1 : 4) === this._cachedChainId
   }
 
   getWeb3() {

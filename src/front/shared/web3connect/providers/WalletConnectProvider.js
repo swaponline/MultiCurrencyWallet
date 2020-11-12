@@ -40,7 +40,6 @@ export default class WalletConnectProvider extends WalletConnectConnector {
   async Connect() {
     try {
       const connection = await super.activate()
-      await this.setupEvents()
       return (connection) ? true : false
     } catch (err) {
       if (err instanceof UserRejectedRequestErrorWalletConnect) {
