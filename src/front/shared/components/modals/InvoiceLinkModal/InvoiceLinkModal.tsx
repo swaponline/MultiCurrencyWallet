@@ -71,6 +71,8 @@ export default class InvoiceLinkModal extends React.Component<any, any> {
               <p>
                 {invoiceLink}
               </p>
+              {/*
+              //@ts-ignore */}
               <Button
                 styleName="button"
                 brand

@@ -110,6 +110,8 @@ export default class DownloadModal extends React.Component<any, any> {
         </div>
         <div styleName="buttonsContainer">
           <CopyToClipboard text={textToCopy} onCopy={this.handleCopyText}>
+            {/*
+            //@ts-ignore */}
             <Button styleName="button" brand disabled={isTextCopied}>
               {isTextCopied ?
                 <FormattedMessage id="down64" defaultMessage="Address copied to clipboard" /> :
@@ -120,6 +122,8 @@ export default class DownloadModal extends React.Component<any, any> {
           {
             !(/iPad|iPhone|iPod/.test(navigator.userAgent)) && (
               <Fragment>
+              {/*
+              //@ts-ignore */}
                 <Button onClick={this.handleDownloadTxt} styleName="button" brand >
                   <FormattedMessage id="downFile2" defaultMessage="Download txt file" />
                 </Button>

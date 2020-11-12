@@ -18,8 +18,11 @@ const WidgetHeaderComponent = ({ intl }) => {
   }
 
   return (
+    //@ts-ignore
     window.isUserRegisteredAndLoggedIn &&
     <div styleName={`exitArea ${isDark ? 'dark' : ''}`} onClick={handleConfirmToggle}>
+      {/*
+      //@ts-ignore */}
       <i class="fas fa-sign-out-alt" /><FormattedMessage id="ExitWidget" defaultMessage="Exit" />
     </div>
   )

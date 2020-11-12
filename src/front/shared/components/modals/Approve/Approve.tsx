@@ -49,7 +49,7 @@ export default class Offer extends React.Component<any, any> {
       })
       return
     }
-
+    //@ts-ignore 
     actions.token.approve(name, amount)
       .then(() => {
         actions.loader.hide()
@@ -81,10 +81,14 @@ export default class Offer extends React.Component<any, any> {
               id="Approve70"
               defaultMessage="Please set the amount limit that the swap smart contract can deduct from your account. We do not recommend setting any limits." />
           </p>
+          {/*
+          //@ts-ignore */}
           <FieldLabel inRow>
             <FormattedMessage id="Approve73" defaultMessage="Amount" />
           </FieldLabel>
           <Input valueLink={linked.amount} type="number" />
+          {/*
+          //@ts-ignore */}
           <Button styleName="button" brand fullWidth disabled={isDisabled} onClick={this.handleApprove}>
             <FormattedMessage id="Approve80" defaultMessage="Approve" />
           </Button>

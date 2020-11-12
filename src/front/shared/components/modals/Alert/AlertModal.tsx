@@ -87,6 +87,8 @@ export default class AlertModal extends React.Component<any, any> {
           [styles.modal_dashboardView]: dashboardModalsAllowed
         })}>
           <div styleName="header">
+            {/*
+            //@ts-ignore */}
             <WidthContainer styleName="headerContent">
               <div styleName="title">{labels.title}</div>
             </WidthContainer>
@@ -96,6 +98,8 @@ export default class AlertModal extends React.Component<any, any> {
               <p styleName="notification">{labels.message}</p>
             </div>
             <div styleName="button-overlay">
+              {/*
+              //@ts-ignore */}
               <Button styleName="button" blue onClick={this.handleClose}>{labels.ok}</Button>
             </div>
           </div>

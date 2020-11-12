@@ -12,6 +12,7 @@ const Overlay = ({ children, onClick, dashboardView }) => {
       const elWithHeight = document.querySelector('.__modalConductorProvided__ .contentHeightEvaluateHere')
       if (elWithHeight) {
         setEvaluatedHeight(elWithHeight.clientHeight ||
+          //@ts-ignore
           elWithHeight.offsetHeight ||
           400)
       }

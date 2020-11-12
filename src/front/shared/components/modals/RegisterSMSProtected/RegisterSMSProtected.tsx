@@ -70,6 +70,7 @@ export default class RegisterSMSProtected extends React.Component<any, any> {
 
     this.state = {
       version,
+      //@ts-ignore
       phone: window.DefaultCountryCode || '',
       step,
       error: false,
@@ -115,6 +116,7 @@ export default class RegisterSMSProtected extends React.Component<any, any> {
         })
         return
       } else {
+        //@ts-ignore
         const mnemonicWallet = actions.btc.getWalletByWords(mnemonic.trim(), 1)
         this.setState({
           mnemonicWallet,
@@ -235,6 +237,7 @@ export default class RegisterSMSProtected extends React.Component<any, any> {
       })
       return
     } else {
+      //@ts-ignore
       const mnemonicWallet = actions.btc.getWalletByWords(mnemonic.trim(), 1)
       this.setState({
         mnemonicWallet,
@@ -520,6 +523,7 @@ export default class RegisterSMSProtected extends React.Component<any, any> {
                 locale={intl.locale}
                 onChange={this.onPhoneChange}
                 placeholder={`${intl.formatMessage(langs.phonePlaceHolder)}`}
+                //@ts-ignore
                 label={<FieldLabel label>
                   <FormattedMessage id="registerSMSModalPhone" defaultMessage="Your phone:" />
                 </FieldLabel>}
@@ -532,6 +536,8 @@ export default class RegisterSMSProtected extends React.Component<any, any> {
                     </div>
                   </div>
                   <div styleName="highLevel" className="ym-hide-content">
+                    {/*
+                    //@ts-ignore */}
                     <FieldLabel label>
                       <FormattedMessage id="registerSMSModalWords" defaultMessage="Секретная фраза (12 слов):" />
                     </FieldLabel>
@@ -582,6 +588,8 @@ export default class RegisterSMSProtected extends React.Component<any, any> {
                     </Fragment>
                   )}
               </div>
+              {/*
+              //@ts-ignore */}
               <Button blue big fullWidth disabled={sentBtnDisabled} onClick={this.handleSendSMS}>
                 {isShipped ? (
                   <Fragment>
@@ -603,10 +611,13 @@ export default class RegisterSMSProtected extends React.Component<any, any> {
                 locale={intl.locale}
                 onChange={this.onPhoneChange}
                 placeholder={`${intl.formatMessage(langs.phonePlaceHolder)}`}
+                //@ts-ignore
                 label={<FieldLabel label>
                   <FormattedMessage id="registerSMSModalPhone" defaultMessage="Your phone:" />
                 </FieldLabel>}
               />
+              {/*
+              //@ts-ignore */}
               <Button blue big fullWidth disabled={sentBtnDisabled} onClick={this.handleSendSMS}>
                 {isShipped ? (
                   <Fragment>
@@ -640,6 +651,8 @@ export default class RegisterSMSProtected extends React.Component<any, any> {
                 </div>
               )}
               <div styleName="highLevel smsCodeHolder">
+                {/*
+                //@ts-ignore */}
                 <FieldLabel label>
                   <FormattedMessage id="registerSMSModalCode" defaultMessage="Enter code from SMS:" />
                 </FieldLabel>
@@ -650,6 +663,8 @@ export default class RegisterSMSProtected extends React.Component<any, any> {
                   placeholder={`${intl.formatMessage(langs.smsPlaceHolder)}`}
                 />
               </div>
+              {/*
+              //@ts-ignore */}
               <Button styleName="confirmSmsCode" big blue fullWidth disabled={isShipped} onClick={this.handleCheckSMS}>
                 {isShipped ? (
                   <FormattedMessage id="registerSMSModalProcess" defaultMessage="Processing ..." />
@@ -671,6 +686,8 @@ export default class RegisterSMSProtected extends React.Component<any, any> {
                 />
               </p>
               <p styleName="buttonContainer">
+                {/*
+                //@ts-ignore */}
                 <Button blue fullWidth autoHeight disabled={isShipped} onClick={this.handleRestoreWallet}>
                   <FormattedMessage id="registerSMSRestoryMnemonic" defaultMessage="Восстановить кошелек используя секретную фразу" />
                 </Button>
@@ -724,6 +741,8 @@ export default class RegisterSMSProtected extends React.Component<any, any> {
                   </div>
                 </div>
               )}
+              {/*
+              //@ts-ignore */}
               <Button big blue fullWidth onClick={this.handleFinish}>
                 <Fragment>
                   <FormattedMessage id="registerSMSModalFinish" defaultMessage="Finish" />

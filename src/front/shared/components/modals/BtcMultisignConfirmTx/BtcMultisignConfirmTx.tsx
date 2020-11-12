@@ -302,6 +302,8 @@ export default class BtcMultisignConfirmTx extends React.Component<any, any> {
               <p styleName="rednotes">
                 <FormattedMessage { ... langLabels.youCantSignThis } />
               </p>
+              {/*
+              //@ts-ignore */}
               <Button
                 styleName="buttonCenter"
                 blue
@@ -314,6 +316,8 @@ export default class BtcMultisignConfirmTx extends React.Component<any, any> {
           {step === `txInfo` && (
             <Fragment>
               <div styleName="highLevel" style={{ marginBottom: "20px" }}>
+                {/*
+                //@ts-ignore */}
                 <FieldLabel>
                   <FormattedMessage id="BtcMultisignConfirmTx_FromAddress" defaultMessage="Оплата с кошелька" />{" "}
                 </FieldLabel>
@@ -325,6 +329,8 @@ export default class BtcMultisignConfirmTx extends React.Component<any, any> {
                 />
               </div>
               <div styleName="highLevel" style={{ marginBottom: "20px" }}>
+                {/*
+                //@ts-ignore  */}
                 <FieldLabel>
                   <FormattedMessage id="Withdrow1194" defaultMessage="Address " />{" "}
                   <Tooltip id="WtH203">
@@ -348,6 +354,8 @@ export default class BtcMultisignConfirmTx extends React.Component<any, any> {
                 <p styleName="balance walletBalance">
                   {txData.wallet.balance} {`BTC`}
                 </p>
+                {/*
+                //@ts-ignore */}
                 <FieldLabel>
                   <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
                 </FieldLabel>
@@ -367,6 +375,7 @@ export default class BtcMultisignConfirmTx extends React.Component<any, any> {
               ) : (
                 <div styleName="buttonsHolder">
                   {!isTxHolder && (
+                    //@ts-ignore
                     <Button
                       styleName="buttonFull"
                       blue
@@ -377,6 +386,8 @@ export default class BtcMultisignConfirmTx extends React.Component<any, any> {
                       <FormattedMessage { ... langLabels.confirmTx } />
                     </Button>
                   )}
+                  {/*
+                  //@ts-ignore */}
                   <Button
                     styleName="buttonFull"
                     blue

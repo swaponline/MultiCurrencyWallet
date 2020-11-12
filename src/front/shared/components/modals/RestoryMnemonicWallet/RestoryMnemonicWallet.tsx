@@ -129,6 +129,7 @@ export default class RestoryMnemonicWallet extends React.Component<any, any> {
 
     const { btcBalance, usdBalance } = allCurrensies.reduce((acc, curr) => {
       const { name, infoAboutCurrency, balance } = curr
+      //@ts-ignore
       if ((!isWidgetBuild || widgetCurrencies.includes(name)) && infoAboutCurrency && balance !== 0) {
         acc.btcBalance += balance * infoAboutCurrency.price_btc
         acc.usdBalance += balance * ((infoAboutCurrency.price_fiat) ? infoAboutCurrency.price_fiat : 1)
@@ -183,10 +184,13 @@ export default class RestoryMnemonicWallet extends React.Component<any, any> {
       const backupMark = actions.btc.getMainPublicKey()
 
       actions.backupManager.backup(backupMark, false, true)
-
+      //@ts-ignore
       const btcWallet = await actions.btc.getWalletByWords(mnemonic)
+      //@ts-ignore
       const ethWallet = await actions.eth.getWalletByWords(mnemonic)
+      //@ts-ignore
       const ghostWallet = await actions.ghost.getWalletByWords(mnemonic)
+      //@ts-ignore
       const nextWallet = await actions.next.getWalletByWords(mnemonic)
 
       // clean mnemonic, if exists
@@ -198,16 +202,17 @@ export default class RestoryMnemonicWallet extends React.Component<any, any> {
       if (actions.backupManager.exists(restoryMark)) {
         actions.backupManager.restory(restoryMark)
       }
-
+      //@ts-ignore
       const btcPrivKey = await actions.btc.login(false, mnemonic)
       const btcSmsKey = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
       localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, btcSmsKey)
+      //@ts-ignore
       localStorage.setItem(constants.localStorage.isWalletCreate, true)
-
+      //@ts-ignore
       await actions.eth.login(false, mnemonic)
-
+      //@ts-ignore
       await actions.ghost.login(false, mnemonic)
-
+      //@ts-ignore
       await actions.next.login(false, mnemonic)
 
       await actions.user.sign_btc_2fa(btcPrivKey)

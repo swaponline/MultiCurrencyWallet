@@ -43,8 +43,12 @@ export default class ModalBox extends Component<any, any> {
     return (
       <div styleName={`modal-box ${isDark ? 'dark' : ''}`}>
         <div styleName="header">
+          {/*
+          //@ts-ignore */}
           <WidthContainer styleName="headerContent">
             <div styleName="title">{title}</div>
+            {/*
+            //@ts-ignore */}
             <CloseIcon styleName="closeButton" onClick={onClose} />
           </WidthContainer>
         </div>

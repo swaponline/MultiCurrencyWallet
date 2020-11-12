@@ -56,6 +56,8 @@ export default class ConfirmBeginSwap extends React.Component<any, any> {
     onAccept: PropTypes.func,
   }
 
+  systemWallets: any
+
   constructor({ tokensData, currenciesData }) {
     //@ts-ignore
     super()
@@ -210,6 +212,8 @@ export default class ConfirmBeginSwap extends React.Component<any, any> {
       <div styleName={`modal-overlay ${isDark ? '--dark' : ''}`}>
         <div styleName="modal">
           <div styleName="header">
+            {/*
+            //@ts-ignore */}
             <WidthContainer styleName="headerContent">
               <div styleName="title">{labels.title}</div>
             </WidthContainer>
@@ -230,6 +234,8 @@ export default class ConfirmBeginSwap extends React.Component<any, any> {
                   }
                   <div styleName="walletToggle walletToggle_site">
                     <div styleName="walletOpenSide">
+                      {/*
+                      //@ts-ignore */}
                       <Toggle checked={customWalletUse} onChange={this.handleCustomWalletUse} />
                       <span styleName="specify">
                         <FormattedMessage id="UseAnotherWallet" defaultMessage="Specify the receiving wallet address" />
@@ -250,11 +256,15 @@ export default class ConfirmBeginSwap extends React.Component<any, any> {
             </div>
           </div>
           <div styleName="buttons">
+            {/*
+            //@ts-ignore */}
             <Button styleName="button" gray onClick={this.handleClose}>{labels.no}</Button>
             {(this.customWalletIsValid()) && (
+              //@ts-ignore
               <Button styleName="button" blue onClick={this.handleConfirm}>{labels.yes}</Button>
             )}
             {(!this.customWalletIsValid()) && (
+              //@ts-ignore
               <Button styleName="button" disabled>{labels.yes}</Button>
             )}
           </div>

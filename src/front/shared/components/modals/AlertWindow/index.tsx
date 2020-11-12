@@ -90,8 +90,12 @@ export default class AlertWindow extends Component<any, any> {
       <div styleName={`modal-overlay ${isDark ? '--dark' : ''}`}>
         <div styleName="modal">
           <div styleName="header">
+            {/*
+            //@ts-ignore */}
             <WidthContainer styleName="headerContent">
               <div styleName="title">{labels.title}</div>
+              {/*
+              //@ts-ignore */}
               {canClose && (<CloseIcon styleName="closeButton" onClick={this.handleClosePopup} />)}
             </WidthContainer>
           </div>
@@ -102,6 +106,8 @@ export default class AlertWindow extends Component<any, any> {
               </p>
             </div>
             <div styleName="button-overlay">
+              {/*
+              //@ts-ignore */}
               <Button styleName="button" gray onClick={this.handleClose}>{labels.actionLabel}</Button>
             </div>
           </div>

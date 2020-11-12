@@ -29,7 +29,7 @@ export default class ExchangeRate extends PureComponent<any, any> {
           <FormattedMessage id="ExchangeRate14" defaultMessage="=" />
         </div>
         {' '}
-        <Value value={BigNumber(exchangeRate).toString()} currency={sellCurrency} />
+        <Value value={new BigNumber(exchangeRate).toString()} currency={sellCurrency} />
       </Row>
     )
   }

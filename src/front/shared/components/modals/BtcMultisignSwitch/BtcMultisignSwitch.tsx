@@ -51,6 +51,7 @@ export default class BtcMultisignSwitch extends React.Component<any, any> {
   }
 
   refreshWallets() {
+    //@ts-ignore
     actions.btcmultisig.getBtcMultisigKeys().then((wallets) => {
       this.setState({
         wallets,

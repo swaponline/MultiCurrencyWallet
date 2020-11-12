@@ -9,7 +9,7 @@ const RequestLoader = ({ isVisible, data }) => {
   if (!isVisible) {
     return null
   }
-
+  //@ts-ignore
   return <Loader data={data} />
 }
 

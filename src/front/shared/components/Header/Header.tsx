@@ -68,6 +68,8 @@ export default class Header extends Component<any, any> {
     return { path: false };
   }
 
+  lastScrollTop: any
+
   constructor(props) {
     super(props);
 
@@ -83,7 +85,10 @@ export default class Header extends Component<any, any> {
       ? `${unlocalisedUrl(intl.locale, pathname)}`
       : `${home}`;
     let lsWalletCreated = localStorage.getItem(isWalletCreate);
-    if (config && config.isWidget) lsWalletCreated = true;
+    if (config && config.isWidget) {
+      //@ts-ignore
+      lsWalletCreated = true;
+    }
     const isWalletPage = pathname === wallet || pathname === `/ru${wallet}`;
 
     this.state = {
@@ -115,6 +120,7 @@ export default class Header extends Component<any, any> {
           haveSubmenu: false,
         },
       ],
+      //@ts-ignore
       menuItems: getMenuItems(props, lsWalletCreated, dinamicPath),
       menuItemsMobile: getMenuItemsMobile(props, lsWalletCreated, dinamicPath),
       createdWalletLoader: isWalletPage && !lsWalletCreated,
@@ -140,7 +146,7 @@ export default class Header extends Component<any, any> {
     });
   };
 
-  tapCreateWalletButton = (customProps) =>
+  tapCreateWalletButton = (customProps = {}) =>
     new Promise((resolve) => {
       const finishProps = { ...this.props, ...customProps };
 
@@ -152,16 +158,21 @@ export default class Header extends Component<any, any> {
         constants.localStorage.isWalletCreate
       );
 
-      if (config && config.isWidget) isWalletCreate = true;
+      if (config && config.isWidget) {
+        //@ts-ignore
+        isWalletCreate = true
+      }
 
       const isWalletPage = pathname === wallet || pathname === `/ru${wallet}`;
 
       if (isWalletPage && !isWalletCreate) {
+        //@ts-ignore
         isWalletCreate = true;
 
         this.setState(
           () => ({
             menuItems: getMenuItems(this.props, isWalletCreate),
+            //@ts-ignore
             menuItemsMobile: getMenuItemsMobile(this.props, isWalletCreate),
             createdWalletLoader: true,
           }),
@@ -179,7 +190,7 @@ export default class Header extends Component<any, any> {
       }
     });
 
-  startTourAndSignInModal = (customProps) => {
+  startTourAndSignInModal = (customProps = {}) => {
     const finishProps = { ...this.props, ...customProps };
     const {
       wasOnExchange,
@@ -188,21 +199,27 @@ export default class Header extends Component<any, any> {
       wasOnWidgetWallet,
     } = constants.localStorage;
     const {
+      //@ts-ignore
       hiddenCoinsList,
+      //@ts-ignore
       location: { hash, pathname },
     } = finishProps;
     const { wallet, exchange } = links;
     const isGuestLink = !(!hash || hash.slice(1) !== "guest");
 
     if (isGuestLink) {
+      //@ts-ignore
       localStorage.setItem(wasOnWallet, true);
+      //@ts-ignore
       localStorage.setItem(wasOnExchange, true);
+      //@ts-ignore
       localStorage.setItem(wasOnWidgetWallet, true);
       return;
     }
 
     this.setState(() => ({
       menuItems: getMenuItems(this.props, true),
+      //@ts-ignore
       menuItemsMobile: getMenuItemsMobile(this.props, true),
     }));
 
@@ -236,10 +253,13 @@ export default class Header extends Component<any, any> {
 
     if (isWidgetBuild) {
       if (
+        //@ts-ignore
         window.widgetERC20Tokens &&
+        //@ts-ignore
         Object.keys(window.widgetERC20Tokens).length
       ) {
         // Multi token widget build
+        //@ts-ignore
         Object.keys(window.widgetERC20Tokens).forEach((key) => {
           widgetCurrencies.push(key.toUpperCase());
         });
@@ -344,6 +364,7 @@ export default class Header extends Component<any, any> {
     setTimeout(() => {
       this.setState(() => ({ isTourOpen: true }));
     }, 1000);
+    //@ts-ignore
     localStorage.setItem(wasOnWallet, true);
   };
 
@@ -353,6 +374,7 @@ export default class Header extends Component<any, any> {
     setTimeout(() => {
       this.setState(() => ({ isWidgetTourOpen: true }));
     }, 1000);
+    //@ts-ignore
     localStorage.setItem(wasOnWidgetWallet, true);
   };
 
@@ -362,6 +384,7 @@ export default class Header extends Component<any, any> {
       this.setState(() => ({ isPartialTourOpen: true }));
     }, 1000);
 
+    //@ts-ignore
     localStorage.setItem(wasOnExchange, true);
   };
 
@@ -373,6 +396,7 @@ export default class Header extends Component<any, any> {
     if (wasDark) {
       localStorage.removeItem(constants.localStorage.isDark);
     } else {
+      //@ts-ignore
       localStorage.setItem(constants.localStorage.isDark, true);
     }
     window.location.reload();
@@ -427,9 +451,12 @@ export default class Header extends Component<any, any> {
 
     const { exchange, wallet } = links;
     const onLogoClickLink =
+      //@ts-ignore
       window && window.LOGO_REDIRECT_LINK
+        //@ts-ignore
         ? window.LOGO_REDIRECT_LINK
         : localisedUrl(locale, links.home);
+    //@ts-ignore
     const hasOwnLogoLink = window && window.LOGO_REDIRECT_LINK;
 
     const isWalletPage =
@@ -442,8 +469,8 @@ export default class Header extends Component<any, any> {
     const imgNode = (
       <img
         styleName="otherHeaderLogo"
-        onClick={this.handleGoHome}
         className="site-logo-header"
+        //@ts-ignore
         src={isDark ? window.darkLogoUrl : window.logoUrl}
         alt="logo"
       />
@@ -458,10 +485,14 @@ export default class Header extends Component<any, any> {
     const logoRenderer = isOurMainDomain ?
       <>
         <LogoTooltip withLink isColored isExchange={isWalletPage} />
+        {/*
+        //@ts-ignore */}
         <ThemeSwitcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
       </>
       :
       <div styleName="flexebleHeader">
+        {/*
+        //@ts-ignore */}
         {window.logoUrl !== "#" && (
           <div styleName="imgWrapper">
             {hasOwnLogoLink ? (
@@ -489,7 +520,7 @@ export default class Header extends Component<any, any> {
         declineRequest={this.declineRequest}
       />
     )
-
+    //@ts-ignore
     if (isMobile && window.logoUrl) {
       return (
         <header className="data-tut-widget-tourFinish" id="header-mobile" styleName="header-mobile">
@@ -541,6 +572,8 @@ export default class Header extends Component<any, any> {
               />
             </div>
           }
+          {/*
+          //@ts-ignore */}
           <ThemeSwitcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
         </header>
       );
@@ -550,6 +583,7 @@ export default class Header extends Component<any, any> {
       <header
         className={cx({
           [styles["header"]]: true,
+          //@ts-ignore
           [styles["widgetHeader"]]: isWidgetBuild && window.logoUrl !== "#",
           [styles["header-fixed"]]: Boolean(sticky),
           [styles["header-promo"]]: isWalletPage && !sticky,

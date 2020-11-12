@@ -99,6 +99,7 @@ export default class ReceiveModal extends React.Component<any, any> {
   }
 
   handleBeginSaveMnemonic = async () => {
+    //@ts-ignore
     actions.modals.open(constants.modals.SaveMnemonicModal, {
       onClose: () => {
         const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
@@ -119,6 +120,7 @@ export default class ReceiveModal extends React.Component<any, any> {
     if (pathname.includes('receive')) {
       goBack()
     }
+    //@ts-ignore
     actions.modals.close(name)
   }
 
@@ -176,6 +178,8 @@ export default class ReceiveModal extends React.Component<any, any> {
 
                   <div styleName="sendBtnsWrapper">
                     <div styleName="actionBtn">
+                      {/*
+                      //@ts-ignore */}
                       <Button
                         brand
                         onClick={() => { }}
@@ -190,6 +194,8 @@ export default class ReceiveModal extends React.Component<any, any> {
                       </Button>
                     </div>
                     <div styleName="actionBtn">
+                      {/*
+                      //@ts-ignore */}
                       <Button big fill gray onClick={this.handleClose}>
                         <FormattedMessage id="WithdrawModalCancelBtn" defaultMessage="Cancel" />
                       </Button>

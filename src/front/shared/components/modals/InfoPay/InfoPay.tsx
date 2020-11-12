@@ -150,12 +150,12 @@ export default class InfoPay extends React.Component<any, any> {
           <table styleName="blockCenter__table" className="table table-borderless">
             <tbody>
               <tr>
-                <td styleName="header" colspan="2">
+                <td styleName="header" colSpan={2}>
                   <FormattedMessage id="InfoPay_3" defaultMessage="Transaction ID" />
                 </td>
               </tr>
               <tr>
-                <td colspan="2">
+                <td colSpan={2}>
                   <a href={window.location.href} target="_blank" styleName="txLink">
                     {`${tx.slice(0, 6)}...${tx.slice(-6)}`}
                   </a>

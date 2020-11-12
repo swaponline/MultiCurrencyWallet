@@ -57,6 +57,7 @@ export default class ModalConductor extends Component<any, any> {
 
     const modalNames = Object.keys(modals)
     const highestZIndex = Object.values(modals)
+      //@ts-ignore 
       .map(i => i.zIndex)
       .reduce((acc, i) => acc < i ? i : acc, 0)
     const areModalsExist = Boolean(modalNames.length)

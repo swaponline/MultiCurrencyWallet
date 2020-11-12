@@ -299,7 +299,7 @@ export default class InvoiceModal extends React.Component<any, any> {
 
     const linked = Link.all(this, 'address', 'destination', 'amountUSD', 'amountRUB', 'amount', 'contact', 'label')
 
-    //const isDisabled = !address || !amount || isShipped || !destination || !contact || !this.addressIsCorrect()
+    //@ts-ignore
     const isDisabled = !amount || isShipped || !destination || !contact || (address && !this.addressIsCorrect())
 
     return (
@@ -314,6 +314,8 @@ export default class InvoiceModal extends React.Component<any, any> {
         <div styleName="invoiceModalHolder">
           {toAddressEnabled && (
             <div styleName="highLevel">
+              {/*
+              //@ts-ignore */}
               <FieldLabel label>
                 <FormattedMessage id="invoiceModal_Address" defaultMessage="Адрес, на который выставляем счет" />
               </FieldLabel>
@@ -327,6 +329,8 @@ export default class InvoiceModal extends React.Component<any, any> {
                 qr
                 openScan={this.openScan}
               />
+              {/*
+              //@ts-ignore */}
               {address && !this.addressIsCorrect() && (
                 <div styleName="rednote">
                   <FormattedMessage id="invoiceModal_IncorrectAddress" defaultMessage="Вы ввели не коректный адрес" />
@@ -335,6 +339,8 @@ export default class InvoiceModal extends React.Component<any, any> {
             </div>
           )}
           <div styleName="highLevel">
+            {/*
+            //@ts-ignore */}
             <FieldLabel label>
               <FormattedMessage id="invoiceModal_destiAddress" defaultMessage="Адрес, куда будет произведена оплата" />
             </FieldLabel>
@@ -360,6 +366,8 @@ export default class InvoiceModal extends React.Component<any, any> {
             )}
           </div>
           <div styleName="highLevel">
+            {/*
+            //@ts-ignore */}
             <FieldLabel label>
               <span>
                 <FormattedMessage id="invoiceModal_Amount" defaultMessage="Сумма" />
@@ -405,6 +413,8 @@ export default class InvoiceModal extends React.Component<any, any> {
                 ''
               )}
 
+            {/*
+            //@ts-ignore */}
             <CurrencySelect
               label="fdsfssf"
               tooltip="dsfss"
@@ -440,6 +450,8 @@ export default class InvoiceModal extends React.Component<any, any> {
             />
           </div>
           <div styleName="highLevel">
+            {/*
+            //@ts-ignore */}
             <FieldLabel label>
               <span>
                 <FormattedMessage id="invoiceModal_Contact" defaultMessage="Ваш контакт (емейл или @никнейм)" />
@@ -452,6 +464,8 @@ export default class InvoiceModal extends React.Component<any, any> {
             />
           </div>
           <div styleName="lowLevel">
+            {/*
+            //@ts-ignore */}
             <FieldLabel label>
               <span>
                 <FormattedMessage id="invoiceModal_Label" defaultMessage="Комментарий" />
@@ -466,6 +480,8 @@ export default class InvoiceModal extends React.Component<any, any> {
               />
             </div>
           </div>
+          {/*
+          //@ts-ignore */}
           <Button fullWidth blue big disabled={isDisabled} onClick={this.handleSubmit}>
             {isShipped ? (
               <Fragment>

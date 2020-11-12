@@ -42,12 +42,16 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 @cssModules(styles, { allowMultiple: true })
 export default class AddOffer extends Component<any, any> {
 
+  isSending: any
+
   constructor({ items, tokenItems, initialData }) {
     //@ts-ignore
     super()
 
     if (config && config.isWidget) {
+      //@ts-ignore
       if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
+        //@ts-ignore
         Object.keys(window.widgetERC20Tokens).forEach((key) => {
           minAmountOffer[key] = 1
         })
@@ -56,6 +60,7 @@ export default class AddOffer extends Component<any, any> {
       }
     }
 
+    //@ts-ignore
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency } = initialData || {}
 
     this.state = {
@@ -79,10 +84,11 @@ export default class AddOffer extends Component<any, any> {
     const { sellCurrency, buyCurrency, value } = this.state
 
     actions.pairs.selectPair(sellCurrency)
+    //@ts-ignore
     this.checkBalance(sellCurrency)
     this.updateExchangeRate(sellCurrency, buyCurrency)
     this.isEthToken(sellCurrency, buyCurrency)
-    this.getFee(sellCurrency, buyCurrency)
+    this.getFee()
   }
 
   getFee = () => {
@@ -113,7 +119,7 @@ export default class AddOffer extends Component<any, any> {
       ? currentBalance
       : currentBalance.minus(this.state.minimalestAmountForSell)
 
-    const finalBalance = balanceWithoutFee.isGreaterThan(0) ? balanceWithoutFee : BigNumber(0)
+    const finalBalance = balanceWithoutFee.isGreaterThan(0) ? balanceWithoutFee : new BigNumber(0)
 
     this.setState({
       balance: finalBalance.toString(),
@@ -154,7 +160,8 @@ export default class AddOffer extends Component<any, any> {
 
     const exchangeRate = sellCurrency === 'swap' || buyCurrency === 'swap'
       ? await actions.user.getExchangeRate(sellCurrency, buyCurrency)
-      : BigNumber(exchangeRateSell).div(exchangeRateBuy).dp(4, BigNumber.ROUND_CEIL)
+      //@ts-ignore
+      : new BigNumber(exchangeRateSell).div(exchangeRateBuy).dp(4, BigNumber.ROUND_CEIL)
 
     return new Promise((resolve, reject) => {
       this.setState({ exchangeRate }, () => resolve())
@@ -168,7 +175,7 @@ export default class AddOffer extends Component<any, any> {
       this.switching()
     } else {
       this.checkPair(sellCurrency)
-
+      //@ts-ignore
       await this.checkBalance(sellCurrency)
       await this.updateExchangeRate(sellCurrency, value)
 
@@ -191,7 +198,7 @@ export default class AddOffer extends Component<any, any> {
       this.switching()
     } else {
       this.checkPair(value)
-
+      //@ts-ignore
       await this.checkBalance(value)
       await this.updateExchangeRate(value, buyCurrency)
 
@@ -321,7 +328,7 @@ export default class AddOffer extends Component<any, any> {
       }
 
       case 'rate': {
-        if (BigNumber(sellAmount).isGreaterThan(mathConstants.high_precision)) {
+        if (new BigNumber(sellAmount).isGreaterThan(mathConstants.high_precision)) {
           // If user has set sell value change buy value
           /*
             XR++ -> S -> B--
@@ -362,7 +369,7 @@ export default class AddOffer extends Component<any, any> {
 
   changeBalance = (value) => {
     this.setState(() => ({
-      sellAmount: BigNumber(value).toString(),
+      sellAmount: new BigNumber(value).toString(),
     }))
 
     this.handleSellAmountChange(value)
@@ -385,12 +392,14 @@ export default class AddOffer extends Component<any, any> {
       sellCurrency: buyCurrency,
       buyCurrency: sellCurrency,
     }, async () => {
+      //@ts-ignore
       await this.checkBalance(buyCurrency)
       await this.updateExchangeRate(buyCurrency, sellCurrency)
 
       actions.pairs.selectPair(buyCurrency)
 
       this.isEthToken(this.state.sellCurrency, this.state.buyCurrency)
+      //@ts-ignore
       this.getFee(this.state.sellCurrency, this.state.buyCurrency)
     })
   }
@@ -426,11 +435,11 @@ export default class AddOffer extends Component<any, any> {
       /* This allows creating order greater than balance
         || BigNumber(sellAmount).isGreaterThan(balance)
       */
-      || BigNumber(sellAmount).isLessThan(minimalAmountSell)
-      || BigNumber(buyAmount).isLessThan(minimalAmountBuy)
+      || new BigNumber(sellAmount).isLessThan(minimalAmountSell)
+      || new BigNumber(buyAmount).isLessThan(minimalAmountBuy)
 
     if (linked.sellAmount.value !== '' && linked.sellAmount.value > 0) {
-      linked.sellAmount.check((value) => (BigNumber(value).isGreaterThan(minimalAmountSell)),
+      linked.sellAmount.check((value) => (new BigNumber(value).isGreaterThan(minimalAmountSell)),
         <span>
           <FormattedMessage id="transaction444" defaultMessage="Sell amount must be greater than " />
           {' '}
@@ -439,7 +448,7 @@ export default class AddOffer extends Component<any, any> {
       )
     }
     if (linked.buyAmount.value !== '' && linked.sellAmount.value > 0) {
-      linked.buyAmount.check((value) => (BigNumber(value).isGreaterThan(minimalAmountBuy)),
+      linked.buyAmount.check((value) => (new BigNumber(value).isGreaterThan(minimalAmountBuy)),
         <span>
           <FormattedMessage id="transaction450" defaultMessage="Buy amount must be greater than " />
           {' '}
@@ -468,7 +477,8 @@ export default class AddOffer extends Component<any, any> {
           currencies={currencies}
           placeholder="0.00000000"
         />
-
+        {/*
+        //@ts-ignore*/}
         <Select
           isDark={isDark}
           changeBalance={this.changeBalance}
@@ -492,6 +502,8 @@ export default class AddOffer extends Component<any, any> {
         />
 
         <div styleName="exchangeRate">
+          {/*
+          //@ts-ignore */}
           <ExchangeRateGroup
             isDark={isDark}
             label={<FormattedMessage id="addoffer406" defaultMessage="Exchange rate" />}
@@ -508,6 +520,8 @@ export default class AddOffer extends Component<any, any> {
 
         <div styleName="controlsToggles">
           <div styleName="togles">
+            {/*
+            //@ts-ignore */}
             <Toggle checked={manualRate} onChange={this.handleManualRate} />
             <div styleName="togleText">
               <FormattedMessage id="AddOffer418" defaultMessage="Custom exchange rate" />
@@ -518,6 +532,8 @@ export default class AddOffer extends Component<any, any> {
             </div>
           </div>
           <div styleName="togles">
+            {/*
+            //@ts-ignore */}
             <Toggle checked={isPartial} onChange={() => this.setState((state) => ({ isPartial: !state.isPartial }))} />
             <div styleName="togleText">
               <FormattedMessage id="AddOffer423" defaultMessage="Enable partial fills" />
@@ -542,7 +558,8 @@ export default class AddOffer extends Component<any, any> {
             : ''
           )
         }
-
+        {/*
+        //@ts-ignore */}
         <Button styleName="button" fullWidth blue disabled={isDisabled} onClick={this.handleNext}>
           <FormattedMessage id="AddOffer396" defaultMessage="Next" />
         </Button>

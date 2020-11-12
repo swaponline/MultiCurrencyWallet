@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { event } from 'helpers'
 import cx from 'classnames'
 
 import cssModules from 'react-css-modules'
@@ -45,7 +44,10 @@ export default class ModalContainer extends Component<any, any> {
     })
 
     return (
+      //@ts-ignore 
       <Overlay>
+        {/*
+        //@ts-ignore */}
         <Center scrollable>
           <div
             styleName={modalContainerStyleName}

@@ -52,7 +52,7 @@ export default class Modal extends Component<any, any> {
     shouldCenterHorizontally: true,
   }
 
-  catchLocationChange = false
+  catchLocationChange = null
 
   componentDidMount() {
     const {
@@ -117,6 +117,7 @@ export default class Modal extends Component<any, any> {
     })
 
     return (
+      //@ts-ignore 
       <Overlay dashboardView={dashboardView} styleName={styleName}>
         <div styleName={cx({
           modal: true,
@@ -126,10 +127,13 @@ export default class Modal extends Component<any, any> {
           {
             Boolean(title || showCloseButton) && (
               <div styleName="header">
+                {/*
+                //@ts-ignore */}
                 <WidthContainer styleName="headerContent">
                   <div styleName={titleStyleName} role="title">{title}</div>
                   {
                     showCloseButton && !disableClose && (
+                      //@ts-ignore 
                       <CloseIcon styleName={`closeButton${delayClose ? ' delayClose' : ''}`} onClick={this.close} data-testid="modalCloseIcon" />
                     )
                   }
@@ -149,6 +153,7 @@ export default class Modal extends Component<any, any> {
                   </div>
                 )
                 : (
+                  //@ts-ignore 
                   <Center scrollable centerHorizontally={shouldCenterHorizontally} centerVertically={shouldCenterVertically}>
                     <div styleName="content">
                       {children}

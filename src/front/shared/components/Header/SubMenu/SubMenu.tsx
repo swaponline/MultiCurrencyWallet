@@ -62,6 +62,8 @@ class SubMenu extends React.PureComponent<any, any> {
                 }
               }
             >
+              {/*
+              //@ts-ignore */}
               <img src={item.image} alt={item.title} />
               <div styleName="text-container-submenu">
                 <span>{item.title}</span>

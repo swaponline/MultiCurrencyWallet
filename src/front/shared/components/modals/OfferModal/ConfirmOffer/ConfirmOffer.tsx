@@ -46,6 +46,7 @@ export default class ConfirmOffer extends Component<any, any> {
     const { feeValue } = this.state
 
     if (helpers.ethToken.isEthToken({ name: sellCurrency.toLowerCase() })) {
+      //@ts-ignore
       const feeValueDynamic = await helpers.ethToken.estimateFeeValue({ method: 'send' })
       this.setState(() => ({
         tokenFee: true,
@@ -81,14 +82,22 @@ export default class ConfirmOffer extends Component<any, any> {
     const { feeValue, tokenFee } = this.state
     return (
       <Fragment>
+        {/*
+        //@ts-ignore */}
         <Coins styleName="coins" names={[ sellCurrency, buyCurrency ]} size={60} />
         <Amounts {...{ buyAmount, sellAmount, buyCurrency, sellCurrency }} />
         <ExchangeRate {...{ sellCurrency, buyCurrency, exchangeRate }} />
         {/*<Fee amount={feeValue} currency={!tokenFee ? sellCurrency : 'ETH'} />*/}
+        {/*
+        //@ts-ignore*/}
         <Row styleName="buttonsInRow">
+          {/*
+          //@ts-ignore */}
           <Button styleName="button" gray onClick={onBack}>
             <FormattedMessage id="ConfirmOffer69" defaultMessage="Back" />
           </Button>
+          {/*
+          //@ts-ignore */}
           <Button styleName="button" id="confirm" brand onClick={this.handleConfirm}>
             <FormattedMessage id="ConfirmOffer73" defaultMessage="Add" />
           </Button>

@@ -134,6 +134,7 @@ export default class InfoInvoice extends React.Component<any, any> {
   }
 
   handleCloseButton = () => {
+    //@ts-ignore
     this.handleClose()
   }
 
@@ -260,6 +261,7 @@ export default class InfoInvoice extends React.Component<any, any> {
     } = (invoice || {})
 
     const modalProps = (!isFetching && invoiceData) ? {
+      //@ts-ignore
       name: constants.modals.WithdrawModal,
       address: '',
       data: {
@@ -382,7 +384,7 @@ export default class InfoInvoice extends React.Component<any, any> {
                   {isFetching ? (
                     <>
                       <tr>
-                        <td styleName="animate-fetching" colSpan="2"></td>
+                        <td styleName="animate-fetching" colSpan={2}></td>
                       </tr>
                     </>
                   ) : (
@@ -396,24 +398,24 @@ export default class InfoInvoice extends React.Component<any, any> {
                         </td>
                       </tr>
                       <tr>
-                        <td styleName="header" colSpan="2">
+                        <td styleName="header" colSpan={2}>
                           <FormattedMessage { ...langLabels.fromAddress } />
                         </td>
                       </tr>
                       <tr>
-                        <td styleName="align-right" colSpan="2">
+                        <td styleName="align-right" colSpan={2}>
                           <span>{invoiceData.fromAddress} ({invoiceData.invoiceNumber})</span>
                         </td>
                       </tr>
                       {invoiceData.toAddress && (
                         <>
                           <tr>
-                            <td styleName="header" colSpan="2">
+                            <td styleName="header" colSpan={2}>
                               <FormattedMessage { ...langLabels.toAddress } />
                             </td>
                           </tr>
                           <tr>
-                            <td styleName="align-right" colSpan="2">
+                            <td styleName="align-right" colSpan={2}>
                               <span>{invoiceData.toAddress}</span>
                             </td>
                           </tr>
@@ -422,12 +424,12 @@ export default class InfoInvoice extends React.Component<any, any> {
                       {invoiceData.label && (
                         <>
                           <tr>
-                            <td styleName="header" colSpan="2">
+                            <td styleName="header" colSpan={2}>
                               <FormattedMessage { ...langLabels.invoiceComment} />
                             </td>
                           </tr>
                           <tr>
-                            <td styleName="invoiceComment" colSpan="2">
+                            <td styleName="invoiceComment" colSpan={2}>
                               <span>{invoiceData.label}</span>
                             </td>
                           </tr>

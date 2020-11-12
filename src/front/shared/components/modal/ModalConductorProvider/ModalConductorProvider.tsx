@@ -13,10 +13,12 @@ const ModalConductorProvider = ({ children, history, modals, ...props }) => {
   const isAnyModalCalled = Object.keys(modals).length
 
   const hiestZ = Object.values(modals).reduce(
+    //@ts-ignore 
     (acc, i) => (acc > i.zIndex ? acc : i.zIndex),
     -1
   )
   const upperModal = Object.keys(modals)[
+    //@ts-ignore 
     Object.values(modals).findIndex((i) => i.zIndex === hiestZ)
   ]
 
@@ -73,6 +75,7 @@ export default connect(({ modals, ui: { dashboardModalsAllowed } }) => ({
   dashboardView: dashboardModalsAllowed,
 }))(
   withRouter(
+    //@ts-ignore 
     cssModules(ModalConductorProvider, styles, { allowMultiple: true })
   )
 )

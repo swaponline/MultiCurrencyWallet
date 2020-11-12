@@ -46,7 +46,7 @@ export default class NavMobile extends Component<any, any> {
                   (<a
                       key={title}
                       onClick={() => actions.modals.open(constants.modals.MobMenu, {})}
-                      tabIndex="-1"
+                      tabIndex={-1}
                     >
                       {icon}
                       <span className={isBold && styles.bold}>{title}</span>

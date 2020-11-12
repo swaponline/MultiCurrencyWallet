@@ -102,7 +102,7 @@ export default class WalletRow extends Component<any, any> {
               <span>
                 <div styleName="no-select-inline">
                   <span>
-                    {BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString()}{' '}
+                    {new BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString()}{' '}
                   </span>
                   <span>{currency}</span>
                 </div>
@@ -112,6 +112,8 @@ export default class WalletRow extends Component<any, any> {
           </div>
           {dropDownMenuItems.length > 0 && (
             <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">
+              {/*
+              //@ts-ignore */}
               <DropdownMenu
                 size="regular"
                 className="walletControls"

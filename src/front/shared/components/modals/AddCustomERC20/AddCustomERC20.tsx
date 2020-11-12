@@ -189,6 +189,8 @@ export default class AddCustomERC20 extends React.Component<any, any> {
           { step === 'enterAddress' && 
             <Fragment>
               <div styleName="highLevel">
+                {/*
+                //@ts-ignore */}
                 <FieldLabel inRow>
                   <span style={{ fontSize: '16px' }}>
                     <FormattedMessage id="customERC20_Address" defaultMessage="Адрес контракта" />
@@ -214,6 +216,8 @@ export default class AddCustomERC20 extends React.Component<any, any> {
                   </div>
                 )}
               </div>
+              {/*
+              //@ts-ignore */}
               <Button styleName="buttonFullMargin" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
                 {isShipped
                   ? (
@@ -233,6 +237,8 @@ export default class AddCustomERC20 extends React.Component<any, any> {
           { step === 'confirm' &&
             <Fragment>
               <div styleName="lowLevel">
+                {/*
+                //@ts-ignore */}
                 <FieldLabel inRow>
                   <span style={{ fontSize: '16px' }}>
                     <FormattedMessage id="customERC20_Address" defaultMessage="Адрес контракта" />
@@ -241,6 +247,8 @@ export default class AddCustomERC20 extends React.Component<any, any> {
                 <div styleName="fakeInput">{tokenAddress}</div>
               </div>
               <div styleName="lowLevel">
+                {/*
+                //@ts-ignore */}
                 <FieldLabel inRow>
                   <span style={{ fontSize: '16px' }}>
                     <FormattedMessage id="customERC20_TokenTitle" defaultMessage="Название токена" />
@@ -249,6 +257,8 @@ export default class AddCustomERC20 extends React.Component<any, any> {
                 <div styleName="fakeInput">{tokenTitle}</div>
               </div>
               <div styleName="lowLevel">
+                {/*
+                //@ts-ignore */}
                 <FieldLabel inRow>
                   <span style={{ fontSize: '16px' }}>
                     <FormattedMessage id="customERC20_TokenSymbol" defaultMessage="Символ токена" />
@@ -257,6 +267,8 @@ export default class AddCustomERC20 extends React.Component<any, any> {
                 <div styleName="fakeInput">{tokenSymbol}</div>
               </div>
               <div styleName="lowLevel">
+                {/*
+                //@ts-ignore */}
                 <FieldLabel inRow>
                   <span style={{ fontSize: '16px' }}>
                     <FormattedMessage id="customERC20_TokenDecimals" defaultMessage="Знаков после запятой" />
@@ -264,6 +276,8 @@ export default class AddCustomERC20 extends React.Component<any, any> {
                 </FieldLabel>
                 <div styleName="fakeInput">{tokenDecimals}</div>
               </div>
+              {/*
+              //@ts-ignore */}
               <Button styleName="buttonFullMargin" brand fullWidth disabled={isDisabled} onClick={this.handleConfirm}>
                 {isShipped
                   ? (
@@ -288,6 +302,8 @@ export default class AddCustomERC20 extends React.Component<any, any> {
                   defaultMessage="Токен успешно добавлен"
                 />
               </h4>
+              {/*
+              //@ts-ignore */}
               <Button styleName="buttonFullMargin" brand fullWidth disabled={isDisabled} onClick={this.handleReady}>
                 <Fragment>
                   <FormattedMessage id="customERC20_Ready" defaultMessage="Готово" />

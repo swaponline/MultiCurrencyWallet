@@ -81,6 +81,7 @@ export default class ImportKeys extends Component<any, any> {
     }
 
     try {
+      //@ts-ignore
       actions.eth.login(ethKey)
       this.setState({
         isImportedEth: true,
@@ -111,6 +112,7 @@ export default class ImportKeys extends Component<any, any> {
     }
 
     try {
+      //@ts-ignore
       actions.btc.login(btcKey)
       this.setState({
         isImportedBtc: true,
@@ -128,7 +130,9 @@ export default class ImportKeys extends Component<any, any> {
 
   handleImportKeys = () => {
     this.handleCloseModal()
+    //@ts-ignore
     localStorage.setItem(constants.localStorage.testnetSkipPKCheck, true)
+    //@ts-ignore
     localStorage.setItem(constants.localStorage.isWalletCreate, true)
 
     setTimeout(() => {
@@ -183,6 +187,8 @@ export default class ImportKeys extends Component<any, any> {
     }
 
     return (
+      /*
+      //@ts-ignore */
       <Modal name={this.props.name} title={intl.formatMessage(title.Import)} data={data} onClose={this.state.onClose}>
         <div styleName="modal" className="ym-hide-content">
           <p>
@@ -190,6 +196,8 @@ export default class ImportKeys extends Component<any, any> {
           </p>
           {(!config.opts.curEnabled || config.opts.curEnabled.eth) && (
             <>
+              {/*
+              //@ts-ignore */}
               <FieldLabel positionStatic>
                 <FormattedMessage id="ImportKeys110" defaultMessage="Please enter ETH private key" />
               </FieldLabel>
@@ -203,6 +211,8 @@ export default class ImportKeys extends Component<any, any> {
           )}
           {(!config.opts.curEnabled || config.opts.curEnabled.btc) && (
             <>
+              {/*
+              //@ts-ignore */}
               <FieldLabel positionStatic>
                 <FormattedMessage id="ImportKeys120" defaultMessage="Please enter BTC private key in WIF format" />
               </FieldLabel>
@@ -221,9 +231,13 @@ export default class ImportKeys extends Component<any, any> {
               </span>
             )
           }
+          {/*
+          //@ts-ignore */}
           <Button brand disabled={isDisabled} styleName="button" onClick={this.handleImportKeys}>
             <FormattedMessage id="ImportKeys130" defaultMessage="Confirm" />
           </Button>
+          {/*
+          //@ts-ignore */}
           <Button gray styleName="button" onClick={this.handleCloseModal}>
             <FormattedMessage id="ImportKeys133" defaultMessage="Cancel" />
           </Button>

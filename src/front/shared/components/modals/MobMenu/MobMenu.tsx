@@ -18,6 +18,8 @@ class MobMenu extends React.Component<any, any> {
 
   props: any
 
+  subMenuItems: any
+
   constructor(props) {
     super(props)
 

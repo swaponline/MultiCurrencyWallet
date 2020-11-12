@@ -48,7 +48,7 @@ export default class CurrencyAction extends React.Component<any, any> {
     if (typeof data.onClose === 'function') {
       data.onClose()
     }
-
+    //@ts-ignore
     actions.modals.close(name)
   }
 
@@ -65,7 +65,7 @@ export default class CurrencyAction extends React.Component<any, any> {
 
     if (context === 'Deposit') {
       this.handleClose()
-
+      //@ts-ignore
       actions.modals.open(constants.modals.ReceiveModal, {
         currency,
         address
@@ -124,6 +124,8 @@ export default class CurrencyAction extends React.Component<any, any> {
         })}>
           <div styleName="header">
             <p styleName="title">{context}</p>
+            {/*
+            //@ts-ignore */}
             <CloseIcon styleName="closeButton" onClick={this.handleClose} data-testid="modalCloseIcon" />
           </div>
           <div styleName={cx({
@@ -172,7 +174,9 @@ export default class CurrencyAction extends React.Component<any, any> {
                 }
 
                 let renderIcon = icons[iconName]
-                let renderStyle = {}
+                let renderStyle = {
+                  backgroundColor: null,
+                }
                 if (config && config.erc20 && config.erc20[item.currency.toLowerCase()]) {
                   if (config.erc20[item.currency.toLowerCase()].icon)
                     renderIcon = config.erc20[item.currency.toLowerCase()].icon

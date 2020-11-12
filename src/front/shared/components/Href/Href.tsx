@@ -10,6 +10,7 @@ import styles from './Href.scss'
 const Href = ({ children, to, redirect, tab, rel, className }) => {
   if (to) {
     return (
+      //@ts-ignore
       <NavLink styleName="link">{children}</NavLink>
     )
   }

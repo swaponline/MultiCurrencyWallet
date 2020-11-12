@@ -13,11 +13,13 @@ const Select = ({ balance, changeBalance, switching, isDark }) => {
     <Fragment>
       <div styleName={`groupField ${isDark ? '--dark' : ''}`}>
         <div styleName="group">
-          <span styleName="cell" onClick={() => changeBalance(BigNumber(balance).div(4))}><FormattedMessage id="Select23" defaultMessage="25%" /></span>
-          <span styleName="cell" onClick={() => changeBalance(BigNumber(balance).div(2))}><FormattedMessage id="Select25" defaultMessage="50%" /></span>
-          <span styleName="cell" onClick={() => changeBalance(BigNumber(balance).div(4).multipliedBy(3))}><FormattedMessage id="Select30" defaultMessage="75%" /></span>
-          <span styleName="cell" onClick={() => changeBalance(BigNumber(balance).div(1))}><FormattedMessage id="Select40" defaultMessage="100%" /></span>
+          <span styleName="cell" onClick={() => changeBalance(new BigNumber(balance).div(4))}><FormattedMessage id="Select23" defaultMessage="25%" /></span>
+          <span styleName="cell" onClick={() => changeBalance(new BigNumber(balance).div(2))}><FormattedMessage id="Select25" defaultMessage="50%" /></span>
+          <span styleName="cell" onClick={() => changeBalance(new BigNumber(balance).div(4).multipliedBy(3))}><FormattedMessage id="Select30" defaultMessage="75%" /></span>
+          <span styleName="cell" onClick={() => changeBalance(new BigNumber(balance).div(1))}><FormattedMessage id="Select40" defaultMessage="100%" /></span>
         </div>
+        {/*
+        //@ts-ignore */}
         <Switching onClick={switching} />
       </div>
     </Fragment>

@@ -605,6 +605,8 @@ export default class RegisterPINProtected extends React.Component<any, any> {
                 <FormattedMessage {...langs.restoryBottomMessage} />
               </p>
               <div styleName="highLevel" className="ym-hide-content">
+                {/*
+                //@ts-ignore */}
                 <FieldLabel label>
                   <FormattedMessage {...langs.labelYourMnemonic} />
                 </FieldLabel>
@@ -649,6 +651,8 @@ export default class RegisterPINProtected extends React.Component<any, any> {
                 </div>
               )}
               <div styleName="highLevel" className="ym-hide-content">
+                {/*
+                //@ts-ignore */}
                 <FieldLabel label>
                   <FormattedMessage {...langs.labelYourPin} />
                 </FieldLabel>
@@ -661,6 +665,8 @@ export default class RegisterPINProtected extends React.Component<any, any> {
                 />
               </div>
               <div styleName="highLevel" className="ym-hide-content">
+                {/*
+                //@ts-ignore */}
                 <FieldLabel label>
                   <FormattedMessage {...langs.labelConfirmYourPin} />
                 </FieldLabel>
@@ -678,6 +684,8 @@ export default class RegisterPINProtected extends React.Component<any, any> {
                 )}
               </div>
               <div styleName="buttonHolder">
+                {/*
+                //@ts-ignore */}
                 <Button blue big fullWidth disabled={isShipped} onClick={this.handleCheckPIN}>
                   {isShipped ? (
                     <Fragment>
@@ -749,6 +757,8 @@ export default class RegisterPINProtected extends React.Component<any, any> {
                   </div>
                 </div>
               )}
+              {/*
+              //@ts-ignore */}
               <Button big blue fullWidth onClick={this.handleFinish}>
                 <Fragment>
                   <FormattedMessage {...langs.buttonFinish} />
