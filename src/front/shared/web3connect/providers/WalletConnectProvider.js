@@ -1,33 +1,54 @@
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { UserRejectedRequestError as UserRejectedRequestErrorWalletConnect } from '@web3-react/walletconnect-connector'
 
+
 export default class WalletConnectProvider extends WalletConnectConnector {
-  async isConnected() {
+  _web3Connect = null
+
+  constructor(web3Connect, options) {
+    super(options)
+    this._web3Connect = web3Connect
   }
+
+  async isConnected() {
+    try {
+      const address = await super.getAccount()
+      return (address) ? true : false
+    } catch (err) {
+      // try restore connection
+      let connectionInfo = localStorage.getItem(`walletconnect`)
+      try {
+        if (connectionInfo) connectionInfo = JSON.parse(connectionInfo)
+      } catch (e) {}
+      if (connectionInfo
+        && connectionInfo.connected
+      ) {
+        if (await this.Connect()) {
+          return true
+        }
+      }
+    }
+    return false
+  }
+
+  async Disconnect() {
+    await this.close()
+    await this.deactivate()
+    localStorage.removeItem(`walletconnect`)
+  }
+
   async Connect() {
     try {
       const connection = await super.activate()
+      await this.setupEvents()
       return (connection) ? true : false
     } catch (err) {
       if (err instanceof UserRejectedRequestErrorWalletConnect) {
         console.warn('User reject connect to Injected provider')
+      } else {
+        console.error(err)
       }
       return false
     }
-  }
-}
-
-const walletconnect = new WalletConnectConnector({
-  rpc,
-  bridge: `https://bridge.walletconnect.org`,
-  qrcode: true,
-  pollingInterval: 12000,
-})
-walletconnect.isConnected = async () => {
-  try {
-    const address = await walletconnect.getAccount()
-    return (address) ? true : false
-  } catch (err) {
-    return false
   }
 }

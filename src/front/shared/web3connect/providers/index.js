@@ -1,45 +1,39 @@
 import config from 'helpers/externalConfig'
 
-import { InjectedProvider } from './InjectedProvider'
+import InjectedProvider from './InjectedProvider'
+import WalletConnectProvider from './WalletConnectProvider'
 
-import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 
-
-import SUPPORTED_PROVIDERS from './supported_providers'
+import SUPPORTED_PROVIDERS from './supported'
 
 const chainId = (process.env.MAINNET) ? 1 : 4
 const rpc = {}
 rpc[`${chainId}`] = config.web3.provider
 
 
-const injected = new InjectedProvider({
+const injectOptions = {
   supportedChainIds: [
     chainId
   ]
-})
+}
 
-const walletconnect = new WalletConnectConnector({
+const walletconnectOptions = {
   rpc,
   bridge: `https://bridge.walletconnect.org`,
   qrcode: true,
   pollingInterval: 12000,
-})
-walletconnect.isConnected = async () => {
-  try {
-    const address = await walletconnect.getAccount()
-    return (address) ? true : false
-  } catch (err) {
-    return false
-  }
 }
 
+export const isInjectedEnabled = () => {
+  return (window && window.ethereum)
+}
 
-const getProviderByName = (providerName) => {
+const getProviderByName = (web3connect, providerName) => {
   switch (providerName) {
     case SUPPORTED_PROVIDERS.INJECTED:
-      return injected
+      return new InjectedProvider(web3connect, injectOptions)
     case SUPPORTED_PROVIDERS.WALLETCONNECT:
-      return walletconnect
+      return new WalletConnectProvider(web3connect, walletconnectOptions)
     default:
       console.error('web3connect - not supported provider', providerName)
   }
