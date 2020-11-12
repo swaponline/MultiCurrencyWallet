@@ -16,6 +16,11 @@ const web3connect = new Web3Connect({
   web3RPC: config.api.web3
 })
 
+web3connect.on('connected', () => window.location.reload())
+web3connect.on('disconnect', () => window.location.reload())
+web3connect.on('accountChange', () => window.location.reload())
+web3connect.on('chainChanged', () => window.location.reload())
+
 const isEnabled = () => true
 
 const isConnected = () => web3connect.isConnected()
@@ -30,9 +35,7 @@ const _init = async () => {
       let _web3 = false
       try {
         _web3 = web3connect.getWeb3()
-        console.log('web3', _web3)
       } catch (err) {
-        console.log('fail get web3', err)
         web3connect.clearCache()
         _initReduxState()
         return
@@ -91,24 +94,7 @@ const disconnect = () => new Promise(async (resolved, reject) => {
 })
 
 const connect = () => new Promise(async (resolved, reject) => {
-  /*
-  web3Modal
-    .connect()
-    .then((provider) => {
-      if (provider) {
-        localStorage.setItem(constants.localStorage.isWalletCreate, true)
-
-        window.location.reload()
-      } else {
-        setDefaultProvider()
-        resolved(false)
-      }
-    })
-    .catch((e) => {
-      setDefaultProvider()
-      resolved(false)
-    })
-  */
+  actions.modals.open(constants.modals.ConnectWalletModal)
 })
 
 /* metamask wallet layer */

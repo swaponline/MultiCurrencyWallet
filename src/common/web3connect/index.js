@@ -34,7 +34,6 @@ export default class Web3Connect extends EventEmitter {
       const lsProvider = getProviderByName(this, cachedProviderName)
       if (lsProvider) {
         lsProvider.isConnected().then(async (isConnected) => {
-          console.log('isConnected', isConnected)
           if (isConnected) {
             if (await lsProvider.Connect()) {
               this._cachedProvider = lsProvider
@@ -42,7 +41,6 @@ export default class Web3Connect extends EventEmitter {
               await this._cacheProviderData()
               this._isConnected = true
               this._inited = true
-              console.log('web3connect inited')
               return
             }
           }
@@ -133,6 +131,7 @@ export default class Web3Connect extends EventEmitter {
           this._setupEvents()
           await this._cacheProviderData()
           this._isConnected = true
+          this.emit('connected')
           return true
         }
       }
@@ -154,7 +153,10 @@ export default class Web3Connect extends EventEmitter {
   }
 
   isCorrectNetwork() {
-    return this.web3ChainId === this._cachedChainId
+    return (
+      this._web3ChainId === this._cachedChainId
+      || `0x0${this._web3ChainId}` === this._cachedChainId
+    )
   }
 
   getWeb3() {
@@ -174,6 +176,7 @@ export default class Web3Connect extends EventEmitter {
       this._isConnected = false
       await this._cachedProvider.Disconnect()
       this.clearCache()
+      this.emit('disconnect')
     }
   }
 }
