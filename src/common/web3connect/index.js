@@ -11,10 +11,12 @@ export default class Web3Connect extends EventEmitter {
   _cachedChainId = null
   _cachedAddress = null
   _cachedWeb3 = null
+  _isConnected = false
 
   _web3RPC = null
   _web3ChainId = null
 
+  _inited = false
 
   constructor(options) {
     super()
@@ -37,19 +39,49 @@ export default class Web3Connect extends EventEmitter {
             if (await lsProvider.Connect()) {
               this._cachedProvider = lsProvider
               this._setupEvents()
-              this._cacheProviderData()
+              await this._cacheProviderData()
+              this._isConnected = true
+              this._inited = true
+              console.log('web3connect inited')
               return
             }
           }
-          this._clearCache()
+          this.clearCache()
+          this._inited = true
         })
       } else {
-        this._clearCache()
+        this.clearCache()
+        this._inited = true
       }
+    } else {
+      this._inited = true
     }
   }
 
-  _clearCache() {
+  isInjectedEnabled() {
+    return isInjectedEnabled()
+  }
+  onInit(cb) {
+    const waitInit = () => {
+      if (this._inited) {
+        cb()
+      } else {
+        setTimeout( waitInit, 100 )
+      }
+    }
+    waitInit()
+  }
+
+  hasCachedProvider() {
+    const cachedProviderName = localStorage.getItem(`WEB3CONNECT:PROVIDER`)
+    if (cachedProviderName) {
+      const lsProvider = getProviderByName(this, cachedProviderName)
+      if (lsProvider) return true
+    }
+    return false
+  }
+
+  clearCache() {
     localStorage.removeItem(`WEB3CONNECT:PROVIDER`)
     this._cachedProvider = null
     this._cachedChainId = null
@@ -76,7 +108,7 @@ export default class Web3Connect extends EventEmitter {
         }
       })
       this._cachedProvider.on(ConnectorEvent.Deactivate, () => {
-        this._clearCache()
+        this.clearCache()
         this.emit('disconnect')
       })
     }
@@ -88,6 +120,7 @@ export default class Web3Connect extends EventEmitter {
     this._cachedWeb3 = new Web3(
       await this._cachedProvider.getProvider()
     )
+    this._cachedWeb3.isMetamask = true
   }
 
   async connectTo(provider) {
@@ -99,6 +132,7 @@ export default class Web3Connect extends EventEmitter {
           this._cachedProvider = _connector
           this._setupEvents()
           await this._cacheProviderData()
+          this._isConnected = true
           return true
         }
       }
@@ -115,7 +149,7 @@ export default class Web3Connect extends EventEmitter {
       : providers.filter((name) => name !== SUPPORTED_PROVIDERS.INJECTED)
   }
 
-  async isConnected() {
+  isConnected() {
     return (this._cachedProvider) ? true : false
   }
 
@@ -129,20 +163,17 @@ export default class Web3Connect extends EventEmitter {
     }
   }
 
-  async getAddress() {
+  getAddress() {
     if (this._cachedProvider) {
-      if (this._cachedAddress) {
-        return this._cachedAddress
-      }
-      this._cachedAddress = this._cachedProvider.getAccount()
+      return this._cachedAddress
     }
-    return false
   }
 
   async Disconnect() {
     if (this._cachedProvider) {
+      this._isConnected = false
       await this._cachedProvider.Disconnect()
-      localStorage.removeItem(`WEB3CONNECT:PROVIDER`)
+      this.clearCache()
     }
   }
 }

@@ -5,83 +5,44 @@ import { cacheStorageGet, cacheStorageSet, constants } from 'helpers'
 import web3 from 'helpers/web3'
 import config from 'app-config'
 import { setMetamask, setDefaultProvider } from 'helpers/web3'
-import WalletConnectProvider from '@walletconnect/web3-provider'
-import Web3 from 'web3'
-import Web3Modal from 'web3modal'
+
 
 import Web3Connect from '../../../common/web3connect'
 
 console.log('In metamask', Web3Connect)
 
-window.webconnect = new Web3Connect({
+const web3connect = new Web3Connect({
   web3ChainId: (process.env.MAINNET) ? 1 : 4,
   web3RPC: config.api.web3
 })
 
-const providerOptions = {
-  /*
-  walletconnect: {
-    package: WalletConnectProvider,
-    options: {
-      infuraId: '5ffc47f65c4042ce847ef66a3fa70d4c',
-    },
-  },
-  */
-}
-
-const web3Modal = new Web3Modal({
-  network: (process.env.MAINNET) ? 'mainnet' : 'rinkeby',
-  cacheProvider: true,
-  providerOptions
-})
-
-let _connected = false
-let _currentChain = 0
-let _currentAddress = ``
-let _isInited = false
-let _web3 = null
-let _provider = null
-
-
-const metamaskProvider = (window.ethereum) || false
-
 const isEnabled = () => true
 
-const isConnected = () => _connected
+const isConnected = () => web3connect.isConnected()
 
-const getAddress = () => (isConnected()) ? _currentAddress : ``
+const getAddress = () => (isConnected()) ? web3connect.getAddress() : ``
 
-const _cacheAddress = async () => {
-  _currentAddress = ``
-
-  // like WalletConnect
-  if (_provider
-    && _provider.accounts
-    && _provider.accounts.length
-  ) {
-    _currentAddress = _provider.accounts[0]
-    return
-  }
-  const accounts = await _web3.eth.getAccounts()
-  if (accounts.length) _currentAddress = accounts[0]
-}
+const getWeb3 = () => (isConnected()) ? web3connect.getWeb3() : false
 
 const _init = async () => {
-  if (web3Modal.cachedProvider) {
-    try {
-      _web3 = await getWeb3()
-      _connected = true
-    } catch (err) {
-      console.log('fail get web3', err)
-      web3Modal.clearCachedProvider()
-      _connected = false
+  web3connect.onInit(() => {
+    if (web3connect.hasCachedProvider()) {
+      let _web3 = false
+      try {
+        _web3 = web3connect.getWeb3()
+        console.log('web3', _web3)
+      } catch (err) {
+        console.log('fail get web3', err)
+        web3connect.clearCache()
+        _initReduxState()
+        return
+      }
+      setMetamask(_web3)
       _initReduxState()
-      return
+    } else {
+      _initReduxState()
     }
-    setMetamask(_web3)
-    await _cacheAddress()
-    _initReduxState()
-  }
+  })
 }
 
 const addWallet = () => {
@@ -89,15 +50,6 @@ const addWallet = () => {
   if (isConnected()) {
     getBalance()
   }
-}
-
-
-
-const getWeb3 = async () => {
-  _provider = await web3Modal.connect()
-  const web3 = new Web3(_provider)
-  web3.isMetamask = true
-  return web3
 }
 
 const getBalance = () => {
@@ -130,23 +82,16 @@ const getBalance = () => {
 
 const disconnect = () => new Promise(async (resolved, reject) => {
   if (isConnected()) {
-    if (_provider
-      && _provider.close
-      && typeof _provider.close === `function`
-    ) {
-      // Like Connect-Wallet
-      _provider.close()
-    }
-    await web3Modal.clearCachedProvider()
-
+    await web3connect.Disconnect()
     resolved(true)
-    window.location.reload()
+    // window.location.reload()
   } else {
     resolved(true)
   }
 })
 
-const connect = () => new Promise((resolved, reject) => {
+const connect = () => new Promise(async (resolved, reject) => {
+  /*
   web3Modal
     .connect()
     .then((provider) => {
@@ -163,56 +108,12 @@ const connect = () => new Promise((resolved, reject) => {
       setDefaultProvider()
       resolved(false)
     })
+  */
 })
 
 /* metamask wallet layer */
+const isCorrectNetwork = () => web3connect.isCorrectNetwork()
 
-
-const isMainnet = () => _currentChain === `0x1`
-const isTestnet = () => _currentChain === `0x4`
-
-const isCorrectNetwork = () => {
-  if (!metamaskProvider) {
-    // If not installed metamask - used other wallet (connect-wallet, etc)
-    // Think - network is correct
-    return true
-  }
-  return (process.env.MAINNET) ? isMainnet() : isTestnet()
-}
-
-if (metamaskProvider) {
-  if (!isConnected()) {
-    if (metamaskProvider.isConnected()) {
-      console.warn(`Metamask exists and connected, but not connected in web3modal`)
-    }
-  }
-
-  _currentChain = metamaskProvider.chainId
-  metamaskProvider.on('chainChanged', (newChainId) => {
-    if (newChainId !== _currentChain) {
-      if (!metamaskProvider.autoRefreshOnNetworkChange) {
-        //window.location.reload()
-      }
-    }
-  })
-  metamaskProvider.on('accountsChanged', (newAccounts) => {
-    if (newAccounts.length === 0) {
-      // user disconnect metamask
-      if (_currentAddress) {
-        web3Modal.clearCachedProvider()
-        window.location.reload()
-        return
-      }
-    }
-    if ((!newAccounts.length
-      || newAccounts[0] !== _currentAddress
-      ) && _currentAddress
-    ) {
-      window.location.reload()
-    }
-  })
-}
-/* --------------------- */
 
 const _initReduxState = () => {
   const {
@@ -248,7 +149,7 @@ const _initReduxState = () => {
         isConnected: false,
         isMetamask: true,
         currency: "ETH",
-        fullName: (metamaskProvider) ? `Ethereum (Metamask)` : `Ethereum (Connect-Wallet)`,
+        fullName: (web3connect.isInjectedEnabled()) ? `Ethereum (Metamask)` : `Ethereum (Connect-Wallet)`,
         infoAboutCurrency: ethData.infoAboutCurrency,
         isBalanceFetched: true,
         isMnemonic: true,
@@ -258,7 +159,7 @@ const _initReduxState = () => {
   }
 }
 
-if (web3Modal.cachedProvider) {
+if (web3connect.hasCachedProvider()) {
   _init()
 } else {
   _initReduxState()
@@ -269,11 +170,10 @@ const metamaskApi = {
   isEnabled,
   isConnected,
   getAddress,
-  metamaskProvider,
+  web3connect,
   addWallet,
   getBalance,
   getWeb3,
-  web3Modal,
   disconnect,
   isCorrectNetwork,
 }
