@@ -11,6 +11,8 @@ export default class Seo extends Component<any, any> {
     location: PropTypes.object.isRequired,
   }
 
+  seoPage: any
+
   constructor(props) {
     super(props)
     this.seoPage = getSeoPage(props.location.pathname)

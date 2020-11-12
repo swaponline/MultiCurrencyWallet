@@ -148,6 +148,7 @@ export default class DropDown extends Component<any, any> {
           isToggleActive
             ? () => {
               if (!disableSearch) {
+                //@ts-ignore
                 this.refs.searchInput.handleBlur()
                 linkedValue.inputValue.set('')
               }
@@ -216,6 +217,8 @@ export default class DropDown extends Component<any, any> {
             <img src={closeBtn} alt="" />
           </button>
           <div styleName="dropDownLabel">
+            {/*
+            //@ts-ignore */}
             <FieldLabel inRow inDropDown>
               <strong>{label}</strong>
               &nbsp;

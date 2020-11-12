@@ -77,9 +77,9 @@ const fetchBalance = (address, assetId = 31) =>
       console.log('Omni Balance pending:', findById[0].pendingpos)
       console.log('Omni Balance pending:', findById[0].pendingneg)
       //@ts-ignore
-      const usdsatoshis = BigNumber(findById[0].value)
+      const usdsatoshis = new BigNumber(findById[0].value)
       //@ts-ignore
-      const usdtUnconfirmed = BigNumber(findById[0].pendingneg)
+      const usdtUnconfirmed = new BigNumber(findById[0].pendingneg)
 
       if (usdsatoshis) {
         return {

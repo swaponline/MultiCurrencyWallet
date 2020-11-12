@@ -1065,7 +1065,7 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
     },
   } = getState()
   //@ts-ignore
-  let feeFromAmount = BigNumber(0)
+  let feeFromAmount = new BigNumber(0)
 
   if (hasAdminFee) {
     const {
@@ -1073,12 +1073,12 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
       min: adminFeeMinValue,
     } = hasAdminFee
     //@ts-ignore
-    const adminFeeMin = BigNumber(adminFeeMinValue)
+    const adminFeeMin = new BigNumber(adminFeeMinValue)
     //@ts-ignore
-    feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
+    feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
     if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
-
+    //@ts-ignore
     feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber() // Admin fee in satoshi
   }
   //@ts-ignore
@@ -1094,6 +1094,7 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
 
   const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+  //@ts-ignore
   const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
   const p2ms = bitcoin.payments.p2ms({
@@ -1121,6 +1122,7 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
     // admin fee output
     psbt.addOutput({
       address: hasAdminFee.address,
+      //@ts-ignore
       value: feeFromAmount,
     })
   }
@@ -1184,7 +1186,7 @@ const sendSMSProtectedV4 = async ({ from, to, amount, feeValue, speed } = {}) =>
     },
   } = getState()
 //@ts-ignore
-  let feeFromAmount = BigNumber(0)
+  let feeFromAmount = new BigNumber(0)
 
   if (hasAdminFee) {
     const {
@@ -1192,9 +1194,9 @@ const sendSMSProtectedV4 = async ({ from, to, amount, feeValue, speed } = {}) =>
       min: adminFeeMinValue,
     } = hasAdminFee
 //@ts-ignore
-    const adminFeeMin = BigNumber(adminFeeMinValue)
+    const adminFeeMin = new BigNumber(adminFeeMinValue)
 //@ts-ignore
-    feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
+    feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
     if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
 
@@ -1208,6 +1210,7 @@ const sendSMSProtectedV4 = async ({ from, to, amount, feeValue, speed } = {}) =>
 
   const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+  //@ts-ignore
   const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
   const p2ms = bitcoin.payments.p2ms({
@@ -1295,7 +1298,7 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
     },
   } = getState()
   //@ts-ignore
-  let feeFromAmount = BigNumber(0)
+  let feeFromAmount = new BigNumber(0)
 
   if (hasAdminFee) {
     const {
@@ -1303,12 +1306,12 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
       min: adminFeeMinValue,
     } = hasAdminFee
     //@ts-ignore
-    const adminFeeMin = BigNumber(adminFeeMinValue)
+    const adminFeeMin = new BigNumber(adminFeeMinValue)
     //@ts-ignore
-    feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
+    feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
     if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
-
+    //@ts-ignore
     feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber() // Admin fee in satoshi
   }
   //@ts-ignore
@@ -1321,6 +1324,7 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
 
   const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+  //@ts-ignore
   const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
   const p2ms = bitcoin.payments.p2ms({
@@ -1348,6 +1352,7 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
     // admin fee output
     psbt.addOutput({
       address: hasAdminFee.address,
+      //@ts-ignore
       value: feeFromAmount,
     })
   }
@@ -1452,7 +1457,7 @@ const sendPinProtectedV4 = async ({ from, to, amount, feeValue, speed, password,
     },
   } = getState()
   //@ts-ignore
-  let feeFromAmount = BigNumber(0)
+  let feeFromAmount = new BigNumber(0)
 
   if (hasAdminFee) {
     const {
@@ -1460,9 +1465,9 @@ const sendPinProtectedV4 = async ({ from, to, amount, feeValue, speed, password,
       min: adminFeeMinValue,
     } = hasAdminFee
     //@ts-ignore
-    const adminFeeMin = BigNumber(adminFeeMinValue)
+    const adminFeeMin = new BigNumber(adminFeeMinValue)
     //@ts-ignore
-    feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
+    feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
     if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
 
@@ -1476,6 +1481,7 @@ const sendPinProtectedV4 = async ({ from, to, amount, feeValue, speed, password,
 
   const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+  //@ts-ignore
   const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
   const p2ms = bitcoin.payments.p2ms({
@@ -1633,7 +1639,7 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
     address,
   })
   //@ts-ignore
-  let feeFromAmount = BigNumber(0)
+  let feeFromAmount = new BigNumber(0)
 
   if (hasAdminFee) {
     const {
@@ -1641,12 +1647,12 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
       min: adminFeeMinValue,
     } = hasAdminFee
     //@ts-ignore
-    const adminFeeMin = BigNumber(adminFeeMinValue)
+    const adminFeeMin = new BigNumber(adminFeeMinValue)
     //@ts-ignore
-    feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
+    feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
     if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
-
+    //@ts-ignore
     feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber()
   }
 
@@ -1654,6 +1660,7 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
 
   const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+  //@ts-ignore
   const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
   const p2ms = bitcoin.payments.p2ms({
@@ -1683,6 +1690,7 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
     // admin fee output
     psbt.addOutput({
       address: hasAdminFee.address,
+      //@ts-ignore
       value: feeFromAmount,
     })
   }
@@ -1724,7 +1732,7 @@ const sendV4 = async ({ from, to, amount, feeValue, speed } = {}) => {
 
   const { address, publicKeys } = senderWallet
   //@ts-ignore
-  let feeFromAmount = BigNumber(0)
+  let feeFromAmount = new BigNumber(0)
 
   if (hasAdminFee) {
     const {
@@ -1732,9 +1740,9 @@ const sendV4 = async ({ from, to, amount, feeValue, speed } = {}) => {
       min: adminFeeMinValue,
     } = hasAdminFee
     //@ts-ignore
-    const adminFeeMin = BigNumber(adminFeeMinValue)
+    const adminFeeMin = new BigNumber(adminFeeMinValue)
     //@ts-ignore
-    feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
+    feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
     if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
 
@@ -1745,6 +1753,7 @@ const sendV4 = async ({ from, to, amount, feeValue, speed } = {}) => {
 
   const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+  //@ts-ignore
   const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
   const p2ms = bitcoin.payments.p2ms({

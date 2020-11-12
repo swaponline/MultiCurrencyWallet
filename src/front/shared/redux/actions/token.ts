@@ -267,11 +267,11 @@ const sendWithAdminFee = async ({ name, from, to, amount, ...feeConfig } = {}) =
     min: adminFeeMinValue,
   } = config.opts.fee.erc20
 //@ts-ignore
-  const adminFeeMin = BigNumber(adminFeeMinValue)
+  const adminFeeMin = new BigNumber(adminFeeMinValue)
 
   // fee - from amount - percent
   //@ts-ignore
-  let feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
+  let feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
   if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
   feeFromAmount = toWei(feeFromAmount.toNumber()) // Admin fee
@@ -452,7 +452,7 @@ const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
         ) {
           receiverAddress = `0x${txData.inputs[0]}`
           //@ts-ignore
-          amount = BigNumber(txData.inputs[1]).div(BigNumber(10).pow(tokenDecimal)).toString()
+          amount = new BigNumber(txData.inputs[1]).div(BigNumber(10).pow(tokenDecimal)).toString()
         } else {
           // This is not erc20 transfer tx (swap tx)
         }
@@ -466,7 +466,7 @@ const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
 
         // Calc miner fee, used for this tx
         //@ts-ignore
-        const minerFee = BigNumber(web3.utils.toBN(gas).toNumber())
+        const minerFee = new BigNumber(web3.utils.toBN(gas).toNumber())
           .multipliedBy(web3.utils.toBN(gasPrice).toNumber())
           .dividedBy(1e18).toNumber()
 
@@ -474,9 +474,9 @@ const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
 
         if (hasAdminFee) {
           //@ts-ignore
-          adminFee = BigNumber(hasAdminFee.fee).dividedBy(100).multipliedBy(amount)
+          adminFee = new BigNumber(hasAdminFee.fee).dividedBy(100).multipliedBy(amount)
           //@ts-ignore
-          if (BigNumber(hasAdminFee.min).isGreaterThan(adminFee)) adminFee = BigNumber(hasAdminFee.min)
+          if (BigNumber(hasAdminFee.min).isGreaterThan(adminFee)) adminFee = new BigNumber(hasAdminFee.min)
           //@ts-ignore
           adminFee = adminFee.toNumber()
         }

@@ -232,7 +232,7 @@ const estimateFeeRate = async ({ speed = 'fast' } = {}) => {
   const apiSpeed = apiSpeeds[speed] || apiSpeed.normal
 
   //@ts-ignore
-  const apiRate = BigNumber(apiResult[apiSpeed])
+  const apiRate = new BigNumber(apiResult[apiSpeed])
 
   return apiRate.isGreaterThanOrEqualTo(DUST)
     ? apiRate.toString()

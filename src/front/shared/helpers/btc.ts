@@ -198,7 +198,7 @@ const estimateFeeRateBitcoinfees = async ({ speed = 'fast' } = {}) => {
   //@ts-ignore
   const apiSpeed = apiSpeeds[speed] || apiSpeed.normal
   //@ts-ignore
-  const apiRate = BigNumber(apiResult[apiSpeed]).multipliedBy(1024)
+  const apiRate = new BigNumber(apiResult[apiSpeed]).multipliedBy(1024)
 
   return apiRate.isGreaterThanOrEqualTo(DUST)
     ? apiRate.toString()
@@ -230,7 +230,7 @@ const estimateFeeRateBlockcypher = async ({ speed = 'fast' } = {}) => {
   //@ts-ignore
   const apiSpeed = apiSpeeds[speed] || apiSpeed.normal
   //@ts-ignore
-  const apiRate = BigNumber(apiResult[apiSpeed])
+  const apiRate = new BigNumber(apiResult[apiSpeed])
 
   return apiRate.isGreaterThanOrEqualTo(DUST)
     ? apiRate.toString()

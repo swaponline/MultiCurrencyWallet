@@ -28,7 +28,9 @@ export default class Address extends Component<any, any> {
     const addressStart = address.substring(0, 4)
     const addressEnd = address.substring(address.length - 4, address.length)
 
-    let colorizing = {}
+    let colorizing = {
+      color: null,
+    }
     if (type === AddressType.Metamask) {
       colorizing.color = '#e4761b'
     }

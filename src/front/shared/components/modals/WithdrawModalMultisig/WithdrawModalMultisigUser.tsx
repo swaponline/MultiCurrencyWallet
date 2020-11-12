@@ -55,7 +55,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   })
 )
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
-export default class WithdrawModalMultisigUser extends React.Component {
+export default class WithdrawModalMultisigUser extends React.Component<any, any> {
 
   props: any
 
@@ -63,6 +63,9 @@ export default class WithdrawModalMultisigUser extends React.Component {
     name: PropTypes.string,
     data: PropTypes.object,
   }
+
+  broadcastCancelFunc: any
+  fiatRates: any
 
   constructor(data) {
     //@ts-ignore
@@ -78,6 +81,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
       items,
     } = data
 
+    //@ts-ignore
     const currentDecimals = constants.tokenDecimals.btcmultisig
 
     const selectedItem = items.filter(item => item.address === address)[0]
@@ -96,7 +100,8 @@ export default class WithdrawModalMultisigUser extends React.Component {
       usedAdminFee = config.opts.fee.btc
       if (usedAdminFee) {
         // miner fee + minimal admin fee
-        min = BigNumber(min).plus(usedAdminFee.min).toNumber()
+        //@ts-ignore
+        min = new BigNumber(min).plus(usedAdminFee.min).toNumber()
       }
     }
 
@@ -141,10 +146,12 @@ export default class WithdrawModalMultisigUser extends React.Component {
       usedAdminFee,
     } = this.state
 
+    //@ts-ignore
     let min = await helpers['btc'].estimateFeeValue({ method: 'send_multisig', speed: 'fast' })
     minAmount['btc_multisig_2n2'] = min
 
     if (usedAdminFee) {
+      //@ts-ignore
       min = BigNumber(min).plus(usedAdminFee.min).toNumber()
     }
 
@@ -161,7 +168,9 @@ export default class WithdrawModalMultisigUser extends React.Component {
     } = this.props
 
     const {
+      //@ts-ignore
       unconfirmedBalance,
+      //@ts-ignore
       balance
     } = await actions.btcmultisig.getAddrBalance(address)
 
@@ -219,14 +228,17 @@ export default class WithdrawModalMultisigUser extends React.Component {
 
     sendOptions = {
       ...sendOptions,
+      //@ts-ignore
       from: address,
     }
 
+    //@ts-ignore
     const result = await actions.btcmultisig.send(sendOptions)
 
     let txId = false
 
     if (result) {
+      //@ts-ignore
       txId = await actions.multisigTx.broadcast({
         sender: address,
         destination: to,
@@ -278,8 +290,8 @@ export default class WithdrawModalMultisigUser extends React.Component {
     let minFee = min
 
     if (usedAdminFee) {
-      let feeFromAmount = BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(balance)
-      minFee = BigNumber(minFee).plus(feeFromAmount).toNumber()
+      let feeFromAmount = new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(balance)
+      minFee = new BigNumber(minFee).plus(feeFromAmount).toNumber()
     }
 
 
@@ -389,10 +401,10 @@ export default class WithdrawModalMultisigUser extends React.Component {
 
     if (usedAdminFee) {
       if (amount) {
-        let feeFromAmount = BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount)
-        if (BigNumber(usedAdminFee.min).isGreaterThan(feeFromAmount)) feeFromAmount = BigNumber(usedAdminFee.min)
+        let feeFromAmount = new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount)
+        if (new BigNumber(usedAdminFee.min).isGreaterThan(feeFromAmount)) feeFromAmount = new BigNumber(usedAdminFee.min)
 
-        min = BigNumber(min).plus(feeFromAmount).toNumber() // Admin fee in satoshi
+        min = new BigNumber(min).plus(feeFromAmount).toNumber() // Admin fee in satoshi
       }
     }
 
@@ -401,6 +413,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
     if (invoice) {
       txConfirmLink = `${getFullOrigin()}${links.multisign}/btc/confirminvoice/${invoice.id}|${txId}`
     }
+    //@ts-ignore
     const linked = Link.all(this, 'address', 'amount', 'code', 'ownTx')
 
     const dataCurrency = currency.toUpperCase()
@@ -408,8 +421,8 @@ export default class WithdrawModalMultisigUser extends React.Component {
     const isDisabled =
       !address || !amount || isShipped || ownTx
       || !this.addressIsCorrect()
-      || BigNumber(amount).isGreaterThan(balance)
-      || BigNumber(amount).dp() > currentDecimals
+      || new BigNumber(amount).isGreaterThan(balance)
+      || new BigNumber(amount).dp() > currentDecimals
 
     const NanReplacement = balance || '...'
     const getFiat = amount * exCurrencyRate
@@ -428,7 +441,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
         </div>
       ))
     }
-
+    //@ts-ignore
     if (this.state.amount < 0) {
       this.setState({
         amount: '',
@@ -468,6 +481,8 @@ export default class WithdrawModalMultisigUser extends React.Component {
             <br />
             <br />
             <div styleName="highLevel" style={{ marginBottom: "20px" }}>
+              {/*
+              //@ts-ignore */}
               <FieldLabel>
                 <FormattedMessage id="Withdrow1194" defaultMessage="Address " />{" "}
                 <Tooltip id="WtH203">
@@ -499,6 +514,8 @@ export default class WithdrawModalMultisigUser extends React.Component {
               <p styleName="balance">
                 {balance} {currency.toUpperCase()}
               </p>
+              {/*
+              //@ts-ignore */}
               <FieldLabel>
                 <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
               </FieldLabel>
@@ -513,11 +530,14 @@ export default class WithdrawModalMultisigUser extends React.Component {
                   onKeyDown={inputReplaceCommaWithDot}
                 />
                 <div style={{ marginLeft: "15px" }}>
+                  {/*
+                  //@ts-ignore */}
                   <Button blue big onClick={this.sellAllBalance} data-tip data-for="Withdrow134">
                     <FormattedMessage id="Select210" defaultMessage="MAX" />
                   </Button>
                 </div>
                 {!isMobile && (
+                  //@ts-ignore
                   <ReactTooltip id="Withdrow134" type="light" effect="solid" styleName="r-tooltip">
                     <FormattedMessage
                       id="WithdrawButton32"
@@ -538,6 +558,8 @@ export default class WithdrawModalMultisigUser extends React.Component {
             </div>
             <div styleName="sendBtnsWrapper">
               <div styleName="actionBtn">
+                {/*
+                //@ts-ignore */}
                 <Button blue big fill disabled={isDisabled} onClick={this.handleSubmit}>
                   {isShipped ? (
                     <Fragment>
@@ -551,6 +573,8 @@ export default class WithdrawModalMultisigUser extends React.Component {
                 </Button>
               </div>
               <div styleName="actionBtn">
+                {/*
+                //@ts-ignore */}
                 <Button big fill gray onClick={this.handleClose}>
                   <Fragment>
                     <FormattedMessage id="WithdrawModalCancelBtn" defaultMessage="Cancel" />
@@ -580,6 +604,8 @@ export default class WithdrawModalMultisigUser extends React.Component {
                 <div styleName={`lowLevel ${isDark ? 'dark' : ''}`} style={{ marginBottom: '50px' }}>
                   <div styleName="groupField">
                     <div styleName="downLabel">
+                      {/*
+                      //@ts-ignore */}
                       <FieldLabel inRow>
                         <span styleName="mobileFont">
                           <FormattedMessage id="WithdrowOwnTX" defaultMessage="Или укажите TX" />
@@ -595,6 +621,8 @@ export default class WithdrawModalMultisigUser extends React.Component {
                     />
                   </div>
                 </div>
+                {/*
+                //@ts-ignore */}
                 <Button styleName="buttonFull" blue big fullWidth disabled={(!(ownTx) || isShipped)} onClick={this.handleSubmit}>
                   {isShipped
                     ? (
@@ -623,10 +651,14 @@ export default class WithdrawModalMultisigUser extends React.Component {
 
               </div>
               <div>
+                {/*
+                //@ts-ignore */}
                 <ShareLink link={txConfirmLink} />
               </div>
             </div>
             <div styleName="centerAlign">
+              {/*
+              //@ts-ignore */}
               <Button styleName="buttonFull" big blue fullWidth onClick={this.handleReady}>
                 <FormattedMessage id="WithdrawMSUserFinish" defaultMessage="Ready" />
               </Button>

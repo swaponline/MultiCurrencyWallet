@@ -526,7 +526,7 @@ const sendV5WithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) =>
     min: adminFeeMinValue,
   } = config.opts.fee.ghost
   //@ts-ignore
-  const adminFeeMin = BigNumber(adminFeeMinValue)
+  const adminFeeMin = new BigNumber(adminFeeMinValue)
   //@ts-ignore
   feeValue = feeValue || await ghost.estimateFeeValue({
     inSatoshis: true,
@@ -536,14 +536,15 @@ const sendV5WithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) =>
 
   // fee - from amount - percent
   //@ts-ignore
-  let feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
+  let feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
   if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
-
+  //@ts-ignore
   feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber()
 
   const unspents = await fetchUnspents(from)
   const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+  //@ts-ignore
   const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
 
@@ -566,6 +567,7 @@ const sendV5WithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) =>
   // admin fee output
   psbt.addOutput({
     address: adminFeeAddress,
+    //@ts-ignore
     value: feeFromAmount,
   })
 
@@ -600,11 +602,11 @@ const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
     min: adminFeeMinValue,
   } = config.opts.fee.ghost
   //@ts-ignore
-  const adminFeeMin = BigNumber(adminFeeMinValue)
+  const adminFeeMin = new BigNumber(adminFeeMinValue)
 
   // fee - from amount - percent
   //@ts-ignore
-  let feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
+  let feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
   if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
   feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
@@ -618,6 +620,7 @@ const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
   let fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
 
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+  //@ts-ignore
   const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
   unspents.forEach(({ txid, vout }) => tx.addInput(txid, vout, 0xfffffffe))
@@ -641,19 +644,18 @@ const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
 const sendV5Default = async ({ from, to, amount, feeValue, speed } = {}) => {
   const privateKey = getPrivateKeyByAddress(from)
   const keyPair = bitcoin.ECPair.fromWIF(privateKey, ghost.network)
-  //@ts-ignore
-  let feeFromAmount = BigNumber(0)
+  
+  let feeFromAmount = new BigNumber(0)
   if (hasAdminFee) {
     const {
       fee: adminFee,
       min: adminFeeMinValue,
     } = config.opts.fee.btc
-    //@ts-ignore
-    const adminFeeMin = BigNumber(adminFeeMinValue)
-    //@ts-ignore
-    feeFromAmount = BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
-    if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
+    const adminFeeMin = new BigNumber(adminFeeMinValue)
+    feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
+    if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
+    //@ts-ignore
     feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber() // Admin fee in satoshi
   }
   //@ts-ignore
@@ -662,6 +664,7 @@ const sendV5Default = async ({ from, to, amount, feeValue, speed } = {}) => {
   const unspents = await fetchUnspents(from)
   const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+  //@ts-ignore
   const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
   const psbt = new bitcoin.Psbt({ network: ghost.network })

@@ -19,6 +19,7 @@ export default class Copy extends Component<any, any> {
   }
 
   handleCopyLink = () => {
+    //@ts-ignore
     if (this.setState.showTip) {
       return
     }

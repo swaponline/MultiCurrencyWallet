@@ -39,6 +39,7 @@ const memdown = require("memdown");
 const userLanguage = (navigator.userLanguage || navigator.language || "en-gb").split("-")[0];
 moment.locale(userLanguage);
 
+//@ts-ignore
 @withRouter
 @connect(({ currencies: { items: currencies }, modals, ui: { dashboardModalsAllowed } }) => ({
   currencies,
@@ -353,6 +354,7 @@ export default class App extends React.Component {
     }
 
     if (isFetching) {
+      //@ts-ignore
       return <Loader />
     }
 
@@ -364,6 +366,8 @@ export default class App extends React.Component {
           <Seo location={history.location} />
         }
         <Wrapper>
+          {/*
+          //@ts-ignore */}
           <WidthContainer id="swapComponentWrapper" styleName="headerAndMain">
             <Header />
             <main>{children}</main>

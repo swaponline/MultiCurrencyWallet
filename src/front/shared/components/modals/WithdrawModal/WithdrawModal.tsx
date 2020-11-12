@@ -62,7 +62,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   })
 )
 @cssModules(styles, { allowMultiple: true })
-export default class WithdrawModal extends React.Component {
+export default class WithdrawModal extends React.Component<any, any> {
 
   props: any
 
@@ -70,6 +70,8 @@ export default class WithdrawModal extends React.Component {
     name: PropTypes.string,
     data: PropTypes.object,
   }
+
+  fiatRates: any
 
   constructor(data) {
     //@ts-ignore
@@ -151,12 +153,12 @@ export default class WithdrawModal extends React.Component {
   }
 
   fixDecimalCountETH = (amount) => {
-    if (this.props.data.currency === 'ETH' && BigNumber(amount).dp() > 18) {
-      const amountInt = BigNumber(amount).integerValue()
-      const amountDecimal = BigNumber(amount).mod(1)
+    if (this.props.data.currency === 'ETH' && (new BigNumber(amount).dp() > 18)) {
+      const amountInt = new BigNumber(amount).integerValue()
+      const amountDecimal = new BigNumber(amount).mod(1)
 
       const amountIntStr = amountInt.toString()
-      const amountDecimalStr = BigNumber(BigNumber(amountDecimal).toPrecision(15)).toString().substring(1)
+      const amountDecimalStr = new BigNumber(new BigNumber(amountDecimal).toPrecision(15)).toString().substring(1)
       const regexr = /[e+-]/g
 
       const result = amountIntStr + amountDecimalStr
@@ -203,6 +205,7 @@ export default class WithdrawModal extends React.Component {
 
     if (isEthToken) {
       minAmount[currentCoin] = this.getMinAmountForEthToken()
+      //@ts-ignore
       minAmount.eth = await helpers.eth.estimateFeeValue({
         method: 'send',
         speed: 'fast',
@@ -300,7 +303,7 @@ export default class WithdrawModal extends React.Component {
       devErrorMessage: false,
     }))
 
-    this.setBalanceOnState(currency)
+    this.setBalanceOnState()
 
     let sendOptions = {
       to,
@@ -313,12 +316,14 @@ export default class WithdrawModal extends React.Component {
     if (helpers.ethToken.isEthToken({ name: currency.toLowerCase() })) {
       sendOptions = {
         ...sendOptions,
+        //@ts-ignore
         name: currency.toLowerCase(),
         // from: address, // Need check eth
       }
     } else {
       sendOptions = {
         ...sendOptions,
+        //@ts-ignore
         from: address,
       }
     }
@@ -380,7 +385,7 @@ export default class WithdrawModal extends React.Component {
         if (invoice) {
           await actions.invoices.markInvoice(invoice.id, 'ready', txRaw, address)
         }
-        this.setBalanceOnState(currency)
+        this.setBalanceOnState()
 
         this.setState(() => ({
           isShipped: false,
@@ -461,12 +466,12 @@ export default class WithdrawModal extends React.Component {
     const {
       data: { currency },
     } = this.props
+    //@ts-ignore
+    let minFee = new BigNumber(isEthToken ? 0 : minAmount[getCurrencyKey(currency).toLowerCase()])
 
-    let minFee = BigNumber(isEthToken ? 0 : minAmount[getCurrencyKey(currency).toLowerCase()])
+    minFee = usedAdminFee ? (new BigNumber(minFee).plus(adminFee.calc(currency, balance))) : minFee
 
-    minFee = usedAdminFee ? BigNumber(minFee).plus(adminFee.calc(currency, balance)) : minFee
-
-    if (BigNumber(minFee).isGreaterThan(balance)) {
+    if (new BigNumber(minFee).isGreaterThan(balance)) {
       this.setState({
         amount: 0,
         fiatAmount: 0,
@@ -481,7 +486,7 @@ export default class WithdrawModal extends React.Component {
         : 'Wait please. Loading...'
 
       this.setState({
-        amount: BigNumber(balanceMiner.dp(currentDecimals, BigNumber.ROUND_FLOOR)),
+        amount: new BigNumber(balanceMiner.dp(currentDecimals, BigNumber.ROUND_FLOOR)),
         fiatAmount: balanceMiner ? (balanceMiner * exCurrencyRate).toFixed(2) : '',
       })
     }
@@ -502,7 +507,7 @@ export default class WithdrawModal extends React.Component {
       data: { currency },
     } = this.props
     const { address, isEthToken, wallet } = this.state
-
+    //@ts-ignore
     if (getCurrencyKey(currency).toLowerCase() === `btc`) {
       if (!typeforce.isCoinAddress.BTC(address)) {
         return actions.btc.addressIsCorrect(address)
@@ -512,7 +517,7 @@ export default class WithdrawModal extends React.Component {
     if (isEthToken) {
       return typeforce.isCoinAddress.ETH(address)
     }
-
+    //@ts-ignore
     return typeforce.isCoinAddress[getCurrencyKey(currency).toUpperCase()](address)
   }
 
@@ -611,7 +616,7 @@ export default class WithdrawModal extends React.Component {
 
     const currencyView = getCurrencyKey(currentActiveAsset.currency, true).toUpperCase()
     const selectedValueView = getCurrencyKey(selectedValue, true).toUpperCase()
-
+    //@ts-ignore
     let min = isEthToken ? 0 : minAmount[getCurrencyKey(currency).toLowerCase()]
     let defaultMin = min
     const minerFee = min
@@ -643,7 +648,7 @@ export default class WithdrawModal extends React.Component {
 
     tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
 
-    min = (usedAdminFee) ? BigNumber(min).plus(adminFee.calc(currency, amount)).toNumber() : defaultMin
+    min = (usedAdminFee) ? (new BigNumber(min).plus(adminFee.calc(currency, amount)).toNumber()) : defaultMin
 
     const dataCurrency = isEthToken ? 'ETH' : currency.toUpperCase()
 
@@ -653,8 +658,8 @@ export default class WithdrawModal extends React.Component {
       isShipped ||
       ownTx ||
       !this.addressIsCorrect() ||
-      BigNumber(amount).isGreaterThan(balance) ||
-      BigNumber(amount).dp() > currentDecimals ||
+      new BigNumber(amount).isGreaterThan(balance) ||
+      new BigNumber(amount).dp() > currentDecimals ||
       this.isEthOrERC20()
 
     if (new BigNumber(amount).isGreaterThan(0)) {
@@ -673,7 +678,8 @@ export default class WithdrawModal extends React.Component {
 
     if (new BigNumber(fiatAmount).isGreaterThan(0)) {
       linked.fiatAmount.check(
-        (value) => new BigNumber(value).isLessThanOrEqualTo(allowedBalance * exCurrencyRate),
+        //@ts-ignore
+        (value) => (new BigNumber(value).isLessThanOrEqualTo(allowedBalance * exCurrencyRate)),
         <FormattedMessage
           id="Withdrow170"
           defaultMessage="The amount must be no more than your balance"
@@ -741,6 +747,8 @@ export default class WithdrawModal extends React.Component {
 
         <div style={{ marginBottom: '40px' }}>
           <div styleName="customSelectContainer">
+            {/*
+            //@ts-ignore */}
             <FieldLabel>
               <FormattedMessage id="Withdrow559" defaultMessage="Отправить с кошелька " />
             </FieldLabel>
@@ -757,6 +765,8 @@ export default class WithdrawModal extends React.Component {
           </div>
         </div>
         <div styleName="highLevel">
+          {/*
+          //@ts-ignore */}
           <FieldLabel>
             <FormattedMessage id="Withdrow1194" defaultMessage="Address " />{' '}
             <Tooltip id="WtH203">
@@ -817,8 +827,8 @@ export default class WithdrawModal extends React.Component {
                 ]}
                 values={{
                   amount: (selectedValue !== activeFiat)
-                    ? BigNumber(fiatAmount).dp(2, BigNumber.ROUND_FLOOR)
-                    : BigNumber(amount).dp(5, BigNumber.ROUND_FLOOR),
+                    ? new BigNumber(fiatAmount).dp(2, BigNumber.ROUND_FLOOR)
+                    : new BigNumber(amount).dp(5, BigNumber.ROUND_FLOOR),
                   currency: (selectedValue !== activeFiat)
                     ? activeFiat
                     : currencyView.toUpperCase(),
@@ -826,6 +836,8 @@ export default class WithdrawModal extends React.Component {
               />
             )}
           </p>
+          {/*
+          //@ts-ignore */}
           <FieldLabel>
             <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
           </FieldLabel>
@@ -845,11 +857,14 @@ export default class WithdrawModal extends React.Component {
                 />
               )}
             <div style={{ marginLeft: '15px' }}>
+              {/*
+              //@ts-ignore */}
               <Button blue big onClick={this.sellAllBalance} data-tip data-for="Withdrow134">
                 <FormattedMessage id="Select210" defaultMessage="MAX" />
               </Button>
             </div>
             {!isMobile && (
+              //@ts-ignore
               <ReactTooltip id="Withdrow134" type="light" effect="solid" styleName="r-tooltip">
                 <FormattedMessage
                   id="WithdrawButton32"
@@ -870,6 +885,8 @@ export default class WithdrawModal extends React.Component {
         </div>
         <div styleName="sendBtnsWrapper">
           <div styleName="actionBtn">
+            {/*
+            //@ts-ignore */}
             <Button big fill gray onClick={this.handleClose}>
               <Fragment>
                 <FormattedMessage id="WithdrawModalCancelBtn" defaultMessage="Cancel" />
@@ -877,6 +894,8 @@ export default class WithdrawModal extends React.Component {
             </Button>
           </div>
           <div styleName="actionBtn">
+            {/*
+            //@ts-ignore */}
             <Button blue big fill disabled={isDisabled} onClick={this.handleSubmit}>
               {isShipped ? (
                 <Fragment>
@@ -915,6 +934,8 @@ export default class WithdrawModal extends React.Component {
             <div styleName="lowLevel" style={{ marginBottom: '50px' }}>
               <div styleName="groupField">
                 <div styleName="downLabel">
+                  {/*
+                  //@ts-ignore */}
                   <FieldLabel inRow>
                     <span styleName="mobileFont">
                       <FormattedMessage id="WithdrowOwnTX" defaultMessage="Или укажите TX" />
@@ -930,11 +951,12 @@ export default class WithdrawModal extends React.Component {
                 />
               </div>
             </div>
+            {/*
+            //@ts-ignore */}
             <Button
               styleName="buttonFull"
               blue
               big
-              fullWidth
               fullWidth
               disabled={!ownTx || isShipped}
               onClick={this.handleSubmit}

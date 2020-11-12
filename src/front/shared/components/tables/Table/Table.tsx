@@ -10,9 +10,19 @@ import { FormattedMessage } from 'react-intl'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 @CSSModules(styles, { allowMultiple: true })
-export default class Table extends React.Component {
+export default class Table extends React.Component<any, any> {
 
   props: any
+
+  linkOnTableHead: any
+  linkOnTableBody: any
+  linkOnTable: any
+
+  defaultProps = {
+    textIfEmpty: <FormattedMessage id="Table95" defaultMessage="The table is empty" />,
+    loadingText: <FormattedMessage id="Table96" defaultMessage="Loading..." />,
+    titles: []
+  }
 
   constructor() {
     //@ts-ignore
@@ -96,10 +106,4 @@ export default class Table extends React.Component {
       </table>
     )
   }
-}
-
-Table.defaultProps = {
-  textIfEmpty: <FormattedMessage id="Table95" defaultMessage="The table is empty" />,
-  loadingText: <FormattedMessage id="Table96" defaultMessage="Loading..." />,
-  titles: []
 }

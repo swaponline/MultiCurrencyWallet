@@ -11,6 +11,8 @@ const Tooltip = ({ children, id, dontHideMobile = null, place = null }) => (
     <span data-tip data-for={id} styleName={`tooltip${dontHideMobile ? ' tooltip_truesight' : ''}`}>
       <FormattedMessage id="Tooltip11" defaultMessage="?" />
     </span>
+    {/*
+    //@ts-ignore */}
     <ReactTooltip id={id} effect="solid" type="dark" multiline {...{ place }} styleName="r-tooltip" >
       {children}
     </ReactTooltip>

@@ -117,7 +117,7 @@ const langs = defineMessages({
   btcMultisigPinData,
 }))
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
-export default class WithdrawBtcPin extends React.Component {
+export default class WithdrawBtcPin extends React.Component<any, any> {
 
   props: any
 
@@ -276,6 +276,7 @@ export default class WithdrawBtcPin extends React.Component {
       helpers.transactions.pullTxBalances(txId, amount, beforeBalances, adminFee)
 
       actions.loader.hide()
+      //@ts-ignore
       actions.btcmultisig.getBalancePin()
       if (invoice) {
         await actions.invoices.markInvoice(invoice.id, 'ready', txId, wallet.address)
@@ -340,8 +341,8 @@ export default class WithdrawBtcPin extends React.Component {
       intl,
     } = this.props
 
+    //@ts-ignore
     const linked = Link.all(this, 'pinCode')
-
 
 
     return (
@@ -356,6 +357,8 @@ export default class WithdrawBtcPin extends React.Component {
                 <br />
               </p>
               <div styleName="highLevel" className="ym-hide-content">
+                {/*
+                //@ts-ignore */}
                 <FieldLabel label>
                   <FormattedMessage {...langs.labelYourPin}  />
                 </FieldLabel>
@@ -380,6 +383,8 @@ export default class WithdrawBtcPin extends React.Component {
                     </Fragment>
                   )}
                 </Button>
+                {/*
+                //@ts-ignore */}
                 <Button blue disabled={isShipped} onClick={this.handleCancel}>
                   <FormattedMessage {...langs.cancelButton} />
                 </Button>
@@ -408,6 +413,8 @@ export default class WithdrawBtcPin extends React.Component {
                 <br />
               </p>
               <div styleName="highLevel" className="ym-hide-content">
+                {/*
+                //@ts-ignore */}
                 <FieldLabel label>
                   <FormattedMessage {...langs.labelYourMnemonic} />
                 </FieldLabel>
@@ -426,6 +433,8 @@ export default class WithdrawBtcPin extends React.Component {
                     </Fragment>
                   )}
                 </Button>
+                {/*
+                //@ts-ignore */}
                 <Button blue disabled={isShipped} onClick={this.handleCancel}>
                   <FormattedMessage {...langs.cancelButton} />
                 </Button>

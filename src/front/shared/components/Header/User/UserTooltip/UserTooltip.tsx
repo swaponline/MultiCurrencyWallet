@@ -77,7 +77,7 @@ export default class UserTooltip extends Component<any, any> {
           feeds.map(row => {
             const { request, content: { buyAmount, buyCurrency, sellAmount, sellCurrency }, id, peer: ownerPeer } = row
             const currencyBalance = this.state.allCurrencyies.find(item => item.currency === sellCurrency).balance
-            const sellAmountPlusFee = BigNumber(this.state.estimatedFeeValues[sellCurrency.toLowerCase()]).plus(sellAmount)
+            const sellAmountPlusFee = new BigNumber(this.state.estimatedFeeValues[sellCurrency.toLowerCase()]).plus(sellAmount)
 
             // if (BigNumber(sellAmountPlusFee).isGreaterThan(currencyBalance)) {
             //   this.removeOrder(id, request[0].participant.peer)

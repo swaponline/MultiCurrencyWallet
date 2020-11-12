@@ -21,6 +21,9 @@ type Props = {
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 @cssModules(styles, { allowMultiple: true })
 export default class DropdownMenu extends Component<Props, any> {
+
+	dropdownMenu: any
+
 	state = {
 		open: false
 	};

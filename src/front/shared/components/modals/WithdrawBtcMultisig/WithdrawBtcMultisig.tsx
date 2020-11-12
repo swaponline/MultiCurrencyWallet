@@ -43,7 +43,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   })
 )
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
-export default class WithdrawBtcMultisig extends React.Component {
+export default class WithdrawBtcMultisig extends React.Component<any, any> {
 
   props: any
 
@@ -204,6 +204,8 @@ export default class WithdrawBtcMultisig extends React.Component {
               </div>
             </div>
             <div styleName="centerAlign">
+              {/*
+              //@ts-ignore */}
               <Button styleName="buttonFull" big blue fullWidth onClick={this.handleReady}>
                 <FormattedMessage id="WithdrawMSUserFinish" defaultMessage="Ready" />
               </Button>

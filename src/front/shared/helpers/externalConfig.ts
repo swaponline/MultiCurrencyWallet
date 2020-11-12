@@ -287,14 +287,14 @@ const externalConfig = () => {
         if (fee && address && min) {
           try {
             //@ts-ignore
-            fee = BigNumber(fee.replace(',', '.')).toNumber()
+            fee = new BigNumber(fee.replace(',', '.')).toNumber()
             feeOk = true
           } catch (e) {
             console.error(`Fail convert ${fee} to number for ${curKey}`)
           }
           try {
             //@ts-ignore
-            min = BigNumber(min.replace(',', '.')).toNumber()
+            min = new BigNumber(min.replace(',', '.')).toNumber()
             minOk = true
           } catch (e) {
             console.error(`Fail convert ${min} to number for ${curKey}`)

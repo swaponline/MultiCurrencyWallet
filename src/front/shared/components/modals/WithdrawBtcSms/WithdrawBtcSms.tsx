@@ -44,7 +44,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   })
 )
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
-export default class WithdrawModalMultisig extends React.Component {
+export default class WithdrawModalMultisig extends React.Component<any, any> {
 
   props: any
 
@@ -110,14 +110,14 @@ export default class WithdrawModalMultisig extends React.Component {
       if (result && result.answer === 'ok') {
         this.setState({
           isShipped: false,
-          rawTx: (result.rawTx) ? result.rawTx : rawTx,
+          rawTx: (result.rawTx) ? result.rawTx : null,
           sendSmsStatus: 'sended',
         })
       } else {
         this.setState({
           isShipped: false,
           sendSmsStatus: 'offline',
-          rawTx: (result.rawTx) ? result.rawTx : rawTx,
+          rawTx: (result.rawTx) ? result.rawTx : null,
         })
       }
     })
@@ -184,7 +184,7 @@ export default class WithdrawModalMultisig extends React.Component {
 
       const result = await actions.btcmultisig.confirmSMSProtected(code)
       if (result && result.txID) {
-        this.onFinishWithdraw(txID)
+        this.onFinishWithdraw(result.txID)
       } else {
         console.log(result)
         if (result
@@ -198,7 +198,7 @@ export default class WithdrawModalMultisig extends React.Component {
             } else {
               this.setState({
                 broadcastError: true,
-                rawTx: rawTX,
+                rawTx: result.rawTX,
                 isShipped: false,
                 isConfirming: false,
                 error: <FormattedMessage id="WithdrawSMS_BroadcastError" defaultMessage="Не удалось отправить транзакцию в сеть ({errorText})" values={{ errorText: `unknown` }} />,
@@ -341,7 +341,7 @@ export default class WithdrawModalMultisig extends React.Component {
       portalUI,
     } = this.props
 
-
+    //@ts-ignore
     const linked = Link.all(this, 'code')
 
     const labels = defineMessages({
@@ -373,12 +373,16 @@ export default class WithdrawModalMultisig extends React.Component {
               />
             </p>
             <div styleName="highLevel" className="ym-hide-content">
+              {/*
+              //@ts-ignore */}
               <FieldLabel label>
                 <FormattedMessage id="registerSMSModalWords" defaultMessage="Секретная фраза (12 слов):" />
               </FieldLabel>
               <MnemonicInput onChange={this.handleMnemonicChange} fullWidth={true} />
             </div>
             {error && <div styleName="rednotes">{error}</div>}
+            {/*
+            //@ts-ignore */}
             <Button styleName="buttonFull" big blue fullWidth disabled={isShipped} onClick={this.handleMnemonicSign}>
               {isShipped
                 ? <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
@@ -389,6 +393,8 @@ export default class WithdrawModalMultisig extends React.Component {
             <p styleName="notice mnemonicUseNote dashboardViewNotice">
               <FormattedMessage id="WithdrawSMS_UseSMSNote" defaultMessage="Так-же вы можете использовать смс-код, отправленный на привязанный номер телефона" />
             </p>
+            {/*
+            //@ts-ignore */}
             <Button styleName="useAuthMethodButton" blue onClick={this.handleSwitchToSms}>
               <FormattedMessage id="WithdrawSMS_UseSMS" defaultMessage="Использовать смс-код" />
             </Button>
@@ -398,6 +404,8 @@ export default class WithdrawModalMultisig extends React.Component {
         {step === 'confirm' &&
           <Fragment>
             <div styleName="highLevel smsCodeHolder">
+              {/*
+              //@ts-ignore */}
               <FieldLabel label>
                 <FormattedMessage id="Withdrow2223" defaultMessage="SMS code" />
               </FieldLabel>
@@ -444,6 +452,8 @@ export default class WithdrawModalMultisig extends React.Component {
                 <FormattedMessage id="WithdrawModal2225" defaultMessage="Something went wrong, enter your current code please" />
               </div>
             )}
+            {/*
+            //@ts-ignore */}
             <Button
               styleName="buttonFull confirmSmsCode"
               fullWidth
@@ -458,6 +468,8 @@ export default class WithdrawModalMultisig extends React.Component {
             <p styleName="notice mnemonicUseNote dashboardViewNotice">
               <FormattedMessage id="WithdrawSMS_MnemonicNote" defaultMessage="Если у вас нет доступа к телефону или не получается получить код, вы можете воспользовать секретной фразой" />
             </p>
+            {/*
+            //@ts-ignore */}
             <Button styleName="useAuthMethodButton" blue onClick={this.handleSwitchToMnemonic}>
               <FormattedMessage id="WithdrawSMS_UseMnemonic" defaultMessage="Использовать секретную фразу" />
             </Button>

@@ -52,7 +52,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   })
 )
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
-export default class WithdrawModalMultisig extends React.Component {
+export default class WithdrawModalMultisig extends React.Component<any, any> {
 
   props: any
 
@@ -60,6 +60,8 @@ export default class WithdrawModalMultisig extends React.Component {
     name: PropTypes.string,
     data: PropTypes.object,
   }
+
+  fiatRates: any
 
   constructor(data) {
     //@ts-ignore
@@ -74,6 +76,7 @@ export default class WithdrawModalMultisig extends React.Component {
       items,
     } = data
 
+    //@ts-ignore
     const currentDecimals = constants.tokenDecimals.btcmultisig
     const selectedItem = items.filter(item => item.currency === currency)[0]
 
@@ -89,7 +92,8 @@ export default class WithdrawModalMultisig extends React.Component {
       usedAdminFee = config.opts.fee.btc
       if (usedAdminFee) {
         // miner fee + minimal admin fee
-        min = BigNumber(min).plus(usedAdminFee.min).toNumber()
+        //@ts-ignore
+        min = new BigNumber(min).plus(usedAdminFee.min).toNumber()
       }
     }
 
@@ -157,12 +161,12 @@ export default class WithdrawModalMultisig extends React.Component {
     const {
       usedAdminFee,
     } = this.state
-
+    //@ts-ignore
     let min = await helpers['btc'].estimateFeeValue({ method: 'send_2fa', speed: 'fast' })
     minAmount['btc_multisig_2fa'] = min
 
     if (usedAdminFee) {
-      min = BigNumber(min).plus(usedAdminFee.min).toNumber()
+      min = new BigNumber(min).plus(usedAdminFee.min).toNumber()
     }
 
     this.setState({
@@ -172,7 +176,7 @@ export default class WithdrawModalMultisig extends React.Component {
 
   setBalanceOnState = async (currency) => {
     const { data: { unconfirmedBalance } } = this.props
-
+    //@ts-ignore
     const balance = await actions.btcmultisig.getBalance()
 
     const finalBalance = unconfirmedBalance !== undefined && unconfirmedBalance < 0
@@ -268,7 +272,7 @@ export default class WithdrawModalMultisig extends React.Component {
 
     const result = await actions.btcmultisig.confirmSMSProtected(code)
     if (result && result.txID) {
-      this.onFinishWithdraw(txID)
+      this.onFinishWithdraw(result.txID)
     } else {
       console.log(result)
       if (result
@@ -282,7 +286,7 @@ export default class WithdrawModalMultisig extends React.Component {
           } else {
             this.setState({
               broadcastError: true,
-              rawTx: rawTX,
+              rawTx: result.rawTX,
               isShipped: false,
               error: <FormattedMessage id="WithdrawSMS_BroadcastError" defaultMessage="Не удалось отправить транзакцию в сеть ({errorText})" values={{ errorText: `unknown` }} />,
             })
@@ -344,7 +348,7 @@ export default class WithdrawModalMultisig extends React.Component {
     this.setState({
       sendSmsStatus: 'sending',
     })
-
+    //@ts-ignore
     const result = await actions.btcmultisig.sendSMSProtected(sendOptions)
 
     console.log('sendSMSProtected result', result)
@@ -378,8 +382,8 @@ export default class WithdrawModalMultisig extends React.Component {
     let minFee = min
 
     if (usedAdminFee) {
-      let feeFromAmount = BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(balance)
-      minFee = BigNumber(minFee).plus(feeFromAmount).toNumber()
+      let feeFromAmount = new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(balance)
+      minFee = new BigNumber(minFee).plus(feeFromAmount).toNumber()
     }
 
     const balanceMiner = balance
@@ -548,10 +552,10 @@ export default class WithdrawModalMultisig extends React.Component {
 
     if (usedAdminFee) {
       if (amount) {
-        let feeFromAmount = BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount)
-        if (BigNumber(usedAdminFee.min).isGreaterThan(feeFromAmount)) feeFromAmount = BigNumber(usedAdminFee.min)
+        let feeFromAmount = new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount)
+        if (new BigNumber(usedAdminFee.min).isGreaterThan(feeFromAmount)) feeFromAmount = new BigNumber(usedAdminFee.min)
 
-        min = BigNumber(min).plus(feeFromAmount).toNumber() // Admin fee in satoshi
+        min = new BigNumber(min).plus(feeFromAmount).toNumber() // Admin fee in satoshi
       }
     }
 
@@ -562,8 +566,8 @@ export default class WithdrawModalMultisig extends React.Component {
     const isDisabled =
       !address || !amount || isShipped || ownTx
       || !this.addressIsCorrect()
-      || BigNumber(amount).isGreaterThan(balance)
-      || BigNumber(amount).dp() > currentDecimals
+      || new BigNumber(amount).isGreaterThan(balance)
+      || new BigNumber(amount).dp() > currentDecimals
 
     const NanReplacement = balance || '...'
     const getFiat = amount * exCurrencyRate
@@ -626,6 +630,8 @@ export default class WithdrawModalMultisig extends React.Component {
               />
             </p>
             <div styleName="highLevel" className="ym-hide-content">
+              {/*
+              //@ts-ignore */}
               <FieldLabel label>
                 <FormattedMessage id="registerSMSModalWords" defaultMessage="Секретная фраза (12 слов):" />
               </FieldLabel>
@@ -637,6 +643,8 @@ export default class WithdrawModalMultisig extends React.Component {
               />
             </div>
             {error && <div styleName="rednotes">{error}</div>}
+            {/*
+            //@ts-ignore */}
             <Button styleName="buttonFull" big blue fullWidth disabled={isShipped} onClick={this.handleMnemonicSign}>
               {isShipped
                 ? <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
@@ -647,6 +655,8 @@ export default class WithdrawModalMultisig extends React.Component {
             <p styleName="notice mnemonicUseNote dashboardViewNotice">
               <FormattedMessage id="WithdrawSMS_UseSMSNote" defaultMessage="Так-же вы можете использовать смс-код, отправленный на привязанный номер телефона" />
             </p>
+            {/*
+            //@ts-ignore */}
             <Button styleName="useAuthMethodButton" blue onClick={this.handleSwitchToSms}>
               <FormattedMessage id="WithdrawSMS_UseSMS" defaultMessage="Использовать смс-код" />
             </Button>
@@ -661,6 +671,8 @@ export default class WithdrawModalMultisig extends React.Component {
                 values={{ minAmount: `${min}`, br: <br />, data: `${dataCurrency}` }} />
             </p>
             <div styleName="highLevel" style={{ marginBottom: "20px" }}>
+              {/*
+              //@ts-ignore */}
               <FieldLabel inRow>
                 <span style={{ fontSize: '16px' }}>
                   <FormattedMessage id="Withdrow1194" defaultMessage="Address " />
@@ -697,6 +709,8 @@ export default class WithdrawModalMultisig extends React.Component {
               <p styleName="balance">
                 {balance} {`BTC`}
               </p>
+              {/*
+              //@ts-ignore */}
               <FieldLabel>
                 <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
               </FieldLabel>
@@ -711,11 +725,14 @@ export default class WithdrawModalMultisig extends React.Component {
                   onKeyDown={inputReplaceCommaWithDot}
                 />
                 <div style={{ marginLeft: "15px" }}>
+                  {/*
+                  //@ts-ignore */}
                   <Button blue big onClick={this.sellAllBalance} data-tip data-for="Withdrow134">
                     <FormattedMessage id="Select210" defaultMessage="MAX" />
                   </Button>
                 </div>
                 {!isMobile && (
+                  //@ts-ignore
                   <ReactTooltip id="Withdrow134" type="light" effect="solid" styleName="r-tooltip">
                     <FormattedMessage
                       id="WithdrawButton32"
@@ -736,6 +753,8 @@ export default class WithdrawModalMultisig extends React.Component {
             </div>
             <div styleName="sendBtnsWrapper">
               <div styleName="actionBtn">
+                {/*
+                //@ts-ignore */}
                 <Button blue big fill disabled={isDisabled} onClick={this.handleSubmit}>
                   {isShipped ? (
                     <Fragment>
@@ -749,6 +768,8 @@ export default class WithdrawModalMultisig extends React.Component {
                 </Button>
               </div>
               <div styleName="actionBtn">
+                {/*
+                //@ts-ignore */}
                 <Button big fill gray onClick={this.handleClose}>
                   <Fragment>
                     <FormattedMessage id="WithdrawModalCancelBtn" defaultMessage="Cancel" />
@@ -778,6 +799,8 @@ export default class WithdrawModalMultisig extends React.Component {
                 <div styleName={`lowLevel ${isDark ? 'dark' : ''}`} style={{ marginBottom: '50px' }}>
                   <div styleName="groupField">
                     <div styleName="downLabel">
+                      {/*
+                      //@ts-ignore */}
                       <FieldLabel inRow>
                         <span styleName="mobileFont">
                           <FormattedMessage id="WithdrowOwnTX" defaultMessage="Или укажите TX" />
@@ -793,6 +816,8 @@ export default class WithdrawModalMultisig extends React.Component {
                     />
                   </div>
                 </div>
+                {/*
+                //@ts-ignore */}
                 <Button styleName="buttonFull" big blue fullWidth disabled={(!(ownTx) || isShipped)} onClick={this.handleSubmit}>
                   {isShipped
                     ? (
@@ -813,6 +838,8 @@ export default class WithdrawModalMultisig extends React.Component {
         {step === 'confirm' &&
           <Fragment>
             <div styleName="highLevel smsCodeHolder">
+              {/*
+              //@ts-ignore */}
               <FieldLabel label>
                 <FormattedMessage id="Withdrow2223" defaultMessage="SMS code" />
               </FieldLabel>
@@ -849,6 +876,8 @@ export default class WithdrawModalMultisig extends React.Component {
                 <FormattedMessage id="WithdrawModal2225" defaultMessage="Something went wrong, enter your current code please" />
               </div>
             )}
+            {/*
+            //@ts-ignore */}
             <Button
               styleName="buttonFull confirmSmsCode"
               fullWidth
@@ -863,6 +892,8 @@ export default class WithdrawModalMultisig extends React.Component {
             <p styleName="notice mnemonicUseNote dashboardViewNotice">
               <FormattedMessage id="WithdrawSMS_MnemonicNote" defaultMessage="Если у вас нет доступа к телефону или не получается получить код, вы можете воспользовать секретной фразой" />
             </p>
+            {/*
+            //@ts-ignore */}
             <Button styleName="useAuthMethodButton" blue onClick={this.handleSwitchToMnemonic}>
               <FormattedMessage id="WithdrawSMS_UseMnemonic" defaultMessage="Использовать секретную фразу" />
             </Button>

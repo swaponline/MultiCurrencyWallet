@@ -644,7 +644,7 @@ export default class Row extends Component<any, any> {
 
     if (itemData.infoAboutCurrency && itemData.infoAboutCurrency.price_fiat) {
       //@ts-ignore
-      currencyFiatBalance = BigNumber(balance).multipliedBy(itemData.infoAboutCurrency.price_fiat)
+      currencyFiatBalance = new BigNumber(balance).multipliedBy(itemData.infoAboutCurrency.price_fiat)
     }
 
     let hasHowToWithdraw = false
