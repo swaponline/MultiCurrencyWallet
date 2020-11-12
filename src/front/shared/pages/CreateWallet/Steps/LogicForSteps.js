@@ -40,38 +40,49 @@ export default class LogicForSteps extends Component {
       && Object.keys(config.opts.ownTokens).length
     ) {
       this.defaultStartPack = []
+
       if (!config.opts.curEnabled || config.opts.curEnabled.btc) {
-        this.defaultStartPack.push({ name: "BTC", capture: "Bitcoin" })
+        pushInDefaultStartPack({ obj: { name: "BTC", capture: "Bitcoin" } })
       }
       if (!config.opts.curEnabled || config.opts.curEnabled.eth) {
-        this.defaultStartPack.push({ name: "ETH", capture: "Ethereum" })
+        pushInDefaultStartPack({ obj: { name: "ETH", capture: "Ethereum" } })
       }
       if (!config.opts.curEnabled || config.opts.curEnabled.ghost) {
-        this.defaultStartPack.push({ name: "GHOST", capture: "Ghost" })
+        pushInDefaultStartPack({ obj: { name: "GHOST", capture: "Ghost" } })
       }
       if (!config.opts.curEnabled || config.opts.curEnabled.next) {
-        this.defaultStartPack.push({ name: "NEXT", capture: "NEXT.coin" })
+        pushInDefaultStartPack({ obj: { name: "NEXT", capture: "NEXT.coin" } })
       }
       const ownTokensKeys = Object.keys(config.opts.ownTokens)
 
-      // this.defaultStartPack has 5 slots
+      // defaultStartPack has 5 slots
       if (ownTokensKeys.length >= 1 && (5 - this.defaultStartPack.length)) {
-        this.defaultStartPack.push({
-          name: ownTokensKeys[0].toUpperCase(),
-          capture: config.opts.ownTokens[ownTokensKeys[0]].fullName,
-        })
+        pushInDefaultStartPack({ index: 0 })
       }
       if (ownTokensKeys.length >= 2 && (5 - this.defaultStartPack.length)) {
-        this.defaultStartPack.push({
-          name: ownTokensKeys[1].toUpperCase(),
-          capture: config.opts.ownTokens[ownTokensKeys[1]].fullName,
-        })
+        pushInDefaultStartPack({ index: 1 })
       }
       if (ownTokensKeys.length >= 3 && (5 - this.defaultStartPack.length)) {
-        this.defaultStartPack.push({
-          name: ownTokensKeys[2].toUpperCase(),
-          capture: config.opts.ownTokens[ownTokensKeys[2]].fullName,
-        })
+        pushInDefaultStartPack({ index: 2 })
+      }
+      /**
+       * need to pass only one parameter
+       * @param  {{
+       *   obj: object
+       *   index: number
+       * }} wrapperObj
+       */
+      function pushInDefaultStartPack(wrapperObj) {
+        if (wrapperObj.obj) {
+          this.defaultStartPack.push(wrapperObj.obj)
+        } else if (typeof wrapperObj.index === 'number') {
+          const i = wrapperObj.index
+
+          this.defaultStartPack.push({
+            name: ownTokensKeys[i].toUpperCase(),
+            capture: config.opts.ownTokens[ownTokensKeys[i]].fullName,
+          })
+        }
       }
     }
 
