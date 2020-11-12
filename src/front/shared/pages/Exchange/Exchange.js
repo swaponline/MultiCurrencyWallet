@@ -339,6 +339,7 @@ export default class Exchange extends Component {
         })
       })
     })
+    // check balance on all wallets
     const walletsArray = actions.core.getWallets()
 
     for (let wallet of walletsArray) {
@@ -1599,12 +1600,12 @@ export default class Exchange extends Component {
             <>
               <Button
                 id="createOrderReactTooltipMessageForUser"
-                styleName={`button link-like ${balance > 0 ? '' : 'noMany'}`}
-                onClick={ balance > 0 ? this.createOffer : null}
+                styleName={`button link-like ${this.state.balanceOnWalletsIsOk ? '' : 'noMany'}`}
+                onClick={ this.state.balanceOnWalletsIsOk ? this.createOffer : null}
               >
                 <FormattedMessage id="orders128" defaultMessage="Create offer" />
               </Button>
-              { balance > 0
+              { this.state.balanceOnWalletsIsOk
                 ? (
                   <ReactTooltip id="createOrderReactTooltipMessageForUser" effect="solid" type="dark" place="bottom">
                     <FormattedMessage
