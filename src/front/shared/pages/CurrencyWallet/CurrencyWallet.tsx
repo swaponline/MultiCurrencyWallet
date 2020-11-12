@@ -164,6 +164,7 @@ export default class CurrencyWallet extends Component<any, any> {
 
     // оставляю запасной вариант для старых ссылок
     if (fullName) {
+      //@ts-ignore
       ticker = fullName
     }
 
@@ -195,7 +196,7 @@ export default class CurrencyWallet extends Component<any, any> {
 
     if (itemCurrency.length) {
       itemCurrency = itemCurrency[0]
-
+      //@ts-ignore
       const { currency, address, contractAddress, decimals, balance, infoAboutCurrency } = itemCurrency
 
       const hasCachedData = lsDataCache.get(`TxHistory_${getCurrencyKey(currency, true).toLowerCase()}_${address}`)
@@ -261,6 +262,7 @@ export default class CurrencyWallet extends Component<any, any> {
 
     // set balance for the address
     address &&
+      //@ts-ignore
       actions[getCurrencyKey(currency.toLowerCase())]
         .fetchBalance(address)
         .then((balance) => this.setState({ balance }))
@@ -423,7 +425,7 @@ export default class CurrencyWallet extends Component<any, any> {
 
       if (itemCurrency.length) {
         itemCurrency = itemCurrency[0]
-
+        //@ts-ignore
         const { currency, address, contractAddress, decimals, balance, infoAboutCurrency } = itemCurrency
 
         const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals
@@ -473,6 +475,7 @@ export default class CurrencyWallet extends Component<any, any> {
                 infoAboutCurrency,
                 hiddenCoinsList,
                 itemCurrency,
+                //@ts-ignore
                 currencyRate: itemCurrency.currencyRate,
               })
             }
@@ -515,7 +518,9 @@ export default class CurrencyWallet extends Component<any, any> {
   }
 
   setLocalStorageItems = () => {
+    //@ts-ignore
     const isClosedNotifyBlockBanner = localStorage.getItem(constants.localStorage.isClosedNotifyBlockBanner)
+    //@ts-ignore
     const isClosedNotifyBlockSignUp = localStorage.getItem(constants.localStorage.isClosedNotifyBlockSignUp)
     const isPrivateKeysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
     const walletTitle = localStorage.getItem(constants.localStorage.walletTitle)
@@ -709,6 +714,7 @@ export default class CurrencyWallet extends Component<any, any> {
 
     if (infoAboutCurrency && infoAboutCurrency.price_fiat) {
       currencyFiatBalance =
+        //@ts-ignore
         BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * infoAboutCurrency.price_fiat
       changePercent = infoAboutCurrency.percent_change_1h
     } else {
@@ -762,7 +768,11 @@ export default class CurrencyWallet extends Component<any, any> {
                 multisigPendingCount={multisigPendingCount}
               />
               :
-              <ContentLoader leftSideContent />
+              <Fragment>
+                {/*
+                //@ts-ignore */}
+                <ContentLoader leftSideContent />
+              </Fragment>
           }
         >
           <div styleName={`currencyWalletActivity ${isDark ? 'darkActivity' : ''}`}>
@@ -778,11 +788,15 @@ export default class CurrencyWallet extends Component<any, any> {
                 <Table rows={txHistory} styleName="currencyHistory" rowRender={this.rowRender} />
               ) : (
                   <div styleName="historyContent">
+                    {/*
+                    //@ts-ignore */}
                     <ContentLoader rideSideContent empty nonHeader inner />
                   </div>
                 ))}
             {(!txHistory || isLoading) && (
               <div styleName="historyContent">
+                {/*
+                //@ts-ignore */}
                 <ContentLoader rideSideContent nonHeader />
               </div>
             )}

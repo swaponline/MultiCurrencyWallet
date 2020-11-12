@@ -39,9 +39,13 @@ export default class Row extends Component<any, any> {
         <td>
           <span>
             <div styleName="exchangeRow">
+              {/*
+              //@ts-ignore */}
               <Coin styleName="coin" name={from} size={40} />
               {from.toUpperCase()}
               <Flip />
+              {/*
+              //@ts-ignore */}
               <Coin styleName="coin" name={to} size={40} />
               {to.toUpperCase()}
             </div>

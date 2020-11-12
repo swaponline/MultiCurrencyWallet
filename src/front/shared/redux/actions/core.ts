@@ -335,7 +335,7 @@ const markCoinAsHidden = (coin, doBackup) => {
   }
 }
 
-const markCoinAsVisible = (coin, doBackup) => {
+const markCoinAsVisible = (coin, doBackup = false) => {
   const { hiddenCoinsList } = constants.localStorage
 
   const findedCoin = JSON.parse(localStorage.getItem(hiddenCoinsList)).find(el => el.includes(coin) && el.includes(':'))

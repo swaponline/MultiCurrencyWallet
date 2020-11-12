@@ -31,6 +31,7 @@ export const withInfiniteScroll = () => Component => {
     }
   }
 
+  //@ts-ignore
   InfiniteScroll.propTypes = {
     getMore: PropTypes.func,
     bottomOffset: PropTypes.number,

@@ -134,6 +134,7 @@ const bannedPeers = {}; // rejected swap peers
       nextData,
       ...Object.values(tokensData).filter(({ address }) => address),
       ...Object.values(rest)
+        //@ts-ignore
         .filter(( coinData ) => coinData && coinData.address)
         .filter(({ address }) => address)
     ],
@@ -174,6 +175,9 @@ export default class Exchange extends Component<any, any> {
   }
 
   constructor(props) {
+    //@ts-ignore
+    super();
+
     const {
       tokensData,
       allCurrencyies,
@@ -182,15 +186,15 @@ export default class Exchange extends Component<any, any> {
       intl: { locale },
       history,
     } = props;
-    //@ts-ignore
-    super();
 
     this.fiatRates = {}
     this.onRequestAnswer = (newOrder, isAccepted) => { };
 
     const isRootPage =
       history.location.pathname === "/" || history.location.pathname === "/ru";
+    //@ts-ignore
     const {
+      //@ts-ignore
       url,
       params: { buy, sell },
     } = match || { params: { buy: "btc", sell: "usdt" } };
@@ -265,6 +269,7 @@ export default class Exchange extends Component<any, any> {
     this.cacheDynamicFee = {};
 
     if (config.isWidget) {
+      //@ts-ignore
       this.state.getCurrency = config.erc20token;
     }
   }
@@ -282,7 +287,7 @@ export default class Exchange extends Component<any, any> {
     const timerProcess = () => {
       if (!this.timer) return;
       this.setOrders();
-      this.showTheFee(haveCurrency);
+      this.showTheFee();
       this.checkUrl();
       this.getCorrectDecline();
       setTimeout(timerProcess, 2000);
@@ -299,11 +304,13 @@ export default class Exchange extends Component<any, any> {
     }, 60 * 1000)
 
     // actual fees
+    //@ts-ignore
     helpers.btc.estimateFeeValue({ method: 'swap' }).then((fee) => {
       this.setState({
         btcFee: new BigNumber(fee).toNumber(),
       })
     })
+    //@ts-ignore
     helpers.eth.estimateFeeValue({ method: 'swap' }).then((fee) => {
       this.setState({
         ethFee: new BigNumber(fee).toNumber(),
@@ -503,10 +510,12 @@ export default class Exchange extends Component<any, any> {
     let checkAmount = haveAmount
 
     const ethFee = new BigNumber(
+      //@ts-ignore
       await helpers.eth.estimateFeeValue({ method: 'swap' })
     ).toNumber()
 
     const btcFee = new BigNumber(
+      //@ts-ignore
       await helpers.btc.estimateFeeValue({ method: 'swap' })
     ).toNumber()
 
@@ -662,7 +671,7 @@ export default class Exchange extends Component<any, any> {
 
     const requestTimeout = setTimeout(() => {
       this.banPeer(peer);
-      this.getLinkToDeclineSwap(peer);
+      this.getLinkToDeclineSwap();
       this.setDeclinedOffer();
     }, requestTimeoutSec * 1000);
 
@@ -676,7 +685,7 @@ export default class Exchange extends Component<any, any> {
         }));
       } else {
         this.banPeer(peer);
-        this.getLinkToDeclineSwap(peer);
+        this.getLinkToDeclineSwap();
         this.setDeclinedOffer();
       }
     };
@@ -1093,6 +1102,7 @@ export default class Exchange extends Component<any, any> {
   };
 
   goDeclimeFaq = () => {
+    //@ts-ignore
     const faqLink = links.getFaqLink('requestDeclimed');
     if (faqLink) {
       window.location.href = faqLink;
@@ -1548,6 +1558,8 @@ export default class Exchange extends Component<any, any> {
           
           <div styleName="buttons">
             {/* Exchange */}
+            {/*
+            //@ts-ignore */}
             <Button
               className="data-tut-Exchange_tourDisabled"
               styleName="button"
@@ -1559,6 +1571,8 @@ export default class Exchange extends Component<any, any> {
             </Button>
             {/* Creates offer */}
             <>
+              {/*
+              //@ts-ignore */}
               <Button
                 id="createOrderReactTooltipMessageForUser"
                 styleName={`button link-like ${balance > 0 ? '' : 'noMany'}`}
@@ -1587,6 +1601,7 @@ export default class Exchange extends Component<any, any> {
             </>
 
             {isIncompletedSwaps &&
+              //@ts-ignore
               <Button blue styleName="buttonContinueSwap" onClick={this.showIncompleteSwap}>
                 <FormattedMessage
                   id="continueDeclined977"

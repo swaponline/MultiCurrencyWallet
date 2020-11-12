@@ -108,8 +108,10 @@ export default class FirstStep extends Component<any, any> {
     const curState = {}
     items.forEach(({ currency }) => { curState[currency] = false })
     if (isWidgetBuild && config && config.erc20) {
+      //@ts-ignore
       if (window && window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
         // Multi token build
+        //@ts-ignore
         Object.keys(window.widgetERC20Tokens).forEach((tokenSymbol) => {
           if (config.erc20[tokenSymbol]) {
             this.widgetStartPack.push({
@@ -182,6 +184,8 @@ export default class FirstStep extends Component<any, any> {
                 return (
                   <div key={name} styleName={`card ${curState[name] ? 'purpleBorder' : ''}`} onClick={() => this.handleClick(name)}>
                     <div styleName="logo">
+                      {/*
+                      //@ts-ignore */}
                       <Coin styleName={`assetsTableIcon ${coloredIcons.includes(name.toLowerCase()) ? name.toLowerCase() : "coinColor"}`} name={name} />
                     </div>
                     <div styleName="listGroup">

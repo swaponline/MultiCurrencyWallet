@@ -66,16 +66,16 @@ export default class Currency extends Component<any, any> {
 
     return constants.tradeTicker
       .filter(ticker => {
-        ticker = ticker.split('-')
-        return currency === ticker[0].toLowerCase()
-          ? ticker[0].toLowerCase() === currency
-          : ticker[1].toLowerCase() === currency
+        const tickers = ticker.split('-')
+        return currency === tickers[0].toLowerCase()
+          ? tickers[0].toLowerCase() === currency
+          : tickers[1].toLowerCase() === currency
       })
       .map(pair => {
-        pair = pair.split('-')
+        const tickers = pair.split('-')
         return {
-          from: pair[0],
-          to: pair[1],
+          from: tickers[0],
+          to: tickers[1],
         }
       })
   }
@@ -154,6 +154,8 @@ export default class Currency extends Component<any, any> {
             content={MetaDescriptionString}
           />
         </Helmet>
+        {/*
+        //@ts-ignore */}
         <PageHeadline>
           <Fragment>
             <SubTitle>
@@ -199,6 +201,8 @@ export default class Currency extends Component<any, any> {
             <Row key={index} {...row} />
           )}
         />
+        {/*
+        //@ts-ignore */}
         <CloseIcon styleName="closeButton" onClick={() => this.props.history.push(localisedUrl(locale, links.home))} data-testid="CloseIcon" />
       </section>
     )

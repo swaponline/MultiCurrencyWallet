@@ -431,6 +431,8 @@ export default class AddressSelect extends Component<any, any> {
         {selectedType === AddressType.Metamask && metamask.isEnabled() && !isMetamaskConnected &&
           <div styleName="selectedInner">
             <div styleName="buttonContainer">
+              {/*
+              //@ts-ignore */}
               <Button
                 styleName="button"
                 blue
@@ -464,6 +466,7 @@ export default class AddressSelect extends Component<any, any> {
         }
         {isScanActive && (
           <QrReader
+            //@ts-ignore
             openScan={this.openScan}
             handleError={this.handleScanError}
             handleScan={this.handleScan}

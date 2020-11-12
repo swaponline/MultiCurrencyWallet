@@ -74,7 +74,7 @@ const CreateWallet = (props) => {
   let fiatBalance = 0
 
   const widgetCurrencies = [
-    BTC,
+    'BTC',
     'BTC (SMS-Protected)',
     'BTC (PIN-Protected)',
     'BTC (Multisig)',
@@ -84,8 +84,10 @@ const CreateWallet = (props) => {
   ]
 
   if (isWidgetBuild) {
+    //@ts-ignore
     if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
       // Multi token widget build
+      //@ts-ignore
       Object.keys(window.widgetERC20Tokens).forEach(key => {
         widgetCurrencies.push(key.toUpperCase())
       })
@@ -145,8 +147,10 @@ const CreateWallet = (props) => {
     ]
 
     if (isWidgetBuild) {
+      //@ts-ignore
       if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
         // Multi token widget build
+        //@ts-ignore
         Object.keys(window.widgetERC20Tokens).forEach(key => {
           widgetCurrencies.push(key.toUpperCase())
         })
@@ -351,8 +355,14 @@ const CreateWallet = (props) => {
   return (
     <div styleName={`wrapper ${isDark ? '--dark' : ''}`}>
       {
+        //@ts-ignore
         userWallets.length && !localStorage.getItem(constants.wasOnWallet)
-          ? <CloseIcon styleName="closeButton" onClick={() => goHome()} data-testid="modalCloseIcon" />
+          ?
+          <>
+            {/*
+            //@ts-ignore */}
+            <CloseIcon styleName="closeButton" onClick={() => goHome()} data-testid="modalCloseIcon" />
+          </>
           : ''
       }
 

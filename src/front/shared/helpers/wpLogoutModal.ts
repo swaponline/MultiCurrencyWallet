@@ -39,6 +39,7 @@ const handleShowMnemonic = () => {
 }
 
 const handleConfirm = () => {
+  //@ts-ignore
   actions.backupManager.serverBackup().then((backupReady, hasBackupPlugin) => {
     console.log('Backup ready', backupReady)
     if (hasBackupPlugin) {

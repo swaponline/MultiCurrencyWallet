@@ -5,7 +5,7 @@ import { ConnectedRouter } from 'react-router-redux'
 
 import App from 'containers/App/App'
 
-import IntlProviderContainer from 'containers/IntlProviderContainer'
+import IntlProviderContainer from './IntlProviderContainer'
 
 
 type Props = {

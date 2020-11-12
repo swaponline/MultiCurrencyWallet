@@ -35,6 +35,7 @@ const getDeclinedExistedSwapIndex = ({ currency, decline }) => {
           if (isFinished || isRefunded || isStoppedSwap || timeSinceLock > 259200) { // 259200 3 дня в секундах
             actions.core.forgetOrders(decline[i])
           } else if (declineSwap.sellCurrency === currency.toUpperCase()
+            //@ts-ignore
             && !declineSwap.isSwapExist
             && !declineSwap.isMy) {
             return i

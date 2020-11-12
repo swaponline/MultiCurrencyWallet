@@ -59,16 +59,27 @@ const SecondStep = (props) => {
   const hiddenCoins = JSON.parse(localStorage.getItem(hiddenCoinsList))
 
   if (currencies.BTC) {
+    //@ts-ignore
     _protection.sms.btc = true
+    //@ts-ignore
     _protection.pin.btc = true
+    //@ts-ignore
     _protection.g2fa.btc = false
+    //@ts-ignore
     _protection.multisign.btc = true
+    //@ts-ignore
     _protection.fingerprint.btc = true
+    //@ts-ignore
     _activated.nothing.btc = btcData.balance > 0 || (hiddenCoins.length ? !hiddenCoins.includes('BTC') && !hiddenCoins.includes(`BTC:${btcData.address}`) : false)
+    //@ts-ignore
     _activated.sms.btc = actions.btcmultisig.checkSMSActivated()
+    //@ts-ignore
     _activated.pin.btc = actions.btcmultisig.checkPINActivated()
+    //@ts-ignore
     _activated.g2fa.btc = actions.btcmultisig.checkG2FAActivated()
+    //@ts-ignore
     _activated.multisign.btc = actions.btcmultisig.checkUserActivated()
+    //@ts-ignore
     _activated.fingerprint.btc = false
   }
 
@@ -118,10 +129,13 @@ const SecondStep = (props) => {
 
   useEffect(() => {
     try {
+      //@ts-ignore
       if (typeof PublicKeyCredential !== 'undefined') {
         // eslint-disable-next-line no-undef
+        //@ts-ignore
         if (thisComponentInitHelper.current && PublicKeyCredential) {
           // eslint-disable-next-line no-undef
+          //@ts-ignore
           PublicKeyCredential
             .isUserVerifyingPlatformAuthenticatorAvailable()
             .then(result => {
