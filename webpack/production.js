@@ -36,8 +36,8 @@ export default (webpackConfig) => {
   webpackConfig.optimization = {
     minimizer: [
       new TerserPlugin({
-        cache: false,
-        parallel: true,
+        cache: true,
+        parallel: true, // default -> os.cpus().length - 1
         sourceMap: false,
       }),
     ],
@@ -46,7 +46,7 @@ export default (webpackConfig) => {
     }
   }
   /* 
-  * отключаем дефолтные карты кода и подключаем плагин для них
+  * отключаем дефолтные карты кода (подключаем плагин для них)
   */
   webpackConfig.devtool = false
 
@@ -57,7 +57,7 @@ export default (webpackConfig) => {
     }),
     new WebpackRequireFrom({
       variableName: 'publicUrl',
-      suppressErrors: true,
+      suppressErrors: true, 
     }),
     new MiniCssExtractPlugin({
       filename: '[name].[hash:6].css',

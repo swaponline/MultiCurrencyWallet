@@ -1,7 +1,6 @@
 import webpack from 'webpack'
 import config from 'app-config'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
-import TerserPlugin from 'terser-webpack-plugin-legacy'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import externalConfig from './externalConfig'
 
@@ -21,7 +20,7 @@ export default (webpackConfig) => {
     tls: 'empty',
   }
   /* 
-  * отключаем дефолтные карты кода и подключаем плагин для них
+  * отключаем дефолтные карты кода (подключаем плагин для них)
   */
   webpackConfig.devtool = false
 
@@ -30,6 +29,10 @@ export default (webpackConfig) => {
     stats: 'errors-only',
     noInfo: true,
     lazy: false,
+  }
+
+  webpackConfig.optimization = {
+    minimize: false,
   }
 
   webpackConfig.plugins.push(
@@ -47,10 +50,6 @@ export default (webpackConfig) => {
     new webpack.SourceMapDevToolPlugin({
       filename: '[name].js.map',
       exclude: ['vendor.js']
-    }),
-    new TerserPlugin({
-      cache: true,
-      parallel: true,
     }),
     new CopyWebpackPlugin([
       {

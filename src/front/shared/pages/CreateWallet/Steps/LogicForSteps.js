@@ -23,14 +23,14 @@ export default class LogicForSteps extends Component {
   ]
 
   defaultStartPack = [
-    ...widgetStartPack,
+    ...this.widgetStartPack,
     { name: "SWAP", capture: "Swap" },
     { name: "USDT", capture: "Tether" },
     { name: "EURS", capture: "Eurs" },
   ]
 
   constructor(props) {
-    super()
+    super(props)
     const { currencies } = props
     
     if (config
@@ -39,36 +39,36 @@ export default class LogicForSteps extends Component {
       && Object.keys(config.opts.ownTokens)
       && Object.keys(config.opts.ownTokens).length
     ) {
-      defaultStartPack = []
+      this.defaultStartPack = []
       if (!config.opts.curEnabled || config.opts.curEnabled.btc) {
-        defaultStartPack.push({ name: "BTC", capture: "Bitcoin" })
+        this.defaultStartPack.push({ name: "BTC", capture: "Bitcoin" })
       }
       if (!config.opts.curEnabled || config.opts.curEnabled.eth) {
-        defaultStartPack.push({ name: "ETH", capture: "Ethereum" })
+        this.defaultStartPack.push({ name: "ETH", capture: "Ethereum" })
       }
       if (!config.opts.curEnabled || config.opts.curEnabled.ghost) {
-        defaultStartPack.push({ name: "GHOST", capture: "Ghost" })
+        this.defaultStartPack.push({ name: "GHOST", capture: "Ghost" })
       }
       if (!config.opts.curEnabled || config.opts.curEnabled.next) {
-        defaultStartPack.push({ name: "NEXT", capture: "NEXT.coin" })
+        this.defaultStartPack.push({ name: "NEXT", capture: "NEXT.coin" })
       }
       const ownTokensKeys = Object.keys(config.opts.ownTokens)
 
-      // defaultStartPack has 5 slots
-      if (ownTokensKeys.length >= 1 && (5 - defaultStartPack.length)) {
-        defaultStartPack.push({
+      // this.defaultStartPack has 5 slots
+      if (ownTokensKeys.length >= 1 && (5 - this.defaultStartPack.length)) {
+        this.defaultStartPack.push({
           name: ownTokensKeys[0].toUpperCase(),
           capture: config.opts.ownTokens[ownTokensKeys[0]].fullName,
         })
       }
-      if (ownTokensKeys.length >= 2 && (5 - defaultStartPack.length)) {
-        defaultStartPack.push({
+      if (ownTokensKeys.length >= 2 && (5 - this.defaultStartPack.length)) {
+        this.defaultStartPack.push({
           name: ownTokensKeys[1].toUpperCase(),
           capture: config.opts.ownTokens[ownTokensKeys[1]].fullName,
         })
       }
-      if (ownTokensKeys.length >= 3 && (5 - defaultStartPack.length)) {
-        defaultStartPack.push({
+      if (ownTokensKeys.length >= 3 && (5 - this.defaultStartPack.length)) {
+        this.defaultStartPack.push({
           name: ownTokensKeys[2].toUpperCase(),
           capture: config.opts.ownTokens[ownTokensKeys[2]].fullName,
         })
@@ -79,7 +79,7 @@ export default class LogicForSteps extends Component {
     const items = currencies
       .filter(({ addAssets, name }) => addAssets)
       .filter(({ name }) => enabledCurrencies.includes(name))
-    const untouchable = defaultStartPack.map(({ name }) => name)
+    const untouchable = this.defaultStartPack.map(({ name }) => name)
 
     const coins = items
       .map(({ name, fullTitle }) => ({ name, capture: fullTitle }))
@@ -92,7 +92,7 @@ export default class LogicForSteps extends Component {
         // Multi token build
         Object.keys(window.widgetERC20Tokens).forEach((tokenSymbol) => {
           if (config.erc20[tokenSymbol]) {
-            widgetStartPack.push({
+            this.widgetStartPack.push({
               name: tokenSymbol.toUpperCase(),
               capture: config.erc20[tokenSymbol].fullName,
             })
@@ -101,14 +101,14 @@ export default class LogicForSteps extends Component {
       } else {
         // Single token build
         if (config.erc20[config.erc20token]) {
-          widgetStartPack.push({
+          this.widgetStartPack.push({
             name: config.erc20token.toUpperCase(),
             capture: config.erc20[config.erc20token].fullName,
           })
         }
       }
     }
-    this.state = { curState, coins, startPack: (isWidgetBuild) ? widgetStartPack : defaultStartPack }
+    this.state = { curState, coins, startPack: (isWidgetBuild) ? this.widgetStartPack : this.defaultStartPack }
   }
 
 
@@ -125,7 +125,7 @@ export default class LogicForSteps extends Component {
 
   etcClick = () => {
     const { coins, startPack, all } = this.state
-    let newStartPack = defaultStartPack
+    let newStartPack = this.defaultStartPack
     if (!all) {
       if (config.opts.addCustomERC20) {
         newStartPack = [{
@@ -141,13 +141,14 @@ export default class LogicForSteps extends Component {
 
   render() {
     const { 
-      forcedCurrencyData, 
-      onClick, 
-      error, 
-      setError, 
-      btcData, 
-      ethData, 
-      currenciesForSecondStep 
+      forcedCurrencyData,
+      onClick,
+      error,
+      setError,
+      btcData,
+      ethData,
+      step,
+      currenciesForSecondStep
     } = this.props
     const { curState, startPack } = this.state
 

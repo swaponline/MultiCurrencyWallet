@@ -389,6 +389,7 @@ const CreateWallet = (props) => {
         </div>
         {/* TODO: переименовать компонент */}
         <LogicForSteps
+          step={step}
           forcedCurrencyData={forcedCurrencyData}
           error={error} 
           onClick={validate}
