@@ -1,6 +1,7 @@
 import config from 'helpers/externalConfig'
 
-import { InjectedConnector } from '@web3-react/injected-connector'
+import { InjectedProvider } from './InjectedProvider'
+
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 
 
@@ -11,14 +12,11 @@ const rpc = {}
 rpc[`${chainId}`] = config.web3.provider
 
 
-const injected = new InjectedConnector({
+const injected = new InjectedProvider({
   supportedChainIds: [
     chainId
   ]
 })
-injected.isConnected = async () => {
-  return await injected.isAuthorized()
-}
 
 const walletconnect = new WalletConnectConnector({
   rpc,
