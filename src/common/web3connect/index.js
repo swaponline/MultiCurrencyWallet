@@ -1,5 +1,6 @@
 import { EventEmitter } from 'events'
 import { ConnectorEvent } from '@web3-react/types'
+import Web3 from 'web3'
 import SUPPORTED_PROVIDERS from './providers/supported'
 import getProviderByName from './providers'
 import { isInjectedEnabled } from './providers'
@@ -9,6 +10,7 @@ export default class Web3Connect extends EventEmitter {
   _cachedProvider = null
   _cachedChainId = null
   _cachedAddress = null
+  _cachedWeb3 = null
 
   _web3RPC = null
   _web3ChainId = null
@@ -52,6 +54,7 @@ export default class Web3Connect extends EventEmitter {
     this._cachedProvider = null
     this._cachedChainId = null
     this._cachedAddress = null
+    this._cachedWeb3 = null
   }
 
   _setupEvents() {
@@ -82,6 +85,9 @@ export default class Web3Connect extends EventEmitter {
   async _cacheProviderData() {
     this._cachedAddress = await this._cachedProvider.getAccount()
     this._cachedChainId = await this._cachedProvider.getChainId()
+    this._cachedWeb3 = new Web3(
+      await this._cachedProvider.getProvider()
+    )
   }
 
   async connectTo(provider) {
@@ -114,10 +120,13 @@ export default class Web3Connect extends EventEmitter {
   }
 
   isCorrectNetwork() {
-    return ((process.env.MAINNET) ? 1 : 4) === this._cachedChainId
+    return this.web3ChainId === this._cachedChainId
   }
 
   getWeb3() {
+    if (this._cachedProvider) {
+      return this._cachedWeb3
+    }
   }
 
   async getAddress() {
@@ -125,7 +134,7 @@ export default class Web3Connect extends EventEmitter {
       if (this._cachedAddress) {
         return this._cachedAddress
       }
-      return this._cachedProvider.getAccount()
+      this._cachedAddress = this._cachedProvider.getAccount()
     }
     return false
   }

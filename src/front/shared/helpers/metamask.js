@@ -3,12 +3,13 @@ import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import { cacheStorageGet, cacheStorageSet, constants } from 'helpers'
 import web3 from 'helpers/web3'
+import config from 'app-config'
 import { setMetamask, setDefaultProvider } from 'helpers/web3'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import Web3 from 'web3'
 import Web3Modal from 'web3modal'
 
-import Web3Connect from '../web3connect'
+import Web3Connect from '../../../common/web3connect'
 
 console.log('In metamask', Web3Connect)
 

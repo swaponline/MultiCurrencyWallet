@@ -13,7 +13,7 @@ const getProviderByName = (web3connect, providerName) => {
     case SUPPORTED_PROVIDERS.INJECTED:
       return new InjectedProvider(web3connect, {
         supportedChainIds: [
-          chainId,
+          web3connect._web3ChainId,
         ],
       })
     case SUPPORTED_PROVIDERS.WALLETCONNECT:
