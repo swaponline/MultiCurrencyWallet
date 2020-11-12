@@ -33,7 +33,7 @@ const title = defineMessages({
   })
 )
 @cssModules(styles)
-export default class DownloadModal extends React.Component {
+export default class DownloadModal extends React.Component<any, any> {
 
   props: any
 

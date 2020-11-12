@@ -14,7 +14,7 @@ import styles from './MobMenu.scss'
 
 @injectIntl
 @cssModules(styles)
-class MobMenu extends React.Component {
+class MobMenu extends React.Component<any, any> {
 
   props: any
 

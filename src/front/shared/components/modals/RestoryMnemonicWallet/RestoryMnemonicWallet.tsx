@@ -91,7 +91,7 @@ const langLabels = defineMessages({
   ]
 }))
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
-export default class RestoryMnemonicWallet extends React.Component {
+export default class RestoryMnemonicWallet extends React.Component<any, any> {
 
   props: any
 
@@ -261,6 +261,8 @@ export default class RestoryMnemonicWallet extends React.Component {
                 </div>
               )}
               <div styleName="highLevel" className="ym-hide-content notranslate">
+                {/*
+                //@ts-ignore */}
                 <FieldLabel label>
                   <span styleName="tooltipWrapper">
 
@@ -311,6 +313,8 @@ export default class RestoryMnemonicWallet extends React.Component {
                 <FormattedMessage {...langLabels.readyNotice} />
               </p>
               <div styleName="lowLevel">
+                {/*
+                //@ts-ignore */}
                 <Button
                   styleName="buttonCenter buttonHalfFullWidth"
                   blue

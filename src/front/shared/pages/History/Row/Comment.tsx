@@ -6,7 +6,7 @@ import styles from './Row.scss'
 
 
 @CSSModules(styles, { allowMultiple: true })
-export default class CommentRow extends React.Component {
+export default class CommentRow extends React.Component<any, any> {
 
   commentTextarea: any
   props: any

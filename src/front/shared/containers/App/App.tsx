@@ -53,7 +53,7 @@ moment.locale(userLanguage);
   dashboardModalsAllowed,
 }))
 @CSSModules(styles, { allowMultiple: true })
-export default class App extends React.Component {
+export default class App extends React.Component<any, any> {
 
   props: any
 

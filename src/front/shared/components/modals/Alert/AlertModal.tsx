@@ -37,7 +37,7 @@ const defaultLanguage = defineMessages({
   dashboardModalsAllowed
 }))
 @cssModules(styles)
-export default class AlertModal extends React.Component {
+export default class AlertModal extends React.Component<any, any> {
 
   props: any
 

@@ -34,7 +34,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   dashboardView: dashboardModalsAllowed,
 }))
 @cssModules(styles, { allowMultiple: true })
-export default class CurrencyAction extends React.Component {
+export default class CurrencyAction extends React.Component<any, any> {
 
   props: any
 

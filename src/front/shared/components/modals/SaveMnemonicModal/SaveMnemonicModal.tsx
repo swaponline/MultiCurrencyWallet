@@ -105,7 +105,7 @@ const langLabels = defineMessages({
   })
 )
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
-export default class SaveMnemonicModal extends React.Component {
+export default class SaveMnemonicModal extends React.Component<any, any> {
 
   props: any
 
@@ -313,6 +313,8 @@ export default class SaveMnemonicModal extends React.Component {
                 <FormattedMessage {...langLabels.readySaveNotice} />
               </p>
               <div styleName="lowLevel">
+                {/*
+                //@ts-ignore */}
                 <Button
                   styleName="buttonCenter buttonHalfFullWidth"
                   blue
@@ -350,6 +352,8 @@ export default class SaveMnemonicModal extends React.Component {
                 </div>
               </div>
               <div styleName="lowLevel">
+                {/*
+                //@ts-ignore */}
                 <Button
                   styleName="buttonCenter buttonHalfFullWidth"
                   blue
@@ -407,6 +411,8 @@ export default class SaveMnemonicModal extends React.Component {
               */}
               </div>
               <div styleName="lowLevel">
+                {/*
+                //@ts-ignore */}
                 <Button
                   styleName="buttonCenter buttonHalfFullWidth"
                   blue

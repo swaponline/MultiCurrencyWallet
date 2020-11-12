@@ -30,9 +30,9 @@ export default class Share extends Component<any, any> {
 
   componentDidMount = () => {
     const { props: { data: { link, title } } } = this
-
+    //@ts-ignore
     if (navigator.share) {
-
+      //@ts-ignore
       navigator.share({
         title: title,
         url: link

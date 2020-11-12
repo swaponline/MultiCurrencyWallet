@@ -34,7 +34,7 @@ const symbolSignature = '0x95d89b41'
 
 @injectIntl
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
-export default class AddCustomERC20 extends React.Component {
+export default class AddCustomERC20 extends React.Component<any, any> {
 
   props: any
 

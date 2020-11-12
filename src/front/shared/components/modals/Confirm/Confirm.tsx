@@ -38,7 +38,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @injectIntl
 @cssModules(styles, { allowMultiple: true })
-export default class Confirm extends React.Component {
+export default class Confirm extends React.Component<any, any> {
 
   props: any
 

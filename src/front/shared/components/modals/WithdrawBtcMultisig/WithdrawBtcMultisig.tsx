@@ -52,6 +52,8 @@ export default class WithdrawBtcMultisig extends React.Component<any, any> {
     data: PropTypes.object,
   }
 
+  broadcastCancelFunc: any
+
   constructor(data) {
     //@ts-ignore
     super()
@@ -90,6 +92,7 @@ export default class WithdrawBtcMultisig extends React.Component<any, any> {
       let txId = false
 
       if (result) {
+        //@ts-ignore
         txId = await actions.multisigTx.broadcast({
           sender: address,
           destination: to,

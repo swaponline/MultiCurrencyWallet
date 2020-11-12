@@ -33,7 +33,7 @@ const title2 = [
   currencies: { items: currencies },
 }) => ({
   tokens: Object.keys(tokensData).map(k => tokensData[k]),
-  items: [ethData, btcData, ghostdata, nextData],
+  items: [ethData, btcData, ghostData, nextData],
   currencies,
   hiddenCoinsList,
 }))
@@ -46,6 +46,8 @@ export default class ShowMoreCoins extends Component<any, any> {
       <Modal name={name} title={title2} shouldCenterVertically={false}>
         <div styleName="modal">
           <div styleName="modal_column">
+            {/*
+            //@ts-ignore */}
             <SubTitle styleName="modal_column-title">
               <FormattedMessage id="ShowMoreCoins36" defaultMessage="Coins in Wallet" />
             </SubTitle>
@@ -58,6 +60,8 @@ export default class ShowMoreCoins extends Component<any, any> {
           </div>
           {hiddenCoinsList.length !== 0 && (
             <div styleName="modal_column">
+              {/*
+              //@ts-ignore */}
               <SubTitle styleName="modal_column-title">
                 <FormattedMessage id="ShowMoreCoins48" defaultMessage="Other coins" />
               </SubTitle>

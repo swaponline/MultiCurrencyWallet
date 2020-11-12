@@ -22,7 +22,7 @@ import WalletRow from './WalletRow'
 
 @injectIntl
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
-export default class BtcMultisignSwitch extends React.Component {
+export default class BtcMultisignSwitch extends React.Component<any, any> {
 
   props: any
 

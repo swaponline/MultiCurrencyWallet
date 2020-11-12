@@ -100,7 +100,7 @@ const langLabels = defineMessages({
   ...animateFetching,
 }, { allowMultiple: true })
 
-export default class InfoInvoice extends React.Component {
+export default class InfoInvoice extends React.Component<any, any> {
 
   props: any
 

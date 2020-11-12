@@ -39,7 +39,7 @@ const title = defineMessages({
 )
 @injectIntl
 @cssModules(styles)
-export default class SignUpModal extends React.Component {
+export default class SignUpModal extends React.Component<any, any> {
 
   props: any
 
@@ -70,6 +70,7 @@ export default class SignUpModal extends React.Component {
     const currentUrl = history.location
     const isRefLink = (currentUrl.search
       && currentUrl.search.includes('?promo=')
+      //@ts-ignore
       && !localStorage.getItem(constants.localStorage.firstStart))
     let refEthAddress = null
 
@@ -93,7 +94,7 @@ export default class SignUpModal extends React.Component {
     if (whatToSubmit === 'isSubmitedPush' || !isSupportedPush) {
       await firestore.addUser(data)
     }
-
+    //@ts-ignore
     actions.analytics.signUpEvent({ action: 'request' })
 
     if (!isSupportedPush || isSubmitedPush) {
@@ -173,6 +174,8 @@ export default class SignUpModal extends React.Component {
                   </p>
                 )
               }
+              {/*
+              //@ts-ignore */}
               <Button styleName="button" brand fullWidth onClick={this.close}>
                 <FormattedMessage id="SignUpModal001" defaultMessage="Go to my wallet" />
               </Button>
@@ -188,6 +191,8 @@ export default class SignUpModal extends React.Component {
                     }
                   </div>
                 }
+                {/*
+                //@ts-ignore */}
                 <Button
                   styleName="button"
                   brand

@@ -38,7 +38,7 @@ const langLabels = defineMessages({
 
 @injectIntl
 @cssModules(styles, { allowMultiple: true })
-export default class SaveKeysModal extends React.Component {
+export default class SaveKeysModal extends React.Component<any, any> {
 
   props: any
 
@@ -87,6 +87,7 @@ export default class SaveKeysModal extends React.Component {
               <a
                 href="#"
                 onClick={() => {
+                  //@ts-ignore
                   localStorage.setItem(constants.localStorage.testnetSkipPKCheck, true)
                   this.forceUpdate()
                 }}>

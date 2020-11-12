@@ -33,7 +33,7 @@ import config from 'app-config'
   reputation: 'pubsubRoom.reputation',
 })
 @CSSModules(styles, { allowMultiple: true })
-export default class User extends React.Component {
+export default class User extends React.Component<any, any> {
 
   props: any
 

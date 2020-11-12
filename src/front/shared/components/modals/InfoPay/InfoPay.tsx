@@ -35,7 +35,7 @@ const labels = defineMessages({
   ...animateFetching,
 }, { allowMultiple: true })
 
-export default class InfoPay extends React.Component {
+export default class InfoPay extends React.Component<any, any> {
 
   props: any
 

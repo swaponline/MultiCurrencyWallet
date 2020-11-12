@@ -48,7 +48,7 @@ const langs = defineMessages({
 @injectIntl
 @withRouter
 @cssModules({ ...styles, ...ownStyles }, { allowMultiple: true })
-export default class ReceiveModal extends React.Component {
+export default class ReceiveModal extends React.Component<any, any> {
 
   props: any
 

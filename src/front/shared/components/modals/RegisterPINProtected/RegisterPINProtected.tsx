@@ -183,7 +183,7 @@ const langs = defineMessages({
   btcMultisigPinData,
 }))
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
-export default class RegisterPINProtected extends React.Component {
+export default class RegisterPINProtected extends React.Component<any, any> {
 
   props: any
 

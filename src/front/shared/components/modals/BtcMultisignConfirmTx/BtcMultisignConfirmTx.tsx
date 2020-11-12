@@ -74,7 +74,7 @@ const langLabels = defineMessages({
   })
 )
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
-export default class BtcMultisignConfirmTx extends React.Component {
+export default class BtcMultisignConfirmTx extends React.Component<any, any> {
   
   props: any
   

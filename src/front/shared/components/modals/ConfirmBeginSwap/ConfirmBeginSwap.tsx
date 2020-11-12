@@ -48,7 +48,7 @@ const defaultLanguage = defineMessages({
   tokensData: [...Object.keys(tokensData).map(k => (tokensData[k]))],
 }))
 @CSSModules(styles, { allowMultiple: true })
-export default class ConfirmBeginSwap extends React.Component {
+export default class ConfirmBeginSwap extends React.Component<any, any> {
 
   props: any
 

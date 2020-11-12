@@ -24,7 +24,7 @@ const title = defineMessages({
 
 @injectIntl
 @cssModules(styles)
-export default class Offer extends React.Component {
+export default class Offer extends React.Component<any, any> {
 
   props: any
 

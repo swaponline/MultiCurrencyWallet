@@ -3,7 +3,7 @@ import Table from 'components/tables/Table/Table'
 import { withInfiniteScroll } from 'decorators/withInfiniteScroll'
 
 @withInfiniteScroll()
-export default class InfiniteScrollTable extends React.Component {
+export default class InfiniteScrollTable extends React.Component<any, any> {
 
   props: any
 

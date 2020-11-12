@@ -31,7 +31,7 @@ import finishSvg from './images/finish.svg'
   btcMultisigSMSData,
 }))
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
-export default class RegisterSMSProtected extends React.Component {
+export default class RegisterSMSProtected extends React.Component<any, any> {
 
   props: any
 

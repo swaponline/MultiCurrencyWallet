@@ -21,7 +21,7 @@ const labels = defineMessages({
 
 @injectIntl
 @cssModules(styles)
-export default class InvoiceLinkModal extends React.Component {
+export default class InvoiceLinkModal extends React.Component<any, any> {
 
   props: any
 

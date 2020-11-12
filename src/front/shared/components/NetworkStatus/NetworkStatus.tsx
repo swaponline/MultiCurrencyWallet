@@ -17,7 +17,7 @@ import { constants } from 'helpers'
   })
 )
 @cssModules(styles, { allowMultiple: true })
-export default class NetworkStatus extends React.Component {
+export default class NetworkStatus extends React.Component<any, any> {
 
   props: any
 

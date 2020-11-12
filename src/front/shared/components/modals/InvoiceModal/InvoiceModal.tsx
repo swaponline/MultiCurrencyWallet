@@ -89,7 +89,7 @@ const localeLabel = defineMessages({
   })
 )
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
-export default class InvoiceModal extends React.Component {
+export default class InvoiceModal extends React.Component<any, any> {
 
   props: any
 
