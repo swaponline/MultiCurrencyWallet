@@ -171,7 +171,7 @@ export default class LogicForSteps extends Component {
                 step === 1 && 
                 <FirstStep 
                   error={error} 
-                  onClick={validate}
+                  onClick={onClick}
                   setError={setError}
                   etcClick={this.etcClick}
                   handleClick={this.handleClick}
@@ -184,7 +184,7 @@ export default class LogicForSteps extends Component {
                 <SecondStep
                   error={error}
                   btcData={btcData}
-                  onClick={validate} 
+                  onClick={onClick} 
                   currencies={currenciesForSecondStep}
                   setError={setError}
                   etcClick={this.etcClick}

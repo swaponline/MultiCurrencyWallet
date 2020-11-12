@@ -1,4 +1,3 @@
-import webpack from 'webpack'
 import config from 'app-config'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
@@ -20,9 +19,11 @@ export default (webpackConfig) => {
     tls: 'empty',
   }
   /* 
-  * отключаем дефолтные карты кода (подключаем плагин для них)
+  * build speed: slow
+  * rebuild: faster
+  * qualiry: original source (lines only)
   */
-  webpackConfig.devtool = false
+  webpackConfig.devtool = 'eval-cheap-module-source-map'
 
   webpackConfig.devServer = {
     publicPath: webpackConfig.output.publicPath,
@@ -47,10 +48,6 @@ export default (webpackConfig) => {
     //   // analyzerPort: '8888',
     //   // openAnalyzer: false, // открывать ли автоматически в браузере
     // }),
-    new webpack.SourceMapDevToolPlugin({
-      filename: '[name].js.map',
-      exclude: ['vendor.js']
-    }),
     new CopyWebpackPlugin([
       {
         from: 'src/front/client/firebase-messaging-sw.js',

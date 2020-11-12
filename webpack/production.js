@@ -21,7 +21,7 @@ export default (webpackConfig) => {
     'react-dom' : 'ReactDOM',
   }
   /* 
-  * для прод сборки лучше изменить 'style-loader' на 'MiniCssExtractPlugin.loader'
+  * для production сборки лучше изменить 'style-loader' на 'MiniCssExtractPlugin.loader'
   * работает со стилями более эффективно
   */
   webpackConfig.module.rules = webpackConfig.module.rules.map((loader) => {
@@ -36,17 +36,18 @@ export default (webpackConfig) => {
   webpackConfig.optimization = {
     minimizer: [
       new TerserPlugin({
-        cache: true,
         parallel: true, // default -> os.cpus().length - 1
         sourceMap: false,
       }),
     ],
     splitChunks: {
       chunks: 'all',
+      minSize: 30000,
     }
   }
   /* 
-  * отключаем дефолтные карты кода (подключаем плагин для них)
+  * отключаем дефолтные карты кода 
+  * и подключаем плагин для более точной настройки (см. plugins)
   */
   webpackConfig.devtool = false
 
