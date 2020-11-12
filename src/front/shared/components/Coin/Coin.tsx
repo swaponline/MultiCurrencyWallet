@@ -56,12 +56,14 @@ const Coin = ({ className, size, name }) => {
   if (isIconExist || isIconConfigExist) {
     iconProps = {
       ...iconProps,
+      //@ts-ignore
       styleName: 'icon',
     }
   }
   else {
     iconProps = {
       ...iconProps,
+      //@ts-ignore
       styleName: 'letter',
       style: {
         lineHeight: `${size}px`,
@@ -72,6 +74,8 @@ const Coin = ({ className, size, name }) => {
 
   return (
     <div styleName={`coin ${isDark ? 'dark' : ''}`} className={className} style={style}>
+      {/*
+      //@ts-ignore */}
       <CurrencyIcon {...iconProps} />
     </div>
   )

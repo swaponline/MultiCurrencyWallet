@@ -18,6 +18,8 @@ export default class TextareaAutosize extends Component<any, any> {
     rows: 1,
   }
 
+  textareaEl: any
+
   componentDidMount() {
     autosize(this.textareaEl)
 
@@ -30,11 +32,12 @@ export default class TextareaAutosize extends Component<any, any> {
     if (this.props.onResize) {
       this.textareaEl.removeEventListener(RESIZED, this.props.onResize)
     }
-
+    //@ts-ignore
     this.dispatchEvent(DESTROY)
   }
 
   componentWillReceiveProps(nextProps) {
+    //@ts-ignore
     if (this.getValue(nextProps) !== this.getValue(this.props)) {
       this.dispatchEvent(UPDATE, true)
     }

@@ -15,12 +15,14 @@ const Phone = (props) => {
 
   const onHandleChange = (phone) => {
     try {
+      //@ts-ignore
       const { value: country } = document.querySelector('.PhoneInputCountry SELECT')
       countryCode = `+${getCountryCallingCode(country)}`
     } catch (e) {
     }
 
     if (!phone || !phone.includes(countryCode.replace(/ /g, ""))) {
+      //@ts-ignore
       document.querySelector('.PhoneInputInput').value = countryCode.replace(/ /g, "")
     } else {
       onChange(phone)

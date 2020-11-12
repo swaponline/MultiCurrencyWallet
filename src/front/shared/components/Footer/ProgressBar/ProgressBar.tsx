@@ -63,7 +63,7 @@ export default class ProgressBar extends Component<any, any> {
     const { progressNow } = this.state
 
     return (
-      <Line strokeColor="#2181F7" percent={progressNow} strokeWidth="1" />
+      <Line strokeColor="#2181F7" percent={progressNow} strokeWidth={1} />
     )
   }
 }

@@ -89,7 +89,12 @@ const Input = (props) => {
 
 class NumberInput extends Component<any, any> {
 
+   onKeyPress: any
+   value: any
+   error: any
+
   constructor() {
+    //@ts-ignore
     super(...arguments)
 
     this.onKeyPress = (event) => {
@@ -168,6 +173,7 @@ class NumberInput extends Component<any, any> {
     return (
       <input
         {...ignoreProps(props, 'positive', 'integer')}
+        //@ts-ignore
         className={validationClasses(props, this.value, error)}
         value={this.value}
         onKeyPress={this.onKeyPress}
@@ -186,6 +192,7 @@ class NumberInput extends Component<any, any> {
 const TextArea = ({ valueLink, ...props }) => (
   <textarea
     {...props}
+    //@ts-ignore
     className={validationClasses(props, valueLink.value, valueLink.error)}
     value={valueLink.value}
     onChange={valueLink.action(setValue)}

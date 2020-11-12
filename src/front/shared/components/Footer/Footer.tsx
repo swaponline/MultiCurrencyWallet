@@ -35,6 +35,7 @@ const Footer = (props) => {
       })}
     >
       {!isFooterDisabled && (
+        //@ts-ignore
         <WidthContainer styleName="container">
           <SwitchLang {...props} />
           {!config.isWidget && <SocialMenu />}

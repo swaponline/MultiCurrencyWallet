@@ -13,6 +13,7 @@ import Coin from 'components/Coin/Coin'
 const CoinInteractive = ({ className, name }) => {
 
   const handleHideCoin = (nameCoin) => {
+    //@ts-ignore
     actions.core.markCoinAsHidden(nameCoin)
   }
 

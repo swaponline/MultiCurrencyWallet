@@ -149,7 +149,7 @@ export default class Header extends Component<any, any> {
   tapCreateWalletButton = (customProps = {}) =>
     new Promise((resolve) => {
       const finishProps = { ...this.props, ...customProps };
-
+      //@ts-ignore
       const { location, intl } = finishProps;
       const { pathname } = location;
       const { wallet, home } = links;

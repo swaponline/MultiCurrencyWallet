@@ -25,6 +25,7 @@ import { FormattedMessage } from 'react-intl'
     currencies: currencies.items,
     addSelectedItems: currencies.addSelectedItems[0],
     items: [ethData, btcData, ghostData, nextData],
+    //@ts-ignore
     tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   })
 )
@@ -86,6 +87,8 @@ export default class CurrencyDirectionChooser extends Component<any, any> {
               <p styleName="text">
                 <FormattedMessage id="CDC63" defaultMessage="You have" />
               </p>
+              {/*
+              //@ts-ignore */}
               <CurrencySelect
                 styleName="currencySelect currencySelectLeft"
                 selectedValue={sellCurrency}
@@ -99,6 +102,8 @@ export default class CurrencyDirectionChooser extends Component<any, any> {
               <p styleName="text">
                 <FormattedMessage id="CDC75" defaultMessage="You get" />
               </p>
+              {/*
+              //@ts-ignore */}
               <CurrencySelect
                 styleName="currencySelect currencySelectRight"
                 selectedValue={buyCurrency}
@@ -108,6 +113,8 @@ export default class CurrencyDirectionChooser extends Component<any, any> {
               />
             </div>
           </div>
+          {/*
+          //@ts-ignore */}
           <Button styleName="button" brand onClick={handleSubmit}>
             <FormattedMessage id="CurrencyDirectionChooser86" defaultMessage="SHOW ORDERS " />
           </Button>

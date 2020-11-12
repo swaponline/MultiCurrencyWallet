@@ -11,6 +11,7 @@ import { FormattedMessage } from 'react-intl'
 
 
 const Confirm = ({ rootClassName, isConfirm, isReject, title, animation }) => (
+  //@ts-ignore
   <Center>
     <div styleName={animation ? 'confirm animation' : 'confirm'} className={rootClassName}>
       <SubTitle>

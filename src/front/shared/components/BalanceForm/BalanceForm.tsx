@@ -144,14 +144,19 @@ function BalanceForm({
         <div styleName="yourBalanceBottom">
           {showButtons ? (
             <div styleName="btns" className="data-tut-withdraw-buttons">
+              {/*
+              //@ts-ignore */}
               <Button blue id="depositBtn" onClick={() => handleReceive('Deposit')}>
                 <FormattedMessage id="YourtotalbalanceDeposit" defaultMessage="Пополнить" />
               </Button>
+              {/*
+              //@ts-ignore */}
               <Button blue disabled={!currencyBalance} id="sendBtn" onClick={() => handleWithdraw('Send')}>
                 <FormattedMessage id="YourtotalbalanceSend" defaultMessage="Отправить" />
               </Button>
             </div>
           ) : (
+            //@ts-ignore
             <Button blue disabled={!currencyBalance} styleName="button__invoice" onClick={() => handleInvoice()}>
               <FormattedMessage id="RequestPayment" defaultMessage="Запросить" />
             </Button>

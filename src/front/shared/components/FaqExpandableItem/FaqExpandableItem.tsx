@@ -9,6 +9,8 @@ import Href from 'components/Href/Href'
 
 const FaqExpandableItem = ({ link, question }) => (
   <div styleName="container">
+    {/*
+    //@ts-ignore */}
     <Href
       tab={link}
       styleName="header"

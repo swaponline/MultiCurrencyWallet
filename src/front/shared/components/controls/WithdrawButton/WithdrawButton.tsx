@@ -26,7 +26,8 @@ const WithdrawButton = (props) => {
       {children}
     </button>
   )
-
+  
+  //@ts-ignore
   WithdrawButton.propTypes = {
     onClick: PropTypes.func.isRequired,
     className: PropTypes.string,

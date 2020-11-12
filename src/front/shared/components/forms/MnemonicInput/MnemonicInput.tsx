@@ -29,6 +29,9 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 @injectIntl
 @cssModules(styles, { allowMultiple: true })
 export default class MnemonicInput extends Component<any, any> {
+
+  reactTags: any
+
   constructor (props) {
     super(props)
 

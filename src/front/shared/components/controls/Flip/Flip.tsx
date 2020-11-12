@@ -6,6 +6,7 @@ import styles from './Flip.scss'
 
 
 const Flip = ({ onClick, className }) => (
+  //@ts-ignore 
   <button alt="flip currency" onClick={onClick} className={className} styleName="trade-panel__change" />
 )
 
