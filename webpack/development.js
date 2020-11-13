@@ -1,13 +1,10 @@
 import config from 'app-config'
-
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-
-import path from 'path'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import externalConfig from './externalConfig'
 
-
 export default (webpackConfig) => {
+  webpackConfig.mode = 'development'
 
   webpackConfig.output = {
     path: config.paths.base('build'),
@@ -21,8 +18,12 @@ export default (webpackConfig) => {
     net: 'empty',
     tls: 'empty',
   }
-
-  webpackConfig.devtool = 'cheap-module-source-map'
+  /* 
+  * build speed: slow
+  * rebuild: faster
+  * qualiry: original source (lines only)
+  */
+  webpackConfig.devtool = 'eval-cheap-module-source-map'
 
   webpackConfig.devServer = {
     publicPath: webpackConfig.output.publicPath,
@@ -31,8 +32,22 @@ export default (webpackConfig) => {
     lazy: false,
   }
 
+  webpackConfig.optimization = {
+    minimize: false,
+  }
+
   webpackConfig.plugins.push(
-    // new BundleAnalyzerPlugin()
+    /* 
+    * раскоментировать, запустить сборку и открыть указанный адрес 
+    * просмотреть что грузиться в сборку
+    * анализатор будет тормозить сборку если использовать постоянно
+    */
+    // new BundleAnalyzerPlugin({
+    //   // analyzerMode: 'server', // в каком формате представлять данные
+    //   // analyzerHost: '127.0.0.1',
+    //   // analyzerPort: '8888',
+    //   // openAnalyzer: false, // открывать ли автоматически в браузере
+    // }),
     new CopyWebpackPlugin([
       {
         from: 'src/front/client/firebase-messaging-sw.js',

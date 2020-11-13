@@ -27,7 +27,17 @@ import Cupture, {
 
 
 const SecondStep = (props) => {
-  const { intl: { locale }, onClick, currencies, error, setError, forcedCurrencyData, btcData, ethData } = props
+  const { 
+    intl: { locale }, 
+    onClick, 
+    currencies, 
+    error, 
+    setError, 
+    forcedCurrencyData, 
+    btcData,
+    etcClick,
+    ethData 
+  } = props
 
   const _protection = {
     nothing: {
@@ -309,7 +319,7 @@ const SecondStep = (props) => {
       {!isMobile && !forcedCurrencyData &&
         <div>
           <Explanation subHeaderText={subHeaderText1()} step={1} notMain>
-            <Cupture click={this.etcClick} step={2} />
+            <Cupture click={etcClick} step={2} />
           </Explanation>
         </div>
       }
@@ -363,7 +373,6 @@ const SecondStep = (props) => {
                     </div>
                   </div>
                 </div>
-
               )
             })}
           </div>

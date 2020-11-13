@@ -1,12 +1,7 @@
 import webpack from 'webpack'
 import path from 'path'
 
-
 const resolveSrcPath = (filePath) => path.resolve(__dirname, `./src/${filePath}`)
-
-const globals = {
-  'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-}
 
 const webpackConfig = {
   mode: 'production',
@@ -36,9 +31,19 @@ const webpackConfig = {
   module: {
     rules: [
       {
+        loader: 'cache-loader',
+      },
+      {
         test: /\.js$/,
-        loader: 'babel-loader',
         exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+            plugins: ['@babel/plugin-proposal-object-rest-spread'],
+            cacheDirectory: true,
+          }
+        }
       }
     ]
   },
@@ -61,7 +66,6 @@ const webpackConfig = {
   },
 
   plugins: [
-    new webpack.DefinePlugin(globals),
     new webpack.ProvidePlugin({
       'swap.auth': 'swap.auth',
       'swap.orders': 'swap.orders',
