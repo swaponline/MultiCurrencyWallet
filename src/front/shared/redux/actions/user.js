@@ -66,80 +66,82 @@ const sign_btc_pin = async (btcPrivateKey) => {
 }
 
 const sign = async () => {
-  initReducerState()
+  metamask.web3connect.onInit( async () => {
+    initReducerState()
 
-  let mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
+    let mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
 
-  if (!mnemonic) {
-    mnemonic = bip39.generateMnemonic()
-    localStorage.setItem(constants.privateKeyNames.twentywords, mnemonic)
-  }
-
-  const mnemonicKeys = {
-    btc: localStorage.getItem(constants.privateKeyNames.btcMnemonic),
-    btcSms: localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated),
-    eth: localStorage.getItem(constants.privateKeyNames.ethMnemonic),
-    ghost: localStorage.getItem(constants.privateKeyNames.ghostMnemonic),
-    next: localStorage.getItem(constants.privateKeyNames.nextMnemonic),
-  }
-  console.log('actions user - sign', mnemonicKeys, mnemonic)
-  if (mnemonic !== `-`) {
-    if (!mnemonicKeys.btc) mnemonicKeys.btc = actions.btc.sweepToMnemonic(mnemonic)
-    if (!mnemonicKeys.eth) mnemonicKeys.eth = actions.eth.sweepToMnemonic(mnemonic)
-    if (!mnemonicKeys.ghost) mnemonicKeys.ghost = actions.ghost.sweepToMnemonic(mnemonic)
-    if (!mnemonicKeys.next) mnemonicKeys.next = actions.next.sweepToMnemonic(mnemonic)
-    if (!mnemonicKeys.btcSms) {
-      mnemonicKeys.btcSms = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
-      localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, mnemonicKeys.btcSms)
+    if (!mnemonic) {
+      mnemonic = bip39.generateMnemonic()
+      localStorage.setItem(constants.privateKeyNames.twentywords, mnemonic)
     }
-  }
-  // Sweep-Switch
-  let btcNewSmsMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKeyMnemonic)
-  try { btcNewSmsMnemonicKey = JSON.parse(btcNewSmsMnemonicKey) } catch (e) { }
-  if (!(btcNewSmsMnemonicKey instanceof Array)) {
-    localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyMnemonic, JSON.stringify([]))
-  }
 
-  let btcNewMultisigOwnerKey = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKeyMnemonic)
-  try { btcNewMultisigOwnerKey = JSON.parse(btcNewMultisigOwnerKey) } catch (e) { }
-  if (!(btcNewMultisigOwnerKey instanceof Array)) {
-    localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKeyMnemonic, JSON.stringify([]))
-  }
+    const mnemonicKeys = {
+      btc: localStorage.getItem(constants.privateKeyNames.btcMnemonic),
+      btcSms: localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated),
+      eth: localStorage.getItem(constants.privateKeyNames.ethMnemonic),
+      ghost: localStorage.getItem(constants.privateKeyNames.ghostMnemonic),
+      next: localStorage.getItem(constants.privateKeyNames.nextMnemonic),
+    }
+    console.log('actions user - sign', mnemonicKeys, mnemonic)
+    if (mnemonic !== `-`) {
+      if (!mnemonicKeys.btc) mnemonicKeys.btc = actions.btc.sweepToMnemonic(mnemonic)
+      if (!mnemonicKeys.eth) mnemonicKeys.eth = actions.eth.sweepToMnemonic(mnemonic)
+      if (!mnemonicKeys.ghost) mnemonicKeys.ghost = actions.ghost.sweepToMnemonic(mnemonic)
+      if (!mnemonicKeys.next) mnemonicKeys.next = actions.next.sweepToMnemonic(mnemonic)
+      if (!mnemonicKeys.btcSms) {
+        mnemonicKeys.btcSms = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
+        localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, mnemonicKeys.btcSms)
+      }
+    }
+    // Sweep-Switch
+    let btcNewSmsMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKeyMnemonic)
+    try { btcNewSmsMnemonicKey = JSON.parse(btcNewSmsMnemonicKey) } catch (e) { }
+    if (!(btcNewSmsMnemonicKey instanceof Array)) {
+      localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyMnemonic, JSON.stringify([]))
+    }
 
-  const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
-  const btcMultisigPrivateKey = localStorage.getItem(constants.privateKeyNames.btcMultisig)
-  const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
-  const ghostPrivateKey = localStorage.getItem(constants.privateKeyNames.ghost)
-  const nextPrivateKey = localStorage.getItem(constants.privateKeyNames.next)
+    let btcNewMultisigOwnerKey = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKeyMnemonic)
+    try { btcNewMultisigOwnerKey = JSON.parse(btcNewMultisigOwnerKey) } catch (e) { }
+    if (!(btcNewMultisigOwnerKey instanceof Array)) {
+      localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKeyMnemonic, JSON.stringify([]))
+    }
+
+    const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
+    const btcMultisigPrivateKey = localStorage.getItem(constants.privateKeyNames.btcMultisig)
+    const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
+    const ghostPrivateKey = localStorage.getItem(constants.privateKeyNames.ghost)
+    const nextPrivateKey = localStorage.getItem(constants.privateKeyNames.next)
 
 
-  const _ethPrivateKey = actions.eth.login(ethPrivateKey, mnemonic, mnemonicKeys)
-  const _btcPrivateKey = actions.btc.login(btcPrivateKey, mnemonic, mnemonicKeys)
-  const _ghostPrivateKey = actions.ghost.login(ghostPrivateKey, mnemonic, mnemonicKeys)
-  const _nextPrivateKey = actions.next.login(nextPrivateKey, mnemonic, mnemonicKeys)
+    const _ethPrivateKey = actions.eth.login(ethPrivateKey, mnemonic, mnemonicKeys)
+    const _btcPrivateKey = actions.btc.login(btcPrivateKey, mnemonic, mnemonicKeys)
+    const _ghostPrivateKey = actions.ghost.login(ghostPrivateKey, mnemonic, mnemonicKeys)
+    const _nextPrivateKey = actions.next.login(nextPrivateKey, mnemonic, mnemonicKeys)
 
-  // btc multisig with 2fa (2of3)
-  await sign_btc_2fa(_btcPrivateKey)
+    // btc multisig with 2fa (2of3)
+    await sign_btc_2fa(_btcPrivateKey)
 
-  // btc multisig 2of2 user manual sign
-  await sign_btc_multisig(_btcPrivateKey)
+    // btc multisig 2of2 user manual sign
+    await sign_btc_multisig(_btcPrivateKey)
 
-  // btc multisig with pin protect (2of3)
-  await sign_btc_pin(_btcPrivateKey)
+    // btc multisig with pin protect (2of3)
+    await sign_btc_pin(_btcPrivateKey)
 
-  // if inside actions.token.login to call web3.eth.accounts.privateKeyToAccount passing public key instead of private key
-  // there will not be an error, but the address returned will be wrong
-  // if (!isEthKeychainActivated) {
-  Object.keys(config.erc20)
-    .forEach(name => {
-      actions.token.login(_ethPrivateKey, config.erc20[name].address, name, config.erc20[name].decimals, config.erc20[name].fullName)
-    })
-  // }
-  reducers.user.setTokenSigned(true)
+    // if inside actions.token.login to call web3.eth.accounts.privateKeyToAccount passing public key instead of private key
+    // there will not be an error, but the address returned will be wrong
+    // if (!isEthKeychainActivated) {
+    Object.keys(config.erc20)
+      .forEach(name => {
+        actions.token.login(_ethPrivateKey, config.erc20[name].address, name, config.erc20[name].decimals, config.erc20[name].fullName)
+      })
+    // }
+    reducers.user.setTokenSigned(true)
 
-  // const getReputation = actions.user.getReputation()
+    // const getReputation = actions.user.getReputation()
 
-  await getReputation()
+    await getReputation()
+  })
 }
 
 const getReputation = async () => {
