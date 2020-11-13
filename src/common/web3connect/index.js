@@ -196,6 +196,8 @@ export default class Web3Connect extends EventEmitter {
   }
 
   isCorrectNetwork() {
+    // @ToDo - test Metamask dAppBrowser
+    return true
     return (
       `${this._web3ChainId}` === `${this._cachedChainId}`
       || `0x0${this._web3ChainId}` === `${this._cachedChainId}`
