@@ -31,7 +31,7 @@ export default smp.wrap((webpackConfig) => {
   * rebuild: faster
   * qualiry: original source (lines only)
   */
-  // webpackConfig.devtool = 'eval-cheap-module-source-map'
+  webpackConfig.devtool = 'eval-cheap-module-source-map'
   
   webpackConfig.devServer = {
     publicPath: webpackConfig.output.publicPath,
@@ -43,8 +43,6 @@ export default smp.wrap((webpackConfig) => {
   webpackConfig.optimization = {
     minimize: false,
   }
-
-  webpackConfig.devtool = false
   
   webpackConfig.plugins.push(
     /* 
@@ -56,10 +54,6 @@ export default smp.wrap((webpackConfig) => {
       analyzerHost: '127.0.0.1',
       analyzerPort: '8888',
     }), */
-    new webpack.SourceMapDevToolPlugin({
-      filename: '[name].js.map',
-      exclude: ['vendor.js']
-    }),
     new CopyWebpackPlugin([
       {
         from: 'src/front/client/firebase-messaging-sw.js',
