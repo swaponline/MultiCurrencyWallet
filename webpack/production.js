@@ -12,7 +12,7 @@ export default (webpackConfig) => {
   webpackConfig.output = {
     path: config.paths.base(`build-${config.dir}`),
     filename: '[name].[hash:6].js',
-    chunkFilename: '[id].[hash:6].chunk.js',
+    chunkFilename: '[name].[hash:6].js',
     publicPath: config.publicPath,
   }
 
@@ -21,8 +21,8 @@ export default (webpackConfig) => {
     'react-dom' : 'ReactDOM',
   }
   /* 
-  * для production сборки лучше изменить 'style-loader' на 'MiniCssExtractPlugin.loader'
-  * работает со стилями более эффективно
+  * for production build is better to replace 'style-loader' on 'MiniCssExtractPlugin.loader'
+  * works with styles more effectively
   */
   webpackConfig.module.rules = webpackConfig.module.rules.map((loader) => {
     if (loader.test.test('*.css') || loader.test.test('*.scss')) {
@@ -42,12 +42,20 @@ export default (webpackConfig) => {
     ],
     splitChunks: {
       chunks: 'all',
-      minSize: 30000,
+      cacheGroups: {
+        vendor: {
+          name: 'vendor',
+          test: /[\\/]node_modules[\\/]/,
+          chunks: 'all',
+          priority: 1,
+          enforce: true,
+        },
+      }
     }
   }
   /* 
-  * отключаем дефолтные карты кода 
-  * и подключаем плагин для более точной настройки (см. plugins)
+  * disable dafault source map
+  * enable webpack plugin for maps (in plugins array)
   */
   webpackConfig.devtool = false
 
