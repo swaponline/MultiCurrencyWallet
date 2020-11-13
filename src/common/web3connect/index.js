@@ -194,8 +194,8 @@ export default class Web3Connect extends EventEmitter {
 
   isCorrectNetwork() {
     return (
-      this._web3ChainId === this._cachedChainId
-      || `0x0${this._web3ChainId}` === this._cachedChainId
+      `${this._web3ChainId}` === `${this._cachedChainId}`
+      || `0x0${this._web3ChainId}` === `${this._cachedChainId}`
     )
   }
 
