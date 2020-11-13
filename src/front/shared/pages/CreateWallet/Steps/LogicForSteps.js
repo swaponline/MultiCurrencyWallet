@@ -15,18 +15,21 @@ const isWidgetBuild = config && config.isWidget
 @connect(({ currencies: { items: currencies } }) => ({ currencies }))
 // TODO: переименовать компонент
 export default class LogicForSteps extends Component {
+  defaultStartPack = [
+    ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],
+    ...(!config.opts.curEnabled || config.opts.curEnabled.eth) ? [{ name: "ETH", capture: "Ethereum" }] : [],
+    ...(!config.opts.curEnabled || config.opts.curEnabled.ghost) ? [{ name: "GHOST", capture: "Ghost" }] : [],
+    ...(!config.opts.curEnabled || config.opts.curEnabled.next) ? [{ name: "NEXT", capture: "NEXT.coin" }] : [],
+    { name: "SWAP", capture: "Swap" },
+    { name: "USDT", capture: "Tether" },
+    { name: "EURS", capture: "Eurs" },
+  ]
+
   widgetStartPack = [
     ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],
     ...(!config.opts.curEnabled || config.opts.curEnabled.eth) ? [{ name: "ETH", capture: "Ethereum" }] : [],
     ...(!config.opts.curEnabled || config.opts.curEnabled.ghost) ? [{ name: "GHOST", capture: "Ghost" }] : [],
     ...(!config.opts.curEnabled || config.opts.curEnabled.next) ? [{ name: "NEXT", capture: "NEXT.coin" }] : [],
-  ]
-  // Here Problem place !!!
-  defaultStartPack = [
-    ...this.widgetStartPack,
-    { name: "SWAP", capture: "Swap" },
-    { name: "USDT", capture: "Tether" },
-    { name: "EURS", capture: "Eurs" },
   ]
 
   constructor(props) {
