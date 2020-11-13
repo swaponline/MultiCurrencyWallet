@@ -65,7 +65,7 @@ export default class Web3Connect extends EventEmitter {
   }
 
   _checkIsDAppBrowser() {
-    if (isMobile()) {
+    if (isMobile) {
       if (window
         && window.ethereum
       ) {
