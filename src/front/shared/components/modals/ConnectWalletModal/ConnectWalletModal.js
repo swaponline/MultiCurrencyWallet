@@ -77,7 +77,11 @@ export default class ConnectWalletModal extends React.Component {
   }
 
   handleWalletConnect = () => {
-    metamask.web3connect.connectTo('WALLETCONNECT')
+    metamask.web3connect.connectTo('WALLETCONNECT').then((connected) => {
+      if (connected) {
+        history.push(localisedUrl(locale, links.createWallet))
+      }
+    })
   }
 
   render() {
