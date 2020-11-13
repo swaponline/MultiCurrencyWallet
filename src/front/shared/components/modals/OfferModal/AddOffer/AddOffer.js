@@ -407,8 +407,15 @@ export default class AddOffer extends Component {
 
   render() {
     const { currencies, tokenItems, addSelectedItems } = this.props
-    const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency, minimalestAmountForSell, minimalestAmountForBuy,
-      balance, ethBalance, manualRate, isPartial, isTokenSell, isTokenBuy } = this.state
+    const { 
+      exchangeRate, buyAmount, 
+      sellAmount, buyCurrency, 
+      sellCurrency, minimalestAmountForSell, 
+      minimalestAmountForBuy, balance, 
+      ethBalance, manualRate, 
+      isPartial, isTokenSell, 
+      isTokenBuy, sellInputValueIsOk 
+    } = this.state
 
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
 
@@ -422,9 +429,7 @@ export default class AddOffer extends Component {
 
     const isDisabled = !exchangeRate
       || !buyAmount && !sellAmount
-      /* This allows creating order greater than balance
-        || BigNumber(sellAmount).isGreaterThan(balance)
-      */
+      || BigNumber(sellAmount).isGreaterThan(balance)
       || BigNumber(sellAmount).isLessThan(minimalAmountSell)
       || BigNumber(buyAmount).isLessThan(minimalAmountBuy)
 

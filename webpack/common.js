@@ -21,7 +21,6 @@ const globals = {
     'EXTENSION': config.dir === 'chrome-extension/application',
     'VERSION': JSON.stringify(version),
   },
-  // TODO fix __CONFIG__ - remove it and check app-config/webpack to resolve in /client.js
   __CONFIG__: JSON.stringify(config),
 }
 
@@ -81,7 +80,6 @@ const webpackConfig = {
       'swap.swap': 'swap.swap',
       'swap.swaps': 'swap.swaps',
     }),
-    new webpack.NoEmitOnErrorsPlugin(),
     new ProgressBarPlugin({ clear: false }),
     new WebappWebpackPlugin({
       logo: 'favicon.png',

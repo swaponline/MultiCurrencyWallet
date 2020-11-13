@@ -86,6 +86,8 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 @withRouter
 @CSSModules({ ...styles, ...stylesHere }, { allowMultiple: true })
 export default class CurrencyWallet extends Component {
+  _mounted = false
+
   constructor(props) {
     super(props)
 
@@ -203,6 +205,7 @@ export default class CurrencyWallet extends Component {
       this.state = {
         itemCurrency,
         address,
+        walletAddress,
         balance,
         decimals,
         currency,
@@ -211,13 +214,14 @@ export default class CurrencyWallet extends Component {
         hiddenCoinsList,
         isLoading: false,
         infoAboutCurrency,
-        filterValue: address || '',
+        filterValue: walletAddress || address || '',
         token: ethToken.isEthToken({ name: ticker }),
       }
     }
   }
 
   componentDidMount() {
+    this._mounted = true
     console.log('CurrencyWallet mounted')
     const {
       currency,
@@ -272,7 +276,9 @@ export default class CurrencyWallet extends Component {
       ? actions.history.setTransactions(address, currency.toLowerCase(), this.pullTransactions)
       : actions.user.setTransactions()
 
-    if (!address) actions.core.getSwapHistory()
+    if (!address) {
+      actions.core.getSwapHistory()
+    }
 
     const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals
 
@@ -489,6 +495,7 @@ export default class CurrencyWallet extends Component {
   }
 
   componentWillUnmount() {
+    this._mounted = false
     console.log('CurrencyWallet unmounted')
   }
 
@@ -497,6 +504,7 @@ export default class CurrencyWallet extends Component {
   }
 
   pullTransactions = (transactions) => {
+    if (!this._mounted) return
     let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date)
     this.setState({
       txItems: data,
@@ -647,6 +655,7 @@ export default class CurrencyWallet extends Component {
 
     const {
       currency,
+      itemCurrency,
       balance,
       fullName,
       infoAboutCurrency,
@@ -671,7 +680,10 @@ export default class CurrencyWallet extends Component {
       })
     }
 
-    swapHistory = Object.keys(swapHistory)
+    const showSwapHistory = (address.toLowerCase() === itemCurrency.address.toLowerCase())
+
+    if (showSwapHistory)
+      swapHistory = Object.keys(swapHistory)
       .map((key) => swapHistory[key])
       .filter((swap) => swap.sellCurrency === currency || swap.buyCurrency === currency)
       .reverse()
@@ -787,13 +799,19 @@ export default class CurrencyWallet extends Component {
               </div>
             )}
           </div>
-          {!actions.btcmultisig.isBTCSMSAddress(`${address}`) &&
-            !actions.btcmultisig.isBTCMSUserAddress(`${address}`) &&
-            (swapHistory.filter((item) => item.step >= 1).length > 0 ? (
-                <SwapsHistory orders={swapHistory.filter((item) => item.step >= 4)} />
-              ) : (
-                ''
-              ))}
+          {showSwapHistory && (
+            <>
+              {!actions.btcmultisig.isBTCSMSAddress(`${address}`) &&
+                !actions.btcmultisig.isBTCMSUserAddress(`${address}`) &&
+                (swapHistory.filter((item) => item.step >= 1).length > 0 ? (
+                    <SwapsHistory orders={swapHistory.filter((item) => item.step >= 4)} />
+                  ) : (
+                    ''
+                  )
+                )
+              }
+            </>
+          )}
         </DashboardLayout>
         <Fragment>{seoPage && seoPage.footer && <div>{seoPage.footer}</div>}</Fragment>
       </div>

@@ -20,14 +20,13 @@ export default [
         options: { sourceMap: true },
       },
       {
+        loader: 'cache-loader',
+      },
+      {
         loader: 'css-loader',
         options: {
-          // [compile]: true,
           sourceMap: true,
           modules: true,
-          // localIdentName,
-          // importLoaders: 1,
-          // minimize: config.env === 'production'
         },
       },
       {

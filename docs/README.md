@@ -3,13 +3,13 @@
 [![About SWAP token](https://img.shields.io/badge/ERC20-SWAP-green)](https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/SWAPTOKEN.md)
 
 ## MultiCurrencyWallet
-
+ 
 - 👛 Crypto wallet: BTC, ETН, USDT, {your_token}...
 - 💵 Fiat gateway: USD, EUR, RUB, UAH...
 - ⚛️ P2P exchange – atomic swaps
 - 💡 Open-source, client-side
 - 📦 Embeddable into your site!
-
+ 
 Live version here: https://swaponline.github.io (mirror https://swaponline.io)
 
 No coding skills? Use :package: [WordPress plugin with admin panel](https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064) :package: 
@@ -79,6 +79,7 @@ Work in progress to add more languages.
 - [Donate](/docs/DONATE.md)
 - _(the easiest)_ Star the project ⭐
 
+Developer? Start with [ONBOARDING](https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/ONBOARDING.md)
 ---
 
 Any questions [are welcome](https://t.me/mcvchat)
