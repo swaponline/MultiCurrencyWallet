@@ -21,7 +21,7 @@ export default class LogicForSteps extends Component {
     ...(!config.opts.curEnabled || config.opts.curEnabled.ghost) ? [{ name: "GHOST", capture: "Ghost" }] : [],
     ...(!config.opts.curEnabled || config.opts.curEnabled.next) ? [{ name: "NEXT", capture: "NEXT.coin" }] : [],
   ]
-
+  // Here Problem place !!!
   defaultStartPack = [
     ...this.widgetStartPack,
     { name: "SWAP", capture: "Swap" },
