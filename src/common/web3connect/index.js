@@ -13,6 +13,8 @@ export default class Web3Connect extends EventEmitter {
   _cachedWeb3 = null
   _isConnected = false
 
+  _isDAppBrowser = false
+
   _web3RPC = null
   _web3ChainId = null
 
@@ -28,6 +30,11 @@ export default class Web3Connect extends EventEmitter {
     this._web3RPC = web3RPC
     this._web3ChainId = web3ChainId
 
+    if (this._checkIsDAppBrowser()) {
+      console.log('Is dAppBrowser')
+      this._inited = true
+      return
+    }
     // Предыдущий провайдер (после перезагрузки восстанавливаем его)
     const cachedProviderName = localStorage.getItem(`WEB3CONNECT:PROVIDER`)
     if (cachedProviderName) {
@@ -53,6 +60,21 @@ export default class Web3Connect extends EventEmitter {
       }
     } else {
       this._inited = true
+    }
+  }
+
+  _checkIsDAppBrowser() {
+    if (window
+      && window.ethereum
+      && window.ethereum.ready
+    ) {
+      this._isDAppBrowser = true
+      this._cachedProvider = window.ethereum
+      this._cachedAddress = window.ethereum.address
+      this._cachedChainId = window.ethereum.chainId
+      this._cachedWeb3 = new Web3(window.ethereum)
+      this._isConnected = true
+      return true
     }
   }
 
@@ -190,7 +212,7 @@ export default class Web3Connect extends EventEmitter {
   }
 
   async Disconnect() {
-    if (this._cachedProvider) {
+    if (this._cachedProvider && !this._isDAppBrowser) {
       this._isConnected = false
       await this._cachedProvider.Disconnect()
       this.clearCache()
