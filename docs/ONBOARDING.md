@@ -1,6 +1,7 @@
 # Onboarding plan
 
 ## Fast test
+- Install (`docs/INSTALLATION.md`) and run testent (`npm start`) 
 - Start a test wallet by writing down 12 words
 - Get test BTC, ETH (`docs / FAUCETS.md`)
 - Send test coins to another wallet
