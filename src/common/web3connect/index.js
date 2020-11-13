@@ -4,6 +4,7 @@ import Web3 from 'web3'
 import SUPPORTED_PROVIDERS from './providers/supported'
 import getProviderByName from './providers'
 import { isInjectedEnabled } from './providers'
+import { isMobile } from 'react-device-detect'
 
 
 export default class Web3Connect extends EventEmitter {
@@ -64,18 +65,20 @@ export default class Web3Connect extends EventEmitter {
   }
 
   _checkIsDAppBrowser() {
-    if (window
-      && window.ethereum
-      && window.ethereum.ready
-    ) {
-      this._isDAppBrowser = true
-      this._cachedProvider = window.ethereum
-      this._cachedAddress = window.ethereum.address
-      this._cachedChainId = window.ethereum.chainId
-      this._cachedWeb3 = new Web3(window.ethereum)
-      this._isConnected = true
-      return true
+    if (isMobile()) {
+      if (window
+        && window.ethereum
+      ) {
+        this._isDAppBrowser = true
+        this._cachedProvider = window.ethereum
+        this._cachedAddress = window.ethereum.address
+        this._cachedChainId = window.ethereum.chainId
+        this._cachedWeb3 = new Web3(window.ethereum)
+        this._isConnected = true
+        return true
+      }
     }
+    return false
   }
 
   isInjectedEnabled() {
