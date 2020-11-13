@@ -79,6 +79,7 @@ Work in progress to add more languages.
 - [Donate](/docs/DONATE.md)
 - _(the easiest)_ Star the project ⭐
 
+Developer? Start with [ONBOARDING](https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/ONBOARDING.md)
 ---
 
 Any questions [are welcome](https://t.me/mcvchat)
