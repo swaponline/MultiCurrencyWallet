@@ -208,7 +208,7 @@ const getBalances = () => {
           try {
             await actions.token.getBalance(name)
           } catch (e) {
-            console.error('Fail fetch balance for token', name)
+            console.error('Fail fetch balance for token', name, e)
           }
         })
     }

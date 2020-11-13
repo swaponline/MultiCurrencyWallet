@@ -59,6 +59,13 @@ export default class Web3Connect extends EventEmitter {
   isInjectedEnabled() {
     return isInjectedEnabled()
   }
+
+  getLibrary(provider) {
+    const library = new Web3Provider(provider)
+    library.pollingInterval = 12000
+    return library
+  }
+
   onInit(cb) {
     const waitInit = () => {
       if (this._inited) {
@@ -115,15 +122,26 @@ export default class Web3Connect extends EventEmitter {
   async _cacheProviderData() {
     this._cachedAddress = await this._cachedProvider.getAccount()
     this._cachedChainId = await this._cachedProvider.getChainId()
+    const _web3provider = await this._cachedProvider.getProvider()
+    await _web3provider.enable()
+
+    // @ToDo - Hard fix walletconnect
+    // https://github.com/WalletConnect/walletconnect-monorepo/issues/384
+    if (window) {
+      window.send = (e,t) => {
+        return _web3provider.send(e,t)
+      }
+    }
+
     this._cachedWeb3 = new Web3(
-      await this._cachedProvider.getProvider()
+      _web3provider
     )
     this._cachedWeb3.isMetamask = true
   }
 
   async connectTo(provider) {
     if (SUPPORTED_PROVIDERS[provider]) {
-      const _connector = getProviderByName(this, provider)
+      const _connector = getProviderByName(this, provider, true)
       if (_connector) {
         if (await _connector.Connect()) {
           localStorage.setItem(`WEB3CONNECT:PROVIDER`, provider)

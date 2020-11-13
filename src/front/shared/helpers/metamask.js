@@ -11,9 +11,10 @@ import Web3Connect from '../../../common/web3connect'
 
 console.log('In metamask', Web3Connect)
 
+console.log(config.web3.provider)
 const web3connect = new Web3Connect({
   web3ChainId: (process.env.MAINNET) ? 1 : 4,
-  web3RPC: config.api.web3
+  web3RPC: config.web3.provider,
 })
 
 web3connect.on('connected', () => window.location.reload())
@@ -56,6 +57,7 @@ const addWallet = () => {
 }
 
 const getBalance = () => {
+  console.log('metamask getBalance')
   const { user: { metamaskData } } = getState()
   if (metamaskData) {
     const { address } = metamaskData
@@ -69,15 +71,17 @@ const getBalance = () => {
       return balanceInCache
     }
 
-    return _web3.eth.getBalance(address)
+    return web3connect.getWeb3().eth.getBalance(address)
       .then(result => {
-        const amount = _web3.utils.fromWei(result)
+        const amount = web3connect.getWeb3().utils.fromWei(result)
 
         cacheStorageSet('currencyBalances', `eth_${address}`, amount, 30)
         reducers.user.setBalance({ name: 'metamaskData', amount })
         return amount
       })
       .catch((e) => {
+        console.log('fail get balance')
+        console.log('error', e)
         reducers.user.setBalanceError({ name: 'metamaskData' })
       })
   }
