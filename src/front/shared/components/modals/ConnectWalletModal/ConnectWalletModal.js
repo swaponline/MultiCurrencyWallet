@@ -4,7 +4,8 @@ import { connect } from 'redaction'
 import cx from 'classnames'
 
 import actions from 'redux/actions'
-import { constants } from 'helpers'
+import { constants, links } from 'helpers'
+import { localisedUrl } from 'helpers/locale'
 
 import Link from 'sw-valuelink'
 
@@ -53,12 +54,26 @@ const providerTitles = defineMessages({
 @cssModules(styles)
 export default class ConnectWalletModal extends React.Component {
   handleClose = () => {
-    const { name } = this.props
+    const {
+      name,
+      history,
+      intl: {
+        locale,
+      },
+    } = this.props
+
+    if (!localStorage.getItem(constants.localStorage.isWalletCreate)) {
+      history.push(localisedUrl(locale, links.createWallet))
+    }
     actions.modals.close(name)
   }
 
   handleInjected = () => {
-    metamask.web3connect.connectTo('INJECTED')
+    metamask.web3connect.connectTo('INJECTED').then((connected) => {
+      if (connected) {
+        history.push(localisedUrl(locale, links.createWallet))
+      }
+    })
   }
 
   handleWalletConnect = () => {
@@ -81,7 +96,7 @@ export default class ConnectWalletModal extends React.Component {
       <div className={cx({
         [styles['modal-overlay']]: true,
         [styles['modal-overlay_dashboardView']]: dashboardModalsAllowed
-      })} onClick={this.handleClose}>
+      })}>
         <div className={cx({
           [styles.modal]: true,
           [styles.modal_dashboardView]: dashboardModalsAllowed

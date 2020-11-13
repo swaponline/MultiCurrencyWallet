@@ -46,6 +46,18 @@ initExternalConfig()
 const repo = utils.createRepo()
 utils.exitListener()
 
+let _inited = false
+
+const onInit = (cb) => {
+  const _wait = () => {
+    if (_inited) {
+      cb()
+    } else {
+      setTimeout( _wait, 100)
+    }
+  }
+  _wait()
+}
 
 const createSwapApp = async () => {
   metamask.web3connect.onInit(async () => {
@@ -202,9 +214,11 @@ const createSwapApp = async () => {
     // ) : null
 
     window.SwapApp = SwapApp.shared()
+    _inited = true
   })
 }
 
 export {
   createSwapApp,
+  onInit,
 }

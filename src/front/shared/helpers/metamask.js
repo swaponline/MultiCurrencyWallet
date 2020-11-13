@@ -17,7 +17,11 @@ const web3connect = new Web3Connect({
   web3RPC: config.web3.provider,
 })
 
-web3connect.on('connected', () => window.location.reload())
+web3connect.on('connected', () => {
+  localStorage.setItem(constants.localStorage.isWalletCreate, true)
+  actions.core.markCoinAsVisible(`ETH`)
+  window.location.reload()
+})
 web3connect.on('disconnect', () => window.location.reload())
 web3connect.on('accountChange', () => window.location.reload())
 web3connect.on('chainChanged', () => window.location.reload())

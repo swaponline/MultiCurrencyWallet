@@ -8,6 +8,7 @@ import App from 'containers/App/App'
 import IntlProviderContainer from 'containers/IntlProviderContainer'
 
 
+
 export default class Root extends React.PureComponent {
 
   static propTypes = {
