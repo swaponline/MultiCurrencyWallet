@@ -185,6 +185,7 @@ export default class App extends React.Component {
             defaultMessage="Отключить внешний кошелек"
           />
         ),
+        dontClose: true,
         okButtonAutoWidth: true,
         callbackOk: () => {
           metamask.disconnect()
