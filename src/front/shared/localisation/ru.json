@@ -5248,7 +5248,7 @@
     "id": "createWallet_customERC20",
     "message": "Подключить токен",
     "files": [
-      "src/front/shared/pages/CreateWallet/Steps/FirstStep.js"
+      "src/front/shared/pages/CreateWallet/Steps/LogicForSteps.js"
     ]
   },
   {
@@ -8316,6 +8316,41 @@
     "message": "Внимание",
     "files": [
       "src/front/shared/containers/App/App.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_Cancel",
+    "message": "Отмена",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_Injected",
+    "message": "Metamask",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_InjectedMobile",
+    "message": "Подключить",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_Title",
+    "message": "Подключение внешего кошелька",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_WalletConnect",
+    "message": "WalletConnect",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
     ]
   }
 ]

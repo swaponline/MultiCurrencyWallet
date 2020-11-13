@@ -5229,7 +5229,7 @@
     "id": "createWallet_customERC20",
     "message": "Custom token",
     "files": [
-      "src/front/shared/pages/CreateWallet/Steps/FirstStep.js"
+      "src/front/shared/pages/CreateWallet/Steps/LogicForSteps.js"
     ]
   },
   {
@@ -8260,6 +8260,41 @@
     "message": "Aandacht",
     "files": [
       "src/front/shared/containers/App/App.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_Cancel",
+    "message": "Annulering",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_Injected",
+    "message": "Metamask",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_InjectedMobile",
+    "message": "Inpluggen",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_Title",
+    "message": "Een externe portemonnee aansluiten",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_WalletConnect",
+    "message": "WalletConnect",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
     ]
   }
 ]

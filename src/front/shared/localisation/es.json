@@ -5234,7 +5234,7 @@
     "id": "createWallet_customERC20",
     "message": "Token personalizado",
     "files": [
-      "src/front/shared/pages/CreateWallet/Steps/FirstStep.js"
+      "src/front/shared/pages/CreateWallet/Steps/LogicForSteps.js"
     ]
   },
   {
@@ -8268,6 +8268,41 @@
     "message": "Atención",
     "files": [
       "src/front/shared/containers/App/App.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_Cancel",
+    "message": "Cancelación",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_Injected",
+    "message": "Metamask",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_InjectedMobile",
+    "message": "Para conectar",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_Title",
+    "message": "Conectar una billetera externa",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_WalletConnect",
+    "message": "WalletConnect",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
     ]
   }
 ]
