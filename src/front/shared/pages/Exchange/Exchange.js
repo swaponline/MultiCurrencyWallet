@@ -242,6 +242,7 @@ export default class Exchange extends Component {
       desclineOrders: [],
       pairFees: false,
       balances: false,
+      haveBalance: false,
     }
 
     if (config.isWidget) {
@@ -281,7 +282,6 @@ export default class Exchange extends Component {
         })
       }
     }, 60 * 1000)
-
     this.fetchPairFeesAndBalances()
   }
 
@@ -336,18 +336,25 @@ export default class Exchange extends Component {
           this.setState({
             balances,
           })
+
+          this.checkBalanceOnAllCurrency()
         })
       })
     })
-    const walletsArray = actions.core.getWallets()
+  }
 
-    for (let wallet of walletsArray) {
-      if (wallet.balance > 0) {
-        this.setState({
-          balanceOnWalletsIsOk: true
-        })
-        break
-      } 
+  checkBalanceOnAllCurrency() {
+    const { balances } = this.state
+
+    if (Object.keys(balances).length) {
+      for (let currency in balances) {
+        if (balances[currency] > 0) {
+          this.setState({
+            haveBalance: true
+          })
+          break
+        } 
+      }
     }
   }
 
@@ -1216,6 +1223,7 @@ export default class Exchange extends Component {
       isDeclinedOffer,
       pairFees,
       balances,
+      haveBalance,
     } = this.state
 
     const sellCoin = haveCurrency.toUpperCase()
@@ -1595,16 +1603,16 @@ export default class Exchange extends Component {
             >
               <FormattedMessage id="partial541" defaultMessage="Exchange now" />
             </Button>
-            {/* Creates offer */}
+            {/* Button Create offer */}
             <>
               <Button
                 id="createOrderReactTooltipMessageForUser"
-                styleName={`button link-like ${balance > 0 ? '' : 'noMany'}`}
-                onClick={ balance > 0 ? this.createOffer : null}
+                styleName={`button link-like ${haveBalance ? '' : 'noMany'}`}
+                onClick={haveBalance ? this.createOffer : null}
               >
                 <FormattedMessage id="orders128" defaultMessage="Create offer" />
               </Button>
-              { balance > 0
+              {haveBalance
                 ? (
                   <ReactTooltip id="createOrderReactTooltipMessageForUser" effect="solid" type="dark" place="bottom">
                     <FormattedMessage
