@@ -95,7 +95,9 @@ export default class Web3Connect extends EventEmitter {
 
       } else {
         alert('no ethereum')
-        detectEthereumProvider().then((provider) => {
+        setTimeout( async () => {
+          alert('try detect provider after 3 sec timeout')
+          const provider = await detectEthereumProvider()
           if (provider) {
             // From now on, this should always be true:
             // provider === window.ethereum
@@ -108,7 +110,7 @@ export default class Web3Connect extends EventEmitter {
           } else {
             alert('Please install MetaMask!')
           }
-        })
+        }, 3000)
       }
     }
     return false
