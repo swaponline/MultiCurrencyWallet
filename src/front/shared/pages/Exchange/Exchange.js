@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react"
 
 import Link from "sw-valuelink"
 
-import ReactTooltip from 'react-tooltip'
+import ThemeTooltip from '../../components/ui/Tooltip/ThemeTooltip'
 import CSSModules from "react-css-modules"
 import styles from "./Exchange.scss"
 
@@ -1614,20 +1614,20 @@ export default class Exchange extends Component {
               </Button>
               {haveBalance
                 ? (
-                  <ReactTooltip id="createOrderReactTooltipMessageForUser" effect="solid" type="dark" place="bottom">
+                  <ThemeTooltip id="createOrderReactTooltipMessageForUser" effect="solid" place="bottom">
                     <FormattedMessage
                       id="createOrderMessageForUser"
                       defaultMessage="You must be online all the time, otherwise your order will not be visible to other users"
                     />
-                  </ReactTooltip>
+                  </ThemeTooltip>
                 )
                 : (
-                  <ReactTooltip id="createOrderReactTooltipMessageForUser" effect="solid" type="dark" place="bottom">
+                  <ThemeTooltip id="createOrderReactTooltipMessageForUser" effect="solid" place="bottom">
                     <FormattedMessage
                       id="createOrderNoManyMessageForUser"
                       defaultMessage="Top up your balance"
                     />
-                  </ReactTooltip>
+                  </ThemeTooltip>
                 )
               }
             </>
