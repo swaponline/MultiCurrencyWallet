@@ -8248,5 +8248,75 @@
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_Message",
+    "message": "Para continuar, seleccione Metamask \"{network}\" en la billetera o deshabilite la billetera",
+    "files": [
+      "src/front/shared/containers/App/App.js"
+    ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_NetworkMainnet",
+    "message": "Red principal (Mainnet)",
+    "files": [
+      "src/front/shared/containers/App/App.js"
+    ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_NetworkTestnet",
+    "message": "Red de prueba (Rinkeby)",
+    "files": [
+      "src/front/shared/containers/App/App.js"
+    ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_OkDisconnectWallet",
+    "message": "Deshabilitar billetera externa",
+    "files": [
+      "src/front/shared/containers/App/App.js"
+    ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_Title",
+    "message": "Atención",
+    "files": [
+      "src/front/shared/containers/App/App.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_Cancel",
+    "message": "Cancelación",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_Injected",
+    "message": "Metamask",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_InjectedMobile",
+    "message": "Para conectar",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_Title",
+    "message": "Conectar una billetera externa",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_WalletConnect",
+    "message": "WalletConnect",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
   }
 ]

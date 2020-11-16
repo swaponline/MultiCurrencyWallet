@@ -8224,5 +8224,75 @@
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
+  },
+    {
+    "id": "MetamaskNetworkAlert_Message",
+    "message": "Wrong network, please select \"{network}\" in Metamask or disconnect wallet",
+    "files": [
+      "src/front/shared/containers/App/App.js"
+    ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_NetworkMainnet",
+    "message": "Main network (Mainnet)",
+    "files": [
+      "src/front/shared/containers/App/App.js"
+    ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_NetworkTestnet",
+    "message": "Test network (Rinkeby)",
+    "files": [
+      "src/front/shared/containers/App/App.js"
+    ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_OkDisconnectWallet",
+    "message": "Disconnect external wallet",
+    "files": [
+      "src/front/shared/containers/App/App.js"
+    ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_Title",
+    "message": "Warning",
+    "files": [
+      "src/front/shared/containers/App/App.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_Cancel",
+    "message": "Cancel",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_Injected",
+    "message": "Metamask",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_InjectedMobile",
+    "message": "Connect",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_Title",
+    "message": "Connecting an external wallet",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_WalletConnect",
+    "message": "WalletConnect",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
   }
 ]
