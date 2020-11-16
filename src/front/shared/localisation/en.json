@@ -5234,7 +5234,7 @@
     "id": "createWallet_customERC20",
     "message": "Custom token",
     "files": [
-      "src/front/shared/pages/CreateWallet/Steps/FirstStep.js"
+      "src/front/shared/pages/CreateWallet/Steps/LogicForSteps.js"
     ]
   },
   {
@@ -7338,16 +7338,14 @@
     "id": "AlertOrderNonEnoughtBalance",
     "message": "Please top up your balance before you start the swap.",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.js",
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
+      "src/front/shared/pages/Exchange/Exchange.js"
     ]
   },
   {
     "id": "AlertOrderNonEnoughtBalanceTitle",
     "message": "Not enough balance.",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.js",
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
+      "src/front/shared/pages/Exchange/Exchange.js"
     ]
   },
   {
@@ -7461,17 +7459,11 @@
   },
   {
     "id": "walletDidntCreateMessage",
-    "message": "Create {curr} wallet before you start the swap.",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.js"
-    ]
+    "message": "Create {curr} wallet before you start the swap."
   },
   {
     "id": "walletDidntCreateTitle",
-    "message": "Wallet does not exist.",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.js"
-    ]
+    "message": "Wallet does not exist."
   },
   {
     "id": "PartialPriceNoOrdersReduce_PointOfSell",
@@ -8128,16 +8120,14 @@
     "id": "Swap_NeedEthFee",
     "message": "You must have at least {sellFee} {sellCoin} and {buyFee} {buyCoin} on your balance to pay the miner commission",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.js",
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
+      "src/front/shared/pages/Exchange/Exchange.js"
     ]
   },
   {
     "id": "Swap_NeedMoreAmount",
     "message": "You must have at least {amount} {currency} on your balance. {br} Miner commission {sellFee} {sellCoin} and {buyFee} {buyCoin}",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.js",
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
+      "src/front/shared/pages/Exchange/Exchange.js"
     ]
   },
   {
@@ -8219,6 +8209,76 @@
     "message": "{buyCurrency} Owner received Bitcoin Script and Secret Hash. Waiting confirm TX and when he creates {buyCurrency} Contract",
     "files": [
       "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
+    ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_Message",
+    "message": "Wrong network, please select \"{network}\" in Metamask or disconnect wallet",
+    "files": [
+      "src/front/shared/containers/App/App.js"
+    ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_NetworkMainnet",
+    "message": "Main network (Mainnet)",
+    "files": [
+      "src/front/shared/containers/App/App.js"
+    ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_NetworkTestnet",
+    "message": "Test network (Rinkeby)",
+    "files": [
+      "src/front/shared/containers/App/App.js"
+    ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_OkDisconnectWallet",
+    "message": "Disconnect external wallet",
+    "files": [
+      "src/front/shared/containers/App/App.js"
+    ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_Title",
+    "message": "Warning",
+    "files": [
+      "src/front/shared/containers/App/App.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_Cancel",
+    "message": "Cancel",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_Injected",
+    "message": "Metamask",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_InjectedMobile",
+    "message": "Connect",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_Title",
+    "message": "Connecting an external wallet",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_WalletConnect",
+    "message": "WalletConnect",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
     ]
   }
 ]
