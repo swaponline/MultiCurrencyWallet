@@ -5,6 +5,7 @@ import SUPPORTED_PROVIDERS from './providers/supported'
 import getProviderByName from './providers'
 import { isInjectedEnabled } from './providers'
 import { isMobile } from 'react-device-detect'
+import detectEthereumProvider from '@metamask/detect-provider'
 
 
 export default class Web3Connect extends EventEmitter {
@@ -94,16 +95,20 @@ export default class Web3Connect extends EventEmitter {
 
       } else {
         alert('no ethereum')
-        const _waitEthereum = () => {
-          if (window
-            && window.ethereum
-          ) {
-            alert('ethereum inited')
+        detectEthereumProvider().then((provider) => {
+          if (provider) {
+            // From now on, this should always be true:
+            // provider === window.ethereum
+            alert('exists metamask provider')
+            if (window.ethereum) {
+              alert('also exist window.ethereum')
+            } else {
+              alert('but no window.ethereum')
+            }
           } else {
-            setTimeout(_waitEthereum, 500)
+            alert('Please install MetaMask!')
           }
-        }
-        _waitEthereum()
+        })
       }
     }
     return false
