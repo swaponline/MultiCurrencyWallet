@@ -87,8 +87,8 @@ const FAQ = (props) => {
             <br />
             <br />
             <FormattedMessage id="MainFAQ2_content3" defaultMessage="Current mining fees:" />
-            <p className={styles.fee}>BTC: <span>{btc.fee}</span> sat/byte</p>
-            <p className={styles.fee}>ETH: <span>{eth.fee}</span> gwei</p>
+            <p className={styles.descriptionFee}><span>BTC:</span> <span className={styles.fee}>{btc.fee}</span> sat/byte</p>
+            <p className={styles.descriptionFee}><span>ETH:</span> <span className={styles.fee}>{eth.fee}</span> gwei</p>
           </div>
         </article>
 
