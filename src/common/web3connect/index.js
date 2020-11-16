@@ -32,11 +32,8 @@ export default class Web3Connect extends EventEmitter {
     this._web3RPC = web3RPC
     this._web3ChainId = web3ChainId
 
-    if (this._checkIsDAppBrowser()) {
-      console.log('Is dAppBrowser')
-      this._inited = true
-      return
-    }
+    this._checkIsDAppBrowser()
+
     // Предыдущий провайдер (после перезагрузки восстанавливаем его)
     const cachedProviderName = localStorage.getItem(`WEB3CONNECT:PROVIDER`)
     if (cachedProviderName) {
@@ -66,56 +63,20 @@ export default class Web3Connect extends EventEmitter {
   }
 
   _checkIsDAppBrowser() {
-    alert('checkIsDApp')
-    if (isMobile || true) {
-      if (window.ethereum) {
-        alert('exists ethereum')
-      }
+    if (isMobile) {
 
-      window.addEventListener('ethereum#initialized', () => {
-        alert('metamask exists and inited')
-      }, {
-        once: true,
-      });
       if (window
         && window.ethereum
       ) {
-        alert('window.ethereum exists')
-        if (window.ethereum.isMetaMask) {
-          alert('has metamask')
-        }
-        return false
         this._isDAppBrowser = true
-        this._cachedProvider = window.ethereum
-        this._cachedAddress = window.ethereum.address
-        this._cachedChainId = window.ethereum.chainId
-        this._cachedWeb3 = new Web3(window.ethereum)
-        this._isConnected = true
-        return true
-
-      } else {
-        alert('no ethereum')
-        setTimeout( async () => {
-          alert('try detect provider after 3 sec timeout')
-          const provider = await detectEthereumProvider()
-          if (provider) {
-            // From now on, this should always be true:
-            // provider === window.ethereum
-            alert('exists metamask provider')
-            if (window.ethereum) {
-              alert('also exist window.ethereum')
-            } else {
-              alert('but no window.ethereum')
-            }
-          } else {
-            alert('Please install MetaMask!')
-          }
-        }, 3000)
       }
     }
-    return false
   }
 
+  async tryDetect() {
+    const provider = await detectEthereumProvider()
+    console.log(provider)
+  }
   isInjectedEnabled() {
     if (isMobile) return false
 
