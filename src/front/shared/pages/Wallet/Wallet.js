@@ -353,11 +353,20 @@ export default class Wallet extends Component {
     }
 
     const currencies = actions.core.getWallets()
-      .filter(({ currency, balance }) => {
+      .filter(({
+        isMetamask,
+        isConnected,
+        currency,
+        balance,
+      }) => {
         return (
           ((context === 'Send') ? balance : true)
           && !hiddenCoinsList.includes(currency)
           && enabledCurrencies.includes(currency)
+          && (
+            !isMetamask
+            || (isMetamask && isConnected)
+          )
           && ((isWidgetBuild) ?
             widgetCurrencies.includes(currency)
             : true)
@@ -490,46 +499,6 @@ export default class Wallet extends Component {
     }, 2000)
   }
 
-
-  handleModalOpen = context => {
-    const { enabledCurrencies } = this.state
-    const { hiddenCoinsList } = this.props
-
-    /* @ToDo Вынести в экшены и убрать все дубляжи из всех компонентов */
-    // Набор валют для виджета
-    const widgetCurrencies = ['BTC']
-    if (!hiddenCoinsList.includes('BTC (SMS-Protected)')) widgetCurrencies.push('BTC (SMS-Protected)')
-    if (!hiddenCoinsList.includes('BTC (PIN-Protected)')) widgetCurrencies.push('BTC (PIN-Protected)')
-    if (!hiddenCoinsList.includes('BTC (Multisig)')) widgetCurrencies.push('BTC (Multisig)')
-    widgetCurrencies.push('ETH')
-    if (isWidgetBuild) {
-      if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
-        // Multi token widget build
-        Object.keys(window.widgetERC20Tokens).forEach(key => {
-          widgetCurrencies.push(key.toUpperCase())
-        })
-      } else {
-        widgetCurrencies.push(config.erc20token.toUpperCase())
-      }
-    }
-
-    const currencies = actions.core.getWallets()
-      .filter(({ currency, balance }) => {
-        return (
-          ((context === 'Send') ? balance : true)
-          && !hiddenCoinsList.includes(currency)
-          && enabledCurrencies.includes(currency)
-          && ((isWidgetBuild) ?
-            widgetCurrencies.includes(currency)
-            : true)
-        )
-      })
-
-    actions.modals.open(constants.modals.CurrencyAction, {
-      currencies,
-      context
-    })
-  }
 
   render() {
     const {
