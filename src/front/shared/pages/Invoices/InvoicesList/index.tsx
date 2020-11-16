@@ -228,8 +228,7 @@ export default class InvoicesList extends PureComponent<any, any> {
         {(items && items.length > 0) ? (
           <Table rows={items} styleName="currencyHistory" rowRender={this.rowRender} />
         ) : (
-          {/*
-          //@ts-ignore */}
+          //@ts-ignore
           <ContentLoader rideSideContent empty inner />
         )}
       </div>
@@ -249,7 +248,7 @@ export default class InvoicesList extends PureComponent<any, any> {
               </a>
             </li>
             <li styleName="widgetNavItem active">
-              <a href="#"" styleName="widgetNavItemLink">
+              <a href="#" styleName="widgetNavItemLink">
                 <FormattedMessage id="InvoicesList_Title" defaultMessage="Invoices" />
               </a>
             </li>
@@ -263,8 +262,7 @@ export default class InvoicesList extends PureComponent<any, any> {
                   {/* Right form holder */}
                 </div>
               ) : (
-                {/*
-                //@ts-ignore */}
+                //@ts-ignore
                 <ContentLoader leftSideContent />
               )}
             </div>
