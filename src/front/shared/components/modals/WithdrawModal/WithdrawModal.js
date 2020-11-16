@@ -211,7 +211,6 @@ export default class WithdrawModal extends React.Component {
       this.setState({
         tokenFee,
       })
-
     }
 
     if (constants.coinsWithDynamicFee.includes(currentCoin)) {
@@ -225,7 +224,6 @@ export default class WithdrawModal extends React.Component {
         speed: 'fast',
         address,
       })
-      console.log('minAmount', minAmount[currentCoin])
     }
   }
 
@@ -605,12 +603,10 @@ export default class WithdrawModal extends React.Component {
     const currencyView = getCurrencyKey(currentActiveAsset.currency, true).toUpperCase()
     const selectedValueView = getCurrencyKey(selectedValue, true).toUpperCase()
 
-    let min = isEthToken ? 0 : minAmount[getCurrencyKey(currency).toLowerCase()]
-    let defaultMin = min
-    const minerFee = min
-    const serviceFee = adminFee.calc(currency, amount)
+    let dinamicFee = isEthToken ? 0 : minAmount[getCurrencyKey(currency).toLowerCase()]
+    let defaultMinFee = dinamicFee
 
-    const allowedBalance = new BigNumber(balance).minus(defaultMin)
+    const allowedBalance = new BigNumber(balance).minus(defaultMinFee)
     
     /*
     let enabledCurrencies = allCurrencyies.filter(
@@ -636,9 +632,11 @@ export default class WithdrawModal extends React.Component {
 
     tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
 
-    min = (usedAdminFee) ? BigNumber(min).plus(adminFee.calc(currency, amount)).toNumber() : defaultMin
+    dinamicFee = (usedAdminFee) ? BigNumber(dinamicFee).plus(adminFee.calc(currency, amount)).toNumber() : defaultMinFee
 
     const dataCurrency = isEthToken ? 'ETH' : currency.toUpperCase()
+    const dynamicAmountValue = linked.amount.pipe(this.handleAmount).value
+    const dynamicValueSum = (+dinamicFee) + (+dynamicAmountValue)
 
     const isDisabled =
       !address ||
@@ -646,6 +644,7 @@ export default class WithdrawModal extends React.Component {
       isShipped ||
       ownTx ||
       !this.addressIsCorrect() ||
+      BigNumber(dynamicValueSum).isGreaterThan(balance) ||
       BigNumber(amount).isGreaterThan(balance) ||
       BigNumber(amount).dp() > currentDecimals ||
       this.isEthOrERC20()
@@ -657,7 +656,7 @@ export default class WithdrawModal extends React.Component {
           id="Withdrow170"
           defaultMessage="The amount must be no more than your balance"
           values={{
-            min,
+            dinamicFee,
             currency: `${activeFiat}`,
           }}
         />
@@ -671,7 +670,7 @@ export default class WithdrawModal extends React.Component {
           id="Withdrow170"
           defaultMessage="The amount must be no more than your balance"
           values={{
-            min,
+            dinamicFee,
             currency: `${currency}`,
           }}
         />
@@ -724,7 +723,7 @@ export default class WithdrawModal extends React.Component {
               id="Withdrow213"
               defaultMessage="Please note: Fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction"
               values={{
-                minAmount: <span>{isEthToken ? minAmount.eth : min}</span>,
+                minAmount: <span>{isEthToken ? minAmount.eth : dinamicFee}</span>,
                 br: <br />,
                 data: `${dataCurrency}`,
               }}
@@ -811,7 +810,7 @@ export default class WithdrawModal extends React.Component {
                 values={{
                   amount: (selectedValue !== activeFiat)
                     ? BigNumber(fiatAmount).dp(2, BigNumber.ROUND_FLOOR)
-                    : BigNumber(amount).dp(5, BigNumber.ROUND_FLOOR),
+                    : BigNumber(amount).dp(6, BigNumber.ROUND_FLOOR),
                   currency: (selectedValue !== activeFiat)
                     ? activeFiat
                     : currencyView.toUpperCase(),
@@ -954,7 +953,7 @@ export default class WithdrawModal extends React.Component {
               id="Withdrow213"
               defaultMessage="Please note: Fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction"
               values={{
-                minAmount: <span>{isEthToken ? tokenFee : min}</span>,
+                minAmount: <span>{isEthToken ? tokenFee : dinamicFee}</span>,
                 br: <br />,
                 data: `${getCurrencyKey(dataCurrency, true).toUpperCase()}`,
               }}

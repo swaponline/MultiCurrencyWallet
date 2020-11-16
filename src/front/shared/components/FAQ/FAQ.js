@@ -5,12 +5,12 @@ import cssModules from 'react-css-modules'
 import { FormattedMessage, injectIntl } from 'react-intl'
 
 import { constants } from 'helpers'
+import config from 'helpers/externalConfig'
 import feedback from 'shared/helpers/feedback'
 
 import cx from 'classnames'
 
 import styles from './styles.scss'
-
 
 const tabsIdsDictionary = {
   FIRST_TAB: 'MainFAQ1_header',
@@ -18,7 +18,9 @@ const tabsIdsDictionary = {
   THIRD_TAB: 'MainFAQ3_header',
 }
 
+
 const FAQ = (props) => {
+  const { btc, eth } = config.opts.fee
   const { intl: { formatMessage } } = props
   const [openedTabs, setOpenedTabs] = useState({
     FIRST_TAB: false,
@@ -82,6 +84,11 @@ const FAQ = (props) => {
             <br />
             <br />
             <FormattedMessage id="MainFAQ2_content2" defaultMessage="NOTE: You can easily check the ‘miners fees’ required for each respective coin by simply googling them." />
+            <br />
+            <br />
+            <FormattedMessage id="MainFAQ2_content3" defaultMessage="Current mining fees:" />
+            <p className={styles.fee}>BTC: <span>{btc.fee}</span> sat/byte</p>
+            <p className={styles.fee}>ETH: <span>{eth.fee}</span> gwei</p>
           </div>
         </article>
 
