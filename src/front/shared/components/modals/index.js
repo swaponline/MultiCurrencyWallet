@@ -43,6 +43,9 @@ import WalletAddressModal from './WalletAddressModal/WalletAddressModal'
 import HowToExportModal from './HowToExportModal/HowToExportModal'
 import AlertWindow from "./AlertWindow"
 
+import ConnectWalletModal from './ConnectWalletModal/ConnectWalletModal'
+
+
 
 export default {
   DeclineOrdersModal,
@@ -90,4 +93,6 @@ export default {
 
   HowToExportModal,
   AlertWindow,
+
+  ConnectWalletModal,
 }

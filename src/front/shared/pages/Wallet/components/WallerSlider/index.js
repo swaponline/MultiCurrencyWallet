@@ -20,6 +20,8 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 @injectIntl
 @connect(({ user }) => ({ user }))
 export default class WallerSlider extends Component {
+  _mounted = false
+
   constructor(props) {
     super(props)
 
@@ -34,7 +36,12 @@ export default class WallerSlider extends Component {
   }
 
   componentDidMount() {
+    this._mounted = true
     this.getBanners()
+  }
+
+  componentWillUnmount() {
+    this._mounted = false
   }
 
   initBanners = () => {
@@ -82,6 +89,7 @@ export default class WallerSlider extends Component {
     ) {
       // Используем банеры, которые были определены в index.html (используется в виджете вордпресса)
       const widgetBanners = (window.bannersOnMainPage.length) ? window.bannersOnMainPage : []
+      if (!this._mounted) return
       this.setState(() => ({
         banners: this.processItezBanner(widgetBanners).filter(el => el && el.length),
         isFetching: true,
@@ -92,6 +100,7 @@ export default class WallerSlider extends Component {
           .get('https://noxon.wpmix.net/swapBanners/banners.php')
           .then(({ data }) => {
             const banners = this.processItezBanner(data).filter(el => el && el.length)
+            if (!this._mounted) return
             this.setState(() => ({
               banners,
               isFetching: true,

@@ -72,15 +72,27 @@
 }
 
 .button {
-  width: 45%;
+  display: block;
+  width: auto;
   max-width: 240px;
 }
 
-.button_autoWidth {
+.button_provider {
+  display: block;
   width: auto;
   max-width: none;
+  min-width: 240px;
+  margin: 0 auto;
 }
 
+.providers {
+  display: block;
+  width: 100%;
+}
+
+.provider_row {
+  margin-bottom: 10px;
+}
 
 .content {
   height: 100%;
