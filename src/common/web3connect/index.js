@@ -65,14 +65,20 @@ export default class Web3Connect extends EventEmitter {
   }
 
   _checkIsDAppBrowser() {
-    return false
-    if (isMobile) {
+    if (isMobile || true) {
+      window.addEventListener('ethereum#initialized', () => {
+        alert('metamask exists')
+      }, {
+        once: true,
+      });
       if (window
         && window.ethereum
       ) {
+        alert('window.ethereum exists')
         if (window.ethereum.isMetaMask) {
-          ethereum.request({ method: 'eth_requestAccounts' })
+          alert('has metamask')
         }
+        return false
         this._isDAppBrowser = true
         this._cachedProvider = window.ethereum
         this._cachedAddress = window.ethereum.address
