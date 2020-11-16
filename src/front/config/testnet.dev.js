@@ -8,8 +8,8 @@ export default {
   entry: 'testnet',
   local: 'online',
 
-  base: `https://port9001.swaponline.site/`,
-  publicPath: `https://port9001.swaponline.site/`,
+  base: `http://${baseConfig.http.host}:${baseConfig.http.port}/`,
+  publicPath: `http://${baseConfig.http.host}:${baseConfig.http.port}${baseConfig.publicPath}`,
 
   time: moment(Date.now()).format('LLLL'),
 
