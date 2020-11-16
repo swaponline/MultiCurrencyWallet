@@ -94,6 +94,16 @@ export default class Web3Connect extends EventEmitter {
 
       } else {
         alert('no ethereum')
+        const _waitEthereum = () => {
+          if (window
+            && window.ethereum
+          ) {
+            alert('ethereum inited')
+          } else {
+            setTimeout(_waitEthereum, 500)
+          }
+        }
+        _waitEthereum()
       }
     }
     return false
