@@ -65,9 +65,14 @@ export default class Web3Connect extends EventEmitter {
   }
 
   _checkIsDAppBrowser() {
+    alert('checkIsDApp')
     if (isMobile || true) {
+      if (window.ethereum) {
+        alert('exists ethereum')
+      }
+
       window.addEventListener('ethereum#initialized', () => {
-        alert('metamask exists')
+        alert('metamask exists and inited')
       }, {
         once: true,
       });
@@ -87,6 +92,8 @@ export default class Web3Connect extends EventEmitter {
         this._isConnected = true
         return true
 
+      } else {
+        alert('no ethereum')
       }
     }
     return false
