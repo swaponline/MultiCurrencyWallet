@@ -1,5 +1,5 @@
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
+import React from 'react'
+import ReactDOM from 'react-dom'
 import routes from 'shared/routes'
 import store, { history } from 'redux/store'
 
@@ -27,8 +27,9 @@ if (
   ReactDOM.render(<ErrorPageNoSSL />, rootEl)
 } else {
   migrate().finally(() => setTimeout(() => {
-    //@ts-ignore
+    console.log('(index.tsx) render root, started', 'Root =', Root, 'history = ', history, 'store = ', store, 'routes = ', routes, 'rootEl = ', rootEl)
     ReactDOM.render(<Root history={history} store={store} routes={routes} />, rootEl)
+    console.log('(index.tsx) render root, finished')
   }, 1000))
 }
 

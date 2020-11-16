@@ -1,7 +1,6 @@
-//@ts-nocheck
 import React, { Component, Fragment } from 'react'
 
-import Link from 'local_modules/sw-valuelink'
+//import Link from 'local_modules/sw-valuelink'
 
 import CSSModules from 'react-css-modules'
 import styles from '../Exchange/Exchange.scss'

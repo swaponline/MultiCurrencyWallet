@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { IntlProvider, addLocaleData } from 'react-intl'
 import { Switch, Route, HashRouter } from 'react-router-dom'
 import localeEn from 'react-intl/locale-data/en'
@@ -9,7 +9,12 @@ import localeEs from 'react-intl/locale-data/es'
 import { getCookie } from 'helpers/utils'
 
 
-addLocaleData([...localeEn, ...localeRu, ...localeNl, ...localeEs])
+addLocaleData([
+  ...localeEn,
+  ...localeRu,
+  ...localeNl,
+  ...localeEs
+])
 
 import myNl from 'localisation/nl.json'
 import myEn from 'localisation/en.json'
@@ -27,29 +32,40 @@ const translations = {
   es: reduceMessages(myEs),
 }
 
-export default class IntlProviderContainer extends Component<any, any> {
+export default class IntlProviderContainer extends React.Component<any, any> {
   render() {
     const { children } = this.props
     let lang = 'en'
+
+console.log('render IntlProviderContainer.tsx')
+console.log('typeof children', typeof children, children)
+    //return <div>123</div>
     return (
       <HashRouter>
         <Switch>
           <Route
             path={localisePrefix}
             render={props => {
+              //return <div>123</div>
               let currentLocale = defaultLocale()
+
               if (props.match.params.locale !== undefined) {
                 currentLocale = props.match.params.locale
               } else {
                 lang = getCookie('mylang') || 'en'
                 currentLocale = lang.toLowerCase()
-
               }
 
               const messages = translations[currentLocale]
-
+              //return <div>123</div>
               return (
-                <IntlProvider {...props} key={currentLocale} locale={currentLocale} defaultLocale={defaultLocale()} messages={messages}>
+                <IntlProvider
+                  {...props}
+                  key={currentLocale}
+                  locale={currentLocale}
+                  defaultLocale={defaultLocale()}
+                  messages={messages}
+                >
                   {children}
                 </IntlProvider>
               )

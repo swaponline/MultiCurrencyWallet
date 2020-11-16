@@ -35,7 +35,7 @@ const rules = Object.keys(rulesMap)
 const webpackConfig = {
 
   entry: {
-    'app': config.paths.client('index.js'),
+    'app': config.paths.client('index.tsx'),
   },
 
   module: {

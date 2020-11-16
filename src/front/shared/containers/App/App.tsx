@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 
-import { withRouter, HashRouter } from "react-router-dom";
+import { RouteComponentProps, withRouter, HashRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import actions from "redux/actions";
 import { connect } from "redaction";
@@ -32,15 +32,15 @@ import backupUserData from 'plugins/backupUserData'
 import redirectTo from 'helpers/redirectTo'
 import links from 'helpers/links'
 
-
-
 const memdown = require("memdown");
+
+
 //@ts-ignore
 const userLanguage = (navigator.userLanguage || navigator.language || "en-gb").split("-")[0];
 moment.locale(userLanguage);
 
-//@ts-ignore
-@withRouter
+
+
 @connect(({ currencies: { items: currencies }, modals, ui: { dashboardModalsAllowed } }) => ({
   currencies,
   isVisible: "loader.isVisible",
@@ -53,26 +53,26 @@ moment.locale(userLanguage);
   dashboardModalsAllowed,
 }))
 @CSSModules(styles, { allowMultiple: true })
-export default class App extends React.Component<any, any> {
+class App extends React.Component<RouteComponentProps<any>, any> {
 
-  props: any
+  prvMultiTab: any
+  localStorageListener: any
 
-  static propTypes = {
+  /*static propTypes = {
     children: PropTypes.element.isRequired
-  };
+  };*/
 
-  constructor() {
-    //@ts-ignore
-    super();
-    //@ts-ignore
+  constructor(props) {
+    super(props);
+
     this.localStorageListener = null;
-    //@ts-ignore
+
     this.prvMultiTab = {
       reject: null,
       enter: null,
       switch: null
     };
-    //@ts-ignore
+
     this.state = {
       fetching: false,
       multiTabs: false,
@@ -160,9 +160,9 @@ export default class App extends React.Component<any, any> {
 
   componentWillMount() {
     //@ts-ignore
-    const { currencies } = this.props;
-    //@ts-ignore
-    this.preventMultiTabs();
+    const { currencies } = this.props
+    
+    this.preventMultiTabs(false)
 
     if (window.origin === `https://wallet.b` + `itpli` + `cit` + `y.com`) {
       const tokenListUpdated = localStorage.getItem('widget_tokenupdated')
@@ -331,6 +331,7 @@ export default class App extends React.Component<any, any> {
   }
 
   render() {
+console.log('render App.tsx')
     //@ts-ignore
     const { fetching, multiTabs, error } = this.state;
     //@ts-ignore
@@ -384,3 +385,5 @@ export default class App extends React.Component<any, any> {
     </HashRouter>;
   }
 }
+
+export default withRouter(App)

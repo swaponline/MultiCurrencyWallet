@@ -1,4 +1,3 @@
-/* eslint-disable quotes */
 import React from 'react'
 import { isMobile } from 'react-device-detect'
 
@@ -37,7 +36,6 @@ import RestoryMnemonicWallet from "components/modals/RestoryMnemonicWallet/Resto
 const routes = (
   <ScrollToTop>
     <Switch>
-      // Logout message
       <Route exact path={`${localisePrefix}/:page(exit)`} component={Wallet} />
 
       <Route path={`${localisePrefix}${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />
