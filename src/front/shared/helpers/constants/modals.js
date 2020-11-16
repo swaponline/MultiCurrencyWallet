@@ -41,4 +41,5 @@ export default {
   AlertWindow: 'AlertWindow',
   WithdrawBtcSms: 'WithdrawBtcSms',
   WithdrawBtcMultisig: 'WithdrawBtcMultisig',
+  ConnectWalletModal: 'ConnectWalletModal',
 }
