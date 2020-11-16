@@ -2442,7 +2442,7 @@
   },
   {
     "id": "Withdrow170",
-    "message": "The amount must be no more than your balance",
+    "message": "The amount must be no more than your allowed balance: {allowedCriptoBalance} {currency}",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.js",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
@@ -5079,7 +5079,7 @@
     "id": "createWallet_customERC20",
     "message": "Подключить токен",
     "files": [
-      "src/front/shared/pages/CreateWallet/Steps/FirstStep.js"
+      "src/front/shared/pages/CreateWallet/Steps/LogicForSteps.js"
     ]
   },
   {
@@ -7279,16 +7279,14 @@
     "id": "AlertOrderNonEnoughtBalance",
     "message": "Please top up your balance before you start the swap.",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.js",
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
+      "src/front/shared/pages/Exchange/Exchange.js"
     ]
   },
   {
     "id": "AlertOrderNonEnoughtBalanceTitle",
     "message": "Not enough balance.",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.js",
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
+      "src/front/shared/pages/Exchange/Exchange.js"
     ]
   },
   {
@@ -7421,17 +7419,11 @@
   },
   {
     "id": "walletDidntCreateMessage",
-    "message": "Create {curr} wallet before you start the swap.",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.js"
-    ]
+    "message": "Create {curr} wallet before you start the swap."
   },
   {
     "id": "walletDidntCreateTitle",
-    "message": "Wallet does not exist.",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.js"
-    ]
+    "message": "Wallet does not exist."
   },
   {
     "id": "PartialPriceNoOrdersReduce_PointOfSell",
@@ -8113,16 +8105,14 @@
     "id": "Swap_NeedEthFee",
     "message": "You must have at least {sellFee} {sellCoin} and {buyFee} {buyCoin} on your balance to pay the miner commission",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.js",
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
+      "src/front/shared/pages/Exchange/Exchange.js"
     ]
   },
   {
     "id": "Swap_NeedMoreAmount",
     "message": "You must have at least {amount} {currency} on your balance. {br} Miner commission {sellFee} {sellCoin} and {buyFee} {buyCoin}",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.js",
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
+      "src/front/shared/pages/Exchange/Exchange.js"
     ]
   },
   {
@@ -8211,6 +8201,20 @@
     "message": "{buyCurrency} Owner received Bitcoin Script and Secret Hash. Waiting confirm TX and when he creates {buyCurrency} Contract",
     "files": [
       "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
+    ]
+  },
+  {
+    "id": "MainFAQ2_content3",
+    "message": "Current mining fees:",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.js"
+    ]
+  },
+  {
+    "id": "Withdrow171",
+    "message": "The amount must be no more than your allowed balance: {allowedUsdBalance} USD",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
   }
 ]

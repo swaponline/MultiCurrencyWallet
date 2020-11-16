@@ -2588,7 +2588,7 @@
   },
   {
     "id": "Withdrow170",
-    "message": "Сумма должны быть не больше вашего Вашего баланса",
+    "message": "Сумма не должна превышать допустимый баланс: {allowedCriptoBalance} {currency}",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.js",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
@@ -5248,7 +5248,7 @@
     "id": "createWallet_customERC20",
     "message": "Подключить токен",
     "files": [
-      "src/front/shared/pages/CreateWallet/Steps/FirstStep.js"
+      "src/front/shared/pages/CreateWallet/Steps/LogicForSteps.js"
     ]
   },
   {
@@ -7410,16 +7410,14 @@
     "id": "AlertOrderNonEnoughtBalance",
     "message": "Please top up your balance before you start the swap.",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.js",
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
+      "src/front/shared/pages/Exchange/Exchange.js"
     ]
   },
   {
     "id": "AlertOrderNonEnoughtBalanceTitle",
     "message": "Not enough balance.",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.js",
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
+      "src/front/shared/pages/Exchange/Exchange.js"
     ]
   },
   {
@@ -7533,17 +7531,11 @@
   },
   {
     "id": "walletDidntCreateMessage",
-    "message": "Create {curr} wallet before you start the swap.",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.js"
-    ]
+    "message": "Create {curr} wallet before you start the swap."
   },
   {
     "id": "walletDidntCreateTitle",
-    "message": "Wallet does not exist.",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.js"
-    ]
+    "message": "Wallet does not exist."
   },
   {
     "id": "PartialPriceNoOrdersReduce_PointOfSell",
@@ -8200,16 +8192,14 @@
     "id": "Swap_NeedEthFee",
     "message": "На вашем балансе должно быть не менее {sellFee} {sellCoin} и {buyFee} {buyCoin} для оплаты коммисии майнера",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.js",
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
+      "src/front/shared/pages/Exchange/Exchange.js"
     ]
   },
   {
     "id": "Swap_NeedMoreAmount",
     "message": "На вашем балансе должно быть не менее {amount} {currency}. {br}Коммисия майнера {sellFee} {sellCoin} и {buyFee} {buyCoin}",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.js",
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
+      "src/front/shared/pages/Exchange/Exchange.js"
     ]
   },
   {
@@ -8291,6 +8281,20 @@
     "message": "{buyCurrency} Owner received Bitcoin Script and Secret Hash. Waiting confirm TX and when he creates {buyCurrency} Contract",
     "files": [
       "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
+    ]
+  },
+  {
+    "id": "MainFAQ2_content3",
+    "message": "Current mining fees:",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.js"
+    ]
+  },
+  {
+    "id": "Withdrow171",
+    "message": "Сумма не должна превышать допустимый баланс: {allowedUsdBalance} USD",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
   }
 ]

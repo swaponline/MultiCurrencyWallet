@@ -2509,7 +2509,7 @@
   },
   {
     "id": "Withdrow170",
-    "message": "La cantidad no debe ser mas que tu saldo ",
+    "message": "La cantidad no debe superar el saldo permitido: {allowedCriptoBalance} {currency}",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.js",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.js",
@@ -5234,7 +5234,7 @@
     "id": "createWallet_customERC20",
     "message": "Token personalizado",
     "files": [
-      "src/front/shared/pages/CreateWallet/Steps/FirstStep.js"
+      "src/front/shared/pages/CreateWallet/Steps/LogicForSteps.js"
     ]
   },
   {
@@ -7278,16 +7278,14 @@
     "id": "AlertOrderNonEnoughtBalance",
     "message": "Recargue su saldo antes de iniciar el intercambio",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.js",
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
+      "src/front/shared/pages/Exchange/Exchange.js"
     ]
   },
   {
     "id": "AlertOrderNonEnoughtBalanceTitle",
     "message": "No hay suficiente credito.",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.js",
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
+      "src/front/shared/pages/Exchange/Exchange.js"
     ]
   },
   {
@@ -7401,17 +7399,11 @@
   },
   {
     "id": "walletDidntCreateMessage",
-    "message": "Crear billetera{curr}antes de iniciar el intercambio. ",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.js"
-    ]
+    "message": "Crear billetera{curr}antes de iniciar el intercambio. "
   },
   {
     "id": "walletDidntCreateTitle",
-    "message": "Billetera no existe",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.js"
-    ]
+    "message": "Billetera no existe"
   },
   {
     "id": "PartialPriceNoOrdersReduce_PointOfSell",
@@ -8068,16 +8060,14 @@
     "id": "Swap_NeedEthFee",
     "message": "Debes tener al menos {sellFee} {sellCoin} y {buyFee} {buyCoin} BTC en tu saldo para pagar la comisión de minero ",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.js",
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
+      "src/front/shared/pages/Exchange/Exchange.js"
     ]
   },
   {
     "id": "Swap_NeedMoreAmount",
     "message": "Debes tener al menos {amount} {currency} en tu saldo. {br} Comisión de minero {sellFee} {sellCoin} y {buyFee} {buyCoin}",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.js",
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
+      "src/front/shared/pages/Exchange/Exchange.js"
     ]
   },
   {
@@ -8243,6 +8233,20 @@
     "message": "{buyCurrency} Owner received Bitcoin Script and Secret Hash. Waiting confirm TX and when he creates {buyCurrency} Contract",
     "files": [
       "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
+    ]
+  },
+  {
+    "id": "MainFAQ2_content3",
+    "message": "Current mining fees:",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.js"
+    ]
+  },
+  {
+    "id": "Withdrow171",
+    "message": "La cantidad no debe superar el saldo permitido: {allowedUsdBalance} USD",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
   }
 ]

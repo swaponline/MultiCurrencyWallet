@@ -637,8 +637,18 @@ export default class WithdrawModal extends React.Component {
     const dataCurrency = isEthToken ? 'ETH' : currency.toUpperCase()
     const dynamicAmountCriptoValue = linked.amount.pipe(this.handleAmount).value
     const dynamicAmountUsdValue = linked.fiatAmount.pipe(this.handleAmount).value
-    const criptoValueIsOk = BigNumber(dynamicAmountCriptoValue).isLessThanOrEqualTo(allowedBalance)
-    const usdValueIsOk = BigNumber(dynamicAmountUsdValue).isLessThanOrEqualTo(allowedBalance * exCurrencyRate)
+    
+    const temporaryCriptoBalance = BigNumber(allowedBalance).dp(6, BigNumber.ROUND_FLOOR).toString()
+    const allowedCriptoBalance = temporaryCriptoBalance[0] === '-'
+      ? temporaryCriptoBalance.substr(1)
+      : temporaryCriptoBalance;
+    const temporaryUsdBalance = BigNumber(allowedBalance * exCurrencyRate).dp(2, BigNumber.ROUND_FLOOR).toString()
+    const allowedUsdBalance = temporaryUsdBalance[0] === '-'
+      ? temporaryUsdBalance.substr(1)
+      : temporaryUsdBalance;
+      
+    const criptoValueIsOk = BigNumber(dynamicAmountCriptoValue).isLessThanOrEqualTo(allowedCriptoBalance)
+    const usdValueIsOk = BigNumber(dynamicAmountUsdValue).isLessThanOrEqualTo(allowedUsdBalance)
 
     const isDisabled =
       !address ||
@@ -650,17 +660,17 @@ export default class WithdrawModal extends React.Component {
       !usdValueIsOk ||
       BigNumber(amount).isGreaterThan(balance) ||
       BigNumber(amount).dp() > currentDecimals ||
-      this.isEthOrERC20()
+      this.isEthOrERC20();
 
     if (new BigNumber(amount).isGreaterThan(0)) {
       linked.amount.check(
         () => criptoValueIsOk,
         <FormattedMessage
           id="Withdrow170"
-          defaultMessage="The amount must be no more than your balance"
+          defaultMessage="The amount must be no more than your allowed balance: {allowedCriptoBalance} {currency}"
           values={{
-            dinamicFee,
-            currency: `${activeFiat}`,
+            allowedCriptoBalance: `${allowedCriptoBalance}`,
+            currency: `${getCurrencyKey(dataCurrency, true).toUpperCase()}`,
           }}
         />
       )
@@ -670,11 +680,10 @@ export default class WithdrawModal extends React.Component {
       linked.fiatAmount.check(
         () => usdValueIsOk,
         <FormattedMessage
-          id="Withdrow170"
-          defaultMessage="The amount must be no more than your balance"
+          id="Withdrow171"
+          defaultMessage="The amount must be no more than your allowed balance: {allowedUsdBalance} USD"
           values={{
-            dinamicFee,
-            currency: `${currency}`,
+            allowedUsdBalance: `${allowedUsdBalance}`,
           }}
         />
       )
