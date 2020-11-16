@@ -607,7 +607,7 @@ export default class WithdrawModal extends React.Component {
     let defaultMinFee = dinamicFee
 
     const allowedBalance = new BigNumber(balance).minus(defaultMinFee)
-    
+
     /*
     let enabledCurrencies = allCurrencyies.filter(
       (x) => !hiddenCoinsList.map((item) => item.split(':')[0]).includes(x.currency)
@@ -635,8 +635,10 @@ export default class WithdrawModal extends React.Component {
     dinamicFee = (usedAdminFee) ? BigNumber(dinamicFee).plus(adminFee.calc(currency, amount)).toNumber() : defaultMinFee
 
     const dataCurrency = isEthToken ? 'ETH' : currency.toUpperCase()
-    const dynamicAmountValue = linked.amount.pipe(this.handleAmount).value
-    const dynamicValueSum = (+dinamicFee) + (+dynamicAmountValue)
+    const dynamicAmountCriptoValue = linked.amount.pipe(this.handleAmount).value
+    const dynamicAmountUsdValue = linked.fiatAmount.pipe(this.handleAmount).value
+    const criptoValueIsOk = BigNumber(dynamicAmountCriptoValue).isLessThanOrEqualTo(allowedBalance)
+    const usdValueIsOk = BigNumber(dynamicAmountUsdValue).isLessThanOrEqualTo(allowedBalance * exCurrencyRate)
 
     const isDisabled =
       !address ||
@@ -644,14 +646,15 @@ export default class WithdrawModal extends React.Component {
       isShipped ||
       ownTx ||
       !this.addressIsCorrect() ||
-      BigNumber(dynamicValueSum).isGreaterThan(balance) ||
+      !criptoValueIsOk ||
+      !usdValueIsOk ||
       BigNumber(amount).isGreaterThan(balance) ||
       BigNumber(amount).dp() > currentDecimals ||
       this.isEthOrERC20()
 
     if (new BigNumber(amount).isGreaterThan(0)) {
       linked.amount.check(
-        (value) => new BigNumber(value).isLessThanOrEqualTo(allowedBalance),
+        () => criptoValueIsOk,
         <FormattedMessage
           id="Withdrow170"
           defaultMessage="The amount must be no more than your balance"
@@ -665,7 +668,7 @@ export default class WithdrawModal extends React.Component {
 
     if (new BigNumber(fiatAmount).isGreaterThan(0)) {
       linked.fiatAmount.check(
-        (value) => new BigNumber(value).isLessThanOrEqualTo(allowedBalance * exCurrencyRate),
+        () => usdValueIsOk,
         <FormattedMessage
           id="Withdrow170"
           defaultMessage="The amount must be no more than your balance"
