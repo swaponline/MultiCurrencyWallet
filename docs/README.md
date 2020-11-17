@@ -39,7 +39,7 @@ Add many assets to your wallet:
 
 ### 5. Other demos
 
-<a href="https://swaponline.github.io/#/usdt-wallet">USDT stablecoin wallet (payment system)</a>
+<a href="https://swaponline.github.io/#/usdt-wallet">USDT stablecoin wallet (payment system) </a>
 
 
 ## Easy to install
