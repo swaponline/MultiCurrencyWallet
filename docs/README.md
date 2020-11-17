@@ -6,7 +6,7 @@
  
 - 👛 Crypto wallet: BTC, ETН, USDT, {your_token}...
 - 💵 Fiat gateway: USD, EUR, RUB, UAH...
-- ⚛️ P2P exchange – atomic swaps
+- ⚛️ P2P exchange – atomic swaps.
 - 💡 Open-source, client-side
  
 Live version here: https://swaponline.github.io (mirror https://swaponline.io)
