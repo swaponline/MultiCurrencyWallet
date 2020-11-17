@@ -4,6 +4,7 @@ import ProgressBarPlugin from 'progress-bar-webpack-plugin'
 import WebappWebpackPlugin from 'webapp-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import AppConfigPlugin from 'app-config/webpack'
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import config from 'app-config'
 import rulesMap from './rules'
 
@@ -33,7 +34,7 @@ const rules = Object.keys(rulesMap)
 const webpackConfig = {
 
   entry: {
-    'app': config.paths.client('index.js'),
+    'app': config.paths.client('index.tsx'),
   },
 
   module: {
@@ -47,6 +48,7 @@ const webpackConfig = {
   resolve: {
     alias: {
       'shared': config.paths.front('shared'),
+      'local_modules': config.paths.front('local_modules'),
       'domain': config.paths.common('domain'),
       'swap.auth': config.paths.core('swap.auth'),
       'swap.orders': config.paths.core('swap.orders'),
@@ -64,7 +66,7 @@ const webpackConfig = {
       'node_modules',
       config.paths.core(''),
     ],
-    extensions: [ '.js', '.jsx', '.scss' ],
+    extensions: [ '.js', '.jsx', '.tsx', '.ts', '.scss' ],
     plugins: [],
   },
 
@@ -106,6 +108,7 @@ const webpackConfig = {
     new webpack.NormalModuleReplacementPlugin(/^leveldown$/, (result) => {
       result.request = result.request.replace(/(leveldown)/,  config.paths.shared('helpers/leveldown'))
     }),
+    new ForkTsCheckerWebpackPlugin(),
   ],
 }
 

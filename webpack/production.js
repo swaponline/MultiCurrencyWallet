@@ -2,9 +2,11 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import WebpackRequireFrom from 'webpack-require-from-naggertooth'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import TerserPlugin from 'terser-webpack-plugin-legacy'
-import externalConfig from './externalConfig'
 import config from 'app-config'
 import webpack from 'webpack'
+
+import externalConfig from './externalConfig'
+
 
 export default (webpackConfig) => {
   webpackConfig.mode = 'production'
@@ -20,7 +22,7 @@ export default (webpackConfig) => {
     'react': 'React',
     'react-dom' : 'ReactDOM',
   }
-  /* 
+  /*
   * for production build is better to replace 'style-loader' on 'MiniCssExtractPlugin.loader'
   * works with styles more effectively
   */

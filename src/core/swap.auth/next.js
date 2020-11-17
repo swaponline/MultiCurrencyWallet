@@ -1,5 +1,5 @@
 import SwapApp from 'swap.app'
-import { getNextWallet } from '../../common/utils/mnemonic'
+import mnemonic from '../../common/utils/mnemonic'
 
 
 const loginMnemonic = (mnemonic, walletNumber=0, path, app) => {
@@ -9,7 +9,7 @@ const loginMnemonic = (mnemonic, walletNumber=0, path, app) => {
       : app.env.bitcoin.testnet
   )
 
-  const wallet = getNextWallet(network, walletNumber, path, app)
+  const wallet = mnemonic.getNextWallet(network, walletNumber, path, app)
   return login(wallet.WIF, app)
 }
 
@@ -18,7 +18,7 @@ const login = (_privateKey, app) => {
 
   const storageKey = `${app.network}:next:privateKey`
   let privateKey = _privateKey || app.env.storage.getItem(storageKey)
-  
+
   let account
 
   const network = (
