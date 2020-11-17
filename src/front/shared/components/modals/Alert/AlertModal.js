@@ -44,7 +44,16 @@ export default class AlertModal extends React.Component {
   }
 
   handleClose = () => {
-    const { name, data, onClose } = this.props
+    const {
+      name,
+      data,
+      data: {
+        dontClose,
+      },
+      onClose,
+    } = this.props
+
+    if (dontClose) return
 
     if (typeof onClose === 'function') {
       onClose()
@@ -57,6 +66,23 @@ export default class AlertModal extends React.Component {
     actions.modals.close(name)
   }
 
+  handleOk = () => {
+    const {
+      name,
+      data: {
+        callbackOk,
+      },
+    } = this.props
+
+    if (typeof callbackOk === `function`) {
+      if (callbackOk()) {
+        actions.modals.close(name)
+      }
+    } else {
+      this.handleClose()
+    }
+  }
+
   render() {
     const {
       intl,
@@ -65,6 +91,8 @@ export default class AlertModal extends React.Component {
         title,
         message,
         labelOk,
+        dontClose,
+        okButtonAutoWidth,
       },
       dashboardModalsAllowed,
     } = this.props
@@ -74,6 +102,8 @@ export default class AlertModal extends React.Component {
       message: message || intl.formatMessage(defaultLanguage.message),
       ok: labelOk || intl.formatMessage(defaultLanguage.ok),
     }
+
+    const buttonStyle = (!okButtonAutoWidth) ? `button` : `button_autoWidth`
 
     return (
       <div className={cx({
@@ -94,7 +124,7 @@ export default class AlertModal extends React.Component {
               <p styleName="notification">{labels.message}</p>
             </div>
             <div styleName="button-overlay">
-              <Button styleName="button" blue onClick={this.handleClose}>{labels.ok}</Button>
+              <Button styleName={buttonStyle} blue onClick={this.handleOk}>{labels.ok}</Button>
             </div>
           </div>
         </div>

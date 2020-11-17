@@ -108,23 +108,27 @@ const askPermission = () =>
 const initialize = () => {
   // window.clientDBinstance = firebase.initializeApp(clientConfig, 'widget-client')
 
-  const firebaseApp = firebase.initializeApp(config)
-  window.firebaseDefaultInstance = firebaseApp
+  try {
+    const firebaseApp = firebase.initializeApp(config)
+    window.firebaseDefaultInstance = firebaseApp
 
-  firebase.firestore(firebaseApp)
+    firebase.firestore(firebaseApp)
 
-  if (isSupported()) {
-    navigator.serviceWorker
-      .register('/firebase-messaging-sw.js')
-      .then((registration) => firebase.messaging().useServiceWorker(registration))
+    if (isSupported()) {
+      navigator.serviceWorker
+        .register('/firebase-messaging-sw.js')
+        .then((registration) => firebase.messaging().useServiceWorker(registration))
 
-    const messaging = firebase.messaging()
+      const messaging = firebase.messaging()
 
-    messaging.onMessage((payload) => {
-      console.log('Message received. ', payload)
-      const message = payload.notification.body
-      actions.notifications.show('Message', { message })
-    })
+      messaging.onMessage((payload) => {
+        console.log('Message received. ', payload)
+        const message = payload.notification.body
+        actions.notifications.show('Message', { message })
+      })
+    }
+  } catch (e) {
+    console.error('Fail init firebase')
   }
 
   try {
