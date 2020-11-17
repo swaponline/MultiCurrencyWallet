@@ -1,11 +1,14 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable max-len */
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import BigNumber from 'bignumber.js'
 import cssModules from 'react-css-modules'
 import { FormattedMessage, injectIntl } from 'react-intl'
 
 import { constants } from 'helpers'
-import config from 'helpers/externalConfig'
+import minAmount from 'helpers/constants/minAmount'
+import btc from '../../helpers/btc'
+import eth from '../../helpers/eth'
 import feedback from 'shared/helpers/feedback'
 
 import cx from 'classnames'
@@ -20,7 +23,26 @@ const tabsIdsDictionary = {
 
 
 const FAQ = (props) => {
-  const { btc, eth } = config.opts.fee
+  const [btcFee, setBtcFee] = useState(null)
+  const [ethFee, setEthFee] = useState(null)
+
+  useEffect(() => {
+   /* 
+   * waiting for the end of the request to currency API
+   * then set fee
+   */
+   btc.estimateFeeRate().then(() => {
+     const { btc } = minAmount
+     setBtcFee(new BigNumber(btc).dp(5, BigNumber.ROUND_FLOOR).toString())
+   })
+
+   eth.estimateGasPrice().then(() => {
+     const { eth } = minAmount
+     setEthFee(new BigNumber(eth).dp(5, BigNumber.ROUND_FLOOR).toString())
+   })
+  });
+
+
   const { intl: { formatMessage } } = props
   const [openedTabs, setOpenedTabs] = useState({
     FIRST_TAB: false,
@@ -87,8 +109,16 @@ const FAQ = (props) => {
             <br />
             <br />
             <FormattedMessage id="MainFAQ2_content3" defaultMessage="Current mining fees:" />
-            <p className={styles.descriptionFee}><span>BTC:</span> <span className={styles.fee}>{btc.fee}</span> sat/byte</p>
-            <p className={styles.descriptionFee}><span>ETH:</span> <span className={styles.fee}>{eth.fee}</span> gwei</p>
+            <p className={styles.descriptionFee}>
+              <span>BTC:</span>{' '}
+              {btcFee ? <span className={styles.fee}>{btcFee}</span> : 'Loading'}{' '}
+              sat/byte
+            </p>
+            <p className={styles.descriptionFee}>
+              <span>ETH:</span>{' '}
+              {ethFee ? <span className={styles.fee}>{ethFee}</span> : 'Loading'}{' '}
+              gwei
+            </p>
           </div>
         </article>
 

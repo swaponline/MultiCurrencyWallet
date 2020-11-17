@@ -202,6 +202,9 @@ const estimateFeeRateBitcoinfees = async ({ speed = 'fast' } = {}) => {
 }
 
 const estimateFeeRateBlockcypher = async ({ speed = 'fast' } = {}) => {
+  /* 
+  * speed can be - slow, normal, fast
+  */
   const link = config.feeRates.btc
   const defaultRate = constants.defaultFeeRates.btc.rate
 
@@ -213,6 +216,10 @@ const estimateFeeRateBlockcypher = async ({ speed = 'fast' } = {}) => {
 
   try {
     apiResult = await request.get(link, { cacheResponse: 60000 })
+    /* 
+    * can used: low_fee_per_kb, medium_fee_per_kb, high_fee_per_kb
+    */
+    constants.minAmount.btc = apiResult.low_fee_per_kb
   } catch (err) {
     console.error(`EstimateFeeRate: ${err.message}`)
     return defaultRate[speed]

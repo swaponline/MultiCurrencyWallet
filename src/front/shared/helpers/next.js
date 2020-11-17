@@ -199,6 +199,9 @@ const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, f
 }
 
 const estimateFeeRate = async ({ speed = 'fast' } = {}) => {
+  /* 
+  * speed can be - slow, normal, fast
+  */
   const link = config.feeRates.next
   const defaultRate = constants.defaultFeeRates.next.rate
 
@@ -210,6 +213,7 @@ const estimateFeeRate = async ({ speed = 'fast' } = {}) => {
 
   try {
     apiResult = await request.get(link, { cacheResponse: 60000 })
+    // constants.minAmount.next = apiResult.<some speed>
   } catch (err) {
     console.error(`EstimateFeeRate: ${err.message}`)
     return defaultRate[speed]

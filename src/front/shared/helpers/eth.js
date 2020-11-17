@@ -15,6 +15,9 @@ const estimateFeeValue = async ({ method = 'send', speed } = {}) => {
 }
 
 const estimateGasPrice = async ({ speed = 'fast' } = {}) => {
+  /* 
+  * speed can be - slow, normal, fast
+  */
   const link = config.feeRates.eth
   const defaultPrice = constants.defaultFeeRates.eth.price
 
@@ -26,6 +29,10 @@ const estimateGasPrice = async ({ speed = 'fast' } = {}) => {
 
   try {
     apiResult = await request.get(link, { cacheResponse: 60000 })
+    /* 
+    * can used: safeLow, standard, fast, fastest
+    */
+    constants.minAmount.eth = apiResult.standard
   } catch (err) {
     console.error(`EstimateGasPrice: ${err.message}`)
     return defaultPrice[speed]
