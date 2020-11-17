@@ -376,11 +376,13 @@ export default class Wallet extends Component<any, any> {
         isMetamask,
         isConnected,
         currency,
+        address,
         balance,
       }) => {
         return (
           ((context === 'Send') ? balance : true)
           && !hiddenCoinsList.includes(currency)
+          && !hiddenCoinsList.includes(`${currency}:${address}`)
           && enabledCurrencies.includes(currency)
           && (
             !isMetamask
