@@ -25,8 +25,8 @@ export default class Offer extends React.Component<any, any> {
   state = {
     view: 'editOffer',
     offer: {
-      buyCurrency: this.props.data.buyCurrency,
-      sellCurrency: this.props.data.sellCurrency,
+      buyCurrency: this.props && this.props.data && this.props.data.buyCurrency,
+      sellCurrency: this.props && this.props.data && this.props.data.sellCurrency,
     },
   }
 
