@@ -38,15 +38,11 @@ export default class Web3Connect extends EventEmitter {
 
     // Предыдущий провайдер (после перезагрузки восстанавливаем его)
     const cachedProviderName = localStorage.getItem(`WEB3CONNECT:PROVIDER`)
-    console.log('cachedProviderName', cachedProviderName)
     if (cachedProviderName) {
       const lsProvider = getProviderByName(this, cachedProviderName)
-      console.log('lsProvider', lsProvider)
       if (lsProvider) {
         lsProvider.isConnected().then(async (isConnected) => {
-          console.log('isConnected', isConnected)
           if (isConnected) {
-            console.log('is connected')
             if (await lsProvider.Connect()) {
               this._cachedProviderName = cachedProviderName
               this._cachedProvider = lsProvider
@@ -57,17 +53,14 @@ export default class Web3Connect extends EventEmitter {
               return
             }
           }
-          console.log('fallback 1')
           this.clearCache()
           this._inited = true
         })
       } else {
-        console.log('fallback 2')
         this.clearCache()
         this._inited = true
       }
     } else {
-      console.log('fallback 3')
       this._inited = true
     }
   }
