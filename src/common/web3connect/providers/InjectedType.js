@@ -1,0 +1,10 @@
+const INJECTED_TYPE = {
+  NONE: 'NONE',
+  UNKNOWN: 'UNKNOWN',
+  OPERA: 'OPERA',
+  METAMASK: 'METAMASK',
+  TRUST: 'TRUST',
+}
+
+
+export default INJECTED_TYPE

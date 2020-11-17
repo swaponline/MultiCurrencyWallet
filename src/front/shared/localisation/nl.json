@@ -8229,7 +8229,7 @@
   },
   {
     "id": "MetamaskNetworkAlert_Message",
-    "message": "Om door te gaan, selecteer Metamask \"{netwerk}\" in de portefeuille of schakel de portefeuille uit",
+    "message": "Om door te gaan, selecteer {walletTitle} \"{netwerk}\" in de portefeuille of schakel de portefeuille uit",
     "files": [
       "src/front/shared/containers/App/App.js"
     ]

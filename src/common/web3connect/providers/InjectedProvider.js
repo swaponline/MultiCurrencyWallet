@@ -19,6 +19,9 @@ export default class InjectedProvider extends InjectedConnector {
       await window.ethereum.enable()
       return window.ethereum.isConnected()
     } else {
+      if (window.ethereum.isTrust) {
+        return window.ethereum.ready
+      }
       return await super.isAuthorized()
     }
   }

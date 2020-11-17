@@ -158,40 +158,43 @@ export default class App extends React.Component {
   }
 
   processMetamask () {
-    if (metamask.isConnected()
-      && !metamask.isCorrectNetwork()
-    ) {
-      const { intl } = this.props
+    metamask.web3connect.onInit(() => {
+      if (metamask.isConnected()
+        && !metamask.isCorrectNetwork()
+      ) {
+        const { intl } = this.props
 
-      actions.modals.open(constants.modals.AlertModal, {
-        title: (
-          <FormattedMessage 
-            id="MetamaskNetworkAlert_Title"
-            defaultMessage="Внимание"
-          />
-        ),
-        message: (
-          <FormattedMessage
-            id="MetamaskNetworkAlert_Message"
-            defaultMessage="Для продолжения выберите в кошельке Метамаск &quot;{network}&quot; или отключите кошелек"
-            values={{
-              network: intl.formatMessage(metamaskNetworks[config.entry]),
-            }}
-          />
-        ),
-        labelOk: (
-          <FormattedMessage
-            id="MetamaskNetworkAlert_OkDisconnectWallet"
-            defaultMessage="Отключить внешний кошелек"
-          />
-        ),
-        dontClose: true,
-        okButtonAutoWidth: true,
-        callbackOk: () => {
-          metamask.disconnect()
-        },
-      })
-    }
+        actions.modals.open(constants.modals.AlertModal, {
+          title: (
+            <FormattedMessage 
+              id="MetamaskNetworkAlert_Title"
+              defaultMessage="Внимание"
+            />
+          ),
+          message: (
+            <FormattedMessage
+              id="MetamaskNetworkAlert_Message"
+              defaultMessage="Для продолжения выберите в кошельке {walletTitle} &quot;{network}&quot; или отключите кошелек"
+              values={{
+                network: intl.formatMessage(metamaskNetworks[config.entry]),
+                walletTitle: metamask.web3connect.getProviderTitle(),
+              }}
+            />
+          ),
+          labelOk: (
+            <FormattedMessage
+              id="MetamaskNetworkAlert_OkDisconnectWallet"
+              defaultMessage="Отключить внешний кошелек"
+            />
+          ),
+          dontClose: true,
+          okButtonAutoWidth: true,
+          callbackOk: () => {
+            metamask.disconnect()
+          },
+        })
+      }
+    })
   }
 
   processUserBackup () {

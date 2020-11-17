@@ -8237,7 +8237,7 @@
   },
   {
     "id": "MetamaskNetworkAlert_Message",
-    "message": "Para continuar, seleccione Metamask \"{network}\" en la billetera o deshabilite la billetera",
+    "message": "Para continuar, seleccione {walletTitle} \"{network}\" en la billetera o deshabilite la billetera",
     "files": [
       "src/front/shared/containers/App/App.js"
     ]

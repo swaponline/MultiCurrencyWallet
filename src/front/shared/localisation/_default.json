@@ -8205,7 +8205,7 @@
   },
   {
     "id": "MetamaskNetworkAlert_Message",
-    "message": "Wrong network, please select \"{network}\" in Metamask (or wallet connect)",
+    "message": "Wrong network, please select \"{network}\" in {walletTitle}",
     "files": [
       "src/front/shared/containers/App/App.js"
     ]

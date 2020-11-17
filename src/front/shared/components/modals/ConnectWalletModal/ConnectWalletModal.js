@@ -37,10 +37,6 @@ const providerTitles = defineMessages({
     id: 'ConnectWalletModal_Injected',
     defaultMessage: 'Metamask',
   },
-  INJECTED_MODILE: {
-    id: 'ConnectWalletModal_InjectedMobile',
-    defaultMessage: 'Подключить',
-  },
   WALLETCONNECT: {
     id: 'ConnectWalletModal_WalletConnect',
     defaultMessage: 'WalletConnect',
@@ -128,7 +124,7 @@ export default class ConnectWalletModal extends React.Component {
                 {metamask.web3connect.isInjectedEnabled() && (
                   <div styleName="provider_row">
                     <Button styleName="button_provider" blue onClick={this.handleInjected}>
-                      <FormattedMessage {...providerTitles.INJECTED} />
+                      {metamask.web3connect.getInjectedTitle()}
                     </Button>
                   </div>
                 )}

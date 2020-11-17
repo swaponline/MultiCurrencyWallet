@@ -8213,7 +8213,7 @@
   },
   {
     "id": "MetamaskNetworkAlert_Message",
-    "message": "Wrong network, please select \"{network}\" in Metamask or disconnect wallet",
+    "message": "Wrong network, please select \"{network}\" in {walletTitle} or disconnect wallet",
     "files": [
       "src/front/shared/containers/App/App.js"
     ]

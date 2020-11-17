@@ -2,6 +2,7 @@ import { EventEmitter } from 'events'
 import { ConnectorEvent } from '@web3-react/types'
 import Web3 from 'web3'
 import SUPPORTED_PROVIDERS from './providers/supported'
+import INJECTED_TYPE from './providers/InjectedType'
 import getProviderByName from './providers'
 import { isInjectedEnabled } from './providers'
 import { isMobile } from 'react-device-detect'
@@ -10,6 +11,7 @@ import detectEthereumProvider from '@metamask/detect-provider'
 
 export default class Web3Connect extends EventEmitter {
   _cachedProvider = null
+  _cachedProviderName = null
   _cachedChainId = null
   _cachedAddress = null
   _cachedWeb3 = null
@@ -36,12 +38,17 @@ export default class Web3Connect extends EventEmitter {
 
     // Предыдущий провайдер (после перезагрузки восстанавливаем его)
     const cachedProviderName = localStorage.getItem(`WEB3CONNECT:PROVIDER`)
+    console.log('cachedProviderName', cachedProviderName)
     if (cachedProviderName) {
       const lsProvider = getProviderByName(this, cachedProviderName)
+      console.log('lsProvider', lsProvider)
       if (lsProvider) {
         lsProvider.isConnected().then(async (isConnected) => {
+          console.log('isConnected', isConnected)
           if (isConnected) {
+            console.log('is connected')
             if (await lsProvider.Connect()) {
+              this._cachedProviderName = cachedProviderName
               this._cachedProvider = lsProvider
               this._setupEvents()
               await this._cacheProviderData()
@@ -50,15 +57,52 @@ export default class Web3Connect extends EventEmitter {
               return
             }
           }
+          console.log('fallback 1')
           this.clearCache()
           this._inited = true
         })
       } else {
+        console.log('fallback 2')
         this.clearCache()
         this._inited = true
       }
     } else {
+      console.log('fallback 3')
       this._inited = true
+    }
+  }
+
+  getProviderTitle() {
+    switch (this._cachedProviderName) {
+      case SUPPORTED_PROVIDERS.WALLETCONNECT:
+        return 'Wallet Connect'
+      case SUPPORTED_PROVIDERS.INJECTED:
+        return this.getInjectedTitle()
+      default:
+        return `Web3 provider`
+    }
+  }
+
+  getInjectedTitle() {
+    switch (this.getInjectedType()) {
+      case INJECTED_TYPE.NONE: return 'Not installed'
+      case INJECTED_TYPE.UNKNOWN: return 'Injected Web3'
+      case INJECTED_TYPE.OPERA: return 'Opera Crypto Wallet'
+      case INJECTED_TYPE.METAMASK: return 'MetaMask'
+      case INJECTED_TYPE.TRUST: return 'Trust Wallet'
+    }
+  }
+
+  getInjectedType() {
+    if (window
+      && window.ethereum
+    ) {
+      if (window.ethereum.isTrust) return INJECTED_TYPE.TRUST
+      if (window.ethereum.isMetaMask) return INJECTED_TYPE.METAMASK
+      if ((!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0) return INJECTED_TYPE.OPERA
+      return INJECTED_TYPE.UNKNOWN
+    } else {
+      return INJECTED_TYPE.NONE
     }
   }
 
@@ -110,6 +154,7 @@ export default class Web3Connect extends EventEmitter {
 
   clearCache() {
     localStorage.removeItem(`WEB3CONNECT:PROVIDER`)
+    this._cachedProviderName = null
     this._cachedProvider = null
     this._cachedChainId = null
     this._cachedAddress = null
@@ -167,6 +212,7 @@ export default class Web3Connect extends EventEmitter {
       if (_connector) {
         if (await _connector.Connect()) {
           localStorage.setItem(`WEB3CONNECT:PROVIDER`, provider)
+          this._cachedProviderName = provider
           this._cachedProvider = _connector
           this._setupEvents()
           await this._cacheProviderData()
@@ -213,7 +259,7 @@ export default class Web3Connect extends EventEmitter {
   }
 
   async Disconnect() {
-    if (this._cachedProvider && !this._isDAppBrowser) {
+    if (this._cachedProvider) {
       this._isConnected = false
       await this._cachedProvider.Disconnect()
       this.clearCache()

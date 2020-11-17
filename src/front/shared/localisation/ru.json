@@ -8285,7 +8285,7 @@
   },
   {
     "id": "MetamaskNetworkAlert_Message",
-    "message": "Для продолжения выберите в кошельке Метамаск \"{network}\" или отключите кошелек",
+    "message": "Для продолжения выберите в кошельке {walletTitle} \"{network}\" или отключите кошелек",
     "files": [
       "src/front/shared/containers/App/App.js"
     ]
