@@ -6,9 +6,12 @@ import Swap from 'swap.swap'
 import { constants } from 'helpers'
 import Pair from 'pages/Exchange/Orders/Pair'
 import config from 'helpers/externalConfig'
+import { BigNumber } from 'bignumber.js'
 
 import metamask from 'helpers/metamask'
 import { AddressType } from 'domain/address'
+
+import helpers from 'helpers'
 
 
 const debug = (...args) => console.log(...args)
@@ -434,6 +437,33 @@ const getWallets = () => {
   return allData.filter(item => item && item.address)
 }
 
+const fetchWalletBalance = async (walletData) => {
+  const name = walletData.currency.toLowerCase()
+  if (helpers.ethToken.isEthToken({ name })) {
+    try {
+      const balance = await actions.token.fetchBalance(walletData.address, walletData.contractAddress, walletData.decimals)
+      return BigNumber(balance).toNumber()
+    } catch (err) {
+      console.error(`Fail fetch balance for wallet '${name}'`, err)
+    }
+  } else {
+    if (actions[name]
+      && actions[name].fetchBalance
+      && typeof actions[name].fetchBalance === `function`
+    ) {
+      try {
+        const balance = await actions[name].fetchBalance(walletData.address)
+        return balance
+      } catch (err) {
+        console.error(`Fail fetch balance for wallet '${name}'`, err)
+      }
+    } else {
+      console.warn(`Fail fetch balance for wallet '${name}' - not fetchBalance in actions`)
+    }
+  }
+  return 0
+}
+
 export default {
   rememberOrder,
   forgetOrders,
@@ -463,4 +493,5 @@ export default {
   getWallets,
   getWallet,
   getHiddenCoins,
+  fetchWalletBalance,
 }

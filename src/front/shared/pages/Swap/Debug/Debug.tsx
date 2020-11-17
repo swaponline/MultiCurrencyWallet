@@ -18,6 +18,7 @@ export default class Debug extends Component<any, any> {
   render() {
     const {
       flow: {
+        state: flowState,
         state: {
           // @ToDo - will be universaly after NextCoin integration
           btcScriptValues,
@@ -40,7 +41,7 @@ export default class Debug extends Component<any, any> {
           <code>
             {/*
             //@ts-ignore */}
-            { JSON.stringify(state, false, 4) }
+            { JSON.stringify(flowState, false, 4) }
           </code>
         </pre>
       </div>

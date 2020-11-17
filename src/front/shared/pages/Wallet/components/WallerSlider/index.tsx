@@ -33,6 +33,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 export default class WallerSlider extends React.Component<any, any> {
 
   props: any
+  _mounted = false
 
   constructor(props) {
     super(props)
@@ -48,7 +49,12 @@ export default class WallerSlider extends React.Component<any, any> {
   }
 
   componentDidMount() {
+    this._mounted = true
     this.getBanners()
+  }
+
+  componentWillUnmount() {
+    this._mounted = false
   }
 
   initBanners = () => {
@@ -100,6 +106,9 @@ export default class WallerSlider extends React.Component<any, any> {
       // Используем банеры, которые были определены в index.html (используется в виджете вордпресса)
       //@ts-ignore
       const widgetBanners = (window.bannersOnMainPage.length) ? window.bannersOnMainPage : []
+
+      if (!this._mounted) return
+
       //@ts-ignore
       this.setState(() => ({
         banners: this.processItezBanner(widgetBanners).filter(el => el && el.length),
@@ -111,6 +120,9 @@ export default class WallerSlider extends React.Component<any, any> {
           .get('https://noxon.wpmix.net/swapBanners/banners.php')
           .then(({ data }) => {
             const banners = this.processItezBanner(data).filter(el => el && el.length)
+
+            if (!this._mounted) return
+
             //@ts-ignore
             this.setState(() => ({
               banners,

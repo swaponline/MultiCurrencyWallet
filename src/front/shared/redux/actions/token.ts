@@ -68,6 +68,7 @@ const login = (privateKey, contractAddress, nameContract, decimals, fullName) =>
 
 
 const setupContract = (ethAddress, contractAddress, nameContract, decimals, fullName) => {
+  console.log('setup contract', web3, web3.isMetamask)
   if (!web3.eth.accounts.wallet[ethAddress]) {
     throw new Error('web3 does not have given address')
   }
@@ -108,8 +109,16 @@ const getBalance = async (currency) => {
     return
   }
 
-  const { address, contractAddress, decimals, name } = tokensData[currency.toLowerCase()]
+  const {
+    address: internalAddress,
+    contractAddress,
+    decimals,
+    name,
+  } = tokensData[currency.toLowerCase()]
 
+  const address = (metamask.isConnected()) ? metamask.getAddress() : false || internalAddress
+
+  console.log('get token balance', address)
   const balanceInCache = cacheStorageGet('currencyBalances', `token_${currency}_${address}`)
 
   if (balanceInCache !== false) {

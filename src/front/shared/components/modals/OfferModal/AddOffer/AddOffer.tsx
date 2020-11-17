@@ -417,8 +417,15 @@ export default class AddOffer extends Component<any, any> {
 
   render() {
     const { currencies, tokenItems, addSelectedItems } = this.props
-    const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency, minimalestAmountForSell, minimalestAmountForBuy,
-      balance, ethBalance, manualRate, isPartial, isTokenSell, isTokenBuy } = this.state
+    const { 
+      exchangeRate, buyAmount, 
+      sellAmount, buyCurrency, 
+      sellCurrency, minimalestAmountForSell, 
+      minimalestAmountForBuy, balance, 
+      ethBalance, manualRate, 
+      isPartial, isTokenSell, 
+      isTokenBuy, sellInputValueIsOk 
+    } = this.state
 
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
 
@@ -432,11 +439,9 @@ export default class AddOffer extends Component<any, any> {
 
     const isDisabled = !exchangeRate
       || !buyAmount && !sellAmount
-      /* This allows creating order greater than balance
-        || BigNumber(sellAmount).isGreaterThan(balance)
-      */
-      || new BigNumber(sellAmount).isLessThan(minimalAmountSell)
-      || new BigNumber(buyAmount).isLessThan(minimalAmountBuy)
+      || BigNumber(sellAmount).isGreaterThan(balance)
+      || BigNumber(sellAmount).isLessThan(minimalAmountSell)
+      || BigNumber(buyAmount).isLessThan(minimalAmountBuy)
 
     if (linked.sellAmount.value !== '' && linked.sellAmount.value > 0) {
       linked.sellAmount.check((value) => (new BigNumber(value).isGreaterThan(minimalAmountSell)),

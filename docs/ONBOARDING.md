@@ -1,40 +1,41 @@
-# Onboarding plan (draft-ru)
+# Onboarding plan
 
 ## Fast test
-- Завести тестовый кошель, записав 12 слов
-- Получить тестовые BTC, ETH (`docs/FAUCETS.md`)
-- Отправить тестовые коины на другой кошелёк
-- Произвести свап с самим собой (нужен ещё один кошель используя инкогнито режим)
-- Создать инвойс и оплатить его с помощью другого кошелька (используя инкогнито режим)
+- Install (`docs/INSTALLATION.md`) and run testent (`npm start`) 
+- Start a test wallet by writing down 12 words
+- Get test BTC, ETH (`docs / FAUCETS.md`)
+- Send test coins to another wallet
+- Swap with yourself (you need another wallet using incognito mode)
+- Create an invoice and pay using another wallet (using incognito mode)
 
 ## Fast start
-- Прочитать `docs`
-- Изучить список тэгов Issue https://github.com/swaponline/MultiCurrencyWallet/labels
+- Read the `docs`
+- Explore Issue Tag List https://github.com/swaponline/MultiCurrencyWallet/labels
 - Improve something: take a simple task / improve docs
 - Create the first PR
 
 ## More info
-- Ознакомиться с инсайтами и текущими разработчиками https://github.com/swaponline/MultiCurrencyWallet/pulse
-- Ознакомиться с перечисленными в `package/json` модулями (https://www.npmjs.com/)
-- Ознакомиться со структурой и содержанием файлов проекта
+- Check out insights and current developers https://github.com/swaponline/MultiCurrencyWallet/pulse
+- Check out the modules listed in `package / json` (https://www.npmjs.com/)
+- Get acquainted with the structure and content of project files
 - https://support.swaponline.io/
-- Ознакомиться с публичными ресурсами (see `helpers/links`)
-- Пробежаться по вики для клиентов https://wiki.swaponline.io/
-- Изучить документацию для клиента
+- Check out public resources (see `helpers / links`)
+- Go through the wiki for clients https://wiki.swaponline.io/
+- Examine the documentation for the client
 
 ## Track current state
-- Изучить открытые issue https://github.com/swaponline/MultiCurrencyWallet/issues
-- Заглядывать в текущие PR (https://github.com/swaponline/MultiCurrencyWallet/pulls)
-- Заглядывать в текущий граф (https://github.com/swaponline/MultiCurrencyWallet/network)
+- Investigate open issues https://github.com/swaponline/MultiCurrencyWallet/issues
+- Look into current PRs (https://github.com/swaponline/MultiCurrencyWallet/pulls)
+- Look into the current graph (https://github.com/swaponline/MultiCurrencyWallet/network)
 
 ## Deep insight
-- Поднять локально бота и обменяться с ним
-- Понять алгоритм свапа
-- Понять core
-- Понять бота
-- Изучить тестовый сервер
+- Raise a bot locally and exchange with him
+- Understand the swap algorithm
+- Understand the core
+- Understand the bot
+- Explore the test server
 - Create reviews
 
 ## Maximal insight
-- Пробежаться по closed issue
-- ?Пробежаться твиттер и чат (вдруг что полезное)
+- Go over the closed issue
+-? Go over Twitter and chat (suddenly something useful)

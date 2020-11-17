@@ -3,6 +3,9 @@ import React, { Component } from 'react'
 import SwapApp from 'swap.app'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
+import metamask from 'helpers/metamask'
+import { onInit } from 'instances/newSwap'
+
 
 @connect(({ pubsubRoom }) => ({ pubsubRoom }))
 export default class Core extends Component<any, any> {
@@ -11,15 +14,17 @@ export default class Core extends Component<any, any> {
     orders: [],
   }
 
-  componentWillMount() {
-    actions.core.getSwapHistory()
-    SwapApp.shared().services.orders
-      .on('new orders', this.updateOrders)
-      .on('new order', this.updateOrders)
-      .on('order update', this.updateOrders)
-      .on('remove order', this.updateOrders)
-      .on('new order request', this.updateOrders)
-    this.setPubsub()
+  componentDidMount() {
+    onInit(() => {
+      actions.core.getSwapHistory()
+      SwapApp.shared().services.orders
+        .on('new orders', this.updateOrders)
+        .on('new order', this.updateOrders)
+        .on('order update', this.updateOrders)
+        .on('remove order', this.updateOrders)
+        .on('new order request', this.updateOrders)
+      this.setPubsub()
+    })
   }
 
   componentWillUnmount() {

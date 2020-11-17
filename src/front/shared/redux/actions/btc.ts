@@ -398,8 +398,7 @@ const getTransaction = (ownAddress, ownType) => {
   const myAllWallets = getAllMyAddresses()
 
   let { user: { btcData: { address: userAddress } } } = getState()
-  //@ts-ignore
-  const address = address || userAddress
+  const address = ownAddress || userAddress
 
   const type = (ownType) || 'btc'
 

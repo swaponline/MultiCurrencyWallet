@@ -15,9 +15,7 @@ import reducers from 'redux/core/reducers'
 import links from 'helpers/links'
 import { localisedUrl } from 'helpers/locale'
 
-
-import FirstStep from './Steps/FirstStep'
-import SecondStep from './Steps/SecondStep'
+import LogicForSteps from './Steps/LogicForSteps'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 
 import { constants, localStorage } from 'helpers'
@@ -25,9 +23,6 @@ import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 
 
 const isWidgetBuild = config && config.isWidget
-const styleBtn = { backgroundColor: '#f0eefd', color: '#6144E5' }
-const defaultColors = { backgroundColor: '#6144E5' }
-
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 const CreateWallet = (props) => {
@@ -43,7 +38,7 @@ const CreateWallet = (props) => {
     core: { hiddenCoinsList },
     activeFiat,
   } = props
-
+  
   const allCurrencies = props.currencies.items
 
   const {
@@ -402,15 +397,17 @@ const CreateWallet = (props) => {
           </span>
           <br />
         </div>
-
-        {forcedCurrencyData ?
-          <SecondStep error={error} onClick={validate} currencies={currencies} setError={setError} forcedCurrencyData />
-          :
-          <div>
-            {step === 1 && <FirstStep error={error} onClick={validate} setError={setError} />}
-            {step === 2 && <SecondStep error={error} btcData={btcData} onClick={validate} currencies={currencies} setError={setError} ethData={ethData} />}
-          </div>
-        }
+        {/* TODO: переименовать компонент */}
+        <LogicForSteps
+          step={step}
+          forcedCurrencyData={forcedCurrencyData}
+          error={error} 
+          onClick={validate}
+          setError={setError}
+          btcData={btcData}
+          currenciesForSecondStep={currencies}
+          ethData={ethData}
+        />
       </div>
     </div>
   )

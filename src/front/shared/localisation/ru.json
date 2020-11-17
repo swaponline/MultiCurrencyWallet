@@ -5248,7 +5248,7 @@
     "id": "createWallet_customERC20",
     "message": "Подключить токен",
     "files": [
-      "src/front/shared/pages/CreateWallet/Steps/FirstStep.js"
+      "src/front/shared/pages/CreateWallet/Steps/LogicForSteps.js"
     ]
   },
   {
@@ -7410,16 +7410,14 @@
     "id": "AlertOrderNonEnoughtBalance",
     "message": "Please top up your balance before you start the swap.",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.js",
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
+      "src/front/shared/pages/Exchange/Exchange.js"
     ]
   },
   {
     "id": "AlertOrderNonEnoughtBalanceTitle",
     "message": "Not enough balance.",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.js",
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
+      "src/front/shared/pages/Exchange/Exchange.js"
     ]
   },
   {
@@ -7533,17 +7531,11 @@
   },
   {
     "id": "walletDidntCreateMessage",
-    "message": "Create {curr} wallet before you start the swap.",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.js"
-    ]
+    "message": "Create {curr} wallet before you start the swap."
   },
   {
     "id": "walletDidntCreateTitle",
-    "message": "Wallet does not exist.",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.js"
-    ]
+    "message": "Wallet does not exist."
   },
   {
     "id": "PartialPriceNoOrdersReduce_PointOfSell",
@@ -8198,18 +8190,16 @@
   },
   {
     "id": "Swap_NeedEthFee",
-    "message": "На вашем балансе должно быть не менее {ethFee} ETH и {btcFee} BTC для оплаты коммисии майнера",
+    "message": "На вашем балансе должно быть не менее {sellFee} {sellCoin} и {buyFee} {buyCoin} для оплаты коммисии майнера",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.js",
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
+      "src/front/shared/pages/Exchange/Exchange.js"
     ]
   },
   {
     "id": "Swap_NeedMoreAmount",
-    "message": "На вашем балансе должно быть не менее {amount} {currency}. {br}Коммисия майнера {ethFee} ETH и {btcFee} BTC",
+    "message": "На вашем балансе должно быть не менее {amount} {currency}. {br}Коммисия майнера {sellFee} {sellCoin} и {buyFee} {buyCoin}",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.js",
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.js"
+      "src/front/shared/pages/Exchange/Exchange.js"
     ]
   },
   {
@@ -8291,6 +8281,76 @@
     "message": "{buyCurrency} Owner received Bitcoin Script and Secret Hash. Waiting confirm TX and when he creates {buyCurrency} Contract",
     "files": [
       "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
+    ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_Message",
+    "message": "Для продолжения выберите в кошельке Метамаск \"{network}\" или отключите кошелек",
+    "files": [
+      "src/front/shared/containers/App/App.js"
+    ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_NetworkMainnet",
+    "message": "Основная сеть (Mainnet)",
+    "files": [
+      "src/front/shared/containers/App/App.js"
+    ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_NetworkTestnet",
+    "message": "Тестовая сеть (Rinkeby)",
+    "files": [
+      "src/front/shared/containers/App/App.js"
+    ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_OkDisconnectWallet",
+    "message": "Отключить внешний кошелек",
+    "files": [
+      "src/front/shared/containers/App/App.js"
+    ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_Title",
+    "message": "Внимание",
+    "files": [
+      "src/front/shared/containers/App/App.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_Cancel",
+    "message": "Отмена",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_Injected",
+    "message": "Metamask",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_InjectedMobile",
+    "message": "Подключить",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_Title",
+    "message": "Подключение внешего кошелька",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_WalletConnect",
+    "message": "WalletConnect",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
     ]
   }
 ]

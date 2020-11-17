@@ -177,25 +177,18 @@ export default class Wallet extends Component<any, any> {
     //@ts-ignore
     } = this.props
 
-    if (metamask.isEnabled()) {
-      setTimeout(() => {
-        metamask.connect().then((isConnected) => {
-          if (isConnected) {
-            //@ts-ignore
-            localStorage.setItem(constants.localStorage.isWalletCreate, true)
-            setTimeout(async () => {
-              history.push(localisedUrl(locale, links.home))
-              await actions.user.sign()
-              await actions.user.getBalances()
-            })
-          } else {
-            history.push(localisedUrl(locale, links.createWallet))
-          }
-        })
-      }, 100)
-    } else {
+    if (metamask.isConnected()) {
       history.push(localisedUrl(locale, links.home))
+      return
     }
+
+    setTimeout(() => {
+      metamask.connect().then((isConnected) => {
+        if (!isConnected) {
+          history.push(localisedUrl(locale, links.home))
+        }
+      })
+    }, 100)
   }
 
   componentDidUpdate(prevProps) {
@@ -379,11 +372,20 @@ export default class Wallet extends Component<any, any> {
     }
 
     const currencies = actions.core.getWallets()
-      .filter(({ currency, balance }) => {
+      .filter(({
+        isMetamask,
+        isConnected,
+        currency,
+        balance,
+      }) => {
         return (
           ((context === 'Send') ? balance : true)
           && !hiddenCoinsList.includes(currency)
           && enabledCurrencies.includes(currency)
+          && (
+            !isMetamask
+            || (isMetamask && isConnected)
+          )
           && ((isWidgetBuild) ?
             widgetCurrencies.includes(currency)
             : true)
@@ -526,51 +528,6 @@ export default class Wallet extends Component<any, any> {
         }
       }
     }, 2000)
-  }
-
-  //@ts-ignore
-  handleModalOpen = context => {
-    //@ts-ignore
-    const { enabledCurrencies } = this.state
-    //@ts-ignore
-    const { hiddenCoinsList } = this.props
-
-    /* @ToDo Вынести в экшены и убрать все дубляжи из всех компонентов */
-    // Набор валют для виджета
-    const widgetCurrencies = ['BTC']
-    if (!hiddenCoinsList.includes('BTC (SMS-Protected)')) widgetCurrencies.push('BTC (SMS-Protected)')
-    if (!hiddenCoinsList.includes('BTC (PIN-Protected)')) widgetCurrencies.push('BTC (PIN-Protected)')
-    if (!hiddenCoinsList.includes('BTC (Multisig)')) widgetCurrencies.push('BTC (Multisig)')
-    widgetCurrencies.push('ETH')
-    if (isWidgetBuild) {
-      //@ts-ignore
-      if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
-        // Multi token widget build
-        //@ts-ignore
-        Object.keys(window.widgetERC20Tokens).forEach(key => {
-          widgetCurrencies.push(key.toUpperCase())
-        })
-      } else {
-        widgetCurrencies.push(config.erc20token.toUpperCase())
-      }
-    }
-
-    const currencies = actions.core.getWallets()
-      .filter(({ currency, balance }) => {
-        return (
-          ((context === 'Send') ? balance : true)
-          && !hiddenCoinsList.includes(currency)
-          && enabledCurrencies.includes(currency)
-          && ((isWidgetBuild) ?
-            widgetCurrencies.includes(currency)
-            : true)
-        )
-      })
-
-    actions.modals.open(constants.modals.CurrencyAction, {
-      currencies,
-      context
-    })
   }
 
   render() {

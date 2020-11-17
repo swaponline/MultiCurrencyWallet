@@ -7,13 +7,6 @@ import App from 'containers/App/App'
 
 import IntlProviderContainer from './IntlProviderContainer'
 
-
-/*type Props = {
-  history: any
-  store: any
-  routes: any
-}*/
-
 export default class Root extends React.Component<any, any> {
 
   props: any

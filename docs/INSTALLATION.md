@@ -51,17 +51,4 @@ npm run build:mainnet https://yourcoolsite.com/
 (don't forget to add a slash in the end of url)
 
 
-### Build with your custom ERC20 token (among BTC, ETH)
-
-1. npm run build:mainnet-widget {erc20contract} {name} {decimals} {ticker}
-
-Example:
-
-```
-npm run build:mainnet-widget 0x4E12EB8e506Ccd1427F6b8F7faa3e88fB698EB28 jack 18 JACK full
-```
-
-2. upload to your domain (https://domain.com/build-mainnet-widget)
-3. open in browser
-
-Remember: you MUST be online for swaps and you can not process more than one exchange at the same time. Otherwise you can use our custodian service for 1% fee and \$50 setup (contact [sashanoxon](https://t.me/sashanoxon) for details).
+Remember: you MUST be online for swaps and you can not process more than one exchange at the same time. 

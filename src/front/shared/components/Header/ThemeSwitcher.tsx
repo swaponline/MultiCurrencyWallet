@@ -1,11 +1,9 @@
 import React from "react"
 
 import CSSModules from "react-css-modules"
-import ReactTooltip from 'react-tooltip'
+import ThemeTooltip from '../ui/Tooltip/ThemeTooltip'
 import { FormattedMessage } from 'react-intl'
 import { constants } from 'helpers'
-
-
 
 import styles from "./Header.scss"
 
@@ -68,9 +66,9 @@ const SwitcherComponent = ({ onClick, withExit, themeSwapAnimation }) => (
     data-tip data-for="themeAlt"
   >
     {isDark ? sun("white") : moon("#747474")}
-    <ReactTooltip id="themeAlt" type={isDark ? "light" : "dark"} effect="solid" place="bottom">
+    <ThemeTooltip id="themeAlt" effect="solid" place="bottom">
       <FormattedMessage id="themeAlt" defaultMessage="{theme} theme" values={{ theme: isDark ? 'Light' : 'Dark' }} />
-    </ReactTooltip>
+    </ThemeTooltip>
   </div>
 )
 

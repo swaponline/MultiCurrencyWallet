@@ -24,6 +24,7 @@ import { BigNumber } from 'bignumber.js'
 import feedback from 'shared/helpers/feedback'
 
 
+
 @injectIntl
 @connect(({
   pubsubRoom: { peer },
@@ -35,6 +36,7 @@ import feedback from 'shared/helpers/feedback'
 
 @cssModules(styles, { allowMultiple: true })
 export default class Row extends Component<any, any> {
+  _mounted = false
 
   static propTypes = {
     row: PropTypes.object,
@@ -44,69 +46,37 @@ export default class Row extends Component<any, any> {
     super(props)
 
     this.state = {
-      balance: 0,
       windowWidth: 0,
       isFetching: false,
       enterButton: false,
-      estimatedFeeValues: {},
     }
+  }
 
-    constants.coinsWithDynamicFee
-      .forEach(item => this.state.estimatedFeeValues[item] = constants.minAmountOffer[item])
+  getBalance() {
+    const {
+      row: {
+        isMy,
+        buyCurrency,
+        sellCurrency,
+      },
+      balances,
+    } = this.props
+
+    const balanceCheckCur = (isMy) ? sellCurrency : buyCurrency
+
+    return (balances && balances[balanceCheckCur]) ? balances[balanceCheckCur] : 0
   }
 
   componentDidMount() {
-    const { estimatedFeeValues } = this.state
+    this._mounted = true
     window.addEventListener('resize', this.renderContent)
     this.renderContent()
-    this.getEstimateFee(estimatedFeeValues)
   }
 
   componentWillUnmount() {
+    this._mounted = false
     window.removeEventListener('resize', this.renderContent)
     actions.modals.close(constants.modals.Confirm)
-  }
-
-  componentWillMount() {
-    const { row: { isMy, sellCurrency, buyCurrency } } = this.props
-    if (isMy) {
-      this.checkBalance(sellCurrency)
-    } else {
-      this.checkBalance(buyCurrency)
-    }
-  }
-
-  getEstimateFee = async (estimatedFeeValues) => {
-    const fee = await helpers.estimateFeeValue.setEstimatedFeeValues({ estimatedFeeValues })
-    this.setState(() => ({ estimatedFeeValues: fee }))
-  }
-
-  checkBalance = async (currency) => {
-    currency = currency.toLowerCase()
-
-    let balance
-
-    const isCurrencyEthOrEthToken = helpers.ethToken.isEthOrEthToken({ name: currency })
-    const isCurrencyEthToken = helpers.ethToken.isEthToken({ name: currency })
-
-    if (isCurrencyEthOrEthToken) {
-      if (isCurrencyEthToken) {
-        balance = await actions.token.getBalance(currency)
-      } else {
-        //@ts-ignore
-        balance = await actions.eth.getBalance(currency)
-      }
-    } else {
-      const { currenciesData } = this.props
-
-      const unspents = await actions[currency].fetchUnspents(currenciesData[`${currency}Data`].address)
-      const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-      balance = new BigNumber(totalUnspent).dividedBy(1e8)
-    }
-
-    this.setState({
-      balance,
-    })
   }
 
   checkDeclineOrders = (orderId, currency) => {
@@ -144,104 +114,32 @@ export default class Row extends Component<any, any> {
     const {
       row: {
         id,
-        buyAmount,
+        buyAmount: sellAmount,
         buyCurrency: sellCurrency, // taker-maker - (maker buy - we sell)
         sellCurrency: buyCurrency, // taker-maker - (maker sell - we buy)
       },
       row,
       intl,
       history,
+      pairFees,
+      balances,
+      checkSwapAllow,
     } = this.props
+
+    const balance = this.getBalance()
+
     //@ts-ignore
     feedback.offers.buyPressed(`${sellCurrency}->${buyCurrency}`)
 
     const pair = Pair.fromOrder(row)
     const { price, amount, total, main, base, type } = pair
 
-    const { address, balance } = actions.core.getWallet({ currency: sellCurrency })
-
-    let checkAmount = buyAmount
-
-    const ethFee = new BigNumber(
-      //@ts-ignore
-      await helpers.eth.estimateFeeValue({ method: 'swap' })
-    ).toNumber()
-
-    const btcFee = new BigNumber(
-      //@ts-ignore
-      await helpers.btc.estimateFeeValue({ method: 'swap' })
-    ).toNumber()
-
-    if (buyCurrency === 'ETH') {
-      checkAmount = new BigNumber(checkAmount).plus(ethFee).toNumber()
-    }
-
-    let ethBalanceOk = true
-
-    const isSellToken = helpers.ethToken.isEthToken( { name: sellCurrency } )
-    const { balance: ethBalance }  = actions.core.getWallet({ currency: 'ETH' })
-
-    let balanceIsOk = true
-    if (
-      isSellToken
-      && (
-        balance < checkAmount
-        || ethBalance < ethFee
-      )
-    ) balanceIsOk = false
-
-
-    if (sellCurrency === 'BTC'
-      && !isSellToken
-      && balance < checkAmount
-    ) balanceIsOk = false
-
-    if (!balanceIsOk) {
-      const alertMessage = (
-        <Fragment>
-          <FormattedMessage
-            id="AlertOrderNonEnoughtBalance"
-            defaultMessage="Please top up your balance before you start the swap."
-          />
-          <br />
-          {isSellToken && (
-            <FormattedMessage
-              id="Swap_NeedEthFee"
-              defaultMessage="На вашем балансе должно быть не менее {ethFee} ETH и {btcFee} BTC для оплаты коммисии майнера"
-              values={{
-                ethFee,
-                btcFee,
-              }}
-            />
-          )}
-          {!isSellToken && (
-            <FormattedMessage
-              id="Swap_NeedMoreAmount"
-              defaultMessage="На вашем балансе должно быть не менее {amount} {currency}. {br}Коммисия майнера {ethFee} ETH и {btcFee} BTC"
-              values={{
-                amount: checkAmount,
-                currency: buyCurrency,
-                ethFee,
-                btcFee,
-                br: <br />,
-              }}
-            />
-          )}
-        </Fragment>
-      )
-      actions.modals.open(constants.modals.AlertWindow, {
-        title: <FormattedMessage
-          id="AlertOrderNonEnoughtBalanceTitle"
-          defaultMessage="Not enough balance."
-        />,
-        message: alertMessage,
-        canClose: true,
-        currency: buyCurrency,
-        address,
-        actionType: 'deposit',
-      })
-      return
-    }
+    if (!checkSwapAllow({
+      sellCurrency,
+      buyCurrency,
+      amount: sellAmount,
+      balance,
+    })) return false
 
     const exchangeRates = new BigNumber(price).dp(6, BigNumber.ROUND_CEIL)
 
@@ -257,7 +155,7 @@ export default class Row extends Component<any, any> {
     })
 
     actions.modals.open(constants.modals.ConfirmBeginSwap, {
-      order: this.props.row,
+      order: row,
       onAccept: async (customWallet) => {
         //@ts-ignore
         feedback.offers.swapRequested(`${sellCurrency}->${buyCurrency}`)
@@ -314,7 +212,12 @@ export default class Row extends Component<any, any> {
   }
 
   render() {
-    const { balance, isFetching, estimatedFeeValues, windowWidth } = this.state;
+    const {
+      isFetching,
+      windowWidth,
+    } = this.state
+
+    const balance = this.getBalance()
 
     const {
       row: {
@@ -333,6 +236,7 @@ export default class Row extends Component<any, any> {
       removeOrder,
       linkedOrderId,
       intl: { locale },
+      pairFees,
     } = this.props
 
 
@@ -340,10 +244,17 @@ export default class Row extends Component<any, any> {
     const { price, amount, total, main, base, type } = pair
 
     // todo: improve calculation much more
-    const buyCurrencyFee = estimatedFeeValues[buyCurrency.toLowerCase()]
-    const costs = (buyCurrencyFee) ? new BigNumber(buyAmount).plus(buyCurrencyFee) : buyAmount
+    const buyCurrencyFee = (
+      pairFees
+      && pairFees.byCoins
+      && pairFees.byCoins[buyCurrency.toUpperCase()]
+    ) ? pairFees.byCoins[buyCurrency.toUpperCase()].fee
+      : false
 
-    const isSwapButtonEnabled = new BigNumber(balance).isGreaterThanOrEqualTo(costs)
+    const costs = (buyCurrencyFee) ? BigNumber(buyAmount).plus(buyCurrencyFee) : buyAmount
+
+    let isSwapButtonEnabled = BigNumber(balance).isGreaterThanOrEqualTo(costs)
+    // @ToDo - Tokens - need eth balance for fee
 
     let sellCurrencyOut,
       sellAmountOut,

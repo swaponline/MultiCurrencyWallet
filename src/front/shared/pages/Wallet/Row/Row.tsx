@@ -949,11 +949,9 @@ export default class Row extends Component<any, any> {
         })
       }
     }
-    //@ts-ignore
-    const addressIsOk = !(this.props.itemData.isMetamask 
-                        //@ts-ignore
-                        && ! this.props.itemData.isConnected)
-                        && mnemonicSaved
+
+    const metamaskIsOk = this.props.itemData.isMetamask && this.props.itemData.isConnected
+    const addressIsOk = !metamaskIsOk && mnemonicSaved
 
     return (
       <tr>
@@ -966,11 +964,11 @@ export default class Row extends Component<any, any> {
             <div styleName="assetsTableInfo">
               <div styleName="nameRow">
                 <a /* Redirect to history if connect wallet */
-                  onClick={ addressIsOk ? this.goToCurrencyHistory : () => null }
+                  onClick={ addressIsOk || metamaskIsOk ? this.goToCurrencyHistory : () => null }
                   styleName={`${
                     addressIsOk && isMobile
                       ? 'linkToHistory mobile'
-                      : addressIsOk 
+                      : addressIsOk || metamaskIsOk
                         ? 'linkToHistory desktop'
                         : ''
                   }`}
