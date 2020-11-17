@@ -14,7 +14,7 @@ import { Button } from 'components/controls'
 import Table from 'components/tables/Table/Table'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import { FormattedMessage } from 'react-intl'
-import SwapsHistory from 'shared/pages/History/SwapsHistory/SwapsHistory.js'
+import SwapsHistory from 'shared/pages/History/SwapsHistory/SwapsHistory'
 
 
 const title = [

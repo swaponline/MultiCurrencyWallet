@@ -392,8 +392,7 @@ export default class Btc extends PureComponent<any, any> {
               <pre>
                 <code>
                   {
-                    {/*
-                    //@ts-ignore */}
+                    //@ts-ignore
                     JSON.stringify(this.state.txData.input, false, 4)
                   }
                 </code>
@@ -408,15 +407,13 @@ export default class Btc extends PureComponent<any, any> {
               <pre>
                 <code>
                   {
-                    {/*
-                    //@ts-ignore */}
+                    //@ts-ignore
                     JSON.stringify(this.state.txData.output, false, 4)
                   }
                 </code>
                 <code>
                   {
-                    {/*
-                    //@ts-ignore */}
+                    //@ts-ignore
                     JSON.stringify(this.state.txData, false, 4)
                   }
                 </code>

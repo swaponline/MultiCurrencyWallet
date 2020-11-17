@@ -211,8 +211,7 @@ export default class History extends Component<any, any> {
                     rowRender={this.rowRender}
                   />
                 ) : (
-                  {/*
-                  //@ts-ignore */}
+                  //@ts-ignore
                   <ContentLoader rideSideContent empty={!isLoading} nonHeader />
                 )
               }

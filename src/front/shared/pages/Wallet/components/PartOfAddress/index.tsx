@@ -28,8 +28,7 @@ export default ({ currency, contractAddress, address, onClick, withoutLink, styl
       ) : (
         //@ts-ignore
         <Address
-          {/*
-          //@ts-ignore*/}
+          //@ts-ignore
           address={address}
           format={AddressFormat.Short}
           style={{ ...style, ...styleOverwrited }}

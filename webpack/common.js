@@ -49,6 +49,7 @@ const webpackConfig = {
   resolve: {
     alias: {
       'shared': config.paths.front('shared'),
+      'local_modules': config.paths.front('local_modules'),
       'domain': config.paths.common('domain'),
       'swap.auth': config.paths.core('swap.auth'),
       'swap.orders': config.paths.core('swap.orders'),

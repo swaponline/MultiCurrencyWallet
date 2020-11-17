@@ -692,19 +692,15 @@ export default class Wallet extends Component<any, any> {
       >
         {
           activeView === 0 &&
+          //@ts-ignore
           <CurrenciesList
             isDark={isDark}
             tableRows={tableRows}
-            {/*
-            //@ts-ignore */}
             {...this.state}
-            {/*
-            //@ts-ignore */}
             {...this.props}
             goToСreateWallet={this.goToСreateWallet}
             multisigPendingCount={multisigPendingCount}
-            {/*
-            //@ts-ignore */}
+            //@ts-ignore
             getExCurrencyRate={(currencySymbol, rate) => this.getExCurrencyRate(currencySymbol, rate)}
           />
         }

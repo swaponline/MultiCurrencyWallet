@@ -137,22 +137,12 @@ class IEO extends React.Component<any, any> {
              titles={titles}
              rows={rows}
              rowRender={(row, index, selectId, handleSelectId) => (
-               {/*
-               //@ts-ignore */}
-               <Row
-                 //@ts-ignore
-                 key={`${row} ${index}`}
-                 //@ts-ignore
-                 currency={row}
-                 //@ts-ignore
+               //@ts-ignore
+               <Row key={`${row} ${index}`} currency={row}
                  selectId={selectId}
-                 //@ts-ignore
                  index={index}
-                 //@ts-ignore
                  handleSelectId={handleSelectId}
-                 //@ts-ignore
                  row={rows[index]}
-                 //@ts-ignore
                  disabled={this.state.isSaved}
                />
              )}
