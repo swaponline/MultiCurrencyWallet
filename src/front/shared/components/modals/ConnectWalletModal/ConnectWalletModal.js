@@ -53,7 +53,7 @@ const providerTitles = defineMessages({
 }))
 @cssModules(styles)
 export default class ConnectWalletModal extends React.Component {
-  handleClose = () => {
+  goToPage(link) {
     const {
       name,
       history,
@@ -61,26 +61,38 @@ export default class ConnectWalletModal extends React.Component {
         locale,
       },
     } = this.props
+    history.push(localisedUrl(locale, link))
+  }
+
+  onConnectLogic(connected) {
+    if (!connected) {
+      this.goToPage(links.createWallet)
+    } else {
+      this.goToPage(links.home)
+    }
+  }
+
+  handleClose = () => {
+    const {
+      name,
+    } = this.props
 
     if (!localStorage.getItem(constants.localStorage.isWalletCreate)) {
-      history.push(localisedUrl(locale, links.createWallet))
+      this.goToPage(links.createWallet)
     }
+
     actions.modals.close(name)
   }
 
   handleInjected = () => {
     metamask.web3connect.connectTo('INJECTED').then((connected) => {
-      if (connected) {
-        history.push(localisedUrl(locale, links.createWallet))
-      }
+      this.onConnectLogic(connected)
     })
   }
 
   handleWalletConnect = () => {
     metamask.web3connect.connectTo('WALLETCONNECT').then((connected) => {
-      if (connected) {
-        history.push(localisedUrl(locale, links.createWallet))
-      }
+      this.onConnectLogic(connected)
     })
   }
 
