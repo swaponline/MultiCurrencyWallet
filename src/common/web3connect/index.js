@@ -243,6 +243,7 @@ export default class Web3Connect extends EventEmitter {
     return (
       `${this._web3ChainId}` === `${this._cachedChainId}`
       || `0x0${this._web3ChainId}` === `${this._cachedChainId}`
+      || `0x${this._web3ChainId}` === `${this._cachedChainId}` // Opera Mobile
     )
   }
 
