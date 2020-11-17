@@ -442,7 +442,7 @@ const fetchWalletBalance = async (walletData) => {
   if (helpers.ethToken.isEthToken({ name })) {
     try {
       const balance = await actions.token.fetchBalance(walletData.address, walletData.contractAddress, walletData.decimals)
-      return BigNumber(balance).toNumber()
+      return new BigNumber(balance).toNumber()
     } catch (err) {
       console.error(`Fail fetch balance for wallet '${name}'`, err)
     }

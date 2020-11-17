@@ -89,9 +89,13 @@ const sign = async () => {
     }
     console.log('actions user - sign', mnemonicKeys, mnemonic)
     if (mnemonic !== `-`) {
+      //@ts-ignore
       if (!mnemonicKeys.btc) mnemonicKeys.btc = actions.btc.sweepToMnemonic(mnemonic)
+      //@ts-ignore
       if (!mnemonicKeys.eth) mnemonicKeys.eth = actions.eth.sweepToMnemonic(mnemonic)
+      //@ts-ignore
       if (!mnemonicKeys.ghost) mnemonicKeys.ghost = actions.ghost.sweepToMnemonic(mnemonic)
+        //@ts-ignore
       if (!mnemonicKeys.next) mnemonicKeys.next = actions.next.sweepToMnemonic(mnemonic)
       if (!mnemonicKeys.btcSms) {
         mnemonicKeys.btcSms = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
@@ -101,12 +105,14 @@ const sign = async () => {
     // Sweep-Switch
     let btcNewSmsMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKeyMnemonic)
     try { btcNewSmsMnemonicKey = JSON.parse(btcNewSmsMnemonicKey) } catch (e) { }
+    //@ts-ignore
     if (!(btcNewSmsMnemonicKey instanceof Array)) {
       localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyMnemonic, JSON.stringify([]))
     }
 
     let btcNewMultisigOwnerKey = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKeyMnemonic)
     try { btcNewMultisigOwnerKey = JSON.parse(btcNewMultisigOwnerKey) } catch (e) { }
+    //@ts-ignore
     if (!(btcNewMultisigOwnerKey instanceof Array)) {
       localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKeyMnemonic, JSON.stringify([]))
     }
@@ -477,8 +483,11 @@ const setTransactions = async (objCurrency = null) => {
       ...(metamask.isEnabled() && metamask.isConnected()) ? [actions.eth.getTransaction(metamask.getAddress())] : [],
       //@ts-ignore
       ...(isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
+      //@ts-ignore
       objCurrency && objCurrency['GHOST'].isBalanceFetched ? actions.ghost.getTransaction() : [],
+      //@ts-ignore
       ...(isGhostSweeped && !(objCurrency && objCurrency['GHOST'].isBalanceFetched)) ? [] : [actions.ghost.getTransaction(actions.ghost.getSweepAddress())],
+      //@ts-ignore
       actions.next.getTransaction(),
       //@ts-ignore
       ...(isNextSweeped) ? [] : [actions.next.getTransaction(actions.next.getSweepAddress())],

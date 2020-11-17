@@ -18,6 +18,7 @@ const web3connect = new Web3Connect({
 })
 
 web3connect.on('connected', () => {
+  //@ts-ignore
   localStorage.setItem(constants.localStorage.isWalletCreate, true)
   actions.core.markCoinAsVisible(`ETH`)
   window.location.reload()

@@ -2,6 +2,7 @@ import helpers, { apiLooper, constants, api, cacheStorageGet, cacheStorageSet } 
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import { web3, getWeb3 } from 'helpers/web3'
+//@ts-ignore
 import { utils as web3utils } from 'web3'
 import reducers from 'redux/core/reducers'
 import config from 'helpers/externalConfig'

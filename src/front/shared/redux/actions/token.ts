@@ -68,6 +68,7 @@ const login = (privateKey, contractAddress, nameContract, decimals, fullName) =>
 
 
 const setupContract = (ethAddress, contractAddress, nameContract, decimals, fullName) => {
+  //@ts-ignore
   console.log('setup contract', web3, web3.isMetamask)
   if (!web3.eth.accounts.wallet[ethAddress]) {
     throw new Error('web3 does not have given address')

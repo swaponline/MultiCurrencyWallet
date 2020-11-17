@@ -10,6 +10,7 @@ let web3 = new Web3(new Web3.providers.HttpProvider(config.web3.provider))
 
 const setMetamask = async (provider) => {
   web3 = provider
+  //@ts-ignore
   web3.isMetamask = true
 }
 

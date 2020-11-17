@@ -512,8 +512,8 @@ export default class Exchange extends Component<any, any> {
     if (
       isSellToken
       && (
-        BigNumber(balance).isLessThan(amount)
-        || BigNumber(balances.ETH).isLessThan(pairFees.byCoins.ETH.fee)
+        new BigNumber(balance).isLessThan(amount)
+        || new BigNumber(balances.ETH).isLessThan(pairFees.byCoins.ETH.fee)
       )
     ) balanceIsOk = false
 
@@ -522,13 +522,13 @@ export default class Exchange extends Component<any, any> {
       && pairFees.byCoins[sellCurrency.toUpperCase()].isUTXO
     ) {
       if (
-        BigNumber(balance).isLessThan(
-          BigNumber(amount).plus(pairFees.byCoins[sellCurrency.toUpperCase()].fee)
+        new BigNumber(balance).isLessThan(
+          new BigNumber(amount).plus(pairFees.byCoins[sellCurrency.toUpperCase()].fee)
         )
       ) balanceIsOk = false
     } else {
       if (!isSellToken
-        && BigNumber(balance).isLessThan(amount)
+        && new BigNumber(balance).isLessThan(amount)
       ) balanceIsOk = false
     }
 
@@ -609,7 +609,7 @@ export default class Exchange extends Component<any, any> {
 
     const haveTicker = haveCurrency.toUpperCase()
     const getTicker = getCurrency.toUpperCase()
-
+    //@ts-ignore
     feedback.exchangeForm.requestedSwap(`${haveTicker}->${getTicker}`)
 
     if (!this.checkSwapAllow({
@@ -1125,10 +1125,10 @@ export default class Exchange extends Component<any, any> {
       // (При списании со скрипта берется коммисия)
       const feeMultipler = 1
       if (pairFees.have.isUTXO
-        && BigNumber(pairFees.have.fee).times(feeMultipler).isGreaterThanOrEqualTo(haveAmount)
+        && new BigNumber(pairFees.have.fee).times(feeMultipler).isGreaterThanOrEqualTo(haveAmount)
       ) return true
       if (pairFees.get.isUTXO
-        && BigNumber(pairFees.get.fee).times(feeMultipler).isGreaterThanOrEqualTo(getAmount)
+        && new BigNumber(pairFees.get.fee).times(feeMultipler).isGreaterThanOrEqualTo(getAmount)
       ) return true
     } else {
       /* No information for fee... wait - disable swap */
@@ -1267,10 +1267,10 @@ export default class Exchange extends Component<any, any> {
       balanceTooltip = (
         <p styleName="maxAmount">
           {(
-            (BigNumber(balance).toNumber() === 0)
+            (new BigNumber(balance).toNumber() === 0)
             || (
               sellCoinFee
-              && BigNumber(balance).minus(sellCoinFee.fee).isLessThanOrEqualTo(0)
+              && new BigNumber(balance).minus(sellCoinFee.fee).isLessThanOrEqualTo(0)
             )
           ) ? ( null ) 
             : (
@@ -1288,10 +1288,10 @@ export default class Exchange extends Component<any, any> {
                   />
                 }
                 {sellCoinFee && sellCoinFee.fee
-                  ? BigNumber(balance)
+                  ? new BigNumber(balance)
                     .minus(sellCoinFee.fee)
                     .dp(5, BigNumber.ROUND_FLOOR).toString()
-                  : BigNumber(balance)
+                  : new BigNumber(balance)
                     .dp(5, BigNumber.ROUND_FLOOR).toString()
                 }
                 {'  '}
@@ -1312,9 +1312,9 @@ export default class Exchange extends Component<any, any> {
       .dp(2, BigNumber.ROUND_CEIL)
 
     const fiatFeeCalculation = (pairFees) ? (
-      BigNumber(pairFees.buyExRate).times(pairFees.buy.fee)
+      new BigNumber(pairFees.buyExRate).times(pairFees.buy.fee)
       .plus(
-        BigNumber(pairFees.sellExRate).times(pairFees.sell.fee)
+        new BigNumber(pairFees.sellExRate).times(pairFees.sell.fee)
       )
       .dp(2, BigNumber.ROUND_CEIL)
       .toNumber()
@@ -1337,8 +1337,8 @@ export default class Exchange extends Component<any, any> {
       pairFees 
       && pairFees.byCoins 
       && pairFees.byCoins[sellCoin]
-      && BigNumber(pairFees.byCoins[sellCoin].fee).isGreaterThan(0)
-    ) ? BigNumber(haveAmount).minus(
+      && new BigNumber(pairFees.byCoins[sellCoin].fee).isGreaterThan(0)
+    ) ? new BigNumber(haveAmount).minus(
           pairFees.byCoins[sellCoin].fee
         )
       : 0
@@ -1358,7 +1358,7 @@ export default class Exchange extends Component<any, any> {
       linked.haveAmount.value > 0
 
     const isErrorLowAmount = this.doesComissionPreventThisOrder() &&
-      BigNumber(getAmount).isGreaterThan(0) &&
+      new BigNumber(getAmount).isGreaterThan(0) &&
       haveAmount &&
       getAmount
 

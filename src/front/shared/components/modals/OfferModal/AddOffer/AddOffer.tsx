@@ -439,9 +439,9 @@ export default class AddOffer extends Component<any, any> {
 
     const isDisabled = !exchangeRate
       || !buyAmount && !sellAmount
-      || BigNumber(sellAmount).isGreaterThan(balance)
-      || BigNumber(sellAmount).isLessThan(minimalAmountSell)
-      || BigNumber(buyAmount).isLessThan(minimalAmountBuy)
+      || new BigNumber(sellAmount).isGreaterThan(balance)
+      || new BigNumber(sellAmount).isLessThan(minimalAmountSell)
+      || new BigNumber(buyAmount).isLessThan(minimalAmountBuy)
 
     if (linked.sellAmount.value !== '' && linked.sellAmount.value > 0) {
       linked.sellAmount.check((value) => (new BigNumber(value).isGreaterThan(minimalAmountSell)),

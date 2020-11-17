@@ -181,6 +181,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     if (metamask.isConnected()
       && !metamask.isCorrectNetwork()
     ) {
+      //@ts-ignore
       const { intl } = this.props
 
       actions.modals.open(constants.modals.AlertModal, {
@@ -244,9 +245,10 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   }
 
   async componentDidMount() {
+    //@ts-ignore
     const { currencies } = this.props
 
-    this.preventMultiTabs()
+    this.preventMultiTabs(false)
 
     // @ToDo - may be can be deleted. Temp fix for our client, when he update token list
     if (window.origin === `https://wallet.b` + `itpli` + `cit` + `y.com`) {
@@ -271,12 +273,14 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       if (config && config.isWidget && false) {
         currencies.forEach(({ name }) => {
           if (name !== "BTC" && !config.erc20[name.toLowerCase()]) {
+            //@ts-ignore
             actions.core.markCoinAsHidden(name)
           }
         })
       } else {
         currencies.forEach(({ name }) => {
           if (name !== "BTC") {
+            //@ts-ignore
             actions.core.markCoinAsHidden(name)
           }
         })

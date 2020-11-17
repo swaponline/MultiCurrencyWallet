@@ -128,6 +128,8 @@ export default class AlertModal extends React.Component<any, any> {
               <p styleName="notification">{labels.message}</p>
             </div>
             <div styleName="button-overlay">
+              {/*
+              //@ts-ignore */}
               <Button styleName={buttonStyle} blue onClick={this.handleOk}>{labels.ok}</Button>
             </div>
           </div>

@@ -251,9 +251,9 @@ export default class Row extends Component<any, any> {
     ) ? pairFees.byCoins[buyCurrency.toUpperCase()].fee
       : false
 
-    const costs = (buyCurrencyFee) ? BigNumber(buyAmount).plus(buyCurrencyFee) : buyAmount
+    const costs = (buyCurrencyFee) ? new BigNumber(buyAmount).plus(buyCurrencyFee) : buyAmount
 
-    let isSwapButtonEnabled = BigNumber(balance).isGreaterThanOrEqualTo(costs)
+    let isSwapButtonEnabled = new BigNumber(balance).isGreaterThanOrEqualTo(costs)
     // @ToDo - Tokens - need eth balance for fee
 
     let sellCurrencyOut,

@@ -40,6 +40,8 @@ function FirstStep(props) {
               return (
                 <div key={name} styleName={`card ${curState[name] ? 'purpleBorder' : ''}`} onClick={() => handleClick(name)}>
                   <div styleName="logo">
+                    {/*
+                    //@ts-ignore */}
                     <Coin styleName={`assetsTableIcon ${coloredIcons.includes(name.toLowerCase()) ? name.toLowerCase() : "coinColor"}`} name={name} />
                   </div>
                   <div styleName="listGroup">
