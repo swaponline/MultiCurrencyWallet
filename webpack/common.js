@@ -66,7 +66,7 @@ const webpackConfig = {
       'node_modules',
       config.paths.core(''),
     ],
-    extensions: [ '.js', '.jsx', '.scss', '.tsx', '.ts' ],
+    extensions: [ '.js', '.jsx', '.tsx', '.ts', '.scss' ],
     plugins: [],
   },
 
