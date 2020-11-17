@@ -48,7 +48,6 @@ const Footer = (props) => {
               <span>-</span>
             }
           </div>
-          <div>{test.prop}</div>
         </WidthContainer>
       )}
     </footer>

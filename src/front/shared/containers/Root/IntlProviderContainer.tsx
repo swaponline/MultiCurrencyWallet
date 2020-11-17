@@ -37,16 +37,12 @@ export default class IntlProviderContainer extends React.Component<any, any> {
     const { children } = this.props
     let lang = 'en'
 
-console.log('render IntlProviderContainer.tsx')
-console.log('typeof children', typeof children, children)
-    //return <div>123</div>
     return (
       <HashRouter>
         <Switch>
           <Route
             path={localisePrefix}
             render={props => {
-              //return <div>123</div>
               let currentLocale = defaultLocale()
 
               if (props.match.params.locale !== undefined) {
@@ -57,7 +53,7 @@ console.log('typeof children', typeof children, children)
               }
 
               const messages = translations[currentLocale]
-              //return <div>123</div>
+
               return (
                 <IntlProvider
                   {...props}

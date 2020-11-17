@@ -331,7 +331,6 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   }
 
   render() {
-console.log('render App.tsx')
     //@ts-ignore
     const { fetching, multiTabs, error } = this.state;
     //@ts-ignore

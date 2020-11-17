@@ -27,7 +27,6 @@ if (
   ReactDOM.render(<ErrorPageNoSSL />, rootEl)
 } else {
   migrate().finally(() => setTimeout(() => {
-    console.log('(index.tsx) render root, started', 'Root =', Root, 'history = ', history, 'store = ', store, 'routes = ', routes, 'rootEl = ', rootEl)
     ReactDOM.render(<Root history={history} store={store} routes={routes} />, rootEl)
     console.log('(index.tsx) render root, finished')
   }, 1000))

@@ -74,7 +74,7 @@ export default class Table extends React.Component<any, any> {
         <thead ref={(thead) => this.linkOnTableHead = thead}>
           <tr>
             {
-              titles.filter(title => !!title).map((title, index) => (
+              titles && titles.filter(title => !!title).map((title, index) => (
                 <th key={index}>{title}</th>
               ))
             }
