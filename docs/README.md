@@ -68,7 +68,7 @@ Supported languages:
 - 🇳🇱 NL
 - 🇪🇸 ES
 
-Work in progress to add more languages.
+https://support.swaponline.io/docs/fpr-business/how-to-add-new-languige/ 
 
 
 ## How to support the project?
