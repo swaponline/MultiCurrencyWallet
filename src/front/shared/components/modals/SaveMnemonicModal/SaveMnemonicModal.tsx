@@ -114,10 +114,6 @@ export default class SaveMnemonicModal extends React.Component<any, any> {
     data: PropTypes.object,
   }
 
-  static defaultProps = {
-    data: { showCloseButton: true }
-  }
-
   constructor(props) {
     super(props)
 
@@ -248,10 +244,7 @@ export default class SaveMnemonicModal extends React.Component<any, any> {
   render() {
     const {
       name,
-      intl,
-      data: {
-        showCloseButton,
-      },
+      intl
     } = this.props
 
     const {
@@ -268,7 +261,7 @@ export default class SaveMnemonicModal extends React.Component<any, any> {
     // const linked = Link.all(this, 'address', 'amount', 'from')
 
     return (
-      <Modal name={name} title={`${intl.formatMessage(langLabels.title)}`} onClose={this.handleClose} showCloseButton={showCloseButton}>
+      <Modal name={name} title={`${intl.formatMessage(langLabels.title)}`} onClose={this.handleClose} showCloseButton={true}>
         {step === `confirmMnemonic` && (
           <p styleName="notice mnemonicNotice">
             <FormattedMessage {...langLabels.enterMnemonicNotice} />
