@@ -613,24 +613,23 @@ export default class WithdrawModal extends React.Component {
     tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
 
     let dinamicFee = isEthToken ? 0 : minAmount[getCurrencyKey(currency).toLowerCase()]
+    let defaultMinFee = dinamicFee // non-changing value in aт amount warning
 
     dinamicFee = (usedAdminFee) ? BigNumber(dinamicFee).plus(adminFee.calc(currency, amount)).toNumber() : dinamicFee
 
-    const dataCurrency = isEthToken ? 'ETH' : currency.toUpperCase()
-
-    let allowedCriptoBalance = new BigNumber(balance).minus(dinamicFee).dp(6, BigNumber.ROUND_FLOOR).toString()
+    let allowedCriptoBalance = new BigNumber(balance).minus(defaultMinFee).dp(6, BigNumber.ROUND_FLOOR).toString()
     let allowedUsdBalance = new BigNumber(allowedCriptoBalance * exCurrencyRate).dp(2, BigNumber.ROUND_FLOOR).toString()
     /* 
     * for btc and btc-usd appears minus in start
-    * need delete it
+    * need delete this minus
     */
-    allowedCriptoBalance = allowedCriptoBalance[0] === '-'
-      ? allowedCriptoBalance.substr(1)
-      : allowedCriptoBalance
-
-    allowedUsdBalance = allowedUsdBalance[0] === '-'
-      ? allowedUsdBalance.substr(1)
-      : allowedUsdBalance
+     allowedCriptoBalance = allowedCriptoBalance[0] === '-'
+       ? allowedCriptoBalance.substr(1)
+       : allowedCriptoBalance
+ 
+     allowedUsdBalance = allowedUsdBalance[0] === '-'
+       ? allowedUsdBalance.substr(1)
+       : allowedUsdBalance
 
     const criptoValueIsOk = BigNumber(linked.amount.pipe(this.handleAmount).value).isLessThanOrEqualTo(allowedCriptoBalance)
     const usdValueIsOk = BigNumber(linked.fiatAmount.pipe(this.handleAmount).value).isLessThanOrEqualTo(allowedUsdBalance)
@@ -683,19 +682,25 @@ export default class WithdrawModal extends React.Component {
 
     const amountInputKeyDownCallback = (event) => {
       const BACKSPACE_CODE = 8
+      const LEFT_ARROW = 37
+      const RIGHT_ARROW = 39
       const ZERO_CODE = 48
       const NINE_CODE = 57
       const DOT_CODE = 190
 
-       if (
-         !(event.keyCode >= ZERO_CODE
-           && event.keyCode <= NINE_CODE
-           || event.keyCode === DOT_CODE
-           || event.keyCode === BACKSPACE_CODE)
-       ) {
-         event.preventDefault()
-       }
+      if (
+        !(event.keyCode >= ZERO_CODE
+          && event.keyCode <= NINE_CODE
+          || event.keyCode === DOT_CODE
+          || event.keyCode === BACKSPACE_CODE
+          || event.keyCode === LEFT_ARROW
+          || event.keyCode === RIGHT_ARROW)
+      ) {
+        event.preventDefault()
+      }
     }
+
+    const dataCurrency = isEthToken ? 'ETH' : currency.toUpperCase()
 
     const formRender = (
       <Fragment>
@@ -755,7 +760,7 @@ export default class WithdrawModal extends React.Component {
             focusOnInit
             pattern="0-9a-zA-Z:"
             placeholder={`Enter ${currency.toUpperCase()} address to transfer`}
-            qr
+            qr={isMobile}
             withMargin
             openScan={this.openScan}
           />
@@ -821,7 +826,7 @@ export default class WithdrawModal extends React.Component {
             ) : (
               <Input
                 type='number'
-                valueLink={linked.fiatAmount.pipe(this.handleAmount)}
+                valueLink={linked.fiatAmount.pipe(this.handleDollarValue)}
                 onKeyDown={amountInputKeyDownCallback}
               />
             )}
@@ -855,12 +860,12 @@ export default class WithdrawModal extends React.Component {
             </div>
             
             <div style={{ marginLeft: '15px' }}>
-              <Button blue big onClick={this.sellAllBalance} data-tip data-for="Withdrow134">
+              <Button blue big onClick={this.sellAllBalance} id="Withdrow134">
                 <FormattedMessage id="Select210" defaultMessage="MAX" />
               </Button>
             </div>
             {!isMobile && (
-              <ReactTooltip id="Withdrow134" type="light" effect="solid" styleName="r-tooltip">
+              <ReactTooltip id="Withdrow134" type={`${isDark ? 'light' : 'dark'}`} effect="solid" place="bottom" styleName="r-tooltip">
                 <FormattedMessage
                   id="WithdrawButton32"
                   defaultMessage="when you click this button, in the field, an amount equal to your balance minus the miners commission will appear"
