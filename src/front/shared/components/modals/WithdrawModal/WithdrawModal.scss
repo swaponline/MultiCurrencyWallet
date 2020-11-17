@@ -17,13 +17,13 @@
 
 .rednote {
   font-size: 12px;
-  color: #aaa;
   height: 0px;
   color: $color-f-error;
   position: absolute;
   bottom: -15px;
+
   &.bottom0 {
-    bottom: 0px;
+    bottom: -2px;
   }
 }
 

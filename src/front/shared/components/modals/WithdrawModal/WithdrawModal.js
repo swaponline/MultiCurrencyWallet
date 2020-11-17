@@ -603,26 +603,6 @@ export default class WithdrawModal extends React.Component {
     const currencyView = getCurrencyKey(currentActiveAsset.currency, true).toUpperCase()
     const selectedValueView = getCurrencyKey(selectedValue, true).toUpperCase()
 
-    let dinamicFee = isEthToken ? 0 : minAmount[getCurrencyKey(currency).toLowerCase()]
-    let defaultMinFee = dinamicFee
-
-    const allowedBalance = new BigNumber(balance).minus(defaultMinFee)
-
-    /*
-    let enabledCurrencies = allCurrencyies.filter(
-      (x) => !hiddenCoinsList.map((item) => item.split(':')[0]).includes(x.currency)
-    )
-    */
-
-    /*
-    let enabledCurrencies = allCurrencyies.filter(({ currency, address, balance }) => {
-      // @ToDo - В будущем нужно убрать проверку только по типу монеты.
-      // Старую проверку оставил, чтобы у старых пользователей не вывалились скрытые кошельки
-
-      return (!hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`)) || balance > 0
-    })
-    */
-
     let tableRows = actions.core.getWallets().filter(({ currency, address, balance }) => {
       // @ToDo - В будущем нужно убрать проверку только по типу монеты.
       // Старую проверку оставил, чтобы у старых пользователей не вывалились скрытые кошельки
@@ -632,27 +612,32 @@ export default class WithdrawModal extends React.Component {
 
     tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
 
-    dinamicFee = (usedAdminFee) ? BigNumber(dinamicFee).plus(adminFee.calc(currency, amount)).toNumber() : defaultMinFee
+    let dinamicFee = isEthToken ? 0 : minAmount[getCurrencyKey(currency).toLowerCase()]
+
+    dinamicFee = (usedAdminFee) ? BigNumber(dinamicFee).plus(adminFee.calc(currency, amount)).toNumber() : dinamicFee
 
     const dataCurrency = isEthToken ? 'ETH' : currency.toUpperCase()
-    const dynamicAmountCriptoValue = linked.amount.pipe(this.handleAmount).value
-    const dynamicAmountUsdValue = linked.fiatAmount.pipe(this.handleAmount).value
-    
-    const temporaryCriptoBalance = BigNumber(allowedBalance).dp(6, BigNumber.ROUND_FLOOR).toString()
-    const allowedCriptoBalance = temporaryCriptoBalance[0] === '-'
-      ? temporaryCriptoBalance.substr(1)
-      : temporaryCriptoBalance;
-    const temporaryUsdBalance = BigNumber(allowedBalance * exCurrencyRate).dp(2, BigNumber.ROUND_FLOOR).toString()
-    const allowedUsdBalance = temporaryUsdBalance[0] === '-'
-      ? temporaryUsdBalance.substr(1)
-      : temporaryUsdBalance;
-      
-    const criptoValueIsOk = BigNumber(dynamicAmountCriptoValue).isLessThanOrEqualTo(allowedCriptoBalance)
-    const usdValueIsOk = BigNumber(dynamicAmountUsdValue).isLessThanOrEqualTo(allowedUsdBalance)
+
+    let allowedCriptoBalance = new BigNumber(balance).minus(dinamicFee).dp(6, BigNumber.ROUND_FLOOR).toString()
+    let allowedUsdBalance = new BigNumber(allowedCriptoBalance * exCurrencyRate).dp(2, BigNumber.ROUND_FLOOR).toString()
+    /* 
+    * for btc and btc-usd appears minus in start
+    * need delete it
+    */
+    allowedCriptoBalance = allowedCriptoBalance[0] === '-'
+      ? allowedCriptoBalance.substr(1)
+      : allowedCriptoBalance
+
+    allowedUsdBalance = allowedUsdBalance[0] === '-'
+      ? allowedUsdBalance.substr(1)
+      : allowedUsdBalance
+
+    const criptoValueIsOk = BigNumber(linked.amount.pipe(this.handleAmount).value).isLessThanOrEqualTo(allowedCriptoBalance)
+    const usdValueIsOk = BigNumber(linked.fiatAmount.pipe(this.handleAmount).value).isLessThanOrEqualTo(allowedUsdBalance)
 
     const isDisabled =
       !address ||
-      !amount ||
+      !+amount || // string to number and inverting
       isShipped ||
       ownTx ||
       !this.addressIsCorrect() ||
@@ -661,33 +646,6 @@ export default class WithdrawModal extends React.Component {
       BigNumber(amount).isGreaterThan(balance) ||
       BigNumber(amount).dp() > currentDecimals ||
       this.isEthOrERC20();
-
-    if (new BigNumber(amount).isGreaterThan(0)) {
-      linked.amount.check(
-        () => criptoValueIsOk,
-        <FormattedMessage
-          id="Withdrow170"
-          defaultMessage="The amount must be no more than your allowed balance: {allowedCriptoBalance} {currency}"
-          values={{
-            allowedCriptoBalance: `${allowedCriptoBalance}`,
-            currency: `${getCurrencyKey(dataCurrency, true).toUpperCase()}`,
-          }}
-        />
-      )
-    }
-
-    if (new BigNumber(fiatAmount).isGreaterThan(0)) {
-      linked.fiatAmount.check(
-        () => usdValueIsOk,
-        <FormattedMessage
-          id="Withdrow171"
-          defaultMessage="The amount must be no more than your allowed balance: {allowedUsdBalance} USD"
-          values={{
-            allowedUsdBalance: `${allowedUsdBalance}`,
-          }}
-        />
-      )
-    }
 
     if (this.state.amount < 0) {
       this.setState({
@@ -722,6 +680,22 @@ export default class WithdrawModal extends React.Component {
         defaultMessage: 'Если оплатили с другого источника',
       },
     })
+
+    const amountInputKeyDownCallback = (event) => {
+      const BACKSPACE_CODE = 8
+      const ZERO_CODE = 48
+      const NINE_CODE = 57
+      const DOT_CODE = 190
+
+       if (
+         !(event.keyCode >= ZERO_CODE
+           && event.keyCode <= NINE_CODE
+           || event.keyCode === DOT_CODE
+           || event.keyCode === BACKSPACE_CODE)
+       ) {
+         event.preventDefault()
+       }
+    }
 
     const formRender = (
       <Fragment>
@@ -766,7 +740,7 @@ export default class WithdrawModal extends React.Component {
             <Tooltip id="WtH203">
               <div style={{ textAlign: 'center' }}>
                 <FormattedMessage
-                  id="WTH275"
+                  id="WTH275" // solve problem with variable in localisations (don't show now)
                   defaultMessage="Make sure the wallet you{br}are sending the funds to supports {currency}"
                   values={{
                     br: <br />,
@@ -775,7 +749,7 @@ export default class WithdrawModal extends React.Component {
                 />
               </div>
             </Tooltip>
-          </FieldLabel>
+        </FieldLabel>
           <Input
             valueLink={linked.address}
             focusOnInit
@@ -785,6 +759,9 @@ export default class WithdrawModal extends React.Component {
             withMargin
             openScan={this.openScan}
           />
+          {/* 
+          * show invalid value warning in address input
+          */}
           {address && !this.addressIsCorrect() && (
             <div styleName="rednote bottom0">
               <FormattedMessage id="WithdrawIncorectAddress" defaultMessage="Your address not correct" />
@@ -831,23 +808,52 @@ export default class WithdrawModal extends React.Component {
             )}
           </p>
           <FieldLabel>
-            <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
+            <FormattedMessage id="Withdrow118" defaultMessage="Amount" />
           </FieldLabel>
 
           <div styleName="group">
             {selectedValue === currentActiveAsset.currency ? (
               <Input
+                type='number'
                 valueLink={linked.amount.pipe(this.handleAmount)}
-                pattern="0-9\."
-                onKeyDown={inputReplaceCommaWithDot}
+                onKeyDown={amountInputKeyDownCallback}
               />
             ) : (
-                <Input
-                  valueLink={linked.fiatAmount.pipe(this.handleDollarValue)}
-                  pattern="0-9\."
-                  onKeyDown={inputReplaceCommaWithDot}
-                />
-              )}
+              <Input
+                type='number'
+                valueLink={linked.fiatAmount.pipe(this.handleAmount)}
+                onKeyDown={amountInputKeyDownCallback}
+              />
+            )}
+            {/* 
+            * show invalid value warning in amount input
+            */}
+            <div styleName="rednote">
+              { selectedValue === currentActiveAsset.currency ? (
+                  new BigNumber(amount).isGreaterThan(0) && !criptoValueIsOk && (
+                    <FormattedMessage
+                      id="Withdrow170"
+                      defaultMessage="Maximum amount you can send is {allowedCriptoBalance} {currency}"
+                      values={{
+                        allowedCriptoBalance: `${allowedCriptoBalance}`,
+                        currency: `${getCurrencyKey(dataCurrency, true).toUpperCase()}`,
+                      }}
+                    />
+                  )
+                ) : (
+                  new BigNumber(fiatAmount).isGreaterThan(0) && !usdValueIsOk && (
+                    <FormattedMessage
+                      id="Withdrow171"
+                      defaultMessage="Maximum amount you can send is {allowedUsdBalance} USD"
+                      values={{
+                        allowedUsdBalance: `${allowedUsdBalance}`,
+                      }}
+                    />
+                  )
+                )
+              }
+            </div>
+            
             <div style={{ marginLeft: '15px' }}>
               <Button blue big onClick={this.sellAllBalance} data-tip data-for="Withdrow134">
                 <FormattedMessage id="Select210" defaultMessage="MAX" />
