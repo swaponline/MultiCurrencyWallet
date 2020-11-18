@@ -139,7 +139,6 @@ const FAQ = (props) => {
             </p>
           </div>
         </article>
-
       </div>
     </div>
   )
