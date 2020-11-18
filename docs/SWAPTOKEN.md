@@ -43,7 +43,7 @@ Current
 - By [community donations](/docs/DONATE.md)
 
 ## initial selling strategy
-- swaponline team can sell SWAP tokens not less than 1 USD per 1 SWAP (please don't buy tokens above 1 usd anywhere to prefent getting rekt)
+- swaponline team can sell SWAP tokens not less than 1 USD per 1 SWAP (please don't buy tokens above 1 usd anywhere to prevent getting rekt)
 - By default, funds are used to support liquidity (not a price increase!) but can be managed by CEO 
 
 ## Strategy and roadmap
