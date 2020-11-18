@@ -286,10 +286,24 @@ export default class AddressSelect extends Component<any, any> {
         return
       }*/
 
-      this.applyAddress({
-        type: selectedType,
-        value,
-      })
+      if ((selectedType === AddressType.Metamask)
+        && !metamask.isConnected()
+      ) {
+        console.log('first - connect')
+        metamask.connect().then((isConnected) => {
+          if (!isConnected) {
+            console.log('not connected')
+            return
+          } else {
+            console.log('connected')
+          }
+        })
+      } else {
+        this.applyAddress({
+          type: selectedType,
+          value,
+        })
+      }
 
     })
   }
@@ -382,7 +396,7 @@ export default class AddressSelect extends Component<any, any> {
               value: AddressType.Metamask,
               icon: iconMetamask,
               title: <Fragment>
-                <FormattedMessage {...langLabels.optionMetamask} />
+              {metamask.web3connect.getProviderTitle()}
                 <Address
                   address={metamaskAddress}
                   format={AddressFormat.Short}
@@ -394,13 +408,13 @@ export default class AddressSelect extends Component<any, any> {
             [{
               value: AddressType.Metamask,
               icon: iconMetamask,
-              title: <FormattedMessage {...langLabels.optionMetamask} />,
+              title: `Ethereum (Web3 provider)`,
             }]
           :
           [{
             value: 'disabled',
-            icon: iconMetamask,
-            title: <FormattedMessage {...langLabels.optionMetamaskNotInstalled} />,
+            icon: false /*iconMetamask*/,
+            title: `Ethereum (Web3 provider)`,
             disabled: true,
           }]
         :

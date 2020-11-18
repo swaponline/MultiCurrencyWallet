@@ -183,6 +183,8 @@ class EthSwap extends SwapInterface {
    * @returns {Promise}
    */
   getBalance(data) {
+    console.log('core -> EthSwap -> getBalance')
+    console.trace()
     const { ownerAddress } = data
 
     return this.contract.methods.getBalance(ownerAddress).call({

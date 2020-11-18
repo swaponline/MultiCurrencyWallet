@@ -208,6 +208,7 @@ const isETHAddress = (address) => {
 }
 
 const getBalance = () => {
+  console.log('actions -> eth -> getBalance')
   const {
     user: {
       ethData: {
@@ -242,12 +243,14 @@ const getBalance = () => {
 
 const getReputation = () => Promise.resolve(0)
 
-const fetchBalance = (address) =>
-  web3.eth.getBalance(address)
+const fetchBalance = (address) => {
+  console.log('actions -> eth -> fetchBalance')
+  return web3.eth.getBalance(address)
     .then(result => Number(web3.utils.fromWei(result)))
     .catch((e) => {
       console.log('Web3 doesn\'t work please again later ', e.error)
     })
+}
 
 const getInvoices = (address) => {
   const { user: { ethData: { userAddress } } } = getState()

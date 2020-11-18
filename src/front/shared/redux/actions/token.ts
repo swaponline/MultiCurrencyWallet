@@ -104,6 +104,7 @@ const setupContract = (ethAddress, contractAddress, nameContract, decimals, full
 
 
 const getBalance = async (currency) => {
+  console.log('actions - token - getBalance')
   const { user: { tokensData } } = getState()
 
   if (currency === undefined) {
@@ -145,7 +146,7 @@ const getBalance = async (currency) => {
 
 
 const fetchBalance = async (address, contractAddress, decimals) => {
-
+  console.log('actions -> token -> fetchBalance')
   const ERC20 = new web3.eth.Contract(ERC20_ABI, contractAddress)
   const result = await ERC20.methods.balanceOf(address).call()
 
