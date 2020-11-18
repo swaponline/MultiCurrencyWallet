@@ -1,4 +1,4 @@
-const BigNumber = require('bignumber.js')
+import BigNumber from 'bignumber.js'
 
 const PAIR_BID = true
 const PAIR_ASK = false
@@ -129,7 +129,7 @@ const convertOrder = (order) => {
   }
 }
 
-module.exports = {
+export default {
   createOrder,
   parsePair,
   parseTicker,

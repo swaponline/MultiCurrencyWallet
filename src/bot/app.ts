@@ -2,14 +2,14 @@
 import express from 'express'
 
 const server = express()
-const bodyparser = require('body-parser')
-const path = require('path')
+import bodyparser from 'body-parser'
+import path from 'path'
 
-const { app, wallet } = require('./swapApp')
-const ws = require('./ws')
+import { app, wallet } from './swapApp'
+import ws from './ws'
 
-const router = require('./routes')
-const auth = require('./routes/auth')
+import router from './routes'
+import auth from './routes/auth'
 
 app.ready = new Promise( resolve => app.services.room.once('ready', resolve))
 app.sync = new Promise( resolve => app.ready.then(() => setTimeout(resolve, 20000)) )
@@ -37,4 +37,4 @@ process.env.ENABLE_WEBSOCKET && ws.init(server, app, router, ws_port)
 const listener = server.listen(port, listen_ip)
 console.log(`[SERVER] listening on http://localhost:${port}`)
 console.log('Run bot...')
-exports = module.exports = { server, app, listener }
+export default { server, app, listener }

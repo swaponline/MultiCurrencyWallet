@@ -1,7 +1,7 @@
-const puppeteer = require('puppeteer');
-const fs = require('fs');
-const { exec } = require("child_process");
-var express = require('express');
+import puppeteer from 'puppeteer'
+import fs from 'fs'
+import { exec } from 'child_process'
+import express from 'express'
 var app = express();
 var today = new Date();
 var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+" "+today.toLocaleTimeString();

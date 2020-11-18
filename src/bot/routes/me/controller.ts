@@ -1,4 +1,4 @@
-const { wallet } = require('../../swapApp')
+import { wallet } from '../../swapApp'
 
 const getMe = async (req, res) => {
   res.json({
@@ -43,4 +43,4 @@ const withdraw = async (req, res) => {
   }
 }
 
-module.exports = { balance, getMe, getWallet, getWalletDetailed, withdraw }
+export default { balance, getMe, getWallet, getWalletDetailed, withdraw }

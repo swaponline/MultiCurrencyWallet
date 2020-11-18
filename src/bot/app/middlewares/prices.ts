@@ -188,4 +188,3 @@ export const syncPrices = async () => {
 }
 
 export default getPriceByPair
-// module.exports = getPriceByPair

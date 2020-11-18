@@ -1,22 +1,22 @@
 //@ToDo need to move in app
-const {
+import {
   orderToString,
   swapToString,
   swapView,
   orderView,
-} = require('./views')
+} from './views'
 
-const {
+import {
   decodeFlow,
   findOrder,
   findSwap,
-} = require('./find')
+} from './find'
 
-const {
+import {
   removeSwap
-} = require('./swap')
+} from './swap'
 
-module.exports = {
+export default {
   findOrder,
   findSwap,
   orderToString,

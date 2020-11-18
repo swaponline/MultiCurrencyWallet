@@ -1,11 +1,11 @@
-const request = require('request-promise-native')
+import request from 'request-promise-native'
 
-const AlgoTrade = require('./algo')
-const SocketBot = require('./socket-bot')
-const DataWorker = require('./data-worker')
+import AlgoTrade from './algo'
+import SocketBot from './socket-bot'
+import DataWorker from './data-worker'
 
-const { getOrderId } = require('./helpers/getOrderId')
-const { parse } = require('./helpers/text')
+import { getOrderId } from './helpers/getOrderId'
+import { parse } from './helpers/text'
 
 const BASE_URL = 'http://localhost:1337'
 
@@ -153,4 +153,4 @@ class RESTInterface {
   }
 }
 
-module.exports = RESTInterface
+export default RESTInterface

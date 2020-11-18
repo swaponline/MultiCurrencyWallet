@@ -1,7 +1,7 @@
-const asciichart = require ('asciichart')
+import asciichart from 'asciichart'
 
-const { convertOrder, TRADE_TICKERS, PAIR_ASK, PAIR_BID } = require('./trade')
-const { print } = require('./helpers/text')
+import { convertOrder, TRADE_TICKERS, PAIR_ASK, PAIR_BID } from './trade'
+import { print } from './helpers/text'
 
 class DataWorker {
 
@@ -85,4 +85,4 @@ class DataWorker {
 
 }
 
-module.exports = DataWorker
+export default DataWorker

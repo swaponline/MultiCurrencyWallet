@@ -1,3 +1,3 @@
-const SwapApp = require('./microbot')
+import SwapApp from './microbot'
 
-module.exports = SwapApp
+export default SwapApp

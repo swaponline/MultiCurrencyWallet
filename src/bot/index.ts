@@ -1,5 +1,5 @@
-
-if (!require('fs').existsSync(__dirname + '/.env')) {
+import * as fs from 'fs'
+if (!fs.existsSync(__dirname + '/.env')) {
   console.log('Please, create ./src/bot/.env file unsing "./src/bot/.env.sample"')
   process.exit(0)
 }
@@ -25,5 +25,5 @@ moduleAlias.addAliases({
   'swap.swaps'        : __dirname + '/../core/swap.swaps',
   //'helpers'           : __dirname + '/../core/simple/src/helpers',
 })
-
-exports = module.exports = require('./app')
+import * as app from './app'
+export default app

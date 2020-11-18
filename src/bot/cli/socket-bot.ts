@@ -1,6 +1,6 @@
-const ws = require('ws')
+import ws from 'ws'
 
-const { getOrderId } = require('./helpers/getOrderId')
+import { getOrderId } from './helpers/getOrderId'
 
 class SocketBot {
   constructor(worker, url) {
@@ -110,4 +110,4 @@ class SocketBot {
   }
 }
 
-module.exports = SocketBot
+export default SocketBot

@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 console.clear()
-const readline = require('./helpers/readline')
-const { HELP, FULL_HELP } = require('./helpers/help')
-const { methods_list, decodeMethod, printHelp } = require('./helpers/methods')
+import readline from './helpers/readline'
+import { HELP, FULL_HELP } from './helpers/help'
+import { methods_list, decodeMethod, printHelp } from './helpers/methods'
 
 const HOST = process.env.HOST || `localhost`
 const url = process.argv[2] || `http://${HOST}:1337`
-const RESTInterface = require('./interface')
+import RESTInterface from './interface'
 const bot = new RESTInterface(url)
 
 console.log(`Using url = ${bot.url}`)

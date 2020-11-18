@@ -2,9 +2,9 @@
 process.env.NODE_ENV = 'test'
 
 //Require the dev-dependencies
-let chai = require('chai')
-let chaiHttp = require('chai-http')
-let { app, server, listener } = require('../app')
+import chai from 'chai'
+import chaiHttp from 'chai-http'
+import { app, server, listener } from '../app'
 let should = chai.should()
 
 chai.use(chaiHttp)

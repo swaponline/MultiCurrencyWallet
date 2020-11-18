@@ -78,7 +78,7 @@ const printHelp = (action) => {
     return method.tokens
 }
 
-module.exports = {
+export default {
   methods,
   methods_list,
   decodeMethod,

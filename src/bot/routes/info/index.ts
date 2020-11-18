@@ -1,6 +1,6 @@
 import { getPriceByPair, syncPrices } from '../../app/middlewares/prices'
 
-const { Router } = require('express')
+import { Router } from 'express'
 const router = new Router()
 
 router.get('/courses', async  ({ query: { ticker = 'ETH-BTC' } }, res) => {
@@ -15,4 +15,4 @@ router.get('/prices', async (req, res) => {
   res.json(prices)
 })
 
-module.exports = router
+export default router

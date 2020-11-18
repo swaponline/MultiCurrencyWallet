@@ -1,6 +1,6 @@
-const { app, wallet } = require('../../swapApp')
+import { app, wallet } from '../../swapApp'
 
-const { findOrder, orderView } = require('../../helpers')
+import { findOrder, orderView } from '../../helpers'
 
 let orders
 const Orders = app.services.orders
@@ -176,7 +176,7 @@ const acceptRequest = (req, res) => {
   })
 }
 
-module.exports = {
+export default {
   filterOrders,
   listOrders,
   listAllOrders,

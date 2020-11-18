@@ -1,4 +1,4 @@
-const ws = require('ws')
+import ws from 'ws'
 
 const checkOrderID = ({ id, orderId }) => {
 
@@ -156,4 +156,4 @@ class SocketBot {
   }
 }
 
-module.exports = SocketBot
+export default SocketBot

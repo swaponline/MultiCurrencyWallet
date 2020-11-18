@@ -1,4 +1,4 @@
-var path = require('path');
+import path from 'path'
 
 
 const home = async (req, res) => {
@@ -10,4 +10,4 @@ const home = async (req, res) => {
 
 
 
-module.exports = home
+export default home

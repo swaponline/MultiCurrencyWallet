@@ -10,4 +10,4 @@ const route = (handler) => async (req, res) => {
   }
 }
 
-module.exports = route
+export default route

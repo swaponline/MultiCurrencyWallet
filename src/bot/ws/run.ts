@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const ws = require('ws')
+import ws from 'ws'
 
 try {
   const server = new ws('ws://localhost:7333')

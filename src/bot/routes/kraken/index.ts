@@ -1,6 +1,6 @@
-const kraken = require ('../../services/instances/kraken')
+import kraken from '../../services/instances/kraken'
 
-const { Router } = require('express')
+import Router from 'express'
 const router = new Router()
 
 
@@ -13,4 +13,4 @@ router.get('/', async  (req, res) => {
    )
 })
 
-module.exports = router
+export default router

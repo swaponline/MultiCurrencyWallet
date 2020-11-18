@@ -1,7 +1,7 @@
-const swap = require('simple.swap.core')
+import swap from 'simple.swap.core'
 
-const commandLineArgs = require('command-line-args')
-const commandLineUsage = require('command-line-usage')
+import commandLineArgs from 'command-line-args'
+import commandLineUsage from 'command-line-usage'
 
 const KEY_ID = [ 'id', 'i' ]
 const KEY_HASH = [ 'hash', 'h' ]

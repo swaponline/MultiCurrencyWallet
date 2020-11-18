@@ -1,7 +1,9 @@
-const flows = require('swap.flows')
+import flows from 'swap.flows'
+import * as os from 'os'
+import * as ip from 'ip'
 
-const OS = require('os').platform()
-const IP = require('ip').address()
+const OS = os.platform()
+const IP = ip.address()
 const HOST = (OS == 'darwin' || OS == 'win32')
     ? `localhost`
     : ( IP ? IP : `127.0.0.1` )
@@ -72,7 +74,7 @@ const orderView = (order) => {
   }
 }
 
-module.exports = {
+export default {
   orderToString,
   swapToString,
   swapView,

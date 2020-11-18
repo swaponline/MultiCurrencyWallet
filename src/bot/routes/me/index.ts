@@ -1,8 +1,8 @@
-const { Router } = require('express')
+import { Router } from 'express'
 const router = new Router()
 
-const { balance, getMe, getWallet, getWalletDetailed, withdraw } = require('./controller')
-const { listMyOrders } = require('../orders/controller')
+import { balance, getMe, getWallet, getWalletDetailed, withdraw } from './controller'
+import { listMyOrders } from '../orders/controller'
 
 router.get('/', getMe)
 router.post('/balance', balance)
@@ -11,4 +11,4 @@ router.get('/core', getWalletDetailed)
 router.get('/withdraw/:from', withdraw)
 router.get('/orders', listMyOrders)
 
-module.exports = router
+export default router

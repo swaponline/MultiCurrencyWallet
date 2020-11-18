@@ -1,4 +1,4 @@
-const KrakenClient = require('kraken-api');
+import KrakenClient from 'kraken-api'
 //const { wallet } = require('../services')
 const wallet = ''
 
@@ -81,4 +81,4 @@ class KrakenApi {
 
 }
 
-module.exports = new KrakenApi();
+export default new KrakenApi();

@@ -1,7 +1,7 @@
-const { Router } = require('express')
+import { Router } from 'express'
 const router = new Router()
 
-const {
+import {
   getSwap,
   getState,
   goSwap,
@@ -17,7 +17,7 @@ const {
 
   getInProgress,
   getFinished,
-} = require('./controller')
+} from './controller'
 
 router.get('/finished', getFinished)
 router.get('/in-progress', getInProgress)
@@ -35,4 +35,4 @@ router.get('/:id/verify-btc-script', withSwap(verifyBtcScript))
 router.get('/:id/sync-balance', withSwap(syncBalance))
 router.get('/:id/try-withdraw', withSwap(tryWithdraw))
 
-module.exports = router
+export default router

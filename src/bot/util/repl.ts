@@ -1,5 +1,5 @@
-const swap = require('simple.swap.core')
-const repl = require('repl')
+import swap from 'simple.swap.core'
+import repl from 'repl'
 
 const {
   on: { onFinish },

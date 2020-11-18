@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   verbose: true,
   testURL: "https://swap.online",
   modulePaths: [

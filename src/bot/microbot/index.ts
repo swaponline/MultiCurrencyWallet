@@ -1,3 +1,2 @@
-//require('babel-core/register')
-
-exports = module.exports = require('./app')
+import * as app from './app'
+export default app

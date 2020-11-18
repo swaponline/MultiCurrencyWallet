@@ -59,4 +59,4 @@ try {
   handleError(err)
 }
 
-module.exports = SwapApp
+export default SwapApp

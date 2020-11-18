@@ -1,7 +1,7 @@
-const { Router } = require('express')
+import Router from 'express'
 const router = new Router()
 
-const {
+import {
   listOrders,
   listAllOrders,
   listMyOrders,
@@ -19,7 +19,7 @@ const {
   requestOrder,
   acceptRequest,
   requestPartialFulfilment,
-} = require('./controller')
+} from './controller'
 
 // order list
 router.get('/', listOrders)
@@ -52,4 +52,4 @@ router.get('/:id/accept', acceptRequest)
 router.get('/:id/accept/:peer', acceptRequest)
 router.get('/:id/decline/:peer', acceptRequest)
 
-module.exports = router
+export default router

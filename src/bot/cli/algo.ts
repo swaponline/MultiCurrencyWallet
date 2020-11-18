@@ -1,5 +1,5 @@
-const BigNumber = require('bignumber.js')
-const request = require('request-promise-native')
+import BigNumber from 'bignumber.js'
+import request from 'request-promise-native'
 
 const BTC_SYMBOL = 1 // BTC
 const ETH_SYMBOL = 1027 // ETH is 1027
@@ -24,13 +24,13 @@ const getPrice = (symbol, base = 'BTC') =>
     .then(num => BigNumber(num))
     .catch(error => { throw new Error(`Cannot get ${symbol} price: ${error}`) })
 
-const {
+import {
   createOrder,
   convertOrder,
   PAIR_ASK,
   PAIR_BID,
   TRADE_TICKERS,
-} = require('./trade')
+} from './trade'
 
 class AlgoTrade {
   constructor(fees) {
@@ -162,4 +162,4 @@ class AlgoTrade {
   }
 }
 
-module.exports = AlgoTrade
+export default AlgoTrade

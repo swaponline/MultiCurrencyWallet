@@ -1,14 +1,14 @@
-const { helpers: { history }} = require('simple.swap.core')
+import { helpers: { history }} from 'simple.swap.core'
 
-const { app } = require('../../swapApp')
-const { findSwap, swapView, decodeFlow, removeSwap } = require('../../helpers')
-const Pair = require('../../microbot/Pair.js')
+import { app } from '../../swapApp'
+import { findSwap, swapView, decodeFlow, removeSwap } from '../../helpers'
+import Pair from '../../microbot/Pair.js'
 
-const flows = require('swap.flows')
-const Swap = require('swap.swap').default
+import flows from 'swap.flows'
+import { default as Swap } from 'swap.swap'
 const Orders = app.services.orders
 
-const crypto = require('crypto')
+import crypto from 'crypto'
 const genSecret = () => crypto.randomBytes(32).toString('hex')
 
 history.init(app)
@@ -237,7 +237,7 @@ const getFinished = ({ query: { parsed, withFees }}, res) => {
   return res.json(pairs)
 }
 
-module.exports = {
+export default {
   getSwap,
   getState,
   goSwap,

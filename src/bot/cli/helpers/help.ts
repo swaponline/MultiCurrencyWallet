@@ -1,4 +1,4 @@
-const { methods, methods_list } = require('./methods')
+import { methods, methods_list } from './methods'
 
 const HELP = `
   COMMANDS:
@@ -49,4 +49,4 @@ const FULL_HELP = `
     ${JSON.stringify(methods, null, 4)}
 `
 
-module.exports = { HELP, FULL_HELP }
+export default { HELP, FULL_HELP }

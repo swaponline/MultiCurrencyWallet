@@ -29,4 +29,4 @@ const fetchPrice = async (obj, type) => {
   }
 }
 
-module.exports = fetchPrice
+export default fetchPrice

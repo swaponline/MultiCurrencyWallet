@@ -1,7 +1,7 @@
-const Swap = require('swap.swap').default
-const flows = require('swap.flows')
+import { default as Swap } from 'swap.swap'
+import flows from 'swap.flows'
 
-const { orderView } = require('./views')
+import { orderView } from './views'
 
 let _swaps = {}
 
@@ -41,7 +41,7 @@ const findSwap = (app) => async (req, res) => {
   return swap
 }
 
-module.exports = {
+export default {
   decodeFlow,
   findSwap,
   findOrder,

@@ -1,8 +1,8 @@
-const WebSocket = require('ws')
-const http = require('http')
+import WebSocket from 'ws'
+import http from 'http'
 const WS_PORT = 7333
 
-const { app: { util } } = require('./swapApp')
+import { app: { util } } from './swapApp'
 
 const init = (app, SwapApp, router, port) => {
   const server = http.createServer(app)
@@ -100,4 +100,4 @@ const init = (app, SwapApp, router, port) => {
   return wss
 }
 
-module.exports = { init }
+export default { init }

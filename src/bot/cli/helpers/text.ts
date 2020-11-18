@@ -1,4 +1,4 @@
-const { PAIR_ASK, PAIR_BID } = require('../trade')
+import { PAIR_ASK, PAIR_BID } from '../trade'
 
 const print = (bas) => bas
   .map(({ticker, type, price, amount}, index) =>
@@ -13,7 +13,7 @@ const parse = (str) => {
   }
 }
 
-module.exports = {
+export default {
   parse,
   print,
 }
