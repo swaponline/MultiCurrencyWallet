@@ -94,7 +94,6 @@ export default (tokenName) => {
         particalBtcLocked: false,
       }
 
-      super._persistSteps()
       this._persistState()
 
       const flow = this
@@ -115,6 +114,8 @@ export default (tokenName) => {
           withdrawRequestIncoming: true,
         })
       })
+
+      super._persistSteps()
     }
 
     _persistState() {
