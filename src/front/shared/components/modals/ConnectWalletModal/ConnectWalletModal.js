@@ -63,10 +63,17 @@ export default class ConnectWalletModal extends React.Component {
   onConnectLogic(connected) {
     const {
       name,
+      data: {
+        dontRedirect,
+        onResolve,
+      },
     } = this.props
 
     if (connected) {
-      this.goToPage(links.home)
+      if (!dontRedirect) this.goToPage(links.home)
+      if (typeof onResolve === `function`) {
+        onResolve(true)
+      }
       actions.modals.close(name)
     }
   }
@@ -74,12 +81,17 @@ export default class ConnectWalletModal extends React.Component {
   handleClose = () => {
     const {
       name,
+      data: {
+        onResolve,
+      },
     } = this.props
 
     if (!localStorage.getItem(constants.localStorage.isWalletCreate)) {
       this.goToPage(links.createWallet)
     }
-
+    if (typeof onResolve === `function`) {
+      onResolve(false)
+    }
     actions.modals.close(name)
   }
 

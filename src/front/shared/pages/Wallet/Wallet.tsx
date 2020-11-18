@@ -183,7 +183,7 @@ export default class Wallet extends Component<any, any> {
     }
 
     setTimeout(() => {
-      metamask.connect()
+      metamask.connect({})
     }, 100)
   }
 

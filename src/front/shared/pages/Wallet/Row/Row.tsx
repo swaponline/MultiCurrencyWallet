@@ -247,7 +247,7 @@ export default class Row extends Component<any, any> {
   }
 
   handleConnectMetamask = () => {
-    metamask.connect().then(async (connected) => {
+    metamask.connect({}).then(async (connected) => {
       if (connected) {
         await actions.user.sign()
         await actions.user.getBalances()

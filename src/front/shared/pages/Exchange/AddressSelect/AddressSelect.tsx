@@ -162,6 +162,37 @@ export default class AddressSelect extends Component<any, any> {
     })
   }
 
+  onWeb3Connected() {
+    this.setState({
+      isMetamaskConnected: true,
+      metamaskAddress: metamask.getAddress(),
+    })
+  }
+
+  onWeb3Disconneted() {
+    this.setState({
+      isMetamaskConnected: false,
+    })
+  }
+
+  onWeb3AccountChanged() {
+    this.setState({
+      metamaskAddress: metamask.getAddress(),
+    })
+  }
+
+  componentDidMount() {
+    metamask.web3connect.on('connected', this.onWeb3Connected.bind(this))
+    metamask.web3connect.on('disconnect', this.onWeb3Disconneted.bind(this))
+    metamask.web3connect.on('accountChange', this.onWeb3AccountChanged.bind(this))
+  }
+
+  componentWillUnmount() {
+    metamask.web3connect.off('connected', this.onWeb3Connected)
+    metamask.web3connect.off('disconnect', this.onWeb3Disconneted)
+    metamask.web3connect.off('accountChange', this.onWeb3AccountChanged)
+  }
+
   componentDidUpdate() {
     const {
       currency: newCurrency,
@@ -213,8 +244,9 @@ export default class AddressSelect extends Component<any, any> {
     history.push(url)
   }
 
+  // @ToDo - remove this
   handleConnectMetamask() {
-    metamask.connect().then((isConnected) => {
+    metamask.connect({}).then((isConnected) => {
       if (!isConnected) {
         return
       }
@@ -256,7 +288,14 @@ export default class AddressSelect extends Component<any, any> {
   }
 
   handleOptionSelect(option) {
-    const selectedType = option.value
+    const {
+      selectedType: oldSelectedType,
+    } = this.state
+
+    const {
+      value: selectedType,
+      dontSelect,
+    } = option
 
     if (selectedType === 'InternalAddressCreate') {
       this.goСreateWallet()
@@ -264,7 +303,7 @@ export default class AddressSelect extends Component<any, any> {
     }
 
     this.setState({
-      selectedType,
+      selectedType: (dontSelect) ? oldSelectedType : selectedType,
     }, () => {
 
       if (!selectedType) {
@@ -289,13 +328,24 @@ export default class AddressSelect extends Component<any, any> {
       if ((selectedType === AddressType.Metamask)
         && !metamask.isConnected()
       ) {
-        console.log('first - connect')
-        metamask.connect().then((isConnected) => {
+        metamask.connect({
+          dontRedirect: true,
+        }).then((isConnected) => {
           if (!isConnected) {
-            console.log('not connected')
             return
           } else {
-            console.log('connected')
+            this.setState({
+              isMetamaskConnected: true,
+              metamaskAddress: metamask.getAddress(),
+              value: metamask.getAddress(),
+              type: AddressType.Metamask,
+              selectedType: AddressType.Metamask,
+            }, () => {
+              this.applyAddress({
+                type: AddressType.Metamask,
+                value: metamask.getAddress(),
+              })
+            })
           }
         })
       } else {
@@ -409,6 +459,7 @@ export default class AddressSelect extends Component<any, any> {
               value: AddressType.Metamask,
               icon: iconMetamask,
               title: `Ethereum (Web3 provider)`,
+              dontSelect: true,
             }]
           :
           [{

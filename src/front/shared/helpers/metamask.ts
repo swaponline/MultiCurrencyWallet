@@ -117,8 +117,12 @@ const disconnect = () => new Promise(async (resolved, reject) => {
   }
 })
 
-const connect = () => new Promise(async (resolved, reject) => {
-  actions.modals.open(constants.modals.ConnectWalletModal)
+const connect = (options) => new Promise(async (resolved, reject) => {
+  actions.modals.open(constants.modals.ConnectWalletModal, {
+    ...options,
+    onResolve: resolved,
+    onReject: reject,
+  })
 })
 
 /* metamask wallet layer */
