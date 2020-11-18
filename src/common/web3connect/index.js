@@ -23,6 +23,7 @@ export default class Web3Connect extends EventEmitter {
   _web3ChainId = null
 
   _inited = false
+  _walletLocked = false
 
   constructor(options) {
     super()
@@ -65,6 +66,10 @@ export default class Web3Connect extends EventEmitter {
     }
   }
 
+  isLocked() {
+    return this._walletLocked
+  }
+
   getProviderTitle() {
     switch (this._cachedProviderName) {
       case SUPPORTED_PROVIDERS.WALLETCONNECT:
@@ -83,6 +88,7 @@ export default class Web3Connect extends EventEmitter {
       case INJECTED_TYPE.OPERA: return 'Opera Crypto Wallet'
       case INJECTED_TYPE.METAMASK: return 'MetaMask'
       case INJECTED_TYPE.TRUST: return 'Trust Wallet'
+      case INJECTED_TYPE.LIQUALITY: return 'Liquality Wallet'
     }
   }
 
@@ -90,6 +96,7 @@ export default class Web3Connect extends EventEmitter {
     if (window
       && window.ethereum
     ) {
+      if (window.ethereum.isLiquality) return INJECTED_TYPE.LIQUALITY
       if (window.ethereum.isTrust) return INJECTED_TYPE.TRUST
       if (window.ethereum.isMetaMask) return INJECTED_TYPE.METAMASK
       if ((!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0) return INJECTED_TYPE.OPERA
@@ -200,6 +207,7 @@ export default class Web3Connect extends EventEmitter {
   }
 
   async connectTo(provider) {
+    this._walletLocked = false
     if (SUPPORTED_PROVIDERS[provider]) {
       const _connector = getProviderByName(this, provider, true)
       if (_connector) {
@@ -212,6 +220,10 @@ export default class Web3Connect extends EventEmitter {
           this._isConnected = true
           this.emit('connected')
           return true
+        } else {
+          if (_connector.isLocked()) {
+            this._walletLocked = true
+          }
         }
       }
       return false

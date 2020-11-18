@@ -85,6 +85,11 @@ export default class ConnectWalletModal extends React.Component {
 
   handleInjected = () => {
     metamask.web3connect.connectTo('INJECTED').then((connected) => {
+      if (!connected && metamask.web3connect.isLocked()) {
+        actions.modals.open(constants.modals.AlertModal, {
+          message: <FormattedMessage id="ConnectWalletModal_WalletLocked" defaultMessage="Wallet is locked. Unlock the wallet first." />,
+        })
+      }
       this.onConnectLogic(connected)
     })
   }
