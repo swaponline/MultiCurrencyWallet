@@ -45,7 +45,6 @@ const namedQueryInit = (queryName) => {
 }
 
 const namedQueryRun = (options) => {
-  
   const {
     name: queryName,
     resolve,
