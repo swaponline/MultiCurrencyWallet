@@ -8233,6 +8233,13 @@
     ]
   },
   {
+    "id": "Withdrow171",
+    "message": "The amount must be no more than your allowed balance: {allowedUsdBalance} USD",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+    {
     "id": "MetamaskNetworkAlert_Message",
     "message": "Wrong network, please select \"{network}\" in Metamask (or wallet connect)",
     "files": [
