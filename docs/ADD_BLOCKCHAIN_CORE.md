@@ -1,7 +1,7 @@
 # How to add BTC-like blockchain
 
 
-## Edit `swap.core` repo
+## Edit `swap.core` 
 
 ### Edit files
 
