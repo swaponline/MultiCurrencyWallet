@@ -614,31 +614,6 @@ export default class WithdrawModal extends React.Component<any, any> {
 
     const currencyView = getCurrencyKey(currentActiveAsset.currency, true).toUpperCase()
     const selectedValueView = getCurrencyKey(selectedValue, true).toUpperCase()
-<<<<<<< HEAD:src/front/shared/components/modals/WithdrawModal/WithdrawModal.js
-=======
-    //@ts-ignore
-    let min = isEthToken ? 0 : minAmount[getCurrencyKey(currency).toLowerCase()]
-    let defaultMin = min
-    const minerFee = min
-    const serviceFee = adminFee.calc(currency, amount)
-
-    const allowedBalance = new BigNumber(balance).minus(defaultMin)
-    
-    /*
-    let enabledCurrencies = allCurrencyies.filter(
-      (x) => !hiddenCoinsList.map((item) => item.split(':')[0]).includes(x.currency)
-    )
-    */
-
-    /*
-    let enabledCurrencies = allCurrencyies.filter(({ currency, address, balance }) => {
-      // @ToDo - В будущем нужно убрать проверку только по типу монеты.
-      // Старую проверку оставил, чтобы у старых пользователей не вывалились скрытые кошельки
-
-      return (!hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`)) || balance > 0
-    })
-    */
->>>>>>> 74028968ba2a9ee71d9a9707ea4f7a738d6a91bb:src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx
 
     let tableRows = actions.core.getWallets().filter(({ currency, address, balance }) => {
       // @ToDo - В будущем нужно убрать проверку только по типу монеты.
@@ -649,12 +624,8 @@ export default class WithdrawModal extends React.Component<any, any> {
 
     tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
 
-<<<<<<< HEAD:src/front/shared/components/modals/WithdrawModal/WithdrawModal.js
     let dinamicFee = isEthToken ? 0 : minAmount[getCurrencyKey(currency).toLowerCase()]
     let defaultMinFee = dinamicFee // non-changing value in aт amount warning
-=======
-    min = (usedAdminFee) ? (new BigNumber(min).plus(adminFee.calc(currency, amount)).toNumber()) : defaultMin
->>>>>>> 74028968ba2a9ee71d9a9707ea4f7a738d6a91bb:src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx
 
     dinamicFee = (usedAdminFee) ? BigNumber(dinamicFee).plus(adminFee.calc(currency, amount)).toNumber() : dinamicFee
 
@@ -672,8 +643,8 @@ export default class WithdrawModal extends React.Component<any, any> {
        ? allowedUsdBalance.substr(1)
        : allowedUsdBalance
 
-    const criptoValueIsOk = BigNumber(linked.amount.pipe(this.handleAmount).value).isLessThanOrEqualTo(allowedCriptoBalance)
-    const usdValueIsOk = BigNumber(linked.fiatAmount.pipe(this.handleAmount).value).isLessThanOrEqualTo(allowedUsdBalance)
+    const criptoValueIsOk = new BigNumber(linked.amount.pipe(this.handleAmount).value).isLessThanOrEqualTo(allowedCriptoBalance).toString()
+    const usdValueIsOk = new BigNumber(linked.fiatAmount.pipe(this.handleAmount).value).isLessThanOrEqualTo(allowedUsdBalance).toString()
 
     const isDisabled =
       !address ||
@@ -681,46 +652,11 @@ export default class WithdrawModal extends React.Component<any, any> {
       isShipped ||
       ownTx ||
       !this.addressIsCorrect() ||
-<<<<<<< HEAD:src/front/shared/components/modals/WithdrawModal/WithdrawModal.js
       !criptoValueIsOk ||
       !usdValueIsOk ||
       BigNumber(amount).isGreaterThan(balance) ||
       BigNumber(amount).dp() > currentDecimals ||
-      this.isEthOrERC20();
-=======
-      new BigNumber(amount).isGreaterThan(balance) ||
-      new BigNumber(amount).dp() > currentDecimals ||
       this.isEthOrERC20()
-
-    if (new BigNumber(amount).isGreaterThan(0)) {
-      linked.amount.check(
-        (value) => new BigNumber(value).isLessThanOrEqualTo(allowedBalance),
-        <FormattedMessage
-          id="Withdrow170"
-          defaultMessage="The amount must be no more than your balance"
-          values={{
-            min,
-            currency: `${activeFiat}`,
-          }}
-        />
-      )
-    }
-
-    if (new BigNumber(fiatAmount).isGreaterThan(0)) {
-      linked.fiatAmount.check(
-        //@ts-ignore
-        (value) => (new BigNumber(value).isLessThanOrEqualTo(allowedBalance * exCurrencyRate)),
-        <FormattedMessage
-          id="Withdrow170"
-          defaultMessage="The amount must be no more than your balance"
-          values={{
-            min,
-            currency: `${currency}`,
-          }}
-        />
-      )
-    }
->>>>>>> 74028968ba2a9ee71d9a9707ea4f7a738d6a91bb:src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx
 
     if (this.state.amount < 0) {
       this.setState({
@@ -825,7 +761,7 @@ export default class WithdrawModal extends React.Component<any, any> {
             <Tooltip id="WtH203">
               <div style={{ textAlign: 'center' }}>
                 <FormattedMessage
-                  id="WTH275" // solve problem with variable in localisations (don't show now)
+                  id="WTH275"
                   defaultMessage="Make sure the wallet you{br}are sending the funds to supports {currency}"
                   values={{
                     br: <br />,
@@ -883,13 +819,8 @@ export default class WithdrawModal extends React.Component<any, any> {
                 ]}
                 values={{
                   amount: (selectedValue !== activeFiat)
-<<<<<<< HEAD:src/front/shared/components/modals/WithdrawModal/WithdrawModal.js
-                    ? BigNumber(fiatAmount).dp(2, BigNumber.ROUND_FLOOR)
-                    : BigNumber(amount).dp(6, BigNumber.ROUND_FLOOR),
-=======
                     ? new BigNumber(fiatAmount).dp(2, BigNumber.ROUND_FLOOR)
-                    : new BigNumber(amount).dp(5, BigNumber.ROUND_FLOOR),
->>>>>>> 74028968ba2a9ee71d9a9707ea4f7a738d6a91bb:src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx
+                    : new BigNumber(amount).dp(6, BigNumber.ROUND_FLOOR),
                   currency: (selectedValue !== activeFiat)
                     ? activeFiat
                     : currencyView.toUpperCase(),
@@ -947,23 +878,14 @@ export default class WithdrawModal extends React.Component<any, any> {
             </div>
             
             <div style={{ marginLeft: '15px' }}>
-<<<<<<< HEAD:src/front/shared/components/modals/WithdrawModal/WithdrawModal.js
               <Button blue big onClick={this.sellAllBalance} id="Withdrow134">
-=======
               {/*
               //@ts-ignore */}
-              <Button blue big onClick={this.sellAllBalance} data-tip data-for="Withdrow134">
->>>>>>> 74028968ba2a9ee71d9a9707ea4f7a738d6a91bb:src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx
                 <FormattedMessage id="Select210" defaultMessage="MAX" />
               </Button>
             </div>
             {!isMobile && (
-<<<<<<< HEAD:src/front/shared/components/modals/WithdrawModal/WithdrawModal.js
               <ReactTooltip id="Withdrow134" type={`${isDark ? 'light' : 'dark'}`} effect="solid" place="bottom" styleName="r-tooltip">
-=======
-              //@ts-ignore
-              <ReactTooltip id="Withdrow134" type="light" effect="solid" styleName="r-tooltip">
->>>>>>> 74028968ba2a9ee71d9a9707ea4f7a738d6a91bb:src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx
                 <FormattedMessage
                   id="WithdrawButton32"
                   defaultMessage="when you click this button, in the field, an amount equal to your balance minus the miners commission will appear"
