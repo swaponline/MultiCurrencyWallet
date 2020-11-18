@@ -8376,7 +8376,7 @@
   },
   {
     "id": "MainFAQ2_content4",
-    "message": "Loading",
+    "message": "Загрузка",
     "files": [
       "src/front/shared/components/FAQ/FAQ.js"
     ]
