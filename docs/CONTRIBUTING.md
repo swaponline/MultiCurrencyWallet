@@ -1,3 +1,19 @@
+## Developer program
+
+To bring JS, React, Typescript developers to work on our codebase. We pay in SWAP tokens. 
+
+SWAP token is NOT a money, no guarantee you will exchange this to visa, paypal, USD, BTC, ETH or whatever), we never will buy SWAP tokens from you. Read more what is this here https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/SWAPTOKEN.md
+
+| Time working on our codebase / Level                         | Junior (earn SWAP per hour) |
+|--------------------------------------------------------------|-----------------------------|
+| Volontueer (less than 3 pullrequests)                        | 1 SWAP per hour             |
+| Junior(can change interface, wallet)                         | 5 SWAP per hour             |
+| Middle (can add new blockchain to wallet)                    | 10 SWAP per hour            |
+| Senior (can add new blockchain to atomic swap)               | 15 SWAP per hour            |
+| Lead (can reduce codebase, make app more developer friendly) | 20 SWAP per hour            |
+
+Q: why you don't pay in USD or btc? <br>
+A: we don't have a revenue in USD to pay new developers 
 
 Ho to contibute:
 1. find or create issue
