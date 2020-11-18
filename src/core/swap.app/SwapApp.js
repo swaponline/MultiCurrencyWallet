@@ -47,9 +47,13 @@ class SwapApp {
     if (!SwapApp._swapAppInstance) {
       throw new Error(`Shared instance not initialized. Use SwapApp.setup() first.`)
     }
-
     SwapApp._swapAppInstance.env.web3 = web3provider
-    SwapApp.setup(this.#options, true)
+    SwapApp._swapAppInstance.initFlows()
+  }
+
+  initFlows() {
+    this._addSwaps(this.#options.swaps || [])
+    this._addFlows(this.#options.flows || [])
   }
 
   static setup(options, forceFreshSetup = false) {
