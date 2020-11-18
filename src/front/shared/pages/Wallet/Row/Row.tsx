@@ -112,6 +112,7 @@ export default class Row extends Component<any, any> {
     const {
       itemData: {
         isMetamask,
+        isERC20,
       }
     //@ts-ignore
     } = this.props
@@ -142,7 +143,7 @@ export default class Row extends Component<any, any> {
             await actions.btcmultisig.getBalancePin()
             break
           default:
-            if (isMetamask) {
+            if (isMetamask && !isERC20) {
               await metamask.getBalance()
             } else {
               await actions[currency.toLowerCase()].getBalance(

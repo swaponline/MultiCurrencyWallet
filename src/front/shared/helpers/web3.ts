@@ -14,6 +14,9 @@ const setMetamask = async (provider) => {
   web3.isMetamask = true
 }
 
+const setProvider = (provider) => {
+  web3 = provider
+}
 const setDefaultProvider = () => {
   web3 = new Web3(new Web3.providers.HttpProvider(config.web3.provider))
   //@ts-ignore
@@ -31,6 +34,7 @@ export {
   web3,
   getWeb3,
   setDefaultProvider,
+  setProvider,
 }
 
 export default web3
