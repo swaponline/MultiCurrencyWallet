@@ -3,7 +3,7 @@ import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import config from './externalConfig'
 import constants from './constants'
-import request from './request'
+import api from './api'
 import BigNumber from 'bignumber.js'
 
 
@@ -180,7 +180,7 @@ const estimateFeeRateBitcoinfees = async ({ speed = 'fast' } = {}) => {
   let apiResult
 
   try {
-    apiResult = await request.get(`https://bitcoinfees.earn.com/api/v1/fees/recommended`, { cacheResponse: 60000 })
+    apiResult = await api.asyncFetchApi(`https://bitcoinfees.earn.com/api/v1/fees/recommended`)
   } catch (err) {
     console.error(`EstimateFeeRate: ${err.message}`)
     return defaultRate[speed]
@@ -202,9 +202,6 @@ const estimateFeeRateBitcoinfees = async ({ speed = 'fast' } = {}) => {
 }
 
 const estimateFeeRateBlockcypher = async ({ speed = 'fast' } = {}) => {
-  /* 
-  * speed can be - slow, normal, fast
-  */
   const link = config.feeRates.btc
   const defaultRate = constants.defaultFeeRates.btc.rate
 
@@ -215,11 +212,7 @@ const estimateFeeRateBlockcypher = async ({ speed = 'fast' } = {}) => {
   let apiResult
 
   try {
-    apiResult = await request.get(link, { cacheResponse: 60000 })
-    /* 
-    * can used: low_fee_per_kb, medium_fee_per_kb, high_fee_per_kb
-    */
-    constants.minAmount.btc = apiResult.low_fee_per_kb
+    apiResult = await api.asyncFetchApi(link)
   } catch (err) {
     console.error(`EstimateFeeRate: ${err.message}`)
     return defaultRate[speed]

@@ -6,10 +6,10 @@ import cssModules from 'react-css-modules'
 import { FormattedMessage, injectIntl } from 'react-intl'
 
 import { constants } from 'helpers'
-import minAmount from 'helpers/constants/minAmount'
-import btc from '../../helpers/btc'
-import eth from '../../helpers/eth'
 import feedback from 'shared/helpers/feedback'
+import minAmount from 'helpers/constants/minAmount'
+import api from 'helpers/api'
+import config from 'app-config'
 
 import cx from 'classnames'
 
@@ -27,19 +27,32 @@ const FAQ = (props) => {
   const [ethFee, setEthFee] = useState(null)
 
   useEffect(() => {
-   /* 
-   * waiting for the end of the request to currency API
-   * then set fee
-   */
-   btc.estimateFeeRate().then(() => {
-     const { btc } = minAmount
-     setBtcFee(new BigNumber(btc).dp(5, BigNumber.ROUND_FLOOR).toString())
-   })
+    /* 
+    * waiting for a response with fees and set them
+    */
+    const { eth: ethLink, btc: btcLink } = config.feeRates
+    let ignore = false
+    let btcApiResult = null
+    let ethApiResult = null
 
-   eth.estimateGasPrice().then(() => {
-     const { eth } = minAmount
-     setEthFee(new BigNumber(eth).dp(5, BigNumber.ROUND_FLOOR).toString())
-   })
+    async function fetchFees() {
+      try {
+        const BYTE_IN_KB = 1024
+        btcApiResult = await api.asyncFetchApi(btcLink)
+        setBtcFee(new BigNumber(btcApiResult.low_fee_per_kb / BYTE_IN_KB).dp(5, BigNumber.ROUND_FLOOR).toString())
+
+        ethApiResult = await api.asyncFetchApi(ethLink)
+        setEthFee(new BigNumber(ethApiResult.fastest).dp(5, BigNumber.ROUND_FLOOR).toString())
+      } catch(err) {
+        console.log('FAQ -> useEffect: ', err);
+
+        setBtcFee(new BigNumber(minAmount.btc).dp(5, BigNumber.ROUND_FLOOR).toString())
+        setEthFee(new BigNumber(minAmount.eth).dp(5, BigNumber.ROUND_FLOOR).toString())
+      }
+    }
+
+    fetchFees()
+    return () => ignore = true
   });
 
 
@@ -111,13 +124,11 @@ const FAQ = (props) => {
             <FormattedMessage id="MainFAQ2_content3" defaultMessage="Current mining fees:" />
             <p className={styles.descriptionFee}>
               <span>BTC:</span>{' '}
-              {btcFee ? <span className={styles.fee}>{btcFee}</span> : 'Loading'}{' '}
-              sat/byte
+              {btcFee ? <span><b className={styles.fee}>{btcFee}</b> sat/byte</span> : 'Loading'}
             </p>
             <p className={styles.descriptionFee}>
               <span>ETH:</span>{' '}
-              {ethFee ? <span className={styles.fee}>{ethFee}</span> : 'Loading'}{' '}
-              gwei
+              {ethFee ? <span><b className={styles.fee}>{ethFee}</b> gwei</span> : 'Loading'}
             </p>
           </div>
         </article>

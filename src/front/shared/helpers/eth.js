@@ -1,6 +1,6 @@
 import config from 'app-config'
 import constants from './constants'
-import request from './request'
+import api from './api'
 import BigNumber from 'bignumber.js'
 
 
@@ -15,9 +15,6 @@ const estimateFeeValue = async ({ method = 'send', speed } = {}) => {
 }
 
 const estimateGasPrice = async ({ speed = 'fast' } = {}) => {
-  /* 
-  * speed can be - slow, normal, fast
-  */
   const link = config.feeRates.eth
   const defaultPrice = constants.defaultFeeRates.eth.price
 
@@ -28,11 +25,7 @@ const estimateGasPrice = async ({ speed = 'fast' } = {}) => {
   let apiResult
 
   try {
-    apiResult = await request.get(link, { cacheResponse: 60000 })
-    /* 
-    * can used: safeLow, standard, fast, fastest
-    */
-    constants.minAmount.eth = apiResult.standard
+    apiResult = await api.asyncFetchApi(link)
   } catch (err) {
     console.error(`EstimateGasPrice: ${err.message}`)
     return defaultPrice[speed]
@@ -42,6 +35,7 @@ const estimateGasPrice = async ({ speed = 'fast' } = {}) => {
     slow: 'safeLow',
     normal: 'standard',
     fast: 'fast',
+    fastest: 'fastest',
   }
 
   const apiSpeed = apiSpeeds[speed] || apiSpeed.normal
