@@ -210,7 +210,7 @@ export default class Web3Connect extends EventEmitter {
           this._setupEvents()
           await this._cacheProviderData()
           this._isConnected = true
-          setTimeout( () => { this.emit('connected') } , 100)
+          this.emit('connected')
           return true
         }
       }

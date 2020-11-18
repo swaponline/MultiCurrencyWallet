@@ -183,11 +183,7 @@ export default class Wallet extends Component<any, any> {
     }
 
     setTimeout(() => {
-      metamask.connect().then((isConnected) => {
-        if (!isConnected) {
-          history.push(localisedUrl(locale, links.home))
-        }
-      })
+      metamask.connect()
     }, 100)
   }
 
