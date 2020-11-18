@@ -126,14 +126,14 @@ const FAQ = (props) => {
             <p className={styles.descriptionFee}>
               <span>BTC:</span>{' '}
               {btcFee 
-                ? <span><b className='fee'>{btcFee}</b> sat/byte</span> 
+                ? <span><b>{btcFee}</b> sat/byte</span> 
                 : <FormattedMessage id="MainFAQ2_content4" defaultMessage="Loading" />
               }
             </p>
             <p className={styles.descriptionFee}>
               <span>ETH:</span>{' '}
               {ethFee 
-                ? <span><b className='fee'>{ethFee}</b> sat/byte</span> 
+                ? <span><b>{ethFee}</b> sat/byte</span> 
                 : <FormattedMessage id="MainFAQ2_content4" defaultMessage="Loading" />
               }
             </p>
