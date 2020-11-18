@@ -1,7 +1,7 @@
 import config from 'app-config'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
-import SpeedMeasurePlugin from "speed-measure-webpack-plugin"
+//import SpeedMeasurePlugin from "speed-measure-webpack-plugin"
 import externalConfig from './externalConfig'
 
 /* 
@@ -9,9 +9,11 @@ import externalConfig from './externalConfig'
 * for all loaders and plugins
 * and showing quantity modules
 */
-const smp = new SpeedMeasurePlugin();
 
-export default smp.wrap((webpackConfig) => {
+
+//const smp = new SpeedMeasurePlugin();
+// export default smp.wrap((webpackConfig) => {
+export default (webpackConfig) => {
   webpackConfig.mode = 'development'
 
   webpackConfig.output = {
@@ -65,4 +67,4 @@ export default smp.wrap((webpackConfig) => {
   )
 
   return webpackConfig
-})
+}

@@ -1,6 +1,6 @@
 export default [
   {
-    test: /\.(js|mjs|jsx)$/,
+    test: /\.(js|mjs|jsx|ts|tsx)$/,
     exclude: /(node_modules|bower_components)/,
     use: [
       {

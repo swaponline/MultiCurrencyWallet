@@ -26,8 +26,6 @@ Add many assets to your wallet:
 
 <a href="https://mytoken.wpmix.net/">Wallet demo (custom asset "SWAP")</a>
 
-<img src="https://generator.swaponline.site/generator/assets/img/example_wallet.png">
-
 ### 3. Buy/Sell assets (exchange widget)
 
 <a href="https://generator.swaponline.site/livedemo/0x4E12EB8e506Ccd1427F6b8F7faa3e88fB698EB28/319aa913-4e84-483f-a0d1-8664a13f56b7/#/buy/btc-to-jack">Exchange widget live demo</a>

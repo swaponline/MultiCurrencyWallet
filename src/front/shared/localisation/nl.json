@@ -8228,6 +8228,7 @@
     ]
   },
   {
+<<<<<<< HEAD
     "id": "MainFAQ2_content3",
     "message": "Current mining fees:",
     "files": [
@@ -8239,6 +8240,75 @@
     "message": "Beløbet må ikke overstige den tilladte saldo: {allowedUsdBalance} USD",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.js"
+=======
+    "id": "MetamaskNetworkAlert_Message",
+    "message": "Om door te gaan, selecteer Metamask \"{netwerk}\" in de portefeuille of schakel de portefeuille uit",
+    "files": [
+      "src/front/shared/containers/App/App.js"
+    ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_NetworkMainnet",
+    "message": "Hoofdnetwerk (Mainnet)",
+    "files": [
+      "src/front/shared/containers/App/App.js"
+    ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_NetworkTestnet",
+    "message": "Test netwerk (Rinkeby)",
+    "files": [
+      "src/front/shared/containers/App/App.js"
+    ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_OkDisconnectWallet",
+    "message": "Schakel externe portemonnee uit",
+    "files": [
+      "src/front/shared/containers/App/App.js"
+    ]
+  },
+  {
+    "id": "MetamaskNetworkAlert_Title",
+    "message": "Aandacht",
+    "files": [
+      "src/front/shared/containers/App/App.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_Cancel",
+    "message": "Annulering",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_Injected",
+    "message": "Metamask",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_InjectedMobile",
+    "message": "Inpluggen",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_Title",
+    "message": "Een externe portemonnee aansluiten",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_WalletConnect",
+    "message": "WalletConnect",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+>>>>>>> 74028968ba2a9ee71d9a9707ea4f7a738d6a91bb
     ]
   }
 ]
