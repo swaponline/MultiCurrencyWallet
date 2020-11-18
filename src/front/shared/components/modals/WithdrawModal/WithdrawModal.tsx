@@ -624,38 +624,38 @@ export default class WithdrawModal extends React.Component<any, any> {
 
     tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
 
-    let dinamicFee = isEthToken ? 0 : minAmount[getCurrencyKey(currency).toLowerCase()]
-    let defaultMinFee = dinamicFee // non-changing value in aт amount warning
+    let dinamicFee = isEthToken ? 0 : minAmount[getCurrencyKey(currency, false).toLowerCase()]
+    let defaultMinFee = dinamicFee // non-changing value in an amount warning
 
-    dinamicFee = (usedAdminFee) ? BigNumber(dinamicFee).plus(adminFee.calc(currency, amount)).toNumber() : dinamicFee
+    dinamicFee = (usedAdminFee) ? new BigNumber(dinamicFee).plus(adminFee.calc(currency, amount)).toNumber() : dinamicFee
 
-    let allowedCriptoBalance = new BigNumber(balance).minus(defaultMinFee).dp(6, BigNumber.ROUND_FLOOR).toString()
-    let allowedUsdBalance = new BigNumber(allowedCriptoBalance * exCurrencyRate).dp(2, BigNumber.ROUND_FLOOR).toString()
+    let allowedCriptoBalance: BigNumber = new BigNumber(balance).minus(defaultMinFee).dp(6, BigNumber.ROUND_FLOOR)
+    let allowedUsdBalance: BigNumber = new BigNumber(allowedCriptoBalance as any * exCurrencyRate as number).dp(2, BigNumber.ROUND_FLOOR)
     /* 
     * for btc and btc-usd appears minus in start
     * need delete this minus
     */
-     allowedCriptoBalance = allowedCriptoBalance[0] === '-'
-       ? allowedCriptoBalance.substr(1)
+     allowedCriptoBalance = allowedCriptoBalance.isLessThan(0)
+       ? allowedCriptoBalance.absoluteValue()
        : allowedCriptoBalance
  
-     allowedUsdBalance = allowedUsdBalance[0] === '-'
-       ? allowedUsdBalance.substr(1)
+     allowedUsdBalance = allowedUsdBalance.isLessThan(0)
+       ? allowedUsdBalance.absoluteValue()
        : allowedUsdBalance
 
-    const criptoValueIsOk = new BigNumber(linked.amount.pipe(this.handleAmount).value).isLessThanOrEqualTo(allowedCriptoBalance).toString()
-    const usdValueIsOk = new BigNumber(linked.fiatAmount.pipe(this.handleAmount).value).isLessThanOrEqualTo(allowedUsdBalance).toString()
+    const criptoValueIsOk = new BigNumber(linked.amount.pipe(this.handleAmount).value).isLessThanOrEqualTo(allowedCriptoBalance)
+    const usdValueIsOk = new BigNumber(linked.fiatAmount.pipe(this.handleAmount).value).isLessThanOrEqualTo(allowedUsdBalance)
 
     const isDisabled =
       !address ||
-      !+amount || // string to number and inverting
+      !+amount || // string to number -> inverting
       isShipped ||
       ownTx ||
       !this.addressIsCorrect() ||
       !criptoValueIsOk ||
       !usdValueIsOk ||
-      BigNumber(amount).isGreaterThan(balance) ||
-      BigNumber(amount).dp() > currentDecimals ||
+      new BigNumber(amount).isGreaterThan(balance) ||
+      new BigNumber(amount).isGreaterThan(currentDecimals) ||
       this.isEthOrERC20()
 
     if (this.state.amount < 0) {
@@ -770,7 +770,7 @@ export default class WithdrawModal extends React.Component<any, any> {
                 />
               </div>
             </Tooltip>
-        </FieldLabel>
+          </FieldLabel>
           <Input
             valueLink={linked.address}
             focusOnInit
@@ -879,18 +879,20 @@ export default class WithdrawModal extends React.Component<any, any> {
             
             <div style={{ marginLeft: '15px' }}>
               <Button blue big onClick={this.sellAllBalance} id="Withdrow134">
-              {/*
-              //@ts-ignore */}
                 <FormattedMessage id="Select210" defaultMessage="MAX" />
               </Button>
             </div>
             {!isMobile && (
-              <ReactTooltip id="Withdrow134" type={`${isDark ? 'light' : 'dark'}`} effect="solid" place="bottom" styleName="r-tooltip">
-                <FormattedMessage
-                  id="WithdrawButton32"
-                  defaultMessage="when you click this button, in the field, an amount equal to your balance minus the miners commission will appear"
-                />
-              </ReactTooltip>
+              <>
+                {/* ignore ReactTooltip property 'type', because it keyword in TypeScript
+                //@ts-ignore */}
+                <ReactTooltip id="Withdrow134" type={`${isDark ? 'light' : 'dark'}`} effect="solid" place="top" styleName="r-tooltip">
+                  <FormattedMessage
+                    id="WithdrawButton32"
+                    defaultMessage="when you click this button, in the field, an amount equal to your balance minus the miners commission will appear"
+                  />
+                </ReactTooltip>
+              </>
             )}
           </div>
           {this.isEthOrERC20() && (
@@ -905,8 +907,6 @@ export default class WithdrawModal extends React.Component<any, any> {
         </div>
         <div styleName="sendBtnsWrapper">
           <div styleName="actionBtn">
-            {/*
-            //@ts-ignore */}
             <Button big fill gray onClick={this.handleClose}>
               <Fragment>
                 <FormattedMessage id="WithdrawModalCancelBtn" defaultMessage="Cancel" />
@@ -914,8 +914,6 @@ export default class WithdrawModal extends React.Component<any, any> {
             </Button>
           </div>
           <div styleName="actionBtn">
-            {/*
-            //@ts-ignore */}
             <Button blue big fill disabled={isDisabled} onClick={this.handleSubmit}>
               {isShipped ? (
                 <Fragment>
