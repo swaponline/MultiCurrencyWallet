@@ -61,10 +61,13 @@ export default class ConnectWalletModal extends React.Component {
   }
 
   onConnectLogic(connected) {
-    if (!connected) {
-      this.goToPage(links.createWallet)
-    } else {
+    const {
+      name,
+    } = this.props
+
+    if (connected) {
       this.goToPage(links.home)
+      actions.modals.close(name)
     }
   }
 
