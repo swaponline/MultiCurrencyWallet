@@ -88,7 +88,6 @@ class ETH2NEXT extends Flow {
       isFailedTransactionError: null,
     }
 
-    super._persistSteps()
     this._persistState()
 
     const flow = this
@@ -112,6 +111,8 @@ class ETH2NEXT extends Flow {
         })
       }
     })
+
+    super._persistSteps()
   }
 
   _persistState() {
