@@ -1,7 +1,7 @@
 'use strict'
-const debug = require('debug')
-const EventEmitter = require('events')
-const pipe = require('it-pipe')
+import debug from 'debug'
+import EventEmitter from 'events'
+import pipe from 'it-pipe'
 
 const emitter = new EventEmitter()
 
@@ -43,7 +43,7 @@ function handler ({ connection, stream }) {
   )
 }
 
-exports = module.exports = {
+export default {
   handler: handler,
   emitter: emitter
 }

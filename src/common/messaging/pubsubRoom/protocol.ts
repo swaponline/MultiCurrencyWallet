@@ -1,3 +1,4 @@
 'use strict'
 
-module.exports = 'ipfs-pubsub-room/v2'
+import * as protocol from 'ipfs-pubsub-room/v2'
+export default protocol

@@ -1,15 +1,15 @@
-const diff = require('hyperdiff')
-const EventEmitter = require('events')
-const clone = require('lodash.clonedeep')
-const PeerId = require('peer-id')
+import diff from 'hyperdiff'
+import EventEmitter from 'events'
+import clone from 'lodash.clonedeep'
+import PeerId from 'peer-id'
 
-const debug = require('debug')
+import debug from 'debug'
 
-const PROTOCOL = require('./protocol')
-const Connection = require('./connection')
-const encoding = require('./encoding')
-const directConnection = require('./direct-connection-handler')
-const namedQueryRun = require('../../utils/namedQuery')
+import PROTOCOL from './protocol'
+import Connection from './connection'
+import encoding from './encoding'
+import directConnection from './direct-connection-handler'
+import namedQueryRun from '../../utils/namedQuery'
 
 const DEFAULT_OPTIONS = {
   pollInterval: 1000
@@ -17,7 +17,7 @@ const DEFAULT_OPTIONS = {
 
 let index = 0
 
-class PubSubRoom extends EventEmitter {
+export default class PubSubRoom extends EventEmitter {
   constructor (libp2p, topic, options) {
     super()
     this._libp2p = libp2p.libp2p || libp2p
@@ -148,5 +148,3 @@ class PubSubRoom extends EventEmitter {
     }
   }
 }
-
-module.exports = PubSubRoom

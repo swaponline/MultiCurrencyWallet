@@ -59,4 +59,4 @@ const namedQueryRun = (options) => {
   namedQuery[queryName].push(options)
 }
 
-module.exports = namedQueryRun
+export default namedQueryRun

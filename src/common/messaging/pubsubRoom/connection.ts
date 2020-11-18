@@ -1,15 +1,15 @@
 'use strict'
 
-const EventEmitter = require('events')
-const pipe = require('it-pipe')
+import { EventEmitter } from 'events'
+import pipe from 'it-pipe'
 
-const PROTOCOL = require('./protocol')
-const encoding = require('./encoding')
+import PROTOCOL from './protocol'
+import encoding from './encoding'
 
-const debug = require('debug')
+import debug from 'debug'
 
 
-module.exports = class Connection extends EventEmitter {
+export default class Connection extends EventEmitter {
   constructor (remoteId, libp2p, room) {
     super()
     this._remoteId = remoteId

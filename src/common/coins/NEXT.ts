@@ -1,11 +1,11 @@
-const bip32 = require('bip32')
-const bip39 = require('bip39')
-const bitcore = require('bitcore-lib')
+import bip32 from 'bip32'
+import bip39 from 'bip39'
+import bitcore from 'bitcore-lib'
 
-const fetch = require('node-fetch');
+import fetch from 'node-fetch'
 
-const { networkType } = require('./../domain/network')
-const bip44 = require('./../helpers/bip44')
+import { networkType } from './../domain/network'
+import bip44 from './../helpers/bip44'
 
 
 const netNames = {
@@ -60,7 +60,7 @@ const NEXT = {
 
 }
 
-module.exports = NEXT
+export default NEXT
 
 
 

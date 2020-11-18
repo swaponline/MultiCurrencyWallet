@@ -1,4 +1,4 @@
-const coins = require('./coins');
+import coins from './../coins'
 
 (async () => {
   /*console.log(await coins.GHOST.testnet._connector.fetchUnspents(coins.NEXT.testnet.type, 'XPtT4tJWyepGAGRF9DR4AhRkJWB3DEBXT2'))*/

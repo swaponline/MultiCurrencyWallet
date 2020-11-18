@@ -14,4 +14,4 @@ const bip44 = {
   }
 }
 
-module.exports = bip44
+export default bip44

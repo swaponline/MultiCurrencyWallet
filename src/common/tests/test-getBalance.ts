@@ -1,4 +1,4 @@
-const coins = require('./../coins');
+import coins from './../coins'
 
 
 const tests = [

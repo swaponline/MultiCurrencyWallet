@@ -1,7 +1,7 @@
-const BTC = require('./BTC')
-const LTC = require('./LTC')
-const GHOST = require('./GHOST')
-const NEXT = require('./NEXT')
+import BTC from './BTC'
+import LTC from './LTC'
+import GHOST from './GHOST'
+import NEXT from './NEXT'
 
 const coins = {
   [BTC.ticker]: BTC,
@@ -10,4 +10,4 @@ const coins = {
   [NEXT.ticker]: NEXT
 }
 
-module.exports = coins
+export default coins

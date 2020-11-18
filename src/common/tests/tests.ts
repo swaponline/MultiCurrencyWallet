@@ -1,2 +1,2 @@
-require('./test-accountFromMnemonic')
-require('./test-getBalance')
+/*require('./test-accountFromMnemonic')
+require('./test-getBalance')*/
