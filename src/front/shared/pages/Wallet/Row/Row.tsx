@@ -112,6 +112,7 @@ export default class Row extends Component<any, any> {
     const {
       itemData: {
         isMetamask,
+        isConnected,
         isERC20,
       }
     //@ts-ignore
@@ -120,6 +121,18 @@ export default class Row extends Component<any, any> {
     if (isBalanceFetching) {
       return null
     }
+
+    if (isMetamask && !isConnected ) {
+      this.setState({
+        isBalanceFetching: true,
+      }, () => {
+        setTimeout(() => {
+          this.setState({isBalanceFetching: false})
+        }, 500)
+      })
+      return null
+    }
+
     //@ts-ignore
     this.setState({
       isBalanceFetching: true,
@@ -832,6 +845,7 @@ export default class Row extends Component<any, any> {
 
     let showBalance = true
     let statusInfo = false
+
 
     if (
       //@ts-ignore
