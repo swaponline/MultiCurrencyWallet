@@ -1,9 +1,14 @@
-## Name
+
+Ho to contibute:
+1. find or create issue
+2. make pullrequest with following instructions:
+
+### Name of pullrequest
 
 The name of the commit, branch and PR are some of the most important things.
 
 
-## Simple and to the point
+### Simple and to the point
 
 The name of the PR is good to start with the module where there were changes. For instance,
 
@@ -32,24 +37,7 @@ A handy trick: write the name of the commit before you start working on it. Then
 
 This brings us to the next point:
 
-
-## Code culture
-
-The set of changes should not contain commits and changes that are not related to the name of the commit.
-
-The history of code changes is almost more important than the code itself. It's cool when the application has a good architecture, and when it's convenient to look at the changes and look for which commit added this bug, it's even cooler.
-
-We all love refactoring, but let's respect each other. If the wrong spaces are so annoying, move them all to a separate branch and make a PR with these changes. I myself notice these desires, but I try to restrain myself.
-
-Why is that bad?
-
-- Such changes really carry the risk of unnecessary bugs
-- Such PRs are more difficult to check: it is not clear what this change is: functionality or just a correction of commas?
-- If some commit or function adds a bug and needs to be rolled back, then all these "useful changes" are rolled back with it. In general, the version control system is needed for this: to roll back changes.
-- Usually you notice and fix only one file. As a result, one file in the project becomes with the correct formatting, and the rest remain with the wrong one, so it's even worse.
-
-
-## Testing
+### Testing
 
 Run the code you added at least once.
 
@@ -58,7 +46,7 @@ There is a bunch of code in the project that no one has ever run, and that just 
 I'm not even talking about autotests: run it manually at least once and check that this `if (value ===" false ")` really does what you intended.
 
 
-## Record video
+### Record video
 
 If you run it anyway, record a video. For example, via [Screencastify] (https://chrome.google.com/webstore/detail/screencastify-screen-vide/mmeijimgabbpbgpdklnllpncmdofkcpn?hl=en).
 
