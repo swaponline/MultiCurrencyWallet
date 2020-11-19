@@ -19,6 +19,7 @@
 
 - Team: 25 000 tokens were distributed among the team based on 1 SWAP ~ 1 USD
 - Bounty: 25 000 tokens were distributed among the bounty participants, for the very simple actions (reposts, etc..)
+- Developers program https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/CONTRIBUTING.md
 
 ## Return of investments
 
@@ -40,6 +41,10 @@ Current
 - By selling [Wordpress plugin](https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064) (whitelabel, wallet as a service)
 - By custom MultiCurrencyWallet integrations
 - By [community donations](/docs/DONATE.md)
+
+## initial selling strategy
+- swaponline team can sell SWAP tokens not less than 1 USD per 1 SWAP (please don't buy tokens above 1 usd anywhere to prevent getting rekt)
+- By default, funds are used to support liquidity (not a price increase!) but can be managed by CEO 
 
 ## Strategy and roadmap
 
