@@ -231,13 +231,9 @@ export default class ImportKeys extends Component<any, any> {
               </span>
             )
           }
-          {/*
-          //@ts-ignore */}
           <Button brand disabled={isDisabled} styleName="button" onClick={this.handleImportKeys}>
             <FormattedMessage id="ImportKeys130" defaultMessage="Confirm" />
           </Button>
-          {/*
-          //@ts-ignore */}
           <Button gray styleName="button" onClick={this.handleCloseModal}>
             <FormattedMessage id="ImportKeys133" defaultMessage="Cancel" />
           </Button>

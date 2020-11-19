@@ -530,8 +530,6 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
                   onKeyDown={inputReplaceCommaWithDot}
                 />
                 <div style={{ marginLeft: "15px" }}>
-                  {/*
-                  //@ts-ignore */}
                   <Button blue big onClick={this.sellAllBalance} data-tip data-for="Withdrow134">
                     <FormattedMessage id="Select210" defaultMessage="MAX" />
                   </Button>
@@ -558,8 +556,6 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
             </div>
             <div styleName="sendBtnsWrapper">
               <div styleName="actionBtn">
-                {/*
-                //@ts-ignore */}
                 <Button blue big fill disabled={isDisabled} onClick={this.handleSubmit}>
                   {isShipped ? (
                     <Fragment>
@@ -573,8 +569,6 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
                 </Button>
               </div>
               <div styleName="actionBtn">
-                {/*
-                //@ts-ignore */}
                 <Button big fill gray onClick={this.handleClose}>
                   <Fragment>
                     <FormattedMessage id="WithdrawModalCancelBtn" defaultMessage="Cancel" />
@@ -621,8 +615,6 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
                     />
                   </div>
                 </div>
-                {/*
-                //@ts-ignore */}
                 <Button styleName="buttonFull" blue big fullWidth disabled={(!(ownTx) || isShipped)} onClick={this.handleSubmit}>
                   {isShipped
                     ? (
@@ -657,8 +649,6 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
               </div>
             </div>
             <div styleName="centerAlign">
-              {/*
-              //@ts-ignore */}
               <Button styleName="buttonFull" big blue fullWidth onClick={this.handleReady}>
                 <FormattedMessage id="WithdrawMSUserFinish" defaultMessage="Ready" />
               </Button>

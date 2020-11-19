@@ -68,8 +68,6 @@ const CurrenciesList = ({
           />
         )}
       />
-      {/*
-      //@ts-ignore */}
       <Button onClick={goToСreateWallet} blue transparent fullWidth>
         <FormattedMessage id="addAsset" defaultMessage="Добавить валюту" />
       </Button>

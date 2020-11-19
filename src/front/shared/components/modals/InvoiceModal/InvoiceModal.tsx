@@ -480,8 +480,6 @@ export default class InvoiceModal extends React.Component<any, any> {
               />
             </div>
           </div>
-          {/*
-          //@ts-ignore */}
           <Button fullWidth blue big disabled={isDisabled} onClick={this.handleSubmit}>
             {isShipped ? (
               <Fragment>

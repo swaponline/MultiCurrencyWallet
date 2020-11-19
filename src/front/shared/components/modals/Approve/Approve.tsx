@@ -87,8 +87,6 @@ export default class Offer extends React.Component<any, any> {
             <FormattedMessage id="Approve73" defaultMessage="Amount" />
           </FieldLabel>
           <Input valueLink={linked.amount} type="number" />
-          {/*
-          //@ts-ignore */}
           <Button styleName="button" brand fullWidth disabled={isDisabled} onClick={this.handleApprove}>
             <FormattedMessage id="Approve80" defaultMessage="Approve" />
           </Button>

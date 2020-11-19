@@ -588,8 +588,6 @@ export default class RegisterSMSProtected extends React.Component<any, any> {
                     </Fragment>
                   )}
               </div>
-              {/*
-              //@ts-ignore */}
               <Button blue big fullWidth disabled={sentBtnDisabled} onClick={this.handleSendSMS}>
                 {isShipped ? (
                   <Fragment>
@@ -616,8 +614,6 @@ export default class RegisterSMSProtected extends React.Component<any, any> {
                   <FormattedMessage id="registerSMSModalPhone" defaultMessage="Your phone:" />
                 </FieldLabel>}
               />
-              {/*
-              //@ts-ignore */}
               <Button blue big fullWidth disabled={sentBtnDisabled} onClick={this.handleSendSMS}>
                 {isShipped ? (
                   <Fragment>
@@ -663,8 +659,6 @@ export default class RegisterSMSProtected extends React.Component<any, any> {
                   placeholder={`${intl.formatMessage(langs.smsPlaceHolder)}`}
                 />
               </div>
-              {/*
-              //@ts-ignore */}
               <Button styleName="confirmSmsCode" big blue fullWidth disabled={isShipped} onClick={this.handleCheckSMS}>
                 {isShipped ? (
                   <FormattedMessage id="registerSMSModalProcess" defaultMessage="Processing ..." />
@@ -686,8 +680,6 @@ export default class RegisterSMSProtected extends React.Component<any, any> {
                 />
               </p>
               <p styleName="buttonContainer">
-                {/*
-                //@ts-ignore */}
                 <Button blue fullWidth autoHeight disabled={isShipped} onClick={this.handleRestoreWallet}>
                   <FormattedMessage id="registerSMSRestoryMnemonic" defaultMessage="Восстановить кошелек используя секретную фразу" />
                 </Button>
@@ -741,8 +733,6 @@ export default class RegisterSMSProtected extends React.Component<any, any> {
                   </div>
                 </div>
               )}
-              {/*
-              //@ts-ignore */}
               <Button big blue fullWidth onClick={this.handleFinish}>
                 <Fragment>
                   <FormattedMessage id="registerSMSModalFinish" defaultMessage="Finish" />

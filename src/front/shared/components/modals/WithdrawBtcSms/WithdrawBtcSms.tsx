@@ -381,8 +381,6 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
               <MnemonicInput onChange={this.handleMnemonicChange} fullWidth={true} />
             </div>
             {error && <div styleName="rednotes">{error}</div>}
-            {/*
-            //@ts-ignore */}
             <Button styleName="buttonFull" big blue fullWidth disabled={isShipped} onClick={this.handleMnemonicSign}>
               {isShipped
                 ? <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
@@ -393,8 +391,6 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
             <p styleName="notice mnemonicUseNote dashboardViewNotice">
               <FormattedMessage id="WithdrawSMS_UseSMSNote" defaultMessage="Так-же вы можете использовать смс-код, отправленный на привязанный номер телефона" />
             </p>
-            {/*
-            //@ts-ignore */}
             <Button styleName="useAuthMethodButton" blue onClick={this.handleSwitchToSms}>
               <FormattedMessage id="WithdrawSMS_UseSMS" defaultMessage="Использовать смс-код" />
             </Button>
@@ -452,8 +448,6 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
                 <FormattedMessage id="WithdrawModal2225" defaultMessage="Something went wrong, enter your current code please" />
               </div>
             )}
-            {/*
-            //@ts-ignore */}
             <Button
               styleName="buttonFull confirmSmsCode"
               fullWidth
@@ -468,8 +462,6 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
             <p styleName="notice mnemonicUseNote dashboardViewNotice">
               <FormattedMessage id="WithdrawSMS_MnemonicNote" defaultMessage="Если у вас нет доступа к телефону или не получается получить код, вы можете воспользовать секретной фразой" />
             </p>
-            {/*
-            //@ts-ignore */}
             <Button styleName="useAuthMethodButton" blue onClick={this.handleSwitchToMnemonic}>
               <FormattedMessage id="WithdrawSMS_UseMnemonic" defaultMessage="Использовать секретную фразу" />
             </Button>

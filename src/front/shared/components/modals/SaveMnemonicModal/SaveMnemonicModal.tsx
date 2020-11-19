@@ -306,8 +306,6 @@ export default class SaveMnemonicModal extends React.Component<any, any> {
                 <FormattedMessage {...langLabels.readySaveNotice} />
               </p>
               <div styleName="lowLevel">
-                {/*
-                //@ts-ignore */}
                 <Button
                   styleName="buttonCenter buttonHalfFullWidth"
                   blue
@@ -345,8 +343,6 @@ export default class SaveMnemonicModal extends React.Component<any, any> {
                 </div>
               </div>
               <div styleName="lowLevel">
-                {/*
-                //@ts-ignore */}
                 <Button
                   styleName="buttonCenter buttonHalfFullWidth"
                   blue
@@ -404,8 +400,6 @@ export default class SaveMnemonicModal extends React.Component<any, any> {
               */}
               </div>
               <div styleName="lowLevel">
-                {/*
-                //@ts-ignore */}
                 <Button
                   styleName="buttonCenter buttonHalfFullWidth"
                   blue
