@@ -114,7 +114,7 @@
     "connect-history-api-fallback": "^1.6.0",
     "copy-and-watch": "^0.1.2",
     "copy-dir-cli": "0.0.3",
-    "copy-webpack-plugin": "^4.6.0",
+    "copy-webpack-plugin": "^6.3.2",
     "core-js": "^3.6.5",
     "cpx": "^1.5.0",
     "cross-env": "^7.0.2",
