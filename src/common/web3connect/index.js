@@ -8,7 +8,6 @@ import { isInjectedEnabled } from './providers'
 import { isMobile } from 'react-device-detect'
 import detectEthereumProvider from '@metamask/detect-provider'
 
-
 export default class Web3Connect extends EventEmitter {
   _cachedProvider = null
   _cachedProviderName = null
