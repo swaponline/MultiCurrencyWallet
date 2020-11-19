@@ -59,6 +59,7 @@ function BalanceForm({
       break
   }
 
+  
   const handleClickCurrency = (currency) => {
     setActiveCurrency(currency)
     actions.user.pullActiveCurrency(currency)
