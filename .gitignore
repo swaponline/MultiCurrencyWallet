@@ -31,8 +31,3 @@ src/bot/.env
 .ipfs
 .storage
 .env
-
-# code formatter
-
-.prettierrc
-.prettierignore
