@@ -179,13 +179,13 @@
     "wrtc": "^0.4.6"
   },
   "dependencies": {
+    "@ethersproject/providers": "^5.0.14",
     "@types/node": "^14.14.7",
     "@types/react": "^16.9.56",
     "@types/react-css-modules": "^4.6.2",
     "@types/react-dom": "^16.9.9",
     "@types/react-router-dom": "^5.1.6",
     "@walletconnect/web3-provider": "^1.1.1-alpha.0",
-    "@ethersproject/providers": "^5.0.14",
     "@web3-react/core": "^6.0.9",
     "@web3-react/injected-connector": "6.0.7",
     "@web3-react/walletconnect-connector": "^6.1.1",
@@ -193,6 +193,7 @@
     "ajv": "^6.12.6",
     "autosize": "^4.0.2",
     "axios": "^0.20.0",
+    "babel-plugin-react-intl": "^8.2.17",
     "babel-runtime": "^6.26.0",
     "bigi": "^1.4.2",
     "bignumber.js": "^9.0.1",

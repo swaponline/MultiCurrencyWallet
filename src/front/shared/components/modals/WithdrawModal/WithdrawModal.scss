@@ -1,14 +1,12 @@
 .note {
   position: absolute;
-  padding: 0 10px 0 10px;
-  background-color: white;
+  background-color: $l-background-elements;
   text-align: left;
   font-family: 'Roboto Mono', monospace;
   font-size: 13px;
-  z-index: 1;
-  color: #8e9aa3;
-  bottom: -17px;
-  left: 10px;
+  z-index: 5;
+  color: $notice-color;
+  bottom: -30px;
 }
 
 .r-tooltip {
@@ -17,13 +15,13 @@
 
 .rednote {
   font-size: 12px;
-  color: #aaa;
   height: 0px;
   color: $color-f-error;
   position: absolute;
   bottom: -15px;
+
   &.bottom0 {
-    bottom: 0px;
+    bottom: -2px;
   }
 }
 
@@ -53,7 +51,7 @@
   font-family: 'Roboto Mono', monospace;
   font-size: 13px;
   z-index: 1;
-  color: #8e9aa3;
+  color: $notice-color;
   @include media-mobile {
     right: 69px;
     z-index: 112;
@@ -62,7 +60,7 @@
 
 .notice {
   line-height: 140%;
-  color: #8e9aa3;
+  color: $notice-color;
   @include ff-regular;
   width: 78%;
   text-align: center;
@@ -185,14 +183,14 @@
       }
     }
     .address {
-      color: #8e9aa3;
+      color: $notice-color;
       font-size: 12px;
       @include media-mobile {
         display: none;
       }
     }
     .mobileAddress {
-      color: #8e9aa3;
+      color: $notice-color;
       font-size: 12px;
       > div {
         margin: 0;
@@ -213,13 +211,13 @@
 
 .coin {
   position: relative;
-  z-index: 1111111;
+  z-index: 1;
 }
 
 .customSelectList {
   margin-top: 10px;
   position: absolute;
-  z-index: 1111111;
+  z-index: 3;
   width: 100%;
   max-height: 300px;
   background: #fff;
@@ -233,7 +231,7 @@
   position: absolute;
   right: 100px;
   background: white;
-  z-index: 111;
+  z-index: 1;
   display: flex;
   top: 22px;
   align-items: center;
@@ -315,12 +313,11 @@
     color: #1f2d48;
   }
   .usd {
-    color: #8e9aa3;
+    color: $notice-color;
   }
 }
 
 @media all and (max-width: 480px) {
-
   .additionalСurrencies {
     right: 80px;
     top: 24px;
@@ -343,5 +340,11 @@
         font-size: 8px;
       }
     }
+  }
+}
+
+@media all and (max-width: 403px) {
+  .note {
+    bottom: -50px; 
   }
 }

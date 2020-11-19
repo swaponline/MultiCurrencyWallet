@@ -59,6 +59,7 @@ function BalanceForm({
       break
   }
 
+  
   const handleClickCurrency = (currency) => {
     setActiveCurrency(currency)
     actions.user.pullActiveCurrency(currency)
@@ -91,18 +92,11 @@ function BalanceForm({
                 // eslint-disable-next-line no-restricted-globals
                 !isNaN(fiatBalance) ? new BigNumber(fiatBalance).dp(2, BigNumber.ROUND_FLOOR).toString() : ''
               }
-              {/* {changePercent ? (
-                  <span styleName={changePercent > 0 ? "green" : "red"}>
-                    {`${changePercent > 0 ? `+${changePercent}` : `${changePercent}`}`}%
-                  </span>
-                ) : (
-                  ""
-                )} */}
             </p>
           ) : (
             <p className="data-tut-all-balance">
               {currency.toUpperCase() === 'BTC' ? <img src={btc} alt="btc" /> : ''}
-              {new BigNumber(currencyBalance).dp(5, BigNumber.ROUND_FLOOR).toString()}
+              {new BigNumber(currencyBalance).dp(6, BigNumber.ROUND_FLOOR).toString()}
             </p>
           )}
         </div>
