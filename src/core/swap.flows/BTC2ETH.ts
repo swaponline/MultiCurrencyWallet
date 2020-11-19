@@ -6,6 +6,10 @@ import { BigNumber } from 'bignumber.js'
 
 class BTC2ETH extends Flow {
 
+  _flowName: string
+  ethSwap: any
+  btcSwap: any
+
   static getName() {
     return `${this.getFromName()}2${this.getToName()}`
   }

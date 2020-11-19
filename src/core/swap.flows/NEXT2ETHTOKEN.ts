@@ -8,6 +8,10 @@ export default (tokenName) => {
 
   class NEXT2ETHTOKEN extends Flow {
 
+    _flowName: string
+    ethTokenSwap: any
+    nextSwap: any
+
     static getName() {
       return `${this.getFromName()}2${this.getToName()}`
     }
@@ -17,6 +21,7 @@ export default (tokenName) => {
     static getToName() {
       return tokenName.toUpperCase()
     }
+
     constructor(swap) {
       super(swap)
 

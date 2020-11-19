@@ -8,6 +8,10 @@ export default (tokenName) => {
 
   class GHOST2ETHTOKEN extends Flow {
 
+    _flowName: string
+    ethTokenSwap: any
+    ghostSwap: any
+
     static getName() {
       return `${this.getFromName()}2${this.getToName()}`
     }

@@ -8,6 +8,12 @@ export default (tokenName) => {
 
   class ETHTOKEN2USDT extends Flow {
 
+    _flowName: string
+    ethTokenSwap: any
+    usdtSwap: any
+    myBtcAddress: string
+    myEthAddress: string
+
     static getName() {
       return `${this.getFromName()}2${this.getToName()}`
     }

@@ -8,6 +8,10 @@ export default (tokenName) => {
 
   class BTC2ETHTOKEN extends Flow {
 
+    _flowName: string
+    ethTokenSwap: any
+    btcSwap: any
+
     static getName() {
       return `${this.getFromName()}2${this.getToName()}`
     }

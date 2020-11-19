@@ -6,6 +6,10 @@ import { Flow } from 'swap.swap'
 
 class SUM2BTC extends Flow {
 
+  _flowName: string
+  sumSwap: any
+  btcSwap: any
+
   static getName() {
     return `${this.getFromName()}2${this.getToName()}`
   }
@@ -15,6 +19,7 @@ class SUM2BTC extends Flow {
   static getToName() {
     return constants.COINS.btc
   }
+
   constructor(swap) {
     super(swap)
 

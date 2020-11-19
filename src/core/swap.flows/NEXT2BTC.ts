@@ -9,6 +9,10 @@ const toCoin = constants.COIN_DATA.BTC
 
 class NEXT2BTC extends Flow {
 
+  _flowName: string
+  nextSwap: any
+  btcSwap: any
+
   static getName() {
     return `${this.getFromName()}2${this.getToName()}`
   }

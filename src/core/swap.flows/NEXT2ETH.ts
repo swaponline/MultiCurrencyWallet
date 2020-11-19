@@ -6,6 +6,10 @@ import { BigNumber } from 'bignumber.js'
 
 class NEXT2ETH extends Flow {
 
+  _flowName: string
+  ethSwap: any
+  nextSwap: any
+
   static getName() {
     return `${this.getFromName()}2${this.getToName()}`
   }

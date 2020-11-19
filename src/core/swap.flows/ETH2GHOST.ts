@@ -5,6 +5,10 @@ import { Flow } from 'swap.swap'
 
 class ETH2GHOST extends Flow {
 
+  _flowName: string
+  ethSwap: any
+  ghostSwap: any
+
   static getName() {
     return `${this.getFromName()}2${this.getToName()}`
   }

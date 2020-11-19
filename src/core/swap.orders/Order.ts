@@ -6,6 +6,25 @@ import events from './events'
 
 class Order {
 
+  id: string
+  isMy: any
+  owner: any
+  participant: any
+  buyCurrency: any
+  exchangeRate: any
+  sellCurrency: any
+  buyAmount: any
+  sellAmount: any
+  collection: any
+  requests: any
+  isRequested: any
+  isProcessing: any
+  isPartial: any
+  isHidden: any
+  partialHandler: any
+  destination: any
+  app: any
+
   /**
    *
    * @param {object}  parent

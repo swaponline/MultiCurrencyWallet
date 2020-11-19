@@ -6,6 +6,10 @@ import { BigNumber } from 'bignumber.js'
 
 class GHOST2ETH extends Flow {
 
+  _flowName: string
+  ghostSwap: any
+  ethSwap: any
+
   static getName() {
     return `${this.getFromName()}2${this.getToName()}`
   }
