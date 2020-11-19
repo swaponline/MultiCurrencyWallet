@@ -216,8 +216,6 @@ export default class AddCustomERC20 extends React.Component<any, any> {
                   </div>
                 )}
               </div>
-              {/*
-              //@ts-ignore */}
               <Button styleName="buttonFullMargin" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
                 {isShipped
                   ? (
@@ -276,8 +274,6 @@ export default class AddCustomERC20 extends React.Component<any, any> {
                 </FieldLabel>
                 <div styleName="fakeInput">{tokenDecimals}</div>
               </div>
-              {/*
-              //@ts-ignore */}
               <Button styleName="buttonFullMargin" brand fullWidth disabled={isDisabled} onClick={this.handleConfirm}>
                 {isShipped
                   ? (
@@ -302,8 +298,6 @@ export default class AddCustomERC20 extends React.Component<any, any> {
                   defaultMessage="Токен успешно добавлен"
                 />
               </h4>
-              {/*
-              //@ts-ignore */}
               <Button styleName="buttonFullMargin" brand fullWidth disabled={isDisabled} onClick={this.handleReady}>
                 <Fragment>
                   <FormattedMessage id="customERC20_Ready" defaultMessage="Готово" />

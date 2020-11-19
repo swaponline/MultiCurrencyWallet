@@ -178,8 +178,6 @@ export default class ReceiveModal extends React.Component<any, any> {
 
                   <div styleName="sendBtnsWrapper">
                     <div styleName="actionBtn">
-                      {/*
-                      //@ts-ignore */}
                       <Button
                         brand
                         onClick={() => { }}
@@ -194,8 +192,6 @@ export default class ReceiveModal extends React.Component<any, any> {
                       </Button>
                     </div>
                     <div styleName="actionBtn">
-                      {/*
-                      //@ts-ignore */}
                       <Button big fill gray onClick={this.handleClose}>
                         <FormattedMessage id="WithdrawModalCancelBtn" defaultMessage="Cancel" />
                       </Button>

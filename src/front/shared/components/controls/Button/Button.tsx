@@ -63,6 +63,8 @@ Button.propTypes = {
   children: PropTypes.any,
   className: PropTypes.string,
   fullWidth: PropTypes.bool,
+  autoHeight: PropTypes.bool,
+  transparent: PropTypes.bool,
   brand: PropTypes.bool,
   green: PropTypes.bool,
   white: PropTypes.bool,

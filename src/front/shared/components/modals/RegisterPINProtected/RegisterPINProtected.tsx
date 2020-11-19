@@ -684,8 +684,6 @@ export default class RegisterPINProtected extends React.Component<any, any> {
                 )}
               </div>
               <div styleName="buttonHolder">
-                {/*
-                //@ts-ignore */}
                 <Button blue big fullWidth disabled={isShipped} onClick={this.handleCheckPIN}>
                   {isShipped ? (
                     <Fragment>
@@ -757,8 +755,6 @@ export default class RegisterPINProtected extends React.Component<any, any> {
                   </div>
                 </div>
               )}
-              {/*
-              //@ts-ignore */}
               <Button big blue fullWidth onClick={this.handleFinish}>
                 <Fragment>
                   <FormattedMessage {...langs.buttonFinish} />

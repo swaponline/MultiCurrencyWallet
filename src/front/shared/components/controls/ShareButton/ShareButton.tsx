@@ -33,8 +33,6 @@ export default class ShareButton extends React.Component<any, any> {
 
     return (
       <div styleName={classes.join(' ')}>
-        {/*
-        //@ts-ignore */}
         <Button blue onClick={this.openShareModal} type="button" title="Share this article">
           <span>
             <img src={shareIcon} alt='Share' />
@@ -43,9 +41,7 @@ export default class ShareButton extends React.Component<any, any> {
         </Button>
       </div>
     );
-
   }
-
 }
 
 

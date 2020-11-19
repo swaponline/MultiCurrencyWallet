@@ -979,8 +979,6 @@ export default class WithdrawModal extends React.Component<any, any> {
                 />
               </div>
             </div>
-            {/*
-            //@ts-ignore */}
             <Button
               styleName="buttonFull"
               blue

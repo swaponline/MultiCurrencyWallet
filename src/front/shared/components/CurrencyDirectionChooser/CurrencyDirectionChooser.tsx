@@ -113,8 +113,6 @@ export default class CurrencyDirectionChooser extends Component<any, any> {
               />
             </div>
           </div>
-          {/*
-          //@ts-ignore */}
           <Button styleName="button" brand onClick={handleSubmit}>
             <FormattedMessage id="CurrencyDirectionChooser86" defaultMessage="SHOW ORDERS " />
           </Button>

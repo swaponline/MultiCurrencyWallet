@@ -231,8 +231,6 @@ export default class SweepToMnemonicKeys extends React.Component<any, any> {
                 { /* <FormattedMessage {...langLabels.readySaveNotice} /> */ }
               </p>
               <div styleName="lowLevel">
-                {/*
-                //@ts-ignore */}
                 <Button
                   styleName="buttonCenter buttonHalfFullWidth"
                   blue

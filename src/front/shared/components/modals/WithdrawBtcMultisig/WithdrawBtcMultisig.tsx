@@ -207,8 +207,6 @@ export default class WithdrawBtcMultisig extends React.Component<any, any> {
               </div>
             </div>
             <div styleName="centerAlign">
-              {/*
-              //@ts-ignore */}
               <Button styleName="buttonFull" big blue fullWidth onClick={this.handleReady}>
                 <FormattedMessage id="WithdrawMSUserFinish" defaultMessage="Ready" />
               </Button>

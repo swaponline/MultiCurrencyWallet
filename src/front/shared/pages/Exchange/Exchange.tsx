@@ -1615,8 +1615,6 @@ export default class Exchange extends Component<any, any> {
           
           <div styleName="buttons">
             {/* Exchange */}
-            {/*
-            //@ts-ignore */}
             <Button
               className="data-tut-Exchange_tourDisabled"
               styleName="button"
@@ -1628,8 +1626,6 @@ export default class Exchange extends Component<any, any> {
             </Button>
             {/* Button Create offer */}
             <>
-              {/*
-              //@ts-ignore */}
               <Button
                 id="createOrderReactTooltipMessageForUser"
                 styleName={`button link-like ${haveBalance ? '' : 'noMany'}`}

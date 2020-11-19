@@ -106,8 +106,6 @@ export default class ShareLink extends React.Component<any, any> {
         </CopyToClipboard>
         <div styleName="ButtonsHolder">
           <CopyToClipboard text={link} onCopy={this.handleCopyLink}>
-            {/*
-            //@ts-ignore */}
             <Button blue fullWidth disabled={isLinkCopied} styleName="CopyLinkButton">
               {isLinkCopied ?
                 <FormattedMessage id="ControlShareLink_LinkCopied" defaultMessage="Link copied" /> :
