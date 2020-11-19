@@ -1316,7 +1316,7 @@
   },
   {
     "id": "WithdrawButton32",
-    "message": "when you click this button, in the field, an amount equal to your balance minus the miners commission will appear. ",
+    "message": "Når du klikker på denne knap, vises i marken et beløb{br} svarende til din saldo minus minearbejdskommissionen",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
@@ -6112,7 +6112,6 @@
     "id": "MainFAQHeader",
     "message": "FAQ",
     "files": [
-      "src/front/shared/components/FAQ/FAQ.js",
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
@@ -6120,7 +6119,6 @@
     "id": "MainFAQ1_header",
     "message": "How worden mijn private sleutels opgeslagen?",
     "files": [
-      "src/front/shared/components/FAQ/FAQ.js",
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
@@ -6128,7 +6126,6 @@
     "id": "MainFAQ1_content",
     "message": "Uw private sleutels worden alleen opgeslagen op uw apparaat , in de locale opslag van uw browser. Backup alstublieft uw sleutels, voor als uw apparaat of browser crashed.",
     "files": [
-      "src/front/shared/components/FAQ/FAQ.js",
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
@@ -6136,7 +6133,6 @@
     "id": "MainFAQ2_header",
     "message": "Wat zijn de transactiekosten?",
     "files": [
-      "src/front/shared/components/FAQ/FAQ.js",
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
@@ -6144,7 +6140,6 @@
     "id": "MainFAQ2_content",
     "message": "We nemen 0 kisten in rekening voor onze services. Echter, u beataald nog wel de standaard TX (Miner fee) voor alle transacties die u maakt op het platform",
     "files": [
-      "src/front/shared/components/FAQ/FAQ.js",
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
@@ -6152,7 +6147,6 @@
     "id": "MainFAQ2_content1",
     "message": "Voor ERC20 tokens is het nodig dat u tenminste 0.001 ETH in uw wallet heeft. Onthoud! Bij het zenden van ERC20 tokens, is het nodig om ETH the hebben voor de miner fee^ Dit is geldt ook voor alle atomic swaps voor ETH & ERC20. Opmerkiing: U kunt de benodigde 'miner fee' voor elke valuto vinden via google.",
     "files": [
-      "src/front/shared/components/FAQ/FAQ.js",
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
@@ -6160,7 +6154,6 @@
     "id": "MainFAQ2_content2",
     "message": "NOTE: You can easily check the ‘miners fees’ required for each respective coin by simply googling them.",
     "files": [
-      "src/front/shared/components/FAQ/FAQ.js",
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
@@ -8244,7 +8237,6 @@
     "id": "MainFAQ2_content3",
     "message": "Current mining fees:",
     "files": [
-      "src/front/shared/components/FAQ/FAQ.js",
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
@@ -8322,7 +8314,7 @@
     "id": "MainFAQ2_content4",
     "message": "Indlæser",
     "files": [
-      "src/front/shared/components/FAQ/FAQ.js"
+      "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
   {
@@ -8405,6 +8397,13 @@
   {
     "id": "Withdrow171",
     "message": "Det maksimale beløb, du kan sende, er {allowedUsdBalance} USD",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "WTH276",
+    "message": "Beløbet må ikke overstige din{br} nuværende saldo minus minegebyr",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]

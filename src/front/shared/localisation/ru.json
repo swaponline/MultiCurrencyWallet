@@ -1305,7 +1305,7 @@
   },
   {
     "id": "WithdrawButton32",
-    "message": "При нажатии на кнопку, в поле появится весь Ваш баланс за вычетом комиссии майнеров",
+    "message": "Когда вы нажмете эту кнопку, в поле появится сумма{br}, равная вашему балансу за вычетом комиссии майнера",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
@@ -6181,7 +6181,6 @@
     "id": "MainFAQHeader",
     "message": "FAQ",
     "files": [
-      "src/front/shared/components/FAQ/FAQ.js",
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
@@ -6189,7 +6188,6 @@
     "id": "MainFAQ1_header",
     "message": "How are my private keys stored?",
     "files": [
-      "src/front/shared/components/FAQ/FAQ.js",
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
@@ -6197,7 +6195,6 @@
     "id": "MainFAQ1_content",
     "message": "Your private keys are stored ONLY on your device, in the localStorage of your browser. Please backup your keys, because your browser or device may be crashed.",
     "files": [
-      "src/front/shared/components/FAQ/FAQ.js",
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
@@ -6205,7 +6202,6 @@
     "id": "MainFAQ2_header",
     "message": "What are the fees involved?",
     "files": [
-      "src/front/shared/components/FAQ/FAQ.js",
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
@@ -6213,7 +6209,6 @@
     "id": "MainFAQ2_content",
     "message": "We take 0 fees in the middle for providing these services to you. However, you still have to pay the standard TX (miners fees) for all transactions you conduct on the platform.",
     "files": [
-      "src/front/shared/components/FAQ/FAQ.js",
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
@@ -6221,7 +6216,6 @@
     "id": "MainFAQ2_content1",
     "message": "For ERC20 tokens, it is required that you have at least 0.001 ETH on your wallets. Remember! when sending ERC20 tokens, you are required to hold some ETH as miners fees for transactions. This is also the case for all atomic swaps for ETH & ERC20 tokens.",
     "files": [
-      "src/front/shared/components/FAQ/FAQ.js",
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
@@ -6229,7 +6223,6 @@
     "id": "MainFAQ2_content2",
     "message": "NOTE: You can easily check the ‘miners fees’ required for each respective coin by simply googling them.",
     "files": [
-      "src/front/shared/components/FAQ/FAQ.js",
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
@@ -8300,7 +8293,6 @@
     "id": "MainFAQ2_content3",
     "message": "Current mining fees:",
     "files": [
-      "src/front/shared/components/FAQ/FAQ.js",
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
@@ -8378,7 +8370,7 @@
     "id": "MainFAQ2_content4",
     "message": "Загрузка",
     "files": [
-      "src/front/shared/components/FAQ/FAQ.js"
+      "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
   {
@@ -8461,6 +8453,13 @@
   {
     "id": "Withdrow171",
     "message": "Максимальная сумма, которую вы можете отправить, составляет {allowedUsdBalance} USD",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "WTH276",
+    "message": "Сумма не должна превышать{br} текущий баланс за вычетом комиссии за майнинг",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]

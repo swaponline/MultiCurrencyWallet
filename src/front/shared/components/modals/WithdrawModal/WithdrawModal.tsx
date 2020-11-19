@@ -458,14 +458,14 @@ export default class WithdrawModal extends React.Component<any, any> {
       })
   }
 
-  sellAllBalance = async () => {
+  setMaxBalance = () => {
     const { balance, isEthToken, usedAdminFee, currentDecimals, exCurrencyRate } = this.state
 
     const {
       data: { currency },
     } = this.props
-    //@ts-ignore
-    let minFee = new BigNumber(isEthToken ? 0 : minAmount[getCurrencyKey(currency).toLowerCase()])
+
+    let minFee = new BigNumber(isEthToken ? 0 : minAmount[getCurrencyKey(currency, false).toLowerCase()])
 
     minFee = usedAdminFee ? (new BigNumber(minFee).plus(adminFee.calc(currency, balance))) : minFee
 
@@ -479,7 +479,6 @@ export default class WithdrawModal extends React.Component<any, any> {
       const balanceMiner = balance
         ? balance !== 0
           ? new BigNumber(balance).minus(minFee)
-
           : balance
         : 'Wait please. Loading...'
 
@@ -505,8 +504,8 @@ export default class WithdrawModal extends React.Component<any, any> {
       data: { currency },
     } = this.props
     const { address, isEthToken, wallet } = this.state
-    //@ts-ignore
-    if (getCurrencyKey(currency).toLowerCase() === `btc`) {
+
+    if (getCurrencyKey(currency, false).toLowerCase() === `btc`) {
       if (!typeforce.isCoinAddress.BTC(address)) {
         return actions.btc.addressIsCorrect(address)
       } else return true
@@ -515,8 +514,8 @@ export default class WithdrawModal extends React.Component<any, any> {
     if (isEthToken) {
       return typeforce.isCoinAddress.ETH(address)
     }
-    //@ts-ignore
-    return typeforce.isCoinAddress[getCurrencyKey(currency).toUpperCase()](address)
+
+    return typeforce.isCoinAddress[getCurrencyKey(currency, false).toUpperCase()](address)
   }
 
   openScan = () => {
@@ -629,7 +628,7 @@ export default class WithdrawModal extends React.Component<any, any> {
 
     dinamicFee = (usedAdminFee) ? new BigNumber(dinamicFee).plus(adminFee.calc(currency, amount)).toNumber() : dinamicFee
 
-    let allowedCriptoBalance: BigNumber = new BigNumber(balance).minus(defaultMinFee).dp(6, BigNumber.ROUND_FLOOR)
+    let allowedCriptoBalance: BigNumber = new BigNumber(balance).minus(defaultMinFee).dp(currentDecimals, BigNumber.ROUND_FLOOR)
     let allowedUsdBalance: BigNumber = new BigNumber(allowedCriptoBalance as any * exCurrencyRate as number).dp(2, BigNumber.ROUND_FLOOR)
     /* 
     * for btc and btc-usd appears minus in start
@@ -886,7 +885,7 @@ export default class WithdrawModal extends React.Component<any, any> {
               </div>
             )}
             <div style={{ marginLeft: '15px' }}>
-              <Button blue big onClick={this.sellAllBalance} id="Withdrow134">
+              <Button blue big onClick={this.setMaxBalance} id="Withdrow134">
                 <FormattedMessage id="Select210" defaultMessage="MAX" />
               </Button>
             </div>
