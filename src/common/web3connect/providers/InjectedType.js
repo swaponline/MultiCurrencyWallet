@@ -7,5 +7,4 @@ const INJECTED_TYPE = {
   LIQUALITY: 'LIQUALITY',
 }
 
-
 export default INJECTED_TYPE
