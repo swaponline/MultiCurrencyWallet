@@ -6289,14 +6289,14 @@
   },
   {
     "id": "Exchange_InternalAddressOption",
-    "message": "SwapOnline",
+    "message": "Внутрений",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
   },
   {
     "id": "Exchange_InternalAddressOptionDisabled",
-    "message": "SwapOnline (недостаточный баланс)",
+    "message": "Внутрений (недостаточный баланс)",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
@@ -6310,17 +6310,11 @@
   },
   {
     "id": "Exchange_MetamaskAddressOption",
-    "message": "Metamask",
-    "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
-    ]
+    "message": "Metamask"
   },
   {
     "id": "Exchange_MetamaskNotInstalledOption",
-    "message": "Metamask (не установлен)",
-    "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
-    ]
+    "message": "Metamask (не установлен)"
   },
   {
     "id": "Exchange_PlaceholderEnterAddress",
@@ -8438,6 +8432,13 @@
     "message": "Wallet is locked. Unlock the wallet first.",
     "files": [
       "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "Exchange_ConnectAddressOption",
+    "message": "Connect Wallet",
+    "files": [
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
   }
 ]

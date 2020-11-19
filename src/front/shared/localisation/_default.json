@@ -6181,7 +6181,7 @@
   },
   {
     "id": "Exchange_InternalAddressOption",
-    "message": "SwapOnline",
+    "message": "Internal",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
@@ -6195,17 +6195,11 @@
   },
   {
     "id": "Exchange_MetamaskAddressOption",
-    "message": "Metamask",
-    "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
-    ]
+    "message": "Metamask"
   },
   {
     "id": "Exchange_MetamaskNotInstalledOption",
-    "message": "Metamask (not installed)",
-    "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
-    ]
+    "message": "Metamask (not installed)"
   },
   {
     "id": "Exchange_PlaceholderEnterAddress",
@@ -8170,7 +8164,7 @@
   },
   {
     "id": "Exchange_InternalAddressOptionDisabled",
-    "message": "SwapOnline (insufficient balance)",
+    "message": "Internal (insufficient balance)",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
@@ -8366,6 +8360,13 @@
     "message": "Another participant is offline",
     "files": [
       "src/front/shared/pages/Swap/SwapController.tsx"
+    ]
+  },
+  {
+    "id": "Exchange_ConnectAddressOption",
+    "message": "Connect Wallet",
+    "files": [
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
   }
 ]

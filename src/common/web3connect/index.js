@@ -91,6 +91,17 @@ export default class Web3Connect extends EventEmitter {
     }
   }
 
+  getProviderType() {
+     switch (this._cachedProviderName) {
+      case SUPPORTED_PROVIDERS.WALLETCONNECT:
+        return SUPPORTED_PROVIDERS.WALLETCONNECT
+      case SUPPORTED_PROVIDERS.INJECTED:
+        return this.getInjectedType()
+      default:
+        return `NONE`
+    }
+  }
+
   getInjectedType() {
     if (window
       && window.ethereum

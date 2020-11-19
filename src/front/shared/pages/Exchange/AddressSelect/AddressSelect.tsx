@@ -23,10 +23,26 @@ import feedback from 'shared/helpers/feedback'
 import QrReader from "components/QrReader"
 import iconInternal from 'components/Logo/images/base.svg'
 import iconMetamask from './images/metamask.svg'
+import iconTrustWallet from './images/trust.svg'
 import iconCustom from './images/custom.svg'
+import iconDefault from './images/unknown.svg'
+import iconOpera from './images/opera.svg'
+import iconWalletConnect from './images/walletconnect.svg'
+import iconLiquality from './images/liquality.png'
+
 
 import { AddressType, AddressRole } from 'domain/address'
 
+
+const web3Icons = {
+  METAMASK: iconMetamask,
+  TRUST: iconTrustWallet,
+  OPERA: iconOpera,
+  NONE: iconDefault,
+  UNKNOWN: iconDefault,
+  LIQUALITY: iconLiquality,
+  WALLETCONNECT: iconWalletConnect,
+}
 
 const langLabels = defineMessages({
   labelSpecifyAddress: {
@@ -35,23 +51,19 @@ const langLabels = defineMessages({
   },
   optionInternal: {
     id: 'Exchange_InternalAddressOption',
-    defaultMessage: 'SwapOnline',
+    defaultMessage: 'Internal',
   },
   optionInternalDisabled: {
     id: 'Exchange_InternalAddressOptionDisabled',
-    defaultMessage: 'SwapOnline (insufficient balance)',
+    defaultMessage: 'Internal (insufficient balance)',
   },
   optionInternalCreate: {
     id: 'Exchange_InternalCreate',
     defaultMessage: 'Create wallet',
   },
-  optionMetamask: {
-    id: 'Exchange_MetamaskAddressOption',
-    defaultMessage: 'Web3 Provider',
-  },
-  optionMetamaskNotInstalled: {
-    id: 'Exchange_MetamaskNotInstalledOption',
-    defaultMessage: 'Web3 Provider (not installed)',
+  optionConnect: {
+    id: 'Exchange_ConnectAddressOption',
+    defaultMessage: 'Connect Wallet',
   },
   optionCustom: {
     id: 'Exchange_CustomAddressOption',
@@ -395,6 +407,10 @@ export default class AddressSelect extends Component<any, any> {
     const isCustomOptionInputHidden = role === AddressRole.Send && ticker === 'BTC' // todo: any utxo
 
 
+    const web3Icon = (metamask.isConnected())
+      ? web3Icons[metamask.web3connect.getProviderType()] || false
+      : web3Icons[metamask.web3connect.getInjectedType()] || false
+
     const options = [
       {
         value: 'placeholder',
@@ -424,11 +440,10 @@ export default class AddressSelect extends Component<any, any> {
         }]
       ),
       ...(isMetamaskOption ?
-        isMetamaskInstalled ?
           isMetamaskConnected ?
             [{
               value: AddressType.Metamask,
-              icon: iconMetamask,
+              icon: web3Icon,
               title: <Fragment>
               {metamask.web3connect.getProviderTitle()}
                 <Address
@@ -441,17 +456,10 @@ export default class AddressSelect extends Component<any, any> {
             :
             [{
               value: AddressType.Metamask,
-              icon: iconMetamask,
-              title: `Ethereum (Web3 provider)`,
+              icon: web3Icon,
+              title: <FormattedMessage {...langLabels.optionConnect} />,
               dontSelect: true,
             }]
-          :
-          [{
-            value: 'disabled',
-            icon: false /*iconMetamask*/,
-            title: `Ethereum (Web3 provider)`,
-            disabled: true,
-          }]
         :
         []
       ),

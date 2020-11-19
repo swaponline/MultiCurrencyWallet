@@ -6232,14 +6232,14 @@
   },
   {
     "id": "Exchange_InternalAddressOption",
-    "message": "SwapOnline",
+    "message": "Internal",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
   },
   {
     "id": "Exchange_InternalAddressOptionDisabled",
-    "message": "SwapOnline (insufficient balance)",
+    "message": "Internal (insufficient balance)",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
@@ -6253,17 +6253,11 @@
   },
   {
     "id": "Exchange_MetamaskAddressOption",
-    "message": "Metamask",
-    "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
-    ]
+    "message": "Connect Wallet"
   },
   {
     "id": "Exchange_MetamaskNotInstalledOption",
-    "message": "Metamask (not installed)",
-    "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
-    ]
+    "message": "Connect Wallet (not installed)"
   },
   {
     "id": "Exchange_PlaceholderEnterAddress",
@@ -8366,6 +8360,13 @@
     "message": "Wallet is locked. Unlock the wallet first.",
     "files": [
       "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "Exchange_ConnectAddressOption",
+    "message": "Connect Wallet",
+    "files": [
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
   }
 ]

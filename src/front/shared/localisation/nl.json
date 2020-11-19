@@ -6220,14 +6220,14 @@
   },
   {
     "id": "Exchange_InternalAddressOption",
-    "message": "SwapOnline",
+    "message": "Intern",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
   },
   {
     "id": "Exchange_InternalAddressOptionDisabled",
-    "message": "SwapOnline (onvoldoende balans)",
+    "message": "Intern (onvoldoende balans)",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
@@ -6241,17 +6241,11 @@
   },
   {
     "id": "Exchange_MetamaskAddressOption",
-    "message": "Metamask",
-    "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
-    ]
+    "message": "Metamask"
   },
   {
     "id": "Exchange_MetamaskNotInstalledOption",
-    "message": "Metamask (niet geïnstalleerd)",
-    "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
-    ]
+    "message": "Metamask (niet geïnstalleerd)"
   },
   {
     "id": "Exchange_PlaceholderEnterAddress",
@@ -8382,6 +8376,13 @@
     "message": "Portemonnee is vergrendeld. Ontgrendel eerst de portemonnee.",
     "files": [
       "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "Exchange_ConnectAddressOption",
+    "message": "Sluit Wallet aan",
+    "files": [
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
   }
 ]

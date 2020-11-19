@@ -8145,14 +8145,14 @@
   },
   {
     "id": "Exchange_InternalAddressOption",
-    "message": "SwapOnline",
+    "message": "Interno",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
   },
   {
     "id": "Exchange_InternalAddressOptionDisabled",
-    "message": "SwapOnline (saldo insuficiente)",
+    "message": "Interno (saldo insuficiente)",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
@@ -8166,17 +8166,11 @@
   },
   {
     "id": "Exchange_MetamaskAddressOption",
-    "message": "Metamask",
-    "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
-    ]
+    "message": "Metamask"
   },
   {
     "id": "Exchange_MetamaskNotInstalledOption",
-    "message": "Metamask (not installed)",
-    "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
-    ]
+    "message": "Metamask (not installed)"
   },
   {
     "id": "Exchange_PlaceholderEnterAddress",
@@ -8390,6 +8384,13 @@
     "message": "La billetera está bloqueada. Primero desbloquea la billetera.",
     "files": [
       "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "Exchange_ConnectAddressOption",
+    "message": "Conectar billetera",
+    "files": [
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
   }
 ]
