@@ -87,6 +87,7 @@ const setupContract = (ethAddress, contractAddress, nameContract, decimals, full
     currencyRate: 1,
     isMnemonic: isSweeped,
     isMetamask: false,
+    isERC20: true,
   }
   if (metamask.isEnabled() && metamask.isConnected()) {
     data = {
@@ -145,7 +146,6 @@ const getBalance = async (currency) => {
 
 
 const fetchBalance = async (address, contractAddress, decimals) => {
-
   const ERC20 = new web3.eth.Contract(ERC20_ABI, contractAddress)
   const result = await ERC20.methods.balanceOf(address).call()
 

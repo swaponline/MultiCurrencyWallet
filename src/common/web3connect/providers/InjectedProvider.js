@@ -7,6 +7,7 @@ import {
 
 export default class InjectedProvider extends InjectedConnector {
   _web3Connect = null
+  _isLocked = false
 
   constructor(web3Connect, options) {
     super(options)
@@ -19,8 +20,15 @@ export default class InjectedProvider extends InjectedConnector {
       await window.ethereum.enable()
       return window.ethereum.isConnected()
     } else {
+      if (window.ethereum.isTrust) {
+        return window.ethereum.ready
+      }
       return await super.isAuthorized()
     }
+  }
+
+  isLocked() {
+    return this._isLocked
   }
 
   async Disconnect() {
@@ -28,6 +36,7 @@ export default class InjectedProvider extends InjectedConnector {
   }
 
   async Connect() {
+    this._isLocked = false
     try {
       const connection = await super.activate()
       return (connection) ? true : false
@@ -36,6 +45,9 @@ export default class InjectedProvider extends InjectedConnector {
         console.warn('User reject connect to Injected provider')
       } else if (err instanceof NoEthereumProviderError) {
         console.warn('There no injected provider')
+      } else if (/Wallet is locked/.test(err.message)) {
+        this._isLocked = true
+        console.warn('Wallet locked')
       } else {
         console.error(err)
       }

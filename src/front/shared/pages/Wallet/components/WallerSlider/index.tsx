@@ -172,14 +172,10 @@ export default class WallerSlider extends React.Component<any, any> {
   }
 
   handleConnectMetamask = () => {
-    metamask.connect().then((connected) => {
+    metamask.connect({}).then((connected) => {
       if (connected) {
-        //@ts-ignore
         this.setState({
           metamaskConnected: true,
-        }, async () => {
-          await actions.user.sign()
-          await actions.user.getBalances()
         })
       }
     })

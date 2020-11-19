@@ -356,7 +356,7 @@ const getWallet = (findCondition) => {
   // otherwise it finds the first wallet from all origins, including metamask
   const { currency, address, addressType } = findCondition
 
-  const wallets = getWallets()
+  const wallets = getWallets({ withInternal: true })
   const founded = wallets.filter((wallet) => {
     if (wallet.isMetamask && !wallet.isConnected) return false
     const conditionOk = (currency && wallet.currency.toLowerCase() === currency.toLowerCase())
@@ -381,7 +381,9 @@ const getWallet = (findCondition) => {
   return (founded.length) ? founded[0] : false
 }
 
-const getWallets = () => {
+const getWallets = (options) => {
+  const { withInternal } = options
+
   const {
     user: {
       btcData,
@@ -420,8 +422,8 @@ const getWallets = () => {
     ... (!config.opts.curEnabled || config.opts.curEnabled.btc) ? [btcMultisigUserData] : [],
     ... (!config.opts.curEnabled || config.opts.curEnabled.btc) ? (btcMultisigUserData && btcMultisigUserData.wallets) ? btcMultisigUserData.wallets : [] : [],
     ... (!config.opts.curEnabled || config.opts.curEnabled.eth)
-      ? ((metamaskConnected) 
-        ? [] 
+      ? ((metamaskConnected)
+        ? (withInternal) ? [ethData] : []
         : [ethData]) 
       : [],
     ... (!config.opts.curEnabled || config.opts.curEnabled.ghost) ? [ghostData] : [],

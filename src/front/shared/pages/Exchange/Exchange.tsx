@@ -35,6 +35,7 @@ import AddressSelect from "./AddressSelect/AddressSelect"
 import { AddressType, AddressRole } from "domain/address"
 import NetworkStatus from 'components/NetworkStatus/NetworkStatus'
 import Orders from "./Orders/Orders"
+import metamask from 'helpers/metamask'
 
 import { getPairFees } from 'helpers/getPairFees'
 
@@ -297,6 +298,7 @@ export default class Exchange extends Component<any, any> {
       }
     }, 60 * 1000)
     this.fetchPairFeesAndBalances()
+    metamask.web3connect.on('updated', this.fetchPairFeesAndBalances.bind(this))
   }
 
   getBalance(currency) {
@@ -386,6 +388,7 @@ export default class Exchange extends Component<any, any> {
   componentWillUnmount() {
     this._mounted = false
     this.timer = false
+    metamask.web3connect.off('updated', this.fetchPairFeesAndBalances)
   }
 
   checkUrl = () => {

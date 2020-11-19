@@ -242,7 +242,7 @@ const getBalance = () => {
 
 const getReputation = () => Promise.resolve(0)
 
-const fetchBalance = (address) =>
+const fetchBalance = (address) => 
   web3.eth.getBalance(address)
     .then(result => Number(web3.utils.fromWei(result)))
     .catch((e) => {

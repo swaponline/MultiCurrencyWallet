@@ -6241,17 +6241,11 @@
   },
   {
     "id": "Exchange_MetamaskAddressOption",
-    "message": "Metamask",
-    "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
-    ]
+    "message": "Metamask"
   },
   {
     "id": "Exchange_MetamaskNotInstalledOption",
-    "message": "Metamask (niet geïnstalleerd)",
-    "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
-    ]
+    "message": "Metamask (niet geïnstalleerd)"
   },
   {
     "id": "Exchange_PlaceholderEnterAddress",
@@ -8291,10 +8285,7 @@
   },
   {
     "id": "ConnectWalletModal_InjectedMobile",
-    "message": "Inpluggen",
-    "files": [
-      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
-    ]
+    "message": "Inpluggen"
   },
   {
     "id": "ConnectWalletModal_Title",
@@ -8406,6 +8397,20 @@
     "message": "Beløbet må ikke overstige din{br} nuværende saldo minus minegebyr",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_WalletLocked",
+    "message": "Wallet is locked. Unlock the wallet first.",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "Exchange_ConnectAddressOption",
+    "message": "Sluit Wallet aan",
+    "files": [
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
   }
 ]

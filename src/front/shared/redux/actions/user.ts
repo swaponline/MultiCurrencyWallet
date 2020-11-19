@@ -154,6 +154,14 @@ const sign = async () => {
   })
 }
 
+const sign_to_tokens = () => {
+  const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
+  Object.keys(config.erc20)
+    .forEach(name => {
+      actions.token.login(ethPrivateKey, config.erc20[name].address, name, config.erc20[name].decimals, config.erc20[name].fullName)
+    })
+}
+
 const getReputation = async () => {
 
   const btcReputationPromise = actions.btc.getReputation()
@@ -569,7 +577,7 @@ Private key: ${nextData.privateKey}\r\n
 export const getWithdrawWallet = (currency, addr) => {
   const needType = getCurrencyKey(currency, true).toUpperCase()
 
-  const filtered = actions.core.getWallets().filter((wallet) => {
+  const filtered = actions.core.getWallets({}).filter((wallet) => {
     const walletType = getCurrencyKey(wallet.currency, true).toUpperCase()
 
     return (walletType === needType && addr === wallet.address) || (!addr && (walletType === needType))
@@ -659,6 +667,7 @@ export default {
   sign_btc_2fa,
   sign_btc_pin,
   sign_btc_multisig,
+  sign_to_tokens,
   getBalances,
   getDemoMoney,
   setTransactions,

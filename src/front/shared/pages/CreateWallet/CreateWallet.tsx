@@ -50,7 +50,7 @@ const CreateWallet = (props) => {
     btcMultisigUserData,
   } = userData
 
-  const userWallets = actions.core.getWallets().filter(({ currency }) => !hiddenCoinsList.includes(currency))
+  const userWallets = actions.core.getWallets({}).filter(({ currency }) => !hiddenCoinsList.includes(currency))
 
   const currencyBalance = [
     btcData,

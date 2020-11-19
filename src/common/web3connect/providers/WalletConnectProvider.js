@@ -31,6 +31,10 @@ export default class WalletConnectProvider extends WalletConnectConnector {
     return false
   }
 
+  isLocked() {
+    return false
+  }
+
   async Disconnect() {
     await this.close()
     await this.deactivate()

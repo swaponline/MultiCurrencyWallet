@@ -6310,17 +6310,11 @@
   },
   {
     "id": "Exchange_MetamaskAddressOption",
-    "message": "Metamask",
-    "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
-    ]
+    "message": "Metamask"
   },
   {
     "id": "Exchange_MetamaskNotInstalledOption",
-    "message": "Metamask (не установлен)",
-    "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
-    ]
+    "message": "Metamask (не установлен)"
   },
   {
     "id": "Exchange_PlaceholderEnterAddress",
@@ -8347,10 +8341,7 @@
   },
   {
     "id": "ConnectWalletModal_InjectedMobile",
-    "message": "Подключить",
-    "files": [
-      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
-    ]
+    "message": "Подключить"
   },
   {
     "id": "ConnectWalletModal_Title",
@@ -8375,14 +8366,14 @@
   },
   {
     "id": "FilterTextAll",
-    "message": "All",
+    "message": "Все",
     "files": [
       "src/front/shared/components/FilterForm/FilterForm.tsx"
     ]
   },
   {
     "id": "FilterTextFind",
-    "message": "Find",
+    "message": "Искать",
     "files": [
       "src/front/shared/components/FilterForm/FilterForm.tsx"
     ]
@@ -8462,6 +8453,20 @@
     "message": "Сумма не должна превышать{br} текущий баланс за вычетом комиссии за майнинг",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_WalletLocked",
+    "message": "Кошелек заблокирован. Сначала разблокируйте кошелек.",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "Exchange_ConnectAddressOption",
+    "message": "Подключить кошелек",
+    "files": [
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
   }
 ]
