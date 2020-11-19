@@ -10,9 +10,11 @@ require('dotenv').config({
 
 import moduleAlias from 'module-alias'
 import _debug from 'debug'
+
 _debug('.:app')
 
 console.log( __dirname + '/../core/simple')
+
 moduleAlias.addAliases({
   'simple.swap.core'  : __dirname + '/../core/simple/src',
   'swap.core'         : __dirname + '/../core/',
@@ -25,5 +27,6 @@ moduleAlias.addAliases({
   'swap.swaps'        : __dirname + '/../core/swap.swaps',
   //'helpers'           : __dirname + '/../core/simple/src/helpers',
 })
+
 import * as app from './app'
 export default app

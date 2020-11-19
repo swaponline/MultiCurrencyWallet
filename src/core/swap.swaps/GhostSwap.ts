@@ -7,6 +7,18 @@ const BufferUtil = bitcore.util.buffer;
 
 class GhostSwap extends SwapInterface {
 
+  _swapName: string
+  fetchBalance: any
+  fetchUnspents: any
+  broadcastTx: any
+  checkWithdraw: any
+  feeValue: any
+  fetchTxInfo: any
+  estimateFeeValue: any
+
+  app: any
+  network: any
+
   /**
    *
    * @param options

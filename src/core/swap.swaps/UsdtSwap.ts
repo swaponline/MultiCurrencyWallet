@@ -10,6 +10,16 @@ import createFundingTransaction from './usdt/funding_tx'
 
 class UsdtSwap extends SwapInterface {
 
+  _swapName: string
+  fetchBalance: any
+  fetchUnspents: any
+  broadcastTx: any
+  fetchTx: any
+  getRecommendedFees: any
+
+  app: any
+  network: any
+
   /**
    *
    * @param options

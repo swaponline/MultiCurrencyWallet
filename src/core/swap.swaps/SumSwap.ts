@@ -4,6 +4,16 @@ import SwapApp, { SwapInterface, constants, util } from 'swap.app'
 
 class SumSwap extends SwapInterface {
 
+  _swapName: string
+  fetchBalance: any
+  fetchUnspents: any
+  broadcastTx: any
+  fetchTx: any
+  feeValue: any
+
+  app: any
+  network: any
+
   /**
    *
    * @param options

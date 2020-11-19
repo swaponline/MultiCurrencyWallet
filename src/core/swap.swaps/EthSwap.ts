@@ -6,6 +6,19 @@ const debug = _debug('swap.core:swaps')
 
 class EthSwap extends SwapInterface {
 
+  address: string
+  abi: any[]
+  _swapName: any
+  gasLimit: number
+  gasPrice: number
+  fetchBalance: any
+  estimateGasPrice: any
+
+  app: any
+  decoder: any
+  contract: any
+  _allSwapEvents: any
+
   /**
    *
    * @param {object}    options

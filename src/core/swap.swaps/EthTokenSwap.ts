@@ -6,6 +6,22 @@ import InputDataDecoder from 'ethereum-input-data-decoder'
 
 class EthTokenSwap extends SwapInterface {
 
+  _swapName: string
+  address: string
+  abi: any[]
+  decimals: number
+  tokenAddress: string
+  tokenAbi: any[]
+  gasLimit: number
+  gasPrice: number
+  fetchBalance: any
+  estimateGasPrice: any
+
+  app: any
+  decoder: any
+  contract: any
+  ERC20: any
+
   /**
    *
    * @param {object}    options

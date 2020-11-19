@@ -5,6 +5,18 @@ import BigNumber from 'bignumber.js'
 
 class BtcSwap extends SwapInterface {
 
+  _swapName: string
+  fetchBalance: any
+  fetchUnspents: any
+  broadcastTx: any
+  checkWithdraw: any
+  feeValue: any
+  fetchTxInfo: any
+  estimateFeeValue: any
+
+  app: any
+  network: any
+
   /**
    *
    * @param options
