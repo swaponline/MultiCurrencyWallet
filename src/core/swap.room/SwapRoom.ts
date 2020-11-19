@@ -7,6 +7,16 @@ import p2pRoom from '../../common/messaging/pubsubRoom'
 
 class SwapRoom extends ServiceInterface {
 
+  _serviceName: string
+  _config: any
+  _events: any
+  peer: any
+  connection: any
+  roomName: string
+
+  app: any
+  CheckReceiptsT: any
+
   static get name() {
     return 'room'
   }

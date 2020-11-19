@@ -4,6 +4,11 @@ import SwapApp, { Events } from 'swap.app'
 
 class Room {
 
+  swapId: string
+  peer: any
+  _events: any
+  app: any
+
   // TODO add destroy method with all events unsubscribe (when swap is finished)
 
   constructor(app, { swapId, participantPeer }) {

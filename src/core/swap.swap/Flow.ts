@@ -5,6 +5,15 @@ import Room from './Room'
 
 class Flow {
 
+  swap: any
+  steps: any
+  app: any
+  stepNumbers: any
+  state: {
+    step: number
+    isWaitingForOwner: boolean
+  }
+
   constructor(swap) {
     this.swap     = swap
     this.steps    = []

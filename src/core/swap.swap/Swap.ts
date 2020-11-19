@@ -6,6 +6,26 @@ import Room from './Room'
 
 class Swap {
 
+  id: any
+  isMy: any
+  owner: any
+  participant: any
+  buyCurrency: any
+  sellCurrency: any
+  buyAmount: any
+  sellAmount: any
+  ownerSwap: any
+  participantSwap: any
+  destinationBuyAddress: any
+  destinationSellAddress: any
+  app: any
+  createUnixTimeStamp: number
+  participantMetamaskAddress: any
+  waitConfirm: boolean
+  events: any
+  room: any
+  flow: any
+
   constructor(id, app, order) {
     this.id                     = null
     this.isMy                   = null
