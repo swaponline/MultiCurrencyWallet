@@ -1,6 +1,6 @@
 .coin {
   position: relative;
-  z-index: 1111111;
+  z-index: 1;
 }
 
 .amount {
@@ -11,11 +11,11 @@
 
   .currency {
     color: #1f2d48;
-    background: #fff;
+    background: $l-background-elements;
   }
   .usd {
-    color: #8e9aa3;
-    background: #fff;
+    color: $notice-color;
+    background: $l-background-elements;
   }
 
   @media screen and (max-width: 480px) {
