@@ -8,7 +8,6 @@ import { setMetamask, setProvider, setDefaultProvider, getWeb3 as getDefaultWeb3
 import SwapApp from 'swap.app'
 import Web3Connect from '../../../common/web3connect'
 
-
 const web3connect = new Web3Connect({
   web3ChainId: (process.env.MAINNET) ? 1 : 4,
   web3RPC: config.web3.provider,
