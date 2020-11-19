@@ -89,7 +89,7 @@ export default class WithdrawModal extends React.Component<any, any> {
     const currentActiveAsset = data.data
 
     const currentDecimals = constants.tokenDecimals[getCurrencyKey(currency, true).toLowerCase()]
-    const allCurrencyies = actions.core.getWallets() //items.concat(tokenItems)
+    const allCurrencyies = actions.core.getWallets({}) //items.concat(tokenItems)
     const selectedItem = actions.user.getWithdrawWallet(currency, withdrawWallet)
 
     const usedAdminFee = adminFee.isEnabled(selectedItem.currency)
@@ -639,7 +639,7 @@ export default class WithdrawModal extends React.Component<any, any> {
     })
     */
 
-    let tableRows = actions.core.getWallets().filter(({ currency, address, balance }) => {
+    let tableRows = actions.core.getWallets({}).filter(({ currency, address, balance }) => {
       // @ToDo - В будущем нужно убрать проверку только по типу монеты.
       // Старую проверку оставил, чтобы у старых пользователей не вывалились скрытые кошельки
 

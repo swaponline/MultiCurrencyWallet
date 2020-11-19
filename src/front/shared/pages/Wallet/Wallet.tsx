@@ -367,7 +367,7 @@ export default class Wallet extends Component<any, any> {
       }
     }
 
-    const currencies = actions.core.getWallets()
+    const currencies = actions.core.getWallets({})
       .filter(({
         isMetamask,
         isConnected,
@@ -411,7 +411,7 @@ export default class Wallet extends Component<any, any> {
       WithdrawMultisigUser,
     } = constants.modals
 
-    const allData = actions.core.getWallets()
+    const allData = actions.core.getWallets({})
 
     let tableRows = allData.filter(({ currency, address, balance }) => {
       // @ToDo - В будущем нужно убрать проверку только по типу монеты.
@@ -550,7 +550,7 @@ export default class Wallet extends Component<any, any> {
     //@ts-ignore
     } = this.props
 
-    const allData = actions.core.getWallets()
+    const allData = actions.core.getWallets({})
 
     this.syncData()
 

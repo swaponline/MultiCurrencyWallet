@@ -74,7 +74,7 @@ const NewDesignLayout = (props) => {
   let fiatBalance = 0
   let changePercent = 0
 
-  const allData = actions.core.getWallets()
+  const allData = actions.core.getWallets({})
 
   // Набор валют для виджета
   const widgetCurrencies = ['BTC']

@@ -110,7 +110,7 @@ export default class InvoicesList extends PureComponent<any, any> {
       })
     } else {
       // Fetch for all my wallets
-      const wallets = actions.core.getWallets()
+      const wallets = actions.core.getWallets({})
       const invoicesData = wallets.map((wallet) => {
         const {
           currency: type,

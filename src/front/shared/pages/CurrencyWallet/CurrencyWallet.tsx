@@ -101,7 +101,7 @@ export default class CurrencyWallet extends Component<any, any> {
       hiddenCoinsList,
     } = props
 
-    const items = actions.core.getWallets()
+    const items = actions.core.getWallets({})
 
     if (!address && !ticker) {
       if (fullName) {
@@ -344,7 +344,7 @@ export default class CurrencyWallet extends Component<any, any> {
       prevProps.location.pathname !== this.props.location.pathname ||
       prevProps.isBalanceFetching !== this.props.isBalanceFetching
     ) {
-      const items = actions.core.getWallets()
+      const items = actions.core.getWallets({})
 
       if (!address && !ticker) {
         if (fullName) {

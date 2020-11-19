@@ -169,6 +169,7 @@ export default class Web3Connect extends EventEmitter {
         ) {
           this._cachedAddress = data.account
           this.emit('accountChange')
+          this.emit('updated')
         }
         if (data
           && data.chainId
@@ -176,11 +177,13 @@ export default class Web3Connect extends EventEmitter {
         ) {
           this._cachedChainId = data.chainId
           this.emit('chainChanged')
+          this.emit('updated')
         }
       })
       this._cachedProvider.on(ConnectorEvent.Deactivate, () => {
         this.clearCache()
         this.emit('disconnect')
+        this.emit('updated')
       })
     }
   }
@@ -218,6 +221,7 @@ export default class Web3Connect extends EventEmitter {
           await this._cacheProviderData()
           this._isConnected = true
           this.emit('connected')
+          this.emit('updated')
           return true
         } else {
           if (_connector.isLocked()) {
@@ -269,6 +273,7 @@ export default class Web3Connect extends EventEmitter {
       await this._cachedProvider.Disconnect()
       this.clearCache()
       this.emit('disconnect')
+      this.emit('updated')
     }
   }
 }

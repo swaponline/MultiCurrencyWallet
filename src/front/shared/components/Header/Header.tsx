@@ -236,7 +236,7 @@ export default class Header extends Component<any, any> {
 
     let tourEvent = () => { };
 
-    const allData = actions.core.getWallets();
+    const allData = actions.core.getWallets({})
 
     const widgetCurrencies = ["BTC", "ETH"];
     const optionsalCur = [
