@@ -6253,17 +6253,11 @@
   },
   {
     "id": "Exchange_MetamaskAddressOption",
-    "message": "Metamask",
-    "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
-    ]
+    "message": "Metamask"
   },
   {
     "id": "Exchange_MetamaskNotInstalledOption",
-    "message": "Metamask (not installed)",
-    "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
-    ]
+    "message": "Metamask (not installed)"
   },
   {
     "id": "Exchange_PlaceholderEnterAddress",
@@ -8282,10 +8276,7 @@
   },
   {
     "id": "ConnectWalletModal_InjectedMobile",
-    "message": "Connect",
-    "files": [
-      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
-    ]
+    "message": "Connect"
   },
   {
     "id": "ConnectWalletModal_Title",
@@ -8390,6 +8381,20 @@
     "message": "The amount should not exceed your{br} current balance minus mining fee",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "ConnectWalletModal_WalletLocked",
+    "message": "Wallet is locked. Unlock the wallet first.",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "Exchange_ConnectAddressOption",
+    "message": "Connect Wallet",
+    "files": [
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
   }
 ]
