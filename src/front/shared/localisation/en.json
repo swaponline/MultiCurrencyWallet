@@ -1312,7 +1312,7 @@
   },
   {
     "id": "WithdrawButton32",
-    "message": "when you click this button, in the field, an amount equal to your balance minus the miners commission will appear. ",
+    "message": "When you click this button, in the field, an amount{br} equal to your balance minus the miners commission will appear",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
@@ -2346,7 +2346,7 @@
   },
   {
     "id": "WTH275",
-    "message": "Make sure the wallet you {br}are sending the funds to supports",
+    "message": "Make sure the wallet you {br}are sending the funds to supports {currency}",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
@@ -2515,7 +2515,7 @@
   },
   {
     "id": "Withdrow170",
-    "message": "The amount must be no more than your balance",
+    "message": "Maximum amount you can send is {allowedCriptoBalance} {currency}",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
@@ -6232,14 +6232,14 @@
   },
   {
     "id": "Exchange_InternalAddressOption",
-    "message": "Internal",
+    "message": "My wallet",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
   },
   {
     "id": "Exchange_InternalAddressOptionDisabled",
-    "message": "Internal (insufficient balance)",
+    "message": "My wallet (insufficient balance)",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
@@ -6253,11 +6253,17 @@
   },
   {
     "id": "Exchange_MetamaskAddressOption",
-    "message": "Connect Wallet"
+    "message": "Metamask",
+    "files": [
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+    ]
   },
   {
     "id": "Exchange_MetamaskNotInstalledOption",
-    "message": "Connect Wallet (not installed)"
+    "message": "Metamask (not installed)",
+    "files": [
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+    ]
   },
   {
     "id": "Exchange_PlaceholderEnterAddress",
@@ -8212,8 +8218,22 @@
     ]
   },
   {
+    "id": "MainFAQ2_content3",
+    "message": "Current mining fees:",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "Withdrow171",
+    "message": "Maximum amount you can send is {allowedUsdBalance} USD",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
     "id": "MetamaskNetworkAlert_Message",
-    "message": "Wrong network, please select \"{network}\" in {walletTitle} or disconnect wallet",
+    "message": "Wrong network, please select \"{network}\" in Metamask (or wallet connect)",
     "files": [
       "src/front/shared/containers/App/App.tsx"
     ]
@@ -8262,7 +8282,10 @@
   },
   {
     "id": "ConnectWalletModal_InjectedMobile",
-    "message": "Connect"
+    "message": "Connect",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
   },
   {
     "id": "ConnectWalletModal_Title",
@@ -8276,6 +8299,13 @@
     "message": "WalletConnect",
     "files": [
       "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "MainFAQ2_content4",
+    "message": "Loading",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
   {
@@ -8356,17 +8386,10 @@
     ]
   },
   {
-    "id": "ConnectWalletModal_WalletLocked",
-    "message": "Wallet is locked. Unlock the wallet first.",
+    "id": "WTH276",
+    "message": "The amount should not exceed your{br} current balance minus mining fee",
     "files": [
-      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
-    ]
-  },
-  {
-    "id": "Exchange_ConnectAddressOption",
-    "message": "Connect Wallet",
-    "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
   }
 ]

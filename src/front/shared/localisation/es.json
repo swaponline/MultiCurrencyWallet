@@ -1312,7 +1312,7 @@
   },
   {
     "id": "WithdrawButton32",
-    "message": "Al hacer clic en este botón, en el campo, aparecerá una cantidad igual a su saldo menos la comisión de mineros",
+    "message": "Al hacer clic en este botón, en el campo, aparecerá una cantidad{br} igual a su saldo menos la comisión de mineros",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
@@ -2346,7 +2346,7 @@
   },
   {
     "id": "WTH275",
-    "message": "Asegurate que la billetera que {br} envias los fondos sea compatible",
+    "message": "Asegurate que la billetera que {br} envias los fondos sea compatible {currency}",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
@@ -2515,7 +2515,7 @@
   },
   {
     "id": "Withdrow170",
-    "message": "La cantidad no debe ser mas que tu saldo ",
+    "message": "La cantidad máxima que puede enviar es {allowedCriptoBalance} {currency}",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
@@ -8145,14 +8145,14 @@
   },
   {
     "id": "Exchange_InternalAddressOption",
-    "message": "Interno",
+    "message": "My wallet",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
   },
   {
     "id": "Exchange_InternalAddressOptionDisabled",
-    "message": "Interno (saldo insuficiente)",
+    "message": "My wallet (saldo insuficiente)",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
@@ -8166,11 +8166,17 @@
   },
   {
     "id": "Exchange_MetamaskAddressOption",
-    "message": "Metamask"
+    "message": "Metamask",
+    "files": [
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+    ]
   },
   {
     "id": "Exchange_MetamaskNotInstalledOption",
-    "message": "Metamask (not installed)"
+    "message": "Metamask (not installed)",
+    "files": [
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+    ]
   },
   {
     "id": "Exchange_PlaceholderEnterAddress",
@@ -8236,8 +8242,15 @@
     ]
   },
   {
+    "id": "MainFAQ2_content3",
+    "message": "Current mining fees:",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
     "id": "MetamaskNetworkAlert_Message",
-    "message": "Para continuar, seleccione {walletTitle} \"{network}\" en la billetera o deshabilite la billetera",
+    "message": "Para continuar, seleccione Metamask \"{network}\" en la billetera o deshabilite la billetera",
     "files": [
       "src/front/shared/containers/App/App.tsx"
     ]
@@ -8286,7 +8299,10 @@
   },
   {
     "id": "ConnectWalletModal_InjectedMobile",
-    "message": "Para conectar"
+    "message": "Para conectar",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
   },
   {
     "id": "ConnectWalletModal_Title",
@@ -8303,94 +8319,101 @@
     ]
   },
   {
+    "id": "MainFAQ2_content4",
+    "message": "Cargando",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
     "id": "FilterTextAll",
-    "message": "Todas",
+    "message": "All",
     "files": [
       "src/front/shared/components/FilterForm/FilterForm.tsx"
     ]
   },
   {
     "id": "FilterTextFind",
-    "message": "Encontrar",
+    "message": "Find",
     "files": [
       "src/front/shared/components/FilterForm/FilterForm.tsx"
     ]
   },
   {
     "id": "themeAlt",
-    "message": "tema {theme}",
+    "message": "{theme} theme",
     "files": [
       "src/front/shared/components/Header/ThemeSwitcher.tsx"
     ]
   },
   {
     "id": "widget-tour-finishStep",
-    "message": "¡Eso es! Empecemos.",
+    "message": "That's it! Lets get started.",
     "files": [
       "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
     ]
   },
   {
     "id": "widget-tour-step-1",
-    "message": "Bienvenido a {widgetName}. ¿Toma el recorrido?",
+    "message": "Welcome to {widgetName}. Take the tour?",
     "files": [
       "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
     ]
   },
   {
     "id": "widget-tour-step-2",
-    "message": "Este es el saldo de su billetera.",
+    "message": "This is your wallet balance.",
     "files": [
       "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
     ]
   },
   {
     "id": "widget-tour-step-3",
-    "message": "Utilice estos botones para transferir criptomonedas dentro y fuera de su billetera.",
+    "message": "Use these buttons to transfer Cryptocurrencies in and out of your wallet.",
     "files": [
       "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
     ]
   },
   {
     "id": "widget-tour-step-4",
-    "message": "Desplácese por este menú para encontrar productos, servicios e información útil.",
+    "message": "Scroll through this menu to find products, services and useful information.",
     "files": [
       "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
     ]
   },
   {
     "id": "widget-tour-step-5",
-    "message": "Haga clic en estos tres puntos para encontrar la dirección de su billetera, claves privadas y más.",
+    "message": "Click these three dots to find your wallet address, private keys and more.",
     "files": [
       "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
     ]
   },
   {
     "id": "widget-tour-step-6",
-    "message": "Haga clic en este botón para revisar una lista de sus transacciones recientes.",
+    "message": "Click this button to review a list of your recent transactions.",
     "files": [
       "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
     ]
   },
   {
     "id": "widget-tour-step-7",
-    "message": "Haga clic en este botón para intercambiar sus criptomonedas.",
+    "message": "Click this button to exchange your cryptocurrencies.",
     "files": [
       "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
     ]
   },
   {
-    "id": "ConnectWalletModal_WalletLocked",
-    "message": "La billetera está bloqueada. Primero desbloquea la billetera.",
+    "id": "Withdrow171",
+    "message": "La cantidad máxima que puede enviar es {allowedUsdBalance} USD",
     "files": [
-      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
   },
   {
-    "id": "Exchange_ConnectAddressOption",
-    "message": "Conectar billetera",
+    "id": "WTH276",
+    "message": "El monto no debe exceder su{br} saldo actual menos la tarifa de minería",
     "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
   }
 ]

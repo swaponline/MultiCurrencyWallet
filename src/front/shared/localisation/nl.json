@@ -1316,7 +1316,7 @@
   },
   {
     "id": "WithdrawButton32",
-    "message": "when you click this button, in the field, an amount equal to your balance minus the miners commission will appear. ",
+    "message": "Når du klikker på denne knap, vises i marken et beløb{br} svarende til din saldo minus minearbejdskommissionen",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
@@ -2344,7 +2344,7 @@
   },
   {
     "id": "WTH275",
-    "message": "Make sure the wallet you {br}are sending the funds to supports",
+    "message": "Make sure the wallet you {br}are sending the funds to supports {currency}",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
@@ -2513,7 +2513,7 @@
   },
   {
     "id": "Withdrow170",
-    "message": "The amount must be no more than your balance",
+    "message": "Det maksimale beløb, du kan sende, er {allowedCriptoBalance} {currency}",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
@@ -6220,14 +6220,14 @@
   },
   {
     "id": "Exchange_InternalAddressOption",
-    "message": "Intern",
+    "message": "Mijn wallet",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
   },
   {
     "id": "Exchange_InternalAddressOptionDisabled",
-    "message": "Intern (onvoldoende balans)",
+    "message": "Mijn wallet (onvoldoende balans)",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
@@ -6241,11 +6241,17 @@
   },
   {
     "id": "Exchange_MetamaskAddressOption",
-    "message": "Metamask"
+    "message": "Metamask",
+    "files": [
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+    ]
   },
   {
     "id": "Exchange_MetamaskNotInstalledOption",
-    "message": "Metamask (niet geïnstalleerd)"
+    "message": "Metamask (niet geïnstalleerd)",
+    "files": [
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+    ]
   },
   {
     "id": "Exchange_PlaceholderEnterAddress",
@@ -8228,8 +8234,15 @@
     ]
   },
   {
+    "id": "MainFAQ2_content3",
+    "message": "Current mining fees:",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
     "id": "MetamaskNetworkAlert_Message",
-    "message": "Om door te gaan, selecteer {walletTitle} \"{netwerk}\" in de portefeuille of schakel de portefeuille uit",
+    "message": "Om door te gaan, selecteer Metamask \"{netwerk}\" in de portefeuille of schakel de portefeuille uit",
     "files": [
       "src/front/shared/containers/App/App.tsx"
     ]
@@ -8278,7 +8291,10 @@
   },
   {
     "id": "ConnectWalletModal_InjectedMobile",
-    "message": "Inpluggen"
+    "message": "Inpluggen",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
   },
   {
     "id": "ConnectWalletModal_Title",
@@ -8295,94 +8311,101 @@
     ]
   },
   {
+    "id": "MainFAQ2_content4",
+    "message": "Indlæser",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
     "id": "FilterTextAll",
-    "message": "Alle",
+    "message": "All",
     "files": [
       "src/front/shared/components/FilterForm/FilterForm.tsx"
     ]
   },
   {
     "id": "FilterTextFind",
-    "message": "Vind",
+    "message": "Find",
     "files": [
       "src/front/shared/components/FilterForm/FilterForm.tsx"
     ]
   },
   {
     "id": "themeAlt",
-    "message": "{theme} thema",
+    "message": "{theme} theme",
     "files": [
       "src/front/shared/components/Header/ThemeSwitcher.tsx"
     ]
   },
   {
     "id": "widget-tour-finishStep",
-    "message": "Dat is het! Laten we beginnen.",
+    "message": "That's it! Lets get started.",
     "files": [
       "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
     ]
   },
   {
     "id": "widget-tour-step-1",
-    "message": "Welkom bij {widgetName}. Neem de Tour?",
+    "message": "Welcome to {widgetName}. Take the tour?",
     "files": [
       "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
     ]
   },
   {
     "id": "widget-tour-step-2",
-    "message": "Dit is uw portefeuillesaldo.",
+    "message": "This is your wallet balance.",
     "files": [
       "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
     ]
   },
   {
     "id": "widget-tour-step-3",
-    "message": "Gebruik deze knoppen om cryptocurrencies in en uit uw portemonnee over te dragen.",
+    "message": "Use these buttons to transfer Cryptocurrencies in and out of your wallet.",
     "files": [
       "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
     ]
   },
   {
     "id": "widget-tour-step-4",
-    "message": "Blader door dit menu om producten, diensten en nuttige informatie te vinden.",
+    "message": "Scroll through this menu to find products, services and useful information.",
     "files": [
       "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
     ]
   },
   {
     "id": "widget-tour-step-5",
-    "message": "Klik op deze drie stippen om uw portefeuilleadres, privésleutels en meer te vinden.",
+    "message": "Click these three dots to find your wallet address, private keys and more.",
     "files": [
       "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
     ]
   },
   {
     "id": "widget-tour-step-6",
-    "message": "Klik op deze knop om een ​​lijst met uw recente transacties te bekijken.",
+    "message": "Click this button to review a list of your recent transactions.",
     "files": [
       "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
     ]
   },
   {
     "id": "widget-tour-step-7",
-    "message": "Klik op deze knop om uw cryptocurrencies in te wisselen.",
+    "message": "Click this button to exchange your cryptocurrencies.",
     "files": [
       "src/front/shared/components/Header/WidgetTours/WidgetWalletTour.tsx"
     ]
   },
   {
-    "id": "ConnectWalletModal_WalletLocked",
-    "message": "Portemonnee is vergrendeld. Ontgrendel eerst de portemonnee.",
+    "id": "Withdrow171",
+    "message": "Det maksimale beløb, du kan sende, er {allowedUsdBalance} USD",
     "files": [
-      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
   },
   {
-    "id": "Exchange_ConnectAddressOption",
-    "message": "Sluit Wallet aan",
+    "id": "WTH276",
+    "message": "Beløbet må ikke overstige din{br} nuværende saldo minus minegebyr",
     "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
   }
 ]

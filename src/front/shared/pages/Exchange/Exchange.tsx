@@ -322,7 +322,9 @@ export default class Exchange extends Component<any, any> {
     }, () => {
       if (!this._mounted) return
       getPairFees(sellCurrency, buyCurrency).then(async (pairFees) => {
+        //@ts-ignore: Property 'buy' does not exist on type 'unknown'
         const buyExRate = await this.fetchFiatExRate(pairFees.buy.coin)
+        //@ts-ignore: Property 'sell' does not exist on type 'unknown'
         const sellExRate = await this.fetchFiatExRate(pairFees.sell.coin)
         if (!this._mounted) return
         this.setState({
@@ -336,7 +338,9 @@ export default class Exchange extends Component<any, any> {
           // After fetching fee - actualize balances
           const buyWallet = actions.core.getWallet({ currency: buyCurrency })
           const sellWallet = actions.core.getWallet({ currency: sellCurrency })
+          //@ts-ignore: Property 'buy' does not exist on type 'unknown'
           const feeBuyWallet = actions.core.getWallet({ currency: pairFees.buy.coin })
+          //@ts-ignore: Property 'sell' does not exist on type 'unknown'
           const feeSellWallet = actions.core.getWallet({ currency: pairFees.sell.coin })
 
           const balances = {}

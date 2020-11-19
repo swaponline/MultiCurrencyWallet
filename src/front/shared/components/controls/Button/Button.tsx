@@ -68,6 +68,9 @@ Button.propTypes = {
   white: PropTypes.bool,
   blue: PropTypes.bool,
   gray: PropTypes.bool,
+  big: PropTypes.bool,
+  id: PropTypes.string,
+  fill: PropTypes.bool,
   disabled: PropTypes.bool,
   onClick: PropTypes.func,
 }

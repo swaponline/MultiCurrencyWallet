@@ -1305,7 +1305,7 @@
   },
   {
     "id": "WithdrawButton32",
-    "message": "При нажатии на кнопку, в поле появится весь Ваш баланс за вычетом комиссии майнеров",
+    "message": "Когда вы нажмете эту кнопку, в поле появится сумма{br}, равная вашему балансу за вычетом комиссии майнера",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
@@ -2419,7 +2419,7 @@
   },
   {
     "id": "WTH275",
-    "message": "Убедитесь, что кошелек, на который вы отправляете{br}поддерживает данную валюту ",
+    "message": "Убедитесь, что кошелек, на который вы отправляете{br}поддерживает данную валюту {currency}",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
@@ -2588,7 +2588,7 @@
   },
   {
     "id": "Withdrow170",
-    "message": "Сумма должны быть не больше вашего Вашего баланса",
+    "message": "Максимальная сумма, которую вы можете отправить, составляет {allowedCriptoBalance} {currency}",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
@@ -6289,14 +6289,14 @@
   },
   {
     "id": "Exchange_InternalAddressOption",
-    "message": "Внутрений",
+    "message": "Мой кошелёк",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
   },
   {
     "id": "Exchange_InternalAddressOptionDisabled",
-    "message": "Внутрений (недостаточный баланс)",
+    "message": "Мой кошелёк (недостаточный баланс)",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
@@ -6310,11 +6310,17 @@
   },
   {
     "id": "Exchange_MetamaskAddressOption",
-    "message": "Metamask"
+    "message": "Metamask",
+    "files": [
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+    ]
   },
   {
     "id": "Exchange_MetamaskNotInstalledOption",
-    "message": "Metamask (не установлен)"
+    "message": "Metamask (не установлен)",
+    "files": [
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+    ]
   },
   {
     "id": "Exchange_PlaceholderEnterAddress",
@@ -8284,8 +8290,15 @@
     ]
   },
   {
+    "id": "MainFAQ2_content3",
+    "message": "Current mining fees:",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
     "id": "MetamaskNetworkAlert_Message",
-    "message": "Для продолжения выберите в кошельке {walletTitle} \"{network}\" или отключите кошелек",
+    "message": "Для продолжения выберите в кошельке Метамаск \"{network}\" или отключите кошелек",
     "files": [
       "src/front/shared/containers/App/App.tsx"
     ]
@@ -8334,7 +8347,10 @@
   },
   {
     "id": "ConnectWalletModal_InjectedMobile",
-    "message": "Подключить"
+    "message": "Подключить",
+    "files": [
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
   },
   {
     "id": "ConnectWalletModal_Title",
@@ -8348,6 +8364,13 @@
     "message": "WalletConnect",
     "files": [
       "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+    ]
+  },
+  {
+    "id": "MainFAQ2_content4",
+    "message": "Загрузка",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
   {
@@ -8428,17 +8451,17 @@
     ]
   },
   {
-    "id": "ConnectWalletModal_WalletLocked",
-    "message": "Wallet is locked. Unlock the wallet first.",
+    "id": "Withdrow171",
+    "message": "Максимальная сумма, которую вы можете отправить, составляет {allowedUsdBalance} USD",
     "files": [
-      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
   },
   {
-    "id": "Exchange_ConnectAddressOption",
-    "message": "Connect Wallet",
+    "id": "WTH276",
+    "message": "Сумма не должна превышать{br} текущий баланс за вычетом комиссии за майнинг",
     "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
   }
 ]
