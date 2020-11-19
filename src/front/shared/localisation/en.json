@@ -6232,14 +6232,14 @@
   },
   {
     "id": "Exchange_InternalAddressOption",
-    "message": "My wallet",
+    "message": "SwapOnline",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
   },
   {
     "id": "Exchange_InternalAddressOptionDisabled",
-    "message": "My wallet (insufficient balance)",
+    "message": "SwapOnline (insufficient balance)",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]

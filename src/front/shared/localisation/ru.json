@@ -6289,14 +6289,14 @@
   },
   {
     "id": "Exchange_InternalAddressOption",
-    "message": "Мой кошелёк",
+    "message": "SwapOnline",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
   },
   {
     "id": "Exchange_InternalAddressOptionDisabled",
-    "message": "Мой кошелёк (недостаточный баланс)",
+    "message": "SwapOnline (недостаточный баланс)",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]

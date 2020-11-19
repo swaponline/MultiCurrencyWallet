@@ -35,11 +35,11 @@ const langLabels = defineMessages({
   },
   optionInternal: {
     id: 'Exchange_InternalAddressOption',
-    defaultMessage: 'My wallet',
+    defaultMessage: 'SwapOnline',
   },
   optionInternalDisabled: {
     id: 'Exchange_InternalAddressOptionDisabled',
-    defaultMessage: 'My wallet (insufficient balance)',
+    defaultMessage: 'SwapOnline (insufficient balance)',
   },
   optionInternalCreate: {
     id: 'Exchange_InternalCreate',
@@ -47,11 +47,11 @@ const langLabels = defineMessages({
   },
   optionMetamask: {
     id: 'Exchange_MetamaskAddressOption',
-    defaultMessage: 'Metamask',
+    defaultMessage: 'Web3 Provider',
   },
   optionMetamaskNotInstalled: {
     id: 'Exchange_MetamaskNotInstalledOption',
-    defaultMessage: 'Metamask (not installed)',
+    defaultMessage: 'Web3 Provider (not installed)',
   },
   optionCustom: {
     id: 'Exchange_CustomAddressOption',

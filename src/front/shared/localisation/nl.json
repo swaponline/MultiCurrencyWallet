@@ -6220,14 +6220,14 @@
   },
   {
     "id": "Exchange_InternalAddressOption",
-    "message": "Mijn wallet",
+    "message": "SwapOnline",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
   },
   {
     "id": "Exchange_InternalAddressOptionDisabled",
-    "message": "Mijn wallet (onvoldoende balans)",
+    "message": "SwapOnline (onvoldoende balans)",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]

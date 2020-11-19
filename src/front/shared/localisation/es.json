@@ -8145,14 +8145,14 @@
   },
   {
     "id": "Exchange_InternalAddressOption",
-    "message": "My wallet",
+    "message": "SwapOnline",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
   },
   {
     "id": "Exchange_InternalAddressOptionDisabled",
-    "message": "My wallet (saldo insuficiente)",
+    "message": "SwapOnline (saldo insuficiente)",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
