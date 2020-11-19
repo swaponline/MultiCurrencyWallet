@@ -79,7 +79,7 @@ export const saveFinished = (swapID) => save(swapID, 'history.finished')
 export const removeFinished = (swapID) => remove(swapID, 'history.finished')
 export const getAllFinished = () => getAll('history.finished')
 
-module.exports = {
+export default {
   init,
 
   save,

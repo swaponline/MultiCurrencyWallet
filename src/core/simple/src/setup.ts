@@ -1,12 +1,12 @@
 import SwapApp, { constants } from 'swap.app'
 
-const Wallet = require('./wallet')
+import Wallet from './wallet'
 
-const configFactory = require('./config')
+import configFactory from './config'
 
 const network = process.env.NETWORK
 
-module.exports = settings => {
+export default settings => {
 
   const useMnemonic = process.env.SECRET_PHRASE
 

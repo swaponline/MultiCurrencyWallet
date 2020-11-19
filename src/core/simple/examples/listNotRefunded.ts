@@ -1,5 +1,4 @@
-// const swap = require('simple.swap.core')
-const swap = require('../src')
+import swap from '../src'
 
 const {
   swap: { read },

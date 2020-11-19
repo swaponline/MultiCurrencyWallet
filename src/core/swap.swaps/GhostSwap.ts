@@ -1,7 +1,7 @@
 import debug from 'debug'
 import SwapApp, { SwapInterface, constants, util } from 'swap.app'
 import BigNumber from 'bignumber.js'
-const bitcore = require('ghost-bitcore-lib');
+import bitcore from 'ghost-bitcore-lib'
 const PrivateKey = bitcore.PrivateKey;
 const BufferUtil = bitcore.util.buffer;
 

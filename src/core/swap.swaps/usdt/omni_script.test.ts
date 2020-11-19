@@ -1,4 +1,4 @@
-const createOmniScript = require('./omni_script')
+import createOmniScript from './omni_script'
 
 test('creates script', () => {
   const output = createOmniScript(10) // USDT

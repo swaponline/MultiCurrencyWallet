@@ -1,9 +1,8 @@
-const bitcoin = require('bitcoinjs-lib')
-//const request = require('request-promise-native')
-const request = require('../helpers/request')
-const bitcoinUtils = require('../../../../common/utils/bitcoin')
-const BigNumber = require('bignumber.js')
-const debug = require('debug')
+import bitcoin from 'bitcoinjs-lib'
+import request from '../helpers/request'
+import bitcoinUtils from '../../../../common/utils/bitcoin'
+import BigNumber from 'bignumber.js'
+import debug from 'debug'
 
 const BITPAY = `https://api.bitcore.io/api/BTC/testnet`
 const BITPAY_MAIN = `https://api.bitcore.io/api/BTC/mainnet`
@@ -265,6 +264,12 @@ class Bitcoin {
   }
 }
 
-module.exports = new Bitcoin()
-module.exports.mainnet = () => new Bitcoin('mainnet')
-module.exports.testnet = () => new Bitcoin('testnet')
+export default new Bitcoin()
+
+const mainnet = () => new Bitcoin('mainnet')
+const testnet = () => new Bitcoin('testnet')
+
+export {
+  mainnet,
+  testnet
+}

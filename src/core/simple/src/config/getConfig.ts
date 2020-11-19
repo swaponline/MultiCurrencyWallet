@@ -1,27 +1,27 @@
-const { constants } = require('swap.app')
+import { constants } from 'swap.app'
 
-const SwapAuth = require('swap.auth')
-const SwapRoom = require('swap.room')
-const SwapOrders = require('swap.orders')
+import SwapAuth from 'swap.auth'
+import SwapRoom from 'swap.room'
+import SwapOrders from 'swap.orders'
 
-const { EthSwap, EthTokenSwap, BtcSwap, /*UsdtSwap,*/ } = require('swap.swaps')
-const {
+import { EthSwap, EthTokenSwap, BtcSwap, /*UsdtSwap,*/ } from 'swap.swaps'
+import {
   ETH2BTC, BTC2ETH,
   ETHTOKEN2BTC, BTC2ETHTOKEN,
-  /*USDT2ETHTOKEN, ETHTOKEN2USDT*/ } = require('swap.flows')
+  /*USDT2ETHTOKEN, ETHTOKEN2USDT*/ } from 'swap.flows'
 
-const eth = require('../instances/ethereum')
-const btc = require('../instances/bitcoin')
+import eth from '../instances/ethereum'
+import btc from '../instances/bitcoin'
 
-const common = require('./common')
+import common from './common'
 
-const tokenSwap = require('./tokenSwap')
+import tokenSwap from './tokenSwap'
 
-const setupLocalStorage = require('./setupLocalStorage')
-const { LocalStorage } = require('node-localstorage')
-const sessionStorage = require('node-sessionstorage')
+import setupLocalStorage from './setupLocalStorage'
+import { LocalStorage } from 'node-localstorage'
+import sessionStorage from 'node-sessionstorage'
 
-module.exports = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, ...custom }) => {
+export default (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, ...custom }) => {
   config = {
     ...common,
     ...config,

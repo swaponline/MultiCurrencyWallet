@@ -1,6 +1,9 @@
-const bitcoin = require('../instances/bitcoin').mainnet()
-const ethereum = require('../instances/ethereum').mainnet()
-const tokenSwap = require('./tokenSwap')
+import bitcoinNetworks from '../instances/bitcoin'
+import ethereumNetworks from '../instances/ethereum'
+import tokenSwap from './tokenSwap'
+
+const bitcoin = bitcoinNetworks.mainnet()
+const ethereum = ethereumNetworks.mainnet()
 
 const id = parseInt(process.argv[2])
         || process.env.SERVER_ID
@@ -10,7 +13,7 @@ const id = parseInt(process.argv[2])
 const offset = process.env.OFFSET || process.argv[1]
 const ROOT_DIR = process.env.ROOT_DIR || '.'
 
-module.exports = {
+export default {
   id,
   network: 'mainnet',
   storageDir: `${ROOT_DIR}/.storage/${id}`,

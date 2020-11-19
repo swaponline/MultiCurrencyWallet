@@ -4,9 +4,9 @@ import SwapApp, { SwapInterface, constants } from 'swap.app'
 const FEE_VALUE = 2000 // satoshis TODO how to get this value
 const DUST = 546
 
-const createOmniScript = require('./usdt/omni_script')
-const createScript = require('./usdt/swap_script')
-const createFundingTransaction = require('./usdt/funding_tx')
+import createOmniScript from './usdt/omni_script'
+import createScript from './usdt/swap_script'
+import createFundingTransaction from './usdt/funding_tx'
 
 class UsdtSwap extends SwapInterface {
 

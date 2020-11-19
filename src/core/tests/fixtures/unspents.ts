@@ -1,4 +1,4 @@
-module.exports = [
+export default [
   {
     "address": "1Kf1dtmZGUoy482yXeoUuhfAJVKyD9JpWS",
     "txid": "970d6bf58c494c0bba54fe04f3fd3d043121ca09dd997968a55d0d42c8d77ec4",

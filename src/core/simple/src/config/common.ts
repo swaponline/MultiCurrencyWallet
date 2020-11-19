@@ -1,6 +1,6 @@
 const id = Math.random().toString().slice(2)
 
-module.exports = {
+export default {
   swapRoom: {
     roomName: 'testnet.swap.online',
     EXPERIMENTAL: {

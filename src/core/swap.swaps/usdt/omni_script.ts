@@ -1,11 +1,11 @@
-const bitcoin = require('bitcoinjs-lib')
+import bitcoin from 'bitcoinjs-lib'
 
 const toPaddedHexString = (num, len) => {
     const str = num.toString(16)
     return "0".repeat(len - str.length) + str
 }
 
-module.exports = (amount, coin = 31) => {
+export default (amount, coin = 31) => {
 
   const simple_send = [
     "6f6d6e69", // omni

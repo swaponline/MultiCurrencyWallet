@@ -1,5 +1,5 @@
-const bitcoin = require('bitcoinjs-lib')
-const createOmniScript = require('./omni_script')
+import bitcoin from 'bitcoinjs-lib'
+import createOmniScript from './omni_script'
 
 // THIS IS NOT USED, that is just reference implementation
 // You can use that for wallet functions USDT withdrawal
@@ -36,6 +36,6 @@ const createSimpleSend = async (alice_pair, recipient_address, amount, getUnspen
   return tx
 }
 
-module.exports = {
+export default {
   createSimpleSend,
 }

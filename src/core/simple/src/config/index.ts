@@ -1,13 +1,13 @@
-const testnet = require('./testnet')
-const mainnet = require('./mainnet')
+import testnet from './testnet'
+import mainnet from './mainnet'
 
-const getConfig = require('./getConfig')
+import getConfig from './getConfig'
 
-const swap = require('swap.core')
-const { EthTokenSwap } = require('swap.swaps')
-const tokenSwap = require('./tokenSwap')
+import swap from 'swap.core'
+import { EthTokenSwap } from 'swap.swaps'
+import tokenSwap from './tokenSwap'
 
-module.exports = {
+export default {
   testnet: getConfig(testnet),
   mainnet: getConfig(mainnet),
 

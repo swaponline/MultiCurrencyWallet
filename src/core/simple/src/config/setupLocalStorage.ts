@@ -1,3 +1,3 @@
-const { mkdir } = require('fs')
+import { mkdir } from 'fs'
 
-module.exports = (dirName = '.storage') => mkdir(dirName, err => {})
+export default (dirName = '.storage') => mkdir(dirName, err => {})

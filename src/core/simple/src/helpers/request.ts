@@ -1,4 +1,4 @@
-const request = require('request-promise-native')
+import request from 'request-promise-native'
 
 const responseCacheStorage = {}
 const responseQuery = {}

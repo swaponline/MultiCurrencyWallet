@@ -1,5 +1,5 @@
 //import bitcoin from 'bitcoinjs-lib'
-//const bitcoin = require('bitcoinjs-lib')
+
 
 import SwapApp, { SwapInterface } from 'swap.app'
 import { testnet } from 'simple/src/instances/bitcoin'

@@ -1,8 +1,7 @@
-//const request = require('request-promise-native')
-const request = require('../helpers/request')
-const debug = require('debug')
+import request from '../helpers/request'
+import debug from 'debug'
 
-const Web3 = require('web3')
+import Web3 from 'web3'
 
 // const MAINNET_PROVIDER = `https://mainnet.infura.io/JCnK5ifEPH9qcQkX0Ahl`
 const TESTNET_PROVIDER = `https://rinkeby.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c`
@@ -18,7 +17,7 @@ const WEB3_PROVIDERS = {
 
 const ETHERCHAIN_API = `https://www.etherchain.org/api/gasPriceOracle`
 const ETHGASSTATION_API = `https://ethgasstation.info/json/ethgasAPI.json`
-const BigNumber = require('bignumber.js')
+import BigNumber from 'bignumber.js'
 const TEN = new BigNumber(10)
 
 const ETHERSCAN_APIKEY = `87F9B9IH33JPVRM5ZVFEK1DQTM64FUZFMV`
@@ -181,6 +180,12 @@ class Ethereum {
   }
 }
 
-module.exports = new Ethereum()
-module.exports.mainnet = () => new Ethereum('mainnet')
-module.exports.testnet = () => new Ethereum('testnet')
+export default new Ethereum()
+
+const mainnet = () => new Ethereum('mainnet')
+const testnet = () => new Ethereum('testnet')
+
+export {
+  mainnet,
+  testnet
+}

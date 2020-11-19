@@ -1,9 +1,9 @@
-const bitcoin = require('bitcoinjs-lib')
+import bitcoin from 'bitcoinjs-lib'
 const net = bitcoin.networks.bitcoin
 
 
-const createScript = require('./swap_script')
-const createOmniScript = require('./omni_script')
+import createScript from './swap_script'
+import createOmniScript from './omni_script'
 const BITCOIN_DUST = 546
 
 const createLockTransaction = async (lockAmount, dialog, scriptValues, getUnspents, network) => {
@@ -57,4 +57,4 @@ const createLockTransaction = async (lockAmount, dialog, scriptValues, getUnspen
   }
 }
 
-module.exports = createLockTransaction
+export default createLockTransaction

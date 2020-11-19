@@ -1,9 +1,9 @@
-const request = require('superagent')
+import request from 'superagent'
 
 const repo = '.ipfs/' + Math.random().toString().slice(2)
 console.log('ipfs repo', repo)
 
-module.exports = {
+export default {
   swapRoom: {
     roomName: 'swap.core.tests.swap.online',
     EXPERIMENTAL: {

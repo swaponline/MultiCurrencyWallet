@@ -1,6 +1,5 @@
-//const swap = require('simple.swap.core')
-const swap = require('./../src/index')
-const repl = require('repl')
+import swap from './../src/index'
+import repl from 'repl'
 
 const {
   on: { onFinish },

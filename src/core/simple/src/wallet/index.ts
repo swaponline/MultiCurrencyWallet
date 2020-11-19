@@ -1,5 +1,6 @@
-const { bitcoin, ethereum } = require('../instances')
-const debug = require('debug')('swap.core:simple:wallet')
+import { bitcoin, ethereum } from '../instances'
+import debugCreate from 'debug'
+const debug = debugCreate('swap.core:simple:wallet')
 
 const BLOCKCHAININFO = isMain => isMain ? `https://blockchain.info` : `https://testnet.blockchain.info`
 const ETHERSCANIO = isMain => isMain ? `https://etherscan.io` : `https://rinkeby.etherscan.io`
@@ -134,4 +135,4 @@ class Wallet {
 
 }
 
-module.exports = Wallet
+export default Wallet

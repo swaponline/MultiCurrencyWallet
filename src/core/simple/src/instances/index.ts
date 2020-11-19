@@ -1,7 +1,7 @@
-const bitcoin = require('./bitcoin')
-const ethereum = require('./ethereum')
+import bitcoin from './bitcoin'
+import ethereum from './ethereum'
 
-module.exports = {
+export default {
   bitcoin,
   ethereum,
 }

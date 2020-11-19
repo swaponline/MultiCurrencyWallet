@@ -1,4 +1,4 @@
-const swap = require('../src/index')
+import swap from '../src/index'
 
 const {
   on: { onFinish },

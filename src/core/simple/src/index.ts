@@ -1,4 +1,6 @@
-require('dotenv').config()
+import dotenv from 'dotenv'
+dotenv.config()
+
 require('module-alias/register')
 
 
@@ -7,9 +9,9 @@ import { default as swapCore } from '../../'
 const { constants } = swapCore
 
 
-const setup = require('./setup')
-const helpers = require('./helpers')
-const config = require('./config')
+import setup from './setup'
+import helpers from './helpers'
+import config from './config'
 
 
-module.exports = { setup, helpers, config, constants }
+export default { setup, helpers, config, constants }

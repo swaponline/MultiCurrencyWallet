@@ -1,6 +1,6 @@
 import SwapApp, { SwapInterface } from '../src/swap.app'
 
-const swap = require('../src')
+import swap from '../src'
 
 const constants = swap.constants
 
@@ -11,17 +11,17 @@ const SwapOrders = swap.orders
 const { EthSwap, EthTokenSwap, BtcSwap } = swap.swaps
 const { ETH2BTC, BTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN } = swap.flows
 
-const Web3 = require('web3')
+import Web3 from 'web3'
 
 const web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.infura.io/<YOUR_KEY>'))
-const bitcoin = require('bitcoinjs-lib')
+import bitcoin from 'bitcoinjs-lib'
 
-const Ipfs = require('ipfs')
-const IpfsRoom = require('ipfs-pubsub-room')
+import Ipfs from 'ipfs'
+import IpfsRoom from 'ipfs-pubsub-room'
 
-const { LocalStorage } = require('node-localstorage')
+import { LocalStorage } from 'node-localstorage'
 
-const config = require('./config')
+import config from './config'
 
 SwapApp.setup({
   network: 'testnet',
@@ -58,4 +58,4 @@ SwapApp.setup({
   ],
 })
 
-exports = module.exports = SwapApp.shared()
+export default SwapApp.shared()

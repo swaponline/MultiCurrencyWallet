@@ -1,9 +1,9 @@
-const ethereum = require('../instances/ethereum')
-const ERC20 = require('./ERC20')
+import ethereumNetworks from '../instances/ethereum'
+import ERC20 from './ERC20'
 
 const eth = {
-  mainnet: ethereum.mainnet(),
-  testnet: ethereum.testnet(),
+  mainnet: ethereumNetworks.mainnet(),
+  testnet: ethereumNetworks.testnet(),
 }
 
 const SwapContract = {
@@ -17,7 +17,7 @@ const SwapContract = {
   },
 }
 
-module.exports = ({ network, name, decimals, tokenAddress }) => (contract = {}) => ({
+export default ({ network, name, decimals, tokenAddress }) => (contract = {}) => ({
   network,
   name,
   decimals,

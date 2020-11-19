@@ -1,4 +1,4 @@
-const bitcoin = require('bitcoinjs-lib')
+import bitcoin from 'bitcoinjs-lib'
 const net = process.env.NETWORK === 'testnet'
   ? bitcoin.networks.testnet
   : bitcoin.networks.bitcoin
@@ -70,4 +70,4 @@ const createScript = (swap_secret_hash, Alice_pubkey, Bob_pubkey, locktime) => {
   }
 }
 
-module.exports = createScript
+export default createScript

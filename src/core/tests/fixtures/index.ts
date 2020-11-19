@@ -1,5 +1,5 @@
-const unspents = require('./unspents')
+import unspents from './unspents'
 
-module.exports = {
+export default {
   unspents,
 }

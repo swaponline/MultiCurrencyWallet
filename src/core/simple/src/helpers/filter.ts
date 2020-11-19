@@ -46,4 +46,4 @@ export const secret2id = (secret) =>
     resolve(null)
   })
 
-module.exports = { hash2id, secret2id }
+export default { hash2id, secret2id }
