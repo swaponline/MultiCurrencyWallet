@@ -170,7 +170,7 @@
     "url-loader": "^1.0.1",
     "webapp-webpack-plugin": "^2.7.1",
     "webpack": "^4.44.2",
-    "webpack-bundle-analyzer": "^3.9.0",
+    "webpack-bundle-analyzer": "^4.1.0",
     "webpack-cli": "^3.3.12",
     "webpack-dev-middleware": "^2.0.6",
     "webpack-raw-bundler": "^1.3.6",
