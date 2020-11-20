@@ -27,8 +27,6 @@ import links from 'helpers/links'
 import MnemonicInput from 'components/forms/MnemonicInput/MnemonicInput'
 import feedback from 'shared/helpers/feedback'
 
-
-
 const langPrefix = `RestoryMnemonicWallet`
 const langLabels = defineMessages({
   title: {
@@ -70,29 +68,23 @@ const langLabels = defineMessages({
 })
 
 @injectIntl
-@connect(({
-  user: {
-    btcData,
-    btcMultisigSMSData,
-    btcMultisigUserData,
-    ethData,
-    ghostData,
-    nextData,
-  }
-}) => ({
-  allCurrensies: [
-    btcData,
-    btcData,
-    btcMultisigSMSData,
-    btcMultisigUserData,
-    ethData,
-    ghostData,
-    nextData,
-  ]
-}))
+@connect(
+  ({
+    user: { btcData, btcMultisigSMSData, btcMultisigUserData, ethData, ghostData, nextData },
+  }) => ({
+    allCurrensies: [
+      btcData,
+      btcData,
+      btcMultisigSMSData,
+      btcMultisigUserData,
+      ethData,
+      ghostData,
+      nextData,
+    ],
+  })
+)
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
 export default class RestoryMnemonicWallet extends React.Component<any, any> {
-
   props: any
 
   static propTypes = {
@@ -113,8 +105,8 @@ export default class RestoryMnemonicWallet extends React.Component<any, any> {
       data: {
         btcBalance: data ? data.btcBalance : 0,
         usdBalance: data ? data.usdBalance : 0,
-        showCloseButton: data ? data.showCloseButton : true
-      }
+        showCloseButton: data ? data.showCloseButton : true,
+      },
     }
   }
 
@@ -127,18 +119,26 @@ export default class RestoryMnemonicWallet extends React.Component<any, any> {
   fetchData = async () => {
     const { allCurrensies } = this.props
 
-    const { btcBalance, usdBalance } = allCurrensies.reduce((acc, curr) => {
-      const { name, infoAboutCurrency, balance } = curr
-      //@ts-ignore
-      if ((!isWidgetBuild || widgetCurrencies.includes(name)) && infoAboutCurrency && balance !== 0) {
-        acc.btcBalance += balance * infoAboutCurrency.price_btc
-        acc.usdBalance += balance * ((infoAboutCurrency.price_fiat) ? infoAboutCurrency.price_fiat : 1)
-      }
-      return acc
-    }, { btcBalance: 0, usdBalance: 0 })
+    const { btcBalance, usdBalance } = allCurrensies.reduce(
+      (acc, curr) => {
+        const { name, infoAboutCurrency, balance } = curr
+        if (
+          //@ts-ignore
+          (!isWidgetBuild || widgetCurrencies.includes(name)) &&
+          infoAboutCurrency &&
+          balance !== 0
+        ) {
+          acc.btcBalance += balance * infoAboutCurrency.price_btc
+          acc.usdBalance +=
+            balance * (infoAboutCurrency.price_fiat ? infoAboutCurrency.price_fiat : 1)
+        }
+        return acc
+      },
+      { btcBalance: 0, usdBalance: 0 }
+    )
 
     this.setState((data) => ({
-      data: { btcBalance, usdBalance, ...data }
+      data: { btcBalance, usdBalance, ...data },
     }))
   }
 
@@ -159,7 +159,6 @@ export default class RestoryMnemonicWallet extends React.Component<any, any> {
   }
 
   handleFinish = () => {
-
     this.handleClose()
 
     window.location.assign(links.hashHome)
@@ -177,57 +176,60 @@ export default class RestoryMnemonicWallet extends React.Component<any, any> {
       return
     }
 
-    this.setState({
-      isFetching: true,
-    }, async () => {
-      // Backup critical localStorage
-      const backupMark = actions.btc.getMainPublicKey()
+    this.setState(
+      {
+        isFetching: true,
+      },
+      async () => {
+        // Backup critical localStorage
+        const backupMark = actions.btc.getMainPublicKey()
 
-      actions.backupManager.backup(backupMark, false, true)
-      //@ts-ignore
-      const btcWallet = await actions.btc.getWalletByWords(mnemonic)
-      //@ts-ignore
-      const ethWallet = await actions.eth.getWalletByWords(mnemonic)
-      //@ts-ignore
-      const ghostWallet = await actions.ghost.getWalletByWords(mnemonic)
-      //@ts-ignore
-      const nextWallet = await actions.next.getWalletByWords(mnemonic)
+        actions.backupManager.backup(backupMark, false, true)
+        //@ts-ignore
+        const btcWallet = await actions.btc.getWalletByWords(mnemonic)
+        //@ts-ignore
+        const ethWallet = await actions.eth.getWalletByWords(mnemonic)
+        //@ts-ignore
+        const ghostWallet = await actions.ghost.getWalletByWords(mnemonic)
+        //@ts-ignore
+        const nextWallet = await actions.next.getWalletByWords(mnemonic)
 
-      // clean mnemonic, if exists
-      localStorage.setItem(constants.privateKeyNames.twentywords, '-')
+        // clean mnemonic, if exists
+        localStorage.setItem(constants.privateKeyNames.twentywords, '-')
 
-      // Check - if exists backup for this mnemonic
-      const restoryMark = btcWallet.publicKey
+        // Check - if exists backup for this mnemonic
+        const restoryMark = btcWallet.publicKey
 
-      if (actions.backupManager.exists(restoryMark)) {
-        actions.backupManager.restory(restoryMark)
+        if (actions.backupManager.exists(restoryMark)) {
+          actions.backupManager.restory(restoryMark)
+        }
+        //@ts-ignore
+        const btcPrivKey = await actions.btc.login(false, mnemonic)
+        const btcSmsKey = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
+        localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, btcSmsKey)
+        //@ts-ignore
+        localStorage.setItem(constants.localStorage.isWalletCreate, true)
+        //@ts-ignore
+        await actions.eth.login(false, mnemonic)
+        //@ts-ignore
+        await actions.ghost.login(false, mnemonic)
+        //@ts-ignore
+        await actions.next.login(false, mnemonic)
+
+        await actions.user.sign_btc_2fa(btcPrivKey)
+        await actions.user.sign_btc_multisig(btcPrivKey)
+
+        actions.core.markCoinAsVisible('BTC', true)
+        actions.core.markCoinAsVisible('ETH', true)
+
+        this.setState({
+          isFetching: false,
+          step: `ready`,
+        })
+        //@ts-ignore
+        feedback.restore.finished()
       }
-      //@ts-ignore
-      const btcPrivKey = await actions.btc.login(false, mnemonic)
-      const btcSmsKey = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
-      localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, btcSmsKey)
-      //@ts-ignore
-      localStorage.setItem(constants.localStorage.isWalletCreate, true)
-      //@ts-ignore
-      await actions.eth.login(false, mnemonic)
-      //@ts-ignore
-      await actions.ghost.login(false, mnemonic)
-      //@ts-ignore
-      await actions.next.login(false, mnemonic)
-
-      await actions.user.sign_btc_2fa(btcPrivKey)
-      await actions.user.sign_btc_multisig(btcPrivKey)
-
-      actions.core.markCoinAsVisible('BTC', true)
-      actions.core.markCoinAsVisible('ETH', true)
-
-      this.setState({
-        isFetching: false,
-        step: `ready`,
-      })
-      //@ts-ignore
-      feedback.restore.finished()
-    })
+    )
   }
 
   handleMnemonicChange = (mnemonic) => {
@@ -237,10 +239,7 @@ export default class RestoryMnemonicWallet extends React.Component<any, any> {
   }
 
   render() {
-    const {
-      name,
-      intl,
-    } = this.props
+    const { name, intl } = this.props
 
     const {
       step,
@@ -248,45 +247,47 @@ export default class RestoryMnemonicWallet extends React.Component<any, any> {
       mnemonicIsInvalid,
       isFetching,
 
-      data: {
-        showCloseButton,
-        btcBalance = 0,
-        usdBalance = 1,
-      },
+      data: { showCloseButton, btcBalance = 0, usdBalance = 1 },
     } = this.state
 
     return (
-      <Modal name={name} title={`${intl.formatMessage(langLabels.title)}`} onClose={this.handleClose} showCloseButton={showCloseButton}>
+      <Modal
+        name={name}
+        title={`${intl.formatMessage(langLabels.title)}`}
+        onClose={this.handleClose}
+        showCloseButton={showCloseButton}
+      >
         <div styleName="restoreModalHolder">
           {step === `enter` && (
             <Fragment>
-              {(mnemonic && mnemonicIsInvalid) && (
-                <div styleName='rednotes mnemonicNotice'>
+              {mnemonic && mnemonicIsInvalid && (
+                <div styleName="rednotes mnemonicNotice">
                   <FormattedMessage {...langLabels.mnemonicInvalid} />
                 </div>
               )}
               <div styleName="highLevel" className="ym-hide-content notranslate">
-                {/*
-                //@ts-ignore */}
-                <FieldLabel label>
+                <FieldLabel>
                   <span styleName="tooltipWrapper">
-
                     <FormattedMessage {...langLabels.mnemonicLabel} />
                     &nbsp;
                     <Tooltip id="ImportKeys_RestoreMnemonic_tooltip">
                       <span>
-                        <FormattedMessage id="ImportKeys_RestoreMnemonic_Tooltip" defaultMessage="12-word backup phrase" />
-                        {
-                          (btcBalance > 0 || usdBalance > 0) && (
-                            <React.Fragment>
-                              <br />
-                              <br />
-                              <div styleName="alertTooltipWrapper">
-                                <FormattedMessage id="ImportKeys_RestoreMnemonic_Tooltip_withBalance" defaultMessage="Please, be causious!" />
-                              </div>
-                            </React.Fragment>
-                          )
-                        }
+                        <FormattedMessage
+                          id="ImportKeys_RestoreMnemonic_Tooltip"
+                          defaultMessage="12-word backup phrase"
+                        />
+                        {(btcBalance > 0 || usdBalance > 0) && (
+                          <React.Fragment>
+                            <br />
+                            <br />
+                            <div styleName="alertTooltipWrapper">
+                              <FormattedMessage
+                                id="ImportKeys_RestoreMnemonic_Tooltip_withBalance"
+                                defaultMessage="Please, be causious!"
+                              />
+                            </div>
+                          </React.Fragment>
+                        )}
                       </span>
                     </Tooltip>
                   </span>
@@ -299,14 +300,14 @@ export default class RestoryMnemonicWallet extends React.Component<any, any> {
                 </Button>
                 <Button
                   blue
-                  disabled={(!mnemonic || mnemonic.split(' ').length !== 12 || isFetching)}
+                  disabled={!mnemonic || mnemonic.split(' ').length !== 12 || isFetching}
                   onClick={this.handleRestoryWallet}
                 >
                   {isFetching ? (
                     <FormattedMessage {...langLabels.restoringWallet} />
                   ) : (
-                      <FormattedMessage {...langLabels.restoryWallet} />
-                    )}
+                    <FormattedMessage {...langLabels.restoryWallet} />
+                  )}
                 </Button>
               </div>
             </Fragment>
@@ -318,8 +319,6 @@ export default class RestoryMnemonicWallet extends React.Component<any, any> {
                 <FormattedMessage {...langLabels.readyNotice} />
               </p>
               <div styleName="lowLevel">
-                {/*
-                //@ts-ignore */}
                 <Button
                   styleName="buttonCenter buttonHalfFullWidth"
                   blue

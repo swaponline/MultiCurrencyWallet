@@ -95,7 +95,6 @@ class ETH2BTC extends Flow {
       particalBtcLocked: false,
     }
 
-    super._persistSteps()
     this._persistState()
 
     const flow = this
@@ -132,6 +131,8 @@ class ETH2BTC extends Flow {
         })
       }
     })
+
+    super._persistSteps()
   }
 
   _persistState() {

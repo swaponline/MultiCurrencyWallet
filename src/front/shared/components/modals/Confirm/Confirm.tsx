@@ -116,11 +116,7 @@ export default class Confirm extends React.Component<any, any> {
               <p styleName="notification">{labels.message}</p>
             </div>
             <div styleName="button-overlay">
-              {/*
-              //@ts-ignore */}
               <Button styleName="button" gray onClick={this.handleCancel}>{labels.no}</Button>
-              {/*
-              //@ts-ignore */}
               <Button styleName="button" blue onClick={this.handleConfirm}>{labels.yes}</Button>
             </div>
           </div>

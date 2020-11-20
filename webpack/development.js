@@ -62,6 +62,10 @@ export default (webpackConfig) => {
         to: '',
         toType: 'file',
       },
+      ...(config.firebug) ? [{
+        from: 'src/common/firebug/',
+        to: 'firebug/',
+      }] : []
     ]),
     externalConfig(),
   )

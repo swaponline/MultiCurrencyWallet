@@ -112,6 +112,8 @@ export default class Row extends Component<any, any> {
     const {
       itemData: {
         isMetamask,
+        isConnected,
+        isERC20,
       }
     //@ts-ignore
     } = this.props
@@ -119,6 +121,18 @@ export default class Row extends Component<any, any> {
     if (isBalanceFetching) {
       return null
     }
+
+    if (isMetamask && !isConnected ) {
+      this.setState({
+        isBalanceFetching: true,
+      }, () => {
+        setTimeout(() => {
+          this.setState({isBalanceFetching: false})
+        }, 500)
+      })
+      return null
+    }
+
     //@ts-ignore
     this.setState({
       isBalanceFetching: true,
@@ -142,7 +156,7 @@ export default class Row extends Component<any, any> {
             await actions.btcmultisig.getBalancePin()
             break
           default:
-            if (isMetamask) {
+            if (isMetamask && !isERC20) {
               await metamask.getBalance()
             } else {
               await actions[currency.toLowerCase()].getBalance(
@@ -233,7 +247,7 @@ export default class Row extends Component<any, any> {
   }
 
   handleConnectMetamask = () => {
-    metamask.connect().then(async (connected) => {
+    metamask.connect({}).then(async (connected) => {
       if (connected) {
         await actions.user.sign()
         await actions.user.getBalances()
@@ -831,6 +845,7 @@ export default class Row extends Component<any, any> {
 
     let showBalance = true
     let statusInfo = false
+
 
     if (
       //@ts-ignore

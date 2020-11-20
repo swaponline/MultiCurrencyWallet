@@ -32,7 +32,7 @@ export default class CurrencyList extends Component<any, any> {
         intl: { locale },
       } = this.props
 
-      const currentAsset = actions.core.getWallets().filter((item) => currency === item.currency && address.toLowerCase() === item.address.toLowerCase())
+      const currentAsset = actions.core.getWallets({}).filter((item) => currency === item.currency && address.toLowerCase() === item.address.toLowerCase())
 
       let targetCurrency = currentAsset[0].currency
 

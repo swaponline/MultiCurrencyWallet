@@ -40,7 +40,7 @@ const fetchCoinFee = (coin) => {
             }).then((coinFee) => {
               doResolve({
                 coin: coinData.ticker,
-                fee: BigNumber(coinFee).toNumber(),
+                fee: new BigNumber(coinFee).toNumber(),
                 isUTXO: (coinData.model === COIN_MODEL.UTXO),
               })
             }).catch((err) => {
@@ -57,12 +57,13 @@ const fetchCoinFee = (coin) => {
           }
           break;
         case COIN_TYPE.ETH_TOKEN:
+          //@ts-ignore
           helpers.eth.estimateFeeValue({
             method: 'swap',
           }).then((ethFee) => {
             doResolve({
               coin: `ETH`,
-              fee: BigNumber(ethFee).toNumber(),
+              fee: new BigNumber(ethFee).toNumber(),
               isUTXO: false,
             })
           }).catch((err) => {
@@ -92,7 +93,9 @@ export const getPairFees = (sellCoin, buyCoin) => {
     const buy = await fetchCoinFee(buyCoin.toUpperCase())
 
     const byCoins = {}
+    //@ts-ignore: Property 'coin' does not exist on type 'unknown'
     byCoins[buy.coin] = buy
+    //@ts-ignore: Property 'coin' does not exist on type 'unknown'
     byCoins[sell.coin] = sell
 
     feeResolved({

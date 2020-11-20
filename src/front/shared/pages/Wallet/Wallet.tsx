@@ -28,13 +28,10 @@ import DashboardLayout from 'components/layout/DashboardLayout/DashboardLayout'
 import BalanceForm from 'components/BalanceForm/BalanceForm'
 
 import { BigNumber } from 'bignumber.js'
-
 import metamask from 'helpers/metamask'
 
 import wpLogoutModal from 'helpers/wpLogoutModal'
 import feedback from 'shared/helpers/feedback'
-
-
 
 const isWidgetBuild = config && config.isWidget
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -75,8 +72,9 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     }
     const tokens =
       config && config.isWidget
-        //@ts-ignore
-        ? window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length
+        ? // comment for ts-ignore
+          //@ts-ignore
+          window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length
           ? widgetMultiTokens
           : [config.erc20token.toUpperCase()]
         : Object.keys(tokensData).map((k) => tokensData[k].currency)
@@ -171,10 +169,8 @@ export default class Wallet extends Component<any, any> {
   handleConnectWallet() {
     const {
       history,
-      intl: {
-        locale,
-      },
-    //@ts-ignore
+      intl: { locale },
+      //@ts-ignore
     } = this.props
 
     if (metamask.isConnected()) {
@@ -183,11 +179,7 @@ export default class Wallet extends Component<any, any> {
     }
 
     setTimeout(() => {
-      metamask.connect().then((isConnected) => {
-        if (!isConnected) {
-          history.push(localisedUrl(locale, links.home))
-        }
-      })
+      metamask.connect({})
     }, 100)
   }
 
@@ -198,23 +190,19 @@ export default class Wallet extends Component<any, any> {
       },
       multisigPendingCount,
       intl,
-      intl: {
-        locale,
-      },
+      intl: { locale },
       location: { pathname },
       history,
-    //@ts-ignore
+      //@ts-ignore
     } = this.props
 
-
     const {
-      location: {
-        pathname: prevPathname,
-      },
+      location: { pathname: prevPathname },
     } = prevProps
 
-    if (pathname.toLowerCase() != prevPathname.toLowerCase()
-      && pathname.toLowerCase() == links.connectWallet.toLowerCase()
+    if (
+      pathname.toLowerCase() != prevPathname.toLowerCase() &&
+      pathname.toLowerCase() == links.connectWallet.toLowerCase()
     ) {
       this.handleConnectWallet()
     }
@@ -251,21 +239,15 @@ export default class Wallet extends Component<any, any> {
     const {
       match: {
         params,
-        params: {
-          page,
-        },
+        params: { page },
         url,
       },
       multisigPendingCount,
       history,
-      location: {
-        pathname,
-      },
+      location: { pathname },
       intl,
-      intl: {
-        locale,
-      },
-    //@ts-ignore
+      intl: { locale },
+      //@ts-ignore
     } = this.props
 
     if (pathname.toLowerCase() == links.connectWallet.toLowerCase()) {
@@ -304,11 +286,13 @@ export default class Wallet extends Component<any, any> {
     await actions.user.getInfoAboutCurrency(currencyNames)
   }
 
-  handleWithdraw = params => {
+  handleWithdraw = (params) => {
     //@ts-ignore
     const { allData } = this.props
     const { address, amount } = params
-    const item = allData.find(({ currency }) => currency.toLowerCase() === params.currency.toLowerCase())
+    const item = allData.find(
+      ({ currency }) => currency.toLowerCase() === params.currency.toLowerCase()
+    )
 
     actions.modals.open(constants.modals.Withdraw, {
       ...item,
@@ -323,7 +307,7 @@ export default class Wallet extends Component<any, any> {
     const {
       history,
       intl: { locale },
-    //@ts-ignore
+      //@ts-ignore
     } = this.props
 
     history.push(localisedUrl(locale, links.createWallet))
@@ -333,7 +317,7 @@ export default class Wallet extends Component<any, any> {
     const {
       history,
       intl: { locale },
-    //@ts-ignore
+      //@ts-ignore
     } = this.props
     if (isWidgetBuild && !config.isFullBuild) {
       // was pointOfSell
@@ -343,7 +327,7 @@ export default class Wallet extends Component<any, any> {
     }
   }
 
-  handleModalOpen = context => {
+  handleModalOpen = (context) => {
     //@ts-ignore
     const { enabledCurrencies } = this.state
     //@ts-ignore
@@ -352,8 +336,10 @@ export default class Wallet extends Component<any, any> {
     /* @ToDo Вынести отдельно */
     // Набор валют для виджета
     const widgetCurrencies = ['BTC']
-    if (!hiddenCoinsList.includes('BTC (SMS-Protected)')) widgetCurrencies.push('BTC (SMS-Protected)')
-    if (!hiddenCoinsList.includes('BTC (PIN-Protected)')) widgetCurrencies.push('BTC (PIN-Protected)')
+    if (!hiddenCoinsList.includes('BTC (SMS-Protected)'))
+      widgetCurrencies.push('BTC (SMS-Protected)')
+    if (!hiddenCoinsList.includes('BTC (PIN-Protected)'))
+      widgetCurrencies.push('BTC (PIN-Protected)')
     if (!hiddenCoinsList.includes('BTC (Multisig)')) widgetCurrencies.push('BTC (Multisig)')
     widgetCurrencies.push('ETH')
     widgetCurrencies.push('GHOST')
@@ -363,7 +349,7 @@ export default class Wallet extends Component<any, any> {
       if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
         // Multi token widget build
         //@ts-ignore
-        Object.keys(window.widgetERC20Tokens).forEach(key => {
+        Object.keys(window.widgetERC20Tokens).forEach((key) => {
           widgetCurrencies.push(key.toUpperCase())
         })
       } else {
@@ -371,30 +357,22 @@ export default class Wallet extends Component<any, any> {
       }
     }
 
-    const currencies = actions.core.getWallets()
-      .filter(({
-        isMetamask,
-        isConnected,
-        currency,
-        balance,
-      }) => {
+    const currencies = actions.core
+      .getWallets({})
+      .filter(({ isMetamask, isConnected, currency, address, balance }) => {
         return (
-          ((context === 'Send') ? balance : true)
-          && !hiddenCoinsList.includes(currency)
-          && enabledCurrencies.includes(currency)
-          && (
-            !isMetamask
-            || (isMetamask && isConnected)
-          )
-          && ((isWidgetBuild) ?
-            widgetCurrencies.includes(currency)
-            : true)
+          (context === 'Send' ? balance : true) &&
+          !hiddenCoinsList.includes(currency) &&
+          !hiddenCoinsList.includes(`${currency}:${address}`) &&
+          enabledCurrencies.includes(currency) &&
+          (!isMetamask || (isMetamask && isConnected)) &&
+          (isWidgetBuild ? widgetCurrencies.includes(currency) : true)
         )
       })
 
     actions.modals.open(constants.modals.CurrencyAction, {
       currencies,
-      context
+      context,
     })
   }
 
@@ -404,22 +382,22 @@ export default class Wallet extends Component<any, any> {
     const {
       history,
       intl: { locale },
-    //@ts-ignore
+      //@ts-ignore
     } = this.props
 
-    const {
-      Withdraw,
-      WithdrawMultisigSMS,
-      WithdrawMultisigUser,
-    } = constants.modals
+    const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals
 
-    const allData = actions.core.getWallets()
+    const allData = actions.core.getWallets({})
 
     let tableRows = allData.filter(({ currency, address, balance }) => {
       // @ToDo - В будущем нужно убрать проверку только по типу монеты.
       // Старую проверку оставил, чтобы у старых пользователей не вывалились скрытые кошельки
 
-      return (!hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`)) && balance > 0
+      return (
+        !hiddenCoinsList.includes(currency) &&
+        !hiddenCoinsList.includes(`${currency}:${address}`) &&
+        balance > 0
+      )
     })
 
     if (tableRows.length === 0) {
@@ -427,11 +405,10 @@ export default class Wallet extends Component<any, any> {
       return
     }
 
-    const { currency, address } = tableRows[0];
+    const { currency, address } = tableRows[0]
 
     let withdrawModalType = Withdraw
-    if (currency === 'BTC (SMS-Protected)')
-      withdrawModalType = WithdrawMultisigSMS
+    if (currency === 'BTC (SMS-Protected)') withdrawModalType = WithdrawMultisigSMS
     if (currency === 'BTC (Multisig)') withdrawModalType = WithdrawMultisigUser
 
     let targetCurrency = currency
@@ -446,10 +423,7 @@ export default class Wallet extends Component<any, any> {
     const isToken = helpers.ethToken.isEthToken({ name: currency })
 
     history.push(
-      localisedUrl(
-        locale,
-        (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`
-      )
+      localisedUrl(locale, (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`)
     )
   }
 
@@ -460,7 +434,9 @@ export default class Wallet extends Component<any, any> {
     const lastCheckMoment = moment(lastCheck, 'HH:mm:ss DD/MM/YYYY')
 
     const isFirstCheck = moment(now, 'HH:mm:ss DD/MM/YYYY').isSame(lastCheckMoment)
-    const isOneHourAfter = moment(now, 'HH:mm:ss DD/MM/YYYY').isAfter(lastCheckMoment.add(1, 'hours'))
+    const isOneHourAfter = moment(now, 'HH:mm:ss DD/MM/YYYY').isAfter(
+      lastCheckMoment.add(1, 'hours')
+    )
     //@ts-ignore
     const { ethData, btcData, ghostData, nextData } = this.props.tokensData
 
@@ -481,10 +457,13 @@ export default class Wallet extends Component<any, any> {
         localStorage.setItem(constants.localStorage.lastCheckBalance, now)
         try {
           const ipInfo = await firebase.getIPInfo()
-        
+
           const registrationData = {
             //@ts-ignore
-            locale: ipInfo.locale || (navigator.userLanguage || navigator.language || 'en-gb').split('-')[0],
+            locale:
+              ipInfo.locale ||
+              //@ts-ignore
+              (navigator.userLanguage || navigator.language || 'en-gb').split('-')[0],
             ip: ipInfo.ip,
           }
           //@ts-ignore
@@ -501,7 +480,7 @@ export default class Wallet extends Component<any, any> {
           //@ts-ignore
           const tokensArray = Object.values(this.props.tokensData)
 
-          const wallets = tokensArray.map(item => ({
+          const wallets = tokensArray.map((item) => ({
             //@ts-ignore
             symbol: item && item.currency ? item.currency.split(' ')[0] : '',
             //@ts-ignore
@@ -536,7 +515,7 @@ export default class Wallet extends Component<any, any> {
       infoAboutCurrency,
       enabledCurrencies,
       multisigPendingCount,
-    //@ts-ignore
+      //@ts-ignore
     } = this.state
 
     const {
@@ -545,14 +524,12 @@ export default class Wallet extends Component<any, any> {
       activeFiat,
       activeCurrency,
       match: {
-        params: {
-          page = null,
-        },
+        params: { page = null },
       },
-    //@ts-ignore
+      //@ts-ignore
     } = this.props
 
-    const allData = actions.core.getWallets()
+    const allData = actions.core.getWallets({})
 
     this.syncData()
 
@@ -561,8 +538,10 @@ export default class Wallet extends Component<any, any> {
 
     // Набор валют для виджета
     const widgetCurrencies = ['BTC']
-    if (!hiddenCoinsList.includes('BTC (SMS-Protected)')) widgetCurrencies.push('BTC (SMS-Protected)')
-    if (!hiddenCoinsList.includes('BTC (PIN-Protected)')) widgetCurrencies.push('BTC (PIN-Protected)')
+    if (!hiddenCoinsList.includes('BTC (SMS-Protected)'))
+      widgetCurrencies.push('BTC (SMS-Protected)')
+    if (!hiddenCoinsList.includes('BTC (PIN-Protected)'))
+      widgetCurrencies.push('BTC (PIN-Protected)')
     if (!hiddenCoinsList.includes('BTC (Multisig)')) widgetCurrencies.push('BTC (Multisig)')
     widgetCurrencies.push('ETH')
     widgetCurrencies.push('GHOST')
@@ -584,15 +563,20 @@ export default class Wallet extends Component<any, any> {
       // @ToDo - В будущем нужно убрать проверку только по типу монеты.
       // Старую проверку оставил, чтобы у старых пользователей не вывалились скрытые кошельки
 
-      return (!hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`)) || balance > 0
+      return (
+        (!hiddenCoinsList.includes(currency) &&
+          !hiddenCoinsList.includes(`${currency}:${address}`)) ||
+        balance > 0
+      )
     })
-
 
     if (isWidgetBuild) {
       //tableRows = allData.filter(({ currency }) => widgetCurrencies.includes(currency))
       tableRows = allData.filter(
-        ({ currency, address,  balance }) =>
-          !hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`) || balance > 0
+        ({ currency, address, balance }) =>
+          (!hiddenCoinsList.includes(currency) &&
+            !hiddenCoinsList.includes(`${currency}:${address}`)) ||
+          balance > 0
       )
       // Отфильтруем валюты, исключив те, которые не используются в этом билде
       tableRows = tableRows.filter(({ currency }) => widgetCurrencies.includes(currency))
@@ -600,21 +584,30 @@ export default class Wallet extends Component<any, any> {
 
     tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
 
-    tableRows = tableRows.map(el => {
-      return ({
+    tableRows = tableRows.map((el) => {
+      return {
         ...el,
         balance: el.balance,
         //@ts-ignore
-        fiatBalance: (el.balance > 0 && el.infoAboutCurrency && el.infoAboutCurrency.price_fiat) ? BigNumber(el.balance)
-          .multipliedBy(el.infoAboutCurrency.price_fiat)
-          .dp(2, BigNumber.ROUND_FLOOR) : 0
-      })
+        fiatBalance:
+          el.balance > 0 && el.infoAboutCurrency && el.infoAboutCurrency.price_fiat
+            ? // comment for ts-ignore
+              //@ts-ignore
+              BigNumber(el.balance)
+                .multipliedBy(el.infoAboutCurrency.price_fiat)
+                .dp(2, BigNumber.ROUND_FLOOR)
+            : 0,
+      }
     })
 
     tableRows.forEach(({ name, infoAboutCurrency, balance, currency }) => {
       const currName = currency || name
 
-      if ((!isWidgetBuild || widgetCurrencies.includes(currName)) && infoAboutCurrency && balance !== 0) {
+      if (
+        (!isWidgetBuild || widgetCurrencies.includes(currName)) &&
+        infoAboutCurrency &&
+        balance !== 0
+      ) {
         if (currName === 'BTC') {
           changePercent = infoAboutCurrency.percent_change_1h
         }
@@ -628,7 +621,7 @@ export default class Wallet extends Component<any, any> {
       <DashboardLayout
         page={page}
         isDark={isDark}
-        BalanceForm={(
+        BalanceForm={
           <BalanceForm
             isDark={isDark}
             activeFiat={activeFiat}
@@ -645,10 +638,9 @@ export default class Wallet extends Component<any, any> {
             infoAboutCurrency={infoAboutCurrency}
             multisigPendingCount={multisigPendingCount}
           />
-        )}
+        }
       >
-        {
-          activeView === 0 &&
+        {activeView === 0 && (
           //@ts-ignore
           <CurrenciesList
             isDark={isDark}
@@ -657,16 +649,18 @@ export default class Wallet extends Component<any, any> {
             {...this.props}
             goToСreateWallet={this.goToСreateWallet}
             multisigPendingCount={multisigPendingCount}
-            //@ts-ignore
-            getExCurrencyRate={(currencySymbol, rate) => this.getExCurrencyRate(currencySymbol, rate)}
+            getExCurrencyRate={(currencySymbol, rate) =>
+              //@ts-ignore
+              this.getExCurrencyRate(currencySymbol, rate)
+            }
           />
-        }
+        )}
         {/*
         //@ts-ignore */}
-        {activeView === 1 && (<History {...this.props} isDark={isDark} />)}
+        {activeView === 1 && <History {...this.props} isDark={isDark} />}
         {/*
         //@ts-ignore */}
-        {activeView === 2 && (<InvoicesList {...this.props} onlyTable={true} isDark={isDark} />)}
+        {activeView === 2 && <InvoicesList {...this.props} onlyTable={true} isDark={isDark} />}
       </DashboardLayout>
     )
   }

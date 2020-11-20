@@ -1390,13 +1390,9 @@ export default class Exchange extends Component<any, any> {
             )
           */}
           <div styleName="rowBtn" className={isWidget ? 'rowBtn' : ''}>
-            {/*
-            //@ts-ignore */}
             <Button className="data-tut-Exchange" styleName="button" brand onClick={this.handleGoTrade} disabled={!canDoOrder}>
               <FormattedMessage id="partial5323" defaultMessage="Buy token" />
             </Button>
-            {/*
-            //@ts-ignore */}
             <Button
               className="data-tut-Orderbook"
               styleName={`button buttonOrders ${isDark ? 'darkButton' : ''}`}

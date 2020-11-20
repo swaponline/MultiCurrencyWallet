@@ -10,16 +10,14 @@ import { setCookie } from 'helpers/utils'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import feedback from 'helpers/feedback'
 
-
 type PropsType = {
-  props: any;
-  history: any;
+  props: any
+  history: any
 }
 
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })
 export default class SwitchLang extends Component<{}, PropsType> {
-
   switchLang = (event, locale) => {
     event.preventDefault()
 
@@ -36,8 +34,10 @@ export default class SwitchLang extends Component<{}, PropsType> {
   }
 
   render() {
-    // @ts-ignore
-    const { intl: { locale } } = this.props
+    const {
+      // @ts-ignore
+      intl: { locale },
+    } = this.props
 
     const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -51,7 +51,10 @@ export default class SwitchLang extends Component<{}, PropsType> {
         <a
           href={locale.toUpperCase() !== 'EN' ? `#${relocalisedUrl(locale)}` : undefined}
           styleName={`language ${isDark ? '--dark' : ''}`}
-          onClick={(e) => { this.switchLang(e, 'EN'); return false }}
+          onClick={(e) => {
+            this.switchLang(e, 'EN')
+            return false
+          }}
         >
           <FormattedMessage id="SwitchLang20" defaultMessage="EN" />
         </a>
@@ -59,7 +62,10 @@ export default class SwitchLang extends Component<{}, PropsType> {
         <a
           href={locale.toUpperCase() !== 'RU' ? `#${relocalisedUrl(locale)}` : undefined}
           styleName={`language ${isDark ? '--dark' : ''}`}
-          onClick={(e) => { this.switchLang(e, 'RU'); return false }}
+          onClick={(e) => {
+            this.switchLang(e, 'RU')
+            return false
+          }}
         >
           <FormattedMessage id="SwitchLang24" defaultMessage="RU" />
         </a>
@@ -67,7 +73,10 @@ export default class SwitchLang extends Component<{}, PropsType> {
         <a
           href={locale.toUpperCase() !== 'NL' ? `#${relocalisedUrl(locale)}` : undefined}
           styleName={`language ${isDark ? '--dark' : ''}`}
-          onClick={(e) => { this.switchLang(e, 'NL'); return false }}
+          onClick={(e) => {
+            this.switchLang(e, 'NL')
+            return false
+          }}
         >
           <FormattedMessage id="SwitchLangNL" defaultMessage="NL" />
         </a>
@@ -75,7 +84,10 @@ export default class SwitchLang extends Component<{}, PropsType> {
         <a
           href={locale.toUpperCase() !== 'ES' ? `#${relocalisedUrl(locale)}` : undefined}
           styleName={`language ${isDark ? '--dark' : ''}`}
-          onClick={(e) => { this.switchLang(e, 'ES'); return false }}
+          onClick={(e) => {
+            this.switchLang(e, 'ES')
+            return false
+          }}
         >
           <FormattedMessage id="SwitchLangES" defaultMessage="ES" />
         </a>

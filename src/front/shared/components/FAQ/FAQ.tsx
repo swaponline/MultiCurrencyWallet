@@ -1,16 +1,19 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable max-len */
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import BigNumber from 'bignumber.js'
 import cssModules from 'react-css-modules'
 import { FormattedMessage, injectIntl } from 'react-intl'
 
 import { constants } from 'helpers'
 import feedback from 'shared/helpers/feedback'
+import minAmount from 'helpers/constants/minAmount'
+import api from 'helpers/api'
+import config from 'app-config'
 
 import cx from 'classnames'
 
 import styles from './styles.scss'
-
 
 const tabsIdsDictionary = {
   FIRST_TAB: 'MainFAQ1_header',
@@ -18,7 +21,41 @@ const tabsIdsDictionary = {
   THIRD_TAB: 'MainFAQ3_header',
 }
 
+
 const FAQ = (props) => {
+  const [btcFee, setBtcFee] = useState(null)
+  const [ethFee, setEthFee] = useState(null)
+
+  useEffect(() => {
+    /* 
+    * waiting for a response with fees and set them
+    */
+    const { eth: ethLink, btc: btcLink } = config.feeRates
+    let ignore = false
+    let btcApiResult = null
+    let ethApiResult = null
+
+    async function fetchFees() {
+      try {
+        const BYTE_IN_KB = 1024
+        btcApiResult = await api.asyncFetchApi(btcLink)
+        setBtcFee(new BigNumber(btcApiResult.low_fee_per_kb / BYTE_IN_KB).dp(5, BigNumber.ROUND_FLOOR).toString())
+
+        ethApiResult = await api.asyncFetchApi(ethLink)
+        setEthFee(new BigNumber(ethApiResult.fastest).dp(5, BigNumber.ROUND_FLOOR).toString())
+      } catch(err) {
+        console.log('FAQ -> useEffect: ', err);
+
+        setBtcFee(new BigNumber(minAmount.btc).dp(5, BigNumber.ROUND_FLOOR).toString())
+        setEthFee(new BigNumber(minAmount.eth).dp(5, BigNumber.ROUND_FLOOR).toString())
+      }
+    }
+
+    fetchFees()
+    return () => ignore = true
+  });
+
+
   const { intl: { formatMessage } } = props
   const [openedTabs, setOpenedTabs] = useState({
     FIRST_TAB: false,
@@ -83,9 +120,25 @@ const FAQ = (props) => {
             <br />
             <br />
             <FormattedMessage id="MainFAQ2_content2" defaultMessage="NOTE: You can easily check the ‘miners fees’ required for each respective coin by simply googling them." />
+            <br />
+            <br />
+            <FormattedMessage id="MainFAQ2_content3" defaultMessage="Current mining fees:" />
+            <p className={styles.descriptionFee}>
+              <span>BTC:</span>{' '}
+              {btcFee
+                ? <span><b>{btcFee}</b> sat/byte</span> 
+                : <FormattedMessage id="MainFAQ2_content4" defaultMessage="Loading" />
+              }
+            </p>
+            <p className={styles.descriptionFee}>
+              <span>ETH:</span>{' '}
+              {ethFee
+                ? <span><b>{ethFee}</b> sat/byte</span> 
+                : <FormattedMessage id="MainFAQ2_content4" defaultMessage="Loading" />
+              }
+            </p>
           </div>
         </article>
-
       </div>
     </div>
   )

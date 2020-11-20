@@ -37,10 +37,6 @@ const providerTitles = defineMessages({
     id: 'ConnectWalletModal_Injected',
     defaultMessage: 'Metamask',
   },
-  INJECTED_MODILE: {
-    id: 'ConnectWalletModal_InjectedMobile',
-    defaultMessage: 'Подключить',
-  },
   WALLETCONNECT: {
     id: 'ConnectWalletModal_WalletConnect',
     defaultMessage: 'WalletConnect',
@@ -65,27 +61,47 @@ export default class ConnectWalletModal extends React.Component {
   }
 
   onConnectLogic(connected) {
-    if (!connected) {
-      this.goToPage(links.createWallet)
-    } else {
-      this.goToPage(links.home)
+    const {
+      name,
+      data: {
+        dontRedirect,
+        onResolve,
+      },
+    } = this.props
+
+    if (connected) {
+      if (!dontRedirect) this.goToPage(links.home)
+      if (typeof onResolve === `function`) {
+        onResolve(true)
+      }
+      actions.modals.close(name)
     }
   }
 
   handleClose = () => {
     const {
       name,
+      data: {
+        onResolve,
+      },
     } = this.props
 
     if (!localStorage.getItem(constants.localStorage.isWalletCreate)) {
       this.goToPage(links.createWallet)
     }
-
+    if (typeof onResolve === `function`) {
+      onResolve(false)
+    }
     actions.modals.close(name)
   }
 
   handleInjected = () => {
     metamask.web3connect.connectTo('INJECTED').then((connected) => {
+      if (!connected && metamask.web3connect.isLocked()) {
+        actions.modals.open(constants.modals.AlertModal, {
+          message: <FormattedMessage id="ConnectWalletModal_WalletLocked" defaultMessage="Wallet is locked. Unlock the wallet first." />,
+        })
+      }
       this.onConnectLogic(connected)
     })
   }
@@ -128,7 +144,7 @@ export default class ConnectWalletModal extends React.Component {
                 {metamask.web3connect.isInjectedEnabled() && (
                   <div styleName="provider_row">
                     <Button styleName="button_provider" blue onClick={this.handleInjected}>
-                      <FormattedMessage {...providerTitles.INJECTED} />
+                      {metamask.web3connect.getInjectedTitle()}
                     </Button>
                   </div>
                 )}

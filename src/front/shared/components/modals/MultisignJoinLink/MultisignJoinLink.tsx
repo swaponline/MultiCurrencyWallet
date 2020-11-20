@@ -214,8 +214,6 @@ export default class MultisignJoinLink extends React.Component<any, any> {
               <ShareLink link={joinLink} fullSize={true} />
             </div>
             <hr />
-            {/*
-            //@ts-ignore */}
             <Button blue styleName="finishButton" fullWidth onClick={this.handleFinish}>
               <FormattedMessage id="BTCMS_CreateWalletReadyButton" defaultMessage="Готово. Открыть кошелек" />
             </Button>

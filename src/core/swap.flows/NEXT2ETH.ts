@@ -86,8 +86,8 @@ class NEXT2ETH extends Flow {
       requireWithdrawFee: false,
     }
 
-    super._persistSteps()
     this._persistState()
+    super._persistSteps()
   }
 
   _persistState() {

@@ -101,7 +101,7 @@ export default class CurrencyWallet extends Component<any, any> {
       hiddenCoinsList,
     } = props
 
-    const items = actions.core.getWallets()
+    const items = actions.core.getWallets({})
 
     if (!address && !ticker) {
       if (fullName) {
@@ -344,7 +344,7 @@ export default class CurrencyWallet extends Component<any, any> {
       prevProps.location.pathname !== this.props.location.pathname ||
       prevProps.isBalanceFetching !== this.props.isBalanceFetching
     ) {
-      const items = actions.core.getWallets()
+      const items = actions.core.getWallets({})
 
       if (!address && !ticker) {
         if (fullName) {
@@ -727,7 +727,7 @@ export default class CurrencyWallet extends Component<any, any> {
     if (infoAboutCurrency && infoAboutCurrency.price_fiat) {
       currencyFiatBalance =
         //@ts-ignore
-        BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * infoAboutCurrency.price_fiat
+        BigNumber(balance).dp(6, BigNumber.ROUND_FLOOR).toString() * infoAboutCurrency.price_fiat
       changePercent = infoAboutCurrency.percent_change_1h
     } else {
       currencyFiatBalance = 0

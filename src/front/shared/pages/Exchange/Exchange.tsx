@@ -35,6 +35,7 @@ import AddressSelect from "./AddressSelect/AddressSelect"
 import { AddressType, AddressRole } from "domain/address"
 import NetworkStatus from 'components/NetworkStatus/NetworkStatus'
 import Orders from "./Orders/Orders"
+import metamask from 'helpers/metamask'
 
 import { getPairFees } from 'helpers/getPairFees'
 
@@ -297,6 +298,7 @@ export default class Exchange extends Component<any, any> {
       }
     }, 60 * 1000)
     this.fetchPairFeesAndBalances()
+    metamask.web3connect.on('updated', this.fetchPairFeesAndBalances.bind(this))
   }
 
   getBalance(currency) {
@@ -320,7 +322,9 @@ export default class Exchange extends Component<any, any> {
     }, () => {
       if (!this._mounted) return
       getPairFees(sellCurrency, buyCurrency).then(async (pairFees) => {
+        //@ts-ignore: Property 'buy' does not exist on type 'unknown'
         const buyExRate = await this.fetchFiatExRate(pairFees.buy.coin)
+        //@ts-ignore: Property 'sell' does not exist on type 'unknown'
         const sellExRate = await this.fetchFiatExRate(pairFees.sell.coin)
         if (!this._mounted) return
         this.setState({
@@ -334,7 +338,9 @@ export default class Exchange extends Component<any, any> {
           // After fetching fee - actualize balances
           const buyWallet = actions.core.getWallet({ currency: buyCurrency })
           const sellWallet = actions.core.getWallet({ currency: sellCurrency })
+          //@ts-ignore: Property 'buy' does not exist on type 'unknown'
           const feeBuyWallet = actions.core.getWallet({ currency: pairFees.buy.coin })
+          //@ts-ignore: Property 'sell' does not exist on type 'unknown'
           const feeSellWallet = actions.core.getWallet({ currency: pairFees.sell.coin })
 
           const balances = {}
@@ -382,6 +388,7 @@ export default class Exchange extends Component<any, any> {
   componentWillUnmount() {
     this._mounted = false
     this.timer = false
+    metamask.web3connect.off('updated', this.fetchPairFeesAndBalances)
   }
 
   checkUrl = () => {
@@ -1611,8 +1618,6 @@ export default class Exchange extends Component<any, any> {
           
           <div styleName="buttons">
             {/* Exchange */}
-            {/*
-            //@ts-ignore */}
             <Button
               className="data-tut-Exchange_tourDisabled"
               styleName="button"
@@ -1624,8 +1629,6 @@ export default class Exchange extends Component<any, any> {
             </Button>
             {/* Button Create offer */}
             <>
-              {/*
-              //@ts-ignore */}
               <Button
                 id="createOrderReactTooltipMessageForUser"
                 styleName={`button link-like ${haveBalance ? '' : 'noMany'}`}

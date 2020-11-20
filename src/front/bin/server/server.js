@@ -9,7 +9,7 @@ import webpackConfig from '../../../../webpack'
 
 
 const port      = process.env.PORT || 9001
-const host      = process.env.HOST || 'localhost'
+const host      = process.env.HOST || '0.0.0.0'
 
 const app       = express()
 const compiler  = webpack(webpackConfig)

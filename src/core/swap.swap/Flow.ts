@@ -46,6 +46,16 @@ class Flow {
     return app.env.storage.getItem(`flow.${id}`)
   }
 
+  _isFinished() {
+    const {
+      isStoppedSwap,
+      isRefunded,
+      isFinished,
+    } = this.state
+
+    return (isStoppedSwap || isRefunded || isFinished)
+  }
+
   _persistState() {
     const state = Flow.read(this.app, this.swap)
 
@@ -69,8 +79,9 @@ class Flow {
 
     // wait events placed
     setTimeout(() => {
-      if (this.state.step >= this.steps.length)
-        return
+      if ((this.state.step >= this.steps.length)
+        || this._isFinished()
+      ) return
       else this.goStep(this.state.step)
     }, 0)
   }

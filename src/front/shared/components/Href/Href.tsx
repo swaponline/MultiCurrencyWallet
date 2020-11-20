@@ -1,17 +1,24 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-
 import { NavLink } from 'react-router-dom'
-
 import cssModules from 'react-css-modules'
+
 import styles from './Href.scss'
 
+interface HrefProps {
+  children: React.ReactNode
+  to?: string
+  redirect?: string
+  tab?: string
+  rel?: string
+  className?: string
+}
 
-const Href = ({ children, to, redirect, tab, rel, className }) => {
+const Href = ({ children, to, redirect, tab, rel, className }: HrefProps) => {
   if (to) {
     return (
-      //@ts-ignore
-      <NavLink styleName="link">{children}</NavLink>
+      <NavLink styleName="link" to={to}>
+        {children}
+      </NavLink>
     )
   }
 
@@ -26,15 +33,6 @@ const Href = ({ children, to, redirect, tab, rel, className }) => {
       {children}
     </a>
   )
-}
-
-Href.propTypes = {
-  children: PropTypes.node.isRequired,
-  to: PropTypes.string,
-  redirect: PropTypes.string,
-  tab: PropTypes.string,
-  rel: PropTypes.string,
-  className: PropTypes.string,
 }
 
 export default cssModules(Href, styles)

@@ -12,7 +12,6 @@ import Table from 'components/tables/Table/Table'
 import { FormattedMessage } from 'react-intl'
 import exConfig from 'helpers/externalConfig'
 
-
 const isWidgetBuild = config && config.isWidget
 
 const CurrenciesList = ({
@@ -27,10 +26,8 @@ const CurrenciesList = ({
 }) => {
   return (
     <div styleName={`yourAssets ${isDark ? 'dark' : ''}`}>
-      {(exConfig && exConfig.opts && exConfig.opts.showWalletBanners || isWidgetBuild) ? (
+      {(exConfig && exConfig.opts && exConfig.opts.showWalletBanners) || isWidgetBuild ? (
         <Fragment>
-          {/*
-          //@ts-ignore */}
           <Slider multisigPendingCount={multisigPendingCount} />
         </Fragment>
       ) : (
@@ -56,7 +53,7 @@ const CurrenciesList = ({
             key={index}
             index={index}
             isDark={isDark}
-            getCurrencyFiat={fiat => this.getCurrencyFiat(fiat)}
+            getCurrencyFiat={(fiat) => this.getCurrencyFiat(fiat)}
             currency={row}
             itemData={row}
             currencies={currencies}
@@ -68,8 +65,6 @@ const CurrenciesList = ({
           />
         )}
       />
-      {/*
-      //@ts-ignore */}
       <Button onClick={goToСreateWallet} blue transparent fullWidth>
         <FormattedMessage id="addAsset" defaultMessage="Добавить валюту" />
       </Button>

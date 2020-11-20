@@ -6,11 +6,15 @@ import ThemeTooltip from './ThemeTooltip'
 import styles from './Tooltip.scss'
 
 
-const Tooltip = ({ children, id, dontHideMobile = null, place = null }) => (
+const Tooltip = ({ mark = true, children, id, dontHideMobile = null, place = null }) => (
   <Fragment>
-    <span data-tip data-for={id} styleName={`tooltip${dontHideMobile ? ' tooltip_truesight' : ''}`}>
-      <FormattedMessage id="Tooltip11" defaultMessage="?" />
-    </span>
+    {
+      mark && (
+        <span data-tip data-for={id} styleName={`tooltip${dontHideMobile ? ' tooltip_truesight' : ''}`}>
+          <FormattedMessage id="Tooltip11" defaultMessage="?" />
+        </span>
+      )
+    }
     <ThemeTooltip id={id} effect="solid" multiline {...{ place }} styleName="r-tooltip">
       {children}
     </ThemeTooltip>

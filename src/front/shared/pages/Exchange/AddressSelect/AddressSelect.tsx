@@ -23,10 +23,26 @@ import feedback from 'shared/helpers/feedback'
 import QrReader from "components/QrReader"
 import iconInternal from 'components/Logo/images/base.svg'
 import iconMetamask from './images/metamask.svg'
+import iconTrustWallet from './images/trust.svg'
 import iconCustom from './images/custom.svg'
+import iconDefault from './images/unknown.svg'
+import iconOpera from './images/opera.svg'
+import iconWalletConnect from './images/walletconnect.svg'
+import iconLiquality from './images/liquality.png'
+
 
 import { AddressType, AddressRole } from 'domain/address'
 
+
+const web3Icons = {
+  METAMASK: iconMetamask,
+  TRUST: iconTrustWallet,
+  OPERA: iconOpera,
+  NONE: iconDefault,
+  UNKNOWN: iconDefault,
+  LIQUALITY: iconLiquality,
+  WALLETCONNECT: iconWalletConnect,
+}
 
 const langLabels = defineMessages({
   labelSpecifyAddress: {
@@ -35,23 +51,19 @@ const langLabels = defineMessages({
   },
   optionInternal: {
     id: 'Exchange_InternalAddressOption',
-    defaultMessage: 'My wallet',
+    defaultMessage: 'Internal',
   },
   optionInternalDisabled: {
     id: 'Exchange_InternalAddressOptionDisabled',
-    defaultMessage: 'My wallet (insufficient balance)',
+    defaultMessage: 'Internal (insufficient balance)',
   },
   optionInternalCreate: {
     id: 'Exchange_InternalCreate',
     defaultMessage: 'Create wallet',
   },
-  optionMetamask: {
-    id: 'Exchange_MetamaskAddressOption',
-    defaultMessage: 'Metamask',
-  },
-  optionMetamaskNotInstalled: {
-    id: 'Exchange_MetamaskNotInstalledOption',
-    defaultMessage: 'Metamask (not installed)',
+  optionConnect: {
+    id: 'Exchange_ConnectAddressOption',
+    defaultMessage: 'Connect Wallet',
   },
   optionCustom: {
     id: 'Exchange_CustomAddressOption',
@@ -162,6 +174,21 @@ export default class AddressSelect extends Component<any, any> {
     })
   }
 
+  onWeb3Updated() {
+    this.setState({
+      isMetamaskConnected: metamask.isConnected(),
+      metamaskAddress: metamask.getAddress(),
+    })
+  }
+
+  componentDidMount() {
+    metamask.web3connect.on('updated', this.onWeb3Updated.bind(this))
+  }
+
+  componentWillUnmount() {
+    metamask.web3connect.off('updated', this.onWeb3Updated)
+  }
+
   componentDidUpdate() {
     const {
       currency: newCurrency,
@@ -213,8 +240,9 @@ export default class AddressSelect extends Component<any, any> {
     history.push(url)
   }
 
+  // @ToDo - remove this
   handleConnectMetamask() {
-    metamask.connect().then((isConnected) => {
+    metamask.connect({}).then((isConnected) => {
       if (!isConnected) {
         return
       }
@@ -256,7 +284,14 @@ export default class AddressSelect extends Component<any, any> {
   }
 
   handleOptionSelect(option) {
-    const selectedType = option.value
+    const {
+      selectedType: oldSelectedType,
+    } = this.state
+
+    const {
+      value: selectedType,
+      dontSelect,
+    } = option
 
     if (selectedType === 'InternalAddressCreate') {
       this.goСreateWallet()
@@ -264,7 +299,7 @@ export default class AddressSelect extends Component<any, any> {
     }
 
     this.setState({
-      selectedType,
+      selectedType: (dontSelect) ? oldSelectedType : selectedType,
     }, () => {
 
       if (!selectedType) {
@@ -286,10 +321,35 @@ export default class AddressSelect extends Component<any, any> {
         return
       }*/
 
-      this.applyAddress({
-        type: selectedType,
-        value,
-      })
+      if ((selectedType === AddressType.Metamask)
+        && !metamask.isConnected()
+      ) {
+        metamask.connect({
+          dontRedirect: true,
+        }).then((isConnected) => {
+          if (!isConnected) {
+            return
+          } else {
+            this.setState({
+              isMetamaskConnected: true,
+              metamaskAddress: metamask.getAddress(),
+              value: metamask.getAddress(),
+              type: AddressType.Metamask,
+              selectedType: AddressType.Metamask,
+            }, () => {
+              this.applyAddress({
+                type: AddressType.Metamask,
+                value: metamask.getAddress(),
+              })
+            })
+          }
+        })
+      } else {
+        this.applyAddress({
+          type: selectedType,
+          value,
+        })
+      }
 
     })
   }
@@ -347,6 +407,10 @@ export default class AddressSelect extends Component<any, any> {
     const isCustomOptionInputHidden = role === AddressRole.Send && ticker === 'BTC' // todo: any utxo
 
 
+    const web3Icon = (metamask.isConnected())
+      ? web3Icons[metamask.web3connect.getProviderType()] || false
+      : web3Icons[metamask.web3connect.getInjectedType()] || false
+
     const options = [
       {
         value: 'placeholder',
@@ -376,13 +440,12 @@ export default class AddressSelect extends Component<any, any> {
         }]
       ),
       ...(isMetamaskOption ?
-        isMetamaskInstalled ?
           isMetamaskConnected ?
             [{
               value: AddressType.Metamask,
-              icon: iconMetamask,
+              icon: web3Icon,
               title: <Fragment>
-                <FormattedMessage {...langLabels.optionMetamask} />
+              {metamask.web3connect.getProviderTitle()}
                 <Address
                   address={metamaskAddress}
                   format={AddressFormat.Short}
@@ -393,16 +456,10 @@ export default class AddressSelect extends Component<any, any> {
             :
             [{
               value: AddressType.Metamask,
-              icon: iconMetamask,
-              title: <FormattedMessage {...langLabels.optionMetamask} />,
+              icon: web3Icon,
+              title: <FormattedMessage {...langLabels.optionConnect} />,
+              dontSelect: true,
             }]
-          :
-          [{
-            value: 'disabled',
-            icon: iconMetamask,
-            title: <FormattedMessage {...langLabels.optionMetamaskNotInstalled} />,
-            disabled: true,
-          }]
         :
         []
       ),
@@ -431,8 +488,6 @@ export default class AddressSelect extends Component<any, any> {
         {selectedType === AddressType.Metamask && metamask.isEnabled() && !isMetamaskConnected &&
           <div styleName="selectedInner">
             <div styleName="buttonContainer">
-              {/*
-              //@ts-ignore */}
               <Button
                 styleName="button"
                 blue

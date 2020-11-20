@@ -98,6 +98,10 @@ const webpackConfig = {
       hash: false,
       filename: 'index.html',
       inject: 'body',
+      ... (config.firebug) ? {
+        firebugMark: `debug="true"`,
+        firebugScript: `<script type="text/javascript" src="./firebug/firebug.js"></script>`,
+      } : {},
     }),
     new webpack.ContextReplacementPlugin(
       /\.\/locale$/,

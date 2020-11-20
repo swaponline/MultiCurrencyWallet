@@ -59,6 +59,7 @@ function BalanceForm({
       break
   }
 
+  
   const handleClickCurrency = (currency) => {
     setActiveCurrency(currency)
     actions.user.pullActiveCurrency(currency)
@@ -91,18 +92,11 @@ function BalanceForm({
                 // eslint-disable-next-line no-restricted-globals
                 !isNaN(fiatBalance) ? new BigNumber(fiatBalance).dp(2, BigNumber.ROUND_FLOOR).toString() : ''
               }
-              {/* {changePercent ? (
-                  <span styleName={changePercent > 0 ? "green" : "red"}>
-                    {`${changePercent > 0 ? `+${changePercent}` : `${changePercent}`}`}%
-                  </span>
-                ) : (
-                  ""
-                )} */}
             </p>
           ) : (
             <p className="data-tut-all-balance">
               {currency.toUpperCase() === 'BTC' ? <img src={btc} alt="btc" /> : ''}
-              {new BigNumber(currencyBalance).dp(5, BigNumber.ROUND_FLOOR).toString()}
+              {new BigNumber(currencyBalance).dp(6, BigNumber.ROUND_FLOOR).toString()}
             </p>
           )}
         </div>
@@ -144,19 +138,14 @@ function BalanceForm({
         <div styleName="yourBalanceBottom">
           {showButtons ? (
             <div styleName="btns" className="data-tut-withdraw-buttons">
-              {/*
-              //@ts-ignore */}
               <Button blue id="depositBtn" onClick={() => handleReceive('Deposit')}>
                 <FormattedMessage id="YourtotalbalanceDeposit" defaultMessage="Пополнить" />
               </Button>
-              {/*
-              //@ts-ignore */}
               <Button blue disabled={!currencyBalance} id="sendBtn" onClick={() => handleWithdraw('Send')}>
                 <FormattedMessage id="YourtotalbalanceSend" defaultMessage="Отправить" />
               </Button>
             </div>
           ) : (
-            //@ts-ignore
             <Button blue disabled={!currencyBalance} styleName="button__invoice" onClick={() => handleInvoice()}>
               <FormattedMessage id="RequestPayment" defaultMessage="Запросить" />
             </Button>

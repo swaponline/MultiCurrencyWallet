@@ -14,7 +14,6 @@ import { Button } from 'components/controls'
 import { FieldLabel, Input } from 'components/forms'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
-
 const title = defineMessages({
   approveTitle: {
     id: 'Approve66',
@@ -25,7 +24,6 @@ const title = defineMessages({
 @injectIntl
 @cssModules(styles)
 export default class Offer extends React.Component<any, any> {
-
   props: any
 
   static propTypes = {
@@ -39,7 +37,9 @@ export default class Offer extends React.Component<any, any> {
 
   handleApprove = () => {
     const { amount } = this.state
-    const { data: { contractAddress, name } } = this.props
+    const {
+      data: { contractAddress, name },
+    } = this.props
     const message = `Your approve ${amount} tokens on contract address ${contractAddress}`
     const error = `Please try again later`
 
@@ -49,8 +49,9 @@ export default class Offer extends React.Component<any, any> {
       })
       return
     }
-    //@ts-ignore 
-    actions.token.approve(name, amount)
+    actions.token
+      //@ts-ignore
+      .approve(name, amount)
       .then(() => {
         actions.loader.hide()
         actions.notifications.show(constants.notifications.Message, { message })
@@ -79,17 +80,20 @@ export default class Offer extends React.Component<any, any> {
           <p>
             <FormattedMessage
               id="Approve70"
-              defaultMessage="Please set the amount limit that the swap smart contract can deduct from your account. We do not recommend setting any limits." />
+              defaultMessage="Please set the amount limit that the swap smart contract can deduct from your account. We do not recommend setting any limits."
+            />
           </p>
-          {/*
-          //@ts-ignore */}
           <FieldLabel inRow>
             <FormattedMessage id="Approve73" defaultMessage="Amount" />
           </FieldLabel>
           <Input valueLink={linked.amount} type="number" />
-          {/*
-          //@ts-ignore */}
-          <Button styleName="button" brand fullWidth disabled={isDisabled} onClick={this.handleApprove}>
+          <Button
+            styleName="button"
+            brand
+            fullWidth
+            disabled={isDisabled}
+            onClick={this.handleApprove}
+          >
             <FormattedMessage id="Approve80" defaultMessage="Approve" />
           </Button>
         </div>

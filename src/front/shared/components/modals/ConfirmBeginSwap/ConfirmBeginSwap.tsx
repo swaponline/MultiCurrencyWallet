@@ -256,15 +256,11 @@ export default class ConfirmBeginSwap extends React.Component<any, any> {
             </div>
           </div>
           <div styleName="buttons">
-            {/*
-            //@ts-ignore */}
             <Button styleName="button" gray onClick={this.handleClose}>{labels.no}</Button>
             {(this.customWalletIsValid()) && (
-              //@ts-ignore
               <Button styleName="button" blue onClick={this.handleConfirm}>{labels.yes}</Button>
             )}
             {(!this.customWalletIsValid()) && (
-              //@ts-ignore
               <Button styleName="button" disabled>{labels.yes}</Button>
             )}
           </div>

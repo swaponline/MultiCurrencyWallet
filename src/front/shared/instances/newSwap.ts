@@ -210,7 +210,7 @@ const createSwapApp = async () => {
         // ...(Object.keys(config.erc20))
         //   .map(key => USDT2ETHTOKEN(key)),
       ],
-    })
+    }, true)
 
     // eslint-disable-next-line
     // process.env.MAINNET ? SwapApp.shared()._addSwap(

@@ -4,28 +4,42 @@ import actions from 'redux/actions'
 import { cacheStorageGet, cacheStorageSet, constants } from 'helpers'
 import web3 from 'helpers/web3'
 import config from 'app-config'
-import { setMetamask, setDefaultProvider } from 'helpers/web3'
-
-
+import { setMetamask, setProvider, setDefaultProvider, getWeb3 as getDefaultWeb3 } from 'helpers/web3'
+import SwapApp from 'swap.app'
 import Web3Connect from '../../../common/web3connect'
 
-console.log('In metamask', Web3Connect)
-
-console.log(config.web3.provider)
 const web3connect = new Web3Connect({
   web3ChainId: (process.env.MAINNET) ? 1 : 4,
   web3RPC: config.web3.provider,
 })
 
-web3connect.on('connected', () => {
+const _onWeb3Changed = (newWeb3) => {
+  setProvider(newWeb3)
+  SwapApp.shared().setWeb3Provider(newWeb3)
+  _initReduxState()
+  actions.user.sign_to_tokens()
+  actions.user.getBalances()
+}
+
+web3connect.on('connected', async () => {
   //@ts-ignore
   localStorage.setItem(constants.localStorage.isWalletCreate, true)
   actions.core.markCoinAsVisible(`ETH`)
-  window.location.reload()
+  _onWeb3Changed(web3connect.getWeb3())
 })
-web3connect.on('disconnect', () => window.location.reload())
-web3connect.on('accountChange', () => window.location.reload())
-web3connect.on('chainChanged', () => window.location.reload())
+
+web3connect.on('disconnect', async () => {
+  setDefaultProvider()
+  _onWeb3Changed(getDefaultWeb3())
+})
+
+web3connect.on('accountChange', async () => {
+  _onWeb3Changed(web3connect.getWeb3())
+})
+
+web3connect.on('chainChanged', async () => {
+  _onWeb3Changed(web3connect.getWeb3())
+})
 
 const isEnabled = () => true
 
@@ -102,8 +116,12 @@ const disconnect = () => new Promise(async (resolved, reject) => {
   }
 })
 
-const connect = () => new Promise(async (resolved, reject) => {
-  actions.modals.open(constants.modals.ConnectWalletModal)
+const connect = (options) => new Promise(async (resolved, reject) => {
+  actions.modals.open(constants.modals.ConnectWalletModal, {
+    ...options,
+    onResolve: resolved,
+    onReject: reject,
+  })
 })
 
 /* metamask wallet layer */
@@ -127,7 +145,7 @@ const _initReduxState = () => {
         isConnected: true,
         isMetamask: true,
         currency: "ETH",
-        fullName: "Ethereum (Metamask)",
+        fullName: `Ethereum (${web3connect.getProviderTitle()})`,
         infoAboutCurrency: ethData.infoAboutCurrency,
         isBalanceFetched: true,
         isMnemonic: true,
@@ -144,7 +162,7 @@ const _initReduxState = () => {
         isConnected: false,
         isMetamask: true,
         currency: "ETH",
-        fullName: (web3connect.isInjectedEnabled()) ? `Ethereum (Metamask)` : `Ethereum (Connect-Wallet)`,
+        fullName: `Ethereum (Web3 provider)`,
         infoAboutCurrency: ethData.infoAboutCurrency,
         isBalanceFetched: true,
         isMnemonic: true,

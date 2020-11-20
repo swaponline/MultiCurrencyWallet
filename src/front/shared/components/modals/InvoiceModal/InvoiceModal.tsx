@@ -33,33 +33,31 @@ import { links } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import redirectTo from 'helpers/redirectTo'
 
-
-
 const localeLabel = defineMessages({
   title: {
     id: 'invoiceModal_Title',
-    defaultMessage: 'Выставление счета на пополнение'
+    defaultMessage: 'Выставление счета на пополнение',
   },
   addressPlaceholder: {
     id: 'invoiceModal_addressPlaceholder',
-    defaultMessage: 'Введите адрес {currency} кошелька'
+    defaultMessage: 'Введите адрес {currency} кошелька',
   },
   destiAddressPlaceholder: {
     id: 'invoiceModal_destiAddressPlaceholder',
-    defaultMessage: 'Введите адрес {currency} кошелька'
+    defaultMessage: 'Введите адрес {currency} кошелька',
   },
   amountPlaceholder: {
     id: 'invoiceModal_amountPlaceholder',
-    defaultMessage: 'Введите сумму'
+    defaultMessage: 'Введите сумму',
   },
   contactPlaceholder: {
     id: 'invoiceModal_contactPlaceholder',
-    defaultMessage: 'Обязательное поле'
+    defaultMessage: 'Обязательное поле',
   },
   labelPlaceholder: {
     id: 'invoiceModal_labelPlaceholder',
-    defaultMessage: 'Укажите комментарий к счету'
-  }
+    defaultMessage: 'Укажите комментарий к счету',
+  },
 })
 
 @injectIntl
@@ -74,28 +72,20 @@ const localeLabel = defineMessages({
       btcMultisigSMSData,
       btcMultisigUserData,
       tokensData,
-    }
+    },
   }) => ({
     currencies: currencies.items,
-    items: [
-      ethData,
-      btcData,
-      ghostData,
-      nextData,
-      btcMultisigSMSData,
-      btcMultisigUserData,
-    ],
-    tokenItems: [...Object.keys(tokensData).map(k => tokensData[k])]
+    items: [ethData, btcData, ghostData, nextData, btcMultisigSMSData, btcMultisigUserData],
+    tokenItems: [...Object.keys(tokensData).map((k) => tokensData[k])],
   })
 )
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
 export default class InvoiceModal extends React.Component<any, any> {
-
   props: any
 
   static propTypes = {
     name: PropTypes.string,
-    data: PropTypes.object
+    data: PropTypes.object,
   }
 
   constructor(data) {
@@ -110,7 +100,7 @@ export default class InvoiceModal extends React.Component<any, any> {
     } = data
     let infoAboutCurrency
 
-    items.map(item => {
+    items.map((item) => {
       if (item.currency === currency) {
         infoAboutCurrency = item.infoAboutCurrency
       }
@@ -118,14 +108,15 @@ export default class InvoiceModal extends React.Component<any, any> {
 
     const currentDecimals = constants.tokenDecimals[currency.toLowerCase()]
 
-    const multiplier = (infoAboutCurrency && infoAboutCurrency.price_fiat) ? infoAboutCurrency.price_fiat : 1
+    const multiplier =
+      infoAboutCurrency && infoAboutCurrency.price_fiat ? infoAboutCurrency.price_fiat : 1
 
     this.state = {
       isShipped: false,
       payerAddress,
       openScanCam: '',
       address: toAddress || '',
-      toAddressEnabled: !(!toAddress),
+      toAddressEnabled: !!toAddress,
       destination: address,
       amount: '',
       minus: '',
@@ -136,7 +127,7 @@ export default class InvoiceModal extends React.Component<any, any> {
       error: false,
       infoAboutCurrency,
       multiplier,
-      rubRates: 62.34
+      rubRates: 62.34,
     }
 
     this.getRubRates()
@@ -147,13 +138,13 @@ export default class InvoiceModal extends React.Component<any, any> {
   getRubRates() {
     request
       .get('https://www.cbr-xml-daily.ru/daily_json.js', {
-        cacheResponse: 60 * 60 * 1000
+        cacheResponse: 60 * 60 * 1000,
       })
-      .then(rates => {
+      .then((rates) => {
         if (rates && rates.Valute && rates.Valute.USD) {
           const rubRates = rates.Valute.USD.Value
           this.setState({
-            rubRates
+            rubRates,
           })
         }
       })
@@ -166,7 +157,7 @@ export default class InvoiceModal extends React.Component<any, any> {
     if (isShipped) return
 
     this.setState({
-      isShipped: true
+      isShipped: true,
     })
 
     let currency = getCurrencyKey(data.currency, true).toUpperCase()
@@ -193,7 +184,7 @@ export default class InvoiceModal extends React.Component<any, any> {
     }
 
     this.setState({
-      isShipped: false
+      isShipped: false,
     })
   }
 
@@ -203,7 +194,7 @@ export default class InvoiceModal extends React.Component<any, any> {
 
   addressIsCorrect(otherAddress) {
     const {
-      data: { currency }
+      data: { currency },
     } = this.props
     const { address, isEthToken } = this.state
     const checkAddress = otherAddress ? otherAddress : address
@@ -220,56 +211,56 @@ export default class InvoiceModal extends React.Component<any, any> {
     const { openScanCam } = this.state
 
     this.setState(() => ({
-      openScanCam: !openScanCam
+      openScanCam: !openScanCam,
     }))
   }
 
-  handleDollarValue = value => {
+  handleDollarValue = (value) => {
     const { rubRates, currentDecimals, multiplier } = this.state
 
     this.setState({
       amountUSD: value,
       amountRUB: value ? (value * rubRates).toFixed(0) : '',
-      amount: value ? (value / multiplier).toFixed(currentDecimals) : ''
+      amount: value ? (value / multiplier).toFixed(currentDecimals) : '',
     })
   }
 
-  handleRubValue = value => {
+  handleRubValue = (value) => {
     const { rubRates, currentDecimals, multiplier } = this.state
 
     this.setState({
       amountRUB: value,
       amountUSD: value ? (value / rubRates).toFixed(2) : '',
-      amount: value ? (value / multiplier / rubRates).toFixed(currentDecimals) : ''
+      amount: value ? (value / multiplier / rubRates).toFixed(currentDecimals) : '',
     })
   }
 
-  handleAmount = value => {
+  handleAmount = (value) => {
     const { rubRates, multiplier } = this.state
 
     this.setState({
       amountRUB: value ? (value * multiplier * rubRates).toFixed(0) : '',
       amountUSD: value ? (value * multiplier).toFixed(2) : '',
-      amount: value
+      amount: value,
     })
   }
 
-  handleError = err => {
+  handleError = (err) => {
     console.error(err)
   }
 
-  handleScan = data => {
+  handleScan = (data) => {
     if (data) {
       this.setState(() => ({
-        address: data.includes(':') ? data.split(':')[1] : data
+        address: data.includes(':') ? data.split(':')[1] : data,
       }))
       this.openScan()
     }
   }
 
-  handleBuyCurrencySelect = value => {
+  handleBuyCurrencySelect = (value) => {
     this.setState({
-      selectedValue: value.name
+      selectedValue: value.name,
     })
   }
 
@@ -294,13 +285,23 @@ export default class InvoiceModal extends React.Component<any, any> {
     const {
       name,
       data: { currency },
-      intl
+      intl,
     } = this.props
 
-    const linked = Link.all(this, 'address', 'destination', 'amountUSD', 'amountRUB', 'amount', 'contact', 'label')
+    const linked = Link.all(
+      this,
+      'address',
+      'destination',
+      'amountUSD',
+      'amountRUB',
+      'amount',
+      'contact',
+      'label'
+    )
 
-    //@ts-ignore
-    const isDisabled = !amount || isShipped || !destination || !contact || (address && !this.addressIsCorrect())
+    const isDisabled =
+      //@ts-ignore
+      !amount || isShipped || !destination || !contact || (address && !this.addressIsCorrect())
 
     return (
       <Modal
@@ -309,15 +310,20 @@ export default class InvoiceModal extends React.Component<any, any> {
         disableClose={this.props.data.disableClose}
       >
         {openScanCam && (
-          <QrReader openScan={this.openScan} handleError={this.handleError} handleScan={this.handleScan} />
+          <QrReader
+            openScan={this.openScan}
+            handleError={this.handleError}
+            handleScan={this.handleScan}
+          />
         )}
         <div styleName="invoiceModalHolder">
           {toAddressEnabled && (
             <div styleName="highLevel">
-              {/*
-              //@ts-ignore */}
-              <FieldLabel label>
-                <FormattedMessage id="invoiceModal_Address" defaultMessage="Адрес, на который выставляем счет" />
+              <FieldLabel>
+                <FormattedMessage
+                  id="invoiceModal_Address"
+                  defaultMessage="Адрес, на который выставляем счет"
+                />
               </FieldLabel>
               <Input
                 smallFontSize
@@ -325,7 +331,9 @@ export default class InvoiceModal extends React.Component<any, any> {
                 valueLink={linked.address}
                 focusOnInit
                 pattern="0-9a-zA-Z:"
-                placeholder={intl.formatMessage(localeLabel.addressPlaceholder, { currency: currency.toUpperCase() })}
+                placeholder={intl.formatMessage(localeLabel.addressPlaceholder, {
+                  currency: currency.toUpperCase(),
+                })}
                 qr
                 openScan={this.openScan}
               />
@@ -333,16 +341,20 @@ export default class InvoiceModal extends React.Component<any, any> {
               //@ts-ignore */}
               {address && !this.addressIsCorrect() && (
                 <div styleName="rednote">
-                  <FormattedMessage id="invoiceModal_IncorrectAddress" defaultMessage="Вы ввели не коректный адрес" />
+                  <FormattedMessage
+                    id="invoiceModal_IncorrectAddress"
+                    defaultMessage="Вы ввели не коректный адрес"
+                  />
                 </div>
               )}
             </div>
           )}
           <div styleName="highLevel">
-            {/*
-            //@ts-ignore */}
-            <FieldLabel label>
-              <FormattedMessage id="invoiceModal_destiAddress" defaultMessage="Адрес, куда будет произведена оплата" />
+            <FieldLabel>
+              <FormattedMessage
+                id="invoiceModal_destiAddress"
+                defaultMessage="Адрес, куда будет произведена оплата"
+              />
             </FieldLabel>
             <Input
               valueLink={linked.destination}
@@ -351,7 +363,7 @@ export default class InvoiceModal extends React.Component<any, any> {
               withMargin
               pattern="0-9a-zA-Z:"
               placeholder={intl.formatMessage(localeLabel.destiAddressPlaceholder, {
-                currency: currency.toUpperCase()
+                currency: currency.toUpperCase(),
               })}
               qr
               openScan={this.openScan}
@@ -366,9 +378,7 @@ export default class InvoiceModal extends React.Component<any, any> {
             )}
           </div>
           <div styleName="highLevel">
-            {/*
-            //@ts-ignore */}
-            <FieldLabel label>
+            <FieldLabel>
               <span>
                 <FormattedMessage id="invoiceModal_Amount" defaultMessage="Сумма" />
               </span>
@@ -384,8 +394,8 @@ export default class InvoiceModal extends React.Component<any, any> {
                 onKeyDown={inputReplaceCommaWithDot}
               />
             ) : (
-                ''
-              )}
+              ''
+            )}
 
             {this.state.selectedValue === 'RUB' ? (
               <Input
@@ -397,8 +407,8 @@ export default class InvoiceModal extends React.Component<any, any> {
                 onKeyDown={inputReplaceCommaWithDot}
               />
             ) : (
-                ''
-              )}
+              ''
+            )}
 
             {this.state.selectedValue === 'USD' ? (
               <Input
@@ -410,8 +420,8 @@ export default class InvoiceModal extends React.Component<any, any> {
                 onKeyDown={inputReplaceCommaWithDot}
               />
             ) : (
-                ''
-              )}
+              ''
+            )}
 
             {/*
             //@ts-ignore */}
@@ -423,6 +433,7 @@ export default class InvoiceModal extends React.Component<any, any> {
               selectedValue={selectedValue}
               onSelect={this.handleBuyCurrencySelect}
               selectedItemRender={(item) => item.fullTitle}
+              //@ts-ignore
               isToggleActive
               currencies={[
                 {
@@ -430,31 +441,32 @@ export default class InvoiceModal extends React.Component<any, any> {
                   icon: 'rub',
                   name: 'RUB',
                   title: 'RUB',
-                  value: 'RUB'
+                  value: 'RUB',
                 },
                 {
                   fullTitle: 'bitcoin',
                   icon: 'btc',
                   name: 'BTC',
                   title: 'BTC',
-                  value: 'BTC'
+                  value: 'BTC',
                 },
                 {
                   fullTitle: 'USD',
                   icon: 'usd',
                   name: 'USD',
                   title: 'USD',
-                  value: 'USD'
-                }
+                  value: 'USD',
+                },
               ]}
             />
           </div>
           <div styleName="highLevel">
-            {/*
-            //@ts-ignore */}
-            <FieldLabel label>
+            <FieldLabel>
               <span>
-                <FormattedMessage id="invoiceModal_Contact" defaultMessage="Ваш контакт (емейл или @никнейм)" />
+                <FormattedMessage
+                  id="invoiceModal_Contact"
+                  defaultMessage="Ваш контакт (емейл или @никнейм)"
+                />
               </span>
             </FieldLabel>
             <Input
@@ -464,9 +476,7 @@ export default class InvoiceModal extends React.Component<any, any> {
             />
           </div>
           <div styleName="lowLevel">
-            {/*
-            //@ts-ignore */}
-            <FieldLabel label>
+            <FieldLabel>
               <span>
                 <FormattedMessage id="invoiceModal_Label" defaultMessage="Комментарий" />
               </span>
@@ -480,18 +490,16 @@ export default class InvoiceModal extends React.Component<any, any> {
               />
             </div>
           </div>
-          {/*
-          //@ts-ignore */}
           <Button fullWidth blue big disabled={isDisabled} onClick={this.handleSubmit}>
             {isShipped ? (
               <Fragment>
                 <FormattedMessage id="invoiceModal_Processing" defaultMessage="Обработка ..." />
               </Fragment>
             ) : (
-                <Fragment>
-                  <FormattedMessage id="invoiceModal_Submit" defaultMessage="Выставить счет" />
-                </Fragment>
-              )}
+              <Fragment>
+                <FormattedMessage id="invoiceModal_Submit" defaultMessage="Выставить счет" />
+              </Fragment>
+            )}
           </Button>
           {error && (
             <div styleName="rednote">
@@ -502,7 +510,7 @@ export default class InvoiceModal extends React.Component<any, any> {
                   errorName: intl.formatMessage(error.name),
                   errorMessage: intl.formatMessage(error.message),
                   br: <br />,
-                  currency: `${currency}`
+                  currency: `${currency}`,
                 }}
               />
             </div>

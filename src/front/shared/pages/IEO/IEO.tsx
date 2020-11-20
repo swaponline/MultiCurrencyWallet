@@ -147,8 +147,6 @@ class IEO extends React.Component<any, any> {
                />
              )}
            />
-           {/*
-           //@ts-ignore */}
            <Button
              styleName="button"
              onClick={this.handleSignUp}

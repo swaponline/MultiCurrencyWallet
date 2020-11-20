@@ -80,8 +80,8 @@ class GHOST2BTC extends Flow {
       isSwapExist: false,
     }
 
-    super._persistSteps()
     this._persistState()
+    super._persistSteps()
   }
 
   _persistState() {

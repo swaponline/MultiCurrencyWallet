@@ -3,15 +3,7 @@ $primary-hover: var(--primary-hover);
 $alternate: var(--alternate);
 $alternate-hover: var(--alternate-hover);
 
-$color-brand                  : #512FD1;
-
-
-// Typography and text colors
-
-$color-f-brightest            : #fff;
-$color-f-error                : #e32950;
-
-
+// -----------------------------------------
 // Light theme
 
 $l-background-color: #f7f7f7;
@@ -23,6 +15,7 @@ $l-brand-color-hover: var(--primary-hover);
 $l-background-elements: #fff;
 $l-box-shadow: 0px 4px 16px rgba(0,0,0,0.08), 0px 1px 4px rgba(0,0,0,0.08);
 
+// -----------------------------------------
 // Dark theme
 
 $d-background-color: #222427;
@@ -33,3 +26,11 @@ $l-brand-color-hover: #ac86ee;
 
 $d-background-elements: #242425;
 $d-box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.49),0px 1px 4px rgba(13, 13, 13, 0.06);
+
+// -----------------------------------------
+// Unchanging colors
+
+$notice-color: #8e9aa3;
+$color-brand: #512FD1;
+$color-f-brightest : #fff;
+$color-f-error : #e32950;
