@@ -914,7 +914,7 @@ const getAddrBalance = (address) => {
   })
 }
 
-const getBalance = (ownAddress, ownDataKey) => {
+const getBalance = (ownAddress = null, ownDataKey = null) => {
   const { user: { btcMultisigSMSData: { address } } } = getState()
   const checkAddress = (ownAddress) || address
   const dataKey = (ownDataKey) || 'btcMultisigSMSData'
