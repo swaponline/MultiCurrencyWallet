@@ -15,7 +15,7 @@ import SwapProgress from './SwapProgress/SwapProgress'
 import DepositWindow from './DepositWindow/DepositWindow'
 import FeeControler from '../FeeControler/FeeControler'
 import SwapList from './SwapList/SwapList'
-import paddingForSwapList from 'shared/helpers/paddingForSwapList.js'
+import paddingForSwapList from 'shared/helpers/paddingForSwapList'
 
 
 @CSSModules(styles)
