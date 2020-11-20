@@ -6,16 +6,9 @@ import styles from './FaqExpandableItem.scss'
 
 import Href from 'components/Href/Href'
 
-
 const FaqExpandableItem = ({ link, question }) => (
   <div styleName="container">
-    {/*
-    //@ts-ignore */}
-    <Href
-      tab={link}
-      styleName="header"
-      rel="noreferrer noopener"
-    >
+    <Href tab={link} styleName="header" rel="noreferrer noopener">
       {question}
     </Href>
   </div>
