@@ -233,17 +233,17 @@ export default class Exchange extends Component<any, any> {
       }
     }
 
+    const haveType = this.getDefaultWalletForCurrency(haveCurrency.toUpperCase())
+    const getType = this.getDefaultWalletForCurrency(getCurrency.toUpperCase())
     this.state = {
       isToken: false,
       dynamicFee: 0,
       haveCurrency,
-      haveType: this.getDefaultWalletForCurrency(haveCurrency.toUpperCase()),
+      haveType,
       getCurrency,
-      getType: this.getDefaultWalletForCurrency(getCurrency.toUpperCase()),
+      getType,
       haveAmount: 0,
       getAmount: "",
-      fromAddress: null,
-      toAddress: null,
       haveFiat: 0,
       getFiat: 0,
       isShowBalance: true,
@@ -261,12 +261,43 @@ export default class Exchange extends Component<any, any> {
       pairFees: false,
       balances: false,
       haveBalance: false,
+      fromAddress: this.makeAddressObject(haveType, haveCurrency.toUpperCase()),
+      toAddress: this.makeAddressObject(getType, getCurrency.toUpperCase()),
     }
 
     if (config.isWidget) {
       //@ts-ignore
       this.state.getCurrency = config.erc20token
     }
+  }
+
+  makeAddressObject(type, currency) {
+    const wallet = (type !== AddressType.Custom) ? actions.core.getWallet({
+      currency,
+      addressType: type,
+    }) : false
+
+    switch (type) {
+      case AddressType.Internal:
+        return {
+          type: AddressType.Internal,
+          currency,
+          value: (wallet) ? wallet.address : '',
+        }
+      case AddressType.Metamask:
+        return {
+          type: AddressType.Metamask,
+          currency,
+          value: (wallet) ? wallet.address : '',
+        }
+      case AddressType.Custom:
+        return {
+          type: AddressType.Internal,
+          currency,
+          value: ``,
+        }
+    }
+    return null
   }
 
   getUserDefaultWallets() {
@@ -550,6 +581,7 @@ export default class Exchange extends Component<any, any> {
       buyCurrency,
       amount,
       balance,
+      fromType,
     } = checkParams
 
     const {
@@ -572,11 +604,13 @@ export default class Exchange extends Component<any, any> {
     if (pairFees.byCoins[sellCurrency.toUpperCase()]
       && pairFees.byCoins[sellCurrency.toUpperCase()].isUTXO
     ) {
-      if (
-        new BigNumber(balance).isLessThan(
-          new BigNumber(amount).plus(pairFees.byCoins[sellCurrency.toUpperCase()].fee)
-        )
-      ) balanceIsOk = false
+      if (fromType !== AddressType.Custom) {
+        if (
+          new BigNumber(balance).isLessThan(
+            new BigNumber(amount).plus(pairFees.byCoins[sellCurrency.toUpperCase()].fee)
+          )
+        ) balanceIsOk = false
+      }
     } else {
       if (!isSellToken
         && new BigNumber(balance).isLessThan(amount)
@@ -656,6 +690,7 @@ export default class Exchange extends Component<any, any> {
       haveCurrency,
       haveAmount,
       getCurrency,
+      haveType,
     } = this.state
 
     const haveTicker = haveCurrency.toUpperCase()
@@ -668,6 +703,7 @@ export default class Exchange extends Component<any, any> {
       buyCurrency: getCurrency,
       amount: haveAmount,
       balance: this.getBalance(haveCurrency),
+      fromType: haveType,
     })) return false
 
     if (decline.length === 0) {
@@ -1441,7 +1477,9 @@ export default class Exchange extends Component<any, any> {
       new BigNumber(getAmount).isGreaterThan(0) &&
       !this.doesComissionPreventThisOrder() &&
       (new BigNumber(haveAmount).isGreaterThan(balance) ||
-        new BigNumber(balance).isGreaterThanOrEqualTo(availableAmount)) &&
+        new BigNumber(balance).isGreaterThanOrEqualTo(availableAmount) ||
+        fromAddress.type === AddressType.Custom
+      ) &&
       !isWaitForPeerAnswer
 
     const isIncompletedSwaps = !!desclineOrders.length
