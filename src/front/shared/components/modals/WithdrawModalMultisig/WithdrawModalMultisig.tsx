@@ -726,7 +726,6 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
                   </Button>
                 </div>
                 {!isMobile && (
-                  //@ts-ignore
                   <ReactTooltip id="Withdrow134" type="light" effect="solid" styleName="r-tooltip">
                     <FormattedMessage
                       id="WithdrawButton32"

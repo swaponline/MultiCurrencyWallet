@@ -64,9 +64,7 @@ const SelectGroup = (props) => {
         {inputToolTip && inputToolTip()}
         {balanceTooltip && (
           <div styleName="smallTooltip balanceTooltip">
-            {/*
-            //@ts-ignore */}
-            <Tooltip>
+            <Tooltip id='SelectGroupTooltipBalance'>
               {balanceTooltip()}
             </Tooltip>
           </div>
