@@ -4,6 +4,7 @@ import ProgressBarPlugin from 'progress-bar-webpack-plugin'
 import WebappWebpackPlugin from 'webapp-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import AppConfigPlugin from 'app-config/webpack'
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import config from 'app-config'
 import rulesMap from './rules'
 
@@ -21,7 +22,6 @@ const globals = {
     'EXTENSION': config.dir === 'chrome-extension/application',
     'VERSION': JSON.stringify(version),
   },
-  // TODO fix __CONFIG__ - remove it and check app-config/webpack to resolve in /client.js
   __CONFIG__: JSON.stringify(config),
 }
 
@@ -34,7 +34,7 @@ const rules = Object.keys(rulesMap)
 const webpackConfig = {
 
   entry: {
-    'app': config.paths.client('index.js'),
+    'app': config.paths.client('index.tsx'),
   },
 
   module: {
@@ -48,6 +48,7 @@ const webpackConfig = {
   resolve: {
     alias: {
       'shared': config.paths.front('shared'),
+      'local_modules': config.paths.front('local_modules'),
       'domain': config.paths.common('domain'),
       'swap.auth': config.paths.core('swap.auth'),
       'swap.orders': config.paths.core('swap.orders'),
@@ -65,7 +66,7 @@ const webpackConfig = {
       'node_modules',
       config.paths.core(''),
     ],
-    extensions: [ '.js', '.jsx', '.scss' ],
+    extensions: [ '.js', '.jsx', '.tsx', '.ts', '.scss' ],
     plugins: [],
   },
 
@@ -81,7 +82,6 @@ const webpackConfig = {
       'swap.swap': 'swap.swap',
       'swap.swaps': 'swap.swaps',
     }),
-    new webpack.NoEmitOnErrorsPlugin(),
     new ProgressBarPlugin({ clear: false }),
     new WebappWebpackPlugin({
       logo: 'favicon.png',
@@ -98,6 +98,10 @@ const webpackConfig = {
       hash: false,
       filename: 'index.html',
       inject: 'body',
+      ... (config.firebug) ? {
+        firebugMark: `debug="true"`,
+        firebugScript: `<script type="text/javascript" src="./firebug/firebug.js"></script>`,
+      } : {},
     }),
     new webpack.ContextReplacementPlugin(
       /\.\/locale$/,
@@ -108,6 +112,7 @@ const webpackConfig = {
     new webpack.NormalModuleReplacementPlugin(/^leveldown$/, (result) => {
       result.request = result.request.replace(/(leveldown)/,  config.paths.shared('helpers/leveldown'))
     }),
+    new ForkTsCheckerWebpackPlugin(),
   ],
 }
 

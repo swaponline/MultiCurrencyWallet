@@ -3,18 +3,18 @@
 [![About SWAP token](https://img.shields.io/badge/ERC20-SWAP-green)](https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/SWAPTOKEN.md)
 
 ## MultiCurrencyWallet
-
+ 
 - 👛 Crypto wallet: BTC, ETН, USDT, {your_token}...
 - 💵 Fiat gateway: USD, EUR, RUB, UAH...
 - ⚛️ P2P exchange – atomic swaps
 - 💡 Open-source, client-side
 - 📦 Embeddable into your site!
-
+ 
 Live version here: https://swaponline.github.io (mirror https://swaponline.io)
 
-No coding skills? Use :package: [WordPress plugin with admin panel](https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064) :package: and installation service for \$100 (send [sashanoxon](https://t.me/sashanoxon) access to your server).
+No coding skills? Use :package: [WordPress plugin with admin panel](https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064) :package: 
 
-Looking for investment opportunity? Read about [ERC20:SWAP token](/docs/SWAPTOKEN.md)
+Looking for investment opportunity? Read about [ERC20:SWAP token](/docs/SWAPTOKEN.md) (target price 1$)
 
 ### 1. Multi-currency wallet: your users can store Bitcoin and custom assets
 
@@ -22,13 +22,9 @@ Add many assets to your wallet:
 
 <img src="https://wallet.wpmix.net/codecanyon_description_3.jpg">
 
-<br>
-Checkout this case: <a href="https://twitter.com/Atomic_Wallet" target="_blank">https://twitter.com/Atomic_Wallet</a> (our real client)
-
 ### 2. ERC20 token wallet
 
-<a href="https://generator.swaponline.site/livedemo/0x4E12EB8e506Ccd1427F6b8F7faa3e88fB698EB28/319aa913-4e84-483f-a0d1-8664a13f56b7/#/JACK-wallet">Wallet demo (custom asset "SWAP")</a>
-<img src="https://generator.swaponline.site/generator/assets/img/example_wallet.png">
+<a href="https://mytoken.wpmix.net/">Wallet demo (custom asset "SWAP")</a>
 
 ### 3. Buy/Sell assets (exchange widget)
 
@@ -81,6 +77,7 @@ Work in progress to add more languages.
 - [Donate](/docs/DONATE.md)
 - _(the easiest)_ Star the project ⭐
 
+Developer? Start with [ONBOARDING](https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/ONBOARDING.md)
 ---
 
 Any questions [are welcome](https://t.me/mcvchat)

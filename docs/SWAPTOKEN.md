@@ -19,10 +19,11 @@
 
 - Team: 25 000 tokens were distributed among the team based on 1 SWAP ~ 1 USD
 - Bounty: 25 000 tokens were distributed among the bounty participants, for the very simple actions (reposts, etc..)
+- Developers program https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/CONTRIBUTING.md
 
 ## Return of investments
 
-10% of project's revenue we forward to uniswap for support liquidity
+10% of project's revenue we forward to uniswap for supporting liquidity
 
 Current
 
@@ -33,12 +34,17 @@ Current
 | jul 2020 | 840 USD  | \$84  | [+0.5 ETH](https://etherscan.io/tx/0xb5708aa91cd181b45aafc3fb92bdeea970a4359110a10f3fde6a4b42e0cabd14) |
 | aug 2020 | 1040 USD | \$104 | 👇                                                                                                     |
 | sep 2020 | 1400 USD | \$140 | [+0.7 ETH](https://etherscan.io/tx/0x7b70734c4a3ed1df347ac3d5ef1ba751f3068555c740cf0a5fb1e33c0dbfd160) |
+| sep 2020 | 1620 USD | \$162 | [+0.37 ETH](https://etherscan.io/tx/0xbe89c49296e56b7a1dacf755c1dd9a71766477b1188527ddc95f5e832651384b) |
 
 ## How we get revenue
 
 - By selling [Wordpress plugin](https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064) (whitelabel, wallet as a service)
 - By custom MultiCurrencyWallet integrations
 - By [community donations](/docs/DONATE.md)
+
+## initial selling strategy
+- swaponline team can sell SWAP tokens not less than 1 USD per 1 SWAP (please don't buy tokens above 1 usd anywhere to prevent getting rekt)
+- By default, funds are used to support liquidity (not a price increase!) but can be managed by CEO 
 
 ## Strategy and roadmap
 

@@ -1,5 +1,4 @@
 import SwapApp from 'swap.app'
-import { getBchWallet } from '../../common/utils/mnemonic'
 
 
 const loginMnemonic = (mnemonic, walletNumber=0, path, app) => {

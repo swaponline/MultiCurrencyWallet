@@ -82,5 +82,4 @@ window.buildOptions = {
     ghost: true,
     next: true,
   },
-  
 }

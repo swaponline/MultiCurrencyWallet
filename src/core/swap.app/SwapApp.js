@@ -8,6 +8,7 @@ class SwapApp {
     'mst6jZKU973gB6Jhei4WQFg381zb86UgBQ', // @eneeseene testnet btc address
     '17Hf3chwyWeNokLfuBcxEtpRYaYiU5RWBt', // swap.bot mainnet btc address
   ]
+  #options = {}
 
   static _swapAppInstance = null
 
@@ -21,6 +22,7 @@ class SwapApp {
    * @param {array}   options.flows
    */
   constructor(options) {
+    this.#options = options
     this.network    = options.network || constants.NETWORKS.TESTNET
     this.env        = {}
     this.services   = {}
@@ -39,6 +41,19 @@ class SwapApp {
 
   static init(options) {
     return new SwapApp(options)
+  }
+
+  setWeb3Provider(web3provider) {
+    if (!SwapApp._swapAppInstance) {
+      throw new Error(`Shared instance not initialized. Use SwapApp.setup() first.`)
+    }
+    SwapApp._swapAppInstance.env.web3 = web3provider
+    SwapApp._swapAppInstance.initFlows()
+  }
+
+  initFlows() {
+    this._addSwaps(this.#options.swaps || [])
+    this._addFlows(this.#options.flows || [])
   }
 
   static setup(options, forceFreshSetup = false) {
