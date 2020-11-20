@@ -445,39 +445,6 @@ export default class WithdrawModal extends React.Component<any, any> {
       })
   }
 
-  setMaxBalance = () => {
-    const { balance, isEthToken, usedAdminFee, currentDecimals, exCurrencyRate } = this.state
-
-    const {
-      data: { currency },
-    } = this.props
-
-    let minFee = new BigNumber(
-      isEthToken ? 0 : minAmount[getCurrencyKey(currency, false).toLowerCase()]
-    )
-
-    minFee = usedAdminFee ? new BigNumber(minFee).plus(adminFee.calc(currency, balance)) : minFee
-
-    if (new BigNumber(minFee).isGreaterThan(balance)) {
-      this.setState({
-        amount: 0,
-        fiatAmount: 0,
-      })
-    } else {
-      console.log('sellAll - min Fee', minFee.toNumber())
-      const balanceMiner = balance
-        ? balance !== 0
-          ? new BigNumber(balance).minus(minFee)
-          : balance
-        : 'Wait please. Loading...'
-
-      this.setState({
-        amount: new BigNumber(balanceMiner.dp(currentDecimals, BigNumber.ROUND_FLOOR)),
-        fiatAmount: balanceMiner ? (balanceMiner * exCurrencyRate).toFixed(2) : '',
-      })
-    }
-  }
-
   isEthOrERC20() {
     const { ethBalance, isEthToken, tokenFee } = this.state
 
@@ -612,29 +579,19 @@ export default class WithdrawModal extends React.Component<any, any> {
     tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
 
     let dinamicFee = isEthToken ? 0 : minAmount[getCurrencyKey(currency, false).toLowerCase()]
-    let defaultMinFee = dinamicFee // non-changing value in an amount warning
+    let defaultMinFee = dinamicFee // non-changing value in an amount hint
 
     dinamicFee = usedAdminFee
       ? new BigNumber(dinamicFee).plus(adminFee.calc(currency, amount)).toNumber()
       : dinamicFee
 
-    let allowedCriptoBalance: BigNumber = new BigNumber(balance)
-      .minus(defaultMinFee)
-      .dp(currentDecimals, BigNumber.ROUND_FLOOR)
-    let allowedUsdBalance: BigNumber = new BigNumber(
+    let allowedCriptoBalance: BigNumber | 0 = new BigNumber(balance).minus(defaultMinFee)
+    let allowedUsdBalance: BigNumber | 0 = new BigNumber(
       ((allowedCriptoBalance as any) * exCurrencyRate) as number
     ).dp(2, BigNumber.ROUND_FLOOR)
-    /*
-     * for btc and btc-usd appears minus in start
-     * need delete this minus
-     */
-    allowedCriptoBalance = allowedCriptoBalance.isLessThan(0)
-      ? allowedCriptoBalance.absoluteValue()
-      : allowedCriptoBalance
-
-    allowedUsdBalance = allowedUsdBalance.isLessThan(0)
-      ? allowedUsdBalance.absoluteValue()
-      : allowedUsdBalance
+    
+    allowedCriptoBalance = +allowedCriptoBalance > 0 ? allowedCriptoBalance : 0
+    allowedUsdBalance = +allowedUsdBalance > 0 ? allowedUsdBalance : 0
 
     const criptoValueIsOk = new BigNumber(
       linked.amount.pipe(this.handleAmount).value
@@ -642,6 +599,20 @@ export default class WithdrawModal extends React.Component<any, any> {
     const usdValueIsOk = new BigNumber(
       linked.fiatAmount.pipe(this.handleAmount).value
     ).isLessThanOrEqualTo(allowedUsdBalance)
+    
+    const setMaxBalance = () => {
+      if (criptoValueIsOk && usdValueIsOk) {
+        this.setState({
+          amount: allowedCriptoBalance,
+          fiatAmount: allowedUsdBalance,
+        })
+      } else {
+        this.setState({
+          amount: 0,
+          fiatAmount: 0,
+        })
+      }
+    }
 
     const isDisabled =
       !address ||
@@ -874,7 +845,7 @@ export default class WithdrawModal extends React.Component<any, any> {
                     }}
                   />
                 )}{' '}
-                {/* <- for indent before the tooltip */}
+                {/* ^ for indent before the tooltip */}
                 <Tooltip id="WtH204">
                   <div style={{ maxWidth: '24em', textAlign: 'center' }}>
                     <FormattedMessage
@@ -889,7 +860,7 @@ export default class WithdrawModal extends React.Component<any, any> {
               </div>
             )}
             <div style={{ marginLeft: '15px' }}>
-              <Button blue big onClick={this.setMaxBalance} id="Withdrow134">
+              <Button blue big onClick={setMaxBalance} id="Withdrow134">
                 <FormattedMessage id="Select210" defaultMessage="MAX" />
               </Button>
             </div>
