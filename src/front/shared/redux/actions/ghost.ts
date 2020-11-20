@@ -307,8 +307,7 @@ const fetchTx = (hash, cacheResponse) =>
       return false
     },
   }).then(({ fees, ...rest }) => ({
-    //@ts-ignore
-    fees: BigNumber(fees).multipliedBy(1e8),
+    fees: new BigNumber(fees).multipliedBy(1e8),
     ...rest,
   }))
 
@@ -330,7 +329,7 @@ const fetchTxInfo = (hash, cacheResponse) =>
       const amount = vout ? new BigNumber(vout[0].value).toNumber() : null
 
       let afterBalance = vout && vout[1] ? new BigNumber(vout[1].value).toNumber() : null
-      let adminFee = false
+      let adminFee: any = false
 
       if (hasAdminFee) {
         const adminOutput = vout.filter((out) => (
@@ -350,7 +349,6 @@ const fetchTxInfo = (hash, cacheResponse) =>
         }
 
         if (adminOutput.length) {
-          //@ts-ignore
           adminFee = new BigNumber(adminOutput[0].value).toNumber()
         }
       }
@@ -525,7 +523,7 @@ const sendV5WithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) =>
     address: adminFeeAddress,
     min: adminFeeMinValue,
   } = config.opts.fee.ghost
-  //@ts-ignore
+
   const adminFeeMin = new BigNumber(adminFeeMinValue)
   //@ts-ignore
   feeValue = feeValue || await ghost.estimateFeeValue({
@@ -535,17 +533,17 @@ const sendV5WithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) =>
 
 
   // fee - from amount - percent
-  //@ts-ignore
+
   let feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
   if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
-  //@ts-ignore
-  feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber()
+
+  feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue()
 
   const unspents = await fetchUnspents(from)
   const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  //@ts-ignore
-  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
+
+  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount.toNumber()
 
 
   const psbt = new bitcoin.Psbt({ network: ghost.network })
@@ -601,11 +599,11 @@ const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
     address: adminFeeAddress,
     min: adminFeeMinValue,
   } = config.opts.fee.ghost
-  //@ts-ignore
+
   const adminFeeMin = new BigNumber(adminFeeMinValue)
 
   // fee - from amount - percent
-  //@ts-ignore
+
   let feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
   if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
