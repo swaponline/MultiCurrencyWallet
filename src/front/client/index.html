@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" <%= htmlWebpackPlugin.options.firebugMark %>>
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <title><%= htmlWebpackPlugin.options.title %></title>
@@ -30,7 +30,7 @@
     <meta property="og:url" content="https://swaponline.io" />
     <!-- ERC20 Tokens hot plug for widget-build (Dont remove this) -->
     <script src="erc20tokens.js"></script>
-    
+    <%= htmlWebpackPlugin.options.firebugScript %>
     <script>
       var isWidgetBuild = '<%= htmlWebpackPlugin.options.isWidget %>';
     </script>
