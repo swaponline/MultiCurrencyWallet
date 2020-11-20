@@ -161,8 +161,8 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
     const {
       usedAdminFee,
     } = this.state
-    //@ts-ignore
-    let min = await helpers['btc'].estimateFeeValue({ method: 'send_2fa', speed: 'fast' })
+
+    let min: any = await helpers['btc'].estimateFeeValue({ method: 'send_2fa', speed: 'fast' })
     minAmount['btc_multisig_2fa'] = min
 
     if (usedAdminFee) {
