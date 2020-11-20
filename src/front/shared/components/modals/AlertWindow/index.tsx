@@ -106,8 +106,6 @@ export default class AlertWindow extends Component<any, any> {
               </p>
             </div>
             <div styleName="button-overlay">
-              {/*
-              //@ts-ignore */}
               <Button styleName="button" gray onClick={this.handleClose}>{labels.actionLabel}</Button>
             </div>
           </div>

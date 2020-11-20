@@ -174,8 +174,6 @@ export default class SignUpModal extends React.Component<any, any> {
                   </p>
                 )
               }
-              {/*
-              //@ts-ignore */}
               <Button styleName="button" brand fullWidth onClick={this.close}>
                 <FormattedMessage id="SignUpModal001" defaultMessage="Go to my wallet" />
               </Button>
@@ -191,8 +189,6 @@ export default class SignUpModal extends React.Component<any, any> {
                     }
                   </div>
                 }
-                {/*
-                //@ts-ignore */}
                 <Button
                   styleName="button"
                   brand

@@ -35,8 +35,6 @@ export default class EthChecker extends Component<any, any> {
             <FormattedMessage id="EthChecker19" defaultMessage="This token works on Ethereum blockchain. To swap this token you must have at least 0.02 ETH on your balance" />
           </p>
           <Link to={localisedUrl(locale, links.home)}>
-            {/*
-            //@ts-ignore */}
             <Button styleName="button" brand fullWidth onClick={() => actions.modals.close(name)}>
               <FormattedMessage id="EthChecker23" defaultMessage="Go wallet" />
             </Button>

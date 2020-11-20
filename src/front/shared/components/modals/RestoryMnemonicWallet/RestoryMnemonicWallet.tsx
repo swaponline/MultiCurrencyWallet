@@ -318,8 +318,6 @@ export default class RestoryMnemonicWallet extends React.Component<any, any> {
                 <FormattedMessage {...langLabels.readyNotice} />
               </p>
               <div styleName="lowLevel">
-                {/*
-                //@ts-ignore */}
                 <Button
                   styleName="buttonCenter buttonHalfFullWidth"
                   blue

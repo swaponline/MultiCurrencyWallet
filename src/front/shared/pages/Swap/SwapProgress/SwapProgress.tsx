@@ -424,14 +424,12 @@ export default class SwapProgress extends Component<any, any> {
               }
 
               {flow.step === 2 && !this.isSellCurrencyEthOrEthToken &&
-                //@ts-ignore
-                <Button brand onClick={this.submitSecret()} >
+                <Button brand onClick={this.submitSecret} >
                   <FormattedMessage id="swapFinishedGoHome289" defaultMessage="Submit the Secret" />
                 </Button>
               }
               {flow.step === 3 && this.isSellCurrencyEthOrEthToken &&
-                //@ts-ignore
-                <Button brand onClick={this.confirmBTCScriptChecked()} >
+                <Button brand onClick={this.confirmBTCScriptChecked} >
                   <FormattedMessage id="swapFinishedGoHome298" defaultMessage="Everything is OK. Continue" />
                 </Button>
               }

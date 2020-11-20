@@ -282,8 +282,6 @@ export default class TxInfo extends Component<any, any> {
           </table>
         </div>
         <div styleName="blockCenter buttonHolder">
-          {/*
-          // @ts-ignore */}
           <ShareButton
             halfWidth={true}
             minWidth="200px"

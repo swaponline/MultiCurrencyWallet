@@ -91,13 +91,9 @@ export default class ConfirmOffer extends Component<any, any> {
         {/*
         //@ts-ignore*/}
         <Row styleName="buttonsInRow">
-          {/*
-          //@ts-ignore */}
           <Button styleName="button" gray onClick={onBack}>
             <FormattedMessage id="ConfirmOffer69" defaultMessage="Back" />
           </Button>
-          {/*
-          //@ts-ignore */}
           <Button styleName="button" id="confirm" brand onClick={this.handleConfirm}>
             <FormattedMessage id="ConfirmOffer73" defaultMessage="Add" />
           </Button>
