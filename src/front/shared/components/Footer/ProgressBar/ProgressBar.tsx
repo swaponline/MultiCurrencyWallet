@@ -4,28 +4,32 @@ import PropTypes from 'prop-types'
 
 import { Line } from 'rc-progress'
 
+interface ProgressBarProps {
+  step?: number
+  endTime?: number
+  maxValue?: number
+  handleClick?(): void
+}
 
-export default class ProgressBar extends Component<any, any> {
+interface ProgressBarState {
+  step?: number
+  endTime?: number
+  maxValue?: number
+  progressNow?: number
+}
 
-  // seconds
-  static propTypes = {
-    step:     PropTypes.number,
-    endTime:  PropTypes.number,
-    maxValue: PropTypes.number,
-    handleClick: PropTypes.func,
-  }
-
+export default class ProgressBar extends Component<ProgressBarProps, ProgressBarState> {
   static defaultProps = {
     maxValue: 100,
-    endTime:  60000,
-    step:     1000,
+    endTime: 60000,
+    step: 1000,
   }
 
   timer = null
 
-  constructor({ maxValue, endTime, step }) {
-    //@ts-ignore
-    super()
+  constructor(props: ProgressBarProps) {
+    super(props)
+    const { maxValue, endTime, step } = props
 
     this.state = {
       step,
@@ -62,8 +66,6 @@ export default class ProgressBar extends Component<any, any> {
   render() {
     const { progressNow } = this.state
 
-    return (
-      <Line strokeColor="#2181F7" percent={progressNow} strokeWidth={1} />
-    )
+    return <Line strokeColor="#2181F7" percent={progressNow} strokeWidth={1} />
   }
 }

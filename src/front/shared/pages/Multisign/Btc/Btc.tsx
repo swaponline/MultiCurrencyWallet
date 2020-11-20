@@ -19,12 +19,7 @@ import styles from './Btc.scss'
 import SwapApp from 'swap.app'
 import config from 'app-config'
 
-
-@connect(({
-  user: {
-    btcData,
-  },
-}) => {
+@connect(({ user: { btcData } }) => {
   return {
     data: btcData,
   }
@@ -32,16 +27,13 @@ import config from 'app-config'
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })
 export default class Btc extends PureComponent<any, any> {
-
   timerWaitOnlineJoin: any
 
   static propTypes = {
     history: PropTypes.object,
     location: PropTypes.object,
     intl: PropTypes.object.isRequired,
-  };
-
-
+  }
 
   constructor() {
     //@ts-ignore
@@ -49,7 +41,7 @@ export default class Btc extends PureComponent<any, any> {
     console.log('Btc mulsign connected')
 
     const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
-    const mnemonicSaved = (mnemonic === `-`)
+    const mnemonicSaved = mnemonic === `-`
 
     this.timerWaitOnlineJoin = false
     this.state = {
@@ -65,25 +57,18 @@ export default class Btc extends PureComponent<any, any> {
   async componentWillMount() {
     let {
       match: {
-        params: {
-          action,
-          data,
-          peer,
-        },
+        params: { action, data, peer },
       },
-      intl: {
-        locale,
-      },
+      intl: { locale },
       history,
-      location: {
-        pathname,
-      },
-      data: {
-        privateKey,
-      },
+      location: { pathname },
+      data: { privateKey },
     } = this.props
 
-    if (!action || ['join', 'connect', 'confirm', 'confirminvoice'].indexOf(action.toLowerCase()) === -1) {
+    if (
+      !action ||
+      ['join', 'connect', 'confirm', 'confirminvoice'].indexOf(action.toLowerCase()) === -1
+    ) {
       history.push(localisedUrl(locale, links.notFound))
       return
     }
@@ -142,27 +127,30 @@ export default class Btc extends PureComponent<any, any> {
               showCloseButton: true,
               onClose: () => {
                 history.push(localisedUrl(locale, links.home))
-              }
+              },
             })
           }, 100)
         } else {
           try {
-            this.setState({
-              action,
-              txData: await actions.btcmultisig.parseRawTX(txRaw),
-              invoice,
-              txRaw: txRaw,
-            }, () => {
-              setTimeout(() => {
-                actions.modals.open(constants.modals.BtcMultisignConfirmTx, {
-                  txData: txRaw,
-                  showCloseButton: false,
-                  onClose: () => {
-                    history.push(localisedUrl(locale, links.home))
-                  }
-                })
-              }, 100)
-            })
+            this.setState(
+              {
+                action,
+                txData: await actions.btcmultisig.parseRawTX(txRaw),
+                invoice,
+                txRaw: txRaw,
+              },
+              () => {
+                setTimeout(() => {
+                  actions.modals.open(constants.modals.BtcMultisignConfirmTx, {
+                    txData: txRaw,
+                    showCloseButton: false,
+                    onClose: () => {
+                      history.push(localisedUrl(locale, links.home))
+                    },
+                  })
+                }, 100)
+              }
+            )
           } catch (e) {
             console.log('Bad tx raw data')
           }
@@ -172,7 +160,10 @@ export default class Btc extends PureComponent<any, any> {
   }
 
   async componentWillUnmount() {
-    SwapApp.shared().services.room.unsubscribe('btc multisig join ready', this.handleOnlineWalletConnect)
+    SwapApp.shared().services.room.unsubscribe(
+      'btc multisig join ready',
+      this.handleOnlineWalletConnect
+    )
     clearTimeout(this.timerWaitOnlineJoin)
   }
 
@@ -183,7 +174,7 @@ export default class Btc extends PureComponent<any, any> {
     actions.core.markCoinAsVisible('BTC (Multisig)', true)
 
     this.setState({
-      action: (action === 'join') ? 'linkready' : 'ready'
+      action: action === 'join' ? 'linkready' : 'ready',
     })
     if (action === 'join') {
       actions.modals.open(constants.modals.MultisignJoinLink, {
@@ -201,7 +192,10 @@ export default class Btc extends PureComponent<any, any> {
     const { fromPeer, data } = _data
     const { peer } = this.state
     if (fromPeer === peer) {
-      SwapApp.shared().services.room.unsubscribe('btc multisig join ready', this.handleOnlineWalletConnect)
+      SwapApp.shared().services.room.unsubscribe(
+        'btc multisig join ready',
+        this.handleOnlineWalletConnect
+      )
       clearTimeout(this.timerWaitOnlineJoin)
       this.connectWallet('ready')
     }
@@ -213,7 +207,7 @@ export default class Btc extends PureComponent<any, any> {
     //If peer is online - try connect via pubsubRoom
 
     this.setState({
-      waitCreateWallet: true
+      waitCreateWallet: true,
     })
 
     actions.pubsubRoom.waitPeer(
@@ -222,16 +216,22 @@ export default class Btc extends PureComponent<any, any> {
         this.setState({
           action: 'onlinejoin',
         })
-        SwapApp.shared().services.room.subscribe('btc multisig join ready', this.handleOnlineWalletConnect)
+        SwapApp.shared().services.room.subscribe(
+          'btc multisig join ready',
+          this.handleOnlineWalletConnect
+        )
         SwapApp.shared().services.room.sendMessagePeer(peer, {
           event: 'btc multisig join',
           data: {
             publicKey: myPublicKey,
             checkKey: publicKey,
-          }
+          },
         })
         this.timerWaitOnlineJoin = setTimeout(() => {
-          SwapApp.shared().services.room.unsubscribe('btc multisig join ready', this.handleOnlineWalletConnect)
+          SwapApp.shared().services.room.unsubscribe(
+            'btc multisig join ready',
+            this.handleOnlineWalletConnect
+          )
           this.connectWallet(action)
         }, 10000)
       },
@@ -246,21 +246,19 @@ export default class Btc extends PureComponent<any, any> {
     actions.modals.open(constants.modals.SaveMnemonicModal, {
       onClose: () => {
         const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
-        const mnemonicSaved = (mnemonic === `-`)
+        const mnemonicSaved = mnemonic === `-`
 
         this.setState({
           mnemonicSaved,
         })
-      }
+      },
     })
   }
 
   handleGoToWallet = async () => {
     const {
       history,
-      intl: {
-        locale,
-      },
+      intl: { locale },
     } = this.props
 
     const { address } = actions.user.getAuthData('btcMultisigUser')
@@ -303,20 +301,29 @@ export default class Btc extends PureComponent<any, any> {
 
     return (
       <section>
-        {(action === 'onlinejoin') &&
+        {action === 'onlinejoin' && (
           <Fragment>
             <h1>
-              <FormattedMessage id="BTCMS_CreateWalletTitle" defaultMessage="Создание BTC-multisignature кошелька" />
+              <FormattedMessage
+                id="BTCMS_CreateWalletTitle"
+                defaultMessage="Создание BTC-multisignature кошелька"
+              />
             </h1>
             <h3>
-              <FormattedMessage id="BTCMS_WaitOtherSide" defaultMessage="Ожидание второй стороны..." />
+              <FormattedMessage
+                id="BTCMS_WaitOtherSide"
+                defaultMessage="Ожидание второй стороны..."
+              />
             </h3>
           </Fragment>
-        }
-        {(action === 'join' || action === 'connect') &&
+        )}
+        {(action === 'join' || action === 'connect') && (
           <Fragment>
             <h1>
-              <FormattedMessage id="BTCMS_CreateWalletTitle" defaultMessage="Создание BTC-multisignature кошелька" />
+              <FormattedMessage
+                id="BTCMS_CreateWalletTitle"
+                defaultMessage="Создание BTC-multisignature кошелька"
+              />
             </h1>
 
             <div>
@@ -329,24 +336,34 @@ export default class Btc extends PureComponent<any, any> {
               <label>
                 <FormattedMessage id="BTCMS_WalletBalance" defaultMessage="Баланс" />
               </label>
-              <strong>{' '}{walletBalance} BTC</strong>
+              <strong> {walletBalance} BTC</strong>
             </div>
             {mnemonicSaved ? (
               <>
-                {addWalletEnabled ?
-                  waitCreateWallet ?
+                {addWalletEnabled ? (
+                  waitCreateWallet ? (
                     <Button brand>
-                      <FormattedMessage id="BTCMS_CreateWalletWait" defaultMessage="Создание кошелька... Подождите немного" />
+                      <FormattedMessage
+                        id="BTCMS_CreateWalletWait"
+                        defaultMessage="Создание кошелька... Подождите немного"
+                      />
                     </Button>
-                    :
+                  ) : (
                     <Button brand onClick={this.handleAddWallet}>
-                      <FormattedMessage id="BTCMS_CreateWalletAdd" defaultMessage="Добавить этот кошелек" />
+                      <FormattedMessage
+                        id="BTCMS_CreateWalletAdd"
+                        defaultMessage="Добавить этот кошелек"
+                      />
                     </Button>
-                  :
+                  )
+                ) : (
                   <Button brand>
-                    <FormattedMessage id="BTCMS_CreateWalletLoading" defaultMessage="Загрузка... Подождите немного" />
+                    <FormattedMessage
+                      id="BTCMS_CreateWalletLoading"
+                      defaultMessage="Загрузка... Подождите немного"
+                    />
                   </Button>
-                }
+                )}
               </>
             ) : (
               <>
@@ -367,102 +384,129 @@ export default class Btc extends PureComponent<any, any> {
                   </label>
                 </div>
                 <Button brand onClick={this.handleSaveMnemonic}>
-                  <FormattedMessage id="BTCMS_SaveMnemonicButton" defaultMessage="Сохранить секретную фразу" />
+                  <FormattedMessage
+                    id="BTCMS_SaveMnemonicButton"
+                    defaultMessage="Сохранить секретную фразу"
+                  />
                 </Button>
               </>
             )}
           </Fragment>
-        }
+        )}
         {!mnemonicSaved && (
           <div styleName="descritonText">
-            <FormattedMessage id="BTCMS_CreateWalletLoading_descroptio" defaultMessage="Funds sent to this wallet cannot be spent without your confirmation (please save your private 12 words passphrase)" />
+            <FormattedMessage
+              id="BTCMS_CreateWalletLoading_descroptio"
+              defaultMessage="Funds sent to this wallet cannot be spent without your confirmation (please save your private 12 words passphrase)"
+            />
           </div>
         )}
-        {(/*action=='confirm' ||*/ action === 'confirminvoice') &&
-          <Fragment>
-            <h1>
-              <FormattedMessage id="BTCMS_ConfirmTxTitle" defaultMessage="Подтверждение транзакции" />
-            </h1>
-            <h3>
-              <button onClick={() => { this.setState({ debugShowInput: !debugShowInput }) }}>
-                <FormattedMessage id="BTCMS_ConfirmTxInputs" defaultMessage="Входы транзакции" />
-              </button>
-            </h3>
-            {debugShowInput &&
-              <pre>
-                <code>
-                  {
-                    //@ts-ignore
-                    JSON.stringify(this.state.txData.input, false, 4)
-                  }
-                </code>
-              </pre>
-            }
-            <h3>
-              <button onClick={() => { this.setState({ debugShowOutput: !debugShowOutput }) }}>
-                <FormattedMessage id="BTCMS_ConfirmTxOutputs" defaultMessage="Выходы транзакции" />
-              </button>
-            </h3>
-            {debugShowOutput &&
-              <pre>
-                <code>
-                  {
-                    //@ts-ignore
-                    JSON.stringify(this.state.txData.output, false, 4)
-                  }
-                </code>
-                <code>
-                  {
-                    //@ts-ignore
-                    JSON.stringify(this.state.txData, false, 4)
-                  }
-                </code>
-              </pre>
-            }
-            <div>
-              <Button brand onClick={this.handleConfirm}>
-                <FormattedMessage id="BTCMS_ConfirmTxSign" defaultMessage="Подписать транзакцию" />
-              </Button>
-            </div>
-          </Fragment>
+        {
+          /*action=='confirm' ||*/ action === 'confirminvoice' && (
+            <Fragment>
+              <h1>
+                <FormattedMessage
+                  id="BTCMS_ConfirmTxTitle"
+                  defaultMessage="Подтверждение транзакции"
+                />
+              </h1>
+              <h3>
+                <button
+                  onClick={() => {
+                    this.setState({ debugShowInput: !debugShowInput })
+                  }}
+                >
+                  <FormattedMessage id="BTCMS_ConfirmTxInputs" defaultMessage="Входы транзакции" />
+                </button>
+              </h3>
+              {debugShowInput && (
+                <pre>
+                  <code>{JSON.stringify(this.state.txData.input, null, 4)}</code>
+                </pre>
+              )}
+              <h3>
+                <button
+                  onClick={() => {
+                    this.setState({ debugShowOutput: !debugShowOutput })
+                  }}
+                >
+                  <FormattedMessage
+                    id="BTCMS_ConfirmTxOutputs"
+                    defaultMessage="Выходы транзакции"
+                  />
+                </button>
+              </h3>
+              {debugShowOutput && (
+                <pre>
+                  <code>{JSON.stringify(this.state.txData.output, null, 4)}</code>
+                  <code>{JSON.stringify(this.state.txData, null, 4)}</code>
+                </pre>
+              )}
+              <div>
+                <Button brand onClick={this.handleConfirm}>
+                  <FormattedMessage
+                    id="BTCMS_ConfirmTxSign"
+                    defaultMessage="Подписать транзакцию"
+                  />
+                </Button>
+              </div>
+            </Fragment>
+          )
         }
-        {(action === 'confirmready') &&
+        {action === 'confirmready' && (
           <Fragment>
             <FormattedMessage id="BTCMS_ConfirmTxTitle" defaultMessage="Подтверждение транзакции" />
             <h2>
-              <FormattedMessage id="BTCMS_ConfirmTxReady" defaultMessage="Транзакция подписана и отправлена в блокчейн" />
+              <FormattedMessage
+                id="BTCMS_ConfirmTxReady"
+                defaultMessage="Транзакция подписана и отправлена в блокчейн"
+              />
             </h2>
             <div>
               <Button brand onClick={this.handleGoToWallet}>
-                <FormattedMessage id="BTCMS_ConfirmTxGoToWallet" defaultMessage="Перейти в кошелек" />
+                <FormattedMessage
+                  id="BTCMS_ConfirmTxGoToWallet"
+                  defaultMessage="Перейти в кошелек"
+                />
               </Button>
             </div>
             <pre>
-              <code>
-                {
-                  //@ts-ignore
-                  JSON.stringify(this.state.txID, false, 4)
-                }
-              </code>
+              <code>{JSON.stringify(this.state.txID, null, 4)}</code>
             </pre>
-
           </Fragment>
-        }
-        {(action === 'linkready' || action === 'ready') &&
+        )}
+        {(action === 'linkready' || action === 'ready') && (
           <Fragment>
             <h1>
-              <FormattedMessage id="BTCMS_CreateWalletTitle" defaultMessage="Создание BTC-multisignature кошелька" />
+              <FormattedMessage
+                id="BTCMS_CreateWalletTitle"
+                defaultMessage="Создание BTC-multisignature кошелька"
+              />
             </h1>
-            {action === 'linkready' && <h2><FormattedMessage id="BTCMS_CreateWalletLinkReady" defaultMessage="Кошелек создан. Отправьте эту ссылку второму владельцу для подтверждения" /></h2>}
-            {action === 'ready' && <h2><FormattedMessage id="BTCMS_CreateWalletReady" defaultMessage="Кошелек создан" /></h2>}
+            {action === 'linkready' && (
+              <h2>
+                <FormattedMessage
+                  id="BTCMS_CreateWalletLinkReady"
+                  defaultMessage="Кошелек создан. Отправьте эту ссылку второму владельцу для подтверждения"
+                />
+              </h2>
+            )}
+            {action === 'ready' && (
+              <h2>
+                <FormattedMessage id="BTCMS_CreateWalletReady" defaultMessage="Кошелек создан" />
+              </h2>
+            )}
             {action === 'linkready' && <span>{joinLink}</span>}
             <div>
               <Button brand onClick={this.handleGoToWallet}>
-                <FormattedMessage id="BTCMS_CreateWalletReadyButton" defaultMessage="Готово. Открыть кошелек" />
+                <FormattedMessage
+                  id="BTCMS_CreateWalletReadyButton"
+                  defaultMessage="Готово. Открыть кошелек"
+                />
               </Button>
             </div>
           </Fragment>
-        }
+        )}
       </section>
     )
   }
