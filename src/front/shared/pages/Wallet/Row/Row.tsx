@@ -636,7 +636,6 @@ export default class Row extends Component<any, any> {
       activeFiat,
       isDark,
       multisigStatus,
-    //@ts-ignore
     } = this.props
 
     const {
@@ -657,7 +656,7 @@ export default class Row extends Component<any, any> {
     const isWidgetBuild = config && config.isWidget
 
     if (itemData.infoAboutCurrency && itemData.infoAboutCurrency.price_fiat) {
-      currencyFiatBalance = new BigNumber(balance).multipliedBy(itemData.infoAboutCurrency.price_fiat).toNumber()
+      currencyFiatBalance = new BigNumber(balance).multipliedBy(itemData.infoAboutCurrency.price_fiat).dp(2, BigNumber.ROUND_FLOOR).toNumber()
     }
 
     let hasHowToWithdraw = false
@@ -1118,7 +1117,7 @@ export default class Row extends Component<any, any> {
                 )}
                 {currencyFiatBalance && showBalance && !balanceError && (
                   <>
-                    <p>{new BigNumber(currencyFiatBalance).dp(2, BigNumber.ROUND_FLOOR).toString()}</p>
+                    <p>{currencyFiatBalance}</p>
                     <strong>{activeFiat}</strong>
                   </>
                 )}
