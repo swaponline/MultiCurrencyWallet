@@ -1064,7 +1064,7 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
       },
     },
   } = getState()
-  //@ts-ignore
+
   let feeFromAmount = new BigNumber(0)
 
   if (hasAdminFee) {
@@ -1072,14 +1072,13 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
       fee: adminFee,
       min: adminFeeMinValue,
     } = hasAdminFee
-    //@ts-ignore
+
     const adminFeeMin = new BigNumber(adminFeeMinValue)
-    //@ts-ignore
+
     feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
     if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
-    //@ts-ignore
-    feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber() // Admin fee in satoshi
+    feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
   }
   //@ts-ignore
   feeValue = feeValue || await btc.estimateFeeValue({
@@ -1094,8 +1093,7 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
 
   const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  //@ts-ignore
-  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
+  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount.toNumber()
 
   const p2ms = bitcoin.payments.p2ms({
     m: 2,
@@ -1185,7 +1183,7 @@ const sendSMSProtectedV4 = async ({ from, to, amount, feeValue, speed } = {}) =>
       },
     },
   } = getState()
-//@ts-ignore
+
   let feeFromAmount = new BigNumber(0)
 
   if (hasAdminFee) {
@@ -1193,16 +1191,16 @@ const sendSMSProtectedV4 = async ({ from, to, amount, feeValue, speed } = {}) =>
       fee: adminFee,
       min: adminFeeMinValue,
     } = hasAdminFee
-//@ts-ignore
+
     const adminFeeMin = new BigNumber(adminFeeMinValue)
-//@ts-ignore
+
     feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
     if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
 
     feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
   }
-//@ts-ignore
+
   feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, method: 'send_2fa' })
 
 
