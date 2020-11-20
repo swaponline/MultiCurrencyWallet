@@ -16,17 +16,17 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import BigNumber from 'bignumber.js'
 
-
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })
 export default class RowHistory extends Component<any, any> {
-
   static propTypes = {
     row: PropTypes.object,
   }
 
   tryRefund = (timeLeft) => {
-    const { row: { id } } = this.props
+    const {
+      row: { id },
+    } = this.props
 
     if (timeLeft > 0) {
       return
@@ -39,18 +39,19 @@ export default class RowHistory extends Component<any, any> {
         state: { isFinished, isRefunded, step, scriptBalance, isEthContractFunded },
         swap: { sellCurrency },
       } = flow
-      let isPayed = 5, isEmptyBalance = false;
-      if(sellCurrency === 'BTC'){
+      let isPayed = 5,
+        isEmptyBalance = false
+      if (sellCurrency === 'BTC') {
         isPayed = sellCurrency === 'BTC' ? 4 : 5
         isEmptyBalance = sellCurrency === 'BTC' ? scriptBalance === 0 : !isEthContractFunded
       }
 
-      if(sellCurrency === 'GHOST'){
+      if (sellCurrency === 'GHOST') {
         isPayed = sellCurrency === 'GHOST' ? 4 : 5
         isEmptyBalance = sellCurrency === 'GHOST' ? scriptBalance === 0 : !isEthContractFunded
       }
 
-      if(sellCurrency === 'NEXT'){
+      if (sellCurrency === 'NEXT') {
         isPayed = sellCurrency === 'NEXT' ? 4 : 5
         isEmptyBalance = sellCurrency === 'NEXT' ? scriptBalance === 0 : !isEthContractFunded
       }
@@ -60,10 +61,9 @@ export default class RowHistory extends Component<any, any> {
         return
       }
 
-      flow.tryRefund()
-        .then((result) => {
-          console.log('refunded', result)
-        })
+      flow.tryRefund().then((result) => {
+        console.log('refunded', result)
+      })
     } catch (err) {
       console.error(`RefundError`, err)
     }
@@ -74,16 +74,21 @@ export default class RowHistory extends Component<any, any> {
   }
   componentDidMount() {
     const {
-      btcScriptValues, ltcScriptValues,
-      usdtScriptValues, scriptValues, ghostScriptValues, nextScriptValues
+      btcScriptValues,
+      ltcScriptValues,
+      usdtScriptValues,
+      scriptValues,
+      ghostScriptValues,
+      nextScriptValues,
     } = this.props.row
 
-    const values  = btcScriptValues
-      || ltcScriptValues
-      || usdtScriptValues
-      || ghostScriptValues
-      || nextScriptValues
-      || scriptValues
+    const values =
+      btcScriptValues ||
+      ltcScriptValues ||
+      usdtScriptValues ||
+      ghostScriptValues ||
+      nextScriptValues ||
+      scriptValues
 
     if (!values) return
 
@@ -95,17 +100,30 @@ export default class RowHistory extends Component<any, any> {
   }
 
   render() {
-
-    const { row, intl: { locale } } = this.props
+    const {
+      row,
+      intl: { locale },
+    } = this.props
 
     if (row === 'undefined') {
       return null
     }
 
     let {
-      buyAmount, buyCurrency, sellAmount, btcScriptValues, scriptBalance, ghostScriptValues, nextScriptValues,
-      isRefunded, isMy, sellCurrency,
-      isFinished, id, scriptValues, isStoppedSwap,
+      buyAmount,
+      buyCurrency,
+      sellAmount,
+      btcScriptValues,
+      scriptBalance,
+      ghostScriptValues,
+      nextScriptValues,
+      isRefunded,
+      isMy,
+      sellCurrency,
+      isFinished,
+      id,
+      scriptValues,
+      isStoppedSwap,
     } = row
 
     const values = btcScriptValues || scriptValues || ghostScriptValues || nextScriptValues
@@ -130,27 +148,21 @@ export default class RowHistory extends Component<any, any> {
       <tr key={id}>
         <td>
           <span>You buy</span>
-          {
-            isMy ? (
-              `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`
-            ) : (
-              `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`
-            )
-          }
+          {isMy
+            ? `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`
+            : `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`}
         </td>
         <td>
           <span>You sell</span>
-          {
-            isMy ? (
-              `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`
-            ) : (
-              `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`
-            )
-          }
+          {isMy
+            ? `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`
+            : `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`}
         </td>
         <td>
           <span>Lock time</span>
-          {lockDateAndTime.split(' ').map((item, key) => <Fragment key={key}>{' '}{item}</Fragment>)}
+          {lockDateAndTime.split(' ').map((item, key) => (
+            <Fragment key={key}> {item}</Fragment>
+          ))}
         </td>
         <td>
           <span>Status</span>
@@ -161,22 +173,15 @@ export default class RowHistory extends Component<any, any> {
               [styles.statusStopped]: isStoppedSwap,
             })}
           >
-            {isFinished && (<FormattedMessage id="RowHistory94" defaultMessage="Finished" />)}
-            {isRefunded && (<FormattedMessage id="RowHistory77" defaultMessage="Refunded" />)}
-            {isStoppedSwap && (<FormattedMessage id="RowHistory139" defaultMessage="Stopped" />)}
-            {!isDeletedSwap && (canBeRefunded
-              ? (
-                //@ts-ignore
-                <Timer
-                  lockTime={values.lockTime * 1000}
-                  enabledButton={this.tryRefund}
-                />
-              )
-              : (
+            {isFinished && <FormattedMessage id="RowHistory94" defaultMessage="Finished" />}
+            {isRefunded && <FormattedMessage id="RowHistory77" defaultMessage="Refunded" />}
+            {isStoppedSwap && <FormattedMessage id="RowHistory139" defaultMessage="Stopped" />}
+            {!isDeletedSwap &&
+              (canBeRefunded ? (
+                <Timer lockTime={values.lockTime * 1000} enabledButton={this.tryRefund} />
+              ) : (
                 <FormattedMessage id="RowHistory76" defaultMessage="Refund not available" />
-              )
-            )
-            }
+              ))}
           </p>
         </td>
         <td>
