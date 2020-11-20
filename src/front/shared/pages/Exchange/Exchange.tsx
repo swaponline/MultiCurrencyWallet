@@ -269,7 +269,35 @@ export default class Exchange extends Component<any, any> {
     }
   }
 
+  getUserDefaultWallets() {
+    const defJson = localStorage.getItem(constants.localStorage.exchangeUserWallets)
+    if (defJson) {
+      try {
+        const json = JSON.parse(defJson)
+        return json
+      } catch (e) {}
+    }
+    return {}
+  }
+
+  getUserDefaultWallet(currency) {
+    const defWalletsJson = this.getUserDefaultWallets()
+    if (defWalletsJson) {
+      if (defWalletsJson && defWalletsJson[currency]) return defWalletsJson[currency]
+    }
+    return false
+  }
+
+  setUserDefaultWallet(currency, type) {
+    const defWalletsJson = this.getUserDefaultWallets()
+    defWalletsJson[currency] = type
+    localStorage.setItem(constants.localStorage.exchangeUserWallets, JSON.stringify(defWalletsJson))
+  }
+
+
   getDefaultWalletForCurrency(currency) {
+    const savedType = this.getUserDefaultWallet(currency)
+    if (savedType) return savedType
     if (COIN_DATA[currency]) {
       if (COIN_DATA[currency].model === COIN_MODEL.UTXO) return AddressType.Custom
       if (COIN_DATA[currency].type === COIN_TYPE.ETH_TOKEN) return AddressType.Metamask
@@ -338,7 +366,6 @@ export default class Exchange extends Component<any, any> {
     }, () => {
       if (!this._mounted) return
       getPairFees(sellCurrency, buyCurrency).then(async (pairFees) => {
-        console.log('pairFees', pairFees)
         //@ts-ignore: Property 'buy' does not exist on type 'unknown'
         const buyExRate = await this.fetchFiatExRate(pairFees.buy.coin)
         //@ts-ignore: Property 'sell' does not exist on type 'unknown'
@@ -964,7 +991,9 @@ export default class Exchange extends Component<any, any> {
     } else {
       this.setState({
         getCurrency: value,
+        getType: this.getDefaultWalletForCurrency(value.toUpperCase()),
         haveCurrency,
+        haveType: this.getDefaultWalletForCurrency(haveCurrency.toUpperCase()),
         pairFees: false,
       }, () => {
         this.fetchPairFeesAndBalances()
@@ -988,7 +1017,9 @@ export default class Exchange extends Component<any, any> {
     } else {
       this.setState({
         haveCurrency: value,
+        haveType: this.getDefaultWalletForCurrency(value.toUpperCase()),
         getCurrency,
+        getType: this.getDefaultWalletForCurrency(getCurrency.toUpperCase()),
         pairFees: false,
       }, () => {
         this.fetchPairFeesAndBalances()
@@ -1008,18 +1039,21 @@ export default class Exchange extends Component<any, any> {
     const { type, value, currency } = addressData;
 
     console.log('Exchange: applyAddress', addressRole, addressData)
+    this.setUserDefaultWallet(currency.toUpperCase(), type)
     //@ts-ignore
     feedback.exchangeForm.selectedAddress(`${addressRole} ${currency.toUpperCase()} ${type}`)
 
     if (addressRole === AddressRole.Send) {
 
       this.setState({
-        fromAddress: addressData
+        fromAddress: addressData,
+        haveType: type,
       })
     }
     if (addressRole === AddressRole.Receive) {
       this.setState({
-        toAddress: addressData
+        toAddress: addressData,
+        getType: type,
       })
     }
   };
