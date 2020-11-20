@@ -18,7 +18,6 @@ import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import config from 'helpers/externalConfig'
 
-
 const title = defineMessages({
   Import: {
     id: 'Import',
@@ -29,7 +28,6 @@ const title = defineMessages({
 @injectIntl
 @cssModules(styles)
 export default class ImportKeys extends Component<any, any> {
-
   state = {
     ethKey: '',
     btcKey: '',
@@ -139,7 +137,7 @@ export default class ImportKeys extends Component<any, any> {
       const { onCloseLink } = this.state
       const { isImportedBtc, isImportedEth } = this.state
 
-      if ([isImportedBtc, isImportedEth].filter(i => i).length > 1) {
+      if ([isImportedBtc, isImportedEth].filter((i) => i).length > 1) {
         this.handleGoTo(links.home)
       } else {
         this.handleGoTo(onCloseLink)
@@ -166,8 +164,12 @@ export default class ImportKeys extends Component<any, any> {
 
   render() {
     const {
-      isSubmittedEth, isSubmittedBtc,
-      isImportedEth, isImportedBtc, isDisabled, keySave,
+      isSubmittedEth,
+      isSubmittedBtc,
+      isImportedEth,
+      isImportedBtc,
+      isDisabled,
+      keySave,
     } = this.state
 
     const { intl, data } = this.props
@@ -175,31 +177,58 @@ export default class ImportKeys extends Component<any, any> {
     const linked = Link.all(this, 'ethKey', 'btcKey')
 
     if (isSubmittedEth) {
-      linked.ethKey.check((value) => value !== '', <FormattedMessage id="importkeys172" defaultMessage="Please enter ETH private key" />)
-      linked.ethKey.check((value) => value.length > 40, <FormattedMessage id="importkeys173" defaultMessage="Please valid ETH private key" />)
+      linked.ethKey.check(
+        (value) => value !== '',
+        <FormattedMessage id="importkeys172" defaultMessage="Please enter ETH private key" />
+      )
+      linked.ethKey.check(
+        (value) => value.length > 40,
+        <FormattedMessage id="importkeys173" defaultMessage="Please valid ETH private key" />
+      )
     }
 
     if (isSubmittedBtc) {
-      linked.btcKey.check((value) => value !== '', <FormattedMessage id="importkeys118" defaultMessage="Please enter BTC private key" />)
-      linked.btcKey.check((value) => value.length > 27, <FormattedMessage id="importkeys119" defaultMessage="Please valid BTC private key" />)
-      linked.btcKey.check(() =>
-        this.handleBtcImportKey(), <FormattedMessage id="importkeys190" defaultMessage="Something went wrong. Check your private key, network of this address and etc." />)
+      linked.btcKey.check(
+        (value) => value !== '',
+        <FormattedMessage id="importkeys118" defaultMessage="Please enter BTC private key" />
+      )
+      linked.btcKey.check(
+        (value) => value.length > 27,
+        <FormattedMessage id="importkeys119" defaultMessage="Please valid BTC private key" />
+      )
+      linked.btcKey.check(
+        () => this.handleBtcImportKey(),
+        <FormattedMessage
+          id="importkeys190"
+          defaultMessage="Something went wrong. Check your private key, network of this address and etc."
+        />
+      )
     }
 
     return (
       /*
       //@ts-ignore */
-      <Modal name={this.props.name} title={intl.formatMessage(title.Import)} data={data} onClose={this.state.onClose}>
+      <Modal
+        name={this.props.name}
+        title={intl.formatMessage(title.Import)}
+        data={data}
+        //@ts-ignore */
+        onClose={this.state.onClose}
+      >
         <div styleName="modal" className="ym-hide-content">
           <p>
-            <FormattedMessage id="ImportKeys107" defaultMessage="This procedure will rewrite your private key. If you are not sure about it, we recommend to press cancel" />
+            <FormattedMessage
+              id="ImportKeys107"
+              defaultMessage="This procedure will rewrite your private key. If you are not sure about it, we recommend to press cancel"
+            />
           </p>
           {(!config.opts.curEnabled || config.opts.curEnabled.eth) && (
             <>
-              {/*
-              //@ts-ignore */}
               <FieldLabel positionStatic>
-                <FormattedMessage id="ImportKeys110" defaultMessage="Please enter ETH private key" />
+                <FormattedMessage
+                  id="ImportKeys110"
+                  defaultMessage="Please enter ETH private key"
+                />
               </FieldLabel>
               <Group
                 inputLink={linked.ethKey}
@@ -211,10 +240,11 @@ export default class ImportKeys extends Component<any, any> {
           )}
           {(!config.opts.curEnabled || config.opts.curEnabled.btc) && (
             <>
-              {/*
-              //@ts-ignore */}
               <FieldLabel positionStatic>
-                <FormattedMessage id="ImportKeys120" defaultMessage="Please enter BTC private key in WIF format" />
+                <FormattedMessage
+                  id="ImportKeys120"
+                  defaultMessage="Please enter BTC private key in WIF format"
+                />
               </FieldLabel>
               <Group
                 inputLink={linked.btcKey}
@@ -224,13 +254,14 @@ export default class ImportKeys extends Component<any, any> {
               />
             </>
           )}
-          {
-            !keySave && (
-              <span styleName="error">
-                <FormattedMessage id="errorImportKeys" defaultMessage=" Please save your private keys" />
-              </span>
-            )
-          }
+          {!keySave && (
+            <span styleName="error">
+              <FormattedMessage
+                id="errorImportKeys"
+                defaultMessage=" Please save your private keys"
+              />
+            </span>
+          )}
           <Button brand disabled={isDisabled} styleName="button" onClick={this.handleImportKeys}>
             <FormattedMessage id="ImportKeys130" defaultMessage="Confirm" />
           </Button>
