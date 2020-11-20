@@ -166,8 +166,8 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
     const {
       data: { unconfirmedBalance },
     } = this.props
-    //@ts-ignore
-    const balance = await actions.btcmultisig.getBalance()
+
+    const balance: any = await actions.btcmultisig.getBalance()
 
     const finalBalance =
       unconfirmedBalance !== undefined && unconfirmedBalance < 0
