@@ -42,14 +42,22 @@ import adminFee from 'helpers/adminFee'
 import feedback from 'shared/helpers/feedback'
 import metamask from 'helpers/metamask'
 
-
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @injectIntl
 @connect(
   ({
     currencies,
-    user: { ethData, btcData, ghostData, nextData, tokensData, activeFiat, isBalanceFetching, activeCurrency },
+    user: {
+      ethData,
+      btcData,
+      ghostData,
+      nextData,
+      tokensData,
+      activeFiat,
+      isBalanceFetching,
+      activeCurrency,
+    },
     ui: { dashboardModalsAllowed },
   }) => ({
     activeFiat,
@@ -63,7 +71,6 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 )
 @cssModules(styles, { allowMultiple: true })
 export default class WithdrawModal extends React.Component<any, any> {
-
   props: any
 
   static propTypes = {
@@ -78,12 +85,7 @@ export default class WithdrawModal extends React.Component<any, any> {
     super()
 
     const {
-      data: {
-        amount,
-        toAddress,
-        currency,
-        address: withdrawWallet,
-      },
+      data: { amount, toAddress, currency, address: withdrawWallet },
     } = data
 
     const currentActiveAsset = data.data
@@ -134,7 +136,10 @@ export default class WithdrawModal extends React.Component<any, any> {
     if (prevProps.data !== this.props.data || prevProps.items !== this.props.items) {
       this.setCurrenctActiveAsset()
     }
-    if (prevProps.isBalanceFetching != this.props.isBalanceFetching && prevProps.isBalanceFetching === true) {
+    if (
+      prevProps.isBalanceFetching != this.props.isBalanceFetching &&
+      prevProps.isBalanceFetching === true
+    ) {
       this.setBalanceOnState()
     }
   }
@@ -153,12 +158,14 @@ export default class WithdrawModal extends React.Component<any, any> {
   }
 
   fixDecimalCountETH = (amount) => {
-    if (this.props.data.currency === 'ETH' && (new BigNumber(amount).dp() > 18)) {
+    if (this.props.data.currency === 'ETH' && new BigNumber(amount).dp() > 18) {
       const amountInt = new BigNumber(amount).integerValue()
       const amountDecimal = new BigNumber(amount).mod(1)
 
       const amountIntStr = amountInt.toString()
-      const amountDecimalStr = new BigNumber(new BigNumber(amountDecimal).toPrecision(15)).toString().substring(1)
+      const amountDecimalStr = new BigNumber(new BigNumber(amountDecimal).toPrecision(15))
+        .toString()
+        .substring(1)
       const regexr = /[e+-]/g
 
       const result = amountIntStr + amountDecimalStr
@@ -195,9 +202,7 @@ export default class WithdrawModal extends React.Component<any, any> {
     } = this.props
     const {
       isEthToken,
-      wallet: {
-        address,
-      },
+      wallet: { address },
       wallet,
     } = this.state
 
@@ -237,28 +242,22 @@ export default class WithdrawModal extends React.Component<any, any> {
 
   setBalanceOnState = async () => {
     const {
-      wallet: {
-        currency,
-        address,
-      },
+      wallet: { currency, address },
     } = this.state
 
     const wallet = actions.user.getWithdrawWallet(currency, address)
 
-    const {
-      balance,
-      unconfirmedBalance,
-    } = wallet
+    const { balance, unconfirmedBalance } = wallet
 
     const finalBalance =
       unconfirmedBalance !== undefined && unconfirmedBalance < 0
         ? new BigNumber(balance).plus(unconfirmedBalance).toString()
         : balance
 
-    const ethBalance = (
-      metamask.isEnabled()
-      && metamask.isConnected()
-    ) ? metamask.getBalance() : await actions.eth.getBalance()
+    const ethBalance =
+      metamask.isEnabled() && metamask.isConnected()
+        ? metamask.getBalance()
+        : await actions.eth.getBalance()
 
     this.setState(() => ({
       balance: finalBalance,
@@ -282,13 +281,7 @@ export default class WithdrawModal extends React.Component<any, any> {
     //@ts-ignore
     feedback.withdraw.started()
 
-    const {
-      address: to,
-      amount,
-      ownTx,
-      usedAdminFee,
-      wallet,
-    } = this.state
+    const { address: to, amount, ownTx, usedAdminFee, wallet } = this.state
 
     const {
       data: { currency, address, invoice, onReady },
@@ -306,7 +299,7 @@ export default class WithdrawModal extends React.Component<any, any> {
     let sendOptions = {
       to,
       amount,
-      speed: 'fast'
+      speed: 'fast',
     }
 
     const adminFeeSize = usedAdminFee ? adminFee.calc(wallet.currency, amount) : 0
@@ -352,15 +345,10 @@ export default class WithdrawModal extends React.Component<any, any> {
       return
     }
 
-    if (wallet.isPinProtected
-      || wallet.isSmsProtected
-      || wallet.isUserProtected
-    ) {
+    if (wallet.isPinProtected || wallet.isSmsProtected || wallet.isUserProtected) {
       let nextStepModal = constants.modals.WithdrawBtcPin
-      if (wallet.isSmsProtected)
-        nextStepModal = constants.modals.WithdrawBtcSms
-      if (wallet.isUserProtected)
-        nextStepModal = constants.modals.WithdrawBtcMultisig
+      if (wallet.isSmsProtected) nextStepModal = constants.modals.WithdrawBtcSms
+      if (wallet.isUserProtected) nextStepModal = constants.modals.WithdrawBtcMultisig
 
       actions.modals.close(name)
       actions.modals.open(nextStepModal, {
@@ -377,7 +365,6 @@ export default class WithdrawModal extends React.Component<any, any> {
     await actions[currency.toLowerCase()]
       .send(sendOptions)
       .then(async (txRaw) => {
-
         actions.loader.hide()
         actions[currency.toLowerCase()].getBalance(currency)
         if (invoice) {
@@ -387,7 +374,7 @@ export default class WithdrawModal extends React.Component<any, any> {
 
         this.setState(() => ({
           isShipped: false,
-          error: false
+          error: false,
         }))
 
         if (onReady instanceof Function) {
@@ -465,9 +452,11 @@ export default class WithdrawModal extends React.Component<any, any> {
       data: { currency },
     } = this.props
 
-    let minFee = new BigNumber(isEthToken ? 0 : minAmount[getCurrencyKey(currency, false).toLowerCase()])
+    let minFee = new BigNumber(
+      isEthToken ? 0 : minAmount[getCurrencyKey(currency, false).toLowerCase()]
+    )
 
-    minFee = usedAdminFee ? (new BigNumber(minFee).plus(adminFee.calc(currency, balance))) : minFee
+    minFee = usedAdminFee ? new BigNumber(minFee).plus(adminFee.calc(currency, balance)) : minFee
 
     if (new BigNumber(minFee).isGreaterThan(balance)) {
       this.setState({
@@ -490,11 +479,7 @@ export default class WithdrawModal extends React.Component<any, any> {
   }
 
   isEthOrERC20() {
-    const {
-      ethBalance,
-      isEthToken,
-      tokenFee,
-    } = this.state
+    const { ethBalance, isEthToken, tokenFee } = this.state
 
     return isEthToken === true && ethBalance < tokenFee
   }
@@ -598,18 +583,17 @@ export default class WithdrawModal extends React.Component<any, any> {
       tokenFee,
     } = this.state
 
-    const {
-      name,
-      intl,
-      portalUI,
-      activeFiat,
-      activeCurrency,
-      dashboardView,
-    } = this.props
+    const { name, intl, portalUI, activeFiat, activeCurrency, dashboardView } = this.props
 
     const linked = Link.all(this, 'address', 'amount', 'ownTx', 'fiatAmount', 'amountRUB', 'amount')
 
-    const { currency, address: currentAddress, balance: currentBalance, infoAboutCurrency, invoice } = currentActiveAsset;
+    const {
+      currency,
+      address: currentAddress,
+      balance: currentBalance,
+      infoAboutCurrency,
+      invoice,
+    } = currentActiveAsset
 
     const currencyView = getCurrencyKey(currentActiveAsset.currency, true).toUpperCase()
     const selectedValueView = getCurrencyKey(selectedValue, true).toUpperCase()
@@ -618,7 +602,11 @@ export default class WithdrawModal extends React.Component<any, any> {
       // @ToDo - В будущем нужно убрать проверку только по типу монеты.
       // Старую проверку оставил, чтобы у старых пользователей не вывалились скрытые кошельки
 
-      return (!hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`)) || balance > 0
+      return (
+        (!hiddenCoinsList.includes(currency) &&
+          !hiddenCoinsList.includes(`${currency}:${address}`)) ||
+        balance > 0
+      )
     })
 
     tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
@@ -626,24 +614,34 @@ export default class WithdrawModal extends React.Component<any, any> {
     let dinamicFee = isEthToken ? 0 : minAmount[getCurrencyKey(currency, false).toLowerCase()]
     let defaultMinFee = dinamicFee // non-changing value in an amount warning
 
-    dinamicFee = (usedAdminFee) ? new BigNumber(dinamicFee).plus(adminFee.calc(currency, amount)).toNumber() : dinamicFee
+    dinamicFee = usedAdminFee
+      ? new BigNumber(dinamicFee).plus(adminFee.calc(currency, amount)).toNumber()
+      : dinamicFee
 
-    let allowedCriptoBalance: BigNumber = new BigNumber(balance).minus(defaultMinFee).dp(currentDecimals, BigNumber.ROUND_FLOOR)
-    let allowedUsdBalance: BigNumber = new BigNumber(allowedCriptoBalance as any * exCurrencyRate as number).dp(2, BigNumber.ROUND_FLOOR)
-    /* 
-    * for btc and btc-usd appears minus in start
-    * need delete this minus
-    */
-     allowedCriptoBalance = allowedCriptoBalance.isLessThan(0)
-       ? allowedCriptoBalance.absoluteValue()
-       : allowedCriptoBalance
- 
-     allowedUsdBalance = allowedUsdBalance.isLessThan(0)
-       ? allowedUsdBalance.absoluteValue()
-       : allowedUsdBalance
+    let allowedCriptoBalance: BigNumber = new BigNumber(balance)
+      .minus(defaultMinFee)
+      .dp(currentDecimals, BigNumber.ROUND_FLOOR)
+    let allowedUsdBalance: BigNumber = new BigNumber(
+      ((allowedCriptoBalance as any) * exCurrencyRate) as number
+    ).dp(2, BigNumber.ROUND_FLOOR)
+    /*
+     * for btc and btc-usd appears minus in start
+     * need delete this minus
+     */
+    allowedCriptoBalance = allowedCriptoBalance.isLessThan(0)
+      ? allowedCriptoBalance.absoluteValue()
+      : allowedCriptoBalance
 
-    const criptoValueIsOk = new BigNumber(linked.amount.pipe(this.handleAmount).value).isLessThanOrEqualTo(allowedCriptoBalance)
-    const usdValueIsOk = new BigNumber(linked.fiatAmount.pipe(this.handleAmount).value).isLessThanOrEqualTo(allowedUsdBalance)
+    allowedUsdBalance = allowedUsdBalance.isLessThan(0)
+      ? allowedUsdBalance.absoluteValue()
+      : allowedUsdBalance
+
+    const criptoValueIsOk = new BigNumber(
+      linked.amount.pipe(this.handleAmount).value
+    ).isLessThanOrEqualTo(allowedCriptoBalance)
+    const usdValueIsOk = new BigNumber(
+      linked.fiatAmount.pipe(this.handleAmount).value
+    ).isLessThanOrEqualTo(allowedUsdBalance)
 
     const isDisabled =
       !address ||
@@ -700,12 +698,13 @@ export default class WithdrawModal extends React.Component<any, any> {
       const DOT_CODE = 190
 
       if (
-        !(event.keyCode >= ZERO_CODE
-          && event.keyCode <= NINE_CODE
-          || event.keyCode === DOT_CODE
-          || event.keyCode === BACKSPACE_CODE
-          || event.keyCode === LEFT_ARROW
-          || event.keyCode === RIGHT_ARROW)
+        !(
+          (event.keyCode >= ZERO_CODE && event.keyCode <= NINE_CODE) ||
+          event.keyCode === DOT_CODE ||
+          event.keyCode === BACKSPACE_CODE ||
+          event.keyCode === LEFT_ARROW ||
+          event.keyCode === RIGHT_ARROW
+        )
       ) {
         event.preventDefault()
       }
@@ -716,7 +715,11 @@ export default class WithdrawModal extends React.Component<any, any> {
     const formRender = (
       <Fragment>
         {openScanCam && (
-          <QrReader openScan={this.openScan} handleError={this.handleError} handleScan={this.handleScan} />
+          <QrReader
+            openScan={this.openScan}
+            handleError={this.handleError}
+            handleScan={this.handleScan}
+          />
         )}
         {invoice && <InvoiceInfoBlock invoiceData={invoice} />}
         {!dashboardView && (
@@ -735,8 +738,6 @@ export default class WithdrawModal extends React.Component<any, any> {
 
         <div style={{ marginBottom: '40px' }}>
           <div styleName="customSelectContainer">
-            {/*
-            //@ts-ignore */}
             <FieldLabel>
               <FormattedMessage id="Withdrow559" defaultMessage="Отправить с кошелька " />
             </FieldLabel>
@@ -753,8 +754,6 @@ export default class WithdrawModal extends React.Component<any, any> {
           </div>
         </div>
         <div styleName="highLevel">
-          {/*
-          //@ts-ignore */}
           <FieldLabel>
             <FormattedMessage id="Withdrow1194" defaultMessage="Address " />{' '}
             <Tooltip id="WtH203">
@@ -779,26 +778,34 @@ export default class WithdrawModal extends React.Component<any, any> {
             withMargin
             openScan={this.openScan}
           />
-          {/* 
-          * show invalid value warning in address input
-          */}
+          {/*
+           * show invalid value warning in address input
+           */}
           {address && !this.addressIsCorrect() && (
             <div styleName="rednote bottom0">
-              <FormattedMessage id="WithdrawIncorectAddress" defaultMessage="Your address not correct" />
+              <FormattedMessage
+                id="WithdrawIncorectAddress"
+                defaultMessage="Your address not correct"
+              />
             </div>
           )}
         </div>
         <div styleName={`lowLevel ${isDark ? 'dark' : ''}`} style={{ marginBottom: '50px' }}>
           <div styleName="additionalСurrencies">
             <span
-              styleName={cx('additionalСurrenciesItem', { additionalСurrenciesItemActive: selectedValue.toUpperCase() === activeFiat })}
+              styleName={cx('additionalСurrenciesItem', {
+                additionalСurrenciesItemActive: selectedValue.toUpperCase() === activeFiat,
+              })}
               onClick={() => this.handleBuyCurrencySelect(activeFiat)}
             >
               {activeFiat}
             </span>
             <span styleName="delimiter"></span>
             <span
-              styleName={cx('additionalСurrenciesItem', { additionalСurrenciesItemActive: selectedValueView.toUpperCase() === currencyView.toUpperCase() })}
+              styleName={cx('additionalСurrenciesItem', {
+                additionalСurrenciesItemActive:
+                  selectedValueView.toUpperCase() === currencyView.toUpperCase(),
+              })}
               onClick={() => this.handleBuyCurrencySelect(currentActiveAsset.currency)}
             >
               {currencyView}
@@ -806,29 +813,26 @@ export default class WithdrawModal extends React.Component<any, any> {
           </div>
           <p styleName="balance">
             {amount > 0 && (
-              <FormattedMessage 
-                { ...labels[
-                  (selectedValue !== activeFiat)
-                    ? (isMobile)
+              <FormattedMessage
+                {...labels[
+                  selectedValue !== activeFiat
+                    ? isMobile
                       ? `balanceFiatMobile`
                       : `balanceFiatDesktop`
-                    : (isMobile)
-                      ? `balanceMobile`
-                      : `balanceDesktop`
+                    : isMobile
+                    ? `balanceMobile`
+                    : `balanceDesktop`
                 ]}
                 values={{
-                  amount: (selectedValue !== activeFiat)
-                    ? new BigNumber(fiatAmount).dp(2, BigNumber.ROUND_FLOOR)
-                    : new BigNumber(amount).dp(6, BigNumber.ROUND_FLOOR),
-                  currency: (selectedValue !== activeFiat)
-                    ? activeFiat
-                    : currencyView.toUpperCase(),
+                  amount:
+                    selectedValue !== activeFiat
+                      ? new BigNumber(fiatAmount).dp(2, BigNumber.ROUND_FLOOR)
+                      : new BigNumber(amount).dp(6, BigNumber.ROUND_FLOOR),
+                  currency: selectedValue !== activeFiat ? activeFiat : currencyView.toUpperCase(),
                 }}
               />
             )}
           </p>
-          {/*
-          //@ts-ignore */}
           <FieldLabel>
             <FormattedMessage id="Withdrow118" defaultMessage="Amount" />
           </FieldLabel>
@@ -836,13 +840,13 @@ export default class WithdrawModal extends React.Component<any, any> {
           <div styleName="group">
             {selectedValue === currentActiveAsset.currency ? (
               <Input
-                type='number'
+                type="number"
                 valueLink={linked.amount.pipe(this.handleAmount)}
                 onKeyDown={amountInputKeyDownCallback}
               />
             ) : (
               <Input
-                type='number'
+                type="number"
                 valueLink={linked.fiatAmount.pipe(this.handleDollarValue)}
                 onKeyDown={amountInputKeyDownCallback}
               />
@@ -852,28 +856,28 @@ export default class WithdrawModal extends React.Component<any, any> {
             */}
             {dashboardView && (
               <div styleName={'note'}>
-                { selectedValue === currentActiveAsset.currency ? (
-                    <FormattedMessage
-                      id="Withdrow170"
-                      defaultMessage="Maximum amount you can send is {allowedCriptoBalance} {currency}"
-                      values={{
-                        allowedCriptoBalance: `${allowedCriptoBalance}`,
-                        currency: `${getCurrencyKey(dataCurrency, true).toUpperCase()}`,
-                      }}
-                    />
-                  ) : (
-                    <FormattedMessage
-                      id="Withdrow171"
-                      defaultMessage="Maximum amount you can send is {allowedUsdBalance} USD"
-                      values={{
-                        allowedUsdBalance: `${allowedUsdBalance}`,
-                      }}
-                    />
-                   )
-                }{' '}{/* <- for indent before the tooltip */}
+                {selectedValue === currentActiveAsset.currency ? (
+                  <FormattedMessage
+                    id="Withdrow170"
+                    defaultMessage="Maximum amount you can send is {allowedCriptoBalance} {currency}"
+                    values={{
+                      allowedCriptoBalance: `${allowedCriptoBalance}`,
+                      currency: `${getCurrencyKey(dataCurrency, true).toUpperCase()}`,
+                    }}
+                  />
+                ) : (
+                  <FormattedMessage
+                    id="Withdrow171"
+                    defaultMessage="Maximum amount you can send is {allowedUsdBalance} USD"
+                    values={{
+                      allowedUsdBalance: `${allowedUsdBalance}`,
+                    }}
+                  />
+                )}{' '}
+                {/* <- for indent before the tooltip */}
                 <Tooltip id="WtH204">
                   <div style={{ maxWidth: '24em', textAlign: 'center' }}>
-                    <FormattedMessage 
+                    <FormattedMessage
                       id="WTH276"
                       defaultMessage="The amount should not exceed your{br} current balance minus mining fee"
                       values={{
@@ -890,7 +894,7 @@ export default class WithdrawModal extends React.Component<any, any> {
               </Button>
             </div>
             {!isMobile && (
-              <Tooltip id="Withdrow134" place='top' mark={false}>
+              <Tooltip id="Withdrow134" place="top" mark={false}>
                 <FormattedMessage
                   id="WithdrawButton32"
                   defaultMessage="When you click this button, in the field, an amount{br}equal to your balance minus the miners commission will appear"
@@ -906,7 +910,7 @@ export default class WithdrawModal extends React.Component<any, any> {
               <FormattedMessage
                 id="WithdrawModal263"
                 defaultMessage="You need {minAmount} ETH on your balance"
-                values={{ minAmount: `${(isEthToken) ? tokenFee : minAmount.eth}` }}
+                values={{ minAmount: `${isEthToken ? tokenFee : minAmount.eth}` }}
               />
             </div>
           )}
@@ -926,14 +930,17 @@ export default class WithdrawModal extends React.Component<any, any> {
                   <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
                 </Fragment>
               ) : (
-                  <Fragment>
-                    <FormattedMessage id="WithdrawModal111" defaultMessage="Send" /> {`${currency.toUpperCase()}`}
-                  </Fragment>
-                )}
+                <Fragment>
+                  <FormattedMessage id="WithdrawModal111" defaultMessage="Send" />{' '}
+                  {`${currency.toUpperCase()}`}
+                </Fragment>
+              )}
             </Button>
           </div>
         </div>
-        {usedAdminFee && isEthToken && <AdminFeeInfoBlock {...usedAdminFee} amount={amount} currency={currency} />}
+        {usedAdminFee && isEthToken && (
+          <AdminFeeInfoBlock {...usedAdminFee} amount={amount} currency={currency} />
+        )}
         {error && (
           <div styleName="rednote">
             <FormattedMessage
@@ -947,9 +954,7 @@ export default class WithdrawModal extends React.Component<any, any> {
               }}
             />
             <br />
-            {devErrorMessage && (
-              <span>Dev info: {devErrorMessage}</span>
-            )}
+            {devErrorMessage && <span>Dev info: {devErrorMessage}</span>}
           </div>
         )}
         {invoice && (
@@ -958,8 +963,6 @@ export default class WithdrawModal extends React.Component<any, any> {
             <div styleName="lowLevel" style={{ marginBottom: '50px' }}>
               <div styleName="groupField">
                 <div styleName="downLabel">
-                  {/*
-                  //@ts-ignore */}
                   <FieldLabel inRow>
                     <span styleName="mobileFont">
                       <FormattedMessage id="WithdrowOwnTX" defaultMessage="Или укажите TX" />
@@ -988,8 +991,11 @@ export default class WithdrawModal extends React.Component<any, any> {
                   <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
                 </Fragment>
               ) : (
-                  <FormattedMessage id="WithdrawModalInvoiceSaveTx" defaultMessage="Отметить как оплаченный" />
-                )}
+                <FormattedMessage
+                  id="WithdrawModalInvoiceSaveTx"
+                  defaultMessage="Отметить как оплаченный"
+                />
+              )}
             </Button>
           </Fragment>
         )}
@@ -1017,13 +1023,13 @@ export default class WithdrawModal extends React.Component<any, any> {
     return portalUI ? (
       formRender
     ) : (
-        <Modal
-          name={name}
-          onClose={this.handleClose}
-          title={`${intl.formatMessage(labels.withdrowModal)}${' '}${currency.toUpperCase()}`}
-        >
-          <div style={{ paddingBottom: '50px', paddingTop: '15px' }}>{formRender}</div>
-        </Modal>
-      )
+      <Modal
+        name={name}
+        onClose={this.handleClose}
+        title={`${intl.formatMessage(labels.withdrowModal)}${' '}${currency.toUpperCase()}`}
+      >
+        <div style={{ paddingBottom: '50px', paddingTop: '15px' }}>{formRender}</div>
+      </Modal>
+    )
   }
 }

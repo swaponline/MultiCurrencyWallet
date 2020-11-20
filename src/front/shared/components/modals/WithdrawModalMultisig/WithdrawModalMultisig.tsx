@@ -25,12 +25,11 @@ import typeforce from 'swap.app/util/typeforce'
 // import { isCoinAddress } from 'swap.app/util/typeforce'
 import minAmount from 'helpers/constants/minAmount'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
-import QrReader from "components/QrReader";
+import QrReader from 'components/QrReader'
 
 import redirectTo from 'helpers/redirectTo'
 import AdminFeeInfoBlock from 'components/AdminFeeInfoBlock/AdminFeeInfoBlock'
 import lsDataCache from 'helpers/lsDataCache'
-
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -38,12 +37,8 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 @connect(
   ({
     currencies,
-    user: {
-      btcData,
-      activeFiat,
-      btcMultisigSMSData,
-    },
-    ui: { dashboardModalsAllowed }
+    user: { btcData, activeFiat, btcMultisigSMSData },
+    ui: { dashboardModalsAllowed },
   }) => ({
     activeFiat,
     currencies: currencies.items,
@@ -53,7 +48,6 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 )
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
 export default class WithdrawModalMultisig extends React.Component<any, any> {
-
   props: any
 
   static propTypes = {
@@ -68,27 +62,19 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
     super()
 
     const {
-      data: {
-        amount,
-        toAddress,
-        currency
-      },
+      data: { amount, toAddress, currency },
       items,
     } = data
 
     //@ts-ignore
     const currentDecimals = constants.tokenDecimals.btcmultisig
-    const selectedItem = items.filter(item => item.currency === currency)[0]
+    const selectedItem = items.filter((item) => item.currency === currency)[0]
 
     let usedAdminFee = false
 
     let min = minAmount['btc_multisig_2fa']
 
-    if (config
-      && config.opts
-      && config.opts.fee
-      && config.opts.fee.btc
-    ) {
+    if (config && config.opts && config.opts.fee && config.opts.fee.btc) {
       usedAdminFee = config.opts.fee.btc
       if (usedAdminFee) {
         // miner fee + minimal admin fee
@@ -101,8 +87,8 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
       usedAdminFee,
       step: 'fillform',
       isShipped: false,
-      address: (toAddress) ? toAddress : '',
-      amount: (amount) ? amount : '',
+      address: toAddress ? toAddress : '',
+      amount: amount ? amount : '',
       code: '',
       minus: '',
       balance: selectedItem.balance || 0,
@@ -134,7 +120,9 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
 
   componentDidMount() {
     const { exCurrencyRate } = this.state
-    const { data: { currency } } = this.props
+    const {
+      data: { currency },
+    } = this.props
 
     this.setBalanceOnState(currency)
 
@@ -145,7 +133,9 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
   }
 
   getMinAmountForEthToken = () => {
-    const { data: { currency } } = this.props
+    const {
+      data: { currency },
+    } = this.props
     const { currentDecimals } = this.state
 
     let ethTokenMinAmount = '0.'
@@ -154,13 +144,11 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
       ethTokenMinAmount += '0'
     }
 
-    return ethTokenMinAmount += '1'
+    return (ethTokenMinAmount += '1')
   }
 
   actualyMinAmount = async () => {
-    const {
-      usedAdminFee,
-    } = this.state
+    const { usedAdminFee } = this.state
     //@ts-ignore
     let min = await helpers['btc'].estimateFeeValue({ method: 'send_2fa', speed: 'fast' })
     minAmount['btc_multisig_2fa'] = min
@@ -175,13 +163,16 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
   }
 
   setBalanceOnState = async (currency) => {
-    const { data: { unconfirmedBalance } } = this.props
+    const {
+      data: { unconfirmedBalance },
+    } = this.props
     //@ts-ignore
     const balance = await actions.btcmultisig.getBalance()
 
-    const finalBalance = unconfirmedBalance !== undefined && unconfirmedBalance < 0
-      ? new BigNumber(balance).plus(unconfirmedBalance).toString()
-      : balance
+    const finalBalance =
+      unconfirmedBalance !== undefined && unconfirmedBalance < 0
+        ? new BigNumber(balance).plus(unconfirmedBalance).toString()
+        : balance
     const ethBalance = await actions.eth.getBalance()
 
     this.setState(() => ({
@@ -191,9 +182,12 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
   }
 
   getFiatBalance = async () => {
-    const { data: { currency }, activeFiat } = this.props
+    const {
+      data: { currency },
+      activeFiat,
+    } = this.props
 
-    const exCurrencyRate = await actions.user.getExchangeRate(currency, activeFiat.toLowerCase());
+    const exCurrencyRate = await actions.user.getExchangeRate(currency, activeFiat.toLowerCase())
     this.fiatRates[currency] = exCurrencyRate
 
     this.setState(() => ({
@@ -202,26 +196,17 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
   }
 
   onFinishWithdraw = async (txId) => {
-    const {
-      amount,
-      address: to,
-    } = this.state
+    const { amount, address: to } = this.state
 
     const {
-      data: {
-        currency,
-        address,
-        balance,
-        invoice,
-        onReady
-      },
+      data: { currency, address, balance, invoice, onReady },
       name,
     } = this.props
 
-    actions.loader.hide();
+    actions.loader.hide()
 
     if (invoice) {
-      await actions.invoices.markInvoice(invoice.id, "ready", txId, address);
+      await actions.invoices.markInvoice(invoice.id, 'ready', txId, address)
     }
     this.setBalanceOnState(currency)
 
@@ -268,18 +253,17 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
   handleConfirmSMS = async () => {
     const { code } = this.state
     const { address: to, amount } = this.state
-    const { data: { currency, address, balance, invoice, onReady }, name } = this.props
+    const {
+      data: { currency, address, balance, invoice, onReady },
+      name,
+    } = this.props
 
     const result = await actions.btcmultisig.confirmSMSProtected(code)
     if (result && result.txID) {
       this.onFinishWithdraw(result.txID)
     } else {
       console.log(result)
-      if (result
-        && result.error
-        && (result.error == 'Fail broadcast')
-        && result.rawTX
-      ) {
+      if (result && result.error && result.error == 'Fail broadcast' && result.rawTX) {
         actions.btc.broadcastTx(result.rawTX).then(async ({ txid }) => {
           if (txid) {
             this.onFinishWithdraw(txid)
@@ -288,7 +272,13 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
               broadcastError: true,
               rawTx: result.rawTX,
               isShipped: false,
-              error: <FormattedMessage id="WithdrawSMS_BroadcastError" defaultMessage="Не удалось отправить транзакцию в сеть ({errorText})" values={{ errorText: `unknown` }} />,
+              error: (
+                <FormattedMessage
+                  id="WithdrawSMS_BroadcastError"
+                  defaultMessage="Не удалось отправить транзакцию в сеть ({errorText})"
+                  values={{ errorText: `unknown` }}
+                />
+              ),
             })
           }
         })
@@ -297,21 +287,10 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
   }
 
   handleSubmit = async () => {
-    const {
-      address: to,
-      amount,
-      ownTx,
-      rawTx,
-    } = this.state
+    const { address: to, amount, ownTx, rawTx } = this.state
 
     const {
-      data: {
-        currency,
-        address,
-        balance,
-        invoice,
-        onReady,
-      },
+      data: { currency, address, balance, invoice, onReady },
       name,
     } = this.props
 
@@ -355,27 +334,20 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
     if (result && result.answer === 'ok') {
       this.setState({
         isShipped: false,
-        rawTx: (result.rawTx) ? result.rawTx : rawTx,
+        rawTx: result.rawTx ? result.rawTx : rawTx,
         sendSmsStatus: 'sended',
       })
     } else {
       this.setState({
         isShipped: false,
         sendSmsStatus: 'offline',
-        rawTx: (result.rawTx) ? result.rawTx : rawTx,
+        rawTx: result.rawTx ? result.rawTx : rawTx,
       })
     }
   }
 
   sellAllBalance = async () => {
-    const {
-      amount,
-      balance,
-      currency,
-      isEthToken,
-      min,
-      usedAdminFee,
-    } = this.state
+    const { amount, balance, currency, isEthToken, min, usedAdminFee } = this.state
 
     const { data } = this.props
 
@@ -397,34 +369,38 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
     })
   }
 
-  isEthOrERC20() { }
+  isEthOrERC20() {}
 
   openScan = () => {
-    const { openScanCam } = this.state;
+    const { openScanCam } = this.state
 
     this.setState(() => ({
-      openScanCam: !openScanCam
-    }));
-  };
+      openScanCam: !openScanCam,
+    }))
+  }
 
   handleMnemonicSign = () => {
-    const {
-      mnemonic,
-      rawTx,
-      balance,
-      amount,
-      to,
-    } = this.state
+    const { mnemonic, rawTx, balance, amount, to } = this.state
 
     if (!mnemonic || !actions.btc.validateMnemonicWords(mnemonic.trim())) {
       this.setState({
-        error: <FormattedMessage id='WithdrawSMS_NotValidMnemonic' defaultMessage='Секретная фраза не валидна' />,
+        error: (
+          <FormattedMessage
+            id="WithdrawSMS_NotValidMnemonic"
+            defaultMessage="Секретная фраза не валидна"
+          />
+        ),
       })
       return
     }
     if (!actions.btcmultisig.checkSmsMnemonic(mnemonic.trim())) {
       this.setState({
-        error: <FormattedMessage id='WithdrawSMS_WrongMnemonic' defaultMessage='Не правильная секретная фраза' />,
+        error: (
+          <FormattedMessage
+            id="WithdrawSMS_WrongMnemonic"
+            defaultMessage="Не правильная секретная фраза"
+          />
+        ),
       })
       return
     }
@@ -435,37 +411,58 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
       broadcastError: false,
     })
 
-    actions.btcmultisig.signSmsMnemonicAndBuild(rawTx, mnemonic.trim()).then(async (txHex) => {
-      console.log('signed', txHex)
-      this.setState({
-        txHex,
-      })
-      actions.btc.broadcastTx(txHex).then(async ({ txid }) => {
-        if (txid) {
-          this.onFinishWithdraw(txid)
-        } else {
-          this.setState({
-            broadcastError: true,
-            isShipped: false,
-            error: <FormattedMessage id="WithdrawSMS_BroadcastError" defaultMessage="Не удалось отправить транзакцию в сеть ({errorText})" values={{ errorText: `unknown` }} />,
-          })
-        }
-      })
-        .catch((e) => {
-          console.error(e)
-          const errorText = e.res ? e.res.text : e.message;
-          this.setState({
-            broadcastError: true,
-            isShipped: false,
-            error: <FormattedMessage id="WithdrawSMS_BroadcastError" defaultMessage="Не удалось отправить транзакцию в сеть ({errorText})" values={{ errorText }} />,
-          })
+    actions.btcmultisig
+      .signSmsMnemonicAndBuild(rawTx, mnemonic.trim())
+      .then(async (txHex) => {
+        console.log('signed', txHex)
+        this.setState({
+          txHex,
         })
-    })
+        actions.btc
+          .broadcastTx(txHex)
+          .then(async ({ txid }) => {
+            if (txid) {
+              this.onFinishWithdraw(txid)
+            } else {
+              this.setState({
+                broadcastError: true,
+                isShipped: false,
+                error: (
+                  <FormattedMessage
+                    id="WithdrawSMS_BroadcastError"
+                    defaultMessage="Не удалось отправить транзакцию в сеть ({errorText})"
+                    values={{ errorText: `unknown` }}
+                  />
+                ),
+              })
+            }
+          })
+          .catch((e) => {
+            console.error(e)
+            const errorText = e.res ? e.res.text : e.message
+            this.setState({
+              broadcastError: true,
+              isShipped: false,
+              error: (
+                <FormattedMessage
+                  id="WithdrawSMS_BroadcastError"
+                  defaultMessage="Не удалось отправить транзакцию в сеть ({errorText})"
+                  values={{ errorText }}
+                />
+              ),
+            })
+          })
+      })
       .catch((e) => {
         console.log('fail sign tx by mnemonic')
         this.setState({
           isShipped: false,
-          error: <FormattedMessage id="WithdrawSMS_FailSignByMnemonic" defaultMessage="Не удалось подписать транзакцию" />,
+          error: (
+            <FormattedMessage
+              id="WithdrawSMS_FailSignByMnemonic"
+              defaultMessage="Не удалось подписать транзакцию"
+            />
+          ),
         })
       })
   }
@@ -482,21 +479,21 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
     })
   }
 
-  handleError = err => {
-    console.error(err);
-  };
+  handleError = (err) => {
+    console.error(err)
+  }
 
-  handleScan = data => {
+  handleScan = (data) => {
     if (data) {
-      const address = data.split(":")[1].split("?")[0];
-      const amount = data.split("=")[1];
+      const address = data.split(':')[1].split('?')[0]
+      const amount = data.split('=')[1]
       this.setState(() => ({
         address,
-        amount
-      }));
-      this.openScan();
+        amount,
+      }))
+      this.openScan()
     }
-  };
+  }
 
   addressIsCorrect() {
     const { address } = this.state
@@ -535,25 +532,20 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
 
     const {
       name,
-      data: {
-        currency,
-        invoice,
-      },
+      data: { currency, invoice },
       tokenItems,
       items,
       intl,
       portalUI,
     } = this.props
 
-    let {
-      min,
-      min: defaultMin,
-    } = this.state
+    let { min, min: defaultMin } = this.state
 
     if (usedAdminFee) {
       if (amount) {
         let feeFromAmount = new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount)
-        if (new BigNumber(usedAdminFee.min).isGreaterThan(feeFromAmount)) feeFromAmount = new BigNumber(usedAdminFee.min)
+        if (new BigNumber(usedAdminFee.min).isGreaterThan(feeFromAmount))
+          feeFromAmount = new BigNumber(usedAdminFee.min)
 
         min = new BigNumber(min).plus(feeFromAmount).toNumber() // Admin fee in satoshi
       }
@@ -564,16 +556,20 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
     const dataCurrency = currency.toUpperCase()
 
     const isDisabled =
-      !address || !amount || isShipped || ownTx
-      || !this.addressIsCorrect()
-      || new BigNumber(amount).isGreaterThan(balance)
-      || new BigNumber(amount).dp() > currentDecimals
+      !address ||
+      !amount ||
+      isShipped ||
+      ownTx ||
+      !this.addressIsCorrect() ||
+      new BigNumber(amount).isGreaterThan(balance) ||
+      new BigNumber(amount).dp() > currentDecimals
 
     const NanReplacement = balance || '...'
     const getFiat = amount * exCurrencyRate
 
     if (new BigNumber(amount).isGreaterThan(0)) {
-      linked.amount.check((value) => new BigNumber(value).isLessThanOrEqualTo(balance), (
+      linked.amount.check(
+        (value) => new BigNumber(value).isLessThanOrEqualTo(balance),
         <div style={{ width: '340px', fontSize: '12px' }}>
           <FormattedMessage
             id="Withdrow170"
@@ -584,7 +580,7 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
             }}
           />
         </div>
-      ))
+      )
     }
 
     if (this.state.amount < 0) {
@@ -601,7 +597,7 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
       },
       ownTxPlaceholder: {
         id: 'withdrawOwnTxPlaceholder',
-        defaultMessage: 'Если оплатили с другого источника'
+        defaultMessage: 'Если оплатили с другого источника',
       },
       smsPlaceholder: {
         id: 'withdrawSMSCodePlaceholder',
@@ -616,12 +612,14 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
     const formRender = (
       <Fragment>
         {openScanCam && (
-          <QrReader openScan={this.openScan} handleError={this.handleError} handleScan={this.handleScan} />
+          <QrReader
+            openScan={this.openScan}
+            handleError={this.handleError}
+            handleScan={this.handleScan}
+          />
         )}
-        {invoice &&
-          <InvoiceInfoBlock invoiceData={invoice} />
-        }
-        {step === 'mnemonicSign' &&
+        {invoice && <InvoiceInfoBlock invoiceData={invoice} />}
+        {step === 'mnemonicSign' && (
           <Fragment>
             <p styleName="notice dashboardViewNotice">
               <FormattedMessage
@@ -630,10 +628,11 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
               />
             </p>
             <div styleName="highLevel" className="ym-hide-content">
-              {/*
-              //@ts-ignore */}
-              <FieldLabel label>
-                <FormattedMessage id="registerSMSModalWords" defaultMessage="Секретная фраза (12 слов):" />
+              <FieldLabel>
+                <FormattedMessage
+                  id="registerSMSModalWords"
+                  defaultMessage="Секретная фраза (12 слов):"
+                />
               </FieldLabel>
               <Input
                 styleName="input"
@@ -643,38 +642,50 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
               />
             </div>
             {error && <div styleName="rednotes">{error}</div>}
-            <Button styleName="buttonFull" big blue fullWidth disabled={isShipped} onClick={this.handleMnemonicSign}>
-              {isShipped
-                ? <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
-                : <FormattedMessage id="btcSMSProtectedSignByMnemonic" defaultMessage="Использовать секретную фразу" />
-              }
+            <Button
+              styleName="buttonFull"
+              big
+              blue
+              fullWidth
+              disabled={isShipped}
+              onClick={this.handleMnemonicSign}
+            >
+              {isShipped ? (
+                <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
+              ) : (
+                <FormattedMessage
+                  id="btcSMSProtectedSignByMnemonic"
+                  defaultMessage="Использовать секретную фразу"
+                />
+              )}
             </Button>
             <hr />
             <p styleName="notice mnemonicUseNote dashboardViewNotice">
-              <FormattedMessage id="WithdrawSMS_UseSMSNote" defaultMessage="Так-же вы можете использовать смс-код, отправленный на привязанный номер телефона" />
+              <FormattedMessage
+                id="WithdrawSMS_UseSMSNote"
+                defaultMessage="Так-же вы можете использовать смс-код, отправленный на привязанный номер телефона"
+              />
             </p>
             <Button styleName="useAuthMethodButton" blue onClick={this.handleSwitchToSms}>
               <FormattedMessage id="WithdrawSMS_UseSMS" defaultMessage="Использовать смс-код" />
             </Button>
           </Fragment>
-        }
-        {step === 'fillform' &&
+        )}
+        {step === 'fillform' && (
           <Fragment>
             <p styleName="notice dashboardViewNotice">
               <FormattedMessage
                 id="Withdrow213"
                 defaultMessage="Please note: Fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction"
-                values={{ minAmount: `${min}`, br: <br />, data: `${dataCurrency}` }} />
+                values={{ minAmount: `${min}`, br: <br />, data: `${dataCurrency}` }}
+              />
             </p>
-            <div styleName="highLevel" style={{ marginBottom: "20px" }}>
-              {/*
-              //@ts-ignore */}
+            <div styleName="highLevel" style={{ marginBottom: '20px' }}>
               <FieldLabel inRow>
                 <span style={{ fontSize: '16px' }}>
                   <FormattedMessage id="Withdrow1194" defaultMessage="Address " />
-                </span>
-                {' '}
-                <Tooltip id="WtH203" >
+                </span>{' '}
+                <Tooltip id="WtH203">
                   <div style={{ textAlign: 'center' }}>
                     <FormattedMessage
                       id="WTH275"
@@ -697,7 +708,8 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
                 <div styleName="rednote">
                   <FormattedMessage
                     id="WithdrawIncorectAddress"
-                    defaultMessage="Your address not correct" />
+                    defaultMessage="Your address not correct"
+                  />
                 </div>
               )}
             </div>
@@ -705,8 +717,6 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
               <p styleName="balance">
                 {balance} {`BTC`}
               </p>
-              {/*
-              //@ts-ignore */}
               <FieldLabel>
                 <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
               </FieldLabel>
@@ -720,7 +730,7 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
                   fiat={getFiat.toFixed(2)}
                   onKeyDown={inputReplaceCommaWithDot}
                 />
-                <div style={{ marginLeft: "15px" }}>
+                <div style={{ marginLeft: '15px' }}>
                   <Button blue big onClick={this.sellAllBalance} data-tip data-for="Withdrow134">
                     <FormattedMessage id="Select210" defaultMessage="MAX" />
                   </Button>
@@ -734,7 +744,7 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
                   </ReactTooltip>
                 )}
                 {!linked.amount.error && (
-                  <div styleName={minus ? "rednote" : "note"}>
+                  <div styleName={minus ? 'rednote' : 'note'}>
                     <FormattedMessage
                       id="WithdrawModal256"
                       defaultMessage="No less than {minAmount}"
@@ -752,10 +762,10 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
                       <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
                     </Fragment>
                   ) : (
-                      <Fragment>
-                        <FormattedMessage id="WithdrawModal111" defaultMessage="Send" />
-                      </Fragment>
-                    )}
+                    <Fragment>
+                      <FormattedMessage id="WithdrawModal111" defaultMessage="Send" />
+                    </Fragment>
+                  )}
                 </Button>
               </div>
               <div styleName="actionBtn">
@@ -766,30 +776,29 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
                 </Button>
               </div>
             </div>
-            {
-              error && (
-                <div styleName="rednote">
-                  <FormattedMessage
-                    id="WithdrawModalErrorSend"
-                    defaultMessage="{errorName} {currency}:{br}{errorMessage}"
-                    values={{
-                      errorName: intl.formatMessage(error.name),
-                      errorMessage: intl.formatMessage(error.message),
-                      br: <br />,
-                      currency: `${currency}`,
-                    }}
-                  />
-                </div>
-              )
-            }
-            {invoice &&
+            {error && (
+              <div styleName="rednote">
+                <FormattedMessage
+                  id="WithdrawModalErrorSend"
+                  defaultMessage="{errorName} {currency}:{br}{errorMessage}"
+                  values={{
+                    errorName: intl.formatMessage(error.name),
+                    errorMessage: intl.formatMessage(error.message),
+                    br: <br />,
+                    currency: `${currency}`,
+                  }}
+                />
+              </div>
+            )}
+            {invoice && (
               <Fragment>
                 <hr />
-                <div styleName={`lowLevel ${isDark ? 'dark' : ''}`} style={{ marginBottom: '50px' }}>
+                <div
+                  styleName={`lowLevel ${isDark ? 'dark' : ''}`}
+                  style={{ marginBottom: '50px' }}
+                >
                   <div styleName="groupField">
                     <div styleName="downLabel">
-                      {/*
-                      //@ts-ignore */}
                       <FieldLabel inRow>
                         <span styleName="mobileFont">
                           <FormattedMessage id="WithdrowOwnTX" defaultMessage="Или укажите TX" />
@@ -805,29 +814,34 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
                     />
                   </div>
                 </div>
-                <Button styleName="buttonFull" big blue fullWidth disabled={(!(ownTx) || isShipped)} onClick={this.handleSubmit}>
-                  {isShipped
-                    ? (
-                      <Fragment>
-                        <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
-                      </Fragment>
-                    )
-                    : (
-                      <FormattedMessage id="WithdrawModalInvoiceSaveTx" defaultMessage="Отметить как оплаченный" />
-                    )
-                  }
+                <Button
+                  styleName="buttonFull"
+                  big
+                  blue
+                  fullWidth
+                  disabled={!ownTx || isShipped}
+                  onClick={this.handleSubmit}
+                >
+                  {isShipped ? (
+                    <Fragment>
+                      <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
+                    </Fragment>
+                  ) : (
+                    <FormattedMessage
+                      id="WithdrawModalInvoiceSaveTx"
+                      defaultMessage="Отметить как оплаченный"
+                    />
+                  )}
                 </Button>
               </Fragment>
-            }
+            )}
           </Fragment>
-        }
+        )}
 
-        {step === 'confirm' &&
+        {step === 'confirm' && (
           <Fragment>
             <div styleName="highLevel smsCodeHolder">
-              {/*
-              //@ts-ignore */}
-              <FieldLabel label>
+              <FieldLabel>
                 <FormattedMessage id="Withdrow2223" defaultMessage="SMS code" />
               </FieldLabel>
               <Input
@@ -839,15 +853,15 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
             </div>
             {sendSmsStatus === 'sending' && (
               <div styleName="smsServerStatus">
-                <FormattedMessage id="WithdrawSMS_SmsSending" defaultMessage="Отправка проверочного кода" />
+                <FormattedMessage
+                  id="WithdrawSMS_SmsSending"
+                  defaultMessage="Отправка проверочного кода"
+                />
               </div>
             )}
             {sendSmsStatus === 'sended' && (
               <div styleName="smsServerStatus">
-                <FormattedMessage
-                  id="WithdrawSMS_SmsSended"
-                  defaultMessage="Код отправлен"
-                />
+                <FormattedMessage id="WithdrawSMS_SmsSended" defaultMessage="Код отправлен" />
               </div>
             )}
             {sendSmsStatus === 'offline' && (
@@ -860,13 +874,16 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
             )}
             {linked.code.error && (
               <div styleName="rednotes smsServerStatus">
-                <FormattedMessage id="WithdrawModal2225" defaultMessage="Something went wrong, enter your current code please" />
+                <FormattedMessage
+                  id="WithdrawModal2225"
+                  defaultMessage="Something went wrong, enter your current code please"
+                />
               </div>
             )}
             <Button
               styleName="buttonFull confirmSmsCode"
               fullWidth
-              disabled={isShipped || (sendSmsStatus === 'sending') || (sendSmsStatus === 'offline')}
+              disabled={isShipped || sendSmsStatus === 'sending' || sendSmsStatus === 'offline'}
               big
               blue
               onClick={this.handleConfirmSMS}
@@ -875,18 +892,29 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
             </Button>
             <hr styleName="marginHr" />
             <p styleName="notice mnemonicUseNote dashboardViewNotice">
-              <FormattedMessage id="WithdrawSMS_MnemonicNote" defaultMessage="Если у вас нет доступа к телефону или не получается получить код, вы можете воспользовать секретной фразой" />
+              <FormattedMessage
+                id="WithdrawSMS_MnemonicNote"
+                defaultMessage="Если у вас нет доступа к телефону или не получается получить код, вы можете воспользовать секретной фразой"
+              />
             </p>
             <Button styleName="useAuthMethodButton" blue onClick={this.handleSwitchToMnemonic}>
-              <FormattedMessage id="WithdrawSMS_UseMnemonic" defaultMessage="Использовать секретную фразу" />
+              <FormattedMessage
+                id="WithdrawSMS_UseMnemonic"
+                defaultMessage="Использовать секретную фразу"
+              />
             </Button>
           </Fragment>
-        }
+        )}
       </Fragment>
     )
 
-    return (portalUI) ? formRender : (
-      <Modal name={name} title={`${intl.formatMessage(labels.withdrowModal)}${' '}${currency.toUpperCase()}`}>
+    return portalUI ? (
+      formRender
+    ) : (
+      <Modal
+        name={name}
+        title={`${intl.formatMessage(labels.withdrowModal)}${' '}${currency.toUpperCase()}`}
+      >
         {formRender}
       </Modal>
     )

@@ -10,7 +10,6 @@ import cssModules from 'react-css-modules'
 import styles from '../Styles/default.scss'
 import ownStyle from './RegisterPINProtected.scss'
 
-
 import { BigNumber } from 'bignumber.js'
 import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
@@ -48,7 +47,7 @@ const langs = defineMessages({
   },
   pleaseSaveMnemonicToContinue: {
     id: `${langPrefix}_SaveYourMnemonic`,
-    defaultMessage: `Пожалуйста сохраните свою секретную фразу.`
+    defaultMessage: `Пожалуйста сохраните свою секретную фразу.`,
   },
   buttonSaveMnemonic: {
     id: `${langPrefix}_ButtonSaveMnemonic`,
@@ -176,7 +175,6 @@ const langs = defineMessages({
   },
 })
 
-
 @injectIntl
 @connect(({ user: { btcData, btcMultisigPinData } }) => ({
   btcData,
@@ -184,30 +182,25 @@ const langs = defineMessages({
 }))
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
 export default class RegisterPINProtected extends React.Component<any, any> {
-
   props: any
 
   static propTypes = {
     name: PropTypes.string,
-    data: PropTypes.object
-  };
+    data: PropTypes.object,
+  }
 
   constructor(props) {
     super(props)
 
-
     const {
-      data: {
-        initStep,
-      },
+      data: { initStep },
     } = props
 
     const generatedKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated)
 
     const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
-    const mnemonicSaved = (mnemonic === `-`)
-    const useGeneratedKeyEnabled = !(!generatedKey)
-
+    const mnemonicSaved = mnemonic === `-`
+    const useGeneratedKeyEnabled = !!generatedKey
 
     let step = 'enterPinCode'
     if (useGeneratedKeyEnabled && !mnemonicSaved) step = 'saveMnemonicWords'
@@ -245,90 +238,104 @@ export default class RegisterPINProtected extends React.Component<any, any> {
   }
 
   handleRestoreWallet = async () => {
-    const {
-      mnemonic,
-    } = this.state
+    const { mnemonic } = this.state
 
-    this.setState({
-      error: false,
-      isShipped: true,
-    }, async () => {
-      if (!mnemonic || !actions.btc.validateMnemonicWords(mnemonic.trim())) {
+    this.setState(
+      {
+        error: false,
+        isShipped: true,
+      },
+      async () => {
+        if (!mnemonic || !actions.btc.validateMnemonicWords(mnemonic.trim())) {
+          this.setState({
+            error: <FormattedMessage {...langs.errorMnemonicInvalid} />,
+            isShipped: false,
+          })
+          return
+        }
+
+        if (!actions.btcmultisig.checkPinCanRestory(mnemonic.trim())) {
+          this.setState({
+            error: <FormattedMessage {...langs.errorMnemonicIncorrect} />,
+            isShipped: false,
+          })
+          return
+        }
+
+        await actions.btcmultisig.addPinWallet(mnemonic.trim())
+
+        this.generateRestoreInstruction()
+
         this.setState({
-          error: <FormattedMessage {...langs.errorMnemonicInvalid} />,
           isShipped: false,
+          step: 'ready',
         })
-        return
       }
-
-      if (!actions.btcmultisig.checkPinCanRestory(mnemonic.trim())) {
-        this.setState({
-          error: <FormattedMessage {...langs.errorMnemonicIncorrect} />,
-          isShipped: false,
-        })
-        return
-      }
-
-      await actions.btcmultisig.addPinWallet(mnemonic.trim())
-
-      this.generateRestoreInstruction()
-
-      this.setState({
-        isShipped: false,
-        step: 'ready',
-      })
-    })
+    )
   }
 
   handleCopyMnemonic = async () => {
-    this.setState({
-      isMnemonicCopied: true,
-    }, () => {
-      setTimeout(() => {
-        this.setState({
-          isMnemonicCopied: false,
-        })
-      }, 1000)
-    })
+    this.setState(
+      {
+        isMnemonicCopied: true,
+      },
+      () => {
+        setTimeout(() => {
+          this.setState({
+            isMnemonicCopied: false,
+          })
+        }, 1000)
+      }
+    )
   }
 
   handleCopyInstruction = async () => {
-    this.setState({
-      isInstructionCopied: true,
-    }, () => {
-      setTimeout(() => {
-        this.setState({
-          isInstructionCopied: false,
-        })
-      }, 1000)
-    })
+    this.setState(
+      {
+        isInstructionCopied: true,
+      },
+      () => {
+        setTimeout(() => {
+          this.setState({
+            isInstructionCopied: false,
+          })
+        }, 1000)
+      }
+    )
   }
 
   handleDownloadInstruction = async () => {
-    const {
-      restoreInstruction,
-    } = this.state
+    const { restoreInstruction } = this.state
 
-    this.setState({
-      isInstructionDownloaded: true,
-    }, () => {
-      const element = document.createElement('a')
-      const message = 'Check your browser downloads'
+    this.setState(
+      {
+        isInstructionDownloaded: true,
+      },
+      () => {
+        const element = document.createElement('a')
+        const message = 'Check your browser downloads'
 
-      element.setAttribute('href', `data:text/plaincharset=utf-8,${encodeURIComponent(restoreInstruction)}`)
-      element.setAttribute('download', `${window.location.hostname}_btc_sms_protected_keys_${moment().format('DD.MM.YYYY')}.txt`)
+        element.setAttribute(
+          'href',
+          `data:text/plaincharset=utf-8,${encodeURIComponent(restoreInstruction)}`
+        )
+        element.setAttribute(
+          'download',
+          `${window.location.hostname}_btc_sms_protected_keys_${moment().format('DD.MM.YYYY')}.txt`
+        )
 
-      element.style.display = 'none'
-      document.body.appendChild(element)
-      element.click()
-      document.body.removeChild(element)
+        element.style.display = 'none'
+        document.body.appendChild(element)
+        element.click()
+        document.body.removeChild(element)
 
-      setTimeout(() => {
-        this.setState({
-          isInstructionDownloaded: false,
-        })
-      }, 1000)
-    })
+        setTimeout(() => {
+          this.setState({
+            isInstructionDownloaded: false,
+          })
+        }, 1000)
+      }
+    )
   }
 
   handleUsePin = () => {
@@ -351,17 +358,20 @@ export default class RegisterPINProtected extends React.Component<any, any> {
   }
 
   handleGenerateMnemonic = async () => {
-    this.setState({
-      isMnemonicGenerated: true,
-      isMnemonicValid: true,
-      mnemonic: actions.btc.getRandomMnemonicWords(),
-    }, () => {
-      setTimeout(() => {
-        this.setState({
-          isMnemonicGenerated: false,
-        })
-      }, 1000)
-    })
+    this.setState(
+      {
+        isMnemonicGenerated: true,
+        isMnemonicValid: true,
+        mnemonic: actions.btc.getRandomMnemonicWords(),
+      },
+      () => {
+        setTimeout(() => {
+          this.setState({
+            isMnemonicGenerated: false,
+          })
+        }, 1000)
+      }
+    )
   }
 
   handleFinish = async () => {
@@ -387,14 +397,14 @@ export default class RegisterPINProtected extends React.Component<any, any> {
     actions.modals.open(constants.modals.SaveMnemonicModal, {
       onClose: () => {
         const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
-        const mnemonicSaved = (mnemonic === `-`)
-        const step = (mnemonicSaved) ? 'enterPhoneAndMnemonic' : 'saveMnemonicWords'
+        const mnemonicSaved = mnemonic === `-`
+        const step = mnemonicSaved ? 'enterPhoneAndMnemonic' : 'saveMnemonicWords'
 
         this.setState({
           mnemonicSaved,
           step,
         })
-      }
+      },
     })
   }
 
@@ -413,51 +423,46 @@ export default class RegisterPINProtected extends React.Component<any, any> {
   }
 
   generateRestoreInstruction = () => {
-    const {
-      mnemonic,
-      mnemonicWallet,
-      useGeneratedKey,
-      generatedKey,
-    } = this.state
+    const { mnemonic, mnemonicWallet, useGeneratedKey, generatedKey } = this.state
 
-    const {
-      btcData,
-      btcMultisigPinData,
-    } = this.props
+    const { btcData, btcMultisigPinData } = this.props
 
     let restoreInstruction = ''
 
     restoreInstruction = `Wallet address:\r\n`
-    restoreInstruction+= `${btcMultisigPinData.address}\r\n`
-    restoreInstruction+= `To withdraw funds create transaction using this code https://github.com/bitcoinjs/bitcoinjs-lib/blob/master/test/integration/transactions.spec.ts#L193\r\n`
-    restoreInstruction+= `\r\n`
-    restoreInstruction+= `Public keys for create Multisig (2of3) wallet:\r\n`
-    if (btcMultisigPinData.publicKeys[0]) restoreInstruction+=`${btcMultisigPinData.publicKeys[0].toString('Hex')}\r\n`
-    if (btcMultisigPinData.publicKeys[1]) restoreInstruction+=`${btcMultisigPinData.publicKeys[1].toString('Hex')}\r\n`
-    if (btcMultisigPinData.publicKeys[2]) restoreInstruction+=`${btcMultisigPinData.publicKeys[2].toString('Hex')}\r\n`
-    restoreInstruction+= `\r\n`
-    restoreInstruction+= `Hot wallet private key (WIF) (first of three for sign tx):\r\n`
-    restoreInstruction+= `Wallet delivery path from your secret phrase:\r\n`
-    restoreInstruction+= `m/44'/0'/0'/0/0\r\n`
-    restoreInstruction+= `${btcData.privateKey}\r\n`
-    restoreInstruction+= `*** (this private key stored in your browser)\r\n`
-    restoreInstruction+= `\r\n`
+    restoreInstruction += `${btcMultisigPinData.address}\r\n`
+    restoreInstruction += `To withdraw funds create transaction using this code https://github.com/bitcoinjs/bitcoinjs-lib/blob/master/test/integration/transactions.spec.ts#L193\r\n`
+    restoreInstruction += `\r\n`
+    restoreInstruction += `Public keys for create Multisig (2of3) wallet:\r\n`
+    if (btcMultisigPinData.publicKeys[0])
+      restoreInstruction += `${btcMultisigPinData.publicKeys[0].toString('Hex')}\r\n`
+    if (btcMultisigPinData.publicKeys[1])
+      restoreInstruction += `${btcMultisigPinData.publicKeys[1].toString('Hex')}\r\n`
+    if (btcMultisigPinData.publicKeys[2])
+      restoreInstruction += `${btcMultisigPinData.publicKeys[2].toString('Hex')}\r\n`
+    restoreInstruction += `\r\n`
+    restoreInstruction += `Hot wallet private key (WIF) (first of three for sign tx):\r\n`
+    restoreInstruction += `Wallet delivery path from your secret phrase:\r\n`
+    restoreInstruction += `m/44'/0'/0'/0/0\r\n`
+    restoreInstruction += `${btcData.privateKey}\r\n`
+    restoreInstruction += `*** (this private key stored in your browser)\r\n`
+    restoreInstruction += `\r\n`
     if (!useGeneratedKey) {
-      restoreInstruction+= `Secret mnemonic:\r\n`
-      restoreInstruction+= `${mnemonic}\r\n`
-      restoreInstruction+= `Wallet delivery path for mnemonic:\r\n`
-      restoreInstruction+= `m/44'/0'/0'/0/0\r\n`
-      restoreInstruction+= `Private key (WIF) of wallet, generated from mnemonic:\r\n`
-      restoreInstruction+= `(DELETE THIS LINE!) ${mnemonicWallet.WIF}\r\n`
-      restoreInstruction+= `*** (this private key does not stored anywhere! but in case if our  2fa server does down, you can withdraw your fond using this private key)\r\n`
+      restoreInstruction += `Secret mnemonic:\r\n`
+      restoreInstruction += `${mnemonic}\r\n`
+      restoreInstruction += `Wallet delivery path for mnemonic:\r\n`
+      restoreInstruction += `m/44'/0'/0'/0/0\r\n`
+      restoreInstruction += `Private key (WIF) of wallet, generated from mnemonic:\r\n`
+      restoreInstruction += `(DELETE THIS LINE!) ${mnemonicWallet.WIF}\r\n`
+      restoreInstruction += `*** (this private key does not stored anywhere! but in case if our  2fa server does down, you can withdraw your fond using this private key)\r\n`
     } else {
-      restoreInstruction+= `Second of three for sign tx:\r\n`
-      restoreInstruction+= `Wallet delivery path from your secret phrase:\r\n`
-      restoreInstruction+= `m/44'/0'/0'/0/1\r\n`
-      restoreInstruction+= `\r\n`
+      restoreInstruction += `Second of three for sign tx:\r\n`
+      restoreInstruction += `Wallet delivery path from your secret phrase:\r\n`
+      restoreInstruction += `m/44'/0'/0'/0/1\r\n`
+      restoreInstruction += `\r\n`
     }
-    restoreInstruction+= `If our service is unavailable, use a local copy of the wallet.\r\n`
-    restoreInstruction+= `https://swaponline.github.io/2fa_wallet.zip\r\n`
+    restoreInstruction += `If our service is unavailable, use a local copy of the wallet.\r\n`
+    restoreInstruction += `https://swaponline.github.io/2fa_wallet.zip\r\n`
 
     this.setState({
       restoreInstruction,
@@ -474,66 +479,69 @@ export default class RegisterPINProtected extends React.Component<any, any> {
       generatedKey,
     } = this.state
 
-    this.setState({
-      error: false,
-      isShipped: true,
-      pinServerOffline: false,
-      isWalletLockedOtherPin: false,
-    }, async () => {
-      if (!pinCode || pinCode.length < 4) {
-        this.setState({
-          error: <FormattedMessage { ...langs.youNotEnterPin } />,
-          isShipped: false,
-        })
-        return
-      }
-      if (pinCode != pinCodeConfirm) {
-        this.setState({
-          error: <FormattedMessage { ...langs.pinCodeNotEqueals } />,
-          isShipped: false,
-        })
-        return
-      }
-      const result = await actions.btcmultisig.register_PIN(
-        pinCode,
-        (mnemonic) ? mnemonic.trim() : false,
-        (useGeneratedKey && useGeneratedKeyEnabled) ? generatedKey : false
-      )
+    this.setState(
+      {
+        error: false,
+        isShipped: true,
+        pinServerOffline: false,
+        isWalletLockedOtherPin: false,
+      },
+      async () => {
+        if (!pinCode || pinCode.length < 4) {
+          this.setState({
+            error: <FormattedMessage {...langs.youNotEnterPin} />,
+            isShipped: false,
+          })
+          return
+        }
+        if (pinCode != pinCodeConfirm) {
+          this.setState({
+            error: <FormattedMessage {...langs.pinCodeNotEqueals} />,
+            isShipped: false,
+          })
+          return
+        }
+        const result = await actions.btcmultisig.register_PIN(
+          pinCode,
+          mnemonic ? mnemonic.trim() : false,
+          useGeneratedKey && useGeneratedKeyEnabled ? generatedKey : false
+        )
 
-      if (result && result.answer && result.answer == 'ok') {
-        this.generateRestoreInstruction()
-        this.setState({
-          isShipped: false,
-          step: 'ready',
-        })
-      } else {
-        if (result && result.error == 'Already registered') {
+        if (result && result.answer && result.answer == 'ok') {
           this.generateRestoreInstruction()
           this.setState({
             isShipped: false,
             step: 'ready',
           })
         } else {
-          if (result && result.error == 'This wallet already locked by other pin code') {
-            // Кошелек зарегистрирован на другой номер телефона
-            // Может быть так, что человек потерял телефон или забыл его
-            // Даем возможность подключить кошелек, чтобы если у клиента есть
-            // валидный mnemonic - он мог разблокировать средства
+          if (result && result.error == 'Already registered') {
+            this.generateRestoreInstruction()
             this.setState({
               isShipped: false,
-              isWalletLockedOtherPin: true,
+              step: 'ready',
             })
           } else {
-            const pinServerOffline = (result === false)
-            this.setState({
-              isShipped: false,
-              pinServerOffline,
-              error: (result && result.error) ? result.error : 'Unknown error',
-            })
+            if (result && result.error == 'This wallet already locked by other pin code') {
+              // Кошелек зарегистрирован на другой номер телефона
+              // Может быть так, что человек потерял телефон или забыл его
+              // Даем возможность подключить кошелек, чтобы если у клиента есть
+              // валидный mnemonic - он мог разблокировать средства
+              this.setState({
+                isShipped: false,
+                isWalletLockedOtherPin: true,
+              })
+            } else {
+              const pinServerOffline = result === false
+              this.setState({
+                isShipped: false,
+                pinServerOffline,
+                error: result && result.error ? result.error : 'Unknown error',
+              })
+            }
           }
         }
       }
-    })
+    )
   }
 
   render() {
@@ -559,16 +567,9 @@ export default class RegisterPINProtected extends React.Component<any, any> {
       showFinalInstruction,
     } = this.state
 
-    const {
-      name,
-      intl,
-      btcData,
-      btcMultisigPinData,
-    } = this.props
+    const { name, intl, btcData, btcMultisigPinData } = this.props
 
     const linked = Link.all(this, 'pinCode', 'pinCodeConfirm', 'mnemonic')
-
-
 
     return (
       <Modal name={name} title={`${intl.formatMessage(langs.registerPinModal)}`}>
@@ -578,19 +579,19 @@ export default class RegisterPINProtected extends React.Component<any, any> {
               <div styleName="content-overlay">
                 <p styleName="centerInfoBlock">
                   <strong>
-                    <FormattedMessage { ...langs.needSaveMnemonicToContinue } />
+                    <FormattedMessage {...langs.needSaveMnemonicToContinue} />
                   </strong>
                   <br />
-                  <FormattedMessage { ...langs.pleaseSaveMnemonicToContinue } />
+                  <FormattedMessage {...langs.pleaseSaveMnemonicToContinue} />
                 </p>
               </div>
 
               <div styleName="buttonsHolder buttonsHolder_2_buttons button-overlay">
                 <Button blue onClick={this.handleBeginSaveMnemonic}>
-                  <FormattedMessage { ...langs.buttonSaveMnemonic } />
+                  <FormattedMessage {...langs.buttonSaveMnemonic} />
                 </Button>
                 <Button gray onClick={this.handleClose}>
-                  <FormattedMessage { ...langs.buttonCancel } />
+                  <FormattedMessage {...langs.buttonCancel} />
                 </Button>
               </div>
             </Fragment>
@@ -605,9 +606,7 @@ export default class RegisterPINProtected extends React.Component<any, any> {
                 <FormattedMessage {...langs.restoryBottomMessage} />
               </p>
               <div styleName="highLevel" className="ym-hide-content">
-                {/*
-                //@ts-ignore */}
-                <FieldLabel label>
+                <FieldLabel>
                   <FormattedMessage {...langs.labelYourMnemonic} />
                 </FieldLabel>
                 <Input
@@ -640,10 +639,10 @@ export default class RegisterPINProtected extends React.Component<any, any> {
             <Fragment>
               <p styleName="centerInfoBlock">
                 <strong>
-                  <FormattedMessage { ...langs.enterPinCodeUpMessage } />
+                  <FormattedMessage {...langs.enterPinCodeUpMessage} />
                 </strong>
                 <br />
-                <FormattedMessage { ...langs.enterPinCodeBottomMessage } />
+                <FormattedMessage {...langs.enterPinCodeBottomMessage} />
               </p>
               {isWalletLockedOtherPin && (
                 <div styleName="rednotes pinInfoBlock">
@@ -651,9 +650,7 @@ export default class RegisterPINProtected extends React.Component<any, any> {
                 </div>
               )}
               <div styleName="highLevel" className="ym-hide-content">
-                {/*
-                //@ts-ignore */}
-                <FieldLabel label>
+                <FieldLabel>
                   <FormattedMessage {...langs.labelYourPin} />
                 </FieldLabel>
                 <Input
@@ -665,9 +662,7 @@ export default class RegisterPINProtected extends React.Component<any, any> {
                 />
               </div>
               <div styleName="highLevel" className="ym-hide-content">
-                {/*
-                //@ts-ignore */}
-                <FieldLabel label>
+                <FieldLabel>
                   <FormattedMessage {...langs.labelConfirmYourPin} />
                 </FieldLabel>
                 <Input
@@ -708,13 +703,20 @@ export default class RegisterPINProtected extends React.Component<any, any> {
               )}
             </Fragment>
           )}
-          {step === "ready" && (
+          {step === 'ready' && (
             <Fragment>
               <div styleName="highLevel">
                 <div>
                   <img styleName="finishImg" src={finishSvg} alt="finish" />
                 </div>
-                <span style={{ fontSize: "25px", display: "block", textAlign: "center", marginBottom: "40px" }}>
+                <span
+                  style={{
+                    fontSize: '25px',
+                    display: 'block',
+                    textAlign: 'center',
+                    marginBottom: '40px',
+                  }}
+                >
                   <FormattedMessage {...langs.finishMessage} />
                 </span>
               </div>
@@ -725,16 +727,21 @@ export default class RegisterPINProtected extends React.Component<any, any> {
                   </h1>
                   <div>
                     <pre>{restoreInstruction}</pre>
-                    <a styleName="link" target="_blank" href="https://github.com/bitcoinjs/bitcoinjs-lib/blob/master/test/integration/addresses.spec.ts">
+                    <a
+                      styleName="link"
+                      target="_blank"
+                      href="https://github.com/bitcoinjs/bitcoinjs-lib/blob/master/test/integration/addresses.spec.ts"
+                    >
                       <FormattedMessage {...langs.howToWithdraw} />
                     </a>
                   </div>
                   <div styleName="buttonsHolder">
-                    <CopyToClipboard
-                      text={restoreInstruction}
-                      onCopy={this.handleCopyInstruction}
-                    >
-                      <Button blue disabled={isInstructionCopied} onClick={this.handleCopyInstruction}>
+                    <CopyToClipboard text={restoreInstruction} onCopy={this.handleCopyInstruction}>
+                      <Button
+                        blue
+                        disabled={isInstructionCopied}
+                        onClick={this.handleCopyInstruction}
+                      >
                         {isInstructionCopied ? (
                           <FormattedMessage {...langs.buttonCopiedInstruction} />
                         ) : (
@@ -742,11 +749,15 @@ export default class RegisterPINProtected extends React.Component<any, any> {
                         )}
                       </Button>
                     </CopyToClipboard>
-                    <Button blue disabled={isInstructionDownloaded} onClick={this.handleDownloadInstruction}>
+                    <Button
+                      blue
+                      disabled={isInstructionDownloaded}
+                      onClick={this.handleDownloadInstruction}
+                    >
                       {isInstructionDownloaded ? (
                         <FormattedMessage {...langs.buttonDownloadingInstruction} />
                       ) : (
-                        <FormattedMessage {...langs.buttonDownloadInstruction}/>
+                        <FormattedMessage {...langs.buttonDownloadInstruction} />
                       )}
                     </Button>
                     <Button blue onClick={this.handleShareInstruction}>
@@ -764,6 +775,6 @@ export default class RegisterPINProtected extends React.Component<any, any> {
           )}
         </div>
       </Modal>
-    );
+    )
   }
 }
