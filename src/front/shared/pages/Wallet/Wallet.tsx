@@ -72,7 +72,8 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     }
     const tokens =
       config && config.isWidget
-        ? //@ts-ignore
+        ? // comment for ts-ignore
+          //@ts-ignore
           window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length
           ? widgetMultiTokens
           : [config.erc20token.toUpperCase()]
@@ -461,6 +462,7 @@ export default class Wallet extends Component<any, any> {
             //@ts-ignore
             locale:
               ipInfo.locale ||
+              //@ts-ignore
               (navigator.userLanguage || navigator.language || 'en-gb').split('-')[0],
             ip: ipInfo.ip,
           }
@@ -589,7 +591,9 @@ export default class Wallet extends Component<any, any> {
         //@ts-ignore
         fiatBalance:
           el.balance > 0 && el.infoAboutCurrency && el.infoAboutCurrency.price_fiat
-            ? BigNumber(el.balance)
+            ? // comment for ts-ignore
+              //@ts-ignore
+              BigNumber(el.balance)
                 .multipliedBy(el.infoAboutCurrency.price_fiat)
                 .dp(2, BigNumber.ROUND_FLOOR)
             : 0,
@@ -645,8 +649,8 @@ export default class Wallet extends Component<any, any> {
             {...this.props}
             goToСreateWallet={this.goToСreateWallet}
             multisigPendingCount={multisigPendingCount}
-            //@ts-ignore
             getExCurrencyRate={(currencySymbol, rate) =>
+              //@ts-ignore
               this.getExCurrencyRate(currencySymbol, rate)
             }
           />
