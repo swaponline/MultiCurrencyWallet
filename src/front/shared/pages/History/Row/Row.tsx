@@ -184,9 +184,7 @@ class Row extends React.PureComponent<any, any> {
       <Fragment>
         {direction === directionType ?
           <div styleName="amount">{`+ ${parseFloat(Number(value).toFixed(5))}`} {type.toUpperCase()}
-            {/*
-            //@ts-ignore */}
-            {txType === 'INVOICE' ? <span styleName="smallTooltip"><Tooltip>Invoice</Tooltip></span> : ''}
+            {txType === 'INVOICE' ? <span styleName="smallTooltip"><Tooltip id='RowTooltipInvoice'>Invoice</Tooltip></span> : ''}
           </div> :
           <div styleName="amount">{`- ${parseFloat(Number(value).toFixed(5))}`} {type.toUpperCase()}</div>
         }

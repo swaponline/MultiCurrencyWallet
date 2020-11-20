@@ -890,19 +890,15 @@ export default class WithdrawModal extends React.Component<any, any> {
               </Button>
             </div>
             {!isMobile && (
-              <>
-                {/* ignore ReactTooltip property 'type', because it keyword in TypeScript
-                //@ts-ignore */}
-                <ReactTooltip id="Withdrow134" type={`${isDark ? 'light' : 'dark'}`} effect="solid" place="top" styleName="r-tooltip">
-                  <FormattedMessage
-                    id="WithdrawButton32"
-                    defaultMessage="When you click this button, in the field, an amount{br}equal to your balance minus the miners commission will appear"
-                    values={{
-                      br: <br />,
-                    }}
-                  />
-                </ReactTooltip>
-              </>
+              <Tooltip id="Withdrow134" place='top' mark={false}>
+                <FormattedMessage
+                  id="WithdrawButton32"
+                  defaultMessage="When you click this button, in the field, an amount{br}equal to your balance minus the miners commission will appear"
+                  values={{
+                    br: <br />,
+                  }}
+                />
+              </Tooltip>
             )}
           </div>
           {this.isEthOrERC20() && (
