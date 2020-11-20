@@ -16,7 +16,6 @@ import styles from './DropDown.scss'
 
 import closeBtn from './images/close.svg'
 
-
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 @toggle()
 @cssModules(styles, { allowMultiple: true })
@@ -31,7 +30,7 @@ export default class DropDown extends Component<any, any> {
     isToggleActive: PropTypes.bool.isRequired, // @toggle
     toggleOpen: PropTypes.func.isRequired, // @toggle
     toggleClose: PropTypes.func.isRequired, // @toggle
-    notIteractable: PropTypes.bool
+    notIteractable: PropTypes.bool,
   }
 
   constructor({ initialValue, selectedValue }) {
@@ -41,7 +40,7 @@ export default class DropDown extends Component<any, any> {
       selectedValue: initialValue || selectedValue || 0,
       inputValue: '',
       infoAboutCurrency: '',
-      error: false
+      error: false,
     }
   }
 
@@ -59,7 +58,7 @@ export default class DropDown extends Component<any, any> {
     }
   }
 
-  handleOptionClick = item => {
+  handleOptionClick = (item) => {
     const { toggleClose, selectedValue, onSelect } = this.props
 
     // if there is no passed `selectedValue` then change it
@@ -75,7 +74,7 @@ export default class DropDown extends Component<any, any> {
     toggleClose()
   }
 
-  renderItem = item => {
+  renderItem = (item) => {
     const { itemRender } = this.props
 
     if (typeof itemRender === 'function') {
@@ -95,7 +94,9 @@ export default class DropDown extends Component<any, any> {
         const textToShow = selectedItem.title || selectedItem.fullTitle
         return (
           <div
-            styleName={`selectedItemInner ${selectedItem.disabled ? 'disabled' : ''} ${selectedItem.reduceSelectedItemText ? 'reducedLength': ''}`}
+            styleName={`selectedItemInner ${selectedItem.disabled ? 'disabled' : ''} ${
+              selectedItem.reduceSelectedItemText ? 'reducedLength' : ''
+            }`}
             //title={selectedItem.reduceSelectedItemText ? textToShow : ''}
           >
             {textToShow}
@@ -124,10 +125,7 @@ export default class DropDown extends Component<any, any> {
       arrowSide,
     } = this.props
 
-    const {
-      inputValue,
-      infoAboutCurrency,
-    } = this.state
+    const { inputValue, infoAboutCurrency } = this.state
 
     const dropDownStyleName = cx('dropDown', { active: isToggleActive })
     const linkedValue = Link.all(this, 'inputValue')
@@ -135,8 +133,8 @@ export default class DropDown extends Component<any, any> {
     let itemsFiltered = items
     if (inputValue) {
       itemsFiltered = items
-        .filter(item => item.name.includes(inputValue.toUpperCase()))
-        .filter(item => item.value !== selectedValue)
+        .filter((item) => item.name.includes(inputValue.toUpperCase()))
+        .filter((item) => item.value !== selectedValue)
     }
 
     const dropDownListStyles = ['select']
@@ -147,14 +145,14 @@ export default class DropDown extends Component<any, any> {
         onClickOutside={
           isToggleActive
             ? () => {
-              if (!disableSearch) {
-                //@ts-ignore
-                this.refs.searchInput.handleBlur()
-                linkedValue.inputValue.set('')
+                if (!disableSearch) {
+                  //@ts-ignore
+                  this.refs.searchInput.handleBlur()
+                  linkedValue.inputValue.set('')
+                }
+                this.toggle()
               }
-              this.toggle()
-            }
-            : () => { }
+            : () => {}
         }
       >
         <div styleName={`${dropDownStyleName} ${isDark ? 'dark' : ''}`} className={className}>
@@ -166,9 +164,7 @@ export default class DropDown extends Component<any, any> {
             `}
             onClick={notIteractable ? () => null : this.toggle}
           >
-            {!notIteractable &&
-              <div styleName={`arrow ${arrowSide === 'left' ? 'left' : ''}`}
-            />}
+            {!notIteractable && <div styleName={`arrow ${arrowSide === 'left' ? 'left' : ''}`} />}
             {isToggleActive && !disableSearch ? (
               <Input
                 styleName="searchInput"
@@ -184,10 +180,10 @@ export default class DropDown extends Component<any, any> {
           {isToggleActive && (
             <div styleName={dropDownListStyles.join(` `)}>
               {name ? <span styleName="listName">{name}</span> : ''}
-              {itemsFiltered.map(item => {
+              {itemsFiltered.map((item) => {
                 let inneedData = null
                 if (infoAboutCurrency) {
-                  inneedData = infoAboutCurrency.find(el => el.name === item.name)
+                  inneedData = infoAboutCurrency.find((el) => el.name === item.name)
                 }
                 if (item.hidden) {
                   return
@@ -217,8 +213,6 @@ export default class DropDown extends Component<any, any> {
             <img src={closeBtn} alt="" />
           </button>
           <div styleName="dropDownLabel">
-            {/*
-            //@ts-ignore */}
             <FieldLabel inRow inDropDown>
               <strong>{label}</strong>
               &nbsp;
