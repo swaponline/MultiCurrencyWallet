@@ -116,12 +116,13 @@ export default class AddressSelect extends Component<any, any> {
     const {
       currency,
       hasError = false,
+      selectedType = false,
     } = props
 
     this.state = {
       currency,
       hasError,
-      selectedType: 'placeholder',
+      selectedType: selectedType || 'placeholder',
       walletAddressFocused: false,
       customAddress: '',
       isMetamaskConnected: metamask.isConnected(),
@@ -192,11 +193,13 @@ export default class AddressSelect extends Component<any, any> {
   componentDidUpdate() {
     const {
       currency: newCurrency,
+      selectedType,
       hasError = false,
     } = this.props
 
     const {
       currency: oldCurrency,
+      selectedType: oldSelectedType,
       hasError: oldHasError = false,
     } = this.state
 
@@ -204,7 +207,7 @@ export default class AddressSelect extends Component<any, any> {
       this.setState({
         currency: newCurrency,
         hasError,
-        selectedType: 'placeholder',
+        selectedType,
         customAddress: '',
       })
     }

@@ -39,6 +39,8 @@ import metamask from 'helpers/metamask'
 
 import { getPairFees } from 'helpers/getPairFees'
 
+import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
+
 
 
 const allowedCoins = [
@@ -235,7 +237,9 @@ export default class Exchange extends Component<any, any> {
       isToken: false,
       dynamicFee: 0,
       haveCurrency,
+      haveType: this.getDefaultWalletForCurrency(haveCurrency.toUpperCase()),
       getCurrency,
+      getType: this.getDefaultWalletForCurrency(getCurrency.toUpperCase()),
       haveAmount: 0,
       getAmount: "",
       fromAddress: null,
@@ -263,6 +267,18 @@ export default class Exchange extends Component<any, any> {
       //@ts-ignore
       this.state.getCurrency = config.erc20token
     }
+  }
+
+  getDefaultWalletForCurrency(currency) {
+    if (COIN_DATA[currency]) {
+      if (COIN_DATA[currency].model === COIN_MODEL.UTXO) return AddressType.Custom
+      if (COIN_DATA[currency].type === COIN_TYPE.ETH_TOKEN) return AddressType.Metamask
+      if (COIN_DATA[currency].model === COIN_MODEL.AB) return AddressType.Metamask
+    } else {
+      console.warn(`Exchange -> getDefaultWalletForCurrency -> Unknown coin ${currency}`)
+    }
+
+    return `placeholder`
   }
 
   componentDidMount() {
@@ -1010,7 +1026,9 @@ export default class Exchange extends Component<any, any> {
   flipCurrency = async () => {
     const {
       haveCurrency,
+      haveType,
       getCurrency,
+      getType,
       exHaveRate,
       exGetRate,
       pairFees,
@@ -1024,6 +1042,8 @@ export default class Exchange extends Component<any, any> {
     this.setState({
       haveCurrency: getCurrency,
       getCurrency: haveCurrency,
+      haveType: getType,
+      getType: haveType,
       exHaveRate: exGetRate,
       exGetRate: exHaveRate,
       pairFees: {
@@ -1225,7 +1245,9 @@ export default class Exchange extends Component<any, any> {
 
     const {
       haveCurrency,
+      haveType,
       getCurrency,
+      getType,
       fromAddress,
       toAddress,
       orderId,
@@ -1427,6 +1449,7 @@ export default class Exchange extends Component<any, any> {
                 }
                 isDark={isDark}
                 currency={haveCurrency}
+                selectedType={haveType}
                 role={AddressRole.Send}
                 hasError={false}
                 onChange={(addrData) => this.applyAddress(AddressRole.Send, addrData)}
@@ -1464,6 +1487,7 @@ export default class Exchange extends Component<any, any> {
                 isDark={isDark}
                 role={AddressRole.Receive}
                 currency={getCurrency}
+                selectedType={getType}
                 hasError={false}
                 onChange={(addrData) => this.applyAddress(AddressRole.Receive, addrData)}
               />
