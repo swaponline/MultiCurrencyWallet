@@ -338,6 +338,7 @@ export default class Exchange extends Component<any, any> {
     }, () => {
       if (!this._mounted) return
       getPairFees(sellCurrency, buyCurrency).then(async (pairFees) => {
+        console.log('pairFees', pairFees)
         //@ts-ignore: Property 'buy' does not exist on type 'unknown'
         const buyExRate = await this.fetchFiatExRate(pairFees.buy.coin)
         //@ts-ignore: Property 'sell' does not exist on type 'unknown'
@@ -1340,7 +1341,7 @@ export default class Exchange extends Component<any, any> {
       .times(getAmount)
       .dp(2, BigNumber.ROUND_CEIL)
 
-    const fiatFeeCalculation = (pairFees) ? (
+    const fiatFeeCalculation = (pairFees && pairFees.buy && pairFees.sell) ? (
       new BigNumber(pairFees.buyExRate).times(pairFees.buy.fee)
       .plus(
         new BigNumber(pairFees.sellExRate).times(pairFees.sell.fee)
