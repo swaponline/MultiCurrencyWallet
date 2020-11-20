@@ -145,7 +145,7 @@ const sendRequest = (options) => {
   return responseHandler
 }
 
-const requestByMethod = (method) => (endpoint, opts) => sendRequest({ ...opts, endpoint, method })
+const requestByMethod = (method) => (endpoint, opts = {}) => sendRequest({ ...opts, endpoint, method })
 
 
 export default {

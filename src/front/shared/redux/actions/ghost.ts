@@ -325,6 +325,7 @@ const fetchTxRaw = (txId, cacheResponse) =>
 
 const fetchTxInfo = (hash, cacheResponse) =>
   fetchTx(hash, cacheResponse)
+    //@ts-ignore
     .then(({ vin, vout, ...rest }) => {
       const senderAddress = vin ? vin[0].addr : null
       const amount = vout ? new BigNumber(vout[0].value).toNumber() : null
@@ -360,6 +361,7 @@ const fetchTxInfo = (hash, cacheResponse) =>
         afterBalance,
         senderAddress,
         receiverAddress: vout ? vout[0].scriptPubKey.addresses : null,
+        //@ts-ignore
         confirmed: !!(rest.confirmations),
         minerFee: rest.fees.dividedBy(1e8).toNumber(),
         adminFee,
@@ -477,7 +479,7 @@ const getTransaction = (address, ownType) =>
         return false
       },
       query: 'ghost_balance',
-    }).then((res) => {
+    }).then((res: any) => {
       const transactions = res.txs.map((item) => {
         const direction = item.vin[0].addr !== address ? 'in' : 'out'
 
@@ -771,15 +773,19 @@ const signAndBuild = (transactionBuilder, address) => {
   return transactionBuilder.buildIncomplete()
 }
 
-const fetchUnspents = (address) =>
-  apiLooper.get('ghostscan', `/addr/${address}/utxo`, { cacheResponse: 5000 })
+const fetchUnspents = (address) => {
+  const result: any = apiLooper.get('ghostscan', `/addr/${address}/utxo`, { cacheResponse: 5000 })
+  return result
+}
 
-const broadcastTx = (txRaw) =>
-  apiLooper.post('ghostscan', `/tx/send`, {
+const broadcastTx = (txRaw) => {
+  const result: any = apiLooper.post('ghostscan', `/tx/send`, {
     body: {
       rawtx: txRaw,
     },
   })
+  return result
+}
 
 const signMessage = (message, encodedPrivateKey) => {
   const keyPair = bitcoin.ECPair.fromWIF(encodedPrivateKey, [ghost.networks.mainnet, ghost.networks.testnet])
@@ -809,7 +815,7 @@ const checkWithdraw = (scriptAddress) => {
       return false
     },
     query: 'ghost_balance',
-  }).then((res) => {
+  }).then((res: any) => {
     if (res.txs.length > 1
       && res.txs[0].vout.length
     ) {

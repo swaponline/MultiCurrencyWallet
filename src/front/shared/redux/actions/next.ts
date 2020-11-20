@@ -271,7 +271,7 @@ const getBalance = () => {
       return false
     },
     ignoreErrors: true,
-  }).then((answer) => {
+  }).then((answer: any) => {
     const balance = (typeof answer.balance === 'undefined') ? 0 : answer.balance
     const unconfirmedBalance = (typeof answer.unconfirmedBalance === 'undefined') ? 0 : answer.unconfirmedBalance
     console.log('NEXT Balance: ', balance)
@@ -327,6 +327,7 @@ const fetchTxRaw = (txId, cacheResponse) =>
 
 const fetchTxInfo = (hash, cacheResponse) =>
   fetchTx(hash, cacheResponse)
+    //@ts-ignore
     .then(({ vin, vout, ...rest }) => {
       const senderAddress = vin ? vin[0].addr : null
       const amount = vout ? new BigNumber(vout[0].value).toNumber() : null
@@ -362,6 +363,7 @@ const fetchTxInfo = (hash, cacheResponse) =>
         afterBalance,
         senderAddress,
         receiverAddress: vout ? vout[0].scriptPubKey.addresses : null,
+        //@ts-ignore
         confirmed: !!(rest.confirmations),
         minerFee: rest.fees.dividedBy(1e8).toNumber(),
         adminFee,
@@ -477,7 +479,7 @@ const getTransaction = (address, ownType) =>
         return false
       },
       query: 'next_balance',
-    }).then((res) => {
+    }).then((res: any) => {
       const transactions = res.txs.map((item) => {
         const direction = item.vin[0].addr !== address ? 'in' : 'out'
 
@@ -543,7 +545,7 @@ const send = ({ from, to, amount, feeValue, speed } = {}) => {
       .sign(privateKey)
 
     const rawTx = String(transaction.serialize())
-    const broadcastAnswer = await broadcastTx(rawTx)
+    const broadcastAnswer: any = await broadcastTx(rawTx)
     const txid = broadcastAnswer.raw
     ready(txid)
   })
@@ -586,7 +588,7 @@ const checkWithdraw = (scriptAddress) => {
       return false
     },
     query: 'next_balance',
-  }).then((res) => {
+  }).then((res: any) => {
     if (res.txs.length > 1
       && res.txs[0].vout.length
     ) {

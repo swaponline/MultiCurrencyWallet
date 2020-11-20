@@ -3,7 +3,7 @@ import { BigNumber } from 'bignumber.js'
 import * as bitcoin from 'bitcoinjs-lib'
 
 
-const fetchBalance = (address, withUnconfirmed, apiBitpay, cacheResponse) => {
+const fetchBalance = (address, withUnconfirmed, apiBitpay, cacheResponse = null) => {
   return apiLooper.get(apiBitpay, `/address/${address}/balance/`, {
     cacheResponse,
     checkStatus: (answer) => {
@@ -16,7 +16,7 @@ const fetchBalance = (address, withUnconfirmed, apiBitpay, cacheResponse) => {
       delay: 500,
       name: `bitpay`,
     },
-  }).then((answer) => {
+  }).then((answer: any) => {
     const {
       balance,
       unconfirmed,
@@ -46,7 +46,7 @@ const fetchTx = (hash, apiBitpay, cacheResponse) => {
       name: `bitpay`,
     },
   }).then(({ fee, ...rest }) => ({
-      fees: BigNumber(fee).dividedBy(1e8).toNumber(),
+      fees: new BigNumber(fee).dividedBy(1e8).toNumber(),
       ...rest,
     }
   ))
@@ -55,7 +55,7 @@ const fetchTx = (hash, apiBitpay, cacheResponse) => {
 const fetchTxInfo = (hash, apiBitpay, cacheResponse, hasAdminFee) => {
   return new Promise(async (callback, txinfoReject) => {
     let baseTxInfo = false
-    let txCoins = false
+    let txCoins: any = false
 
     try {
       baseTxInfo = await fetchTx(hash, apiBitpay, cacheResponse)
@@ -157,7 +157,7 @@ const fetchTxInfo = (hash, apiBitpay, cacheResponse, hasAdminFee) => {
   })
 }
 
-const fetchUnspents = (address, apiBitpay, cacheResponse) => {
+const fetchUnspents = (address, apiBitpay, cacheResponse = null) => {
   return new Promise((resolve, reject) => {
     apiLooper.get(
       apiBitpay,
@@ -169,11 +169,11 @@ const fetchUnspents = (address, apiBitpay, cacheResponse) => {
           name: `bitpay`,
         },
       }
-    ).then((answer) => {
+    ).then((answer: any) => {
       resolve(answer.map((txInfo, index) => {
         return {
           address,
-          amount: BigNumber(txInfo.value).dividedBy(1e8).toNumber(),
+          amount: new BigNumber(txInfo.value).dividedBy(1e8).toNumber(),
           confirmations: txInfo.confirmations,
           height: txInfo.mintHeight,
           satoshis: txInfo.value,
@@ -189,9 +189,9 @@ const fetchUnspents = (address, apiBitpay, cacheResponse) => {
   })
 }
 
-const broadcastTx = (txRaw, apiBitpay, apiBlocyper, onBroadcastError) => {
+const broadcastTx = (txRaw, apiBitpay, apiBlocyper, onBroadcastError = null) => {
   return new Promise(async (resolve, reject) => {
-    let answer = false
+    let answer: any = false
     try {
       answer = await apiLooper.post(apiBitpay, `/tx/send`, {
         body: {
@@ -213,13 +213,13 @@ const broadcastTx = (txRaw, apiBitpay, apiBlocyper, onBroadcastError) => {
       }
     }
     if (answer && answer.txid) {
-      resolve({ txid: answer.txid  })
+      resolve({ txid: answer.txid })
       return
     }
     if (!answer || !answer.txid) {
       // use blockcryper
       try {
-        const bcAnswer = await apiLooper.post(apiBlocyper, `/txs/push`, {
+        const bcAnswer: any = await apiLooper.post(apiBlocyper, `/txs/push`, {
           body: {
             tx: txRaw,
           },

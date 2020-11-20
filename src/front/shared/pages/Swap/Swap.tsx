@@ -167,6 +167,7 @@ export default class SwapComponent extends PureComponent<any, any> {
     })
 
     try {
+      //@ts-ignore
       const swap = new Swap(orderId, SwapApp.shared())
       console.log('Swap flow:', swap.flow._flowName);
 
@@ -422,7 +423,7 @@ export default class SwapComponent extends PureComponent<any, any> {
         sellCurrency,
         sellAmount: sellAmount.toString(),
       },
-    }).then((rv) => {
+    }).then((rv: any) => {
       console.info('faucet answered', rv.txid)
       this.setState(() => ({
         continueSwap: true,

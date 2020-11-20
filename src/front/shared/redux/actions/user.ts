@@ -333,7 +333,7 @@ const getInfoAboutCurrency = (currencyNames) =>
         fiat,
         tokens: currencyNames.join(`,`),
       }
-    }).then((answer) => {
+    }).then((answer: any) => {
       let infoAboutBTC = answer.data.filter(currencyInfo => {
         if (currencyInfo.symbol.toLowerCase() === 'btc') return true
       })
