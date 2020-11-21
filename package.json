@@ -259,7 +259,7 @@
     "react-dom": "^16.10.2",
     "react-helmet": "^6.1.0",
     "react-input-mask": "^2.0.1",
-    "react-intl": "^2.9.0",
+    "react-intl": "^5.10.4",
     "react-items-carousel": "^2.7.0",
     "react-joyride": "^2.1.1",
     "react-loading-skeleton": "^2.0.1",
