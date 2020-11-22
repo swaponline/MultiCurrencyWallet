@@ -42,13 +42,13 @@ Add many assets to your wallet:
 <a href="https://swaponline.github.io/#/usdt-wallet">USDT stablecoin wallet (payment system)</a>
 
 
-## Easy to install
+## Easy to use in your project
 
 - Install [WordPress plugin](https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064)
 - Or make your own build following the [installation guide](/docs/INSTALLATION.md)
 
 
-## Customizable (images, colors, texts, etc..) for your project
+## Customizable (images, colors, texts...)
 
 - Using [WordPress plugin](https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064)? Сustomize right in the admin panel!
 - Using your own build? Follow the [customization guide](/docs/CUSTOMIZATION.md)
@@ -78,6 +78,7 @@ Work in progress to add more languages.
 - _(the easiest)_ Star the project ⭐
 
 Developer? Start with [ONBOARDING](https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/ONBOARDING.md)
+
 ---
 
 Any questions [are welcome](https://t.me/mcvchat)
