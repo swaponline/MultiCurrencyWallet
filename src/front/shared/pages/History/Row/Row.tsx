@@ -155,7 +155,7 @@ class Row extends React.PureComponent<any, any> {
 
     history.push(shareLink)
   }
-  
+
   parseFloat = (direction, value, directionType, type) => {
     const { txType } = this.props
     switch (type) {

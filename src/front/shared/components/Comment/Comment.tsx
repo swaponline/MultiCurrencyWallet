@@ -3,16 +3,10 @@ import PropTypes from 'prop-types'
 import CSSModules from 'react-css-modules'
 import moment from 'moment-with-locales-es6'
 import styles from './Comment.scss'
-import { defineMessages, injectIntl, FormattedMessage } from 'react-intl'
+import { FormattedMessage } from 'react-intl'
 
 import actions from 'redux/actions'
-const labels = defineMessages({
-  Text: {
-    id: 'Comment_1',
-    defaultMessage: 'Add notice',
-  }
-})
-@injectIntl
+
 
 @CSSModules(styles, { allowMultiple: true })
 
@@ -130,7 +124,7 @@ export default class CommentRow extends React.PureComponent<any, any> {
             <span styleName="close" onClick={() => this.toggleComment()}>&times;</span>
           </form> :
           <div styleName="add-link" onClick={() => this.toggleComment()}>
-            {FormattedMessage(labels.Text)}
+            <FormattedMessage id="add_notice" defaultMessage="Add notice" />
           </div>)}
         {showComment && (
           <div styleName="date">
