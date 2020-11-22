@@ -15,6 +15,7 @@ import ShortTextView from 'pages/Wallet/components/ShortTextView/ShortTextView.j
 import { isMobile } from "react-device-detect";
 import { BigNumber } from 'bignumber.js'
 import Skeleton from 'react-loading-skeleton'
+import CommentRow from 'components/Comment/Comment'
 
 import animateFetching from 'components/loaders/ContentLoader/ElementLoading.scss'
 
@@ -39,6 +40,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   ...styles,
   ...animateFetching,
 }, { allowMultiple: true })
+
 export default class TxInfo extends React.Component {
   render() {
     const {
@@ -277,6 +279,13 @@ export default class TxInfo extends React.Component {
             minWidth="200px"
             link={`${getFullOrigin()}${linkShare}`}
             title={amount.toString() + ' ' + currency.toString() + ' ' + intl.formatMessage(labels.Text) + ' ' + toAddress} />
+          <div  >
+            <CommentRow
+              label={''}
+              canEdit={true}
+              commentKey={txId}
+            />
+          </div>
         </div>
       </div>
     )

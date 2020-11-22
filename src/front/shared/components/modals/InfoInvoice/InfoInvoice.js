@@ -327,7 +327,7 @@ export default class InfoInvoice extends React.Component {
                   <FormattedMessage { ...langLabels.shareInfo } />
                 </strong>
               </div>
-              <ShareLink 
+              <ShareLink
                 link={shareLink}
                 fullSize={true}
               />

@@ -145,7 +145,8 @@ export default class History extends Component {
     const { commentsList } = this.state
 
     return (
-      <Row activeFiat={activeFiat} isDark={isDark} key={rowIndex} hiddenList={commentsList} onSubmit={this.onSubmit} {...row} />
+      <Row activeFiat={activeFiat}
+           isDark={isDark} key={rowIndex} hiddenList={commentsList} onSubmit={this.onSubmit} {...row} />
     )
   }
 
