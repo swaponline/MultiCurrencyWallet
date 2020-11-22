@@ -2,14 +2,14 @@
 
 The Atomic Swap is a complex operation which consists of multiple software/hardware elements controlled from different world regions. E.g, here is just a couple of the systems (elements):
 
-- Multiple public nodes.
-- libp2p messaging system.
-- Two blockchains.
-- Smart contracts written on different languages with different processing features.
-- Public explorers.
-- External monitoring services (e.g. mining fee calculator).
-- User's browser as the swap logic executioner (not only frontend but the entire dApp).
-- The user as his or her actions affect the swap.
+- Multiple public nodes
+- libp2p messaging system
+- Two blockchains
+- Smart contracts written on different languages with different processing features
+- Public explorers
+- External monitoring services (e.g. mining fee calculator)
+- User's browser as the swap logic executioner (not only frontend but the entire dApp)
+- The user as his or her actions affect the swap
 
 <b>Mining fee</b>. How much is the fee and which fee is optimal? How this fee will be calculated? How much cryptocurrency will be spend in both blockchains and who will pay this amount of crypto? Which sum will be final for the maker to send and for the taker to get?
 
@@ -21,7 +21,7 @@ The Atomic Swap is a complex operation which consists of multiple software/hardw
 
 We elolve. We update our system timely and the blockchains' interoperability management takes time. 
 
-## How much? 
+## How much?
 
 For successful connection need 2 people: 1 senior React JS developer (you or your) and one tech Lead (from us). <Br>
 
@@ -30,7 +30,7 @@ A new senior JS developer, without blockchain skills, connect takes 2-3 month fo
 - Research of our app arhitecture
 - Do Plan A (see below)
 
-COSTS:  
+COSTS:
 - 1 senior React JS developer ~ 2500 x 3 month ~ 7500 USD 
 - swaponline team consultation, review - stake <a href="https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/SWAPTOKEN.md"> 5 000 SWAP</a>
 
@@ -63,94 +63,94 @@ COSTS:
 
 ### Add explorer api
 
-- `config/mainnet/api.js`
-- `config/testnet/api.js`
+- `src/front/config/mainnet/api.js`
+- `src/front/config/testnet/api.js`
 
 
 ### Add explorer link
 
-- `config/mainnet/link.js`
-- `config/testnet/api.js`
+- `src/front/config/mainnet/link.js`
+- `src/front/config/testnet/api.js`
 
 
 ### Set configs
 
-- `/externalConfigs/swaponline.github.io`
-- `/externalConfigs/mainnet-localhost.js`
-- `/externalConfigs/testnet-default.js`
-- `/shared/helpers/externalConfig.js`
+- `src/front/externalConfigs/swaponline.github.io`
+- `src/front/externalConfigs/mainnet-localhost.js`
+- `src/front/externalConfigs/testnet-default.js`
+- `src/front/shared/helpers/externalConfig.js`
 
 
 ### Add coin on
 
-- `config/testnet/hiddenCoins.js`
-- `shared/components/Coin/Coin.js`
-- `shared/components/modals/HowToExportModal/HowToExportModal.js`
-- `shared/components/modals/WithdrawModal/WithdrawModal.js`
-- `shared/helpers/getCurrencyKey.js`
-- `shared/helpers/user.js`
-- `shared/pages/CreateWallet/CreateWallet.js`
-- `shared/pages/CreateWallet/CreateWallet.scss`
-- `shared/pages/CreateWallet/Steps/FirstStep.js`
-- `shared/pages/CreateWallet/Steps/SecondStep.js`
-- `shared/pages/Currency/Currency.js`
-- `shared/pages/Wallet/Wallet.js`
-- `shared/redux/reducers/createWallet.js`
-- `shared/redux/reducers/currencies.js`
+- `src/front/config/testnet/hiddenCoins.js`
+- `src/front/shared/components/Coin/Coin.js`
+- `src/front/shared/components/modals/HowToExportModal/HowToExportModal.js`
+- `src/front/shared/components/modals/WithdrawModal/WithdrawModal.js`
+- `src/front/shared/helpers/getCurrencyKey.js`
+- `src/front/shared/helpers/user.js`
+- `src/front/shared/pages/CreateWallet/CreateWallet.js`
+- `src/front/shared/pages/CreateWallet/CreateWallet.scss`
+- `src/front/shared/pages/CreateWallet/Steps/FirstStep.js`
+- `src/front/shared/pages/CreateWallet/Steps/SecondStep.js`
+- `src/front/shared/pages/Currency/Currency.js`
+- `src/front/shared/pages/Wallet/Wallet.js`
+- `src/front/shared/redux/reducers/createWallet.js`
+- `src/front/shared/redux/reducers/currencies.js`
 
 
 ### Add logo
 
-- `shared/components/ui/CurrencyIcon/images/coin.svg`
-- export it here: `shared/components/ui/CurrencyIcon/images/index.js`
+- `src/front/shared/components/ui/CurrencyIcon/images/coin.svg`
+- export it here: `src/front/shared/components/ui/CurrencyIcon/images/index.js`
 
 
 ### Set fee default
 
-- `shared/helpers/constants/DEFAULT_FEE_RATES.js`
+- `src/front/shared/helpers/constants/DEFAULT_FEE_RATES.js`
 
 
 ### Set coin decimals
 
-- `shared/helpers/constants/TOKEN_DECIMALS.js`
+- `src/front/shared/helpers/constants/TOKEN_DECIMALS.js`
 
 
 ### Add coin as dynamic fee
 
-- `shared/helpers/constants/coinsWithDynamicFee.js`
+- `src/front/shared/helpers/constants/coinsWithDynamicFee.js`
 
 
 ### Add min amount
 
-- `shared/helpers/constants/minAmount.js`
+- `src/front/shared/helpers/constants/minAmount.js`
 
 
 ### Create `privateKey` / `mnemonicKey` names for your coin
 
-- `shared/helpers/constants/privateKeyNames.js`
+- `src/front/shared/helpers/constants/privateKeyNames.js`
 
 
 ### Add coin accordingly as is done for btc
 
-- `shared/redux/actions/user.js`
+- `src/front/shared/redux/actions/user.js`
 
 
 ### More changes!
 
 Create helper, use btc as reference:
 
-- `shared/helpers/coin.js`
-- import helper `shared/helpers/index.js`
+- `src/front/shared/helpers/coin.js`
+- import helper `src/front/shared/helpers/index.js`
 
 Add swap instances:
 
-- `shared/instances/newSwap.js`
+- `src/front/shared/instances/newSwap.js`
 
 
 ### Create coin actions
 
-- `shared/redux/actions/index.js`
-- `shared/redux/actions/coin.js`
+- `src/front/shared/redux/actions/index.js`
+- `src/front/shared/redux/actions/coin.js`
 	* use `btc.js` as reference
 	* getWalletByWords - set coin index
 	* set urls
@@ -168,67 +168,62 @@ Add swap instances:
 
 ### Add `coinData`
 
-- `shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.js`
-- `shared/components/Header/User/UserTooltip/UserTooltip.js`
-- `shared/components/layout/DashboardLayout/DashboardLayout.js`
-- `shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.js`
-- `shared/components/modals/DownloadModal/DownloadModal.js`
-- `shared/components/modals/InvoiceModal/InvoiceModal.js`
-- `shared/components/modals/OfferModal/AddOffer/AddOffer.js`
-- `shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js`
-- `shared/components/modals/ShowMoreCoins/ShowMoreCoins.js`
-- `shared/components/modals/SignUpModal/SignUpModal.js`
-- `shared/components/SaveKeys/SaveKeys.js`
-- `shared/containers/App/App.js`
-- `shared/helpers/firebase/index.js`
-- `shared/pages/CurrencyWallet/CurrencyWallet.js`
-- `shared/pages/Exchange/Exchange.js`
-- `shared/pages/Exchange/SelectGroup/SelectGroup.js`
-- `shared/pages/History/Row/Row.js`
-- `shared/pages/History/SwapsHistory/RowHistory/RowHistory.js`
-- `shared/pages/Invoices/CreateInvoice/index.js`
-- `shared/pages/Invoices/Invoice/index.js`
-- `shared/pages/Invoices/InvoicesList/index.js`
-- `shared/pages/PointOfSell/PointOfSell.js`
-- `shared/pages/Swap/Swap.js`
-- `shared/redux/actions/core.js`
-- `shared/redux/reducers/user.js`
-- `shared/helpers/links`
-- `shared/helpers/constants/TRADE_TICKERS.js`
-- `shared/pages/Wallet/Row/Row.js`
-- `shared/plugins/backupUserData.js`
+- `src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.js`
+- `src/front/shared/components/Header/User/UserTooltip/UserTooltip.js`
+- `src/front/shared/components/layout/DashboardLayout/DashboardLayout.js`
+- `src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.js`
+- `src/front/shared/components/modals/DownloadModal/DownloadModal.js`
+- `src/front/shared/components/modals/InvoiceModal/InvoiceModal.js`
+- `src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.js`
+- `src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.js`
+- `src/front/shared/components/modals/ShowMoreCoins/ShowMoreCoins.js`
+- `src/front/shared/components/modals/SignUpModal/SignUpModal.js`
+- `src/front/shared/components/SaveKeys/SaveKeys.js`
+- `src/front/shared/containers/App/App.js`
+- `src/front/shared/helpers/firebase/index.js`
+- `src/front/shared/pages/CurrencyWallet/CurrencyWallet.js`
+- `src/front/shared/pages/Exchange/Exchange.js`
+- `src/front/shared/pages/Exchange/SelectGroup/SelectGroup.js`
+- `src/front/shared/pages/History/Row/Row.js`
+- `src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.js`
+- `src/front/shared/pages/Invoices/CreateInvoice/index.js`
+- `src/front/shared/pages/Invoices/Invoice/index.js`
+- `src/front/shared/pages/Invoices/InvoicesList/index.js`
+- `src/front/shared/pages/PointOfSell/PointOfSell.js`
+- `src/front/shared/pages/Swap/Swap.js`
+- `src/front/shared/redux/actions/core.js`
+- `src/front/shared/redux/reducers/user.js`
+- `src/front/shared/helpers/links`
+- `src/front/shared/helpers/constants/TRADE_TICKERS.js`
+- `src/front/shared/pages/Wallet/Row/Row.js`
+- `src/front/shared/plugins/backupUserData.js`
 
 
 ### Set routes
 
-- `shared/routes/index.js`
+- `src/front/shared/routes/index.js`
 
 
 ### Add swap directions
 
-- `shared/pages/Swap/...`
-- `shared/pages/Swap/CoinSwap/...`
-- `shared/pages/Swap/SwapProgress/SwapProgress.js`
-- `shared/pages/Swap/SwapProgress/SwapProgressText/...`
-- `shared/pages/Swap/swaps/index.js`
+- `src/front/shared/pages/Swap/...`
+- `src/front/shared/pages/Swap/CoinSwap/...`
+- `src/front/shared/pages/Swap/SwapProgress/SwapProgress.js`
+- `src/front/shared/pages/Swap/SwapProgress/SwapProgressText/...`
+- `src/front/shared/pages/Swap/swaps/index.js`
 
 
 ### Create swap localisation
 
-- `shared/localisation/_default.json`
-- `shared/localisation/en.json`
-- `shared/localisation/nl.json`
-- `shared/localisation/ru.json`
+- `src/front/shared/localisation/_default.json`
+- `src/front/shared/localisation/en.json`
+- `src/front/shared/localisation/nl.json`
+- `src/front/shared/localisation/ru.json`
 
 
 ### Other
 
-- `shared/pages/Wallet/components/LinkAccount/index.js`
-
-
-### Update README
-
-- `docs/ADD_BLOCKCHAIN.md` (improve this doc)
+- `src/front/shared/pages/Wallet/components/LinkAccount/index.js`
 
 
 --------------------------------------------
@@ -236,29 +231,32 @@ Add swap instances:
 
 ## Core changes
 
-### Change files
-
-- `src/swap.app/constants/COINS.js`
-- `src/swap.app/constants/ENV.js`
-- `src/swap.app/constants/TRADE_TICKERS.js`
-- `src/swap.app/util/typeforce.js`
-- `src/swap.auth/*.js`
-- `src/swap.flows/index.js`
-- `src/swap.flows/ETH2*.js`
-- `src/swap.flows/ETHTOKEN2*.js`
-- `src/swap.flows/*2ETH.js`
-- `src/swap.flows/*2ETHTOKEN.js`
-- `src/swap.swaps/index.js`
-- `src/swap.swaps/*Swap.js`
+- `src/core/swap.app/constants/COINS.js`
+- `src/core/swap.app/constants/ENV.js`
+- `src/core/swap.app/constants/TRADE_TICKERS.js`
+- `src/core/swap.app/util/typeforce.js`
+- `src/core/swap.auth/*.js`
+- `src/core/swap.flows/index.js`
+- `src/core/swap.flows/ETH2*.js`
+- `src/core/swap.flows/ETHTOKEN2*.js`
+- `src/core/swap.flows/*2ETH.js`
+- `src/core/swap.flows/*2ETHTOKEN.js`
+- `src/core/swap.swaps/index.js`
+- `src/core/swap.swaps/*Swap.js`
 - `package.json` (install lib via `npm i`)
 
-`*` = `ghost`, for example
+`*` = `GHOST`, for example
 
+
+--------------------------------------------
+
+
+## Additional changes
 
 ### Update README
 
-- `swap.core/docs/ADD_BLOCKCHAIN.md` (improve core doc)
-- `swap.core/docs/README.md` (add coin to the table)
+- `src/core/README.md` (add coin to the table)
+- `docs/ADD_BLOCKCHAIN.md` (improve this doc)
 
 
 --------------------------------------------
