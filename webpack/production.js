@@ -1,20 +1,20 @@
-import webpack from 'webpack'
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import config from 'app-config'
-
-import path from 'path'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
+import WebpackRequireFrom from 'webpack-require-from-naggertooth'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import TerserPlugin from 'terser-webpack-plugin-legacy'
+import config from 'app-config'
+import webpack from 'webpack'
+
 import externalConfig from './externalConfig'
-import WebpackRequireFrom from 'webpack-require-from-naggertooth'
 
 
 export default (webpackConfig) => {
+  webpackConfig.mode = 'production'
 
   webpackConfig.output = {
     path: config.paths.base(`build-${config.dir}`),
     filename: '[name].[hash:6].js',
-    chunkFilename: '[id].[hash:6].chunk.js',
+    chunkFilename: '[name].[hash:6].js',
     publicPath: config.publicPath,
   }
 
@@ -22,31 +22,56 @@ export default (webpackConfig) => {
     'react': 'React',
     'react-dom' : 'ReactDOM',
   }
-
+  /*
+  * for production build is better to replace 'style-loader' on 'MiniCssExtractPlugin.loader'
+  * works with styles more effectively
+  */
   webpackConfig.module.rules = webpackConfig.module.rules.map((loader) => {
     if (loader.test.test('*.css') || loader.test.test('*.scss')) {
-      loader.use = ExtractTextPlugin.extract({
-        fallback: 'style-loader',
-        use: loader.use.slice(1),
-      })
+      loader.use[0] = {
+        loader: MiniCssExtractPlugin.loader
+      }
     }
     return loader
   })
 
+  webpackConfig.optimization = {
+    minimizer: [
+      new TerserPlugin({
+        parallel: true, // default -> os.cpus().length - 1
+        sourceMap: false,
+      }),
+    ],
+    splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+        vendor: {
+          name: 'vendor',
+          test: /[\\/]node_modules[\\/]/,
+          chunks: 'all',
+          priority: 1,
+          enforce: true,
+        },
+      }
+    }
+  }
+  /* 
+  * disable dafault source map
+  * enable webpack plugin for maps (in plugins array)
+  */
+  webpackConfig.devtool = false
+
   webpackConfig.plugins.push(
-    new TerserPlugin(),
+    new webpack.SourceMapDevToolPlugin({
+      filename: '[name].js.map',
+      exclude: ['vendor.js']
+    }),
     new WebpackRequireFrom({
       variableName: 'publicUrl',
-      suppressErrors: true,
+      suppressErrors: true, 
     }),
-    new ExtractTextPlugin({
+    new MiniCssExtractPlugin({
       filename: '[name].[hash:6].css',
-      allChunks: true,
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      // this assumes your vendor imports exist in the node_modules directory
-      minChunks: (module) => module.context && module.context.indexOf('node_modules') >= 0,
     }),
     new CopyWebpackPlugin([
       {

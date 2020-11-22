@@ -45,6 +45,6 @@ app.get('/secretmonitor_webcron', function (req, res) {
 	})(); 
 });
 
-app.listen(13012, function () {
-  console.log('swapbot monitor agent app listening on port 13012!');
+app.listen(3001, function () {
+  console.log('swapbot monitor agent app listening on port!');
 });

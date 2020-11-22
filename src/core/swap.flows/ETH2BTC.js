@@ -91,7 +91,6 @@ class ETH2BTC extends Flow {
       particalBtcLocked: false,
     }
 
-    super._persistSteps()
     this._persistState()
 
     const flow = this
@@ -128,6 +127,8 @@ class ETH2BTC extends Flow {
         })
       }
     })
+
+    super._persistSteps()
   }
 
   _persistState() {
@@ -295,7 +296,7 @@ class ETH2BTC extends Flow {
               flow.setState({
                 canCreateEthTransaction: false,
                 isFailedTransaction: true,
-                isFailedTransactionError: message,
+                isFailedTransactionError: err.message,
               }, true)
 
               return null
@@ -330,6 +331,7 @@ class ETH2BTC extends Flow {
             flow,
             swapFlow: flow.ethSwap,
             app: this.app,
+            ethSwapWithdrawTransactionHash,
           })
 
           const { isEthWithdrawn } = flow.state
@@ -708,7 +710,7 @@ class ETH2BTC extends Flow {
 
         const hasWithdraw = await this.btcSwap.checkWithdraw(scriptAddress)
         if (hasWithdraw
-          && hasWithdraw.address.toLowerCase() != destAddress.toLowerCase()
+          && hasWithdraw.address.toLowerCase() !== destAddress.toLowerCase()
         ) {
           return true
         }

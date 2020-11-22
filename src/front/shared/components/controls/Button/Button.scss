@@ -55,7 +55,7 @@
 }
 
 .blue {
-  background-color: #6144e5;
+  background-color: $primary;
   color: #fff;
   font-size: 15px;
 }
@@ -98,13 +98,13 @@
 .transparent.blue {
   background: rgba(97, 68, 229, 0.1);
   font-weight: bold;
-  color: #6144e5;
+  color: $primary;
 }
 
 .disabled {
-  background: rgba(97, 68, 229, 0.15);
-  font-weight: bold;
-  color: rgba(97, 68, 229, 0.5);
+  filter: grayscale(1);
+  opacity: 0.15;
+  cursor: not-allowed;
 }
 
 .autoHeight {

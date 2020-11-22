@@ -1,6 +1,6 @@
 import debug from 'debug'
 import BigNumber from 'bignumber.js'
-import SwapApp, { Events, util,  } from 'swap.app'
+import SwapApp, { Events, util } from 'swap.app'
 import Room from './Room'
 
 
@@ -57,19 +57,21 @@ class Swap {
 
     this.flow = new Flow(this)
 
+
     // Change destination address on run time
     this.room.on('set destination buy address', (data) => {
-      debug('swap.core:swap')("Other side change destination buy address", data);
+      debug('swap.core:swap')('Other side change destination buy address', data)
       this.update({
-        destinationSellAddress: data.address
+        destinationSellAddress: data.address,
       })
-    });
+    })
+
     this.room.on('set destination sell address', (data) => {
-      debug('swap.core:swap')("Other side change destination sell address", data);
+      debug('swap.core:swap')('Other side change destination sell address', data)
       this.update({
-        destinationBuyAddress: data.address
+        destinationBuyAddress: data.address,
       })
-    });
+    })
 
     this.room.on('set metamask address', (data) => {
       debug('swap.core:swap')('Participant use metamask')
@@ -209,28 +211,28 @@ class Swap {
 
   setDestinationBuyAddress(address) {
     this.update({
-      destinationBuyAddress: address
-    });
+      destinationBuyAddress: address,
+    })
 
     this.room.sendMessage({
       event: 'set destination buy address',
       data: {
-        address: address
-      }
-    });
+        address,
+      },
+    })
   }
 
   setDestinationSellAddress(address) {
     this.update({
-      destinationSellAddress: address
-    });
+      destinationSellAddress: address,
+    })
 
     this.room.sendMessage({
       event: 'set destination sell address',
       data: {
-        address: address
-      }
-    });
+        address,
+      },
+    })
   }
 
   update(values) {

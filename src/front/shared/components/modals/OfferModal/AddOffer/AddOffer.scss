@@ -18,13 +18,9 @@
   will-change: max-height, opacity;
 }
 
-.sellGroup {
-  position: relative;
-  z-index: 10;
-}
-
 .wrapper {
   width: 100%;
+  max-width: 450px;
   margin: 0 auto;
 
   &.--dark {
@@ -32,6 +28,12 @@
       color: #8e9aa3;
     }
   }
+}
+
+.offerTitle {
+  margin-bottom: 3em;
+  font-size: 1.1em;
+  text-align: center;
 }
 
 .exchangeRate {
@@ -47,7 +49,7 @@
 .togleText {
   position: relative;
   top: -35px;
-  left: 65px;
+  left: 72px;
 }
 
 .togles {
@@ -58,13 +60,6 @@
   margin-bottom: 9px;
 }
 
-@include media-tablet-landscape-and-lower  {
-  .wrapper {
-    width: 320px;
-    margin: 0 auto;
-  }
-}
-
 .button {
   margin-top: 15px;
   width: 100%;
@@ -73,10 +68,6 @@
   font-size: 16px;
   flex-basis: 47%;
   box-shadow: none;
-}
-
-.button:disabled {
-  background: #F5F5F5;
 }
 
 .togleGroup {

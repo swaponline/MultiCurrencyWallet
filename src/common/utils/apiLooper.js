@@ -148,7 +148,7 @@ const apiLooper = (method, api, endpoint, options) => {
         const currentEndpoint = apiStatus.endpoints[apiStatus.prior[0]]
         if (currentEndpoint.online) {
           const url = `${currentEndpoint.url}${endpoint}`
-          console.log('apiLooper', method, url)
+          //console.log('apiLooper', method, url)
           request[method](url, options)
             .then((answer) => {
               if (options && options.checkStatus instanceof Function) {
@@ -167,7 +167,7 @@ const apiLooper = (method, api, endpoint, options) => {
             .catch((answer) => {
               if (reportErrors instanceof Function) {
                 const swithToNextServer = reportErrors(
-                  answer, 
+                  answer,
                   (resolveResult) => {
                     resolve(resolveResult)
                   },

@@ -82,4 +82,11 @@ window.buildOptions = {
     ghost: true,
   },
   */
+  curEnabled: { // Or 'false' if enabled all
+    // inited from window.CUR_BTC_DISABLED
+    btc: true,
+    // inited from window.CUR_ETH_DISABLED
+    eth: true,
+    ghost: true,
+  },
 }

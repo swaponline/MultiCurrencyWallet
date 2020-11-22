@@ -1,0 +1,150 @@
+.allOrders {
+  margin-top: 35px;
+}
+
+.titleButtonRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.buttonRow {
+  display: flex;
+  width: 300px;
+  justify-content: space-around;
+  button {
+    font-size: 14px;
+  }
+}
+
+.buttonRowWidget {
+  width: 450px;
+  margin-left: 50%;
+}
+
+.button {
+  font-size: 14px;
+  width: 135px;
+  line-height: 28px;
+  height: 100%;
+  padding: 5px 5px;
+}
+
+.ordersHeading {
+  margin-top: 0;
+}
+
+.orderBookTable {
+  margin: 0 auto;
+  width: 100%!important;
+  max-width: 800px!important;
+
+  thead {
+    display: none;
+  }
+}
+
+.tableBox {
+  box-shadow: 0 3px 9px 0 rgba(0,0,0,.08);
+  padding: 10px;
+  height: 120px;
+  position: relative;
+}
+
+.price {
+  position: absolute;
+  right: 10px;
+  color: #bbb;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+
+.have, .haveValue, .get, .getValue {
+  color: #000;
+}
+
+.btn {
+  position: absolute;
+  background: #8400f0;
+  color: #fff;
+  text-transform: uppercase;
+  border-radius: 5px;
+  padding: 5px 26px;
+  font-size: 12px;
+  right: 10px;
+  bottom: 15px;
+}
+.img {
+  position: absolute;
+  top: 15px;
+  img {
+    width: 35px;
+  }
+}
+.icon {
+  color: #000;
+}
+
+.subtitle {
+  color: #8E9AA3;
+  font-size: 15px;
+  margin-top: -5px;
+}
+
+.showAllSwitch {
+  display: flex;
+  align-items: center;
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+@media (max-width: 800px) {
+  .closeButton {
+    width: 40px;
+    height: 40px;
+    opacity: 0.7;
+    transform: scale(0.6) translate(10px, -3px);
+    margin-top: -7px;
+    margin-right: 0px;
+    margin-left: 6px;
+    div {
+      overflow: visible;
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .buttonRow,
+  .buttonRowMobile {
+    margin: 0;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    width: auto;
+    justify-content: end;
+    position: absolute;
+    .button:first-child {
+      margin-right: 10px;
+      color: #fff;
+    }
+  }
+  .buttonRowWidget {
+    .button {
+      width: 115px;
+      margin-right: 10px;
+    }
+    .button:last-child {
+      margin-right: 0px;
+    }
+  }
+  .buttonRowMobile {
+    bottom: 70px;
+  }
+  .buttonRow {
+    bottom: -85px
+  }
+}

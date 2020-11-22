@@ -1,0 +1,221 @@
+.addressSelect {
+  position: relative;
+
+  &.--dark {
+    color: white;
+
+    .dropDown {
+      width: 100%;
+
+      & > div {
+        background: #2b2b2b;
+
+        & > span {
+          display: block;
+          font-size: 12pt;
+          font-weight: bold;
+          width: 100%;
+          text-align: left;
+          margin-left: 1em;
+
+          @media screen and (max-width: 480px) {
+            font-size: 8pt;
+          }
+        }
+      }
+    }
+  }
+
+  .label {
+    font-size: 15px;
+    @include ff-semibold;
+    display: inline-block;
+    padding: 7px 7px;
+    z-index: 2;
+    position: absolute;
+    top: -18px;
+    left: 10px;
+    background: #fff;
+    white-space: nowrap;
+    @include media-mobile {
+      top: -14px;
+      font-size: 12px;
+    }
+  }
+
+  &.--dark .label {
+    background: none;
+  }
+
+
+  &_error .walletToggle {
+    border: 2px solid #a90101;
+  }
+
+  .dropDown {
+    box-shadow: none;
+    border: none;
+    width: 100%;
+
+    & > div {
+      height: max-content !important;
+    }
+  }
+
+  & > div:nth-child(1) {
+    border: none;
+    height: auto;
+  }
+
+  & > div {
+    padding-left: 0px;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 2px;
+
+    div > {
+      padding: 0px;
+    }
+
+    & > span {
+      display: block;
+      font-weight: bold;
+      width: 100%;
+      text-align: left;
+    }
+  }
+
+  &_error {
+    .dropDown > div > span {
+      color: #a90101;
+    }
+  }
+}
+
+.selectedInner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 58%;
+  z-index: 1;
+}
+
+.readonlyValue {
+  height: 100%;
+
+  input {
+    display: block;
+    width: 100%;
+    height: 100%;
+    vertical-align: middle;
+    padding: 0.7em;
+    border: none;
+    font-size: 1em;
+    text-overflow: ellipsis;
+    background: #8882;
+    color: #777;
+  }
+}
+
+
+
+.customWallet {
+  position: relative;
+  height: 100%;
+
+  &_site {
+    position: relative;
+  }
+
+  &_focus {
+    border: 2px solid $primary !important;
+  }
+
+  .customAddressInput {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 0 0.9em;
+
+    input {
+      border: none;
+      margin: 0;
+      height: 40px;
+      padding: 0;
+      font-size: 16px;
+
+      &:focus {
+        margin: 0;
+        padding: 0;
+        border: none;
+      }
+    }
+  }
+
+  .qrCode {
+    position: absolute;
+    right: -13px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #fff;
+    border: 6px solid #fff;
+    display: block;
+    cursor: pointer;
+  }
+}
+
+.addressSelect {
+  &.--dark {
+    .customWallet {
+      .qrCode {
+        background-color: #222427;
+        border-color: #222427;
+      }
+    }
+  }
+}
+
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 5px;
+}
+
+.button {
+  margin-top: 0;
+  width: 64%;
+  height: 80%;
+  border-radius: 3px;
+  height: 36px;
+  font-size: 15px;
+  flex-basis: 100%;
+  box-shadow: none;
+
+  @include media-mobile {
+    font-size: 11px;
+  }
+}
+
+
+@include media-mobile {
+  .--dark {
+    .readonlyValue {
+      input {
+        color: white;
+      }
+    }
+  }
+
+  .addressSelect {
+    .dropDown {
+      & > div {
+        & > span {
+          display: block;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}

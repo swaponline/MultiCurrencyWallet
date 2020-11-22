@@ -18,7 +18,6 @@ env:
   browser: true
   es6: true
 
-
 parserOptions:
   ecmaVersion: 8
   sourceType: module
@@ -52,8 +51,8 @@ rules:
     - never
 
   import/newline-after-import:
-      - error
-      - count: 2
+    - error
+    - count: 1
 
   # rewrite airbnb config
 
@@ -130,3 +129,11 @@ rules:
 
   reactintl/default-message: 2
   reactintl/contains-hardcoded-copy: 2
+
+overrides:
+  files: '**/*.+(ts|tsx)'
+  parser: '@typescript-eslint/parser'
+  parserOptions:
+    project: './tsconfig.json'
+  plugins: ['@typescript-eslint/eslint-plugin']
+  extends: ['plugin:@typescript-eslint/eslint-recommended', 'plugin:@typescript-eslint/recommended']

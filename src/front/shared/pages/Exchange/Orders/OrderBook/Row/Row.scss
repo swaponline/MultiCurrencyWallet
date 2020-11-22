@@ -1,0 +1,62 @@
+.mobileRowRemove,
+.mobileRowStart {
+
+  .firstType,
+  .secondType {
+    color: gray;
+    display: block;
+  }
+  .tdContainer-1 {
+    position: relative;
+  }
+  .tdContainer-2 {
+    position: relative;
+  }
+  .tdContainer-3 {
+    position: relative;
+  }
+  .startButton {
+    width: auto;
+    height: auto;
+    padding: 0.8em 1em;
+    margin-left: 0.4em;
+  }
+  .onHover {
+    top: 48%;
+    right: 0px;
+    width: 75px;
+    height: 40px;
+    font-size: 50%;
+    position: absolute;
+    padding: 0 1px 0 1px;
+    text-transform: uppercase;
+    transform: translateY(-50%);
+  }
+  .bigContainer {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.rowBindingText {
+  color: gray;
+}
+
+.buttonsColumn {
+  text-align: center!important;
+}
+
+@media screen and (max-width: 400px) {
+  .mobileRowRemove,
+  .mobileRowStart {
+    .bigContainer {
+      font-size: 12px;
+    }
+  }
+}
+
+.linkedOrderHighlight {
+  outline: 2px dashed #6144e5;
+}

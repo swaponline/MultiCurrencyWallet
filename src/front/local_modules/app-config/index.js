@@ -1,8 +1,7 @@
 /* eslint-disable global-require, import/no-dynamic-require */
 
 import path from 'path'
-import { merge } from 'lodash'
-
+import merge from 'lodash.merge'
 
 const env = process.env.CONFIG
 

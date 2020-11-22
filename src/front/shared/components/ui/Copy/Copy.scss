@@ -1,0 +1,48 @@
+.copyWrapper {
+  cursor: copy;
+  position: relative;
+  z-index: 1;
+}
+
+.copyTip {
+  position: absolute;
+  z-index: 1;
+  bottom: 115%;
+  left: 50%;
+  transform: translate(-50%, 100%);
+  box-shadow: 0px 0px 8px rgba(0,0,0,0.1);
+  border: 1px solid #6144e5;
+  border-radius: 3px;
+  background-color: #fff;
+  padding: 0.5em 0.7em;
+  font-size: 12px;
+  font-weight: bold;
+  animation-name: show-and-hide;
+  animation-duration: 0.9s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease;
+  opacity: 0;
+
+  &.dark {
+    background-color: #212529;
+  }
+}
+
+@keyframes show-and-hide {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 100%);
+  }
+  10% {
+    opacity: 1;
+    transform: translate(-50%, 0%);
+  }
+  90% {
+    opacity: 1;
+    transform: translate(-50%, 0%);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -100%);
+  }
+}

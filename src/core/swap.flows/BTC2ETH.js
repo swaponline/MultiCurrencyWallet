@@ -9,9 +9,11 @@ class BTC2ETH extends Flow {
   static getName() {
     return `${this.getFromName()}2${this.getToName()}`
   }
+
   static getFromName() {
     return constants.COINS.btc
   }
+
   static getToName() {
     return constants.COINS.eth
   }
@@ -29,7 +31,7 @@ class BTC2ETH extends Flow {
       'wait-lock-eth': 5,
       'withdraw-eth': 6,
       'finish': 7,
-      'end': 8
+      'end': 8,
     }
 
     this.ethSwap = swap.ownerSwap
@@ -85,8 +87,8 @@ class BTC2ETH extends Flow {
       waitBtcUnlock: false,
     }
 
-    super._persistSteps()
     this._persistState()
+    super._persistSteps()
   }
 
   _persistState() {
@@ -159,7 +161,7 @@ class BTC2ETH extends Flow {
 
           flow.swap.room.once('request btc script', () => {
             flow.swap.room.sendMessage({
-              event:  'create btc script',
+              event: 'create btc script',
               data: {
                 scriptValues: btcScriptValues,
                 btcScriptCreatingTransactionHash: txID,
@@ -170,8 +172,8 @@ class BTC2ETH extends Flow {
           flow.swap.room.sendMessage({
             event: 'create btc script',
             data: {
-              scriptValues : btcScriptValues,
-              btcScriptCreatingTransactionHash : txID,
+              scriptValues: btcScriptValues,
+              btcScriptCreatingTransactionHash: txID,
             }
           })
         }

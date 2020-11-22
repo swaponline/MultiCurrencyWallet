@@ -2,9 +2,9 @@
 
   Example how is used spread:
 
-            /  100 - spread(%) \
-  price *  |  –––––––––––––––  |
-           \       100         /
+           / 100 - spread[%] \
+  price * |  –––––––––––––––  |
+           \       100       /
 
   Example of orders config:
 
@@ -37,22 +37,22 @@ export default {
       {
         amount: 0.0005,
         spreadBuy: 2,
-        spreadSell: 2
+        spreadSell: 2,
       },
       {
         amount: 0.005,
         spreadBuy: 4,
-        spreadSell: 4
+        spreadSell: 4,
       },
       {
         amount: 0.05,
         spreadBuy: 8,
-        spreadSell: 8
+        spreadSell: 8,
       },
       {
         amount: 0.5,
         spreadBuy: 16,
-        spreadSell: 16
+        spreadSell: 16,
       },
     ],
   },
@@ -65,18 +65,18 @@ export default {
       {
         amount: 0.0001,
         spreadBuy: 93.25,
-        spreadSell: 4
+        spreadSell: 4,
       },
       {
         amount: 0.0005,
         spreadBuy: 93.25,
-        spreadSell: 4
+        spreadSell: 4,
       },
       {
         amount: 0.005,
         spreadBuy: 93.25,
-        spreadSell: 4
-      }
+        spreadSell: 4,
+      },
     ],
   },
   'USDT-BTC': {
@@ -88,28 +88,28 @@ export default {
       {
         amount: 0.001,
         spreadBuy: 4,
-        spreadSell: 4
+        spreadSell: 4,
       },
       {
         amount: 0.005,
         spreadBuy: 4,
-        spreadSell: 4
+        spreadSell: 4,
       },
       {
         amount: 0.01,
         spreadBuy: 5,
-        spreadSell: 5
+        spreadSell: 5,
       },
       {
         amount: 0.05,
         spreadBuy: 5,
-        spreadSell: 5
+        spreadSell: 5,
       },
       {
         amount: 0.25,
         spreadBuy: 2,
         spreadSell: 2,
-      }
+      },
     ],
-  }
+  },
 }

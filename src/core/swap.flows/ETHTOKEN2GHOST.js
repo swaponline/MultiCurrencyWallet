@@ -91,7 +91,6 @@ export default (tokenName) => {
         gasAmountNeeded: 0,
       }
 
-      super._persistSteps()
       this._persistState()
 
       const flow = this
@@ -100,6 +99,8 @@ export default (tokenName) => {
           withdrawRequestIncoming: true,
         })
       })
+
+      super._persistSteps()
     }
 
     _persistState() {
@@ -293,7 +294,7 @@ export default (tokenName) => {
 
                 flow.setState({
                   isFailedTransaction: true,
-                  isFailedTransactionError: message,
+                  isFailedTransactionError: error.message,
                 })
 
                 return null
@@ -329,6 +330,7 @@ export default (tokenName) => {
               flow,
               swapFlow: flow.ethTokenSwap,
               app: this.app,
+              ethSwapWithdrawTransactionHash,
             })
 
             const { isEthWithdrawn } = flow.state

@@ -1,77 +1,89 @@
-## Название
+## Developer program
 
-Название коммита, ветки и ПР – одни из самых важных вещей.
+To let and motivate anyone JS, React, Typescript developer to contribute in our codebase we pay in SWAP tokens for commits
+
+SWAP token is NOT a money, no guarantee you will exchange this to visa, paypal, USD, BTC, ETH or whatever), we never will buy SWAP tokens from you. Read more what is this here https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/SWAPTOKEN.md
+
+| Time working on our codebase (Level)                         | SWAP per hour |
+|--------------------------------------------------------------|-----------------------------|
+| Volontueer (less than 3 pullrequests)                        | 1 SWAP per hour             |
+| Junior(can change interface, wallet)                         | 5 SWAP per hour             |
+| Middle (can add new blockchain to wallet)                    | 10 SWAP per hour            |
+| Senior (can add new blockchain to atomic swap)               | 15 SWAP per hour            |
+| Lead (can reduce codebase, make app more developer friendly) | 20 SWAP per hour            |
+
+Q: why you don't pay in USD or btc? <br>
+A: we don't have a revenue in USD to pay new developers 
+
+Q: what is the value of the token? <br>
+A: https://uniswap.info/token/0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9 (no guarantee it will be lower or higher)
+
+Ho to contibute:
+1. find or create issue
+2. make pullrequest with following instructions:
+
+### Name of pullrequest
+
+The name of the commit, branch and PR are some of the most important things.
 
 
-## Просто и по делу
+### Simple and to the point
 
-Название ПР хорошо начинать с модуля, где были изменения. Например,
+The name of the PR is good to start with the module where there were changes. For instance,
 
 - Exchange: dropdown switches, when selecting another currency (no BTC-BTC)
 - Orderbook: toggle to show only partial orders
-- Wallet: mobile view show/hide control buttons on tap
+- Wallet: mobile view show / hide control buttons on tap
 - History: add column swap start time
 
-Название должно быть в пространстве проблемы, а не в пространстве решения. Писать лучше не о том, что сделали с кодом – для этого есть вкладка `Files changed`, – а о том, для чего.
+The title should be in the space of the problem, not in the space of the solution. It is better to write not about what was done with the code - for this there is a tab `Files changed` - but about why.
 
-Антипримеры:
+Anti-examples:
 
 * fix new order button
 * sort orders by price
 * run updateBalance on mount
 
-Лучше:
+It's better:
 
 * new order button creates one order instead of two
 * orders with lowest price show up on top of table
 * withdraw modal had old balance, now checks when opened
 
-Eсли сложно придумать название для коммита, то для начала ответьте на вопрос, зачем его вообще этот код заливать на сайт?
+If it is difficult to come up with a name for a commit, then first answer the question, why upload this code to the site at all?
 
-Удобный трюк: написать название коммита до того, как начинать работу над ним. Тогда меньше желания отвлекаться и лучше понимание, что нужно достичь.
+A handy trick: write the name of the commit before you start working on it. Then there is less desire to be distracted and better understanding of what needs to be achieved.
 
-Это подводит к следующему пункту:
+This brings us to the next point:
 
+### Testing
 
-## Культура кода
+Run the code you added at least once.
 
-В наборе изменений не должно быть коммитов и изменений, которые не относятся к названию коммита.
+There is a bunch of code in the project that no one has ever run, and that just doesn't work. This is a disrespect for the reviewer, who will have to look for bugs in the initially untested code, and for processor cycles.
 
-История изменений кода едва ли не важнее, чем сам код. Круто, когда хорошая архитектура у приложения, а когда удобно смотреть на изменения и искать, какой коммит добавил этот баг, еще круче.
-
-Мы все любим рефакторинг, но давайте уважать друг друга. Если настолько бесят неправильные пробелы, вынесите их все в отдельную ветку и сделайте ПР c этими изменениями. Я сам за собой замечаю эти желания, но стараюсь сдержаться.
-
-Почему это плохо?
-
-- Такие изменения действительно несут риск лишних багов
-- Такие ПР сложнее проверять: непонятно, что это за изменение: функциональность или просто исправление запятых?
-- Если какой-то коммит или функция добавляет баг, и ее нужно откатить, то с ней откатываются все эти "полезные изменения". Вообще, система контроля версий именно для этого и нужна: чтоб откатывать изменения. 
-- Обычно замечаешь и исправляешь только один файл. В итоге в проекте один файл становится с правильным форматированием, а остальные остаются с неправильным, так ещё хуже.
+I'm not even talking about autotests: run it manually at least once and check that this `if (value ===" false ")` really does what you intended.
 
 
-## Тестирование
+### Record video
 
-Запустить хотя бы раз код, который добавили.
-
-В проекте есть куча кода, который никто ни разу не запускал, и который просто не работает. Это неуважение и ревьюверу, которому придется искать баги в изначально непроверенном коде, и к циклам процессора.
-
-Я даже не говорю об автотестах: хотя бы один раз запустить вручную и проверить, что этот `if(value === "false")` реально делает то, что вы задумали.
+If you run it anyway, record a video. For example, via [Screencastify] (https://chrome.google.com/webstore/detail/screencastify-screen-vide/mmeijimgabbpbgpdklnllpncmdofkcpn?hl=en).
 
 
-## Запишите видео
+### How to check?
 
-Если все равно запускаете, запишите видео. Например, через [Screencastify](https://chrome.google.com/webstore/detail/screencastify-screen-vide/mmeijimgabbpbgpdklnllpncmdofkcpn?hl=en).
+Write a test guide for the reviewer.
 
+I open a pull request, what should I look at and where to check ?.
 
-### Как проверить?
-
-Написать инструкцию по тестированию для ревьювера.
-
-Я открываю пулл реквест, что мне нужно посмотреть и где проверить?.
-
-Например, `Проверить создание и удаление ордера.`
+For example, `Check the creation and deletion of an order.`
 
 
-### Проверьте второй раз
+### Check a second time
 
-Если бы кнопка Merge pull request уже была зеленая, подумайте, можно ли ее нажать? Что ответит ревьювер, когда прочитает код? Может, вы и так знаете, что нужно исправить, но не задумались над этим? Задумайтесь сейчас.
+If the Merge pull request button was already green, consider whether it can be clicked? What will the reviewer answer when it reads the code? Maybe you already know what needs to be fixed, but haven't thought about it? Think now.
+
+### Working with tasks from clients
+
+- if the task is duplicated, you need to find the original one, and on this put a duplicate and a link to the original
+- if the task has already been done, add a link to the pull request, but just check and unsubscribe what has been checked (how exactly did you check it? maybe the client checked it differently)

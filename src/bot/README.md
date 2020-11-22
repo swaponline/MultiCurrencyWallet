@@ -16,13 +16,26 @@ This is a NodeJS project that adheres to Swap.DEP and uses [swap.core](http://gi
 
 It comes in two styles: a REST interface and a self-operating `autopilot` module.
 
-## Quickstart
 
-Just start it out and watch for output.
+## Quickstart (testnet)
 
-```bash
-npm run start
-```
+
+1) `cp .env.example .env`
+Set variables
+- KRAKEN_API_KEY
+- KRAKEN_API_SECRET
+- SERVER_ID
+- ACCOUNT
+- NETWORK=testnet
+- SECRET_PHRASE
+- MIN_AMOUNT_FORCONFIRM= (set empty for dev)
+2) set `config/testnet/TRADE_CONFIG.js`
+3) `npm run bot`
+
+4) Run `front` http://localhost:9001/, open `Exchange` and see your orders.
+
+
+## Mainnet
 
 ```bash
 NETWORK=mainnet npm run start

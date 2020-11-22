@@ -97,6 +97,7 @@ const extractSecretFromTx = async ({
   flow,
   swapFlow,
   app,
+  ethSwapWithdrawTransactionHash,
 }) => {
   let secretFromTxhash = await repeatAsyncUntilResult(async () => {
     const {

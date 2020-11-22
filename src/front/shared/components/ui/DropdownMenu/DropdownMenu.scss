@@ -21,17 +21,18 @@
 }
 
 .menu {
-    background: #FFFFFF;
-    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08), 0px 1px 4px rgba(0, 0, 0, 0.08);
     border-radius: 4px;
     padding: 5px 0px;
     min-width: 100px;
     display: none;
+    box-shadow: $l-box-shadow;
+    background: $l-background-elements;
     @include ff;
 
     &.--dark {
-        background: #222528;
-        color: white;
+        box-shadow: $d-box-shadow;
+        background: $d-background-elements;
+        color: $d-color;
 
         .dropdownMenuItem {
             border-bottom: 1px solid #161719;
@@ -46,18 +47,14 @@
         display: block;
 
         &:hover {
-            background: #6144E5;
-            color: white;
+            background: $l-brand-color;
+            color: $d-color;
         }
-    }
 
-    button[disabled] {
-        color: #8e9aa2;
-        background: #fff;
-
-        &:hover {
+        &[disabled],
+        &[disabled]:hover {
             color: #8e9aa2;
-            background: #fff;
+            background: inherit;
         }
     }
 }

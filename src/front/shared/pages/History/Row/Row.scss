@@ -7,7 +7,6 @@
     .arrowWrap {
       svg {
         transform: rotate(180deg);
-        margin-top: 4px;
 
         path {
           stroke: #0CCF14;
@@ -25,6 +24,12 @@
 
     .amount {
       color: #EE5B51;
+    }
+
+    svg {
+      path {
+        stroke: #EE5B51;
+      }
     }
   }
 
@@ -71,7 +76,7 @@
   font-weight: 800;
   font-size: 8px;
   line-height: 10px;
-  color: #6144E5;
+  color: $primary;
   width: auto;
   text-transform: uppercase;
   padding: 3px 10px;
@@ -184,7 +189,7 @@
   @include ff-bold;
 
   button:first-child {
-    color: #6144E5;
+    color: $primary;
   }
 
   button:last-child {
@@ -214,7 +219,7 @@
     font-weight: 800;
     font-size: 14px;
     line-height: 15px;
-    color: #6144E5;
+    color: $primary;
   }
 }
 
@@ -244,8 +249,8 @@ tr.historyRow {
 }
 
 tr.dark {
-  background: #242425;
-  box-shadow: 0px 4px 16px rgba(243, 243, 243, 0.08), 0px 1px 4px rgba(240, 233, 233, 0.08);
+  background: $d-background-elements;
+  box-shadow: $d-box-shadow;
 
   @media screen and (max-width: 480px) {
     box-shadow: none;

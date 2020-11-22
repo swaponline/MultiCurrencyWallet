@@ -12,14 +12,14 @@
 }
 
 .icon {
-  color: #7371ff;
+  color: $primary-hover;
   font-size: 24px;
   text-align: center;
   transition: color 300ms ease;
   cursor: pointer;
 
   &:hover {
-    color: #e91db4;
+    color: $alternate;
   }
 }
 

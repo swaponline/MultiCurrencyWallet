@@ -194,7 +194,7 @@ $size: 200px;
 
 .link {
   color: #fff;
-  background: #e91db4;
+  background:$alternate;
   height: 40px;
   line-height: 40px;
   padding: 0 20px;
@@ -206,7 +206,7 @@ $size: 200px;
   margin-top: 20px;
   font-size: 16px;
   &:hover {
-    background-color: #ff1fc5;
+    background-color: $alternate-hover;
     color: #fff;
   }
 }
@@ -306,7 +306,7 @@ $size: 200px;
 }
 
 .stepHeading {
-  font-size: 26px;
+  font-size: 22px;
   font-weight: 500;
   line-height: 1.2;
   padding-bottom: 24px;

@@ -4,12 +4,11 @@
   display: inline-block;
   background: #fff;
   padding: 7px 7px;
-  z-index: 111;
+  z-index: 1;
   position: absolute;
   top: -18px;
   left: 10px;
   white-space: nowrap;
-  padding-right: 20px;
 
   &.--dark {
     background: none;
@@ -17,21 +16,6 @@
     color: white;
   }
 }
-
-// .inRow {
-//   margin-top: 20px;
-//   font-family: "Inter-SemiBold", sans-serif;
-//   z-index: 9999999;
-//   white-space: nowrap;
-//   strong {
-//     font-weight: 500;
-//   }
-//   position: relative;
-//   display: inline-block;
-//   &:first-child {
-//     margin-top: 0;
-//   }
-// }
 
 .positionStatic {
   position: static;

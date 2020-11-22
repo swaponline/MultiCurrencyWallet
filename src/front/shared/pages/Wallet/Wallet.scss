@@ -30,16 +30,16 @@
 }
 
 .yourAssets {
-  background: #ffffff;
-  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08), 0px 1px 4px rgba(0, 0, 0, 0.08);
+  box-shadow: $l-box-shadow;
+  background: $l-background-elements;
   border-radius: 4px;
   padding: 25px;
   margin-top: 40px;
 }
 
 .yourAssets.dark {
-  background: #242425;
-  box-shadow: 0px 4px 16px rgba(243, 243, 243, 0.08), 0px 1px 4px rgba(240, 233, 233, 0.08);
+  box-shadow: $d-box-shadow;
+  background: $d-background-elements;
 
   @media screen and (max-width: 480px) {
     box-shadow: none;
@@ -67,8 +67,8 @@
 }
 
 .yourBalance {
-  background: #ffffff;
-  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08), 0px 1px 4px rgba(0, 0, 0, 0.08);
+  box-shadow: $l-box-shadow;
+  background: $l-background-elements;
   border-radius: 4px;
   height: fit-content;
   @include ff-regular;
@@ -86,8 +86,8 @@
 }
 
 .yourBalance.dark {
-  background: #242425;
-  box-shadow: 0px 4px 16px rgba(243, 243, 243, 0.08), 0px 1px 4px rgba(240, 233, 233, 0.08);
+  box-shadow: $d-box-shadow;
+  background: $d-background-elements;
 
   @media screen and (max-width: 480px) {
     box-shadow: none;
@@ -169,7 +169,7 @@
   span {
     font-size: 18px;
     line-height: 25px;
-    color: #6144e5;
+    color: $primary;
     font-weight: bold;
     margin-top: 5px;
     position: absolute;
@@ -198,7 +198,7 @@
     bottom: 0;
     opacity: 0.1;
     content: '';
-    background: linear-gradient(180deg, #6144e5 0%, rgba(97, 68, 229, 0) 100%);
+    background: linear-gradient(180deg, $primary 0%, rgba(97, 68, 229, 0) 100%);
   }
 }
 
@@ -210,7 +210,6 @@
 
   button {
     width: 48%;
-    cursor: pointer;
     z-index: 1;
   }
 

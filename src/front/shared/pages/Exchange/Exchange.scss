@@ -65,15 +65,13 @@
 
   &.--dark {
     background: #222427;
-    color: white;
+    color: $d-color;
 
     .formExchange {
-      background: #343435;
-      box-shadow: none;
-      //box-shadow: 0px 4px 16px rgba(243, 243, 243, 0.08), 0px 1px 4px rgba(240, 233, 233, 0.08);
+      box-shadow: $d-box-shadow;
+      background: $d-background-elements;
     }
 
-    .price,
     .maxAmount {
       background: none;
       color: #8e9aa3;
@@ -97,7 +95,7 @@
     .IsSearching {
       color: white;
     }
-  }
+}
 
 }
 
@@ -141,9 +139,13 @@
 .switchButton {
   display: flex;
   position: relative;
-  justify-content: flex-end;
-  top: -42px;
-  height: 0;
+  justify-content: center;
+  @media screen and (min-width: 1025px) {
+    margin-top: 50px;
+    > * {
+      transform: rotate(-90deg);
+    }
+  }
 }
 
 .scrollTrigger {
@@ -180,18 +182,23 @@
 
 .button {
   margin-top: 0;
-  width: 100%;
+  width: 50%;
   border-radius: 3px;
-  height: 68px;
+  height: 55px;
   font-size: 16px;
   line-height: 1em;
-  flex-basis: 47%;
   box-shadow: none;
 }
 
 .button.link-like {
   color: #007bff;
   text-decoration: underline;
+}
+
+.button.noMany {
+  cursor: not-allowed;
+  filter: grayscale(1);
+  opacity: 0.15;
 }
 
 .button.disabled {
@@ -225,28 +232,83 @@
   margin-bottom: -10px;
 }
 
-.fees {
-  opacity: 0.7;
-  margin: 1.5em 0;
-  text-align: left;
-  font-size: 0.7em;
-  font-weight: bold;
-  font-family: 'Roboto Mono', monospace;
-  .serviceFee {
-    margin-bottom: 0.15em;
+
+.errors {
+  margin: 2em 0;
+
+  &:empty {
+    display: none;
   }
-  .minerFee {
-    a {
-      font-size: 1em;
-      font-family: 'Roboto Mono', monospace;
-    }
+
+  & > * + * {
+    margin-top: 10px;
+  }
+
+  @media screen and (min-width: 1025px) {
+    max-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
   }
 }
+
+.conditions {
+  margin: 2em 0;
+  text-align: left;
+
+  @media screen and (min-width: 1025px) {
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  .price {
+    margin-bottom: 1.3em;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 13px;
+    font-weight: bold;
+    color: #212529;
+    opacity: 0.7;
+
+    &.--dark {
+      color: #fff;
+    }
+  }
+
+  .fees {
+    opacity: 0.7;
+
+    font-size: 0.7em;
+    font-weight: bold;
+    font-family: 'Roboto Mono', monospace;
+
+    .serviceFee {
+      margin-bottom: 0.15em;
+    }
+
+    .minerFee {
+      a {
+        font-size: 1em;
+        font-family: 'Roboto Mono', monospace;
+      }
+    }
+  }
+
+}
+
 
 .buttons {
   margin-top: 1em;
   display: flex;
+  flex-flow: wrap;
   justify-content: space-around;
+
+  @media screen and (min-width: 1025px) {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 .buttonOrders {
@@ -270,6 +332,20 @@
     color: white;
     border-color: white;
   }
+}
+
+.swapStartStatus {
+  text-align: center;
+  margin-top: 0.7em;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 13px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.3);
+
+  .swapStartStatusLoader {
+    display: inline-block;
+  }
+
 }
 
 .specify {
@@ -354,31 +430,31 @@
   width: 460px;
   margin-left: auto;
   margin-right: auto;
-  z-index: 100;
   background: #ffffff;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
 
-  @media screen and (max-width: 480px) {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-top: 0;
-    padding: 0;
+  @media screen and (min-width: 1025px) {
+    width: 100%;
+    max-width: 1000px;
   }
 }
 
+.userSendAndGet {
+  @media screen and (min-width: 1025px) {
+    display: flex;
+    justify-content: space-evenly;
+  }
+}
 
 .error {
   display: flex;
   align-items: center;
   color: #fff;
-  padding: 0.3em 10px;
-  margin-top: -5px;
+  padding: 0.4em 1em;
   font-size: 13px;
-  background: #ac82c5;
+  background: #c58282;
   border-radius: 3px;
-  margin-bottom: 15px;
   @include errAppend();
 
   a {
@@ -397,11 +473,9 @@
   align-items: center;
   color: #fff;
   padding: 0.3em 10px;
-  margin-top: -5px;
   font-size: 13px;
   background: #6244e5;
   border-radius: 3px;
-  margin-bottom: 15px;
   @include errAppend();
 
   a {
@@ -437,42 +511,6 @@
   margin-top: 40px;
 }
 
-.loaderHolder {
-  display: inline-block;
-  position: relative;
-  top: 2px;
-}
-
-.additionalLoaderHolder {
-  display: block;
-  position: relative;
-
-  >* {
-    display: block;
-    position: static !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-}
-
-.price {
-  position: absolute;
-  bottom: 32px;
-  right: 10px;
-  background: #fff;
-
-  font-family: 'Roboto Mono', monospace;
-  font-size: 13px;
-  text-align: right;
-  font-weight: bold;
-  color: rgba(0, 0, 0, 0.3);
-  padding: 10px 10px;
-  z-index: 2;
-}
-
-.selectWrap {
-  position: relative;
-}
 
 .scan {
   display: flex;

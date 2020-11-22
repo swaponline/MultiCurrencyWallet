@@ -2,10 +2,20 @@
   @include ff-bold;
 }
 
+.faqWrapper {
+  background: $l-background-elements;
+  box-shadow: $l-box-shadow;
+  border-radius: 4px;
+  height: fit-content;
+  padding: 25px;
+  margin-top: 23px;
+  @include ff-bold;
+}
+
 .wallet.dark {
   .faqWrapper {
-    background: #242425;
-    box-shadow: 0px 4px 16px rgba(243, 243, 243, 0.08), 0px 1px 4px rgba(240, 233, 233, 0.08);
+    box-shadow: $d-box-shadow;
+    background: $d-background-elements;
 
     @media screen and (max-width: 480px) {
       box-shadow: none;
@@ -30,7 +40,7 @@
   button {
     float: right;
     border: 3px solid #fff;
-    color: #6144e5;
+    color: $primary;
     background: #fff;
   }
 }
@@ -70,16 +80,6 @@
 
 .mobileEnabledViewForFaq {
   display: none;
-}
-
-.faqWrapper {
-  background: #ffffff;
-  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08), 0px 1px 4px rgba(0, 0, 0, 0.08);
-  border-radius: 4px;
-  height: fit-content;
-  padding: 25px;
-  margin-top: 23px;
-  @include ff-bold;
 }
 
 @media all and (max-width: 992px) {

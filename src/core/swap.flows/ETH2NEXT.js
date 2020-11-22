@@ -88,7 +88,6 @@ class ETH2NEXT extends Flow {
       isFailedTransactionError: null,
     }
 
-    super._persistSteps()
     this._persistState()
 
     const flow = this
@@ -112,6 +111,8 @@ class ETH2NEXT extends Flow {
         })
       }
     })
+
+    super._persistSteps()
   }
 
   _persistState() {
@@ -251,7 +252,7 @@ class ETH2NEXT extends Flow {
               flow.setState({
                 canCreateEthTransaction: false,
                 isFailedTransaction: true,
-                isFailedTransactionError: message,
+                isFailedTransactionError: err.message,
               }, true)
 
               return null
@@ -286,6 +287,7 @@ class ETH2NEXT extends Flow {
             flow,
             swapFlow: flow.ethSwap,
             app: this.app,
+            ethSwapWithdrawTransactionHash,
           })
 
           const { isEthWithdrawn } = flow.state

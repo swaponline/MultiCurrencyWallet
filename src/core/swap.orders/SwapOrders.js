@@ -9,8 +9,12 @@ import Order from './Order'
 
 const checkIncomeOrderFormat = (order) => {
   // Skip unknown currencies
-  if (order && order.buyCurrency && !util.typeforce.isCoinName(order.buyCurrency)) return false
-  if (order && order.sellCurrency && !util.typeforce.isCoinName(order.sellCurrency)) return false
+  if (order && order.buyCurrency && !util.typeforce.isCoinName(order.buyCurrency)) {
+    return false
+  }
+  if (order && order.sellCurrency && !util.typeforce.isCoinName(order.sellCurrency)) {
+    return false
+  }
 
   const format = {
     id: '?String',
@@ -83,6 +87,7 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
     this.app.services.room.on('user online', this._handleUserOnline)
     this.app.services.room.on('user offline', this._handleUserOffline)
     this.app.services.room.on('new orders', this._handleNewOrders)
+    this.app.services.room.on('give orders', this._handleGiveOrders)
     this.app.services.room.on('new order', this._handleNewOrder)
     this.app.services.room.on('remove order', this._handleRemoveOrder)
     this.app.services.room.on('hide orders', this._handleHideOrders)
@@ -114,9 +119,12 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
     })
   }
 
-  _handleUserOnline = (peer) => {
-    let myOrders = this.getMyOrders()
+  _handleGiveOrders = ({ fromPeer }) => {
+    this._sendOrdersToPeer(fromPeer)
+  }
 
+  _sendOrdersToPeer = (peer) => {
+    let myOrders = this.getMyOrders()
     if (myOrders.length) {
       // clean orders from other additional props
       myOrders = myOrders.map((item) => util.pullProps(
@@ -144,6 +152,13 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
         }
       )
     }
+  }
+  _handleUserOnline = (peer) => {
+    this._sendOrdersToPeer(peer)
+    this.app.services.room.sendMessagePeer(peer, {
+      event: 'give orders',
+      data: {},
+    })
   }
 
   _handleUserOffline = (peer) => {
@@ -263,7 +278,9 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
         events.dispatch('remove order', order)
       }
     }
-    catch (err) {}
+    catch (err) {
+      console.error(err)
+    }
   }
 
   _saveMyOrders() {
@@ -370,7 +387,7 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
 
   hasHiddenOrders() {
     let myHiddenOrders = this.items.filter(({ isHidden, owner: { peer } }) => (peer === this.app.services.room.peer && isHidden))
-    return myHiddenOrders.length ? true : false
+    return !!myHiddenOrders.length
   }
 
   /**
