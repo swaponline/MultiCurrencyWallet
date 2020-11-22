@@ -1,6 +1,6 @@
 <img src="https://api.travis-ci.org/caffeinum/swap.core.svg?branch=master" />
 
-# Swap Core
+# Swap Core (`src/core`)
 
 In-browser atomic swap protocol based on HTLC
 

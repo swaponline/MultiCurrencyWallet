@@ -1,16 +1,9 @@
 On our server launch `root@DCbankroll ~/swap_new.bot # npm run pm2`
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-
-# Swap.Bot
+# Swap.Bot (`src/bot`)
 
 _Trading engine for swap.core protocol_
-
-```
-npm i
-npm run start
-```
 
 This is a NodeJS project that adheres to Swap.DEP and uses [swap.core](http://github.com/swaponline/swap.core) library.
 
@@ -19,7 +12,7 @@ It comes in two styles: a REST interface and a self-operating `autopilot` module
 
 ## Quickstart (testnet)
 
-
+0) `npm i`
 1) `cp .env.example .env`
 Set variables
 - KRAKEN_API_KEY
@@ -38,7 +31,7 @@ Set variables
 ## Mainnet
 
 ```bash
-NETWORK=mainnet npm run start
+NETWORK=mainnet npm run bot
 ```
 
 Try to open [web-based client](https://swaponline.io/) and see if any orders show up.
