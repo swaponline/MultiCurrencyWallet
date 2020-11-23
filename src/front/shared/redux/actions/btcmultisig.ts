@@ -1081,7 +1081,7 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
     feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
   }
   feeFromAmount = feeFromAmount.toNumber()
-  //@ts-ignore
+
   feeValue = feeValue || await btc.estimateFeeValue({
     inSatoshis: true,
     speed,
@@ -1625,7 +1625,7 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
   console.log('senderWallet', from)
 
   const { address, publicKeys } = senderWallet
-  //@ts-ignore
+
   feeValue = feeValue || await btc.estimateFeeValue({
     inSatoshis: true,
     speed,
@@ -1709,7 +1709,6 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
 // Deprecated
 //@ts-ignore
 const sendV4 = async ({ from, to, amount, feeValue, speed } = {}) => {
-  //@ts-ignore
   feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, method: 'send_multisig' })
   const {
     user: {
