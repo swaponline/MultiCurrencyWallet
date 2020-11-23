@@ -211,7 +211,7 @@
     "bitcoinjs-message": "^2.1.0",
     "bitcore-lib": "^8.22.2",
     "bootstrap": "^4.3.1",
-    "buffer": "^5.6.1",
+    "buffer": "^6.0.3",
     "classnames": "^2.2.5",
     "command-line-args": "^5.0.2",
     "command-line-usage": "^6.1.0",
