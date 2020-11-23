@@ -43,6 +43,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   ...animateFetching,
 }, { allowMultiple: true })
 export default class TxInfo extends Component<any, any> {
+
   render() {
     const {
       intl,
@@ -82,6 +83,8 @@ export default class TxInfo extends Component<any, any> {
       }
     }
 
+
+
     let finalAmount = amount
     let finalAdminFee = adminFee
 
@@ -98,6 +101,8 @@ export default class TxInfo extends Component<any, any> {
       fromIsOur = actions.user.isOwner(finalBalances.from, finalBalances.currency)
       toIsOur = actions.user.isOwner(finalBalances.to, finalBalances.currency)
     }
+
+    const comment = actions.comments.getComment(txId)
 
     return (
       <div>
@@ -279,6 +284,18 @@ export default class TxInfo extends Component<any, any> {
                     </>
                   )}
                 </>
+              )}
+            {comment && (
+                <tr>
+                  <td styleName="header">
+                    <FormattedMessage id="InfoPay_Comment" defaultMessage="Comment" />
+                  </td>
+                  <td>
+                    <strong>
+                      {comment}
+                    </strong>
+                  </td>
+                </tr>
               )}
             </tbody>
           </table>
