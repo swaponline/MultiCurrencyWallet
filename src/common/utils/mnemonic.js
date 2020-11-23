@@ -15,7 +15,7 @@ const convertMnemonicToValid = (mnemonic) => {
 }
 
 
-const getBtcWallet = (network, mnemonic, walletNumber = 0, path) => {
+const getBtcWallet = (network, mnemonic, walletNumber, path) => {
   mnemonic = convertMnemonicToValid(mnemonic)
   const seed = bip39.mnemonicToSeedSync(mnemonic)
   const root = bip32.fromSeed(seed, network)
@@ -36,7 +36,7 @@ const getBtcWallet = (network, mnemonic, walletNumber = 0, path) => {
   }
 }
 
-const getEthWallet = (network, mnemonic, walletNumber = 0, path) => {
+const getEthWallet = (network, mnemonic, walletNumber, path) => {
   mnemonic = convertMnemonicToValid(mnemonic)
   const seed = bip39.mnemonicToSeedSync(mnemonic)
   const hdwallet = hdkey.fromMasterSeed(seed)
@@ -51,7 +51,7 @@ const getEthWallet = (network, mnemonic, walletNumber = 0, path) => {
   }
 }
 
-const getGhostWallet = (network, mnemonic, walletNumber = 0, path) => {
+const getGhostWallet = (network, mnemonic, walletNumber, path) => {
   const seed = bip39.mnemonicToSeedSync(mnemonic)
   const root = bip32.fromSeed(seed, network)
   const node = root.derivePath((path) || `m/44'/0'/0'/0/${walletNumber}`)
@@ -71,7 +71,7 @@ const getGhostWallet = (network, mnemonic, walletNumber = 0, path) => {
   }
 }
 
-const getNextWallet = (network, mnemonic, walletNumber = 0, path) => {
+const getNextWallet = (network, mnemonic, walletNumber, path) => {
   const seed = bip39.mnemonicToSeedSync(mnemonic)
   const root = bip32.fromSeed(seed, network)
   const node = root.derivePath((path) || `m/44'/707'/0'/0/${walletNumber}`)

@@ -31,7 +31,6 @@ const getRandomMnemonicWords = () => bip39.generateMnemonic()
 const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonicUtils.convertMnemonicToValid(mnemonic))
 
 const sweepToMnemonic = (mnemonic, path) => {
-  //@ts-ignore
   const wallet = getWalletByWords(mnemonic, path)
   localStorage.setItem(constants.privateKeyNames.ethMnemonic, wallet.privateKey)
   return wallet.privateKey
@@ -102,7 +101,7 @@ const getPrivateKeyByAddress = (address) => {
   if (mnemonicAddress === address) return mnemonicKey
 }
 
-const getWalletByWords = (mnemonic, walletNumber = 0, path) => {
+const getWalletByWords = (mnemonic: string, walletNumber: number = 0, path: string = '') => {
   // in eth address are equals in all networds
   return mnemonicUtils.getEthWallet('nothing', mnemonic, walletNumber, path)
 }
@@ -133,9 +132,9 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
     if (!mnemonic) {
       mnemonic = bip39.generateMnemonic()
     }
-    //@ts-ignore
+
     const accData = getWalletByWords(mnemonic)
-    console.log('Eth. Generated walled from random 12 words')
+    console.log('Eth. Generated wallet from random 12 words')
     console.log(accData)
     privateKey = accData.privateKey
     data = web3.eth.accounts.privateKeyToAccount(privateKey)
