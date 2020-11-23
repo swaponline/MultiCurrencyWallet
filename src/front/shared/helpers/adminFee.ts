@@ -23,14 +23,12 @@ const calc = (currency, amount) => {
   const usedAdminFee = isEnabled(currency)
 
   if (usedAdminFee) {
-    //@ts-ignore
-    let fee = (usedAdminFee.min) ? BigNumber(usedAdminFee.min).toNumber() : 0
-    //@ts-ignore
-    if (amount && BigNumber(amount).isGreaterThan(0)) {
-      //@ts-ignore
+    let fee = (usedAdminFee.min) ? new BigNumber(usedAdminFee.min).toNumber() : 0
+
+    if (amount && new BigNumber(amount).isGreaterThan(0)) {
       let feeFromAmount = new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount)
-      //@ts-ignore
-      if (BigNumber(usedAdminFee.min).isGreaterThan(feeFromAmount)) feeFromAmount = new BigNumber(usedAdminFee.min)
+
+      if (new BigNumber(usedAdminFee.min).isGreaterThan(feeFromAmount)) feeFromAmount = new BigNumber(usedAdminFee.min)
 
       fee = feeFromAmount.toNumber() // Admin fee in satoshi
     }

@@ -192,6 +192,8 @@ export default class WithdrawModal extends React.Component<any, any> {
     for (let a = 0; a < currentDecimals - 1; a++) {
       ethTokenMinAmount += '0'
     }
+    console.log('-------- > currentDecimals > ', currentDecimals)
+    console.log('-------- > ethTokenMinAmount > ', ethTokenMinAmount)
 
     return (ethTokenMinAmount += '1')
   }
@@ -209,7 +211,7 @@ export default class WithdrawModal extends React.Component<any, any> {
     const currentCoin = getCurrencyKey(currency, true).toLowerCase()
 
     if (isEthToken) {
-      minAmount[currentCoin] = this.getMinAmountForEthToken()
+      minAmount[currentCoin] = +this.getMinAmountForEthToken()
       //@ts-ignore
       minAmount.eth = await helpers.eth.estimateFeeValue({
         method: 'send',

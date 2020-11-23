@@ -477,19 +477,14 @@ export default class Wallet extends Component<any, any> {
             //@ts-ignore
             registrationData.widget_url = widgetUrl
           }
-          //@ts-ignore
-          const tokensArray = Object.values(this.props.tokensData)
+
+          const tokensArray: any[] = Object.values(this.props.tokensData)
 
           const wallets = tokensArray.map((item) => ({
-            //@ts-ignore
             symbol: item && item.currency ? item.currency.split(' ')[0] : '',
-            //@ts-ignore
             type: item && item.currency ? item.currency.split(' ')[1] || 'common' : '',
-            //@ts-ignore
             address: item && item.address ? item.address : '',
-            //@ts-ignore
-            balance: item && item.balance ? BigNumber(item.balance).toNumber() : 0,
-            //@ts-ignore
+            balance: item && item.balance ? new BigNumber(item.balance).toNumber() : 0,
             public_key: item && item.publicKey ? item.publicKey.toString('Hex') : '',
             // TODO: let this work
             // nounce: 1,
@@ -591,9 +586,7 @@ export default class Wallet extends Component<any, any> {
         //@ts-ignore
         fiatBalance:
           el.balance > 0 && el.infoAboutCurrency && el.infoAboutCurrency.price_fiat
-            ? // comment for ts-ignore
-              //@ts-ignore
-              BigNumber(el.balance)
+            ? new BigNumber(el.balance)
                 .multipliedBy(el.infoAboutCurrency.price_fiat)
                 .dp(2, BigNumber.ROUND_FLOOR)
             : 0,
@@ -614,8 +607,8 @@ export default class Wallet extends Component<any, any> {
         btcBalance += balance * infoAboutCurrency.price_btc
       }
     })
-    //@ts-ignore
-    const allFiatBalance = tableRows.reduce((acc, cur) => BigNumber(cur.fiatBalance).plus(acc), 0)
+
+    const allFiatBalance = tableRows.reduce((acc, cur) => new BigNumber(cur.fiatBalance).plus(acc), 0)
 
     return (
       <DashboardLayout
