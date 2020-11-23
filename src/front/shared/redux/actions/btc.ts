@@ -436,7 +436,7 @@ const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
   if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
   feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
-
+  //@ts-ignore
   feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
 
   const tx = new bitcoin.TransactionBuilder(btc.network)
@@ -473,7 +473,8 @@ const sendV5 = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
     const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
 
     // fee - from amount - percent
-    let feeFromAmount = new BigNumber(0)
+    let feeFromAmount: number | BigNumber = new BigNumber(0)
+
     if (hasAdminFee) {
       const {
         fee: adminFee,
@@ -487,6 +488,7 @@ const sendV5 = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
 
       feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
     }
+    feeFromAmount = feeFromAmount.toNumber()
     //@ts-ignore
     feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed})
 
@@ -494,7 +496,7 @@ const sendV5 = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
     const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
     const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
 
-    const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount.toNumber()
+    const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
     const psbt = new bitcoin.Psbt({network: btc.network})
 
@@ -513,7 +515,6 @@ const sendV5 = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
     if (hasAdminFee) {
       psbt.addOutput({
         address: hasAdminFee.address,
-        //@ts-ignore
         value: feeFromAmount,
       })
     }

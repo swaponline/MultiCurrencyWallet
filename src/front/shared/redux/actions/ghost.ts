@@ -534,16 +534,16 @@ const sendV5WithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) =>
 
   // fee - from amount - percent
 
-  let feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
+  let feeFromAmount: number | BigNumber = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
   if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
-  feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue()
+  feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber()
 
   const unspents = await fetchUnspents(from)
   const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
 
-  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount.toNumber()
+  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
 
   const psbt = new bitcoin.Psbt({ network: ghost.network })
@@ -565,7 +565,6 @@ const sendV5WithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) =>
   // admin fee output
   psbt.addOutput({
     address: adminFeeAddress,
-    //@ts-ignore
     value: feeFromAmount,
   })
 
