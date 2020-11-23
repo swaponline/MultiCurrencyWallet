@@ -656,15 +656,14 @@ export default class WithdrawModal extends React.Component<any, any> {
       const RIGHT_ARROW = 39
       const ZERO_CODE = 48
       const NINE_CODE = 57
-      const DOT_CODE = 190
 
       if (
         !(
           (event.keyCode >= ZERO_CODE && event.keyCode <= NINE_CODE) ||
-          event.keyCode === DOT_CODE ||
           event.keyCode === BACKSPACE_CODE ||
           event.keyCode === LEFT_ARROW ||
-          event.keyCode === RIGHT_ARROW
+          event.keyCode === RIGHT_ARROW ||
+          event.key === '.'
         )
       ) {
         event.preventDefault()
