@@ -119,6 +119,7 @@ export default class WithdrawModal extends React.Component<any, any> {
       devErrorMessage: false,
       tokenFee: `(Fetching fee)`,
       fetchFee: true,
+      adminFeeSize: null,
     }
   }
 
@@ -203,6 +204,9 @@ export default class WithdrawModal extends React.Component<any, any> {
       isEthToken,
       wallet: { address },
       wallet,
+      usedAdminFee,
+      adminFeeSize,
+      amount,
     } = this.state
 
     const currentCoin = getCurrencyKey(currency, true).toLowerCase()
@@ -241,6 +245,13 @@ export default class WithdrawModal extends React.Component<any, any> {
         fetchFee: false,
       })
     }
+
+    const valueAdminFee = usedAdminFee ? adminFee.calc(wallet.currency, amount) : 0
+
+    this.setState({
+      fetchFee: false,
+      adminFeeSize: valueAdminFee,
+    })
   }
 
   setBalanceOnState = async () => {
@@ -552,6 +563,7 @@ export default class WithdrawModal extends React.Component<any, any> {
       devErrorMessage,
       tokenFee,
       fetchFee,
+      adminFeeSize,
     } = this.state
 
     const { name, intl, portalUI, activeFiat, activeCurrency, dashboardView } = this.props
@@ -966,7 +978,22 @@ export default class WithdrawModal extends React.Component<any, any> {
               rednotes: isEthToken,
               dashboardViewNotice: dashboardView,
             })}
-          >
+            >
+            { // Show message if BTC, ETH or All currency?
+              usedAdminFee && (
+                <>
+                  <FormattedMessage
+                    id="Withdrow214"
+                    defaultMessage="Admin Fee {currency}: {adminFee}"
+                    values={{
+                      adminFee: `${fetchFee ? '...' : adminFeeSize}`,
+                      currency: `${getCurrencyKey(dataCurrency, true).toUpperCase()}`,
+                    }}
+                  />
+                  <br />
+                </>
+              )
+            }
             <FormattedMessage
               id="Withdrow213"
               defaultMessage="Please note: Fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction"
