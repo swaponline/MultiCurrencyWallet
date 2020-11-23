@@ -1,5 +1,5 @@
 import SwapApp, { SwapInterface } from 'swap.app'
-import { mainnet } from 'simple/src/instances/ethereum'
+import { mainnet } from './../simple/src/instances/ethereum'
 import bitcoin from 'bitcoinjs-lib'
 import { EthSwap } from 'swap.swaps'
 import config from './config'
@@ -17,7 +17,7 @@ const lockTime    = 1521171580
 const ethSwap = new EthSwap({
   ...config.ethSwap,
   fetchBalance: (address) => 10,
-  estimateGasPrice: ({ speed } = {}) => mainnet().estimateGasPrice({ speed }),
+  estimateGasPrice: (options) => mainnet().estimateGasPrice(options),
 })
 
 test('ethSwaps can estimate tx fee', async () => {

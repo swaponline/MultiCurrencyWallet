@@ -1,5 +1,5 @@
 import SwapApp from './setupSwapApp'
-import { Bitcoin } from 'examples/react/src/instances/bitcoin'
+import Bitcoin from './../simple/src/instances/bitcoin'
 import bitcoinjs from 'bitcoinjs-lib'
 import { BtcSwap } from 'swap.swaps'
 
@@ -22,7 +22,9 @@ const ethOwner = {
   publicKey: '02dfae561eb061072da126f1aed7d47202a36b762e89e913c400cdb682360d9620',
 }
 
+//@ts-ignore
 const btcOwnerBitcoin = new Bitcoin()
+//@ts-ignore
 const ethOwnerBitcoin = new Bitcoin()
 
 const btcSwap = new BtcSwap({

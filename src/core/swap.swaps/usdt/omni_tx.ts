@@ -28,7 +28,7 @@ const createSimpleSend = async (alice_pair, recipient_address, amount, getUnspen
   tx.addOutput(omniOutput, 0)
 
   tx.addOutput(alice_p2pkh, skipValue)
-
+  //@ts-ignore
   tx.inputs.forEach((input, index) => {
     tx.sign(index, alice_pair)
   })

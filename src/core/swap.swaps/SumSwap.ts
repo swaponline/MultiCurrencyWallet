@@ -300,6 +300,7 @@ class SumSwap extends SwapInterface {
    * @returns {Promise}
    */
   async getWithdrawHexTransaction(data, isRefund) {
+    //@ts-ignore
     const txRaw = await this.getWithdrawRawTransaction(data, isRefund)
 
     return txRaw.toHex()
@@ -313,6 +314,7 @@ class SumSwap extends SwapInterface {
    * @returns {Promise}
    */
   getRefundRawTransaction(data) {
+    //@ts-ignore
     return this.getWithdrawRawTransaction(data, true)
   }
 
@@ -339,6 +341,7 @@ class SumSwap extends SwapInterface {
   async checkBalance(data) {
     const { ownerAddress, expectedValue } = data
     let balance = await util.helpers.repeatAsyncUntilResult(() =>
+      //@ts-ignore
       this.getBalance( ownerAddress )
     )
 
@@ -386,6 +389,7 @@ class SumSwap extends SwapInterface {
    * @returns {Promise}
    */
   refund(data, handleTransactionHash) {
+    //@ts-ignore
     return this.withdraw(data, handleTransactionHash, true)
   }
 

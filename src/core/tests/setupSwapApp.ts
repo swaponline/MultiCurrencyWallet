@@ -1,6 +1,6 @@
-import SwapApp, { SwapInterface } from '../src/swap.app'
+import SwapApp, { SwapInterface } from 'swap.app'
 
-import swap from '../src'
+import swap from './../'
 
 const constants = swap.constants
 
@@ -16,8 +16,6 @@ import Web3 from 'web3'
 const web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.infura.io/<YOUR_KEY>'))
 import bitcoin from 'bitcoinjs-lib'
 
-import Ipfs from 'ipfs'
-import IpfsRoom from 'ipfs-pubsub-room'
 
 import { LocalStorage } from 'node-localstorage'
 
@@ -29,12 +27,11 @@ SwapApp.setup({
   env: {
     web3,
     bitcoin,
-    Ipfs,
-    IpfsRoom,
     storage: new LocalStorage('./.storage'),
   },
 
   services: [
+    //@ts-ignore
     new SwapAuth({
       eth: null,
       btc: null,
