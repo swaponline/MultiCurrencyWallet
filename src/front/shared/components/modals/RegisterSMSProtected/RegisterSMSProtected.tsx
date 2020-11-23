@@ -110,7 +110,6 @@ export default class RegisterSMSProtected extends React.Component<any, any> {
         })
         return
       } else {
-        //@ts-ignore
         const mnemonicWallet = actions.btc.getWalletByWords(mnemonic.trim(), 1)
         this.setState({
           mnemonicWallet,
@@ -239,7 +238,6 @@ export default class RegisterSMSProtected extends React.Component<any, any> {
       })
       return
     } else {
-      //@ts-ignore
       const mnemonicWallet = actions.btc.getWalletByWords(mnemonic.trim(), 1)
       this.setState({
         mnemonicWallet,

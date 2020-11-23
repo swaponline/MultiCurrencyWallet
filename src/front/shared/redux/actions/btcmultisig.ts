@@ -54,7 +54,6 @@ const addressToWallet = (address) => {
 
 const getSmsKeyFromMnemonic = (mnemonic) => {
   if (mnemonic) {
-    //@ts-ignore
     const mnemonicWallet = actions.btc.getWalletByWords(mnemonic, 1)
     if (mnemonicWallet) {
       return mnemonicWallet.publicKey
@@ -641,7 +640,6 @@ const beginRegisterSMS = async (phone, mnemonic, ownPublicKey) => {
   const publicKeys = []
   if (mnemonic && !ownPublicKey) {
     // 2of3 - extract public key from mnemonic
-    //@ts-ignore
     const mnemonicAccount = actions.btc.getWalletByWords(mnemonic, 1)
     publicKeys.push(mnemonicAccount.publicKey)
   }
@@ -692,7 +690,6 @@ const confirmRegisterSMS = async (phone, smsCode, mnemonic, ownPublicKey) => {
 
   if (mnemonic && !ownPublicKey) {
     // 2of3 - extract public key from mnemonic
-    //@ts-ignore
     const mnemonicAccount = actions.btc.getWalletByWords(mnemonic, 1)
     //@ts-ignore
     mnemonicKey = mnemonicAccount.publicKey
@@ -759,7 +756,6 @@ const register_PIN = async (password, mnemonic, ownPublicKey) => {
 
   if (mnemonic && !ownPublicKey) {
     // 2of3 - extract public key from mnemonic
-    //@ts-ignore
     const mnemonicAccount = actions.btc.getWalletByWords(mnemonic, 1)
     //@ts-ignore
     mnemonicKey = mnemonicAccount.publicKey
@@ -813,7 +809,6 @@ const addPinWallet = async (mnemonicOrKey) => {
 
   let mnemonicKey = mnemonicOrKey
   if (actions.btc.validateMnemonicWords(mnemonicOrKey)) {
-    //@ts-ignore
     const mnemonicAccount = actions.btc.getWalletByWords(mnemonicOrKey, 1)
     mnemonicKey = mnemonicAccount.publicKey
   }
@@ -860,7 +855,6 @@ const addSMSWallet = async (mnemonicOrKey) => {
 
   let mnemonicKey = mnemonicOrKey
   if (actions.btc.validateMnemonicWords(mnemonicOrKey)) {
-    //@ts-ignore
     const mnemonicAccount = actions.btc.getWalletByWords(mnemonicOrKey, 1)
     mnemonicKey = mnemonicAccount.publicKey
   }
@@ -2105,7 +2099,6 @@ const signSmsMnemonic = (txHash, mnemonic) => {
 
 const signPinMnemonic = (txHash, mnemonic) => {
   return new Promise(async (resolve, reject) => {
-    //@ts-ignore
     const mnemonicWallet = actions.btc.getWalletByWords(mnemonic, 1)
     const psbt = bitcoin.Psbt.fromHex(txHash)
 
@@ -2139,7 +2132,6 @@ const signPinMnemonicv4 = (txHash, mnemonic) => {
 
 const signSmsMnemonicAndBuild = (txHash, mnemonic) => {
   return new Promise(async (resolve, reject) => {
-    //@ts-ignore
     const mnemonicWallet = actions.btc.getWalletByWords(mnemonic, 1)
     const psbt = bitcoin.Psbt.fromHex(txHash)
 
@@ -2169,7 +2161,6 @@ const signSmsMnemonicAndBuildV4 = (txHash, mnemonic) => {
 }
 
 const checkPinCanRestory = (mnemonic) => {
-  //@ts-ignore
   const mnemonicWallet = actions.btc.getWalletByWords(mnemonic, 1)
   let btcSmsMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKey)
   try { btcSmsMnemonicKey = JSON.parse(btcSmsMnemonicKey) } catch (e) { }
@@ -2188,8 +2179,8 @@ const checkPinMnemonic = (mnemonic) => {
       },
     },
   } = getState()
-  //@ts-ignore
   const mnemonicWallet = actions.btc.getWalletByWords(mnemonic, 1)
+
   if (mnemonicWallet) {
     const matchedKeys = publicKeys.filter((key) => key.toString('Hex') === mnemonicWallet.publicKey)
     return (matchedKeys.length > 0)
@@ -2205,8 +2196,8 @@ const checkSmsMnemonic = (mnemonic) => {
       },
     },
   } = getState()
-  //@ts-ignore
   const mnemonicWallet = actions.btc.getWalletByWords(mnemonic, 1)
+
   if (mnemonicWallet) {
     const matchedKeys = publicKeys.filter((key) => key.toString('Hex') === mnemonicWallet.publicKey)
     return (matchedKeys.length > 0)

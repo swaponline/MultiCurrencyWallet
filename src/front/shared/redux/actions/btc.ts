@@ -44,7 +44,6 @@ const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(convertMnemon
 
 
 const sweepToMnemonic = (mnemonic, path) => {
-  //@ts-ignore
   const wallet = getWalletByWords(mnemonic, path)
   localStorage.setItem(constants.privateKeyNames.btcMnemonic, wallet.WIF)
   return wallet.WIF
@@ -91,7 +90,7 @@ const getSweepAddress = () => {
 
 const convertMnemonicToValid = (mnemonic) => mnemonicUtils.convertMnemonicToValid(mnemonic)
 
-const getWalletByWords = (mnemonic, walletNumber = 0, path) => {
+const getWalletByWords = (mnemonic: string, walletNumber: number = 0, path: string = '') => {
   return mnemonicUtils.getBtcWallet(btc.network, mnemonic, walletNumber, path)
 }
 
@@ -157,9 +156,9 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
     // privateKey  = keyPair.toWIF()
     // use random 12 words
     if (!mnemonic) mnemonic = bip39.generateMnemonic()
-    //@ts-ignore
+
     const accData = getWalletByWords(mnemonic)
-    console.log('Btc. Generated walled from random 12 words')
+    console.log('Btc. Generated wallet from random 12 words')
     console.log(accData)
     privateKey = accData.WIF
     localStorage.setItem(constants.privateKeyNames.btcMnemonic, privateKey)
