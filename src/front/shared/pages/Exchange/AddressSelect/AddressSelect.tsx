@@ -243,9 +243,10 @@ export default class AddressSelect extends Component<any, any> {
     history.push(url)
   }
 
-  // @ToDo - remove this
   handleConnectMetamask() {
-    metamask.connect({}).then((isConnected) => {
+    metamask.connect({
+      dontRedirect: true,
+    }).then((isConnected) => {
       if (!isConnected) {
         return
       }
