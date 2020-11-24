@@ -7,6 +7,7 @@ import swapContract from './swapContract'
 import feeRates from './feeRates'
 import hiddenCoins from './hiddenCoins'
 import noExchangeCoins from './noExchangeCoins'
+import swapConfig from './swapConfig'
 
 
 export default {
@@ -19,4 +20,5 @@ export default {
   feeRates,
   hiddenCoins,
   noExchangeCoins,
+  swapConfig,
 }

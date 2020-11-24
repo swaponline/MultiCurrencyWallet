@@ -1,61 +1,23 @@
 import config from 'app-config'
 
-import BtcToEth from '../BtcToEth'
-import EthToBtc from '../EthToBtc'
-
-import BtcToGhost from '../BtcToGhost'
-import GhostToBtc from '../GhostToBtc'
-
-import EthToGhost from '../EthToGhost'
-import GhostToEth from '../GhostToEth'
-
-import EthTokenToBtc from '../EthTokenToBtc'
-import BtcToEthToken from '../BtcToEthToken'
-
-import EthTokenToGhost from '../EthTokenToGhost'
-import GhostToEthToken from '../GhostToEthToken'
-
-import EthToNext from '../EthToNext'
-import NextToEth from '../NextToEth'
-
-import EthTokenToNext from '../EthTokenToNext'
-import NextToEthToken from '../NextToEthToken'
-
-// import EthTokenToUsdt from '../EthTokenToUsdt'
-// import UsdtToEthToken from '../UsdtToEthToken'
+import {
+  UTXO_to_ERC20,
+  ERC20_to_UTXO,
+  UTXO_to_ETH,
+  ETH_to_UTXO
+} from './build'
 
 
-const swapComponents = {
-  'BTC2ETH': BtcToEth,
-  'ETH2BTC': EthToBtc,
-
-  'BTC2GHOST': BtcToGhost,
-  'GHOST2BTC': GhostToBtc,
-
-  'ETH2GHOST': EthToGhost,
-  'GHOST2ETH': GhostToEth,
-
-  'SWAP2BTC': EthTokenToBtc,
-  'BTC2SWAP': BtcToEthToken,
-
-  'ETH2NEXT': EthToNext,
-  'NEXT2ETH': NextToEth,
-  // 'SWAP2USDT': EthTokenToUsdt,
-  // 'USDT2SWAP': UsdtToEthToken,
-}
-
-
-Object.keys(config.erc20)
-  .forEach(key => {
-    swapComponents[`${key.toUpperCase()}2BTC`] = EthTokenToBtc
-    swapComponents[`BTC2${key.toUpperCase()}`] = BtcToEthToken
-
-    swapComponents[`${key.toUpperCase()}2GHOST`] = EthTokenToGhost
-    swapComponents[`GHOST2${key.toUpperCase()}`] = GhostToEthToken
-
-    swapComponents[`${key.toUpperCase()}2NEXT`] = EthTokenToNext
-    swapComponents[`NEXT2${key.toUpperCase()}`] = NextToEthToken
+const swapComponents = {}
+Object.keys(config.swapConfig).forEach(coin => {
+  swapComponents[`${coin.toUpperCase()}2ETH`] = UTXO_to_ETH(coin)
+  swapComponents[`ETH2${coin.toUpperCase()}`] = ETH_to_UTXO(coin)
+  Object.keys(config.erc20).forEach(tokenName => {
+  swapComponents[`${tokenName.toUpperCase()}2${coin.toUpperCase()}`] = ERC20_to_UTXO(coin)
+    swapComponents[`${coin.toUpperCase()}2${tokenName.toUpperCase()}`] = UTXO_to_ERC20(coin)
   })
+})
+  
 
 export {
   swapComponents,
