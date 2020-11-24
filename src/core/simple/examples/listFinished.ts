@@ -3,7 +3,7 @@ import swap from './../src'
 const {
   history: { getAllFinished, getAllInProgress },
 } = swap.helpers
-
+//@ts-ignore
 swap.setup()
 
 console.log('in progress:', getAllInProgress())

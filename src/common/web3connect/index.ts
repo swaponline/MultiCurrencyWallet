@@ -39,6 +39,7 @@ export default class Web3Connect extends EventEmitter {
     // Предыдущий провайдер (после перезагрузки восстанавливаем его)
     const cachedProviderName = localStorage.getItem(`WEB3CONNECT:PROVIDER`)
     if (cachedProviderName) {
+      //@ts-ignore
       const lsProvider = getProviderByName(this, cachedProviderName)
       if (lsProvider) {
         lsProvider.isConnected().then(async (isConnected) => {
@@ -103,12 +104,13 @@ export default class Web3Connect extends EventEmitter {
   }
 
   getInjectedType() {
-    if (window
-      && window.ethereum
-    ) {
+    if (window && window.ethereum) {
+      //@ts-ignore
       if (window.ethereum.isLiquality) return INJECTED_TYPE.LIQUALITY
+      //@ts-ignore
       if (window.ethereum.isTrust) return INJECTED_TYPE.TRUST
       if (window.ethereum.isMetaMask) return INJECTED_TYPE.METAMASK
+      //@ts-ignore
       if ((!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0) return INJECTED_TYPE.OPERA
       return INJECTED_TYPE.UNKNOWN
     } else {
@@ -136,12 +138,6 @@ export default class Web3Connect extends EventEmitter {
     return isInjectedEnabled()
   }
 
-  getLibrary(provider) {
-    const library = new Web3Provider(provider)
-    library.pollingInterval = 12000
-    return library
-  }
-
   onInit(cb) {
     const waitInit = () => {
       if (this._inited) {
@@ -156,6 +152,7 @@ export default class Web3Connect extends EventEmitter {
   hasCachedProvider() {
     const cachedProviderName = localStorage.getItem(`WEB3CONNECT:PROVIDER`)
     if (cachedProviderName) {
+      //@ts-ignore
       const lsProvider = getProviderByName(this, cachedProviderName)
       if (lsProvider) return true
     }
@@ -208,6 +205,7 @@ export default class Web3Connect extends EventEmitter {
     // @ToDo - Hard fix walletconnect
     // https://github.com/WalletConnect/walletconnect-monorepo/issues/384
     if (window) {
+      //@ts-ignore
       window.send = (e,t) => {
         return _web3provider.send(e,t)
       }

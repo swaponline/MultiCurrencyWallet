@@ -75,7 +75,7 @@ const {
   history: { getAllInProgress, removeInProgress, saveFinished },
   filter: { hash2id, secret2id },
 } = swap.helpers
-
+//@ts-ignore
 const { room, orders } = swap.setup()
 
 console.clear()
@@ -101,6 +101,7 @@ const _ = (async () => {
       swapID = key
 
       if (swapHisory.includes(swapID)) {
+        //@ts-ignore
         refundResult = await refund(swapID)
 
         if (refundResult) {
@@ -120,6 +121,7 @@ const _ = (async () => {
       swapID = await hash2id(key)
 
       if (swapID) {
+        //@ts-ignore
         refundResult = await refund(swapID)
 
         if (refundResult) {
@@ -137,6 +139,7 @@ const _ = (async () => {
       swapID = await secret2id(key)
 
       if (swapID) {
+        //@ts-ignore
         refundResult = await refund(swapID)
 
         if (refundResult) {
@@ -153,7 +156,7 @@ const _ = (async () => {
 
       for (let a = 0; a < swapHisory.length; a++) {
         swapID = swapHisory[a]
-
+        //@ts-ignore
         refundResult = await refund(swapID)
 
         if (refundResult) {

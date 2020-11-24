@@ -15,12 +15,17 @@ export default class InjectedProvider extends InjectedConnector {
   }
 
   async isConnected() {
+    //@ts-ignore
     if ((!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0) {
       // This is opera
+      //@ts-ignore
       await window.ethereum.enable()
+      //@ts-ignore
       return window.ethereum.isConnected()
     } else {
+      //@ts-ignore
       if (window.ethereum.isTrust) {
+        //@ts-ignore
         return window.ethereum.ready
       }
       return await super.isAuthorized()

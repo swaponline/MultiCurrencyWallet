@@ -189,7 +189,13 @@ export default new Ethereum()
 const mainnet = () => new Ethereum('mainnet')
 const testnet = () => new Ethereum('testnet')
 
+const networks = {
+  mainnet,
+  testnet
+}
+
 export {
+  networks
   mainnet,
   testnet
 }

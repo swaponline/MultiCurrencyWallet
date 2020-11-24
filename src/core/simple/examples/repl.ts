@@ -7,7 +7,7 @@ const {
   orders: { request, subscribe },
   swap: { onStep, get, start },
 } = swap.helpers
-
+//@ts-ignore
 const { auth, room, wallet, orders } = swap.setup()
 
 const swapID = process.argv[2]
@@ -28,7 +28,7 @@ const _ = (async () => {
   if (peer !== room.peer) {
     console.log(`Peers do not match:`, peer, room.peer)
   }
-
+  //@ts-ignore
   const swap = get(swapID)
 
   console.log(`swap.flow.state =`, swap.flow.state)

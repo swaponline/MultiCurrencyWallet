@@ -18,6 +18,15 @@ const DEFAULT_OPTIONS = {
 let index = 0
 
 export default class PubSubRoom extends EventEmitter {
+  _libp2p: any
+  _topic: any
+  _options: any
+  _peers: any[]
+  _connections: any
+  _handleMessage: any
+  _interval: NodeJS.Timeout
+  _idx: number
+
   constructor (libp2p, topic, options) {
     super()
     this._libp2p = libp2p.libp2p || libp2p

@@ -1,6 +1,7 @@
 import apiLooper from './apiLooper'
 import { BigNumber } from 'bignumber.js'
 import * as bitcoin from 'bitcoinjs-lib'
+import typeforce from 'swap.app/util/typeforce'
 
 
 const fetchBalance = (address, withUnconfirmed, apiBitpay, cacheResponse = null) => {
@@ -389,6 +390,7 @@ const getTransactionBlocyper = (address, ownType, myWallets, network, apiBlocype
 // Draft
 const getTransactionBitcore = (address, ownType, myWallets, network, apiBitpay) => {
   return new Promise(async (resolve) => {
+    //@ts-ignore
     let { user: { btcData: { address: userAddress } } } = getState()
     address = address || userAddress
 

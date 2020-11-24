@@ -101,8 +101,11 @@ const switchNext = (api) => {
 
 const apiLooper = (method, api, endpoint, options) => {
   const {
+    //@ts-ignore
     inQuery,
+    //@ts-ignore
     ignoreErrors,
+    //@ts-ignore
     reportErrors,
   } = options || {}
 

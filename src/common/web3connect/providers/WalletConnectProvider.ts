@@ -16,13 +16,11 @@ export default class WalletConnectProvider extends WalletConnectConnector {
       return (address) ? true : false
     } catch (err) {
       // try restore connection
-      let connectionInfo = localStorage.getItem(`walletconnect`)
+      let connectionInfo: any = localStorage.getItem(`walletconnect`)
       try {
         if (connectionInfo) connectionInfo = JSON.parse(connectionInfo)
       } catch (e) {}
-      if (connectionInfo
-        && connectionInfo.connected
-      ) {
+      if (connectionInfo && connectionInfo.connected) {
         if (await this.Connect()) {
           return true
         }

@@ -22,7 +22,7 @@ const namedQueryTimer = (queryName) => {
           namedQueryTimer(queryName)
         }, delay)
       } catch (err) {
-        if (typeof onReject === `function`) onReject(err)
+        if (typeof onError === `function`) onError(err)
         namedQueryTimers[queryName] = setTimeout(() => {
           namedQueryTimer(queryName)
         }, delay)

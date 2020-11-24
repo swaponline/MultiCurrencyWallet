@@ -274,7 +274,13 @@ export default new Bitcoin()
 const mainnet = () => new Bitcoin('mainnet')
 const testnet = () => new Bitcoin('testnet')
 
-export {
+const networks = {
   mainnet,
   testnet
+}
+
+export {
+  networks
+  mainnet,
+  testnet,
 }

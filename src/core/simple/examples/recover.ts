@@ -5,7 +5,7 @@ const {
   orders: { request, subscribe },
   swap: { onStep, start, get },
 } = swap.helpers
-
+//@ts-ignore
 const { room } = swap.setup()
 
 const swapID = process.argv[2]
@@ -45,7 +45,7 @@ const _ = (async () => {
   console.clear()
   console.log('Swap id =', swapID)
   console.log()
-
+  //@ts-ignore
   const swap = get(swapID)
 
   if (!method) {

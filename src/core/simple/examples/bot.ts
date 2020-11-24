@@ -7,7 +7,7 @@ const {
   swap: { onStep, start },
   history: { saveInProgress, removeInProgress, saveFinished },
 } = swap.helpers
-
+//@ts-ignore
 const { wallet, auth, room, orders } = swap.setup()
 
 const doSwap = async order => {

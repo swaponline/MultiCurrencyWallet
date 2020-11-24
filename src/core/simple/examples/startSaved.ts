@@ -7,7 +7,7 @@ const {
   swap: { onStep, start, get },
   history: { saveInProgress, removeInProgress, saveFinished, getAllInProgress },
 } = swap.helpers
-
+//@ts-ignore
 const { wallet, auth, room, orders } = swap.setup()
 
 const _ = (async () => {
@@ -16,6 +16,6 @@ const _ = (async () => {
 
   await ready(room)
   console.log('info:', wallet.view())
-
+  //@ts-ignore
   getAllInProgress().map(id => get(id)).map(swap => start(swap))
 })()

@@ -28,6 +28,7 @@ export default (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, ...c
     ...custom,
 
     swapAuth: {
+      //@ts-ignore
       ...common.swapAuth,
       ...config.swapAuth,
       ...custom.swapAuth,
@@ -85,6 +86,7 @@ export default (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, ...c
         (config.swaps || [])
       ),
       ...(
+        //@ts-ignore
         tokens.map(_token => new EthTokenSwap(tokenSwap(_token)()))
       )
     ]
