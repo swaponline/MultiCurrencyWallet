@@ -19,7 +19,7 @@
     .mobileFormBody,
     .formBody {
       h2 {
-        color: white
+        color: white;
       }
     }
 
@@ -208,7 +208,6 @@
   font-weight: 900;
   margin-bottom: 0;
   @include ff-bold;
-  ;
   margin-bottom: 5px;
 }
 
@@ -217,7 +216,6 @@
   margin-bottom: 7px;
   color: #8e9aa3;
   @include ff-bold;
-  ;
   line-height: 140%;
 }
 
@@ -243,11 +241,11 @@
   position: absolute;
   right: 50px;
   top: 40px;
+  text-align: right;
 
   button {
     color: $primary;
     @include ff-bold;
-    ;
     font-size: 14px;
     text-decoration: underline;
     padding: 0;
@@ -292,10 +290,14 @@
     color: #8e9aa3;
     font-size: 10px;
     @include ff-bold;
-    ;
     line-height: 18px;
     text-align: center;
   }
+}
+
+.connectWalletIcon {
+  width: 22px;
+  margin-right: 4px;
 }
 
 .cupture1 {
@@ -441,7 +443,6 @@
     top: 93px;
     margin-bottom: 40px;
     @include ff-bold;
-    ;
     font-style: normal;
     font-size: 23px;
     line-height: 120%;
@@ -466,7 +467,6 @@
 
   .subHeader h5 {
     @include ff-bold;
-    ;
     font-style: normal;
     font-size: 18px;
     margin: 5px 0;
@@ -503,7 +503,6 @@
     button {
       color: $primary;
       @include ff-bold;
-      ;
       font-size: 14px;
       text-decoration: underline;
 
@@ -557,7 +556,6 @@
       color: #8e9aa3;
       font-size: 11px;
       @include ff-bold;
-      ;
       line-height: 18px;
       text-align: left;
     }
@@ -589,16 +587,13 @@
   }
 }
 
-
 @media screen and (max-width: 420px) {
   .stepNumber {
     width: 45px;
   }
 }
 
-
 @media all and (max-width: 767px) {
-
   .mobileFormBody,
   .formBody {
     margin: 0px;
