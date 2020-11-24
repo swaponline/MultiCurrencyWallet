@@ -17,7 +17,7 @@ import paddingForSwapList from 'shared/helpers/paddingForSwapList'
 
 
 @CSSModules(styles)
-export default class BtcLikeToEthToken extends Component {
+export default class UTXOToEthToken extends Component {
 
   _fields = null
 
@@ -25,7 +25,6 @@ export default class BtcLikeToEthToken extends Component {
 
     super()
 
-    console.log('BtcLikeToEthToken')
     this.swap = swap
 
     this.state = {

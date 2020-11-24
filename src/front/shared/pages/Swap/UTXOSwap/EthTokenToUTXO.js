@@ -1,51 +1,42 @@
 import React, { Component, Fragment } from 'react'
 
-
+import actions from 'redux/actions'
+import { constants } from 'helpers'
 
 import CSSModules from 'react-css-modules'
 import styles from '../Swap.scss'
 
-import config from 'app-config'
-import { isMobile } from 'react-device-detect'
-
-import FeeControler from '../FeeControler/FeeControler'
 import SwapProgress from './SwapProgress/SwapProgress'
 import SwapList from './SwapList/SwapList'
+import FeeControler from '../FeeControler/FeeControler'
+import FailControler from '../FailControler/FailControler'
 import DepositWindow from './DepositWindow/DepositWindow'
 import paddingForSwapList from 'shared/helpers/paddingForSwapList'
 
+
 @CSSModules(styles)
-export default class EthToBtcLike extends Component {
+export default class EthTokenToUTXO extends Component {
+
   _fields = null
 
-  constructor(props) {
+  constructor({ swap, currencyData, ethBalance, tokenItems, fields }) {
     super()
-    const {
-      swap,
-      currencyData,
-      depositWindow,
-      enoughBalance,
-      verifyScriptFunc,
-      fields,
-    } = props
-
-    this._fields = fields
 
     this.swap = swap
 
     this.state = {
       swap,
       currencyData,
-      enoughBalance,
+      tokenItems,
       signed: false,
-      depositWindow,
       paddingContainerValue: 0,
       enabledButton: false,
       isAddressCopied: false,
       flow: this.swap.flow.state,
-      isShowingGhostScript: false,
       currencyAddress: currencyData.address,
     }
+
+    this._fields = fields
 
     this.signTimer = null
     this.confirmTimer = null
@@ -54,14 +45,23 @@ export default class EthToBtcLike extends Component {
 
   componentWillMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
+  }
 
+  componentWillUnmount() {
+    this.swap.off('state update', this.handleFlowStateUpdate)
   }
 
   componentDidMount() {
-    const { swap, flow: { isSignFetching, isMeSigned, step } } = this.state
+    const {
+      flow: {
+        isSignFetching,
+        isMeSigned,
+        step,
+      },
+    } = this.state
+
     this.changePaddingValue()
-    window.addEventListener('resize', this.updateWindowDimensions)
-    this.updateWindowDimensions()
+window.signSwap = this.signSwap
     this.signTimer = setInterval(() => {
       if (!this.state.flow.isMeSigned) {
         this.signSwap()
@@ -74,14 +74,11 @@ export default class EthToBtcLike extends Component {
       if (this.state.flow.step === 3) {
         this.confirmScriptChecked()
       } else {
-        clearInterval(this.confirmGhostTimer)
+        clearInterval(this.confirmTimer)
       }
     }, 3000)
-  }
 
-  componentWillUnmount() {
-    this.swap.off('state update', this.handleFlowStateUpdate)
-    window.removeEventListener('resize', this.updateWindowDimensions)
+    this.requestMaxAllowance()
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -90,8 +87,8 @@ export default class EthToBtcLike extends Component {
     }
   }
 
-  updateWindowDimensions = () => {
-    this.setState({ windowWidth: window.innerWidth })
+  confirmScriptChecked = () => {
+    this.swap.flow[this._fields.verifyScriptFunc]()
   }
 
   changePaddingValue = () => {
@@ -101,77 +98,79 @@ export default class EthToBtcLike extends Component {
     }))
   }
 
-  confirmScriptChecked = () => {
-    const {
-      verifyScriptFunc,
-    } = this._fields
-
-    this.swap.flow[this.verifyScriptFunc]()
-  }
-
   handleFlowStateUpdate = (values) => {
-    const {
-      swap,
-      flow: {
-        isMeSigned,
-      },
-    } = this.state
 
-    const { currencyName } = this._fields
-    /** todo - not used - remove **/
     const stepNumbers = {
-      1: 'sign',
-      2: 'wait-lock-ghost',
-      3: 'verify-script',
-      4: 'sync-balance',
-      5: 'lock-eth',
-      6: 'wait-withdraw-eth',
-      7: 'withdraw-ghost',
-      8: 'finish',
-      9: 'end',
+      'sign': 1,
+      'wait-lock-ghost': 2,
+      'verify-script': 3,
+      'sync-balance': 4,
+      'lock-eth': 5,
+      'wait-withdraw-eth': 6, // aka getSecret
+      'withdraw-ghost': 7,
+      'finish': 8,
+      'end': 9,
     }
+
+    // actions.analytics.swapEvent(stepNumbers[values.step], 'ETHTOKEN2BTC')
 
     this.setState({
       flow: values,
     })
-
-    this.changePaddingValue()
-
   }
 
   signSwap = () => {
+    console.log('sign swap')
     this.swap.flow.sign()
     this.setState(() => ({
       signed: true,
     }))
   }
 
-  toggleScript = () => {
-    this.setState({
-      isShowingScript: !this.state.isShowingScript,
+  
+  requestMaxAllowance = () => {
+    const { sellCurrency, sellAmount } = this.swap
+    const { ethTokenSwap } = this.swap.flow
+
+    actions.token.setAllowanceForToken({
+      name: sellCurrency,
+      to: ethTokenSwap.address, // swap contract address
+      targetAllowance: sellAmount,
+      speed: 'fast',
     })
   }
 
   render() {
     const {
-      tokenItems,
+      children,
+      disabledTimer,
       continueSwap,
       enoughBalance,
       history,
       ethAddress,
-      children,
       requestToFaucetSended,
       onClickCancelSwap,
       locale,
       wallets,
-    } = this.props
+    }  = this.props
 
-    const { currencyAddress, flow, isShowingScript, swap, currencyData, signed, paddingContainerValue, buyCurrency, sellCurrency, windowWidth } = this.state
-    const stepse = flow.step
+    const {
+      currencyAddress,
+      flow,
+      enabledButton,
+      isAddressCopied,
+      currencyData,
+      tokenItems,
+      signed,
+      paddingContainerValue,
+      swap,
+    } = this.state
+
+    const { canCreateEthTransaction, isFailedTransaction, isFailedTransactionError, gasAmountNeeded } = flow
 
     return (
       <div>
-        <div styleName="swapContainer" style={(isMobile && (windowWidth < 569)) ? { paddingTop: paddingContainerValue } : { paddingTop: 0 }}>
+        <div styleName="swapContainer">
           <div>
             <div styleName="swapInfo">
               {this.swap.id &&
@@ -196,17 +195,30 @@ export default class EthToBtcLike extends Component {
               : (
                 <Fragment>
                   {!continueSwap
-                    ? <FeeControler ethAddress={ethAddress} requestToFaucetSended={requestToFaucetSended} />
+                    ? (
+                      <Fragment>
+                        {
+                          !canCreateEthTransaction && (
+                            <FeeControler ethAddress={ethAddress} gasAmountNeeded={gasAmountNeeded} fields={this._fields} />
+                          )
+                        }
+                        {
+                          isFailedTransaction && (
+                            <FailControler ethAddress={ethAddress} message={isFailedTransactionError} fields={this._fields} />
+                          )
+                        }
+                      </Fragment>
+                    )
                     : (
                       <SwapProgress
                         flow={flow}
-                        name="EthToBtcLike"
+                        name="EthTokensToGhost"
                         swap={swap}
+                        tokenItems={tokenItems}
                         history={history}
-                        signed={signed}
                         locale={locale}
                         wallets={wallets}
-                        tokenItems={tokenItems}
+                        signed={signed}
                         fields={this._fields}
                       />
                     )
@@ -215,17 +227,9 @@ export default class EthToBtcLike extends Component {
               )
             }
           </div>
-          <SwapList
-            enoughBalance={enoughBalance}
-            flow={flow}
-            name={swap.sellCurrency}
-            windowWidth={windowWidth}
-            onClickCancelSwap={onClickCancelSwap}
-            swap={swap}
-            fields={this._fields}
-          />
-          <div styleName="swapContainerInfo">{children}</div>
+          <SwapList enoughBalance={enoughBalance} flow={flow} swap={swap} onClickCancelSwap={onClickCancelSwap} fields={this._fields} />
         </div>
+        <div styleName="swapContainerInfo">{children}</div>
       </div>
     )
   }

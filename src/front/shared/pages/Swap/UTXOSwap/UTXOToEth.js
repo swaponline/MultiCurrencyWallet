@@ -19,7 +19,7 @@ import paddingForSwapList from 'shared/helpers/paddingForSwapList'
 
 
 @CSSModules(styles)
-export default class BtcLikeToEth extends Component {
+export default class UTXOToEth extends Component {
 
   _fields = null
 
@@ -28,7 +28,6 @@ export default class BtcLikeToEth extends Component {
 
     this.swap = swap
 
-    console.log('BtcLikeToEth', fields)
     this._fields = fields
     this.state = {
       currencyData,

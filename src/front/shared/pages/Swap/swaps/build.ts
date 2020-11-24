@@ -1,12 +1,12 @@
 import config from 'app-config'
-import BtcLikeToEthToken from '../BtcLikeSwap/BtcLikeToEthToken'
-import EthTokenToBtcLike from '../BtcLikeSwap/EthTokenToBtcLike'
-import BtcLikeToEth from '../BtcLikeSwap/BtcLikeToEth'
-import EthToBtcLike from '../BtcLikeSwap/EthToBtcLike'
+import UTXOToEthToken from '../UTXOSwap/UTXOToEthToken'
+import EthTokenToUTXO from '../UTXOSwap/EthTokenToUTXO'
+import UTXOToEth from '../UTXOSwap/UTXOToEth'
+import EthToUTXO from '../UTXOSwap/EthToUTXO'
 
 
 const UTXO_to_ERC20 = (coinName) => {
-  class _UTXO_to_ERC20 extends BtcLikeToEthToken {
+  class _UTXO_to_ERC20 extends UTXOToEthToken {
     constructor(props) {
       super({
         ...props,
@@ -21,7 +21,7 @@ const UTXO_to_ERC20 = (coinName) => {
 }
 
 const ERC20_to_UTXO = (coinName) => {
-  class _ERC20_to_UTXO extends EthTokenToBtcLike {
+  class _ERC20_to_UTXO extends EthTokenToUTXO {
     constructor(props) {
       super({
         ...props,
@@ -36,7 +36,7 @@ const ERC20_to_UTXO = (coinName) => {
 }
 
 const UTXO_to_ETH = (coinName) => {
-  class _UTXO_to_ETH extends BtcLikeToEth {
+  class _UTXO_to_ETH extends UTXOToEth {
     constructor(props) {
       super({
         ...props,
@@ -51,7 +51,7 @@ const UTXO_to_ETH = (coinName) => {
 }
 
 const ETH_to_UTXO = (coinName) => {
-  class _ETH_to_UTXO extends EthToBtcLike {
+  class _ETH_to_UTXO extends EthToUTXO {
     constructor(props) {
       super({
         ...props,
