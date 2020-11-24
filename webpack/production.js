@@ -63,8 +63,10 @@ export default (webpackConfig) => {
 
   webpackConfig.plugins.push(
     new webpack.SourceMapDevToolPlugin({
+      publicPath: config.publicPath,
       filename: '[name].js.map',
-      exclude: ['vendor.js']
+      fileContext: 'public',
+      exclude: ['vendor.js'],
     }),
     new WebpackRequireFrom({
       variableName: 'publicUrl',
