@@ -658,6 +658,8 @@ export default class Row extends Component<any, any> {
     if (itemData.infoAboutCurrency && itemData.infoAboutCurrency.price_fiat) {
       currencyFiatBalance = new BigNumber(balance).multipliedBy(itemData.infoAboutCurrency.price_fiat).dp(2, BigNumber.ROUND_FLOOR).toNumber()
     }
+    // TODO: itemData не учитывает вложенность ? проверка вложенных обьектов ?
+    console.log('Row .......... itemData ..... ', itemData)
 
     let hasHowToWithdraw = false
     if (
@@ -1114,7 +1116,7 @@ export default class Row extends Component<any, any> {
                       }
                     )}
                   </p>
-                )}
+                )}  
                 {currencyFiatBalance && showBalance && !balanceError && (
                   <>
                     <p>{currencyFiatBalance}</p>
