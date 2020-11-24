@@ -31,7 +31,6 @@ const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonicUtils
 
 
 const sweepToMnemonic = (mnemonic, path) => {
-  //@ts-ignore
   const wallet = getWalletByWords(mnemonic, path)
   localStorage.setItem(constants.privateKeyNames.nextMnemonic, wallet.WIF)
   return wallet.WIF
@@ -76,7 +75,7 @@ const getSweepAddress = () => {
   return false
 }
 
-const getWalletByWords = (mnemonic, walletNumber = 0, path) => {
+const getWalletByWords = (mnemonic: string, walletNumber: number = 0, path: string = '') => {
   return mnemonicUtils.getNextWallet(next.network, mnemonic, walletNumber, path)
 }
 
@@ -143,9 +142,9 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
     // privateKey  = keyPair.toWIF()
     // use random 12 words
     if (!mnemonic) mnemonic = bip39.generateMnemonic()
-    //@ts-ignore
+    
     const accData = getWalletByWords(mnemonic)
-    console.log('Next. Generated walled from random 12 words')
+    console.log('Next. Generated wallet from random 12 words')
     console.log(accData)
     privateKey = accData.WIF
     localStorage.setItem(constants.privateKeyNames.nextMnemonic, privateKey)
@@ -309,8 +308,7 @@ const fetchTx = (hash, cacheResponse) =>
       return false
     },
   }).then(({ fees, ...rest }) => ({
-    //@ts-ignore
-    fees: BigNumber(fees).multipliedBy(1e8),
+    fees: new BigNumber(fees).multipliedBy(1e8),
     ...rest,
   }))
 
@@ -332,7 +330,7 @@ const fetchTxInfo = (hash, cacheResponse) =>
       const amount = vout ? new BigNumber(vout[0].value).toNumber() : null
 
       let afterBalance = vout && vout[1] ? new BigNumber(vout[1].value).toNumber() : null
-      let adminFee = false
+      let adminFee: any = false
 
       if (hasAdminFee) {
         const adminOutput = vout.filter((out) => (
@@ -352,7 +350,6 @@ const fetchTxInfo = (hash, cacheResponse) =>
         }
 
         if (adminOutput.length) {
-          //@ts-ignore
           adminFee = new BigNumber(adminOutput[0].value).toNumber()
         }
       }

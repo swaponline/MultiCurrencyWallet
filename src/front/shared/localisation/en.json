@@ -5278,7 +5278,7 @@
   },
   {
     "id": "customERC20_NextStep",
-    "message": "NExt",
+    "message": "Nеxt",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]

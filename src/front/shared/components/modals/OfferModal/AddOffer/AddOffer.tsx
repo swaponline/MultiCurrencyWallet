@@ -155,12 +155,11 @@ export default class AddOffer extends Component<any, any> {
   }
 
   updateExchangeRate = async (sellCurrency, buyCurrency) => {
-    const exchangeRateSell = await actions.user.getExchangeRate(sellCurrency, 'usd')
-    const exchangeRateBuy = await actions.user.getExchangeRate(buyCurrency, 'usd')
+    const exchangeRateSell: any = await actions.user.getExchangeRate(sellCurrency, 'usd')
+    const exchangeRateBuy: any = await actions.user.getExchangeRate(buyCurrency, 'usd')
 
     const exchangeRate = sellCurrency === 'swap' || buyCurrency === 'swap'
       ? await actions.user.getExchangeRate(sellCurrency, buyCurrency)
-      //@ts-ignore
       : new BigNumber(exchangeRateSell).div(exchangeRateBuy).dp(4, BigNumber.ROUND_CEIL)
 
     return new Promise((resolve, reject) => {

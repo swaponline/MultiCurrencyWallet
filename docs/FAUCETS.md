@@ -15,3 +15,6 @@ ETH (rinkeby)
  
 USDT (rinkeby)
  - contact swaponline developers
+
+[WEENUS](https://github.com/bokkypoobah/WeenusTokenFaucet) - test ERC20 token (rinkeby)
+- send 0 ETH to contract `0xaFF4481D10270F50f203E0763e2597776068CBc5` - it will send back 1000 WEENUS

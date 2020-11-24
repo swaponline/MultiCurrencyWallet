@@ -44,7 +44,6 @@ const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(convertMnemon
 
 
 const sweepToMnemonic = (mnemonic, path) => {
-  //@ts-ignore
   const wallet = getWalletByWords(mnemonic, path)
   localStorage.setItem(constants.privateKeyNames.btcMnemonic, wallet.WIF)
   return wallet.WIF
@@ -91,7 +90,7 @@ const getSweepAddress = () => {
 
 const convertMnemonicToValid = (mnemonic) => mnemonicUtils.convertMnemonicToValid(mnemonic)
 
-const getWalletByWords = (mnemonic, walletNumber = 0, path) => {
+const getWalletByWords = (mnemonic: string, walletNumber: number = 0, path: string = '') => {
   return mnemonicUtils.getBtcWallet(btc.network, mnemonic, walletNumber, path)
 }
 
@@ -157,9 +156,9 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
     // privateKey  = keyPair.toWIF()
     // use random 12 words
     if (!mnemonic) mnemonic = bip39.generateMnemonic()
-    //@ts-ignore
+
     const accData = getWalletByWords(mnemonic)
-    console.log('Btc. Generated walled from random 12 words')
+    console.log('Btc. Generated wallet from random 12 words')
     console.log(accData)
     privateKey = accData.WIF
     localStorage.setItem(constants.privateKeyNames.btcMnemonic, privateKey)
@@ -428,16 +427,15 @@ const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
     address: adminFeeAddress,
     min: adminFeeMinValue,
   } = config.opts.fee.btc
-  //@ts-ignore
+
   const adminFeeMin = new BigNumber(adminFeeMinValue)
 
   // fee - from amount - percent
-  //@ts-ignore
-  let feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
+  let feeFromAmount: number | BigNumber = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
   if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
   feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
-
+  feeFromAmount = feeFromAmount.toNumber()
   //@ts-ignore
   feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
 
@@ -447,7 +445,7 @@ const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
   let fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
 
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  //@ts-ignore
+
   const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
   unspents.forEach(({ txid, vout }) => tx.addInput(txid, vout, 0xfffffffe))
@@ -458,7 +456,7 @@ const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
   }
 
   // admin fee output
-  tx.addOutput(adminFeeAddress, feeFromAmount.toNumber())
+  tx.addOutput(adminFeeAddress, feeFromAmount)
 
   const txRaw = signAndBuild(tx, from)
 
@@ -475,28 +473,29 @@ const sendV5 = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
     const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
 
     // fee - from amount - percent
-    //@ts-ignore
-    let feeFromAmount = new BigNumber(0)
+    let feeFromAmount: number | BigNumber = new BigNumber(0)
+
     if (hasAdminFee) {
       const {
         fee: adminFee,
         min: adminFeeMinValue,
       } = config.opts.fee.btc
-      //@ts-ignore
+
       const adminFeeMin = new BigNumber(adminFeeMinValue)
-      //@ts-ignore
+
       feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
       if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
-      //@ts-ignore
-      feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber() // Admin fee in satoshi
+
+      feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
     }
+    feeFromAmount = feeFromAmount.toNumber()
     //@ts-ignore
     feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed})
 
     const unspents = await fetchUnspents(from)
     const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
     const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-    //@ts-ignore
+
     const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
     const psbt = new bitcoin.Psbt({network: btc.network})
@@ -516,7 +515,6 @@ const sendV5 = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
     if (hasAdminFee) {
       psbt.addOutput({
         address: hasAdminFee.address,
-        //@ts-ignore
         value: feeFromAmount,
       })
     }

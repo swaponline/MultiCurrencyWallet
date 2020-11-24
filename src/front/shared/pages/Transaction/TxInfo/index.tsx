@@ -1,3 +1,4 @@
+
 //@ts-ignore
 import React, { Component } from 'react'
 import { Modal } from 'components/modal'
@@ -16,6 +17,7 @@ import ShortTextView from 'pages/Wallet/components/ShortTextView/ShortTextView.j
 import { isMobile } from "react-device-detect";
 import { BigNumber } from 'bignumber.js'
 import Skeleton from 'react-loading-skeleton'
+import CommentRow from 'components/Comment/Comment'
 
 import animateFetching from 'components/loaders/ContentLoader/ElementLoading.scss'
 
@@ -41,6 +43,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   ...animateFetching,
 }, { allowMultiple: true })
 export default class TxInfo extends Component<any, any> {
+
   render() {
     const {
       intl,
@@ -59,7 +62,7 @@ export default class TxInfo extends Component<any, any> {
       adminFee,
       error,
       finalBalances,
-    //@ts-ignore
+      //@ts-ignore
     } = this.props
 
     let linkBlockChain = '#'
@@ -80,6 +83,8 @@ export default class TxInfo extends Component<any, any> {
       }
     }
 
+
+
     let finalAmount = amount
     let finalAdminFee = adminFee
 
@@ -96,6 +101,8 @@ export default class TxInfo extends Component<any, any> {
       fromIsOur = actions.user.isOwner(finalBalances.from, finalBalances.currency)
       toIsOur = actions.user.isOwner(finalBalances.to, finalBalances.currency)
     }
+
+    const comment = actions.comments.getComment(txId)
 
     return (
       <div>
@@ -116,168 +123,180 @@ export default class TxInfo extends Component<any, any> {
                     </span>
                   )
                   : error
-                    ? (
-                      <span>
+                  ? (
+                    <span>
                         <span><FormattedMessage id="InfoPay_2_Error" defaultMessage="Error loading data" /></span>
                       </span>
-                    )
-                    : (
-                      <span>
+                  )
+                  : (
+                    <span>
                         <span><strong> {finalAmount}  {currency.toUpperCase()} </strong></span>
                         <FormattedMessage id="InfoPay_2_Ready" defaultMessage="были успешно переданы" />
                         <br />
                         <strong>{toAddress}</strong>
                       </span>
-                    )
+                  )
               }
             </div>
           </div>
 
           <table styleName="blockCenter__table" className="table table-borderless">
             <tbody>
-              <tr>
-                <td styleName="header">
-                  <FormattedMessage id="InfoPay_3" defaultMessage="Transaction ID" />
-                </td>
-                <td>
-                  <a href={linkBlockChain} target="_blank" styleName="txLink">
-                    {`${tx.slice(0, 6)}...${tx.slice(-6)}`}
-                  </a>
-                </td>
-              </tr>
-              {isFetching ? (
+            <tr>
+              <td styleName="header">
+                <FormattedMessage id="InfoPay_3" defaultMessage="Transaction ID" />
+              </td>
+              <td>
+                <a href={linkBlockChain} target="_blank" styleName="txLink">
+                  {`${tx.slice(0, 6)}...${tx.slice(-6)}`}
+                </a>
+              </td>
+            </tr>
+            {isFetching ? (
+              <>
+                <tr>
+                  <td colSpan={2}>
+                    {/*
+                      // @ts-ignore */}
+                    <Skeleton />
+                  </td>
+                </tr>
+                <tr>
+                  <td colSpan={2}>
+                    {/*
+                      // @ts-ignore */}
+                    <Skeleton />
+                  </td>
+                </tr>
+                <tr>
+                  <td colSpan={2}>
+                    {/*
+                      // @ts-ignore */}
+                    <Skeleton />
+                  </td>
+                </tr>
+              </>
+            ) : error
+              ? ''
+              : (
                 <>
-                  <tr>
-                    <td colSpan={2}>
-                      {/*
-                      // @ts-ignore */}
-                      <Skeleton />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colSpan={2}>
-                      {/*
-                      // @ts-ignore */}
-                      <Skeleton />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colSpan={2}>
-                      {/*
-                      // @ts-ignore */}
-                      <Skeleton />
-                    </td>
-                  </tr>
-                </>
-              ) : error
-                  ? ''
-                  : (
+                  {(confirmed) ? (
+                    <tr>
+                      <td styleName="header">
+                        <FormattedMessage id="InfoPay_StatusReadyHeader" defaultMessage="Status" />
+                      </td>
+                      <td>
+                        <strong>
+                          <FormattedMessage id="InfoPay_Confirmed" defaultMessage="Confirmed" />
+                        </strong>
+                      </td>
+                    </tr>
+                  ) : (
+                    <tr>
+                      <td styleName="header">
+                        <FormattedMessage id="InfoPay_4" defaultMessage="Est. time to confirmation" />
+                      </td>
+                      <td>
+                        <FormattedMessage id="InfoPay_NotConfirmed" defaultMessage="~10 mins" />
+                      </td>
+                    </tr>
+                  )}
+                  {(minerFee > 0) && (
+                    <tr>
+                      <td styleName="header">
+                        <FormattedMessage id="InfoPay_MinerFee" defaultMessage="Miner fee" />
+                      </td>
+                      <td>
+                        <strong>
+                          {minerFee} {minerFeeCurrency}
+                        </strong>
+                      </td>
+                    </tr>
+                  )}
+                  {(finalAdminFee > 0) && (
+                    <tr>
+                      <td styleName="header">
+                        <FormattedMessage id="InfoPay_AdminFee" defaultMessage="Service fee" />
+                      </td>
+                      <td>
+                        <strong>
+                          {finalAdminFee} {currency.toUpperCase()}
+                        </strong>
+                      </td>
+                    </tr>
+                  )}
+                  {(finalBalances) ? (
                     <>
-                      {(confirmed) ? (
+                      <tr>
+                        <td styleName="header" colSpan={2}>
+                          <FormattedMessage id="InfoPay_FinalBalances" defaultMessage="Final balances" />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td styleName="header" colSpan={2}>
+                          {finalBalances.from}
+                          {(fromIsOur) && (
+                            <>
+                              {` `}
+                              <FormattedMessage id="InfoPay_IsOurAddress" defaultMessage="(Your)" />
+                            </>
+                          )}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>
+                          <strong>{fromFinal} {currency.toUpperCase()}</strong>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td styleName="header" colSpan={2}>
+                          {finalBalances.to}
+                          {(toIsOur) && (
+                            <>
+                              {` `}
+                              <FormattedMessage id="InfoPay_IsOurAddress" defaultMessage="(Your)" />
+                            </>
+                          )}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>
+                          <strong>{toFinal} {currency.toUpperCase()}</strong>
+                        </td>
+                      </tr>
+                    </>
+                  ) : (
+                    <>
+                      {(oldBalance > 0) && (
                         <tr>
                           <td styleName="header">
-                            <FormattedMessage id="InfoPay_StatusReadyHeader" defaultMessage="Status" />
+                            <FormattedMessage id="InfoPay_FinalBalance" defaultMessage="Final balance" />
                           </td>
                           <td>
                             <strong>
-                              <FormattedMessage id="InfoPay_Confirmed" defaultMessage="Confirmed" />
-                            </strong>
-                          </td>
-                        </tr>
-                      ) : (
-                          <tr>
-                            <td styleName="header">
-                              <FormattedMessage id="InfoPay_4" defaultMessage="Est. time to confirmation" />
-                            </td>
-                            <td>
-                              <FormattedMessage id="InfoPay_NotConfirmed" defaultMessage="~10 mins" />
-                            </td>
-                          </tr>
-                        )}
-                      {(minerFee > 0) && (
-                        <tr>
-                          <td styleName="header">
-                            <FormattedMessage id="InfoPay_MinerFee" defaultMessage="Miner fee" />
-                          </td>
-                          <td>
-                            <strong>
-                              {minerFee} {minerFeeCurrency}
+                              {oldBalance} {currency.toUpperCase()}
                             </strong>
                           </td>
                         </tr>
                       )}
-                      {(finalAdminFee > 0) && (
-                        <tr>
-                          <td styleName="header">
-                            <FormattedMessage id="InfoPay_AdminFee" defaultMessage="Service fee" />
-                          </td>
-                          <td>
-                            <strong>
-                              {finalAdminFee} {currency.toUpperCase()}
-                            </strong>
-                          </td>
-                        </tr>
-                      )}
-                      {(finalBalances) ? (
-                        <>
-                          <tr>
-                            <td styleName="header" colSpan={2}>
-                              <FormattedMessage id="InfoPay_FinalBalances" defaultMessage="Final balances" />
-                            </td>
-                          </tr>
-                          <tr>
-                            <td styleName="header" colSpan={2}>
-                              {finalBalances.from}
-                              {(fromIsOur) && (
-                                <>
-                                  {` `}
-                                  <FormattedMessage id="InfoPay_IsOurAddress" defaultMessage="(Your)" />
-                                </>
-                              )}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td></td>
-                            <td>
-                              <strong>{fromFinal} {currency.toUpperCase()}</strong>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td styleName="header" colSpan={2}>
-                              {finalBalances.to}
-                              {(toIsOur) && (
-                                <>
-                                  {` `}
-                                  <FormattedMessage id="InfoPay_IsOurAddress" defaultMessage="(Your)" />
-                                </>
-                              )}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td></td>
-                            <td>
-                              <strong>{toFinal} {currency.toUpperCase()}</strong>
-                            </td>
-                          </tr>
-                        </>
-                      ) : (
-                          <>
-                            {(oldBalance > 0) && (
-                              <tr>
-                                <td styleName="header">
-                                  <FormattedMessage id="InfoPay_FinalBalance" defaultMessage="Final balance" />
-                                </td>
-                                <td>
-                                  <strong>
-                                    {oldBalance} {currency.toUpperCase()}
-                                  </strong>
-                                </td>
-                              </tr>
-                            )}
-                          </>
-                        )}
                     </>
                   )}
+                </>
+              )}
+            {comment && (
+                <tr>
+                  <td styleName="header">
+                    <FormattedMessage id="InfoPay_Comment" defaultMessage="Comment" />
+                  </td>
+                  <td>
+                    <strong>
+                      {comment}
+                    </strong>
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
@@ -287,6 +306,12 @@ export default class TxInfo extends Component<any, any> {
             minWidth="200px"
             link={`${getFullOrigin()}${linkShare}`}
             title={amount.toString() + ' ' + currency.toString() + ' ' + intl.formatMessage(labels.Text) + ' ' + toAddress} />
+
+            <CommentRow
+              label={''}
+              canEdit={true}
+              commentKey={txId}
+            />
         </div>
       </div>
     )

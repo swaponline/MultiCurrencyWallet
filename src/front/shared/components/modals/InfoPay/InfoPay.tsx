@@ -9,10 +9,8 @@ import styles from './InfoPay.scss'
 import ShareButton from 'components/controls/ShareButton/ShareButton'
 import finishSvg from './images/finish.svg'
 import actions from 'redux/actions'
-import Button from 'components/controls/Button/Button'
-import ShortTextView from 'pages/Wallet/components/ShortTextView/ShortTextView.js'
-import { isMobile } from "react-device-detect";
-import { BigNumber } from 'bignumber.js'
+
+
 
 import animateFetching from 'components/loaders/ContentLoader/ElementLoading.scss'
 
