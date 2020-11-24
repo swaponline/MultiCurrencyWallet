@@ -1,4 +1,8 @@
-const minAmount = {
+interface MinAmount {
+  [propName: string]: number;
+}
+
+const minAmount: MinAmount = {
   eth: 0.001,
   btc: 0.00015,
   ghost: 0.00015,

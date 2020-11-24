@@ -308,8 +308,7 @@ const fetchTx = (hash, cacheResponse) =>
       return false
     },
   }).then(({ fees, ...rest }) => ({
-    //@ts-ignore
-    fees: BigNumber(fees).multipliedBy(1e8),
+    fees: new BigNumber(fees).multipliedBy(1e8),
     ...rest,
   }))
 
@@ -331,7 +330,7 @@ const fetchTxInfo = (hash, cacheResponse) =>
       const amount = vout ? new BigNumber(vout[0].value).toNumber() : null
 
       let afterBalance = vout && vout[1] ? new BigNumber(vout[1].value).toNumber() : null
-      let adminFee = false
+      let adminFee: any = false
 
       if (hasAdminFee) {
         const adminOutput = vout.filter((out) => (
@@ -351,7 +350,6 @@ const fetchTxInfo = (hash, cacheResponse) =>
         }
 
         if (adminOutput.length) {
-          //@ts-ignore
           adminFee = new BigNumber(adminOutput[0].value).toNumber()
         }
       }
