@@ -407,7 +407,7 @@ const CreateWallet = (props) => {
           {forcedCurrency && forcedCurrency.toUpperCase()}
         </h2>
         <div styleName="buttonWrapper">
-          <span>
+          <div>
             <button onClick={handleRestoreMnemonic}>
               <FormattedMessage id="ImportKeys_RestoreMnemonic" defaultMessage="Ввести 12 слов" />
             </button>
@@ -432,16 +432,15 @@ const CreateWallet = (props) => {
                 )}
               </span>
             </Tooltip>
-          </span>
-          <br />
-          <span>
+          </div>
+          <div>
             <button onClick={handleConnectWallet}>
               {web3Icon && (web3Icon !== 'UNKNOWN' || web3Icon !== 'NONE') && (
                 <img styleName="connectWalletIcon" src={web3Icons[web3Icon]} />
               )}
               <FormattedMessage id="ImportKeys_ConnectWallet" defaultMessage="Connect Wallet" />
             </button>
-          </span>
+          </div>
         </div>
         {/* TODO: переименовать компонент */}
         <LogicForSteps
