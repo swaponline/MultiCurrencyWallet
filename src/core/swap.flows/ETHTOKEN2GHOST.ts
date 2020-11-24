@@ -10,6 +10,7 @@ export default (tokenName) => {
     _flowName: string
     ethTokenSwap: any
     ghostSwap: any
+    state: any
 
     static getName() {
       return `${this.getFromName()}2${this.getToName()}`
@@ -87,8 +88,6 @@ export default (tokenName) => {
 
         withdrawRequestIncoming: false,
         withdrawRequestAccepted: false,
-        isSignFetching: false,
-        isMeSigned: false,
 
         isFailedTransaction: false,
         isFailedTransactionError: null,
@@ -119,6 +118,7 @@ export default (tokenName) => {
         // 1. Sign swap to start
 
         () => {
+          //@ts-ignore
           this.processMetamask()
           // this.sign()
         },
@@ -489,6 +489,7 @@ export default (tokenName) => {
 
     _checkSwapAlreadyExists() {
       const { participant } = this.swap
+      const flow = this
 
       const swapData = {
         ownerAddress: this.app.getMyEthAddress(),
@@ -650,7 +651,7 @@ export default (tokenName) => {
     }
 
     async tryWithdraw(_secret) {
-      const { secret, secretHash, isEthWithdrawn, isghostWithdrawn, ghostScriptValues } = this.state
+      const { secret, secretHash, isEthWithdrawn, isGhostWithdrawn, ghostScriptValues } = this.state
 
       if (!_secret)
         throw new Error(`Withdrawal is automatic. For manual withdrawal, provide a secret`)

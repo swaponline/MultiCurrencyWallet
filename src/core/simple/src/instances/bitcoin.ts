@@ -27,7 +27,14 @@ const filterError = (error) => {
 }
 
 class Bitcoin {
-  constructor(_network) {
+  core: any
+  net: any
+  network: any
+  root: any
+  API_BITPAY: any
+  API_BLOCKCYPHER: any
+
+  constructor(_network?) {
     this.core = bitcoin
 
     this.net = bitcoin.networks[_network === 'mainnet' ? 'bitcoin' : 'testnet']
@@ -53,7 +60,7 @@ class Bitcoin {
       .catch(err => console.error(`NOXONFUND error: ${err.message}`))
   }
 
-  async calculateTxSize({ speed, unspents, address, txOut = 2 } = {}) {
+  async calculateTxSize({ speed, unspents = null, address, txOut = 2 }) {
     unspents = unspents || await this.fetchUnspents(address)
 
     const txIn = unspents.length
@@ -65,20 +72,20 @@ class Bitcoin {
     return txSize
   }
 
-  async estimateFeeValue({ feeRate, inSatoshis, speed, address, txSize } = {}) {
+  async estimateFeeValue({ feeRate, inSatoshis, speed, address, txSize }) {
     const DUST = 546
     let calculatedFeeValue
 
     if (!txSize && !address) {
       debug('swap.core:bitcoin')('estimateFeeValue: need address or txSize')
-      calculatedFeeValue = BigNumber(DUST).multipliedBy(1e-8)
+      calculatedFeeValue = new BigNumber(DUST).multipliedBy(1e-8)
     } else {
       txSize = txSize || await this.calculateTxSize({ address, speed })
       feeRate = feeRate || await this.estimateFeeRate({ speed })
 
       calculatedFeeValue = BigNumber.maximum(
         DUST,
-        BigNumber(feeRate)
+        new BigNumber(feeRate)
           .multipliedBy(txSize)
           .div(1024)
           .dp(0, BigNumber.ROUND_HALF_EVEN),
@@ -123,7 +130,7 @@ class Bitcoin {
           name: `blocyper`,
         },
       } )
-      .then(json => JSON.parse(json))
+      .then((json: any) => JSON.parse(json))
       .then(fees => Number(fees[_speed]) * 1024)
       .catch(error => filterError(error))
   }
@@ -153,7 +160,7 @@ class Bitcoin {
           name: `blocyper`,
         },
       } )
-      .then(json => JSON.parse(json))
+      .then((json: string) => JSON.parse(json))
       .then(info => Number(info[_speed]))
       .catch(error => filterError(error))
   }
@@ -188,7 +195,7 @@ class Bitcoin {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       })
-      .then(response => {
+      .then((response: any) => {
         const { error, balance } = response
 
         if (error) throw new Error(`Omni Balance: ${error}`)
@@ -204,7 +211,7 @@ class Bitcoin {
         debug('swap.core:bitcoin')('Omni Balance pending:', findById[0].pendingpos)
         debug('swap.core:bitcoin')('Omni Balance pending:', findById[0].pendingneg)
 
-        const usdsatoshis = BigNumber(findById[0].value)
+        const usdsatoshis = new BigNumber(findById[0].value)
 
         if (usdsatoshis) {
           return usdsatoshis.dividedBy(1e8).toNumber()
@@ -224,13 +231,11 @@ class Bitcoin {
   }
 
   async sendTransaction({ account, to, value }, handleTransactionHash) {
-    const tx = new bitcoin.TransactionBuilder(this.net)
+    const tx: any = new bitcoin.TransactionBuilder(this.net)
 
-    value = BigNumber(value)
+    const unspents: any = await this.fetchUnspents(account.getAddress())
 
-    const unspents      = await this.fetchUnspents(account.getAddress())
-
-    const fundValue     = value.multipliedBy(1e8).integerValue().toNumber()
+    const fundValue     = new BigNumber(value).multipliedBy(1e8).integerValue().toNumber()
     const feeValue      = 1000
     const totalUnspent  = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
     const skipValue     = totalUnspent - fundValue - feeValue

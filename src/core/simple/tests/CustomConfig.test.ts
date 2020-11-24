@@ -29,8 +29,6 @@ beforeAll(async () => {
 })
 
 test('check token added', () => {
-  console.log('coins', app.constants)
-
   expect(Object.values(app.swaps).length).toBe(5)
   expect(app.swaps.BTRM).not.toBeNull()
   expect(app.swaps.BTRM).not.toBeUndefined()

@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 
-import { COIN_DATA } from 'swap.app/constants'
+import COIN_DATA from 'swap.app/constants'
 import TRADE_TICKERS from 'swap.app/constants/TRADE_TICKERS'
 import PAIR_TYPES from 'swap.app/constants/PAIR_TYPES'
 
@@ -13,7 +13,7 @@ const isBid = (type) => (type === PAIR_TYPES.BID)
 
 const filteredDecimals = ({ amount, currency }) => {
   const precision = COIN_DATA[currency] && typeof COIN_DATA[currency].precision == "number" ? COIN_DATA[currency].precision : 18
-  return BigNumber(amount).decimalPlaces(precision).toString()
+  return new BigNumber(amount).decimalPlaces(precision).toString()
 }
 
 export const parseTicker = (order) => {
@@ -54,7 +54,7 @@ export const parsePair = (str) => {
 
   const tokens = str.split('-')
 
-  if (!tokens.length === 2) {
+  if (tokens.length !== 2) {
     throw new Error(`ParseTickerError: Wrong tokens: ${str}`)
   }
 
@@ -76,9 +76,17 @@ export const parsePair = (str) => {
 }
 
 export default class Pair {
+  price: BigNumber
+  amount: BigNumber
+  ticker: any
+  main: any
+  base: any
+  type: any
+  total: any
+
   constructor({ price, amount, ticker, type }) {
-    this.price = BigNumber(price)
-    this.amount = BigNumber(amount)
+    this.price = new BigNumber(price)
+    this.amount = new BigNumber(amount)
 
     const { MAIN, BASE } = parsePair(ticker)
     if (!MAIN || !BASE) throw new Error(`CreateOrderError: No currency: ${MAIN}-${BASE}`)
@@ -120,7 +128,7 @@ export default class Pair {
 
     console.log(`create order ${this}`)
     const { MAIN, BASE } = parsePair(ticker)
-    if (!MAIN || !BASE) throw new Error(`CreateOrderError: No currency: ${main}-${base}`)
+    if (!MAIN || !BASE) throw new Error(`CreateOrderError: No currency: ${MAIN}-${BASE}`)
 
     if (![PAIR_ASK, PAIR_BID].includes(type)) throw new Error(`CreateOrderError: Wrong order type: ${type}`)
 
@@ -148,8 +156,8 @@ export default class Pair {
     }
 
     // ASK means sellCurrency is ETH, then sell is main
-    const mainAmount = BigNumber(type === PAIR_ASK ? sellAmount : buyAmount)
-    const baseAmount = BigNumber(type === PAIR_ASK ? buyAmount : sellAmount)
+    const mainAmount = new BigNumber(type === PAIR_ASK ? sellAmount : buyAmount)
+    const baseAmount = new BigNumber(type === PAIR_ASK ? buyAmount : sellAmount)
 
     return new Pair({
       ticker,

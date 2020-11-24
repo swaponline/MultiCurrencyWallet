@@ -8,6 +8,7 @@ class ETH2GHOST extends Flow {
   _flowName: string
   ethSwap: any
   ghostSwap: any
+  state: any
 
   static getName() {
     return `${this.getFromName()}2${this.getToName()}`
@@ -85,8 +86,6 @@ class ETH2GHOST extends Flow {
 
       withdrawRequestIncoming: false,
       withdrawRequestAccepted: false,
-      isSignFetching: false,
-      isMeSigned: false,
 
       isFailedTransaction: false,
       isFailedTransactionError: null,
@@ -643,7 +642,7 @@ class ETH2GHOST extends Flow {
     }
 
     await this.ghostSwap.withdraw({
-      scriptValues: btcScriptValues,
+      scriptValues: ghostScriptValues,
       secret: _secret,
     }, (hash) => {
       debug('swap.core:flow')(`TX hash=${hash}`)
@@ -660,9 +659,9 @@ class ETH2GHOST extends Flow {
 
   async checkOtherSideRefund() {
     if (typeof this.ghostSwap.checkWithdraw === 'function') {
-      const { btcScriptValues } = this.state
-      if (btcScriptValues) {
-        const { scriptAddress } = this.ghostSwap.createScript(btcScriptValues)
+      const { ghostScriptValues } = this.state
+      if (ghostScriptValues) {
+        const { scriptAddress } = this.ghostSwap.createScript(ghostScriptValues)
 
         const destinationAddress = this.swap.destinationBuyAddress
         const destAddress = (destinationAddress) ? destinationAddress : this.app.getMyEthAddress()

@@ -9,6 +9,7 @@ class BTC2ETH extends Flow {
   _flowName: string
   ethSwap: any
   btcSwap: any
+  state: any
 
   static getName() {
     return `${this.getFromName()}2${this.getToName()}`
@@ -241,11 +242,11 @@ class BTC2ETH extends Flow {
 
           const balance = await this.btcSwap.getBalance(btcScriptValues)
 
-          const isEnoughMoney = BigNumber(balance).isGreaterThanOrEqualTo(sellAmount.times(1e8))
+          const isEnoughMoney = new BigNumber(balance).isGreaterThanOrEqualTo(sellAmount.times(1e8))
 
           if (isEnoughMoney) {
             flow.setState({
-              scriptBalance: BigNumber(balance).div(1e8).dp(8),
+              scriptBalance: new BigNumber(balance).div(1e8).dp(8),
             })
 
             onTransactionHash(txID)
@@ -613,7 +614,7 @@ class BTC2ETH extends Flow {
     const txFee = await this.btcSwap.estimateFeeValue({ method: 'swap', fixed: true, address: btcAddress })
     const unspents = await this.btcSwap.fetchUnspents(btcAddress)
     const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-    const balance = BigNumber(totalUnspent).dividedBy(1e8)
+    const balance = new BigNumber(totalUnspent).dividedBy(1e8)
 
     const needAmount = sellAmount.plus(txFee)
     const isEnoughMoney = needAmount.isLessThanOrEqualTo(balance)

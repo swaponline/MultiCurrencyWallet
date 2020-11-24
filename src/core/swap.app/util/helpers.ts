@@ -124,7 +124,7 @@ const extractSecretFromTx = async ({
       }
     }
   })
-
+  //@ts-ignore
   secretFromTxhash = `0x${secretFromTxhash.replace(/^0x/, '')}`
 
   return secretFromTxhash

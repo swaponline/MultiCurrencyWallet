@@ -5,10 +5,9 @@ const {
   room: { ready },
   orders: { request, subscribe },
   swap: { onStep, start },
-  history: { save, get, remove },
 } = swap.helpers
 
-const { room, wallet } = swap.setup()
+const { room, wallet } = swap.setup({})
 
 beforeAll(done => {
   ready(room).then(done)
@@ -26,6 +25,7 @@ test('wallet can query balance', async () => {
 })
 
 test('wallet can return crypto data', async () => {
+  //@ts-ignore
   const data = await wallet.getData()
 
   expect(data.length).not.toBe(0)

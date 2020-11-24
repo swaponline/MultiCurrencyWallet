@@ -13,6 +13,7 @@ export default (tokenName) => {
     usdtSwap: any
     myBtcAddress: string
     myEthAddress: string
+    state: any
 
     static getName() {
       return `${this.getFromName()}2${this.getToName()}`
@@ -405,7 +406,7 @@ export default (tokenName) => {
       debug('swap.core:flow')(`address=${scriptAddress}, balance=${balance}`)
 
       if (balance === 0) {
-        flow.finishStep({
+        this.finishStep({
           isBtcWithdrawn: true,
         }, { step: 'withdraw-usdt' })
 
@@ -467,6 +468,7 @@ export default (tokenName) => {
 
       if (!secret) {
         try {
+          //@ts-ignore
           secret = await this.ethTokenSwap.getSecret(data)
         }
         catch (err) {

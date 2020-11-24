@@ -13,6 +13,7 @@ export default (tokenName) => {
     usdtSwap: any
     myBtcAddress: any
     myEthAddress: any
+    state: any
 
     static getName() {
       return `${this.getFromName()}2${this.getToName()}`

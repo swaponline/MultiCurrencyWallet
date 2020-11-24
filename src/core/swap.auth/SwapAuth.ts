@@ -7,6 +7,11 @@ const getPublicDataMethods = {}
 
 class SwapAuth extends ServiceInterface {
 
+  _serviceName: string
+  accounts: any
+  app: any
+
+  //@ts-ignore
   static get name() {
     return 'auth'
   }

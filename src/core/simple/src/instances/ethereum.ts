@@ -32,10 +32,14 @@ const filterError = (error) => {
 
 class Ethereum {
 
-  constructor(_network = 'testnet', _customProvider) {
-    const _provider = WEB3_PROVIDERS[_network]
+  core: any
+  etherscan: any
 
+  constructor(_network = 'testnet') {
+    const _provider = WEB3_PROVIDERS[_network]
+    //@ts-ignore
     if (typeof web3 !== 'undefined') {
+      //@ts-ignore
       this.core = new Web3(web3.currentProvider)
     } else {
       this.core = new Web3(_provider)
@@ -73,9 +77,9 @@ class Ethereum {
         cacheResponse: 10*1000,
         queryResponse: true,
       })
-      .then(json => JSON.parse(json))
+      .then((json: any) => JSON.parse(json))
       .then(({ result }) => result)
-      .then(raw => BigNumber(raw).dividedBy(base).toString())
+      .then(raw => new BigNumber(raw).dividedBy(base).toString())
       .catch(error => {
         debug('swap.core:ethereum')(`TokenBalanceError: ${error.statusCode} ${url} - Failed to fetch token balance (${tokenAddress}). Probably too frequent request!`)
 
@@ -127,8 +131,8 @@ class Ethereum {
         }
       })
     )
-
-    return BigNumber(gasPrice).multipliedBy(_multiplier)
+    //@ts-ignore
+    return new BigNumber(gasPrice).multipliedBy(_multiplier)
   }
 
   estimateGasPriceEtherChain({ speed = 'fast' } = {}) {
@@ -146,12 +150,12 @@ class Ethereum {
     // use cache if fail
     return request
       .get(`${ETHERCHAIN_API}`, {
-        cacheResponse: 10*60*1000,
+        cacheResponse: 10 * 60 * 1000,
         queryResponse: true,
         cacheOnFail: true,
       })
-      .then(json => JSON.parse(json))
-      .then(fees => BigNumber(fees[_speed]).multipliedBy(1e9))
+      .then((json: string) => JSON.parse(json))
+      .then(fees => new BigNumber(fees[_speed]).multipliedBy(1e9))
       .catch(error => filterError(error))
   }
 
@@ -170,12 +174,12 @@ class Ethereum {
     // use cache if fail
     return request
       .get(`${ETHGASSTATION_API}`, {
-        cacheResponse: 10*60*1000,
+        cacheResponse: 10 * 60 * 1000,
         queryResponse: true,
         cacheOnFail: true,
       })
-      .then(json => JSON.parse(json))
-      .then(fees => BigNumber(fees[_speed]).dividedBy(10).multipliedBy(1e9))
+      .then((json: any) => JSON.parse(json))
+      .then(fees => new BigNumber(fees[_speed]).dividedBy(10).multipliedBy(1e9))
       .catch(error => filterError(error))
   }
 }

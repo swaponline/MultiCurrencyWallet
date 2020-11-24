@@ -8,6 +8,7 @@ class ETH2BTC extends Flow {
   _flowName: string
   ethSwap: any
   btcSwap: any
+  state: any
 
   static getName() {
     return `${this.getFromName()}2${this.getToName()}`
@@ -85,8 +86,6 @@ class ETH2BTC extends Flow {
 
       withdrawRequestIncoming: false,
       withdrawRequestAccepted: false,
-      isSignFetching: false,
-      isMeSigned: false,
 
       isFailedTransaction: false,
       isFailedTransactionError: null,

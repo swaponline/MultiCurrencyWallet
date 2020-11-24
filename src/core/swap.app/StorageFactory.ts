@@ -1,5 +1,8 @@
 class StorageFactory {
 
+  prefix: string
+  storage: any
+
   constructor(storage) {
     this.prefix = 'swap:'
     this.storage = storage || global.localStorage

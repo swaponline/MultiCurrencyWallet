@@ -26,7 +26,7 @@ class Swap {
   room: any
   flow: any
 
-  constructor(id, app, order) {
+  constructor(id, app, order?) {
     this.id                     = null
     this.isMy                   = null
     this.owner                  = null

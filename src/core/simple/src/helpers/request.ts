@@ -189,7 +189,7 @@ const sendRequest = (options) => {
   }
 
   const responseHandler = createResponseHandler(req, opts)
-
+  //@ts-ignore
   responseHandler.abort = req.abort.bind(req)
 
   return responseHandler

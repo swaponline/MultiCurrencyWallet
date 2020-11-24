@@ -1,4 +1,5 @@
-import { bitcoin, ethereum } from '../instances'
+import bitcoin from './../instances'
+import ethereum from './../instances'
 import debugCreate from 'debug'
 const debug = debugCreate('swap.core:simple:wallet')
 
@@ -6,6 +7,15 @@ const BLOCKCHAININFO = isMain => isMain ? `https://blockchain.info` : `https://t
 const ETHERSCANIO = isMain => isMain ? `https://etherscan.io` : `https://rinkeby.etherscan.io`
 
 class Wallet {
+  id: any
+  network: any
+  ethereum: any
+  bitcoin: any
+  swapApp: any
+  constants: any
+  auth: any
+  balances: any
+
   constructor(app, constants, config) {
     this.id = config.id
     this.network = app.network
@@ -40,7 +50,7 @@ class Wallet {
     return this.balances[symbol]
   }
 
-  async getData({ coins } = {}) {
+  async getData({ coins }) {
     const currencies = coins || Object.values(this.constants.COINS)
     const data = this.auth.getPublicData()
 
@@ -83,7 +93,7 @@ class Wallet {
     return instance ? instance.fetchBalance(account.address) : '-'
   }
 
-  async getBalance(symbols) {
+  async getBalance(symbols?) {
     const currencies = symbols || Object.values(this.constants.COINS)
 
     const values = await Promise.all(

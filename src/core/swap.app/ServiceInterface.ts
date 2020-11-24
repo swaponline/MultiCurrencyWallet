@@ -3,6 +3,12 @@ import SwapApp from './SwapApp'
 
 class ServiceInterface {
 
+  _serviceName: any
+  _dependsOn: any
+  _spyHandlers: any
+  app: any
+
+
   // _constructor for aggregation
   _constructor() {
     // service name, within it will be stored in this.app.services

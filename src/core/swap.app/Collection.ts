@@ -1,5 +1,8 @@
 class Collection {
 
+  items: any[]
+  itemIds: any
+
   // _constructor for aggregation
   _constructor() {
     this.items = []

@@ -10,6 +10,7 @@ export default (tokenName) => {
     _flowName: string
     ethTokenSwap: any
     btcSwap: any
+    state: any
 
     static getName() {
       return `${this.getFromName()}2${this.getToName()}`
@@ -87,8 +88,6 @@ export default (tokenName) => {
 
         withdrawRequestIncoming: false,
         withdrawRequestAccepted: false,
-        isSignFetching: false,
-        isMeSigned: false,
 
         isFailedTransaction: false,
         isFailedTransactionError: null,

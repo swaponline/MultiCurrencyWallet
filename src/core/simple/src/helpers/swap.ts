@@ -4,7 +4,7 @@ import debug from 'debug'
 
 import crypto from 'crypto'
 import history from './history'
-import on from './on'
+import { on } from './on'
 
 export const read = Swap.read
 

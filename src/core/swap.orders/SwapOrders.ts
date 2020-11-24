@@ -69,6 +69,11 @@ const checkIncomeOrder = (order, fromPeer) => {
 
 class SwapOrders extends aggregation(ServiceInterface, Collection) {
 
+  _serviceName: string
+  getUniqueId: any
+  _dependsOn: any
+
+  //@ts-ignore
   static get name() {
     return 'orders'
   }
@@ -224,8 +229,8 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
 
     const buy = buyCurrency.toUpperCase()
     const sell = sellCurrency.toUpperCase()
-    const roundedBuyAmount = BigNumber(buyAmount).dp(constants.COIN_DATA[buy].precision)
-    const roundedSellAmount = BigNumber(sellAmount).dp(constants.COIN_DATA[sell].precision)
+    const roundedBuyAmount = new BigNumber(buyAmount).dp(constants.COIN_DATA[buy].precision)
+    const roundedSellAmount = new BigNumber(sellAmount).dp(constants.COIN_DATA[sell].precision)
 
     const order = new Order(this.app, this, {
       id:           id || this.getUniqueId(),

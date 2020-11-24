@@ -5,7 +5,6 @@ const {
   room: { ready },
   orders: { request, subscribe },
   swap: { onStep, start },
-  history: { save, get, remove },
 } = swap.helpers
 
 const _ORDER = {

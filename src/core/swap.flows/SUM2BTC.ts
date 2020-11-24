@@ -9,6 +9,7 @@ class SUM2BTC extends Flow {
   _flowName: string
   sumSwap: any
   btcSwap: any
+  state: any
 
   static getName() {
     return `${this.getFromName()}2${this.getToName()}`

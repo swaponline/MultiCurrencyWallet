@@ -1,8 +1,8 @@
 import debug from 'debug'
 import crypto from 'bitcoinjs-lib/src/crypto' // move to BtcSwap
 import SwapApp, { constants } from 'swap.app'
-import { COIN_DATA } from 'swap.app/constants'
-import stepsForCoins, { Flow } from 'swap.swap'
+import COIN_DATA from 'swap.app/constants'
+import { Flow, stepsForCoins } from 'swap.swap'
 
 const fromCoin = constants.COIN_DATA.NEXT
 const toCoin = constants.COIN_DATA.BTC
@@ -12,6 +12,7 @@ class NEXT2BTC extends Flow {
   _flowName: string
   nextSwap: any
   btcSwap: any
+  state: any
 
   static getName() {
     return `${this.getFromName()}2${this.getToName()}`

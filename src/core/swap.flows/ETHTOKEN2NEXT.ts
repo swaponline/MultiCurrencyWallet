@@ -10,6 +10,7 @@ export default (tokenName) => {
     _flowName: string
     ethTokenSwap: any
     nextSwap: any
+    state: any
 
     static getName() {
       return `${this.getFromName()}2${this.getToName()}`
@@ -87,8 +88,6 @@ export default (tokenName) => {
 
         withdrawRequestIncoming: false,
         withdrawRequestAccepted: false,
-        isSignFetching: false,
-        isMeSigned: false,
 
         isFailedTransaction: false,
         isFailedTransactionError: null,
@@ -649,7 +648,7 @@ export default (tokenName) => {
     }
 
     async tryWithdraw(_secret) {
-      const { secret, secretHash, isEthWithdrawn, isnextWithdrawn, nextScriptValues } = this.state
+      const { secret, secretHash, isEthWithdrawn, isNextWithdrawn, nextScriptValues } = this.state
 
       if (!_secret)
         throw new Error(`Withdrawal is automatic. For manual withdrawal, provide a secret`)

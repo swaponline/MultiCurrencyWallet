@@ -3,6 +3,9 @@ import debug from 'debug'
 
 class Event {
 
+  name: any
+  handlers: any[]
+
   /**
    *
    * @param name {string}
@@ -55,6 +58,8 @@ class Event {
 }
 
 class EventAggregator {
+
+  events: any
 
   constructor() {
     this.events = {}

@@ -1,9 +1,9 @@
-import ethereumNetworks from '../instances/ethereum'
+import ethereum, { mainnet, testnet } from '../instances/ethereum'
 import ERC20 from './ERC20'
 
 const eth = {
-  mainnet: ethereumNetworks.mainnet(),
-  testnet: ethereumNetworks.testnet(),
+  mainnet: mainnet(),
+  testnet: testnet(),
 }
 
 const SwapContract = {
@@ -17,7 +17,7 @@ const SwapContract = {
   },
 }
 
-export default ({ network, name, decimals, tokenAddress }) => (contract = {}) => ({
+export default ({ network, name, decimals, tokenAddress }) => (contract) => ({
   network,
   name,
   decimals,
@@ -27,5 +27,5 @@ export default ({ network, name, decimals, tokenAddress }) => (contract = {}) =>
   address: contract.address || SwapContract[network].address,
   abi: contract.abi || SwapContract[network].abi,
   fetchBalance: (address) => eth[network].fetchTokenBalance(address, tokenAddress, decimals),
-  estimateGasPrice: ({ speed } = {}) => ethereum.estimateGasPrice({ speed }),
+  estimateGasPrice: ({ speed }) => ethereum.estimateGasPrice({ speed }),
 })

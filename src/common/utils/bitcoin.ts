@@ -52,9 +52,9 @@ const fetchTx = (hash, apiBitpay, cacheResponse) => {
   ))
 }
 
-const fetchTxInfo = (hash, apiBitpay, cacheResponse, hasAdminFee) => {
+const fetchTxInfo = (hash, apiBitpay, cacheResponse?, hasAdminFee?) => {
   return new Promise(async (callback, txinfoReject) => {
-    let baseTxInfo = false
+    let baseTxInfo: any = false
     let txCoins: any = false
 
     try {
@@ -83,7 +83,7 @@ const fetchTxInfo = (hash, apiBitpay, cacheResponse, hasAdminFee) => {
       ? new BigNumber(txCoins.inputs[1].value).dividedBy(1e8).toNumber() 
       : null
     let adminOutput = []
-    let adminFee = false
+    let adminFee: any = false
     let afterOutput = []
 
     if (!txCoins || !txCoins.inputs || !txCoins.outputs) {
@@ -277,13 +277,13 @@ const checkWithdraw = (scriptAddress, apiBitpay) => {
       delay: 500,
       name: `bitpay`,
     },
-  }).then(async (txs) => {
+  }).then(async (txs: any) => {
     if ((txs.length > 0)
       && txs[0].mintTxid
       && txs[0].spentTxid
     ) {
       try {
-        const spendTxInfo = await fetchTxInfo(txs[0].spentTxid, apiBitpay)
+        const spendTxInfo: any = await fetchTxInfo(txs[0].spentTxid, apiBitpay)
         return {
           address: spendTxInfo.receiverAddress,
           txid: txs[0].spentTxid,
@@ -328,7 +328,7 @@ const getTransactionBlocyper = (address, ownType, myWallets, network, apiBlocype
           name: `blocyper`,
         },
       }
-    ).then((answer) => {
+    ).then((answer: any) => {
       if (answer
         && answer.txs
       ) {
@@ -363,11 +363,11 @@ const getTransactionBlocyper = (address, ownType, myWallets, network, apiBlocype
             value: new BigNumber(value).dividedBy(1e8).toNumber(),
             date: (
               Math.floor(
-                new Date(
+                +(new Date(
                   (item.confirmations)
                   ? item.confirmed
                   : item.received
-                )
+                ))
               )
             ),
             direction: isSelf ? 'self' : direction,
@@ -389,8 +389,6 @@ const getTransactionBlocyper = (address, ownType, myWallets, network, apiBlocype
 // Draft
 const getTransactionBitcore = (address, ownType, myWallets, network, apiBitpay) => {
   return new Promise(async (resolve) => {
-    const myAllWallets = getAllMyAddresses()
-
     let { user: { btcData: { address: userAddress } } } = getState()
     address = address || userAddress
 
@@ -419,7 +417,7 @@ const getTransactionBitcore = (address, ownType, myWallets, network, apiBitpay) 
         delay: 500,
         name: `bitpay`,
       },
-    }).then((res) => {
+    }).then((res: any) => {
       const transactions = res.txs.map((item) => {
         const direction = item.vin[0].addr !== address ? 'in' : 'out'
 

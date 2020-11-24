@@ -17,6 +17,7 @@ const aggregation = (baseClass, ...mixins) => {
 
   const copyProps = (target, source) => {
     Object.getOwnPropertyNames(source)
+      //@ts-ignore
       .concat(Object.getOwnPropertySymbols(source))
       .forEach((prop) => {
         if (prop.match(/^(?:_?constructor|prototype|arguments|caller|name|bind|call|apply|toString|length)$/)) {

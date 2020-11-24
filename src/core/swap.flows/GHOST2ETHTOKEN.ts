@@ -11,6 +11,7 @@ export default (tokenName) => {
     _flowName: string
     ethTokenSwap: any
     ghostSwap: any
+    state: any
 
     static getName() {
       return `${this.getFromName()}2${this.getToName()}`
@@ -200,11 +201,11 @@ export default (tokenName) => {
 
             const balance = await this.ghostSwap.getBalance(ghostScriptValues)
 
-            const isEnoughMoney = BigNumber(balance).isGreaterThanOrEqualTo(sellAmount.times(1e8))
+            const isEnoughMoney = new BigNumber(balance).isGreaterThanOrEqualTo(sellAmount.times(1e8))
 
             if (isEnoughMoney) {
               flow.setState({
-                scriptBalance: BigNumber(balance).div(1e8).dp(8),
+                scriptBalance: new BigNumber(balance).div(1e8).dp(8),
               })
 
               onTransactionHash(txID)
@@ -578,7 +579,7 @@ export default (tokenName) => {
       const txFee = await this.ghostSwap.estimateFeeValue({ method: 'swap', fixed: true, address: ghostAddress })
       const unspents = await this.ghostSwap.fetchUnspents(ghostAddress)
       const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-      const balance = BigNumber(totalUnspent).dividedBy(1e8)
+      const balance = new BigNumber(totalUnspent).dividedBy(1e8)
 
       const needAmount = sellAmount.plus(txFee)
       const isEnoughMoney = needAmount.isLessThanOrEqualTo(balance)
