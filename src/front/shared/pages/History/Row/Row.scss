@@ -272,37 +272,6 @@ tr.dark {
   }
 }
 
-.input {
-  font-size: 12px;
-  color: #8e9aa3;
-  border-bottom: 1px solid #8e9aa3;
-  width: 75%;
-  padding-bottom: 5px;
-  position: relative;
-
-  textarea {
-    width: 85%;
-    @include ff;
-  }
-
-  .submit {
-    color: #0CCF14;
-    position: absolute;
-    font-size: 16px;
-    right: 22px;
-    top: -1px;
-  }
-
-  .close {
-    color: #EE5B51;
-    margin-right: 5px;
-    font-size: 22px;
-    position: absolute;
-    right: -6px;
-    top: -7px;
-  }
-}
-
 .historyInvoiceInfo {
   outline: 1px solid red;
 

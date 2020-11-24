@@ -7,7 +7,6 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 
 import { constants } from 'helpers'
 import feedback from 'shared/helpers/feedback'
-import minAmount from 'helpers/constants/minAmount'
 import api from 'helpers/api'
 import config from 'app-config'
 

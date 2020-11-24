@@ -72,7 +72,7 @@ export default class History extends Component<any, any> {
       }
     } = props
 
-    const commentsList = actions.comments.getComment()
+    const commentsList = actions.comments.getComments()
     this.state = {
       page,
       items,
@@ -107,7 +107,7 @@ export default class History extends Component<any, any> {
 
         for (let prop in user) {
           if (
-            user[prop] 
+            user[prop]
             && typeof user[prop] === 'object'
             && user[prop].currency
           ) {
@@ -150,18 +150,13 @@ export default class History extends Component<any, any> {
     }
   }
 
-  onSubmit = (obj) => {
-
-    this.setState(() => ({ commentsList: obj }))
-    actions.comments.setComment(obj)
-  }
-
   rowRender = (row, rowIndex) => {
     const { activeFiat } = this.props
     const { commentsList } = this.state
 
     return (
-      <Row activeFiat={activeFiat} isDark={isDark} key={rowIndex} hiddenList={commentsList} onSubmit={this.onSubmit} {...row} />
+      <Row activeFiat={activeFiat}
+           isDark={isDark} key={rowIndex} hiddenList={commentsList} {...row} />
     )
   }
 

@@ -149,8 +149,8 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
 
   actualyMinAmount = async () => {
     const { usedAdminFee } = this.state
-    //@ts-ignore
-    let min = await helpers['btc'].estimateFeeValue({ method: 'send_2fa', speed: 'fast' })
+
+    let min: any = await helpers['btc'].estimateFeeValue({ method: 'send_2fa', speed: 'fast' })
     minAmount['btc_multisig_2fa'] = min
 
     if (usedAdminFee) {
@@ -166,8 +166,8 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
     const {
       data: { unconfirmedBalance },
     } = this.props
-    //@ts-ignore
-    const balance = await actions.btcmultisig.getBalance()
+
+    const balance: any = await actions.btcmultisig.getBalance()
 
     const finalBalance =
       unconfirmedBalance !== undefined && unconfirmedBalance < 0

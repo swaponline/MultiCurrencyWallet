@@ -474,19 +474,17 @@ const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
         const amount =  web3.utils.fromWei(value)
 
         // Calc miner fee, used for this tx
-        //@ts-ignore
         const minerFee = new BigNumber(web3.utils.toBN(gas).toNumber())
           .multipliedBy(web3.utils.toBN(gasPrice).toNumber())
           .dividedBy(1e18).toNumber()
 
-        let adminFee = false
+        let adminFee: any = false
 
         if (hasAdminFee && to != hasAdminFee.address) {
-          //@ts-ignore
           adminFee = new BigNumber(hasAdminFee.fee).dividedBy(100).multipliedBy(amount)
-          //@ts-ignore
-          if (BigNumber(hasAdminFee.min).isGreaterThan(adminFee)) adminFee = new BigNumber(hasAdminFee.min)
-          //@ts-ignore
+
+          if (new BigNumber(hasAdminFee.min).isGreaterThan(adminFee)) adminFee = new BigNumber(hasAdminFee.min)
+
           adminFee = adminFee.toNumber()
         }
 
