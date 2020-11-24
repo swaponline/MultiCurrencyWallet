@@ -632,7 +632,7 @@ export default class WithdrawModal extends React.Component<any, any> {
       !criptoValueIsOk ||
       !usdValueIsOk ||
       new BigNumber(amount).isGreaterThan(balance) ||
-      new BigNumber(amount).isGreaterThan(currentDecimals) ||
+      new BigNumber(amount).dp() > currentDecimals ||
       this.isEthOrERC20()
 
     const labels = defineMessages({
@@ -979,7 +979,7 @@ export default class WithdrawModal extends React.Component<any, any> {
               dashboardViewNotice: dashboardView,
             })}
             >
-            { // Show message if BTC, ETH or All currency?
+            {
               usedAdminFee && (
                 <>
                   <FormattedMessage
