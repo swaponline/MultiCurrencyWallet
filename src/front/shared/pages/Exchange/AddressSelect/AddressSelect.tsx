@@ -87,12 +87,12 @@ export default class AddressSelect extends Component<any, any> {
   constructor(props) {
     super(props)
 
-    const { currency, hasError = false } = props
+    const { currency, hasError = false, selectedType = false } = props
 
     this.state = {
       currency,
       hasError,
-      selectedType: 'placeholder',
+      selectedType: selectedType || 'placeholder',
       walletAddressFocused: false,
       customAddress: '',
       isMetamaskConnected: metamask.isConnected(),
@@ -161,15 +161,19 @@ export default class AddressSelect extends Component<any, any> {
   }
 
   componentDidUpdate() {
-    const { currency: newCurrency, hasError = false } = this.props
+    const { currency: newCurrency, selectedType, hasError = false } = this.props
 
-    const { currency: oldCurrency, hasError: oldHasError = false } = this.state
+    const {
+      currency: oldCurrency,
+      selectedType: oldSelectedType,
+      hasError: oldHasError = false,
+    } = this.state
 
     if (newCurrency !== oldCurrency || hasError !== oldHasError) {
       this.setState({
         currency: newCurrency,
         hasError,
-        selectedType: 'placeholder',
+        selectedType,
         customAddress: '',
       })
     }
@@ -205,26 +209,29 @@ export default class AddressSelect extends Component<any, any> {
     history.push(url)
   }
 
-  // @ToDo - remove this
   handleConnectMetamask() {
-    metamask.connect({}).then((isConnected) => {
-      if (!isConnected) {
-        return
-      }
-
-      this.setState(
-        {
-          isMetamaskConnected: true,
-          metamaskAddress: metamask.getAddress(),
-        },
-        () => {
-          this.applyAddress({
-            type: AddressType.Metamask,
-            value: metamask.getAddress(),
-          })
+    metamask
+      .connect({
+        dontRedirect: true,
+      })
+      .then((isConnected) => {
+        if (!isConnected) {
+          return
         }
-      )
-    }) /*.catch((error) => {
+
+        this.setState(
+          {
+            isMetamaskConnected: true,
+            metamaskAddress: metamask.getAddress(),
+          },
+          () => {
+            this.applyAddress({
+              type: AddressType.Metamask,
+              value: metamask.getAddress(),
+            })
+          }
+        )
+      }) /*.catch((error) => {
       console.log('Metamask rejected', error)
     })*/
   }

@@ -34,4 +34,5 @@ export default {
   isDark: 'isDark',
 
   prevWPUser: 'wp_widget_prev_userid',
+  exchangeUserWallets: 'exchangeUserWallets',
 }
