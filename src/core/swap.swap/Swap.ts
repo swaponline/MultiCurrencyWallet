@@ -101,7 +101,7 @@ class Swap {
     })
   }
 
-  static read(app, { id } = {}) {
+  static read(app, { id }) {
     SwapApp.required(app)
 
     if (!id) {
@@ -150,11 +150,17 @@ class Swap {
     )
 
     const {
+      //@ts-ignore
       isMy,
+      //@ts-ignore
       sellCurrency,
+      //@ts-ignore
       sellAmount,
+      //@ts-ignore
       buyCurrency,
+      //@ts-ignore
       buyAmount,
+      //@ts-ignore
       destination,
       ...rest
     } = data
@@ -171,8 +177,9 @@ class Swap {
       destinationBuyAddress: isMy ? ownerAddress : participantAddress,
       destinationSellAddress: isMy ? participantAddress : ownerAddress,
     }
-
+    //@ts-ignore
     if (!swap.participant && !isMy) {
+      //@ts-ignore
       swap.participant = swap.owner
     }
 

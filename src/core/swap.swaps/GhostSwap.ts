@@ -77,8 +77,14 @@ class GhostSwap extends SwapInterface {
    * @returns {BigNumber}
    * @public
    */
-  async getTxFee({ inSatoshis, size, speed = 'fast', address } = {}) {
-    let estimatedFee = BigNumber(await this.estimateFeeValue({ inSatoshis, address, speed, method: 'swap' /*, txSize: size */ }))
+  async getTxFee({ inSatoshis, size, speed = 'fast', address }) {
+    let estimatedFee = new BigNumber(await this.estimateFeeValue({ 
+      inSatoshis,
+      address,
+      speed,
+      method: 'swap',
+      txSize: size
+    }))
 
     this.feeValue = estimatedFee
 
@@ -98,8 +104,8 @@ class GhostSwap extends SwapInterface {
     const feesToConfidence = async (fees, size, address) => {
       const currentFastestFee = await this.getTxFee({ inSatoshis: true, size, speed: 'fast', address })
 
-      return BigNumber(fees).isLessThan(currentFastestFee)
-        ? BigNumber(fees).dividedBy(currentFastestFee).toNumber()
+      return new BigNumber(fees).isLessThan(currentFastestFee)
+        ? new BigNumber(fees).dividedBy(currentFastestFee).toNumber()
         : 1
     }
 
@@ -108,7 +114,7 @@ class GhostSwap extends SwapInterface {
     const fetchConfidence = async ({ txid, confirmations }) => {
       const confidenceFromConfirmations = confirmationsToConfidence(confirmations)
 
-      if (BigNumber(confidenceFromConfirmations).isGreaterThanOrEqualTo(expectedConfidenceLevel)) {
+      if (new BigNumber(confidenceFromConfirmations).isGreaterThanOrEqualTo(expectedConfidenceLevel)) {
         return confidenceFromConfirmations
       }
 
@@ -133,7 +139,8 @@ class GhostSwap extends SwapInterface {
 
     return unspents.filter((utxo, index) => {
       debug('swap.core:swaps')(`confidence[${index}]:`, confidences[index])
-      return BigNumber(confidences[index]).isGreaterThanOrEqualTo(expectedConfidenceLevel)
+      //@ts-ignore
+      return new BigNumber(confidences[index]).isGreaterThanOrEqualTo(expectedConfidenceLevel)
     })
   }
   /**
@@ -281,7 +288,11 @@ class GhostSwap extends SwapInterface {
 
         const unspents = await this.fetchUnspents(ownerAddress)
         const fundValue = amount.multipliedBy(1e8).integerValue().toNumber()
-        const feeValueBN = await this.getTxFee({ inSatoshis: true, address: ownerAddress })
+        //@ts-ignore
+        const feeValueBN = await this.getTxFee({
+          inSatoshis: true,
+          address: ownerAddress,
+        })
         const feeValue = feeValueBN.integerValue().toNumber()
         const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
         const skipValue = totalUnspent - fundValue - feeValue
@@ -347,18 +358,21 @@ class GhostSwap extends SwapInterface {
    * @param {boolean} isRefund
    * @returns {Promise}
    */
-  async getWithdrawRawTransaction(data, isRefund, hashName) {
+  async getWithdrawRawTransaction(data, isRefund, hashName?) {
     const { scriptValues, secret, destinationAddress } = data
     const destAddress = (destinationAddress) ? destinationAddress : this.app.services.auth.accounts.ghost.getAddress()
 
     const { script, scriptAddress } = this.createScript(scriptValues, hashName)
     const unspents = await this.fetchUnspents(scriptAddress)
-
-    const feeValueBN = await this.getTxFee({ inSatoshis: true, address: scriptAddress })
+    //@ts-ignore
+    const feeValueBN = await this.getTxFee({
+      inSatoshis: true,
+      address: scriptAddress
+    })
     const feeValue = feeValueBN.integerValue().toNumber()
     const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
 
-    if (BigNumber(totalUnspent).isLessThan(feeValue)) {
+    if (new BigNumber(totalUnspent).isLessThan(feeValue)) {
       /* Check - may be withdrawed */
       if (typeof this.checkWithdraw === 'function') {
         const hasWithdraw = await this.checkWithdraw(scriptAddress)
@@ -478,7 +492,7 @@ class GhostSwap extends SwapInterface {
           resolve(txRaw.txId)
         } else {
           console.warn('GhostSwap: cant withdraw', 'Generated TX not found')
-          reject('TX not found. Try it later. ', txRaw.txId)
+          reject('TX not found. Try it later. ')
         }
       }
       catch (error) {

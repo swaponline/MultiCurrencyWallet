@@ -79,8 +79,14 @@ class NextSwap extends SwapInterface {
    * @returns {BigNumber}
    * @public
    */
-  async getTxFee({ inSatoshis, /*size,*/ speed = 'fast', address }) {
-    let estimatedFee = new BigNumber(await this.estimateFeeValue({ inSatoshis, address, speed, method: 'swap' /*, txSize: size */ }))
+  async getTxFee({ inSatoshis, size: number, speed = 'fast', address, size }): Promise<BigNumber> {
+    let estimatedFee = new BigNumber(await this.estimateFeeValue({
+      inSatoshis,
+      address,
+      speed,
+      method: 'swap',
+      txSize: size
+    }))
 
     this.feeValue = estimatedFee
 
@@ -98,7 +104,7 @@ class NextSwap extends SwapInterface {
    */
   async filterConfidentUnspents(unspents, expectedConfidenceLevel = 0.95) {
     const feesToConfidence = async (fees, size, address) => {
-      const currentFastestFee = await this.getTxFee({ inSatoshis: true, /*size,*/ speed: 'fast', address })
+      const currentFastestFee = await this.getTxFee({ inSatoshis: true, size, speed: 'fast', address })
 
       return new BigNumber(fees).isLessThan(currentFastestFee)
         ? new BigNumber(fees).dividedBy(currentFastestFee).toNumber()
@@ -282,7 +288,11 @@ class NextSwap extends SwapInterface {
 
         const unspents = await this.fetchUnspents(ownerAddress)
         const fundValue = amount.multipliedBy(1e8).integerValue().toNumber()
-        const feeValueBN = await this.getTxFee({ inSatoshis: true, address: ownerAddress })
+        //@ts-ignore
+        const feeValueBN = await this.getTxFee({
+          inSatoshis: true,
+          address: ownerAddress,
+        })
         const feeValue = feeValueBN.integerValue().toNumber()
         const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
         const skipValue = totalUnspent - fundValue - feeValue
@@ -291,10 +301,10 @@ class NextSwap extends SwapInterface {
         }
 
         const transaction = new bitcore.Transaction()
-          .from(unspents)         
-          .to(scriptAddress, fundValue) 
-          .change(this.app.services.auth.accounts.next.getAddress())     
-          .sign(this.app.services.auth.accounts.next.getPrivateKey())    
+          .from(unspents)
+          .to(scriptAddress, fundValue)
+          .change(this.app.services.auth.accounts.next.getAddress())
+          .sign(this.app.services.auth.accounts.next.getPrivateKey())
 
         if (typeof handleTransactionHash === 'function') {
           handleTransactionHash(transaction.toObject().txid)
@@ -355,9 +365,13 @@ class NextSwap extends SwapInterface {
     const { script, scriptAddress } = this.createScript(scriptValues, hashName)
     const unspents = await this.fetchUnspents(scriptAddress)
 
-    const feeValueBN = await this.getTxFee({ inSatoshis: true, address: scriptAddress })
-    const feeValue = feeValueBN.integerValue().toNumber()
     const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+    //@ts-ignore
+    const feeValueBN = await this.getTxFee({
+      inSatoshis: true,
+      address: scriptAddress,
+    })
+    const feeValue = feeValueBN.integerValue().toNumber()
 
     if (new BigNumber(totalUnspent).isLessThan(feeValue)) {
       /* Check - may be withdrawed */

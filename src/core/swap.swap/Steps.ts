@@ -36,7 +36,7 @@ const stepsForCoins = (fromCoin, toCoin) => {
   const direction = `${fromCoin.model}_2_${toCoin.model}`
   const form = fromCoin.ticker.toLowerCase()
   const to = toCoin.ticker.toLowerCase()
-  const steps = stepsFromDirection(direction)(form, to)
+  const steps = stepsFromDirection[direction](form, to)
   return steps
 }
 

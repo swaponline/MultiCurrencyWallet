@@ -16,6 +16,7 @@ class EthTokenSwap extends SwapInterface {
   gasPrice: number
   fetchBalance: any
   estimateGasPrice: any
+  _allSwapEvents: any
 
   app: any
   decoder: any
@@ -99,6 +100,7 @@ class EthTokenSwap extends SwapInterface {
   }
 
   async updateGasPrice() {
+    //@ts-ignore
     debug('gas price before update', this.gasPrice)
 
     try {
@@ -106,7 +108,7 @@ class EthTokenSwap extends SwapInterface {
     } catch(err) {
       debug(`EthTokenSwap: Error with gas update: ${err.message}, using old value gasPrice=${this.gasPrice}`)
     }
-
+    //@ts-ignore
     debug('gas price after update', this.gasPrice)
   }
 
@@ -124,13 +126,13 @@ class EthTokenSwap extends SwapInterface {
         gasPrice: this.gasPrice,
         ..._params,
       }
-
+      //@ts-ignore
       debug(`EthTokenSwap -> ${methodName} -> params`, params)
 
       const gasAmount = await this.contract.methods[methodName](...args).estimateGas(params)
 
       params.gas = gasAmount
-
+      //@ts-ignore
       debug(`EthTokenSwap -> ${methodName} -> gas`, gasAmount)
 
       const receipt = await this.contract.methods[methodName](...args).send(params)
@@ -140,7 +142,7 @@ class EthTokenSwap extends SwapInterface {
           }
         })
         .catch((error) => {
-          reject({ message: error.message, gasAmount: BigNumber(gasAmount).dividedBy(1e8).toString() })
+          reject({ message: error.message, gasAmount: new BigNumber(gasAmount).dividedBy(1e8).toString() })
         })
 
       resolve(receipt)
@@ -157,8 +159,8 @@ class EthTokenSwap extends SwapInterface {
   async approve(data, handleTransactionHash) {
     const { amount } = data
 
-    const exp = BigNumber(10).pow(this.decimals)
-    const newAmount = BigNumber(amount).times(exp).toString()
+    const exp = new BigNumber(10).pow(this.decimals)
+    const newAmount = new BigNumber(amount).times(exp).toString()
 
     await this.updateGasPrice()
 
@@ -169,13 +171,13 @@ class EthTokenSwap extends SwapInterface {
           gas: this.gasLimit,
           gasPrice: this.gasPrice,
         }
-
+        //@ts-ignore
         debug(`EthTokenSwap -> approve -> params`, params)
 
         const gasAmount = await this.ERC20.methods.approve(this.address, newAmount).estimateGas(params)
 
         params.gas = gasAmount
-
+        //@ts-ignore
         debug(`EthTokenSwap -> approve -> gas`, gasAmount)
 
         const result = await this.ERC20.methods.approve(this.address, newAmount).send(params)
@@ -185,7 +187,7 @@ class EthTokenSwap extends SwapInterface {
             }
           })
           .catch((error) => {
-            reject({ message: error.message, gasAmount: BigNumber(gasAmount).dividedBy(1e8).toString() })
+            reject({ message: error.message, gasAmount: new BigNumber(gasAmount).dividedBy(1e8).toString() })
           })
 
         resolve(result)
@@ -248,8 +250,8 @@ class EthTokenSwap extends SwapInterface {
   async createSwap(data, handleTransactionHash) {
     const { secretHash, participantAddress, amount } = data
 
-    const exp = BigNumber(10).pow(this.decimals)
-    const newAmount = BigNumber(amount).times(exp).toString()
+    const exp = new BigNumber(10).pow(this.decimals)
+    const newAmount = new BigNumber(amount).times(exp).toString()
 
     const hash = `0x${secretHash.replace(/^0x/, '')}`
     const args = [ hash, participantAddress, newAmount, this.tokenAddress ]
@@ -269,8 +271,8 @@ class EthTokenSwap extends SwapInterface {
   async createSwapTarget(data, handleTransactionHash) {
     const { secretHash, participantAddress, amount, targetWallet } = data
 
-    const exp = BigNumber(10).pow(this.decimals)
-    const newAmount = BigNumber(amount).times(exp).toString()
+    const exp = new BigNumber(10).pow(this.decimals)
+    const newAmount = new BigNumber(amount).times(exp).toString()
 
     const hash = `0x${secretHash.replace(/^0x/, '')}`
     const args = [ hash, participantAddress, targetWallet, newAmount, this.tokenAddress ]
@@ -300,7 +302,7 @@ class EthTokenSwap extends SwapInterface {
    */
   async checkSwapExists(data) {
     const swap = await this.swaps(data)
-
+    //@ts-ignore
     debug('swapExists', swap)
 
     const balance = swap && swap.balance ? parseInt(swap.balance) : 0
@@ -338,7 +340,7 @@ class EthTokenSwap extends SwapInterface {
     const swap = await util.helpers.repeatAsyncUntilResult(() =>
       this.contract.methods.swaps(ownerAddress, participantAddress).call()
     )
-
+    //@ts-ignore
     const { secretHash } = swap
     debug('swap.core:swaps')(`swap.secretHash`, secretHash)
 
@@ -350,8 +352,8 @@ class EthTokenSwap extends SwapInterface {
       return `Expected hash: ${expectedHash}, got: ${_secretHash}`
     }
 
-    const expectedValueWei = BigNumber(expectedValue).multipliedBy(this.decimals)
-
+    const expectedValueWei = new BigNumber(expectedValue).multipliedBy(this.decimals)
+    //@ts-ignore
     if (expectedValueWei.isGreaterThan(balance)) {
       return `Expected value: ${expectedValueWei.toString()}, got: ${balance}`
     }
@@ -479,7 +481,7 @@ class EthTokenSwap extends SwapInterface {
     const swap = await util.helpers.repeatAsyncUntilResult(() =>
       this.contract.methods.swaps(ownerAddress, participantAddress).call()
     )
-
+    //@ts-ignore
     const { token } = swap
     debug('swap.core:swaps')(`Token address at swap contract: ${token.toUpperCase()}`);
 

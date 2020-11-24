@@ -79,6 +79,7 @@ class BtcSwap extends SwapInterface {
    * @returns {BigNumber}
    * @public
    */
+  //@ts-ignore
   async getTxFee({ inSatoshis, size, speed = 'fast', address } = {}) {
     const estimatedFeeRaw = await this.estimateFeeValue({
       inSatoshis: true,
@@ -88,7 +89,7 @@ class BtcSwap extends SwapInterface {
       txSize: size,
     })
 
-    const estimatedFee = BigNumber(estimatedFeeRaw)
+    const estimatedFee = new BigNumber(estimatedFeeRaw)
     this.feeValue = estimatedFee
 
     return inSatoshis
@@ -106,11 +107,11 @@ class BtcSwap extends SwapInterface {
   async filterConfidentUnspents(unspents, expectedConfidenceLevel = 0.95) {
 
     const feesToConfidence = async (fees, size, address) => {
-      fees = BigNumber(fees).multipliedBy(1e8).toNumber()
+      fees = new BigNumber(fees).multipliedBy(1e8).toNumber()
       const currentFastestFee = await this.getTxFee({ inSatoshis: true, size, speed: 'fast', address })
 
-      return BigNumber(fees).isLessThan(currentFastestFee)
-        ? BigNumber(fees).dividedBy(currentFastestFee).toNumber()
+      return new BigNumber(fees).isLessThan(currentFastestFee)
+        ? new BigNumber(fees).dividedBy(currentFastestFee).toNumber()
         : 1
     }
 
@@ -131,11 +132,12 @@ class BtcSwap extends SwapInterface {
           const confFromFee = await feesToConfidence(fees, size, senderAddress)
           return confFromFee
         }
-
+        //@ts-ignore
         throw new Error(`txinfo={confirmations: ${confirmations}, fees: ${fees}, size: ${size}, senderAddress: ${senderAddress} }`)
 
       } catch (err) {
         console.error(`BtcSwap: Error fetching confidence: using confirmations > 0:`, err.message)
+        //@ts-ignore
         return confidenceFromConfirmations
       }
     }
@@ -144,7 +146,8 @@ class BtcSwap extends SwapInterface {
 
     return unspents.filter((utxo, index) => {
       debug('swap.core:swaps')(`confidence[${index}]:`, confidences[index])
-      return BigNumber(confidences[index]).isGreaterThanOrEqualTo(expectedConfidenceLevel)
+      //@ts-ignore
+      return new BigNumber(confidences[index]).isGreaterThanOrEqualTo(expectedConfidenceLevel)
     })
   }
 
@@ -302,7 +305,7 @@ class BtcSwap extends SwapInterface {
 
     const expectedConfidence = (expected.confidence !== undefined) ? expected.confidence : 0.95
     const unspents = await this.fetchUnspentsFullInfo(scriptAddress)
-
+    //@ts-ignore
     if (!unspents.length) return `No unspents. Wait`
 
 
@@ -313,8 +316,10 @@ class BtcSwap extends SwapInterface {
     }
     if (waitConfirm || canBeReplaced) {
       // Wait confirm only - for big amount of swap
+      //@ts-ignore
       if (!unspents.length) return `No unspents`
       const confirmedUnspents = await this.filterConfirmedUnspents(unspents)
+      //@ts-ignore
       if (unspents.length === confirmedUnspents.length) return
       await util.helpers.waitDelay(30)
       if (canBeReplaced) return `Can be replace by fee. Wait confirm`
@@ -322,6 +327,7 @@ class BtcSwap extends SwapInterface {
     }
 
     const expectedValue = expected.value.multipliedBy(1e8).integerValue()
+    //@ts-ignore
     const totalUnspent  = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
 
     const confidentUnspents = await this.filterConfidentUnspents(unspents, expectedConfidence)
@@ -360,7 +366,7 @@ class BtcSwap extends SwapInterface {
         const { scriptAddress } = this.createScript(scriptValues, hashName)
 
         const scriptBalance = await this.fetchBalance(scriptAddress)
-        if (BigNumber(scriptBalance).isGreaterThan(0)) {
+        if (new BigNumber(scriptBalance).isGreaterThan(0)) {
           // Script already funded - skip double payments
           reject('Script funded already')
           return
@@ -371,7 +377,11 @@ class BtcSwap extends SwapInterface {
         const fundValue     = amount.multipliedBy(1e8).integerValue().toNumber()
         const tx            = new this.app.env.bitcoin.TransactionBuilder(this.network)
         const unspents = await this.fetchUnspents(ownerAddress)
-        const feeValueBN    = await this.getTxFee({ inSatoshis: true, address: ownerAddress })
+        //@ts-ignore
+        const feeValueBN    = await this.getTxFee({
+          inSatoshis: true,
+          address: ownerAddress
+        })
         const feeValue      = feeValueBN.integerValue().toNumber()
         const totalUnspent  = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
         const skipValue     = totalUnspent - fundValue - feeValue
@@ -439,7 +449,7 @@ class BtcSwap extends SwapInterface {
    * @param {boolean} isRefund
    * @returns {Promise}
    */
-  async getWithdrawRawTransaction(data, isRefund, hashName) {
+  async getWithdrawRawTransaction(data, isRefund, hashName?) {
     const { scriptValues, secret, destinationAddress } = data
     const destAddress = (destinationAddress) ? destinationAddress : this.app.services.auth.accounts.btc.getAddress()
 
@@ -447,8 +457,11 @@ class BtcSwap extends SwapInterface {
 
     const tx            = new this.app.env.bitcoin.TransactionBuilder(this.network)
     const unspents      = await this.fetchUnspents(scriptAddress)
-
-    const feeValueBN    = await this.getTxFee({ inSatoshis: true, address: scriptAddress })
+    //@ts-ignore
+    const feeValueBN    = await this.getTxFee({
+      inSatoshis: true,
+      address: scriptAddress
+    })
     const feeValue      = feeValueBN.integerValue().toNumber()
     const totalUnspent  = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
 
@@ -466,7 +479,7 @@ class BtcSwap extends SwapInterface {
       }
     }
 
-    if (BigNumber(totalUnspent).isLessThan(feeValue)) {
+    if (new BigNumber(totalUnspent).isLessThan(feeValue)) {
       throw new Error(`Total less than fee: ${totalUnspent} < ${feeValue}`)
     }
 
@@ -572,7 +585,7 @@ class BtcSwap extends SwapInterface {
           resolve(txRaw.txId)
         } else {
           console.warn('BtcSwap: cant withdraw', 'Generated TX not found')
-          reject('TX not found. Try it later. ',txRaw.txId)
+          reject('TX not found. Try it later. ')
         }
       }
       catch (error) {

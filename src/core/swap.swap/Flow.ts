@@ -12,6 +12,9 @@ class Flow {
   state: {
     step: number
     isWaitingForOwner: boolean
+    isStoppedSwap: boolean
+    isRefunded: boolean
+    isFinished: boolean
   }
 
   constructor(swap) {
@@ -20,7 +23,7 @@ class Flow {
     this.app      = null
 
     this.stepNumbers = {}
-
+    //@ts-ignore
     this.state = {
       step: 0,
       isWaitingForOwner: false,
@@ -35,7 +38,7 @@ class Flow {
     this.app = app
   }
 
-  static read(app, { id } = {}) {
+  static read(app, { id }) {
     SwapApp.required(app)
 
     if (!id) {
@@ -113,6 +116,7 @@ class Flow {
               const order = orders.getByKey(orderId)
 
               // TODO move this to Swap.js
+              //@ts-ignore
               flow.swap.room = new Room({
                 participantPeer: order.owner.peer,
               })
@@ -140,7 +144,7 @@ class Flow {
   _saveState() {
     this.app.env.storage.setItem(`flow.${this.swap.id}`, this.state)
   }
-  finishStep(data, constraints) {
+  finishStep(data?, constraints?) {
     debug('swap.core:swap')(`on step ${this.state.step}, constraints =`, constraints)
 
     if (constraints) {
@@ -185,7 +189,7 @@ class Flow {
     this.steps[index]()
   }
 
-  setState(values, save) {
+  setState(values, save?) {
     this.state = {
       ...this.state,
       ...values,

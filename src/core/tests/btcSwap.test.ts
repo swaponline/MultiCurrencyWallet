@@ -70,14 +70,14 @@ test('btcSwap can estimate tx fee', async () => {
   const estimatedSat = await btcSwap.getTxFee({ inSatoshis: true })
   const expectedSat = 546
 
-  expect(estimatedSat > 0).toBeTruthy()
+  expect(estimatedSat.toNumber() > 0).toBeTruthy()
   expect(estimatedSat.toNumber()).toBeGreaterThanOrEqual(expectedSat)
 
 
   const estimatedBTC = await btcSwap.getTxFee()
   const expectedBTC = 546 / 1e8
 
-  expect(estimatedBTC > 0).toBeTruthy()
+  expect(estimatedBTC.toNumber() > 0).toBeTruthy()
   expect(estimatedBTC.toNumber()).toBeGreaterThanOrEqual(expectedBTC)
 })
 

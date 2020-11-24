@@ -16,7 +16,7 @@ class SwapRoom extends ServiceInterface {
 
   app: any
   CheckReceiptsT: any
-
+  //@ts-ignore
   static get name() {
     return 'room'
   }
@@ -42,7 +42,7 @@ class SwapRoom extends ServiceInterface {
     )
     createP2PNode({
       peerIdJson,
-    }).then((p2pNode) => {
+    }).then((p2pNode: any) => {
       // Save PeerId
       this.app.env.storage.setItem(
         'libp2p:peerIdJson',
@@ -225,7 +225,7 @@ class SwapRoom extends ServiceInterface {
     }, 15000)
   }
 
-  sendConfirmation(peer, message, callback = false, repeat = 9) {
+  sendConfirmation(peer, message, callback = null, repeat = 9) {
     if (!this.connection) {
       setTimeout(() => {
         this.sendConfirmation(peer, message, callback, repeat)
@@ -248,7 +248,9 @@ class SwapRoom extends ServiceInterface {
         return
       }
 
-      if (callback) callback(delivered)
+      if (typeof callback === 'function') {
+        callback(delivered)
+      }
     })
   }
 
