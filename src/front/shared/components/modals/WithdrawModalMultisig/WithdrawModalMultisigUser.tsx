@@ -28,9 +28,8 @@ import minAmount from 'helpers/constants/minAmount'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import links from 'helpers/links'
 import CopyToClipboard from 'react-copy-to-clipboard'
-import QrReader from "components/QrReader"
+import QrReader from 'components/QrReader'
 import { getFullOrigin } from 'helpers/links'
-
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -40,23 +39,17 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     user: {
       activeFiat,
       btcMultisigUserData,
-      btcMultisigUserData: {
-        wallets,
-      },
+      btcMultisigUserData: { wallets },
     },
-    ui: { dashboardModalsAllowed }
+    ui: { dashboardModalsAllowed },
   }) => ({
     activeFiat,
-    items: [
-      btcMultisigUserData,
-      ...wallets,
-    ],
+    items: [btcMultisigUserData, ...wallets],
     dashboardView: dashboardModalsAllowed,
   })
 )
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
 export default class WithdrawModalMultisigUser extends React.Component<any, any> {
-
   props: any
 
   static propTypes = {
@@ -72,35 +65,25 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
     super()
 
     const {
-      data: {
-        currency,
-        amount,
-        toAddress,
-        address,
-      },
+      data: { currency, amount, toAddress, address },
       items,
     } = data
 
     //@ts-ignore
     const currentDecimals = constants.tokenDecimals.btcmultisig
 
-    const selectedItem = items.filter(item => item.address === address)[0]
+    const selectedItem = items.filter((item) => item.address === address)[0]
 
     this.broadcastCancelFunc = false
 
-    let usedAdminFee = false
+    let usedAdminFee: any = false
 
     let min = minAmount['btc_multisig_2n2']
 
-    if (config
-      && config.opts
-      && config.opts.fee
-      && config.opts.fee.btc
-    ) {
+    if (config && config.opts && config.opts.fee && config.opts.fee.btc) {
       usedAdminFee = config.opts.fee.btc
       if (usedAdminFee) {
         // miner fee + minimal admin fee
-        //@ts-ignore
         min = new BigNumber(min).plus(usedAdminFee.min).toNumber()
       }
     }
@@ -109,8 +92,8 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
       usedAdminFee,
       step: 'fillform',
       isShipped: false,
-      address: (toAddress) ? toAddress : '',
-      amount: (amount) ? amount : '',
+      address: toAddress ? toAddress : '',
+      amount: amount ? amount : '',
       code: '',
       minus: '',
       balance: selectedItem.balance || 0,
@@ -128,7 +111,9 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
 
   componentDidMount() {
     const { exCurrencyRate } = this.state
-    const { data: { currency } } = this.props
+    const {
+      data: { currency },
+    } = this.props
 
     this.setBalanceOnState(currency)
 
@@ -142,17 +127,13 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
   }
 
   actualyMinAmount = async () => {
-    const {
-      usedAdminFee,
-    } = this.state
+    const { usedAdminFee } = this.state
 
-    //@ts-ignore
-    let min = await helpers['btc'].estimateFeeValue({ method: 'send_multisig', speed: 'fast' })
+    let min: any = await helpers['btc'].estimateFeeValue({ method: 'send_multisig', speed: 'fast' })
     minAmount['btc_multisig_2n2'] = min
 
     if (usedAdminFee) {
-      //@ts-ignore
-      min = BigNumber(min).plus(usedAdminFee.min).toNumber()
+      min = new BigNumber(min).plus(usedAdminFee.min).toNumber()
     }
 
     this.setState({
@@ -162,21 +143,20 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
 
   setBalanceOnState = async (currency) => {
     const {
-      data: {
-        address,
-      },
+      data: { address },
     } = this.props
 
     const {
       //@ts-ignore
       unconfirmedBalance,
       //@ts-ignore
-      balance
+      balance,
     } = await actions.btcmultisig.getAddrBalance(address)
 
-    const finalBalance = unconfirmedBalance !== undefined && unconfirmedBalance < 0
-      ? new BigNumber(balance).plus(unconfirmedBalance).toString()
-      : balance
+    const finalBalance =
+      unconfirmedBalance !== undefined && unconfirmedBalance < 0
+        ? new BigNumber(balance).plus(unconfirmedBalance).toString()
+        : balance
 
     this.setState(() => ({
       balance: finalBalance,
@@ -184,10 +164,12 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
   }
 
   getFiatBalance = async () => {
-    const { data: { currency }, activeFiat } = this.props
+    const {
+      data: { currency },
+      activeFiat,
+    } = this.props
 
-
-    const exCurrencyRate = await actions.user.getExchangeRate(currency, activeFiat.toLowerCase());
+    const exCurrencyRate = await actions.user.getExchangeRate(currency, activeFiat.toLowerCase())
 
     this.fiatRates[currency] = exCurrencyRate
 
@@ -198,7 +180,10 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
 
   handleSubmit = async () => {
     const { address: to, amount, ownTx } = this.state
-    const { data: { currency, address, balance, invoice, onReady }, name } = this.props
+    const {
+      data: { currency, address, balance, invoice, onReady },
+      name,
+    } = this.props
 
     this.setState(() => ({ isShipped: true }))
 
@@ -277,13 +262,7 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
   }
 
   sellAllBalance = async () => {
-    const {
-      amount,
-      balance,
-      currency,
-      min,
-      usedAdminFee,
-    } = this.state
+    const { amount, balance, currency, min, usedAdminFee } = this.state
 
     const { data } = this.props
 
@@ -293,7 +272,6 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
       let feeFromAmount = new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(balance)
       minFee = new BigNumber(minFee).plus(feeFromAmount).toNumber()
     }
-
 
     const balanceMiner = balance
       ? balance !== 0
@@ -307,7 +285,9 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
   }
 
   addressIsCorrect() {
-    const { data: { currency } } = this.props
+    const {
+      data: { currency },
+    } = this.props
     const { address } = this.state
 
     if (!typeforce.isCoinAddress.BTC(address)) {
@@ -316,52 +296,54 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
   }
 
   handleCopyLink = () => {
-    this.setState({
-      isLinkCopied: true,
-    }, () => {
-      setTimeout(() => {
-        this.setState({
-          isLinkCopied: false,
-        })
-      }, 500)
-    })
+    this.setState(
+      {
+        isLinkCopied: true,
+      },
+      () => {
+        setTimeout(() => {
+          this.setState({
+            isLinkCopied: false,
+          })
+        }, 500)
+      }
+    )
   }
 
   handleReady = () => {
     const { name } = this.props
-    actions.modals.close(name);
+    actions.modals.close(name)
   }
 
   openScan = () => {
-    const { openScanCam } = this.state;
+    const { openScanCam } = this.state
 
     this.setState(() => ({
-      openScanCam: !openScanCam
-    }));
-  };
+      openScanCam: !openScanCam,
+    }))
+  }
 
-  handleError = err => {
-    console.error(err);
-  };
+  handleError = (err) => {
+    console.error(err)
+  }
 
-  handleScan = data => {
+  handleScan = (data) => {
     if (data) {
-      const address = data.split(":")[1].split("?")[0];
-      const amount = data.split("=")[1];
+      const address = data.split(':')[1].split('?')[0]
+      const amount = data.split('=')[1]
       this.setState(() => ({
         address,
-        amount
-      }));
-      this.openScan();
+        amount,
+      }))
+      this.openScan()
     }
-  };
+  }
 
   handleClose = () => {
     const { name } = this.props
 
     actions.modals.close(name)
   }
-
 
   render() {
     const {
@@ -385,33 +367,29 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
 
     const {
       name,
-      data: {
-        currency,
-        invoice,
-      },
+      data: { currency, invoice },
       items,
       intl,
       portalUI,
     } = this.props
 
-    let {
-      min,
-      min: defaultMin,
-    } = this.state
+    let { min, min: defaultMin } = this.state
 
     if (usedAdminFee) {
       if (amount) {
         let feeFromAmount = new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount)
-        if (new BigNumber(usedAdminFee.min).isGreaterThan(feeFromAmount)) feeFromAmount = new BigNumber(usedAdminFee.min)
+        if (new BigNumber(usedAdminFee.min).isGreaterThan(feeFromAmount))
+          feeFromAmount = new BigNumber(usedAdminFee.min)
 
         min = new BigNumber(min).plus(feeFromAmount).toNumber() // Admin fee in satoshi
       }
     }
 
-
     let txConfirmLink = `${getFullOrigin()}${links.multisign}/btc/confirm/${txId}`
     if (invoice) {
-      txConfirmLink = `${getFullOrigin()}${links.multisign}/btc/confirminvoice/${invoice.id}|${txId}`
+      txConfirmLink = `${getFullOrigin()}${links.multisign}/btc/confirminvoice/${
+        invoice.id
+      }|${txId}`
     }
     //@ts-ignore
     const linked = Link.all(this, 'address', 'amount', 'code', 'ownTx')
@@ -419,16 +397,20 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
     const dataCurrency = currency.toUpperCase()
 
     const isDisabled =
-      !address || !amount || isShipped || ownTx
-      || !this.addressIsCorrect()
-      || new BigNumber(amount).isGreaterThan(balance)
-      || new BigNumber(amount).dp() > currentDecimals
+      !address ||
+      !amount ||
+      isShipped ||
+      ownTx ||
+      !this.addressIsCorrect() ||
+      new BigNumber(amount).isGreaterThan(balance) ||
+      new BigNumber(amount).dp() > currentDecimals
 
     const NanReplacement = balance || '...'
     const getFiat = amount * exCurrencyRate
 
     if (new BigNumber(amount).isGreaterThan(0)) {
-      linked.amount.check((value) => new BigNumber(value).isLessThanOrEqualTo(balance), (
+      linked.amount.check(
+        (value) => new BigNumber(value).isLessThanOrEqualTo(balance),
         <div style={{ width: '340px', fontSize: '12px' }}>
           <FormattedMessage
             id="Withdrow170"
@@ -439,7 +421,7 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
             }}
           />
         </div>
-      ))
+      )
     }
     //@ts-ignore
     if (this.state.amount < 0) {
@@ -456,19 +438,21 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
       },
       ownTxPlaceholder: {
         id: 'withdrawOwnTxPlaceholder',
-        defaultMessage: 'Если оплатили с другого источника'
+        defaultMessage: 'Если оплатили с другого источника',
       },
     })
 
     const formRender = (
       <Fragment>
         {openScanCam && (
-          <QrReader openScan={this.openScan} handleError={this.handleError} handleScan={this.handleScan} />
+          <QrReader
+            openScan={this.openScan}
+            handleError={this.handleError}
+            handleScan={this.handleScan}
+          />
         )}
-        {invoice &&
-          <InvoiceInfoBlock invoiceData={invoice} />
-        }
-        {step === 'fillform' &&
+        {invoice && <InvoiceInfoBlock invoiceData={invoice} />}
+        {step === 'fillform' && (
           <Fragment>
             <p styleName="notice dashboardViewNotice">
               <FormattedMessage
@@ -480,13 +464,11 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
             <br />
             <br />
             <br />
-            <div styleName="highLevel" style={{ marginBottom: "20px" }}>
-              {/*
-              //@ts-ignore */}
+            <div styleName="highLevel" style={{ marginBottom: '20px' }}>
               <FieldLabel>
-                <FormattedMessage id="Withdrow1194" defaultMessage="Address " />{" "}
+                <FormattedMessage id="Withdrow1194" defaultMessage="Address " />{' '}
                 <Tooltip id="WtH203">
-                  <div style={{ textAlign: "center" }}>
+                  <div style={{ textAlign: 'center' }}>
                     <FormattedMessage
                       id="WTH275"
                       defaultMessage="Make sure the wallet you{br}are sending the funds to supports {currency}"
@@ -506,7 +488,10 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
               />
               {address && !this.addressIsCorrect() && (
                 <div styleName="rednote">
-                  <FormattedMessage id="WithdrawIncorectAddress" defaultMessage="Your address not correct" />
+                  <FormattedMessage
+                    id="WithdrawIncorectAddress"
+                    defaultMessage="Your address not correct"
+                  />
                 </div>
               )}
             </div>
@@ -514,8 +499,6 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
               <p styleName="balance">
                 {balance} {currency.toUpperCase()}
               </p>
-              {/*
-              //@ts-ignore */}
               <FieldLabel>
                 <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
               </FieldLabel>
@@ -529,7 +512,7 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
                   fiat={getFiat.toFixed(2)}
                   onKeyDown={inputReplaceCommaWithDot}
                 />
-                <div style={{ marginLeft: "15px" }}>
+                <div style={{ marginLeft: '15px' }}>
                   <Button blue big onClick={this.sellAllBalance} data-tip data-for="Withdrow134">
                     <FormattedMessage id="Select210" defaultMessage="MAX" />
                   </Button>
@@ -543,7 +526,7 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
                   </ReactTooltip>
                 )}
                 {!linked.amount.error && (
-                  <div styleName={minus ? "rednote" : "note"}>
+                  <div styleName={minus ? 'rednote' : 'note'}>
                     <FormattedMessage
                       id="WithdrawModal256"
                       defaultMessage="No less than {minAmount}"
@@ -561,10 +544,10 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
                       <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
                     </Fragment>
                   ) : (
-                      <Fragment>
-                        <FormattedMessage id="WithdrawModal111" defaultMessage="Send" />
-                      </Fragment>
-                    )}
+                    <Fragment>
+                      <FormattedMessage id="WithdrawModal111" defaultMessage="Send" />
+                    </Fragment>
+                  )}
                 </Button>
               </div>
               <div styleName="actionBtn">
@@ -575,30 +558,29 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
                 </Button>
               </div>
             </div>
-            {
-              error && (
-                <div styleName="rednote">
-                  <FormattedMessage
-                    id="WithdrawModalErrorSend"
-                    defaultMessage="{errorName} {currency}:{br}{errorMessage}"
-                    values={{
-                      errorName: intl.formatMessage(error.name),
-                      errorMessage: intl.formatMessage(error.message),
-                      br: <br />,
-                      currency: `${currency}`,
-                    }}
-                  />
-                </div>
-              )
-            }
-            {invoice &&
+            {error && (
+              <div styleName="rednote">
+                <FormattedMessage
+                  id="WithdrawModalErrorSend"
+                  defaultMessage="{errorName} {currency}:{br}{errorMessage}"
+                  values={{
+                    errorName: intl.formatMessage(error.name),
+                    errorMessage: intl.formatMessage(error.message),
+                    br: <br />,
+                    currency: `${currency}`,
+                  }}
+                />
+              </div>
+            )}
+            {invoice && (
               <Fragment>
                 <hr />
-                <div styleName={`lowLevel ${isDark ? 'dark' : ''}`} style={{ marginBottom: '50px' }}>
+                <div
+                  styleName={`lowLevel ${isDark ? 'dark' : ''}`}
+                  style={{ marginBottom: '50px' }}
+                >
                   <div styleName="groupField">
                     <div styleName="downLabel">
-                      {/*
-                      //@ts-ignore */}
                       <FieldLabel inRow>
                         <span styleName="mobileFont">
                           <FormattedMessage id="WithdrowOwnTX" defaultMessage="Или укажите TX" />
@@ -614,33 +596,41 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
                     />
                   </div>
                 </div>
-                <Button styleName="buttonFull" blue big fullWidth disabled={(!(ownTx) || isShipped)} onClick={this.handleSubmit}>
-                  {isShipped
-                    ? (
-                      <Fragment>
-                        <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
-                      </Fragment>
-                    )
-                    : (
-                      <FormattedMessage id="WithdrawModalInvoiceSaveTx" defaultMessage="Отметить как оплаченный" />
-                    )
-                  }
+                <Button
+                  styleName="buttonFull"
+                  blue
+                  big
+                  fullWidth
+                  disabled={!ownTx || isShipped}
+                  onClick={this.handleSubmit}
+                >
+                  {isShipped ? (
+                    <Fragment>
+                      <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
+                    </Fragment>
+                  ) : (
+                    <FormattedMessage
+                      id="WithdrawModalInvoiceSaveTx"
+                      defaultMessage="Отметить как оплаченный"
+                    />
+                  )}
                 </Button>
               </Fragment>
-            }
+            )}
           </Fragment>
-        }
-        {step === 'rawlink' &&
+        )}
+        {step === 'rawlink' && (
           <Fragment>
             <p styleName="notice dashboardViewNotice">
               <FormattedMessage id="WithdrawMSUserReady" defaultMessage="TX confirm link" />
               <br />
-              <FormattedMessage id="WithdrawMSUserMessage" defaultMessage="Send this link to other wallet owner" />
+              <FormattedMessage
+                id="WithdrawMSUserMessage"
+                defaultMessage="Send this link to other wallet owner"
+              />
             </p>
             <div styleName="highLevel">
-              <div styleName="groupField">
-
-              </div>
+              <div styleName="groupField"></div>
               <div>
                 {/*
                 //@ts-ignore */}
@@ -653,11 +643,16 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
               </Button>
             </div>
           </Fragment>
-        }
+        )}
       </Fragment>
     )
-    return (portalUI) ? formRender : (
-      <Modal name={name} title={`${intl.formatMessage(labels.withdrowModal)}${' '}${currency.toUpperCase()}`}>
+    return portalUI ? (
+      formRender
+    ) : (
+      <Modal
+        name={name}
+        title={`${intl.formatMessage(labels.withdrowModal)}${' '}${currency.toUpperCase()}`}
+      >
         {formRender}
       </Modal>
     )

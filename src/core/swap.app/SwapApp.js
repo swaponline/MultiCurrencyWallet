@@ -9,6 +9,7 @@ class SwapApp {
     '17Hf3chwyWeNokLfuBcxEtpRYaYiU5RWBt', // swap.bot mainnet btc address
   ]
   #options = {}
+  #inited = false
 
   static _swapAppInstance = null
 
@@ -37,6 +38,25 @@ class SwapApp {
     this._addFlows(options.flows || [])
 
     if (options.whitelistBtc) this.#whitelistBtc = options.whitelistBtc
+
+    this.#inited = true
+  }
+
+  static onInit(cb) {
+    const waitInit = () => {
+      if (SwapApp._swapAppInstance
+        && SwapApp._swapAppInstance.isInited()
+      ) {
+        cb()
+      } else {
+        setTimeout(waitInit, 100)
+      }
+    }
+    waitInit()
+  }
+
+  isInited() {
+    return this.#inited
   }
 
   static init(options) {

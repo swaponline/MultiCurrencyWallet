@@ -25,13 +25,21 @@ interface State {
   metamaskConnected: boolean
 }*/
 
+interface WallerSliderProps {
+  multisigPendingCount: number
+}
+
+interface WallerSliderState {
+  mnemonicDeleted: boolean
+  isFetching: boolean
+  metamaskConnected: boolean
+  banners?: any[]
+}
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 @injectIntl
 @connect(({ user }) => ({ user }))
-//@ts-ignore
-export default class WallerSlider extends React.Component<any, any> {
-
+export default class WallerSlider extends React.Component<WallerSliderProps, WallerSliderState> {
   props: any
   _mounted = false
 
@@ -40,7 +48,6 @@ export default class WallerSlider extends React.Component<any, any> {
 
     const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
     const mnemonicDeleted = mnemonic === '-'
-    //@ts-ignore
     this.state = {
       mnemonicDeleted,
       isFetching: false,
@@ -79,57 +86,66 @@ export default class WallerSlider extends React.Component<any, any> {
   }
 
   processItezBanner = (inBanners) => {
-    //@ts-ignore
-    const { user, intl: { locale: intlLocale } } = this.props
+    const {
+      user,
+      intl: { locale: intlLocale },
+    } = this.props
 
     let locale = intlLocale
 
     if (!locale) locale = `en`
 
-    const banners = inBanners.map(el => {
-      if (el[4].includes('https://itez.swaponline.io/')) {
-        const bannerArr = [...el]
-        bannerArr.splice(4, 1, getItezUrl({ user, locale, url: el[4] }));
+    const banners = inBanners
+      .map((el) => {
+        if (el[4].includes('https://itez.swaponline.io/')) {
+          const bannerArr = [...el]
+          bannerArr.splice(4, 1, getItezUrl({ user, locale, url: el[4] }))
 
-        return bannerArr
-      }
-      return el
-    }).filter(el => el && el.length)
+          return bannerArr
+        }
+        return el
+      })
+      .filter((el) => el && el.length)
     return banners
   }
 
   getBanners = () => {
-    if (window
+    if (
+      window &&
       //@ts-ignore
-      && window.bannersOnMainPage !== undefined
+      window.bannersOnMainPage !== undefined
     ) {
       // Используем банеры, которые были определены в index.html (используется в виджете вордпресса)
       //@ts-ignore
-      const widgetBanners = (window.bannersOnMainPage.length) ? window.bannersOnMainPage : []
+      const widgetBanners = window.bannersOnMainPage.length ? window.bannersOnMainPage : []
 
       if (!this._mounted) return
 
-      //@ts-ignore
-      this.setState(() => ({
-        banners: this.processItezBanner(widgetBanners).filter(el => el && el.length),
-        isFetching: true,
-      }), () => this.initBanners())
+      this.setState(
+        () => ({
+          banners: this.processItezBanner(widgetBanners).filter((el) => el && el.length),
+          isFetching: true,
+        }),
+        () => this.initBanners()
+      )
     } else {
       try {
         return axios
           .get('https://noxon.wpmix.net/swapBanners/banners.php')
           .then(({ data }) => {
-            const banners = this.processItezBanner(data).filter(el => el && el.length)
+            const banners = this.processItezBanner(data).filter((el) => el && el.length)
 
             if (!this._mounted) return
 
-            //@ts-ignore
-            this.setState(() => ({
-              banners,
-              isFetching: true,
-            }), () => this.initBanners())
+            this.setState(
+              () => ({
+                banners,
+                isFetching: true,
+              }),
+              () => this.initBanners()
+            )
           })
-          .catch(error => {
+          .catch((error) => {
             console.error('getBanners:', error)
           })
       } catch (error) {
@@ -154,7 +170,6 @@ export default class WallerSlider extends React.Component<any, any> {
       onClose: () => {
         const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
         const mnemonicDeleted = mnemonic === '-'
-        //@ts-ignore
         this.setState({
           mnemonicDeleted,
         })
@@ -182,20 +197,14 @@ export default class WallerSlider extends React.Component<any, any> {
   }
 
   render() {
-    //@ts-ignore
-    const {
-      mnemonicDeleted,
-      banners,
-      metamaskConnected,
-    //@ts-ignore
-    } = this.state
-    //@ts-ignore
+    const { mnemonicDeleted, banners, metamaskConnected } = this.state
     const { multisigPendingCount } = this.props
 
     const isPrivateKeysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
 
     let firstBtnTitle = <FormattedMessage id="descr282" defaultMessage="Show my keys" />
-    if (!mnemonicDeleted) firstBtnTitle = <FormattedMessage id="ShowMyMnemonic" defaultMessage="Показать 12 слов" />
+    if (!mnemonicDeleted)
+      firstBtnTitle = <FormattedMessage id="ShowMyMnemonic" defaultMessage="Показать 12 слов" />
 
     const needSignMultisig = (
       <FormattedMessage
@@ -207,20 +216,22 @@ export default class WallerSlider extends React.Component<any, any> {
       />
     )
 
-
-    return (window.location.hash !== linksManager.hashHome) ? null : (
+    return window.location.hash !== linksManager.hashHome ? null : (
       <div className="data-tut-banners">
         <h3 className={`${styles.bannersHeading} ${isDark ? styles.dark : ''}`}>
           <FormattedMessage id="ForYou" defaultMessage="For you" />
         </h3>
-        {/*
-        //@ts-ignore */}
-        {!this.state.isFetching ?
+        {!this.state.isFetching ? (
           //@ts-ignore
-          <ContentLoader banners /> :
-          <div id="swiper_banners" className="swiper-container" style={{ marginTop: '20px', marginBottom: '30px' }}>
+          <ContentLoader banners />
+        ) : (
+          <div
+            id="swiper_banners"
+            className="swiper-container"
+            style={{ marginTop: '20px', marginBottom: '30px' }}
+          >
             <div className="swiper-wrapper">
-              {(multisigPendingCount > 0) && (
+              {multisigPendingCount > 0 && (
                 <div className="swiper-slide">
                   <NotifyBlock
                     className="notifyIncomeRequest"
@@ -233,7 +244,7 @@ export default class WallerSlider extends React.Component<any, any> {
                   />
                 </div>
               )}
-              {(metamask.isEnabled() && !metamask.isConnected() && !metamaskConnected) && (
+              {metamask.isEnabled() && !metamask.isConnected() && !metamaskConnected && (
                 <div className="swiper-slide">
                   <NotifyBlock
                     className="notifyBlockConnectMetamask"
@@ -241,13 +252,18 @@ export default class WallerSlider extends React.Component<any, any> {
                     firstBtn={firstBtnTitle}
                     widthIcon="80"
                     background="6144e5"
-                    descr={<FormattedMessage id="Banner_ConnectMetamask" defaultMessage="Подключить кошелек" />}
+                    descr={
+                      <FormattedMessage
+                        id="Banner_ConnectMetamask"
+                        defaultMessage="Подключить кошелек"
+                      />
+                    }
                     logDescr={`Connect wallet`}
                     firstFunc={this.handleConnectMetamask}
                   />
                 </div>
               )}
-              {(!isPrivateKeysSaved && !mnemonicDeleted) && (
+              {!isPrivateKeysSaved && !mnemonicDeleted && (
                 <div className="swiper-slide">
                   <NotifyBlock
                     className="notifyBlockSaveKeys"
@@ -255,20 +271,32 @@ export default class WallerSlider extends React.Component<any, any> {
                     firstBtn={firstBtnTitle}
                     widthIcon="80"
                     background="6144e5"
-                    descr={<FormattedMessage id="ShowMyMnemonic_copy" defaultMessage="Please backup your wallet" />}
+                    descr={
+                      <FormattedMessage
+                        id="ShowMyMnemonic_copy"
+                        defaultMessage="Please backup your wallet"
+                      />
+                    }
                     logDescr={`Save mnemonic`}
                     firstFunc={mnemonicDeleted ? this.handleShowKeys : this.handleShowMnemonic}
                   />
                 </div>
               )}
-              {banners && banners.length > 0 && banners.map(banner => (
-                <div key={banner[0]} className="swiper-slide">
-                  <NotifyBlock background={`${banner[3]}`} descr={banner[2]} link={banner[4]} icon={banner[5]} />
-                </div>
-              ))}
+              {banners &&
+                banners.length > 0 &&
+                banners.map((banner) => (
+                  <div key={banner[0]} className="swiper-slide">
+                    <NotifyBlock
+                      background={`${banner[3]}`}
+                      descr={banner[2]}
+                      link={banner[4]}
+                      icon={banner[5]}
+                    />
+                  </div>
+                ))}
             </div>
           </div>
-        }
+        )}
       </div>
     )
   }

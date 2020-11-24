@@ -296,11 +296,13 @@ const requestToPeer = (event, peer, data, callback) => {
 }
 
 const updateCore = () => {
-  const orders = SwapApp.shared().services.orders.items
+  SwapApp.onInit(() => {
+    const orders = SwapApp.shared().services.orders.items
 
-  getOrders(orders)
+    getOrders(orders)
 
-  actions.feed.getFeedDataFromOrder(orders)
+    actions.feed.getFeedDataFromOrder(orders)
+  })
 }
 
 const getSwapHistory = () => {

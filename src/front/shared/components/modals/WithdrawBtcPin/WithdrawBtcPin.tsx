@@ -10,7 +10,6 @@ import cssModules from 'react-css-modules'
 import styles from '../Styles/default.scss'
 import ownStyle from './WithdrawBtcPin.scss'
 
-
 import { BigNumber } from 'bignumber.js'
 import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
@@ -28,7 +27,6 @@ import moment from 'moment/moment'
 import redirectTo from 'helpers/redirectTo'
 import lsDataCache from 'helpers/lsDataCache'
 import MnemonicInput from 'components/forms/MnemonicInput/MnemonicInput'
-
 
 const langPrefix = `WithdrawPINProtected`
 
@@ -118,23 +116,17 @@ const langs = defineMessages({
 }))
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
 export default class WithdrawBtcPin extends React.Component<any, any> {
-
   props: any
 
   static propTypes = {
     name: PropTypes.string,
-    data: PropTypes.object
-  };
+    data: PropTypes.object,
+  }
 
   constructor(props) {
     super(props)
 
-    const {
-      wallet,
-      invoice,
-      sendOptions,
-      beforeBalances,
-    } = props.data
+    const { wallet, invoice, sendOptions, beforeBalances } = props.data
 
     this.state = {
       pinCode: '',
@@ -172,53 +164,48 @@ export default class WithdrawBtcPin extends React.Component<any, any> {
   }
 
   handleSendMnemonic = async () => {
-    const {
-      mnemonic,
-    } = this.state
+    const { mnemonic } = this.state
 
     const {
-      data: {
-        sendOptions,
-      },
+      data: { sendOptions },
     } = this.props
 
-    this.setState({
-      isShipped: true,
-      error: false,
-    }, async () => {
-      if (!mnemonic || !actions.btc.validateMnemonicWords(mnemonic.trim())) {
-        this.setState({
-          error: <FormattedMessage {...langs.errorMnemonicInvalid} />,
-          isShipped: false,
-        })
-        return
-      }
-      if (!actions.btcmultisig.checkPinMnemonic(mnemonic.trim())) {
-        this.setState({
-          error: <FormattedMessage {...langs.errorMnemonicIncorrect} />,
-          isShipped: false,
-        })
-        return
-      }
+    this.setState(
+      {
+        isShipped: true,
+        error: false,
+      },
+      async () => {
+        if (!mnemonic || !actions.btc.validateMnemonicWords(mnemonic.trim())) {
+          this.setState({
+            error: <FormattedMessage {...langs.errorMnemonicInvalid} />,
+            isShipped: false,
+          })
+          return
+        }
+        if (!actions.btcmultisig.checkPinMnemonic(mnemonic.trim())) {
+          this.setState({
+            error: <FormattedMessage {...langs.errorMnemonicIncorrect} />,
+            isShipped: false,
+          })
+          return
+        }
 
-      const result = await actions.btcmultisig.sendPinProtected({
-        ...sendOptions,
-        mnemonic,
-      })
+        const result = await actions.btcmultisig.sendPinProtected({
+          ...sendOptions,
+          mnemonic,
+        })
 
-      this.processSendResult(result)
-    })
+        this.processSendResult(result)
+      }
+    )
   }
 
   handleSend = async () => {
-    const {
-      pinCode,
-    } = this.state
+    const { pinCode } = this.state
 
     const {
-      data: {
-        sendOptions,
-      },
+      data: { sendOptions },
     } = this.props
 
     if (!pinCode || pinCode.length < 4) {
@@ -228,28 +215,27 @@ export default class WithdrawBtcPin extends React.Component<any, any> {
       return
     }
 
-    this.setState({
-      error: false,
-      serverOffline: false,
-      isShipped: true,
-    }, async () => {
-      const result = await actions.btcmultisig.sendPinProtected({
-        ...sendOptions,
-        password: pinCode,
-      })
-      this.processSendResult(result)
-    })
+    this.setState(
+      {
+        error: false,
+        serverOffline: false,
+        isShipped: true,
+      },
+      async () => {
+        const result = await actions.btcmultisig.sendPinProtected({
+          ...sendOptions,
+          password: pinCode,
+        })
+        this.processSendResult(result)
+      }
+    )
   }
 
   processSendResult = async (result) => {
     const {
       data: {
         wallet,
-        sendOptions: {
-          amount,
-          from,
-          to,
-        },
+        sendOptions: { amount, from, to },
         invoice,
         adminFee,
         beforeBalances,
@@ -291,7 +277,7 @@ export default class WithdrawBtcPin extends React.Component<any, any> {
     } else {
       this.setState({
         isShipped: false,
-        serverOffline: !(result.error),
+        serverOffline: !result.error,
         error: result.error || `Unknown error`,
       })
     }
@@ -336,14 +322,10 @@ export default class WithdrawBtcPin extends React.Component<any, any> {
 
     const step = ''
 
-    const {
-      name,
-      intl,
-    } = this.props
+    const { name, intl } = this.props
 
     //@ts-ignore
     const linked = Link.all(this, 'pinCode')
-
 
     return (
       <Modal name={name} title={`${intl.formatMessage(langs.title)}`}>
@@ -357,10 +339,8 @@ export default class WithdrawBtcPin extends React.Component<any, any> {
                 <br />
               </p>
               <div styleName="highLevel" className="ym-hide-content">
-                {/*
-                //@ts-ignore */}
-                <FieldLabel label>
-                  <FormattedMessage {...langs.labelYourPin}  />
+                <FieldLabel>
+                  <FormattedMessage {...langs.labelYourPin} />
                 </FieldLabel>
                 <Input
                   styleName="input inputMargin25"
@@ -413,9 +393,7 @@ export default class WithdrawBtcPin extends React.Component<any, any> {
                 <br />
               </p>
               <div styleName="highLevel" className="ym-hide-content">
-                {/*
-                //@ts-ignore */}
-                <FieldLabel label>
+                <FieldLabel>
                   <FormattedMessage {...langs.labelYourMnemonic} />
                 </FieldLabel>
                 <MnemonicInput onChange={this.handleMnemonicChange} fullWidth={true} />

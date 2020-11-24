@@ -29,18 +29,13 @@ import GhostToEthTokens from './SwapProgressText/GhostToEthTokens'
 import EthToGhost from './SwapProgressText/EthToGhost'
 import EthTokensToGhost from './SwapProgressText/EthTokensToGhost'
 
-
-
-
 import * as animation from './images'
 import finishSvg from './images/finish.svg'
-
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })
 export default class SwapProgress extends Component<any, any> {
-
   swap: any
   wallets: any
   history: any
@@ -91,10 +86,7 @@ export default class SwapProgress extends Component<any, any> {
   }
 
   onPushGoToTxPage = () => {
-    const {
-      flow,
-      swap,
-    } = this.state
+    const { flow, swap } = this.state
 
     if (flow.ethSwapWithdrawTransactionHash && swap.sellCurrency === 'GHOST') {
       window.open(`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`, '_blank')
@@ -105,9 +97,18 @@ export default class SwapProgress extends Component<any, any> {
   }
 
   handleBarProgress = () => {
-    const { swap: { sellCurrency, flow: { stepNumbers, state: { step } } } } = this.state
+    const {
+      swap: {
+        sellCurrency,
+        flow: {
+          stepNumbers,
+          state: { step },
+        },
+      },
+    } = this.state
     const first = stepNumbers.sign
-    const sixth = sellCurrency === 'GHOST' ? stepNumbers[`withdraw-eth`] : stepNumbers[`wait-withdraw-eth`]
+    const sixth =
+      sellCurrency === 'GHOST' ? stepNumbers[`withdraw-eth`] : stepNumbers[`wait-withdraw-eth`]
     const seventh = sellCurrency === 'GHOST' ? stepNumbers.finish : stepNumbers[`withdraw-ghost`]
     const eighth = sellCurrency === 'GHOST' ? stepNumbers.end : stepNumbers.finish
 
@@ -154,9 +155,9 @@ export default class SwapProgress extends Component<any, any> {
         clearTimeout(this.timer)
       }
 
-      const isSwapPage = window.location.pathname.includes("swaps")
+      const isSwapPage = window.location.pathname.includes('swaps')
       //@ts-ignore
-      if (((Date.now() - startSwapTime) > 600 * 1000) && isSwapPage) {
+      if (Date.now() - startSwapTime > 600 * 1000 && isSwapPage) {
         console.warn('UPS!!! SWAP IS FROZEN - RELOAD')
         localStorage.removeItem(constants.localStorage.startSwap)
         clearTimeout(this.timer)
@@ -187,8 +188,10 @@ export default class SwapProgress extends Component<any, any> {
     const finalBuyCurrency = getFinalCurrency(buyCurrency)
     const finalSellCurrency = getFinalCurrency(sellCurrency)
 
-    const isStartStepForRefund = state.step >= stepNumbers[`lock-${finalSellCurrency.toLowerCase()}`]
-    const isEndStepForRefund = state.step < stepNumbers[`withdraw-${finalBuyCurrency.toLowerCase()}`]
+    const isStartStepForRefund =
+      state.step >= stepNumbers[`lock-${finalSellCurrency.toLowerCase()}`]
+    const isEndStepForRefund =
+      state.step < stepNumbers[`withdraw-${finalBuyCurrency.toLowerCase()}`]
 
     const isStepForRefund = isStartStepForRefund && isEndStepForRefund
 
@@ -202,10 +205,7 @@ export default class SwapProgress extends Component<any, any> {
       ? state.ghostSwapWithdrawTransactionHash
       : state.ethSwapWithdrawTransactionHash
 
-    const canRefund = isStepForRefund
-      && isCurrencyFunded
-      && isNotFinished
-      && !isCurrencyWithdrawn
+    const canRefund = isStepForRefund && isCurrencyFunded && isNotFinished && !isCurrencyWithdrawn
 
     return canRefund
   }
@@ -230,21 +230,20 @@ export default class SwapProgress extends Component<any, any> {
     }
   }
 
-  handleFocusSecretInput = (event) => event.target.select();
+  handleFocusSecretInput = (event) => event.target.select()
 
   tryRefund = async () => {
     const { flow } = this.swap
 
-    await flow.tryRefund()
-      .then((result) => {
-        if (!result) {
-          this.setState(() => ({ refundError: true }))
-          setTimeout(() => this.setState(() => ({ refundError: false })), 5000)
-          return
-        }
+    await flow.tryRefund().then((result) => {
+      if (!result) {
+        this.setState(() => ({ refundError: true }))
+        setTimeout(() => this.setState(() => ({ refundError: false })), 5000)
+        return
+      }
 
-        this.setState(() => ({ enabledButton: false }))
-      })
+      this.setState(() => ({ enabledButton: false }))
+    })
   }
 
   willEnable = () => {
@@ -280,8 +279,9 @@ export default class SwapProgress extends Component<any, any> {
 
     const progress = Math.floor(90 * stepValue)
     const finishIcon = <img src={finishSvg} alt="finishIcon" />
-    const showWalletButton = (!this.swap.destinationBuyAddress)
-      || (this.swap.destinationBuyAddress === this.wallets[buyCurrency.toUpperCase()])
+    const showWalletButton =
+      !this.swap.destinationBuyAddress ||
+      this.swap.destinationBuyAddress === this.wallets[buyCurrency.toUpperCase()]
 
     const canRefund = this.checkCanRefund()
 
@@ -293,18 +293,18 @@ export default class SwapProgress extends Component<any, any> {
 
     const swapTexts = (
       <Fragment>
-        {
-          this.props.name === 'GHostToEth' && <GhostToEth step={flow.step} flow={flow} swap={swap} />
-        }
-        {
-          this.props.name === 'EthToGhost' && <EthToGhost step={flow.step} flow={flow} swap={swap} />
-        }
-        {
-          this.props.name === 'GhostToEthTokens' && <GhostToEthTokens step={flow.step} flow={flow} swap={swap} />
-        }
-        {
-          this.props.name === 'EthTokensToGhost' && <EthTokensToGhost step={flow.step} flow={flow} swap={swap} />
-        }
+        {this.props.name === 'GHostToEth' && (
+          <GhostToEth step={flow.step} flow={flow} swap={swap} />
+        )}
+        {this.props.name === 'EthToGhost' && (
+          <EthToGhost step={flow.step} flow={flow} swap={swap} />
+        )}
+        {this.props.name === 'GhostToEthTokens' && (
+          <GhostToEthTokens step={flow.step} flow={flow} swap={swap} />
+        )}
+        {this.props.name === 'EthTokensToGhost' && (
+          <EthTokensToGhost step={flow.step} flow={flow} swap={swap} />
+        )}
       </Fragment>
     )
 
@@ -316,7 +316,10 @@ export default class SwapProgress extends Component<any, any> {
             <div styleName="progressContainer">
               <div styleName={progress > 180 ? 'progress-pie-chart gt-50' : 'progress-pie-chart'}>
                 <div styleName="ppc-progress">
-                  <div styleName="ppc-progress-fill" style={{ transform: `rotate(${progress}deg)` }} />
+                  <div
+                    styleName="ppc-progress-fill"
+                    style={{ transform: `rotate(${progress}deg)` }}
+                  />
                 </div>
               </div>
               <div styleName="step">
@@ -326,104 +329,121 @@ export default class SwapProgress extends Component<any, any> {
               </div>
             </div>
             <div styleName="stepInfo">
-
-              <span styleName="stepHeading">
-                {swapTexts}
-              </span>
+              <span styleName="stepHeading">{swapTexts}</span>
 
               {signed && flow.step < 4 && (
                 <div>
                   <strong>
-                    <a href={`${config.link.etherscan}/tx/${flow.signTransactionHash}`} target="_blank" rel="noopener noreferrer">
-                      <FormattedMessage id="swappropgress193" defaultMessage="Sign ETH transaction: {transaction}" values={{ transaction: flow.signTransactionHash }} />
+                    <a
+                      href={`${config.link.etherscan}/tx/${flow.signTransactionHash}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FormattedMessage
+                        id="swappropgress193"
+                        defaultMessage="Sign ETH transaction: {transaction}"
+                        values={{ transaction: flow.signTransactionHash }}
+                      />
                     </a>
                   </strong>
                 </div>
               )}
 
-              {(flow.ghostScriptValues && !flow.isFinished && !flow.isEthWithdrawn) && flow.refundTxHex && (
-                <div>
-                  <a
-                    href="https://wiki.swaponline.io/faq/my-swap-got-stuck-and-my-bitcoin-has-been-withdrawn-what-to-do/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FormattedMessage id="swappropgress192" defaultMessage="How to refund your money ?" />
-                  </a>
-                  <FormattedMessage id="swappropgress333" defaultMessage="Refund hex transaction: " />
-                  <code> {flow.refundTxHex} </code>
+              {flow.ghostScriptValues &&
+                !flow.isFinished &&
+                !flow.isEthWithdrawn &&
+                flow.refundTxHex && (
+                  <div>
+                    <a
+                      href="https://wiki.swaponline.io/faq/my-swap-got-stuck-and-my-bitcoin-has-been-withdrawn-what-to-do/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FormattedMessage
+                        id="swappropgress192"
+                        defaultMessage="How to refund your money ?"
+                      />
+                    </a>
+                    <FormattedMessage
+                      id="swappropgress333"
+                      defaultMessage="Refund hex transaction: "
+                    />
+                    <code> {flow.refundTxHex} </code>
+                  </div>
+                )}
+
+              {_refundTx && (
+                <div styleName="refundTransaction">
+                  <strong>
+                    <a
+                      href={
+                        swap.sellCurrency === 'GHOST'
+                          ? `${config.link.ghostscan}/tx/${_refundTx}`
+                          : `${config.link.etherscan}/tx/${_refundTx}`
+                      }
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FormattedMessage
+                        id="swapprogress254"
+                        defaultMessage="Refund transaction: "
+                      />
+                      <span styleName="refundTransactionHash">{_refundTx}</span>
+                    </a>
+                  </strong>
                 </div>
               )}
 
-              {
-                _refundTx && (
-                  <div styleName="refundTransaction">
-                    <strong>
-                      <a
-                        href={swap.sellCurrency === 'GHOST'
-                          ? `${config.link.ghostscan}/tx/${_refundTx}`
-                          : `${config.link.etherscan}/tx/${_refundTx}`
-                        }
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <FormattedMessage id="swapprogress254" defaultMessage="Refund transaction: " />
-                        <span styleName="refundTransactionHash">{_refundTx}</span>
-                      </a>
-                    </strong>
-                  </div>
-                )
-              }
-
-              {canRefund &&
+              {canRefund && (
                 <Fragment>
-                  {enabledButton
-                    ? (
-                      <Fragment>
-                        <div styleName="btnRefund">
-                          <Button gray onClick={this.tryRefund}>
-                            <FormattedMessage id="swapprogress270" defaultMessage="Try refund" />
-                          </Button>
-                        </div>
-                        {refundError &&
-                          <span styleName="tryAgain">
-                            <FormattedMessage id="swapprogress271" defaultMessage="Try again in a few minutes" />
-                          </span>
-                        }
-                      </Fragment>
-                    )
-                    : (
-                      <div styleName="timerRefund">
-                        {/*
-                        //@ts-ignore */}
-                        <Timer
-                          isRefund
-                          lockTime={flow.ghostScriptValues.lockTime * 1000}
-                          cancelTime={(flow.ghostScriptValues.lockTime - 7200) * 1000}
-                          enabledButton={() => this.setState(() => ({ enabledButton: true }))}
-                        />
+                  {enabledButton ? (
+                    <Fragment>
+                      <div styleName="btnRefund">
+                        <Button gray onClick={this.tryRefund}>
+                          <FormattedMessage id="swapprogress270" defaultMessage="Try refund" />
+                        </Button>
                       </div>
-                    )
-                  }
+                      {refundError && (
+                        <span styleName="tryAgain">
+                          <FormattedMessage
+                            id="swapprogress271"
+                            defaultMessage="Try again in a few minutes"
+                          />
+                        </span>
+                      )}
+                    </Fragment>
+                  ) : (
+                    <div styleName="timerRefund">
+                      <Timer
+                        isRefund
+                        lockTime={flow.ghostScriptValues.lockTime * 1000}
+                        cancelTime={(flow.ghostScriptValues.lockTime - 7200) * 1000}
+                        enabledButton={() => this.setState(() => ({ enabledButton: true }))}
+                      />
+                    </div>
+                  )}
                 </Fragment>
-              }
+              )}
 
-              {flow.step === 2 && !this.isSellCurrencyEthOrEthToken &&
+              {flow.step === 2 && !this.isSellCurrencyEthOrEthToken && (
                 //@ts-ignore
-                <Button brand onClick={this.submitSecret()} >
+                <Button brand onClick={this.submitSecret()}>
                   <FormattedMessage id="swapFinishedGoHome289" defaultMessage="Submit the Secret" />
                 </Button>
-              }
-              {flow.step === 3 && this.isSellCurrencyEthOrEthToken &&
+              )}
+              {flow.step === 3 && this.isSellCurrencyEthOrEthToken && (
                 //@ts-ignore
-                <Button brand onClick={this.confirmGhostScriptChecked()} >
-                  <FormattedMessage id="swapFinishedGoHome298" defaultMessage="Everything is OK. Continue" />
+                <Button brand onClick={this.confirmGhostScriptChecked()}>
+                  <FormattedMessage
+                    id="swapFinishedGoHome298"
+                    defaultMessage="Everything is OK. Continue"
+                  />
                 </Button>
-              }
+              )}
 
-              {flow.step > 3 && !this.isSellCurrencyEthOrEthToken &&
+              {flow.step > 3 && !this.isSellCurrencyEthOrEthToken && (
                 <PleaseDontLeaveWrapper isGHOST={flow.secret ? flow.secret : false} />
-              }
+              )}
             </div>
 
             {flow.ethSwapWithdrawTransactionHash && !this.isSellCurrencyEthOrEthToken && (
@@ -433,7 +453,11 @@ export default class SwapProgress extends Component<any, any> {
                   target="_blank"
                   rel="noreferrer noopener"
                 >
-                  <FormattedMessage id="swappropgress207" defaultMessage="{transaction}" values={{ transaction: flow.ethSwapWithdrawTransactionHash }} />
+                  <FormattedMessage
+                    id="swappropgress207"
+                    defaultMessage="{transaction}"
+                    values={{ transaction: flow.ethSwapWithdrawTransactionHash }}
+                  />
                 </a>
               </strong>
             )}
@@ -444,7 +468,11 @@ export default class SwapProgress extends Component<any, any> {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <FormattedMessage id="swappropgress218" defaultMessage="{transaction}" values={{ transaction: flow.ghostSwapWithdrawTransactionHash }} />
+                  <FormattedMessage
+                    id="swappropgress218"
+                    defaultMessage="{transaction}"
+                    values={{ transaction: flow.ghostSwapWithdrawTransactionHash }}
+                  />
                 </a>
               </strong>
             )}
@@ -453,12 +481,18 @@ export default class SwapProgress extends Component<any, any> {
                 {showWalletButton && (
                   <LinkTo to="/wallet">
                     <Button brand onClick={this.onPushGoToWallet}>
-                      <FormattedMessage id="swapProgressGoToWallet" defaultMessage="Check balance" />
+                      <FormattedMessage
+                        id="swapProgressGoToWallet"
+                        defaultMessage="Check balance"
+                      />
                     </Button>
                   </LinkTo>
                 )}
                 <Button gray onClick={this.onPushGoToTxPage}>
-                  <FormattedMessage id="swapProgressGoToTxPage" defaultMessage="View TX in explorer" />
+                  <FormattedMessage
+                    id="swapProgressGoToTxPage"
+                    defaultMessage="View TX in explorer"
+                  />
                 </Button>
               </div>
             )}

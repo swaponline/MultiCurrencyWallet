@@ -9,11 +9,9 @@ import ShowBtcScript from './ShowBtcScript'
 
 @CSSModules(styles)
 export default class Debug extends Component<any, any> {
-
   static propTypes = {
     flow: PropTypes.object,
   }
-
 
   render() {
     const {
@@ -38,14 +36,9 @@ export default class Debug extends Component<any, any> {
           </code>
         </pre>
         <pre styleName="information">
-          <code>
-            {/*
-            //@ts-ignore */}
-            { JSON.stringify(flowState, false, 4) }
-          </code>
+          <code>{JSON.stringify(flowState, null, 4)}</code>
         </pre>
       </div>
     )
   }
-
 }

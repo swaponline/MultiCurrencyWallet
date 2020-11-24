@@ -1,26 +1,31 @@
-import React, { Fragment }  from 'react'
-import PropTypes from 'prop-types'
+import React, { Fragment } from 'react'
 
 import CSSModules from 'react-css-modules'
 import styles from './Timer.scss'
 import { FormattedMessage } from 'react-intl'
 
+interface TimerProps {
+  lockTime: number
+  cancelTime?: number
+  enabledButton?: any
+  isRefund?: boolean
+  defaultMessage?: boolean
+}
+
+interface TimerState {
+  lockTime: number
+  cancelTime: number
+  timeLeft: null | number
+  cancelTimeLeft: null | number
+}
 
 @CSSModules(styles)
-export default class Timer extends React.Component<any, any> {
-
-  props: any
-
-  static propTypes = {
-    lockTime: PropTypes.number,
-    cancelTime: PropTypes.number,
-  }
-
+export default class Timer extends React.Component<TimerProps, TimerState> {
   timer = null
 
-  constructor({ lockTime, cancelTime }) {
-    //@ts-ignore
-    super()
+  constructor(props: TimerProps) {
+    super(props)
+    const { lockTime, cancelTime } = props
 
     this.state = {
       lockTime,
@@ -55,8 +60,7 @@ export default class Timer extends React.Component<any, any> {
 
     if (newTimeLeft <= 0 && typeof enabledButton === 'function') {
       enabledButton()
-    }
-    else {
+    } else {
       this.timer = setTimeout(this.tick, 1000)
       this.setState({
         timeLeft: newTimeLeft,
@@ -67,55 +71,49 @@ export default class Timer extends React.Component<any, any> {
 
   render() {
     const { timeLeft, cancelTimeLeft, cancelTime } = this.state
-    const { isRefund } = this.props
+    const { isRefund, defaultMessage } = this.props
     const min = Math.ceil(timeLeft / 1000 / 60)
     const minToCancel = Math.ceil(cancelTimeLeft / 1000 / 60)
 
     return (
       <Fragment>
-        {
-          (cancelTime && (cancelTimeLeft > 0) && !isRefund) ? (
-            <div styleName="timer">
-              <FormattedMessage
-                id="timerTimeToCancel"
-                defaultMessage="You have {min} min to make a payment"
-                values={{ min: `${minToCancel}` }}
-              />
-            </div>
-          ) : (
-            <Fragment>
-              {
-                (cancelTime && (cancelTimeLeft <= 0)) && (
-                  <div styleName="timer">
-                    <FormattedMessage id="timerSwapIsCancelled" defaultMessage="Swap canceled due to time out" />
-                  </div>
-                )
-              }
-              <br />
+        {cancelTime && cancelTimeLeft > 0 && !isRefund ? (
+          <div styleName="timer">
+            <FormattedMessage
+              id="timerTimeToCancel"
+              defaultMessage="You have {min} min to make a payment"
+              values={{ min: `${minToCancel}` }}
+            />
+          </div>
+        ) : (
+          <Fragment>
+            {cancelTime && cancelTimeLeft <= 0 && (
               <div styleName="timer">
-                {
-                  this.props.defaultMessage === false ? (
-                    <span>{min}</span>
-                  ) : (
-                    min > 0 ? (
-                      <span>
-                        <FormattedMessage
-                          id="timer671"
-                          defaultMessage="minute left for refund"
-                          values={{ min: `${min}` }}
-                        />
-                      </span>
-                    ) : (
-                      <FormattedMessage id="timer68" defaultMessage="refund ready" />
-                    )
-                  )
-                }
+                <FormattedMessage
+                  id="timerSwapIsCancelled"
+                  defaultMessage="Swap canceled due to time out"
+                />
               </div>
-            </Fragment>
-          )
-        }
+            )}
+            <br />
+            <div styleName="timer">
+              {defaultMessage === false ? (
+                <span>{min}</span>
+              ) : min > 0 ? (
+                <span>
+                  <FormattedMessage
+                    id="timer671"
+                    defaultMessage="minute left for refund"
+                    values={{ min: `${min}` }}
+                  />
+                </span>
+              ) : (
+                <FormattedMessage id="timer68" defaultMessage="refund ready" />
+              )}
+            </div>
+          </Fragment>
+        )}
       </Fragment>
     )
   }
-
 }

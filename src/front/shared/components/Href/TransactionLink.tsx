@@ -5,7 +5,6 @@ import Href from './Href'
 import config from 'app-config'
 import { FormattedMessage } from 'react-intl'
 
-
 const setApi = (type, id) => {
   switch (type) {
     case 'BTC':
@@ -19,12 +18,13 @@ const setApi = (type, id) => {
   }
 }
 
-
 const TransactionLink = ({ type, id }) => (
   <div>
     <FormattedMessage id="transactionLink28" defaultMessage="Transaction: " />
     <strong>
-      <Href tab={setApi(type, id)} rel="noopener noreferrer">{id}</Href>
+      <Href tab={setApi(type, id)} rel="noopener noreferrer">
+        {id}
+      </Href>
     </strong>
   </div>
 )

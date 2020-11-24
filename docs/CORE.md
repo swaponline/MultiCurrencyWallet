@@ -1,6 +1,6 @@
 <img src="https://api.travis-ci.org/caffeinum/swap.core.svg?branch=master" />
 
-# Swap Core
+# Swap Core (`src/core`)
 
 In-browser atomic swap protocol based on HTLC
 
@@ -13,7 +13,7 @@ Swap Core is a decentralized exchange protocol (DEP) for crosschain atomic swaps
 *tags: HTLC, atomic swap, javascript, browser, crypto, bitcoin, ethereum, erc20*
 
 
-## Used currencies
+## Supported currencies
 
 | ticker    | title |
 |-----------|---------|
@@ -25,17 +25,17 @@ Swap Core is a decentralized exchange protocol (DEP) for crosschain atomic swaps
 | SUM       | Sumcoin |
 | NEXT      | NEXT.coin |
 
-## Current swap directions support
+## Supported swap directions
 
 | tx\rx | ETH  | ERC20 | BTC | BCH | GHOST | SUM | NEXT |
 |-------|------|-------|-----|-----|-------|-----|------|
-| ETH   |      |       | +   |     | +     |     | soon |
+| ETH   |      |       | +   |     | +     |     | +    |
 | ERC20 |      |       | +   |     | +     |     |      |
 | BTC   | +    | +     |     |     |       |     |      |
 | BCH   |      |       |     |     |       |     |      |
 | GHOST | +    | +     |     |     |       |     |      |
 | SUM   |      |       |     |     |       |     |      |
-| NEXT  | soon |       | soon|     |       |     | soon |
+| NEXT  | +    |       | soon|     |       |     | soon |
 
 ## How it works step by step
 

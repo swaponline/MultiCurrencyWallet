@@ -39,6 +39,8 @@ import metamask from 'helpers/metamask'
 
 import { getPairFees } from 'helpers/getPairFees'
 
+import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
+
 
 
 const allowedCoins = [
@@ -231,15 +233,17 @@ export default class Exchange extends Component<any, any> {
       }
     }
 
+    const haveType = this.getDefaultWalletForCurrency(haveCurrency.toUpperCase())
+    const getType = this.getDefaultWalletForCurrency(getCurrency.toUpperCase())
     this.state = {
       isToken: false,
       dynamicFee: 0,
       haveCurrency,
+      haveType,
       getCurrency,
+      getType,
       haveAmount: 0,
       getAmount: "",
-      fromAddress: null,
-      toAddress: null,
       haveFiat: 0,
       getFiat: 0,
       isShowBalance: true,
@@ -257,12 +261,83 @@ export default class Exchange extends Component<any, any> {
       pairFees: false,
       balances: false,
       haveBalance: false,
+      fromAddress: this.makeAddressObject(haveType, haveCurrency.toUpperCase()),
+      toAddress: this.makeAddressObject(getType, getCurrency.toUpperCase()),
     }
 
     if (config.isWidget) {
       //@ts-ignore
       this.state.getCurrency = config.erc20token
     }
+  }
+
+  makeAddressObject(type, currency) {
+    const wallet = (type !== AddressType.Custom) ? actions.core.getWallet({
+      currency,
+      addressType: type,
+    }) : false
+
+    switch (type) {
+      case AddressType.Internal:
+        return {
+          type: AddressType.Internal,
+          currency,
+          value: (wallet) ? wallet.address : '',
+        }
+      case AddressType.Metamask:
+        return {
+          type: AddressType.Metamask,
+          currency,
+          value: (wallet) ? wallet.address : '',
+        }
+      case AddressType.Custom:
+        return {
+          type: AddressType.Internal,
+          currency,
+          value: ``,
+        }
+    }
+    return null
+  }
+
+  getUserDefaultWallets() {
+    const defJson = localStorage.getItem(constants.localStorage.exchangeUserWallets)
+    if (defJson) {
+      try {
+        const json = JSON.parse(defJson)
+        return json
+      } catch (e) {}
+    }
+    return {}
+  }
+
+  getUserDefaultWallet(currency) {
+    const defWalletsJson = this.getUserDefaultWallets()
+    if (defWalletsJson) {
+      if (defWalletsJson && defWalletsJson[currency]) return defWalletsJson[currency]
+    }
+    return false
+  }
+
+  setUserDefaultWallet(currency, type) {
+    const defWalletsJson = this.getUserDefaultWallets()
+    defWalletsJson[currency] = type
+    localStorage.setItem(constants.localStorage.exchangeUserWallets, JSON.stringify(defWalletsJson))
+  }
+
+
+  getDefaultWalletForCurrency(currency) {
+    const savedType = this.getUserDefaultWallet(currency)
+    if (savedType) return savedType
+    if (COIN_DATA[currency]) {
+      if (COIN_DATA[currency].model === COIN_MODEL.UTXO) return AddressType.Custom
+      if (COIN_DATA[currency].type === COIN_TYPE.ETH_TOKEN) return AddressType.Metamask
+      if (COIN_DATA[currency].model === COIN_MODEL.AB) return AddressType.Metamask
+    } else {
+      console.warn(`Exchange -> getDefaultWalletForCurrency -> Unknown coin ${currency}`)
+    }
+
+    return `placeholder`
   }
 
   componentDidMount() {
@@ -506,6 +581,7 @@ export default class Exchange extends Component<any, any> {
       buyCurrency,
       amount,
       balance,
+      fromType,
     } = checkParams
 
     const {
@@ -528,11 +604,13 @@ export default class Exchange extends Component<any, any> {
     if (pairFees.byCoins[sellCurrency.toUpperCase()]
       && pairFees.byCoins[sellCurrency.toUpperCase()].isUTXO
     ) {
-      if (
-        new BigNumber(balance).isLessThan(
-          new BigNumber(amount).plus(pairFees.byCoins[sellCurrency.toUpperCase()].fee)
-        )
-      ) balanceIsOk = false
+      if (fromType !== AddressType.Custom) {
+        if (
+          new BigNumber(balance).isLessThan(
+            new BigNumber(amount).plus(pairFees.byCoins[sellCurrency.toUpperCase()].fee)
+          )
+        ) balanceIsOk = false
+      }
     } else {
       if (!isSellToken
         && new BigNumber(balance).isLessThan(amount)
@@ -612,6 +690,7 @@ export default class Exchange extends Component<any, any> {
       haveCurrency,
       haveAmount,
       getCurrency,
+      haveType,
     } = this.state
 
     const haveTicker = haveCurrency.toUpperCase()
@@ -624,6 +703,7 @@ export default class Exchange extends Component<any, any> {
       buyCurrency: getCurrency,
       amount: haveAmount,
       balance: this.getBalance(haveCurrency),
+      fromType: haveType,
     })) return false
 
     if (decline.length === 0) {
@@ -947,7 +1027,9 @@ export default class Exchange extends Component<any, any> {
     } else {
       this.setState({
         getCurrency: value,
+        getType: this.getDefaultWalletForCurrency(value.toUpperCase()),
         haveCurrency,
+        haveType: this.getDefaultWalletForCurrency(haveCurrency.toUpperCase()),
         pairFees: false,
       }, () => {
         this.fetchPairFeesAndBalances()
@@ -971,7 +1053,9 @@ export default class Exchange extends Component<any, any> {
     } else {
       this.setState({
         haveCurrency: value,
+        haveType: this.getDefaultWalletForCurrency(value.toUpperCase()),
         getCurrency,
+        getType: this.getDefaultWalletForCurrency(getCurrency.toUpperCase()),
         pairFees: false,
       }, () => {
         this.fetchPairFeesAndBalances()
@@ -991,18 +1075,21 @@ export default class Exchange extends Component<any, any> {
     const { type, value, currency } = addressData;
 
     console.log('Exchange: applyAddress', addressRole, addressData)
+    this.setUserDefaultWallet(currency.toUpperCase(), type)
     //@ts-ignore
     feedback.exchangeForm.selectedAddress(`${addressRole} ${currency.toUpperCase()} ${type}`)
 
     if (addressRole === AddressRole.Send) {
 
       this.setState({
-        fromAddress: addressData
+        fromAddress: addressData,
+        haveType: type,
       })
     }
     if (addressRole === AddressRole.Receive) {
       this.setState({
-        toAddress: addressData
+        toAddress: addressData,
+        getType: type,
       })
     }
   };
@@ -1010,7 +1097,9 @@ export default class Exchange extends Component<any, any> {
   flipCurrency = async () => {
     const {
       haveCurrency,
+      haveType,
       getCurrency,
+      getType,
       exHaveRate,
       exGetRate,
       pairFees,
@@ -1024,6 +1113,8 @@ export default class Exchange extends Component<any, any> {
     this.setState({
       haveCurrency: getCurrency,
       getCurrency: haveCurrency,
+      haveType: getType,
+      getType: haveType,
       exHaveRate: exGetRate,
       exGetRate: exHaveRate,
       pairFees: {
@@ -1225,7 +1316,9 @@ export default class Exchange extends Component<any, any> {
 
     const {
       haveCurrency,
+      haveType,
       getCurrency,
+      getType,
       fromAddress,
       toAddress,
       orderId,
@@ -1318,7 +1411,7 @@ export default class Exchange extends Component<any, any> {
       .times(getAmount)
       .dp(2, BigNumber.ROUND_CEIL)
 
-    const fiatFeeCalculation = (pairFees) ? (
+    const fiatFeeCalculation = (pairFees && pairFees.buy && pairFees.sell) ? (
       new BigNumber(pairFees.buyExRate).times(pairFees.buy.fee)
       .plus(
         new BigNumber(pairFees.sellExRate).times(pairFees.sell.fee)
@@ -1384,7 +1477,9 @@ export default class Exchange extends Component<any, any> {
       new BigNumber(getAmount).isGreaterThan(0) &&
       !this.doesComissionPreventThisOrder() &&
       (new BigNumber(haveAmount).isGreaterThan(balance) ||
-        new BigNumber(balance).isGreaterThanOrEqualTo(availableAmount)) &&
+        new BigNumber(balance).isGreaterThanOrEqualTo(availableAmount) ||
+        fromAddress.type === AddressType.Custom
+      ) &&
       !isWaitForPeerAnswer
 
     const isIncompletedSwaps = !!desclineOrders.length
@@ -1427,6 +1522,7 @@ export default class Exchange extends Component<any, any> {
                 }
                 isDark={isDark}
                 currency={haveCurrency}
+                selectedType={haveType}
                 role={AddressRole.Send}
                 hasError={false}
                 onChange={(addrData) => this.applyAddress(AddressRole.Send, addrData)}
@@ -1464,6 +1560,7 @@ export default class Exchange extends Component<any, any> {
                 isDark={isDark}
                 role={AddressRole.Receive}
                 currency={getCurrency}
+                selectedType={getType}
                 hasError={false}
                 onChange={(addrData) => this.applyAddress(AddressRole.Receive, addrData)}
               />
