@@ -7,8 +7,6 @@ import actions from 'redux/actions'
 import { constants, links } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 
-import Link from 'sw-valuelink'
-
 import cssModules from 'react-css-modules'
 import styles from './ConnectWalletModal.scss'
 
@@ -46,7 +44,7 @@ const providerTitles = defineMessages({
   dashboardModalsAllowed,
 }))
 @cssModules(styles)
-export default class ConnectWalletModal extends React.Component {
+export default class ConnectWalletModal extends React.Component<any, any> {
   goToPage(link) {
     const {
       name,
@@ -99,7 +97,7 @@ export default class ConnectWalletModal extends React.Component {
               id="ConnectWalletModal_WalletLocked"
               defaultMessage="Wallet is locked. Unlock the wallet first."
             />
-          ),
+          )
         })
       }
       this.onConnectLogic(connected)
@@ -129,11 +127,13 @@ export default class ConnectWalletModal extends React.Component {
       >
         <div
           className={cx({
-            [styles.modal]: true,
-            [styles.modal_dashboardView]: dashboardModalsAllowed,
+            [styles['modal']]: true,
+            [styles['modal_dashboardView']]: dashboardModalsAllowed,
           })}
         >
           <div styleName="header">
+            {/*
+            //@ts-ignore */}
             <WidthContainer styleName="headerContent">
               <div styleName="title">{labels.title}</div>
             </WidthContainer>
