@@ -435,11 +435,18 @@ const CreateWallet = (props) => {
           {!metamask.isConnected() && (
             <div>
               <button onClick={handleConnectWallet}>
-                {web3Icon&& (
+                {web3Icon && (
                   <img styleName="connectWalletIcon" src={web3Icon} />
                 )}
                 <FormattedMessage id="ImportKeys_ConnectWallet" defaultMessage="Connect Wallet" />
               </button>
+              &nbsp;
+              <Tooltip id="CreateWallet_ConnectWalletTooltip">
+                <FormattedMessage
+                  id="CreateWallet_ConnectWalletButton"
+                  defaultMessage="Use this if you already have ethereum wallet"
+                />
+              </Tooltip>
             </div>
           )}
         </div>
