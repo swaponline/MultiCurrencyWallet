@@ -10,8 +10,6 @@ import { isMobile } from 'react-device-detect'
 import * as bip39 from 'bip39'
 import ReactTags from 'react-tag-autocomplete'
 
-
-
 const langPrefix = `MnemonicInputComponent`
 const langLabels = defineMessages({
   placeholder: {
