@@ -378,9 +378,8 @@ const CreateWallet = (props) => {
     }
   }, [])
 
-  const web3Icon = metamask.isConnected()
-    ? web3Icons[metamask.web3connect.getInjectedType()]
-    : false
+  const web3Type = metamask.web3connect.getInjectedType()
+  const web3Icon = (web3Icons[web3Type] && web3Type !== `UNKNOWN` && web3Type !== `NONE`) ? web3Icons[web3Type] : false
 
   return (
     <div styleName={`wrapper ${isDark ? '--dark' : ''}`}>
@@ -433,14 +432,16 @@ const CreateWallet = (props) => {
               </span>
             </Tooltip>
           </div>
-          <div>
-            <button onClick={handleConnectWallet}>
-              {web3Icon && (web3Icon !== 'UNKNOWN' || web3Icon !== 'NONE') && (
-                <img styleName="connectWalletIcon" src={web3Icons[web3Icon]} />
-              )}
-              <FormattedMessage id="ImportKeys_ConnectWallet" defaultMessage="Connect Wallet" />
-            </button>
-          </div>
+          {!metamask.isConnected() && (
+            <div>
+              <button onClick={handleConnectWallet}>
+                {web3Icon&& (
+                  <img styleName="connectWalletIcon" src={web3Icon} />
+                )}
+                <FormattedMessage id="ImportKeys_ConnectWallet" defaultMessage="Connect Wallet" />
+              </button>
+            </div>
+          )}
         </div>
         {/* TODO: переименовать компонент */}
         <LogicForSteps
