@@ -7,7 +7,7 @@ import styles from './AddressSelect.scss'
 import cssModules from 'react-css-modules'
 import config from 'helpers/externalConfig'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
-import Input from 'components/forms/Input/Input';
+import Input from 'components/forms/Input/Input'
 import DropDown from 'components/ui/DropDown/DropDown'
 import Address from 'components/ui/Address/Address'
 import { AddressFormat } from 'domain/address'
@@ -19,30 +19,13 @@ import { links } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import actions from 'redux/actions'
 import feedback from 'shared/helpers/feedback'
+import web3Icons from 'shared/images'
 
-import QrReader from "components/QrReader"
+import QrReader from 'components/QrReader'
 import iconInternal from 'components/Logo/images/base.svg'
-import iconMetamask from './images/metamask.svg'
-import iconTrustWallet from './images/trust.svg'
-import iconCustom from './images/custom.svg'
-import iconDefault from './images/unknown.svg'
-import iconOpera from './images/opera.svg'
-import iconWalletConnect from './images/walletconnect.svg'
-import iconLiquality from './images/liquality.png'
-
+import iconCustom from '../../../images/custom.svg'
 
 import { AddressType, AddressRole } from 'domain/address'
-
-
-const web3Icons = {
-  METAMASK: iconMetamask,
-  TRUST: iconTrustWallet,
-  OPERA: iconOpera,
-  NONE: iconDefault,
-  UNKNOWN: iconDefault,
-  LIQUALITY: iconLiquality,
-  WALLETCONNECT: iconWalletConnect,
-}
 
 const langLabels = defineMessages({
   labelSpecifyAddress: {
@@ -82,16 +65,7 @@ const langLabels = defineMessages({
 @injectIntl
 @withRouter
 @connect(
-  ({
-    core: { hiddenCoinsList },
-    user: {
-      btcData,
-      ethData,
-      ghostData,
-      nextData,
-      tokensData
-    }
-  }) => {
+  ({ core: { hiddenCoinsList }, user: { btcData, ethData, ghostData, nextData, tokensData } }) => {
     const allData = [
       btcData,
       ethData,
@@ -113,11 +87,7 @@ export default class AddressSelect extends Component<any, any> {
   constructor(props) {
     super(props)
 
-    const {
-      currency,
-      hasError = false,
-      selectedType = false,
-    } = props
+    const { currency, hasError = false, selectedType = false } = props
 
     this.state = {
       currency,
@@ -136,7 +106,7 @@ export default class AddressSelect extends Component<any, any> {
   }
 
   getInternalAddress() {
-    const { allData } =  this.props
+    const { allData } = this.props
     const ticker = this.getTicker()
     let internalAddress
     for (let i = 0; i < allData.length; i++) {
@@ -191,11 +161,7 @@ export default class AddressSelect extends Component<any, any> {
   }
 
   componentDidUpdate() {
-    const {
-      currency: newCurrency,
-      selectedType,
-      hasError = false,
-    } = this.props
+    const { currency: newCurrency, selectedType, hasError = false } = this.props
 
     const {
       currency: oldCurrency,
@@ -203,7 +169,7 @@ export default class AddressSelect extends Component<any, any> {
       hasError: oldHasError = false,
     } = this.state
 
-    if ((newCurrency !== oldCurrency) || (hasError !== oldHasError)) {
+    if (newCurrency !== oldCurrency || hasError !== oldHasError) {
       this.setState({
         currency: newCurrency,
         hasError,
@@ -244,23 +210,28 @@ export default class AddressSelect extends Component<any, any> {
   }
 
   handleConnectMetamask() {
-    metamask.connect({
-      dontRedirect: true,
-    }).then((isConnected) => {
-      if (!isConnected) {
-        return
-      }
-
-      this.setState({
-        isMetamaskConnected: true,
-        metamaskAddress: metamask.getAddress(),
-      }, () => {
-        this.applyAddress({
-          type: AddressType.Metamask,
-          value: metamask.getAddress(),
-        })
+    metamask
+      .connect({
+        dontRedirect: true,
       })
-    })/*.catch((error) => {
+      .then((isConnected) => {
+        if (!isConnected) {
+          return
+        }
+
+        this.setState(
+          {
+            isMetamaskConnected: true,
+            metamaskAddress: metamask.getAddress(),
+          },
+          () => {
+            this.applyAddress({
+              type: AddressType.Metamask,
+              value: metamask.getAddress(),
+            })
+          }
+        )
+      }) /*.catch((error) => {
       console.log('Metamask rejected', error)
     })*/
   }
@@ -288,74 +259,73 @@ export default class AddressSelect extends Component<any, any> {
   }
 
   handleOptionSelect(option) {
-    const {
-      selectedType: oldSelectedType,
-    } = this.state
+    const { selectedType: oldSelectedType } = this.state
 
-    const {
-      value: selectedType,
-      dontSelect,
-    } = option
+    const { value: selectedType, dontSelect } = option
 
     if (selectedType === 'InternalAddressCreate') {
       this.goСreateWallet()
       return
     }
 
-    this.setState({
-      selectedType: (dontSelect) ? oldSelectedType : selectedType,
-    }, () => {
+    this.setState(
+      {
+        selectedType: dontSelect ? oldSelectedType : selectedType,
+      },
+      () => {
+        if (!selectedType) {
+          return
+        }
 
-      if (!selectedType) {
-        return
-      }
+        let value
 
-      let value
+        if (selectedType === AddressType.Internal) {
+          value = this.getInternalAddress()
+        }
 
-      if (selectedType === AddressType.Internal) {
-        value = this.getInternalAddress()
-      }
+        if (selectedType === AddressType.Metamask) {
+          value = metamask.getAddress()
+        }
 
-      if (selectedType === AddressType.Metamask) {
-        value = metamask.getAddress()
-      }
-
-      /*if (selectedType === AddressType.Custom) {
+        /*if (selectedType === AddressType.Custom) {
         // apply address input blur / qrScan
         return
       }*/
 
-      if ((selectedType === AddressType.Metamask)
-        && !metamask.isConnected()
-      ) {
-        metamask.connect({
-          dontRedirect: true,
-        }).then((isConnected) => {
-          if (!isConnected) {
-            return
-          } else {
-            this.setState({
-              isMetamaskConnected: true,
-              metamaskAddress: metamask.getAddress(),
-              value: metamask.getAddress(),
-              type: AddressType.Metamask,
-              selectedType: AddressType.Metamask,
-            }, () => {
-              this.applyAddress({
-                type: AddressType.Metamask,
-                value: metamask.getAddress(),
-              })
+        if (selectedType === AddressType.Metamask && !metamask.isConnected()) {
+          metamask
+            .connect({
+              dontRedirect: true,
             })
-          }
-        })
-      } else {
-        this.applyAddress({
-          type: selectedType,
-          value,
-        })
+            .then((isConnected) => {
+              if (!isConnected) {
+                return
+              } else {
+                this.setState(
+                  {
+                    isMetamaskConnected: true,
+                    metamaskAddress: metamask.getAddress(),
+                    value: metamask.getAddress(),
+                    type: AddressType.Metamask,
+                    selectedType: AddressType.Metamask,
+                  },
+                  () => {
+                    this.applyAddress({
+                      type: AddressType.Metamask,
+                      value: metamask.getAddress(),
+                    })
+                  }
+                )
+              }
+            })
+        } else {
+          this.applyAddress({
+            type: selectedType,
+            value,
+          })
+        }
       }
-
-    })
+    )
   }
 
   applyAddress(address) {
@@ -374,15 +344,7 @@ export default class AddressSelect extends Component<any, any> {
   }
 
   render() {
-
-    const {
-      currency,
-      isDark,
-      label,
-      hiddenCoinsList,
-      allData,
-      role,
-    } = this.props
+    const { currency, isDark, label, hiddenCoinsList, allData, role } = this.props
 
     const {
       selectedType,
@@ -397,10 +359,11 @@ export default class AddressSelect extends Component<any, any> {
 
     const { balance: internalBalance } = actions.core.getWallet({
       currency,
-      addressType: AddressType.Internal
+      addressType: AddressType.Internal,
     })
 
-    const isInternalOptionDisabled = role === AddressRole.Send && (!internalBalance || internalBalance === 0)
+    const isInternalOptionDisabled =
+      role === AddressRole.Send && (!internalBalance || internalBalance === 0)
 
     const isMetamaskOption = ethToken.isEthOrEthToken({ name: currency })
     const isMetamaskInstalled = metamask.isEnabled()
@@ -410,8 +373,7 @@ export default class AddressSelect extends Component<any, any> {
     const isCustomAddressOption = !ethToken.isEthOrEthToken({ name: currency })
     const isCustomOptionInputHidden = role === AddressRole.Send && ticker === 'BTC' // todo: any utxo
 
-
-    const web3Icon = (metamask.isConnected())
+    const web3Icon = metamask.isConnected()
       ? web3Icons[metamask.web3connect.getProviderType()] || false
       : web3Icons[metamask.web3connect.getInjectedType()] || false
 
@@ -422,61 +384,78 @@ export default class AddressSelect extends Component<any, any> {
         disabled: true,
         hidden: true,
       },
-      ...(this.isCurrencyInInternalWallet() ? [{
-          value: AddressType.Internal,
-          icon: iconInternal,
-          title: !isInternalOptionDisabled ?
-            <Fragment>
-              <FormattedMessage {...langLabels.optionInternal} />
-              <Address
-                address={this.getInternalAddress()}
-                format={AddressFormat.Short}
-                type={AddressType.Internal}
-              />
-            </Fragment>
-            :
-            <FormattedMessage {...langLabels.optionInternalDisabled} />,
-          disabled: isInternalOptionDisabled,
-        }] : [{
-          value: 'InternalAddressCreate',
-          icon: iconInternal,
-          title: <FormattedMessage {...langLabels.optionInternalCreate} />,
-        }]
-      ),
-      ...(isMetamaskOption ?
-          isMetamaskConnected ?
-            [{
-              value: AddressType.Metamask,
-              icon: web3Icon,
-              title: <Fragment>
-              {metamask.web3connect.getProviderTitle()}
-                <Address
-                  address={metamaskAddress}
-                  format={AddressFormat.Short}
-                  type={AddressType.Metamask}
-                />
-              </Fragment>
-            }]
-            :
-            [{
-              value: AddressType.Metamask,
-              icon: web3Icon,
-              title: <FormattedMessage {...langLabels.optionConnect} />,
-              dontSelect: true,
-            }]
-        :
-        []
-      ),
-      ...(isCustomAddressOption ? [{
-        value: AddressType.Custom,
-        icon: iconCustom,
-        title: <FormattedMessage {...langLabels.optionCustom} />,
-        reduceSelectedItemText: !isCustomOptionInputHidden,
-      }] : []),
+      ...(this.isCurrencyInInternalWallet()
+        ? [
+            {
+              value: AddressType.Internal,
+              icon: iconInternal,
+              title: !isInternalOptionDisabled ? (
+                <Fragment>
+                  <FormattedMessage {...langLabels.optionInternal} />
+                  <Address
+                    address={this.getInternalAddress()}
+                    format={AddressFormat.Short}
+                    type={AddressType.Internal}
+                  />
+                </Fragment>
+              ) : (
+                <FormattedMessage {...langLabels.optionInternalDisabled} />
+              ),
+              disabled: isInternalOptionDisabled,
+            },
+          ]
+        : [
+            {
+              value: 'InternalAddressCreate',
+              icon: iconInternal,
+              title: <FormattedMessage {...langLabels.optionInternalCreate} />,
+            },
+          ]),
+      ...(isMetamaskOption
+        ? isMetamaskConnected
+          ? [
+              {
+                value: AddressType.Metamask,
+                icon: web3Icon,
+                title: (
+                  <Fragment>
+                    {metamask.web3connect.getProviderTitle()}
+                    <Address
+                      address={metamaskAddress}
+                      format={AddressFormat.Short}
+                      type={AddressType.Metamask}
+                    />
+                  </Fragment>
+                ),
+              },
+            ]
+          : [
+              {
+                value: AddressType.Metamask,
+                icon: web3Icon,
+                title: <FormattedMessage {...langLabels.optionConnect} />,
+                dontSelect: true,
+              },
+            ]
+        : []),
+      ...(isCustomAddressOption
+        ? [
+            {
+              value: AddressType.Custom,
+              icon: iconCustom,
+              title: <FormattedMessage {...langLabels.optionCustom} />,
+              reduceSelectedItemText: !isCustomOptionInputHidden,
+            },
+          ]
+        : []),
     ]
 
     return (
-      <div styleName={`addressSelect ${(hasError) ? 'addressSelect_error' : ''} ${isDark ? '--dark' : ''}`}>
+      <div
+        styleName={`addressSelect ${hasError ? 'addressSelect_error' : ''} ${
+          isDark ? '--dark' : ''
+        }`}
+      >
         <div styleName="label">{label}</div>
         <DropDown
           styleName="dropDown"
@@ -486,30 +465,32 @@ export default class AddressSelect extends Component<any, any> {
           disableSearch={true}
           dontScroll={true}
           arrowSide="left"
-          itemRender={item => <Option {...item} />}
+          itemRender={(item) => <Option {...item} />}
           onSelect={(value) => this.handleOptionSelect(value)}
         />
-        {selectedType === AddressType.Metamask && metamask.isEnabled() && !isMetamaskConnected &&
+        {selectedType === AddressType.Metamask && metamask.isEnabled() && !isMetamaskConnected && (
           <div styleName="selectedInner">
             <div styleName="buttonContainer">
               <Button
                 styleName="button"
                 blue
-                onClick={() => { this.handleConnectMetamask() }}
+                onClick={() => {
+                  this.handleConnectMetamask()
+                }}
               >
                 <FormattedMessage {...langLabels.connectMetamask} />
               </Button>
             </div>
           </div>
-        }
-        {selectedType === AddressType.Custom && !isCustomOptionInputHidden &&
+        )}
+        {selectedType === AddressType.Custom && !isCustomOptionInputHidden && (
           <div styleName="selectedInner">
-            <div styleName={`customWallet ${(walletAddressFocused) ? 'customWallet_focus' : ''}`}>
+            <div styleName={`customWallet ${walletAddressFocused ? 'customWallet_focus' : ''}`}>
               <div styleName="customAddressInput">
                 <Input
                   inputCustomStyle={{
                     fontSize: '15px',
-                    textOverflow: "ellipsis",
+                    textOverflow: 'ellipsis',
                   }}
                   required
                   pattern="0-9a-zA-Z"
@@ -522,7 +503,7 @@ export default class AddressSelect extends Component<any, any> {
               <i styleName="qrCode" className="fas fa-qrcode" onClick={this.toggleScan} />
             </div>
           </div>
-        }
+        )}
         {isScanActive && (
           <QrReader
             //@ts-ignore
