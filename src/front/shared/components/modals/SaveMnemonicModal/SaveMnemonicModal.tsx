@@ -323,7 +323,7 @@ export default class SaveMnemonicModal extends React.Component<any, any> {
                   {
                     enteredWords.map((word, index) => {
                       return (
-                        <button key={index} onClick={() => { }} className="ym-hide-content notranslate">
+                        <button key={index} onClick={() => { }} className="ym-hide-content notranslate" translate="no">
                           {word}
                         </button>
                       )
@@ -334,7 +334,7 @@ export default class SaveMnemonicModal extends React.Component<any, any> {
                   {
                     randomedWords.map((word, index) => {
                       return (
-                        <button key={index} onClick={() => this.handleClickWord(index)} className="ym-hide-content notranslate">
+                        <button key={index} onClick={() => this.handleClickWord(index)} className="ym-hide-content notranslate" translate="no">
                           {word}
                         </button>
                       )
@@ -357,7 +357,7 @@ export default class SaveMnemonicModal extends React.Component<any, any> {
           {step === `show` && (
             <Fragment>
               <div styleName="highLevel">
-                <div styleName="mnemonicView" className="ym-hide-content notranslate">
+                <div styleName="mnemonicView" className="ym-hide-content notranslate" translate="no">
                   {
                     words.map((word, index) => {
                       return (
