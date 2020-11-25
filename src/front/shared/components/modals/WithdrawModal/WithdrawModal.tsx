@@ -968,7 +968,7 @@ export default class WithdrawModal extends React.Component<any, any> {
           </Fragment>
         )}
         {dashboardView && (
-          <p
+          <div
             styleName={cx({
               notice: !isEthToken,
               rednotes: isEthToken,
@@ -980,14 +980,14 @@ export default class WithdrawModal extends React.Component<any, any> {
                 <>
                   <FormattedMessage id="WithdrowModalMinerFee" defaultMessage="Miner Fee: " />
                   { fetchFee 
-                    ? <span styleName='paleLoader'><InlineLoader /></span>
-                    : <span styleName='fee'>{123}{' '}{dataCurrency}</span>// TODO: add miner fee
+                    ? <div styleName='paleLoader'><InlineLoader /></div>
+                    : <span styleName='fee'>{123} {dataCurrency}</span>// TODO: add miner fee
                   }
                   <br />
                   <FormattedMessage id="WithdrowModalAdminFee" defaultMessage="Admin Fee: " />
                   { fetchFee 
-                    ? <span styleName='paleLoader'><InlineLoader /></span>
-                    : <span styleName='fee'>{adminFeeSize}{' '}{dataCurrency}</span>  
+                    ? <div styleName='paleLoader'><InlineLoader /></div>
+                    : <span styleName='fee'>{adminFeeSize} {dataCurrency}</span>  
                   }
                   <br />
                 </>
@@ -995,16 +995,17 @@ export default class WithdrawModal extends React.Component<any, any> {
             }
             <FormattedMessage id="WithdrowModalCommonFee" defaultMessage="Total Fee: " />
             { fetchFee 
-                ? <span styleName='paleLoader'><InlineLoader /></span>
+                ? <div styleName='paleLoader'><InlineLoader /></div>
                 : (
                   <span styleName='fee'>
                     {isEthToken 
                       ? minAmount.eth 
-                      : new BigNumber(dinamicFee).dp(6, BigNumber.ROUND_FLOOR).toNumber()}{' '}{dataCurrency}
+                      : new BigNumber(dinamicFee).dp(6, BigNumber.ROUND_FLOOR).toNumber()
+                    } {dataCurrency}
                   </span>
                 ) 
             }
-          </p>
+          </div>
         )}
       </Fragment>
     )
