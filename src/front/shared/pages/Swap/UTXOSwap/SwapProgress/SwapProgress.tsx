@@ -12,8 +12,7 @@ import config from 'app-config'
 
 import { constants, links, ethToken } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
-
-import Link from 'sw-valuelink'
+import { BigNumber } from 'bignumber.js'
 import { Link as LinkTo } from 'react-router-dom'
 
 import { injectIntl, FormattedMessage } from 'react-intl'
@@ -39,9 +38,15 @@ import finishSvg from './images/finish.svg'
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })
-export default class SwapProgress extends Component {
-
+export default class SwapProgress extends Component<any, any> {
+  swap = null
   _fields = null
+  wallets = null
+  history = null
+  locale = null
+  timer = null
+  isSellCurrencyEthOrEthToken = null
+
 
   static propTypes = {
     flow: PropTypes.object,
@@ -53,7 +58,7 @@ export default class SwapProgress extends Component {
   }
 
   constructor(props) {
-    super()
+    super(props)
     const {
       flow,
       step,
@@ -170,7 +175,7 @@ export default class SwapProgress extends Component {
   componentDidMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
     this.handleBarProgress()
-    localStorage.setItem(constants.localStorage.startSwap, Date.now())
+    localStorage.setItem(constants.localStorage.startSwap, Date.now().toString())
     this.reloadPage()
   }
 
@@ -181,13 +186,14 @@ export default class SwapProgress extends Component {
 
   reloadPage = () => {
     this.timer = setTimeout(() => {
-      const startSwapTime = localStorage.getItem(constants.localStorage.startSwap)
+      const startSwapTime: number = new BigNumber(localStorage.getItem(constants.localStorage.startSwap)).toNumber()
 
       if (this.swap.flow.isFinished) {
         clearTimeout(this.timer)
       }
 
       const isSwapPage = window.location.pathname.includes("swaps")
+
       if (((Date.now() - startSwapTime) > 600 * 1000) && isSwapPage) {
         console.warn('UPS!!! SWAP IS FROZEN - RELOAD')
         localStorage.removeItem(constants.localStorage.startSwap)
@@ -455,12 +461,12 @@ export default class SwapProgress extends Component {
               }
 
               {flow.step === 2 && !this.isSellCurrencyEthOrEthToken &&
-                <Button brand onClick={this.submitSecret()} >
+                <Button brand onClick={this.submitSecret.bind(this)} >
                   <FormattedMessage id="swapFinishedGoHome289" defaultMessage="Submit the Secret" />
                 </Button>
               }
               {flow.step === 3 && this.isSellCurrencyEthOrEthToken &&
-                <Button brand onClick={this.confirmScriptChecked()} >
+                <Button brand onClick={this.confirmScriptChecked.bind(this)} >
                   <FormattedMessage id="swapFinishedGoHome298" defaultMessage="Everything is OK. Continue" />
                 </Button>
               }
