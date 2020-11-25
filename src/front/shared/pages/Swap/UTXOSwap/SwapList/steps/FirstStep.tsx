@@ -6,7 +6,7 @@ import styles from '../SwapList.scss'
 import { FormattedMessage } from 'react-intl'
 
 
-const FirstStep = ({ step, first, second }) => (
+const FirstStep = ({ step, first, second, fields }) => (
   <div styleName={(step === first && 'stepItem active') || (step < second && 'stepItem') || 'stepItem active checked'}>
     <span styleName="stepNumber">{step < second ? 1 : <i className="fas fa-check" />}</span>
     <p styleName="stepText">

@@ -15,12 +15,12 @@ import FourthStep from './steps/FourthStep'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 @CSSModules(styles, { allowMultiple: true })
-export default class SwapList extends Component {
+export default class SwapList extends Component<any, any> {
 
   _fields = null
 
   constructor(props) {
-    super()
+    super(props)
     const {
       swap: {
         sellCurrency,

@@ -47,7 +47,6 @@ const SecondStep = (props) => {
       {flowState[scriptCreatingTransactionHash] && (
         <strong styleName="transactionInStep">
           <a
-            alt={`${explorerLink}/tx/${flowState[scriptCreatingTransactionHash]}`}
             title={`${explorerLink}/tx/${flowState[scriptCreatingTransactionHash]}`}
             href={`${explorerLink}/tx/${flowState[scriptCreatingTransactionHash]}`}
             target="_blank"
