@@ -18,7 +18,7 @@ import { Link as LinkTo } from 'react-router-dom'
 import { injectIntl, FormattedMessage } from 'react-intl'
 
 import Timer from '../../Timer/Timer'
-import { Button } from 'components/controls'
+import { Button, TimerButton } from 'components/controls'
 
 import SwapController from '../../SwapController'
 import PleaseDontLeaveWrapper from './SwapProgressText/PleaseDontLeaveWrapper'
@@ -460,16 +460,16 @@ export default class SwapProgress extends Component<any, any> {
                 </Fragment>
               }
 
-              {flow.step === 2 && !this.isSellCurrencyEthOrEthToken &&
-                <Button brand onClick={this.submitSecret.bind(this)} >
+              {flow.step === 2 && !this.isSellCurrencyEthOrEthToken && (
+                <TimerButton brand onClick={this.submitSecret.bind(this)} timeLeft={180} forceClick={true}>
                   <FormattedMessage id="swapFinishedGoHome289" defaultMessage="Submit the Secret" />
-                </Button>
-              }
-              {flow.step === 3 && this.isSellCurrencyEthOrEthToken &&
-                <Button brand onClick={this.confirmScriptChecked.bind(this)} >
+                </TimerButton>
+              )}
+              {flow.step === 3 && this.isSellCurrencyEthOrEthToken && (
+                <TimerButton brand onClick={this.confirmScriptChecked.bind(this)} timeLeft={180} forceClick={true}>
                   <FormattedMessage id="swapFinishedGoHome298" defaultMessage="Everything is OK. Continue" />
-                </Button>
-              }
+                </TimerButton>
+              )}
 
               {flow.step > 3 && !this.isSellCurrencyEthOrEthToken &&
                 <PleaseDontLeaveWrapper isBtcLike={flow.secret ? flow.secret : false} />
