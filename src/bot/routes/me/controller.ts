@@ -28,7 +28,9 @@ const withdraw = async (req, res) => {
   let to = req.query.to
   let value = req.query.value
 
-  if (!from in ['btc', 'eth']) return res.status(403).json({ error: 'no such currency'})
+  if (!(from in ['btc', 'eth'])) {
+    return res.status(403).json({ error: 'no such currency'})
+  }
 
   console.log(new Date().toISOString(), 'from', from)
   console.log(new Date().toISOString(), 'to', to)
@@ -43,4 +45,4 @@ const withdraw = async (req, res) => {
   }
 }
 
-export default { balance, getMe, getWallet, getWalletDetailed, withdraw }
+export { balance, getMe, getWallet, getWalletDetailed, withdraw }

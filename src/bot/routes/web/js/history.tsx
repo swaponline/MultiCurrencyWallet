@@ -1,4 +1,9 @@
-class Swap extends React.Component {
+import React from 'react'
+import moment from 'moment'
+import BigNumber from 'bignumber.js'
+
+
+export default class Swap extends React.Component<any, any> {
   componentWillMount() {
     this.calculateProfit()
   }
@@ -20,12 +25,12 @@ class Swap extends React.Component {
     const { id, pair, swap, timestamp, prices } = this.props
     const { price, amount, ticker, main, base, type } = pair
 
-    const market_price = BigNumber(prices[ticker])
+    const market_price = new BigNumber(prices[ticker])
     console.log(new Date().toISOString(), prices)
     console.log(new Date().toISOString(), ticker, prices[ticker])
     console.log(new Date().toISOString(), market_price.toString())
 
-    const _amount = BigNumber(amount).div(price) // in MAIN
+    const _amount = new BigNumber(amount).div(price) // in MAIN
 
     const totalMarket = _amount.times(market_price)
     const totalBase = _amount.times(price)
@@ -75,27 +80,27 @@ class Swap extends React.Component {
         </td>
 
         <td>
-          {BigNumber(amount).div(price).toFixed(6)} {main}
+          {new BigNumber(amount).div(price).toFixed(6)} {main}
         </td>
 
         <td>
           at price
         </td>
         <td>
-          {BigNumber(price).toFixed(6)} {base}
+          {new BigNumber(price).toFixed(6)} {base}
         </td>
 
         <td>
           total
         </td>
         <td>
-          {BigNumber(amount).toFixed(6)} {base}
+          {new BigNumber(amount).toFixed(6)} {base}
         </td>
 
         <td>
-          {BigNumber(btc_profit).toFixed(6)} {base}
+          {new BigNumber(btc_profit).toFixed(6)} {base}
           {' = '}
-          {BigNumber(usd_profit).toFixed(6)} $
+          {new BigNumber(usd_profit).toFixed(6)} $
         </td>
 
         <td>
@@ -115,7 +120,7 @@ class Swap extends React.Component {
   }
 }
 
-class History extends React.Component {
+class History extends React.Component<any, any> {
 
   state = {
     filter: '',
@@ -158,7 +163,7 @@ class History extends React.Component {
           swaps: swaps.reverse(),
           prices,
         })
-
+        //@ts-ignore
         window.swaps = swaps.reverse()
       },
       (error) => {
@@ -177,7 +182,7 @@ class History extends React.Component {
   }
 
   render() {
-
+    //@ts-ignore
     const { error, isLoaded, swaps, prices } = this.state;
 
     if (error) {

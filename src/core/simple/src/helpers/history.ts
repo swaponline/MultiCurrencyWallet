@@ -7,7 +7,7 @@ const checkHistoryInit = (_app) => {
   if (!_app) throw new Error(`history not initialized: call history.init(app)`)
 }
 
-const init = (_app) => {
+export const init = (_app) => {
   SwapApp.required(_app)
 
   app = _app

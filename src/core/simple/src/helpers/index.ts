@@ -8,17 +8,11 @@ import * as history from './history'
 import * as filter from './filter'
 
 export default {
-  room,
-
-  orders,
-
-  swap,
-
-  on,
-
-  history,
-
-  filter,
-
   checkService,
+  on,
+  orders,
+  room,
+  swap,
+  history,
+  filter,
 }

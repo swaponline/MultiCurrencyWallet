@@ -1,4 +1,4 @@
-import { app, wallet } from '../../swapApp'
+import { app } from '../../swapApp'
 
 import { findOrder, orderView } from '../../helpers'
 
@@ -176,7 +176,7 @@ const acceptRequest = (req, res) => {
   })
 }
 
-export default {
+export {
   filterOrders,
   listOrders,
   listAllOrders,

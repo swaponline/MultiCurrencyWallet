@@ -14,4 +14,4 @@ import helpers from './helpers'
 import config from './config'
 
 
-export default { setup, helpers, config, constants }
+export { setup, helpers, config, constants }

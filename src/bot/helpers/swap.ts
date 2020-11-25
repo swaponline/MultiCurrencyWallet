@@ -6,6 +6,6 @@ const removeSwap = (swap) => {
   return swap.update({})
 }
 
-export default {
+export {
   removeSwap
 }

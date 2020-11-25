@@ -8,8 +8,9 @@ import { app, server, listener } from '../app'
 let should = chai.should()
 
 chai.use(chaiHttp)
-
+//@ts-ignore
 before(async () => { await app.ready })
+//@ts-ignore
 after(async () => { await listener.close() })
 
 describe('Wallet', () => {
@@ -22,7 +23,7 @@ describe('Wallet', () => {
 
       return chai.request(server)
         .get('/me/balance')
-        .then((err, res) => {
+        .then((res) => {
 
         // .end((err, res) => {
           res.should.have.status(200)

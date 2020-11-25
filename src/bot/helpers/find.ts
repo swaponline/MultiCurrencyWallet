@@ -41,7 +41,7 @@ const findSwap = (app) => async (req, res) => {
   return swap
 }
 
-export default {
+export {
   decodeFlow,
   findSwap,
   findOrder,

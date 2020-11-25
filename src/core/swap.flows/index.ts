@@ -24,7 +24,6 @@ import ETH2NEXT from './ETH2NEXT'
 import NEXT2ETHTOKEN from './NEXT2ETHTOKEN'
 import ETHTOKEN2NEXT from './ETHTOKEN2NEXT'
 
-
 export {
   ETH2BTC,
   BTC2ETH,
@@ -51,6 +50,4 @@ export {
 
   NEXT2ETHTOKEN,
   ETHTOKEN2NEXT,
-
-
 }

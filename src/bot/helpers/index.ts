@@ -16,7 +16,7 @@ import {
   removeSwap
 } from './swap'
 
-export default {
+export {
   findOrder,
   findSwap,
   orderToString,

@@ -1,14 +1,18 @@
-import { helpers: { history }} from 'simple.swap.core'
+import crypto from 'crypto'
 
-import { app } from '../../swapApp'
+import { helpers } from 'simple.swap.core'
+
+import app from '../../swapApp'
 import { findSwap, swapView, decodeFlow, removeSwap } from '../../helpers'
 import Pair from '../../microbot/Pair.js'
 
-import flows from 'swap.flows'
+import * as flows from 'swap.flows'
 import { default as Swap } from 'swap.swap'
-const Orders = app.services.orders
 
-import crypto from 'crypto'
+//const Orders = app.services.orders
+
+const history = helpers.history
+
 const genSecret = () => crypto.randomBytes(32).toString('hex')
 
 history.init(app)
@@ -237,7 +241,7 @@ const getFinished = ({ query: { parsed, withFees }}, res) => {
   return res.json(pairs)
 }
 
-export default {
+export {
   getSwap,
   getState,
   goSwap,

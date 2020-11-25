@@ -5,7 +5,7 @@ const {
   swap: { read, get },
   history,
 } = swap.helpers
-
+//@ts-ignore
 const { app } = swap.setup()
 
 history.init(app)

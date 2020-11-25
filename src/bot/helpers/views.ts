@@ -74,7 +74,7 @@ const orderView = (order) => {
   }
 }
 
-export default {
+export {
   orderToString,
   swapToString,
   swapView,

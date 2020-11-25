@@ -76,7 +76,7 @@ const {
   history: { getAllInProgress, removeInProgress, saveFinished },
   filter: { hash2id, secret2id },
 } = swap.helpers
-
+//@ts-ignore
 const { app, room, orders } = swap.setup()
 
 console.clear()
@@ -94,7 +94,7 @@ const _ = (async () => {
   const keyType = Object.keys(options)[0]
   const key = options[keyType]
   let swapID = null
-  let refundResult = false
+  let refundResult = null
 
   switch (keyType) {
 
@@ -178,3 +178,7 @@ const _ = (async () => {
   process.exit(0)
 
 })()
+
+console.log(swap.helpers)
+console.log(swap.helpers.history)
+console.log(swap.helpers.history.init)

@@ -4,8 +4,12 @@ const wallet = ''
 
 class KrakenApi {
 
-  constructor() {
+  key: string
+  core: KrakenClient
+  pair: string
+  isMainnet: boolean
 
+  constructor() {
     const secret = process.env.KRAKEN_API_SECRET;
     this.key = process.env.KRAKEN_API_KEY;
     this.core = new KrakenClient(this.key, secret, {dev: true});
@@ -24,13 +28,13 @@ class KrakenApi {
   }
 
   deposit() {
-
+    //@ts-ignore
     wallet.withdraw(amount,)
 
   }
 
   run(amount, type) {
-
+    //@ts-ignore
     this.deposit(type, '', amount);
   }
 
@@ -58,6 +62,7 @@ class KrakenApi {
   returnMoney(amount) {
 
     let result = this.core.api('Withdraw', {
+      //@ts-ignore
       'key': type, //sell & buy
       'amount': amount,
       'asset': 'ETH' //@ToDo переделать XBT

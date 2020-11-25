@@ -7,7 +7,7 @@ const {
   orders: { request, subscribe },
   swap: { onStep, get, start },
 } = swap.helpers
-
+//@ts-ignore
 const { app, auth, room, wallet, orders } = swap.setup()
 
 const swapID = process.argv[2]

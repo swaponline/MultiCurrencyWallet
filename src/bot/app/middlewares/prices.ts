@@ -13,7 +13,7 @@ const COIN_API = `https://api.coinmarketcap.com/v2`
 const YOBIT_API = `https://yobit.net/api/3`
 
 const btcPrice = () => getNoxonPrice('BTC', 'USD')
-const usdPrice = () => btcPrice().then(usds => BigNumber(1).div(usds))
+const usdPrice = () => btcPrice().then(usds => new BigNumber(1).div(usds))
 
 export const getNoxonPrice = (symbol, base = 'BTC') => {
   return request({
@@ -29,13 +29,13 @@ export const getNoxonPrice = (symbol, base = 'BTC') => {
         console.error(error)
       }
     })
-    .then((json) => {
+    .then((json: any) => {
       if (json && json.data) {
-        let btcData = false
+        let btcData: any = false
         
         if (base.toUpperCase() === `BTC`){
           btcData = json.data.filter(item => item && item.symbol && item.symbol.toUpperCase() === `BTC`)
-          if(btcData.length) {
+          if (btcData.length) {
             btcData = btcData[0]
           }
         }
@@ -61,7 +61,7 @@ export const getNoxonPrice = (symbol, base = 'BTC') => {
         console.log("Cant get price for ", symbol, base)
       }
     })
-    .then(num => BigNumber(num))
+    .then(num => new BigNumber(num))
     .catch((error) => {
       console.error(`Cannot get ${symbol} price (from noxon)`)
       console.error(error)
@@ -73,7 +73,7 @@ const getYobitPrice = (symbol) =>
     .then(res => JSON.parse(res))
     .then(json => json[symbol.toLowerCase()].last
     )
-    .then(num => BigNumber(num))
+    .then(num => new BigNumber(num))
     .catch(error => {
       console.error(`Cannot get (getYobitPrice) ${symbol} price: ${error}`)
       return null
@@ -86,14 +86,14 @@ export const getPrice = (symbol, base = 'BTC') =>
   })
     .then(res => JSON.parse(res))
     .then(json => json.data.quotes[base].price)
-    .then(num => BigNumber(num))
+    .then(num => new BigNumber(num))
     .catch(error => {
       console.error(`Cannot get (getPrice) ${symbol} price: ${error}`)
       return null
     })
 
 
-export const getPriceByPair = async (pair, type) => {
+export const getPriceByPair = async (pair, type?) => {
   if (type) {
     switch (type) {
       case 'token':
@@ -102,15 +102,15 @@ export const getPriceByPair = async (pair, type) => {
 
         const token_price = await getPrice(BTC_SYMBOL, pair_main)
 
-        return BigNumber(1).div(token_price)
+        return new BigNumber(1).div(token_price)
     }
   }
 
   switch (pair) {
     case 'BTC-WBTC':
-      return BigNumber('1')
+      return new BigNumber('1')
     case 'WBTC-BTC':
-      return BigNumber('1')
+      return new BigNumber('1')
     case 'BTC-USDT':
       return btcPrice()
 
@@ -146,15 +146,15 @@ export const getPriceByPair = async (pair, type) => {
       return usdPrice().then(price => price.multipliedBy('2'))
     case 'SNM-BTC':
       console.log(await getNoxonPrice('SNM'))
-      return BigNumber( await getPrice(SNM_SYMBOL) ).multipliedBy(0.7)
+      return new BigNumber( await getPrice(SNM_SYMBOL) ).multipliedBy(0.7)
     case 'JACK-BTC':
       return usdPrice().then(price => price.multipliedBy('0.02'))
 
     case 'SWAP-USDT':
-      return BigNumber('5')
+      return new BigNumber('5')
 
     case 'NOXON-USDT':
-      return BigNumber('42.3256')
+      return new BigNumber('42.3256')
 
     case 'NOXON-BTC':
       return getPrice(ETH_SYMBOL)
@@ -174,13 +174,13 @@ export const syncPrices = async () => {
     'ETH-BTC': await getPrice(ETH_SYMBOL),
     'JOT-BTC': await getPrice(JOT_SYMBOL),
     'USD-BTC': await usdPrice(),
-    'WBTC-BTC': BigNumber('1'),
-    'BTC-WBTC': BigNumber('1'),
+    'WBTC-BTC': new BigNumber('1'),
+    'BTC-WBTC': new BigNumber('1'),
     'SWAP-BTC': await usdPrice().then(price => price.multipliedBy('5')),
     'USDT-BTC': await usdPrice().then(price => price.multipliedBy('1')),
     'SNM-BTC': await getPrice(SNM_SYMBOL),
-    'SWAP-USDT': await Promise.resolve(BigNumber('5')),
-    'NOXON-USDT': await Promise.resolve(BigNumber('42.3256')),
+    'SWAP-USDT': await Promise.resolve(new BigNumber('5')),
+    'NOXON-USDT': await Promise.resolve(new BigNumber('42.3256')),
     'NOXON-BTC': await getPrice(ETH_SYMBOL),
     'BTRM-BTC': await getYobitPrice('BTRM_BTC'),
     'XSAT-BTC': await usdPrice().then(price => price.multipliedBy('0.13')),

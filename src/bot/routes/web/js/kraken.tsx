@@ -1,4 +1,6 @@
-class Kraken extends React.Component {
+import React from 'react'
+
+export default class Kraken extends React.Component<any, any> {
 
   state = {
     kraken_items: []
@@ -37,8 +39,8 @@ class Kraken extends React.Component {
   }
 
   render() {
-
-    const {error, isLoaded, kraken_items} = this.state;
+    //@ts-ignore
+    const {error, isLoaded, kraken_items, type} = this.state;
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
@@ -55,10 +57,10 @@ class Kraken extends React.Component {
           <div  className="row d-none">
             <div className="col-2">
               <div className="btn-group btn-group-toggle" data-toggle="buttons">
-                <label className={`btn btn-secondary  ${(this.state.type === 'sell' ? 'active' : '')}`}>
+                <label className={`btn btn-secondary  ${(type === 'sell' ? 'active' : '')}`}>
                   <input type="radio" name="type" id="option1"  onChange={this.onTypeChanged.bind(this)} autoComplete="off" value="sell"   /> Sell
                 </label>
-                <label  className={`btn btn-secondary  ${(this.state.type === 'buy' ? 'active' : '')}`}>
+                <label  className={`btn btn-secondary  ${(type === 'buy' ? 'active' : '')}`}>
                   <input type="radio" value="buy"  name="type" id="option2"  onChange={this.onTypeChanged.bind(this)} autoComplete="off" /> Buy
                 </label>
               </div>
@@ -68,7 +70,7 @@ class Kraken extends React.Component {
 
                 <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                         />
-                  <small id="emailHelp" className="form-text text-muted">Amount of ETH to {this.state.type}.
+                  <small id="emailHelp" className="form-text text-muted">Amount of ETH to {type}.
                   </small>
               </div>
             </div>
@@ -76,7 +78,7 @@ class Kraken extends React.Component {
               <div className="form-group">
                 <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                         />
-                <small id="emailHelp" className="form-text text-muted">{this.state.type} at a fixed price per ETH.
+                <small id="emailHelp" className="form-text text-muted">{type} at a fixed price per ETH.
                 </small>
               </div>
 
