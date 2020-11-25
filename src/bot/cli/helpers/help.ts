@@ -49,4 +49,4 @@ const FULL_HELP = `
     ${JSON.stringify(methods, null, 4)}
 `
 
-export default { HELP, FULL_HELP }
+export { HELP, FULL_HELP }

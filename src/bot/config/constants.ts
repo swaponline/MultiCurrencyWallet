@@ -9,7 +9,7 @@ const TOKEN_DECIMALS = require(`./${network}/TOKEN_DECIMALS`)
 const PAIR_TYPES = require(`./${network}/PAIR_TYPES`)
 
 
-export default {
+export {
   TRADE_TICKERS,
   TRADE_ORDER_MINAMOUNTS,
   TRADE_LIMITS,

@@ -77,7 +77,7 @@ const runInput = async (input) => {
   cycle()
 }
 
-const cycle = async (input) => {
+const cycle = async (input?) => {
   if (input) {
     await runInput(input)
   } else {

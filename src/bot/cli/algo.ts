@@ -13,7 +13,7 @@ const getYobitPrice = (symbol, base = 'BTC') => {
   return request(`${YOBIT_API}/ticker/${ticker}`)
     .then(res => JSON.parse(res))
     .then(json => json[ticker].last)
-    .then(num => BigNumber(num))
+    .then(num => new BigNumber(num))
     .catch(error => { throw new Error(`Cannot get ${symbol} price: ${error}`) })
 }
 
@@ -21,7 +21,7 @@ const getPrice = (symbol, base = 'BTC') =>
   request(`${COIN_API}/ticker/${symbol}/?convert=${base}`)
     .then(res => JSON.parse(res))
     .then(json => json.data.quotes[base].price)
-    .then(num => BigNumber(num))
+    .then(num => new BigNumber(num))
     .catch(error => { throw new Error(`Cannot get ${symbol} price: ${error}`) })
 
 import {
@@ -33,6 +33,9 @@ import {
 } from './trade'
 
 class AlgoTrade {
+  fees: any
+  prices: any
+
   constructor(fees) {
     this.fees = fees
 
@@ -41,7 +44,7 @@ class AlgoTrade {
 
   async syncPrices() {
     const btcPrice = () => getPrice(BTC_SYMBOL, 'USD')
-    const usdPrice = () => btcPrice().then(usds => BigNumber(1).div(usds))
+    const usdPrice = () => btcPrice().then(usds => new BigNumber(1).div(usds))
 
     const prices = {
       'ETH-BTC':    await getPrice(ETH_SYMBOL),
@@ -76,11 +79,11 @@ class AlgoTrade {
     const minPrice = this.getCurrentPrice({ ticker })
 
     console.log(`Has a price of ${price}`)
-    const TEN = BigNumber(10)
+    const TEN = new BigNumber(10)
     // 2 gwei * 100000 gasLimit * 2 two tx = 4e5 * 1e-9 = 4e-4
-    const mainFees = BigNumber(4).times( TEN.pow(-4) )
+    const mainFees = new BigNumber(4).times( TEN.pow(-4) )
     // 0.15 mBTC = 1.5e-1 * 1e-3 = 15e-5
-    const baseFees = BigNumber(15).times( TEN.pow(-5) )
+    const baseFees = new BigNumber(15).times( TEN.pow(-5) )
     // eth * (BTC/ETH) + btc
     const fees = mainFees.times(price).plus(baseFees)
 
@@ -91,8 +94,8 @@ class AlgoTrade {
     console.log(`I will buy ${ticker} below ${max_ask_price} or sell above ${min_bid_price}`)
 
     return ( type == PAIR_BID )
-      ? BigNumber(price).isGreaterThan(min_bid_price)
-      : BigNumber(price).isLessThan(max_ask_price)
+      ? new BigNumber(price).isGreaterThan(min_bid_price)
+      : new BigNumber(price).isLessThan(max_ask_price)
   }
 
   fillAllOrders({ total }) {
@@ -110,14 +113,14 @@ class AlgoTrade {
     if (!TRADE_TICKERS.includes(ticker.toUpperCase()))
       throw new Error(`FillOrdersError: Wrong ticker: ${ticker}`)
 
-    const _price = BigNumber(price)
-    if ( !_price || isNaN(_price) || _price === 0 )
+    const _price = new BigNumber(price)
+    if (_price.isZero())
       throw new Error(`FillOrdersError: Bad price: ${price}`)
 
     // console.log('price', price_num)
 
-    const total_amount = BigNumber(total)
-    if ( !total_amount || isNaN(total_amount) || total_amount === 0 )
+    const total_amount = new BigNumber(total)
+    if (total_amount.isZero())
       throw new Error(`FillOrdersError: Bad total amount: ${total}`)
 
       // total_amount in BASE (BTC)
@@ -129,11 +132,11 @@ class AlgoTrade {
     // baseFees is BTC, mainFees is ETH
     // so fees in BTC are
 
-    const TEN = BigNumber(10)
+    const TEN = new BigNumber(10)
     // 2 gwei * 100000 gasLimit * 2 two tx = 4e5 * 1e-9 = 4e-4
-    const mainFees = BigNumber(4).times( TEN.pow(-4) )
+    const mainFees = new BigNumber(4).times( TEN.pow(-4) )
     // 0.15 mBTC = 1.5e-1 * 1e-3 = 15e-5
-    const baseFees = BigNumber(15).times( TEN.pow(-5) )
+    const baseFees = new BigNumber(15).times( TEN.pow(-5) )
     // eth * (BTC/ETH) + btc
     const fees = mainFees.times(_price).plus(baseFees)
 

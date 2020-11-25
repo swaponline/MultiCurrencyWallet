@@ -3,6 +3,11 @@ import ws from 'ws'
 import { getOrderId } from './helpers/getOrderId'
 
 class SocketBot {
+  isAutoAccepting: boolean
+  isAutoSearching: boolean
+  ws: ws
+  worker: any
+
   constructor(worker, url) {
     if (!worker) throw new Error (`Cant init without Worker`)
 

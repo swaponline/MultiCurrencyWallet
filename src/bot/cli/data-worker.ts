@@ -5,6 +5,9 @@ import { print } from './helpers/text'
 
 class DataWorker {
 
+  provider: any
+  orders: any
+
   constructor (orderProvider) {
     this.provider = orderProvider
     this.orders = []

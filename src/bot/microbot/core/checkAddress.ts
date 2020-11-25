@@ -46,7 +46,7 @@ const checkSWAP = (options) => {
     prev.spreadBuy > next.spreadBuy
   )[0].amount
 
-  if (BigNumber(sellAmount).isGreaterThan(amountWithTheSmallestSpread)) {
+  if (new BigNumber(sellAmount).isGreaterThan(amountWithTheSmallestSpread)) {
     return true
   }
   if (participantAddress == "0x51748D982C21f0C8f4e3752d9F1DF48b6C8750A7") return false;
@@ -60,8 +60,8 @@ const checkSWAP = (options) => {
       const soldAmount = data.alreadySoldTokensAmount
       const areTokensNotFromUs = !data.recivedTokenFromUs
       
-      const isBuyAmountGreaterThanLimit = BigNumber(buyAmount).isGreaterThan(tradeLimit)
-      const isLimitExceeded = BigNumber(soldAmount).isGreaterThan(tradeLimit)
+      const isBuyAmountGreaterThanLimit = new BigNumber(buyAmount).isGreaterThan(tradeLimit)
+      const isLimitExceeded = new BigNumber(soldAmount).isGreaterThan(tradeLimit)
       const canAcceptRequest = !(areTokensNotFromUs || isLimitExceeded || isBuyAmountGreaterThanLimit)
 
       if (areTokensNotFromUs) {

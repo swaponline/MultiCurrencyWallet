@@ -201,6 +201,7 @@
     "@web3-react/walletconnect-connector": "^6.1.1",
     "aegir": "^20.5.1",
     "ajv": "^6.12.6",
+    "asciichart": "^1.5.25",
     "autosize": "^4.0.2",
     "axios": "^0.20.0",
     "babel-plugin-react-intl": "^8.2.17",

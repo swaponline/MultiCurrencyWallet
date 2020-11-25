@@ -13,7 +13,7 @@ const isAsk = (type) => (type === PAIR_TYPES.ASK)
 const isBid = (type) => (type === PAIR_TYPES.BID)
 
 const filteredDecimals = ({ amount, currency }) =>
-  BigNumber(amount).decimalPlaces(TOKEN_DECIMALS[currency] || TOKEN_DECIMALS.default).toString()
+  new BigNumber(amount).decimalPlaces(TOKEN_DECIMALS[currency] || TOKEN_DECIMALS.default).toString()
 
 const parseTicker = (order) => {
   const { buyCurrency: buy, sellCurrency: sell } = order
@@ -32,7 +32,7 @@ const parsePair = (str) => {
   if (typeof str !== 'string') throw new Error(`ParseTickerError: Not a string: ${str}`)
 
   const tokens = str.split('-')
-  if (!tokens.length == 2) throw new Error(`ParseTickerError: Wrong tokens: ${str}`)
+  if (tokens.length !== 2) throw new Error(`ParseTickerError: Wrong tokens: ${str}`)
 
   if (TRADE_TICKERS.includes(str)) { str = str } else { str = tokens.reverse().join('-') }
 
@@ -48,12 +48,19 @@ const parsePair = (str) => {
 }
 
 export default class Pair {
+  price: BigNumber
+  amount: BigNumber
+  ticker: string
+  main: string
+  base: string
+  type: any
+
   constructor ({ price, amount, ticker, type }) {
-    this.price = BigNumber(price)
-    this.amount = BigNumber(amount)
+    this.price = new BigNumber(price)
+    this.amount = new BigNumber(amount)
 
     const { MAIN, BASE } = parsePair(ticker)
-    if (!MAIN || !BASE) throw new Error(`CreateOrderError: No currency: ${main}-${base}`)
+    if (!MAIN || !BASE) throw new Error(`CreateOrderError: No currency: ${MAIN}-${BASE}`)
 
     this.ticker = ticker
     this.main = MAIN
@@ -91,7 +98,7 @@ export default class Pair {
 
     console.log(new Date().toISOString(), `create order ${this}`)
     const { MAIN, BASE } = parsePair(ticker)
-    if (!MAIN || !BASE) throw new Error(`CreateOrderError: No currency: ${main}-${base}`)
+    if (!MAIN || !BASE) throw new Error(`CreateOrderError: No currency: ${MAIN}-${BASE}`)
 
     if (![PAIR_ASK, PAIR_BID].includes(type)) throw new Error(`CreateOrderError: Wrong order type: ${type}`)
 
@@ -116,8 +123,8 @@ export default class Pair {
     const { ticker, type } = parseTicker(order)
 
     // ASK means sellCurrency is ETH, then sell is main
-    const main_amount = BigNumber(type == PAIR_ASK ? sellAmount : buyAmount)
-    const base_amount = BigNumber(type == PAIR_ASK ? buyAmount : sellAmount)
+    const main_amount = new BigNumber(type == PAIR_ASK ? sellAmount : buyAmount)
+    const base_amount = new BigNumber(type == PAIR_ASK ? buyAmount : sellAmount)
 
     return new Pair({
       ticker,

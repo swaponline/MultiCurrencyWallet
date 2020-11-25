@@ -7,7 +7,7 @@ let _isOutdated = true
 let _firstRun = true
 let _prices = []
 
-const fetchPrice = async (obj, type) => {
+const fetchPrice = async (obj, type?) => {
   const ticker = obj.ticker ? obj.ticker : obj
 
   try {

@@ -129,7 +129,7 @@ const convertOrder = (order) => {
   }
 }
 
-export default {
+export {
   createOrder,
   parsePair,
   parseTicker,

@@ -17,7 +17,7 @@ import { createOrder, removeMyOrders } from '../../core/orders'
 
 const debug = (...args) => console.log(new Date().toISOString(), ...args) //_debug('swap.bot')
 const n = (n) => (cb) => Array(n).fill(null).map((el, i) => cb(i, el))
-const TEN = BigNumber(10)
+const TEN = new BigNumber(10)
 
 const getCurrenciesBalance = (balances, ticker) => {
   const [ pair_main, pair_base ] = ticker.split('-')
@@ -33,8 +33,8 @@ const getCurrenciesBalance = (balances, ticker) => {
 }
 
 const getAmount = (tickerOrder) => tickerOrder.amount
-  ? BigNumber(tickerOrder.amount)
-  : BigNumber(TRADE_ORDER_MINAMOUNTS.default).times(TEN.pow(index))
+  ? new BigNumber(tickerOrder.amount)
+  : new BigNumber(TRADE_ORDER_MINAMOUNTS.default).times(TEN.pow(index))
 
 const checkCanCreateCurrentOrder = (tickerOrder, orderType) =>
   typeof(tickerOrder[orderType]) === 'undefined'
@@ -47,10 +47,10 @@ const checkHaveSpread = (tickerOrder, orderType) =>
     : false
 
 const getSpread = (tickerOrder, orderType) => orderType === 'buy'
-  ? BigNumber(100)
+  ? new BigNumber(100)
     .minus(tickerOrder.spreadBuy)
     .dividedBy(100)
-  : BigNumber(100)
+  : new BigNumber(100)
     .plus(tickerOrder.spreadSell)
     .dividedBy(100)
 
@@ -59,8 +59,8 @@ const createOrders = (orderType, balance, ticker, tickerOrders, basePrice) => {
   const type = orderType === 'buy' ? PAIR_TYPES.BID : PAIR_TYPES.ASK
   const canCreateOrders = TRADE_CONFIG[ticker][orderType] && balance > 0
   const checkIsEnoughBalance = (price, amount) => orderType === 'buy'
-    ? BigNumber(balance).isLessThan(amount)
-    : BigNumber(balance).isLessThan(BigNumber(amount).dividedBy(price))
+    ? new BigNumber(balance).isLessThan(amount)
+    : new BigNumber(balance).isLessThan(new BigNumber(amount).dividedBy(price))
 
   debug(ticker, `create ${orderType} orders`, canCreateOrders)
 
@@ -91,7 +91,7 @@ const createOrders = (orderType, balance, ticker, tickerOrders, basePrice) => {
 
 const createAllOrders = async (balances, ticker) => {
   const price = TRADE_CONFIG[ticker].sellPrice
-    ? BigNumber(TRADE_CONFIG[ticker].sellPrice)
+    ? new BigNumber(TRADE_CONFIG[ticker].sellPrice)
     : await fetchPrice(ticker,  TRADE_CONFIG[ticker].type)
 
   if (!price) {

@@ -32,7 +32,7 @@ export default (app, wallet, orders) => async ({ orderId, participant }) => {
     sellAmount: order.sellAmount,
   })
 
-  const isEnoughBalance = BigNumber(balance).isGreaterThan(order.sellAmount)
+  const isEnoughBalance = new BigNumber(balance).isGreaterThan(order.sellAmount)
   const isAccepted = isEnoughBalance && isParticipantAddressOkay
 
   debug('handleRequest:', 'bot balance', balance, 'order amount', order.sellAmount.toString())

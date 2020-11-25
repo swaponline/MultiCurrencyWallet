@@ -10,6 +10,10 @@ import { parse } from './helpers/text'
 const BASE_URL = 'http://localhost:1337'
 
 class RESTInterface {
+  algo: AlgoTrade
+  data: DataWorker
+  url: string
+  
   constructor(url) {
     this.algo = new AlgoTrade()
     this.data = new DataWorker(this)

@@ -13,7 +13,7 @@ const parse = (str) => {
   }
 }
 
-export default {
+export {
   parse,
   print,
 }

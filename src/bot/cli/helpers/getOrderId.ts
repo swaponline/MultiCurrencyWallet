@@ -19,4 +19,4 @@ const getOrderId = (orders, id) => {
   return id
 }
 
-export default { getOrderId }
+export { getOrderId }
