@@ -2,7 +2,7 @@
 import debug from 'debug'
 import EventEmitter from 'events'
 import pipe from 'it-pipe'
-
+//@ts-ignore
 const emitter = new EventEmitter()
 
 function handler ({ connection, stream }) {

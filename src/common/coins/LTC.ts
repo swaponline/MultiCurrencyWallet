@@ -75,11 +75,13 @@ const libAdapter = {
 
   accountFromMnemonic(mnemonic, netName) {
     const network = LTC[netName]
+    //@ts-ignore
     const settings = network.settings
 
     // todo: move?
 
     const seed = bip39.mnemonicToSeedSync(mnemonic)
+    //@ts-ignore
     const root = bip32.fromSeed(seed, network.bip32settings)
     const derivePath = bip44.createDerivePath(network)
     const child = root.derivePath(derivePath)

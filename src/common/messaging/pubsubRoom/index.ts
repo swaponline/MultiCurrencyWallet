@@ -16,7 +16,7 @@ const DEFAULT_OPTIONS = {
 }
 
 let index = 0
-
+//@ts-ignore
 export default class PubSubRoom extends EventEmitter {
   _libp2p: any
   _topic: any
@@ -102,12 +102,14 @@ export default class PubSubRoom extends EventEmitter {
 
         if (!conn) {
           conn = new Connection(toPeer, this._libp2p, this)
+          //@ts-ignore
           conn.on('error', (err) => this.emit('error', err))
           this._connections[peer] = conn
 
           conn.once('disconnect', () => {
             delete this._connections[peer]
             this._peers = this._peers.filter((p) => p.toString() !== peer.toString())
+            //@ts-ignore
             this.emit('peer left', peer)
           })
         }
@@ -138,14 +140,16 @@ export default class PubSubRoom extends EventEmitter {
 
   _emitChanges (newPeers) {
     const differences = diff(this._peers, newPeers)
-
+    //@ts-ignore
     differences.added.forEach((peer) => this.emit('peer joined', peer))
+    //@ts-ignore
     differences.removed.forEach((peer) => this.emit('peer left', peer))
 
     return differences.added.length > 0 || differences.removed.length > 0
   }
 
   _onMessage (message) {
+    //@ts-ignore
     this.emit('message', message)
   }
 
@@ -153,6 +157,7 @@ export default class PubSubRoom extends EventEmitter {
     if (message.to.id === this._libp2p.peerId._idB58String) {
       const m = Object.assign({}, message)
       delete m.to
+      //@ts-ignore
       this.emit('message', m)
     }
   }

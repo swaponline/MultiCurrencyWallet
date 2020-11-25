@@ -68,6 +68,7 @@ const libAdapter = {
 
   accountFromMnemonic(mnemonic, netName) {
     const network = NEXT[netName]
+    //@ts-ignore
     const settings = network.settings
 
     const seed = bip39.mnemonicToSeedSync(mnemonic)
@@ -116,6 +117,7 @@ const libAdapter = {
 
     const network = NEXT[netName]
     const addressStr = address.toString()
+    //@ts-ignore
     const unspent = await connector.fetchUnspents(network.type, addressStr)
 
     const tx = new bitcore.Transaction()

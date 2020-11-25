@@ -9,6 +9,12 @@ const checkOrderID = ({ id, orderId }) => {
 }
 
 class SocketBot {
+  ws: any
+  rest: any
+  isAutoAccepting: boolean
+  isAutoSearching: boolean
+
+
   constructor(rest, url, auto) {
     if (!rest) throw new Error (`Cant init without Worker`)
 
@@ -63,7 +69,7 @@ class SocketBot {
 
     const { id } = checkOrderID(order)
 
-    if (!order.buyAmount) throw new Error(`Not enought order info`, order)
+    if (!order.buyAmount) throw new Error(`Not enought order info ${JSON.stringify(order)}`, )
 
     if (order.isRequested) {
       return this.fire(order)

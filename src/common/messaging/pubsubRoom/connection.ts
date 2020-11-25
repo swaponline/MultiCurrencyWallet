@@ -10,6 +10,13 @@ import debug from 'debug'
 
 
 export default class Connection extends EventEmitter {
+
+  _remoteId: any
+  _libp2p: any
+  _room: any
+  _connection: any
+  _connecting: any
+
   constructor (remoteId, libp2p, room) {
     super()
     this._remoteId = remoteId
@@ -19,7 +26,7 @@ export default class Connection extends EventEmitter {
     this._connecting = false
   }
 
-  push (message) {
+  push(message) {
     if (this._connection) {
       this._connection.push(encoding(message))
 
@@ -35,13 +42,13 @@ export default class Connection extends EventEmitter {
     }
   }
 
-  stop () {
+  stop() {
     if (this._connection) {
       this._connection.end()
     }
   }
 
-  async _connect () {
+  async _connect() {
     this._connecting = true
 
     if (!this._isConnectedToRemote()) {
@@ -77,7 +84,7 @@ export default class Connection extends EventEmitter {
       })
   }
 
-  _isConnectedToRemote () {
+  _isConnectedToRemote() {
     for (const peerId of this._libp2p.connections.keys()) {
       if (peerId === this._remoteId._idB58String) {
         return true
@@ -87,6 +94,11 @@ export default class Connection extends EventEmitter {
 }
 
 class FiFoMessageQueue {
+
+  _queue: any[]
+  _ended: boolean
+  _resolve: any
+
   constructor () {
     this._queue = []
   }
@@ -95,7 +107,7 @@ class FiFoMessageQueue {
     return this
   }
 
-  push (message) {
+  push(message) {
     if (this._ended) {
       throw new Error('Message queue ended')
     }
@@ -110,7 +122,7 @@ class FiFoMessageQueue {
     this._queue.push(message)
   }
 
-  end () {
+  end() {
     this._ended = true
     if (this._resolve) {
       this._resolve({
@@ -119,7 +131,7 @@ class FiFoMessageQueue {
     }
   }
 
-  next () {
+  next() {
     if (this._ended) {
       return {
         done: true

@@ -1,8 +1,9 @@
 import WebSocket from 'ws'
 import http from 'http'
-const WS_PORT = 7333
+import { util } from 'swap.app'
 
-import { app: { util } } from './swapApp'
+
+const WS_PORT = 7333
 
 const init = (app, SwapApp, router, port) => {
   const server = http.createServer(app)
@@ -46,9 +47,11 @@ const init = (app, SwapApp, router, port) => {
     try {
       to.isAlive && to.send(json(message))
     } catch ({ name, message }) {
-      if (!wss.clients.has(to) || /WebSocket is not open/g.test(message))
+      if (!wss.clients.has(to) || /WebSocket is not open/g.test(message)) {
+        //@ts-ignore
         return ws.terminate()
-
+      }
+      //@ts-ignore
       safeSend(ws, { error: { name, message }})
     }
   }
@@ -93,8 +96,10 @@ const init = (app, SwapApp, router, port) => {
 
   })
 
-  server.listen(port || WS_PORT, () => {
-    console.log(`[WS] listening on port ${server.address().port}`)
+  const portUsed = port || WS_PORT
+
+  server.listen(portUsed, () => {
+    console.log(`[WS] listening on port ${portUsed}`)
   })
 
   return wss

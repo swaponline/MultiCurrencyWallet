@@ -14,7 +14,7 @@ const createP2PNode = (options) => {
     listen,
     discoveryPeers,
     peerIdJson,
-  } = options || {}
+  } = options
 
   const defaultListen = [
     //'/ip4/0.0.0.0/tcp/4002',
@@ -48,7 +48,7 @@ const createP2PNode = (options) => {
   // Build and return our libp2p node
   return new Promise(async (resolve, reject) => {
     // Generate peerId
-    let peerId = false
+    let peerId = null
     if (peerIdJson) {
       try {
         peerId = await PeerId.createFromJSON(peerIdJson)

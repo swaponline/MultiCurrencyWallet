@@ -1,3 +1,5 @@
+//    DRAFT
+
 
 /* Use BigInt?
 // use @babel/plugin-syntax-bigint
@@ -13,8 +15,9 @@ type Balance = {
   smaller:
   derived: DerivedUnit
 }
-
 */
+
+import BigNumber from 'bignumber.js'
 
 type Amount = {
   value: BigNumber
@@ -45,11 +48,11 @@ type Coin = {
   getMinerFee(): Amount,
 }
 
-const amount = (number, unit: Unit | Coin): Amount => {
+const amount = (value: number, unit: Unit | Coin): Amount => {
   // use overload
   return {
-    value: 0, // BigNumber overload
-    unit: ...
+    value: new BigNumber(value), // BigNumber overload
+    unit: null// ...
   }
 }
 
@@ -137,21 +140,21 @@ const coins = [BTC, ETH, GRM]
 // Usage examples
 
 amount(0.1, BTC)
-amount(0.1, BTC).plus(0.1, BTC)
+//amount(0.1, BTC).plus(0.1, BTC)
 amount(0.1, BTC.unit.BTC)
-amount(0.1, BTC.unit.BTC).plus(0.1, BTC.unit.BTC)
-amount(0.1, BTC.unit.BTC).plus(0.1, BTC.unit.sat)
+//amount(0.1, BTC.unit.BTC).plus(0.1, BTC.unit.BTC)
+//amount(0.1, BTC.unit.BTC).plus(0.1, BTC.unit.sat)
 
 // Conversions
 
-amount(1, BTC).toUnit(BTC.unit.sat)
-amount(1, BTC.unit.sat).toUnit(BTC)
-amount(1, ETH.unit.wei).toUnit(ETH)
-amount(1, ETH).toUnit(ETH.unit.wei)
+//amount(1, BTC).toUnit(BTC.unit.sat)
+//amount(1, BTC.unit.sat).toUnit(BTC)
+//amount(1, ETH.unit.wei).toUnit(ETH)
+//amount(1, ETH).toUnit(ETH.unit.wei)
 
 // Piping
 
-amount(1, ETH).plus(10000, ETH.unit.wei).plus(0.2, ETH)
+//amount(1, ETH).plus(10000, ETH.unit.wei).plus(0.2, ETH)
 
 
 // Wrong usage examples
@@ -164,20 +167,20 @@ amount(0.5, BTC.unit.sat)
 amount(1.5, BTC.unit.sat)
 
 // error: different coins, different units
-amount(1, BTC).plus(1, ETH)
-amount(1, BTC.unit.BTC).plus(1, ETH.unit.ETH)
+//amount(1, BTC).plus(1, ETH)
+//amount(1, BTC.unit.BTC).plus(1, ETH.unit.ETH)
 
 // error: different coins, same units
-amount(1, ETH.unit.wei).plus(1, ETC.unit.wei)
+//amount(1, ETH.unit.wei).plus(1, ETC.unit.wei)
 
 
 // Usecase: balance view
 
-coins.forEach(coin => {
+/*coins.forEach(coin => {
   const balance = coin.getBalance()
   const output = `${coin.title} | ${balance.value.toString()} ${balance.unit}`
   console.log(output)
-})
+})*/
 
 
 // Usecase: tx (sendAmount + minerFee <= balance)
@@ -190,4 +193,4 @@ const sendAmount = Amount(0.1, BTC) // use overload?
 const minerFee = BTC.getMinerFee()
 const balance = BTC.getBalance()
 
-const isTxAvailable = sendAmount.plus(minerFee).isLessThan(balance)
+//const isTxAvailable = sendAmount.plus(minerFee).isLessThan(balance)
