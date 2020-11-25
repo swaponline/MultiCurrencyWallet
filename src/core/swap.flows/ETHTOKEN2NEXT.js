@@ -486,7 +486,7 @@ export default (tokenName) => {
       const { participant } = this.swap
 
       const swapData = {
-        ownerAddress: this.app.services.auth.accounts.eth.address,
+        ownerAddress: this.app.getMyEthAddress(),
         participantAddress: participant.eth.address
       }
 
@@ -566,7 +566,7 @@ export default (tokenName) => {
         isBalanceFetching: true,
       })
 
-      const balance = await this.ethTokenSwap.fetchBalance(this.app.services.auth.accounts.eth.address)
+      const balance = await this.ethTokenSwap.fetchBalance(this.app.getMyEthAddress())
       const isEnoughMoney = sellAmount.isLessThanOrEqualTo(balance)
 
       const stateData = {

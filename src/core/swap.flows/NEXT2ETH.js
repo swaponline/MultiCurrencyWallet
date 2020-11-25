@@ -291,7 +291,7 @@ class NEXT2ETH extends Flow {
 
         const balanceCheckError = await flow.ethSwap.checkBalance({
           ownerAddress: participant.eth.address,
-          participantAddress: this.app.services.auth.accounts.eth.address,
+          participantAddress: this.app.getMyEthAddress(),
           expectedValue: buyAmount,
           expectedHash: secretHash,
         })
@@ -307,7 +307,7 @@ class NEXT2ETH extends Flow {
           const targetWallet = await flow.ethSwap.getTargetWallet( participant.eth.address )
           const needTargetWallet = (flow.swap.destinationBuyAddress)
             ? flow.swap.destinationBuyAddress
-            : this.app.services.auth.accounts.eth.address
+            : this.app.getMyEthAddress()
 
           if (targetWallet.toLowerCase() !== needTargetWallet.toLowerCase()) {
             console.error(
