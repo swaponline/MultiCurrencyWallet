@@ -7,7 +7,6 @@ import styles from '../Swap.scss'
 
 import crypto from 'crypto'
 import SwapApp from 'swap.app'
-import Link from 'sw-valuelink'
 
 import DepositWindow from './DepositWindow/DepositWindow'
 import SwapProgress from './SwapProgress/SwapProgress'
@@ -17,13 +16,15 @@ import paddingForSwapList from 'shared/helpers/paddingForSwapList'
 
 
 @CSSModules(styles)
-export default class UTXOToEthToken extends Component {
-
+export default class UTXOToEthToken extends Component<any, any> {
+  swap = null
   _fields = null
+  confirmAddressTimer = null
+  ParticipantTimer = null
 
-  constructor({ swap, currencyData, ethData, enoughBalance, styles, depositWindow, fields }) {
-
-    super()
+  constructor(props) {
+    super(props)
+    const { swap, currencyData, ethData, enoughBalance, styles, depositWindow, fields } = props
 
     this.swap = swap
 
@@ -46,11 +47,6 @@ export default class UTXOToEthToken extends Component {
     }
 
     this._fields = fields
-
-    console.log('BtcLikeToEthToken fields', this._fields)
-    this.confirmAddressTimer = null
-    this.ParticipantTimer = null
-
   }
 
   componentWillMount() {
@@ -91,33 +87,6 @@ export default class UTXOToEthToken extends Component {
     this.setState(() => ({
       paddingContainerValue: paddingForSwapList({ step }),
     }))
-  }
-
-  changePaddingValue = () => {
-    const { flow: { step } } = this.state
-    this.setState(() => ({
-      paddingContainerValue: paddingForSwapList({ step }),
-    }))
-  }
-
-  changePaddingValue = () => {
-    const { flow } = this.state
-
-    if (flow.step <= 2) {
-      this.setState(() => ({
-        paddingContainerValue: 60 * flow.step,
-      }))
-    }
-    if (flow.step > 5 && flow.step < 7) {
-      this.setState(() => ({
-        paddingContainerValue: 180,
-      }))
-    }
-    if (flow.step > 7) {
-      this.setState(() => ({
-        paddingContainerValue: 210,
-      }))
-    }
   }
 
   handleFlowStateUpdate = (values) => {
@@ -200,10 +169,6 @@ export default class UTXOToEthToken extends Component {
       paddingContainerValue,
       isShowingScript,
     } = this.state
-
-    const linked = Link.all(this, 'destinationBuyAddress')
-
-    linked.destinationBuyAddress.check((value) => value !== '', 'Please enter ETH address for tokens')
 
     const feeControllerView = (
       <FeeControler

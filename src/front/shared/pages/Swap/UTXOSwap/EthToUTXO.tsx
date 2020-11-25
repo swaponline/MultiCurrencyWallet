@@ -15,11 +15,14 @@ import DepositWindow from './DepositWindow/DepositWindow'
 import paddingForSwapList from 'shared/helpers/paddingForSwapList'
 
 @CSSModules(styles)
-export default class EthToUTXO extends Component {
+export default class EthToUTXO extends Component<any, any> {
   _fields = null
+  swap = null
+  signTimer = null
+  confirmTimer = null
 
   constructor(props) {
-    super()
+    super(props)
     const {
       swap,
       currencyData,
@@ -46,10 +49,6 @@ export default class EthToUTXO extends Component {
       isShowingGhostScript: false,
       currencyAddress: currencyData.address,
     }
-
-    this.signTimer = null
-    this.confirmTimer = null
-
   }
 
   componentWillMount() {
@@ -74,7 +73,7 @@ export default class EthToUTXO extends Component {
       if (this.state.flow.step === 3) {
         this.confirmScriptChecked()
       } else {
-        clearInterval(this.confirmGhostTimer)
+        clearInterval(this.confirmTimer)
       }
     }, 3000)
   }
@@ -106,7 +105,7 @@ export default class EthToUTXO extends Component {
       verifyScriptFunc,
     } = this._fields
 
-    this.swap.flow[this.verifyScriptFunc]()
+    this.swap.flow[verifyScriptFunc]()
   }
 
   handleFlowStateUpdate = (values) => {

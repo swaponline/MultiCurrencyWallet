@@ -15,12 +15,22 @@ import paddingForSwapList from 'shared/helpers/paddingForSwapList'
 
 
 @CSSModules(styles)
-export default class EthTokenToUTXO extends Component {
+export default class EthTokenToUTXO extends Component<any, any> {
 
   _fields = null
+  swap = null
+  signTimer = null
+  confirmTimer = null
 
-  constructor({ swap, currencyData, ethBalance, tokenItems, fields }) {
-    super()
+  constructor(props) {
+    super(props)
+    const {
+      swap,
+      currencyData,
+      ethBalance,
+      tokenItems,
+      fields,
+    } = props
 
     this.swap = swap
 
@@ -37,10 +47,6 @@ export default class EthTokenToUTXO extends Component {
     }
 
     this._fields = fields
-
-    this.signTimer = null
-    this.confirmTimer = null
-
   }
 
   componentWillMount() {
@@ -61,7 +67,7 @@ export default class EthTokenToUTXO extends Component {
     } = this.state
 
     this.changePaddingValue()
-window.signSwap = this.signSwap
+
     this.signTimer = setInterval(() => {
       if (!this.state.flow.isMeSigned) {
         this.signSwap()

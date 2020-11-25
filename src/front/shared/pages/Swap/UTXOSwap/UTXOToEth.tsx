@@ -9,7 +9,6 @@ import styles from '../Swap.scss'
 import { isMobile } from 'react-device-detect'
 import { FormattedMessage } from 'react-intl'
 import { BigNumber } from 'bignumber.js'
-import Link from 'sw-valuelink'
 
 import SwapProgress from './SwapProgress/SwapProgress'
 import DepositWindow from './DepositWindow/DepositWindow'
@@ -19,12 +18,14 @@ import paddingForSwapList from 'shared/helpers/paddingForSwapList'
 
 
 @CSSModules(styles)
-export default class UTXOToEth extends Component {
-
+export default class UTXOToEth extends Component<any, any> {
+  swap = null
   _fields = null
+  ParticipantTimer = null
 
-  constructor({ swap, currencyData, fields }) {
-    super()
+  constructor(props) {
+    super(props)
+    const { swap, currencyData, fields } = props
 
     this.swap = swap
 
@@ -37,9 +38,6 @@ export default class UTXOToEth extends Component {
       currencyAddress: currencyData.address,
       secret: crypto.randomBytes(32).toString('hex'),
     }
-
-    this.ParticipantTimer = null
-
   }
 
   componentWillMount() {
@@ -65,7 +63,7 @@ export default class UTXOToEth extends Component {
     const { swap, flow: { isMeSigned } } = this.state
     window.removeEventListener('resize', this.updateWindowDimensions)
     this.swap.off('state update', this.handleFlowStateUpdate)
-    clearInterval(this.timer)
+    clearInterval(this.ParticipantTimer)
   }
 
   updateWindowDimensions = () => {
@@ -75,10 +73,6 @@ export default class UTXOToEth extends Component {
   submitSecret = () => {
     const { secret } = this.state
     this.swap.flow.submitSecret(secret)
-  }
-
-  tryRefund = () => {
-    this.swap.flow.tryRefund()
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -114,11 +108,6 @@ export default class UTXOToEth extends Component {
     })
 
     this.changePaddingValue()
-  }
-
-  submitSecret = () => {
-    const { secret } = this.state
-    this.swap.flow.submitSecret(secret)
   }
 
   updateBalance = () => {
