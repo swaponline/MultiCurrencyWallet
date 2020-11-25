@@ -18,6 +18,7 @@ import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import { isMobile } from 'react-device-detect'
 import QrReader from 'components/QrReader'
@@ -982,27 +983,34 @@ export default class WithdrawModal extends React.Component<any, any> {
             {
               usedAdminFee && (
                 <>
-                  <FormattedMessage
-                    id="Withdrow214"
-                    defaultMessage="Admin Fee {currency}: {adminFee}"
-                    values={{
-                      adminFee: `${fetchFee ? '...' : adminFeeSize}`,
-                      currency: `${getCurrencyKey(dataCurrency, true).toUpperCase()}`,
-                    }}
-                  />
+                  <FormattedMessage id="WithdrowModalMinerFee" defaultMessage="Miner Fee is " />
+                  { fetchFee 
+                    ? <span styleName='paleLoader'><InlineLoader /></span>
+                    : <span styleName='fee'>{123}{' '}{dataCurrency}</span>  
+                  }
                   <br />
                 </>
               )
             }
-            <FormattedMessage
-              id="Withdrow213"
-              defaultMessage="Please note: Fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction"
-              values={{
-                minAmount: <span>{isEthToken ? tokenFee : dinamicFee}</span>,
-                br: <br />,
-                data: `${getCurrencyKey(dataCurrency, true).toUpperCase()}`,
-              }}
-            />
+            {
+              usedAdminFee && (
+                <>
+                  <FormattedMessage id="WithdrowModalAdminFee" defaultMessage="Admin Fee is " />
+                  { fetchFee 
+                    ? <span styleName='paleLoader'><InlineLoader /></span>
+                    : <span styleName='fee'>{adminFeeSize}{' '}{dataCurrency}</span>  
+                  }
+                  <br />
+                </>
+              )
+            }
+            <FormattedMessage id="WithdrowModalCommonFee" defaultMessage="Please note: Fee is " />
+            { fetchFee 
+                ? <span styleName='paleLoader'><InlineLoader /></span>
+                : <span styleName='fee'>{isEthToken ? minAmount.eth : dinamicFee}{' '}{dataCurrency}</span> 
+            }
+            <br />
+            <FormattedMessage id="WithdrowModalFeePrompt" defaultMessage="Your balance must exceed this sum to perform transaction" />
           </p>
         )}
       </Fragment>
