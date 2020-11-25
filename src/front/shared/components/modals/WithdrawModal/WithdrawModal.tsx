@@ -206,7 +206,6 @@ export default class WithdrawModal extends React.Component<any, any> {
       wallet: { address },
       wallet,
       usedAdminFee,
-      adminFeeSize,
       amount,
     } = this.state
 
@@ -240,10 +239,6 @@ export default class WithdrawModal extends React.Component<any, any> {
         method,
         speed: 'fast',
         address,
-      })
-
-      this.setState({
-        fetchFee: false,
       })
     }
 
@@ -983,19 +978,13 @@ export default class WithdrawModal extends React.Component<any, any> {
             {
               usedAdminFee && (
                 <>
-                  <FormattedMessage id="WithdrowModalMinerFee" defaultMessage="Miner Fee is " />
+                  <FormattedMessage id="WithdrowModalMinerFee" defaultMessage="Miner Fee: " />
                   { fetchFee 
                     ? <span styleName='paleLoader'><InlineLoader /></span>
-                    : <span styleName='fee'>{123}{' '}{dataCurrency}</span>  
+                    : <span styleName='fee'>{123}{' '}{dataCurrency}</span>// TODO: add miner fee
                   }
                   <br />
-                </>
-              )
-            }
-            {
-              usedAdminFee && (
-                <>
-                  <FormattedMessage id="WithdrowModalAdminFee" defaultMessage="Admin Fee is " />
+                  <FormattedMessage id="WithdrowModalAdminFee" defaultMessage="Admin Fee: " />
                   { fetchFee 
                     ? <span styleName='paleLoader'><InlineLoader /></span>
                     : <span styleName='fee'>{adminFeeSize}{' '}{dataCurrency}</span>  
@@ -1004,13 +993,17 @@ export default class WithdrawModal extends React.Component<any, any> {
                 </>
               )
             }
-            <FormattedMessage id="WithdrowModalCommonFee" defaultMessage="Please note: Fee is " />
+            <FormattedMessage id="WithdrowModalCommonFee" defaultMessage="Total Fee: " />
             { fetchFee 
                 ? <span styleName='paleLoader'><InlineLoader /></span>
-                : <span styleName='fee'>{isEthToken ? minAmount.eth : dinamicFee}{' '}{dataCurrency}</span> 
+                : (
+                  <span styleName='fee'>
+                    {isEthToken 
+                      ? minAmount.eth 
+                      : new BigNumber(dinamicFee).dp(6, BigNumber.ROUND_FLOOR).toNumber()}{' '}{dataCurrency}
+                  </span>
+                ) 
             }
-            <br />
-            <FormattedMessage id="WithdrowModalFeePrompt" defaultMessage="Your balance must exceed this sum to perform transaction" />
           </p>
         )}
       </Fragment>
