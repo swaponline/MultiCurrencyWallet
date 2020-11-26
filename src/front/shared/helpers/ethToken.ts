@@ -8,15 +8,24 @@ import BigNumber from 'bignumber.js'
 const isEthToken = ({ name }) => Object.keys(config.erc20).includes(name.toLowerCase())
 const isEthOrEthToken = ({ name }) => Object.keys(config.erc20).concat('eth').includes(name.toLowerCase())
 
-//@ts-ignore
-const estimateFeeValue = async ({ method = 'send', speed } = {}) => {
+type EstimateFeeOptions = {
+  method: string
+  speed: string
+}
+
+const estimateFeeValue = async (options: EstimateFeeOptions) => {
+  /* 
+  * method -> send, swap
+  * speed -> safeLow, standard, fast, fastest
+  */
+  const { method, speed } = options
   const gasPrice = await estimateGasPrice({ speed })
   const feeValue = new BigNumber(constants.defaultFeeRates.ethToken.limit[method])
     .multipliedBy(gasPrice)
     .multipliedBy(1e-18)
     .toString()
 
-  return feeValue
+  return +feeValue
 }
 
 //@ts-ignore

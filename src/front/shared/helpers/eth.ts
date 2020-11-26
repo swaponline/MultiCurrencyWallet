@@ -3,15 +3,24 @@ import constants from './constants'
 import api from './api'
 import BigNumber from 'bignumber.js'
 
-//@ts-ignore
-const estimateFeeValue = async ({ method = 'send', speed } = {}) => {
+type EstimateFeeOptions = {
+  method: string
+  speed: string
+}
+
+const estimateFeeValue = async (options: EstimateFeeOptions) => {
+  /* 
+  * method -> send, swap
+  * speed -> safeLow, standard, fast, fastest
+  */
+  const { method, speed } = options
   const gasPrice = await estimateGasPrice({ speed })
   const feeValue = new BigNumber(constants.defaultFeeRates.eth.limit[method])
     .multipliedBy(gasPrice)
     .multipliedBy(1e-18)
     .toString()
 
-  return feeValue
+  return +feeValue
 }
 
 const estimateGasPrice = async ({ speed = 'fast' } = {}) => {

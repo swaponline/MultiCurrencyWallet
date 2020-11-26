@@ -213,7 +213,6 @@ export default class WithdrawModal extends React.Component<any, any> {
 
     if (isEthToken) {
       minAmount[currentCoin] = +this.getMinAmountForEthToken()
-      //@ts-ignore
       minAmount.eth = await helpers.eth.estimateFeeValue({
         method: 'send',
         speed: 'fast',
@@ -242,11 +241,11 @@ export default class WithdrawModal extends React.Component<any, any> {
       })
     }
 
-    const valueAdminFee = usedAdminFee ? adminFee.calc(wallet.currency, amount) : 0
+    const adminFeeSize = usedAdminFee ? adminFee.calc(wallet.currency, amount) : 0
 
     this.setState({
       fetchFee: false,
-      adminFeeSize: valueAdminFee,
+      adminFeeSize,
     })
   }
 
@@ -291,7 +290,13 @@ export default class WithdrawModal extends React.Component<any, any> {
     //@ts-ignore
     feedback.withdraw.started()
 
-    const { address: to, amount, ownTx, usedAdminFee, wallet } = this.state
+    const { 
+      address: to, 
+      amount, 
+      ownTx, 
+      adminFeeSize, 
+      wallet 
+    } = this.state
 
     const {
       data: { currency, address, invoice, onReady },
@@ -311,8 +316,6 @@ export default class WithdrawModal extends React.Component<any, any> {
       amount,
       speed: 'fast',
     }
-
-    const adminFeeSize = usedAdminFee ? adminFee.calc(wallet.currency, amount) : 0
 
     if (helpers.ethToken.isEthToken({ name: currency.toLowerCase() })) {
       sendOptions = {
@@ -602,7 +605,7 @@ export default class WithdrawModal extends React.Component<any, any> {
     }
 
     let totalFee = isEthToken ? 0 : minAmount[getCurrencyKey(currency, false).toLowerCase()]
-    let defaultMinFee = totalFee // non-changing value in an amount hint
+    const defaultMinFee = totalFee // non-changing value in an amount hint
  
     totalFee = usedAdminFee
       ? new BigNumber(totalFee).plus(adminFee.calc(currency, amount)).toNumber()
@@ -999,9 +1002,9 @@ export default class WithdrawModal extends React.Component<any, any> {
               ? <div styleName='paleLoader'><InlineLoader /></div>
               : (
                 <span styleName='fee'>{
-                  usedAdminFee
-                    ? new BigNumber(totalFee).minus(adminFeeSize).dp(6, BigNumber.ROUND_FLOOR).toNumber()
-                    : new BigNumber(totalFee).dp(6, BigNumber.ROUND_FLOOR).toNumber()
+                  isEthToken
+                    ? new BigNumber(tokenFee).dp(6, BigNumber.ROUND_FLOOR).toNumber()
+                    : new BigNumber(totalFee).minus(adminFeeSize).dp(6, BigNumber.ROUND_FLOOR).toNumber()
                   } {dataCurrency}
                 </span>
               )
@@ -1031,15 +1034,15 @@ export default class WithdrawModal extends React.Component<any, any> {
             <FormattedMessage id="WithdrowModalCommonFee" defaultMessage="Total Fee: " />
             {' '}{/* < indent */}
             {fetchFee 
-                ? <div styleName='paleLoader'><InlineLoader /></div>
-                : (
-                  <span styleName='fee'>
-                    {isEthToken 
-                      ? minAmount.eth 
-                      : new BigNumber(totalFee).dp(6, BigNumber.ROUND_FLOOR).toNumber()
-                    } {dataCurrency}
-                  </span>
-                ) 
+              ? <div styleName='paleLoader'><InlineLoader /></div>
+              : (
+                <span styleName='fee'>
+                  {isEthToken 
+                    ? new BigNumber(tokenFee).plus(adminFeeSize).dp(6, BigNumber.ROUND_FLOOR).toNumber()
+                    : new BigNumber(totalFee).dp(6, BigNumber.ROUND_FLOOR).toNumber()
+                  } {dataCurrency}
+                </span>
+              )
             }
           </div>
         )}
