@@ -574,9 +574,6 @@ export default class WithdrawModal extends React.Component<any, any> {
       invoice,
     } = currentActiveAsset
 
-    const currencyView = getCurrencyKey(currentActiveAsset.currency, true).toUpperCase()
-    const selectedValueView = getCurrencyKey(selectedValue, true).toUpperCase()
-
     let tableRows = actions.core.getWallets({}).filter(({ currency, address, balance }) => {
       // @ToDo - В будущем нужно убрать проверку только по типу монеты.
       // Старую проверку оставил, чтобы у старых пользователей не вывалились скрытые кошельки
@@ -588,7 +585,21 @@ export default class WithdrawModal extends React.Component<any, any> {
       )
     })
 
-    tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
+    const activeCriptoCurrency = getCurrencyKey(currentActiveAsset.currency, true).toUpperCase()
+    const selectedValueView = getCurrencyKey(selectedValue, true).toUpperCase()
+    const criptoCurrencyHaveInfoPrice = returnHaveInfoPrice();
+
+    function returnHaveInfoPrice() {
+      let result = true
+
+      tableRows.forEach(item => {
+        if (item.currency === activeCriptoCurrency) {
+          result = item.infoAboutCurrency && item.infoAboutCurrency.price_fiat
+        }
+      })
+
+      return result
+    }
 
     let totalFee = isEthToken ? 0 : minAmount[getCurrencyKey(currency, false).toLowerCase()]
     let defaultMinFee = totalFee // non-changing value in an amount hint
@@ -760,23 +771,30 @@ export default class WithdrawModal extends React.Component<any, any> {
         </div>
         <div styleName={`lowLevel ${isDark ? 'dark' : ''}`} style={{ marginBottom: '50px' }}>
           <div styleName="additionalСurrencies">
-            <span
-              styleName={cx('additionalСurrenciesItem', {
-                additionalСurrenciesItemActive: selectedValue.toUpperCase() === activeFiat,
-              })}
-              onClick={() => this.handleBuyCurrencySelect(activeFiat)}
-            >
-              {activeFiat}
-            </span>
-            <span styleName="delimiter"></span>
+            {criptoCurrencyHaveInfoPrice
+              ? (
+                <>
+                  <span
+                    styleName={cx('additionalСurrenciesItem', {
+                      additionalСurrenciesItemActive: selectedValue.toUpperCase() === activeFiat,
+                    })}
+                    onClick={() => this.handleBuyCurrencySelect(activeFiat)}
+                  >
+                    {activeFiat}
+                  </span>
+                  <span styleName="delimiter"></span>
+                </>
+              )
+              : null
+            }
             <span
               styleName={cx('additionalСurrenciesItem', {
                 additionalСurrenciesItemActive:
-                  selectedValueView.toUpperCase() === currencyView.toUpperCase(),
+                  selectedValueView === activeCriptoCurrency,
               })}
               onClick={() => this.handleBuyCurrencySelect(currentActiveAsset.currency)}
             >
-              {currencyView}
+              {activeCriptoCurrency}
             </span>
           </div>
           <p styleName="balance">
@@ -796,7 +814,7 @@ export default class WithdrawModal extends React.Component<any, any> {
                     selectedValue !== activeFiat
                       ? new BigNumber(fiatAmount).dp(2, BigNumber.ROUND_FLOOR)
                       : new BigNumber(amount).dp(6, BigNumber.ROUND_FLOOR),
-                  currency: selectedValue !== activeFiat ? activeFiat : currencyView.toUpperCase(),
+                  currency: selectedValue !== activeFiat ? activeFiat : activeCriptoCurrency.toUpperCase(),
                 }}
               />
             )}
@@ -829,7 +847,7 @@ export default class WithdrawModal extends React.Component<any, any> {
                     id="Withdrow170"
                     defaultMessage="Maximum amount you can send is {allowedCriptoBalance} {currency}"
                     values={{
-                      allowedCriptoBalance: `${allowedCriptoBalance}`,
+                      allowedCriptoBalance: `${new BigNumber(allowedCriptoBalance).dp(6, BigNumber.ROUND_FLOOR).toNumber()}`,
                       currency: `${getCurrencyKey(dataCurrency, true).toUpperCase()}`,
                     }}
                   />
