@@ -17,9 +17,6 @@ RUN apk add screen
 
 RUN cd root && git clone https://github.com/swaponline/MultiCurrencyWallet && cd MultiCurrencyWallet && npm i
 
-RUN apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
 EXPOSE 1337 3001 3002 22
 
 CMD    ["npm", "run", "bot"]
