@@ -5937,6 +5937,13 @@
     ]
   },
   {
+    "id": "ImportKeys_ConnectWallet",
+    "message": "Connect Wallet",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
     "id": "RequestPayment",
     "message": "Запросить",
     "files": [
@@ -8395,6 +8402,34 @@
     "message": "Connect Wallet",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+    ]
+  },
+  {
+    "id": "add_notice",
+    "message": "Add notice",
+    "files": [
+      "src/front/shared/components/Comment/Comment.tsx"
+    ]
+  },
+  {
+    "id": "CreateWallet_ConnectWalletButton",
+    "message": "Use this if you already have ethereum wallet",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
+    "id": "InfoPay_Comment",
+    "message": "Comment",
+    "files": [
+      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+    ]
+  },
+  {
+    "id": "Withdrow214",
+    "message": "Admin Fee {currency}: {adminFee}",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
   }
 ]

@@ -1114,7 +1114,7 @@ export default class Row extends Component<any, any> {
                       }
                     )}
                   </p>
-                )}
+                )}  
                 {currencyFiatBalance && showBalance && !balanceError && (
                   <>
                     <p>{currencyFiatBalance}</p>

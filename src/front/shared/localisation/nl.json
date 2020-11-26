@@ -5990,6 +5990,13 @@
     ]
   },
   {
+    "id": "ImportKeys_ConnectWallet",
+    "message": "Sluit Portemonnee aan",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
     "id": "registerSMSModalInstCopied",
     "message": "Gekopieerd",
     "files": [
@@ -8411,6 +8418,34 @@
     "message": "Sluit Wallet aan",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+    ]
+  },
+  {
+    "id": "add_notice",
+    "message": "Voeg bericht toe",
+    "files": [
+      "src/front/shared/components/Comment/Comment.tsx"
+    ]
+  },
+  {
+    "id": "CreateWallet_ConnectWalletButton",
+    "message": "Gebruik dit als je al een ethereum-portemonnee hebt",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
+    "id": "InfoPay_Comment",
+    "message": "Commentaar",
+    "files": [
+      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+    ]
+  },
+  {
+    "id": "Withdrow214",
+    "message": "Administratiekosten {currency}: {adminFee}",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
   }
 ]

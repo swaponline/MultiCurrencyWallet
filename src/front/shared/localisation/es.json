@@ -6002,6 +6002,13 @@
     ]
   },
   {
+    "id": "ImportKeys_ConnectWallet",
+    "message": "Conecte Billetera",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
     "id": "registerSMSModalInstCopied",
     "message": "Copiado",
     "files": [
@@ -8419,6 +8426,34 @@
     "message": "Conectar billetera",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+    ]
+  },
+  {
+    "id": "add_notice",
+    "message": "Agregar aviso",
+    "files": [
+      "src/front/shared/components/Comment/Comment.tsx"
+    ]
+  },
+  {
+    "id": "CreateWallet_ConnectWalletButton",
+    "message": "Use esto si ya tiene una billetera ethereum",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
+    "id": "InfoPay_Comment",
+    "message": "Comentario",
+    "files": [
+      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+    ]
+  },
+  {
+    "id": "Withdrow214",
+    "message": "Gastos de gestión {currency}: {adminFee}",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
   }
 ]

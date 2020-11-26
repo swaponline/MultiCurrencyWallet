@@ -1,7 +1,6 @@
 import constants from './constants'
 import StorageFactory from './StorageFactory'
 
-
 class SwapApp {
   // White list BTC. Dont wait confirm
   #whitelistBtc = [
@@ -24,12 +23,12 @@ class SwapApp {
    */
   constructor(options) {
     this.#options = options
-    this.network    = options.network || constants.NETWORKS.TESTNET
-    this.env        = {}
-    this.services   = {}
+    this.network = options.network || constants.NETWORKS.TESTNET
+    this.env = {}
+    this.services = {}
 
-    this.swaps      = {}
-    this.flows      = {}
+    this.swaps = {}
+    this.flows = {}
 
     this._addEnv(options.env || {})
     this._addServices(options.services || {})
@@ -44,9 +43,7 @@ class SwapApp {
 
   static onInit(cb) {
     const waitInit = () => {
-      if (SwapApp._swapAppInstance
-        && SwapApp._swapAppInstance.isInited()
-      ) {
+      if (SwapApp._swapAppInstance && SwapApp._swapAppInstance.isInited()) {
         cb()
       } else {
         setTimeout(waitInit, 100)
@@ -85,7 +82,10 @@ class SwapApp {
   }
 
   static shared() {
-    SwapApp.required(SwapApp._swapAppInstance, `Shared instance not initialized. Call SwapApp.setup(config) first.`)
+    SwapApp.required(
+      SwapApp._swapAppInstance,
+      `Shared instance not initialized. Call SwapApp.setup(config) first.`
+    )
     return SwapApp._swapAppInstance
   }
 
@@ -118,7 +118,11 @@ class SwapApp {
     }
 
     if (!Object.values(constants.SERVICES).includes(service._serviceName)) {
-      throw new Error(`SwapApp service should contain "_serviceName" property should be one of ${Object.values(constants.SERVICES)}, got "${service._serviceName}"`)
+      throw new Error(
+        `SwapApp service should contain "_serviceName" property should be one of ${Object.values(
+          constants.SERVICES
+        )}, got "${service._serviceName}"`
+      )
     }
 
     service._attachSwapApp(this)
@@ -129,9 +133,13 @@ class SwapApp {
     // add service to app by _serviceName
     services.forEach((service) => this._addService(service))
     // spy expects
-    Object.keys(this.services).forEach((serviceName) => this.services[serviceName]._waitRelationsResolve())
+    Object.keys(this.services).forEach((serviceName) =>
+      this.services[serviceName]._waitRelationsResolve()
+    )
     // init services
-    Object.keys(this.services).forEach((serviceName) => this.services[serviceName]._tryInitService())
+    Object.keys(this.services).forEach((serviceName) =>
+      this.services[serviceName]._tryInitService()
+    )
   }
 
   _addSwap(swap) {
@@ -140,7 +148,11 @@ class SwapApp {
     }
 
     if (!Object.values(constants.COINS).includes(swap._swapName.toUpperCase())) {
-      throw new Error(`SwapApp swap should contain "_swapName" property should be one of ${Object.values(constants.COINS)}, got "${swap._swapName.toUpperCase()}"`)
+      throw new Error(
+        `SwapApp swap should contain "_swapName" property should be one of ${Object.values(
+          constants.COINS
+        )}, got "${swap._swapName.toUpperCase()}"`
+      )
     }
 
     this.swaps[swap._swapName] = swap
@@ -159,10 +171,15 @@ class SwapApp {
   _addFlow(Flow) {
     const flowName = Flow.getName()
 
-    if ( !Object.values(constants.COINS).includes( Flow.getFromName() )
-      || !Object.values(constants.COINS).includes( Flow.getToName() )
+    if (
+      !Object.values(constants.COINS).includes(Flow.getFromName()) ||
+      !Object.values(constants.COINS).includes(Flow.getToName())
     ) {
-      throw new Error(`SwapApp flow "_flowName" property should contain only: ${Object.values(constants.COINS)}. Got: "${flowName.toUpperCase()}"`)
+      throw new Error(
+        `SwapApp flow "_flowName" property should contain only: ${Object.values(
+          constants.COINS
+        )}. Got: "${flowName.toUpperCase()}"`
+      )
     }
 
     this.flows[flowName] = Flow
@@ -189,22 +206,14 @@ class SwapApp {
   }
 
   getMyEthAddress() {
-    return (
-      this.env.metamask
-      && this.env.metamask.isEnabled()
-      && this.env.metamask.isConnected()
-    ) ? this.env.metamask.getAddress()
+    return this.env.metamask && this.env.metamask.isEnabled() && this.env.metamask.isConnected()
+      ? this.env.metamask.getAddress()
       : this.services.auth.accounts.eth.address
   }
 
   getParticipantEthAddress(swap) {
-    const {
-      participant,
-      participantMetamaskAddress,
-    } = swap
-    return (participantMetamaskAddress)
-      ? participantMetamaskAddress
-      : participant.eth.address
+    const { participant, participantMetamaskAddress } = swap
+    return participantMetamaskAddress ? participantMetamaskAddress : participant.eth.address
   }
 
   static is(app) {
@@ -217,6 +226,5 @@ class SwapApp {
     }
   }
 }
-
 
 export default SwapApp

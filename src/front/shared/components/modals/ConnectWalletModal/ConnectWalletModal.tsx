@@ -7,8 +7,6 @@ import actions from 'redux/actions'
 import { constants, links } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 
-import Link from 'sw-valuelink'
-
 import cssModules from 'react-css-modules'
 import styles from './ConnectWalletModal.scss'
 
@@ -18,8 +16,6 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
 import metamask from 'helpers/metamask'
-
-
 
 const defaultLanguage = defineMessages({
   title: {
@@ -44,18 +40,16 @@ const providerTitles = defineMessages({
 })
 
 @injectIntl
-@connect(({ ui: { dashboardModalsAllowed }}) => ({
-  dashboardModalsAllowed
+@connect(({ ui: { dashboardModalsAllowed } }) => ({
+  dashboardModalsAllowed,
 }))
 @cssModules(styles)
-export default class ConnectWalletModal extends React.Component {
+export default class ConnectWalletModal extends React.Component<any, any> {
   goToPage(link) {
     const {
       name,
       history,
-      intl: {
-        locale,
-      },
+      intl: { locale },
     } = this.props
     history.push(localisedUrl(locale, link))
   }
@@ -63,10 +57,7 @@ export default class ConnectWalletModal extends React.Component {
   onConnectLogic(connected) {
     const {
       name,
-      data: {
-        dontRedirect,
-        onResolve,
-      },
+      data: { dontRedirect, onResolve },
     } = this.props
 
     if (connected) {
@@ -81,15 +72,14 @@ export default class ConnectWalletModal extends React.Component {
   handleClose = () => {
     const {
       name,
-      data: {
-        dontRedirect,
-        onResolve,
-      },
+      data: { dontRedirect, onResolve },
     } = this.props
 
-    if (!localStorage.getItem(constants.localStorage.isWalletCreate)) {
-      if (!dontRedirect) {
+    if (!dontRedirect) {
+      if (!localStorage.getItem(constants.localStorage.isWalletCreate)) {
         this.goToPage(links.createWallet)
+      } else {
+        this.goToPage(links.home)
       }
     }
     if (typeof onResolve === `function`) {
@@ -102,7 +92,12 @@ export default class ConnectWalletModal extends React.Component {
     metamask.web3connect.connectTo('INJECTED').then((connected) => {
       if (!connected && metamask.web3connect.isLocked()) {
         actions.modals.open(constants.modals.AlertModal, {
-          message: <FormattedMessage id="ConnectWalletModal_WalletLocked" defaultMessage="Wallet is locked. Unlock the wallet first." />,
+          message: (
+            <FormattedMessage
+              id="ConnectWalletModal_WalletLocked"
+              defaultMessage="Wallet is locked. Unlock the wallet first."
+            />
+          )
         })
       }
       this.onConnectLogic(connected)
@@ -116,11 +111,7 @@ export default class ConnectWalletModal extends React.Component {
   }
 
   render() {
-    const {
-      intl,
-      name,
-      dashboardModalsAllowed,
-    } = this.props
+    const { intl, name, dashboardModalsAllowed } = this.props
 
     const labels = {
       title: intl.formatMessage(defaultLanguage.title),
@@ -128,15 +119,21 @@ export default class ConnectWalletModal extends React.Component {
     }
 
     return (
-      <div className={cx({
-        [styles['modal-overlay']]: true,
-        [styles['modal-overlay_dashboardView']]: dashboardModalsAllowed
-      })}>
-        <div className={cx({
-          [styles.modal]: true,
-          [styles.modal_dashboardView]: dashboardModalsAllowed
-        })}>
+      <div
+        className={cx({
+          [styles['modal-overlay']]: true,
+          [styles['modal-overlay_dashboardView']]: dashboardModalsAllowed,
+        })}
+      >
+        <div
+          className={cx({
+            [styles['modal']]: true,
+            [styles['modal_dashboardView']]: dashboardModalsAllowed,
+          })}
+        >
           <div styleName="header">
+            {/*
+            //@ts-ignore */}
             <WidthContainer styleName="headerContent">
               <div styleName="title">{labels.title}</div>
             </WidthContainer>
@@ -159,7 +156,9 @@ export default class ConnectWalletModal extends React.Component {
               </div>
             </div>
             <div styleName="button-overlay">
-              <Button styleName="button" blue onClick={this.handleClose}>{labels.cancel}</Button>
+              <Button styleName="button" blue onClick={this.handleClose}>
+                {labels.cancel}
+              </Button>
             </div>
           </div>
         </div>

@@ -6045,6 +6045,13 @@
     ]
   },
   {
+    "id": "ImportKeys_ConnectWallet",
+    "message": "Подключить кошелек",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
     "id": "RequestPayment",
     "message": "Запросить",
     "files": [
@@ -8467,6 +8474,34 @@
     "message": "Подключить кошелек",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+    ]
+  },
+  {
+    "id": "add_notice",
+    "message": "Добавить заметку",
+    "files": [
+      "src/front/shared/components/Comment/Comment.tsx"
+    ]
+  },
+  {
+    "id": "CreateWallet_ConnectWalletButton",
+    "message": "Используйте это, если у вас уже есть кошелек Ethereum",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
+    "id": "InfoPay_Comment",
+    "message": "Комментарий",
+    "files": [
+      "src/front/shared/pages/Transaction/TxInfo/index.tsx"
+    ]
+  },
+  {
+    "id": "Withdrow214",
+    "message": "Коммисия сервиса {currency}: {adminFee}",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
   }
 ]

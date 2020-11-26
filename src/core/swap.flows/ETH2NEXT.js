@@ -445,7 +445,7 @@ class ETH2NEXT extends Flow {
     const { participant } = this.swap
 
     const swapData = {
-      ownerAddress: this.app.services.auth.accounts.eth.address,
+      ownerAddress: this.app.getMyEthAddress(),
       participantAddress: participant.eth.address
     }
 
@@ -525,7 +525,7 @@ class ETH2NEXT extends Flow {
       isBalanceFetching: true,
     })
 
-    const balance = await this.ethSwap.fetchBalance(this.app.services.auth.accounts.eth.address)
+    const balance = await this.ethSwap.fetchBalance(this.app.getMyEthAddress())
     const isEnoughMoney = sellAmount.isLessThanOrEqualTo(balance)
 
     const stateData = {
