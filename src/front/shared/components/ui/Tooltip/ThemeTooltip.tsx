@@ -12,7 +12,12 @@ export default function ThemeTooltip({
   ...props
 }) {
   return (
-    <ReactTooltop type={type} {...props}>
+    
+    <ReactTooltop
+      //@ts-ignore
+      type={type}
+      {...props}
+    >
       {children}
     </ReactTooltop>
   );
