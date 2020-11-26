@@ -13,4 +13,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image src/bot
-      run: docker build src/bot --file Dockerfile --tag sobot:$(date +%s)
+      run: docker build src/bot --file src/bot/Dockerfile --tag sobot:$(date +%s)
