@@ -99,6 +99,7 @@ export default (tokenName) => {
         // 1. Signs
 
         async () => {
+          flow.swap.processMetamask()
           flow.swap.room.once('swap sign', () => {
             const { step } = flow.state
 

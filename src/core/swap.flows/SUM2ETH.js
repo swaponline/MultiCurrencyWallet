@@ -97,6 +97,7 @@ class SUM2ETH extends Flow {
       // 1. Signs
 
       () => {
+        flow.swap.processMetamask()
         flow.swap.room.once('swap sign', () => {
           flow.finishStep({
             isParticipantSigned: true,

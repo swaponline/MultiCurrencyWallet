@@ -115,6 +115,7 @@ export default (tokenName) => {
         // 1. Sign swap to start
 
         () => {
+          flow.swap.processMetamask()
           // this.sign()
         },
 

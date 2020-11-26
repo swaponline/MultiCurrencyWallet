@@ -98,6 +98,7 @@ class NEXT2ETH extends Flow {
       // 1. Signs
 
       async () => {
+        flow.swap.processMetamask()
         flow.swap.room.once('swap sign', () => {
           const { step } = flow.state
 
@@ -254,6 +255,7 @@ class NEXT2ETH extends Flow {
         })
 
         const isContractBalanceOk = await util.helpers.repeatAsyncUntilResult(async () => {
+          console.log('check balance')
           const balance = await flow.ethSwap.getBalance({
             ownerAddress: participant.eth.address,
           })
@@ -267,7 +269,7 @@ class NEXT2ETH extends Flow {
           return false
         })
 
-        
+        console.log('isContractBalanceOk', isContractBalanceOk)
         if (isContractBalanceOk) {
           const { isEthContractFunded } = flow.state
 
