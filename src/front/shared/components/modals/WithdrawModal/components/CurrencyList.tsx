@@ -90,10 +90,10 @@ export default class CurrencyList extends Component<any, any> {
               {currentBalance} {getCurrencyKey(currency, true).toUpperCase()}
             </span>
             <span styleName="usd">
-              {(currentActiveAsset.infoAboutCurrency && currentActiveAsset.infoAboutCurrency.price_fiat)
-                ? (currentBalance * currentActiveAsset.infoAboutCurrency.price_fiat).toFixed(2)
-                : (currentBalance * exCurrencyRate).toFixed(2)}{' '}
-              {activeFiat}
+              {currentActiveAsset.infoAboutCurrency && currentActiveAsset.infoAboutCurrency.price_fiat
+                ? <span>{(currentBalance * currentActiveAsset.infoAboutCurrency.price_fiat).toFixed(2)} {activeFiat}</span>
+                : null
+              }
             </span>
           </div>
           <div styleName={cx('customSelectArrow', { active: isAssetsOpen })}></div>
@@ -124,10 +124,9 @@ export default class CurrencyList extends Component<any, any> {
                     {item.balance} {getCurrencyKey(item.currency, true).toUpperCase()}
                   </span>
                   <span styleName="usd">
-                    {
-                      item.infoAboutCurrency && item.infoAboutCurrency.price_fiat
-                        ? <span>{(item.balance * item.infoAboutCurrency.price_fiat).toFixed(2)} {activeFiat}</span>
-                        : null
+                    {item.infoAboutCurrency && item.infoAboutCurrency.price_fiat
+                      ? <span>{(item.balance * item.infoAboutCurrency.price_fiat).toFixed(2)} {activeFiat}</span>
+                      : null
                     }
                   </span>
                 </div>

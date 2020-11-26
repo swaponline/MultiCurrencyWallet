@@ -589,7 +589,7 @@ export default class WithdrawModal extends React.Component<any, any> {
     const selectedValueView = getCurrencyKey(selectedValue, true).toUpperCase()
     const criptoCurrencyHaveInfoPrice = returnHaveInfoPrice();
 
-    function returnHaveInfoPrice() {
+    function returnHaveInfoPrice(): boolean {
       let result = true
 
       tableRows.forEach(item => {
@@ -798,7 +798,7 @@ export default class WithdrawModal extends React.Component<any, any> {
             </span>
           </div>
           <p styleName="balance">
-            {amount > 0 && (
+            {amount > 0 && criptoCurrencyHaveInfoPrice && (
               <FormattedMessage
                 {...labels[
                   selectedValue !== activeFiat
