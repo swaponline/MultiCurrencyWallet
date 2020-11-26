@@ -11,7 +11,7 @@ RUN apk add git
 RUN apk add --update build-base
 RUN apk add g++ 
 RUN apk add python 
-RUN apl add make 
+RUN apk add make 
 RUN apk add mc 
 RUN apk add screen
 
