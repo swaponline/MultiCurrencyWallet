@@ -257,7 +257,7 @@ class NEXT2ETH extends Flow {
         const isContractBalanceOk = await util.helpers.repeatAsyncUntilResult(async () => {
           console.log('check balance')
           const balance = await flow.ethSwap.getBalance({
-            ownerAddress: participant.eth.address,
+            ownerAddress: this.app.getParticipantEthAddress(flow.swap),
           })
 
           debug('swap.core:flow')('Checking contract balance:', balance)
@@ -288,7 +288,7 @@ class NEXT2ETH extends Flow {
         const { secretHash, secret } = flow.state
 
         const data = {
-          ownerAddress:   participant.eth.address,
+          ownerAddress:   this.app.getParticipantEthAddress(flow.swap),
           secret,
         }
 
@@ -307,7 +307,7 @@ class NEXT2ETH extends Flow {
         }
 
         if (flow.ethSwap.hasTargetWallet()) {
-          const targetWallet = await flow.ethSwap.getTargetWallet( participant.eth.address )
+          const targetWallet = await flow.ethSwap.getTargetWallet( this.app.getParticipantEthAddress(flow.swap) )
           const needTargetWallet = (flow.swap.destinationBuyAddress)
             ? flow.swap.destinationBuyAddress
             : this.app.getMyEthAddress()
@@ -690,7 +690,7 @@ class NEXT2ETH extends Flow {
     const { participant } = this.swap
 
     const data = {
-      ownerAddress: participant.eth.address,
+      ownerAddress: this.app.getParticipantEthAddress(flow.swap),
       secret: _secret,
     }
 

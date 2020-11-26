@@ -257,7 +257,7 @@ export default (tokenName) => {
 
           const isContractBalanceOk = await util.helpers.repeatAsyncUntilResult(async () => {
             const balance = await flow.ethTokenSwap.getBalance({
-              ownerAddress: participant.eth.address,
+              ownerAddress: this.app.getParticipantEthAddress(flow.swap),
             })
 
             debug('swap.core:flow')('Checking contract balance:', balance)
@@ -287,7 +287,7 @@ export default (tokenName) => {
           const { secretHash, secret } = flow.state
 
           const data = {
-            ownerAddress: participant.eth.address,
+            ownerAddress: this.app.getParticipantEthAddress(flow.swap),
             secret,
           }
 
@@ -306,7 +306,7 @@ export default (tokenName) => {
           }
 
           if (flow.ethTokenSwap.hasTargetWallet()) {
-            const targetWallet = await flow.ethTokenSwap.getTargetWallet( participant.eth.address )
+            const targetWallet = await flow.ethTokenSwap.getTargetWallet( this.app.getParticipantEthAddress(flow.swap) )
             const needTargetWallet = (flow.swap.destinationBuyAddress)
               ? flow.swap.destinationBuyAddress
               : this.app.getMyEthAddress()
@@ -694,7 +694,7 @@ export default (tokenName) => {
       const { participant } = this.swap
 
       const data = {
-        ownerAddress: participant.eth.address,
+        ownerAddress: this.app.getParticipantEthAddress(flow.swap),
         secret: _secret,
       }
 

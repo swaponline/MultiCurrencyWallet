@@ -200,7 +200,7 @@ class SUM2ETH extends Flow {
         const checkEthBalance = () => {
           timer = setTimeout(async () => {
             const balance = await flow.ethSwap.getBalance({
-              ownerAddress: participant.eth.address,
+              ownerAddress: this.app.getParticipantEthAddress(flow.swap),
             })
 
             if (balance > 0) {
@@ -236,12 +236,12 @@ class SUM2ETH extends Flow {
         const { buyAmount, participant } = flow.swap
 
         const data = {
-          ownerAddress:   participant.eth.address,
+          ownerAddress:   this.app.getParticipantEthAddress(flow.swap),
           secret:         flow.state.secret,
         }
 
         const balanceCheckResult = await flow.ethSwap.checkBalance({
-          ownerAddress: participant.eth.address,
+          ownerAddress: this.app.getParticipantEthAddress(flow.swap),
           expectedValue: buyAmount,
         })
 
