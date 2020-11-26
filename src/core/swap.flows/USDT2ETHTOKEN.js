@@ -26,7 +26,7 @@ export default (tokenName) => {
       this.usdtSwap      = this.app.swaps[constants.COINS.usdt]
 
       this.myBtcAddress = this.app.services.auth.accounts.btc.getAddress()
-      this.myEthAddress = this.app.services.auth.accounts.eth.address
+      this.myEthAddress = this.app.getMyEthAddress()
 
       this.stepNumbers = {
         'sign': 1,
@@ -254,7 +254,7 @@ export default (tokenName) => {
 
           const tokenAddressIsValid = await flow.ethTokenSwap.checkTokenIsValid({
             ownerAddress: flow.swap.participant.eth.address,
-            participantAddress: this.app.services.auth.accounts.eth.address,
+            participantAddress: this.app.getMyEthAddress(),
           })
 
           if (!tokenAddressIsValid) {

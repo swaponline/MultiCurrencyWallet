@@ -292,7 +292,7 @@ export default (tokenName) => {
 
           const balanceCheckError = await flow.ethTokenSwap.checkBalance({
             ownerAddress: participant.eth.address,
-            participantAddress: this.app.services.auth.accounts.eth.address,
+            participantAddress: this.app.getMyEthAddress(),
             expectedValue: buyAmount,
             expectedHash: secretHash,
           })
@@ -308,7 +308,7 @@ export default (tokenName) => {
             const targetWallet = await flow.ethTokenSwap.getTargetWallet( participant.eth.address )
             const needTargetWallet = (flow.swap.destinationBuyAddress)
               ? flow.swap.destinationBuyAddress
-              : this.app.services.auth.accounts.eth.address
+              : this.app.getMyEthAddress()
 
             if (targetWallet.toLowerCase() != needTargetWallet.toLowerCase()) {
               console.error(
@@ -328,7 +328,7 @@ export default (tokenName) => {
 
           const tokenAddressIsValid = await flow.ethTokenSwap.checkTokenIsValid({
             ownerAddress: participant.eth.address,
-            participantAddress: this.app.services.auth.accounts.eth.address,
+            participantAddress: this.app.getMyEthAddress(),
           })
 
           if (!tokenAddressIsValid) {

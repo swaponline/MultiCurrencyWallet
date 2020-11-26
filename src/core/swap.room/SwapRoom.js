@@ -274,7 +274,7 @@ class SwapRoom extends ServiceInterface {
     const sign = this._signMessage(data)
 
     this.connection.sendTo(peer, JSON.stringify({
-      fromAddress: this.app.services.auth.accounts.eth.address,
+      fromAddress: this.app.getMyEthAddress(),
       data,
       event,
       sign,

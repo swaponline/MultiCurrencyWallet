@@ -526,7 +526,7 @@ class ETH2GHOST extends Flow {
       isBalanceFetching: true,
     })
 
-    const balance = await this.ethSwap.fetchBalance(this.app.services.auth.accounts.eth.address)
+    const balance = await this.ethSwap.fetchBalance(this.app.getMyEthAddress())
     const isEnoughMoney = sellAmount.isLessThanOrEqualTo(balance)
 
     const stateData = {
