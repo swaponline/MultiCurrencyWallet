@@ -8280,14 +8280,14 @@
     "id": "ConnectWalletModal_Cancel",
     "message": "Annulering",
     "files": [
-      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
     ]
   },
   {
     "id": "ConnectWalletModal_Injected",
     "message": "Metamask",
     "files": [
-      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
     ]
   },
   {
@@ -8298,22 +8298,19 @@
     "id": "ConnectWalletModal_Title",
     "message": "Een externe portemonnee aansluiten",
     "files": [
-      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
     ]
   },
   {
     "id": "ConnectWalletModal_WalletConnect",
     "message": "WalletConnect",
     "files": [
-      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
     ]
   },
   {
     "id": "MainFAQ2_content4",
-    "message": "Indlæser",
-    "files": [
-      "src/front/shared/components/FAQ/FAQ.tsx"
-    ]
+    "message": "Indlæser"
   },
   {
     "id": "FilterTextAll",
@@ -8410,7 +8407,7 @@
     "id": "ConnectWalletModal_WalletLocked",
     "message": "Wallet is locked. Unlock the wallet first.",
     "files": [
-      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.js"
+      "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
     ]
   },
   {
@@ -8443,7 +8440,25 @@
   },
   {
     "id": "Withdrow214",
-    "message": "Administratiekosten {currency}: {adminFee}",
+    "message": "Administratiekosten {currency}: {adminFee}"
+  },
+  {
+    "id": "WithdrowModalAdminFee",
+    "message": "Admin Fee:",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "WithdrowModalCommonFee",
+    "message": "Total Fee:",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "WithdrowModalMinerFee",
+    "message": "Miner Fee:",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
