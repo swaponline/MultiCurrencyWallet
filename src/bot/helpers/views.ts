@@ -1,4 +1,3 @@
-import flows from 'swap.flows'
 import * as os from 'os'
 import * as ip from 'ip'
 
@@ -22,7 +21,7 @@ const sendStatus = (req, res) => (order) => res.json(status(order))
 
 const swapToString = (swap) => ""
 
-const orderToString = (swap, full) => {
+const orderToString = (swap, full?) => {
   try {
     let link = `<a href="/orders/${swap.id}/start">start</a>`
     return [
@@ -64,7 +63,7 @@ const orderView = (order) => {
     url: `${URL}/swaps/${id}/go`,
     handshake: isMy ? `${URL}/orders/${id}/accept` : `${URL}/orders/${id}/request`,
     requestPartial: isMy? `` : `${URL}/orders/${id}/request-partial?sellAmount=1`,
-    swap: `${URL}/swaps/${id}/go`,
+    //swap: `${URL}/swaps/${id}/go`,
     query: `swaps/${id}/go`,
     id, isMy, swap, string: orderToString(order),
     buyAmount, buyCurrency, sellAmount, sellCurrency,

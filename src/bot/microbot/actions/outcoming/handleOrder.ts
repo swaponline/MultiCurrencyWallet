@@ -14,7 +14,7 @@ export default (app, orders) => async (order) => {
   // turn off autorequest
   // return
 
-  const fee = BigNumber(0.01)
+  const fee = new BigNumber(0.01)
 
   let pair
   try {

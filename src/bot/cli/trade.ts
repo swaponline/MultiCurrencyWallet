@@ -28,7 +28,7 @@ const DECIMALS = {
 }
 
 const filteredDecimals = ({ amount, currency }) =>
-  BigNumber(amount).decimalPlaces( DECIMALS[currency] || 0 ).toString()
+  new BigNumber(amount).decimalPlaces( DECIMALS[currency] || 0 ).toString()
 
 const parseTicker = (order) => {
   const { buyCurrency: buy, sellCurrency: sell } = order
@@ -47,7 +47,7 @@ const parsePair = (str) => {
   if (typeof str != 'string') throw new Error(`ParseTickerError: Not a string: ${str}`)
 
   const tokens = str.split('-')
-  if (!tokens.length == 2) throw new Error(`ParseTickerError: Wrong tokens: ${str}`)
+  if (tokens.length !== 2) throw new Error(`ParseTickerError: Wrong tokens: ${str}`)
 
   if (TRADE_TICKERS.includes(str))
     str = str
@@ -93,7 +93,7 @@ const parsePair = (str) => {
 const createOrder = (ticker, type, price, amount) => {
   // console.log('create order', ticker, type, price, amount)
   const { MAIN, BASE } = parsePair(ticker)
-  if (!MAIN || !BASE) throw new Error(`CreateOrderError: No currency: ${main}-${base}`)
+  if (!MAIN || !BASE) throw new Error(`CreateOrderError: No currency: ${MAIN}-${BASE}`)
 
   if (![PAIR_ASK, PAIR_BID].includes(type)) throw new Error(`CreateOrderError: Wrong order type: ${type}`)
 

@@ -29,12 +29,12 @@ const ERC20TOKENS = Object.keys(TOKENS)
     tokenAddress: TOKENS[name].address,
   }))
 
-let SwapApp
+let SwapApp, app, auth, wallet, room, orders, services
 
 try {
 
   SwapApp = setup({ network, ERC20TOKENS })
-  const { app, auth, wallet, room, orders } = SwapApp
+  { app, auth, wallet, room, orders, services } = SwapApp
 
   ready(room).then(() => {
     debug('room ready')
@@ -60,3 +60,12 @@ try {
 }
 
 export default SwapApp
+
+export {
+  app,
+  room,
+  wallet,
+  ready,
+  services,
+  erc20
+}

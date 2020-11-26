@@ -5,7 +5,7 @@ import helpers from './helpers'
 import erc20 from './erc20'
 
 
-export default {
+export {
   pullProps,
   ignoreProps,
   typeforce,

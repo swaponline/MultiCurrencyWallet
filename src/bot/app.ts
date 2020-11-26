@@ -1,31 +1,31 @@
-
 import express from 'express'
 
-const server = express()
 import bodyparser from 'body-parser'
 import path from 'path'
 
-import { app, wallet } from './swapApp'
+import app from './swapApp'
 import ws from './ws'
 
 import router from './routes'
 import auth from './routes/auth'
 
-app.ready = new Promise( resolve => app.services.room.once('ready', resolve))
-app.sync = new Promise( resolve => app.ready.then(() => setTimeout(resolve, 20000)) )
+app.room.ready = new Promise( resolve => app.services.room.once('ready', resolve))
+app.room.sync = new Promise( resolve => app.room.ready.then(() => setTimeout(resolve, 20000)) )
 
 app.services.room.once('ready', () => {
   console.log('swapApp ready')
 
-  console.log('btc', wallet.auth.accounts.btc.getAddress())
-  console.log('eth', wallet.auth.accounts.eth.address)
+  console.log('btc', app.wallet.auth.accounts.btc.getAddress())
+  console.log('eth', app.wallet.auth.accounts.eth.address)
 
-  console.log('created swap app, me:', wallet.view())
+  console.log('created swap app, me:', app.wallet.view())
 })
 
 const port = process.env.PORT || 1337
 const ws_port = process.env.WS_PORT || 7333
 const listen_ip = process.env.IP || '0.0.0.0'
+
+const server = express()
 
 server.use(auth)
 server.use(express.static(path.join(__dirname, '/routes/web/')))

@@ -62,17 +62,17 @@ console.log(swap.flow._flowName)
 
       }
 
-      const { ticker } = Pair.fromOrder(swap)
+      const pair = Pair.fromOrder(swap)
 
       if (step === 2) {
-        if (ticker === 'GHOST2BTC') {
+        if (pair.ticker === 'GHOST2BTC') {
           // set destination wallet
           swap.setDestinationBuyAddress('16BZguAz5U6QVxu1Nan6adWRoPxzQfG464')
         }
       }
 
       if (swap.flow.state.isFinished) {
-        if (ticker === 'ETH-BTC') {
+        if (pair.ticker === 'ETH-BTC') {
           // @ToDo - fix
           kraken.createOrder(pair.amount.div(pair.price).toNumber(), pair.isBid() ? 'sell' : 'buy')
         }
@@ -86,6 +86,7 @@ console.log(swap.flow._flowName)
         console.log(new Date().toISOString(), `swap finished! remove ${swap.id}`)
         history.removeInProgress(swap.id)
         history.saveFinished(swap.id)
+        //@ts-ignore
         return clearInterval(update)
       }
 

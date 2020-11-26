@@ -11,7 +11,7 @@ const setInvite = (newInvite) => {
   invite = newInvite
 }
 
-const read = async (question) => {
+const read = async (question?) => {
   return new Promise( (resolve, reject) => {
     rl.question(question || invite, (answer) => {
       resolve(answer)

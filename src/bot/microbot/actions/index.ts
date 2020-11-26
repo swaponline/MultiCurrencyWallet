@@ -1,9 +1,18 @@
-export handleError from '../../app/actions/errors/handleError'
+import handleError from '../../app/actions/errors/handleError'
 
-export startSaved from './book/startSaved'
-export handleKeyboardInput from './book/handleKeyboardInput'
-export fillOrderbook from './book/fillOrderbook'
+import startSaved from './book/startSaved'
+import handleKeyboardInput from './book/handleKeyboardInput'
+import fillOrderbook from './book/fillOrderbook'
+
+import handleRequest from './incoming/handleRequest'
+import handleOrder from './outcoming/handleOrder'
 
 
-export handleRequest from './incoming/handleRequest'
-export handleOrder from './outcoming/handleOrder'
+export {
+  handleError,
+  startSaved,
+  handleKeyboardInput,
+  fillOrderbook,
+  handleRequest,
+  handleOrder
+}

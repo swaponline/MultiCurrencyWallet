@@ -156,9 +156,9 @@ class AlgoTrade {
     // ASK = SELL ETH above given price
     const orders = [
       ...Array(4).fill(null).map( (e, index) =>
-          createOrder(ticker, PAIR_BID, bid_price, amount * (index + 1))),
+          createOrder(ticker, PAIR_BID, bid_price, amount.times(index + 1))),
       ...Array(4).fill(null).map( (e, index) =>
-          createOrder(ticker, PAIR_ASK, ask_price, amount * (index + 1))),
+          createOrder(ticker, PAIR_ASK, ask_price, amount.times(index + 1))),
     ]
 
     return orders
