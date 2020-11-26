@@ -24,6 +24,7 @@ const nextCoinNode = {
   },*/
   mainnet: {
     port: 7078,
+    ip: '127.0.0.1', //'195.201.222.194'
   },
 }
 
@@ -54,7 +55,9 @@ const sendRequest = ({ network, rpcMethod, rpcMethodParams = [], onSuccess, onEr
 
   const user = { name: 'test', password: 'test' }
   const nodePort = nextCoinNode[network].port
-  const url = `http://${user.name}:${user.password}@localhost:${nodePort}`
+  const nodeIP = nextCoinNode[network].ip
+
+  const url = `http://${user.name}:${user.password}@${nodeIP}:${nodePort}`
 
   const bodyJson = {
     'jsonrpc': '1.0',
@@ -62,6 +65,7 @@ const sendRequest = ({ network, rpcMethod, rpcMethodParams = [], onSuccess, onEr
     'method': rpcMethod,
     'params': rpcMethodParams,
   }
+
   const body = JSON.stringify(bodyJson)
 
   return request
@@ -72,17 +76,18 @@ const sendRequest = ({ network, rpcMethod, rpcMethodParams = [], onSuccess, onEr
       const data = JSON.parse(req.text)
       // console.log('data =', data)
       if (data.error === null) {
+        if (!onSuccess) return data.result
         onSuccess(data.result)
       } else {
         throw new Error(data.error)
       }
     })
     .catch((e) => {
-      console.log('Error', e)
       let resultError = e
       if (e.code === 'ECONNREFUSED') {
         resultError = new Error('Node is offline')
       }
+      if (!onError) return resultError
       onError(resultError)
     })
 }
@@ -107,9 +112,6 @@ app.get('/:network', async (req, res) => {
     rpcMethod: 'getblockchaininfo',
     rpcMethodParams: [],
     onSuccess: (data) => {
-      /*res.status(200).json({
-        rawtx: answer.hex,
-      })*/
       res.status(200).json(data)
     },
     onError: (e) => {
@@ -128,10 +130,43 @@ app.get('/:network/addr/:address', async (req, res) => {
     rpcMethod: 'getaddressbalance',
     rpcMethodParams: [{ 'addresses': [address] }],
     onSuccess: (data) => {
-      /*res.status(200).json({
-        rawtx: answer.hex,
-      })*/
       res.status(200).json(data)
+    },
+    onError: (e) => {
+      res.status(503).json({ error: e.message })
+    },
+  })
+})
+
+app.get('/:network/txs/:address', async (req, res) => {
+  const { network, address } = req.params
+
+  sendRequest({
+    network,
+    rpcMethod: 'getaddresstxids',
+    rpcMethodParams: [{ 'addresses': [address] }],
+    onSuccess: (data) => {
+      const ret = {
+        txs: data.reverse(),
+      }
+
+      const fetchTxInfos = data.map((txid, i) => {
+        return new Promise(async (resolve) => {
+          const txInfo = await sendRequest({
+            network,
+            rpcMethod: 'getrawtransaction',
+            rpcMethodParams: [ txid, 1 ],
+          })
+          ret.txs[i] = txInfo
+          resolve(txInfo)
+        })
+      })
+
+      Promise.all(fetchTxInfos).then(() => {
+        res.status(200).json(ret)
+      }).catch ((e) => {
+        res.status(503).json({ error: e.message })
+      })
     },
     onError: (e) => {
       res.status(503).json({ error: e.message })
@@ -149,9 +184,6 @@ app.get('/:network/addr/:address/utxo', async (req, res) => {
     rpcMethod: 'getaddressutxos',
     rpcMethodParams: [{ 'addresses': [address] }],
     onSuccess: (data) => {
-      /*res.status(200).json({
-        rawtx: answer.hex,
-      })*/
       res.status(200).json(data)
     },
     onError: (e) => {

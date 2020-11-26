@@ -26,6 +26,8 @@ import iconInternal from 'components/Logo/images/base.svg'
 import iconCustom from '../../../images/custom.svg'
 
 import { AddressType, AddressRole } from 'domain/address'
+import { COIN_DATA, COIN_MODEL} from 'swap.app/constants/COINS'
+
 
 const langLabels = defineMessages({
   labelSpecifyAddress: {
@@ -371,7 +373,11 @@ export default class AddressSelect extends Component<any, any> {
     // Forbid `Custom address` option when using ethereum/tokens
     // because you need to make a request to the contract
     const isCustomAddressOption = !ethToken.isEthOrEthToken({ name: currency })
-    const isCustomOptionInputHidden = role === AddressRole.Send && ticker === 'BTC' // todo: any utxo
+    const isCustomOptionInputHidden = (
+      role === AddressRole.Send 
+      && COIN_DATA[ticker] 
+      && COIN_DATA[ticker].model === COIN_MODEL.UTXO
+    )
 
     const web3Icon = metamask.isConnected()
       ? web3Icons[metamask.web3connect.getProviderType()] || false

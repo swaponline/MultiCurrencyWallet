@@ -36,7 +36,7 @@ const externalConfig = () => {
       eth: true,
       btc: true,
       ghost: false,
-      next: false,
+      next: true,
     },
     ownTokens: false,
     addCustomERC20: true,

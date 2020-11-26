@@ -31,7 +31,6 @@ const networks = {
 }
 
 
-
 const hasAdminFee = (
   config
     && config.opts

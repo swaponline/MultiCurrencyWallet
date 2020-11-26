@@ -12,18 +12,32 @@ export default class TimerButton extends Component<any, any> {
     timeLeft: PropTypes.number.isRequired,
     className: PropTypes.string,
     disabledTimer: PropTypes.bool,
+    forceClick: PropTypes.bool,
   }
 
   static defaultProps = {
     disabledTimer: false,
   }
 
+  componentDidMount() {
+    const {
+      forceClick,
+      onClick,
+    } = this.props
+
+    if (forceClick) onClick()
+  }
+
   render() {
     const { children, disabledTimer, timeLeft, className, onClick, ...rest } = this.props
+    const { forceClick } = this.props
+
+    if (forceClick) return null
 
     return (
       <Button className={className} onClick={onClick} {...rest} >
         {children}
+        {` `}
         {!disabledTimer && <Timer timeLeft={timeLeft} handleClick={onClick} />}
       </Button>
     )
