@@ -8,7 +8,7 @@ RUN apk update
 RUN apk add curl 
 RUN apk add npm 
 RUN apk add git 
-RUN apk add build-essential 
+RUN apk add --update build-base
 RUN apk add g++ 
 RUN apk add python 
 RUN apl add make 
