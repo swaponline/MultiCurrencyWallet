@@ -12,7 +12,7 @@ import { hdkey } from 'ethereumjs-wallet'
 import * as bip39 from 'bip39'
 import typeforce from 'swap.app/util/typeforce'
 import { BigNumber } from 'bignumber.js'
-import * as mnemonicUtils from '../../../../common/utils/mnemonic'
+import { default as mnemonicUtils } from '../../../../common/utils/mnemonic'
 
 import metamask from 'helpers/metamask'
 

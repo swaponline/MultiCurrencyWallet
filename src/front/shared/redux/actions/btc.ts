@@ -15,7 +15,7 @@ import config from 'app-config'
 
 import { localisePrefix } from 'helpers/locale'
 
-import * as mnemonicUtils from '../../../../common/utils/mnemonic'
+import { default as mnemonicUtils } from '../../../../common/utils/mnemonic'
 
 import { default as bitcoinUtils } from '../../../../common/utils/bitcoin'
 
