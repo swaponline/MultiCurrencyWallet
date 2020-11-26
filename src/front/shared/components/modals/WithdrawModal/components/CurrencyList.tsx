@@ -124,10 +124,11 @@ export default class CurrencyList extends Component<any, any> {
                     {item.balance} {getCurrencyKey(item.currency, true).toUpperCase()}
                   </span>
                   <span styleName="usd">
-                    {(item.infoAboutCurrency && item.infoAboutCurrency.price_fiat)
-                      ? (item.balance * item.infoAboutCurrency.price_fiat).toFixed(2)
-                      : (item.balance * exCurrencyRate).toFixed(2)}{' '}
-                    {activeFiat}
+                    {
+                      item.infoAboutCurrency && item.infoAboutCurrency.price_fiat
+                        ? <span>{(item.balance * item.infoAboutCurrency.price_fiat).toFixed(2)} {activeFiat}</span>
+                        : null
+                    }
                   </span>
                 </div>
               </div>
