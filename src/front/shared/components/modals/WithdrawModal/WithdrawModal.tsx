@@ -991,8 +991,7 @@ export default class WithdrawModal extends React.Component<any, any> {
         {dashboardView && (
           <div
             styleName={cx({
-              notice: !isEthToken,
-              rednotes: isEthToken,
+              notice: true,
               dashboardViewNotice: dashboardView,
             })}
             >

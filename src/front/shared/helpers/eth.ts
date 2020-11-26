@@ -42,15 +42,14 @@ const estimateGasPrice = async ({ speed = 'fast' } = {}) => {
 
   const apiSpeeds = {
     slow: 'safeLow',
-    normal: 'standard',
     fast: 'fast',
     fastest: 'fastest',
   }
 
   //@ts-ignore
-  const apiSpeed = apiSpeeds[speed] || apiSpeed.normal
+  const apiSpeed = apiSpeeds[speed] || apiSpeed.fast
 
-  const apiPrice = new BigNumber(apiResult[apiSpeed]).multipliedBy(1e9)
+  const apiPrice = new BigNumber(apiResult[apiSpeed]).dividedBy(10).multipliedBy(1e9)
 
   return apiPrice >= defaultPrice[speed] ? apiPrice.toString() : defaultPrice[speed]
 }
