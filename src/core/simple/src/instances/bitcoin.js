@@ -160,23 +160,44 @@ class Bitcoin {
   }
 
   fetchBalance(address) {
-    return bitcoinUtils.fetchBalance(address, false, this.API_BITPAY, 10*1000)
+    return bitcoinUtils.fetchBalance({
+      address,
+      withUnconfirmed: false,
+      apiBitpay: this.API_BITPAY,
+      cacheResponse: 10*1000,
+    })
   }
 
   fetchUnspents(address) {
-    return bitcoinUtils.fetchUnspents(address, this.API_BITPAY, 10*1000)
+    return bitcoinUtils.fetchUnspents({
+      address,
+      apiBitpay: this.API_BITPAY,
+      cacheResponse: 10*1000,
+    })
   }
 
   broadcastTx(txRaw) {
-    return bitcoinUtils.broadcastTx(txRaw, this.API_BITPAY, this.API_BLOCKCYPHER)
+    return bitcoinUtils.broadcastTx({
+      txRaw,
+      apiBitpay: this.API_BITPAY,
+      apiBlocyper: this.API_BLOCKCYPHER,
+    })
   }
 
   fetchTx(hash) {
-    return bitcoinUtils.fetchTx(hash, this.API_BITPAY, 10*1000)
+    return bitcoinUtils.fetchTx({
+      hash,
+      apiBitpay: this.API_BITPAY,
+      cacheResponse: 10*1000,
+    })
   }
 
   fetchTxInfo(hash) {
-    return bitcoinUtils.fetchTxInfo(hash, this.API_BITPAY, 10*1000)
+    return bitcoinUtils.fetchTxInfo({
+      hash,
+      apiBitpay: this.API_BITPAY,
+      cacheResponse: 10*1000,
+    })
   }
 
   fetchOmniBalance(address, assetId = 31) {
@@ -221,7 +242,10 @@ class Bitcoin {
     Возвращает txId, адресс и сумму
   */
   checkWithdraw = (scriptAddress) => {
-    return bitcoinUtils.checkWithdraw(scriptAddress, this.API_BITPAY)
+    return bitcoinUtils.checkWithdraw({
+      scriptAddress,
+      apiBitpay: this.API_BITPAY
+    })
   }
 
   async sendTransaction({ account, to, value }, handleTransactionHash) {
