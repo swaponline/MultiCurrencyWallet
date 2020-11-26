@@ -1,7 +1,7 @@
 const bitcoin = require('bitcoinjs-lib')
 //const request = require('request-promise-native')
 const request = require('../helpers/request')
-const bitcoinUtils = require('../../../../common/utils/bitcoin')
+const bitcoinUtils = require('../../../../common/utils/coin/btc')
 const BigNumber = require('bignumber.js')
 const debug = require('debug')
 
