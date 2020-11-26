@@ -8427,10 +8427,6 @@
     "message": "Admin Fee {currency}: {adminFee}"
   },
   {
-    "id": "WithdrowModalAdminFee",
-    "message": "Admin Fee:"
-  },
-  {
     "id": "WithdrowModalCommonFee",
     "message": "Total Fee:",
     "files": [
