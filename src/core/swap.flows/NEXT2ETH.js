@@ -290,7 +290,7 @@ class NEXT2ETH extends Flow {
         }
 
         const balanceCheckError = await flow.ethSwap.checkBalance({
-          ownerAddress: participant.eth.address,
+          ownerAddress: this.app.getParticipantEthAddress(this.swap),
           participantAddress: this.app.getMyEthAddress(),
           expectedValue: buyAmount,
           expectedHash: secretHash,

@@ -291,7 +291,7 @@ export default (tokenName) => {
           }
 
           const balanceCheckError = await flow.ethTokenSwap.checkBalance({
-            ownerAddress: participant.eth.address,
+            ownerAddress: this.app.getParticipantEthAddress(this.swap),
             participantAddress: this.app.getMyEthAddress(),
             expectedValue: buyAmount,
             expectedHash: secretHash,
@@ -327,7 +327,7 @@ export default (tokenName) => {
           }
 
           const tokenAddressIsValid = await flow.ethTokenSwap.checkTokenIsValid({
-            ownerAddress: participant.eth.address,
+            ownerAddress: this.app.getParticipantEthAddress(this.swap),
             participantAddress: this.app.getMyEthAddress(),
           })
 

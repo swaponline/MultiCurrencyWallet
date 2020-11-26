@@ -193,7 +193,7 @@ export default (tokenName) => {
           }
 
           const swapData = {
-            participantAddress: participant.eth.address,
+            participantAddress: this.app.getParticipantEthAddress(this.swap),
             secretHash,
             amount: sellAmount,
             targetWallet: flow.swap.destinationSellAddress,
@@ -460,7 +460,7 @@ export default (tokenName) => {
       this.swap.room.once('do withdraw', async ({secret}) => {
         try {
           const data = {
-            participantAddress: flow.swap.participant.eth.address,
+            participantAddress: this.app.getParticipantEthAddress(this.swap),
             secret,
           }
 
@@ -487,7 +487,7 @@ export default (tokenName) => {
 
       const swapData = {
         ownerAddress: this.app.getMyEthAddress(),
-        participantAddress: participant.eth.address
+        participantAddress: this.app.getParticipantEthAddress(this.swap)
       }
 
       return this.ethTokenSwap.checkSwapExists(swapData)
@@ -616,7 +616,7 @@ export default (tokenName) => {
       }
 
       return this.ethTokenSwap.refund({
-        participantAddress: participant.eth.address,
+        participantAddress: this.app.getParticipantEthAddress(this.swap),
       })
         .then((hash) => {
           if (!hash) {
