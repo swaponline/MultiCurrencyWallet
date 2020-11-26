@@ -10,8 +10,6 @@ if (process.env.TEST_STARTUP === `true`) {
 
   process.env.SECRET_PHRASE='gospel total hundred major refuse when equal pilot goat soft recall abandon'
 
-  process.env.BLOCKCYPHER_API_TOKEN='be885028ef7e435dbbad749c9dcdf248'
-
   process.env.WEB3_TESTNET_PROVIDER='https://rinkeby.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c'
   process.env.WEB3_MAINNET_PROVIDER='https://mainnet.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c'
 
