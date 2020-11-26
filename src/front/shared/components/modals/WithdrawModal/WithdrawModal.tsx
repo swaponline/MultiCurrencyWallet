@@ -997,6 +997,7 @@ export default class WithdrawModal extends React.Component<any, any> {
               usedAdminFee && (
                 <>
                   <FormattedMessage id="WithdrowModalMinerFee" defaultMessage="Miner Fee: " />
+                  {' '}{/* < for indent */}
                   { fetchFee 
                     ? <div styleName='paleLoader'><InlineLoader /></div>
                     : (
@@ -1008,6 +1009,7 @@ export default class WithdrawModal extends React.Component<any, any> {
                   }
                   <br />
                   <FormattedMessage id="WithdrowModalAdminFee" defaultMessage="Admin Fee: " />
+                  {' '}{/* < for indent */}
                   { fetchFee 
                     ? <div styleName='paleLoader'><InlineLoader /></div>
                     : <span styleName='fee'>{adminFeeSize} {dataCurrency}</span>  
@@ -1017,6 +1019,7 @@ export default class WithdrawModal extends React.Component<any, any> {
               )
             }
             <FormattedMessage id="WithdrowModalCommonFee" defaultMessage="Total Fee: " />
+            {' '}{/* < for indent */}
             { fetchFee 
                 ? <div styleName='paleLoader'><InlineLoader /></div>
                 : (
