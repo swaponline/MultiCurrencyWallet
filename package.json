@@ -68,8 +68,8 @@
     "rename-assets-manifest-link": "replace 'assets/manifest.json' 'assets/android-manifest.json' ./build-chrome-extension/application/index.html",
     "release": "git commit -am v%npm_package_version% && git tag v%npm_package_version% && git push && git push --tags",
     "bot": "babel-node --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot",
-    "bot:test": "cross-env TEST_STARTUP=true babel-node --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot",
-    "bot:debug": "cross-env DEBUG=swap.core* babel-node --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot"
+    "bot:test": "cross-env TEST_STARTUP=true babel-node --extensions .ts,.js --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot",
+    "bot:debug": "cross-env DEBUG=swap.core* babel-node --extensions .ts,.js --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot"
   },
   "husky": {
     "hooks": {
@@ -100,7 +100,7 @@
     "@babel/preset-react": "^7.9.4",
     "@babel/preset-stage-1": "^7.8.3",
     "@babel/preset-stage-3": "^7.8.3",
-    "@babel/preset-typescript": "^7.6.0",
+    "@babel/preset-typescript": "^7.12.7",
     "@babel/register": "^7.6.2",
     "@metamask/detect-provider": "^1.2.0",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
