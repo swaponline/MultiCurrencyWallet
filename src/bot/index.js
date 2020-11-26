@@ -8,6 +8,14 @@ require('dotenv').config({
   path: __dirname + '/.env',
 })
 
+if (process.env.TEST_STARTUP === `true`) {
+  console.log('>>>> TEST STARTUP')
+  setTimeout(() => {
+    console.log('>>>> TEST READY - SHUTDOWN')
+    process.exit(0)
+  }, 30*1000)
+}
+
 import moduleAlias from 'module-alias'
 import _debug from 'debug'
 _debug('.:app')
