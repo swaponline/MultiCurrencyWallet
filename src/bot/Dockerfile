@@ -9,7 +9,7 @@ RUN apt-get install -y openssh-server curl npm git build-essential g++ python ma
 
 
 RUN curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-apt-get install -y nodejs
+RUN apt-get install -y nodejs
 
 RUN cd root && git clone https://github.com/swaponline/MultiCurrencyWallet && cd MultiCurrencyWallet && npm i
 
