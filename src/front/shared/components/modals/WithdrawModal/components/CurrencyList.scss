@@ -10,6 +10,7 @@
   font-size: 13px;
 
   .usd {
+    min-height: 13px; // top element does not go down if no currency
     color: $notice-color;
   }
 
