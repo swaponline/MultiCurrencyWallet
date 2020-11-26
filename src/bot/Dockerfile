@@ -1,15 +1,11 @@
-FROM       ubuntu:18.04
+FROM       node:12.20.0-alpine3.9
 
 #docker build --tag labot .
 #docker run --restart unless-stopped --name labot --hostname labot -d -p 30937:3002 -p 30901:3001 -p 30922:22 labot:latest
 
 RUN apt-get update
 
-RUN apt-get install -y openssh-server curl npm git build-essential g++ python make mc screen
-
-
-RUN curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-RUN apt-get install -y nodejs
+RUN apt-get install -y curl npm git build-essential g++ python make mc screen
 
 RUN cd root && git clone https://github.com/swaponline/MultiCurrencyWallet && cd MultiCurrencyWallet && npm i
 
