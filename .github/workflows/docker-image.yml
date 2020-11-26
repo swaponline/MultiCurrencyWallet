@@ -1,0 +1,16 @@
+name: src/bot docker build
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image src/bot
+      run: docker build src/bot --file src/bot/Dockerfile --tag sobot:$(date +%s)
