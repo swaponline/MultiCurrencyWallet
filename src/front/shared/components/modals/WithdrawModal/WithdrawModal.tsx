@@ -590,12 +590,12 @@ export default class WithdrawModal extends React.Component<any, any> {
 
     tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
 
-    let dinamicFee = isEthToken ? 0 : minAmount[getCurrencyKey(currency, false).toLowerCase()]
-    let defaultMinFee = dinamicFee // non-changing value in an amount hint
+    let totalFee = isEthToken ? 0 : minAmount[getCurrencyKey(currency, false).toLowerCase()]
+    let defaultMinFee = totalFee // non-changing value in an amount hint
  
-    dinamicFee = usedAdminFee
-      ? new BigNumber(dinamicFee).plus(adminFee.calc(currency, amount)).toNumber()
-      : dinamicFee
+    totalFee = usedAdminFee
+      ? new BigNumber(totalFee).plus(adminFee.calc(currency, amount)).toNumber()
+      : totalFee
 
     let allowedCriptoBalance: BigNumber | 0 = new BigNumber(balance).minus(defaultMinFee)
     let allowedUsdBalance: BigNumber | 0 = new BigNumber(
@@ -696,7 +696,7 @@ export default class WithdrawModal extends React.Component<any, any> {
               id="Withdrow213"
               defaultMessage="Please note: Fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction"
               values={{
-                minAmount: <span>{isEthToken ? minAmount.eth : dinamicFee}</span>,
+                minAmount: <span>{isEthToken ? minAmount.eth : totalFee}</span>,
                 br: <br />,
                 data: `${dataCurrency}`,
               }}
@@ -981,7 +981,12 @@ export default class WithdrawModal extends React.Component<any, any> {
                   <FormattedMessage id="WithdrowModalMinerFee" defaultMessage="Miner Fee: " />
                   { fetchFee 
                     ? <div styleName='paleLoader'><InlineLoader /></div>
-                    : <span styleName='fee'>{123} {dataCurrency}</span>// TODO: add miner fee
+                    : (
+                      <span styleName='fee'>{
+                          new BigNumber(totalFee).minus(adminFeeSize).dp(6, BigNumber.ROUND_FLOOR).toNumber()
+                        } {dataCurrency}
+                      </span>
+                    )
                   }
                   <br />
                   <FormattedMessage id="WithdrowModalAdminFee" defaultMessage="Admin Fee: " />
@@ -1000,7 +1005,7 @@ export default class WithdrawModal extends React.Component<any, any> {
                   <span styleName='fee'>
                     {isEthToken 
                       ? minAmount.eth 
-                      : new BigNumber(dinamicFee).dp(6, BigNumber.ROUND_FLOOR).toNumber()
+                      : new BigNumber(totalFee).dp(6, BigNumber.ROUND_FLOOR).toNumber()
                     } {dataCurrency}
                   </span>
                 ) 
