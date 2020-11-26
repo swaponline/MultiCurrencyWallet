@@ -17,7 +17,7 @@ import { localisePrefix } from 'helpers/locale'
 
 import { default as mnemonicUtils } from '../../../../common/utils/mnemonic'
 
-import { default as bitcoinUtils } from '../../../../common/utils/bitcoin'
+import { default as bitcoinUtils } from '../../../../common/utils/coin/btc'
 
 
 const BITPAY_API = {
@@ -257,12 +257,13 @@ const getLinkToInfo = (tx) => {
 
 const fetchBalanceStatus = (address) => {
   return new Promise((resolve) => {
-    bitcoinUtils.fetchBalance(
+    bitcoinUtils.fetchBalance({
       address,
-      true,
-      BITPAY_API
-    //@ts-ignore
-    ).then(({ balance, unconfirmed }) => {
+      withUnconfirmed: true,
+      apiBitpay: BITPAY_API,
+    }).then((answer) => {
+      // @ts-ignore
+      const { balance, unconfirmed } = answer
       resolve({
         address,
         balance: balance,
@@ -284,12 +285,13 @@ const getBalance = () => {
   } = getState()
 
   return new Promise((resolve) => {
-    bitcoinUtils.fetchBalance(
+    bitcoinUtils.fetchBalance({
       address,
-      true,
-      BITPAY_API
-    //@ts-ignore
-    ).then(({ balance, unconfirmed }) => {
+      withUnconfirmed: true,
+      apiBitpay: BITPAY_API,
+    }).then((answer) => {
+      // @ts-ignore
+      const { balance, unconfirmed } = answer
       reducers.user.setBalance({
         name: 'btcData',
         amount: balance,
@@ -304,13 +306,31 @@ const getBalance = () => {
 }
 
 
-const fetchBalance = (address) => bitcoinUtils.fetchBalance(address, false, BITPAY_API)
+const fetchBalance = (address) => bitcoinUtils.fetchBalance({
+  address,
+  withUnconfirmed: false,
+  apiBitpay: BITPAY_API,
+})
 
-const fetchTxRaw = (txId, cacheResponse) => bitcoinUtils.fetchTxRaw(txId, cacheResponse, BLOCYPER_API)
 
-const fetchTx = (hash, cacheResponse) => bitcoinUtils.fetchTx(hash, BITPAY_API, cacheResponse)
+const fetchTxRaw = (txId, cacheResponse) => bitcoinUtils.fetchTxRaw({
+  txId,
+  cacheResponse,
+  apiBlocyper: BLOCYPER_API,
+})
 
-const fetchTxInfo = (hash, cacheResponse) => bitcoinUtils.fetchTxInfo(hash, BITPAY_API, cacheResponse, hasAdminFee)
+const fetchTx = (hash, cacheResponse) => bitcoinUtils.fetchTx({
+  hash,
+  apiBitpay: BITPAY_API,
+  cacheResponse,
+})
+
+const fetchTxInfo = (hash, cacheResponse) => bitcoinUtils.fetchTxInfo({
+  hash,
+  apiBitpay: BITPAY_API,
+  cacheResponse,
+  hasAdminFee,
+})
 
 
 const getInvoices = (address) => {
@@ -404,7 +424,13 @@ const getTransaction = (ownAddress, ownType) => {
   if (!typeforce.isCoinAddress.BTC(address)) {
     return new Promise((resolve) => { resolve([]) })
   }
-  return bitcoinUtils.getTransactionBlocyper(address, type, myAllWallets, btc.network, BLOCYPER_API)
+  return bitcoinUtils.getTransactionBlocyper({
+    address,
+    ownType: type,
+    myWallets: myAllWallets,
+    network: btc.network,
+    apiBlocyper: BLOCYPER_API,
+  })
 }
 
 const send = (data) => {
@@ -591,9 +617,16 @@ const signAndBuild = (transactionBuilder, address) => {
   return transactionBuilder.buildIncomplete()
 }
 
-const fetchUnspents = (address) => bitcoinUtils.fetchUnspents(address, BITPAY_API)
+const fetchUnspents = (address) => bitcoinUtils.fetchUnspents({
+  address,
+  apiBitpay: BITPAY_API,
+})
 
-const broadcastTx = (txRaw) => bitcoinUtils.broadcastTx(txRaw, BITPAY_API, BLOCYPER_API)
+const broadcastTx = (txRaw) => bitcoinUtils.broadcastTx({
+  txRaw,
+  apiBitpay: BITPAY_API,
+  apiBlocyper: BLOCYPER_API,
+})
 
 const signMessage = (message, encodedPrivateKey) => {
   const keyPair = bitcoin.ECPair.fromWIF(encodedPrivateKey, [bitcoin.networks.bitcoin, bitcoin.networks.testnet])
@@ -606,7 +639,10 @@ const signMessage = (message, encodedPrivateKey) => {
 
 const getReputation = () => Promise.resolve(0)
 
-const checkWithdraw = (scriptAddress) => bitcoinUtils.checkWithdraw(scriptAddress, BITPAY_API)
+const checkWithdraw = (scriptAddress) => bitcoinUtils.checkWithdraw({
+  scriptAddress,
+  apiBitpay: BITPAY_API,
+})
 
 
 export default {

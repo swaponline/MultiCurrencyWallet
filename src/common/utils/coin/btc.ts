@@ -1,9 +1,16 @@
-import apiLooper from './apiLooper'
+import apiLooper from '../apiLooper'
 import { BigNumber } from 'bignumber.js'
 import * as bitcoin from 'bitcoinjs-lib'
 
 
-const fetchBalance = (address, withUnconfirmed, apiBitpay, cacheResponse) => {
+const fetchBalance = (options) => {
+  const {
+    address,
+    withUnconfirmed,
+    apiBitpay,
+    cacheResponse,
+  } = options
+
   return apiLooper.get(apiBitpay, `/address/${address}/balance/`, {
     cacheResponse,
     checkStatus: (answer) => {
@@ -32,7 +39,13 @@ const fetchBalance = (address, withUnconfirmed, apiBitpay, cacheResponse) => {
   })
 }
 
-const fetchTx = (hash, apiBitpay, cacheResponse) => {
+const fetchTx = (options) => {
+  const {
+    hash,
+    apiBitpay,
+    cacheResponse,
+  } = options
+
   return apiLooper.get(apiBitpay, `/tx/${hash}`, {
     cacheResponse,
     checkStatus: (answer) => {
@@ -46,19 +59,32 @@ const fetchTx = (hash, apiBitpay, cacheResponse) => {
       name: `bitpay`,
     },
   }).then(({ fee, ...rest }) => ({
-      fees: BigNumber(fee).dividedBy(1e8).toNumber(),
+      fees: new BigNumber(fee).dividedBy(1e8).toNumber(),
       ...rest,
     }
   ))
 }
 
-const fetchTxInfo = (hash, apiBitpay, cacheResponse, hasAdminFee) => {
+// @ToDo - Make interface - fetchTxInfo общая для всех блокчейнов - она возврашет сведенные данные определенного типа
+
+const fetchTxInfo = (options) : any => {
+  const {
+    hash,
+    apiBitpay,
+    cacheResponse,
+    hasAdminFee,
+  } = options
+
   return new Promise(async (callback, txinfoReject) => {
-    let baseTxInfo = false
-    let txCoins = false
+    let baseTxInfo :any | boolean = false // @ToDo - make interface for baseTxInfo api answer
+    let txCoins :any | boolean = false // @ToDo - make interface for txCoins api answer
 
     try {
-      baseTxInfo = await fetchTx(hash, apiBitpay, cacheResponse)
+      baseTxInfo = await fetchTx({
+        hash,
+        apiBitpay,
+        cacheResponse,
+      })
     } catch (error) {
       console.error('Fail fetch tx info', error)
       txinfoReject(error)
@@ -83,7 +109,7 @@ const fetchTxInfo = (hash, apiBitpay, cacheResponse, hasAdminFee) => {
       ? new BigNumber(txCoins.inputs[1].value).dividedBy(1e8).toNumber() 
       : null
     let adminOutput = []
-    let adminFee = false
+    let adminFee : number | boolean = false
     let afterOutput = []
 
     if (!txCoins || !txCoins.inputs || !txCoins.outputs) {
@@ -127,7 +153,8 @@ const fetchTxInfo = (hash, apiBitpay, cacheResponse, hasAdminFee) => {
     if (txCoins && txCoins.outputs && txCoins.outputs[0]) {
       receiverAddress = txCoins.outputs[0].address
     }
-    
+
+    // @ToDo - Интерфейс этой функции
     const txInfo = {
       txid: baseTxInfo.txid,
       amount,
@@ -157,7 +184,14 @@ const fetchTxInfo = (hash, apiBitpay, cacheResponse, hasAdminFee) => {
   })
 }
 
-const fetchUnspents = (address, apiBitpay, cacheResponse) => {
+// @To-do - make interface - ответ этой функции общий для все блокчейнов
+const fetchUnspents = (options) : any => {
+  const {
+    address,
+    apiBitpay,
+    cacheResponse,
+  } = options
+
   return new Promise((resolve, reject) => {
     apiLooper.get(
       apiBitpay,
@@ -173,7 +207,7 @@ const fetchUnspents = (address, apiBitpay, cacheResponse) => {
       resolve(answer.map((txInfo, index) => {
         return {
           address,
-          amount: BigNumber(txInfo.value).dividedBy(1e8).toNumber(),
+          amount: new BigNumber(txInfo.value).dividedBy(1e8).toNumber(),
           confirmations: txInfo.confirmations,
           height: txInfo.mintHeight,
           satoshis: txInfo.value,
@@ -189,9 +223,17 @@ const fetchUnspents = (address, apiBitpay, cacheResponse) => {
   })
 }
 
-const broadcastTx = (txRaw, apiBitpay, apiBlocyper, onBroadcastError) => {
+// @ToDo - интерфейс - возврашет объект { txid }
+const broadcastTx = (options) : any => {
+  const {
+    txRaw,
+    apiBitpay,
+    apiBlocyper,
+    onBroadcastError,
+  } = options
+
   return new Promise(async (resolve, reject) => {
-    let answer = false
+    let answer : any | boolean = false // @ToDo - make interface for api answer 
     try {
       answer = await apiLooper.post(apiBitpay, `/tx/send`, {
         body: {
@@ -263,7 +305,12 @@ const broadcastTx = (txRaw, apiBitpay, apiBlocyper, onBroadcastError) => {
   Проверяет списание со скрипта - последняя транзакция выхода
   Возвращает txId, адресс и сумму
 */
-const checkWithdraw = (scriptAddress, apiBitpay) => {
+const checkWithdraw = (options) => {
+  const {
+    scriptAddress,
+    apiBitpay,
+  } = options
+
   const url = `/address/${scriptAddress}/txs/`
 
   return apiLooper.get(apiBitpay, url, {
@@ -283,7 +330,10 @@ const checkWithdraw = (scriptAddress, apiBitpay) => {
       && txs[0].spentTxid
     ) {
       try {
-        const spendTxInfo = await fetchTxInfo(txs[0].spentTxid, apiBitpay)
+        const spendTxInfo = await fetchTxInfo({
+          hash: txs[0].spentTxid,
+          apiBitpay
+        })
         return {
           address: spendTxInfo.receiverAddress,
           txid: txs[0].spentTxid,
@@ -297,7 +347,13 @@ const checkWithdraw = (scriptAddress, apiBitpay) => {
   })
 }
 
-const fetchTxRaw = (txId, cacheResponse, apiBlocyper) => {
+const fetchTxRaw = (options) => {
+  const {
+    txId,
+    cacheResponse,
+    apiBlocyper,
+  } = options
+
   return apiLooper.get(apiBlocyper, `/txs/${txId}?includeHex=true`, {
     cacheResponse,
     checkStatus: (answer) => {
@@ -313,7 +369,15 @@ const fetchTxRaw = (txId, cacheResponse, apiBlocyper) => {
   }).then(({ hex }) => hex)
 }
 
-const getTransactionBlocyper = (address, ownType, myWallets, network, apiBlocyper) => {
+const getTransactionBlocyper = (options) => {
+  const {
+    address,
+    ownType,
+    myWallets,
+    network,
+    apiBlocyper,
+  } = options
+
   return new Promise((resolve) => {
     const type = (ownType) || 'btc'
 
@@ -362,13 +426,9 @@ const getTransactionBlocyper = (address, ownType, myWallets, network, apiBlocype
             confirmations: item.confirmations,
             value: new BigNumber(value).dividedBy(1e8).toNumber(),
             date: (
-              Math.floor(
-                new Date(
-                  (item.confirmations)
-                  ? item.confirmed
-                  : item.received
-                )
-              )
+              (item.confirmations)
+                ? item.confirmed
+                : item.received
             ),
             direction: isSelf ? 'self' : direction,
           })
@@ -386,16 +446,34 @@ const getTransactionBlocyper = (address, ownType, myWallets, network, apiBlocype
   })
 }
 
-// Draft
-const getTransactionBitcore = (address, ownType, myWallets, network, apiBitpay) => {
+/** 
+  Draft - взято из фронта, там не используется
+  Но нужно реализовать
+  игноры - явные ошибки - есть зависимости от фронта shared/actions/btc
+  Ситауация такая - когда insight обновил свое апи, в быстром режиме нужно было
+  восстанавливать фронт - эта функция должна использоваться для получения списка
+  все транзакций на странице "История", но из-за изменений в их апи, быстрее было
+  использовать блокрипер - в этой функции есть проблемы с получением адресов получателя-отправителя
+**/
+const getTransactionBitcore = (options) => {
+  const {
+    address,
+    ownType,
+    myWallets,
+    network,
+    apiBitpay,
+  } = options
+  
   return new Promise(async (resolve) => {
+    // @ts-ignore
     const myAllWallets = getAllMyAddresses()
-
+    // @ts-ignore
     let { user: { btcData: { address: userAddress } } } = getState()
+    // @ts-ignore
     address = address || userAddress
 
     const type = (ownType) || 'btc'
-
+    // @ts-ignore
     if (!typeforce.isCoinAddress.BTC(address)) {
       resolve([])
     }
