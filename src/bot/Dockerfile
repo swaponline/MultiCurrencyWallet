@@ -3,9 +3,17 @@ FROM       node:12.20.0-alpine3.9
 #docker build --tag labot .
 #docker run --restart unless-stopped --name labot --hostname labot -d -p 30937:3002 -p 30901:3001 -p 30922:22 labot:latest
 
-RUN apt-get update
+RUN apk update
 
-RUN apt-get install -y curl npm git build-essential g++ python make mc screen
+RUN apk add curl 
+RUN apk add npm 
+RUN apk add git 
+RUN apk add build-essential 
+RUN apk add g++ 
+RUN apk add python 
+RUN apl add make 
+RUN apk add mc 
+RUN apk add screen
 
 RUN cd root && git clone https://github.com/swaponline/MultiCurrencyWallet && cd MultiCurrencyWallet && npm i
 
