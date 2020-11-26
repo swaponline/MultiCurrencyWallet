@@ -38,6 +38,7 @@
   .note,
   .balance {
     background: none;
+    color: $notice-color;
   }
 }
 
@@ -46,7 +47,7 @@
   right: 98px;
   top: -8px;
   padding: 0 10px 0 10px;
-  background-color: white;
+  background-color: $l-background-elements;
   text-align: left;
   font-family: 'Roboto Mono', monospace;
   font-size: 13px;
@@ -119,6 +120,14 @@
   &.dark {
     .additionalСurrencies {
       background: #2b2b2b;
+    }
+
+    .additionalСurrenciesItemActive {
+      color: $d-color;
+    }
+
+    .delimiter {
+      background: rgba(255,255,255,0.1);
     }
   }
 }
@@ -229,7 +238,7 @@
 .additionalСurrencies {
   position: absolute;
   right: 100px;
-  background: white;
+  background: $l-background-elements;
   z-index: 1;
   display: flex;
   top: 22px;
@@ -243,8 +252,9 @@
   @include ff-bold;
   color: rgba(142,154,163,0.5);
 }
+
 .additionalСurrenciesItemActive {
-  color: #000;
+  color: $l-color;
 }
 
 .delimiter {
