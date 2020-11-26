@@ -848,7 +848,7 @@ export default class WithdrawModal extends React.Component<any, any> {
                     defaultMessage="Maximum amount you can send is {allowedCriptoBalance} {currency}"
                     values={{
                       allowedCriptoBalance: `${new BigNumber(allowedCriptoBalance).dp(6, BigNumber.ROUND_FLOOR).toNumber()}`,
-                      currency: `${getCurrencyKey(dataCurrency, true).toUpperCase()}`,
+                      currency: activeCriptoCurrency,
                     }}
                   />
                 ) : (
@@ -870,7 +870,7 @@ export default class WithdrawModal extends React.Component<any, any> {
                         br: <br />,
                       }}
                     />
-                </div>
+                  </div>
                 </Tooltip>
               </div>
             )}
@@ -993,24 +993,34 @@ export default class WithdrawModal extends React.Component<any, any> {
               dashboardViewNotice: dashboardView,
             })}
             >
-            {
-              usedAdminFee && (
+            <FormattedMessage id="WithdrowModalMinerFee" defaultMessage="Miner Fee: " />
+            {' '}{/* < indent */}
+            {fetchFee
+              ? <div styleName='paleLoader'><InlineLoader /></div>
+              : (
+                <span styleName='fee'>{
+                  usedAdminFee
+                    ? new BigNumber(totalFee).minus(adminFeeSize).dp(6, BigNumber.ROUND_FLOOR).toNumber()
+                    : new BigNumber(totalFee).dp(6, BigNumber.ROUND_FLOOR).toNumber()
+                  } {dataCurrency}
+                </span>
+              )
+            }
+            {' '}{/* < indent */}
+            <Tooltip id="WithdrawModalMinerFeeDescription">
+              <div style={{ maxWidth: '24em', textAlign: 'center' }}>
+                <FormattedMessage
+                  id="WithdrawModalMinerFeeDescription"
+                  defaultMessage="Amount of cryptocurrency paid to incentivize miners to confirm your transaction"
+                />
+              </div>
+            </Tooltip>
+            <br />
+            {usedAdminFee && (
                 <>
-                  <FormattedMessage id="WithdrowModalMinerFee" defaultMessage="Miner Fee: " />
-                  {' '}{/* < for indent */}
-                  { fetchFee 
-                    ? <div styleName='paleLoader'><InlineLoader /></div>
-                    : (
-                      <span styleName='fee'>{
-                          new BigNumber(totalFee).minus(adminFeeSize).dp(6, BigNumber.ROUND_FLOOR).toNumber()
-                        } {dataCurrency}
-                      </span>
-                    )
-                  }
-                  <br />
-                  <FormattedMessage id="WithdrowModalAdminFee" defaultMessage="Admin Fee: " />
-                  {' '}{/* < for indent */}
-                  { fetchFee 
+                  <FormattedMessage id="WithdrowModalServiceFee" defaultMessage="Service Fee: " />
+                  {' '}{/* < indent */}
+                  {fetchFee 
                     ? <div styleName='paleLoader'><InlineLoader /></div>
                     : <span styleName='fee'>{adminFeeSize} {dataCurrency}</span>  
                   }
@@ -1019,8 +1029,8 @@ export default class WithdrawModal extends React.Component<any, any> {
               )
             }
             <FormattedMessage id="WithdrowModalCommonFee" defaultMessage="Total Fee: " />
-            {' '}{/* < for indent */}
-            { fetchFee 
+            {' '}{/* < indent */}
+            {fetchFee 
                 ? <div styleName='paleLoader'><InlineLoader /></div>
                 : (
                   <span styleName='fee'>

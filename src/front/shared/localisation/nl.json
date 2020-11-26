@@ -8444,10 +8444,7 @@
   },
   {
     "id": "WithdrowModalAdminFee",
-    "message": "Admin Fee:",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
-    ]
+    "message": "Admin Fee:"
   },
   {
     "id": "WithdrowModalCommonFee",
@@ -8459,6 +8456,20 @@
   {
     "id": "WithdrowModalMinerFee",
     "message": "Miner Fee:",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawModalMinerFeeDescription",
+    "message": "Bedrag aan cryptocurrency dat is betaald om mijnwerkers te stimuleren om uw transactie te bevestigen",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "WithdrowModalServiceFee",
+    "message": "Service Fee:",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
