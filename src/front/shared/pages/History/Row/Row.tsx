@@ -20,7 +20,14 @@ import { getFullOrigin } from 'helpers/links'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-class Row extends React.PureComponent<any, any> {
+@connect(({
+  user: { tokensData },
+}) => ({
+  tokensData,
+}))
+@cssModules(styles, { allowMultiple: true })
+
+export default class Row extends React.PureComponent<any, any> {
 
   props: any
 
@@ -39,13 +46,26 @@ class Row extends React.PureComponent<any, any> {
       comment: actions.comments.returnDefaultComment(hiddenList, ind),
       cancelled: false,
       payed: false,
+      showFiat: true,
     }
   }
 
   componentDidMount() {
-    const { type } = this.props
-
-    this.getFiatBalance(type)
+    const { type, tokensData } = this.props
+    /* 
+    * request fiat balance if token have currency price 
+    */
+    Object.keys(tokensData).forEach(key => {
+      if (key.includes(type)) {
+        if (tokensData[key].infoAboutCurrency) {
+          this.getFiatBalance(type)
+        } else {
+          this.setState({
+            showFiat: false
+          })
+        }
+      }
+    })
   }
 
   getFiatBalance = async (type) => {
@@ -191,8 +211,13 @@ class Row extends React.PureComponent<any, any> {
       txType,
       invoiceData,
       date,
-      confirmTx
+      confirmTx,
+      tokensData,
     } = this.props
+
+    const {
+      showFiat,
+    } = this.state
 
     const substrAddress = address ? `${address.slice(0, 2)}...${address.slice(-2)}` : ''
 
@@ -399,8 +424,11 @@ class Row extends React.PureComponent<any, any> {
             )}
             <div styleName={statusStyleAmount}>
               {invoiceData ? this.parseFloat(direction, value, 'out', type) : this.parseFloat(direction, value, 'in', type)}
-              <span styleName='amountUsd'>{`~${getFiat.toFixed(2)}`}{` `}{activeFiat}</span>
-
+              {
+                showFiat
+                  ? <span styleName='amountUsd'>{`~${getFiat.toFixed(2)}`}{` `}{activeFiat}</span>
+                  : null
+              }
             </div>
             {/* <LinkTransaction type={type} styleName='address' hash={hash} >{hash}</LinkTransaction> */}
           </td>
@@ -409,8 +437,3 @@ class Row extends React.PureComponent<any, any> {
     )
   }
 }
-
-/* eslint-enable */
-
-
-export default cssModules(Row, styles, { allowMultiple: true })

@@ -2,7 +2,7 @@
   font-size: 15px;
   @include ff-semibold;
   display: inline-block;
-  background: #fff;
+  background-color: $l-background-elements;
   padding: 7px 7px;
   z-index: 1;
   position: absolute;
@@ -11,9 +11,9 @@
   white-space: nowrap;
 
   &.--dark {
-    background: none;
+    background-color: $d-background-elements;
     z-index: 4;
-    color: white;
+    color: $d-color;
   }
 }
 

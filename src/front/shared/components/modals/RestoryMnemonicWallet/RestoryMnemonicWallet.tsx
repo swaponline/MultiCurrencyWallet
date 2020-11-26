@@ -261,7 +261,7 @@ export default class RestoryMnemonicWallet extends React.Component<any, any> {
                   <FormattedMessage {...langLabels.mnemonicInvalid} />
                 </div>
               )}
-              <div styleName="highLevel" className="ym-hide-content notranslate">
+              <div styleName="highLevel" className="ym-hide-content notranslate" translate="no">
                 <FieldLabel>
                   <span styleName="tooltipWrapper">
                     <FormattedMessage {...langLabels.mnemonicLabel} />
