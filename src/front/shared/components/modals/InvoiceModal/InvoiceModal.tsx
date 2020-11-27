@@ -140,7 +140,7 @@ export default class InvoiceModal extends React.Component<any, any> {
       .get('https://www.cbr-xml-daily.ru/daily_json.js', {
         cacheResponse: 60 * 60 * 1000,
       })
-      .then((rates) => {
+      .then((rates: any) => {
         if (rates && rates.Valute && rates.Valute.USD) {
           const rubRates = rates.Valute.USD.Value
           this.setState({
@@ -164,7 +164,7 @@ export default class InvoiceModal extends React.Component<any, any> {
 
     try {
       const message = `${contact}\r\n${label}`
-      const result = await actions.invoices.addInvoice({
+      const result: any = await actions.invoices.addInvoice({
         currency,
         toAddress: address,
         fromAddress: data.address,

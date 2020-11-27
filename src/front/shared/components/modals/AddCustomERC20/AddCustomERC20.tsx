@@ -60,7 +60,7 @@ export default class AddCustomERC20 extends React.Component<any, any> {
   componentDidMount() {}
 
   async getName(address) {
-    const response = await request.get(`${serviceURL}&to=${address}&data=${nameSignature}`)
+    const response: any = await request.get(`${serviceURL}&to=${address}&data=${nameSignature}`)
     const hexSymbol = response.result
     const symbol = Web3.utils.toUtf8(hexSymbol)
 
@@ -68,7 +68,7 @@ export default class AddCustomERC20 extends React.Component<any, any> {
   }
 
   async getSymbol(address) {
-    const response = await request.get(`${serviceURL}&to=${address}&data=${symbolSignature}`)
+    const response: any = await request.get(`${serviceURL}&to=${address}&data=${symbolSignature}`)
     const hexSymbol = response.result
     const symbol = Web3.utils.toUtf8(hexSymbol)
 
@@ -76,7 +76,7 @@ export default class AddCustomERC20 extends React.Component<any, any> {
   }
 
   async getDecimals(address) {
-    const response = await request.get(`${serviceURL}&to=${address}&data=${decimalsSignature}`)
+    const response: any = await request.get(`${serviceURL}&to=${address}&data=${decimalsSignature}`)
     const hexDecimals = response.result
     const decimals = Web3.utils.hexToNumber(hexDecimals)
 

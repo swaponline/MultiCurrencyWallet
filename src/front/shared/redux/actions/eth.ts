@@ -460,7 +460,7 @@ const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
   return apiLooper.get('etherscan', url, {
     cacheResponse,
   })
-    .then((res) => {
+    .then((res: any) => {
       if (res && res.result) {
         const {
           from,

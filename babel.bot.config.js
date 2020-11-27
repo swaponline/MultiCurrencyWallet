@@ -5,6 +5,7 @@ module.exports = {
         'node': 'current',
       },
     }],
+    '@babel/preset-typescript',
   ],
   'plugins': [
     'add-module-exports',

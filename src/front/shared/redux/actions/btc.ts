@@ -591,9 +591,15 @@ const signAndBuild = (transactionBuilder, address) => {
   return transactionBuilder.buildIncomplete()
 }
 
-const fetchUnspents = (address) => bitcoinUtils.fetchUnspents(address, BITPAY_API)
+const fetchUnspents = (address) => { 
+  const result: any = bitcoinUtils.fetchUnspents(address, BITPAY_API)
+  return result
+}
 
-const broadcastTx = (txRaw) => bitcoinUtils.broadcastTx(txRaw, BITPAY_API, BLOCYPER_API)
+const broadcastTx = (txRaw) => {
+  const result: any = bitcoinUtils.broadcastTx(txRaw, BITPAY_API, BLOCYPER_API)
+  return result
+}
 
 const signMessage = (message, encodedPrivateKey) => {
   const keyPair = bitcoin.ECPair.fromWIF(encodedPrivateKey, [bitcoin.networks.bitcoin, bitcoin.networks.testnet])

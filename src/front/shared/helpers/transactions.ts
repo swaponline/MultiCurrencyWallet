@@ -16,7 +16,7 @@ const fetchTxBalances = (currency, txId) => {
       } catch (e) { /* */ }
       return false
     },
-  }).then((res) => {
+  }).then((res: any) => {
     if (res
       && res.answer
       && res.answer === 'ok'
