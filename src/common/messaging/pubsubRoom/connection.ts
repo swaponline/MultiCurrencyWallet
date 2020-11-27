@@ -3,6 +3,7 @@
 import { EventEmitter } from 'events'
 import pipe from 'it-pipe'
 
+// @ts-ignore
 import PROTOCOL from './protocol'
 import encoding from './encoding'
 
