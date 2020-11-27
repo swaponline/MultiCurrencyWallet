@@ -5,8 +5,7 @@ import PeerId from 'peer-id'
 
 import debug from 'debug'
 
-// @ts-ignore
-import PROTOCOL from './protocol'
+import { PROTOCOL } from './protocol'
 import Connection from './connection'
 import encoding from './encoding'
 import directConnection from './direct-connection-handler'

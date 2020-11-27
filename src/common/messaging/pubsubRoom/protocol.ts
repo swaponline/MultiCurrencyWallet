@@ -1,3 +1,5 @@
-'use strict'
+const PROTOCOL = 'ipfs-pubsub-room/v2'
 
-module.exports = 'ipfs-pubsub-room/v2'
+export {
+  PROTOCOL,
+}

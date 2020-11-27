@@ -3,13 +3,13 @@
 import { EventEmitter } from 'events'
 import pipe from 'it-pipe'
 
-// @ts-ignore
-import PROTOCOL from './protocol'
+
+import { PROTOCOL } from './protocol'
 import encoding from './encoding'
 
 import debug from 'debug'
 
-
+console.log('>>>>>>>>>>> PROTOCOL', PROTOCOL)
 export default class Connection extends EventEmitter {
 
   _remoteId: any
