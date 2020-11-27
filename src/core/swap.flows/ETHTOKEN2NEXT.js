@@ -541,6 +541,10 @@ export default (tokenName) => {
       }
     }
 
+    verifyScript() {
+      this.verifyNextScript()
+    }
+
     verifyNextScript() {
       const flow = this
       const { nextScriptVerified, nextScriptValues } = flow.state

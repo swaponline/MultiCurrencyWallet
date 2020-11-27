@@ -543,6 +543,10 @@ class ETH2BTC extends Flow {
     }
   }
 
+  verifyScript() {
+    this.verifyBtcScript()
+  }
+
   verifyBtcScript() {
     const flow = this
     const { btcScriptVerified, btcScriptValues } = flow.state

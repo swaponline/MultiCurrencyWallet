@@ -500,6 +500,10 @@ class ETH2GHOST extends Flow {
     }
   }
 
+  verifyScript() {
+    this.verifyGhostScript()
+  }
+
   verifyGhostScript() {
     const flow = this
     const { ghostScriptVerified, ghostScriptValues } = flow.state

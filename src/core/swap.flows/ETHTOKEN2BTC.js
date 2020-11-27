@@ -583,6 +583,10 @@ export default (tokenName) => {
       }
     }
 
+    verifyScript() {
+      this.verifyBtcScript()
+    }
+
     verifyBtcScript() {
       const flow = this
       const { btcScriptVerified, btcScriptValues } = flow.state

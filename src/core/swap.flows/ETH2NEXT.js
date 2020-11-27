@@ -500,6 +500,10 @@ class ETH2NEXT extends Flow {
     }
   }
 
+  verifyScript() {
+    this.verifyNextScript()
+  }
+
   verifyNextScript() {
     const flow = this
     const { nextScriptVerified, nextScriptValues } = flow.state

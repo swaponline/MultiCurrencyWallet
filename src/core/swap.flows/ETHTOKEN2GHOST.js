@@ -541,6 +541,10 @@ export default (tokenName) => {
       }
     }
 
+    verifyScript() {
+      this.verifyGhostScript()
+    }
+
     verifyGhostScript() {
       const flow = this
       const { ghostScriptVerified, ghostScriptValues } = flow.state
