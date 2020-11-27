@@ -6,6 +6,7 @@ const fetchBalance = (options) => {
   const {
     address,
     API_ENDPOINT, // nextExplorerCustom
+    MAINNET,
   } = options
 
   return apiLooper.get(API_ENDPOINT, `/address/${address}`, {
@@ -27,6 +28,7 @@ const fetchUnspents = (options) => {
   const {
     address,
     API_ENDPOINT, // nextExplorerCustom
+    MAINNET,
   } = options
 
   return apiLooper.get(API_ENDPOINT, `/addr/${address}/utxo`, { cacheResponse: 5000 })
@@ -36,6 +38,7 @@ const broadcastTx = (options) => {
   const {
     rawTx,
     API_ENDPOINT, // nextExplorer
+    MAINNET,
   } = options
 
   return apiLooper.post(API_ENDPOINT, `/sendrawtransaction`, {
@@ -50,6 +53,7 @@ const fetchTx = (options) => {
     hash,
     cacheResponse,
     API_ENDPOINT, // nextExplorer
+    MAINNET,
   } = options
 
   return apiLooper.get(API_ENDPOINT, `/tx/${hash}`, {
@@ -73,6 +77,7 @@ const fetchTxInfo = (options) => {
     cacheResponse,
     API_ENDPOINT, // nextExplorer
     hasAdminFee,
+    MAINNET,
   } = options
 
   return fetchTx({
@@ -134,6 +139,7 @@ const checkWithdraw = (options) => {
   const {
     scriptAddress,
     API_ENDPOINT, // nextExplorerCustom
+    MAINNET,
   } = options
 
   return apiLooper.get(API_ENDPOINT, `/txs/${scriptAddress}`, {

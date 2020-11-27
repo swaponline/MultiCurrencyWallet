@@ -1,3 +1,6 @@
+import { default as nextUtils } from '../../../../common/utils/coin/next'
+
+
 const id = Math.random().toString().slice(2)
 
 module.exports = {
@@ -17,4 +20,15 @@ module.exports = {
       },
     },
   },
+
+  // flows for swap
+  /*
+  nextSwap: () => ({
+    fetchBalance: (address) => bitcoin.fetchBalance(address),
+    fetchUnspents: (scriptAddress) => bitcoin.fetchUnspents(scriptAddress),
+    broadcastTx: (txRaw) => bitcoin.broadcastTx(txRaw),
+    fetchTxInfo: txid => bitcoin.fetchTxInfo(txid),
+    estimateFeeValue: ({ inSatoshis, speed, address, txSize } = {}) => bitcoin.estimateFeeValue({ inSatoshis, speed, address, txSize }),
+    checkWithdraw: (scriptAddress) => bitcoin.checkWithdraw(scriptAddress),
+  })*/
 }
