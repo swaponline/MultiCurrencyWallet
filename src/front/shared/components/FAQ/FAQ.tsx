@@ -6,8 +6,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { constants } from 'helpers'
 import feedback from 'shared/helpers/feedback'
-import api from 'helpers/api'
-import config from 'app-config'
+import helpers from 'helpers'
 
 import cx from 'classnames'
 
@@ -30,19 +29,17 @@ const FAQ = (props) => {
     /* 
     * waiting for a response with fees and set them
     */
-    const { eth: ethLink, btc: btcLink } = config.feeRates
-    let btcApiResult = null
-    let ethApiResult = null
+    let btcSatoshiPrice = null
+    let ethGasPrice = null
 
     async function fetchFees() {
       try {
         if (_mounted) {
-          const BYTE_IN_KB = 1024
-          btcApiResult = await api.asyncFetchApi(btcLink)
-          setBtcFee(Math.ceil((btcApiResult.high_fee_per_kb / BYTE_IN_KB)))
-  
-          ethApiResult = await api.asyncFetchApi(ethLink)
-          setEthFee(ethApiResult.fastest)
+          btcSatoshiPrice = await helpers.btc.estimateFeeRate({ speed: 'fast' })
+          setBtcFee(btcSatoshiPrice)
+
+          ethGasPrice = await helpers.eth.estimateGasPrice({ speed: 'fast' })
+          setEthFee(ethGasPrice.replace(/0*$/,'')) // delete nulls in end
         }
       } catch(err) {
         console.error('FAQ -> useEffect: ', err);
