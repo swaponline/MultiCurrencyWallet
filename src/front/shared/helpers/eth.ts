@@ -11,7 +11,7 @@ type EstimateFeeOptions = {
 const estimateFeeValue = async (options: EstimateFeeOptions) => {
   /* 
   * method -> send, swap
-  * speed -> safeLow, standard, fast, fastest
+  * speed -> slow, fast, fastest
   */
   const { method, speed } = options
   const gasPrice = await estimateGasPrice({ speed })
