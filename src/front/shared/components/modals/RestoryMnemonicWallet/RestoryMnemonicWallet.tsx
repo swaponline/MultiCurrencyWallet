@@ -185,13 +185,9 @@ export default class RestoryMnemonicWallet extends React.Component<any, any> {
         const backupMark = actions.btc.getMainPublicKey()
 
         actions.backupManager.backup(backupMark, false, true)
-        //@ts-ignore
         const btcWallet = await actions.btc.getWalletByWords(mnemonic)
-        //@ts-ignore
         const ethWallet = await actions.eth.getWalletByWords(mnemonic)
-        //@ts-ignore
         const ghostWallet = await actions.ghost.getWalletByWords(mnemonic)
-        //@ts-ignore
         const nextWallet = await actions.next.getWalletByWords(mnemonic)
 
         // clean mnemonic, if exists
@@ -265,7 +261,7 @@ export default class RestoryMnemonicWallet extends React.Component<any, any> {
                   <FormattedMessage {...langLabels.mnemonicInvalid} />
                 </div>
               )}
-              <div styleName="highLevel" className="ym-hide-content notranslate">
+              <div styleName="highLevel" className="ym-hide-content notranslate" translate="no">
                 <FieldLabel>
                   <span styleName="tooltipWrapper">
                     <FormattedMessage {...langLabels.mnemonicLabel} />

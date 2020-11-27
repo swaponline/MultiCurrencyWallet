@@ -311,7 +311,7 @@ export default (tokenName) => {
           }
 
           if (flow.ethTokenSwap.hasTargetWallet()) {
-            const targetWallet = await flow.ethTokenSwap.getTargetWallet( participant.eth.address )
+            const targetWallet = await flow.ethTokenSwap.getTargetWallet( this.app.getParticipantEthAddress(flow.swap) )
             const needTargetWallet = (flow.swap.destinationBuyAddress)
               ? flow.swap.destinationBuyAddress
               : this.app.getMyEthAddress()

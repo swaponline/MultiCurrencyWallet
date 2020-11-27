@@ -9,18 +9,25 @@ import styles from './Row.scss'
 import { FormattedMessage } from 'react-intl'
 import actions from 'redux/actions'
 import { constants, links } from 'helpers'
-import CommentRow from './Comment'
+import CommentRow from 'components/Comment/Comment'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { Link } from 'react-router-dom'
 import getCurrencyKey from 'helpers/getCurrencyKey'
-import ethToken from 'helpers/ethToken'
 
+import ethToken from 'helpers/ethToken'
 import { getFullOrigin } from 'helpers/links'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-class Row extends React.PureComponent<any, any> {
+@connect(({
+  user: { tokensData },
+}) => ({
+  tokensData,
+}))
+@cssModules(styles, { allowMultiple: true })
+
+export default class Row extends React.PureComponent<any, any> {
 
   props: any
 
@@ -39,13 +46,26 @@ class Row extends React.PureComponent<any, any> {
       comment: actions.comments.returnDefaultComment(hiddenList, ind),
       cancelled: false,
       payed: false,
+      showFiat: true,
     }
   }
 
   componentDidMount() {
-    const { type } = this.props
-
-    this.getFiatBalance(type)
+    const { type, tokensData } = this.props
+    /* 
+    * request fiat balance if token have currency price 
+    */
+    Object.keys(tokensData).forEach(key => {
+      if (key.includes(type)) {
+        if (tokensData[key].infoAboutCurrency) {
+          this.getFiatBalance(type)
+        } else {
+          this.setState({
+            showFiat: false
+          })
+        }
+      }
+    })
   }
 
   getFiatBalance = async (type) => {
@@ -126,14 +146,6 @@ class Row extends React.PureComponent<any, any> {
     })
   }
 
-  toggleComment = (val) => {
-    this.setState(() => ({ isOpen: val }))
-  }
-
-  changeComment = (val) => {
-    this.setState(() => ({ comment: val }))
-  }
-
   handleSendConfirmLink = () => {
     const {
       history,
@@ -162,11 +174,6 @@ class Row extends React.PureComponent<any, any> {
     const shareLink = `${links.multisign}/btc/confirm/${uniqhash}`
 
     history.push(shareLink)
-  }
-
-  commentCancel = () => {
-
-    this.toggleComment(false)
   }
 
   parseFloat = (direction, value, directionType, type) => {
@@ -203,9 +210,14 @@ class Row extends React.PureComponent<any, any> {
       confirmations,
       txType,
       invoiceData,
+      date,
       confirmTx,
-      onSubmit,
+      tokensData,
     } = this.props
+
+    const {
+      showFiat,
+    } = this.state
 
     const substrAddress = address ? `${address.slice(0, 2)}...${address.slice(-2)}` : ''
 
@@ -343,15 +355,11 @@ class Row extends React.PureComponent<any, any> {
                 }
               </div>
               <CommentRow
-                isOpen={isOpen}
                 comment={comment}
                 label={invoiceData && invoiceData.label}
-                commentCancel={this.commentCancel}
-                ind={ind}
-                submit={onSubmit}
-                changeComment={({ target }) => this.changeComment(target.value)}
-                toggleComment={this.toggleComment}
-                {...this.props}
+                date={date}
+                showComment={true}
+                commentKey={hash}
               />
               {txType === 'INVOICE' && direction === 'in' &&
                 <div styleName={(hasInvoiceButtons) ? 'info' : 'info noButtons'}>
@@ -416,8 +424,11 @@ class Row extends React.PureComponent<any, any> {
             )}
             <div styleName={statusStyleAmount}>
               {invoiceData ? this.parseFloat(direction, value, 'out', type) : this.parseFloat(direction, value, 'in', type)}
-              <span styleName='amountUsd'>{`~${getFiat.toFixed(2)}`}{` `}{activeFiat}</span>
-
+              {
+                showFiat
+                  ? <span styleName='amountUsd'>{`~${getFiat.toFixed(2)}`}{` `}{activeFiat}</span>
+                  : null
+              }
             </div>
             {/* <LinkTransaction type={type} styleName='address' hash={hash} >{hash}</LinkTransaction> */}
           </td>
@@ -426,8 +437,3 @@ class Row extends React.PureComponent<any, any> {
     )
   }
 }
-
-/* eslint-enable */
-
-
-export default cssModules(Row, styles, { allowMultiple: true })

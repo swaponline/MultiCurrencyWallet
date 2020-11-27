@@ -54,7 +54,6 @@ const addressToWallet = (address) => {
 
 const getSmsKeyFromMnemonic = (mnemonic) => {
   if (mnemonic) {
-    //@ts-ignore
     const mnemonicWallet = actions.btc.getWalletByWords(mnemonic, 1)
     if (mnemonicWallet) {
       return mnemonicWallet.publicKey
@@ -641,7 +640,6 @@ const beginRegisterSMS = async (phone, mnemonic, ownPublicKey) => {
   const publicKeys = []
   if (mnemonic && !ownPublicKey) {
     // 2of3 - extract public key from mnemonic
-    //@ts-ignore
     const mnemonicAccount = actions.btc.getWalletByWords(mnemonic, 1)
     publicKeys.push(mnemonicAccount.publicKey)
   }
@@ -692,7 +690,6 @@ const confirmRegisterSMS = async (phone, smsCode, mnemonic, ownPublicKey) => {
 
   if (mnemonic && !ownPublicKey) {
     // 2of3 - extract public key from mnemonic
-    //@ts-ignore
     const mnemonicAccount = actions.btc.getWalletByWords(mnemonic, 1)
     //@ts-ignore
     mnemonicKey = mnemonicAccount.publicKey
@@ -759,7 +756,6 @@ const register_PIN = async (password, mnemonic, ownPublicKey) => {
 
   if (mnemonic && !ownPublicKey) {
     // 2of3 - extract public key from mnemonic
-    //@ts-ignore
     const mnemonicAccount = actions.btc.getWalletByWords(mnemonic, 1)
     //@ts-ignore
     mnemonicKey = mnemonicAccount.publicKey
@@ -813,7 +809,6 @@ const addPinWallet = async (mnemonicOrKey) => {
 
   let mnemonicKey = mnemonicOrKey
   if (actions.btc.validateMnemonicWords(mnemonicOrKey)) {
-    //@ts-ignore
     const mnemonicAccount = actions.btc.getWalletByWords(mnemonicOrKey, 1)
     mnemonicKey = mnemonicAccount.publicKey
   }
@@ -860,7 +855,6 @@ const addSMSWallet = async (mnemonicOrKey) => {
 
   let mnemonicKey = mnemonicOrKey
   if (actions.btc.validateMnemonicWords(mnemonicOrKey)) {
-    //@ts-ignore
     const mnemonicAccount = actions.btc.getWalletByWords(mnemonicOrKey, 1)
     mnemonicKey = mnemonicAccount.publicKey
   }
@@ -914,7 +908,7 @@ const getAddrBalance = (address) => {
   })
 }
 
-const getBalance = (ownAddress, ownDataKey) => {
+const getBalance = (ownAddress = null, ownDataKey = null) => {
   const { user: { btcMultisigSMSData: { address } } } = getState()
   const checkAddress = (ownAddress) || address
   const dataKey = (ownDataKey) || 'btcMultisigSMSData'
@@ -1064,24 +1058,24 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
       },
     },
   } = getState()
-  //@ts-ignore
-  let feeFromAmount = new BigNumber(0)
+
+  let feeFromAmount: number | BigNumber = new BigNumber(0)
 
   if (hasAdminFee) {
     const {
       fee: adminFee,
       min: adminFeeMinValue,
     } = hasAdminFee
-    //@ts-ignore
+
     const adminFeeMin = new BigNumber(adminFeeMinValue)
-    //@ts-ignore
+
     feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
     if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
-    //@ts-ignore
-    feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber() // Admin fee in satoshi
+    feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
   }
-  //@ts-ignore
+  feeFromAmount = feeFromAmount.toNumber()
+
   feeValue = feeValue || await btc.estimateFeeValue({
     inSatoshis: true,
     speed,
@@ -1094,7 +1088,6 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
 
   const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  //@ts-ignore
   const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
   const p2ms = bitcoin.payments.p2ms({
@@ -1122,7 +1115,6 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
     // admin fee output
     psbt.addOutput({
       address: hasAdminFee.address,
-      //@ts-ignore
       value: feeFromAmount,
     })
   }
@@ -1185,7 +1177,7 @@ const sendSMSProtectedV4 = async ({ from, to, amount, feeValue, speed } = {}) =>
       },
     },
   } = getState()
-//@ts-ignore
+
   let feeFromAmount = new BigNumber(0)
 
   if (hasAdminFee) {
@@ -1193,16 +1185,16 @@ const sendSMSProtectedV4 = async ({ from, to, amount, feeValue, speed } = {}) =>
       fee: adminFee,
       min: adminFeeMinValue,
     } = hasAdminFee
-//@ts-ignore
+
     const adminFeeMin = new BigNumber(adminFeeMinValue)
-//@ts-ignore
+
     feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
     if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
 
     feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
   }
-//@ts-ignore
+
   feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, method: 'send_2fa' })
 
 
@@ -1210,8 +1202,7 @@ const sendSMSProtectedV4 = async ({ from, to, amount, feeValue, speed } = {}) =>
 
   const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  //@ts-ignore
-  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
+  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount.toNumber()
 
   const p2ms = bitcoin.payments.p2ms({
     m: 2,
@@ -1297,24 +1288,24 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
       },
     },
   } = getState()
-  //@ts-ignore
-  let feeFromAmount = new BigNumber(0)
+
+  let feeFromAmount: number | BigNumber = new BigNumber(0)
 
   if (hasAdminFee) {
     const {
       fee: adminFee,
       min: adminFeeMinValue,
     } = hasAdminFee
-    //@ts-ignore
+
     const adminFeeMin = new BigNumber(adminFeeMinValue)
-    //@ts-ignore
+
     feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
     if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
-    //@ts-ignore
-    feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber() // Admin fee in satoshi
+
+    feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
   }
-  //@ts-ignore
+  feeFromAmount = feeFromAmount.toNumber()
   feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, method: 'send_2fa', address: pinAddress })
 
 
@@ -1324,7 +1315,6 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
 
   const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  //@ts-ignore
   const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
   const p2ms = bitcoin.payments.p2ms({
@@ -1352,7 +1342,6 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
     // admin fee output
     psbt.addOutput({
       address: hasAdminFee.address,
-      //@ts-ignore
       value: feeFromAmount,
     })
   }
@@ -1456,7 +1445,7 @@ const sendPinProtectedV4 = async ({ from, to, amount, feeValue, speed, password,
       },
     },
   } = getState()
-  //@ts-ignore
+
   let feeFromAmount = new BigNumber(0)
 
   if (hasAdminFee) {
@@ -1464,16 +1453,16 @@ const sendPinProtectedV4 = async ({ from, to, amount, feeValue, speed, password,
       fee: adminFee,
       min: adminFeeMinValue,
     } = hasAdminFee
-    //@ts-ignore
+
     const adminFeeMin = new BigNumber(adminFeeMinValue)
-    //@ts-ignore
+
     feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
     if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
 
     feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
   }
-  //@ts-ignore
+
   feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, method: 'send_2fa' })
 
 
@@ -1481,8 +1470,7 @@ const sendPinProtectedV4 = async ({ from, to, amount, feeValue, speed, password,
 
   const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  //@ts-ignore
-  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
+  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount.toNumber()
 
   const p2ms = bitcoin.payments.p2ms({
     m: 2,
@@ -1631,36 +1619,35 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
   console.log('senderWallet', from)
 
   const { address, publicKeys } = senderWallet
-  //@ts-ignore
+
   feeValue = feeValue || await btc.estimateFeeValue({
     inSatoshis: true,
     speed,
     method: 'send_multisig',
     address,
   })
-  //@ts-ignore
-  let feeFromAmount = new BigNumber(0)
+
+  let feeFromAmount: number | BigNumber = new BigNumber(0)
 
   if (hasAdminFee) {
     const {
       fee: adminFee,
       min: adminFeeMinValue,
     } = hasAdminFee
-    //@ts-ignore
+
     const adminFeeMin = new BigNumber(adminFeeMinValue)
-    //@ts-ignore
+
     feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
     if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
-    //@ts-ignore
-    feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber()
-  }
 
+    feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue()
+  }
+  feeFromAmount = feeFromAmount.toNumber()
   const unspents = await fetchUnspents(from)
 
   const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  //@ts-ignore
   const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
   const p2ms = bitcoin.payments.p2ms({
@@ -1690,7 +1677,6 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
     // admin fee output
     psbt.addOutput({
       address: hasAdminFee.address,
-      //@ts-ignore
       value: feeFromAmount,
     })
   }
@@ -1717,7 +1703,6 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
 // Deprecated
 //@ts-ignore
 const sendV4 = async ({ from, to, amount, feeValue, speed } = {}) => {
-  //@ts-ignore
   feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, method: 'send_multisig' })
   const {
     user: {
@@ -1731,7 +1716,7 @@ const sendV4 = async ({ from, to, amount, feeValue, speed } = {}) => {
   console.log('senderWallet', from)
 
   const { address, publicKeys } = senderWallet
-  //@ts-ignore
+
   let feeFromAmount = new BigNumber(0)
 
   if (hasAdminFee) {
@@ -1739,9 +1724,9 @@ const sendV4 = async ({ from, to, amount, feeValue, speed } = {}) => {
       fee: adminFee,
       min: adminFeeMinValue,
     } = hasAdminFee
-    //@ts-ignore
+
     const adminFeeMin = new BigNumber(adminFeeMinValue)
-    //@ts-ignore
+
     feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
     if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
@@ -1753,8 +1738,8 @@ const sendV4 = async ({ from, to, amount, feeValue, speed } = {}) => {
 
   const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  //@ts-ignore
-  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
+
+  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount.toNumber()
 
   const p2ms = bitcoin.payments.p2ms({
     m: 2,
@@ -2105,7 +2090,6 @@ const signSmsMnemonic = (txHash, mnemonic) => {
 
 const signPinMnemonic = (txHash, mnemonic) => {
   return new Promise(async (resolve, reject) => {
-    //@ts-ignore
     const mnemonicWallet = actions.btc.getWalletByWords(mnemonic, 1)
     const psbt = bitcoin.Psbt.fromHex(txHash)
 
@@ -2139,7 +2123,6 @@ const signPinMnemonicv4 = (txHash, mnemonic) => {
 
 const signSmsMnemonicAndBuild = (txHash, mnemonic) => {
   return new Promise(async (resolve, reject) => {
-    //@ts-ignore
     const mnemonicWallet = actions.btc.getWalletByWords(mnemonic, 1)
     const psbt = bitcoin.Psbt.fromHex(txHash)
 
@@ -2169,7 +2152,6 @@ const signSmsMnemonicAndBuildV4 = (txHash, mnemonic) => {
 }
 
 const checkPinCanRestory = (mnemonic) => {
-  //@ts-ignore
   const mnemonicWallet = actions.btc.getWalletByWords(mnemonic, 1)
   let btcSmsMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKey)
   try { btcSmsMnemonicKey = JSON.parse(btcSmsMnemonicKey) } catch (e) { }
@@ -2188,8 +2170,8 @@ const checkPinMnemonic = (mnemonic) => {
       },
     },
   } = getState()
-  //@ts-ignore
   const mnemonicWallet = actions.btc.getWalletByWords(mnemonic, 1)
+
   if (mnemonicWallet) {
     const matchedKeys = publicKeys.filter((key) => key.toString('Hex') === mnemonicWallet.publicKey)
     return (matchedKeys.length > 0)
@@ -2205,8 +2187,8 @@ const checkSmsMnemonic = (mnemonic) => {
       },
     },
   } = getState()
-  //@ts-ignore
   const mnemonicWallet = actions.btc.getWalletByWords(mnemonic, 1)
+
   if (mnemonicWallet) {
     const matchedKeys = publicKeys.filter((key) => key.toString('Hex') === mnemonicWallet.publicKey)
     return (matchedKeys.length > 0)

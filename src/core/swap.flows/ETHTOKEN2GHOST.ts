@@ -572,7 +572,7 @@ export default (tokenName) => {
         isBalanceFetching: true,
       })
 
-      const balance = await this.ethTokenSwap.fetchBalance(this.app.services.auth.accounts.eth.address)
+      const balance = await this.ethTokenSwap.fetchBalance(this.app.getMyEthAddress())
       const isEnoughMoney = sellAmount.isLessThanOrEqualTo(balance)
 
       const stateData = {

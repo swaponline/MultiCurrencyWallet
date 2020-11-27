@@ -24,6 +24,8 @@ class SwapAuth extends ServiceInterface {
 
     _privateKeys = privateKeys
     _mnemonic = useMnemonic
+    
+
   }
 
   initService() {

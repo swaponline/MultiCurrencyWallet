@@ -19,7 +19,6 @@ import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-import ReactTooltip from 'react-tooltip'
 import { isMobile } from 'react-device-detect'
 import QrReader from 'components/QrReader'
 import InvoiceInfoBlock from 'components/InvoiceInfoBlock/InvoiceInfoBlock'
@@ -102,7 +101,6 @@ export default class WithdrawModal extends React.Component<any, any> {
       openScanCam: '',
       address: toAddress ? toAddress : '',
       amount: amount ? amount : '',
-      minus: '',
       balance: selectedItem.balance || 0,
       selectedItem,
       ethBalance: null,
@@ -120,6 +118,8 @@ export default class WithdrawModal extends React.Component<any, any> {
       wallet: selectedItem,
       devErrorMessage: false,
       tokenFee: `(Fetching fee)`,
+      fetchFee: true,
+      adminFeeSize: null,
     }
   }
 
@@ -204,12 +204,15 @@ export default class WithdrawModal extends React.Component<any, any> {
       isEthToken,
       wallet: { address },
       wallet,
+      usedAdminFee,
+      adminFeeSize,
+      amount,
     } = this.state
 
     const currentCoin = getCurrencyKey(currency, true).toLowerCase()
 
     if (isEthToken) {
-      minAmount[currentCoin] = this.getMinAmountForEthToken()
+      minAmount[currentCoin] = +this.getMinAmountForEthToken()
       //@ts-ignore
       minAmount.eth = await helpers.eth.estimateFeeValue({
         method: 'send',
@@ -237,7 +240,18 @@ export default class WithdrawModal extends React.Component<any, any> {
         speed: 'fast',
         address,
       })
+
+      this.setState({
+        fetchFee: false,
+      })
     }
+
+    const valueAdminFee = usedAdminFee ? adminFee.calc(wallet.currency, amount) : 0
+
+    this.setState({
+      fetchFee: false,
+      adminFeeSize: valueAdminFee,
+    })
   }
 
   setBalanceOnState = async () => {
@@ -445,39 +459,6 @@ export default class WithdrawModal extends React.Component<any, any> {
       })
   }
 
-  setMaxBalance = () => {
-    const { balance, isEthToken, usedAdminFee, currentDecimals, exCurrencyRate } = this.state
-
-    const {
-      data: { currency },
-    } = this.props
-
-    let minFee = new BigNumber(
-      isEthToken ? 0 : minAmount[getCurrencyKey(currency, false).toLowerCase()]
-    )
-
-    minFee = usedAdminFee ? new BigNumber(minFee).plus(adminFee.calc(currency, balance)) : minFee
-
-    if (new BigNumber(minFee).isGreaterThan(balance)) {
-      this.setState({
-        amount: 0,
-        fiatAmount: 0,
-      })
-    } else {
-      console.log('sellAll - min Fee', minFee.toNumber())
-      const balanceMiner = balance
-        ? balance !== 0
-          ? new BigNumber(balance).minus(minFee)
-          : balance
-        : 'Wait please. Loading...'
-
-      this.setState({
-        amount: new BigNumber(balanceMiner.dp(currentDecimals, BigNumber.ROUND_FLOOR)),
-        fiatAmount: balanceMiner ? (balanceMiner * exCurrencyRate).toFixed(2) : '',
-      })
-    }
-  }
-
   isEthOrERC20() {
     const { ethBalance, isEthToken, tokenFee } = this.state
 
@@ -581,6 +562,8 @@ export default class WithdrawModal extends React.Component<any, any> {
       enabledCurrencies,
       devErrorMessage,
       tokenFee,
+      fetchFee,
+      adminFeeSize,
     } = this.state
 
     const { name, intl, portalUI, activeFiat, activeCurrency, dashboardView } = this.props
@@ -612,29 +595,19 @@ export default class WithdrawModal extends React.Component<any, any> {
     tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
 
     let dinamicFee = isEthToken ? 0 : minAmount[getCurrencyKey(currency, false).toLowerCase()]
-    let defaultMinFee = dinamicFee // non-changing value in an amount warning
-
+    let defaultMinFee = dinamicFee // non-changing value in an amount hint
+ 
     dinamicFee = usedAdminFee
       ? new BigNumber(dinamicFee).plus(adminFee.calc(currency, amount)).toNumber()
       : dinamicFee
 
-    let allowedCriptoBalance: BigNumber = new BigNumber(balance)
-      .minus(defaultMinFee)
-      .dp(currentDecimals, BigNumber.ROUND_FLOOR)
-    let allowedUsdBalance: BigNumber = new BigNumber(
+    let allowedCriptoBalance: BigNumber | 0 = new BigNumber(balance).minus(defaultMinFee)
+    let allowedUsdBalance: BigNumber | 0 = new BigNumber(
       ((allowedCriptoBalance as any) * exCurrencyRate) as number
     ).dp(2, BigNumber.ROUND_FLOOR)
-    /*
-     * for btc and btc-usd appears minus in start
-     * need delete this minus
-     */
-    allowedCriptoBalance = allowedCriptoBalance.isLessThan(0)
-      ? allowedCriptoBalance.absoluteValue()
-      : allowedCriptoBalance
-
-    allowedUsdBalance = allowedUsdBalance.isLessThan(0)
-      ? allowedUsdBalance.absoluteValue()
-      : allowedUsdBalance
+    
+    allowedCriptoBalance = +allowedCriptoBalance > 0 ? allowedCriptoBalance : 0
+    allowedUsdBalance = +allowedUsdBalance > 0 ? allowedUsdBalance : 0
 
     const criptoValueIsOk = new BigNumber(
       linked.amount.pipe(this.handleAmount).value
@@ -642,6 +615,13 @@ export default class WithdrawModal extends React.Component<any, any> {
     const usdValueIsOk = new BigNumber(
       linked.fiatAmount.pipe(this.handleAmount).value
     ).isLessThanOrEqualTo(allowedUsdBalance)
+    
+    const setMaxBalance = () => {
+      this.setState({
+        amount: allowedCriptoBalance,
+        fiatAmount: allowedUsdBalance,
+      })
+    }
 
     const isDisabled =
       !address ||
@@ -652,15 +632,8 @@ export default class WithdrawModal extends React.Component<any, any> {
       !criptoValueIsOk ||
       !usdValueIsOk ||
       new BigNumber(amount).isGreaterThan(balance) ||
-      new BigNumber(amount).isGreaterThan(currentDecimals) ||
+      new BigNumber(amount).dp() > currentDecimals ||
       this.isEthOrERC20()
-
-    if (this.state.amount < 0) {
-      this.setState({
-        amount: '',
-        minus: true,
-      })
-    }
 
     const labels = defineMessages({
       withdrowModal: {
@@ -695,15 +668,14 @@ export default class WithdrawModal extends React.Component<any, any> {
       const RIGHT_ARROW = 39
       const ZERO_CODE = 48
       const NINE_CODE = 57
-      const DOT_CODE = 190
 
       if (
         !(
           (event.keyCode >= ZERO_CODE && event.keyCode <= NINE_CODE) ||
-          event.keyCode === DOT_CODE ||
           event.keyCode === BACKSPACE_CODE ||
           event.keyCode === LEFT_ARROW ||
-          event.keyCode === RIGHT_ARROW
+          event.keyCode === RIGHT_ARROW ||
+          event.key === '.'
         )
       ) {
         event.preventDefault()
@@ -874,7 +846,7 @@ export default class WithdrawModal extends React.Component<any, any> {
                     }}
                   />
                 )}{' '}
-                {/* <- for indent before the tooltip */}
+                {/* ^ for indent before the tooltip */}
                 <Tooltip id="WtH204">
                   <div style={{ maxWidth: '24em', textAlign: 'center' }}>
                     <FormattedMessage
@@ -884,12 +856,12 @@ export default class WithdrawModal extends React.Component<any, any> {
                         br: <br />,
                       }}
                     />
-                  </div>
+                </div>
                 </Tooltip>
               </div>
             )}
             <div style={{ marginLeft: '15px' }}>
-              <Button blue big onClick={this.setMaxBalance} id="Withdrow134">
+              <Button disabled={fetchFee} blue big onClick={setMaxBalance} id="Withdrow134">
                 <FormattedMessage id="Select210" defaultMessage="MAX" />
               </Button>
             </div>
@@ -1006,7 +978,22 @@ export default class WithdrawModal extends React.Component<any, any> {
               rednotes: isEthToken,
               dashboardViewNotice: dashboardView,
             })}
-          >
+            >
+            {
+              usedAdminFee && (
+                <>
+                  <FormattedMessage
+                    id="Withdrow214"
+                    defaultMessage="Admin Fee {currency}: {adminFee}"
+                    values={{
+                      adminFee: `${fetchFee ? '...' : adminFeeSize}`,
+                      currency: `${getCurrencyKey(dataCurrency, true).toUpperCase()}`,
+                    }}
+                  />
+                  <br />
+                </>
+              )
+            }
             <FormattedMessage
               id="Withdrow213"
               defaultMessage="Please note: Fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction"

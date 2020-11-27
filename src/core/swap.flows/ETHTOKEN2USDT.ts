@@ -33,7 +33,7 @@ export default (tokenName) => {
       this.usdtSwap      = this.app.swaps[constants.COINS.usdt]
 
       this.myBtcAddress = this.app.services.auth.accounts.btc.getAddress()
-      this.myEthAddress = this.app.services.auth.accounts.eth.address
+      this.myEthAddress = this.app.getMyEthAddress()
 
       this.stepNumbers = {
         'sign': 1,
@@ -292,7 +292,7 @@ export default (tokenName) => {
       const { participant } = this.swap
 
       const swapData = {
-        ownerAddress:       this.app.services.auth.accounts.eth.address,
+        ownerAddress:       this.app.getMyEthAddress(),
         participantAddress: participant.eth.address
       }
 
@@ -358,7 +358,7 @@ export default (tokenName) => {
         isBalanceFetching: true,
       })
 
-      const balance = await this.ethTokenSwap.fetchBalance(this.app.services.auth.accounts.eth.address)
+      const balance = await this.ethTokenSwap.fetchBalance(this.app.getMyEthAddress())
       const isEnoughMoney = sellAmount.isLessThanOrEqualTo(balance)
 
       if (isEnoughMoney) {

@@ -101,7 +101,16 @@ const getBchWallet = (network, mnemonic, walletNumber = 0, path) => { /* not imp
 
 const getSumWallet = (network, mnemonic, walletNumber = 0, path) => { /* not implements */ }
 
-export default {
+const forCoin = {
+  BTC:    getBtcWallet,
+  ETH:    getEthWallet,
+  GHOST:  getGhostWallet,
+  NEXT:   getNextWallet,
+  BCH:    getBchWallet, /* not implements */
+  SUM:    getSumWallet, /* not implements */
+}
+
+export {
   convertMnemonicToValid,
   getBtcWallet,
   getEthWallet,
@@ -109,12 +118,5 @@ export default {
   getNextWallet,
   getBchWallet, /* not implements */
   getSumWallet, /* not implements */
-  forCoin: {
-    BTC:    getBtcWallet,
-    ETH:    getEthWallet,
-    GHOST:  getGhostWallet,
-    NEXT:   getNextWallet,
-    BCH:    getBchWallet, /* not implements */
-    SUM:    getSumWallet, /* not implements */
-  },
+  forCoin,
 }

@@ -169,9 +169,11 @@ const apiLooper = (method, api, endpoint, options) => {
             })
             .catch((answer) => {
               if (reportErrors instanceof Function) {
+                let skipDefResolve = false
                 const swithToNextServer = reportErrors(
                   answer,
                   (resolveResult) => {
+                    skipDefResolve = true
                     resolve(resolveResult)
                   },
                   (rejectResult) => {
@@ -179,7 +181,7 @@ const apiLooper = (method, api, endpoint, options) => {
                   }
                 )
                 if (!swithToNextServer) {
-                  resolve(answer)
+                  if (!skipDefResolve) resolve(answer)
                   return
                 }
               }

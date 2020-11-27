@@ -31,7 +31,6 @@ const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonicUtils
 
 
 const sweepToMnemonic = (mnemonic, path) => {
-  //@ts-ignore
   const wallet = getWalletByWords(mnemonic, path)
   localStorage.setItem(constants.privateKeyNames.nextMnemonic, wallet.WIF)
   return wallet.WIF
@@ -76,7 +75,7 @@ const getSweepAddress = () => {
   return false
 }
 
-const getWalletByWords = (mnemonic, walletNumber = 0, path) => {
+const getWalletByWords = (mnemonic: string, walletNumber: number = 0, path: string = '') => {
   return mnemonicUtils.getNextWallet(next.network, mnemonic, walletNumber, path)
 }
 
@@ -95,6 +94,7 @@ const auth = (privateKey) => {
     //@ts-ignore
     network: next.network,
   })
+
   const { publicKey } = account
 
   return {
@@ -143,9 +143,9 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
     // privateKey  = keyPair.toWIF()
     // use random 12 words
     if (!mnemonic) mnemonic = bip39.generateMnemonic()
-    //@ts-ignore
+    
     const accData = getWalletByWords(mnemonic)
-    console.log('Next. Generated walled from random 12 words')
+    console.log('Next. Generated wallet from random 12 words')
     console.log(accData)
     privateKey = accData.WIF
     localStorage.setItem(constants.privateKeyNames.nextMnemonic, privateKey)
@@ -288,13 +288,17 @@ const getBalance = () => {
 }
 
 const fetchBalance = (address) => {
-  console.log('>>>fetchBalance')
   return apiLooper.get('nextExplorer', `/address/${address}`, {
     checkStatus: (answer) => {
       try {
         if (answer && answer.balance !== undefined) return true
       } catch (e) { /* */ }
       return false
+    },
+    ignoreErrors: true,
+    reportErrors: (answer, onSuccess, onFail) => {
+      onSuccess({ balance: 0 })
+      return true
     },
   }).then(({ balance }) => balance)
 }
@@ -304,13 +308,12 @@ const fetchTx = (hash, cacheResponse) =>
     cacheResponse,
     checkStatus: (answer) => {
       try {
-        if (answer && answer.fees !== undefined) return true
+        if (answer && answer.txId !== undefined) return true
       } catch (e) { /* */ }
       return false
     },
   }).then(({ fees, ...rest }) => ({
-    //@ts-ignore
-    fees: BigNumber(fees).multipliedBy(1e8),
+    fees: new BigNumber(fees).multipliedBy(1e8),
     ...rest,
   }))
 
@@ -325,15 +328,18 @@ const fetchTxRaw = (txId, cacheResponse) =>
     },
   }).then(({ rawtx }) => rawtx)
 
+/** to-do  not working **/
 const fetchTxInfo = (hash, cacheResponse) =>
   fetchTx(hash, cacheResponse)
-    //@ts-ignore
-    .then(({ vin, vout, ...rest }) => {
+    .then((txInfo_) => {
+
+      return { ...txInfo_ }
+      const { vin, vout, ...rest } = txInfo_
       const senderAddress = vin ? vin[0].addr : null
       const amount = vout ? new BigNumber(vout[0].value).toNumber() : null
 
       let afterBalance = vout && vout[1] ? new BigNumber(vout[1].value).toNumber() : null
-      let adminFee = false
+      let adminFee: any = false
 
       if (hasAdminFee) {
         const adminOutput = vout.filter((out) => (
@@ -353,7 +359,6 @@ const fetchTxInfo = (hash, cacheResponse) =>
         }
 
         if (adminOutput.length) {
-          //@ts-ignore
           adminFee = new BigNumber(adminOutput[0].value).toNumber()
         }
       }
@@ -580,7 +585,7 @@ window.getMainPublicKey = getMainPublicKey
 
 
 const checkWithdraw = (scriptAddress) => {
-  return apiLooper.get('nextExplorer', `/txs/?address=${scriptAddress}`, {
+  return apiLooper.get('nextExplorerCustom', `/txs/${scriptAddress}`, {
     checkStatus: (answer) => {
       try {
         if (answer && answer.txs !== undefined) return true
@@ -593,9 +598,10 @@ const checkWithdraw = (scriptAddress) => {
       && res.txs[0].vout.length
     ) {
       const address = res.txs[0].vout[0].scriptPubKey.addresses[0]
+      const amount = res.txs[0].vout[0].valueSat
+
       const {
         txid,
-        valueOut: amount,
       } = res.txs[0]
       return {
         address,
@@ -606,8 +612,7 @@ const checkWithdraw = (scriptAddress) => {
     return false
   })
 }
-//@ts-ignore
-window.nextCheckWithdraw = checkWithdraw
+
 
 export default {
   login,

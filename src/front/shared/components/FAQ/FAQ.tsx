@@ -7,7 +7,6 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 
 import { constants } from 'helpers'
 import feedback from 'shared/helpers/feedback'
-import minAmount from 'helpers/constants/minAmount'
 import api from 'helpers/api'
 import config from 'app-config'
 
@@ -39,15 +38,12 @@ const FAQ = (props) => {
       try {
         const BYTE_IN_KB = 1024
         btcApiResult = await api.asyncFetchApi(btcLink)
-        setBtcFee(new BigNumber(btcApiResult.low_fee_per_kb / BYTE_IN_KB).dp(5, BigNumber.ROUND_FLOOR).toString())
+        setBtcFee(Math.ceil((btcApiResult.high_fee_per_kb / BYTE_IN_KB)))
 
         ethApiResult = await api.asyncFetchApi(ethLink)
-        setEthFee(new BigNumber(ethApiResult.fastest).dp(5, BigNumber.ROUND_FLOOR).toString())
+        setEthFee(ethApiResult.fastest)
       } catch(err) {
         console.log('FAQ -> useEffect: ', err);
-
-        setBtcFee(new BigNumber(minAmount.btc).dp(5, BigNumber.ROUND_FLOOR).toString())
-        setEthFee(new BigNumber(minAmount.eth).dp(5, BigNumber.ROUND_FLOOR).toString())
       }
     }
 
@@ -133,7 +129,7 @@ const FAQ = (props) => {
             <p className={styles.descriptionFee}>
               <span>ETH:</span>{' '}
               {ethFee
-                ? <span><b>{ethFee}</b> sat/byte</span> 
+                ? <span><b>{ethFee}</b> gwei</span> 
                 : <FormattedMessage id="MainFAQ2_content4" defaultMessage="Loading" />
               }
             </p>

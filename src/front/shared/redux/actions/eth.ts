@@ -31,7 +31,6 @@ const getRandomMnemonicWords = () => bip39.generateMnemonic()
 const validateMnemonicWords = (mnemonic) => bip39.validateMnemonic(mnemonicUtils.convertMnemonicToValid(mnemonic))
 
 const sweepToMnemonic = (mnemonic, path) => {
-  //@ts-ignore
   const wallet = getWalletByWords(mnemonic, path)
   localStorage.setItem(constants.privateKeyNames.ethMnemonic, wallet.privateKey)
   return wallet.privateKey
@@ -102,7 +101,7 @@ const getPrivateKeyByAddress = (address) => {
   if (mnemonicAddress === address) return mnemonicKey
 }
 
-const getWalletByWords = (mnemonic, walletNumber = 0, path) => {
+const getWalletByWords = (mnemonic: string, walletNumber: number = 0, path: string = '') => {
   // in eth address are equals in all networds
   return mnemonicUtils.getEthWallet('nothing', mnemonic, walletNumber, path)
 }
@@ -133,9 +132,9 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
     if (!mnemonic) {
       mnemonic = bip39.generateMnemonic()
     }
-    //@ts-ignore
+
     const accData = getWalletByWords(mnemonic)
-    console.log('Eth. Generated walled from random 12 words')
+    console.log('Eth. Generated wallet from random 12 words')
     console.log(accData)
     privateKey = accData.privateKey
     data = web3.eth.accounts.privateKeyToAccount(privateKey)
@@ -475,19 +474,17 @@ const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
         const amount =  web3.utils.fromWei(value)
 
         // Calc miner fee, used for this tx
-        //@ts-ignore
         const minerFee = new BigNumber(web3.utils.toBN(gas).toNumber())
           .multipliedBy(web3.utils.toBN(gasPrice).toNumber())
           .dividedBy(1e18).toNumber()
 
-        let adminFee = false
+        let adminFee: any = false
 
         if (hasAdminFee && to != hasAdminFee.address) {
-          //@ts-ignore
           adminFee = new BigNumber(hasAdminFee.fee).dividedBy(100).multipliedBy(amount)
-          //@ts-ignore
-          if (BigNumber(hasAdminFee.min).isGreaterThan(adminFee)) adminFee = new BigNumber(hasAdminFee.min)
-          //@ts-ignore
+
+          if (new BigNumber(hasAdminFee.min).isGreaterThan(adminFee)) adminFee = new BigNumber(hasAdminFee.min)
+
           adminFee = adminFee.toNumber()
         }
 

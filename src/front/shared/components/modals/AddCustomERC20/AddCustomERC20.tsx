@@ -155,7 +155,6 @@ export default class AddCustomERC20 extends React.Component<any, any> {
 
     const {
       name,
-      data: { currency },
       intl,
       //@ts-ignore
     } = this.props
@@ -181,7 +180,6 @@ export default class AddCustomERC20 extends React.Component<any, any> {
       <Modal
         name={name}
         title={`${intl.formatMessage(localeLabel.title)}`}
-        disableClose={this.props.data.disableClose}
       >
         <div styleName="erc20ModalHolder">
           {step === 'enterAddress' && (
@@ -238,7 +236,7 @@ export default class AddCustomERC20 extends React.Component<any, any> {
             <Fragment>
               <div styleName="lowLevel">
                 <FieldLabel inRow>
-                  <span style={{ fontSize: '16px' }}>
+                  <span styleName="title">
                     <FormattedMessage id="customERC20_Address" defaultMessage="Адрес контракта" />
                   </span>
                 </FieldLabel>
@@ -246,7 +244,7 @@ export default class AddCustomERC20 extends React.Component<any, any> {
               </div>
               <div styleName="lowLevel">
                 <FieldLabel inRow>
-                  <span style={{ fontSize: '16px' }}>
+                  <span styleName="title">
                     <FormattedMessage
                       id="customERC20_TokenTitle"
                       defaultMessage="Название токена"
@@ -257,7 +255,7 @@ export default class AddCustomERC20 extends React.Component<any, any> {
               </div>
               <div styleName="lowLevel">
                 <FieldLabel inRow>
-                  <span style={{ fontSize: '16px' }}>
+                  <span styleName="title">
                     <FormattedMessage id="customERC20_TokenSymbol" defaultMessage="Символ токена" />
                   </span>
                 </FieldLabel>
@@ -265,7 +263,7 @@ export default class AddCustomERC20 extends React.Component<any, any> {
               </div>
               <div styleName="lowLevel">
                 <FieldLabel inRow>
-                  <span style={{ fontSize: '16px' }}>
+                  <span styleName="title">
                     <FormattedMessage
                       id="customERC20_TokenDecimals"
                       defaultMessage="Знаков после запятой"

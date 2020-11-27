@@ -36,7 +36,7 @@ const externalConfig = () => {
       eth: true,
       btc: true,
       ghost: false,
-      next: false,
+      next: true,
     },
     ownTokens: false,
     addCustomERC20: true,
@@ -286,14 +286,12 @@ const externalConfig = () => {
         // @ToDo add currency isAddress Check
         if (fee && address && min) {
           try {
-            //@ts-ignore
             fee = new BigNumber(fee.replace(',', '.')).toNumber()
             feeOk = true
           } catch (e) {
             console.error(`Fail convert ${fee} to number for ${curKey}`)
           }
           try {
-            //@ts-ignore
             min = new BigNumber(min.replace(',', '.')).toNumber()
             minOk = true
           } catch (e) {

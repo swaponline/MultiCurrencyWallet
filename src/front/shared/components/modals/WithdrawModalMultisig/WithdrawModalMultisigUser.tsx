@@ -76,7 +76,7 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
 
     this.broadcastCancelFunc = false
 
-    let usedAdminFee = false
+    let usedAdminFee: any = false
 
     let min = minAmount['btc_multisig_2n2']
 
@@ -84,7 +84,6 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
       usedAdminFee = config.opts.fee.btc
       if (usedAdminFee) {
         // miner fee + minimal admin fee
-        //@ts-ignore
         min = new BigNumber(min).plus(usedAdminFee.min).toNumber()
       }
     }
@@ -130,13 +129,11 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
   actualyMinAmount = async () => {
     const { usedAdminFee } = this.state
 
-    //@ts-ignore
-    let min = await helpers['btc'].estimateFeeValue({ method: 'send_multisig', speed: 'fast' })
+    let min: any = await helpers['btc'].estimateFeeValue({ method: 'send_multisig', speed: 'fast' })
     minAmount['btc_multisig_2n2'] = min
 
     if (usedAdminFee) {
-      //@ts-ignore
-      min = BigNumber(min).plus(usedAdminFee.min).toNumber()
+      min = new BigNumber(min).plus(usedAdminFee.min).toNumber()
     }
 
     this.setState({

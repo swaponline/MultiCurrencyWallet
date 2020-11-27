@@ -291,7 +291,7 @@ class GHOST2ETH extends Flow {
         const { secretHash, secret } = flow.state
 
         const data = {
-          ownerAddress:   participant.eth.address,
+          ownerAddress: this.app.getParticipantEthAddress(flow.swap),
           secret,
         }
 

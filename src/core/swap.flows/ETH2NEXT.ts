@@ -130,6 +130,7 @@ class ETH2NEXT extends Flow {
       // 1. Sign swap to start
 
       () => {
+        flow.swap.processMetamask()
         // this.sign()
       },
 
@@ -208,7 +209,7 @@ class ETH2NEXT extends Flow {
         }
 
         const swapData = {
-          participantAddress: participant.eth.address,
+          participantAddress: this.app.getParticipantEthAddress(this.swap),
           secretHash: secretHash,
           amount: sellAmount,
           targetWallet: flow.swap.destinationSellAddress
@@ -422,7 +423,7 @@ class ETH2NEXT extends Flow {
     this.swap.room.once('do withdraw', async ({secret}) => {
       try {
         const data = {
-          participantAddress: flow.swap.participant.eth.address,
+          participantAddress: this.app.getParticipantEthAddress(this.swap),
           secret,
         }
 
@@ -448,8 +449,8 @@ class ETH2NEXT extends Flow {
     const { participant } = this.swap
 
     const swapData = {
-      ownerAddress: this.app.services.auth.accounts.eth.address,
-      participantAddress: participant.eth.address
+      ownerAddress: this.app.getMyEthAddress(),
+      participantAddress: this.app.getParticipantEthAddress(this.swap)
     }
 
     return this.ethSwap.checkSwapExists(swapData)
@@ -528,7 +529,7 @@ class ETH2NEXT extends Flow {
       isBalanceFetching: true,
     })
 
-    const balance = await this.ethSwap.fetchBalance(this.app.services.auth.accounts.eth.address)
+    const balance = await this.ethSwap.fetchBalance(this.app.getMyEthAddress())
     const isEnoughMoney = sellAmount.isLessThanOrEqualTo(balance)
 
     const stateData = {
@@ -578,7 +579,7 @@ class ETH2NEXT extends Flow {
     }
 
     return this.ethSwap.refund({
-      participantAddress: participant.eth.address,
+      participantAddress: this.app.getParticipantEthAddress(this.swap),
     })
       .then((hash) => {
         if (!hash) {

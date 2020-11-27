@@ -5,8 +5,8 @@ import mnemonic from '../../common/utils/mnemonic'
 const loginMnemonic = (mnemonic, walletNumber=0, path, app) => {
   const network = (
     app.isMainNet()
-      ? app.env.bitcoin.mainnet
-      : app.env.bitcoin.testnet
+      ? app.env.coininfo.next.main
+      : app.env.coininfo.next.test
   )
 
   const wallet = mnemonic.getNextWallet(network, walletNumber, path, app)
@@ -23,8 +23,8 @@ const login = (_privateKey, app) => {
 
   const network = (
     app.isMainNet()
-      ? app.env.bitcoin.mainnet
-      : app.env.bitcoin.testnet
+      ? app.env.coininfo.next.main
+      : app.env.coininfo.next.test
   )
 
   if (!privateKey) {
@@ -37,6 +37,7 @@ const login = (_privateKey, app) => {
     pubkey: account.publicKey,
     network
   })
+
   const { publicKey } = account
 
   account.getPublicKey = () => publicKey.toString('hex')
