@@ -3,6 +3,7 @@ import swapApp from '../../swapApp'
 import { findOrder, orderView } from '../../helpers'
 
 let orders
+const app = swapApp.app
 const Orders = swapApp.app.services.orders
 
 const listMyOrders = (req, res) => {

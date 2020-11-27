@@ -5,7 +5,7 @@ import Collection from './Collection'
 import Events from './Events'
 
 import constants from './constants'
-import util from './util'
+import * as util from './util'
 
 
 export default SwapApp
