@@ -18,16 +18,7 @@ import * as mnemonicUtils from '../../../../common/utils/mnemonic'
 import { default as nextUtils } from '../../../../common/utils/coin/next'
 
 
-const NEXT_API = {
-  name: 'nextapi',
-  servers: config.api.nextExplorer,
-}
-
-const CUSTOM_API = {
-  name: 'customnextapi',
-  servers: config.api.nextExplorerCustom,
-}
-
+const NETWORK = (process.env.MAINNET) ? `MAINNET` : `TESTNET`
 
 
 const hasAdminFee = (config
@@ -302,13 +293,13 @@ const getBalance = () => {
 
 const fetchBalance = (address) => nextUtils.fetchBalance({
   address,
-  API_ENDPOINT: NEXT_API,
+  NETWORK,
 })
 
 const fetchTx = (hash, cacheResponse) => nextUtils.fetchTx({
   hash,
   cacheResponse,
-  API_ENDPOINT: NEXT_API,
+  NETWORK,
 })
 
 const fetchTxRaw = (txId, cacheResponse) =>
@@ -325,7 +316,7 @@ const fetchTxRaw = (txId, cacheResponse) =>
 const fetchTxInfo = (hash, cacheResponse) => nextUtils.fetchTxInfo({
   hash,
   cacheResponse,
-  API_ENDPOINT: NEXT_API,
+  NETWORK,
 })
 
 const getInvoices = (address) => {
@@ -504,13 +495,13 @@ const send = ({ from, to, amount, feeValue, speed } = {}) => {
 
 const fetchUnspents = (address) => nextUtils.fetchUnspents({
   address,
-  API_ENDPOINT: CUSTOM_API,
+  NETWORK,
 })
 
 
 const broadcastTx = (txRaw) => nextUtils.broadcastTx({
   txRaw,
-  API_ENDPOINT: NEXT_API,
+  NETWORK,
 })
 
 const signMessage = (message, encodedPrivateKey) => {
@@ -527,7 +518,7 @@ const getReputation = () => Promise.resolve(0)
 
 const checkWithdraw = (scriptAddress) => nextUtils.checkWithdraw({
   scriptAddress,
-  API_ENDPOINT: CUSTOM_API,
+  NETWORK,
 })
 
 export default {

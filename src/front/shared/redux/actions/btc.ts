@@ -20,15 +20,8 @@ import * as mnemonicUtils from '../../../../common/utils/mnemonic'
 import { default as bitcoinUtils } from '../../../../common/utils/coin/btc'
 
 
-const BITPAY_API = {
-  name: 'bitpay',
-  servers: config.api.bitpay,
-}
+const NETWORK = (process.env.MAINNET) ? `MAINNET` : `TESTNET`
 
-const BLOCYPER_API = {
-  name: 'blockcypher',
-  servers: config.api.blockcypher,
-}
 
 const hasAdminFee = (config
   && config.opts
@@ -260,7 +253,7 @@ const fetchBalanceStatus = (address) => {
     bitcoinUtils.fetchBalance({
       address,
       withUnconfirmed: true,
-      apiBitpay: BITPAY_API,
+      NETWORK,
     }).then((answer) => {
       // @ts-ignore
       const { balance, unconfirmed } = answer
@@ -288,7 +281,7 @@ const getBalance = () => {
     bitcoinUtils.fetchBalance({
       address,
       withUnconfirmed: true,
-      apiBitpay: BITPAY_API,
+      NETWORK,
     }).then((answer) => {
       // @ts-ignore
       const { balance, unconfirmed } = answer
@@ -309,25 +302,25 @@ const getBalance = () => {
 const fetchBalance = (address) => bitcoinUtils.fetchBalance({
   address,
   withUnconfirmed: false,
-  apiBitpay: BITPAY_API,
+  NETWORK,
 })
 
 
 const fetchTxRaw = (txId, cacheResponse) => bitcoinUtils.fetchTxRaw({
   txId,
   cacheResponse,
-  apiBlocyper: BLOCYPER_API,
+  NETWORK,
 })
 
 const fetchTx = (hash, cacheResponse) => bitcoinUtils.fetchTx({
   hash,
-  apiBitpay: BITPAY_API,
+  NETWORK,
   cacheResponse,
 })
 
 const fetchTxInfo = (hash, cacheResponse) => bitcoinUtils.fetchTxInfo({
   hash,
-  apiBitpay: BITPAY_API,
+  NETWORK,
   cacheResponse,
   hasAdminFee,
 })
@@ -429,7 +422,7 @@ const getTransaction = (ownAddress, ownType) => {
     ownType: type,
     myWallets: myAllWallets,
     network: btc.network,
-    apiBlocyper: BLOCYPER_API,
+    NETWORK,
   })
 }
 
@@ -619,13 +612,12 @@ const signAndBuild = (transactionBuilder, address) => {
 
 const fetchUnspents = (address) => bitcoinUtils.fetchUnspents({
   address,
-  apiBitpay: BITPAY_API,
+  NETWORK,
 })
 
 const broadcastTx = (txRaw) => bitcoinUtils.broadcastTx({
   txRaw,
-  apiBitpay: BITPAY_API,
-  apiBlocyper: BLOCYPER_API,
+  NETWORK,
 })
 
 const signMessage = (message, encodedPrivateKey) => {
@@ -641,7 +633,7 @@ const getReputation = () => Promise.resolve(0)
 
 const checkWithdraw = (scriptAddress) => bitcoinUtils.checkWithdraw({
   scriptAddress,
-  apiBitpay: BITPAY_API,
+  NETWORK,
 })
 
 
