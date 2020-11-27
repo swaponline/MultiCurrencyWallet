@@ -39,7 +39,8 @@ import _debug from 'debug'
 
 _debug('.:app')
 
-console.log( __dirname + '/../core/simple')
+console.log('Bot starts...')
+//console.log(__dirname + '/../core/simple')
 
 moduleAlias.addAliases({
   'simple.swap.core'  : __dirname + '/../core/simple/src',
@@ -55,4 +56,7 @@ moduleAlias.addAliases({
 })
 
 import * as app from './app'
+
+console.log(app)
+
 export default app

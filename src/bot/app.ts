@@ -8,8 +8,9 @@ import ws from './ws'
 
 import router from './routes'
 import auth from './routes/auth'
+console.log('app.ts')
 
-// app.sync / app.ready - for tests
+// app.sync / app.ready - used in tests, tests are broken, fix later
 //@ts-ignore
 app.ready = new Promise( resolve => app.services.room.once('ready', resolve))
 //@ts-ignore
