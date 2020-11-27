@@ -46,12 +46,16 @@ const estimateGasPrice = async ({ speed = 'fast' } = {}) => {
     fastest: 'fastest',
   }
 
-  //@ts-ignore
-  const apiSpeed = apiSpeeds[speed] || apiSpeed.fast
-
+  const apiSpeed = apiSpeeds[speed] || apiSpeeds.fast
+  /* 
+  * api returns gas price in x10 Gwei
+  * divided by 10 to convert it to gwei
+  */
   const apiPrice = new BigNumber(apiResult[apiSpeed]).dividedBy(10).multipliedBy(1e9)
 
-  return apiPrice >= defaultPrice[speed] ? apiPrice.toString() : defaultPrice[speed]
+  return apiPrice >= defaultPrice[speed] 
+    ? apiPrice.toString() 
+    : defaultPrice[speed]
 }
 
 export default {

@@ -194,8 +194,8 @@ const estimateFeeRateBitcoinfees = async ({ speed = 'fast' } = {}) => {
     normal: `halfHourFee`,
     fast: `fastestFee`,
   }
-  //@ts-ignore
-  const apiSpeed = apiSpeeds[speed] || apiSpeed.normal
+
+  const apiSpeed = apiSpeeds[speed] || apiSpeeds.normal
   const apiRate = new BigNumber(apiResult[apiSpeed]).multipliedBy(1024)
 
   return apiRate.isGreaterThanOrEqualTo(DUST)
@@ -225,12 +225,17 @@ const estimateFeeRateBlockcypher = async ({ speed = 'fast' } = {}) => {
     normal: 'medium_fee_per_kb',
     fast: 'high_fee_per_kb',
   }
-  //@ts-ignore
-  const apiSpeed = apiSpeeds[speed] || apiSpeed.normal
+
+  const apiSpeed = apiSpeeds[speed] || apiSpeeds.normal
+  /* 
+  * api returns sotoshi in 1 kb
+  * divided by 1 kb to convert it to gwei
+  */
+  const BYTE_IN_KB = 1024
   const apiRate = new BigNumber(apiResult[apiSpeed])
 
-  return apiRate.isGreaterThanOrEqualTo(DUST)
-    ? apiRate.toString()
+  return apiRate.isGreaterThanOrEqualTo(DUST) 
+    ? Math.ceil(apiRate.dividedBy(BYTE_IN_KB).toNumber())
     : defaultRate[speed]
 }
 
