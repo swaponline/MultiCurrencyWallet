@@ -1,4 +1,3 @@
-// import { routerMiddleware, routerReducer } from 'react-router-redux'
 import { routerMiddleware, connectRouter } from 'connected-react-router'
 import { createBrowserHistory } from 'history'
 import { createStore, combineReducers } from 'redaction'
