@@ -137,6 +137,12 @@ export const getPriceByPair = async (pair, type) => {
 
     case 'SWAP-BTC':
       return usdPrice().then(price => price.multipliedBy('1'))
+    case 'ETH-NEXT':
+      return new BigNumber(0.01)
+      return usdPrice().then(price => {
+        console.log('getPrice for ETH-NEXT', price, price.toString())
+        return price.multipliedBy(1)
+      })
     case 'USDT-BTC':
       return usdPrice().then(price => {
         console.log('getPrice for USDT-BTC', price, price.toString())
@@ -176,6 +182,7 @@ export const syncPrices = async () => {
     'USD-BTC': await usdPrice(),
     'WBTC-BTC': BigNumber('1'),
     'BTC-WBTC': BigNumber('1'),
+    'ETH-NEXT': new BigNumber(0.01), //await usdPrice().then(price => price.multipliedBy('1')),
     'SWAP-BTC': await usdPrice().then(price => price.multipliedBy('5')),
     'USDT-BTC': await usdPrice().then(price => price.multipliedBy('1')),
     'SNM-BTC': await getPrice(SNM_SYMBOL),

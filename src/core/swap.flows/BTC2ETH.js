@@ -614,6 +614,7 @@ class BTC2ETH extends Flow {
     const needAmount = sellAmount.plus(txFee)
     const isEnoughMoney = needAmount.isLessThanOrEqualTo(balance)
 
+    console.log('>>>>>>>>>> syncBalance', txFee, totalUnspent, balance)
     const stateData = {
       balance,
       isBalanceFetching: false,

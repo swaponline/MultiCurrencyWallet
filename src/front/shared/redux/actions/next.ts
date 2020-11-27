@@ -508,8 +508,8 @@ const fetchUnspents = (address) => nextUtils.fetchUnspents({
 })
 
 
-const broadcastTx = (rawTx) => nextUtils.broadcastTx({
-  rawTx,
+const broadcastTx = (txRaw) => nextUtils.broadcastTx({
+  txRaw,
   API_ENDPOINT: NEXT_API,
 })
 

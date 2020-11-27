@@ -40,6 +40,9 @@ import { EthSwap, EthTokenSwap, BtcSwap, GhostSwap, NextSwap } from 'swap.swaps'
 
 import metamask from 'helpers/metamask'
 
+import { default as bitcoinUtils } from '../../../common/utils/coin/btc'
+import { default as nextUtils } from '../../../common/utils/coin/next'
+
 
 initExternalConfig()
 
@@ -64,6 +67,8 @@ const createSwapApp = async () => {
     const web3 = (metamask.isEnabled() && metamask.isConnected())
       ? await metamask.getWeb3()
       : await getWeb3()
+
+    const NETWORK = process.env.MAINNET ? `MAINNET` : `TESTNET`
 
     SwapApp.setup({
       network: process.env.MAINNET ? 'mainnet' : 'testnet',
@@ -123,14 +128,30 @@ const createSwapApp = async () => {
           estimateGasPrice: ({ speed } = {}) => helpers.eth.estimateGasPrice({ speed }),
         }),
         new BtcSwap({
-          fetchBalance: (address) => actions.btc.fetchBalance(address),
-          fetchUnspents: (scriptAddress) => actions.btc.fetchUnspents(scriptAddress),
-          broadcastTx: (txRaw) => actions.btc.broadcastTx(txRaw),
-          //@ts-ignore
-          fetchTxInfo: (txid) => actions.btc.fetchTxInfo(txid),
-          checkWithdraw: (scriptAddress) => actions.btc.checkWithdraw(scriptAddress),
-          //@ts-ignore
-          estimateFeeValue: ({ inSatoshis, speed, address, txSize } = {}) => helpers.btc.estimateFeeValue({ inSatoshis, speed, address, txSize }),
+          fetchBalance: (address) => bitcoinUtils.fetchBalance({
+            address,
+            NETWORK,
+          }),
+          fetchUnspents: (address) => bitcoinUtils.fetchUnspents({
+            address,
+            NETWORK,
+          }),
+          broadcastTx: (txRaw) => bitcoinUtils.broadcastTx({
+            txRaw,
+            NETWORK,
+          }),
+          fetchTxInfo: (hash) => bitcoinUtils.fetchTxInfo({
+            hash,
+            NETWORK,
+          }),
+          checkWithdraw: (scriptAddress) => bitcoinUtils.checkWithdraw({
+            scriptAddress,
+            NETWORK,
+          }),
+          estimateFeeValue: (options) => bitcoinUtils.estimateFeeValue({
+            ...options,
+            NETWORK,
+          }),
         }),
         new GhostSwap({
           fetchBalance: (address) => actions.ghost.fetchBalance(address),
@@ -143,14 +164,30 @@ const createSwapApp = async () => {
           estimateFeeValue: ({ inSatoshis, speed, address, txSize } = {}) => helpers.ghost.estimateFeeValue({ inSatoshis, speed, address, txSize }),
         }),
         new NextSwap({
-          fetchBalance: (address) => actions.next.fetchBalance(address),
-          fetchUnspents: (scriptAddress) => actions.next.fetchUnspents(scriptAddress),
-          broadcastTx: (txRaw) => actions.next.broadcastTx(txRaw),
-          //@ts-ignore
-          fetchTxInfo: (txid) => actions.next.fetchTxInfo(txid),
-          checkWithdraw: (scriptAddress) => actions.next.checkWithdraw(scriptAddress),
-          //@ts-ignore
-          estimateFeeValue: ({ inSatoshis, speed, address, txSize } = {}) => helpers.next.estimateFeeValue({ inSatoshis, speed, address, txSize }),
+          fetchBalance: (address) => nextUtils.fetchBalance({
+            address,
+            NETWORK,
+          }),
+          fetchUnspents: (address) => nextUtils.fetchUnspents({
+            address,
+            NETWORK,
+          }),
+          broadcastTx: (txRaw) => nextUtils.broadcastTx({
+            txRaw,
+            NETWORK,
+          }),
+          fetchTxInfo: (hash) => nextUtils.fetchTxInfo({
+            hash,
+            NETWORK,
+          }),
+          checkWithdraw: (scriptAddress) => nextUtils.checkWithdraw({
+            scriptAddress,
+            NETWORK,
+          }),
+          estimateFeeValue: (options) => nextUtils.estimateFeeValue({
+            ...options,
+            NETWORK,
+          }),
         }),
         ...(Object.keys(config.erc20)
           .map(key =>

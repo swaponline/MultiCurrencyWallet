@@ -29,6 +29,8 @@ class SwapAuth extends ServiceInterface {
     SwapApp.required(app)
     console.log('app', app.isSwapApp())
 
+    console.log('>>>>>>>>>>>>')
+    console.log(Object.keys(_privateKeys))
     Object.keys(_privateKeys).forEach((name) => {
       if (Object.keys(constants.COINS).indexOf(name) < 0) {
         let error = `SwapAuth._initService(): There is no instance with name "${name}".`

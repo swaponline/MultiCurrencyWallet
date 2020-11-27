@@ -4,4 +4,5 @@ export default [
   'ETH-BTC',
   'SWAP-BTC',
   'USDT-BTC',
+  'ETH-NEXT',
 ]
