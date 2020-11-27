@@ -53,7 +53,7 @@ const cancelInvoice = (invoiceId) => new Promise((resolve) => apiLooper.post('in
       invoiceId,
     },
   })
-  .then((res) => {
+  .then((res: any) => {
     resolve(res && res.answer && res.answer === 'ok')
   })
   .catch(() => { resolve(false) }))
@@ -67,7 +67,7 @@ const markInvoice = (invoiceId, mark, txid, address) => new Promise((resolve) =>
       address,
     },
   })
-  .then((res) => {
+  .then((res: any) => {
     resolve(res && res.answer && res.answer === 'ok')
   })
   .catch(() => { resolve(false) }))
@@ -83,7 +83,7 @@ const getInvoice = (hash) => {
       body: {
         hash,
       },
-    }).then((res) => {
+    }).then((res: any) => {
       console.log('fetced answer from invoice api', res)
       if (res && res.answer && res.answer === 'ok' && res.item) {
         const {
@@ -149,7 +149,7 @@ const getManyInvoices = (data) => {
         wallets,
         mainnet: (process.env.MAINNET) ? '1' : '0',
       },
-    }).then((res) => {
+    }).then((res: any) => {
       if (res && res.answer && res.answer === 'ok') {
         const invoices = res.items.map((item) => {
           const walletHash = `${item.type}:${item.toAddress.toLowerCase()}`
@@ -201,7 +201,7 @@ const getInvoices = (data) => {
         address: data.address,
         mainnet: (process.env.MAINNET) ? '1' : '0',
       },
-    }).then((res) => {
+    }).then((res: any) => {
       if (res && res.answer && res.answer === 'ok') {
         const transactions = res.items.map((item) => {
           const direction = item.toAddress === data.address ? 'in' : 'out'

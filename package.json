@@ -67,9 +67,9 @@
     "rename-assets-manifest-file": "rename-files ./build-chrome-extension/application/assets/ 'manifest.json' 'android-manifest.json'",
     "rename-assets-manifest-link": "replace 'assets/manifest.json' 'assets/android-manifest.json' ./build-chrome-extension/application/index.html",
     "release": "git commit -am v%npm_package_version% && git tag v%npm_package_version% && git push && git push --tags",
-    "bot": "babel-node --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot",
-    "bot:test": "cross-env TEST_STARTUP=true babel-node --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot",
-    "bot:debug": "cross-env DEBUG=swap.core* babel-node --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot"
+    "bot": "babel-node --extensions .ts,.js --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot",
+    "bot:test": "cross-env TEST_STARTUP=true babel-node --extensions .ts,.js --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot",
+    "bot:debug": "cross-env DEBUG=swap.core* babel-node --extensions .ts,.js --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot"
   },
   "husky": {
     "hooks": {
@@ -118,6 +118,7 @@
     "body-parser": "^1.19.0",
     "cache-loader": "^4.1.0",
     "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "chalk": "^4.1.0",
     "colors": "^1.2.1",
     "connect-history-api-fallback": "^1.6.0",
@@ -192,6 +193,7 @@
   },
   "dependencies": {
     "@ethersproject/providers": "^5.0.14",
+    "@types/jest": "^26.0.15",
     "@types/node": "^14.14.7",
     "@types/react": "^17.0.0",
     "@types/react-css-modules": "^4.6.2",
@@ -203,6 +205,7 @@
     "@web3-react/walletconnect-connector": "^6.1.1",
     "aegir": "^29.0.1",
     "ajv": "^6.12.6",
+    "asciichart": "^1.5.25",
     "autosize": "^4.0.2",
     "axios": "^0.21.0",
     "babel-plugin-react-intl": "^8.2.17",
@@ -251,6 +254,7 @@
     "node-fetch": "^2.6.1",
     "node-gyp": "^7.1.0",
     "peer-info": "^0.17.1",
+    "puppeteer": "^5.5.0",
     "rc-progress": "^3.1.0",
     "react": "^17.0.1",
     "react-click-outside": "github:tj/react-click-outside",

@@ -96,7 +96,7 @@ export default class BtcMultisignConfirmTx extends React.Component<any, any> {
       } = this.props
 
       if (txId) {
-        const txData = await actions.multisigTx.fetchTx(txId)
+        const txData: any = await actions.multisigTx.fetchTx(txId)
 
         const { destination: address, sender: from, amount } = txData
 
@@ -123,7 +123,7 @@ export default class BtcMultisignConfirmTx extends React.Component<any, any> {
           },
           () => {
             // Fetching full tx info (rawTX)
-            actions.multisigTx.fetchRawTx(from, txId).then((txAuthedData) => {
+            actions.multisigTx.fetchRawTx(from, txId).then((txAuthedData: any) => {
               if (txAuthedData) {
                 actions.btcmultisig.parseRawTX(txAuthedData.rawTx).then((txDataParsed) => {
                   this.setState({
