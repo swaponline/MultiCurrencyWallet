@@ -928,7 +928,7 @@ export default class WithdrawModal extends React.Component<any, any> {
           </div>
         </div>
         {usedAdminFee && isEthToken && (
-          <AdminFeeInfoBlock {...usedAdminFee} amount={amount} currency={currency} />
+          <AdminFeeInfoBlock {...usedAdminFee} currency={currency} />
         )}
         {error && (
           <div styleName="rednote">
@@ -1022,9 +1022,15 @@ export default class WithdrawModal extends React.Component<any, any> {
                 <>
                   <FormattedMessage id="WithdrowModalServiceFee" defaultMessage="Service Fee: " />
                   {' '}{/* < indent */}
-                  {fetchFee 
+                  {fetchFee
                     ? <div styleName='paleLoader'><InlineLoader /></div>
-                    : <span styleName='fee'>{adminFeeSize} {dataCurrency}</span>  
+                    : isEthToken
+                      ? <span styleName='fee'>{
+                          amount // fee in precents (fee / 100%)
+                            ? new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).toNumber()
+                            : adminFeeSize
+                        } {currency}</span>
+                      : <span styleName='fee'>{adminFeeSize} {dataCurrency}</span>  
                   }
                   <br />
                 </>

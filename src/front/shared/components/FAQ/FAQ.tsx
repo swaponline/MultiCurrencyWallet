@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import cssModules from 'react-css-modules'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
+import BigNumber from 'bignumber.js'
 import { constants } from 'helpers'
 import feedback from 'shared/helpers/feedback'
 import helpers from 'helpers'
@@ -39,7 +40,8 @@ const FAQ = (props) => {
           setBtcFee(btcSatoshiPrice)
 
           ethGasPrice = await helpers.eth.estimateGasPrice({ speed: 'fast' })
-          setEthFee(ethGasPrice.replace(/0*$/,'')) // delete nulls in end
+          // eth.ts return gas * 1e9 - divided by 1e9 to convert
+          setEthFee(new BigNumber(ethGasPrice).dividedBy(1e9).toNumber())
         }
       } catch(err) {
         console.error('FAQ -> useEffect: ', err);
