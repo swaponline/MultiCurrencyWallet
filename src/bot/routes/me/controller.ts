@@ -1,4 +1,6 @@
-import { wallet } from '../../swapApp'
+import swapApp from '../../swapApp'
+
+const wallet = swapApp.wallet
 
 const getMe = async (req, res) => {
   res.json({

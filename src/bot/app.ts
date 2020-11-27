@@ -9,8 +9,12 @@ import ws from './ws'
 import router from './routes'
 import auth from './routes/auth'
 
-app.room.ready = new Promise( resolve => app.services.room.once('ready', resolve))
-app.room.sync = new Promise( resolve => app.room.ready.then(() => setTimeout(resolve, 20000)) )
+// app.sync / app.ready - for tests
+//@ts-ignore
+app.ready = new Promise( resolve => app.services.room.once('ready', resolve))
+//@ts-ignore
+app.sync = new Promise( resolve => app.room.ready.then(() => setTimeout(resolve, 20000)) )
+
 
 app.services.room.once('ready', () => {
   console.log('swapApp ready')

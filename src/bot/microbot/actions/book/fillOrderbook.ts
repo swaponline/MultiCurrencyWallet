@@ -13,6 +13,7 @@ import {
 } from '../../../config/constants'
 
 import { createOrder, removeMyOrders } from '../../core/orders'
+import Order from 'swap.orders/Order'
 
 
 const debug = (...args) => console.log(new Date().toISOString(), ...args) //_debug('swap.bot')
@@ -32,9 +33,6 @@ const getCurrenciesBalance = (balances, ticker) => {
   return { sell, buy }
 }
 
-const getAmount = (tickerOrder) => tickerOrder.amount
-  ? new BigNumber(tickerOrder.amount)
-  : new BigNumber(TRADE_ORDER_MINAMOUNTS.default).times(TEN.pow(index))
 
 const checkCanCreateCurrentOrder = (tickerOrder, orderType) =>
   typeof(tickerOrder[orderType]) === 'undefined'
@@ -75,7 +73,9 @@ const createOrders = (orderType, balance, ticker, tickerOrders, basePrice) => {
 
       const spread = getSpread(tickerOrder, orderType)
       const price = basePrice.multipliedBy(spread)
-      const amount = getAmount(tickerOrder)
+      const amount = tickerOrder.amount
+        ? new BigNumber(tickerOrder.amount)
+        : new BigNumber(TRADE_ORDER_MINAMOUNTS.default).times(TEN.pow(index))
       const isEnoughBalance = checkIsEnoughBalance(price, amount)
 
       if (isEnoughBalance) {
@@ -127,7 +127,7 @@ const fillOrders = async (balances, ticker, create) => {
     orders
       .map(pair => ({ ...pair.toOrder(), isPartial: true }))
       .map(create)
-      .map(order => order.setRequestHandlerForPartial('buyAmount',
+      .map((order: Order) => order.setRequestHandlerForPartial('buyAmount',
         ({ buyAmount }, oldOrder) => {
           const oldPair = Pair.fromOrder(oldOrder)
 
@@ -156,7 +156,7 @@ const fillOrders = async (balances, ticker, create) => {
 
           return Pair.fromOrder({ ...oldOrder, ...newOrder }).toOrder()
         }))
-      .map(order => order.setRequestHandlerForPartial('sellAmount',
+      .map((order: Order) => order.setRequestHandlerForPartial('sellAmount',
         ({ sellAmount }, oldOrder) => {
           const oldPair = Pair.fromOrder(oldOrder)
 

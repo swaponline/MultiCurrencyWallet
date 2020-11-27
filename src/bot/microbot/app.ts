@@ -34,7 +34,7 @@ let SwapApp, app, auth, wallet, room, orders, services
 try {
 
   SwapApp = setup({ network, ERC20TOKENS })
-  { app, auth, wallet, room, orders, services } = SwapApp
+  let { app, auth, wallet, room, orders, services } = SwapApp
 
   ready(room).then(() => {
     debug('room ready')

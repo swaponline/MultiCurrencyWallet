@@ -68,8 +68,8 @@ class RESTInterface {
       case 'plotasks':  return this.data.plotAsks(payload)
       case 'printbook': return this.data.printOrderBook(payload)
 
-      case 'autosearch':  return this.ws.setAutoSearch(payload)
-      case 'autoaccept':  return this.ws.setAutoAccept(payload)
+      //case 'autosearch':  return this.ws.setAutoSearch(payload)
+      //case 'autoaccept':  return this.ws.setAutoAccept(payload)
 
       default:          return Promise.resolve('no method')
     }

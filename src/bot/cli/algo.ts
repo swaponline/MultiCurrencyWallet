@@ -33,12 +33,10 @@ import {
 } from './trade'
 
 class AlgoTrade {
-  fees: any
+
   prices: any
 
-  constructor(fees) {
-    this.fees = fees
-
+  constructor() {
     this.syncPrices()
   }
 

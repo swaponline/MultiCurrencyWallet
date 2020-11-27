@@ -42,6 +42,7 @@ describe('Wallet', () => {
 describe('Orders', () => {
 
   beforeEach((done) => {
+    //@ts-ignore
     app.sync.then(done)
   })
 

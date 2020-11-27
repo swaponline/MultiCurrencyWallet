@@ -1,9 +1,9 @@
-import { app } from '../../swapApp'
+import swapApp from '../../swapApp'
 
 import { findOrder, orderView } from '../../helpers'
 
 let orders
-const Orders = app.services.orders
+const Orders = swapApp.app.services.orders
 
 const listMyOrders = (req, res) => {
 
