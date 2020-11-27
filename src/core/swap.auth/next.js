@@ -9,7 +9,7 @@ const loginMnemonic = (mnemonic, walletNumber=0, path, app) => {
       : app.env.coininfo.next.test
   )
 
-  const wallet = mnemonicUtils.getNextWallet(network, walletNumber, path, app)
+  const wallet = mnemonicUtils.getNextWallet(network, mnemonic, walletNumber, path, app)
   return login(wallet.WIF, app)
 }
 
