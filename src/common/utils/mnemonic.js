@@ -104,7 +104,7 @@ const forCoin = {
   SUM:    getSumWallet, /* not implements */
 }
 
-export default {
+export {
   convertMnemonicToValid,
   getBtcWallet,
   getEthWallet,

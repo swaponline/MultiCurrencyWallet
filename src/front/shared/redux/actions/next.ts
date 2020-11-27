@@ -14,7 +14,7 @@ import typeforce from 'swap.app/util/typeforce'
 import config from 'app-config'
 const bitcore = require('bitcore-lib')
 import { localisePrefix } from 'helpers/locale'
-import { default as mnemonicUtils } from '../../../../common/utils/mnemonic'
+import * as mnemonicUtils from '../../../../common/utils/mnemonic'
 
 
 const hasAdminFee = (config

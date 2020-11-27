@@ -1,15 +1,15 @@
 import SwapApp from 'swap.app'
-import mnemonic from '../../common/utils/mnemonic'
+import * as mnemonicUtils from '../../common/utils/mnemonic'
+// import * as mnemonicUtils from '../../../../common/utils/mnemonic'
 
-
-const loginMnemonic = (mnemonic, walletNumber=0, path, app) => {
+const loginMnemonic = (mnemonicUtils, walletNumber=0, path, app) => {
   const network = (
     app.isMainNet()
       ? app.env.coininfo.ghost.main
       : app.env.coininfo.ghost.test
   )
 
-  const wallet = mnemonic.getGhostWallet(network, walletNumber, path, app)
+  const wallet = mnemonicUtils.getGhostWallet(network, walletNumber, path, app)
   return login(wallet.WIF, app)
 }
 
