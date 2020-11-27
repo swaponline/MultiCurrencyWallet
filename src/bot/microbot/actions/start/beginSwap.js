@@ -12,7 +12,10 @@ import { canBeDeleted, needsRefund } from './swapStatus'
 import { getNoxonPrice } from '../../../app/middlewares/prices'
 
 import { BTC2ETHFlow, ETH2BTCFlow } from '../swap-flow'
+import { UTXO2ETHFlow, ETH2UTXOFlow } from '../swap-flow'
+
 import request from 'request-promise-cache'
+import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
 
 
 
@@ -29,19 +32,30 @@ export default (app, { id }, callback) => {
 
     const flowName = swap.flow._flowName
 
-console.log(swap.flow._flowName)
-//    @ToDo - Revert this code. Can exists token MY2YTOKEN and then flow MY2YTOKEN2BTC break swap
-//    const main = swap.flow.getFromName()
-//    const base = swap.flow.getToName()
-    const [ main, base ] = flowName.split('2')
+    // @ToDo - DONT DELETE THIS CODE!. Can exists token MY2YTOKEN and then flow MY2YTOKEN2BTC break swap
+    const main = swap.flow.getFromName()
+    const base = swap.flow.getToName()
+    // const [ main, base ] = flowName.split('2')
 
     if (!main || !base) {
       throw new Error(`Cannot parse flow: ${flowName} ?= ${main}2${base}`)
     }
 
-    const goFlow = (main === 'BTC' || main === 'BCH') ? BTC2ETHFlow : ETH2BTCFlow
+    const mainIsUTXO = (
+      COIN_DATA
+      && COIN_DATA[main]
+      && COIN_DATA[main].model === COIN_MODEL.UTXO
+    ) ? true : false
 
-    if (base === 'BTC' && process.env.MIN_AMOUNT_FORCONFIRM) {
+    const baseIsUTXO = (
+      COIN_DATA
+      && COIN_DATA[base]
+      && COIN_DATA[base].model === COIN_MODEL.UTXO
+    )
+
+    const goFlow = (mainIsUTXO) ? BTC2ETHFlow : ETH2BTCFlow
+
+    if (baseIsUTXO && process.env.MIN_AMOUNT_FORCONFIRM) {
       getNoxonPrice(main, 'USD').then((usdPrice) => {
         const minAmount = new BigNumber(process.env.MIN_AMOUNT_FORCONFIRM)
         if (usdPrice.multipliedBy(swap.sellAmount).isGreaterThanOrEqualTo(minAmount)) {
@@ -74,7 +88,7 @@ console.log(swap.flow._flowName)
       if (swap.flow.state.isFinished) {
         if (ticker === 'ETH-BTC') {
           // @ToDo - fix
-          kraken.createOrder(pair.amount.div(pair.price).toNumber(), pair.isBid() ? 'sell' : 'buy')
+          //kraken.createOrder(pair.amount.div(pair.price).toNumber(), pair.isBid() ? 'sell' : 'buy')
         }
       }
 

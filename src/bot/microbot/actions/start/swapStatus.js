@@ -1,3 +1,6 @@
+import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
+
+
 const defaultLockTime = 60 * 60 * 3
 
 // Date.now() gives ms
@@ -24,7 +27,8 @@ export const needsRefund = (swap) => {
 
   const { state } = swap.flow
 
-  const { step, btcScriptValues, isFinished, isRefunded, isStoppedSwap } = state
+  const { step, isFinished, isRefunded, isStoppedSwap } = state
+  const btcScriptValues = swap.flow.getScriptValues()
 
   console.log(new Date().toISOString(), `swap`, id, `step`, step)
 
@@ -49,12 +53,19 @@ export const needsRefund = (swap) => {
   }
 
   const { lockTime } = btcScriptValues
-  const [ head, base ] = swap.flow._flowName.split('2')
+  //const [ head, base ] = swap.flow._flowName.split('2')
+  const head = swap.flow.getFromName()
+  const base = swap.flow.getToName()
 
-  if (head === 'BTC') { // ['BTC','BCH','USDT'].includes(head)) {
+  if (COIN_DATA
+    && COIN_DATA[head]
+    && COIN_DATA[head].model === COIN_MODEL.UTXO
+  ) {
+  // if (head === 'BTC') { // ['BTC','BCH','USDT'].includes(head)) {
     // BTC to _ETH_
 
-    const { btcScriptCreatingTransactionHash } = state
+    //const { btcScriptCreatingTransactionHash } = state
+    const btcScriptCreatingTransactionHash = swap.flow.getScriptCreateTx()
 
     if (!btcScriptCreatingTransactionHash) {
       console.error(new Date().toISOString(), `Unknown creating tx hash`)
@@ -71,24 +82,6 @@ export const needsRefund = (swap) => {
     return lockTimePassed(lockTime, defaultLockTime)
   }
 
-  if (base === 'BTC') { // (['BTC','BCH','USDT'].includes(base)) {
-    //  _ETH_ to BTC
-
-    const { ethSwapCreationTransactionHash } = state
-
-    if (!ethSwapCreationTransactionHash) {
-      console.error(new Date().toISOString(), `Unknown creating tx hash`)
-    } else {
-      console.error(new Date().toISOString(), `Found tx hash: ${ethSwapCreationTransactionHash}`)
-    }
-
-    // ETH locktime is 1 hour.
-
-    return lockTimePassed(lockTime, defaultLockTime)
-  }
-
-  throw new Error(`Unknown flow type: ${swap.flow._flowName}`)
-
 }
 
 export const canBeDeleted = async swap => {
@@ -96,7 +89,8 @@ export const canBeDeleted = async swap => {
 
   const isParticipantOnline = swap.room.getOnlineParticipant()
 
-  const { step, btcScriptValues, isFinished, isRefunded, isStoppedSwap } = state
+  const { step, isFinished, isRefunded, isStoppedSwap } = state
+  const btcScriptValues = swap.flow.getScriptValues()
 
   const lifeTimeout = swap.checkTimeout(defaultLockTime)
 

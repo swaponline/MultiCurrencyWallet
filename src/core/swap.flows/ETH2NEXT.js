@@ -405,6 +405,20 @@ class ETH2NEXT extends Flow {
     ]
   }
 
+  getScriptValues() {
+    const {
+      nextScriptValues: scriptValues,
+    } = this.state
+    return scriptValues
+  }
+
+  getScriptCreateTx() {
+    const {
+      nextScriptCreatingTransactionHash: createTx,
+    } = this.state
+    return createTx
+  }
+
   acceptWithdrawRequest() {
     const flow = this
     const { withdrawRequestAccepted } = flow.state

@@ -509,6 +509,20 @@ export default (tokenName) => {
       })
     }
 
+    getScriptValues() {
+      const {
+        nextScriptValues: scriptValues,
+      } = this.state
+      return scriptValues
+    }
+
+    getScriptCreateTx() {
+      const {
+        nextScriptCreatingTransactionHash: createTx,
+      } = this.state
+      return createTx
+    }
+
     submitSecret(secret) {
       if (this.state.secretHash) { return }
 

@@ -534,6 +534,20 @@ export default (tokenName) => {
       return scriptAddress;
     }
 
+    getScriptValues() {
+      const {
+        ghostScriptValues: scriptValues,
+      } = this.state
+      return scriptValues
+    }
+
+    getScriptCreateTx() {
+      const {
+        ghostScriptCreatingTransactionHash: createTx,
+      } = this.state
+      return createTx
+    }
+    
     createWorkGHOSTScript(secretHash) {
       if (this.state.ghostScriptValues) {
         debug('swap.core:flow')('GHOST Script already generated', this.state.ghostScriptValues);

@@ -405,6 +405,20 @@ class ETH2GHOST extends Flow {
     ]
   }
 
+  getScriptValues() {
+    const {
+      ghostScriptValues: scriptValues,
+    } = this.state
+    return scriptValues
+  }
+
+  getScriptCreateTx() {
+    const {
+      ghostScriptCreatingTransactionHash: createTx,
+    } = this.state
+    return createTx
+  }
+
   acceptWithdrawRequest() {
     const flow = this
     const { withdrawRequestAccepted } = flow.state
