@@ -2,7 +2,7 @@ import SwapApp from 'swap.app'
 import * as mnemonicUtils from '../../common/utils/mnemonic'
 
 
-const loginMnemonic = (mnemonicUtils, walletNumber=0, path, app) => {
+const loginMnemonic = (mnemonic, walletNumber=0, path, app) => {
   const network = (
     app.isMainNet()
       ? app.env.coininfo.next.main
