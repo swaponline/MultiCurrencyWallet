@@ -15,7 +15,7 @@ import config from 'app-config'
 const bitcore = require('ghost-bitcore-lib');
 import { localisePrefix } from 'helpers/locale'
 
-import { default as mnemonicUtils } from '../../../../common/utils/mnemonic'
+import * as mnemonicUtils from '../../../../common/utils/mnemonic'
 
 
 
