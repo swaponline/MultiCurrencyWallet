@@ -94,6 +94,7 @@ const auth = (privateKey) => {
     //@ts-ignore
     network: next.network,
   })
+
   const { publicKey } = account
 
   return {
@@ -287,13 +288,17 @@ const getBalance = () => {
 }
 
 const fetchBalance = (address) => {
-  console.log('>>>fetchBalance')
   return apiLooper.get('nextExplorer', `/address/${address}`, {
     checkStatus: (answer) => {
       try {
         if (answer && answer.balance !== undefined) return true
       } catch (e) { /* */ }
       return false
+    },
+    ignoreErrors: true,
+    reportErrors: (answer, onSuccess, onFail) => {
+      onSuccess({ balance: 0 })
+      return true
     },
   }).then(({ balance }) => balance)
 }
@@ -303,7 +308,7 @@ const fetchTx = (hash, cacheResponse) =>
     cacheResponse,
     checkStatus: (answer) => {
       try {
-        if (answer && answer.fees !== undefined) return true
+        if (answer && answer.txId !== undefined) return true
       } catch (e) { /* */ }
       return false
     },
@@ -323,9 +328,13 @@ const fetchTxRaw = (txId, cacheResponse) =>
     },
   }).then(({ rawtx }) => rawtx)
 
+/** to-do  not working **/
 const fetchTxInfo = (hash, cacheResponse) =>
   fetchTx(hash, cacheResponse)
-    .then(({ vin, vout, ...rest }) => {
+    .then((txInfo_) => {
+
+      return { ...txInfo_ }
+      const { vin, vout, ...rest } = txInfo_
       const senderAddress = vin ? vin[0].addr : null
       const amount = vout ? new BigNumber(vout[0].value).toNumber() : null
 
@@ -575,7 +584,7 @@ window.getMainPublicKey = getMainPublicKey
 
 
 const checkWithdraw = (scriptAddress) => {
-  return apiLooper.get('nextExplorer', `/txs/?address=${scriptAddress}`, {
+  return apiLooper.get('nextExplorerCustom', `/txs/${scriptAddress}`, {
     checkStatus: (answer) => {
       try {
         if (answer && answer.txs !== undefined) return true
@@ -588,9 +597,10 @@ const checkWithdraw = (scriptAddress) => {
       && res.txs[0].vout.length
     ) {
       const address = res.txs[0].vout[0].scriptPubKey.addresses[0]
+      const amount = res.txs[0].vout[0].valueSat
+
       const {
         txid,
-        valueOut: amount,
       } = res.txs[0]
       return {
         address,
@@ -601,8 +611,7 @@ const checkWithdraw = (scriptAddress) => {
     return false
   })
 }
-//@ts-ignore
-window.nextCheckWithdraw = checkWithdraw
+
 
 export default {
   login,

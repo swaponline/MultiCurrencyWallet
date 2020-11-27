@@ -22,10 +22,12 @@ jobs:
       uses: bahmutov/npm-install@v1
       with:
        useLockFile: false
-    - name: npm install, build, and test
+    - name: build mainnet
       run: |
         npm run build:mainnet
-        #zip -r mainnet-build.zip ./config
+    - name: bot test
+      run: |
+        npm run bot:test
       env:
         CI: true
 

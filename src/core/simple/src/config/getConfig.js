@@ -21,6 +21,8 @@ const setupLocalStorage = require('./setupLocalStorage')
 const { LocalStorage } = require('node-localstorage')
 const sessionStorage = require('node-sessionstorage')
 
+const ROOT_DIR = process.env.ROOT_DIR || '.'
+
 module.exports = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, ...custom }) => {
   config = {
     ...common,
@@ -40,8 +42,11 @@ module.exports = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, ..
     },
   }
 
-  setupLocalStorage()
-
+  console.log('setup .storage')
+  setupLocalStorage(`${ROOT_DIR}/.storage/`)
+  console.log('make dir with session', config.storageDir)
+  setupLocalStorage(config.storageDir)
+  
   const storage = new LocalStorage(config.storageDir)
 
   const web3 = eth[config.network]().core
