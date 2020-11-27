@@ -3,7 +3,7 @@ import { getEthWallet } from '../../common/utils/mnemonic'
 
 
 const loginMnemonic = (mnemonic, walletNumber=0, path, app) => {
-  const wallet = getEthWallet('nothing', mnemonic, walletNumber, path, app)
+  const wallet = getEthWallet('nothing', mnemonic, walletNumber, path)
   return login(wallet.privateKey, app)
 }
 

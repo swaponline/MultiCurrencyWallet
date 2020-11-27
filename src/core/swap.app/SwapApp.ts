@@ -3,12 +3,17 @@ import StorageFactory from './StorageFactory'
 
 class SwapApp {
   // White list BTC. Dont wait confirm
-  #whitelistBtc = [
+  whitelistBtc = [
     'mst6jZKU973gB6Jhei4WQFg381zb86UgBQ', // @eneeseene testnet btc address
     '17Hf3chwyWeNokLfuBcxEtpRYaYiU5RWBt', // swap.bot mainnet btc address
   ]
-  #options = {}
-  #inited = false
+  options: any = {}
+  inited: boolean = false
+  network: any
+  env: any
+  services: any
+  swaps: any
+  flows: any
 
   static _swapAppInstance = null
 
@@ -22,7 +27,7 @@ class SwapApp {
    * @param {array}   options.flows
    */
   constructor(options) {
-    this.#options = options
+    this.options = options
     this.network = options.network || constants.NETWORKS.TESTNET
     this.env = {}
     this.services = {}
@@ -36,9 +41,9 @@ class SwapApp {
     this._addSwaps(options.swaps || [])
     this._addFlows(options.flows || [])
 
-    if (options.whitelistBtc) this.#whitelistBtc = options.whitelistBtc
+    if (options.whitelistBtc) this.whitelistBtc = options.whitelistBtc
 
-    this.#inited = true
+    this.inited = true
   }
 
   static onInit(cb) {
@@ -53,7 +58,7 @@ class SwapApp {
   }
 
   isInited() {
-    return this.#inited
+    return this.inited
   }
 
   static init(options) {
@@ -69,8 +74,8 @@ class SwapApp {
   }
 
   initFlows() {
-    this._addSwaps(this.#options.swaps || [])
-    this._addFlows(this.#options.flows || [])
+    this._addSwaps(this.options.swaps || [])
+    this._addFlows(this.options.flows || [])
   }
 
   static setup(options, forceFreshSetup = false) {
@@ -91,7 +96,7 @@ class SwapApp {
 
   // Check address is whitelisted
   isWhitelistBtc(address) {
-    return this.#whitelistBtc.indexOf(address) !== -1
+    return this.whitelistBtc.indexOf(address) !== -1
   }
   // Configure -------------------------------------------------------- /
 

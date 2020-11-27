@@ -9,7 +9,7 @@ const loginMnemonic = (mnemonic, walletNumber=0, path, app) => {
       : app.env.bitcoin.networks.testnet
   )
 
-  const wallet = getBtcWallet(network, mnemonic, walletNumber, path, app)
+  const wallet = getBtcWallet(network, mnemonic, walletNumber, path)
 
   return login(wallet.WIF, app)
 }

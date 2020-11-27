@@ -694,6 +694,8 @@ class NEXT2ETH extends Flow {
 
     const { participant } = this.swap
 
+    const flow = this
+
     const data = {
       ownerAddress: this.app.getParticipantEthAddress(flow.swap),
       secret: _secret,

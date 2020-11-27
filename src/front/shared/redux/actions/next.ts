@@ -331,7 +331,7 @@ const fetchTxRaw = (txId, cacheResponse) =>
 /** to-do  not working **/
 const fetchTxInfo = (hash, cacheResponse) =>
   fetchTx(hash, cacheResponse)
-    .then((txInfo_) => {
+    .then((txInfo_: any) => {
 
       return { ...txInfo_ }
       const { vin, vout, ...rest } = txInfo_

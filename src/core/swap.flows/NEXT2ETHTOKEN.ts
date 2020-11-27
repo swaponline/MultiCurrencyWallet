@@ -699,6 +699,8 @@ export default (tokenName) => {
 
       const { participant } = this.swap
 
+      const flow = this
+
       const data = {
         ownerAddress: this.app.getParticipantEthAddress(flow.swap),
         secret: _secret,
