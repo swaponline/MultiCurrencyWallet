@@ -9,7 +9,7 @@ import encoding from './encoding'
 
 import debug from 'debug'
 
-console.log('>>>>>>>>>>> PROTOCOL', PROTOCOL)
+
 export default class Connection extends EventEmitter {
 
   _remoteId: any
