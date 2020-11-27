@@ -33,9 +33,9 @@ export default (app, { id }, callback) => {
     const flowName = swap.flow._flowName
 
     // @ToDo - DONT DELETE THIS CODE!. Can exists token MY2YTOKEN and then flow MY2YTOKEN2BTC break swap
-    const main = swap.flow.getFromName()
-    const base = swap.flow.getToName()
-    // const [ main, base ] = flowName.split('2')
+    //const main = swap.flow.getFromName()
+    //const base = swap.flow.getToName()
+    const [ main, base ] = flowName.split('2')
 
     if (!main || !base) {
       throw new Error(`Cannot parse flow: ${flowName} ?= ${main}2${base}`)

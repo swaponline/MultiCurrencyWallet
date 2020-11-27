@@ -53,9 +53,9 @@ export const needsRefund = (swap) => {
   }
 
   const { lockTime } = btcScriptValues
-  //const [ head, base ] = swap.flow._flowName.split('2')
-  const head = swap.flow.getFromName()
-  const base = swap.flow.getToName()
+  const [ head, base ] = swap.flow._flowName.split('2')
+  //const head = swap.flow.getFromName()
+  //const base = swap.flow.getToName()
 
   if (COIN_DATA
     && COIN_DATA[head]
