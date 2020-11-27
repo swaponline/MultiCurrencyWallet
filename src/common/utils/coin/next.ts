@@ -164,7 +164,6 @@ const checkWithdraw = (options) => {
   })
 }
 
-}
 const estimateFeeValue = () => {}
 
 export default { 
