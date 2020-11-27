@@ -15,7 +15,6 @@ import * as rememberedOrders from './rememberedOrders'
 import * as createWallet from './createWallet'
 import * as ui from './ui'
 
-
 export default {
   notifications,
   modals,

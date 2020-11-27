@@ -1,36 +1,36 @@
-import { routerMiddleware, routerReducer } from 'react-router-redux'
+// import { routerMiddleware, routerReducer } from 'react-router-redux'
+import { routerMiddleware, connectRouter } from 'connected-react-router'
 import { createBrowserHistory } from 'history'
 import { createStore, combineReducers } from 'redaction'
 import { createLogger } from 'redux-logger'
 import localReducers from 'redux/reducers'
 import { selectiveSaver } from 'redux/middleware'
 
-
 const history = createBrowserHistory()
 const middleware = routerMiddleware(history)
-const initialState = (localStorage['redux-store']) ? JSON.parse(localStorage['redux-store']) : {}
+const initialState = localStorage['redux-store'] ? JSON.parse(localStorage['redux-store']) : {}
 //@ts-ignore
-const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (v) => v
+const devTools = window.__REDUX_DEVTOOLS_EXTENSION__
+  ? // comment
+    //@ts-ignore
+    window.__REDUX_DEVTOOLS_EXTENSION__()
+  : (v) => v
 
 const store = createStore({
   reducers: {
-    ...combineReducers(localReducers, routerReducer),
+    ...combineReducers({ ...localReducers, router: connectRouter(history) }),
   },
-  middleware: [
-    middleware,
-    selectiveSaver,
-  ].concat(process.env.NODE_ENV === 'production' ? [] : [
-    // createLogger(),
-  ]),
-  enhancers: [
-    devTools,
-  ],
+  middleware: [middleware, selectiveSaver].concat(
+    process.env.NODE_ENV === 'production'
+      ? []
+      : [
+          // createLogger(),
+        ]
+  ),
+  enhancers: [devTools],
   initialState,
 })
 
-
 export default store
 
-export {
-  history,
-}
+export { history }
