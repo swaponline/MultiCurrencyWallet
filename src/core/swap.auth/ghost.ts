@@ -8,7 +8,7 @@ const loginMnemonic = (mnemonic, walletNumber=0, path, app) => {
       : app.env.coininfo.ghost.test
   )
 
-  const wallet = mnemonicUtils.getGhostWallet(network, mnemonic, walletNumber, path, app)
+  const wallet = mnemonicUtils.getGhostWallet(network, mnemonic, walletNumber, path)
   return login(wallet.WIF, app)
 }
 
