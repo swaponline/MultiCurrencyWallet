@@ -2,6 +2,7 @@ import debug from 'debug'
 import BigNumber from 'bignumber.js'
 import SwapApp, { Events, util } from 'swap.app'
 import Room from './Room'
+import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
 
 
 class Swap {
@@ -77,7 +78,7 @@ class Swap {
 
     this.flow = new Flow(this)
 
-
+    this.setupEvents()
     // Change destination address on run time
     this.room.on('set destination buy address', (data) => {
       debug('swap.core:swap')('Other side change destination buy address', data)
@@ -124,6 +125,7 @@ class Swap {
 
     data.flow = Flow.read(app, data)
 
+    
     return data
   }
 
@@ -214,6 +216,93 @@ class Swap {
   checkTimeout(timeoutUTS) {
     // return true if timeout passed
     return !((this.createUnixTimeStamp + timeoutUTS) > Math.floor(new Date().getTime() / 1000))
+  }
+
+  setupEvents() {
+    const {
+      sellCurrency: sellCoin,
+      buyCurrency: buyCoin,
+    } = this
+
+    if (COIN_DATA[sellCoin]
+      && COIN_DATA[sellCoin].model
+      && COIN_DATA[buyCoin]
+      && COIN_DATA[buyCoin].model
+    ) {
+      const _Sell = sellCoin.toLowerCase()
+      const _Buy = buyCoin.toLowerCase()
+
+      const sellModel = COIN_DATA[sellCoin].model
+      const buyModel = COIN_DATA[buyCoin].model
+
+      // sell UTXO buy AB 
+      if (sellModel === COIN_MODEL.UTXO && buyModel === COIN_MODEL.AB) {
+        // @ToDo after refactoring use 'request script'
+        this.room.on(`request ${_Sell} script`, () => {
+          if (this.flow) {
+            const {
+              [`${_Sell}ScriptValues`]: scriptValues,
+              [`${_Sell}ScriptCreatingTransactionHash`]: scriptCreatingTransactionHash,
+            } = this.flow.state
+            
+            if (scriptValues && scriptCreatingTransactionHash) {
+              this.room.sendMessage({
+                event:  `create ${_Sell} script`,
+                data: {
+                  scriptValues,
+                  [`${_Sell}ScriptCreatingTransactionHash`] : scriptCreatingTransactionHash,
+                }
+              })
+            }
+          }
+        })
+      }
+      // sell AB buy UTXO
+      if (sellModel === COIN_MODEL.AB && buyModel === COIN_MODEL.UTXO) {
+        this.room.on(`create ${_Buy} script`, (eventData) => {
+          if (this.flow) {
+            const {
+              scriptValues,
+              [`${_Buy}ScriptCreatingTransactionHash`]: scriptCreatingTransactionHash, 
+            } = eventData
+
+            const { step } = this.flow.state
+
+            if (step >= 3) {
+              return
+            }
+
+            this.flow.finishStep({
+              secretHash: scriptValues.secretHash,
+              [`${_Buy}ScriptValues`]: scriptValues,
+              [`${_Buy}ScriptCreatingTransactionHash`]: scriptCreatingTransactionHash,
+            }, { step: `wait-lock-${_Buy}`, silentError: true })
+          }
+        })
+        const requestScriptFunc = () => {
+          if (this.flow && !this.flow._isFinished()) {
+            const { step } = this.flow.state
+
+            if (step >= 3) {
+              return
+            }
+
+            this.flow.swap.room.sendMessage({
+              event: `request ${_Buy} script`,
+            })
+
+            setTimeout( requestScriptFunc, 5000 )
+          }
+        }
+        requestScriptFunc()
+      }
+      // sell UTXO buy UTXO
+      if (sellModel === COIN_MODEL.UTXO && buyModel === COIN_MODEL.UTXO) { /* ---- */ }
+      // sell AB buy AB
+      if (sellModel === COIN_MODEL.AB && buyModel === COIN_MODEL.AB) { /* ----- */ }
+    } else {
+      console.warn(`Core->Swap->setupEvents - Unknown coins models Sell(${sellCoin}) Buy(${buyCoin})`)
+    }
   }
 
   needWaitConfirm() {
