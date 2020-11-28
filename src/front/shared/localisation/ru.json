@@ -85,10 +85,6 @@
     ]
   },
   {
-    "id": "Nav88",
-    "message": "Листинг"
-  },
-  {
     "id": "ADDoffer22",
     "message": "Перейти в Mainnet"
   },
@@ -5020,10 +5016,6 @@
     "files": [
       "src/front/shared/components/TourWindow/index.tsx"
     ]
-  },
-  {
-    "id": "CurrencySlider36",
-    "message": "+"
   },
   {
     "id": "PartialFeeValueWarn3",
