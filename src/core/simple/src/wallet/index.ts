@@ -1,5 +1,5 @@
-import bitcoin from './../instances'
-import ethereum from './../instances'
+import * as bitcoin from './../instances'
+import * as ethereum from './../instances'
 import debugCreate from 'debug'
 const debug = debugCreate('swap.core:simple:wallet')
 
@@ -17,6 +17,8 @@ class Wallet {
   balances: any
 
   constructor(app, constants, config) {
+    console.log('Create wallet')
+
     this.id = config.id
     this.network = app.network
     this.ethereum = ethereum
@@ -53,7 +55,6 @@ class Wallet {
   async getData({ coins }) {
     const currencies = coins || Object.values(this.constants.COINS)
     const data = this.auth.getPublicData()
-
     const addresses = currencies.reduce((obj, symbol) => {
       const { address } = (symbol == 'BTC' /*|| symbol == 'USDT' */)
         ? data.btc : data.eth

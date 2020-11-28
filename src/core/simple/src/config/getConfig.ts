@@ -10,12 +10,11 @@ import {
   ETHTOKEN2BTC, BTC2ETHTOKEN,
   /*USDT2ETHTOKEN, ETHTOKEN2USDT*/ } from 'swap.flows'
 
-import eth from '../instances/ethereum'
-import btc from '../instances/bitcoin'
+import * as eth from '../instances/ethereum'
+import * as btc from '../instances/bitcoin'
 
-import common from './common'
-
-import tokenSwap from './tokenSwap'
+import { common } from './common'
+import { default as tokenSwap } from './tokenSwap'
 
 import setupLocalStorage from './setupLocalStorage'
 import { LocalStorage } from 'node-localstorage'
@@ -24,7 +23,7 @@ import sessionStorage from 'node-sessionstorage'
 
 const ROOT_DIR = process.env.ROOT_DIR || '.'
 
-export default (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, ...custom }) => {
+const getConfig = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, ...custom }) => {
   config = {
     ...common,
     ...config,
@@ -44,9 +43,7 @@ export default (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, ...c
     },
   }
 
-  console.log('setup .storage')
   setupLocalStorage(`${ROOT_DIR}/.storage/`)
-  console.log('make dir with session', config.storageDir)
   setupLocalStorage(config.storageDir)
   
   const storage = new LocalStorage(config.storageDir)
@@ -93,7 +90,7 @@ export default (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, ...c
       ),
       ...(
         //@ts-ignore
-        tokens.map(_token => new EthTokenSwap(tokenSwap(_token)()))
+        tokens.map(_token => new EthTokenSwap(tokenSwap(_token)))
       )
     ]
       .filter(a => !!a),
@@ -118,3 +115,6 @@ export default (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, ...c
     ],
   }
 }
+
+
+export { getConfig }
