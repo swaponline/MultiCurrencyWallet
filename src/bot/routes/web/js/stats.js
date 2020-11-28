@@ -1,8 +1,4 @@
-import BigNumber from 'bignumber.js'
-import React from 'react'
-
-export default class CurrencyStats extends React.Component<any, any> {
-
+class CurrencyStats extends React.Component {
   render() {
     const { data } = this.props
     const { ticker, market_price, total, average, last } = data
@@ -60,11 +56,11 @@ class Statistics extends React.Component {
     return scriptValues.lockTime - 3 * 3600
   }
 
-  calculateStatsForCurrency = (_ticker, swaps, prices, /*time*/) => {
+  calculateStatsForCurrency = (_ticker, swaps, prices, time) => {
     const [ main, base ] = _ticker.split('-')
 
     const usd_price = prices[`USD-${base}`] || 1
-    const market_price = new BigNumber(prices[_ticker])
+    const market_price = BigNumber(prices[_ticker])
 
     console.log(new Date().toISOString(), 'ticker price', market_price)
     // const now = Date.now()
@@ -81,7 +77,7 @@ class Statistics extends React.Component {
         }
       })
       .map(({ price, amount, type }) => {
-        const _amount = new BigNumber(amount).div(price) // in MAIN
+        const _amount = BigNumber(amount).div(price) // in MAIN
 
         const totalMarket = _amount.times(market_price)
         const totalBase = _amount.times(price)
@@ -106,21 +102,21 @@ class Statistics extends React.Component {
       market_price,
       average: {
         btc_profit: processed
-          .reduce((sum, { btc_profit }) => btc_profit.plus(sum), new BigNumber(0))
+          .reduce((sum, { btc_profit }) => btc_profit.plus(sum), BigNumber(0))
           .div(processed.length || 1),
         usd_profit: processed
-          .reduce((sum, { usd_profit }) => usd_profit.plus(sum), new BigNumber(0))
+          .reduce((sum, { usd_profit }) => usd_profit.plus(sum), BigNumber(0))
           .div(processed.length || 1),
       },
       last: {
-        btc_profit: processed[0] ? processed[0].btc_profit : new BigNumber(0),
-        usd_profit: processed[0] ? processed[0].usd_profit : new BigNumber(0),
+        btc_profit: processed[0] ? processed[0].btc_profit : BigNumber(0),
+        usd_profit: processed[0] ? processed[0].usd_profit : BigNumber(0),
       },
       total: {
         btc_profit: processed
-          .reduce((sum, { btc_profit }) => btc_profit.plus(sum), new BigNumber(0)),
+          .reduce((sum, { btc_profit }) => btc_profit.plus(sum), BigNumber(0)),
         usd_profit: processed
-          .reduce((sum, { usd_profit }) => usd_profit.plus(sum), new BigNumber(0)),
+          .reduce((sum, { usd_profit }) => usd_profit.plus(sum), BigNumber(0)),
       },
     }
   }
@@ -183,7 +179,7 @@ class Statistics extends React.Component {
   }
 
   render() {
-    //@ts-ignore
+
     const { error, isLoaded, currencies, swaps } = this.state;
 
     if (error) {
