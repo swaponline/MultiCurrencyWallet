@@ -12,6 +12,7 @@ import BtcScript from './BtcScript'
 export default class ShowBtcScript extends Component<any, any> {
   render() {
     const { btcScriptValues } = this.props
+    if (!btcScriptValues) return null
     return (
       <BtcScript
         secretHash={btcScriptValues.secretHash}
