@@ -84,26 +84,31 @@ export default {
       },
     ],
   },
-  'SWAP-BTC': {
+  'USDT-NEXT': {
     active: true,
     buy: true,
     sell: true,
     type: 'coin',
     orders: [
       {
-        amount: 0.0001,
-        spreadBuy: 93.25,
-        spreadSell: 4,
-      },
-      {
         amount: 0.0005,
-        spreadBuy: 93.25,
-        spreadSell: 4,
+        spreadBuy: 2,
+        spreadSell: 2,
       },
       {
         amount: 0.005,
-        spreadBuy: 93.25,
+        spreadBuy: 4,
         spreadSell: 4,
+      },
+      {
+        amount: 0.05,
+        spreadBuy: 8,
+        spreadSell: 8,
+      },
+      {
+        amount: 0.5,
+        spreadBuy: 16,
+        spreadSell: 16,
       },
     ],
   },

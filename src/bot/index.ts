@@ -1,5 +1,20 @@
 import * as fs from 'fs'
 
+
+const rewriteEnvKeys = [
+  `NETWORK`,
+  `API_USER`,
+  `API_PASS`,
+  `SECRET_PHRASE`,
+  `SPREAD`
+]
+const rewritedEnv = {}
+rewriteEnvKeys.forEach((envKey) => {
+  if (process.env[envKey] !== undefined) {
+    rewritedEnv[envKey] = process.env[envKey]
+  }
+})
+
 if (process.env.TEST_STARTUP === `true`) {
   console.log('>>>> TEST STARTUP')
   /* Test env */
@@ -32,6 +47,11 @@ if (process.env.TEST_STARTUP === `true`) {
     path: __dirname + '/.env',
   })
 }
+
+// Rewrite vars from .env with values from command lineHeight
+Object.keys(rewritedEnv).forEach((envKey) => {
+  process.env[envKey] = rewritedEnv[envKey]
+})
 
 import _debug from 'debug'
 

@@ -41,5 +41,6 @@ export default [
   'USDT-BTC',
   'SNM-BTC',
   'JACK-BTC',
-  'GHOST-BTC',
+  'ETH-NEXT',
+  'ETH-GHOST'
 ]

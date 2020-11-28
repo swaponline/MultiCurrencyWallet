@@ -52,13 +52,17 @@ class Wallet {
     return this.balances[symbol]
   }
 
-  async getData({ coins }) {
+  async getData(options) {
+    const { coins } = options
+
+    console.log('>>>> getData', options)
     const currencies = coins || Object.values(this.constants.COINS)
     const data = this.auth.getPublicData()
     const addresses = currencies.reduce((obj, symbol) => {
+      let account = data.eth
+      if (data[symbol.toLowerCase()]) account = data[symbol.toLowerCase()]
 
-      const { address } = (symbol == 'BTC' /*|| symbol == 'USDT' */)
-        ? data.btc : data.eth
+      const { address } = account
 
       return {
         ...obj,
@@ -67,6 +71,7 @@ class Wallet {
     }, {})
 
     const fetchBalances = currencies.map(symbol => {
+      console.log('>>>> wallet fetchBalances', symbol)
       try {
         const instance = this.swapApp.swaps[symbol]
         const address = addresses[symbol]
