@@ -296,7 +296,7 @@ const broadcastTx = (options) : any => {
     if (!answer || !answer.txid) {
       // use blockcryper
       try {
-        const bcAnswer = await apiLooper.post(apiBlocyper || getBlockcypher(NETWORK), `/txs/push`, {
+        const bcAnswer : any | boolean = await apiLooper.post(apiBlocyper || getBlockcypher(NETWORK), `/txs/push`, {
           body: {
             tx: txRaw,
           },

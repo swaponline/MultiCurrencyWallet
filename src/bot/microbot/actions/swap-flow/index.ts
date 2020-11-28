@@ -6,5 +6,7 @@ import ETH2UTXOFlow from './ETH2UTXOFlow'
 
 export {
   BTC2ETHFlow,
-  ETH2BTCFlow
+  ETH2BTCFlow,
+  UTXO2ETHFlow,
+  ETH2UTXOFlow
 }

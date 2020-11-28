@@ -33,13 +33,13 @@ const config = {
   //   broadcastTx: (txRaw) => bitcoin.broadcastTx(txRaw),
   //   fetchTx: hash => bitcoin.fetchTx(hash),
   // }),
-  noxonTokenSwap: tokenSwap({
+  noxonTokenSwap: () => tokenSwap({
     network: 'mainnet',
     name: 'NOXON',
     decimals: 0,
     tokenAddress: '0x9e4ad79049282f942c1b4c9b418f0357a0637017',
   }),
-  swapTokenSwap: tokenSwap({
+  swapTokenSwap: () => tokenSwap({
     network: 'mainnet',
     name: 'SWAP',
     decimals: 18,

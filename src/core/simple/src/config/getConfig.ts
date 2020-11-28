@@ -114,11 +114,8 @@ const getConfig = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, .
           txid,
           NETWORK,
         }),
-        estimateFeeValue: ({ inSatoshis, speed, address, txSize } = {}) => btcUtils.estimateFeeValue({
-          inSatoshis,
-          speed,
-          address,
-          txSize,
+        estimateFeeValue: (options) => btcUtils.estimateFeeValue({
+          ...options,
           NETWORK,
         }),
         checkWithdraw: (scriptAddress) => btcUtils.checkWithdraw({
@@ -143,11 +140,8 @@ const getConfig = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, .
           txid,
           NETWORK,
         }),
-        estimateFeeValue: ({ inSatoshis, speed, address, txSize } = {}) => nextUtils.estimateFeeValue({
-          inSatoshis,
-          speed,
-          address,
-          txSize,
+        estimateFeeValue: (options) => nextUtils.estimateFeeValue({
+          ...options,
           NETWORK,
         }),
         checkWithdraw: (scriptAddress) => nextUtils.checkWithdraw({

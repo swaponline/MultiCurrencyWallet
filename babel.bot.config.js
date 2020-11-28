@@ -5,8 +5,7 @@ module.exports = {
       'targets': {
         'node': 'current',
       },
-    }],
-    '@babel/preset-typescript',
+    }]
   ],
   'plugins': [
     [
@@ -29,7 +28,9 @@ module.exports = {
             "swap.swap/*": "./src/core/swap.swap/*",
             "swap.swaps": "./src/core/swap.swaps/",
             "swap.swaps/*": "./src/core/swap.swaps/*",
-            "simple.swap.core": "./src/core/simple/src/"
+            "simple.swap.core": "./src/core/simple/src/",
+            "common": "./src/common/",
+            "common/*": "./src/common/*"
           },
       },
     ],

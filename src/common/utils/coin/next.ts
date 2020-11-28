@@ -117,7 +117,7 @@ const fetchTxInfo = (options) => {
     cacheResponse,
     API_ENDPOINT,
     NETWORK,
-  }).then((txInfo_) => {
+  }).then((txInfo_ : any) => {
     return { ...txInfo_ } /** yes - ^^^^ not working - заглужка **/
     const { vin, vout, ...rest } = txInfo_
     const senderAddress = vin ? vin[0].addr : null
@@ -183,7 +183,7 @@ const checkWithdraw = (options) => {
       return false
     },
     query: 'next_balance',
-  }).then((res) => {
+  }).then((res : any) => {
     if (res.txs.length > 1
       && res.txs[0].vout.length
     ) {

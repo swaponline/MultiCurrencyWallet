@@ -27,7 +27,7 @@ const config = {
     fetchBalance: (address) => ethereum.fetchBalance(address),
     estimateGasPrice: ({ speed }) => ethereum.estimateGasPrice({ speed }),
   }),
-  noxonTokenSwap: tokenSwap({
+  noxonTokenSwap: () => tokenSwap({
     network: 'testnet',
     name: 'NOXON',
     decimals: 0,
