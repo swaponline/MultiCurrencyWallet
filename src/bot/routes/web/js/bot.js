@@ -1,6 +1,4 @@
-import React from 'react'
-
-export default class Bot extends React.Component {
+class Bot extends React.Component {
   state = {
     items: [],
     kraken_items: [],
@@ -39,7 +37,6 @@ export default class Bot extends React.Component {
   }
 
   render() {
-    //@ts-ignore
     const { error, isLoaded, items, kraken_items, coins } = this.state;
 
     if (error) {
