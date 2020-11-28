@@ -53,7 +53,6 @@ const CurrenciesList = ({
             key={index}
             index={index}
             isDark={isDark}
-            getCurrencyFiat={(fiat) => this.getCurrencyFiat(fiat)} // FIXME: Where's method???
             currency={row}
             itemData={row}
             currencies={currencies}
