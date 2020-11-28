@@ -1,5 +1,6 @@
 import ethereum, { mainnet, testnet } from '../instances/ethereum'
-import { ERC20Api as ERC20 } from './ERC20'
+import abi from 'human-standard-token-abi'
+
 
 const eth = {
   mainnet: mainnet(),
@@ -17,17 +18,18 @@ const SwapContract = {
   },
 }
 
-const tokenSwap = (contract) => {
-  const { network, name, decimals, tokenAddress } = contract
+const tokenSwap = (options) => {
+  const { network, name, decimals, tokenAddress } = options
+
   return {
     network,
     name,
     decimals,
-    tokenAddress: tokenAddress || contract.tokenAddress,
-    tokenAbi: ERC20,
+    tokenAddress,
+    tokenAbi: abi,
     gasLimit: 3e5,
-    address: contract.address || SwapContract[network].address,
-    abi: contract.abi || SwapContract[network].abi,
+    address: SwapContract[network].address,
+    abi: SwapContract[network].abi,
     fetchBalance: (address) => eth[network].fetchTokenBalance(address, tokenAddress, decimals),
     estimateGasPrice: ({ speed }) => ethereum.estimateGasPrice({ speed }),
   }
