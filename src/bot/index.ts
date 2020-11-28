@@ -39,8 +39,12 @@ _debug('.:app')
 
 console.log('Bot starts...')
 
+exports = module.exports = require('./app')
+/*
 import * as app from './app'
 
 console.log(app)
 
 export default app
+*/
+

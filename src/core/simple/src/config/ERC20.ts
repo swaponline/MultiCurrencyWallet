@@ -1,6 +1,4 @@
-'use strict';
-
-export default [
+const ERC20Api = [
   {
     "constant": true,
     "inputs": [],
@@ -221,4 +219,6 @@ export default [
   "name": "Transfer",
   "type": "event"
   }
-];
+]
+
+export { ERC20Api }

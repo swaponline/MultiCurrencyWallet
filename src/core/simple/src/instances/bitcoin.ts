@@ -1,4 +1,4 @@
-import bitcoin from 'bitcoinjs-lib'
+import * as bitcoin from 'bitcoinjs-lib'
 import request from '../helpers/request'
 import bitcoinUtils from '../../../../common/utils/bitcoin'
 import BigNumber from 'bignumber.js'
@@ -269,8 +269,6 @@ class Bitcoin {
   }
 }
 
-export default new Bitcoin()
-
 const mainnet = () => new Bitcoin('mainnet')
 const testnet = () => new Bitcoin('testnet')
 
@@ -280,7 +278,7 @@ const networks = {
 }
 
 export {
-  networks
+  networks,
   mainnet,
   testnet,
 }

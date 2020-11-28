@@ -1,2 +1,4 @@
-import * as app from './app'
-export default app
+import { SwapApp } from './app'
+
+
+export default SwapApp

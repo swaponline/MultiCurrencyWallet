@@ -1,6 +1,6 @@
 import { networks as bitcoinNetworks } from '../instances/bitcoin'
 import { networks as ethereumNetworks} from '../instances/ethereum'
-import tokenSwap from './tokenSwap'
+import { default as tokenSwap } from './tokenSwap'
 
 const bitcoin = bitcoinNetworks.testnet()
 const ethereum = ethereumNetworks.testnet()
@@ -13,7 +13,7 @@ const id = parseInt(process.argv[2])
 const offset = process.env.OFFSET || process.argv[1]
 const ROOT_DIR = process.env.ROOT_DIR || '.'
 
-export default {
+const config = {
   id,
   network: 'testnet',
   storageDir: `${ROOT_DIR}/.storage/__testnet__${id}__`,
@@ -42,13 +42,13 @@ export default {
       }),
     checkWithdraw: (scriptAddress) => bitcoin.checkWithdraw(scriptAddress),
   }),
-  noxonTokenSwap: tokenSwap({
+  noxonTokenSwap: () => tokenSwap({
     network: 'testnet',
     name: 'NOXON',
     decimals: 0,
     tokenAddress: '0x60c205722c6c797c725a996cf9cca11291f90749',
   }),
-  swapTokenSwap: tokenSwap({
+  swapTokenSwap: () => tokenSwap({
     network: 'testnet',
     name: 'SWAP',
     decimals: 18,
@@ -61,3 +61,5 @@ export default {
     openURL: url => open(url),
   }),
 }
+
+export { config }

@@ -2,9 +2,9 @@ import crypto from 'crypto'
 
 import { helpers } from 'simple.swap.core'
 
-import app from '../../swapApp'
+import { app } from '../../swapApp'
 import { findSwap, swapView, decodeFlow, removeSwap } from '../../helpers'
-import Pair from '../../microbot/Pair.js'
+import Pair from '../../microbot/Pair'
 
 import * as flows from 'swap.flows'
 import { default as Swap } from 'swap.swap'

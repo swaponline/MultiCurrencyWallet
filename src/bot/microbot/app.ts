@@ -8,6 +8,7 @@ import { erc20 } from '../../core/swap.app/util'
 
 const debug = _debug('swap.bot')
 const network = process.env.NETWORK || 'testnet'
+
 const {
   room: {
     ready,
@@ -56,16 +57,10 @@ try {
     orders.on('new order request', handleRequest(app, wallet, orders))
   })
 } catch (err) {
+  console.log('Fail create swapApp',err)
   handleError(err)
 }
 
-export default SwapApp
-
 export {
-  app,
-  room,
-  wallet,
-  ready,
-  services,
-  erc20
+  SwapApp
 }

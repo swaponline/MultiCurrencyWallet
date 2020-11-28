@@ -2,7 +2,8 @@ import SwapApp, { constants } from 'swap.app'
 
 import Wallet from './wallet'
 
-import configFactory from './config'
+import * as configFactory from './config'
+
 
 const network = process.env.NETWORK
 

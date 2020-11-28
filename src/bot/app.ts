@@ -3,27 +3,23 @@ import express from 'express'
 import bodyparser from 'body-parser'
 import path from 'path'
 
-import app from './swapApp'
+import { app, wallet } from './swapApp'
 import ws from './ws'
 
 import router from './routes'
 import auth from './routes/auth'
-console.log('app.ts')
 
-// app.sync / app.ready - used in tests, tests are broken, fix later
-//@ts-ignore
 app.ready = new Promise( resolve => app.services.room.once('ready', resolve))
-//@ts-ignore
-app.sync = new Promise( resolve => app.room.ready.then(() => setTimeout(resolve, 20000)) )
+app.sync = new Promise( resolve => app.ready.then(() => setTimeout(resolve, 20000)) )
 
 
 app.services.room.once('ready', () => {
   console.log('swapApp ready')
 
-  console.log('btc', app.wallet.auth.accounts.btc.getAddress())
-  console.log('eth', app.wallet.auth.accounts.eth.address)
+  console.log('btc', wallet.auth.accounts.btc.getAddress())
+  console.log('eth', wallet.auth.accounts.eth.address)
 
-  console.log('created swap app, me:', app.wallet.view())
+  console.log('created swap app, me:', wallet.view())
 })
 
 const port = process.env.PORT || 1337
