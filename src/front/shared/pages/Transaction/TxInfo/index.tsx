@@ -10,7 +10,7 @@ import { constants } from 'helpers'
 import cssModules from 'react-css-modules'
 import styles from './styles.scss'
 import ShareButton from 'components/controls/ShareButton/ShareButton'
-import finishSvg from './images/finish.svg'
+import okSvg from 'shared/images/ok.svg'
 import actions from 'redux/actions'
 import Button from 'components/controls/Button/Button'
 import ShortTextView from 'pages/Wallet/components/ShortTextView/ShortTextView.js'
@@ -108,7 +108,7 @@ export default class TxInfo extends Component<any, any> {
       <div>
         <div styleName={`blockCenter ${isDark ? 'dark' : ''}`}>
           <div>
-            <img styleName="finishImg" src={finishSvg} alt="finish" />
+            <img styleName="finishImg" src={okSvg} alt="finish" />
           </div>
 
           <div className="p-3">
