@@ -270,20 +270,6 @@
     ]
   },
   {
-    "id": "ShowMoreCoins36",
-    "message": "Monedas en Billetera",
-    "files": [
-      "src/front/shared/components/modals/ShowMoreCoins/ShowMoreCoins.tsx"
-    ]
-  },
-  {
-    "id": "ShowMoreCoins48",
-    "message": "Otras monedas",
-    "files": [
-      "src/front/shared/components/modals/ShowMoreCoins/ShowMoreCoins.tsx"
-    ]
-  },
-  {
     "id": "ErrorNotification12",
     "message": "Ups, parece que algo ha salido mal!",
     "files": [
@@ -1422,27 +1408,6 @@
     "message": "Wiki"
   },
   {
-    "id": "Actions",
-    "message": "Acciones",
-    "files": [
-      "src/front/shared/components/modals/ShowMoreCoins/ShowMoreCoins.tsx"
-    ]
-  },
-  {
-    "id": "Coin",
-    "message": "Moneda",
-    "files": [
-      "src/front/shared/components/modals/ShowMoreCoins/ShowMoreCoins.tsx"
-    ]
-  },
-  {
-    "id": "Name",
-    "message": "Nombre",
-    "files": [
-      "src/front/shared/components/modals/ShowMoreCoins/ShowMoreCoins.tsx"
-    ]
-  },
-  {
     "id": "Amount61",
     "message": "Cantidad"
   },
@@ -1890,13 +1855,6 @@
     "message": "Recibir",
     "files": [
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
-    ]
-  },
-  {
-    "id": "ShMoreCoins",
-    "message": "Mostrar mas monedas",
-    "files": [
-      "src/front/shared/components/modals/ShowMoreCoins/ShowMoreCoins.tsx"
     ]
   },
   {
