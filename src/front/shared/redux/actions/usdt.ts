@@ -58,7 +58,7 @@ const fetchBalance = (address, assetId = 31) =>
   apiLooper.post('usdt', `v1/address/addr/`, {
     body: `addr=${address}`,
   })
-    .then(response => {
+    .then((response: any) => {
       console.log('responce', response)
       const { error, balance } = response
 
@@ -101,7 +101,7 @@ const getTransaction = () => {
     apiLooper.post('usdt', `v1/address/addr/details/`, {
       body: `addr=${address}`,
     })
-      .then((res) => {
+      .then((res: any) => {
         console.log('res', res)
         const transactions = res.transactions.map((item) => ({
           type: 'usdt',
@@ -131,7 +131,7 @@ const send = ({ from, to, amount } = {}) => {
     const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
 
     const tx = new bitcoin.TransactionBuilder(btc.network)
-    const unspents = await fetchUnspents(from)
+    const unspents: any = await fetchUnspents(from)
     const feeValue = 5000
     const sendingValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
     const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)

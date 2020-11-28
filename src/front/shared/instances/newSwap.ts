@@ -98,6 +98,7 @@ const createSwapApp = async () => {
       // whitelistBtc: [],
 
       services: [
+        //@ts-ignore
         new SwapAuth({
           // TODO need init swapApp only after private keys created!!!!!!!!!!!!!!!!!!!
           eth: localStorage.getItem(privateKeys.privateKeyNames.eth),

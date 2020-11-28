@@ -275,7 +275,7 @@ const getBalance = () => {
       return false
     },
     ignoreErrors: true,
-  }).then((answer) => {
+  }).then((answer: any) => {
     const balance = (typeof answer.balance === 'undefined') ? 0 : answer.balance
     const unconfirmedBalance = (typeof answer.unconfirmedBalance === 'undefined') ? 0 : answer.unconfirmedBalance
     console.log('NEXT Balance: ', balance)
@@ -420,7 +420,7 @@ const getTransaction = (address, ownType) =>
         return false
       },
       query: 'next_balance',
-    }).then((res) => {
+    }).then((res: any) => {
       const transactions = res.txs.map((item) => {
         const direction = item.vin[0].addr !== address ? 'in' : 'out'
 
@@ -486,7 +486,7 @@ const send = ({ from, to, amount, feeValue, speed } = {}) => {
       .sign(privateKey)
 
     const rawTx = String(transaction.serialize())
-    const broadcastAnswer = await broadcastTx(rawTx)
+    const broadcastAnswer: any = await broadcastTx(rawTx)
     const txid = broadcastAnswer.raw
     ready(txid)
   })

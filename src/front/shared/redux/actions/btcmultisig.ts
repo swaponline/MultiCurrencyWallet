@@ -653,7 +653,7 @@ const beginRegisterSMS = async (phone, mnemonic, ownPublicKey) => {
 
   const sign = _getSign()
   try {
-    const result = await apiLooper.post('btc2FAProtected', `/register/begin/`, {
+    const result: any = await apiLooper.post('btc2FAProtected', `/register/begin/`, {
       body: {
         phone,
         address,
@@ -709,7 +709,7 @@ const confirmRegisterSMS = async (phone, smsCode, mnemonic, ownPublicKey) => {
   const newKeys = JSON.stringify(publicKeys)
 
   try {
-    const result = await apiLooper.post('btc2FAProtected', `/register/confirm/`, {
+    const result: any = await apiLooper.post('btc2FAProtected', `/register/confirm/`, {
       body: {
         phone,
         address,
@@ -775,7 +775,7 @@ const register_PIN = async (password, mnemonic, ownPublicKey) => {
   const newKeys = JSON.stringify(publicKeys)
 
   try {
-    const result = await apiLooper.post('btcPin', `/register/`, {
+    const result: any = await apiLooper.post('btcPin', `/register/`, {
       body: {
         address,
         password,
@@ -1158,7 +1158,7 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
   authKeys = JSON.stringify(authKeys.map((key) => key.toString('Hex')))
 
   try {
-    const result = await apiLooper.post('btc2FAProtected', `/push/`, {
+    const result: any = await apiLooper.post('btc2FAProtected', `/push/`, {
       body: {
         address,
         publicKey: authKeys,
@@ -1402,7 +1402,7 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
   authKeys = JSON.stringify(authKeys.map((key) => key.toString('Hex')))
 
   try {
-    const result = await apiLooper.post('btcPin', `/sign/`, {
+    const result: any = await apiLooper.post('btcPin', `/sign/`, {
       body: {
         address,
         publicKey: authKeys,
@@ -1548,7 +1548,7 @@ const sendPinProtectedV4 = async ({ from, to, amount, feeValue, speed, password,
   authKeys = JSON.stringify(authKeys.map((key) => key.toString('Hex')))
 
   try {
-    const result = await apiLooper.post('btcPin', `/sign/`, {
+    const result: any = await apiLooper.post('btcPin', `/sign/`, {
       body: {
         address,
         publicKey: authKeys,
@@ -1612,7 +1612,7 @@ const confirmSMSProtected = async (smsCode) => {
   let authKeys = publicKeys.slice(1)
   authKeys = JSON.stringify(authKeys.map((key) => key.toString('Hex')))
 
-  const result = await apiLooper.post('btc2FAProtected', `/sign/`, {
+  const result: any = await apiLooper.post('btc2FAProtected', `/sign/`, {
     body: {
       address,
       version: 'v5',
@@ -2233,9 +2233,15 @@ const signAndBuild = (transactionBuilder, p2sh) => {
   return transactionBuilder.buildIncomplete()
 }
 
-const fetchUnspents = (address) => actions.btc.fetchUnspents(address)
+const fetchUnspents = (address) => {
+  const result: any = actions.btc.fetchUnspents(address)
+  return result
+}
 
-const broadcastTx = (txRaw) => actions.btc.broadcastTx(txRaw)
+const broadcastTx = (txRaw) => {
+  const result: any = actions.btc.broadcastTx(txRaw)
+  return result
+}
 
 const signMessage = (message, encodedPrivateKey) => {
   const keyPair = bitcoin.ECPair.fromWIF(encodedPrivateKey, [bitcoin.networks.bitcoin, bitcoin.networks.testnet])

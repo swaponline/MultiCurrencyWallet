@@ -1,6 +1,8 @@
 import apiLooper from '../apiLooper'
 import { BigNumber } from 'bignumber.js'
 import * as bitcoin from 'bitcoinjs-lib'
+import typeforce from 'swap.app/util/typeforce'
+
 // Use front API config
 import { default as TESTNET } from '../../../front/config/testnet/api'
 import { default as MAINNET } from '../../../front/config/testnet/api'
@@ -18,6 +20,7 @@ const getBitpay = (network) => {
 const getCore = () => {
   return bitcoin
 }
+
 
 const getBlockcypher = (network) => {
   return {
@@ -49,7 +52,7 @@ const fetchBalance = (options) => {
       delay: 500,
       name: `bitpay`,
     },
-  }).then((answer) => {
+  }).then((answer: any) => {
     const {
       balance,
       unconfirmed,
@@ -92,8 +95,8 @@ const fetchTx = (options) => {
   ))
 }
 
-// @ToDo - Make interface - fetchTxInfo общая для всех блокчейнов - она возврашет сведенные данные определенного типа
 
+// @ToDo - Make interface - fetchTxInfo общая для всех блокчейнов - она возврашет сведенные данные определенного типа
 const fetchTxInfo = (options) : any => {
   const {
     hash,
@@ -233,7 +236,7 @@ const fetchUnspents = (options) : any => {
           name: `bitpay`,
         },
       }
-    ).then((answer) => {
+    ).then((answer: any) => {
       resolve(answer.map((txInfo, index) => {
         return {
           address,
@@ -252,6 +255,7 @@ const fetchUnspents = (options) : any => {
     })
   })
 }
+
 
 // @ToDo - интерфейс - возврашет объект { txid }
 const broadcastTx = (options) : any => {
@@ -286,7 +290,7 @@ const broadcastTx = (options) : any => {
       }
     }
     if (answer && answer.txid) {
-      resolve({ txid: answer.txid  })
+      resolve({ txid: answer.txid })
       return
     }
     if (!answer || !answer.txid) {
@@ -356,7 +360,7 @@ const checkWithdraw = (options) => {
       delay: 500,
       name: `bitpay`,
     },
-  }).then(async (txs) => {
+  }).then(async (txs: any) => {
     if ((txs.length > 0)
       && txs[0].mintTxid
       && txs[0].spentTxid
@@ -426,7 +430,7 @@ const getTransactionBlocyper = (options) => {
           name: `blocyper`,
         },
       }
-    ).then((answer) => {
+    ).then((answer: any) => {
       if (answer
         && answer.txs
       ) {
@@ -532,7 +536,7 @@ const getTransactionBitcore = (options) => {
         delay: 500,
         name: `bitpay`,
       },
-    }).then((res) => {
+    }).then((res: any) => {
       const transactions = res.txs.map((item) => {
         const direction = item.vin[0].addr !== address ? 'in' : 'out'
 
