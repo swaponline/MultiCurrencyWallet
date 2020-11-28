@@ -3,12 +3,14 @@ import express from 'express'
 import bodyparser from 'body-parser'
 import path from 'path'
 
-import { app, wallet } from './swapApp'
+import SwapApp from './swapApp'
 import ws from './ws'
 
 import router from './routes'
 import auth from './routes/auth'
 
+
+const { app, wallet } = SwapApp
 app.ready = new Promise( resolve => app.services.room.once('ready', resolve))
 app.sync = new Promise( resolve => app.ready.then(() => setTimeout(resolve, 20000)) )
 
