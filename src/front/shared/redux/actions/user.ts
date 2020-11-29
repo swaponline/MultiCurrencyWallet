@@ -656,9 +656,7 @@ const getAuthData = (name) => {
 }
 
 const addMessagingToken = (token) => {
-  console.log(12313123123)
-  console.log(token)
-  console.log(12313123123)
+  console.log("Added token to redux store: ", token)
   reducers.user.addMessagingToken({ token })
 }
 
