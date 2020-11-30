@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 
 
-export default (/*options = { processClick: false }*/) =>
+export default (/*options = { processClick: false }*/) => 
   (Component) =>
     class WrappedComponent extends PureComponent<any, any> {
       static propTypes: any
