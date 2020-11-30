@@ -1,4 +1,4 @@
-import swap from '../src/index'
+import * as swap from '../src'
 
 const {
   on: { onFinish },

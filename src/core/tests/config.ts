@@ -1,6 +1,9 @@
 import request from 'superagent'
-import ethereumInstance from './../simple/src/instances/ethereum'
-import bitcoinInstance from './../simple/src/instances/bitcoin'
+import Ethereum from './../simple/src/instances/ethereum'
+import Bitcoin from './../simple/src/instances/bitcoin'
+
+const ethereumInstance = new Ethereum('testnet')
+const bitcoinInstance = new Bitcoin('testnet')
 
 const repo = '.ipfs/' + Math.random().toString().slice(2)
 console.log('ipfs repo', repo)

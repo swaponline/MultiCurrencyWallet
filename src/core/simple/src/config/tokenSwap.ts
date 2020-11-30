@@ -31,7 +31,7 @@ const tokenSwap = (options) => {
     address: SwapContract[network].address,
     abi: SwapContract[network].abi,
     fetchBalance: (address) => eth[network].fetchTokenBalance(address, tokenAddress, decimals),
-    estimateGasPrice: ({ speed }) => ethereum.estimateGasPrice({ speed }),
+    estimateGasPrice: ({ speed }) => eth[network].estimateGasPrice({ speed }),
   }
 }
 export default tokenSwap
