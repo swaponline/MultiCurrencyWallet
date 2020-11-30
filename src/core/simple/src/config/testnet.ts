@@ -33,7 +33,6 @@ const config = {
     broadcastTx: (txRaw) => bitcoin.broadcastTx(txRaw),
     fetchTxInfo: txid => bitcoin.fetchTxInfo(txid),
     estimateFeeValue: ({ inSatoshis, speed, address, txSize }) => 
-      //@ts-ignore
       bitcoin.estimateFeeValue({
         inSatoshis,
         speed,

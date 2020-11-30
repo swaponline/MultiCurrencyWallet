@@ -128,10 +128,9 @@ const createSwapApp = async () => {
           fetchUnspents: (scriptAddress) => actions.btc.fetchUnspents(scriptAddress),
           broadcastTx: (txRaw) => actions.btc.broadcastTx(txRaw),
           //@ts-ignore
-          fetchTxInfo: (txid) => actions.btc.fetchTxInfo(txid),
+        fetchTxInfo: (txid) => actions.btc.fetchTxInfo(txid),
           checkWithdraw: (scriptAddress) => actions.btc.checkWithdraw(scriptAddress),
-          //@ts-ignore
-          estimateFeeValue: ({ inSatoshis, speed, address, txSize } = {}) => helpers.btc.estimateFeeValue({ inSatoshis, speed, address, txSize }),
+          estimateFeeValue: ({ inSatoshis, speed, address, txSize }) => helpers.btc.estimateFeeValue({ inSatoshis, speed, address, txSize }),
         }),
         new GhostSwap({
           fetchBalance: (address) => actions.ghost.fetchBalance(address),
@@ -140,8 +139,7 @@ const createSwapApp = async () => {
           //@ts-ignore
           fetchTxInfo: (txid) => actions.ghost.fetchTxInfo(txid),
           checkWithdraw: (scriptAddress) => actions.ghost.checkWithdraw(scriptAddress),
-          //@ts-ignore
-          estimateFeeValue: ({ inSatoshis, speed, address, txSize } = {}) => helpers.ghost.estimateFeeValue({ inSatoshis, speed, address, txSize }),
+          estimateFeeValue: ({ inSatoshis, speed, address, txSize }) => helpers.ghost.estimateFeeValue({ inSatoshis, speed, address, txSize }),
         }),
         new NextSwap({
           fetchBalance: (address) => actions.next.fetchBalance(address),
@@ -150,8 +148,7 @@ const createSwapApp = async () => {
           //@ts-ignore
           fetchTxInfo: (txid) => actions.next.fetchTxInfo(txid),
           checkWithdraw: (scriptAddress) => actions.next.checkWithdraw(scriptAddress),
-          //@ts-ignore
-          estimateFeeValue: ({ inSatoshis, speed, address, txSize } = {}) => helpers.next.estimateFeeValue({ inSatoshis, speed, address, txSize }),
+          estimateFeeValue: ({ inSatoshis, speed, address, txSize }) => helpers.next.estimateFeeValue({ inSatoshis, speed, address, txSize }),
         }),
         ...(Object.keys(config.erc20)
           .map(key =>

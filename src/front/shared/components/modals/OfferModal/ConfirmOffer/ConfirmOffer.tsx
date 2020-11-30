@@ -46,8 +46,7 @@ export default class ConfirmOffer extends Component<any, any> {
     const { feeValue } = this.state
 
     if (helpers.ethToken.isEthToken({ name: sellCurrency.toLowerCase() })) {
-      //@ts-ignore
-      const feeValueDynamic = await helpers.ethToken.estimateFeeValue({ method: 'send' })
+      const feeValueDynamic = await helpers.ethToken.estimateFeeValue({ method: 'send', speed: 'fast' })
       this.setState(() => ({
         tokenFee: true,
         feeValue: feeValueDynamic,

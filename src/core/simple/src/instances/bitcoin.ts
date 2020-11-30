@@ -72,9 +72,16 @@ class Bitcoin {
     return txSize
   }
 
-  async estimateFeeValue({ feeRate, inSatoshis, speed, address, txSize }) {
-    const DUST = 546
+  async estimateFeeValue(options: {
+      feeRate?: number,
+      inSatoshis: boolean,
+      speed: string,
+      address: string,
+      txSize: number,
+    }) {
+    let { feeRate, inSatoshis, speed, address, txSize } = options
     let calculatedFeeValue
+    const DUST = 546
 
     if (!txSize && !address) {
       debug('swap.core:bitcoin')('estimateFeeValue: need address or txSize')

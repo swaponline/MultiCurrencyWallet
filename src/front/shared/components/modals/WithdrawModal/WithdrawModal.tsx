@@ -213,7 +213,7 @@ export default class WithdrawModal extends React.Component<any, any> {
 
     if (isEthToken) {
       minAmount[currentCoin] = +this.getMinAmountForEthToken()
-      //@ts-ignore
+
       minAmount.eth = await helpers.eth.estimateFeeValue({
         method: 'send',
         speed: 'fast',

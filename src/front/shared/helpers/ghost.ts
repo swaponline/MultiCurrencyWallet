@@ -160,8 +160,18 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
   return txSize
 }
 
-//@ts-ignore
-const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, fixed, method } = {}) => {
+type EstimateFeeValueOptions = {
+  method?: string
+  speed: string
+  feeRate?: number
+  inSatoshis?: boolean
+  address?: string
+  txSize?: number
+  fixed?: string
+}
+
+const estimateFeeValue = async (options: EstimateFeeValueOptions) => {
+  let { feeRate, inSatoshis, speed, address, txSize, fixed, method } = options
   const {
     user: {
       ghostData,
