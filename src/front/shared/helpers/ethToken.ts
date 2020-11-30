@@ -28,8 +28,8 @@ const estimateFeeValue = async (options: EstimateFeeOptions) => {
   return +feeValue
 }
 
-//@ts-ignore
-const estimateGasPrice = ({ speed } = {}) => eth.estimateGasPrice({ speed })
+
+const estimateGasPrice = ({ speed }) => eth.estimateGasPrice({ speed })
 
 export default {
   estimateFeeValue,

@@ -455,7 +455,6 @@ const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
 
   feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
   feeFromAmount = feeFromAmount.toNumber()
-  //@ts-ignore
   feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
 
   const tx = new bitcoin.TransactionBuilder(btc.network)
@@ -508,7 +507,6 @@ const sendV5 = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
       feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
     }
     feeFromAmount = feeFromAmount.toNumber()
-    //@ts-ignore
     feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed})
 
     const unspents = await fetchUnspents(from)
@@ -567,7 +565,6 @@ const sendV5 = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
 // Deprecated
 //@ts-ignore
 const sendDefault = async ({ from, to, amount, feeValue, speed } = {}) => {
-  //@ts-ignore
   feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
 
   const tx = new bitcoin.TransactionBuilder(btc.network)

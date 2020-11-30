@@ -55,8 +55,7 @@ const btcSwap = new BtcSwap({
   fetchBalance: (address) => 10,
   fetchUnspents: (address) => [],
   broadcastTx: (rawTx) => {},
-  //@ts-ignore
-  estimateFeeValue: ({ inSatoshis, speed, address, txSize } = {}) => testnet().estimateFeeValue({ inSatoshis, speed, address, txSize }),
+  estimateFeeValue: ({ inSatoshis, speed, address, txSize }) => testnet().estimateFeeValue({ inSatoshis, speed, address, txSize }),
   fetchTxInfo: async txid => txInfo[txid],
 })
 
