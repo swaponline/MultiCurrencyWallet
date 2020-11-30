@@ -7,7 +7,6 @@ import { constants } from 'helpers'
 
 import cssModules from 'react-css-modules'
 
-import toggle from 'decorators/toggle'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import Input from 'components/forms/Input/Input'
@@ -16,9 +15,9 @@ import styles from './DropDown.scss'
 
 import closeBtn from './images/close.svg'
 
+
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-@toggle()
 @cssModules(styles, { allowMultiple: true })
 export default class DropDown extends Component<any, any> {
   static propTypes = {
@@ -28,9 +27,6 @@ export default class DropDown extends Component<any, any> {
     selectedItemRender: PropTypes.func,
     itemRender: PropTypes.func,
     onSelect: PropTypes.func,
-    isToggleActive: PropTypes.bool.isRequired, // @toggle
-    toggleOpen: PropTypes.func.isRequired, // @toggle
-    toggleClose: PropTypes.func.isRequired, // @toggle
     notIteractable: PropTypes.bool,
   }
 
@@ -38,6 +34,7 @@ export default class DropDown extends Component<any, any> {
     //@ts-ignore
     super()
     this.state = {
+      isToggleActive: false,
       selectedValue: initialValue || selectedValue || 0,
       inputValue: '',
       infoAboutCurrency: '',
@@ -45,22 +42,38 @@ export default class DropDown extends Component<any, any> {
     }
   }
 
+  toggleClose = () => {
+    this.setState({
+      isToggleActive: false,
+    })
+  }
+
+  toggleOpen = () => {
+    const { isToggleActive } = this.state
+
+    if (isToggleActive) {
+      return
+    }
+
+    this.setState({
+      isToggleActive: true,
+    })
+  }
+
   componentDidUpdate(prevProps) {
     const { isToggleActive } = this.props
   }
 
   toggle = () => {
-    const { isToggleActive, toggleOpen, toggleClose } = this.props
-
-    if (isToggleActive) {
-      toggleClose()
+    if (this.state.isToggleActive) {
+      this.toggleClose()
     } else {
-      toggleOpen()
+      this.toggleOpen()
     }
   }
 
   handleOptionClick = (item) => {
-    const { toggleClose, selectedValue, onSelect } = this.props
+    const { selectedValue, onSelect } = this.props
 
     // if there is no passed `selectedValue` then change it
     if (typeof selectedValue === 'undefined') {
@@ -72,7 +85,7 @@ export default class DropDown extends Component<any, any> {
       onSelect(item)
       this.setState({ selectedValue: item.value })
     }
-    toggleClose()
+    this.toggleClose()
   }
 
   renderItem = (item) => {
@@ -113,7 +126,6 @@ export default class DropDown extends Component<any, any> {
     const {
       className,
       items,
-      isToggleActive,
       selectedValue,
       name,
       placeholder,
@@ -126,7 +138,7 @@ export default class DropDown extends Component<any, any> {
       arrowSide,
     } = this.props
 
-    const { inputValue, infoAboutCurrency } = this.state
+    const { inputValue, infoAboutCurrency, isToggleActive } = this.state
 
     const dropDownStyleName = cx('dropDown', { active: isToggleActive })
     const linkedValue = Link.all(this, 'inputValue')
