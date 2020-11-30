@@ -1,4 +1,4 @@
-import swap from 'simple.swap.core'
+import * as swap from 'simple.swap.core'
 import repl from 'repl'
 
 const {

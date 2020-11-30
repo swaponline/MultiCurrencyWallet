@@ -1,4 +1,4 @@
-import swap from './../src'
+import * as swap from './../src'
 
 const {
   history: { getAllFinished, getAllInProgress },

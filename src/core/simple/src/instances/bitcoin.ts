@@ -26,7 +26,7 @@ const filterError = (error) => {
   throw error
 }
 
-class Bitcoin {
+export default class Bitcoin {
   core: any
   net: any
   network: any

@@ -8,7 +8,7 @@ import { on } from './on'
 
 export const read = Swap.read
 
-export const get = (app, id) => new Swap(id, app)
+export const get = (app, id?) => new Swap(id, app)
 
 export const onStep = (swap, _step) => new Promise(async resolve => {
   if (_step <= swap.flow.state.step)
