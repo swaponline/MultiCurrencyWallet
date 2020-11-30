@@ -1,0 +1,36 @@
+.localStorage {
+  width: 75%;
+  margin: 0 auto;
+  padding: 1em;
+  overflow: auto;
+  border-radius: .3em;
+  box-shadow: $l-box-shadow;
+  background-color: $l-background-elements;
+  color: $l-color;
+
+
+  &.dark {
+    box-shadow: $d-box-shadow;
+    background-color: $d-background-elements;
+    color: $d-color;
+  }
+}
+
+.localStorage__list {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    margin-bottom: .3em;
+    border-bottom: .1em solid $notice-color;
+    white-space: nowrap;
+  }
+}
+
+.localStorage__item {
+  span {
+    font-weight: 700;
+  }
+}
