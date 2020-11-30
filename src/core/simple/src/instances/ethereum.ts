@@ -30,7 +30,7 @@ const filterError = (error) => {
   throw error
 }
 
-export default class Ethereum {
+class Ethereum {
 
   core: any
   etherscan: any

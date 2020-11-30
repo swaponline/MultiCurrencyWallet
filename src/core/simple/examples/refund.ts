@@ -1,4 +1,4 @@
-import * as swap from './../src'
+import swap from './../src'
 import commandLineArgs from 'command-line-args'
 import commandLineUsage from 'command-line-usage'
 
