@@ -1,20 +1,21 @@
 import React, { PureComponent } from 'react'
 
 
-export default (options = { processClick: false }) =>
+export default (/*options = { processClick: false }*/) =>
   (Component) =>
     class WrappedComponent extends PureComponent<any, any> {
+      static propTypes: any
 
       state = {
         isToggleActive: false,
       }
 
       toggleClose = (event) => {
-        if (options.processClick) {
+        /*if (options.processClick) {
           event.stopPropagation()
 
           document.removeEventListener('click', this.toggleClose)
-        }
+        }*/
 
         this.setState({
           isToggleActive: false,
@@ -28,11 +29,11 @@ export default (options = { processClick: false }) =>
           return
         }
 
-        if (options.processClick) {
+        /*if (options.processClick) {
           event.stopPropagation()
 
           document.addEventListener('click', this.toggleClose)
-        }
+        }*/
 
         this.setState({
           isToggleActive: true,
