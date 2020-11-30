@@ -43,7 +43,7 @@ import adminFee from './adminFee'
 
 import stats from './stats.swaponline'
 
-import { getPairFees } from './getPairFees'
+import getPairFees from './getPairFees'
 
 
 export default {

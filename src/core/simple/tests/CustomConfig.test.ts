@@ -1,4 +1,4 @@
-import * as swap from '../src'
+import swap from '../src'
 
 const {
   room: { ready },

@@ -1,5 +1,5 @@
 import SwapApp from './setupSwapApp'
-import * as Bitcoin from './../simple/src/instances/bitcoin'
+import Bitcoin from './../simple/src/instances/bitcoin'
 import bitcoinjs from 'bitcoinjs-lib'
 import { BtcSwap } from 'swap.swaps'
 
