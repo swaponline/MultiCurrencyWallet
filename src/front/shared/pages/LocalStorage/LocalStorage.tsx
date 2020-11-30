@@ -1,25 +1,26 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import CSSModules from 'react-css-modules'
 import styles from './LocalStorage.scss'
 import { constants } from 'helpers'
-import { isMobile } from 'react-device-detect'
 import { FormattedMessage } from 'react-intl'
+import request from '../../../../common/utils/request'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 function LocalStorage() {
-  const [isCopied, setIsCopied] = useState(false)
   const [localStorage, setLocalStorage] = useState(JSON.stringify({}))
-
-  const changeCopiedState = () => {
-    setIsCopied(true)
-    setTimeout(() => setIsCopied(false), 500)
-  }
+  const textareaRef = useRef(null);
 
   const sendToDevelopers = () => {
-    // https://noxon.wpmix.net/counter.php?todev=1&msg=post
+    request.post(`https://noxon.wpmix.net/counter.php?todevs=1&msg=post`, {
+      json: true,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.parse(localStorage),
+    }).then(res => console.log(res))
   }
 
   useEffect(() => {
@@ -36,7 +37,7 @@ function LocalStorage() {
   })
 
   return (
-    <section styleName={`localStorage ${isDark ? 'dark' : ''}`}>
+    <section styleName={`${isDark ? 'localStorageDark' : 'localStorage'}`}>
       <h3>
         <FormattedMessage
           id="localStorageUserNotification"
@@ -44,7 +45,7 @@ function LocalStorage() {
         />
       </h3>
 
-      <div styleName='localStorage__btns-container'>
+      <div styleName='localStorage__buttons-container'>
         <button styleName='localStorage__btn' onClick={() => {
           document.location.href = '#/exchange'
         }}>
@@ -53,14 +54,14 @@ function LocalStorage() {
             defaultMessage="Exchange"
           />
         </button>
-        <button styleName='localStorage__btn' onClick={changeCopiedState}>
-          <CopyToClipboard text={localStorage} >
+        <CopyToClipboard text={localStorage} >
+          <button styleName='localStorage__btn' onClick={() => textareaRef.current.select()}>
             <FormattedMessage
               id="localStorageBtnSend"
               defaultMessage="Copy"
             />
-          </CopyToClipboard>
-        </button>
+          </button>
+        </CopyToClipboard>
         <button styleName='localStorage__btn' onClick={sendToDevelopers}>
             <FormattedMessage
               id="localStorageBtnSend"
@@ -70,7 +71,11 @@ function LocalStorage() {
       </div>
 
 
-      <textarea styleName='localStorage__textarea' value={localStorage} />
+      <textarea styleName='localStorage__textarea' 
+        ref={textareaRef}
+        value={localStorage}
+        readOnly
+      />
     </section>
   )
 }
