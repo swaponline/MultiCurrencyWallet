@@ -58,7 +58,10 @@
       "simple.swap.core": ["src/core/simple/src"],
 
       "domain": ["src/common/domain"],
-      "domain/*": ["src/common/domain/*"]
+      "domain/*": ["src/common/domain/*"],
+
+      "common": ["src/common/"],
+      "common/*": ["src/common/*"]
     },
   },
   "include": [

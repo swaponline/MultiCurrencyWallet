@@ -1,4 +1,19 @@
 import * as fs from 'fs'
+import * as mnemonicUtils from 'common/utils/mnemonic'
+import * as configStorage from './config/storage'
+
+
+if (process.argv.length === 14) {
+  /* check - its may be run with seed */
+  const mnemonic = process.argv.slice(2).join(` `)
+  if (mnemonicUtils.mnemonicIsValid(mnemonic)) {
+    configStorage.setMnemonic(mnemonic)
+    console.log('> Use Mnemonic:', mnemonic)
+  } else {
+    console.log('> Your are pass not valid mnemonic')
+    process.exit(0)
+  }
+}
 
 
 const rewriteEnvKeys = [

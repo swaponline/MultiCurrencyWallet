@@ -3,7 +3,7 @@ import { setup, helpers, constants } from '../../core/simple/src'
 import { handleRequest, handleOrder, handleError, fillOrderbook, startSaved } from './actions'
 import { TOKENS } from '../config/constants'
 import lineInput from './lineInput'
-
+import * as configStorage from '../config/storage'
 import { erc20 } from '../../core/swap.app/util'
 
 const debug = _debug('swap.bot')
@@ -33,8 +33,12 @@ const ERC20TOKENS = Object.keys(TOKENS)
 let SwapApp, app, auth, wallet, room, orders, services
 
 try {
-
-  SwapApp = setup({ network, ERC20TOKENS })
+  console.log('>>> settings ', configStorage.getMnemonic())
+  SwapApp = setup({
+    network,
+    ERC20TOKENS,
+    mnemonic: configStorage.getMnemonic() || process.env.SECRET_PHRASE,
+  })
   let { app, auth, wallet, room, orders, services } = SwapApp
 
   ready(room).then(() => {
