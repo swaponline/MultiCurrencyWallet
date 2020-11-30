@@ -1,9 +1,9 @@
 .localStorage {
   width: 75%;
-  margin: 0 auto;
-  padding: 1em;
+  margin: 3em auto 0;
+  padding: 2em;
   overflow: auto;
-  border-radius: .3em;
+  border-radius: 0.3em;
   box-shadow: $l-box-shadow;
   background-color: $l-background-elements;
   color: $l-color;
@@ -13,24 +13,43 @@
     box-shadow: $d-box-shadow;
     background-color: $d-background-elements;
     color: $d-color;
+
+    .localStorage__btn {
+      background-color: rgb(44, 44, 44);
+      color: $d-color;
+    
+      &:hover {
+        background-color:  rgb(73, 73, 73);
+      }
+    }
   }
 }
 
-.localStorage__list {
+.localStorage__btns-container {
+  display: flex;
+  margin: 2em 0 1em;
+}
+
+.localStorage__btn {
+  margin-right: .4em;
+  padding: 0.2em 1.2em;
+  border-radius: 0.3em;
+  height: 55px;
+  font-size: 16px;
+  line-height: 1em;
+  background-color: rgb(233, 233, 233);
+  color: $l-color;
+  transition: .1s;
+
+  &:hover {
+    background-color:  rgb(196, 196, 196);
+  }
+}
+
+.localStorage__textarea {
   width: 100%;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-
-  li {
-    margin-bottom: .3em;
-    border-bottom: .1em solid $notice-color;
-    white-space: nowrap;
-  }
-}
-
-.localStorage__item {
-  span {
-    font-weight: 700;
-  }
+  min-height: 25em;
+  padding: 0.6em;
+  border-radius: 0.3em;
+  border: .1em solid $notice-color;
 }
