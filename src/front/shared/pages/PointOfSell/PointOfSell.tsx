@@ -1093,6 +1093,7 @@ export default class Exchange extends Component<any, any> {
     const currentCurrencyGet = getCurrencyData || getTokenData
 
     const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? new BigNumber(0) : new BigNumber(goodRate)
+    //@ts-ignore
     const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')
 
     const isWidgetLink = this.props.location.pathname.includes('/exchange') && this.props.location.hash === '#widget'

@@ -180,7 +180,7 @@ const getTransaction = (ownAddress, ownType) =>
       // @ToDo - may be need cache or use in memory cache
       // cacheResponse: 60 * 1000
     })
-      .then((res) => {
+      .then((res: any) => {
         const transactions = res.result
           .filter((item) => item.value > 0)
           .map((item) => ({
@@ -429,7 +429,7 @@ const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
   return apiLooper.get('etherscan', url, {
     cacheResponse,
   })
-    .then((res) => {
+    .then((res: any) => {
       if (res && res.result) {
         let amount: number | string = 0
         let receiverAddress = res.result.to
