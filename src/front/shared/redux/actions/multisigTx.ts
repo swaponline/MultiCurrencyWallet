@@ -93,7 +93,7 @@ const fetch = (address) => {
       address,
     },
     query: 'multisigTx',
-  }).then((res) => {
+  }).then((res: any) => {
     if (res
       && res.answer
     ) {

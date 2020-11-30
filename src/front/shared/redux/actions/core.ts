@@ -74,7 +74,7 @@ const addCurrencyFromOrders = (orders) => {
     reducers.currencies.updatePartialItems(partialCurrency)
   }
 }
-
+//@ts-ignore
 const getSwapById = (id) => new Swap(id, SwapApp.shared())
 
 const getUserData = (currency) => {
