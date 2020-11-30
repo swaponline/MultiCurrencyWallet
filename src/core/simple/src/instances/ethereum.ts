@@ -184,8 +184,6 @@ class Ethereum {
   }
 }
 
-export default new Ethereum()
-
 const mainnet = () => new Ethereum('mainnet')
 const testnet = () => new Ethereum('testnet')
 
@@ -195,7 +193,7 @@ const networks = {
 }
 
 export {
-  networks
+  networks,
   mainnet,
   testnet
 }

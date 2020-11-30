@@ -1,6 +1,6 @@
 const id = Math.random().toString().slice(2)
 
-export default {
+const common = {
   swapRoom: {
     roomName: 'testnet.swap.online',
     EXPERIMENTAL: {
@@ -18,3 +18,6 @@ export default {
     },
   },
 }
+
+
+export { common }

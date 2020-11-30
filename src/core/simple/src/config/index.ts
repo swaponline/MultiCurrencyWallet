@@ -1,14 +1,17 @@
-import testnet from './testnet'
-import mainnet from './mainnet'
+import { config as testnetConfig } from './testnet'
+import { config as mainnetConfig } from './mainnet'
 
-import getConfig from './getConfig'
+import { getConfig } from './getConfig'
 
 import { EthTokenSwap } from 'swap.swaps'
-import tokenSwap from './tokenSwap'
+import { default as tokenSwapConfig } from './tokenSwap'
 
-export default {
-  testnet: getConfig(testnet),
-  mainnet: getConfig(mainnet),
-  //@ts-ignore
-  tokenSwap: (config) => new EthTokenSwap(tokenSwap(config)()),
+const testnet = getConfig(testnetConfig)
+const mainnet = getConfig(mainnetConfig)
+const tokenSwap = (config) => new EthTokenSwap(tokenSwapConfig(config))
+
+export {
+  testnet,
+  mainnet,
+  tokenSwap,
 }

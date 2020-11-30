@@ -13,7 +13,7 @@ const id = parseInt(process.argv[2])
 const offset = process.env.OFFSET || process.argv[1]
 const ROOT_DIR = process.env.ROOT_DIR || '.'
 
-export default {
+const config = {
   id,
   network: 'mainnet',
   storageDir: `${ROOT_DIR}/.storage/${id}`,
@@ -61,3 +61,6 @@ export default {
     tokenAddress: '0x14a52cf6B4F68431bd5D9524E4fcD6F41ce4ADe9',
   })
 }
+
+
+export { config }

@@ -2,9 +2,9 @@ import crypto from 'crypto'
 
 import { helpers } from 'simple.swap.core'
 
-import app from '../../swapApp'
+import { app } from '../../swapApp'
 import { findSwap, swapView, decodeFlow, removeSwap } from '../../helpers'
-import Pair from '../../microbot/Pair.js'
+import Pair from '../../microbot/Pair'
 
 import * as flows from 'swap.flows'
 import { default as Swap } from 'swap.swap'
@@ -209,8 +209,13 @@ const tryWithdraw = async (swap, { secret }) => {
 
 const getInProgress = ({ query: { parsed, withFees }}, res) => {
   const swaps = history
-      .getAllInProgress()
-      .map(id => new Swap(id, app))
+    .getAllInProgress()
+    .map((id) => {
+      try {
+        const swapData = new Swap(id, app)
+      } catch (e) { return false }
+    })
+    .filter((swapData: Swap | boolean) => { return swapData !== false })
 
   if (!parsed) {
     return res.json(swaps.map(swapView))
@@ -227,7 +232,13 @@ const getInProgress = ({ query: { parsed, withFees }}, res) => {
 const getFinished = ({ query: { parsed, withFees }}, res) => {
   const swaps = history
     .getAllFinished()
-    .map(id => new Swap(id, app))
+    .map((id) => {
+      try {
+        const swapData = new Swap(id, app)
+        return swapData
+      } catch (e) { return false }
+    })
+    .filter((swapData: Swap | boolean ) => { return swapData !== false })
 
   if (!parsed) {
     return res.json(swaps.map(swapView))

@@ -1,11 +1,7 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { Route, Link, BrowserRouter } from 'react-router-dom'
-
-import Bot from './bot'
-import Kraken from './kraken'
-import History from './history'
-import Statistics from './stats'
+var Router = ReactRouterDOM.Router;
+var Route = ReactRouterDOM.Route;
+var Link = ReactRouterDOM.Link;
+var BrowserRouter  = ReactRouterDOM.BrowserRouter ;
 
 const links = [
   { name: 'Bot', link: '/'},
@@ -37,7 +33,7 @@ const Header = () => (
   </header>
 )
 
-class App extends React.Component {
+class App extends  React.Component {
   render() {
     return (
       <div>
@@ -48,8 +44,6 @@ class App extends React.Component {
           <Route key={3} path="/in-progress" exact  component={History}/>
           <Route key={4} path="/history" exact  component={History}/>
           <Route key={5} path="/history/:ticker" exact  component={History}/>
-          {/*
-          //@ts-ignore */}
           <Route key={6} path="/stats" exact  component={Statistics}/>
         </div>
       </div>
@@ -58,8 +52,8 @@ class App extends React.Component {
 }
 
 ReactDOM.render(
-  <BrowserRouter>
-    <App />
+  <BrowserRouter  >
+    <App/>
   </BrowserRouter>,
   document.getElementById('main')
 );
