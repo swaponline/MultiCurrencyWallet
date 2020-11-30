@@ -4,7 +4,7 @@ import CSSModules from 'react-css-modules'
 import styles from './LocalStorage.scss'
 import { constants } from 'helpers'
 import { FormattedMessage } from 'react-intl'
-import request from '../../../../common/utils/request'
+import request from '../../helpers/request'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -15,11 +15,9 @@ function LocalStorage() {
 
   const sendToDevelopers = () => {
     request.post(`https://noxon.wpmix.net/counter.php?todevs=1&msg=post`, {
-      json: true,
-      headers: {
-        'Content-Type': 'application/json'
+      body: {
+        data: localStorage,
       },
-      body: JSON.parse(localStorage),
     }).then(res => console.log(res))
   }
 
