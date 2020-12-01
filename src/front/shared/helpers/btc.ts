@@ -171,12 +171,14 @@ const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, f
       .dp(0, BigNumber.ROUND_HALF_EVEN),
   )
 
-  const CUSTOM_SATOSHI = 20 // just wanted to add
-  calculatedFeeValue.plus(CUSTOM_SATOSHI)
+  const ONE_PART_SATOSHI = 1e-8; // 1 BTC -> 100 000 000 satoshi
+  const CUSTOM_SATOSHI = 20
 
+  calculatedFeeValue.plus(CUSTOM_SATOSHI) // just wanted to add
+    
   const finalFeeValue = inSatoshis
     ? calculatedFeeValue.toString()
-    : calculatedFeeValue.multipliedBy(1e-8).toString()
+    : calculatedFeeValue.multipliedBy(ONE_PART_SATOSHI).toString()
 
   console.log(`Btc withdraw fee speed(${speed}) method (${method}) ${finalFeeValue}`)
   return finalFeeValue

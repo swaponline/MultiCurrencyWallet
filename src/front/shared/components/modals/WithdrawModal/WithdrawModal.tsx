@@ -1020,13 +1020,11 @@ export default class WithdrawModal extends React.Component<any, any> {
                   {' '}{/* < indent */}
                   {fetchFee
                     ? <div styleName='paleLoader'><InlineLoader /></div>
-                    : isEthToken
-                        ? <span styleName='fee'>{
-                            amount // fee in precents (fee / 100%)
-                              ? new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).toNumber()
-                              : adminFeeSize
-                          } {currency}</span>
-                        : <span styleName='fee'>{adminFeeSize} {dataCurrency}</span>  
+                    : <span styleName='fee'>{
+                        amount // fee in precents (fee / 100%)
+                          ? new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).toNumber()
+                          : adminFeeSize
+                      } {currency}</span>
                   }
                   <br />
                 </>
