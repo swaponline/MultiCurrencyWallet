@@ -112,7 +112,6 @@ if (process.env.NODE_ENV === 'production') {
 const addUser = async (createdBy, domain, data) => {
   try {
     const res = await request(serverBaseUrl, addUserMut, { createdBy, domain, data })
-    console.log(res)
     return res
   } catch (error) {
     console.error('Error on add user to stat.swaponline:', error)
@@ -129,7 +128,6 @@ const addUser = async (createdBy, domain, data) => {
 const updateUser = async (createdBy, domain, data) => {
   try {
     const res = await request(serverBaseUrl, updUserMut, { createdBy, domain, data })
-    console.log(res)
     return res
   } catch (error) {
     if (
