@@ -104,11 +104,17 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
   }
 
   unspents = unspents || await actions.btc.fetchUnspents(address)
-
+  /*
+  * Formula with 2 input and 2 output addresses 
+  * BYTE_INPUT_ADDRESS × 2 + BYTE_OUTPUT_ADDRESS × 2 + BYTE_TRANSACTION
+  */
+  const BYTE_INPUT_ADDRESS = 146 // ~ 146 byte
+  const BYTE_OUTPUT_ADDRESS = 33 // ~ 33 byte
+  const BYTE_TRANSACTION = 15 // ~ 15 byte
 
   const txIn = unspents.length
   const txSize = txIn > 0
-    ? txIn * 146 + txOut * 33 + (15 + txIn - txOut)
+    ? txIn * BYTE_INPUT_ADDRESS + txOut * BYTE_OUTPUT_ADDRESS + (BYTE_TRANSACTION + txIn - txOut)
     : defaultTxSize
 
   if (method === 'send_multisig') {
@@ -116,7 +122,7 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
       { 'MULTISIG-P2SH-P2WSH:2-2': 1 },
       { 'P2PKH': (hasAdminFee) ? 3 : 2 }
     )
-    const msutxSize = txIn * msuSize + txOut * 33 + (15 + txIn - txOut)
+    const msutxSize = txIn * msuSize + txOut * BYTE_OUTPUT_ADDRESS + (BYTE_TRANSACTION + txIn - txOut)
 
     return msutxSize
   }
@@ -126,7 +132,7 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
       { 'MULTISIG-P2SH-P2WSH:2-3': 1 },
       { 'P2PKH': (hasAdminFee) ? 3 : 2 }
     )
-    const mstxSize = txIn * msSize + txOut * 33 + (15 + txIn - txOut)
+    const mstxSize = txIn * msSize + txOut * BYTE_OUTPUT_ADDRESS + (BYTE_TRANSACTION + txIn - txOut)
 
     return mstxSize
   }
