@@ -1,5 +1,7 @@
 import BigNumber from 'bignumber.js'
 import request from 'request-promise-cache'
+import * as configStorage from '../../config/storage'
+
 
 
 const BTC_SYMBOL = 1 // BTC

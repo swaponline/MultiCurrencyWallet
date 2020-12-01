@@ -69,6 +69,8 @@
     "release": "git commit -am v%npm_package_version% && git tag v%npm_package_version% && git push && git push --tags",
     "bot": "babel-node --extensions .ts,.js --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot",
     "bot:test": "cross-env TEST_STARTUP=true babel-node --extensions .ts,.js --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot",
+    "marketmaker": "cross-env TEST_STARTUP=true USE_JSON=true NETWORK=mainnet babel-node --extensions .ts,.js --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot",
+    "marketmaker:test": "cross-env TEST_STARTUP=true USE_JSON=true NETWORK=testnet babel-node --extensions .ts,.js --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot",
     "bot:debug": "cross-env DEBUG=swap.core* babel-node --extensions .ts,.js --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot"
   },
   "husky": {

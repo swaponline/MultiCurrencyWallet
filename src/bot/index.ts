@@ -1,8 +1,10 @@
 import * as fs from 'fs'
 import * as mnemonicUtils from 'common/utils/mnemonic'
 import * as configStorage from './config/storage'
+import { getNetworkType } from 'common/domain/network'
 
 
+// Mnemonic
 if (process.argv.length === 14) {
   /* check - its may be run with seed */
   const mnemonic = process.argv.slice(2).join(` `)
@@ -15,6 +17,16 @@ if (process.argv.length === 14) {
   }
 }
 
+// NETWORK
+if (process.env.NETWORK !== undefined) {
+  configStorage.setNetwork(getNetworkType(process.env.NETWORK))
+}
+
+// Use Json
+if (process.env.USE_JSON === `true`) {
+  configStorage.loadJson()
+  console.log('>> Trade pairs: ', configStorage.getTradeTickers())
+}
 
 const rewriteEnvKeys = [
   `NETWORK`,
@@ -35,7 +47,7 @@ if (process.env.TEST_STARTUP === `true`) {
   /* Test env */
   process.env.SERVER_ID='2234567890'
   process.env.ACCOUNT='2234567890'
-  process.env.NETWORK='testnet'
+  process.env.NETWORK = process.env.NETWORK || 'testnet'
 
   process.env.API_USER='user'
   process.env.API_PASS='password'

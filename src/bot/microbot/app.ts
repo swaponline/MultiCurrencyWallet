@@ -7,7 +7,7 @@ import * as configStorage from '../config/storage'
 import { erc20 } from '../../core/swap.app/util'
 
 const debug = _debug('swap.bot')
-const network = process.env.NETWORK || 'testnet'
+const network = configStorage.getNetwork() || process.env.NETWORK || 'testnet'
 
 const {
   room: {
@@ -33,7 +33,6 @@ const ERC20TOKENS = Object.keys(TOKENS)
 let SwapApp, app, auth, wallet, room, orders, services
 
 try {
-  console.log('>>> settings ', configStorage.getMnemonic())
   SwapApp = setup({
     network,
     ERC20TOKENS,
