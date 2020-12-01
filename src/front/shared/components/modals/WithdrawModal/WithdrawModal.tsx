@@ -224,10 +224,13 @@ export default class WithdrawModal extends React.Component<any, any> {
         method: 'send',
         speed: 'fast',
       })
-
+      /*
+      * Commission 7% of the transfer token amount
+      * totalFee = adminFeeSize - this minimum
+      */
       this.setState({
         tokenFee,
-        totalFee: 0,
+        totalFee: adminFeeSize,
       })
     }
     /* 
@@ -1035,9 +1038,7 @@ export default class WithdrawModal extends React.Component<any, any> {
               ? <div styleName='paleLoader'><InlineLoader /></div>
               : (
                 <span styleName='fee'>{
-                    isEthToken
-                      ? adminFeeSize
-                      : new BigNumber(totalFee).dp(6, BigNumber.ROUND_FLOOR).toNumber()
+                    new BigNumber(totalFee).dp(6, BigNumber.ROUND_FLOOR).toNumber()
                   } {dataCurrency}
                 </span>
               )
