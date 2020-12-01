@@ -1,5 +1,16 @@
 {
   "COINS": {
+    "PAY": {
+      "ERC20": {
+        "address": "0xeb51b16eb987c4c1eb06ae57dbe11bd18a048929",
+        "decimals": "18"
+      },
+      "price": {
+        "source": "FIXED",
+        "price": 10
+      },
+      "minAmount": 0.005
+    },
     "BTC": {
       "price": {
         "source": "API",
@@ -42,6 +53,34 @@
   },
   "PAIRS": {
     "ETH-BTC": {
+      "active": true,
+      "buy": true,
+      "sell": true,
+      "type":  "coin",
+      "orders": [
+        {
+          "amount": 0.0005,
+          "spreadBuy": 2,
+          "spreadSell": 2
+        },
+        {
+          "amount": 0.005,
+          "spreadBuy": 4,
+          "spreadSell": 4
+        },
+        {
+          "amount": 0.05,
+          "spreadBuy": 8,
+          "spreadSell": 8
+        },
+        {
+          "amount": 0.5,
+          "spreadBuy": 16,
+          "spreadSell": 16
+        }
+      ]
+    },
+    "PAY-BTC": {
       "active": true,
       "buy": true,
       "sell": true,

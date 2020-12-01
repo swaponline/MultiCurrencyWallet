@@ -11,9 +11,9 @@ if (process.argv.length === 14) {
   const mnemonic = process.argv.slice(2).join(` `)
   if (mnemonicUtils.mnemonicIsValid(mnemonic)) {
     configStorage.setMnemonic(mnemonic)
-    console.log('> Use Mnemonic:', mnemonic)
+    console.log('>>> Use Mnemonic:', mnemonic)
   } else {
-    console.log('> Your are pass not valid mnemonic')
+    console.log('>>> Your are pass not valid mnemonic')
     process.exit(0)
   }
 }
@@ -26,10 +26,7 @@ if (process.env.NETWORK !== undefined) {
 // Use Json
 if (process.env.USE_JSON === `true`) {
   configStorage.loadJson()
-  console.log('>> Trade pairs: ', configStorage.getTradeTickers())
-  console.log('check price calc')
-  calcPairPrice('USDT-BTC')
-  getPriceByPair('USDT-BTC')
+  console.log('>>> Trade pairs: ', configStorage.getTradeTickers())
 }
 
 const rewriteEnvKeys = [
@@ -88,7 +85,7 @@ import _debug from 'debug'
 
 _debug('.:app')
 
-console.log('Bot starts...')
+console.log('>>> Marketmaker starts...')
 
 exports = module.exports = require('./app')
 /*

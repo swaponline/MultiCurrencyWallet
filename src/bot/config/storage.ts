@@ -1,4 +1,5 @@
 import * as fs from 'fs'
+import BigNumber from 'bignumber.js'
 import { Networks } from 'common/domain/network'
 
 
@@ -6,6 +7,28 @@ let _hasTradeConfig : boolean = false
 let _tradeConfig : any = false
 let _mnemonic : string | boolean = false
 let _network : Networks = Networks.testnet
+let _customERC : Array<any> = new Array()
+
+const _processERC20 = () : void => {
+  _customERC = new Array()
+  Object.keys(_tradeConfig.COINS).forEach((name) => {
+    if (_tradeConfig.COINS[name].ERC20
+      && _tradeConfig.COINS[name].ERC20.address
+      && _tradeConfig.COINS[name].ERC20.decimals
+    ) {
+      const { address, decimals } = _tradeConfig.COINS[name].ERC20
+      _customERC.push({
+        name,
+        address,
+        decimals: new BigNumber(decimals).toNumber(),
+      })
+    }
+  })
+}
+
+const getCustomERC20 = () : Array<any> => {
+  return _customERC
+}
 
 const setNetwork = (network:Networks) : void => {
   console.log(`>>> Switch network to ${network}`)
@@ -81,11 +104,12 @@ const loadJson = (network?:Networks = Networks.testnet) : boolean => {
     try {
       console.log(`>>> Loaded trade config 'tradeconfig.${network}.json'`)
       const data = JSON.parse(rawdata.toString())
-      console.log(data)
       _tradeConfig = data
       _hasTradeConfig = true
+      _processERC20()
       return true
     } catch (e) {
+      console.log('Parse trade config error', e)
       console.warn(`Fail parse trade config 'tradeconfig.${network}.json'. Use defaults`)
       return false
     }
@@ -107,4 +131,5 @@ export {
   getTradeTickers,
   getMinAmount,
   getCoinPriceConfig,
+  getCustomERC20,
 }

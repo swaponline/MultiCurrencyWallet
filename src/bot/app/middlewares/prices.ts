@@ -1,6 +1,7 @@
 import BigNumber from 'bignumber.js'
 import request from 'request-promise-cache'
 import * as configStorage from '../../config/storage'
+import getUnixTimeStamp from 'common/utils/getUnixTimeStamp'
 
 
 
@@ -16,6 +17,10 @@ const YOBIT_API = `https://yobit.net/api/3`
 
 const btcPrice = () => getNoxonPrice('BTC', 'USD')
 const usdPrice = () => btcPrice().then(usds => new BigNumber(1).div(usds))
+
+
+let _priceCache = {}
+const _priceCacheTime = 60 // 60 секунд, для облегчения на этапе заполнения ордеров
 
 export const getNoxonPrice = (symbol, base = 'BTC') => {
   return request({
@@ -205,7 +210,18 @@ export const syncPrices = async () => {
   }
 }
 
+export const getCoinPriceCache = (coin : string) : number | boolean => {
+  if (_priceCache[coin]) {
+    if (getUnixTimeStamp() < _priceCache[coin].utx) {
+      return _priceCache[coin].price
+    }
+  }
+  return false
+}
+
 export const getCoinPrice = async (coin) => {
+  const cachedPrice: number | boolean = getCoinPriceCache(coin)
+  if (cachedPrice !== false) return cachedPrice
   const priceConfig = configStorage.getCoinPriceConfig(coin)
   if (priceConfig) {
     let coinPrice = new BigNumber(0)
@@ -231,6 +247,10 @@ export const getCoinPrice = async (coin) => {
         coinPrice = new BigNumber(priceConfig.stoploss)
       }
     }
+    _priceCache[coin] = {
+      price: coinPrice,
+      utx: getUnixTimeStamp() + _priceCacheTime,
+    }
     return coinPrice
   }
 }
@@ -241,14 +261,9 @@ export const calcPairPrice = async (pair) => {
   // В боте валюты привязаны к BTC
   const headPrice = await getCoinPrice(head)
   const basePrice = await getCoinPrice(base)
-  
-  console.log('>>>>>>>>>>>>>>>>>>>>>> calcPairPrice')
-  console.log('pair', pair)
-  console.log('head', headPrice.toNumber())
-  console.log('base', basePrice.toNumber())
 
   const price = headPrice.dividedBy(basePrice)
-  console.log('price', price.toNumber())
+
   return price
 }
 
