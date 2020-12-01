@@ -23,10 +23,10 @@ function LocalStorage() {
 
   useEffect(() => {
     const newStorage = {}
-    const privateKeyRegExp = /(mnemonic|private)/i;
+    const privateDataRegExp = /(mnemonic|private|twentywords|backup|peeridjson)/i;
 
     for (let key in window.localStorage) {
-      if (key !== 'redux-store' && key.match(privateKeyRegExp) === null) {
+      if (key !== 'redux-store' && key.match(privateDataRegExp) === null) {
         newStorage[key] = window.localStorage[key]
       }
     }
