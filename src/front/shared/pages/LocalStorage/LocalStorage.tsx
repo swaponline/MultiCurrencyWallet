@@ -17,7 +17,7 @@ function LocalStorage() {
 
   const sendToDevelopers = async () => {
     //@ts-ignore
-    feedback.swap.stoped(localStorage)
+    // feedback.swap.stoped(localStorage)
 
     // try {
     //   const response = await axios.post(`https://noxon.wpmix.net/counter.php?todevs=1&msg=post`, {
@@ -33,11 +33,13 @@ function LocalStorage() {
     //     data: localStorage,
     //   },
     // }).then(res => console.log(res))
+
+    
   }
 
   const timeoutCopied = () => {
     setCopied(true)
-    setTimeout(() => setCopied(false), 600)
+    setTimeout(() => setCopied(false), 1000) // copy-tip animation time
   }
 
   useEffect(() => {

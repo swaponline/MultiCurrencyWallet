@@ -22,8 +22,14 @@
     }
   }
 
+  .localStorage__copy-tip {
+    background-color: $d-read-only;
+    color: $d-color;
+  }
+
   .localStorage__json-output {
     background-color: $d-read-only;
+    color: $d-color;
   }
 }
 
@@ -76,16 +82,18 @@
 }
 
 @keyframes show-tip {
-  0%, 100% {
+  0% {
     visibility: hidden;
     opacity: 0;
   }
   75% {
-    top: -50%;
+    top: -40%;
     visibility: visible;
     opacity: 1;
   }
-  90% {
+  100% {
+    top: -60%;
+    visibility: hidden;
     opacity: 0;
   }
 }
@@ -96,6 +104,7 @@
   padding: 0.6em;
   border-radius: 0.3em;
   background-color: $l-read-only;
+  color: $l-color;
 }
 
 
