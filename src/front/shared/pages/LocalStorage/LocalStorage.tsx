@@ -48,23 +48,23 @@ function LocalStorage() {
           window.history.back()
         }}>
           <FormattedMessage
-            id="localStorageBtnExchange"
+            id="localStorageBtnBack"
             defaultMessage="Back"
           />
         </button>
         <CopyToClipboard text={localStorage} >
           <button styleName='localStorage__btn' onClick={() => textareaRef.current.select()}>
             <FormattedMessage
-              id="localStorageBtnSend"
+              id="localStorageBtnCopy"
               defaultMessage="Copy"
             />
           </button>
         </CopyToClipboard>
         <button styleName='localStorage__btn' onClick={sendToDevelopers}>
-            <FormattedMessage
-              id="localStorageBtnSend"
-              defaultMessage="Send to developers"
-            />
+          <FormattedMessage
+            id="localStorageBtnSend"
+            defaultMessage="Send to developers"
+          />
         </button>
       </div>
 
