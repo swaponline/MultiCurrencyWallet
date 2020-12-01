@@ -26,8 +26,8 @@ jobs:
       run: |
         npm run build:mainnet
     - name: bot test
-      # run: |
-        # npm run bot:test
+      run: |
+        npm run bot:test
       env:
         CI: true
 
