@@ -656,7 +656,7 @@ const getAuthData = (name) => {
 }
 
 const addMessagingToken = (token) => {
-  console.log("Added token to redux store: ", token)
+  console.log("Added firebase token to redux store: ", token)
   reducers.user.addMessagingToken({ token })
 }
 
