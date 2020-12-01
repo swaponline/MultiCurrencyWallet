@@ -54,7 +54,7 @@ Current
 - 👷 UTXO to UTXO atomic swap – soon
 - 👷 DeFi on bitcoin (A [Hashed Time-Locked Collateral Contract](https://github.com/bitcoin/bips/blob/master/bip-0197.mediawiki) (HTLCC) consists of two scripts that permit a designated party (the "borrower") to lock funds on the Bitcoin chain for a specified amount of time as collateral in a debt agreement where the loan principal is denominated in a currency on another blockchain)
 
-## Timeline
+## Timeline 
 
 October, 2017 – The idea of non-custodial interaction between Bitcoin and dApps is published by CEO in Facebook
 
@@ -83,3 +83,7 @@ Jul, 2019 – Swap.online progress presented on Asia Blockchain Summit
 Jan, 2020 – WordPress plugin release
 
 Sep, 2020 – 100 WordPress plugin sales, stable income
+
+## other stat
+
+![](https://screenshots.wpmix.net/Telegram_BgGLGK1HWgMnk7BDad8VwuUWjjwDqQjy.png)
