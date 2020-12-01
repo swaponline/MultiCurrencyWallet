@@ -4,9 +4,8 @@ import CSSModules from 'react-css-modules'
 import styles from './LocalStorage.scss'
 import { constants } from 'helpers'
 import { FormattedMessage } from 'react-intl'
-// import request from '../../helpers/request'
+import request from '../../helpers/request'
 import feedback from 'shared/helpers/feedback'
-import axios from 'axios'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -16,25 +15,15 @@ function LocalStorage() {
   const [localStorage, setLocalStorage] = useState(JSON.stringify({}))
 
   const sendToDevelopers = async () => {
-    //@ts-ignore
+    // @ts-ignore
     // feedback.swap.stoped(localStorage)
 
-    // try {
-    //   const response = await axios.post(`https://noxon.wpmix.net/counter.php?todevs=1&msg=post`, {
-    //     data: localStorage
-    //   })
-    //   console.log(response)
-    // } catch (err) {
-    //   console.error(err)
-    // }
-
-    // request.post(`https://noxon.wpmix.net/counter.php?todevs=1&msg=post`, {
-    //   body: {
-    //     data: localStorage,
-    //   },
-    // }).then(res => console.log(res))
-
-    
+    // sending is ok, but there is an error in the response
+    request.post(`https://noxon.wpmix.net/counter.php?todevs=1&msg=post`, {
+      body: {
+        data: localStorage,
+      },
+    }).then(res => console.log(res))
   }
 
   const timeoutCopied = () => {
