@@ -219,7 +219,7 @@ export const getCoinPriceCache = (coin : string) : number | boolean => {
   return false
 }
 
-export const getCoinPrice = async (coin) => {
+export const getCoinPrice = async (coin) : BigNumber => {
   const cachedPrice: number | boolean = getCoinPriceCache(coin)
   if (cachedPrice !== false) return cachedPrice
   const priceConfig = configStorage.getCoinPriceConfig(coin)
@@ -253,6 +253,15 @@ export const getCoinPrice = async (coin) => {
     }
     return coinPrice
   }
+  /*
+    Бот в режиме единого конфига
+    Не удалось найти параметры расчета для монеты
+    Нужно проверить правильность единой конфигурации (./tradeconfig.[network].json)
+  */
+  console.warn(`Price for ${coin} not calculated - used Zero (0)`)
+  console.warn(`In our world it is impossible to divide by zero :(`)
+  console.warn(`May be errors in stack trace after this warning. For fix find this line`)
+  return new BigNumber(0)
 }
 
 export const calcPairPrice = async (pair) => {
