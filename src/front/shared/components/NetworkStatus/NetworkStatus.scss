@@ -1,19 +1,17 @@
 .title {
   font-size: 14px;
-  color: #b2b2b2;
+  color: $notice-color;
   position: static;
-  z-index: 1049;
+  z-index: 1;
+  display: flex;
+  align-items: center;
 
-  &>span {
-    padding-left: 5px;
+  & .status {
+    padding: 0 5px;
     display: inline-block;
     line-height: 1em;
     vertical-align: middle;
-  }
-
-  & span {
     font-weight: bold;
-
   }
 
   & svg {

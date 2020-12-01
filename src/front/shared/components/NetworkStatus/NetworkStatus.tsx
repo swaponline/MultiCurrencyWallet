@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 
 import cssModules from 'react-css-modules'
 import { connect } from 'redaction'
-
 import styles from './NetworkStatus.scss'
-import { constants } from 'helpers'
 
+import Tooltip from 'components/ui/Tooltip/Tooltip'
+import { FormattedMessage } from 'react-intl'
 
 @connect(
   ({
@@ -40,15 +40,21 @@ export default class NetworkStatus extends React.Component<any, any> {
       <div styleName={`title ${isOnline ? 'online' : 'offline'}`}>
         <em styleName="mark"></em>
         {!isOnline &&
-          <span>Offline</span>
+          <span styleName="status">Offline</span>
         }
         {
           isOnline && (onlineUsers === 0
-          ?
-          <span>Connecting...</span>
-          :
-          <span>{`${onlineUsers} peers online`}</span>)
+            ? <span styleName="status">Connecting...</span>
+            : <span styleName="status">{`${onlineUsers} peers online`}</span>)
         }
+        <Tooltip id="NetworkStatusPeersOnlineTooltip">
+          <div style={{ maxWidth: '24em', textAlign: 'center' }}>
+            <FormattedMessage
+              id="NetworkStatusPeersOnlineMessage"
+              defaultMessage="We do not have a centralized server for storing orders, we use the libp2p network from Protocol Labs, which works by analogy with the torrent network, every user (including you) is a peer in this network"
+            />
+          </div>
+        </Tooltip>
       </div>
     )
   }

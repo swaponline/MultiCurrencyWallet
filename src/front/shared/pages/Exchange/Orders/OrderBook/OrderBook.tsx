@@ -282,7 +282,7 @@ export default class Orders extends Component<any, any> {
             </div>
           </Fragment>
         }
-        >
+        > {/* TODO: не показывать таблицу если ордеров нет - No Orders */}
           <Table
             id="table_exchange"
             className={tableStyles.exchange}
