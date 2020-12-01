@@ -7,6 +7,7 @@ import { links } from 'helpers'
 import { localisePrefix } from 'helpers/locale'
 import config from 'helpers/externalConfig'
 
+import LocalStorage from 'pages/LocalStorage/LocalStorage'
 import SwapComponent from 'pages/Swap/Swap'
 import History from 'pages/History/History'
 import CreateWallet from 'pages/CreateWallet/CreateWallet'
@@ -51,6 +52,8 @@ const routes = (
       <Route path={`${localisePrefix}${links.exchange}/:sell-to-:buy/:linkedOrderId`} component={Exchange} />
       <Route path={`${localisePrefix}${links.exchange}/:sell-to-:buy`} component={Exchange} />
       <Route path={`${localisePrefix}${links.exchange}`} component={Exchange} />
+
+      <Route path={`${localisePrefix}${links.localStorage}`} component={LocalStorage} />
 
       <Route path={`${localisePrefix}${links.pointOfSell}/:sell-to-:buy`} component={PointOfSell} />
       <Route path={`${localisePrefix}${links.pointOfSell}`} component={PointOfSell} />
