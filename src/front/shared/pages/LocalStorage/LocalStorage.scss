@@ -9,12 +9,21 @@
   color: $d-color;
 
   .localStorage__btn {
-    background-color: rgb(44, 44, 44);
+    background-color: $d-read-only;
     color: $d-color;
   
     &:hover {
       background-color:  rgb(73, 73, 73);
     }
+
+    &.copy::before {
+      background-color:  $d-background-elements;
+      color: $d-color;
+    }
+  }
+
+  .localStorage__json-output {
+    background-color: $d-read-only;
   }
 }
 
@@ -36,13 +45,14 @@
 }
 
 .localStorage__btn {
+  position: relative;
   margin: 0 0.4em .4em 0;
   padding: 0.2em 1.2em;
   border-radius: 0.3em;
   height: 55px;
   font-size: 16px;
   line-height: 1em;
-  background-color: rgb(233, 233, 233);
+  background-color: $l-read-only;
   color: $l-color;
   transition: .1s;
 
@@ -51,12 +61,41 @@
   }
 }
 
-.localStorage__textarea {
+.localStorage__copy-tip {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.4em 1em;
+  border: .1em solid $color-brand;
+  border-radius: 0.3em;
+  background-color: $l-background-elements;
+  color: $l-color;
+  animation: show-tip 1s ease both;
+}
+
+@keyframes show-tip {
+  0%, 100% {
+    visibility: hidden;
+    opacity: 0;
+  }
+  75% {
+    top: -50%;
+    visibility: visible;
+    opacity: 1;
+  }
+  90% {
+    opacity: 0;
+  }
+}
+
+.localStorage__json-output {
   width: 100%;
   min-height: 25em;
   padding: 0.6em;
   border-radius: 0.3em;
-  border: .1em solid $notice-color;
+  background-color: $l-read-only;
 }
 
 
