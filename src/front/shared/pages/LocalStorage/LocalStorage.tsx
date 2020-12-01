@@ -45,11 +45,11 @@ function LocalStorage() {
 
       <div styleName='localStorage__buttons-container'>
         <button styleName='localStorage__btn' onClick={() => {
-          document.location.href = '#/exchange'
+          window.history.back()
         }}>
           <FormattedMessage
             id="localStorageBtnExchange"
-            defaultMessage="Exchange"
+            defaultMessage="Back"
           />
         </button>
         <CopyToClipboard text={localStorage} >
