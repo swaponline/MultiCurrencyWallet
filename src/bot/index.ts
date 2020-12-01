@@ -25,7 +25,7 @@ if (process.env.NETWORK !== undefined) {
 
 // Use Json
 if (process.env.USE_JSON === `true`) {
-  configStorage.loadJson()
+  configStorage.loadJson(configStorage.getNetwork())
   console.log('>>> Trade pairs: ', configStorage.getTradeTickers())
 }
 

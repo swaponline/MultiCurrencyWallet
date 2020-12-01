@@ -19,7 +19,6 @@ const {
 Object.keys(TOKENS).filter((name) => !Object.keys(constants.COINS).includes(name))
   .map((name) => {
     erc20.register(name.toLowerCase(), TOKENS[name].decimals)
-    console.log('UNKRONW TOKEN:', name)
   })
 if (configStorage.hasTradeConfig()) {
   configStorage
