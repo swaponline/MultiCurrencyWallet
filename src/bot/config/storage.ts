@@ -37,6 +37,18 @@ const getTradeTickers = () : Array<string> | boolean => {
   return false
 }
 
+const getCoinPriceConfig = (coin:string):any => {
+  if (_hasTradeConfig
+    && _tradeConfig
+    && _tradeConfig.COINS
+    && _tradeConfig.COINS[coin]
+    && _tradeConfig.COINS[coin].price
+  ) {
+    return _tradeConfig.COINS[coin].price
+  }
+  return false
+}
+
 const getMinAmount = ():any => {
   if (_hasTradeConfig
     && _tradeConfig
@@ -94,4 +106,5 @@ export {
   getTradePairs,
   getTradeTickers,
   getMinAmount,
+  getCoinPriceConfig,
 }

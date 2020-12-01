@@ -2,6 +2,7 @@ import * as fs from 'fs'
 import * as mnemonicUtils from 'common/utils/mnemonic'
 import * as configStorage from './config/storage'
 import { getNetworkType } from 'common/domain/network'
+import { calcPairPrice, getPriceByPair } from './app/middlewares/prices'
 
 
 // Mnemonic
@@ -26,6 +27,9 @@ if (process.env.NETWORK !== undefined) {
 if (process.env.USE_JSON === `true`) {
   configStorage.loadJson()
   console.log('>> Trade pairs: ', configStorage.getTradeTickers())
+  console.log('check price calc')
+  calcPairPrice('USDT-BTC')
+  getPriceByPair('USDT-BTC')
 }
 
 const rewriteEnvKeys = [
