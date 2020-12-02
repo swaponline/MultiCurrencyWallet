@@ -1,12 +1,17 @@
 .debug {
   padding: 0.5em;
-  border: 1px solid gray;
+  border-radius: 0.3em;
+  border: 1px solid $notice-color;
+}
+
+.title {
+  margin: 1em 0 0;
 }
 
 .button {
-  color: #A9A9A9;
-  text-decoration: underline;
   cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
 }
 
 .information {

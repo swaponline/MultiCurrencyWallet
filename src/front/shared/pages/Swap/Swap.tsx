@@ -594,19 +594,7 @@ export default class SwapComponent extends PureComponent<any, any> {
                     defaultMessage="reload the page"
                   />
                 </span>
-                {/* 
-                  redirect to Local Storage page
-                */}
-                <FormattedMessage
-                  id="SwapOr"
-                  defaultMessage=" or "
-                />
-                <span styleName="pseudolink" onClick={() => document.location.href = '#/localStorage'}>
-                  <FormattedMessage
-                    id="SwapLocalStorage"
-                    defaultMessage="open your settings"
-                  />
-                </span>
+
               </p>
 
               {isShowDebug &&
