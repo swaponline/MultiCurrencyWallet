@@ -4,7 +4,7 @@ npm i
 npm run marketmaker:testnet SECRET_PHRASE="asd asd asd" SPREAD="5"
 
 ```
-![](https://screenshots.wpmix.net/putty_U275bbaNXqo9qnPidgpw4Zs9jJzh3a79.png)
+![](https://screenshots.wpmix.net/putty_3ISF58oZz8jfJwFuyyMFpfocPTBR7aC4.png)
 
 1. then top up adressess to start trading
 2. don't forget to topup Ethereum balance
