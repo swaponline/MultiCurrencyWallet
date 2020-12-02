@@ -5929,7 +5929,7 @@
   },
   {
     "id": "MainFAQ2_content",
-    "message": "We nemen 0 kisten in rekening voor onze services. Echter, u beataald nog wel de standaard TX (Miner fee) voor alle transacties die u maakt op het platform",
+    "message": "U betaalt de standaard TX (miners fees) voor alle transacties die u op het platform uitvoert.",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
@@ -5943,7 +5943,7 @@
   },
   {
     "id": "MainFAQ2_content2",
-    "message": "NOTE: You can easily check the ‘miners fees’ required for each respective coin by simply googling them.",
+    "message": "OPMERKING: u kunt eenvoudig de ‘miners fees’ die voor elke respectievelijke munt zijn vereist, controleren door ze eenvoudigweg te googlen.",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
@@ -7768,7 +7768,7 @@
   },
   {
     "id": "MainFAQ2_content3",
-    "message": "Current mining fees:",
+    "message": "Huidige mijnvergoedingen:",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
@@ -8000,6 +8000,20 @@
     "message": "Servicekosten:",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "FAQServiceFee",
+    "message": "Servicekosten (only withdraw):",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "FAQServiceFeeDescription",
+    "message": "niet minder dan",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
   {

@@ -5941,7 +5941,7 @@
   },
   {
     "id": "MainFAQ2_content",
-    "message": "Cobramos 0 tarifas para brindarle estos servicios. Sin embargo, aún debe pagar el TX estándar (tarifas de mineros) por todas las transacciones que realice en la plataforma.",
+    "message": "Usted paga la TX estándar (tarifas de mineros) por todas las transacciones que realiza en la plataforma.",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
@@ -5955,7 +5955,7 @@
   },
   {
     "id": "MainFAQ2_content2",
-    "message": " NOTA: Puede verificar fácilmente las 'tarifas de mineros' requeridas para cada moneda respectiva simplemente buscándolas en Google.",
+    "message": "NOTA: Puede verificar fácilmente las 'tarifas de mineros' requeridas para cada moneda respectiva simplemente buscándolas en Google.",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
@@ -7776,7 +7776,7 @@
   },
   {
     "id": "MainFAQ2_content3",
-    "message": "Current mining fees:",
+    "message": "Tarifas mineras actuales:",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
@@ -8008,6 +8008,20 @@
     "message": "Tarifa de servicio:",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "FAQServiceFee",
+    "message": "Tarifa de servicio (only withdraw):",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "FAQServiceFeeDescription",
+    "message": "no menos que",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
   {

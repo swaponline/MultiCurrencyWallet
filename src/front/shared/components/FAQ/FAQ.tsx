@@ -1,16 +1,13 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable max-len */
 import React, { useState, useEffect } from 'react'
-import cssModules from 'react-css-modules'
-import { FormattedMessage, injectIntl } from 'react-intl'
-import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import BigNumber from 'bignumber.js'
-import { constants } from 'helpers'
-import feedback from 'shared/helpers/feedback'
-import helpers from 'helpers'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
+import { FormattedMessage, injectIntl } from 'react-intl'
+import { constants, feedback, adminFee, btc, eth } from 'helpers'
 
+import cssModules from 'react-css-modules'
 import cx from 'classnames'
-
 import styles from './styles.scss'
 
 const tabsIdsDictionary = {
@@ -18,7 +15,6 @@ const tabsIdsDictionary = {
   SECOND_TAB: 'MainFAQ2_header',
   THIRD_TAB: 'MainFAQ3_header',
 }
-
 
 const FAQ = (props) => {
   const [btcFee, setBtcFee] = useState(null)
@@ -38,11 +34,11 @@ const FAQ = (props) => {
         if (_mounted) {
           const BYTE_IN_KB = 1024
 
-          btcSatoshiPrice = await helpers.btc.estimateFeeRate({ speed: 'fast' })
+          btcSatoshiPrice = await btc.estimateFeeRate({ speed: 'fast' })
           // divided by 1 kb to convert it to satoshi / byte
           setBtcFee(Math.ceil(btcSatoshiPrice / BYTE_IN_KB))
 
-          ethGasPrice = await helpers.eth.estimateGasPrice({ speed: 'fast' })
+          ethGasPrice = await eth.estimateGasPrice({ speed: 'fast' })
           // return gas * 1e9 - divided by 1e9 to convert
           setEthFee(new BigNumber(ethGasPrice).dividedBy(1e9).toNumber())
         }
@@ -113,15 +109,15 @@ const FAQ = (props) => {
             [styles.tab__content]: true,
             [styles.tab__content_active]: openedTabs.SECOND_TAB,
           })}>
-            <FormattedMessage id="MainFAQ2_content" defaultMessage="We take 0 fees in the middle for providing these services to you. However, you still have to pay the standard TX (miners fees) for all transactions you conduct on the platform." />
-            <br />
-            <br />
-            <FormattedMessage id="MainFAQ2_content1" defaultMessage="For ERC20 tokens, it is required that you have at least 0.001 ETH on your wallets. Remember! when sending ERC20 tokens, you are required to hold some ETH as miners fees for transactions. This is also the case for all atomic swaps for ETH & ERC20 tokens." />
-            <br />
-            <br />
-            <FormattedMessage id="MainFAQ2_content2" defaultMessage="NOTE: You can easily check the ‘miners fees’ required for each respective coin by simply googling them." />
-            <br />
-            <br />
+            <p>
+              <FormattedMessage id="MainFAQ2_content" defaultMessage="You pay the standard TX (miners fees) for all transactions you conduct on the platform." />
+            </p>
+            <p>
+              <FormattedMessage id="MainFAQ2_content1" defaultMessage="For ERC20 tokens, it is required that you have at least 0.001 ETH on your wallets. Remember! when sending ERC20 tokens, you are required to hold some ETH as miners fees for transactions. This is also the case for all atomic swaps for ETH & ERC20 tokens." />
+            </p>
+            <p>
+              <FormattedMessage id="MainFAQ2_content2" defaultMessage="NOTE: You can easily check the ‘miners fees’ required for each respective coin by simply googling them." />
+            </p>
             <FormattedMessage id="MainFAQ2_content3" defaultMessage="Current mining fees:" />
             <div className={styles.descriptionFee}>
               <span>BTC:</span>{' '}
@@ -137,6 +133,24 @@ const FAQ = (props) => {
                 : <InlineLoader />
               }
             </div>
+            <br />
+            <FormattedMessage id="FAQServiceFee" defaultMessage="Service fee (only withdraw):" />
+            <p className={styles.descriptionFee}>
+              <span>BTC:</span>{' '}
+              <span>
+                5%,{' '}
+                <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
+                {' '}<b>{adminFee.calc('BTC', null)}</b> BTC
+              </span> 
+            </p>
+            <p className={styles.descriptionFee}>
+              <span>ETH:</span>{' '}
+              <span>
+                5%,{' '}
+                <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
+                {' '}<b>{adminFee.calc('ETH', null)}</b> ETH
+              </span> 
+            </p>
           </div>
         </article>
       </div>

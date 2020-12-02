@@ -5890,7 +5890,7 @@
   },
   {
     "id": "MainFAQ2_content",
-    "message": "We take 0 fees in the middle for providing these services to you. However, you still have to pay the standard TX (miners fees) for all transactions you conduct on the platform.",
+    "message": "You pay the standard TX (miners fees) for all transactions you conduct on the platform.",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
@@ -7984,6 +7984,20 @@
     "message": "Service Fee:",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "FAQServiceFee",
+    "message": "Service fee (only withdraw):",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "FAQServiceFeeDescription",
+    "message": "no less than",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
   {
