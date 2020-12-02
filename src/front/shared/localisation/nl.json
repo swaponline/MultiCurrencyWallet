@@ -7983,7 +7983,7 @@
   },
   {
     "id": "WithdrowModalMinerFee",
-    "message": "Miner Fee:",
+    "message": "Mijnwerkersvergoeding:",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
@@ -7997,7 +7997,7 @@
   },
   {
     "id": "WithdrowModalServiceFee",
-    "message": "Service Fee:",
+    "message": "Servicekosten:",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]

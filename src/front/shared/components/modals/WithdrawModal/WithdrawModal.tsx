@@ -683,6 +683,7 @@ export default class WithdrawModal extends React.Component<any, any> {
       const RIGHT_ARROW = 39
       const ZERO_CODE = 48
       const NINE_CODE = 57
+      const DELETE_CODE = 46
 
       if (
         !(
@@ -690,6 +691,7 @@ export default class WithdrawModal extends React.Component<any, any> {
           event.keyCode === BACKSPACE_CODE ||
           event.keyCode === LEFT_ARROW ||
           event.keyCode === RIGHT_ARROW ||
+          event.keyCode === DELETE_CODE ||
           event.key === '.'
         )
       ) {

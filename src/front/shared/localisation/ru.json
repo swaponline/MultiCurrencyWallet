@@ -8039,7 +8039,7 @@
   },
   {
     "id": "WithdrowModalMinerFee",
-    "message": "Miner Fee:",
+    "message": "Комиссия майнера: ",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
@@ -8053,7 +8053,7 @@
   },
   {
     "id": "WithdrowModalServiceFee",
-    "message": "Service Fee:",
+    "message": "Комиссия сервиса:",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
