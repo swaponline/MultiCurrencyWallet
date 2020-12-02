@@ -140,7 +140,7 @@ const FAQ = (props) => {
             <p className={styles.descriptionFee}>
               <span>ETH:</span>{' '}
               <span>
-                5%,{' '}
+                7%,{' '}
                 <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
                 {' '}<b>{adminFee.calc('ETH', null)}</b> ETH
               </span> 

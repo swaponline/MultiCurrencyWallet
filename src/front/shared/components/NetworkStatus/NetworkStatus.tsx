@@ -47,14 +47,16 @@ export default class NetworkStatus extends React.Component<any, any> {
             ? <span styleName="status">Connecting...</span>
             : <span styleName="status">{`${onlineUsers} peers online`}</span>)
         }
-        <Tooltip id="NetworkStatusPeersOnlineTooltip">
-          <div style={{ maxWidth: '24em', textAlign: 'center' }}>
-            <FormattedMessage
-              id="NetworkStatusPeersOnlineMessage"
-              defaultMessage="We do not have a centralized server for storing orders, we use the libp2p network from Protocol Labs, which works by analogy with the torrent network, every user (including you) is a peer in this network"
-            />
-          </div>
-        </Tooltip>
+        <span styleName='status-tooltip'>
+          <Tooltip id="NetworkStatusPeersOnlineTooltip">
+            <div style={{ maxWidth: '24em', textAlign: 'center' }}>
+              <FormattedMessage
+                id="NetworkStatusPeersOnlineMessage"
+                defaultMessage="We do not have a centralized server for storing orders, we use the libp2p network from Protocol Labs, which works by analogy with the torrent network, every user (including you) is a peer in this network"
+              />
+            </div>
+          </Tooltip>
+        </span>
       </div>
     )
   }

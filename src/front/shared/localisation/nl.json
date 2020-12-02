@@ -2380,7 +2380,7 @@
   },
   {
     "id": "orders1381",
-    "message": "{buyCurrency}🔁{sellCurrency}",
+    "message": "{buyCurrency} 🔁 {sellCurrency}",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]

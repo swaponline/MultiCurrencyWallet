@@ -204,7 +204,7 @@ export default class Orders extends Component<any, any> {
                 <div styleName="subtitle showAllSwitch">
                   <FormattedMessage
                     id="orders1381"
-                    defaultMessage="{buyCurrency}🔁{sellCurrency}"
+                    defaultMessage="{buyCurrency} 🔁 {sellCurrency}"
                     values={{ buyCurrency, sellCurrency }}
                   />
                   {/*
