@@ -221,6 +221,8 @@ const signUpWithPush = (data) =>
 
     console.log('firebase messagingToken: ', messagingToken)
 
+    actions.user.addMessagingToken(messagingToken)
+
     const sendResult = submitUserData(dataBasePath, {
       ...data,
       messagingToken,
