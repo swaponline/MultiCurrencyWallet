@@ -4,8 +4,7 @@ import CSSModules from 'react-css-modules'
 import styles from './LocalStorage.scss'
 import { constants } from 'helpers'
 import { FormattedMessage } from 'react-intl'
-import request from '../../helpers/request'
-import feedback from 'shared/helpers/feedback'
+import request from '../../../../core/simple/src/helpers/request'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
