@@ -30,6 +30,12 @@ export default class Debug extends Component<any, any> {
 
     return (
       <div styleName="debug">
+        <button styleName='button' onClick={() => document.location.href = '#/localStorage'}>
+          <FormattedMessage id="DebugStoredDataLink" defaultMessage="Show stored data" />
+        </button>
+        <h5 styleName='title'>
+          <FormattedMessage id="DebugSwapDataTitle" defaultMessage="Swap data:" />
+        </h5>
         <pre styleName="information">
           <code>
             <ShowBtcScript btcScriptValues={scriptValues} />
