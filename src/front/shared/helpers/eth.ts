@@ -18,7 +18,7 @@ const estimateFeeValue = async (options: EstimateFeeOptions) => {
   const feeValue = new BigNumber(constants.defaultFeeRates.eth.limit[method])
     .multipliedBy(gasPrice)
     .multipliedBy(1e-18)
-    .toString()
+    .toNumber()
 
   return +feeValue
 }

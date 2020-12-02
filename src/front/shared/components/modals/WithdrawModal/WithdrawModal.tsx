@@ -998,8 +998,8 @@ export default class WithdrawModal extends React.Component<any, any> {
               : (
                 <span styleName='fee'>{
                   isEthToken
-                    ? new BigNumber(tokenFee).dp(currentDecimals, BigNumber.ROUND_FLOOR).toNumber()
-                    : new BigNumber(totalFee).minus(adminFeeSize).dp(currentDecimals, BigNumber.ROUND_FLOOR).toNumber()
+                    ? new BigNumber(tokenFee).toNumber()
+                    : new BigNumber(coinFee).toNumber()
                   } {dataCurrency}
                 </span>
               )
@@ -1021,7 +1021,7 @@ export default class WithdrawModal extends React.Component<any, any> {
                   {fetchFee
                     ? <div styleName='paleLoader'><InlineLoader /></div>
                     : <span styleName='fee'>{
-                        amount // fee in precents (fee / 100%)
+                        amount > 0 // fee in precents (fee / 100%)
                           ? new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).toNumber()
                           : adminFeeSize
                       } {currency}</span>
@@ -1036,9 +1036,9 @@ export default class WithdrawModal extends React.Component<any, any> {
               ? <div styleName='paleLoader'><InlineLoader /></div>
               : (
                 <span styleName='fee'>{
-                    amount // fee in precents (fee / 100%)
-                      ? new BigNumber(totalFee).plus(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).dp(currentDecimals, BigNumber.ROUND_FLOOR).toNumber()
-                      : totalFee
+                  isEthToken && amount > 0 // fee in precents (fee / 100%)
+                    ? new BigNumber(totalFee).plus(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).toNumber()
+                    : totalFee
                   } {dataCurrency}
                 </span>
               )
