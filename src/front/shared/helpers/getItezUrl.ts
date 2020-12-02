@@ -8,6 +8,7 @@ export const getItezUrl = ({ user, locale, url }) => {
 
   const hiddenCoinsList = JSON.parse(localStorage.getItem('hiddenCoinsList')) || []
 
+  /*
   if (!getActuallyFiatAddress && !hiddenCoinsList.includes('BTC (SMS-Protected)')) getActuallyFiatAddress = btcMultisigSMSData
   if (!getActuallyFiatAddress && !hiddenCoinsList.includes('BTC (PIN-Protected)')) getActuallyFiatAddress = btcMultisigPinData
   if (!getActuallyFiatAddress && !hiddenCoinsList.includes('BTC (Multisig)')) getActuallyFiatAddress = btcMultisigUserData
@@ -15,6 +16,8 @@ export const getItezUrl = ({ user, locale, url }) => {
   if (!getActuallyFiatAddress) {
     getActuallyFiatAddress = btcData
   }
+  */
+  getActuallyFiatAddress = btcData
 
   const shieldingСomingFiat = /%7BDEFAULT_FIAT%7D/gi
   const shieldingСomingLocale = /%7Blocale%7D/gi
