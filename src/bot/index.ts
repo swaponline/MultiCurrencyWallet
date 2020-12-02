@@ -6,9 +6,9 @@ import { calcPairPrice, getPriceByPair } from './app/middlewares/prices'
 
 
 // Mnemonic
-if (process.argv.length === 14) {
+if (process.argv.length >= 3) {
   /* check - its may be run with seed */
-  const mnemonic = process.argv.slice(2).join(` `)
+  const mnemonic = process.argv[2]
   if (mnemonicUtils.mnemonicIsValid(mnemonic)) {
     configStorage.setMnemonic(mnemonic)
     console.log('>>> Use Mnemonic:', mnemonic)
@@ -43,23 +43,23 @@ rewriteEnvKeys.forEach((envKey) => {
   }
 })
 
-if (process.env.TEST_STARTUP === `true`) {
-  console.log('>>>> TEST STARTUP')
-  /* Test env */
+const _loadDefaultEnv = () => {
   process.env.SERVER_ID='2234567890'
   process.env.ACCOUNT='2234567890'
   process.env.NETWORK = process.env.NETWORK || 'testnet'
-
   process.env.API_USER='user'
   process.env.API_PASS='password'
-
-  process.env.SECRET_PHRASE='gospel total hundred major refuse when equal pilot goat soft recall abandon'
-
-  process.env.WEB3_TESTNET_PROVIDER='https://rinkeby.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c'
-  process.env.WEB3_MAINNET_PROVIDER='https://mainnet.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c'
-
   process.env.PORT='3000'
   process.env.IP='0.0.0.0'
+  process.env.WEB3_TESTNET_PROVIDER='https://rinkeby.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c'
+  process.env.WEB3_MAINNET_PROVIDER='https://mainnet.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c'
+}
+
+if (process.env.TEST_STARTUP === `true`) {
+  console.log('>>>> TEST STARTUP')
+  /* Test env */
+  _loadDefaultEnv()
+  process.env.SECRET_PHRASE='gospel total hundred major refuse when equal pilot goat soft recall abandon'
 
   setTimeout(() => {
     console.log('>>>> TEST READY - SHUTDOWN')
@@ -67,13 +67,18 @@ if (process.env.TEST_STARTUP === `true`) {
   }, 30*1000)
 } else {
   if (!fs.existsSync(__dirname + '/.env')) {
-    console.log('Please, create ./src/bot/.env file unsing "./src/bot/.env.sample"')
-    process.exit(0)
+    if (configStorage.hasTradeConfig()) {
+      // If use quick start with json, and .env not exists - use defaults
+      _loadDefaultEnv()
+    } else {
+      console.log('Please, create ./src/bot/.env file unsing "./src/bot/.env.sample"')
+      process.exit(0)
+    }
+  } else {
+    require('dotenv').config({
+      path: __dirname + '/.env',
+    })
   }
-
-  require('dotenv').config({
-    path: __dirname + '/.env',
-  })
 }
 
 // Rewrite vars from .env with values from command lineHeight

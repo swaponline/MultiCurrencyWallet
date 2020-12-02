@@ -233,8 +233,13 @@ export const getCoinPrice = async (coin) : BigNumber => {
         switch (priceConfig.api) {
           case `SWAPONLINE`:
             coinPrice = await getNoxonPrice(coin, 'USD')
+            break
           case `YOBIT`:
             coinPrice = await getYobitPrice(`${coin.toLowerCase()}_usd`)
+            break
+          default:
+            console.warn(`Unknown price API '${priceConfig.api}' for coin '${coin}'.`)
+            break
         }
         break;
       case `COIN`:  // От цены другой монеты
