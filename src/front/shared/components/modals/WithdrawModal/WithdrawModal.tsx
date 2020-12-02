@@ -998,8 +998,8 @@ export default class WithdrawModal extends React.Component<any, any> {
               : (
                 <span styleName='fee'>{
                   isEthToken
-                    ? new BigNumber(tokenFee).dp(6, BigNumber.ROUND_FLOOR).toNumber()
-                    : new BigNumber(totalFee).minus(adminFeeSize).dp(6, BigNumber.ROUND_FLOOR).toNumber()
+                    ? new BigNumber(tokenFee).dp(currentDecimals, BigNumber.ROUND_FLOOR).toNumber()
+                    : new BigNumber(totalFee).minus(adminFeeSize).dp(currentDecimals, BigNumber.ROUND_FLOOR).toNumber()
                   } {dataCurrency}
                 </span>
               )
@@ -1037,7 +1037,7 @@ export default class WithdrawModal extends React.Component<any, any> {
               : (
                 <span styleName='fee'>{
                     amount // fee in precents (fee / 100%)
-                      ? new BigNumber(totalFee).plus(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).dp(6, BigNumber.ROUND_FLOOR).toNumber()
+                      ? new BigNumber(totalFee).plus(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).dp(currentDecimals, BigNumber.ROUND_FLOOR).toNumber()
                       : totalFee
                   } {dataCurrency}
                 </span>

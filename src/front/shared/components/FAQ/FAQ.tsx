@@ -36,11 +36,14 @@ const FAQ = (props) => {
     async function fetchFees() {
       try {
         if (_mounted) {
+          const BYTE_IN_KB = 1024
+
           btcSatoshiPrice = await helpers.btc.estimateFeeRate({ speed: 'fast' })
-          setBtcFee(btcSatoshiPrice)
+          // divided by 1 kb to convert it to satoshi / byte
+          setBtcFee(Math.ceil(btcSatoshiPrice / BYTE_IN_KB))
 
           ethGasPrice = await helpers.eth.estimateGasPrice({ speed: 'fast' })
-          // eth.ts return gas * 1e9 - divided by 1e9 to convert
+          // return gas * 1e9 - divided by 1e9 to convert
           setEthFee(new BigNumber(ethGasPrice).dividedBy(1e9).toNumber())
         }
       } catch(err) {

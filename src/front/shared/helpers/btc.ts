@@ -19,7 +19,20 @@ const network = process.env.MAINNET
   ? bitcoin.networks.bitcoin
   : bitcoin.networks.testnet
 
-const DUST = 546
+/* 
+* Bitcoin dust - small amount of bitcoin that remains in a particular wallet 
+* because the monetary value is so tiny that it is below the amount of the
+* fee required to spend the bitcoin. It makes the transaction impossible 
+* to process
+*
+* Default value:
+* - dustRelayFee (3000 satochi / kb)
+* - output P2PKH
+*/
+const DUST = 546 // satoshi
+const BYTE_INPUT_ADDRESS = 146 // ~ 146 byte
+const BYTE_OUTPUT_ADDRESS = 33 // ~ 33 byte
+const BYTE_TRANSACTION = 15 // ~ 15 byte
 
 // getByteCount({'MULTISIG-P2SH:2-4':45},{'P2PKH':1}) Means "45 inputs of P2SH Multisig and 1 output of P2PKH"
 // getByteCount({'P2PKH':1,'MULTISIG-P2SH:2-3':2},{'P2PKH':2}) means "1 P2PKH input and 2 Multisig P2SH (2 of 3) inputs along with 2 P2PKH outputs"
@@ -106,12 +119,8 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
   unspents = unspents || await actions.btc.fetchUnspents(address)
   /*
   * Formula with 2 input and 2 output addresses 
-  * BYTE_INPUT_ADDRESS × 2 + BYTE_OUTPUT_ADDRESS × 2 + BYTE_TRANSACTION
+  * (BYTE_INPUT_ADDRESS × 2 ) + (BYTE_OUTPUT_ADDRESS × 2) + BYTE_TRANSACTION
   */
-  const BYTE_INPUT_ADDRESS = 146 // ~ 146 byte
-  const BYTE_OUTPUT_ADDRESS = 33 // ~ 33 byte
-  const BYTE_TRANSACTION = 15 // ~ 15 byte
-
   const txIn = unspents.length
   const txSize = txIn > 0
     ? txIn * BYTE_INPUT_ADDRESS + txOut * BYTE_OUTPUT_ADDRESS + (BYTE_TRANSACTION + txIn - txOut)
@@ -168,17 +177,18 @@ const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, f
     DUST,
     new BigNumber(feeRate)
       .multipliedBy(txSize)
+      .div(1024)
       .dp(0, BigNumber.ROUND_HALF_EVEN),
   )
 
-  const ONE_PART_SATOSHI = 1e-8; // 1 BTC -> 100 000 000 satoshi
   const CUSTOM_SATOSHI = 20
-
   calculatedFeeValue.plus(CUSTOM_SATOSHI) // just wanted to add
-    
+
+  const SATOSHI_TO_BITCOIN_RATIO = 1e-8; // 1 BTC -> 100 000 000 satoshi
+  
   const finalFeeValue = inSatoshis
-    ? calculatedFeeValue.toString()
-    : calculatedFeeValue.multipliedBy(ONE_PART_SATOSHI).toString()
+    ? calculatedFeeValue.toNumber()
+    : calculatedFeeValue.multipliedBy(SATOSHI_TO_BITCOIN_RATIO).toNumber()
 
   console.log(`Btc withdraw fee speed(${speed}) method (${method}) ${finalFeeValue}`)
   return finalFeeValue
@@ -221,6 +231,7 @@ const estimateFeeRateBlockcypher = async ({ speed = 'fast' } = {}) => {
   let apiResult
 
   try {
+    // api returns sotoshi in 1 kb
     apiResult = await api.asyncFetchApi(link)
   } catch (err) {
     console.error(`EstimateFeeRate: ${err.message}`)
@@ -234,15 +245,10 @@ const estimateFeeRateBlockcypher = async ({ speed = 'fast' } = {}) => {
   }
 
   const apiSpeed = apiSpeeds[speed] || apiSpeeds.normal
-  /* 
-  * api returns sotoshi in 1 kb
-  * divided by 1 kb to convert it to gwei
-  */
-  const BYTE_IN_KB = 1024
   const apiRate = new BigNumber(apiResult[apiSpeed])
 
   return apiRate.isGreaterThanOrEqualTo(DUST) 
-    ? Math.ceil(apiRate.dividedBy(BYTE_IN_KB).toNumber())
+    ? apiRate.toNumber()
     : defaultRate[speed]
 }
 
