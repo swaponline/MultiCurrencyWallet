@@ -223,7 +223,7 @@ export default class Orders extends Component<any, any> {
             />
           </Panel>
         }
-
+        {/* No orders found. Most likely they are not there or the user who created them is not online */}
         <Panel header={
           <Fragment>
             <h3 styleName="ordersHeading">
@@ -282,7 +282,7 @@ export default class Orders extends Component<any, any> {
             </div>
           </Fragment>
         }
-        > {/* TODO: не показывать таблицу если ордеров нет - No Orders */}
+        >
           <Table
             id="table_exchange"
             className={tableStyles.exchange}
