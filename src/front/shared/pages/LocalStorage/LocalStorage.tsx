@@ -4,26 +4,12 @@ import CSSModules from 'react-css-modules'
 import styles from './LocalStorage.scss'
 import { constants } from 'helpers'
 import { FormattedMessage } from 'react-intl'
-import request from '../../../../core/simple/src/helpers/request'
-
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 function LocalStorage() {
   const [isCopied, setCopied] = useState(false)
   const [localStorage, setLocalStorage] = useState(JSON.stringify({}))
-
-  const sendToDevelopers = async () => {
-    // @ts-ignore
-    // feedback.swap.stoped(localStorage)
-
-    // sending is ok, but there is an error in the response
-    request.post(`https://noxon.wpmix.net/counter.php?todevs=1&msg=post`, {
-      body: {
-        data: localStorage,
-      },
-    }).then(res => console.log(res))
-  }
 
   const timeoutCopied = () => {
     setCopied(true)
@@ -67,12 +53,12 @@ function LocalStorage() {
             <FormattedMessage id="localStorageBtnCopy" defaultMessage="Copy" />
           </button>
         </CopyToClipboard>
-        <button styleName='localStorage__btn' onClick={sendToDevelopers}>
+        {/* <button styleName='localStorage__btn' onClick={() => null}>
           <FormattedMessage
             id="localStorageBtnSend"
             defaultMessage="Send to developers"
           />
-        </button>
+        </button> */}
       </div>
 
       <pre styleName='localStorage__json-output'>
