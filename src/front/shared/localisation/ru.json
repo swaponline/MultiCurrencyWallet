@@ -226,7 +226,7 @@
     "id": "Group14",
     "message": "Загрузить",
     "files": [
-      "src/front/shared/components/modals/ImportKeys/Group/Group.js"
+      "src/front/shared/components/modals/ImportKeys/Group/Group.tsx"
     ]
   },
   {
@@ -386,11 +386,7 @@
   },
   {
     "id": "SwapProgress105",
-    "message": "Проверяется баланс.. ",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.tsx",
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToGhost.tsx"
-    ]
+    "message": "Проверяется баланс.. "
   },
   {
     "id": "SwapProgress111",
@@ -450,19 +446,11 @@
   },
   {
     "id": "SwapProgress93",
-    "message": "Создавший ордер, не в сети. Ожидание.. ",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.tsx",
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToGhost.tsx"
-    ]
+    "message": "Создавший ордер, не в сети. Ожидание.. "
   },
   {
     "id": "SwapProgress99",
-    "message": "Создается Секретный ключ",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.tsx",
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToGhost.tsx"
-    ]
+    "message": "Создается Секретный ключ"
   },
   {
     "id": "Tooltip11",
@@ -839,367 +827,211 @@
   },
   {
     "id": "EthTokenToUsdt101",
-    "message": "Подтверждение сделки необходимо для формирования репутации. Если пользователь не доводит дело до конца, он получает отрицательную репутацию. ",
-    "files": [
-      "src/front/shared/pages/Swap/EthTokenToUsdt.tsx"
-    ]
+    "message": "Подтверждение сделки необходимо для формирования репутации. Если пользователь не доводит дело до конца, он получает отрицательную репутацию. "
   },
   {
     "id": "EthTokenToUsdt109",
-    "message": "Подтвердить",
-    "files": [
-      "src/front/shared/pages/Swap/EthTokenToUsdt.tsx"
-    ]
+    "message": "Подтвердить"
   },
   {
     "id": "EthTokenToUsdt118",
-    "message": "Пожалуйста, подождите. Обработка подтверждения",
-    "files": [
-      "src/front/shared/pages/Swap/EthTokenToUsdt.tsx"
-    ]
+    "message": "Пожалуйста, подождите. Обработка подтверждения"
   },
   {
     "id": "EthTokenToUsdt123",
-    "message": "Транзакция: ",
-    "files": [
-      "src/front/shared/pages/Swap/EthTokenToUsdt.tsx"
-    ]
+    "message": "Транзакция: "
   },
   {
     "id": "EthTokenToUsdt154",
-    "message": "Ожидание, Владелец USDT создает Секретный ключ, создает BTC Omni Script и пополняет его",
-    "files": [
-      "src/front/shared/pages/Swap/EthTokenToUsdt.tsx"
-    ]
+    "message": "Ожидание, Владелец USDT создает Секретный ключ, создает BTC Omni Script и пополняет его"
   },
   {
     "id": "EthTokenToUsdt166",
-    "message": "Bitcoin Omni Script создан и загружен. Пожалуйста, проверте информацию ниже",
-    "files": [
-      "src/front/shared/pages/Swap/EthTokenToUsdt.tsx"
-    ]
+    "message": "Bitcoin Omni Script создан и загружен. Пожалуйста, проверте информацию ниже"
   },
   {
     "id": "EthTokenToUsdt169",
-    "message": "Хэш: ",
-    "files": [
-      "src/front/shared/pages/Swap/EthTokenToUsdt.tsx"
-    ]
+    "message": "Хэш: "
   },
   {
     "id": "EthTokenToUsdt172",
-    "message": "Script адрес: ",
-    "files": [
-      "src/front/shared/pages/Swap/EthTokenToUsdt.tsx"
-    ]
+    "message": "Script адрес: "
   },
   {
     "id": "EthTokenToUsdt192",
-    "message": "Показать BTC script",
-    "files": [
-      "src/front/shared/pages/Swap/EthTokenToUsdt.tsx"
-    ]
+    "message": "Показать BTC script"
   },
   {
     "id": "EthTokenToUsdt236",
-    "message": "Все отлично. Продолжить",
-    "files": [
-      "src/front/shared/pages/Swap/EthTokenToUsdt.tsx"
-    ]
+    "message": "Все отлично. Продолжить"
   },
   {
     "id": "EthTokenToUsdt249",
-    "message": "Недостаточно средств для данной операции. Пожалуйста пополните баланс",
-    "files": [
-      "src/front/shared/pages/Swap/EthTokenToUsdt.tsx"
-    ]
+    "message": "Недостаточно средств для данной операции. Пожалуйста пополните баланс"
   },
   {
     "id": "EthTokenToUsdt253",
-    "message": "Ваш баланс: ",
-    "files": [
-      "src/front/shared/pages/Swap/EthTokenToUsdt.tsx"
-    ]
+    "message": "Ваш баланс: "
   },
   {
     "id": "EthTokenToUsdt257",
-    "message": "Необходимый баланс: ",
-    "files": [
-      "src/front/shared/pages/Swap/EthTokenToUsdt.tsx"
-    ]
+    "message": "Необходимый баланс: "
   },
   {
     "id": "EthTokenToUsdt260",
-    "message": "Ваш адрес: ",
-    "files": [
-      "src/front/shared/pages/Swap/EthTokenToUsdt.tsx"
-    ]
+    "message": "Ваш адрес: "
   },
   {
     "id": "EthTokenToUsdt267",
-    "message": "Продолжить",
-    "files": [
-      "src/front/shared/pages/Swap/EthTokenToUsdt.tsx"
-    ]
+    "message": "Продолжить"
   },
   {
     "id": "EthTokenToUsdt276",
-    "message": "Проверка баланса.. ",
-    "files": [
-      "src/front/shared/pages/Swap/EthTokenToUsdt.tsx"
-    ]
+    "message": "Проверка баланса.. "
   },
   {
     "id": "EthTokenToUsdt285",
-    "message": "Создание контракта Ethereum. Подождите, это займет некоторое время",
-    "files": [
-      "src/front/shared/pages/Swap/EthTokenToUsdt.tsx"
-    ]
+    "message": "Создание контракта Ethereum. Подождите, это займет некоторое время"
   },
   {
     "id": "EthTokenToUsdt292",
-    "message": "Транзакция: ",
-    "files": [
-      "src/front/shared/pages/Swap/EthTokenToUsdt.tsx"
-    ]
+    "message": "Транзакция: "
   },
   {
     "id": "EthTokenToUsdt313",
-    "message": "Транзакция: ",
-    "files": [
-      "src/front/shared/pages/Swap/EthTokenToUsdt.tsx"
-    ]
+    "message": "Транзакция: "
   },
   {
     "id": "EthTokenToUsdt331",
-    "message": "Ожидание, Владелец BTC жобавляет Секретный ключь в ETH Контракт",
-    "files": [
-      "src/front/shared/pages/Swap/EthTokenToUsdt.tsx"
-    ]
+    "message": "Ожидание, Владелец BTC жобавляет Секретный ключь в ETH Контракт"
   },
   {
     "id": "EthTokenToUsdt345",
-    "message": "Владелец USDT успешно получил средства из ETH Контракта и отправил Секретный ключ. Запрос о снятии с BTC Script. Пожалуйста, подождите",
-    "files": [
-      "src/front/shared/pages/Swap/EthTokenToUsdt.tsx"
-    ]
+    "message": "Владелец USDT успешно получил средства из ETH Контракта и отправил Секретный ключ. Запрос о снятии с BTC Script. Пожалуйста, подождите"
   },
   {
     "id": "EthTokenToUsdt352",
-    "message": "USDT транзакция вывода: ",
-    "files": [
-      "src/front/shared/pages/Swap/EthTokenToUsdt.tsx"
-    ]
+    "message": "USDT транзакция вывода: "
   },
   {
     "id": "EthTokenToUsdt377",
-    "message": "USDT были переведены на Ваш кошелек. Проверьте баланс. ",
-    "files": [
-      "src/front/shared/pages/Swap/EthTokenToUsdt.tsx"
-    ]
+    "message": "USDT были переведены на Ваш кошелек. Проверьте баланс. "
   },
   {
     "id": "EthTokenToUsdt380",
-    "message": "Благодарим за использование Swap.Online!! ",
-    "files": [
-      "src/front/shared/pages/Swap/EthTokenToUsdt.tsx"
-    ]
+    "message": "Благодарим за использование Swap.Online!! "
   },
   {
     "id": "EthTokenToUsdt390",
-    "message": "ПОПРОБУЙТЕ ВОЗВРАТ",
-    "files": [
-      "src/front/shared/pages/Swap/EthTokenToUsdt.tsx"
-    ]
+    "message": "ПОПРОБУЙТЕ ВОЗВРАТ"
   },
   {
     "id": "EthTokenToUsdt84",
-    "message": "Ожидание другого пользователя",
-    "files": [
-      "src/front/shared/pages/Swap/EthTokenToUsdt.tsx"
-    ]
+    "message": "Ожидание другого пользователя"
   },
   {
     "id": "EthTokenToUsdt93",
-    "message": "Пожалуйста, подтвердите свое участие, для начала сделки",
-    "files": [
-      "src/front/shared/pages/Swap/EthTokenToUsdt.tsx"
-    ]
+    "message": "Пожалуйста, подтвердите свое участие, для начала сделки"
   },
   {
     "id": "UsdrToEthToken106",
-    "message": "2. Создается Секретный ключ",
-    "files": [
-      "src/front/shared/pages/Swap/UsdtToEthToken.tsx"
-    ]
+    "message": "2. Создается Секретный ключ"
   },
   {
     "id": "UsdrToEthToken115",
-    "message": "Подтвердить",
-    "files": [
-      "src/front/shared/pages/Swap/UsdtToEthToken.tsx"
-    ]
+    "message": "Подтвердить"
   },
   {
     "id": "UsdrToEthToken121",
-    "message": "Сохраните секретный ключ! В противном случае у вас будет шанс, что Вы потеряете свои деньги! ",
-    "files": [
-      "src/front/shared/pages/Swap/UsdtToEthToken.tsx"
-    ]
+    "message": "Сохраните секретный ключ! В противном случае у вас будет шанс, что Вы потеряете свои деньги! "
   },
   {
     "id": "UsdrToEthToken124",
-    "message": "Секретный ключ: ",
-    "files": [
-      "src/front/shared/pages/Swap/UsdtToEthToken.tsx"
-    ]
+    "message": "Секретный ключ: "
   },
   {
     "id": "UsdrToEthToken127",
-    "message": "Хэш: ",
-    "files": [
-      "src/front/shared/pages/Swap/UsdtToEthToken.tsx"
-    ]
+    "message": "Хэш: "
   },
   {
     "id": "UsdrToEthToken137",
-    "message": "Недостаточно средств для этого обмена. Пожалуйста, пополните баланс",
-    "files": [
-      "src/front/shared/pages/Swap/UsdtToEthToken.tsx"
-    ]
+    "message": "Недостаточно средств для этого обмена. Пожалуйста, пополните баланс"
   },
   {
     "id": "UsdrToEthToken141",
-    "message": "Ваш баланс: ",
-    "files": [
-      "src/front/shared/pages/Swap/UsdtToEthToken.tsx"
-    ]
+    "message": "Ваш баланс: "
   },
   {
     "id": "UsdrToEthToken144",
-    "message": "Требуемый баланс: ",
-    "files": [
-      "src/front/shared/pages/Swap/UsdtToEthToken.tsx"
-    ]
+    "message": "Требуемый баланс: "
   },
   {
     "id": "UsdrToEthToken147",
-    "message": "Ваш адрес: ",
-    "files": [
-      "src/front/shared/pages/Swap/UsdtToEthToken.tsx"
-    ]
+    "message": "Ваш адрес: "
   },
   {
     "id": "UsdrToEthToken154",
-    "message": "Продолжить",
-    "files": [
-      "src/front/shared/pages/Swap/UsdtToEthToken.tsx"
-    ]
+    "message": "Продолжить"
   },
   {
     "id": "UsdrToEthToken163",
-    "message": "Проверка баланса... ",
-    "files": [
-      "src/front/shared/pages/Swap/UsdtToEthToken.tsx"
-    ]
+    "message": "Проверка баланса... "
   },
   {
     "id": "UsdrToEthToken174",
-    "message": "3. Создание BTC Omni Script. Подождите, это займет некоторое время",
-    "files": [
-      "src/front/shared/pages/Swap/UsdtToEthToken.tsx"
-    ]
+    "message": "3. Создание BTC Omni Script. Подождите, это займет некоторое время"
   },
   {
     "id": "UsdrToEthToken179",
-    "message": "Транзакция: ",
-    "files": [
-      "src/front/shared/pages/Swap/UsdtToEthToken.tsx"
-    ]
+    "message": "Транзакция: "
   },
   {
     "id": "UsdrToEthToken206",
-    "message": "Создание транзакции на возврат средств",
-    "files": [
-      "src/front/shared/pages/Swap/UsdtToEthToken.tsx"
-    ]
+    "message": "Создание транзакции на возврат средств"
   },
   {
     "id": "UsdrToEthToken213",
-    "message": "Как вернуть деньги? ",
-    "files": [
-      "src/front/shared/pages/Swap/UsdtToEthToken.tsx"
-    ]
+    "message": "Как вернуть деньги? "
   },
   {
     "id": "UsdrToEthToken233",
-    "message": "4. Владелец ETH получил Btc Omni Script и Хэш. Ожидается, создание Контракта ETH",
-    "files": [
-      "src/front/shared/pages/Swap/UsdtToEthToken.tsx"
-    ]
+    "message": "4. Владелец ETH получил Btc Omni Script и Хэш. Ожидается, создание Контракта ETH"
   },
   {
     "id": "UsdrToEthToken246",
-    "message": "Транзакция: ",
-    "files": [
-      "src/front/shared/pages/Swap/UsdtToEthToken.tsx"
-    ]
+    "message": "Транзакция: "
   },
   {
     "id": "UsdrToEthToken264",
-    "message": "5. Пробуем вывести ETH из контракта. Пожалуйста, подождите",
-    "files": [
-      "src/front/shared/pages/Swap/UsdtToEthToken.tsx"
-    ]
+    "message": "5. Пробуем вывести ETH из контракта. Пожалуйста, подождите"
   },
   {
     "id": "UsdrToEthToken271",
-    "message": "Транзакция: ",
-    "files": [
-      "src/front/shared/pages/Swap/UsdtToEthToken.tsx"
-    ]
+    "message": "Транзакция: "
   },
   {
     "id": "UsdrToEthToken294",
-    "message": "6. ETH были переведены на ваш кошелек. Проверьте баланс. ",
-    "files": [
-      "src/front/shared/pages/Swap/UsdtToEthToken.tsx"
-    ]
+    "message": "6. ETH были переведены на ваш кошелек. Проверьте баланс. "
   },
   {
     "id": "UsdrToEthToken297",
-    "message": "Благодарим за использование Swap.Online!! ",
-    "files": [
-      "src/front/shared/pages/Swap/UsdtToEthToken.tsx"
-    ]
+    "message": "Благодарим за использование Swap.Online!! "
   },
   {
     "id": "UsdrToEthToken307",
-    "message": "ПОПРОБУЙТЕ ВОЗВРАТ",
-    "files": [
-      "src/front/shared/pages/Swap/UsdtToEthToken.tsx"
-    ]
+    "message": "ПОПРОБУЙТЕ ВОЗВРАТ"
   },
   {
     "id": "UsdrToEthToken320",
-    "message": "Транзакция: ",
-    "files": [
-      "src/front/shared/pages/Swap/UsdtToEthToken.tsx"
-    ]
+    "message": "Транзакция: "
   },
   {
     "id": "UsdrToEthToken83",
-    "message": "Мы оживаем создавшего ордер на обмен. Если он не появится в течение 5 минут, обмен будет отменен автоматически. ",
-    "files": [
-      "src/front/shared/pages/Swap/UsdtToEthToken.tsx"
-    ]
+    "message": "Мы оживаем создавшего ордер на обмен. Если он не появится в течение 5 минут, обмен будет отменен автоматически. "
   },
   {
     "id": "UsdrToEthToken93",
-    "message": "1. Ожидание подтверждения",
-    "files": [
-      "src/front/shared/pages/Swap/UsdtToEthToken.tsx"
-    ]
+    "message": "1. Ожидание подтверждения"
   },
   {
     "id": "Row263",
@@ -2405,10 +2237,7 @@
   },
   {
     "id": "EthTokenToUsdt375",
-    "message": "Обратите внимание, что снятие USDT может занять некоторое время для майнинга и распространения сети.\n                    Due to Omni Protocol properties, the transaction may show up at the OmniExplorer in up to 20 minutes.",
-    "files": [
-      "src/front/shared/pages/Swap/EthTokenToUsdt.tsx"
-    ]
+    "message": "Обратите внимание, что снятие USDT может занять некоторое время для майнинга и распространения сети.\n                    Due to Omni Protocol properties, the transaction may show up at the OmniExplorer in up to 20 minutes."
   },
   {
     "id": "addOfferPartialTooltip",
@@ -2664,10 +2493,7 @@
   },
   {
     "id": "WithdrawModal263",
-    "message": "Вам нужно иметь {minAmount} ETH на вашем балансе",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
-    ]
+    "message": "Вам нужно иметь {minAmount} ETH на вашем балансе"
   },
   {
     "id": "WithdrawModalErrorSend",
@@ -2758,24 +2584,21 @@
     "id": "deposit165",
     "message": "Для продолжения обмена - скопируйте указанный адрес и пополните баланс на {missingBalance}.",
     "files": [
-      "src/front/shared/pages/Swap/DepositWindow/DepositWindow.tsx",
-      "src/front/shared/pages/Swap/GhostSwap/DepositWindow/DepositWindow.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
     ]
   },
   {
     "id": "deposit297",
     "message": "открыть в эксплоурер",
     "files": [
-      "src/front/shared/pages/Swap/DepositWindow/DepositWindow.tsx",
-      "src/front/shared/pages/Swap/GhostSwap/DepositWindow/DepositWindow.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
     ]
   },
   {
     "id": "deposit177",
     "message": "Этой суммы вам не хватает для обмена: {amount} {tokenName}, сумма указана с учетом комиссии майнеров.{br}Вы можете отправить {tokenName} с любого кошелька или биржи.",
     "files": [
-      "src/front/shared/pages/Swap/DepositWindow/DepositWindow.tsx",
-      "src/front/shared/pages/Swap/GhostSwap/DepositWindow/DepositWindow.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
     ]
   },
   {
@@ -2786,8 +2609,7 @@
     "id": "deposit239",
     "message": "Если вы пополните контракт на сумму больше указанной - остаток будет списан в качестве комиссии майнеров.",
     "files": [
-      "src/front/shared/pages/Swap/DepositWindow/DepositWindow.tsx",
-      "src/front/shared/pages/Swap/GhostSwap/DepositWindow/DepositWindow.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
     ]
   },
   {
@@ -2798,16 +2620,14 @@
     "id": "deposit198",
     "message": "Ожидание платежа...",
     "files": [
-      "src/front/shared/pages/Swap/DepositWindow/DepositWindow.tsx",
-      "src/front/shared/pages/Swap/GhostSwap/DepositWindow/DepositWindow.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
     ]
   },
   {
     "id": "deposit198.1",
     "message": "Создается Ethereum контракт. Пожалуйста подождите, потребуется некоторое время...",
     "files": [
-      "src/front/shared/pages/Swap/DepositWindow/DepositWindow.tsx",
-      "src/front/shared/pages/Swap/GhostSwap/DepositWindow/DepositWindow.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
     ]
   },
   {
@@ -2985,7 +2805,7 @@
     "id": "BtcToEthToken123",
     "message": "Свап завершен!",
     "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapList/steps/FourthStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/FourthStep.tsx"
     ]
   },
   {
@@ -3020,40 +2840,35 @@
     "id": "swapFinishedGoHome289",
     "message": "Отправить Секрет",
     "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgress.tsx",
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgress.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
   },
   {
     "id": "swapFinishedGoHome298",
     "message": "Все хорошо. Продолжить",
     "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgress.tsx",
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgress.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
   },
   {
     "id": "swapprogress254",
     "message": "Транзакция возврата:",
     "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgress.tsx",
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgress.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
   },
   {
     "id": "swapprogress270",
     "message": "Попытаться вернуть",
     "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgress.tsx",
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgress.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
   },
   {
     "id": "swapprogress271",
     "message": "Попробуйте еще раз через несколько минут",
     "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgress.tsx",
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgress.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
   },
   {
@@ -3072,8 +2887,7 @@
     "id": "swappropgress333",
     "message": "Транзакция возврата:",
     "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgress.tsx",
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgress.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
   },
   {
@@ -3232,24 +3046,21 @@
     "id": "swappropgress193",
     "message": "Sign ETH transaction: {transaction}",
     "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgress.tsx",
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgress.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
   },
   {
     "id": "swappropgress207",
     "message": "{transaction}",
     "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgress.tsx",
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgress.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
   },
   {
     "id": "swappropgress218",
     "message": "{transaction}",
     "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgress.tsx",
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgress.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
   },
   {
@@ -3314,8 +3125,7 @@
     "id": "deposit256",
     "message": "Адрес {tokenName} смарт контракта",
     "files": [
-      "src/front/shared/pages/Swap/DepositWindow/DepositWindow.tsx",
-      "src/front/shared/pages/Swap/GhostSwap/DepositWindow/DepositWindow.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
     ]
   },
   {
@@ -3344,8 +3154,7 @@
     "id": "deposit300",
     "message": "Получено {balance} / {need} {tooltip}",
     "files": [
-      "src/front/shared/pages/Swap/DepositWindow/DepositWindow.tsx",
-      "src/front/shared/pages/Swap/GhostSwap/DepositWindow/DepositWindow.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
     ]
   },
   {
@@ -3360,8 +3169,7 @@
     "id": "deposit320",
     "message": "(Включено {mineerFee} {sellCurrency} комиссии майнеров)",
     "files": [
-      "src/front/shared/pages/Swap/DepositWindow/DepositWindow.tsx",
-      "src/front/shared/pages/Swap/GhostSwap/DepositWindow/DepositWindow.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
     ]
   },
   {
@@ -3392,48 +3200,36 @@
     "id": "BtcToEthToken24",
     "message": "Зачисление",
     "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapList/steps/SecondStep.tsx",
-      "src/front/shared/pages/Swap/SwapList/steps/SecondStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/SecondStep.tsx"
     ]
   },
   {
     "id": "FourthStep36",
-    "message": "({btcTx} tx)",
-    "files": [
-      "src/front/shared/pages/Swap/SwapList/steps/SecondStep.tsx",
-      "src/front/shared/pages/Swap/SwapList/steps/ThirdStep.tsx"
-    ]
+    "message": "({btcTx} tx)"
   },
   {
     "id": "FourthStep37",
-    "message": "({ghostTx} tx)",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapList/steps/SecondStep.tsx",
-      "src/front/shared/pages/Swap/GhostSwap/SwapList/steps/ThirdStep.tsx"
-    ]
+    "message": "({ghostTx} tx)"
   },
   {
     "id": "FourthStep52",
     "message": "({otherCurrency} tx)",
     "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapList/steps/SecondStep.tsx",
-      "src/front/shared/pages/Swap/SwapList/steps/SecondStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/SecondStep.tsx"
     ]
   },
   {
     "id": "FourthStep34",
     "message": "({sell} tx)",
     "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapList/steps/ThirdStep.tsx",
-      "src/front/shared/pages/Swap/SwapList/steps/ThirdStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/ThirdStep.tsx"
     ]
   },
   {
     "id": "thirdStep24",
     "message": "Вывод из контракта",
     "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapList/steps/ThirdStep.tsx",
-      "src/front/shared/pages/Swap/SwapList/steps/ThirdStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/ThirdStep.tsx"
     ]
   },
   {
@@ -3500,8 +3296,7 @@
     "id": "deposit165widget",
     "message": "Скопируйте адрес ниже и пополните его рекомендуемым количеством {missingBalance}",
     "files": [
-      "src/front/shared/pages/Swap/DepositWindow/DepositWindow.tsx",
-      "src/front/shared/pages/Swap/GhostSwap/DepositWindow/DepositWindow.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
     ]
   },
   {
@@ -3568,24 +3363,21 @@
     "id": "swapprogressDONTLEAVE",
     "message": "Пожалуйста, не уходите с этой страницы ",
     "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/PleaseDontLeaveWrapper.tsx",
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/PleaseDontLeaveWrapper.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/PleaseDontLeaveWrapper.tsx"
     ]
   },
   {
     "id": "swapjsdontleave",
     "message": "В каждом шаге при обмене требуется подпись приватными ключами, которые знает только ваш браузер.",
     "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/PleaseDontLeaveWrapper.tsx",
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/PleaseDontLeaveWrapper.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/PleaseDontLeaveWrapper.tsx"
     ]
   },
   {
     "id": "Confirmation14",
     "message": "Подтверждение",
     "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapList/steps/FirstStep.tsx",
-      "src/front/shared/pages/Swap/SwapList/steps/FirstStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/FirstStep.tsx"
     ]
   },
   {
@@ -3596,8 +3388,7 @@
     "id": "swappropgress192",
     "message": "Как вернуть ваши деньги ?",
     "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgress.tsx",
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgress.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
   },
   {
@@ -3880,16 +3671,14 @@
     "id": "SecondStep",
     "message": "On this step, the crypto goes not to your wallet {br}or to the wallet of your counterparty but directly to the swap contract",
     "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapList/steps/SecondStep.tsx",
-      "src/front/shared/pages/Swap/SwapList/steps/SecondStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/SecondStep.tsx"
     ]
   },
   {
     "id": "thirdStep",
     "message": "Оn this step crypto is transferred from {br}the contract to your wallet and to the wallet {br} of your counterparty {br}",
     "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapList/steps/ThirdStep.tsx",
-      "src/front/shared/pages/Swap/SwapList/steps/ThirdStep.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/ThirdStep.tsx"
     ]
   },
   {
@@ -4242,16 +4031,14 @@
     "id": "swapjsdontleavesavesecret",
     "message": "If you want to leave this page please save the secret.",
     "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/PleaseDontLeaveWrapper.tsx",
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/PleaseDontLeaveWrapper.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/PleaseDontLeaveWrapper.tsx"
     ]
   },
   {
     "id": "swapprogressDONTLEAVEBTC",
     "message": "Or save this information before you leave:",
     "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/PleaseDontLeaveWrapper.tsx",
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/PleaseDontLeaveWrapper.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/PleaseDontLeaveWrapper.tsx"
     ]
   },
   {
@@ -4432,24 +4219,21 @@
     "id": "deposit312",
     "message": "copy",
     "files": [
-      "src/front/shared/pages/Swap/DepositWindow/DepositWindow.tsx",
-      "src/front/shared/pages/Swap/GhostSwap/DepositWindow/DepositWindow.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
     ]
   },
   {
     "id": "swapProgressGoToTxPage",
     "message": "View TX in explorer",
     "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgress.tsx",
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgress.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
   },
   {
     "id": "swapProgressGoToWallet",
     "message": "Check balance",
     "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgress.tsx",
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgress.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
   },
   {
@@ -5254,7 +5038,7 @@
     "id": "createWallet_customERC20",
     "message": "Подключить токен",
     "files": [
-      "src/front/shared/pages/CreateWallet/Steps/LogicForSteps.js"
+      "src/front/shared/pages/CreateWallet/Steps/LogicForSteps.tsx"
     ]
   },
   {
@@ -6660,10 +6444,7 @@
   },
   {
     "id": "AdminFee_MessageWithAmount",
-    "message": "Комиссия {calcedAmount} {currency}",
-    "files": [
-      "src/front/shared/components/AdminFeeInfoBlock/AdminFeeInfoBlock.tsx"
-    ]
+    "message": "Комиссия {calcedAmount} {currency}"
   },
   {
     "id": "InfoPay_2_Ready",
@@ -7602,577 +7383,331 @@
   },
   {
     "id": "ethToBtcText20_eth_to_ghost",
-    "message": "Waiting for GHOST Owner to create Secret Key, create GHOST Script and charge it",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/EthToGhost.tsx"
-    ]
+    "message": "Waiting for GHOST Owner to create Secret Key, create GHOST Script and charge it"
   },
   {
     "id": "ethToBtcText25_eth_to_ghost",
-    "message": "The GHOST Script was created and charged. Check the information below",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/EthToGhost.tsx"
-    ]
+    "message": "The GHOST Script was created and charged. Check the information below"
   },
   {
     "id": "ethToBtcText26_eth_to_ghost",
-    "message": "Confirmation processing",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/EthToGhost.tsx"
-    ]
+    "message": "Confirmation processing"
   },
   {
     "id": "ethToBtcText28_eth_to_ghost",
-    "message": "Checking balance..",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/EthToGhost.tsx"
-    ]
+    "message": "Checking balance.."
   },
   {
     "id": "ethToBtcText32_eth_to_ghost",
-    "message": "Creating Ethereum Contract.{br}It can take a few minutes",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/EthToGhost.tsx"
-    ]
+    "message": "Creating Ethereum Contract.{br}It can take a few minutes"
   },
   {
     "id": "ethToBtcText36_eth_to_ghost",
-    "message": "Waiting for GHOST Owner to add a Secret Key to ETH Contact",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/EthToGhost.tsx"
-    ]
+    "message": "Waiting for GHOST Owner to add a Secret Key to ETH Contact"
   },
   {
     "id": "ethToBtcText40_eth_to_ghost",
-    "message": "The funds from ETH contract was successfully transferred to GHOST owner.\n              GHOST owner left a secret key. Requesting withdrawal from GHOST script.",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/EthToGhost.tsx"
-    ]
+    "message": "The funds from ETH contract was successfully transferred to GHOST owner.\n              GHOST owner left a secret key. Requesting withdrawal from GHOST script."
   },
   {
     "id": "ethToBtcText44_eth_to_ghost",
-    "message": "Thank you for using Swap.Online",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/EthToGhost.tsx"
-    ]
+    "message": "Thank you for using Swap.Online"
   },
   {
     "id": "ethToBtcText48_eth_to_ghost",
-    "message": "Thank you for using Swap.Online!",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/EthToGhost.tsx"
-    ]
+    "message": "Thank you for using Swap.Online!"
   },
   {
     "id": "EthTokensToBtc16_ethtoken_to_Ghost",
-    "message": "Confirmation processing",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/EthTokensToGhost.tsx"
-    ]
+    "message": "Confirmation processing"
   },
   {
     "id": "EthTokensToBtc20_ethtoken_to_Ghost",
-    "message": "Waiting for GHOST Owner to create Secret Key, create GHOST Script and charge it",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/EthTokensToGhost.tsx"
-    ]
+    "message": "Waiting for GHOST Owner to create Secret Key, create GHOST Script and charge it"
   },
   {
     "id": "EthTokensToBtc24_ethtoken_to_Ghost",
-    "message": "The GHOST Script was created and charged. Check the information below",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/EthTokensToGhost.tsx"
-    ]
+    "message": "The GHOST Script was created and charged. Check the information below"
   },
   {
     "id": "EthTokensToBtc28_ethtoken_to_Ghost",
-    "message": "Checking balance..",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/EthTokensToGhost.tsx"
-    ]
+    "message": "Checking balance.."
   },
   {
     "id": "EthTokensToBtc32_ethtoken_to_Ghost",
-    "message": "Creating Ethereum Contract. {br} It can take a few minutes",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/EthTokensToGhost.tsx"
-    ]
+    "message": "Creating Ethereum Contract. {br} It can take a few minutes"
   },
   {
     "id": "EthTokensToBtc36_ethtoken_to_Ghost",
-    "message": "Waiting for GHOST Owner to add a Secret Key to ETH Contact",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/EthTokensToGhost.tsx"
-    ]
+    "message": "Waiting for GHOST Owner to add a Secret Key to ETH Contact"
   },
   {
     "id": "EthTokensToBtc40_ethtoken_to_Ghost",
-    "message": "The funds from ETH contract was successfully transferred to GHOST owner",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/EthTokensToGhost.tsx"
-    ]
+    "message": "The funds from ETH contract was successfully transferred to GHOST owner"
   },
   {
     "id": "EthTokensToBtc44_ethtoken_to_Ghost",
-    "message": "Thank you for using Swap.Online",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/EthTokensToGhost.tsx"
-    ]
+    "message": "Thank you for using Swap.Online"
   },
   {
     "id": "EthTokensToBtc48_ethtoken_to_Ghost",
-    "message": "Thank you for using Swap.Online!",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/EthTokensToGhost.tsx"
-    ]
+    "message": "Thank you for using Swap.Online!"
   },
   {
     "id": "SwapProgress105_ghost_to_eth",
-    "message": "Checking balance..",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/GhostToEth.tsx"
-    ]
+    "message": "Checking balance.."
   },
   {
     "id": "SwapProgress111_ghost_to_eth",
-    "message": "Creating GHOST Script.{br}It can take a few minutes",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/GhostToEth.tsx"
-    ]
+    "message": "Creating GHOST Script.{br}It can take a few minutes"
   },
   {
     "id": "SwapProgress117_ghost_to_eth",
-    "message": "Your GHOST are now depositing. It may require one confirmation from GHOST Network. Waiting for other participant to deposit ETH.",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/GhostToEth.tsx"
-    ]
+    "message": "Your GHOST are now depositing. It may require one confirmation from GHOST Network. Waiting for other participant to deposit ETH."
   },
   {
     "id": "SwapProgress123_ghost_to_eth",
-    "message": "ETH Contract created and charged. Requesting withdrawal from ETH Contract.",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/GhostToEth.tsx"
-    ]
+    "message": "ETH Contract created and charged. Requesting withdrawal from ETH Contract."
   },
   {
     "id": "SwapProgress129_ghost_to_eth",
-    "message": "ETH was transferred to your wallet. Check the balance.",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/GhostToEth.tsx"
-    ]
+    "message": "ETH was transferred to your wallet. Check the balance."
   },
   {
     "id": "SwapProgress135_ghost_to_eth",
-    "message": "Thank you for using Swap.Online!",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/GhostToEth.tsx"
-    ]
+    "message": "Thank you for using Swap.Online!"
   },
   {
     "id": "SwapProgress93_ghost_to_eth",
-    "message": "The order creator is offline. Waiting for him..",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/GhostToEth.tsx"
-    ]
+    "message": "The order creator is offline. Waiting for him.."
   },
   {
     "id": "SwapProgress99_ghost_to_eth",
-    "message": "Create a secret key",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/GhostToEth.tsx"
-    ]
+    "message": "Create a secret key"
   },
   {
     "id": "BitcoinBuyText17_ghost_to_tokens",
-    "message": "Confirmation processing",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/GhostToEthTokens.tsx"
-    ]
+    "message": "Confirmation processing"
   },
   {
     "id": "BitcoinBuyText29_ghost_to_tokens",
-    "message": "Checking balance..",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/GhostToEthTokens.tsx"
-    ]
+    "message": "Checking balance.."
   },
   {
     "id": "BitcoinBuyText33_ghost_to_tokens",
-    "message": "Creating GHOST Script.{br}It can take a few minutes",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/GhostToEthTokens.tsx"
-    ]
+    "message": "Creating GHOST Script.{br}It can take a few minutes"
   },
   {
     "id": "BitcoinBuyText37_ghost_to_tokens",
-    "message": "{buyCurrency} Owner received GHOST Script and Secret Hash. Waiting when he creates {buyCurrency} Contract",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/GhostToEthTokens.tsx"
-    ]
+    "message": "{buyCurrency} Owner received GHOST Script and Secret Hash. Waiting when he creates {buyCurrency} Contract"
   },
   {
     "id": "BitcoinBuyText41_ghost_to_tokens",
-    "message": "{buyCurrency} Contract created and charged. Requesting withdrawal from {buyCurrency} Contract.",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/GhostToEthTokens.tsx"
-    ]
+    "message": "{buyCurrency} Contract created and charged. Requesting withdrawal from {buyCurrency} Contract."
   },
   {
     "id": "BitcoinBuyText45_ghost_to_tokens",
-    "message": "{buyCurrency} tokens was transferred to your wallet. Check the balance.",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/GhostToEthTokens.tsx"
-    ]
+    "message": "{buyCurrency} tokens was transferred to your wallet. Check the balance."
   },
   {
     "id": "BitcoinBuyText49_ghost_to_tokens",
-    "message": "Thank you for using Swap.Online",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/GhostToEthTokens.tsx"
-    ]
+    "message": "Thank you for using Swap.Online"
   },
   {
     "id": "BitcoinBuyText53_ghost_to_tokens",
-    "message": "Thank you for using Swap.Online!",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/GhostToEthTokens.tsx"
-    ]
+    "message": "Thank you for using Swap.Online!"
   },
   {
     "id": "BtcToEthToken20_ghost_to_tokens",
-    "message": "Create a secret key",
-    "files": [
-      "src/front/shared/pages/Swap/GhostSwap/SwapProgress/SwapProgressText/GhostToEthTokens.tsx"
-    ]
+    "message": "Create a secret key"
   },
   {
     "id": "BtcToEthToken123_copy",
-    "message": "The swap is finished!",
-    "files": [
-      "src/front/shared/pages/Swap/SwapList/steps/FourthStep.tsx"
-    ]
+    "message": "The swap is finished!"
   },
   {
     "id": "SwapProgress111_BTC_ETH",
-    "message": "Creating Bitcoin Script.{br}It can take a few minutes",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.tsx"
-    ]
+    "message": "Creating Bitcoin Script.{br}It can take a few minutes"
   },
   {
     "id": "SwapProgress117_BTC_ETH",
-    "message": "Your BTC are now depositing. It may require one confirmation from Bitcoin Network. Waiting for other participant to deposit ETH.",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.tsx"
-    ]
+    "message": "Your BTC are now depositing. It may require one confirmation from Bitcoin Network. Waiting for other participant to deposit ETH."
   },
   {
     "id": "SwapProgress123_BTC_ETH",
-    "message": "ETH Contract created and charged. Requesting withdrawal from ETH Contract.",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.tsx"
-    ]
+    "message": "ETH Contract created and charged. Requesting withdrawal from ETH Contract."
   },
   {
     "id": "SwapProgress129_BTC_ETH",
-    "message": "ETH was transferred to your wallet. Check the balance.",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.tsx"
-    ]
+    "message": "ETH was transferred to your wallet. Check the balance."
   },
   {
     "id": "SwapProgress135_BTC_ETH",
-    "message": "Thank you for using Swap.Onlinde!",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.tsx"
-    ]
+    "message": "Thank you for using Swap.Onlinde!"
   },
   {
     "id": "BitcoinBuyText17_btc_to_ethtoken",
-    "message": "Confirmation processing",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.tsx"
-    ]
+    "message": "Confirmation processing"
   },
   {
     "id": "BitcoinBuyText29_btc_to_ethtoken",
-    "message": "Checking balance..",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.tsx"
-    ]
+    "message": "Checking balance.."
   },
   {
     "id": "BitcoinBuyText33_btc_to_ethtoken",
-    "message": "Creating Bitcoin Script.{br}It can take a few minutes",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.tsx"
-    ]
+    "message": "Creating Bitcoin Script.{br}It can take a few minutes"
   },
   {
     "id": "BitcoinBuyText37_btc_to_ethtoken",
-    "message": "{buyCurrency} Owner received Bitcoin Script and Secret Hash. Waiting when he creates {buyCurrency} Contract",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.tsx"
-    ]
+    "message": "{buyCurrency} Owner received Bitcoin Script and Secret Hash. Waiting when he creates {buyCurrency} Contract"
   },
   {
     "id": "BitcoinBuyText41_btc_to_ethtoken",
-    "message": "{buyCurrency} Contract created and charged. Requesting withdrawal from {buyCurrency} Contract.",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.tsx"
-    ]
+    "message": "{buyCurrency} Contract created and charged. Requesting withdrawal from {buyCurrency} Contract."
   },
   {
     "id": "BitcoinBuyText45_btc_to_ethtoken",
-    "message": "{buyCurrency} tokens was transferred to your wallet. Check the balance.",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.tsx"
-    ]
+    "message": "{buyCurrency} tokens was transferred to your wallet. Check the balance."
   },
   {
     "id": "BitcoinBuyText49_btc_to_ethtoken",
-    "message": "Thank you for using Swap.Online",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.tsx"
-    ]
+    "message": "Thank you for using Swap.Online"
   },
   {
     "id": "BitcoinBuyText53_btc_to_ethtoken",
-    "message": "Thank you for using Swap.Online!",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.tsx"
-    ]
+    "message": "Thank you for using Swap.Online!"
   },
   {
     "id": "BtcToEthToken20_btc_to_ethtoken",
-    "message": "Create a secret key",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.tsx"
-    ]
+    "message": "Create a secret key"
   },
   {
     "id": "SwapProgress111_BTC_GHOST",
-    "message": "Creating Bitcoin Script.{br}It can take a few minutes",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToGhost.tsx"
-    ]
+    "message": "Creating Bitcoin Script.{br}It can take a few minutes"
   },
   {
     "id": "SwapProgress117_BTC_GHOST",
-    "message": "Your BTC are now depositing. It may require one confirmation from Bitcoin Network. Waiting for other participant to deposit GHOST.",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToGhost.tsx"
-    ]
+    "message": "Your BTC are now depositing. It may require one confirmation from Bitcoin Network. Waiting for other participant to deposit GHOST."
   },
   {
     "id": "SwapProgress123_BTC_GHOST",
-    "message": "GHOST Contract created and charged. Requesting withdrawal from GHOST Contract.",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToGhost.tsx"
-    ]
+    "message": "GHOST Contract created and charged. Requesting withdrawal from GHOST Contract."
   },
   {
     "id": "SwapProgress129_BTC_GHOST",
-    "message": "GHOST was transferred to your wallet. Check the balance.",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToGhost.tsx"
-    ]
+    "message": "GHOST was transferred to your wallet. Check the balance."
   },
   {
     "id": "SwapProgress135_BTC_GHOST",
-    "message": "Thank you for using Swap.Onlinde!",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToGhost.tsx"
-    ]
+    "message": "Thank you for using Swap.Onlinde!"
   },
   {
     "id": "ethToBtcText20_eth_to_btc",
-    "message": "Waiting for BTC Owner to create Secret Key, create BTC Script and charge it",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/EthToBtc.tsx"
-    ]
+    "message": "Waiting for BTC Owner to create Secret Key, create BTC Script and charge it"
   },
   {
     "id": "ethToBtcText25_eth_to_btc",
-    "message": "The bitcoin Script was created and charged. Check the information below",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/EthToBtc.tsx"
-    ]
+    "message": "The bitcoin Script was created and charged. Check the information below"
   },
   {
     "id": "ethToBtcText26_eth_to_btc",
-    "message": "Confirmation processing",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/EthToBtc.tsx"
-    ]
+    "message": "Confirmation processing"
   },
   {
     "id": "ethToBtcText28_eth_to_btc",
-    "message": "Checking balance..",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/EthToBtc.tsx"
-    ]
+    "message": "Checking balance.."
   },
   {
     "id": "ethToBtcText32_eth_to_btc",
-    "message": "Creating Ethereum Contract.{br}It can take a few minutes",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/EthToBtc.tsx"
-    ]
+    "message": "Creating Ethereum Contract.{br}It can take a few minutes"
   },
   {
     "id": "ethToBtcText36_eth_to_btc",
-    "message": "Waiting for BTC Owner to add a Secret Key to ETH Contact",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/EthToBtc.tsx"
-    ]
+    "message": "Waiting for BTC Owner to add a Secret Key to ETH Contact"
   },
   {
     "id": "ethToBtcText40_eth_to_btc",
-    "message": "The funds from ETH contract was successfully transferred to BTC owner.\n              BTC owner left a secret key. Requesting withdrawal from BTC script.",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/EthToBtc.tsx"
-    ]
+    "message": "The funds from ETH contract was successfully transferred to BTC owner.\n              BTC owner left a secret key. Requesting withdrawal from BTC script."
   },
   {
     "id": "ethToBtcText44_eth_to_btc",
-    "message": "Thank you for using Swap.Online",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/EthToBtc.tsx"
-    ]
+    "message": "Thank you for using Swap.Online"
   },
   {
     "id": "ethToBtcText48_eth_to_btc",
-    "message": "Thank you for using Swap.Online!",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/EthToBtc.tsx"
-    ]
+    "message": "Thank you for using Swap.Online!"
   },
   {
     "id": "ethToBtcText20_ghost_to_btc",
-    "message": "Waiting for GHOST Owner to create Secret Key, create GHOST Script and charge it",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/GhostToBtc.tsx"
-    ]
+    "message": "Waiting for GHOST Owner to create Secret Key, create GHOST Script and charge it"
   },
   {
     "id": "ethToBtcText25_ghost_to_btc",
-    "message": "The ghost Script was created and charged. Check the information below",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/GhostToBtc.tsx"
-    ]
+    "message": "The ghost Script was created and charged. Check the information below"
   },
   {
     "id": "ethToBtcText26_ghost_to_btc",
-    "message": "Confirmation processing",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/GhostToBtc.tsx"
-    ]
+    "message": "Confirmation processing"
   },
   {
     "id": "ethToBtcText28_ghost_to_btc",
-    "message": "Checking balance..",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/GhostToBtc.tsx"
-    ]
+    "message": "Checking balance.."
   },
   {
     "id": "ethToBtcText32_ghost_to_btc",
-    "message": "Creating Ethereum Contract.{br}It can take a few minutes",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/GhostToBtc.tsx"
-    ]
+    "message": "Creating Ethereum Contract.{br}It can take a few minutes"
   },
   {
     "id": "ethToBtcText36_ghost_to_btc",
-    "message": "Waiting for BTC Owner to add a Secret Key to ETH Contact",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/GhostToBtc.tsx"
-    ]
+    "message": "Waiting for BTC Owner to add a Secret Key to ETH Contact"
   },
   {
     "id": "ethToBtcText40_ghost_to_btc",
-    "message": "The funds from ETH contract was successfully transferred to BTC owner.\n              BTC owner left a secret key. Requesting withdrawal from BTC script.",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/GhostToBtc.tsx"
-    ]
+    "message": "The funds from ETH contract was successfully transferred to BTC owner.\n              BTC owner left a secret key. Requesting withdrawal from BTC script."
   },
   {
     "id": "ethToBtcText44_ghost_to_btc",
-    "message": "Thank you for using Swap.Online",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/GhostToBtc.tsx"
-    ]
+    "message": "Thank you for using Swap.Online"
   },
   {
     "id": "ethToBtcText48_ghost_to_btc",
-    "message": "Thank you for using Swap.Online!",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/GhostToBtc.tsx"
-    ]
+    "message": "Thank you for using Swap.Online!"
   },
   {
     "id": "EthTokensToBtc16_ethToken_to_btc",
-    "message": "Confirmation processing",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.tsx"
-    ]
+    "message": "Confirmation processing"
   },
   {
     "id": "EthTokensToBtc20_ethToken_to_btc",
-    "message": "Waiting for BTC Owner to create Secret Key, create BTC Script and charge it",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.tsx"
-    ]
+    "message": "Waiting for BTC Owner to create Secret Key, create BTC Script and charge it"
   },
   {
     "id": "EthTokensToBtc24_ethToken_to_btc",
-    "message": "The bitcoin Script was created and charged. Check the information below",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.tsx"
-    ]
+    "message": "The bitcoin Script was created and charged. Check the information below"
   },
   {
     "id": "EthTokensToBtc28_ethToken_to_btc",
-    "message": "Checking balance..",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.tsx"
-    ]
+    "message": "Checking balance.."
   },
   {
     "id": "EthTokensToBtc32_ethToken_to_btc",
-    "message": "Creating Ethereum Contract. {br} It can take a few minutes",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.tsx"
-    ]
+    "message": "Creating Ethereum Contract. {br} It can take a few minutes"
   },
   {
     "id": "EthTokensToBtc36_ethToken_to_btc",
-    "message": "Waiting for BTC Owner to add a Secret Key to ETH Contact",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.tsx"
-    ]
+    "message": "Waiting for BTC Owner to add a Secret Key to ETH Contact"
   },
   {
     "id": "EthTokensToBtc40_ethToken_to_btc",
-    "message": "The funds from ETH contract was successfully transferred to BTC owner",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.tsx"
-    ]
+    "message": "The funds from ETH contract was successfully transferred to BTC owner"
   },
   {
     "id": "EthTokensToBtc44_ethToken_to_btc",
-    "message": "Thank you for using Swap.Online",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.tsx"
-    ]
+    "message": "Thank you for using Swap.Online"
   },
   {
     "id": "EthTokensToBtc48_ethToken_to_btc",
-    "message": "Thank you for using Swap.Online!",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.tsx"
-    ]
+    "message": "Thank you for using Swap.Online!"
   },
   {
     "id": "Banner_YouAreHaveNotSignegTx",
@@ -8285,10 +7820,7 @@
   },
   {
     "id": "BitcoinBuyText35_btc_to_ethtoken",
-    "message": "{buyCurrency} Owner received Bitcoin Script and Secret Hash. Waiting confirm TX and when he creates {buyCurrency} Contract",
-    "files": [
-      "src/front/shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.tsx"
-    ]
+    "message": "{buyCurrency} Owner received Bitcoin Script and Secret Hash. Waiting confirm TX and when he creates {buyCurrency} Contract"
   },
   {
     "id": "MainFAQ2_content3",
@@ -8500,7 +8032,7 @@
   },
   {
     "id": "WithdrowModalCommonFee",
-    "message": "Total Fee:",
+    "message": "Общая сумма, которую вы платите:",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
@@ -8524,6 +8056,272 @@
     "message": "Service Fee:",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "SwapLocalStorage",
+    "message": "open your settings",
+    "files": [
+      "src/front/shared/pages/Swap/Swap.tsx"
+    ]
+  },
+  {
+    "id": "FourthStep37BtcLike",
+    "message": "({currencyName} tx)",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/SecondStep.tsx"
+    ]
+  },
+  {
+    "id": "FourthStep37_BtcLike",
+    "message": "({currencyName} tx)",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/ThirdStep.tsx"
+    ]
+  },
+  {
+    "id": "SwapProgress105_btclike_to_eth",
+    "message": "Checking balance..",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEth.tsx"
+    ]
+  },
+  {
+    "id": "SwapProgress111_btclike_to_eth",
+    "message": "Creating {coinName} Script.{br}It can take a few minutes",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEth.tsx"
+    ]
+  },
+  {
+    "id": "SwapProgress117_btclike_to_eth",
+    "message": "Your {coinName} are now depositing. It may require one confirmation from {coinName} Network. Waiting for other participant to deposit ETH.",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEth.tsx"
+    ]
+  },
+  {
+    "id": "SwapProgress123_btclike_to_eth",
+    "message": "ETH Contract created and charged. Requesting withdrawal from ETH Contract.",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEth.tsx"
+    ]
+  },
+  {
+    "id": "SwapProgress129_btclike_to_eth",
+    "message": "ETH was transferred to your wallet. Check the balance.",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEth.tsx"
+    ]
+  },
+  {
+    "id": "SwapProgress135_btclike_to_eth",
+    "message": "Thank you for using Swap.Online!",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEth.tsx"
+    ]
+  },
+  {
+    "id": "SwapProgress93_btclike_to_eth",
+    "message": "The order creator is offline. Waiting for him..",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEth.tsx"
+    ]
+  },
+  {
+    "id": "SwapProgress99_btclike_to_eth",
+    "message": "Create a secret key",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEth.tsx"
+    ]
+  },
+  {
+    "id": "ethToBtcText20_eth_to_btclike",
+    "message": "Waiting for {coinName} Owner to create Secret Key, create {coinName} Script and charge it",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
+    ]
+  },
+  {
+    "id": "ethToBtcText25_eth_to_btclike",
+    "message": "The {coinName} Script was created and charged. Check the information below",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
+    ]
+  },
+  {
+    "id": "ethToBtcText26_eth_to_btclike",
+    "message": "Confirmation processing",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
+    ]
+  },
+  {
+    "id": "ethToBtcText28_eth_to_btclike",
+    "message": "Checking balance..",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
+    ]
+  },
+  {
+    "id": "ethToBtcText32_eth_to_btclike",
+    "message": "Creating Ethereum Contract.{br}It can take a few minutes",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
+    ]
+  },
+  {
+    "id": "ethToBtcText36_eth_to_btclike",
+    "message": "Waiting for {coinName} Owner to add a Secret Key to ETH Contact",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
+    ]
+  },
+  {
+    "id": "ethToBtcText40_eth_to_btclike",
+    "message": "The funds from ETH contract was successfully transferred to {coinName} owner. {coinName} owner left a secret key. Requesting withdrawal from {coinName} script.",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
+    ]
+  },
+  {
+    "id": "ethToBtcText44_eth_to_btclike",
+    "message": "Thank you for using Swap.Online",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
+    ]
+  },
+  {
+    "id": "ethToBtcText48_eth_to_btclike",
+    "message": "Thank you for using Swap.Online!",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText17_BtcLike_to_tokens",
+    "message": "Confirmation processing",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText29_BtcLike_to_tokens",
+    "message": "Checking balance..",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText33_BtcLike_to_tokens",
+    "message": "Creating {coinName} Script.{br}It can take a few minutes",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText37_BtcLike_to_tokens",
+    "message": "{buyCurrency} Owner received {coinName} Script and Secret Hash. Waiting when he creates {buyCurrency} Contract",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText41_BtcLike_to_tokens",
+    "message": "{buyCurrency} Contract created and charged. Requesting withdrawal from {buyCurrency} Contract.",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText45_BtcLike_to_tokens",
+    "message": "{buyCurrency} tokens was transferred to your wallet. Check the balance.",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText49_BtcLike_to_tokens",
+    "message": "Thank you for using Swap.Online",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText53_BtcLike_to_tokens",
+    "message": "Thank you for using Swap.Online!",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+    ]
+  },
+  {
+    "id": "BtcToEthToken20_BtcLike_to_tokens",
+    "message": "Create a secret key",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+    ]
+  },
+  {
+    "id": "EthTokensToBtc16_ethtoken_to_BtcLike",
+    "message": "Confirmation processing",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
+    ]
+  },
+  {
+    "id": "EthTokensToBtc20_ethtoken_to_BtcLike",
+    "message": "Waiting for {coinName} Owner to create Secret Key, create {coinName} Script and charge it",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
+    ]
+  },
+  {
+    "id": "EthTokensToBtc24_ethtoken_to_BtcLike",
+    "message": "The {coinName} Script was created and charged. Check the information below",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
+    ]
+  },
+  {
+    "id": "EthTokensToBtc28_ethtoken_to_BtcLike",
+    "message": "Checking balance..",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
+    ]
+  },
+  {
+    "id": "EthTokensToBtc32_ethtoken_to_BtcLike",
+    "message": "Creating Ethereum Contract. {br} It can take a few minutes",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
+    ]
+  },
+  {
+    "id": "EthTokensToBtc36_ethtoken_to_BtcLike",
+    "message": "Waiting for {coinName} Owner to add a Secret Key to ETH Contact",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
+    ]
+  },
+  {
+    "id": "EthTokensToBtc40_ethtoken_to_BtcLike",
+    "message": "The funds from ETH contract was successfully transferred to {coinName} owner",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
+    ]
+  },
+  {
+    "id": "EthTokensToBtc44_ethtoken_to_BtcLike",
+    "message": "Thank you for using Swap.Online",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
+    ]
+  },
+  {
+    "id": "EthTokensToBtc48_ethtoken_to_BtcLike",
+    "message": "Thank you for using Swap.Online!",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
     ]
   }
 ]

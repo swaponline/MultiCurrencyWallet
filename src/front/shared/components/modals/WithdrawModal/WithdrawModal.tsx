@@ -855,7 +855,7 @@ export default class WithdrawModal extends React.Component<any, any> {
                     id="Withdrow170"
                     defaultMessage="Maximum amount you can send is {allowedCriptoBalance} {currency}"
                     values={{
-                      allowedCriptoBalance: `${new BigNumber(allowedCriptoBalance).dp(6, BigNumber.ROUND_FLOOR).toNumber()}`,
+                      allowedCriptoBalance: `${new BigNumber(allowedCriptoBalance).toNumber()}`,
                       currency: activeCriptoCurrency,
                     }}
                   />
@@ -1036,7 +1036,7 @@ export default class WithdrawModal extends React.Component<any, any> {
               ? <div styleName='paleLoader'><InlineLoader /></div>
               : (
                 <span styleName='fee'>{
-                  isEthToken && amount > 0 // fee in precents (fee / 100%)
+                  amount > 0 // fee in precents (fee / 100%)
                     ? new BigNumber(totalFee).plus(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).toNumber()
                     : totalFee
                   } {dataCurrency}
