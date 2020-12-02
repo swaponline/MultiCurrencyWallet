@@ -20,3 +20,9 @@ with docker:
 ## update prices, pairs, etc 
 see ./tradeconfig.mainnet.json
 ./tradeconfig.testnet.json
+
+
+# ENV vvariables
+```
+TELEGRAM_CHATID = 111 //id for notifications. 1. contact  @get_id_bot to get your id 2. say "hello" to this bot @swaponlinebot 
+```
