@@ -247,9 +247,9 @@ export const getCoinPrice = async (coin) : BigNumber => {
         coinPrice = baseCoinPrice.multipliedBy(priceConfig.count)
     }
     // Check stoplost
-    if (priceConfig.stoploss) {
-      if (coinPrice.isLessThan(priceConfig.stoploss)) {
-        coinPrice = new BigNumber(priceConfig.stoploss)
+    if (priceConfig.minSafePrice) {
+      if (coinPrice.isLessThan(priceConfig.minSafePrice)) {
+        coinPrice = new BigNumber(priceConfig.minSafePrice)
       }
     }
     _priceCache[coin] = {

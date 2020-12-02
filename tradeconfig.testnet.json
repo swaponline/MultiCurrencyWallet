@@ -16,7 +16,7 @@
         "source": "API",
         "api": "SWAPONLINE",
         "api_": "YOBIT",
-        "stoploss": 16000
+        "minSafePrice": 16000
       },
       "minAmount": 0.0005
     },
@@ -38,7 +38,7 @@
       "price": {
         "source": "API",
         "api": "SWAPONLINE",
-        "stoploss": 500
+        "minSafePrice": 500
       },
       "minAmount": 0.0005
     },
