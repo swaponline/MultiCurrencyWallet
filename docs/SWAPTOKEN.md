@@ -34,7 +34,8 @@ Current
 | jul 2020 | 840 USD  | \$84  | [+0.5 ETH](https://etherscan.io/tx/0xb5708aa91cd181b45aafc3fb92bdeea970a4359110a10f3fde6a4b42e0cabd14) |
 | aug 2020 | 1040 USD | \$104 | 👇                                                                                                     |
 | sep 2020 | 1400 USD | \$140 | [+0.7 ETH](https://etherscan.io/tx/0x7b70734c4a3ed1df347ac3d5ef1ba751f3068555c740cf0a5fb1e33c0dbfd160) |
-| sep 2020 | 1620 USD | \$162 | [+0.37 ETH](https://etherscan.io/tx/0xbe89c49296e56b7a1dacf755c1dd9a71766477b1188527ddc95f5e832651384b) |
+| oct 2020 | 1620 USD | \$162 | [+0.37 ETH](https://etherscan.io/tx/0xbe89c49296e56b7a1dacf755c1dd9a71766477b1188527ddc95f5e832651384b) |
+| nov 2020 | 1005 USD | \$105 | [+0.174 ETH](https://etherscan.io/tx/0x8eaf2eb6ae6fdfdda6fe40ed6ae3cdf84b118e0d77c0c6715ef9118f88c80ccb) |
 
 ## How we get revenue
 
@@ -53,7 +54,7 @@ Current
 - 👷 UTXO to UTXO atomic swap – soon
 - 👷 DeFi on bitcoin (A [Hashed Time-Locked Collateral Contract](https://github.com/bitcoin/bips/blob/master/bip-0197.mediawiki) (HTLCC) consists of two scripts that permit a designated party (the "borrower") to lock funds on the Bitcoin chain for a specified amount of time as collateral in a debt agreement where the loan principal is denominated in a currency on another blockchain)
 
-## Timeline
+## Timeline 
 
 October, 2017 – The idea of non-custodial interaction between Bitcoin and dApps is published by CEO in Facebook
 
@@ -82,3 +83,7 @@ Jul, 2019 – Swap.online progress presented on Asia Blockchain Summit
 Jan, 2020 – WordPress plugin release
 
 Sep, 2020 – 100 WordPress plugin sales, stable income
+
+## other stat
+
+![](https://screenshots.wpmix.net/Telegram_BgGLGK1HWgMnk7BDad8VwuUWjjwDqQjy.png)
