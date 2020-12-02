@@ -15,7 +15,16 @@ const rewriteEnvKeys = [
   `USE_JSON`,
   `SPREAD`
 ]
-const rewritedEnv = {}
+interface envKeys {
+  NETWORK?:string,
+  API_USER?:string,
+  API_PASS?:string,
+  SECRET_PHRASE?:string,
+  USE_JSON?:string,
+  SPREAD?:string
+}
+
+const rewritedEnv:envKeys = {}
 // Mnemonic
 // Extract env from args
 if (process.argv.length >= 3) {
@@ -48,8 +57,8 @@ if (rewritedEnv.SECRET_PHRASE) {
   }
 }
 // NETWORK
-if (process.env.NETWORK !== undefined) {
-  configStorage.setNetwork(getNetworkType(process.env.NETWORK))
+if (rewritedEnv.NETWORK !== undefined) {
+  configStorage.setNetwork(getNetworkType(rewritedEnv.NETWORK))
 }
 
 // Use Json
@@ -57,7 +66,7 @@ if (process.env.USE_JSON === `true`) {
   configStorage.loadJson(configStorage.getNetwork())
   console.log(
     colorString('>>> Trade pairs: ', COLORS.GREEN),
-    colorString(configStorage.getTradeTickers(), COLORS.RED)
+    colorString(configStorage.getTradeTickers().toString(), COLORS.RED)
   )
 }
 
