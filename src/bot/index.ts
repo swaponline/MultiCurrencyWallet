@@ -3,7 +3,9 @@ import * as mnemonicUtils from 'common/utils/mnemonic'
 import * as configStorage from './config/storage'
 import { getNetworkType } from 'common/domain/network'
 import { calcPairPrice, getPriceByPair } from './app/middlewares/prices'
+import { FG_COLORS as COLORS, BG_COLORS , colorString } from 'common/utils/colorString'
 
+console.log(colorString(`Loading...`,COLORS.GREEN))
 
 // Mnemonic
 if (process.argv.length >= 3) {
@@ -11,9 +13,12 @@ if (process.argv.length >= 3) {
   const mnemonic = process.argv[2]
   if (mnemonicUtils.mnemonicIsValid(mnemonic)) {
     configStorage.setMnemonic(mnemonic)
-    console.log('>>> Use Mnemonic:', mnemonic)
+    console.log(
+      colorString('>>> Use Mnemonic:', COLORS.GREEN),
+      colorString(mnemonic, COLORS.RED)
+    )
   } else {
-    console.log('>>> Your are pass not valid mnemonic')
+    console.log(colorString('>>> Your are pass not valid mnemonic', COLORS.RED))
     process.exit(0)
   }
 }
