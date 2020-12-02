@@ -1,5 +1,5 @@
 import { default as Swap } from 'swap.swap'
-import * as flows from 'swap.flows'
+import flows from 'swap.flows'
 
 import { orderView } from './views'
 
