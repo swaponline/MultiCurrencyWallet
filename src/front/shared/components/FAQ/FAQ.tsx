@@ -1,17 +1,12 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable max-len */
 import React, { useState, useEffect } from 'react'
-import BigNumber from 'bignumber.js'
-import cssModules from 'react-css-modules'
 import { FormattedMessage, injectIntl } from 'react-intl'
-
-import { constants } from 'helpers'
-import feedback from 'shared/helpers/feedback'
-import api from 'helpers/api'
+import { constants, feedback, api, adminFee } from 'helpers'
 import config from 'app-config'
 
+import cssModules from 'react-css-modules'
 import cx from 'classnames'
-
 import styles from './styles.scss'
 
 const tabsIdsDictionary = {
@@ -19,7 +14,6 @@ const tabsIdsDictionary = {
   SECOND_TAB: 'MainFAQ2_header',
   THIRD_TAB: 'MainFAQ3_header',
 }
-
 
 const FAQ = (props) => {
   const [btcFee, setBtcFee] = useState(null)
@@ -109,15 +103,15 @@ const FAQ = (props) => {
             [styles.tab__content]: true,
             [styles.tab__content_active]: openedTabs.SECOND_TAB,
           })}>
-            <FormattedMessage id="MainFAQ2_content" defaultMessage="We take 0 fees in the middle for providing these services to you. However, you still have to pay the standard TX (miners fees) for all transactions you conduct on the platform." />
-            <br />
-            <br />
-            <FormattedMessage id="MainFAQ2_content1" defaultMessage="For ERC20 tokens, it is required that you have at least 0.001 ETH on your wallets. Remember! when sending ERC20 tokens, you are required to hold some ETH as miners fees for transactions. This is also the case for all atomic swaps for ETH & ERC20 tokens." />
-            <br />
-            <br />
-            <FormattedMessage id="MainFAQ2_content2" defaultMessage="NOTE: You can easily check the ‘miners fees’ required for each respective coin by simply googling them." />
-            <br />
-            <br />
+            <p>
+              <FormattedMessage id="MainFAQ2_content" defaultMessage="You pay the standard TX (miners fees) for all transactions you conduct on the platform." />
+            </p>
+            <p>
+              <FormattedMessage id="MainFAQ2_content1" defaultMessage="For ERC20 tokens, it is required that you have at least 0.001 ETH on your wallets. Remember! when sending ERC20 tokens, you are required to hold some ETH as miners fees for transactions. This is also the case for all atomic swaps for ETH & ERC20 tokens." />
+            </p>
+            <p>
+              <FormattedMessage id="MainFAQ2_content2" defaultMessage="NOTE: You can easily check the ‘miners fees’ required for each respective coin by simply googling them." />
+            </p>
             <FormattedMessage id="MainFAQ2_content3" defaultMessage="Current mining fees:" />
             <p className={styles.descriptionFee}>
               <span>BTC:</span>{' '}
@@ -132,6 +126,24 @@ const FAQ = (props) => {
                 ? <span><b>{ethFee}</b> gwei</span> 
                 : <FormattedMessage id="MainFAQ2_content4" defaultMessage="Loading" />
               }
+            </p>
+            <br />
+            <FormattedMessage id="FAQServiceFee" defaultMessage="Service fee (only withdraw):" />
+            <p className={styles.descriptionFee}>
+              <span>BTC:</span>{' '}
+              <span>
+                5%,{' '}
+                <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
+                {' '}<b>{adminFee.calc('BTC', null)}</b> BTC
+              </span> 
+            </p>
+            <p className={styles.descriptionFee}>
+              <span>ETH:</span>{' '}
+              <span>
+                5%,{' '}
+                <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
+                {' '}<b>{adminFee.calc('ETH', null)}</b> ETH
+              </span> 
             </p>
           </div>
         </article>
