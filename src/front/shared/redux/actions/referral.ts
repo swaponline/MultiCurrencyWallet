@@ -1,4 +1,4 @@
-import { request } from 'helpers'
+import request from 'common/utils/request'
 import URL from 'url-parse'
 
 

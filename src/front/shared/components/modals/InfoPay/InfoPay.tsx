@@ -7,7 +7,7 @@ import { getFullOrigin } from 'helpers/links'
 import cssModules from 'react-css-modules'
 import styles from './InfoPay.scss'
 import ShareButton from 'components/controls/ShareButton/ShareButton'
-import finishSvg from './images/finish.svg'
+import okSvg from 'shared/images/ok.svg'
 import actions from 'redux/actions'
 
 
@@ -130,7 +130,7 @@ export default class InfoPay extends React.Component<any, any> {
       <Modal name={name} title={intl.formatMessage(labels.Title)} onClose={this.handleClose} showCloseButton={true}>
         <div styleName="blockCenter">
           <div>
-            <img styleName="finishImg" src={finishSvg} alt="finish" />
+            <img styleName="finishImg" src={okSvg} alt="finish" />
           </div>
 
           <div className="p-3">

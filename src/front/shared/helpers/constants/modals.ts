@@ -6,7 +6,6 @@ export default {
   PrivateKeys: 'PrivateKeysModal',
   Approve: 'Approve',
   ImportKeys: 'ImportKeys',
-  ShowMoreCoins: 'ShowMoreCoins',
   EthChecker: 'EthChecker',
   ReceiveModal: 'ReceiveModal',
   DownloadModal: 'DownloadModal',

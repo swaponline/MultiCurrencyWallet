@@ -92,10 +92,6 @@
     ]
   },
   {
-    "id": "Nav88",
-    "message": "Listing"
-  },
-  {
     "id": "ADDoffer22",
     "message": "Start to real Swap"
   },
@@ -278,20 +274,6 @@
     "message": "Testnet: Don`t ask again",
     "files": [
       "src/front/shared/components/modals/SaveKeysModal/SaveKeysModal.tsx"
-    ]
-  },
-  {
-    "id": "ShowMoreCoins36",
-    "message": "Coins in Wallet",
-    "files": [
-      "src/front/shared/components/modals/ShowMoreCoins/ShowMoreCoins.tsx"
-    ]
-  },
-  {
-    "id": "ShowMoreCoins48",
-    "message": "Other coins",
-    "files": [
-      "src/front/shared/components/modals/ShowMoreCoins/ShowMoreCoins.tsx"
     ]
   },
   {
@@ -1262,27 +1244,6 @@
     "message": "Wiki"
   },
   {
-    "id": "Actions",
-    "message": "Actions",
-    "files": [
-      "src/front/shared/components/modals/ShowMoreCoins/ShowMoreCoins.tsx"
-    ]
-  },
-  {
-    "id": "Coin",
-    "message": "Coin",
-    "files": [
-      "src/front/shared/components/modals/ShowMoreCoins/ShowMoreCoins.tsx"
-    ]
-  },
-  {
-    "id": "Name",
-    "message": "Name",
-    "files": [
-      "src/front/shared/components/modals/ShowMoreCoins/ShowMoreCoins.tsx"
-    ]
-  },
-  {
     "id": "Amount61",
     "message": "HOEVEELHEID"
   },
@@ -1725,13 +1686,6 @@
   {
     "id": "Ontvangen",
     "message": "Ontvangen"
-  },
-  {
-    "id": "ShMoreCoins",
-    "message": "Show More Coins",
-    "files": [
-      "src/front/shared/components/modals/ShowMoreCoins/ShowMoreCoins.tsx"
-    ]
   },
   {
     "id": "SignUpModal55",
@@ -4782,10 +4736,6 @@
       "src/front/shared/pages/Exchange/CurrencySlider/CurrencySlider.tsx",
       "src/front/shared/pages/PointOfSell/CurrencySlider/CurrencySlider.tsx"
     ]
-  },
-  {
-    "id": "CurrencySlider36",
-    "message": "+"
   },
   {
     "id": "PartialFeeValueWarn3",
@@ -8003,17 +7953,28 @@
     ]
   },
   {
-    "id": "FAQServiceFee",
-    "message": "Servicekosten (only withdraw):",
+    "id": "localStorageBtnCopy",
+    "message": "Kopiëren",
     "files": [
-      "src/front/shared/components/FAQ/FAQ.tsx"
+      "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
     ]
   },
   {
-    "id": "FAQServiceFeeDescription",
-    "message": "niet minder dan",
+    "id": "localStorageBtnExchange",
+    "message": "Back"
+  },
+  {
+    "id": "localStorageBtnSend",
+    "message": "Verzenden naar ontwikkelaars",
     "files": [
-      "src/front/shared/components/FAQ/FAQ.tsx"
+      "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
+    ]
+  },
+  {
+    "id": "localStorageUserNotification",
+    "message": "✔️ Deze gegevens bevatten niet uw privésleutels",
+    "files": [
+      "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
     ]
   },
   {
@@ -8280,6 +8241,13 @@
     "message": "Thank you for using Swap.Online!",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
+    ]
+  },
+  {
+    "id": "localStorageBtnBack",
+    "message": "Terug",
+    "files": [
+      "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
     ]
   }
 ]

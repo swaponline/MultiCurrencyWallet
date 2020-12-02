@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import helpers, { constants, request } from 'helpers'
+import helpers, { constants } from 'helpers'
+import request from 'common/utils/request'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
 import { connect } from 'redaction'

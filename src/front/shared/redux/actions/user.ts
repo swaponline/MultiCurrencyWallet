@@ -1,6 +1,7 @@
 import config from 'app-config'
 import moment from 'moment/moment'
-import { request, constants, ethToken } from 'helpers'
+import { constants, ethToken } from 'helpers'
+import request from 'common/utils/request'
 
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
