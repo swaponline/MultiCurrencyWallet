@@ -34,8 +34,6 @@ const link = [
     { link: links.footer.fordexses, title: <FormattedMessage id="FooterPartnershipForDEXes" defaultMessage="For DEXes" /> },
     /* Блокчейнам (For Blockchains) https://wiki.swap.online/for_blockchains/ */
     { link: links.footer.forblockchains, title: <FormattedMessage id="FooterPartnershipForBlockchains" defaultMessage="For Blockchains" /> },
-    /* Токенам (For ERC20 tokens) https://listing.swap.online/ */
-    { link: links.footer.forerc20tokens, title: <FormattedMessage id="FooterPartnershipForERC20" defaultMessage="For ERC20 tokens" /> },
     /* Виджет для криптосайтов (For news websites) https://widget.swap.online/ */
     { link: links.footer.fornewswebsites, title: <FormattedMessage id="FooterPartnershipForNewsWebsites" defaultMessage="For news websites" /> },
   ],

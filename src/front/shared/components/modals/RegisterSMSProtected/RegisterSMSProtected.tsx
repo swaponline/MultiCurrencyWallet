@@ -22,7 +22,7 @@ import typeforce from 'swap.app/util/typeforce'
 // import { isCoinAddress } from 'swap.app/util/typeforce'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import moment from 'moment/moment'
-import finishSvg from './images/finish.svg'
+import okSvg from 'shared/images/ok.svg'
 
 @injectIntl
 @connect(({ user: { btcData, btcMultisigSMSData } }) => ({
@@ -762,7 +762,7 @@ export default class RegisterSMSProtected extends React.Component<any, any> {
             <Fragment>
               <div styleName="highLevel">
                 <div>
-                  <img styleName="finishImg" src={finishSvg} alt="finish" />
+                  <img styleName="finishImg" src={okSvg} alt="finish" />
                 </div>
                 <span
                   style={{

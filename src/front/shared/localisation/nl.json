@@ -92,10 +92,6 @@
     ]
   },
   {
-    "id": "Nav88",
-    "message": "Listing"
-  },
-  {
     "id": "ADDoffer22",
     "message": "Start to real Swap"
   },
@@ -278,20 +274,6 @@
     "message": "Testnet: Don`t ask again",
     "files": [
       "src/front/shared/components/modals/SaveKeysModal/SaveKeysModal.tsx"
-    ]
-  },
-  {
-    "id": "ShowMoreCoins36",
-    "message": "Coins in Wallet",
-    "files": [
-      "src/front/shared/components/modals/ShowMoreCoins/ShowMoreCoins.tsx"
-    ]
-  },
-  {
-    "id": "ShowMoreCoins48",
-    "message": "Other coins",
-    "files": [
-      "src/front/shared/components/modals/ShowMoreCoins/ShowMoreCoins.tsx"
     ]
   },
   {
@@ -1262,27 +1244,6 @@
     "message": "Wiki"
   },
   {
-    "id": "Actions",
-    "message": "Actions",
-    "files": [
-      "src/front/shared/components/modals/ShowMoreCoins/ShowMoreCoins.tsx"
-    ]
-  },
-  {
-    "id": "Coin",
-    "message": "Coin",
-    "files": [
-      "src/front/shared/components/modals/ShowMoreCoins/ShowMoreCoins.tsx"
-    ]
-  },
-  {
-    "id": "Name",
-    "message": "Name",
-    "files": [
-      "src/front/shared/components/modals/ShowMoreCoins/ShowMoreCoins.tsx"
-    ]
-  },
-  {
     "id": "Amount61",
     "message": "HOEVEELHEID"
   },
@@ -1725,13 +1686,6 @@
   {
     "id": "Ontvangen",
     "message": "Ontvangen"
-  },
-  {
-    "id": "ShMoreCoins",
-    "message": "Show More Coins",
-    "files": [
-      "src/front/shared/components/modals/ShowMoreCoins/ShowMoreCoins.tsx"
-    ]
   },
   {
     "id": "SignUpModal55",
@@ -4785,10 +4739,6 @@
       "src/front/shared/pages/Exchange/CurrencySlider/CurrencySlider.tsx",
       "src/front/shared/pages/PointOfSell/CurrencySlider/CurrencySlider.tsx"
     ]
-  },
-  {
-    "id": "CurrencySlider36",
-    "message": "+"
   },
   {
     "id": "PartialFeeValueWarn3",

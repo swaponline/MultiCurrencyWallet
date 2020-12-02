@@ -17,7 +17,6 @@ a:hover {
  * Starter Overlay
  * =========================================== */
 .starter-overlay {
-    font-family: Inter;
     position: fixed;
     top: 0;
     left: 0;
@@ -62,7 +61,6 @@ a:hover {
 }
 
 .block-h6 {
-    font-family: Inter;
     font-weight: bold;
     font-size: 18px;
     line-height: normal;
@@ -72,7 +70,6 @@ a:hover {
 }
 
 .block-h1 {
-    font-family: Inter;
     font-weight: bold;
     font-size: 32px;
     line-height: 1.5;
@@ -80,7 +77,6 @@ a:hover {
 }
 
 .block-h2 {
-    font-family: Inter;
     font-weight: bold;
     font-size: 26px;
     line-height: 1.5;
@@ -96,7 +92,6 @@ a:hover {
 }
 
 .swap-list {
-    font-family: Inter;
     list-style: none;
     font-size: 18px;
     padding: 0;
@@ -146,7 +141,7 @@ a:hover {
 
 /* Navbar */
 .navbar {
-    font-family: Inter;
+    font-family: Roboto;
 }
 
 .navbar.sticky-top {
@@ -354,7 +349,6 @@ a:hover {
 }
 
 .features-item h4 {
-    font-family: 'Inter';
     color: #151B57;
     font-weight: bold;
     font-size: 24px;
@@ -363,7 +357,6 @@ a:hover {
 }
 
 .features-item p {
-    font-family: 'Inter';
     font-weight: 500;
     font-size: 16px;
     line-height: 23px;
@@ -410,7 +403,6 @@ a:hover {
 }
 
 .howitwork h6 {
-    font-family: Inter;
     font-weight: bold;
     font-size: 18px;
     line-height: normal;
@@ -420,7 +412,6 @@ a:hover {
 }
 
 .howitwork h2 {
-    font-family: Inter;
     font-weight: bold;
     font-size: 32px;
     line-height: 1.3;
@@ -429,7 +420,6 @@ a:hover {
 }
 
 .howitwork h3 {
-    font-family: Inter;
     font-weight: bold;
     font-size: 40px;
     color: #151B57;
@@ -438,7 +428,6 @@ a:hover {
 
 .howitwork-nav>a {
     display: block;
-    font-family: Inter;
     font-style: normal;
     font-weight: 500;
     font-size: 24px;
@@ -474,7 +463,6 @@ a:hover {
 .howitwork-help:before {
     content: counter(tooltip);
     counter-increment: tooltip;
-    font-family: Inter;
     font-weight: bold;
     line-height: 1;
 }
@@ -633,7 +621,6 @@ a:hover {
 }
 
 .reviews-heading {
-    font-family: Inter;
     font-weight: bold;
     font-size: 32px;
     line-height: 42px;
@@ -652,7 +639,6 @@ a:hover {
 }
 
 .review-swiper-heading {
-    font-family: Inter;
     font-weight: bold;
     font-size: 64px;
     text-align: center;
@@ -662,7 +648,6 @@ a:hover {
 }
 
 .review-swiper-content p {
-    font-family: 'Inter';
     font-weight: normal;
     font-size: 22px;
     line-height: 1.6;
@@ -906,7 +891,6 @@ a:hover {
 }
 
 .footer-top h2 {
-    font-family: Inter;
     font-weight: 500;
     font-size: 32px;
     color: #fff;
@@ -1003,7 +987,6 @@ a:hover {
 
 /* Buttons */
 .btn {
-    font-family: Inter;
     border-radius: 30px;
     font-weight: normal;
     font-size: 16px;
@@ -1110,7 +1093,6 @@ a:hover {
 /* Faq */
 .swap-faq {
     position: relative;
-    font-family: Inter;
 }
 
 .faq {
@@ -1199,7 +1181,6 @@ a:hover {
 }
 
 .swap-step-content-item h4 {
-    font-family: 'Inter';
     color: #151B57;
     font-weight: bold;
     font-size: 20px;
@@ -1209,7 +1190,6 @@ a:hover {
 }
 
 .swap-step-content-item p {
-    font-family: 'Inter';
     font-weight: 500;
     font-size: 15px;
     line-height: 1.6;
@@ -1262,7 +1242,6 @@ a:hover {
 .swap-step-content-item:after {
     counter-increment: step;
     content: counter(step);
-    font-family: 'Inter';
     display: block;
     width: 40px;
     height: 40px;
@@ -1409,7 +1388,6 @@ a:hover {
     border-radius: 3px;
     color: #fff;
     padding: 5px 15px;
-    font-family: Inter;
     font-size: 24px;
     letter-spacing: 1px;
 }
@@ -1447,7 +1425,6 @@ a:hover {
 
 .noxon-bio {
     text-align: center;
-    font-family: Inter;
 }
 
 .noxon-img {
@@ -1475,7 +1452,6 @@ a:hover {
 }
 
 .noxon-text {
-    font-family: Inter;
     margin: 0 auto;
     max-width: 800px;
     box-shadow: 0 3px 10px rgba(119, 119, 255, .4);
@@ -1533,7 +1509,7 @@ a:hover {
  * Modal
  * =========================================== */
 .modal-cta {
-    font-family: Inter;
+    font-family: Roboto;
 }
 
 .modal-cta .modal-body {

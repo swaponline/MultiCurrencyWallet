@@ -14,7 +14,6 @@ import SwapProgress from './SwapProgress/SwapProgress'
 import DepositWindow from './DepositWindow/DepositWindow'
 import FeeControler from '../FeeControler/FeeControler'
 import SwapList from './SwapList/SwapList'
-import paddingForSwapList from 'shared/helpers/paddingForSwapList'
 
 
 @CSSModules(styles)
@@ -34,7 +33,6 @@ export default class UTXOToEth extends Component<any, any> {
       currencyData,
       enabledButton: false,
       flow: this.swap.flow.state,
-      paddingContainerValue: 60,
       currencyAddress: currencyData.address,
       secret: crypto.randomBytes(32).toString('hex'),
     }
@@ -48,7 +46,6 @@ export default class UTXOToEth extends Component<any, any> {
     const { flow: { isSignFetching, isMeSigned, step, isParticipantSigned } } = this.state
     window.addEventListener('resize', this.updateWindowDimensions)
     this.updateWindowDimensions()
-    this.changePaddingValue()
     this.ParticipantTimer = setInterval(() => {
       if (this.state.flow.isParticipantSigned && this.state.destinationBuyAddress) {
         this.submitSecret()
@@ -75,19 +72,6 @@ export default class UTXOToEth extends Component<any, any> {
     this.swap.flow.submitSecret(secret)
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.flow !== this.state.flow) {
-      this.changePaddingValue()
-    }
-  }
-
-  changePaddingValue = () => {
-    const { flow: { step } } = this.state
-    this.setState(() => ({
-      paddingContainerValue: paddingForSwapList({ step }),
-    }))
-  }
-
   handleFlowStateUpdate = (values) => {
     /** todo - not used - remove **/
     const stepNumbers = {
@@ -106,8 +90,6 @@ export default class UTXOToEth extends Component<any, any> {
     this.setState({
       flow: values,
     })
-
-    this.changePaddingValue()
   }
 
   updateBalance = () => {
@@ -147,14 +129,14 @@ export default class UTXOToEth extends Component<any, any> {
       wallets,
     }  = this.props
 
-    const { flow, isShowingGhostScript, currencyData, paddingContainerValue, windowWidth } = this.state
+    const { flow, isShowingGhostScript, currencyData, windowWidth } = this.state
 
     return (
       <div>
         <div
           styleName="swapContainer"
           style={(isMobile && (windowWidth < 569))
-            ? { paddingTop: paddingContainerValue }
+            ? { paddingTop: 120 }
             : { paddingTop: 0 }
           }>
           <div>

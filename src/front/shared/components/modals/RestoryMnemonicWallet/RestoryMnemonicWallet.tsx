@@ -10,7 +10,7 @@ import cssModules from 'react-css-modules'
 
 import defaultStyles from '../Styles/default.scss'
 import styles from './RestoryMnemonicWallet.scss'
-import finishSvg from './images/finish.svg'
+import okSvg from 'shared/images/ok.svg'
 
 import { BigNumber } from 'bignumber.js'
 import Modal from 'components/modal/Modal/Modal'
@@ -311,7 +311,7 @@ export default class RestoryMnemonicWallet extends React.Component<any, any> {
           {step === `ready` && (
             <Fragment>
               <p styleName="notice mnemonicNotice">
-                <img styleName="finishImg" src={finishSvg} alt="finish" />
+                <img styleName="finishImg" src={okSvg} alt="finish" />
                 <FormattedMessage {...langLabels.readyNotice} />
               </p>
               <div styleName="lowLevel">
