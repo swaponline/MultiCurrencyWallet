@@ -9,6 +9,13 @@ import ws from './ws'
 import router from './routes'
 import auth from './routes/auth'
 
+import {
+  colorString,
+  FG_COLORS,
+  BG_COLORS
+} from 'common/utils/colorString'
+
+
 
 const { app, wallet } = SwapApp
 app.ready = new Promise( resolve => app.services.room.once('ready', resolve))
@@ -38,7 +45,15 @@ server.use('/', router)
 process.env.ENABLE_WEBSOCKET && ws.init(server, app, router, ws_port)
 
 const listener = server.listen(port, listen_ip)
-console.log(`[SERVER] listening on http://localhost:${port}`)
+
+const serverColor = {
+  color: FG_COLORS.WHITE,
+  bg: BG_COLORS.GREEN,
+}
+
+console.log(colorString(`------------------------------------------------------------------------------`, serverColor))
+console.log(colorString(`                  [SERVER] listening on http://localhost:${port}                 `, serverColor))
+console.log(colorString(`------------------------------------------------------------------------------`, serverColor))
 console.log('Run bot...')
 
 export { server, app, listener }

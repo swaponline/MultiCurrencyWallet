@@ -5,6 +5,8 @@ import handleError from '../../../app/actions/errors/handleError'
 import fetchPrice from '../../../app/actions/fetchPrice'
 import * as configStorage from '../../../config/storage'
 import Pair from '../../Pair'
+import * as colors from 'common/utils/colorString'
+
 
 import {
   TRADE_CONFIG as DEFAULT_TRADE_CONFIG,
