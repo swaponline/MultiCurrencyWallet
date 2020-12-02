@@ -1,7 +1,7 @@
 ```
 git clone ...
 npm i 
-npm run bot "12 word seed"
+npm run marketmaker:testnet "seed phrase lorem ipsum doner strenum" 5 //seed and spread (default 5)
 ```
 ![](https://screenshots.wpmix.net/putty_U275bbaNXqo9qnPidgpw4Zs9jJzh3a79.png)
 
