@@ -1,7 +1,8 @@
 ```
 git clone ...
 npm i 
-npm run marketmaker:testnet SEED="seed phrase lorem ipsum doner strenum" SPREAD="5"
+npm run marketmaker:testnet SECRET_PHRASE="asd asd asd" SPREAD="5"
+
 ```
 ![](https://screenshots.wpmix.net/putty_U275bbaNXqo9qnPidgpw4Zs9jJzh3a79.png)
 
