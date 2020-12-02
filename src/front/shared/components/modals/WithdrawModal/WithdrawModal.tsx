@@ -227,11 +227,11 @@ export default class WithdrawModal extends React.Component<any, any> {
       })
       /*
       * Commission 7% of the transfer token amount
-      * totalFee = adminFeeSize - this minimum
+      * adminFeeSize - minimum fee
       */
       this.setState({
         tokenFee,
-        totalFee: adminFeeSize,
+        totalFee: adminFeeSize + tokenFee,
       })
     }
     /* 
@@ -1040,7 +1040,9 @@ export default class WithdrawModal extends React.Component<any, any> {
               : (
                 <span styleName='fee'>{
                   amount > 0 // fee in precents (fee / 100%)
-                    ? new BigNumber(totalFee).plus(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).toNumber()
+                    ? usedAdminFee
+                      ? new BigNumber(totalFee).plus(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).toNumber()
+                      : totalFee
                     : totalFee
                   } {dataCurrency}
                 </span>
