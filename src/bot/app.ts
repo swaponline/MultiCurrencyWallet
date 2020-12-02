@@ -54,6 +54,5 @@ const serverColor = {
 console.log(colorString(`------------------------------------------------------------------------------`, serverColor))
 console.log(colorString(`                  [SERVER] listening on http://localhost:${port}                 `, serverColor))
 console.log(colorString(`------------------------------------------------------------------------------`, serverColor))
-console.log('Run bot...')
 
 export { server, app, listener }

@@ -5,6 +5,8 @@ import { TOKENS, TOKEN_DECIMALS } from '../config/constants'
 import lineInput from './lineInput'
 import * as configStorage from '../config/storage'
 import { erc20 } from '../../core/swap.app/util'
+import { FG_COLORS as COLORS, colorString } from 'common/utils/colorString'
+
 
 const debug = _debug('swap.bot')
 const network = configStorage.getNetwork() || process.env.NETWORK || 'testnet'
@@ -35,7 +37,11 @@ if (configStorage.hasTradeConfig()) {
 
       erc20.register(name.toLowerCase(), decimals)
       TOKENS[name.toLowerCase()] = ercData
-      console.log('>>> Add ERC token', name, '[OK]')
+      console.log(
+        colorString('>>> Add ERC token', COLORS.GREEN),
+        colorString(name, COLORS.RED),
+        colorString('[OK]', COLORS.GREEN)
+      )
     })
 }
 

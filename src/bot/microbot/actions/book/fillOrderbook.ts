@@ -52,13 +52,20 @@ const checkHaveSpread = (tickerOrder, orderType) =>
     ? true
     : false
 
-const getSpread = (tickerOrder, orderType) => orderType === 'buy'
-  ? new BigNumber(100)
-    .minus(tickerOrder.spreadBuy)
-    .dividedBy(100)
-  : new BigNumber(100)
-    .plus(tickerOrder.spreadSell)
-    .dividedBy(100)
+const getSpread = (tickerOrder, orderType) => {
+  if (process.env.SPREAD) {
+    return new BigNumber(100)
+      .minus(process.env.SPREAD)
+      .dividedBy(100)
+  }
+  return orderType === 'buy'
+    ? new BigNumber(100)
+      .minus(tickerOrder.spreadBuy)
+      .dividedBy(100)
+    : new BigNumber(100)
+      .plus(tickerOrder.spreadSell)
+      .dividedBy(100)
+}
 
 const createOrders = (orderType, balance, ticker, tickerOrders, basePrice) => {
   const orders = []

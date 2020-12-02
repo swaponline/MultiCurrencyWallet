@@ -1,6 +1,7 @@
 import * as fs from 'fs'
 import BigNumber from 'bignumber.js'
 import { Networks } from 'common/domain/network'
+import { FG_COLORS as COLORS, colorString } from 'common/utils/colorString'
 
 
 let _hasTradeConfig : boolean = false
@@ -31,7 +32,10 @@ const getCustomERC20 = () : Array<any> => {
 }
 
 const setNetwork = (network:Networks) : void => {
-  console.log(`>>> Switch network to ${network}`)
+  console.log(
+    colorString(`>>> Switch network to`, COLORS.GREEN),
+    colorString(network, COLORS.RED)
+  )
   _network = network
 }
 
@@ -102,14 +106,17 @@ const loadJson = (network?:Networks = Networks.testnet) : boolean => {
   if (fs.existsSync(filePath)) {
     const rawdata = fs.readFileSync(filePath)
     try {
-      console.log(`>>> Loaded trade config 'tradeconfig.${network}.json'`)
+      console.log(
+        colorString(`>>> Loaded trade config `, COLORS.GREEN),
+        colorString(`tradeconfig.${network}.json`, COLORS.RED)
+      )
       const data = JSON.parse(rawdata.toString())
       _tradeConfig = data
       _hasTradeConfig = true
       _processERC20()
       return true
     } catch (e) {
-      console.log('Parse trade config error', e)
+      console.log(colorString('Parse trade config error', COLORS.RED), e)
       console.warn(`Fail parse trade config 'tradeconfig.${network}.json'. Use defaults`)
       return false
     }
