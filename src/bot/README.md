@@ -9,3 +9,8 @@ npm run marketmaker:testnet "seed phrase lorem ipsum doner strenum" 5 //seed and
 2. don't forget to topup Ethereum balance
 
 ![](https://screenshots.wpmix.net/chrome_VfMLfx2KBVUIxaGsQ6ECBEKUq2VMF7Ag.png)
+
+with docker:
+```
+(soon)
+```
