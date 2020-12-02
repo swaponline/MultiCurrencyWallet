@@ -5980,42 +5980,42 @@
   },
   {
     "id": "MainFAQ1_header",
-    "message": "How are my private keys stored?",
+    "message": "Как хранятся мои личные ключи?",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
   {
     "id": "MainFAQ1_content",
-    "message": "Your private keys are stored ONLY on your device, in the localStorage of your browser. Please backup your keys, because your browser or device may be crashed.",
+    "message": "Ваши личные ключи хранятся ТОЛЬКО на вашем устройстве, в локальном хранилище вашего браузера. Пожалуйста, сделайте резервную копию ваших ключей, потому что ваш браузер или устройство могут выйти из строя.",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
   {
     "id": "MainFAQ2_header",
-    "message": "What are the fees involved?",
+    "message": "Какие сборы включены?",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
   {
     "id": "MainFAQ2_content",
-    "message": "We take 0 fees in the middle for providing these services to you. However, you still have to pay the standard TX (miners fees) for all transactions you conduct on the platform.",
+    "message": "Вы платите стандартную TX (комиссию майнеров) за все транзакции, проводимые на платформе.",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
   {
     "id": "MainFAQ2_content1",
-    "message": "For ERC20 tokens, it is required that you have at least 0.001 ETH on your wallets. Remember! when sending ERC20 tokens, you are required to hold some ETH as miners fees for transactions. This is also the case for all atomic swaps for ETH & ERC20 tokens.",
+    "message": "Для токенов ERC20 требуется, чтобы на ваших кошельках было не менее 0,001 ETH. Помнить! при отправке токенов ERC20 вы должны удерживать некоторое количество ETH в качестве комиссии майнеров за транзакции. Это также относится ко всем атомным свопам для токенов ETH и ERC20.",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
   {
     "id": "MainFAQ2_content2",
-    "message": "NOTE: You can easily check the ‘miners fees’ required for each respective coin by simply googling them.",
+    "message": "ПРИМЕЧАНИЕ: Вы можете легко проверить «комиссию майнеров», необходимую для каждой соответствующей монеты, просто погуглив.",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
@@ -7830,7 +7830,7 @@
   },
   {
     "id": "MainFAQ2_content3",
-    "message": "Current mining fees:",
+    "message": "Текущие комиссии майнеров:",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
@@ -8037,7 +8037,7 @@
   },
   {
     "id": "Withdrow214",
-    "message": "Коммисия сервиса {currency}: {adminFee}",
+    "message": "Комиссия сервиса {currency}: {adminFee}",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
