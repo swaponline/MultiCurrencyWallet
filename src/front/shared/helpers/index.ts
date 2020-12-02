@@ -6,7 +6,6 @@ import ethToken from './ethToken'
 import * as user from './user'
 import web3 from './web3'
 import links from './links'
-import request from './request'
 import getCurrencyKey from './getCurrencyKey'
 import constants from './constants'
 import localStorage from './localStorage'
@@ -68,7 +67,6 @@ export {
   web3,
   utils,
   links,
-  request,
   constants,
   localStorage,
   api,

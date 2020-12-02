@@ -1,5 +1,5 @@
 import config from 'app-config'
-import request from './request'
+import request from 'common/utils/request'
 import { getState } from 'redux/core'
 
 

@@ -62,11 +62,6 @@ const seo = {
       description: 'About Us',
     },
     {
-      uri: '/listing',
-      title: 'Listing',
-      description: 'Listing',
-    },
-    {
       uri: '/swap',
       title: 'Swap',
       description: 'Swap',

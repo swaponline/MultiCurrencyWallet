@@ -85,10 +85,6 @@
     ]
   },
   {
-    "id": "Nav88",
-    "message": "Listado"
-  },
-  {
     "id": "ADDoffer22",
     "message": "Comienza el Swap real"
   },
@@ -271,20 +267,6 @@
     "message": "Testnet: No volver a preguntar",
     "files": [
       "src/front/shared/components/modals/SaveKeysModal/SaveKeysModal.tsx"
-    ]
-  },
-  {
-    "id": "ShowMoreCoins36",
-    "message": "Monedas en Billetera",
-    "files": [
-      "src/front/shared/components/modals/ShowMoreCoins/ShowMoreCoins.tsx"
-    ]
-  },
-  {
-    "id": "ShowMoreCoins48",
-    "message": "Otras monedas",
-    "files": [
-      "src/front/shared/components/modals/ShowMoreCoins/ShowMoreCoins.tsx"
     ]
   },
   {
@@ -1258,27 +1240,6 @@
     "message": "Wiki"
   },
   {
-    "id": "Actions",
-    "message": "Acciones",
-    "files": [
-      "src/front/shared/components/modals/ShowMoreCoins/ShowMoreCoins.tsx"
-    ]
-  },
-  {
-    "id": "Coin",
-    "message": "Moneda",
-    "files": [
-      "src/front/shared/components/modals/ShowMoreCoins/ShowMoreCoins.tsx"
-    ]
-  },
-  {
-    "id": "Name",
-    "message": "Nombre",
-    "files": [
-      "src/front/shared/components/modals/ShowMoreCoins/ShowMoreCoins.tsx"
-    ]
-  },
-  {
     "id": "Amount61",
     "message": "Cantidad"
   },
@@ -1726,13 +1687,6 @@
     "message": "Recibir",
     "files": [
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
-    ]
-  },
-  {
-    "id": "ShMoreCoins",
-    "message": "Mostrar mas monedas",
-    "files": [
-      "src/front/shared/components/modals/ShowMoreCoins/ShowMoreCoins.tsx"
     ]
   },
   {
@@ -4790,10 +4744,6 @@
       "src/front/shared/pages/Exchange/CurrencySlider/CurrencySlider.tsx",
       "src/front/shared/pages/PointOfSell/CurrencySlider/CurrencySlider.tsx"
     ]
-  },
-  {
-    "id": "CurrencySlider36",
-    "message": "+"
   },
   {
     "id": "PartialFeeValueWarn3",
@@ -7995,17 +7945,28 @@
     ]
   },
   {
-    "id": "FAQServiceFee",
-    "message": "Tarifa de servicio (only withdraw):",
+    "id": "localStorageBtnCopy",
+    "message": "Copiar",
     "files": [
-      "src/front/shared/components/FAQ/FAQ.tsx"
+      "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
     ]
   },
   {
-    "id": "FAQServiceFeeDescription",
-    "message": "no menos que",
+    "id": "localStorageBtnExchange",
+    "message": "Back"
+  },
+  {
+    "id": "localStorageBtnSend",
+    "message": "Enviar a los desarrolladores",
     "files": [
-      "src/front/shared/components/FAQ/FAQ.tsx"
+      "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
+    ]
+  },
+  {
+    "id": "localStorageUserNotification",
+    "message": "✔️ Estos datos no contienen sus claves privadas",
+    "files": [
+      "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
     ]
   },
   {
@@ -8086,69 +8047,6 @@
     ]
   },
   {
-    "id": "BitcoinBuyText17_BtcLike_to_tokens",
-    "message": "Confirmation processing",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
-    ]
-  },
-  {
-    "id": "BitcoinBuyText29_BtcLike_to_tokens",
-    "message": "Checking balance..",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
-    ]
-  },
-  {
-    "id": "BitcoinBuyText33_BtcLike_to_tokens",
-    "message": "Creating {coinName} Script.{br}It can take a few minutes",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
-    ]
-  },
-  {
-    "id": "BitcoinBuyText37_BtcLike_to_tokens",
-    "message": "{buyCurrency} Owner received {coinName} Script and Secret Hash. Waiting when he creates {buyCurrency} Contract",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
-    ]
-  },
-  {
-    "id": "BitcoinBuyText41_BtcLike_to_tokens",
-    "message": "{buyCurrency} Contract created and charged. Requesting withdrawal from {buyCurrency} Contract.",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
-    ]
-  },
-  {
-    "id": "BitcoinBuyText45_BtcLike_to_tokens",
-    "message": "{buyCurrency} tokens was transferred to your wallet. Check the balance.",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
-    ]
-  },
-  {
-    "id": "BitcoinBuyText49_BtcLike_to_tokens",
-    "message": "Thank you for using Swap.Online",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
-    ]
-  },
-  {
-    "id": "BitcoinBuyText53_BtcLike_to_tokens",
-    "message": "Thank you for using Swap.Online!",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
-    ]
-  },
-  {
-    "id": "BtcToEthToken20_BtcLike_to_tokens",
-    "message": "Create a secret key",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
-    ]
-  },
-  {
     "id": "ethToBtcText20_eth_to_btclike",
     "message": "Waiting for {coinName} Owner to create Secret Key, create {coinName} Script and charge it",
     "files": [
@@ -8212,6 +8110,69 @@
     ]
   },
   {
+    "id": "BitcoinBuyText17_BtcLike_to_tokens",
+    "message": "Confirmation processing",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText29_BtcLike_to_tokens",
+    "message": "Checking balance..",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText33_BtcLike_to_tokens",
+    "message": "Creating {coinName} Script.{br}It can take a few minutes",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText37_BtcLike_to_tokens",
+    "message": "{buyCurrency} Owner received {coinName} Script and Secret Hash. Waiting when he creates {buyCurrency} Contract",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText41_BtcLike_to_tokens",
+    "message": "{buyCurrency} Contract created and charged. Requesting withdrawal from {buyCurrency} Contract.",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText45_BtcLike_to_tokens",
+    "message": "{buyCurrency} tokens was transferred to your wallet. Check the balance.",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText49_BtcLike_to_tokens",
+    "message": "Thank you for using Swap.Online",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText53_BtcLike_to_tokens",
+    "message": "Thank you for using Swap.Online!",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+    ]
+  },
+  {
+    "id": "BtcToEthToken20_BtcLike_to_tokens",
+    "message": "Create a secret key",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
+    ]
+  },
+  {
     "id": "EthTokensToBtc16_ethtoken_to_BtcLike",
     "message": "Confirmation processing",
     "files": [
@@ -8272,6 +8233,13 @@
     "message": "Thank you for using Swap.Online!",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
+    ]
+  },
+  {
+    "id": "localStorageBtnBack",
+    "message": "Atrás",
+    "files": [
+      "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
     ]
   }
 ]

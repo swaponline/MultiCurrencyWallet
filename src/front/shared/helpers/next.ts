@@ -3,7 +3,7 @@ import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import config from './externalConfig'
 import constants from './constants'
-import request from './request'
+import request from 'common/utils/request'
 import BigNumber from 'bignumber.js'
 
 
