@@ -1,7 +1,7 @@
 ```
 git clone ...
 npm i 
-npm run marketmaker:testnet "seed phrase lorem ipsum doner strenum" 5 //seed and spread (default 5)
+npm run marketmaker:testnet SEED="seed phrase lorem ipsum doner strenum" SPREAD="5"
 ```
 ![](https://screenshots.wpmix.net/putty_U275bbaNXqo9qnPidgpw4Zs9jJzh3a79.png)
 
@@ -14,3 +14,8 @@ with docker:
 ```
 (soon)
 ```
+
+
+## update prices, pairs, etc 
+see ./tradeconfig.mainnet.json
+./tradeconfig.testnet.json
