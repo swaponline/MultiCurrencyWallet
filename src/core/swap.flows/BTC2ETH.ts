@@ -189,7 +189,6 @@ class BTC2ETH extends Flow {
         if (isBalanceEnough) {
           const fundScriptRepeat = async () => {
             try {
-              console.log('Funding script')
               await flow.btcSwap.fundScript({
                 scriptValues: btcScriptValues,
                 amount: sellAmount,
@@ -633,7 +632,6 @@ class BTC2ETH extends Flow {
     const needAmount = sellAmount.plus(txFee)
     const isEnoughMoney = needAmount.isLessThanOrEqualTo(balance)
 
-    console.log('>>>>>>>>>> syncBalance', txFee, totalUnspent, balance)
     const stateData = {
       balance,
       isBalanceFetching: false,

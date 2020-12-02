@@ -17,8 +17,6 @@ class Wallet {
   balances: any
 
   constructor(app, constants, config) {
-    console.log('Create wallet')
-
     this.id = config.id
     this.network = app.network
     this.ethereum = ethereum
@@ -55,7 +53,6 @@ class Wallet {
   async getData(options) {
     const { coins } = options
 
-    console.log('>>>> getData', options)
     const currencies = coins || Object.values(this.constants.COINS)
     const data = this.auth.getPublicData()
     const addresses = currencies.reduce((obj, symbol) => {
@@ -71,7 +68,6 @@ class Wallet {
     }, {})
 
     const fetchBalances = currencies.map(symbol => {
-      console.log('>>>> wallet fetchBalances', symbol)
       try {
         const instance = this.swapApp.swaps[symbol]
         const address = addresses[symbol]
