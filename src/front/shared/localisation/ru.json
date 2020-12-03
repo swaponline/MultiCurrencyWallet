@@ -2447,10 +2447,7 @@
   },
   {
     "id": "WithdrawModal263",
-    "message": "Вам нужно иметь {minAmount} ETH на вашем балансе",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
-    ]
+    "message": "Вам нужно иметь {minAmount} ETH на вашем балансе"
   },
   {
     "id": "WithdrawModalErrorSend",
@@ -6397,10 +6394,7 @@
   },
   {
     "id": "AdminFee_MessageWithAmount",
-    "message": "Комиссия {calcedAmount} {currency}",
-    "files": [
-      "src/front/shared/components/AdminFeeInfoBlock/AdminFeeInfoBlock.tsx"
-    ]
+    "message": "Комиссия {calcedAmount} {currency}"
   },
   {
     "id": "InfoPay_2_Ready",
@@ -7854,10 +7848,7 @@
   },
   {
     "id": "MainFAQ2_content4",
-    "message": "Загрузка",
-    "files": [
-      "src/front/shared/components/FAQ/FAQ.tsx"
-    ]
+    "message": "Загрузка"
   },
   {
     "id": "FilterTextAll",
@@ -7987,7 +7978,32 @@
   },
   {
     "id": "Withdrow214",
-    "message": "Комиссия сервиса {currency}: {adminFee}",
+    "message": "Коммисия сервиса {currency}: {adminFee}"
+  },
+  {
+    "id": "WithdrowModalCommonFee",
+    "message": "Общая сумма, которую вы платите:",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "WithdrowModalMinerFee",
+    "message": "Комиссия майнера: ",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawModalMinerFeeDescription",
+    "message": "Сумма криптовалюты, уплаченная, чтобы побудить майнеров подтвердить вашу транзакцию",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "WithdrowModalServiceFee",
+    "message": "Комиссия сервиса:",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]

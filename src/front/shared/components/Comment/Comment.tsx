@@ -16,7 +16,7 @@ export default class CommentRow extends React.PureComponent<any, any> {
     label: PropTypes.string,
     commentKey: PropTypes.string.isRequired,
     canEdit: PropTypes.bool,
-    date: PropTypes.string,
+    date: PropTypes.number,
     showComment: PropTypes.bool,
     comment: PropTypes.string
   }

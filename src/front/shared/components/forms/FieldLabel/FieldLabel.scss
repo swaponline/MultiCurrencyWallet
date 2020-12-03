@@ -11,7 +11,7 @@
   white-space: nowrap;
 
   &.--dark {
-    background-color: $d-background-elements;
+    background-color: transparent;
     z-index: 4;
     color: $d-color;
   }
