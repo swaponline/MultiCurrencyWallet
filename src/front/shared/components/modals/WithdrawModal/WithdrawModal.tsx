@@ -1041,8 +1041,8 @@ export default class WithdrawModal extends React.Component<any, any> {
                   {' '}{/* < indent */}
                   {fetchFee
                     ? <div styleName='paleLoader'><InlineLoader /></div>
-                    : <span styleName='fee'>{
-                        amount > 0 // fee in precents (fee / 100%)
+                    : <span styleName='fee'>{ // fee in precents (fee / 100%)
+                        amount > 0 && new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).isGreaterThan(adminFeeSize)
                           ? new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).toNumber()
                           : adminFeeSize
                       } {currency}</span>
