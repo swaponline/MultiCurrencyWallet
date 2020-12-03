@@ -47,7 +47,7 @@ process.env.ENABLE_WEBSOCKET && ws.init(server, app, router, ws_port)
 const listener = server.listen(port, listen_ip)
 
 const serverColor = {
-  color: FG_COLORS.WHITE,
+  color: FG_COLORS.BLACK,
   bg: BG_COLORS.GREEN,
 }
 
