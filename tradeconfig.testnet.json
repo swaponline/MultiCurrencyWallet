@@ -15,7 +15,6 @@
       "price": {
         "source": "API",
         "api": "SWAPONLINE",
-        "api_": "YOBIT",
         "minSafePrice": 16000
       },
       "minAmount": 0.0005
