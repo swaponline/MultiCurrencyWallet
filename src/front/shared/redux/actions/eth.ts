@@ -292,7 +292,6 @@ const getTransaction = (address, ownType) =>
           .map((item) => {
             internals[item.hash] = item.value
           })
-        console.log('internals', internals)
         apiLooper.get('etherscan', url)
           .then((res:any) => {
             const transactions = res.result
@@ -315,8 +314,7 @@ const getTransaction = (address, ownType) =>
                 direction: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out',
               }))
               .filter((item) => {
-                console.log('>>>> ETH TX', item)
-                //if (item.direction === 'in') return true
+                if (item.direction === 'in') return true
                 if (!hasAdminFee) return true
                 if (address.toLowerCase() === hasAdminFee.address.toLowerCase()) return true
                 if (item.address.toLowerCase() === hasAdminFee.address.toLowerCase()) return false
