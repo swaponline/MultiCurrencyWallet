@@ -8,14 +8,15 @@ import styles from './Table.scss'
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 type TableProps = {
-  id: string
-  textIfEmpty: string
-  className: string
-  isLoading: boolean
-  loadingText: JSX.Element
   rows: { [key: string]: any }[]
-  titles: (string | JSX.Element)[]
   rowRender: (...any) => JSX.Element
+  
+  id?: string
+  className?: string
+  textIfEmpty?: string
+  isLoading?: boolean
+  loadingText?: JSX.Element
+  titles?: (string | JSX.Element)[]
 }
 
 type TableState = {
@@ -83,7 +84,7 @@ export default class Table extends React.Component {
     const { titles, rows, rowRender, textIfEmpty, isLoading, loadingText, className } = this.props
 
     return (
-      <table styleName={`table ${isDark ? 'dark' : ''}`} className={className} ref={(table) => this.linkOnTable = table}>
+      <table styleName={`table ${isDark ? 'dark' : ''}`} className={`table ${className}`} ref={(table) => this.linkOnTable = table}>
         <thead ref={(thead) => this.linkOnTableHead = thead}>
           <tr>
             {

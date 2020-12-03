@@ -45,11 +45,10 @@
 
 .orderBookTable {
   margin: 0 auto;
-  width: 100%!important;
-  max-width: 800px!important;
+  width: 100%;
 
   thead {
-    display: none;
+    display: none; // hide default table headers
   }
 }
 
@@ -74,7 +73,7 @@
 
 .btn {
   position: absolute;
-  background: #8400f0;
+  background: $color-brand;
   color: #fff;
   text-transform: uppercase;
   border-radius: 5px;

@@ -423,14 +423,6 @@ table.wallet {
   }
 }
 
-@media all and (max-width: 800px) {
-  .table.exchange {
-    thead {
-      display: none;
-    }
-  }
-}
-
 @include media-mobile {
   .table {
     margin-top: 15px;
