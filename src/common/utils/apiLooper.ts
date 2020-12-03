@@ -210,6 +210,6 @@ const apiLooper = (method, api, endpoint, options) => {
 
 
 export default {
-  get: (api, endpoint, options) => apiLooper('get', api, endpoint, options),
-  post: (api, endpoint, options) => apiLooper('post', api, endpoint, options),
+  get: (api, endpoint, options?) => apiLooper('get', api, endpoint, options),
+  post: (api, endpoint, options?) => apiLooper('post', api, endpoint, options),
 }
