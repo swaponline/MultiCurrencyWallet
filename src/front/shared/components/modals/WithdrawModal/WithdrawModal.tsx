@@ -12,6 +12,7 @@ import { localisedUrl } from 'helpers/locale'
 import cssModules from 'react-css-modules'
 import styles from './WithdrawModal.scss'
 
+import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import { BigNumber } from 'bignumber.js'
 import Coin from 'components/Coin/Coin'
 import Modal from 'components/modal/Modal/Modal'
@@ -617,7 +618,10 @@ export default class WithdrawModal extends React.Component<any, any> {
       return result
     }
 
-    let allowedCriptoBalance: BigNumber | 0 = new BigNumber(balance).minus(totalFee)
+    let allowedCriptoBalance: BigNumber | 0 = usedAdminFee
+      ? new BigNumber(balance).minus(totalFee).minus(adminFeeSize)
+      : new BigNumber(balance).minus(totalFee)
+
     let allowedUsdBalance: BigNumber | 0 = new BigNumber(
       ((allowedCriptoBalance as any) * exCurrencyRate) as number
     ).dp(2, BigNumber.ROUND_FLOOR)
@@ -681,21 +685,36 @@ export default class WithdrawModal extends React.Component<any, any> {
       const BACKSPACE_CODE = 8
       const LEFT_ARROW = 37
       const RIGHT_ARROW = 39
+      const DELETE_CODE = 46
       const ZERO_CODE = 48
       const NINE_CODE = 57
-      const DELETE_CODE = 46
+      const isNumber = event.keyCode >= ZERO_CODE && event.keyCode <= NINE_CODE
 
-      if (
-        !(
-          (event.keyCode >= ZERO_CODE && event.keyCode <= NINE_CODE) ||
-          event.keyCode === BACKSPACE_CODE ||
-          event.keyCode === LEFT_ARROW ||
-          event.keyCode === RIGHT_ARROW ||
-          event.keyCode === DELETE_CODE ||
-          event.key === '.'
-        )
-      ) {
-        event.preventDefault()
+      if (event.key === ',') {
+        inputReplaceCommaWithDot(event)
+      } else {
+        /* 
+        * block number input if quantity decimal places
+        * more than allowed (crypto: currentDecimals | usd: 2)
+        */
+        if (event.target.value.includes('.')) {
+          const maxQuantityDecimals = selectedValue === currentActiveAsset.currency
+            ? event.target.value.split('.')[1].length === currentDecimals
+            : event.target.value.split('.')[1].length === 2
+          
+          maxQuantityDecimals && isNumber && event.preventDefault()
+        } else if (
+          !(
+            isNumber ||
+            event.keyCode === BACKSPACE_CODE ||
+            event.keyCode === LEFT_ARROW ||
+            event.keyCode === RIGHT_ARROW ||
+            event.keyCode === DELETE_CODE ||
+            event.key === '.'
+          ) 
+        ) {
+          event.preventDefault()
+        }
       }
     }
 
