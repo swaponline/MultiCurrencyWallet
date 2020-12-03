@@ -1,18 +1,32 @@
 import React from 'react'
-
 import { constants } from 'helpers'
+import { FormattedMessage } from 'react-intl'
 
 import CSSModules from 'react-css-modules'
 import styles from './Table.scss'
 
-import { FormattedMessage } from 'react-intl'
-
-
 const isDark = localStorage.getItem(constants.localStorage.isDark)
-@CSSModules(styles, { allowMultiple: true })
-export default class Table extends React.Component<any, any> {
 
-  props: any
+type TableProps = {
+  id: string
+  textIfEmpty: string
+  className: string
+  isLoading: boolean
+  loadingText: JSX.Element
+  rows: { [key: string]: any }[]
+  titles: (string | JSX.Element)[]
+  rowRender: (...any) => JSX.Element
+}
+
+type TableState = {
+  selectId: number
+}
+
+@CSSModules(styles, { allowMultiple: true })
+export default class Table extends React.Component {
+
+  props: TableProps
+  state: TableState
 
   linkOnTableHead: any
   linkOnTableBody: any
@@ -24,9 +38,8 @@ export default class Table extends React.Component<any, any> {
     titles: []
   }
 
-  constructor() {
-    //@ts-ignore
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
       selectId: 0,

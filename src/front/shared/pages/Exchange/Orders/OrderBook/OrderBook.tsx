@@ -55,6 +55,12 @@ type OrderBookProps = {
   checkSwapAllow: ({}) => boolean
 }
 
+type OrderBookState = {
+  buyOrders: { [key: string]: any }[]
+  sellOrders: { [key: string]: any }[]
+  isShowAllMyOrders: boolean
+}
+
 const filterMyOrders = (orders, peer) => orders
   .filter(order => order.owner.peer === peer)
 
@@ -81,12 +87,10 @@ const filterOrders = (orders, filter) => orders
 @withRouter
 @injectIntl
 @cssModules(styles, { allowMultiple: true })
-export default class OrderBook extends Component<OrderBookProps> {
-  state = {
-    buyOrders: [],
-    sellOrders: [],
-    isShowAllMyOrders: true,
-  }
+export default class OrderBook extends Component {
+
+  props: OrderBookProps
+  state: OrderBookState
 
   static getDerivedStateFromProps({ orders, sellCurrency, buyCurrency }) {
     if (orders.length === 0) {
@@ -106,6 +110,16 @@ export default class OrderBook extends Component<OrderBookProps> {
     return {
       buyOrders,
       sellOrders,
+    }
+  }
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      buyOrders: [],
+      sellOrders: [],
+      isShowAllMyOrders: true,
     }
   }
 
