@@ -1051,19 +1051,24 @@ export default class WithdrawModal extends React.Component<any, any> {
                 </>
               )
             }
-            <FormattedMessage id="WithdrowModalCommonFee" defaultMessage="Total fee you pay: " />
-            {' '}{/* < indent */}
-            {fetchFee 
-              ? <div styleName='paleLoader'><InlineLoader /></div>
-              : (
-                <span styleName='fee'>{
-                  amount > 0
-                    ? usedAdminFee // fee in precents (100 > 100%)
-                      ? new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).plus(totalFee).toNumber()
-                      : new BigNumber(totalFee).plus(adminFeeSize).toNumber()
-                    : new BigNumber(totalFee).plus(adminFeeSize).toNumber()
-                  } {dataCurrency}
-                </span>
+            {!isEthToken && (
+              <>
+                <FormattedMessage id="WithdrowModalCommonFee" defaultMessage="Total fee you pay: " />
+                {' '}{/* < indent */}
+                {fetchFee 
+                  ? <div styleName='paleLoader'><InlineLoader /></div>
+                  : (
+                    <span styleName='fee'>{
+                      amount > 0
+                        ? usedAdminFee // fee in precents (100 > 100%)
+                          ? new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).plus(totalFee).toNumber()
+                          : new BigNumber(totalFee).plus(adminFeeSize).toNumber()
+                        : new BigNumber(totalFee).plus(adminFeeSize).toNumber()
+                      } {dataCurrency}
+                    </span>
+                  )
+                }
+              </>
               )
             }
           </div>
