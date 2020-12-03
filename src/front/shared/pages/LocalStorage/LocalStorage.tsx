@@ -22,7 +22,9 @@ function LocalStorage() {
     const privateDataRegExp = /(mnemonic|private|twentywords|backup|peeridjson)/i;
 
     for (let key in window.localStorage) {
-      if ((key !== 'redux-store' && key.match(privateDataRegExp) === null) || dumpAll) {
+      if ((key !== 'redux-store' && key.match(privateDataRegExp) === null)
+        || (dumpAll && (key !== 'redux-store'))
+      ) {
         newStorage[key] = window.localStorage[key]
       }
     }
