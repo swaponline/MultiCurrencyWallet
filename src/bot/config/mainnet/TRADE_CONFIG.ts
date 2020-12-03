@@ -79,34 +79,6 @@ export default {
       }
     ],
   },
-  'GHOST-BTC': {
-    active: true,
-    buy: false,
-    sell: true,
-    type: 'coin',
-    orders: [
-      {
-        amount: 0.005,
-        spreadBuy: 10,
-        spreadSell: 10
-      },
-      {
-        amount: 0.01,
-        spreadBuy: 10,
-        spreadSell: 10
-      },
-      {
-        amount: 0.05,
-        spreadBuy: 10,
-        spreadSell: 10
-      },
-      {
-        amount: 0.25,
-        spreadBuy: 10,
-        spreadSell: 10,
-      }
-    ],
-  },
   'USDT-BTC': {
     active: true,
     buy: true,

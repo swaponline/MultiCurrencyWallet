@@ -230,9 +230,4 @@ export default {
     decimals: 18,
     fullName: 'jack',
   },
-  ghost: {
-		address: '0x4c327471c44b2dacd6e90525f9d629bd2e4f662c',
-		decimals: 18,
-		fullName: 'GHOST',
-  },
 }

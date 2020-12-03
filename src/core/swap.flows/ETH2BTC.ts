@@ -451,6 +451,20 @@ class ETH2BTC extends Flow {
     ]
   }
 
+  getScriptValues() {
+    const {
+      btcScriptValues: scriptValues,
+    } = this.state
+    return scriptValues
+  }
+
+  getScriptCreateTx() {
+    const {
+      btcScriptCreatingTransactionHash: createTx,
+    } = this.state
+    return createTx
+  }
+
   acceptWithdrawRequest() {
     const flow = this
     const { withdrawRequestAccepted } = flow.state
@@ -544,6 +558,10 @@ class ETH2BTC extends Flow {
 
       return true
     }
+  }
+
+  verifyScript() {
+    this.verifyBtcScript()
   }
 
   verifyBtcScript() {

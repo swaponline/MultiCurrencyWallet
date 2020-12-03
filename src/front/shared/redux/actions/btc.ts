@@ -17,18 +17,11 @@ import { localisePrefix } from 'helpers/locale'
 
 import * as mnemonicUtils from '../../../../common/utils/mnemonic'
 
-import { default as bitcoinUtils } from '../../../../common/utils/bitcoin'
+import { default as bitcoinUtils } from '../../../../common/utils/coin/btc'
 
 
-const BITPAY_API = {
-  name: 'bitpay',
-  servers: config.api.bitpay,
-}
+const NETWORK = (process.env.MAINNET) ? `MAINNET` : `TESTNET`
 
-const BLOCYPER_API = {
-  name: 'blockcypher',
-  servers: config.api.blockcypher,
-}
 
 const hasAdminFee = (config
   && config.opts
@@ -257,12 +250,13 @@ const getLinkToInfo = (tx) => {
 
 const fetchBalanceStatus = (address) => {
   return new Promise((resolve) => {
-    bitcoinUtils.fetchBalance(
+    bitcoinUtils.fetchBalance({
       address,
-      true,
-      BITPAY_API
-    //@ts-ignore
-    ).then(({ balance, unconfirmed }) => {
+      withUnconfirmed: true,
+      NETWORK,
+    }).then((answer) => {
+      // @ts-ignore
+      const { balance, unconfirmed } = answer
       resolve({
         address,
         balance: balance,
@@ -284,12 +278,13 @@ const getBalance = () => {
   } = getState()
 
   return new Promise((resolve) => {
-    bitcoinUtils.fetchBalance(
+    bitcoinUtils.fetchBalance({
       address,
-      true,
-      BITPAY_API
-    //@ts-ignore
-    ).then(({ balance, unconfirmed }) => {
+      withUnconfirmed: true,
+      NETWORK,
+    }).then((answer) => {
+      // @ts-ignore
+      const { balance, unconfirmed } = answer
       reducers.user.setBalance({
         name: 'btcData',
         amount: balance,
@@ -304,13 +299,31 @@ const getBalance = () => {
 }
 
 
-const fetchBalance = (address) => bitcoinUtils.fetchBalance(address, false, BITPAY_API)
+const fetchBalance = (address) => bitcoinUtils.fetchBalance({
+  address,
+  withUnconfirmed: false,
+  NETWORK,
+})
 
-const fetchTxRaw = (txId, cacheResponse) => bitcoinUtils.fetchTxRaw(txId, cacheResponse, BLOCYPER_API)
 
-const fetchTx = (hash, cacheResponse) => bitcoinUtils.fetchTx(hash, BITPAY_API, cacheResponse)
+const fetchTxRaw = (txId, cacheResponse) => bitcoinUtils.fetchTxRaw({
+  txId,
+  cacheResponse,
+  NETWORK,
+})
 
-const fetchTxInfo = (hash, cacheResponse) => bitcoinUtils.fetchTxInfo(hash, BITPAY_API, cacheResponse, hasAdminFee)
+const fetchTx = (hash, cacheResponse) => bitcoinUtils.fetchTx({
+  hash,
+  NETWORK,
+  cacheResponse,
+})
+
+const fetchTxInfo = (hash, cacheResponse) => bitcoinUtils.fetchTxInfo({
+  hash,
+  NETWORK,
+  cacheResponse,
+  hasAdminFee,
+})
 
 
 const getInvoices = (address) => {
@@ -404,7 +417,13 @@ const getTransaction = (ownAddress, ownType) => {
   if (!typeforce.isCoinAddress.BTC(address)) {
     return new Promise((resolve) => { resolve([]) })
   }
-  return bitcoinUtils.getTransactionBlocyper(address, type, myAllWallets, btc.network, BLOCYPER_API)
+  return bitcoinUtils.getTransactionBlocyper({
+    address,
+    ownType: type,
+    myWallets: myAllWallets,
+    network: btc.network,
+    NETWORK,
+  })
 }
 
 const send = (data) => {
@@ -591,15 +610,15 @@ const signAndBuild = (transactionBuilder, address) => {
   return transactionBuilder.buildIncomplete()
 }
 
-const fetchUnspents = (address) => { 
-  const result: any = bitcoinUtils.fetchUnspents(address, BITPAY_API)
-  return result
-}
+const fetchUnspents = (address) => bitcoinUtils.fetchUnspents({
+  address,
+  NETWORK,
+})
 
-const broadcastTx = (txRaw) => {
-  const result: any = bitcoinUtils.broadcastTx(txRaw, BITPAY_API, BLOCYPER_API)
-  return result
-}
+const broadcastTx = (txRaw) => bitcoinUtils.broadcastTx({
+  txRaw,
+  NETWORK,
+})
 
 const signMessage = (message, encodedPrivateKey) => {
   const keyPair = bitcoin.ECPair.fromWIF(encodedPrivateKey, [bitcoin.networks.bitcoin, bitcoin.networks.testnet])
@@ -612,7 +631,10 @@ const signMessage = (message, encodedPrivateKey) => {
 
 const getReputation = () => Promise.resolve(0)
 
-const checkWithdraw = (scriptAddress) => bitcoinUtils.checkWithdraw(scriptAddress, BITPAY_API)
+const checkWithdraw = (scriptAddress) => bitcoinUtils.checkWithdraw({
+  scriptAddress,
+  NETWORK,
+})
 
 
 export default {

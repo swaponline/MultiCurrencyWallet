@@ -532,6 +532,20 @@ export default (tokenName) => {
       return this.sendWithdrawRequestToAnotherParticipant()
     }
 
+    getScriptValues() {
+      const {
+        btcScriptValues: scriptValues,
+      } = this.state
+      return scriptValues
+    }
+
+    getScriptCreateTx() {
+      const {
+        btcScriptCreatingTransactionHash: createTx,
+      } = this.state
+      return createTx
+    }
+
     sendWithdrawRequestToAnotherParticipant() {
       const flow = this
 

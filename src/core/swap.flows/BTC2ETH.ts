@@ -189,7 +189,6 @@ class BTC2ETH extends Flow {
         if (isBalanceEnough) {
           const fundScriptRepeat = async () => {
             try {
-              console.log('Funding script')
               await flow.btcSwap.fundScript({
                 scriptValues: btcScriptValues,
                 amount: sellAmount,
@@ -517,6 +516,20 @@ class BTC2ETH extends Flow {
    */
   sendWithdrawRequest() {
     return this.sendWithdrawRequestToAnotherParticipant()
+  }
+
+  getScriptValues() {
+    const {
+      btcScriptValues: scriptValues,
+    } = this.state
+    return scriptValues
+  }
+
+  getScriptCreateTx() {
+    const {
+      btcScriptCreatingTransactionHash: createTx,
+    } = this.state
+    return createTx
   }
 
   sendWithdrawRequestToAnotherParticipant() {

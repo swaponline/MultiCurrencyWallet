@@ -59,7 +59,10 @@
 
       "common/*": ["src/common/*"],
       "domain": ["src/common/domain"],
-      "domain/*": ["src/common/domain/*"]
+      "domain/*": ["src/common/domain/*"],
+
+      "common": ["src/common/"],
+      "common/*": ["src/common/*"]
     },
   },
   "include": [

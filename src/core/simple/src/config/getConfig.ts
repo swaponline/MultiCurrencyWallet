@@ -4,14 +4,24 @@ import SwapAuth from 'swap.auth'
 import SwapRoom from 'swap.room'
 import SwapOrders from 'swap.orders'
 
-import { EthSwap, EthTokenSwap, BtcSwap, /*UsdtSwap,*/ } from 'swap.swaps'
+import { default as nextUtils } from '../../../../common/utils/coin/next'
+import { default as btcUtils } from '../../../../common/utils/coin/btc'
+
+import {
+  EthSwap,
+  EthTokenSwap,
+  BtcSwap,
+  NextSwap
+} from 'swap.swaps'
+
 import {
   ETH2BTC, BTC2ETH,
   ETHTOKEN2BTC, BTC2ETHTOKEN,
-  /*USDT2ETHTOKEN, ETHTOKEN2USDT*/ } from 'swap.flows'
+  ETH2NEXT, NEXT2ETH,
+  ETHTOKEN2NEXT, NEXT2ETHTOKEN
+} from 'swap.flows'
 
 import * as eth from '../instances/ethereum'
-import * as btc from '../instances/bitcoin'
 
 import { common } from './common'
 import { default as tokenSwap } from './tokenSwap'
@@ -30,7 +40,6 @@ const getConfig = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, .
     ...custom,
 
     swapAuth: {
-      //@ts-ignore
       ...common.swapAuth,
       ...config.swapAuth,
       ...custom.swapAuth,
@@ -47,9 +56,11 @@ const getConfig = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, .
   setupLocalStorage(config.storageDir)
   
   const storage = new LocalStorage(config.storageDir)
+  const NETWORK = config.network.toUpperCase()
 
   const web3 = eth[config.network]().core
-  const bitcoin = btc[config.network]().core
+  const bitcoin = btcUtils.getCore()
+  const next = nextUtils.getCore()
 
   const tokens = (config.ERC20TOKENS || [])
     .map(_token => ({ network: config.network, ..._token }))
@@ -61,15 +72,23 @@ const getConfig = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, .
     env: {
       web3,
       bitcoin,
+      next,
       // bcash,
       storage,
       sessionStorage,
+      coininfo: {
+        next: {
+          main: nextUtils.networks.mainnet,
+          test: nextUtils.networks.mainnet,
+        },
+      },
       ...config.env,
     },
     services: [
       new SwapAuth({
         eth: account,
         btc: null,
+        next: null,
         ...config.swapAuth
       }, mnemonic),
       new SwapRoom(config.swapRoom),
@@ -78,11 +97,67 @@ const getConfig = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, .
 
     swaps: [
       new EthSwap(config.ethSwap(ETH)),
-      new BtcSwap(config.btcSwap()),
+      new BtcSwap({
+        fetchBalance: (address) => btcUtils.fetchBalance({
+          address,
+          NETWORK,
+        }),
+        fetchUnspents: (address) => btcUtils.fetchUnspents({
+          address,
+          NETWORK,
+        }),
+        broadcastTx: (txRaw) => btcUtils.broadcastTx({
+          txRaw,
+          NETWORK,
+        }),
+        fetchTxInfo: (txid) => btcUtils.fetchTxInfo({
+          txid,
+          NETWORK,
+        }),
+        estimateFeeValue: (options) => btcUtils.estimateFeeValue({
+          ...options,
+          NETWORK,
+        }),
+        checkWithdraw: (scriptAddress) => btcUtils.checkWithdraw({
+          scriptAddress,
+          NETWORK,
+        }),
+      }),
+      new NextSwap({
+        fetchBalance: (address) => nextUtils.fetchBalance({
+          address,
+          NETWORK,
+        }),
+        fetchUnspents: (address) => nextUtils.fetchUnspents({
+          address,
+          NETWORK,
+        }),
+        broadcastTx: (txRaw) => nextUtils.broadcastTx({
+          txRaw,
+          NETWORK,
+        }),
+        fetchTxInfo: (txid) => nextUtils.fetchTxInfo({
+          txid,
+          NETWORK,
+        }),
+        estimateFeeValue: (options) => nextUtils.estimateFeeValue({
+          ...options,
+          NETWORK,
+        }),
+        checkWithdraw: (scriptAddress) => nextUtils.checkWithdraw({
+          scriptAddress,
+          NETWORK,
+        }),
+      }),
       /*config.network === 'mainnet'
         ? new UsdtSwap(config.usdtSwap())
         : null,*/
-
+      
+      // flows for swap
+      /*
+      nextSwap: () => ({
+        
+      })*/
       new EthTokenSwap(config.noxonTokenSwap(TOKEN)),
       new EthTokenSwap(config.swapTokenSwap(TOKEN)),
       ...(
@@ -98,6 +173,9 @@ const getConfig = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, .
     flows: [
       ETH2BTC,
       BTC2ETH,
+
+      ETH2NEXT, NEXT2ETH,
+
       ETHTOKEN2BTC(constants.COINS.noxon),
       BTC2ETHTOKEN(constants.COINS.noxon),
       ETHTOKEN2BTC(constants.COINS.swap),
@@ -108,6 +186,8 @@ const getConfig = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, .
           tokens.map(({ name }) => ([
             ETHTOKEN2BTC(name),
             BTC2ETHTOKEN(name),
+            ETHTOKEN2NEXT(name),
+            NEXT2ETHTOKEN(name)
           ]))
         )
       ) || []

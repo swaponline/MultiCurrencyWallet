@@ -491,6 +491,20 @@ export default (tokenName) => {
       ]
     }
 
+    getScriptValues() {
+      const {
+        btcScriptValues: scriptValues,
+      } = this.state
+      return scriptValues
+    }
+
+    getScriptCreateTx() {
+      const {
+        btcScriptCreatingTransactionHash: createTx,
+      } = this.state
+      return createTx
+    }
+
     acceptWithdrawRequest() {
       const flow = this
       const { withdrawRequestAccepted } = flow.state
@@ -584,6 +598,10 @@ export default (tokenName) => {
 
         return true
       }
+    }
+
+    verifyScript() {
+      this.verifyBtcScript()
     }
 
     verifyBtcScript() {
