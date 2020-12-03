@@ -4,11 +4,11 @@ import { Networks } from 'common/domain/network'
 import { FG_COLORS as COLORS, colorString } from 'common/utils/colorString'
 
 
-let _hasTradeConfig : boolean = false
-let _tradeConfig : any = false
-let _mnemonic : string | boolean = false
-let _network : Networks = Networks.testnet
-let _customERC : Array<any> = new Array()
+let _hasTradeConfig: boolean = false
+let _tradeConfig: any = false
+let _mnemonic: string | boolean = false
+let _network: Networks = Networks.testnet
+let _customERC: Array<any> = new Array()
 
 const _processERC20 = () : void => {
   _customERC = new Array()
@@ -27,11 +27,11 @@ const _processERC20 = () : void => {
   })
 }
 
-const getCustomERC20 = () : Array<any> => {
+const getCustomERC20 = (): Array<any> => {
   return _customERC
 }
 
-const setNetwork = (network:Networks) : void => {
+const setNetwork = (network:Networks): void => {
   console.log(
     colorString(`>>> Switch network to`, COLORS.GREEN),
     colorString(network, COLORS.RED)
@@ -39,21 +39,21 @@ const setNetwork = (network:Networks) : void => {
   _network = network
 }
 
-const getNetwork = ():Networks => {
+const getNetwork = (): Networks => {
   return _network
 }
 
-const setMnemonic = (newMnemonic:string) => {
+const setMnemonic = (newMnemonic: string) => {
   _mnemonic = newMnemonic
 }
 
-const getMnemonic = ():string|boolean => {
+const getMnemonic = (): string | boolean => {
   return _mnemonic
 }
 
-const hasTradeConfig = ():boolean => { return _hasTradeConfig }
+const hasTradeConfig = (): boolean => { return _hasTradeConfig }
 
-const getTradeTickers = () : Array<string> | boolean => {
+const getTradeTickers = (): Array<string> | boolean => {
   if (_hasTradeConfig
     && _tradeConfig
     && _tradeConfig.PAIRS
@@ -64,7 +64,7 @@ const getTradeTickers = () : Array<string> | boolean => {
   return false
 }
 
-const getCoinPriceConfig = (coin:string):any => {
+const getCoinPriceConfig = (coin: string): any => {
   if (_hasTradeConfig
     && _tradeConfig
     && _tradeConfig.COINS
@@ -76,7 +76,7 @@ const getCoinPriceConfig = (coin:string):any => {
   return false
 }
 
-const getMinAmount = ():any => {
+const getMinAmount = (): any => {
   if (_hasTradeConfig
     && _tradeConfig
     && _tradeConfig.COINS
@@ -92,7 +92,7 @@ const getMinAmount = ():any => {
   return false
 }
 
-const getTradePairs = ():any => {
+const getTradePairs = (): any => {
   if (_hasTradeConfig
     && _tradeConfig
     && _tradeConfig.PAIRS
@@ -100,7 +100,7 @@ const getTradePairs = ():any => {
   return false
 }
 
-const loadJson = (network?:Networks = Networks.testnet) : boolean => {
+const loadJson = (network?: Networks = Networks.testnet) : boolean => {
   _hasTradeConfig = false
   const filePath = `${__dirname}/../../../tradeconfig.${network}.json`
   if (fs.existsSync(filePath)) {

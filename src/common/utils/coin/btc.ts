@@ -107,8 +107,8 @@ const fetchTxInfo = (options) : any => {
   } = options
 
   return new Promise(async (callback, txinfoReject) => {
-    let baseTxInfo :any | boolean = false // @ToDo - make interface for baseTxInfo api answer
-    let txCoins :any | boolean = false // @ToDo - make interface for txCoins api answer
+    let baseTxInfo: any | boolean = false // @ToDo - make interface for baseTxInfo api answer
+    let txCoins: any | boolean = false // @ToDo - make interface for txCoins api answer
 
     try {
       baseTxInfo = await fetchTx({
@@ -217,7 +217,7 @@ const fetchTxInfo = (options) : any => {
 }
 
 // @To-do - make interface - ответ этой функции общий для все блокчейнов
-const fetchUnspents = (options) : any => {
+const fetchUnspents = (options): any => {
   const {
     address,
     apiBitpay,
@@ -258,7 +258,7 @@ const fetchUnspents = (options) : any => {
 
 
 // @ToDo - интерфейс - возврашет объект { txid }
-const broadcastTx = (options) : any => {
+const broadcastTx = (options): any => {
   const {
     txRaw,
     apiBitpay,

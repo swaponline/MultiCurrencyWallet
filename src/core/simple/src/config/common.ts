@@ -1,6 +1,6 @@
 const id = Math.random().toString().slice(2)
 
-const common : any = {
+const common: any = {
   swapRoom: {
     roomName: 'testnet.swap.online',
     EXPERIMENTAL: {

@@ -16,15 +16,15 @@ const rewriteEnvKeys = [
   `SPREAD`
 ]
 interface envKeys {
-  NETWORK?:string,
-  API_USER?:string,
-  API_PASS?:string,
-  SECRET_PHRASE?:string,
-  USE_JSON?:string,
-  SPREAD?:string
+  NETWORK?: string,
+  API_USER?: string,
+  API_PASS?: string,
+  SECRET_PHRASE?: string,
+  USE_JSON?: string,
+  SPREAD?: string
 }
 
-const rewritedEnv:envKeys = {}
+const rewritedEnv: envKeys = {}
 // Mnemonic
 // Extract env from args
 if (process.argv.length >= 3) {

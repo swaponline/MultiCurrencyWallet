@@ -9,7 +9,7 @@ export enum Networks {
   unknown = 'unknown',
 }
 
-export const getNetworkType = (name:string): Networks => {
+export const getNetworkType = (name: string): Networks => {
   switch(name.toLowerCase()) {
     case `mainnet`: return Networks.mainnet
     case `testnet`: return Networks.testnet

@@ -37,11 +37,11 @@ interface formatStringOptions {
   styles?: Array<STYLES>,
 }
 
-export const colorString = (string:string, options:formatStringOptions | FG_COLORS) : string => {
+export const colorString = (string: string, options: formatStringOptions | FG_COLORS): string => {
   if (typeof options === `string`) {
     return `${options}${string}${OP_RESET}`
   }
-  let ret:string = `${options.color}`
+  let ret: string = `${options.color}`
   if (options.bg) ret = `${ret}${options.bg}`
   if (options.styles && options.styles.length) {
     options.styles.forEach((style) => {

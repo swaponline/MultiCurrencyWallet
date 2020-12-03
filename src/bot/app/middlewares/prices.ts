@@ -210,7 +210,7 @@ export const syncPrices = async () => {
   }
 }
 
-export const getCoinPriceCache = (coin : string) : number | boolean => {
+export const getCoinPriceCache = (coin: string): number | boolean => {
   if (_priceCache[coin]) {
     if (getUnixTimeStamp() < _priceCache[coin].utx) {
       return _priceCache[coin].price
@@ -219,7 +219,7 @@ export const getCoinPriceCache = (coin : string) : number | boolean => {
   return false
 }
 
-export const getCoinPrice = async (coin) : BigNumber => {
+export const getCoinPrice = async (coin): BigNumber => {
   const cachedPrice: number | boolean = getCoinPriceCache(coin)
   if (cachedPrice !== false) return cachedPrice
   const priceConfig = configStorage.getCoinPriceConfig(coin)
