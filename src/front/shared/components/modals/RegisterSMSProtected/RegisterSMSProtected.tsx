@@ -43,7 +43,7 @@ export default class RegisterSMSProtected extends React.Component<any, any> {
 
     let {
       data: { version, initStep },
-    } = this.props
+    } = props
 
     version = version ? version : '2of3' // 2of2
 
@@ -386,6 +386,8 @@ export default class RegisterSMSProtected extends React.Component<any, any> {
   }
 
   generateRestoreInstruction = () => {
+    // @ToDo - temp comment - find error, fix, and uncomment
+    /*
     const { mnemonic, mnemonicWallet, useGeneratedKey } = this.state
 
     const { btcData, btcMultisigSMSData } = this.props
@@ -430,6 +432,7 @@ export default class RegisterSMSProtected extends React.Component<any, any> {
     this.setState({
       restoreInstruction,
     })
+    */
   }
 
   onPhoneChange = (phone) => {

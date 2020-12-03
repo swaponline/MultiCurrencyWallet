@@ -230,6 +230,7 @@ const SecondStep = (props) => {
         feedback.createWallet.securitySelected(`${currencyName}-normal`)
       },
     },
+    /*
     {
       text: 'SMS',
       name: 'sms',
@@ -251,6 +252,7 @@ const SecondStep = (props) => {
         feedback.createWallet.securitySelected(`${currencyName}-sms`)
       },
     },
+    */
     {
       text: 'PIN',
       name: 'pin',

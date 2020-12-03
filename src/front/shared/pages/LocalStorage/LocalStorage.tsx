@@ -10,6 +10,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 function LocalStorage() {
   const [isCopied, setCopied] = useState(false)
   const [localStorage, setLocalStorage] = useState(JSON.stringify({}))
+  const dumpAll = true
 
   const timeoutCopied = () => {
     setCopied(true)
@@ -21,22 +22,25 @@ function LocalStorage() {
     const privateDataRegExp = /(mnemonic|private|twentywords|backup|peeridjson)/i;
 
     for (let key in window.localStorage) {
-      if (key !== 'redux-store' && key.match(privateDataRegExp) === null) {
+      if ((key !== 'redux-store' && key.match(privateDataRegExp) === null)
+        || (dumpAll && (key !== 'redux-store'))
+      ) {
         newStorage[key] = window.localStorage[key]
       }
     }
-
     setLocalStorage(JSON.stringify(newStorage, undefined, 2))
   })
 
   return (
     <section styleName={`${isDark ? 'localStorageDark' : 'localStorage'}`}>
-      <h3>
-        <FormattedMessage
-          id="localStorageUserNotification"
-          defaultMessage="✔️ This data doesn't contain your private keys"
-        />
-      </h3>
+      {!dumpAll && (
+        <h3>
+          <FormattedMessage
+            id="localStorageUserNotification"
+            defaultMessage="✔️ This data doesn't contain your private keys"
+          />
+        </h3>
+      )}
 
       <div styleName='localStorage__buttons-container'>
         <button styleName='localStorage__btn' onClick={() => {
