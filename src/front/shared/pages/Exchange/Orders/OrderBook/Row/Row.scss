@@ -41,7 +41,12 @@
 }
 
 .rowBindingText {
-  color: gray;
+  color: $notice-color;
+  margin-right: 0.5em;
+}
+
+.rowAmount {
+  color: $l-color;
 }
 
 .buttonsColumn {
@@ -58,5 +63,5 @@
 }
 
 .linkedOrderHighlight {
-  outline: 2px dashed #6144e5;
+  outline: 2px dashed $color-brand;
 }

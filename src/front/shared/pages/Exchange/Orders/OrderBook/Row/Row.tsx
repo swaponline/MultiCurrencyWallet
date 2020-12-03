@@ -311,8 +311,9 @@ export default class Row extends Component<any, any> {
               defaultMessage="sells"
             />
           </span>
-          {' '}
-          {`${this.getDecimals(sellAmountOut, sellCurrencyOut)} ${sellCurrencyOut}`}
+          <span styleName='rowAmount'>
+            {`${this.getDecimals(sellAmountOut, sellCurrencyOut)} ${sellCurrencyOut}`}
+          </span>
         </td>
         <td>
           <span styleName="rowBindingText">
@@ -321,8 +322,9 @@ export default class Row extends Component<any, any> {
               defaultMessage="for"
             />
           </span>
-          {' '}
-          {`${this.getDecimals(getAmountOut, getCurrencyOut)} ${getCurrencyOut}`}
+          <span styleName='rowAmount'>
+            {`${this.getDecimals(getAmountOut, getCurrencyOut)} ${getCurrencyOut}`}
+          </span>
         </td>
         <td>
           <span styleName="rowBindingText">
@@ -331,8 +333,9 @@ export default class Row extends Component<any, any> {
               defaultMessage="at price"
             />
           </span>
-          {' '}
-          {`${this.getDecimals(priceOut, getCurrencyOut)} ${getCurrencyOut}/${sellCurrencyOut}`}
+          <span styleName='rowAmount'>
+            {`${this.getDecimals(priceOut, getCurrencyOut)} ${getCurrencyOut}/${sellCurrencyOut}`}
+          </span>
         </td>
         <td styleName="buttonsColumn">
           {peer === ownerPeer
