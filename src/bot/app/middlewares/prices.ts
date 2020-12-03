@@ -210,63 +210,69 @@ export const syncPrices = async () => {
   }
 }
 
-export const getCoinPriceCache = (coin: string): number | boolean => {
+export const getCoinPriceCache = (coin: string): BigNumber => {
   if (_priceCache[coin]) {
     if (getUnixTimeStamp() < _priceCache[coin].utx) {
       return _priceCache[coin].price
     }
   }
-  return false
+  return null
 }
 
-export const getCoinPrice = async (coin): BigNumber => {
-  const cachedPrice: number | boolean = getCoinPriceCache(coin)
-  if (cachedPrice !== false) return cachedPrice
-  const priceConfig = configStorage.getCoinPriceConfig(coin)
-  if (priceConfig) {
-    let coinPrice = new BigNumber(0)
-    switch (priceConfig.source) {
-      case `FIXED`: // Фиксированая цена
-        coinPrice = new BigNumber(priceConfig.price)
-        break;
-      case `API`: // API
-        switch (priceConfig.api) {
-          case `SWAPONLINE`:
-            coinPrice = await getNoxonPrice(coin, 'USD')
-            break
-          case `YOBIT`:
-            coinPrice = await getYobitPrice(`${coin.toLowerCase()}_usd`)
-            break
-          default:
-            console.warn(`Unknown price API '${priceConfig.api}' for coin '${coin}'.`)
-            break
+export const getCoinPrice = (coin: string):Promise<BigNumber> => {
+  return new Promise(async (resolve) => {
+    const cachedPrice: BigNumber = getCoinPriceCache(coin)
+    if (cachedPrice !== null) {
+      resolve(cachedPrice)
+    } else {
+      const priceConfig = configStorage.getCoinPriceConfig(coin)
+      if (priceConfig) {
+        let coinPrice = new BigNumber(0)
+        switch (priceConfig.source) {
+          case `FIXED`: // Фиксированая цена
+            coinPrice = new BigNumber(priceConfig.price)
+            break;
+          case `API`: // API
+            switch (priceConfig.api) {
+              case `SWAPONLINE`:
+                coinPrice = new BigNumber(await getNoxonPrice(coin, 'USD'))
+                break
+              case `YOBIT`:
+                coinPrice = new BigNumber(await getYobitPrice(`${coin.toLowerCase()}_usd`))
+                break
+              default:
+                console.warn(`Unknown price API '${priceConfig.api}' for coin '${coin}'.`)
+                break
+            }
+            break;
+          case `COIN`:  // От цены другой монеты
+            const baseCoinPrice = await getCoinPrice(priceConfig.coin)
+            coinPrice = baseCoinPrice.multipliedBy(priceConfig.count)
         }
-        break;
-      case `COIN`:  // От цены другой монеты
-        const baseCoinPrice = await getCoinPrice(priceConfig.coin)
-        coinPrice = baseCoinPrice.multipliedBy(priceConfig.count)
-    }
-    // Check stoplost
-    if (priceConfig.minSafePrice) {
-      if (coinPrice.isLessThan(priceConfig.minSafePrice)) {
-        coinPrice = new BigNumber(priceConfig.minSafePrice)
+        // Check stoplost
+        if (priceConfig.minSafePrice) {
+          if (coinPrice.isLessThan(priceConfig.minSafePrice)) {
+            coinPrice = new BigNumber(priceConfig.minSafePrice)
+          }
+        }
+        _priceCache[coin] = {
+          price: coinPrice,
+          utx: getUnixTimeStamp() + _priceCacheTime,
+        }
+        resolve(coinPrice)
+      } else {
+        /*
+          Бот в режиме единого конфига
+          Не удалось найти параметры расчета для монеты
+          Нужно проверить правильность единой конфигурации (./tradeconfig.[network].json)
+        */
+        console.warn(`Price for ${coin} not calculated - used Zero (0)`)
+        console.warn(`In our world it is impossible to divide by zero :(`)
+        console.warn(`May be errors in stack trace after this warning. For fix find this line`)
+        resolve(new BigNumber(0))
       }
     }
-    _priceCache[coin] = {
-      price: coinPrice,
-      utx: getUnixTimeStamp() + _priceCacheTime,
-    }
-    return coinPrice
-  }
-  /*
-    Бот в режиме единого конфига
-    Не удалось найти параметры расчета для монеты
-    Нужно проверить правильность единой конфигурации (./tradeconfig.[network].json)
-  */
-  console.warn(`Price for ${coin} not calculated - used Zero (0)`)
-  console.warn(`In our world it is impossible to divide by zero :(`)
-  console.warn(`May be errors in stack trace after this warning. For fix find this line`)
-  return new BigNumber(0)
+  })
 }
 
 export const calcPairPrice = async (pair) => {
