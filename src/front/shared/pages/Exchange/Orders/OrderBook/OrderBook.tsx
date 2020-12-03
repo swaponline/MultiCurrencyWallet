@@ -49,8 +49,8 @@ type OrderBookProps = {
   pairFees: { [key: string]: any } | boolean
   balances: { [key: string]: number } | boolean
   
-  linkedOrderId: number | undefined
-  orderId: number | undefined
+  linkedOrderId: number
+  orderId: number
 
   checkSwapAllow: ({}) => boolean
 }
@@ -77,10 +77,11 @@ const filterOrders = (orders, filter) => orders
   currencies,
   decline: rememberedOrders.savedOrders,
 }))
+//@ts-ignore
 @withRouter
 @injectIntl
 @cssModules(styles, { allowMultiple: true })
-export default class OrderBook extends Component<OrderBookProps, any> {
+export default class OrderBook extends Component<OrderBookProps> {
   state = {
     buyOrders: [],
     sellOrders: [],
@@ -88,8 +89,8 @@ export default class OrderBook extends Component<OrderBookProps, any> {
   }
 
   static getDerivedStateFromProps({ orders, sellCurrency, buyCurrency }) {
-    if (!Array.isArray(orders)) {
-      return
+    if (orders.length === 0) {
+      return null
     }
 
     const sellOrders = orders.filter(order =>
@@ -101,7 +102,7 @@ export default class OrderBook extends Component<OrderBookProps, any> {
       order.buyCurrency.toLowerCase() === sellCurrency &&
       order.sellCurrency.toLowerCase() === buyCurrency
     ).sort((a, b) => Pair.compareOrders(a, b))
-
+      
     return {
       buyOrders,
       sellOrders,
@@ -241,7 +242,6 @@ export default class OrderBook extends Component<OrderBookProps, any> {
             />
           </Panel>
         }
-        {/* No orders found. Most likely they are not there or the user who created them is not online */}
         <Panel header={
           <Fragment>
             <h3 styleName="ordersHeading">
@@ -259,6 +259,14 @@ export default class OrderBook extends Component<OrderBookProps, any> {
             </div>
           </Fragment>
         }>
+          {isPubSubLoaded &&
+            <p styleName='ordersNote'>
+              <FormattedMessage
+                id="OrderBookBueOrdersNote"
+                defaultMessage="Searching for Peers and Orders can take a couple of minutes. If no orders are found within a couple of minutes, it means that there are no matching orders or a user who placed the order is offline."
+                />
+            </p>
+          }
           <Table
             id="table_exchange"
             className={tableStyles.exchange}
@@ -301,6 +309,14 @@ export default class OrderBook extends Component<OrderBookProps, any> {
           </Fragment>
         }
         >
+          {isPubSubLoaded &&
+            <p styleName='ordersNote'>
+              <FormattedMessage
+                id="OrderBookBueOrdersNote"
+                defaultMessage="Searching for Peers and Orders can take a couple of minutes. If no orders are found within a couple of minutes, it means that there are no matching orders or a user who placed the order is offline."
+              />
+            </p>
+          }
           <Table
             id="table_exchange"
             className={tableStyles.exchange}
