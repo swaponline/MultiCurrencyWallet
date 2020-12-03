@@ -11,7 +11,6 @@ import SwapList from './SwapList/SwapList'
 import FeeControler from '../FeeControler/FeeControler'
 import FailControler from '../FailControler/FailControler'
 import DepositWindow from './DepositWindow/DepositWindow'
-import paddingForSwapList from 'shared/helpers/paddingForSwapList'
 
 
 @CSSModules(styles)
@@ -39,7 +38,6 @@ export default class EthTokenToUTXO extends Component<any, any> {
       currencyData,
       tokenItems,
       signed: false,
-      paddingContainerValue: 0,
       enabledButton: false,
       isAddressCopied: false,
       flow: this.swap.flow.state,
@@ -66,8 +64,6 @@ export default class EthTokenToUTXO extends Component<any, any> {
       },
     } = this.state
 
-    this.changePaddingValue()
-
     this.signTimer = setInterval(() => {
       if (!this.state.flow.isMeSigned) {
         this.signSwap()
@@ -87,21 +83,8 @@ export default class EthTokenToUTXO extends Component<any, any> {
     this.requestMaxAllowance()
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.flow !== this.state.flow) {
-      this.changePaddingValue()
-    }
-  }
-
   confirmScriptChecked = () => {
     this.swap.flow[this._fields.verifyScriptFunc]()
-  }
-
-  changePaddingValue = () => {
-    const { flow: { step } } = this.state
-    this.setState(() => ({
-      paddingContainerValue: paddingForSwapList({ step }),
-    }))
   }
 
   handleFlowStateUpdate = (values) => {
@@ -168,7 +151,6 @@ export default class EthTokenToUTXO extends Component<any, any> {
       currencyData,
       tokenItems,
       signed,
-      paddingContainerValue,
       swap,
     } = this.state
 

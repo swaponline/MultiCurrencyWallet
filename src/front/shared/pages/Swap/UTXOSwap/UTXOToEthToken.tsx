@@ -12,7 +12,6 @@ import DepositWindow from './DepositWindow/DepositWindow'
 import SwapProgress from './SwapProgress/SwapProgress'
 import SwapList from './SwapList/SwapList'
 import FeeControler from '../FeeControler/FeeControler'
-import paddingForSwapList from 'shared/helpers/paddingForSwapList'
 
 
 @CSSModules(styles)
@@ -37,7 +36,6 @@ export default class UTXOToEthToken extends Component<any, any> {
       enabledButton: false,
       isAddressCopied: false,
       flow: this.swap.flow.state,
-      paddingContainerValue: 0,
       destinationAddressTimer: true,
       isShowingScript: false,
       currencyAddress: currencyData.address,
@@ -59,7 +57,6 @@ export default class UTXOToEthToken extends Component<any, any> {
 
   componentDidMount() {
     const { swap, flow: { step, isParticipantSigned } } = this.state
-    this.changePaddingValue()
 
     this.ParticipantTimer = setInterval(() => {
       if (this.state.flow.isParticipantSigned && this.state.destinationBuyAddress) {
@@ -71,23 +68,11 @@ export default class UTXOToEthToken extends Component<any, any> {
     }, 3000)
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.flow !== this.state.flow) {
-      this.changePaddingValue()
-    }
-  }
-
   submitSecret = () => {
     const { secret } = this.state
     this.swap.flow.submitSecret(secret)
   }
 
-  changePaddingValue = () => {
-    const { flow: { step } } = this.state
-    this.setState(() => ({
-      paddingContainerValue: paddingForSwapList({ step }),
-    }))
-  }
 
   handleFlowStateUpdate = (values) => {
 
@@ -166,7 +151,6 @@ export default class UTXOToEthToken extends Component<any, any> {
       flow,
       secret,
       ethAddress,
-      paddingContainerValue,
       isShowingScript,
     } = this.state
 

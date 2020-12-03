@@ -21,9 +21,24 @@ import Toggle from 'components/controls/Toggle/Toggle'
 import Input from 'components/forms/Input/Input'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage } from 'react-intl'
-import { isNumberValid, isNumberStringFormatCorrect, mathConstants } from 'helpers/math'
 import minAmountOffer from 'helpers/constants/minAmountOffer'
 import coinsWithDynamicFee from 'helpers/constants/coinsWithDynamicFee'
+
+
+const mathConstants = {
+  high_precision: 10e-8,
+  low_precision: 10e-5,
+}
+
+const isNumberStringFormatCorrect = number => {
+  const stringified = String(number)
+
+  const firstDotIndex = stringified.indexOf('.')
+  const lastDotIndex = stringified.lastIndexOf('.')
+
+  // first and last dot positions match, so it has only one dot
+  return firstDotIndex === lastDotIndex
+}
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
