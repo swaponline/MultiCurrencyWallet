@@ -62,7 +62,7 @@ if (rewritedEnv.NETWORK !== undefined) {
 }
 
 // Use Json
-if (process.env.USE_JSON === `true`) {
+if (process.env.USE_JSON_CONFIG === `true`) {
   configStorage.loadJson(configStorage.getNetwork())
   console.log(
     colorString('>>> Trade pairs: ', COLORS.GREEN),
