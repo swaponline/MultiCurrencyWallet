@@ -287,16 +287,20 @@ const getTransaction = (address, ownType) =>
 
     apiLooper.get('etherscan', internalUrl)
       .then((res:any) => {
-        const internals : Array<number> = []
+        const internals : Array<any> = []
         res.result
           .map((item) => {
-            internals[item.hash] = item.value
+            const { value, to } = item
+            internals[item.hash] = {
+              value,
+              to,
+            }
           })
         apiLooper.get('etherscan', url)
           .then((res:any) => {
             const transactions = res.result
               .filter((item) => {
-                return (item.value > 0) || (internals[item.hash] !== undefined && internals[item.hash] > 0)
+                return (item.value > 0) || (internals[item.hash] !== undefined && internals[item.hash].value > 0)
               })
               .map((item) => ({
                 type,
@@ -304,14 +308,21 @@ const getTransaction = (address, ownType) =>
                 hash: item.hash,
                 status: item.blockHash != null ? 1 : 0,
                 value: web3.utils.fromWei(
-                  (internals[item.hash] !== undefined && internals[item.hash] > 0)
-                    ? internals[item.hash]
+                  (internals[item.hash] !== undefined && internals[item.hash].value > 0)
+                    ? internals[item.hash].value
                     : item.value
                 ),
                 address: item.to,
                 canEdit: address === userAddress,
                 date: item.timeStamp * 1000,
-                direction: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out',
+                direction: (
+                  (
+                    internals[item.hash] !== undefined
+                    && internals[item.hash].to.toLowerCase() == address.toLowerCase()
+                  )
+                  ? 'in'
+                  : address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out'
+                ),
               }))
               .filter((item) => {
                 if (item.direction === 'in') return true
