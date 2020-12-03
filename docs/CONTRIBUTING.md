@@ -15,9 +15,6 @@ SWAP token is NOT a money, no guarantee you will exchange this to visa, paypal, 
 Q: why you don't pay in USD or btc? <br>
 A: we don't have a revenue in USD to pay new developers 
 
-Q: what is the value of the token? <br>
-A: https://uniswap.info/token/0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9 (no guarantee it will be lower or higher)
-
 Ho to contibute:
 1. find or create issue
 2. make pullrequest with following instructions:
