@@ -6,7 +6,6 @@ export const networkType = Object.freeze({
 export enum Networks {
   mainnet = 'mainnet',
   testnet = 'testnet',
-  unknown = 'unknown',
 }
 
 export const getNetworkType = (name: string): Networks => {
@@ -14,5 +13,5 @@ export const getNetworkType = (name: string): Networks => {
     case `mainnet`: return Networks.mainnet
     case `testnet`: return Networks.testnet
   }
-  return Networks.unknown
+  throw new Error('Unknown network')
 }
