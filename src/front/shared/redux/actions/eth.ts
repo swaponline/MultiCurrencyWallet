@@ -281,36 +281,58 @@ const getTransaction = (address, ownType) =>
     }
 
     const type = (ownType) || 'eth'
-
+    // First - get internal txs
+    const internalUrl = `?module=account&action=txlistinternal&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.api.etherscan_ApiKey}`
     const url = `?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.api.etherscan_ApiKey}`
-    //@ts-ignore
-    return apiLooper.get('etherscan', url)
-      .then((res) => {
-        const transactions = res.result
-          .filter((item) => item.value > 0)
-          .map((item) => ({
-            type,
-            confirmations: item.confirmations,
-            hash: item.hash,
-            status: item.blockHash != null ? 1 : 0,
-            value: web3.utils.fromWei(item.value),
-            address: item.to,
-            canEdit: address === userAddress,
-            date: item.timeStamp * 1000,
-            direction: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out',
-          }))
-          .filter((item) => {
-            if (item.direction === 'in') return true
-            if (!hasAdminFee) return true
-            if (address.toLowerCase() === hasAdminFee.address.toLowerCase()) return true
-            if (item.address.toLowerCase() === hasAdminFee.address.toLowerCase()) return false
 
-            return true
+    apiLooper.get('etherscan', internalUrl)
+      .then((res:any) => {
+        const internals : Array<number> = []
+        res.result
+          .map((item) => {
+            internals[item.hash] = item.value
           })
+        console.log('internals', internals)
+        apiLooper.get('etherscan', url)
+          .then((res:any) => {
+            const transactions = res.result
+              .filter((item) => {
+                return (item.value > 0) || (internals[item.hash] !== undefined && internals[item.hash] > 0)
+              })
+              .map((item) => ({
+                type,
+                confirmations: item.confirmations,
+                hash: item.hash,
+                status: item.blockHash != null ? 1 : 0,
+                value: web3.utils.fromWei(
+                  (internals[item.hash] !== undefined && internals[item.hash] > 0)
+                    ? internals[item.hash]
+                    : item.value
+                ),
+                address: item.to,
+                canEdit: address === userAddress,
+                date: item.timeStamp * 1000,
+                direction: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out',
+              }))
+              .filter((item) => {
+                console.log('>>>> ETH TX', item)
+                //if (item.direction === 'in') return true
+                if (!hasAdminFee) return true
+                if (address.toLowerCase() === hasAdminFee.address.toLowerCase()) return true
+                if (item.address.toLowerCase() === hasAdminFee.address.toLowerCase()) return false
 
-        resolve(transactions)
+                return true
+              })
+
+            resolve(transactions)
+          })
+          .catch((e) => {
+            console.warn(`Fail get txs for ETH ${address}`, e)
+            resolve([])
+          })
       })
-      .catch(() => {
+      .catch((e) => {
+        console.warn(`Fail get txs for ETH ${address}`, e)
         resolve([])
       })
   })
