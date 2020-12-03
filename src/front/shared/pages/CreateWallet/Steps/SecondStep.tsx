@@ -240,7 +240,7 @@ const SecondStep = (props) => {
         es: 'Verifique sus transacciones mediante código SMS.',
       }[locale],
       // enabled: _protection.sms[currencyKey],
-      enabled: true, // sms temporarly disabled
+      enabled: false, // sms temporarly disabled
       activated: _activated.sms[currencyKey],
       onClickHandler: () => {
         if (isSmsFeatureAsked) {
