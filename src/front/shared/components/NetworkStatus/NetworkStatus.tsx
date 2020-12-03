@@ -52,7 +52,7 @@ export default class NetworkStatus extends React.Component<any, any> {
             <div style={{ maxWidth: '24em', textAlign: 'center' }}>
               <FormattedMessage
                 id="NetworkStatusPeersOnlineMessage"
-                defaultMessage="We do not have a centralized server for storing orders, we use the libp2p network from Protocol Labs, which works by analogy with the torrent network, every user (including you) is a peer in this network"
+                defaultMessage="Searching for Peers and Orders can take a couple of minutes. We do not store the orders on a centralized server. Instead, we use libp2p network by Protocol Labs that works like a Torrent network, which means that each user such as yourself is a peer in this network. If no orders are found within a couple of minutes, it means that there are no matching orders or a user who placed the order is offline."
               />
             </div>
           </Tooltip>

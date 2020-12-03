@@ -27,12 +27,33 @@ import MyOrders from './../MyOrders/MyOrders'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
 import config from 'app-config'
-import { links } from 'helpers'
 import feedback from 'shared/helpers/feedback'
+import { links, getPairFees } from 'helpers'
 
-import { getPairFees } from 'helpers/getPairFees'
 
+type OrderBookProps = {
+  sellCurrency: string
+  buyCurrency: string
 
+  isOnline: boolean
+  invalidPair: boolean
+  isAllPeersLoaded: boolean
+
+  decline: any[]
+  history: { [key: string]: any }
+  intl: { [key: string]: any }
+  location: { [key: string]: any }
+  myOrders: { [key: string]: any }[]
+  currencies: { [key: string]: any }[]
+
+  pairFees: { [key: string]: any } | boolean
+  balances: { [key: string]: number } | boolean
+  
+  linkedOrderId: number | undefined
+  orderId: number | undefined
+
+  checkSwapAllow: ({}) => boolean
+}
 
 const filterMyOrders = (orders, peer) => orders
   .filter(order => order.owner.peer === peer)
@@ -59,9 +80,7 @@ const filterOrders = (orders, filter) => orders
 @withRouter
 @injectIntl
 @cssModules(styles, { allowMultiple: true })
-export default class Orders extends Component<any, any> {
-  _mounted = false
-
+export default class OrderBook extends Component<OrderBookProps, any> {
   state = {
     buyOrders: [],
     sellOrders: [],
@@ -125,20 +144,27 @@ export default class Orders extends Component<any, any> {
       isShowAllMyOrders,
     } = this.state
 
-    let {
-      sellCurrency,
-      buyCurrency,
+    const { 
       intl,
       decline,
       linkedOrderId,
       pairFees,
-      balances,
+      balances, 
+      history, 
+      isOnline, 
+      isAllPeersLoaded, 
+      myOrders, 
+      orderId, 
+      location, 
+      currencies,
+      checkSwapAllow,
+      buyCurrency: propsBuyCurrency,
+      sellCurrency: propsSellCurrency,
+      invalidPair,
     } = this.props
 
-    const { history } = this.props
-
-    buyCurrency = buyCurrency.toUpperCase()
-    sellCurrency = sellCurrency.toUpperCase()
+    const buyCurrency = propsBuyCurrency.toUpperCase()
+    const sellCurrency = propsSellCurrency.toUpperCase()
 
     const titles = [
       ' ',
@@ -148,8 +174,6 @@ export default class Orders extends Component<any, any> {
       ' ',
     ]
 
-
-    const { isOnline, isAllPeersLoaded, myOrders, orderId, invalidPair, location, currencies } = this.props
     const isPubSubLoaded = isOnline && isAllPeersLoaded
     const seoPage = getSeoPage(location.pathname)
 
@@ -185,12 +209,6 @@ export default class Orders extends Component<any, any> {
           defaultTitle={intl.formatMessage(title.metaTitle, { buyCurrency, sellCurrency, buyCurrencyFullName, sellCurrencyFullName })}
           defaultDescription={intl.formatMessage(description.metaDescription, { buyCurrency, sellCurrency, buyCurrencyFullName, sellCurrencyFullName })}
         />
-
-        {/* {invalidPair &&
-          <p>
-            <FormattedMessage id="Orders141" defaultMessage="No such ticker. Redirecting to USDT-BTC exchange..." />
-          </p>
-        } */}
 
         {!!myOrders.length &&
           <Panel
@@ -258,7 +276,7 @@ export default class Orders extends Component<any, any> {
                 linkedOrderId={linkedOrderId}
                 pairFees={pairFees}
                 balances={balances}
-                checkSwapAllow={this.props.checkSwapAllow}
+                checkSwapAllow={checkSwapAllow}
               />
             )}
             isLoading={buyOrders.length === 0 && !isPubSubLoaded}
@@ -300,7 +318,7 @@ export default class Orders extends Component<any, any> {
                 linkedOrderId={linkedOrderId}
                 pairFees={pairFees}
                 balances={balances}
-                checkSwapAllow={this.props.checkSwapAllow}
+                checkSwapAllow={checkSwapAllow}
               />
             )}
             isLoading={sellOrders.length === 0 && !isPubSubLoaded}
