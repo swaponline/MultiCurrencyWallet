@@ -215,6 +215,10 @@ export default class WithdrawModal extends React.Component<any, any> {
     const adminFeeSize = usedAdminFee ? adminFee.calc(currency, amount) : 0
 
     if (isEthToken) {
+      /* 
+      * Сommission for tokens is taken on the ETH
+      * 7% of the transfer token amount
+      */
       minAmount[currentCoin] = +this.getMinAmountForEthToken()
       minAmount.eth = await helpers.eth.estimateFeeValue({
         method: 'send',
@@ -225,13 +229,10 @@ export default class WithdrawModal extends React.Component<any, any> {
         method: 'send',
         speed: 'fast',
       })
-      /*
-      * Commission 7% of the transfer token amount
-      * adminFeeSize - minimum fee
-      */
+
       this.setState({
         tokenFee,
-        totalFee: adminFeeSize + tokenFee,
+        totalFee: tokenFee,
       })
     }
     /* 
@@ -249,9 +250,7 @@ export default class WithdrawModal extends React.Component<any, any> {
         speed: 'fast',
         address,
       })
-      const totalFee = usedAdminFee
-        ? new BigNumber(coinFee).plus(adminFeeSize).toNumber()
-        : new BigNumber(coinFee).toNumber()
+      const totalFee = new BigNumber(coinFee).toNumber()
       
       minAmount[currentCoin] = coinFee
 
@@ -1027,7 +1026,7 @@ export default class WithdrawModal extends React.Component<any, any> {
                         amount > 0 // fee in precents (fee / 100%)
                           ? new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).toNumber()
                           : adminFeeSize
-                      } {dataCurrency}</span>
+                      } {currency}</span>
                   }
                   <br />
                 </>
@@ -1042,8 +1041,8 @@ export default class WithdrawModal extends React.Component<any, any> {
                   amount > 0
                     ? usedAdminFee // fee in precents (100 > 100%)
                       ? new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).plus(totalFee).toNumber()
-                      : totalFee
-                    : totalFee
+                      : new BigNumber(totalFee).plus(adminFeeSize).toNumber()
+                    : new BigNumber(totalFee).plus(adminFeeSize).toNumber()
                   } {dataCurrency}
                 </span>
               )
