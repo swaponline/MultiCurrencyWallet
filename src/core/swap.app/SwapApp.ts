@@ -1,16 +1,18 @@
 import constants from './constants'
 import StorageFactory from './StorageFactory'
 import Collection from './Collection'
-import { Flow } from '../swap.swap'
+import Swap, { Flow } from '../swap.swap'
 import SwapAuth from '../swap.auth'
 import SwapInterface from './SwapInterface'
 import ServiceInterface from './ServiceInterface'
+import SwapRoom from 'swap.room'
+import SwapOrders from 'swap.orders'
 
 
 interface SwapAppServices {
   auth?: SwapAuth,
-  room?: ServiceInterface,
-  orders?: ServiceInterface,
+  room?: SwapRoom,
+  orders?: SwapOrders,
 }
 
 interface SwapAppOptions {
@@ -29,7 +31,7 @@ class SwapApp {
     'mst6jZKU973gB6Jhei4WQFg381zb86UgBQ', // @eneeseene testnet btc address
     '17Hf3chwyWeNokLfuBcxEtpRYaYiU5RWBt', // swap.bot mainnet btc address
   ]
-  private activeSwaps: Collection = new Collection()
+  private attachedSwaps: Collection = new Collection()
 
   options: any = {}
   inited: boolean = false
@@ -86,7 +88,7 @@ class SwapApp {
     return this.inited
   }
 
-  static init(options) {
+  static init(options: SwapAppOptions) {
     return new SwapApp(options)
   }
 
@@ -119,8 +121,22 @@ class SwapApp {
     return SwapApp._swapAppInstance
   }
 
+  attachSwap(swap: Swap) {
+    if (!this.attachedSwaps.isExistByKey(swap.id)) {
+      this.attachedSwaps.append(swap, swap.id)
+    }
+  }
+
+  getActiveSwaps(): Array<Swap> {
+    return this.attachedSwaps.filter((swap: Swap) => {
+      return (swap === null)
+        ? false
+        : swap.isFinished()
+    })
+  }
+
   // Check address is whitelisted
-  isWhitelistBtc(address) {
+  isWhitelistBtc(address: string) {
     return this.whitelistBtc.indexOf(address) !== -1
   }
   // Configure -------------------------------------------------------- /
