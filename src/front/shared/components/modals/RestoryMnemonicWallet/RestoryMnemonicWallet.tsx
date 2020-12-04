@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
 import helpers, { constants } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
@@ -19,7 +18,6 @@ import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-import ReactTooltip from 'react-tooltip'
 import { isMobile } from 'react-device-detect'
 
 import links from 'helpers/links'
@@ -67,6 +65,31 @@ const langLabels = defineMessages({
   },
 })
 
+type RestoryMnemonicWalletProps = {
+  name: string
+  onClose: () => void
+  intl: { [key: string]: any }
+  allCurrensies: { [key: string]: any }[]
+
+  data: {
+    btcBalance: number
+    fiatBalance: number
+    onClose: () => void
+  }
+}
+
+type RestoryMnemonicWalletState = {
+  mnemonic: string
+  step: string
+  mnemonicIsInvalid: boolean
+  isFetching: boolean
+  data: {
+    btcBalance: number
+    usdBalance: number
+    showCloseButton: boolean
+  }
+}
+
 @injectIntl
 @connect(
   ({
@@ -84,13 +107,10 @@ const langLabels = defineMessages({
   })
 )
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
-export default class RestoryMnemonicWallet extends React.Component<any, any> {
-  props: any
+export default class RestoryMnemonicWallet extends React.Component {
 
-  static propTypes = {
-    name: PropTypes.string,
-    data: PropTypes.object,
-  }
+  props: RestoryMnemonicWalletProps
+  state: RestoryMnemonicWalletState
 
   constructor(props) {
     super(props)
@@ -112,7 +132,6 @@ export default class RestoryMnemonicWallet extends React.Component<any, any> {
 
   componentDidMount() {
     this.fetchData()
-    //@ts-ignore
     feedback.restore.started()
   }
 
@@ -175,7 +194,11 @@ export default class RestoryMnemonicWallet extends React.Component<any, any> {
       })
       return
     }
-
+    /* 
+    * This callback blocks any action until all wallets are created
+    * So ui does not work
+    * How improve it ?
+    */
     this.setState(
       {
         isFetching: true,
@@ -288,7 +311,10 @@ export default class RestoryMnemonicWallet extends React.Component<any, any> {
                     </Tooltip>
                   </span>
                 </FieldLabel>
-                <MnemonicInput onChange={this.handleMnemonicChange} />
+                <MnemonicInput 
+                  autoFill={config.entry === 'testnet'}
+                  onChange={this.handleMnemonicChange}
+                />
               </div>
               <div styleName="buttonsHolder">
                 <Button blue onClick={this.handleClose}>
