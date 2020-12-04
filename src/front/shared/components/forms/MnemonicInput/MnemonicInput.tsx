@@ -53,6 +53,7 @@ export default class MnemonicInput extends Component {
   */
   private TESTNET_TEST_PHRASE = 'vast bronze oyster trade love once fog match rail lock cake science'
   private TESTNET_TAGS: Tags
+  private isAutofill = false
 
   props: MnemonicInputProps
   state: MnemonicInputState
@@ -61,11 +62,15 @@ export default class MnemonicInput extends Component {
   constructor (props) {
     super(props)
 
+    const { autoFill = false } = props
     const suggestions = bip39.wordlists.english.map((name, id) => { return { id, name } })
 
-    this.TESTNET_TAGS = this.TESTNET_TEST_PHRASE.split(' ').map(word => {
-      return suggestions.find(obj => obj.name === word)
-    })
+    if (autoFill) {
+      this.isAutofill = true
+      this.TESTNET_TAGS = this.TESTNET_TEST_PHRASE.split(' ').map(word => {
+        return suggestions.find(obj => obj.name === word)
+      })
+    }
 
     this.state = {
       tags: [],
@@ -78,8 +83,8 @@ export default class MnemonicInput extends Component {
 
   componentDidMount() {
     const { autoFill = false } = this.props
-    // look > onAddition()
-    if (autoFill) {
+
+    if (autoFill) { // without last element
       this.onAddition(this.TESTNET_TAGS[this.TESTNET_TAGS.length - 1])
     }
   }
@@ -111,7 +116,6 @@ export default class MnemonicInput extends Component {
   }
 
   onAddition = (tag) => {
-    const { autoFill = false } = this.props
     /* 
     * there is probably a better solution to autofill ReactTags component 
     * you need to call this callback at least once
@@ -120,11 +124,16 @@ export default class MnemonicInput extends Component {
     const testnetTagsWithoutLastElement = this.TESTNET_TAGS.filter((tag, index) => {
       return this.TESTNET_TAGS.length - 1 !== index
     })
+    const returnTags = () => {
+      if (this.isAutofill) {
+        this.isAutofill = false
+        return [...testnetTagsWithoutLastElement, tag]
+      } else {
+        return [...this.state.tags, tag]
+      }
+    }
 
-    const tags = autoFill
-      ? [...testnetTagsWithoutLastElement, tag]
-      : [...this.state.tags, tag]
-
+    const tags = returnTags()
     this.setState({ tags }, this.onChangeCallback )
   }
 
