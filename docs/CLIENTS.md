@@ -18,7 +18,7 @@
 
 ## [SONM](https://sonm.com/)
 
-- __Integration__: https://sonm.com/swap-online/
+- __Integration__: https://sonm.com/swap-online/ (currently offline)
 - Listed **SNM**, see [rank](https://www.coingecko.com/en/coins/sonm)
 
 
