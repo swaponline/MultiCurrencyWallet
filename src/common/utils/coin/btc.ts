@@ -5,7 +5,7 @@ import typeforce from 'swap.app/util/typeforce'
 
 // Use front API config
 import { default as TESTNET } from '../../../front/config/testnet/api'
-import { default as MAINNET } from '../../../front/config/testnet/api'
+import { default as MAINNET } from '../../../front/config/mainnet/api'
 
 
 const getBitpay = (network) => {
