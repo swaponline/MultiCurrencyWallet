@@ -1,20 +1,44 @@
 import constants from './constants'
 import StorageFactory from './StorageFactory'
+import Collection from './Collection'
+import { Flow } from '../swap.swap'
+import SwapAuth from '../swap.auth'
+import SwapInterface from './SwapInterface'
+import ServiceInterface from './ServiceInterface'
+
+
+interface SwapAppServices {
+  auth?: SwapAuth,
+  room?: ServiceInterface,
+  orders?: ServiceInterface,
+}
+
+interface SwapAppOptions {
+  network?: string,
+  env: any,
+  services: SwapAppServices | Array<ServiceInterface>,
+  swaps: Array<SwapInterface>,
+  flows: Array<Flow>,
+  whitelistBtc?: Array<string>,
+}
 
 class SwapApp {
   // White list BTC. Dont wait confirm
-  whitelistBtc = [
+  private whitelistBtc: Array<string> = [
     'mzgKwRsfYLgApStDLwcN9Y6ce9qYPnTJNx', // @eneeseene testnet
     'mst6jZKU973gB6Jhei4WQFg381zb86UgBQ', // @eneeseene testnet btc address
     '17Hf3chwyWeNokLfuBcxEtpRYaYiU5RWBt', // swap.bot mainnet btc address
   ]
+  private activeSwaps: Collection = new Collection()
+
   options: any = {}
   inited: boolean = false
   network: any
   env: any
-  services: any
-  swaps: any
-  flows: any
+  services: SwapAppServices = {}
+  swaps: Array<SwapInterface>
+  flows: Array<Flow>
+  
 
   static _swapAppInstance = null
 
@@ -27,14 +51,14 @@ class SwapApp {
    * @param {array}   options.swaps
    * @param {array}   options.flows
    */
-  constructor(options) {
+  constructor(options: SwapAppOptions) {
     this.options = options
     this.network = options.network || constants.NETWORKS.TESTNET
     this.env = {}
     this.services = {}
 
-    this.swaps = {}
-    this.flows = {}
+    this.swaps = new Array()
+    this.flows = new Array()
 
     this._addEnv(options.env || {})
     this._addServices(options.services || {})
