@@ -71,14 +71,6 @@ $walletPaddingTop: 41px;
     display: table-cell;
   }
 
-  td:last-child {
-    padding-right: $borderPadding - 10px;
-
-    @media all and (max-width: 400px) {
-      padding-right: 10px;
-    }
-  }
-
   tr:last-child td {
     &:first-child {
       border-bottom-left-radius: $borderRadius;

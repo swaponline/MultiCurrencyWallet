@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react'
-import PropTypes from 'prop-types'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
@@ -25,6 +24,39 @@ import feedback from 'shared/helpers/feedback'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
+type RowProps = {
+  history: { [key: string]: any }
+  balances: { [key: string]: number } | boolean
+  pairFees: any
+  decline: any[]
+  orderId: string
+  linkedOrderId: number
+  
+  row: {
+    id: string
+    isMy: boolean
+    buyCurrency: string
+    sellCurrency: string
+    buyAmount: BigNumber
+    sellAmount: BigNumber
+    isRequested: boolean
+    isProcessing: boolean
+    owner: { [key: string]: any }
+  }
+
+  removeOrder: (number) => void
+  checkSwapAllow: ({}) => boolean
+
+  currenciesData?: { [key: string]: any }
+  intl?: { [key: string]: any }
+  peer?: string
+}
+
+type RowState = {
+  enterButton: boolean
+  isFetching: boolean
+  windowWidth: number
+}
 @injectIntl
 @connect(({
   pubsubRoom: { peer },
@@ -35,12 +67,11 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 }))
 
 @cssModules(styles, { allowMultiple: true })
-export default class Row extends Component<any, any> {
+export default class Row extends Component {
   _mounted = false
 
-  static propTypes = {
-    row: PropTypes.object,
-  }
+  props: RowProps
+  state: RowState
 
   constructor(props) {
     super(props)
@@ -295,10 +326,7 @@ export default class Row extends Component<any, any> {
     return showDesktopContent ? (
       <tr
         id={id}
-        styleName={`
-          ${id === linkedOrderId ? 'linkedOrderHighlight' : ''}
-          ${isDark ? 'rowDark' : ''}
-        `}
+        styleName={`${isDark ? 'rowDark' : ''}`}
         style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}
       >
         <td>
@@ -396,7 +424,6 @@ export default class Row extends Component<any, any> {
       <tr
         id={id}
         styleName={`
-          ${id === linkedOrderId ? 'linkedOrderHighlight' : ''}
           ${peer === ownerPeer ? 'mobileRowRemove' : 'mobileRowStart'}
           ${isDark ? 'rowDark' : ''}
         `}
