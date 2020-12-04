@@ -216,11 +216,11 @@ export default class OrderBook extends Component {
       order.buyCurrency === sellCurrency && order.sellCurrency === buyCurrency
     )
 
-    const ordersNoticeText = (
-      <span styleName='ordersNoticeText'>
+    const offersNoticeText = (
+      <span styleName='offersNoticeText'>
         <FormattedMessage
-          id="OrderBookBueOrdersNote"
-          defaultMessage="Searching for Peers and Orders can take a couple of minutes. If no orders are found within a couple of minutes, it means that there are no matching orders or a user who placed the order is offline."
+          id="OrderBookOffersNote"
+          defaultMessage="Searching for Peers and Offers can take a couple of minutes. If no offers are found within a couple of minutes, it means that there are no matching offers or a user who placed the offer is offline."
         />
       </span>
     )
@@ -282,7 +282,7 @@ export default class OrderBook extends Component {
           </Fragment>
         }>
           {buyOrders.length === 0
-            ? ordersNoticeText
+            ? offersNoticeText
             : (
               <Table
                 id="table_exchange"
@@ -328,7 +328,7 @@ export default class OrderBook extends Component {
         }
         >
           {sellOrders.length === 0
-            ? ordersNoticeText
+            ? offersNoticeText
             : (
               <Table
                 id="table_exchange"

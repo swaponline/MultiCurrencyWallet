@@ -3403,10 +3403,7 @@
   },
   {
     "id": "FooterPartnershipForERC20",
-    "message": "For ERC20 tokens",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
+    "message": "For ERC20 tokens"
   },
   {
     "id": "FooterPartnershipForNewsWebsites",
@@ -7949,10 +7946,7 @@
   },
   {
     "id": "localStorageBtnSend",
-    "message": "Send to developers",
-    "files": [
-      "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
-    ]
+    "message": "Send to developers"
   },
   {
     "id": "localStorageUserNotification",
@@ -7963,10 +7957,7 @@
   },
   {
     "id": "SwapLocalStorage",
-    "message": "open your settings",
-    "files": [
-      "src/front/shared/pages/Swap/Swap.tsx"
-    ]
+    "message": "open your settings"
   },
   {
     "id": "FourthStep37BtcLike",
@@ -8232,6 +8223,55 @@
     "message": "Back",
     "files": [
       "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
+    ]
+  },
+  {
+    "id": "FAQServiceFee",
+    "message": "Service fee (only withdraw):",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "FAQServiceFeeDescription",
+    "message": "no less than",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "FAQServiceFeeDisabled",
+    "message": "Disabled",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "NetworkStatusPeersOnlineMessage",
+    "message": "Searching for Peers and Offers can take a couple of minutes. We do not store the offers on a centralized server. Instead, we use libp2p network by Protocol Labs that works like a Torrent network, which means that each user such as yourself is a peer in this network. If no offers are found within a couple of minutes, it means that there are no matching offers or a user who placed the offer is offline.",
+    "files": [
+      "src/front/shared/components/NetworkStatus/NetworkStatus.tsx"
+    ]
+  },
+  {
+    "id": "OrderBookOffersNote",
+    "message": "Searching for Peers and Offers can take a couple of minutes. If no offers are found within a couple of minutes, it means that there are no matching offers or a user who placed the offer is offline.",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+    ]
+  },
+  {
+    "id": "DebugStoredDataLink",
+    "message": "Show stored data",
+    "files": [
+      "src/front/shared/pages/Swap/Debug/Debug.tsx"
+    ]
+  },
+  {
+    "id": "DebugSwapDataTitle",
+    "message": "Swap data:",
+    "files": [
+      "src/front/shared/pages/Swap/Debug/Debug.tsx"
     ]
   }
 ]

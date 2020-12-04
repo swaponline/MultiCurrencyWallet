@@ -3401,10 +3401,7 @@
   },
   {
     "id": "FooterPartnershipForERC20",
-    "message": "Voor ERC20 tokens",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
+    "message": "Voor ERC20 tokens"
   },
   {
     "id": "FooterPartnershipForNewsWebsites",
@@ -7965,10 +7962,7 @@
   },
   {
     "id": "localStorageBtnSend",
-    "message": "Verzenden naar ontwikkelaars",
-    "files": [
-      "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
-    ]
+    "message": "Verzenden naar ontwikkelaars"
   },
   {
     "id": "localStorageUserNotification",
@@ -7979,10 +7973,7 @@
   },
   {
     "id": "SwapLocalStorage",
-    "message": "open your settings",
-    "files": [
-      "src/front/shared/pages/Swap/Swap.tsx"
-    ]
+    "message": "open your settings"
   },
   {
     "id": "FourthStep37BtcLike",
@@ -8248,6 +8239,55 @@
     "message": "Terug",
     "files": [
       "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
+    ]
+  },
+  {
+    "id": "FAQServiceFee",
+    "message": "Service fee (only withdraw):",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "FAQServiceFeeDescription",
+    "message": "no less than",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "FAQServiceFeeDisabled",
+    "message": "Disabled",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "NetworkStatusPeersOnlineMessage",
+    "message": "Het zoeken naar peers en aanbiedingen kan enkele minuten duren. We slaan de aanbiedingen niet op een gecentraliseerde server op. In plaats daarvan gebruiken we het libp2p-netwerk van Protocol Labs dat werkt als een Torrent-netwerk, wat betekent dat elke gebruiker, zoals jij, een peer in dit netwerk is. Als er binnen een paar minuten geen aanbiedingen worden gevonden, betekent dit dat er geen overeenkomende aanbiedingen zijn of dat een gebruiker die de aanbieding heeft geplaatst offline is.",
+    "files": [
+      "src/front/shared/components/NetworkStatus/NetworkStatus.tsx"
+    ]
+  },
+  {
+    "id": "OrderBookOffersNote",
+    "message": "Het zoeken naar peers en aanbiedingen kan enkele minuten duren. Als er binnen een paar minuten geen aanbiedingen worden gevonden, betekent dit dat er geen overeenkomende aanbiedingen zijn of dat een gebruiker die de aanbieding heeft geplaatst offline is.",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+    ]
+  },
+  {
+    "id": "DebugStoredDataLink",
+    "message": "Show stored data",
+    "files": [
+      "src/front/shared/pages/Swap/Debug/Debug.tsx"
+    ]
+  },
+  {
+    "id": "DebugSwapDataTitle",
+    "message": "Swap data:",
+    "files": [
+      "src/front/shared/pages/Swap/Debug/Debug.tsx"
     ]
   }
 ]
