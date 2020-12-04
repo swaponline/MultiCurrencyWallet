@@ -194,7 +194,11 @@ export default class RestoryMnemonicWallet extends React.Component {
       })
       return
     }
-
+    /* 
+    * This callback blocks any action until all wallets are created
+    * So ui does not work
+    * How improve it ?
+    */
     this.setState(
       {
         isFetching: true,
@@ -320,7 +324,7 @@ export default class RestoryMnemonicWallet extends React.Component {
                   blue
                   disabled={!mnemonic || mnemonic.split(' ').length !== 12 || isFetching}
                   onClick={this.handleRestoryWallet}
-                > {/* TODO: почему не работает блокировка после начала востановления */}
+                >
                   {isFetching ? (
                     <FormattedMessage {...langLabels.restoringWallet} />
                   ) : (
