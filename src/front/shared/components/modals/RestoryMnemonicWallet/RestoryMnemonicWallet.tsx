@@ -83,7 +83,6 @@ type RestoryMnemonicWalletState = {
   step: string
   mnemonicIsInvalid: boolean
   isFetching: boolean
-
   data: {
     btcBalance: number
     usdBalance: number
@@ -109,8 +108,7 @@ type RestoryMnemonicWalletState = {
 )
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
 export default class RestoryMnemonicWallet extends React.Component {
-  private TESTNET_TEST_PHRASE = 'vast bronze oyster trade love once fog match rail lock cake science'
-  
+
   props: RestoryMnemonicWalletProps
   state: RestoryMnemonicWalletState
 
@@ -135,10 +133,6 @@ export default class RestoryMnemonicWallet extends React.Component {
   componentDidMount() {
     this.fetchData()
     feedback.restore.started()
-
-    if (config.entry === 'testnet') {
-      // autofill
-    }
   }
 
   fetchData = async () => {
@@ -313,7 +307,10 @@ export default class RestoryMnemonicWallet extends React.Component {
                     </Tooltip>
                   </span>
                 </FieldLabel>
-                <MnemonicInput onChange={this.handleMnemonicChange} />
+                <MnemonicInput 
+                  autoFill={config.entry === 'testnet'}
+                  onChange={this.handleMnemonicChange}
+                />
               </div>
               <div styleName="buttonsHolder">
                 <Button blue onClick={this.handleClose}>
