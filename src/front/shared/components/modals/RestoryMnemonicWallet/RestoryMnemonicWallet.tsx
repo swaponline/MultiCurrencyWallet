@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
 import helpers, { constants } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
@@ -19,7 +18,6 @@ import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-import ReactTooltip from 'react-tooltip'
 import { isMobile } from 'react-device-detect'
 
 import links from 'helpers/links'
@@ -67,6 +65,32 @@ const langLabels = defineMessages({
   },
 })
 
+type RestoryMnemonicWalletProps = {
+  name: string
+  onClose: () => void
+  intl: { [key: string]: any }
+  allCurrensies: { [key: string]: any }[]
+
+  data: {
+    btcBalance: number
+    fiatBalance: number
+    onClose: () => void
+  }
+}
+
+type RestoryMnemonicWalletState = {
+  mnemonic: string
+  step: string
+  mnemonicIsInvalid: boolean
+  isFetching: boolean
+
+  data: {
+    btcBalance: number
+    usdBalance: number
+    showCloseButton: boolean
+  }
+}
+
 @injectIntl
 @connect(
   ({
@@ -84,13 +108,11 @@ const langLabels = defineMessages({
   })
 )
 @cssModules({ ...defaultStyles, ...styles }, { allowMultiple: true })
-export default class RestoryMnemonicWallet extends React.Component<any, any> {
-  props: any
-
-  static propTypes = {
-    name: PropTypes.string,
-    data: PropTypes.object,
-  }
+export default class RestoryMnemonicWallet extends React.Component {
+  private TESTNET_TEST_PHRASE = 'vast bronze oyster trade love once fog match rail lock cake science'
+  
+  props: RestoryMnemonicWalletProps
+  state: RestoryMnemonicWalletState
 
   constructor(props) {
     super(props)
@@ -112,8 +134,11 @@ export default class RestoryMnemonicWallet extends React.Component<any, any> {
 
   componentDidMount() {
     this.fetchData()
-    //@ts-ignore
     feedback.restore.started()
+
+    if (config.entry === 'testnet') {
+      // autofill
+    }
   }
 
   fetchData = async () => {
@@ -298,7 +323,7 @@ export default class RestoryMnemonicWallet extends React.Component<any, any> {
                   blue
                   disabled={!mnemonic || mnemonic.split(' ').length !== 12 || isFetching}
                   onClick={this.handleRestoryWallet}
-                >
+                > {/* TODO: почему не работает блокировка после начала востановления */}
                   {isFetching ? (
                     <FormattedMessage {...langLabels.restoringWallet} />
                   ) : (

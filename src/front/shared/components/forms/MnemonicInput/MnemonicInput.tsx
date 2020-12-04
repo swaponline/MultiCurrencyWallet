@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, RefObject } from 'react'
 import { constants } from 'helpers'
 
 import cssModules from 'react-css-modules'
@@ -28,7 +28,7 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 @cssModules(styles, { allowMultiple: true })
 export default class MnemonicInput extends Component<any, any> {
 
-  reactTags: any
+  reactTags: RefObject<any>
 
   constructor (props) {
     super(props)
@@ -77,6 +77,7 @@ export default class MnemonicInput extends Component<any, any> {
 
 
   onInput(query) {
+    console.log('Input')
     const isPasteWords = query.trim().split(/\s+/g)
     if (isPasteWords.length === 12) {
       /* This pasted of phrase */
