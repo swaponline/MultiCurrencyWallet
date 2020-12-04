@@ -127,11 +127,24 @@ class SwapApp {
     }
   }
 
-  getActiveSwaps(): Array<Swap> {
+  getActiveSwaps(): Swap[] {
     return this.attachedSwaps.filter((swap: Swap) => {
       return (swap === null)
         ? false
-        : swap.isFinished()
+        : !swap.isFinished()
+    })
+  }
+
+  getSwapByAddres(coin: string, address: string): Swap[] {
+    return this.attachedSwaps.filter((swap: Swap) => {
+      if (swap
+        && swap.participant
+        && swap.participant[coin.toLowerCase()]
+        && swap.participant[coin.toLowerCase()].address
+        && swap.participant[coin.toLowerCase()].address.toLowerCase() === address.toLowerCase()
+        && !swap.isFinished()
+      ) return true
+      return false
     })
   }
 
