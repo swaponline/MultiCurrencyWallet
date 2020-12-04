@@ -121,11 +121,11 @@ export default class MnemonicInput extends Component {
     * you need to call this callback at least once
     * so pass the last element in the argument
     */
-    const testnetTagsWithoutLastElement = this.TESTNET_TAGS.filter((tag, index) => {
-      return this.TESTNET_TAGS.length - 1 !== index
-    })
-    const returnTags = () => {
-      if (this.isAutofill) {
+   const returnTags = () => {
+     if (this.isAutofill) {
+        const testnetTagsWithoutLastElement = this.TESTNET_TAGS.filter((tag, index) => {
+         return this.TESTNET_TAGS.length - 1 !== index
+        })
         this.isAutofill = false
         return [...testnetTagsWithoutLastElement, tag]
       } else {
