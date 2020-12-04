@@ -19,4 +19,4 @@ RUN cd root && git clone https://github.com/swaponline/MultiCurrencyWallet && cd
 
 EXPOSE 1337 3001 3002 22
 
-CMD    ["npm", "run", "bot"]
+CMD    ["npm", "run", "marketmaker"]
