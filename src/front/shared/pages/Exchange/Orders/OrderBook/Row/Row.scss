@@ -13,7 +13,7 @@
 
   .firstType,
   .secondType {
-    color: gray;
+    color: $indicating-color;
     display: block;
   }
   .tdContainer-1 {
@@ -51,7 +51,7 @@
 }
 
 .rowBindingText {
-  color: $notice-color;
+  color: $indicating-color;
   margin-right: 0.5em;
 }
 

@@ -437,7 +437,7 @@ export default class Row extends Component {
                   ? (<FormattedMessage id="RowMobileFirstTypeYouHave" defaultMessage="You have" />)
                   : (<FormattedMessage id="RowMobileFirstTypeYouGet" defaultMessage="You get" />)}
               </span>
-              <span>{`${mobileFormatCrypto(amount, main)} ${main}`}</span>
+              <span styleName='rowAmount'>{`${mobileFormatCrypto(amount, main)} ${main}`}</span>
             </div>
             <div>
               <i className="fas fa-exchange-alt" />
@@ -448,7 +448,7 @@ export default class Row extends Component {
                   ? (<FormattedMessage id="RowMobileSecondTypeYouGet" defaultMessage="You get" />)
                   : (<FormattedMessage id="RowMobileSecondTypeYouHave" defaultMessage="You have" />)}
               </span>
-              <span>{`${mobileFormatCrypto(total, base)} ${base}`}</span>
+              <span styleName='rowAmount'>{`${mobileFormatCrypto(total, base)} ${base}`}</span>
             </div>
             <div styleName="tdContainer-3">
               {

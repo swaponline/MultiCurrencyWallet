@@ -42,6 +42,9 @@ $walletPaddingTop: 41px;
 
     &:last-child {
       padding-right: 0;
+      // right-align buttons
+      display: flex;
+      justify-content: flex-end;
     }
 
     div {
@@ -182,8 +185,7 @@ $walletPaddingTop: 41px;
 
 @include media-tablet-landscape-and-lower {
   table {
-    display: block;
-    overflow-x: scroll;
+    overflow-x: auto;
   }
 
   // Wallet
