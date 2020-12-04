@@ -189,7 +189,6 @@ export default class OrderBook extends Component {
       ' ',
     ]
 
-    const isPubSubLoaded = isOnline && isAllPeersLoaded
     const seoPage = getSeoPage(location.pathname)
 
     const isWidget = (config && config.isWidget)
@@ -215,6 +214,15 @@ export default class OrderBook extends Component {
       order.buyCurrency === buyCurrency && order.sellCurrency === sellCurrency
       ||
       order.buyCurrency === sellCurrency && order.sellCurrency === buyCurrency
+    )
+
+    const ordersNoticeText = (
+      <span styleName='ordersNoticeText'>
+        <FormattedMessage
+          id="OrderBookBueOrdersNote"
+          defaultMessage="Searching for Peers and Orders can take a couple of minutes. If no orders are found within a couple of minutes, it means that there are no matching orders or a user who placed the order is offline."
+        />
+      </span>
     )
 
     return (
@@ -273,36 +281,32 @@ export default class OrderBook extends Component {
             </div>
           </Fragment>
         }>
-          {isPubSubLoaded &&
-            <p styleName='ordersNote'>
-              <FormattedMessage
-                id="OrderBookBueOrdersNote"
-                defaultMessage="Searching for Peers and Orders can take a couple of minutes. If no orders are found within a couple of minutes, it means that there are no matching orders or a user who placed the order is offline."
-                />
-            </p>
-          }
-          <Table
-            id="table_exchange"
-            className={tableStyles.exchange}
-            styleName="orderBookTable"
-            titles={titles}
-            rows={buyOrders}
-            rowRender={(row) => (
-              <Row
-                key={row.id}
-                orderId={orderId}
-                row={row}
-                decline={decline}
-                history={history}
-                removeOrder={this.removeOrder}
-                linkedOrderId={linkedOrderId}
-                pairFees={pairFees}
-                balances={balances}
-                checkSwapAllow={checkSwapAllow}
+          {buyOrders.length === 0
+            ? ordersNoticeText
+            : (
+              <Table
+                id="table_exchange"
+                className={tableStyles.exchange}
+                styleName="orderBookTable"
+                titles={titles}
+                rows={buyOrders}
+                rowRender={(row) => (
+                  <Row
+                    key={row.id}
+                    orderId={orderId}
+                    row={row}
+                    decline={decline}
+                    history={history}
+                    removeOrder={this.removeOrder}
+                    linkedOrderId={linkedOrderId}
+                    pairFees={pairFees}
+                    balances={balances}
+                    checkSwapAllow={checkSwapAllow}
+                  />
+                )}
               />
-            )}
-            isLoading={buyOrders.length === 0 && !isPubSubLoaded}
-          />
+            )
+          }
         </Panel>
 
         <Panel header={
@@ -323,36 +327,32 @@ export default class OrderBook extends Component {
           </Fragment>
         }
         >
-          {isPubSubLoaded &&
-            <p styleName='ordersNote'>
-              <FormattedMessage
-                id="OrderBookBueOrdersNote"
-                defaultMessage="Searching for Peers and Orders can take a couple of minutes. If no orders are found within a couple of minutes, it means that there are no matching orders or a user who placed the order is offline."
+          {sellOrders.length === 0
+            ? ordersNoticeText
+            : (
+              <Table
+                id="table_exchange"
+                className={tableStyles.exchange}
+                styleName="orderBookTable"
+                titles={titles}
+                rows={sellOrders}
+                rowRender={(row) => (
+                  <Row
+                    key={row.id}
+                    orderId={orderId}
+                    row={row}
+                    decline={decline}
+                    history={history}
+                    removeOrder={this.removeOrder}
+                    linkedOrderId={linkedOrderId}
+                    pairFees={pairFees}
+                    balances={balances}
+                    checkSwapAllow={checkSwapAllow}
+                  />
+                )}
               />
-            </p>
+            )
           }
-          <Table
-            id="table_exchange"
-            className={tableStyles.exchange}
-            styleName="orderBookTable"
-            titles={titles}
-            rows={sellOrders}
-            rowRender={(row) => (
-              <Row
-                key={row.id}
-                orderId={orderId}
-                row={row}
-                decline={decline}
-                history={history}
-                removeOrder={this.removeOrder}
-                linkedOrderId={linkedOrderId}
-                pairFees={pairFees}
-                balances={balances}
-                checkSwapAllow={checkSwapAllow}
-              />
-            )}
-            isLoading={sellOrders.length === 0 && !isPubSubLoaded}
-          />
         </Panel>
         {seoPage && seoPage.footer && <div>{seoPage.footer}</div>}
       </Fragment>

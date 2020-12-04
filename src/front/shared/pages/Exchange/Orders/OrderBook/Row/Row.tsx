@@ -23,7 +23,7 @@ import { localisedUrl } from 'helpers/locale'
 import { BigNumber } from 'bignumber.js'
 import feedback from 'shared/helpers/feedback'
 
-
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @injectIntl
 @connect(({
@@ -295,7 +295,10 @@ export default class Row extends Component<any, any> {
     return showDesktopContent ? (
       <tr
         id={id}
-        styleName={`${id === linkedOrderId ? 'linkedOrderHighlight' : ''}`}
+        styleName={`
+          ${id === linkedOrderId ? 'linkedOrderHighlight' : ''}
+          ${isDark ? 'rowDark' : ''}
+        `}
         style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}
       >
         <td>
@@ -392,7 +395,11 @@ export default class Row extends Component<any, any> {
     (
       <tr
         id={id}
-        styleName={`${id === linkedOrderId ? 'linkedOrderHighlight' : ''} ${peer === ownerPeer ? 'mobileRowRemove' : 'mobileRowStart'}`}
+        styleName={`
+          ${id === linkedOrderId ? 'linkedOrderHighlight' : ''}
+          ${peer === ownerPeer ? 'mobileRowRemove' : 'mobileRowStart'}
+          ${isDark ? 'rowDark' : ''}
+        `}
         style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}
       >
         <td>

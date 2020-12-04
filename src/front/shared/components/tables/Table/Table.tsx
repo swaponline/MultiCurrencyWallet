@@ -13,8 +13,8 @@ type TableProps = {
   
   id?: string
   className?: string
-  textIfEmpty?: string
   isLoading?: boolean
+  textIfEmpty?: JSX.Element
   loadingText?: JSX.Element
   titles?: (string | JSX.Element)[]
 }
@@ -98,14 +98,14 @@ export default class Table extends React.Component {
           {
             isLoading && (
               <tr>
-                <td styleName="color">{loadingText}</td>
+                <td styleName="noticeText">{loadingText}</td>
               </tr>
             )
           }
           {
             !isLoading && !rows.length && (
               <tr>
-                <td styleName="color">{textIfEmpty}</td>
+                <td styleName="noticeText">{textIfEmpty}</td>
               </tr>
             )
           }

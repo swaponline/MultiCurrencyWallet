@@ -1,3 +1,13 @@
+.rowAmount {
+  color: $l-color;
+}
+
+.rowDark {
+  .rowAmount {
+    color: $d-color;
+  }
+}
+
 .mobileRowRemove,
 .mobileRowStart {
 
@@ -43,10 +53,6 @@
 .rowBindingText {
   color: $notice-color;
   margin-right: 0.5em;
-}
-
-.rowAmount {
-  color: $l-color;
 }
 
 .buttonsColumn {
