@@ -2,7 +2,7 @@ class Bot extends React.Component {
   state = {
     items: [],
     kraken_items: [],
-    coins: ['ETH', 'BTC', 'SWAP', 'XSAT', 'HDP', 'USDT', 'JACK', 'WBTC', 'GHOST']
+    coins: ['ETH', 'BTC', 'SWAP', 'XSAT', 'HDP', 'USDT', 'JACK', 'WBTC', 'GHOST', 'NEXT']
   }
 
   componentDidMount() {

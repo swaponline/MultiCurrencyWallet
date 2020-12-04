@@ -2374,10 +2374,7 @@
   },
   {
     "id": "WithdrawModal263",
-    "message": "Necesitas {minAmount} ETH en tu saldo",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
-    ]
+    "message": "Necesitas {minAmount} ETH en tu saldo"
   },
   {
     "id": "WithdrawModalErrorSend",
@@ -6271,10 +6268,7 @@
   },
   {
     "id": "AdminFee_MessageWithAmount",
-    "message": "Comisión {calcedAmount} {currency}",
-    "files": [
-      "src/front/shared/components/AdminFeeInfoBlock/AdminFeeInfoBlock.tsx"
-    ]
+    "message": "Comisión {calcedAmount} {currency}"
   },
   {
     "id": "InfoPay_2_Ready",
@@ -7806,10 +7800,7 @@
   },
   {
     "id": "MainFAQ2_content4",
-    "message": "Cargando",
-    "files": [
-      "src/front/shared/components/FAQ/FAQ.tsx"
-    ]
+    "message": "Cargando"
   },
   {
     "id": "FilterTextAll",
@@ -7939,7 +7930,32 @@
   },
   {
     "id": "Withdrow214",
-    "message": "Gastos de gestión {currency}: {adminFee}",
+    "message": "Gastos de gestión {currency}: {adminFee}"
+  },
+  {
+    "id": "WithdrowModalCommonFee",
+    "message": "Tarifa total que paga:",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "WithdrowModalMinerFee",
+    "message": "Tarifa de minero:",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawModalMinerFeeDescription",
+    "message": "Cantidad de criptomoneda pagada para incentivar a los mineros a confirmar su transacción",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "WithdrowModalServiceFee",
+    "message": "Tarifa de servicio:",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]

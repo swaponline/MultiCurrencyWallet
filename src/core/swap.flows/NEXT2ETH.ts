@@ -656,6 +656,20 @@ class NEXT2ETH extends Flow {
     }, true)
   }
 
+  getScriptValues() {
+    const {
+      nextScriptValues: scriptValues,
+    } = this.state
+    return scriptValues
+  }
+
+  getScriptCreateTx() {
+    const {
+      nextScriptCreatingTransactionHash: createTx,
+    } = this.state
+    return createTx
+  }
+  
   async isRefundSuccess() {
     const { refundTransactionHash, isRefunded } = this.state
     if (refundTransactionHash && isRefunded) {

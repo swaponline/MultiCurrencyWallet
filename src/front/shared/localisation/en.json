@@ -2374,10 +2374,7 @@
   },
   {
     "id": "WithdrawModal263",
-    "message": "You need {minAmount} ETH on your balance",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
-    ]
+    "message": "You need {minAmount} ETH on your balance"
   },
   {
     "id": "WithdrawModalErrorSend",
@@ -6318,10 +6315,7 @@
   },
   {
     "id": "AdminFee_MessageWithAmount",
-    "message": "Commission {calcedAmount} {currency}",
-    "files": [
-      "src/front/shared/components/AdminFeeInfoBlock/AdminFeeInfoBlock.tsx"
-    ]
+    "message": "Commission {calcedAmount} {currency}"
   },
   {
     "id": "InfoPay_2_Ready",
@@ -7782,10 +7776,7 @@
   },
   {
     "id": "MainFAQ2_content4",
-    "message": "Loading",
-    "files": [
-      "src/front/shared/components/FAQ/FAQ.tsx"
-    ]
+    "message": "Loading"
   },
   {
     "id": "FilterTextAll",
@@ -7915,7 +7906,32 @@
   },
   {
     "id": "Withdrow214",
-    "message": "Admin Fee {currency}: {adminFee}",
+    "message": "Admin Fee {currency}: {adminFee}"
+  },
+  {
+    "id": "WithdrowModalCommonFee",
+    "message": "Total fee you pay:",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "WithdrowModalMinerFee",
+    "message": "Miner Fee:",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "WithdrawModalMinerFeeDescription",
+    "message": "Amount of cryptocurrency paid to incentivize miners to confirm your transaction",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "WithdrowModalServiceFee",
+    "message": "Service Fee:",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]

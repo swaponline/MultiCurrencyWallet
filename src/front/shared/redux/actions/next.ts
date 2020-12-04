@@ -15,6 +15,10 @@ import config from 'app-config'
 const bitcore = require('bitcore-lib')
 import { localisePrefix } from 'helpers/locale'
 import * as mnemonicUtils from '../../../../common/utils/mnemonic'
+import { default as nextUtils } from '../../../../common/utils/coin/next'
+
+
+const NETWORK = (process.env.MAINNET) ? `MAINNET` : `TESTNET`
 
 
 const hasAdminFee = (config
@@ -287,35 +291,16 @@ const getBalance = () => {
   })
 }
 
-const fetchBalance = (address) => {
-  return apiLooper.get('nextExplorer', `/address/${address}`, {
-    checkStatus: (answer) => {
-      try {
-        if (answer && answer.balance !== undefined) return true
-      } catch (e) { /* */ }
-      return false
-    },
-    ignoreErrors: true,
-    reportErrors: (answer, onSuccess, onFail) => {
-      onSuccess({ balance: 0 })
-      return true
-    },
-  }).then(({ balance }) => balance)
-}
+const fetchBalance = (address) => nextUtils.fetchBalance({
+  address,
+  NETWORK,
+})
 
-const fetchTx = (hash, cacheResponse) =>
-  apiLooper.get('nextExplorer', `/tx/${hash}`, {
-    cacheResponse,
-    checkStatus: (answer) => {
-      try {
-        if (answer && answer.txId !== undefined) return true
-      } catch (e) { /* */ }
-      return false
-    },
-  }).then(({ fees, ...rest }) => ({
-    fees: new BigNumber(fees).multipliedBy(1e8),
-    ...rest,
-  }))
+const fetchTx = (hash, cacheResponse) => nextUtils.fetchTx({
+  hash,
+  cacheResponse,
+  NETWORK,
+})
 
 const fetchTxRaw = (txId, cacheResponse) =>
   apiLooper.get('nextExplorer', `/rawtx/${txId}`, {
@@ -328,60 +313,11 @@ const fetchTxRaw = (txId, cacheResponse) =>
     },
   }).then(({ rawtx }) => rawtx)
 
-/** to-do  not working **/
-const fetchTxInfo = (hash, cacheResponse) =>
-  fetchTx(hash, cacheResponse)
-    .then((txInfo_: any) => {
-
-      return { ...txInfo_ }
-      const { vin, vout, ...rest } = txInfo_
-      const senderAddress = vin ? vin[0].addr : null
-      const amount = vout ? new BigNumber(vout[0].value).toNumber() : null
-
-      let afterBalance = vout && vout[1] ? new BigNumber(vout[1].value).toNumber() : null
-      let adminFee: any = false
-
-      if (hasAdminFee) {
-        const adminOutput = vout.filter((out) => (
-          out.scriptPubKey.addresses
-          && out.scriptPubKey.addresses[0] === hasAdminFee.address
-          && !(new BigNumber(out.value).eq(amount))
-        ))
-
-        const afterOutput = vout.filter((out) => (
-          out.addresses
-          && out.addresses[0] !== hasAdminFee.address
-          && out.addresses[0] !== senderAddress
-        ))
-
-        if (afterOutput.length) {
-          afterBalance = new BigNumber(afterOutput[0].value).toNumber()
-        }
-
-        if (adminOutput.length) {
-          adminFee = new BigNumber(adminOutput[0].value).toNumber()
-        }
-      }
-
-      const txInfo = {
-        amount,
-        afterBalance,
-        senderAddress,
-        receiverAddress: vout ? vout[0].scriptPubKey.addresses : null,
-        //@ts-ignore
-        confirmed: !!(rest.confirmations),
-        minerFee: rest.fees.dividedBy(1e8).toNumber(),
-        adminFee,
-        minerFeeCurrency: 'NEXT',
-        outputs: vout.map((out) => ({
-          amount: new BigNumber(out.value).toNumber(),
-          address: out.scriptPubKey.addresses || null,
-        })),
-        ...rest,
-      }
-
-      return txInfo
-    })
+const fetchTxInfo = (hash, cacheResponse) => nextUtils.fetchTxInfo({
+  hash,
+  cacheResponse,
+  NETWORK,
+})
 
 const getInvoices = (address) => {
   const { user: { nextData: { userAddress } } } = getState()
@@ -557,17 +493,16 @@ const send = ({ from, to, amount, feeValue, speed } = {}) => {
 }
 
 
-const fetchUnspents = (address) =>
-  apiLooper.get('nextExplorerCustom', `/addr/${address}/utxo`, { cacheResponse: 5000 })
+const fetchUnspents = (address) => nextUtils.fetchUnspents({
+  address,
+  NETWORK,
+})
 
 
-const broadcastTx = (rawTx) => {
-  return apiLooper.post('nextExplorer', `/sendrawtransaction`, {
-    body: {
-      rawtx: rawTx,
-    },
-  })
-}
+const broadcastTx = (txRaw) => nextUtils.broadcastTx({
+  txRaw,
+  NETWORK,
+})
 
 const signMessage = (message, encodedPrivateKey) => {
   //@ts-ignore
@@ -580,39 +515,11 @@ const signMessage = (message, encodedPrivateKey) => {
 }
 
 const getReputation = () => Promise.resolve(0)
-//@ts-ignore
-window.getMainPublicKey = getMainPublicKey
 
-
-const checkWithdraw = (scriptAddress) => {
-  return apiLooper.get('nextExplorerCustom', `/txs/${scriptAddress}`, {
-    checkStatus: (answer) => {
-      try {
-        if (answer && answer.txs !== undefined) return true
-      } catch (e) { /* */ }
-      return false
-    },
-    query: 'next_balance',
-  }).then((res: any) => {
-    if (res.txs.length > 1
-      && res.txs[0].vout.length
-    ) {
-      const address = res.txs[0].vout[0].scriptPubKey.addresses[0]
-      const amount = res.txs[0].vout[0].valueSat
-
-      const {
-        txid,
-      } = res.txs[0]
-      return {
-        address,
-        txid,
-        amount,
-      }
-    }
-    return false
-  })
-}
-
+const checkWithdraw = (scriptAddress) => nextUtils.checkWithdraw({
+  scriptAddress,
+  NETWORK,
+})
 
 export default {
   login,

@@ -1,5 +1,8 @@
 import BigNumber from 'bignumber.js'
 import request from 'request-promise-cache'
+import * as configStorage from '../../config/storage'
+import getUnixTimeStamp from 'common/utils/getUnixTimeStamp'
+
 
 
 const BTC_SYMBOL = 1 // BTC
@@ -14,6 +17,10 @@ const YOBIT_API = `https://yobit.net/api/3`
 
 const btcPrice = () => getNoxonPrice('BTC', 'USD')
 const usdPrice = () => btcPrice().then(usds => new BigNumber(1).div(usds))
+
+
+let _priceCache = {}
+const _priceCacheTime = 60 // 60 секунд, для облегчения на этапе заполнения ордеров
 
 export const getNoxonPrice = (symbol, base = 'BTC') => {
   return request({
@@ -71,8 +78,9 @@ export const getNoxonPrice = (symbol, base = 'BTC') => {
 const getYobitPrice = (symbol) =>
   request(`${YOBIT_API}/ticker/${symbol.toLowerCase()}`)
     .then(res => JSON.parse(res))
-    .then(json => json[symbol.toLowerCase()].last
-    )
+    .then((json) => {
+      return json[symbol.toLowerCase()].last
+    })
     .then(num => new BigNumber(num))
     .catch(error => {
       console.error(`Cannot get (getYobitPrice) ${symbol} price: ${error}`)
@@ -94,6 +102,9 @@ export const getPrice = (symbol, base = 'BTC') =>
 
 
 export const getPriceByPair = async (pair, type?) => {
+  if (configStorage.hasTradeConfig()) {
+    return await calcPairPrice(pair)
+  }
   if (type) {
     switch (type) {
       case 'token':
@@ -137,6 +148,14 @@ export const getPriceByPair = async (pair, type?) => {
 
     case 'SWAP-BTC':
       return usdPrice().then(price => price.multipliedBy('1'))
+    case 'USDT-NEXT':
+      return new BigNumber(0.0001)
+    case 'ETH-NEXT':
+      return new BigNumber(0.001)
+      return usdPrice().then(price => {
+        console.log('getPrice for ETH-NEXT', price, price.toString())
+        return price.multipliedBy(1)
+      })
     case 'USDT-BTC':
       return usdPrice().then(price => {
         console.log('getPrice for USDT-BTC', price, price.toString())
@@ -170,12 +189,16 @@ export const getPriceByPair = async (pair, type?) => {
 
 export const syncPrices = async () => {
   console.log('app.middlewares.prices syncPrices')
+
+
   return {
     'ETH-BTC': await getPrice(ETH_SYMBOL),
     'JOT-BTC': await getPrice(JOT_SYMBOL),
     'USD-BTC': await usdPrice(),
     'WBTC-BTC': new BigNumber('1'),
     'BTC-WBTC': new BigNumber('1'),
+    'ETH-NEXT': new BigNumber(0.001),
+    'USDT-NEXT': new BigNumber(0.0001),
     'SWAP-BTC': await usdPrice().then(price => price.multipliedBy('5')),
     'USDT-BTC': await usdPrice().then(price => price.multipliedBy('1')),
     'SNM-BTC': await getPrice(SNM_SYMBOL),
@@ -185,6 +208,83 @@ export const syncPrices = async () => {
     'BTRM-BTC': await getYobitPrice('BTRM_BTC'),
     'XSAT-BTC': await usdPrice().then(price => price.multipliedBy('0.13')),
   }
+}
+
+export const getCoinPriceCache = (coin: string): BigNumber => {
+  if (_priceCache[coin]) {
+    if (getUnixTimeStamp() < _priceCache[coin].utx) {
+      return _priceCache[coin].price
+    }
+  }
+  return null
+}
+
+export const getCoinPrice = (coin: string):Promise<BigNumber> => {
+  return new Promise(async (resolve) => {
+    const cachedPrice: BigNumber = getCoinPriceCache(coin)
+    if (cachedPrice !== null) {
+      resolve(cachedPrice)
+    } else {
+      const priceConfig = configStorage.getCoinPriceConfig(coin)
+      if (priceConfig) {
+        let coinPrice = new BigNumber(0)
+        switch (priceConfig.source) {
+          case `FIXED`: // Фиксированая цена
+            coinPrice = new BigNumber(priceConfig.price)
+            break;
+          case `API`: // API
+            switch (priceConfig.api) {
+              case `SWAPONLINE`:
+                coinPrice = new BigNumber(await getNoxonPrice(coin, 'USD'))
+                break
+              case `YOBIT`:
+                coinPrice = new BigNumber(await getYobitPrice(`${coin.toLowerCase()}_usd`))
+                break
+              default:
+                console.warn(`Unknown price API '${priceConfig.api}' for coin '${coin}'.`)
+                break
+            }
+            break;
+          case `COIN`:  // От цены другой монеты
+            const baseCoinPrice = await getCoinPrice(priceConfig.coin)
+            coinPrice = baseCoinPrice.multipliedBy(priceConfig.count)
+        }
+        // Check stoplost
+        if (priceConfig.minSafePrice) {
+          if (coinPrice.isLessThan(priceConfig.minSafePrice)) {
+            coinPrice = new BigNumber(priceConfig.minSafePrice)
+          }
+        }
+        _priceCache[coin] = {
+          price: coinPrice,
+          utx: getUnixTimeStamp() + _priceCacheTime,
+        }
+        resolve(coinPrice)
+      } else {
+        /*
+          Бот в режиме единого конфига
+          Не удалось найти параметры расчета для монеты
+          Нужно проверить правильность единой конфигурации (./tradeconfig.[network].json)
+        */
+        console.warn(`Price for ${coin} not calculated - used Zero (0)`)
+        console.warn(`In our world it is impossible to divide by zero :(`)
+        console.warn(`May be errors in stack trace after this warning. For fix find this line`)
+        resolve(new BigNumber(0))
+      }
+    }
+  })
+}
+
+export const calcPairPrice = async (pair) => {
+  const [ head, base ] = pair.split(`-`)
+  // Нужно расчитать соотношение одной цены к другой.
+  // В боте валюты привязаны к BTC
+  const headPrice = await getCoinPrice(head)
+  const basePrice = await getCoinPrice(base)
+
+  const price = headPrice.dividedBy(basePrice)
+
+  return price
 }
 
 export default getPriceByPair

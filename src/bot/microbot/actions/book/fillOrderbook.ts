@@ -3,17 +3,25 @@ import _debug from 'debug'
 
 import handleError from '../../../app/actions/errors/handleError'
 import fetchPrice from '../../../app/actions/fetchPrice'
+import * as configStorage from '../../../config/storage'
 import Pair from '../../Pair'
+import * as colors from 'common/utils/colorString'
+
 
 import {
-  TRADE_CONFIG,
-  TRADE_ORDER_MINAMOUNTS,
-  TRADE_TICKERS,
+  TRADE_CONFIG as DEFAULT_TRADE_CONFIG,
+  TRADE_ORDER_MINAMOUNTS as DEFAULT_TRADE_ORDER_MINAMOUNTS,
+  TRADE_TICKERS as DEFAULT_TRADE_TICKERS,
   PAIR_TYPES
 } from '../../../config/constants'
 
 import { createOrder, removeMyOrders } from '../../core/orders'
 import Order from 'swap.orders/Order'
+
+
+const TRADE_ORDER_MINAMOUNTS = (configStorage.hasTradeConfig()) ? configStorage.getMinAmount() : DEFAULT_TRADE_ORDER_MINAMOUNTS
+const TRADE_CONFIG = (configStorage.hasTradeConfig()) ? configStorage.getTradePairs() : DEFAULT_TRADE_CONFIG
+const TRADE_TICKERS = (configStorage.hasTradeConfig()) ? configStorage.getTradeTickers() : DEFAULT_TRADE_TICKERS
 
 
 const debug = (...args) => console.log(new Date().toISOString(), ...args) //_debug('swap.bot')
@@ -44,13 +52,20 @@ const checkHaveSpread = (tickerOrder, orderType) =>
     ? true
     : false
 
-const getSpread = (tickerOrder, orderType) => orderType === 'buy'
-  ? new BigNumber(100)
-    .minus(tickerOrder.spreadBuy)
-    .dividedBy(100)
-  : new BigNumber(100)
-    .plus(tickerOrder.spreadSell)
-    .dividedBy(100)
+const getSpread = (tickerOrder, orderType) => {
+  if (process.env.SPREAD) {
+    return new BigNumber(100)
+      .minus(process.env.SPREAD)
+      .dividedBy(100)
+  }
+  return orderType === 'buy'
+    ? new BigNumber(100)
+      .minus(tickerOrder.spreadBuy)
+      .dividedBy(100)
+    : new BigNumber(100)
+      .plus(tickerOrder.spreadSell)
+      .dividedBy(100)
+}
 
 const createOrders = (orderType, balance, ticker, tickerOrders, basePrice) => {
   const orders = []
