@@ -1,4 +1,3 @@
-import { RefObject } from 'react';
 import bip32 from 'bip32'
 import bip39 from'bip39'
 import bitcore from 'bitcore-lib'
