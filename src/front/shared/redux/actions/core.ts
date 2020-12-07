@@ -339,7 +339,7 @@ const getInformationAboutSwap = (swapId) => {
 
 const getHiddenCoins = () => getState().core.hiddenCoinsList || []
 
-const markCoinAsHidden = (coin, doBackup) => {
+const markCoinAsHidden = (coin, doBackup = false) => {
   let list = getState().core.hiddenCoinsList || []
   if (!list.includes(coin)) {
     reducers.core.markCoinAsHidden(coin)
