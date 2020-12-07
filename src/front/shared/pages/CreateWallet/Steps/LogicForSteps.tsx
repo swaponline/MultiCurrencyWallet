@@ -91,10 +91,8 @@ export default class LogicForSteps extends Component<any, any> {
     const curState = {}
     items.forEach(({ currency }) => { curState[currency] = false })
     if (isWidgetBuild && config && config.erc20) {
-      //@ts-ignore
       if (window && window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
         // Multi token build
-        //@ts-ignore
         Object.keys(window.widgetERC20Tokens).forEach((tokenSymbol) => {
           if (config.erc20[tokenSymbol]) {
             this.widgetStartPack.push({

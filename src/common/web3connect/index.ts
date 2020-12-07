@@ -205,7 +205,6 @@ export default class Web3Connect extends EventEmitter {
     // @ToDo - Hard fix walletconnect
     // https://github.com/WalletConnect/walletconnect-monorepo/issues/384
     if (window) {
-      //@ts-ignore
       window.send = (e,t) => {
         return _web3provider.send(e,t)
       }

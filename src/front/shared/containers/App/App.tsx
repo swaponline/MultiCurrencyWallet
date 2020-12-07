@@ -312,7 +312,6 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     this.processMetamask()
 
     this.checkIfDashboardModalsAllowed()
-    //@ts-ignore
     window.actions = actions;
 
     window.onerror = error => {
@@ -322,19 +321,16 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     try {
       const db = indexedDB.open("test");
       db.onerror = () => {
-        //@ts-ignore
         window.leveldown = memdown;
       };
     } catch (e) {
-      //@ts-ignore
       window.leveldown = memdown;
     }
 
     actions.user.sign();
     await createSwapApp();
-    //@ts-ignore
+
     this.setState(() => ({ fetching: true }));
-    //@ts-ignore
     window.prerenderReady = true;
 
     const appInstalled = (e) => {

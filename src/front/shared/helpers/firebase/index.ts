@@ -67,7 +67,6 @@ const sendData = (userId, dataBasePath, data, isDefault = true) =>
   new Promise(async (resolve) => {
     const database = isDefault
       ? firebase.database()
-      //@ts-ignore
       : firebase.database(window.clientDBinstance)
 
     const usersRef = database.ref(dataBasePath)
@@ -111,7 +110,7 @@ const initialize = () => {
 
   try {
     const firebaseApp = firebase.initializeApp(config)
-    //@ts-ignore
+
     window.firebaseDefaultInstance = firebaseApp
 
     firebase.firestore(firebaseApp)

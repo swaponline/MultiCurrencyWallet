@@ -261,7 +261,6 @@ const createSwapApp = async () => {
     //   }),
     // ) : null
 
-    //@ts-ignore
     window.SwapApp = SwapApp.shared()
     _inited = true
   })

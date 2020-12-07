@@ -54,7 +54,6 @@ export default class PreventMultiTabs extends Component<any, any> {
           <FormattedMessage
             id="PreventMultiTabsWidgetBuild"
             defaultMessage="{widgetName} supports only one active tab. Please close the other open window and refresh to continue."
-            //@ts-ignore
             values={{ widgetName: window.widgetName || 'Atomic Swap Widget' }}
           />
         )}

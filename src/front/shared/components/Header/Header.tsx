@@ -253,13 +253,10 @@ export default class Header extends Component<any, any> {
 
     if (isWidgetBuild) {
       if (
-        //@ts-ignore
         window.widgetERC20Tokens &&
-        //@ts-ignore
         Object.keys(window.widgetERC20Tokens).length
       ) {
         // Multi token widget build
-        //@ts-ignore
         Object.keys(window.widgetERC20Tokens).forEach((key) => {
           widgetCurrencies.push(key.toUpperCase());
         });
@@ -450,13 +447,12 @@ export default class Header extends Component<any, any> {
     } = this.props;
 
     const { exchange, wallet } = links;
+
     const onLogoClickLink =
-      //@ts-ignore
       window && window.LOGO_REDIRECT_LINK
-        //@ts-ignore
         ? window.LOGO_REDIRECT_LINK
         : localisedUrl(locale, links.home);
-    //@ts-ignore
+
     const hasOwnLogoLink = window && window.LOGO_REDIRECT_LINK;
 
     const isWalletPage =
@@ -470,7 +466,6 @@ export default class Header extends Component<any, any> {
       <img
         styleName="otherHeaderLogo"
         className="site-logo-header"
-        //@ts-ignore
         src={isDark ? window.darkLogoUrl : window.logoUrl}
         alt="logo"
       />
@@ -491,8 +486,6 @@ export default class Header extends Component<any, any> {
       </>
       :
       <div styleName="flexebleHeader">
-        {/*
-        //@ts-ignore */}
         {window.logoUrl !== "#" && (
           <div styleName="imgWrapper">
             {hasOwnLogoLink ? (
@@ -520,7 +513,7 @@ export default class Header extends Component<any, any> {
         declineRequest={this.declineRequest}
       />
     )
-    //@ts-ignore
+
     if (isMobile && window.logoUrl) {
       return (
         <header className="data-tut-widget-tourFinish" id="header-mobile" styleName="header-mobile">
@@ -583,7 +576,6 @@ export default class Header extends Component<any, any> {
       <header
         className={cx({
           [styles["header"]]: true,
-          //@ts-ignore
           [styles["widgetHeader"]]: isWidgetBuild && window.logoUrl !== "#",
           [styles["header-fixed"]]: Boolean(sticky),
           [styles["header-promo"]]: isWalletPage && !sticky,

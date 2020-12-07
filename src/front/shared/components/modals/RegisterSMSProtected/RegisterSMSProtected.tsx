@@ -64,7 +64,6 @@ export default class RegisterSMSProtected extends React.Component<any, any> {
 
     this.state = {
       version,
-      //@ts-ignore
       phone: window.DefaultCountryCode || '',
       step,
       error: false,

@@ -63,18 +63,14 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
     ui: { dashboardModalsAllowed },
   }) => {
     let widgetMultiTokens = []
-    //@ts-ignore
     if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
-      //@ts-ignore
       Object.keys(window.widgetERC20Tokens).forEach((key) => {
         widgetMultiTokens.push(key.toUpperCase())
       })
     }
     const tokens =
       config && config.isWidget
-        ? // comment for ts-ignore
-          //@ts-ignore
-          window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length
+        ? window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length
           ? widgetMultiTokens
           : [config.erc20token.toUpperCase()]
         : Object.keys(tokensData).map((k) => tokensData[k].currency)
@@ -345,10 +341,8 @@ export default class Wallet extends Component<any, any> {
     widgetCurrencies.push('GHOST')
     widgetCurrencies.push('NEXT')
     if (isWidgetBuild) {
-      //@ts-ignore
       if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
         // Multi token widget build
-        //@ts-ignore
         Object.keys(window.widgetERC20Tokens).forEach((key) => {
           widgetCurrencies.push(key.toUpperCase())
         })
@@ -542,10 +536,8 @@ export default class Wallet extends Component<any, any> {
     widgetCurrencies.push('GHOST')
     widgetCurrencies.push('NEXT')
     if (isWidgetBuild) {
-      //@ts-ignore
       if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
         // Multi token widget build
-        //@ts-ignore
         Object.keys(window.widgetERC20Tokens).forEach((key) => {
           widgetCurrencies.push(key.toUpperCase())
         })

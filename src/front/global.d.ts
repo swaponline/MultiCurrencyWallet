@@ -7,3 +7,9 @@ declare module 'react' {
     title?: any;
   }
 }
+
+declare global {
+  interface Window {
+    [key: string]: any
+  }
+}
