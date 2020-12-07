@@ -256,8 +256,7 @@ export default class Row extends React.PureComponent<any, any> {
       invoiceStatusText = <FormattedMessage id="RowHistoryInvoiceCancelled" defaultMessage="Отклонен" />
     }
     /* eslint-disable */
-    //@ts-ignore
-    let txLink = `/${getCurrencyKey(type)}/tx/${hash}`
+    let txLink = `/${getCurrencyKey(type, false)}/tx/${hash}`
     if (ethToken.isEthToken({ name: type })) {
       txLink = `/token/${type}/tx/${hash}`
     }
