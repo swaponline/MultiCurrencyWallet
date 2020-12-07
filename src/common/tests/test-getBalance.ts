@@ -88,7 +88,7 @@ const tests = [
     }
     const { coin, network, address, isCoins } = test;
     console.log(`Test: getBalance, ${coin} ${network}, balance ${isCoins ? '> 0' : '= 0'}`)
-    //@ts-ignore
+
     const balance = await coins[coin][network].getBalance(address)
     //console.log(balance)
     if ((balance > 0) == isCoins) {

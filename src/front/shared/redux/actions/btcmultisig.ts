@@ -885,7 +885,6 @@ const addSMSWallet = async (mnemonicOrKey) => {
   let btcSmsPublicKeys = [btcSMSServerKey, mnemonicKey]
 
   await actions.btcmultisig.login_SMS(privateKey, btcSmsPublicKeys)
-  //@ts-ignore
   await getBalance()
 }
 
@@ -934,7 +933,7 @@ const getBalance = (ownAddress = null, ownDataKey = null) => {
     })
 }
 
-const getBalancePin = (checkAddress) => {
+const getBalancePin = () => {
   const { user: { btcMultisigPinData: { address } } } = getState()
 
   return getBalance(address, 'btcMultisigPinData')

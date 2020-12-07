@@ -6,6 +6,11 @@ import fetch from 'node-fetch'
 
 import { networkType } from './../domain/network'
 import bip44 from './../helpers/bip44'
+import { 
+  ICoin,
+  ILibAdapter,
+  IConnector
+} from './interfaces'
 
 
 const netNames = {
@@ -13,7 +18,7 @@ const netNames = {
   //'testnet': 'testnet', // testnet is down
 }
 
-const NEXT = {
+const NEXT: ICoin = {
   ticker: 'NEXT',
   name: 'NEXT.coin',
   precision: 8,
@@ -64,11 +69,10 @@ export default NEXT
 
 
 
-const libAdapter = {
+const libAdapter: ILibAdapter = {
 
   accountFromMnemonic(mnemonic, netName) {
     const network = NEXT[netName]
-    //@ts-ignore
     const settings = network.settings
 
     const seed = bip39.mnemonicToSeedSync(mnemonic)
@@ -117,7 +121,6 @@ const libAdapter = {
 
     const network = NEXT[netName]
     const addressStr = address.toString()
-    //@ts-ignore
     const unspent = await connector.fetchUnspents(network.type, addressStr)
 
     const tx = new bitcore.Transaction()
@@ -134,7 +137,7 @@ const libAdapter = {
 
 
 
-const connector = {
+const connector: IConnector = {
 
   // next.exhnage API documentation:
   // https://explore.next.exchange/#/api
