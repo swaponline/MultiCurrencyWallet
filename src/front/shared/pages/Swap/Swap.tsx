@@ -7,7 +7,8 @@ import cssModules from 'react-css-modules'
 import styles from './Swap.scss'
 
 import { connect } from 'redaction'
-import helpers, { links, constants, request, apiLooper } from 'helpers'
+import helpers, { links, constants, apiLooper } from 'helpers'
+import request from 'common/utils/request'
 import { isMobile } from 'react-device-detect'
 import actions from 'redux/actions'
 import { Link } from 'react-router-dom'
@@ -593,6 +594,7 @@ export default class SwapComponent extends PureComponent<any, any> {
                     defaultMessage="reload the page"
                   />
                 </span>
+
               </p>
 
               {isShowDebug &&

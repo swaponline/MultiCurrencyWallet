@@ -3,7 +3,7 @@ import apiLooper from '../../../common/utils/apiLooper'
 
 
 export default {
-  get: (api, endpoint, options) => apiLooper.get(
+  get: (api, endpoint, options?) => apiLooper.get(
     {
       name: api,
       servers: config.api[api],
@@ -11,7 +11,7 @@ export default {
     endpoint,
     options
   ),
-  post: (api, endpoint, options) => apiLooper.post(
+  post: (api, endpoint, options?) => apiLooper.post(
     {
       name: api,
       servers: config.api[api],

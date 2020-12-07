@@ -332,7 +332,9 @@ export default class Exchange extends Component<any, any> {
     }
     timerProcess()
 
-    SwapApp.shared().services.room.on('new orders', () => this.checkPair())
+    SwapApp.onInit(() => {
+      SwapApp.shared().services.room.on('new orders', () => this.checkPair())
+    })
 
     document.addEventListener('scroll', this.rmScrollAdvice)
 

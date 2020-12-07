@@ -12,6 +12,7 @@ const linksManager = {
   connectWallet: '/connectWallet',
   invoices: '/invoices',
   invoice: '/invoice',
+  localStorage: '/localStorage',
 
   creditCardDeposit: '/creditCardDeposit',
   wallets: '/wallets',
@@ -22,7 +23,6 @@ const linksManager = {
   swap: '/swaps',
   feed: '/feed',
   aboutUs: '/aboutUs',
-  listing: 'https://listing.swaponline.io/',
   test: 'https://testnet.swaponline.io',
   main: 'https://swaponline.io/',
   ieo: '/IEO',
@@ -133,7 +133,6 @@ const linksManager = {
     forstablecoin: 'https://wiki.swaponline.io/for_stablecoins/',
     fordexses: 'https://wiki.swaponline.io/for_dexs/',
     forblockchains: 'https://wiki.swaponline.io/for_blockchains/',
-    forerc20tokens: 'https://listing.swap.online/',
     fornewswebsites: 'https://generator.swaponline.site/generator/',
     whitepaper: 'https://wiki.swaponline.io/en.pdf',
     wiki: 'https://wiki.swaponline.io/',

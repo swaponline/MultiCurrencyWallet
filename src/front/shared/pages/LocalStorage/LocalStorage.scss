@@ -1,0 +1,116 @@
+.localStorageDark {
+  width: 75%;
+  margin: 3em auto 0;
+  padding: 2em;
+  overflow: auto;
+  border-radius: 0.3em;
+  box-shadow: $d-box-shadow;
+  background-color: $d-background-elements;
+  color: $d-color;
+
+  .localStorage__btn {
+    background-color: $d-read-only;
+    color: $d-color;
+  
+    &:hover {
+      background-color:  rgb(73, 73, 73);
+    }
+
+    &.copy::before {
+      background-color:  $d-background-elements;
+      color: $d-color;
+    }
+  }
+
+  .localStorage__copy-tip {
+    background-color: $d-read-only;
+    color: $d-color;
+  }
+
+  .localStorage__json-output {
+    background-color: $d-read-only;
+    color: $d-color;
+  }
+}
+
+.localStorage {
+  width: 75%;
+  margin: 3em auto 0;
+  padding: 2em;
+  overflow: auto;
+  border-radius: 0.3em;
+  box-shadow: $l-box-shadow;
+  background-color: $l-background-elements;
+  color: $l-color;
+}
+
+.localStorage__buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 2em 0 1em;
+}
+
+.localStorage__btn {
+  position: relative;
+  margin: 0 0.4em .4em 0;
+  padding: 0.2em 1.2em;
+  border-radius: 0.3em;
+  height: 55px;
+  font-size: 16px;
+  line-height: 1em;
+  background-color: $l-read-only;
+  color: $l-color;
+  transition: .1s;
+
+  &:hover {
+    background-color:  rgb(196, 196, 196);
+  }
+}
+
+.localStorage__copy-tip {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.4em 1em;
+  border: .1em solid $color-brand;
+  border-radius: 0.3em;
+  background-color: $l-background-elements;
+  color: $l-color;
+  animation: show-tip 1s ease both;
+}
+
+@keyframes show-tip {
+  0% {
+    visibility: hidden;
+    opacity: 0;
+  }
+  75% {
+    top: -40%;
+    visibility: visible;
+    opacity: 1;
+  }
+  100% {
+    top: -60%;
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+.localStorage__json-output {
+  width: 100%;
+  min-height: 25em;
+  padding: 0.6em;
+  border-radius: 0.3em;
+  background-color: $l-read-only;
+  color: $l-color;
+}
+
+
+@media all and (max-width: 700px) {
+  .localStorageDark,
+  .localStorage {
+    width: 90%;
+  }
+}

@@ -32,7 +32,6 @@ class SwapAuth extends ServiceInterface {
     const app = this.app
 
     SwapApp.required(app)
-    console.log('app', app.isSwapApp())
 
     Object.keys(_privateKeys).forEach((name) => {
       if (Object.keys(constants.COINS).indexOf(name) < 0) {

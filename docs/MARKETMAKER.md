@@ -1,0 +1,28 @@
+```
+git clone ...
+npm i 
+npm run marketmaker:testnet SECRET_PHRASE="asd asd asd" SPREAD="5"
+
+```
+![](https://screenshots.wpmix.net/putty_3ISF58oZz8jfJwFuyyMFpfocPTBR7aC4.png)
+
+1. then top up adressess to start trading
+2. don't forget to topup Ethereum balance
+
+![](https://screenshots.wpmix.net/chrome_VfMLfx2KBVUIxaGsQ6ECBEKUq2VMF7Ag.png)
+
+with docker:
+```
+(soon)
+```
+
+
+## update prices, pairs, etc 
+see ./tradeconfig.mainnet.json
+./tradeconfig.testnet.json
+
+
+# ENV vvariables
+```
+TELEGRAM_CHATID = 111 //id for notifications. 1. contact  @get_id_bot to get your id 2. say "hello" to this bot @swaponlinebot 
+```

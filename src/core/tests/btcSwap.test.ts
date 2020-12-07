@@ -2,6 +2,8 @@
 
 
 import SwapApp, { SwapInterface } from 'swap.app'
+// @ToDo - use common/utils/coin/btc
+// @ts-ignore
 import { testnet } from '../simple/src/instances/bitcoin'
 import { BtcSwap } from 'swap.swaps'
 import bitcoin from 'bitcoinjs-lib'

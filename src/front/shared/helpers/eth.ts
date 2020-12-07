@@ -3,20 +3,33 @@ import constants from './constants'
 import api from './api'
 import BigNumber from 'bignumber.js'
 
+<<<<<<< HEAD
 type EstimateFeeValue = {
+=======
+type EstimateFeeOptions = {
+>>>>>>> f5c632a4ca26d055e8d34f88c54924df79f03bff
   method: string
   speed: string
 }
 
+<<<<<<< HEAD
 const estimateFeeValue = async (options: EstimateFeeValue) => {
   const { method = 'send', speed = 'fast' } = options
+=======
+const estimateFeeValue = async (options: EstimateFeeOptions) => {
+  /* 
+  * method -> send, swap
+  * speed -> slow, fast, fastest
+  */
+  const { method, speed } = options
+>>>>>>> f5c632a4ca26d055e8d34f88c54924df79f03bff
   const gasPrice = await estimateGasPrice({ speed })
   const feeValue = new BigNumber(constants.defaultFeeRates.eth.limit[method])
     .multipliedBy(gasPrice)
     .multipliedBy(1e-18)
     .toNumber()
 
-  return feeValue
+  return +feeValue
 }
 
 const estimateGasPrice = async ({ speed = 'fast' } = {}) => {
@@ -38,17 +51,20 @@ const estimateGasPrice = async ({ speed = 'fast' } = {}) => {
 
   const apiSpeeds = {
     slow: 'safeLow',
-    normal: 'standard',
     fast: 'fast',
     fastest: 'fastest',
   }
 
-  //@ts-ignore
-  const apiSpeed = apiSpeeds[speed] || apiSpeed.normal
+  const apiSpeed = apiSpeeds[speed] || apiSpeeds.fast
+  /* 
+  * api returns gas price in x10 Gwei
+  * divided by 10 to convert it to gwei
+  */
+  const apiPrice = new BigNumber(apiResult[apiSpeed]).dividedBy(10).multipliedBy(1e9)
 
-  const apiPrice = new BigNumber(apiResult[apiSpeed]).multipliedBy(1e9)
-
-  return apiPrice >= defaultPrice[speed] ? apiPrice.toString() : defaultPrice[speed]
+  return apiPrice >= defaultPrice[speed] 
+    ? apiPrice.toString()
+    : defaultPrice[speed]
 }
 
 export default {

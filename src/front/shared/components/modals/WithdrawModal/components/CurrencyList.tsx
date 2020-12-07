@@ -6,7 +6,8 @@ import cx from 'classnames'
 import Coin from 'components/Coin/Coin'
 import PartOfAddress from 'pages/Wallet/components/PartOfAddress'
 import { isMobile } from 'react-device-detect'
-import helpers, { constants, links, request } from 'helpers'
+import helpers, { constants, links } from 'helpers'
+import request from 'common/utils/request'
 import actions from 'redux/actions'
 import { localisedUrl } from 'helpers/locale'
 import getCurrencyKey from 'helpers/getCurrencyKey'
@@ -90,10 +91,10 @@ export default class CurrencyList extends Component<any, any> {
               {currentBalance} {getCurrencyKey(currency, true).toUpperCase()}
             </span>
             <span styleName="usd">
-              {(currentActiveAsset.infoAboutCurrency && currentActiveAsset.infoAboutCurrency.price_fiat)
-                ? (currentBalance * currentActiveAsset.infoAboutCurrency.price_fiat).toFixed(2)
-                : (currentBalance * exCurrencyRate).toFixed(2)}{' '}
-              {activeFiat}
+              {currentActiveAsset.infoAboutCurrency && currentActiveAsset.infoAboutCurrency.price_fiat
+                ? <span>{(currentBalance * currentActiveAsset.infoAboutCurrency.price_fiat).toFixed(2)} {activeFiat}</span>
+                : null
+              }
             </span>
           </div>
           <div styleName={cx('customSelectArrow', { active: isAssetsOpen })}></div>
@@ -124,10 +125,10 @@ export default class CurrencyList extends Component<any, any> {
                     {item.balance} {getCurrencyKey(item.currency, true).toUpperCase()}
                   </span>
                   <span styleName="usd">
-                    {(item.infoAboutCurrency && item.infoAboutCurrency.price_fiat)
-                      ? (item.balance * item.infoAboutCurrency.price_fiat).toFixed(2)
-                      : (item.balance * exCurrencyRate).toFixed(2)}{' '}
-                    {activeFiat}
+                    {item.infoAboutCurrency && item.infoAboutCurrency.price_fiat
+                      ? <span>{(item.balance * item.infoAboutCurrency.price_fiat).toFixed(2)} {activeFiat}</span>
+                      : null
+                    }
                   </span>
                 </div>
               </div>

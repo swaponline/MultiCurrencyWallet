@@ -8,7 +8,7 @@ assignees: ''
 ---
 <!-- Please use English -->
 
-# Suggestion for improvement
+## Suggestion for improvement
 
 (What is working not well? What we need to do in order to implement this feature?)
 

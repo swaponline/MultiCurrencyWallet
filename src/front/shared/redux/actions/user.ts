@@ -1,6 +1,7 @@
 import config from 'app-config'
 import moment from 'moment/moment'
-import { request, constants, ethToken } from 'helpers'
+import { constants, ethToken } from 'helpers'
+import request from 'common/utils/request'
 
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
@@ -656,9 +657,7 @@ const getAuthData = (name) => {
 }
 
 const addMessagingToken = (token) => {
-  console.log(12313123123)
-  console.log(token)
-  console.log(12313123123)
+  console.log("Added firebase token to redux store: ", token)
   reducers.user.addMessagingToken({ token })
 }
 

@@ -1,9 +1,9 @@
-import { networks as bitcoinNetworks } from '../instances/bitcoin'
 import { networks as ethereumNetworks } from '../instances/ethereum'
 import tokenSwap from './tokenSwap'
 
-const bitcoin = bitcoinNetworks.mainnet()
+
 const ethereum = ethereumNetworks.mainnet()
+
 
 const id = parseInt(process.argv[2])
         || process.env.SERVER_ID
@@ -27,6 +27,7 @@ const config = {
     fetchBalance: (address) => ethereum.fetchBalance(address),
     estimateGasPrice: ({ speed }) => ethereum.estimateGasPrice({ speed }),
   }),
+<<<<<<< HEAD
   btcSwap: () => ({
     fetchBalance: (address) => bitcoin.fetchBalance(address),
     fetchUnspents: (scriptAddress) => bitcoin.fetchUnspents(scriptAddress),
@@ -41,19 +42,21 @@ const config = {
       }),
     checkWithdraw: (scriptAddress) => bitcoin.checkWithdraw(scriptAddress),
   }),
+=======
+>>>>>>> f5c632a4ca26d055e8d34f88c54924df79f03bff
   // usdtSwap: () => ({
   //   fetchBalance: (address) => bitcoin.fetchOmniBalance(address, 31),
   //   fetchUnspents: (scriptAddress) => bitcoin.fetchUnspents(scriptAddress),
   //   broadcastTx: (txRaw) => bitcoin.broadcastTx(txRaw),
   //   fetchTx: hash => bitcoin.fetchTx(hash),
   // }),
-  noxonTokenSwap: tokenSwap({
+  noxonTokenSwap: () => tokenSwap({
     network: 'mainnet',
     name: 'NOXON',
     decimals: 0,
     tokenAddress: '0x9e4ad79049282f942c1b4c9b418f0357a0637017',
   }),
-  swapTokenSwap: tokenSwap({
+  swapTokenSwap: () => tokenSwap({
     network: 'mainnet',
     name: 'SWAP',
     decimals: 18,

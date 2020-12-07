@@ -1,9 +1,9 @@
-import { networks as bitcoinNetworks } from '../instances/bitcoin'
 import { networks as ethereumNetworks} from '../instances/ethereum'
 import { default as tokenSwap } from './tokenSwap'
 
-const bitcoin = bitcoinNetworks.testnet()
+
 const ethereum = ethereumNetworks.testnet()
+
 
 const id = parseInt(process.argv[2])
         || process.env.SERVER_ID
@@ -27,6 +27,7 @@ const config = {
     fetchBalance: (address) => ethereum.fetchBalance(address),
     estimateGasPrice: ({ speed }) => ethereum.estimateGasPrice({ speed }),
   }),
+<<<<<<< HEAD
   btcSwap: () => ({
     fetchBalance: (address) => bitcoin.fetchBalance(address),
     fetchUnspents: (scriptAddress) => bitcoin.fetchUnspents(scriptAddress),
@@ -41,6 +42,8 @@ const config = {
       }),
     checkWithdraw: (scriptAddress) => bitcoin.checkWithdraw(scriptAddress),
   }),
+=======
+>>>>>>> f5c632a4ca26d055e8d34f88c54924df79f03bff
   noxonTokenSwap: () => tokenSwap({
     network: 'testnet',
     name: 'NOXON',
