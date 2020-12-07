@@ -6,14 +6,17 @@ import fetch from 'node-fetch'
 
 import { networkType } from './../domain/network'
 import bip44 from './../helpers/bip44'
-
+import { 
+  ICoin,
+  ILibAdapter
+} from './interfaces'
 
 const netNames = {
   'mainnet': 'mainnet',
   'testnet': 'testnet',
 }
 
-const LTC = {
+const LTC: ICoin = {
   ticker: 'LTC',
   name: 'Litecoin',
   precision: 8, // ?
@@ -71,17 +74,15 @@ export default LTC
 
 
 
-const libAdapter = {
+const libAdapter: ILibAdapter = {
 
   accountFromMnemonic(mnemonic, netName) {
     const network = LTC[netName]
-    //@ts-ignore
     const settings = network.settings
 
     // todo: move?
 
     const seed = bip39.mnemonicToSeedSync(mnemonic)
-    //@ts-ignore
     const root = bip32.fromSeed(seed, network.bip32settings)
     const derivePath = bip44.createDerivePath(network)
     const child = root.derivePath(derivePath)

@@ -1,3 +1,4 @@
+import { RefObject } from 'react';
 import bip32 from 'bip32'
 import bip39 from'bip39'
 import bitcore from 'bitcore-lib'
@@ -7,14 +8,18 @@ import BigNumber from 'bignumber.js'
 
 import { networkType } from './../domain/network'
 import bip44 from './../helpers/bip44'
-
+import { 
+  ICoin,
+  ILibAdapter,
+  IConnector
+} from './interfaces'
 
 const netNames = {
   'mainnet': 'mainnet',
   'testnet': 'testnet',
 }
 
-const BTC = {
+const BTC: ICoin = {
   ticker: 'BTC',
   name: 'Bitcoin',
   precision: 8,
@@ -80,11 +85,10 @@ export default BTC
 
 
 
-const libAdapter = {
+const libAdapter: ILibAdapter = {
 
   accountFromMnemonic(mnemonic, netName) {
     const network = BTC[netName]
-    // @ts-ignore
     const settings = network.settings
 
     // todo: move?
@@ -134,7 +138,7 @@ const libAdapter = {
 
 
 
-const connector = {
+const connector: IConnector = {
 
   // bitcore API documentation:
   // https://github.com/bitpay/bitcore/blob/master/packages/bitcore-node/docs/api-documentation.md
