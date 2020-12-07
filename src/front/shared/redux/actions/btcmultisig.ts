@@ -933,7 +933,7 @@ const getBalance = (ownAddress = null, ownDataKey = null) => {
     })
 }
 
-const getBalancePin = (checkAddress = null) => {
+const getBalancePin = () => {
   const { user: { btcMultisigPinData: { address } } } = getState()
 
   return getBalance(address, 'btcMultisigPinData')
