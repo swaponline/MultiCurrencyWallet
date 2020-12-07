@@ -221,10 +221,6 @@ export default class WithdrawModal extends React.Component<any, any> {
       * 7% of the transfer token amount
       */
       minAmount[currentCoin] = +this.getMinAmountForEthToken()
-<<<<<<< HEAD
-
-=======
->>>>>>> f5c632a4ca26d055e8d34f88c54924df79f03bff
       minAmount.eth = await helpers.eth.estimateFeeValue({
         method: 'send',
         speed: 'fast',
