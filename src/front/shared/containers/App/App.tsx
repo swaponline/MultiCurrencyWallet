@@ -40,7 +40,6 @@ import metamask from 'helpers/metamask'
 const memdown = require("memdown");
 
 
-//@ts-ignore
 const userLanguage = (navigator.userLanguage || navigator.language || "en-gb").split("-")[0];
 moment.locale(userLanguage)
 

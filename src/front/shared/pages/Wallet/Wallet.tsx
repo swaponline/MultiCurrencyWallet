@@ -453,14 +453,12 @@ export default class Wallet extends Component<any, any> {
           const ipInfo = await firebase.getIPInfo()
 
           const registrationData = {
-            //@ts-ignore
             locale:
               ipInfo.locale ||
-              //@ts-ignore
               (navigator.userLanguage || navigator.language || 'en-gb').split('-')[0],
             ip: ipInfo.ip,
           }
-          //@ts-ignore
+
           if (this.props.messagingToken) {
             //@ts-ignore
             registrationData.messaging_token = this.props.messagingToken

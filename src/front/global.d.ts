@@ -12,4 +12,8 @@ declare global {
   interface Window {
     [key: string]: any
   }
+
+  interface Navigator {
+    [key: string]: any
+  }
 }
