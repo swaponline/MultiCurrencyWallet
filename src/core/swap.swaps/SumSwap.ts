@@ -230,7 +230,7 @@ class SumSwap extends SwapInterface {
    * @param {object|string} data - scriptValues or wallet address
    * @returns {Promise.<void>}
    */
-  async getBalance(data, hashName) {
+  async getBalance(data, hashName?) {
     let address
 
     if (typeof data === 'string') {
@@ -341,7 +341,6 @@ class SumSwap extends SwapInterface {
   async checkBalance(data) {
     const { ownerAddress, expectedValue } = data
     let balance = await util.helpers.repeatAsyncUntilResult(() =>
-      //@ts-ignore
       this.getBalance( ownerAddress )
     )
 

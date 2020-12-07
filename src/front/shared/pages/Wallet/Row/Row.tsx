@@ -145,14 +145,12 @@ export default class Row extends Component<any, any> {
 
         switch (currency) {
           case 'BTC (SMS-Protected)':
-            //@ts-ignore
             await actions.btcmultisig.getBalance()
             break
           case 'BTC (Multisig)':
             await actions.btcmultisig.getBalanceUser(address)
             break
           case 'BTC (PIN-Protected)':
-            //@ts-ignore
             await actions.btcmultisig.getBalancePin()
             break
           default:
