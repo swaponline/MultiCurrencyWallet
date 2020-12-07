@@ -151,7 +151,7 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
 
 type EstimateFeeValueOptions = {
   method?: string
-  speed: string
+  speed: 'fast' | 'normal' | 'slow'
   feeRate?: number
   inSatoshis?: boolean
   address?: string
@@ -187,7 +187,7 @@ const estimateFeeValue = async (options: EstimateFeeValueOptions) => {
     DUST,
     new BigNumber(feeRate)
       .multipliedBy(txSize)
-      .div(1024)
+      .div(1024) // divide by one kilobyte
       .dp(0, BigNumber.ROUND_HALF_EVEN),
   )
 

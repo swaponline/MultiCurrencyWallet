@@ -10,7 +10,7 @@ const isEthOrEthToken = ({ name }) => Object.keys(config.erc20).concat('eth').in
 
 type EstimateFeeOptions = {
   method: string
-  speed: string
+  speed: 'fast' | 'normal' | 'slow'
 }
 
 const estimateFeeValue = async (options: EstimateFeeOptions) => {
