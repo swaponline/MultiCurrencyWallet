@@ -6,7 +6,7 @@ import INJECTED_TYPE from './providers/InjectedType'
 import getProviderByName from './providers'
 import { isInjectedEnabled } from './providers'
 import { isMobile } from 'react-device-detect'
-import detectEthereumProvider from '@metamask/detect-provider'
+
 
 export default class Web3Connect extends EventEmitter {
   _cachedProvider = null
@@ -106,8 +106,8 @@ export default class Web3Connect extends EventEmitter {
   getInjectedType() {
     if (window && window.ethereum) {
       // the keys in brackets because typescript shows an error
-      if (window.ethereum['isLiquality']) return INJECTED_TYPE.LIQUALITY
-      if (window.ethereum['isTrust']) return INJECTED_TYPE.TRUST
+      if (window.ethereum.isLiquality) return INJECTED_TYPE.LIQUALITY
+      if (window.ethereum.isTrust) return INJECTED_TYPE.TRUST
       if (window.ethereum.isMetaMask) return INJECTED_TYPE.METAMASK
       if ((!!window.opr && !!window.opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0) return INJECTED_TYPE.OPERA
 
@@ -126,11 +126,6 @@ export default class Web3Connect extends EventEmitter {
         this._isDAppBrowser = true
       }
     }
-  }
-
-  async tryDetect() {
-    const provider = await detectEthereumProvider()
-    console.log(provider)
   }
 
   isInjectedEnabled() {

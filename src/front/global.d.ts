@@ -9,8 +9,16 @@ declare module 'react' {
 }
 
 declare global {
+  interface IEtheriumProvider {
+    [key: string]: any;
+    isLiquality?: boolean;
+    isTrust?: boolean;
+    isMetaMask2?: boolean;
+  }
+
   interface Window {
-    [key: string]: any
+    [key: string]: any;
+    ethereum?: IEtheriumProvider;
   }
 
   interface Navigator {

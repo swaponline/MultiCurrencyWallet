@@ -18,11 +18,11 @@ export default class InjectedProvider extends InjectedConnector {
     if ((!!window.opr && !!window.opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0) {
       // This is opera
       // the keys in brackets because typescript shows an error
-      await window.ethereum['enable']()
-      return window.ethereum['isConnected']()
+      await window.ethereum.enable()
+      return window.ethereum.isConnected()
     } else {
-      if (window.ethereum['isTrust']) {
-        return window.ethereum['ready']
+      if (window.ethereum.isTrust) {
+        return window.ethereum.ready
       }
       return await super.isAuthorized()
     }
