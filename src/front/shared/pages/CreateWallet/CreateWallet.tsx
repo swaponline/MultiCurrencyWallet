@@ -408,7 +408,7 @@ const CreateWallet = (props) => {
         <div styleName="buttonWrapper">
           <div>
             <button onClick={handleRestoreMnemonic}>
-              <FormattedMessage id="ImportKeys_RestoreMnemonic" defaultMessage="Ввести 12 слов" />
+              <FormattedMessage id="ImportKeys_RestoreMnemonic" defaultMessage="Restore from 12-word seed" />
             </button>
             &nbsp;
             <Tooltip id="ImportKeys_RestoreMnemonic_tooltip">

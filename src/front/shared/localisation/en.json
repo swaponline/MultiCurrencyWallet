@@ -5714,7 +5714,7 @@
   },
   {
     "id": "ImportKeys_RestoreMnemonic",
-    "message": "Enter 12 words recovery phrase",
+    "message": "Restore from 12-word seed",
     "files": [
       "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
     ]

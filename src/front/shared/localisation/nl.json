@@ -5702,7 +5702,7 @@
   },
   {
     "id": "ImportKeys_RestoreMnemonic",
-    "message": "Ik heb mijn 12 woord seed",
+    "message": "Herstel van seed van 12 woorden",
     "files": [
       "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
     ]
