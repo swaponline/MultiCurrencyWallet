@@ -126,6 +126,9 @@ export default class WithdrawModal extends React.Component<any, any> {
     this.setCommissions()
     this.setBalanceOnState()
     feedback.withdraw.entered()
+
+    console.log('withdraw ______ props _______ ', this.props)
+    console.log('withdraw ______ state _______ ', this.state)
   }
 
   componentDidUpdate(prevProps) {
@@ -638,7 +641,7 @@ export default class WithdrawModal extends React.Component<any, any> {
       !address ||
       !+amount || // string to number -> inverting
       isShipped ||
-      ownTx ||
+      !!ownTx ||
       !this.addressIsCorrect() ||
       !criptoValueIsOk ||
       !usdValueIsOk ||
