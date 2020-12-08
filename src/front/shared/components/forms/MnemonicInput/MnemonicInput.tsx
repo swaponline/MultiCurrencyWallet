@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, RefObject } from 'react'
 import { constants } from 'helpers'
 
 import cssModules from 'react-css-modules'
@@ -24,16 +24,53 @@ const langLabels = defineMessages({
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
+type MnemonicInputProps = {
+  onChange: (string) => void
+  fullWidth?: boolean
+  autoFill?: boolean
+  intl?: { [key: string]: any }
+}
+
+type Tags = {
+  id: number
+  name: string
+}[]
+
+type MnemonicInputState = {
+  suggestions: Tags
+  tags: Tags
+  isPlaceholderVisible: boolean
+  busy?: boolean
+}
+
 @injectIntl
 @cssModules(styles, { allowMultiple: true })
-export default class MnemonicInput extends Component<any, any> {
+export default class MnemonicInput extends Component {
+  /* 
+  * This phrase just for test
+  * If config entry point equals testnet
+  * Then fill in the input with a test phrase
+  */
+  private TESTNET_TEST_PHRASE = 'vast bronze oyster trade love once fog match rail lock cake science'
+  private TESTNET_TAGS: Tags
+  private isAutofill = false
 
-  reactTags: any
+  props: MnemonicInputProps
+  state: MnemonicInputState
+  reactTags: RefObject<any>
 
   constructor (props) {
     super(props)
 
+    const { autoFill = false } = props
     const suggestions = bip39.wordlists.english.map((name, id) => { return { id, name } })
+
+    if (autoFill) {
+      this.isAutofill = true
+      this.TESTNET_TAGS = this.TESTNET_TEST_PHRASE.split(' ').map(word => {
+        return suggestions.find(obj => obj.name === word)
+      })
+    }
 
     this.state = {
       tags: [],
@@ -42,6 +79,14 @@ export default class MnemonicInput extends Component<any, any> {
     }
 
     this.reactTags = React.createRef()
+  }
+
+  componentDidMount() {
+    const { autoFill = false } = this.props
+
+    if (autoFill) { // without last element
+      this.onAddition(this.TESTNET_TAGS[this.TESTNET_TAGS.length - 1])
+    }
   }
 
   onChangeCallback () {
@@ -64,36 +109,54 @@ export default class MnemonicInput extends Component<any, any> {
     }
   }
 
-  onDelete (i) {
+  onDelete = (i) => {
     const tags = this.state.tags.slice(0)
     tags.splice(i, 1)
     this.setState({ tags }, this.onChangeCallback )
   }
 
-  onAddition (tag) {
-    const tags = [].concat(this.state.tags, tag)
+  onAddition = (tag) => {
+    /* 
+    * there is probably a better solution to autofill ReactTags component 
+    * you need to call this callback at least once
+    * so pass the last element in the argument
+    */
+   const returnTags = () => {
+     if (this.isAutofill) {
+        const testnetTagsWithoutLastElement = this.TESTNET_TAGS.filter((tag, index) => {
+         return this.TESTNET_TAGS.length - 1 !== index
+        })
+        this.isAutofill = false
+        return [...testnetTagsWithoutLastElement, tag]
+      } else {
+        return [...this.state.tags, tag]
+      }
+    }
+
+    const tags = returnTags()
     this.setState({ tags }, this.onChangeCallback )
   }
 
-
-  onInput(query) {
+  onInput = (query) => {
+    const allowedСhars = /[A-Za-z]/
     const isPasteWords = query.trim().split(/\s+/g)
-    if (isPasteWords.length === 12) {
+
+    if (query.match(allowedСhars) === null) {
+      return null
+    } else if (isPasteWords.length === 12) {
       /* This pasted of phrase */
       const tags = isPasteWords.map((name, id) => { return { id, name } })
       this.setState({ tags }, () => {
         this.reactTags.current.clearInput()
         this.onChangeCallback()
       })
-    } else {
-      if (!this.state.busy) {
-        this.setState({ busy: true })
+    } else if (!this.state.busy) {
+      this.setState({ busy: true })
 
-        return fetch(`query=${query}`).then((result) => {
-          this.setState({ busy: false })
-        })
-      }
-    }
+      return fetch(`query=${query}`).then((result) => {
+        this.setState({ busy: false })
+      })
+    } 
   }
 
   render () {
@@ -117,9 +180,9 @@ export default class MnemonicInput extends Component<any, any> {
           tags={tags}
           autoresize={true}
           suggestions={suggestions}
-          onDelete={this.onDelete.bind(this)}
-          onAddition={this.onAddition.bind(this)}
-          onInput={this.onInput.bind(this)}
+          onDelete={this.onDelete}
+          onAddition={this.onAddition}
+          onInput={this.onInput}
           placeholderText={isPlaceholderVisible ? intl.formatMessage(langLabels.placeholder) : ''}
           removeButtonText={intl.formatMessage(langLabels.deleteText)}
           delimiters={[`Enter`, `Tab`, ` `, `,`]}
