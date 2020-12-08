@@ -2336,7 +2336,7 @@
   },
   {
     "id": "orders1381",
-    "message": "{buyCurrency}🔁{sellCurrency}",
+    "message": "{buyCurrency} 🔁 {sellCurrency}",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
@@ -3403,10 +3403,7 @@
   },
   {
     "id": "FooterPartnershipForERC20",
-    "message": "Para ERC20 tokens",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
+    "message": "Para ERC20 tokens"
   },
   {
     "id": "FooterPartnershipForNewsWebsites",
@@ -7973,10 +7970,7 @@
   },
   {
     "id": "localStorageBtnSend",
-    "message": "Enviar a los desarrolladores",
-    "files": [
-      "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
-    ]
+    "message": "Enviar a los desarrolladores"
   },
   {
     "id": "localStorageUserNotification",
@@ -7987,10 +7981,7 @@
   },
   {
     "id": "SwapLocalStorage",
-    "message": "open your settings",
-    "files": [
-      "src/front/shared/pages/Swap/Swap.tsx"
-    ]
+    "message": "open your settings"
   },
   {
     "id": "FourthStep37BtcLike",
@@ -8256,6 +8247,66 @@
     "message": "Atrás",
     "files": [
       "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
+    ]
+  },
+  {
+    "id": "FAQServiceFee",
+    "message": "Service fee (only withdraw):",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "FAQServiceFeeDescription",
+    "message": "no less than",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "FAQServiceFeeDisabled",
+    "message": "Disabled",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "NetworkStatusPeersOnlineMessage",
+    "message": "La búsqueda de pares y ofertas puede tardar un par de minutos. No almacenamos las ofertas en un servidor centralizado. En su lugar, usamos la red libp2p de Protocol Labs que funciona como una red Torrent, lo que significa que cada usuario, como usted, es un par en esta red. Si no se encuentran ofertas en un par de minutos, significa que no hay ofertas coincidentes o que un usuario que realizó la oferta no está conectado.",
+    "files": [
+      "src/front/shared/components/NetworkStatus/NetworkStatus.tsx"
+    ]
+  },
+  {
+    "id": "OrderBookOffersNote",
+    "message": "La búsqueda de pares y ofertas puede tardar un par de minutos. Si no se encuentran ofertas en un par de minutos, significa que no hay ofertas coincidentes o que un usuario que realizó la oferta no está conectado."
+  },
+  {
+    "id": "DebugStoredDataLink",
+    "message": "Show stored data",
+    "files": [
+      "src/front/shared/pages/Swap/Debug/Debug.tsx"
+    ]
+  },
+  {
+    "id": "DebugSwapDataTitle",
+    "message": "Swap data:",
+    "files": [
+      "src/front/shared/pages/Swap/Debug/Debug.tsx"
+    ]
+  },
+  {
+    "id": "OrderBookOffersNoteOverLoader",
+    "message": "Solicitar ofertas de compañeros en línea",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+    ]
+  },
+  {
+    "id": "OrderBookOffersNoteUnderLoader",
+    "message": "puede tomar un minuto",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
   }
 ]

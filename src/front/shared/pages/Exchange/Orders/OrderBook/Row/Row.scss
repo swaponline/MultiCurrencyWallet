@@ -1,9 +1,19 @@
+.rowAmount {
+  color: $l-color;
+}
+
+.rowDark {
+  .rowAmount {
+    color: $d-color;
+  }
+}
+
 .mobileRowRemove,
 .mobileRowStart {
 
   .firstType,
   .secondType {
-    color: gray;
+    color: $indicating-color;
     display: block;
   }
   .tdContainer-1 {
@@ -41,7 +51,8 @@
 }
 
 .rowBindingText {
-  color: gray;
+  color: $indicating-color;
+  margin-right: 0.5em;
 }
 
 .buttonsColumn {
@@ -55,8 +66,4 @@
       font-size: 12px;
     }
   }
-}
-
-.linkedOrderHighlight {
-  outline: 2px dashed #6144e5;
 }

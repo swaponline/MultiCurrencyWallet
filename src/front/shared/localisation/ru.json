@@ -2409,7 +2409,7 @@
   },
   {
     "id": "orders1381",
-    "message": "{buyCurrency}🔁{sellCurrency}",
+    "message": "{buyCurrency} 🔁 {sellCurrency}",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
@@ -3511,10 +3511,7 @@
   },
   {
     "id": "FooterPartnershipForERC20",
-    "message": "Токенам",
-    "files": [
-      "src/front/shared/components/Footer/Links/Links.tsx"
-    ]
+    "message": "Токенам"
   },
   {
     "id": "FooterPartnershipForNewsWebsites",
@@ -8021,10 +8018,7 @@
   },
   {
     "id": "localStorageBtnSend",
-    "message": "Отправить разработчикам",
-    "files": [
-      "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
-    ]
+    "message": "Отправить разработчикам"
   },
   {
     "id": "localStorageUserNotification",
@@ -8035,10 +8029,7 @@
   },
   {
     "id": "SwapLocalStorage",
-    "message": "open your settings",
-    "files": [
-      "src/front/shared/pages/Swap/Swap.tsx"
-    ]
+    "message": "open your settings"
   },
   {
     "id": "FourthStep37BtcLike",
@@ -8304,6 +8295,66 @@
     "message": "Назад",
     "files": [
       "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
+    ]
+  },
+  {
+    "id": "FAQServiceFee",
+    "message": "Service fee (only withdraw):",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "FAQServiceFeeDescription",
+    "message": "no less than",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "FAQServiceFeeDisabled",
+    "message": "Disabled",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "NetworkStatusPeersOnlineMessage",
+    "message": "Поиск пиров и предложений может занять пару минут. Мы не храним предложения на централизованном сервере. Вместо этого мы используем сеть libp2p от Protocol Labs, которая работает как сеть Torrent, что означает, что каждый пользователь, такой как вы, является одноранговым узлом в этой сети. Если в течение нескольких минут предложений не найдено, это означает, что подходящих предложений нет или пользователь, разместивший предложение, находится в автономном режиме.",
+    "files": [
+      "src/front/shared/components/NetworkStatus/NetworkStatus.tsx"
+    ]
+  },
+  {
+    "id": "OrderBookOffersNote",
+    "message": "Поиск пиров и предложений может занять пару минут. Если в течение нескольких минут предложений не найдено, это означает, что подходящих предложений нет или пользователь, разместивший предложение, находится в автономном режиме."
+  },
+  {
+    "id": "DebugStoredDataLink",
+    "message": "Show stored data",
+    "files": [
+      "src/front/shared/pages/Swap/Debug/Debug.tsx"
+    ]
+  },
+  {
+    "id": "DebugSwapDataTitle",
+    "message": "Swap data:",
+    "files": [
+      "src/front/shared/pages/Swap/Debug/Debug.tsx"
+    ]
+  },
+  {
+    "id": "OrderBookOffersNoteOverLoader",
+    "message": "Запрос предложений от пользователей онлайн",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+    ]
+  },
+  {
+    "id": "OrderBookOffersNoteUnderLoader",
+    "message": "это может занять минуту",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
   }
 ]

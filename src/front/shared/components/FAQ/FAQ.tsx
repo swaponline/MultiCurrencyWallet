@@ -137,19 +137,29 @@ const FAQ = (props) => {
             <FormattedMessage id="FAQServiceFee" defaultMessage="Service fee (only withdraw):" />
             <p className={styles.descriptionFee}>
               <span>BTC:</span>{' '}
-              <span>
-                5%,{' '}
-                <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
-                {' '}<b>{adminFee.calc('BTC', null)}</b> BTC
-              </span> 
+              { adminFee.isEnabled('BTC')
+                  ? (
+                    <span>
+                      5%,{' '}
+                      <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
+                      {' '}<b>{adminFee.calc('BTC', null)}</b> BTC
+                    </span>
+                  )
+                  : <FormattedMessage id="FAQServiceFeeDisabled" defaultMessage="Disabled" />
+              }
             </p>
             <p className={styles.descriptionFee}>
               <span>ETH:</span>{' '}
-              <span>
-                5%,{' '}
-                <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
-                {' '}<b>{adminFee.calc('ETH', null)}</b> ETH
-              </span> 
+              { adminFee.isEnabled('ETH')
+                  ? (
+                    <span>
+                      7%,{' '}
+                      <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
+                      {' '}<b>{adminFee.calc('ETH', null)}</b> ETH
+                    </span>
+                  )
+                  : <FormattedMessage id="FAQServiceFeeDisabled" defaultMessage="Disabled" />
+              }
             </p>
           </div>
         </article>

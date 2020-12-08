@@ -1,51 +1,40 @@
 .title {
   font-size: 14px;
-  color: #b2b2b2;
+  color: $notice-color;
   position: static;
-  z-index: 1049;
+  z-index: 1;
+  display: flex;
+  align-items: center;
 
-  &>span {
-    padding-left: 5px;
+  .status {
+    padding: 0 6px;
     display: inline-block;
     line-height: 1em;
     vertical-align: middle;
-  }
-
-  & span {
     font-weight: bold;
-
   }
 
-  & svg {
-    display: block;
+  .status-tooltip {
+    // fix tooltip margin styles
     position: relative;
-    top: 2px;
-    height: 3px;
+    margin-bottom: -2px;
   }
+
   &.online,
   &.offline {
-    div {
-      display: none;
-      padding-left: 10px;
-    }
     .mark {
       display: inline-block;
       width: 0.5em;
       height: 0.5em;
-      background: #f56e85;
+      background: $color-bad;
       line-height: 1em;
       vertical-align: middle;
       border-radius: 0.5em;
     }
   }
-  &:hover {
-    div {
-      display: inline-block;
-    }
-  }
   &.online {
     .mark {
-      background: #4dd3ab;
+      background: $color-good;
     }
   }
 }
