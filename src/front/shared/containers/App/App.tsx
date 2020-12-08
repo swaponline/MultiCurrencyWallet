@@ -278,7 +278,6 @@ class App extends React.Component<RouteComponentProps<any>, any> {
             && (tokenCode !== `usdt`)
           ) {
             console.log('Hide', tokenCode)
-            //@ts-ignore
             actions.core.markCoinAsHidden(tokenCode.toUpperCase())
           }
         })
@@ -291,14 +290,12 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       if (config && config.isWidget && false) {
         currencies.forEach(({ name }) => {
           if (name !== "BTC" && !config.erc20[name.toLowerCase()]) {
-            //@ts-ignore
             actions.core.markCoinAsHidden(name)
           }
         })
       } else {
         currencies.forEach(({ name }) => {
           if (name !== "BTC") {
-            //@ts-ignore
             actions.core.markCoinAsHidden(name)
           }
         })
