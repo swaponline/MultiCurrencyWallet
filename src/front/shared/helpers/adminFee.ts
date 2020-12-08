@@ -4,8 +4,7 @@ import { BigNumber } from 'bignumber.js'
 
 
 const isEnabled = (currency) => {
-  //@ts-ignore
-  currency = getCurrencyKey(currency).toLowerCase()
+  currency = getCurrencyKey(currency, false).toLowerCase()
   if (config && config.opts && config.opts.fee) {
     if ((currency === `token`) && config.opts.fee.erc20) {
       return config.opts.fee.erc20

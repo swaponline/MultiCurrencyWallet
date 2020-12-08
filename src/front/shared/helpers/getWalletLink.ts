@@ -6,8 +6,7 @@ import actions from 'redux/actions'
 const getWalletLink = (currency, checkAddress) => {
   let ourWallets = false
   const isEthToken = ethToken.isEthToken({ name: currency })
-  //@ts-ignore
-  const prefix = getCurrencyKey(currency)
+  const prefix = getCurrencyKey(currency, false)
 
   if (isEthToken) {
     //@ts-ignore
