@@ -36,6 +36,7 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
 import metamask from 'helpers/metamask'
 
+import { history } from 'redux/store'
 
 const memdown = require("memdown");
 
@@ -84,6 +85,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   constructor(props) {
     super(props);
 
+    console.log('********************** APP constructor', props)
     this.localStorageListener = null;
 
     this.prvMultiTab = {
@@ -406,7 +408,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     //@ts-ignore
     const { fetching, multiTabs, error } = this.state;
     //@ts-ignore
-    const { children, ethAddress, btcAddress, ghostAddress, nextAddress, tokenAddress, history, dashboardModalsAllowed } = this.props;
+    const { children, ethAddress, btcAddress, ghostAddress, nextAddress, tokenAddress, dashboardModalsAllowed } = this.props;
 
     this.overflowHandler()
 
@@ -432,6 +434,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
     const isSeoDisabled = isWidget || isWidgetBuild || isCalledFromIframe
 
+console.log('------------App Render history', history)
     return <HashRouter>
       <div styleName="compressor">
         {!isSeoDisabled &&

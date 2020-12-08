@@ -8,7 +8,7 @@ import Modals from 'components/modals'
 
 import cssModules from 'react-css-modules'
 import styles from './ModalConductor.scss'
-
+import { history } from 'redux/store'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -53,8 +53,9 @@ export default class ModalConductor extends Component<any, any> {
   }
 
   render() {
-    const { modals, history, dashboardView } = this.props
+    const { modals, dashboardView } = this.props
 
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>Modal conductor history', history)
     const modalNames = Object.keys(modals)
     const highestZIndex = Object.values(modals)
       //@ts-ignore 

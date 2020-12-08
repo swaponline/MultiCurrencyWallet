@@ -18,17 +18,21 @@ export default class Root extends React.Component<any, any> {
 
   constructor(props) {
     super(props)
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>> Construction - Root', props)
   }
 
   render() {
     const { history, store, routes } = this.props
 
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>> Construction - Root - render', history)
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <IntlProviderContainer>
-            <App>{routes}</App>
-          </IntlProviderContainer>
+          <>
+            <IntlProviderContainer>
+              <App history={history}>{routes}</App>
+            </IntlProviderContainer>
+          </>
         </ConnectedRouter>
       </Provider>
     )

@@ -614,6 +614,7 @@ export default class Wallet extends Component<any, any> {
       <DashboardLayout
         page={page}
         isDark={isDark}
+        history={"PleaseCrashApp"}
         BalanceForm={
           <BalanceForm
             isDark={isDark}
