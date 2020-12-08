@@ -16,7 +16,7 @@ import Panel from 'components/ui/Panel/Panel'
 import Table from 'components/tables/Table/Table'
 import tableStyles from 'components/tables/Table/Table.scss'
 import Toggle from 'components/controls/Toggle/Toggle'
-
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import PageSeo from 'components/Seo/PageSeo'
 import { getSeoPage } from 'helpers/seo'
 
@@ -27,12 +27,39 @@ import MyOrders from './../MyOrders/MyOrders'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
 import config from 'app-config'
-import { links } from 'helpers'
 import feedback from 'shared/helpers/feedback'
+import { links, getPairFees } from 'helpers'
 
-import { getPairFees } from 'helpers/getPairFees'
 
+type OrderBookProps = {
+  sellCurrency: string
+  buyCurrency: string
 
+  isOnline: boolean
+  invalidPair: boolean
+  isAllPeersLoaded: boolean
+
+  decline: any[]
+  history: { [key: string]: any }
+  intl: { [key: string]: any }
+  location: { [key: string]: any }
+  myOrders: { [key: string]: any }[]
+  currencies: { [key: string]: any }[]
+
+  pairFees: { [key: string]: any } | boolean
+  balances: { [key: string]: number } | boolean
+  
+  linkedOrderId: number
+  orderId: string
+
+  checkSwapAllow: ({}) => boolean
+}
+
+type OrderBookState = {
+  buyOrders: { [key: string]: any }[]
+  sellOrders: { [key: string]: any }[]
+  isShowAllMyOrders: boolean
+}
 
 const filterMyOrders = (orders, peer) => orders
   .filter(order => order.owner.peer === peer)
@@ -56,21 +83,18 @@ const filterOrders = (orders, filter) => orders
   currencies,
   decline: rememberedOrders.savedOrders,
 }))
+//@ts-ignore
 @withRouter
 @injectIntl
 @cssModules(styles, { allowMultiple: true })
-export default class Orders extends Component<any, any> {
-  _mounted = false
+export default class OrderBook extends Component {
 
-  state = {
-    buyOrders: [],
-    sellOrders: [],
-    isShowAllMyOrders: true,
-  }
+  props: OrderBookProps
+  state: OrderBookState
 
   static getDerivedStateFromProps({ orders, sellCurrency, buyCurrency }) {
-    if (!Array.isArray(orders)) {
-      return
+    if (orders.length === 0) {
+      return null
     }
 
     const sellOrders = orders.filter(order =>
@@ -82,10 +106,20 @@ export default class Orders extends Component<any, any> {
       order.buyCurrency.toLowerCase() === sellCurrency &&
       order.sellCurrency.toLowerCase() === buyCurrency
     ).sort((a, b) => Pair.compareOrders(a, b))
-
+      
     return {
       buyOrders,
       sellOrders,
+    }
+  }
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      buyOrders: [],
+      sellOrders: [],
+      isShowAllMyOrders: true,
     }
   }
 
@@ -125,20 +159,27 @@ export default class Orders extends Component<any, any> {
       isShowAllMyOrders,
     } = this.state
 
-    let {
-      sellCurrency,
-      buyCurrency,
+    const { 
       intl,
       decline,
       linkedOrderId,
       pairFees,
-      balances,
+      balances, 
+      history, 
+      isOnline, 
+      isAllPeersLoaded, 
+      myOrders, 
+      orderId, 
+      location, 
+      currencies,
+      checkSwapAllow,
+      buyCurrency: propsBuyCurrency,
+      sellCurrency: propsSellCurrency,
+      invalidPair,
     } = this.props
 
-    const { history } = this.props
-
-    buyCurrency = buyCurrency.toUpperCase()
-    sellCurrency = sellCurrency.toUpperCase()
+    const buyCurrency = propsBuyCurrency.toUpperCase()
+    const sellCurrency = propsSellCurrency.toUpperCase()
 
     const titles = [
       ' ',
@@ -148,9 +189,6 @@ export default class Orders extends Component<any, any> {
       ' ',
     ]
 
-
-    const { isOnline, isAllPeersLoaded, myOrders, orderId, invalidPair, location, currencies } = this.props
-    const isPubSubLoaded = isOnline && isAllPeersLoaded
     const seoPage = getSeoPage(location.pathname)
 
     const isWidget = (config && config.isWidget)
@@ -178,6 +216,22 @@ export default class Orders extends Component<any, any> {
       order.buyCurrency === sellCurrency && order.sellCurrency === buyCurrency
     )
 
+    const offersNoticeText = (
+      <div styleName='offersNotice'>
+        <FormattedMessage
+          id="OrderBookOffersNoteOverLoader"
+          defaultMessage="Requesting offers from peers online"
+        />
+        <div styleName='loader'>
+          <InlineLoader />
+        </div>
+        <FormattedMessage
+          id="OrderBookOffersNoteUnderLoader"
+          defaultMessage="it may take a minute"
+        />
+      </div>
+    )
+
     return (
       <Fragment>
         <PageSeo
@@ -185,12 +239,6 @@ export default class Orders extends Component<any, any> {
           defaultTitle={intl.formatMessage(title.metaTitle, { buyCurrency, sellCurrency, buyCurrencyFullName, sellCurrencyFullName })}
           defaultDescription={intl.formatMessage(description.metaDescription, { buyCurrency, sellCurrency, buyCurrencyFullName, sellCurrencyFullName })}
         />
-
-        {/* {invalidPair &&
-          <p>
-            <FormattedMessage id="Orders141" defaultMessage="No such ticker. Redirecting to USDT-BTC exchange..." />
-          </p>
-        } */}
 
         {!!myOrders.length &&
           <Panel
@@ -204,7 +252,7 @@ export default class Orders extends Component<any, any> {
                 <div styleName="subtitle showAllSwitch">
                   <FormattedMessage
                     id="orders1381"
-                    defaultMessage="{buyCurrency}🔁{sellCurrency}"
+                    defaultMessage="{buyCurrency} 🔁 {sellCurrency}"
                     values={{ buyCurrency, sellCurrency }}
                   />
                   {/*
@@ -223,7 +271,6 @@ export default class Orders extends Component<any, any> {
             />
           </Panel>
         }
-
         <Panel header={
           <Fragment>
             <h3 styleName="ordersHeading">
@@ -241,28 +288,32 @@ export default class Orders extends Component<any, any> {
             </div>
           </Fragment>
         }>
-          <Table
-            id="table_exchange"
-            className={tableStyles.exchange}
-            styleName="orderBookTable"
-            titles={titles}
-            rows={buyOrders}
-            rowRender={(row) => (
-              <Row
-                key={row.id}
-                orderId={orderId}
-                row={row}
-                decline={decline}
-                history={history}
-                removeOrder={this.removeOrder}
-                linkedOrderId={linkedOrderId}
-                pairFees={pairFees}
-                balances={balances}
-                checkSwapAllow={this.props.checkSwapAllow}
+          {buyOrders.length === 0
+            ? offersNoticeText
+            : (
+              <Table
+                id="table_exchange"
+                className={tableStyles.exchange}
+                styleName="orderBookTable"
+                titles={titles}
+                rows={buyOrders}
+                rowRender={(row) => (
+                  <Row
+                    key={row.id}
+                    orderId={orderId}
+                    row={row}
+                    decline={decline}
+                    history={history}
+                    removeOrder={this.removeOrder}
+                    linkedOrderId={linkedOrderId}
+                    pairFees={pairFees}
+                    balances={balances}
+                    checkSwapAllow={checkSwapAllow}
+                  />
+                )}
               />
-            )}
-            isLoading={buyOrders.length === 0 && !isPubSubLoaded}
-          />
+            )
+          }
         </Panel>
 
         <Panel header={
@@ -283,28 +334,32 @@ export default class Orders extends Component<any, any> {
           </Fragment>
         }
         >
-          <Table
-            id="table_exchange"
-            className={tableStyles.exchange}
-            styleName="orderBookTable"
-            titles={titles}
-            rows={sellOrders}
-            rowRender={(row) => (
-              <Row
-                key={row.id}
-                orderId={orderId}
-                row={row}
-                decline={decline}
-                history={history}
-                removeOrder={this.removeOrder}
-                linkedOrderId={linkedOrderId}
-                pairFees={pairFees}
-                balances={balances}
-                checkSwapAllow={this.props.checkSwapAllow}
+          {sellOrders.length === 0
+            ? offersNoticeText
+            : (
+              <Table
+                id="table_exchange"
+                className={tableStyles.exchange}
+                styleName="orderBookTable"
+                titles={titles}
+                rows={sellOrders}
+                rowRender={(row) => (
+                  <Row
+                    key={row.id}
+                    orderId={orderId}
+                    row={row}
+                    decline={decline}
+                    history={history}
+                    removeOrder={this.removeOrder}
+                    linkedOrderId={linkedOrderId}
+                    pairFees={pairFees}
+                    balances={balances}
+                    checkSwapAllow={checkSwapAllow}
+                  />
+                )}
               />
-            )}
-            isLoading={sellOrders.length === 0 && !isPubSubLoaded}
-          />
+            )
+          }
         </Panel>
         {seoPage && seoPage.footer && <div>{seoPage.footer}</div>}
       </Fragment>

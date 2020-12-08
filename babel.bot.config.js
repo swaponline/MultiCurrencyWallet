@@ -1,35 +1,37 @@
 module.exports = {
   'presets': [
+    '@babel/preset-typescript',
     ['@babel/preset-env', {
       'targets': {
         'node': 'current',
       },
-    }],
-    '@babel/preset-typescript',
+    }]
   ],
   'plugins': [
     [
       'module-resolver',
       {
-          extensions: ['.js', '.jsx', '.ts', '.tsx'],
-          root: ['./src'],
-          alias: {
-            "swap.app": "./src/core/swap.app/",
-            "swap.app/*": "./src/core/swap.app/*",
-            "swap.auth": "./src/core/swap.auth/",
-            "swap.auth/*": "./src/core/swap.auth/*",
-            "swap.flows": "./src/core/swap.flows/",
-            "swap.flows/*": "./src/core/swap.flows/*",
-            "swap.orders": "./src/core/swap.orders/",
-            "swap.orders/*": "./src/core/swap.orders/*",
-            "swap.room": "./src/core/swap.room/",
-            "swap.room/*": "./src/core/swap.room/*",
-            "swap.swap": "./src/core/swap.swap/",
-            "swap.swap/*": "./src/core/swap.swap/*",
-            "swap.swaps": "./src/core/swap.swaps/",
-            "swap.swaps/*": "./src/core/swap.swaps/*",
-            "simple.swap.core": "./src/core/simple/src/"
-          },
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        root: ['./src'],
+        alias: {
+          "swap.app": "./src/core/swap.app/",
+          "swap.app/*": "./src/core/swap.app/*",
+          "swap.auth": "./src/core/swap.auth/",
+          "swap.auth/*": "./src/core/swap.auth/*",
+          "swap.flows": "./src/core/swap.flows/",
+          "swap.flows/*": "./src/core/swap.flows/*",
+          "swap.orders": "./src/core/swap.orders/",
+          "swap.orders/*": "./src/core/swap.orders/*",
+          "swap.room": "./src/core/swap.room/",
+          "swap.room/*": "./src/core/swap.room/*",
+          "swap.swap": "./src/core/swap.swap/",
+          "swap.swap/*": "./src/core/swap.swap/*",
+          "swap.swaps": "./src/core/swap.swaps/",
+          "swap.swaps/*": "./src/core/swap.swaps/*",
+          "simple.swap.core": "./src/core/simple/src/",
+          "common": "./src/common/",
+          "common/*": "./src/common/*"
+        },
       },
     ],
     'add-module-exports',

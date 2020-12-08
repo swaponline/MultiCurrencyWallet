@@ -19,7 +19,20 @@ const network = process.env.MAINNET
   ? bitcoin.networks.bitcoin
   : bitcoin.networks.testnet
 
-const DUST = 546
+/* 
+* Bitcoin dust - small amount of bitcoin that remains in a particular wallet 
+* because the monetary value is so tiny that it is below the amount of the
+* fee required to spend the bitcoin. It makes the transaction impossible 
+* to process
+*
+* Default value:
+* - dustRelayFee (3000 satochi / kb)
+* - output P2PKH
+*/
+const DUST = 546 // satoshi
+const BYTE_INPUT_ADDRESS = 146 // ~ 146 byte
+const BYTE_OUTPUT_ADDRESS = 33 // ~ 33 byte
+const BYTE_TRANSACTION = 15 // ~ 15 byte
 
 // getByteCount({'MULTISIG-P2SH:2-4':45},{'P2PKH':1}) Means "45 inputs of P2SH Multisig and 1 output of P2PKH"
 // getByteCount({'P2PKH':1,'MULTISIG-P2SH:2-3':2},{'P2PKH':2}) means "1 P2PKH input and 2 Multisig P2SH (2 of 3) inputs along with 2 P2PKH outputs"
@@ -104,11 +117,13 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
   }
 
   unspents = unspents || await actions.btc.fetchUnspents(address)
-
-
+  /*
+  * Formula with 2 input and 2 output addresses 
+  * (BYTE_INPUT_ADDRESS × 2 ) + (BYTE_OUTPUT_ADDRESS × 2) + BYTE_TRANSACTION
+  */
   const txIn = unspents.length
   const txSize = txIn > 0
-    ? txIn * 146 + txOut * 33 + (15 + txIn - txOut)
+    ? txIn * BYTE_INPUT_ADDRESS + txOut * BYTE_OUTPUT_ADDRESS + (BYTE_TRANSACTION + txIn - txOut)
     : defaultTxSize
 
   if (method === 'send_multisig') {
@@ -116,7 +131,7 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
       { 'MULTISIG-P2SH-P2WSH:2-2': 1 },
       { 'P2PKH': (hasAdminFee) ? 3 : 2 }
     )
-    const msutxSize = txIn * msuSize + txOut * 33 + (15 + txIn - txOut)
+    const msutxSize = txIn * msuSize + txOut * BYTE_OUTPUT_ADDRESS + (BYTE_TRANSACTION + txIn - txOut)
 
     return msutxSize
   }
@@ -126,7 +141,7 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
       { 'MULTISIG-P2SH-P2WSH:2-3': 1 },
       { 'P2PKH': (hasAdminFee) ? 3 : 2 }
     )
-    const mstxSize = txIn * msSize + txOut * 33 + (15 + txIn - txOut)
+    const mstxSize = txIn * msSize + txOut * BYTE_OUTPUT_ADDRESS + (BYTE_TRANSACTION + txIn - txOut)
 
     return mstxSize
   }
@@ -134,8 +149,18 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
   return txSize
 }
 
-//@ts-ignore
-const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, fixed, method }: object = {}) => {
+type EstimateFeeValueOptions = {
+  method?: string
+  speed: 'fast' | 'normal' | 'slow'
+  feeRate?: number
+  inSatoshis?: boolean
+  address?: string
+  txSize?: number
+  fixed?: string
+}
+
+const estimateFeeValue = async (options: EstimateFeeValueOptions) => {
+  let { feeRate, inSatoshis, speed, address, txSize, fixed, method } = options
   const {
     user: {
       btcData,
@@ -162,18 +187,19 @@ const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, f
     DUST,
     new BigNumber(feeRate)
       .multipliedBy(txSize)
-      .div(1024)
+      .div(1024) // divide by one kilobyte
       .dp(0, BigNumber.ROUND_HALF_EVEN),
   )
 
-  // Используем комиссию больше рекомендованной на 5 сатоши
-  calculatedFeeValue.plus(20)
+  const CUSTOM_SATOSHI = 20
+  calculatedFeeValue.plus(CUSTOM_SATOSHI) // just wanted to add
 
+  const SATOSHI_TO_BITCOIN_RATIO = 1e-8; // 1 BTC -> 100 000 000 satoshi
+  
   const finalFeeValue = inSatoshis
-    ? calculatedFeeValue.toString()
-    : calculatedFeeValue.multipliedBy(1e-8).toString()
-
-  console.log(`Btc withdraw fee speed(${speed}) method (${method}) ${finalFeeValue}`)
+    ? calculatedFeeValue.toNumber()
+    : calculatedFeeValue.multipliedBy(SATOSHI_TO_BITCOIN_RATIO).toNumber()
+  
   return finalFeeValue
 }
 
@@ -194,8 +220,8 @@ const estimateFeeRateBitcoinfees = async ({ speed = 'fast' } = {}) => {
     normal: `halfHourFee`,
     fast: `fastestFee`,
   }
-  //@ts-ignore
-  const apiSpeed = apiSpeeds[speed] || apiSpeed.normal
+
+  const apiSpeed = apiSpeeds[speed] || apiSpeeds.normal
   const apiRate = new BigNumber(apiResult[apiSpeed]).multipliedBy(1024)
 
   return apiRate.isGreaterThanOrEqualTo(DUST)
@@ -214,6 +240,7 @@ const estimateFeeRateBlockcypher = async ({ speed = 'fast' } = {}) => {
   let apiResult
 
   try {
+    // api returns sotoshi in 1 kb
     apiResult = await api.asyncFetchApi(link)
   } catch (err) {
     console.error(`EstimateFeeRate: ${err.message}`)
@@ -225,12 +252,12 @@ const estimateFeeRateBlockcypher = async ({ speed = 'fast' } = {}) => {
     normal: 'medium_fee_per_kb',
     fast: 'high_fee_per_kb',
   }
-  //@ts-ignore
-  const apiSpeed = apiSpeeds[speed] || apiSpeed.normal
+
+  const apiSpeed = apiSpeeds[speed] || apiSpeeds.normal
   const apiRate = new BigNumber(apiResult[apiSpeed])
 
-  return apiRate.isGreaterThanOrEqualTo(DUST)
-    ? apiRate.toString()
+  return apiRate.isGreaterThanOrEqualTo(DUST) 
+    ? apiRate.toNumber()
     : defaultRate[speed]
 }
 

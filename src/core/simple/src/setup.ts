@@ -4,12 +4,10 @@ import Wallet from './wallet'
 
 import * as configFactory from './config'
 
-
 const network = process.env.NETWORK
 
 export default settings => {
-
-  const useMnemonic = process.env.SECRET_PHRASE
+  const useMnemonic = settings.mnemonic
 
 
   const getConfig = configFactory[network || 'testnet']

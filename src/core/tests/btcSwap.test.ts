@@ -2,6 +2,8 @@
 
 
 import SwapApp, { SwapInterface } from 'swap.app'
+// @ToDo - use common/utils/coin/btc
+// @ts-ignore
 import { testnet } from '../simple/src/instances/bitcoin'
 import { BtcSwap } from 'swap.swaps'
 import bitcoin from 'bitcoinjs-lib'
@@ -53,8 +55,7 @@ const btcSwap = new BtcSwap({
   fetchBalance: (address) => 10,
   fetchUnspents: (address) => [],
   broadcastTx: (rawTx) => {},
-  //@ts-ignore
-  estimateFeeValue: ({ inSatoshis, speed, address, txSize } = {}) => testnet().estimateFeeValue({ inSatoshis, speed, address, txSize }),
+  estimateFeeValue: ({ inSatoshis, speed, address, txSize }) => testnet().estimateFeeValue({ inSatoshis, speed, address, txSize }),
   fetchTxInfo: async txid => txInfo[txid],
 })
 

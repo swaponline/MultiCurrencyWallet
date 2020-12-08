@@ -50,6 +50,7 @@ const webpackConfig = {
       'shared': config.paths.front('shared'),
       'local_modules': config.paths.front('local_modules'),
       'domain': config.paths.common('domain'),
+      'common': config.paths.common(),
       'swap.auth': config.paths.core('swap.auth'),
       'swap.orders': config.paths.core('swap.orders'),
       'swap.room': config.paths.core('swap.room'),
@@ -58,7 +59,8 @@ const webpackConfig = {
       'swap.swap': config.paths.core('swap.swap'),
       'swap.swaps': config.paths.core('swap.swaps'),
       'simple.swap.core': config.paths.core('simple/src'),
-      'redaction': config.paths.common('redaction')
+      'redaction': config.paths.common('redaction'),
+      'common': config.paths.common(),
     },
     modules: [
       config.paths.front('client'),

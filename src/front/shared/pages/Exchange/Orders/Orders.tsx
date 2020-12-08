@@ -223,7 +223,9 @@ export default class Home extends Component<any, any> {
               </div>
             </PageHeadline>
           ) : (
+            //@ts-ignore
             <OrderBook
+              //@ts-ignore
               handleSellCurrencySelect={this.handleSellCurrencySelect}
               handleBuyCurrencySelect={this.handleBuyCurrencySelect}
               buyCurrency={buyCurrency}

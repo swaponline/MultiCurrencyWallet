@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import helpers, { request, constants } from 'helpers'
+import helpers, { constants } from 'helpers'
+import request from 'common/utils/request'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
 import { connect } from 'redaction'
@@ -334,7 +335,7 @@ export default class InvoiceModal extends React.Component<any, any> {
                 placeholder={intl.formatMessage(localeLabel.addressPlaceholder, {
                   currency: currency.toUpperCase(),
                 })}
-                qr
+                qr={isMobile}
                 openScan={this.openScan}
               />
               {/*
@@ -365,7 +366,7 @@ export default class InvoiceModal extends React.Component<any, any> {
               placeholder={intl.formatMessage(localeLabel.destiAddressPlaceholder, {
                 currency: currency.toUpperCase(),
               })}
-              qr
+              qr={isMobile}
               openScan={this.openScan}
             />
             {destination && !this.addressIsCorrect(destination) && (

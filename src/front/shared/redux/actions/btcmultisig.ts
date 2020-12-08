@@ -11,7 +11,7 @@ import actions from 'redux/actions'
 import config from 'helpers/externalConfig'
 import SwapApp from 'swap.app'
 
-import { default as bitcoinUtils } from '../../../../common/utils/bitcoin'
+import { default as bitcoinUtils } from '../../../../common/utils/coin/btc'
 
 const BITPAY_API = {
   name: 'bitpay',
@@ -885,18 +885,18 @@ const addSMSWallet = async (mnemonicOrKey) => {
   let btcSmsPublicKeys = [btcSMSServerKey, mnemonicKey]
 
   await actions.btcmultisig.login_SMS(privateKey, btcSmsPublicKeys)
-  //@ts-ignore
   await getBalance()
 }
 
 const getAddrBalance = (address) => {
   return new Promise((resolve) => {
-    bitcoinUtils.fetchBalance(
+    bitcoinUtils.fetchBalance({
       address,
-      true,
-      BITPAY_API
-    //@ts-ignore
-    ).then(({ balance, unconfirmed }) => {
+      withUnconfirmed: true,
+      apiBitpay: BITPAY_API
+    }).then((answer) => {
+      //@ts-ignore
+      const { balance, unconfirmed } = answer
       resolve({
         address,
         balance: balance,
@@ -933,7 +933,7 @@ const getBalance = (ownAddress = null, ownDataKey = null) => {
     })
 }
 
-const getBalancePin = (checkAddress) => {
+const getBalancePin = () => {
   const { user: { btcMultisigPinData: { address } } } = getState()
 
   return getBalance(address, 'btcMultisigPinData')
@@ -968,11 +968,24 @@ const getRate = async () => {
 const getBalanceG2FA = () => {
 }
 
-const fetchBalance = (address) => bitcoinUtils.fetchBalance(address, false, BITPAY_API)
+const fetchBalance = (address) => bitcoinUtils.fetchBalance({
+  address,
+  withUnconfirmed: false,
+  apiBitpay: BITPAY_API,
+})
 
-const fetchTx = (hash, cacheResponse) => bitcoinUtils.fetchTx(hash, BITPAY_API, cacheResponse)
+const fetchTx = (hash, cacheResponse) => bitcoinUtils.fetchTx({
+  hash,
+  apiBitpay: BITPAY_API,
+  cacheResponse,
+})
 
-const fetchTxInfo = (hash, cacheResponse) => bitcoinUtils.fetchTxInfo(hash, BITPAY_API, cacheResponse, hasAdminFee)
+const fetchTxInfo = (hash, cacheResponse) => bitcoinUtils.fetchTxInfo({
+  hash,
+  apiBitpay: BITPAY_API,
+  cacheResponse,
+  hasAdminFee,
+})
 
 const getTransactionUser = (address) => {
   if (!address) {
@@ -1041,7 +1054,13 @@ const getInvoicesUser = () => {
 }
 
 const getTransaction = (ownAddress, ownType) => {
-  return bitcoinUtils.getTransactionBlocyper(ownAddress, ownType, [ownAddress], btc.network, BLOCYPER_API)
+  return bitcoinUtils.getTransactionBlocyper({
+    ownAddress,
+    ownType,
+    myWallets: [ownAddress],
+    network: btc.network,
+    apiBlocyper: BLOCYPER_API,
+  })
 }
 //@ts-ignore
 const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {

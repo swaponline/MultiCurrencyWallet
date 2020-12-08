@@ -38,9 +38,6 @@ import metamask from 'helpers/metamask'
 
 import { history } from 'redux/store'
 
-const memdown = require("memdown");
-
-
 //@ts-ignore
 const userLanguage = (navigator.userLanguage || navigator.language || "en-gb").split("-")[0];
 moment.locale(userLanguage)
@@ -281,7 +278,6 @@ class App extends React.Component<RouteComponentProps<any>, any> {
             && (tokenCode !== `usdt`)
           ) {
             console.log('Hide', tokenCode)
-            //@ts-ignore
             actions.core.markCoinAsHidden(tokenCode.toUpperCase())
           }
         })
@@ -294,14 +290,12 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       if (config && config.isWidget && false) {
         currencies.forEach(({ name }) => {
           if (name !== "BTC" && !config.erc20[name.toLowerCase()]) {
-            //@ts-ignore
             actions.core.markCoinAsHidden(name)
           }
         })
       } else {
         currencies.forEach(({ name }) => {
           if (name !== "BTC") {
-            //@ts-ignore
             actions.core.markCoinAsHidden(name)
           }
         })
@@ -323,13 +317,11 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
     try {
       const db = indexedDB.open("test");
-      db.onerror = () => {
-        //@ts-ignore
-        window.leveldown = memdown;
+      db.onerror = (e) => {
+        console.log('db error', e)
       };
     } catch (e) {
-      //@ts-ignore
-      window.leveldown = memdown;
+      console.log('db error', e)
     }
 
     actions.user.sign();

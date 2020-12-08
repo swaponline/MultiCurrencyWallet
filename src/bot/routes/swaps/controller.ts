@@ -245,9 +245,11 @@ const getFinished = ({ query: { parsed, withFees }}, res) => {
   }
 
   const pairs = swaps.map(swap => {
-    const pair = Pair.fromOrder(swap)
-    return { id: swap.id, pair, swap: swapView(swap) }
-  })
+    try {
+      const pair = Pair.fromOrder(swap)
+      return { id: swap.id, pair, swap: swapView(swap) }
+    } catch (e) { return false }
+  }).filter((pair: any) => { return pair !== false })
 
   return res.json(pairs)
 }

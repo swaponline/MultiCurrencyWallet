@@ -266,8 +266,7 @@ export default class CurrencyWallet extends Component<any, any> {
 
     // set balance for the address
     address &&
-      //@ts-ignore
-      actions[getCurrencyKey(currency.toLowerCase())]
+      actions[getCurrencyKey(currency.toLowerCase(), false)]
         .fetchBalance(address)
         .then((balance) => this.setState({ balance }))
 

@@ -1,24 +1,20 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import CSSModules from 'react-css-modules'
 import styles from './LocalStorage.scss'
 import { constants } from 'helpers'
 import { FormattedMessage } from 'react-intl'
-import request from '../../helpers/request'
-
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 function LocalStorage() {
+  const [isCopied, setCopied] = useState(false)
   const [localStorage, setLocalStorage] = useState(JSON.stringify({}))
-  const textareaRef = useRef(null);
+  const dumpAll = true
 
-  const sendToDevelopers = () => {
-    request.post(`https://noxon.wpmix.net/counter.php?todevs=1&msg=post`, {
-      body: {
-        data: localStorage,
-      },
-    }).then(res => console.log(res))
+  const timeoutCopied = () => {
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1000) // copy-tip animation time
   }
 
   useEffect(() => {
@@ -26,54 +22,52 @@ function LocalStorage() {
     const privateDataRegExp = /(mnemonic|private|twentywords|backup|peeridjson)/i;
 
     for (let key in window.localStorage) {
-      if (key !== 'redux-store' && key.match(privateDataRegExp) === null) {
+      if ((key !== 'redux-store' && key.match(privateDataRegExp) === null)
+        || (dumpAll && (key !== 'redux-store'))
+      ) {
         newStorage[key] = window.localStorage[key]
       }
     }
-
-    setLocalStorage(JSON.stringify(newStorage))
+    setLocalStorage(JSON.stringify(newStorage, undefined, 2))
   })
 
   return (
     <section styleName={`${isDark ? 'localStorageDark' : 'localStorage'}`}>
-      <h3>
-        <FormattedMessage
-          id="localStorageUserNotification"
-          defaultMessage="✔️ This data doesn't contain your private keys"
-        />
-      </h3>
+      {!dumpAll && (
+        <h3>
+          <FormattedMessage
+            id="localStorageUserNotification"
+            defaultMessage="✔️ This data doesn't contain your private keys"
+          />
+        </h3>
+      )}
 
       <div styleName='localStorage__buttons-container'>
         <button styleName='localStorage__btn' onClick={() => {
           window.history.back()
         }}>
           <FormattedMessage
-            id="localStorageBtnExchange"
+            id="localStorageBtnBack"
             defaultMessage="Back"
           />
         </button>
         <CopyToClipboard text={localStorage} >
-          <button styleName='localStorage__btn' onClick={() => textareaRef.current.select()}>
-            <FormattedMessage
-              id="localStorageBtnSend"
-              defaultMessage="Copy"
-            />
+          <button styleName='localStorage__btn' onClick={timeoutCopied}>
+            {isCopied && <span styleName='localStorage__copy-tip'>Copied!</span>}
+            <FormattedMessage id="localStorageBtnCopy" defaultMessage="Copy" />
           </button>
         </CopyToClipboard>
-        <button styleName='localStorage__btn' onClick={sendToDevelopers}>
-            <FormattedMessage
-              id="localStorageBtnSend"
-              defaultMessage="Send to developers"
-            />
-        </button>
+        {/* <button styleName='localStorage__btn' onClick={() => null}>
+          <FormattedMessage
+            id="localStorageBtnSend"
+            defaultMessage="Send to developers"
+          />
+        </button> */}
       </div>
 
-
-      <textarea styleName='localStorage__textarea' 
-        ref={textareaRef}
-        value={localStorage}
-        readOnly
-      />
+      <pre styleName='localStorage__json-output'>
+        {localStorage}
+      </pre>
     </section>
   )
 }
