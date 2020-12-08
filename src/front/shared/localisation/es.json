@@ -8279,10 +8279,7 @@
   },
   {
     "id": "OrderBookOffersNote",
-    "message": "La búsqueda de pares y ofertas puede tardar un par de minutos. Si no se encuentran ofertas en un par de minutos, significa que no hay ofertas coincidentes o que un usuario que realizó la oferta no está conectado.",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
-    ]
+    "message": "La búsqueda de pares y ofertas puede tardar un par de minutos. Si no se encuentran ofertas en un par de minutos, significa que no hay ofertas coincidentes o que un usuario que realizó la oferta no está conectado."
   },
   {
     "id": "DebugStoredDataLink",
@@ -8296,6 +8293,20 @@
     "message": "Swap data:",
     "files": [
       "src/front/shared/pages/Swap/Debug/Debug.tsx"
+    ]
+  },
+  {
+    "id": "OrderBookOffersNoteOverLoader",
+    "message": "Solicitar ofertas de compañeros en línea",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+    ]
+  },
+  {
+    "id": "OrderBookOffersNoteUnderLoader",
+    "message": "puede tomar un minuto",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
   }
 ]

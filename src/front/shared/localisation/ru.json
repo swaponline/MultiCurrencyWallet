@@ -8327,10 +8327,7 @@
   },
   {
     "id": "OrderBookOffersNote",
-    "message": "Поиск пиров и предложений может занять пару минут. Если в течение нескольких минут предложений не найдено, это означает, что подходящих предложений нет или пользователь, разместивший предложение, находится в автономном режиме.",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
-    ]
+    "message": "Поиск пиров и предложений может занять пару минут. Если в течение нескольких минут предложений не найдено, это означает, что подходящих предложений нет или пользователь, разместивший предложение, находится в автономном режиме."
   },
   {
     "id": "DebugStoredDataLink",
@@ -8344,6 +8341,20 @@
     "message": "Swap data:",
     "files": [
       "src/front/shared/pages/Swap/Debug/Debug.tsx"
+    ]
+  },
+  {
+    "id": "OrderBookOffersNoteOverLoader",
+    "message": "Запрос предложений от пользователей онлайн",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+    ]
+  },
+  {
+    "id": "OrderBookOffersNoteUnderLoader",
+    "message": "это может занять минуту",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
   }
 ]

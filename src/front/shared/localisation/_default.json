@@ -8255,10 +8255,7 @@
   },
   {
     "id": "OrderBookOffersNote",
-    "message": "Searching for Peers and Offers can take a couple of minutes. If no offers are found within a couple of minutes, it means that there are no matching offers or a user who placed the offer is offline.",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
-    ]
+    "message": "Searching for Peers and Offers can take a couple of minutes. If no offers are found within a couple of minutes, it means that there are no matching offers or a user who placed the offer is offline."
   },
   {
     "id": "DebugStoredDataLink",
@@ -8272,6 +8269,20 @@
     "message": "Swap data:",
     "files": [
       "src/front/shared/pages/Swap/Debug/Debug.tsx"
+    ]
+  },
+  {
+    "id": "OrderBookOffersNoteOverLoader",
+    "message": "Requesting offers from peers online",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+    ]
+  },
+  {
+    "id": "OrderBookOffersNoteUnderLoader",
+    "message": "it may take a minute",
+    "files": [
+      "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
   }
 ]
