@@ -24,7 +24,6 @@ import links from 'helpers/links'
 
 import MnemonicInput from 'components/forms/MnemonicInput/MnemonicInput'
 import feedback from 'shared/helpers/feedback'
-import { TIMEOUT } from 'dns'
 
 const langPrefix = `RestoryMnemonicWallet`
 const langLabels = defineMessages({
