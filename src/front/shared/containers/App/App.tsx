@@ -37,9 +37,6 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import metamask from 'helpers/metamask'
 
 
-const memdown = require("memdown");
-
-
 //@ts-ignore
 const userLanguage = (navigator.userLanguage || navigator.language || "en-gb").split("-")[0];
 moment.locale(userLanguage)
@@ -318,13 +315,11 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
     try {
       const db = indexedDB.open("test");
-      db.onerror = () => {
-        //@ts-ignore
-        window.leveldown = memdown;
+      db.onerror = (e) => {
+        console.log('db error', e)
       };
     } catch (e) {
-      //@ts-ignore
-      window.leveldown = memdown;
+      console.log('db error', e)
     }
 
     actions.user.sign();
