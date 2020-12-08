@@ -938,22 +938,6 @@ export default class WithdrawModal extends React.Component<any, any> {
         {usedAdminFee && isEthToken && (
           <AdminFeeInfoBlock {...usedAdminFee} currency={currency} />
         )}
-        {error && (
-          <div styleName="rednote">
-            <FormattedMessage
-              id="WithdrawModalErrorSend"
-              defaultMessage="{errorName} {currency}:{br}{errorMessage}"
-              values={{
-                errorName: intl.formatMessage(error.name),
-                errorMessage: intl.formatMessage(error.message),
-                br: <br />,
-                currency: `${currency}`,
-              }}
-            />
-            <br />
-            {devErrorMessage && <span>Dev info: {devErrorMessage}</span>}
-          </div>
-        )}
         {invoice && (
           <Fragment>
             <hr />
@@ -1062,6 +1046,22 @@ export default class WithdrawModal extends React.Component<any, any> {
               </>
               )
             }
+            {error && (
+              <div styleName="errorBlock">
+                <FormattedMessage
+                  id="WithdrawModalErrorSend"
+                  defaultMessage="{errorName} {currency}:{br}{errorMessage}"
+                  values={{
+                    errorName: intl.formatMessage(error.name),
+                    errorMessage: intl.formatMessage(error.message),
+                    br: <br />,
+                    currency: `${currency}`,
+                  }}
+                />
+                <br />
+                {devErrorMessage && <span>Dev info: {devErrorMessage}</span>}
+              </div>
+            )}
           </div>
         )}
       </Fragment>
