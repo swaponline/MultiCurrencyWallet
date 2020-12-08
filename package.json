@@ -251,7 +251,7 @@
     "libp2p-webrtc-star": "^0.20.1",
     "libp2p-websockets": "^0.14.0",
     "lodash": "^4.17.15",
-    "memdown": "^3.0.0",
+    "memdown": "^5.1.0",
     "module-alias": "^2.2.2",
     "moment": "^2.29.1",
     "moment-with-locales-es6": "^1.0.1",
