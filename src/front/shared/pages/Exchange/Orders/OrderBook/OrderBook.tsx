@@ -16,7 +16,7 @@ import Panel from 'components/ui/Panel/Panel'
 import Table from 'components/tables/Table/Table'
 import tableStyles from 'components/tables/Table/Table.scss'
 import Toggle from 'components/controls/Toggle/Toggle'
-
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import PageSeo from 'components/Seo/PageSeo'
 import { getSeoPage } from 'helpers/seo'
 
@@ -217,12 +217,19 @@ export default class OrderBook extends Component {
     )
 
     const offersNoticeText = (
-      <span styleName='offersNoticeText'>
+      <div styleName='offersNotice'>
         <FormattedMessage
-          id="OrderBookOffersNote"
-          defaultMessage="Searching for Peers and Offers can take a couple of minutes. If no offers are found within a couple of minutes, it means that there are no matching offers or a user who placed the offer is offline."
+          id="OrderBookOffersNoteOverLoader"
+          defaultMessage="Requesting offers from peers online"
         />
-      </span>
+        <div styleName='loader'>
+          <InlineLoader />
+        </div>
+        <FormattedMessage
+          id="OrderBookOffersNoteUnderLoader"
+          defaultMessage="it may take a minute"
+        />
+      </div>
     )
 
     return (

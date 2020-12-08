@@ -35,8 +35,15 @@
   margin-top: 0;
 }
 
-.offersNoticeText {
+.offersNotice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   color: $notice-color;
+
+  .loader {
+    margin: 0.2em 0;
+  }
 }
 
 .orderBookTable {
@@ -119,9 +126,7 @@
       overflow: visible;
     }
   }
-}
 
-@media (max-width: 800px) {
   .buttonRow,
   .buttonRowMobile {
     margin: 0;
@@ -149,5 +154,11 @@
   }
   .buttonRow {
     bottom: -85px
+  }
+}
+
+@media (max-width: 328px) {
+  .offersNotice {
+    font-size: 0.9em;
   }
 }
