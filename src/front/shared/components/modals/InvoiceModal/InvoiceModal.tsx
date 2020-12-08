@@ -335,7 +335,7 @@ export default class InvoiceModal extends React.Component<any, any> {
                 placeholder={intl.formatMessage(localeLabel.addressPlaceholder, {
                   currency: currency.toUpperCase(),
                 })}
-                qr
+                qr={isMobile}
                 openScan={this.openScan}
               />
               {/*
@@ -366,7 +366,7 @@ export default class InvoiceModal extends React.Component<any, any> {
               placeholder={intl.formatMessage(localeLabel.destiAddressPlaceholder, {
                 currency: currency.toUpperCase(),
               })}
-              qr
+              qr={isMobile}
               openScan={this.openScan}
             />
             {destination && !this.addressIsCorrect(destination) && (

@@ -6,6 +6,11 @@ import fetch from 'node-fetch'
 
 import { networkType } from './../domain/network'
 import bip44 from './../helpers/bip44'
+import { 
+  ICoin,
+  ILibAdapter,
+  IConnector
+} from './interfaces'
 
 
 const netNames = {
@@ -13,7 +18,7 @@ const netNames = {
   'testnet': 'testnet',
 }
 
-const GHOST = {
+const GHOST: ICoin = {
   ticker: 'GHOST',
   name: 'Ghost',
   precision: 8,
@@ -85,11 +90,10 @@ export default GHOST
 
 
 
-const libAdapter = {
+const libAdapter: ILibAdapter = {
 
   accountFromMnemonic(mnemonic, netName) {
     const network = GHOST[netName]
-    //@ts-ignore
     const settings = network.settings
 
     const seed = bip39.mnemonicToSeedSync(mnemonic)
@@ -126,7 +130,6 @@ const libAdapter = {
 
     const network = GHOST[netName]
     const addressStr = address.toString()
-    //@ts-ignore
     const unspent = await connector.fetchUnspents(network.type, addressStr)
 
     const tx = new ghost_bitcore.Transaction()
@@ -143,7 +146,7 @@ const libAdapter = {
 
 
 
-const connector = {
+const connector: IConnector = {
 
   getApiUrl(netType) {
     if (netType === networkType.mainnet) {

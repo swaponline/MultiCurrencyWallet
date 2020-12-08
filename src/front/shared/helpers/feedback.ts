@@ -92,7 +92,13 @@ const events = {
   },
 }
 
-const feedback = {}
+interface IFeedback {
+  [key: string]: {
+    [key: string]: (object?) => void
+  }
+}
+
+const feedback: IFeedback = {}
 
 Object.keys(events).forEach(appPart => {
   if (!feedback[appPart]) {
