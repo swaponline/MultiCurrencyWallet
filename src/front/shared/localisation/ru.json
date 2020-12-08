@@ -5757,7 +5757,7 @@
   },
   {
     "id": "ImportKeys_RestoreMnemonic",
-    "message": "Ввести 12 слов",
+    "message": "Восстановить из 12 слов",
     "files": [
       "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
     ]
