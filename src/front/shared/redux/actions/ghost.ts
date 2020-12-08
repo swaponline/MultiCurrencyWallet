@@ -525,7 +525,6 @@ const sendV5WithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) =>
   } = config.opts.fee.ghost
 
   const adminFeeMin = new BigNumber(adminFeeMinValue)
-  //@ts-ignore
   feeValue = feeValue || await ghost.estimateFeeValue({
     inSatoshis: true,
     speed
@@ -607,8 +606,6 @@ const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
   if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
   feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
-
-  //@ts-ignore
   feeValue = feeValue || await ghost.estimateFeeValue({ inSatoshis: true, speed })
 
   const tx = new bitcoin.TransactionBuilder(ghost.network)
@@ -655,7 +652,7 @@ const sendV5Default = async ({ from, to, amount, feeValue, speed } = {}) => {
     //@ts-ignore
     feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber() // Admin fee in satoshi
   }
-  //@ts-ignore
+
   feeValue = feeValue || await ghost.estimateFeeValue({ inSatoshis: true, speed })
 
   const unspents = await fetchUnspents(from)
@@ -707,7 +704,6 @@ const sendV5Default = async ({ from, to, amount, feeValue, speed } = {}) => {
 }
 //@ts-ignore
 const sendDefault = async ({ from, to, amount, feeValue, speed } = {}) => {
-  //@ts-ignore
   feeValue = feeValue || await ghost.estimateFeeValue({ inSatoshis: true, speed })
   const tx = new bitcoin.TransactionBuilder(ghost.network)
   tx.setVersion(160);

@@ -105,7 +105,6 @@ export default class Web3Connect extends EventEmitter {
 
   getInjectedType() {
     if (window && window.ethereum) {
-      // the keys in brackets because typescript shows an error
       if (window.ethereum.isLiquality) return INJECTED_TYPE.LIQUALITY
       if (window.ethereum.isTrust) return INJECTED_TYPE.TRUST
       if (window.ethereum.isMetaMask) return INJECTED_TYPE.METAMASK

@@ -1,4 +1,4 @@
-const ethGasApiLink = 'https://noxon.wpmix.net/ethGas.php'
+let ethGasApiLink = 'https://noxon.wpmix.net/ethGas.php'
 
 if (typeof window !== 'undefined') {
   if (window.defipulse_api_key) {

@@ -13,7 +13,7 @@ declare global {
     [key: string]: any;
     isLiquality?: boolean;
     isTrust?: boolean;
-    isMetaMask2?: boolean;
+    isMetaMask?: boolean;
   }
 
   interface Window {

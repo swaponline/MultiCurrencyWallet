@@ -45,7 +45,7 @@ const network = process.env.MAINNET
   ? networks.mainnet
   : networks.testnet
 
-const DUST = 546
+const DUST = 546 // description in ./btc.ts
 
 // getByteCount({'MULTISIG-P2SH:2-4':45},{'P2PKH':1}) Means "45 inputs of P2SH Multisig and 1 output of P2PKH"
 // getByteCount({'P2PKH':1,'MULTISIG-P2SH:2-3':2},{'P2PKH':2}) means "1 P2PKH input and 2 Multisig P2SH (2 of 3) inputs along with 2 P2PKH outputs"
@@ -160,8 +160,18 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
   return txSize
 }
 
-//@ts-ignore
-const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, fixed, method } = {}) => {
+type EstimateFeeValueOptions = {
+  method?: string
+  speed: 'fast' | 'normal' | 'slow'
+  feeRate?: number
+  inSatoshis?: boolean
+  address?: string
+  txSize?: number
+  fixed?: string
+}
+
+const estimateFeeValue = async (options: EstimateFeeValueOptions) => {
+  let { feeRate, inSatoshis, speed, address, txSize, fixed, method } = options
   const {
     user: {
       ghostData,
@@ -189,12 +199,12 @@ const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, f
     DUST,
     new BigNumber(feeRate)
       .multipliedBy(txSize)
-      .div(1024)
+      .div(1024) // divide by one kilobyte
       .dp(0, BigNumber.ROUND_HALF_EVEN),
   )
 
-  // Используем комиссию больше рекомендованной на 5 сатоши
-  calculatedFeeValue.plus(20)
+  const CUSTOM_SATOSHI = 20
+  calculatedFeeValue.plus(CUSTOM_SATOSHI) // just wanted to add
 
   const finalFeeValue = inSatoshis
     ? calculatedFeeValue.toString()
@@ -227,8 +237,7 @@ const estimateFeeRate = async ({ speed = 'fast' } = {}) => {
     fast: 'high_fee_per_kb',
   }
 
-  //@ts-ignore
-  const apiSpeed = apiSpeeds[speed] || apiSpeed.normal
+  const apiSpeed = apiSpeeds[speed] || apiSpeeds.normal
   const apiRate = new BigNumber(apiResult[apiSpeed])
 
   return apiRate.isGreaterThanOrEqualTo(DUST)
