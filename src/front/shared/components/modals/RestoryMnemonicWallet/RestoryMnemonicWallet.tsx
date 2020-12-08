@@ -24,6 +24,7 @@ import links from 'helpers/links'
 
 import MnemonicInput from 'components/forms/MnemonicInput/MnemonicInput'
 import feedback from 'shared/helpers/feedback'
+import { TIMEOUT } from 'dns'
 
 const langPrefix = `RestoryMnemonicWallet`
 const langLabels = defineMessages({
@@ -194,15 +195,18 @@ export default class RestoryMnemonicWallet extends React.Component {
       })
       return
     }
-    /* 
-    * This callback blocks any action until all wallets are created
-    * So ui does not work
-    * How improve it ?
-    */
+
     this.setState(
       {
         isFetching: true,
       },
+      //@ts-ignore
+      this.restoreWallet(mnemonic)
+    )
+  }
+
+  restoreWallet = (mnemonic) => {
+    setTimeout(
       async () => {
         // Backup critical localStorage
         const backupMark = actions.btc.getMainPublicKey()
@@ -245,7 +249,7 @@ export default class RestoryMnemonicWallet extends React.Component {
           isFetching: false,
           step: `ready`,
         })
-        //@ts-ignore
+
         feedback.restore.finished()
       }
     )
