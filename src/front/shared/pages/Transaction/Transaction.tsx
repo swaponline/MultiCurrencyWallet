@@ -171,8 +171,7 @@ class Transaction extends Component<any, any> {
       return
     }
 
-    //@ts-ignore
-    const currency = getCurrencyKey(ticker)
+    const currency = getCurrencyKey(ticker, false)
     this.fetchTxInfo(currency, txId, ticker)
     this.fetchTxFinalBalances(getCurrencyKey(ticker, true), txId)
 
