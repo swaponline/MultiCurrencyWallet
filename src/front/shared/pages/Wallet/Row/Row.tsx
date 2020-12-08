@@ -405,7 +405,6 @@ export default class Row extends Component<any, any> {
   }
 
   handleMarkCoinAsHidden = (coin) => {
-    //@ts-ignore
     actions.core.markCoinAsHidden(coin)
   }
 
@@ -566,7 +565,6 @@ export default class Row extends Component<any, any> {
         ),
       })
     } else {
-      //@ts-ignore
       actions.core.markCoinAsHidden(`${currency}:${address}`)
       actions.notifications.show(constants.notifications.Message, {
         message: (
