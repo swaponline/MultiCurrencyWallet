@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
 import cx from 'classnames'
 import cssModules from 'react-css-modules'
 import styles from './WithdrawModal.scss'
@@ -27,6 +26,10 @@ import helpers, {
   metamask,
 } from 'helpers'
 
+import {
+  IWithdrawModalProps,
+  IWithdrawModalState,
+} from './interfaces';
 
 import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
@@ -68,14 +71,9 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 )
 @cssModules(styles, { allowMultiple: true })
 export default class WithdrawModal extends React.Component<any, any> {
-  props: any
-
-  static propTypes = {
-    name: PropTypes.string,
-    data: PropTypes.object,
-  }
-
-  fiatRates: any
+  
+  props: IWithdrawModalProps
+  state: IWithdrawModalState
 
   constructor(data) {
     //@ts-ignore
@@ -124,7 +122,6 @@ export default class WithdrawModal extends React.Component<any, any> {
   }
 
   componentDidMount() {
-    this.fiatRates = {}
     this.getFiatBalance()
     this.setCommissions()
     this.setBalanceOnState()
@@ -438,7 +435,9 @@ export default class WithdrawModal extends React.Component<any, any> {
         actions.modals.close(name)
       })
       .catch((e) => {
-        feedback.withdraw.failed()
+        const { selectedItem } = this.state
+        feedback.withdraw.failed(selectedItem.fullName)
+
         const errorText = e.res ? e.res.text : ''
         const error = {
           name: {
