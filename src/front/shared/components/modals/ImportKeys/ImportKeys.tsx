@@ -79,7 +79,6 @@ export default class ImportKeys extends Component<any, any> {
     }
 
     try {
-      //@ts-ignore
       actions.eth.login(ethKey)
       this.setState({
         isImportedEth: true,
@@ -110,7 +109,6 @@ export default class ImportKeys extends Component<any, any> {
     }
 
     try {
-      //@ts-ignore
       actions.btc.login(btcKey)
       this.setState({
         isImportedBtc: true,
