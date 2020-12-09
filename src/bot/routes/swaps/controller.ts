@@ -21,10 +21,10 @@ const until = (_step, swap) =>
   new Promise(resolve => {
     setInterval(
       () => ( swap.flow.state.step >= _step )
-        ? resolve() : null,
+        ? resolve(true) : null,
     500)
 
-    swap.on('enter step', (step) => ( step >= _step ) ? resolve() : null)
+    swap.on('enter step', (step) => ( step >= _step ) ? resolve(true) : null)
   })
 
 const runSwap = (swap) => {

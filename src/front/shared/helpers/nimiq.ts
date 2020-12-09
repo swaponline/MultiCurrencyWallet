@@ -13,7 +13,7 @@ const followTransaction = ($, tx) =>
     const id = $.mempool.on('transaction-mined', tx2 => {
       if (tx.equals(tx2)) {
         $.mempool.off('transaction-mined', id)
-        resolve()
+        resolve(true)
       }
     })
   })

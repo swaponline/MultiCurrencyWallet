@@ -1881,7 +1881,7 @@ const parseRawTX = async (txHash) => {
         parsedTX.isOur = true
       }
     })
-    inputParsed()
+    inputParsed(true)
   }).then(() => {
     //@ts-ignore
     psbt.data.globalMap.unsignedTx.tx.outs.forEach(async (out) => {
@@ -1966,7 +1966,7 @@ const parseRawTXv4 = async (txHash) => {
         publicKeys: input.pubkeys.map(buf => buf.toString('hex')),
       })
     })
-    inputParsed()
+    inputParsed(true)
   }).then(() => {
     //@ts-ignore
     txb.__TX.outs.forEach((out) => {

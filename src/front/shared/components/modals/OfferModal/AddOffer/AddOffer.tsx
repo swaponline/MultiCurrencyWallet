@@ -176,7 +176,7 @@ export default class AddOffer extends Component<any, any> {
       : new BigNumber(exchangeRateSell).div(exchangeRateBuy).dp(4, BigNumber.ROUND_CEIL)
 
     return new Promise((resolve, reject) => {
-      this.setState({ exchangeRate }, () => resolve())
+      this.setState({ exchangeRate }, () => resolve(true))
     })
   }
 
