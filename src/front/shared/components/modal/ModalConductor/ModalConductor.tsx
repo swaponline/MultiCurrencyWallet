@@ -10,7 +10,6 @@ import cssModules from 'react-css-modules'
 import styles from './ModalConductor.scss'
 
 
-
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @connect({

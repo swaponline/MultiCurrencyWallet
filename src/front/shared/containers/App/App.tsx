@@ -36,6 +36,8 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
 import metamask from 'helpers/metamask'
 
+
+//@ts-ignore
 const userLanguage = (navigator.userLanguage || navigator.language || "en-gb").split("-")[0];
 moment.locale(userLanguage)
 
