@@ -13,7 +13,8 @@ npm run marketmaker:testnet SECRET_PHRASE="asd asd asd" SPREAD="5"
 
 with docker:
 ```
-(soon)
+docker pull swaponline/mcw
+docker run -P -d --restart always --env "SECRET_PHRASE=bla bla bla 12 words seed phrase" swaponline/mcw:latest
 ```
 
 
