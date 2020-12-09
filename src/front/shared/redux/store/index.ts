@@ -23,10 +23,8 @@ const _storeConfig = {
     ...combineReducers(localReducers),
   },
   middleware: [
-  /*
     middleware,
     selectiveSaver,
-    */
   ].concat(process.env.NODE_ENV === 'production' ? [] : [
     // createLogger(),
   ]),

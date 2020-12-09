@@ -235,7 +235,7 @@
     "ghost-bitcore-lib": "git+https://github.com/ghost-coin/ghost-bitcore-lib.git",
     "graphql": "^15.3.0",
     "graphql-request": "^3.0.0",
-    "history": "^5.0.0",
+    "history": "^4.9.0",
     "human-standard-token-abi": "^2.0.0",
     "is-local-ip": "^1.1.0",
     "jdenticon": "^3.0.1",
