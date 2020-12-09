@@ -206,8 +206,6 @@ export default class ImportKeys extends Component<any, any> {
     }
 
     return (
-      /*
-      //@ts-ignore */
       <Modal
         name={this.props.name}
         title={intl.formatMessage(title.Import)}

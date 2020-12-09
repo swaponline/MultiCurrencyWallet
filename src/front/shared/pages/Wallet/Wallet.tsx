@@ -151,7 +151,7 @@ export default class Wallet extends Component<any, any> {
       activeView = 1
     }
     if (page === 'invoices') activeView = 2
-    //@ts-ignore
+
     this.state = {
       activeView,
       btcBalance: 0,
@@ -324,9 +324,7 @@ export default class Wallet extends Component<any, any> {
   }
 
   handleModalOpen = (context) => {
-    //@ts-ignore
     const { enabledCurrencies } = this.state
-    //@ts-ignore
     const { hiddenCoinsList } = this.props
 
     /* @ToDo Вынести отдельно */
@@ -502,7 +500,6 @@ export default class Wallet extends Component<any, any> {
       infoAboutCurrency,
       enabledCurrencies,
       multisigPendingCount,
-      //@ts-ignore
     } = this.state
 
     const {

@@ -523,7 +523,6 @@ export default class Exchange extends Component<any, any> {
   }
 
   createOffer = async () => {
-    //@ts-ignore
     feedback.createOffer.started()
 
     const { haveCurrency, getCurrency } = this.state
@@ -1031,7 +1030,6 @@ export default class Exchange extends Component<any, any> {
       pairFees,
     } = this.state
 
-    //@ts-ignore
     feedback.exchangeForm.flipped(
       `${haveCurrency}->${getCurrency} => ${getCurrency}->${haveCurrency}`
     )

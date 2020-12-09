@@ -438,7 +438,6 @@ export default class SwapComponent extends PureComponent<any, any> {
       swap: {
         flow,
       },
-    //@ts-ignore
     } = this.state
     //@ts-ignore
     if (typeof swap.flow.checkOtherSideRefund === 'function') {
