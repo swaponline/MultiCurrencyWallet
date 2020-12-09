@@ -3,7 +3,8 @@ import * as mnemonicUtils from 'common/utils/mnemonic'
 import * as configStorage from './config/storage'
 import { getNetworkType } from 'common/domain/network'
 import { calcPairPrice, getPriceByPair } from './app/middlewares/prices'
-import { FG_COLORS as COLORS, BG_COLORS , colorString } from 'common/utils/colorString'
+import { FG_COLORS as COLORS, BG_COLORS , colorString, resetColors } from 'common/utils/colorString'
+
 
 console.log(colorString(`Loading...`,COLORS.GREEN))
 
@@ -13,15 +14,18 @@ const rewriteEnvKeys = [
   `API_PASS`,
   `SECRET_PHRASE`,
   `USE_JSON`,
-  `SPREAD`
+  `SPREAD`,
+  `MAX_PARALLEL_SWAPS`,
 ]
+
 interface envKeys {
   NETWORK?: string,
   API_USER?: string,
   API_PASS?: string,
   SECRET_PHRASE?: string,
   USE_JSON?: string,
-  SPREAD?: string
+  SPREAD?: string,
+  MAX_PARALLEL_SWAPS?: string,
 }
 
 const rewritedEnv: envKeys = {}
@@ -81,6 +85,7 @@ const _loadDefaultEnv = () => {
   process.env.API_PASS='password'
   process.env.PORT='3000'
   process.env.IP='0.0.0.0'
+  process.env.MAX_PARALLEL_SWAPS='3'
   process.env.WEB3_TESTNET_PROVIDER='https://rinkeby.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c'
   process.env.WEB3_MAINNET_PROVIDER='https://mainnet.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c'
 }
@@ -117,6 +122,13 @@ if (process.env.TEST_STARTUP === `true`) {
 Object.keys(rewritedEnv).forEach((envKey) => {
   process.env[envKey] = rewritedEnv[envKey]
 })
+
+if (process.env.MAX_PARALLEL_SWAPS) {
+  console.log(
+    colorString('>>> Maximum parallel swaps:', COLORS.GREEN),
+    colorString(process.env.MAX_PARALLEL_SWAPS, COLORS.RED)
+  )
+}
 
 import _debug from 'debug'
 

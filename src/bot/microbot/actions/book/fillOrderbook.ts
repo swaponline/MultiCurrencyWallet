@@ -5,7 +5,8 @@ import handleError from '../../../app/actions/errors/handleError'
 import fetchPrice from '../../../app/actions/fetchPrice'
 import * as configStorage from '../../../config/storage'
 import Pair from '../../Pair'
-import * as colors from 'common/utils/colorString'
+import { FG_COLORS as COLORS, BG_COLORS , colorString } from 'common/utils/colorString'
+import { checkSwapsCountLimit } from '../../core/checkSwapsCountLimit'
 
 
 import {
@@ -201,8 +202,21 @@ const fillOrders = async (balances, ticker, create) => {
   }
 }
 
-export default async (wallet, orders) => {
+export default async (wallet, orders): [] => {
+  console.log(
+    colorString(`Prepare order book...`, COLORS.GREEN)
+  )
+
   removeMyOrders(orders)
+
+  // Check paraller swaps limit
+  if (!checkSwapsCountLimit()) {
+    console.log(
+      colorString(`Prepare order book:`, COLORS.GREEN),
+      colorString(`Break - Paraller swap limit`, COLORS.RED)
+    )
+    return []
+  }
 
   const symbols = Object.keys(TRADE_CONFIG)
     .filter((item) => TRADE_CONFIG[item].active)
@@ -220,7 +234,14 @@ export default async (wallet, orders) => {
 
   debug('balances', balanceForSymbol)
 
-  return Object.keys(TRADE_CONFIG)
+  const filledOrders = Object.keys(TRADE_CONFIG)
     .filter((item) => TRADE_CONFIG[item].active)
-    .map(ticker => fillOrders(balanceForSymbol, ticker, createOrder(orders)))
+    .map(async ticker => await fillOrders(balanceForSymbol, ticker, createOrder(orders)))
+
+  console.log(
+    colorString(`Prepare order book:`, COLORS.GREEN),
+    colorString(`Ready. Start fill...`, COLORS.RED)
+  )
+
+  return filledOrders
 }

@@ -88,7 +88,11 @@ class SwapApp {
     return this.inited
   }
 
-  static init(options: SwapAppOptions) {
+  static init(options: SwapAppOptions, makeShared: boolean = false) {
+    if (makeShared) {
+      SwapApp._swapAppInstance = new SwapApp(options)
+      return SwapApp._swapAppInstance
+    }
     return new SwapApp(options)
   }
 
@@ -109,7 +113,6 @@ class SwapApp {
     if (SwapApp._swapAppInstance && !forceFreshSetup) {
       throw new Error(`Shared instance already initialized. Use SwapApp.shared() to access it.`)
     }
-
     SwapApp._swapAppInstance = new SwapApp(options)
   }
 

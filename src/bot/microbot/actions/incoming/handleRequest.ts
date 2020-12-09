@@ -10,6 +10,7 @@ import fetchOrder from '../../core/fetchOrder'
 import replyToRequest from '../../core/replyToRequest'
 import { checkParticipantAddress } from '../../core/checkAddress'
 import { checkParticipant } from '../../core/checkParticipant'
+import { checkSwapsCountLimit } from '../../core/checkSwapsCountLimit'
 
 
 const debug = _debug('swap.bot')
@@ -35,14 +36,9 @@ export default (app, wallet, orders) => async ({ orderId, participant }) => {
     sellAmount: order.sellAmount,
   })
 
-  if (process.env.MAX_PARALEL_SWAPS !== undefined
-    && Number(process.env.MAX_PARALEL_SWAPS) !== 0
-  ) {
-    const activeSwapsCount = SwapApp.shared().getActiveSwaps().length
-    if (activeSwapsCount === Number(process.env.MAX_PARALEL_SWAPS)) {
-      replyToRequest(orders)({ orderId, participant }, false)
-      return false
-    }
+  if (!checkSwapsCountLimit()) {
+    replyToRequest(orders)({ orderId, participant }, false)
+    return false
   }
 
   if (!checkParticipant(participant)) {
