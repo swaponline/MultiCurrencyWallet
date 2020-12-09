@@ -11,10 +11,11 @@ const sendMessage = ({ appPart, eventName, details }) => {
 
   const host = window.top.location.host || window.location.hostname || document.location.host
 
-  const textToSend = `[${host}] ${appPart} - ${eventName === 'failed' ? '🛑 ' + eventName : eventName}${details ? ` {${details}}` : ``} |`
+  const prefixMark = eventName === 'failed' ? '🛑 ' : ''
+  const textToSend = `${prefixMark} [${host}] ${appPart} - ${eventName}${details ? ` {${details}}` : ``} |`
 
   if (host && host.includes('localhost')) {
-    console.log(`📩 (mocked) ${textToSend}`)
+    console.log(`📩 (muted) ${textToSend}`)
     return
   }
 
