@@ -19,12 +19,7 @@ const cleanReduxStore = (reduxStore) =>
     {})
 
 const selectiveSaver = store => next => async action => {
-  try {
-    next(action)
-  } catch (error) {
-    console.log('Redux middleware - selectiveSaver')
-    console.log(error)
-  }
+  next(action)
 
   const stateName = action.type.split('.')[0]
 

@@ -20,8 +20,6 @@
       "esnext"
     ],
     "paths": {
-      "redaction": ["src/common/redaction"],
-      "redaction/*": ["src/common/redaction/*"],
       "shared": ["src/front/shared"],
       "shared/*": ["src/front/shared/*"],
       "redux/*": ["src/front/shared/redux/*"],

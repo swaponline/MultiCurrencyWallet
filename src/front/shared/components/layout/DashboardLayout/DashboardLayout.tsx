@@ -18,7 +18,6 @@ import { ModalConductorProvider } from 'components/modal'
 
 import styles from './styles.scss'
 
-import { history } from 'redux/store'
 
 
 const isWidgetBuild = config && config.isWidget
@@ -142,7 +141,6 @@ const NewDesignLayout = (props) => {
     }
   })
 
-  console.log('++++++++++++++++++++ Dashboard ', history)
   return (
     <article className="data-tut-start-widget-tour">
       {window.CUSTOM_LOGO && (
@@ -194,7 +192,7 @@ const NewDesignLayout = (props) => {
               </p>
             )}
 
-            <ModalConductorProvider history={history}>
+            <ModalConductorProvider>
               {children}
             </ModalConductorProvider>
           </div>
