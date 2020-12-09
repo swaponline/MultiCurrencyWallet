@@ -47,7 +47,7 @@ const handleConfirm = () => {
     } else {
       window.localStorage.clear()
     }
-    //@ts-ignore
+
     window.location = (window && window.logoutUrl) ? window.logoutUrl : '/wp-login.php?action=logout'
   })
 }

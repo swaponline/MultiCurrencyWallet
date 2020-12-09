@@ -38,6 +38,7 @@ import metamask from 'helpers/metamask'
 
 import { history } from 'redux/store'
 
+
 //@ts-ignore
 const userLanguage = (navigator.userLanguage || navigator.language || "en-gb").split("-")[0];
 moment.locale(userLanguage)
@@ -308,7 +309,6 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     this.processMetamask()
 
     this.checkIfDashboardModalsAllowed()
-    //@ts-ignore
     window.actions = actions;
 
     window.onerror = error => {
@@ -326,9 +326,8 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
     actions.user.sign();
     await createSwapApp();
-    //@ts-ignore
+
     this.setState(() => ({ fetching: true }));
-    //@ts-ignore
     window.prerenderReady = true;
 
     const appInstalled = (e) => {

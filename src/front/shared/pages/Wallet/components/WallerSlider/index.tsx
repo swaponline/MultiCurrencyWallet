@@ -112,11 +112,9 @@ export default class WallerSlider extends React.Component<WallerSliderProps, Wal
   getBanners = () => {
     if (
       window &&
-      //@ts-ignore
       window.bannersOnMainPage !== undefined
     ) {
       // Используем банеры, которые были определены в index.html (используется в виджете вордпресса)
-      //@ts-ignore
       const widgetBanners = window.bannersOnMainPage.length ? window.bannersOnMainPage : []
 
       if (!this._mounted) return

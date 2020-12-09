@@ -18,7 +18,6 @@ const WidgetHeaderComponent = ({ intl }) => {
   }
 
   return (
-    //@ts-ignore
     window.isUserRegisteredAndLoggedIn &&
     <div styleName={`exitArea ${isDark ? 'dark' : ''}`} onClick={handleConfirmToggle}>
       {/*

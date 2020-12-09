@@ -364,7 +364,6 @@ export default class Row extends Component<any, any> {
 
     if (decline.length === 0) {
       window.scrollTo(0, 0)
-      //@ts-ignore
       this.props.history.push(
         localisedUrl(
           locale,
@@ -379,7 +378,6 @@ export default class Row extends Component<any, any> {
         this.handleDeclineOrdersModalOpen(getDeclinedExistedSwapIndex)
       } else {
         window.scrollTo(0, 0)
-        //@ts-ignore
         this.props.history.push(
           localisedUrl(
             locale,
@@ -605,7 +603,6 @@ export default class Row extends Component<any, any> {
 
 
   getCustomRate = (cur) => {
-    //@ts-ignore
     const wTokens = window.widgetERC20Tokens
 
     const dataobj = wTokens && Object.keys(wTokens).find(el => el === cur.toLowerCase())
@@ -613,7 +610,6 @@ export default class Row extends Component<any, any> {
   }
 
   handleShowMnemonic = () => {
-    //@ts-ignore
     actions.modals.open(constants.modals.SaveMnemonicModal)
   }
 

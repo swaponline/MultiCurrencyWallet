@@ -19,7 +19,6 @@ export class WidgetWalletTour extends Component<any, any> {
           content: <FormattedMessage
             id="widget-tour-step-1"
             defaultMessage="Welcome to {widgetName}. Take the tour?"
-            //@ts-ignore
             values={{ widgetName: window.widgetName }}
           />,
           placement: 'center',

@@ -15,7 +15,6 @@ const saveUserData = function saveUserData(data) {
       && config.opts
       && config.opts.plugins
       && config.opts.plugins.userDataPluginApi
-      //@ts-ignore
       && window.WPuserUid
       && config.opts.WPuserHash
     ) {
@@ -54,7 +53,6 @@ const saveUserData = function saveUserData(data) {
       if (data && Object.values(data).length) {
         axios.post(config.opts.plugins.userDataPluginApi, {
           ...data,
-          //@ts-ignore
           WPuserUid: window.WPuserUid,
           WPuserHash: config.opts.WPuserHash,
         })

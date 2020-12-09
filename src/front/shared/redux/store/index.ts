@@ -14,7 +14,6 @@ history.isSame = true
 console.log('>>>> init redux', history)
 const middleware = routerMiddleware(history)
 const initialState = (localStorage['redux-store']) ? JSON.parse(localStorage['redux-store']) : {}
-//@ts-ignore
 const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (v) => v
 
 console.log('>>>>>>>>>>>>>>>> INITIAL STATE', initialState)
