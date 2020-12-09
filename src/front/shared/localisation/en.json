@@ -8273,7 +8273,7 @@
   },
   {
     "id": "OrderBookOffersNoteOverLoader",
-    "message": "Requesting offers from peers online",
+    "message": "Looking for offers from online peers",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
