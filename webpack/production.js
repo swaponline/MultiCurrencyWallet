@@ -75,13 +75,15 @@ export default (webpackConfig) => {
     new MiniCssExtractPlugin({
       filename: '[name].[hash:6].css',
     }),
-    new CopyWebpackPlugin([
-      {
-        from: 'src/front/client/firebase-messaging-sw.js',
-        to: '',
-        toType: 'file',
-      },
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: 'src/front/client/firebase-messaging-sw.js',
+          to: '',
+          toType: 'file',
+        },
+      ],
+    }),
     externalConfig(),
   )
 

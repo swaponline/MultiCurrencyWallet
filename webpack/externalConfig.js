@@ -19,13 +19,15 @@ const externalConfig = () => {
 
   console.log(`Config: used external (${from})`)
 
-  return new CopyWebpackPlugin([
-    {
-      from,
-      to: './erc20tokens.js',
-      toType: 'file',
-    },
-  ])
+  return new CopyWebpackPlugin({
+    patterns: [
+      {
+        from,
+        to: './erc20tokens.js',
+        toType: 'file',
+      },
+    ],
+  })
 }
 
 export default externalConfig

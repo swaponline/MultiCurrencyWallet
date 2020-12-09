@@ -56,17 +56,19 @@ export default (webpackConfig) => {
       analyzerHost: '127.0.0.1',
       analyzerPort: '8888',
     }), */
-    new CopyWebpackPlugin([
-      {
-        from: 'src/front/client/firebase-messaging-sw.js',
-        to: '',
-        toType: 'file',
-      },
-      ...(config.firebug) ? [{
-        from: 'src/common/firebug/',
-        to: 'firebug/',
-      }] : []
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: 'src/front/client/firebase-messaging-sw.js',
+          to: '',
+          toType: 'file',
+        },
+        ...(config.firebug) ? [{
+          from: 'src/common/firebug/',
+          to: 'firebug/',
+        }] : []
+      ],
+    }),
     externalConfig(),
   )
 
