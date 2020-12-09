@@ -165,9 +165,8 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
     currency: 'GHOST',
     fullName: 'ghost',
   }
-  //@ts-ignore
+
   window.getGhostAddress = () => data.address
-  //@ts-ignore
   window.getGhostData = () => data
 
   console.info('Logged in with Ghost', data)
@@ -789,7 +788,7 @@ const signMessage = (message, encodedPrivateKey) => {
 }
 
 const getReputation = () => Promise.resolve(0)
-//@ts-ignore
+
 window.getMainPublicKey = getMainPublicKey
 
 /*
@@ -825,7 +824,7 @@ const checkWithdraw = (scriptAddress) => {
     return false
   })
 }
-//@ts-ignore
+
 window.ghostCheckWithdraw = checkWithdraw
 
 export default {

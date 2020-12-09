@@ -191,7 +191,6 @@ const metamaskApi = {
   isCorrectNetwork,
 }
 
-//@ts-ignore
 window.metamaskApi = metamaskApi
 
 export default metamaskApi

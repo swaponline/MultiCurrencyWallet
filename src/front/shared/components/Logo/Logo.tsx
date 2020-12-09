@@ -30,15 +30,12 @@ export default class Logo extends Component<any, any> {
       isExchange
     } = this.props;
 
-    //@ts-ignore
     const isNoLogo = !(window.logoUrl === `#`)
 
     const srcFiles = isColored ? images.colored : images.common;
     const { host, href } = window.location;
     const file = Object.keys(srcFiles).find(el => window.location.href.includes(el)) || "base"
-    //@ts-ignore
     const onLogoClickLink = (window && window.LOGO_REDIRECT_LINK) ? window.LOGO_REDIRECT_LINK : localisedUrl(locale, links.home)
-    //@ts-ignore
     const hasOwnLogoLink = (window && window.LOGO_REDIRECT_LINK)
 
     const imgNode = React.createElement("img", {
@@ -76,7 +73,6 @@ export default class Logo extends Component<any, any> {
         ) : (
           <div>
             {isNoLogo && (
-              //@ts-ignore
               <img styleName="otherLogoBrand" className="site-logo" src={window.logoUrl} alt="Wallet" />
             )}
           </div>

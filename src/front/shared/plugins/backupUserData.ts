@@ -8,7 +8,6 @@ const lsCurrentUser = `${process.env.ENTRY}:wp_currentUserId`
 
 const backupUserData = {
   isUserLoggedIn: () => {
-    //@ts-ignore
     return (window && window.WPuserUid && config.opts.WPuserHash)
   },
   isFirstBackup: () => {
@@ -23,14 +22,12 @@ const backupUserData = {
         && config.opts.plugins.backupPlugin
         && config.opts.plugins.restorePluginUrl
         && window
-        //@ts-ignore
         && window.WPuserUid
         && config.opts.WPuserHash
       ) {
         const set = (key, value) => localStorage.setItem(constants.privateKeyNames[key], value)
 
         axios.post(config.opts.plugins.restorePluginUrl, {
-          //@ts-ignore
           WPuserUid: window.WPuserUid,
           WPuserHash: config.opts.WPuserHash,
         }).then((req) => {
@@ -54,7 +51,7 @@ const backupUserData = {
   },
   isUserChanged: () => {
     const currentUser = localStorage.getItem(lsCurrentUser)
-    //@ts-ignore
+
     return (currentUser !== `${window.WPuserUid}` && window.WPuserUid) ? true : false
   },
   backupUser: () => {
@@ -65,7 +62,6 @@ const backupUserData = {
         && config.opts.plugins.backupPlugin
         && config.opts.plugins.backupPluginUrl
         && window
-        //@ts-ignore
         && window.WPuserUid
         && config.opts.WPuserHash
       ) {
@@ -98,7 +94,6 @@ const backupUserData = {
 
         axios.post(config.opts.plugins.backupPluginUrl, {
           ...backup,
-          //@ts-ignore
           WPuserUid: window.WPuserUid,
           WPuserHash: config.opts.WPuserHash,
         }).then((answer) => {
@@ -107,7 +102,6 @@ const backupUserData = {
             && data.answer
             && data.answer === `ok`
           ) {
-            //@ts-ignore
             localStorage.setItem(lsCurrentUser, window.WPuserUid)
             //@ts-ignore
             resolve(true, true)
@@ -133,12 +127,10 @@ const backupUserData = {
         && config.opts.plugins.backupPlugin
         && config.opts.plugins.backupPluginUrl
         && window
-        //@ts-ignore
         && window.WPuserUid
         && config.opts.WPuserHash
       ) {
         axios.post(config.opts.plugins.backupPluginUrl, {
-          //@ts-ignore
           WPuserUid: window.WPuserUid,
           WPuserHash: config.opts.WPuserHash,
           action: 'cleanup',
@@ -168,7 +160,6 @@ const backupUserData = {
         && config.opts.plugins.backupPlugin
         && config.opts.plugins.restorePluginUrl
         && window
-        //@ts-ignore
         && window.WPuserUid
         && config.opts.WPuserHash
       ) {
@@ -177,7 +168,6 @@ const backupUserData = {
         }
 
         axios.post(config.opts.plugins.restorePluginUrl, {
-          //@ts-ignore
           WPuserUid: window.WPuserUid,
           WPuserHash: config.opts.WPuserHash,
         }).then((req) => {
@@ -223,7 +213,6 @@ const backupUserData = {
             localStorage.setItem(constants.localStorage.wasOnWallet, true)
             localStorage.setItem(constants.localStorage.didProtectedBtcCreated, data.didProtectedBtcCreated)
             localStorage.setItem(constants.localStorage.didPinBtcCreated, data.didPinBtcCreated)
-            //@ts-ignore
             localStorage.setItem(lsCurrentUser, window.WPuserUid)
 
 
