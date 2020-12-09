@@ -159,7 +159,6 @@ export default class Row extends Component {
 
     const balance = this.getBalance()
 
-    //@ts-ignore
     feedback.offers.buyPressed(`${sellCurrency}->${buyCurrency}`)
 
     const pair = Pair.fromOrder(row)
