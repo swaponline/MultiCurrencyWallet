@@ -28,14 +28,16 @@ const initExternalConfig = () => {
 
 const externalConfig = () => {
   // Reconfigure app config if it widget or use external config
-  if (config.opts && config.opts.inited) return config
+  if (config.opts && config.opts.inited) {
+    return config
+  }
 
   config.opts = {
     inited: true,
     curEnabled: {
       eth: true,
       btc: true,
-      ghost: false,
+      ghost: true,
       next: true,
     },
     ownTokens: false,
@@ -102,37 +104,27 @@ const externalConfig = () => {
   ) {
     config.opts.exchangeDisabled = window.EXCHANGE_DISABLED
   }
-  if (window
-    && window.CUR_BTC_DISABLED
-  ) {
-    if (!config.opts.curEnabled) config.opts.curEnabled = {}
+
+
+  // Plugin: enable/disable currencies
+
+  if (window && window.CUR_BTC_DISABLED === true) {
     config.opts.curEnabled.btc = false
   }
 
-  if (window) {
-    if (!config.opts.curEnabled) config.opts.curEnabled = {}
-    if (window.CUR_GHOST_DISABLED !== undefined
-      && window.CUR_GHOST_DISABLED === false
-    ) {
-      config.opts.curEnabled.ghost = true
-    }
+  if (window && window.CUR_GHOST_DISABLED === true) {
+    config.opts.curEnabled.ghost = false
   }
 
-  if (window) {
-    if (!config.opts.curEnabled) config.opts.curEnabled = {}
-    if (window.CUR_NEXT_DISABLED !== undefined
-      && window.CUR_NEXT_DISABLED === false
-    ) {
-      config.opts.curEnabled.next = true
-    }
+  if (window && window.CUR_NEXT_DISABLED === true) {
+    config.opts.curEnabled.next = false
   }
 
-  if (window
-    && window.CUR_ETH_DISABLED
-  ) {
-    if (!config.opts.curEnabled) config.opts.curEnabled = {}
+  if (window && window.CUR_ETH_DISABLED === true) {
     config.opts.curEnabled.eth = false
   }
+
+
   // Plugins
   if (window
     && window.backupPlugin

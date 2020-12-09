@@ -107,7 +107,7 @@ const getWalletByWords = (mnemonic: string, walletNumber: number = 0, path: stri
 }
 
 
-const login = (privateKey, mnemonic, mnemonicKeys) => {
+const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
   let sweepToMnemonicReady = false
 
   if (privateKey
