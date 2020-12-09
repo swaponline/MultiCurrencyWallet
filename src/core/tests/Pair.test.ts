@@ -41,7 +41,6 @@ describe('Trade Pair', () => {
 
   it('should convert pair to nice string', () => {
     const bid = new Pair(_PAIR)
-    //@ts-ignore
     const ask = new Pair({ ...bid, type: PAIR_TYPES.ASK })
 
     const bid_str = '' + bid
@@ -52,7 +51,6 @@ describe('Trade Pair', () => {
 
   it('should not lie if its bid or ask', () => {
     const bid = new Pair(_PAIR)
-    //@ts-ignore
     const ask = new Pair({ ...bid, type: PAIR_TYPES.ASK })
 
     expect(bid.isBid()).toBe(true)
