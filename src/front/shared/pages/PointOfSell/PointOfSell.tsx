@@ -131,6 +131,9 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 @CSSModules(styles, { allowMultiple: true })
 export default class Exchange extends Component<any, any> {
 
+  props: any
+  state: any
+
   promoContainer: any
   scrollTrigger: any
   wallets: any
@@ -243,7 +246,6 @@ export default class Exchange extends Component<any, any> {
     // fiatRates
 
     if (config.isWidget) {
-      //@ts-ignore
       this.state.getCurrency = config.erc20token
     }
   }

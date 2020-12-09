@@ -38,8 +38,79 @@ import Orders from './Orders/Orders'
 import metamask from 'helpers/metamask'
 
 import { getPairFees } from 'helpers/getPairFees'
-
 import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
+
+type ExchangeProps = {
+  isOnlyForm: boolean
+  activeFiat: string
+  intl: { [key: string]: any }
+  match: { [key: string]: any }
+  location: { [key: string]: any }
+  history: { [key: string]: any }
+  usersData: { [key: string]: any }[]
+  currenciesData: { [key: string]: any }[]
+  tokensData: { [key: string]: any }[]
+  currencies: { [key: string]: string }[]
+  allCurrencyies: {
+    addAssets: boolean
+    fullTitle: string
+    icon: string
+    name: string
+    title: string
+    value: string
+  }[]
+  swapHistory: {} // what in the object?
+  addSelectedItems: [] // what in the array?
+  decline: [] // what in the array?
+}
+
+type Address = {
+  currency: string
+  type: string
+  value: string
+}
+
+type ExchangeState = {
+  haveAmount: number
+  goodRate: number
+  maxAmount: number
+  dynamicFee: number
+  haveFiat: number
+  getFiat: number
+  maxBuyAmount: BigNumber
+  
+  getAmount: string
+  haveCurrency: string
+  haveType: string
+  getCurrency: string
+  getType: string
+  orderId: string
+
+  extendedControls: boolean
+  isLowAmount: boolean
+  isToken: boolean
+  isNonOffers: boolean
+  isSearching: boolean
+  isShowBalance: boolean
+  isNoAnyOrders: boolean
+  isFullLoadingComplite: boolean
+  isWaitForPeerAnswer: boolean
+  isDeclinedOffer: boolean
+  haveBalance: boolean
+  pairFees: boolean
+  balances: boolean | { [key: string]: string }
+
+  peer: string
+  exHaveRate: string
+  exGetRate: string
+  redirectToSwap: string
+
+  filteredOrders: { [key: string]: string }[]
+  desclineOrders: [] // what in the array?
+
+  fromAddress: Address
+  toAddress: Address
+}
 
 const allowedCoins = [
   ...(!config.opts.curEnabled || config.opts.curEnabled.btc ? ['BTC'] : []),
@@ -127,19 +198,23 @@ const bannedPeers = {} // rejected swap peers
 )
 @CSSModules(styles, { allowMultiple: true })
 export default class Exchange extends Component<any, any> {
-  _mounted = false
+  
+  props: ExchangeProps
+  state: ExchangeState
+  
+  private _mounted = false
 
   static defaultProps = {
     orders: [],
   }
-
-  promoContainer: any
-  scrollTrigger: any
-  onRequestAnswer: any
-  fiatRates: any
+  
+  timer: boolean
+  promoContainer: Element
+  fiatRates: { [key: string]: number }
+  onRequestAnswer: (newOrder: { [key: string]: any }, isAccepted: boolean) => void
   cacheDynamicFee: any
-  timer: any
-  wallets: any
+  scrollTrigger: any // undefined | ?
+  wallets: any // undefined | ?
 
   static getDerivedStateFromProps({ orders, match: { params } }, { haveCurrency, getCurrency }) {
     if (!Array.isArray(orders)) {
@@ -175,7 +250,6 @@ export default class Exchange extends Component<any, any> {
     this.onRequestAnswer = (newOrder, isAccepted) => {}
 
     const isRootPage = history.location.pathname === '/' || history.location.pathname === '/ru'
-    //@ts-ignore
     const {
       //@ts-ignore
       url,
@@ -235,7 +309,6 @@ export default class Exchange extends Component<any, any> {
     }
 
     if (config.isWidget) {
-      //@ts-ignore
       this.state.getCurrency = config.erc20token
     }
   }
@@ -347,6 +420,11 @@ export default class Exchange extends Component<any, any> {
     }, 60 * 1000)
     this.fetchPairFeesAndBalances()
     metamask.web3connect.on('updated', this.fetchPairFeesAndBalances.bind(this))
+
+    console.log('_____________________________')
+    console.log('this ', this)
+    console.log('this.props ', this.props)
+    console.log('this.state ', this.state)
   }
 
   getBalance(currency) {
@@ -366,51 +444,52 @@ export default class Exchange extends Component<any, any> {
       },
       () => {
         if (!this._mounted) return
-        getPairFees(sellCurrency, buyCurrency).then(async (pairFees) => {
-          //@ts-ignore: Property 'buy' does not exist on type 'unknown'
-          const buyExRate = await this.fetchFiatExRate(pairFees.buy.coin)
-          //@ts-ignore: Property 'sell' does not exist on type 'unknown'
-          const sellExRate = await this.fetchFiatExRate(pairFees.sell.coin)
-          if (!this._mounted) return
-          this.setState(
-            {
-              pairFees: {
-                ...pairFees,
-                buyExRate,
-                sellExRate,
+        getPairFees(sellCurrency, buyCurrency)
+          .then(async (pairFees: { [key: string]: any }) => {
+            console.log('Exchange pairFees >>>>>  ', pairFees)
+            const buyExRate = await this.fetchFiatExRate(pairFees.buy.coin)
+            const sellExRate = await this.fetchFiatExRate(pairFees.sell.coin)
+
+            if (!this._mounted) return
+            this.setState(
+              {
+                pairFees: {
+                  ...pairFees,
+                  buyExRate,
+                  sellExRate,
+                },
               },
-            },
-            async () => {
-              if (!this._mounted) return
-              // After fetching fee - actualize balances
-              const buyWallet = actions.core.getWallet({ currency: buyCurrency })
-              const sellWallet = actions.core.getWallet({ currency: sellCurrency })
-              //@ts-ignore: Property 'buy' does not exist on type 'unknown'
-              const feeBuyWallet = actions.core.getWallet({ currency: pairFees.buy.coin })
-              //@ts-ignore: Property 'sell' does not exist on type 'unknown'
-              const feeSellWallet = actions.core.getWallet({ currency: pairFees.sell.coin })
+              async () => {
+                if (!this._mounted) return
+                // After fetching fee - actualize balances
+                const buyWallet = actions.core.getWallet({ currency: buyCurrency })
+                const sellWallet = actions.core.getWallet({ currency: sellCurrency })
+                //@ts-ignore: Property 'buy' does not exist on type 'unknown'
+                const feeBuyWallet = actions.core.getWallet({ currency: pairFees.buy.coin })
+                //@ts-ignore: Property 'sell' does not exist on type 'unknown'
+                const feeSellWallet = actions.core.getWallet({ currency: pairFees.sell.coin })
 
-              const balances = {}
-              balances[`${buyWallet.currency}`] = await actions.core.fetchWalletBalance(buyWallet)
-              balances[`${sellWallet.currency}`] = await actions.core.fetchWalletBalance(sellWallet)
-              if (balances[`${feeBuyWallet.currency}`] === undefined) {
-                balances[`${feeBuyWallet.currency}`] = await actions.core.fetchWalletBalance(
-                  feeBuyWallet
-                )
+                const balances = {}
+                balances[`${buyWallet.currency}`] = await actions.core.fetchWalletBalance(buyWallet)
+                balances[`${sellWallet.currency}`] = await actions.core.fetchWalletBalance(sellWallet)
+                if (balances[`${feeBuyWallet.currency}`] === undefined) {
+                  balances[`${feeBuyWallet.currency}`] = await actions.core.fetchWalletBalance(
+                    feeBuyWallet
+                  )
+                }
+                if (balances[`${feeSellWallet.currency}`] === undefined) {
+                  balances[`${feeSellWallet.currency}`] = await actions.core.fetchWalletBalance(
+                    feeSellWallet
+                  )
+                }
+
+                this.setState({
+                  balances,
+                })
+
+                this.checkBalanceOnAllCurrency()
               }
-              if (balances[`${feeSellWallet.currency}`] === undefined) {
-                balances[`${feeSellWallet.currency}`] = await actions.core.fetchWalletBalance(
-                  feeSellWallet
-                )
-              }
-
-              this.setState({
-                balances,
-              })
-
-              this.checkBalanceOnAllCurrency()
-            }
-          )
+            )
         })
       }
     )
@@ -636,10 +715,9 @@ export default class Exchange extends Component<any, any> {
     const { decline, usersData } = this.props
 
     const { haveCurrency, haveAmount, getCurrency, haveType } = this.state
-
     const haveTicker = haveCurrency.toUpperCase()
     const getTicker = getCurrency.toUpperCase()
-    //@ts-ignore
+
     feedback.exchangeForm.requestedSwap(`${haveTicker}->${getTicker}`)
 
     if (
