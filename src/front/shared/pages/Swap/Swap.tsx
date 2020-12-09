@@ -168,13 +168,10 @@ export default class SwapComponent extends PureComponent<any, any> {
     })
 
     try {
-      //@ts-ignore
       const swap = new Swap(orderId, SwapApp.shared())
       console.log('Swap flow:', swap.flow._flowName);
 
-      //@ts-ignore
       window.swap = swap
-      //@ts-ignore
       window.flow = swap.flow
 
       const SwapComponent = swapComponents[swap.flow._flowName]
@@ -327,7 +324,6 @@ export default class SwapComponent extends PureComponent<any, any> {
   deleteThisSwap = (orderId) => {
     actions.core.saveDeletedOrder(orderId)
     actions.core.forgetOrders(orderId)
-    //@ts-ignore
     window.swap = null
   }
 

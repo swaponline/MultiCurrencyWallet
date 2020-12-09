@@ -184,7 +184,6 @@ export const getTokenWallet = (token) => {
   return `/token/${token.toUpperCase()}/${address}`
 }
 
-//@ts-ignore
 window.getTokenWallet = getTokenWallet
 
 export const getFullOrigin = () => `${location.origin}${location.pathname}#`

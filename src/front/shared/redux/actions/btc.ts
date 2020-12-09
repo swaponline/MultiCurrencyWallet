@@ -164,9 +164,7 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
     isMnemonic: sweepToMnemonicReady,
   }
 
-  //@ts-ignore
   window.getBtcAddress = () => data.address
-  //@ts-ignore
   window.getBtcData = () => data
 
   console.info('Logged in with Bitcoin', data)

@@ -30,7 +30,6 @@ const initReducerState = () => {
   } = getState()
 
   if (!activeCurrency) reducers.user.setActiveCurrency({ activeCurrency: 'BTC' })
-  //@ts-ignore
   if (!activeFiat) reducers.user.setActiveFiat({ activeFiat: window.DEFAULT_FIAT || 'USD' })
 }
 
@@ -241,7 +240,6 @@ const getBalances = () => {
 }
 
 const customRate = (cur) => {
-  //@ts-ignore
   const wTokens = window.widgetERC20Tokens
 
   const dataobj = wTokens && Object.keys(wTokens).find(el => el === cur.toLowerCase())
@@ -648,7 +646,7 @@ const downloadPrivateKeys = () => {
   //@ts-ignore
   localStorage.setItem(constants.localStorage.privateKeysSaved, true)
 }
-//@ts-ignore
+
 window.downloadPrivateKeys = downloadPrivateKeys
 
 const getAuthData = (name) => {

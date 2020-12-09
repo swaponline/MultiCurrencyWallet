@@ -64,61 +64,45 @@ const externalConfig = () => {
 
 
   if (window
-    //@ts-ignore
     && window._ui_footerDisabled
   ) {
-    //@ts-ignore
     config.opts.ui.footerDisabled = window._ui_footerDisabled
   }
 
   if (window
-    //@ts-ignore
     && window.WPuserHash
   ) {
-    //@ts-ignore
     config.opts.WPuserHash = window.WPuserHash
-    //@ts-ignore
     window.WPuserHash = false
   }
 
   if (window
-    //@ts-ignore
     && window.showHowItWorksOnExchangePage
   ) {
-    //@ts-ignore
     config.showHowItsWork = window.showHowItWorksOnExchangePage
   }
 
   if (window
-    //@ts-ignore
     && window.buildOptions
-    //@ts-ignore
     && Object.keys(window.buildOptions)
-    //@ts-ignore
     && Object.keys(window.buildOptions).length
   ) {
-    //@ts-ignore
     config.opts = { ...config.opts, ...window.buildOptions }
   }
 
   if (window
-    //@ts-ignore
     && window.DEFAULT_FIAT
   ) {
-    //@ts-ignore
     config.opts.activeFiat = window.DEFAULT_FIAT
   }
   reducers.user.setActiveFiat({ activeFiat: config.opts.activeFiat })
 
   if (window
-    //@ts-ignore
     && window.EXCHANGE_DISABLED
   ) {
-    //@ts-ignore
     config.opts.exchangeDisabled = window.EXCHANGE_DISABLED
   }
   if (window
-    //@ts-ignore
     && window.CUR_BTC_DISABLED
   ) {
     if (!config.opts.curEnabled) config.opts.curEnabled = {}
@@ -127,9 +111,7 @@ const externalConfig = () => {
 
   if (window) {
     if (!config.opts.curEnabled) config.opts.curEnabled = {}
-    //@ts-ignore
     if (window.CUR_GHOST_DISABLED !== undefined
-      //@ts-ignore
       && window.CUR_GHOST_DISABLED === false
     ) {
       config.opts.curEnabled.ghost = true
@@ -138,9 +120,7 @@ const externalConfig = () => {
 
   if (window) {
     if (!config.opts.curEnabled) config.opts.curEnabled = {}
-    //@ts-ignore
     if (window.CUR_NEXT_DISABLED !== undefined
-      //@ts-ignore
       && window.CUR_NEXT_DISABLED === false
     ) {
       config.opts.curEnabled.next = true
@@ -148,7 +128,6 @@ const externalConfig = () => {
   }
 
   if (window
-    //@ts-ignore
     && window.CUR_ETH_DISABLED
   ) {
     if (!config.opts.curEnabled) config.opts.curEnabled = {}
@@ -156,67 +135,48 @@ const externalConfig = () => {
   }
   // Plugins
   if (window
-    //@ts-ignore
     && window.backupPlugin
-    //@ts-ignore
     && window.backupUrl
-    //@ts-ignore
     && window.restoreUrl
   ) {
-    //@ts-ignore
     config.opts.plugins.backupPlugin = window.backupPlugin
-    //@ts-ignore
     config.opts.plugins.backupPluginUrl = window.backupUrl
-    //@ts-ignore
     config.opts.plugins.restorePluginUrl = window.restoreUrl
   }
 
   if (window
-    //@ts-ignore
     && window.setItemPlugin
   ) {
-    //@ts-ignore
     config.opts.plugins.setItemPlugin = window.setItemPlugin
   }
   if (window
-    //@ts-ignore
     && window.getItemPlugin
   ) {
-    //@ts-ignore
     config.opts.plugins.getItemPlugin = window.getItemPlugin
   }
   if (window
-    //@ts-ignore
     && window.userDataPluginApi
   ) {
-    //@ts-ignore
     config.opts.plugins.userDataPluginApi = window.userDataPluginApi
   }
 
   // ------
   if (window
-    //@ts-ignore
     && window.buyViaCreditCardLink
   ) {
-    //@ts-ignore
     config.opts.buyViaCreditCardLink = window.buyViaCreditCardLink
   }
 
   if (window
-    //@ts-ignore
     && window.SWAP_HIDE_EXPORT_PRIVATEKEY !== undefined
   ) {
-    //@ts-ignore
     config.opts.hideShowPrivateKey = window.SWAP_HIDE_EXPORT_PRIVATEKEY
   }
 
   if (window
-    //@ts-ignore
     && window.widgetERC20Tokens
-    //@ts-ignore
     && Object.keys(window.widgetERC20Tokens)
   ) {
-    //@ts-ignore
     config.opts.ownTokens = window.widgetERC20Tokens
   }
 
@@ -266,19 +226,14 @@ const externalConfig = () => {
 
   // Comission config - default false
   if (window
-    //@ts-ignore
     && window.widgetERC20Comisions
-    //@ts-ignore
     && Object.keys(window.widgetERC20Comisions)
   ) {
     let setErc20FromEther = false
 
-    //@ts-ignore
     Object.keys(window.widgetERC20Comisions).filter((key) => {
       const curKey = key.toLowerCase()
-      //@ts-ignore
       if (window.widgetERC20Comisions[curKey]) {
-        //@ts-ignore
         let { fee, address, min } = window.widgetERC20Comisions[curKey]
         let feeOk = false
         let minOk = false

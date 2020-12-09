@@ -147,7 +147,6 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
   data.isMnemonic = sweepToMnemonicReady
 
   reducers.user.setAuthData({ name: 'ethData', data })
-  //@ts-ignore
   window.getEthAddress = () => data.address
   referral.newReferral(data.address)
 
