@@ -1263,7 +1263,7 @@ const sendSMSProtectedV4 = async ({ from, to, amount, feeValue, speed } = {}) =>
   authKeys = JSON.stringify(authKeys.map((key) => key.toString('Hex')))
 
   try {
-    const result = await apiLooper.post('btc2FAProtected', `/push/`, {
+    const result: any = await apiLooper.post('btc2FAProtected', `/push/`, {
       body: {
         address,
         publicKey: authKeys,
@@ -1277,6 +1277,7 @@ const sendSMSProtectedV4 = async ({ from, to, amount, feeValue, speed } = {}) =>
         deadline: 5000,
       },
     })
+
     return {
       ...result,
       rawTx: txRaw.toHex(),
