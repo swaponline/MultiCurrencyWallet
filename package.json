@@ -273,6 +273,7 @@
     "react-loading-skeleton": "^2.0.1",
     "react-phone-number-input": "^3.1.1",
     "react-redux": "^7.2.2",
+    "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-tag-autocomplete": "^6.0.0-beta.6",
     "react-tooltip": "^4.2.10",

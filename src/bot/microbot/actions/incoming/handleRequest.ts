@@ -1,12 +1,15 @@
 import BigNumber from 'bignumber.js'
 import _debug from 'debug'
 
+import SwapApp from 'swap.app'
+
 import handleError from '../../../app/actions/errors/handleError'
 import beginSwap from '../start/beginSwap'
 
 import fetchOrder from '../../core/fetchOrder'
 import replyToRequest from '../../core/replyToRequest'
 import { checkParticipantAddress } from '../../core/checkAddress'
+import { checkParticipant } from '../../core/checkParticipant'
 
 
 const debug = _debug('swap.bot')
@@ -31,6 +34,22 @@ export default (app, wallet, orders) => async ({ orderId, participant }) => {
     buyAmount: order.buyAmount,
     sellAmount: order.sellAmount,
   })
+
+  if (process.env.MAX_PARALEL_SWAPS !== undefined
+    && Number(process.env.MAX_PARALEL_SWAPS) !== 0
+  ) {
+    const activeSwapsCount = SwapApp.shared().getActiveSwaps().length
+    if (activeSwapsCount === Number(process.env.MAX_PARALEL_SWAPS)) {
+      replyToRequest(orders)({ orderId, participant }, false)
+      return false
+    }
+  }
+
+  if (!checkParticipant(participant)) {
+    // One swap with one participant
+    replyToRequest(orders)({ orderId, participant }, false)
+    return false
+  }
 
   const isEnoughBalance = new BigNumber(balance).isGreaterThan(order.sellAmount)
   const isAccepted = isEnoughBalance && isParticipantAddressOkay
