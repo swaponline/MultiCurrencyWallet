@@ -1,49 +1,109 @@
 import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
 import cx from 'classnames'
-import helpers, { constants, links } from 'helpers'
-import request from 'common/utils/request'
-import actions from 'redux/actions'
-import Link from 'local_modules/sw-valuelink'
-import { connect } from 'redaction'
-import config from 'helpers/externalConfig'
-import { localisedUrl } from 'helpers/locale'
-
 import cssModules from 'react-css-modules'
 import styles from './WithdrawModal.scss'
 
-import { inputReplaceCommaWithDot } from 'helpers/domUtils'
+import actions from 'redux/actions'
+import Link from 'local_modules/sw-valuelink'
+import { connect } from 'redaction'
+import typeforce from 'swap.app/util/typeforce'
 import { BigNumber } from 'bignumber.js'
-import Coin from 'components/Coin/Coin'
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
+import { isMobile } from 'react-device-detect'
+
+import { getActivatedCurrencies } from 'helpers/user'
+import { inputReplaceCommaWithDot } from 'helpers/domUtils'
+import { localisedUrl } from 'helpers/locale'
+import minAmount from 'helpers/constants/minAmount'
+import redirectTo from 'helpers/redirectTo'
+import getCurrencyKey from 'helpers/getCurrencyKey'
+import lsDataCache from 'helpers/lsDataCache'
+import helpers, { 
+  constants,
+  links,
+  adminFee,
+  feedback,
+  metamask,
+} from 'helpers'
+
 import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-import { isMobile } from 'react-device-detect'
 import QrReader from 'components/QrReader'
 import InvoiceInfoBlock from 'components/InvoiceInfoBlock/InvoiceInfoBlock'
-
-// import isCoinAddress from 'swap.app/util/typeforce'
-import typeforce from 'swap.app/util/typeforce'
-import minAmount from 'helpers/constants/minAmount'
-
-import redirectTo from 'helpers/redirectTo'
 import AdminFeeInfoBlock from 'components/AdminFeeInfoBlock/AdminFeeInfoBlock'
-
-import { getActivatedCurrencies } from 'helpers/user'
-
 import CurrencyList from './components/CurrencyList'
-import getCurrencyKey from 'helpers/getCurrencyKey'
-import lsDataCache from 'helpers/lsDataCache'
-
-import adminFee from 'helpers/adminFee'
-import feedback from 'shared/helpers/feedback'
-import metamask from 'helpers/metamask'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
+
+type Currency = {
+  addAssets: boolean
+  fullTitle: string
+  icon: string
+  name: string
+  title: string
+  value: string
+}
+
+interface IWithdrawModalProps {
+  name: 'WithdrawModal'
+  activeFiat: string
+  activeCurrency: string
+  dashboardView: boolean
+  isBalanceFetching: boolean
+  currencies: Currency[]
+
+  intl: { [key: string]: any }
+  history: { [key: string]: any }
+  data: { [key: string]: any }
+  tokenItems: { [key: string]: any }[]
+  items: { [key: string]: any }[]
+
+  portalUI?: any
+}
+
+interface IWithdrawModalState {
+  isShipped: boolean
+  isEthToken: boolean
+  isAssetsOpen: boolean
+  fetchFee: boolean
+  devErrorMessage: boolean
+  
+  openScanCam: string
+  address: string
+  amount: number
+  ownTx: string
+  selectedValue: string
+  
+  balance: number
+  getFiat: number
+  currentDecimals: number
+  exCurrencyRate?: number
+  fiatAmount?: number
+  
+  ethBalance: null | number
+  tokenFee: null | number
+  coinFee: null | number
+  totalFee: null | number
+  adminFeeSize: null | number
+  
+  usedAdminFee: {
+    address: string
+    fee: number
+    min: number
+  }
+  hiddenCoinsList: string[]
+  enabledCurrencies: string[]
+
+  error: { [key: string]: any } | false
+  currentActiveAsset: { [key: string]: any }
+  allCurrencyies: { [key: string]: any }[]
+  selectedItem: { [key: string]: any }
+  wallet: { [key: string]: any }
+}
 
 @injectIntl
 @connect(
@@ -72,14 +132,9 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 )
 @cssModules(styles, { allowMultiple: true })
 export default class WithdrawModal extends React.Component<any, any> {
-  props: any
-
-  static propTypes = {
-    name: PropTypes.string,
-    data: PropTypes.object,
-  }
-
-  fiatRates: any
+  
+  props: IWithdrawModalProps
+  state: IWithdrawModalState
 
   constructor(data) {
     //@ts-ignore
@@ -128,11 +183,9 @@ export default class WithdrawModal extends React.Component<any, any> {
   }
 
   componentDidMount() {
-    this.fiatRates = {}
     this.getFiatBalance()
     this.setCommissions()
     this.setBalanceOnState()
-    //@ts-ignore
     feedback.withdraw.entered()
   }
 
@@ -305,7 +358,6 @@ export default class WithdrawModal extends React.Component<any, any> {
   }
 
   handleSubmit = async () => {
-    //@ts-ignore
     feedback.withdraw.started()
 
     const { 
@@ -435,7 +487,6 @@ export default class WithdrawModal extends React.Component<any, any> {
           time: 3600,
           data: txInfoCache,
         })
-        //@ts-ignore
         feedback.withdraw.finished()
 
         const txInfoUrl = helpers.transactions.getTxRouter(currency.toLowerCase(), txId)
@@ -445,8 +496,9 @@ export default class WithdrawModal extends React.Component<any, any> {
         actions.modals.close(name)
       })
       .catch((e) => {
-        //@ts-ignore
-        feedback.withdraw.failed()
+        const { selectedItem } = this.state
+        feedback.withdraw.failed(selectedItem.fullName)
+
         const errorText = e.res ? e.res.text : ''
         const error = {
           name: {
@@ -647,7 +699,7 @@ export default class WithdrawModal extends React.Component<any, any> {
       !address ||
       !+amount || // string to number -> inverting
       isShipped ||
-      ownTx ||
+      !!ownTx || // string to boolean
       !this.addressIsCorrect() ||
       !criptoValueIsOk ||
       !usdValueIsOk ||
@@ -947,22 +999,6 @@ export default class WithdrawModal extends React.Component<any, any> {
         {usedAdminFee && isEthToken && (
           <AdminFeeInfoBlock {...usedAdminFee} currency={currency} />
         )}
-        {error && (
-          <div styleName="rednote">
-            <FormattedMessage
-              id="WithdrawModalErrorSend"
-              defaultMessage="{errorName} {currency}:{br}{errorMessage}"
-              values={{
-                errorName: intl.formatMessage(error.name),
-                errorMessage: intl.formatMessage(error.message),
-                br: <br />,
-                currency: `${currency}`,
-              }}
-            />
-            <br />
-            {devErrorMessage && <span>Dev info: {devErrorMessage}</span>}
-          </div>
-        )}
         {invoice && (
           <Fragment>
             <hr />
@@ -1071,6 +1107,22 @@ export default class WithdrawModal extends React.Component<any, any> {
               </>
               )
             }
+            {error && (
+              <div styleName="errorBlock">
+                <FormattedMessage
+                  id="WithdrawModalErrorSend"
+                  defaultMessage="{errorName} {currency}:{br}{errorMessage}"
+                  values={{
+                    errorName: intl.formatMessage(error.name),
+                    errorMessage: intl.formatMessage(error.message),
+                    br: <br />,
+                    currency: `${currency}`,
+                  }}
+                />
+                <br />
+                {devErrorMessage && <span>Dev info: {devErrorMessage}</span>}
+              </div>
+            )}
           </div>
         )}
       </Fragment>
