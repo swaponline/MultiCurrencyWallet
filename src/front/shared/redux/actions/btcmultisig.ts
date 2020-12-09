@@ -358,9 +358,7 @@ const createWallet = (privateKey, otherOwnerPublicKey) => {
 
   localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKey, otherOwnerPublicKey)
 
-  //@ts-ignore
   window.getBtcMultisigData = () => data
-  //@ts-ignore
   window.getBtcMultisigAddress = () => data.address
 
   console.info('Logged in with BitcoinMultisig', data)
@@ -378,7 +376,7 @@ const login_SMS = (privateKey, otherOwnerPublicKey) => {
   data.fullName = 'Bitcoin (SMS-Protected)'
   data.isRegistered = (otherOwnerPublicKey instanceof Array && otherOwnerPublicKey.length > 1) ? true : isRegistered
   data.isSmsProtected = true
-  //@ts-ignore
+
   window.getBtcSmsData = () => data
   reducers.user.setAuthData({ name: 'btcMultisigSMSData', data })
 }
@@ -395,7 +393,7 @@ const login_PIN = (privateKey, otherOwnerPublicKey) => {
   data.fullName = 'Bitcoin (PIN-Protected)'
   data.isRegistered = (otherOwnerPublicKey instanceof Array && otherOwnerPublicKey.length > 1) ? true : isRegistered
   data.isPinProtected = true
-  //@ts-ignore
+
   window.getBtcPinData = () => data
   reducers.user.setAuthData({ name: 'btcMultisigPinData', data })
 }
@@ -611,7 +609,7 @@ const broadcastTX2Room = (txData, cbSuccess, cbFail) => {
   })
   return cancelFunc
 }
-//@ts-ignore
+
 window.broadcastTX2Room = broadcastTX2Room
 
 const _getSign = () => {
@@ -958,7 +956,6 @@ const getBalanceUser = (checkAddress) => {
 }
 
 const getRate = async () => {
-  //@ts-ignore
   const activeFiat = window.DEFAULT_FIAT || 'USD'
 
   const exCurrencyRate = await actions.user.getExchangeRate('BTC', activeFiat.toLowerCase())

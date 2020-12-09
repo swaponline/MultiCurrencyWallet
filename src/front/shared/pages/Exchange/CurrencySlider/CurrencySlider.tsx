@@ -10,7 +10,6 @@ import { FormattedMessage } from 'react-intl'
 
 import images from './images'
 
-//@ts-ignore
 const tokens = window.widgetERC20Tokens ? Object.keys(window.widgetERC20Tokens) : ['swap']
 const names = ['btc', 'eth', ...tokens]
 
@@ -30,13 +29,9 @@ export default class CurrencySlider extends Component<any, any> {
   }
 
   getItemImage(name) {
-    //@ts-ignore
     if (window.widgetERC20Tokens
-      //@ts-ignore
       && window.widgetERC20Tokens[name]
-      //@ts-ignore
       && window.widgetERC20Tokens[name].icon
-    //@ts-ignore
     ) return window.widgetERC20Tokens[name].icon
 
     if (images[name]) return images[name]

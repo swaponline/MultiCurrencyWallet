@@ -107,7 +107,7 @@ const getWalletByWords = (mnemonic: string, walletNumber: number = 0, path: stri
 }
 
 
-const login = (privateKey, mnemonic, mnemonicKeys) => {
+const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
   let sweepToMnemonicReady = false
 
   if (privateKey
@@ -147,7 +147,6 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
   data.isMnemonic = sweepToMnemonicReady
 
   reducers.user.setAuthData({ name: 'ethData', data })
-  //@ts-ignore
   window.getEthAddress = () => data.address
   referral.newReferral(data.address)
 

@@ -126,7 +126,7 @@ const getPrivateKeyByAddress = (address) => {
   if (mnemonicAddress === address) return mnemonicKey
 }
 
-const login = (privateKey, mnemonic, mnemonicKeys) => {
+const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
   let sweepToMnemonicReady = false
 
   if (privateKey
@@ -165,9 +165,8 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
     currency: 'GHOST',
     fullName: 'ghost',
   }
-  //@ts-ignore
+
   window.getGhostAddress = () => data.address
-  //@ts-ignore
   window.getGhostData = () => data
 
   console.info('Logged in with Ghost', data)
@@ -526,7 +525,6 @@ const sendV5WithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) =>
   } = config.opts.fee.ghost
 
   const adminFeeMin = new BigNumber(adminFeeMinValue)
-  //@ts-ignore
   feeValue = feeValue || await ghost.estimateFeeValue({
     inSatoshis: true,
     speed
@@ -608,8 +606,6 @@ const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
   if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
   feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
-
-  //@ts-ignore
   feeValue = feeValue || await ghost.estimateFeeValue({ inSatoshis: true, speed })
 
   const tx = new bitcoin.TransactionBuilder(ghost.network)
@@ -656,7 +652,7 @@ const sendV5Default = async ({ from, to, amount, feeValue, speed } = {}) => {
     //@ts-ignore
     feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue().toNumber() // Admin fee in satoshi
   }
-  //@ts-ignore
+
   feeValue = feeValue || await ghost.estimateFeeValue({ inSatoshis: true, speed })
 
   const unspents = await fetchUnspents(from)
@@ -708,7 +704,6 @@ const sendV5Default = async ({ from, to, amount, feeValue, speed } = {}) => {
 }
 //@ts-ignore
 const sendDefault = async ({ from, to, amount, feeValue, speed } = {}) => {
-  //@ts-ignore
   feeValue = feeValue || await ghost.estimateFeeValue({ inSatoshis: true, speed })
   const tx = new bitcoin.TransactionBuilder(ghost.network)
   tx.setVersion(160);
@@ -793,7 +788,7 @@ const signMessage = (message, encodedPrivateKey) => {
 }
 
 const getReputation = () => Promise.resolve(0)
-//@ts-ignore
+
 window.getMainPublicKey = getMainPublicKey
 
 /*
@@ -829,7 +824,7 @@ const checkWithdraw = (scriptAddress) => {
     return false
   })
 }
-//@ts-ignore
+
 window.ghostCheckWithdraw = checkWithdraw
 
 export default {

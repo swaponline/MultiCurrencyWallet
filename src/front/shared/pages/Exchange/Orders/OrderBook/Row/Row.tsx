@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react'
-import PropTypes from 'prop-types'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
@@ -23,8 +22,41 @@ import { localisedUrl } from 'helpers/locale'
 import { BigNumber } from 'bignumber.js'
 import feedback from 'shared/helpers/feedback'
 
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
+type RowProps = {
+  history: { [key: string]: any }
+  balances: { [key: string]: number } | boolean
+  pairFees: any
+  decline: any[]
+  orderId: string
+  linkedOrderId: number
+  
+  row: {
+    id: string
+    isMy: boolean
+    buyCurrency: string
+    sellCurrency: string
+    buyAmount: BigNumber
+    sellAmount: BigNumber
+    isRequested: boolean
+    isProcessing: boolean
+    owner: { [key: string]: any }
+  }
 
+  removeOrder: (number) => void
+  checkSwapAllow: ({}) => boolean
+
+  currenciesData?: { [key: string]: any }
+  intl?: { [key: string]: any }
+  peer?: string
+}
+
+type RowState = {
+  enterButton: boolean
+  isFetching: boolean
+  windowWidth: number
+}
 @injectIntl
 @connect(({
   pubsubRoom: { peer },
@@ -35,12 +67,11 @@ import feedback from 'shared/helpers/feedback'
 }))
 
 @cssModules(styles, { allowMultiple: true })
-export default class Row extends Component<any, any> {
+export default class Row extends Component {
   _mounted = false
 
-  static propTypes = {
-    row: PropTypes.object,
-  }
+  props: RowProps
+  state: RowState
 
   constructor(props) {
     super(props)
@@ -128,7 +159,6 @@ export default class Row extends Component<any, any> {
 
     const balance = this.getBalance()
 
-    //@ts-ignore
     feedback.offers.buyPressed(`${sellCurrency}->${buyCurrency}`)
 
     const pair = Pair.fromOrder(row)
@@ -295,7 +325,7 @@ export default class Row extends Component<any, any> {
     return showDesktopContent ? (
       <tr
         id={id}
-        styleName={`${id === linkedOrderId ? 'linkedOrderHighlight' : ''}`}
+        styleName={`${isDark ? 'rowDark' : ''}`}
         style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}
       >
         <td>
@@ -311,8 +341,9 @@ export default class Row extends Component<any, any> {
               defaultMessage="sells"
             />
           </span>
-          {' '}
-          {`${this.getDecimals(sellAmountOut, sellCurrencyOut)} ${sellCurrencyOut}`}
+          <span styleName='rowAmount'>
+            {`${this.getDecimals(sellAmountOut, sellCurrencyOut)} ${sellCurrencyOut}`}
+          </span>
         </td>
         <td>
           <span styleName="rowBindingText">
@@ -321,8 +352,9 @@ export default class Row extends Component<any, any> {
               defaultMessage="for"
             />
           </span>
-          {' '}
-          {`${this.getDecimals(getAmountOut, getCurrencyOut)} ${getCurrencyOut}`}
+          <span styleName='rowAmount'>
+            {`${this.getDecimals(getAmountOut, getCurrencyOut)} ${getCurrencyOut}`}
+          </span>
         </td>
         <td>
           <span styleName="rowBindingText">
@@ -331,8 +363,9 @@ export default class Row extends Component<any, any> {
               defaultMessage="at price"
             />
           </span>
-          {' '}
-          {`${this.getDecimals(priceOut, getCurrencyOut)} ${getCurrencyOut}/${sellCurrencyOut}`}
+          <span styleName='rowAmount'>
+            {`${this.getDecimals(priceOut, getCurrencyOut)} ${getCurrencyOut}/${sellCurrencyOut}`}
+          </span>
         </td>
         <td styleName="buttonsColumn">
           {peer === ownerPeer
@@ -389,7 +422,10 @@ export default class Row extends Component<any, any> {
     (
       <tr
         id={id}
-        styleName={`${id === linkedOrderId ? 'linkedOrderHighlight' : ''} ${peer === ownerPeer ? 'mobileRowRemove' : 'mobileRowStart'}`}
+        styleName={`
+          ${peer === ownerPeer ? 'mobileRowRemove' : 'mobileRowStart'}
+          ${isDark ? 'rowDark' : ''}
+        `}
         style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}
       >
         <td>
@@ -400,7 +436,7 @@ export default class Row extends Component<any, any> {
                   ? (<FormattedMessage id="RowMobileFirstTypeYouHave" defaultMessage="You have" />)
                   : (<FormattedMessage id="RowMobileFirstTypeYouGet" defaultMessage="You get" />)}
               </span>
-              <span>{`${mobileFormatCrypto(amount, main)} ${main}`}</span>
+              <span styleName='rowAmount'>{`${mobileFormatCrypto(amount, main)} ${main}`}</span>
             </div>
             <div>
               <i className="fas fa-exchange-alt" />
@@ -411,7 +447,7 @@ export default class Row extends Component<any, any> {
                   ? (<FormattedMessage id="RowMobileSecondTypeYouGet" defaultMessage="You get" />)
                   : (<FormattedMessage id="RowMobileSecondTypeYouHave" defaultMessage="You have" />)}
               </span>
-              <span>{`${mobileFormatCrypto(total, base)} ${base}`}</span>
+              <span styleName='rowAmount'>{`${mobileFormatCrypto(total, base)} ${base}`}</span>
             </div>
             <div styleName="tdContainer-3">
               {

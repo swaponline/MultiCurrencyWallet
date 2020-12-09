@@ -194,61 +194,60 @@ export default class RestoryMnemonicWallet extends React.Component {
       })
       return
     }
-    /* 
-    * This callback blocks any action until all wallets are created
-    * So ui does not work
-    * How improve it ?
-    */
+
     this.setState(
       {
         isFetching: true,
       },
-      async () => {
-        // Backup critical localStorage
-        const backupMark = actions.btc.getMainPublicKey()
-
-        actions.backupManager.backup(backupMark, false, true)
-        const btcWallet = await actions.btc.getWalletByWords(mnemonic)
-        const ethWallet = await actions.eth.getWalletByWords(mnemonic)
-        const ghostWallet = await actions.ghost.getWalletByWords(mnemonic)
-        const nextWallet = await actions.next.getWalletByWords(mnemonic)
-
-        // clean mnemonic, if exists
-        localStorage.setItem(constants.privateKeyNames.twentywords, '-')
-
-        // Check - if exists backup for this mnemonic
-        const restoryMark = btcWallet.publicKey
-
-        if (actions.backupManager.exists(restoryMark)) {
-          actions.backupManager.restory(restoryMark)
-        }
-        //@ts-ignore
-        const btcPrivKey = await actions.btc.login(false, mnemonic)
-        const btcSmsKey = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
-        localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, btcSmsKey)
-        //@ts-ignore
-        localStorage.setItem(constants.localStorage.isWalletCreate, true)
-        //@ts-ignore
-        await actions.eth.login(false, mnemonic)
-        //@ts-ignore
-        await actions.ghost.login(false, mnemonic)
-        //@ts-ignore
-        await actions.next.login(false, mnemonic)
-
-        await actions.user.sign_btc_2fa(btcPrivKey)
-        await actions.user.sign_btc_multisig(btcPrivKey)
-
-        actions.core.markCoinAsVisible('BTC', true)
-        actions.core.markCoinAsVisible('ETH', true)
-
-        this.setState({
-          isFetching: false,
-          step: `ready`,
-        })
-        //@ts-ignore
-        feedback.restore.finished()
-      }
+      () => this.restoreWallet(mnemonic)
     )
+  }
+
+  restoreWallet = (mnemonic) => {
+    // callback in timeout is't block ui
+    setTimeout(async () => {
+      // Backup critical localStorage
+      const backupMark = actions.btc.getMainPublicKey()
+
+      actions.backupManager.backup(backupMark, false, true)
+      const btcWallet = await actions.btc.getWalletByWords(mnemonic)
+      const ethWallet = await actions.eth.getWalletByWords(mnemonic)
+      const ghostWallet = await actions.ghost.getWalletByWords(mnemonic)
+      const nextWallet = await actions.next.getWalletByWords(mnemonic)
+
+      // clean mnemonic, if exists
+      localStorage.setItem(constants.privateKeyNames.twentywords, '-')
+
+      // Check - if exists backup for this mnemonic
+      const restoryMark = btcWallet.publicKey
+
+      if (actions.backupManager.exists(restoryMark)) {
+        actions.backupManager.restory(restoryMark)
+      }
+
+      const btcPrivKey = await actions.btc.login(false, mnemonic)
+      const btcSmsKey = actions.btcmultisig.getSmsKeyFromMnemonic(mnemonic)
+      localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyGenerated, btcSmsKey)
+      //@ts-ignore
+      localStorage.setItem(constants.localStorage.isWalletCreate, true)
+
+      await actions.eth.login(false, mnemonic)
+      await actions.ghost.login(false, mnemonic)
+      await actions.next.login(false, mnemonic)
+
+      await actions.user.sign_btc_2fa(btcPrivKey)
+      await actions.user.sign_btc_multisig(btcPrivKey)
+
+      actions.core.markCoinAsVisible('BTC', true)
+      actions.core.markCoinAsVisible('ETH', true)
+
+      this.setState({
+        isFetching: false,
+        step: `ready`,
+      })
+
+      feedback.restore.finished()
+    })
   }
 
   handleMnemonicChange = (mnemonic) => {

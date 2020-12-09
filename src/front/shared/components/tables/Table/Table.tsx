@@ -1,18 +1,33 @@
 import React from 'react'
-
 import { constants } from 'helpers'
+import { FormattedMessage } from 'react-intl'
 
 import CSSModules from 'react-css-modules'
 import styles from './Table.scss'
 
-import { FormattedMessage } from 'react-intl'
-
-
 const isDark = localStorage.getItem(constants.localStorage.isDark)
-@CSSModules(styles, { allowMultiple: true })
-export default class Table extends React.Component<any, any> {
 
-  props: any
+type TableProps = {
+  rows: { [key: string]: any }[]
+  rowRender: (...any) => JSX.Element
+  
+  id?: string
+  className?: string
+  isLoading?: boolean
+  textIfEmpty?: JSX.Element
+  loadingText?: JSX.Element
+  titles?: (string | JSX.Element)[]
+}
+
+type TableState = {
+  selectId: number
+}
+
+@CSSModules(styles, { allowMultiple: true })
+export default class Table extends React.Component {
+
+  props: TableProps
+  state: TableState
 
   linkOnTableHead: any
   linkOnTableBody: any
@@ -24,9 +39,8 @@ export default class Table extends React.Component<any, any> {
     titles: []
   }
 
-  constructor() {
-    //@ts-ignore
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
       selectId: 0,
@@ -70,7 +84,7 @@ export default class Table extends React.Component<any, any> {
     const { titles, rows, rowRender, textIfEmpty, isLoading, loadingText, className } = this.props
 
     return (
-      <table styleName={`table ${isDark ? 'dark' : ''}`} className={className} ref={(table) => this.linkOnTable = table}>
+      <table styleName={`table ${isDark ? 'dark' : ''}`} className={`table ${className}`} ref={(table) => this.linkOnTable = table}>
         <thead ref={(thead) => this.linkOnTableHead = thead}>
           <tr>
             {
@@ -84,14 +98,14 @@ export default class Table extends React.Component<any, any> {
           {
             isLoading && (
               <tr>
-                <td styleName="color">{loadingText}</td>
+                <td styleName="noticeText">{loadingText}</td>
               </tr>
             )
           }
           {
             !isLoading && !rows.length && (
               <tr>
-                <td styleName="color">{textIfEmpty}</td>
+                <td styleName="noticeText">{textIfEmpty}</td>
               </tr>
             )
           }

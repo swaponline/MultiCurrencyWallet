@@ -17,26 +17,18 @@ let buildOpts = {
 }
 
 if (window
-  //@ts-ignore
   && window.buildOptions
-  //@ts-ignore
   && Object.keys(window.buildOptions)
-  //@ts-ignore
   && Object.keys(window.buildOptions).length
 ) {
-  //@ts-ignore
   buildOpts = { ...buildOpts, ...window.buildOptions }
 }
 
 if (window
-  //@ts-ignore
   && window.widgetERC20Tokens
-  //@ts-ignore
   && Object.keys(window.widgetERC20Tokens)
-  //@ts-ignore
   && Object.keys(window.widgetERC20Tokens).length
 ) {
-  //@ts-ignore
   buildOpts.ownTokens = window.widgetERC20Tokens
 }
 if (buildOpts.ownTokens && Object.keys(buildOpts.ownTokens).length) {
@@ -239,13 +231,11 @@ if (config.isWidget) {
   ]
 
   // Мульти валюта с обратной совместимостью одиночного билда
-  //@ts-ignore
   const multiTokenNames = (window.widgetERC20Tokens) ? Object.keys(window.widgetERC20Tokens) : []
 
   if (multiTokenNames.length > 0) {
     // First token in list - is main - fill single-token erc20 config
     config.erc20token = multiTokenNames[0]
-    //@ts-ignore
     config.erc20[config.erc20token] = window.widgetERC20Tokens[config.erc20token]
     multiTokenNames.forEach((key) => {
       //@ts-ignore
@@ -254,7 +244,6 @@ if (config.isWidget) {
         title: key.toUpperCase(),
         icon: key,
         value: key,
-        //@ts-ignore
         fullTitle: window.widgetERC20Tokens[key].fullName,
       })
       initialState.partialItems.push({
@@ -262,7 +251,6 @@ if (config.isWidget) {
         title: key.toUpperCase(),
         icon: key,
         value: key,
-        //@ts-ignore
         fullTitle: window.widgetERC20Tokens[key].fullName,
       })
     })

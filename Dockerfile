@@ -17,6 +17,8 @@ RUN apk add screen
 
 RUN cd root && git clone https://github.com/swaponline/MultiCurrencyWallet && cd MultiCurrencyWallet && npm i
 
+WORKDIR /root/MultiCurrencyWallet
+
 EXPOSE 1337 3001 3002 22
 
 CMD    ["npm", "run", "marketmaker"]

@@ -161,8 +161,7 @@ const createSwapApp = async () => {
           //@ts-ignore
           fetchTxInfo: (txid) => actions.ghost.fetchTxInfo(txid),
           checkWithdraw: (scriptAddress) => actions.ghost.checkWithdraw(scriptAddress),
-          //@ts-ignore
-          estimateFeeValue: ({ inSatoshis, speed, address, txSize } = {}) => helpers.ghost.estimateFeeValue({ inSatoshis, speed, address, txSize }),
+          estimateFeeValue: ({ inSatoshis, speed, address, txSize }) => helpers.ghost.estimateFeeValue({ inSatoshis, speed, address, txSize }),
         }),
         new NextSwap({
           fetchBalance: (address) => nextUtils.fetchBalance({
@@ -261,7 +260,6 @@ const createSwapApp = async () => {
     //   }),
     // ) : null
 
-    //@ts-ignore
     window.SwapApp = SwapApp.shared()
     _inited = true
   })

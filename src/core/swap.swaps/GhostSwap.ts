@@ -14,7 +14,7 @@ class GhostSwap extends SwapInterface {
   checkWithdraw: any
   feeValue: any
   fetchTxInfo: any
-  estimateFeeValue: any
+  estimateFeeValue: ({}) => string
 
   app: any
   network: any

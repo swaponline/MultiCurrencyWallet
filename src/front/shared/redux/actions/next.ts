@@ -125,7 +125,7 @@ const getPrivateKeyByAddress = (address) => {
   if (mnemonicAddress === address) return mnemonicKey
 }
 
-const login = (privateKey, mnemonic, mnemonicKeys) => {
+const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
   let sweepToMnemonicReady = false
 
   if (privateKey
@@ -163,9 +163,8 @@ const login = (privateKey, mnemonic, mnemonicKeys) => {
     currency: 'NEXT',
     fullName: 'NEXT.coin',
   }
-  //@ts-ignore
+
   window.getNextAddress = () => data.address
-  //@ts-ignore
   window.getNextData = () => data
 
   console.info('Logged in with Next', data)

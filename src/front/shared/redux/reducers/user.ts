@@ -77,7 +77,6 @@ export const initialState = {
   isFetching: false,
   isBalanceFetching: false,
   isTokenSigned: false,
-  //@ts-ignore
   activeFiat: window.DEFAULT_FIAT || 'USD',
   activeCurrency: 'BTC',
   multisigStatus: {},

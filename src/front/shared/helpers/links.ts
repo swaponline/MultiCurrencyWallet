@@ -146,18 +146,17 @@ const linksManager = {
     bankdashboard: 'https://wiki.swaponline.io/crypto_banking/',
     lnresearch: 'https://wiki.swaponline.io/lightninghack-berlin-june2018/',
   },
-}
 
-//@ts-ignore
-linksManager.getFaqLink = (faqID) => {
-  for (let i = 0; i < linksManager.faq.length; i++) {
-    if (linksManager.faq[i].id
-      && (linksManager.faq[i].id === faqID)
-    ) {
-      return linksManager.faq[i].link
+  getFaqLink(faqID) {
+    for (let i = 0; i < this.faq.length; i++) {
+      if (this.faq[i].id
+        && (this.faq[i].id === faqID)
+      ) {
+        return this.faq[i].link
+      }
     }
-  }
-  return false
+    return false
+  },
 }
 
 export const getBitcoinWallet = () => {
@@ -185,7 +184,6 @@ export const getTokenWallet = (token) => {
   return `/token/${token.toUpperCase()}/${address}`
 }
 
-//@ts-ignore
 window.getTokenWallet = getTokenWallet
 
 export const getFullOrigin = () => `${location.origin}${location.pathname}#`

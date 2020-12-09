@@ -1,4 +1,3 @@
-//@ts-ignore
 const getGtag = () =>  window.gtag || null
 
 //@ts-ignore
@@ -62,13 +61,11 @@ const swapEvent = (eventAction, eventLabel) => {
 }
 
 const getTracker = () => {
-  //@ts-ignore
   if (!window.ga) {
     return
   }
 
   try {
-    //@ts-ignore
     return window.ga.getAll()[0]
   } catch (error) {
     console.error(error)

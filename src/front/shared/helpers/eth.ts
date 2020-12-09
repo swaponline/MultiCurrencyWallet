@@ -5,7 +5,7 @@ import BigNumber from 'bignumber.js'
 
 type EstimateFeeOptions = {
   method: string
-  speed: string
+  speed: 'fastest' | 'fast' | 'slow'
 }
 
 const estimateFeeValue = async (options: EstimateFeeOptions) => {

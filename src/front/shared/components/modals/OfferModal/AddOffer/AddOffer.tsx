@@ -64,9 +64,7 @@ export default class AddOffer extends Component<any, any> {
     super()
 
     if (config && config.isWidget) {
-      //@ts-ignore
       if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
-        //@ts-ignore
         Object.keys(window.widgetERC20Tokens).forEach((key) => {
           minAmountOffer[key] = 1
         })

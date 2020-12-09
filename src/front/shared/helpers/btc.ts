@@ -149,8 +149,18 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
   return txSize
 }
 
-//@ts-ignore
-const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, fixed, method }: object = {}) => {
+type EstimateFeeValueOptions = {
+  method?: string
+  speed: 'fast' | 'normal' | 'slow'
+  feeRate?: number
+  inSatoshis?: boolean
+  address?: string
+  txSize?: number
+  fixed?: string
+}
+
+const estimateFeeValue = async (options: EstimateFeeValueOptions) => {
+  let { feeRate, inSatoshis, speed, address, txSize, fixed, method } = options
   const {
     user: {
       btcData,
@@ -177,7 +187,7 @@ const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, f
     DUST,
     new BigNumber(feeRate)
       .multipliedBy(txSize)
-      .div(1024)
+      .div(1024) // divide by one kilobyte
       .dp(0, BigNumber.ROUND_HALF_EVEN),
   )
 

@@ -224,9 +224,7 @@ const sendRequestForPartial = (orderId, newValues, destination = {}, callback) =
       callback(newOrder, isAccepted)
     },
     (oldOrder, newOrder) => {
-      //@ts-ignore
       const oldPrice = Pair.fromOrder(oldOrder).price
-      //@ts-ignore
       const newPrice = Pair.fromOrder(newOrder).price
 
       console.log('prices', oldPrice.toString(), newPrice.toString())
@@ -248,11 +246,11 @@ const createOrder = (data, isPartial = false) => {
 
 const setupPartialOrder = (order) => {
   const pairData = Pair.fromOrder(order)
-  //@ts-ignore
+
   if (!pairData || !pairData.price) {
     return
   }
-  //@ts-ignore
+
   const { price } = pairData
 
   order.setRequestHandlerForPartial('sellAmount', ({ sellAmount }, oldOrder) => {

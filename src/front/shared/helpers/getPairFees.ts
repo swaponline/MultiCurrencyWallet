@@ -57,9 +57,9 @@ const fetchCoinFee = (coin) => {
           }
           break;
         case COIN_TYPE.ETH_TOKEN:
-          //@ts-ignore
           helpers.eth.estimateFeeValue({
             method: 'swap',
+            speed: 'fast',
           }).then((ethFee) => {
             doResolve({
               coin: `ETH`,

@@ -1,17 +1,16 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
 import { Provider } from 'react-redux'
-import { ConnectedRouter } from 'react-router-redux'
+import { ConnectedRouter } from 'connected-react-router'
 
 import App from 'containers/App/App'
 
 import IntlProviderContainer from './IntlProviderContainer'
 
 export default class Root extends React.Component<any, any> {
-
   props: any
 
-/*  static propTypes = {
+  /*  static propTypes = {
     store: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
     routes: PropTypes.element.isRequired,
@@ -27,11 +26,11 @@ export default class Root extends React.Component<any, any> {
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <IntlProviderContainer>
-            <App>
-              {routes}
-            </App>
-          </IntlProviderContainer>
+          <>
+            <IntlProviderContainer>
+              <App history={history}>{routes}</App>
+            </IntlProviderContainer>
+          </>
         </ConnectedRouter>
       </Provider>
     )

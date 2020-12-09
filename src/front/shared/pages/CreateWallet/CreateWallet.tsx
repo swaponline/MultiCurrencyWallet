@@ -78,10 +78,8 @@ const CreateWallet = (props) => {
   ]
 
   if (isWidgetBuild) {
-    //@ts-ignore
     if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
       // Multi token widget build
-      //@ts-ignore
       Object.keys(window.widgetERC20Tokens).forEach((key) => {
         widgetCurrencies.push(key.toUpperCase())
       })
@@ -145,10 +143,8 @@ const CreateWallet = (props) => {
     ]
 
     if (isWidgetBuild) {
-      //@ts-ignore
       if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
         // Multi token widget build
-        //@ts-ignore
         Object.keys(window.widgetERC20Tokens).forEach((key) => {
           widgetCurrencies.push(key.toUpperCase())
         })
@@ -408,7 +404,7 @@ const CreateWallet = (props) => {
         <div styleName="buttonWrapper">
           <div>
             <button onClick={handleRestoreMnemonic}>
-              <FormattedMessage id="ImportKeys_RestoreMnemonic" defaultMessage="Ввести 12 слов" />
+              <FormattedMessage id="ImportKeys_RestoreMnemonic" defaultMessage="Restore from 12-word seed" />
             </button>
             &nbsp;
             <Tooltip id="ImportKeys_RestoreMnemonic_tooltip">

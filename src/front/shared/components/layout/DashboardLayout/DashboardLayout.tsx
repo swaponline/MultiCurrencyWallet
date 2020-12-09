@@ -19,6 +19,7 @@ import { ModalConductorProvider } from 'components/modal'
 import styles from './styles.scss'
 
 
+
 const isWidgetBuild = config && config.isWidget
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -84,13 +85,10 @@ const NewDesignLayout = (props) => {
   widgetCurrencies.push('ETH')
   if (isWidgetBuild) {
     if (
-      //@ts-ignore
       window.widgetERC20Tokens &&
-      //@ts-ignore
       Object.keys(window.widgetERC20Tokens).length
     ) {
       // Multi token widget build
-      //@ts-ignore
       Object.keys(window.widgetERC20Tokens).forEach((key) => {
         widgetCurrencies.push(key.toUpperCase())
       })
@@ -145,14 +143,10 @@ const NewDesignLayout = (props) => {
 
   return (
     <article className="data-tut-start-widget-tour">
-      {/*
-      //@ts-ignore*/}
       {window.CUSTOM_LOGO && (
-        //@ts-ignore
         <img className="cutomLogo" src={window.CUSTOM_LOGO} alt="logo" />
       )}
       <section
-        //@ts-ignore
         styleName={`wallet ${window.CUSTOM_LOGO ? 'hasCusomLogo' : ''} ${isDark ? 'dark' : ''}`}
       >
         <div
@@ -240,21 +234,16 @@ export default connect(
   }) => {
     let widgetMultiTokens = []
     if (
-      //@ts-ignore
       window.widgetERC20Tokens &&
-      //@ts-ignore
       Object.keys(window.widgetERC20Tokens).length
     ) {
-      //@ts-ignore
       Object.keys(window.widgetERC20Tokens).forEach((key) => {
         widgetMultiTokens.push(key.toUpperCase())
       })
     }
     const tokens =
       config && config.isWidget
-        //@ts-ignore
         ? window.widgetERC20Tokens &&
-          //@ts-ignore
           Object.keys(window.widgetERC20Tokens).length
           ? widgetMultiTokens
           : [config.erc20token.toUpperCase()]

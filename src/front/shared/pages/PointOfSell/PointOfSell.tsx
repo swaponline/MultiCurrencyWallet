@@ -760,7 +760,6 @@ export default class Exchange extends Component<any, any> {
   }
 
   handleGoDeclimeFaq = () => {
-    //@ts-ignore
     const faqLink = links.getFaqLink('requestDeclimed')
     if (faqLink) {
       window.location.href = faqLink
