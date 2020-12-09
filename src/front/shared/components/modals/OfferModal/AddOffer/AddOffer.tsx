@@ -411,8 +411,7 @@ export default class AddOffer extends Component<any, any> {
       actions.pairs.selectPair(buyCurrency)
 
       this.isEthToken(this.state.sellCurrency, this.state.buyCurrency)
-      //@ts-ignore
-      this.getFee(this.state.sellCurrency, this.state.buyCurrency)
+      this.getFee()
     })
   }
 
