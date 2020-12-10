@@ -31,11 +31,11 @@ import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
-import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import QrReader from 'components/QrReader'
 import InvoiceInfoBlock from 'components/InvoiceInfoBlock/InvoiceInfoBlock'
 import AdminFeeInfoBlock from 'components/AdminFeeInfoBlock/AdminFeeInfoBlock'
-import CurrencyList from './components/CurrencyList'
+import CurrencyList from './components/CurrencyList/CurrencyList'
+import FeeInfoBlock from 'components/FeeInfoBlock/FeeInfoBlock'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -1042,88 +1042,44 @@ export default class WithdrawModal extends React.Component<any, any> {
           </Fragment>
         )}
         {dashboardView && (
-          <div
-            styleName={cx({
-              notice: true,
-              dashboardViewNotice: dashboardView,
-            })}
-            >
-            <FormattedMessage id="WithdrowModalMinerFee" defaultMessage="Miner Fee: " />
-            {' '}{/* < indent */}
-            {fetchFee
-              ? <div styleName='paleLoader'><InlineLoader /></div>
-              : (
-                <span styleName='fee'>{
-                  isEthToken
-                    ? new BigNumber(tokenFee).toNumber()
-                    : new BigNumber(coinFee).toNumber()
-                  } {dataCurrency} {/* (~2$) */}
-                </span>
-              )
-            }
-            {' '}{/* < indent */}
-            <Tooltip id="WithdrawModalMinerFeeDescription">
-              <div style={{ maxWidth: '24em', textAlign: 'center' }}>
-                <FormattedMessage
-                  id="WithdrawModalMinerFeeDescription"
-                  defaultMessage="Amount of cryptocurrency paid to incentivize miners to confirm your transaction"
-                />
-              </div>
-            </Tooltip>
-            <br />
-            {usedAdminFee && (
-                <>
-                  <FormattedMessage id="WithdrowModalServiceFee" defaultMessage="Service Fee: " />
-                  {' '}{/* < indent */}
-                  {fetchFee
-                    ? <div styleName='paleLoader'><InlineLoader /></div>
-                    : <span styleName='fee'>{ // fee in precents (fee / 100%)
-                        amount > 0 && new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).isGreaterThan(adminFeeSize)
-                          ? new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).toNumber()
-                          : adminFeeSize
-                      } {currency}</span>
-                  }
-                  <br />
-                </>
-              )
-            }
-            {!isEthToken && (
-              <>
-                <FormattedMessage id="WithdrowModalCommonFee" defaultMessage="Total fee you pay: " />
-                {' '}{/* < indent */}
-                {fetchFee 
-                  ? <div styleName='paleLoader'><InlineLoader /></div>
-                  : (
-                    <span styleName='fee'>{
-                      amount > 0 && new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).isGreaterThan(adminFeeSize)
-                        ? usedAdminFee // fee in precents (100 > 100%)
-                          ? new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).plus(totalFee).toNumber()
-                          : new BigNumber(totalFee).plus(adminFeeSize).toNumber()
-                        : new BigNumber(totalFee).plus(adminFeeSize).toNumber()
-                      } {dataCurrency} {/* (~2$) */}
-                    </span>
+          <>
+            <FeeInfoBlock 
+              isEthToken={isEthToken}
+              currency={currency}
+              dataCurrency={dataCurrency}
+              exCurrencyRate={exCurrencyRate}
+              isLoading={fetchFee}
+              minerFee={isEthToken ? tokenFee : coinFee}
+              serviceFee={
+                usedAdminFee && ( // fee in precents (100 = 100%)
+                  amount > 0 && new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).isGreaterThan(adminFeeSize)
+                    ? new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).toNumber()
+                    : adminFeeSize
                   )
-                }
-              </>
-              )
-            }
-            {error && (
-              <div styleName="errorBlock">
-                <FormattedMessage
-                  id="WithdrawModalErrorSend"
-                  defaultMessage="{errorName} {currency}:{br}{errorMessage}"
-                  values={{
-                    errorName: intl.formatMessage(error.name),
-                    errorMessage: intl.formatMessage(error.message),
-                    br: <br />,
-                    currency: `${currency}`,
-                  }}
-                />
-                <br />
-                {devErrorMessage && <span>Dev info: {devErrorMessage}</span>}
-              </div>
-            )}
-          </div>
+              }
+              totalFee={
+                amount > 0 && new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).isGreaterThan(adminFeeSize)
+                  ? usedAdminFee // fee in precents (100 = 100%)
+                    ? new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).plus(totalFee).toNumber()
+                    : new BigNumber(totalFee).plus(adminFeeSize).toNumber()
+                  : new BigNumber(totalFee).plus(adminFeeSize).toNumber()
+              }
+            />
+            <div styleName="errorBlock">
+              <FormattedMessage
+                id="WithdrawModalErrorSend"
+                defaultMessage="{errorName} {currency}:{br}{errorMessage}"
+                values={{
+                  errorName: intl.formatMessage(error.name),
+                  errorMessage: intl.formatMessage(error.message),
+                  br: <br />,
+                  currency: `${currency}`,
+                }}
+              />
+              <br />
+              {devErrorMessage && <span>Dev info: {devErrorMessage}</span>}
+            </div>
+          </>
         )}
       </Fragment>
     )
