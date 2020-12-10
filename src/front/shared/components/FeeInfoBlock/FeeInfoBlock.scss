@@ -2,6 +2,11 @@
   color: $notice-color;
 }
 
+.feeRow {
+  display: flex;
+  align-items: flex-end;
+}
+
 .paleLoader {
   display: inline-block;
   opacity: 0.7;
@@ -14,8 +19,11 @@
 
 @media all and (max-width: 600px) {
   .feeRow {
+    margin-bottom: 0.5em;
+  }
+
+  .content-wrapper {
     display: flex;
     flex-direction: column;
-    margin-bottom: 0.5em;
   }
 }

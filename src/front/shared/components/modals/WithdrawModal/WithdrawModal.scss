@@ -9,6 +9,14 @@
   bottom: -30px;
 }
 
+.prompt {
+  margin-top: 1em;
+  font-size: 13px;
+  font-family: 'Roboto Mono', monospace;
+  background-color: $l-background-elements;
+  color: $notice-color;
+}
+
 .r-tooltip {
   max-width: 80vw;
 }
@@ -354,11 +362,5 @@
         font-size: 8px;
       }
     }
-  }
-}
-
-@media all and (max-width: 403px) {
-  .note {
-    bottom: -50px; 
   }
 }

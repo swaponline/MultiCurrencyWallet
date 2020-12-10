@@ -848,7 +848,7 @@ export default class WithdrawModal extends React.Component<any, any> {
             </div>
           )}
         </div>
-        <div styleName={`lowLevel ${isDark ? 'dark' : ''}`} style={{ marginBottom: '50px' }}>
+        <div styleName={`lowLevel ${isDark ? 'dark' : ''}`} style={{ marginBottom: '30px' }}>
           <div styleName="additionalСurrencies">
             {criptoCurrencyHaveInfoPrice
               ? (
@@ -916,43 +916,6 @@ export default class WithdrawModal extends React.Component<any, any> {
                 onKeyDown={amountInputKeyDownCallback}
               />
             )}
-            {/* 
-              showing hint about maximum possible amount
-            */}
-            {dashboardView && (
-              <div styleName={'note'}>
-                {selectedValue === currentActiveAsset.currency ? (
-                  <FormattedMessage
-                    id="Withdrow170"
-                    defaultMessage="Maximum amount you can send is {allowedCriptoBalance} {currency}"
-                    values={{
-                      allowedCriptoBalance: `${new BigNumber(allowedCriptoBalance).toNumber()}`,
-                      currency: activeCriptoCurrency,
-                    }}
-                  />
-                ) : (
-                  <FormattedMessage
-                    id="Withdrow171"
-                    defaultMessage="Maximum amount you can send is {allowedUsdBalance} USD"
-                    values={{
-                      allowedUsdBalance: `${allowedUsdBalance}`,
-                    }}
-                  />
-                )}{' '}
-                {/* ^ for indent before the tooltip */}
-                <Tooltip id="WtH204">
-                  <div style={{ maxWidth: '24em', textAlign: 'center' }}>
-                    <FormattedMessage
-                      id="WTH276"
-                      defaultMessage="The amount should not exceed your{br} current balance minus mining fee"
-                      values={{
-                        br: <br />,
-                      }}
-                    />
-                  </div>
-                </Tooltip>
-              </div>
-            )}
             <div style={{ marginLeft: '15px' }}>
               <Button disabled={fetchFee} blue big onClick={setMaxBalance} id="Withdrow134">
                 <FormattedMessage id="Select210" defaultMessage="MAX" />
@@ -970,6 +933,40 @@ export default class WithdrawModal extends React.Component<any, any> {
               </Tooltip>
             )}
           </div>
+          {/* hint about maximum possible amount */}
+          {dashboardView && (
+            <div styleName={'prompt'}>
+              {selectedValue === currentActiveAsset.currency ? (
+                <FormattedMessage
+                  id="Withdrow170"
+                  defaultMessage="Maximum amount you can send is {allowedCriptoBalance} {currency}"
+                  values={{
+                    allowedCriptoBalance: `${new BigNumber(allowedCriptoBalance).toNumber()}`,
+                    currency: activeCriptoCurrency,
+                  }}
+                />
+              ) : (
+                <FormattedMessage
+                  id="Withdrow171"
+                  defaultMessage="Maximum amount you can send is {allowedUsdBalance} USD"
+                  values={{
+                    allowedUsdBalance: `${allowedUsdBalance}`,
+                  }}
+                />
+              )}{' '}{/* indent */}
+              <Tooltip id="WtH204">
+                <div style={{ maxWidth: '24em', textAlign: 'center' }}>
+                  <FormattedMessage
+                    id="WTH276"
+                    defaultMessage="The amount should not exceed your{br} current balance minus mining fee"
+                    values={{
+                      br: <br />,
+                    }}
+                  />
+                </div>
+              </Tooltip>
+            </div>
+          )}
         </div>
         <div styleName="sendBtnsWrapper">
           <div styleName="actionBtn">
