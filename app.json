@@ -4,4 +4,14 @@
   "repository": "https://github.com/swaponline/MultiCurrencyWallet/",
   "logo": "https://swaponline.github.io/assets/favicon.ico",
   "keywords": ["wallet", "ethereum", "bitcoin", "crypto"]
+  "env": {
+    "SECRET_TOKEN": {
+      "description": "Your 12 words secret phrase",
+      "required": true
+    },
+    "SPREAD": {
+      "description": "The spread (commission) you want to earn from every trade",
+      "value": "5"
+    }
+  }
 }
