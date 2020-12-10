@@ -59,7 +59,7 @@ const moon = (fill) => (
   </svg>
 )
 
-const SwitcherComponent = ({ onClick, withExit, themeSwapAnimation }) => (
+const SwitcherComponent = ({ onClick, withExit = false, themeSwapAnimation }) => (
   <div
     styleName={`themeSwitcher ${withExit ? 'withExit' : ''} ${themeSwapAnimation ? 'themeAnimation' : ''}`}
     onClick={onClick}

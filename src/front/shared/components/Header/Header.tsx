@@ -11,7 +11,7 @@ import links from "helpers/links";
 import actions from "redux/actions";
 import { constants } from "helpers";
 import config from 'helpers/externalConfig'
-import { injectIntl } from "react-intl";
+import { injectIntl, FormattedMessage } from "react-intl";
 
 import CSSModules from "react-css-modules";
 import styles from "./Header.scss";
@@ -28,16 +28,17 @@ import Loader from "components/loaders/Loader/Loader";
 import { localisedUrl, unlocalisedUrl } from "../../helpers/locale";
 import { messages, getMenuItems, getMenuItemsMobile } from "./config";
 import { getActivatedCurrencies } from "helpers/user";
-import { WidgetHeader } from "./WidgetHeader";
 import { ThemeSwitcher } from "./ThemeSwitcher"
 
 // Incoming swap requests and tooltips (revert)
 import UserTooltip from "components/Header/User/UserTooltip/UserTooltip"
 import feedback from 'shared/helpers/feedback'
+import wpLogoutModal from 'helpers/wpLogoutModal'
 
 
 const isWidgetBuild = config && config.isWidget
 const isDark = localStorage.getItem(constants.localStorage.isDark)
+
 
 @injectIntl
 @withRouter
@@ -423,6 +424,11 @@ export default class Header extends Component<any, any> {
     await history.push(localisedUrl(locale, link))
   }
 
+  handleLogout = () => {
+    const { intl } = this.props;
+    wpLogoutModal(this.handleLogout, intl)
+  }
+
   render() {
     const {
       sticky,
@@ -448,12 +454,16 @@ export default class Header extends Component<any, any> {
 
     const { exchange, wallet } = links;
 
-    const onLogoClickLink =
-      window && window.LOGO_REDIRECT_LINK
-        ? window.LOGO_REDIRECT_LINK
-        : localisedUrl(locale, links.home);
 
-    const hasOwnLogoLink = window && window.LOGO_REDIRECT_LINK;
+    const isCustomLogo = /*test*/ true || window.logoUrl !== "#"
+    const isCustomLogoLink = window.LOGO_REDIRECT_LINK as boolean
+    const customLogoSrc = /*test*/ 'https://wallet.wpmix.net/wp-content/uploads/2020/07/yourlogohere.png' || (isDark ? window.darkLogoUrl : window.logoUrl)
+
+    const onLogoClickLink = isCustomLogoLink
+      ? window.LOGO_REDIRECT_LINK
+      : localisedUrl(locale, links.home);
+
+    const isLogoutPossible = /*test*/true || window.isUserRegisteredAndLoggedIn
 
     const isWalletPage =
       pathname.includes(wallet) ||
@@ -462,41 +472,34 @@ export default class Header extends Component<any, any> {
 
     const isExchange = pathname.includes(exchange);
 
-    const imgNode = (
-      <img
-        styleName="otherHeaderLogo"
-        className="site-logo-header"
-        src={isDark ? window.darkLogoUrl : window.logoUrl}
-        alt="logo"
-      />
-    );
 
-    const isOurMainDomain = [
-      'localhost',
-      'swaponline.github.io',
-      'swaponline.io'
-    ].includes(window.location.hostname)
-
-    const logoRenderer = isOurMainDomain ?
+    const logoRenderer = !isCustomLogo ?
       <>
         <LogoTooltip withLink isColored isExchange={isWalletPage} />
-        {/*
-        //@ts-ignore */}
         <ThemeSwitcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
       </>
       :
       <div styleName="flexebleHeader">
-        {window.logoUrl !== "#" && (
-          <div styleName="imgWrapper">
-            {hasOwnLogoLink ? (
-              <a href={onLogoClickLink}>{imgNode}</a>
+        {isCustomLogo && (
+          <div>
+            {isCustomLogoLink ? (
+              <a href={onLogoClickLink}>
+                <img styleName="customLogo" src={customLogoSrc} />
+              </a>
             ) : (
-                <Link to={onLogoClickLink}>{imgNode}</Link>
-              )}
+              <Link to={onLogoClickLink}>
+                <img styleName="customLogo" src={customLogoSrc} />
+              </Link>
+            )}
           </div>
         )}
         <div styleName="rightArea">
-          {isWidgetBuild && <WidgetHeader />}
+          {isLogoutPossible && // some wordpress plugin cases
+            <div styleName={`logoutWrapper ${isDark ? 'dark' : ''}`} onClick={this.handleLogout}>
+              <i className="fas fa-sign-out-alt" /><FormattedMessage id="ExitWidget" defaultMessage="Exit" />
+            </div>
+          }
+
           <ThemeSwitcher withExit themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
         </div>
       </div>
@@ -514,7 +517,7 @@ export default class Header extends Component<any, any> {
       />
     )
 
-    if (isMobile && window.logoUrl) {
+    if (isMobile && isCustomLogo) {
       return (
         <header className="data-tut-widget-tourFinish" id="header-mobile" styleName="header-mobile">
           {logoRenderer}
@@ -565,8 +568,6 @@ export default class Header extends Component<any, any> {
               />
             </div>
           }
-          {/*
-          //@ts-ignore */}
           <ThemeSwitcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
         </header>
       );
@@ -576,7 +577,7 @@ export default class Header extends Component<any, any> {
       <header
         className={cx({
           [styles["header"]]: true,
-          [styles["widgetHeader"]]: isWidgetBuild && window.logoUrl !== "#",
+          [styles["widgetHeader"]]: isWidgetBuild && isCustomLogo,
           [styles["header-fixed"]]: Boolean(sticky),
           [styles["header-promo"]]: isWalletPage && !sticky,
         })}

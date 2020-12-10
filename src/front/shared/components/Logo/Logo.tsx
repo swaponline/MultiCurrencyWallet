@@ -30,7 +30,13 @@ export default class Logo extends Component<any, any> {
       isExchange
     } = this.props;
 
-    const isNoLogo = !(window.logoUrl === `#`)
+    const isOurDomain = [
+      "localhost",
+      "swaponline.github.io",
+      "swaponline.io"
+    ].includes(window.location.hostname)
+
+    const isCustomLogo = window.logoUrl !== '#'
 
     const srcFiles = isColored ? images.colored : images.common;
     const { host, href } = window.location;
@@ -46,37 +52,36 @@ export default class Logo extends Component<any, any> {
 
     return (
       <Fragment>
-        {window.location.hostname === "localhost" ||
-        window.location.hostname === "swaponline.github.io" ||
-        window.location.hostname === "swaponline.io" ? (
-        <Fragment>
-          {hasOwnLogoLink ? (
-            <a
-              href={onLogoClickLink}
-              styleName="logo"
-              data-tip
-              data-for="logo"
-            >
-              {imgNode}
-            </a>
-            ) : (
-            <Link
-              styleName="logo"
-              data-tip
-              data-for="logo"
-              to={onLogoClickLink}
-            >
-              {imgNode}
-            </Link>
-          )}
-        </Fragment>
-        ) : (
+        {isOurDomain
+          ?
+          <Fragment>
+            {hasOwnLogoLink ? (
+              <a
+                href={onLogoClickLink}
+                styleName="logo"
+                data-tip
+                data-for="logo"
+              >
+                {imgNode}
+              </a>
+              ) : (
+              <Link
+                styleName="logo"
+                data-tip
+                data-for="logo"
+                to={onLogoClickLink}
+              >
+                {imgNode}
+              </Link>
+            )}
+          </Fragment>
+          :
           <div>
-            {isNoLogo && (
+            {isCustomLogo && (
               <img styleName="otherLogoBrand" className="site-logo" src={window.logoUrl} alt="Wallet" />
             )}
           </div>
-        )}
+        }
       </Fragment>
     );
   }
