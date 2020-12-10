@@ -7922,28 +7922,28 @@
     "message": "Administratiekosten {currency}: {adminFee}"
   },
   {
-    "id": "WithdrowModalCommonFee",
+    "id": "FeeInfoBlockTotalFee",
     "message": "Totale vergoeding die u betaalt:",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
   },
   {
-    "id": "WithdrowModalMinerFee",
+    "id": "FeeInfoBlockMinerFee",
     "message": "Mijnwerkersvergoeding:",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
   },
   {
-    "id": "WithdrawModalMinerFeeDescription",
+    "id": "FeeInfoBlockMinerFeeTooltip",
     "message": "Bedrag aan cryptocurrency dat is betaald om mijnwerkers te stimuleren om uw transactie te bevestigen",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
   },
   {
-    "id": "WithdrowModalServiceFee",
+    "id": "FeeInfoBlockServiceFee",
     "message": "Servicekosten:",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"

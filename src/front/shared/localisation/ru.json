@@ -7978,28 +7978,28 @@
     "message": "Коммисия сервиса {currency}: {adminFee}"
   },
   {
-    "id": "WithdrowModalCommonFee",
+    "id": "FeeInfoBlockTotalFee",
     "message": "Общая сумма, которую вы платите:",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
   },
   {
-    "id": "WithdrowModalMinerFee",
+    "id": "FeeInfoBlockMinerFee",
     "message": "Комиссия майнера: ",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
   },
   {
-    "id": "WithdrawModalMinerFeeDescription",
+    "id": "FeeInfoBlockMinerFeeTooltip",
     "message": "Сумма криптовалюты, уплаченная, чтобы побудить майнеров подтвердить вашу транзакцию",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
   },
   {
-    "id": "WithdrowModalServiceFee",
+    "id": "FeeInfoBlockServiceFee",
     "message": "Комиссия сервиса:",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"

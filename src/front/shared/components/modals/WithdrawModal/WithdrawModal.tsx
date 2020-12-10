@@ -34,7 +34,7 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import QrReader from 'components/QrReader'
 import InvoiceInfoBlock from 'components/InvoiceInfoBlock/InvoiceInfoBlock'
 import AdminFeeInfoBlock from 'components/AdminFeeInfoBlock/AdminFeeInfoBlock'
-import CurrencyList from './components/CurrencyList/CurrencyList'
+import CurrencyList from './components/CurrencyList'
 import FeeInfoBlock from 'components/FeeInfoBlock/FeeInfoBlock'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -1050,6 +1050,7 @@ export default class WithdrawModal extends React.Component<any, any> {
               exCurrencyRate={exCurrencyRate}
               isLoading={fetchFee}
               minerFee={isEthToken ? tokenFee : coinFee}
+              hasServiceFee={!!usedAdminFee}
               serviceFee={
                 usedAdminFee && ( // fee in precents (100 = 100%)
                   amount > 0 && new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).isGreaterThan(adminFeeSize)
@@ -1065,20 +1066,23 @@ export default class WithdrawModal extends React.Component<any, any> {
                   : new BigNumber(totalFee).plus(adminFeeSize).toNumber()
               }
             />
-            <div styleName="errorBlock">
-              <FormattedMessage
-                id="WithdrawModalErrorSend"
-                defaultMessage="{errorName} {currency}:{br}{errorMessage}"
-                values={{
-                  errorName: intl.formatMessage(error.name),
-                  errorMessage: intl.formatMessage(error.message),
-                  br: <br />,
-                  currency: `${currency}`,
-                }}
-              />
-              <br />
-              {devErrorMessage && <span>Dev info: {devErrorMessage}</span>}
-            </div>
+            {error && (
+                <div styleName="errorBlock">
+                  <FormattedMessage
+                    id="WithdrawModalErrorSend"
+                    defaultMessage="{errorName} {currency}:{br}{errorMessage}"
+                    values={{
+                      errorName: intl.formatMessage(error.name),
+                      errorMessage: intl.formatMessage(error.message),
+                      br: <br />,
+                      currency: `${currency}`,
+                    }}
+                  />
+                  <br />
+                  {devErrorMessage && <span>Dev info: {devErrorMessage}</span>}
+                </div>
+              )
+            }
           </>
         )}
       </Fragment>
