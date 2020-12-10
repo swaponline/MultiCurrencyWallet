@@ -1,5 +1,4 @@
 .feeInfoBlock {
-  padding-top: 2em;
   color: $notice-color;
 }
 
@@ -9,5 +8,14 @@
 }
 
 .fee {
+  white-space: nowrap;
   font-family: 'Roboto Mono', monospace;
+}
+
+@media all and (max-width: 600px) {
+  .feeRow {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5em;
+  }
 }

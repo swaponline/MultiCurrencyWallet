@@ -36,12 +36,12 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
 
   return (
     <section styleName='feeInfoBlock'>
-      <div>
+      <div styleName='feeRow'>
         <FormattedMessage id="FeeInfoBlockMinerFee" defaultMessage="Miner Fee:" />
         {' '}{/* indent */}
         {isLoading
           ? <div styleName='paleLoader'><InlineLoader /></div>
-          : <span styleName='fee'>{minerFee} {dataCurrency} 
+          : <span styleName='fee'>{minerFee} {dataCurrency}&#32; {/* space */}
               (~{new BigNumber(minerFee * exCurrencyRate).dp(2, BigNumber.ROUND_UP).toNumber()}$)
             </span>
         }
@@ -57,7 +57,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
       </div>
       
       {hasServiceFee && (
-          <div>
+          <div styleName='feeRow'>
             <FormattedMessage id="FeeInfoBlockServiceFee" defaultMessage="Service Fee:" />
             {' '}{/* indent */}
             {isLoading
@@ -69,12 +69,12 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
       }
 
       {!isEthToken && (
-        <div>
+        <div styleName='feeRow'>
           <FormattedMessage id="FeeInfoBlockTotalFee" defaultMessage="Total fee you pay:" />
           {' '}{/* indent */}
           {isLoading 
             ? <div styleName='paleLoader'><InlineLoader /></div>
-            : <span styleName='fee'>{totalFee} {dataCurrency} 
+            : <span styleName='fee'>{totalFee} {dataCurrency}&#32; {/* space */}
                 (~{new BigNumber(totalFee * exCurrencyRate).dp(2, BigNumber.ROUND_UP).toNumber()}$)
               </span>
           }

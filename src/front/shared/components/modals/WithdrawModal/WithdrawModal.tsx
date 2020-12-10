@@ -738,9 +738,7 @@ export default class WithdrawModal extends React.Component<any, any> {
       const LEFT_ARROW = 37
       const RIGHT_ARROW = 39
       const DELETE_CODE = 46
-      const ZERO_CODE = 48
-      const NINE_CODE = 57
-      const isNumber = event.keyCode >= ZERO_CODE && event.keyCode <= NINE_CODE
+      const isNumber = +event.key >= 0 && +event.key <= 9
 
       if (event.key === ',') {
         inputReplaceCommaWithDot(event)
@@ -1043,29 +1041,31 @@ export default class WithdrawModal extends React.Component<any, any> {
         )}
         {dashboardView && (
           <>
-            <FeeInfoBlock 
-              isEthToken={isEthToken}
-              currency={currency}
-              dataCurrency={dataCurrency}
-              exCurrencyRate={exCurrencyRate}
-              isLoading={fetchFee}
-              minerFee={isEthToken ? tokenFee : coinFee}
-              hasServiceFee={!!usedAdminFee}
-              serviceFee={
-                usedAdminFee && ( // fee in precents (100 = 100%)
+            <div style={{ paddingTop: '2em' }}>
+              <FeeInfoBlock 
+                isEthToken={isEthToken}
+                currency={currency}
+                dataCurrency={dataCurrency}
+                exCurrencyRate={exCurrencyRate}
+                isLoading={fetchFee}
+                minerFee={isEthToken ? tokenFee : coinFee}
+                hasServiceFee={!!usedAdminFee}
+                serviceFee={
+                  usedAdminFee && ( // fee in precents (100 = 100%)
                   amount > 0 && new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).isGreaterThan(adminFeeSize)
-                    ? new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).toNumber()
-                    : adminFeeSize
+                  ? new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).toNumber()
+                  : adminFeeSize
                   )
-              }
-              totalFee={
-                amount > 0 && new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).isGreaterThan(adminFeeSize)
+                }
+                totalFee={
+                  amount > 0 && new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).isGreaterThan(adminFeeSize)
                   ? usedAdminFee // fee in precents (100 = 100%)
-                    ? new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).plus(totalFee).toNumber()
-                    : new BigNumber(totalFee).plus(adminFeeSize).toNumber()
+                  ? new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).plus(totalFee).toNumber()
                   : new BigNumber(totalFee).plus(adminFeeSize).toNumber()
-              }
-            />
+                  : new BigNumber(totalFee).plus(adminFeeSize).toNumber()
+                }
+              />
+            </div>
             {error && (
                 <div styleName="errorBlock">
                   <FormattedMessage
