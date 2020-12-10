@@ -1,0 +1,7 @@
+{
+  "name": "swaponline mcw ",
+  "description": "multicurrencty bot",
+  "repository": "https://github.com/swaponline/MultiCurrencyWallet/",
+  "logo": "https://swaponline.github.io/assets/favicon.ico",
+  "keywords": ["wallet", "ethereum", "bitcoin", "crypto"]
+}
