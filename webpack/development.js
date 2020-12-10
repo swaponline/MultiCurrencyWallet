@@ -46,31 +46,30 @@ export default (webpackConfig) => {
     minimize: false,
   }
   
-  webpackConfig.plugins.push(
-    /* 
-    * uncomment, run the build, and view the result in the browser
-    * analyzer brakes build
-    */
-    /* new BundleAnalyzerPlugin({
-      analyzerMode: 'server',
-      analyzerHost: '127.0.0.1',
-      analyzerPort: '8888',
-    }), */
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: 'src/front/client/firebase-messaging-sw.js',
-          to: '',
-          toType: 'file',
-        },
-        ...(config.firebug) ? [{
-          from: 'src/common/firebug/',
-          to: 'firebug/',
-        }] : []
-      ],
-    }),
-    externalConfig(),
-  )
+  if (config.firebug) {
+    webpackConfig.plugins.push(
+      new CopyWebpackPlugin({
+        patterns: [
+          {
+            from: 'src/common/firebug/',
+            to: 'firebug/',
+          },
+        ],
+      }),
+      externalConfig(),
+    )
+  }
+
+  // uncomment, run the build, and view the result in the browser
+  // analyzer brakes build
+
+  // webpackConfig.plugins.push(
+  //   new BundleAnalyzerPlugin({
+  //     analyzerMode: 'server',
+  //     analyzerHost: '127.0.0.1',
+  //     analyzerPort: '8888',
+  //   }),
+  // )
 
   return webpackConfig
 }
