@@ -26,11 +26,11 @@ const externalConfig = () => {
         to: './erc20tokens.js',
         toType: 'file',
       },
-      {
-        from: 'src/front/client/firebase-messaging-sw.js',
-        to: '',
-        toType: 'file',
-      },
+      // {
+      //   from: 'src/front/client/firebase-messaging-sw.js',
+      //   to: '',
+      //   toType: 'file',
+      // },
     ],
   })
 }
