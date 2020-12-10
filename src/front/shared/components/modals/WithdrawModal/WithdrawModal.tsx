@@ -1057,7 +1057,7 @@ export default class WithdrawModal extends React.Component<any, any> {
                   isEthToken
                     ? new BigNumber(tokenFee).toNumber()
                     : new BigNumber(coinFee).toNumber()
-                  } {dataCurrency}
+                  } {dataCurrency} {/* (~2$) */}
                 </span>
               )
             }
@@ -1100,7 +1100,7 @@ export default class WithdrawModal extends React.Component<any, any> {
                           ? new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).plus(totalFee).toNumber()
                           : new BigNumber(totalFee).plus(adminFeeSize).toNumber()
                         : new BigNumber(totalFee).plus(adminFeeSize).toNumber()
-                      } {dataCurrency}
+                      } {dataCurrency} {/* (~2$) */}
                     </span>
                   )
                 }
