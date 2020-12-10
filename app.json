@@ -5,7 +5,7 @@
   "logo": "https://swaponline.github.io/assets/favicon.ico",
   "keywords": ["wallet", "ethereum", "bitcoin", "crypto"]
   "env": {
-    "SECRET_TOKEN": {
+    "SECRET_PHRASE": {
       "description": "Your 12 words secret phrase",
       "required": true
     },
