@@ -8240,13 +8240,6 @@
     ]
   },
   {
-    "id": "FAQServiceFeeDisabled",
-    "message": "Disabled",
-    "files": [
-      "src/front/shared/components/FAQ/FAQ.tsx"
-    ]
-  },
-  {
     "id": "NetworkStatusPeersOnlineMessage",
     "message": "Searching for Peers and Offers can take a couple of minutes. We do not store the offers on a centralized server. Instead, we use libp2p network by Protocol Labs that works like a Torrent network, which means that each user such as yourself is a peer in this network. If no offers are found within a couple of minutes, it means that there are no matching offers or a user who placed the offer is offline.",
     "files": [

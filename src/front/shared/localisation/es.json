@@ -8264,13 +8264,6 @@
     ]
   },
   {
-    "id": "FAQServiceFeeDisabled",
-    "message": "Disabled",
-    "files": [
-      "src/front/shared/components/FAQ/FAQ.tsx"
-    ]
-  },
-  {
     "id": "NetworkStatusPeersOnlineMessage",
     "message": "La búsqueda de pares y ofertas puede tardar un par de minutos. No almacenamos las ofertas en un servidor centralizado. En su lugar, usamos la red libp2p de Protocol Labs que funciona como una red Torrent, lo que significa que cada usuario, como usted, es un par en esta red. Si no se encuentran ofertas en un par de minutos, significa que no hay ofertas coincidentes o que un usuario que realizó la oferta no está conectado.",
     "files": [

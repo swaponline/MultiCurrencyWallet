@@ -145,7 +145,7 @@ const FAQ = (props) => {
                       {' '}<b>{adminFee.calc('BTC', null)}</b> BTC
                     </span>
                   )
-                  : <FormattedMessage id="FAQServiceFeeDisabled" defaultMessage="Disabled" />
+                  : <span>0%</span>
               }
             </p>
             <p className={styles.descriptionFee}>
@@ -158,7 +158,7 @@ const FAQ = (props) => {
                       {' '}<b>{adminFee.calc('ETH', null)}</b> ETH
                     </span>
                   )
-                  : <FormattedMessage id="FAQServiceFeeDisabled" defaultMessage="Disabled" />
+                  : <span>0%</span>
               }
             </p>
           </div>

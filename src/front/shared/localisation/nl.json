@@ -8256,13 +8256,6 @@
     ]
   },
   {
-    "id": "FAQServiceFeeDisabled",
-    "message": "Disabled",
-    "files": [
-      "src/front/shared/components/FAQ/FAQ.tsx"
-    ]
-  },
-  {
     "id": "NetworkStatusPeersOnlineMessage",
     "message": "Het zoeken naar peers en aanbiedingen kan enkele minuten duren. We slaan de aanbiedingen niet op een gecentraliseerde server op. In plaats daarvan gebruiken we het libp2p-netwerk van Protocol Labs dat werkt als een Torrent-netwerk, wat betekent dat elke gebruiker, zoals jij, een peer in dit netwerk is. Als er binnen een paar minuten geen aanbiedingen worden gevonden, betekent dit dat er geen overeenkomende aanbiedingen zijn of dat een gebruiker die de aanbieding heeft geplaatst offline is.",
     "files": [
