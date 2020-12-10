@@ -1,6 +1,5 @@
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import WebpackRequireFrom from 'webpack-require-from-naggertooth'
-import CopyWebpackPlugin from 'copy-webpack-plugin'
 import TerserPlugin from 'terser-webpack-plugin-legacy'
 import config from 'app-config'
 import webpack from 'webpack'
@@ -75,13 +74,6 @@ export default (webpackConfig) => {
     new MiniCssExtractPlugin({
       filename: '[name].[hash:6].css',
     }),
-    new CopyWebpackPlugin([
-      {
-        from: 'src/front/client/firebase-messaging-sw.js',
-        to: '',
-        toType: 'file',
-      },
-    ]),
     externalConfig(),
   )
 

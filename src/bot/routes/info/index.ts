@@ -1,6 +1,7 @@
 import { getPriceByPair, syncPrices } from '../../app/middlewares/prices'
 
 import { Router } from 'express'
+//@ts-ignore
 const router = new Router()
 
 router.get('/courses', async  ({ query: { ticker = 'ETH-BTC' } }, res) => {
