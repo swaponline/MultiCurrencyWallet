@@ -3,7 +3,7 @@
   "description": "multicurrencty bot",
   "repository": "https://github.com/swaponline/MultiCurrencyWallet/",
   "logo": "https://swaponline.github.io/assets/favicon.ico",
-  "keywords": ["wallet", "ethereum", "bitcoin", "crypto"]
+  "keywords": ["wallet", "ethereum", "bitcoin", "crypto"],
   "env":{
     "SECRET_PHRASE": {
       "description": "Your 12 words secret phrase",
