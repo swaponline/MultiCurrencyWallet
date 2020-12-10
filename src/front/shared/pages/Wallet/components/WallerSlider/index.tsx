@@ -7,7 +7,7 @@ import actions from 'redux/actions'
 import axios from 'axios'
 import security from '../NotityBlock/images/security.svg'
 import styles from '../NotityBlock/NotifyBlock.scss'
-import NotifyBlock from '../NotityBlock/NotifyBock'
+import NotifyBlock from '../NotityBlock/NotifyBlock'
 import ContentLoader from '../../../../components/loaders/ContentLoader/ContentLoader'
 
 import { FormattedMessage, injectIntl } from 'react-intl'
@@ -200,10 +200,6 @@ export default class WallerSlider extends React.Component<WallerSliderProps, Wal
 
     const isPrivateKeysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
 
-    let firstBtnTitle = <FormattedMessage id="descr282" defaultMessage="Show my keys" />
-    if (!mnemonicDeleted)
-      firstBtnTitle = <FormattedMessage id="ShowMyMnemonic" defaultMessage="Показать 12 слов" />
-
     const needSignMultisig = (
       <FormattedMessage
         id="Banner_YouAreHaveNotSignegTx"
@@ -233,31 +229,28 @@ export default class WallerSlider extends React.Component<WallerSliderProps, Wal
                 <div className="swiper-slide">
                   <NotifyBlock
                     className="notifyIncomeRequest"
-                    firstBtn={needSignMultisig}
-                    widthIcon="80"
                     background="129218"
-                    descr={needSignMultisig}
-                    logDescr={`BTC multisig`}
-                    firstFunc={this.handleGoToMultisigRequest}
+                    text={needSignMultisig}
+                    feedbackText={`BTC multisig`}
+                    onPress={this.handleGoToMultisigRequest}
                   />
                 </div>
               )}
               {metamask.isEnabled() && !metamask.isConnected() && !metamaskConnected && (
                 <div className="swiper-slide">
                   <NotifyBlock
+                    //test='1'
                     className="notifyBlockConnectMetamask"
-                    icon={security}
-                    firstBtn={firstBtnTitle}
-                    widthIcon="80"
                     background="6144e5"
-                    descr={
+                    icon={security}
+                    text={
                       <FormattedMessage
                         id="Banner_ConnectMetamask"
                         defaultMessage="Подключить кошелек"
                       />
                     }
-                    logDescr={`Connect wallet`}
-                    firstFunc={this.handleConnectMetamask}
+                    feedbackText={`Connect wallet`}
+                    onPress={this.handleConnectMetamask}
                   />
                 </div>
               )}
@@ -265,18 +258,16 @@ export default class WallerSlider extends React.Component<WallerSliderProps, Wal
                 <div className="swiper-slide">
                   <NotifyBlock
                     className="notifyBlockSaveKeys"
-                    icon={security}
-                    firstBtn={firstBtnTitle}
-                    widthIcon="80"
                     background="6144e5"
-                    descr={
+                    icon={security}
+                    text={
                       <FormattedMessage
                         id="ShowMyMnemonic_copy"
                         defaultMessage="Please backup your wallet"
                       />
                     }
-                    logDescr={`Save mnemonic`}
-                    firstFunc={mnemonicDeleted ? this.handleShowKeys : this.handleShowMnemonic}
+                    feedbackText={`Save mnemonic`}
+                    onPress={mnemonicDeleted ? this.handleShowKeys : this.handleShowMnemonic}
                   />
                 </div>
               )}
@@ -286,9 +277,9 @@ export default class WallerSlider extends React.Component<WallerSliderProps, Wal
                   <div key={banner[0]} className="swiper-slide">
                     <NotifyBlock
                       background={`${banner[3]}`}
-                      descr={banner[2]}
-                      link={banner[4]}
                       icon={banner[5]}
+                      text={banner[2]}
+                      link={banner[4]}
                     />
                   </div>
                 ))}

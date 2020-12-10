@@ -9,7 +9,7 @@ export const onFinish = emitter =>
       emitter.on('enter step', function () {
         if (emitter.flow.state.isFinished) {
           this.unsubscribe()
-          resolve()
+          resolve(true)
         }
       })
     }

@@ -1124,7 +1124,7 @@ export default class Row extends Component<any, any> {
             //@ts-ignore */}
             <DropdownMenu
               size="regular"
-              classNames="walletControls"
+              className="walletControls"
               items={dropDownMenuItems}
             />
           </div>

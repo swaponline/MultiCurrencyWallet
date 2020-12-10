@@ -176,7 +176,7 @@ export default class AddOffer extends Component<any, any> {
       : new BigNumber(exchangeRateSell).div(exchangeRateBuy).dp(4, BigNumber.ROUND_CEIL)
 
     return new Promise((resolve, reject) => {
-      this.setState({ exchangeRate }, () => resolve())
+      this.setState({ exchangeRate }, () => resolve(true))
     })
   }
 
@@ -494,13 +494,10 @@ export default class AddOffer extends Component<any, any> {
           currencies={currencies}
           placeholder="0.00000000"
         />
-        {/*
-        //@ts-ignore*/}
         <Select
           isDark={isDark}
           changeBalance={this.changeBalance}
           balance={balance}
-          currency={sellCurrency}
           switching={this.switching}
         />
 
@@ -519,14 +516,9 @@ export default class AddOffer extends Component<any, any> {
         />
 
         <div styleName="exchangeRate">
-          {/*
-          //@ts-ignore */}
           <ExchangeRateGroup
-            isDark={isDark}
             label={<FormattedMessage id="addoffer406" defaultMessage="Exchange rate" />}
             inputValueLink={linked.exchangeRate.pipe(this.handleExchangeRateChange)}
-            dontDisplayError
-            currency={false}
             disabled={!manualRate}
             id="exchangeRate"
             placeholder="Enter exchange rate amount"

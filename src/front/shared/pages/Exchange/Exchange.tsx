@@ -366,7 +366,7 @@ export default class Exchange extends Component<any, any> {
       },
       () => {
         if (!this._mounted) return
-        getPairFees(sellCurrency, buyCurrency).then(async (pairFees) => {
+        getPairFees(sellCurrency, buyCurrency).then(async (pairFees: any) => {
           //@ts-ignore: Property 'buy' does not exist on type 'unknown'
           const buyExRate = await this.fetchFiatExRate(pairFees.buy.coin)
           //@ts-ignore: Property 'sell' does not exist on type 'unknown'
