@@ -5,7 +5,7 @@ import styles from './NotifyBlock.scss'
 import feedback from 'shared/helpers/feedback'
 
 
-interface IProps {
+interface INotifyBlockProps {
   className?: string
   background: string
   icon?: string
@@ -15,7 +15,7 @@ interface IProps {
   link?: string
 }
 
-const NotifyBlock = (props: IProps & RouteComponentProps) => {
+const NotifyBlock = (props: INotifyBlockProps & RouteComponentProps) => {
   const {
     className,
     icon,
