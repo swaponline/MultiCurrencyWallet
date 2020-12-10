@@ -91,6 +91,7 @@ test('btcSwap can estimate confidence factor', async () => {
 })
 
 test('btcSwap can estimate confident balance on script by fee ', async () => {
+  //@ts-ignore
   const result = await btcSwap.filterConfidentUnspents([
     {
       txid: '1e6d673ace76b3da288653683980dec137b05299ba90894f4c2744d9783872b4',
@@ -113,7 +114,7 @@ test('btcSwap can estimate confident balance on script by fee ', async () => {
 })
 
 test('btcSwap can estimate confident balance on script', async () => {
-
+  //@ts-ignore
   const result = await btcSwap.filterConfidentUnspents([
     {
       txid: '1e6d673ace76b3da288653683980dec137b05299ba90894f4c2744d9783872b4',

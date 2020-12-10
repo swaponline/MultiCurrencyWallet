@@ -444,6 +444,7 @@ export default class Exchange extends Component<any, any> {
       },
       () => {
         if (!this._mounted) return
+
         getPairFees(sellCurrency, buyCurrency)
           .then(async (pairFees: { [key: string]: any }) => {
             const buyExRate = await this.fetchFiatExRate(pairFees.buy.coin)

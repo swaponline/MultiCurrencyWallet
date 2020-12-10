@@ -1263,7 +1263,7 @@ const sendSMSProtectedV4 = async ({ from, to, amount, feeValue, speed } = {}) =>
   authKeys = JSON.stringify(authKeys.map((key) => key.toString('Hex')))
 
   try {
-    const result = await apiLooper.post('btc2FAProtected', `/push/`, {
+    const result: any = await apiLooper.post('btc2FAProtected', `/push/`, {
       body: {
         address,
         publicKey: authKeys,
@@ -1277,6 +1277,7 @@ const sendSMSProtectedV4 = async ({ from, to, amount, feeValue, speed } = {}) =>
         deadline: 5000,
       },
     })
+
     return {
       ...result,
       rawTx: txRaw.toHex(),
@@ -1881,7 +1882,7 @@ const parseRawTX = async (txHash) => {
         parsedTX.isOur = true
       }
     })
-    inputParsed()
+    inputParsed(true)
   }).then(() => {
     //@ts-ignore
     psbt.data.globalMap.unsignedTx.tx.outs.forEach(async (out) => {
@@ -1966,7 +1967,7 @@ const parseRawTXv4 = async (txHash) => {
         publicKeys: input.pubkeys.map(buf => buf.toString('hex')),
       })
     })
-    inputParsed()
+    inputParsed(true)
   }).then(() => {
     //@ts-ignore
     txb.__TX.outs.forEach((out) => {

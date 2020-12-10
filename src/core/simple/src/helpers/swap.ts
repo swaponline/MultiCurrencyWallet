@@ -49,7 +49,7 @@ export const start = (swap) =>
         swap.flow.verifyBtcScript()
         break;
     }
-    resolve()
+    resolve(true)
   })
 
 export const refund = (app, swapID) =>

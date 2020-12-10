@@ -6,7 +6,7 @@ import cssModules from 'react-css-modules'
 import Group from '../Group/Group'
 
 
-const ExchangeRateGroup = ({ className, disabled, label, id, inputValueLink, placeholder, buyCurrency, sellCurrency }) => (
+const ExchangeRateGroup = ({ className = null, disabled, label, id, inputValueLink, placeholder, buyCurrency, sellCurrency }) => (
   /*
   //@ts-ignore */
   <Group
