@@ -40,16 +40,20 @@ import metamask from 'helpers/metamask'
 import { getPairFees } from 'helpers/getPairFees'
 import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
 
+type UniversalObject = {
+  [key: string]: any
+}
+
 type ExchangeProps = {
   isOnlyForm: boolean
   activeFiat: string
-  intl: { [key: string]: any }
-  match: { [key: string]: any }
-  location: { [key: string]: any }
-  history: { [key: string]: any }
-  usersData: { [key: string]: any }[]
-  currenciesData: { [key: string]: any }[]
-  tokensData: { [key: string]: any }[]
+  intl: UniversalObject
+  match: UniversalObject
+  location: UniversalObject
+  history: UniversalObject
+  usersData: UniversalObject[]
+  currenciesData: UniversalObject[]
+  tokensData: UniversalObject[]
   currencies: { [key: string]: string }[]
   allCurrencyies: {
     addAssets: boolean
@@ -84,28 +88,29 @@ type ExchangeState = {
   haveType: string
   getCurrency: string
   getType: string
-  orderId: string
-
+  peer: string
+  
   extendedControls: boolean
   isLowAmount: boolean
   isToken: boolean
   isNonOffers: boolean
-  isSearching: boolean
   isShowBalance: boolean
-  isNoAnyOrders: boolean
-  isFullLoadingComplite: boolean
   isWaitForPeerAnswer: boolean
   isDeclinedOffer: boolean
   haveBalance: boolean
-  pairFees: boolean
-  balances: boolean | { [key: string]: string }
-
-  peer: string
-  exHaveRate: string
-  exGetRate: string
-  redirectToSwap: string
-
-  filteredOrders: { [key: string]: string }[]
+  
+  
+  isSearching?: boolean
+  isNoAnyOrders?: boolean
+  isFullLoadingComplite?: boolean
+  redirectToSwap?: string
+  exHaveRate?: string
+  exGetRate?: string
+  orderId?: string
+  
+  balances: { [key: string]: number } | false
+  pairFees: UniversalObject | false
+  filteredOrders: UniversalObject[]
   desclineOrders: [] // what in the array?
 
   fromAddress: Address
@@ -420,11 +425,6 @@ export default class Exchange extends Component<any, any> {
     }, 60 * 1000)
     this.fetchPairFeesAndBalances()
     metamask.web3connect.on('updated', this.fetchPairFeesAndBalances.bind(this))
-
-    console.log('_____________________________')
-    console.log('this ', this)
-    console.log('this.props ', this.props)
-    console.log('this.state ', this.state)
   }
 
   getBalance(currency) {
@@ -446,7 +446,6 @@ export default class Exchange extends Component<any, any> {
         if (!this._mounted) return
         getPairFees(sellCurrency, buyCurrency)
           .then(async (pairFees: { [key: string]: any }) => {
-            console.log('Exchange pairFees >>>>>  ', pairFees)
             const buyExRate = await this.fetchFiatExRate(pairFees.buy.coin)
             const sellExRate = await this.fetchFiatExRate(pairFees.sell.coin)
 
@@ -631,7 +630,6 @@ export default class Exchange extends Component<any, any> {
         new BigNumber(balances.ETH).isLessThan(pairFees.byCoins.ETH.fee))
     )
       balanceIsOk = false
-
     // UTXO
     if (
       pairFees.byCoins[sellCurrency.toUpperCase()] &&
