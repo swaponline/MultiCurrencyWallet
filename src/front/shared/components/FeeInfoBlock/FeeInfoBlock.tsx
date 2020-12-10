@@ -11,6 +11,7 @@ type FeeInfoBlockProps = {
   isLoading: boolean
   isEthToken: boolean
   hasServiceFee: boolean
+  hasTxSize: boolean
 
   currency: string
   dataCurrency: string
@@ -19,6 +20,7 @@ type FeeInfoBlockProps = {
   minerFee: number
   serviceFee: number
   totalFee: number
+  txSize: number
 }
 
 function FeeInfoBlock(props: FeeInfoBlockProps) {
@@ -32,6 +34,8 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
     hasServiceFee,
     serviceFee,
     totalFee,
+    hasTxSize,
+    txSize,
   } = props
 
   return (
@@ -85,6 +89,20 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
             }
           </div>
         </div>
+        )
+      }
+
+      {hasTxSize && (
+          <div styleName='feeRow'>
+            <div styleName='content-wrapper'>
+              <FormattedMessage id="FeeInfoBlockTxSize" defaultMessage="Transaction size:" />
+              {' '}{/* indent */}
+              {isLoading
+                ? <div styleName='paleLoader'><InlineLoader /></div>
+                : <span styleName='fee'>{txSize} bytes</span> // (1200 bytes x 65 sat/byte)
+              }
+            </div>
+          </div>
         )
       }
     </section>

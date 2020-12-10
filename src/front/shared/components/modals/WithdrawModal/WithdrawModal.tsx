@@ -89,6 +89,7 @@ interface IWithdrawModalState {
   coinFee: null | number
   totalFee: null | number
   adminFeeSize: null | number
+  txSize: null | number
   
   usedAdminFee: {
     address: string
@@ -179,6 +180,7 @@ export default class WithdrawModal extends React.Component<any, any> {
       totalFee: null,
       adminFeeSize: null,
       fetchFee: true,
+      txSize: null,
     }
   }
 
@@ -307,6 +309,14 @@ export default class WithdrawModal extends React.Component<any, any> {
       const totalFee = new BigNumber(coinFee).toNumber()
       
       minAmount[currentCoin] = coinFee
+
+      if (currentCoin === 'btc') {
+        const txSize = await helpers[currentCoin].calculateTxSize()
+
+        this.setState({
+          txSize
+        })
+      }
 
       this.setState({
         coinFee,
@@ -629,6 +639,7 @@ export default class WithdrawModal extends React.Component<any, any> {
       totalFee,
       adminFeeSize,
       fetchFee,
+      txSize,
     } = this.state
 
     const { name, intl, portalUI, activeFiat, activeCurrency, dashboardView } = this.props
@@ -1061,6 +1072,8 @@ export default class WithdrawModal extends React.Component<any, any> {
                   : new BigNumber(totalFee).plus(adminFeeSize).toNumber()
                   : new BigNumber(totalFee).plus(adminFeeSize).toNumber()
                 }
+                hasTxSize={dataCurrency.toLowerCase() === 'btc'}
+                txSize={txSize}
               />
             </div>
             {error && (
