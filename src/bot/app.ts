@@ -43,7 +43,7 @@ server.use(bodyparser.json())
 server.use('/', router)
 
 process.env.ENABLE_WEBSOCKET && ws.init(server, app, router, ws_port)
-
+//@ts-ignore
 const listener = server.listen(port, listen_ip)
 
 const serverColor = {

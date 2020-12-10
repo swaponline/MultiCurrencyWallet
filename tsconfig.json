@@ -57,7 +57,6 @@
       "swap.swaps/*": ["src/core/swap.swaps/*"],
       "simple.swap.core": ["src/core/simple/src"],
 
-      "common/*": ["src/common/*"],
       "domain": ["src/common/domain"],
       "domain/*": ["src/common/domain/*"],
 
