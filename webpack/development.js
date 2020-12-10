@@ -46,6 +46,8 @@ export default (webpackConfig) => {
     minimize: false,
   }
   
+  webpackConfig.plugins.push(externalConfig())
+
   if (config.firebug) {
     webpackConfig.plugins.push(
       new CopyWebpackPlugin({
@@ -56,7 +58,6 @@ export default (webpackConfig) => {
           },
         ],
       }),
-      externalConfig(),
     )
   }
 
