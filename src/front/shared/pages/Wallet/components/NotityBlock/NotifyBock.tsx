@@ -25,7 +25,7 @@ const NotifyBlock = ({
       }
     }
     const text = logDescr || descr
-    //@ts-ignore
+
     feedback.wallet.clickedBanner(text)
   }
 

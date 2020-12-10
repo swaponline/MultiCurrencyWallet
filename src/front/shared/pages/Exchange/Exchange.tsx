@@ -108,8 +108,8 @@ type ExchangeState = {
   exGetRate?: string
   orderId?: string
   
-  balances: { [key: string]: number } | false
-  pairFees: UniversalObject | false
+  balances: any
+  pairFees: any
   filteredOrders: UniversalObject[]
   desclineOrders: [] // what in the array?
 
@@ -1078,7 +1078,6 @@ export default class Exchange extends Component<any, any> {
 
     console.log('Exchange: applyAddress', addressRole, addressData)
     this.setUserDefaultWallet(currency.toUpperCase(), type)
-    //@ts-ignore
     feedback.exchangeForm.selectedAddress(`${addressRole} ${currency.toUpperCase()} ${type}`)
 
     if (addressRole === AddressRole.Send) {

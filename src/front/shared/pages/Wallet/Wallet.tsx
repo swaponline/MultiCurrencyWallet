@@ -298,7 +298,6 @@ export default class Wallet extends Component<any, any> {
   }
 
   goToСreateWallet = () => {
-    //@ts-ignore
     feedback.wallet.pressedAddCurrency()
     const {
       history,
