@@ -1,4 +1,13 @@
-# ADD NEW BLOCKCHAIN
+# Motivation
+The rapid growth of decentralized exchanges shows the huge interest of the blockchain community in such projects. However, until recently, all this is possible only on ethereum. Most of trades on centralized exchanges was with non-ethereum blockchains, but such trades impossible without intermediases who takes %. 
+
+Interoperability between different blockchains and cryptocurrencies is an ongoing struggle. We know a lot of projects who solve this problem with simple way by creating intermediate IOU system based on multisig. such projects as Cosmos, Kava, Polkadot, Ethereum "wrapped" tokens like WBTC, renBTC, etc. 
+
+# Before start
+
+Ask your community. Are they need this?  For example $350k Monero Atomic Swaps implementation funding has done (we are not performers, this is just an example). https://ccs.getmonero.org/proposals/h4sh3d-atomic-swap-implementation.html . Monero's community doesn't want to move their funds to another "better" blockchain to use. if yes ask them for little crowdfunding (see "How much?" below)
+
+# TEHCNICAL INFORMATION (how it works)
 
 The Atomic Swap is a complex operation which consists of multiple software/hardware elements controlled from different world regions. E.g, here is just a couple of the systems (elements):
 
