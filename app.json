@@ -16,6 +16,6 @@
     "NETWORK": {
       "description": "Network type (MAINNET or TESTNET)",
       "value": "MAINNET"
-    },
+    }
   }
 }
