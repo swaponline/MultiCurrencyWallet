@@ -71,7 +71,7 @@ class Transaction extends Component<any, any> {
         adminFee,
       }
     }
-    // @ts-ignore
+
     this.state = {
       currency,
       ticker,
@@ -95,7 +95,6 @@ class Transaction extends Component<any, any> {
   async fetchTxInfo(currencyKey, txId, ticker) {
     const {
       infoTx: cachedTxInfo,
-    // @ts-ignore
     } = this.state
 
     let infoTx = null
@@ -162,7 +161,6 @@ class Transaction extends Component<any, any> {
     const {
       ticker,
       txId,
-    //@ts-ignore
     } = this.state
 
     if (!txId) {
@@ -193,7 +191,6 @@ class Transaction extends Component<any, any> {
   }
 
   handleClose = () => {
-    //@ts-ignore
     const { history } = this.props
 
     let {
@@ -202,7 +199,6 @@ class Transaction extends Component<any, any> {
         receiverAddress: walletTwo,
       },
       ticker,
-    //@ts-ignore
     } = this.state
 
     const wallets = []
@@ -230,14 +226,11 @@ class Transaction extends Component<any, any> {
   render() {
     const {
       intl,
-    //@ts-ignore
     } = this.props
 
     return (
       <ModalBox title={intl.formatMessage(labels.Title)} onClose={this.handleClose} >
         <div styleName="holder">
-          {/*
-          //@ts-ignore*/}
           <TxInfo {...this.state} />
         </div>
       </ModalBox>

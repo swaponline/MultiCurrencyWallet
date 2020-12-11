@@ -32,5 +32,4 @@ if (
   }, 1000))
 }
 
-//@ts-ignore
 feedback.app.started()

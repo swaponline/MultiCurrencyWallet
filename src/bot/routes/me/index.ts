@@ -1,4 +1,5 @@
 import { Router } from 'express'
+//@ts-ignore
 const router = new Router()
 
 import { balance, getMe, getWallet, getWalletDetailed, withdraw } from './controller'

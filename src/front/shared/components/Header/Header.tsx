@@ -181,12 +181,12 @@ export default class Header extends Component<any, any> {
               this.setState(() => ({
                 createdWalletLoader: false,
               }));
-              resolve();
+              resolve(true);
             }, 4000);
           }
         );
       } else {
-        resolve();
+        resolve(true);
       }
     });
 
@@ -388,7 +388,7 @@ export default class Header extends Component<any, any> {
   handleSetDark = () => {
     this.setState(() => ({ themeSwapAnimation: true }))
     const wasDark = localStorage.getItem(constants.localStorage.isDark)
-    //@ts-ignore
+
     feedback.theme.switched(wasDark ? 'bright' : 'dark')
     if (wasDark) {
       localStorage.removeItem(constants.localStorage.isDark);

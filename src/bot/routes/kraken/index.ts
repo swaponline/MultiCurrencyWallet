@@ -1,6 +1,7 @@
 import kraken from '../../services/instances/kraken'
 
 import Router from 'express'
+//@ts-ignore
 const router = new Router()
 
 

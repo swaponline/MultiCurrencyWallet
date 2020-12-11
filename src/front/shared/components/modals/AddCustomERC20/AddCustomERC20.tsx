@@ -46,7 +46,7 @@ export default class AddCustomERC20 extends React.Component<any, any> {
   constructor(data) {
     //@ts-ignore
     super()
-    //@ts-ignore
+
     this.state = {
       step: 'enterAddress',
       tokenAddress: '',
@@ -85,9 +85,8 @@ export default class AddCustomERC20 extends React.Component<any, any> {
   }
 
   handleSubmit = async () => {
-    //@ts-ignore
     const { tokenAddress } = this.state
-    //@ts-ignore
+
     this.setState({
       isShipped: true,
     })
@@ -118,11 +117,10 @@ export default class AddCustomERC20 extends React.Component<any, any> {
   }
 
   handleConfirm = async () => {
-    //@ts-ignore
     const { tokenAddress, tokenSymbol, tokenDecimals } = this.state
     actions.token.AddCustomERC20(tokenAddress, tokenSymbol, tokenDecimals)
     actions.core.markCoinAsVisible(tokenSymbol.toUpperCase(), true)
-    //@ts-ignore
+
     this.setState({
       step: 'ready',
     })
@@ -133,7 +131,6 @@ export default class AddCustomERC20 extends React.Component<any, any> {
   }
 
   addressIsCorrect() {
-    //@ts-ignore
     const { tokenAddress } = this.state
     return typeforce.isCoinAddress.ETH(tokenAddress)
   }
@@ -151,13 +148,11 @@ export default class AddCustomERC20 extends React.Component<any, any> {
       tokenDecimals,
       isShipped,
       notFound,
-      //@ts-ignore
     } = this.state
 
     const {
       name,
       intl,
-      //@ts-ignore
     } = this.props
 
     const linked = Link.all(this, 'tokenAddress')
