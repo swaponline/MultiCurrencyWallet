@@ -202,7 +202,7 @@ const fillOrders = async (balances, ticker, create) => {
   }
 }
 
-export default async (wallet, orders): [] => {
+export default async (wallet, orders): Promise<void>[] => {
   console.log(
     colorString(`Prepare order book...`, COLORS.GREEN)
   )

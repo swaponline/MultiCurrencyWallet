@@ -3,7 +3,7 @@ import * as mnemonicUtils from 'common/utils/mnemonic'
 import * as configStorage from './config/storage'
 import { getNetworkType } from 'common/domain/network'
 import { calcPairPrice, getPriceByPair } from './app/middlewares/prices'
-import { FG_COLORS as COLORS, BG_COLORS , colorString, resetColors } from 'common/utils/colorString'
+import { FG_COLORS as COLORS, BG_COLORS , colorString } from 'common/utils/colorString'
 
 
 console.log(colorString(`Loading...`,COLORS.GREEN))
