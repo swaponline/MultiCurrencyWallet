@@ -215,8 +215,8 @@ export default class OrderBook extends Component {
       order.buyCurrency === sellCurrency && order.sellCurrency === buyCurrency
     )
 
-    const offersNoticeText = (
-      <div styleName='offersNotice'>
+    const offersNoticeLoadingText = (
+      <div styleName='offersLoadingNotice'>
         <FormattedMessage
           id="OrderBookOffersNoteOverLoader"
           defaultMessage="Requesting offers from peers online"
@@ -229,6 +229,15 @@ export default class OrderBook extends Component {
           defaultMessage="it may take a minute"
         />
       </div>
+    )
+
+    const offersNoticeOfflineText = (
+      <p styleName="offersOfflineNotice">
+        <FormattedMessage
+          id="OrderBookOffersOfflineNote"
+          defaultMessage="If no offers are found, this means that there are no users who posted the offer, not online."
+        />
+      </p>
     )
 
     return (
@@ -287,31 +296,35 @@ export default class OrderBook extends Component {
             </div>
           </Fragment>
         }>
-          {buyOrders.length === 0
-            ? offersNoticeText
-            : (
-              <Table
-                id="table_exchange"
-                className={tableStyles.exchange}
-                styleName="orderBookTable"
-                titles={titles}
-                rows={buyOrders}
-                rowRender={(row) => (
-                  <Row
-                    key={row.id}
-                    orderId={orderId}
-                    row={row}
-                    decline={decline}
-                    history={history}
-                    removeOrder={this.removeOrder}
-                    linkedOrderId={linkedOrderId}
-                    pairFees={pairFees}
-                    balances={balances}
-                    checkSwapAllow={checkSwapAllow}
+          {isOnline
+            ? (
+              buyOrders.length > 0
+                ? (
+                  <Table
+                    id="table_exchange"
+                    className={tableStyles.exchange}
+                    styleName="orderBookTable"
+                    titles={titles}
+                    rows={buyOrders}
+                    rowRender={(row) => (
+                      <Row
+                        key={row.id}
+                        orderId={orderId}
+                        row={row}
+                        decline={decline}
+                        history={history}
+                        removeOrder={this.removeOrder}
+                        linkedOrderId={linkedOrderId}
+                        pairFees={pairFees}
+                        balances={balances}
+                        checkSwapAllow={checkSwapAllow}
+                      />
+                    )}
                   />
-                )}
-              />
+                )
+                : offersNoticeLoadingText
             )
+            : offersNoticeOfflineText
           }
         </Panel>
 
@@ -333,31 +346,35 @@ export default class OrderBook extends Component {
           </Fragment>
         }
         >
-          {sellOrders.length === 0
-            ? offersNoticeText
-            : (
-              <Table
-                id="table_exchange"
-                className={tableStyles.exchange}
-                styleName="orderBookTable"
-                titles={titles}
-                rows={sellOrders}
-                rowRender={(row) => (
-                  <Row
-                    key={row.id}
-                    orderId={orderId}
-                    row={row}
-                    decline={decline}
-                    history={history}
-                    removeOrder={this.removeOrder}
-                    linkedOrderId={linkedOrderId}
-                    pairFees={pairFees}
-                    balances={balances}
-                    checkSwapAllow={checkSwapAllow}
+          {isOnline
+            ? (
+              sellOrders.length > 0
+                ? (
+                  <Table
+                    id="table_exchange"
+                    className={tableStyles.exchange}
+                    styleName="orderBookTable"
+                    titles={titles}
+                    rows={sellOrders}
+                    rowRender={(row) => (
+                      <Row
+                        key={row.id}
+                        orderId={orderId}
+                        row={row}
+                        decline={decline}
+                        history={history}
+                        removeOrder={this.removeOrder}
+                        linkedOrderId={linkedOrderId}
+                        pairFees={pairFees}
+                        balances={balances}
+                        checkSwapAllow={checkSwapAllow}
+                      />
+                    )}
                   />
-                )}
-              />
+                )
+                : offersNoticeLoadingText
             )
+            : offersNoticeOfflineText
           }
         </Panel>
         {seoPage && seoPage.footer && <div>{seoPage.footer}</div>}
