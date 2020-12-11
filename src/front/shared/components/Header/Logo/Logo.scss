@@ -21,3 +21,10 @@
   outline: none;
 }
 
+.customLogo {
+  display: block;
+  height: 100%;
+  object-fit: contain;
+  max-width: 160px;
+  max-height: 70px;
+}

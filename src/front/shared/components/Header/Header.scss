@@ -18,7 +18,12 @@ $purple: #510ed8;
 .themeSwitcher {
   color: white;
   width: 20px;
+  height: 20px;
   cursor: pointer;
+
+  svg {
+    display: block;
+  }
 }
 
 .themeAnimation {
@@ -27,8 +32,8 @@ $purple: #510ed8;
 
 .rightArea {
   display: flex;
-  width: 5em;
   justify-content: space-between;
+  align-items: center;
 }
 
 .header,
@@ -50,15 +55,6 @@ $purple: #510ed8;
   height: 100%;
 }
 
-.customLogo {
-  display: block;
-  height: 100%;
-  object-fit: contain;
-  max-width: 160px;
-  max-height: 70px;
-
-}
-
 @include media-mobile {
   .widgetHeader {
     display: unset;
@@ -67,20 +63,22 @@ $purple: #510ed8;
 }
 
 .logoutWrapper {
+  margin-left: 1em;
   display: flex;
   align-items: baseline;
   cursor: pointer;
+  color: #747474;
+
+  &.dark {
+    color: white
+  }
 
   span {
-    margin-left: 0.2em;
+    margin-left: 0.15em;
   }
 
   &:hover {
    color: #6044e6;;
-  }
-
-  &.dark {
-    color: white
   }
 }
 
