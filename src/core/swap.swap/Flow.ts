@@ -12,9 +12,10 @@ class Flow {
   state: {
     step: number
     isWaitingForOwner: boolean
-    isStoppedSwap: boolean
-    isRefunded: boolean
-    isFinished: boolean
+
+    isStoppedSwap?: boolean
+    isRefunded?: boolean
+    isFinished?: boolean
   }
 
   constructor(swap) {
@@ -23,7 +24,7 @@ class Flow {
     this.app      = null
 
     this.stepNumbers = {}
-    //@ts-ignore
+
     this.state = {
       step: 0,
       isWaitingForOwner: false,

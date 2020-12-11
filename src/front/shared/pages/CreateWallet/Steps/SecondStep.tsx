@@ -163,10 +163,8 @@ const SecondStep = (props) => {
 
   const handleFinish = () => {
     if (currencies.BTC) {
-      //@ts-ignore
       feedback.createWallet.finished('BTC')
     } else {
-      //@ts-ignore
       feedback.createWallet.finished()
     }
     onClick()
@@ -226,7 +224,6 @@ const SecondStep = (props) => {
           return null
         }
         setTrivialFeatureAsked(true)
-        //@ts-ignore
         feedback.createWallet.securitySelected(`${currencyName}-normal`)
       },
     },
@@ -248,7 +245,6 @@ const SecondStep = (props) => {
           return null
         }
         setSmsFeatureAsked(true)
-        //@ts-ignore
         feedback.createWallet.securitySelected(`${currencyName}-sms`)
       },
     },
@@ -269,7 +265,6 @@ const SecondStep = (props) => {
           return null
         }
         setPinFeatureAsked(true)
-        //@ts-ignore
         feedback.createWallet.securitySelected(`${currencyName}-pin`)
       },
     },
@@ -307,7 +302,6 @@ const SecondStep = (props) => {
           return null
         }
         setMultisigFeatureAsked(true)
-        //@ts-ignore
         feedback.createWallet.securitySelected(`${currencyName}-multisig`)
       },
     },
@@ -331,7 +325,6 @@ const SecondStep = (props) => {
           return null
         }
         setFingerprintFeatureAsked(true)
-        //@ts-ignore
         feedback.createWallet.securitySelected(`${currencyName}-fingerprint`)
       },
     })

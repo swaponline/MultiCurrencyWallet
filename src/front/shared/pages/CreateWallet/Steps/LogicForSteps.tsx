@@ -116,7 +116,6 @@ export default class LogicForSteps extends Component<any, any> {
 
 
   handleClick = name => {
-    //@ts-ignore
     feedback.createWallet.currencySelected(name)
     const { setError } = this.props
     const { curState } = this.state

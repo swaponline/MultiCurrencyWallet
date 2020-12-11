@@ -157,7 +157,6 @@ export default class SaveMnemonicModal extends React.Component<any, any> {
   }
 
   handleFinish = () => {
-    //@ts-ignore
     feedback.backup.finished()
     this.handleClose()
   }
@@ -287,7 +286,6 @@ export default class SaveMnemonicModal extends React.Component<any, any> {
               </p>
               <div styleName="buttonsHolder">
                 <Button blue onClick={() => {
-                  //@ts-ignore
                   feedback.backup.started()
                   this.setState({ step: `show` })
                 }}>
