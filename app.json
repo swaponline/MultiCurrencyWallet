@@ -24,7 +24,7 @@
       "required": true
     },
     "API_PASS": {
-      "description": "Password access admin panel",
+      "description": "Password to access admin panel",
       "generator": "secret",
       "required": true
     }
