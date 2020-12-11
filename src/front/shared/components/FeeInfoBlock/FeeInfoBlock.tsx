@@ -59,9 +59,10 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
   return (
     <section styleName='feeInfoBlock'>
       <div styleName='feeRow'>
-        <div styleName='content-wrapper'>
+        <span styleName='feeRowTitle'>
           <FormattedMessage id="FeeInfoBlockMinerFee" defaultMessage="Miner Fee:" />
-          {' '}{/* indent */}
+        </span>
+        <div className="feeRowInfo">
           {isLoading
             ? <div styleName='paleLoader'><InlineLoader /></div>
             : <span styleName='fee'>
@@ -71,22 +72,23 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
               </span>
           }
           {' '}{/* indent */}
+          <Tooltip id="FeeInfoBlockMinerFeeTooltip">
+            <div style={{ maxWidth: '24em', textAlign: 'center' }}>
+              <FormattedMessage
+                id="FeeInfoBlockMinerFeeTooltip"
+                defaultMessage="Amount of cryptocurrency paid to incentivize miners to confirm your transaction"
+              />
+            </div>
+          </Tooltip>
         </div>
-        <Tooltip id="FeeInfoBlockMinerFeeTooltip">
-          <div style={{ maxWidth: '24em', textAlign: 'center' }}>
-            <FormattedMessage
-              id="FeeInfoBlockMinerFeeTooltip"
-              defaultMessage="Amount of cryptocurrency paid to incentivize miners to confirm your transaction"
-            />
-          </div>
-        </Tooltip>
       </div>
       
       {hasServiceFee && (
           <div styleName='feeRow'>
-            <div styleName='content-wrapper'>
+            <span styleName='feeRowTitle'>
               <FormattedMessage id="FeeInfoBlockServiceFee" defaultMessage="Service Fee:" />
-              {' '}{/* indent */}
+            </span>
+            <div className="feeRowInfo">
               {isLoading
                 ? <div styleName='paleLoader'><InlineLoader /></div>
                 : <span styleName='fee'>{serviceFee} {isEthToken ? currency : dataCurrency}</span>
@@ -98,9 +100,10 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
 
       {!isEthToken && (
         <div styleName='feeRow'>
-          <div styleName='content-wrapper'>
+          <span styleName='feeRowTitle'>
             <FormattedMessage id="FeeInfoBlockTotalFee" defaultMessage="Total fee you pay:" />
-            {' '}{/* indent */}
+          </span>
+          <div className="feeRowInfo">
             {isLoading 
               ? <div styleName='paleLoader'><InlineLoader /></div>
               : <span styleName='fee'>{totalFee} {dataCurrency}&#32; {/* space */}
