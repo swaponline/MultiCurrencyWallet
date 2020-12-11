@@ -96,7 +96,6 @@ export default class Header extends Component<any, any> {
       isPartialTourOpen: false,
       path: false,
       isTourOpen: false,
-      isShowingMore: false,
       sticky: false,
       isWallet: false,
       menuItemsFill: [
@@ -312,28 +311,6 @@ export default class Header extends Component<any, any> {
     }
 
     tourEvent();
-  };
-
-  handleScroll = () => {
-    if (this.props.history.location.pathname === "/") {
-      this.setState(() => ({
-        sticky: false,
-      }));
-      return;
-    }
-    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    if (scrollTop > this.lastScrollTop) {
-      this.setState(() => ({ sticky: false }));
-    } else {
-      this.setState(() => ({ sticky: true }));
-    }
-    this.lastScrollTop = scrollTop;
-  };
-
-  toggleShowMore = () => {
-    this.setState((prevState) => ({
-      isShowingMore: !prevState.isShowingMore,
-    }));
   };
 
   closeTour = () => {

@@ -13,4 +13,5 @@ const LogoTooltip = (props) => (
     </ThemeTooltip>
   </Fragment>
 );
+
 export default LogoTooltip;
