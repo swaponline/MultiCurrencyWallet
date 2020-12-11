@@ -4,6 +4,7 @@
   "repository": "https://github.com/swaponline/MultiCurrencyWallet/",
   "logo": "https://swaponline.github.io/assets/favicon.ico",
   "keywords": ["wallet", "ethereum", "bitcoin", "crypto"],
+  "stack": "container",
   "env":{
     "SECRET_PHRASE": {
       "description": "Your 12 words secret phrase",
