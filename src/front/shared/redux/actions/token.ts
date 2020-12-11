@@ -111,6 +111,8 @@ const getBalance = async (currency) => {
     return
   }
 
+  // tokensData hasn't token on first addition (only after reload)
+  // TODO: fix it
   const {
     address: internalAddress,
     contractAddress,
@@ -120,7 +122,6 @@ const getBalance = async (currency) => {
 
   const address = (metamask.isConnected()) ? metamask.getAddress() : false || internalAddress
 
-  console.log('get token balance', address)
   const balanceInCache = cacheStorageGet('currencyBalances', `token_${currency}_${address}`)
 
   if (balanceInCache !== false) {
