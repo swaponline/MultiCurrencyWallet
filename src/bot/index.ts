@@ -2,13 +2,13 @@ import * as fs from 'fs'
 import * as mnemonicUtils from 'common/utils/mnemonic'
 import * as configStorage from './config/storage'
 import { getNetworkType } from 'common/domain/network'
-import { calcPairPrice, getPriceByPair } from './app/middlewares/prices'
 import { FG_COLORS as COLORS, BG_COLORS , colorString } from 'common/utils/colorString'
 
 console.log(colorString(`Loading...`,COLORS.GREEN))
 
 const rewriteEnvKeys = [
   `NETWORK`,
+  `PORT`,
   `API_USER`,
   `API_PASS`,
   `SECRET_PHRASE`,
@@ -17,6 +17,7 @@ const rewriteEnvKeys = [
 ]
 interface envKeys {
   NETWORK?: string,
+  PORT?: string,
   API_USER?: string,
   API_PASS?: string,
   SECRET_PHRASE?: string,
@@ -113,7 +114,7 @@ if (process.env.TEST_STARTUP === `true`) {
   }
 }
 
-// Rewrite vars from .env with values from command lineHeight
+// Rewrite vars from .env with values from command line
 Object.keys(rewritedEnv).forEach((envKey) => {
   process.env[envKey] = rewritedEnv[envKey]
 })
