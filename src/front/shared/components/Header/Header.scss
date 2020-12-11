@@ -42,23 +42,6 @@ $purple: #510ed8;
   }
 }
 
-.buttonLan {
-  color: #7c1de9 !important;
-
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
-  background: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  margin-right: 10px;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
 .header,
 .header-mobile {
   width: 100%;
@@ -84,6 +67,7 @@ $purple: #510ed8;
   object-fit: contain;
   max-width: 160px;
   max-height: 70px;
+
 }
 
 @include media-mobile {
@@ -99,7 +83,7 @@ $purple: #510ed8;
   cursor: pointer;
 
   span {
-    margin-left: 0.5em;
+    margin-left: 0.2em;
   }
 
   &:hover {
@@ -111,11 +95,6 @@ $purple: #510ed8;
   }
 }
 
-.header-fixed {
-  position: fixed;
-  height: 88px;
-  animation: slide-down 0.4s;
-}
 
 .header-promo {
   background: transparent;

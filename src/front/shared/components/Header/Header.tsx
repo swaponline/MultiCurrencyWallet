@@ -48,7 +48,6 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   isSigned: "signUp.isSigned",
   isInputActive: "inputActive.isInputActive",
   reputation: "pubsubRoom.reputation",
-  dashboardView: "ui.dashboardModalsAllowed",
   modals: "modals",
   hiddenCoinsList: "core.hiddenCoinsList",
 })
@@ -96,7 +95,6 @@ export default class Header extends Component<any, any> {
       isPartialTourOpen: false,
       path: false,
       isTourOpen: false,
-      sticky: false,
       isWallet: false,
       menuItemsFill: [
         {
@@ -408,7 +406,6 @@ export default class Header extends Component<any, any> {
 
   render() {
     const {
-      sticky,
       isTourOpen,
       path,
       isPartialTourOpen,
@@ -471,13 +468,13 @@ export default class Header extends Component<any, any> {
           </div>
         )}
         <div styleName="rightArea">
+          <ThemeSwitcher withExit themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
+
           {isLogoutPossible && // some wordpress plugin cases
             <div styleName={`logoutWrapper ${isDark ? 'dark' : ''}`} onClick={this.handleLogout}>
               <i className="fas fa-sign-out-alt" /><FormattedMessage id="ExitWidget" defaultMessage="Exit" />
             </div>
           }
-
-          <ThemeSwitcher withExit themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
         </div>
       </div>
 
@@ -555,8 +552,7 @@ export default class Header extends Component<any, any> {
         className={cx({
           [styles["header"]]: true,
           [styles["widgetHeader"]]: isWidgetBuild && isCustomLogo,
-          [styles["header-fixed"]]: Boolean(sticky),
-          [styles["header-promo"]]: isWalletPage && !sticky,
+          [styles["header-promo"]]: isWalletPage
         })}
       >
         {createdWalletLoader && (
