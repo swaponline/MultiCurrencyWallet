@@ -83,6 +83,7 @@ interface IWithdrawModalState {
   currentDecimals: number
   exCurrencyRate?: number
   fiatAmount?: number
+  btcFeeRate: number
   
   ethBalance: null | number
   tokenFee: null | number
@@ -181,6 +182,7 @@ export default class WithdrawModal extends React.Component<any, any> {
       adminFeeSize: null,
       fetchFee: true,
       txSize: null,
+      btcFeeRate: null,
     }
   }
 
@@ -311,10 +313,14 @@ export default class WithdrawModal extends React.Component<any, any> {
       minAmount[currentCoin] = coinFee
 
       if (currentCoin === 'btc') {
+        const BYTE_IN_KB = 1024
+        const feeRate = await helpers.btc.estimateFeeRate()
+        const feeSatByte = new BigNumber(feeRate).dividedBy(BYTE_IN_KB).dp(0, BigNumber.ROUND_CEIL).toNumber()
         const txSize = await helpers[currentCoin].calculateTxSize()
 
         this.setState({
-          txSize
+          btcFeeRate: feeSatByte,
+          txSize,
         })
       }
 
@@ -640,6 +646,7 @@ export default class WithdrawModal extends React.Component<any, any> {
       adminFeeSize,
       fetchFee,
       txSize,
+      btcFeeRate,
     } = this.state
 
     const { name, intl, portalUI, activeFiat, activeCurrency, dashboardView } = this.props
@@ -1055,6 +1062,7 @@ export default class WithdrawModal extends React.Component<any, any> {
                 currency={currency}
                 dataCurrency={dataCurrency}
                 exCurrencyRate={exCurrencyRate}
+                feeCurrentCurrency={btcFeeRate}
                 isLoading={fetchFee}
                 minerFee={isEthToken ? tokenFee : coinFee}
                 hasServiceFee={!!usedAdminFee}

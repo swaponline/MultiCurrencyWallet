@@ -20,7 +20,9 @@ type FeeInfoBlockProps = {
   minerFee: number
   serviceFee: number
   totalFee: number
-  txSize: number
+
+  txSize?: number
+  feeCurrentCurrency?: number
 }
 
 function FeeInfoBlock(props: FeeInfoBlockProps) {
@@ -36,7 +38,23 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
     totalFee,
     hasTxSize,
     txSize,
+    feeCurrentCurrency,
   } = props
+
+  const linkToTxSizeInfo = (
+    <a
+      href="https://en.bitcoin.it/wiki/Maximum_transaction_rate#:~:text=Each%20transaction%20input%20requires%20at,the%20minimum-sized%20Bitcoin%20transaction"
+      target="_blank"
+    >
+      (?)
+    </a>
+  )
+
+  const transactionSize = (
+    <>
+      {feeCurrentCurrency} sat/byte * {txSize} bytes {linkToTxSizeInfo} ={' '}
+    </>
+  )
 
   return (
     <section styleName='feeInfoBlock'>
@@ -46,8 +64,10 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
           {' '}{/* indent */}
           {isLoading
             ? <div styleName='paleLoader'><InlineLoader /></div>
-            : <span styleName='fee'>{minerFee} {dataCurrency}&#32; {/* space */}
-                (~{new BigNumber(minerFee * exCurrencyRate).dp(2, BigNumber.ROUND_UP).toNumber()}$)
+            : <span styleName='fee'>
+                {hasTxSize && feeCurrentCurrency > 0 ? transactionSize : null}
+                {minerFee} {dataCurrency}&#32; {/* space */}
+                (~${new BigNumber(minerFee * exCurrencyRate).dp(2, BigNumber.ROUND_UP).toNumber()})
               </span>
           }
           {' '}{/* indent */}
@@ -84,25 +104,11 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
             {isLoading 
               ? <div styleName='paleLoader'><InlineLoader /></div>
               : <span styleName='fee'>{totalFee} {dataCurrency}&#32; {/* space */}
-                  (~{new BigNumber(totalFee * exCurrencyRate).dp(2, BigNumber.ROUND_UP).toNumber()}$)
+                  (~${new BigNumber(totalFee * exCurrencyRate).dp(2, BigNumber.ROUND_UP).toNumber()})
                 </span>
             }
           </div>
         </div>
-        )
-      }
-
-      {hasTxSize && (
-          <div styleName='feeRow'>
-            <div styleName='content-wrapper'>
-              <FormattedMessage id="FeeInfoBlockTxSize" defaultMessage="Transaction size:" />
-              {' '}{/* indent */}
-              {isLoading
-                ? <div styleName='paleLoader'><InlineLoader /></div>
-                : <span styleName='fee'>{txSize} bytes</span> // (1200 bytes x 65 sat/byte)
-              }
-            </div>
-          </div>
         )
       }
     </section>
