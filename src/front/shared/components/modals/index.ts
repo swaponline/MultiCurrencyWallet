@@ -5,7 +5,6 @@ import WithdrawModalMultisig from './WithdrawModalMultisig/WithdrawModalMultisig
 import WithdrawModalMultisigUser from './WithdrawModalMultisig/WithdrawModalMultisigUser'
 import PrivateKeysModal from './PrivateKeysModal/PrivateKeysModal'
 import Approve from './Approve/Approve'
-import ImportKeys from './ImportKeys/ImportKeys'
 import EthChecker from './EthChecker/EthChecker'
 import ReceiveModal from './ReceiveModal/ReceiveModal'
 import DownloadModal from './DownloadModal/DownloadModal'
@@ -55,7 +54,6 @@ export default {
   WithdrawModal,
   WithdrawModalMultisigUser, // Deprecated
   PrivateKeysModal,
-  ImportKeys,
   Approve,
   EthChecker,
   ReceiveModal,

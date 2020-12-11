@@ -38,6 +38,14 @@ import { animate } from 'helpers/domUtils'
 import Switching from 'components/controls/Switching/Switching'
 import AddressSelect from '../Exchange/AddressSelect/AddressSelect'
 
+type PointOfSellProps = {
+  [key: string]: any
+}
+
+type PointOfSellState = {
+  [key: string]: any
+}
+
 const allowedCoins = [
   ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? ['BTC'] : [],
   ...(!config.opts.curEnabled || config.opts.curEnabled.eth) ? ['ETH'] : [],
@@ -130,6 +138,9 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 }))
 @CSSModules(styles, { allowMultiple: true })
 export default class Exchange extends Component<any, any> {
+
+  props: PointOfSellProps
+  state: PointOfSellState
 
   promoContainer: any
   scrollTrigger: any
@@ -243,7 +254,6 @@ export default class Exchange extends Component<any, any> {
     // fiatRates
 
     if (config.isWidget) {
-      //@ts-ignore
       this.state.getCurrency = config.erc20token
     }
   }

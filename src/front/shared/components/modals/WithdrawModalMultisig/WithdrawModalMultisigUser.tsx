@@ -423,7 +423,7 @@ export default class WithdrawModalMultisigUser extends React.Component<any, any>
         </div>
       )
     }
-    //@ts-ignore
+
     if (this.state.amount < 0) {
       this.setState({
         amount: '',

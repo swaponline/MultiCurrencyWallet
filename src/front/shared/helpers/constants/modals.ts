@@ -5,7 +5,6 @@ export default {
   Offer: 'OfferModal',
   PrivateKeys: 'PrivateKeysModal',
   Approve: 'Approve',
-  ImportKeys: 'ImportKeys',
   EthChecker: 'EthChecker',
   ReceiveModal: 'ReceiveModal',
   DownloadModal: 'DownloadModal',

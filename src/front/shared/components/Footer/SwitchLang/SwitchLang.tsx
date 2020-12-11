@@ -21,7 +21,6 @@ export default class SwitchLang extends Component<{}, PropsType> {
   switchLang = (event, locale) => {
     event.preventDefault()
 
-    // @ts-ignore
     feedback.i18n.switched(locale)
 
     // @ts-ignore

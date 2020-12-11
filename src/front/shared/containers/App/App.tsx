@@ -117,12 +117,10 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       }
 
       const onRejectHandle = () => {
-        //@ts-ignore
         const { appID } = this.state;
         const id = localStorage.getItem(constants.localStorage.reject);
 
         if (id && id !== appID) {
-          //@ts-ignore
           this.setState({ multiTabs: true });
           //@ts-ignore
           localStorage.unsubscribe(this.prvMultiTab.reject);
@@ -135,7 +133,6 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       };
 
       const onEnterHandle = () => {
-        //@ts-ignore
         const { appID } = this.state;
         const id = localStorage.getItem(constants.localStorage.enter);
         const switchId = localStorage.getItem(constants.localStorage.switch);
@@ -147,11 +144,9 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
       const onSwitchHangle = () => {
         const switchId = localStorage.getItem(constants.localStorage.switch);
-        //@ts-ignore
         const { appID } = this.state;
 
         if (appID !== switchId) {
-          //@ts-ignore
           this.setState({
             multiTabs: true
           });
@@ -393,7 +388,6 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   }
 
   render() {
-    //@ts-ignore
     const { fetching, multiTabs, error } = this.state;
     //@ts-ignore
     const { children, ethAddress, btcAddress, ghostAddress, nextAddress, tokenAddress, history, dashboardModalsAllowed } = this.props;

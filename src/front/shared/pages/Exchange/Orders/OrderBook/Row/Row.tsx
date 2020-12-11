@@ -187,7 +187,6 @@ export default class Row extends Component {
     actions.modals.open(constants.modals.ConfirmBeginSwap, {
       order: row,
       onAccept: async (customWallet) => {
-        //@ts-ignore
         feedback.offers.swapRequested(`${sellCurrency}->${buyCurrency}`)
 
         this.setState({ isFetching: true })
