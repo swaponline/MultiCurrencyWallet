@@ -1,33 +1,33 @@
 /* eslint-disable max-len */
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import cx from "classnames";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import cx from "classnames"
 
-import { withRouter, Link } from "react-router-dom";
-import { isMobile } from "react-device-detect";
-import { connect } from "redaction";
+import { withRouter, Link } from "react-router-dom"
+import { isMobile } from "react-device-detect"
+import { connect } from "redaction"
 
-import links from "helpers/links";
-import actions from "redux/actions";
-import { constants } from "helpers";
+import links from "helpers/links"
+import actions from "redux/actions"
+import { constants } from "helpers"
 import config from 'helpers/externalConfig'
-import { injectIntl, FormattedMessage } from "react-intl";
+import { injectIntl, FormattedMessage } from "react-intl"
 
-import CSSModules from "react-css-modules";
-import styles from "./Header.scss";
+import CSSModules from "react-css-modules"
+import styles from "./Header.scss"
 
-import Nav from "./Nav/Nav";
-import NavMobile from "./NavMobile/NavMobile";
+import Nav from "./Nav/Nav"
+import NavMobile from "./NavMobile/NavMobile"
 
-import LogoTooltip from "components/Logo/LogoTooltip";
-import TourPartial from "./TourPartial/TourPartial";
-import WalletTour from "./WalletTour/WalletTour";
-import { WidgetWalletTour } from "./WidgetTours";
+import Logo from "./Logo/Logo"
+import TourPartial from "./TourPartial/TourPartial"
+import WalletTour from "./WalletTour/WalletTour"
+import { WidgetWalletTour } from "./WidgetTours"
 
-import Loader from "components/loaders/Loader/Loader";
-import { localisedUrl, unlocalisedUrl } from "../../helpers/locale";
-import { messages, getMenuItems, getMenuItemsMobile } from "./config";
-import { getActivatedCurrencies } from "helpers/user";
+import Loader from "components/loaders/Loader/Loader"
+import { localisedUrl, unlocalisedUrl } from "../../helpers/locale"
+import { messages, getMenuItems, getMenuItemsMobile } from "./config"
+import { getActivatedCurrencies } from "helpers/user"
 import { ThemeSwitcher } from "./ThemeSwitcher"
 
 // Incoming swap requests and tooltips (revert)
@@ -429,7 +429,7 @@ export default class Header extends Component<any, any> {
     const { exchange, wallet } = links;
 
 
-    const isCustomLogo = /*test*/ true || window.logoUrl !== "#"
+    const isCustomLogo = /*test*/ false || window.logoUrl !== "#"
     const isCustomLogoLink = window.LOGO_REDIRECT_LINK as boolean
     const customLogoSrc = /*test*/ 'https://wallet.wpmix.net/wp-content/uploads/2020/07/yourlogohere.png' || (isDark ? window.darkLogoUrl : window.logoUrl)
 
@@ -449,7 +449,7 @@ export default class Header extends Component<any, any> {
 
     const logoRenderer = !isCustomLogo ?
       <>
-        <LogoTooltip withLink isColored isExchange={isWalletPage} />
+        <Logo />
         <ThemeSwitcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
       </>
       :

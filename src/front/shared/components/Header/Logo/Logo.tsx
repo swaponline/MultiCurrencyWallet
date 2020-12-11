@@ -7,27 +7,46 @@ import { links } from "helpers";
 import CSSModules from "react-css-modules";
 import styles from "./Logo.scss";
 
-import { injectIntl } from "react-intl";
+import { FormattedMessage, injectIntl } from "react-intl";
 import { localisedUrl } from "helpers/locale";
-import images from "./images";
+import ThemeTooltip from "../../ui/Tooltip/ThemeTooltip";
+
+import logoBlack from "shared/images/logo/logo-black.svg"
+import logoColored from "shared/images/logo/logo-colored.svg"
+
 
 @withRouter
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })
 export default class Logo extends Component<any, any> {
-  static propTypes = {
-    isColored: PropTypes.bool,
-    withLink: PropTypes.bool,
-    mobile: PropTypes.bool
-  };
+
+
+/*
+
+import base from './base.svg'
+import baseColored from './baseColored.svg'
+
+import swapOnline from './swapOnline.svg'
+import swapOnlineColored from './swapOnlineColored.svg'
+
+
+export default {
+  colored: {
+    base: baseColored,
+    localhost: base,
+    'swap.online': swapOnlineColored,
+  },
+  common: {
+    base,
+    'swap.online': swapOnline,
+  },
+}
+
+*/
 
   render() {
     const {
-      isColored,
-      withLink,
-      mobile,
       intl: { locale },
-      isExchange
     } = this.props;
 
     const isOurDomain = [
@@ -38,9 +57,14 @@ export default class Logo extends Component<any, any> {
 
     const isCustomLogo = window.logoUrl !== '#'
 
-    const srcFiles = isColored ? images.colored : images.common;
-    const { host, href } = window.location;
+    const withLink = true // todo
+    const isColored = true // todo
+
+    const srcFiles = isColored ? logoColored : logoBlack
+    const { host, href } = window.location
+
     const file = Object.keys(srcFiles).find(el => window.location.href.includes(el)) || "base"
+
     const onLogoClickLink = (window && window.LOGO_REDIRECT_LINK) ? window.LOGO_REDIRECT_LINK : localisedUrl(locale, links.home)
     const hasOwnLogoLink = (window && window.LOGO_REDIRECT_LINK)
 
@@ -82,6 +106,9 @@ export default class Logo extends Component<any, any> {
             )}
           </div>
         }
+      <ThemeTooltip id="logo" effect="solid" place="bottom">
+        <FormattedMessage id="logo29" defaultMessage="Go Home" />
+      </ThemeTooltip>
       </Fragment>
     );
   }

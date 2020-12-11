@@ -35,11 +35,6 @@ $purple: #510ed8;
   display: flex;
   width: 5em;
   justify-content: space-between;
-
-  @media all and (max-width: 480px) {
-    position: absolute;
-    right: 10px;
-  }
 }
 
 .header,
