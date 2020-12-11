@@ -4733,10 +4733,7 @@
   },
   {
     "id": "descr282",
-    "message": "Show my keys",
-    "files": [
-      "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
-    ]
+    "message": "Show my keys"
   },
   {
     "id": "descr284",
@@ -5432,10 +5429,7 @@
   },
   {
     "id": "ShowMyMnemonic",
-    "message": "Backup your wallet",
-    "files": [
-      "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
-    ]
+    "message": "Backup your wallet"
   },
   {
     "id": "BtcMultisignConfirmTx_FromAddress",
@@ -7909,28 +7903,28 @@
     "id": "FeeInfoBlockTotalFee",
     "message": "Total fee you pay:",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockMinerFee",
     "message": "Miner Fee:",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockMinerFeeTooltip",
     "message": "Amount of cryptocurrency paid to incentivize miners to confirm your transaction",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockServiceFee",
     "message": "Service Fee:",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
     ]
   },
   {
@@ -8276,6 +8270,13 @@
     "message": "it may take a minute",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+    ]
+  },
+  {
+    "id": "FeeInfoBlockTxSize",
+    "message": "Transaction size:",
+    "files": [
+      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
     ]
   }
 ]

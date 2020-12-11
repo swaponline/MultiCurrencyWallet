@@ -4876,10 +4876,7 @@
   },
   {
     "id": "descr282",
-    "message": "Показать мои ключи",
-    "files": [
-      "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
-    ]
+    "message": "Показать мои ключи"
   },
   {
     "id": "descr284",
@@ -5540,10 +5537,7 @@
   },
   {
     "id": "ShowMyMnemonic",
-    "message": "Сделайте резервную копию кошелька",
-    "files": [
-      "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
-    ]
+    "message": "Сделайте резервную копию кошелька"
   },
   {
     "id": "BtcMultisignConfirmTx_FromAddress",
@@ -7981,28 +7975,28 @@
     "id": "FeeInfoBlockTotalFee",
     "message": "Общая сумма, которую вы платите:",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockMinerFee",
     "message": "Комиссия майнера: ",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockMinerFeeTooltip",
     "message": "Сумма криптовалюты, уплаченная, чтобы побудить майнеров подтвердить вашу транзакцию",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockServiceFee",
     "message": "Комиссия сервиса:",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
     ]
   },
   {
@@ -8348,6 +8342,13 @@
     "message": "это может занять минуту",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+    ]
+  },
+  {
+    "id": "FeeInfoBlockTxSize",
+    "message": "Размер транзакции:",
+    "files": [
+      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
     ]
   }
 ]
