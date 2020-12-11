@@ -102,7 +102,7 @@ if (process.env.TEST_STARTUP === `true`) {
   }, 30*1000)
 } else {
   if (!fs.existsSync(__dirname + '/.env')) {
-    if (configStorage.hasTradeConfig()) {
+    if (!configStorage.hasTradeConfig()) {
       console.log('Please, create ./src/bot/.env file unsing "./src/bot/.env.sample"')
       process.exit(0)
     }
