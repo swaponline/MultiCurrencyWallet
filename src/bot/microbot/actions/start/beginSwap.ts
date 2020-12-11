@@ -11,8 +11,10 @@ import { debugFeedBack } from '../../../helpers/debugFeedBack'
 import { canBeDeleted, needsRefund } from './swapStatus'
 import { getNoxonPrice } from '../../../app/middlewares/prices'
 
-import { BTC2ETHFlow, ETH2BTCFlow } from '../swap-flow'
 import { UTXO2ETHFlow, ETH2UTXOFlow } from '../swap-flow'
+
+import { checkSwapsCountLimit } from '../../core/checkSwapsCountLimit'
+import { removeMyOrders } from '../../core/orders'
 
 import request from 'request-promise-cache'
 import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
@@ -53,7 +55,7 @@ export default (app, { id }, callback) => {
       && COIN_DATA[base].model === COIN_MODEL.UTXO
     )
 
-    const goFlow = (mainIsUTXO) ? BTC2ETHFlow : ETH2BTCFlow
+    const goFlow = (mainIsUTXO) ? UTXO2ETHFlow : ETH2UTXOFlow
 
     if (baseIsUTXO && process.env.MIN_AMOUNT_FORCONFIRM) {
       getNoxonPrice(main, 'USD').then((usdPrice) => {
@@ -79,6 +81,10 @@ export default (app, { id }, callback) => {
       const pair = Pair.fromOrder(swap)
 
       if (step === 2) {
+        // Second step - swap started - check limit for paraller swaps and remove orders if necesy
+        if (!checkSwapsCountLimit()) {
+          removeMyOrders(app.services.orders)
+        }
         if (pair.ticker === 'GHOST2BTC') {
           // set destination wallet
           swap.setDestinationBuyAddress('16BZguAz5U6QVxu1Nan6adWRoPxzQfG464')
