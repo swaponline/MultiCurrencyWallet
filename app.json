@@ -15,7 +15,18 @@
     },
     "NETWORK": {
       "description": "Network type (MAINNET or TESTNET)",
-      "value": "MAINNET"
+      "value": "MAINNET",
+      "required": true
+    },
+    "API_USER": {
+      "description": "Login for access admin panel",
+      "value": "Login",
+      "required": true
+    },
+    "API_PASS": {
+      "description": "Password access admin panel",
+      "value": "Password",
+      "required": true
     }
   }
 }

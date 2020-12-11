@@ -31,7 +31,7 @@ app.services.room.once('ready', () => {
   console.log('created swap app, me:', wallet.view())
 })
 
-const port = process.env.PORT || 1337
+const port = process.env.PORT || 3000
 const ws_port = process.env.WS_PORT || 7333
 const listen_ip = process.env.IP || '0.0.0.0'
 
