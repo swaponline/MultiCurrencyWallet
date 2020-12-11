@@ -12,6 +12,10 @@
     "SPREAD": {
       "description": "The spread (commission) you want to earn from every trade",
       "value": "5"
-    }
+    },
+    "NETWORK": {
+      "description": "Network type (MAINNET or TESTNET)",
+      "value": "MAINNET"
+    },
   }
 }
