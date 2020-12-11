@@ -12,17 +12,20 @@ $walletPaddingTop: 41px;
     position: sticky;
     top: 0;
     @include ff-bold;
-    width: 100%;
     border-radius: $borderRadius $borderRadius 0 0;
-    border-bottom: 1px soild #8882;
     z-index: 1;
+
+    th {
+      // disable bootstrap style
+      border-bottom: none;
+    }
   }
 
   tbody {
     border-radius: 0 0 $borderRadius $borderRadius;
 
-    tr:not(:first-child) {
-      border-top: 1px solid #8882;
+    tr {
+      border-top: 1px solid $pale-color;
     }
   }
 

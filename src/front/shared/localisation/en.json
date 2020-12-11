@@ -1334,14 +1334,14 @@
   },
   {
     "id": "orders102",
-    "message": "AMOUNT",
+    "message": "SELLS",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
   },
   {
     "id": "orders105",
-    "message": "TOTAL",
+    "message": "AT PRICE",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
@@ -2308,7 +2308,7 @@
   },
   {
     "id": "orders104",
-    "message": "PRICE",
+    "message": "FOR",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
@@ -4742,14 +4742,6 @@
     "message": "Continue your swaps",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
-  },
-  {
-    "id": "partial1021",
-    "message": "Embed on website",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
     ]
   },
   {

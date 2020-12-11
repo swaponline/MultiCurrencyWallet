@@ -1462,7 +1462,7 @@ export default class Exchange extends Component<any, any> {
                   inputValueLink={linked.haveAmount.pipe(this.setAmount)}
                   selectedValue={haveCurrency}
                   onSelect={this.handleSetHaveValue}
-                  label={<FormattedMessage id="partial243" defaultMessage="You sell" />}
+                  label={<FormattedMessage id="partial243" defaultMessage="You sell" />} // sell or send ?
                   id="Exchange456"
                   placeholder="0.00000000"
                   fiat={maxAmount > 0 && isNonOffers ? 0 : haveFiat}
@@ -1705,17 +1705,6 @@ export default class Exchange extends Component<any, any> {
           <div styleName="networkStatusPlace">
             <NetworkStatus />
           </div>
-
-          {!isWidgetBuild && (
-            <a
-              href="https://generator.swaponline.site/generator/"
-              target="_blank"
-              rel="noopener noreferrer"
-              styleName="widgetLink"
-            >
-              <FormattedMessage id="partial1021" defaultMessage="Embed on website" />
-            </a>
-          )}
         </div>
       </div>
     )

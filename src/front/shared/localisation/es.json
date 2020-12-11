@@ -1334,14 +1334,14 @@
   },
   {
     "id": "orders102",
-    "message": "CANTIDAD",
+    "message": "VENDE",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
   },
   {
     "id": "orders105",
-    "message": "TOTAL",
+    "message": "A PRECIO",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
@@ -2308,7 +2308,7 @@
   },
   {
     "id": "orders104",
-    "message": "PRECIO",
+    "message": "PARA",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]

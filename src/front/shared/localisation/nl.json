@@ -1338,14 +1338,14 @@
   },
   {
     "id": "orders102",
-    "message": "HOEVEELHEID",
+    "message": "SELGER",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
   },
   {
     "id": "orders105",
-    "message": "TOTAL",
+    "message": "TIL PRIS",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
@@ -2306,7 +2306,7 @@
   },
   {
     "id": "orders104",
-    "message": "PRIJS",
+    "message": "TIL",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
