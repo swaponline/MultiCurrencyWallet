@@ -70,7 +70,6 @@ const FAQ = (props) => {
   const handleTabClick = (tabName) => {
     setOpenedTabs({ ...openedTabs, [tabName]: !openedTabs[tabName] })
     if (openedTabsCounter[tabName] === 0) {
-      //@ts-ignore
       feedback.faq.opened(formatMessage({ id: tabsIdsDictionary[tabName] }))
     }
     setOpenedTabsCounter({ ...openedTabsCounter, [tabName]: ++openedTabsCounter[tabName] })

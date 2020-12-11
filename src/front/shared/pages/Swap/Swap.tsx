@@ -116,7 +116,7 @@ export default class SwapComponent extends PureComponent<any, any> {
 
         localStorage.setItem('axiosSwaps', JSON.stringify(swapsId))
         clearInterval(this.sendDebugInfoTimer)
-        //@ts-ignore
+
         feedback.swap.started(sendedJSON)
       }
     }
@@ -250,11 +250,9 @@ export default class SwapComponent extends PureComponent<any, any> {
         const isStoppedSwap = this.checkStoppedSwap()
 
         if (isFinallyFinished) {
-          //@ts-ignore
           feedback.swap.finished()
         }
         if (isStoppedSwap) {
-          //@ts-ignore
           feedback.swap.stopped()
         }
 
@@ -438,7 +436,6 @@ export default class SwapComponent extends PureComponent<any, any> {
       swap: {
         flow,
       },
-    //@ts-ignore
     } = this.state
     //@ts-ignore
     if (typeof swap.flow.checkOtherSideRefund === 'function') {

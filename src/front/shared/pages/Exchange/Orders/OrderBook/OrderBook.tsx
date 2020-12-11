@@ -130,7 +130,6 @@ export default class OrderBook extends Component {
   removeOrder = (orderId) => {
     actions.modals.open(constants.modals.Confirm, {
       onAccept: () => {
-        //@ts-ignore
         feedback.offers.deleted()
         actions.core.deletedPartialCurrency(orderId)
         actions.core.removeOrder(orderId)
