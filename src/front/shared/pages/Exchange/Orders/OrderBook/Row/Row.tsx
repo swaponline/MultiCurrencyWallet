@@ -126,7 +126,7 @@ export default class Row extends Component {
   }
 
   getDecimals = (amount, currency) => {
-    const decimalPlaces = constants.tokenDecimals[currency.toLowerCase()] || 8
+    const decimalPlaces = 8 // constants.tokenDecimals[currency.toLowerCase()] || 8
     return String(new BigNumber(amount).dp(decimalPlaces, BigNumber.ROUND_CEIL))
   }
 

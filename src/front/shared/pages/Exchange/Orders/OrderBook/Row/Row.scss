@@ -31,17 +31,6 @@
     padding: 0.8em 1em;
     margin-left: 0.4em;
   }
-  .onHover {
-    top: 48%;
-    right: 0px;
-    width: 75px;
-    height: 40px;
-    font-size: 50%;
-    position: absolute;
-    padding: 0 1px 0 1px;
-    text-transform: uppercase;
-    transform: translateY(-50%);
-  }
   .bigContainer {
     font-size: 14px;
     display: flex;
@@ -51,7 +40,7 @@
 }
 
 .buttonsColumn {
-  text-align: center!important;
+  text-align: center !important;
 }
 
 @media screen and (max-width: 400px) {
