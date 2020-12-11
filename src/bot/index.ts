@@ -86,6 +86,8 @@ const _loadDefaultEnv = () => {
   process.env.WEB3_MAINNET_PROVIDER='https://mainnet.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c'
 }
 
+_loadDefaultEnv()
+
 if (process.env.TEST_STARTUP === `true`) {
   console.log(
     colorString('>>>> TEST STARTUP', COLORS.GREEN)
@@ -101,9 +103,6 @@ if (process.env.TEST_STARTUP === `true`) {
 } else {
   if (!fs.existsSync(__dirname + '/.env')) {
     if (configStorage.hasTradeConfig()) {
-      // If use quick start with json, and .env not exists - use defaults
-      _loadDefaultEnv()
-    } else {
       console.log('Please, create ./src/bot/.env file unsing "./src/bot/.env.sample"')
       process.exit(0)
     }
