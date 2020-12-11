@@ -25,7 +25,7 @@
     },
     "API_PASS": {
       "description": "Password access admin panel",
-      "value": "Password",
+      "generator": "secret",
       "required": true
     }
   }
