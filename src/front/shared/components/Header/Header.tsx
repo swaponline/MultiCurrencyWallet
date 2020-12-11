@@ -428,17 +428,6 @@ export default class Header extends Component<any, any> {
 
     const { exchange, wallet } = links;
 
-
-    const isCustomLogo = /*test*/ false || window.logoUrl !== "#"
-    const isCustomLogoLink = window.LOGO_REDIRECT_LINK as boolean
-    const customLogoSrc = /*test*/ 'https://wallet.wpmix.net/wp-content/uploads/2020/07/yourlogohere.png' || (isDark ? window.darkLogoUrl : window.logoUrl)
-
-    const onLogoClickLink = isCustomLogoLink
-      ? window.LOGO_REDIRECT_LINK
-      : localisedUrl(locale, links.home);
-
-    const isLogoutPossible = /*test*/true || window.isUserRegisteredAndLoggedIn
-
     const isWalletPage =
       pathname.includes(wallet) ||
       pathname === `/ru${wallet}` ||
@@ -446,29 +435,15 @@ export default class Header extends Component<any, any> {
 
     const isExchange = pathname.includes(exchange);
 
+    const isLogoutPossible = /*test*/true || window.isUserRegisteredAndLoggedIn
 
-    const logoRenderer = !isCustomLogo ?
-      <>
-        <Logo />
-        <ThemeSwitcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
-      </>
-      :
+    const logoRenderer = (
       <div styleName="flexebleHeader">
-        {isCustomLogo && (
-          <div>
-            {isCustomLogoLink ? (
-              <a href={onLogoClickLink}>
-                <img styleName="customLogo" src={customLogoSrc} />
-              </a>
-            ) : (
-              <Link to={onLogoClickLink}>
-                <img styleName="customLogo" src={customLogoSrc} />
-              </Link>
-            )}
-          </div>
-        )}
+        <div>
+          <Logo />
+        </div>
         <div styleName="rightArea">
-          <ThemeSwitcher withExit themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
+          <ThemeSwitcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
 
           {isLogoutPossible && // some wordpress plugin cases
             <div styleName={`logoutWrapper ${isDark ? 'dark' : ''}`} onClick={this.handleLogout}>
@@ -477,6 +452,7 @@ export default class Header extends Component<any, any> {
           }
         </div>
       </div>
+    )
 
     if (pathname.includes("/createWallet") && isMobile) {
       return <span />;
@@ -491,9 +467,9 @@ export default class Header extends Component<any, any> {
       />
     )
 
-    if (isMobile && isCustomLogo) {
+    if (isMobile) {
       return (
-        <header className="data-tut-widget-tourFinish" id="header-mobile" styleName="header-mobile">
+        <header id="header-mobile" styleName="header-mobile" className="data-tut-widget-tourFinish">
           {logoRenderer}
           {createdWalletLoader && (
             <div styleName="loaderCreateWallet">
@@ -519,39 +495,11 @@ export default class Header extends Component<any, any> {
       );
     }
 
-    if (isMobile) {
-      return (
-        <header id="header-mobile" styleName="header-mobile">
-          {createdWalletLoader && (
-            <div styleName="loaderCreateWallet">
-              <Loader
-                showMyOwnTip={formatMessage({
-                  id: "createWalletLoaderTip",
-                  defaultMessage: "Creating wallet... Please wait.",
-                })}
-              />
-            </div>
-          )}
-          {incomingSwapRequest}
-          <NavMobile menu={menuItemsMobile} isHidden={isInputActive} />
-          {isWidgetTourOpen && isWalletPage &&
-            <div styleName="walletTour">
-              <WidgetWalletTour
-                isTourOpen={isWidgetTourOpen}
-                closeTour={this.closeWidgetTour}
-              />
-            </div>
-          }
-          <ThemeSwitcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
-        </header>
-      );
-    }
-
     return (
       <header
         className={cx({
           [styles["header"]]: true,
-          [styles["widgetHeader"]]: isWidgetBuild && isCustomLogo,
+          [styles["widgetHeader"]]: isWidgetBuild,
           [styles["header-promo"]]: isWalletPage
         })}
       >

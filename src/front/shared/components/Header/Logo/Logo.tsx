@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 
 import { Link, withRouter } from "react-router-dom";
-import { links } from "helpers";
+import { links, constants } from "helpers";
 
 import CSSModules from "react-css-modules";
 import styles from "./Logo.scss";
@@ -13,6 +13,9 @@ import ThemeTooltip from "../../ui/Tooltip/ThemeTooltip";
 
 import logoBlack from "shared/images/logo/logo-black.svg"
 import logoColored from "shared/images/logo/logo-colored.svg"
+
+
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 
 @withRouter
@@ -74,6 +77,14 @@ export default {
       alt: `${host}`
     });
 
+    //const isCustomLogo = /*test*/ false || window.logoUrl !== "#"
+    const isCustomLogoLink = window.LOGO_REDIRECT_LINK as boolean
+    const customLogoSrc = /*test*/ 'https://wallet.wpmix.net/wp-content/uploads/2020/07/yourlogohere.png' || (isDark ? window.darkLogoUrl : window.logoUrl)
+
+    //const onLogoClickLink = isCustomLogoLink
+      ? window.LOGO_REDIRECT_LINK
+      : localisedUrl(locale, links.home);
+
     return (
       <Fragment>
         {isOurDomain
@@ -106,9 +117,22 @@ export default {
             )}
           </div>
         }
-      <ThemeTooltip id="logo" effect="solid" place="bottom">
-        <FormattedMessage id="logo29" defaultMessage="Go Home" />
-      </ThemeTooltip>
+
+        {/*moved*/}
+        {isCustomLogoLink ? (
+          <a href={onLogoClickLink}>
+            <img styleName="customLogo" src={customLogoSrc} />
+          </a>
+        ) : (
+          <Link to={onLogoClickLink}>
+            <img styleName="customLogo" src={customLogoSrc} />
+          </Link>
+        )}
+        {/*/moved*/}
+
+        <ThemeTooltip id="logo" effect="solid" place="bottom">
+          <FormattedMessage id="logo29" defaultMessage="Go Home" />
+        </ThemeTooltip>
       </Fragment>
     );
   }
