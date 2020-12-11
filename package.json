@@ -27,7 +27,7 @@
     "test": "",
     "eslint": "eslint --fix --cache ./shared --ext js",
     "prettier": "prettier --ignore-path .gitignore \"**/*.+(js|json|ts|tsx)\" --write",
-    "start": "npm run dev",
+    "start": "cross-env USE_JSON_CONFIG=true babel-node --extensions .ts,.js --config-file=./babel.bot.config.js --max-old-space-size=2048 ./src/bot",
     "dev": "npm run dev:testnet",
     "dev-widget": "npm run dev:testnet-widget",
     "prod": "npm run dev:mainnet",
