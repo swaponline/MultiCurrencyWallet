@@ -3,7 +3,7 @@
 .idea
 .DS_Store
 .eslintcache
-/src/back/nextcoin/package-lock.json
+*-lock.*
 
 # node
 
