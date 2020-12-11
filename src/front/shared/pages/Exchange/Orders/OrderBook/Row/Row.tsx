@@ -334,34 +334,16 @@ export default class Row extends Component {
           />
         </td>
         <td>
-          <span styleName="rowBindingText">
-            <FormattedMessage
-              id="OrderBookRowSells"
-              defaultMessage="sells"
-            />
-          </span>
           <span styleName='rowAmount'>
             {`${this.getDecimals(sellAmountOut, sellCurrencyOut)} ${sellCurrencyOut}`}
           </span>
         </td>
         <td>
-          <span styleName="rowBindingText">
-            <FormattedMessage
-              id="OrderBookRowFor"
-              defaultMessage="for"
-            />
-          </span>
           <span styleName='rowAmount'>
             {`${this.getDecimals(getAmountOut, getCurrencyOut)} ${getCurrencyOut}`}
           </span>
         </td>
         <td>
-          <span styleName="rowBindingText">
-            <FormattedMessage
-              id="OrderBookRowAtPrice"
-              defaultMessage="at price"
-            />
-          </span>
           <span styleName='rowAmount'>
             {`${this.getDecimals(priceOut, getCurrencyOut)} ${getCurrencyOut}/${sellCurrencyOut}`}
           </span>

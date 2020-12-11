@@ -13,20 +13,16 @@ $walletPaddingTop: 41px;
     top: 0;
     @include ff-bold;
     width: 100%;
-    border-bottom: 0.5px solid rgba(#000, 0.03);
     border-radius: $borderRadius $borderRadius 0 0;
-    z-index: 100;
+    border-bottom: 1px soild #8882;
+    z-index: 1;
   }
 
   tbody {
     border-radius: 0 0 $borderRadius $borderRadius;
 
-    tr {
-      border-top: 1px solid #f5f5f5;
-
-      &:first-child {
-        border-top: 0;
-      }
+    tr:not(:first-child) {
+      border-top: 1px solid #8882;
     }
   }
 
@@ -42,7 +38,6 @@ $walletPaddingTop: 41px;
 
     &:last-child {
       padding-right: 0;
-      // right-align buttons
       display: flex;
       justify-content: flex-end;
     }

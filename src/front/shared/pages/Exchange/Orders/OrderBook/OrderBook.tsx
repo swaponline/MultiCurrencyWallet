@@ -182,9 +182,9 @@ export default class OrderBook extends Component {
 
     const titles = [
       ' ',
-      <FormattedMessage id="orders102" defaultMessage="AMOUNT" />,
-      <FormattedMessage id="orders104" defaultMessage="PRICE" />,
-      <FormattedMessage id="orders105" defaultMessage="TOTAL" />,
+      <FormattedMessage id="orders102" defaultMessage="Sells" />,
+      <FormattedMessage id="orders104" defaultMessage="For" />,
+      <FormattedMessage id="orders105" defaultMessage="At price" />,
       ' ',
     ]
 

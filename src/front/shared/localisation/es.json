@@ -2166,27 +2166,6 @@
     ]
   },
   {
-    "id": "OrderBookRowSells",
-    "message": "vende",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "OrderBookRowFor",
-    "message": "para",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "OrderBookRowAtPrice",
-    "message": "al precio",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
     "id": "CurrencyWallet141",
     "message": "{fullName}({currency}) Billetera Web con Atomic Swap."
   },

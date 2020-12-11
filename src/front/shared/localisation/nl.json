@@ -2164,27 +2164,6 @@
     ]
   },
   {
-    "id": "OrderBookRowSells",
-    "message": "verkoopt",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "OrderBookRowFor",
-    "message": "voor",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "OrderBookRowAtPrice",
-    "message": "prijs",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
     "id": "CurrencyWallet141",
     "message": "{fullName}({currency}) Web Wallet with Atomic Swap."
   },
