@@ -106,6 +106,10 @@ export default (app, { id }, callback) => {
         console.log(new Date().toISOString(), `swap finished! remove ${swap.id}`)
         history.removeInProgress(swap.id)
         history.saveFinished(swap.id)
+        // check - can orders be refilled
+        if (checkSwapsCountLimit()) {
+          // fill order book
+        }
         //@ts-ignore
         return clearInterval(update)
       }
