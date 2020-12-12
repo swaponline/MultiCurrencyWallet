@@ -1,6 +1,9 @@
 const getTopLocation = (): any => {
   try {
-    return window.top.location
+    const topLocation: any = window.top.location
+    const tryGetHost: any = topLocation.host
+    const tryGetHostname: any = topLocation.hostname
+    return topLocation
   } catch (e) {
     return window.location
   }
