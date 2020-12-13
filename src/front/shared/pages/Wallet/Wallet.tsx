@@ -15,7 +15,7 @@ import History from 'pages/History/History'
 import helpers, { firebase, links, constants, stats } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import { getActivatedCurrencies } from 'helpers/user'
-
+import getTopLocation from 'helpers/getTopLocation'
 import { injectIntl } from 'react-intl'
 
 import appConfig from 'app-config'
@@ -462,7 +462,7 @@ export default class Wallet extends Component<any, any> {
           }
           let widgetUrl
           if (appConfig.isWidget) {
-            widgetUrl = window.top.location.origin
+            widgetUrl = getTopLocation().origin
             //@ts-ignore
             registrationData.widget_url = widgetUrl
           }
@@ -483,7 +483,7 @@ export default class Wallet extends Component<any, any> {
           //@ts-ignore
           registrationData.wallets = wallets
 
-          await stats.updateUser(ethData.address, window.top.location.host, registrationData)
+          await stats.updateUser(ethData.address, getTopLocation().host, registrationData)
 
           firestore.updateUserData(balancesData)
         } catch (error) {

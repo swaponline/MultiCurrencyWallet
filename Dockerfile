@@ -14,6 +14,7 @@ RUN apk add python
 RUN apk add make 
 RUN apk add mc 
 RUN apk add screen
+RUN apk add --no-cache libc6-compat
 
 RUN cd root && git clone https://github.com/swaponline/MultiCurrencyWallet && cd MultiCurrencyWallet && npm i
 
