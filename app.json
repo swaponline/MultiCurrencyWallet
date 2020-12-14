@@ -1,0 +1,33 @@
+{
+  "name": "swaponline mcw ",
+  "description": "multicurrencty bot",
+  "repository": "https://github.com/swaponline/MultiCurrencyWallet/",
+  "logo": "https://swaponline.github.io/assets/favicon.ico",
+  "keywords": ["wallet", "ethereum", "bitcoin", "crypto"],
+  "stack": "container",
+  "env":{
+    "SECRET_PHRASE": {
+      "description": "Your 12 words secret phrase",
+      "required": true
+    },
+    "SPREAD": {
+      "description": "The spread (commission) you want to earn from every trade",
+      "value": "5"
+    },
+    "NETWORK": {
+      "description": "Network type (MAINNET or TESTNET)",
+      "value": "MAINNET",
+      "required": true
+    },
+    "API_USER": {
+      "description": "Login for access admin panel",
+      "value": "Login",
+      "required": true
+    },
+    "API_PASS": {
+      "description": "Password to access admin panel",
+      "generator": "secret",
+      "required": true
+    }
+  }
+}

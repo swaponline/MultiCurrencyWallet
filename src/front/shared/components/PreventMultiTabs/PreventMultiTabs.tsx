@@ -25,7 +25,6 @@ export default class PreventMultiTabs extends Component<any, any> {
   }
 
   handleSwitchClick = () => {
-    //@ts-ignore
     feedback.app.otherTabsClosed()
     const { onSwitchTab } = this.props
 

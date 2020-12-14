@@ -1,4 +1,5 @@
 import axios from 'axios'
+import getTopLocation from 'helpers/getTopLocation'
 
 
 const isFeedbackEnabled = true
@@ -9,7 +10,7 @@ const sendMessage = ({ appPart, eventName, details }) => {
     return
   }
 
-  const host = window.top.location.host || window.location.hostname || document.location.host
+  const host = getTopLocation().host || window.location.hostname || document.location.host
 
   const prefixMark = eventName === 'failed' ? '🛑 ' : ''
   const textToSend = `${prefixMark} [${host}] ${appPart} - ${eventName}${details ? ` {${details}}` : ``} |`

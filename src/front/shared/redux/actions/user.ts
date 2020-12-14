@@ -246,7 +246,7 @@ const customRate = (cur) => {
   return dataobj ? (wTokens[dataobj] || { customEcxchangeRate: null }).customEcxchangeRate : null
 }
 
-const getExchangeRate = (sellCurrency, buyCurrency) => {
+const getExchangeRate = (sellCurrency, buyCurrency): Promise<number> => {
   const sellDataRate = customRate(sellCurrency)
   const buyDataRate = customRate(buyCurrency)
 
