@@ -1,15 +1,12 @@
 .logoWrapper {
-  max-width: 160px;
-  max-height: 70px;
-
-  @media (max-width: 640px) {
-    max-height: 40px;
-  }
-
   img {
     display: block;
-    //height: 100%;
-    object-fit: contain;
+    max-width: 160px;
+    max-height: 70px;
     outline: none;
+
+    @media (max-width: 640px) {
+      max-height: 40px;
+    }
   }
 }

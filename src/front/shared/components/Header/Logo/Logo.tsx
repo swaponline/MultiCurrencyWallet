@@ -10,104 +10,72 @@ import styles from "./Logo.scss";
 import { FormattedMessage, injectIntl } from "react-intl";
 import { localisedUrl } from "helpers/locale";
 import ThemeTooltip from "../../ui/Tooltip/ThemeTooltip";
+import config from 'app-config'
 
 import logoBlack from "shared/images/logo/logo-black.svg"
 import logoColored from "shared/images/logo/logo-colored.svg"
 
 
-const isDark = localStorage.getItem(constants.localStorage.isDark)
+/* debug */
 
+//window.logoUrl = 'https://wallet.wpmix.net/wp-content/uploads/2020/07/yourlogohere.png'
+//window.darkLogoUrl = ...
+//window.logoUrl = "#"
+//window.LOGO_REDIRECT_LINK = 'https://www.google.com/'
+
+/* debug end */
+
+console.log(config)
+const isDark = localStorage.getItem(constants.localStorage.isDark)
+const isMainnet = process.env.MAINNET
 
 @withRouter
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })
-export default class Logo extends Component<any, any> {
+export default class Logo extends Component<any, {}> {
 
   render() {
     const {
       intl: { locale },
     } = this.props;
 
-    const isOurDomain = [
-      "localhost",
-      "swaponline.github.io",
-      "swaponline.io"
-    ].includes(window.location.hostname)
-
     const isCustomLogo = window.logoUrl !== '#'
+    const customLogoUrl = isDark ?
+      window.darkLogoUrl || window.logoUrl
+      :
+      window.logoUrl
 
-    const isColored = true // todo
-
-    const imgSrc = isColored ? logoColored : logoBlack
-    const { host, href } = window.location
-
-
-    const onLogoClickLink = (window && window.LOGO_REDIRECT_LINK) ? window.LOGO_REDIRECT_LINK : localisedUrl(locale, links.home)
-    const hasOwnLogoLink = (window && window.LOGO_REDIRECT_LINK)
-
-
-    //const isCustomLogo = /*test*/ false || window.logoUrl !== "#"
     const isCustomLogoLink = window.LOGO_REDIRECT_LINK as boolean
-    const customLogoSrc = /*test*/ 'https://wallet.wpmix.net/wp-content/uploads/2020/07/yourlogohere.png' || (isDark ? window.darkLogoUrl : window.logoUrl)
+    const customLogoLink = window.LOGO_REDIRECT_LINK
 
-    //const onLogoClickLink = isCustomLogoLink
-      ? window.LOGO_REDIRECT_LINK
-      : localisedUrl(locale, links.home);
+    const imgSrc = isCustomLogo ?
+      customLogoUrl
+      :
+      isMainnet ? logoColored : logoBlack
+
+    const imgAlt = window.location.hostname
+
+    const goToUrl = isCustomLogoLink ?
+      customLogoLink
+      :
+      localisedUrl(locale, links.home);
 
     return (
       <div styleName="logoWrapper">
-        {isOurDomain
-          ?
-          <Fragment>
-            {hasOwnLogoLink ? (
-              <a
-                href={onLogoClickLink}
-                //styleName="logo"
-                data-tip
-                data-for="logo"
-              >
-                <img
-                  src={imgSrc}
-                  alt={host}
-                />
-              </a>
-              ) : (
-              <Link
-                to={onLogoClickLink}
-                //styleName="logo"
-                data-tip
-                data-for="logo"
-              >
-                <img
-                  src={imgSrc}
-                  alt={host}
-                />
-              </Link>
-            )}
-          </Fragment>
-          :
-          <div>
-            {isCustomLogo && (
-              <img src={window.logoUrl} alt="Wallet" />
-            )}
-          </div>
-        }
-
-        {/*moved*/}
-        {isCustomLogoLink ? (
-          <a href={onLogoClickLink}>
-            <img src={customLogoSrc} />
+        {isCustomLogoLink ?
+          <a href={goToUrl}>
+            <img src={imgSrc} alt={imgAlt} />
           </a>
-        ) : (
-          <Link to={onLogoClickLink}>
-            <img src={customLogoSrc} />
-          </Link>
-        )}
-        {/*/moved*/}
-
-        <ThemeTooltip id="logo" effect="solid" place="bottom">
-          <FormattedMessage id="logo29" defaultMessage="Go Home" />
-        </ThemeTooltip>
+          :
+          <Fragment>
+            <Link to={goToUrl} data-tip data-for="logo">
+              <img src={imgSrc} alt={imgAlt} />
+            </Link>
+            <ThemeTooltip id="logo" effect="solid" place="bottom">
+              <FormattedMessage id="logo29" defaultMessage="Go Home" />
+            </ThemeTooltip>
+          </Fragment>
+        }
       </div>
     );
   }
