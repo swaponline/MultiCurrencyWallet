@@ -1,31 +1,30 @@
-import React, { Component, Fragment } from "react";
-import PropTypes from "prop-types";
+import React, { Component, Fragment } from 'react'
+import { FormattedMessage, injectIntl } from 'react-intl'
 
-import { Link, withRouter } from "react-router-dom";
-import { links, constants } from "helpers";
+import { Link, withRouter } from 'react-router-dom'
+import { links, constants } from 'helpers'
 
-import CSSModules from "react-css-modules";
-import styles from "./Logo.scss";
+import CSSModules from 'react-css-modules'
+import styles from './Logo.scss'
 
-import { FormattedMessage, injectIntl } from "react-intl";
-import { localisedUrl } from "helpers/locale";
-import ThemeTooltip from "../../ui/Tooltip/ThemeTooltip";
-import config from 'app-config'
+import { localisedUrl } from 'helpers/locale'
+import ThemeTooltip from '../../ui/Tooltip/ThemeTooltip'
 
-import logoBlack from "shared/images/logo/logo-black.svg"
-import logoColored from "shared/images/logo/logo-colored.svg"
+import logoBlack from 'shared/images/logo/logo-black.svg'
+import logoColored from 'shared/images/logo/logo-colored.svg'
 
 
-/* debug */
-
+/* uncomment to debug */
 //window.logoUrl = 'https://wallet.wpmix.net/wp-content/uploads/2020/07/yourlogohere.png'
+//window.logoUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Samsung_Logo.svg/640px-Samsung_Logo.svg.png'
+//window.logoUrl = 'https://www.laocommerce.com/wp-content/uploads/2020/05/logo.png'
+//window.logoUrl = 'https://www.swappeers.com/wp-content/uploads/2020/10/sp-1.png'
+//window.logoUrl = 'https://www.business.bet/images/bb.svg'
 //window.darkLogoUrl = ...
 //window.logoUrl = "#"
 //window.LOGO_REDIRECT_LINK = 'https://www.google.com/'
 
-/* debug end */
 
-console.log(config)
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 const isMainnet = process.env.MAINNET
 

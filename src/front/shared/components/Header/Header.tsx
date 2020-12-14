@@ -36,9 +36,12 @@ import feedback from 'shared/helpers/feedback'
 import wpLogoutModal from 'helpers/wpLogoutModal'
 
 
+/* uncomment to debug */
+//window.isUserRegisteredAndLoggedIn = true
+
+
 const isWidgetBuild = config && config.isWidget
 const isDark = localStorage.getItem(constants.localStorage.isDark)
-
 
 @injectIntl
 @withRouter
@@ -435,7 +438,7 @@ export default class Header extends Component<any, any> {
 
     const isExchange = pathname.includes(exchange);
 
-    const isLogoutPossible = /*test*/true || window.isUserRegisteredAndLoggedIn
+    const isLogoutPossible = window.isUserRegisteredAndLoggedIn
 
     const logoRenderer = (
       <div styleName="flexebleHeader">
