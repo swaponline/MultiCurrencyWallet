@@ -23,30 +23,6 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 @CSSModules(styles, { allowMultiple: true })
 export default class Logo extends Component<any, any> {
 
-
-/*
-
-import base from './base.svg'
-import baseColored from './baseColored.svg'
-
-import swapOnline from './swapOnline.svg'
-import swapOnlineColored from './swapOnlineColored.svg'
-
-
-export default {
-  colored: {
-    base: baseColored,
-    localhost: base,
-    'swap.online': swapOnlineColored,
-  },
-  common: {
-    base,
-    'swap.online': swapOnline,
-  },
-}
-
-*/
-
   render() {
     const {
       intl: { locale },
@@ -60,22 +36,15 @@ export default {
 
     const isCustomLogo = window.logoUrl !== '#'
 
-    const withLink = true // todo
     const isColored = true // todo
 
-    const srcFiles = isColored ? logoColored : logoBlack
+    const imgSrc = isColored ? logoColored : logoBlack
     const { host, href } = window.location
 
-    const file = Object.keys(srcFiles).find(el => window.location.href.includes(el)) || "base"
 
     const onLogoClickLink = (window && window.LOGO_REDIRECT_LINK) ? window.LOGO_REDIRECT_LINK : localisedUrl(locale, links.home)
     const hasOwnLogoLink = (window && window.LOGO_REDIRECT_LINK)
 
-    const imgNode = React.createElement("img", {
-      styleName: !withLink && "logo",
-      src: srcFiles[file],
-      alt: `${host}`
-    });
 
     //const isCustomLogo = /*test*/ false || window.logoUrl !== "#"
     const isCustomLogoLink = window.LOGO_REDIRECT_LINK as boolean
@@ -86,34 +55,40 @@ export default {
       : localisedUrl(locale, links.home);
 
     return (
-      <Fragment>
+      <div styleName="logoWrapper">
         {isOurDomain
           ?
           <Fragment>
             {hasOwnLogoLink ? (
               <a
                 href={onLogoClickLink}
-                styleName="logo"
+                //styleName="logo"
                 data-tip
                 data-for="logo"
               >
-                {imgNode}
+                <img
+                  src={imgSrc}
+                  alt={host}
+                />
               </a>
               ) : (
               <Link
-                styleName="logo"
+                to={onLogoClickLink}
+                //styleName="logo"
                 data-tip
                 data-for="logo"
-                to={onLogoClickLink}
               >
-                {imgNode}
+                <img
+                  src={imgSrc}
+                  alt={host}
+                />
               </Link>
             )}
           </Fragment>
           :
           <div>
             {isCustomLogo && (
-              <img styleName="otherLogoBrand" className="site-logo" src={window.logoUrl} alt="Wallet" />
+              <img src={window.logoUrl} alt="Wallet" />
             )}
           </div>
         }
@@ -121,11 +96,11 @@ export default {
         {/*moved*/}
         {isCustomLogoLink ? (
           <a href={onLogoClickLink}>
-            <img styleName="customLogo" src={customLogoSrc} />
+            <img src={customLogoSrc} />
           </a>
         ) : (
           <Link to={onLogoClickLink}>
-            <img styleName="customLogo" src={customLogoSrc} />
+            <img src={customLogoSrc} />
           </Link>
         )}
         {/*/moved*/}
@@ -133,7 +108,7 @@ export default {
         <ThemeTooltip id="logo" effect="solid" place="bottom">
           <FormattedMessage id="logo29" defaultMessage="Go Home" />
         </ThemeTooltip>
-      </Fragment>
+      </div>
     );
   }
 }

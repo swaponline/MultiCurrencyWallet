@@ -1,30 +1,15 @@
-.logo {
-  display: block;
-  width: 32px;
-  height: 30px;
-  
+.logoWrapper {
+  max-width: 160px;
+  max-height: 70px;
+
+  @media (max-width: 640px) {
+    max-height: 40px;
+  }
 
   img {
     display: block;
-    will-change: filter;
-    transition: filter 0.1s ease;
+    //height: 100%;
+    object-fit: contain;
+    outline: none;
   }
-}
-
-.whiteFill {
-  img {
-    filter: brightness(0) invert(1);
-  }
-}
-
-.otherLogoBrand {
-  outline: none;
-}
-
-.customLogo {
-  display: block;
-  height: 100%;
-  object-fit: contain;
-  max-width: 160px;
-  max-height: 70px;
 }
