@@ -17,6 +17,8 @@ import Button from 'components/controls/Button/Button'
 import Input from 'components/forms/Input/Input'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 
+import getTopLocation from 'helpers/getTopLocation'
+
 
 const title = defineMessages({
   signUpModal: {
@@ -89,7 +91,7 @@ export default class SignUpModal extends React.Component<any, any> {
       ghostAddress,
       nextAddress,
       Referrer: refEthAddress,
-      registrationDomain: window.top.location.host,
+      registrationDomain: getTopLocation().host,
       userAgentRegistration: navigator.userAgent,
     }
     if (whatToSubmit === 'isSubmitedPush' || !isSupportedPush) {

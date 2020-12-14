@@ -16,7 +16,7 @@ import { firebase, constants, stats } from 'helpers'
 import firestore from 'helpers/firebase/firestore'
 import ethToken from 'helpers/ethToken'
 import feedback from 'shared/helpers/feedback'
-
+import getTopLocation from 'helpers/getTopLocation'
 import Explanation from '../Explanation'
 import icons from '../images'
 import Cupture, {
@@ -101,7 +101,7 @@ const SecondStep = (props) => {
         const ipInfo = await firebase.getIPInfo()
         const data = {
           ...ipInfo,
-          registrationDomain: window.top.location.host,
+          registrationDomain: getTopLocation().host,
           userAgentRegistration: navigator.userAgent,
         }
         await firestore.addUser(data)
