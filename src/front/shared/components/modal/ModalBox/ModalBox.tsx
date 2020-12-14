@@ -9,7 +9,6 @@ import cssModules from 'react-css-modules'
 import styles from './ModalBox.scss'
 
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
-import Logo from 'components/Logo/Logo'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
 
