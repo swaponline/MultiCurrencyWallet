@@ -1,4 +1,4 @@
-# Onboarding plan
+# Onboarding plan for developer
 
 ## Dive as a user
 - Install and run the service locally on testnet using [`/docs/INSTALLATION.md`](/docs/INSTALLATION.md)
