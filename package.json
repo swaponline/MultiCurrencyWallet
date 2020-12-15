@@ -239,7 +239,7 @@
     "history": "^4.9.0",
     "human-standard-token-abi": "^2.0.0",
     "is-local-ip": "^1.1.0",
-    "jdenticon": "^3.0.1",
+    "jdenticon": "^3.1.0",
     "json-stringify-safe": "^5.0.1",
     "libp2p": "^0.29.4",
     "libp2p-bootstrap": "^0.12.1",
