@@ -1,110 +1,116 @@
 # Terms
 
-The list of terms is needed to synchronize developer concepts.
-Choose short terms preferably.
+The list of terms is needed to synchronize developer concepts
+
+- сhoose one best option for each term -> make a header -> use in links
+- use short terms
+- don't use deprecated variants
 
 
 ## Coin
-
 ...
 
+- examples: `Bitcoin`, `Ethereum`, `Tether`
 
-## Ticker (coin ticker)
 
-...
+## Ticker
+Short character set for coin (upper case)
 
-Examples: `BTC`, `ETH`
+- synonims: `coin ticker`
+- examples: `BTC`, `ETH`, `USDT`
 
 
 ## 12-word seed
-
 ...
 
-Examples of using: `Restore from 12-word seed`
-Standart: [BIP39](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki)
+- usage example: `Restore wallet from 12-word seed`
+- example: 
+- standart: [BIP39](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki)
 
 
 ## Address
-
 ...
 
 
 ## Wallet
-
 ...
 
 
 ## Room
-
 Messaging environment
 
 
 ## Peer
-
 Room participant, can communicate with other peers using messages
 
-*Examples of using: `peer.id`*
+- example: `peer.id = ...`
 
 
-## Message (room message)
-
+## Message
 ...
 
+- synonyms: `room message`
+- example: ...
 
-## Maker (offer maker)
-*(deprecated: `owner`)*
 
+## Maker
 The peer who created the offer
 
+- synonyms: `offer maker`
+- deprecated: `owner`
 
-## Taker (offer taker)
-*(deprecated: `participant`)*
 
+## Taker
 The peer who accepted the offer (initiated the swap)
 
+- synonyms: `offer taker`
+- deprecated: `participant`
 
-## Marketmaker (marketmaker bot / bot)
 
+## Marketmaker
 ...
+
+- synonyms: `marketmaker bot` / `bot`
 
 
 ## Offer
-*(deprecated: `order`)*
 ...
+
+- deprecated: `order`
 
 
 ## Offers
-*(deprecated: `orderbook`)*
+...
+
+- deprecated: `orderbook`
 
 
 ## Swap
-
 Сoin exchange process
 
 
 ### Partial swap
-
 ...
 
-*Examples of using: `allowPartial`*
+- example: `allowPartialSwap = true`
 
 
-## Flow (swap flow)
-
+## Flow
 Swap steps sequence
+
+- synonyms: `swap flow`
+- example: `GHOST2ETH`
 
 
 ## Fee
-*(deprecated: `commission`)*
-
 ...
+
+- deprecated: `commission`
 
 
 ### Service fee
-
 ...
 
 
 ### Miner fee
-
 ...
