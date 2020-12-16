@@ -7901,14 +7901,14 @@
   },
   {
     "id": "FeeInfoBlockTotalFee",
-    "message": "Total fee you pay:",
+    "message": "Total fees you pay:",
     "files": [
       "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockMinerFee",
-    "message": "Miner Fee:",
+    "message": "Miner fee:",
     "files": [
       "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
     ]
@@ -7922,7 +7922,7 @@
   },
   {
     "id": "FeeInfoBlockServiceFee",
-    "message": "Service Fee:",
+    "message": "Service fee:",
     "files": [
       "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
     ]

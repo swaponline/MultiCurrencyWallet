@@ -41,6 +41,8 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
     feeCurrentCurrency,
   } = props
 
+  const ticker = isEthToken ? currency : dataCurrency // what's the difference?
+
   const linkToTxSizeInfo = (
     <a
       href="https://en.bitcoin.it/wiki/Maximum_transaction_rate#:~:text=Each%20transaction%20input%20requires%20at,the%20minimum-sized%20Bitcoin%20transaction"
@@ -52,7 +54,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
 
   const transactionSize = (
     <>
-      {feeCurrentCurrency} sat/byte * {txSize} bytes {linkToTxSizeInfo} ={' '}
+      {feeCurrentCurrency}&nbsp;sat/byte * {txSize}&nbsp;bytes&nbsp;{linkToTxSizeInfo} ={' '}
     </>
   )
 
@@ -60,15 +62,16 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
     <section styleName='feeInfoBlock'>
       <div styleName='feeRow'>
         <span styleName='feeRowTitle'>
-          <FormattedMessage id="FeeInfoBlockMinerFee" defaultMessage="Miner Fee:" />
+          <FormattedMessage id="FeeInfoBlockMinerFee" defaultMessage="Miner fee:" />
         </span>
         <div className="feeRowInfo">
           {isLoading
             ? <div styleName='paleLoader'><InlineLoader /></div>
             : <span styleName='fee'>
                 {hasTxSize && feeCurrentCurrency > 0 ? transactionSize : null}
-                {minerFee} {dataCurrency}&#32; {/* space */}
-                (~${new BigNumber(minerFee * exCurrencyRate).dp(2, BigNumber.ROUND_UP).toNumber()})
+                {minerFee}&nbsp;{ticker}
+                {' '}
+                (~${new BigNumber(minerFee * exCurrencyRate).toFixed(2)})
               </span>
           }
           {' '}{/* indent */}
@@ -86,12 +89,16 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
       {hasServiceFee && (
           <div styleName='feeRow'>
             <span styleName='feeRowTitle'>
-              <FormattedMessage id="FeeInfoBlockServiceFee" defaultMessage="Service Fee:" />
+              <FormattedMessage id="FeeInfoBlockServiceFee" defaultMessage="Service fee:" />
             </span>
             <div className="feeRowInfo">
               {isLoading
                 ? <div styleName='paleLoader'><InlineLoader /></div>
-                : <span styleName='fee'>{serviceFee} {isEthToken ? currency : dataCurrency}</span>
+                : <span styleName='fee'>
+                    {serviceFee}&nbsp;{ticker}
+                    {' '}
+                    (~${new BigNumber(serviceFee * exCurrencyRate).toFixed(2)})
+                  </span>
               }
             </div>
           </div>
@@ -101,13 +108,15 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
       {!isEthToken && (
         <div styleName='feeRow'>
           <span styleName='feeRowTitle'>
-            <FormattedMessage id="FeeInfoBlockTotalFee" defaultMessage="Total fee you pay:" />
+            <FormattedMessage id="FeeInfoBlockTotalFee" defaultMessage="Total fees you pay:" />
           </span>
           <div className="feeRowInfo">
             {isLoading 
               ? <div styleName='paleLoader'><InlineLoader /></div>
-              : <span styleName='fee'>{totalFee} {dataCurrency}&#32; {/* space */}
-                  (~${new BigNumber(totalFee * exCurrencyRate).dp(2, BigNumber.ROUND_UP).toNumber()})
+              : <span styleName='fee'>
+                  {totalFee}&nbsp;{ticker}
+                  {' '}
+                  (~${new BigNumber(totalFee * exCurrencyRate).toFixed(2)})
                 </span>
             }
           </div>
