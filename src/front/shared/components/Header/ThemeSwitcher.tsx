@@ -59,9 +59,9 @@ const moon = (fill) => (
   </svg>
 )
 
-const SwitcherComponent = ({ onClick, withExit, themeSwapAnimation }) => (
+const SwitcherComponent = ({ onClick, themeSwapAnimation }) => (
   <div
-    styleName={`themeSwitcher ${withExit ? 'withExit' : ''} ${themeSwapAnimation ? 'themeAnimation' : ''}`}
+    styleName={`themeSwitcher ${themeSwapAnimation ? 'themeAnimation' : ''}`}
     onClick={onClick}
     data-tip data-for="themeAlt"
   >

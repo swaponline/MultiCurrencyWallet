@@ -16,6 +16,7 @@ import firestoreInstance from './firestore'
 import clientConfig from './config/firebase-client-config'
 
 import appConfig from 'app-config'
+import getTopLocation from 'helpers/getTopLocation'
 
 
 const isWidgetBuild = appConfig && appConfig.isWidget
@@ -85,7 +86,7 @@ const setUserLastOnline = async () => {
     lastOnline: moment().format('HH:mm:ss DD/MM/YYYY'),
     unixLastOnline: moment().unix(),
     lastUserAgent: navigator.userAgent,
-    lastOnlineDomain: window.top.location.host,
+    lastOnlineDomain: getTopLocation().host,
   }
 
   sendData(userID, 'usersCommon', data)
@@ -197,7 +198,7 @@ const submitUserDataWidget = async (dataBasePath = 'usersCommon') => {
       ghostAddress,
       nextAddress,
     }
-    const dataBasePathFormatted = `widgetUsers/${window.top.location.host}/${dataBasePath}`.replace(/[\.\#\$\[\]]/ig, '_') // eslint-disable-line
+    const dataBasePathFormatted = `widgetUsers/${getTopLocation().host}/${dataBasePath}`.replace(/[\.\#\$\[\]]/ig, '_') // eslint-disable-line
 
     if (userID) {
       const sendWidgetResultToDefaultDB = await sendData(userID, dataBasePathFormatted, data)
