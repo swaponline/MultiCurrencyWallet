@@ -13,8 +13,11 @@ export const getItems = orders => {
   return orders.items
 }
 
-export const removeMyOrders = (Orders) => {
+export const removeMyOrders = (Orders: any, allOrders: boolean = false) => {
   getItems(Orders)
-    .filter(o => o.isMy && !o.isRequested && !o.isProcessing)
+    .filter(o => o.isMy)
+    .filter((o) => {
+      return (allOrders && !o.isRequested) || (!o.isRequested && !o.isProcessing)
+    })
     .map(removeOrder(Orders))
 }
