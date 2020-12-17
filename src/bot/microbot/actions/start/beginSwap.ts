@@ -5,6 +5,7 @@ import { get, start } from '../../core/beginSwap'
 import history from '../../core/history'
 import handleError from '../../../app/actions/errors/handleError'
 import handleSwapError from '../../../app/actions/errors/handleSwapError'
+import fillOrderbook from '../book/fillOrderbook'
 import kraken from '../../../services/instances/kraken'
 import Pair from '../../Pair'
 import { debugFeedBack } from '../../../helpers/debugFeedBack'
@@ -109,6 +110,7 @@ export default (app, { id }, callback) => {
         // check - can orders be refilled
         if (checkSwapsCountLimit()) {
           // fill order book
+          fillOrderbook(app.services.wallet, app.services.orders)
         }
         //@ts-ignore
         return clearInterval(update)
