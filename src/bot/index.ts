@@ -79,26 +79,30 @@ if (process.env.USE_JSON_CONFIG === `true`) {
 
 
 const _loadDefaultEnv = () => {
-  process.env.SERVER_ID='2234567890'
-  process.env.ACCOUNT='2234567890'
-  process.env.NETWORK = process.env.NETWORK || 'testnet'
-  process.env.API_USER='user'
-  process.env.API_PASS='password'
-  process.env.PORT='3000'
-  process.env.IP='0.0.0.0'
-  process.env.MAX_PARALLEL_SWAPS='3'
-  process.env.WEB3_TESTNET_PROVIDER='https://rinkeby.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c'
-  process.env.WEB3_MAINNET_PROVIDER='https://mainnet.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c'
+  const defaultConfig = {
+    SERVER_ID: '2234567890',
+    ACCOUNT: '2234567890',
+    NETWORK: 'testnet',
+    API_USER: 'user',
+    API_PASS: 'password',
+    PORT: '3000',
+    IP: '0.0.0.0',
+    MAX_PARALLEL_SWAPS: '3',
+    WEB3_TESTNET_PROVIDER: 'https://rinkeby.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c',
+    WEB3_MAINNET_PROVIDER: 'https://mainnet.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c',
+  }
+  Object.keys(defaultConfig).forEach((key) => {
+    if (process.env[key] === undefined) {
+      process.env[key] = defaultConfig[key]
+    }
+  })
 }
-
-_loadDefaultEnv()
 
 if (process.env.TEST_STARTUP === `true`) {
   console.log(
     colorString('>>>> TEST STARTUP', COLORS.GREEN)
   )
-  /* Test env */
-  _loadDefaultEnv()
+
   process.env.SECRET_PHRASE='gospel total hundred major refuse when equal pilot goat soft recall abandon'
 
   setTimeout(() => {
@@ -117,6 +121,8 @@ if (process.env.TEST_STARTUP === `true`) {
     })
   }
 }
+
+_loadDefaultEnv()
 
 // Rewrite vars from .env with values from command line
 Object.keys(rewritedEnv).forEach((envKey) => {
