@@ -19,6 +19,7 @@ const getBtcWallet = (network, mnemonic, walletNumber = 0, path) => {
   mnemonic = convertMnemonicToValid(mnemonic)
   const seed = bip39.mnemonicToSeedSync(mnemonic)
   const root = bip32.fromSeed(seed, network)
+  console.log('>>>> getBtcWallet', path, (path) ? path : `m/44'/0'/0'/0/${walletNumber}`)
   const node = root.derivePath((path) ? path : `m/44'/0'/0'/0/${walletNumber}`)
 
   const account = bitcoin.payments.p2pkh({

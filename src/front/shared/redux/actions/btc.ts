@@ -22,6 +22,7 @@ import { default as bitcoinUtils } from '../../../../common/utils/coin/btc'
 
 const NETWORK = (process.env.MAINNET) ? `MAINNET` : `TESTNET`
 
+window.mnemonicUtils = mnemonicUtils
 
 const hasAdminFee = (config
   && config.opts
@@ -87,6 +88,7 @@ const getWalletByWords = (mnemonic: string, walletNumber: number = 0, path: stri
   return mnemonicUtils.getBtcWallet(btc.network, mnemonic, walletNumber, path)
 }
 
+window.getWalletByWords = getWalletByWords
 const auth = (privateKey) => {
   if (privateKey) {
     const hash = bitcoin.crypto.sha256(privateKey)

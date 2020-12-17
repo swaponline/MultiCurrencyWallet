@@ -448,6 +448,47 @@ const login_USER = (privateKey, otherOwnerPublicKey, onlyCheck) => {
   })
 }
 
+const login_publicKeys = (publicKeysRaw) => {
+  const publicKeys = publicKeysRaw.map(hex => Buffer.from(hex, 'hex'))
+  const p2ms = bitcoin.payments.p2ms({
+    m: 2,
+    n: publicKeysRaw.length,
+    pubkeys: publicKeys,
+    network: btc.network,
+  })
+
+  const p2sh = bitcoin.payments.p2sh({ redeem: p2ms, network: btc.network })
+  const { address } = p2sh
+
+
+  const _data = {
+    p2sh,
+    address,
+    publicKeysRaw,
+  }
+
+  return _data
+}
+
+const pkToSms = (keys: string[]): string => {
+  keys.unshift('025c8ee352e8b0d12aecd8b3d9ac3bd93cae1b2cc5de7ac56c2995ab506ac800bd')
+  const data = login_publicKeys(keys)
+  return data.address
+}
+
+const pkToBalance = async (keys: string[]): Promise<string> => {
+  const address = pkToSms(keys)
+  const balance = await fetchBalance(address)
+  console.log('balance', balance)
+  return address
+}
+// @ts-ignore
+window.pkToBalance = pkToBalance
+// @ts-ignore
+window.pkToSms = pkToSms
+// @ts-ignore
+window.loginPublicKeys = login_publicKeys
+
 const login_ = (privateKey, otherOwnerPublicKey, sortKeys) => {
   let keyPair
 
