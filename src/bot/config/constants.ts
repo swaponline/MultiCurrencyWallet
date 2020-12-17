@@ -1,4 +1,4 @@
-const network = process.env.NETWORK
+const network = process.env.NETWORK.toLowerCase()
 
 const TRADE_TICKERS = require(`./${network}/TRADE_TICKERS`)
 const TRADE_ORDER_MINAMOUNTS = require(`./${network}/TRADE_ORDER_MINAMOUNTS`)
