@@ -1,3 +1,5 @@
+# How to launch a marketmaker
+
 ```
 git clone ...
 npm i 
@@ -23,7 +25,7 @@ see ./tradeconfig.mainnet.json
 ./tradeconfig.testnet.json
 
 
-# ENV vvariables
+## ENV variables
 ```
-TELEGRAM_CHATID = 111 //id for notifications. 1. contact  @get_id_bot to get your id 2. say "hello" to this bot @swaponlinebot 
+TELEGRAM_CHATID = 111 //id for notifications. 1. contact @get_id_bot to get your id 2. say "hello" to this bot @swaponlinebot 
 ```
