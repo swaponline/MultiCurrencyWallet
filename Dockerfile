@@ -18,10 +18,13 @@ RUN apk add screen
 RUN apk add libc6-compat
 RUN apk add gcompat
 
-RUN cd root && git clone https://github.com/swaponline/MultiCurrencyWallet && cd MultiCurrencyWallet && npm i
+ADD https://api.github.com/repos/swaponline/MultiCurrencyWallet/git/refs/heads/master version.json
+RUN git clone -b master https://github.com/swaponline/MultiCurrencyWallet.git /root/MultiCurrencyWallet
 
 WORKDIR /root/MultiCurrencyWallet
 
+RUN npm i
+
 EXPOSE 80
 
-CMD    ["npm", "run", "marketmaker"]
+CMD    ["npm", "start"]
