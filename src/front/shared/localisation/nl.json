@@ -7944,6 +7944,13 @@
     ]
   },
   {
+    "id": "FeeInfoBlockServiceFeeConditions",
+    "message": "van het overgemaakte bedrag, maar niet minder dan",
+    "files": [
+      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+    ]
+  },
+  {
     "id": "localStorageBtnCopy",
     "message": "Kopiëren",
     "files": [

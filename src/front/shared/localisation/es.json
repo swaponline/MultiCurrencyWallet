@@ -7952,6 +7952,13 @@
     ]
   },
   {
+    "id": "FeeInfoBlockServiceFeeConditions",
+    "message": "del monto de la transferencia, pero no menos de",
+    "files": [
+      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+    ]
+  },
+  {
     "id": "localStorageBtnCopy",
     "message": "Copiar",
     "files": [

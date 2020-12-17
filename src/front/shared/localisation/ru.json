@@ -8000,6 +8000,13 @@
     ]
   },
   {
+    "id": "FeeInfoBlockServiceFeeConditions",
+    "message": "от отправляемого количества, но не менее",
+    "files": [
+      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+    ]
+  },
+  {
     "id": "localStorageBtnCopy",
     "message": "Копировать",
     "files": [

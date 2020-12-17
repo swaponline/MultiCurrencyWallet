@@ -7928,6 +7928,13 @@
     ]
   },
   {
+    "id": "FeeInfoBlockServiceFeeConditions",
+    "message": "of the transfer amount, but not less than",
+    "files": [
+      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+    ]
+  },
+  {
     "id": "localStorageBtnCopy",
     "message": "Copy",
     "files": [

@@ -101,7 +101,9 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
               <div styleName="serviceFeeConditions">
                 <span>{serviceFeePercent}%</span>
                 {' '}
-                <span>of the transfer amount, but not less than</span>
+                <span>
+                  <FormattedMessage id="FeeInfoBlockServiceFeeConditions" defaultMessage="of the transfer amount, but not less than" />
+                </span>
                 {' '}
                 <span>{serviceFeeMin}&nbsp;{serviceFeeTicker}</span>
               </div>
