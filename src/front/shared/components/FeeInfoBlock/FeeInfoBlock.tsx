@@ -45,7 +45,9 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
     feeCurrentCurrency,
   } = props
 
-  const ticker = isEthToken ? currency : dataCurrency // what's the difference?
+
+  const minerFeeTicker = dataCurrency
+  const serviceFeeTicker = currency
 
   const linkToTxSizeInfo = (
     <a
@@ -73,7 +75,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
             ? <div styleName='paleLoader'><InlineLoader /></div>
             : <span styleName='fee'>
                 {hasTxSize && feeCurrentCurrency > 0 ? transactionSize : null}
-                {minerFee}&nbsp;{ticker}
+                {minerFee}&nbsp;{minerFeeTicker}
                 {' '}
                 (~${new BigNumber(minerFee * exCurrencyRate).toFixed(2)})
               </span>
@@ -101,12 +103,12 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
                 {' '}
                 <span>of the transfer amount, but not less than</span>
                 {' '}
-                <span>{serviceFeeMin}&nbsp;{ticker}</span>
+                <span>{serviceFeeMin}&nbsp;{serviceFeeTicker}</span>
               </div>
               {isLoading
                 ? <div styleName='paleLoader'><InlineLoader /></div>
                 : <span styleName='fee'>
-                    {serviceFee}&nbsp;{ticker}
+                    {serviceFee}&nbsp;{serviceFeeTicker}
                     {' '}
                     (~${new BigNumber(serviceFee * exCurrencyRate).toFixed(2)})
                   </span>
@@ -122,10 +124,10 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
             <FormattedMessage id="FeeInfoBlockTotalFee" defaultMessage="Total fees you pay:" />
           </span>
           <div className="feeRowInfo">
-            {isLoading 
+            {isLoading
               ? <div styleName='paleLoader'><InlineLoader /></div>
               : <span styleName='fee'>
-                  {totalFee}&nbsp;{ticker}
+                  {totalFee}&nbsp;{minerFeeTicker}
                   {' '}
                   (~${new BigNumber(totalFee * exCurrencyRate).toFixed(2)})
                 </span>
