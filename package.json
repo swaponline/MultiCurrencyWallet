@@ -161,7 +161,7 @@
     "node-sessionstorage": "^1.0.0",
     "nodemon": "^2.0.5",
     "peer-id": "^0.14.2",
-    "pg": "^8.4.0",
+    "pg": "^8.5.1",
     "postcss-loader": "^3.0.0",
     "prettier": "^2.1.2",
     "progress-bar-webpack-plugin": "^2.1.0",
