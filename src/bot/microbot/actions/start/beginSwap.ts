@@ -84,7 +84,7 @@ export default (app, { id }, callback) => {
       if (step === 2) {
         // Second step - swap started - check limit for paraller swaps and remove orders if necesy
         if (!checkSwapsCountLimit()) {
-          removeMyOrders(app.services.orders)
+          app.services.orders.hideMyOrders()
         }
         if (pair.ticker === 'GHOST2BTC') {
           // set destination wallet
