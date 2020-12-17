@@ -24,4 +24,4 @@ WORKDIR /root/MultiCurrencyWallet
 
 EXPOSE 80
 
-CMD    ["npm", "run", "marketmaker"]
+CMD    ["npm", "start"]
