@@ -34,7 +34,7 @@
   background: $l-background-elements;
   border-radius: 4px;
   padding: 25px;
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 .yourAssets.dark {
@@ -144,7 +144,7 @@
   height: 44px;
   display: flex;
   justify-content: flex-end;
-  margin-top: 40px;
+  margin-top: 20px;
 
   .loaderHolder {
     float: left;
@@ -352,7 +352,7 @@
 
   .yourBalance,
   .yourAssets {
-    margin: 20px 0 5px;
+    margin: 0 0 5px;
   }
 
   .widgetBuild .yourBalanceBottom {

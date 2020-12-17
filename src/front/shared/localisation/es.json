@@ -145,7 +145,7 @@
     "id": "logo29",
     "message": "Ir a pagina principal",
     "files": [
-      "src/front/shared/components/Logo/LogoTooltip.tsx"
+      "src/front/shared/components/Header/Logo.tsx"
     ]
   },
   {

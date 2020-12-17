@@ -12,7 +12,6 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import Overlay from 'components/layout/Overlay/Overlay'
 import Center from 'components/layout/Center/Center'
-import Logo from 'components/Logo/Logo'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)

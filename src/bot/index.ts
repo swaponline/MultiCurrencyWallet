@@ -2,7 +2,6 @@ import * as fs from 'fs'
 import * as mnemonicUtils from 'common/utils/mnemonic'
 import * as configStorage from './config/storage'
 import { getNetworkType } from 'common/domain/network'
-import { calcPairPrice, getPriceByPair } from './app/middlewares/prices'
 import { FG_COLORS as COLORS, BG_COLORS , colorString } from 'common/utils/colorString'
 
 
@@ -10,6 +9,7 @@ console.log(colorString(`Loading...`,COLORS.GREEN))
 
 const rewriteEnvKeys = [
   `NETWORK`,
+  `PORT`,
   `API_USER`,
   `API_PASS`,
   `SECRET_PHRASE`,
@@ -20,6 +20,7 @@ const rewriteEnvKeys = [
 
 interface envKeys {
   NETWORK?: string,
+  PORT?: string,
   API_USER?: string,
   API_PASS?: string,
   SECRET_PHRASE?: string,
@@ -90,6 +91,8 @@ const _loadDefaultEnv = () => {
   process.env.WEB3_MAINNET_PROVIDER='https://mainnet.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c'
 }
 
+_loadDefaultEnv()
+
 if (process.env.TEST_STARTUP === `true`) {
   console.log(
     colorString('>>>> TEST STARTUP', COLORS.GREEN)
@@ -104,10 +107,7 @@ if (process.env.TEST_STARTUP === `true`) {
   }, 30*1000)
 } else {
   if (!fs.existsSync(__dirname + '/.env')) {
-    if (configStorage.hasTradeConfig()) {
-      // If use quick start with json, and .env not exists - use defaults
-      _loadDefaultEnv()
-    } else {
+    if (!configStorage.hasTradeConfig()) {
       console.log('Please, create ./src/bot/.env file unsing "./src/bot/.env.sample"')
       process.exit(0)
     }
@@ -118,7 +118,7 @@ if (process.env.TEST_STARTUP === `true`) {
   }
 }
 
-// Rewrite vars from .env with values from command lineHeight
+// Rewrite vars from .env with values from command line
 Object.keys(rewritedEnv).forEach((envKey) => {
   process.env[envKey] = rewritedEnv[envKey]
 })
