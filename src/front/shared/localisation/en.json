@@ -4862,10 +4862,7 @@
   },
   {
     "id": "descr282",
-    "message": "Show my keys",
-    "files": [
-      "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
-    ]
+    "message": "Show my keys"
   },
   {
     "id": "descr284",
@@ -5497,10 +5494,7 @@
   },
   {
     "id": "ShowMyMnemonic",
-    "message": "Please backup your wallet",
-    "files": [
-      "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
-    ]
+    "message": "Please backup your wallet"
   },
   {
     "id": "BtcMultisignConfirmTx_FromAddress",
@@ -7906,31 +7900,38 @@
     "message": "Admin Fee {currency}: {adminFee}"
   },
   {
-    "id": "WithdrowModalCommonFee",
-    "message": "Total fee you pay:",
+    "id": "FeeInfoBlockTotalFee",
+    "message": "Total fees you pay:",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
     ]
   },
   {
-    "id": "WithdrowModalMinerFee",
-    "message": "Miner Fee:",
+    "id": "FeeInfoBlockMinerFee",
+    "message": "Miner fee:",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
     ]
   },
   {
-    "id": "WithdrawModalMinerFeeDescription",
+    "id": "FeeInfoBlockMinerFeeTooltip",
     "message": "Amount of cryptocurrency paid to incentivize miners to confirm your transaction",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
     ]
   },
   {
-    "id": "WithdrowModalServiceFee",
-    "message": "Service Fee:",
+    "id": "FeeInfoBlockServiceFee",
+    "message": "Service fee:",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+    ]
+  },
+  {
+    "id": "FeeInfoBlockServiceFeeConditions",
+    "message": "of the transfer amount, but not less than",
+    "files": [
+      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
     ]
   },
   {
@@ -8240,13 +8241,6 @@
     ]
   },
   {
-    "id": "FAQServiceFeeDisabled",
-    "message": "Disabled",
-    "files": [
-      "src/front/shared/components/FAQ/FAQ.tsx"
-    ]
-  },
-  {
     "id": "NetworkStatusPeersOnlineMessage",
     "message": "Searching for Peers and Offers can take a couple of minutes. We do not store the offers on a centralized server. Instead, we use libp2p network by Protocol Labs that works like a Torrent network, which means that each user such as yourself is a peer in this network. If no offers are found within a couple of minutes, it means that there are no matching offers or a user who placed the offer is offline.",
     "files": [
@@ -8283,6 +8277,13 @@
     "message": "it may take a minute",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+    ]
+  },
+  {
+    "id": "FeeInfoBlockTxSize",
+    "message": "Transaction size:",
+    "files": [
+      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
     ]
   }
 ]

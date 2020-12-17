@@ -4862,10 +4862,7 @@
   },
   {
     "id": "descr282",
-    "message": "Muestra mis claves",
-    "files": [
-      "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
-    ]
+    "message": "Muestra mis claves"
   },
   {
     "id": "descr284",
@@ -5497,10 +5494,7 @@
   },
   {
     "id": "ShowMyMnemonic",
-    "message": "Haga una copia de seguridad de su billetera",
-    "files": [
-      "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
-    ]
+    "message": "Haga una copia de seguridad de su billetera"
   },
   {
     "id": "BtcMultisignConfirmTx_FromAddress",
@@ -7930,31 +7924,38 @@
     "message": "Gastos de gestión {currency}: {adminFee}"
   },
   {
-    "id": "WithdrowModalCommonFee",
+    "id": "FeeInfoBlockTotalFee",
     "message": "Tarifa total que paga:",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
     ]
   },
   {
-    "id": "WithdrowModalMinerFee",
+    "id": "FeeInfoBlockMinerFee",
     "message": "Tarifa de minero:",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
     ]
   },
   {
-    "id": "WithdrawModalMinerFeeDescription",
+    "id": "FeeInfoBlockMinerFeeTooltip",
     "message": "Cantidad de criptomoneda pagada para incentivar a los mineros a confirmar su transacción",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
     ]
   },
   {
-    "id": "WithdrowModalServiceFee",
+    "id": "FeeInfoBlockServiceFee",
     "message": "Tarifa de servicio:",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+    ]
+  },
+  {
+    "id": "FeeInfoBlockServiceFeeConditions",
+    "message": "del monto de la transferencia, pero no menos de",
+    "files": [
+      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
     ]
   },
   {
@@ -8264,13 +8265,6 @@
     ]
   },
   {
-    "id": "FAQServiceFeeDisabled",
-    "message": "Disabled",
-    "files": [
-      "src/front/shared/components/FAQ/FAQ.tsx"
-    ]
-  },
-  {
     "id": "NetworkStatusPeersOnlineMessage",
     "message": "La búsqueda de pares y ofertas puede tardar un par de minutos. No almacenamos las ofertas en un servidor centralizado. En su lugar, usamos la red libp2p de Protocol Labs que funciona como una red Torrent, lo que significa que cada usuario, como usted, es un par en esta red. Si no se encuentran ofertas en un par de minutos, significa que no hay ofertas coincidentes o que un usuario que realizó la oferta no está conectado.",
     "files": [
@@ -8307,6 +8301,13 @@
     "message": "puede tomar un minuto",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+    ]
+  },
+  {
+    "id": "FeeInfoBlockTxSize",
+    "message": "Tamaño de la transacción:",
+    "files": [
+      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
     ]
   }
 ]
