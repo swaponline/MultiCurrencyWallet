@@ -65,6 +65,12 @@ interface IWithdrawModalProps {
   portalUI?: any
 }
 
+interface IServiceFeeSetting {
+  address: string
+  fee: number
+  min: number
+}
+
 interface IWithdrawModalState {
   isShipped: boolean
   isEthToken: boolean
@@ -92,11 +98,8 @@ interface IWithdrawModalState {
   adminFeeSize: null | number
   txSize: null | number
   
-  usedAdminFee: {
-    address: string
-    fee: number
-    min: number
-  }
+  usedAdminFee: IServiceFeeSetting
+
   hiddenCoinsList: string[]
   enabledCurrencies: string[]
 
@@ -1073,6 +1076,8 @@ export default class WithdrawModal extends React.Component<any, any> {
                   : adminFeeSize
                   )
                 }
+                serviceFeePercent={usedAdminFee.fee}
+                serviceFeeMin={usedAdminFee.min}
                 totalFee={
                   amount > 0 && new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).isGreaterThan(adminFeeSize)
                   ? usedAdminFee // fee in precents (100 = 100%)

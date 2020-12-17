@@ -19,6 +19,8 @@ type FeeInfoBlockProps = {
   exCurrencyRate: number
   minerFee: number
   serviceFee: number
+  serviceFeePercent: number
+  serviceFeeMin: number
   totalFee: number
 
   txSize?: number
@@ -35,6 +37,8 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
     minerFee,
     hasServiceFee,
     serviceFee,
+    serviceFeePercent,
+    serviceFeeMin,
     totalFee,
     hasTxSize,
     txSize,
@@ -92,6 +96,13 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
               <FormattedMessage id="FeeInfoBlockServiceFee" defaultMessage="Service fee:" />
             </span>
             <div className="feeRowInfo">
+              <div styleName="serviceFeeConditions">
+                <span>{serviceFeePercent}%</span>
+                {' '}
+                <span>of the transfer amount, but not less than</span>
+                {' '}
+                <span>{serviceFeeMin}&nbsp;{ticker}</span>
+              </div>
               {isLoading
                 ? <div styleName='paleLoader'><InlineLoader /></div>
                 : <span styleName='fee'>
