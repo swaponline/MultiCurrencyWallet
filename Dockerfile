@@ -1,4 +1,4 @@
-FROM       node:12.20.0-alpine3.9
+FROM  node:12
 
 #docker run --rm -it $(docker build -q .) 
 #docker build --tag labot .
