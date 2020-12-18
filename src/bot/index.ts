@@ -20,6 +20,7 @@ const rewriteEnvKeys = [
   `USE_JSON`,
   `SPREAD`,
   `MAX_PARALLEL_SWAPS`,
+  `TELEGRAM_CHATID`,
 ]
 
 interface envKeys {
@@ -31,6 +32,7 @@ interface envKeys {
   USE_JSON?: string,
   SPREAD?: string,
   MAX_PARALLEL_SWAPS?: string,
+  TELEGRAM_CHATID?: string,
 }
 
 const rewritedEnv: envKeys = {}

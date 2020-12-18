@@ -28,6 +28,14 @@
       "description": "Password to access admin panel",
       "generator": "secret",
       "required": true
+    },
+    "TELEGRAM_CHATID": {
+      "description": "Telegram User ID for notifications",
+      "value": "0"
+    },
+    "MAX_PARALLEL_SWAPS": {
+      "description": "Max parallel swaps",
+      "value": "3"
     }
   }
 }
