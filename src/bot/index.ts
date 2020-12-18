@@ -4,6 +4,10 @@ import * as configStorage from './config/storage'
 import { getNetworkType } from 'common/domain/network'
 import { FG_COLORS as COLORS, BG_COLORS , colorString } from 'common/utils/colorString'
 
+import { feedbackToOwner } from './helpers/debugFeedBack'
+
+
+
 
 console.log(colorString(`Loading...`,COLORS.GREEN))
 
@@ -134,6 +138,9 @@ if (process.env.MAX_PARALLEL_SWAPS) {
     colorString(process.env.MAX_PARALLEL_SWAPS, COLORS.RED)
   )
 }
+
+
+feedbackToOwner(`Marketmaker started Network(${process.env.NETWORK})`)
 
 import _debug from 'debug'
 

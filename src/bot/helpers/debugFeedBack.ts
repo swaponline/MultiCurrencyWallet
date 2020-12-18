@@ -4,9 +4,14 @@ export const debugFeedBack = (message: string, toDev?: boolean): void => {
   const chatId: number = (process.env.TELEGRAM_CHATID)
     ? Number(process.env.TELEGRAM_CHATID)
     : 0
-  const infoURL: string = (chatId === 0)
-    ? 'https://noxon.wpmix.net/counter.php?toshendel=1&msg=' + encodeURIComponent(message) + ((toDev) ? '&toDev=1' : '')
-    : `https://noxon.wpmix.net/counter.php?toshendel=1&msg=${encodeURIComponent(message)}&tochatid=${chatId}`
+  const infoURL: string = (chatId === 0 || toDev)
+    ? 'https://noxon.wpmix.net/counter.php?msg=' + encodeURIComponent(message) + ((toDev) ? '&todevs=1' : '')
+    : `https://noxon.wpmix.net/counter.php?msg=${encodeURIComponent(message)}&tochatid=${chatId}`
 
-  request(infoURL).then( () => {})
+
+  request(infoURL).then( () => {} )
+}
+
+export const feedbackToOwner = (message: string): void => {
+  if (process.env.TELEGRAM_CHATID !== undefined) debugFeedBack(message)
 }
