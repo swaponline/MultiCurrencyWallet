@@ -176,6 +176,10 @@ export default class AddressSelect extends Component<any, any> {
         hasError,
         selectedType,
         customAddress: '',
+      }, () => {
+        if (newCurrency !== oldCurrency) {
+          this.handleOptionSelect({ value: selectedType })
+        }
       })
     }
   }
