@@ -6,3 +6,5 @@ docker run --shm-size 1G --rm -v /root/MultiCurrencyWallet/e2e:/app pp1
 ```
 
 в  /root/MultiCurrencyWallet/e2e/screenshots появятся скриншоты 
+
+![](https://screenshots.wpmix.net/ApplicationFrameHost_xoaEin8fasAlps7hRpXEmcXQmPOTAPbY.png)
