@@ -8,7 +8,10 @@ import handleSwapError from '../../../app/actions/errors/handleSwapError'
 import fillOrderbook from '../book/fillOrderbook'
 import kraken from '../../../services/instances/kraken'
 import Pair from '../../Pair'
-import { debugFeedBack } from '../../../helpers/debugFeedBack'
+import {
+  debugFeedBack,
+  feedbackToOwner
+} from '../../../helpers/debugFeedBack'
 import { canBeDeleted, needsRefund } from './swapStatus'
 import { getNoxonPrice } from '../../../app/middlewares/prices'
 
@@ -75,7 +78,7 @@ export default (app, { id }, callback) => {
 
       if (step >= 2) {
         const swapInfo = 'swap step '+step+' buy '+swap.buyCurrency+' '+swap.buyAmount.toString()+ ' sell '+swap.sellCurrency+' ' + swap.sellAmount.toString()
-        debugFeedBack(swapInfo)
+        feedbackToOwner(swapInfo)
 
       }
 
@@ -84,6 +87,7 @@ export default (app, { id }, callback) => {
       if (step === 2) {
         // Second step - swap started - check limit for paraller swaps and remove orders if necesy
         if (!checkSwapsCountLimit()) {
+          feedbackToOwner(`The limit of parallel swaps has been exceeded. Orders are hidden`)
           removeMyOrders(app.services.orders, true)
         }
         if (pair.ticker === 'GHOST2BTC') {
@@ -105,6 +109,7 @@ export default (app, { id }, callback) => {
 
       if (await canBeDeleted(swap)) {
         console.log(new Date().toISOString(), `swap finished! remove ${swap.id}`)
+        feedbackToOwner(`Swap ${swap.id} finished`)
         history.removeInProgress(swap.id)
         history.saveFinished(swap.id)
         // check - can orders be refilled
