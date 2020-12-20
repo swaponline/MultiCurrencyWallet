@@ -18,16 +18,16 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: npm install
-      uses: bahmutov/npm-install@v1
+    - name: yarn install
+      uses: borales/actions-yarn@v2.0.0
       with:
-       useLockFile: false
+          cmd: install # will run `yarn install` command
     - name: build mainnet
       run: |
-        npm run build:mainnet
+        yarn run build:mainnet
     - name: bot test
       run: |
-        npm run bot:test
+        yarn run bot:test
       env:
         CI: true
 
