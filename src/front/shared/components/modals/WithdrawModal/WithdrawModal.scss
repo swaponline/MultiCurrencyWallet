@@ -150,6 +150,24 @@
   justify-content: space-between;
 }
 
+.commentFormWrapper {
+  position: relative;
+  margin-bottom: 30px;
+  textarea {
+    width: 100%;
+    font-family: 'Roboto Mono', monospace;
+    outline: none;
+    padding: 0 16px;
+    margin-top: 10px;
+    height: 75px;
+    resize: vertical;
+  }
+  .group {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    height: auto;
+  }
+}
+
 .actionBtn {
   width: calc(50% - 5px);
   position: relative;
@@ -339,6 +357,7 @@
   }
 }
 
+
 @media all and (max-width: 480px) {
   .additionalСurrencies {
     right: 80px;
@@ -364,3 +383,4 @@
     }
   }
 }
+

@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import CSSModules from 'react-css-modules'
 import moment from 'moment-with-locales-es6'
 import styles from './Comment.scss'
@@ -8,18 +7,30 @@ import { FormattedMessage } from 'react-intl'
 import actions from 'redux/actions'
 
 
+interface IWithdrawModalProps {
+  commentKey?: any,
+  isOpen?: boolean,
+  label?: string,
+  date?: any,
+  canEdit?: boolean,
+  showComment?: boolean,
+  updateComment?: (text: string) => void,
+  onSubmit?: (text: string) => void
+}
+
+interface IWithdrawModalState {
+  comment?: null | string,
+  isOpen?: boolean
+}
+
+
 @CSSModules(styles, { allowMultiple: true })
 
 export default class CommentRow extends React.PureComponent<any, any> {
 
-  static propTypes = {
-    label: PropTypes.string,
-    commentKey: PropTypes.string.isRequired,
-    canEdit: PropTypes.bool,
-    date: PropTypes.number,
-    showComment: PropTypes.bool,
-    comment: PropTypes.string
-  }
+
+  props: IWithdrawModalProps
+  state: IWithdrawModalState
 
   commentTextarea: any
 
@@ -38,7 +49,8 @@ export default class CommentRow extends React.PureComponent<any, any> {
       e.preventDefault()
     }
     const {
-      commentKey
+      commentKey,
+      updateComment = false
     } = this.props
 
     const {
@@ -50,7 +62,17 @@ export default class CommentRow extends React.PureComponent<any, any> {
       key:commentKey,
       comment:comment
     })
-    //actions.comments.returnDefaultComment(obj)
+
+    if(updateComment) {
+      updateComment(comment);
+    }
+
+    const {
+      label,
+      date,
+      canEdit = false,
+      showComment = false,
+    } = this.props
 
     this.toggleComment()
   }
@@ -106,7 +128,7 @@ export default class CommentRow extends React.PureComponent<any, any> {
       label,
       date,
       canEdit = false,
-      showComment = false
+      showComment = false,
       } = this.props
 
     const { isOpen = false, comment = null } = this.state
