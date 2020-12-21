@@ -491,9 +491,9 @@ const setTransactions = async (objCurrency = null) => {
       //@ts-ignore
       ...(isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
       //@ts-ignore
-      objCurrency && objCurrency['GHOST'].isBalanceFetched ? actions.ghost.getTransaction() : [],
+      objCurrency && objCurrency['GHOST'] && objCurrency['GHOST'].isBalanceFetched ? actions.ghost.getTransaction() : [],
       //@ts-ignore
-      ...(isGhostSweeped && !(objCurrency && objCurrency['GHOST'].isBalanceFetched)) ? [] : [actions.ghost.getTransaction(actions.ghost.getSweepAddress())],
+      ...(isGhostSweeped && !(objCurrency && objCurrency['GHOST'] && objCurrency['GHOST'].isBalanceFetched)) ? [] : [actions.ghost.getTransaction(actions.ghost.getSweepAddress())],
       //@ts-ignore
       actions.next.getTransaction(),
       //@ts-ignore
