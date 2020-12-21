@@ -44,7 +44,6 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 export default class TxInfo extends Component<any, any> {
 
   updateComment = (value) => {
-    console.log(1111)
     this.setState({ state: this.state });
   }
 
