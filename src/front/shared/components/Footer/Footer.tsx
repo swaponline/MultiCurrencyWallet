@@ -15,14 +15,14 @@ import SocialMenu from './SocialMenu/SocialMenu'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import SwitchLang from './SwitchLang/SwitchLang'
 
+import version from 'helpers/version'
+
 
 const Footer = (props) => {
 
   const isDark = localStorage.getItem(constants.localStorage.isDark)
 
   const isFooterDisabled = config.opts.ui.footerDisabled
-
-  const version = process.env.VERSION
 
   return (
     <footer
@@ -31,6 +31,8 @@ const Footer = (props) => {
         [styles.dark]: isDark,
         [styles.mobile]: isMobile,
       })}
+      data-version-name={version.name}
+      data-version-url={version.link}
     >
       {!isFooterDisabled && (
         //@ts-ignore
@@ -38,9 +40,9 @@ const Footer = (props) => {
           <SwitchLang {...props} />
           {!config.isWidget && <SocialMenu />}
           <div styleName="version">
-            {version ?
-              <a href={`https://github.com/search?q=${version}&type=Commits`} target="_blank">
-                {version.substring(0, 6)}
+            {version.link && version.name ?
+              <a href={version.link} target="_blank">
+                {version.name}
               </a>
               :
               <span>-</span>
