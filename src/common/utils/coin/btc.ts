@@ -446,7 +446,7 @@ const getTransactionBlocyper = (options) => {
 
           const isSelf = direction === 'out'
             && item.outputs.filter((output) => {
-                const currentAddress = output.address[0]
+                const currentAddress = output.addresses[0]
 
                 return currentAddress === checkAddress
             }).length === item.outputs.length
