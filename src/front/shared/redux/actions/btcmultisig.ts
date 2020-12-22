@@ -984,7 +984,7 @@ const fetchTxInfo = (hash, cacheResponse) => bitcoinUtils.fetchTxInfo({
   hasAdminFee,
 })
 
-const getTransactionUser = (address) => {
+const getTransactionUser = (address: string = ``) => {
   if (!address) {
     // Fetch all
     return new Promise(async (resolve) => {

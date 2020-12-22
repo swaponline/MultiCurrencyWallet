@@ -467,7 +467,7 @@ const getTransactionBlocyper = (options) => {
             canEdit: (myWallets.indexOf(checkAddress) !== -1),
             confirmations: item.confirmations,
             value: new BigNumber(value).dividedBy(1e8).toNumber(),
-            date: (
+            date: Date.parse(
               (item.confirmations)
                 ? item.confirmed
                 : item.received
