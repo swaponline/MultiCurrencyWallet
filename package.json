@@ -247,7 +247,7 @@
     "libp2p-mplex": "^0.10.1",
     "libp2p-noise": "^2.0.1",
     "libp2p-secio": "^0.13.1",
-    "libp2p-websockets": "^0.14.0",
+    "libp2p-websockets": "^0.15.0",
     "lodash": "^4.17.15",
     "module-alias": "^2.2.2",
     "moment": "^2.29.1",
