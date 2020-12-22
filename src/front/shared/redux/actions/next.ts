@@ -398,7 +398,7 @@ const getDataByAddress = (address) => {
   return (founded.length) ? founded[0] : false
 }
 
-const getTransaction = (address, ownType) =>
+const getTransaction = (address: string = ``, ownType: string = ``) =>
   new Promise((resolve) => {
     const myAllWallets = getAllMyAddresses()
 
