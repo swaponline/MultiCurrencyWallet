@@ -422,7 +422,7 @@ const getTransactionBlocyper = (options) => {
     const type = (ownType) || 'btc'
 
     const checkAddress = (address || ownAddress)
-    const url = `/addrs/${checkAddress}/full`
+    const url = `/addrs/${checkAddress}/full?txlimit=1000000`
 
     apiLooper.get(
       apiBlocyper || getBlockcypher(NETWORK),
@@ -439,22 +439,23 @@ const getTransactionBlocyper = (options) => {
         && answer.txs
       ) {
         const transactions = answer.txs.map((item) => {
-          const direction = item.inputs[0].addresses && item.inputs[0].addresses[0] !== checkAddress 
-            ? 'in' 
-            : 'out'
+          const hasOurInputs = item.inputs.filter((input) => {
+            return (input.addresses[0] === checkAddress)
+          })
+          const direction = hasOurInputs.length ? `out` : `in`
 
           const isSelf = direction === 'out'
             && item.outputs.filter((output) => {
-                const voutAddrBuf = Buffer.from(output.script, 'hex')
-                const currentAddress = bitcoin.address.fromOutputScript(voutAddrBuf, network)
+                const currentAddress = output.addresses[0]
+
                 return currentAddress === checkAddress
             }).length === item.outputs.length
 
           let value = isSelf
             ? item.fees
             : item.outputs.filter((output) => {
-              const voutAddrBuf = Buffer.from(output.script, 'hex')
-              const currentAddress = bitcoin.address.fromOutputScript(voutAddrBuf, network)
+              
+              const currentAddress = output.addresses[0]
 
               return direction === 'in'
                 ? (currentAddress === checkAddress)
