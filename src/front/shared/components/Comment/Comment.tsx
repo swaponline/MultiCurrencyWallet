@@ -5,7 +5,7 @@ import styles from './Comment.scss'
 import { FormattedMessage } from 'react-intl'
 
 import actions from 'redux/actions'
-
+//comment
 
 interface IWithdrawModalProps {
   commentKey?: any,
