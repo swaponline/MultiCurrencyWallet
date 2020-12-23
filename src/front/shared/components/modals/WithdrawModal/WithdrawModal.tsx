@@ -36,7 +36,7 @@ import InvoiceInfoBlock from 'components/InvoiceInfoBlock/InvoiceInfoBlock'
 import AdminFeeInfoBlock from 'components/AdminFeeInfoBlock/AdminFeeInfoBlock'
 import CurrencyList from './components/CurrencyList'
 import FeeInfoBlock from 'components/FeeInfoBlock/FeeInfoBlock'
-import {TextArea} from "components/forms";
+
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -1006,7 +1006,7 @@ export default class WithdrawModal extends React.Component<any, any> {
             <FormattedMessage id="Comment" defaultMessage="Comment" />
           </FieldLabel>
           <div styleName="group">
-            <TextArea valueLink={linked.comment} placeholder={"Comment"}/>
+            <Input valueLink={linked.comment} placeholder={"Comment"}/>
           </div>
         </div>
         <div styleName="sendBtnsWrapper">
