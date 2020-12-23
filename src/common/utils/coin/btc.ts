@@ -406,9 +406,11 @@ const fetchTxRaw = (options) => {
   }).then(({ hex }) => hex)
 }
 
+
 const getTransactionBlocyper = (options) => {
   const {
     address,
+    ownAddress,
     ownType,
     myWallets,
     network,
@@ -419,7 +421,9 @@ const getTransactionBlocyper = (options) => {
   return new Promise((resolve) => {
     const type = (ownType) || 'btc'
 
-    const url = `/addrs/${address}/full`
+    const checkAddress = (address || ownAddress)
+    const url = `/addrs/${checkAddress}/full?txlimit=1000000`
+
     apiLooper.get(
       apiBlocyper || getBlockcypher(NETWORK),
       url,
@@ -435,35 +439,36 @@ const getTransactionBlocyper = (options) => {
         && answer.txs
       ) {
         const transactions = answer.txs.map((item) => {
-          const direction = item.inputs[0].addresses && item.inputs[0].addresses[0] !== address 
-            ? 'in' 
-            : 'out'
+          const hasOurInputs = item.inputs.filter((input) => {
+            return (input.addresses[0] === checkAddress)
+          })
+          const direction = hasOurInputs.length ? `out` : `in`
 
           const isSelf = direction === 'out'
             && item.outputs.filter((output) => {
-                const voutAddrBuf = Buffer.from(output.script, 'hex')
-                const currentAddress = bitcoin.address.fromOutputScript(voutAddrBuf, network)
-                return currentAddress === address
+                const currentAddress = output.addresses[0]
+
+                return currentAddress === checkAddress
             }).length === item.outputs.length
 
           let value = isSelf
             ? item.fees
             : item.outputs.filter((output) => {
-              const voutAddrBuf = Buffer.from(output.script, 'hex')
-              const currentAddress = bitcoin.address.fromOutputScript(voutAddrBuf, network)
+              
+              const currentAddress = output.addresses[0]
 
               return direction === 'in'
-                ? (currentAddress === address)
-                : (currentAddress !== address)
+                ? (currentAddress === checkAddress)
+                : (currentAddress !== checkAddress)
             })[0].value
 
           return({
             type,
             hash: item.hash,
-            canEdit: (myWallets.indexOf(address) !== -1),
+            canEdit: (myWallets.indexOf(checkAddress) !== -1),
             confirmations: item.confirmations,
             value: new BigNumber(value).dividedBy(1e8).toNumber(),
-            date: (
+            date: Date.parse(
               (item.confirmations)
                 ? item.confirmed
                 : item.received

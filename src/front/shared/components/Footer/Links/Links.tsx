@@ -5,8 +5,6 @@ import CSSModules from 'react-css-modules'
 
 import links from 'helpers/links'
 import { FormattedMessage } from 'react-intl'
-import LogoTooltip from 'components/Logo/LogoTooltip'
-import Logo from 'components/Logo/Logo'
 import logoImage from 'components/Logo/images/logo.svg'
 
 

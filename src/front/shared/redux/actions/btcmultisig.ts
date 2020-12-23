@@ -984,7 +984,7 @@ const fetchTxInfo = (hash, cacheResponse) => bitcoinUtils.fetchTxInfo({
   hasAdminFee,
 })
 
-const getTransactionUser = (address) => {
+const getTransactionUser = (address: string = ``) => {
   if (!address) {
     // Fetch all
     return new Promise(async (resolve) => {
@@ -1016,18 +1016,34 @@ const getTransactionUser = (address) => {
 
 }
 //@ts-ignore
-const getTransactionSMS = (address) => getTransaction(address)
+const getTransactionSMS = (address: string = ``) => {
+  const {
+    user: {
+      btcMultisigSMSData: {
+        address: smsAddress,
+        isRegistered,
+      },
+    },
+  } = getState()
+  if (!isRegistered) {
+    return new Promise((resolve) => { resolve([]) })
+  }
+  return getTransaction((address || smsAddress), `btc (sms-protected)`)
+}
 
-const getTransactionPIN = (address) => {
+const getTransactionPIN = (address: string = ``) => {
   const {
     user: {
       btcMultisigPinData: {
         address: pinAddress,
+        isRegistered,
       },
     },
   } = getState()
-
-  return getTransaction((address) ? address : pinAddress, `btc (pin-protected)`)
+  if (!isRegistered) {
+    return new Promise((resolve) => { resolve([]) })
+  }
+  return getTransaction((address || pinAddress), `btc (pin-protected)`)
 }
 
 const getTransactionG2FA = () => { }

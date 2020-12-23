@@ -1,39 +1,43 @@
 /* eslint-disable max-len */
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import cx from "classnames";
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import cx from "classnames"
 
-import { withRouter, Link } from "react-router-dom";
-import { isMobile } from "react-device-detect";
-import { connect } from "redaction";
+import { withRouter, Link } from "react-router-dom"
+import { isMobile } from "react-device-detect"
+import { connect } from "redaction"
 
-import links from "helpers/links";
-import actions from "redux/actions";
-import { constants } from "helpers";
+import links from "helpers/links"
+import actions from "redux/actions"
+import { constants } from "helpers"
 import config from 'helpers/externalConfig'
-import { injectIntl } from "react-intl";
+import { injectIntl, FormattedMessage } from "react-intl"
 
-import CSSModules from "react-css-modules";
-import styles from "./Header.scss";
+import CSSModules from "react-css-modules"
+import styles from "./Header.scss"
 
-import Nav from "./Nav/Nav";
-import NavMobile from "./NavMobile/NavMobile";
+import Nav from "./Nav/Nav"
+import NavMobile from "./NavMobile/NavMobile"
 
-import LogoTooltip from "components/Logo/LogoTooltip";
-import TourPartial from "./TourPartial/TourPartial";
-import WalletTour from "./WalletTour/WalletTour";
-import { WidgetWalletTour } from "./WidgetTours";
+import Logo from "./Logo/Logo"
+import TourPartial from "./TourPartial/TourPartial"
+import WalletTour from "./WalletTour/WalletTour"
+import { WidgetWalletTour } from "./WidgetTours"
 
-import Loader from "components/loaders/Loader/Loader";
-import { localisedUrl, unlocalisedUrl } from "../../helpers/locale";
-import { messages, getMenuItems, getMenuItemsMobile } from "./config";
-import { getActivatedCurrencies } from "helpers/user";
-import { WidgetHeader } from "./WidgetHeader";
+import Loader from "components/loaders/Loader/Loader"
+import { localisedUrl, unlocalisedUrl } from "../../helpers/locale"
+import { messages, getMenuItems, getMenuItemsMobile } from "./config"
+import { getActivatedCurrencies } from "helpers/user"
 import { ThemeSwitcher } from "./ThemeSwitcher"
 
 // Incoming swap requests and tooltips (revert)
 import UserTooltip from "components/Header/User/UserTooltip/UserTooltip"
 import feedback from 'shared/helpers/feedback'
+import wpLogoutModal from 'helpers/wpLogoutModal'
+
+
+/* uncomment to debug */
+//window.isUserRegisteredAndLoggedIn = true
 
 
 const isWidgetBuild = config && config.isWidget
@@ -47,7 +51,6 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   isSigned: "signUp.isSigned",
   isInputActive: "inputActive.isInputActive",
   reputation: "pubsubRoom.reputation",
-  dashboardView: "ui.dashboardModalsAllowed",
   modals: "modals",
   hiddenCoinsList: "core.hiddenCoinsList",
 })
@@ -95,8 +98,6 @@ export default class Header extends Component<any, any> {
       isPartialTourOpen: false,
       path: false,
       isTourOpen: false,
-      isShowingMore: false,
-      sticky: false,
       isWallet: false,
       menuItemsFill: [
         {
@@ -313,28 +314,6 @@ export default class Header extends Component<any, any> {
     tourEvent();
   };
 
-  handleScroll = () => {
-    if (this.props.history.location.pathname === "/") {
-      this.setState(() => ({
-        sticky: false,
-      }));
-      return;
-    }
-    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    if (scrollTop > this.lastScrollTop) {
-      this.setState(() => ({ sticky: false }));
-    } else {
-      this.setState(() => ({ sticky: true }));
-    }
-    this.lastScrollTop = scrollTop;
-  };
-
-  toggleShowMore = () => {
-    this.setState((prevState) => ({
-      isShowingMore: !prevState.isShowingMore,
-    }));
-  };
-
   closeTour = () => {
     this.setState(() => ({ isTourOpen: false }));
   };
@@ -423,9 +402,13 @@ export default class Header extends Component<any, any> {
     await history.push(localisedUrl(locale, link))
   }
 
+  handleLogout = () => {
+    const { intl } = this.props;
+    wpLogoutModal(this.handleLogout, intl)
+  }
+
   render() {
     const {
-      sticky,
       isTourOpen,
       path,
       isPartialTourOpen,
@@ -448,13 +431,6 @@ export default class Header extends Component<any, any> {
 
     const { exchange, wallet } = links;
 
-    const onLogoClickLink =
-      window && window.LOGO_REDIRECT_LINK
-        ? window.LOGO_REDIRECT_LINK
-        : localisedUrl(locale, links.home);
-
-    const hasOwnLogoLink = window && window.LOGO_REDIRECT_LINK;
-
     const isWalletPage =
       pathname.includes(wallet) ||
       pathname === `/ru${wallet}` ||
@@ -462,44 +438,24 @@ export default class Header extends Component<any, any> {
 
     const isExchange = pathname.includes(exchange);
 
-    const imgNode = (
-      <img
-        styleName="otherHeaderLogo"
-        className="site-logo-header"
-        src={isDark ? window.darkLogoUrl : window.logoUrl}
-        alt="logo"
-      />
-    );
+    const isLogoutPossible = window.isUserRegisteredAndLoggedIn
 
-    const isOurMainDomain = [
-      'localhost',
-      'swaponline.github.io',
-      'swaponline.io'
-    ].includes(window.location.hostname)
-
-    const logoRenderer = isOurMainDomain ?
-      <>
-        <LogoTooltip withLink isColored isExchange={isWalletPage} />
-        {/*
-        //@ts-ignore */}
-        <ThemeSwitcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
-      </>
-      :
+    const logoRenderer = (
       <div styleName="flexebleHeader">
-        {window.logoUrl !== "#" && (
-          <div styleName="imgWrapper">
-            {hasOwnLogoLink ? (
-              <a href={onLogoClickLink}>{imgNode}</a>
-            ) : (
-                <Link to={onLogoClickLink}>{imgNode}</Link>
-              )}
-          </div>
-        )}
+        <div>
+          <Logo />
+        </div>
         <div styleName="rightArea">
-          {isWidgetBuild && <WidgetHeader />}
-          <ThemeSwitcher withExit themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
+          <ThemeSwitcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
+
+          {isLogoutPossible && // some wordpress plugin cases
+            <div styleName={`logoutWrapper ${isDark ? 'dark' : ''}`} onClick={this.handleLogout}>
+              <i className="fas fa-sign-out-alt" /><FormattedMessage id="ExitWidget" defaultMessage="Exit" />
+            </div>
+          }
         </div>
       </div>
+    )
 
     if (pathname.includes("/createWallet") && isMobile) {
       return <span />;
@@ -514,9 +470,9 @@ export default class Header extends Component<any, any> {
       />
     )
 
-    if (isMobile && window.logoUrl) {
+    if (isMobile) {
       return (
-        <header className="data-tut-widget-tourFinish" id="header-mobile" styleName="header-mobile">
+        <header id="header-mobile" styleName="header-mobile" className="data-tut-widget-tourFinish">
           {logoRenderer}
           {createdWalletLoader && (
             <div styleName="loaderCreateWallet">
@@ -542,43 +498,12 @@ export default class Header extends Component<any, any> {
       );
     }
 
-    if (isMobile) {
-      return (
-        <header id="header-mobile" styleName="header-mobile">
-          {createdWalletLoader && (
-            <div styleName="loaderCreateWallet">
-              <Loader
-                showMyOwnTip={formatMessage({
-                  id: "createWalletLoaderTip",
-                  defaultMessage: "Creating wallet... Please wait.",
-                })}
-              />
-            </div>
-          )}
-          {incomingSwapRequest}
-          <NavMobile menu={menuItemsMobile} isHidden={isInputActive} />
-          {isWidgetTourOpen && isWalletPage &&
-            <div styleName="walletTour">
-              <WidgetWalletTour
-                isTourOpen={isWidgetTourOpen}
-                closeTour={this.closeWidgetTour}
-              />
-            </div>
-          }
-          {/*
-          //@ts-ignore */}
-          <ThemeSwitcher themeSwapAnimation={themeSwapAnimation} onClick={this.handleSetDark} />
-        </header>
-      );
-    }
-
     return (
       <header
         className={cx({
           [styles["header"]]: true,
-          [styles["widgetHeader"]]: isWidgetBuild && window.logoUrl !== "#",
-          [styles["header-fixed"]]: Boolean(sticky),
-          [styles["header-promo"]]: isWalletPage && !sticky,
+          [styles["widgetHeader"]]: isWidgetBuild,
+          [styles["header-promo"]]: isWalletPage
         })}
       >
         {createdWalletLoader && (
