@@ -27,7 +27,7 @@ import BtcLikeToEth from './SwapProgressText/BtcLikeToEth'
 import BtcLikeToEthToken from './SwapProgressText/BtcLikeToEthToken'
 import EthToBtcLike from './SwapProgressText/EthToBtcLike'
 import EthTokenToBtcLike from './SwapProgressText/EthTokenToBtcLike'
-
+import metamask from 'helpers/metamask'
 
 
 
@@ -471,6 +471,17 @@ export default class SwapProgress extends Component<any, any> {
                 </TimerButton>
               )}
 
+              {metamask.isConnected() && (
+                <strong styleName="externalWeb3Atention">
+                  <FormattedMessage
+                    id="Swap_MetamaskAtention"
+                    defaultMessage="Attention, you have a &quot;{walletName}&quot; wallet connected. Make sure it is unlocked and active"
+                    values={{
+                      walletName: metamask.web3connect.getProviderTitle(),
+                    }}
+                  />
+                </strong>
+              )}
               {flow.step > 3 && !this.isSellCurrencyEthOrEthToken &&
                 <PleaseDontLeaveWrapper isBtcLike={flow.secret ? flow.secret : false} />
               }

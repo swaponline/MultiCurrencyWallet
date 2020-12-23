@@ -145,7 +145,7 @@
     "id": "logo29",
     "message": "Go Home",
     "files": [
-      "src/front/shared/components/Header/Logo.tsx"
+      "src/front/shared/components/Header/Logo/Logo.tsx"
     ]
   },
   {
@@ -185,45 +185,27 @@
   },
   {
     "id": "ImportKeys107",
-    "message": "This procedure will rewrite your private key. If you are not sure about it, we recommend to press cancel",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "This procedure will rewrite your private key. If you are not sure about it, we recommend to press cancel"
   },
   {
     "id": "ImportKeys110",
-    "message": "Please enter ETH private key",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Please enter ETH private key"
   },
   {
     "id": "ImportKeys120",
-    "message": "Please enter BTC private key in WIF format",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Please enter BTC private key in WIF format"
   },
   {
     "id": "ImportKeys130",
-    "message": "Confirm",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Confirm"
   },
   {
     "id": "ImportKeys133",
-    "message": "Cancel",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Cancel"
   },
   {
     "id": "Group14",
-    "message": "Import",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/Group/Group.tsx"
-    ]
+    "message": "Import"
   },
   {
     "id": "Select10",
@@ -1656,10 +1638,7 @@
   },
   {
     "id": "Import",
-    "message": "Import keys",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Import keys"
   },
   {
     "id": "Add52",
@@ -1808,10 +1787,7 @@
   },
   {
     "id": "errorImportKeys",
-    "message": "Please save your private keys",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Please save your private keys"
   },
   {
     "id": "PrivateKeysModal144",
@@ -1899,17 +1875,11 @@
   },
   {
     "id": "importkeys118",
-    "message": "Please enter BTC private key",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Please enter BTC private key"
   },
   {
     "id": "importkeys119",
-    "message": "Please valid BTC private key",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Please valid BTC private key"
   },
   {
     "id": "PartialPriceSearch483",
@@ -2264,24 +2234,15 @@
   },
   {
     "id": "importkeys172",
-    "message": "Please enter ETH private key",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Please enter ETH private key"
   },
   {
     "id": "importkeys173",
-    "message": "Please valid ETH private key",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Please valid ETH private key"
   },
   {
     "id": "importkeys190",
-    "message": "Something went wrong. Check your private key, network of this address and etc.",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Something went wrong. Check your private key, network of this address and etc."
   },
   {
     "id": "WithdrawIncorectAddress",
@@ -6369,7 +6330,7 @@
     "id": "ExitWidget",
     "message": "Exit",
     "files": [
-      "src/front/shared/components/Header/WidgetHeader/index.tsx"
+      "src/front/shared/components/Header/Header.tsx"
     ]
   },
   {
@@ -8281,9 +8242,13 @@
   },
   {
     "id": "FeeInfoBlockTxSize",
-    "message": "Transaction size:",
+    "message": "Transaction size:"
+  },
+  {
+    "id": "Swap_MetamaskAtention",
+    "message": "Attention, you have a \"{walletName}\" wallet connected. Make sure it is unlocked and active",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
   }
 ]

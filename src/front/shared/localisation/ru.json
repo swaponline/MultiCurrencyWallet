@@ -145,7 +145,7 @@
     "id": "logo29",
     "message": "Домой",
     "files": [
-      "src/front/shared/components/Header/Logo.tsx"
+      "src/front/shared/components/Header/Logo/Logo.tsx"
     ]
   },
   {
@@ -185,45 +185,27 @@
   },
   {
     "id": "ImportKeys107",
-    "message": "Эта процедура перепишет Ваш общедоступный ключ. Если Вы не уверены, Мы рекомендуем Вам отказаться",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Эта процедура перепишет Ваш общедоступный ключ. Если Вы не уверены, Мы рекомендуем Вам отказаться"
   },
   {
     "id": "ImportKeys110",
-    "message": "Введите Ваш ETH приватный ключ",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Введите Ваш ETH приватный ключ"
   },
   {
     "id": "ImportKeys120",
-    "message": "Введите Ваш BTC приватный ключ в WIF формате",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Введите Ваш BTC приватный ключ в WIF формате"
   },
   {
     "id": "ImportKeys130",
-    "message": "Подтвердить",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Подтвердить"
   },
   {
     "id": "ImportKeys133",
-    "message": "Отменить",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Отменить"
   },
   {
     "id": "Group14",
-    "message": "Загрузить",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/Group/Group.tsx"
-    ]
+    "message": "Загрузить"
   },
   {
     "id": "Select10",
@@ -1737,10 +1719,7 @@
   },
   {
     "id": "Import",
-    "message": "Импортировать",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Импортировать"
   },
   {
     "id": "Add52",
@@ -1889,10 +1868,7 @@
   },
   {
     "id": "errorImportKeys",
-    "message": "Пожалуйста сохраните приватные ключи",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Пожалуйста сохраните приватные ключи"
   },
   {
     "id": "PrivateKeysModal144",
@@ -1980,17 +1956,11 @@
   },
   {
     "id": "importkeys118",
-    "message": "Пожалуйста введите BTC секретный ключ ",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Пожалуйста введите BTC секретный ключ "
   },
   {
     "id": "importkeys119",
-    "message": "Недействительный BTC секретный ключ",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Недействительный BTC секретный ключ"
   },
   {
     "id": "partial437",
@@ -2341,24 +2311,15 @@
   },
   {
     "id": "importkeys172",
-    "message": "Пожалуйста введите ETH приватный ключ",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Пожалуйста введите ETH приватный ключ"
   },
   {
     "id": "importkeys173",
-    "message": "Пожалуйста введите корректный ETH приватный ключ",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Пожалуйста введите корректный ETH приватный ключ"
   },
   {
     "id": "importkeys190",
-    "message": "Что то пошло не так. Проверьте ваш приватный ключ, сеть этого адреса и тд.",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Что то пошло не так. Проверьте ваш приватный ключ, сеть этого адреса и тд."
   },
   {
     "id": "WithdrawIncorectAddress",
@@ -6448,7 +6409,7 @@
     "id": "ExitWidget",
     "message": "Exit",
     "files": [
-      "src/front/shared/components/Header/WidgetHeader/index.tsx"
+      "src/front/shared/components/Header/Header.tsx"
     ]
   },
   {
@@ -8353,9 +8314,13 @@
   },
   {
     "id": "FeeInfoBlockTxSize",
-    "message": "Размер транзакции:",
+    "message": "Размер транзакции:"
+  },
+  {
+    "id": "Swap_MetamaskAtention",
+    "message": "Внимание, у Вас подключен кошелек \"{walletName}\". Убедитесь, что он разблокирован и активен",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
   }
 ]

@@ -25,6 +25,14 @@
   top: 40px;
 }
 
+.externalWeb3Atention {
+  display: block;
+  padding-bottom: 10pt;
+  color: #b32808;
+  font-size: 11pt;
+  line-height: 11pt;
+}
+
 @mixin circle($size) {
   content: "";
   position: absolute;
