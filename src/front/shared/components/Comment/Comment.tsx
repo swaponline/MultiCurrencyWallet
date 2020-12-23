@@ -144,14 +144,21 @@ export default class CommentRow extends React.PureComponent<any, any> {
                       value={comment} ></textarea>
             <span styleName="submit" onClick={(e) => this.submitComment(e, this.props)}>&#10004;</span>
             <span styleName="close" onClick={() => this.toggleComment()}>&times;</span>
-          </form> :
+          </form>
+          :
           <div styleName="add-link" onClick={() => this.toggleComment()}>
             <FormattedMessage id="add_notice" defaultMessage="Add notice" />
-          </div>)}
+          </div>)
+        }
+
         {showComment && (
           <div styleName="date">
-            {date && (<div>{moment(date).format('LLLL')}</div>) }
-            {comment && (<div>{comment}</div>)}
+            {date &&
+              <div>{moment(date).format('LLLL')}</div>
+            }
+            {comment &&
+              <div styleName="commentText">{comment}</div>
+            }
           </div>
         )}
     </div>)
