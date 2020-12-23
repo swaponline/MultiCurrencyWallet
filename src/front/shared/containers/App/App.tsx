@@ -236,10 +236,14 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       ) {
         console.log('do restore user')
         backupUserData.restoreUser().then((isRestored) => {
-          console.log('is restored', isRestored)
+          console.log('is restored', isRestored, constants.localStorage.isWalletCreate)
           if (isRestored) {
-            redirectTo(links.home)
-            window.location.reload()
+            if (localStorage.getItem(constants.localStorage.isWalletCreate)) {
+              redirectTo(links.home)
+              window.location.reload()
+            } else {
+              redirectTo(links.createWallet)
+            }
           }
         })
       } else {
@@ -248,7 +252,11 @@ class App extends React.Component<RouteComponentProps<any>, any> {
           || !hasServerBackup
         ) {
           console.log('Do backup user')
-          backupUserData.backupUser()
+          backupUserData.backupUser().then(() => {
+            if (!localStorage.getItem(constants.localStorage.isWalletCreate)) {
+              redirectTo(links.createWallet)
+            }
+          })
         }
       }
       resolve(`ready`)
