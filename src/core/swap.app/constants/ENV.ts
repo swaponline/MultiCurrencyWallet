@@ -2,7 +2,6 @@ export default {
   web3: 'web3',
   bitcoin: 'bitcoin',
   bitcoincash: 'bitcoincash',
-  sumcoin: 'sumcoin',
   ghost: 'ghost',
   next: 'next',
   coininfo: 'coininfo',

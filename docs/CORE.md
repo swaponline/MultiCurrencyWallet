@@ -20,20 +20,18 @@ Swap Core is a decentralized exchange protocol (DEP) for crosschain atomic swaps
 | BTC       | Bitcoin |
 | BCH       | Bitcoin Cash |
 | GHOST     | Ghost |
-| SUM       | Sumcoin |
 | NEXT      | NEXT.coin |
 
 ## Supported swap directions
 
-| tx\rx | ETH  | ERC20 | BTC | BCH | GHOST | SUM | NEXT |
-|-------|------|-------|-----|-----|-------|-----|------|
-| ETH   |      |       | +   |     | +     |     | +    |
-| ERC20 |      |       | +   |     | +     |     |      |
-| BTC   | +    | +     |     |     |       |     |      |
-| BCH   |      |       |     |     |       |     |      |
-| GHOST | +    | +     |     |     |       |     |      |
-| SUM   |      |       |     |     |       |     |      |
-| NEXT  | +    |       | soon|     |       |     | soon |
+| tx\rx | ETH  | ERC20 | BTC | BCH | GHOST | NEXT |
+|-------|------|-------|-----|-----|-------|------|
+| ETH   |      |       | +   |     | +     | +    |
+| ERC20 |      |       | +   |     | +     |      |
+| BTC   | +    | +     |     |     |       |      |
+| BCH   |      |       |     |     |       |      |
+| GHOST | +    | +     |     |     |       |      |
+| NEXT  | +    |       | +   |     |       | +    |
 
 ## How it works step by step
 

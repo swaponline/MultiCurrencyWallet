@@ -5,7 +5,6 @@ import { Switch, Route } from 'react-router-dom'
 
 import { links } from 'helpers'
 import { localisePrefix } from 'helpers/locale'
-import config from 'helpers/externalConfig'
 
 import LocalStorage from 'pages/LocalStorage/LocalStorage'
 import SwapComponent from 'pages/Swap/Swap'

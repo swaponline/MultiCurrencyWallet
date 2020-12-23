@@ -57,7 +57,7 @@ Add many assets to your wallet:
 
 ## Open for integrations
 
-See the [list of our clients](/docs/CLIENTS.md).
+See the [list of our clients](/docs/CLIENTS.md)
 
 
 ## International

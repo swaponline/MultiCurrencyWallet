@@ -22,7 +22,7 @@ import feedback from 'shared/helpers/feedback'
 import web3Icons from 'shared/images'
 
 import QrReader from 'components/QrReader'
-import iconInternal from 'components/Logo/images/base.svg'
+import iconInternal from '../../../images/logo/logo-black.svg'
 import iconCustom from '../../../images/custom.svg'
 
 import { AddressType, AddressRole } from 'domain/address'
@@ -176,6 +176,10 @@ export default class AddressSelect extends Component<any, any> {
         hasError,
         selectedType,
         customAddress: '',
+      }, () => {
+        if (newCurrency !== oldCurrency) {
+          this.handleOptionSelect({ value: selectedType })
+        }
       })
     }
   }

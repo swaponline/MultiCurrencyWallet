@@ -1,4 +1,4 @@
-### Installation guide
+# Installation guide
 
 1. Fork this repository (Click "Fork" on top of this page)
 2. Clone repository
@@ -31,7 +31,11 @@ npm i
 5. Start dev mode
 
 ```
-npm run start
+npm run dev
+```
+or, if you feel confident
+```
+npm run dev:mainnet
 ```
 
 The dev server is running! (http://localhost:9001)
@@ -39,7 +43,7 @@ The dev server is running! (http://localhost:9001)
 To access from other devices on the local network, specify your IP address:
 
 ```
-HOST=X.X.X.X npm run start
+HOST=X.X.X.X npm run dev
 ```
 
 6. Build for prod
@@ -51,4 +55,4 @@ npm run build:mainnet https://yourcoolsite.com/
 (don't forget to add a slash in the end of url)
 
 
-Remember: you MUST be online for swaps and you can not process more than one exchange at the same time. 
+Remember: you MUST be online for swaps and you can not process more than one exchange at the same time.

@@ -31,11 +31,11 @@ import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
-import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import QrReader from 'components/QrReader'
 import InvoiceInfoBlock from 'components/InvoiceInfoBlock/InvoiceInfoBlock'
 import AdminFeeInfoBlock from 'components/AdminFeeInfoBlock/AdminFeeInfoBlock'
 import CurrencyList from './components/CurrencyList'
+import FeeInfoBlock from 'components/FeeInfoBlock/FeeInfoBlock'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -65,6 +65,12 @@ interface IWithdrawModalProps {
   portalUI?: any
 }
 
+interface IServiceFeeSetting {
+  address: string
+  fee: number
+  min: number
+}
+
 interface IWithdrawModalState {
   isShipped: boolean
   isEthToken: boolean
@@ -83,18 +89,17 @@ interface IWithdrawModalState {
   currentDecimals: number
   exCurrencyRate?: number
   fiatAmount?: number
+  btcFeeRate: number
   
   ethBalance: null | number
   tokenFee: null | number
   coinFee: null | number
   totalFee: null | number
   adminFeeSize: null | number
+  txSize: null | number
   
-  usedAdminFee: {
-    address: string
-    fee: number
-    min: number
-  }
+  usedAdminFee: IServiceFeeSetting
+
   hiddenCoinsList: string[]
   enabledCurrencies: string[]
 
@@ -179,6 +184,8 @@ export default class WithdrawModal extends React.Component<any, any> {
       totalFee: null,
       adminFeeSize: null,
       fetchFee: true,
+      txSize: null,
+      btcFeeRate: null,
     }
   }
 
@@ -307,6 +314,18 @@ export default class WithdrawModal extends React.Component<any, any> {
       const totalFee = new BigNumber(coinFee).toNumber()
       
       minAmount[currentCoin] = coinFee
+
+      if (currentCoin === 'btc') {
+        const BYTE_IN_KB = 1024
+        const feeRate = await helpers.btc.estimateFeeRate()
+        const feeSatByte = new BigNumber(feeRate).dividedBy(BYTE_IN_KB).dp(0, BigNumber.ROUND_CEIL).toNumber()
+        const txSize = await helpers[currentCoin].calculateTxSize()
+
+        this.setState({
+          btcFeeRate: feeSatByte,
+          txSize,
+        })
+      }
 
       this.setState({
         coinFee,
@@ -629,6 +648,8 @@ export default class WithdrawModal extends React.Component<any, any> {
       totalFee,
       adminFeeSize,
       fetchFee,
+      txSize,
+      btcFeeRate,
     } = this.state
 
     const { name, intl, portalUI, activeFiat, activeCurrency, dashboardView } = this.props
@@ -738,9 +759,7 @@ export default class WithdrawModal extends React.Component<any, any> {
       const LEFT_ARROW = 37
       const RIGHT_ARROW = 39
       const DELETE_CODE = 46
-      const ZERO_CODE = 48
-      const NINE_CODE = 57
-      const isNumber = event.keyCode >= ZERO_CODE && event.keyCode <= NINE_CODE
+      const isNumber = +event.key >= 0 && +event.key <= 9
 
       if (event.key === ',') {
         inputReplaceCommaWithDot(event)
@@ -850,7 +869,7 @@ export default class WithdrawModal extends React.Component<any, any> {
             </div>
           )}
         </div>
-        <div styleName={`lowLevel ${isDark ? 'dark' : ''}`} style={{ marginBottom: '50px' }}>
+        <div styleName={`lowLevel ${isDark ? 'dark' : ''}`} style={{ marginBottom: '30px' }}>
           <div styleName="additionalСurrencies">
             {criptoCurrencyHaveInfoPrice
               ? (
@@ -918,43 +937,6 @@ export default class WithdrawModal extends React.Component<any, any> {
                 onKeyDown={amountInputKeyDownCallback}
               />
             )}
-            {/* 
-              showing hint about maximum possible amount
-            */}
-            {dashboardView && (
-              <div styleName={'note'}>
-                {selectedValue === currentActiveAsset.currency ? (
-                  <FormattedMessage
-                    id="Withdrow170"
-                    defaultMessage="Maximum amount you can send is {allowedCriptoBalance} {currency}"
-                    values={{
-                      allowedCriptoBalance: `${new BigNumber(allowedCriptoBalance).toNumber()}`,
-                      currency: activeCriptoCurrency,
-                    }}
-                  />
-                ) : (
-                  <FormattedMessage
-                    id="Withdrow171"
-                    defaultMessage="Maximum amount you can send is {allowedUsdBalance} USD"
-                    values={{
-                      allowedUsdBalance: `${allowedUsdBalance}`,
-                    }}
-                  />
-                )}{' '}
-                {/* ^ for indent before the tooltip */}
-                <Tooltip id="WtH204">
-                  <div style={{ maxWidth: '24em', textAlign: 'center' }}>
-                    <FormattedMessage
-                      id="WTH276"
-                      defaultMessage="The amount should not exceed your{br} current balance minus mining fee"
-                      values={{
-                        br: <br />,
-                      }}
-                    />
-                  </div>
-                </Tooltip>
-              </div>
-            )}
             <div style={{ marginLeft: '15px' }}>
               <Button disabled={fetchFee} blue big onClick={setMaxBalance} id="Withdrow134">
                 <FormattedMessage id="Select210" defaultMessage="MAX" />
@@ -972,6 +954,40 @@ export default class WithdrawModal extends React.Component<any, any> {
               </Tooltip>
             )}
           </div>
+          {/* hint about maximum possible amount */}
+          {dashboardView && (
+            <div styleName={'prompt'}>
+              {selectedValue === currentActiveAsset.currency ? (
+                <FormattedMessage
+                  id="Withdrow170"
+                  defaultMessage="Maximum amount you can send is {allowedCriptoBalance} {currency}"
+                  values={{
+                    allowedCriptoBalance: `${new BigNumber(allowedCriptoBalance).toNumber()}`,
+                    currency: activeCriptoCurrency,
+                  }}
+                />
+              ) : (
+                <FormattedMessage
+                  id="Withdrow171"
+                  defaultMessage="Maximum amount you can send is {allowedUsdBalance} USD"
+                  values={{
+                    allowedUsdBalance: `${allowedUsdBalance}`,
+                  }}
+                />
+              )}{' '}{/* indent */}
+              <Tooltip id="WtH204">
+                <div style={{ maxWidth: '24em', textAlign: 'center' }}>
+                  <FormattedMessage
+                    id="WTH276"
+                    defaultMessage="The amount should not exceed your{br} current balance minus mining fee"
+                    values={{
+                      br: <br />,
+                    }}
+                  />
+                </div>
+              </Tooltip>
+            </div>
+          )}
         </div>
         <div styleName="sendBtnsWrapper">
           <div styleName="actionBtn">
@@ -1042,88 +1058,55 @@ export default class WithdrawModal extends React.Component<any, any> {
           </Fragment>
         )}
         {dashboardView && (
-          <div
-            styleName={cx({
-              notice: true,
-              dashboardViewNotice: dashboardView,
-            })}
-            >
-            <FormattedMessage id="WithdrowModalMinerFee" defaultMessage="Miner Fee: " />
-            {' '}{/* < indent */}
-            {fetchFee
-              ? <div styleName='paleLoader'><InlineLoader /></div>
-              : (
-                <span styleName='fee'>{
-                  isEthToken
-                    ? new BigNumber(tokenFee).toNumber()
-                    : new BigNumber(coinFee).toNumber()
-                  } {dataCurrency}
-                </span>
-              )
-            }
-            {' '}{/* < indent */}
-            <Tooltip id="WithdrawModalMinerFeeDescription">
-              <div style={{ maxWidth: '24em', textAlign: 'center' }}>
-                <FormattedMessage
-                  id="WithdrawModalMinerFeeDescription"
-                  defaultMessage="Amount of cryptocurrency paid to incentivize miners to confirm your transaction"
-                />
-              </div>
-            </Tooltip>
-            <br />
-            {usedAdminFee && (
-                <>
-                  <FormattedMessage id="WithdrowModalServiceFee" defaultMessage="Service Fee: " />
-                  {' '}{/* < indent */}
-                  {fetchFee
-                    ? <div styleName='paleLoader'><InlineLoader /></div>
-                    : <span styleName='fee'>{ // fee in precents (fee / 100%)
-                        amount > 0 && new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).isGreaterThan(adminFeeSize)
-                          ? new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).toNumber()
-                          : adminFeeSize
-                      } {currency}</span>
-                  }
-                  <br />
-                </>
-              )
-            }
-            {!isEthToken && (
-              <>
-                <FormattedMessage id="WithdrowModalCommonFee" defaultMessage="Total fee you pay: " />
-                {' '}{/* < indent */}
-                {fetchFee 
-                  ? <div styleName='paleLoader'><InlineLoader /></div>
-                  : (
-                    <span styleName='fee'>{
-                      amount > 0 && new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).isGreaterThan(adminFeeSize)
-                        ? usedAdminFee // fee in precents (100 > 100%)
-                          ? new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).plus(totalFee).toNumber()
-                          : new BigNumber(totalFee).plus(adminFeeSize).toNumber()
-                        : new BigNumber(totalFee).plus(adminFeeSize).toNumber()
-                      } {dataCurrency}
-                    </span>
+          <>
+            <div style={{ paddingTop: '2em' }}>
+              <FeeInfoBlock 
+                isEthToken={isEthToken}
+                currency={currency}
+                dataCurrency={dataCurrency}
+                exCurrencyRate={exCurrencyRate}
+                feeCurrentCurrency={btcFeeRate}
+                isLoading={fetchFee}
+                minerFee={isEthToken ? tokenFee : coinFee}
+                hasServiceFee={!!usedAdminFee}
+                serviceFee={
+                  usedAdminFee && ( // fee in precents (100 = 100%)
+                  amount > 0 && new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).isGreaterThan(adminFeeSize)
+                  ? new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).toNumber()
+                  : adminFeeSize
                   )
                 }
-              </>
+                serviceFeePercent={usedAdminFee.fee}
+                serviceFeeMin={usedAdminFee.min}
+                totalFee={
+                  amount > 0 && new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).isGreaterThan(adminFeeSize)
+                  ? usedAdminFee // fee in precents (100 = 100%)
+                  ? new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).plus(totalFee).toNumber()
+                  : new BigNumber(totalFee).plus(adminFeeSize).toNumber()
+                  : new BigNumber(totalFee).plus(adminFeeSize).toNumber()
+                }
+                hasTxSize={dataCurrency.toLowerCase() === 'btc'}
+                txSize={txSize}
+              />
+            </div>
+            {error && (
+                <div styleName="errorBlock">
+                  <FormattedMessage
+                    id="WithdrawModalErrorSend"
+                    defaultMessage="{errorName} {currency}:{br}{errorMessage}"
+                    values={{
+                      errorName: intl.formatMessage(error.name),
+                      errorMessage: intl.formatMessage(error.message),
+                      br: <br />,
+                      currency: `${currency}`,
+                    }}
+                  />
+                  <br />
+                  {devErrorMessage && <span>Dev info: {devErrorMessage}</span>}
+                </div>
               )
             }
-            {error && (
-              <div styleName="errorBlock">
-                <FormattedMessage
-                  id="WithdrawModalErrorSend"
-                  defaultMessage="{errorName} {currency}:{br}{errorMessage}"
-                  values={{
-                    errorName: intl.formatMessage(error.name),
-                    errorMessage: intl.formatMessage(error.message),
-                    br: <br />,
-                    currency: `${currency}`,
-                  }}
-                />
-                <br />
-                {devErrorMessage && <span>Dev info: {devErrorMessage}</span>}
-              </div>
-            )}
-          </div>
+          </>
         )}
       </Fragment>
     )
