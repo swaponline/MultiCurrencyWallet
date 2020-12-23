@@ -5,7 +5,7 @@ import styles from './Comment.scss'
 import { FormattedMessage } from 'react-intl'
 
 import actions from 'redux/actions'
-//comment
+
 
 interface IWithdrawModalProps {
   commentKey?: any,
@@ -25,9 +25,7 @@ interface IWithdrawModalState {
 
 
 @CSSModules(styles, { allowMultiple: true })
-
 export default class CommentRow extends React.PureComponent<any, any> {
-
 
   props: IWithdrawModalProps
   state: IWithdrawModalState
@@ -39,32 +37,31 @@ export default class CommentRow extends React.PureComponent<any, any> {
     this.commentTextarea = React.createRef()
     this.state = {
       isOpen: false,
-      comment: null
+      comment: null,
     }
   }
 
   submitComment = (e, props) => {
-
     if (e) {
       e.preventDefault()
     }
+
     const {
       commentKey,
-      updateComment = false
+      updateComment = false,
     } = this.props
 
     const {
       comment
     } = this.state
 
-
     actions.comments.setComment({
-      key:commentKey,
-      comment:comment
+      key: commentKey,
+      comment: comment
     })
 
-    if(updateComment) {
-      updateComment(comment);
+    if (updateComment) {
+      updateComment(comment)
     }
 
     const {
@@ -76,8 +73,8 @@ export default class CommentRow extends React.PureComponent<any, any> {
 
     this.toggleComment()
   }
-  componentDidMount() {
 
+  componentDidMount() {
     const {
       commentKey
     } = this.props
@@ -86,28 +83,25 @@ export default class CommentRow extends React.PureComponent<any, any> {
     // actions.core.getSwapHistory()
     const comment = actions.comments.getComment(commentKey)
 
-    if(comment) {
+    if (comment) {
       this.setState({
         comment
       })
     }
-
   }
-  componentDidUpdate(prevProps) {
 
+  componentDidUpdate(prevProps) {
     if (this.props.isOpen && this.props.isOpen !== prevProps.isOpen && this.props.onSubmit) {
-      this.handleKeyUp();
+      this.handleKeyUp()
     }
   }
 
   handleKeyUp = (e = null) => {
     if (!this.commentTextarea) {
-
       return
     }
 
     if (e && e.ctrlKey && e.keyCode == 13) {
-
       this.submitComment(null, this.props)
       return
     }
@@ -119,8 +113,11 @@ export default class CommentRow extends React.PureComponent<any, any> {
   changeComment = (event) => this.setState({comment: event.target.value});
 
   toggleComment = () => {
-    const {isOpen = false} = this.state
-    this.setState({isOpen: !isOpen})
+    const { isOpen = false } = this.state
+
+    this.setState({
+      isOpen: !isOpen
+    })
   }
 
   render() {
@@ -129,9 +126,12 @@ export default class CommentRow extends React.PureComponent<any, any> {
       date,
       canEdit = false,
       showComment = false,
-      } = this.props
+    } = this.props
 
-    const { isOpen = false, comment = null } = this.state
+    const {
+      isOpen = false,
+      comment = null
+    } = this.state
 
     return (
       <div styleName="wrap-block">
@@ -161,6 +161,7 @@ export default class CommentRow extends React.PureComponent<any, any> {
             }
           </div>
         )}
-    </div>)
+      </div>
+    )
   }
 }
