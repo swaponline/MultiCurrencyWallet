@@ -164,7 +164,7 @@
   },
   {
     "id": "Approve73",
-    "message": "HOEVEELHEID",
+    "message": "Hoeveelheid",
     "files": [
       "src/front/shared/components/modals/Approve/Approve.tsx"
     ]
@@ -7872,6 +7872,13 @@
   {
     "id": "WTH276",
     "message": "Beløbet må ikke overstige din{br} nuværende saldo minus minegebyr",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "Comment",
+    "message": "Сommentaar",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]

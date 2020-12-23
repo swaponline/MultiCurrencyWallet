@@ -7854,6 +7854,13 @@
     ]
   },
   {
+    "id": "Comment",
+    "message": "Comment",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
     "id": "ConnectWalletModal_WalletLocked",
     "message": "Wallet is locked. Unlock the wallet first.",
     "files": [
