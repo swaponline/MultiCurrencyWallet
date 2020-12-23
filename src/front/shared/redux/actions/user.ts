@@ -401,8 +401,21 @@ const getInfoAboutCurrency = (currencyNames) =>
   })
 
 
-const pullTransactions = transactions => {
+const clearTransactions = () => {
+  reducers.history.setTransactions([])
+}
 
+const mergeTransactions = (mergeTxs: any[]) => {
+  const {
+    history: {
+      transactions,
+    },
+  } = getState()
+  let data = [].concat(transactions, ...mergeTxs).sort((a, b) => b.date - a.date).filter((item) => item)
+  reducers.history.setTransactions(data)
+}
+
+const pullTransactions = transactions => {
   let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date).filter((item) => item)
   reducers.history.setTransactions(data)
 }
@@ -467,56 +480,35 @@ const setTransactions = async (objCurrency = null) => {
   */
 
   try {
-    // @ToDo - make in like query
-    const mainTokens = await Promise.all([
-      //@ts-ignore
-      actions.btc.getTransaction(),
-      //@ts-ignore
-      ...(isBtcSweeped) ? [] : [actions.btc.getTransaction(actions.btc.getSweepAddress())],
-      // actions.btc.getInvoices(),
-      // ... (isBtcSweeped) ? [] : [actions.btc.getInvoices(actions.btc.getSweepAddress())],
-      //@ts-ignore
-      actions.btcmultisig.getTransactionSMS(),
-      //@ts-ignore
-      actions.btcmultisig.getTransactionPIN(),
-      // actions.btcmultisig.getInvoicesSMS(),
-      //@ts-ignore
-      actions.btcmultisig.getTransactionUser(),
-      // actions.btcmultisig.getInvoicesUser(),
-      // actions.usdt.getTransaction(),
-      //@ts-ignore
-      actions.eth.getTransaction(),
-      //@ts-ignore
-      ...(metamask.isEnabled() && metamask.isConnected()) ? [actions.eth.getTransaction(metamask.getAddress())] : [],
-      //@ts-ignore
-      ...(isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
-      //@ts-ignore
-      objCurrency && objCurrency['GHOST'].isBalanceFetched ? actions.ghost.getTransaction() : [],
-      //@ts-ignore
-      ...(isGhostSweeped && !(objCurrency && objCurrency['GHOST'].isBalanceFetched)) ? [] : [actions.ghost.getTransaction(actions.ghost.getSweepAddress())],
-      //@ts-ignore
-      actions.next.getTransaction(),
-      //@ts-ignore
-      ...(isNextSweeped) ? [] : [actions.next.getTransaction(actions.next.getSweepAddress())],
-      // actions.eth.getInvoices(),
-      // ... (isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
-    ])
+    clearTransactions()
 
+    const fetchTxsPromises = [
+      actions.btc.getTransaction(),
+      ...(isBtcSweeped) ? [] : [actions.btc.getTransaction(actions.btc.getSweepAddress())],
+      actions.btcmultisig.getTransactionSMS(),
+      actions.btcmultisig.getTransactionPIN(),
+      actions.btcmultisig.getTransactionUser(),
+      actions.eth.getTransaction(),
+      ...(metamask.isEnabled() && metamask.isConnected()) ? [actions.eth.getTransaction(metamask.getAddress())] : [],
+      ...(isEthSweeped) ? [] : [actions.eth.getTransaction(actions.eth.getSweepAddress())],
+      ...objCurrency && objCurrency['GHOST'] ? [actions.ghost.getTransaction()] : [],
+      ...objCurrency && objCurrency['NEXT'] ? [actions.next.getTransaction()] : [],
+    ]
+    
     const erc20 = Object.keys(config.erc20)
       .filter((key) => !hiddenCoinsList.includes(key.toUpperCase()) && enabledCurrencies.includes(key.toUpperCase()))
 
-    await new Promise(async resolve => {
-      const ercArray = await Promise.all(erc20
-        .map(async (name, index) => {
-          await delay(650 * index)
-          const res = await actions.token.getTransaction(null, name)
-          // console.log('name - ', name, '\n', '\n', res)
-          return res
-        }))
-      return resolve(ercArray)
-    }).then((ercTokens) => {
-      //@ts-ignore
-      pullTransactions([...mainTokens.filter(arr => arr.length), ...ercTokens])
+    fetchTxsPromises.forEach((txPromise: Promise<any[]>) => {
+      txPromise.then((txList: any[]) => {
+        mergeTransactions(txList)
+      })
+    })
+    erc20.map((name, index) => {
+      delay(650 * index).then(() => {
+        actions.token.getTransaction(null, name).then((ercTxs: any[]) => {
+          mergeTransactions(ercTxs)
+        })
+      })
     })
   } catch (error) {
     console.error('getTransError: ', error)

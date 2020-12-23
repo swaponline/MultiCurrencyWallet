@@ -404,7 +404,7 @@ const getDataByAddress = (address) => {
   return (founded.length) ? founded[0] : false
 }
 
-const getTransaction = (ownAddress, ownType) => {
+const getTransaction = (ownAddress: string = ``, ownType: string = ``) => {
   const myAllWallets = getAllMyAddresses()
 
   let { user: { btcData: { address: userAddress } } } = getState()

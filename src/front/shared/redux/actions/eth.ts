@@ -270,7 +270,7 @@ const getLinkToInfo = (tx) => {
   return `https://etherscan.io/tx/${tx}`
 }
 
-const getTransaction = (address, ownType) =>
+const getTransaction = (address: string = ``, ownType: string = ``) =>
   new Promise((resolve) => {
     const { user: { ethData: { address: userAddress } } } = getState()
     address = address || userAddress
