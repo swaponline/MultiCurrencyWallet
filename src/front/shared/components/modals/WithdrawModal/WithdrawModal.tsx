@@ -1006,7 +1006,15 @@ export default class WithdrawModal extends React.Component<any, any> {
             <FormattedMessage id="Comment" defaultMessage="Comment" />
           </FieldLabel>
           <div styleName="group">
-            <Input valueLink={linked.comment} placeholder={"Comment"} />
+            <Input
+              valueLink={linked.comment}
+              placeholder={
+                intl.formatMessage({
+                  id: 'Comment',
+                  defaultMessage: 'Comment',
+                })
+              }
+            />
           </div>
         </div>
         <div styleName="sendBtnsWrapper">
