@@ -15,18 +15,14 @@ npm run marketmaker:testnet SECRET_PHRASE="asd asd asd" SPREAD="5"
 ![](https://screenshots.wpmix.net/chrome_VfMLfx2KBVUIxaGsQ6ECBEKUq2VMF7Ag.png)
 
 ## Launch using docker
-```
-docker pull swaponline/mcw
-docker run -P -d --restart always --env "SECRET_PHRASE=bla bla bla 12 words seed phrase" swaponline/mcw:latest
-```
-or 
+copy paste this to bash (replace CONTAINERNAME=mybotproject1 and PORT=80 )
 
 ```
 CONTAINERNAME=mybotproject
 PORT=80 
 
-mkdir {$CONTAINERNAME}
-cd {$CONTAINERNAME}
+mkdir $CONTAINERNAME
+cd $CONTAINERNAME
 
 tee docker-compose.yml <<EOF
 version: '3'
@@ -101,6 +97,10 @@ EOF
 
 docker pull swaponline/mcw
 docker-compose up -d 
+
+curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash
+lazydocker
+
 ```
 
 ## update prices, pairs, etc 
