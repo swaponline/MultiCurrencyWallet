@@ -92,6 +92,8 @@ export default (tokenName) => {
         isFailedTransaction: false,
         isFailedTransactionError: null,
         gasAmountNeeded: 0,
+        // Script charged, confirmed and checked - next step - charge AB contract
+        isUTXOScriptOk: false,
       }
 
       this._persistState()
@@ -194,6 +196,10 @@ export default (tokenName) => {
 
           if (!isNextScriptOk) {
             return
+          } else {
+            flow.setState({
+              isUTXOScriptOk: true,
+            }, true)
           }
 
           const swapData = {

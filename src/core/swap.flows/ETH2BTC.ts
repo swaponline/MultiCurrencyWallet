@@ -92,6 +92,8 @@ class ETH2BTC extends Flow {
 
       // Partical (btc-seller) has unconfirmed txs in mempool
       particalBtcLocked: false,
+      // Script charged, confirmed and checked - next step - charge AB contract
+      isUTXOScriptOk: false,
     }
 
     this._persistState()
@@ -239,6 +241,10 @@ class ETH2BTC extends Flow {
 
         if (!isBtcScriptOk) {
           return
+        } else {
+          flow.setState({
+            isUTXOScriptOk: true,
+          }, true)
         }
 
         const swapData = {

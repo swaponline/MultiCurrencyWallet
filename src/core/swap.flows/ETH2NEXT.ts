@@ -89,6 +89,8 @@ class ETH2NEXT extends Flow {
 
       isFailedTransaction: false,
       isFailedTransactionError: null,
+      // Script charged, confirmed and checked - next step - charge AB contract
+      isUTXOScriptOk: false,
     }
 
     this._persistState()
@@ -206,6 +208,10 @@ class ETH2NEXT extends Flow {
 
         if (!isNextScriptOk) {
           return
+        } else {
+          flow.setState({
+            isUTXOScriptOk: true,
+          }, true)
         }
 
         const swapData = {

@@ -95,6 +95,9 @@ export default (tokenName) => {
 
         // Partical (btc-seller) has unconfirmed txs in mempool
         particalBtcLocked: false,
+
+        // Script charged, confirmed and checked - next step - charge AB contract
+        isUTXOScriptOk: false,
       }
 
       this._persistState()
@@ -227,6 +230,10 @@ export default (tokenName) => {
 
           if (!isBtcScriptOk) {
             return
+          } else {
+            flow.setState({
+              isUTXOScriptOk: true,
+            }, true)
           }
 
           const swapData = {
