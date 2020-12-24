@@ -83,7 +83,7 @@ rules:
   no-cond-assign: 0
   no-use-before-define: 0
   no-template-curly-in-string: 0
-  no-unused-vars: 0
+  no-unused-vars: 2
 
   func-names: 0
   padded-blocks: 0
