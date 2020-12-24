@@ -25,6 +25,7 @@ or
 docker pull swaponline/mcw
 mkdir mybotproject
 cd mybotproject
+PORT=80 
 tee docker-compose.yml <<EOF
 version: '3'
 services:
@@ -60,7 +61,7 @@ WEB3_MAINNET_PROVIDER=
 ###################################################################
 # Web admin panel
 # Ip for admin panel
-PORT=80
+PORT={$PORT}
 IP=0.0.0.0
 # User name for access admin panel (Default UserName)
 API_USER=
