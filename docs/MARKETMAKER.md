@@ -29,7 +29,7 @@ version: '3'
 services:
   mcw_bot:
     image: swaponline/mcw
-    container_name: mcw_bot
+    container_name: $CONTAINERNAME
     restart: unless-stopped
     volumes:
       - ${PWD}/config:/root/MulticurrencyWallet/config
@@ -59,7 +59,7 @@ WEB3_MAINNET_PROVIDER=
 ###################################################################
 # Web admin panel
 # Ip for admin panel
-PORT={$PORT}
+PORT=$PORT
 IP=0.0.0.0
 # User name for access admin panel (Default UserName)
 API_USER=
@@ -99,8 +99,8 @@ docker pull swaponline/mcw
 docker-compose up -d 
 
 curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash
-lazydocker
-
+lazydocker 
+echo "all done"
 ```
 
 ## update prices, pairs, etc 
