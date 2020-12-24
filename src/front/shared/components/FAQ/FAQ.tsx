@@ -121,15 +121,29 @@ const FAQ = (props) => {
             <div className={styles.descriptionFee}>
               <span>BTC:</span>{' '}
               {btcFee
-                ? <span><b>{btcFee}</b> sat/byte</span> 
-                : <InlineLoader />
+                ? (
+                  <span>
+                    <b>{btcFee}</b> sat/byte
+                    {' '}
+                    <a className={styles.link} href="https://api.blockcypher.com/v1/btc/main" target="_blank">
+                      <FormattedMessage id="FAQFeeApiLink" defaultMessage="(source)" />
+                    </a>
+                  </span>
+                ) : <InlineLoader />
               }
             </div>
             <div className={styles.descriptionFee}>
               <span>ETH:</span>{' '}
               {ethFee
-                ? <span><b>{ethFee}</b> gwei</span> 
-                : <InlineLoader />
+                ? (
+                  <span>
+                    <b>{ethFee}</b> gwei
+                    {' '}
+                    <a className={styles.link} href="https://data-api.defipulse.com/api/v1/egs/api/ethgasAPI.json?api-key=53be2a60f8bc0bb818ad161f034286d709a9c4ccb1362054b0543df78e27" target="_blank">
+                      <FormattedMessage id="FAQFeeApiLink" defaultMessage="(source)" />
+                    </a>
+                  </span>
+                ) : <InlineLoader />
               }
             </div>
             <br />
