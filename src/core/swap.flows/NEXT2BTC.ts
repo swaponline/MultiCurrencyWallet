@@ -55,7 +55,7 @@ class NEXT2BTC extends Flow {
     }
 
     this.state = {
-      ...this.state,
+      step: 0,
 
       signTransactionHash: null,
       isSignFetching: false,

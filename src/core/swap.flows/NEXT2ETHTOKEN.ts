@@ -50,7 +50,9 @@ export default (tokenName) => {
       }
 
       this.state = {
-        ...this.state,
+        step: 0,
+
+        isStoppedSwap: false,
 
         signTransactionHash: null,
         isSignFetching: false,
