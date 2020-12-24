@@ -126,8 +126,11 @@ export default class Row extends Component {
   }
 
   getDecimals = (amount, currency) => {
-    const decimalPlaces = 8 // constants.tokenDecimals[currency.toLowerCase()] || 8
-    return String(new BigNumber(amount).dp(decimalPlaces, BigNumber.ROUND_CEIL))
+    const decimalPlaces = constants.tokenDecimals[currency.toLowerCase()] || 8
+
+    return decimalPlaces > 8
+      ? String(new BigNumber(amount).dp(8, BigNumber.ROUND_CEIL) + '...')
+      : String(new BigNumber(amount).dp(decimalPlaces, BigNumber.ROUND_CEIL))
   }
 
   handleDeclineOrdersModalOpen = (indexOfDecline) => {

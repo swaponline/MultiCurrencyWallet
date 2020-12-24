@@ -181,11 +181,11 @@ export default class OrderBook extends Component {
     const sellCurrency = propsSellCurrency.toUpperCase()
 
     const titles = [
-      ' ',
-      <FormattedMessage id="orders102" defaultMessage="SELLS" />,
-      <FormattedMessage id="orders104" defaultMessage="FOR" />,
-      <FormattedMessage id="orders105" defaultMessage="AT PRICE" />,
-      ' ',
+      ' ', // empty title in the table
+      <FormattedMessage id="orders102" defaultMessage="Amount" />,
+      <FormattedMessage id="orders104" defaultMessage="Total" />,
+      <FormattedMessage id="orders105" defaultMessage="Price" />,
+      ' ', // empty title in the table 
     ]
 
     const seoPage = getSeoPage(location.pathname)
