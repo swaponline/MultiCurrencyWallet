@@ -478,7 +478,7 @@ export default class SwapProgress extends Component<any, any> {
                 <strong styleName="externalWeb3Attention">
                   <FormattedMessage
                     id="Swap_MetamaskAttention"
-                    defaultMessage="Please confirm transaction in your &quot;{walletName}&quot; wallet"
+                    defaultMessage="Please confirm the transaction in your &quot;{walletName}&quot; wallet"
                     values={{
                       walletName: metamask.web3connect.getProviderTitle(),
                     }}
