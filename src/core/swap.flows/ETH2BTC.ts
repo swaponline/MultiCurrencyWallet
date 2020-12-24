@@ -47,9 +47,7 @@ class ETH2BTC extends Flow {
     }
 
     this.state = {
-      step: 0,
-
-      isStoppedSwap: false,
+      ...this.state,
 
       signTransactionHash: null,
       isSignFetching: false,
@@ -89,22 +87,11 @@ class ETH2BTC extends Flow {
 
       isFailedTransaction: false,
       isFailedTransactionError: null,
-
-      // Partical (btc-seller) has unconfirmed txs in mempool
-      particalBtcLocked: false,
-      // Script charged, confirmed and checked - next step - charge AB contract
-      isUTXOScriptOk: false,
     }
 
     this._persistState()
 
     const flow = this
-
-    flow.swap.room.on('wait btc unlock', () => {
-      this.setState({
-        particalBtcLocked: true,
-      })
-    })
 
     flow.swap.room.once('request withdraw', () => {
       flow.setState({

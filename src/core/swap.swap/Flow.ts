@@ -10,12 +10,23 @@ class Flow {
   app: any
   stepNumbers: any
   state: {
+    // Common swaps state
     step: number
     isWaitingForOwner: boolean
 
     isStoppedSwap?: boolean
     isRefunded?: boolean
     isFinished?: boolean
+
+    // Torbo swaps state
+    // ...
+
+    // Atomic swaps state
+    // -- AB-UTXO
+    particalHasLockedUTXO?: boolean
+    // -- UTXO-AB
+    isUTXOScriptOk?: boolean
+    waitUnlockUTXO?: boolean
   }
 
   constructor(swap) {
@@ -28,6 +39,30 @@ class Flow {
     this.state = {
       step: 0,
       isWaitingForOwner: false,
+      isStoppedSwap: false,
+
+      /** -------------- Turbo Swaps States ----------------- **/
+      // ....
+
+      /** -------------- Atomic Swaps States ---------------- **/
+      ...{
+        /** AB-UTXO **/
+        // Partical (btc-seller) has unconfirmed txs in mempool
+        particalHasLockedUTXO: false,
+        // Script charged, confirmed and checked - next step - charge AB contract
+        isUTXOScriptOk: false,
+      },
+      ...{
+        /** UTXO-AB **/
+        // We are have locked txs in mem-pool
+        waitUnlockUTXO: false,
+      },
+      ...{
+        /** UTXO-UTXO **/
+      },
+      ...{
+        /** AB-AB **/
+      },
     }
 
     this._attachSwapApp(swap.app)

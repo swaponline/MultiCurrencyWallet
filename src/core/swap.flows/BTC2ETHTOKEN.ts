@@ -49,9 +49,7 @@ export default (tokenName) => {
       }
 
       this.state = {
-        step: 0,
-
-        isStoppedSwap: false,
+        ...this.state,
 
         signTransactionHash: null,
         isSignFetching: false,
@@ -86,9 +84,6 @@ export default (tokenName) => {
         refundTxHex: null,
         isFinished: false,
         isSwapExist: false,
-
-        // Has unconfirmed tx in mem-pool - wait unlock
-        waitBtcUnlock: false,
       }
 
       this._persistState()
@@ -202,11 +197,11 @@ export default (tokenName) => {
                   if (err === 'Conflict') {
                     console.warn('BTC locked. Has not confirmed tx in mempool. Wait confirm')
                     flow.swap.room.sendMessage({
-                      event: 'wait btc unlock',
+                      event: 'wait utxo unlock',
                       data: {},
                     })
                     flow.setState({
-                      waitBtcUnlock: true,
+                      waitUnlockUTXO: true,
                     })
                     await util.helpers.waitDelay(30)
                     return false

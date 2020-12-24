@@ -47,9 +47,7 @@ class ETH2GHOST extends Flow {
     }
 
     this.state = {
-      step: 0,
-
-      isStoppedSwap: false,
+      ...this.state,
 
       signTransactionHash: null,
       isSignFetching: false,
@@ -89,8 +87,6 @@ class ETH2GHOST extends Flow {
 
       isFailedTransaction: false,
       isFailedTransactionError: null,
-      // Script charged, confirmed and checked - next step - charge AB contract
-      isUTXOScriptOk: false,
     }
 
     this._persistState()

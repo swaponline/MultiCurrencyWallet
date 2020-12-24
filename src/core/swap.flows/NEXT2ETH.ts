@@ -48,9 +48,7 @@ class NEXT2ETH extends Flow {
     }
 
     this.state = {
-      step: 0,
-
-      isStoppedSwap: false,
+      ...this.state,
 
       signTransactionHash: null,
       isSignFetching: false,

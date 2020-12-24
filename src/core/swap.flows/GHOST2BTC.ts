@@ -48,7 +48,7 @@ class GHOST2BTC extends Flow {
     }
 
     this.state = {
-      step: 0,
+      ...this.state,
 
       signTransactionHash: null,
       isSignFetching: false,

@@ -49,9 +49,7 @@ export default (tokenName) => {
       }
 
       this.state = {
-        step: 0,
-
-        isStoppedSwap: false,
+        ...this.state,
 
         signTransactionHash: null,
         isSignFetching: false,
@@ -92,8 +90,6 @@ export default (tokenName) => {
         isFailedTransaction: false,
         isFailedTransactionError: null,
         gasAmountNeeded: 0,
-        // Script charged, confirmed and checked - next step - charge AB contract
-        isUTXOScriptOk: false,
       }
 
       this._persistState()

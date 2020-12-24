@@ -279,6 +279,13 @@ class Swap {
             }, { step: `wait-lock-${_Buy}`, silentError: true })
           }
         })
+        // Seller has unconfirmed tx in mem pool
+        this.room.on('wait utxo unlock', () => {
+          this.flow.setState({
+            particalHasLockedUTXO: true,
+          }, true)
+        })
+
         const requestScriptFunc = () => {
           if (this.flow && !this.flow._isFinished()) {
             const { step } = this.flow.state
