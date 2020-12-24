@@ -7846,6 +7846,13 @@
     ]
   },
   {
+    "id": "Comment",
+    "message": "Сomentario",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
     "id": "ConnectWalletModal_WalletLocked",
     "message": "La billetera está bloqueada. Primero desbloquea la billetera.",
     "files": [

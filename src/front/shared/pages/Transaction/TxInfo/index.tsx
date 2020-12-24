@@ -43,6 +43,10 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 }, { allowMultiple: true })
 export default class TxInfo extends Component<any, any> {
 
+  updateComment = (value) => {
+    this.setState({ state: this.state });
+  }
+
   render() {
     const {
       intl,
@@ -309,6 +313,7 @@ export default class TxInfo extends Component<any, any> {
             <CommentRow
               label={''}
               canEdit={true}
+              updateComment={(v) => this.updateComment(v)}
               commentKey={txId}
             />
         </div>

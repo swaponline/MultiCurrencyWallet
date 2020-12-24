@@ -61,13 +61,17 @@
   }
 }
 @media all and (max-width: 767px) {
-
   .date {
     width: 65%;
   }
 }
 
-
-@media all and (max-width: 400px) {
-
+.commentText {
+  margin-top: 0.5em;
+  border: 2px solid #8883;
+  padding: 4px;
+  border-radius: 8px;
+  border-top-left-radius: 0px;
+  background: #8881;
+  font-weight: normal;
 }
