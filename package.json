@@ -240,7 +240,7 @@
     "is-local-ip": "^1.1.0",
     "jdenticon": "^3.1.0",
     "json-stringify-safe": "^5.0.1",
-    "libp2p": "^0.29.4",
+    "libp2p": "^0.30.0",
     "libp2p-bootstrap": "^0.12.1",
     "libp2p-gossipsub": "^0.7.0",
     "libp2p-mdns": "^0.15.0",
