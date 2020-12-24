@@ -474,15 +474,15 @@ export default class SwapProgress extends Component<any, any> {
                 <strong styleName="attention">
                   <FormattedMessage
                     id="Swap_OwnerHasLockedUTX"
-                    defaultMessage="Swap paused because owner has unconfirmed transaction in mempool"
+                    defaultMessage="Swap paused because you has unconfirmed transaction in mempool"
                   />
                 </strong>
               )}
-              {flow.step === 5 && flow.particalHasLockedUTXO && (
+              {flow.step <= 5 && flow.particalHasLockedUTXO && (
                 <strong styleName="attention">
                   <FormattedMessage
                     id="Swap_SellerHasLockedUTX"
-                    defaultMessage="Swap paused because yp has unconfirmed transaction in mempool"
+                    defaultMessage="Swap paused because owner has unconfirmed transaction in mempool"
                   />
                 </strong>
               )}
