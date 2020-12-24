@@ -22,10 +22,12 @@ docker run -P -d --restart always --env "SECRET_PHRASE=bla bla bla 12 words seed
 or 
 
 ```
-docker pull swaponline/mcw
-mkdir mybotproject
-cd mybotproject
+CONTAINERNAME=mybotproject
 PORT=80 
+
+mkdir {$CONTAINERNAME}
+cd {$CONTAINERNAME}
+
 tee docker-compose.yml <<EOF
 version: '3'
 services:
@@ -97,7 +99,7 @@ LOG_TO_DB_PASS=
 
 EOF
 
-
+docker pull swaponline/mcw
 docker-compose up -d 
 ```
 
