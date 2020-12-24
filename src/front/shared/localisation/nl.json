@@ -1338,14 +1338,14 @@
   },
   {
     "id": "orders102",
-    "message": "SELGER",
+    "message": "Beløp",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
   },
   {
     "id": "orders105",
-    "message": "TIL PRIS",
+    "message": "Pris",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
@@ -2306,7 +2306,7 @@
   },
   {
     "id": "orders104",
-    "message": "TIL",
+    "message": "Total",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]

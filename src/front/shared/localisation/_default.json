@@ -1287,14 +1287,14 @@
   },
   {
     "id": "orders102",
-    "message": "SELLS",
+    "message": "Amount",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
   },
   {
     "id": "orders105",
-    "message": "AT PRICE",
+    "message": "Price",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
@@ -2232,7 +2232,7 @@
   },
   {
     "id": "orders104",
-    "message": "FOR",
+    "message": "Total",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]

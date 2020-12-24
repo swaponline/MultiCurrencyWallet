@@ -1403,14 +1403,14 @@
   },
   {
     "id": "orders102",
-    "message": "ПРОДАЕТ",
+    "message": "Количество",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
   },
   {
     "id": "orders105",
-    "message": "ПО ЦЕНЕ",
+    "message": "Цена",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
@@ -2381,7 +2381,7 @@
   },
   {
     "id": "orders104",
-    "message": "ЗА",
+    "message": "Всего",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
