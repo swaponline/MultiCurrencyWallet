@@ -470,12 +470,27 @@ export default class SwapProgress extends Component<any, any> {
                   <FormattedMessage id="swapFinishedGoHome298" defaultMessage="Everything is OK. Continue" />
                 </TimerButton>
               )}
-
+              {flow.step === 4 && flow.waitUnlockUTXO && (
+                <strong styleName="attention">
+                  <FormattedMessage
+                    id="Swap_OwnerHasLockedUTX"
+                    defaultMessage="Swap paused because owner has unconfirmed transaction in mempool"
+                  />
+                </strong>
+              )}
+              {flow.step === 5 && flow.particalHasLockedUTXO && (
+                <strong styleName="attention">
+                  <FormattedMessage
+                    id="Swap_SellerHasLockedUTX"
+                    defaultMessage="Swap paused because you has unconfirmed transaction in mempool"
+                  />
+                </strong>
+              )}
               {metamask.isConnected() && (
                 (!this.isSellCurrencyEthOrEthToken && flow.step === 6)
                 || (this.isSellCurrencyEthOrEthToken && flow.step === 5 && flow.isUTXOScriptOk)
               ) && (
-                <strong styleName="externalWeb3Attention">
+                <strong styleName="attention">
                   <FormattedMessage
                     id="Swap_MetamaskAttention"
                     defaultMessage="Please confirm the transaction in your &quot;{walletName}&quot; wallet"
