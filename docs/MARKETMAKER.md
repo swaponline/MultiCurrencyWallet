@@ -19,7 +19,11 @@ npm run marketmaker:testnet SECRET_PHRASE="asd asd asd" SPREAD="5"
 docker pull swaponline/mcw
 docker run -P -d --restart always --env "SECRET_PHRASE=bla bla bla 12 words seed phrase" swaponline/mcw:latest
 ```
-
+or 
+```
+docker pull swaponline/mcw
+docker-compose up -d 
+```
 
 ## update prices, pairs, etc 
 see ./tradeconfig.mainnet.json
