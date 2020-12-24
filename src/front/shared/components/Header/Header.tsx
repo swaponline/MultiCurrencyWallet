@@ -77,6 +77,9 @@ export default class Header extends Component<any, any> {
     super(props);
 
     const {
+      match: {
+        params: { page = null },
+      },
       location: { pathname },
       intl,
     } = props;
@@ -92,6 +95,7 @@ export default class Header extends Component<any, any> {
       //@ts-ignore
       lsWalletCreated = true;
     }
+
     const isWalletPage = pathname === wallet || pathname === `/ru${wallet}`;
 
     this.state = {
@@ -299,14 +303,14 @@ export default class Header extends Component<any, any> {
       case isWidgetBuild && !wasOnWidgetWalletLs:
         tourEvent = this.openWidgetWalletTour;
         break;
-      case !userCurrencies.length && isWalletPage:
-        this.openCreateWallet({ onClose: tourEvent });
-        break;
+      case !userCurrencies.length && isWalletPage && !config.opts.plugins.backupPlugin:
+        this.openCreateWallet({ onClose: tourEvent })
+        break
       default:
         return;
     }
 
-    if (!didOpenWalletCreate && isWalletPage) {
+    if (!didOpenWalletCreate && isWalletPage && !config.opts.plugins.backupPlugin) {
       this.openCreateWallet({ onClose: tourEvent });
       return;
     }

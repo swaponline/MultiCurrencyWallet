@@ -52,8 +52,8 @@ export default class Row extends React.PureComponent<any, any> {
 
   componentDidMount() {
     const { type, tokensData } = this.props
-    /* 
-    * request fiat balance if token have currency price 
+    /*
+    * request fiat balance if token have currency price
     */
     Object.keys(tokensData).forEach(key => {
       if (key.includes(type)) {
@@ -354,7 +354,6 @@ export default class Row extends React.PureComponent<any, any> {
                 }
               </div>
               <CommentRow
-                comment={comment}
                 label={invoiceData && invoiceData.label}
                 date={date}
                 showComment={true}

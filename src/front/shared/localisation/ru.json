@@ -7912,6 +7912,13 @@
     ]
   },
   {
+    "id": "Comment",
+    "message": "Комментарий",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
     "id": "ConnectWalletModal_WalletLocked",
     "message": "Кошелек заблокирован. Сначала разблокируйте кошелек.",
     "files": [
