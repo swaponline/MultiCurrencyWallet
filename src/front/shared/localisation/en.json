@@ -8253,7 +8253,7 @@
   },
   {
     "id": "Swap_MetamaskAtention",
-    "message": "Attention, you have a \"{walletName}\" wallet connected. Make sure it is unlocked and active",
+    "message": "Please confirm transaction in your \"{walletName}\" wallet",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]

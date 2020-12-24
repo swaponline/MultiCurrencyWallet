@@ -8277,7 +8277,7 @@
   },
   {
     "id": "Swap_MetamaskAtention",
-    "message": "Atención, tiene una billetera \"{walletName}\" conectada. Asegúrese de que esté desbloqueado y activo",
+    "message": "Confirma la transacción en tu billetera \"{walletName}\"",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]

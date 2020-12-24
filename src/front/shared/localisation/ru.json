@@ -8325,7 +8325,7 @@
   },
   {
     "id": "Swap_MetamaskAtention",
-    "message": "Внимание, у Вас подключен кошелек \"{walletName}\". Убедитесь, что он разблокирован и активен",
+    "message": "Пожалуйста подтвердите транзакцию в вашем кошельке \"{walletName}\".",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]

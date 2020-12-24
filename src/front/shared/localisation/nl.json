@@ -8269,7 +8269,7 @@
   },
   {
     "id": "Swap_MetamaskAtention",
-    "message": "Let op, u heeft een \"{walletName}\" wallet aangesloten. Zorg ervoor dat het ontgrendeld en actief is",
+    "message": "Bevestig de transactie in uw \"{walletName}\" portemonnee",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
