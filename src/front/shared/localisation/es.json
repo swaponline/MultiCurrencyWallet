@@ -8276,7 +8276,7 @@
     "message": "Tamaño de la transacción:"
   },
   {
-    "id": "Swap_MetamaskAtention",
+    "id": "Swap_MetamaskAttention",
     "message": "Confirma la transacción en tu billetera \"{walletName}\"",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"

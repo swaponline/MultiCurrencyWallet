@@ -475,9 +475,9 @@ export default class SwapProgress extends Component<any, any> {
                 (!this.isSellCurrencyEthOrEthToken && flow.step === 6)
                 || (this.isSellCurrencyEthOrEthToken && flow.step === 5)
               ) && (
-                <strong styleName="externalWeb3Atention">
+                <strong styleName="externalWeb3Attention">
                   <FormattedMessage
-                    id="Swap_MetamaskAtention"
+                    id="Swap_MetamaskAttention"
                     defaultMessage="Please confirm transaction in your &quot;{walletName}&quot; wallet"
                     values={{
                       walletName: metamask.web3connect.getProviderTitle(),

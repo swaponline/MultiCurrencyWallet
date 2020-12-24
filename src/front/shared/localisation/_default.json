@@ -8252,7 +8252,7 @@
     "message": "Transaction size:"
   },
   {
-    "id": "Swap_MetamaskAtention",
+    "id": "Swap_MetamaskAttention",
     "message": "Please confirm transaction in your \"{walletName}\" wallet",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"

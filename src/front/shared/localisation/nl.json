@@ -8268,7 +8268,7 @@
     "message": "Transaksjonsstørrelse:"
   },
   {
-    "id": "Swap_MetamaskAtention",
+    "id": "Swap_MetamaskAttention",
     "message": "Bevestig de transactie in uw \"{walletName}\" portemonnee",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
