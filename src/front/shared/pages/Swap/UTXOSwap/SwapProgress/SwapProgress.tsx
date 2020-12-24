@@ -472,10 +472,13 @@ export default class SwapProgress extends Component<any, any> {
               )}
 
               {metamask.isConnected() && (
+                (!this.isSellCurrencyEthOrEthToken && flow.step === 6)
+                || (this.isSellCurrencyEthOrEthToken && flow.step === 5)
+              ) && (
                 <strong styleName="externalWeb3Atention">
                   <FormattedMessage
                     id="Swap_MetamaskAtention"
-                    defaultMessage="Attention, you have a &quot;{walletName}&quot; wallet connected. Make sure it is unlocked and active"
+                    defaultMessage="Please confirm transaction in your &quot;{walletName}&quot; wallet"
                     values={{
                       walletName: metamask.web3connect.getProviderTitle(),
                     }}
