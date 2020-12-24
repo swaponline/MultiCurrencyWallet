@@ -1,0 +1,70 @@
+.tx {
+  padding: 0 1em;
+  font-size: 12px;
+}
+
+.amount {
+  font-size: 12px;
+  text-align: center;
+}
+
+
+$arrow_color: #8886;
+$expected_opacity: 0.3;
+
+.arrow {
+  height: 4px;
+  background-color: $arrow_color;
+  position: relative;
+
+  &::before {
+    display: block;
+    content: ' ';
+    position: absolute;
+    top: -6px;
+    width: 16px;
+    height: 16px;
+    border: 3px solid $arrow_color;
+    border-right-width: 0;
+    border-bottom-width: 0;
+  }
+
+  &.left::before {
+    left: -1px;
+    transform: rotate(-45deg);
+  }
+
+  &.right::before {
+    right: -1px;
+    transform: rotate(135deg);
+  }
+
+  &.expected {
+    opacity: $expected_opacity;
+  }
+
+  &.pending {
+    animation: 0.6s ease infinite pending;
+  }
+
+  &.done {
+    font-size: 12px;
+  }
+}
+
+@keyframes pending {
+  0% {
+    opacity: $expected_opacity;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: $expected_opacity;
+  }
+}
+
+.link {
+  font-size: 12px;
+}
+

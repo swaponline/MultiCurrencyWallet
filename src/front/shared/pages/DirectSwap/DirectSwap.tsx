@@ -1,5 +1,6 @@
 import React, { PureComponent, Fragment } from 'react'
 
+import BigNumber from 'bignumber.js'
 import Swap from 'swap.swap'
 import SwapApp from 'swap.app'
 
@@ -19,7 +20,8 @@ import { localisedUrl } from 'helpers/locale'
 import feedback from 'shared/helpers/feedback'
 
 import config from 'app-config'
-
+import Side from './Side'
+import Tx from './Tx'
 
 
 import { IDirectSwapConditions, DirectSwapStep } from 'common/domain/swap'
@@ -213,25 +215,69 @@ export default class SwapComponent extends PureComponent<any, any> {
       swap,
     } = this.state
 
-    const side = () => {
-
-    }
-
     return (
-      <Fragment>
-        <div styleName="directSwap">
-          <div styleName="side">
-            <div styleName="avatar">
-            </div>
-            <div styleName="title">
-              You
-            </div>
-          </div>
-          <div styleName="tx">
-            123412341234123412341234123412341234
-          </div>
+      <div styleName="directSwap">
+        <div styleName="blockchain">
+          <Side
+            peerId={'123'}
+            title={'You'}
+            address={'111111111'}
+          />
+          <Tx
+            amount={new BigNumber(0.123)}
+            ticker={'BTC'}
+            id={'123412341234123412341234123412341234'}
+            url={'https://google.com'}
+            direction={'right'}
+            status={'done'}
+          />
+          <Side
+            peerId={'1234'}
+            title={'Maker'}
+            address={'2222222'}
+          />
         </div>
-      </Fragment>
+        <div styleName="blockchain">
+          <Side
+            peerId={'123'}
+            title={'You'}
+            address={'111111111'}
+          />
+          <Tx
+            amount={new BigNumber(456)}
+            ticker={'ETH'}
+            id={'123412341234123412341234123412341234'}
+            url={'https://google.com'}
+            direction={'left'}
+            status={'pending'}
+          />
+          <Side
+            peerId={'1234'}
+            title={'Maker'}
+            address={'2222222'}
+          />
+        </div>
+        <div styleName="blockchain">
+          <Side
+            peerId={'123'}
+            title={'You'}
+            address={'111111111'}
+          />
+          <Tx
+            amount={new BigNumber(456)}
+            ticker={'ETH'}
+            id={'123412341234123412341234123412341234'}
+            url={'https://google.com'}
+            direction={'left'}
+            status={'expected'}
+          />
+          <Side
+            peerId={'1234'}
+            title={'Maker'}
+            address={'2222222'}
+          />
+        </div>
+      </div>
     )
   }
 }

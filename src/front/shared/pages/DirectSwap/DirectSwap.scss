@@ -1,19 +1,21 @@
 .directSwap {
+  //width: 300px;
+  max-width: 900px;
+  margin: 0 auto;
   font-size: 12px;
 }
 
-.side {
-  font-size: 13px;
+
+.blockchain {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  background: linear-gradient(#8880, #8882, #8880);
+  padding: 2em 1em;
+  //border-radius: 20%;
+  overflow: hidden;
 }
 
-.avatar {
-  font-size: 12px;
-}
-
-.title {
-  font-size: 12px;
-}
-
-.tx {
-  font-size: 12px;
+.blockchain + .blockchain {
+  border-top: 2px dashed #8884;
 }
