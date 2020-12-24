@@ -82,4 +82,4 @@ Developer? Start with [ONBOARDING](https://github.com/swaponline/MultiCurrencyWa
 
 ---
 
-Any questions [are welcome](https://t.me/mcvchat)
+Any questions [are welcome](https://t.me/mcwchat)
