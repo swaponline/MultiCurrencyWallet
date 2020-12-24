@@ -473,7 +473,7 @@ export default class SwapProgress extends Component<any, any> {
 
               {metamask.isConnected() && (
                 (!this.isSellCurrencyEthOrEthToken && flow.step === 6)
-                || (this.isSellCurrencyEthOrEthToken && flow.step === 5)
+                || (this.isSellCurrencyEthOrEthToken && flow.step === 5 && flow.isUTXOScriptOk)
               ) && (
                 <strong styleName="externalWeb3Attention">
                   <FormattedMessage
