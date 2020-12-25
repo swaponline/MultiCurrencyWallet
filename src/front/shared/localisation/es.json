@@ -145,7 +145,7 @@
     "id": "logo29",
     "message": "Ir a pagina principal",
     "files": [
-      "src/front/shared/components/Header/Logo.tsx"
+      "src/front/shared/components/Header/Logo/Logo.tsx"
     ]
   },
   {
@@ -185,45 +185,27 @@
   },
   {
     "id": "ImportKeys107",
-    "message": "Este procedimiento reescribirá tu clave privada. Si no estas seguro, recomendamos presionar cancelar",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Este procedimiento reescribirá tu clave privada. Si no estas seguro, recomendamos presionar cancelar"
   },
   {
     "id": "ImportKeys110",
-    "message": "Por favor ingrese su clave privada de ETH",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Por favor ingrese su clave privada de ETH"
   },
   {
     "id": "ImportKeys120",
-    "message": "Por favor ingrese su clave privada de BTC en formato WIF",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Por favor ingrese su clave privada de BTC en formato WIF"
   },
   {
     "id": "ImportKeys130",
-    "message": "Confirmar",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Confirmar"
   },
   {
     "id": "ImportKeys133",
-    "message": "Cancelar",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Cancelar"
   },
   {
     "id": "Group14",
-    "message": "Importar",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/Group/Group.tsx"
-    ]
+    "message": "Importar"
   },
   {
     "id": "Select10",
@@ -1656,10 +1638,7 @@
   },
   {
     "id": "Import",
-    "message": "Importar claves",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Importar claves"
   },
   {
     "id": "Add52",
@@ -1808,10 +1787,7 @@
   },
   {
     "id": "errorImportKeys",
-    "message": "Por favor guarda tus claves privadas",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Por favor guarda tus claves privadas"
   },
   {
     "id": "PrivateKeysModal144",
@@ -1899,17 +1875,11 @@
   },
   {
     "id": "importkeys118",
-    "message": "Por favor ingrese la clave privada BTC",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Por favor ingrese la clave privada BTC"
   },
   {
     "id": "importkeys119",
-    "message": "Por favor valide la clave privada BTC",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Por favor valide la clave privada BTC"
   },
   {
     "id": "PartialPriceSearch483",
@@ -2243,24 +2213,15 @@
   },
   {
     "id": "importkeys172",
-    "message": "Por favor ingrese su clave privada de ETH",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Por favor ingrese su clave privada de ETH"
   },
   {
     "id": "importkeys173",
-    "message": "Por favor valide la clave privada ETH",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Por favor valide la clave privada ETH"
   },
   {
     "id": "importkeys190",
-    "message": "Algo salió mal. Revise su clave privada, red de esta dirección, etc. ",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Algo salió mal. Revise su clave privada, red de esta dirección, etc. "
   },
   {
     "id": "WithdrawIncorectAddress",
@@ -6301,7 +6262,7 @@
     "id": "ExitWidget",
     "message": "Salir",
     "files": [
-      "src/front/shared/components/Header/WidgetHeader/index.tsx"
+      "src/front/shared/components/Header/Header.tsx"
     ]
   },
   {
@@ -8291,9 +8252,13 @@
   },
   {
     "id": "FeeInfoBlockTxSize",
-    "message": "Tamaño de la transacción:",
+    "message": "Tamaño de la transacción:"
+  },
+  {
+    "id": "FAQFeeApiLink",
+    "message": "(fuente)",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   }
 ]
