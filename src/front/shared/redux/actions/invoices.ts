@@ -73,7 +73,7 @@ const markInvoice = (invoiceId, mark, txid, address) => new Promise((resolve) =>
   .catch(() => { resolve(false) }))
 
 const getInvoice = (hash) => {
-  if ((config.isWidget || !config.opts.invoiceEnabled)) {
+  if (!config.opts.invoiceEnabled) {
     return new Promise((resolve) => { resolve(false) })
   }
 
@@ -117,7 +117,7 @@ const getInvoice = (hash) => {
 }
 
 const getManyInvoices = (data) => {
-  if ((config.isWidget || !config.opts.invoiceEnabled)) {
+  if (!config.opts.invoiceEnabled) {
     return new Promise((resolve) => { resolve([]) })
   }
 
@@ -180,7 +180,7 @@ const getManyInvoices = (data) => {
 }
 
 const getInvoices = (data) => {
-  if ((config.isWidget || !config.opts.invoiceEnabled)) {
+  if (!config.opts.invoiceEnabled) {
     return new Promise((resolve) => { resolve([]) })
   }
 
