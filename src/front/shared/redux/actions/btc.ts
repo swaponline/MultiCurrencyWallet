@@ -605,6 +605,12 @@ const signAndBuild = (transactionBuilder, address) => {
   return transactionBuilder.buildIncomplete()
 }
 
+const prepareUnspents = (address, amount) => bitcoinUtils.prepareUnspents({
+  address,
+  amount,
+  NETWORK,
+})
+window.prepareUnspents = prepareUnspents
 const fetchUnspents = (address) => bitcoinUtils.fetchUnspents({
   address,
   NETWORK,

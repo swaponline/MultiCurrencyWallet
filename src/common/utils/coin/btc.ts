@@ -216,8 +216,19 @@ const fetchTxInfo = (options) : any => {
   })
 }
 
+export interface IBtcUnspent {
+  address: string,
+  amount: number,
+  confirmations: number,
+  height: number,
+  satoshis: number,
+  scriptPubKey: string,
+  txid: string,
+  vout: number,
+  spentTxid: string,
+}
 // @To-do - make interface - ответ этой функции общий для все блокчейнов
-const fetchUnspents = (options): any => {
+const fetchUnspents = (options): Promise<IBtcUnspent[]> => {
   const {
     address,
     apiBitpay,
@@ -252,10 +263,75 @@ const fetchUnspents = (options): any => {
       }))
     }).catch((error) => {
       console.error('btc fetchUnspents error', error)
+      reject(error)
     })
   })
 }
 
+/**
+ * Подберает подходящие unspents для указанной суммы в сатоши
+ **/
+interface IprepareUnspents {
+  NETWORK: any,
+  address: string,
+  amount: number,
+  apiBitpay?: any,
+  cacheResponse?: any,
+}
+const prepareUnspents = (options: IprepareUnspents): Promise<IBtcUnspent[]> => {
+  const {
+    NETWORK,
+    apiBitpay,
+    cacheResponse,
+    address,
+    amount,
+  } = options
+  return new Promise((resolve, reject) => {
+    fetchUnspents({
+      NETWORK,
+      address,
+      apiBitpay,
+      cacheResponse,
+    }).then((unspents: IBtcUnspent[]) => {
+      // Сначала отсортируем unspents по возрастанию не потраченной сдачи
+      console.log('unspents', unspents)
+      const sortedUnspents: IBtcUnspent[] = unspents.sort((a: IBtcUnspent, b: IBtcUnspent) => {
+        return (a.satoshis == b.satoshis)
+          ? 0
+          : (a.satoshis > b.satoshis)
+            ? 1
+            : -1
+      })
+      console.log('sortedUnspents', sortedUnspents)
+      // Подберем здачу, суммы которой хватает для транзакции (от меньшего к большему)
+      let calcedAmount = new BigNumber(0)
+      const usedUnspents: IBtcUnspent[] = sortedUnspents.filter((unspent: IBtcUnspent) => {
+        if (calcedAmount.isGreaterThanOrEqualTo(amount)) {
+          return false
+        } else {
+          calcedAmount = calcedAmount.plus(unspent.satoshis)
+          return true
+        }
+      })
+      console.log('usedUnspents', usedUnspents)
+      // Попробуем найти один выход сдачи, который покроет транзакцию
+      let oneUnspent: IBtcUnspent = null
+      sortedUnspents.forEach((unspent: IBtcUnspent) => {
+        if (oneUnspent === null
+          && new BigNumber(unspent.satoshis).isGreaterThanOrEqualTo(amount)
+        ) {
+          oneUnspent = unspent
+          return false
+        }
+      })
+      console.log('one unspent', oneUnspent)
+      // Если один выход не нашли - используем подсчитанные usedUnspents
+      
+    }).catch((error) => {
+      reject(error)
+    })
+  })
+}
 
 // @ToDo - интерфейс - возврашет объект { txid }
 const broadcastTx = (options): any => {
@@ -716,4 +792,6 @@ export default {
 
   estimateFeeValue,
   getCore,
+
+  prepareUnspents,
 }
