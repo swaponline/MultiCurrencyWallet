@@ -7,6 +7,7 @@ import typeforce from 'swap.app/util/typeforce'
 import { default as TESTNET } from '../../../front/config/testnet/api'
 import { default as MAINNET } from '../../../front/config/mainnet/api'
 
+const DUST = 546
 
 const getBitpay = (network) => {
   return {
@@ -296,9 +297,9 @@ const prepareUnspents = (options: IprepareUnspents): Promise<IBtcUnspent[]> => {
       // Сначала отсортируем unspents по возрастанию не потраченной сдачи
       console.log('unspents', unspents)
       const sortedUnspents: IBtcUnspent[] = unspents.sort((a: IBtcUnspent, b: IBtcUnspent) => {
-        return (a.satoshis == b.satoshis)
+        return (new BigNumber(a.satoshis).isEqualTo(b.satoshis))
           ? 0
-          : (a.satoshis > b.satoshis)
+          : (new BigNumber(a.satoshis).isGreaterThan(b.satoshis))
             ? 1
             : -1
       })
@@ -755,7 +756,6 @@ const estimateFeeValue = async (options) => {
     NETWORK,
   } = options
 
-  const DUST = 546
   let calculatedFeeValue
 
   if (!_txSize && !address) {
