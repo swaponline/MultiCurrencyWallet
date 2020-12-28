@@ -963,13 +963,15 @@ export default class Row extends Component<any, any> {
                   {/* 
                   If metamask disconnected then showing connect button
                   else if balance fetched or fetching then showing loader
-                  else show fetching button and currency balance
+                  else showing fetch-button and currency balance
                   */}
                   {metamaskDisconnected 
                     ? (
-                      <Button blue onClick={this.handleConnectMetamask}>
-                        <FormattedMessage id="WalletRowConnectMetamaskButton" defaultMessage="Connect" />
-                      </Button>
+                      <div>
+                        <Button blue onClick={this.handleConnectMetamask}>
+                          <FormattedMessage id="WalletRowConnectMetamaskButton" defaultMessage="Connect" />
+                        </Button>
+                      </div>
                     ) : !isBalanceFetched || isBalanceFetching ? (
                         this.props.itemData.isUserProtected &&
                           !this.props.itemData.active ? (

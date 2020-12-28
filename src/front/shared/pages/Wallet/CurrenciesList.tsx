@@ -9,8 +9,7 @@ import Table from 'components/tables/Table/Table'
 
 import { FormattedMessage } from 'react-intl'
 import exConfig from 'helpers/externalConfig'
-import metamask from 'helpers/metamask'
-// metamask.isEnabled() && !metamask.isConnected() && !metamaskConnected &&
+
 const isWidgetBuild = config && config.isWidget
 
 const CurrenciesList = ({
