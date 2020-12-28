@@ -7,21 +7,19 @@ import { isMobile } from 'react-device-detect'
 
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
-
+import metamask from 'helpers/metamask'
 import Coin from 'components/Coin/Coin'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import DropdownMenu from 'components/ui/DropdownMenu/DropdownMenu'
-// import LinkAccount from '../LinkAccount/LinkAcount'
 import { withRouter } from 'react-router-dom'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import SwapApp from 'swap.app'
 import { BigNumber } from 'bignumber.js'
+import { Button } from 'components/controls'
 
-import dollar from '../images/dollar.svg'
 import PartOfAddress from '../components/PartOfAddress'
 import Copy from '../../../components/ui/Copy/Copy'
-import metamask from 'helpers/metamask'
 
 
 const langLabels = defineMessages({
@@ -913,8 +911,9 @@ export default class Row extends Component<any, any> {
       }
     }
 
-    const metamaskIsOk = this.props.itemData.isMetamask && this.props.itemData.isConnected
-    const addressIsOk = !metamaskIsOk && mnemonicSaved
+    const isMetamask = this.props.itemData.isMetamask
+    const metamaskIsConnected = isMetamask && this.props.itemData.isConnected
+    const metamaskDisconnected = isMetamask && !metamaskIsConnected
 
     return (
       <tr>
@@ -924,12 +923,14 @@ export default class Row extends Component<any, any> {
             <Coin className={styles.assetsTableIcon} name={currency} />
             <div styleName="assetsTableInfo">
               <div styleName="nameRow">
-                <a /* Redirect to history if connect wallet */
-                  onClick={ addressIsOk || metamaskIsOk ? this.goToCurrencyHistory : () => null }
+                <a
+                  onClick={mnemonicSaved || (isMetamask && metamaskIsConnected) 
+                    ? this.goToCurrencyHistory 
+                    : () => null }
                   styleName={`${
-                    addressIsOk && isMobile
+                    mnemonicSaved && isMobile
                       ? 'linkToHistory mobile'
-                      : addressIsOk || metamaskIsOk
+                      : mnemonicSaved || (isMetamask && metamaskIsConnected)
                         ? 'linkToHistory desktop'
                         : ''
                   }`}
@@ -959,52 +960,60 @@ export default class Row extends Component<any, any> {
             <span styleName="assetsTableCurrencyWrapper">
               {showBalance && (
                 <Fragment>
-                  {!isBalanceFetched || isBalanceFetching ? (
-                    this.props.itemData.isUserProtected &&
-                      !this.props.itemData.active ? (
-                        <span>
-                          <FormattedMessage
-                            id="walletMultisignNotJoined"
-                            defaultMessage="Not joined"
-                          />
-                        </span>
-                      ) : (
-                        <div styleName="loader">
-                          {!(balanceError && nodeDownErrorShow) && <InlineLoader />}
-                        </div>
-                      )
-                  ) : (
-                      <div
-                        styleName="no-select-inline"
-                        onClick={this.handleReloadBalance}
-                      >
-                        <i className="fas fa-sync-alt" styleName="icon" />
-                        <span>
-                          {balanceError
-                            ? '?'
-                            : new BigNumber(balance)
-                              .dp(5, BigNumber.ROUND_FLOOR)
-                              .toString()}{' '}
-                        </span>
-                        <span styleName="assetsTableCurrencyBalance">
-                          {currencyView}
-                        </span>
-                        {unconfirmedBalance !== 0 && (
-                          <Fragment>
-                            <br />
-                            <span
-                              styleName="unconfirmedBalance"
-                              title={intl.formatMessage(
-                                langLabels.unconfirmedBalance
-                              )}
-                            >
-                              {unconfirmedBalance > 0 && <>{'+'}</>}
-                              {unconfirmedBalance}{' '}
+                  {/* 
+                  If metamask disconnected then showing connect button
+                  else if balance fetched or fetching then showing loader
+                  else show fetching button and currency balance
+                  */}
+                  {metamaskDisconnected 
+                    ? (
+                      <Button blue onClick={this.handleConnectMetamask}>
+                        <FormattedMessage id="WalletRowConnectMetamaskButton" defaultMessage="Connect" />
+                      </Button>
+                    ) : !isBalanceFetched || isBalanceFetching ? (
+                        this.props.itemData.isUserProtected &&
+                          !this.props.itemData.active ? (
+                            <span>
+                              <FormattedMessage
+                                id="walletMultisignNotJoined"
+                                defaultMessage="Not joined"
+                              />
                             </span>
-                          </Fragment>
-                        )}
-                      </div>
-                    )}
+                          ) : (
+                            <div styleName="loader">
+                              {!(balanceError && nodeDownErrorShow) && <InlineLoader />}
+                            </div>
+                          )
+                      ) : (
+                          <div styleName="no-select-inline" onClick={this.handleReloadBalance}>
+                            <i className="fas fa-sync-alt" styleName="icon" />
+                            <span>
+                              {balanceError
+                                ? '?'
+                                : new BigNumber(balance)
+                                  .dp(5, BigNumber.ROUND_FLOOR)
+                                  .toString()}{' '}
+                            </span>
+                            <span styleName="assetsTableCurrencyBalance">
+                              {currencyView}
+                            </span>
+                            {unconfirmedBalance !== 0 && (
+                              <Fragment>
+                                <br />
+                                <span
+                                  styleName="unconfirmedBalance"
+                                  title={intl.formatMessage(
+                                    langLabels.unconfirmedBalance
+                                  )}
+                                >
+                                  {unconfirmedBalance > 0 && <>{'+'}</>}
+                                  {unconfirmedBalance}{' '}
+                                </span>
+                              </Fragment>
+                            )}
+                          </div>
+                        )
+                  }
                 </Fragment>
               )}
             </span>
@@ -1020,8 +1029,8 @@ export default class Row extends Component<any, any> {
                       defaultMessage="Show address"
                     />
                   </p>
-                  :
-                  this.props.itemData.isMetamask && ! this.props.itemData.isConnected ?
+                  : // only for metamask
+                  metamaskDisconnected ?
                     <p styleName="addressStyle">
                       <FormattedMessage
                         id="WalletRow_MetamaskNotConnected"
@@ -1069,15 +1078,17 @@ export default class Row extends Component<any, any> {
               )}
           </div>
 
-          <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">
-            {/*
-            //@ts-ignore */}
-            <DropdownMenu
-              size="regular"
-              className="walletControls"
-              items={dropDownMenuItems}
-            />
-          </div>
+          { !metamaskDisconnected &&
+            <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">
+              {/*
+              //@ts-ignore */}
+              <DropdownMenu
+                size="regular"
+                className="walletControls"
+                items={dropDownMenuItems}
+              />
+            </div>
+          }
         </td>
       </tr>
     )

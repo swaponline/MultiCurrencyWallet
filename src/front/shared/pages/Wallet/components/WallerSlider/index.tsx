@@ -9,11 +9,8 @@ import security from '../NotityBlock/images/security.svg'
 import styles from '../NotityBlock/NotifyBlock.scss'
 import NotifyBlock from '../NotityBlock/NotifyBlock'
 import ContentLoader from '../../../../components/loaders/ContentLoader/ContentLoader'
-
 import { FormattedMessage, injectIntl } from 'react-intl'
 import linksManager from '../../../../helpers/links'
-
-import metamask from 'helpers/metamask'
 
 type WallerSliderProps = {
   intl?: { [key: string]: any }
