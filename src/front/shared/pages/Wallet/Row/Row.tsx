@@ -1,4 +1,3 @@
-//@ts-ignore
 import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
@@ -99,7 +98,6 @@ export default class Row extends Component<any, any> {
   componentDidUpdate(prevProps, prevState) {
     const {
       itemData: { currency, balance },
-    //@ts-ignore
     } = this.props
 
     if (balance > 0) {
@@ -115,7 +113,6 @@ export default class Row extends Component<any, any> {
         isConnected,
         isERC20,
       }
-    //@ts-ignore
     } = this.props
 
     if (isBalanceFetching) {
@@ -133,14 +130,12 @@ export default class Row extends Component<any, any> {
       return null
     }
 
-    //@ts-ignore
     this.setState({
       isBalanceFetching: true,
     }, () => {
       setTimeout(async () => {
         const {
           itemData: { currency, address },
-        //@ts-ignore
         } = this.props
 
         switch (currency) {
@@ -163,7 +158,7 @@ export default class Row extends Component<any, any> {
               )
             }
         }
-        //@ts-ignore
+
         this.setState(() => ({
           isBalanceFetching: false,
         }))
@@ -191,7 +186,6 @@ export default class Row extends Component<any, any> {
   }
 
   handleTouch = (e) => {
-    //@ts-ignore
     this.setState({
       isTouch: true,
     })
@@ -200,7 +194,6 @@ export default class Row extends Component<any, any> {
   handleSliceAddress = () => {
     const {
       itemData: { address },
-    //@ts-ignore
     } = this.props
 
     const firstPart = address.substr(0, 6)
@@ -212,21 +205,18 @@ export default class Row extends Component<any, any> {
   }
 
   handleTouchClear = (e) => {
-    //@ts-ignore
     this.setState({
       isTouch: false,
     })
   }
 
   handleCopyAddress = () => {
-    //@ts-ignore
     this.setState(
       {
         isAddressCopied: true,
       },
       () => {
         setTimeout(() => {
-          //@ts-ignore
           this.setState({
             isAddressCopied: false,
           })
@@ -257,7 +247,6 @@ export default class Row extends Component<any, any> {
     const {
       itemData: { currency },
       itemData
-    //@ts-ignore
     } = this.props
 
     actions.modals.open(constants.modals.Withdraw, itemData)
@@ -268,7 +257,6 @@ export default class Row extends Component<any, any> {
       itemData: { currency, address },
       history,
       intl: { locale },
-    //@ts-ignore
     } = this.props
 
     if (currency.toLowerCase() === 'ghost') {
@@ -301,7 +289,6 @@ export default class Row extends Component<any, any> {
   }
 
   handleHowToExport = () => {
-    //@ts-ignore
     const { itemData } = this.props
 
     if (itemData.isUserProtected) {
@@ -337,7 +324,6 @@ export default class Row extends Component<any, any> {
   handleReceive = () => {
     const {
       itemData: { currency, address },
-    //@ts-ignore
     } = this.props
 
     actions.modals.open(constants.modals.ReceiveModal, {
@@ -347,7 +333,6 @@ export default class Row extends Component<any, any> {
   }
 
   handleShowOptions = () => {
-    //@ts-ignore
     this.setState({
       showMobileButtons: true,
     })
@@ -357,7 +342,6 @@ export default class Row extends Component<any, any> {
     const {
       intl: { locale },
       decline,
-    //@ts-ignore
     } = this.props
 
     const pair = currency.toLowerCase() === 'btc' ? 'eth' : 'btc'
@@ -391,7 +375,6 @@ export default class Row extends Component<any, any> {
   handleDeclineOrdersModalOpen = (indexOfDecline) => {
     const orders = SwapApp.shared().services.orders.items
     const declineSwap = actions.core.getSwapById(
-      //@ts-ignore
       this.props.decline[indexOfDecline]
     )
 
@@ -421,7 +404,6 @@ export default class Row extends Component<any, any> {
   handleHowToWithdraw = () => {
     const {
       itemData: { currency, address },
-    //@ts-ignore
     } = this.props
 
     actions.modals.open(constants.modals.HowToWithdrawModal, {
@@ -431,7 +413,6 @@ export default class Row extends Component<any, any> {
   }
 
   handleOpenDropdown = () => {
-    //@ts-ignore
     this.setState({
       isDropdownOpen: true,
     })
@@ -440,7 +421,6 @@ export default class Row extends Component<any, any> {
   handleCreateInvoiceLink = () => {
     const {
       itemData: { currency, address },
-    //@ts-ignore
     } = this.props
 
     actions.modals.open(constants.modals.InvoiceLinkModal, {
@@ -450,7 +430,6 @@ export default class Row extends Component<any, any> {
   }
 
   handleSwitchMultisign = () => {
-    //@ts-ignore
     actions.modals.open(constants.modals.BtcMultisignSwitch)
   }
 
@@ -465,7 +444,6 @@ export default class Row extends Component<any, any> {
         address,
         balance,
       },
-    //@ts-ignore
     } = this.props
 
     actions.modals.open(constants.modals.InvoiceModal, {
@@ -483,7 +461,6 @@ export default class Row extends Component<any, any> {
     const {
       history,
       intl: { locale },
-    //@ts-ignore
     } = this.props
     history.push(localisedUrl(locale, '/history'))
   }
@@ -492,7 +469,6 @@ export default class Row extends Component<any, any> {
     const {
       history,
       intl: { locale },
-    //@ts-ignore
     } = this.props
     history.push(localisedUrl(locale, '/exchange'))
   }
@@ -502,7 +478,6 @@ export default class Row extends Component<any, any> {
       history,
       intl: { locale },
       currency,
-    //@ts-ignore
     } = this.props
 
     // was pointOfSell
@@ -516,7 +491,6 @@ export default class Row extends Component<any, any> {
   }
 
   deleteThisSwap = () => {
-    //@ts-ignore
     actions.core.forgetOrders(this.props.decline[0])
   }
 
@@ -525,7 +499,6 @@ export default class Row extends Component<any, any> {
       history,
       intl: { locale },
       itemData: { currency, balance, address },
-    //@ts-ignore
     } = this.props
 
     let targetCurrency = currency
@@ -550,7 +523,6 @@ export default class Row extends Component<any, any> {
   hideCurrency = () => {
     const {
       itemData: { currency, address, balance },
-    //@ts-ignore
     } = this.props
 
     if (balance > 0) {
@@ -578,7 +550,6 @@ export default class Row extends Component<any, any> {
   copy = () => {
     const {
       itemData: { address, fullName },
-    //@ts-ignore
     } = this.props
 
     actions.modals.open(constants.modals.WalletAddressModal, {
@@ -591,7 +562,6 @@ export default class Row extends Component<any, any> {
     const {
       itemData: { address, privateKey, fullName },
       ethDataHelper,
-    //@ts-ignore
     } = this.props
 
     actions.modals.open(constants.modals.PrivateKeysModal, {
@@ -655,9 +625,7 @@ export default class Row extends Component<any, any> {
     if (
       config &&
       config.erc20 &&
-      //@ts-ignore
       config.erc20[this.props.currency.currency.toLowerCase()] &&
-      //@ts-ignore
       config.erc20[this.props.currency.currency.toLowerCase()].howToWithdraw
     )
       hasHowToWithdraw = true
@@ -792,9 +760,7 @@ export default class Row extends Component<any, any> {
       })
     }
 
-    //@ts-ignore
     if (this.props.itemData.isMetamask
-      //@ts-ignore
       && !this.props.itemData.isConnected
     ) {
       dropDownMenuItems = [{
@@ -810,9 +776,8 @@ export default class Row extends Component<any, any> {
         disable: false,
       }]
     }
-    //@ts-ignore
+
     if (this.props.itemData.isMetamask
-      //@ts-ignore
       && this.props.itemData.isConnected
     ) {
       dropDownMenuItems = [
@@ -837,9 +802,7 @@ export default class Row extends Component<any, any> {
 
 
     if (
-      //@ts-ignore
       this.props.itemData.isPinProtected &&
-      //@ts-ignore
       !this.props.itemData.isRegistered
     ) {
       //@ts-ignore
@@ -877,9 +840,7 @@ export default class Row extends Component<any, any> {
     ) ? multisigStatus[itemData.address].count : false
 
     if (
-      //@ts-ignore
       this.props.itemData.isSmsProtected &&
-      //@ts-ignore
       !this.props.itemData.isRegistered
     ) {
       //@ts-ignore
@@ -908,9 +869,8 @@ export default class Row extends Component<any, any> {
         },
       ]
     }
-    //@ts-ignore
+
     if (this.props.itemData.isUserProtected) {
-      //@ts-ignore
       if (!this.props.itemData.active) {
         //@ts-ignore
         statusInfo = 'Not joined'
@@ -941,7 +901,6 @@ export default class Row extends Component<any, any> {
         action: this.handleGenerateMultisignLink,
         disabled: false,
       })
-      //@ts-ignore
       if (!this.props.itemData.active) {
         dropDownMenuItems.push({
           id: 1011,
@@ -962,8 +921,6 @@ export default class Row extends Component<any, any> {
         <td styleName={`assetsTableRow ${isDark ? 'dark' : ''}`}>
           <div styleName="assetsTableCurrency">
             {/* Currency icon */}
-            {/*
-            //@ts-ignore */}
             <Coin className={styles.assetsTableIcon} name={currency} />
             <div styleName="assetsTableInfo">
               <div styleName="nameRow">
@@ -1003,9 +960,7 @@ export default class Row extends Component<any, any> {
               {showBalance && (
                 <Fragment>
                   {!isBalanceFetched || isBalanceFetching ? (
-                    //@ts-ignore
                     this.props.itemData.isUserProtected &&
-                      //@ts-ignore
                       !this.props.itemData.active ? (
                         <span>
                           <FormattedMessage
@@ -1058,7 +1013,6 @@ export default class Row extends Component<any, any> {
               {statusInfo ?
                 <p styleName="statusStyle">{statusInfo}</p>
                 :
-                //@ts-ignore
                 !mnemonicSaved && !this.props.itemData.isMetamask ?
                   <p styleName="showAddressStyle" onClick={this.handleShowMnemonic}>
                     <FormattedMessage
@@ -1067,7 +1021,6 @@ export default class Row extends Component<any, any> {
                     />
                   </p>
                   :
-                  //@ts-ignore
                   this.props.itemData.isMetamask && ! this.props.itemData.isConnected ?
                     <p styleName="addressStyle">
                       <FormattedMessage
@@ -1077,8 +1030,6 @@ export default class Row extends Component<any, any> {
                     </p>
                     : // Address shows 
                     <div styleName="addressStyle">
-                      {/*
-                      //@ts-ignore */}
                       <Copy text={itemData.address}>
                         {
                           isMobile ?

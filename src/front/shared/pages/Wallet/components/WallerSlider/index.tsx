@@ -176,16 +176,6 @@ export default class WallerSlider extends React.Component {
     actions.modals.open(constants.modals.SignUp)
   }
 
-  handleConnectMetamask = () => {
-    metamask.connect({}).then((connected) => {
-      if (connected) {
-        this.setState({
-          metamaskConnected: true,
-        })
-      }
-    })
-  }
-
   render() {
     const { mnemonicDeleted, banners } = this.state
     const { multisigPendingCount } = this.props
