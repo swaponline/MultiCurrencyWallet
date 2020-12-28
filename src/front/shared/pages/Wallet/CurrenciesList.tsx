@@ -1,6 +1,4 @@
-//@ts-ignore
 import React, { Fragment } from 'react'
-
 import CSSModules from 'react-css-modules'
 import config from 'app-config'
 import styles from './Wallet.scss'
@@ -11,7 +9,8 @@ import Table from 'components/tables/Table/Table'
 
 import { FormattedMessage } from 'react-intl'
 import exConfig from 'helpers/externalConfig'
-
+import metamask from 'helpers/metamask'
+// metamask.isEnabled() && !metamask.isConnected() && !metamaskConnected &&
 const isWidgetBuild = config && config.isWidget
 
 const CurrenciesList = ({
@@ -42,13 +41,10 @@ const CurrenciesList = ({
           defaultMessage="Here you can safely store, send and receive assets"
         />
       </div>
-      {/*
-      //@ts-ignore */}
       <Table
         className={`${styles.walletTable} data-tut-address`}
         rows={tableRows}
         rowRender={(row, index, selectId, handleSelectId) => (
-          //@ts-ignore
           <Row
             key={index}
             index={index}
