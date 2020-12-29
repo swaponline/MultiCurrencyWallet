@@ -89,7 +89,7 @@ const _loadDefaultEnv = () => {
     ACCOUNT: '2234567890',
     NETWORK: 'testnet',
     API_USER: 'user',
-    API_PASS: 'password',
+    API_PASS: '',
     PORT: '3000',
     IP: '0.0.0.0',
     MAX_PARALLEL_SWAPS: '3',
