@@ -59,9 +59,11 @@ const CurrenciesList = ({
           />
         )}
       />
-      <Button onClick={goToСreateWallet} blue transparent fullWidth>
-        <FormattedMessage id="addAsset" defaultMessage="Добавить валюту" />
-      </Button>
+      <div styleName='addCurrencyBtnWrapper'>
+        <Button onClick={goToСreateWallet} blue transparent fullWidth>
+          <FormattedMessage id="addAsset" defaultMessage="Add currency" />
+        </Button>
+      </div>
     </div>
   )
 }

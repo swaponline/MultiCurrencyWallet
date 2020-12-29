@@ -62,8 +62,9 @@
 
 // .small selector after .blue so that the font size is applied
 .small {
-  height: 39px;
+  width: 100%;
   min-height: 39px;
+  height: 39px;
   font-size: 0.9em;
 }
 
