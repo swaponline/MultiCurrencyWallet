@@ -68,7 +68,7 @@ EOF
 tee docker-compose.yml <<EOF
 version: '3'
 services:
-  $CONTAINERNAME_mcw_bot:
+  mcw_bot:
     image: swaponline/mcw
     container_name: $CONTAINERNAME
     restart: unless-stopped
