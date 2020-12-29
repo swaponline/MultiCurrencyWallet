@@ -117,7 +117,7 @@ export default (app, { id }, callback) => {
           // fill order book
           fillOrderbook(app.services.wallet, app.services.orders)
         }
-        //@ts-ignore
+   
         return clearInterval(update)
       }
 
