@@ -162,6 +162,7 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
   const data = {
     ...auth(privateKey),
     isMnemonic: sweepToMnemonicReady,
+    isBTC: true,
   }
 
   window.getBtcAddress = () => data.address
@@ -605,11 +606,12 @@ const signAndBuild = (transactionBuilder, address) => {
   return transactionBuilder.buildIncomplete()
 }
 
-const prepareUnspents = (address, amount) => bitcoinUtils.prepareUnspents({
-  address,
+const prepareUnspents = ({ amount, unspents }) => bitcoinUtils.prepareUnspents({
   amount,
+  unspents,
   NETWORK,
 })
+
 window.prepareUnspents = prepareUnspents
 const fetchUnspents = (address) => bitcoinUtils.fetchUnspents({
   address,
@@ -667,4 +669,5 @@ export default {
   fetchTxRaw,
   addressIsCorrect,
   convertMnemonicToValid,
+  prepareUnspents,
 }

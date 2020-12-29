@@ -144,6 +144,9 @@ export default class WithdrawModal extends React.Component<any, any> {
   props: IWithdrawModalProps
   state: IWithdrawModalState
 
+  mounted = true
+  btcFeeTimer: any = 0
+
   constructor(data) {
     //@ts-ignore
     super()
@@ -190,6 +193,11 @@ export default class WithdrawModal extends React.Component<any, any> {
       txSize: null,
       btcFeeRate: null,
     }
+  }
+
+  componentWillUnmount() {
+    this.mounted = false
+    clearTimeout(this.btcFeeTimer)
   }
 
   componentDidMount() {
@@ -263,6 +271,39 @@ export default class WithdrawModal extends React.Component<any, any> {
     return (ethTokenMinAmount += '1')
   }
 
+  setBtcFeeRate = async () => {
+    const {
+      wallet: {
+        address,
+        isUserProtected,
+        isSmsProtected,
+        isPinProtected,
+      },
+      amount,
+    } = this.state
+
+    let method = `send`
+    if (isUserProtected) method = `send_multisig`
+    if (isSmsProtected) method = `send_2fa`
+    if (isPinProtected) method = `send_2fa`
+
+    const BYTE_IN_KB = 1024
+    const feeRate = await helpers.btc.estimateFeeRate()
+    const feeSatByte = new BigNumber(feeRate).dividedBy(BYTE_IN_KB).dp(0, BigNumber.ROUND_CEIL).toNumber()
+    const txSize = await helpers.btc.calculateTxSize({
+      address,
+      amount,
+      method,
+    })
+
+    if (!this.mounted) return
+
+    this.setState({
+      btcFeeRate: feeSatByte,
+      txSize,
+    })
+  }
+
   setCommissions = async () => {
     const {
       data: { currency },
@@ -294,6 +335,7 @@ export default class WithdrawModal extends React.Component<any, any> {
         speed: 'fast',
       })
 
+      if (!this.mounted) return
       this.setState({
         tokenFee,
         totalFee: tokenFee,
@@ -313,29 +355,24 @@ export default class WithdrawModal extends React.Component<any, any> {
         method,
         speed: 'fast',
         address,
+        amount,
       })
       const totalFee = new BigNumber(coinFee).toNumber()
 
       minAmount[currentCoin] = coinFee
 
-      if (currentCoin === 'btc') {
-        const BYTE_IN_KB = 1024
-        const feeRate = await helpers.btc.estimateFeeRate()
-        const feeSatByte = new BigNumber(feeRate).dividedBy(BYTE_IN_KB).dp(0, BigNumber.ROUND_CEIL).toNumber()
-        const txSize = await helpers[currentCoin].calculateTxSize()
-
-        this.setState({
-          btcFeeRate: feeSatByte,
-          txSize,
-        })
+      if (wallet.isBTC) {
+        this.setBtcFeeRate()
       }
 
+      if (!this.mounted) return
       this.setState({
         coinFee,
         totalFee,
       })
     }
 
+    if (!this.mounted) return
     this.setState({
       fetchFee: false,
       adminFeeSize,
@@ -601,16 +638,40 @@ export default class WithdrawModal extends React.Component<any, any> {
   }
 
   handleDollarValue = (value) => {
-    const { currentDecimals, exCurrencyRate } = this.state
+    const {
+      wallet: {
+        isBTC,
+      },
+      currentDecimals,
+      exCurrencyRate,
+    } = this.state
+
+    if (isBTC) {
+      this.btcFeeTimer = setTimeout(() => {
+        this.setBtcFeeRate()
+      }, 5000)
+    }
 
     this.setState({
       fiatAmount: value,
       amount: value ? (value / exCurrencyRate).toFixed(currentDecimals) : '',
     })
+
   }
 
   handleAmount = (value) => {
-    const { exCurrencyRate } = this.state
+    const {
+      exCurrencyRate,
+      wallet: {
+        isBTC,
+      },
+    } = this.state
+
+    if (isBTC) {
+      this.btcFeeTimer = setTimeout(() => {
+        this.setBtcFeeRate()
+      }, 5000)
+    }
 
     this.setState({
       fiatAmount: value ? (value * exCurrencyRate).toFixed(2) : '',
@@ -662,6 +723,9 @@ export default class WithdrawModal extends React.Component<any, any> {
       fetchFee,
       txSize,
       btcFeeRate,
+      wallet: {
+        isBTC: isBTCWallet,
+      },
     } = this.state
 
     const { name, intl, portalUI, activeFiat, activeCurrency, dashboardView } = this.props
@@ -1113,7 +1177,7 @@ export default class WithdrawModal extends React.Component<any, any> {
                   : new BigNumber(totalFee).plus(adminFeeSize).toNumber()
                   : new BigNumber(totalFee).plus(adminFeeSize).toNumber()
                 }
-                hasTxSize={dataCurrency.toLowerCase() === 'btc'}
+                hasTxSize={isBTCWallet}
                 txSize={txSize}
               />
             </div>

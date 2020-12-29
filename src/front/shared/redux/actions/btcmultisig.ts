@@ -106,6 +106,7 @@ const signToUserMultisig = async () => {
     balanceError: false,
     publicKeys: data.publicKeys,
     publicKey: data.publicKey,
+    isBTC: true,
   })).filter((wallet) => wallet.address !== btcMultisigUserData.address)
 
   btcMultisigUserData.wallets = wallets
@@ -354,6 +355,7 @@ const createWallet = (privateKey, otherOwnerPublicKey) => {
     privateKey,
     publicKeys,
     publicKey,
+    isBTC: true,
   }
 
   localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKey, otherOwnerPublicKey)
@@ -505,6 +507,7 @@ const login_ = (privateKey, otherOwnerPublicKey, sortKeys) => {
       privateKey,
       publicKeys,
       publicKey,
+      isBTC: true,
       active: true,
     }
   } else {
@@ -518,6 +521,7 @@ const login_ = (privateKey, otherOwnerPublicKey, sortKeys) => {
       privateKey,
       publicKeys: [],
       publicKey,
+      isBTC: true,
       active: false,
     }
   }

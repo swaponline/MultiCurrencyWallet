@@ -274,7 +274,7 @@ const fetchUnspents = (options): Promise<IBtcUnspent[]> => {
  **/
 interface IprepareUnspentsOptions {
   NETWORK: any,
-  address: string,
+  address?: string,
   amount: number,
   apiBitpay?: any,
   cacheResponse?: any,
@@ -291,7 +291,7 @@ const prepareUnspents = (options: IprepareUnspentsOptions): Promise<IBtcUnspent[
   } = options
   return new Promise((resolve, reject) => {
     const processUnspents = (unspents: IBtcUnspent[]) => {
-      const needAmount = new BigNumber(amount).plus(DUST)
+      const needAmount = new BigNumber(amount).multipliedBy(1e8).plus(DUST)
       // Сначала отсортируем unspents по возрастанию не потраченной сдачи
       const sortedUnspents: IBtcUnspent[] = unspents.sort((a: IBtcUnspent, b: IBtcUnspent) => {
         return (new BigNumber(a.satoshis).isEqualTo(b.satoshis))

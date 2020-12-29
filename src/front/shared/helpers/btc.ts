@@ -5,6 +5,7 @@ import config from './externalConfig'
 import constants from './constants'
 import api from './api'
 import BigNumber from 'bignumber.js'
+import { IBtcUnspent } from 'common/utils/coin/btc'
 
 
 const hasAdminFee = (
@@ -108,8 +109,27 @@ const getByteCount = (inputs, outputs) => {
   return Math.ceil(totalWeight / 4)
 }
 
-//@ts-ignore
-const calculateTxSize = async ({ amount, speed, unspents, address, txOut = 2, method = 'send', fixed } = {}) => {
+interface IcalculateTxSizeOptions {
+  amount?: number
+  unspents?: any
+  address: string
+  txOut?: number
+  method?: string
+  fixed?: boolean
+}
+const calculateTxSize = async (options: IcalculateTxSizeOptions) => {
+  let {
+    amount,
+    unspents,
+    address,
+    txOut,
+    method,
+    fixed,
+  } = options
+
+  txOut = txOut || 2
+  method = method || 'send'
+
   const defaultTxSize = constants.defaultFeeRates.btc.size[method]
 
   if (fixed) {
@@ -117,8 +137,11 @@ const calculateTxSize = async ({ amount, speed, unspents, address, txOut = 2, me
   }
 
   unspents = unspents || await actions.btc.fetchUnspents(address)
+  console.log('unspents', unspents)
   if (amount) {
-    unspents = actions.btc.prepareUnspents({ amount, unspents })
+    
+    unspents = await actions.btc.prepareUnspents({ amount, unspents })
+    console.log('filtered unspents', unspents)
   }
   /*
   * Formula with 2 input and 2 output addresses 
@@ -141,12 +164,16 @@ const calculateTxSize = async ({ amount, speed, unspents, address, txOut = 2, me
 
   if (method === 'send_2fa') {
     const msSize = getByteCount(
-      { 'MULTISIG-P2SH-P2WSH:2-3': 1 },
+      { 'MULTISIG-P2SH-P2WSH:2-3': txIn },
       { 'P2PKH': (hasAdminFee) ? 3 : 2 }
     )
+    console.log('Tx size', msSize)
+    return msSize
+    /*
     const mstxSize = txIn * msSize + txOut * BYTE_OUTPUT_ADDRESS + (BYTE_TRANSACTION + txIn - txOut)
 
     return mstxSize
+    */
   }
 
   return txSize
