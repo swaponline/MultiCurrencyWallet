@@ -2,9 +2,14 @@ version: '3'
 services:
   mcw_bot:
     build: .
-    container_name: mcw_bot
+    image: swaponline/mcw
+    container_name: mcw_mainnet_bot
     restart: unless-stopped
     volumes:
       - ${PWD}/config:/root/MulticurrencyWallet/config
-      - ${PWD}/.env:/root/MulticurrencyWallet/.env
       - ${PWD}/.storage:/root/MulticurrencyWallet/.storage
+      - ${PWD}/config/tradeconfig.mainnet.json:/root/MulticurrencyWallet/tradeconfig.mainnet.json
+      - ${PWD}/config/tradeconfig.testnet.json:/root/MulticurrencyWallet/tradeconfig.testnet.json    
+    env_file: .env
+    ports:
+      - "${PORT}:${PORT}"

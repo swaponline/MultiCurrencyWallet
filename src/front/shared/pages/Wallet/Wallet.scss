@@ -259,6 +259,10 @@
   }
 }
 
+.addCurrencyBtnWrapper {
+  width: calc(100% - 28px);
+}
+
 @media all and (min-width: 993px) {
   .walletTable {
     display: inline-table;
@@ -323,8 +327,8 @@
   .yourAssets {
     padding: 20px 0;
 
-    button {
-      width: calc(100% - 65px);
+    .addCurrencyBtnWrapper {
+      width: calc(100% - 52px);
       margin: auto;
     }
   }

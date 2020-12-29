@@ -4664,7 +4664,7 @@
   },
   {
     "id": "addAsset",
-    "message": "Добавить валюту",
+    "message": "Add currency",
     "files": [
       "src/front/shared/pages/Wallet/CurrenciesList.tsx"
     ]
@@ -5859,7 +5859,7 @@
     ]
   },
   {
-    "id": "Exchange_ConnectMetamask",
+    "id": "CommonTextConnect",
     "message": "Connect",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"

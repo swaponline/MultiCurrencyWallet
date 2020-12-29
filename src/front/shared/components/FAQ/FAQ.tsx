@@ -75,6 +75,9 @@ const FAQ = (props) => {
     setOpenedTabsCounter({ ...openedTabsCounter, [tabName]: ++openedTabsCounter[tabName] })
   }
 
+  const BtcPrecentFee = adminFee.isEnabled('BTC')
+  const EthPrecentFee = adminFee.isEnabled('ETH')
+
   return (
     <div className={`${styles.faQuestions} ${isDark ? styles.dark : ''}`}>
       <h5 className={styles.faQuestions__header}>
@@ -150,10 +153,10 @@ const FAQ = (props) => {
             <FormattedMessage id="FAQServiceFee" defaultMessage="Service fee (only withdraw):" />
             <p className={styles.descriptionFee}>
               <span>BTC:</span>{' '}
-              { adminFee.isEnabled('BTC')
+              {BtcPrecentFee
                   ? (
                     <span>
-                      5%,{' '}
+                      {BtcPrecentFee.fee + '%, '}
                       <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
                       {' '}<b>{adminFee.calc('BTC', null)}</b> BTC
                     </span>
@@ -163,10 +166,10 @@ const FAQ = (props) => {
             </p>
             <p className={styles.descriptionFee}>
               <span>ETH:</span>{' '}
-              { adminFee.isEnabled('ETH')
+              {EthPrecentFee
                   ? (
                     <span>
-                      7%,{' '}
+                      {EthPrecentFee.fee + '%, '}
                       <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
                       {' '}<b>{adminFee.calc('ETH', null)}</b> ETH
                     </span>

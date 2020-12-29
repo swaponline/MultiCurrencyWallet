@@ -5903,7 +5903,7 @@
     ]
   },
   {
-    "id": "Exchange_ConnectMetamask",
+    "id": "CommonTextConnect",
     "message": "Connect",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
