@@ -30,7 +30,7 @@
       "required": true
     },
     "TELEGRAM_CHATID": {
-      "description": "Telegram User ID for notifications",
+      "description": "Telegram User ID for notifications (contact https://t.me/get_id_bot to get this)",
       "value": "0"
     },
     "MAX_PARALLEL_SWAPS": {
