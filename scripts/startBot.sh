@@ -1,5 +1,5 @@
-CONTAINERNAME=mybotproject
-PORT=80 
+#CONTAINERNAME=mybotproject
+#PORT=80 
 
 mkdir $CONTAINERNAME
 cd $CONTAINERNAME
