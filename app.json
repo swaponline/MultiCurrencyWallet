@@ -7,7 +7,7 @@
   "stack": "container",
   "env":{
     "SECRET_PHRASE": {
-      "description": "Your 12 words secret phrase",
+      "description": "Your 12 words secret phrase (create new one on https://swaponline.io)",
       "required": true
     },
     "SPREAD": {
