@@ -43,6 +43,7 @@ type OrderBookProps = {
   history: { [key: string]: any }
   intl: { [key: string]: any }
   location: { [key: string]: any }
+  orders: { [key: string]: any }[]
   myOrders: { [key: string]: any }[]
   currencies: { [key: string]: any }[]
 
@@ -120,6 +121,16 @@ export default class OrderBook extends Component {
       buyOrders: [],
       sellOrders: [],
       isShowAllMyOrders: true,
+    }
+  }
+
+  componentDidUpdate() {
+    const { orders } = this.props
+    const { buyOrders, sellOrders } = this.state
+
+    if (orders.length === 0) {
+      buyOrders.length && this.setState({ buyOrders: [] })
+      sellOrders.length && this.setState({ sellOrders: [] })
     }
   }
 
