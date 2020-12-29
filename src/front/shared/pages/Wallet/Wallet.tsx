@@ -368,12 +368,10 @@ export default class Wallet extends Component<any, any> {
   }
 
   handleWithdrawFirstAsset = () => {
-    //@ts-ignore
     const { hiddenCoinsList } = this.props
     const {
       history,
       intl: { locale },
-      //@ts-ignore
     } = this.props
 
     const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals
@@ -569,7 +567,6 @@ export default class Wallet extends Component<any, any> {
       return {
         ...el,
         balance: el.balance,
-        //@ts-ignore
         fiatBalance:
           el.balance > 0 && el.infoAboutCurrency && el.infoAboutCurrency.price_fiat
             ? new BigNumber(el.balance)
@@ -634,11 +631,7 @@ export default class Wallet extends Component<any, any> {
             }
           />
         )}
-        {/*
-        //@ts-ignore */}
         {activeView === 1 && <History {...this.props} isDark={isDark} />}
-        {/*
-        //@ts-ignore */}
         {activeView === 2 && <InvoicesList {...this.props} onlyTable={true} isDark={isDark} />}
       </DashboardLayout>
     )

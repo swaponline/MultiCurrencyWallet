@@ -1,6 +1,4 @@
-//@ts-ignore
 import React, { Fragment } from 'react'
-
 import CSSModules from 'react-css-modules'
 import config from 'app-config'
 import styles from './Wallet.scss'
@@ -42,13 +40,10 @@ const CurrenciesList = ({
           defaultMessage="Here you can safely store, send and receive assets"
         />
       </div>
-      {/*
-      //@ts-ignore */}
       <Table
         className={`${styles.walletTable} data-tut-address`}
         rows={tableRows}
         rowRender={(row, index, selectId, handleSelectId) => (
-          //@ts-ignore
           <Row
             key={index}
             index={index}
@@ -64,9 +59,11 @@ const CurrenciesList = ({
           />
         )}
       />
-      <Button onClick={goToСreateWallet} blue transparent fullWidth>
-        <FormattedMessage id="addAsset" defaultMessage="Добавить валюту" />
-      </Button>
+      <div styleName='addCurrencyBtnWrapper'>
+        <Button onClick={goToСreateWallet} blue transparent fullWidth>
+          <FormattedMessage id="addAsset" defaultMessage="Add currency" />
+        </Button>
+      </div>
     </div>
   )
 }
