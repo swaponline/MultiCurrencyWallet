@@ -9,27 +9,16 @@ import security from '../NotityBlock/images/security.svg'
 import styles from '../NotityBlock/NotifyBlock.scss'
 import NotifyBlock from '../NotityBlock/NotifyBlock'
 import ContentLoader from '../../../../components/loaders/ContentLoader/ContentLoader'
-
 import { FormattedMessage, injectIntl } from 'react-intl'
 import linksManager from '../../../../helpers/links'
 
-import metamask from 'helpers/metamask'
-
-/*interface Props {
-
-}
-
-interface State {
-  mnemonicDeleted: boolean
-  isFetching: boolean
-  metamaskConnected: boolean
-}*/
-
-interface WallerSliderProps {
+type WallerSliderProps = {
+  intl?: { [key: string]: any }
+  user?: { [key: string]: any }
   multisigPendingCount: number
 }
 
-interface WallerSliderState {
+type WallerSliderState = {
   mnemonicDeleted: boolean
   isFetching: boolean
   metamaskConnected: boolean
@@ -39,8 +28,11 @@ interface WallerSliderState {
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 @injectIntl
 @connect(({ user }) => ({ user }))
-export default class WallerSlider extends React.Component<WallerSliderProps, WallerSliderState> {
-  props: any
+export default class WallerSlider extends React.Component {
+
+  props: WallerSliderProps
+  state: WallerSliderState
+  
   _mounted = false
 
   constructor(props) {
@@ -154,12 +146,10 @@ export default class WallerSlider extends React.Component<WallerSliderProps, Wal
   }
 
   handleShowKeys = () => {
-    //@ts-ignore
     actions.modals.open(constants.modals.DownloadModal)
   }
 
   handleSaveKeys = () => {
-    //@ts-ignore
     actions.modals.open(constants.modals.PrivateKeys)
   }
 
@@ -180,22 +170,11 @@ export default class WallerSlider extends React.Component<WallerSliderProps, Wal
   }
 
   handleSignUp = () => {
-    //@ts-ignore
     actions.modals.open(constants.modals.SignUp)
   }
 
-  handleConnectMetamask = () => {
-    metamask.connect({}).then((connected) => {
-      if (connected) {
-        this.setState({
-          metamaskConnected: true,
-        })
-      }
-    })
-  }
-
   render() {
-    const { mnemonicDeleted, banners, metamaskConnected } = this.state
+    const { mnemonicDeleted, banners } = this.state
     const { multisigPendingCount } = this.props
 
     const isPrivateKeysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
@@ -233,24 +212,6 @@ export default class WallerSlider extends React.Component<WallerSliderProps, Wal
                     text={needSignMultisig}
                     feedbackText={`BTC multisig`}
                     onPress={this.handleGoToMultisigRequest}
-                  />
-                </div>
-              )}
-              {metamask.isEnabled() && !metamask.isConnected() && !metamaskConnected && (
-                <div className="swiper-slide">
-                  <NotifyBlock
-                    //test='1'
-                    className="notifyBlockConnectMetamask"
-                    background="6144e5"
-                    icon={security}
-                    text={
-                      <FormattedMessage
-                        id="Banner_ConnectMetamask"
-                        defaultMessage="Подключить кошелек"
-                      />
-                    }
-                    feedbackText={`Connect wallet`}
-                    onPress={this.handleConnectMetamask}
                   />
                 </div>
               )}
