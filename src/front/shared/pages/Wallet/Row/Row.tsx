@@ -758,8 +758,8 @@ export default class Row extends Component<any, any> {
       })
     }
 
-    if (this.props.itemData.isMetamask
-      && !this.props.itemData.isConnected
+    if (itemData.isMetamask
+      && !itemData.isConnected
     ) {
       dropDownMenuItems = [{
         id: 1,
@@ -775,8 +775,8 @@ export default class Row extends Component<any, any> {
       }]
     }
 
-    if (this.props.itemData.isMetamask
-      && this.props.itemData.isConnected
+    if (itemData.isMetamask
+      && itemData.isConnected
     ) {
       dropDownMenuItems = [
         {
@@ -800,8 +800,8 @@ export default class Row extends Component<any, any> {
 
 
     if (
-      this.props.itemData.isPinProtected &&
-      !this.props.itemData.isRegistered
+      itemData.isPinProtected &&
+      !itemData.isRegistered
     ) {
       //@ts-ignore
       statusInfo = 'Not activated'
@@ -838,8 +838,8 @@ export default class Row extends Component<any, any> {
     ) ? multisigStatus[itemData.address].count : false
 
     if (
-      this.props.itemData.isSmsProtected &&
-      !this.props.itemData.isRegistered
+      itemData.isSmsProtected &&
+      !itemData.isRegistered
     ) {
       //@ts-ignore
       statusInfo = 'Not activated'
@@ -868,8 +868,8 @@ export default class Row extends Component<any, any> {
       ]
     }
 
-    if (this.props.itemData.isUserProtected) {
-      if (!this.props.itemData.active) {
+    if (itemData.isUserProtected) {
+      if (!itemData.active) {
         //@ts-ignore
         statusInfo = 'Not joined'
         showBalance = false
@@ -899,7 +899,7 @@ export default class Row extends Component<any, any> {
         action: this.handleGenerateMultisignLink,
         disabled: false,
       })
-      if (!this.props.itemData.active) {
+      if (!itemData.active) {
         dropDownMenuItems.push({
           id: 1011,
           title: (
@@ -911,14 +911,17 @@ export default class Row extends Component<any, any> {
       }
     }
 
-    const isMetamask = this.props.itemData.isMetamask
-    const metamaskIsConnected = isMetamask && this.props.itemData.isConnected
-    const metamaskDisconnected = isMetamask && !metamaskIsConnected
+    const ethRowWithoutExternalProvider = itemData.address.toLowerCase() === 'not connected' && !metamask.web3connect.isInjectedEnabled()
     const web3Type = metamask.web3connect.getInjectedType()
     const web3Icon = (web3Icons[web3Type] && web3Type !== `UNKNOWN` && web3Type !== `NONE`) ? web3Icons[web3Type] : false
+    
+    const isMetamask = itemData.isMetamask
+    const metamaskIsConnected = isMetamask && itemData.isConnected
+    const metamaskDisconnected = isMetamask && !metamaskIsConnected
 
     return (
-      <tr>
+      !ethRowWithoutExternalProvider
+      && <tr>
         <td styleName={`assetsTableRow ${isDark ? 'dark' : ''}`}>
           <div styleName="assetsTableCurrency">
             {/* Currency icon */}
@@ -975,8 +978,8 @@ export default class Row extends Component<any, any> {
                         <FormattedMessage id="CommonTextConnect" defaultMessage="Connect" />
                       </Button>
                     ) : !isBalanceFetched || isBalanceFetching ? (
-                        this.props.itemData.isUserProtected &&
-                          !this.props.itemData.active ? (
+                        itemData.isUserProtected &&
+                          !itemData.active ? (
                             <span>
                               <FormattedMessage
                                 id="walletMultisignNotJoined"
@@ -1026,7 +1029,7 @@ export default class Row extends Component<any, any> {
               {statusInfo ?
                 <p styleName="statusStyle">{statusInfo}</p>
                 :
-                !mnemonicSaved && !this.props.itemData.isMetamask ?
+                !mnemonicSaved && !itemData.isMetamask ?
                   <p styleName="showAddressStyle" onClick={this.handleShowMnemonic}>
                     <FormattedMessage
                       id="WalletRow_ShowAddress"
