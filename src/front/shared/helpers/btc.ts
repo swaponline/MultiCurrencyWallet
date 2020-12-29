@@ -109,7 +109,7 @@ const getByteCount = (inputs, outputs) => {
 }
 
 //@ts-ignore
-const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = 'send', fixed } = {}) => {
+const calculateTxSize = async ({ amount, speed, unspents, address, txOut = 2, method = 'send', fixed } = {}) => {
   const defaultTxSize = constants.defaultFeeRates.btc.size[method]
 
   if (fixed) {
@@ -117,6 +117,9 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
   }
 
   unspents = unspents || await actions.btc.fetchUnspents(address)
+  if (amount) {
+    unspents = actions.btc.prepareUnspents({ amount, unspents })
+  }
   /*
   * Formula with 2 input and 2 output addresses 
   * (BYTE_INPUT_ADDRESS × 2 ) + (BYTE_OUTPUT_ADDRESS × 2) + BYTE_TRANSACTION
@@ -157,10 +160,11 @@ type EstimateFeeValueOptions = {
   address?: string
   txSize?: number
   fixed?: string
+  amount?: number
 }
 
 const estimateFeeValue = async (options: EstimateFeeValueOptions) => {
-  let { feeRate, inSatoshis, speed, address, txSize, fixed, method } = options
+  let { feeRate, inSatoshis, speed, address, txSize, fixed, method, amount } = options
   const {
     user: {
       btcData,
@@ -180,7 +184,7 @@ const estimateFeeValue = async (options: EstimateFeeValueOptions) => {
   }
 
   //@ts-ignore
-  txSize = txSize || await calculateTxSize({ address, speed, fixed, method, txOut })
+  txSize = txSize || await calculateTxSize({ address, speed, fixed, method, txOut, amount })
   feeRate = feeRate || await estimateFeeRate({ speed })
 
   const calculatedFeeValue = BigNumber.maximum(

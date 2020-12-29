@@ -272,14 +272,16 @@ const fetchUnspents = (options): Promise<IBtcUnspent[]> => {
 /**
  * Подберает подходящие unspents для указанной суммы в сатоши
  **/
-interface IprepareUnspents {
+interface IprepareUnspentsOptions {
   NETWORK: any,
   address: string,
   amount: number,
   apiBitpay?: any,
   cacheResponse?: any,
+  unspents?: IBtcUnspent[],
 }
-const prepareUnspents = (options: IprepareUnspents): Promise<IBtcUnspent[]> => {
+
+const prepareUnspents = (options: IprepareUnspentsOptions): Promise<IBtcUnspent[]> => {
   const {
     NETWORK,
     apiBitpay,
@@ -288,15 +290,9 @@ const prepareUnspents = (options: IprepareUnspents): Promise<IBtcUnspent[]> => {
     amount,
   } = options
   return new Promise((resolve, reject) => {
-    fetchUnspents({
-      NETWORK,
-      address,
-      apiBitpay,
-      cacheResponse,
-    }).then((unspents: IBtcUnspent[]) => {
+    const processUnspents = (unspents: IBtcUnspent[]) => {
       const needAmount = new BigNumber(amount).plus(DUST)
       // Сначала отсортируем unspents по возрастанию не потраченной сдачи
-      console.log('unspents', unspents)
       const sortedUnspents: IBtcUnspent[] = unspents.sort((a: IBtcUnspent, b: IBtcUnspent) => {
         return (new BigNumber(a.satoshis).isEqualTo(b.satoshis))
           ? 0
@@ -304,18 +300,6 @@ const prepareUnspents = (options: IprepareUnspents): Promise<IBtcUnspent[]> => {
             ? 1
             : -1
       })
-      console.log('sortedUnspents', sortedUnspents)
-      // Подберем здачу, суммы которой хватает для транзакции (от меньшего к большему)
-      let calcedAmount = new BigNumber(0)
-      const usedUnspents: IBtcUnspent[] = sortedUnspents.filter((unspent: IBtcUnspent) => {
-        if (calcedAmount.isGreaterThanOrEqualTo(needAmount)) {
-          return false
-        } else {
-          calcedAmount = calcedAmount.plus(unspent.satoshis)
-          return true
-        }
-      })
-      console.log('usedUnspents', usedUnspents)
       // Попробуем найти один выход сдачи, который покроет транзакцию
       let oneUnspent: IBtcUnspent = null
       sortedUnspents.forEach((unspent: IBtcUnspent) => {
@@ -326,12 +310,36 @@ const prepareUnspents = (options: IprepareUnspents): Promise<IBtcUnspent[]> => {
           return false
         }
       })
-      console.log('one unspent', oneUnspent)
-      // Если один выход не нашли - используем подсчитанные usedUnspents
-      
-    }).catch((error) => {
-      reject(error)
-    })
+      if (oneUnspent === null) {
+        // Если один выход не нашли - используем подсчитанные usedUnspents
+        // Подберем здачу, суммы которой хватает для транзакции (от меньшего к большему)
+        let calcedAmount = new BigNumber(0)
+        const usedUnspents: IBtcUnspent[] = sortedUnspents.filter((unspent: IBtcUnspent) => {
+          if (calcedAmount.isGreaterThanOrEqualTo(needAmount)) {
+            return false
+          } else {
+            calcedAmount = calcedAmount.plus(unspent.satoshis)
+            return true
+          }
+        })
+        resolve(usedUnspents)
+      } else {
+        resolve([oneUnspent])
+      }
+    }
+
+    if (options.unspents) {
+      processUnspents(options.unspents)
+    } else {
+      fetchUnspents({
+        NETWORK,
+        address,
+        apiBitpay,
+        cacheResponse,
+      }).then(processUnspents).catch((error) => {
+        reject(error)
+      })
+    }
   })
 }
 
