@@ -7,6 +7,9 @@ read PORT
 mkdir $CONTAINERNAME
 cd $CONTAINERNAME
 
+wget -O config/tradeconfig.mainnet.json https://raw.githubusercontent.com/swaponline/MultiCurrencyWallet/master/tradeconfig.mainnet.json
+wget -O config/tradeconfig.testnet.json https://raw.githubusercontent.com/swaponline/MultiCurrencyWallet/master/tradeconfig.testnet.json
+
 tee docker-compose.yml <<EOF
 version: '3'
 services:
