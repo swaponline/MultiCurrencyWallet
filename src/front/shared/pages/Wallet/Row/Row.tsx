@@ -17,7 +17,7 @@ import { localisedUrl } from 'helpers/locale'
 import SwapApp from 'swap.app'
 import { BigNumber } from 'bignumber.js'
 import { Button } from 'components/controls'
-
+import web3Icons from '../../../images'
 import PartOfAddress from '../components/PartOfAddress'
 import Copy from '../../../components/ui/Copy/Copy'
 
@@ -914,6 +914,8 @@ export default class Row extends Component<any, any> {
     const isMetamask = this.props.itemData.isMetamask
     const metamaskIsConnected = isMetamask && this.props.itemData.isConnected
     const metamaskDisconnected = isMetamask && !metamaskIsConnected
+    const web3Type = metamask.web3connect.getInjectedType()
+    const web3Icon = (web3Icons[web3Type] && web3Type !== `UNKNOWN` && web3Type !== `NONE`) ? web3Icons[web3Type] : false
 
     return (
       <tr>
@@ -969,6 +971,7 @@ export default class Row extends Component<any, any> {
                   */}
                   {metamaskDisconnected ? (
                       <Button small blue onClick={this.handleConnectMetamask}>
+                        {web3Icon && <img styleName="web3ProviderIcon" src={web3Icon} />}
                         <FormattedMessage id="CommonTextConnect" defaultMessage="Connect" />
                       </Button>
                     ) : !isBalanceFetched || isBalanceFetching ? (

@@ -480,7 +480,6 @@ tr button[disabled]:hover {
 }
 
 .assetsTableIcon {
-  // background: rgba(97, 68, 229, 0.1);
   min-width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -488,6 +487,12 @@ tr button[disabled]:hover {
   align-items: center;
   justify-content: center;
   margin-right: 15px;
+}
+
+.web3ProviderIcon {
+  height: 28px;
+  margin-right: 0.5em;
+  margin-bottom: 0.2em;
 }
 
 .assetsTableCurrencyWrapper {
