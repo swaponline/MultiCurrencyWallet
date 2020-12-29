@@ -176,10 +176,6 @@ export default class AddressSelect extends Component<any, any> {
         hasError,
         selectedType,
         customAddress: '',
-      }, () => {
-        if (newCurrency !== oldCurrency) {
-          this.handleOptionSelect({ value: selectedType })
-        }
       })
     }
   }
@@ -298,31 +294,7 @@ export default class AddressSelect extends Component<any, any> {
       }*/
 
         if (selectedType === AddressType.Metamask && !metamask.isConnected()) {
-          metamask
-            .connect({
-              dontRedirect: true,
-            })
-            .then((isConnected) => {
-              if (!isConnected) {
-                return
-              } else {
-                this.setState(
-                  {
-                    isMetamaskConnected: true,
-                    metamaskAddress: metamask.getAddress(),
-                    value: metamask.getAddress(),
-                    type: AddressType.Metamask,
-                    selectedType: AddressType.Metamask,
-                  },
-                  () => {
-                    this.applyAddress({
-                      type: AddressType.Metamask,
-                      value: metamask.getAddress(),
-                    })
-                  }
-                )
-              }
-            })
+          this.handleConnectMetamask()
         } else {
           this.applyAddress({
             type: selectedType,

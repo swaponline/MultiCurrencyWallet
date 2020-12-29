@@ -1104,6 +1104,8 @@ export default class Exchange extends Component<any, any> {
       exHaveRate,
       exGetRate,
       pairFees,
+      fromAddress,
+      toAddress,
     } = this.state
 
     feedback.exchangeForm.flipped(
@@ -1134,7 +1136,9 @@ export default class Exchange extends Component<any, any> {
               }
             : []),
         },
-        // todo: flip values, addresses
+        // todo: flip values
+        fromAddress: toAddress,
+        toAddress: fromAddress,
       },
       () => {
         actions.analytics.dataEvent({
