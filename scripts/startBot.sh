@@ -73,11 +73,11 @@ services:
     container_name: $CONTAINERNAME
     restart: unless-stopped
     volumes:
-      - ${PWD}/config:/root/MulticurrencyWallet/config
-      - ${PWD}/.storage:/root/MulticurrencyWallet/.storage
-      - ${PWD}/config/tradeconfig.mainnet.json:/root/MulticurrencyWallet/tradeconfig.mainnet.json
-      - ${PWD}/config/tradeconfig.testnet.json:/root/MulticurrencyWallet/tradeconfig.testnet.json    
-      - ${PWD}/.env:/root/MulticurrencyWallet/.env
+      - ${PWD}/config:/root/MultiCurrencyWallet/config
+      - ${PWD}/.storage:/root/MultiCurrencyWallet/.storage
+      - ${PWD}/config/tradeconfig.mainnet.json:/root/MultiCurrencyWallet/tradeconfig.mainnet.json
+      - ${PWD}/config/tradeconfig.testnet.json:/root/MultiCurrencyWallet/tradeconfig.testnet.json    
+      - ${PWD}/.env:/root/MultiCurrencyWallet/.env
     ports:
       - "${PORT}:${PORT}"
 EOF
