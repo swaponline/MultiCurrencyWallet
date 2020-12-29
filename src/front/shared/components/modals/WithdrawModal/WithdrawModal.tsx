@@ -288,19 +288,27 @@ export default class WithdrawModal extends React.Component<any, any> {
     if (isPinProtected) method = `send_2fa`
 
     const BYTE_IN_KB = 1024
-    const feeRate = await helpers.btc.estimateFeeRate()
-    const feeSatByte = new BigNumber(feeRate).dividedBy(BYTE_IN_KB).dp(0, BigNumber.ROUND_CEIL).toNumber()
-    const txSize = await helpers.btc.calculateTxSize({
+
+    const feeData = await helpers.btc.estimateFeeValue({
+      method,
+      speed: 'fast',
       address,
       amount,
-      method,
+      moreInfo: true,
     })
+
+    const {
+      feeRate,
+      txSize,
+    } = feeData
+    const feeSatByte = new BigNumber(feeRate).dividedBy(BYTE_IN_KB).dp(0, BigNumber.ROUND_CEIL).toNumber()
 
     if (!this.mounted) return
 
     this.setState({
       btcFeeRate: feeSatByte,
       txSize,
+      coinFee: feeData.fee,
     })
   }
 
@@ -647,9 +655,10 @@ export default class WithdrawModal extends React.Component<any, any> {
     } = this.state
 
     if (isBTC) {
+      clearTimeout(this.btcFeeTimer)
       this.btcFeeTimer = setTimeout(() => {
         this.setBtcFeeRate()
-      }, 5000)
+      }, 2000)
     }
 
     this.setState({
@@ -668,9 +677,10 @@ export default class WithdrawModal extends React.Component<any, any> {
     } = this.state
 
     if (isBTC) {
+      clearTimeout(this.btcFeeTimer)
       this.btcFeeTimer = setTimeout(() => {
         this.setBtcFeeRate()
-      }, 5000)
+      }, 2000)
     }
 
     this.setState({

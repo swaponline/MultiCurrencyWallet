@@ -188,9 +188,11 @@ type EstimateFeeValueOptions = {
   txSize?: number
   fixed?: string
   amount?: number
+  moreInfo?: boolean
 }
 
-const estimateFeeValue = async (options: EstimateFeeValueOptions) => {
+const estimateFeeValue = async (options: EstimateFeeValueOptions): any => {
+  const { moreInfo } = options
   let { feeRate, inSatoshis, speed, address, txSize, fixed, method, amount } = options
   const {
     user: {
@@ -230,7 +232,15 @@ const estimateFeeValue = async (options: EstimateFeeValueOptions) => {
   const finalFeeValue = inSatoshis
     ? calculatedFeeValue.toNumber()
     : calculatedFeeValue.multipliedBy(SATOSHI_TO_BITCOIN_RATIO).toNumber()
-  
+
+  if (moreInfo) {
+    return {
+      fee: calculatedFeeValue.multipliedBy(SATOSHI_TO_BITCOIN_RATIO).toNumber(),
+      satoshis: calculatedFeeValue.toNumber(),
+      txSize,
+      feeRate,
+    }
+  }
   return finalFeeValue
 }
 
