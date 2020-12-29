@@ -59,7 +59,7 @@ if (rewritedEnv.SECRET_PHRASE) {
   if (mnemonicUtils.mnemonicIsValid(mnemonic)) {
     configStorage.setMnemonic(mnemonic)
     console.log(
-      colorString('>>> Use Mnemonic:', COLORS.GREEN)
+      colorString('>>> used SECRET_PHRASE', COLORS.GREEN)
     )
   } else {
     console.log(colorString('>>> Your are pass not valid mnemonic', COLORS.RED))
@@ -160,4 +160,3 @@ console.log(app)
 
 export default app
 */
-
