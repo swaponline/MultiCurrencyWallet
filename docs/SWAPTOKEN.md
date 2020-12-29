@@ -43,7 +43,7 @@ Current
 - By custom MultiCurrencyWallet integrations
 - By [community donations](/docs/DONATE.md)
 
-## initial selling strategy
+## Initial selling strategy
 - swaponline team can sell SWAP tokens not less than 1 USD per 1 SWAP (please don't buy tokens above 1 usd anywhere to prevent getting rekt)
 - By default, funds are used to support liquidity (not a price increase!) but can be managed by CEO 
 
@@ -84,6 +84,8 @@ Jan, 2020 – WordPress plugin release
 
 Sep, 2020 – 100 WordPress plugin sales, stable income
 
-## other stat
+Dec, 2020 – 150 WordPress plugin sales, stable income
+
+## Our growth
 
 ![](https://screenshots.wpmix.net/Telegram_BgGLGK1HWgMnk7BDad8VwuUWjjwDqQjy.png)
