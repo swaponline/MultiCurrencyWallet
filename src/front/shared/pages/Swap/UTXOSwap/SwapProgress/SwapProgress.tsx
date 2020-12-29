@@ -486,7 +486,10 @@ export default class SwapProgress extends Component<any, any> {
                   />
                 </strong>
               )}
-
+              {metamask.isConnected() && (
+                (!this.isSellCurrencyEthOrEthToken && flow.step === 6)
+                || (this.isSellCurrencyEthOrEthToken && flow.step === 5 && flow.isUTXOScriptOk)
+              ) && (
                 <strong styleName="metamask_attention">
                   <FormattedMessage
                     id="Swap_MetamaskAttention"
@@ -496,7 +499,7 @@ export default class SwapProgress extends Component<any, any> {
                     }}
                   />
                 </strong>
-
+              )}
               {flow.step > 3 && !this.isSellCurrencyEthOrEthToken &&
                 <PleaseDontLeaveWrapper isBtcLike={flow.secret ? flow.secret : false} />
               }
