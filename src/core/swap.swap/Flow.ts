@@ -23,7 +23,7 @@ class Flow {
 
     // Atomic swaps state
     // -- AB-UTXO
-    particalHasLockedUTXO?: boolean
+    participantHasLockedUTXO?: boolean
     // -- UTXO-AB
     isUTXOScriptOk?: boolean
     waitUnlockUTXO?: boolean
@@ -48,7 +48,7 @@ class Flow {
       ...{
         /** AB-UTXO **/
         // Partical (btc-seller) has unconfirmed txs in mempool
-        particalHasLockedUTXO: false,
+        participantHasLockedUTXO: false,
         // Script charged, confirmed and checked - next step - charge AB contract
         isUTXOScriptOk: false,
       },

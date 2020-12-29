@@ -478,7 +478,7 @@ export default class SwapProgress extends Component<any, any> {
                   />
                 </strong>
               )}
-              {flow.step <= 5 && flow.particalHasLockedUTXO && (
+              {flow.step <= 5 && flow.participantHasLockedUTXO && (
                 <strong styleName="attention">
                   <FormattedMessage
                     id="Swap_SellerHasLockedUTX"

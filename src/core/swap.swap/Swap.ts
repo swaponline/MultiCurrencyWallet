@@ -282,7 +282,7 @@ class Swap {
         // Seller has unconfirmed tx in mem pool
         this.room.on('wait utxo unlock', () => {
           this.flow.setState({
-            particalHasLockedUTXO: true,
+            participantHasLockedUTXO: true,
           }, true)
         })
 
