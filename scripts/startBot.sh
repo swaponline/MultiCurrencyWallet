@@ -37,7 +37,7 @@ ACCOUNT=123 (Number)
 # Blockchain network
 # mainnet|testnet - default testnet
 # If testnet, for eth use rinky network
-NETWORK=mainnet
+NETWORK=testnet
 # Web3 providers
 WEB3_TESTNET_PROVIDER=
 WEB3_MAINNET_PROVIDER=
