@@ -1,5 +1,8 @@
-#CONTAINERNAME=mybotproject
-#PORT=80 
+echo "Enter name of instance (ex. mybot)"
+read CONTAINERNAME
+
+echo "Enter port to deploy (80)"	
+read PORT 
 
 mkdir $CONTAINERNAME
 cd $CONTAINERNAME
