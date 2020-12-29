@@ -7536,10 +7536,7 @@
   },
   {
     "id": "Banner_ConnectMetamask",
-    "message": "Conectar Billetera",
-    "files": [
-      "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
-    ]
+    "message": "Conectar Billetera"
   },
   {
     "id": "Banner_ConnectMetamaskDesc",
@@ -7577,7 +7574,8 @@
     "id": "CommonTextConnect",
     "message": "Connect",
     "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx",
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
@@ -8287,6 +8285,20 @@
     "message": "(fuente)",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "Swap_OwnerHasLockedUTX",
+    "message": "El intercambio se detuvo porque tiene una transacción sin confirmar en mempool. Esperando confirmar",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "Swap_SellerHasLockedUTX",
+    "message": "El intercambio se detuvo porque el propietario tiene una transacción sin confirmar en mempool. Esperando confirmar",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
   }
 ]

@@ -5906,7 +5906,8 @@
     "id": "CommonTextConnect",
     "message": "Connect",
     "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx",
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
@@ -7583,10 +7584,7 @@
   },
   {
     "id": "Banner_ConnectMetamask",
-    "message": "Connect wallet",
-    "files": [
-      "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
-    ]
+    "message": "Connect wallet"
   },
   {
     "id": "Banner_ConnectMetamaskDesc",
@@ -8263,6 +8261,20 @@
     "message": "(source)",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "Swap_OwnerHasLockedUTX",
+    "message": "Swap paused because you has unconfirmed transaction in mempool. Waiting confirm",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "Swap_SellerHasLockedUTX",
+    "message": "Swap paused because owner has unconfirmed transaction in mempool. Waiting confirm",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
   }
 ]
