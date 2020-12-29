@@ -1,8 +1,5 @@
-echo "Enter name of instance (ex. mybot)"
-read CONTAINERNAME
-
-echo "Enter port to deploy (80)"
-read PORT 
+CONTAINERNAME=mybotproject
+PORT=80 
 
 mkdir $CONTAINERNAME
 cd $CONTAINERNAME
@@ -83,3 +80,4 @@ docker-compose up -d
 
 curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash
 lazydocker 
+ 
