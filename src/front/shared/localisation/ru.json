@@ -8337,14 +8337,14 @@
   },
   {
     "id": "Swap_OwnerHasLockedUTX",
-    "message": "Свап стоит на паузе, потому-что у вас есть не подтвержденные транзакции в мем-пуле. Ждем подтверждения",
+    "message": "Свап стоит на паузе, потому что у вас есть не подтвержденные транзакции в мемпуле. Ждем подтверждения.",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
   },
   {
     "id": "Swap_SellerHasLockedUTX",
-    "message": "Свап стоит на паузе, потому-что у продавца есть не подтвержденные транзакции в мем-пуле. Ждем подтверждения",
+    "message": "Свап стоит на паузе, потому что у продавца есть не подтвержденные транзакции в мемпуле. Ждем подтверждения.",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
