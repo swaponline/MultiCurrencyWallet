@@ -4,7 +4,7 @@
   "repository": "https://github.com/swaponline/MultiCurrencyWallet/",
   "logo": "https://swaponline.github.io/assets/favicon.ico",
   "keywords": ["wallet", "ethereum", "bitcoin", "crypto"],
-  "stack": "Heroku-18",
+  "stack": "heroku-18",
   "env":{
     "SECRET_PHRASE": {
       "description": "Your 12 words secret phrase (create new one on https://swaponline.io)",
