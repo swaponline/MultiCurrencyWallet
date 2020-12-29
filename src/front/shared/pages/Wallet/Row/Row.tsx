@@ -923,10 +923,12 @@ export default class Row extends Component<any, any> {
             <Coin className={styles.assetsTableIcon} name={currency} />
             <div styleName="assetsTableInfo">
               <div styleName="nameRow">
-                <a
-                  onClick={mnemonicSaved || (isMetamask && metamaskIsConnected) 
-                    ? this.goToCurrencyHistory 
-                    : () => null }
+                <a onClick={metamaskDisconnected
+                    ? this.handleConnectMetamask
+                    : mnemonicSaved || metamaskIsConnected
+                      ? this.goToCurrencyHistory
+                      : () => null
+                  }
                   styleName={`${
                     mnemonicSaved && isMobile
                       ? 'linkToHistory mobile'
@@ -961,17 +963,14 @@ export default class Row extends Component<any, any> {
               {showBalance && (
                 <Fragment>
                   {/* 
-                  If metamask disconnected then showing connect button
+                  If it's metamask and it's disconnected then showing connect button
                   else if balance fetched or fetching then showing loader
                   else showing fetch-button and currency balance
                   */}
-                  {metamaskDisconnected 
-                    ? (
-                      <div>
-                        <Button blue onClick={this.handleConnectMetamask}>
-                          <FormattedMessage id="WalletRowConnectMetamaskButton" defaultMessage="Connect" />
-                        </Button>
-                      </div>
+                  {metamaskDisconnected ? (
+                      <Button small blue onClick={this.handleConnectMetamask}>
+                        <FormattedMessage id="WalletRowConnectMetamaskButton" defaultMessage="Connect" />
+                      </Button>
                     ) : !isBalanceFetched || isBalanceFetching ? (
                         this.props.itemData.isUserProtected &&
                           !this.props.itemData.active ? (

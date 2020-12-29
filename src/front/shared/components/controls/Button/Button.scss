@@ -36,12 +36,12 @@
 }
 
 .brand {
-  background-color: #e72bb3;
+  background-color: $color-brand;
   box-shadow: 1px 1px 6px #929292;
   color: #fff;
 
   &:hover {
-    background-color: lighten(#e72bb3, 5%);
+    background-color: lighten($color-brand, 5%);
   }
 }
 
@@ -58,6 +58,13 @@
   background-color: $primary;
   color: #fff;
   font-size: 15px;
+}
+
+// .small selector after .blue so that the font size is applied
+.small {
+  height: 39px;
+  min-height: 39px;
+  font-size: 0.9em;
 }
 
 .transparent {

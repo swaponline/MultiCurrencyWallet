@@ -17,6 +17,7 @@ type ButtonProps = {
   blue?: boolean
   gray?: boolean
   big?: boolean
+  small?: boolean
   fill?: boolean
   disabled?: boolean
   className?: string
@@ -38,6 +39,7 @@ const Button = (props: ButtonProps) => {
     gray,
     disabled,
     big,
+    small,
     autoHeight,
     onClick,
     id = '',
@@ -55,6 +57,7 @@ const Button = (props: ButtonProps) => {
     white,
     gray,
     big,
+    small,
     autoHeight,
     disabled,
     "darkTheme-white": isDark && white,
