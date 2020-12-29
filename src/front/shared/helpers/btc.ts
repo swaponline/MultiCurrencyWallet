@@ -137,11 +137,8 @@ const calculateTxSize = async (options: IcalculateTxSizeOptions) => {
   }
 
   unspents = unspents || await actions.btc.fetchUnspents(address)
-  console.log('unspents', unspents)
   if (amount) {
-    
     unspents = await actions.btc.prepareUnspents({ amount, unspents })
-    console.log('filtered unspents', unspents)
   }
   /*
   * Formula with 2 input and 2 output addresses 
@@ -212,6 +209,10 @@ const estimateFeeValue = async (options: EstimateFeeValueOptions): any => {
     if (method === 'send_multisig') address = btcMultisigUserData.address
   }
 
+  let unspents = await actions.btc.fetchUnspents(address)
+  if (amount) {
+    unspents = await actions.btc.prepareUnspents({ amount, unspents })
+  }
   //@ts-ignore
   txSize = txSize || await calculateTxSize({ address, speed, fixed, method, txOut, amount })
   feeRate = feeRate || await estimateFeeRate({ speed })
@@ -239,6 +240,7 @@ const estimateFeeValue = async (options: EstimateFeeValueOptions): any => {
       satoshis: calculatedFeeValue.toNumber(),
       txSize,
       feeRate,
+      unspents,
     }
   }
   return finalFeeValue
