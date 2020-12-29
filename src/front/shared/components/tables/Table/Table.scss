@@ -421,9 +421,6 @@ table.wallet {
   }
 
   .table.exchange {
-    display: table;
-    width: 280px;
-
     td {
       position: relative;
 
@@ -493,6 +490,20 @@ table.wallet {
 
     tr {
       display: block;
+    }
+  }
+}
+
+@media all and (max-width: 800px) {
+  .table.exchange {
+    thead {
+      display: none;
+    }
+
+    tbody {
+      tr:first-child {
+        border-top: none; // ui improve without titles
+      }
     }
   }
 }

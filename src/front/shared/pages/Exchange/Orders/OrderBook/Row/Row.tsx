@@ -423,7 +423,7 @@ export default class Row extends Component {
               <span styleName='rowAmount'>{`${mobileFormatCrypto(amount, main)} ${main}`}</span>
             </div>
             <div>
-              <i className="fas fa-exchange-alt" />
+              <i style={{ margin: '0 0.8em' }} className="fas fa-exchange-alt" />
             </div>
             <div styleName="tdContainer-2">
               <span styleName="secondType">
