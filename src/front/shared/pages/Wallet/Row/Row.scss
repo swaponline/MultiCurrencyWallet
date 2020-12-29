@@ -1,79 +1,7 @@
-.marginRight {
-  margin-right: 10px;
-}
-
-.copied {
-  font-size: 14px;
-  position: absolute;
-  padding: 5px 15px;
-  background: #f8f3fe;
-  top: -16px;
-  left: calc(25%);
-  border-radius: 20px;
-}
-
-.no-select-inline {
-  cursor: pointer;
-  display: inline;
-  user-select: none;
-  white-space: nowrap;
-}
-
-.icon {
-  margin-right: 5px;
-}
-
-.notActiveLink {
-  font-size: 12px;
-  color: #c9c9c9;
-  position: absolute;
-  bottom: -2px;
-}
-
 .txWaitConfirm {
   padding-right: 10px;
   color: $primary;
   cursor: pointer;
-}
-
-.disableWth {
-  @include inline-block;
-  height: 40px;
-  background: #dbdbdb;
-  padding: 0 25px;
-  cursor: pointer;
-  line-height: 40px;
-  font-size: 16px;
-  border: none;
-  font-weight: 500;
-  color: #626262;
-  border-radius: 20px;
-  margin-right: 10px;
-}
-
-.notContractAddress {
-  float: left;
-  position: relative;
-  height: 40px;
-}
-
-.button {
-  @include inline-block;
-  height: 40px;
-  background: #f8f3fe;
-  padding: 0 25px;
-  cursor: pointer;
-  line-height: 40px;
-  font-size: 16px;
-  font-weight: 500;
-  color: #7c1de9;
-  border-radius: 20px;
-  margin-right: 10px;
-
-  &:hover {
-    color: #7c1de9;
-    background: #dfc5ff;
-  }
 }
 
 .nameRow {
@@ -118,33 +46,7 @@
       margin-left: 10px;
       margin-top: 3px;
     }
-
-    // :hover {
-    //   text-decoration: underline;
-    // }
   }
-}
-
-.disbutton {
-  onclick: none;
-}
-
-.buttonActivate {
-  margin-left: 15px;
-}
-
-.marginRight {
-  margin-right: 10px;
-}
-
-.copied {
-  font-size: 14px;
-  position: absolute;
-  padding: 5px 15px;
-  background: #f8f3fe;
-  top: -16px;
-  left: calc(25%);
-  border-radius: 20px;
 }
 
 .no-select-inline {
@@ -160,272 +62,12 @@
   margin-right: 5px;
 }
 
-.table_balance-cell {
-  min-width: 170px;
-  max-width: 170px;
-}
-
-.mobileName {
-  color: #000;
-  display: block;
-  margin-left: -10px;
-  display: none;
-}
-
-.hidden {
-  display: none;
-}
-
-.visible {
-  display: none;
-}
-
 tr button:disabled,
 tr button[disabled],
 tr button[disabled]:hover {
   background-color: #dbdbdb;
   cursor: default;
   color: #626262;
-}
-
-.yourAddress {
-  position: relative;
-  min-width: 400px;
-}
-
-.yourAddressWithOptions {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-}
-
-.walletButtons {
-  color: inherit;
-}
-
-.activeControlButtons {
-  color: inherit;
-  display: flex;
-  margin-left: 10px;
-  bottom: 0;
-
-  .buttonActivate,
-  .buttonUseAnother {
-    display: block;
-  }
-}
-
-.actButton {
-  button {
-    color: #ffffff;
-    width: auto;
-    background: rgba(61, 226, 91, 0.7);
-    height: 25px;
-    line-height: 25px;
-    padding: 0px 25px;
-    margin-left: 31px;
-    margin: 0;
-    margin-bottom: 0;
-    font-size: 16px;
-    margin-right: 10px;
-    height: 40px;
-
-    &:hover {
-      color: #ffffff;
-      background: rgba(61, 226, 91, 0.8);
-    }
-  }
-}
-
-.useButton {
-  button {
-    background: #ffffff;
-    color: #8c8c8c;
-    border: 1px solid #dbdbdb;
-    height: 25px;
-    line-height: 15px;
-    padding: 0 25px;
-    font-size: 16px;
-    height: 40px;
-    margin-right: -10px;
-
-    &:hover {
-      background: #ffffff;
-      color: #8c8c8c;
-      border: 1px solid #dbdbdb;
-    }
-  }
-}
-
-.buttonActivate,
-.buttonUseAnother {
-  display: none;
-}
-
-.addressExist {
-  position: relative;
-  left: 51%;
-}
-
-@media all and (min-width: 570px) and (max-width: 1024px) {
-  .buttonActivate {
-    margin-left: 0px;
-  }
-
-  .yourAddress {
-    display: table-cell;
-  }
-
-  .buttonActivate {
-    top: auto;
-  }
-
-  .activeControlButtons {
-    color: inherit;
-    display: flex;
-    left: 170px;
-    top: -65px;
-    position: absolute;
-    flex-direction: row;
-  }
-
-  .notActivated {
-    display: flex;
-    max-width: 140px;
-    display: none;
-    align-items: flex-end !important;
-  }
-}
-
-@media all and (max-width: 1024px) {
-  .notActiveLink {
-    bottom: -10px;
-  }
-
-  .mobileName {
-    display: block;
-  }
-
-  .yourAddress {
-    position: absolute;
-    bottom: 0;
-    right: 10px;
-    min-width: 80px;
-    width: auto !important;
-  }
-
-  .yourAddressWithOptions {
-    position: absolute;
-    right: 40px;
-    bottom: 10px;
-    width: 100% !important;
-
-    .notContractAddress {
-      position: absolute;
-      right: -20px;
-      bottom: 15px;
-      display: none;
-    }
-  }
-
-  .table_balance-cell {
-    min-width: 75px;
-  }
-
-  .yourAddress {
-    display: none;
-  }
-
-  .mobileName {
-    color: #000;
-    display: block;
-    font-size: 16px;
-  }
-
-  tr.showButtons {
-    color: #000;
-    height: 120px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    box-shadow: rgba(0, 0, 0, 0.08) 0px 0px 20px 0;
-    margin-bottom: 10px;
-    margin-top: 10px;
-
-    .yourAddressWithOptions {
-      .notContractAddress {
-        display: block;
-      }
-    }
-
-    .yourAddress {
-      display: block;
-    }
-
-    td:nth-child(1) {
-      a {
-        top: 14px;
-        position: absolute;
-      }
-    }
-
-    .mobileName {
-      position: absolute;
-      left: 70px;
-      top: 23px;
-      margin: 0;
-      color: #000;
-    }
-
-    .buttonActivate {
-      top: 0px;
-    }
-  }
-
-  tr.hidden {
-    td:nth-child(5) {
-      div {
-        display: none;
-      }
-    }
-  }
-
-  .buttonActivate {
-    right: 0;
-    height: 22px;
-    line-height: 0px;
-    top: -47px;
-    left: 103px;
-    color: #ffffff;
-    background: rgba(61, 226, 91, 0.7);
-    height: 25px;
-    line-height: 25px;
-    padding: 0 0.9em !important;
-    margin-left: 31px;
-    margin: 0;
-    margin-bottom: 10px;
-    font-size: 13px !important;
-    margin-right: 5px !important;
-    width: 115px;
-  }
-
-  .buttonUseAnother {
-    background: #ffffff;
-    color: #8c8c8c;
-    border: 1px solid #dbdbdb;
-    height: 25px;
-    line-height: 15px;
-    padding: 0 15px !important;
-    display: none;
-    width: 115px;
-    font-size: 13px !important;
-  }
-}
-
-.assetsTable {
-  position: relative;
-
-  button {
-    margin-top: 20px;
-  }
 }
 
 .assetsTableRow {
@@ -451,7 +93,6 @@ tr button[disabled]:hover {
 }
 
 .dark {
-
   .errorMessage,
   .assetsTableCurrencyWrapper {
     background: #222528;
@@ -646,44 +287,6 @@ tr button[disabled]:hover {
   margin-left: -5px;
 }
 
-@media all and (max-width: 570px) {
-  .yourAddress {
-    display: none;
-  }
-
-  tr.showButtons {
-    .yourAddress {
-      display: none;
-    }
-  }
-
-  .yourAddressWithOptions {
-    position: absolute;
-    right: -90px;
-    bottom: 50px;
-    width: 100% !important;
-
-    .notContractAddress {
-      display: none !important;
-    }
-  }
-
-  .buttonActivate {
-    width: 75px;
-    height: 26px !important;
-    // padding: 0!important;
-    position: absolute;
-    left: 16px;
-    top: -17px !important;
-    font-size: 10px !important;
-  }
-
-  .buttonUseAnother {
-    width: 100px;
-    display: none !important;
-  }
-}
-
 @media all and (min-width: 993px) {
   .assetsTableInfo {
     position: relative;
@@ -784,7 +387,6 @@ tr button[disabled]:hover {
   }
 
   .assetsTableValue {
-
     strong,
     p {
       font-size: 1em;
