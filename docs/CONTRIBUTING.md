@@ -1,6 +1,6 @@
 ## Developer program
 
-To let and motivate anyone JS, React, Typescript developer to contribute in our codebase we pay in SWAP tokens for commits
+To let and motivate anyone JS, React, Typescript developers and QA to contribute in our codebase we pay in SWAP tokens for commits and issues. If you are willing to receive experience in your area see below
 
 SWAP token is NOT a money, no guarantee you will exchange this to visa, paypal, USD, BTC, ETH or whatever), we never will buy SWAP tokens from you. Read more what is this here https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/SWAPTOKEN.md
 
