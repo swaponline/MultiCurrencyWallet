@@ -9,20 +9,28 @@
   }
 }
 
+.rowCell:nth-of-type(1) {
+  width: 10%;
+}
+.rowCell:nth-of-type(2) {
+  width: 25%;
+}
+.rowCell:nth-of-type(3) {
+  width: 25%;
+}
+.rowCell:nth-of-type(4) {
+  width: 25%;
+}
+
 .mobileRowRemove,
 .mobileRowStart {
-
   .firstType,
   .secondType {
     color: $indicating-color;
     display: block;
   }
-  .tdContainer-1 {
-    position: relative;
-  }
-  .tdContainer-2 {
-    position: relative;
-  }
+  .tdContainer-1,
+  .tdContainer-2,
   .tdContainer-3 {
     position: relative;
   }
@@ -38,10 +46,6 @@
     align-items: center;
     justify-content: space-between;
   }
-}
-
-.buttonsColumn {
-  text-align: center !important;
 }
 
 @media screen and (max-width: 400px) {

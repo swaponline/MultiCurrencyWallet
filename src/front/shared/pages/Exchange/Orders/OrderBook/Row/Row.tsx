@@ -330,28 +330,28 @@ export default class Row extends Component {
         styleName={`${isDark ? 'rowDark' : ''}`}
         style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}
       >
-        <td>
+        <td styleName='rowCell'>
           <Avatar
             value={ownerPeer}
             size={30}
           />
         </td>
-        <td>
+        <td styleName='rowCell'>
           <span styleName='rowAmount'>
             {`${this.getDecimals(sellAmountOut, sellCurrencyOut)} ${sellCurrencyOut}`}
           </span>
         </td>
-        <td>
+        <td styleName='rowCell'>
           <span styleName='rowAmount'>
             {`${this.getDecimals(getAmountOut, getCurrencyOut)} ${getCurrencyOut}`}
           </span>
         </td>
-        <td>
+        <td styleName='rowCell'>
           <span styleName='rowAmount'>
             {`${this.getDecimals(priceOut, getCurrencyOut)} ${getCurrencyOut}/${sellCurrencyOut}`}
           </span>
         </td>
-        <td styleName="buttonsColumn">
+        <td styleName='rowCell'>
           {peer === ownerPeer
             ?
             <RemoveButton className="removeButton" onClick={() => removeOrder(id)} />
