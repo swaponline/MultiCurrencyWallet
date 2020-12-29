@@ -60,6 +60,14 @@
   font-size: 15px;
 }
 
+// .small selector after .blue so that the font size is applied
+.small {
+  width: 100%;
+  min-height: 39px;
+  height: 39px;
+  font-size: 0.9em;
+}
+
 .transparent {
   background: rgba(255, 255, 255, 0.1);
   font-size: 15px;

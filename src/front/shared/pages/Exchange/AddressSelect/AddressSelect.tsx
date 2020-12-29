@@ -58,7 +58,7 @@ const langLabels = defineMessages({
     defaultMessage: 'Enter the receiving wallet address',
   },
   connectMetamask: {
-    id: 'Exchange_ConnectMetamask',
+    id: 'CommonTextConnect',
     defaultMessage: 'Connect',
   },
 })
