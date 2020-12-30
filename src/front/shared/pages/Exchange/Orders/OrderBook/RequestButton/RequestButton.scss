@@ -1,12 +1,12 @@
 .button {
-  padding: 6px 8px!important;
+  padding: 6px 8px;
   width: auto;
-  background-color: #6144e5;
+  background-color: $color-brand;
   position: relative;
   border-radius: 5px;
   box-shadow: 1px 1px 6px #929292;
   font-size: 12px;
-  color: #ffffff;
+  color: $color-f-brightest;
   cursor: pointer;
 
   &:hover {
