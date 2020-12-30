@@ -105,6 +105,7 @@ export default (app, { id }, callback) => {
 
     })
 
+    let updateTimeout: any = 0
     const update = async () => {
 
       if (await canBeDeleted(swap)) {
@@ -118,14 +119,15 @@ export default (app, { id }, callback) => {
           fillOrderbook(app.services.wallet, app.services.orders)
         }
    
-        return clearInterval(update)
+        return clearInterval(updateTimeout)
       }
 
       if (needsRefund(swap)) {
         console.log(new Date().toISOString(), `swap needs refund: ${swap.id}, trying...`)
         const result = await swap.flow.tryRefund()
         console.log(new Date().toISOString(), `swap refund:`, result)
-        return setTimeout(update, 5000)
+        updateTimeout = setTimeout(update, 5000)
+        return updateTimeout
       } else {
         console.log(new Date().toISOString(), `swap does not need refund: ${swap.id}`)
       }
@@ -138,12 +140,12 @@ export default (app, { id }, callback) => {
         const { name, message } = error
         console.error(new Date().toISOString(), `[${swap.id}]: `, name, message)
       } finally {
-        setTimeout(update, 5000)
+        updateTimeout = setTimeout(update, 5000)
       }
 
     }
 
-    setTimeout(update, 0)
+    updateTimeout = setTimeout(update, 0)
 
   } catch (err) {
     console.error(new Date().toISOString(), `[ERROR] swap id=${swap && swap.id} step=${swap && swap.flow.state.step}`)
