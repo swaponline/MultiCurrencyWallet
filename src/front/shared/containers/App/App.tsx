@@ -258,11 +258,9 @@ class App extends React.Component<RouteComponentProps<any>, any> {
           backupUserData.backupUser().then(() => {
             if (!localStorage.getItem(constants.localStorage.isWalletCreate)) {
               redirectTo(links.createWallet)
-              if (wpLoader) wpLoader.style.display = 'none'
             }
+            if (wpLoader) wpLoader.style.display = 'none'
           })
-        } else {
-          if (wpLoader) wpLoader.style.display = 'none'
         }
       }
       resolve(`ready`)
