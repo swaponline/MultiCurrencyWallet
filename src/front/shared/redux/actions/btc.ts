@@ -162,6 +162,7 @@ const login = (privateKey, mnemonic = null, mnemonicKeys = null) => {
   const data = {
     ...auth(privateKey),
     isMnemonic: sweepToMnemonicReady,
+    isBTC: true,
   }
 
   window.getBtcAddress = () => data.address
@@ -505,9 +506,10 @@ const sendV5 = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
       feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
     }
     feeFromAmount = feeFromAmount.toNumber()
-    feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed})
+    feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, amount})
 
-    const unspents = await fetchUnspents(from)
+    let unspents = await fetchUnspents(from)
+    unspents = await prepareUnspents({ unspents, amount })
     const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
     const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
 
@@ -605,6 +607,13 @@ const signAndBuild = (transactionBuilder, address) => {
   return transactionBuilder.buildIncomplete()
 }
 
+const prepareUnspents = ({ amount, unspents }) => bitcoinUtils.prepareUnspents({
+  amount,
+  unspents,
+  NETWORK,
+})
+
+window.prepareUnspents = prepareUnspents
 const fetchUnspents = (address) => bitcoinUtils.fetchUnspents({
   address,
   NETWORK,
@@ -661,4 +670,5 @@ export default {
   fetchTxRaw,
   addressIsCorrect,
   convertMnemonicToValid,
+  prepareUnspents,
 }

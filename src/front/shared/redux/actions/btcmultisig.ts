@@ -106,6 +106,7 @@ const signToUserMultisig = async () => {
     balanceError: false,
     publicKeys: data.publicKeys,
     publicKey: data.publicKey,
+    isBTC: true,
   })).filter((wallet) => wallet.address !== btcMultisigUserData.address)
 
   btcMultisigUserData.wallets = wallets
@@ -354,6 +355,7 @@ const createWallet = (privateKey, otherOwnerPublicKey) => {
     privateKey,
     publicKeys,
     publicKey,
+    isBTC: true,
   }
 
   localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKey, otherOwnerPublicKey)
@@ -505,6 +507,7 @@ const login_ = (privateKey, otherOwnerPublicKey, sortKeys) => {
       privateKey,
       publicKeys,
       publicKey,
+      isBTC: true,
       active: true,
     }
   } else {
@@ -518,6 +521,7 @@ const login_ = (privateKey, otherOwnerPublicKey, sortKeys) => {
       privateKey,
       publicKeys: [],
       publicKey,
+      isBTC: true,
       active: false,
     }
   }
@@ -1108,15 +1112,21 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
   }
   feeFromAmount = feeFromAmount.toNumber()
 
-  feeValue = feeValue || await btc.estimateFeeValue({
+  const feeData =  await btc.estimateFeeValue({
     inSatoshis: true,
     speed,
     method: 'send_2fa',
     address: smsAddress,
+    amount,
+    moreInfo: true,
   })
 
-
-  const unspents = await fetchUnspents(from)
+  const {
+    satoshis,
+    unspents,
+    unspents: originalUnspents,
+  } = feeData
+  feeValue = satoshis
 
   const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
@@ -1322,7 +1332,7 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
     },
   } = getState()
 
-  let feeFromAmount: number | BigNumber = new BigNumber(0)
+  let feeFromAmount: any = new BigNumber(0)
 
   if (hasAdminFee) {
     const {
@@ -1339,12 +1349,21 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
     feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
   }
   feeFromAmount = feeFromAmount.toNumber()
-  feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, method: 'send_2fa', address: pinAddress })
+  const feeData = await btc.estimateFeeValue({
+    inSatoshis: true,
+    speed,
+    method: 'send_2fa',
+    address: pinAddress,
+    moreInfo: true,
+    amount,
+  })
 
-
-  feeValue = new BigNumber(feeValue).integerValue().toNumber()
-
-  const unspents = await fetchUnspents(from)
+  const {
+    satoshis,
+    unspents,
+    unspents: originalUnspents,
+  } = feeData
+  feeValue = satoshis
 
   const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
