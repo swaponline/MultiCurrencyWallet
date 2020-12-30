@@ -261,6 +261,8 @@ class App extends React.Component<RouteComponentProps<any>, any> {
             }
             if (wpLoader) wpLoader.style.display = 'none'
           })
+        } else {
+          if (wpLoader) wpLoader.style.display = 'none'
         }
       }
       resolve(`ready`)
