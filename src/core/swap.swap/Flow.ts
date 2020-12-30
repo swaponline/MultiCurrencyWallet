@@ -92,7 +92,7 @@ class Flow {
       isFinished,
     } = this.state
 
-    return (isStoppedSwap || isRefunded || isFinished)
+    return (isStoppedSwap || isRefunded || isFinished || this.swap.checkTimeout(3600))
   }
 
   _persistState() {
@@ -180,6 +180,7 @@ class Flow {
   _saveState() {
     this.app.env.storage.setItem(`flow.${this.swap.id}`, this.state)
   }
+
   finishStep(data?, constraints?) {
     debug('swap.core:swap')(`on step ${this.state.step}, constraints =`, constraints)
 
