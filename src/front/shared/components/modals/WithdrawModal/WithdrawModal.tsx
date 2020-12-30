@@ -816,7 +816,7 @@ export default class WithdrawModal extends React.Component<any, any> {
     }
 
     let allowedCriptoBalance: BigNumber | 0 = usedAdminFee
-      ? new BigNumber(balance).minus(totalFee).minus(adminFeeSize)
+      ? new BigNumber(balance).minus(totalFee).minus(adminFee.calc(currency, balance))
       : new BigNumber(balance).minus(totalFee)
 
     let allowedUsdBalance: BigNumber | 0 = new BigNumber(
@@ -1079,7 +1079,7 @@ export default class WithdrawModal extends React.Component<any, any> {
                   id="Withdrow170"
                   defaultMessage="Maximum amount you can send is {allowedCriptoBalance} {currency}"
                   values={{
-                    allowedCriptoBalance: `${new BigNumber(allowedCriptoBalance).toNumber()}`,
+                    allowedCriptoBalance: `${new BigNumber(allowedCriptoBalance).dp(currentDecimals).toNumber()}`,
                     currency: activeCriptoCurrency,
                   }}
                 />
