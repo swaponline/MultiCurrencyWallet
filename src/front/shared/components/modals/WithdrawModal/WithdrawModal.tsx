@@ -705,7 +705,7 @@ export default class WithdrawModal extends React.Component<any, any> {
     })
   }
 
-  sellAllBalance = async () => {
+  setMaxBalance = async () => {
     const {
       balance,
       isEthToken,
@@ -832,13 +832,6 @@ export default class WithdrawModal extends React.Component<any, any> {
     const usdValueIsOk = new BigNumber(
       linked.fiatAmount.pipe(this.handleAmount).value
     ).isLessThanOrEqualTo(allowedUsdBalance)
-
-    const setMaxBalance = () => {
-      this.setState({
-        amount: allowedCriptoBalance,
-        fiatAmount: allowedUsdBalance,
-      })
-    }
 
     const isDisabled =
       !address ||
@@ -1062,7 +1055,7 @@ export default class WithdrawModal extends React.Component<any, any> {
               />
             )}
             <div style={{ marginLeft: '15px' }}>
-              <Button disabled={fetchFee} blue big onClick={this.sellAllBalance} id="Withdrow134">
+              <Button disabled={fetchFee} blue big onClick={this.setMaxBalance} id="Withdrow134">
                 <FormattedMessage id="Select210" defaultMessage="MAX" />
               </Button>
             </div>
