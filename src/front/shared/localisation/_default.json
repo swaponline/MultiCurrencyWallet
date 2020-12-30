@@ -145,7 +145,7 @@
     "id": "logo29",
     "message": "Go Home",
     "files": [
-      "src/front/shared/components/Header/Logo.tsx"
+      "src/front/shared/components/Header/Logo/Logo.tsx"
     ]
   },
   {
@@ -185,45 +185,27 @@
   },
   {
     "id": "ImportKeys107",
-    "message": "This procedure will rewrite your private key. If you are not sure about it, we recommend to press cancel",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "This procedure will rewrite your private key. If you are not sure about it, we recommend to press cancel"
   },
   {
     "id": "ImportKeys110",
-    "message": "Please enter ETH private key",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Please enter ETH private key"
   },
   {
     "id": "ImportKeys120",
-    "message": "Please enter BTC private key in WIF format",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Please enter BTC private key in WIF format"
   },
   {
     "id": "ImportKeys130",
-    "message": "Confirm",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Confirm"
   },
   {
     "id": "ImportKeys133",
-    "message": "Cancel",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Cancel"
   },
   {
     "id": "Group14",
-    "message": "Import",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/Group/Group.tsx"
-    ]
+    "message": "Import"
   },
   {
     "id": "Select10",
@@ -1287,14 +1269,14 @@
   },
   {
     "id": "orders102",
-    "message": "AMOUNT",
+    "message": "Amount",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
   },
   {
     "id": "orders105",
-    "message": "TOTAL",
+    "message": "Price",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
@@ -1609,10 +1591,7 @@
   },
   {
     "id": "Import",
-    "message": "Import keys",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Import keys"
   },
   {
     "id": "Add52",
@@ -1757,10 +1736,7 @@
   },
   {
     "id": "errorImportKeys",
-    "message": "Please save your private keys",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Please save your private keys"
   },
   {
     "id": "PrivateKeysModal144",
@@ -1840,17 +1816,11 @@
   },
   {
     "id": "importkeys118",
-    "message": "Please enter BTC private key",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Please enter BTC private key"
   },
   {
     "id": "importkeys119",
-    "message": "Please valid BTC private key",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Please valid BTC private key"
   },
   {
     "id": "PartialPriceSearch483",
@@ -2093,27 +2063,6 @@
     ]
   },
   {
-    "id": "OrderBookRowSells",
-    "message": "sells",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "OrderBookRowFor",
-    "message": "for",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "OrderBookRowAtPrice",
-    "message": "at price",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
     "id": "CurrencyWallet141",
     "message": "{fullName}({currency}) Web Wallet with Atomic Swap."
   },
@@ -2191,24 +2140,15 @@
   },
   {
     "id": "importkeys172",
-    "message": "Please enter ETH private key",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Please enter ETH private key"
   },
   {
     "id": "importkeys173",
-    "message": "Please valid ETH private key",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Please valid ETH private key"
   },
   {
     "id": "importkeys190",
-    "message": "Something went wrong. Check your private key, network of this address and etc.",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Something went wrong. Check your private key, network of this address and etc."
   },
   {
     "id": "WithdrawIncorectAddress",
@@ -2253,7 +2193,7 @@
   },
   {
     "id": "orders104",
-    "message": "PRICE",
+    "message": "Total",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
@@ -4647,14 +4587,6 @@
     ]
   },
   {
-    "id": "partial1021",
-    "message": "Embed on website",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
-  },
-  {
     "id": "ImportKeysBtn",
     "message": "Импортировать"
   },
@@ -4703,7 +4635,7 @@
   },
   {
     "id": "addAsset",
-    "message": "Добавить валюту",
+    "message": "Add currency",
     "files": [
       "src/front/shared/pages/Wallet/CurrenciesList.tsx"
     ]
@@ -5898,7 +5830,7 @@
     ]
   },
   {
-    "id": "Exchange_ConnectMetamask",
+    "id": "CommonTextConnect",
     "message": "Connect",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
@@ -6311,7 +6243,7 @@
     "id": "ExitWidget",
     "message": "Exit",
     "files": [
-      "src/front/shared/components/Header/WidgetHeader/index.tsx"
+      "src/front/shared/components/Header/Header.tsx"
     ]
   },
   {
@@ -7861,6 +7793,13 @@
     ]
   },
   {
+    "id": "Comment",
+    "message": "Comment",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
     "id": "ConnectWalletModal_WalletLocked",
     "message": "Wallet is locked. Unlock the wallet first.",
     "files": [
@@ -8281,9 +8220,13 @@
   },
   {
     "id": "FeeInfoBlockTxSize",
-    "message": "Transaction size:",
+    "message": "Transaction size:"
+  },
+  {
+    "id": "FAQFeeApiLink",
+    "message": "(source)",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   }
 ]

@@ -58,13 +58,6 @@ export const COIN_DATA = {
     model: COIN_MODEL.AB,
     precision: 18,
   },
-  'SUM': {
-    ticker: 'SUM',
-    name: 'Sumcoin',
-    type: COIN_TYPE.NATIVE,
-    model: COIN_MODEL.UTXO,
-    precision: 8,
-  },
   'SNM': {
     ticker: 'SONM',
     name: 'SWAP',
@@ -82,7 +75,6 @@ export const NATIVE = {
   eth: 'ETH',
   ghost: 'GHOST',
   next: 'NEXT',
-  sum: 'SUM',
 }
 
 export const ETH_TOKENS = {

@@ -57,7 +57,7 @@ Add many assets to your wallet:
 
 ## Open for integrations
 
-See the [list of our clients](/docs/CLIENTS.md).
+See the [list of our clients](/docs/CLIENTS.md)
 
 
 ## International
@@ -82,4 +82,4 @@ Developer? Start with [ONBOARDING](https://github.com/swaponline/MultiCurrencyWa
 
 ---
 
-Any questions [are welcome](https://t.me/mcvchat)
+Any questions [are welcome](https://t.me/swaponline)

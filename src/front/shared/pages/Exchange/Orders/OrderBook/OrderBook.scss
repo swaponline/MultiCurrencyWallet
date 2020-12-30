@@ -2,7 +2,7 @@
   margin-top: 0;
 }
 
-.offersNotice {
+.offersLoadingNotice {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,13 +13,13 @@
   }
 }
 
+.offersOfflineNotice {
+  color: $notice-color;
+}
+
 .orderBookTable {
   margin: 0 auto;
   width: 100%;
-
-  thead {
-    display: none; // hide default table headers
-  }
 }
 
 .subtitle {
@@ -34,7 +34,7 @@
 }
 
 @media (max-width: 340px) {
-  .offersNotice {
+  .offersLoadingNotice {
     font-size: 0.9em;
   }
 }

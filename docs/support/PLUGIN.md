@@ -1,7 +1,10 @@
+
 # Plugin support guide
 
 Clients need to respond as quickly as possible, while their questions are relevant and there is interest in resolving issues.
 
+## installation service 
+Reuired wp-admin access (login and pass) and 100$ extra. Important information: The service only includes installation and activation. We do not offer support for plugins, configuration, or verification of compatibility with already installed plugins. Order here
 
 ## Possible sources of requests
 - https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064/comments
@@ -13,6 +16,7 @@ Clients need to respond as quickly as possible, while their questions are releva
 - using old version
 - activated third-party plugins that affect the code
 
+---
 
 ## Use ready answers
 
@@ -48,3 +52,13 @@ https://screenshots.wpmix.net/chrome_YwPqgnY2cCxj8gjB42SuD0dq6DdmqU1o.png
 http://support.swaponline.io/
 ```
 
+---
+
+## In difficult cases
+```
+Please contact our technical support for further instructions - https://t.me/swaponlinebot
+```
+
+
+## I need support
+Talk to humans https://t.me/swaponlinebot
