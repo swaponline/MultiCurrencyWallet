@@ -705,6 +705,44 @@ export default class WithdrawModal extends React.Component<any, any> {
     })
   }
 
+  sellAllBalance = async () => {
+    const {
+      balance,
+      isEthToken,
+      usedAdminFee,
+      currentDecimals,
+      exCurrencyRate,
+      coinFee,
+    } = this.state
+
+    const {
+      data: { currency },
+    } = this.props
+
+    let minFee = new BigNumber(isEthToken ? 0 : coinFee)
+
+    minFee = usedAdminFee ? new BigNumber(minFee).plus(adminFee.calc(currency, balance)) : minFee
+
+    if (minFee.isGreaterThan(balance)) {
+      this.setState({
+        amount: 0,
+        fiatAmount: 0,
+      })
+    } else {
+      console.log('sellAll - min Fee', minFee.toNumber())
+      const balanceMiner = balance
+        ? balance !== 0
+          ? new BigNumber(balance).minus(minFee)
+          : new BigNumber(balance)
+        : new BigNumber(0)
+
+      this.setState({
+        amount: new BigNumber(balanceMiner.dp(currentDecimals, BigNumber.ROUND_FLOOR)),
+        fiatAmount: balanceMiner.isGreaterThan(0) ? (balanceMiner.multipliedBy(exCurrencyRate)).toFixed(2) : '',
+      })
+    }
+  }
+
   render() {
     const {
       error,
@@ -1024,7 +1062,7 @@ export default class WithdrawModal extends React.Component<any, any> {
               />
             )}
             <div style={{ marginLeft: '15px' }}>
-              <Button disabled={fetchFee} blue big onClick={setMaxBalance} id="Withdrow134">
+              <Button disabled={fetchFee} blue big onClick={this.sellAllBalance} id="Withdrow134">
                 <FormattedMessage id="Select210" defaultMessage="MAX" />
               </Button>
             </div>
