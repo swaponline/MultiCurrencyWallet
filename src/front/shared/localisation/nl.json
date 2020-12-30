@@ -5880,7 +5880,8 @@
     "id": "CommonTextConnect",
     "message": "Connect",
     "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx",
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
@@ -7585,10 +7586,7 @@
   },
   {
     "id": "Banner_ConnectMetamask",
-    "message": "Sluit portemonnee aan",
-    "files": [
-      "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
-    ]
+    "message": "Sluit portemonnee aan"
   },
   {
     "id": "Banner_ConnectMetamaskDesc",
@@ -8247,10 +8245,31 @@
     "message": "Transaksjonsstørrelse:"
   },
   {
+    "id": "Swap_MetamaskAttention",
+    "message": "Bevestig de transactie in uw \"{walletName}\" portemonnee",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
     "id": "FAQFeeApiLink",
     "message": "(kilde)",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "Swap_OwnerHasLockedUTX",
+    "message": "Wisselen onderbroken omdat u een onbevestigde transactie in mempool heeft. Wachten bevestigen",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "Swap_SellerHasLockedUTX",
+    "message": "Wisselen onderbroken omdat de eigenaar een niet-bevestigde transactie in de mempool heeft. Wachten bevestigen",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
   }
 ]

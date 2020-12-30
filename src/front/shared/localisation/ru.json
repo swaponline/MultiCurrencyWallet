@@ -5949,7 +5949,8 @@
     "id": "CommonTextConnect",
     "message": "Подключить",
     "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx",
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
@@ -7641,10 +7642,7 @@
   },
   {
     "id": "Banner_ConnectMetamask",
-    "message": "Подключить кошелек",
-    "files": [
-      "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
-    ]
+    "message": "Подключить кошелек"
   },
   {
     "id": "Banner_ConnectMetamaskDesc",
@@ -8303,10 +8301,31 @@
     "message": "Размер транзакции:"
   },
   {
+    "id": "Swap_MetamaskAttention",
+    "message": "Пожалуйста подтвердите транзакцию в вашем кошельке \"{walletName}\".",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
     "id": "FAQFeeApiLink",
     "message": "(источник)",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "Swap_OwnerHasLockedUTX",
+    "message": "Свап стоит на паузе, потому что у вас есть не подтвержденные транзакции в мемпуле. Ждем подтверждения.",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "Swap_SellerHasLockedUTX",
+    "message": "Свап стоит на паузе, потому что у продавца есть не подтвержденные транзакции в мемпуле. Ждем подтверждения.",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
   }
 ]

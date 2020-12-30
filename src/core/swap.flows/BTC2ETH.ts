@@ -87,9 +87,6 @@ class BTC2ETH extends Flow {
       isSwapExist: false,
 
       requireWithdrawFee: false,
-
-      // Has unconfirmed tx in mem-pool - wait unlock
-      waitBtcUnlock: false,
     }
 
     this._persistState()
@@ -200,13 +197,14 @@ class BTC2ETH extends Flow {
                 return true
               } else {
                 if (err === 'Conflict') {
-                  console.warn('BTC locked. Has not confirmed tx in mempool. Wait confirm')
+                  // @ToDo - its can be not btc, other UTXO, but, with btc its frequent error
+                  console.warn('UTXO(BTC) locked. Has not confirmed tx in mempool. Wait confirm')
                   flow.swap.room.sendMessage({
-                    event: 'wait btc unlock',
+                    event: 'wait utxo unlock',
                     data: {},
                   })
                   flow.setState({
-                    waitBtcUnlock: true,
+                    waitUnlockUTXO: true,
                   })
                   await util.helpers.waitDelay(30)
                   return false

@@ -206,6 +206,10 @@ class ETH2GHOST extends Flow {
 
         if (!isGhostScriptOk) {
           return
+        } else {
+          flow.setState({
+            isUTXOScriptOk: true,
+          }, true)
         }
 
         const swapData = {

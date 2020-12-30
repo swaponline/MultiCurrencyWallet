@@ -195,6 +195,10 @@ export default (tokenName) => {
 
           if (!isGhostScriptOk) {
             return
+          } else {
+            flow.setState({
+              isUTXOScriptOk: true,
+            }, true)
           }
 
           const swapData = {

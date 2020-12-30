@@ -24,6 +24,31 @@
   clip: rect(0, 200px, 200px, 100px);
   top: 40px;
 }
+.metamask_attention,
+.attention {
+  display: block;
+  padding-top: 5pt;
+  padding-bottom: 10pt;
+  color: #b32808;
+  font-size: 11pt;
+  line-height: 11pt;
+}
+
+.metamask_attention {
+  animation: blink-animation 1s steps(5, start) infinite;
+  -webkit-animation: blink-animation 1s steps(5, start) infinite;
+}
+
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+@-webkit-keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
 
 @mixin circle($size) {
   content: "";
