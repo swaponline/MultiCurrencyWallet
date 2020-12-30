@@ -20,9 +20,11 @@ export default settings => {
     } : {}
   })
 
-  const swapApp = SwapApp.init(config)
+  const swapApp = SwapApp.init(config, true)
 
   const wallet = new Wallet(swapApp, constants, config)
+
+  swapApp.services.wallet = wallet
 
   const { auth, room, orders } = swapApp.services
 

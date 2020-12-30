@@ -13,6 +13,18 @@ class Collection {
     this._constructor()
   }
 
+  map(callback) {
+    return this.items.map(callback)
+  }
+
+  filter(callback) {
+    return this.items.filter(callback)
+  }
+
+  forEach(callback) {
+    this.items.forEach(callback)
+  }
+
   /**
    * Add item at the start of current collection
    * @param item

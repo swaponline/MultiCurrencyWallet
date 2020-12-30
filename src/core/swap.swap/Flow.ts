@@ -60,6 +60,13 @@ class Flow {
     return (isStoppedSwap || isRefunded || isFinished)
   }
 
+  isFinished(): boolean {
+    return (
+      (this.state.step >= this.steps.length)
+      || this._isFinished()
+    )
+  }
+
   _persistState() {
     const state = Flow.read(this.app, this.swap)
 
