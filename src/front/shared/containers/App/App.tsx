@@ -228,6 +228,8 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
   processUserBackup () {
     new Promise(async (resolve) => {
+      const wpLoader = document.getElementById('wrapper_element')
+
       const hasServerBackup = await backupUserData.hasServerBackup()
       console.log('has server backup', hasServerBackup)
       if (backupUserData.isUserLoggedIn()
@@ -243,6 +245,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
               window.location.reload()
             } else {
               redirectTo(links.createWallet)
+              if (wpLoader) wpLoader.style.display = 'none'
             }
           }
         })
@@ -255,8 +258,11 @@ class App extends React.Component<RouteComponentProps<any>, any> {
           backupUserData.backupUser().then(() => {
             if (!localStorage.getItem(constants.localStorage.isWalletCreate)) {
               redirectTo(links.createWallet)
+              if (wpLoader) wpLoader.style.display = 'none'
             }
           })
+        } else {
+          if (wpLoader) wpLoader.style.display = 'none'
         }
       }
       resolve(`ready`)
@@ -339,6 +345,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       window.removeEventListener('appinstalled', appInstalled)
     }
     window.addEventListener('appinstalled', appInstalled)
+
   }
 
   componentDidUpdate() {
