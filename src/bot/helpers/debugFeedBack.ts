@@ -9,7 +9,7 @@ export const debugFeedBack = (message: string, toDev?: boolean): void => {
     : `https://noxon.wpmix.net/counter.php?msg=${encodeURIComponent(message)}&tochatid=${chatId}`
 
 
-  request(infoURL).then( () => {} )
+  request(infoURL).then( () => {} ).catch((e) => { /* silent error if counter is down */ })
 }
 
 export const feedbackToOwner = (message: string): void => {
