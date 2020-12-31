@@ -1,5 +1,7 @@
 import config from 'app-config'
 
+import * as types from './types'
+
 import modals from './modals'
 import loader from './loader'
 import notifications from './notifications'
@@ -43,6 +45,7 @@ Object.keys(config.erc20)
 
 export default {
   ...tokens,
+  types,
   filter,
   modals,
   loader,
