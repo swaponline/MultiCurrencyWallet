@@ -24,4 +24,8 @@ declare global {
   interface Navigator {
     [key: string]: any
   }
+
+  interface IUniversalObj { 
+    [key: string]: any
+  }
 }

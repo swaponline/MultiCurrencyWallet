@@ -301,7 +301,9 @@ const fetchTx = (hash, cacheResponse) =>
     checkStatus: (answer) => {
       try {
         if (answer && answer.fees !== undefined) return true
-      } catch (e) { /* */ }
+      } catch (e) {
+        console.error(e)
+      }
       return false
     },
   }).then(({ fees, ...rest }) => ({
@@ -315,12 +317,14 @@ const fetchTxRaw = (txId, cacheResponse) =>
     checkStatus: (answer) => {
       try {
         if (answer && answer.rawtx !== undefined) return true
-      } catch (e) { /* */ }
+      } catch (e) {
+        console.error(e)
+      }
       return false
     },
   }).then(({ rawtx }) => rawtx)
 
-const fetchTxInfo = (hash, cacheResponse) =>
+const fetchTxInfo = (hash, cacheResponse?) =>
   fetchTx(hash, cacheResponse)
     //@ts-ignore
     .then(({ vin, vout, ...rest }) => {
