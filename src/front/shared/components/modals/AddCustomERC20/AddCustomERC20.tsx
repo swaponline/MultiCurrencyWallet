@@ -162,11 +162,11 @@ export default class AddCustomERC20 extends React.Component<any, any> {
     const localeLabel = defineMessages({
       title: {
         id: 'customERC20_Title',
-        defaultMessage: 'Добавление токена ERC20',
+        defaultMessage: 'Add new ERC20',
       },
       addressPlaceholder: {
         id: 'customERC20_addressPlaceholder',
-        defaultMessage: 'Введите адрес токена',
+        defaultMessage: 'Enter token address',
       },
     })
 
@@ -183,7 +183,7 @@ export default class AddCustomERC20 extends React.Component<any, any> {
               <div styleName="highLevel">
                 <FieldLabel inRow>
                   <span style={{ fontSize: '16px' }}>
-                    <FormattedMessage id="customERC20_Address" defaultMessage="Адрес контракта" />
+                    <FormattedMessage id="customERC20_Address" defaultMessage="erc20 address" />
                   </span>
                 </FieldLabel>
                 <Input
@@ -196,7 +196,7 @@ export default class AddCustomERC20 extends React.Component<any, any> {
                   <div styleName="rednote">
                     <FormattedMessage
                       id="customERC20_NotFound"
-                      defaultMessage="По указаному адресу не найден токен ERC20"
+                      defaultMessage="This is not ERC20 address"
                     />
                   </div>
                 )}
@@ -204,7 +204,7 @@ export default class AddCustomERC20 extends React.Component<any, any> {
                   <div styleName="rednote">
                     <FormattedMessage
                       id="customERC20_IncorrectAddress"
-                      defaultMessage="Вы ввели не коректный адрес"
+                      defaultMessage="Invalid erc20 address"
                     />
                   </div>
                 )}
@@ -218,11 +218,11 @@ export default class AddCustomERC20 extends React.Component<any, any> {
               >
                 {isShipped ? (
                   <Fragment>
-                    <FormattedMessage id="customERC20_Processing" defaultMessage="Обработка ..." />
+                    <FormattedMessage id="customERC20_Processing" defaultMessage="Processing ..." />
                   </Fragment>
                 ) : (
                   <Fragment>
-                    <FormattedMessage id="customERC20_NextStep" defaultMessage="Далее" />
+                    <FormattedMessage id="customERC20_NextStep" defaultMessage="Nеxt" />
                   </Fragment>
                 )}
               </Button>
@@ -233,7 +233,7 @@ export default class AddCustomERC20 extends React.Component<any, any> {
               <div styleName="lowLevel">
                 <FieldLabel inRow>
                   <span styleName="title">
-                    <FormattedMessage id="customERC20_Address" defaultMessage="Адрес контракта" />
+                    <FormattedMessage id="customERC20_Address" defaultMessage="erc20 address" />
                   </span>
                 </FieldLabel>
                 <div styleName="fakeInput">{tokenAddress}</div>
@@ -243,7 +243,7 @@ export default class AddCustomERC20 extends React.Component<any, any> {
                   <span styleName="title">
                     <FormattedMessage
                       id="customERC20_TokenTitle"
-                      defaultMessage="Название токена"
+                      defaultMessage="Title"
                     />
                   </span>
                 </FieldLabel>
@@ -252,7 +252,7 @@ export default class AddCustomERC20 extends React.Component<any, any> {
               <div styleName="lowLevel">
                 <FieldLabel inRow>
                   <span styleName="title">
-                    <FormattedMessage id="customERC20_TokenSymbol" defaultMessage="Символ токена" />
+                    <FormattedMessage id="customERC20_TokenSymbol" defaultMessage="Symbol" />
                   </span>
                 </FieldLabel>
                 <div styleName="fakeInput">{tokenSymbol}</div>
@@ -262,7 +262,7 @@ export default class AddCustomERC20 extends React.Component<any, any> {
                   <span styleName="title">
                     <FormattedMessage
                       id="customERC20_TokenDecimals"
-                      defaultMessage="Знаков после запятой"
+                      defaultMessage="Decimals"
                     />
                   </span>
                 </FieldLabel>
@@ -277,13 +277,13 @@ export default class AddCustomERC20 extends React.Component<any, any> {
               >
                 {isShipped ? (
                   <Fragment>
-                    <FormattedMessage id="customERC20_Processing" defaultMessage="Обработка ..." />
+                    <FormattedMessage id="customERC20_Processing" defaultMessage="Processing ..." />
                   </Fragment>
                 ) : (
                   <Fragment>
                     <FormattedMessage
                       id="customERC20_ConfirmStep"
-                      defaultMessage="Добавить этот токен"
+                      defaultMessage="Add this token"
                     />
                   </Fragment>
                 )}
@@ -295,7 +295,7 @@ export default class AddCustomERC20 extends React.Component<any, any> {
               <h4 styleName="readyTitle">
                 <FormattedMessage
                   id="customERC20_ReadyMessage"
-                  defaultMessage="Токен успешно добавлен"
+                  defaultMessage="Token added successfully"
                 />
               </h4>
               <Button
@@ -306,7 +306,7 @@ export default class AddCustomERC20 extends React.Component<any, any> {
                 onClick={this.handleReady}
               >
                 <Fragment>
-                  <FormattedMessage id="customERC20_Ready" defaultMessage="Готово" />
+                  <FormattedMessage id="customERC20_Ready" defaultMessage="Done" />
                 </Fragment>
               </Button>
             </Fragment>

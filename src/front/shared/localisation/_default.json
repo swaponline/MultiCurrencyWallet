@@ -4756,91 +4756,91 @@
   },
   {
     "id": "customERC20_Address",
-    "message": "Адрес контракта",
+    "message": "erc20 address",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
     "id": "customERC20_ConfirmStep",
-    "message": "Добавить этот токен",
+    "message": "Add this token",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
     "id": "customERC20_IncorrectAddress",
-    "message": "Вы ввели не коректный адрес",
+    "message": "Invalid erc20 address",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
     "id": "customERC20_NextStep",
-    "message": "Далее",
+    "message": "Nеxt",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
     "id": "customERC20_NotFound",
-    "message": "По указаному адресу не найден токен ERC20",
+    "message": "This is not ERC20 address",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
     "id": "customERC20_Processing",
-    "message": "Обработка ...",
+    "message": "Processing ...",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
     "id": "customERC20_Ready",
-    "message": "Готово",
+    "message": "Done",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
     "id": "customERC20_ReadyMessage",
-    "message": "Токен успешно добавлен",
+    "message": "Token added successfully",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
     "id": "customERC20_Title",
-    "message": "Добавление токена ERC20",
+    "message": "Add new ERC20",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
     "id": "customERC20_TokenDecimals",
-    "message": "Знаков после запятой",
+    "message": "Decimals",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
     "id": "customERC20_TokenSymbol",
-    "message": "Символ токена",
+    "message": "Symbol",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
     "id": "customERC20_TokenTitle",
-    "message": "Название токена",
+    "message": "Title",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
     "id": "customERC20_addressPlaceholder",
-    "message": "Введите адрес токена",
+    "message": "Enter token address",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]

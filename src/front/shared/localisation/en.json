@@ -4966,7 +4966,7 @@
   },
   {
     "id": "customERC20_ReadyMessage",
-    "message": "Токен успешно добавлен",
+    "message": "Token added successfully",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
@@ -5001,7 +5001,7 @@
   },
   {
     "id": "customERC20_addressPlaceholder",
-    "message": "Введите адрес токена",
+    "message": "Enter token address",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
