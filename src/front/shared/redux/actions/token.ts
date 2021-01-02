@@ -105,14 +105,12 @@ const setupContract = (ethAddress, contractAddress, nameContract, decimals, full
 
 
 const getBalance = async (currency) => {
-  const { user: { tokensData } } = getState()
+  const { user: { tokensData } } = getState() // ! first addition - dont have token (only after render)
 
   if (currency === undefined) {
     return
   }
 
-  // tokensData hasn't token on first addition (only after reload)
-  // TODO: fix it
   const {
     address: internalAddress,
     contractAddress,
