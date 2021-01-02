@@ -12,21 +12,20 @@ $walletPaddingTop: 41px;
     position: sticky;
     top: 0;
     @include ff-bold;
-    width: 100%;
-    border-bottom: 0.5px solid rgba(#000, 0.03);
     border-radius: $borderRadius $borderRadius 0 0;
-    z-index: 100;
+    z-index: 1;
+
+    th {
+      // disable bootstrap style
+      border-bottom: none;
+    }
   }
 
   tbody {
     border-radius: 0 0 $borderRadius $borderRadius;
 
     tr {
-      border-top: 1px solid #f5f5f5;
-
-      &:first-child {
-        border-top: 0;
-      }
+      border-top: 1px solid $pale-color;
     }
   }
 
@@ -42,7 +41,6 @@ $walletPaddingTop: 41px;
 
     &:last-child {
       padding-right: 0;
-      // right-align buttons
       display: flex;
       justify-content: flex-end;
     }
@@ -423,9 +421,6 @@ table.wallet {
   }
 
   .table.exchange {
-    display: table;
-    width: 280px;
-
     td {
       position: relative;
 
@@ -495,6 +490,20 @@ table.wallet {
 
     tr {
       display: block;
+    }
+  }
+}
+
+@media all and (max-width: 800px) {
+  .table.exchange {
+    thead {
+      display: none;
+    }
+
+    tbody {
+      tr:first-child {
+        border-top: none; // ui improve without titles
+      }
     }
   }
 }

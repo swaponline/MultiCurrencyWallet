@@ -194,6 +194,10 @@ export default (tokenName) => {
 
           if (!isNextScriptOk) {
             return
+          } else {
+            flow.setState({
+              isUTXOScriptOk: true,
+            }, true)
           }
 
           const swapData = {

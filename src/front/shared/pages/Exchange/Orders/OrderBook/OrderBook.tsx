@@ -43,6 +43,7 @@ type OrderBookProps = {
   history: { [key: string]: any }
   intl: { [key: string]: any }
   location: { [key: string]: any }
+  orders: { [key: string]: any }[]
   myOrders: { [key: string]: any }[]
   currencies: { [key: string]: any }[]
 
@@ -123,6 +124,16 @@ export default class OrderBook extends Component {
     }
   }
 
+  componentDidUpdate() {
+    const { orders } = this.props
+    const { buyOrders, sellOrders } = this.state
+
+    if (orders.length === 0) {
+      buyOrders.length && this.setState({ buyOrders: [] })
+      sellOrders.length && this.setState({ sellOrders: [] })
+    }
+  }
+
   handleShowAllMyOrders = (value) => {
     this.setState(() => ({ isShowAllMyOrders: value }))
   }
@@ -181,11 +192,11 @@ export default class OrderBook extends Component {
     const sellCurrency = propsSellCurrency.toUpperCase()
 
     const titles = [
-      ' ',
-      <FormattedMessage id="orders102" defaultMessage="AMOUNT" />,
-      <FormattedMessage id="orders104" defaultMessage="PRICE" />,
-      <FormattedMessage id="orders105" defaultMessage="TOTAL" />,
-      ' ',
+      ' ', // empty title in the table
+      <FormattedMessage id="orders102" defaultMessage="Amount" />,
+      <FormattedMessage id="orders104" defaultMessage="Total" />,
+      <FormattedMessage id="orders105" defaultMessage="Price" />,
+      ' ', // empty title in the table 
     ]
 
     const seoPage = getSeoPage(location.pathname)
@@ -215,8 +226,8 @@ export default class OrderBook extends Component {
       order.buyCurrency === sellCurrency && order.sellCurrency === buyCurrency
     )
 
-    const offersNoticeText = (
-      <div styleName='offersNotice'>
+    const offersNoticeLoadingText = (
+      <div styleName='offersLoadingNotice'>
         <FormattedMessage
           id="OrderBookOffersNoteOverLoader"
           defaultMessage="Requesting offers from peers online"
@@ -229,6 +240,15 @@ export default class OrderBook extends Component {
           defaultMessage="it may take a minute"
         />
       </div>
+    )
+
+    const offersNoticeOfflineText = (
+      <p styleName="offersOfflineNotice">
+        <FormattedMessage
+          id="OrderBookOffersOfflineNote"
+          defaultMessage="If no offers are found, this means that there are no users who posted the offer, not online."
+        />
+      </p>
     )
 
     return (
@@ -287,31 +307,35 @@ export default class OrderBook extends Component {
             </div>
           </Fragment>
         }>
-          {buyOrders.length === 0
-            ? offersNoticeText
-            : (
-              <Table
-                id="table_exchange"
-                className={tableStyles.exchange}
-                styleName="orderBookTable"
-                titles={titles}
-                rows={buyOrders}
-                rowRender={(row) => (
-                  <Row
-                    key={row.id}
-                    orderId={orderId}
-                    row={row}
-                    decline={decline}
-                    history={history}
-                    removeOrder={this.removeOrder}
-                    linkedOrderId={linkedOrderId}
-                    pairFees={pairFees}
-                    balances={balances}
-                    checkSwapAllow={checkSwapAllow}
+          {isOnline
+            ? (
+              buyOrders.length > 0
+                ? (
+                  <Table
+                    id="table_exchange"
+                    className={tableStyles.exchange}
+                    styleName="orderBookTable"
+                    titles={titles}
+                    rows={buyOrders}
+                    rowRender={(row) => (
+                      <Row
+                        key={row.id}
+                        orderId={orderId}
+                        row={row}
+                        decline={decline}
+                        history={history}
+                        removeOrder={this.removeOrder}
+                        linkedOrderId={linkedOrderId}
+                        pairFees={pairFees}
+                        balances={balances}
+                        checkSwapAllow={checkSwapAllow}
+                      />
+                    )}
                   />
-                )}
-              />
+                )
+                : offersNoticeLoadingText
             )
+            : offersNoticeOfflineText
           }
         </Panel>
 
@@ -333,31 +357,35 @@ export default class OrderBook extends Component {
           </Fragment>
         }
         >
-          {sellOrders.length === 0
-            ? offersNoticeText
-            : (
-              <Table
-                id="table_exchange"
-                className={tableStyles.exchange}
-                styleName="orderBookTable"
-                titles={titles}
-                rows={sellOrders}
-                rowRender={(row) => (
-                  <Row
-                    key={row.id}
-                    orderId={orderId}
-                    row={row}
-                    decline={decline}
-                    history={history}
-                    removeOrder={this.removeOrder}
-                    linkedOrderId={linkedOrderId}
-                    pairFees={pairFees}
-                    balances={balances}
-                    checkSwapAllow={checkSwapAllow}
+          {isOnline
+            ? (
+              sellOrders.length > 0
+                ? (
+                  <Table
+                    id="table_exchange"
+                    className={tableStyles.exchange}
+                    styleName="orderBookTable"
+                    titles={titles}
+                    rows={sellOrders}
+                    rowRender={(row) => (
+                      <Row
+                        key={row.id}
+                        orderId={orderId}
+                        row={row}
+                        decline={decline}
+                        history={history}
+                        removeOrder={this.removeOrder}
+                        linkedOrderId={linkedOrderId}
+                        pairFees={pairFees}
+                        balances={balances}
+                        checkSwapAllow={checkSwapAllow}
+                      />
+                    )}
                   />
-                )}
-              />
+                )
+                : offersNoticeLoadingText
             )
+            : offersNoticeOfflineText
           }
         </Panel>
         {seoPage && seoPage.footer && <div>{seoPage.footer}</div>}

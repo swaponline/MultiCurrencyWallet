@@ -1,5 +1,6 @@
 .rowAmount {
   color: $l-color;
+  font-family: 'Roboto Mono', monospace;
 }
 
 .rowDark {
@@ -8,39 +9,35 @@
   }
 }
 
+.rowCell:nth-of-type(1) {
+  width: 10%;
+}
+.rowCell:nth-of-type(2) {
+  width: 25%;
+}
+.rowCell:nth-of-type(3) {
+  width: 25%;
+}
+.rowCell:nth-of-type(4) {
+  width: 25%;
+}
+
 .mobileRowRemove,
 .mobileRowStart {
-
   .firstType,
   .secondType {
     color: $indicating-color;
     display: block;
   }
-  .tdContainer-1 {
-    position: relative;
-  }
-  .tdContainer-2 {
-    position: relative;
-  }
+  .tdContainer-1,
+  .tdContainer-2,
   .tdContainer-3 {
     position: relative;
   }
   .startButton {
     width: auto;
     height: auto;
-    padding: 0.8em 1em;
-    margin-left: 0.4em;
-  }
-  .onHover {
-    top: 48%;
-    right: 0px;
-    width: 75px;
-    height: 40px;
-    font-size: 50%;
-    position: absolute;
-    padding: 0 1px 0 1px;
-    text-transform: uppercase;
-    transform: translateY(-50%);
+    margin-left: 0.6em;
   }
   .bigContainer {
     font-size: 14px;
@@ -48,15 +45,6 @@
     align-items: center;
     justify-content: space-between;
   }
-}
-
-.rowBindingText {
-  color: $indicating-color;
-  margin-right: 0.5em;
-}
-
-.buttonsColumn {
-  text-align: center!important;
 }
 
 @media screen and (max-width: 400px) {

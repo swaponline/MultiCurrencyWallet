@@ -92,25 +92,11 @@ export default (tokenName) => {
         isFailedTransaction: false,
         isFailedTransactionError: null,
         gasAmountNeeded: 0,
-
-        // Partical (btc-seller) has unconfirmed txs in mempool
-        particalBtcLocked: false,
       }
 
       this._persistState()
 
       const flow = this
-
-      flow.swap.room.on('wait btc unlock', () => {
-        this.setState({
-          particalBtcLocked: true,
-        })
-      })
-      flow.swap.room.on('wait btc confirm', () => {
-        flow.setState({
-          waitBtcConfirm: true,
-        })
-      })
 
       flow.swap.room.once('request withdraw', () => {
         flow.setState({
@@ -227,6 +213,10 @@ export default (tokenName) => {
 
           if (!isBtcScriptOk) {
             return
+          } else {
+            flow.setState({
+              isUTXOScriptOk: true,
+            }, true)
           }
 
           const swapData = {

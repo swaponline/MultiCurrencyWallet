@@ -7,6 +7,7 @@ import typeforce from 'swap.app/util/typeforce'
 import { default as TESTNET } from '../../../front/config/testnet/api'
 import { default as MAINNET } from '../../../front/config/mainnet/api'
 
+const DUST = 546
 
 const getBitpay = (network) => {
   return {
@@ -216,8 +217,19 @@ const fetchTxInfo = (options) : any => {
   })
 }
 
+export interface IBtcUnspent {
+  address: string,
+  amount: number,
+  confirmations: number,
+  height: number,
+  satoshis: number,
+  scriptPubKey: string,
+  txid: string,
+  vout: number,
+  spentTxid: string,
+}
 // @To-do - make interface - ответ этой функции общий для все блокчейнов
-const fetchUnspents = (options): any => {
+const fetchUnspents = (options): Promise<IBtcUnspent[]> => {
   const {
     address,
     apiBitpay,
@@ -252,10 +264,84 @@ const fetchUnspents = (options): any => {
       }))
     }).catch((error) => {
       console.error('btc fetchUnspents error', error)
+      reject(error)
     })
   })
 }
 
+/**
+ * Подберает подходящие unspents для указанной суммы в сатоши
+ **/
+interface IprepareUnspentsOptions {
+  NETWORK: any,
+  address?: string,
+  amount: number,
+  apiBitpay?: any,
+  cacheResponse?: any,
+  unspents?: IBtcUnspent[],
+}
+
+const prepareUnspents = (options: IprepareUnspentsOptions): Promise<IBtcUnspent[]> => {
+  const {
+    NETWORK,
+    apiBitpay,
+    cacheResponse,
+    address,
+    amount,
+  } = options
+  return new Promise((resolve, reject) => {
+    const processUnspents = (unspents: IBtcUnspent[]) => {
+      const needAmount = new BigNumber(amount).multipliedBy(1e8).plus(DUST)
+      // Сначала отсортируем unspents по возрастанию не потраченной сдачи
+      const sortedUnspents: IBtcUnspent[] = unspents.sort((a: IBtcUnspent, b: IBtcUnspent) => {
+        return (new BigNumber(a.satoshis).isEqualTo(b.satoshis))
+          ? 0
+          : (new BigNumber(a.satoshis).isGreaterThan(b.satoshis))
+            ? 1
+            : -1
+      })
+      // Попробуем найти один выход сдачи, который покроет транзакцию
+      let oneUnspent: IBtcUnspent = null
+      sortedUnspents.forEach((unspent: IBtcUnspent) => {
+        if (oneUnspent === null
+          && new BigNumber(unspent.satoshis).isGreaterThanOrEqualTo(needAmount)
+        ) {
+          oneUnspent = unspent
+          return false
+        }
+      })
+      if (oneUnspent === null) {
+        // Если один выход не нашли - используем подсчитанные usedUnspents
+        // Подберем здачу, суммы которой хватает для транзакции (от меньшего к большему)
+        let calcedAmount = new BigNumber(0)
+        const usedUnspents: IBtcUnspent[] = sortedUnspents.filter((unspent: IBtcUnspent) => {
+          if (calcedAmount.isGreaterThanOrEqualTo(needAmount)) {
+            return false
+          } else {
+            calcedAmount = calcedAmount.plus(unspent.satoshis)
+            return true
+          }
+        })
+        resolve(usedUnspents)
+      } else {
+        resolve([oneUnspent])
+      }
+    }
+
+    if (options.unspents) {
+      processUnspents(options.unspents)
+    } else {
+      fetchUnspents({
+        NETWORK,
+        address,
+        apiBitpay,
+        cacheResponse,
+      }).then(processUnspents).catch((error) => {
+        reject(error)
+      })
+    }
+  })
+}
 
 // @ToDo - интерфейс - возврашет объект { txid }
 const broadcastTx = (options): any => {
@@ -679,7 +765,6 @@ const estimateFeeValue = async (options) => {
     NETWORK,
   } = options
 
-  const DUST = 546
   let calculatedFeeValue
 
   if (!_txSize && !address) {
@@ -716,4 +801,6 @@ export default {
 
   estimateFeeValue,
   getCore,
+
+  prepareUnspents,
 }

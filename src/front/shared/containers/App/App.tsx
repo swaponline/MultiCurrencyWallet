@@ -228,6 +228,8 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
   processUserBackup () {
     new Promise(async (resolve) => {
+      const wpLoader = document.getElementById('wrapper_element')
+
       const hasServerBackup = await backupUserData.hasServerBackup()
       console.log('has server backup', hasServerBackup)
       if (backupUserData.isUserLoggedIn()
@@ -236,10 +238,15 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       ) {
         console.log('do restore user')
         backupUserData.restoreUser().then((isRestored) => {
-          console.log('is restored', isRestored)
+          console.log('is restored', isRestored, constants.localStorage.isWalletCreate)
           if (isRestored) {
-            redirectTo(links.home)
-            window.location.reload()
+            if (localStorage.getItem(constants.localStorage.isWalletCreate)) {
+              redirectTo(links.home)
+              window.location.reload()
+            } else {
+              redirectTo(links.createWallet)
+              if (wpLoader) wpLoader.style.display = 'none'
+            }
           }
         })
       } else {
@@ -248,7 +255,14 @@ class App extends React.Component<RouteComponentProps<any>, any> {
           || !hasServerBackup
         ) {
           console.log('Do backup user')
-          backupUserData.backupUser()
+          backupUserData.backupUser().then(() => {
+            if (!localStorage.getItem(constants.localStorage.isWalletCreate)) {
+              redirectTo(links.createWallet)
+            }
+            if (wpLoader) wpLoader.style.display = 'none'
+          })
+        } else {
+          if (wpLoader) wpLoader.style.display = 'none'
         }
       }
       resolve(`ready`)
@@ -331,6 +345,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       window.removeEventListener('appinstalled', appInstalled)
     }
     window.addEventListener('appinstalled', appInstalled)
+
   }
 
   componentDidUpdate() {

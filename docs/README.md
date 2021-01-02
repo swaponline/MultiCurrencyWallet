@@ -4,7 +4,7 @@
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 ## MultiCurrencyWallet
- 
+  
 - 👛 Crypto wallet: BTC, ETН, USDT, {your_token}...
 - 💵 Fiat gateway: USD, EUR, RUB, UAH...
 - ⚛️ P2P exchange – atomic swaps
@@ -82,4 +82,4 @@ Developer? Start with [ONBOARDING](https://github.com/swaponline/MultiCurrencyWa
 
 ---
 
-Any questions [are welcome](https://t.me/mcvchat)
+Any questions [are welcome](https://t.me/swaponline)

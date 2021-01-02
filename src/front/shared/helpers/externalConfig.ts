@@ -42,7 +42,7 @@ const externalConfig = () => {
     },
     ownTokens: false,
     addCustomERC20: true,
-    invoiceEnabled: true,
+    invoiceEnabled: (config.isWidget) ? false : true,
     showWalletBanners: false,
     showHowItsWork: false,
     fee: {},
@@ -64,6 +64,11 @@ const externalConfig = () => {
     },
   }
 
+  if (window
+    && window.invoiceEnabled
+  ) {
+    config.opts.invoiceEnabled = true
+  }
 
   if (window
     && window._ui_footerDisabled

@@ -1,33 +1,40 @@
+echo "Enter name of instance (ex. mybot)"
+read CONTAINERNAME
+
+echo "Enter port to deploy (80)"	
+read PORT 
+
+mkdir $CONTAINERNAME
+cd $CONTAINERNAME
+
+wget -O config/tradeconfig.mainnet.json https://raw.githubusercontent.com/swaponline/MultiCurrencyWallet/master/tradeconfig.mainnet.json
+wget -O config/tradeconfig.testnet.json https://raw.githubusercontent.com/swaponline/MultiCurrencyWallet/master/tradeconfig.testnet.json
+
+
+tee .env <<EOF
 KRAKEN_API_KEY=
 KRAKEN_API_SECRET=
 SERVER_ID=123 (Number)
 ACCOUNT=123 (Number)
 
-# id for notifications. 1. contact @get_id_bot to get your id 2. say "hello" to this bot @swaponlinebot 
-TELEGRAM_CHATID = 111
-
-# Максимальное кол-во паралельных свапов - если лимит достигнут - бот скрывает ордера
-# Если 0 - то лимитов нет
-MAX_PARALLEL_SWAPS = 3
-# SPREAD
-SPREAD=0.05
 ###################################################################
 # Blockchain network
 # mainnet|testnet - default testnet
 # If testnet, for eth use rinky network
-NETWORK=mainnet (mainnet|testnet)
+NETWORK=testnet
 # Web3 providers
-WEB3_TESTNET_PROVIDER=https://mainnet.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c
-WEB3_MAINNET_PROVIDER=https://mainnet.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c
+WEB3_TESTNET_PROVIDER=
+WEB3_MAINNET_PROVIDER=
 
 ###################################################################
 # Web admin panel
 # Ip for admin panel
-IP=127.0.0.1
+PORT=$PORT
+IP=0.0.0.0
 # User name for access admin panel (Default UserName)
-API_USER=UserName
+API_USER=
 # Passowrd for access admin panel (Default UserPassword)
-API_PASS=UserPassword
+API_PASS=
 
 ###################################################################
 # Generate walltes from secret phrase (12 words)
@@ -55,3 +62,29 @@ LOG_TO_DB_BASE=
 LOG_TO_DB_USER=
 # Password (default empty)
 LOG_TO_DB_PASS=
+
+EOF
+
+tee docker-compose.yml <<EOF
+version: '3'
+services:
+  mcw_bot:
+    image: swaponline/mcw
+    container_name: $CONTAINERNAME
+    restart: unless-stopped
+    volumes:
+      - ${PWD}/config:/root/MultiCurrencyWallet/config
+      - ${PWD}/.storage:/root/MultiCurrencyWallet/.storage
+      - ${PWD}/config/tradeconfig.mainnet.json:/root/MultiCurrencyWallet/tradeconfig.mainnet.json
+      - ${PWD}/config/tradeconfig.testnet.json:/root/MultiCurrencyWallet/tradeconfig.testnet.json    
+      - ${PWD}/.env:/root/MultiCurrencyWallet/.env
+    ports:
+      - "${PORT}:${PORT}"
+EOF
+
+docker pull swaponline/mcw
+docker-compose up -d 
+
+curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash
+lazydocker 
+ 

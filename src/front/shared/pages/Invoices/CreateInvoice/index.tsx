@@ -50,7 +50,7 @@ export default class CreateInvoice extends PureComponent<any, any> {
   constructor() {
     //@ts-ignore
     super()
-    
+
     this.timerWaitOnlineJoin = false
     this.state = {
     }
@@ -63,7 +63,6 @@ export default class CreateInvoice extends PureComponent<any, any> {
     if (type && wallet && ['btc', 'eth', 'ghost', 'next'].includes(type) && data[type]) {
       const address = data[type].address
 
-      console.log(1)
       actions.modals.open(constants.modals.InvoiceModal, {
         currency: type.toUpperCase(),
         toAddress: wallet,

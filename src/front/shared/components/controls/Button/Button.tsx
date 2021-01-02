@@ -1,13 +1,32 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { constants } from 'helpers'
 import cx from "classnames";
 
 import cssModules from 'react-css-modules'
 import styles from './Button.scss'
 
+type ButtonProps = {
+  dataTut?: any
+  children?: any
+  fullWidth?: boolean
+  autoHeight?: boolean
+  transparent?: boolean
+  brand?: boolean
+  green?: boolean
+  white?: boolean
+  blue?: boolean
+  gray?: boolean
+  big?: boolean
+  small?: boolean
+  fill?: boolean
+  disabled?: boolean
+  className?: string
+  id?: string
+  onClick?: () => void
+}
+
 const isDark = localStorage.getItem(constants.localStorage.isDark)
-const Button = props => {
+const Button = (props: ButtonProps) => {
   const {
     children,
     className,
@@ -20,6 +39,7 @@ const Button = props => {
     gray,
     disabled,
     big,
+    small,
     autoHeight,
     onClick,
     id = '',
@@ -37,6 +57,7 @@ const Button = props => {
     white,
     gray,
     big,
+    small,
     autoHeight,
     disabled,
     "darkTheme-white": isDark && white,
@@ -57,24 +78,6 @@ const Button = props => {
       {children}
     </button>
   )
-}
-
-Button.propTypes = {
-  children: PropTypes.any,
-  className: PropTypes.string,
-  fullWidth: PropTypes.bool,
-  autoHeight: PropTypes.bool,
-  transparent: PropTypes.bool,
-  brand: PropTypes.bool,
-  green: PropTypes.bool,
-  white: PropTypes.bool,
-  blue: PropTypes.bool,
-  gray: PropTypes.bool,
-  big: PropTypes.bool,
-  id: PropTypes.string,
-  fill: PropTypes.bool,
-  disabled: PropTypes.bool,
-  onClick: PropTypes.func,
 }
 
 export default cssModules(Button, styles, { allowMultiple: true })

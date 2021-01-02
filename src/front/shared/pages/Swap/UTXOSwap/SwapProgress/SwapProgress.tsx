@@ -27,7 +27,7 @@ import BtcLikeToEth from './SwapProgressText/BtcLikeToEth'
 import BtcLikeToEthToken from './SwapProgressText/BtcLikeToEthToken'
 import EthToBtcLike from './SwapProgressText/EthToBtcLike'
 import EthTokenToBtcLike from './SwapProgressText/EthTokenToBtcLike'
-
+import metamask from 'helpers/metamask'
 
 
 
@@ -470,7 +470,36 @@ export default class SwapProgress extends Component<any, any> {
                   <FormattedMessage id="swapFinishedGoHome298" defaultMessage="Everything is OK. Continue" />
                 </TimerButton>
               )}
-
+              {flow.step === 4 && flow.waitUnlockUTXO && (
+                <strong styleName="attention">
+                  <FormattedMessage
+                    id="Swap_OwnerHasLockedUTX"
+                    defaultMessage="Swap paused because you has unconfirmed transaction in mempool. Waiting confirm"
+                  />
+                </strong>
+              )}
+              {flow.step <= 5 && flow.participantHasLockedUTXO && (
+                <strong styleName="attention">
+                  <FormattedMessage
+                    id="Swap_SellerHasLockedUTX"
+                    defaultMessage="Swap paused because owner has unconfirmed transaction in mempool. Waiting confirm"
+                  />
+                </strong>
+              )}
+              {metamask.isConnected() && (
+                (!this.isSellCurrencyEthOrEthToken && flow.step === 6)
+                || (this.isSellCurrencyEthOrEthToken && flow.step === 5 && flow.isUTXOScriptOk)
+              ) && (
+                <strong styleName="metamask_attention">
+                  <FormattedMessage
+                    id="Swap_MetamaskAttention"
+                    defaultMessage="Please confirm the transaction in your &quot;{walletName}&quot; wallet"
+                    values={{
+                      walletName: metamask.web3connect.getProviderTitle(),
+                    }}
+                  />
+                </strong>
+              )}
               {flow.step > 3 && !this.isSellCurrencyEthOrEthToken &&
                 <PleaseDontLeaveWrapper isBtcLike={flow.secret ? flow.secret : false} />
               }

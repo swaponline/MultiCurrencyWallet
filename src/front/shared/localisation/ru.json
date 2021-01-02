@@ -145,7 +145,7 @@
     "id": "logo29",
     "message": "Домой",
     "files": [
-      "src/front/shared/components/Header/Logo.tsx"
+      "src/front/shared/components/Header/Logo/Logo.tsx"
     ]
   },
   {
@@ -185,45 +185,27 @@
   },
   {
     "id": "ImportKeys107",
-    "message": "Эта процедура перепишет Ваш общедоступный ключ. Если Вы не уверены, Мы рекомендуем Вам отказаться",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Эта процедура перепишет Ваш общедоступный ключ. Если Вы не уверены, Мы рекомендуем Вам отказаться"
   },
   {
     "id": "ImportKeys110",
-    "message": "Введите Ваш ETH приватный ключ",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Введите Ваш ETH приватный ключ"
   },
   {
     "id": "ImportKeys120",
-    "message": "Введите Ваш BTC приватный ключ в WIF формате",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Введите Ваш BTC приватный ключ в WIF формате"
   },
   {
     "id": "ImportKeys130",
-    "message": "Подтвердить",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Подтвердить"
   },
   {
     "id": "ImportKeys133",
-    "message": "Отменить",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Отменить"
   },
   {
     "id": "Group14",
-    "message": "Загрузить",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/Group/Group.tsx"
-    ]
+    "message": "Загрузить"
   },
   {
     "id": "Select10",
@@ -1403,14 +1385,14 @@
   },
   {
     "id": "orders102",
-    "message": "СУММА",
+    "message": "Количество",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
   },
   {
     "id": "orders105",
-    "message": "ВСЕГО",
+    "message": "Цена",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
@@ -1737,10 +1719,7 @@
   },
   {
     "id": "Import",
-    "message": "Импортировать",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Импортировать"
   },
   {
     "id": "Add52",
@@ -1889,10 +1868,7 @@
   },
   {
     "id": "errorImportKeys",
-    "message": "Пожалуйста сохраните приватные ключи",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Пожалуйста сохраните приватные ключи"
   },
   {
     "id": "PrivateKeysModal144",
@@ -1980,17 +1956,11 @@
   },
   {
     "id": "importkeys118",
-    "message": "Пожалуйста введите BTC секретный ключ ",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Пожалуйста введите BTC секретный ключ "
   },
   {
     "id": "importkeys119",
-    "message": "Недействительный BTC секретный ключ",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Недействительный BTC секретный ключ"
   },
   {
     "id": "partial437",
@@ -2239,27 +2209,6 @@
     ]
   },
   {
-    "id": "OrderBookRowSells",
-    "message": "продаёт",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "OrderBookRowFor",
-    "message": "за",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "OrderBookRowAtPrice",
-    "message": "цена",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
     "id": "CurrencyWallet141",
     "message": "{fullName}({currency}) онлайн кошелек, работащюий на технологии Atomic Swap."
   },
@@ -2341,24 +2290,15 @@
   },
   {
     "id": "importkeys172",
-    "message": "Пожалуйста введите ETH приватный ключ",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Пожалуйста введите ETH приватный ключ"
   },
   {
     "id": "importkeys173",
-    "message": "Пожалуйста введите корректный ETH приватный ключ",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Пожалуйста введите корректный ETH приватный ключ"
   },
   {
     "id": "importkeys190",
-    "message": "Что то пошло не так. Проверьте ваш приватный ключ, сеть этого адреса и тд.",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Что то пошло не так. Проверьте ваш приватный ключ, сеть этого адреса и тд."
   },
   {
     "id": "WithdrawIncorectAddress",
@@ -2402,7 +2342,7 @@
   },
   {
     "id": "orders104",
-    "message": "ЦЕНА",
+    "message": "Всего",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
@@ -6006,10 +5946,11 @@
     ]
   },
   {
-    "id": "Exchange_ConnectMetamask",
+    "id": "CommonTextConnect",
     "message": "Подключить",
     "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx",
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
@@ -6448,7 +6389,7 @@
     "id": "ExitWidget",
     "message": "Exit",
     "files": [
-      "src/front/shared/components/Header/WidgetHeader/index.tsx"
+      "src/front/shared/components/Header/Header.tsx"
     ]
   },
   {
@@ -7701,10 +7642,7 @@
   },
   {
     "id": "Banner_ConnectMetamask",
-    "message": "Подключить кошелек",
-    "files": [
-      "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
-    ]
+    "message": "Подключить кошелек"
   },
   {
     "id": "Banner_ConnectMetamaskDesc",
@@ -7928,6 +7866,13 @@
   {
     "id": "WTH276",
     "message": "Сумма не должна превышать{br} текущий баланс за вычетом комиссии за майнинг",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "Comment",
+    "message": "Комментарий",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
@@ -8353,9 +8298,34 @@
   },
   {
     "id": "FeeInfoBlockTxSize",
-    "message": "Размер транзакции:",
+    "message": "Размер транзакции:"
+  },
+  {
+    "id": "Swap_MetamaskAttention",
+    "message": "Пожалуйста подтвердите транзакцию в вашем кошельке \"{walletName}\".",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "FAQFeeApiLink",
+    "message": "(источник)",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "Swap_OwnerHasLockedUTX",
+    "message": "Свап стоит на паузе, потому что у вас есть не подтвержденные транзакции в мемпуле. Ждем подтверждения.",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "Swap_SellerHasLockedUTX",
+    "message": "Свап стоит на паузе, потому что у продавца есть не подтвержденные транзакции в мемпуле. Ждем подтверждения.",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
   }
 ]

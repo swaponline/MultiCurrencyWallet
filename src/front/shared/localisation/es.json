@@ -145,7 +145,7 @@
     "id": "logo29",
     "message": "Ir a pagina principal",
     "files": [
-      "src/front/shared/components/Header/Logo.tsx"
+      "src/front/shared/components/Header/Logo/Logo.tsx"
     ]
   },
   {
@@ -185,45 +185,27 @@
   },
   {
     "id": "ImportKeys107",
-    "message": "Este procedimiento reescribirá tu clave privada. Si no estas seguro, recomendamos presionar cancelar",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Este procedimiento reescribirá tu clave privada. Si no estas seguro, recomendamos presionar cancelar"
   },
   {
     "id": "ImportKeys110",
-    "message": "Por favor ingrese su clave privada de ETH",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Por favor ingrese su clave privada de ETH"
   },
   {
     "id": "ImportKeys120",
-    "message": "Por favor ingrese su clave privada de BTC en formato WIF",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Por favor ingrese su clave privada de BTC en formato WIF"
   },
   {
     "id": "ImportKeys130",
-    "message": "Confirmar",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Confirmar"
   },
   {
     "id": "ImportKeys133",
-    "message": "Cancelar",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Cancelar"
   },
   {
     "id": "Group14",
-    "message": "Importar",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/Group/Group.tsx"
-    ]
+    "message": "Importar"
   },
   {
     "id": "Select10",
@@ -1334,14 +1316,14 @@
   },
   {
     "id": "orders102",
-    "message": "CANTIDAD",
+    "message": "Cantidad",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
   },
   {
     "id": "orders105",
-    "message": "TOTAL",
+    "message": "Precio",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
@@ -1656,10 +1638,7 @@
   },
   {
     "id": "Import",
-    "message": "Importar claves",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Importar claves"
   },
   {
     "id": "Add52",
@@ -1808,10 +1787,7 @@
   },
   {
     "id": "errorImportKeys",
-    "message": "Por favor guarda tus claves privadas",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Por favor guarda tus claves privadas"
   },
   {
     "id": "PrivateKeysModal144",
@@ -1899,17 +1875,11 @@
   },
   {
     "id": "importkeys118",
-    "message": "Por favor ingrese la clave privada BTC",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Por favor ingrese la clave privada BTC"
   },
   {
     "id": "importkeys119",
-    "message": "Por favor valide la clave privada BTC",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Por favor valide la clave privada BTC"
   },
   {
     "id": "PartialPriceSearch483",
@@ -2166,27 +2136,6 @@
     ]
   },
   {
-    "id": "OrderBookRowSells",
-    "message": "vende",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "OrderBookRowFor",
-    "message": "para",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "OrderBookRowAtPrice",
-    "message": "al precio",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
     "id": "CurrencyWallet141",
     "message": "{fullName}({currency}) Billetera Web con Atomic Swap."
   },
@@ -2264,24 +2213,15 @@
   },
   {
     "id": "importkeys172",
-    "message": "Por favor ingrese su clave privada de ETH",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Por favor ingrese su clave privada de ETH"
   },
   {
     "id": "importkeys173",
-    "message": "Por favor valide la clave privada ETH",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Por favor valide la clave privada ETH"
   },
   {
     "id": "importkeys190",
-    "message": "Algo salió mal. Revise su clave privada, red de esta dirección, etc. ",
-    "files": [
-      "src/front/shared/components/modals/ImportKeys/ImportKeys.tsx"
-    ]
+    "message": "Algo salió mal. Revise su clave privada, red de esta dirección, etc. "
   },
   {
     "id": "WithdrawIncorectAddress",
@@ -2329,7 +2269,7 @@
   },
   {
     "id": "orders104",
-    "message": "PRECIO",
+    "message": "Total",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
@@ -6322,7 +6262,7 @@
     "id": "ExitWidget",
     "message": "Salir",
     "files": [
-      "src/front/shared/components/Header/WidgetHeader/index.tsx"
+      "src/front/shared/components/Header/Header.tsx"
     ]
   },
   {
@@ -7575,10 +7515,7 @@
   },
   {
     "id": "Banner_ConnectMetamask",
-    "message": "Conectar Billetera",
-    "files": [
-      "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
-    ]
+    "message": "Conectar Billetera"
   },
   {
     "id": "Banner_ConnectMetamaskDesc",
@@ -7613,10 +7550,11 @@
     ]
   },
   {
-    "id": "Exchange_ConnectMetamask",
+    "id": "CommonTextConnect",
     "message": "Connect",
     "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx",
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
@@ -7880,6 +7818,13 @@
   {
     "id": "WTH276",
     "message": "El monto no debe exceder su{br} saldo actual menos la tarifa de minería",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "Comment",
+    "message": "Сomentario",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
@@ -8305,9 +8250,34 @@
   },
   {
     "id": "FeeInfoBlockTxSize",
-    "message": "Tamaño de la transacción:",
+    "message": "Tamaño de la transacción:"
+  },
+  {
+    "id": "Swap_MetamaskAttention",
+    "message": "Confirma la transacción en tu billetera \"{walletName}\"",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "FAQFeeApiLink",
+    "message": "(fuente)",
+    "files": [
+      "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "Swap_OwnerHasLockedUTX",
+    "message": "El intercambio se detuvo porque tiene una transacción sin confirmar en mempool. Esperando confirmar",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "Swap_SellerHasLockedUTX",
+    "message": "El intercambio se detuvo porque el propietario tiene una transacción sin confirmar en mempool. Esperando confirmar",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
   }
 ]

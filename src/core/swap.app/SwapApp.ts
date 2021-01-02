@@ -1,20 +1,46 @@
 import constants from './constants'
 import StorageFactory from './StorageFactory'
+import Collection from './Collection'
+import Swap, { Flow } from '../swap.swap'
+import SwapAuth from '../swap.auth'
+import SwapInterface from './SwapInterface'
+import ServiceInterface from './ServiceInterface'
+import SwapRoom from 'swap.room'
+import SwapOrders from 'swap.orders'
+
+
+interface SwapAppServices {
+  auth?: SwapAuth,
+  room?: SwapRoom,
+  orders?: SwapOrders,
+}
+
+interface SwapAppOptions {
+  network?: string,
+  env: any,
+  services: SwapAppServices | Array<ServiceInterface>,
+  swaps: Array<SwapInterface>,
+  flows: Array<Flow>,
+  whitelistBtc?: Array<string>,
+}
 
 class SwapApp {
   // White list BTC. Dont wait confirm
-  whitelistBtc = [
+  private whitelistBtc: Array<string> = [
     'mzgKwRsfYLgApStDLwcN9Y6ce9qYPnTJNx', // @eneeseene testnet
     'mst6jZKU973gB6Jhei4WQFg381zb86UgBQ', // @eneeseene testnet btc address
     '17Hf3chwyWeNokLfuBcxEtpRYaYiU5RWBt', // swap.bot mainnet btc address
   ]
+  private attachedSwaps: Collection = new Collection()
+
   options: any = {}
   inited: boolean = false
   network: any
   env: any
-  services: any
-  swaps: any
-  flows: any
+  services: SwapAppServices = {}
+  swaps: Array<SwapInterface>
+  flows: Array<Flow>
+  
 
   static _swapAppInstance = null
 
@@ -27,14 +53,14 @@ class SwapApp {
    * @param {array}   options.swaps
    * @param {array}   options.flows
    */
-  constructor(options) {
+  constructor(options: SwapAppOptions) {
     this.options = options
     this.network = options.network || constants.NETWORKS.TESTNET
     this.env = {}
     this.services = {}
 
-    this.swaps = {}
-    this.flows = {}
+    this.swaps = new Array()
+    this.flows = new Array()
 
     this._addEnv(options.env || {})
     this._addServices(options.services || {})
@@ -62,7 +88,11 @@ class SwapApp {
     return this.inited
   }
 
-  static init(options) {
+  static init(options: SwapAppOptions, makeShared: boolean = false) {
+    if (makeShared) {
+      SwapApp._swapAppInstance = new SwapApp(options)
+      return SwapApp._swapAppInstance
+    }
     return new SwapApp(options)
   }
 
@@ -83,7 +113,6 @@ class SwapApp {
     if (SwapApp._swapAppInstance && !forceFreshSetup) {
       throw new Error(`Shared instance already initialized. Use SwapApp.shared() to access it.`)
     }
-
     SwapApp._swapAppInstance = new SwapApp(options)
   }
 
@@ -95,8 +124,35 @@ class SwapApp {
     return SwapApp._swapAppInstance
   }
 
+  attachSwap(swap: Swap) {
+    if (!this.attachedSwaps.isExistByKey(swap.id)) {
+      this.attachedSwaps.append(swap, swap.id)
+    }
+  }
+
+  getActiveSwaps(): Swap[] {
+    return this.attachedSwaps.filter((swap: Swap) => {
+      return (swap === null)
+        ? false
+        : !swap.isFinished()
+    })
+  }
+
+  getSwapsByAddress(coin: string, address: string): Swap[] {
+    return this.attachedSwaps.filter((swap: Swap) => {
+      if (swap
+        && swap.participant
+        && swap.participant[coin.toLowerCase()]
+        && swap.participant[coin.toLowerCase()].address
+        && swap.participant[coin.toLowerCase()].address.toLowerCase() === address.toLowerCase()
+        && !swap.isFinished()
+      ) return true
+      return false
+    })
+  }
+
   // Check address is whitelisted
-  isWhitelistBtc(address) {
+  isWhitelistBtc(address: string) {
     return this.whitelistBtc.indexOf(address) !== -1
   }
   // Configure -------------------------------------------------------- /
