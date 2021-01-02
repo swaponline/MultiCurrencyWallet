@@ -2211,10 +2211,15 @@ const signSmsMnemonicAndBuildV4 = (txHash, mnemonic) => {
 
 const checkPinCanRestory = (mnemonic) => {
   const mnemonicWallet = actions.btc.getWalletByWords(mnemonic, 1)
-  let btcSmsMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKey)
-  try { btcSmsMnemonicKey = JSON.parse(btcSmsMnemonicKey) } catch (e) { }
+  let btcSmsMnemonicKey: MnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKey)
+  
+  try {
+    btcSmsMnemonicKey = JSON.parse(btcSmsMnemonicKey)
+  } catch (e) {
+    console.error(e)
+  }
 
-  if (btcSmsMnemonicKey as MnemonicKey instanceof Array && btcSmsMnemonicKey.length > 0) {
+  if (btcSmsMnemonicKey instanceof Array && btcSmsMnemonicKey.length > 0) {
     return btcSmsMnemonicKey.includes(mnemonicWallet.publicKey)
   }
   return false
