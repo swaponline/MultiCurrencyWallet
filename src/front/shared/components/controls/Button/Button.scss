@@ -5,8 +5,6 @@
   @include inline-block;
   cursor: pointer;
   line-height: 40px;
-  // text-transform: uppercase;
-  // font-weight: bold;
   text-align: center;
   font-size: 18px;
   border: none;
@@ -45,19 +43,16 @@
   }
 }
 
-.green {
-  background-color: #3de25b;
-  color: #fff;
-
-  &:hover {
-    background-color: lighten(#3de25b, 5%);
-  }
-}
-
 .blue {
   background-color: $primary;
   color: #fff;
   font-size: 15px;
+}
+
+.empty {
+  border: 1px solid $color-brand;
+  background-color: transparent;
+  color: $color-brand;
 }
 
 // .small selector after .blue so that the font size is applied
