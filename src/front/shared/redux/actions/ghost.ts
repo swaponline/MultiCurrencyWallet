@@ -306,7 +306,7 @@ const fetchTx = (hash, cacheResponse) =>
       }
       return false
     },
-  }).then(({ fees, ...rest }) => ({
+  }).then(({ fees, ...rest }): IUniversalObj => ({
     fees: new BigNumber(fees).multipliedBy(1e8),
     ...rest,
   }))
@@ -326,7 +326,6 @@ const fetchTxRaw = (txId, cacheResponse) =>
 
 const fetchTxInfo = (hash, cacheResponse?) =>
   fetchTx(hash, cacheResponse)
-    //@ts-ignore
     .then(({ vin, vout, ...rest }) => {
       const senderAddress = vin ? vin[0].addr : null
       const amount = vout ? new BigNumber(vout[0].value).toNumber() : null
@@ -361,7 +360,6 @@ const fetchTxInfo = (hash, cacheResponse?) =>
         afterBalance,
         senderAddress,
         receiverAddress: vout ? vout[0].scriptPubKey.addresses : null,
-        //@ts-ignore
         confirmed: !!(rest.confirmations),
         minerFee: rest.fees.dividedBy(1e8).toNumber(),
         adminFee,
