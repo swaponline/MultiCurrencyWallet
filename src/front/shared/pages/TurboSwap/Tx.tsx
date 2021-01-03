@@ -7,7 +7,7 @@ import styles from './Tx.scss'
 
 import { injectIntl, FormattedMessage } from 'react-intl'
 
-import { IDirectSwapConditions, DirectSwapStep } from 'common/domain/swap'
+import { ITurboSwapConditions, TurboSwapStep } from 'common/domain/swap'
 
 interface ITx {
   amount: BigNumber,

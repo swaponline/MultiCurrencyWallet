@@ -6,7 +6,7 @@ import styles from './Side.scss'
 
 import { injectIntl, FormattedMessage } from 'react-intl'
 
-import { IDirectSwapConditions, DirectSwapStep } from 'common/domain/swap'
+import { ITurboSwapConditions, TurboSwapStep } from 'common/domain/swap'
 
 interface ISide {
   peerId: string,

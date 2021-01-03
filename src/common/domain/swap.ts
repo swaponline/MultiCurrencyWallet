@@ -8,7 +8,7 @@ export enum SwapSide {
   Taker = 'Taker',
 }
 
-export interface IDirectSwapConditions {
+export interface ITurboSwapConditions {
   /*TakerCoin: any
   TakerAddressFrom: any
   MakerAddressTo: any
@@ -30,13 +30,13 @@ export interface IDirectSwapConditions {
   }
 }
 
-export enum DirectSwapStep {
+export enum TurboSwapStep {
   TakerSendsToMaker = 'TakerSendsToMaker',
   MakerSendsToTaker = 'MakerSendsToTaker',
   Finished = 'Finished',
 }
 
-export interface IDirectSwapState {
+export interface ITurboSwapState {
   coin1: {
     isTakerSended: boolean
     isMakerReceived: boolean
