@@ -167,7 +167,7 @@
     "prettier": "^2.1.2",
     "progress-bar-webpack-plugin": "^2.1.0",
     "prop-types": "^15.7.2",
-    "react-qr-scanner": "0.0.10",
+    "react-qr-scanner": "0.0.11",
     "rename-files": "0.0.2",
     "replace": "^1.1.1",
     "request-promise-cache": "^2.0.1",
