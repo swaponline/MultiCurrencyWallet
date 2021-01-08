@@ -1,7 +1,7 @@
 import child_process from 'child_process'
 import webpack from 'webpack'
 import ProgressBarPlugin from 'progress-bar-webpack-plugin'
-import WebappWebpackPlugin from 'webapp-webpack-plugin'
+import FaviconsWebpackPlugin from 'favicons-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import AppConfigPlugin from 'app-config/webpack'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
@@ -41,11 +41,10 @@ const webpackConfig = {
     rules,
   },
 
-  node: {
-    fs: 'empty',
-  },
-
   resolve: {
+    fallback: {
+      fs: false
+    },
     alias: {
       'shared': config.paths.front('shared'),
       'local_modules': config.paths.front('local_modules'),
@@ -86,7 +85,7 @@ const webpackConfig = {
       'swap.swaps': 'swap.swaps',
     }),
     new ProgressBarPlugin({ clear: false }),
-    new WebappWebpackPlugin({
+    new FaviconsWebpackPlugin({
       logo: 'favicon.png',
       path: config.base,
       favicons: {

@@ -6,8 +6,8 @@ module.exports = AppConfigPlugin
 
 AppConfigPlugin.prototype.apply = (compiler) => {
 
-  compiler.plugin('normal-module-factory', nmf => {
-    nmf.plugin('before-resolve', (result, callback) => {
+  compiler.hooks.normalModuleFactory.tap('normal-module-factory', nmf => {
+    nmf.hooks.beforeResolve.tap('before-resolve', (result, callback) => {
 
       if (!result) {
         return callback()

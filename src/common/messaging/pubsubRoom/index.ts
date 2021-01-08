@@ -1,6 +1,6 @@
 import diff from 'hyperdiff'
 import EventEmitter from 'events'
-import clone from 'lodash.clonedeep'
+import { cloneDeep as clone } from 'lodash'
 import PeerId from 'peer-id'
 
 import debug from 'debug'
