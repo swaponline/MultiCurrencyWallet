@@ -15,12 +15,8 @@ export default [
   {
     test: /\.scss$/,
     use: [
-      {
-        loader: 'style-loader',
-      },
-      {
-        loader: 'cache-loader',
-      },
+      'style-loader',
+      'cache-loader',
       {
         loader: 'css-loader',
         options: {
@@ -32,9 +28,11 @@ export default [
         loader: 'postcss-loader',
         options: {
           sourceMap: true,
-          plugins: () => [
-            autoprefixer(AUTOPREFIXER),
-          ],
+          postcssOptions: {
+            plugins: () => [
+              autoprefixer(AUTOPREFIXER),
+            ],
+          }
         },
       },
       {

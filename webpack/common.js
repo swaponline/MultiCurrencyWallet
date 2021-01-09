@@ -8,6 +8,8 @@ import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import config from 'app-config'
 import rulesMap from './rules'
 
+// NOTE: Should be removed for webpack debugging, updating, or refactoring
+process.noDeprecation = true
 
 const versionBuffer = child_process.execSync('git rev-parse HEAD')
 const version = versionBuffer.toString('utf8')

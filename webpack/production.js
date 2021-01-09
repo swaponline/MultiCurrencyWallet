@@ -27,9 +27,7 @@ export default (webpackConfig) => {
   */
   webpackConfig.module.rules = webpackConfig.module.rules.map((loader) => {
     if (loader.test.test('*.css') || loader.test.test('*.scss')) {
-      loader.use[0] = {
-        loader: MiniCssExtractPlugin.loader
-      }
+      loader.use[0] = MiniCssExtractPlugin.loader
     }
     return loader
   })
