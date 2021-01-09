@@ -41,10 +41,11 @@ const webpackConfig = {
     rules,
   },
 
+  node: {
+    fs: 'empty',
+  },
+
   resolve: {
-    fallback: {
-      fs: false
-    },
     alias: {
       'shared': config.paths.front('shared'),
       'local_modules': config.paths.front('local_modules'),

@@ -23,11 +23,11 @@ export default (webpackConfig) => {
     publicPath: config.publicPath,
   }
 
-  // webpackConfig.node = {
-  //   fs: 'empty',
-  //   net: 'empty',
-  //   tls: 'empty',
-  // }
+  webpackConfig.node = {
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty',
+  }
   /* 
   * build speed: slow
   * rebuild: faster
@@ -37,6 +37,9 @@ export default (webpackConfig) => {
   
   webpackConfig.devServer = {
     publicPath: webpackConfig.output.publicPath,
+    stats: 'errors-only',
+    noInfo: true,
+    lazy: false,
   }
   
   webpackConfig.optimization = {
