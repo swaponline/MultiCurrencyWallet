@@ -39,12 +39,14 @@ export default [
         loader: 'sass-loader',
         options: {
           sourceMap: true,
-          data: _sccsConfig,
-          includePaths: [
-            config.paths.base('node_modules'),
-            config.paths.front('shared'),
-            config.paths.front('client'),
-          ],
+          sassOptions:{
+            data: _sccsConfig,
+            includePaths: [
+              config.paths.base('node_modules'),
+              config.paths.front('shared'),
+              config.paths.front('client'),
+            ]
+          }
         },
       },
     ],
