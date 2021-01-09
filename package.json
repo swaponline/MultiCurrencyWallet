@@ -14,7 +14,6 @@
     ]
   },
   "scripts": {
-    "postinstall": "npm dedupe",
     "common:test": "node ./src/common/tests/tests.js",
     "common:example:send": "node ./src/common/examples/send.js",
     "common:example:unspents": "node ./src/common/examples/unspents.js",
