@@ -39,8 +39,8 @@ export default [
         loader: 'sass-loader',
         options: {
           sourceMap: true,
+          prependData: _sccsConfig,
           sassOptions:{
-            data: _sccsConfig,
             includePaths: [
               config.paths.base('node_modules'),
               config.paths.front('shared'),
