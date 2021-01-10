@@ -294,7 +294,7 @@
     "react-tag-autocomplete": "^6.1.0",
     "react-tooltip": "^4.2.11",
     "rebuild": "^0.1.2",
-    "redaction": "^5.0.5",
+    "redaction": "^5.1.1",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
     "reverse": "^4.0.1",
