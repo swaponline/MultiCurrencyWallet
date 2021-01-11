@@ -89,8 +89,8 @@ const webpackConfig = {
     }),
     new ProgressBarPlugin({ clear: false }),
     new FaviconsWebpackPlugin({
-      logo: 'favicon.png',
-      path: config.paths.client('favicon.png'),
+      logo: config.paths.client('favicon.png'),
+      path: config.base,
       favicons: {
         appName: 'Wallet',
         appDescription: 'Hot wallet',
