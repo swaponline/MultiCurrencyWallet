@@ -1,4 +1,4 @@
-# Motivation
+# Add new blockchain to multicurrency wallet with atomic swap exchange
 The rapid growth of decentralized exchanges shows the huge interest of the blockchain community in such projects. However, until recently, all this is possible only on ethereum. Most of trades on centralized exchanges was with non-ethereum blockchains, but such trades impossible without intermediases who takes %. 
 
 Interoperability between different blockchains and cryptocurrencies is an ongoing struggle. We know a lot of projects who solve this problem with simple way by creating intermediate IOU system based on multisig. such projects as Cosmos, Kava, Polkadot, Ethereum "wrapped" tokens like WBTC, renBTC, etc. 
@@ -39,9 +39,13 @@ A new senior JS developer, without blockchain skills, connect takes 2-3 month fo
 - Research of our app arhitecture
 - Do Plan A (see below)
 
-COSTS:
-- 1 senior React JS developer ~ 2500 x 3 month ~ 7500 USD 
-- swaponline team consultation, review -  <a href="https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/SWAPTOKEN.md"> 5 000 SWAP</a>
+# COSTS:
+- 1 senior React JS developer ~ 3500 (remote) x 3 month ~ 7500 USD 
+- swaponline team consultation, review -  <a href="https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/SWAPTOKEN.md">5 000 SWAP</a>
+- maintaining and thechnical support ~ $500-3500 / month
+- budget for testing, auditing or covering losses if users lose money as a result of errors in the swap process (we are not responsible for this) ~ from $0
+
+Important note: Our core team focused on BTC-ETH swaps. If another blockchain added to our codebase it incurs additional cost for maintenance. mcw is going forward and a lot of things will be changed in the future (in our core code, in thousands of dependencies, in our design etc..). A developer must adopt new changes or we can lock the version on a separate domain and disable blockchain from our codebase due to outdated version. 
 
 ## Plan A
 
