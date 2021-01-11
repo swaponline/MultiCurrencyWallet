@@ -17,7 +17,7 @@ type PropsType = {
 
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })
-export default class SwitchLangOrigin extends Component<{intl: IntlShape}, PropsType> {
+export default class SwitchLang extends Component<{intl: IntlShape}, PropsType> {
   switchLang = (event, locale) => {
     event.preventDefault()
 
