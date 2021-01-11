@@ -74,7 +74,13 @@ try {
     const update = () => fillOrderbook(wallet, orders)
 
     update()
-    setInterval(update, 10 * 60 * 1000)
+
+    setInterval(() => {
+      console.log(
+        colorString(`Refill order book`, COLORS.GREEN)
+      )
+      update()
+    }, 10 * 60 * 1000)
 
     // orders.on('new orders', orders => orders.map(handleOrder(orders)))
     // orders.on('new order', handleOrder(orders))

@@ -4,10 +4,9 @@
   "repository": "https://github.com/swaponline/MultiCurrencyWallet/",
   "logo": "https://swaponline.github.io/assets/favicon.ico",
   "keywords": ["wallet", "ethereum", "bitcoin", "crypto"],
-  "stack": "container",
   "env":{
     "SECRET_PHRASE": {
-      "description": "Your 12 words secret phrase",
+      "description": "Your 12 words secret phrase (create new one on https://swaponline.io)",
       "required": true
     },
     "SPREAD": {
@@ -28,6 +27,14 @@
       "description": "Password to access admin panel",
       "generator": "secret",
       "required": true
+    },
+    "TELEGRAM_CHATID": {
+      "description": "Telegram User ID for notifications (contact https://t.me/get_id_bot to get this)",
+      "value": "0"
+    },
+    "MAX_PARALLEL_SWAPS": {
+      "description": "Max parallel swaps",
+      "value": "3"
     }
   }
 }

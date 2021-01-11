@@ -162,7 +162,7 @@ const _initReduxState = () => {
         isConnected: false,
         isMetamask: true,
         currency: "ETH",
-        fullName: `Ethereum (Web3 provider)`,
+        fullName: `Ethereum (external wallet)`,
         infoAboutCurrency: ethData.infoAboutCurrency,
         isBalanceFetched: true,
         isMnemonic: true,

@@ -89,20 +89,11 @@ class ETH2BTC extends Flow {
 
       isFailedTransaction: false,
       isFailedTransactionError: null,
-
-      // Partical (btc-seller) has unconfirmed txs in mempool
-      particalBtcLocked: false,
     }
 
     this._persistState()
 
     const flow = this
-
-    flow.swap.room.on('wait btc unlock', () => {
-      this.setState({
-        particalBtcLocked: true,
-      })
-    })
 
     flow.swap.room.once('request withdraw', () => {
       flow.setState({
@@ -239,6 +230,10 @@ class ETH2BTC extends Flow {
 
         if (!isBtcScriptOk) {
           return
+        } else {
+          flow.setState({
+            isUTXOScriptOk: true,
+          }, true)
         }
 
         const swapData = {

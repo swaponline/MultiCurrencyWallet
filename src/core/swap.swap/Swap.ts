@@ -1,31 +1,33 @@
 import debug from 'debug'
 import BigNumber from 'bignumber.js'
 import SwapApp, { Events, util } from 'swap.app'
+import SwapInterface from 'swap.app/SwapInterface'
 import Room from './Room'
+import { Flow as FlowType } from 'swap.swap'
 import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
 
 
 class Swap {
 
-  id: any
-  isMy: any
+  id: string
+  isMy: boolean
   owner: any
   participant: any
-  buyCurrency: any
-  sellCurrency: any
-  buyAmount: any
-  sellAmount: any
+  buyCurrency: string // @ToDo CoinType
+  sellCurrency: string// @ToDo CoinType
+  buyAmount: BigNumber
+  sellAmount: BigNumber
   ownerSwap: any
   participantSwap: any
   destinationBuyAddress: any
   destinationSellAddress: any
-  app: any
+  app: SwapApp
   createUnixTimeStamp: number
   participantMetamaskAddress: any
   waitConfirm: boolean
-  events: any
-  room: any
-  flow: any
+  events: Events
+  room: Room
+  flow: any // @ToDo - FlowType (need add functions to root class)
 
   constructor(id, app, order?) {
     this.id                     = null
@@ -129,10 +131,15 @@ class Swap {
     return data
   }
 
+  isFinished(): boolean {
+    return this.flow.isFinished()
+  }
+
   _attachSwapApp(app) {
     SwapApp.required(app)
 
     this.app = app
+    this.app.attachSwap(this)
   }
 
   _getDataFromOrder(order) {
@@ -279,6 +286,13 @@ class Swap {
             }, { step: `wait-lock-${_Buy}`, silentError: true })
           }
         })
+        // Seller has unconfirmed tx in mem pool
+        this.room.on('wait utxo unlock', () => {
+          this.flow.setState({
+            participantHasLockedUTXO: true,
+          }, true)
+        })
+
         const requestScriptFunc = () => {
           if (this.flow && !this.flow._isFinished()) {
             const { step } = this.flow.state

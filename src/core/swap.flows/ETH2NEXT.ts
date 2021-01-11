@@ -206,6 +206,10 @@ class ETH2NEXT extends Flow {
 
         if (!isNextScriptOk) {
           return
+        } else {
+          flow.setState({
+            isUTXOScriptOk: true,
+          }, true)
         }
 
         const swapData = {

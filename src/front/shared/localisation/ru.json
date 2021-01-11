@@ -1385,14 +1385,14 @@
   },
   {
     "id": "orders102",
-    "message": "СУММА",
+    "message": "Количество",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
   },
   {
     "id": "orders105",
-    "message": "ВСЕГО",
+    "message": "Цена",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
@@ -2209,27 +2209,6 @@
     ]
   },
   {
-    "id": "OrderBookRowSells",
-    "message": "продаёт",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "OrderBookRowFor",
-    "message": "за",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "OrderBookRowAtPrice",
-    "message": "цена",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
     "id": "CurrencyWallet141",
     "message": "{fullName}({currency}) онлайн кошелек, работащюий на технологии Atomic Swap."
   },
@@ -2363,7 +2342,7 @@
   },
   {
     "id": "orders104",
-    "message": "ЦЕНА",
+    "message": "Всего",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
@@ -5967,10 +5946,11 @@
     ]
   },
   {
-    "id": "Exchange_ConnectMetamask",
+    "id": "CommonTextConnect",
     "message": "Подключить",
     "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx",
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
@@ -7662,10 +7642,7 @@
   },
   {
     "id": "Banner_ConnectMetamask",
-    "message": "Подключить кошелек",
-    "files": [
-      "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
-    ]
+    "message": "Подключить кошелек"
   },
   {
     "id": "Banner_ConnectMetamaskDesc",
@@ -8324,10 +8301,31 @@
     "message": "Размер транзакции:"
   },
   {
+    "id": "Swap_MetamaskAttention",
+    "message": "Пожалуйста подтвердите транзакцию в вашем кошельке \"{walletName}\".",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
     "id": "FAQFeeApiLink",
     "message": "(источник)",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "Swap_OwnerHasLockedUTX",
+    "message": "Свап стоит на паузе, потому что у вас есть не подтвержденные транзакции в мемпуле. Ждем подтверждения.",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "Swap_SellerHasLockedUTX",
+    "message": "Свап стоит на паузе, потому что у продавца есть не подтвержденные транзакции в мемпуле. Ждем подтверждения.",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
   }
 ]

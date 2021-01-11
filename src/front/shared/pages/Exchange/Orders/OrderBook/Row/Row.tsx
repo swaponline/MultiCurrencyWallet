@@ -127,7 +127,10 @@ export default class Row extends Component {
 
   getDecimals = (amount, currency) => {
     const decimalPlaces = constants.tokenDecimals[currency.toLowerCase()] || 8
-    return String(new BigNumber(amount).dp(decimalPlaces, BigNumber.ROUND_CEIL))
+
+    return decimalPlaces > 8
+      ? String(new BigNumber(amount).dp(8, BigNumber.ROUND_CEIL))
+      : String(new BigNumber(amount).dp(decimalPlaces, BigNumber.ROUND_CEIL))
   }
 
   handleDeclineOrdersModalOpen = (indexOfDecline) => {
@@ -327,46 +330,28 @@ export default class Row extends Component {
         styleName={`${isDark ? 'rowDark' : ''}`}
         style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}
       >
-        <td>
+        <td styleName='rowCell'>
           <Avatar
             value={ownerPeer}
             size={30}
           />
         </td>
-        <td>
-          <span styleName="rowBindingText">
-            <FormattedMessage
-              id="OrderBookRowSells"
-              defaultMessage="sells"
-            />
-          </span>
+        <td styleName='rowCell'>
           <span styleName='rowAmount'>
             {`${this.getDecimals(sellAmountOut, sellCurrencyOut)} ${sellCurrencyOut}`}
           </span>
         </td>
-        <td>
-          <span styleName="rowBindingText">
-            <FormattedMessage
-              id="OrderBookRowFor"
-              defaultMessage="for"
-            />
-          </span>
+        <td styleName='rowCell'>
           <span styleName='rowAmount'>
             {`${this.getDecimals(getAmountOut, getCurrencyOut)} ${getCurrencyOut}`}
           </span>
         </td>
-        <td>
-          <span styleName="rowBindingText">
-            <FormattedMessage
-              id="OrderBookRowAtPrice"
-              defaultMessage="at price"
-            />
-          </span>
+        <td styleName='rowCell'>
           <span styleName='rowAmount'>
             {`${this.getDecimals(priceOut, getCurrencyOut)} ${getCurrencyOut}/${sellCurrencyOut}`}
           </span>
         </td>
-        <td styleName="buttonsColumn">
+        <td styleName='rowCell'>
           {peer === ownerPeer
             ?
             <RemoveButton className="removeButton" onClick={() => removeOrder(id)} />
@@ -438,7 +423,7 @@ export default class Row extends Component {
               <span styleName='rowAmount'>{`${mobileFormatCrypto(amount, main)} ${main}`}</span>
             </div>
             <div>
-              <i className="fas fa-exchange-alt" />
+              <i style={{ margin: '0 0.8em' }} className="fas fa-exchange-alt" />
             </div>
             <div styleName="tdContainer-2">
               <span styleName="secondType">

@@ -66,15 +66,11 @@ const createP2PNode = (options) => {
       addresses: {
         listen: (listen || defaultListen),
       },
-      connectionManager: {
-        minPeers: 25,
-        maxPeers: 100,
-        pollInterval: 5000
-      },
       modules: {
         transport: [WebrtcStar],
         streamMuxer: [MPLEX],
         connEncryption: [SECIO],
+        // @ts-ignore
         peerDiscovery: [Bootstrap],
         dht: KadDHT,
         pubsub: Gossipsub
@@ -87,12 +83,13 @@ const createP2PNode = (options) => {
         },
         peerDiscovery: {
           autoDial: true,
+          // @ts-ignore
           webRTCStar: {
             enabled: true
           },
           bootstrap: {
             enabled: true,
-            interval: 30e3,
+            interval: 10e3,
             list: discoveryPeers || defaultDiscoveryPeers,
           }
         },
@@ -104,14 +101,15 @@ const createP2PNode = (options) => {
         connectionManager: {
           maxConnections: Infinity,
           minConnections: 0,
-          pollInterval: 1000,
+          pollInterval: 500,
           defaultPeerValue: 1,
           maxData: Infinity,
           maxSentData: Infinity,
           maxReceivedData: Infinity,
           maxEventLoopDelay: Infinity,
-          movingAverageInterval: 5000
+          movingAverageInterval: 1000
         },
+        // @ts-ignore
         relay: {
           enabled: true,
           hop: {

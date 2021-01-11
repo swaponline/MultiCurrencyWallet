@@ -1316,14 +1316,14 @@
   },
   {
     "id": "orders102",
-    "message": "AMOUNT",
+    "message": "Amount",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
   },
   {
     "id": "orders105",
-    "message": "TOTAL",
+    "message": "Price",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
@@ -2136,27 +2136,6 @@
     ]
   },
   {
-    "id": "OrderBookRowSells",
-    "message": "sells",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "OrderBookRowFor",
-    "message": "for",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "OrderBookRowAtPrice",
-    "message": "at price",
-    "files": [
-      "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
-    ]
-  },
-  {
     "id": "CurrencyWallet141",
     "message": "{fullName}({currency}) Web Wallet with Atomic Swap."
   },
@@ -2290,7 +2269,7 @@
   },
   {
     "id": "orders104",
-    "message": "PRICE",
+    "message": "Total",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
@@ -4727,14 +4706,6 @@
     ]
   },
   {
-    "id": "partial1021",
-    "message": "Embed on website",
-    "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
-  },
-  {
     "id": "partial2378",
     "message": "Wallet",
     "files": [
@@ -5903,10 +5874,11 @@
     ]
   },
   {
-    "id": "Exchange_ConnectMetamask",
+    "id": "CommonTextConnect",
     "message": "Connect",
     "files": [
-      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
+      "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx",
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
@@ -7583,10 +7555,7 @@
   },
   {
     "id": "Banner_ConnectMetamask",
-    "message": "Connect wallet",
-    "files": [
-      "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
-    ]
+    "message": "Connect wallet"
   },
   {
     "id": "Banner_ConnectMetamaskDesc",
@@ -8252,10 +8221,31 @@
     "message": "Transaction size:"
   },
   {
+    "id": "Swap_MetamaskAttention",
+    "message": "Please confirm the transaction in your \"{walletName}\" wallet",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
     "id": "FAQFeeApiLink",
     "message": "(source)",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
+    ]
+  },
+  {
+    "id": "Swap_OwnerHasLockedUTX",
+    "message": "Swap paused because you has unconfirmed transaction in mempool. Waiting confirm",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "Swap_SellerHasLockedUTX",
+    "message": "Swap paused because owner has unconfirmed transaction in mempool. Waiting confirm",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
   }
 ]

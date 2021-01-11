@@ -4,7 +4,7 @@
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 ## MultiCurrencyWallet
- 
+  
 - 👛 Crypto wallet: BTC, ETН, USDT, {your_token}...
 - 💵 Fiat gateway: USD, EUR, RUB, UAH...
 - ⚛️ P2P exchange – atomic swaps
@@ -15,7 +15,7 @@ Live version here: https://swaponline.github.io (mirror https://swaponline.io)
 
 No coding skills? Use :package: [WordPress plugin with admin panel](https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064) :package: 
 
-Looking for investment opportunity? Read about [ERC20:SWAP token](/docs/SWAPTOKEN.md) (target price 1$)
+Looking for investment opportunity? Read about [ERC20:SWAP token](/docs/SWAPTOKEN.md) (target price $1)
 
 ### 1. Multi-currency wallet: your users can store Bitcoin and custom assets
 
