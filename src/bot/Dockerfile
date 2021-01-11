@@ -1,4 +1,4 @@
-FROM       node:12.20.0-alpine3.9
+FROM node:14-alpine3.10
 
 #docker build --tag labot .
 #docker run --restart unless-stopped --name labot --hostname labot -d -p 30937:3002 -p 30901:3001 -p 30922:22 labot:latest
