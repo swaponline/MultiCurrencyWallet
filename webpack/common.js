@@ -1,13 +1,15 @@
 import child_process from 'child_process'
 import webpack from 'webpack'
 import ProgressBarPlugin from 'progress-bar-webpack-plugin'
-import WebappWebpackPlugin from 'webapp-webpack-plugin'
+import FaviconsWebpackPlugin from 'favicons-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import AppConfigPlugin from 'app-config/webpack'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import config from 'app-config'
 import rulesMap from './rules'
 
+// NOTE: Should be removed for webpack debugging, updating, or refactoring
+process.noDeprecation = true
 
 const versionBuffer = child_process.execSync('git rev-parse HEAD')
 const version = versionBuffer.toString('utf8')
@@ -86,8 +88,8 @@ const webpackConfig = {
       'swap.swaps': 'swap.swaps',
     }),
     new ProgressBarPlugin({ clear: false }),
-    new WebappWebpackPlugin({
-      logo: 'favicon.png',
+    new FaviconsWebpackPlugin({
+      logo: config.paths.client('favicon.png'),
       path: config.base,
       favicons: {
         appName: 'Wallet',

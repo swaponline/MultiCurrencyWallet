@@ -1,4 +1,4 @@
-FROM  node:12-slim
+FROM node:14-slim
 
 #docker-compose up -d --build --force-recreate --no-deps && lazydocker 
 
