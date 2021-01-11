@@ -103,5 +103,4 @@ const SelectGroup = ({ intl: IntlShape,  dynamicFee, isToken, extendedControls, 
   )
 }
 
-// @ts-ignore
 export default injectIntl(CSSModules(SelectGroup, styles, { allowMultiple: true }))
