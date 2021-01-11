@@ -7,7 +7,7 @@ import CSSModules from 'react-css-modules'
 
 import { relocalisedUrl } from 'helpers/locale'
 import { setCookie } from 'helpers/utils'
-import { FormattedMessage, injectIntl } from 'react-intl'
+import { FormattedMessage, injectIntl, IntlShape } from 'react-intl'
 import feedback from 'helpers/feedback'
 
 type PropsType = {
@@ -17,7 +17,7 @@ type PropsType = {
 
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })
-export default class SwitchLang extends Component<{}, PropsType> {
+export default class SwitchLangOrigin extends Component<{intl: IntlShape}, PropsType> {
   switchLang = (event, locale) => {
     event.preventDefault()
 
