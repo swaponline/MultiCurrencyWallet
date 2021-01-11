@@ -103,5 +103,5 @@ const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onS
   )
 }
 
-
+// @ts-ignore
 export default injectIntl(CSSModules(SelectGroup, styles, { allowMultiple: true }))
