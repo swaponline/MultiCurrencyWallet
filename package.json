@@ -222,7 +222,7 @@
     "asciichart": "^1.5.25",
     "autosize": "^4.0.2",
     "axios": "^0.21.0",
-    "babel-plugin-react-intl": "^8.2.22",
+    "babel-plugin-react-intl": "^8.2.25",
     "babel-runtime": "^6.26.0",
     "bigi": "^1.4.2",
     "bignumber.js": "^9.0.1",
