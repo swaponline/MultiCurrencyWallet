@@ -95,6 +95,22 @@ The peer who accepted the offer (initiated the swap)
 - example: `allowPartialSwap = true`
 
 
+### Atomic swap / Direct swap
+Two schemes for swap execution.
+
+Atomic swaps:
+* use smart contracts / scripts
+* more decentralized
+* more expensive (additional transactions are used, see [TECHNICAL_OVERVIEW](/docs/TECHNICAL_OVERVIEW.md))
+* slower
+
+Direct swaps:
+* don't use smart contracts / scripts
+* less decentralized, requires whitelisted marketmakers
+* the cheapest
+* faster
+
+
 ## Flow
 Swap steps sequence
 
