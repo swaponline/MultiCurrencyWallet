@@ -24,7 +24,7 @@ import Side from './Side'
 import Tx from './Tx'
 
 
-import { ITurboSwapConditions, TurboSwapStep } from 'common/domain/swap'
+import { ITurboSwapConditions, TurboSwapStep, SwapStatus } from 'common/domain/swap'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -64,6 +64,9 @@ export default class SwapComponent extends PureComponent<any, any> {
     super()
 
     this.state = {
+      swap: {
+        status: SwapStatus.Pending
+      }
     }
   }
 
@@ -173,6 +176,14 @@ export default class SwapComponent extends PureComponent<any, any> {
     feedback.swap.started(JSON.stringify({
       //... 
     }))
+
+    setTimeout(() => {
+      this.setState({
+        swap: {
+          status: SwapStatus.Finished
+        }
+      })
+    }, 2000)
   }
 
   componentWillUnmount() {
@@ -217,9 +228,19 @@ export default class SwapComponent extends PureComponent<any, any> {
 
     const txHash = '61c975570a624818615adc8c77a756cc003df7e4a66a91fb8a9bff8f926e15b2'
     const txHash2 = '0xaf8b87662e5fc6824768de522421563799473009c4b34f033831aaeef2e5c7c1'
+    const swapId = '123'
 
     return (
       <div styleName="turboSwap">
+        <h1 styleName="pageTitle">Turbo swap #{swapId}</h1>
+        <div styleName={`swapStatus ${swap.status}`}>
+          {swap.status == SwapStatus.Pending &&
+            <span>Pending...</span>
+          }
+          {swap.status == SwapStatus.Finished &&
+            <span>Finished!</span>
+          }
+        </div>
         <div styleName="blockchain">
           <Side
             peerId={'123'}
@@ -252,7 +273,7 @@ export default class SwapComponent extends PureComponent<any, any> {
             id={txHash2}
             url={'https://google.com'}
             direction={'left'}
-            status={'pending'}
+            status={'expected'}
           />
           <Side
             peerId={'1234'}
@@ -260,26 +281,6 @@ export default class SwapComponent extends PureComponent<any, any> {
             address={'0x26352d20e6a05e04a1ecc75d4a43ae9989272621'}
           />
         </div>
-        {/*<div styleName="blockchain">
-          <Side
-            peerId={'123'}
-            title={'You'}
-            address={'111111111'}
-          />
-          <Tx
-            amount={new BigNumber(456)}
-            ticker={'ETH'}
-            id={'123412341234123412341234123412341234'}
-            url={'https://google.com'}
-            direction={'left'}
-            status={'expected'}
-          />
-          <Side
-            peerId={'1234'}
-            title={'Maker'}
-            address={'2222222'}
-          />
-        </div>*/}
       </div>
     )
   }

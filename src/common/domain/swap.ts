@@ -46,3 +46,16 @@ export interface ITurboSwapState {
     isTakerReceived: boolean
   }
 }
+
+export enum SwapStatus {
+  Pending = 'Pending',
+  Finished = 'Finished',
+}
+
+export interface ITurboSwap {
+  id: any
+  mySide: SwapSide
+  conditions: ITurboSwapConditions
+  state: ITurboSwapState
+  status: SwapStatus
+}

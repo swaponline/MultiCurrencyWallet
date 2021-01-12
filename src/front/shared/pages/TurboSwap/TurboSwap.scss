@@ -4,13 +4,30 @@
   font-size: 12px;
 }
 
+.pageTitle {
+  text-align: center;
+  margin-bottom: 0.1em;
+}
+
+.swapStatus {
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+
+  &.Pending {
+    color: #bb0;
+  }
+  &.Finished {
+    color: #0b0;
+  }
+}
 
 .blockchain {
   display: flex;
   align-items: center;
   justify-content: space-between;
   //background: linear-gradient(#8880, #8882, #8880);
-  padding: 2em 0em;
+  padding: 2.5em 0em;
   overflow: hidden;
 }
 
