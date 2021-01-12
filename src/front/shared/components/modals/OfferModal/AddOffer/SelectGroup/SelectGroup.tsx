@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { FormattedMessage, injectIntl } from 'react-intl'
+import { FormattedMessage, injectIntl, IntlShape } from 'react-intl'
 
 import CSSModules from 'react-css-modules'
 import styles from './SelectGroup.scss'
@@ -13,7 +13,7 @@ import { BigNumber } from 'bignumber.js'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 
 // TODO to split data and view this component
-const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onSelect, dataTut, isDark,
+const SelectGroup = ({ intl: IntlShape,  dynamicFee, isToken, extendedControls, selectedValue, onSelect, dataTut, isDark,
   currencies, fiat, placeholder, label, disabled, className, inputValueLink, tooltip, balance, error,
   id, type, idFee, tooltipAboutFee, haveAmount, dontDisplayError, activeFiat, ...props
 }) => {
@@ -102,6 +102,5 @@ const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onS
     </div>
   )
 }
-
 
 export default injectIntl(CSSModules(SelectGroup, styles, { allowMultiple: true }))
