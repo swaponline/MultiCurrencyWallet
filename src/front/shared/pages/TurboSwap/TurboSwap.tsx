@@ -5,7 +5,7 @@ import Swap from 'swap.swap'
 import SwapApp from 'swap.app'
 
 import cssModules from 'react-css-modules'
-import styles from './DirectSwap.scss'
+import styles from './TurboSwap.scss'
 
 import { connect } from 'redaction'
 import helpers, { links, constants } from 'helpers'
@@ -24,7 +24,7 @@ import Side from './Side'
 import Tx from './Tx'
 
 
-import { IDirectSwapConditions, DirectSwapStep } from 'common/domain/swap'
+import { ITurboSwapConditions, TurboSwapStep } from 'common/domain/swap'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -216,7 +216,7 @@ export default class SwapComponent extends PureComponent<any, any> {
     } = this.state
 
     return (
-      <div styleName="directSwap">
+      <div styleName="turboSwap">
         <div styleName="blockchain">
           <Side
             peerId={'123'}

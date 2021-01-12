@@ -8,7 +8,7 @@ import { localisePrefix } from 'helpers/locale'
 
 import LocalStorage from 'pages/LocalStorage/LocalStorage'
 import SwapComponent from 'pages/Swap/Swap'
-import DirectSwap from 'pages/DirectSwap/DirectSwap'
+import TurboSwap from 'pages/TurboSwap/TurboSwap'
 import History from 'pages/History/History'
 import CreateWallet from 'pages/CreateWallet/CreateWallet'
 import NotFound from 'pages/NotFound/NotFound'
@@ -40,7 +40,7 @@ const routes = (
       <Route exact path={`${localisePrefix}/:page(exit)`} component={Wallet} />
 
       <Route path={`${localisePrefix}${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />
-      <Route path={`${localisePrefix}direct-swap/:orderId`} component={DirectSwap} />
+      <Route path={`${localisePrefix}turbo-swap/:orderId`} component={TurboSwap} />
 
       <Route path={`${localisePrefix}/:ticker(btc|eth|ghost|next)/tx/:tx?`} component={Transaction} />
       <Route path={`${localisePrefix}/:token(token)/:ticker/tx/:tx?`} component={Transaction} />
