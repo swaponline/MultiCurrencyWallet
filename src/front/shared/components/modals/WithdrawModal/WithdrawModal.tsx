@@ -111,6 +111,8 @@ interface IWithdrawModalState {
   allCurrencyies: { [key: string]: any }[]
   selectedItem: { [key: string]: any }
   wallet: { [key: string]: any }
+
+  isSendAll: boolean
 }
 
 @injectIntl
@@ -192,6 +194,7 @@ export default class WithdrawModal extends React.Component<any, any> {
       fetchFee: true,
       txSize: null,
       btcFeeRate: null,
+      isSendAll: false,
     }
   }
 
@@ -433,7 +436,8 @@ export default class WithdrawModal extends React.Component<any, any> {
       ownTx,
       adminFeeSize,
       wallet,
-      comment = ''
+      comment = '',
+      isSendAll,
     } = this.state
 
     const {
@@ -442,7 +446,7 @@ export default class WithdrawModal extends React.Component<any, any> {
     } = this.props
 
     this.setState(() => ({
-      isShipped: true,
+      //isShipped: true,
       error: false,
       devErrorMessage: false,
     }))
@@ -453,8 +457,11 @@ export default class WithdrawModal extends React.Component<any, any> {
       to,
       amount,
       speed: 'fast',
+      isSendAll,
     }
 
+console.log('>>>>> IS SEND ALL', isSendAll)
+return
     if (helpers.ethToken.isEthToken({ name: currency.toLowerCase() })) {
       sendOptions = {
         ...sendOptions,
@@ -664,6 +671,7 @@ export default class WithdrawModal extends React.Component<any, any> {
     this.setState({
       fiatAmount: value,
       amount: value ? (value / exCurrencyRate).toFixed(currentDecimals) : '',
+      isSendAll: false,
     })
 
   }
@@ -686,6 +694,7 @@ export default class WithdrawModal extends React.Component<any, any> {
     this.setState({
       fiatAmount: value ? (value * exCurrencyRate).toFixed(2) : '',
       amount: value,
+      isSendAll: false,
     })
   }
 
@@ -739,6 +748,7 @@ export default class WithdrawModal extends React.Component<any, any> {
       this.setState({
         amount: new BigNumber(balanceMiner.dp(currentDecimals, BigNumber.ROUND_FLOOR)),
         fiatAmount: balanceMiner.isGreaterThan(0) ? (balanceMiner.multipliedBy(exCurrencyRate)).toFixed(2) : '',
+        isSendAll: true,
       })
     }
   }
