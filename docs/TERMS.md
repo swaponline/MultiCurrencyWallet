@@ -95,7 +95,7 @@ The peer who accepted the offer (initiated the swap)
 - example: `allowPartialSwap = true`
 
 
-### Atomic swap / Direct swap
+### Atomic swap / Turbo swap
 Two schemes for swap execution.
 
 Atomic swaps:
@@ -104,7 +104,7 @@ Atomic swaps:
 * more expensive (additional transactions are used, see [TECHNICAL_OVERVIEW](/docs/TECHNICAL_OVERVIEW.md))
 * slower
 
-Direct swaps:
+Turbo swaps:
 * don't use smart contracts / scripts
 * less decentralized, requires whitelisted marketmakers
 * the cheapest
