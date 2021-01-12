@@ -47,15 +47,15 @@ $expected_opacity: 0.3;
     transform: rotate(135deg);
   }
 
-  &.expected {
+  &.Expected {
     opacity: $expected_opacity;
   }
 
-  &.pending {
+  &.Pending {
     animation: 0.6s ease infinite pending;
   }
 
-  &.done {
+  &.Done {
     font-size: 12px;
   }
 }

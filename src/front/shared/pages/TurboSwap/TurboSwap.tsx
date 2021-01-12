@@ -24,10 +24,18 @@ import Side from './Side'
 import Tx from './Tx'
 
 
-import { ITurboSwapConditions, TurboSwapStep, SwapStatus } from 'common/domain/swap'
+import { ITurboSwap, TurboSwapStep, SwapSide, SwapStatus, SwapTxStatus } from 'common/domain/swap'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
+
+const takerTxHash = '61c975570a624818615adc8c77a756cc003df7e4a66a91fb8a9bff8f926e15b2'
+const makerTxHash = '0xaf8b87662e5fc6824768de522421563799473009c4b34f033831aaeef2e5c7c1'
+
+
+interface ITurboSwapState {
+  swap: ITurboSwap
+}
 
 @injectIntl
 @connect(({
@@ -51,9 +59,8 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   deletedOrders: rememberedOrders.deletedOrders,*/
   peer,
 }))
-
 @cssModules(styles, { allowMultiple: true })
-export default class SwapComponent extends PureComponent<any, any> {
+export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
 
 /*  wallets: any
   checkingConfirmSuccessTimer: any
@@ -63,10 +70,37 @@ export default class SwapComponent extends PureComponent<any, any> {
     //@ts-ignore
     super()
 
-    this.state = {
-      swap: {
-        status: SwapStatus.Pending
+    const swap: ITurboSwap = {
+      id: '123',
+      conditions: {
+        mySide: SwapSide.Taker,
+        coinA: {
+          ticker: 'BTC',
+          amount: new BigNumber(0.123),
+          takerAddress: '13sC2KJNjDs7CwAifzgWa5XqWaKfShpL2z',
+          makerAddress: '18v1YXxJgQ6RA4m4Kmz61RLhRM16RsAb1D',
+        },
+        coinB: {
+          ticker: 'ETH',
+          amount: new BigNumber(0.0456),
+          takerAddress: '0x1ca43b645886c98d7eb7d27ec16ea59f509cbe1a',
+          makerAddress: '0x26352d20e6a05e04a1ecc75d4a43ae9989272621',
+        },
+      },
+      mySide: SwapSide.Taker,
+      status: SwapStatus.Pending,
+      takerTx: {
+        status: SwapTxStatus.Expected,
+        hash: null,
+      },
+      makerTx: {
+        status: SwapTxStatus.Expected,
+        hash: null,
       }
+    }
+
+    this.state = {
+      swap
     }
   }
 
@@ -177,13 +211,24 @@ export default class SwapComponent extends PureComponent<any, any> {
       //... 
     }))
 
+/*    setTimeout(() => {
+      const swap = this.state.swap
+      swap.takerTx = {
+        status: SwapTxStatus.Pending,
+        hash: takerTxHash
+      }
+      this.setState({
+        swap
+      })
+    }, 2000)*/
+    /*
     setTimeout(() => {
       this.setState({
         swap: {
           status: SwapStatus.Finished
         }
       })
-    }, 2000)
+    }, 2000)*/
   }
 
   componentWillUnmount() {
@@ -226,13 +271,9 @@ export default class SwapComponent extends PureComponent<any, any> {
       swap,
     } = this.state
 
-    const txHash = '61c975570a624818615adc8c77a756cc003df7e4a66a91fb8a9bff8f926e15b2'
-    const txHash2 = '0xaf8b87662e5fc6824768de522421563799473009c4b34f033831aaeef2e5c7c1'
-    const swapId = '123'
-
     return (
       <div styleName="turboSwap">
-        <h1 styleName="pageTitle">Turbo swap #{swapId}</h1>
+        <h1 styleName="pageTitle">Turbo swap #{swap.id}</h1>
         <div styleName={`swapStatus ${swap.status}`}>
           {swap.status == SwapStatus.Pending &&
             <span>Pending...</span>
@@ -243,42 +284,42 @@ export default class SwapComponent extends PureComponent<any, any> {
         </div>
         <div styleName="blockchain">
           <Side
-            peerId={'123'}
+            //peerId={'123'}
             title={'You'}
-            address={'18v1YXxJgQ6RA4m4Kmz61RLhRM16RsAb1D'}
+            address={swap.conditions.coinA.takerAddress}
           />
           <Tx
-            amount={new BigNumber(0.123)}
-            ticker={'BTC'}
-            id={txHash}
+            amount={swap.conditions.coinA.amount}
+            ticker={swap.conditions.coinA.ticker}
+            id={swap.takerTx.hash}
             url={'https://google.com'}
             direction={'right'}
-            status={'done'}
+            status={swap.takerTx.status}
           />
           <Side
-            peerId={'1234'}
+            //peerId={'1234'}
             title={'Maker'}
-            address={'13sC2KJNjDs7CwAifzgWa5XqWaKfShpL2z'}
+            address={swap.conditions.coinA.makerAddress}
           />
         </div>
         <div styleName="blockchain">
           <Side
-            peerId={'123'}
+            //peerId={'123'}
             title={'You'}
-            address={'0x1ca43b645886c98d7eb7d27ec16ea59f509cbe1a'}
+            address={swap.conditions.coinB.takerAddress}
           />
           <Tx
-            amount={new BigNumber(0.0456)}
-            ticker={'ETH'}
-            id={txHash2}
+            amount={swap.conditions.coinB.amount}
+            ticker={swap.conditions.coinB.ticker}
+            id={swap.makerTx.hash}
             url={'https://google.com'}
             direction={'left'}
-            status={'expected'}
+            status={swap.makerTx.status}
           />
           <Side
-            peerId={'1234'}
+            //peerId={'1234'}
             title={'Maker'}
-            address={'0x26352d20e6a05e04a1ecc75d4a43ae9989272621'}
+            address={swap.conditions.coinB.makerAddress}
           />
         </div>
       </div>

@@ -6,7 +6,7 @@ import styles from './Tx.scss'
 
 import { injectIntl, FormattedMessage } from 'react-intl'
 
-import { ITurboSwapConditions, TurboSwapStep } from 'common/domain/swap'
+import { ITurboSwapConditions, TurboSwapStep, SwapTxStatus } from 'common/domain/swap'
 
 import Address from 'components/ui/Address/Address'
 import { AddressFormat } from 'domain/address'
@@ -14,10 +14,10 @@ import { AddressFormat } from 'domain/address'
 interface ITx {
   amount: BigNumber,
   ticker: string,
-  id: string,
+  id: string | null,
   url: string,
   direction: 'left' | 'right',
-  status: 'expected' | 'pending' | 'done'
+  status: SwapTxStatus
 }
 
 //const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -40,12 +40,14 @@ export default class Tx extends PureComponent<ITx, {}> {
           {amount.toNumber()} {ticker}
         </div>
         <div styleName={`arrow ${direction} ${status}`}></div>
-        <a styleName="link" href={url} target='_blank'>
-          <Address
-            address={id}
-            format={AddressFormat.Short}
-          />
-        </a>
+        {id &&
+          <a styleName="link" href={url} target='_blank'>
+            <Address
+              address={id}
+              format={AddressFormat.Short}
+            />
+          </a>
+        }
       </div>
     )
   }

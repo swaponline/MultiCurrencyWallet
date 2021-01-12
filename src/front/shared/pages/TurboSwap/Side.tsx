@@ -11,7 +11,7 @@ import Address from 'components/ui/Address/Address'
 import { AddressFormat } from 'domain/address'
 
 interface ISide {
-  peerId: string,
+  //peerId: string,
   title: string,
   address: string,
 }
@@ -28,7 +28,7 @@ export default class Side extends PureComponent<ISide, {}> {
   }
 
   render() {
-    const { peerId, title, address } = this.props
+    const { /*peerId,*/ title, address } = this.props
 
     return (
       <div styleName="side">

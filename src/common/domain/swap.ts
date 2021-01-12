@@ -1,3 +1,6 @@
+import BigNumber from 'bignumber.js'
+
+
 export enum SwapType {
   Atomic = 'Atomic',
   Direct = 'Direct',
@@ -16,15 +19,15 @@ export interface ITurboSwapConditions {
   MakerAddressFrom: any
   TakerAddressTo: any*/
   mySide: SwapSide
-  coin1: {
+  coinA: {
     ticker: any
-    amount: any
+    amount: BigNumber
     takerAddress: any
     makerAddress: any
   },
-  coin2: {
+  coinB: {
     ticker: any
-    amount: any
+    amount: BigNumber
     makerAddress: any
     takerAddress: any
   }
@@ -36,7 +39,10 @@ export enum TurboSwapStep {
   Finished = 'Finished',
 }
 
-export interface ITurboSwapState {
+/*export interface ITurboSwapState {
+  takerTxHash: string
+  makerTxHash: string
+
   coin1: {
     isTakerSended: boolean
     isMakerReceived: boolean
@@ -45,7 +51,7 @@ export interface ITurboSwapState {
     isMakerSended: boolean
     isTakerReceived: boolean
   }
-}
+}*/
 
 export enum SwapStatus {
   Pending = 'Pending',
@@ -56,6 +62,25 @@ export interface ITurboSwap {
   id: any
   mySide: SwapSide
   conditions: ITurboSwapConditions
-  state: ITurboSwapState
+  //state: ITurboSwapState
   status: SwapStatus
+  takerTx: SwapTx
+  makerTx: SwapTx
+}
+
+export type SwapTx = {
+  status: SwapTxStatus.Expected
+  hash: null
+} | {
+  status: SwapTxStatus.Pending
+  hash: string
+} | {
+  status: SwapTxStatus.Done
+  hash: string
+}
+
+export enum SwapTxStatus {
+  Expected = 'Expected',
+  Pending = 'Pending',
+  Done = 'Done'
 }
