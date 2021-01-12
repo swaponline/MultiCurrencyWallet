@@ -211,8 +211,8 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
       //... 
     }))
 
-/*    setTimeout(() => {
-      const swap = this.state.swap
+    setTimeout(() => {
+      const swap = {...this.state.swap}
       swap.takerTx = {
         status: SwapTxStatus.Pending,
         hash: takerTxHash
@@ -220,15 +220,42 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
       this.setState({
         swap
       })
-    }, 2000)*/
-    /*
+    }, 3000)
+
     setTimeout(() => {
+      const swap = {...this.state.swap}
+      swap.takerTx = {
+        status: SwapTxStatus.Done,
+        hash: takerTxHash
+      }
       this.setState({
-        swap: {
-          status: SwapStatus.Finished
-        }
+        swap
       })
-    }, 2000)*/
+    }, 6000)
+
+    setTimeout(() => {
+      const swap = {...this.state.swap}
+      swap.makerTx = {
+        status: SwapTxStatus.Pending,
+        hash: makerTxHash
+      }
+      this.setState({
+        swap
+      })
+    }, 9000)
+
+    setTimeout(() => {
+      const swap = {...this.state.swap}
+      swap.makerTx = {
+        status: SwapTxStatus.Done,
+        hash: makerTxHash
+      },
+      swap.status = SwapStatus.Finished
+      this.setState({
+        swap
+      })
+    }, 12000)
+
   }
 
   componentWillUnmount() {
@@ -286,6 +313,7 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
           <Side
             //peerId={'123'}
             title={'You'}
+            isTitleHighlighted={true}
             address={swap.conditions.coinA.takerAddress}
           />
           <Tx
@@ -306,6 +334,7 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
           <Side
             //peerId={'123'}
             title={'You'}
+            isTitleHighlighted={true}
             address={swap.conditions.coinB.takerAddress}
           />
           <Tx
@@ -322,6 +351,7 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
             address={swap.conditions.coinB.makerAddress}
           />
         </div>
+        {/*JSON.stringify(swap)*/}
       </div>
     )
   }

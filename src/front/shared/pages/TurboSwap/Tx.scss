@@ -1,3 +1,6 @@
+$arrow_color: #8886;
+$expected_opacity: 0.3;
+
 .tx {
   width: 100%;
   padding: 0 1em;
@@ -7,6 +10,10 @@
   margin-bottom: 4px;
   text-align: center;
   font-size: 13px;
+
+  .Expected & {
+    opacity: $expected_opacity;
+  }
 }
 
 .link {
@@ -15,10 +22,6 @@
   text-align: center;
   font-size: 13px;
 }
-
-
-$arrow_color: #8886;
-$expected_opacity: 0.3;
 
 .arrow {
   height: 4px;
@@ -47,15 +50,15 @@ $expected_opacity: 0.3;
     transform: rotate(135deg);
   }
 
-  &.Expected {
+  .Expected & {
     opacity: $expected_opacity;
   }
 
-  &.Pending {
+  .Pending & {
     animation: 0.6s ease infinite pending;
   }
 
-  &.Done {
+  .Done & {
     font-size: 12px;
   }
 }

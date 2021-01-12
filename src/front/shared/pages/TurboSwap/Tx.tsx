@@ -35,11 +35,11 @@ export default class Tx extends PureComponent<ITx, {}> {
     const { amount, ticker, id, url, direction, status } = this.props
 
     return (
-      <div styleName="tx">
+      <div styleName={`tx ${status}`}>
         <div styleName="amount">
           {amount.toNumber()} {ticker}
         </div>
-        <div styleName={`arrow ${direction} ${status}`}></div>
+        <div styleName={`arrow ${direction}`}></div>
         {id &&
           <a styleName="link" href={url} target='_blank'>
             <Address

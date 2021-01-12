@@ -13,6 +13,7 @@ import { AddressFormat } from 'domain/address'
 interface ISide {
   //peerId: string,
   title: string,
+  isTitleHighlighted?: boolean
   address: string,
 }
 
@@ -28,11 +29,11 @@ export default class Side extends PureComponent<ISide, {}> {
   }
 
   render() {
-    const { /*peerId,*/ title, address } = this.props
+    const { /*peerId,*/ title, isTitleHighlighted, address } = this.props
 
     return (
       <div styleName="side">
-        <div styleName="title">
+        <div styleName={`title ${isTitleHighlighted ? 'highlighted' : ''}`}>
           {title}
         </div>
         <div styleName="avatar">
