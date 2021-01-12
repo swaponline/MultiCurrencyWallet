@@ -1029,8 +1029,8 @@ export default class WithdrawModal extends React.Component<any, any> {
                 values={{
                   amount:
                     selectedValue !== activeFiat
-                      ? new BigNumber(fiatAmount).dp(2, BigNumber.ROUND_FLOOR)
-                      : new BigNumber(amount).dp(6, BigNumber.ROUND_FLOOR),
+                      ? new BigNumber(fiatAmount).dp(2, BigNumber.ROUND_FLOOR).toNumber()
+                      : new BigNumber(amount).dp(6, BigNumber.ROUND_FLOOR).toNumber(),
                   currency: selectedValue !== activeFiat ? activeFiat : activeCriptoCurrency.toUpperCase(),
                 }}
               />
