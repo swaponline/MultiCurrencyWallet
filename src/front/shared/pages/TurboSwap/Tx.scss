@@ -1,11 +1,19 @@
 .tx {
+  width: 100%;
   padding: 0 1em;
-  font-size: 12px;
 }
 
 .amount {
-  font-size: 12px;
+  margin-bottom: 4px;
   text-align: center;
+  font-size: 13px;
+}
+
+.link {
+  margin-top: 8px;
+  display: block;
+  text-align: center;
+  font-size: 13px;
 }
 
 
@@ -62,9 +70,5 @@ $expected_opacity: 0.3;
   100% {
     opacity: $expected_opacity;
   }
-}
-
-.link {
-  font-size: 12px;
 }
 

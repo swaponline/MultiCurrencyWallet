@@ -1,11 +1,19 @@
 .side {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
   font-size: 13px;
 }
 
 .avatar {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #8884;
+  border-radius: 50%;
+  background-color: #8881;
   font-size: 12px;
 }
 
 .title {
-  font-size: 12px;
+  font-size: 14px;
 }

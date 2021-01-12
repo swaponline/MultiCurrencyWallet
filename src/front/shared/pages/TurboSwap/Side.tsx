@@ -7,6 +7,8 @@ import styles from './Side.scss'
 import { injectIntl, FormattedMessage } from 'react-intl'
 
 import { ITurboSwapConditions, TurboSwapStep } from 'common/domain/swap'
+import Address from 'components/ui/Address/Address'
+import { AddressFormat } from 'domain/address'
 
 interface ISide {
   peerId: string,
@@ -30,12 +32,15 @@ export default class Side extends PureComponent<ISide, {}> {
 
     return (
       <div styleName="side">
-        <div styleName="avatar">
-        </div>
         <div styleName="title">
           {title}
         </div>
-        {address}
+        <div styleName="avatar">
+        </div>
+        <Address
+          address={address}
+          format={AddressFormat.Short}
+        />
       </div>
     )
   }

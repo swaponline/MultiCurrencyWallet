@@ -215,18 +215,21 @@ export default class SwapComponent extends PureComponent<any, any> {
       swap,
     } = this.state
 
+    const txHash = '61c975570a624818615adc8c77a756cc003df7e4a66a91fb8a9bff8f926e15b2'
+    const txHash2 = '0xaf8b87662e5fc6824768de522421563799473009c4b34f033831aaeef2e5c7c1'
+
     return (
       <div styleName="turboSwap">
         <div styleName="blockchain">
           <Side
             peerId={'123'}
             title={'You'}
-            address={'111111111'}
+            address={'18v1YXxJgQ6RA4m4Kmz61RLhRM16RsAb1D'}
           />
           <Tx
             amount={new BigNumber(0.123)}
             ticker={'BTC'}
-            id={'123412341234123412341234123412341234'}
+            id={txHash}
             url={'https://google.com'}
             direction={'right'}
             status={'done'}
@@ -234,19 +237,19 @@ export default class SwapComponent extends PureComponent<any, any> {
           <Side
             peerId={'1234'}
             title={'Maker'}
-            address={'2222222'}
+            address={'13sC2KJNjDs7CwAifzgWa5XqWaKfShpL2z'}
           />
         </div>
         <div styleName="blockchain">
           <Side
             peerId={'123'}
             title={'You'}
-            address={'111111111'}
+            address={'0x1ca43b645886c98d7eb7d27ec16ea59f509cbe1a'}
           />
           <Tx
-            amount={new BigNumber(456)}
+            amount={new BigNumber(0.0456)}
             ticker={'ETH'}
-            id={'123412341234123412341234123412341234'}
+            id={txHash2}
             url={'https://google.com'}
             direction={'left'}
             status={'pending'}
@@ -254,10 +257,10 @@ export default class SwapComponent extends PureComponent<any, any> {
           <Side
             peerId={'1234'}
             title={'Maker'}
-            address={'2222222'}
+            address={'0x26352d20e6a05e04a1ecc75d4a43ae9989272621'}
           />
         </div>
-        <div styleName="blockchain">
+        {/*<div styleName="blockchain">
           <Side
             peerId={'123'}
             title={'You'}
@@ -276,7 +279,7 @@ export default class SwapComponent extends PureComponent<any, any> {
             title={'Maker'}
             address={'2222222'}
           />
-        </div>
+        </div>*/}
       </div>
     )
   }

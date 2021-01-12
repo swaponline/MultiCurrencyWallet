@@ -70,7 +70,7 @@ type ExchangeProps = {
 
 type Address = {
   currency: string
-  type: string
+  type: AddressType
   value: string
 }
 

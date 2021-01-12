@@ -1,6 +1,5 @@
 .turboSwap {
-  //width: 300px;
-  max-width: 900px;
+  max-width: 600px;
   margin: 0 auto;
   font-size: 12px;
 }
@@ -8,11 +7,10 @@
 
 .blockchain {
   display: flex;
-  align-items: start;
-  justify-content: center;
-  background: linear-gradient(#8880, #8882, #8880);
-  padding: 2em 1em;
-  //border-radius: 20%;
+  align-items: center;
+  justify-content: space-between;
+  //background: linear-gradient(#8880, #8882, #8880);
+  padding: 2em 0em;
   overflow: hidden;
 }
 

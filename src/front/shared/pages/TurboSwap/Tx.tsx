@@ -4,10 +4,12 @@ import BigNumber from 'bignumber.js'
 import cssModules from 'react-css-modules'
 import styles from './Tx.scss'
 
-
 import { injectIntl, FormattedMessage } from 'react-intl'
 
 import { ITurboSwapConditions, TurboSwapStep } from 'common/domain/swap'
+
+import Address from 'components/ui/Address/Address'
+import { AddressFormat } from 'domain/address'
 
 interface ITx {
   amount: BigNumber,
@@ -38,11 +40,12 @@ export default class Tx extends PureComponent<ITx, {}> {
           {amount.toNumber()} {ticker}
         </div>
         <div styleName={`arrow ${direction} ${status}`}></div>
-        <div styleName="link">
-          <a href={url} target='_blank'>
-            {id}
-          </a>
-        </div>
+        <a styleName="link" href={url} target='_blank'>
+          <Address
+            address={id}
+            format={AddressFormat.Short}
+          />
+        </a>
       </div>
     )
   }
