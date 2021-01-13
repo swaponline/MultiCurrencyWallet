@@ -8,13 +8,12 @@ import { getState } from 'redux/core'
 
 import reducers from 'redux/core/reducers'
 import * as bip39 from 'bip39'
-import axios from 'axios'
 
 import { getActivatedCurrencies } from 'helpers/user'
 import getCurrencyKey from 'helpers/getCurrencyKey'
-import apiLooper from 'helpers/apiLooper'
-
 import metamask from 'helpers/metamask'
+
+import { MnemonicKey } from './types'
 
 
 /*
@@ -45,9 +44,14 @@ const sign_btc_multisig = async (btcPrivateKey) => {
 const sign_btc_2fa = async (btcPrivateKey) => {
   const btcSMSServerKey = config.swapContract.protectedBtcKey
   let btcSmsPublicKeys = [btcSMSServerKey]
-  let btcSmsMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKey)
-  try { btcSmsMnemonicKey = JSON.parse(btcSmsMnemonicKey) } catch (e) { }
-  //@ts-ignore
+  let btcSmsMnemonicKey: MnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKey)
+  
+  try { 
+    btcSmsMnemonicKey = JSON.parse(btcSmsMnemonicKey) 
+  } catch (e) {
+    console.error(e)
+  }
+
   if (btcSmsMnemonicKey instanceof Array && btcSmsMnemonicKey.length > 0) {
     btcSmsPublicKeys.push(btcSmsMnemonicKey[0])
   }
@@ -57,10 +61,14 @@ const sign_btc_2fa = async (btcPrivateKey) => {
 const sign_btc_pin = async (btcPrivateKey) => {
   const btcPinServerKey = config.swapContract.btcPinKey
   let btcPinPublicKeys = [btcPinServerKey]
+  let btcPinMnemonicKey: MnemonicKey = localStorage.getItem(constants.privateKeyNames.btcPinMnemonicKey)
+  
+  try { 
+    btcPinMnemonicKey = JSON.parse(btcPinMnemonicKey) 
+  } catch (e) {
+    console.error(e)
+  }
 
-  let btcPinMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcPinMnemonicKey)
-  try { btcPinMnemonicKey = JSON.parse(btcPinMnemonicKey) } catch (e) { }
-  //@ts-ignore
   if (btcPinMnemonicKey instanceof Array && btcPinMnemonicKey.length > 0) {
     btcPinPublicKeys.push(btcPinMnemonicKey[0])
   }
@@ -103,16 +111,26 @@ const sign = async () => {
       }
     }
     // Sweep-Switch
-    let btcNewSmsMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKeyMnemonic)
-    try { btcNewSmsMnemonicKey = JSON.parse(btcNewSmsMnemonicKey) } catch (e) { }
-    //@ts-ignore
+    let btcNewSmsMnemonicKey: MnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKeyMnemonic)
+    
+    try { 
+      btcNewSmsMnemonicKey = JSON.parse(btcNewSmsMnemonicKey) 
+    } catch (e) {
+      console.error(e)
+    }
+
     if (!(btcNewSmsMnemonicKey instanceof Array)) {
       localStorage.setItem(constants.privateKeyNames.btcSmsMnemonicKeyMnemonic, JSON.stringify([]))
     }
 
-    let btcNewMultisigOwnerKey = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKeyMnemonic)
-    try { btcNewMultisigOwnerKey = JSON.parse(btcNewMultisigOwnerKey) } catch (e) { }
-    //@ts-ignore
+    let btcNewMultisigOwnerKey: MnemonicKey = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKeyMnemonic)
+    
+    try { 
+      btcNewMultisigOwnerKey = JSON.parse(btcNewMultisigOwnerKey) 
+    } catch (e) {
+      console.error(e)
+    }
+
     if (!(btcNewMultisigOwnerKey instanceof Array)) {
       localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKeyMnemonic, JSON.stringify([]))
     }
