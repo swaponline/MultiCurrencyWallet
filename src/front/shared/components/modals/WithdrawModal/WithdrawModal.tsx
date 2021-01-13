@@ -111,6 +111,8 @@ interface IWithdrawModalState {
   allCurrencyies: { [key: string]: any }[]
   selectedItem: { [key: string]: any }
   wallet: { [key: string]: any }
+
+  isInvoicePay?: boolean
 }
 
 @injectIntl
@@ -148,8 +150,7 @@ export default class WithdrawModal extends React.Component<any, any> {
   btcFeeTimer: any = 0
 
   constructor(data) {
-    //@ts-ignore
-    super()
+    super(data)
 
     const {
       data: { amount, toAddress, currency, address: withdrawWallet },
@@ -192,6 +193,7 @@ export default class WithdrawModal extends React.Component<any, any> {
       fetchFee: true,
       txSize: null,
       btcFeeRate: null,
+      isInvoicePay: !!(currentActiveAsset.invoice),
     }
   }
 
@@ -394,7 +396,9 @@ export default class WithdrawModal extends React.Component<any, any> {
 
     const wallet = actions.user.getWithdrawWallet(currency, address)
 
-    const { balance, unconfirmedBalance } = wallet
+    const { unconfirmedBalance } = wallet
+    const balance = await actions.core.fetchWalletBalance(wallet)
+    wallet.balance = balance
 
     const finalBalance =
       unconfirmedBalance !== undefined && unconfirmedBalance < 0
@@ -418,10 +422,17 @@ export default class WithdrawModal extends React.Component<any, any> {
       data: { currency },
       activeFiat,
     } = this.props
+    const {
+      amount,
+      fiatAmount,
+    } = this.state
 
     const exCurrencyRate = await actions.user.getExchangeRate(currency, activeFiat.toLowerCase())
 
-    this.setState(() => ({ exCurrencyRate }))
+    this.setState({
+      exCurrencyRate,
+      fiatAmount: (amount) ? new BigNumber(amount).multipliedBy(exCurrencyRate).toFixed(2) : fiatAmount,
+    })
   }
 
   handleSubmit = async () => {
@@ -826,12 +837,8 @@ export default class WithdrawModal extends React.Component<any, any> {
     allowedCriptoBalance = +allowedCriptoBalance > 0 ? allowedCriptoBalance : 0
     allowedUsdBalance = +allowedUsdBalance > 0 ? allowedUsdBalance : 0
 
-    const criptoValueIsOk = new BigNumber(
-      linked.amount.pipe(this.handleAmount).value
-    ).isLessThanOrEqualTo(allowedCriptoBalance)
-    const usdValueIsOk = new BigNumber(
-      linked.fiatAmount.pipe(this.handleAmount).value
-    ).isLessThanOrEqualTo(allowedUsdBalance)
+    const criptoValueIsOk = new BigNumber(amount).isLessThanOrEqualTo(allowedCriptoBalance)
+    const usdValueIsOk = new BigNumber(fiatAmount).isLessThanOrEqualTo(allowedUsdBalance)
 
     const isDisabled =
       !address ||

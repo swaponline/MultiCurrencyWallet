@@ -90,8 +90,7 @@ export default class InvoiceModal extends React.Component<any, any> {
   }
 
   constructor(data) {
-    //@ts-ignore
-    super()
+    super(data)
 
     const {
       data: { address, currency, toAddress },
