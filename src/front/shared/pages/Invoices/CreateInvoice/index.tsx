@@ -58,9 +58,27 @@ export default class CreateInvoice extends PureComponent<any, any> {
 
   async componentDidMount() {
     console.log('CreateInvoice mounted')
-    let { match : { params : { type, wallet } }, history, location: { pathname } , data } = this.props
+    let {
+      match: {
+        params: {
+          type,
+          wallet,
+        },
+      },
+      history,
+      location: {
+        pathname,
+      },
+      data,
+    } = this.props
 
-    if (type && wallet && ['btc', 'eth', 'ghost', 'next'].includes(type) && data[type]) {
+    if (!data[type]) {
+      data[type] = actions.core.getWallet({
+        currency: type,
+      })
+    }
+console.log('>>>>>>>', 'type', type, 'wallet', wallet, 'data', data, data[type])
+    if (type && wallet && data[type]) {
       const address = data[type].address
 
       actions.modals.open(constants.modals.InvoiceModal, {
