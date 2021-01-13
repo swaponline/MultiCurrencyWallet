@@ -414,6 +414,7 @@ export default class WithdrawModal extends React.Component<any, any> {
       balance: finalBalance,
       ethBalance,
       selectedItem: wallet,
+      currentActiveAsset: wallet,
     }))
   }
 
@@ -785,6 +786,7 @@ export default class WithdrawModal extends React.Component<any, any> {
       wallet: {
         isBTC: isBTCWallet,
       },
+      selectedItem,
     } = this.state
 
     const { name, intl, portalUI, activeFiat, activeCurrency, dashboardView } = this.props
