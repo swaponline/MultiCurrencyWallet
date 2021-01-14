@@ -62,24 +62,6 @@ const localeLabel = defineMessages({
 })
 
 @injectIntl
-@connect(
-  ({
-    currencies,
-    user: {
-      ethData,
-      btcData,
-      ghostData,
-      nextData,
-      btcMultisigSMSData,
-      btcMultisigUserData,
-      tokensData,
-    },
-  }) => ({
-    currencies: currencies.items,
-    items: [ethData, btcData, ghostData, nextData, btcMultisigSMSData, btcMultisigUserData],
-    tokenItems: [...Object.keys(tokensData).map((k) => tokensData[k])],
-  })
-)
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
 export default class InvoiceModal extends React.Component<any, any> {
   props: any
@@ -89,24 +71,25 @@ export default class InvoiceModal extends React.Component<any, any> {
     data: PropTypes.object,
   }
 
-  constructor(data) {
-    super(data)
+  constructor(props) {
+    super(props)
 
     const {
-      data: { address, currency, toAddress },
-      items,
+      data: {
+        address,
+        currency,
+        toAddress,
+      },
       tokenItems,
       payerAddress = false,
-    } = data
-    let infoAboutCurrency
+    } = props
 
-    items.map((item) => {
-      if (item.currency === currency) {
-        infoAboutCurrency = item.infoAboutCurrency
-      }
-    })
+    const walletData = actions.core.getWallet({ currency })
 
-    const currentDecimals = constants.tokenDecimals[currency.toLowerCase()]
+    const {
+      infoAboutCurrency,
+      decimals: currentDecimals,
+    } = walletData
 
     const multiplier =
       infoAboutCurrency && infoAboutCurrency.price_fiat ? infoAboutCurrency.price_fiat : 1
@@ -122,69 +105,60 @@ export default class InvoiceModal extends React.Component<any, any> {
       minus: '',
       contact: '',
       label: '',
-      selectedValue: 'BTC',
+      selectedValue: currency,
       currentDecimals,
       error: false,
       infoAboutCurrency,
       multiplier,
-      rubRates: 62.34,
+      walletData,
     }
-
-    this.getRubRates()
 
     localStorage.setItem(constants.localStorage.invoicesEnabled, '1')
   }
 
-  getRubRates() {
-    request
-      .get('https://www.cbr-xml-daily.ru/daily_json.js', {
-        cacheResponse: 60 * 60 * 1000,
-      })
-      .then((rates: any) => {
-        if (rates && rates.Valute && rates.Valute.USD) {
-          const rubRates = rates.Valute.USD.Value
-          this.setState({
-            rubRates,
-          })
-        }
-      })
-  }
-
-  handleSubmit = async () => {
+  handleSubmit = () => {
     const { name, data } = this.props
-    const { address, amount, destination, contact, label, isShipped } = this.state
+    const {
+      address,
+      amount,
+      destination,
+      contact,
+      label,
+      isShipped,
+      walletData: {
+        currency,
+      },
+    } = this.state
 
     if (isShipped) return
 
     this.setState({
       isShipped: true,
-    })
+    }, async () => {
+      try {
+        const message = `${contact}\r\n${label}`
+        const result: any = await actions.invoices.addInvoice({
+          currency,
+          toAddress: address,
+          fromAddress: data.address,
+          amount,
+          contact,
+          label: message,
+          destination,
+        })
+        if (result && result.answer && result.answer === 'ok') {
+          this.handleGoToInvoice(result.invoiceId)
+        }
+        if (data.onReady instanceof Function) {
+          data.onReady()
+        }
+      } catch (e) {
+        console.log('error', e)
+      }
 
-    let currency = getCurrencyKey(data.currency, true).toUpperCase()
-
-    try {
-      const message = `${contact}\r\n${label}`
-      const result: any = await actions.invoices.addInvoice({
-        currency,
-        toAddress: address,
-        fromAddress: data.address,
-        amount,
-        contact,
-        label: message,
-        destination,
+      this.setState({
+        isShipped: false,
       })
-      if (result && result.answer && result.answer === 'ok') {
-        this.handleGoToInvoice(result.invoiceId)
-      }
-      if (data.onReady instanceof Function) {
-        data.onReady()
-      }
-    } catch (e) {
-      console.log('error', e)
-    }
-
-    this.setState({
-      isShipped: false,
     })
   }
 
@@ -194,9 +168,12 @@ export default class InvoiceModal extends React.Component<any, any> {
 
   addressIsCorrect(otherAddress) {
     const {
-      data: { currency },
-    } = this.props
-    const { address, isEthToken } = this.state
+      address,
+      walletData: {
+        currency,
+        isERC20: isEthToken,
+      },
+    } = this.state
     const checkAddress = otherAddress ? otherAddress : address
 
     if (isEthToken) {
@@ -216,30 +193,18 @@ export default class InvoiceModal extends React.Component<any, any> {
   }
 
   handleDollarValue = (value) => {
-    const { rubRates, currentDecimals, multiplier } = this.state
+    const { currentDecimals, multiplier } = this.state
 
     this.setState({
       amountUSD: value,
-      amountRUB: value ? (value * rubRates).toFixed(0) : '',
       amount: value ? (value / multiplier).toFixed(currentDecimals) : '',
     })
   }
 
-  handleRubValue = (value) => {
-    const { rubRates, currentDecimals, multiplier } = this.state
-
-    this.setState({
-      amountRUB: value,
-      amountUSD: value ? (value / rubRates).toFixed(2) : '',
-      amount: value ? (value / multiplier / rubRates).toFixed(currentDecimals) : '',
-    })
-  }
-
   handleAmount = (value) => {
-    const { rubRates, multiplier } = this.state
+    const { multiplier } = this.state
 
     this.setState({
-      amountRUB: value ? (value * multiplier * rubRates).toFixed(0) : '',
       amountUSD: value ? (value * multiplier).toFixed(2) : '',
       amount: value,
     })
@@ -251,10 +216,11 @@ export default class InvoiceModal extends React.Component<any, any> {
 
   handleScan = (data) => {
     if (data) {
-      this.setState(() => ({
+      this.setState({
         address: data.includes(':') ? data.split(':')[1] : data,
-      }))
-      this.openScan()
+      }, () => {
+        this.openScan()
+      })
     }
   }
 
@@ -269,7 +235,6 @@ export default class InvoiceModal extends React.Component<any, any> {
       address,
       destination,
       amount,
-      amountRUB,
       amountUSD,
       contact,
       label,
@@ -280,11 +245,14 @@ export default class InvoiceModal extends React.Component<any, any> {
       infoAboutCurrency,
       selectedValue,
       toAddressEnabled,
+      walletData: {
+        currency,
+      },
+      walletData,
     } = this.state
 
     const {
       name,
-      data: { currency },
       intl,
     } = this.props
 
@@ -293,11 +261,27 @@ export default class InvoiceModal extends React.Component<any, any> {
       'address',
       'destination',
       'amountUSD',
-      'amountRUB',
       'amount',
       'contact',
       'label'
     )
+
+    let curList = [
+      {
+        fullTitle: walletData.fullName,
+        icon: currency.toLowerCase(),
+        name: currency,
+        title: currency,
+        value: currency,
+      },
+      {
+        fullTitle: 'USD',
+        icon: 'usd',
+        name: 'USD',
+        title: 'USD',
+        value: 'USD',
+      },
+    ]
 
     const isDisabled =
       //@ts-ignore
@@ -383,42 +367,34 @@ export default class InvoiceModal extends React.Component<any, any> {
                 <FormattedMessage id="invoiceModal_Amount" defaultMessage="Сумма" />
               </span>
             </FieldLabel>
-            <span styleName="amountTooltip">{amount > 0 ? `~ ${amount} BTC` : ''}</span>
-            {this.state.selectedValue === 'BTC' ? (
-              <Input
-                withMargin
-                className={ownStyle.input}
-                valueLink={linked.amount.pipe(this.handleAmount)}
-                pattern="0-9\."
-                placeholder={intl.formatMessage(localeLabel.amountPlaceholder)}
-                onKeyDown={inputReplaceCommaWithDot}
-              />
+            {selectedValue === currency ? (
+              <>
+                <span styleName="amountTooltip">{amount > 0 ? `~ ${amountUSD} USD` : ''}</span>
+                <Input
+                  withMargin
+                  className={ownStyle.input}
+                  valueLink={linked.amount.pipe(this.handleAmount)}
+                  pattern="0-9\."
+                  placeholder={intl.formatMessage(localeLabel.amountPlaceholder)}
+                  onKeyDown={inputReplaceCommaWithDot}
+                />
+              </>
             ) : (
               ''
             )}
 
-            {this.state.selectedValue === 'RUB' ? (
-              <Input
-                withMargin
-                className={ownStyle.input}
-                valueLink={linked.amountRUB.pipe(this.handleRubValue)}
-                pattern="0-9\."
-                placeholder={intl.formatMessage(localeLabel.amountPlaceholder)}
-                onKeyDown={inputReplaceCommaWithDot}
-              />
-            ) : (
-              ''
-            )}
-
-            {this.state.selectedValue === 'USD' ? (
-              <Input
-                withMargin
-                className={ownStyle.input}
-                valueLink={linked.amountUSD.pipe(this.handleDollarValue)}
-                pattern="0-9\."
-                placeholder={intl.formatMessage(localeLabel.amountPlaceholder)}
-                onKeyDown={inputReplaceCommaWithDot}
-              />
+            {selectedValue === 'USD' ? (
+              <>
+                <span styleName="amountTooltip">{amount > 0 ? `~ ${amount} ${currency}` : ''}</span>
+                <Input
+                  withMargin
+                  className={ownStyle.input}
+                  valueLink={linked.amountUSD.pipe(this.handleDollarValue)}
+                  pattern="0-9\."
+                  placeholder={intl.formatMessage(localeLabel.amountPlaceholder)}
+                  onKeyDown={inputReplaceCommaWithDot}
+                />
+              </>
             ) : (
               ''
             )}
@@ -435,29 +411,7 @@ export default class InvoiceModal extends React.Component<any, any> {
               selectedItemRender={(item) => item.fullTitle}
               //@ts-ignore
               isToggleActive
-              currencies={[
-                {
-                  fullTitle: 'rub',
-                  icon: 'rub',
-                  name: 'RUB',
-                  title: 'RUB',
-                  value: 'RUB',
-                },
-                {
-                  fullTitle: 'bitcoin',
-                  icon: 'btc',
-                  name: 'BTC',
-                  title: 'BTC',
-                  value: 'BTC',
-                },
-                {
-                  fullTitle: 'USD',
-                  icon: 'usd',
-                  name: 'USD',
-                  title: 'USD',
-                  value: 'USD',
-                },
-              ]}
+              currencies={curList}
             />
           </div>
           <div styleName="highLevel">
