@@ -77,7 +77,7 @@ export default class CreateInvoice extends PureComponent<any, any> {
         currency: type,
       })
     }
-console.log('>>>>>>>', 'type', type, 'wallet', wallet, 'data', data, data[type])
+
     if (type && wallet && data[type]) {
       const address = data[type].address
 
