@@ -11,6 +11,9 @@ import { ITurboSwapConditions, TurboSwapStep, SwapTxStatus } from 'common/domain
 import Address from 'components/ui/Address/Address'
 import { AddressFormat } from 'domain/address'
 
+import imgPending from 'shared/images/tx-status/pending.svg'
+import imgDone from 'shared/images/tx-status/done.svg'
+
 interface ITx {
   amount: BigNumber,
   ticker: string,
@@ -40,14 +43,26 @@ export default class Tx extends PureComponent<ITx, {}> {
           {amount.toNumber()} {ticker}
         </div>
         <div styleName={`arrow ${direction}`}></div>
-        {id &&
-          <a styleName="link" href={url} target='_blank'>
-            <Address
-              address={id}
-              format={AddressFormat.Short}
-            />
-          </a>
-        }
+        <div styleName="tx-hash">
+          {id ?
+            <a styleName="tx-link" href={url} target='_blank'>
+              <Address
+                address={id}
+                format={AddressFormat.Short}
+              />
+            </a>
+            :
+            <span>&nbsp;</span>
+          }
+        </div>
+        <div styleName="tx-status-icon">
+          {status == SwapTxStatus.Pending &&
+            <img src={imgPending} />
+          }
+          {status == SwapTxStatus.Done &&
+            <img src={imgDone} />
+          }
+        </div>
       </div>
     )
   }

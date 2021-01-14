@@ -1,14 +1,16 @@
-$arrow_color: #8886;
+$arrow_color: #888a;
 $expected_opacity: 0.3;
 
 .tx {
   width: 100%;
   padding: 0 1em;
+  position: relative;
 }
 
 .amount {
   margin-bottom: 4px;
   text-align: center;
+  font-family: 'Roboto Mono', monospace;
   font-size: 13px;
 
   .Expected & {
@@ -16,11 +18,31 @@ $expected_opacity: 0.3;
   }
 }
 
-.link {
+.tx-hash {
   margin-top: 8px;
-  display: block;
   text-align: center;
   font-size: 13px;
+
+  .tx-link {
+    display: block;
+  }
+}
+
+
+
+.tx-status-icon {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 16px;
+  width: 16px;
+  height: 16px;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+  }
 }
 
 .arrow {

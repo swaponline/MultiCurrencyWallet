@@ -1,5 +1,5 @@
 .turboSwap {
-  max-width: 600px;
+  max-width: 500px;
   margin: 0 auto;
   font-size: 12px;
 }
@@ -15,10 +15,10 @@
   font-weight: bold;
 
   &.Pending {
-    color: #bb0;
+    color: #f6b153;
   }
   &.Finished {
-    color: #0b0;
+    color: #54C147;
   }
 }
 

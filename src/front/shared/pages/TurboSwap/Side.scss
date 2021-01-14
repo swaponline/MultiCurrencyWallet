@@ -6,9 +6,10 @@
 }
 
 .title {
+  margin-bottom: 4px;
   font-size: 14px;
 
-  .highlighted {
+  &.highlighted {
     font-weight: bold
   }
 }
@@ -20,4 +21,8 @@
   border-radius: 50%;
   background-color: #8881;
   font-size: 12px;
+}
+
+.address {
+  margin-top: 5px;
 }

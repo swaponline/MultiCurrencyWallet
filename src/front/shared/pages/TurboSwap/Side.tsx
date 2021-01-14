@@ -34,14 +34,16 @@ export default class Side extends PureComponent<ISide, {}> {
     return (
       <div styleName="side">
         <div styleName={`title ${isTitleHighlighted ? 'highlighted' : ''}`}>
-          {title}
+          {title}{isTitleHighlighted}
         </div>
         <div styleName="avatar">
         </div>
-        <Address
-          address={address}
-          format={AddressFormat.Short}
-        />
+        <div styleName="address">
+          <Address
+            address={address}
+            format={AddressFormat.Short}
+          />
+        </div>
       </div>
     )
   }
