@@ -392,6 +392,7 @@ export default class WithdrawModal extends React.Component<any, any> {
   setBalanceOnState = async () => {
     const {
       wallet: { currency, address },
+      currentActiveAsset,
     } = this.state
 
     const wallet = actions.user.getWithdrawWallet(currency, address)
@@ -414,7 +415,10 @@ export default class WithdrawModal extends React.Component<any, any> {
       balance: finalBalance,
       ethBalance,
       selectedItem: wallet,
-      currentActiveAsset: wallet,
+      currentActiveAsset: {
+        ...currentActiveAsset,
+        ...wallet,
+      },
     }))
   }
 
@@ -787,6 +791,7 @@ export default class WithdrawModal extends React.Component<any, any> {
         isBTC: isBTCWallet,
       },
       selectedItem,
+      isInvoicePay,
     } = this.state
 
     const { name, intl, portalUI, activeFiat, activeCurrency, dashboardView } = this.props
