@@ -845,7 +845,6 @@ export default class WithdrawModal extends React.Component<any, any> {
     allowedUsdBalance = +allowedUsdBalance > 0 ? allowedUsdBalance : 0
 
     const criptoValueIsOk = new BigNumber(amount).isLessThanOrEqualTo(allowedCriptoBalance)
-    const usdValueIsOk = new BigNumber(fiatAmount).isLessThanOrEqualTo(allowedUsdBalance)
 
     const isDisabled =
       !address ||
@@ -854,7 +853,6 @@ export default class WithdrawModal extends React.Component<any, any> {
       !!ownTx || // string to boolean
       !this.addressIsCorrect() ||
       !criptoValueIsOk ||
-      !usdValueIsOk ||
       new BigNumber(amount).isGreaterThan(balance) ||
       new BigNumber(amount).dp() > currentDecimals
 
