@@ -484,81 +484,85 @@ const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
 
 //@ts-ignore
 const sendV5 = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
-  return new Promise(async (ready) => {
-    const privateKey = getPrivateKeyByAddress(from)
+  return new Promise(async (ready, reject) => {
+    try {
+      const privateKey = getPrivateKeyByAddress(from)
 
-    const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
+      const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
 
-    // fee - from amount - percent
-    let feeFromAmount: number | BigNumber = new BigNumber(0)
+      // fee - from amount - percent
+      let feeFromAmount: number | BigNumber = new BigNumber(0)
 
-    if (hasAdminFee) {
-      const {
-        fee: adminFee,
-        min: adminFeeMinValue,
-      } = config.opts.fee.btc
+      if (hasAdminFee) {
+        const {
+          fee: adminFee,
+          min: adminFeeMinValue,
+        } = config.opts.fee.btc
 
-      const adminFeeMin = new BigNumber(adminFeeMinValue)
+        const adminFeeMin = new BigNumber(adminFeeMinValue)
 
-      feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
-      if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
+        feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
+        if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
 
-      feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
-    }
-    feeFromAmount = feeFromAmount.toNumber()
-    feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, amount})
+        feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
+      }
+      feeFromAmount = feeFromAmount.toNumber()
+      feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, amount})
 
-    let unspents = await fetchUnspents(from)
-    unspents = await prepareUnspents({ unspents, amount })
-    const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
-    const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+      let unspents = await fetchUnspents(from)
+      unspents = await prepareUnspents({ unspents, amount })
+      const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
+      const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
 
-    const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
+      const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
-    const psbt = new bitcoin.Psbt({network: btc.network})
+      const psbt = new bitcoin.Psbt({network: btc.network})
 
-    psbt.addOutput({
-      address: to,
-      value: fundValue,
-    })
-
-    if (skipValue > 546) {
       psbt.addOutput({
-        address: from,
-        value: skipValue
+        address: to,
+        value: fundValue,
       })
-    }
 
-    if (hasAdminFee) {
-      psbt.addOutput({
-        address: hasAdminFee.address,
-        value: feeFromAmount,
-      })
-    }
+      if (skipValue > 546) {
+        psbt.addOutput({
+          address: from,
+          value: skipValue
+        })
+      }
 
-    for (let i = 0; i < unspents.length; i++) {
-      const { txid, vout } = unspents[i]
-      let rawTx = false
-      //@ts-ignore
-      rawTx = await fetchTxRaw(txid)
+      if (hasAdminFee) {
+        psbt.addOutput({
+          address: hasAdminFee.address,
+          value: feeFromAmount,
+        })
+      }
 
-      psbt.addInput({
-        hash: txid,
-        index: vout,
+      for (let i = 0; i < unspents.length; i++) {
+        const { txid, vout } = unspents[i]
+        let rawTx = false
         //@ts-ignore
-        nonWitnessUtxo: Buffer.from(rawTx, 'hex'),
-      })
+        rawTx = await fetchTxRaw(txid)
+
+        psbt.addInput({
+          hash: txid,
+          index: vout,
+          //@ts-ignore
+          nonWitnessUtxo: Buffer.from(rawTx, 'hex'),
+        })
+      }
+
+      psbt.signAllInputs(keyPair)
+      psbt.finalizeAllInputs()
+
+      const rawTx = psbt.extractTransaction().toHex();
+
+      const broadcastAnswer = await broadcastTx(rawTx)
+
+      const { txid } = broadcastAnswer
+      ready(txid)
+    } catch (error) {
+      reject(error)
     }
-
-    psbt.signAllInputs(keyPair)
-    psbt.finalizeAllInputs()
-
-    const rawTx = psbt.extractTransaction().toHex();
-
-    const broadcastAnswer = await broadcastTx(rawTx)
-
-    const { txid } = broadcastAnswer
-    ready(txid)
   })
 }
 

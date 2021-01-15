@@ -589,7 +589,7 @@ export default class WithdrawModal extends React.Component<any, any> {
       })
       .catch((e) => {
         const { selectedItem } = this.state
-        feedback.withdraw.failed(selectedItem.fullName)
+        feedback.withdraw.failed(selectedItem.fullName + ` error(${e.message})`)
 
         const errorText = e.res ? e.res.text : ''
         const error = {
