@@ -7,7 +7,7 @@ import styles from './CreateWallet.scss'
 import { connect } from 'redaction'
 import actions from 'redux/actions'
 
-import { FormattedMessage, injectIntl } from 'react-intl'
+import { FormattedMessage, injectIntl, useIntl, IntlShape } from 'react-intl'
 import { withRouter } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 import reducers from 'redux/core/reducers'
@@ -25,16 +25,19 @@ import web3Icons from '../../images'
 const isWidgetBuild = config && config.isWidget
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-const CreateWallet = (props) => {
+
+
+const CreateWallet: React.FC<any> = (props) => {
   const {
     history,
-    intl: { locale },
     createWallet: { currencies, secure },
     location: { pathname },
     userData,
     core: { hiddenCoinsList },
     activeFiat,
   } = props
+
+  const { locale } = useIntl()
 
   const allCurrencies = props.currencies.items
 
@@ -467,4 +470,4 @@ export default connect({
   userData: 'user',
   core: 'core',
   activeFiat: 'user.activeFiat',
-})(injectIntl(withRouter(CSSModules(CreateWallet, styles, { allowMultiple: true }))))
+})(withRouter(CSSModules(CreateWallet, styles, { allowMultiple: true })))

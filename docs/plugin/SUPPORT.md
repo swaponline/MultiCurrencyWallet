@@ -1,15 +1,11 @@
-
 # Plugin support guide
-
 Clients need to respond as quickly as possible, while their questions are relevant and there is interest in resolving issues.
 
-## installation service 
-Reuired wp-admin access (login and pass) and 100$ extra. Important information: The service only includes installation and activation. We do not offer support for plugins, configuration, or verification of compatibility with already installed plugins. Order here
 
-## Possible sources of requests
+## Possible sources of support requests
 - https://codecanyon.net/item/multicurrency-crypto-wallet-and-exchange-widgets-for-wordpress/23532064/comments
-- https://t.me/mcvchat
-- support bot (soon)
+- https://t.me/mcwchat
+- https://t.me/swaponlinebot (support bot)
 
 
 ## Common causes of issues
@@ -19,6 +15,9 @@ Reuired wp-admin access (login and pass) and 100$ extra. Important information: 
 ---
 
 ## Use ready answers
+
+### Help to install
+[INSTALLATION_SERVICE.md](/docs/plugin/INSTALLATION_SERVICE.md)
 
 ### Questions about translation
 ```
@@ -32,7 +31,7 @@ https://support.swaponline.io/docs/fpr-business/fiat-ramp/
 
 ### Wallet is not displayed
 ```
-Please disable all plugins expect MCW
+Please disable all plugins except MCW
 ```
 
 ### Something doesn't work
@@ -45,7 +44,6 @@ https://screenshots.wpmix.net/chrome_YwPqgnY2cCxj8gjB42SuD0dq6DdmqU1o.png
 - login and check if the plugin is updated, update if necessary
 - check if the error remains
 - check the commission settings, check what is passed on the wallet to the `window` and think
-
 
 ### Where to read about ...
 ```

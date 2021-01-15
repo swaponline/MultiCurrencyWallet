@@ -1,20 +1,8 @@
 import React from 'react'
-import { IntlProvider, addLocaleData } from 'react-intl'
+import { IntlProvider } from 'react-intl'
 import { Switch, Route, HashRouter } from 'react-router-dom'
-import localeEn from 'react-intl/locale-data/en'
-import localeRu from 'react-intl/locale-data/ru'
-import localeNl from 'react-intl/locale-data/nl'
-import localeEs from 'react-intl/locale-data/es'
 
 import { getCookie } from 'helpers/utils'
-
-
-addLocaleData([
-  ...localeEn,
-  ...localeRu,
-  ...localeNl,
-  ...localeEs
-])
 
 import myNl from 'localisation/nl.json'
 import myEn from 'localisation/en.json'

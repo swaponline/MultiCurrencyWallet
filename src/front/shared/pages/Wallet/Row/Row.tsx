@@ -729,7 +729,6 @@ export default class Row extends Component<any, any> {
 
 
     if (
-      ['BTC', 'ETH'].includes(currencyView) &&
       config.opts.invoiceEnabled
     ) {
       dropDownMenuItems.push({
