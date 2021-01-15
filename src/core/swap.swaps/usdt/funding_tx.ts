@@ -1,9 +1,9 @@
 import bitcoin from 'bitcoinjs-lib'
-const net = bitcoin.networks.bitcoin
-
 
 import createScript from './swap_script'
 import createOmniScript from './omni_script'
+
+
 const BITCOIN_DUST = 546
 
 const createLockTransaction = async (lockAmount, dialog, scriptValues, getUnspents, network) => {

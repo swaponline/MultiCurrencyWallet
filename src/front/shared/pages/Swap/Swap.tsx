@@ -131,7 +131,6 @@ export default class SwapComponent extends PureComponent<any, any> {
       isAddressCopied: false,
       swap: null,
       isMy: false,
-      ethBalance: null,
       currencyData: null,
       isAmountMore: null,
       SwapComponent: null,
@@ -269,7 +268,9 @@ export default class SwapComponent extends PureComponent<any, any> {
       }, 5000)
 
       const checkingConfirmSuccess = setTimeout(() => {
-        if (!this.checkIsConfirmed()) window.location.reload()
+        if (!this.checkIsConfirmed()) {
+          window.location.reload()
+        }
       }, 30000)
 
       this.checkingConfirmSuccessTimer = checkingConfirmSuccess
