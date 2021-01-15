@@ -165,7 +165,6 @@ export default class Wallet extends Component<any, any> {
     const {
       history,
       intl: { locale },
-      //@ts-ignore
     } = this.props
 
     if (metamask.isConnected()) {
@@ -219,7 +218,7 @@ export default class Wallet extends Component<any, any> {
           history.push(localisedUrl(locale, links.home))
         }, intl)
       }
-      //@ts-ignore
+
       this.setState({
         activeView,
         multisigPendingCount,
@@ -241,7 +240,6 @@ export default class Wallet extends Component<any, any> {
       location: { pathname },
       intl,
       intl: { locale },
-      //@ts-ignore
     } = this.props
 
     if (pathname.toLowerCase() == links.connectWallet.toLowerCase()) {
@@ -262,7 +260,6 @@ export default class Wallet extends Component<any, any> {
       }, intl)
     }
     this.getInfoAboutCurrency()
-    //@ts-ignore
     this.setState({
       multisigPendingCount,
     })
@@ -273,7 +270,6 @@ export default class Wallet extends Component<any, any> {
   }
 
   getInfoAboutCurrency = async () => {
-    //@ts-ignore
     const { currencies } = this.props
     const currencyNames = currencies.map(({ name }) => name)
 
@@ -281,7 +277,6 @@ export default class Wallet extends Component<any, any> {
   }
 
   handleWithdraw = (params) => {
-    //@ts-ignore
     const { allData } = this.props
     const { address, amount } = params
     const item = allData.find(
@@ -423,7 +418,7 @@ export default class Wallet extends Component<any, any> {
     const isOneHourAfter = moment(now, 'HH:mm:ss DD/MM/YYYY').isAfter(
       lastCheckMoment.add(1, 'hours')
     )
-    //@ts-ignore
+
     const { ethData, btcData, ghostData, nextData } = this.props.tokensData
 
     const balancesData = {
@@ -504,7 +499,6 @@ export default class Wallet extends Component<any, any> {
       match: {
         params: { page = null },
       },
-      //@ts-ignore
     } = this.props
 
     const allData = actions.core.getWallets({})

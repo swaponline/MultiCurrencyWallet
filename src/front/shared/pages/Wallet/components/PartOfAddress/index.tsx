@@ -17,8 +17,6 @@ export default ({ currency, contractAddress, address, onClick, withoutLink, styl
     <div>
       {!withoutLink ? (
         <LinkAccount type={currency} contractAddress={contractAddress} address={address} onClick={onClick}>
-          {/*
-          //@ts-ignore */}
           <Address
             address={address}
             format={AddressFormat.Short}
@@ -26,9 +24,7 @@ export default ({ currency, contractAddress, address, onClick, withoutLink, styl
           />
         </LinkAccount>
       ) : (
-        //@ts-ignore
         <Address
-          //@ts-ignore
           address={address}
           format={AddressFormat.Short}
           style={{ ...style, ...styleOverwrited }}
