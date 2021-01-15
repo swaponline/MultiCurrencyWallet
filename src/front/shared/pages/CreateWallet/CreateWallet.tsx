@@ -15,7 +15,7 @@ import links from 'helpers/links'
 import metamask from 'helpers/metamask'
 import { localisedUrl } from 'helpers/locale'
 
-import LogicForSteps from './Steps/LogicForSteps'
+import StepsWrapper from './Steps/StepsWrapper'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 
 import { constants, localStorage } from 'helpers'
@@ -449,8 +449,8 @@ const CreateWallet: React.FC<any> = (props) => {
             </div>
           )}
         </div>
-        {/* TODO: переименовать компонент */}
-        <LogicForSteps
+
+        <StepsWrapper
           step={step}
           forcedCurrencyData={forcedCurrencyData}
           error={error}

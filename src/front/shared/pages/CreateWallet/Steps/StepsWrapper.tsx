@@ -13,8 +13,7 @@ import SecondStep from './SecondStep'
 const isWidgetBuild = config && config.isWidget
 
 @connect(({ currencies: { items: currencies } }) => ({ currencies }))
-// TODO: переименовать компонент
-export default class LogicForSteps extends Component<any, any> {
+export default class StepsWrapper extends Component<any, any> {
   defaultStartPack = [
     ...(!config.opts.curEnabled || config.opts.curEnabled.btc) ? [{ name: "BTC", capture: "Bitcoin" }] : [],
     ...(!config.opts.curEnabled || config.opts.curEnabled.eth) ? [{ name: "ETH", capture: "Ethereum" }] : [],
