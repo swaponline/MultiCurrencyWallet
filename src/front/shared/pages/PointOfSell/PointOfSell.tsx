@@ -720,7 +720,6 @@ export default class Exchange extends Component<any, any> {
 
     this.setState({
       customWalletUse: newCustomWalletUse,
-      //@ts-ignore
       customWallet: (newCustomWalletUse === false) ? '' : this.getSystemWallet(),
     })
   }
@@ -734,7 +733,6 @@ export default class Exchange extends Component<any, any> {
       this.setState(() => ({
         getCurrency: value,
         haveCurrency,
-        //@ts-ignore
         customWallet: customWalletUse ? this.getSystemWallet() : '',
       }))
       this.additionalPathing(haveCurrency, value)
@@ -754,7 +752,6 @@ export default class Exchange extends Component<any, any> {
       this.setState({
         haveCurrency: value,
         getCurrency,
-        //@ts-ignore
         customWallet: customWalletUse ? this.getSystemWallet() : '',
       }, () => {
         this.additionalPathing(value, getCurrency)
@@ -853,7 +850,7 @@ export default class Exchange extends Component<any, any> {
     }))
   }
 
-  getSystemWallet = (walletCurrency) => {
+  getSystemWallet = (walletCurrency = '') => {
     const { getCurrency } = this.state
 
     return this.wallets[(walletCurrency) ? walletCurrency.toUpperCase() : getCurrency.toUpperCase()]
@@ -1046,7 +1043,6 @@ export default class Exchange extends Component<any, any> {
       destinationSelected: selected,
       destinationError: false,
       customWalletUse: !isCustom,
-      //@ts-ignore
       customWallet: (isCustom) ? value : this.getSystemWallet(),
     })
   }

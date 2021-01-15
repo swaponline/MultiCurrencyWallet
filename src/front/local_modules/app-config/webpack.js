@@ -8,7 +8,6 @@ AppConfigPlugin.prototype.apply = (compiler) => {
 
   compiler.plugin('normal-module-factory', nmf => {
     nmf.plugin('before-resolve', (result, callback) => {
-
       if (!result) {
         return callback()
       }

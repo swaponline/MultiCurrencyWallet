@@ -120,7 +120,6 @@ const getTransaction = () => {
 }
 
 const fetchUnspents = (address) =>
-  //@ts-ignore
   apiLooper.get('bitpay', `/addr/${address}/utxo`)
 
 //@ts-ignore

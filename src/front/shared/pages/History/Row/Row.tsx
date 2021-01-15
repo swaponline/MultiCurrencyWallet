@@ -81,48 +81,35 @@ export default class Row extends React.PureComponent<any, any> {
   }
 
   handlePayInvoice = async () => {
-    const { invoiceData } = this.props
+    const {
+      invoiceData: {
+        type,
+        toAddress: address,
+        amount,
+        destAddress,
+        fromAddress,
+      },
+      invoiceData: invoice,
+    } = this.props
 
-    let withdrawModalType = null
-    let data = null
-    const btcData = actions.btc.getDataByAddress(invoiceData.toAddress)
-
-    if (btcData) {
-      data = btcData
-      withdrawModalType = constants.modals.Withdraw
-      const { currency } = btcData
-
-      if (currency === 'BTC (SMS-Protected)') withdrawModalType = constants.modals.WithdrawMultisigSMS
-      if (currency === 'BTC (Multisig)') withdrawModalType = constants.modals.WithdrawMultisigUser
-    }
-
-    const ghostData = actions.ghost.getDataByAddress(invoiceData.toAddress)
-    if (ghostData) {
-      data = ghostData
-      withdrawModalType = constants.modals.Withdraw
-    }
-
-    const nextData = actions.next.getDataByAddress(invoiceData.toAddress)
-    if (nextData) {
-      data = nextData
-      withdrawModalType = constants.modals.Withdraw
-    }
-
-    const ethData = actions.eth.isETHAddress(invoiceData.toAddress)
-    if (ethData) {
-      withdrawModalType = constants.modals.Withdraw
-      data = ethData
-    }
-
-    if (withdrawModalType) {
-      actions.modals.open(withdrawModalType, {
-        currency: data.currency,
-        address: invoiceData.toAddress,
-        balance: data.balance,
-        unconfirmedBalance: data.unconfirmedBalance,
-        toAddress: (invoiceData.destAddress) ? invoiceData.destAddress : invoiceData.fromAddress,
-        amount: invoiceData.amount,
-        invoice: invoiceData,
+    const walletData = actions.core.getWallet({
+      address,
+      currency: type,
+    })
+    if (walletData) {
+      const {
+        currency,
+        balance,
+        unconfirmedBalance
+      } = walletData
+      actions.modals.open(constants.modals.Withdraw, {
+        currency,
+        address,
+        balance,
+        unconfirmedBalance,
+        toAddress: destAddress || fromAddress,
+        amount,
+        invoice,
         hiddenCoinsList: [],
         onReady: () => {
           this.setState({

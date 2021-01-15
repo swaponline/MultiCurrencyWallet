@@ -391,26 +391,21 @@ const setAllowanceForToken = async ({ name, to, targetAllowance, ...config }) =>
 
 const fetchTokenTxInfo = (ticker, hash, cacheResponse) => {
   return new Promise(async (resolve) => {
-    let txInfo = await fetchTxInfo(hash, cacheResponse)
-    //@ts-ignore
+    let txInfo = await <IUniversalObj>fetchTxInfo(hash, cacheResponse)
+
     if (txInfo.isContractTx) {
       // This is tx to contract. Fetch all txs and find this tx
-      //@ts-ignore
-      const txs = await getTransaction(txInfo.senderAddress, ticker)
-      //@ts-ignore
+      const txs = await <IUniversalObj>getTransaction(txInfo.senderAddress, ticker)
+
       const ourTx = txs.filter((tx) => tx.hash.toLowerCase() === hash.toLowerCase())
       if (ourTx.length) {
-        //@ts-ignore
         txInfo.amount = ourTx[0].value
-        //@ts-ignore
         txInfo.adminFee = false // Swap dont have service fee
+
         if (ourTx[0].direction == `in`) {
           txInfo = {
-            //@ts-ignore
             ...txInfo,
-            //@ts-ignore
             receiverAddress: txInfo.senderAddress,
-            //@ts-ignore
             senderAddress: txInfo.receiverAddress,
           }
         }
