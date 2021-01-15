@@ -18,21 +18,12 @@ type CurrenciesListProps = {
   goToСreateWallet: () => void
   hiddenCoinsList: string[]
   tableRows: IUniversalObj[]
-  currencies: {
-    addAssets: boolean
-    fullTitle: string
-    icon: string
-    name: string
-    title: string
-    value: string
-  }[]
 }
 
 const CurrenciesList = (props: CurrenciesListProps) => {
   const {
     isDark,
     tableRows,
-    currencies,
     hiddenCoinsList,
     goToСreateWallet,
     multisigPendingCount,
@@ -59,17 +50,15 @@ const CurrenciesList = (props: CurrenciesListProps) => {
       <Table
         className={`${styles.walletTable} data-tut-address`}
         rows={tableRows}
-        rowRender={(row, index, selectId, handleSelectId) => (
+        rowRender={(row, index, selectId) => (
           <Row
             key={index}
             index={index}
             isDark={isDark}
             currency={row}
             itemData={row}
-            currencies={currencies}
             hiddenCoinsList={hiddenCoinsList}
             selectId={selectId}
-            handleSelectId={handleSelectId}
           />
         )}
       />

@@ -611,7 +611,6 @@ export default class Wallet extends Component<any, any> {
           <CurrenciesList
             isDark={!!isDark}
             tableRows={tableRows}
-            currencies={this.props.currencies}
             hiddenCoinsList={hiddenCoinsList}
             goToСreateWallet={this.goToСreateWallet}
             multisigPendingCount={multisigPendingCount}
