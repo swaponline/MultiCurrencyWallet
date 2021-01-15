@@ -105,7 +105,8 @@ const setupContract = (ethAddress, contractAddress, nameContract, decimals, full
 
 
 const getBalance = async (currency) => {
-  const { user: { tokensData } } = getState() // ! first addition - dont have token (only after render)
+  // ! first addition - dont have token (only after rerender)
+  const { user: { tokensData } } = getState()
 
   if (currency === undefined) {
     return

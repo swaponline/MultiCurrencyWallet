@@ -1,4 +1,3 @@
-//@ts-ignore - update ts
 import React, { Component } from 'react'
 
 import { connect } from 'redaction'
@@ -189,7 +188,6 @@ export default class Wallet extends Component<any, any> {
       intl: { locale },
       location: { pathname },
       history,
-      //@ts-ignore
     } = this.props
 
     const {
@@ -302,7 +300,6 @@ export default class Wallet extends Component<any, any> {
     const {
       history,
       intl: { locale },
-      //@ts-ignore
     } = this.props
 
     history.push(localisedUrl(locale, links.createWallet))
@@ -312,8 +309,8 @@ export default class Wallet extends Component<any, any> {
     const {
       history,
       intl: { locale },
-      //@ts-ignore
     } = this.props
+
     if (isWidgetBuild && !config.isFullBuild) {
       // was pointOfSell
       history.push(localisedUrl(locale, links.exchange))
@@ -617,18 +614,13 @@ export default class Wallet extends Component<any, any> {
         }
       >
         {activeView === 0 && (
-          //@ts-ignore
           <CurrenciesList
-            isDark={isDark}
+            isDark={!!isDark}
             tableRows={tableRows}
-            {...this.state}
-            {...this.props}
+            currencies={this.props.currencies}
+            hiddenCoinsList={hiddenCoinsList}
             goToСreateWallet={this.goToСreateWallet}
             multisigPendingCount={multisigPendingCount}
-            getExCurrencyRate={(currencySymbol, rate) =>
-              //@ts-ignore
-              this.getExCurrencyRate(currencySymbol, rate)
-            }
           />
         )}
         {activeView === 1 && <History {...this.props} isDark={isDark} />}

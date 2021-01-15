@@ -12,16 +12,32 @@ import exConfig from 'helpers/externalConfig'
 
 const isWidgetBuild = config && config.isWidget
 
-const CurrenciesList = ({
-  isDark,
-  tableRows,
-  currencies,
-  infoAboutCurrency,
-  hiddenCoinsList,
-  goToСreateWallet,
-  getExCurrencyRate,
-  multisigPendingCount,
-}) => {
+type CurrenciesListProps = {
+  isDark: boolean
+  multisigPendingCount: number
+  goToСreateWallet: () => void
+  hiddenCoinsList: string[]
+  tableRows: IUniversalObj[]
+  currencies: {
+    addAssets: boolean
+    fullTitle: string
+    icon: string
+    name: string
+    title: string
+    value: string
+  }[]
+}
+
+const CurrenciesList = (props: CurrenciesListProps) => {
+  const {
+    isDark,
+    tableRows,
+    currencies,
+    hiddenCoinsList,
+    goToСreateWallet,
+    multisigPendingCount,
+  } = props
+
   return (
     <div styleName={`yourAssets ${isDark ? 'dark' : ''}`}>
       {(exConfig && exConfig.opts && exConfig.opts.showWalletBanners) || isWidgetBuild ? (
@@ -51,8 +67,6 @@ const CurrenciesList = ({
             currency={row}
             itemData={row}
             currencies={currencies}
-            infoAboutCurrency={infoAboutCurrency}
-            getExCurrencyRate={(currencySymbol, rate) => getExCurrencyRate(currencySymbol, rate)}
             hiddenCoinsList={hiddenCoinsList}
             selectId={selectId}
             handleSelectId={handleSelectId}
