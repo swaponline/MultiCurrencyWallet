@@ -21,6 +21,8 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import { BigNumber } from 'bignumber.js'
 import feedback from 'shared/helpers/feedback'
+import turboSwapIcon from 'shared/images/turbo.svg'
+
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -35,6 +37,7 @@ type RowProps = {
   row: {
     id: string
     isMy: boolean
+    isTurbo: boolean
     buyCurrency: string
     sellCurrency: string
     buyAmount: BigNumber
@@ -255,6 +258,7 @@ export default class Row extends Component {
       row: {
         id,
         isMy,
+        //isTurbo,
         buyCurrency,
         buyAmount,
         sellCurrency,
@@ -271,6 +275,7 @@ export default class Row extends Component {
       pairFees,
     } = this.props
 
+    const isTurbo = true // todo
 
     const pair = Pair.fromOrder(this.props.row)
     const { price, amount, total, main, base, type } = pair
@@ -337,6 +342,9 @@ export default class Row extends Component {
           />
         </td>
         <td styleName='rowCell'>
+          {isTurbo &&
+            <img styleName='turboSwapIcon' src={turboSwapIcon} />
+          }
           <span styleName='rowAmount'>
             {`${this.getDecimals(sellAmountOut, sellCurrencyOut)} ${sellCurrencyOut}`}
           </span>
@@ -420,7 +428,12 @@ export default class Row extends Component {
                   ? (<FormattedMessage id="RowMobileFirstTypeYouHave" defaultMessage="You have" />)
                   : (<FormattedMessage id="RowMobileFirstTypeYouGet" defaultMessage="You get" />)}
               </span>
-              <span styleName='rowAmount'>{`${mobileFormatCrypto(amount, main)} ${main}`}</span>
+              <span styleName='rowAmount'>
+                {isTurbo &&
+                  <img styleName='turboSwapIcon' src={turboSwapIcon} />
+                }
+                {`${mobileFormatCrypto(amount, main)} ${main}`}
+              </span>
             </div>
             <div>
               <i style={{ margin: '0 0.8em' }} className="fas fa-exchange-alt" />

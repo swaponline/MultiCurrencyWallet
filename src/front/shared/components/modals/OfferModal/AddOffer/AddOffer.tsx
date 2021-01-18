@@ -23,6 +23,7 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage } from 'react-intl'
 import minAmountOffer from 'helpers/constants/minAmountOffer'
 import coinsWithDynamicFee from 'helpers/constants/coinsWithDynamicFee'
+import turboSwapIcon from 'shared/images/turbo.svg'
 
 
 const mathConstants = {
@@ -565,6 +566,7 @@ export default class AddOffer extends Component<any, any> {
             <Toggle checked={isTurbo} onChange={() => this.setState((state) => ({ isTurbo: !state.isTurbo }))} />
             <div styleName="togleText">
               <span>Turbo swap</span>
+              <img styleName='turboSwapIcon' src={turboSwapIcon} />
             </div>
           </div>
         </div>
