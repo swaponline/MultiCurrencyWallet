@@ -8,6 +8,7 @@ class Order {
 
   id: string
   isMy: any
+  isTurbo: boolean
   owner: any
   participant: any
   buyCurrency: any
@@ -44,6 +45,7 @@ class Order {
   constructor(app, parentCollection, data) {
     this.id             = data.id
     this.isMy           = null
+    this.isTurbo        = null
     this.owner          = null
     this.participant    = null
     this.buyCurrency    = null
