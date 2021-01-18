@@ -44,7 +44,6 @@ type RowState = {
   isBalanceFetching: boolean
   viewText: boolean
   isAddressCopied: boolean
-  isTouch: boolean
   isBalanceEmpty: boolean
   showButtons: boolean
   existUnfinished: boolean
@@ -91,12 +90,6 @@ const langLabels = defineMessages({
 )
 @cssModules(styles, { allowMultiple: true })
 export default class Row extends Component<RowProps, RowState> {
-  static getDerivedStateFromProps({ itemData: { balance } }) {
-    return {
-      isBalanceEmpty: balance === 0,
-    }
-  }
-
   constructor(props) {
     super(props)
 
@@ -104,7 +97,6 @@ export default class Row extends Component<RowProps, RowState> {
       isBalanceFetching: false,
       viewText: false,
       isAddressCopied: false,
-      isTouch: false,
       isBalanceEmpty: true,
       showButtons: false,
       exCurrencyRate: 0,
@@ -121,12 +113,26 @@ export default class Row extends Component<RowProps, RowState> {
     console.log('Wallet Row props: ', this.props)
     console.log('Wallet Row state: ', this.state)
 
+    const { balance } = this.props.itemData
+    this.setState({
+      isBalanceEmpty: balance === 0,
+    })
+
     window.addEventListener('resize', this.handleSliceAddress)
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     const {
-      itemData: { currency, balance },
+      itemData: { 
+        balance: prevBalance
+      }
+    } = prevProps
+
+    const {
+      itemData: { 
+        currency, 
+        balance 
+      }
     } = this.props
 
     console.log(`
@@ -137,6 +143,12 @@ export default class Row extends Component<RowProps, RowState> {
 
     if (balance > 0) {
       actions.analytics.balanceEvent({ action: 'have', currency, balance })
+    }
+
+    if (prevBalance !== balance) {
+      this.setState({
+        isBalanceEmpty: balance === 0,
+      })
     }
   }
 
@@ -220,12 +232,6 @@ export default class Row extends Component<RowProps, RowState> {
     )
   }
 
-  handleTouch = (e) => {
-    this.setState({
-      isTouch: true,
-    })
-  }
-
   handleSliceAddress = () => {
     const {
       itemData: { address },
@@ -237,12 +243,6 @@ export default class Row extends Component<RowProps, RowState> {
     return window.innerWidth < 700 || isMobile || address.length > 42
       ? `${firstPart}...${secondPart}`
       : address
-  }
-
-  handleTouchClear = (e) => {
-    this.setState({
-      isTouch: false,
-    })
   }
 
   handleCopyAddress = () => {
@@ -321,39 +321,6 @@ export default class Row extends Component<RowProps, RowState> {
         (isToken ? '/token' : '') + `/${targetCurrency}/${address}/send`
       )
     )
-  }
-
-  handleHowToExport = () => {
-    const { itemData } = this.props
-
-    if (itemData.isUserProtected) {
-      console.log('Not implements')
-      return
-    }
-    if (itemData.isSmsProtected) {
-      this.handleHowExportSMS()
-      return
-    }
-    if (itemData.isPinProtected) {
-      this.handleHowExportPIN()
-      return
-    }
-
-    actions.modals.open(constants.modals.HowToExportModal, {
-      item: itemData,
-    })
-  }
-
-  handleHowExportSMS = () => {
-    actions.modals.open(constants.modals.RegisterSMSProtected, {
-      initStep: 'export',
-    })
-  }
-
-  handleHowExportPIN = () => {
-    actions.modals.open(constants.modals.RegisterPINProtected, {
-      initStep: 'export',
-    })
   }
 
   handleReceive = () => {
@@ -435,41 +402,12 @@ export default class Row extends Component<RowProps, RowState> {
     })
   }
 
-  goToHistory = () => {
-    const {
-      history,
-      intl: { locale },
-    } = this.props
-    history.push(localisedUrl(locale, '/history'))
-  }
-
   goToExchange = () => {
     const {
       history,
       intl: { locale },
     } = this.props
     history.push(localisedUrl(locale, '/exchange'))
-  }
-
-  goToBuy = () => {
-    const {
-      history,
-      intl: { locale },
-      currency,
-    } = this.props
-
-    // was pointOfSell
-
-    history.push(
-      localisedUrl(
-        locale,
-        `${links.exchange}/btc-to-${currency.currency.toLowerCase()}`
-      )
-    )
-  }
-
-  deleteThisSwap = () => {
-    actions.core.forgetOrders(this.props.decline[0])
   }
 
   goToCurrencyHistory = () => {
@@ -546,15 +484,6 @@ export default class Row extends Component<RowProps, RowState> {
       key: address === ethDataHelper.address ? ethDataHelper.privateKey : privateKey,
       fullName,
     })
-  }
-
-
-
-  getCustomRate = (cur) => {
-    const wTokens = window.widgetERC20Tokens
-
-    const dataobj = wTokens && Object.keys(wTokens).find(el => el === cur.toLowerCase())
-    return dataobj ? (wTokens[dataobj] || { customEcxchangeRate: null }).customEcxchangeRate : null
   }
 
   handleShowMnemonic = () => {
