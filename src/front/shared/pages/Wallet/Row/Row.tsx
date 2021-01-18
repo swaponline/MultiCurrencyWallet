@@ -21,23 +21,20 @@ import PartOfAddress from '../components/PartOfAddress'
 import Copy from '../../../components/ui/Copy/Copy'
 
 type RowProps = {
-  activeFiat: string // USD, ...?
+  // from component
+  isDark: boolean
   currency: IUniversalObj
-  decline: any[]
-  ethDataHelper: {
+  itemData: IUniversalObj
+  // from store
+  activeFiat?: string // USD, ...?
+  decline?: any[]
+  ethDataHelper?: {
     address: string
     privateKey: string
   }
-  hiddenCoinsList: string[]
-  history: IUniversalObj
-  intl: IUniversalObj
-  selectId: number
-  isDark: boolean
-  itemData: IUniversalObj
-  staticContext: any // undefined ?!
-  location: IUniversalObj
-  match: IUniversalObj
-  multisigStatus: any
+  history?: IUniversalObj
+  intl?: IUniversalObj
+  multisigStatus?: any
 }
 
 type RowState = {
@@ -89,7 +86,10 @@ const langLabels = defineMessages({
   })
 )
 @cssModules(styles, { allowMultiple: true })
-export default class Row extends Component<RowProps, RowState> {
+export default class Row extends Component {
+  props: RowProps
+  state: RowState
+
   constructor(props) {
     super(props)
 
@@ -110,10 +110,8 @@ export default class Row extends Component<RowProps, RowState> {
   }
 
   async componentDidMount() {
-    console.log('Wallet Row props: ', this.props)
-    console.log('Wallet Row state: ', this.state)
-
     const { balance } = this.props.itemData
+
     this.setState({
       isBalanceEmpty: balance === 0,
     })
@@ -134,12 +132,6 @@ export default class Row extends Component<RowProps, RowState> {
         balance 
       }
     } = this.props
-
-    console.log(`
-    ------ Wallet Row
-    currency: ${currency}
-    balance: ${balance}
-    `)
 
     if (balance > 0) {
       actions.analytics.balanceEvent({ action: 'have', currency, balance })
@@ -532,8 +524,9 @@ export default class Row extends Component<RowProps, RowState> {
       config.erc20 &&
       config.erc20[this.props.currency.currency.toLowerCase()] &&
       config.erc20[this.props.currency.currency.toLowerCase()].howToWithdraw
-    )
+    ) {
       hasHowToWithdraw = true
+    }
 
     const isSafari = 'safari' in window
 

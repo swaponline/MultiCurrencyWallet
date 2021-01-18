@@ -50,15 +50,12 @@ const CurrenciesList = (props: CurrenciesListProps) => {
       <Table
         className={`${styles.walletTable} data-tut-address`}
         rows={tableRows}
-        rowRender={(row, index, selectId) => (
+        rowRender={(row, index) => (
           <Row
             key={index}
-            index={index}
             isDark={isDark}
             currency={row}
             itemData={row}
-            hiddenCoinsList={hiddenCoinsList}
-            selectId={selectId}
           />
         )}
       />

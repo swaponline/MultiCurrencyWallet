@@ -19,10 +19,9 @@ import Web3 from 'web3'
 
 type AddCustomERC20Props = {
   name: string
-  data: null
-  style: { [key: string]: any }
-  history: { [key: string]: any }
-  intl: { [key: string]: any }
+  style: IUniversalObj
+  history: IUniversalObj
+  intl: IUniversalObj
 }
 
 type AddCustomERC20State = {
@@ -52,8 +51,8 @@ export default class AddCustomERC20 extends React.Component<any, any> {
   props: AddCustomERC20Props
   state: AddCustomERC20State
 
-  constructor(data) {
-    super(data)
+  constructor(props) {
+    super(props)
 
     this.state = {
       step: 'enterAddress',
@@ -64,11 +63,6 @@ export default class AddCustomERC20 extends React.Component<any, any> {
       notFound: false,
       isShipped: false,
     }
-  }
-
-  componentDidMount() {
-    console.log('CUSTOM TOKEN -> PROPS: ', this.props)
-    console.log('CUSTOM TOKEN -> STATE: ', this.state)
   }
 
   async getName(address) {

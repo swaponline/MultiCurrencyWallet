@@ -26,8 +26,8 @@ const erc20Decoder = new InputDataDecoder(ERC20_ABI)
 
 const AddCustomERC20 = (contract, symbol, decimals) => {
   const configStorage = (process.env.MAINNET) ? 'mainnet' : 'testnet'
-
   let tokensInfo = JSON.parse(localStorage.getItem(constants.localStorage.customERC))
+
   if (!tokensInfo) {
     tokensInfo = {
       mainnet: {},
@@ -39,6 +39,7 @@ const AddCustomERC20 = (contract, symbol, decimals) => {
     symbol,
     decimals,
   }
+
   localStorage.setItem(constants.localStorage.customERC, JSON.stringify(tokensInfo))
 }
 
@@ -110,9 +111,6 @@ const getBalance = async (currency) => {
   }
 
   const { user: { tokensData } } = getState()
-  // first addition - dont have token in the tokensData (only after rerender)
-  console.log('>>> token actions -> getBalance -> tokensData: ', tokensData)
-
   const {
     address: internalAddress,
     contractAddress,
