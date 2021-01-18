@@ -81,6 +81,7 @@ export default class AddOffer extends Component<any, any> {
       isTokenSell: false,
       isTokenBuy: false,
       isPartial: true,
+      isTurbo: false,
       isSending: false,
       manualRate: true,
       buyAmount: buyAmount || '',
@@ -429,13 +430,13 @@ export default class AddOffer extends Component<any, any> {
   render() {
     const { currencies, tokenItems, addSelectedItems } = this.props
     const { 
-      exchangeRate, buyAmount, 
-      sellAmount, buyCurrency, 
-      sellCurrency, minimalestAmountForSell, 
-      minimalestAmountForBuy, balance, 
-      ethBalance, manualRate, 
-      isPartial, isTokenSell, 
-      isTokenBuy, sellInputValueIsOk 
+      exchangeRate, buyAmount,
+      sellAmount, buyCurrency,
+      sellCurrency, minimalestAmountForSell,
+      minimalestAmountForBuy, balance,
+      ethBalance, manualRate,
+      isPartial, isTurbo, isTokenSell,
+      isTokenBuy, sellInputValueIsOk
     } = this.state
 
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
@@ -556,6 +557,14 @@ export default class AddOffer extends Component<any, any> {
                   />
                 </div>
               </Tooltip>
+            </div>
+          </div>
+          <div styleName="togles">
+            {/*
+            //@ts-ignore */}
+            <Toggle checked={isTurbo} onChange={() => this.setState((state) => ({ isTurbo: !state.isTurbo }))} />
+            <div styleName="togleText">
+              <span>Turbo swap</span>
             </div>
           </div>
         </div>
