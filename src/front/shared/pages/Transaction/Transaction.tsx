@@ -112,7 +112,6 @@ class Transaction extends Component<any, any> {
 
     if (!infoTx || error) {
       // Fail parse
-      //@ts-ignore
       this.setState({
         isFetching: false,
         error: !(cachedTxInfo),
@@ -138,7 +137,7 @@ class Transaction extends Component<any, any> {
         minerFeeCurrency,
         adminFee,
       } = infoTx
-      //@ts-ignore
+
       this.setState({
         isFetching: false,
         infoTx,
@@ -182,7 +181,6 @@ class Transaction extends Component<any, any> {
     setTimeout(async () => {
       const finalBalances = await helpers.transactions.fetchTxBalances(currency, txId)
       if (finalBalances && !this.unmounted) {
-        //@ts-ignore
         this.setState({
           finalBalances,
         })

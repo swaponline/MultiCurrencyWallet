@@ -1,0 +1,1 @@
+export type MnemonicKey = string | string[]

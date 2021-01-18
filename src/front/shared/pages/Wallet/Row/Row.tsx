@@ -729,7 +729,6 @@ export default class Row extends Component<any, any> {
 
 
     if (
-      ['BTC', 'ETH'].includes(currencyView) &&
       config.opts.invoiceEnabled
     ) {
       dropDownMenuItems.push({
@@ -973,7 +972,7 @@ export default class Row extends Component<any, any> {
                   else showing fetch-button and currency balance
                   */}
                   {metamaskDisconnected ? (
-                      <Button small blue onClick={this.handleConnectMetamask}>
+                      <Button small empty onClick={this.handleConnectMetamask}>
                         {web3Icon && <img styleName="web3ProviderIcon" src={web3Icon} />}
                         <FormattedMessage id="CommonTextConnect" defaultMessage="Connect" />
                       </Button>

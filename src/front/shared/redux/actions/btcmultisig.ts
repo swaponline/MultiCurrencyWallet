@@ -11,6 +11,8 @@ import actions from 'redux/actions'
 import config from 'helpers/externalConfig'
 import SwapApp from 'swap.app'
 
+import { MnemonicKey } from './types'
+
 import { default as bitcoinUtils } from '../../../../common/utils/coin/btc'
 
 const BITPAY_API = {
@@ -815,22 +817,24 @@ const addPinWallet = async (mnemonicOrKey) => {
     mnemonicKey = mnemonicAccount.publicKey
   }
 
-  let btcPinMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcPinMnemonicKey)
-  try { btcPinMnemonicKey = JSON.parse(btcPinMnemonicKey) } catch (e) { }
-  //@ts-ignore
+  let btcPinMnemonicKey: MnemonicKey = localStorage.getItem(constants.privateKeyNames.btcPinMnemonicKey)
+  
+  try { 
+    btcPinMnemonicKey = JSON.parse(btcPinMnemonicKey) 
+  } catch (e) {
+    console.error(e)
+  }
+
   if (!(btcPinMnemonicKey instanceof Array)) {
-    //@ts-ignore
     btcPinMnemonicKey = []
   }
 
   const index = btcPinMnemonicKey.indexOf(mnemonicKey)
-  //@ts-ignore
+
   if (index === -1) btcPinMnemonicKey.unshift(mnemonicKey)
   if ((index > -1) && (index < btcPinMnemonicKey.length)) {
     if (index !== 0) {
-      //@ts-ignore
       btcPinMnemonicKey = btcPinMnemonicKey.splice(index, 1)
-      //@ts-ignore
       btcPinMnemonicKey.unshift(mnemonicKey)
     }
   }
@@ -861,22 +865,24 @@ const addSMSWallet = async (mnemonicOrKey) => {
     mnemonicKey = mnemonicAccount.publicKey
   }
 
-  let btcSmsMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKey)
-  try { btcSmsMnemonicKey = JSON.parse(btcSmsMnemonicKey) } catch (e) { }
-  //@ts-ignore
+  let btcSmsMnemonicKey: MnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKey)
+  
+  try { 
+    btcSmsMnemonicKey = JSON.parse(btcSmsMnemonicKey) 
+  } catch (e) {
+    console.error(e)
+  }
+
   if (!(btcSmsMnemonicKey instanceof Array)) {
-    //@ts-ignore
     btcSmsMnemonicKey = []
   }
 
   const index = btcSmsMnemonicKey.indexOf(mnemonicKey)
-  //@ts-ignore
+
   if (index === -1) btcSmsMnemonicKey.unshift(mnemonicKey)
   if ((index > -1) && (index < btcSmsMnemonicKey.length)) {
     if (index !== 0) {
-      //@ts-ignore
       btcSmsMnemonicKey = btcSmsMnemonicKey.splice(index, 1)
-      //@ts-ignore
       btcSmsMnemonicKey.unshift(mnemonicKey)
     }
   }
@@ -2205,9 +2211,14 @@ const signSmsMnemonicAndBuildV4 = (txHash, mnemonic) => {
 
 const checkPinCanRestory = (mnemonic) => {
   const mnemonicWallet = actions.btc.getWalletByWords(mnemonic, 1)
-  let btcSmsMnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKey)
-  try { btcSmsMnemonicKey = JSON.parse(btcSmsMnemonicKey) } catch (e) { }
-  //@ts-ignore
+  let btcSmsMnemonicKey: MnemonicKey = localStorage.getItem(constants.privateKeyNames.btcSmsMnemonicKey)
+  
+  try {
+    btcSmsMnemonicKey = JSON.parse(btcSmsMnemonicKey)
+  } catch (e) {
+    console.error(e)
+  }
+
   if (btcSmsMnemonicKey instanceof Array && btcSmsMnemonicKey.length > 0) {
     return btcSmsMnemonicKey.includes(mnemonicWallet.publicKey)
   }

@@ -158,7 +158,6 @@ const createSwapApp = async () => {
           fetchBalance: (address) => actions.ghost.fetchBalance(address),
           fetchUnspents: (scriptAddress) => actions.ghost.fetchUnspents(scriptAddress),
           broadcastTx: (txRaw) => actions.ghost.broadcastTx(txRaw),
-          //@ts-ignore
           fetchTxInfo: (txid) => actions.ghost.fetchTxInfo(txid),
           checkWithdraw: (scriptAddress) => actions.ghost.checkWithdraw(scriptAddress),
           estimateFeeValue: ({ inSatoshis, speed, address, txSize }) => helpers.ghost.estimateFeeValue({ inSatoshis, speed, address, txSize }),

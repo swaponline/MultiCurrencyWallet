@@ -152,7 +152,7 @@ tr button[disabled]:hover {
 .statusStyle {
   font-size: 12px;
   margin-left: 10px;
-  color: rgb(142, 154, 163);
+  color: $notice-color;
   margin-top: 1px;
   position: absolute;
   left: 46px;
@@ -169,7 +169,7 @@ tr button[disabled]:hover {
   bottom: 0px;
   font-size: 12px;
   font-weight: 500;
-  color: #8e9aa3;
+  color: $notice-color;
   background: #fff;
 
   img {
@@ -196,7 +196,7 @@ tr button[disabled]:hover {
 
   strong {
     margin-left: 5px;
-    color: #8e9aa3;
+    color: $notice-color;
   }
 }
 
@@ -238,7 +238,7 @@ tr button[disabled]:hover {
 
   span {
     +span {
-      color: #8e9aa3;
+      color: $notice-color;
       font-size: 14px;
       margin-left: 3px;
     }
@@ -247,7 +247,7 @@ tr button[disabled]:hover {
   strong {
     font-size: 15px;
     line-height: 21px;
-    color: #8e9aa3;
+    color: $notice-color;
     text-transform: uppercase;
     font-weight: bold;
     margin-left: 25px;
@@ -348,7 +348,6 @@ tr button[disabled]:hover {
     top: 0px;
     font-size: 15px;
   }
-
 }
 
 @media all and (max-width: 530px) {
@@ -397,5 +396,23 @@ tr button[disabled]:hover {
     a {
       font-size: 1em;
     }
+  }
+}
+
+@media all and (max-width: 420px) {
+  .assetsTableCurrencyWrapper {
+    font-size: 0.7em;
+  }
+
+  .nameRow {
+    font-size: 0.7em;
+  
+    a.linkToHistory {
+      font-size: inherit;
+    }
+  }
+
+  .web3ProviderIcon {
+    display: none;
   }
 }

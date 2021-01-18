@@ -367,7 +367,12 @@ const markCoinAsVisible = (coin, doBackup = false) => {
   }
 }
 
-const getWallet = (findCondition) => {
+interface I_getWallet_FindCondition {
+  currency?: string
+  address?: string
+  addressType?: string
+}
+const getWallet = (findCondition: I_getWallet_FindCondition) => {
   // specify addressType,
   // otherwise it finds the first wallet from all origins, including metamask
   const { currency, address, addressType } = findCondition
@@ -472,7 +477,7 @@ const getWallets = (options) => {
   return allData.filter((item) => item && item.address)
 }
 
-const fetchWalletBalance = async (walletData) => {
+const fetchWalletBalance = async (walletData): number => {
   const name = walletData.currency.toLowerCase()
   if (helpers.ethToken.isEthToken({ name })) {
     try {
@@ -493,7 +498,7 @@ const fetchWalletBalance = async (walletData) => {
     ) {
       try {
         const balance = await actions[name].fetchBalance(walletData.address)
-        return balance
+        return new BigNumber(balance).toNumber()
       } catch (err) {
         console.error(`Fail fetch balance for wallet '${name}'`, err)
       }
