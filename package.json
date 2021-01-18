@@ -166,6 +166,7 @@
     "nodemon": "^2.0.7",
     "peer-id": "^0.14.2",
     "pg": "^8.5.1",
+    "postcss-load-config": "^3.0.0",
     "postcss-loader": "^4.1.0",
     "prettier": "^2.2.1",
     "progress-bar-webpack-plugin": "^2.1.0",
