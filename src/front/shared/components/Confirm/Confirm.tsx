@@ -35,7 +35,6 @@ const Confirm = ({ rootClassName, isConfirm, isReject, title, animation }) => (
 )
 
 Confirm.propTypes = {
-  // Center: PropTypes.node,
   rootClassName: PropTypes.string,
   isConfirm: PropTypes.func.isRequired,
   isReject: PropTypes.func.isRequired,
