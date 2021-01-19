@@ -15,7 +15,7 @@ interface CenterProps {
 }
 
 
-const Center = ({ children, scrollable, centerHorizontally, centerVertically, keepFontSize, relative, ...rest }: CenterProps) => {
+const Center = ({ children, scrollable = false, centerHorizontally = true, centerVertically = true, keepFontSize = false, relative = false, ...rest }: CenterProps) => {
   // TODO move overflow to Modal and any other cases where it belongs
   const styleName = cx('centringContainer', {
     'scrollable': scrollable,
