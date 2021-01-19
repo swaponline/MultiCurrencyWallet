@@ -6,12 +6,9 @@ import PromoText from '../PromoText/PromoText'
 import CSSModules from 'react-css-modules'
 import styles from './Promo.scss'
 
-
 const Promo = ({ className, subTitle }) => (
   <div styleName="promo">
     <div styleName="promoWrap">
-      {/*
-      //@ts-ignore */}
       <PromoText subTitle={subTitle} />
     </div>
   </div>

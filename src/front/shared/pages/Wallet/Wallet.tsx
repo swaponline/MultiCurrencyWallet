@@ -483,12 +483,7 @@ export default class Wallet extends Component<any, any> {
   }
 
   render() {
-    const {
-      activeView,
-      infoAboutCurrency,
-      enabledCurrencies,
-      multisigPendingCount,
-    } = this.state
+    const { activeView, infoAboutCurrency, enabledCurrencies, multisigPendingCount } = this.state
 
     const {
       hiddenCoinsList,
@@ -581,7 +576,10 @@ export default class Wallet extends Component<any, any> {
       }
     })
 
-    const allFiatBalance = tableRows.reduce((acc, cur) => new BigNumber(cur.fiatBalance).plus(acc), 0)
+    const allFiatBalance = tableRows.reduce(
+      (acc, cur) => new BigNumber(cur.fiatBalance).plus(acc),
+      0
+    )
 
     return (
       <DashboardLayout

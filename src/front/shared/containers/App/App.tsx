@@ -1,32 +1,32 @@
-import React, { Fragment } from "react";
+import React, { Fragment } from 'react'
 
-import { RouteComponentProps, withRouter, HashRouter } from "react-router-dom";
-import PropTypes from "prop-types";
-import actions from "redux/actions";
-import { connect } from "redaction";
-import moment from "moment-with-locales-es6";
-import { constants, localStorage, firebase } from "helpers";
-import { isMobile } from "react-device-detect";
+import { RouteComponentProps, withRouter, HashRouter } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import actions from 'redux/actions'
+import { connect } from 'redaction'
+import moment from 'moment-with-locales-es6'
+import { constants, localStorage, firebase } from 'helpers'
+import { isMobile } from 'react-device-detect'
 
-import CSSModules from "react-css-modules";
-import styles from "./App.scss";
-import "scss/app.scss";
+import CSSModules from 'react-css-modules'
+import styles from './App.scss'
+import 'scss/app.scss'
 
-import { createSwapApp } from "instances/newSwap";
-import Core from "containers/Core/Core";
+import { createSwapApp } from 'instances/newSwap'
+import Core from 'containers/Core/Core'
 
-import Header from "components/Header/Header";
-import Footer from "components/Footer/Footer";
-import Loader from "components/loaders/Loader/Loader";
-import PreventMultiTabs from "components/PreventMultiTabs/PreventMultiTabs";
-import RequestLoader from "components/loaders/RequestLoader/RequestLoader";
-import ModalConductor from "components/modal/ModalConductor/ModalConductor";
-import WidthContainer from "components/layout/WidthContainer/WidthContainer";
-import Wrapper from "components/layout/Wrapper/Wrapper";
-import NotificationConductor from "components/notification/NotificationConductor/NotificationConductor";
-import Seo from "components/Seo/Seo";
+import Header from 'components/Header/Header'
+import Footer from 'components/Footer/Footer'
+import Loader from 'components/loaders/Loader/Loader'
+import PreventMultiTabs from 'components/PreventMultiTabs/PreventMultiTabs'
+import RequestLoader from 'components/loaders/RequestLoader/RequestLoader'
+import ModalConductor from 'components/modal/ModalConductor/ModalConductor'
+import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
+import Wrapper from 'components/layout/Wrapper/Wrapper'
+import NotificationConductor from 'components/notification/NotificationConductor/NotificationConductor'
+import Seo from 'components/Seo/Seo'
 
-import config from "helpers/externalConfig"
+import config from 'helpers/externalConfig'
 
 import backupUserData from 'plugins/backupUserData'
 import redirectTo from 'helpers/redirectTo'
@@ -36,11 +36,9 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
 import metamask from 'helpers/metamask'
 
-
 //@ts-ignore
-const userLanguage = (navigator.userLanguage || navigator.language || "en-gb").split("-")[0];
+const userLanguage = (navigator.userLanguage || navigator.language || 'en-gb').split('-')[0]
 moment.locale(userLanguage)
-
 
 const metamaskNetworks = defineMessages({
   mainnet: {
@@ -53,24 +51,21 @@ const metamaskNetworks = defineMessages({
   },
 })
 
-
-
 @injectIntl
 @withRouter
 @connect(({ currencies: { items: currencies }, modals, ui: { dashboardModalsAllowed } }) => ({
   currencies,
-  isVisible: "loader.isVisible",
-  ethAddress: "user.ethData.address",
-  btcAddress: "user.btcData.address",
-  ghostAddress: "user.ghostData.address",
-  nextAddress: "user.nextData.address",
-  tokenAddress: "user.tokensData.swap.address",
+  isVisible: 'loader.isVisible',
+  ethAddress: 'user.ethData.address',
+  btcAddress: 'user.btcData.address',
+  ghostAddress: 'user.ghostData.address',
+  nextAddress: 'user.nextData.address',
+  tokenAddress: 'user.tokensData.swap.address',
   modals,
   dashboardModalsAllowed,
 }))
 @CSSModules(styles, { allowMultiple: true })
 class App extends React.Component<RouteComponentProps<any>, any> {
-
   prvMultiTab: any
   localStorageListener: any
 
@@ -79,94 +74,99 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   };*/
 
   constructor(props) {
-    super(props);
+    super(props)
 
-    this.localStorageListener = null;
+    this.localStorageListener = null
 
     this.prvMultiTab = {
       reject: null,
       enter: null,
-      switch: null
-    };
+      switch: null,
+    }
 
     this.state = {
       fetching: false,
       multiTabs: false,
-      error: "",
+      error: '',
     }
   }
 
-
   generadeId(callback) {
-    const newId = Date.now().toString();
+    const newId = Date.now().toString()
     //@ts-ignore
     this.setState(
       {
-        appID: newId
+        appID: newId,
       },
       () => {
-        callback(newId);
+        callback(newId)
       }
-    );
+    )
   }
 
   preventMultiTabs(isSwitch) {
-    this.generadeId(newId => {
+    this.generadeId((newId) => {
       if (isSwitch) {
-        localStorage.setItem(constants.localStorage.switch, newId);
+        localStorage.setItem(constants.localStorage.switch, newId)
       }
 
       const onRejectHandle = () => {
-        const { appID } = this.state;
-        const id = localStorage.getItem(constants.localStorage.reject);
+        const { appID } = this.state
+        const id = localStorage.getItem(constants.localStorage.reject)
 
         if (id && id !== appID) {
-          this.setState({ multiTabs: true });
+          this.setState({ multiTabs: true })
           //@ts-ignore
-          localStorage.unsubscribe(this.prvMultiTab.reject);
+          localStorage.unsubscribe(this.prvMultiTab.reject)
           //@ts-ignore
-          localStorage.unsubscribe(this.prvMultiTab.enter);
+          localStorage.unsubscribe(this.prvMultiTab.enter)
           //@ts-ignore
-          localStorage.unsubscribe(this.prvMultiTab.switch);
-          localStorage.removeItem(constants.localStorage.reject);
+          localStorage.unsubscribe(this.prvMultiTab.switch)
+          localStorage.removeItem(constants.localStorage.reject)
         }
-      };
+      }
 
       const onEnterHandle = () => {
-        const { appID } = this.state;
-        const id = localStorage.getItem(constants.localStorage.enter);
-        const switchId = localStorage.getItem(constants.localStorage.switch);
+        const { appID } = this.state
+        const id = localStorage.getItem(constants.localStorage.enter)
+        const switchId = localStorage.getItem(constants.localStorage.switch)
 
-        if (switchId && switchId === id) return;
+        if (switchId && switchId === id) return
 
-        localStorage.setItem(constants.localStorage.reject, appID);
-      };
+        localStorage.setItem(constants.localStorage.reject, appID)
+      }
 
       const onSwitchHangle = () => {
-        const switchId = localStorage.getItem(constants.localStorage.switch);
-        const { appID } = this.state;
+        const switchId = localStorage.getItem(constants.localStorage.switch)
+        const { appID } = this.state
 
         if (appID !== switchId) {
           this.setState({
-            multiTabs: true
-          });
+            multiTabs: true,
+          })
           //@ts-ignore
-          localStorage.unsubscribe(this.prvMultiTab.reject);
+          localStorage.unsubscribe(this.prvMultiTab.reject)
           //@ts-ignore
-          localStorage.unsubscribe(this.prvMultiTab.enter);
+          localStorage.unsubscribe(this.prvMultiTab.enter)
           //@ts-ignore
-          localStorage.unsubscribe(this.prvMultiTab.switch);
+          localStorage.unsubscribe(this.prvMultiTab.switch)
         }
-      };
+      }
       //@ts-ignore
-      this.prvMultiTab.reject = localStorage.subscribe(constants.localStorage.reject, onRejectHandle);
+      this.prvMultiTab.reject = localStorage.subscribe(
+        constants.localStorage.reject,
+        onRejectHandle
+      )
       //@ts-ignore
-      this.prvMultiTab.enter = localStorage.subscribe(constants.localStorage.enter, onEnterHandle);
+      this.prvMultiTab.enter = localStorage.subscribe(constants.localStorage.enter, onEnterHandle)
       //@ts-ignore
-      this.prvMultiTab.switch = localStorage.subscribe(constants.localStorage.switch, onSwitchHangle);
+      this.prvMultiTab.switch = localStorage.subscribe(
+        constants.localStorage.switch,
+        onSwitchHangle
+      )
 
-      localStorage.setItem(constants.localStorage.enter, newId);
-    });
+      localStorage.setItem(constants.localStorage.enter, newId)
+    })
   }
 
   popupIncorrectNetwork() {
@@ -174,16 +174,11 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     const { intl } = this.props
 
     actions.modals.open(constants.modals.AlertModal, {
-      title: (
-        <FormattedMessage 
-          id="MetamaskNetworkAlert_Title"
-          defaultMessage="Внимание"
-        />
-      ),
+      title: <FormattedMessage id="MetamaskNetworkAlert_Title" defaultMessage="Внимание" />,
       message: (
         <FormattedMessage
           id="MetamaskNetworkAlert_Message"
-          defaultMessage="Для продолжения выберите в кошельке {walletTitle} &quot;{network}&quot; или отключите кошелек"
+          defaultMessage='Для продолжения выберите в кошельке {walletTitle} "{network}" или отключите кошелек'
           values={{
             network: intl.formatMessage(metamaskNetworks[config.entry]),
             walletTitle: metamask.web3connect.getProviderTitle(),
@@ -205,7 +200,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     })
   }
 
-  processMetamask () {
+  processMetamask() {
     metamask.web3connect.onInit(() => {
       const _checkChain = () => {
         if (metamask.isCorrectNetwork()) {
@@ -218,24 +213,19 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       metamask.web3connect.on('chainChanged', _checkChain)
       metamask.web3connect.on('connected', _checkChain)
 
-      if (metamask.isConnected()
-        && !metamask.isCorrectNetwork()
-      ) {
+      if (metamask.isConnected() && !metamask.isCorrectNetwork()) {
         this.popupIncorrectNetwork()
       }
     })
   }
 
-  processUserBackup () {
+  processUserBackup() {
     new Promise(async (resolve) => {
       const wpLoader = document.getElementById('wrapper_element')
 
       const hasServerBackup = await backupUserData.hasServerBackup()
       console.log('has server backup', hasServerBackup)
-      if (backupUserData.isUserLoggedIn()
-        && backupUserData.isUserChanged()
-        && hasServerBackup
-      ) {
+      if (backupUserData.isUserLoggedIn() && backupUserData.isUserChanged() && hasServerBackup) {
         console.log('do restore user')
         backupUserData.restoreUser().then((isRestored) => {
           console.log('is restored', isRestored, constants.localStorage.isWalletCreate)
@@ -250,9 +240,9 @@ class App extends React.Component<RouteComponentProps<any>, any> {
           }
         })
       } else {
-        if (backupUserData.isUserLoggedIn()
-          && backupUserData.isFirstBackup()
-          || !hasServerBackup
+        if (
+          (backupUserData.isUserLoggedIn() && backupUserData.isFirstBackup()) ||
+          !hasServerBackup
         ) {
           console.log('Do backup user')
           backupUserData.backupUser().then(() => {
@@ -281,9 +271,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       if (!tokenListUpdated) {
         localStorage.setItem('widget_tokenupdated', true)
         Object.keys(config.erc20).forEach((tokenCode) => {
-          if ((tokenCode !== `bitpl`)
-            && (tokenCode !== `usdt`)
-          ) {
+          if (tokenCode !== `bitpl` && tokenCode !== `usdt`) {
             console.log('Hide', tokenCode)
             actions.core.markCoinAsHidden(tokenCode.toUpperCase())
           }
@@ -296,45 +284,45 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     if (!isWalletCreate) {
       if (config && config.isWidget && false) {
         currencies.forEach(({ name }) => {
-          if (name !== "BTC" && !config.erc20[name.toLowerCase()]) {
+          if (name !== 'BTC' && !config.erc20[name.toLowerCase()]) {
             actions.core.markCoinAsHidden(name)
           }
         })
       } else {
         currencies.forEach(({ name }) => {
-          if (name !== "BTC") {
+          if (name !== 'BTC') {
             actions.core.markCoinAsHidden(name)
           }
         })
       }
     }
 
-    firebase.initialize();
+    firebase.initialize()
 
     this.processUserBackup()
     this.processMetamask()
 
     this.checkIfDashboardModalsAllowed()
-    window.actions = actions;
+    window.actions = actions
 
-    window.onerror = error => {
+    window.onerror = (error) => {
       // actions.analytics.errorEvent(error)
-    };
+    }
 
     try {
-      const db = indexedDB.open("test");
+      const db = indexedDB.open('test')
       db.onerror = (e) => {
         console.log('db error', e)
-      };
+      }
     } catch (e) {
       console.log('db error', e)
     }
 
-    actions.user.sign();
-    await createSwapApp();
+    actions.user.sign()
+    await createSwapApp()
 
-    this.setState(() => ({ fetching: true }));
-    window.prerenderReady = true;
+    this.setState(() => ({ fetching: true }))
+    window.prerenderReady = true
 
     const appInstalled = (e) => {
       alert(
@@ -345,13 +333,12 @@ class App extends React.Component<RouteComponentProps<any>, any> {
       window.removeEventListener('appinstalled', appInstalled)
     }
     window.addEventListener('appinstalled', appInstalled)
-
   }
 
   componentDidUpdate() {
     this.checkIfDashboardModalsAllowed()
     if (process.env.MAINNET) {
-      firebase.setUserLastOnline();
+      firebase.setUserLastOnline()
     }
   }
 
@@ -360,7 +347,7 @@ class App extends React.Component<RouteComponentProps<any>, any> {
     //@ts-ignore
     if (dashboardModalProvider && !this.props.dashboardModalsAllowed) {
       return actions.ui.allowDashboardModals()
-    //@ts-ignore
+      //@ts-ignore
     } else if (dashboardModalProvider && this.props.dashboardModalsAllowed) {
       return null
     }
@@ -370,14 +357,14 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   handleSwitchTab = () => {
     //@ts-ignore
     this.setState({
-      multiTabs: false
-    });
-    this.preventMultiTabs(true);
-  };
+      multiTabs: false,
+    })
+    this.preventMultiTabs(true)
+  }
 
   overflowHandler = () => {
     //@ts-ignore
-    const { modals, dashboardModalsAllowed } = this.props;
+    const { modals, dashboardModalsAllowed } = this.props
     const isAnyModalCalled = Object.keys(modals).length > 0
 
     const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -403,21 +390,40 @@ class App extends React.Component<RouteComponentProps<any>, any> {
   }
 
   render() {
-    const { fetching, multiTabs, error } = this.state;
+    const { fetching, multiTabs, error } = this.state
     //@ts-ignore
-    const { children, ethAddress, btcAddress, ghostAddress, nextAddress, tokenAddress, history, dashboardModalsAllowed } = this.props;
+    const {
+      children,
+      ethAddress,
+      btcAddress,
+      ghostAddress,
+      nextAddress,
+      tokenAddress,
+      history,
+      dashboardModalsAllowed,
+    } = this.props
 
     this.overflowHandler()
 
-    const isFetching = !ethAddress || !btcAddress || !ghostAddress || !nextAddress || (!tokenAddress && config && !config.isWidget) || !fetching;
+    const isFetching =
+      !ethAddress ||
+      !btcAddress ||
+      !ghostAddress ||
+      !nextAddress ||
+      (!tokenAddress && config && !config.isWidget) ||
+      !fetching
 
-    const isWidget = history.location.pathname.includes("/exchange") && history.location.hash === "#widget";
-    const isCalledFromIframe = window.location !== window.parent.location;
-    const isWidgetBuild = config && config.isWidget;
+    const isWidget =
+      history.location.pathname.includes('/exchange') && history.location.hash === '#widget'
+    const isCalledFromIframe = window.location !== window.parent.location
+    const isWidgetBuild = config && config.isWidget
 
-    if (isWidgetBuild && localStorage.getItem(constants.localStorage.didWidgetsDataSend) !== "true") {
-      firebase.submitUserDataWidget("usersData");
-      localStorage.setItem(constants.localStorage.didWidgetsDataSend, true);
+    if (
+      isWidgetBuild &&
+      localStorage.getItem(constants.localStorage.didWidgetsDataSend) !== 'true'
+    ) {
+      firebase.submitUserDataWidget('usersData')
+      localStorage.setItem(constants.localStorage.didWidgetsDataSend, true)
     }
 
     if (multiTabs) {
@@ -431,28 +437,26 @@ class App extends React.Component<RouteComponentProps<any>, any> {
 
     const isSeoDisabled = isWidget || isWidgetBuild || isCalledFromIframe
 
-    return <HashRouter>
-      <div styleName="compressor">
-        {!isSeoDisabled &&
-          <Seo location={history.location} />
-        }
-        <Wrapper>
-          {/*
+    return (
+      <HashRouter>
+        <div styleName="compressor">
+          {!isSeoDisabled && <Seo location={history.location} />}
+          <Wrapper>
+            {/*
           //@ts-ignore */}
-          <WidthContainer id="swapComponentWrapper" styleName="headerAndMain">
-            <Header />
-            <main>{children}</main>
-          </WidthContainer>
-        </Wrapper>
-        <Core />
-        <Footer />
-        <RequestLoader />
-        {!dashboardModalsAllowed &&
-          <ModalConductor history={history}
-        />}
-        <NotificationConductor history={history} />
-      </div>
-    </HashRouter>;
+            <WidthContainer id="swapComponentWrapper" styleName="headerAndMain">
+              <Header />
+              <main>{children}</main>
+            </WidthContainer>
+          </Wrapper>
+          <Core />
+          <Footer />
+          <RequestLoader />
+          {!dashboardModalsAllowed && <ModalConductor history={history} />}
+          <NotificationConductor history={history} />
+        </div>
+      </HashRouter>
+    )
   }
 }
 
