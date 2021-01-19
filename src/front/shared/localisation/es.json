@@ -2258,7 +2258,7 @@
   },
   {
     "id": "ExchangeTitleTag1",
-    "message": "Los mas rápidos cross-chain atomic swaps",
+    "message": "Los mas rápidos cross-chain swaps",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

@@ -2331,7 +2331,7 @@
   },
   {
     "id": "ExchangeTitleTag1",
-    "message": "Самые быстрые кроссчейновые атомарные свопы",
+    "message": "Самые быстрые кроссчейновые обмены",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

@@ -150,15 +150,7 @@ const text = [
 
 const subTitle = (sell, sellTicker, buy, buyTicker) => (
   <div>
-    <FormattedMessage id="ExchangeTitleTag1" defaultMessage="Fastest cross-chain atomic swaps" />
-    <span styleName="tooltipHeader">
-      <Tooltip id="partialAtomicSwapWhatIsIt1" dontHideMobile place="bottom">
-        <FormattedMessage
-          id="partialAtomicSwapWhatIsIt"
-          defaultMessage="Atomic swap is a smart contract technology that enables exchange."
-        />
-      </Tooltip>
-    </span>
+    <FormattedMessage id="ExchangeTitleTag1" defaultMessage="Fastest cross-chain swaps" />
   </div>
 )
 

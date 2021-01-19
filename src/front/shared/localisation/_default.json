@@ -7125,7 +7125,7 @@
   },
   {
     "id": "ExchangeTitleTag1",
-    "message": "Fastest cross-chain atomic swaps",
+    "message": "Fastest cross-chain swaps",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
