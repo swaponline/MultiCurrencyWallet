@@ -258,7 +258,7 @@ export default class Row extends Component {
       row: {
         id,
         isMy,
-        //isTurbo,
+        isTurbo,
         buyCurrency,
         buyAmount,
         sellCurrency,
@@ -274,8 +274,6 @@ export default class Row extends Component {
       intl: { locale },
       pairFees,
     } = this.props
-
-    const isTurbo = true // todo
 
     const pair = Pair.fromOrder(this.props.row)
     const { price, amount, total, main, base, type } = pair

@@ -144,6 +144,7 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
         'isRequested',
         'isProcessing',
         'isPartial',
+        'isTurbo',
         'isHidden',
         'destination',
       ))
@@ -310,6 +311,7 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
       'isRequested',
       'isProcessing',
       'isPartial',
+      'isTurbo',
       'isHidden',
       'destination',
     ))
@@ -355,6 +357,7 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
           'isRequested',
           'isProcessing',
           'isPartial',
+          'isTurbo',
           'isHidden',
           'destination',
         ),
