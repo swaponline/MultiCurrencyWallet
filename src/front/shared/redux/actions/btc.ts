@@ -507,13 +507,18 @@ const sendV5 = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
         feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
       }
       feeFromAmount = feeFromAmount.toNumber()
-      feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, amount})
+      try {
+        feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, amount})
+      } catch (eFee) {
+        reject({ message: `Fail estimate fee ` + eFee.message })
+        return
+      }
       let unspents = []
       
       try {
         unspents = await fetchUnspents(from)
       } catch (eUnspents) {
-        reject(`Fail get unspents `+eUnspents.message)
+        reject({ message: `Fail get unspents `+eUnspents.message})
         return
       }
       unspents = await prepareUnspents({ unspents, amount })
@@ -543,7 +548,7 @@ const sendV5 = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
             value: feeFromAmount,
           })
         } catch (eAdminFee) {
-          reject(`Fail add service fee` + eAdminFee.message)
+          reject({ message: `Fail add service fee` + eAdminFee.message })
           return
         }
       }
@@ -555,7 +560,7 @@ const sendV5 = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
         try {
           rawTx = await fetchTxRaw(txid, false)
         } catch (eFetchTxRaw) {
-          reject(`Fail fetch tx raw `+ txid + `(`+eFetchTxRaw.message+`)`)
+          reject({ message: `Fail fetch tx raw `+ txid + `(`+eFetchTxRaw.message+`)` })
           return
         }
 
