@@ -1065,12 +1065,14 @@ export default class WithdrawModal extends React.Component<any, any> {
                 type="number"
                 valueLink={linked.amount.pipe(this.handleAmount)}
                 onKeyDown={amountInputKeyDownCallback}
+                pattern="0-9:"
               />
             ) : (
               <Input
                 type="number"
                 valueLink={linked.fiatAmount.pipe(this.handleDollarValue)}
                 onKeyDown={amountInputKeyDownCallback}
+                pattern="0-9:"
               />
             )}
             <div style={{ marginLeft: '15px' }}>
