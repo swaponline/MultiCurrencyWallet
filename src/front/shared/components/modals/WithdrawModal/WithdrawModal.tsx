@@ -592,12 +592,12 @@ export default class WithdrawModal extends React.Component<any, any> {
       .then(() => {
         actions.modals.close(name)
       })
-      .catch((e) => {
+      .catch((error) => {
         const { selectedItem } = this.state
-        feedback.withdraw.failed(selectedItem.fullName + ` error(${e.message})`)
+        feedback.withdraw.failed(selectedItem.fullName + ` error(${error.message})`)
 
-        const errorText = e.res ? e.res.text : ''
-        const error = {
+        const errorText = error.res ? error.res.text : ''
+        const errorObj = {
           name: {
             id: 'Withdraw218',
             defaultMessage: 'Withdrawal error',
@@ -609,17 +609,17 @@ export default class WithdrawModal extends React.Component<any, any> {
         }
 
         if (/insufficient priority|bad-txns-inputs-duplicate/.test(errorText)) {
-          error.message = {
+          errorObj.message = {
             id: 'Withdraw232',
             defaultMessage: 'There is not enough confirmation of the last transaction. Try later.',
           }
         }
 
-        console.error(error.name.defaultMessage, ':', e)
+        console.error(errorObj.name.defaultMessage, ':', error)
 
         this.setState(() => ({
-          error,
-          devErrorMessage: e.message,
+          errorObj,
+          devErrorMessage: error.message,
           isShipped: false,
         }))
       })
