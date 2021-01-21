@@ -48,7 +48,7 @@ type Currency = {
   value: string
 }
 
-interface IWithdrawModalProps {
+type WithdrawModalProps = {
   name: 'WithdrawModal'
   activeFiat: string
   activeCurrency: string
@@ -65,18 +65,24 @@ interface IWithdrawModalProps {
   portalUI?: any
 }
 
-interface IServiceFeeSetting {
+type AdminFee = {
   address: string
-  fee: number
+  fee: number // present (%)
   min: number
 }
 
+type Fees = {
+  miner: BigNumber
+  service: BigNumber | null
+  total: BigNumber
+}
 
-interface IWithdrawModalState {
+type WithdrawModalState = {
   isShipped: boolean
   isEthToken: boolean
   fetchFee: boolean
   devErrorMessage: boolean
+  isInvoicePay?: boolean
 
   openScanCam: string
   address: string
@@ -91,17 +97,14 @@ interface IWithdrawModalState {
   exCurrencyRate?: number
   fiatAmount?: number
   btcFeeRate: number
-
-  ethBalance: null | number
-  tokenFee: null | number
-  coinFee: null | number
-  totalFee: null | number
-  adminFeeSize: null | number
   txSize: null | number
+  ethBalance: null | number
+  
 
   maxFeeSize: null | number
 
-  usedAdminFee: IServiceFeeSetting
+  fees: Fees
+  usedAdminFee: AdminFee
 
   hiddenCoinsList: string[]
 
@@ -109,8 +112,6 @@ interface IWithdrawModalState {
   currentActiveAsset: { [key: string]: any }
   allCurrencyies: { [key: string]: any }[]
   selectedItem: { [key: string]: any }
-
-  isInvoicePay?: boolean
 }
 
 @injectIntl
@@ -141,8 +142,8 @@ interface IWithdrawModalState {
 @cssModules(styles, { allowMultiple: true })
 export default class WithdrawModal extends React.Component<any, any> {
 
-  props: IWithdrawModalProps
-  state: IWithdrawModalState
+  props: WithdrawModalProps
+  state: WithdrawModalState
 
   mounted = true
   btcFeeTimer: any = 0
@@ -155,16 +156,13 @@ export default class WithdrawModal extends React.Component<any, any> {
     } = data
 
     const currentActiveAsset = data.data
-
     const currentDecimals = constants.tokenDecimals[getCurrencyKey(currency, true).toLowerCase()]
     const allCurrencyies = actions.core.getWallets({}) //items.concat(tokenItems)
     const selectedItem = actions.user.getWithdrawWallet(currency, currencyAddress)
-
     const usedAdminFee = adminFee.isEnabled(selectedItem.currency)
 
     this.state = {
       isShipped: false,
-      usedAdminFee,
       openScanCam: '',
       address: toAddress ? toAddress : '',
       amount: amount ? amount : '',
@@ -181,10 +179,12 @@ export default class WithdrawModal extends React.Component<any, any> {
       currentActiveAsset,
       allCurrencyies,
       devErrorMessage: false,
-      tokenFee: null,
-      coinFee: null,
-      totalFee: null,
-      adminFeeSize: null,
+      usedAdminFee: usedAdminFee,
+      fees: {
+        miner: new BigNumber(0),
+        service: usedAdminFee ? new BigNumber(usedAdminFee.min) : null,
+        total: new BigNumber(0),
+      },
       fetchFee: true,
       txSize: null,
       maxFeeSize: null,
@@ -325,6 +325,7 @@ export default class WithdrawModal extends React.Component<any, any> {
 
     const currentCoin = getCurrencyKey(currency, true).toLowerCase()
     const adminFeeSize = usedAdminFee ? adminFee.calc(currency, amount) : 0
+    let newTotalFee = new BigNumber(0)
 
     if (isEthToken) {
       /*
@@ -336,37 +337,28 @@ export default class WithdrawModal extends React.Component<any, any> {
         method: 'send',
         speed: 'fast',
       })
-
-      const tokenFee = await helpers.ethToken.estimateFeeValue({
+      newTotalFee = new BigNumber(await helpers.ethToken.estimateFeeValue({
         method: 'send',
         speed: 'fast',
-      })
+      }))
 
       if (!this.mounted) return
-      this.setState({
-        tokenFee,
-        totalFee: tokenFee,
-      })
     }
-    /*
-    * Dinamic fee because the price changes globally
-    * Transfer amount does not affect it
-    */
+
     if (constants.coinsWithDynamicFee.includes(currentCoin)) {
       let method = 'send'
       if (selectedItem.isUserProtected) method = 'send_multisig'
       if (selectedItem.isPinProtected) method = 'send_2fa'
       if (selectedItem.isSmsProtected) method = 'send_2fa'
 
-      const coinFee = await helpers[currentCoin].estimateFeeValue({
+      newTotalFee = new BigNumber(await helpers[currentCoin].estimateFeeValue({
         method,
         speed: 'fast',
         address,
         amount,
-      })
-      const totalFee = new BigNumber(coinFee).toNumber()
+      }))
 
-      minAmount[currentCoin] = coinFee
+      minAmount[currentCoin] = +newTotalFee
 
       if (selectedItem.isBTC) {
         this.setBtcFeeRate()
@@ -374,16 +366,17 @@ export default class WithdrawModal extends React.Component<any, any> {
 
       if (!this.mounted) return
       this.setState({
-        coinFee,
-        totalFee,
-        maxFeeSize: (amount) ? maxFeeSize : coinFee,
+        maxFeeSize: (amount) ? maxFeeSize : newTotalFee,
       })
     }
 
     if (!this.mounted) return
     this.setState({
       fetchFee: false,
-      adminFeeSize,
+      fees: {
+        service: adminFeeSize,
+        total: newTotalFee,
+      },
     })
   }
 
@@ -445,7 +438,7 @@ export default class WithdrawModal extends React.Component<any, any> {
       address: to,
       amount,
       ownTx,
-      adminFeeSize,
+      fees,
       selectedItem,
       comment = ''
     } = this.state
@@ -522,7 +515,7 @@ export default class WithdrawModal extends React.Component<any, any> {
         sendOptions,
         beforeBalances,
         onReady,
-        adminFee: adminFeeSize,
+        adminFee: +fees.service,
       })
       return
     }
@@ -561,7 +554,7 @@ export default class WithdrawModal extends React.Component<any, any> {
           senderAddress: address,
           receiverAddress: to,
           confirmed: false,
-          adminFee: adminFeeSize,
+          adminFee: +fees.service,
         }
 
         lsDataCache.push({
@@ -743,7 +736,6 @@ export default class WithdrawModal extends React.Component<any, any> {
         fiatAmount: 0,
       })
     } else {
-      console.log('sellAll - min Fee', minFee.toNumber())
       const balanceMiner = balance
         ? balance !== 0
           ? new BigNumber(balance).minus(minFee)
@@ -752,7 +744,6 @@ export default class WithdrawModal extends React.Component<any, any> {
 
       this.setState({
         amount: new BigNumber(balanceMiner.dp(currentDecimals, BigNumber.ROUND_FLOOR)),
-        coinFee: maxFeeSize,
         fiatAmount: balanceMiner.isGreaterThan(0) ? (balanceMiner.multipliedBy(exCurrencyRate)).toFixed(2) : '',
       })
     }
@@ -774,12 +765,9 @@ export default class WithdrawModal extends React.Component<any, any> {
       hiddenCoinsList,
       currentActiveAsset,
       selectedValue,
-      usedAdminFee,
       devErrorMessage,
-      tokenFee,
-      coinFee,
-      totalFee,
-      adminFeeSize,
+      usedAdminFee,
+      fees,
       fetchFee,
       txSize,
       btcFeeRate,
@@ -827,8 +815,8 @@ export default class WithdrawModal extends React.Component<any, any> {
     }
 
     let allowedCriptoBalance: BigNumber | 0 = usedAdminFee
-      ? new BigNumber(balance).minus(totalFee).minus(adminFee.calc(currency, balance))
-      : new BigNumber(balance).minus(totalFee)
+      ? new BigNumber(balance).minus(fees.total).minus(adminFee.calc(currency, balance))
+      : new BigNumber(balance).minus(fees.total)
 
     let allowedUsdBalance: BigNumber | 0 = new BigNumber(
       ((allowedCriptoBalance as any) * exCurrencyRate) as number
@@ -849,6 +837,7 @@ export default class WithdrawModal extends React.Component<any, any> {
       new BigNumber(amount).isGreaterThan(balance) ||
       new BigNumber(amount).dp() > currentDecimals
 
+      // 
     console.log('SEND FORM ******************************')
     console.log('PROPS: ', this.props)
     console.log('STATE: ', this.state)
@@ -933,7 +922,7 @@ export default class WithdrawModal extends React.Component<any, any> {
               id="Withdrow213"
               defaultMessage="Please note: Fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction"
               values={{
-                minAmount: <span>{isEthToken ? minAmount.eth : totalFee}</span>,
+                minAmount: <span>{isEthToken ? minAmount.eth : fees.total}</span>,
                 br: <br />,
                 data: `${dataCurrency}`,
               }}
@@ -1212,26 +1201,24 @@ export default class WithdrawModal extends React.Component<any, any> {
                 exCurrencyRate={exCurrencyRate}
                 feeCurrentCurrency={btcFeeRate}
                 isLoading={fetchFee}
-                minerFee={isEthToken ? tokenFee : coinFee}
-                hasServiceFee={!!usedAdminFee}
-                serviceFee={
-                  usedAdminFee && ( // in the bottom line fee in precents (100 = 100%)
-                    amount > 0 && new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).isGreaterThan(adminFeeSize)
-                      ? new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).toNumber()
-                      : adminFeeSize
-                  )
-                }
-                serviceFeePercent={usedAdminFee.fee}
-                serviceFeeMin={usedAdminFee.min}
-                totalFee={
-                  amount > 0 && new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).isGreaterThan(adminFeeSize)
-                    ? usedAdminFee // in the bottom line fee in precents (100 = 100%)
-                      ? new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).plus(totalFee).toNumber()
-                      : new BigNumber(totalFee).plus(adminFeeSize).toNumber()
-                    : new BigNumber(totalFee).plus(adminFeeSize).toNumber()
-                }
                 hasTxSize={isBTCWallet}
                 txSize={txSize}
+                usedAdminFee={usedAdminFee}
+                minerFee={fees.miner}
+                serviceFee={
+                  usedAdminFee && ( // in the bottom line fee in precents (100 = 100%)
+                  amount > 0 && new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).isGreaterThan(fees.service)
+                    ? new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount)
+                    : fees.service
+                  )
+                }
+                totalFee={
+                  amount > 0 && new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).isGreaterThan(fees.service)
+                    ? usedAdminFee // in the bottom line fee in precents (100 = 100%)
+                      ? new BigNumber(usedAdminFee.fee).dividedBy(100).multipliedBy(amount).plus(fees.total)
+                      : new BigNumber(fees.total).plus(fees.service)
+                    : new BigNumber(fees.total).plus(fees.service)
+                }
               />
             </div>
             {error && (

@@ -10,22 +10,24 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 type FeeInfoBlockProps = {
   isLoading: boolean
   isEthToken: boolean
-  hasServiceFee: boolean
   hasTxSize: boolean
-
+  
   currency: string
   activeFiat: string
   dataCurrency: string
-
+  
   exCurrencyRate: number
-  minerFee: number
-  serviceFee: number
-  serviceFeePercent: number
-  serviceFeeMin: number
-  totalFee: number
-
   txSize?: number
   feeCurrentCurrency?: number
+  
+  minerFee: BigNumber
+  serviceFee: BigNumber
+  totalFee: BigNumber
+  usedAdminFee: undefined | {
+    address: string
+    fee: number // prevent (%)
+    min: number
+  }
 }
 
 function FeeInfoBlock(props: FeeInfoBlockProps) {
@@ -37,10 +39,8 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
     exCurrencyRate,
     isLoading,
     minerFee,
-    hasServiceFee,
     serviceFee,
-    serviceFeePercent,
-    serviceFeeMin,
+    usedAdminFee,
     totalFee,
     hasTxSize,
     txSize,
@@ -82,9 +82,9 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
             ? <div styleName='paleLoader'><InlineLoader /></div>
             : <span styleName='fee'>
                 {hasTxSize && feeCurrentCurrency > 0 ? transactionSize : null}
-                {minerFee}&nbsp;{minerFeeTicker}
+                {+minerFee}&nbsp;{minerFeeTicker}
                 {' '}
-                (~{activeFiatSymbol}{new BigNumber(minerFee * exCurrencyRate).toFixed(2)})
+                (~{activeFiatSymbol}{new BigNumber(+minerFee * exCurrencyRate).toFixed(2)})
               </span>
           }
           {' '}
@@ -99,27 +99,27 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
         </div>
       </div>
       
-      {hasServiceFee && (
+      {usedAdminFee && (
           <div styleName='feeRow'>
             <span styleName='feeRowTitle'>
               <FormattedMessage id="FeeInfoBlockServiceFee" defaultMessage="Service fee:" />
             </span>
             <div className="feeRowInfo">
               <div styleName="serviceFeeConditions">
-                <span>{serviceFeePercent}%</span>
+                <span>{usedAdminFee.fee}%</span>
                 {' '}
                 <span>
                   <FormattedMessage id="FeeInfoBlockServiceFeeConditions" defaultMessage="of the transfer amount, but not less than" />
                 </span>
                 {' '}
-                <span>{serviceFeeMin}&nbsp;{serviceFeeTicker}</span>
+                <span>{usedAdminFee.min}&nbsp;{serviceFeeTicker}</span>
               </div>
               {isLoading
                 ? <div styleName='paleLoader'><InlineLoader /></div>
                 : <span styleName='fee'>
-                    {serviceFee}&nbsp;{serviceFeeTicker}
+                    {+serviceFee}&nbsp;{serviceFeeTicker}
                     {' '}
-                    (~{activeFiatSymbol}{new BigNumber(serviceFee * exCurrencyRate).toFixed(2)})
+                    (~{activeFiatSymbol}{new BigNumber(+serviceFee * exCurrencyRate).toFixed(2)})
                   </span>
               }
             </div>
@@ -136,9 +136,9 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
             {isLoading
               ? <div styleName='paleLoader'><InlineLoader /></div>
               : <span styleName='fee'>
-                  {totalFee}&nbsp;{minerFeeTicker}
+                  {+totalFee}&nbsp;{minerFeeTicker}
                   {' '}
-                  (~{activeFiatSymbol}{new BigNumber(totalFee * exCurrencyRate).toFixed(2)})
+                  (~{activeFiatSymbol}{new BigNumber(+totalFee * exCurrencyRate).toFixed(2)})
                 </span>
             }
           </div>
