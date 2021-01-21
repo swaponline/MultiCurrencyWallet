@@ -87,7 +87,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
                 (~{activeFiatSymbol}{new BigNumber(minerFee * exCurrencyRate).toFixed(2)})
               </span>
           }
-          {' '}{/* indent */}
+          {' '}
           <Tooltip id="FeeInfoBlockMinerFeeTooltip">
             <div style={{ maxWidth: '24em', textAlign: 'center' }}>
               <FormattedMessage
