@@ -118,6 +118,9 @@ const getPrivateKeyByAddress = (address) => {
       btcMnemonicData: {
         address: mnemonicAddress,
         privateKey: mnemonicKey,
+      } = {
+        address: undefined,
+        privateKey: undefined,
       },
     },
   } = getState()
@@ -486,7 +489,13 @@ const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
 const sendV5 = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
   return new Promise(async (ready, reject) => {
     try {
-      const privateKey = getPrivateKeyByAddress(from)
+      let privateKey = null
+      try {
+        privateKey = getPrivateKeyByAddress(from)
+      } catch (ePrivateKey) {
+        reject({ message: `Fail get data for send address` + ePrivateKey.message })
+        return
+      }
 
       const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
 
