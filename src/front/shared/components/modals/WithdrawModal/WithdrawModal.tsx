@@ -474,19 +474,19 @@ export default class WithdrawModal extends React.Component<any, any> {
       to,
       amount,
       speed: 'fast',
+      name: '',
+      from: ''
     }
 
     if (helpers.ethToken.isEthToken({ name: currency.toLowerCase() })) {
       sendOptions = {
         ...sendOptions,
-        //@ts-ignore
         name: currency.toLowerCase(),
-        // from: address, // Need check eth
+        from: address, // Need check eth
       }
     } else {
       sendOptions = {
         ...sendOptions,
-        //@ts-ignore
         from: address,
       }
     }
@@ -862,10 +862,6 @@ export default class WithdrawModal extends React.Component<any, any> {
       !criptoValueIsOk ||
       new BigNumber(amount).isGreaterThan(balance) ||
       new BigNumber(amount).dp() > currentDecimals
-
-    console.log('_________________________________________')
-    console.log('props: ', this.props)
-    console.log('state: ', this.state)
 
     const labels = defineMessages({
       withdrowModal: {

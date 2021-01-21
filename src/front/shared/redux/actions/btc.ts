@@ -582,6 +582,7 @@ const sendV5 = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
       const { txid } = broadcastAnswer
       ready(txid)
     } catch (error) {
+      console.log('Actions - btc - send: ', error)
       reject(error)
     }
   })
