@@ -155,14 +155,14 @@ export default class WithdrawModal extends React.Component<any, any> {
     super(data)
 
     const {
-      data: { amount, toAddress, currency, address: withdrawWallet },
+      data: { amount, toAddress, currency, address: currencyAddress },
     } = data
 
     const currentActiveAsset = data.data
 
     const currentDecimals = constants.tokenDecimals[getCurrencyKey(currency, true).toLowerCase()]
     const allCurrencyies = actions.core.getWallets({}) //items.concat(tokenItems)
-    const selectedItem = actions.user.getWithdrawWallet(currency, withdrawWallet)
+    const selectedItem = actions.user.getWithdrawWallet(currency, currencyAddress)
 
     const usedAdminFee = adminFee.isEnabled(selectedItem.currency)
 
@@ -863,6 +863,10 @@ export default class WithdrawModal extends React.Component<any, any> {
       new BigNumber(amount).isGreaterThan(balance) ||
       new BigNumber(amount).dp() > currentDecimals
 
+    console.log('_________________________________________')
+    console.log('props: ', this.props)
+    console.log('state: ', this.state)
+
     const labels = defineMessages({
       withdrowModal: {
         id: 'withdrowTitle271',
@@ -1065,14 +1069,14 @@ export default class WithdrawModal extends React.Component<any, any> {
                 type="number"
                 valueLink={linked.amount.pipe(this.handleAmount)}
                 onKeyDown={amountInputKeyDownCallback}
-                pattern="0-9:"
+                pattern="0-9\.:"
               />
             ) : (
               <Input
                 type="number"
                 valueLink={linked.fiatAmount.pipe(this.handleDollarValue)}
                 onKeyDown={amountInputKeyDownCallback}
-                pattern="0-9:"
+                pattern="0-9\.:"
               />
             )}
             <div style={{ marginLeft: '15px' }}>
