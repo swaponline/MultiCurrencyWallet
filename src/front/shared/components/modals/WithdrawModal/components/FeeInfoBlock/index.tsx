@@ -1,6 +1,6 @@
 import React from 'react'
 import cssModules from 'react-css-modules'
-import styles from './FeeInfoBlock.scss'
+import styles from './index.scss'
 import { BigNumber } from 'bignumber.js'
 import { FormattedMessage } from 'react-intl'
 
@@ -14,6 +14,7 @@ type FeeInfoBlockProps = {
   hasTxSize: boolean
 
   currency: string
+  activeFiat: string
   dataCurrency: string
 
   exCurrencyRate: number
@@ -31,6 +32,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
   const {
     isEthToken,
     currency,
+    activeFiat,
     dataCurrency,
     exCurrencyRate,
     isLoading,
@@ -45,9 +47,14 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
     feeCurrentCurrency,
   } = props
 
-
   const minerFeeTicker = dataCurrency
   const serviceFeeTicker = currency
+  const activeFiatSymbol = 
+    activeFiat.toLowerCase() === 'usd'
+      ? '$' 
+      : activeFiat.toLowerCase() === 'eur'
+        ? '€'
+        : '-'
 
   const linkToTxSizeInfo = (
     <a
@@ -77,7 +84,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
                 {hasTxSize && feeCurrentCurrency > 0 ? transactionSize : null}
                 {minerFee}&nbsp;{minerFeeTicker}
                 {' '}
-                (~${new BigNumber(minerFee * exCurrencyRate).toFixed(2)})
+                (~{activeFiatSymbol}{new BigNumber(minerFee * exCurrencyRate).toFixed(2)})
               </span>
           }
           {' '}{/* indent */}
@@ -112,7 +119,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
                 : <span styleName='fee'>
                     {serviceFee}&nbsp;{serviceFeeTicker}
                     {' '}
-                    (~${new BigNumber(serviceFee * exCurrencyRate).toFixed(2)})
+                    (~{activeFiatSymbol}{new BigNumber(serviceFee * exCurrencyRate).toFixed(2)})
                   </span>
               }
             </div>
@@ -131,7 +138,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
               : <span styleName='fee'>
                   {totalFee}&nbsp;{minerFeeTicker}
                   {' '}
-                  (~${new BigNumber(totalFee * exCurrencyRate).toFixed(2)})
+                  (~{activeFiatSymbol}{new BigNumber(totalFee * exCurrencyRate).toFixed(2)})
                 </span>
             }
           </div>

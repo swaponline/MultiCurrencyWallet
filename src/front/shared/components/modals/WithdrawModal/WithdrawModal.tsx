@@ -35,7 +35,7 @@ import QrReader from 'components/QrReader'
 import InvoiceInfoBlock from 'components/InvoiceInfoBlock/InvoiceInfoBlock'
 import AdminFeeInfoBlock from 'components/AdminFeeInfoBlock/AdminFeeInfoBlock'
 import CurrencyList from './components/CurrencyList'
-import FeeInfoBlock from 'components/FeeInfoBlock/FeeInfoBlock'
+import FeeInfoBlock from './components/FeeInfoBlock'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -1217,6 +1217,7 @@ export default class WithdrawModal extends React.Component<any, any> {
               <FeeInfoBlock
                 isEthToken={isEthToken}
                 currency={currency}
+                activeFiat={activeFiat}
                 dataCurrency={dataCurrency}
                 exCurrencyRate={exCurrencyRate}
                 feeCurrentCurrency={btcFeeRate}

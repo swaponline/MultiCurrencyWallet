@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 
 import cssModules from 'react-css-modules'
-import styles from './CurrencyList.scss'
+import styles from './index.scss'
 import cx from 'classnames'
 import Coin from 'components/Coin/Coin'
 import PartOfAddress from 'pages/Wallet/components/PartOfAddress'
