@@ -38,8 +38,6 @@ export default (webpackConfig) => {
   webpackConfig.devServer = {
     publicPath: webpackConfig.output.publicPath,
     stats: 'errors-only',
-    noInfo: true,
-    lazy: false,
   }
   
   webpackConfig.optimization = {
