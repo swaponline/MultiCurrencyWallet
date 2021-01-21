@@ -27,3 +27,10 @@ Test Task 1. Test for basic knowledge of git, npm and the ability to solve the s
 5. Remove the error and make a pull request to our repository <br>
 6. wait until the github shows a green checkmark "All checks have passed" <br>
 7. send a link to the pull request <br>
+
+Test task 2: 
+1. Make the simplest bitcoin wallet using the bitcoinjs library, https://github.com/bitcoinjs/bitcoinjs-lib#examples here are examples of use <br>
+2. The wallet must work on the testnet of the bitcoin network. The testnet bitcoin network is a free version of bitcoin that technically works the same way, created specifically for developers who test their applications there. <br>
+3. When user entering the wallet, it must generate a bitcoin address, show it to the user, show the user's balance <br>
+4. The sending form contains: a field for entering the amount, a field for entering an address and a send button <br>
+5. When filling out the form and clicking on send, bitcoins are sent <br>
