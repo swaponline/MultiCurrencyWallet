@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import cx from 'classnames'
 
 import cssModules from 'react-css-modules'
@@ -16,11 +15,11 @@ type CenterProps = {
 
 const Center = ({
   children,
-  scrollable: false,
-  centerHorizontally: true,
-  centerVertically: true,
-  keepFontSize: false,
-  relative: false,
+  scrollable = false,
+  centerHorizontally = true,
+  centerVertically = true,
+  keepFontSize = false,
+  relative = false,
   ...rest
 }: CenterProps) => {
   // TODO move overflow to Modal and any other cases where it belongs
