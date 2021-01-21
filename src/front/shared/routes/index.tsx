@@ -40,7 +40,7 @@ const routes = (
       <Route exact path={`${localisePrefix}/:page(exit)`} component={Wallet} />
 
       <Route path={`${localisePrefix}${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />
-      <Route path={`${localisePrefix}turbo-swap/:orderId`} component={TurboSwap} />
+      <Route path={`${localisePrefix}${links.turboSwap}/:orderId`} component={TurboSwap} />
 
       <Route path={`${localisePrefix}/:ticker(btc|eth|ghost|next)/tx/:tx?`} component={Transaction} />
       <Route path={`${localisePrefix}/:token(token)/:ticker/tx/:tx?`} component={Transaction} />

@@ -21,6 +21,7 @@ const linksManager = {
   savePrivateKeys: '/savePrivateKeys',
   currencyWallet: '/wallet',
   swap: '/swaps',
+  turboSwap: '/turbo-swaps',
   feed: '/feed',
   aboutUs: '/aboutUs',
   test: 'https://testnet.swaponline.io',

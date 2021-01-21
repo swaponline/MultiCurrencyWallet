@@ -33,6 +33,7 @@ import { animate } from 'helpers/domUtils'
 import Switching from 'components/controls/Switching/Switching'
 import AddressSelect from './AddressSelect/AddressSelect'
 import { AddressType, AddressRole } from 'domain/address'
+import { SwapType } from 'domain/swap'
 import NetworkStatus from 'components/NetworkStatus/NetworkStatus'
 import Orders from './Orders/Orders'
 import metamask from 'helpers/metamask'
@@ -103,10 +104,10 @@ type ExchangeState = {
   isSearching?: boolean
   isNoAnyOrders?: boolean
   isFullLoadingComplite?: boolean
-  redirectToSwap?: string
   exHaveRate?: string
   exGetRate?: string
   orderId?: string
+  redirectToSwap: null | SwapType
   
   balances: any
   pairFees: any
@@ -143,10 +144,6 @@ const filterIsPartial = (orders) =>
     .filter((order) => order.sellAmount !== 0 && order.sellAmount.isGreaterThan(0)) // WTF sellAmount can be not BigNumber
     .filter((order) => order.buyAmount !== 0 && order.buyAmount.isGreaterThan(0)) // WTF buyAmount can be not BigNumber too - need fix this
 
-const text = [
-  <FormattedMessage id="partial223" defaultMessage="To change default wallet for buy currency. " />,
-  <FormattedMessage id="partial224" defaultMessage="Leave empty for use Swap.Online wallet " />,
-]
 
 const subTitle = (sell, sellTicker, buy, buyTicker) => (
   <div>
@@ -303,6 +300,7 @@ export default class Exchange extends Component<any, any> {
       haveBalance: false,
       fromAddress: this.makeAddressObject(haveType, haveCurrency.toUpperCase()),
       toAddress: this.makeAddressObject(getType, getCurrency.toUpperCase()),
+      redirectToSwap: null,
     }
 
     if (config.isWidget) {
@@ -791,7 +789,7 @@ export default class Exchange extends Component<any, any> {
       clearTimeout(requestTimeout)
       if (isAccepted) {
         this.setState(() => ({
-          redirectToSwap: true,
+          redirectToSwap: newOrder.isTurbo ? SwapType.Turbo : SwapType.Atomic,
           orderId: newOrder.id,
           isWaitForPeerAnswer: false,
         }))
@@ -1338,7 +1336,14 @@ export default class Exchange extends Component<any, any> {
     const balance = this.getBalance(sellCoin)
 
     if (redirectToSwap) {
-      const uri = `${localisedUrl(locale, links.swap)}/${getCurrency}-${haveCurrency}/${orderId}`
+      const uri = ({
+        [SwapType.Atomic]: `${localisedUrl(locale, links.swap)}/${getCurrency}-${haveCurrency}/${orderId}`,
+        [SwapType.Turbo]: `${localisedUrl(locale, links.turboSwap)}/${orderId}`
+      })[redirectToSwap]
+
+      if (!uri) {
+        throw new Error('Wrong swap redirect')
+      }
       return <Redirect to={uri} push />
     }
 

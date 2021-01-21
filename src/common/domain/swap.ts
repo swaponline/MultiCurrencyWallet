@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js'
 
 export enum SwapType {
   Atomic = 'Atomic',
-  Direct = 'Direct',
+  Turbo = 'Turbo',
 }
 
 export enum SwapSide {
