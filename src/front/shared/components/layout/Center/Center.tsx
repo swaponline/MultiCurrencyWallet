@@ -6,11 +6,11 @@ import styles from './Center.scss'
 
 type CenterProps = {
   children: React.ReactNode
-  relative: boolean
-  scrollable: boolean
-  keepFontSize: boolean
-  centerVertically: boolean
-  centerHorizontally: boolean
+  relative?: boolean
+  scrollable?: boolean
+  keepFontSize?: boolean
+  centerVertically?: boolean
+  centerHorizontally?: boolean
 }
 
 const Center = ({
