@@ -9,7 +9,7 @@ const Toggle = ({ checked, onChange, dataTut }) => (
   <label styleName="Switch" data-tut={dataTut} >
     {/*
     //@ts-ignore */}
-    <input type="checkbox" onClick={({ target }) => onChange(target.checked)} defaultChecked={checked} />
+    <input type="checkbox" onClick={({ target }) => onChange(target.checked())} defaultChecked={checked} />
     <span /> {/* need for button */}
   </label>
 )

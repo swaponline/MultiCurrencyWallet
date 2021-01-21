@@ -47,10 +47,10 @@ export const messages = defineMessages({
   },
 })
 
-export const getMenuItems = (props, isWalletCreate) => {
+export const getMenuItems = (props, isWalletCreate, dinamicPath = '/') => {
   const { intl, reputation, isSigned } = props
 
-  const { exchange: linksExchange, createWallet: create, home } = links
+  const { exchange: linksExchange, createWallet: create} = links
   const { exchange, wallet, createWallet } = messages
 
   return (Number.isInteger(reputation) && reputation !== 0)
@@ -61,7 +61,7 @@ export const getMenuItems = (props, isWalletCreate) => {
     [
       {
         title: intl.formatMessage(wallet),
-        link: home,
+        link: dinamicPath,
         exact: true,
         haveSubmenu: true,
         icon: 'products',
@@ -106,10 +106,10 @@ export const getMenuItems = (props, isWalletCreate) => {
 }
 
 
-export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
+export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath = '/') => {
   const { intl, reputation, isSigned } = props
 
-  const { exchange: linksExchange, createWallet: create, home } = links
+  const { exchange: linksExchange, createWallet: create } = links
   const { exchange, wallet, createWallet } = messages
 
   return (Number.isInteger(reputation) && reputation !== 0) || isSigned

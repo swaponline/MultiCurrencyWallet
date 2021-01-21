@@ -15,6 +15,7 @@ type PropsType = {
   history: any
 }
 
+// @ts-ignore
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })
 export default class SwitchLang extends Component<{intl: IntlShape}, PropsType> {

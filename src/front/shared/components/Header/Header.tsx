@@ -35,15 +35,15 @@ import UserTooltip from "components/Header/User/UserTooltip/UserTooltip"
 import feedback from 'shared/helpers/feedback'
 import wpLogoutModal from 'helpers/wpLogoutModal'
 
-
 /* uncomment to debug */
 //window.isUserRegisteredAndLoggedIn = true
-
 
 const isWidgetBuild = config && config.isWidget
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
+//@ts-ignore
 @injectIntl
+//@ts-ignore
 @withRouter
 @connect({
   feeds: "feeds.items",
@@ -90,10 +90,10 @@ export default class Header extends Component<any, any> {
     const dinamicPath = pathname.includes(exchange)
       ? `${unlocalisedUrl(intl.locale, pathname)}`
       : `${home}`;
-    let lsWalletCreated = localStorage.getItem(isWalletCreate);
+
+    let lsWalletCreated: string | boolean = localStorage.getItem(isWalletCreate);
     if (config && config.isWidget) {
-      //@ts-ignore
-      lsWalletCreated = true;
+      lsWalletCreated = true
     }
 
     const isWalletPage = pathname === wallet || pathname === `/ru${wallet}`;
@@ -125,7 +125,7 @@ export default class Header extends Component<any, any> {
           haveSubmenu: false,
         },
       ],
-      //@ts-ignore
+      
       menuItems: getMenuItems(props, lsWalletCreated, dinamicPath),
       menuItemsMobile: getMenuItemsMobile(props, lsWalletCreated, dinamicPath),
       createdWalletLoader: isWalletPage && !lsWalletCreated,
@@ -159,25 +159,22 @@ export default class Header extends Component<any, any> {
       const { pathname } = location;
       const { wallet, home } = links;
 
-      let isWalletCreate = localStorage.getItem(
+      let isWalletCreate: string | boolean = localStorage.getItem(
         constants.localStorage.isWalletCreate
       );
 
       if (config && config.isWidget) {
-        //@ts-ignore
         isWalletCreate = true
       }
 
       const isWalletPage = pathname === wallet || pathname === `/ru${wallet}`;
 
       if (isWalletPage && !isWalletCreate) {
-        //@ts-ignore
         isWalletCreate = true;
 
         this.setState(
           () => ({
             menuItems: getMenuItems(this.props, isWalletCreate),
-            //@ts-ignore
             menuItemsMobile: getMenuItemsMobile(this.props, isWalletCreate),
             createdWalletLoader: true,
           }),
@@ -224,7 +221,6 @@ export default class Header extends Component<any, any> {
 
     this.setState(() => ({
       menuItems: getMenuItems(this.props, true),
-      //@ts-ignore
       menuItemsMobile: getMenuItemsMobile(this.props, true),
     }));
 

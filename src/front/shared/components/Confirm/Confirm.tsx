@@ -9,9 +9,7 @@ import Button from 'components/controls/Button/Button'
 import Center from 'components/layout/Center/Center'
 import { FormattedMessage } from 'react-intl'
 
-
 const Confirm = ({ rootClassName, isConfirm, isReject, title, animation }) => (
-  //@ts-ignore
   <Center>
     <div styleName={animation ? 'confirm animation' : 'confirm'} className={rootClassName}>
       <SubTitle>
@@ -40,5 +38,6 @@ Confirm.propTypes = {
   title: PropTypes.string.isRequired,
   animation: PropTypes.bool,
 }
+
 
 export default cssModules(Confirm, styles, { allowMultiple: true })

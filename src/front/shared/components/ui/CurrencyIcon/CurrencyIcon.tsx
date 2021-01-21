@@ -7,9 +7,7 @@ import icons from './images'
 import { FormattedMessage } from 'react-intl'
 import config from 'app-config'
 
-
 export const iconNames = Object.keys(icons)
-
 
 const CurrencyIcon = ({ className, style, name, currency }) => {
   if (typeof name === 'undefined') {

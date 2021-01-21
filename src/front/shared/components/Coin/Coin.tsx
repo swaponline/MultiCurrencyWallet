@@ -29,6 +29,8 @@ const Coin = ({ className, size, name }) => {
 
   let iconProps = {
     name: name.toLowerCase(),
+    styleName: '',
+    style: {}
   }
 
   const isIconExist = iconNames.includes(name.toLowerCase())
@@ -56,14 +58,12 @@ const Coin = ({ className, size, name }) => {
   if (isIconExist || isIconConfigExist) {
     iconProps = {
       ...iconProps,
-      //@ts-ignore
       styleName: 'icon',
     }
   }
   else {
     iconProps = {
       ...iconProps,
-      //@ts-ignore
       styleName: 'letter',
       style: {
         lineHeight: `${size}px`,
