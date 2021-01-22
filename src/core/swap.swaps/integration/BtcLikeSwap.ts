@@ -177,17 +177,25 @@ class BtcLikeSwap extends SwapInterface {
 
     /* @ToDo - больше гибкости */
     const fetchConfidence = async (unspent): number => {
+      
 
       if (this.skipFetchConfidence) return 1
 
-      try {
-        const {
-          fees,
-          size,
-          senderAddress,
-          confirmations: txConfirms,
-        } = unspent
+      const {
+        fees,
+        size,
+        senderAddress,
+        confirmations: txConfirms,
+      } = unspent
 
+      const confirmationsToConfidence = confs => confs > 0 ? 1 : 0
+      const confidenceFromConfirmations = confirmationsToConfidence(txConfirms)
+
+      if (new BigNumber(confidenceFromConfirmations).isGreaterThanOrEqualTo(expectedConfidenceLevel)) {
+        return confidenceFromConfirmations
+      }
+
+      try {
         if (txConfirms > 0) {
           return 1
         }
@@ -201,7 +209,7 @@ class BtcLikeSwap extends SwapInterface {
 
       } catch (err) {
         console.error(`BtcSwap: Error fetching confidence: using confirmations > 0:`, err.message)
-        // @ts-ignore - not defined - need recheck github version and find where was lossed
+
         return confidenceFromConfirmations
       }
     }
