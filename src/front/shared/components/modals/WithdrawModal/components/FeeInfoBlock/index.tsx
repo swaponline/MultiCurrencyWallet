@@ -25,7 +25,7 @@ type FeeInfoBlockProps = {
   totalFee: BigNumber
   usedAdminFee: undefined | {
     address: string
-    fee: number // prevent (%)
+    fee: number // percent (%)
     min: number
   }
 }
