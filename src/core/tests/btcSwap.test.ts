@@ -74,8 +74,8 @@ test('btcSwap can estimate tx fee', async () => {
   expect(estimatedSat.toNumber() > 0).toBeTruthy()
   expect(estimatedSat.toNumber()).toBeGreaterThanOrEqual(expectedSat)
 
-
-  const estimatedBTC = await btcSwap.getTxFee()
+  // @ts-ignore - missing the following properties from type 'getTxFeeOptions': inSatoshis, address
+  const estimatedBTC = await btcSwap.getTxFee({})
   const expectedBTC = 546 / 1e8
 
   expect(estimatedBTC.toNumber() > 0).toBeTruthy()

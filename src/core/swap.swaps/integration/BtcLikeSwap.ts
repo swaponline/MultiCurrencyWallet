@@ -11,9 +11,36 @@ interface processSwapScriptFundOptions {
   coin: string,
 }
 
+interface getTxFeeOptions {
+  inSatoshis: boolean,
+  size?: number,
+  speed?: 'slow' | 'medium' | 'fast'
+  address: string,
+}
+
 class BtcLikeSwap extends SwapInterface {
 
+  _swapName: string = undefined
   fetchBalance: Function = undefined
+  fetchUnspents: Function = undefined
+  broadcastTx: Function = undefined
+  checkWithdraw: Function = undefined
+  feeValue: number = 546
+  fetchTxInfo: Function = undefined
+  estimateFeeValue: Function = undefined
+
+  account: string = undefined
+  networks: any = undefined
+  network: any = undefined
+
+  skipFetchConfidence: boolean = false
+  skipCheckCanBeReplaces: boolean = false
+  skipLockTime: boolean = false
+  skipRecipientPublickKey: boolean = false
+
+  processUnspent: Function = undefined
+
+  app: SwapApp = undefined
   /**
    *
    * @param options
@@ -106,7 +133,14 @@ class BtcLikeSwap extends SwapInterface {
    * @returns {BigNumber}
    * @public
    */
-  async getTxFee({ inSatoshis, size, speed = 'fast', address } = {}) {
+  async getTxFee(options: getTxFeeOptions) {
+    const {
+      inSatoshis,
+      size,
+      speed = 'fast',
+      address,
+    } = options
+
     const estimatedFeeRaw = await this.estimateFeeValue({
       inSatoshis: true,
       address,
@@ -115,8 +149,8 @@ class BtcLikeSwap extends SwapInterface {
       txSize: size,
     })
 
-    const estimatedFee = BigNumber(estimatedFeeRaw)
-    this.feeValue = estimatedFee
+    const estimatedFee = new BigNumber(estimatedFeeRaw)
+    this.feeValue = estimatedFee.toNumber()
 
     return inSatoshis
       ? estimatedFee
@@ -133,16 +167,16 @@ class BtcLikeSwap extends SwapInterface {
   async filterConfidentUnspents(unspents, expectedConfidenceLevel = 0.95) {
 
     const feesToConfidence = async (fees, size, address) => {
-      fees = BigNumber(fees).multipliedBy(1e8).toNumber()
+      fees = new BigNumber(fees).multipliedBy(1e8).toNumber()
       const currentFastestFee = await this.getTxFee({ inSatoshis: true, size, speed: 'fast', address })
 
-      return BigNumber(fees).isLessThan(currentFastestFee)
-        ? BigNumber(fees).dividedBy(currentFastestFee).toNumber()
+      return new BigNumber(fees).isLessThan(currentFastestFee)
+        ? new BigNumber(fees).dividedBy(currentFastestFee).toNumber()
         : 1
     }
 
     /* @ToDo - больше гибкости */
-    const fetchConfidence = async (unspent) => {
+    const fetchConfidence = async (unspent): number => {
 
       if (this.skipFetchConfidence) return 1
 
@@ -163,19 +197,20 @@ class BtcLikeSwap extends SwapInterface {
           return confFromFee
         }
 
-        throw new Error(`txinfo={confirmations: ${confirmations}, fees: ${fees}, size: ${size}, senderAddress: ${senderAddress} }`)
+        throw new Error(`txinfo={confirmations: ${txConfirms}, fees: ${fees}, size: ${size}, senderAddress: ${senderAddress} }`)
 
       } catch (err) {
         console.error(`BtcSwap: Error fetching confidence: using confirmations > 0:`, err.message)
+        // @ts-ignore - not defined - need recheck github version and find where was lossed
         return confidenceFromConfirmations
       }
     }
 
-    const confidences = await Promise.all(unspents.map(fetchConfidence))
+    const confidences: number[] = await Promise.all(unspents.map(fetchConfidence))
 
     return unspents.filter((utxo, index) => {
       debug('swap.core:swaps')(`confidence[${index}]:`, confidences[index])
-      return BigNumber(confidences[index]).isGreaterThanOrEqualTo(expectedConfidenceLevel)
+      return new BigNumber(confidences[index]).isGreaterThanOrEqualTo(expectedConfidenceLevel)
     })
   }
 
@@ -184,7 +219,7 @@ class BtcLikeSwap extends SwapInterface {
    * @param {Array[object]} unspents
    * @return {Array[object]}
    */
-  async filterConfirmedUnspents(unspents) {
+  async filterConfirmedUnspents(unspents): Promise<any[]> {
     return new Promise(async (resolve) => {
       const filtered = unspents.filter((unspent) => {
         const {
@@ -301,7 +336,7 @@ class BtcLikeSwap extends SwapInterface {
     }
   }
 
-  fetchUnspentsFullInfo(scriptAddress) {
+  fetchUnspentsFullInfo(scriptAddress): Promise<any[]> {
     console.log('fetchUnspentsFullInfo', scriptAddress)
     return new Promise(async (resolve) => {
       const unspents      = await this.fetchUnspents(scriptAddress)
@@ -361,7 +396,7 @@ class BtcLikeSwap extends SwapInterface {
 
     const expectedConfidence = (expected.confidence !== undefined) ? expected.confidence : 0.95
     console.log('script', scriptAddress)
-    const unspents      = await this.fetchUnspentsFullInfo(scriptAddress)
+    const unspents: any[] = await this.fetchUnspentsFullInfo(scriptAddress)
 
     console.log('script', scriptAddress)
     console.log('unspents', unspents)
@@ -376,7 +411,7 @@ class BtcLikeSwap extends SwapInterface {
     if (waitConfirm || canBeReplaced) {
       // Wait confirm only - for big amount of swap
       if (!unspents.length) return `No unspents`
-      const confirmedUnspents = await this.filterConfirmedUnspents(unspents)
+      const confirmedUnspents: any[] = await this.filterConfirmedUnspents(unspents)
       if (unspents.length === confirmedUnspents.length) return
       await util.helpers.waitDelay(30)
       if (canBeReplaced) return `Can be replace by fee. Wait confirm`
@@ -413,7 +448,7 @@ class BtcLikeSwap extends SwapInterface {
    * @param {string} hashName
    * @returns {Promise}
    */
-  fundScript(data, handleTransactionHash, hashName) {
+  fundScript(data, handleTransactionHash?: Function, hashName?: string) {
     const { scriptValues, amount } = data
 
     console.log('fundScript', data)
@@ -423,7 +458,7 @@ class BtcLikeSwap extends SwapInterface {
 
         console.log('scriptAddress', scriptAddress)
         const scriptBalance = await this.fetchBalance(scriptAddress)
-        if (BigNumber(scriptBalance).isGreaterThan(0)) {
+        if (new BigNumber(scriptBalance).isGreaterThan(0)) {
           // Script already funded - skip double payments
           reject('Script funded already')
           return
@@ -482,7 +517,7 @@ class BtcLikeSwap extends SwapInterface {
    * @param {object|string} data - scriptValues or wallet address
    * @returns {Promise.<void>}
    */
-  async getBalance(data, hashName) {
+  async getBalance(data, hashName?: string): number {
     let address
 
     if (typeof data === 'string') {
@@ -511,7 +546,7 @@ class BtcLikeSwap extends SwapInterface {
    * @param {boolean} isRefund
    * @returns {Promise}
    */
-  async getWithdrawRawTransaction(data, isRefund, hashName) {
+  async getWithdrawRawTransaction(data: any, isRefund: boolean, hashName?: string) {
     const { scriptValues, secret, destinationAddress } = data
     const destAddress = (destinationAddress) ? destinationAddress : this.app.services.auth.accounts[this.account].getAddress()
 
@@ -539,7 +574,7 @@ class BtcLikeSwap extends SwapInterface {
       }
     }
 
-    if (BigNumber(totalUnspent).isLessThan(feeValue)) {
+    if (new BigNumber(totalUnspent).isLessThan(feeValue)) {
       throw new Error(`Total less than fee: ${totalUnspent} < ${feeValue}`)
     }
 
@@ -781,7 +816,7 @@ class BtcLikeSwap extends SwapInterface {
           resolve(txRaw.txId)
         } else {
           console.warn('BtcSwap: cant withdraw', 'Generated TX not found')
-          reject('TX not found. Try it later. ',txRaw.txId)
+          reject('TX not found. Try it later. ' + txRaw.txId)
         }
       }
       catch (error) {
