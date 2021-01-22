@@ -210,6 +210,9 @@ export default (tokenName) => {
                     return false
                   } else {
                     console.log('Fail fund script', err)
+                    flow.setState({
+                      utxoFundError: err,
+                    })
                   }
                 }
               }
