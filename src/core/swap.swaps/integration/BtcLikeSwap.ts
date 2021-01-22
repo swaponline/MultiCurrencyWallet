@@ -3,9 +3,17 @@ import SwapApp, { SwapInterface, constants, util } from 'swap.app'
 import BigNumber from 'bignumber.js'
 
 
+interface processSwapScriptFundOptions {
+  flow: any,
+  fieldScriptValues: string,
+  fieldCreateTransactionHash: string,
+  fielsIsScriptFunded: string,
+  coin: string,
+}
 
 class BtcLikeSwap extends SwapInterface {
 
+  fetchBalance: Function = undefined
   /**
    *
    * @param options
@@ -590,7 +598,15 @@ class BtcLikeSwap extends SwapInterface {
     return this.getWithdrawRawTransaction(data, true)
   }
 
-  async processSwapScriptFund(flow) {
+  async processSwapScriptFund(options: processSwapScriptFundOptions) {
+    const {
+      flow,
+      fieldScriptValues,
+      fieldCreateTransactionHash,
+      fielsIsScriptFunded,
+      coin,
+    } = options
+
     const utxoClass = this
 
     const onTransactionHash = (txID) => {
@@ -670,7 +686,7 @@ class BtcLikeSwap extends SwapInterface {
       })
     }
 
-    const checkBTCScriptBalance = async () => {
+    const checkScriptBalance = async () => {
       const { scriptAddress } = utxoClass.createScript(btcScriptValues)
       const unspents = await utxoClass.fetchUnspents(scriptAddress)
 
@@ -699,7 +715,7 @@ class BtcLikeSwap extends SwapInterface {
       const { isStoppedSwap } = flow.state
 
       if (!isStoppedSwap) {
-        return await checkBTCScriptBalance()
+        return await checkScriptBalance()
       } else {
         stopRepeat()
       }
