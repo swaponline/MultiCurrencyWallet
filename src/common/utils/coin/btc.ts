@@ -393,8 +393,17 @@ const broadcastTx = (options): any => {
               && error.res.res.statusMessage
               && error.res.res.statusMessage === `Conflict`
             ) {
-              reject('Conflict')
+              reject(`Conflict`)
               return false
+            } else {
+              if (error
+                && error.res
+                && error.res.body
+                && error.res.body.error
+              ) {
+                reject(error.res.body.error)
+                return false
+              }
             }
             return true
           },
@@ -410,12 +419,13 @@ const broadcastTx = (options): any => {
             txid: bcAnswer.tx.hash,
           })
         } else {
-          reject()
+          reject(`Cant decode answer`)
         }
       } catch (blocyperError) {
-        console.log('Blocyper broadcastTx error', blocyperError)
         if (onBroadcastError instanceof Function) {
-          if (onBroadcastError(blocyperError)) reject()
+          if (onBroadcastError(blocyperError)) reject(``)
+        } else {
+          reject(``)
         }
       }
     }
