@@ -1,6 +1,5 @@
 import { Router } from 'express'
-//@ts-ignore
-const router = new Router()
+const router = Router()
 
 import orders from './orders'
 import me from './me'
@@ -15,6 +14,5 @@ router.use('/swaps', swaps)
 router.use('/kraken', kraken)
 router.use('/info', info)
 router.use('/', homepage)
-
 
 export default router

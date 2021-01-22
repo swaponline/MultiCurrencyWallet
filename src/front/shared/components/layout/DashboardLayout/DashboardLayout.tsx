@@ -18,18 +18,11 @@ import { ModalConductorProvider } from 'components/modal'
 
 import styles from './styles.scss'
 
-
-
 const isWidgetBuild = config && config.isWidget
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 const NewDesignLayout = (props) => {
-  const {
-    hiddenCoinsList,
-    activeFiat,
-    children,
-    page,
-  } = props
+  const { hiddenCoinsList, activeFiat, children, page } = props
 
   const balanceRef = React.useRef(null) // Create a ref object
 
@@ -40,10 +33,7 @@ const NewDesignLayout = (props) => {
   }
   if (page === 'invoices') activeView = 2
 
-
-  const isSweepReady = localStorage.getItem(
-    constants.localStorage.isSweepReady
-  )
+  const isSweepReady = localStorage.getItem(constants.localStorage.isSweepReady)
   const isBtcSweeped = actions.btc.isSweeped()
   const isEthSweeped = actions.eth.isSweeped()
 
@@ -65,11 +55,7 @@ const NewDesignLayout = (props) => {
     isMnemonicSaved: mnemonic === `-`,
   })
 
-  const {
-    enabledCurrencies,
-    //@ts-ignore
-    infoAboutCurrency
-  } = commonState
+  const { enabledCurrencies, infoAboutCurrency } = commonState
 
   let btcBalance = 0
   let fiatBalance = 0
@@ -79,15 +65,18 @@ const NewDesignLayout = (props) => {
 
   // Набор валют для виджета
   const widgetCurrencies = ['BTC']
-  if (!hiddenCoinsList.includes('BTC (SMS-Protected)')) { widgetCurrencies.push('BTC (SMS-Protected)') }
-  if (!hiddenCoinsList.includes('BTC (PIN-Protected)')) { widgetCurrencies.push('BTC (PIN-Protected)') }
-  if (!hiddenCoinsList.includes('BTC (Multisig)')) { widgetCurrencies.push('BTC (Multisig)') }
+  if (!hiddenCoinsList.includes('BTC (SMS-Protected)')) {
+    widgetCurrencies.push('BTC (SMS-Protected)')
+  }
+  if (!hiddenCoinsList.includes('BTC (PIN-Protected)')) {
+    widgetCurrencies.push('BTC (PIN-Protected)')
+  }
+  if (!hiddenCoinsList.includes('BTC (Multisig)')) {
+    widgetCurrencies.push('BTC (Multisig)')
+  }
   widgetCurrencies.push('ETH')
   if (isWidgetBuild) {
-    if (
-      window.widgetERC20Tokens &&
-      Object.keys(window.widgetERC20Tokens).length
-    ) {
+    if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
       // Multi token widget build
       Object.keys(window.widgetERC20Tokens).forEach((key) => {
         widgetCurrencies.push(key.toUpperCase())
@@ -97,33 +86,27 @@ const NewDesignLayout = (props) => {
     }
   }
 
-  let tableRows = allData.filter(({ currency, address, balance }) =>
-    // @ToDo - В будущем нужно убрать проверку только по типу монеты.
-    // Старую проверку оставил, чтобы у старых пользователей не вывалились скрытые кошельки
+  let tableRows = allData.filter(
+    ({ currency, address, balance }) =>
+      // @ToDo - В будущем нужно убрать проверку только по типу монеты.
+      // Старую проверку оставил, чтобы у старых пользователей не вывалились скрытые кошельки
 
-    (
       (!hiddenCoinsList.includes(currency) &&
         !hiddenCoinsList.includes(`${currency}:${address}`)) ||
       balance > 0
-    )
   )
 
   if (isWidgetBuild) {
     // tableRows = allData.filter(({ currency }) => widgetCurrencies.includes(currency))
     tableRows = allData.filter(
       ({ currency, address }) =>
-        !hiddenCoinsList.includes(currency) &&
-        !hiddenCoinsList.includes(`${currency}:${address}`)
+        !hiddenCoinsList.includes(currency) && !hiddenCoinsList.includes(`${currency}:${address}`)
     )
     // Отфильтруем валюты, исключив те, которые не используются в этом билде
-    tableRows = tableRows.filter(({ currency }) =>
-      widgetCurrencies.includes(currency)
-    )
+    tableRows = tableRows.filter(({ currency }) => widgetCurrencies.includes(currency))
   }
 
-  tableRows = tableRows.filter(({ currency }) =>
-    enabledCurrencies.includes(currency)
-  )
+  tableRows = tableRows.filter(({ currency }) => enabledCurrencies.includes(currency))
 
   tableRows.forEach(({ name, infoAboutCurrency, balance, currency }) => {
     const currName = currency || name
@@ -137,25 +120,18 @@ const NewDesignLayout = (props) => {
         changePercent = infoAboutCurrency.percent_change_1h
       }
       btcBalance += balance * infoAboutCurrency.price_btc
-      fiatBalance += balance * ((infoAboutCurrency.price_fiat) ? infoAboutCurrency.price_fiat : 1)
+      fiatBalance += balance * (infoAboutCurrency.price_fiat ? infoAboutCurrency.price_fiat : 1)
     }
   })
 
   return (
     <article className="data-tut-start-widget-tour">
-      {window.CUSTOM_LOGO && (
-        <img className="cutomLogo" src={window.CUSTOM_LOGO} alt="logo" />
-      )}
+      {window.CUSTOM_LOGO && <img className="cutomLogo" src={window.CUSTOM_LOGO} alt="logo" />}
       <section
         styleName={`wallet ${window.CUSTOM_LOGO ? 'hasCusomLogo' : ''} ${isDark ? 'dark' : ''}`}
       >
-        <div
-          className="data-tut-store"
-          styleName="walletContent"
-          ref={balanceRef}
-        >
+        <div className="data-tut-store" styleName="walletContent" ref={balanceRef}>
           <div styleName="walletBalance">
-
             {props.BalanceForm}
 
             <div
@@ -169,19 +145,15 @@ const NewDesignLayout = (props) => {
           </div>
           <div
             styleName={cx({
-              'yourAssetsWrapper': activeView === 0,
-              'activity': activeView === 1 || activeView === 2,
-              'active': true,
+              yourAssetsWrapper: activeView === 0,
+              activity: activeView === 1 || activeView === 2,
+              active: true,
             })}
-
           >
             {showSweepBanner && (
               <p styleName="sweepInfo">
                 <Button blue onClick={this.handleMakeSweep}>
-                  <FormattedMessage
-                    id="SweepBannerButton"
-                    defaultMessage="Done"
-                  />
+                  <FormattedMessage id="SweepBannerButton" defaultMessage="Done" />
                 </Button>
                 <FormattedMessage
                   id="SweepBannerDescription"
@@ -192,9 +164,7 @@ const NewDesignLayout = (props) => {
               </p>
             )}
 
-            <ModalConductorProvider>
-              {children}
-            </ModalConductorProvider>
+            <ModalConductorProvider>{children}</ModalConductorProvider>
           </div>
           <div
             className={cx({
@@ -233,18 +203,14 @@ export default connect(
     ui: { dashboardModalsAllowed },
   }) => {
     let widgetMultiTokens = []
-    if (
-      window.widgetERC20Tokens &&
-      Object.keys(window.widgetERC20Tokens).length
-    ) {
+    if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
       Object.keys(window.widgetERC20Tokens).forEach((key) => {
         widgetMultiTokens.push(key.toUpperCase())
       })
     }
     const tokens =
       config && config.isWidget
-        ? window.widgetERC20Tokens &&
-          Object.keys(window.widgetERC20Tokens).length
+        ? window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length
           ? widgetMultiTokens
           : [config.erc20token.toUpperCase()]
         : Object.keys(tokensData).map((k) => tokensData[k].currency)
@@ -294,8 +260,4 @@ export default connect(
       modals,
     }
   }
-)(
-  injectIntl(
-    withRouter(cssModules(NewDesignLayout, styles, { allowMultiple: true }))
-  )
-)
+)(injectIntl(withRouter(cssModules(NewDesignLayout, styles, { allowMultiple: true }))))
