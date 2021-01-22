@@ -213,7 +213,7 @@ class BTC2ETH extends Flow {
                 } else {
                   console.log('Fail fund script', err)
                   flow.setState({
-                    utxoFundError: err,
+                    utxoFundError: err.toString(),
                   })
                 }
               }
