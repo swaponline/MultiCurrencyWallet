@@ -590,6 +590,131 @@ class BtcLikeSwap extends SwapInterface {
     return this.getWithdrawRawTransaction(data, true)
   }
 
+  async processSwapScriptFund(flow) {
+    const utxoClass = this
+
+    const onTransactionHash = (txID) => {
+      const { btcScriptCreatingTransactionHash, btcScriptValues } = flow.state
+
+      if (btcScriptCreatingTransactionHash) {
+        return
+      }
+
+      flow.setState({
+        btcScriptCreatingTransactionHash: txID,
+      })
+
+      flow.swap.room.once('request btc script', () => {
+        flow.swap.room.sendMessage({
+          event: 'create btc script',
+          data: {
+            scriptValues: btcScriptValues,
+            btcScriptCreatingTransactionHash: txID,
+          }
+        })
+      })
+
+      flow.swap.room.sendMessage({
+        event: 'create btc script',
+        data: {
+          scriptValues: btcScriptValues,
+          btcScriptCreatingTransactionHash: txID,
+        }
+      })
+    }
+
+    const { sellAmount } = flow.swap
+    const { isBalanceEnough, btcScriptValues } = flow.state
+
+    if (isBalanceEnough) {
+      const fundScriptRepeat = async () => {
+        try {
+          await utxoClass.fundScript({
+            scriptValues: btcScriptValues,
+            amount: sellAmount,
+          })
+          return true
+        } catch (err) {
+          if (err === 'Script funded already') {
+            console.warn('Script already funded')
+            return true
+          } else {
+            if (err === 'Conflict') {
+              // @ToDo - its can be not btc, other UTXO, but, with btc its frequent error
+              console.warn('UTXO(BTC) locked. Has not confirmed tx in mempool. Wait confirm')
+              flow.swap.room.sendMessage({
+                event: 'wait utxo unlock',
+                data: {},
+              })
+              flow.setState({
+                waitUnlockUTXO: true,
+              })
+              await util.helpers.waitDelay(30)
+              return false
+            } else {
+              console.log('Fail fund script', err)
+            }
+          }
+        }
+        return true
+      }
+
+      await util.helpers.repeatAsyncUntilResult(async (stopRepeat) => {
+        const { isStoppedSwap } = flow.state
+
+        if (!isStoppedSwap) {
+          return await fundScriptRepeat()
+        } else {
+          stopRepeat()
+        }
+      })
+    }
+
+    const checkBTCScriptBalance = async () => {
+      const { scriptAddress } = utxoClass.createScript(btcScriptValues)
+      const unspents = await utxoClass.fetchUnspents(scriptAddress)
+
+      if (unspents.length === 0) {
+        return false
+      }
+
+      const txID = unspents[0].txid
+
+      const balance = await utxoClass.getBalance(btcScriptValues)
+
+      const isEnoughMoney = new BigNumber(balance).isGreaterThanOrEqualTo(sellAmount.times(1e8))
+
+      if (isEnoughMoney) {
+        flow.setState({
+          scriptBalance: new BigNumber(balance).div(1e8).dp(8),
+        })
+
+        onTransactionHash(txID)
+      }
+
+      return isEnoughMoney
+    }
+
+    await util.helpers.repeatAsyncUntilResult(async (stopRepeat) => {
+      const { isStoppedSwap } = flow.state
+
+      if (!isStoppedSwap) {
+        return await checkBTCScriptBalance()
+      } else {
+        stopRepeat()
+      }
+    })
+
+    const { isStoppedSwap } = flow.state
+
+    if (!isStoppedSwap) {
+      flow.finishStep({
+        isBtcScriptFunded: true,
+        isScriptFunded: true,
+      }, { step: 'lock-btc' })
+    }
+  }
+
   /**
    *
    * @param {object} data
