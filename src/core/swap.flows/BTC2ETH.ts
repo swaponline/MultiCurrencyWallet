@@ -87,6 +87,8 @@ class BTC2ETH extends Flow {
       isSwapExist: false,
 
       requireWithdrawFee: false,
+
+      utxoFundError: null,
     }
 
     this._persistState()
@@ -210,6 +212,9 @@ class BTC2ETH extends Flow {
                   return false
                 } else {
                   console.log('Fail fund script', err)
+                  flow.setState({
+                    utxoFundError: err.toString(),
+                  })
                 }
               }
             }

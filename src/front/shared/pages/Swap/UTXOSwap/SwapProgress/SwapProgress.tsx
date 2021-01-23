@@ -486,6 +486,17 @@ export default class SwapProgress extends Component<any, any> {
                   />
                 </strong>
               )}
+              {flow.step <= 5 && flow.utxoFundError && (
+                <strong styleName="attention">
+                  <FormattedMessage
+                    id="Swap_UtxoBroadcastError"
+                    defaultMessage="Swap paused because broadcast tx ended with error &quot;{error}&quot;"
+                    values={{
+                      error: flow.utxoFundError,
+                    }}
+                  />
+                </strong>
+              )}
               {metamask.isConnected() && (
                 (!this.isSellCurrencyEthOrEthToken && flow.step === 6)
                 || (this.isSellCurrencyEthOrEthToken && flow.step === 5 && flow.isUTXOScriptOk)
