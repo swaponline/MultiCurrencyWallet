@@ -42,8 +42,9 @@ const FAQ = (props) => {
           // return gas * 1e9 - divided by 1e9 to convert
           setEthFee(new BigNumber(ethGasPrice).dividedBy(1e9).toNumber())
         }
-      } catch(err) {
-        console.error('FAQ -> useEffect: ', err);
+      } catch(error) {
+        console.error('FAQ -> useEffect: ', error);
+        feedback.faq.failed(`fetch fees error(${error.message})`)
       }
     }
 

@@ -50,6 +50,7 @@ const events = {
   },
   faq: {
     opened: 'opened',
+    failed: 'failed',
   },
   backup: {
     started: 'started',
