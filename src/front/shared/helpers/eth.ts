@@ -16,7 +16,7 @@ const estimateFeeValue = async (options: EstimateFeeOptions) => {
     .multipliedBy(1e-18)
     .toNumber()
 
-  return +feeValue
+  return feeValue
 }
 
 const estimateGasPrice = async ({ speed = 'fast' } = {}) => {
