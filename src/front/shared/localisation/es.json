@@ -3518,34 +3518,6 @@
     ]
   },
   {
-    "id": "getIeo13",
-    "message": "Se uno de los primeros usuarios.",
-    "files": [
-      "src/front/shared/components/Footer/GetIeo/GetIeo.tsx"
-    ]
-  },
-  {
-    "id": "getIeo21",
-    "message": "Premiaremos a todos los usuarios con nuestros nativos {br}SWAP tokens que pueden ser intercambiados a BTC en nuestra plataforma.{br}",
-    "files": [
-      "src/front/shared/components/Footer/GetIeo/GetIeo.tsx"
-    ]
-  },
-  {
-    "id": "getIeo22",
-    "message": "Comienza",
-    "files": [
-      "src/front/shared/components/Footer/GetIeo/GetIeo.tsx"
-    ]
-  },
-  {
-    "id": "getIeo25",
-    "message": "Leer WhitePaper",
-    "files": [
-      "src/front/shared/components/Footer/GetIeo/GetIeo.tsx"
-    ]
-  },
-  {
     "id": "Submenu16",
     "message": "Rapido intercambio atomic swap a BTC, ETH, ERC20 online",
     "files": [
