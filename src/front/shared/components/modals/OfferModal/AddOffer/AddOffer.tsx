@@ -565,8 +565,8 @@ export default class AddOffer extends Component<any, any> {
             //@ts-ignore */}
             <Toggle checked={isTurbo} onChange={() => this.setState((state) => ({ isTurbo: !state.isTurbo }))} />
             <div styleName="togleText">
-              <span>Turbo swap</span>
               <img styleName='turboSwapIcon' src={turboSwapIcon} />
+              <span>Turbo swap <sub>αlpha</sub></span>
             </div>
           </div>
         </div>

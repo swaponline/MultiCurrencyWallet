@@ -7674,14 +7674,14 @@
   },
   {
     "id": "offerMessageToUser",
-    "message": "Вы должны быть онлайн все время, иначе ваш заказ не будет виден другим пользователям",
+    "message": "Вы должны быть онлайн все время, иначе ваше предложение не будет видно другим пользователям",
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
   },
   {
     "id": "createOrderMessageForUser",
-    "message": "Вы должны быть онлайн все время, иначе ваш заказ не будет виден другим пользователям",
+    "message": "Вы должны быть онлайн все время, иначе ваше предложение не будет видно другим пользователям",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]

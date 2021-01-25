@@ -57,8 +57,24 @@
 }
 
 .turboSwapIcon {
-  max-width: 20px;
-  max-height: 20px;
+  display: inline-block;
   position: relative;
-  top: -3px;
+  top: -6px;
+  width: 20px;
+  height: 20px;
+  margin-right: 0.2em;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  span {
+    position: absolute;
+    font-size: 8px;
+    line-height: 1em;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-55%);
+  }
 }

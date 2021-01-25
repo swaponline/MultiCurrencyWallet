@@ -213,6 +213,7 @@ export default class Row extends Component {
 
           if (isAccepted) {
             this.setState({ isFetching: false }, () => {
+              console.log('Redirect Row.tsx -> Swap')
               history.push(localisedUrl(intl.locale, `${links.swap}/${buyCurrency}-${sellCurrency}/${id}`))
             })
           } else {
@@ -341,7 +342,10 @@ export default class Row extends Component {
         </td>
         <td styleName='rowCell'>
           {isTurbo &&
-            <img styleName='turboSwapIcon' src={turboSwapIcon} />
+            <div styleName='turboSwapIcon'>
+              <img src={turboSwapIcon} />
+              <span>turbo</span>
+            </div>
           }
           <span styleName='rowAmount'>
             {`${this.getDecimals(sellAmountOut, sellCurrencyOut)} ${sellCurrencyOut}`}
@@ -428,7 +432,10 @@ export default class Row extends Component {
               </span>
               <span styleName='rowAmount'>
                 {isTurbo &&
-                  <img styleName='turboSwapIcon' src={turboSwapIcon} />
+                  <div styleName='turboSwapIcon'>
+                    <img src={turboSwapIcon} />
+                    <span>turbo</span>
+                  </div>
                 }
                 {`${mobileFormatCrypto(amount, main)} ${main}`}
               </span>
