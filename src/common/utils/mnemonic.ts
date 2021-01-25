@@ -98,7 +98,6 @@ const getNextWallet = (network, mnemonic, walletNumber = 0, path) => {
 }
 
 const mnemonicIsValid = (mnemonic:string):boolean => bip39.validateMnemonic(convertMnemonicToValid(mnemonic))
-const getBchWallet = (network, mnemonic, walletNumber = 0, path) => { /* not implements */ }
 
 
 const forCoin = {
@@ -106,7 +105,6 @@ const forCoin = {
   ETH:    getEthWallet,
   GHOST:  getGhostWallet,
   NEXT:   getNextWallet,
-  BCH:    getBchWallet, /* not implements */
 }
 
 export {
@@ -116,6 +114,5 @@ export {
   getEthWallet,
   getGhostWallet,
   getNextWallet,
-  getBchWallet, /* not implements */
   forCoin,
 }

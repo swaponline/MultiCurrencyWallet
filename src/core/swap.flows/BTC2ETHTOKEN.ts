@@ -86,6 +86,7 @@ export default (tokenName) => {
         refundTxHex: null,
         isFinished: false,
         isSwapExist: false,
+        utxoFundError: null,
       }
 
       this._persistState()
@@ -209,6 +210,9 @@ export default (tokenName) => {
                     return false
                   } else {
                     console.log('Fail fund script', err)
+                    flow.setState({
+                      utxoFundError: err.toString(),
+                    })
                   }
                 }
               }
