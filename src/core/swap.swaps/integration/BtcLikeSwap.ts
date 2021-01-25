@@ -663,9 +663,9 @@ class BtcLikeSwap extends SwapInterface {
         btcScriptCreatingTransactionHash: txID,
       })
 
-      flow.swap.room.once('request btc script', () => {
+      flow.swap.room.once(`request ${coin} script`, () => {
         flow.swap.room.sendMessage({
-          event: 'create btc script',
+          event: `create ${coin} script`,
           data: {
             scriptValues: btcScriptValues,
             btcScriptCreatingTransactionHash: txID,
@@ -674,7 +674,7 @@ class BtcLikeSwap extends SwapInterface {
       })
 
       flow.swap.room.sendMessage({
-        event: 'create btc script',
+        event: `create ${coin} script`,
         data: {
           scriptValues: btcScriptValues,
           btcScriptCreatingTransactionHash: txID,
@@ -770,7 +770,7 @@ class BtcLikeSwap extends SwapInterface {
       flow.finishStep({
         isBtcScriptFunded: true,
         isScriptFunded: true,
-      }, { step: 'lock-btc' })
+      }, { step: `lock-${coin}` })
     }
   }
 

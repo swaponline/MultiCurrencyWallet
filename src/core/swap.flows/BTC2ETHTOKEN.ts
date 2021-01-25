@@ -150,131 +150,13 @@ export default (tokenName) => {
         // 4. Create BTC Script, fund, notify participant
 
         async () => {
-          const onTransactionHash = (txID) => {
-            const { btcScriptCreatingTransactionHash, btcScriptValues } = flow.state
-
-            if (btcScriptCreatingTransactionHash) {
-              return
-            }
-
-            flow.setState({
-              btcScriptCreatingTransactionHash: txID,
-            })
-
-            flow.swap.room.once('request btc script', () => {
-              flow.swap.room.sendMessage({
-                event:  'create btc script',
-                data: {
-                  scriptValues: btcScriptValues,
-                  btcScriptCreatingTransactionHash: txID,
-                }
-              })
-            })
-
-            flow.swap.room.sendMessage({
-              event: 'create btc script',
-              data: {
-                scriptValues : btcScriptValues,
-                btcScriptCreatingTransactionHash : txID,
-              }
-            })
-          }
-
-          const { sellAmount } = flow.swap
-          const { isBalanceEnough, btcScriptValues } = flow.state
-
-          if (isBalanceEnough) {
-            const fundScriptRepeat = async () => {
-              try {
-                console.log('Funding script')
-                await flow.btcSwap.fundScript({
-                  scriptValues: btcScriptValues,
-                  amount: sellAmount,
-                })
-                return true
-              } catch (err) {
-                if (err === 'Script funded already') {
-                  console.warn('Script already funded')
-                  return true
-                } else {
-                  if (err === 'Conflict') {
-                    console.warn('BTC locked. Has not confirmed tx in mempool. Wait confirm')
-                    flow.swap.room.sendMessage({
-                      event: 'wait utxo unlock',
-                      data: {},
-                    })
-                    flow.setState({
-                      waitUnlockUTXO: true,
-                    })
-                    await util.helpers.waitDelay(30)
-                    return false
-                  } else {
-                    console.log('Fail fund script', err)
-                    flow.setState({
-                      utxoFundError: err.toString(),
-                    })
-                  }
-                }
-              }
-              return true
-            }
-
-            await util.helpers.repeatAsyncUntilResult(async (stopRepeat) => {
-              const { isStoppedSwap } = flow.state
-
-              if (!isStoppedSwap) {
-                return await fundScriptRepeat()
-              } else {
-                stopRepeat()
-              }
-            })
-          }
-
-          const checkBTCScriptBalance = async () => {
-            console.log('checkBTCScriptBalance')
-            const { scriptAddress } = this.btcSwap.createScript(btcScriptValues)
-            const unspents = await this.btcSwap.fetchUnspents(scriptAddress)
-
-            console.log('unspents', unspents)
-            if (unspents.length === 0) {
-              return false
-            }
-
-            const txID = unspents[0].txid
-
-            const balance = await this.btcSwap.getBalance(btcScriptValues)
-
-            const isEnoughMoney = new BigNumber(balance).isGreaterThanOrEqualTo(sellAmount.times(1e8))
-
-            if (isEnoughMoney) {
-              flow.setState({
-                scriptBalance: new BigNumber(balance).div(1e8).dp(8),
-              })
-
-              onTransactionHash(txID)
-            }
-
-            return isEnoughMoney
-          }
-
-          console.log('begin wait tx fund ready')
-          await util.helpers.repeatAsyncUntilResult(async (stopRepeat) => {
-            const { isStoppedSwap } = flow.state
-
-            if (!isStoppedSwap) {
-              return await checkBTCScriptBalance()
-            } else {
-              stopRepeat()
-            }
+          this.btcSwap.processSwapScriptFund({
+            flow,
+            fieldScriptValues: `btcScriptValues`,
+            fieldCreateTransactionHash: `btcScriptCreatingTransactionHash`,
+            fielsIsScriptFunded: ``,
+            coin: `btc`,
           })
-
-          const { isStoppedSwap } = flow.state
-
-          if (!isStoppedSwap) {
-            flow.finishStep({
-              isBtcScriptFunded: true,
-            }, { step: 'lock-btc' })
-          }
         },
 
         // 5. Wait participant creates ETH Contract
