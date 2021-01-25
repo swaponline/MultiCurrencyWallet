@@ -13,7 +13,6 @@
   margin-top: 1em;
   font-size: 13px;
   font-family: 'Roboto Mono', monospace;
-  //background-color: $l-background-elements;
   color: $notice-color;
 }
 
@@ -91,16 +90,6 @@
 .buttonFull {
   margin-top: 10px;
   display: block;
-}
-
-.cell {
-  color: #3b95ff;
-  cursor: pointer;
-  display: block;
-
-  &:hover {
-    color: darken(#3b95ff, 1);
-  }
 }
 
 .group {
