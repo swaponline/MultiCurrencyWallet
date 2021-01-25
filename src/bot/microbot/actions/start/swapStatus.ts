@@ -61,7 +61,7 @@ export const needsRefund = (swap) => {
     && COIN_DATA[head]
     && COIN_DATA[head].model === COIN_MODEL.UTXO
   ) {
-  // if (head === 'BTC') { // ['BTC','BCH','USDT'].includes(head)) {
+  // if (head === 'BTC') { // ['BTC', 'USDT'].includes(head)) {
     // BTC to _ETH_
 
     //const { btcScriptCreatingTransactionHash } = state
