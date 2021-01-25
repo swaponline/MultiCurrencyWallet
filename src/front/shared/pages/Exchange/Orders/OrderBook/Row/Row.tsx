@@ -21,7 +21,7 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import { BigNumber } from 'bignumber.js'
 import feedback from 'shared/helpers/feedback'
-import turboSwapIcon from 'shared/images/turbo.svg'
+import TurboIcon from 'shared/components/ui/TurboIcon/TurboIcon'
 
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
@@ -335,18 +335,17 @@ export default class Row extends Component {
         style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}
       >
         <td styleName='rowCell'>
-          <Avatar
-            value={ownerPeer}
-            size={30}
-          />
+          <div styleName='withIcon'>
+            <Avatar
+              value={ownerPeer}
+              size={30}
+            />
+            {isTurbo &&
+              <TurboIcon />
+            }
+          </div>
         </td>
         <td styleName='rowCell'>
-          {isTurbo &&
-            <div styleName='turboSwapIcon'>
-              <img src={turboSwapIcon} />
-              <span>turbo</span>
-            </div>
-          }
           <span styleName='rowAmount'>
             {`${this.getDecimals(sellAmountOut, sellCurrencyOut)} ${sellCurrencyOut}`}
           </span>
@@ -430,12 +429,9 @@ export default class Row extends Component {
                   ? (<FormattedMessage id="RowMobileFirstTypeYouHave" defaultMessage="You have" />)
                   : (<FormattedMessage id="RowMobileFirstTypeYouGet" defaultMessage="You get" />)}
               </span>
-              <span styleName='rowAmount'>
+              <span styleName='rowAmount withIcon'>
                 {isTurbo &&
-                  <div styleName='turboSwapIcon'>
-                    <img src={turboSwapIcon} />
-                    <span>turbo</span>
-                  </div>
+                  <TurboIcon />
                 }
                 {`${mobileFormatCrypto(amount, main)} ${main}`}
               </span>

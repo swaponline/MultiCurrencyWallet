@@ -40,6 +40,7 @@ const checkIncomeOrderFormat = (order) => {
     isProcessing: '?Boolean',
     isRequested: '?Boolean',
     isPartial: '?Boolean',
+    isTurbo: '?Boolean',
     isHidden: '?Boolean',
     destination: util.typeforce.t.maybe({
       ownerAddress: '?String',
@@ -336,6 +337,7 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
    * @param {number} data.sellAmount
    */
   create(data) {
+    console.log('swap.orders/SwapOrders >>> create() data = ', data)
     const order = this._create({
       ...data,
       owner: this.app.services.auth.getPublicData(),

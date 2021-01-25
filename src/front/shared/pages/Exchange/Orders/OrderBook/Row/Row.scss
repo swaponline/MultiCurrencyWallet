@@ -3,6 +3,15 @@
   font-family: 'Roboto Mono', monospace;
 }
 
+.withIcon {
+  display: flex;
+  align-items: center;
+
+  & > * + * {
+    margin-left: 0.5em;
+  }
+}
+
 .rowDark {
   .rowAmount {
     color: $d-color;
@@ -53,28 +62,5 @@
     .bigContainer {
       font-size: 12px;
     }
-  }
-}
-
-.turboSwapIcon {
-  display: inline-block;
-  position: relative;
-  top: -6px;
-  width: 20px;
-  height: 20px;
-  margin-right: 0.2em;
-
-  img {
-    max-width: 100%;
-    max-height: 100%;
-  }
-
-  span {
-    position: absolute;
-    font-size: 8px;
-    line-height: 1em;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-55%);
   }
 }

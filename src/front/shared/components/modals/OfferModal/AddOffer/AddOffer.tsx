@@ -23,7 +23,7 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage } from 'react-intl'
 import minAmountOffer from 'helpers/constants/minAmountOffer'
 import coinsWithDynamicFee from 'helpers/constants/coinsWithDynamicFee'
-import turboSwapIcon from 'shared/images/turbo.svg'
+import TurboIcon from 'shared/components/ui/TurboIcon/TurboIcon'
 
 
 const mathConstants = {
@@ -529,11 +529,11 @@ export default class AddOffer extends Component<any, any> {
         </div>
 
         <div styleName="controlsToggles">
-          <div styleName="togles">
+          <div styleName="toggle">
             {/*
             //@ts-ignore */}
             <Toggle checked={manualRate} onChange={this.handleManualRate} />
-            <div styleName="togleText">
+            <div styleName="toggleText">
               <FormattedMessage id="AddOffer418" defaultMessage="Custom exchange rate" />
               {' '}
               <Tooltip id="add264">
@@ -541,11 +541,11 @@ export default class AddOffer extends Component<any, any> {
               </Tooltip>
             </div>
           </div>
-          <div styleName="togles">
+          <div styleName="toggle">
             {/*
             //@ts-ignore */}
             <Toggle checked={isPartial} onChange={() => this.setState((state) => ({ isPartial: !state.isPartial }))} />
-            <div styleName="togleText">
+            <div styleName="toggleText">
               <FormattedMessage id="AddOffer423" defaultMessage="Enable partial fills" />
               {' '}
               <Tooltip id="add547">
@@ -560,13 +560,14 @@ export default class AddOffer extends Component<any, any> {
               </Tooltip>
             </div>
           </div>
-          <div styleName="togles">
+          <div styleName="toggle">
+            <div styleName="toggleText">Atomic swap</div>
             {/*
             //@ts-ignore */}
             <Toggle checked={isTurbo} onChange={() => this.setState((state) => ({ isTurbo: !state.isTurbo }))} />
-            <div styleName="togleText">
-              <img styleName='turboSwapIcon' src={turboSwapIcon} />
-              <span>Turbo swap <sub>αlpha</sub></span>
+            <div styleName="toggleText">
+              <TurboIcon />
+              <span>Turbo swap <sub>α</sub></span>
             </div>
           </div>
         </div>

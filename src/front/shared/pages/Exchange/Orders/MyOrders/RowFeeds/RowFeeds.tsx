@@ -15,6 +15,7 @@ import { RemoveButton } from 'components/controls'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import BigNumber from 'bignumber.js'
+import TurboIcon from 'shared/components/ui/TurboIcon/TurboIcon'
 
 
 @withRouter
@@ -36,7 +37,7 @@ export default class RowFeeds extends Component<any, any> {
 
   render() {
     const {
-      row: { requests, buyAmount, buyCurrency, sellAmount, sellCurrency, exchangeRate, id },
+      row: { requests, buyAmount, buyCurrency, sellAmount, sellCurrency, exchangeRate, id, isTurbo },
       declineRequest, acceptRequest, removeOrder, intl: { locale },
     } = this.props
 
@@ -44,8 +45,11 @@ export default class RowFeeds extends Component<any, any> {
 
     return (
       <tr key={this.props.key}>
-        <td>
+        <td styleName="with-icon">
           <Coins names={[sellCurrency, buyCurrency]} size={25} />
+          {isTurbo &&
+            <TurboIcon />
+          }
         </td>
         <td>
           <span styleName="value">{sellAmount.toFixed(5)}</span>

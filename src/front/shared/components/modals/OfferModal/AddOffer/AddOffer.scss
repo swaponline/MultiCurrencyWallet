@@ -24,7 +24,7 @@
   margin: 0 auto;
 
   &.--dark {
-    .togleText {
+    .toggleText {
       color: #8e9aa3;
     }
   }
@@ -46,14 +46,15 @@
   }
 }
 
-.togleText {
-  position: relative;
-  top: -35px;
-  left: 72px;
+.toggle {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5em;
 }
 
-.togles {
-  height: 40px;
+.toggleText {
+  display: flex;
+  align-items: center;
 }
 
 .controlsToggles {
@@ -123,9 +124,4 @@
   }
 }
 
-.turboSwapIcon {
-  max-width: 20px;
-  max-height: 20px;
-  position: relative;
-  top: -4px;
-}
+
