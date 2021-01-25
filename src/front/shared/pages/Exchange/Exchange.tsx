@@ -40,20 +40,16 @@ import metamask from 'helpers/metamask'
 import { getPairFees } from 'helpers/getPairFees'
 import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
 
-type UniversalObject = {
-  [key: string]: any
-}
-
 type ExchangeProps = {
   isOnlyForm: boolean
   activeFiat: string
-  intl: UniversalObject
-  match: UniversalObject
-  location: UniversalObject
-  history: UniversalObject
-  usersData: UniversalObject[]
-  currenciesData: UniversalObject[]
-  tokensData: UniversalObject[]
+  intl: IUniversalObj
+  match: IUniversalObj
+  location: IUniversalObj
+  history: IUniversalObj
+  usersData: IUniversalObj[]
+  currenciesData: IUniversalObj[]
+  tokensData: IUniversalObj[]
   currencies: { [key: string]: string }[]
   allCurrencyies: {
     addAssets: boolean
@@ -110,7 +106,7 @@ type ExchangeState = {
   
   balances: any
   pairFees: any
-  filteredOrders: UniversalObject[]
+  filteredOrders: IUniversalObj[]
   desclineOrders: [] // what in the array?
 
   fromAddress: Address
@@ -464,9 +460,7 @@ export default class Exchange extends Component<any, any> {
                 // After fetching fee - actualize balances
                 const buyWallet = actions.core.getWallet({ currency: buyCurrency })
                 const sellWallet = actions.core.getWallet({ currency: sellCurrency })
-                //@ts-ignore: Property 'buy' does not exist on type 'unknown'
                 const feeBuyWallet = actions.core.getWallet({ currency: pairFees.buy.coin })
-                //@ts-ignore: Property 'sell' does not exist on type 'unknown'
                 const feeSellWallet = actions.core.getWallet({ currency: pairFees.sell.coin })
 
                 const balances = {}

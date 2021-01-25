@@ -30,11 +30,6 @@ export const messages = defineMessages({
     description: 'Menu item "History"',
     defaultMessage: 'Transactions',
   },
-  IEO: {
-    id: 'menu.IEO',
-    description: 'Menu item "IEO"',
-    defaultMessage: 'Earn',
-  },
   invest: {
     id: 'menu.invest.info',
     description: 'Menu item "Transactions"',

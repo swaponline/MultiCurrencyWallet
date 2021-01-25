@@ -12,16 +12,23 @@ import exConfig from 'helpers/externalConfig'
 
 const isWidgetBuild = config && config.isWidget
 
-const CurrenciesList = ({
-  isDark,
-  tableRows,
-  currencies,
-  infoAboutCurrency,
-  hiddenCoinsList,
-  goToСreateWallet,
-  getExCurrencyRate,
-  multisigPendingCount,
-}) => {
+type CurrenciesListProps = {
+  isDark: boolean
+  multisigPendingCount: number
+  goToСreateWallet: () => void
+  hiddenCoinsList: string[]
+  tableRows: IUniversalObj[]
+}
+
+const CurrenciesList = (props: CurrenciesListProps) => {
+  const {
+    isDark,
+    tableRows,
+    hiddenCoinsList,
+    goToСreateWallet,
+    multisigPendingCount,
+  } = props
+
   return (
     <div styleName={`yourAssets ${isDark ? 'dark' : ''}`}>
       {(exConfig && exConfig.opts && exConfig.opts.showWalletBanners) || isWidgetBuild ? (
@@ -43,19 +50,12 @@ const CurrenciesList = ({
       <Table
         className={`${styles.walletTable} data-tut-address`}
         rows={tableRows}
-        rowRender={(row, index, selectId, handleSelectId) => (
+        rowRender={(row, index) => (
           <Row
             key={index}
-            index={index}
             isDark={isDark}
             currency={row}
             itemData={row}
-            currencies={currencies}
-            infoAboutCurrency={infoAboutCurrency}
-            getExCurrencyRate={(currencySymbol, rate) => getExCurrencyRate(currencySymbol, rate)}
-            hiddenCoinsList={hiddenCoinsList}
-            selectId={selectId}
-            handleSelectId={handleSelectId}
           />
         )}
       />
