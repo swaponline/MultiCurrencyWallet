@@ -4837,7 +4837,7 @@
   },
   {
     "id": "customERC20_ReadyMessage",
-    "message": "Токен успешно добавлен",
+    "message": "Token ble lagt til",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
