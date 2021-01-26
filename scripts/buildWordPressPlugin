@@ -51,7 +51,7 @@ rm -rf testnet
 rm -rf *.css
 rm -rf *.js
 
-cp -rf ../../../build-testnet-widget/* ./testnet/.
+cp -rf ../../../../build-testnet-widget/* ./.
 buildIdtestnet=$(find -iname "app.*?.js" | sed "s/^\.\/app\.\(.*\)\.js$/\1/")
 
 echo $buildIdtestnet
