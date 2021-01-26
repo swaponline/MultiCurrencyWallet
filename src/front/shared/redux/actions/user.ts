@@ -234,7 +234,6 @@ const getBalances = () => {
 
     balances.forEach(async (obj) => {
       try {
-        //@ts-ignore
         await obj.func()
       } catch (e) {
         console.error('Fail fetch balance for', obj.name)
@@ -242,14 +241,19 @@ const getBalances = () => {
     })
 
     if (isTokenSigned) {
-      Object.keys(config.erc20)
-        .forEach(async (name) => { 
-          try {
-            await actions.token.getBalance(name)
-          } catch (e) {
-            console.error('Fail fetch balance for token', name, e)
-          }
-        })
+      // wait until all token data is loaded and will be in the store
+      setTimeout(() => {
+        // local storage data
+        Object.keys(config.erc20)
+          .forEach(async (name) => {
+            try {
+              await actions.token.getBalance(name)
+              
+            } catch (e) {
+              console.error('Fail fetch balance for token', name, e)
+            }
+          })
+      })
     }
 
     reducers.user.setIsBalanceFetching({ isBalanceFetching: false })

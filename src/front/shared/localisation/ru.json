@@ -3598,76 +3598,6 @@
     ]
   },
   {
-    "id": "IEO_title_1",
-    "message": "Получите до 5 SWAP за каждое действие:",
-    "files": [
-      "src/front/shared/pages/IEO/IEO.tsx"
-    ]
-  },
-  {
-    "id": "IEO_titles_1",
-    "message": "Шаг",
-    "files": [
-      "src/front/shared/pages/IEO/IEO.tsx"
-    ]
-  },
-  {
-    "id": "IEO_titles_2",
-    "message": "Действие",
-    "files": [
-      "src/front/shared/pages/IEO/IEO.tsx"
-    ]
-  },
-  {
-    "id": "IEO_titles_3",
-    "message": "Ваши данные",
-    "files": [
-      "src/front/shared/pages/IEO/IEO.tsx"
-    ]
-  },
-  {
-    "id": "IEO_btn_1",
-    "message": "Зарегистрироваться",
-    "files": [
-      "src/front/shared/pages/IEO/IEO.tsx"
-    ]
-  },
-  {
-    "id": "IEO_btn_2",
-    "message": "Вы зарегистрированы",
-    "files": [
-      "src/front/shared/pages/IEO/IEO.tsx"
-    ]
-  },
-  {
-    "id": "IEO_row_1",
-    "message": "Подписаться на твиттер https://twitter.com/SwapOnlineTeam, введите свой твиттер: ",
-    "files": [
-      "src/front/shared/pages/IEO/IEO.tsx"
-    ]
-  },
-  {
-    "id": "IEO_row_2",
-    "message": "Подписаться на фейсбук https://www.facebook.com/SwapOnlineTeam, введите свой фейсбук: ",
-    "files": [
-      "src/front/shared/pages/IEO/IEO.tsx"
-    ]
-  },
-  {
-    "id": "IEO_row_3",
-    "message": "Подписаться на реддит https://www.reddit.com/r/SwapOnline, введите свой реддит: ",
-    "files": [
-      "src/front/shared/pages/IEO/IEO.tsx"
-    ]
-  },
-  {
-    "id": "IEO_row_4",
-    "message": "Подписаться на гитхаб https://github.com/swaponline, введите свой гитхаб: ",
-    "files": [
-      "src/front/shared/pages/IEO/IEO.tsx"
-    ]
-  },
-  {
     "id": "DepositButton41",
     "message": "Deposit this cryptocurrency to your wallet",
     "files": [
@@ -3679,34 +3609,6 @@
     "message": "You can not send this asset, because you have a zero balance.",
     "files": [
       "src/front/shared/components/controls/DepositButton/DepositButton.tsx"
-    ]
-  },
-  {
-    "id": "getIeo13",
-    "message": "Be one of the first users.",
-    "files": [
-      "src/front/shared/components/Footer/GetIeo/GetIeo.tsx"
-    ]
-  },
-  {
-    "id": "getIeo21",
-    "message": "We will reward all users with our native {br}SWAP tokens that can be exchanged to BTC on our platform.{br}",
-    "files": [
-      "src/front/shared/components/Footer/GetIeo/GetIeo.tsx"
-    ]
-  },
-  {
-    "id": "getIeo22",
-    "message": "Get Started",
-    "files": [
-      "src/front/shared/components/Footer/GetIeo/GetIeo.tsx"
-    ]
-  },
-  {
-    "id": "getIeo25",
-    "message": "Read WhitePaper",
-    "files": [
-      "src/front/shared/components/Footer/GetIeo/GetIeo.tsx"
     ]
   },
   {
@@ -3734,14 +3636,6 @@
     ]
   },
   {
-    "id": "Submenu34",
-    "message": "Launch IEO on your website",
-    "files": [
-      "src/front/shared/components/Header/SubMenu/SubMenu.tsx",
-      "src/front/shared/components/modals/MobMenu/MobMenu.tsx"
-    ]
-  },
-  {
     "id": "Swap.OnlineSubmenu",
     "message": "Swap.Exhange"
   },
@@ -3756,14 +3650,6 @@
   {
     "id": "Swap.WidgetSubMenu",
     "message": "Swap.Widget",
-    "files": [
-      "src/front/shared/components/Header/SubMenu/SubMenu.tsx",
-      "src/front/shared/components/modals/MobMenu/MobMenu.tsx"
-    ]
-  },
-  {
-    "id": "launchpadSubMenu",
-    "message": "IEO launchpad",
     "files": [
       "src/front/shared/components/Header/SubMenu/SubMenu.tsx",
       "src/front/shared/components/modals/MobMenu/MobMenu.tsx"
@@ -3902,13 +3788,6 @@
   {
     "id": "history107",
     "message": "Загрузка"
-  },
-  {
-    "id": "IEOHref",
-    "message": "Вы можете обменять SWAP на BTC здесь",
-    "files": [
-      "src/front/shared/pages/IEO/IEO.tsx"
-    ]
   },
   {
     "id": "Quote",
@@ -4582,13 +4461,6 @@
     "message": "Приватный ключ",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "menu.IEO",
-    "message": "Earn",
-    "files": [
-      "src/front/shared/components/Header/config.tsx"
     ]
   },
   {

@@ -586,10 +586,14 @@ const sendV5 = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
 
       const rawTx = psbt.extractTransaction().toHex();
 
-      const broadcastAnswer = await broadcastTx(rawTx)
+      try {
+        const broadcastAnswer = await broadcastTx(rawTx)
 
-      const { txid } = broadcastAnswer
-      ready(txid)
+        const { txid } = broadcastAnswer
+        ready(txid)
+      } catch (eBroadcast) {
+        reject({ message: `Fail broadcast TX: `+eBroadcast })
+      }
     } catch (error) {
       reject(error)
     }

@@ -19,7 +19,6 @@ import Exchange from 'pages/Exchange/Exchange'
 import PointOfSell from 'pages/PointOfSell/PointOfSell'
 import CurrencyWallet from 'pages/CurrencyWallet/CurrencyWallet'
 import Transaction from 'pages/Transaction/Transaction'
-import IEO from 'pages/IEO/IEO'
 import BtcMultisignProcessor from 'pages/Multisign/Btc/Btc'
 
 import CreateInvoice from 'pages/Invoices/CreateInvoice'
@@ -78,7 +77,6 @@ const routes = (
       <Route path={`${localisePrefix}${links.savePrivateSeed}`} component={SaveMnemonicModal} />
       <Route path={`${localisePrefix}${links.savePrivateKeys}`} component={SaveKeysModal} />
 
-      <Route path={`${localisePrefix}${links.ieo}`} component={IEO} />
       <Route exact path={`${localisePrefix}${links.notFound}`} component={NotFound} />
       <Route exact path={`${localisePrefix}/`} component={Wallet} />
       <Route exact path={`${localisePrefix}${links.connectWallet}`} component={Wallet} />

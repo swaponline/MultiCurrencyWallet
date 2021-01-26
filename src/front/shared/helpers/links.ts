@@ -26,7 +26,6 @@ const linksManager = {
   aboutUs: '/aboutUs',
   test: 'https://testnet.swaponline.io',
   main: 'https://swaponline.io/',
-  ieo: '/IEO',
   wallet: '/wallet',
   coins: '/coins',
   partial: '/partial',

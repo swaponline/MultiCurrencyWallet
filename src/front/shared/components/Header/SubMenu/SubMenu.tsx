@@ -28,12 +28,6 @@ const subMenuItems = [
     description: <FormattedMessage id="Submenu28" defaultMessage="Turn your website into a cryptocurrency portal (wallet, stock exchange, etc.)" />,
     image: 'https://img.icons8.com/wired/30/000000/r2-d2.png',
   },
-  {
-    link: links.footer.widget,
-    title: <FormattedMessage id="launchpadSubMenu" defaultMessage="IEO launchpad" />,
-    description: <FormattedMessage id="Submenu34" defaultMessage="Launch IEO on your website" />,
-    image: 'https://img.icons8.com/wired/30/000000/data-protection.png',
-  },
 ]
 
 

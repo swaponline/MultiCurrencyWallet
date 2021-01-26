@@ -4,8 +4,15 @@ import Address from 'components/ui/Address/Address'
 import { AddressFormat } from 'domain/address'
 import LinkAccount from '../LinkAccount'
 
-
-export default ({ currency, contractAddress, address, onClick, withoutLink, style }) => {
+export default function PartOfAddress(props) {
+  const { 
+    style,
+    currency, 
+    contractAddress, 
+    address, 
+    onClick, 
+    withoutLink
+  } = props
 
   const styleOverwrited = {
     fontSize: '12px',

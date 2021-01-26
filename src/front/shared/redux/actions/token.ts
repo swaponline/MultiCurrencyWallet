@@ -26,8 +26,8 @@ const erc20Decoder = new InputDataDecoder(ERC20_ABI)
 
 const AddCustomERC20 = (contract, symbol, decimals) => {
   const configStorage = (process.env.MAINNET) ? 'mainnet' : 'testnet'
-
   let tokensInfo = JSON.parse(localStorage.getItem(constants.localStorage.customERC))
+
   if (!tokensInfo) {
     tokensInfo = {
       mainnet: {},
@@ -39,6 +39,7 @@ const AddCustomERC20 = (contract, symbol, decimals) => {
     symbol,
     decimals,
   }
+
   localStorage.setItem(constants.localStorage.customERC, JSON.stringify(tokensInfo))
 }
 
@@ -105,12 +106,11 @@ const setupContract = (ethAddress, contractAddress, nameContract, decimals, full
 
 
 const getBalance = async (currency) => {
-  const { user: { tokensData } } = getState()
-
   if (currency === undefined) {
     return
   }
 
+  const { user: { tokensData } } = getState()
   const {
     address: internalAddress,
     contractAddress,
@@ -119,8 +119,6 @@ const getBalance = async (currency) => {
   } = tokensData[currency.toLowerCase()]
 
   const address = (metamask.isConnected()) ? metamask.getAddress() : false || internalAddress
-
-  console.log('get token balance', address)
   const balanceInCache = cacheStorageGet('currencyBalances', `token_${currency}_${address}`)
 
   if (balanceInCache !== false) {
@@ -132,12 +130,15 @@ const getBalance = async (currency) => {
   }
 
   const ERC20 = new web3.eth.Contract(ERC20_ABI, contractAddress)
+
   try {
     const result = await ERC20.methods.balanceOf(address).call()
 
     let amount = new BigNumber(String(result)).dividedBy(new BigNumber(String(10)).pow(decimals)).toString()
+    
     reducers.user.setTokenBalance({ name, amount })
     cacheStorageSet('currencyBalances', `token_${currency}_${address}`, amount, 60)
+
     return amount
   } catch (e) {
     reducers.user.setTokenBalanceError({ name })

@@ -477,7 +477,7 @@ const getWallets = (options) => {
   return allData.filter((item) => item && item.address)
 }
 
-const fetchWalletBalance = async (walletData): number => {
+const fetchWalletBalance = async (walletData): Promise<number> => {
   const name = walletData.currency.toLowerCase()
   if (helpers.ethToken.isEthToken({ name })) {
     try {
