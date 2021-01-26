@@ -6,6 +6,8 @@ git pull
 
 npm run build:mainnet-widget
 
+npm run build:testnet-widget
+
 # update repo or clone
 #rm -rf WalletWpPlugin
 git clone https://sorentobot:$1@github.com/swaponline/WalletWpPlugin.git
