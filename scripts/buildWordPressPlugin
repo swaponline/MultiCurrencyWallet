@@ -18,6 +18,7 @@ git reset --hard origin/master
 rm -rf assets
 rm -rf images
 rm -rf fonts
+rm -rf testnet
 rm -rf *.css
 rm -rf *.js
 
@@ -33,6 +34,30 @@ mv vendor.${buildId}.js vendor.js
 rm index.html
 rm firebase-messaging-sw.js
 rm erc20tokens.js
+
+mkdir ./testnet/
+
+cd ./testnet/
+rm -rf assets
+rm -rf images
+rm -rf fonts
+rm -rf testnet
+rm -rf *.css
+rm -rf *.js
+
+cp -rf ../../../build-testnet-widget/* ./testnet/.
+buildIdtestnet=$(find -iname "app.*?.js" | sed "s/^\.\/app\.\(.*\)\.js$/\1/")
+
+echo $buildIdtestnet
+
+mv app.${buildIdtestnet}.js app.js
+mv app.${buildIdtestnet}.css app.css
+mv vendor.${buildIdtestnet}.js vendor.js
+rm index.html
+rm firebase-messaging-sw.js
+rm erc20tokens.js
+rm -rf assets
+cd ../
 
 # https://screenshots.wpmix.net/Telegram_9DNCH0DXYKUiL0Mo1BvVvR7WvDiea0ON.png
 rm -rf assets
