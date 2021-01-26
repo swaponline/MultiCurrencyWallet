@@ -381,8 +381,9 @@ export default class Header extends Component<any, any> {
     }
 
     console.log('-Accepting request', link)
-    await history.replace(localisedUrl(locale, link))
-    await history.push(localisedUrl(locale, link))
+    console.log(`Redirect to swap: ${link}`)
+    //await history.replace(localisedUrl(locale, link))
+    //await history.push(localisedUrl(locale, link))
   }
 
   handleLogout = () => {

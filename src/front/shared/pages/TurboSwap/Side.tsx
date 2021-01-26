@@ -19,7 +19,7 @@ interface ISide {
 
 //const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-@injectIntl
+//@injectIntl
 @cssModules(styles, { allowMultiple: true })
 export default class Side extends PureComponent<ISide, {}> {
 

@@ -786,6 +786,7 @@ export default class Exchange extends Component<any, any> {
     }, requestTimeoutSec * 1000)
 
     this.onRequestAnswer = (newOrder, isAccepted) => {
+      console.log('>>> onRequestAnswer newOrder=', newOrder)
       clearTimeout(requestTimeout)
       if (isAccepted) {
         this.setState(() => ({
@@ -1336,15 +1337,16 @@ export default class Exchange extends Component<any, any> {
     const balance = this.getBalance(sellCoin)
 
     if (redirectToSwap) {
-      const uri = ({
+      const swapUri = ({
         [SwapType.Atomic]: `${localisedUrl(locale, links.swap)}/${getCurrency}-${haveCurrency}/${orderId}`,
         [SwapType.Turbo]: `${localisedUrl(locale, links.turboSwap)}/${orderId}`
       })[redirectToSwap]
 
-      if (!uri) {
+      if (!swapUri) {
         throw new Error('Wrong swap redirect')
       }
-      return <Redirect to={uri} push />
+      console.log(`Redirect to swap: ${swapUri}`)
+      //return <Redirect to={uri} push />
     }
 
     let balanceTooltip = null

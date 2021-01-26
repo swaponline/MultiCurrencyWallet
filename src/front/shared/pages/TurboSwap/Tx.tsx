@@ -25,7 +25,7 @@ interface ITx {
 
 //const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-@injectIntl
+//@injectIntl
 @cssModules(styles, { allowMultiple: true })
 export default class Tx extends PureComponent<ITx, {}> {
 

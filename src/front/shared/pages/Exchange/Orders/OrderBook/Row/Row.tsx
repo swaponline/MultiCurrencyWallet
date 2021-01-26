@@ -213,8 +213,9 @@ export default class Row extends Component {
 
           if (isAccepted) {
             this.setState({ isFetching: false }, () => {
-              console.log('Redirect Row.tsx -> Swap')
-              history.push(localisedUrl(intl.locale, `${links.swap}/${buyCurrency}-${sellCurrency}/${id}`))
+              const swapUri = `${links.swap}/${buyCurrency}-${sellCurrency}/${id}`
+              console.log(`Redirect to swap: ${swapUri}`)
+              //history.push(localisedUrl(intl.locale, swapUri))
             })
           } else {
             this.setState({ isFetching: false })

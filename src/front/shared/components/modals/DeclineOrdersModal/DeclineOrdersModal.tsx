@@ -35,9 +35,10 @@ export default class DeclineOrdersModal extends Component<any, any> {
     const { data: { declineSwap: { sellCurrency, buyCurrency, id } }, history } = this.props /* eslint-disable-line */
 
     const { intl : { locale } } = this.props
-    
-    history.push(localisedUrl(locale, `${links.swap}/${sellCurrency}-${buyCurrency}/${id}`))
-    actions.modals.close('DeclineOrdersModal')
+    const swapUri = `${links.swap}/${sellCurrency}-${buyCurrency}/${id}`
+    console.log(`Redirect to swap: ${swapUri}`)
+    //history.push(localisedUrl(locale, swapUri))
+    //actions.modals.close('DeclineOrdersModal')
   }
 
   render() {
