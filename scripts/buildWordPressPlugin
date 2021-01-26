@@ -6,6 +6,8 @@ git pull
 
 npm run build:mainnet-widget
 
+npm run build:testnet-widget
+
 # update repo or clone
 #rm -rf WalletWpPlugin
 git clone https://sorentobot:$1@github.com/swaponline/WalletWpPlugin.git
@@ -18,10 +20,12 @@ git reset --hard origin/master
 rm -rf assets
 rm -rf images
 rm -rf fonts
+rm -rf testnet
 rm -rf *.css
 rm -rf *.js
 
 # update files in repo
+# make mainnet
 cp -rf ../../../build-mainnet-widget/* ./
 buildId=$(find -iname "app.*?.js" | sed "s/^\.\/app\.\(.*\)\.js$/\1/")
 
@@ -33,9 +37,33 @@ mv vendor.${buildId}.js vendor.js
 rm index.html
 rm firebase-messaging-sw.js
 rm erc20tokens.js
-
 # https://screenshots.wpmix.net/Telegram_9DNCH0DXYKUiL0Mo1BvVvR7WvDiea0ON.png
 rm -rf assets
+
+# make testnet
+mkdir ./testnet/
+
+cd ./testnet/
+rm -rf assets
+rm -rf images
+rm -rf fonts
+rm -rf testnet
+rm -rf *.css
+rm -rf *.js
+
+cp -rf ../../../build-testnet-widget/* ./testnet/.
+buildIdtestnet=$(find -iname "app.*?.js" | sed "s/^\.\/app\.\(.*\)\.js$/\1/")
+
+echo $buildIdtestnet
+
+mv app.${buildIdtestnet}.js app.js
+mv app.${buildIdtestnet}.css app.css
+mv vendor.${buildIdtestnet}.js vendor.js
+rm index.html
+rm firebase-messaging-sw.js
+rm erc20tokens.js
+rm -rf assets
+cd ../
 
 cd ../../
 
