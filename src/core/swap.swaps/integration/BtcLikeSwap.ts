@@ -7,7 +7,7 @@ interface processSwapScriptFundOptions {
   flow: any,
   fieldScriptValues: string,
   fieldCreateTransactionHash: string,
-  fielsIsScriptFunded: string,
+  fieldIsScriptFunded: string,
   coin: string,
 }
 
@@ -646,29 +646,32 @@ class BtcLikeSwap extends SwapInterface {
       flow,
       fieldScriptValues,
       fieldCreateTransactionHash,
-      fielsIsScriptFunded,
+      fieldIsScriptFunded,
       coin,
     } = options
 
     const utxoClass = this
 
     const onTransactionHash = (txID) => {
-      const { btcScriptCreatingTransactionHash, btcScriptValues } = flow.state
+      const {
+        [`${fieldCreateTransactionHash}`]: scriptCreatingTransactionHash,
+        [`${fieldScriptValues}`]: scriptValues,
+      } = flow.state
 
-      if (btcScriptCreatingTransactionHash) {
+      if (scriptCreatingTransactionHash) {
         return
       }
 
       flow.setState({
-        btcScriptCreatingTransactionHash: txID,
+        [`${fieldCreateTransactionHash}`]: txID,
       })
 
       flow.swap.room.once(`request ${coin} script`, () => {
         flow.swap.room.sendMessage({
           event: `create ${coin} script`,
           data: {
-            scriptValues: btcScriptValues,
-            btcScriptCreatingTransactionHash: txID,
+            scriptValues,
+            [`${fieldCreateTransactionHash}`]: txID,
           }
         })
       })
@@ -676,20 +679,27 @@ class BtcLikeSwap extends SwapInterface {
       flow.swap.room.sendMessage({
         event: `create ${coin} script`,
         data: {
-          scriptValues: btcScriptValues,
-          btcScriptCreatingTransactionHash: txID,
+          scriptValues,
+          [`${fieldCreateTransactionHash}`]: txID,
         }
       })
     }
 
-    const { sellAmount } = flow.swap
-    const { isBalanceEnough, btcScriptValues } = flow.state
+    const {
+      swap: {
+        sellAmount,
+      },
+      state: {
+        isBalanceEnough,
+        [`${fieldScriptValues}`]: scriptValues,
+      },
+    } = flow
 
     if (isBalanceEnough) {
       const fundScriptRepeat = async () => {
         try {
           await utxoClass.fundScript({
-            scriptValues: btcScriptValues,
+            scriptValues,
             amount: sellAmount,
           })
           return true
@@ -730,7 +740,7 @@ class BtcLikeSwap extends SwapInterface {
     }
 
     const checkScriptBalance = async () => {
-      const { scriptAddress } = utxoClass.createScript(btcScriptValues)
+      const { scriptAddress } = utxoClass.createScript(scriptValues)
       const unspents = await utxoClass.fetchUnspents(scriptAddress)
 
       if (unspents.length === 0) {
@@ -739,7 +749,7 @@ class BtcLikeSwap extends SwapInterface {
 
       const txID = unspents[0].txid
 
-      const balance = await utxoClass.getBalance(btcScriptValues)
+      const balance = await utxoClass.getBalance(scriptValues)
 
       const isEnoughMoney = new BigNumber(balance).isGreaterThanOrEqualTo(sellAmount.times(1e8))
 
@@ -768,7 +778,7 @@ class BtcLikeSwap extends SwapInterface {
 
     if (!isStoppedSwap) {
       flow.finishStep({
-        isBtcScriptFunded: true,
+        [`${fieldIsScriptFunded}`]: true,
         isScriptFunded: true,
       }, { step: `lock-${coin}` })
     }

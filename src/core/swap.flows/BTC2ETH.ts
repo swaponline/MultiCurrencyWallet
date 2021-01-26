@@ -156,7 +156,7 @@ class BTC2ETH extends Flow {
           flow,
           fieldScriptValues: `btcScriptValues`,
           fieldCreateTransactionHash: `btcScriptCreatingTransactionHash`,
-          fielsIsScriptFunded: ``,
+          fieldIsScriptFunded: `isBtcScriptFunded`,
           coin: `btc`,
         })
       },
