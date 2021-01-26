@@ -425,35 +425,13 @@ export default (tokenName) => {
         // 7. Withdraw
 
         async () => {
-          await util.helpers.repeatAsyncUntilResult((stopRepeat) => {
-            const { secret, btcScriptValues, btcSwapWithdrawTransactionHash } = flow.state
-
-            if (btcSwapWithdrawTransactionHash) {
-              return true
-            }
-
-            if (!btcScriptValues) {
-              console.error('There is no "btcScriptValues" in state. No way to continue swap...')
-              return null
-            }
-
-            return flow.btcSwap.withdraw({
-              scriptValues: btcScriptValues,
-              secret,
-              destinationAddress: flow.swap.destinationBuyAddress,
-            })
-              .then((hash) => {
-                flow.setState({
-                  btcSwapWithdrawTransactionHash: hash,
-                }, true)
-                return true
-              })
-              .catch((error) => null)
+          await this.btcSwap.processSwapWithdraw({
+            flow,
+            coin: `btc`,
+            fieldSwapWithdrawTransactionHash: `btcSwapWithdrawTransactionHash`,
+            fieldScriptValues: `btcScriptValues`,
+            fieldIsBtcWithdrawn: `isBtcWithdrawn`,
           })
-
-          flow.finishStep({
-            isBtcWithdrawn: true,
-          }, { step: 'withdraw-btc' })
         },
 
         // 8. Finish

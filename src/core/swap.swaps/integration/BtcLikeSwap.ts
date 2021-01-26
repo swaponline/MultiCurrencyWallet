@@ -1,14 +1,23 @@
 import debug from 'debug'
 import SwapApp, { SwapInterface, constants, util } from 'swap.app'
 import BigNumber from 'bignumber.js'
+import { Flow } from 'swap.swap'
 
 
 interface processSwapScriptFundOptions {
-  flow: any,
+  flow: any, // Flow, @todo - add all fields
   fieldScriptValues: string,
   fieldCreateTransactionHash: string,
   fieldIsScriptFunded: string,
   coin: string,
+}
+
+interface processSwapWithdrawOptions {
+  flow: any,
+  coin: string,
+  fieldSwapWithdrawTransactionHash: string,
+  fieldScriptValues: string,
+  fieldIsBtcWithdrawn: string,
 }
 
 interface getTxFeeOptions {
@@ -888,6 +897,54 @@ class BtcLikeSwap extends SwapInterface {
    */
   refund(data, hashName) {
     return this.withdraw(data, true, hashName)
+  }
+
+
+  async processSwapWithdraw(options: processSwapWithdrawOptions) {
+    const {
+      flow,
+      coin,
+      fieldSwapWithdrawTransactionHash,
+      fieldScriptValues,
+      fieldIsBtcWithdrawn,
+    } = options
+
+    const utxoClass = this
+
+    await util.helpers.repeatAsyncUntilResult((stopRepeat) => {
+      const {
+        secret,
+        [`${fieldScriptValues}`]: scriptValues,
+        [`${fieldSwapWithdrawTransactionHash}`]: swapWithdrawTransactionHash,
+      } = flow.state
+
+      if (swapWithdrawTransactionHash) {
+        return true
+      }
+
+      if (!scriptValues) {
+        console.error(`There is no "${fieldScriptValues}" in state. No way to continue swap...`)
+        return null
+      }
+
+      return flow.btcSwap.withdraw({
+        scriptValues,
+        secret,
+        destinationAddress: flow.swap.destinationBuyAddress,
+      })
+        .then((hash) => {
+          console.log('withdraw hash', hash)
+          flow.setState({
+            [`${fieldSwapWithdrawTransactionHash}`]: hash,
+          }, true)
+          return true
+        })
+        .catch((error) => null)
+    })
+
+    flow.finishStep({
+      [`${fieldIsBtcWithdrawn}`]: true,
+    }, { step: `withdraw-${coin}` })
   }
 }
 
