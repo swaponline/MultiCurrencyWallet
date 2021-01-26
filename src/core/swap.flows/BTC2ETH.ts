@@ -152,7 +152,7 @@ class BTC2ETH extends Flow {
       // 4. Create BTC Script, fund, notify participant
 
       async () => {
-        this.btcSwap.processSwapScriptFund({
+        this.btcSwap.processFundSwapScript({
           flow,
           fieldScriptValues: `btcScriptValues`,
           fieldCreateTransactionHash: `btcScriptCreatingTransactionHash`,

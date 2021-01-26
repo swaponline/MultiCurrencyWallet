@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js'
 import { Flow } from 'swap.swap'
 
 
-interface processSwapScriptFundOptions {
+interface processFundSwapScriptOptions {
   flow: any, // Flow, @todo - add all fields
   fieldScriptValues: string,
   fieldCreateTransactionHash: string,
@@ -12,7 +12,7 @@ interface processSwapScriptFundOptions {
   coin: string,
 }
 
-interface processSwapWithdrawOptions {
+interface processWithdrawFromSwapOptions {
   flow: any,
   coin: string,
   fieldSwapWithdrawTransactionHash: string,
@@ -650,7 +650,7 @@ class BtcLikeSwap extends SwapInterface {
     return this.getWithdrawRawTransaction(data, true)
   }
 
-  async processSwapScriptFund(options: processSwapScriptFundOptions) {
+  async processFundSwapScript(options: processFundSwapScriptOptions) {
     const {
       flow,
       fieldScriptValues,
@@ -900,7 +900,7 @@ class BtcLikeSwap extends SwapInterface {
   }
 
 
-  async processSwapWithdraw(options: processSwapWithdrawOptions) {
+  async processWithdrawFromSwap(options: processWithdrawFromSwapOptions) {
     const {
       flow,
       coin,
