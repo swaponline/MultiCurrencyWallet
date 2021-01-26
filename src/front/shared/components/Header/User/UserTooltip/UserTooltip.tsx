@@ -84,6 +84,8 @@ export default class UserTooltip extends Component<any, any> {
             //   return console.warn(`Not enought money for the swap, order № ${id} was deleted`)
             // }
 
+            const swapUri = `${links.swap}/${sellCurrency}-${buyCurrency}/${id}`
+
             return (
               mePeer === ownerPeer &&
               request.map(({ participant: { peer }, reputation }) => (
@@ -103,11 +105,11 @@ export default class UserTooltip extends Component<any, any> {
                     </div>
                   </div>
                   <span styleName="decline" onClick={() => this.props.declineRequest(id, peer)} />
-                  <div styleName="checked" onClick={() => this.props.acceptRequest(id, peer, `${links.swap}/${sellCurrency}-${buyCurrency}/${id}`)} />
+                  <div styleName="checked" onClick={() => this.props.acceptRequest(id, peer, swapUri)} />
                   <TimerButton
                     timeLeft={autoAcceptTimeout}
                     isButton={false}
-                    onClick={() => this.props.acceptRequest(id, peer, `${links.swap}/${sellCurrency}-${buyCurrency}/${id}`)}
+                    onClick={() => this.props.acceptRequest(id, peer, swapUri)}
                   />
                 </div>
               ))

@@ -139,7 +139,7 @@ export default class RowHistory extends Component<any, any> {
 
     const lockDateAndTime = moment.unix(values.lockTime || date).format('HH:mm:ss DD/MM/YYYY')
 
-    const linkToTheSwap = `${localisedUrl(locale, links.swap)}/${sellCurrency}-${buyCurrency}/${id}`
+    const swapUri = `${links.swap}/${sellCurrency}-${buyCurrency}/${id}`
 
     buyAmount = new BigNumber(buyAmount)
     sellAmount = new BigNumber(sellAmount)
@@ -186,7 +186,7 @@ export default class RowHistory extends Component<any, any> {
         </td>
         <td>
           <span>Link</span>
-          <Link to={`${linkToTheSwap}`} onClick={this.closeIncompleted}>
+          <Link to={swapUri} onClick={this.closeIncompleted}>
             <FormattedMessage id="RowHistory91" defaultMessage="Link" />
           </Link>
         </td>

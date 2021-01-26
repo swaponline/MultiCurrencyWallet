@@ -1338,8 +1338,8 @@ export default class Exchange extends Component<any, any> {
 
     if (redirectToSwap) {
       const swapUri = ({
-        [SwapType.Atomic]: `${localisedUrl(locale, links.swap)}/${getCurrency}-${haveCurrency}/${orderId}`,
-        [SwapType.Turbo]: `${localisedUrl(locale, links.turboSwap)}/${orderId}`
+        [SwapType.Atomic]: `${links.swap}/${getCurrency}-${haveCurrency}/${orderId}`,
+        [SwapType.Turbo]: `${links.turboSwap}/${orderId}`
       })[redirectToSwap]
 
       if (!swapUri) {

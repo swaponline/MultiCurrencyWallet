@@ -315,6 +315,8 @@ export default class Row extends Component {
       priceOut = price
     }
 
+    const swapUri = `${links.swap}/${buyCurrency}-${sellCurrency}/${id}`
+
     const mobileFormatCrypto = (value, currency) => {
       if (currency === 'USDT' || currency == 'EUR') {
         return String(value.toFixed(2))
@@ -373,7 +375,7 @@ export default class Row extends Component {
                     <div style={{ color: 'red' }}>
                       <FormattedMessage id="Row148" defaultMessage="REQUESTING" />
                     </div>
-                    <Link to={`${localisedUrl(locale, links.swap)}/${buyCurrency}-${sellCurrency}/${id}`}>
+                    <Link to={swapUri}>
                       <FormattedMessage id="Row151" defaultMessage="Go to the swap" />
                     </Link>
                   </Fragment>
@@ -460,7 +462,7 @@ export default class Row extends Component {
                           <div style={{ color: 'red' }}>
                             <FormattedMessage id="RowM136" defaultMessage="REQUESTING" />
                           </div>
-                          <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`}>
+                          <Link to={swapUri}>
                             <FormattedMessage id="RowM139" defaultMessage="Go to the swap" />
                           </Link>
                         </Fragment>

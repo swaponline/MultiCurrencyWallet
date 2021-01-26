@@ -1106,7 +1106,8 @@ export default class Exchange extends Component<any, any> {
     const availableAmount = estimatedFeeValues[haveCurrency.toLowerCase()] > 0 ? new BigNumber(haveAmount).plus(estimatedFeeValues[haveCurrency.toLowerCase()]) : 0
 
     if (redirect) {
-      return <Redirect push to={`${localisedUrl(locale, links.swap)}/${getCurrency}-${haveCurrency}/${orderId}`} />
+      const swapUri = `${links.swap}/${getCurrency}-${haveCurrency}/${orderId}`
+      return <Redirect push to={swapUri} />
     }
 
     const isLowAmount = this.checkoutLowAmount()

@@ -43,6 +43,8 @@ export default class RowFeeds extends Component<any, any> {
 
     const rate = exchangeRate ? new BigNumber(exchangeRate) : new BigNumber(buyAmount).div(sellAmount)
 
+    const swapUri = `${links.swap}/${sellCurrency.toLowerCase()}-${buyCurrency.toLowerCase()}/${id}`
+
     return (
       <tr key={this.props.key}>
         <td styleName="with-icon">
@@ -80,7 +82,7 @@ export default class RowFeeds extends Component<any, any> {
                 <div styleName="delete" onClick={() => declineRequest(id, requests[0].participant.peer)} >
                   <FormattedMessage id="RowFeeds77" defaultMessage="Decline" />
                 </div>
-                <Link to={`${localisedUrl(locale, links.swap)}/${sellCurrency.toLowerCase()}-${buyCurrency.toLowerCase()}/${id}`}>
+                <Link to={swapUri}>
                   <div styleName="accept" onClick={() => acceptRequest(id, requests[0].participant.peer)} >
                     <FormattedMessage id="RowFeeds81" defaultMessage="Accept" />
                   </div>
