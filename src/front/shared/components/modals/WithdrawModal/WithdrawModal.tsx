@@ -85,7 +85,6 @@ type WithdrawModalState = {
 
   ethBalance: null | number
   txSize: null | number
-  maxFeeSize: null | number
 
   fees: {
     miner: BigNumber
@@ -209,7 +208,6 @@ export default class WithdrawModal extends React.Component<any, any> {
         allowedCurrency: new BigNumber(0),
         allowedFiat: new BigNumber(0),
       },
-      maxFeeSize: null,
       btcFeeRate: null,
       fetchFee: true,
       txSize: null,
@@ -260,10 +258,6 @@ export default class WithdrawModal extends React.Component<any, any> {
     }
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    nextState.amount = this.fixDecimalCountETH(nextState.amount)
-  }
-
   reportError = (error: IUniversalObj, details: string = '-') => {
     feedback.withdraw.failed(`details(${details}) : error message(${error.message})`)
     console.error(`Send form. details(${details}) : error(${error})`)
@@ -283,33 +277,6 @@ export default class WithdrawModal extends React.Component<any, any> {
       currentActiveAsset: data,
       allCurrencyies,
     })
-  }
-
-  fixDecimalCountETH = (amount) => {
-    if (this.props.data.currency === 'ETH' && new BigNumber(amount).dp() > 18) {
-      const amountInt = new BigNumber(amount).integerValue()
-      const amountDecimal = new BigNumber(amount).mod(1)
-
-      const amountIntStr = amountInt.toString()
-      const amountDecimalStr = new BigNumber(new BigNumber(amountDecimal).toPrecision(15))
-        .toString()
-        .substring(1)
-      const regexr = /[e+-]/g
-
-      const result = amountIntStr + amountDecimalStr
-
-      console.warn(
-        'To avoid [ethjs-unit]error: while converting number with more then 18 decimals to wei - you can`t afford yourself add more than 18 decimals'
-      ) // eslint-disable-line
-      if (regexr.test(result)) {
-        console.warn(
-          'And ofcourse you can not write number which can not be saved without an exponential notation in JS'
-        )
-        return 0
-      }
-      return result
-    }
-    return amount
   }
 
   setBtcFeeRate = async () => {
@@ -363,7 +330,6 @@ export default class WithdrawModal extends React.Component<any, any> {
       selectedItem,
       usedAdminFee,
       amount,
-      maxFeeSize,
       currentDecimals,
     } = this.state
 
@@ -407,10 +373,6 @@ export default class WithdrawModal extends React.Component<any, any> {
         if (selectedItem.isBTC) {
           this.setBtcFeeRate()
         }
-
-        this.setState((state) => ({
-          maxFeeSize: (amount) ? maxFeeSize : newMinerFee.toNumber(),
-        }))
       }
 
       this.setState((state) => ({
@@ -752,8 +714,8 @@ export default class WithdrawModal extends React.Component<any, any> {
     const maxService = usedAdminFee
         ? new BigNumber(usedAdminFee.fee).dividedBy(ONE_HUNDRED_PERCENT).multipliedBy(balances.balance)
         : new BigNumber(0)
-    const maxAmount = balances.balance.minus(minerFee).minus(maxService).dp(currentDecimals, BigNumber.ROUND_FLOOR)
-    const maxFiatAmount = maxAmount.multipliedBy(exCurrencyRate).dp(2, BigNumber.ROUND_FLOOR)
+    const maxAmount = balances.balance.minus(minerFee).minus(maxService).dp(currentDecimals, BigNumber.ROUND_DOWN)
+    const maxFiatAmount = maxAmount.multipliedBy(exCurrencyRate).dp(2, BigNumber.ROUND_DOWN)
 
     if (maxAmount.isGreaterThan(balances.balance) || maxAmount.isLessThanOrEqualTo(0)) {
       this.setState({
@@ -811,7 +773,7 @@ export default class WithdrawModal extends React.Component<any, any> {
     const DELETE = 46
     const isNumber = +event.key >= 0 && +event.key <= 9
     const amountValue = event.target.value
-    // ! doesn't work
+
     if (event.key === ',') {
       inputReplaceCommaWithDot(event)
     }
@@ -1077,8 +1039,7 @@ export default class WithdrawModal extends React.Component<any, any> {
           </FieldLabel>
           <div styleName="group">
             <Input
-              type="number"
-              pattern="0-9\.:"
+              pattern="0-9\."
               onKeyDown={this.amountInputKeyDownCallback}
               valueLink={selectedValue === currentActiveAsset.currency
                 ? linked.amount.pipe(this.handleAmount)

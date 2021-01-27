@@ -70,8 +70,8 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
     const strResult = bigNumResult.toString()
     const haveTwoZeroAfterDot = 
       strResult.match(/\./) 
-      && strResult.split('.')[1][0] === '0'
-      && strResult.split('.')[1][1] === '0'
+      && strResult.split('.')[1][0] === '0' // 12.34 -> ['12', '34'] -> ['3'] === '0'
+      && strResult.split('.')[1][1] === '0' // 12.34 -> ['12', '34'] -> ['4'] === '0'
       
     bigNumResult = haveTwoZeroAfterDot 
       ? bigNumResult.dp(currentDecimals, BigNumber.ROUND_CEIL)
