@@ -436,11 +436,6 @@ export default class WithdrawModal extends React.Component<any, any> {
     const {
       selectedItem: { currency, address },
       currentActiveAsset,
-      currentDecimals,
-      exCurrencyRate,
-      usedAdminFee,
-      balances,
-      fees,
     } = this.state
 
     const wallet = actions.user.getWithdrawWallet(currency, address)
@@ -460,27 +455,19 @@ export default class WithdrawModal extends React.Component<any, any> {
         : await actions.eth.getBalance()
 
 
-    const ONE_HUNDRED_PERCENT = 100
-    const maxService = usedAdminFee
-      ? new BigNumber(usedAdminFee.fee).dividedBy(ONE_HUNDRED_PERCENT).multipliedBy(balances.balance)
-      : new BigNumber(0)
-    const maxAmount = balances.balance.minus(fees.miner).minus(maxService).dp(currentDecimals, BigNumber.ROUND_FLOOR)
-    const maxFiatAmount = maxAmount.multipliedBy(exCurrencyRate).dp(2, BigNumber.ROUND_FLOOR)
-
     this.setState((state) => ({
       ethBalance,
       selectedItem: wallet,
       balances: {
         ...state.balances,
         balance: new BigNumber(finalBalance),
-        allowedCurrency: maxAmount,
-        allowedFiat: maxFiatAmount,
       },
       currentActiveAsset: {
         ...currentActiveAsset,
         ...wallet,
       },
     }))
+    this.setAlowedBalances()
   }
 
   getFiatBalance = async () => {
@@ -753,43 +740,52 @@ export default class WithdrawModal extends React.Component<any, any> {
     })
   }
 
-  setMaxBalance = () => {
+  setAlowedBalances = () => {
     const {
       isEthToken,
       usedAdminFee,
       currentDecimals,
       exCurrencyRate,
-      maxFeeSize,
       balances,
       fees,
     } = this.state
 
-    let minFee = new BigNumber(isEthToken ? 0 : maxFeeSize)
-    minFee = usedAdminFee ? minFee.plus(fees.adminFeeSize) : minFee
+    const ONE_HUNDRED_PERCENT = 100
+    const minerFee = isEthToken ? new BigNumber(0) : fees.miner
+    const maxService = usedAdminFee
+        ? new BigNumber(usedAdminFee.fee).dividedBy(ONE_HUNDRED_PERCENT).multipliedBy(balances.balance)
+        : new BigNumber(0)
+    const maxAmount = balances.balance.minus(minerFee).minus(maxService).dp(currentDecimals, BigNumber.ROUND_FLOOR)
+    const maxFiatAmount = maxAmount.multipliedBy(exCurrencyRate).dp(2, BigNumber.ROUND_FLOOR)
 
-    if (minFee.isGreaterThan(balances.balance)) {
+    if (maxAmount.isGreaterThan(balances.balance)) {
       this.setState({
         amount: 0,
         fiatAmount: 0,
       })
     } else {
-      const balanceMiner = balances.balance
-        ? new BigNumber(balances.balance).minus(minFee)
-        : new BigNumber(0)
-
       this.setState((state) => ({
-        amount: balanceMiner.dp(currentDecimals, BigNumber.ROUND_FLOOR),
-        fiatAmount: balanceMiner.multipliedBy(exCurrencyRate).dp(2, BigNumber.ROUND_FLOOR),
-        fees: {
-          ...state.fees,
-          miner: new BigNumber(maxFeeSize),
+        balances: {
+          ...state.balances,
+          allowedCurrency: maxAmount,
+          allowedFiat: maxFiatAmount,
         },
       }))
     }
   }
 
+  setMaxBalance = () => {
+    const { balances } = this.state
+
+    this.setAlowedBalances()
+    this.setState({
+      amount: balances.allowedCurrency.toNumber(),
+      fiatAmount: balances.allowedFiat.toNumber(),
+    })
+  }
+
   updateServiceAndTotalFee = () => {
-    const { usedAdminFee, amount, fees, balances } = this.state
+    const { usedAdminFee, amount, fees } = this.state
     const ONE_HUNDRED_PERCENT = 100
 
     let newServiceFeeSize = usedAdminFee
