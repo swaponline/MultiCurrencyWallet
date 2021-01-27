@@ -30,3 +30,14 @@ see ./tradeconfig.mainnet.json
 ```
 TELEGRAM_CHATID = 111 //id for notifications. 1. contact @get_id_bot to get your id 2. say "hello" to this bot @swaponlinebot 
 ```
+
+## update docker imgage and container to the latest version
+```
+cd mainnet_bot 
+lazydocker
+```
+stop and remove mcw_bot container (don't worry the data is't affected because it's stored in the folder as "volume" not in the container). 
+```
+docker pull swaponline/mcw
+docker-compose up -d 
+```
