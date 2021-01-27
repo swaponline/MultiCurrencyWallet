@@ -11,7 +11,7 @@
 
 .prompt {
   margin-top: 1em;
-  font-size: 14px;
+  font-size: 13px;
   font-family: 'Roboto Mono', monospace;
   color: $notice-color;
 }
@@ -256,6 +256,7 @@
 
 .additionalСurrencies {
   position: absolute;
+  padding-left: 0.4em;
   right: 100px;
   background: $l-background-elements;
   z-index: 1;
@@ -349,7 +350,7 @@
 @media all and (max-width: 480px) {
   .additionalСurrencies {
     right: 80px;
-    top: 24px;
+    top: 25px;
   }
 
   .additionalСurrenciesItem {
@@ -369,6 +370,10 @@
         font-size: 8px;
       }
     }
+  }
+
+  .prompt {
+    font-size: 10px;
   }
 }
 

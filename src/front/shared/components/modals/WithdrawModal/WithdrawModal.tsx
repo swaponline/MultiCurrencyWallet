@@ -354,9 +354,7 @@ export default class WithdrawModal extends React.Component<any, any> {
           method: 'send',
           speed: 'fast',
         }))
-      }
-
-      if (constants.coinsWithDynamicFee.includes(currentCoin)) {
+      } else if (constants.coinsWithDynamicFee.includes(currentCoin)) {
         let method = 'send'
         if (selectedItem.isUserProtected) method = 'send_multisig'
         if (selectedItem.isPinProtected || selectedItem.isSmsProtected) method = 'send_2fa'
