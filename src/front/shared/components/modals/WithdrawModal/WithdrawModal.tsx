@@ -755,7 +755,7 @@ export default class WithdrawModal extends React.Component<any, any> {
     const maxAmount = balances.balance.minus(minerFee).minus(maxService).dp(currentDecimals, BigNumber.ROUND_FLOOR)
     const maxFiatAmount = maxAmount.multipliedBy(exCurrencyRate).dp(2, BigNumber.ROUND_FLOOR)
 
-    if (maxAmount.isGreaterThan(balances.balance)) {
+    if (maxAmount.isGreaterThan(balances.balance) || maxAmount.isLessThanOrEqualTo(0)) {
       this.setState({
         amount: 0,
         fiatAmount: 0,
@@ -1105,18 +1105,27 @@ export default class WithdrawModal extends React.Component<any, any> {
           {/* hint about maximum possible amount */}
           {dashboardView && (
             <div styleName={'prompt'}>
-              <FormattedMessage
-                id="Withdrow170"
-                defaultMessage="Maximum amount you can send is {allowedBalance} {currency}"
-                values={{
-                  allowedBalance: selectedValue === currentActiveAsset.currency
-                    ? balances.allowedCurrency.toNumber()
-                    : balances.allowedFiat.toNumber(),
-                  currency: selectedValue === currentActiveAsset.currency 
-                    ? activeCriptoCurrency
-                    : activeFiat,
-                }}
-              />{' '}
+              {balances.allowedCurrency.isEqualTo(0) ?
+                (
+                  <FormattedMessage
+                    id="WithdrowBalanceNotEnoughtPrompt"
+                    defaultMessage="Not enough balance to send"
+                  />
+                ) : (
+                  <FormattedMessage
+                    id="Withdrow170"
+                    defaultMessage="Maximum amount you can send is {allowedBalance} {currency}"
+                    values={{
+                      allowedBalance: selectedValue === currentActiveAsset.currency
+                        ? balances.allowedCurrency.toNumber()
+                        : balances.allowedFiat.toNumber(),
+                      currency: selectedValue === currentActiveAsset.currency 
+                        ? activeCriptoCurrency
+                        : activeFiat,
+                    }}
+                  />
+                )
+              }{' '}
               <Tooltip id="WtH204">
                 <div style={{ maxWidth: '24em', textAlign: 'center' }}>
                   <FormattedMessage
