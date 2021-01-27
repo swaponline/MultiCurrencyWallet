@@ -151,6 +151,7 @@ export default class WithdrawModal extends React.Component<any, any> {
    * @method setBalanceOnState
    * @method setCommissions
    * @method setBtcFeeRate
+   * @method setAlowedBalances
    * @method setMaxBalance
    * 
    * @method handleBuyCurrencySelect
@@ -229,10 +230,6 @@ export default class WithdrawModal extends React.Component<any, any> {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // ! delete
-    console.log('FORM PROPS: ', this.props)
-    console.log('FORM STATE: ', this.state)
-
     const { 
       data: prevData, 
       items: prevItems,
@@ -343,13 +340,13 @@ export default class WithdrawModal extends React.Component<any, any> {
       const feeSatByte = new BigNumber(feeRate).dividedBy(BYTE_IN_KB).dp(0, BigNumber.ROUND_CEIL).toNumber()
 
       if (!this.mounted) return
-
       this.setState((state) => ({
         btcFeeRate: feeSatByte,
         txSize,
         fees: {
           ...state.fees,
           miner: new BigNumber(fee),
+          total: state.fees.service.plus(fee),
         },
       }))
     } catch (error) {
@@ -1224,6 +1221,7 @@ export default class WithdrawModal extends React.Component<any, any> {
               <FeeInfoBlock
                 isEthToken={isEthToken}
                 currency={currency}
+                currentDecimals={currentDecimals}
                 activeFiat={activeFiat}
                 dataCurrency={dataCurrency}
                 exCurrencyRate={exCurrencyRate}

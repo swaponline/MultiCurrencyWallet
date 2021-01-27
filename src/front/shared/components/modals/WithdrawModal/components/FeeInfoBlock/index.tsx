@@ -16,6 +16,7 @@ type FeeInfoBlockProps = {
   activeFiat: string
   dataCurrency: string
   
+  currentDecimals: number
   exCurrencyRate: number
   txSize?: number
   feeCurrentCurrency?: number
@@ -34,6 +35,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
   const {
     isEthToken,
     currency,
+    currentDecimals,
     activeFiat,
     dataCurrency,
     exCurrencyRate,
@@ -49,12 +51,50 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
 
   const minerFeeTicker = dataCurrency
   const serviceFeeTicker = currency
-  const activeFiatSymbol = 
-    activeFiat.toLowerCase() === 'usd'
-      ? '$' 
-      : activeFiat.toLowerCase() === 'eur'
-        ? '€'
-        : '-'
+  let activeFiatSymbol = activeFiat
+
+  switch (activeFiatSymbol.toLowerCase()) {
+    case 'usd':
+      activeFiatSymbol = '$'
+      break
+    case 'eur':
+      activeFiatSymbol = '€'
+      break
+  }
+
+  const convertToFiat = (currency) => {
+    // check after converting
+    // if  0.<two-digit number more 0> then cut result to two numbers
+    // else cut result to currency decimals
+    let bigNumResult = currency.multipliedBy(exCurrencyRate)
+    const strResult = bigNumResult.toString()
+    const haveTwoZeroAfterDot = 
+      strResult.match(/\./) 
+      && strResult.split('.')[1][0] === '0'
+      && strResult.split('.')[1][1] === '0'
+      
+    bigNumResult = haveTwoZeroAfterDot 
+      ? bigNumResult.dp(currentDecimals, BigNumber.ROUND_CEIL)
+      : bigNumResult.dp(2, BigNumber.ROUND_CEIL)
+    
+    return bigNumResult.toNumber()
+  }
+
+  const fiatMinerFee = exCurrencyRate > 0
+    ? convertToFiat(minerFee)
+    : 0
+
+  const fiatServiceFee = usedAdminFee
+    ? exCurrencyRate > 0
+      ? convertToFiat(serviceFee)
+      : 0
+    : 0
+
+  const fiatTotalFee = !isEthToken
+    ? exCurrencyRate > 0
+      ? convertToFiat(totalFee)
+      : 0
+    : 0
 
   const linkToTxSizeInfo = (
     <a
@@ -84,7 +124,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
                 {hasTxSize && feeCurrentCurrency > 0 ? transactionSize : null}
                 {+minerFee}&nbsp;{minerFeeTicker}
                 {' '}
-                (~{activeFiatSymbol}{new BigNumber(+minerFee * exCurrencyRate).toFixed(2)})
+                {fiatMinerFee > 0 && `(${activeFiatSymbol}${fiatMinerFee})`}
               </span>
           }
           {' '}
@@ -99,7 +139,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
         </div>
       </div>
       
-      {usedAdminFee && (
+      {fiatServiceFee > 0 && (
           <div styleName='feeRow'>
             <span styleName='feeRowTitle'>
               <FormattedMessage id="FeeInfoBlockServiceFee" defaultMessage="Service fee:" />
@@ -119,7 +159,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
                 : <span styleName='fee'>
                     {+serviceFee}&nbsp;{serviceFeeTicker}
                     {' '}
-                    (~{activeFiatSymbol}{new BigNumber(+serviceFee * exCurrencyRate).toFixed(2)})
+                    {`(${activeFiatSymbol}${fiatServiceFee})`}
                   </span>
               }
             </div>
@@ -127,7 +167,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
         )
       }
 
-      {!isEthToken && (
+      {fiatTotalFee > 0 && (
         <div styleName='feeRow'>
           <span styleName='feeRowTitle'>
             <FormattedMessage id="FeeInfoBlockTotalFee" defaultMessage="Total fees you pay:" />
@@ -138,7 +178,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
               : <span styleName='fee'>
                   {+totalFee}&nbsp;{minerFeeTicker}
                   {' '}
-                  (~{activeFiatSymbol}{new BigNumber(+totalFee * exCurrencyRate).toFixed(2)})
+                  {`(${activeFiatSymbol}${fiatTotalFee})`}
                 </span>
             }
           </div>
