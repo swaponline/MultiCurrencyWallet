@@ -1,6 +1,7 @@
 import debug from 'debug'
 import SwapApp, { constants, util } from 'swap.app'
 import { Flow } from 'swap.swap'
+import BigNumber from 'bignumber.js'
 
 
 export default (tokenName) => {
@@ -249,7 +250,7 @@ export default (tokenName) => {
                 })
 
                 debug('swap.core:flow')('allowance', allowance)
-                if (allowance < sellAmount) {
+                if (new BigNumber(allowance).isLessThan(sellAmount)) {
                   debug('swap.core:flow')('allowance < sellAmount', allowance, sellAmount)
                   await flow.ethTokenSwap.approve({
                     amount: sellAmount,

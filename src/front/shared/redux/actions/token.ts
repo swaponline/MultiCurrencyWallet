@@ -381,7 +381,7 @@ const setAllowanceForToken = async ({ name, to, targetAllowance, ...config }) =>
   const allowance = await tokenContract.methods.allowance(address, to).call()
 
   // if there is already enough allowance, skip
-  if (toWei(targetAllowance).isLessThanOrEqualTo(allowance)) {
+  if (new BigNumber(toWei(targetAllowance)).isLessThanOrEqualTo(allowance)) {
     return Promise.resolve()
   }
   // but if not, set allowance to 1 billion (or requested target allowance, if it's bigger than 1 billion)
