@@ -7,9 +7,8 @@ read PORT
 mkdir $CONTAINERNAME
 cd $CONTAINERNAME
 
-wget -O config/tradeconfig.mainnet.json https://raw.githubusercontent.com/swaponline/MultiCurrencyWallet/master/tradeconfig.mainnet.json
-wget -O config/tradeconfig.testnet.json https://raw.githubusercontent.com/swaponline/MultiCurrencyWallet/master/tradeconfig.testnet.json
-
+curl https://raw.githubusercontent.com/swaponline/MultiCurrencyWallet/master/tradeconfig.mainnet.json --create-dirs -o config/tradeconfig.mainnet.json
+curl https://raw.githubusercontent.com/swaponline/MultiCurrencyWallet/master/tradeconfig.testnet.json --create-dirs -o config/tradeconfig.testnet.json
 
 tee .env <<EOF
 KRAKEN_API_KEY=
@@ -77,9 +76,10 @@ services:
       - ${PWD}/.storage:/root/MultiCurrencyWallet/.storage
       - ${PWD}/config/tradeconfig.mainnet.json:/root/MultiCurrencyWallet/tradeconfig.mainnet.json
       - ${PWD}/config/tradeconfig.testnet.json:/root/MultiCurrencyWallet/tradeconfig.testnet.json    
-      - ${PWD}/.env:/root/MultiCurrencyWallet/.env
     ports:
       - "${PORT}:${PORT}"
+    env_file:
+      - .env
 EOF
 
 docker pull swaponline/mcw
