@@ -150,7 +150,7 @@ export default (tokenName) => {
         // 4. Create BTC Script, fund, notify participant
 
         async () => {
-          this.btcSwap.processFundSwapScript({
+          this.btcSwap.fundSwapScript({
             flow,
             fieldScriptValues: `btcScriptValues`,
             fieldCreateTransactionHash: `btcScriptCreatingTransactionHash`,

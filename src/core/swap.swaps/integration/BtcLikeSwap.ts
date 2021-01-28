@@ -4,29 +4,6 @@ import BigNumber from 'bignumber.js'
 import { Flow } from 'swap.swap'
 
 
-interface processFundSwapScriptOptions {
-  flow: any, // Flow, @todo - add all fields
-  fieldScriptValues: string,
-  fieldCreateTransactionHash: string,
-  fieldIsScriptFunded: string,
-  coin: string,
-}
-
-interface processWithdrawFromSwapOptions {
-  flow: any,
-  coin: string,
-  fieldSwapWithdrawTransactionHash: string,
-  fieldScriptValues: string,
-  fieldIsBtcWithdrawn: string,
-}
-
-interface getTxFeeOptions {
-  inSatoshis: boolean,
-  size?: number,
-  speed?: 'slow' | 'medium' | 'fast'
-  address: string,
-}
-
 class BtcLikeSwap extends SwapInterface {
 
   _swapName: string = undefined
@@ -142,13 +119,18 @@ class BtcLikeSwap extends SwapInterface {
    * @returns {BigNumber}
    * @public
    */
-  async getTxFee(options: getTxFeeOptions) {
-    const {
-      inSatoshis,
-      size,
-      speed = 'fast',
-      address,
-    } = options
+  async getTxFee({
+    inSatoshis,
+    size,
+    speed = 'fast',
+    address,
+  }: {
+    inSatoshis: boolean,
+    size?: number,
+    speed?: 'slow' | 'medium' | 'fast'
+    address: string,
+  }) {
+
 
     const estimatedFeeRaw = await this.estimateFeeValue({
       inSatoshis: true,
@@ -650,15 +632,19 @@ class BtcLikeSwap extends SwapInterface {
     return this.getWithdrawRawTransaction(data, true)
   }
 
-  async processFundSwapScript(options: processFundSwapScriptOptions) {
-    const {
-      flow,
-      fieldScriptValues,
-      fieldCreateTransactionHash,
-      fieldIsScriptFunded,
-      coin,
-    } = options
-
+  async fundSwapScript({
+    flow,
+    fieldScriptValues,
+    fieldCreateTransactionHash,
+    fieldIsScriptFunded,
+    coin,
+  }: {
+    flow: any, // Flow, @todo - add all fields
+    fieldScriptValues: string,
+    fieldCreateTransactionHash: string,
+    fieldIsScriptFunded: string,
+    coin: string,
+  }) {
     const utxoClass = this
 
     const onTransactionHash = (txID) => {
@@ -900,15 +886,19 @@ class BtcLikeSwap extends SwapInterface {
   }
 
 
-  async processWithdrawFromSwap(options: processWithdrawFromSwapOptions) {
-    const {
-      flow,
-      coin,
-      fieldSwapWithdrawTransactionHash,
-      fieldScriptValues,
-      fieldIsBtcWithdrawn,
-    } = options
-
+  async withdrawFromSwap({
+    flow,
+    coin,
+    fieldSwapWithdrawTransactionHash,
+    fieldScriptValues,
+    fieldIsBtcWithdrawn,
+  }: {
+    flow: any,
+    coin: string,
+    fieldSwapWithdrawTransactionHash: string,
+    fieldScriptValues: string,
+    fieldIsBtcWithdrawn: string,
+  }) {
     const utxoClass = this
 
     await util.helpers.repeatAsyncUntilResult((stopRepeat) => {

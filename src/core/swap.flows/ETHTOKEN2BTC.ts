@@ -245,11 +245,13 @@ export default (tokenName) => {
             if (!isEthContractFunded) {
               try {
                 debug('swap.core:flow')('fetching allowance')
+
                 const allowance = await flow.ethTokenSwap.checkAllowance({
                   spender: this.app.getMyEthAddress(),
                 })
 
                 debug('swap.core:flow')('allowance', allowance)
+
                 if (new BigNumber(allowance).isLessThan(sellAmount)) {
                   debug('swap.core:flow')('allowance < sellAmount', allowance, sellAmount)
                   await flow.ethTokenSwap.approve({
@@ -426,7 +428,7 @@ export default (tokenName) => {
         // 7. Withdraw
 
         async () => {
-          await this.btcSwap.processWithdrawFromSwap({
+          await this.btcSwap.withdrawFromSwap({
             flow,
             coin: `btc`,
             fieldSwapWithdrawTransactionHash: `btcSwapWithdrawTransactionHash`,
