@@ -17,6 +17,7 @@ class Flow {
     isStoppedSwap?: boolean
     isRefunded?: boolean
     isFinished?: boolean
+    isSwapTimeout?: boolean
 
     // Torbo swaps state
     // ...
@@ -42,7 +43,9 @@ class Flow {
       step: 0,
       isWaitingForOwner: false,
       isStoppedSwap: false,
-
+      isSwapTimeout: false,
+      isRefunded: false,
+      isFinished: false,
       /** -------------- Turbo Swaps States ----------------- **/
       // ....
 
@@ -94,6 +97,13 @@ class Flow {
       isRefunded,
       isFinished,
     } = this.state
+
+    if (this.swap.checkTimeout(3600)) {
+      this.setState({
+        isStoppedSwap: true,
+        isSwapTimeout: true,
+      }, true)
+    }
 
     return (isStoppedSwap || isRefunded || isFinished || this.swap.checkTimeout(3600))
   }

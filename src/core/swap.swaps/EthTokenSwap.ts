@@ -129,12 +129,17 @@ class EthTokenSwap extends SwapInterface {
       //@ts-ignore
       debug(`EthTokenSwap -> ${methodName} -> params`, params)
 
-      const gasAmount = await this.contract.methods[methodName](...args).estimateGas(params)
+      let gasAmount = 0
+      try {
+        gasAmount = await this.contract.methods[methodName](...args).estimateGas(params)
+      } catch (estimateGasError) {
+        reject({ message: estimateGasError.message, gasAmount: new BigNumber(gasAmount).dividedBy(1e8).toString() })
+        return
+      }
 
       params.gas = gasAmount
       //@ts-ignore
       debug(`EthTokenSwap -> ${methodName} -> gas`, gasAmount)
-
       const receipt = await this.contract.methods[methodName](...args).send(params)
         .on('transactionHash', (hash) => {
           if (typeof handleTransactionHash === 'function') {
