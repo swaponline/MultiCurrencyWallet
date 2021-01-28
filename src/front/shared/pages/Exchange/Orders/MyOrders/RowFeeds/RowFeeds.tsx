@@ -43,7 +43,10 @@ export default class RowFeeds extends Component<any, any> {
 
     const rate = exchangeRate ? new BigNumber(exchangeRate) : new BigNumber(buyAmount).div(sellAmount)
 
-    const swapUri = `${links.swap}/${sellCurrency.toLowerCase()}-${buyCurrency.toLowerCase()}/${id}`
+    const swapUri = isTurbo ?
+      `${links.turboSwap}/${id}`
+      :
+      `${links.atomicSwap}/${id}`
 
     return (
       <tr key={this.props.key}>

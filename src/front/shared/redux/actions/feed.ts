@@ -21,6 +21,7 @@ const getFeedDataFromOrder = (orders) => {
   const feeds = orders.map(order => ({
     peer: order.owner.peer,
     id: order.id,
+    isTurbo: order.isTurbo,
     content:{
       sellCurrency: order.sellCurrency,
       buyCurrency: order.buyCurrency,

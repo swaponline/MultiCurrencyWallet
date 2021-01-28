@@ -1332,7 +1332,7 @@ export default class Exchange extends Component<any, any> {
 
     if (redirectToSwap) {
       const swapUri = ({
-        [SwapType.Atomic]: `${links.swap}/${getCurrency}-${haveCurrency}/${orderId}`,
+        [SwapType.Atomic]: `${links.atomicSwap}/${orderId}`,
         [SwapType.Turbo]: `${links.turboSwap}/${orderId}`
       })[redirectToSwap]
 
@@ -1340,7 +1340,7 @@ export default class Exchange extends Component<any, any> {
         throw new Error('Wrong swap redirect')
       }
       console.log(`Redirect to swap: ${swapUri}`)
-      //return <Redirect to={uri} push />
+      return <Redirect to={swapUri} push />
     }
 
     let balanceTooltip = null

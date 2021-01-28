@@ -20,7 +20,7 @@ const linksManager = {
   savePrivateSeed: '/savePrivateSeed',
   savePrivateKeys: '/savePrivateKeys',
   currencyWallet: '/wallet',
-  swap: '/swaps',
+  atomicSwap: '/atomic-swaps',
   turboSwap: '/turbo-swaps',
   feed: '/feed',
   aboutUs: '/aboutUs',

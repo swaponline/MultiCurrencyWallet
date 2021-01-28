@@ -213,9 +213,13 @@ export default class Row extends Component {
 
           if (isAccepted) {
             this.setState({ isFetching: false }, () => {
-              const swapUri = `${links.swap}/${buyCurrency}-${sellCurrency}/${id}`
+              const swapUri = row.isTurbo ?
+                `${links.turboSwap}/${id}`
+                :
+                `${links.atomicSwap}/${id}`
+              
               console.log(`Redirect to swap: ${swapUri}`)
-              //history.push(localisedUrl(intl.locale, swapUri))
+              history.push(localisedUrl(intl.locale, swapUri))
             })
           } else {
             this.setState({ isFetching: false })
@@ -315,7 +319,7 @@ export default class Row extends Component {
       priceOut = price
     }
 
-    const swapUri = `${links.swap}/${buyCurrency}-${sellCurrency}/${id}`
+    const swapUri = `${links.atomicSwap}/${id}`
 
     const mobileFormatCrypto = (value, currency) => {
       if (currency === 'USDT' || currency == 'EUR') {

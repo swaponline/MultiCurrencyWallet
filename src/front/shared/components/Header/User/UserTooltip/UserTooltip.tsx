@@ -70,12 +70,13 @@ export default class UserTooltip extends Component<any, any> {
   render() {
     const { feeds, peer: mePeer } = this.props
 
-    const autoAcceptTimeout = (config && config.isWidgetBuild) ? 5 : 5
+    const autoAcceptTimeout = 3
+
     return !!feeds.length && (
-      <div styleName="column" >
+      <div styleName="column">
         {feeds.length < 3 ? (
           feeds.map(row => {
-            const { request, content: { buyAmount, buyCurrency, sellAmount, sellCurrency }, id, peer: ownerPeer } = row
+            const { request, content: { buyAmount, buyCurrency, sellAmount, sellCurrency }, id, isTurbo, peer: ownerPeer } = row
             const currencyBalance = this.state.allCurrencyies.find(item => item.currency === sellCurrency).balance
             const sellAmountPlusFee = new BigNumber(this.state.estimatedFeeValues[sellCurrency.toLowerCase()]).plus(sellAmount)
 
@@ -84,7 +85,10 @@ export default class UserTooltip extends Component<any, any> {
             //   return console.warn(`Not enought money for the swap, order № ${id} was deleted`)
             // }
 
-            const swapUri = `${links.swap}/${sellCurrency}-${buyCurrency}/${id}`
+            const swapUri = isTurbo ?
+              `${links.turboSwap}/${id}`
+              :
+              `${links.atomicSwap}/${id}`
 
             return (
               mePeer === ownerPeer &&

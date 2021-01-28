@@ -119,6 +119,7 @@ export default class RowHistory extends Component<any, any> {
       nextScriptValues,
       isRefunded,
       isMy,
+      isTurbo,
       sellCurrency,
       isFinished,
       id,
@@ -139,7 +140,10 @@ export default class RowHistory extends Component<any, any> {
 
     const lockDateAndTime = moment.unix(values.lockTime || date).format('HH:mm:ss DD/MM/YYYY')
 
-    const swapUri = `${links.swap}/${sellCurrency}-${buyCurrency}/${id}`
+    const swapUri = isTurbo ?
+      `${links.turboSwap}/${id}`
+      :
+      `${links.atomicSwap}/${id}`
 
     buyAmount = new BigNumber(buyAmount)
     sellAmount = new BigNumber(sellAmount)
