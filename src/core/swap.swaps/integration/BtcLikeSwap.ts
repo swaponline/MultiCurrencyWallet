@@ -880,14 +880,8 @@ class BtcLikeSwap extends SwapInterface {
 
   async withdrawFromSwap({
     flow,
-    fieldSwapWithdrawTransactionHash,
-    fieldScriptValues,
-    fieldIsBtcWithdrawn,
   }: {
     flow: any,
-    fieldSwapWithdrawTransactionHash: string,
-    fieldScriptValues: string,
-    fieldIsBtcWithdrawn: string,
   }) {
     const utxoClass = this
     const coin = this._swapName.toLowerCase()
@@ -895,8 +889,8 @@ class BtcLikeSwap extends SwapInterface {
     await util.helpers.repeatAsyncUntilResult((stopRepeat) => {
       const {
         secret,
-        [`${fieldScriptValues}`]: scriptValues,
-        [`${fieldSwapWithdrawTransactionHash}`]: swapWithdrawTransactionHash,
+        [`${coin}ScriptValues`]: scriptValues,
+        [`${coin}SwapWithdrawTransactionHash`]: swapWithdrawTransactionHash,
       } = flow.state
 
       if (swapWithdrawTransactionHash) {
@@ -904,7 +898,7 @@ class BtcLikeSwap extends SwapInterface {
       }
 
       if (!scriptValues) {
-        console.error(`There is no "${fieldScriptValues}" in state. No way to continue swap...`)
+        console.error(`There is no "${coin}ScriptValues" in state. No way to continue swap...`)
         return null
       }
 
@@ -916,7 +910,7 @@ class BtcLikeSwap extends SwapInterface {
         .then((hash) => {
           console.log('withdraw hash', hash)
           flow.setState({
-            [`${fieldSwapWithdrawTransactionHash}`]: hash,
+            [`${coin}SwapWithdrawTransactionHash`]: hash,
           }, true)
           return true
         })
@@ -924,7 +918,7 @@ class BtcLikeSwap extends SwapInterface {
     })
 
     flow.finishStep({
-      [`${fieldIsBtcWithdrawn}`]: true,
+      [`is${coin}Withdrawn`]: true,
     }, { step: `withdraw-${coin}` })
   }
 }
