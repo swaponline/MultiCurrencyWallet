@@ -430,7 +430,6 @@ export default (tokenName) => {
         async () => {
           await this.btcSwap.withdrawFromSwap({
             flow,
-            coin: `btc`,
             fieldSwapWithdrawTransactionHash: `btcSwapWithdrawTransactionHash`,
             fieldScriptValues: `btcScriptValues`,
             fieldIsBtcWithdrawn: `isBtcWithdrawn`,

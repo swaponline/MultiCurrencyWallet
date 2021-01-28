@@ -155,7 +155,6 @@ export default (tokenName) => {
             fieldScriptValues: `btcScriptValues`,
             fieldCreateTransactionHash: `btcScriptCreatingTransactionHash`,
             fieldIsScriptFunded: `isBtcScriptFunded`,
-            coin: `btc`,
           })
         },
 

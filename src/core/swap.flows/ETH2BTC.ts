@@ -390,7 +390,6 @@ class ETH2BTC extends Flow {
 
       async () => {
         await this.btcSwap.withdrawFromSwap({
-          flow,
           coin: `btc`,
           fieldSwapWithdrawTransactionHash: `btcSwapWithdrawTransactionHash`,
           fieldScriptValues: `btcScriptValues`,

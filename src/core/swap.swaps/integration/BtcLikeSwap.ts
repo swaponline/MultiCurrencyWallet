@@ -6,7 +6,7 @@ import { Flow } from 'swap.swap'
 
 class BtcLikeSwap extends SwapInterface {
 
-  _swapName: string = undefined
+  _swapName: string = null
   fetchBalance: Function = undefined
   fetchUnspents: Function = undefined
   broadcastTx: Function = undefined
@@ -637,15 +637,14 @@ class BtcLikeSwap extends SwapInterface {
     fieldScriptValues,
     fieldCreateTransactionHash,
     fieldIsScriptFunded,
-    coin,
   }: {
     flow: any, // Flow, @todo - add all fields
     fieldScriptValues: string,
     fieldCreateTransactionHash: string,
     fieldIsScriptFunded: string,
-    coin: string,
   }) {
     const utxoClass = this
+    const coin = this._swapName.toLowerCase()
 
     const onTransactionHash = (txID) => {
       const {
@@ -888,18 +887,17 @@ class BtcLikeSwap extends SwapInterface {
 
   async withdrawFromSwap({
     flow,
-    coin,
     fieldSwapWithdrawTransactionHash,
     fieldScriptValues,
     fieldIsBtcWithdrawn,
   }: {
     flow: any,
-    coin: string,
     fieldSwapWithdrawTransactionHash: string,
     fieldScriptValues: string,
     fieldIsBtcWithdrawn: string,
   }) {
     const utxoClass = this
+    const coin = this._swapName.toLowerCase()
 
     await util.helpers.repeatAsyncUntilResult((stopRepeat) => {
       const {
