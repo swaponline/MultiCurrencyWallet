@@ -60,11 +60,18 @@ const checkIncomeOrderFormat = (order) => {
 const checkIncomeOrderOwner = ({ owner: { peer } }, fromPeer) =>
   peer === fromPeer
 
+const visibleMakersWhitelist: string[] = [] // any maker if empty
+
+const checkIncomeOrderWhitelisted = ({ owner: { peer } }) => {
+  return !visibleMakersWhitelist.length || visibleMakersWhitelist.includes(peer)
+}
+
 const checkIncomeOrder = (order, fromPeer) => {
   const isFormatValid = checkIncomeOrderFormat(order)
   const isOwnerValid = checkIncomeOrderOwner(order, fromPeer)
+  const isOwnerWhitelisted = checkIncomeOrderWhitelisted(order)
 
-  return isFormatValid && isOwnerValid
+  return isFormatValid && isOwnerValid && isOwnerWhitelisted
 }
 
 
@@ -150,14 +157,12 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
         'destination',
       ))
 
-      this.app.services.room.sendMessagePeer(peer,
-        {
-          event: 'new orders',
-          data: {
-            orders: myOrders,
-          },
-        }
-      )
+      this.app.services.room.sendMessagePeer(peer, {
+        event: 'new orders',
+        data: {
+          orders: myOrders,
+        },
+      })
     }
   }
   _handleUserOnline = (peer) => {
