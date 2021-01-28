@@ -600,10 +600,7 @@ export default class WithdrawModal extends React.Component<any, any> {
           }
         }
 
-        this.reportError(error, `
-          selected item: ${selectedItem.fullName} 
-          custom message: ${customError.name.defaultMessage}
-        `)
+        this.reportError(error, `selected item: ${selectedItem.fullName} custom message: ${customError.name.defaultMessage}`)
         this.setState(() => ({
           error: customError,
           isShipped: false,
@@ -716,10 +713,13 @@ export default class WithdrawModal extends React.Component<any, any> {
     const maxFiatAmount = maxAmount.multipliedBy(exCurrencyRate).dp(2, BigNumber.ROUND_DOWN)
 
     if (maxAmount.isGreaterThan(balances.balance) || maxAmount.isLessThanOrEqualTo(0)) {
-      this.setState({
-        amount: 0,
-        fiatAmount: 0,
-      })
+      this.setState((state) => ({
+        balances: {
+          ...state.balances,
+          allowedCurrency: new BigNumber(0),
+          allowedFiat: new BigNumber(0),
+        },
+      }))
     } else {
       this.setState((state) => ({
         balances: {
@@ -1062,7 +1062,7 @@ export default class WithdrawModal extends React.Component<any, any> {
             )}
           </div>
           {/* hint about maximum possible amount */}
-          {dashboardView && (
+          {dashboardView && !fetchFee && (
             <div styleName={'prompt'}>
               {balances.allowedCurrency.isEqualTo(0) ?
                 (
