@@ -76,7 +76,7 @@ export default (tokenName) => {
         secret: null,
 
         isEthWithdrawn: false,
-        isBtcWithdrawn: false,
+        isbtcWithdrawn: false,
 
         ethSwapWithdrawTransactionHash: null,
         btcSwapWithdrawTransactionHash: null,
@@ -432,7 +432,7 @@ export default (tokenName) => {
             flow,
             fieldSwapWithdrawTransactionHash: `btcSwapWithdrawTransactionHash`,
             fieldScriptValues: `btcScriptValues`,
-            fieldIsBtcWithdrawn: `isBtcWithdrawn`,
+            fieldIsBtcWithdrawn: `isbtcWithdrawn`,
           })
         },
 
@@ -681,7 +681,7 @@ export default (tokenName) => {
     }
 
     async tryWithdraw(_secret) {
-      const { secret, secretHash, isEthWithdrawn, isBtcWithdrawn, btcScriptValues } = this.state
+      const { secret, secretHash, isEthWithdrawn, isbtcWithdrawn, btcScriptValues } = this.state
 
       if (!_secret)
         throw new Error(`Withdrawal is automatic. For manual withdrawal, provide a secret`)
@@ -692,7 +692,7 @@ export default (tokenName) => {
       if (secret && secret != _secret)
         console.warn(`Secret already known and is different. Are you sure?`)
 
-      if (isBtcWithdrawn)
+      if (isbtcWithdrawn)
         console.warn(`Looks like money were already withdrawn, are you sure?`)
 
       debug('swap.core:flow')(`WITHDRAW using secret = ${_secret}`)
@@ -709,7 +709,7 @@ export default (tokenName) => {
 
       if (balance === 0) {
         this.finishStep({
-          isBtcWithdrawn: true,
+          isbtcWithdrawn: true,
         }, {step: 'withdraw-btc'})
         throw new Error(`Already withdrawn: address=${scriptAddress},balance=${balance}`)
       }
@@ -726,7 +726,7 @@ export default (tokenName) => {
       debug('swap.core:flow')(`TX withdraw sent: ${this.state.btcSwapWithdrawTransactionHash}`)
 
       this.finishStep({
-        isBtcWithdrawn: true,
+        isbtcWithdrawn: true,
       }, { step: 'withdraw-btc' })
     }
 

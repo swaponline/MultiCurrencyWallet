@@ -634,22 +634,16 @@ class BtcLikeSwap extends SwapInterface {
 
   async fundSwapScript({
     flow,
-    fieldScriptValues,
-    fieldCreateTransactionHash,
-    fieldIsScriptFunded,
   }: {
     flow: any, // Flow, @todo - add all fields
-    fieldScriptValues: string,
-    fieldCreateTransactionHash: string,
-    fieldIsScriptFunded: string,
   }) {
     const utxoClass = this
     const coin = this._swapName.toLowerCase()
 
     const onTransactionHash = (txID) => {
       const {
-        [`${fieldCreateTransactionHash}`]: scriptCreatingTransactionHash,
-        [`${fieldScriptValues}`]: scriptValues,
+        [`${coin}ScriptCreatingTransactionHash`]: scriptCreatingTransactionHash,
+        [`${coin}ScriptValues`]: scriptValues,
       } = flow.state
 
       if (scriptCreatingTransactionHash) {
@@ -657,7 +651,7 @@ class BtcLikeSwap extends SwapInterface {
       }
 
       flow.setState({
-        [`${fieldCreateTransactionHash}`]: txID,
+        [`${coin}ScriptCreatingTransactionHash`]: txID,
       })
 
       flow.swap.room.once(`request ${coin} script`, () => {
@@ -665,7 +659,7 @@ class BtcLikeSwap extends SwapInterface {
           event: `create ${coin} script`,
           data: {
             scriptValues,
-            [`${fieldCreateTransactionHash}`]: txID,
+            [`${coin}ScriptCreatingTransactionHash`]: txID,
           }
         })
       })
@@ -674,7 +668,7 @@ class BtcLikeSwap extends SwapInterface {
         event: `create ${coin} script`,
         data: {
           scriptValues,
-          [`${fieldCreateTransactionHash}`]: txID,
+          [`${coin}ScriptCreatingTransactionHash`]: txID,
         }
       })
     }
@@ -685,7 +679,7 @@ class BtcLikeSwap extends SwapInterface {
       },
       state: {
         isBalanceEnough,
-        [`${fieldScriptValues}`]: scriptValues,
+        [`${coin}ScriptValues`]: scriptValues,
       },
     } = flow
 
@@ -772,8 +766,7 @@ class BtcLikeSwap extends SwapInterface {
 
     if (!isStoppedSwap) {
       flow.finishStep({
-        [`${fieldIsScriptFunded}`]: true,
-        isScriptFunded: true,
+        [`$is{coin}ScriptFunded}`]: true,
       }, { step: `lock-${coin}` })
     }
   }

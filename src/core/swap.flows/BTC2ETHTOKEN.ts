@@ -152,9 +152,6 @@ export default (tokenName) => {
         async () => {
           this.btcSwap.fundSwapScript({
             flow,
-            fieldScriptValues: `btcScriptValues`,
-            fieldCreateTransactionHash: `btcScriptCreatingTransactionHash`,
-            fieldIsScriptFunded: `isBtcScriptFunded`,
           })
         },
 

@@ -73,7 +73,7 @@ class ETH2BTC extends Flow {
       secret: null,
 
       isEthWithdrawn: false,
-      isBtcWithdrawn: false,
+      isbtcWithdrawn: false,
 
       ethSwapWithdrawTransactionHash: null,
       btcSwapWithdrawTransactionHash: null,
@@ -393,7 +393,7 @@ class ETH2BTC extends Flow {
           coin: `btc`,
           fieldSwapWithdrawTransactionHash: `btcSwapWithdrawTransactionHash`,
           fieldScriptValues: `btcScriptValues`,
-          fieldIsBtcWithdrawn: `isBtcWithdrawn`,
+          fieldIsBtcWithdrawn: `isbtcWithdrawn`,
         })
       },
 
@@ -642,7 +642,7 @@ class ETH2BTC extends Flow {
   }
 
   async tryWithdraw(_secret) {
-    const { secret, secretHash, isEthWithdrawn, isBtcWithdrawn, btcScriptValues } = this.state
+    const { secret, secretHash, isEthWithdrawn, isbtcWithdrawn, btcScriptValues } = this.state
 
     if (!_secret)
       throw new Error(`Withdrawal is automatic. For manual withdrawal, provide a secret`)
@@ -653,7 +653,7 @@ class ETH2BTC extends Flow {
     if (secret && secret != _secret)
       console.warn(`Secret already known and is different. Are you sure?`)
 
-    if (isBtcWithdrawn)
+    if (isbtcWithdrawn)
       console.warn(`Looks like money were already withdrawn, are you sure?`)
 
     debug('swap.core:flow')(`WITHDRAW using secret = ${_secret}`)
@@ -670,7 +670,7 @@ class ETH2BTC extends Flow {
 
     if (balance === 0) {
       this.finishStep({
-        isBtcWithdrawn: true,
+        isbtcWithdrawn: true,
       }, { step: 'withdraw-btc' })
       throw new Error(`Already withdrawn: address=${scriptAddress},balance=${balance}`)
     }
@@ -687,7 +687,7 @@ class ETH2BTC extends Flow {
     debug('swap.core:flow')(`TX withdraw sent: ${this.state.btcSwapWithdrawTransactionHash}`)
 
     this.finishStep({
-      isBtcWithdrawn: true,
+      isbtcWithdrawn: true,
     }, { step: 'withdraw-btc' })
   }
 

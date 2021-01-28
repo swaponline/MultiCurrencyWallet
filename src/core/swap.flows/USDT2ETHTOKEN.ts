@@ -79,7 +79,7 @@ export default (tokenName) => {
 
         ethSwapWithdrawTransactionHash: null,
         isEthWithdrawn: false,
-        isBtcWithdrawn: false,
+        isbtcWithdrawn: false,
 
         refundTxHex: null,
         isFinished: false,
