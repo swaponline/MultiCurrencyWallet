@@ -27,12 +27,17 @@ export default class RowFeeds extends Component<any, any> {
     row: PropTypes.object,
   }
 
-  generateLink = () => {
-    const { intl: { locale }, row: { buyCurrency, sellCurrency, id } } = this.props
+  generateOfferUrl = () => {
+    const { row: { id } } = this.props
 
-    const market = `${buyCurrency}-to-${sellCurrency}`.toLowerCase()
-    const url = `${config.base}#${links.exchange}/${market}/${id}`
-    return url
+    const currentUrl = window.location.href
+
+    const offerUrl = currentUrl.includes(`/${id}`) ?
+      currentUrl // if already entered
+      :
+      `${currentUrl}/${id}`
+
+    return offerUrl
   }
 
   render() {
@@ -74,7 +79,7 @@ export default class RowFeeds extends Component<any, any> {
         <td>
           <div styleName="buttons">
             <div>
-              <Copy text={this.generateLink()}>
+              <Copy text={this.generateOfferUrl()}>
                 <div styleName="circle">
                   <img src={ShareImg} styleName="img" alt="share" />
                 </div>

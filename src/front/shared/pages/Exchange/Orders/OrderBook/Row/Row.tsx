@@ -32,7 +32,7 @@ type RowProps = {
   pairFees: any
   decline: any[]
   orderId: string
-  linkedOrderId: number
+  linkedOrderId: string
   
   row: {
     id: string
@@ -338,7 +338,10 @@ export default class Row extends Component {
     return showDesktopContent ? (
       <tr
         id={id}
-        styleName={`${isDark ? 'rowDark' : ''}`}
+        styleName={`
+          ${isDark ? 'rowDark' : ''}
+          ${id === linkedOrderId ? 'linkedOrderHighlight' : ''}
+        `}
         style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}
       >
         <td styleName='rowCell'>
@@ -425,6 +428,7 @@ export default class Row extends Component {
         styleName={`
           ${peer === ownerPeer ? 'mobileRowRemove' : 'mobileRowStart'}
           ${isDark ? 'rowDark' : ''}
+          ${id === linkedOrderId ? 'linkedOrderHighlight' : ''}
         `}
         style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}
       >

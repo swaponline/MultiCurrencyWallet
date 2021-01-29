@@ -50,7 +50,7 @@ type OrderBookProps = {
   pairFees: { [key: string]: any } | boolean
   balances: { [key: string]: number } | boolean
   
-  linkedOrderId: number
+  linkedOrderId: string
   orderId: string
 
   checkSwapAllow: ({}) => boolean
