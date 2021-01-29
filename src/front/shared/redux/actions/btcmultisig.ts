@@ -75,8 +75,6 @@ const _loadBtcMultisigKeys = () => {
   return savedKeys
 }
 
-const delay = (ms) => new Promise(resolve => setTimeout(() => resolve(true), ms))
-
 const signToUserMultisig = async () => {
   const {
     user: {
@@ -230,12 +228,6 @@ const removeBtcMultisigNey = (keyOrIndex) => {
       return true
     }
   }
-}
-
-
-const addWallet = (otherOwnerPublicKey) => {
-  const { user: { btcMultisigSMSData: { address, privateKey } } } = getState()
-  createWallet(privateKey, otherOwnerPublicKey)
 }
 
 const checkSMSActivated = () => {
@@ -1211,116 +1203,6 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
     }
   }
 }
-//@ts-ignore
-const sendSMSProtectedV4 = async ({ from, to, amount, feeValue, speed } = {}) => {
-  const {
-    user: {
-      btcMultisigSMSData: {
-        privateKey,
-        publicKeys,
-        publicKey,
-      },
-      btcData: {
-        address,
-      },
-    },
-  } = getState()
-
-  let feeFromAmount = new BigNumber(0)
-
-  if (hasAdminFee) {
-    const {
-      fee: adminFee,
-      min: adminFeeMinValue,
-    } = hasAdminFee
-
-    const adminFeeMin = new BigNumber(adminFeeMinValue)
-
-    feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
-    if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
-
-
-    feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
-  }
-
-  feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, method: 'send_2fa' })
-
-
-  const unspents = await fetchUnspents(from)
-
-  const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
-  const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount.toNumber()
-
-  const p2ms = bitcoin.payments.p2ms({
-    m: 2,
-    n: publicKeys.length,
-    pubkeys: publicKeys,
-    network: btc.network,
-  })
-  const p2sh = bitcoin.payments.p2sh({ redeem: p2ms, network: btc.network })
-
-  // console.log('P2SH Address:',p2sh.address)
-  // console.log('P2SH Script')
-  // console.log(bitcoin.script.toASM(p2sh.redeem.output))
-  // console.log(publicKey.toString('Hex'))
-  // console.log(bitcoin.ECPair.fromWIF(privateKey, btc.network).publicKey.toString('Hex'))
-
-
-  let txb1 = new bitcoin.TransactionBuilder(btc.network)
-
-  unspents.forEach(({ txid, vout }) => txb1.addInput(txid, vout, 0xfffffffe))
-  txb1.addOutput(to, fundValue)
-
-  if (skipValue > 546) {
-    txb1.addOutput(from, skipValue)
-  }
-
-  if (hasAdminFee) {
-    // admin fee output
-    txb1.addOutput(hasAdminFee.address, feeFromAmount.toNumber())
-  }
-//@ts-ignore
-  txb1.__INPUTS.forEach((input, index) => {
-    txb1.sign(index, bitcoin.ECPair.fromWIF(privateKey, btc.network), p2sh.redeem.output)
-  })
-
-  let txRaw = txb1.buildIncomplete()
-  // console.log('Multisig transaction ready')
-  // console.log('Your key:', publicKey.toString('Hex'))
-  // console.log('TX Hash:', txRaw.toHex())
-  // console.log('Send it to other owner for sign and broadcast')
-
-  let authKeys = publicKeys.slice(1)
-  authKeys = JSON.stringify(authKeys.map((key) => key.toString('Hex')))
-
-  try {
-    const result: any = await apiLooper.post('btc2FAProtected', `/push/`, {
-      body: {
-        address,
-        publicKey: authKeys,
-        checkSign: _getSign,
-        rawTX: txRaw.toHex(),
-        mainnet: !!process.env.MAINNET,
-        source: window.location.hostname,
-      },
-      timeout: {
-        response: 0,
-        deadline: 5000,
-      },
-    })
-
-    return {
-      ...result,
-      rawTx: txRaw.toHex(),
-    }
-  } catch (apiError) {
-    return {
-      error: apiError.message,
-      rawTx: txRaw.toHex(),
-    }
-  }
-}
 
 //@ts-ignore
 const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, mnemonic } = {}) => {
@@ -1488,151 +1370,6 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
   }
 }
 
-// deprecated
-//@ts-ignore
-const sendPinProtectedV4 = async ({ from, to, amount, feeValue, speed, password, mnemonic } = {}) => {
-  const {
-    user: {
-      btcMultisigPinData: {
-        privateKey,
-        publicKeys,
-        publicKey,
-      },
-      btcData: {
-        address,
-      },
-    },
-  } = getState()
-
-  let feeFromAmount = new BigNumber(0)
-
-  if (hasAdminFee) {
-    const {
-      fee: adminFee,
-      min: adminFeeMinValue,
-    } = hasAdminFee
-
-    const adminFeeMin = new BigNumber(adminFeeMinValue)
-
-    feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
-    if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
-
-
-    feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
-  }
-
-  feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, method: 'send_2fa' })
-
-
-  const unspents = await fetchUnspents(from)
-
-  const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
-  const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount.toNumber()
-
-  const p2ms = bitcoin.payments.p2ms({
-    m: 2,
-    n: publicKeys.length,
-    pubkeys: publicKeys,
-    network: btc.network,
-  })
-  const p2sh = bitcoin.payments.p2sh({ redeem: p2ms, network: btc.network })
-
-  // console.log('P2SH Address:',p2sh.address)
-  // console.log('P2SH Script')
-  // console.log(bitcoin.script.toASM(p2sh.redeem.output))
-  // console.log(publicKey.toString('Hex'))
-  // console.log(bitcoin.ECPair.fromWIF(privateKey, btc.network).publicKey.toString('Hex'))
-
-
-  let txb1 = new bitcoin.TransactionBuilder(btc.network)
-
-  unspents.forEach(({ txid, vout }) => txb1.addInput(txid, vout, 0xfffffffe))
-  txb1.addOutput(to, fundValue)
-
-  if (skipValue > 546) {
-    txb1.addOutput(from, skipValue)
-  }
-
-  if (hasAdminFee) {
-    // admin fee output
-    txb1.addOutput(hasAdminFee.address, feeFromAmount.toNumber())
-  }
-  //@ts-ignore
-  txb1.__INPUTS.forEach((input, index) => {
-    txb1.sign(index, bitcoin.ECPair.fromWIF(privateKey, btc.network), p2sh.redeem.output)
-  })
-
-  let txRaw = txb1.buildIncomplete()
-
-  if (mnemonic) {
-    const mnemonicTx = await signPinMnemonic(txRaw.toHex(), mnemonic)
-    const broadcastResult = await actions.btc.broadcastTx(mnemonicTx)
-    if (broadcastResult
-      && broadcastResult.txid
-    ) {
-      return {
-        answer: 'ok',
-        txId: broadcastResult.txid,
-      }
-    }
-    return {
-      error: `Fail sign transaction by mnemonic`,
-    }
-
-  }
-
-  let authKeys = publicKeys// .slice(1)
-  authKeys = JSON.stringify(authKeys.map((key) => key.toString('Hex')))
-
-  try {
-    const result: any = await apiLooper.post('btcPin', `/sign/`, {
-      body: {
-        address,
-        publicKey: authKeys,
-        checkSign: _getSign,
-        rawTX: txRaw.toHex(),
-        mainnet: !!process.env.MAINNET,
-        source: window.location.hostname,
-        password,
-      },
-      timeout: {
-        response: 0,
-        deadline: 5000,
-      },
-    })
-
-    if (result
-      && result.answer
-      && result.answer === 'ok'
-      && result.rawTX
-    ) {
-      const broadcastResult = await actions.btc.broadcastTx(result.rawTX)
-      if (broadcastResult
-        && broadcastResult.txid
-      ) {
-        return {
-          answer: 'ok',
-          txId: broadcastResult.txid,
-        }
-      }
-      return {
-        error: 'Fail broadcast transaction',
-      }
-
-    }
-    return {
-      ...result,
-    }
-
-  } catch (apiError) {
-    return {
-      error: apiError.message,
-      rawTx: txRaw.toHex(),
-    }
-  }
-}
-
 const confirmSMSProtected = async (smsCode) => {
   const {
     user: {
@@ -1758,79 +1495,6 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
   return rawTx
 }
 
-// Deprecated
-//@ts-ignore
-const sendV4 = async ({ from, to, amount, feeValue, speed } = {}) => {
-  feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, method: 'send_multisig' })
-  const {
-    user: {
-      btcMultisigUserData: {
-        privateKey,
-      },
-    }
-  } = getState()
-
-  const senderWallet = addressToWallet( from )
-  console.log('senderWallet', from)
-
-  const { address, publicKeys } = senderWallet
-
-  let feeFromAmount = new BigNumber(0)
-
-  if (hasAdminFee) {
-    const {
-      fee: adminFee,
-      min: adminFeeMinValue,
-    } = hasAdminFee
-
-    const adminFeeMin = new BigNumber(adminFeeMinValue)
-
-    feeFromAmount = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
-    if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
-
-
-    feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue()
-  }
-
-  const unspents = await fetchUnspents(from)
-
-  const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
-  const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-
-  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount.toNumber()
-
-  const p2ms = bitcoin.payments.p2ms({
-    m: 2,
-    n: publicKeys.length,
-    pubkeys: publicKeys,
-    network: btc.network,
-  })
-
-  const p2sh = bitcoin.payments.p2sh({ redeem: p2ms, network: btc.network })
-
-  let txb1 = new bitcoin.TransactionBuilder(btc.network)
-
-  unspents.forEach(({ txid, vout }) => txb1.addInput(txid, vout, 0xfffffffe))
-  txb1.addOutput(to, fundValue)
-
-  if (skipValue > 546) {
-    txb1.addOutput(from, skipValue)
-  }
-
-  if (hasAdminFee) {
-    // admin fee output
-    txb1.addOutput(hasAdminFee.address, feeFromAmount.toNumber())
-  }
-  //@ts-ignore
-  txb1.__INPUTS.forEach((input, index) => {
-    txb1.sign(index, bitcoin.ECPair.fromWIF(privateKey, btc.network), p2sh.redeem.output)
-  })
-
-  let txRaw = txb1.buildIncomplete()
-
-  return txRaw.toHex()
-}
-
 const getMSWalletByScript = async (script, myBtcWallets) => {
   //@ts-ignore
   if (!myBtcWallets) myBtcWallets = await getBtcMultisigKeys()
@@ -1841,36 +1505,6 @@ const getMSWalletByScript = async (script, myBtcWallets) => {
     const walletScript = `OP_2 ${keys} OP_2 OP_CHECKMULTISIG`
 
     if (walletScript === script) {
-      return true
-    }
-  }).map((wallet) => {
-    const {
-      publicKeys,
-      publicKey,
-      address,
-      balance,
-    } = wallet
-
-    return {
-      publicKeys,
-      publicKey,
-      address,
-      balance,
-    }
-  })
-
-  return (wallets.length) ? wallets[0] : false
-}
-
-const getMSWalletByPubkeysHash = async (pubkeysHash, myBtcWallets) => {
-  //@ts-ignore
-  if (!myBtcWallets) myBtcWallets = await getBtcMultisigKeys()
-  if (typeof pubkeysHash !== 'string') pubkeysHash = pubkeysHash.map(buf => buf.toString('hex')).join('-')
-
-  const wallets = myBtcWallets.filter((wallet) => {
-    const hash = wallet.publicKeys.map(buf => buf.toString('hex')).join('-')
-    if (pubkeysHash === hash) {
-
       return true
     }
   }).map((wallet) => {
@@ -1968,95 +1602,6 @@ const parseRawTX = async (txHash) => {
   return parsedTX
 }
 
-const parseRawTXv4 = async (txHash) => {
-  //@ts-ignore
-  const myBtcWallets = await getBtcMultisigKeys()
-  //@ts-ignore
-  const myBtcAddreses = myBtcWallets.map((wallet) => wallet.address)
-
-  const txb = await bitcoin.TransactionBuilder.fromTransaction(
-    bitcoin.Transaction.fromHex(txHash),
-    btc.network
-  )
-
-  const parsedTX = {
-    txb,
-    input: [],
-    output: [],
-    from: false,
-    to: false,
-    out: {},
-    isOur: false,
-    amount: new BigNumber(0),
-  }
-
-  await new Promise((inputParsed) => {
-    //@ts-ignore
-    txb.__INPUTS.forEach(async (input) => {
-      const inputWallet = await getMSWalletByPubkeysHash(input.pubkeys, myBtcWallets)
-
-      if (inputWallet) {
-        if (inputWallet.address) parsedTX.from = inputWallet.address
-        //@ts-ignore
-        parsedTX.wallet = inputWallet
-        parsedTX.isOur = true
-      }
-
-      parsedTX.input.push({
-        script: bitcoin.script.toASM(input.redeemScript),
-        wallet: inputWallet,
-        publicKeys: input.pubkeys.map(buf => buf.toString('hex')),
-      })
-    })
-    inputParsed(true)
-  }).then(() => {
-    //@ts-ignore
-    txb.__TX.outs.forEach((out) => {
-      let address
-      try {
-        address = bitcoin.address.fromOutputScript(out.script, btc.network)
-      } catch (e) { }
-
-      if (!parsedTX.isOur) {
-        //@ts-ignore
-        const outWallet = myBtcWallets.filter((wallet) => wallet.address === address)
-
-        if (outWallet.length) {
-          if (outWallet[0].address) parsedTX.from = outWallet[0].address
-          //@ts-ignore
-          parsedTX.wallet = outWallet[0]
-          parsedTX.isOur = true
-        }
-      }
-      if (parsedTX.from !== address) {
-        if (!parsedTX.out[address]) {
-          parsedTX.out[address] = {
-            to: address,
-            amount: new BigNumber(out.value).dividedBy(1e8).toNumber(),
-          }
-        } else {
-          parsedTX.out[address].amount = parsedTX.out[address].amount.plus(new BigNumber(out.value).dividedBy(1e8).toNumber())
-        }
-        parsedTX.amount = parsedTX.amount.plus(new BigNumber(out.value).dividedBy(1e8).toNumber())
-      }
-
-      parsedTX.output.push({
-        address,
-        valueSatoshi: out.value,
-        value: new BigNumber(out.value).dividedBy(1e8).toNumber(),
-      })
-    })
-
-    if (Object.keys(parsedTX.out).length) {
-      parsedTX.to = parsedTX.out[Object.keys(parsedTX.out)[0]].to
-    }
-  })
-
-  console.log('parsedTX', parsedTX)
-  return parsedTX
-}
-
-
 const signMofNByMnemonic = async (txHash, option_M, publicKeys, mnemonic, walletNumber, ownPath) => {
   const mnemonicWallet = actions.btc.getWalletByWords(mnemonic, walletNumber, ownPath)
   if (mnemonicWallet) {
@@ -2087,30 +1632,6 @@ const signMofNByMnemonic = async (txHash, option_M, publicKeys, mnemonic, wallet
     const txHex = tx.toHex()
     return txHex
   }
-}
-
-const signMofN = async (txHash, option_M, publicKeys, privateKey) => {
-  let txb = bitcoin.TransactionBuilder.fromTransaction(
-    bitcoin.Transaction.fromHex(txHash),
-    btc.network
-  )
-
-  const p2ms = bitcoin.payments.p2ms({
-    m: option_M,
-    n: publicKeys.length,
-    pubkeys: publicKeys,
-    network: btc.network,
-  })
-
-  const p2sh = bitcoin.payments.p2sh({ redeem: p2ms, network: btc.network })
-  //@ts-ignore
-  txb.__INPUTS.forEach((input, index) => {
-    txb.sign(index, bitcoin.ECPair.fromWIF(privateKey, btc.network), p2sh.redeem.output)
-  })
-
-  let tx = await txb.build()
-  const txHex = tx.toHex()
-  return txHex
 }
 
 const signMultiSign = async (txHash, wallet) => {
@@ -2165,20 +1686,6 @@ const signPinMnemonic = (txHash, mnemonic) => {
   })
 }
 
-// deprecated
-const signPinMnemonicv4 = (txHash, mnemonic) => {
-  const {
-    user: {
-      btcMultisigPinData: {
-        publicKeys,
-      },
-    },
-  } = getState()
-  //@ts-ignore
-  return signMofNByMnemonic(txHash, 2, publicKeys, mnemonic, 1)
-}
-
-
 const signSmsMnemonicAndBuild = (txHash, mnemonic) => {
   return new Promise(async (resolve, reject) => {
     const mnemonicWallet = actions.btc.getWalletByWords(mnemonic, 1)
@@ -2190,17 +1697,6 @@ const signSmsMnemonicAndBuild = (txHash, mnemonic) => {
 
     const rawTx = psbt.extractTransaction().toHex()
 
-    if (!rawTx) {
-      reject('rawTx empty')
-    } else {
-      resolve(rawTx)
-    }
-  })
-}
-// deprecated
-const signSmsMnemonicAndBuildV4 = (txHash, mnemonic) => {
-  return new Promise(async (resolve, reject) => {
-    const rawTx = signSmsMnemonic(txHash, mnemonic)
     if (!rawTx) {
       reject('rawTx empty')
     } else {
@@ -2257,23 +1753,6 @@ const checkSmsMnemonic = (mnemonic) => {
     return (matchedKeys.length > 0)
   }
   return false
-}
-
-const signAndBuild = (transactionBuilder, p2sh) => {
-  const {
-    user: {
-      btcData: {
-        privateKey,
-      },
-    },
-  } = getState()
-
-  const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
-
-  transactionBuilder.__INPUTS.forEach((input, index) => {
-    transactionBuilder.sign(index, keyPair, p2sh)
-  })
-  return transactionBuilder.buildIncomplete()
 }
 
 const fetchUnspents = (address) => {
