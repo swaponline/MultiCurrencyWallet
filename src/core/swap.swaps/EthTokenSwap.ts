@@ -903,6 +903,77 @@ class EthTokenSwap extends SwapInterface {
       }, {step: 'lock-eth'})
     }
   }
+
+
+  async getSecretFromAB2UTXO({
+    flow,
+  }: {
+    flow: any,
+  }) {
+    const abClass = this
+
+    flow.swap.room.once('ethWithdrawTxHash', async ({ethSwapWithdrawTransactionHash}) => {
+      flow.setState({
+        ethSwapWithdrawTransactionHash,
+      }, true)
+
+      const secretFromTxhash = await util.helpers.extractSecretFromTx({
+        flow,
+        swapFlow: flow.ethTokenSwap,
+        app: flow.app,
+        ethSwapWithdrawTransactionHash,
+      })
+
+      const { isEthWithdrawn } = flow.state
+
+      if (!isEthWithdrawn && secretFromTxhash) {
+        debug('swap.core:flow')('got secret from tx', ethSwapWithdrawTransactionHash, secretFromTxhash)
+        flow.finishStep({
+          isEthWithdrawn: true,
+          secret: secretFromTxhash,
+        }, {step: 'wait-withdraw-eth'})
+      }
+    })
+
+    flow.swap.room.sendMessage({
+      event: 'request ethWithdrawTxHash',
+    })
+
+    const { participant } = flow.swap
+
+    const checkSecretExist = async () => {
+      return await util.helpers.extractSecretFromContract({
+        flow,
+        swapFlow: abClass,
+        participantAddress: flow.app.getParticipantEthAddress(flow.swap),
+        ownerAddress: flow.app.getMyEthAddress(),
+        app: flow.app,
+      })
+    }
+
+    const secretFromContract = await util.helpers.repeatAsyncUntilResult((stopRepeat) => {
+      const { isEthWithdrawn, isRefunded } = flow.state
+
+      if (isEthWithdrawn || isRefunded) {
+        stopRepeat()
+
+        return false
+      }
+
+      return checkSecretExist()
+    })
+
+    const { isEthWithdrawn } = flow.state
+
+    if (secretFromContract && !isEthWithdrawn) {
+      debug('swap.core:flow')('got secret from smart contract', secretFromContract)
+
+      flow.finishStep({
+        isEthWithdrawn: true,
+        secret: secretFromContract,
+      }, { step: 'wait-withdraw-eth' })
+    }
+  }
 }
 
 
