@@ -160,53 +160,10 @@ class BTC2ETH extends Flow {
       // 5. Wait participant creates ETH Contract
 
       async () => {
-        flow.swap.room.sendMessage({
-          event: 'request eth contract',
+        await flow.ethSwap.waitAB2UTXOContract({
+          flow,
+          utxoCoin: `btc`,
         })
-
-        flow.swap.room.once('request btc script', () => {
-          const { btcScriptValues, btcScriptCreatingTransactionHash } = flow.state
-
-          flow.swap.room.sendMessage({
-            event:  'create btc script',
-            data: {
-              scriptValues: btcScriptValues,
-              btcScriptCreatingTransactionHash,
-            }
-          })
-        })
-
-        const { participant } = flow.swap
-
-        flow.swap.room.on('create eth contract', ({ ethSwapCreationTransactionHash }) => {
-          flow.setState({
-            ethSwapCreationTransactionHash,
-          }, true)
-        })
-
-        const isContractBalanceOk = await util.helpers.repeatAsyncUntilResult(async () => {
-          const balance = await flow.ethSwap.getBalance({
-            ownerAddress: this.app.getParticipantEthAddress(flow.swap),
-          })
-
-          debug('swap.core:flow')('Checking contract balance:', balance)
-
-          if (balance > 0) {
-            return true
-          }
-
-          return false
-        })
-
-        if (isContractBalanceOk) {
-          const { isEthContractFunded } = flow.state
-
-          if (!isEthContractFunded) {
-            flow.finishStep({
-              isEthContractFunded: true,
-            }, { step: 'wait-lock-eth' })
-          }
-        }
       },
 
       // 6. Withdraw

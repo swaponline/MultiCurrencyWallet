@@ -235,55 +235,10 @@ class NEXT2ETH extends Flow {
       // 5. Wait participant creates ETH Contract
 
       async () => {
-        flow.swap.room.sendMessage({
-          event: 'request eth contract',
+        await flow.ethSwap.waitAB2UTXOContract({
+          flow,
+          utxoCoin: `next`,
         })
-
-        flow.swap.room.once('request next script', () => {
-          const { nextScriptValues, nextScriptCreatingTransactionHash } = flow.state
-
-          flow.swap.room.sendMessage({
-            event:  'create next script',
-            data: {
-              scriptValues: nextScriptValues,
-              nextScriptCreatingTransactionHash,
-            }
-          })
-        })
-
-        const { participant } = flow.swap
-
-        flow.swap.room.on('create eth contract', ({ ethSwapCreationTransactionHash }) => {
-          flow.setState({
-            ethSwapCreationTransactionHash,
-          }, true)
-        })
-
-        const isContractBalanceOk = await util.helpers.repeatAsyncUntilResult(async () => {
-          console.log('check balance')
-          const balance = await flow.ethSwap.getBalance({
-            ownerAddress: this.app.getParticipantEthAddress(flow.swap),
-          })
-
-          debug('swap.core:flow')('Checking contract balance:', balance)
-
-          if (balance > 0) {
-            return true
-          }
-
-          return false
-        })
-
-        console.log('isContractBalanceOk', isContractBalanceOk)
-        if (isContractBalanceOk) {
-          const { isEthContractFunded } = flow.state
-
-          if (!isEthContractFunded) {
-            flow.finishStep({
-              isEthContractFunded: true,
-            }, { step: 'wait-lock-eth' })
-          }
-        }
       },
 
       // 6. Withdraw

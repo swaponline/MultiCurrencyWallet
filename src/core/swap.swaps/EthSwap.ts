@@ -805,6 +805,71 @@ class EthSwap extends SwapInterface {
       }, { step: 'wait-withdraw-eth' })
     }
   }
+
+  async waitAB2UTXOContract({
+    flow,
+    utxoCoin,
+  }: {
+    flow: any,
+    utxoCoin: string,
+  }) {
+    const abClass = this
+
+    flow.swap.room.sendMessage({
+      event: 'request eth contract',
+    })
+
+    flow.swap.room.once(`request ${utxoCoin} script`, () => {
+      const {
+        [`${utxoCoin}ScriptValues`]: scriptValues,
+        [`${utxoCoin}ScriptCreatingTransactionHash`]: txHash,
+      } = flow.state
+
+      flow.swap.room.sendMessage({
+        event:  `create ${utxoCoin} script`,
+        data: {
+          scriptValues,
+          [`${utxoCoin}ScriptCreatingTransactionHash`]: txHash,
+        }
+      })
+    })
+
+    const { participant } = flow.swap
+
+    flow.swap.room.on('create eth contract', ({ ethSwapCreationTransactionHash }) => {
+      flow.setState({
+        ethSwapCreationTransactionHash,
+      }, true)
+    })
+
+    const isContractBalanceOk = await util.helpers.repeatAsyncUntilResult(async () => {
+      const balance = await flow.ethSwap.getBalance({
+        ownerAddress: abClass.app.getParticipantEthAddress(flow.swap),
+      })
+
+      _debug('swap.core:flow')('Checking contract balance:', balance)
+
+      if (balance > 0) {
+        return true
+      }
+
+      return false
+    })
+
+    if (isContractBalanceOk) {
+      const { isEthContractFunded } = flow.state
+
+      // @ToDo - нужно проверить сценарий, если был прерван свап
+      // Мы остались на этом шаге, но при этом isEthContractFunded = true
+      // Застрянет ли свап на этом шаге (#5)
+      // Или нужно принудительно перевести на следующий шаг
+      if (!isEthContractFunded) {
+        flow.finishStep({
+          isEthContractFunded: true,
+        }, { step: 'wait-lock-eth' })
+      }
+    }
+  }
 }
 
 
