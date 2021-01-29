@@ -974,6 +974,68 @@ class EthTokenSwap extends SwapInterface {
       }, { step: 'wait-withdraw-eth' })
     }
   }
+
+
+  async waitAB2UTXOContract({
+    flow,
+    utxoCoin,
+  }: {
+    flow: any,
+    utxoCoin: string,
+  }) {
+    const abClass = this
+
+    flow.swap.room.sendMessage({
+      event: 'request eth contract',
+    })
+
+    flow.swap.room.once(`request ${utxoCoin} script`, () => {
+      const {
+        [`${utxoCoin}ScriptValues`]: scriptValues,
+        [`${utxoCoin}ScriptCreatingTransactionHash`]: txHash,
+      } = flow.state
+
+      flow.swap.room.sendMessage({
+        event:  `create ${utxoCoin} script`,
+        data: {
+          scriptValues,
+          [`${utxoCoin}ScriptCreatingTransactionHash`]: txHash,
+        }
+      })
+    })
+
+    const { participant } = flow.swap
+
+    flow.swap.room.on('create eth contract', ({ ethSwapCreationTransactionHash }) => {
+      flow.setState({
+        ethSwapCreationTransactionHash,
+      }, true)
+    })
+
+    const isContractBalanceOk = await util.helpers.repeatAsyncUntilResult(async () => {
+      const balance = await abClass.getBalance({
+        ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
+      })
+
+      debug('swap.core:flow')('Checking contract balance:', balance)
+
+      if (balance > 0) {
+        return true
+      }
+
+      return false
+    })
+
+    if (isContractBalanceOk) {
+      const { isEthContractFunded } = flow.state
+
+      if (!isEthContractFunded) {
+        flow.finishStep({
+          isEthContractFunded: true,
+        }, { step: 'wait-lock-eth' })
+      }
+    }
+  }
 }
 
 
