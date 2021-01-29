@@ -507,8 +507,8 @@ class EthTokenSwap extends SwapInterface {
    * @param {string} ownerAddress
    * @returns {Promise.<string>}
    */
-  async getTargetWallet(ownerAddress) {
-    let address = await util.helpers.repeatAsyncUntilResult(() =>
+  async getTargetWallet(ownerAddress: string): Promise<string> {
+    let address: string = await util.helpers.repeatAsyncUntilResult(() =>
       this.getTargetWalletPromise(ownerAddress)
     )
     return address
@@ -1034,6 +1034,180 @@ class EthTokenSwap extends SwapInterface {
           isEthContractFunded: true,
         }, { step: 'wait-lock-eth' })
       }
+    }
+  }
+
+
+  async withdrawFromAB2UTXO({
+    flow,
+  }: {
+    flow: any,
+  }) {
+    const abClass = this
+    const { buyAmount, participant } = flow.swap
+    const { secretHash, secret } = flow.state
+
+    const data = {
+      ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
+      secret,
+    }
+
+    const balanceCheckError = await abClass.checkBalance({
+      ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
+      participantAddress: flow.app.getMyEthAddress(),
+      expectedValue: buyAmount,
+      expectedHash: secretHash,
+    })
+
+    if (balanceCheckError) {
+      console.error('Waiting until deposit: ETH balance check error:', balanceCheckError)
+      flow.swap.events.dispatch('eth balance check error', balanceCheckError)
+
+      return
+    }
+
+    if (abClass.hasTargetWallet()) {
+      const targetWallet = await abClass.getTargetWallet(
+        flow.app.getParticipantEthAddress(flow.swap)
+      )
+      const needTargetWallet = (flow.swap.destinationBuyAddress)
+        ? flow.swap.destinationBuyAddress
+        : flow.app.getMyEthAddress()
+
+      if (targetWallet.toLowerCase() != needTargetWallet.toLowerCase()) {
+        console.error(
+          "Destination address for tokens dismatch with needed (Needed, Getted). Stop swap now!",
+          needTargetWallet,
+          targetWallet,
+        )
+
+        flow.swap.events.dispatch('address for tokens invalid', {
+          needed: needTargetWallet,
+          getted: targetWallet,
+        })
+
+        return
+      }
+    }
+
+    const tokenAddressIsValid = await abClass.checkTokenIsValid({
+      ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
+      participantAddress: flow.app.getMyEthAddress(),
+    })
+
+    if (!tokenAddressIsValid) {
+      console.error("Tokens, blocked at contract dismatch with needed. Stop swap now!")
+      return
+    }
+
+    const onWithdrawReady = () => {
+      flow.swap.room.once('request ethWithdrawTxHash', () => {
+        const { ethSwapWithdrawTransactionHash } = flow.state
+
+        flow.swap.room.sendMessage({
+          event: 'ethWithdrawTxHash',
+          data: {
+            ethSwapWithdrawTransactionHash,
+          },
+        })
+      })
+
+      const { step } = flow.state
+
+      if (step >= 7) {
+        return
+      }
+
+      flow.finishStep({
+        isEthWithdrawn: true,
+      }, 'withdraw-eth')
+    }
+
+    const tryWithdraw = async (stopRepeater) => {
+      const { isEthWithdrawn } = flow.state
+
+      if (!isEthWithdrawn) {
+        try {
+          const { withdrawFee } = flow.state
+
+          if (!withdrawFee) {
+            const withdrawNeededGas = await abClass.calcWithdrawGas({
+              ownerAddress: data.ownerAddress,
+              secret,
+            })
+            flow.setState({
+              withdrawFee: withdrawNeededGas,
+            })
+            debug('swap.core:flow')('withdraw gas fee', withdrawNeededGas)
+          }
+
+          await abClass.withdraw(data, (hash) => {
+            flow.setState({
+              isEthWithdrawn: true,
+              ethSwapWithdrawTransactionHash: hash,
+              canCreateEthTransaction: true,
+              requireWithdrawFee: false,
+            }, true)
+
+            flow.swap.room.sendMessage({
+              event: 'ethWithdrawTxHash',
+              data: {
+                ethSwapWithdrawTransactionHash: hash,
+              }
+            })
+          })
+
+          stopRepeater()
+          return true
+        } catch (err) {
+          if ( /known transaction/.test(err.message) ) {
+            console.error(`known tx: ${err.message}`)
+            stopRepeater()
+            return true
+          } else if ( /out of gas/.test(err.message) ) {
+            console.error(`tx failed (wrong secret?): ${err.message}`)
+          } else if ( /insufficient funds for gas/.test(err.message) ) {
+            console.error(`insufficient fund for gas: ${err.message}`)
+
+            debug('swap.core:flow')('insufficient fund for gas... wait fund or request other side to withdraw')
+
+            const { requireWithdrawFee } = flow.state
+
+            if (!requireWithdrawFee) {
+              flow.swap.room.once('withdraw ready', ({ethSwapWithdrawTransactionHash}) => {
+                flow.setState({
+                  ethSwapWithdrawTransactionHash,
+                })
+
+                onWithdrawReady()
+              })
+
+              flow.setState({
+                requireWithdrawFee: true,
+              })
+            }
+
+          } else {
+            console.error(err)
+          }
+
+          flow.setState({
+            canCreateEthTransaction: false,
+          })
+
+          return null
+        }
+      }
+
+      return true
+    }
+
+    const isEthWithdrawn = await util.helpers.repeatAsyncUntilResult((stopRepeater) =>
+      tryWithdraw(stopRepeater),
+    )
+
+    if (isEthWithdrawn) {
+      onWithdrawReady()
     }
   }
 }

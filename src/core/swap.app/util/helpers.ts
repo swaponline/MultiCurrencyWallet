@@ -3,7 +3,7 @@
  * @param {number} delay
  * @returns {Promise<any>}
  */
-const repeatAsyncUntilResult = (action, delay = 10 * 1000) =>
+const repeatAsyncUntilResult = (action, delay = 10 * 1000): Promise<any> =>
   new Promise(async (resolve) => {
     let isStoped = false
     const stop = () => {
