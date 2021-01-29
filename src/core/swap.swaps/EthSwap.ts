@@ -616,7 +616,7 @@ class EthSwap extends SwapInterface {
         recipientPublicKey: abClass.app.services.auth.accounts[utxoCoin].getPublicKey(),
         lockTime: utcNow(),
         confidence: 0.8,
-        isWhiteList: abClass.app.isWhitelistBtc(participant[utxoCoin].address),
+        isWhiteList: abClass.app.isWhitelistBtc(participant.btc.address), // @todo - may be need more white list coins
         waitConfirm,
       })
 
