@@ -181,70 +181,7 @@ class ETH2GHOST extends Flow {
       // 6. Wait participant withdraw
 
       async () => {
-        flow.swap.room.once('ethWithdrawTxHash', async ({ethSwapWithdrawTransactionHash}) => {
-          flow.setState({
-            ethSwapWithdrawTransactionHash,
-          }, true)
-
-          const secretFromTxhash = await util.helpers.extractSecretFromTx({
-            flow,
-            swapFlow: flow.ethSwap,
-            app: this.app,
-            ethSwapWithdrawTransactionHash,
-          })
-
-          const { isEthWithdrawn } = flow.state
-
-          if (!isEthWithdrawn && secretFromTxhash) {
-            debug('swap.core:flow')('got secret from tx', ethSwapWithdrawTransactionHash, secretFromTxhash)
-            flow.finishStep({
-              isEthWithdrawn: true,
-              secret: secretFromTxhash,
-            }, {step: 'wait-withdraw-eth'})
-          }
-        })
-
-        flow.swap.room.sendMessage({
-          event: 'request ethWithdrawTxHash',
-        })
-
-        // If partner decides to scam and doesn't send ethWithdrawTxHash
-        // then we try to withdraw as in ETHTOKEN2USDT
-
-        const { participant } = flow.swap
-
-        const checkSecretExist = async () => {
-          return await util.helpers.extractSecretFromContract({
-            flow,
-            swapFlow: flow.ethSwap,
-            participantAddress: this.app.getParticipantEthAddress(flow.swap),
-            ownerAddress: flow.app.getMyEthAddress(),
-            app: this.app,
-          })
-        }
-
-        const secretFromContract = await util.helpers.repeatAsyncUntilResult((stopRepeat) => {
-          const { isEthWithdrawn, isRefunded } = flow.state
-
-          if (isEthWithdrawn || isRefunded) {
-            stopRepeat()
-
-            return false
-          }
-
-          return checkSecretExist()
-        })
-
-        const { isEthWithdrawn } = this.state
-
-        if (secretFromContract && !isEthWithdrawn) {
-          debug('swap.core:flow')('got secret from smart contract', secretFromContract)
-
-          flow.finishStep({
-            isEthWithdrawn: true,
-            secret: secretFromContract,
-          }, { step: 'wait-withdraw-eth' })
-        }
+        await flow.ethSwap.getSecretFromAB2UTXO({ flow })
       },
 
       // 7. Withdraw
