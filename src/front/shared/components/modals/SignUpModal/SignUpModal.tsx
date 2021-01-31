@@ -5,9 +5,10 @@ import PropTypes from 'prop-types'
 import { connect } from 'redaction'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
-import { firebase, constants } from 'helpers'
+import {
+  constants
+} from 'helpers'
 import request from 'common/utils/request'
-import firestore from 'helpers/firebase/firestore'
 
 import cssModules from 'react-css-modules'
 import styles from './SignUpModal.scss'
@@ -57,7 +58,7 @@ export default class SignUpModal extends React.Component<any, any> {
     this.state = {
       isSubmitedPush: false,
       isSubmitedEmail: false,
-      isSupportedPush: firebase.isSupported(),
+      // isSupportedPush: firebase.isSupported(),
       isPushError: false,
       isEmailError: false,
       email: '',
@@ -80,12 +81,12 @@ export default class SignUpModal extends React.Component<any, any> {
     if (isRefLink) {
       // eslint-disable-next-line prefer-destructuring
       refEthAddress = currentUrl.search.split('?promo=')[1].split('&')[0]
-      await firebase.submitUserData('usersBalance', { Referrer: refEthAddress })
+      // await firebase.submitUserData('usersBalance', { Referrer: refEthAddress })
     }
 
-    const ipInfo = await firebase.getIPInfo()
+    // const ipInfo = await firebase.getIPInfo()
     const data = {
-      ...ipInfo,
+      // ...ipInfo,
       ethAddress,
       btcAddress,
       ghostAddress,
@@ -95,47 +96,47 @@ export default class SignUpModal extends React.Component<any, any> {
       userAgentRegistration: navigator.userAgent,
     }
     if (whatToSubmit === 'isSubmitedPush' || !isSupportedPush) {
-      await firestore.addUser(data)
+      // await firestore.addUser(data)
     }
     //@ts-ignore
     actions.analytics.signUpEvent({ action: 'request' })
 
-    if (!isSupportedPush || isSubmitedPush) {
-      const result = await firebase.signUpWithEmail({
-        ...data,
-        email,
-      })
-      const resultFirestore = firestore.signUpWithEmail({
-        email,
-      })
+    // if (!isSupportedPush || isSubmitedPush) {
+    //   const result = await firebase.signUpWithEmail({
+    //     ...data,
+    //     email,
+    //   })
+    //   const resultFirestore = firestore.signUpWithEmail({
+    //     email,
+    //   })
 
-      if (!result) {
-        this.setState(() => ({
-          isEmailError: true,
-          [whatToSubmit]: Boolean(result && resultFirestore),
-        }))
-        return
-      }
+    //   if (!result) {
+    //     this.setState(() => ({
+    //       isEmailError: true,
+    //       [whatToSubmit]: Boolean(result && resultFirestore),
+    //     }))
+    //     return
+    //   }
 
-      this.setState(() => ({ [whatToSubmit]: Boolean(result && resultFirestore) }))
-      return
-    }
+    //   this.setState(() => ({ [whatToSubmit]: Boolean(result && resultFirestore) }))
+    //   return
+    // }
 
-    const result = await firebase.signUpWithPush(data)
-    const resultFirestore = await firestore.signUpWithPush()
+    // const result = await firebase.signUpWithPush(data)
+    // const resultFirestore = await firestore.signUpWithPush()
 
-    this.setState(() => ({ [whatToSubmit]: true }))
+    // this.setState(() => ({ [whatToSubmit]: true }))
 
-    if (!result && !resultFirestore) {
-      this.setState(() => ({
-        isPushError: !result,
-        isSupportedPush: result,
-        [whatToSubmit]: false,
-      }))
-      return
-    }
+    // if (!result && !resultFirestore) {
+    //   this.setState(() => ({
+    //     isPushError: !result,
+    //     isSupportedPush: result,
+    //     [whatToSubmit]: false,
+    //   }))
+    //   return
+    // }
 
-    this.setState(() => ({ [whatToSubmit]: Boolean(result && resultFirestore) }))
+    // this.setState(() => ({ [whatToSubmit]: Boolean(result && resultFirestore) }))
   }
 
   close = () => {

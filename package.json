@@ -246,7 +246,6 @@
     "ethereum-input-data-decoder": "^0.3.1",
     "ethereumjs-abi": "^0.6.8",
     "ethereumjs-common": "^1.5.2",
-    "firebase": "^8.2.1",
     "fork-ts-checker-webpack-plugin": "3.1.1",
     "ghost-bitcore-lib": "git+https://github.com/swaponline/ghost-bitcore-lib.git",
     "graphql": "^15.3.0",

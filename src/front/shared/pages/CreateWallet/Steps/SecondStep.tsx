@@ -12,8 +12,12 @@ import { isMobile } from 'react-device-detect'
 
 import config from 'app-config'
 import actions from 'redux/actions'
-import { firebase, constants, stats } from 'helpers'
-import firestore from 'helpers/firebase/firestore'
+import {
+  // firebase,
+  constants,
+  stats
+} from 'helpers'
+// import firestore from 'helpers/firebase/firestore'
 import ethToken from 'helpers/ethToken'
 import feedback from 'shared/helpers/feedback'
 import getTopLocation from 'helpers/getTopLocation'
@@ -93,27 +97,27 @@ const SecondStep = (props) => {
     _activated.fingerprint.btc = false
   }
 
-  const isSupportedPush = firebase.isSupported()
+  // const isSupportedPush = firebase.isSupported()
 
-  const onCreateTrigger = async () => {
-    if (!window.localStorage.getItem(constants.localStorage.signedUpWithPush)) {
-      try {
-        const ipInfo = await firebase.getIPInfo()
-        const data = {
-          ...ipInfo,
-          registrationDomain: getTopLocation().host,
-          userAgentRegistration: navigator.userAgent,
-        }
-        await firestore.addUser(data)
-        if (isSupportedPush) {
-          await firebase.signUpWithPush(data)
-          window.localStorage.setItem(constants.localStorage.signedUpWithPush, 'true')
-        }
-      } catch (error) {
-        console.error(error)
-      }
-    }
-  }
+  // const onCreateTrigger = async () => {
+  //   if (!window.localStorage.getItem(constants.localStorage.signedUpWithPush)) {
+  //     try {
+  //       const ipInfo = await firebase.getIPInfo()
+  //       const data = {
+  //         ...ipInfo,
+  //         registrationDomain: getTopLocation().host,
+  //         userAgentRegistration: navigator.userAgent,
+  //       }
+  //       await firestore.addUser(data)
+  //       if (isSupportedPush) {
+  //         await firebase.signUpWithPush(data)
+  //         window.localStorage.setItem(constants.localStorage.signedUpWithPush, 'true')
+  //       }
+  //     } catch (error) {
+  //       console.error(error)
+  //     }
+  //   }
+  // }
 
   const [border, setBorder] = useState({
     color: {
@@ -168,7 +172,7 @@ const SecondStep = (props) => {
       feedback.createWallet.finished()
     }
     onClick()
-    onCreateTrigger()
+    // onCreateTrigger()
   }
 
   const handleClick = (index, el) => {
