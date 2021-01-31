@@ -4545,7 +4545,6 @@
     "id": "CurrencySlider19",
     "message": "Ya disponible para intercambio",
     "files": [
-      "src/front/shared/pages/Exchange/CurrencySlider/CurrencySlider.tsx",
       "src/front/shared/pages/PointOfSell/CurrencySlider/CurrencySlider.tsx"
     ]
   },

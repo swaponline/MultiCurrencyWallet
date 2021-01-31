@@ -4540,7 +4540,6 @@
     "id": "CurrencySlider19",
     "message": "Nu al beschikbaar voor exchange.",
     "files": [
-      "src/front/shared/pages/Exchange/CurrencySlider/CurrencySlider.tsx",
       "src/front/shared/pages/PointOfSell/CurrencySlider/CurrencySlider.tsx"
     ]
   },

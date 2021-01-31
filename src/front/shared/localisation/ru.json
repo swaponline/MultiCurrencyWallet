@@ -1206,7 +1206,6 @@
     "id": "CurrencySlider19",
     "message": "Уже доступны для обмена",
     "files": [
-      "src/front/shared/pages/Exchange/CurrencySlider/CurrencySlider.tsx",
       "src/front/shared/pages/PointOfSell/CurrencySlider/CurrencySlider.tsx"
     ]
   },
