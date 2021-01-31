@@ -2409,7 +2409,6 @@
     "id": "advantagesButtonTitle",
     "message": "How it works?",
     "files": [
-      "src/front/shared/pages/Exchange/PureComponents/Advantages.tsx",
       "src/front/shared/pages/PointOfSell/PureComponents/Advantages.tsx"
     ]
   },
@@ -2417,7 +2416,6 @@
     "id": "advantagesButtonTxt",
     "message": "(Watch the video)",
     "files": [
-      "src/front/shared/pages/Exchange/PureComponents/Advantages.tsx",
       "src/front/shared/pages/PointOfSell/PureComponents/Advantages.tsx"
     ]
   },
