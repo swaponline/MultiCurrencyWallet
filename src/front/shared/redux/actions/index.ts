@@ -5,7 +5,7 @@ import * as types from './types'
 import modals from './modals'
 import loader from './loader'
 import notifications from './notifications'
-import firebase from './firebase'
+// import firebase from './firebase'
 
 import user from './user'
 import history from './history'
@@ -50,7 +50,7 @@ export default {
   modals,
   loader,
   notifications,
-  firebase,
+  // firebase,
   user,
   history,
   core,

@@ -14,7 +14,7 @@ npm run marketmaker:testnet SECRET_PHRASE="asd asd asd" SPREAD="5"
 
 ![](https://screenshots.wpmix.net/chrome_VfMLfx2KBVUIxaGsQ6ECBEKUq2VMF7Ag.png)
 
-## Launch using docker
+## Launch using docker (RECCOMENDED)
 insstall docker and docker-compose https://docs.docker.com/engine/install/ https://docs.docker.com/compose/install/ 
 
 ```
@@ -33,11 +33,9 @@ TELEGRAM_CHATID = 111 //id for notifications. 1. contact @get_id_bot to get your
 
 ## update docker imgage and container to the latest version
 ```
-cd mainnet_bot 
-lazydocker
+cd mainnet_bot  //your working folder (created at installation)
 ```
-stop and remove mcw_bot container (don't worry the data is't affected because it's stored in the folder as "volume" not in the container). 
+update container and restart service  (don't worry the data is't affected because it's stored in the folder as "volume" not in the container). 
 ```
-docker pull swaponline/mcw
-docker-compose up -d 
+docker-compose pull mcw_bot && docker-compose up -d
 ```
