@@ -485,10 +485,9 @@ const send = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
       unspents = await prepareUnspents({ unspents, amount })
       const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
       const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-
       const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
-      const psbt = new bitcoin.Psbt({network: btc.network})
+      const psbt = new bitcoin.Psbt({ network: btc.network })
 
       psbt.addOutput({
         address: to,

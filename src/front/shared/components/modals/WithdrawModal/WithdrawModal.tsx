@@ -299,6 +299,7 @@ export default class WithdrawModal extends React.Component<any, any> {
         isSmsProtected,
         isPinProtected,
       },
+      currentDecimals,
       amount,
     } = this.state
 
@@ -325,7 +326,7 @@ export default class WithdrawModal extends React.Component<any, any> {
         fees: {
           ...state.fees,
           miner: new BigNumber(fee),
-          total: state.fees.service.plus(fee),
+          total: state.fees.service.plus(fee).dp(currentDecimals, BigNumber.ROUND_DOWN),
         },
       }))
     } catch (error) {
@@ -389,8 +390,8 @@ export default class WithdrawModal extends React.Component<any, any> {
         fees: {
           ...state.fees,
           miner: newMinerFee,
-          service: new BigNumber(adminFeeSize),
-          total: newMinerFee.plus(adminFeeSize),
+          service: new BigNumber(adminFeeSize).dp(currentDecimals, BigNumber.ROUND_DOWN),
+          total: newMinerFee.plus(adminFeeSize).dp(currentDecimals, BigNumber.ROUND_DOWN),
           adminFeeSize: new BigNumber(adminFeeSize),
         },
       }))
@@ -690,18 +691,18 @@ export default class WithdrawModal extends React.Component<any, any> {
     }
   }
 
-  setMaxBalance = () => {
-    const { balances } = this.state
+  // setMaxBalance = () => {
+  //   const { balances } = this.state
 
-    this.setAlowedBalances()
-    this.setState({
-      amount: balances.allowedCurrency.toString(),
-      fiatAmount: balances.allowedFiat.toString(),
-    })
-  }
+  //   this.setAlowedBalances()
+  //   this.setState({
+  //     amount: balances.allowedCurrency.toString(),
+  //     fiatAmount: balances.allowedFiat.toString(),
+  //   })
+  // }
 
   updateServiceAndTotalFee = () => {
-    const { usedAdminFee, amount, fees } = this.state
+    const { usedAdminFee, amount, fees, currentDecimals } = this.state
     const ONE_HUNDRED_PERCENT = 100
 
     let newServiceFeeSize = usedAdminFee
@@ -715,8 +716,8 @@ export default class WithdrawModal extends React.Component<any, any> {
     this.setState((state) => ({
       fees: {
         ...state.fees,
-        service: newServiceFeeSize,
-        total: fees.miner.plus(newServiceFeeSize),
+        service: newServiceFeeSize.dp(currentDecimals, BigNumber.ROUND_DOWN),
+        total: fees.miner.plus(newServiceFeeSize).dp(currentDecimals, BigNumber.ROUND_DOWN),
       },
     }))
   }
@@ -1004,11 +1005,11 @@ export default class WithdrawModal extends React.Component<any, any> {
                 : linked.fiatAmount.pipe(this.handleAmount)
               }
             />
-            <div style={{ marginLeft: '15px' }}>
+            {/* <div style={{ marginLeft: '15px' }}>
               <Button disabled={fetchFee} blue big onClick={this.setMaxBalance} id="Withdrow134">
                 <FormattedMessage id="Select210" defaultMessage="MAX" />
               </Button>
-            </div>
+            </div> */}
             {!isMobile && (
               <Tooltip id="Withdrow134" place="top" mark={false}>
                 <FormattedMessage

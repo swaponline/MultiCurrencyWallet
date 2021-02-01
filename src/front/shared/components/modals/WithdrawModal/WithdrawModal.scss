@@ -261,7 +261,7 @@
 .additionalСurrencies {
   position: absolute;
   padding-left: 0.4em;
-  right: 100px;
+  right: 20px; // 100 px with MAX button
   background: $l-background-elements;
   z-index: 1;
   display: flex;
@@ -353,7 +353,7 @@
 
 @media all and (max-width: 480px) {
   .additionalСurrencies {
-    right: 80px;
+    // right: 80px; // with MAX button
     top: 25px;
   }
 
