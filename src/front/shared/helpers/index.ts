@@ -14,7 +14,7 @@ import * as utils from './utils'
 // Methods
 import ignoreProps from './ignoreProps'
 import handleGoTrade from './handleGoTrade'
-import firebase from './firebase'
+// import firebase from './firebase'
 // Getters
 import externalConfig from './externalConfig'
 import feedback from './feedback'
@@ -74,7 +74,7 @@ export {
   // Methods
   ignoreProps,
   handleGoTrade,
-  firebase,
+  // firebase,
 
   // Getters
   getPageOffset,
