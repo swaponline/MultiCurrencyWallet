@@ -4,8 +4,7 @@ import React, { useState, useEffect } from 'react'
 import BigNumber from 'bignumber.js'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage, injectIntl } from 'react-intl'
-import { constants, feedback, adminFee, btc, eth } from 'helpers'
-
+import { constants, feedback, adminFee, btc, eth, externalConfig } from 'helpers'
 import cssModules from 'react-css-modules'
 import cx from 'classnames'
 import styles from './styles.scss'
@@ -129,7 +128,7 @@ const FAQ = (props) => {
                   <span>
                     <b>{btcFee}</b> sat/byte
                     {' '}
-                    <a className={styles.link} href="https://api.blockcypher.com/v1/btc/main" target="_blank">
+                    <a className={styles.link} href={externalConfig.api.blockcypher} target="_blank">
                       <FormattedMessage id="FAQFeeApiLink" defaultMessage="(source)" />
                     </a>
                   </span>
@@ -143,7 +142,7 @@ const FAQ = (props) => {
                   <span>
                     <b>{ethFee}</b> gwei
                     {' '}
-                    <a className={styles.link} href="https://data-api.defipulse.com/api/v1/egs/api/ethgasAPI.json?api-key=53be2a60f8bc0bb818ad161f034286d709a9c4ccb1362054b0543df78e27" target="_blank">
+                    <a className={styles.link} href={externalConfig.api.defipulse} target="_blank">
                       <FormattedMessage id="FAQFeeApiLink" defaultMessage="(source)" />
                     </a>
                   </span>

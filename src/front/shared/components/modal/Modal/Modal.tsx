@@ -57,7 +57,10 @@ export default class Modal extends Component<any, any> {
     const {
       closeOnLocationChange,
       onLocationChange,
+      name,
     } = this.props
+
+    window.addEventListener('popstate', () => actions.modals.close(name))
 
     if (closeOnLocationChange) {
       let currentLocation = window.location.hash
@@ -85,12 +88,6 @@ export default class Modal extends Component<any, any> {
 
     window.removeEventListener('popstate', () => actions.modals.close(name))
     clearInterval(this.catchLocationChange)
-  }
-
-  componentDidUpdate() {
-    const { name } = this.props
-
-    window.addEventListener('popstate', () => actions.modals.close(name))
   }
 
   close = (event, isLocationChange) => {

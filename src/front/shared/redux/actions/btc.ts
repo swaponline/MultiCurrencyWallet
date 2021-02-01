@@ -428,10 +428,6 @@ const getTransaction = (ownAddress: string = ``, ownType: string = ``) => {
   })
 }
 
-const send = (data) => {
-  return sendV5(data)
-}
-
 const addressIsCorrect = (address) => {
   try {
     let outputScript = bitcoin.address.toOutputScript(address, btc.network)
@@ -441,8 +437,10 @@ const addressIsCorrect = (address) => {
 }
 
 //@ts-ignore
-const sendV5 = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
+const send = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
   return new Promise(async (ready, reject) => {
+    console.log('Bitcoin send ___________________') // !
+
     try {
       let privateKey = null
       try {
@@ -453,6 +451,9 @@ const sendV5 = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
       }
 
       const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
+
+      console.log('privateKey: ', privateKey) // !
+      console.log('keyPair: ', keyPair) // !
 
       // fee - from amount - percent
       let feeFromAmount: number | BigNumber = new BigNumber(0)
@@ -471,18 +472,24 @@ const sendV5 = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
         feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
       }
       feeFromAmount = feeFromAmount.toNumber()
+
+      console.log('feeFromAmount: ', feeFromAmount) // !
+      console.log('has fee value: ', !!feeValue) // !
+
       try {
         feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, amount})
       } catch (eFee) {
         reject({ message: `Fail estimate fee ` + eFee.message })
         return
       }
+
+      console.log('feeValue: ', feeValue) // !
+
       let unspents = []
-      
       try {
         unspents = await fetchUnspents(from)
       } catch (eUnspents) {
-        reject({ message: `Fail get unspents `+eUnspents.message})
+        reject({ message: `Fail get unspents `+ eUnspents.message})
         return
       }
       unspents = await prepareUnspents({ unspents, amount })
@@ -492,6 +499,12 @@ const sendV5 = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
       const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
       const psbt = new bitcoin.Psbt({network: btc.network})
+
+      console.log('unspents: ', unspents) // !
+      console.log('fundValue: ', fundValue) // !
+      console.log('totalUnspent: ', totalUnspent) // !
+      console.log('skipValue: ', skipValue) // !
+      console.log('psbt: ', psbt) // !
 
       psbt.addOutput({
         address: to,

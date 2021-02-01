@@ -83,7 +83,6 @@ type WithdrawModalState = {
   btcFeeRate: number
   amount: number
 
-  ethBalance: null | number
   txSize: null | number
 
   fees: {
@@ -147,7 +146,6 @@ export default class WithdrawModal extends React.Component<any, any> {
    * @method updateServiceAndTotalFee
    * 
    * @method setCurrenctActiveAsset
-   * @method setBalanceOnState
    * @method setCommissions
    * @method setBtcFeeRate
    * @method setAlowedBalances
@@ -174,7 +172,6 @@ export default class WithdrawModal extends React.Component<any, any> {
     } = props
 
     const currentActiveAsset = props.data
-
     const currentDecimals = constants.tokenDecimals[getCurrencyKey(currency, true).toLowerCase()]
     const allCurrencyies = actions.core.getWallets({}) //items.concat(tokenItems)
     const selectedItem = actions.user.getWithdrawWallet(currency, withdrawWallet)
@@ -187,7 +184,6 @@ export default class WithdrawModal extends React.Component<any, any> {
       address: toAddress ? toAddress : '',
       amount: amount ? amount : '',
       selectedItem,
-      ethBalance: null,
       isEthToken: helpers.ethToken.isEthToken({ name: currency.toLowerCase() }),
       currentDecimals,
       selectedValue: currency,
@@ -223,7 +219,7 @@ export default class WithdrawModal extends React.Component<any, any> {
   componentDidMount() {
     this.getFiatBalance()
     this.setCommissions()
-    this.setBalanceOnState()
+    this.setAlowedBalances()
     feedback.withdraw.entered()
   }
 
@@ -231,12 +227,10 @@ export default class WithdrawModal extends React.Component<any, any> {
     const { 
       data: prevData, 
       items: prevItems,
-      isBalanceFetching: prevIsBalanceFetching,
     } = prevProps
     const { 
       data, 
       items,
-      isBalanceFetching,
     } = this.props
     const {
       amount: prevAmount,
@@ -249,9 +243,6 @@ export default class WithdrawModal extends React.Component<any, any> {
 
     if (prevData !== data || prevItems !== items) {
       this.setCurrenctActiveAsset()
-    }
-    if (prevIsBalanceFetching != isBalanceFetching && prevIsBalanceFetching === true) {
-      this.setBalanceOnState()
     }
     if (prevAmount !== amount || prevFiatAmount !== fiatAmount) {
       this.updateServiceAndTotalFee()
@@ -389,44 +380,6 @@ export default class WithdrawModal extends React.Component<any, any> {
     }
   }
 
-  setBalanceOnState = async () => {
-    const {
-      selectedItem: { currency, address },
-      currentActiveAsset,
-    } = this.state
-
-    const wallet = actions.user.getWithdrawWallet(currency, address)
-
-    const { unconfirmedBalance } = wallet
-    const balance = await actions.core.fetchWalletBalance(wallet)
-    wallet.balance = balance
-
-    const finalBalance =
-      unconfirmedBalance !== undefined && unconfirmedBalance < 0
-        ? new BigNumber(balance).plus(unconfirmedBalance).toString()
-        : balance
-
-    const ethBalance =
-      metamask.isEnabled() && metamask.isConnected()
-        ? metamask.getBalance()
-        : await actions.eth.getBalance()
-
-
-    this.setState((state) => ({
-      ethBalance,
-      selectedItem: wallet,
-      balances: {
-        ...state.balances,
-        balance: new BigNumber(finalBalance),
-      },
-      currentActiveAsset: {
-        ...currentActiveAsset,
-        ...wallet,
-      },
-    }))
-    this.setAlowedBalances()
-  }
-
   getFiatBalance = async () => {
     const {
       data: { currency },
@@ -468,8 +421,6 @@ export default class WithdrawModal extends React.Component<any, any> {
       error: false,
       devErrorMessage: '',
     }))
-
-    this.setBalanceOnState()
 
     let sendOptions = {
       from: address,
@@ -530,7 +481,6 @@ export default class WithdrawModal extends React.Component<any, any> {
         if (invoice) {
           await actions.invoices.markInvoice(invoice.id, 'ready', txRaw, address)
         }
-        this.setBalanceOnState()
 
         this.setState(() => ({
           isShipped: false,

@@ -46,7 +46,9 @@ const fetchBalance = (options) => {
     checkStatus: (answer) => {
       try {
         if (answer && answer.balance !== undefined) return true
-      } catch (e) { /* */ }
+      } catch (error) {
+        console.error('Utils - btc - fetch balance: ', error)
+      }
       return false
     },
     inQuery: {

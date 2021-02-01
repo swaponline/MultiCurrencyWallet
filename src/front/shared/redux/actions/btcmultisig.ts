@@ -957,13 +957,6 @@ const getBalanceUser = (checkAddress) => {
 
 }
 
-const getRate = async () => {
-  const activeFiat = window.DEFAULT_FIAT || 'USD'
-
-  const exCurrencyRate = await actions.user.getExchangeRate('BTC', activeFiat.toLowerCase())
-  reducers.user.setCurrencyRate({ name: 'btcData', currencyRate: exCurrencyRate })
-}
-
 const getBalanceG2FA = () => {
 }
 
