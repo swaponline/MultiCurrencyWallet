@@ -17,10 +17,10 @@ type FeeInfoBlockProps = {
   dataCurrency: string
   
   currentDecimals: number
-  exCurrencyRate: number
   txSize?: number
   feeCurrentCurrency?: number
-  
+  exEthereumRate?: BigNumber
+  exCurrencyRate?: BigNumber
   minerFee: BigNumber
   serviceFee: BigNumber
   totalFee: BigNumber
@@ -38,7 +38,8 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
     currentDecimals,
     activeFiat,
     dataCurrency,
-    exCurrencyRate,
+    exEthereumRate = 0,
+    exCurrencyRate = 0,
     isLoading,
     minerFee,
     serviceFee,
@@ -62,11 +63,11 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
       break
   }
 
-  const convertToFiat = (currency) => {
+  const convertToFiat = (currency, exchangeRate) => {
     // check after converting
     // if  0.<two-digit number more 0> then cut result to two numbers
     // else cut result to currency decimals
-    let bigNumResult = currency.multipliedBy(exCurrencyRate)
+    let bigNumResult = currency.multipliedBy(exchangeRate)
     const strResult = bigNumResult.toString()
     const haveTwoZeroAfterDot = 
       strResult.match(/\./) 
@@ -80,20 +81,22 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
     return bigNumResult.toNumber()
   }
 
-  const fiatMinerFee = exCurrencyRate > 0
-    ? convertToFiat(minerFee)
-    : 0
+  const fiatMinerFee = isEthToken
+    ? exEthereumRate > 0 // eth rate for tokens
+      ? convertToFiat(minerFee, exEthereumRate)
+      : 0
+    : exCurrencyRate > 0 // own currency rate for another
+      ? convertToFiat(minerFee, exCurrencyRate)
+      : 0
 
   const fiatServiceFee = usedAdminFee
     ? exCurrencyRate > 0
-      ? convertToFiat(serviceFee)
+      ? convertToFiat(serviceFee, exCurrencyRate)
       : 0
     : 0
 
-  const fiatTotalFee = !isEthToken
-    ? exCurrencyRate > 0
-      ? convertToFiat(totalFee)
-      : 0
+  const fiatTotalFee = exCurrencyRate > 0 && !isEthToken
+    ? convertToFiat(totalFee, exCurrencyRate)
     : 0
 
   const linkToTxSizeInfo = (
@@ -139,7 +142,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
         </div>
       </div>
       
-      {fiatServiceFee > 0 && (
+      {usedAdminFee && (
           <div styleName='feeRow'>
             <span styleName='feeRowTitle'>
               <FormattedMessage id="FeeInfoBlockServiceFee" defaultMessage="Service fee:" />
@@ -159,7 +162,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
                 : <span styleName='fee'>
                     {+serviceFee}&nbsp;{serviceFeeTicker}
                     {' '}
-                    {`(${activeFiatSymbol}${fiatServiceFee})`}
+                    {fiatServiceFee > 0 && `(${activeFiatSymbol}${fiatServiceFee})`}
                   </span>
               }
             </div>
@@ -167,7 +170,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
         )
       }
 
-      {fiatTotalFee > 0 && (
+      {!isEthToken && (
         <div styleName='feeRow'>
           <span styleName='feeRowTitle'>
             <FormattedMessage id="FeeInfoBlockTotalFee" defaultMessage="Total fees you pay:" />
@@ -178,7 +181,7 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
               : <span styleName='fee'>
                   {+totalFee}&nbsp;{minerFeeTicker}
                   {' '}
-                  {`(${activeFiatSymbol}${fiatTotalFee})`}
+                  {fiatTotalFee > 0 && `(${activeFiatSymbol}${fiatTotalFee})`}
                 </span>
             }
           </div>

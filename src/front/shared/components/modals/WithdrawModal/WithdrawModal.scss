@@ -14,6 +14,10 @@
   font-size: 13px;
   font-family: 'Roboto Mono', monospace;
   color: $notice-color;
+
+  &.hide {
+    opacity: 0;
+  }
 }
 
 .r-tooltip {

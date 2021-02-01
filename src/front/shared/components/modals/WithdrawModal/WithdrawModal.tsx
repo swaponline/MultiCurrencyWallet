@@ -78,13 +78,13 @@ type WithdrawModalState = {
   selectedValue: string
   
   currentDecimals: number
-  exCurrencyRate?: number
   fiatAmount?: number
   btcFeeRate: number
   amount: number
-
   txSize: null | number
 
+  exEthereumRate: BigNumber
+  exCurrencyRate: BigNumber
   fees: {
     miner: BigNumber
     service: BigNumber
@@ -168,7 +168,13 @@ export default class WithdrawModal extends React.Component<any, any> {
     super(props)
 
     const {
-      data: { amount, toAddress, currency, address: withdrawWallet },
+      items,
+      data: { 
+        amount, 
+        toAddress, 
+        currency,
+        address: withdrawWallet,
+      },
     } = props
 
     const currentActiveAsset = props.data
@@ -176,6 +182,20 @@ export default class WithdrawModal extends React.Component<any, any> {
     const allCurrencyies = actions.core.getWallets({}) //items.concat(tokenItems)
     const selectedItem = actions.user.getWithdrawWallet(currency, withdrawWallet)
     const usedAdminFee = adminFee.isEnabled(selectedItem.currency)
+    const infoAboutCurrency = currentActiveAsset.infoAboutCurrency
+    const isEthToken = helpers.ethToken.isEthToken({ name: currency.toLowerCase() })
+    const exCurrencyRate = infoAboutCurrency && infoAboutCurrency.price_fiat
+      ? new BigNumber(currentActiveAsset.infoAboutCurrency.price_fiat)
+      : new BigNumber(0)
+    // get exchange rate for tokens (to pay fee in ethereum)
+    const arrWithEthWallet = items.filter(item => {
+      return item.currency.toLowerCase() === 'eth' 
+        && item.infoAboutCurrency
+        && item.infoAboutCurrency.price_fiat
+    })
+    const exEthereumRate = (
+      arrWithEthWallet.length && arrWithEthWallet[0].infoAboutCurrency.price_fiat
+    ) || new BigNumber(0)
 
     this.state = {
       isShipped: false,
@@ -184,12 +204,14 @@ export default class WithdrawModal extends React.Component<any, any> {
       address: toAddress ? toAddress : '',
       amount: amount ? amount : '',
       selectedItem,
-      isEthToken: helpers.ethToken.isEthToken({ name: currency.toLowerCase() }),
+      isEthToken,
       currentDecimals,
       selectedValue: currency,
       ownTx: '',
       hiddenCoinsList: actions.core.getHiddenCoins(),
       currentActiveAsset,
+      exEthereumRate: new BigNumber(exEthereumRate),
+      exCurrencyRate,
       allCurrencyies,
       error: false,
       devErrorMessage: '',
@@ -217,7 +239,6 @@ export default class WithdrawModal extends React.Component<any, any> {
   }
 
   componentDidMount() {
-    this.getFiatBalance()
     this.setCommissions()
     this.setAlowedBalances()
     feedback.withdraw.entered()
@@ -378,24 +399,6 @@ export default class WithdrawModal extends React.Component<any, any> {
     } finally {
       this.setState({ fetchFee: false })
     }
-  }
-
-  getFiatBalance = async () => {
-    const {
-      data: { currency },
-      activeFiat,
-    } = this.props
-    const {
-      amount,
-      fiatAmount,
-    } = this.state
-
-    const exCurrencyRate = await actions.user.getExchangeRate(currency, activeFiat.toLowerCase())
-
-    this.setState({
-      exCurrencyRate,
-      fiatAmount: (amount) ? new BigNumber(amount).multipliedBy(exCurrencyRate).toFixed(2) : fiatAmount,
-    })
   }
 
   handleSubmit = async () => {
@@ -614,15 +617,21 @@ export default class WithdrawModal extends React.Component<any, any> {
       }, 2000)
     }
 
+    const hasExCurrencyRate = exCurrencyRate.isGreaterThan(0)
+
     if (selectedValue === currentActiveAsset.currency) {
       this.setState({
-        fiatAmount: value ? (value * exCurrencyRate).toFixed(2) : '',
+        fiatAmount: value && hasExCurrencyRate
+          ? exCurrencyRate.times(value).dp(2, BigNumber.ROUND_DOWN).toString()
+          : '',
         amount: value,
       })
     } else {
       this.setState({
         fiatAmount: value,
-        amount: value ? (value / exCurrencyRate).toFixed(currentDecimals) : '',
+        amount: value && hasExCurrencyRate
+          ? new BigNumber(value).div(exCurrencyRate).dp(currentDecimals).toString() 
+          : '',
       })
     }
   }
@@ -686,8 +695,8 @@ export default class WithdrawModal extends React.Component<any, any> {
 
     this.setAlowedBalances()
     this.setState({
-      amount: balances.allowedCurrency.toNumber(),
-      fiatAmount: balances.allowedFiat.toNumber(),
+      amount: balances.allowedCurrency.toString(),
+      fiatAmount: balances.allowedFiat.toString(),
     })
   }
 
@@ -759,6 +768,7 @@ export default class WithdrawModal extends React.Component<any, any> {
       fiatAmount,
       isEthToken,
       openScanCam,
+      exEthereumRate,
       exCurrencyRate,
       currentDecimals,
       hiddenCoinsList,
@@ -889,7 +899,7 @@ export default class WithdrawModal extends React.Component<any, any> {
               currentActiveAsset={currentActiveAsset}
               currentBalance={currentBalance}
               currency={currency}
-              exCurrencyRate={exCurrencyRate}
+              exCurrencyRate={exCurrencyRate.toNumber()}
               activeFiat={activeFiat}
               tableRows={tableRows}
               currentAddress={currentAddress}
@@ -1012,8 +1022,8 @@ export default class WithdrawModal extends React.Component<any, any> {
             )}
           </div>
           {/* hint about maximum possible amount */}
-          {dashboardView && !fetchFee && (
-            <div styleName={'prompt'}>
+          {dashboardView && (
+            <div styleName={`prompt ${fetchFee ? 'hide' : ''}`}>
               {balances.allowedCurrency.isEqualTo(0) ?
                 (
                   <FormattedMessage
@@ -1142,6 +1152,7 @@ export default class WithdrawModal extends React.Component<any, any> {
                 currentDecimals={currentDecimals}
                 activeFiat={activeFiat}
                 dataCurrency={dataCurrency}
+                exEthereumRate={exEthereumRate}
                 exCurrencyRate={exCurrencyRate}
                 feeCurrentCurrency={btcFeeRate}
                 isLoading={fetchFee}

@@ -439,8 +439,6 @@ const addressIsCorrect = (address) => {
 //@ts-ignore
 const send = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
   return new Promise(async (ready, reject) => {
-    console.log('Bitcoin send ___________________') // !
-
     try {
       let privateKey = null
       try {
@@ -451,9 +449,6 @@ const send = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
       }
 
       const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
-
-      console.log('privateKey: ', privateKey) // !
-      console.log('keyPair: ', keyPair) // !
 
       // fee - from amount - percent
       let feeFromAmount: number | BigNumber = new BigNumber(0)
@@ -473,17 +468,12 @@ const send = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
       }
       feeFromAmount = feeFromAmount.toNumber()
 
-      console.log('feeFromAmount: ', feeFromAmount) // !
-      console.log('has fee value: ', !!feeValue) // !
-
       try {
         feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, amount})
       } catch (eFee) {
         reject({ message: `Fail estimate fee ` + eFee.message })
         return
       }
-
-      console.log('feeValue: ', feeValue) // !
 
       let unspents = []
       try {
@@ -499,12 +489,6 @@ const send = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
       const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
       const psbt = new bitcoin.Psbt({network: btc.network})
-
-      console.log('unspents: ', unspents) // !
-      console.log('fundValue: ', fundValue) // !
-      console.log('totalUnspent: ', totalUnspent) // !
-      console.log('skipValue: ', skipValue) // !
-      console.log('psbt: ', psbt) // !
 
       psbt.addOutput({
         address: to,
