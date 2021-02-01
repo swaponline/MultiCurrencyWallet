@@ -35,7 +35,7 @@ TELEGRAM_CHATID = 111 //id for notifications. 1. contact @get_id_bot to get your
 ```
 cd mainnet_bot  //your working folder (created at installation)
 ```
-stop and remove mcw_bot container (don't worry the data is't affected because it's stored in the folder as "volume" not in the container). 
+update container and restart service  (don't worry the data is't affected because it's stored in the folder as "volume" not in the container). 
 ```
-docker-compose pull mcw_bot && docker-compose upd -d
+docker-compose pull mcw_bot && docker-compose up -d
 ```
