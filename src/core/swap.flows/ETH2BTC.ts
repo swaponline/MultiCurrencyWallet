@@ -62,7 +62,6 @@ class ETH2BTC extends Flow {
       isBalanceEnough: true,
       balance: null,
 
-      btcScriptCreatingTransactionHash: null,
       ethSwapCreationTransactionHash: null,
       canCreateEthTransaction: true,
       isEthContractFunded: false,
@@ -141,7 +140,7 @@ class ETH2BTC extends Flow {
       // 2. Wait participant create, fund BTC Script
 
       () => {
-        flow.swap.room.on('create btc script', ({ scriptValues, btcScriptCreatingTransactionHash }) => {
+        flow.swap.room.on('create btc script', ({ scriptValues, utxoScriptCreatingTransactionHash }) => {
           const { step } = flow.state
 
           if (step >= 3) {
@@ -151,7 +150,7 @@ class ETH2BTC extends Flow {
           flow.finishStep({
             secretHash: scriptValues.secretHash,
             utxoScriptValues: scriptValues,
-            btcScriptCreatingTransactionHash,
+            utxoScriptCreatingTransactionHash,
           }, { step: 'wait-lock-btc', silentError: true })
         })
 
@@ -218,13 +217,6 @@ class ETH2BTC extends Flow {
 
       () => {}
     ]
-  }
-
-  getScriptCreateTx() {
-    const {
-      btcScriptCreatingTransactionHash: createTx,
-    } = this.state
-    return createTx
   }
 
   acceptWithdrawRequest() {

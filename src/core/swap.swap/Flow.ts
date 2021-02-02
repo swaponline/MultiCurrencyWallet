@@ -34,6 +34,7 @@ class Flow {
 
     utxoScriptValues: any
     utxoScriptVerified: boolean
+    utxoScriptCreatingTransactionHash: string
   }
 
   constructor(swap) {
@@ -62,6 +63,7 @@ class Flow {
         isUTXOScriptOk: false,
         utxoScriptValues: null,
         utxoScriptVerified: false,
+        utxoScriptCreatingTransactionHash: null,
       },
       ...{
         /** UTXO-AB **/
@@ -70,6 +72,7 @@ class Flow {
         utxoFundError: null,
         utxoScriptValues: null,
         utxoScriptVerified: false,
+        utxoScriptCreatingTransactionHash: null,
       },
       ...{
         /** UTXO-UTXO **/
@@ -375,6 +378,13 @@ class Flow {
     }, { step: 'verify-script' })
 
     return true
+  }
+
+  getScriptCreateTx() {
+    const {
+      utxoScriptCreatingTransactionHash,
+    } = this.state
+    return utxoScriptCreatingTransactionHash
   }
 }
 

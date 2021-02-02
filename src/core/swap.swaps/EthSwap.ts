@@ -822,14 +822,14 @@ class EthSwap extends SwapInterface {
     flow.swap.room.once(`request ${utxoCoin} script`, () => {
       const {
         utxoScriptValues: scriptValues,
-        [`${utxoCoin}ScriptCreatingTransactionHash`]: txHash,
+        utxoScriptCreatingTransactionHash: txHash,
       } = flow.state
 
       flow.swap.room.sendMessage({
         event:  `create ${utxoCoin} script`,
         data: {
           scriptValues,
-          [`${utxoCoin}ScriptCreatingTransactionHash`]: txHash,
+          utxoScriptCreatingTransactionHash: txHash,
         }
       })
     })

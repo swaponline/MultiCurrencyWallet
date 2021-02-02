@@ -642,7 +642,7 @@ class BtcLikeSwap extends SwapInterface {
 
     const onTransactionHash = (txID) => {
       const {
-        [`${coin}ScriptCreatingTransactionHash`]: scriptCreatingTransactionHash,
+        utxoScriptCreatingTransactionHash: scriptCreatingTransactionHash,
         utxoScriptValues: scriptValues,
       } = flow.state
 
@@ -651,7 +651,7 @@ class BtcLikeSwap extends SwapInterface {
       }
 
       flow.setState({
-        [`${coin}ScriptCreatingTransactionHash`]: txID,
+        utxoScriptCreatingTransactionHash: txID,
       })
 
       flow.swap.room.once(`request ${coin} script`, () => {
@@ -659,7 +659,7 @@ class BtcLikeSwap extends SwapInterface {
           event: `create ${coin} script`,
           data: {
             scriptValues,
-            [`${coin}ScriptCreatingTransactionHash`]: txID,
+            utxoScriptCreatingTransactionHash: txID,
           }
         })
       })
@@ -668,7 +668,7 @@ class BtcLikeSwap extends SwapInterface {
         event: `create ${coin} script`,
         data: {
           scriptValues,
-          [`${coin}ScriptCreatingTransactionHash`]: txID,
+          utxoScriptCreatingTransactionHash: txID,
         }
       })
     }

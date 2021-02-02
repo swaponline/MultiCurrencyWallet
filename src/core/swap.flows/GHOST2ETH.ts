@@ -56,7 +56,6 @@ class GHOST2ETH extends Flow {
       isSignFetching: false,
       isParticipantSigned: false,
 
-      ghostScriptCreatingTransactionHash: null,
       ethSwapCreationTransactionHash: null,
 
       secretHash: null,
@@ -146,14 +145,14 @@ class GHOST2ETH extends Flow {
 
       async () => {
         const onTransactionHash = (txID) => {
-          const { ghostScriptCreatingTransactionHash, utxoScriptValues } = flow.state
+          const { utxoScriptCreatingTransactionHash, utxoScriptValues } = flow.state
 
-          if (ghostScriptCreatingTransactionHash) {
+          if (utxoScriptCreatingTransactionHash) {
             return
           }
 
           flow.setState({
-            ghostScriptCreatingTransactionHash: txID,
+            utxoScriptCreatingTransactionHash: txID,
           })
 
           flow.swap.room.once('request ghost script', () => {
@@ -161,7 +160,7 @@ class GHOST2ETH extends Flow {
               event:  'create ghost script',
               data: {
                 scriptValues: utxoScriptValues,
-                ghostScriptCreatingTransactionHash: txID,
+                utxoScriptCreatingTransactionHash: txID,
               }
             })
           })
@@ -170,7 +169,7 @@ class GHOST2ETH extends Flow {
             event: 'create ghost script',
             data: {
               scriptValues : utxoScriptValues,
-              ghostScriptCreatingTransactionHash : txID,
+              utxoScriptCreatingTransactionHash : txID,
             }
           })
         }
@@ -276,13 +275,6 @@ class GHOST2ETH extends Flow {
    */
   sendWithdrawRequest() {
     return this.sendWithdrawRequestToAnotherParticipant()
-  }
-
-  getScriptCreateTx() {
-    const {
-      ghostScriptCreatingTransactionHash: createTx,
-    } = this.state
-    return createTx
   }
 
   sendWithdrawRequestToAnotherParticipant() {

@@ -58,7 +58,6 @@ class BTC2ETH extends Flow {
       isSignFetching: false,
       isParticipantSigned: false,
 
-      btcScriptCreatingTransactionHash: null,
       ethSwapCreationTransactionHash: null,
 
       secretHash: null,
@@ -201,13 +200,6 @@ class BTC2ETH extends Flow {
    */
   sendWithdrawRequest() {
     return this.sendWithdrawRequestToAnotherParticipant()
-  }
-
-  getScriptCreateTx() {
-    const {
-      btcScriptCreatingTransactionHash: createTx,
-    } = this.state
-    return createTx
   }
 
   sendWithdrawRequestToAnotherParticipant() {

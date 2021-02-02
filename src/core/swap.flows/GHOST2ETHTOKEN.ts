@@ -57,7 +57,6 @@ export default (tokenName) => {
         isSignFetching: false,
         isParticipantSigned: false,
 
-        ghostScriptCreatingTransactionHash: null,
         ethSwapCreationTransactionHash: null,
 
         secretHash: null,
@@ -147,14 +146,14 @@ export default (tokenName) => {
 
         async () => {
           const onTransactionHash = (txID) => {
-            const { ghostScriptCreatingTransactionHash, utxoScriptValues } = flow.state
+            const { utxoScriptCreatingTransactionHash, utxoScriptValues } = flow.state
 
-            if (ghostScriptCreatingTransactionHash) {
+            if (utxoScriptCreatingTransactionHash) {
               return
             }
 
             flow.setState({
-              ghostScriptCreatingTransactionHash: txID,
+              utxoScriptCreatingTransactionHash: txID,
             })
 
             flow.swap.room.once('request ghost script', () => {
@@ -162,7 +161,7 @@ export default (tokenName) => {
                 event:  'create ghost script',
                 data: {
                   scriptValues: utxoScriptValues,
-                  ghostScriptCreatingTransactionHash: txID,
+                  utxoScriptCreatingTransactionHash: txID,
                 }
               })
             })
@@ -171,7 +170,7 @@ export default (tokenName) => {
               event: 'create ghost script',
               data: {
                 scriptValues : utxoScriptValues,
-                ghostScriptCreatingTransactionHash : txID,
+                utxoScriptCreatingTransactionHash : txID,
               }
             })
           }
@@ -331,13 +330,6 @@ export default (tokenName) => {
       return scriptAddress;
     }
 
-    getScriptCreateTx() {
-      const {
-        ghostScriptCreatingTransactionHash: createTx,
-      } = this.state
-      return createTx
-    }
-    
     createWorkGHOSTScript(secretHash) {
       if (this.state.utxoScriptValues) {
         debug('swap.core:flow')('GHOST Script already generated', this.state.utxoScriptValues);

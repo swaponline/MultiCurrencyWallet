@@ -65,7 +65,6 @@ export default (tokenName) => {
         isBalanceEnough: true,
         balance: null,
 
-        btcScriptCreatingTransactionHash: null,
         ethSwapCreationTransactionHash: null,
         canCreateEthTransaction: true,
         isEthContractFunded: false,
@@ -124,7 +123,7 @@ export default (tokenName) => {
         // 2. Wait participant create, fund BTC Script
 
         () => {
-          flow.swap.room.on('create btc script', ({ scriptValues, btcScriptCreatingTransactionHash }) => {
+          flow.swap.room.on('create btc script', ({ scriptValues, utxoScriptCreatingTransactionHash }) => {
             const { step } = flow.state
 
             if (step >= 3) {
@@ -134,7 +133,7 @@ export default (tokenName) => {
             flow.finishStep({
               secretHash: scriptValues.secretHash,
               utxoScriptValues: scriptValues,
-              btcScriptCreatingTransactionHash,
+              utxoScriptCreatingTransactionHash,
             }, { step: 'wait-lock-btc', silentError: true })
           })
 
@@ -201,13 +200,6 @@ export default (tokenName) => {
 
         () => {},
       ]
-    }
-
-    getScriptCreateTx() {
-      const {
-        btcScriptCreatingTransactionHash: createTx,
-      } = this.state
-      return createTx
     }
 
     acceptWithdrawRequest() {

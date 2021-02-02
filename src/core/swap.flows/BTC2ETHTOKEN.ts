@@ -57,7 +57,6 @@ export default (tokenName) => {
         isSignFetching: false,
         isParticipantSigned: false,
 
-        btcScriptCreatingTransactionHash: null,
         ethSwapCreationTransactionHash: null,
 
         secretHash: null,
@@ -199,13 +198,6 @@ export default (tokenName) => {
      */
     sendWithdrawRequest() {
       return this.sendWithdrawRequestToAnotherParticipant()
-    }
-
-    getScriptCreateTx() {
-      const {
-        btcScriptCreatingTransactionHash: createTx,
-      } = this.state
-      return createTx
     }
 
     sendWithdrawRequestToAnotherParticipant() {

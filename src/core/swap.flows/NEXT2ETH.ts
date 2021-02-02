@@ -56,7 +56,6 @@ class NEXT2ETH extends Flow {
       isSignFetching: false,
       isParticipantSigned: false,
 
-      nextScriptCreatingTransactionHash: null,
       ethSwapCreationTransactionHash: null,
 
       secretHash: null,
@@ -146,14 +145,14 @@ class NEXT2ETH extends Flow {
 
       async () => {
         const onTransactionHash = (txID) => {
-          const { nextScriptCreatingTransactionHash, utxoScriptValues } = flow.state
+          const { utxoScriptCreatingTransactionHash, utxoScriptValues } = flow.state
 
-          if (nextScriptCreatingTransactionHash) {
+          if (utxoScriptCreatingTransactionHash) {
             return
           }
 
           flow.setState({
-            nextScriptCreatingTransactionHash: txID,
+            utxoScriptCreatingTransactionHash: txID,
           })
 
           flow.swap.room.once('request next script', () => {
@@ -161,7 +160,7 @@ class NEXT2ETH extends Flow {
               event:  'create next script',
               data: {
                 scriptValues: utxoScriptValues,
-                nextScriptCreatingTransactionHash: txID,
+                utxoScriptCreatingTransactionHash: txID,
               }
             })
           })
@@ -170,7 +169,7 @@ class NEXT2ETH extends Flow {
             event: 'create next script',
             data: {
               scriptValues : utxoScriptValues,
-              nextScriptCreatingTransactionHash : txID,
+              utxoScriptCreatingTransactionHash : txID,
             }
           })
         }
@@ -457,13 +456,6 @@ class NEXT2ETH extends Flow {
     }, true)
   }
 
-  getScriptCreateTx() {
-    const {
-      nextScriptCreatingTransactionHash: createTx,
-    } = this.state
-    return createTx
-  }
-  
   async isRefundSuccess() {
     const { refundTransactionHash, isRefunded } = this.state
     if (refundTransactionHash && isRefunded) {

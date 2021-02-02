@@ -62,7 +62,6 @@ class ETH2GHOST extends Flow {
       isBalanceEnough: true,
       balance: null,
 
-      ghostScriptCreatingTransactionHash: null,
       ethSwapCreationTransactionHash: null,
       canCreateEthTransaction: true,
       isEthContractFunded: false,
@@ -134,7 +133,7 @@ class ETH2GHOST extends Flow {
       // 2. Wait participant create, fund BTC Script
 
       () => {
-        flow.swap.room.on('create ghost script', ({ scriptValues, ghostScriptCreatingTransactionHash }) => {
+        flow.swap.room.on('create ghost script', ({ scriptValues, utxoScriptCreatingTransactionHash }) => {
           const { step } = flow.state
 
           if (step >= 3) {
@@ -144,7 +143,7 @@ class ETH2GHOST extends Flow {
           flow.finishStep({
             secretHash: scriptValues.secretHash,
             utxoScriptValues: scriptValues,
-            ghostScriptCreatingTransactionHash,
+            utxoScriptCreatingTransactionHash,
           }, { step: 'wait-lock-ghost', silentError: true })
         })
 
@@ -239,13 +238,6 @@ class ETH2GHOST extends Flow {
 
       () => {}
     ]
-  }
-
-  getScriptCreateTx() {
-    const {
-      ghostScriptCreatingTransactionHash: createTx,
-    } = this.state
-    return createTx
   }
 
   acceptWithdrawRequest() {

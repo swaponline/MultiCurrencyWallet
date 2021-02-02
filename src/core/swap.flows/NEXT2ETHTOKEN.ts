@@ -58,7 +58,6 @@ export default (tokenName) => {
         isSignFetching: false,
         isParticipantSigned: false,
 
-        nextScriptCreatingTransactionHash: null,
         ethSwapCreationTransactionHash: null,
 
         secretHash: null,
@@ -148,14 +147,14 @@ export default (tokenName) => {
 
         async () => {
           const onTransactionHash = (txID) => {
-            const { nextScriptCreatingTransactionHash, utxoScriptValues } = flow.state
+            const { utxoScriptCreatingTransactionHash, utxoScriptValues } = flow.state
 
-            if (nextScriptCreatingTransactionHash) {
+            if (utxoScriptCreatingTransactionHash) {
               return
             }
 
             flow.setState({
-              nextScriptCreatingTransactionHash: txID,
+              utxoScriptCreatingTransactionHash: txID,
             })
 
             flow.swap.room.once('request next script', () => {
@@ -163,7 +162,7 @@ export default (tokenName) => {
                 event:  'create next script',
                 data: {
                   scriptValues: utxoScriptValues,
-                  nextScriptCreatingTransactionHash: txID,
+                  utxoScriptCreatingTransactionHash: txID,
                 }
               })
             })
@@ -172,7 +171,7 @@ export default (tokenName) => {
               event: 'create next script',
               data: {
                 scriptValues : utxoScriptValues,
-                nextScriptCreatingTransactionHash : txID,
+                utxoScriptCreatingTransactionHash : txID,
               }
             })
           }
@@ -305,13 +304,6 @@ export default (tokenName) => {
       flow.swap.room.sendMessage({
         event: 'request withdraw',
       })
-    }
-
-    getScriptCreateTx() {
-      const {
-        nextScriptCreatingTransactionHash: createTx,
-      } = this.state
-      return createTx
     }
 
     submitSecret(secret) {

@@ -249,7 +249,7 @@ class Swap {
           if (this.flow) {
             const {
               utxoScriptValues: scriptValues,
-              [`${_Sell}ScriptCreatingTransactionHash`]: scriptCreatingTransactionHash,
+              utxoScriptCreatingTransactionHash: scriptCreatingTransactionHash,
             } = this.flow.state
             
             if (scriptValues && scriptCreatingTransactionHash) {
@@ -257,7 +257,7 @@ class Swap {
                 event:  `create ${_Sell} script`,
                 data: {
                   scriptValues,
-                  [`${_Sell}ScriptCreatingTransactionHash`] : scriptCreatingTransactionHash,
+                  utxoScriptCreatingTransactionHash: scriptCreatingTransactionHash,
                 }
               })
             }
@@ -270,7 +270,7 @@ class Swap {
           if (this.flow) {
             const {
               scriptValues,
-              [`${_Buy}ScriptCreatingTransactionHash`]: scriptCreatingTransactionHash, 
+              utxoScriptCreatingTransactionHash: scriptCreatingTransactionHash, 
             } = eventData
 
             const { step } = this.flow.state
@@ -282,7 +282,7 @@ class Swap {
             this.flow.finishStep({
               secretHash: scriptValues.secretHash,
               utxoScriptValues: scriptValues,
-              [`${_Buy}ScriptCreatingTransactionHash`]: scriptCreatingTransactionHash,
+              utxoScriptCreatingTransactionHash: scriptCreatingTransactionHash,
             }, { step: `wait-lock-${_Buy}`, silentError: true })
           }
         })

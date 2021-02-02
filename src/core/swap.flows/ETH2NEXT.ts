@@ -64,7 +64,6 @@ class ETH2NEXT extends Flow {
       isBalanceEnough: true,
       balance: null,
 
-      nextScriptCreatingTransactionHash: null,
       ethSwapCreationTransactionHash: null,
       canCreateEthTransaction: true,
       isEthContractFunded: false,
@@ -136,7 +135,7 @@ class ETH2NEXT extends Flow {
       // 2. Wait participant create, fund NEXT Script
 
       () => {
-        flow.swap.room.on('create next script', ({ scriptValues, nextScriptCreatingTransactionHash }) => {
+        flow.swap.room.on('create next script', ({ scriptValues, utxoScriptCreatingTransactionHash }) => {
           const { step } = flow.state
 
           if (step >= 3) {
@@ -146,7 +145,7 @@ class ETH2NEXT extends Flow {
           flow.finishStep({
             secretHash: scriptValues.secretHash,
             utxoScriptValues: scriptValues,
-            nextScriptCreatingTransactionHash,
+            utxoScriptCreatingTransactionHash,
           }, { step: 'wait-lock-next', silentError: true })
         })
 
@@ -241,13 +240,6 @@ class ETH2NEXT extends Flow {
 
       () => {}
     ]
-  }
-
-  getScriptCreateTx() {
-    const {
-      nextScriptCreatingTransactionHash: createTx,
-    } = this.state
-    return createTx
   }
 
   acceptWithdrawRequest() {

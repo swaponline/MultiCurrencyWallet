@@ -15,7 +15,7 @@ export const hash2id = (hash) =>
 
       switch (currency) {
         case 'btc':
-          currentHash = flowState.btcScriptCreatingTransactionHash
+          currentHash = flowState.utxoScriptCreatingTransactionHash
           break
         case 'eth':
           currentHash = flowState.ethSwapCreationTransactionHash
