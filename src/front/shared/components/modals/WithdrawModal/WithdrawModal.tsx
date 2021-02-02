@@ -83,7 +83,7 @@ type WithdrawModalState = {
   amount: number
   txSize: null | number
 
-  exEthereumRate: BigNumber
+  ethWallet: IUniversalObj
   exCurrencyRate: BigNumber
   fees: {
     miner: BigNumber
@@ -138,9 +138,7 @@ type WithdrawModalState = {
 export default class WithdrawModal extends React.Component<any, any> {
   /**
    * @method reportError
-   * @method fixDecimalCountETH
    * @method addressIsCorrect
-   * @method getFiatBalance
    * @method openScan
    * @method amountInputKeyDownCallback
    * @method updateServiceAndTotalFee
@@ -187,15 +185,13 @@ export default class WithdrawModal extends React.Component<any, any> {
     const exCurrencyRate = infoAboutCurrency && infoAboutCurrency.price_fiat
       ? new BigNumber(currentActiveAsset.infoAboutCurrency.price_fiat)
       : new BigNumber(0)
-    // get exchange rate for tokens (to pay fee in ethereum)
+    // save ethereum wallet for token exchange's rate
     const arrWithEthWallet = items.filter(item => {
       return item.currency.toLowerCase() === 'eth' 
         && item.infoAboutCurrency
         && item.infoAboutCurrency.price_fiat
     })
-    const exEthereumRate = (
-      arrWithEthWallet.length && arrWithEthWallet[0].infoAboutCurrency.price_fiat
-    ) || new BigNumber(0)
+    const ethWallet = arrWithEthWallet[0] || {}
 
     this.state = {
       isShipped: false,
@@ -210,7 +206,7 @@ export default class WithdrawModal extends React.Component<any, any> {
       ownTx: '',
       hiddenCoinsList: actions.core.getHiddenCoins(),
       currentActiveAsset,
-      exEthereumRate: new BigNumber(exEthereumRate),
+      ethWallet,
       exCurrencyRate,
       allCurrencyies,
       error: false,
@@ -325,7 +321,7 @@ export default class WithdrawModal extends React.Component<any, any> {
         fees: {
           ...state.fees,
           miner: new BigNumber(fee),
-          total: state.fees.service.plus(fee).dp(currentDecimals, BigNumber.ROUND_DOWN),
+          total: state.fees.service.plus(fee).dp(currentDecimals, BigNumber.ROUND_CEIL),
         },
       }))
     } catch (error) {
@@ -389,8 +385,8 @@ export default class WithdrawModal extends React.Component<any, any> {
         fees: {
           ...state.fees,
           miner: newMinerFee,
-          service: new BigNumber(adminFeeSize).dp(currentDecimals, BigNumber.ROUND_DOWN),
-          total: newMinerFee.plus(adminFeeSize).dp(currentDecimals, BigNumber.ROUND_DOWN),
+          service: new BigNumber(adminFeeSize).dp(currentDecimals, BigNumber.ROUND_CEIL),
+          total: newMinerFee.plus(adminFeeSize).dp(currentDecimals, BigNumber.ROUND_CEIL),
           adminFeeSize: new BigNumber(adminFeeSize),
         },
       }))
@@ -623,7 +619,7 @@ export default class WithdrawModal extends React.Component<any, any> {
     if (selectedValue === currentActiveAsset.currency) {
       this.setState({
         fiatAmount: value && hasExCurrencyRate
-          ? exCurrencyRate.times(value).dp(2, BigNumber.ROUND_DOWN).toString()
+          ? exCurrencyRate.times(value).dp(2, BigNumber.ROUND_CEIL).toString()
           : '',
         amount: value,
       })
@@ -669,8 +665,8 @@ export default class WithdrawModal extends React.Component<any, any> {
     const maxService = usedAdminFee
         ? new BigNumber(usedAdminFee.fee).dividedBy(ONE_HUNDRED_PERCENT).multipliedBy(balances.balance)
         : new BigNumber(0)
-    const maxAmount = balances.balance.minus(minerFee).minus(maxService).dp(currentDecimals, BigNumber.ROUND_DOWN)
-    const maxFiatAmount = maxAmount.multipliedBy(exCurrencyRate).dp(2, BigNumber.ROUND_DOWN)
+    const maxAmount = balances.balance.minus(minerFee).minus(maxService).dp(currentDecimals, BigNumber.ROUND_CEIL)
+    const maxFiatAmount = maxAmount.multipliedBy(exCurrencyRate).dp(2, BigNumber.ROUND_CEIL)
 
     if (maxAmount.isGreaterThan(balances.balance) || maxAmount.isLessThanOrEqualTo(0)) {
       this.setState((state) => ({
@@ -715,8 +711,8 @@ export default class WithdrawModal extends React.Component<any, any> {
     this.setState((state) => ({
       fees: {
         ...state.fees,
-        service: newServiceFeeSize.dp(currentDecimals, BigNumber.ROUND_DOWN),
-        total: fees.miner.plus(newServiceFeeSize).dp(currentDecimals, BigNumber.ROUND_DOWN),
+        service: newServiceFeeSize.dp(currentDecimals, BigNumber.ROUND_CEIL),
+        total: fees.miner.plus(newServiceFeeSize).dp(currentDecimals, BigNumber.ROUND_CEIL),
       },
     }))
   }
@@ -764,11 +760,11 @@ export default class WithdrawModal extends React.Component<any, any> {
       amount,
       address,
       balances,
+      ethWallet,
       isShipped,
       fiatAmount,
       isEthToken,
       openScanCam,
-      exEthereumRate,
       exCurrencyRate,
       currentDecimals,
       hiddenCoinsList,
@@ -809,6 +805,8 @@ export default class WithdrawModal extends React.Component<any, any> {
     const activeCriptoCurrency = getCurrencyKey(currentActiveAsset.currency, true).toUpperCase()
     const selectedValueView = getCurrencyKey(selectedValue, true).toUpperCase()
     const criptoCurrencyHaveInfoPrice = returnHaveInfoPrice();
+    const ethBalanceLessThanMiner = new BigNumber(ethWallet.balance).isLessThan(fees.miner)
+    const exEthereumRate = new BigNumber(ethWallet.infoAboutCurrency.price_fiat || 0)
 
     function returnHaveInfoPrice(): boolean {
       let result = true
@@ -828,6 +826,7 @@ export default class WithdrawModal extends React.Component<any, any> {
       isShipped ||
       !!ownTx ||
       !this.addressIsCorrect() ||
+      isEthToken && ethBalanceLessThanMiner ||
       new BigNumber(amount).isGreaterThan(balances.balance) ||
       new BigNumber(amount).dp() > currentDecimals ||
       new BigNumber(amount).isGreaterThan(
@@ -1021,29 +1020,36 @@ export default class WithdrawModal extends React.Component<any, any> {
               </Tooltip>
             )}
           </div>
-          {/* hint about maximum possible amount */}
+          {/* hint for amount value */}
           {dashboardView && (
             <div styleName={`prompt ${fetchFee ? 'hide' : ''}`}>
-              {balances.allowedCurrency.isEqualTo(0) ?
-                (
-                  <FormattedMessage
-                    id="WithdrowBalanceNotEnoughtPrompt"
-                    defaultMessage="Not enough balance to send"
-                  />
-                ) : (
-                  <FormattedMessage
-                    id="Withdrow170"
-                    defaultMessage="Maximum amount you can send is {allowedBalance} {currency}"
-                    values={{
-                      allowedBalance: selectedValue === currentActiveAsset.currency
-                        ? balances.allowedCurrency.toNumber()
-                        : balances.allowedFiat.toNumber(),
-                      currency: selectedValue === currentActiveAsset.currency 
-                        ? activeCriptoCurrency
-                        : activeFiat,
-                    }}
-                  />
-                )
+              {isEthToken && ethBalanceLessThanMiner 
+                ? (
+                    <FormattedMessage
+                      id="WithdrowBalanceNotEnoughtEthereumBalancePrompt"
+                      defaultMessage="Not enough ethereum balance for miner fee"
+                    />
+                  )
+                : balances.allowedCurrency.isEqualTo(0) ?
+                  (
+                    <FormattedMessage
+                      id="WithdrowBalanceNotEnoughtPrompt"
+                      defaultMessage="Not enough balance to send"
+                    />
+                  ) : (
+                    <FormattedMessage
+                      id="Withdrow170"
+                      defaultMessage="Maximum amount you can send is {allowedBalance} {currency}"
+                      values={{
+                        allowedBalance: selectedValue === currentActiveAsset.currency
+                          ? balances.allowedCurrency.toNumber()
+                          : balances.allowedFiat.toNumber(),
+                        currency: selectedValue === currentActiveAsset.currency 
+                          ? activeCriptoCurrency
+                          : activeFiat,
+                      }}
+                    />
+                  )
               }{' '}
               <Tooltip id="WtH204">
                 <div style={{ maxWidth: '24em', textAlign: 'center' }}>

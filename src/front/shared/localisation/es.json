@@ -8162,5 +8162,12 @@
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
+  },
+  {
+    "id": "WithdrowBalanceNotEnoughtEthereumBalancePrompt",
+    "message": "No hay suficiente saldo de ethereum para la tarifa del minero",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
   }
 ]

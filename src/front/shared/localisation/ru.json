@@ -8210,5 +8210,12 @@
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
+  },
+  {
+    "id": "WithdrowBalanceNotEnoughtEthereumBalancePrompt",
+    "message": "Недостаточно эфира для комиссии за майнинг",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
   }
 ]

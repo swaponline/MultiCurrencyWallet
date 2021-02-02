@@ -8134,5 +8134,12 @@
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
+  },
+  {
+    "id": "WithdrowBalanceNotEnoughtEthereumBalancePrompt",
+    "message": "Not enough ethereum balance for miner fee",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
   }
 ]
