@@ -133,8 +133,7 @@ class ETH2BTC extends Flow {
       // 1. Sign swap to start
 
       () => {
-        flow.swap.processMetamask()
-        // this.sign()
+        this.signABSide()
       },
 
       // 2. Wait participant create, fund BTC Script

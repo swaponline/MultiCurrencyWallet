@@ -281,6 +281,41 @@ class Flow {
     console.warn(`swap ${this.swap.id} was stoped`)
   }
 
+  signABSide() {
+    this.swap.processMetamask()
+  }
+
+  signUTXOSide() {
+    this.swap.processMetamask()
+    this.swap.room.once('swap sign', () => {
+      const { step } = this.state
+
+      if (step >= 2) {
+        return
+      }
+
+      this.swap.room.once('eth refund completed', () => {
+        this.tryRefund()
+      })
+
+      this.finishStep({
+        isParticipantSigned: true,
+      }, { step: 'sign', silentError: true })
+    })
+
+    this.swap.room.once('swap exists', () => {
+      this.setState({
+        isSwapExist: true,
+      })
+
+      this.stopSwapProcess()
+    })
+
+    this.swap.room.sendMessage({
+      event: 'request sign',
+    })
+  }
+
   waitUTXOScriptCreated() {
     const flow = this
     this.swap.room.on('create utxo script', ({ scriptValues, utxoScriptCreatingTransactionHash }) => {
@@ -406,6 +441,8 @@ class Flow {
     } = this.state
     return utxoScriptCreatingTransactionHash
   }
+
+  tryRefund() {}
 }
 
 

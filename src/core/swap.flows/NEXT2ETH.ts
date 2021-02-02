@@ -99,34 +99,7 @@ class NEXT2ETH extends Flow {
       // 1. Signs
 
       async () => {
-        flow.swap.processMetamask()
-        flow.swap.room.once('swap sign', () => {
-          const { step } = flow.state
-
-          if (step >= 2) {
-            return
-          }
-
-          flow.swap.room.once('eth refund completed', () => {
-            flow.tryRefund()
-          })
-
-          flow.finishStep({
-            isParticipantSigned: true,
-          }, { step: 'sign', silentError: true })
-        })
-
-        flow.swap.room.once('swap exists', () => {
-          flow.setState({
-            isSwapExist: true,
-          })
-
-          flow.stopSwapProcess()
-        })
-
-        flow.swap.room.sendMessage({
-          event: 'request sign',
-        })
+        this.signUTXOSide()
       },
 
       // 2. Create secret, secret hash and NEXT script
