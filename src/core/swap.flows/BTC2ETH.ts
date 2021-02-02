@@ -63,8 +63,6 @@ class BTC2ETH extends Flow {
 
       secretHash: null,
 
-      btcScriptVerified: false,
-
       isBalanceFetching: false,
       isBalanceEnough: true,
       balance: null,

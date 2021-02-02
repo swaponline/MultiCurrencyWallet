@@ -345,29 +345,6 @@ class ETH2NEXT extends Flow {
     }
   }
 
-  verifyScript() {
-    this.verifyNextScript()
-  }
-
-  verifyNextScript() {
-    const flow = this
-    const { nextScriptVerified, utxoScriptValues } = flow.state
-
-    if (nextScriptVerified) {
-      return true
-    }
-
-    if (!utxoScriptValues) {
-      throw new Error(`No script, cannot verify`)
-    }
-
-    flow.finishStep({
-      nextScriptVerified: true,
-    }, { step: 'verify-script' })
-
-    return true
-  }
-
   async syncBalance() {
     const { sellAmount } = this.swap
 

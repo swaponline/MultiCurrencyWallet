@@ -58,8 +58,6 @@ class ETH2GHOST extends Flow {
       targetWallet : null,
       secretHash: null,
 
-      ghostScriptVerified: false,
-
       isBalanceFetching: false,
       isBalanceEnough: true,
       balance: null,
@@ -343,29 +341,6 @@ class ETH2GHOST extends Flow {
 
       return true
     }
-  }
-
-  verifyScript() {
-    this.verifyGhostScript()
-  }
-
-  verifyGhostScript() {
-    const flow = this
-    const { ghostScriptVerified, utxoScriptValues } = flow.state
-
-    if (ghostScriptVerified) {
-      return true
-    }
-
-    if (!utxoScriptValues) {
-      throw new Error(`No script, cannot verify`)
-    }
-
-    flow.finishStep({
-      ghostScriptVerified: true,
-    }, { step: 'verify-script' })
-
-    return true
   }
 
   async syncBalance() {

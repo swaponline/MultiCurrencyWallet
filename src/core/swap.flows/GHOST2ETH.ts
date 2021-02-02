@@ -61,8 +61,6 @@ class GHOST2ETH extends Flow {
 
       secretHash: null,
 
-      ghostScriptVerified: false,
-
       isBalanceFetching: false,
       isBalanceEnough: true,
       balance: null,

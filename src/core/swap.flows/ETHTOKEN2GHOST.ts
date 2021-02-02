@@ -60,8 +60,6 @@ export default (tokenName) => {
         targetWallet : null,
         secretHash: null,
 
-        ghostScriptVerified: false,
-
         isBalanceFetching: false,
         isBalanceEnough: true,
         balance: null,
@@ -332,29 +330,6 @@ export default (tokenName) => {
 
         return true
       }
-    }
-
-    verifyScript() {
-      this.verifyGhostScript()
-    }
-
-    verifyGhostScript() {
-      const flow = this
-      const { ghostScriptVerified, utxoScriptValues } = flow.state
-
-      if (ghostScriptVerified) {
-        return true
-      }
-
-      if (!utxoScriptValues) {
-        throw new Error(`No script, cannot verify`)
-      }
-
-      flow.finishStep({
-        ghostScriptVerified: true,
-      }, { step: 'verify-script' })
-
-      return true
     }
 
     async syncBalance() {

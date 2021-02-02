@@ -58,8 +58,6 @@ class ETH2BTC extends Flow {
       targetWallet : null,
       secretHash: null,
 
-      btcScriptVerified: false,
-
       isBalanceFetching: false,
       isBalanceEnough: true,
       balance: null,
@@ -166,7 +164,6 @@ class ETH2BTC extends Flow {
 
       () => {
         debug('swap.core:flow')(`waiting verify btc script`)
-        // this.verifyBtcScript()
       },
 
       // 4. Check balance
@@ -323,29 +320,6 @@ class ETH2BTC extends Flow {
 
       return true
     }
-  }
-
-  verifyScript() {
-    this.verifyBtcScript()
-  }
-
-  verifyBtcScript() {
-    const flow = this
-    const { btcScriptVerified, utxoScriptValues } = flow.state
-
-    if (btcScriptVerified) {
-      return true
-    }
-
-    if (!utxoScriptValues) {
-      throw new Error(`No script, cannot verify`)
-    }
-
-    flow.finishStep({
-      btcScriptVerified: true,
-    }, { step: 'verify-script' })
-
-    return true
   }
 
   async syncBalance() {

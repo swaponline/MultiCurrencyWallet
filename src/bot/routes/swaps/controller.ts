@@ -60,7 +60,7 @@ const runSwap = (swap) => {
       case "SWAP2USDT":
 
         if ( step == 1 ) swap.flow.sign()
-        if ( step == 3 ) swap.flow.verifyBtcScript()
+        if ( step == 3 ) swap.flow.verifyScript()
 
         if ( step + 1 === swap.flow.steps.length ) {
           console.log(new Date().toISOString(), '[FINISHED] tx', swap.flow.state.btcSwapWithdrawTransactionHash)
@@ -129,11 +129,11 @@ const sign = async (swap) => {
   await until(2, swap)
 }
 
-const verifyBtcScript = async (swap) => {
-  if (swap.flow.state.btcScriptVerified) throw new Error(`Already verified`)
+const verifyScript = async (swap) => {
+  if (swap.flow.state.utxoScriptVerified) throw new Error(`Already verified`)
 
   await until(3, swap)
-  await swap.flow.verifyBtcScript()
+  await swap.flow.verifyScript()
   await until(4, swap)
 }
 
@@ -262,7 +262,7 @@ export {
   withSwap,
   sign,
   submitSecret,
-  verifyBtcScript,
+  verifyScript,
   syncBalance,
   tryWithdraw,
 

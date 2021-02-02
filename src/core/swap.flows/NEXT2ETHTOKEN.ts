@@ -63,9 +63,6 @@ export default (tokenName) => {
 
         secretHash: null,
 
-
-        nextScriptVerified: false,
-
         isBalanceFetching: false,
         isBalanceEnough: true,
         balance: null,

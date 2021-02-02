@@ -61,8 +61,6 @@ export default (tokenName) => {
         targetWallet : null,
         secretHash: null,
 
-        btcScriptVerified: false,
-
         isBalanceFetching: false,
         isBalanceEnough: true,
         balance: null,
@@ -149,7 +147,6 @@ export default (tokenName) => {
 
         () => {
           debug('swap.core:flow')(`waiting verify btc script`)
-          // this.verifyBtcScript()
         },
 
         // 4. Check balance
@@ -306,29 +303,6 @@ export default (tokenName) => {
 
         return true
       }
-    }
-
-    verifyScript() {
-      this.verifyBtcScript()
-    }
-
-    verifyBtcScript() {
-      const flow = this
-      const { btcScriptVerified, utxoScriptValues } = flow.state
-
-      if (btcScriptVerified) {
-        return true
-      }
-
-      if (!utxoScriptValues) {
-        throw new Error(`No script, cannot verify`)
-      }
-
-      flow.finishStep({
-        btcScriptVerified: true,
-      }, { step: 'verify-script' })
-
-      return true
     }
 
     async syncBalance() {

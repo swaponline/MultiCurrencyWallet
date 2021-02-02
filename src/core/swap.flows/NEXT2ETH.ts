@@ -61,8 +61,6 @@ class NEXT2ETH extends Flow {
 
       secretHash: null,
 
-      nextScriptVerified: false,
-
       isBalanceFetching: false,
       isBalanceEnough: true,
       balance: null,

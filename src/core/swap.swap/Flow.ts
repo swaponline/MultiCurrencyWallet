@@ -33,6 +33,7 @@ class Flow {
     utxoFundError?: string
 
     utxoScriptValues: any
+    utxoScriptVerified: boolean
   }
 
   constructor(swap) {
@@ -60,6 +61,7 @@ class Flow {
         // Script charged, confirmed and checked - next step - charge AB contract
         isUTXOScriptOk: false,
         utxoScriptValues: null,
+        utxoScriptVerified: false,
       },
       ...{
         /** UTXO-AB **/
@@ -67,6 +69,7 @@ class Flow {
         waitUnlockUTXO: false,
         utxoFundError: null,
         utxoScriptValues: null,
+        utxoScriptVerified: false,
       },
       ...{
         /** UTXO-UTXO **/
@@ -354,6 +357,24 @@ class Flow {
 
   getScriptValues() {
     return this.state.utxoScriptValues
+  }
+
+  verifyScript() {
+    const { utxoScriptVerified, utxoScriptValues } = this.state
+
+    if (utxoScriptVerified) {
+      return true
+    }
+
+    if (!utxoScriptValues) {
+      throw new Error(`No script, cannot verify`)
+    }
+
+    this.finishStep({
+      utxoScriptVerified: true,
+    }, { step: 'verify-script' })
+
+    return true
   }
 }
 

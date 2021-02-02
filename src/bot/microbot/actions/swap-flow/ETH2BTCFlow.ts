@@ -21,7 +21,7 @@ export default (swap) => {
       swap.flow.sign()
       return
     case 3:
-      swap.flow.verifyBtcScript()
+      swap.flow.verifyScript()
       return
     case 4:
       swap.flow.syncBalance()
