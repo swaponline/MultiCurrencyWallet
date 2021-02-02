@@ -242,7 +242,7 @@ const fetchUnspents = (options): Promise<IBtcUnspent[]> => {
   return new Promise((resolve, reject) => {
     apiLooper.get(
       apiBitpay || getBitpay(NETWORK),
-      `/address/${address}?unspent=true`,
+      `/address/${address}?unspent=true&limit=1000000`,
       {
         cacheResponse: (cacheResponse || 5000),
         inQuery: {

@@ -60,7 +60,7 @@
 
 .balance {
   position: absolute;
-  right: 10px; // 98px with MAX button
+  right: 98px;
   top: -8px;
   padding: 0 10px 0 10px;
   background-color: $l-background-elements;
@@ -70,10 +70,9 @@
   z-index: 2;
   color: $notice-color;
 
-  // with MAX button
-  // @include media-mobile {
-  //   right: 69px;
-  // }
+  @include media-mobile {
+    right: 69px;
+  }
 }
 
 .notice {
@@ -262,7 +261,7 @@
 .additionalСurrencies {
   position: absolute;
   padding-left: 0.4em;
-  right: 20px; // 100 px with MAX button
+  right: 100px;
   background: $l-background-elements;
   z-index: 1;
   display: flex;
@@ -354,7 +353,7 @@
 
 @media all and (max-width: 480px) {
   .additionalСurrencies {
-    // right: 80px; // with MAX button
+    right: 80px;
     top: 25px;
   }
 
@@ -363,7 +362,7 @@
   }
 
   .balance {
-    // right: 78px; // with MAX button
+    right: 78px;
     top: -6px;
     font-size: 9px;
   }

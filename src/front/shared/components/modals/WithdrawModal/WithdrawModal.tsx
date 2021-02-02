@@ -691,14 +691,14 @@ export default class WithdrawModal extends React.Component<any, any> {
     }
   }
 
-  // setMaxBalance = () => {
-  //   const { balances } = this.state
+  setMaxBalance = () => {
+    const { balances } = this.state
 
-  //   this.setState({
-  //     amount: balances.allowedCurrency.toString(),
-  //     fiatAmount: balances.allowedFiat.toString(),
-  //   })
-  // }
+    this.setState({
+      amount: balances.allowedCurrency.toString(),
+      fiatAmount: balances.allowedFiat.toString(),
+    })
+  }
 
   updateServiceAndTotalFee = () => {
     const { usedAdminFee, amount, fees, currentDecimals } = this.state
@@ -1004,7 +1004,7 @@ export default class WithdrawModal extends React.Component<any, any> {
                 : linked.fiatAmount.pipe(this.handleAmount)
               }
             />
-            {/* <div style={{ marginLeft: '15px' }}>
+            <div style={{ marginLeft: '15px' }}>
               <Button disabled={fetchFee} blue big onClick={this.setMaxBalance} id="Withdrow134">
                 <FormattedMessage id="Select210" defaultMessage="MAX" />
               </Button>
@@ -1019,7 +1019,7 @@ export default class WithdrawModal extends React.Component<any, any> {
                   }}
                 />
               </Tooltip>
-            )} */}
+            )}
           </div>
           {/* hint about maximum possible amount */}
           {dashboardView && (
