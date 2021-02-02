@@ -282,7 +282,8 @@ class Flow {
   }
 
   waitUTXOScriptCreated() {
-    flow.swap.room.on('create utxo script', ({ scriptValues, utxoScriptCreatingTransactionHash }) => {
+    const flow = this
+    this.swap.room.on('create utxo script', ({ scriptValues, utxoScriptCreatingTransactionHash }) => {
       const { step } = flow.state
 
       if (step >= 3) {
@@ -296,7 +297,7 @@ class Flow {
       }, { step: 'wait-lock-utxo', silentError: true })
     })
 
-    flow.swap.room.sendMessage({
+    this.swap.room.sendMessage({
       event: 'request utxo script',
     })
   }
