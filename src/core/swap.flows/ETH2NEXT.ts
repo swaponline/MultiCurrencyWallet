@@ -135,23 +135,7 @@ class ETH2NEXT extends Flow {
       // 2. Wait participant create, fund NEXT Script
 
       () => {
-        flow.swap.room.on('create next script', ({ scriptValues, utxoScriptCreatingTransactionHash }) => {
-          const { step } = flow.state
-
-          if (step >= 3) {
-            return
-          }
-
-          flow.finishStep({
-            secretHash: scriptValues.secretHash,
-            utxoScriptValues: scriptValues,
-            utxoScriptCreatingTransactionHash,
-          }, { step: 'wait-lock-next', silentError: true })
-        })
-
-        flow.swap.room.sendMessage({
-          event: 'request next script',
-        })
+        flow.waitUTXOScriptCreated()
       },
 
       // 3. Verify NEXT Script

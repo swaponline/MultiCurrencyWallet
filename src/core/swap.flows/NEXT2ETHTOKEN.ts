@@ -157,9 +157,9 @@ export default (tokenName) => {
               utxoScriptCreatingTransactionHash: txID,
             })
 
-            flow.swap.room.once('request next script', () => {
+            flow.swap.room.once('request utxo script', () => {
               flow.swap.room.sendMessage({
-                event:  'create next script',
+                event:  'create utxo script',
                 data: {
                   scriptValues: utxoScriptValues,
                   utxoScriptCreatingTransactionHash: txID,
@@ -168,7 +168,7 @@ export default (tokenName) => {
             })
 
             flow.swap.room.sendMessage({
-              event: 'create next script',
+              event: 'create utxo script',
               data: {
                 scriptValues : utxoScriptValues,
                 utxoScriptCreatingTransactionHash : txID,

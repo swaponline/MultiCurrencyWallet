@@ -133,23 +133,7 @@ class ETH2GHOST extends Flow {
       // 2. Wait participant create, fund BTC Script
 
       () => {
-        flow.swap.room.on('create ghost script', ({ scriptValues, utxoScriptCreatingTransactionHash }) => {
-          const { step } = flow.state
-
-          if (step >= 3) {
-            return
-          }
-
-          flow.finishStep({
-            secretHash: scriptValues.secretHash,
-            utxoScriptValues: scriptValues,
-            utxoScriptCreatingTransactionHash,
-          }, { step: 'wait-lock-ghost', silentError: true })
-        })
-
-        flow.swap.room.sendMessage({
-          event: 'request ghost script',
-        })
+        flow.waitUTXOScriptCreated()
       },
 
       // 3. Verify GHOST Script

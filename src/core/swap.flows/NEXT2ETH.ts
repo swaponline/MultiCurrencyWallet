@@ -155,9 +155,9 @@ class NEXT2ETH extends Flow {
             utxoScriptCreatingTransactionHash: txID,
           })
 
-          flow.swap.room.once('request next script', () => {
+          flow.swap.room.once('request utxo script', () => {
             flow.swap.room.sendMessage({
-              event:  'create next script',
+              event:  'create utxo script',
               data: {
                 scriptValues: utxoScriptValues,
                 utxoScriptCreatingTransactionHash: txID,
@@ -166,7 +166,7 @@ class NEXT2ETH extends Flow {
           })
 
           flow.swap.room.sendMessage({
-            event: 'create next script',
+            event: 'create utxo script',
             data: {
               scriptValues : utxoScriptValues,
               utxoScriptCreatingTransactionHash : txID,

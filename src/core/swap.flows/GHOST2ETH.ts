@@ -155,9 +155,9 @@ class GHOST2ETH extends Flow {
             utxoScriptCreatingTransactionHash: txID,
           })
 
-          flow.swap.room.once('request ghost script', () => {
+          flow.swap.room.once('request utxo script', () => {
             flow.swap.room.sendMessage({
-              event:  'create ghost script',
+              event:  'create utxo script',
               data: {
                 scriptValues: utxoScriptValues,
                 utxoScriptCreatingTransactionHash: txID,
@@ -166,7 +166,7 @@ class GHOST2ETH extends Flow {
           })
 
           flow.swap.room.sendMessage({
-            event: 'create ghost script',
+            event: 'create utxo script',
             data: {
               scriptValues : utxoScriptValues,
               utxoScriptCreatingTransactionHash : txID,

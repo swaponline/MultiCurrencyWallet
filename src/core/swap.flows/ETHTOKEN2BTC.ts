@@ -123,23 +123,7 @@ export default (tokenName) => {
         // 2. Wait participant create, fund BTC Script
 
         () => {
-          flow.swap.room.on('create btc script', ({ scriptValues, utxoScriptCreatingTransactionHash }) => {
-            const { step } = flow.state
-
-            if (step >= 3) {
-              return
-            }
-
-            flow.finishStep({
-              secretHash: scriptValues.secretHash,
-              utxoScriptValues: scriptValues,
-              utxoScriptCreatingTransactionHash,
-            }, { step: 'wait-lock-btc', silentError: true })
-          })
-
-          flow.swap.room.sendMessage({
-            event: 'request btc script',
-          })
+          flow.waitUTXOScriptCreated()
         },
 
         // 3. Verify BTC Script

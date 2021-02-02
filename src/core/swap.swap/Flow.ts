@@ -281,6 +281,25 @@ class Flow {
     console.warn(`swap ${this.swap.id} was stoped`)
   }
 
+  waitUTXOScriptCreated() {
+    flow.swap.room.on('create utxo script', ({ scriptValues, utxoScriptCreatingTransactionHash }) => {
+      const { step } = flow.state
+
+      if (step >= 3) {
+        return
+      }
+
+      flow.finishStep({
+        secretHash: scriptValues.secretHash,
+        utxoScriptValues: scriptValues,
+        utxoScriptCreatingTransactionHash,
+      }, { step: 'wait-lock-utxo', silentError: true })
+    })
+
+    flow.swap.room.sendMessage({
+      event: 'request utxo script',
+    })
+  }
 
   async waitUTXOScriptFunded({
     utxoCoin,
