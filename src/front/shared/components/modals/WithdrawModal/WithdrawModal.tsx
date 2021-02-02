@@ -1009,7 +1009,7 @@ export default class WithdrawModal extends React.Component<any, any> {
               <Button disabled={fetchFee} blue big onClick={this.setMaxBalance} id="Withdrow134">
                 <FormattedMessage id="Select210" defaultMessage="MAX" />
               </Button>
-            </div> */}
+            </div>
             {!isMobile && (
               <Tooltip id="Withdrow134" place="top" mark={false}>
                 <FormattedMessage
@@ -1020,7 +1020,7 @@ export default class WithdrawModal extends React.Component<any, any> {
                   }}
                 />
               </Tooltip>
-            )}
+            )} */}
           </div>
           {/* hint about maximum possible amount */}
           {dashboardView && (

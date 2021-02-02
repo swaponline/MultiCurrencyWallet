@@ -60,19 +60,20 @@
 
 .balance {
   position: absolute;
-  right: 98px;
+  right: 10px; // 98px with MAX button
   top: -8px;
   padding: 0 10px 0 10px;
   background-color: $l-background-elements;
   text-align: left;
   font-family: 'Roboto Mono', monospace;
   font-size: 13px;
-  z-index: 1;
+  z-index: 2;
   color: $notice-color;
-  @include media-mobile {
-    right: 69px;
-    z-index: 112;
-  }
+
+  // with MAX button
+  // @include media-mobile {
+  //   right: 69px;
+  // }
 }
 
 .notice {
@@ -362,7 +363,7 @@
   }
 
   .balance {
-    right: 78px;
+    // right: 78px; // with MAX button
     top: -6px;
     font-size: 9px;
   }
