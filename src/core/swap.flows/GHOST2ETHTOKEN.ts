@@ -61,7 +61,6 @@ export default (tokenName) => {
         ethSwapCreationTransactionHash: null,
 
         secretHash: null,
-        ghostScriptValues: null,
 
         ghostScriptVerified: false,
 
@@ -150,7 +149,7 @@ export default (tokenName) => {
 
         async () => {
           const onTransactionHash = (txID) => {
-            const { ghostScriptCreatingTransactionHash, ghostScriptValues } = flow.state
+            const { ghostScriptCreatingTransactionHash, utxoScriptValues } = flow.state
 
             if (ghostScriptCreatingTransactionHash) {
               return
@@ -164,7 +163,7 @@ export default (tokenName) => {
               flow.swap.room.sendMessage({
                 event:  'create ghost script',
                 data: {
-                  scriptValues: ghostScriptValues,
+                  scriptValues: utxoScriptValues,
                   ghostScriptCreatingTransactionHash: txID,
                 }
               })
@@ -173,24 +172,24 @@ export default (tokenName) => {
             flow.swap.room.sendMessage({
               event: 'create ghost script',
               data: {
-                scriptValues : ghostScriptValues,
+                scriptValues : utxoScriptValues,
                 ghostScriptCreatingTransactionHash : txID,
               }
             })
           }
 
           const { sellAmount } = flow.swap
-          const { isBalanceEnough, ghostScriptValues } = flow.state
+          const { isBalanceEnough, utxoScriptValues } = flow.state
 
           if (isBalanceEnough) {
             await flow.ghostSwap.fundScript({
-              scriptValues: ghostScriptValues,
+              scriptValues: utxoScriptValues,
               amount: sellAmount,
             })
           }
 
           const checkGHOSTScriptBalance = async () => {
-            const { scriptAddress } = this.ghostSwap.createScript(ghostScriptValues)
+            const { scriptAddress } = this.ghostSwap.createScript(utxoScriptValues)
             const unspents = await this.ghostSwap.fetchUnspents(scriptAddress)
 
             if (unspents.length === 0) {
@@ -199,7 +198,7 @@ export default (tokenName) => {
 
             const txID = unspents[0].txid
 
-            const balance = await this.ghostSwap.getBalance(ghostScriptValues)
+            const balance = await this.ghostSwap.getBalance(utxoScriptValues)
 
             const isEnoughMoney = new BigNumber(balance).isGreaterThanOrEqualTo(sellAmount.times(1e8))
 
@@ -334,13 +333,6 @@ export default (tokenName) => {
       return scriptAddress;
     }
 
-    getScriptValues() {
-      const {
-        ghostScriptValues: scriptValues,
-      } = this.state
-      return scriptValues
-    }
-
     getScriptCreateTx() {
       const {
         ghostScriptCreatingTransactionHash: createTx,
@@ -349,8 +341,8 @@ export default (tokenName) => {
     }
     
     createWorkGHOSTScript(secretHash) {
-      if (this.state.ghostScriptValues) {
-        debug('swap.core:flow')('GHOST Script already generated', this.state.ghostScriptValues);
+      if (this.state.utxoScriptValues) {
+        debug('swap.core:flow')('GHOST Script already generated', this.state.utxoScriptValues);
         return;
       }
       const { participant } = this.swap
@@ -368,7 +360,7 @@ export default (tokenName) => {
 
       this.setState({
         scriptAddress: scriptAddress,
-        ghostScriptValues: scriptValues,
+        utxoScriptValues: scriptValues,
       });
     }
 
@@ -420,10 +412,10 @@ export default (tokenName) => {
 
     tryRefund() {
       const flow = this
-      const { ghostScriptValues, secret } = flow.state
+      const { utxoScriptValues, secret } = flow.state
 
       return flow.ghostSwap.refund({
-        scriptValues: ghostScriptValues,
+        scriptValues: utxoScriptValues,
         secret: secret,
       })
         .then((hash) => {

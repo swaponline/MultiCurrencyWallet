@@ -161,7 +161,7 @@ const tryRefund = async (swap) => {
   } catch (err) {
     if (err.error == '64: non-final. Code:-26')
       err.message =
-        `Can't be mined until lockTime = ${swap.flow.state.btcScriptValues.lockTime}, now = ${Date.now()/1000}, secondsLeft = ${Math.ceil(swap.flow.state.btcScriptValues.lockTime - Date.now()/1000)}`
+        `Can't be mined until lockTime = ${swap.flow.state.utxoScriptValues.lockTime}, now = ${Date.now()/1000}, secondsLeft = ${Math.ceil(swap.flow.state.utxoScriptValues.lockTime - Date.now()/1000)}`
 
     throw err
   }
@@ -178,8 +178,8 @@ const refund = (req, res) => {
       res.json({ status: 'refund', result })
     } catch (err) {
       if (err.error == '64: non-final. Code:-26') {
-        const { usdtScriptValues, btcScriptValues } = swap.flow.state
-        const scriptValues = usdtScriptValues || btcScriptValues
+        const { usdtScriptValues, utxoScriptValues } = swap.flow.state
+        const scriptValues = usdtScriptValues || utxoScriptValues
 
         err.description =
           `Can't be mined until lockTime = ${scriptValues.lockTime}, now = ${Date.now()/1000}, secondsLeft = ${Math.ceil(scriptValues.lockTime - Date.now()/1000)}`

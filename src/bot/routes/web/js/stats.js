@@ -46,10 +46,7 @@ class Statistics extends React.Component {
   getCreatedAt = (swap) => {
     const { flow } = swap
 
-    const scriptValues = flow.btcScriptValues
-                      || flow.ltcScriptValues
-                      || flow.usdtScriptValues
-                      || flow.scriptValues
+    const scriptValues = flow.utxoScriptValues
 
     if (!scriptValues) return
 

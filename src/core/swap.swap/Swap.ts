@@ -248,7 +248,7 @@ class Swap {
         this.room.on(`request ${_Sell} script`, () => {
           if (this.flow) {
             const {
-              [`${_Sell}ScriptValues`]: scriptValues,
+              utxoScriptValues: scriptValues,
               [`${_Sell}ScriptCreatingTransactionHash`]: scriptCreatingTransactionHash,
             } = this.flow.state
             
@@ -281,7 +281,7 @@ class Swap {
 
             this.flow.finishStep({
               secretHash: scriptValues.secretHash,
-              [`${_Buy}ScriptValues`]: scriptValues,
+              utxoScriptValues: scriptValues,
               [`${_Buy}ScriptCreatingTransactionHash`]: scriptCreatingTransactionHash,
             }, { step: `wait-lock-${_Buy}`, silentError: true })
           }

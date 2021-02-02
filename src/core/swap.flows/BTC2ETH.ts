@@ -62,7 +62,6 @@ class BTC2ETH extends Flow {
       ethSwapCreationTransactionHash: null,
 
       secretHash: null,
-      btcScriptValues: null,
 
       btcScriptVerified: false,
 
@@ -206,13 +205,6 @@ class BTC2ETH extends Flow {
     return this.sendWithdrawRequestToAnotherParticipant()
   }
 
-  getScriptValues() {
-    const {
-      btcScriptValues: scriptValues,
-    } = this.state
-    return scriptValues
-  }
-
   getScriptCreateTx() {
     const {
       btcScriptCreatingTransactionHash: createTx,
@@ -273,8 +265,8 @@ class BTC2ETH extends Flow {
   }
 
   createWorkBTCScript(secretHash) {
-    if (this.state.btcScriptValues) {
-      debug('swap.core:flow')('BTC Script already generated', this.state.btcScriptValues)
+    if (this.state.utxoScriptValues) {
+      debug('swap.core:flow')('BTC Script already generated', this.state.utxoScriptValues)
       return
     }
 
@@ -293,7 +285,7 @@ class BTC2ETH extends Flow {
 
     this.setState({
       scriptAddress: scriptAddress,
-      btcScriptValues: scriptValues,
+      utxoScriptValues: scriptValues,
       scriptBalance: 0,
       scriptUnspendBalance: 0
     })
@@ -347,10 +339,10 @@ class BTC2ETH extends Flow {
 
   tryRefund() {
     const flow = this
-    const { btcScriptValues, secret } = flow.state
+    const { utxoScriptValues, secret } = flow.state
 
     return flow.btcSwap.refund({
-      scriptValues: btcScriptValues,
+      scriptValues: utxoScriptValues,
       secret: secret,
     })
       .then((hash) => {

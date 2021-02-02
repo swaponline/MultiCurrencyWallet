@@ -643,7 +643,7 @@ class BtcLikeSwap extends SwapInterface {
     const onTransactionHash = (txID) => {
       const {
         [`${coin}ScriptCreatingTransactionHash`]: scriptCreatingTransactionHash,
-        [`${coin}ScriptValues`]: scriptValues,
+        utxoScriptValues: scriptValues,
       } = flow.state
 
       if (scriptCreatingTransactionHash) {
@@ -679,7 +679,7 @@ class BtcLikeSwap extends SwapInterface {
       },
       state: {
         isBalanceEnough,
-        [`${coin}ScriptValues`]: scriptValues,
+        utxoScriptValues: scriptValues,
       },
     } = flow
 
@@ -889,7 +889,7 @@ class BtcLikeSwap extends SwapInterface {
     await util.helpers.repeatAsyncUntilResult((stopRepeat) => {
       const {
         secret,
-        [`${coin}ScriptValues`]: scriptValues,
+        utxoScriptValues: scriptValues,
         [`${coin}SwapWithdrawTransactionHash`]: swapWithdrawTransactionHash,
       } = flow.state
 
@@ -898,7 +898,7 @@ class BtcLikeSwap extends SwapInterface {
       }
 
       if (!scriptValues) {
-        console.error(`There is no "${coin}ScriptValues" in state. No way to continue swap...`)
+        console.error(`There is no "utxoScriptValues" in state. No way to continue swap...`)
         return null
       }
 

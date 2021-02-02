@@ -60,7 +60,6 @@ class GHOST2ETH extends Flow {
       ethSwapCreationTransactionHash: null,
 
       secretHash: null,
-      ghostScriptValues: null,
 
       ghostScriptVerified: false,
 
@@ -149,7 +148,7 @@ class GHOST2ETH extends Flow {
 
       async () => {
         const onTransactionHash = (txID) => {
-          const { ghostScriptCreatingTransactionHash, ghostScriptValues } = flow.state
+          const { ghostScriptCreatingTransactionHash, utxoScriptValues } = flow.state
 
           if (ghostScriptCreatingTransactionHash) {
             return
@@ -163,7 +162,7 @@ class GHOST2ETH extends Flow {
             flow.swap.room.sendMessage({
               event:  'create ghost script',
               data: {
-                scriptValues: ghostScriptValues,
+                scriptValues: utxoScriptValues,
                 ghostScriptCreatingTransactionHash: txID,
               }
             })
@@ -172,24 +171,24 @@ class GHOST2ETH extends Flow {
           flow.swap.room.sendMessage({
             event: 'create ghost script',
             data: {
-              scriptValues : ghostScriptValues,
+              scriptValues : utxoScriptValues,
               ghostScriptCreatingTransactionHash : txID,
             }
           })
         }
 
         const { sellAmount } = flow.swap
-        const { isBalanceEnough, ghostScriptValues } = flow.state
+        const { isBalanceEnough, utxoScriptValues } = flow.state
 
         if (isBalanceEnough) {
           await flow.ghostSwap.fundScript({
-            scriptValues: ghostScriptValues,
+            scriptValues: utxoScriptValues,
             amount: sellAmount,
           })
         }
 
         const checkGHOSTScriptBalance = async () => {
-          const { scriptAddress } = this.ghostSwap.createScript(ghostScriptValues)
+          const { scriptAddress } = this.ghostSwap.createScript(utxoScriptValues)
           const unspents = await this.ghostSwap.fetchUnspents(scriptAddress)
 
           if (unspents.length === 0) {
@@ -198,7 +197,7 @@ class GHOST2ETH extends Flow {
 
           const txID = unspents[0].txid
 
-          const balance = await this.ghostSwap.getBalance(ghostScriptValues)
+          const balance = await this.ghostSwap.getBalance(utxoScriptValues)
 
           const isEnoughMoney = new BigNumber(balance).isGreaterThanOrEqualTo(sellAmount.times(1e8))
 
@@ -281,13 +280,6 @@ class GHOST2ETH extends Flow {
     return this.sendWithdrawRequestToAnotherParticipant()
   }
 
-  getScriptValues() {
-    const {
-      ghostScriptValues: scriptValues,
-    } = this.state
-    return scriptValues
-  }
-
   getScriptCreateTx() {
     const {
       ghostScriptCreatingTransactionHash: createTx,
@@ -348,8 +340,8 @@ class GHOST2ETH extends Flow {
   }
 
   createWorkGHOSTScript(secretHash) {
-    if (this.state.ghostScriptValues) {
-      debug('swap.core:flow')('GHOST Script already generated', this.state.ghostScriptValues)
+    if (this.state.utxoScriptValues) {
+      debug('swap.core:flow')('GHOST Script already generated', this.state.utxoScriptValues)
       return
     }
 
@@ -368,7 +360,7 @@ class GHOST2ETH extends Flow {
 
     this.setState({
       scriptAddress: scriptAddress,
-      ghostScriptValues: scriptValues,
+      utxoScriptValues: scriptValues,
       scriptBalance: 0,
       scriptUnspendBalance: 0
     })
@@ -422,10 +414,10 @@ class GHOST2ETH extends Flow {
 
   tryRefund() {
     const flow = this
-    const { ghostScriptValues, secret } = flow.state
+    const { utxoScriptValues, secret } = flow.state
 
     return flow.ghostSwap.refund({
-      scriptValues: ghostScriptValues,
+      scriptValues: utxoScriptValues,
       secret: secret,
     })
       .then((hash) => {

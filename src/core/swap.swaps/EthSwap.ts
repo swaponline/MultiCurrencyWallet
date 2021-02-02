@@ -608,7 +608,7 @@ class EthSwap extends SwapInterface {
 
     const isUTXOScriptOk = await util.helpers.repeatAsyncUntilResult(async (stopRepeat) => {
       const {
-        [`${utxoCoin}ScriptValues`]: utxoScriptValues,
+        utxoScriptValues,
       } = flow.state
 
       const scriptCheckError = await flow[`${utxoCoin}Swap`].checkScript(utxoScriptValues, {
@@ -821,7 +821,7 @@ class EthSwap extends SwapInterface {
 
     flow.swap.room.once(`request ${utxoCoin} script`, () => {
       const {
-        [`${utxoCoin}ScriptValues`]: scriptValues,
+        utxoScriptValues: scriptValues,
         [`${utxoCoin}ScriptCreatingTransactionHash`]: txHash,
       } = flow.state
 

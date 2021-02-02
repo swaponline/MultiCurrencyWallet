@@ -61,7 +61,6 @@ export default (tokenName) => {
         ethSwapCreationTransactionHash: null,
 
         secretHash: null,
-        btcScriptValues: null,
 
         btcScriptVerified: false,
 
@@ -204,13 +203,6 @@ export default (tokenName) => {
       return this.sendWithdrawRequestToAnotherParticipant()
     }
 
-    getScriptValues() {
-      const {
-        btcScriptValues: scriptValues,
-      } = this.state
-      return scriptValues
-    }
-
     getScriptCreateTx() {
       const {
         btcScriptCreatingTransactionHash: createTx,
@@ -271,7 +263,7 @@ export default (tokenName) => {
     }
 
     createWorkBTCScript(secretHash) {
-      if (this.state.btcScriptValues) {
+      if (this.state.utxoScriptValues) {
         debug('swap.core:flow')('BTC Script already generated', this.state.btcScriptValues);
         return;
       }
@@ -290,7 +282,7 @@ export default (tokenName) => {
 
       this.setState({
         scriptAddress: scriptAddress,
-        btcScriptValues: scriptValues,
+        utxoScriptValues: scriptValues,
       });
     }
 
@@ -330,7 +322,7 @@ export default (tokenName) => {
 
     getRefundTxHex = () => {
       this.btcSwap.getRefundHexTransaction({
-        scriptValues: this.state.btcScriptValues,
+        scriptValues: this.state.utxoScriptValues,
         secret: this.state.secret,
       })
         .then((txHex) => {
@@ -342,10 +334,10 @@ export default (tokenName) => {
 
     tryRefund() {
       const flow = this
-      const { btcScriptValues, secret } = flow.state
+      const { utxoScriptValues, secret } = flow.state
 
       return flow.btcSwap.refund({
-        scriptValues: btcScriptValues,
+        scriptValues: utxoScriptValues,
         secret: secret,
       })
         .then((hash) => {

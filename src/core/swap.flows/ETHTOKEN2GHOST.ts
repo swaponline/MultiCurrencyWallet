@@ -59,7 +59,6 @@ export default (tokenName) => {
 
         targetWallet : null,
         secretHash: null,
-        ghostScriptValues: null,
 
         ghostScriptVerified: false,
 
@@ -135,7 +134,7 @@ export default (tokenName) => {
 
             flow.finishStep({
               secretHash: scriptValues.secretHash,
-              ghostScriptValues: scriptValues,
+              utxoScriptValues: scriptValues,
               ghostScriptCreatingTransactionHash,
             }, { step: 'wait-lock-ghost', silentError: true })
           })
@@ -177,19 +176,19 @@ export default (tokenName) => {
 
         async () => {
           await util.helpers.repeatAsyncUntilResult((stopRepeat) => {
-            const { secret, ghostScriptValues, ghostSwapWithdrawTransactionHash } = flow.state
+            const { secret, utxoScriptValues, ghostSwapWithdrawTransactionHash } = flow.state
 
             if (ghostSwapWithdrawTransactionHash) {
               return true
             }
 
-            if (!ghostScriptValues) {
-              console.error('There is no "ghostScriptValues" in state. No way to continue swap...')
+            if (!utxoScriptValues) {
+              console.error('There is no "utxoScriptValues" in state. No way to continue swap...')
               return null
             }
 
             return flow.ghostSwap.withdraw({
-              scriptValues: ghostScriptValues,
+              scriptValues: utxoScriptValues,
               secret,
               destinationAddress: flow.swap.destinationBuyAddress,
             })
@@ -230,13 +229,6 @@ export default (tokenName) => {
 
         () => {},
       ]
-    }
-
-    getScriptValues() {
-      const {
-        ghostScriptValues: scriptValues,
-      } = this.state
-      return scriptValues
     }
 
     getScriptCreateTx() {
@@ -348,13 +340,13 @@ export default (tokenName) => {
 
     verifyGhostScript() {
       const flow = this
-      const { ghostScriptVerified, ghostScriptValues } = flow.state
+      const { ghostScriptVerified, utxoScriptValues } = flow.state
 
       if (ghostScriptVerified) {
         return true
       }
 
-      if (!ghostScriptValues) {
+      if (!utxoScriptValues) {
         throw new Error(`No script, cannot verify`)
       }
 
@@ -451,12 +443,12 @@ export default (tokenName) => {
     }
 
     async tryWithdraw(_secret) {
-      const { secret, secretHash, isEthWithdrawn, isGhostWithdrawn, ghostScriptValues } = this.state
+      const { secret, secretHash, isEthWithdrawn, isGhostWithdrawn, utxoScriptValues } = this.state
 
       if (!_secret)
         throw new Error(`Withdrawal is automatic. For manual withdrawal, provide a secret`)
 
-      if (!ghostScriptValues)
+      if (!utxoScriptValues)
         throw new Error(`Cannot withdraw without script values`)
 
       if (secret && secret != _secret)
@@ -472,7 +464,7 @@ export default (tokenName) => {
       if (secretHash != _secretHash)
         console.warn(`Hash does not match! state: ${secretHash}, given: ${_secretHash}`)
 
-      const {scriptAddress} = this.ghostSwap.createScript(ghostScriptValues)
+      const {scriptAddress} = this.ghostSwap.createScript(utxoScriptValues)
       const balance = await this.ghostSwap.getBalance(scriptAddress)
 
       debug('swap.core:flow')(`address=${scriptAddress}, balance=${balance}`)
@@ -485,7 +477,7 @@ export default (tokenName) => {
       }
 
       await this.ghostSwap.withdraw({
-        scriptValues: ghostScriptValues,
+        scriptValues: utxoScriptValues,
         secret: _secret,
       }, (hash) => {
         debug('swap.core:flow')(`TX hash=${hash}`)
@@ -502,9 +494,9 @@ export default (tokenName) => {
 
     async checkOtherSideRefund() {
       if (typeof this.ghostSwap.checkWithdraw === 'function') {
-        const { btcScriptValues } = this.state
-        if (btcScriptValues) {
-          const { scriptAddress } = this.ghostSwap.createScript(btcScriptValues)
+        const { utxoScriptValues } = this.state
+        if (utxoScriptValues) {
+          const { scriptAddress } = this.ghostSwap.createScript(utxoScriptValues)
 
           const destinationAddress = this.swap.destinationBuyAddress
           const destAddress = (destinationAddress) ? destinationAddress : this.app.services.auth.accounts.btc.getAddress()

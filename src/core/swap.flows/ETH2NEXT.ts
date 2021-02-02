@@ -57,7 +57,6 @@ class ETH2NEXT extends Flow {
 
       targetWallet : null,
       secretHash: null,
-      nextScriptValues: null,
 
       nextScriptVerified: false,
 
@@ -146,7 +145,7 @@ class ETH2NEXT extends Flow {
 
           flow.finishStep({
             secretHash: scriptValues.secretHash,
-            nextScriptValues: scriptValues,
+            utxoScriptValues: scriptValues,
             nextScriptCreatingTransactionHash,
           }, { step: 'wait-lock-next', silentError: true })
         })
@@ -188,19 +187,19 @@ class ETH2NEXT extends Flow {
 
       async () => {
         await util.helpers.repeatAsyncUntilResult((stopRepeat) => {
-          const { secret, nextScriptValues, nextSwapWithdrawTransactionHash } = flow.state
+          const { secret, utxoScriptValues, nextSwapWithdrawTransactionHash } = flow.state
 
           if (nextSwapWithdrawTransactionHash) {
             return true
           }
 
-          if (!nextScriptValues) {
-            console.error('There is no "nextScriptValues" in state. No way to continue swap...')
+          if (!utxoScriptValues) {
+            console.error('There is no "utxoScriptValues" in state. No way to continue swap...')
             return null
           }
 
           return flow.nextSwap.withdraw({
-            scriptValues: nextScriptValues,
+            scriptValues: utxoScriptValues,
             secret,
             destinationAddress: flow.swap.destinationBuyAddress,
           })
@@ -242,13 +241,6 @@ class ETH2NEXT extends Flow {
 
       () => {}
     ]
-  }
-
-  getScriptValues() {
-    const {
-      nextScriptValues: scriptValues,
-    } = this.state
-    return scriptValues
   }
 
   getScriptCreateTx() {
@@ -359,13 +351,13 @@ class ETH2NEXT extends Flow {
 
   verifyNextScript() {
     const flow = this
-    const { nextScriptVerified, nextScriptValues } = flow.state
+    const { nextScriptVerified, utxoScriptValues } = flow.state
 
     if (nextScriptVerified) {
       return true
     }
 
-    if (!nextScriptValues) {
+    if (!utxoScriptValues) {
       throw new Error(`No script, cannot verify`)
     }
 
@@ -462,12 +454,12 @@ class ETH2NEXT extends Flow {
   }
 
   async tryWithdraw(_secret) {
-    const { secret, secretHash, isEthWithdrawn, isNextWithdrawn, nextScriptValues } = this.state
+    const { secret, secretHash, isEthWithdrawn, isNextWithdrawn, utxoScriptValues } = this.state
 
     if (!_secret)
       throw new Error(`Withdrawal is automatic. For manual withdrawal, provide a secret`)
 
-    if (!nextScriptValues)
+    if (!utxoScriptValues)
       throw new Error(`Cannot withdraw without script values`)
 
     if (secret && secret != _secret)
@@ -483,7 +475,7 @@ class ETH2NEXT extends Flow {
     if (secretHash != _secretHash)
       console.warn(`Hash does not match! state: ${secretHash}, given: ${_secretHash}`)
 
-    const { scriptAddress } = this.nextSwap.createScript(nextScriptValues)
+    const { scriptAddress } = this.nextSwap.createScript(utxoScriptValues)
     const balance = await this.nextSwap.getBalance(scriptAddress)
 
     debug('swap.core:flow')(`address=${scriptAddress}, balance=${balance}`)
@@ -496,7 +488,7 @@ class ETH2NEXT extends Flow {
     }
 
     await this.nextSwap.withdraw({
-      scriptValues: nextScriptValues,
+      scriptValues: utxoScriptValues,
       secret: _secret,
     }, (hash) => {
       debug('swap.core:flow')(`TX hash=${hash}`)
@@ -513,9 +505,9 @@ class ETH2NEXT extends Flow {
 
   async checkOtherSideRefund() {
     if (typeof this.nextSwap.checkWithdraw === 'function') {
-      const { nextScriptValues } = this.state
-      if (nextScriptValues) {
-        const { scriptAddress } = this.nextSwap.createScript(nextScriptValues)
+      const { utxoScriptValues } = this.state
+      if (utxoScriptValues) {
+        const { scriptAddress } = this.nextSwap.createScript(utxoScriptValues)
 
         const destinationAddress = this.swap.destinationBuyAddress
         const destAddress = (destinationAddress) ? destinationAddress : this.app.services.auth.accounts.next.getAddress()

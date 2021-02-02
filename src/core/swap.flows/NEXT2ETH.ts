@@ -60,7 +60,6 @@ class NEXT2ETH extends Flow {
       ethSwapCreationTransactionHash: null,
 
       secretHash: null,
-      nextScriptValues: null,
 
       nextScriptVerified: false,
 
@@ -149,7 +148,7 @@ class NEXT2ETH extends Flow {
 
       async () => {
         const onTransactionHash = (txID) => {
-          const { nextScriptCreatingTransactionHash, nextScriptValues } = flow.state
+          const { nextScriptCreatingTransactionHash, utxoScriptValues } = flow.state
 
           if (nextScriptCreatingTransactionHash) {
             return
@@ -163,7 +162,7 @@ class NEXT2ETH extends Flow {
             flow.swap.room.sendMessage({
               event:  'create next script',
               data: {
-                scriptValues: nextScriptValues,
+                scriptValues: utxoScriptValues,
                 nextScriptCreatingTransactionHash: txID,
               }
             })
@@ -172,24 +171,24 @@ class NEXT2ETH extends Flow {
           flow.swap.room.sendMessage({
             event: 'create next script',
             data: {
-              scriptValues : nextScriptValues,
+              scriptValues : utxoScriptValues,
               nextScriptCreatingTransactionHash : txID,
             }
           })
         }
 
         const { sellAmount } = flow.swap
-        const { isBalanceEnough, nextScriptValues } = flow.state
+        const { isBalanceEnough, utxoScriptValues } = flow.state
 
         if (isBalanceEnough) {
           await flow.nextSwap.fundScript({
-            scriptValues: nextScriptValues,
+            scriptValues: utxoScriptValues,
             amount: sellAmount,
           })
         }
 
         const checkNEXTScriptBalance = async () => {
-          const { scriptAddress } = this.nextSwap.createScript(nextScriptValues)
+          const { scriptAddress } = this.nextSwap.createScript(utxoScriptValues)
           const unspents = await this.nextSwap.fetchUnspents(scriptAddress)
 
           if (unspents.length === 0) {
@@ -198,7 +197,7 @@ class NEXT2ETH extends Flow {
 
           const txID = unspents[0].txid
 
-          const balance = await this.nextSwap.getBalance(nextScriptValues)
+          const balance = await this.nextSwap.getBalance(utxoScriptValues)
 
           const isEnoughMoney = new BigNumber(balance).isGreaterThanOrEqualTo(sellAmount.times(1e8))
 
@@ -334,8 +333,8 @@ class NEXT2ETH extends Flow {
   }
 
   createWorkNEXTScript(secretHash) {
-    if (this.state.nextScriptValues) {
-      debug('swap.core:flow')('NEXT Script already generated', this.state.nextScriptValues)
+    if (this.state.utxoScriptValues) {
+      debug('swap.core:flow')('NEXT Script already generated', this.state.utxoScriptValues)
       return
     }
 
@@ -354,7 +353,7 @@ class NEXT2ETH extends Flow {
 
     this.setState({
       scriptAddress: scriptAddress,
-      nextScriptValues: scriptValues,
+      utxoScriptValues: scriptValues,
       scriptBalance: 0,
       scriptUnspendBalance: 0
     })
@@ -399,7 +398,7 @@ class NEXT2ETH extends Flow {
 
   getRefundTxHex = () => {
     this.nextSwap.getRefundHexTransaction({
-      scriptValues: this.state.nextScriptValues,
+      scriptValues: this.state.utxoScriptValues,
       secret: this.state.secret,
     })
       .then((txHex) => {
@@ -411,10 +410,10 @@ class NEXT2ETH extends Flow {
 
   tryRefund() {
     const flow = this
-    const { nextScriptValues, secret } = flow.state
+    const { utxoScriptValues, secret } = flow.state
 
     return flow.nextSwap.refund({
-      scriptValues: nextScriptValues,
+      scriptValues: utxoScriptValues,
       secret: secret,
     })
       .then((hash) => {
@@ -458,13 +457,6 @@ class NEXT2ETH extends Flow {
     flow.setState({
       isStoppedSwap: true,
     }, true)
-  }
-
-  getScriptValues() {
-    const {
-      nextScriptValues: scriptValues,
-    } = this.state
-    return scriptValues
   }
 
   getScriptCreateTx() {

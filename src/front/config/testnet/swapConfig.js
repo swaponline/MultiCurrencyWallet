@@ -7,20 +7,20 @@ export default {
     scriptCreatingTransactionHash: `btcScriptCreatingTransactionHash`,
     explorerLink: api.blockcypher,
     verifyScriptFunc: `verifyBtcScript`,
-    scriptValues: `btcScriptValues`,
+    scriptValues: `utxoScriptValues`, // @to-do - remove this - use in code utxoScriptValues
   },
   NEXT: {
     withdrawTransactionHash: `nextSwapWithdrawTransactionHash`,
     scriptCreatingTransactionHash: `nextScriptCreatingTransactionHash`,
     explorerLink: api.nextscan,
     verifyScriptFunc: `verifyNextScript`,
-    scriptValues: `nextScriptValues`,
+    scriptValues: `utxoScriptValues`,
   },
   GHOST: {
     withdrawTransactionHash: `ghostSwapWithdrawTransactionHash`,
     scriptCreatingTransactionHash: `ghostScriptCreatingTransactionHash`,
     explorerLink: api.ghostscan,
     verifyScriptFunc: `verifyGhostScript`,
-    scriptValues: `ghostScriptValues`,
+    scriptValues: `utxoScriptValues`,
   },
 }

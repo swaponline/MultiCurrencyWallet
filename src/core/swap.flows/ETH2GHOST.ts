@@ -57,7 +57,6 @@ class ETH2GHOST extends Flow {
 
       targetWallet : null,
       secretHash: null,
-      ghostScriptValues: null,
 
       ghostScriptVerified: false,
 
@@ -188,19 +187,19 @@ class ETH2GHOST extends Flow {
 
       async () => {
         await util.helpers.repeatAsyncUntilResult((stopRepeat) => {
-          const { secret, ghostScriptValues, ghostSwapWithdrawTransactionHash } = flow.state
+          const { secret, utxoScriptValues, ghostSwapWithdrawTransactionHash } = flow.state
 
           if (ghostSwapWithdrawTransactionHash) {
             return true
           }
 
-          if (!ghostScriptValues) {
-            console.error('There is no "ghostScriptValues" in state. No way to continue swap...')
+          if (!utxoScriptValues) {
+            console.error('There is no "utxoScriptValues" in state. No way to continue swap...')
             return null
           }
 
           return flow.ghostSwap.withdraw({
-            scriptValues: ghostScriptValues,
+            scriptValues: utxoScriptValues,
             secret,
             destinationAddress: flow.swap.destinationBuyAddress,
           })
@@ -242,13 +241,6 @@ class ETH2GHOST extends Flow {
 
       () => {}
     ]
-  }
-
-  getScriptValues() {
-    const {
-      ghostScriptValues: scriptValues,
-    } = this.state
-    return scriptValues
   }
 
   getScriptCreateTx() {
@@ -359,13 +351,13 @@ class ETH2GHOST extends Flow {
 
   verifyGhostScript() {
     const flow = this
-    const { ghostScriptVerified, ghostScriptValues } = flow.state
+    const { ghostScriptVerified, utxoScriptValues } = flow.state
 
     if (ghostScriptVerified) {
       return true
     }
 
-    if (!ghostScriptValues) {
+    if (!utxoScriptValues) {
       throw new Error(`No script, cannot verify`)
     }
 
@@ -462,12 +454,12 @@ class ETH2GHOST extends Flow {
   }
 
   async tryWithdraw(_secret) {
-    const { secret, secretHash, isEthWithdrawn, isGhostWithdrawn, ghostScriptValues } = this.state
+    const { secret, secretHash, isEthWithdrawn, isGhostWithdrawn, utxoScriptValues } = this.state
 
     if (!_secret)
       throw new Error(`Withdrawal is automatic. For manual withdrawal, provide a secret`)
 
-    if (!ghostScriptValues)
+    if (!utxoScriptValues)
       throw new Error(`Cannot withdraw without script values`)
 
     if (secret && secret != _secret)
@@ -483,7 +475,7 @@ class ETH2GHOST extends Flow {
     if (secretHash != _secretHash)
       console.warn(`Hash does not match! state: ${secretHash}, given: ${_secretHash}`)
 
-    const { scriptAddress } = this.ghostSwap.createScript(ghostScriptValues)
+    const { scriptAddress } = this.ghostSwap.createScript(utxoScriptValues)
     const balance = await this.ghostSwap.getBalance(scriptAddress)
 
     debug('swap.core:flow')(`address=${scriptAddress}, balance=${balance}`)
@@ -496,7 +488,7 @@ class ETH2GHOST extends Flow {
     }
 
     await this.ghostSwap.withdraw({
-      scriptValues: ghostScriptValues,
+      scriptValues: utxoScriptValues,
       secret: _secret,
     }, (hash) => {
       debug('swap.core:flow')(`TX hash=${hash}`)
@@ -513,9 +505,9 @@ class ETH2GHOST extends Flow {
 
   async checkOtherSideRefund() {
     if (typeof this.ghostSwap.checkWithdraw === 'function') {
-      const { ghostScriptValues } = this.state
-      if (ghostScriptValues) {
-        const { scriptAddress } = this.ghostSwap.createScript(ghostScriptValues)
+      const { utxoScriptValues } = this.state
+      if (utxoScriptValues) {
+        const { scriptAddress } = this.ghostSwap.createScript(utxoScriptValues)
 
         const destinationAddress = this.swap.destinationBuyAddress
         const destAddress = (destinationAddress) ? destinationAddress : this.app.getMyEthAddress()

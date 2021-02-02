@@ -60,7 +60,6 @@ export default (tokenName) => {
 
         targetWallet : null,
         secretHash: null,
-        btcScriptValues: null,
 
         btcScriptVerified: false,
 
@@ -136,7 +135,7 @@ export default (tokenName) => {
 
             flow.finishStep({
               secretHash: scriptValues.secretHash,
-              btcScriptValues: scriptValues,
+              utxoScriptValues: scriptValues,
               btcScriptCreatingTransactionHash,
             }, { step: 'wait-lock-btc', silentError: true })
           })
@@ -205,13 +204,6 @@ export default (tokenName) => {
 
         () => {},
       ]
-    }
-
-    getScriptValues() {
-      const {
-        btcScriptValues: scriptValues,
-      } = this.state
-      return scriptValues
     }
 
     getScriptCreateTx() {
@@ -322,13 +314,13 @@ export default (tokenName) => {
 
     verifyBtcScript() {
       const flow = this
-      const { btcScriptVerified, btcScriptValues } = flow.state
+      const { btcScriptVerified, utxoScriptValues } = flow.state
 
       if (btcScriptVerified) {
         return true
       }
 
-      if (!btcScriptValues) {
+      if (!utxoScriptValues) {
         throw new Error(`No script, cannot verify`)
       }
 
@@ -412,27 +404,19 @@ export default (tokenName) => {
         .catch((error) => false)
     }
 
-    stopSwapProcess() {
-      const flow = this
 
-      console.warn('Swap was stopped')
-
-      flow.setState({
-        isStoppedSwap: true,
-      }, true)
-    }
 
     async isRefundSuccess() {
       return true
     }
 
     async tryWithdraw(_secret) {
-      const { secret, secretHash, isEthWithdrawn, isbtcWithdrawn, btcScriptValues } = this.state
+      const { secret, secretHash, isEthWithdrawn, isbtcWithdrawn, utxoScriptValues } = this.state
 
       if (!_secret)
         throw new Error(`Withdrawal is automatic. For manual withdrawal, provide a secret`)
 
-      if (!btcScriptValues)
+      if (!utxoScriptValues)
         throw new Error(`Cannot withdraw without script values`)
 
       if (secret && secret != _secret)
@@ -448,7 +432,7 @@ export default (tokenName) => {
       if (secretHash != _secretHash)
         console.warn(`Hash does not match! state: ${secretHash}, given: ${_secretHash}`)
 
-      const {scriptAddress} = this.btcSwap.createScript(btcScriptValues)
+      const {scriptAddress} = this.btcSwap.createScript(utxoScriptValues)
       const balance = await this.btcSwap.getBalance(scriptAddress)
 
       debug('swap.core:flow')(`address=${scriptAddress}, balance=${balance}`)
@@ -461,7 +445,7 @@ export default (tokenName) => {
       }
 
       await this.btcSwap.withdraw({
-        scriptValues: btcScriptValues,
+        scriptValues: utxoScriptValues,
         secret: _secret,
       }, (hash) => {
         debug('swap.core:flow')(`TX hash=${hash}`)
@@ -478,9 +462,9 @@ export default (tokenName) => {
 
     async checkOtherSideRefund() {
       if (typeof this.btcSwap.checkWithdraw === 'function') {
-        const { btcScriptValues } = this.state
-        if (btcScriptValues) {
-          const { scriptAddress } = this.btcSwap.createScript(btcScriptValues)
+        const { utxoScriptValues } = this.state
+        if (utxoScriptValues) {
+          const { scriptAddress } = this.btcSwap.createScript(utxoScriptValues)
 
           const destinationAddress = this.swap.destinationBuyAddress
           const destAddress = (destinationAddress) ? destinationAddress : this.app.services.auth.accounts.btc.getAddress()

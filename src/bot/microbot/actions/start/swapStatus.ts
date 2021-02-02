@@ -28,7 +28,7 @@ export const needsRefund = (swap) => {
   const { state } = swap.flow
 
   const { step, isFinished, isRefunded, isStoppedSwap } = state
-  const btcScriptValues = swap.flow.getScriptValues()
+  const utxoScriptValues = swap.flow.getScriptValues()
 
   console.log(new Date().toISOString(), `swap`, id, `step`, step)
 
@@ -36,7 +36,7 @@ export const needsRefund = (swap) => {
     return false
   }
 
-  if (!btcScriptValues) {
+  if (!utxoScriptValues) {
     return false
   }
 
@@ -52,7 +52,7 @@ export const needsRefund = (swap) => {
     return false
   }
 
-  const { lockTime } = btcScriptValues
+  const { lockTime } = utxoScriptValues
   const [ head, base ] = swap.flow._flowName.split('2')
   //const head = swap.flow.getFromName()
   //const base = swap.flow.getToName()
@@ -90,7 +90,7 @@ export const canBeDeleted = async swap => {
   const isParticipantOnline = swap.room.getOnlineParticipant()
 
   const { step, isFinished, isRefunded, isStoppedSwap } = state
-  const btcScriptValues = swap.flow.getScriptValues()
+  const utxoScriptValues = swap.flow.getScriptValues()
 
   const lifeTimeout = swap.checkTimeout(defaultLockTime)
 

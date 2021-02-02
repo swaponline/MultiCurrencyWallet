@@ -59,7 +59,6 @@ export default (tokenName) => {
 
         targetWallet : null,
         secretHash: null,
-        nextScriptValues: null,
 
         nextScriptVerified: false,
 
@@ -134,7 +133,7 @@ export default (tokenName) => {
 
             flow.finishStep({
               secretHash: scriptValues.secretHash,
-              nextScriptValues: scriptValues,
+              utxoScriptValues: scriptValues,
               nextScriptCreatingTransactionHash,
             }, { step: 'wait-lock-next', silentError: true })
           })
@@ -176,19 +175,19 @@ export default (tokenName) => {
 
         async () => {
           await util.helpers.repeatAsyncUntilResult((stopRepeat) => {
-            const { secret, nextScriptValues, nextSwapWithdrawTransactionHash } = flow.state
+            const { secret, utxoScriptValues, nextSwapWithdrawTransactionHash } = flow.state
 
             if (nextSwapWithdrawTransactionHash) {
               return true
             }
 
-            if (!nextScriptValues) {
-              console.error('There is no "nextScriptValues" in state. No way to continue swap...')
+            if (!utxoScriptValues) {
+              console.error('There is no "utxoScriptValues" in state. No way to continue swap...')
               return null
             }
 
             return flow.nextSwap.withdraw({
-              scriptValues: nextScriptValues,
+              scriptValues: utxoScriptValues,
               secret,
               destinationAddress: flow.swap.destinationBuyAddress,
             })
@@ -346,13 +345,13 @@ export default (tokenName) => {
 
     verifyNextScript() {
       const flow = this
-      const { nextScriptVerified, nextScriptValues } = flow.state
+      const { nextScriptVerified, utxoScriptValues } = flow.state
 
       if (nextScriptVerified) {
         return true
       }
 
-      if (!nextScriptValues) {
+      if (!utxoScriptValues) {
         throw new Error(`No script, cannot verify`)
       }
 
@@ -449,12 +448,12 @@ export default (tokenName) => {
     }
 
     async tryWithdraw(_secret) {
-      const { secret, secretHash, isEthWithdrawn, isNextWithdrawn, nextScriptValues } = this.state
+      const { secret, secretHash, isEthWithdrawn, isNextWithdrawn, utxoScriptValues } = this.state
 
       if (!_secret)
         throw new Error(`Withdrawal is automatic. For manual withdrawal, provide a secret`)
 
-      if (!nextScriptValues)
+      if (!utxoScriptValues)
         throw new Error(`Cannot withdraw without script values`)
 
       if (secret && secret != _secret)
@@ -470,7 +469,7 @@ export default (tokenName) => {
       if (secretHash != _secretHash)
         console.warn(`Hash does not match! state: ${secretHash}, given: ${_secretHash}`)
 
-      const {scriptAddress} = this.nextSwap.createScript(nextScriptValues)
+      const {scriptAddress} = this.nextSwap.createScript(utxoScriptValues)
       const balance = await this.nextSwap.getBalance(scriptAddress)
 
       debug('swap.core:flow')(`address=${scriptAddress}, balance=${balance}`)
@@ -483,7 +482,7 @@ export default (tokenName) => {
       }
 
       await this.nextSwap.withdraw({
-        scriptValues: nextScriptValues,
+        scriptValues: utxoScriptValues,
         secret: _secret,
       }, (hash) => {
         debug('swap.core:flow')(`TX hash=${hash}`)
