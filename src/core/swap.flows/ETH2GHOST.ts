@@ -145,7 +145,7 @@ class ETH2GHOST extends Flow {
 
           flow.finishStep({
             secretHash: scriptValues.secretHash,
-            ghostScriptValues: scriptValues,
+            utxoScriptValues: scriptValues,
             ghostScriptCreatingTransactionHash,
           }, { step: 'wait-lock-ghost', silentError: true })
         })

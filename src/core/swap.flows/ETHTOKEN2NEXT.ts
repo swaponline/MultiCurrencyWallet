@@ -230,13 +230,6 @@ export default (tokenName) => {
       ]
     }
 
-    getScriptValues() {
-      const {
-        nextScriptValues: scriptValues,
-      } = this.state
-      return scriptValues
-    }
-
     getScriptCreateTx() {
       const {
         nextScriptCreatingTransactionHash: createTx,

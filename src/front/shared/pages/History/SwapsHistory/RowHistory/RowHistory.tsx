@@ -100,10 +100,8 @@ export default class RowHistory extends Component<any, any> {
       buyAmount,
       buyCurrency,
       sellAmount,
-      btcScriptValues,
+      utxoScriptValues: values,
       scriptBalance,
-      ghostScriptValues,
-      nextScriptValues,
       isRefunded,
       isMy,
       sellCurrency,
@@ -112,8 +110,6 @@ export default class RowHistory extends Component<any, any> {
       scriptValues,
       isStoppedSwap,
     } = row
-
-    const values = btcScriptValues || scriptValues || ghostScriptValues || nextScriptValues
 
     const canBeRefunded = values && scriptBalance > 0
     const isDeletedSwap = isFinished || isRefunded || isStoppedSwap

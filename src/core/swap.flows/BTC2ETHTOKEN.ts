@@ -264,7 +264,7 @@ export default (tokenName) => {
 
     createWorkBTCScript(secretHash) {
       if (this.state.utxoScriptValues) {
-        debug('swap.core:flow')('BTC Script already generated', this.state.btcScriptValues);
+        debug('swap.core:flow')('BTC Script already generated', this.state.utxoScriptValues);
         return;
       }
       const { participant } = this.swap

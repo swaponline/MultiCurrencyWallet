@@ -223,13 +223,6 @@ class ETH2BTC extends Flow {
     ]
   }
 
-  getScriptValues() {
-    const {
-      btcScriptValues: scriptValues,
-    } = this.state
-    return scriptValues
-  }
-
   getScriptCreateTx() {
     const {
       btcScriptCreatingTransactionHash: createTx,

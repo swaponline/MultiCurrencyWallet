@@ -400,7 +400,7 @@ export default (tokenName) => {
 
     getRefundTxHex = () => {
       this.ghostSwap.getRefundHexTransaction({
-        scriptValues: this.state.ghostScriptValues,
+        scriptValues: this.state.utxoScriptValues,
         secret: this.state.secret,
       })
         .then((txHex) => {

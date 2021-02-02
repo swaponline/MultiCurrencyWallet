@@ -402,7 +402,7 @@ class GHOST2ETH extends Flow {
 
   getRefundTxHex = () => {
     this.ghostSwap.getRefundHexTransaction({
-      scriptValues: this.state.ghostScriptValues,
+      scriptValues: this.state.utxoScriptValues,
       secret: this.state.secret,
     })
       .then((txHex) => {
