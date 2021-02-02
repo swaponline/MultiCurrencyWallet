@@ -26,7 +26,7 @@ type RowProps = {
   currency: IUniversalObj
   itemData: IUniversalObj
   // from store
-  activeFiat?: string // USD, ...?
+  activeFiat?: string
   decline?: any[]
   ethDataHelper?: {
     address: string
@@ -87,6 +87,33 @@ const langLabels = defineMessages({
 )
 @cssModules(styles, { allowMultiple: true })
 export default class Row extends Component {
+  /**
+   * @method handleReloadBalance
+   * @method handleSliceAddress
+   * @method handleCopyAddress
+   * @method handleDisconnectWallet
+   * @method handleConnectMetamask
+   * @method handleWithdrawPopup
+   * @method handleWithdraw
+   * @method handleReceive
+   * @method handleActivateProtected
+   * @method handleActivatePinProtected
+   * @method handleGenerateMultisignLink
+   * @method handleHowToWithdraw
+   * @method handleOpenDropdown
+   * @method handleCreateInvoiceLink
+   * @method handleSwitchMultisign
+   * @method handleCreateInvoice
+   *
+   * @method goToExchange
+   * @method goToCurrencyHistory
+   * @method hideCurrency
+   * @method
+   * @method copy
+   * @method copyPrivateKey
+   * @method handleShowMnemonic
+   */
+
   props: RowProps
   state: RowState
 
@@ -490,7 +517,6 @@ export default class Row extends Component {
 
     const {
       itemData,
-      intl: { locale },
       intl,
       activeFiat,
       isDark,
@@ -508,11 +534,8 @@ export default class Row extends Component {
     } = itemData
 
     let currencyView = currency
-
     let nodeDownErrorShow = true
     let currencyFiatBalance = 0
-
-    const isWidgetBuild = config && config.isWidget
 
     if (itemData.infoAboutCurrency && itemData.infoAboutCurrency.price_fiat) {
       currencyFiatBalance = new BigNumber(balance).multipliedBy(itemData.infoAboutCurrency.price_fiat).dp(2, BigNumber.ROUND_FLOOR).toNumber()
