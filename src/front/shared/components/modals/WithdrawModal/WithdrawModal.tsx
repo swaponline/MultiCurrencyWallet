@@ -240,7 +240,6 @@ export default class WithdrawModal extends React.Component<any, any> {
 
   componentDidMount() {
     this.setCommissions()
-    this.setAlowedBalances()
     feedback.withdraw.entered()
   }
 
@@ -395,6 +394,7 @@ export default class WithdrawModal extends React.Component<any, any> {
           adminFeeSize: new BigNumber(adminFeeSize),
         },
       }))
+      this.setAlowedBalances()
     } catch (error) {
       this.reportError(error)
     } finally {
@@ -694,7 +694,6 @@ export default class WithdrawModal extends React.Component<any, any> {
   // setMaxBalance = () => {
   //   const { balances } = this.state
 
-  //   this.setAlowedBalances()
   //   this.setState({
   //     amount: balances.allowedCurrency.toString(),
   //     fiatAmount: balances.allowedFiat.toString(),

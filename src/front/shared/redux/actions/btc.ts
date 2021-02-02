@@ -485,19 +485,20 @@ const send = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
       unspents = await prepareUnspents({ unspents, amount })
       const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
       const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-      const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
-
+      const residue = totalUnspent - fundValue - feeValue - feeFromAmount
       const psbt = new bitcoin.Psbt({ network: btc.network })
 
+      // add main output for recipient
       psbt.addOutput({
         address: to,
         value: fundValue,
       })
-
-      if (skipValue > 546) {
+      // if we have residue wich more then DUST value
+      // then return this value to the sender wallet
+      if (residue > 546) {
         psbt.addOutput({
           address: from,
-          value: skipValue
+          value: residue
         })
       }
 
@@ -516,7 +517,7 @@ const send = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
       for (let i = 0; i < unspents.length; i++) {
         const { txid, vout } = unspents[i]
         let rawTx = false
-        //@ts-ignore
+
         try {
           rawTx = await fetchTxRaw(txid, false)
         } catch (eFetchTxRaw) {
