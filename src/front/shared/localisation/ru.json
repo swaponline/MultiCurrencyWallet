@@ -1206,7 +1206,6 @@
     "id": "CurrencySlider19",
     "message": "Уже доступны для обмена",
     "files": [
-      "src/front/shared/pages/Exchange/CurrencySlider/CurrencySlider.tsx",
       "src/front/shared/pages/PointOfSell/CurrencySlider/CurrencySlider.tsx"
     ]
   },
@@ -2593,7 +2592,6 @@
     "id": "advantagesButtonTitle",
     "message": "Как это работает?",
     "files": [
-      "src/front/shared/pages/Exchange/PureComponents/Advantages.tsx",
       "src/front/shared/pages/PointOfSell/PureComponents/Advantages.tsx"
     ]
   },
@@ -2601,7 +2599,6 @@
     "id": "advantagesButtonTxt",
     "message": "(Смотреть видео)",
     "files": [
-      "src/front/shared/pages/Exchange/PureComponents/Advantages.tsx",
       "src/front/shared/pages/PointOfSell/PureComponents/Advantages.tsx"
     ]
   },
