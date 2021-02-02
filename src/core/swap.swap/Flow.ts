@@ -27,6 +27,8 @@ class Flow {
     // -- UTXO-AB
     isUTXOScriptOk?: boolean
     waitUnlockUTXO?: boolean
+
+    utxoFundError?: string
   }
 
   constructor(swap) {
@@ -56,6 +58,7 @@ class Flow {
         /** UTXO-AB **/
         // We are have locked txs in mem-pool
         waitUnlockUTXO: false,
+        utxoFundError: null,
       },
       ...{
         /** UTXO-UTXO **/

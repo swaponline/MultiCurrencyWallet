@@ -14,7 +14,7 @@ npm run marketmaker:testnet SECRET_PHRASE="asd asd asd" SPREAD="5"
 
 ![](https://screenshots.wpmix.net/chrome_VfMLfx2KBVUIxaGsQ6ECBEKUq2VMF7Ag.png)
 
-## Launch using docker
+## Launch using docker (RECCOMENDED)
 insstall docker and docker-compose https://docs.docker.com/engine/install/ https://docs.docker.com/compose/install/ 
 
 ```
@@ -29,4 +29,13 @@ see ./tradeconfig.mainnet.json
 ## ENV variables
 ```
 TELEGRAM_CHATID = 111 //id for notifications. 1. contact @get_id_bot to get your id 2. say "hello" to this bot @swaponlinebot 
+```
+
+## update docker imgage and container to the latest version
+```
+cd mainnet_bot  //your working folder (created at installation)
+```
+update container and restart service  (don't worry the data is't affected because it's stored in the folder as "volume" not in the container). 
+```
+docker-compose pull mcw_bot && docker-compose up -d
 ```

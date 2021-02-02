@@ -116,10 +116,10 @@ export const addWallet = (state, { name, data }) => ({
   },
 })
 
-export const addMessagingToken = (state, { token }) => ({
-  ...state,
-  messagingToken: token,
-})
+// export const addMessagingToken = (state, { token }) => ({
+//   ...state,
+//   messagingToken: token,
+// })
 
 export const setAuthData = (state, { name, data }) => ({
   ...state,

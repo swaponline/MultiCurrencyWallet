@@ -35,7 +35,6 @@ const runSwap = (swap) => {
     console.log('enter step', step)
     switch (swap.flow._flowName) {
       case "BTC2ETH":
-      case "BCH2ETH":
       case "BTC2NOXON":
       case "BTC2SWAP":
       case "BTC2XSAT":
@@ -53,7 +52,6 @@ const runSwap = (swap) => {
         return
 
       case "ETH2BTC":
-      case "ETH2BCH":
       case "NOXON2BTC":
       case "SWAP2BTC":
       case "XSAT2BTC":

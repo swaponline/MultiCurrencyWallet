@@ -14,13 +14,39 @@ import DropdownMenu from 'components/ui/DropdownMenu/DropdownMenu'
 import { withRouter } from 'react-router-dom'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
-import SwapApp from 'swap.app'
 import { BigNumber } from 'bignumber.js'
 import { Button } from 'components/controls'
 import web3Icons from '../../../images'
 import PartOfAddress from '../components/PartOfAddress'
 import Copy from '../../../components/ui/Copy/Copy'
 
+type RowProps = {
+  // from component
+  isDark: boolean
+  currency: IUniversalObj
+  itemData: IUniversalObj
+  // from store
+  activeFiat?: string // USD, ...?
+  decline?: any[]
+  ethDataHelper?: {
+    address: string
+    privateKey: string
+  }
+  history?: IUniversalObj
+  intl?: IUniversalObj
+  multisigStatus?: any
+}
+
+type RowState = {
+  isBalanceFetching: boolean
+  viewText: boolean
+  isAddressCopied: boolean
+  isBalanceEmpty: boolean
+  showButtons: boolean
+  existUnfinished: boolean
+  isDropdownOpen: boolean
+  exCurrencyRate: number
+}
 
 const langLabels = defineMessages({
   unconfirmedBalance: {
@@ -60,29 +86,23 @@ const langLabels = defineMessages({
   })
 )
 @cssModules(styles, { allowMultiple: true })
-export default class Row extends Component<any, any> {
-  state = {
-    isBalanceFetching: false,
-    viewText: false,
-    tradeAllowed: false,
-    isAddressCopied: false,
-    isTouch: false,
-    isBalanceEmpty: true,
-    showButtons: false,
-    exCurrencyRate: 0,
-    existUnfinished: false,
-    isDropdownOpen: false,
-  }
-
-  static getDerivedStateFromProps({ itemData: { balance } }) {
-    return {
-      isBalanceEmpty: balance === 0,
-    }
-  }
+export default class Row extends Component {
+  props: RowProps
+  state: RowState
 
   constructor(props) {
     super(props)
 
+    this.state = {
+      isBalanceFetching: false,
+      viewText: false,
+      isAddressCopied: false,
+      isBalanceEmpty: true,
+      showButtons: false,
+      exCurrencyRate: 0,
+      existUnfinished: false,
+      isDropdownOpen: false,
+    }
   }
 
   componentWillUnmount() {
@@ -90,16 +110,37 @@ export default class Row extends Component<any, any> {
   }
 
   async componentDidMount() {
+    const { balance } = this.props.itemData
+
+    this.setState({
+      isBalanceEmpty: balance === 0,
+    })
+
     window.addEventListener('resize', this.handleSliceAddress)
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     const {
-      itemData: { currency, balance },
+      itemData: { 
+        balance: prevBalance
+      }
+    } = prevProps
+
+    const {
+      itemData: { 
+        currency, 
+        balance 
+      }
     } = this.props
 
     if (balance > 0) {
       actions.analytics.balanceEvent({ action: 'have', currency, balance })
+    }
+
+    if (prevBalance !== balance) {
+      this.setState({
+        isBalanceEmpty: balance === 0,
+      })
     }
   }
 
@@ -183,12 +224,6 @@ export default class Row extends Component<any, any> {
     )
   }
 
-  handleTouch = (e) => {
-    this.setState({
-      isTouch: true,
-    })
-  }
-
   handleSliceAddress = () => {
     const {
       itemData: { address },
@@ -200,12 +235,6 @@ export default class Row extends Component<any, any> {
     return window.innerWidth < 700 || isMobile || address.length > 42
       ? `${firstPart}...${secondPart}`
       : address
-  }
-
-  handleTouchClear = (e) => {
-    this.setState({
-      isTouch: false,
-    })
   }
 
   handleCopyAddress = () => {
@@ -286,39 +315,6 @@ export default class Row extends Component<any, any> {
     )
   }
 
-  handleHowToExport = () => {
-    const { itemData } = this.props
-
-    if (itemData.isUserProtected) {
-      console.log('Not implements')
-      return
-    }
-    if (itemData.isSmsProtected) {
-      this.handleHowExportSMS()
-      return
-    }
-    if (itemData.isPinProtected) {
-      this.handleHowExportPIN()
-      return
-    }
-
-    actions.modals.open(constants.modals.HowToExportModal, {
-      item: itemData,
-    })
-  }
-
-  handleHowExportSMS = () => {
-    actions.modals.open(constants.modals.RegisterSMSProtected, {
-      initStep: 'export',
-    })
-  }
-
-  handleHowExportPIN = () => {
-    actions.modals.open(constants.modals.RegisterPINProtected, {
-      initStep: 'export',
-    })
-  }
-
   handleReceive = () => {
     const {
       itemData: { currency, address },
@@ -328,63 +324,6 @@ export default class Row extends Component<any, any> {
       currency,
       address,
     })
-  }
-
-  handleShowOptions = () => {
-    this.setState({
-      showMobileButtons: true,
-    })
-  }
-
-  handleGoTrade = (currency) => {
-    const {
-      intl: { locale },
-      decline,
-    } = this.props
-
-    const pair = currency.toLowerCase() === 'btc' ? 'eth' : 'btc'
-
-    if (decline.length === 0) {
-      window.scrollTo(0, 0)
-      this.props.history.push(
-        localisedUrl(
-          locale,
-          `${links.exchange}/${currency.toLowerCase()}-to-${pair}`
-        )
-      )
-    } else {
-      const getDeclinedExistedSwapIndex = helpers.handleGoTrade.getDeclinedExistedSwapIndex(
-        { currency, decline }
-      )
-      if (getDeclinedExistedSwapIndex !== false) {
-        this.handleDeclineOrdersModalOpen(getDeclinedExistedSwapIndex)
-      } else {
-        window.scrollTo(0, 0)
-        this.props.history.push(
-          localisedUrl(
-            locale,
-            `${links.exchange}/${currency.toLowerCase()}-to-${pair}`
-          )
-        )
-      }
-    }
-  }
-
-  handleDeclineOrdersModalOpen = (indexOfDecline) => {
-    const orders = SwapApp.shared().services.orders.items
-    const declineSwap = actions.core.getSwapById(
-      this.props.decline[indexOfDecline]
-    )
-
-    if (declineSwap !== undefined) {
-      actions.modals.open(constants.modals.DeclineOrdersModal, {
-        declineSwap,
-      })
-    }
-  }
-
-  handleMarkCoinAsHidden = (coin) => {
-    actions.core.markCoinAsHidden(coin)
   }
 
   handleActivateProtected = async () => {
@@ -455,41 +394,12 @@ export default class Row extends Component<any, any> {
     })
   }
 
-  goToHistory = () => {
-    const {
-      history,
-      intl: { locale },
-    } = this.props
-    history.push(localisedUrl(locale, '/history'))
-  }
-
   goToExchange = () => {
     const {
       history,
       intl: { locale },
     } = this.props
     history.push(localisedUrl(locale, '/exchange'))
-  }
-
-  goToBuy = () => {
-    const {
-      history,
-      intl: { locale },
-      currency,
-    } = this.props
-
-    // was pointOfSell
-
-    history.push(
-      localisedUrl(
-        locale,
-        `${links.exchange}/btc-to-${currency.currency.toLowerCase()}`
-      )
-    )
-  }
-
-  deleteThisSwap = () => {
-    actions.core.forgetOrders(this.props.decline[0])
   }
 
   goToCurrencyHistory = () => {
@@ -568,15 +478,6 @@ export default class Row extends Component<any, any> {
     })
   }
 
-
-
-  getCustomRate = (cur) => {
-    const wTokens = window.widgetERC20Tokens
-
-    const dataobj = wTokens && Object.keys(wTokens).find(el => el === cur.toLowerCase())
-    return dataobj ? (wTokens[dataobj] || { customEcxchangeRate: null }).customEcxchangeRate : null
-  }
-
   handleShowMnemonic = () => {
     actions.modals.open(constants.modals.SaveMnemonicModal)
   }
@@ -584,8 +485,6 @@ export default class Row extends Component<any, any> {
   render() {
     const {
       isBalanceFetching,
-      // @ToDo Remove this
-      // tradeAllowed,
       isBalanceEmpty,
     } = this.state
 
@@ -625,8 +524,9 @@ export default class Row extends Component<any, any> {
       config.erc20 &&
       config.erc20[this.props.currency.currency.toLowerCase()] &&
       config.erc20[this.props.currency.currency.toLowerCase()].howToWithdraw
-    )
+    ) {
       hasHowToWithdraw = true
+    }
 
     const isSafari = 'safari' in window
 
@@ -795,14 +695,13 @@ export default class Row extends Component<any, any> {
     }
 
     let showBalance = true
-    let statusInfo = false
+    let statusInfo = ''
 
 
     if (
       itemData.isPinProtected &&
       !itemData.isRegistered
     ) {
-      //@ts-ignore
       statusInfo = 'Not activated'
       showBalance = false
       nodeDownErrorShow = false
@@ -840,7 +739,6 @@ export default class Row extends Component<any, any> {
       itemData.isSmsProtected &&
       !itemData.isRegistered
     ) {
-      //@ts-ignore
       statusInfo = 'Not activated'
       showBalance = false
       nodeDownErrorShow = false
@@ -869,7 +767,6 @@ export default class Row extends Component<any, any> {
 
     if (itemData.isUserProtected) {
       if (!itemData.active) {
-        //@ts-ignore
         statusInfo = 'Not joined'
         showBalance = false
         nodeDownErrorShow = false

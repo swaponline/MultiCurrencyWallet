@@ -2515,7 +2515,6 @@
     "id": "advantagesButtonTitle",
     "message": "How it works?",
     "files": [
-      "src/front/shared/pages/Exchange/PureComponents/Advantages.tsx",
       "src/front/shared/pages/PointOfSell/PureComponents/Advantages.tsx"
     ]
   },
@@ -2523,7 +2522,6 @@
     "id": "advantagesButtonTxt",
     "message": "(Watch the video)",
     "files": [
-      "src/front/shared/pages/Exchange/PureComponents/Advantages.tsx",
       "src/front/shared/pages/PointOfSell/PureComponents/Advantages.tsx"
     ]
   },
@@ -3432,76 +3430,6 @@
     ]
   },
   {
-    "id": "IEO_title_1",
-    "message": "We are planning IEO, you can get bonuses by following these steps::",
-    "files": [
-      "src/front/shared/pages/IEO/IEO.tsx"
-    ]
-  },
-  {
-    "id": "IEO_titles_1",
-    "message": "Step",
-    "files": [
-      "src/front/shared/pages/IEO/IEO.tsx"
-    ]
-  },
-  {
-    "id": "IEO_titles_2",
-    "message": "Action",
-    "files": [
-      "src/front/shared/pages/IEO/IEO.tsx"
-    ]
-  },
-  {
-    "id": "IEO_titles_3",
-    "message": "Input",
-    "files": [
-      "src/front/shared/pages/IEO/IEO.tsx"
-    ]
-  },
-  {
-    "id": "IEO_btn_1",
-    "message": "Opslaan",
-    "files": [
-      "src/front/shared/pages/IEO/IEO.tsx"
-    ]
-  },
-  {
-    "id": "IEO_btn_2",
-    "message": "Registred",
-    "files": [
-      "src/front/shared/pages/IEO/IEO.tsx"
-    ]
-  },
-  {
-    "id": "IEO_row_1",
-    "message": "Subscribe to our twitter https://twitter.com/SwapOnlineTeam, enter your twitter: ",
-    "files": [
-      "src/front/shared/pages/IEO/IEO.tsx"
-    ]
-  },
-  {
-    "id": "IEO_row_2",
-    "message": "Subscribe to our facebook https://www.facebook.com/SwapOnlineTeam, enter your facebook: ",
-    "files": [
-      "src/front/shared/pages/IEO/IEO.tsx"
-    ]
-  },
-  {
-    "id": "IEO_row_3",
-    "message": "Subscribe to our reddit https://www.reddit.com/r/SwapOnline, enter your reddit: ",
-    "files": [
-      "src/front/shared/pages/IEO/IEO.tsx"
-    ]
-  },
-  {
-    "id": "IEO_row_4",
-    "message": "Subscribe to our github https://github.com/swaponline, enter your github: ",
-    "files": [
-      "src/front/shared/pages/IEO/IEO.tsx"
-    ]
-  },
-  {
     "id": "DepositButton41",
     "message": "Deposit this cryptocurrency to your wallet",
     "files": [
@@ -3513,34 +3441,6 @@
     "message": "You can not send this asset, because you have a zero balance.",
     "files": [
       "src/front/shared/components/controls/DepositButton/DepositButton.tsx"
-    ]
-  },
-  {
-    "id": "getIeo13",
-    "message": "Be one of the first users.",
-    "files": [
-      "src/front/shared/components/Footer/GetIeo/GetIeo.tsx"
-    ]
-  },
-  {
-    "id": "getIeo21",
-    "message": "We will reward all users with our native {br}SWAP tokens that can be exchanged to BTC on our platform.{br}",
-    "files": [
-      "src/front/shared/components/Footer/GetIeo/GetIeo.tsx"
-    ]
-  },
-  {
-    "id": "getIeo22",
-    "message": "Get Started",
-    "files": [
-      "src/front/shared/components/Footer/GetIeo/GetIeo.tsx"
-    ]
-  },
-  {
-    "id": "getIeo25",
-    "message": "Read WhitePaper",
-    "files": [
-      "src/front/shared/components/Footer/GetIeo/GetIeo.tsx"
     ]
   },
   {
@@ -3568,14 +3468,6 @@
     ]
   },
   {
-    "id": "Submenu34",
-    "message": "Launch IEO on your website",
-    "files": [
-      "src/front/shared/components/Header/SubMenu/SubMenu.tsx",
-      "src/front/shared/components/modals/MobMenu/MobMenu.tsx"
-    ]
-  },
-  {
     "id": "Swap.OnlineSubmenu",
     "message": "Swap.Exhange"
   },
@@ -3590,14 +3482,6 @@
   {
     "id": "Swap.WidgetSubMenu",
     "message": "Swap.Widget",
-    "files": [
-      "src/front/shared/components/Header/SubMenu/SubMenu.tsx",
-      "src/front/shared/components/modals/MobMenu/MobMenu.tsx"
-    ]
-  },
-  {
-    "id": "launchpadSubMenu",
-    "message": "IEO launchpad",
     "files": [
       "src/front/shared/components/Header/SubMenu/SubMenu.tsx",
       "src/front/shared/components/modals/MobMenu/MobMenu.tsx"
@@ -3751,13 +3635,6 @@
   {
     "id": "history107",
     "message": "Loading"
-  },
-  {
-    "id": "IEOHref",
-    "message": "You can change SWAP to BTC here",
-    "files": [
-      "src/front/shared/pages/IEO/IEO.tsx"
-    ]
   },
   {
     "id": "HowItWorks18",
@@ -4544,13 +4421,6 @@
     ]
   },
   {
-    "id": "menu.IEO",
-    "message": "Earn",
-    "files": [
-      "src/front/shared/components/Header/config.tsx"
-    ]
-  },
-  {
     "id": "menu.invest",
     "message": "Invest",
     "files": [
@@ -4670,7 +4540,6 @@
     "id": "CurrencySlider19",
     "message": "Nu al beschikbaar voor exchange.",
     "files": [
-      "src/front/shared/pages/Exchange/CurrencySlider/CurrencySlider.tsx",
       "src/front/shared/pages/PointOfSell/CurrencySlider/CurrencySlider.tsx"
     ]
   },
@@ -4965,7 +4834,7 @@
   },
   {
     "id": "customERC20_ReadyMessage",
-    "message": "Токен успешно добавлен",
+    "message": "Token ble lagt til",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]

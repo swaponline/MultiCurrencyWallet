@@ -7,11 +7,16 @@ import cssModules from 'react-css-modules'
 import styles from './Wallet.scss'
 import { isMobile } from 'react-device-detect'
 import moment from 'moment'
-import firestore from 'helpers/firebase/firestore'
+// import firestore from 'helpers/firebase/firestore'
 
 import History from 'pages/History/History'
 
-import helpers, { firebase, links, constants, stats } from 'helpers'
+import helpers, {
+  // firebase,
+  links,
+  constants,
+  stats
+} from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import { getActivatedCurrencies } from 'helpers/user'
 import getTopLocation from 'helpers/getTopLocation'
@@ -305,6 +310,7 @@ export default class Wallet extends Component<any, any> {
       history,
       intl: { locale },
     } = this.props
+
     if (isWidgetBuild && !config.isFullBuild) {
       // was pointOfSell
       history.push(localisedUrl(locale, links.exchange))
@@ -436,7 +442,7 @@ export default class Wallet extends Component<any, any> {
       if (isOneHourAfter || isFirstCheck) {
         localStorage.setItem(constants.localStorage.lastCheckBalance, now)
         try {
-          const ipInfo = await firebase.getIPInfo()
+          const ipInfo = await stats.getIPInfo()
 
           const registrationData = {
             locale:
@@ -474,7 +480,7 @@ export default class Wallet extends Component<any, any> {
 
           await stats.updateUser(ethData.address, getTopLocation().host, registrationData)
 
-          firestore.updateUserData(balancesData)
+          // firestore.updateUserData(balancesData)
         } catch (error) {
           console.error(`Sync error in wallet: ${error}`)
         }
@@ -607,18 +613,12 @@ export default class Wallet extends Component<any, any> {
         }
       >
         {activeView === 0 && (
-          //@ts-ignore
           <CurrenciesList
-            isDark={isDark}
+            isDark={!!isDark}
             tableRows={tableRows}
-            {...this.state}
-            {...this.props}
+            hiddenCoinsList={hiddenCoinsList}
             goToСreateWallet={this.goToСreateWallet}
             multisigPendingCount={multisigPendingCount}
-            getExCurrencyRate={(currencySymbol, rate) =>
-              //@ts-ignore
-              this.getExCurrencyRate(currencySymbol, rate)
-            }
           />
         )}
         {activeView === 1 && <History {...this.props} isDark={isDark} />}

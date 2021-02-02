@@ -118,6 +118,9 @@ const getPrivateKeyByAddress = (address) => {
       btcMnemonicData: {
         address: mnemonicAddress,
         privateKey: mnemonicKey,
+      } = {
+        address: undefined,
+        privateKey: undefined,
       },
     },
   } = getState()
@@ -486,7 +489,13 @@ const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
 const sendV5 = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
   return new Promise(async (ready, reject) => {
     try {
-      const privateKey = getPrivateKeyByAddress(from)
+      let privateKey = null
+      try {
+        privateKey = getPrivateKeyByAddress(from)
+      } catch (ePrivateKey) {
+        reject({ message: `Fail get data for send address` + ePrivateKey.message })
+        return
+      }
 
       const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
 
@@ -507,9 +516,20 @@ const sendV5 = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
         feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
       }
       feeFromAmount = feeFromAmount.toNumber()
-      feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, amount})
-
-      let unspents = await fetchUnspents(from)
+      try {
+        feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, amount})
+      } catch (eFee) {
+        reject({ message: `Fail estimate fee ` + eFee.message })
+        return
+      }
+      let unspents = []
+      
+      try {
+        unspents = await fetchUnspents(from)
+      } catch (eUnspents) {
+        reject({ message: `Fail get unspents `+eUnspents.message})
+        return
+      }
       unspents = await prepareUnspents({ unspents, amount })
       const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
       const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
@@ -531,17 +551,27 @@ const sendV5 = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
       }
 
       if (hasAdminFee) {
-        psbt.addOutput({
-          address: hasAdminFee.address,
-          value: feeFromAmount,
-        })
+        try {
+          psbt.addOutput({
+            address: hasAdminFee.address,
+            value: feeFromAmount,
+          })
+        } catch (eAdminFee) {
+          reject({ message: `Fail add service fee` + eAdminFee.message })
+          return
+        }
       }
 
       for (let i = 0; i < unspents.length; i++) {
         const { txid, vout } = unspents[i]
         let rawTx = false
         //@ts-ignore
-        rawTx = await fetchTxRaw(txid)
+        try {
+          rawTx = await fetchTxRaw(txid, false)
+        } catch (eFetchTxRaw) {
+          reject({ message: `Fail fetch tx raw `+ txid + `(`+eFetchTxRaw.message+`)` })
+          return
+        }
 
         psbt.addInput({
           hash: txid,
@@ -556,10 +586,14 @@ const sendV5 = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
 
       const rawTx = psbt.extractTransaction().toHex();
 
-      const broadcastAnswer = await broadcastTx(rawTx)
+      try {
+        const broadcastAnswer = await broadcastTx(rawTx)
 
-      const { txid } = broadcastAnswer
-      ready(txid)
+        const { txid } = broadcastAnswer
+        ready(txid)
+      } catch (eBroadcast) {
+        reject({ message: `Fail broadcast TX: `+eBroadcast })
+      }
     } catch (error) {
       reject(error)
     }
