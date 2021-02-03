@@ -37,6 +37,7 @@ const events = {
     started: 'started',
     otherTabsClosed: 'otherTabsClosed',
     //closed: 'closed',
+    failed: 'failed',
   },
   createWallet: {
     //started: 'started',

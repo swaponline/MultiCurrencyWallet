@@ -22,7 +22,6 @@ import helpers, {
   links,
   adminFee,
   feedback,
-  metamask,
 } from 'helpers'
 
 import Modal from 'components/modal/Modal/Modal'
@@ -70,7 +69,6 @@ type WithdrawModalState = {
   fetchFee: boolean
   isInvoicePay?: boolean
   
-  devErrorMessage: string
   openScanCam: string
   address: string
   comment?: string
@@ -82,7 +80,8 @@ type WithdrawModalState = {
   btcFeeRate: number
   amount: number
   txSize: null | number
-
+  
+  devError: IError | null
   ethWallet: IUniversalObj
   exCurrencyRate: BigNumber
   fees: {
@@ -103,7 +102,6 @@ type WithdrawModalState = {
   }
 
   hiddenCoinsList: string[]
-  error: IUniversalObj | false
   currentActiveAsset: IUniversalObj
   allCurrencyies: IUniversalObj[]
   selectedItem: IUniversalObj
@@ -209,8 +207,7 @@ export default class WithdrawModal extends React.Component<any, any> {
       ethWallet,
       exCurrencyRate,
       allCurrencyies,
-      error: false,
-      devErrorMessage: '',
+      devError: null,
       fees: {
         miner: new BigNumber(0),
         service: new BigNumber(0),
@@ -265,14 +262,13 @@ export default class WithdrawModal extends React.Component<any, any> {
     }
   }
 
-  reportError = (error: IUniversalObj, details: string = '-') => {
+  reportError = (error: IError, details: string = '-') => {
     feedback.withdraw.failed(`details(${details}) : error message(${error.message})`)
-    console.error(`Send form. details(${details}) : error(${error})`)
+    console.error(`Withdraw. details(${details}) : error(${JSON.stringify(error)})`)
     this.setState({ 
-      devErrorMessage: error.message,
-      error: {
-        name: error.name,
-        message: error.message,
+      devError: {
+        name: error.name || 'Error',
+        message: error.message || '-',
       },
     })
   }
@@ -418,8 +414,7 @@ export default class WithdrawModal extends React.Component<any, any> {
 
     this.setState(() => ({
       isShipped: true,
-      error: false,
-      devErrorMessage: '',
+      devError: null,
     }))
 
     let sendOptions = {
@@ -550,9 +545,8 @@ export default class WithdrawModal extends React.Component<any, any> {
           }
         }
 
-        this.reportError(error, `selected item: ${selectedItem.fullName} custom message: ${customError.name.defaultMessage}`)
+        this.reportError(error, `selected item: ${selectedItem.fullName} | custom message: ${customError.message.defaultMessage}`)
         this.setState(() => ({
-          error: customError,
           isShipped: false,
         }))
       })
@@ -755,7 +749,6 @@ export default class WithdrawModal extends React.Component<any, any> {
 
   render() {
     const {
-      error,
       ownTx,
       amount,
       address,
@@ -771,7 +764,7 @@ export default class WithdrawModal extends React.Component<any, any> {
       currentActiveAsset,
       selectedValue,
       usedAdminFee,
-      devErrorMessage,
+      devError,
       fees,
       fetchFee,
       txSize,
@@ -1170,20 +1163,12 @@ export default class WithdrawModal extends React.Component<any, any> {
                 totalFee={fees.total}
               />
             </div>
-            {error && (
+            {devError && (
                 <div styleName="errorBlock">
-                  <FormattedMessage
-                    id="WithdrawModalErrorSend"
-                    defaultMessage="{errorName} {currency}:{br}{errorMessage}"
-                    values={{
-                      errorName: intl.formatMessage(error.name),
-                      errorMessage: intl.formatMessage(error.message),
-                      br: <br />,
-                      currency: `${currency}`,
-                    }}
-                  />
-                  <br />
-                  {devErrorMessage && <span>Dev info: {devErrorMessage}</span>}
+                  <p>
+                    Error name: {devError.name}<br />
+                    Message: {devError.message}
+                  </p>
                 </div>
               )
             }

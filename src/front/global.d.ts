@@ -28,4 +28,14 @@ declare global {
   interface IUniversalObj { 
     [key: string]: any
   }
+
+  interface IError {
+    errno?: number
+    code?: number
+    path?: string
+    name?: string
+    message?: string
+    syscall?: string
+    stack?: string
+  }
 }

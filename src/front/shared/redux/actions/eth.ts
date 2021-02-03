@@ -346,7 +346,11 @@ const getTransaction = (address: string = ``, ownType: string = ``) =>
   })
 
 const send = (data) => {
-  return (hasAdminFee) ? sendWithAdminFee(data) : sendDefault(data)
+  const metamaskEnable = metamask.isEnabled() && metamask.isConnected()
+
+  return hasAdminFee && !metamaskEnable 
+    ? sendWithAdminFee(data)
+    : sendDefault(data)
 }
 //@ts-ignore
 const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed } = {}) => {
@@ -465,19 +469,20 @@ const sendDefault = ({ from, to, amount, gasPrice, gasLimit, speed } = {}) => {
       const signedTx = await web3js.eth.accounts.signTransaction(params, privateKey)
       rawTx = signedTx.rawTransaction
     }
-    //@ts-ignore
-    const receipt = web3js.eth[
+
+    const ethDispatchMethod = web3js.eth[
       walletData.isMetamask
         ? 'sendTransaction'
         : 'sendSignedTransaction'
-    ](walletData.isMetamask ? params : rawTx)
+    ]
+    const receipt = ethDispatchMethod(walletData.isMetamask ? params : rawTx)
       .on('transactionHash', (hash) => {
         const txId = `${config.link.etherscan}/tx/${hash}`
         console.log('tx', txId)
         actions.loader.show(true, { txId })
       })
-      .on('error', (err) => {
-        reject(err)
+      .on('error', (error) => {
+        reject(error)
       })
 
     resolve(receipt)
