@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
-import helpers, { constants, links } from 'helpers'
+import helpers, { constants } from 'helpers'
 import config from 'helpers/externalConfig'
 import { isMobile } from 'react-device-detect'
 
@@ -108,7 +108,7 @@ export default class Row extends Component {
    * @method goToExchange
    * @method goToCurrencyHistory
    * @method hideCurrency
-   * @method
+   *
    * @method copy
    * @method copyPrivateKey
    * @method handleShowMnemonic
@@ -533,9 +533,17 @@ export default class Row extends Component {
       balanceError,
     } = itemData
 
-    let currencyView = currency
     let nodeDownErrorShow = true
     let currencyFiatBalance = 0
+    let currencyView = currency
+
+    switch (currencyView) {
+      case 'BTC (Multisig)':
+      case 'BTC (SMS-Protected)':
+      case 'BTC (PIN-Protected)':
+        currencyView = 'BTC'
+        break
+    }
 
     if (itemData.infoAboutCurrency && itemData.infoAboutCurrency.price_fiat) {
       currencyFiatBalance = new BigNumber(balance).multipliedBy(itemData.infoAboutCurrency.price_fiat).dp(2, BigNumber.ROUND_FLOOR).toNumber()
@@ -644,13 +652,6 @@ export default class Row extends Component {
       },
     ].filter((el) => el)
 
-
-    if (currencyView == 'BTC (Multisig)') currencyView = 'BTC'
-    if (currencyView == 'BTC (SMS-Protected)') currencyView = 'BTC'
-    if (currencyView == 'BTC (PIN-Protected)') currencyView = 'BTC'
-
-
-
     if (
       config.opts.invoiceEnabled
     ) {
@@ -719,7 +720,6 @@ export default class Row extends Component {
 
     let showBalance = true
     let statusInfo = ''
-
 
     if (
       itemData.isPinProtected &&
@@ -867,27 +867,26 @@ export default class Row extends Component {
               </div>
               {title ? <strong>{title}</strong> : ''}
             </div>
-            {balanceError && nodeDownErrorShow ? (
+            {balanceError && nodeDownErrorShow && (
               <div className={styles.errorMessage}>
                 <FormattedMessage
                   id="RowWallet276"
                   defaultMessage=" node is down (You can not perform transactions). "
                 />
-                <a href=".">
+                {/* https://wiki.swaponline.io/faq/bitcoin-node-is-down-you-cannot-make-transactions/ */}
+                <a href="#">
                   <FormattedMessage
                     id="RowWallet282"
                     defaultMessage="No connection..."
                   />
                 </a>
               </div>
-            ) : (
-                ''
-              )}
+            )}
             <span styleName="assetsTableCurrencyWrapper">
               {showBalance && (
                 <Fragment>
                   {/*
-                  If it's metamask and it's disconnected then showing connect button
+                  If it's a metamask and it disconnected then showing connect button
                   else if balance fetched or fetching then showing loader
                   else showing fetch-button and currency balance
                   */}
