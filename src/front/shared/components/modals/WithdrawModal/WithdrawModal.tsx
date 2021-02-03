@@ -934,22 +934,19 @@ export default class WithdrawModal extends React.Component<any, any> {
           )}
         </div>
         <div styleName={`lowLevel ${isDark ? 'dark' : ''}`} style={{ marginBottom: '30px' }}>
-          <div styleName="additionalСurrencies">
-            {criptoCurrencyHaveInfoPrice
-              ? (
-                <>
-                  <span
-                    styleName={cx('additionalСurrenciesItem', {
-                      additionalСurrenciesItemActive: selectedValue.toUpperCase() === activeFiat,
-                    })}
-                    onClick={() => this.handleBuyCurrencySelect(activeFiat)}
-                  >
-                    {activeFiat}
-                  </span>
-                  <span styleName="delimiter"></span>
-                </>
-              )
-              : null
+          {/* why style ? see tip for max button */}  
+          <div style={usedAdminFee ? { right: '20px' } : null} styleName="additionalСurrencies">
+            {criptoCurrencyHaveInfoPrice && <>
+                <span
+                  styleName={cx('additionalСurrenciesItem', {
+                    additionalСurrenciesItemActive: selectedValue.toUpperCase() === activeFiat,
+                  })}
+                  onClick={() => this.handleBuyCurrencySelect(activeFiat)}
+                >
+                  {activeFiat}
+                </span>
+                <span styleName="delimiter"></span>
+              </>
             }
             <span
               styleName={cx('additionalСurrenciesItem', {
@@ -961,7 +958,8 @@ export default class WithdrawModal extends React.Component<any, any> {
               {activeCriptoCurrency}
             </span>
           </div>
-          <p styleName="balance">
+          {/* why style ? see tip for max button */}
+          <p style={usedAdminFee ? { right: '10px' } : null} styleName='balance'>
             {amount > 0 && criptoCurrencyHaveInfoPrice && (
               <FormattedMessage
                 {...labels[
@@ -976,8 +974,8 @@ export default class WithdrawModal extends React.Component<any, any> {
                 values={{
                   amount:
                     selectedValue !== activeFiat
-                      ? new BigNumber(fiatAmount).dp(2, BigNumber.ROUND_FLOOR).toNumber()
-                      : new BigNumber(amount).dp(6, BigNumber.ROUND_FLOOR).toNumber(),
+                      ? new BigNumber(fiatAmount).dp(2, BigNumber.ROUND_CEIL).toNumber()
+                      : new BigNumber(amount).dp(6, BigNumber.ROUND_CEIL).toNumber(),
                   currency: selectedValue !== activeFiat ? activeFiat : activeCriptoCurrency.toUpperCase(),
                 }}
               />
@@ -996,22 +994,30 @@ export default class WithdrawModal extends React.Component<any, any> {
                 : linked.fiatAmount.pipe(this.handleAmount)
               }
             />
-            <div style={{ marginLeft: '15px' }}>
-              <Button disabled={fetchFee} blue big onClick={this.setMaxBalance} id="Withdrow134">
-                <FormattedMessage id="Select210" defaultMessage="MAX" />
-              </Button>
-            </div>
-            {!isMobile && (
-              <Tooltip id="Withdrow134" place="top" mark={false}>
-                <FormattedMessage
-                  id="WithdrawButton32"
-                  defaultMessage="When you click this button, in the field, an amount{br}equal to your balance minus the miners commission will appear"
-                  values={{
-                    br: <br />,
-                  }}
-                />
-              </Tooltip>
-            )}
+            {/* 
+            with service commission we can't send all balance (there is a remainder)
+            so we disable this button
+            */}
+            {!usedAdminFee &&
+              <>
+                <div style={{ marginLeft: '15px' }}>
+                  <Button disabled={fetchFee} blue big onClick={this.setMaxBalance} id="Withdrow134">
+                    <FormattedMessage id="Select210" defaultMessage="MAX" />
+                  </Button>
+                </div>
+                {!isMobile && (
+                  <Tooltip id="Withdrow134" place="top" mark={false}>
+                    <FormattedMessage
+                      id="WithdrawButton32"
+                      defaultMessage="When you click this button, in the field, an amount{br}equal to your balance minus the miners commission will appear"
+                      values={{
+                        br: <br />,
+                      }}
+                    />
+                  </Tooltip>
+                )}
+              </>
+            }
           </div>
           {/* hint for amount value */}
           {dashboardView && (

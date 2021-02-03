@@ -267,7 +267,7 @@ const getLinkToInfo = (tx) => {
     return
   }
 
-  return `https://etherscan.io/tx/${tx}`
+  return `${config.link.etherscan}/tx/${tx}`
 }
 
 const getTransaction = (address: string = ``, ownType: string = ``) =>
