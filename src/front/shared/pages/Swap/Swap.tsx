@@ -44,7 +44,6 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
   errors: 'api.errors',
   checked: 'api.checked',
   savedOrders: rememberedOrders.savedOrders,
-  deletedOrders: rememberedOrders.deletedOrders,
   peer,
 }))
 
@@ -146,7 +145,7 @@ export default class SwapComponent extends PureComponent<any, any> {
   }
 
   componentWillMount() {
-    const { items, tokenItems, currenciesData, tokensData, intl: { locale }, deletedOrders } = this.props
+    const { items, tokenItems, currenciesData, tokensData, intl: { locale } } = this.props
     let { match: { params: { orderId } }, history, activeFiat } = this.props
 
     if (!!window.performance && window.performance.navigation.type === 2) {
@@ -228,7 +227,7 @@ export default class SwapComponent extends PureComponent<any, any> {
   }
 
   componentDidMount() {
-    const { swap, deletedOrders } = this.state
+    const { swap } = this.state
     const { flow } = swap
     const { step } = flow.state
 

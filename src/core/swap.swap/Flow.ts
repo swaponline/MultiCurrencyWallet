@@ -18,7 +18,7 @@ class Flow {
     isRefunded?: boolean
     isFinished?: boolean
 
-    // Torbo swaps state
+    // Turbo swaps state
     // ...
 
     // Atomic swaps state
@@ -131,7 +131,7 @@ class Flow {
       if ((this.state.step >= this.steps.length)
         || this._isFinished()
       ) return
-      else this.goStep(this.state.step)
+      else this._goStep(this.state.step)
     }, 0)
   }
 
@@ -213,10 +213,10 @@ class Flow {
 
     debug('swap.core:swap')(`proceed to step ${this.state.step+1}, data=`, data)
 
-    this.goNextStep(data)
+    this._goNextStep(data)
   }
 
-  goNextStep(data) {
+  _goNextStep(data) {
     const { step } = this.state
     const newStep = step + 1
     console.warn("this.state", this.state)
@@ -228,10 +228,10 @@ class Flow {
     }, true)
 
     if (this.steps.length > newStep)
-      this.goStep(newStep)
+      this._goStep(newStep)
   }
 
-  goStep(index) {
+  _goStep(index) {
     this.swap.events.dispatch('enter step', index)
     this.steps[index]()
   }
