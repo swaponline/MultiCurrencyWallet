@@ -564,7 +564,14 @@ export default class Row extends Component {
     const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
     const mnemonicSaved = (mnemonic === `-`)
 
-    let dropDownMenuItems = [
+    type DropDownItem = {
+      action: () => void
+      disabled?: boolean
+      title: JSX.Element
+      id: number
+    }
+
+    let dropDownMenuItems: DropDownItem[] = [
       {
         id: 1001,
         title: (
@@ -664,8 +671,7 @@ export default class Row extends Component {
           />
         ),
         action: this.handleCreateInvoice,
-        //@ts-ignore
-        disable: false,
+        disabled: false,
       })
       dropDownMenuItems.push({
         id: 1005,
@@ -676,8 +682,7 @@ export default class Row extends Component {
           />
         ),
         action: this.handleCreateInvoiceLink,
-        //@ts-ignore
-        disable: false,
+        disabled: false,
       })
     }
 
@@ -693,8 +698,7 @@ export default class Row extends Component {
           />
         ),
         action: this.handleConnectMetamask,
-        //@ts-ignore
-        disable: false,
+        disabled: false,
       }]
     }
 
@@ -711,8 +715,7 @@ export default class Row extends Component {
             />
           ),
           action: this.handleDisconnectWallet,
-          //@ts-ignore
-          disable: false
+          disabled: false
         },
         ...dropDownMenuItems
       ]
@@ -1005,8 +1008,6 @@ export default class Row extends Component {
 
           { !metamaskDisconnected &&
             <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">
-              {/*
-              //@ts-ignore */}
               <DropdownMenu
                 size="regular"
                 className="walletControls"
