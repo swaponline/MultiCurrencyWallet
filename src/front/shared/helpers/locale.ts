@@ -7,7 +7,8 @@ export const reduceMessages = result =>
 
 export const defaultLocale = () => navigator.language.split('-')[0]
 
-export const localisePrefix = '/:locale(en|ru|nl|es)?'
+export const localisePrefix = '/:locale(en|ru|nl|es|pl)?'
+
 const prepareUrl = (locale, link = '') =>
   // const locLink = (locale.toLowerCase() === defaultLocale().toLowerCase()) ? `${link}` : `${locale}${link}`
   link.replace(/^\/|\/$/g, '')

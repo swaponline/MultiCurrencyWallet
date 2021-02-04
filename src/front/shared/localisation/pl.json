@@ -1,99 +1,92 @@
 [
   {
-    "id": "SaveMnemonicModal_BeginNotice",
-    "message": "Nu zullen we 12 woorden van uw geheime zin laten zien. Als u deze verliest, is het niet meer mogelijk uw wallet te herstellen.",
-    "files": [
-      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
-    ]
-  },
-  {
     "id": "menu.aboutus",
-    "message": "About Us"
+    "message": "O nas"
   },
   {
     "id": "menu.exchange",
-    "message": "Exchange",
+    "message": "Giełda",
     "files": [
       "src/front/shared/components/Header/config.tsx"
     ]
   },
   {
     "id": "menu.history",
-    "message": "Transacties",
+    "message": "Transakcje",
     "files": [
       "src/front/shared/components/Header/config.tsx"
     ]
   },
   {
     "id": "menu.wallet",
-    "message": "Portefeuille",
+    "message": "Portfel",
     "files": [
       "src/front/shared/components/Header/config.tsx"
     ]
   },
   {
     "id": "menu.CreateWallet",
-    "message": "Creëer wallet",
+    "message": "Utwórz portfel",
     "files": [
       "src/front/shared/components/Header/config.tsx"
     ]
   },
   {
     "id": "createWalletLoaderTip",
-    "message": "Creating wallet... Please wait."
+    "message": "Tworzę portfel... Proszę czekać."
   },
   {
     "id": "avatar24",
-    "message": "This is your (personal) gravatar, it is unique for each user. The number is your rating within the system (it grows with the number of successful swaps)",
+    "message": "To jest Twój (indywidualny) identyfikator użytkownika, jest unikatowy dla każdego użytkownika. To ocena użytkownika na podstawie ilości swapów",
     "files": [
       "src/front/shared/components/Header/User/User.tsx"
     ]
   },
   {
     "id": "ConConfirm25firm20",
-    "message": "Nee",
+    "message": "Nie",
     "files": [
       "src/front/shared/components/Confirm/Confirm.tsx"
     ]
   },
   {
     "id": "Confirm20",
-    "message": "Ja:",
+    "message": "Tak",
     "files": [
       "src/front/shared/components/Confirm/Confirm.tsx"
     ]
   },
   {
     "id": "CDC63",
-    "message": "You have",
+    "message": "Posiadasz",
     "files": [
       "src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.tsx"
     ]
   },
   {
     "id": "CDC75",
-    "message": "U ontvangt",
+    "message": "Dostaniesz",
     "files": [
       "src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.tsx"
     ]
   },
   {
     "id": "CurrencyDirectionChooser54",
-    "message": "Choose the direction of exchange",
+    "message": "Wybierz kierunek wymiany",
     "files": [
       "src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.tsx"
     ]
   },
   {
     "id": "CurrencyDirectionChooser86",
-    "message": "SHOW ORDERS",
+    "message": "POKAŻ ZLECENIA",
     "files": [
       "src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.tsx"
     ]
   },
   {
     "id": "ADDoffer22",
-    "message": "Start to real Swap"
+    "message": "Zacznij prawdziwy swap"
   },
   {
     "id": "ADDoffer2218",
@@ -101,141 +94,141 @@
   },
   {
     "id": "ADDoffer29",
-    "message": "Sign up (get up to 10$ bonus)"
+    "message": "Zarejestruj się (Otrzymaj do 100zł bonusu)"
   },
   {
     "id": "ADDoffer33",
-    "message": "Get subscribed for the Swap.Online news"
+    "message": "Subskrybuj swap. Będziemy wysyłać newsy"
   },
   {
     "id": "question15",
-    "message": "Know more about us",
+    "message": "Dowiedz się więcej o nas",
     "files": [
       "src/front/shared/components/Header/User/Question/Question.tsx"
     ]
   },
   {
     "id": "QUESTION15",
-    "message": "Go to the feed page"
+    "message": "Idź do strony kanału"
   },
   {
     "id": "transactionLink28",
-    "message": "Transaction: ",
+    "message": "Transakcja: ",
     "files": [
       "src/front/shared/components/Href/TransactionLink.tsx"
     ]
   },
   {
     "id": "KeyActionsPanel43",
-    "message": "Exit"
+    "message": "Wyjdź"
   },
   {
     "id": "KeyActionsPanel46",
-    "message": "Show my keys"
+    "message": "Pokaż moje klucze"
   },
   {
     "id": "KeyActionsPanel49",
-    "message": "Import keys"
+    "message": "Importuj klucze"
   },
   {
     "id": "KeyActionsPanel53",
-    "message": "Show more coins"
+    "message": "Pokaż więcej kryptowalut"
   },
   {
     "id": "Loader21",
-    "message": "Please wait, it takes from 3 to 5 minutes to complete the transaction. ",
+    "message": "Proszę czekać, standartowo transkacja zajmuje 5-15 minut. ",
     "files": [
       "src/front/shared/components/loaders/Loader/Loader.tsx"
     ]
   },
   {
     "id": "logo29",
-    "message": "Go Home",
+    "message": "Strona główna",
     "files": [
       "src/front/shared/components/Header/Logo/Logo.tsx"
     ]
   },
   {
     "id": "Approve70",
-    "message": "Please set the amount limit that the swap smart contract can deduct from your account. We do not recommend setting any limits. ",
+    "message": "Ustaw limit kwoty, który inteligentna umowa swap może odjąć z Twojego konta. Nie zalecamy ustawiania żadnych ograniczeń. ",
     "files": [
       "src/front/shared/components/modals/Approve/Approve.tsx"
     ]
   },
   {
     "id": "Approve73",
-    "message": "Hoeveelheid",
+    "message": "Kwota",
     "files": [
       "src/front/shared/components/modals/Approve/Approve.tsx"
     ]
   },
   {
     "id": "Approve80",
-    "message": "Approve",
+    "message": "Zatwierdź",
     "files": [
       "src/front/shared/components/modals/Approve/Approve.tsx"
     ]
   },
   {
     "id": "EthChecker19",
-    "message": "This token works on Ethereum blockchain. To swap this token you must have at least 0.02 ETH on your balance",
+    "message": "Ten token działa w sieci Ethereum. Aby wymienić token musisz posiadać minimum 0.02 ETH w Twoim portfelu",
     "files": [
       "src/front/shared/components/modals/EthChecker/EthChecker.tsx"
     ]
   },
   {
     "id": "EthChecker23",
-    "message": "Go wallet",
+    "message": "Portfel",
     "files": [
       "src/front/shared/components/modals/EthChecker/EthChecker.tsx"
     ]
   },
   {
     "id": "ImportKeys107",
-    "message": "This procedure will rewrite your private key. If you are not sure about it, we recommend to press cancel"
+    "message": "Ta procedura spowoduje przepisanie klucza prywatnego. Jeśli nie jesteś tego pewien, zalecamy naciśnięcie anuluj"
   },
   {
     "id": "ImportKeys110",
-    "message": "Please enter ETH private key"
+    "message": "Wpisz swój klucz prywatny ETH"
   },
   {
     "id": "ImportKeys120",
-    "message": "Please enter BTC private key in WIF format"
+    "message": "Wpisz swój klucz prywatny BTC w formacie WIF"
   },
   {
     "id": "ImportKeys130",
-    "message": "Confirm"
+    "message": "Zatwierdź"
   },
   {
     "id": "ImportKeys133",
-    "message": "Annuleer"
+    "message": "Anuluj"
   },
   {
     "id": "Group14",
-    "message": "Import"
+    "message": "Importuj"
   },
   {
     "id": "Select10",
-    "message": "Available amount to sell"
+    "message": "Dostępna suma do sprzedaży"
   },
   {
     "id": "Select15",
-    "message": "verkoop "
+    "message": "Sprzedaj "
   },
   {
     "id": "Select24",
-    "message": "Alle"
+    "message": "WSZYSTKO"
   },
   {
     "id": "ConfirmOffer69",
-    "message": "Terug",
+    "message": "Cofnij",
     "files": [
       "src/front/shared/components/modals/OfferModal/ConfirmOffer/ConfirmOffer.tsx"
     ]
   },
   {
     "id": "ConfirmOffer73",
-    "message": "Add",
+    "message": "Dodaj",
     "files": [
       "src/front/shared/components/modals/OfferModal/ConfirmOffer/ConfirmOffer.tsx"
     ]
@@ -249,25 +242,25 @@
   },
   {
     "id": "Feld82",
-    "message": "INVALID PRIVATE KEY! You should pass correct value! Try again! "
+    "message": "ZŁY KLUCZ PRYWATNY! Podaj prawidłową wartość! Spróbuj ponownie! "
   },
   {
     "id": "SaveKeysModal",
-    "message": "Testnet: Don`t ask again",
+    "message": "Testnet: Nie pytaj ponownie",
     "files": [
       "src/front/shared/components/modals/SaveKeysModal/SaveKeysModal.tsx"
     ]
   },
   {
     "id": "ErrorNotification12",
-    "message": "Oops, looks like something went wrong! ",
+    "message": "Oojj, coś poszło nie tak! ",
     "files": [
       "src/front/shared/components/notifications/ErrorNotification/ErrorNotification.tsx"
     ]
   },
   {
     "id": "WithdrawModal111",
-    "message": "Verstuur",
+    "message": "Wyślij ",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
@@ -276,7 +269,7 @@
   },
   {
     "id": "WithdrawModal11212",
-    "message": "Processing ...",
+    "message": "Przetwarzam ...",
     "files": [
       "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
@@ -286,18 +279,18 @@
   },
   {
     "id": "Withdrow113",
-    "message": "Uw balans: "
+    "message": "Stan konta: "
   },
   {
     "id": "Withdrow559",
-    "message": "Transfer from",
+    "message": "Wyślij z",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
   },
   {
     "id": "Withdrow118",
-    "message": "HOEVEELHEID",
+    "message": "Kwota",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
@@ -307,63 +300,63 @@
   },
   {
     "id": "Withdraw218",
-    "message": "Withdrawal error"
+    "message": "Błąd wypłaty"
   },
   {
     "id": "Withdraw232",
-    "message": "There is not enough confirmation of the last transaction. Try later."
+    "message": "Za mała ilość potwierdzeń ostatniej transakcji. Spróbuj później."
   },
   {
     "id": "PreventMultiTabs",
-    "message": "Such error, many tabs",
+    "message": "Error, za dużo zakładek",
     "files": [
       "src/front/shared/components/PreventMultiTabs/PreventMultiTabs.tsx"
     ]
   },
   {
     "id": "SaveKe33",
-    "message": "Download",
+    "message": "Pobierz",
     "files": [
       "src/front/shared/components/SaveKeys/SaveKeys.tsx"
     ]
   },
   {
     "id": "SaveKe37",
-    "message": "Download text document with keys and accounts",
+    "message": "Pobierz plik tekstowy z kluczami i kontami",
     "files": [
       "src/front/shared/components/SaveKeys/SaveKeys.tsx"
     ]
   },
   {
     "id": "SaveKeys26",
-    "message": "I saved the keys in a safe place",
+    "message": "Zapisałem klucz w bezpiecznym miejscu",
     "files": [
       "src/front/shared/components/SaveKeys/SaveKeys.tsx"
     ]
   },
   {
     "id": "SwapProgress105",
-    "message": "Checking balance.. "
+    "message": "Sprwadzam saldo.. "
   },
   {
     "id": "SwapProgress111",
-    "message": "Depositing BTC to the contract. \n It can take a few minutes"
+    "message": "Wpłata BTC do kontraktu. Może to zająć kilka minut"
   },
   {
     "id": "SwapProgress117",
-    "message": "Your BTC are now depositing. It may require one confirmation from Bitcoin Network. Waiting for other participant to deposit ETH.(It may require 1 confirmation from bitcoin network)"
+    "message": "Twoje BTC są teraz deponowane. Może wymagać jednego potwierdzenia z Bitcoin Network. Oczekiwanie na wpłatę ETH przez innego uczestnika (może wymagać 1 potwierdzenia z sieci bitcoin)"
   },
   {
     "id": "SwapProgress123",
-    "message": "ETH contract was created and charged. Withdrawing ETH."
+    "message": "Umowa ETH została utworzona i obciążona. Wypłacam ETH"
   },
   {
     "id": "SwapProgress129",
-    "message": "ETH was transferred to your wallet. Check the balance. "
+    "message": "Otrzymałeś Ethereum. Sprawdź saldo konta. "
   },
   {
     "id": "SwapProgress135",
-    "message": "Thank you for using Swap.Online!"
+    "message": "Dziękujemy za użycie naszego portfela !"
   },
   {
     "id": "SwapProgress157",
@@ -371,47 +364,47 @@
   },
   {
     "id": "SwapProgress32",
-    "message": "Please wait. Confirmation processing"
+    "message": "Proszę czekać. Czekam na potwierdzenia transakcji"
   },
   {
     "id": "SwapProgress38",
-    "message": "Waiting for BTC Owner to create Secret Key, create BTC Script and charge it"
+    "message": "Czekam, aż właściciel BTC utworzy Tajny klucz i obciąży saldo"
   },
   {
     "id": "SwapProgress44",
-    "message": "The bitcoin Script was created and charged. Please check the information below"
+    "message": "Skrypt BTC został stworzony i obciążony. Sprawdź informacje poniżej"
   },
   {
     "id": "SwapProgress50",
-    "message": "Checking balance.. "
+    "message": "Sprawdzam saldo.. "
   },
   {
     "id": "SwapProgress56",
-    "message": "Creating Ethereum Contract. \n Please wait, it can take a few minutes"
+    "message": "Tworzenie kontraktu Ethereum. \n Proszę czekać, może to potrwać kilka minut"
   },
   {
     "id": "SwapProgress62",
-    "message": "Waiting for BTC Owner to add a Secret Key to ETH Contact"
+    "message": "Czekam, aż właściciel BTC doda tajny klucz do kontaktu ETH"
   },
   {
     "id": "SwapProgress68",
-    "message": "BTC was transferred to your wallet. Check the balance. "
+    "message": "BTC zostało wysłane na Twój portfel. Sprawdź stan konta "
   },
   {
     "id": "SwapProgress74",
-    "message": "Thank you for using Swap.Online!"
+    "message": "Dziękujemy za użycie naszego swapu!"
   },
   {
     "id": "SwapProgress80",
-    "message": "Thank you for using Swap.Online!"
+    "message": "Dziękujemy za użycie naszego swapu"
   },
   {
     "id": "SwapProgress93",
-    "message": "The order creator is offline. The request is valid for 30 min "
+    "message": "Kreator zamówienia jest offline. Prośba jest ważna przez 30 min "
   },
   {
     "id": "SwapProgress99",
-    "message": "Creating a secret key"
+    "message": "Tworzę sekretny klucz"
   },
   {
     "id": "Tooltip11",
@@ -422,204 +415,204 @@
   },
   {
     "id": "Currency101",
-    "message": "Balance: ",
+    "message": "Saldo: ",
     "files": [
       "src/front/shared/pages/Currency/Currency.tsx"
     ]
   },
   {
     "id": "CurrencyTitleSeo1",
-    "message": "{fullName} ({tickerName}) Price, Description & Exchange Rates. Store & Exchange {fullName} ({tickerName}) Anonymously on Swap.Online."
+    "message": "{fullName} ({tickerName}) Cena, opis & Kurs wymiany. Sklep & Giełda {fullName} ({tickerName}) Swapuj anonimowo"
   },
   {
     "id": "CurrencyMetaDescrTag1",
-    "message": "Find out actual price of {fullName}, its ticker name is ({tickerName}). Swap.Online is the best way to safely store your cryptocurrecy."
+    "message": "Znajdź aktualną cenę {fullName}, its ticker name is ({tickerName}). Swap to bezpieczny sposób holdowania tokenów."
   },
   {
     "id": "CurrencyH1Seo1",
-    "message": "{fullName} ({tickerName}) Price & Exchange Rates.",
+    "message": "{fullName} ({tickerName}) Cena & kurs wymiany.",
     "files": [
       "src/front/shared/pages/Currency/Currency.tsx"
     ]
   },
   {
     "id": "CurrencyWallet100",
-    "message": "Verstuur",
+    "message": "Wyślij",
     "files": [
       "src/front/shared/pages/Currency/Currency.tsx"
     ]
   },
   {
     "id": "CurrencyWallet104",
-    "message": "Exchange"
+    "message": "Giełda"
   },
   {
     "id": "CurrencyWallet423",
-    "message": "Buy TOKEN"
+    "message": "Kup TOKEN"
   },
   {
     "id": "CurrencyWallet105",
-    "message": "Activate account"
+    "message": "Aktywuj konto"
   },
   {
     "id": "CurrencyWallet110",
-    "message": " History your transactions"
+    "message": " Historia Twoich transkacji"
   },
   {
     "id": "Row35",
-    "message": "Exchange",
+    "message": "Giełda",
     "files": [
       "src/front/shared/pages/Currency/Row/Row.tsx"
     ]
   },
   {
     "id": "history68",
-    "message": "All transactions"
+    "message": "Wszystkie transakcje"
   },
   {
     "id": "history72",
-    "message": "All transactions sent and received"
+    "message": "Wszystkie wysłane/otrzymane transakcje "
   },
   {
     "id": "RowHistory76",
-    "message": "Refund not available",
+    "message": "Zwrot nie jest możliwy",
     "files": [
       "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx"
     ]
   },
   {
     "id": "RowHistory91",
-    "message": "Link naar de ruil",
+    "message": "Link do swapu",
     "files": [
       "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx"
     ]
   },
   {
     "id": "RowHistory164",
-    "message": "Deleted"
+    "message": "Usunięte"
   },
   {
     "id": "RowHistory95",
-    "message": "Link naar de ruil"
+    "message": "Link do swapu"
   },
   {
     "id": "SwapHisrory21",
-    "message": "Verwisselt",
+    "message": "Swaps",
     "files": [
       "src/front/shared/pages/History/SwapsHistory/SwapsHistory.tsx"
     ]
   },
   {
     "id": "MyOrders23",
-    "message": "Uw aanbiedingen",
+    "message": "Twoje oferty",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
   },
   {
     "id": "RowFeeds64",
-    "message": "Gekopieerd!",
+    "message": "Skopiowane!",
     "files": [
       "src/front/shared/components/ui/Copy/Copy.tsx"
     ]
   },
   {
     "id": "RowFeeds68",
-    "message": "Delen"
+    "message": "Udostępnij"
   },
   {
     "id": "RowFeeds77",
-    "message": "Decline",
+    "message": "Rezygnuj",
     "files": [
       "src/front/shared/pages/Exchange/Orders/MyOrders/RowFeeds/RowFeeds.tsx"
     ]
   },
   {
     "id": "RowFeeds81",
-    "message": "Accept",
+    "message": "Zatwierdź",
     "files": [
       "src/front/shared/pages/Exchange/Orders/MyOrders/RowFeeds/RowFeeds.tsx"
     ]
   },
   {
     "id": "RowFeeds87",
-    "message": "Delete"
+    "message": "Usuń"
   },
   {
     "id": "RowMFeed49",
-    "message": "U ontvangt"
+    "message": "Otrzymasz"
   },
   {
     "id": "RowMFeed56",
-    "message": "You have"
+    "message": "Posiadasz"
   },
   {
     "id": "RowMFeed69",
-    "message": "Gekopieerd"
+    "message": "Skopiowane"
   },
   {
     "id": "Home153",
-    "message": "What is atomic swap? ",
+    "message": "Co to jest atomic swap? ",
     "files": [
       "src/front/shared/pages/Exchange/Orders/Orders.tsx"
     ]
   },
   {
     "id": "orders150",
-    "message": " sell "
+    "message": " sprzedaj "
   },
   {
     "id": "Row148",
-    "message": "REQUESTING",
+    "message": "ŻĄDANIE",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
     ]
   },
   {
     "id": "Row151",
-    "message": "Go to the swap",
+    "message": "Idź do swapu",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
     ]
   },
   {
     "id": "Row157",
-    "message": "This order is in execution",
+    "message": "To zamówienie jest w trakcie realizacji",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
     ]
   },
   {
     "id": "Row165",
-    "message": "Please wait while we confirm your request",
+    "message": "Poczekaj, aż potwierdzimy Twoją prośbę",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
     ]
   },
   {
     "id": "RowM136",
-    "message": "REQUESTING",
+    "message": "ŻĄDANIE",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
     ]
   },
   {
     "id": "RowM139",
-    "message": "Go to the swap",
+    "message": "Idź do swapu",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
     ]
   },
   {
     "id": "RowM145",
-    "message": "This order is in execution",
+    "message": "To zamówienie jest w trakcie realizacji",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
     ]
   },
   {
     "id": "RowM153",
-    "message": "Please wait while we confirm your request",
+    "message": "Poczekaj, aż potwierdzimy Twoją prośbę",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
     ]
@@ -633,486 +626,489 @@
   },
   {
     "id": "NotFound8",
-    "message": "Page not found! ",
+    "message": "Strona nie została znaleziona, błąd! ",
     "files": [
       "src/front/shared/pages/NotFound/NotFound.tsx"
     ]
   },
   {
     "id": "BtcToEthToken108",
-    "message": "Confirm"
+    "message": "Potwierdź"
   },
   {
     "id": "BtcToEthToken156",
-    "message": "3. Checking balance.. "
+    "message": "3. Sprawdzam saldo.. "
   },
   {
     "id": "BtcToEthToken167",
-    "message": "3. Depositing BTC to the contract. \n Please wait, it can take a few minutes"
+    "message": "3. Wpłata BTC do kontraktu. \n Proszę czekać, może to potrwać kilka minut"
   },
   {
     "id": "BtcToEthToken172",
-    "message": "Transaction: "
+    "message": "Transakcja: "
   },
   {
     "id": "BtcToEthToken230",
-    "message": "3. Your BTC are now depositing. It may require one confirmation from Bitcoin Network. Waiting for other participant to deposit ETH.(It may require 1 confirmation from bitcoin network)"
+    "message": "3. Twoje BTC są teraz deponowane. Może wymagać jednego potwierdzenia z Bitcoin Network. Oczekiwanie na wpłatę ETH przez innego uczestnika (może wymagać 1 potwierdzenia z sieci bitcoin)"
   },
   {
     "id": "BtcToEthToken243",
-    "message": "Transaction: "
+    "message": "Transakcja: "
   },
   {
     "id": "BtcToEthToken260",
-    "message": "ETH contract was created and charged. Withdrawing ETH. Please wait "
+    "message": "Umowa ETH została utworzona i obciążona. Wycofywanie ETH. Proszę czekać "
   },
   {
     "id": "BtcToEthToken267",
-    "message": "Transaction: "
+    "message": "Transakcja: "
   },
   {
     "id": "BtcToEthToken290",
-    "message": "6. ETH was transferred to your wallet. Check the balance. "
+    "message": "6. ETH zostało przelane do Twojego portfela. Sprawdź saldo. "
   },
   {
     "id": "BtcToEthToken293",
-    "message": "Thank you for using Swap.Online!"
+    "message": "Dziękujemy za użycie Swapu!"
   },
   {
     "id": "BtcToEthToken303",
-    "message": "TRY REFUND"
+    "message": "SPRÓBUJ ZWRÓCIĆ"
   },
   {
     "id": "BtcToEthToken316",
-    "message": "Transaction: "
+    "message": "Transakcja: "
   },
   {
     "id": "BtcToEthToken77",
-    "message": "Waiting for a market maker. If the market maker does not appear within 5 minutes, the swap will be canceled automatically. "
+    "message": "Czekam na kreatora rynku. Jeśli kreator rynku nie pojawi się w ciągu 5 minut, swap zostanie automatycznie anulowany. "
   },
   {
     "id": "BtcToEthToken87",
-    "message": "1. Waiting participant confirm this swap"
+    "message": "1. Oczekujący uczestnik potwierdza tę zamianę"
   },
   {
     "id": "SwapController54",
-    "message": "Another participant is online",
+    "message": "Inny uczestnik jest online",
     "files": [
       "src/front/shared/pages/Swap/SwapController.tsx"
     ]
   },
   {
     "id": "SwapController60",
-    "message": "Another participant is offline",
+    "message": "Inny uczestnik jest offline",
     "files": [
       "src/front/shared/pages/Swap/SwapController.tsx"
     ]
   },
   {
     "id": "EmergencySave",
-    "message": "Information about the swap"
+    "message": "Informacje o zamianie"
   },
   {
     "id": "EthTokenBtc102",
-    "message": "Confirm"
+    "message": "Potwierdź"
   },
   {
     "id": "EthTokenBtc111",
-    "message": "Please wait. Confirmation processing"
+    "message": "Proszę czekać. Przetwarzanie potwierdzenia"
   },
   {
     "id": "EthTokenBtc116",
-    "message": "Transaction: "
+    "message": "Transakcja: "
   },
   {
     "id": "EthTokenBtc147",
-    "message": "2. Waiting for BTC Owner to create Secret Key, create BTC Script and charge it"
+    "message": "2. Oczekiwanie, aż właściciel BTC utworzy Tajny klucz, utwórz skrypt BTC i go obciąż"
   },
   {
     "id": "EthTokenBtc159",
-    "message": "3. The bitcoin Script was created and charged. Please check the information below"
+    "message": "3. Skrypt bitcoin został utworzony i naładowany. Sprawdź poniższe informacje"
   },
   {
     "id": "EthTokenBtc162",
-    "message": "Secret Hash: "
+    "message": "Tajny Hash: "
   },
   {
     "id": "EthTokenBtc165",
-    "message": "Script address: "
+    "message": "Adres skryptu: "
   },
   {
     "id": "EthTokenBtc184",
-    "message": "Show bitcoin script"
+    "message": "Pokaż adres skryptu Bitcoin"
   },
   {
     "id": "EthTokenBtc228",
-    "message": "Everything is OK. continue "
+    "message": "Wszystko ok. Kontynuuj "
   },
   {
     "id": "EthTokenBtc267",
-    "message": "Checking balance.. "
+    "message": "Sprawdzam saldo.. "
   },
   {
     "id": "EthTokenBtc276",
-    "message": "4. Creating Ethereum Contract. \n Please wait, it can take a few minutes"
+    "message": "4. Tworzenie kontraktu Ethereum. \n Proszę czekać, może to potrwać kilka minut"
   },
   {
     "id": "EthTokenBtc283",
-    "message": "Transaction: "
+    "message": "Transakcja: "
   },
   {
     "id": "EthTokenBtc303",
-    "message": "Transaction: "
+    "message": "Transakcja: "
   },
   {
     "id": "EthTokenBtc321",
-    "message": "5. Waiting for BTC Owner to add a Secret Key to ETH Contact"
+    "message": "5. Oczekiwanie, aż właściciel BTC doda tajny klucz do kontaktu ETH"
   },
   {
     "id": "EthTokenBtc335",
-    "message": "ETH was successfully transferred. Withdrawing BTC. Please wait"
+    "message": "ETH został pomyślnie przesłany. Wypłata BTC. Proszę czekać"
   },
   {
     "id": "EthTokenBtc342",
-    "message": "Transaction: "
+    "message": "Transakcja: "
   },
   {
     "id": "EthTokenBtc365",
-    "message": "Thank you for using Swap.Online!"
+    "message": "Dziękujemy za użycie Swapu"
   },
   {
     "id": "EthTokenBtc375",
-    "message": "TRY REFUND"
+    "message": "SPRÓBUJ ZWRÓCIĆ"
   },
   {
     "id": "EthTokenBtc77",
-    "message": "Waiting for other user when he connect to the order"
+    "message": "Oczekiwanie na dołaczenie innego użytkownika"
   },
   {
     "id": "EthTokenBtc86",
-    "message": "1. Please confirm your participation to begin the deal"
+    "message": "1. Proszę potwierdź swój udział żeby rozpocząć handel"
   },
   {
     "id": "EthTokenBtc94",
-    "message": "Confirmation of the transaction is necessary for crediting the reputation.If a user does not bring the deal to the end he gets a negative credit to his reputation. "
+    "message": "Potwierdzenie transakcji jest niezbędne do uznania reputacji, jeśli użytkownik nie doprowadzi transakcji do końca, otrzyma negatywny wpływ na swoją reputację. "
   },
   {
     "id": "EthTokenToUsdt101",
-    "message": "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative credit to his reputation. "
+    "message": "Potwierdzenie transakcji jest niezbędne do uznania reputacji, jeśli użytkownik nie doprowadzi transakcji do końca, otrzyma negatywny wpływ na swoją reputację. "
   },
   {
     "id": "EthTokenToUsdt109",
-    "message": "Confirm"
+    "message": "Potwierdź"
   },
   {
     "id": "EthTokenToUsdt118",
-    "message": "Please wait. Confirmation processing"
+    "message": "Proszę czekać. Przetwarzam potwierdzenie"
   },
   {
     "id": "EthTokenToUsdt123",
-    "message": "Transaction: "
+    "message": "Transakcja: "
   },
   {
     "id": "EthTokenToUsdt154",
-    "message": "2. Waiting for USDT Owner to create a Secret Key, create BTC Omni Script and charge it"
+    "message": "2. Czekam na właściciela USDT na stworzenie tajnego klucza, stówrz Omni BTC i doładuj go"
   },
   {
     "id": "EthTokenToUsdt166",
-    "message": "3. Bitcoin Omni Script created and charged. Please check the information below"
+    "message": "3. Skrpyt bitcoin omni został utworzony. Sprawdź informacje poniżej"
   },
   {
     "id": "EthTokenToUsdt169",
-    "message": "Secret Hash: "
+    "message": "Tajny Hash: "
   },
   {
     "id": "EthTokenToUsdt172",
-    "message": "Script address: "
+    "message": "Adres skryptu: "
   },
   {
     "id": "EthTokenToUsdt192",
-    "message": "Show bitcoin script"
+    "message": "Pokaż skrypt BTC"
   },
   {
     "id": "EthTokenToUsdt236",
-    "message": "Everything is OK. continue "
+    "message": "Wszystko GIT. Kontynuuj "
   },
   {
     "id": "EthTokenToUsdt249",
-    "message": "Not enough money for this swap. Please fund the balance"
+    "message": "Za mało środków na tą wymianę... Proszę dodać środki"
   },
   {
     "id": "EthTokenToUsdt253",
-    "message": "Uw balans: "
+    "message": "Twoje saldo: "
   },
   {
     "id": "EthTokenToUsdt257",
-    "message": "Required balance: "
+    "message": "Wymagane saldo: "
   },
   {
     "id": "EthTokenToUsdt260",
-    "message": "Your address: "
+    "message": "Twój adres: "
   },
   {
     "id": "EthTokenToUsdt267",
-    "message": "Volgende"
+    "message": "Kontynuuj "
   },
   {
     "id": "EthTokenToUsdt276",
-    "message": "Checking balance.. "
+    "message": "Sprawdzam saldo.. "
   },
   {
     "id": "EthTokenToUsdt285",
-    "message": "4. Creating Ethereum Contract. \n Please wait, it can take a few minutes"
+    "message": "4. Tworzenie transkacji Ethereum. \n Proszę czekać do kilku minut"
   },
   {
     "id": "EthTokenToUsdt292",
-    "message": "Transaction: "
+    "message": "Transakcja: "
   },
   {
     "id": "EthTokenToUsdt313",
-    "message": "Transaction: "
+    "message": "Transakcja: "
   },
   {
     "id": "EthTokenToUsdt331",
-    "message": "5. Waiting for BTC Owner to add a Secret Key to ETH Contact"
+    "message": "5. Oczekiwanie na właściciela BTC na dodanie sekretnego klucza do ETH"
   },
   {
     "id": "EthTokenToUsdt345",
-    "message": "6. USDT Owner successfully took money from ETH Contract and left Secret Key. Requesting withdrawal from BTC Script. Please wait"
+    "message": "Właściciel USDT pomyślnie odebrał pieniądze z kontraktu ETH i zostawił Tajny klucz. Żądanie wypłaty BTC. Proszę czekać"
   },
   {
     "id": "EthTokenToUsdt352",
-    "message": "USDT withdrawal transaction: "
+    "message": "Transakcja wypłaty USDT: "
   },
   {
     "id": "EthTokenToUsdt377",
-    "message": "7. USDT was transferred to your wallet. Check the balance. "
+    "message": "7. USDT zostało wysłane na Twój portfel. Sprawdź saldo. "
   },
   {
     "id": "EthTokenToUsdt380",
-    "message": "Thank you for using Swap.Online!"
+    "message": "Dziękujemy za użycie swapu"
   },
   {
     "id": "EthTokenToUsdt390",
-    "message": "TRY REFUND"
+    "message": "SPRÓBUJ ZWRÓCIC"
   },
   {
     "id": "EthTokenToUsdt84",
-    "message": "Waiting for other user when he connect to the order"
+    "message": "Czekam na drugiego usera"
   },
   {
     "id": "EthTokenToUsdt93",
-    "message": "1. Please confirm your participation to begin the deal"
+    "message": "1. Proszę potwierdzić swój udział aby zacząć wymianę"
   },
   {
-    "id": "Delen",
-    "message": "Share Twitter"
+    "id": "Share",
+    "message": "Udostępnij : Twitter",
+    "files": [
+      "src/front/shared/pages/Swap/Share/Share.tsx"
+    ]
   },
   {
     "id": "UsdrToEthToken106",
-    "message": "Creating a secret key"
+    "message": "Tworzenie tajnego klucza"
   },
   {
     "id": "UsdrToEthToken115",
-    "message": "Confirm"
+    "message": "Potwierdź"
   },
   {
     "id": "UsdrToEthToken121",
-    "message": "Save the secret key! Otherwise there will be a chance that you'll lose your money! "
+    "message": "Zapisz klucz prywatny! Inaczej możesz stracić wszystkie środki ! "
   },
   {
     "id": "UsdrToEthToken124",
-    "message": "Secret Key: "
+    "message": "Tajny klucz: "
   },
   {
     "id": "UsdrToEthToken127",
-    "message": "Secret Hash: "
+    "message": "Tajny Hash: "
   },
   {
     "id": "UsdrToEthToken137",
-    "message": "Not enough money for this swap. Please charge the balance"
+    "message": "Za małe saldo do wymiany. Proszę dodać środki"
   },
   {
     "id": "UsdrToEthToken141",
-    "message": "Uw balans: "
+    "message": "Twoje saldo: "
   },
   {
     "id": "UsdrToEthToken144",
-    "message": "Required balance: "
+    "message": "Wymagane saldo:: "
   },
   {
     "id": "UsdrToEthToken147",
-    "message": "Your address: "
+    "message": "Twój adres: "
   },
   {
     "id": "UsdrToEthToken154",
-    "message": "Volgende"
+    "message": "kontynuuj "
   },
   {
     "id": "UsdrToEthToken163",
-    "message": "Checking balance... "
+    "message": "Sprawdzam saldo... "
   },
   {
     "id": "UsdrToEthToken174",
-    "message": "3. Creating Bitcoin Omni Script. \n Please wait, it can take a few minutes"
+    "message": "3. Tworzę nowy kontrakt. \n Proszę czekać, maksymalnie 5 minut"
   },
   {
     "id": "UsdrToEthToken179",
-    "message": "Transaction: "
+    "message": "Transakcja: "
   },
   {
     "id": "UsdrToEthToken206",
-    "message": "Create refund hex"
+    "message": "Stwórz zwrot hex"
   },
   {
     "id": "UsdrToEthToken213",
-    "message": "How to refund your money? "
+    "message": "Jak odzyskać środki? "
   },
   {
     "id": "UsdrToEthToken233",
-    "message": "4. ETH Owner received Bitcoin Omni Script and Secret Hash. Waiting until he creates ETH Contract"
+    "message": "4. Właściciel ETH otrzymał Bitcoin Omni Script i Secret Hash. Czekam, aż utworzy kontrakt ETH"
   },
   {
     "id": "UsdrToEthToken246",
-    "message": "Transaction: "
+    "message": "Transakcja: "
   },
   {
     "id": "UsdrToEthToken264",
-    "message": "5. ETH Contract is created and charged. Requesting withdrawal from ETH Contract. Please wait. It usually takes less than 10 mins"
+    "message": "5. Kontrakt ETH jest tworzony i obciążany. Żądanie wypłaty od umowy ETH. Proszę czekać. Zwykle zajmuje to mniej niż 10 minut"
   },
   {
     "id": "UsdrToEthToken271",
-    "message": "Transaction: "
+    "message": "Transakcja: "
   },
   {
     "id": "UsdrToEthToken294",
-    "message": "6. ETH was transferred to your wallet. Check the balance. "
+    "message": "6. ETH zostało wysłane na Twój portfel. Sprawdź saldo. "
   },
   {
     "id": "UsdrToEthToken297",
-    "message": "Thank you for using Swap.Online!"
+    "message": "Dziękujemy za użycie swapu!"
   },
   {
     "id": "UsdrToEthToken307",
-    "message": "TRY REFUND"
+    "message": "SPRÓBUJ ZWRÓCIĆ"
   },
   {
     "id": "UsdrToEthToken320",
-    "message": "Transaction: "
+    "message": "Transakcja: "
   },
   {
     "id": "UsdrToEthToken83",
-    "message": "Waiting for a market maker. If the market maker does not appear within 5 minutes, the swap will be canceled automatically. "
+    "message": "Czekam na usera rynku wymiany. Jeśli handlarz nie pojawi się w ciągu 5 minut, swap zostanie automatycznie anulowany."
   },
   {
     "id": "UsdrToEthToken93",
-    "message": "1. Waiting participant confirm this swap"
+    "message": "1. Oczekujący uczestnik potwierdza tę zamianę"
   },
   {
     "id": "Row263",
-    "message": "Use another"
+    "message": "Użyj innego"
   },
   {
     "id": "RowWallet197",
-    "message": "Unconfirmed balance"
+    "message": "Niepotwierdzone saldo"
   },
   {
     "id": "RowWallet181",
-    "message": "Unconfirmed balance",
+    "message": "Niepotwierdzone saldo",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
     "id": "AddOffer396",
-    "message": "Volgende",
+    "message": "Dalej",
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
   },
   {
     "id": "PrivateKeysModal106",
-    "message": "We do not store your private keys and will not be able to restore them! "
+    "message": "Nie przechowujemy kluczy prywatnych i nie jesteśmy w stanie ich przywrócić ! "
   },
   {
     "id": "PrivateKeysModal110",
-    "message": "1. Click here to save your private keys"
+    "message": "1. Kliknij tutaj aby zapisać klucz prywatny"
   },
   {
     "id": "PrivateKeysModal113",
-    "message": "Show keys"
+    "message": "Pokaż klucze"
   },
   {
     "id": "PrivateKeysModal118",
-    "message": "2. Then click here if you have saved your private keys in a secure place (or two)"
+    "message": "2. Kliknij tutaj jeśli zapisałeś klucz w bezpiecznym miejscu (lub 2)"
   },
   {
     "id": "PrivateKeysModal121",
-    "message": "I saved my keys!"
+    "message": "Zapisałem swoje klucze!"
   },
   {
     "id": "PrivateKeysModal130",
-    "message": "Please fill information below. We`d like to be sure that you saved the private keys before you can continue  to the site. "
+    "message": "Proszę wypełnić poniższe informacje. Chcielibyśmy mieć pewność, że zapisałeś klucze prywatne, zanim będziesz mógł przejść do witryny. "
   },
   {
     "id": "PrivateKeysModal131",
-    "message": "Do not worry, this data is not sent anywhere from this page!"
+    "message": "Nie martw się, te dane nie są nigdzie wysyłane z tej strony!"
   },
   {
     "id": "PrivateKeysModal145",
-    "message": "GO TO THE SITE! "
+    "message": "IDŹ DO TEJ STRONY! "
   },
   {
     "id": "PrivateKeysModal662",
-    "message": "Attention!"
+    "message": "Uwaga!"
   },
   {
     "id": "PrivateKeysModal623",
-    "message": "{skipIt} and go to the site."
+    "message": "{skipIt} i przejdź do strony"
   },
   {
     "id": "PrivateKeysModal624",
-    "message": "skip it"
+    "message": "Pomiń to"
   },
   {
     "id": "PrivateKeysModal663",
-    "message": "We don't recommend, but you can {skipBtn}"
+    "message": "Nie zalecamy ale możesz {skipBtn}"
   },
   {
     "id": "PrivateKeysModal664",
-    "message": "Please save your private keys! We do not store your private keys and will not be able to restore your wallets."
+    "message": "Zapisz swoje klucze prywatne! Nie przechowujemy Twoich kluczy prywatnych i nie będziemy mogli przywrócić Twoich portfeli."
   },
   {
     "id": "PrivateKeysModal665",
-    "message": " I understand and except the risks of not saving my private keys. {learnMore}"
+    "message": " Rozumiem i akceptuję ryzyko niezapisania kluczy {learnMore}"
   },
   {
     "id": "PrivateKeysModal666",
-    "message": "Volgende"
+    "message": "Kontynuuj"
   },
   {
     "id": "PrivateKeysModal667",
-    "message": "Learn more"
+    "message": "Dowiedz się więcej"
   },
   {
     "id": "PrivateKeysModal99",
-    "message": "It`s very important because If you don`t"
+    "message": "To bardzo ważne bo jeśli nie"
   },
   {
     "id": "PrivateKeysModal991",
-    "message": "Please save your private keys"
+    "message": "Proszę zapisz swoje klucze prywatne"
   },
   {
     "id": "BtcToEthTokenAddress1",
-    "message": "Confirm destination address (by default - swap.online wallet)"
+    "message": "Potwierdź adres do wysłania (domyślnie - adres portfela)"
   },
   {
     "id": "BtcToEthTokenAddress2",
-    "message": "Confirm address"
+    "message": "Potwierdź addres"
   },
   {
     "id": "WithdrawButton32",
-    "message": "Når du klikker på denne knap, vises i marken et beløb{br} svarende til din saldo minus minearbejdskommissionen",
+    "message": "Po kliknięciu tego przycisku w polu pojawi się kwota {br} równa saldzie po odjęciu prowizji górników",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
@@ -1121,7 +1117,7 @@
   },
   {
     "id": "HowItWorks10",
-    "message": "How it works",
+    "message": "Jak to działa?",
     "files": [
       "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx",
       "src/front/shared/pages/PointOfSell/HowItWorks/HowItWorks.tsx"
@@ -1129,25 +1125,25 @@
   },
   {
     "id": "AddOffer418",
-    "message": "Aangepaste wisselkoers",
+    "message": "Własny kurs wymiany",
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
   },
   {
     "id": "AddOffer423",
-    "message": "Gedeeltelijke aanvullingen inschakelen",
+    "message": "Włącz częściowe wypełnienie",
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
   },
   {
     "id": "BtcToEthToken236",
-    "message": "Top up BTC Script"
+    "message": "Doładuj skrypt BTC"
   },
   {
     "id": "Row277",
-    "message": "Not activated"
+    "message": "Nie aktywowany"
   },
   {
     "id": "partial221",
@@ -1155,71 +1151,71 @@
   },
   {
     "id": "Company",
-    "message": "Company"
+    "message": "Firma"
   },
   {
     "id": "AboutUS14",
-    "message": "About Us"
+    "message": "O nas"
   },
   {
     "id": "Careers",
-    "message": "Careers"
+    "message": "Kariera"
   },
   {
     "id": "ChromeExtension",
-    "message": "Chrome Extension"
+    "message": "Rozszerzenie chrome"
   },
   {
     "id": "Concept",
-    "message": "Concept (PDF)"
+    "message": "Koncept (PDF)"
   },
   {
     "id": "Contacts",
-    "message": "Contacts"
+    "message": "Kontakty"
   },
   {
     "id": "DEXTrendResearch",
-    "message": "DEX Trend Research"
+    "message": "DEX Raporty i Trendy"
   },
   {
     "id": "DEXdetails",
-    "message": "DEX Details"
+    "message": "DEX szczegóły"
   },
   {
     "id": "Documentation",
-    "message": "Documentation"
+    "message": "Dokumentacja"
   },
   {
     "id": "Legal",
-    "message": "Legal"
+    "message": "Legalność"
   },
   {
     "id": "LegalOpinion",
-    "message": "Legal Opinion"
+    "message": "Opinie"
   },
   {
     "id": "Licence",
-    "message": "Licence"
+    "message": "Licencja"
   },
   {
     "id": "PrivacyPolicy",
-    "message": "Privacy Policy"
+    "message": "Polityka prywatności"
   },
   {
     "id": "Resources",
-    "message": "Resources"
+    "message": "Źródła"
   },
   {
     "id": "Terms",
-    "message": "Terms of use"
+    "message": "Regulamin"
   },
   {
     "id": "Useswapbutton",
-    "message": "Swap Button"
+    "message": "Przycisk wymiany"
   },
   {
     "id": "WhitePaperdraft",
-    "message": "White Paper (draft)"
+    "message": "White Paper (szkic)"
   },
   {
     "id": "Wiki",
@@ -1227,7 +1223,7 @@
   },
   {
     "id": "Amount61",
-    "message": "HOEVEELHEID"
+    "message": "Kwota"
   },
   {
     "id": "Coin61",
@@ -1235,11 +1231,11 @@
   },
   {
     "id": "Statement61",
-    "message": "Statement"
+    "message": "Oświadczenie"
   },
   {
     "id": "Status61",
-    "message": "Toestand"
+    "message": "Status"
   },
   {
     "id": "SwapHisrory14",
@@ -1247,60 +1243,60 @@
   },
   {
     "id": "SwapHisrory15",
-    "message": "Exchange"
+    "message": "Giełda"
   },
   {
     "id": "SwapHisrory16",
-    "message": "Je koopt"
+    "message": "Kupujesz"
   },
   {
     "id": "SwapHisrory17",
-    "message": "Jij verkoopt"
+    "message": "Sprzedajesz"
   },
   {
     "id": "SwapHisrory18",
-    "message": "Exchange rate"
+    "message": "Kurs wymiany"
   },
   {
     "id": "SwapHisrory20",
-    "message": "Status order"
+    "message": "Status zamówienia"
   },
   {
     "id": "SwapHisrory211",
-    "message": "Vergrendel tijd"
+    "message": "Lock time"
   },
   {
     "id": "SwapHisrory22",
-    "message": "Koppeling"
+    "message": "Link"
   },
   {
     "id": "MyOrders19",
-    "message": "EXCHANGE"
+    "message": "GIEŁDA"
   },
   {
     "id": "MyOrders20",
-    "message": "U ontvangt",
+    "message": "Dostajesz : ",
     "files": [
       "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx"
     ]
   },
   {
     "id": "MyOrders21",
-    "message": "You have",
+    "message": "Masz :",
     "files": [
       "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx"
     ]
   },
   {
     "id": "MyOrders22",
-    "message": "Exchange rate",
+    "message": "Kurs wymiany",
     "files": [
       "src/front/shared/pages/Exchange/Orders/MyOrders/MyOrders.tsx"
     ]
   },
   {
     "id": "MyOrders231",
-    "message": "Delen"
+    "message": "UDOSTĘPNIJ"
   },
   {
     "id": "MyOrders24",
@@ -1308,210 +1304,213 @@
   },
   {
     "id": "Orders141",
-    "message": "No such ticker. Redirecting to USDT-BTC exchange... "
+    "message": "Nie ma takiego paska. Przekierowanie na giełdę USDT-BTC ... "
   },
   {
     "id": "Orders151",
-    "message": "Mijn orders"
+    "message": "My zlecenia"
   },
   {
     "id": "orders101",
-    "message": "EIGENAAR"
+    "message": "WŁAŚCICIEL"
   },
   {
     "id": "orders102",
-    "message": "Beløp",
+    "message": "Kwota",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
   },
   {
     "id": "orders105",
-    "message": "Pris",
+    "message": "Cena",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
   },
   {
     "id": "orders106",
-    "message": "START EXCHANGE"
+    "message": "ZACZNIJ WYMIANĘ"
   },
   {
     "id": "orders128",
-    "message": "Creёer aanbod",
+    "message": "Utwórz ofertę",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "orders1499",
-    "message": "Verbergen"
+    "message": "Ukryj"
   },
   {
     "id": "addoffer381",
-    "message": "verkoopt",
+    "message": "Sprzedaj",
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
   },
   {
     "id": "addoffer396",
-    "message": "Buy",
+    "message": "Kup",
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
   },
   {
     "id": "addoffer406",
-    "message": "Exchange rate",
+    "message": "Kurs wymiany",
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
   },
   {
     "id": "Table95",
-    "message": "Dit tabel is leeg",
+    "message": "Ta tabelka jest pusta",
     "files": [
       "src/front/shared/components/tables/Table/Table.tsx"
     ]
   },
   {
     "id": "Table96",
-    "message": "Lading... ",
+    "message": "Ładowanie... ",
     "files": [
       "src/front/shared/components/tables/Table/Table.tsx"
     ]
   },
   {
     "id": "Amount68",
-    "message": "Transacties",
+    "message": "Transakcje",
     "files": [
       "src/front/shared/pages/History/History.tsx"
     ]
   },
   {
     "id": "Reqstbttn15",
-    "message": "verkoopt"
+    "message": "SPRZEDAJ"
   },
   {
     "id": "Reqstbttn16",
-    "message": "Buy",
+    "message": "Kup",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/RequestButton/RequestButton.tsx"
     ]
   },
   {
     "id": "ExchangeRate12",
-    "message": "Exchange Rate",
+    "message": "Kurs wymiany",
     "files": [
       "src/front/shared/components/modals/OfferModal/ConfirmOffer/ExchangeRate/ExchangeRate.tsx"
     ]
   },
   {
-    "id": "HOEVEELHEID",
-    "message": "Exchange"
+    "id": "amount",
+    "message": "Wymień",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/ConfirmOffer/Amounts/Amounts.tsx"
+    ]
   },
   {
     "id": "fee9",
-    "message": "Miner fee",
+    "message": "Prowizja górnika",
     "files": [
       "src/front/shared/components/modals/OfferModal/ConfirmOffer/Fee/Fee.tsx"
     ]
   },
   {
     "id": "recieved65",
-    "message": "Address copied to clipboard",
+    "message": "Addres skopiowany do schowka",
     "files": [
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
     ]
   },
   {
     "id": "recieved67",
-    "message": "Copy to clipboard",
+    "message": "Kopiuj do schowka",
     "files": [
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
     ]
   },
   {
     "id": "RowHistory94",
-    "message": "Afgewerkt",
+    "message": "Zakończone",
     "files": [
       "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx"
     ]
   },
   {
     "id": "RowHistory139",
-    "message": "Stopped",
+    "message": "Zatrzymane",
     "files": [
       "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx"
     ]
   },
   {
     "id": "RowMobileFirstTypeYouGet",
-    "message": "U ontvangt",
+    "message": "Dostajesz",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
     ]
   },
   {
     "id": "RowMobileFirstTypeYouHave",
-    "message": "You have",
+    "message": "Masz",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
     ]
   },
   {
     "id": "RowMobileSecondTypeYouGet",
-    "message": "U ontvangt",
+    "message": "Dostaniesz",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
     ]
   },
   {
     "id": "RowMobileSecondTypeYouHave",
-    "message": "You have",
+    "message": "Masz",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
     ]
   },
   {
     "id": "SignUpModal133",
-    "message": "Something went wrong.{br}Try it later",
+    "message": "Coś poszło nie tak..{br}Spróbuj później",
     "files": [
       "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
     ]
   },
   {
     "id": "SignUpModal000",
-    "message": "Thanks!{br}You will receive a notification",
+    "message": "Dzięki !{br}Otrzymasz powiadomienie",
     "files": [
       "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
     ]
   },
   {
     "id": "SignUpModal001",
-    "message": "Go to my wallet",
+    "message": "Idź do mojego portfela",
     "files": [
       "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
     ]
   },
   {
     "id": "SignUpModal002",
-    "message": "Sign up",
+    "message": "Zarejestruj się",
     "files": [
       "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
     ]
   },
   {
     "id": "SignUpModal002-1",
-    "message": "One more step",
+    "message": "Jeden krok więcej",
     "files": [
       "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
     ]
   },
   {
     "id": "SignUpModal003",
-    "message": "Allow notifications",
+    "message": "Zezwól na powiadomienia",
     "files": [
       "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
     ]
@@ -1532,11 +1531,11 @@
   },
   {
     "id": "transaction368",
-    "message": "Amount must be greater than "
+    "message": "Kwota musi być większa niż "
   },
   {
     "id": "transaction376",
-    "message": "Amount must be less than your balance"
+    "message": "Kwota musi być mniejsza niż"
   },
   {
     "id": "Select210",
@@ -1559,11 +1558,11 @@
   },
   {
     "id": "Withdrow159",
-    "message": "Amount must be greater than "
+    "message": "Kwota musi być większa niż "
   },
   {
     "id": "partial291",
-    "message": "Waiting for another participant (30 sec)",
+    "message": "Czekam na innych... (30 sec)",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx",
       "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
@@ -1571,29 +1570,29 @@
   },
   {
     "id": "Row358",
-    "message": "Activeer"
+    "message": "Aktywacja"
   },
   {
     "id": "Row377",
-    "message": "Not activated"
+    "message": "Nieaktywne"
   },
   {
     "id": "CDC52",
-    "message": "Offer list",
+    "message": "Lista ofert",
     "files": [
       "src/front/shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.tsx"
     ]
   },
   {
     "id": "add408",
-    "message": "Om wisselkoers te veranderen",
+    "message": "Aby zmienić kurs wymiany",
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
   },
   {
     "id": "partial223",
-    "message": "To change default wallet for buy currency. ",
+    "message": "Aby zmienić domyślny portfel na kupno waluty. ",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx",
       "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
@@ -1601,7 +1600,7 @@
   },
   {
     "id": "partial224",
-    "message": "Leave empty for use Swap.Online wallet",
+    "message": "Zostaw puste aby użyć domyślnego portfela",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx",
       "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
@@ -1609,7 +1608,7 @@
   },
   {
     "id": "partial243",
-    "message": "U verstuurd",
+    "message": "Wysyłasz",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx",
       "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
@@ -1617,7 +1616,7 @@
   },
   {
     "id": "partial255",
-    "message": "U ontvangt",
+    "message": "Dostajesz",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx",
       "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
@@ -1625,106 +1624,109 @@
   },
   {
     "id": "Approve66",
-    "message": "Approve token",
+    "message": "Zatwierdź token",
     "files": [
       "src/front/shared/components/modals/Approve/Approve.tsx"
     ]
   },
   {
     "id": "Approve",
-    "message": "Approve token",
+    "message": "Zatwierdź token",
     "files": [
       "src/front/shared/components/modals/EthChecker/EthChecker.tsx"
     ]
   },
   {
     "id": "Import",
-    "message": "Import keys"
+    "message": "Importuj klucze"
   },
   {
     "id": "Add52",
-    "message": "Plaats een aanbod",
+    "message": "Złóż ofertę",
     "files": [
       "src/front/shared/components/modals/OfferModal/OfferModal.tsx"
     ]
   },
   {
     "id": "Confirm52",
-    "message": "Confirm offer",
+    "message": "Potwierdź ofertę",
     "files": [
       "src/front/shared/components/modals/OfferModal/OfferModal.tsx"
     ]
   },
   {
     "id": "ImCAUTIONport",
-    "message": "CAUTION!",
+    "message": "UWAGA!",
     "files": [
       "src/front/shared/components/modals/PrivateKeysModal/PrivateKeysModal.tsx"
     ]
   },
   {
-    "id": "Ontvangen",
-    "message": "Ontvangen"
+    "id": "Receive",
+    "message": "Otrzymywanie",
+    "files": [
+      "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
+    ]
   },
   {
     "id": "SignUpModal55",
-    "message": "Sign up",
+    "message": "Zarejestruj się",
     "files": [
       "src/front/shared/components/modals/SignUpModal/SignUpModal.tsx"
     ]
   },
   {
     "id": "RowHistory281",
-    "message": "Received {address}",
+    "message": "Otrzymanie {address}",
     "files": [
       "src/front/shared/pages/History/Row/Row.tsx"
     ]
   },
   {
     "id": "RowHistory282",
-    "message": "Sent {address}",
+    "message": "Wyślij {address}",
     "files": [
       "src/front/shared/pages/History/Row/Row.tsx"
     ]
   },
   {
     "id": "fromRow",
-    "message": "from",
+    "message": "Od",
     "files": [
       "src/front/shared/pages/History/Row/Row.tsx"
     ]
   },
   {
     "id": "toRow",
-    "message": "to",
+    "message": "Do",
     "files": [
       "src/front/shared/pages/History/Row/Row.tsx"
     ]
   },
   {
     "id": "RowHistory283",
-    "message": "Self",
+    "message": "ja",
     "files": [
       "src/front/shared/pages/History/Row/Row.tsx"
     ]
   },
   {
     "id": "RowHistory34",
-    "message": "Confirmed",
+    "message": "Potwierdzone",
     "files": [
       "src/front/shared/pages/History/Row/Row.tsx"
     ]
   },
   {
     "id": "RowHistory341",
-    "message": "Confirmed",
+    "message": "Potwierdzone",
     "files": [
       "src/front/shared/pages/History/Row/Row.tsx"
     ]
   },
   {
     "id": "RowHistory342",
-    "message": "Unconfirmed",
+    "message": "Niepotwierdzone",
     "files": [
       "src/front/shared/pages/History/Row/Row.tsx"
     ]
@@ -1735,46 +1737,46 @@
   },
   {
     "id": "timer68",
-    "message": "refund ready",
+    "message": "Zwrot wykonany",
     "files": [
       "src/front/shared/pages/Swap/Timer/Timer.tsx"
     ]
   },
   {
     "id": "BtcToEthToken275",
-    "message": "Refund hex transaction:"
+    "message": "hex zwrotnej transakcji:"
   },
   {
     "id": "Header184",
-    "message": "This is your personal bitcoin address. We do not store your private keys. Everything is kept in your browser. No server, no back-end, completely decentralized."
+    "message": "To jest Twój osobisty adres Bitcoin. Nie przechowujemy Twoich kluczy prywatnych. Wszystko jest przechowywane w Twojej przeglądarce. Bez serwera, bez zaplecza, całkowicie zdecentralizowany."
   },
   {
     "id": "Header188",
-    "message": "Swap Online does NOT store your private keys, please download and keep them in a secured place"
+    "message": "Usługa Swap NIE przechowuje kluczy prywatnych, pobierz je i przechowuj w bezpiecznym miejscu"
   },
   {
     "id": "Header192",
-    "message": "This is your bitcoin balance. You can close your browser, reboot your computer. Your funds will remain safe, just don't forget to save your private keys"
+    "message": "To jest Twoje saldo Bitcoin. Możesz zamknąć przeglądarkę, zrestartować komputer. Twoje fundusze pozostaną bezpieczne, po prostu nie zapomnij zapisać kluczy prywatnych"
   },
   {
     "id": "Header194",
-    "message": "Do not forget to save your keys"
+    "message": "Pamiętaj aby zapisać swój klucz prywatny"
   },
   {
     "id": "Header196",
-    "message": "You can store crypto of different blockchains including Bitcoin, Ethereum, Bitcoin Cash, Litecoin and various token"
+    "message": "Możesz przechowywać krypto różnych łańcuchów bloków, w tym Bitcoin, Ethereum, Bitcoin Cash, Litecoin i różne token"
   },
   {
     "id": "Header200",
-    "message": "Our killer feature is the peer-to-peer exchange available in our wallet powered by atomic swap technology. You can perfrom swaps with any crypto listed in our wallet."
+    "message": "Fenomenemalna jest wymiana peer-to-peer dostępna w naszym portfelu zasilana technologią atomowej wymiany. Możesz dokonywać swapów z dowolnym krypto wymienionym w naszym portfelu."
   },
   {
     "id": "Header205",
-    "message": "You will receive notifications regarding updates with your account (orders, transactions) and monthly updates about our project"
+    "message": "Będziesz otrzymywać powiadomienia o aktualizacjach na swoim koncie (zamówienia, transakcje) oraz comiesięczne aktualizacje dotyczące naszego projektu"
   },
   {
     "id": "Header207",
-    "message": "show how to save"
+    "message": "Pokaż jak zapisać"
   },
   {
     "id": "question12",
@@ -1785,29 +1787,29 @@
   },
   {
     "id": "errorImportKeys",
-    "message": "Please save your private keys"
+    "message": "Proszę zapisz swoje klucze prywatne"
   },
   {
     "id": "PrivateKeysModal144",
-    "message": "Terug"
+    "message": "Wróć"
   },
   {
     "id": "PartialPriceCalc",
-    "message": "Calc price",
+    "message": "Oblicz cenę",
     "files": [
       "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
     ]
   },
   {
     "id": "PartialPriceNoOrdersReduce",
-    "message": "No orders found, try later or change the currency pair",
+    "message": "Nie znaleziono ofert, spróbuj później lub zmień parę walutową",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "PartialPriceNoOrdersReduceAllInfo",
-    "message": "This trade amount is too high for present market liquidity. Please reduce amount to {maxForSell}. ",
+    "message": "Ta kwota transakcji jest zbyt wysoka dla obecnej płynności rynku. Zmniejsz kwotę do {maxForSell}. ",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx",
       "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
@@ -1815,11 +1817,11 @@
   },
   {
     "id": "PartialPriceReduceMin",
-    "message": "Maximum available amount:"
+    "message": "Maksymalna dostępna kwota:"
   },
   {
     "id": "PartialOfferCantProceed1",
-    "message": "Request is declined. {link}",
+    "message": "Żądanie zostało odrzucone. {link}",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx",
       "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
@@ -1827,7 +1829,7 @@
   },
   {
     "id": "PartialOfferCantProceed1_1",
-    "message": "Why?",
+    "message": "Dlaczego?",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx",
       "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
@@ -1835,7 +1837,7 @@
   },
   {
     "id": "ErrorBtcLowAmount",
-    "message": "{btcAmount} BTC - This amount is too low",
+    "message": "{btcAmount} BTC - Ta kwota jest zbyt niska",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx",
       "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
@@ -1843,53 +1845,53 @@
   },
   {
     "id": "LessThanIHavePartial",
-    "message": "You have not so much money on your balance"
+    "message": "Nie posiadasz wystarczającej ilości środków"
   },
   {
     "id": "PartialPriceSearch",
-    "message": "Searching orders...",
+    "message": "Szukam ofert...",
     "files": [
       "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
     ]
   },
   {
     "id": "PartialUseSwapOnlineWallet",
-    "message": "Use Swap.Online wallet"
+    "message": "Użyj Swapu"
   },
   {
     "id": "UseAnotherWallet",
-    "message": "Specificeer de ontvangende wallet adres",
+    "message": "Podaj adres portfela odbiorczego",
     "files": [
       "src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.tsx"
     ]
   },
   {
     "id": "CustomWalletIsNotAllowed",
-    "message": "Aanvaarding van een aanbieding uit het offerteboek is tijdelijk alleen mogelijk voor interne adressen"
+    "message": "Akceptacja oferty z rynku jest tymczasowo możliwa tylko dla adresów wewnętrznych"
   },
   {
     "id": "PartialYourWalletAddress",
-    "message": "Ontvangende wallet adres"
+    "message": "Odbieranie adresu portfela"
   },
   {
     "id": "importkeys118",
-    "message": "Please enter BTC private key"
+    "message": "Wprowadź klucz prywatny BTC"
   },
   {
     "id": "importkeys119",
-    "message": "Please valid BTC private key"
+    "message": "Proszę o poprawny klucz prywatny BTC"
   },
   {
     "id": "PartialPriceSearch483",
-    "message": "Price: 1"
+    "message": "Cena: 1"
   },
   {
     "id": "partial437",
-    "message": "Atomic Swap {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}) Instant Exchange"
+    "message": "Wymień {full_name1} ({ticker_name1}) na {full_name2} ({ticker_name2}) Natychmiastowa wymiana"
   },
   {
     "id": "partial462",
-    "message": "De hoeveelheid u heeft in uw swap.online wallet of externe wallet dat u wilt verhandelen.",
+    "message": "Kwota, którą masz w swoim portfelu swap lub portfelu zewnętrznym, którą chcesz wymienić",
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx",
       "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
@@ -1897,7 +1899,7 @@
   },
   {
     "id": "partial478",
-    "message": "De hoeveelheid die u ontvangt na het verhandelen",
+    "message": "Kwota, którą otrzymasz po wymianie",
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx",
       "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
@@ -1905,32 +1907,32 @@
   },
   {
     "id": "partial541",
-    "message": "Exchange nu",
+    "message": "Wymień teraz",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "partial5323",
-    "message": "Buy token",
+    "message": "Kup token",
     "files": [
       "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
     ]
   },
   {
     "id": "partial544",
-    "message": "Orderboek"
+    "message": "Rynek ofert"
   },
   {
     "id": "partial766",
-    "message": "Van elke wallet of exchange",
+    "message": "Z jakiegokolwiek portfela lub giełdy",
     "files": [
       "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
     ]
   },
   {
     "id": "partial767",
-    "message": "Uw balans: ",
+    "message": "Twoje saldo: ",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx",
       "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
@@ -1938,7 +1940,7 @@
   },
   {
     "id": "partialAtomicSwapWhatIsIt",
-    "message": "Atomic swap is een smart contract technology die het verhandelen van een cryptovaluta voor een andere mogelijk maakt zonder gecentraliseerde tussenpersoon, zoals exchange.",
+    "message": "Swap to technologia inteligentnych kontraktów, która umożliwia wymianę jednej kryptowaluty na inną bez korzystania ze scentralizowanych pośredników, takich jak giełdy.",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx",
       "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
@@ -1946,15 +1948,15 @@
   },
   {
     "id": "partialVideoAndFeaturesTitle",
-    "message": "The {purplefastest} cross-chain Atomic Swap exchange"
+    "message": " Najszybsza {purplefastest} zdecentralizowana giełda wymiany"
   },
   {
     "id": "partialVideoAndFeaturesTitlePur",
-    "message": "fastest"
+    "message": "najszybszy"
   },
   {
     "id": "partialVideoAndFeatures0",
-    "message": "Based on Atomic Swap technology",
+    "message": "Na bazie technologii atomic swap",
     "files": [
       "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx",
       "src/front/shared/pages/PointOfSell/VideoAndFeatures/VideoAndFeatures.tsx"
@@ -1962,7 +1964,7 @@
   },
   {
     "id": "partialVideoAndFeatures1",
-    "message": "Exchange only takes 2 minutes",
+    "message": "Wymiana zajmie tylko 2 minuty",
     "files": [
       "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx",
       "src/front/shared/pages/PointOfSell/VideoAndFeatures/VideoAndFeatures.tsx"
@@ -1970,7 +1972,7 @@
   },
   {
     "id": "partialVideoAndFeatures2",
-    "message": "Supports BTC, ETH, USDT, ERC-20 tokens",
+    "message": "Wspieramy BTC, ETH, USDT, i każdy token ERC-20",
     "files": [
       "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx",
       "src/front/shared/pages/PointOfSell/VideoAndFeatures/VideoAndFeatures.tsx"
@@ -1978,7 +1980,7 @@
   },
   {
     "id": "partialVideoAndFeatures3",
-    "message": "Can be deployed on any website as an exchange service",
+    "message": "Może być wdrożony w dowolnej witrynie internetowej jako usługa wymiany",
     "files": [
       "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx",
       "src/front/shared/pages/PointOfSell/VideoAndFeatures/VideoAndFeatures.tsx"
@@ -1986,7 +1988,7 @@
   },
   {
     "id": "PartialFeeValueWarn",
-    "message": "The maximum amount you can sell is {maximumAmount} {haveCurrency}. Miner fee up to {estimatedFeeValue} {haveCurrency}",
+    "message": "Maksymalna kwota, jaką możesz sprzedać, to {maximumAmount} {haveCurrency}. Prowizja do {estimatedFeeValue} {haveCurrency}",
     "files": [
       "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
     ]
@@ -2007,61 +2009,61 @@
   },
   {
     "id": "down57",
-    "message": "To save your private keys just copy these keys and paste them into notepad textarea. You can also download your keys as a .txt file",
+    "message": "Aby zapisać klucze prywatne, po prostu skopiuj te klucze i wklej je do obszaru tekstowego notatnika. Możesz także pobrać klucze jako plik .txt",
     "files": [
       "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx"
     ]
   },
   {
     "id": "down64",
-    "message": "Address copied to clipboard",
+    "message": "Adres skopiowano do schowka",
     "files": [
       "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx"
     ]
   },
   {
     "id": "down65",
-    "message": "Copy to clipboard",
+    "message": "Kopiuj do schowka",
     "files": [
       "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx"
     ]
   },
   {
     "id": "downFile2",
-    "message": "Download txt file",
+    "message": "POBIERZ PLIK TXT",
     "files": [
       "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx"
     ]
   },
   {
     "id": "down97",
-    "message": "Your private keys!",
+    "message": "Twoje klucze prywatne!",
     "files": [
       "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx"
     ]
   },
   {
     "id": "Reqstbttn22",
-    "message": "voor",
+    "message": "dla",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/RequestButton/RequestButton.tsx"
     ]
   },
   {
     "id": "Row206",
-    "message": "Buy"
+    "message": "Kup"
   },
   {
     "id": "Row2061",
-    "message": "verkoopt"
+    "message": "Sprzedaj"
   },
   {
     "id": "Row210",
-    "message": "voor"
+    "message": "dla"
   },
   {
     "id": "downloadModal73",
-    "message": "Account name:"
+    "message": "Nazwa konta:"
   },
   {
     "id": "downloadModal75",
@@ -2072,32 +2074,32 @@
   },
   {
     "id": "downloadModal782",
-    "message": "Private key",
+    "message": "Klucz prywatny",
     "files": [
       "src/front/shared/components/modals/DownloadModal/DownloadModal.tsx"
     ]
   },
   {
     "id": "PreventMultiTabs12",
-    "message": "Our service supports only one active tab.\n    Please reload this page to continue  using this tab or close it",
+    "message": "Zalecamy używanie 1 zakładki.\n    Odśwież stronę aby kontynuuować w tej karcie, lub zamknij ją",
     "files": [
       "src/front/shared/components/PreventMultiTabs/PreventMultiTabs.tsx"
     ]
   },
   {
     "id": "EthTokenToUsdt375",
-    "message": "Please note that USDT withdrawal may take a while to mine and to propagate the network.\n                    Due to Omni Protocol properties, the transaction may show up at the OmniExplorer in up to 20 minutes."
+    "message": "Należy pamiętać, że wypłata USDT może zająć trochę czasu, aby wydobyć i rozpropagować sieć. \n Ze względu na właściwości protokołu Omni, transakcja może pojawić się w OmniExplorer w ciągu 20 minut."
   },
   {
     "id": "addOfferPartialTooltip",
-    "message": "U ontvangt uitwisselingsverzoeken of de hoeveelheid lager dan de totale hoeveelheid dat u wilt verkopen. Bijvoorbeeld: U wilt 1 BTC verkopen,  andere gebruikers kunnen u een uitwisselingsverzoek doen voor 0.1, 0.5 BTC",
+    "message": "Otrzymasz prośby o wymianę lub {p} kwotę mniejszą niż całkowita kwota, którą chcesz {p} sprzedać. Na przykład chcesz sprzedać 1 BTC, \n inni użytkownicy mogą wysyłać Ci zlecenia wymiany {p} za 0,1, 0,5 BTC",
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
   },
   {
     "id": "WTH275",
-    "message": "Make sure the wallet you {br}are sending the funds to supports {currency}",
+    "message": "Upewnij się że portfel {br} wspiera {currency}",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
@@ -2107,87 +2109,87 @@
   },
   {
     "id": "SaveKeys235",
-    "message": "These are your private keys. Download the keys by clicking on the button or take a screenshot of this page, then confirm it and click here.",
+    "message": "To są twoje klucze prywatne. Pobierz klucze, klikając przycisk lub zrób zrzut ekranu tej strony, a następnie potwierdź go i kliknij tutaj.",
     "files": [
       "src/front/shared/components/SaveKeys/SaveKeys.tsx"
     ]
   },
   {
     "id": "orders156",
-    "message": "Koop {currency} hier",
+    "message": "Kup {currency} tutaj",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
   },
   {
     "id": "orders159",
-    "message": "{currency} aanbiedingen",
+    "message": " Oferty {currency}",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
   },
   {
     "id": "WithdrawButton322",
-    "message": "You can not send this asset, because you have a zero balance.",
+    "message": "Nie możesz tego wysłać, saldo wynosi 0.",
     "files": [
       "src/front/shared/components/controls/WithdrawButton/BtnTooltip.tsx"
     ]
   },
   {
     "id": "CurrencyWallet141",
-    "message": "{fullName}({currency}) Web Wallet with Atomic Swap."
+    "message": "{fullName}({currency}) Portfel online ze swapem."
   },
   {
     "id": "orders189",
-    "message": "buy"
+    "message": "kup"
   },
   {
     "id": "orders186",
-    "message": "{currency} aanbiedingen"
+    "message": " Oferty {currency}"
   },
   {
     "id": "CurrencyButton41",
-    "message": "Deposit this cryptocurrency to your wallet",
+    "message": "Wpłać kryptowalutę do Twojego protfela",
     "files": [
       "src/front/shared/components/controls/CurrencyButton/CurrencyButton.tsx"
     ]
   },
   {
     "id": "CurrencyButton42",
-    "message": "You can not send this asset, because you have a zero balance.",
+    "message": "Nie możesz tego wysłać, saldo wynosi 0.",
     "files": [
       "src/front/shared/components/controls/CurrencyButton/CurrencyButton.tsx"
     ]
   },
   {
     "id": "PrivateKeysModal122",
-    "message": "Continuing you agree with our "
+    "message": "Kontynuujemy zgodę z naszą "
   },
   {
     "id": "PrivateKeysModal123",
-    "message": "privacy policy"
+    "message": "polityka prywatności"
   },
   {
     "id": "Areyousure",
-    "message": "Are you sure ?",
+    "message": "Jesteś pewien?",
     "files": [
       "src/front/shared/components/modals/SaveKeysModal/SaveKeysModal.tsx"
     ]
   },
   {
     "id": "SaveKeysModal_Title",
-    "message": "Private keys export",
+    "message": "Eksportuj klucze prywatne",
     "files": [
       "src/front/shared/components/modals/SaveKeysModal/SaveKeysModal.tsx"
     ]
   },
   {
     "id": "Exchange",
-    "message": "The wallet address to where cryptocurrency will be sent after the exchange"
+    "message": "Adres portfela gdzie środki zostaną wysłane po wymianie"
   },
   {
     "id": "CurrencyWallet168",
-    "message": "Your address: {address}{br}Your {fullName} balance: {balance} {currency}"
+    "message": "Twój adres: {address}{br} Twoje {fullName} Saldo: {balance} {currency}"
   },
   {
     "id": "currencyWallet27",
@@ -2195,35 +2197,35 @@
   },
   {
     "id": "currencyWallet28",
-    "message": "Toestand"
+    "message": "Status"
   },
   {
     "id": "currencyWallet29",
-    "message": "Statement"
+    "message": "Komunikat"
   },
   {
     "id": "currencyWallet30",
-    "message": "HOEVEELHEID"
+    "message": "Kwota"
   },
   {
     "id": "Withdraw18333",
-    "message": "Withdraw {data}"
+    "message": "Wypłać {data}"
   },
   {
     "id": "importkeys172",
-    "message": "Please enter ETH private key"
+    "message": "Wprowadź klucz prywatny ETH"
   },
   {
     "id": "importkeys173",
-    "message": "Please valid ETH private key"
+    "message": "Wprowadź prawidłowy klucz ETH"
   },
   {
     "id": "importkeys190",
-    "message": "Something went wrong. Check your private key, network of this address and etc."
+    "message": "Błąd. Sprawdź klucz prywatny, sieć hash itp..."
   },
   {
     "id": "WithdrawIncorectAddress",
-    "message": "Your address not correct",
+    "message": "Twój adres nie jest prawidłowy",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
@@ -2232,11 +2234,11 @@
   },
   {
     "id": "Withdrow168",
-    "message": "The amount must be less than your balance by the minimum amount for the transaction {min} {currency}"
+    "message": "Kwota musi być mniejsza od salda o minimalną kwotę transakcji {min} {currency}"
   },
   {
     "id": "Withdrow170",
-    "message": "Det maksimale beløb, du kan sende, er {allowedCriptoBalance} {currency}",
+    "message": "Maksymalna kwota, jaką możesz wysłać to {allowedCriptoBalance} {currency}",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
@@ -2252,22 +2254,22 @@
   },
   {
     "id": "ExchangeTitleTag",
-    "message": "Atomic Swap {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}) Instant Exchange"
+    "message": "Swap {full_name1} ({ticker_name1}) na {full_name2} ({ticker_name2}) Natychmiastowa"
   },
   {
     "id": "ExchangeTitleTag1",
-    "message": "Fastest cross-chain atomic swaps",
+    "message": "Najszybszy swap cross-chain",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "PartialClosureMetaDescrTag",
-    "message": "Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol."
+    "message": "Najlepszy kurs wymiany {full_name1} ({ticker_name1}) na {full_name2} ({ticker_name2}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol."
   },
   {
     "id": "orders104",
-    "message": "Total",
+    "message": "Suma",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
@@ -2281,7 +2283,7 @@
   },
   {
     "id": "orders1382",
-    "message": "Alle",
+    "message": "Wszystko",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
@@ -2295,7 +2297,7 @@
   },
   {
     "id": "Withdrow213",
-    "message": "Please note: Fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction.",
+    "message": "Uwaga: Prowizja jest od  {minAmount} {data}.{br} Twoje saldo musi przekraczać tę sumę, aby wykonać transakcję.",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
@@ -2304,7 +2306,7 @@
   },
   {
     "id": "WithdrawModal256",
-    "message": "No less than {minAmount}",
+    "message": "Nie mniej niż {minAmount}",
     "files": [
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
@@ -2312,7 +2314,7 @@
   },
   {
     "id": "WithdrawModal263",
-    "message": "You need {minAmount} ETH on your balance"
+    "message": "Potrzebujesz {minAmount} ETH na Twoim koncie"
   },
   {
     "id": "WithdrawModalErrorSend",
@@ -2325,32 +2327,32 @@
   },
   {
     "id": "RowHistory77",
-    "message": "Refunded",
+    "message": "Zwrócone",
     "files": [
       "src/front/shared/pages/History/SwapsHistory/RowHistory/RowHistory.tsx"
     ]
   },
   {
     "id": "timer671",
-    "message": "{min} minute left for refund",
+    "message": "{min} minut pozostało do zwrotu",
     "files": [
       "src/front/shared/pages/Swap/Timer/Timer.tsx"
     ]
   },
   {
     "id": "CurrencyWallet148",
-    "message": "${fullName} (${currency}) Web Wallet with Atomic Swap."
+    "message": "${fullName} (${currency}) Portfel online ze swapem."
   },
   {
     "id": "CurrencyWallet154",
-    "message": "Atomic Swap Wallet allows you to manage and securely exchange ${fullName} (${currency}) with 0% fees. Based on Multi-Sig and Atomic Swap technologies.",
+    "message": "Swap pozwala Ci bezpiecznie wymienić ${fullName} (${currency}) z 0% prowizją.",
     "files": [
       "src/front/shared/pages/CurrencyWallet/CurrencyWallet.tsx"
     ]
   },
   {
     "id": "Orders121",
-    "message": "Atomic Swap {buyCurrencyFullName} ({buyCurrency}) to {sellCurrencyFullName} ({sellCurrency}) Instant Exchange",
+    "message": "Atomic Swap {buyCurrencyFullName} ({buyCurrency}) to {sellCurrencyFullName} ({sellCurrency}) Natychmiastowa wymiana",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
@@ -2364,7 +2366,7 @@
   },
   {
     "id": "orders182",
-    "message": "Verkoop {buyCurrency} Hier"
+    "message": "SPRZEDAJ {buyCurrency} TUTAJ"
   },
   {
     "id": "PartialClosure562",
@@ -2372,7 +2374,14 @@
   },
   {
     "id": "RowWallet276",
-    "message": "Noden er nede",
+    "message": " Węzeł padł (You can not perform transactions). ",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "RowWallet282",
+    "message": "Brak połączenia...",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
@@ -2386,22 +2395,22 @@
   },
   {
     "id": "BtcToEthToken222",
-    "message": "Depositing BTC to the contract. \n Please wait, it can take a few minutes"
+    "message": "Wpłacam bitcoiny do kontraktu. \n Proszę czekać"
   },
   {
     "id": "deposit213",
-    "message": " and 0.002 ETH gas fee "
+    "message": " i 0.002 ETH gas fee "
   },
   {
     "id": "deposit165",
-    "message": "Om de swap te vervolgen kopieer dit adres en vult dit aan met {missingBalance}",
+    "message": "Aby kontynuować zamianę, skopiuj ten adres i doładuj go {missingBalance}",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
     ]
   },
   {
     "id": "deposit297",
-    "message": "view in explorer",
+    "message": "Zobacz w explorerze",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
     ]
@@ -2415,22 +2424,22 @@
   },
   {
     "id": "deposit231",
-    "message": "Received {balance} / {need} {tooltip}"
+    "message": " Otrzymano {balance} / {need} {tooltip}"
   },
   {
     "id": "deposit239",
-    "message": "Swap will continue after {tokenName} contract receives the funds. {br} Is usually takes less than 10 min",
+    "message": "Wymiana będzie kontynuuowana po wymianie {tokenName}. {br} Zazwyczaj mniej niż 10 minut",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
     ]
   },
   {
     "id": "Deposit52",
-    "message": "You have {timer} min to make the payment"
+    "message": "Masz {timer} minut aby zrealizować płatność"
   },
   {
     "id": "deposit198",
-    "message": "waiting for payment...",
+    "message": "Czekam za płatnością...",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
     ]
@@ -2444,53 +2453,53 @@
   },
   {
     "id": "BtcToEthToken1245",
-    "message": "Sent funds"
+    "message": "Wyślij środki"
   },
   {
     "id": "ReceiveModal50",
-    "message": "This is your {currency} address",
+    "message": "Twój adress {currency}",
     "files": [
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
     ]
   },
   {
     "id": "OrdersWidgetModeShowWallet",
-    "message": "Portefeuille"
+    "message": "Portfel"
   },
   {
     "id": "swapFinishedGoHome",
-    "message": "Return to home page"
+    "message": "Wróć do strony głównej"
   },
   {
     "id": "KeyActionsPanel73",
-    "message": "Hide / Add Coins"
+    "message": "Ukryj / Dodaj token/coina"
   },
   {
     "id": "userTooltip43",
-    "message": "User ({reputation}) wants to swap",
+    "message": "Użytkownik ({reputation}) chce się wymienić",
     "files": [
       "src/front/shared/components/Header/User/UserTooltip/UserTooltip.tsx"
     ]
   },
   {
     "id": "advantagesTitle",
-    "message": "Why we are different from other exchanges"
+    "message": "Dlaczego jesteśmy inni"
   },
   {
     "id": "advantagesTitle1",
-    "message": "0% commission"
+    "message": "0% prowizji"
   },
   {
     "id": "advantagesTitle3",
-    "message": "No 3d party"
+    "message": "Bez 3 osób"
   },
   {
     "id": "advantagesTitle4",
-    "message": "Super fast"
+    "message": "Super ultra szybki"
   },
   {
     "id": "advantagesTxt1",
-    "message": "The exchange is happening between you and other crypto holders (peer-2-peer). No percentage charged of the transaction."
+    "message": "Wymiana odbywa się między tobą a innymi posiadaczami kryptowalut (peer-2-peer). Brak oprocentowania transakcji.."
   },
   {
     "id": "advantagesTxt2",
@@ -2560,14 +2569,14 @@
   },
   {
     "id": "FeeControler48",
-    "message": "Gekopieerd",
+    "message": "Copied",
     "files": [
       "src/front/shared/pages/Swap/FeeControler/FeeControler.tsx"
     ]
   },
   {
     "id": "FeeControler49",
-    "message": "Copy",
+    "message": "Kopiuj",
     "files": [
       "src/front/shared/pages/Swap/FeeControler/FeeControler.tsx"
     ]
@@ -2596,7 +2605,7 @@
   },
   {
     "id": "BtcToEthToken123",
-    "message": "De swap is klaar!!",
+    "message": "The swap is finished!!",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/FourthStep.tsx"
     ]
@@ -2607,11 +2616,11 @@
   },
   {
     "id": "BtcToEthToken34",
-    "message": "Confirmation process"
+    "message": "Potwierdzenie process"
   },
   {
     "id": "BtcToEthToken43",
-    "message": "Confirmation processing"
+    "message": "Przetwarzanie potwierdzenia"
   },
   {
     "id": "BtcToEthToken58",
@@ -2689,15 +2698,15 @@
   },
   {
     "id": "ethToBtcText26",
-    "message": "Confirmation processing"
+    "message": "Przetwarzanie potwierdzenia"
   },
   {
     "id": "ethToBtcText28",
-    "message": "Checking balance.."
+    "message": "Sprawdzam saldo.."
   },
   {
     "id": "ethToBtcText32",
-    "message": "Creating Ethereum Contract.{br}It can take a few minutes. (It may require 1 confirmation from bitcoin network)"
+    "message": "Creating Ethereum Contract.{br}It can take a few minutes. (It may require 1 Potwierdzenie from bitcoin network)"
   },
   {
     "id": "ethToBtcText36",
@@ -2705,15 +2714,15 @@
   },
   {
     "id": "ethToBtcText40",
-    "message": "ETH was successfully transferred. Withdrawing BTC."
+    "message": "ETH otrzymane, wypłacam BTC."
   },
   {
     "id": "ethToBtcText44",
-    "message": "Thank you for using Swap.Online!"
+    "message": "Dziękujemy za użycie swapu"
   },
   {
     "id": "ethToBtcText48",
-    "message": "Thank you for using Swap.Online!"
+    "message": "Dziękujemy za użycie swapu"
   },
   {
     "id": "WalletPromoLinkText",
@@ -2721,11 +2730,11 @@
   },
   {
     "id": "WalletPromoText",
-    "message": "🎁 🎁 🎁 Thank you for using Swap.Online!\n                Tell us about your experience with our service\n                and we will gift you $10 in BTC 🎁 🎁 🎁"
+    "message": "🎁 🎁 🎁 Dziękujemy za użycie swapu\n                Tell us about your experience with our service\n                and we will gift you $10 in BTC 🎁 🎁 🎁"
   },
   {
     "id": "orders224",
-    "message": "Koop {currency} hier"
+    "message": "Buy {currency} here"
   },
   {
     "id": "swappropgress246",
@@ -2733,7 +2742,7 @@
   },
   {
     "id": "BitcoinBuyText17",
-    "message": "Confirmation processing"
+    "message": "Przetwarzanie potwierdzenia"
   },
   {
     "id": "BtcToEthToken20",
@@ -2741,7 +2750,7 @@
   },
   {
     "id": "BitcoinBuyText29",
-    "message": "Checking balance.."
+    "message": "Sprawdzam saldo.."
   },
   {
     "id": "BitcoinBuyText33",
@@ -2749,7 +2758,7 @@
   },
   {
     "id": "BitcoinBuyText37",
-    "message": "You sent BTC to the contract (possible needs 1 confirmation from blockchain), {buyCurrency} owner received TXID and Secret Hash. Waiting while he freezes {buyCurrency} in the contract"
+    "message": "You sent BTC to the contract (possible needs 1 Potwierdzenie from blockchain), {buyCurrency} owner received TXID and Secret Hash. Waiting while he freezes {buyCurrency} in the contract"
   },
   {
     "id": "BitcoinBuyText41",
@@ -2761,15 +2770,15 @@
   },
   {
     "id": "BitcoinBuyText49",
-    "message": "Thank you for using Swap.Online!"
+    "message": "Dziękujemy za użycie swapu"
   },
   {
     "id": "BitcoinBuyText53",
-    "message": "Thank you for using Swap.Online!"
+    "message": "Dziękujemy za użycie swapu"
   },
   {
     "id": "EthTokensToBtc16",
-    "message": "Confirmation processing."
+    "message": "Przetwarzanie potwierdzenia."
   },
   {
     "id": "EthTokensToBtc20",
@@ -2781,11 +2790,11 @@
   },
   {
     "id": "EthTokensToBtc28",
-    "message": "Checking balance.."
+    "message": "Sprawdzam saldo.."
   },
   {
     "id": "EthTokensToBtc32",
-    "message": "Creating Ethereum Contract. {br} It can take a few minutes (It may require 1 confirmation from bitcoin network)"
+    "message": "Creating Ethereum Contract. {br} It can take a few minutes (It may require 1 Potwierdzenie from bitcoin network)"
   },
   {
     "id": "EthTokensToBtc36",
@@ -2793,19 +2802,19 @@
   },
   {
     "id": "EthTokensToBtc40",
-    "message": "ETH was successfully transferred. Withdrawing BTC."
+    "message": "ETH otrzymane, wypłacam BTC."
   },
   {
     "id": "EthTokensToBtc44",
-    "message": "Thank you for using Swap.Online!"
+    "message": "Dziękujemy za użycie swapu"
   },
   {
     "id": "EthTokensToBtc48",
-    "message": "Thank you for using Swap.Online!"
+    "message": "Dziękujemy za użycie swapu"
   },
   {
     "id": "SwapStuck",
-    "message": "De swap vastgelopen? Herlaad de pagen ",
+    "message": "Wymiana się zacięła ? Spróbuj  ",
     "files": [
       "src/front/shared/pages/Swap/Swap.tsx"
     ]
@@ -2826,7 +2835,7 @@
   },
   {
     "id": "SwapReload",
-    "message": "reload the page",
+    "message": "odśwież stronę",
     "files": [
       "src/front/shared/pages/Swap/Swap.tsx"
     ]
@@ -2862,7 +2871,7 @@
   },
   {
     "id": "withdrowTitle271",
-    "message": "Verstuur",
+    "message": "Send",
     "files": [
       "src/front/shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.tsx",
       "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
@@ -2898,7 +2907,7 @@
   },
   {
     "id": "deposit256",
-    "message": "De adres van {tokenName} smart contract bekijken in explorer",
+    "message": "The address of {tokenName} smart contract",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
     ]
@@ -2973,7 +2982,7 @@
   },
   {
     "id": "BtcToEthToken24",
-    "message": "Storten",
+    "message": "Deposit",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/SecondStep.tsx"
     ]
@@ -3002,7 +3011,7 @@
   },
   {
     "id": "thirdStep24",
-    "message": "Opnemen",
+    "message": "WITHDRAW",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/ThirdStep.tsx"
     ]
@@ -3017,7 +3026,7 @@
   },
   {
     "id": "confirmDialogDefaultNo",
-    "message": "Nee",
+    "message": "No",
     "files": [
       "src/front/shared/components/modals/Confirm/Confirm.tsx",
       "src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.tsx"
@@ -3025,7 +3034,7 @@
   },
   {
     "id": "confirmDialogDefaultTitle",
-    "message": "Bevestig actie",
+    "message": "Confirm action",
     "files": [
       "src/front/shared/components/modals/Confirm/Confirm.tsx",
       "src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.tsx"
@@ -3033,7 +3042,7 @@
   },
   {
     "id": "confirmDialogDefaultYes",
-    "message": "Ja:",
+    "message": "Yes",
     "files": [
       "src/front/shared/components/modals/Confirm/Confirm.tsx",
       "src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.tsx"
@@ -3055,21 +3064,21 @@
   },
   {
     "id": "ordersRow134",
-    "message": "Wilt u  {action} {amount} {main} voor {total} {base} tegen een prijs van {price} {main}/{base}?",
+    "message": "Do you want to {action} {amount} {main} for {total} {base} at price {price} {main}/{base}?",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
     ]
   },
   {
     "id": "ordersRow97",
-    "message": "verkoopt",
+    "message": "sell",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/Row/Row.tsx"
     ]
   },
   {
     "id": "deposit165widget",
-    "message": "Copy the address below and top it up with the recommended amount of {missingBalance}",
+    "message": "Kopiuj the address below and top it up with the recommended amount of {missingBalance}",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
     ]
@@ -3108,21 +3117,21 @@
   },
   {
     "id": "Incompleted21",
-    "message": "Incompleted Swaps",
+    "message": "Niedokończone wymiany",
     "files": [
       "src/front/shared/components/modals/IncompletedSwaps/IncompletedSwaps.tsx"
     ]
   },
   {
     "id": "IncompletedSwaps49",
-    "message": "Swaps needing to complete",
+    "message": "Wymiana powinna być dokończona",
     "files": [
       "src/front/shared/components/modals/IncompletedSwaps/IncompletedSwaps.tsx"
     ]
   },
   {
     "id": "swappropgress327",
-    "message": "This swap is canceled",
+    "message": "Wymiana została anulowana",
     "files": [
       "src/front/shared/pages/Swap/Swap.tsx"
     ]
@@ -3149,8 +3158,8 @@
     ]
   },
   {
-    "id": "Confirmation14",
-    "message": "Bevestiging",
+    "id": "Potwierdzenie14",
+    "message": "Potwierdzenie",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/FirstStep.tsx"
     ]
@@ -3172,11 +3181,11 @@
   },
   {
     "id": "swapjs290",
-    "message": "Cancel swap"
+    "message": "anuluj wymianę"
   },
   {
     "id": "IncompletedSwaps55",
-    "message": "Data processed, try to reload the page",
+    "message": "Przetwarzam dane, spróbuj odśwież stronę",
     "files": [
       "src/front/shared/components/modals/IncompletedSwaps/IncompletedSwaps.tsx"
     ]
@@ -3187,7 +3196,7 @@
   },
   {
     "id": "ErrorNotAvailable",
-    "message": "Available balance to swap is {available}"
+    "message": "Dostępna kwota do wymiany to  {available}"
   },
   {
     "id": "select75",
@@ -3200,7 +3209,7 @@
   },
   {
     "id": "selected53",
-    "message": "You can use an external wallet to perform a swap",
+    "message": "Możesz użyć zewnętrznego portfela do wymiany",
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/SelectGroup/SelectGroup.tsx",
       "src/front/shared/pages/Exchange/SelectGroup/SelectGroup.tsx",
@@ -3209,7 +3218,7 @@
   },
   {
     "id": "Select28",
-    "message": "Alle"
+    "message": "ALL"
   },
   {
     "id": "tourPartial103",
@@ -3304,7 +3313,7 @@
   },
   {
     "id": "FooterOurProductsWallet",
-    "message": "Portefeuille",
+    "message": "Wallet",
     "files": [
       "src/front/shared/components/Footer/Links/Links.tsx"
     ]
@@ -3318,39 +3327,39 @@
   },
   {
     "id": "FooterPartnershipForBlockchains",
-    "message": "Voor Blockchains",
+    "message": "For Blockchains",
     "files": [
       "src/front/shared/components/Footer/Links/Links.tsx"
     ]
   },
   {
     "id": "FooterPartnershipForDEXes",
-    "message": "Voor DEXes",
+    "message": "For DEXes",
     "files": [
       "src/front/shared/components/Footer/Links/Links.tsx"
     ]
   },
   {
     "id": "FooterPartnershipForERC20",
-    "message": "Voor ERC20 tokens"
+    "message": "For ERC20 tokens"
   },
   {
     "id": "FooterPartnershipForNewsWebsites",
-    "message": "Voor news websites",
+    "message": "For news websites",
     "files": [
       "src/front/shared/components/Footer/Links/Links.tsx"
     ]
   },
   {
     "id": "FooterPartnershipForstablecoin",
-    "message": "Voor stablecoins",
+    "message": "For stablecoins",
     "files": [
       "src/front/shared/components/Footer/Links/Links.tsx"
     ]
   },
   {
     "id": "FooterPartnershipHeader",
-    "message": "Partnership",
+    "message": "Współpraca",
     "files": [
       "src/front/shared/components/Footer/Links/Links.tsx"
     ]
@@ -3364,7 +3373,7 @@
   },
   {
     "id": "FooterTechnologyHeader",
-    "message": "Technology",
+    "message": "Technologia",
     "files": [
       "src/front/shared/components/Footer/Links/Links.tsx"
     ]
@@ -3399,7 +3408,7 @@
   },
   {
     "id": "Partial955",
-    "message": "Address not correct"
+    "message": "Addres nieprawidłowy"
   },
   {
     "id": "FooterOurProductsBankDashboard",
@@ -3424,21 +3433,21 @@
   },
   {
     "id": "DepositButton41",
-    "message": "Deposit this cryptocurrency to your wallet",
+    "message": "Wykonaj depozyt do Twojego portfela",
     "files": [
       "src/front/shared/components/controls/DepositButton/DepositButton.tsx"
     ]
   },
   {
     "id": "DepositButton42",
-    "message": "You can not send this asset, because you have a zero balance.",
+    "message": "Nie możesz tego wysłać ponieważ nie posiadasz tyle na koncie.",
     "files": [
       "src/front/shared/components/controls/DepositButton/DepositButton.tsx"
     ]
   },
   {
     "id": "Submenu16",
-    "message": "Fast atomic swap exchanges BTC, ETH, ERC20 online",
+    "message": "Ekspresowt SWAP BTC, ETH, ERC20 online",
     "files": [
       "src/front/shared/components/Header/SubMenu/SubMenu.tsx",
       "src/front/shared/components/modals/MobMenu/MobMenu.tsx"
@@ -3454,7 +3463,7 @@
   },
   {
     "id": "Submenu28",
-    "message": "Turn your website into a cryptocurrency portal (wallet, stock exchange, etc.)",
+    "message": "Zmień swoją stronę w portal o kryptowalutach (portfel, giełd itp.)",
     "files": [
       "src/front/shared/components/Header/SubMenu/SubMenu.tsx",
       "src/front/shared/components/modals/MobMenu/MobMenu.tsx"
@@ -3482,28 +3491,28 @@
   },
   {
     "id": "CustomWalletIsNotCorrect",
-    "message": "Wallet address is incorrect",
+    "message": "Adres portfela jest błędny",
     "files": [
       "src/front/shared/components/modals/ConfirmBeginSwap/ConfirmBeginSwap.tsx"
     ]
   },
   {
     "id": "multiSignJoinLink",
-    "message": "Creёer BTC-Multisign wallet",
+    "message": "Create BTC-Multisign wallet",
     "files": [
       "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx"
     ]
   },
   {
     "id": "multiSignJoinLinkMessage",
-    "message": "Stuur deze link naar de tweede eigenaar van de wallet",
+    "message": "Wyślij link do drugiego właściciela portfela",
     "files": [
       "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx"
     ]
   },
   {
     "id": "multiSignJoinLinkReady",
-    "message": "Gereed"
+    "message": "Gotowe"
   },
   {
     "id": "Select23",
@@ -3535,103 +3544,103 @@
   },
   {
     "id": "BTCMS_WithdrawRequest",
-    "message": "Withdraw request from BTC-multisign wallet",
+    "message": "Zlecenie wypłaty z portfela multisign BTC",
     "files": [
       "src/front/shared/components/notifications/BTCMultisignRequest/BTCMultisignRequest.tsx"
     ]
   },
   {
     "id": "BTCMS_WithdrawRequestInfo",
-    "message": "Send {amount} {currency} to wallet {address}",
+    "message": "Wyślij {amount} {currency} do portfela {address}",
     "files": [
       "src/front/shared/components/notifications/BTCMultisignRequest/BTCMultisignRequest.tsx"
     ]
   },
   {
     "id": "PreventMultiTabsSwitchApp",
-    "message": "Close other tabs and continue here",
+    "message": "Zamknij inne karty i kontynuuj w tej",
     "files": [
       "src/front/shared/components/PreventMultiTabs/PreventMultiTabs.tsx"
     ]
   },
   {
     "id": "createWalletHeader1",
-    "message": "Create a wallet",
+    "message": "Utwórz portfel",
     "files": [
       "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
     ]
   },
   {
     "id": "createWalletButton1",
-    "message": "Volgende",
+    "message": "Kontynuuj",
     "files": [
       "src/front/shared/pages/CreateWallet/Steps/FirstStep.tsx"
     ]
   },
   {
     "id": "createWalletButton2",
-    "message": "Import keys"
+    "message": "Importuj klucze"
   },
   {
     "id": "createWalletButton4",
-    "message": "Exchange"
+    "message": "Wymiana/Swap"
   },
   {
     "id": "createWalletCapture1",
-    "message": "Kies uit Bitcoin, Ethereum, Swap of andere valuta's",
+    "message": "Wybierz Bitcoin/Ethereum lub Swapuj",
     "files": [
       "src/front/shared/pages/CreateWallet/Steps/texts.tsx"
     ]
   },
   {
     "id": "createWalletCapture2",
-    "message": "Geen beveiliging, sms, google auth, multisig",
+    "message": "Bez bezpieczeństwa, sms, google auth, multisig",
     "files": [
       "src/front/shared/pages/CreateWallet/Steps/texts.tsx"
     ]
   },
   {
     "id": "createWalletSubHeader1",
-    "message": "Kies uw wallet's valuta",
+    "message": "Wybierz walutę Twojego portfela",
     "files": [
       "src/front/shared/pages/CreateWallet/Steps/texts.tsx"
     ]
   },
   {
     "id": "createWalletSubHeader2",
-    "message": "Kies jouw wallet's beveiligings niveau",
+    "message": "Wybierz poziom bezpieczeństwa",
     "files": [
       "src/front/shared/pages/CreateWallet/Steps/texts.tsx"
     ]
   },
   {
     "id": "createWalletActivated",
-    "message": "Activated!",
+    "message": "Aktywowane!",
     "files": [
       "src/front/shared/pages/CreateWallet/Steps/SecondStep.tsx"
     ]
   },
   {
     "id": "createWalletButton3",
-    "message": "Creëer wallet",
+    "message": "Utwórz portfel",
     "files": [
       "src/front/shared/pages/CreateWallet/Steps/SecondStep.tsx"
     ]
   },
   {
     "id": "createWalletSoon",
-    "message": "Soon!",
+    "message": "Wkrótce!",
     "files": [
       "src/front/shared/pages/CreateWallet/Steps/SecondStep.tsx"
     ]
   },
   {
     "id": "history107",
-    "message": "Loading"
+    "message": "Ładowanie"
   },
   {
     "id": "HowItWorks18",
-    "message": "1. Select your cryptocurrency and the amount.",
+    "message": "1. Wybierz kryptowalutę i kwotę.",
     "files": [
       "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx",
       "src/front/shared/pages/PointOfSell/HowItWorks/HowItWorks.tsx"
@@ -3639,7 +3648,7 @@
   },
   {
     "id": "HowItWorks21",
-    "message": "Choose a cryptocurrency that you have at your disposal on any external wallet, exchange, or Swap Online wallet",
+    "message": "Wybierz kryptowalutę którą posiadasz na jakimkolwiek portfelu, giełdzie, lub na swapie",
     "files": [
       "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx",
       "src/front/shared/pages/PointOfSell/HowItWorks/HowItWorks.tsx"
@@ -3647,7 +3656,7 @@
   },
   {
     "id": "HowItWorks26",
-    "message": "2. Click “Exchange”",
+    "message": "2. Kliknij “Swap”",
     "files": [
       "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx",
       "src/front/shared/pages/PointOfSell/HowItWorks/HowItWorks.tsx"
@@ -3663,7 +3672,7 @@
   },
   {
     "id": "HowItWorks34",
-    "message": "3. Make a cryptocurrency deposit.",
+    "message": "3. Wykonaj depozyt kryptowalut.",
     "files": [
       "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx",
       "src/front/shared/pages/PointOfSell/HowItWorks/HowItWorks.tsx"
@@ -3671,7 +3680,7 @@
   },
   {
     "id": "HowItWorks37",
-    "message": "In the event that the required amount is available on your internal wallet, the deposit will be executed automatically.",
+    "message": "W przypadku, gdy wymagana kwota jest dostępna w Twoim wewnętrznym portfelu, wpłata zostanie zrealizowana automatycznie.",
     "files": [
       "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx",
       "src/front/shared/pages/PointOfSell/HowItWorks/HowItWorks.tsx"
@@ -3679,7 +3688,7 @@
   },
   {
     "id": "HowItWorks42",
-    "message": "4. Confirm completion of the swap.",
+    "message": "4. Potwierdź zakończenie wymiany.",
     "files": [
       "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx",
       "src/front/shared/pages/PointOfSell/HowItWorks/HowItWorks.tsx"
@@ -3687,7 +3696,7 @@
   },
   {
     "id": "HowItWorks45",
-    "message": "The exchange usually takes about a minute.  At the end of the swap, you will see the txid and will be able to confirm completion of the transfer on your end.",
+    "message": "Wymiana zazwyczaj zajmuje do minuty. Na końcu wymiany, zobaczysz txid i będziesz mógł przewidzieć kiedy wymiana zostanie zakończona",
     "files": [
       "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx",
       "src/front/shared/pages/PointOfSell/HowItWorks/HowItWorks.tsx"
@@ -3717,37 +3726,37 @@
   },
   {
     "id": "timerSwapIsCancelled",
-    "message": "Swap canceled due to time out",
+    "message": "Wymiana anulowana - przekroczono czas",
     "files": [
       "src/front/shared/pages/Swap/Timer/Timer.tsx"
     ]
   },
   {
     "id": "timerTimeToCancel",
-    "message": "U heeft {min} min om de betaling uit te voeren.",
+    "message": "Masz {min} minut na wysłanie płatności",
     "files": [
       "src/front/shared/pages/Swap/Timer/Timer.tsx"
     ]
   },
   {
     "id": "PrivateKeysModalToggleTree",
-    "message": "I do not use TOR browser"
+    "message": "Nie używam przeglądarki TOR"
   },
   {
     "id": "PrivateKeysModalToggleTwo",
-    "message": "I do not use incognito or guest mode in my browser"
+    "message": "Nie używam trybu incognito lub trybu ducha"
   },
   {
     "id": "WithdrawMSLinkCopied",
-    "message": "Link copied to clipboard"
+    "message": "Link skopiowany do schowka"
   },
   {
     "id": "WithdrawMSLinkCopy",
-    "message": "Copy to clipboard"
+    "message": "Kopiuj do schowka"
   },
   {
     "id": "WithdrawMSUserFinish",
-    "message": "Gereed",
+    "message": "Gotowe",
     "files": [
       "src/front/shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
@@ -3771,84 +3780,84 @@
   },
   {
     "id": "BTCMS_ConfirmTxGoToWallet",
-    "message": "Go to your wallet",
+    "message": "Idź do mojego portfela",
     "files": [
       "src/front/shared/pages/Multisign/Btc/Btc.tsx"
     ]
   },
   {
     "id": "BTCMS_ConfirmTxInputs",
-    "message": "Transaction inputs",
+    "message": "Wejścia transakcji",
     "files": [
       "src/front/shared/pages/Multisign/Btc/Btc.tsx"
     ]
   },
   {
     "id": "BTCMS_ConfirmTxOutputs",
-    "message": "Transaction outputs",
+    "message": "Wyjścia transakcji",
     "files": [
       "src/front/shared/pages/Multisign/Btc/Btc.tsx"
     ]
   },
   {
     "id": "BTCMS_ConfirmTxReady",
-    "message": "Transaction is signed and sent to the blockchain",
+    "message": "Transakcja została zarejestrowana i wysłana do sieci",
     "files": [
       "src/front/shared/pages/Multisign/Btc/Btc.tsx"
     ]
   },
   {
     "id": "BTCMS_ConfirmTxSign",
-    "message": "Sign the transaction",
+    "message": "Zarejestruj transkacje",
     "files": [
       "src/front/shared/pages/Multisign/Btc/Btc.tsx"
     ]
   },
   {
     "id": "BTCMS_ConfirmTxTitle",
-    "message": "Transaction confirmation",
+    "message": "Potwierdzenie transakcji",
     "files": [
       "src/front/shared/pages/Multisign/Btc/Btc.tsx"
     ]
   },
   {
     "id": "BTCMS_CreateWalletAdd",
-    "message": "Add this wallet",
+    "message": "Dodaj ten portfel",
     "files": [
       "src/front/shared/pages/Multisign/Btc/Btc.tsx"
     ]
   },
   {
     "id": "BTCMS_CreateWalletLoading_descroptio",
-    "message": "Funds sent to this wallet cannot be spent without your confirmation (please save your private 12 words passphrase)",
+    "message": "Funds sent to this wallet cannot be spent without your Potwierdzenie (please save your private 12 words passphrase)",
     "files": [
       "src/front/shared/pages/Multisign/Btc/Btc.tsx"
     ]
   },
   {
     "id": "BTCMS_CreateWalletLinkReady",
-    "message": "The wallet is created. Send this link to the second owner for confirmation.",
+    "message": "The wallet is created. Send this link to the second owner for Potwierdzenie.",
     "files": [
       "src/front/shared/pages/Multisign/Btc/Btc.tsx"
     ]
   },
   {
     "id": "BTCMS_CreateWalletLoading",
-    "message": "Lading... Wacht alsjeblieft",
+    "message": "Ładowanie... Proszę czekać",
     "files": [
       "src/front/shared/pages/Multisign/Btc/Btc.tsx"
     ]
   },
   {
     "id": "BTCMS_CreateWalletReady",
-    "message": "Wallet is ready",
+    "message": "Portfel gotowy",
     "files": [
       "src/front/shared/pages/Multisign/Btc/Btc.tsx"
     ]
   },
   {
     "id": "BTCMS_CreateWalletReadyButton",
-    "message": "Ready. Open the wallet",
+    "message": "Gotowe. Otwórz portfel",
     "files": [
       "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx",
       "src/front/shared/pages/Multisign/Btc/Btc.tsx"
@@ -3856,7 +3865,7 @@
   },
   {
     "id": "BTCMS_CreateWalletTitle",
-    "message": "Create BTC-multisignature wallet",
+    "message": "Utwórz portfel BTC-multisignature wallet",
     "files": [
       "src/front/shared/pages/Multisign/Btc/Btc.tsx"
     ]
@@ -3877,7 +3886,7 @@
   },
   {
     "id": "BTCMS_WalletAddress",
-    "message": "Wallet adres:",
+    "message": "Wallet address:",
     "files": [
       "src/front/shared/pages/Multisign/Btc/Btc.tsx"
     ]
@@ -3891,7 +3900,7 @@
   },
   {
     "id": "deposit312",
-    "message": "copy",
+    "message": "Kopiuj",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/DepositWindow/DepositWindow.tsx"
     ]
@@ -3955,21 +3964,21 @@
   },
   {
     "id": "partial-tour-2",
-    "message": "In dit veld kiest u de valuta en hoeveelheid dat u wilt verkopen. U kunt het ook verkopen vanuit een externe wallet.",
+    "message": "In this field choose the currency and enter the amount you want to sell. You also can sell the currency from an external wallet.",
     "files": [
       "src/front/shared/components/Header/TourPartial/TourPartial.tsx"
     ]
   },
   {
     "id": "partial-tour-3",
-    "message": "In dit veld kiest u de valuta en hoeveelheid dat u wilt kopen.",
+    "message": "In this field choose the currency and enter the amount you want to buy.",
     "files": [
       "src/front/shared/components/Header/TourPartial/TourPartial.tsx"
     ]
   },
   {
     "id": "partial-tour-4",
-    "message": "Hier ziet u de status van het zoeken naar aanbiedingen op de exchange. Tijdens het laten ziet u 'Zoeken naar orders...' Na het vinden van een order, checked u de wisselkoers hier.",
+    "message": "Here you can see the search status of exchange offers. When loading you'll see 'Searching orders...'. After finding an order, check the exchange rate here.",
     "files": [
       "src/front/shared/components/Header/TourPartial/TourPartial.tsx"
     ]
@@ -3983,28 +3992,28 @@
   },
   {
     "id": "partial-tour-6",
-    "message": "Druk op de knop om een directe URL te zien van de transactie. Deze is beschikbaar wanneer de knop roze is.",
+    "message": "Switch this button to see a direct URL of the transaction. It is available when the button is pink.",
     "files": [
       "src/front/shared/components/Header/TourPartial/TourPartial.tsx"
     ]
   },
   {
     "id": "partial-tour-7",
-    "message": "Druk op deze knop om de Orderboek pagina te bezoeken. De orders voor specifieke valuta's worden hier getoond. U kunt ook zelfeen order creëren in de Orderboek pagina.",
+    "message": "Press this button to see the Order Book page. The orders will be shown for specific currencies. You can also create your own order on the Order Book page.",
     "files": [
       "src/front/shared/components/Header/TourPartial/TourPartial.tsx"
     ]
   },
   {
     "id": "tour-step-1",
-    "message": "De balans van de gekozen valuta wordt weergegeven aan het einde van het veld, tegengesteld aan de valuta. U kunt de browser sluiten en de computer herstarten. Uw balans zal hetzelfde blijven. Vergeet alstublieft niet de sleutels op te saan.",
+    "message": "The Balance of the choosen currency is shown at the end of the field, opposite to the currency. You can close the browser and reload your computer. Your balance will remain the same. Please don't forget to save your keys",
     "files": [
       "src/front/shared/components/Header/WalletTour/WalletTour.tsx"
     ]
   },
   {
     "id": "tour-step-1.1",
-    "message": "Uw totale balans",
+    "message": "Saldo",
     "files": [
       "src/front/shared/components/Header/WalletTour/WalletTour.tsx"
     ]
@@ -4018,14 +4027,14 @@
   },
   {
     "id": "tour-step-2",
-    "message": "U kunt valuta's opslaan van verschillende blockchains als Bitcoin, Ethereum, Bitcoin Cash, Litecoin en vele andere tokens.",
+    "message": "You can store currencies of different blockchains like Bitcoin, Ethereum, Bitcoin Cash, Litecoin, and other tokens",
     "files": [
       "src/front/shared/components/Header/WalletTour/WalletTour.tsx"
     ]
   },
   {
     "id": "tour-step-3",
-    "message": "Onze unieke peer-to-peer exchange is beschikbaar in onze wallet en is gebouwd op Atomic Swap technology. U kunt uw cryptovaluta toevoegen in onze wallet.",
+    "message": "Our unique peer-to-peer exchange is available in our wallet that is built on Atomic Swap technology. You can list your cryptocurrency in our wallet.",
     "files": [
       "src/front/shared/components/Header/WalletTour/WalletTour.tsx"
     ]
@@ -4060,14 +4069,14 @@
   },
   {
     "id": "InvoiceLinkCopied",
-    "message": "Link gekopieerd",
+    "message": "Link copied",
     "files": [
       "src/front/shared/components/modals/InvoiceLinkModal/InvoiceLinkModal.tsx"
     ]
   },
   {
     "id": "InvoiceLinkCopy",
-    "message": "Copy this link",
+    "message": "Kopiuj this link",
     "files": [
       "src/front/shared/components/modals/InvoiceLinkModal/InvoiceLinkModal.tsx"
     ]
@@ -4081,7 +4090,7 @@
   },
   {
     "id": "WithdrawModalCancelBtn",
-    "message": "Annuleer",
+    "message": "Cancel",
     "files": [
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
@@ -4123,14 +4132,14 @@
   },
   {
     "id": "InfoPay_4",
-    "message": "Est. time to confirmation",
+    "message": "Est. time to Potwierdzenie",
     "files": [
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]
   },
   {
     "id": "InfoPay_5",
-    "message": "Back to app"
+    "message": "Wróć do aplikacji"
   },
   {
     "id": "createWalletCaptureOthers",
@@ -4155,18 +4164,18 @@
   },
   {
     "id": "invoiceModal_Amount",
-    "message": "HOEVEELHEID",
+    "message": "Kwota",
     "files": [
       "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
     ]
   },
   {
     "id": "invoiceModal_Amount_Dollar",
-    "message": "Amount in USD"
+    "message": "Kwota w USD"
   },
   {
     "id": "invoiceModal_Amount_Rub",
-    "message": "Amount in RUB"
+    "message": "Kwota w RUB"
   },
   {
     "id": "invoiceModal_Error",
@@ -4198,7 +4207,7 @@
   },
   {
     "id": "invoiceModal_Processing",
-    "message": "Processing ...",
+    "message": "Przetwarzanie ...",
     "files": [
       "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
     ]
@@ -4338,7 +4347,7 @@
   },
   {
     "id": "WalletRow_Menu_ActivateSMSProtected",
-    "message": "Activeer",
+    "message": "Activate",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
@@ -4352,21 +4361,21 @@
   },
   {
     "id": "WalletRow_Menu_Deposit",
-    "message": "Storten",
+    "message": "Depozyt",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
     "id": "WalletRow_Menu_Hide",
-    "message": "Verbergen",
+    "message": "Hide",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
     "id": "WalletRow_Menu_History",
-    "message": "Geschiedenis",
+    "message": "History",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
@@ -4380,49 +4389,49 @@
   },
   {
     "id": "WalletRow_Menu_Invoice",
-    "message": "Factuur",
+    "message": "Invoice",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
     "id": "WalletRow_Menu_InvoiceLink",
-    "message": "Krijg de link voor factureren",
+    "message": "Get the link for invoicing",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
     "id": "WalletRow_Menu_Send",
-    "message": "Verstuur",
+    "message": "Wyślij",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
     "id": "WalletRow_Menu_Сopy",
-    "message": "Kopieer Adres",
+    "message": "Kopiuj adres",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
     "id": "WalletRow_Menu_Сopy_PrivateKey",
-    "message": "Kopieer Prive Sleutel",
+    "message": "Kopiuj klucz prywatny",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
     "id": "menu.invest",
-    "message": "Invest",
+    "message": "Inwestuj",
     "files": [
       "src/front/shared/components/Header/config.tsx"
     ]
   },
   {
     "id": "menu.invest.info",
-    "message": "How to invest?",
+    "message": "Jak inwestować?",
     "files": [
       "src/front/shared/components/Header/config.tsx"
     ]
@@ -4443,95 +4452,98 @@
   },
   {
     "id": "currencyAction81",
-    "message": "Kies de valuta die u wilt {context}",
+    "message": "Please choose a currency you want to {context}",
     "files": [
       "src/front/shared/components/modals/CurrencyAction/CurrencyAction.tsx"
     ]
   },
   {
     "id": "registerSMSModalCode",
-    "message": "Code from SMS",
+    "message": "Kod z SMSa",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
     "id": "registerSMSModalFinish",
-    "message": "Finish",
+    "message": "Koniec",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
     "id": "registerSMSModalPhone",
-    "message": "Uw telefoonnummer",
+    "message": "Twój telefon",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
     "id": "registerSMSModalProcess",
-    "message": "Processing ...",
+    "message": "Przetwarzanie ...",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
     "id": "registerSMSModalReady",
-    "message": "Uw beveiligde wallet is geactiveerd",
+    "message": "Twój bezpiecny portfel został aktywowany",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
     "id": "registerSMSModalSendSMS",
-    "message": "Verstuur SMS",
+    "message": "Wyślij SMS",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
     "id": "registerSMSModalSendSMS165",
-    "message": "Confirm",
+    "message": "Potwierdź",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
     "id": "registerSMSProtectedTitle",
-    "message": "Activate SMS Protected Wallet",
+    "message": "Aktywuj ochronę portfela SMS",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
-    "id": "Terug",
-    "message": "Terug"
+    "id": "back",
+    "message": "Wróć",
+    "files": [
+      "src/front/shared/components/TourWindow/index.tsx"
+    ]
   },
   {
     "id": "closeTourWindow",
-    "message": "Close",
+    "message": "Zamknij",
     "files": [
       "src/front/shared/components/TourWindow/index.tsx"
     ]
   },
   {
     "id": "nextTourWindow",
-    "message": "Volgende",
+    "message": "Dalej",
     "files": [
       "src/front/shared/components/TourWindow/index.tsx"
     ]
   },
   {
     "id": "skip",
-    "message": "Overslaan",
+    "message": "Pominń",
     "files": [
       "src/front/shared/components/TourWindow/index.tsx"
     ]
   },
   {
     "id": "CurrencySlider19",
-    "message": "Nu al beschikbaar voor exchange.",
+    "message": "Już dostępne do wymiany",
     "files": [
       "src/front/shared/pages/PointOfSell/CurrencySlider/CurrencySlider.tsx"
     ]
@@ -4545,7 +4557,7 @@
   },
   {
     "id": "PartialHowItWorks10",
-    "message": "How it works?",
+    "message": "Jak to działa?",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx",
       "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
@@ -4553,133 +4565,129 @@
   },
   {
     "id": "PartialPriceSellMax",
-    "message": "Maximum available amount for sell:"
+    "message": "Maksymalna suma na sprzedaż:"
   },
   {
     "id": "continueDeclined977",
-    "message": "Continue your swaps",
+    "message": "Kontynuuj Twoją wymianę",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
-    "id": "partial1021",
-    "message": "Insluiten op website"
-  },
-  {
     "id": "partial2378",
-    "message": "Portefeuille",
+    "message": "Portfel",
     "files": [
       "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
     ]
   },
   {
     "id": "ImportKeysBtn",
-    "message": "Import"
+    "message": "Importuj"
   },
   {
     "id": "ExchangeBtn",
-    "message": "Exchange"
+    "message": "Giełda"
   },
   {
     "id": "Yourtotalbalance",
-    "message": "Uw totale balans",
+    "message": "Twoje całkowite saldo",
     "files": [
       "src/front/shared/components/BalanceForm/BalanceForm.tsx"
     ]
   },
   {
     "id": "YourtotalbalanceDeposit",
-    "message": "Storten",
+    "message": "Depozyt",
     "files": [
       "src/front/shared/components/BalanceForm/BalanceForm.tsx"
     ]
   },
   {
     "id": "YourtotalbalanceSend",
-    "message": "Verstuur",
+    "message": "Wyślij",
     "files": [
       "src/front/shared/components/BalanceForm/BalanceForm.tsx"
     ]
   },
   {
     "id": "YourAssets",
-    "message": "Uw bezittingen",
+    "message": "Portfolio",
     "files": [
       "src/front/shared/pages/Wallet/CurrenciesList.tsx"
     ]
   },
   {
     "id": "ForYou",
-    "message": "Voor jouw",
+    "message": "Dla Ciebie",
     "files": [
       "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
     ]
   },
   {
     "id": "YourAssetsDescription",
-    "message": "Hier kunt u veilig activa opslaan, verzenden en ontvangen",
+    "message": "Tutaj bezpiecznie możesz kupować, wymieniać i przechowywać kryptowaluty",
     "files": [
       "src/front/shared/pages/Wallet/CurrenciesList.tsx"
     ]
   },
   {
     "id": "addAsset",
-    "message": "Valuta toevoegen",
+    "message": "Dodaj kryptowalutę",
     "files": [
       "src/front/shared/pages/Wallet/CurrenciesList.tsx"
     ]
   },
   {
     "id": "MybalanceswalletNav",
-    "message": "Mijn wallet",
+    "message": "Mój portfel",
     "files": [
       "src/front/shared/pages/Invoices/InvoicesList/index.tsx"
     ]
   },
   {
     "id": "TransactionswalletNav",
-    "message": "Transacties"
+    "message": "Tranzakcje"
   },
   {
     "id": "walletHistoryActivity",
-    "message": "Geschiedenis"
+    "message": "Historia"
   },
   {
     "id": "descr279",
-    "message": "Save your private keys!"
+    "message": "Zapisz swoje klucze prywatne!"
   },
   {
     "id": "descr280",
-    "message": "We do not store your private keys and will not be able to restore them"
+    "message": "Nie przechowujemy kluczy prywatnych i nie jesteśmy w stanie ich odszyfrować"
   },
   {
     "id": "descr282",
-    "message": "Show my keys"
+    "message": "Pokaż klucze"
   },
   {
     "id": "descr284",
-    "message": "I saved my keys"
+    "message": "Zapisałem swoje klucze"
   },
   {
     "id": "descr291",
-    "message": "Sign up and get your free cryptocurrency for test!"
+    "message": "Zarejestruj się i otrzymaj kryptowalutę w gratisie!"
   },
   {
     "id": "descr292",
-    "message": "You will also be able to receive notifications regarding updates with your account"
+    "message": "Możesz otrzymywać powiadomienia dotyczące aktywności związanej z kontem"
   },
   {
     "id": "descr293",
-    "message": "Sign Up"
+    "message": "Zarejestruj się"
   },
   {
     "id": "descr294",
-    "message": "I’ll do this later"
+    "message": "Zrobię to później"
   },
   {
     "id": "descr295",
-    "message": "The fastest BTC/USDT exchange"
+    "message": "Najszybsza wymymiana BTC/USDT"
   },
   {
     "id": "descr296",
@@ -4687,7 +4695,7 @@
   },
   {
     "id": "descr297",
-    "message": "Do you have an investor?"
+    "message": "Masz inwestora?"
   },
   {
     "id": "descr298",
@@ -4711,7 +4719,7 @@
   },
   {
     "id": "historyActivity",
-    "message": "Geschiedenis"
+    "message": "History"
   },
   {
     "id": "Submenu",
@@ -4737,36 +4745,36 @@
   },
   {
     "id": "multiSignJoinLinkCopied",
-    "message": "Ready. Link copied to clipboard",
+    "message": "Gotowe. Link skopiowany do schowka",
     "files": [
       "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx"
     ]
   },
   {
     "id": "multiSignJoinLinkCopy",
-    "message": "Copy to clipboard",
+    "message": "Kopiuj do schowka",
     "files": [
       "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx"
     ]
   },
   {
     "id": "CreateInvoiceGoHome",
-    "message": "Go to main"
+    "message": "Idź do głównej"
   },
   {
     "id": "CreateInvoiceReady",
-    "message": "Invoice sent"
+    "message": "Rachunek wysłany"
   },
   {
     "id": "createWallet_customERC20",
-    "message": "Custom token",
+    "message": "Własny token",
     "files": [
-      "src/front/shared/pages/CreateWallet/Steps/StepsWrapper.tsx"
+      "src/front/shared/pages/CreateWallet/Steps/LogicForSteps.tsx"
     ]
   },
   {
     "id": "descr301",
-    "message": "Updates"
+    "message": "Aktualizacje"
   },
   {
     "id": "descr302",
@@ -4774,74 +4782,74 @@
   },
   {
     "id": "descr303",
-    "message": "Close"
+    "message": "Zamknij"
   },
   {
     "id": "customERC20_Address",
-    "message": "erc20 address",
+    "message": "erc20 addres",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
     "id": "customERC20_ConfirmStep",
-    "message": "Add token",
+    "message": "Dodaj token",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
     "id": "customERC20_IncorrectAddress",
-    "message": "Invalid erc20 address",
+    "message": "Nieprawidłowy erc20 addres",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
     "id": "customERC20_NextStep",
-    "message": "Volgende",
+    "message": "Dalej",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
     "id": "customERC20_NotFound",
-    "message": "This is not ERC20 address",
+    "message": "To nie jest adres ERC20",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
     "id": "customERC20_Processing",
-    "message": "Processing ...",
+    "message": "Przetwarzam ...",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
     "id": "customERC20_Ready",
-    "message": "Done",
+    "message": "Gotowe",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
     "id": "customERC20_ReadyMessage",
-    "message": "Token ble lagt til",
+    "message": "Token dodany pomyślnie",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
     "id": "customERC20_Title",
-    "message": "Add new ERC20",
+    "message": "Dodaj nowy ERC20",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
     "id": "customERC20_TokenDecimals",
-    "message": "Decimals",
+    "message": "0",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
@@ -4855,43 +4863,43 @@
   },
   {
     "id": "customERC20_TokenTitle",
-    "message": "Title",
+    "message": "Nazwa",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
     "id": "customERC20_addressPlaceholder",
-    "message": "Введите адрес токена",
+    "message": "Enter token address",
     "files": [
       "src/front/shared/components/modals/AddCustomERC20/AddCustomERC20.tsx"
     ]
   },
   {
     "id": "invoiceModal_contactPlaceholder",
-    "message": "Required",
+    "message": "Wymagane",
     "files": [
       "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx"
     ]
   },
   {
     "id": "HistoryRowInvoiceStatusNew",
-    "message": "Pending",
+    "message": "Oczekuje",
     "files": [
       "src/front/shared/pages/History/Row/Row.tsx"
     ]
   },
   {
     "id": "WalletPage_ExportKeys",
-    "message": "Show private keys"
+    "message": "Pokaż klucze prywatne"
   },
   {
     "id": "WalletPage_Heading",
-    "message": "Portefeuille"
+    "message": "Portfel"
   },
   {
     "id": "WalletPage_ImportKeys",
-    "message": "Import keys"
+    "message": "Importuj klucze"
   },
   {
     "id": "btcmsSwitchFetchWalletsData",
@@ -4902,35 +4910,35 @@
   },
   {
     "id": "btcmsSwitchFetchWalletsEmpty",
-    "message": "You do not have BTC-Multisign wallets",
+    "message": "Nie posiadasz portfela BTC-Multisign",
     "files": [
       "src/front/shared/components/modals/BtcMultisignSwitch/BtcMultisignSwitch.tsx"
     ]
   },
   {
     "id": "btcmsSwitchTitle",
-    "message": "Connected BTC-Multisign wallets",
+    "message": "Połączono BTC-Multisign",
     "files": [
       "src/front/shared/components/modals/BtcMultisignSwitch/BtcMultisignSwitch.tsx"
     ]
   },
   {
     "id": "SwitchBtcMultisigMenuRemove",
-    "message": "Remove",
+    "message": "Usuń",
     "files": [
       "src/front/shared/components/modals/BtcMultisignSwitch/WalletRow.tsx"
     ]
   },
   {
     "id": "SwitchBtcMultisigMenuSwitch",
-    "message": "Switch",
+    "message": "Przełącz",
     "files": [
       "src/front/shared/components/modals/BtcMultisignSwitch/WalletRow.tsx"
     ]
   },
   {
     "id": "ShareModal1",
-    "message": "Kopieer Link",
+    "message": "Kopiuj link",
     "files": [
       "src/front/shared/components/modals/Share/Share.tsx"
     ]
@@ -4941,7 +4949,7 @@
   },
   {
     "id": "withdrawSMSCodePlaceholder",
-    "message": "Enter SMS-code",
+    "message": "Wpisz kod SMS",
     "files": [
       "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
@@ -4949,32 +4957,32 @@
   },
   {
     "id": "WalletRow_Menu_BTCMS_SwitchMenu",
-    "message": "Switch wallet",
+    "message": "Zmień portfel",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
     "id": "YourtotalbalanceExchange",
-    "message": "Exchange"
+    "message": "Giełda"
   },
   {
     "id": "RequestPayment",
-    "message": "Request Payment",
+    "message": "Żądaj płatności",
     "files": [
       "src/front/shared/components/BalanceForm/BalanceForm.tsx"
     ]
   },
   {
     "id": "ControlShareLink_CopyLink",
-    "message": "Kopieer Link",
+    "message": "Kopiuj link",
     "files": [
       "src/front/shared/components/controls/ShareLink/ShareLink.tsx"
     ]
   },
   {
     "id": "ControlShareLink_LinkCopied",
-    "message": "Link gekopieerd",
+    "message": "Link skopiowany",
     "files": [
       "src/front/shared/components/controls/ShareLink/ShareLink.tsx"
     ]
@@ -5028,49 +5036,49 @@
   },
   {
     "id": "ConfirmActivateSMS_Message",
-    "message": "You have already activated this type of wallet. Want to overwrite your old wallet (you may loose the funds)",
+    "message": "Już aktywowałeś ten rodzaj tokenu ! Chcesz nadpisać stary portfel? (możesz stracić swoje środki)",
     "files": [
       "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
     ]
   },
   {
     "id": "ConfirmActivateSMS_No",
-    "message": "Nee",
+    "message": "Nie",
     "files": [
       "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
     ]
   },
   {
     "id": "ConfirmActivateSMS_Title",
-    "message": "Add BTC (SMS-Protected) wallet",
+    "message": "Dodaj portfel BTC (SMS-Protected)",
     "files": [
       "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
     ]
   },
   {
     "id": "ConfirmActivateSMS_Yes",
-    "message": "Ja:",
+    "message": "Tak",
     "files": [
       "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
     ]
   },
   {
     "id": "RegisterSMSProtected_SmsCodeRequery",
-    "message": "Enter SMS-code",
+    "message": "Wpisz kod",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
     "id": "registerSMSAddOffline",
-    "message": "Restore wallet",
+    "message": "Przywróc portfel",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
     "id": "registerSMSMPlaceHolder",
-    "message": "Secret phrase (12 words)",
+    "message": "Sekretna fraza (12 słów)",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx",
       "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
@@ -5079,39 +5087,39 @@
   },
   {
     "id": "registerSMSMnemonicError",
-    "message": "Your enter not valid mnemonic",
+    "message": "Wpisałeś błędne mnemonic",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
     "id": "registerSMSMnemonicNotice",
-    "message": "This phrase will help to unlock your assets in case 2fa server will be unavailable",
+    "message": "To pomoże Ci odzyskać Twoje środki gdyby P2P nie było czynne",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
     "id": "registerSMSModalFinishInfoTitle",
-    "message": "Save this information"
+    "message": "Zapisz tą informację"
   },
   {
     "id": "registerSMSModalPhonePlaceholder",
-    "message": "Voer uw nummer in",
+    "message": "Wpisz numer telefonu",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
     "id": "registerSMSModalSmsCodePlaceholder",
-    "message": "Enter code from SMS",
+    "message": "Wpisz kod z SMS",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
     "id": "registerSMSModalWords",
-    "message": "Geheime zin(12 woorden):",
+    "message": "Sekretna fraza (12 słów):",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx",
       "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
@@ -5120,7 +5128,7 @@
   },
   {
     "id": "registerSMSRestoryMnemonic",
-    "message": "Restore your wallet with a secret phrase",
+    "message": "Przywróć swój portfel z sekretną frazą",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
@@ -5134,49 +5142,49 @@
   },
   {
     "id": "registerSMS_ConfigServerOffline",
-    "message": "The authorization server is not available. Try again later or use a secret phrase to unlock your wallet",
+    "message": "Autoryzacja serwera nie jest dostępna. Spróbuj później",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
     "id": "registerSMS_LinkToManualRestore",
-    "message": "How to withdraw money manually",
+    "message": "Jak wypłacić pieniądze ręcznie ? ",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
     "id": "registerSMS_MnemonicRestoreNotes",
-    "message": "If you didn’t receive your SMS code or you don’t have access to this number, you can use a secret phrase to restore your wallet",
+    "message": "Jeżeli nie otrzymałeś kodu SMS lub nie masz dostępu do tego numeru, możesz przywrócić swój portfel za pomocą sekretnej frazy",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
     "id": "registerSMS_MnemonicUseNotes",
-    "message": "By using a secret phrase you can unlock assets on your account",
+    "message": "Używając sekretnej frazy możesz przywrócić swoje środki",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
     "id": "registerSMS_NotValidPhone",
-    "message": "Enter your phone number",
+    "message": "Podaj numer telefonu",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
     "id": "registerSMS_ShareInstruction",
-    "message": "Delen",
+    "message": "Udostępnij",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
     "id": "registerSMS_WalletLocked",
-    "message": "This wallet is tied to a different phone number",
+    "message": "Ten portfel jest przypisany do innego numeru telefonu",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
@@ -5199,7 +5207,7 @@
   },
   {
     "id": "WithdrawSMS_MnemonicNote",
-    "message": "If you didn’t receive your SMS code or you don’t have access to this number, you can use a secret phrase to restore your wallet",
+    "message": "Jeżeli nie otrzymałeś kodu SMS lub nie masz dostępu do tego numeru, możesz przywrócić swój portfel za pomocą sekretnej frazy",
     "files": [
       "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
@@ -5207,7 +5215,7 @@
   },
   {
     "id": "WithdrawSMS_MnemonicSignCaption",
-    "message": "Confirm transaction by secret phrase (12 words)",
+    "message": "Potwierdź transkację sekrętną frazą (12 words)",
     "files": [
       "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
@@ -5215,7 +5223,7 @@
   },
   {
     "id": "WithdrawSMS_NotValidMnemonic",
-    "message": "Secret phrase not valid",
+    "message": "Sekretna fraz jest nieprawidłowa",
     "files": [
       "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
@@ -5223,7 +5231,7 @@
   },
   {
     "id": "WithdrawSMS_ServerOffline",
-    "message": "Authorization server is offline",
+    "message": "Authoryzacja serwera offline",
     "files": [
       "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
@@ -5231,7 +5239,7 @@
   },
   {
     "id": "WithdrawSMS_SmsSended",
-    "message": "SMS with code sent",
+    "message": "Kod SMS został wysłany",
     "files": [
       "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
@@ -5239,7 +5247,7 @@
   },
   {
     "id": "WithdrawSMS_SmsSending",
-    "message": "Sending sms with confirm code",
+    "message": "Wysyłam SMS z kodem potwierdzającym",
     "files": [
       "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
@@ -5247,7 +5255,7 @@
   },
   {
     "id": "WithdrawSMS_UseMnemonic",
-    "message": "Use secret phrase (12 words)",
+    "message": "Użyj sekretnej frazy (12 słów)",
     "files": [
       "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
@@ -5255,7 +5263,7 @@
   },
   {
     "id": "WithdrawSMS_UseSMS",
-    "message": "Use SMS-code",
+    "message": "Użyj kodu SMS",
     "files": [
       "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
@@ -5271,7 +5279,7 @@
   },
   {
     "id": "WithdrawSMS_WrongMnemonic",
-    "message": "Secret phrase not valid",
+    "message": "Sekretna fraza nieprawidłowa",
     "files": [
       "src/front/shared/components/modals/WithdrawBtcSms/WithdrawBtcSms.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
@@ -5287,18 +5295,18 @@
   },
   {
     "id": "ShowMyMnemonic",
-    "message": "Please backup your wallet"
+    "message": "Proszę zrób back-up swojego portfela.."
   },
   {
     "id": "BtcMultisignConfirmTx_FromAddress",
-    "message": "Payment from wallet",
+    "message": "Płatność z portfela",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
     ]
   },
   {
     "id": "multiSignConfirmTxModal_GoToWalletPage",
-    "message": "Open wallet",
+    "message": "Otwórz portfel",
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx"
     ]
@@ -5319,186 +5327,193 @@
   },
   {
     "id": "SaveMnemonicModal_Continue",
-    "message": "Volgende",
+    "message": "Kontynuuj",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
     ]
   },
   {
     "id": "SaveMnemonicModal_CopyMnemonic",
-    "message": "Copy",
+    "message": "Kopiuj",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
     ]
   },
   {
     "id": "SaveMnemonicModal_EnterNotice",
-    "message": "Klik de woorden aan en plaats ze in de juiste volgorde",
+    "message": "Сlick on words to place them in the correct order",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
     ]
   },
   {
     "id": "SaveMnemonicModal_MnemonicCopied",
-    "message": "Copied...",
+    "message": "Skopiowane...",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
     ]
   },
   {
     "id": "SaveMnemonicModal_MnemoniceDeleted",
-    "message": "You have already saved your 12-words seed. {href}",
+    "message": "Już zapisałeś swoją sekretną frazę. {href}",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
     ]
   },
   {
     "id": "MnemoniceDeleted_hrefText",
-    "message": "Try export private key"
+    "message": "Spróbuj eksportować klucze"
   },
   {
     "id": "SaveMnemonicModal_Ready",
-    "message": "Gereed",
+    "message": "Gotowe",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
     ]
   },
   {
     "id": "SaveMnemonicModal_ReadySaveNotice",
-    "message": "Bewaar het papier op een plaats die je niet zult vergeten",
+    "message": "Schowaj kartke tak żebys nie zapomniał ! ",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
     ]
   },
   {
     "id": "SaveMnemonicModal_SaveMnemonicStep1",
-    "message": "1. Schrijf de zin op papier",
+    "message": "1. Napisz frazy na kartce",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
     ]
   },
   {
     "id": "SaveMnemonicModal_SaveMnemonicStep2",
-    "message": "2. Wees zeker dat dit de sleutel is naar {domain}",
+    "message": "2. Bądź pewny że zapsiujesz klucz z {domain}",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
     ]
   },
   {
     "id": "SaveMnemonicModal_ShareMnemonic",
-    "message": "Delen",
+    "message": "Udostępnij",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
     ]
   },
   {
     "id": "SaveMnemonicModal_ShareMnemonicTitle",
-    "message": "Uw geheime zin",
+    "message": "Twoja tajna fraza",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
     ]
   },
   {
     "id": "SaveMnemonicModal_ShowMnemonicNotice",
-    "message": "Schrijf deze woorden in de juiste volgorde op en bewaard het op een veilige plek.",
+    "message": "Zapisz słowa w dobrej kolejności i schowaj w bezpiecznym miejscu.",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
     ]
   },
   {
     "id": "SaveMnemonicModal_Title",
-    "message": "Uw geheime zin",
+    "message": "Twoja sekretna fraza",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
     ]
   },
   {
     "id": "SaveMnemonicModal_BeginContinue",
-    "message": "Lk begrijp het",
+    "message": "Zrozumiałem, akceptuję",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
     ]
   },
   {
     "id": "SaveMnemonicModal_BeginLater",
-    "message": "Later",
+    "message": "Później",
+    "files": [
+      "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
+    ]
+  },
+  {
+    "id": "SaveMnemonicModal_BeginNotice",
+    "message": "Teraz pokażemy Ci 12 tajnych słów.{br}Jeśli je zgubisz, nie będziesz w stanie przywrócić swoich środków",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx"
     ]
   },
   {
     "id": "RestoryMnemonicWallet_CancelRestory",
-    "message": "Annuleer",
+    "message": "Anuluj",
     "files": [
       "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
     ]
   },
   {
     "id": "RestoryMnemonicWallet_MnemonicField",
-    "message": "Geheime zin(12 woorden):",
+    "message": "Sekretna fraza (12 słów):",
     "files": [
       "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
     ]
   },
   {
     "id": "RestoryMnemonicWallet_MnemonicInvalid",
-    "message": "You specified an invalid set of words",
+    "message": "Wybrałeś nieprawidłową kolejność słów",
     "files": [
       "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
     ]
   },
   {
     "id": "RestoryMnemonicWallet_MnemonicPlaceholder",
-    "message": "Enter the saved phrase to restore the wallet",
+    "message": "Wpisz zapisaną frazę aby przywrócić portfel",
     "files": [
       "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
     ]
   },
   {
     "id": "RestoryMnemonicWallet_Ready",
-    "message": "Gereed",
+    "message": "Gotowe",
     "files": [
       "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
     ]
   },
   {
     "id": "RestoryMnemonicWallet_ReadyNotice",
-    "message": "Now you can add BTC, ETH and other currencies",
+    "message": "Teraz możesz dodać BTC, ETH i inne kryptowaluty",
     "files": [
       "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
     ]
   },
   {
     "id": "RestoryMnemonicWallet_RestoryWallet",
-    "message": "Herstellen",
+    "message": "Przywróć",
     "files": [
       "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
     ]
   },
   {
     "id": "RestoryMnemonicWallet_RestroringWallet",
-    "message": "Restoring...",
+    "message": "Przywracanie...",
     "files": [
       "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
     ]
   },
   {
     "id": "RestoryMnemonicWallet_Title",
-    "message": "Herstel wallet met een geheimze zin",
+    "message": "Przywracanie portfela z podanej frazy..",
     "files": [
       "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx"
     ]
   },
   {
     "id": "ImportKeys_RestoreMnemonic",
-    "message": "Herstel van seed van 12 woorden",
+    "message": "Przywróć z 12słów seed",
     "files": [
       "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
     ]
   },
   {
     "id": "ImportKeys_RestoreMnemonic_Tooltip",
-    "message": "12 woordige backup zin - ook wel bekend als 12 woorden, 'backup' , recovery phrase, mnemonic seed, 'seed' - is een unieke willekeurig gegenereerde set van woorden, die worden gegeven wanneer je een wallet aanmaakt. De herstel zin wordt gebruikt om alle prive sleutels af te leiden of te genereren, die direct versleuteld worden op je apparaat.",
+    "message": "12-word backup phrase – also know as 12-words, “backup”, recovery phrase, mnemonic seed, “seed” – is a unique, randomly generated set of words, that are given to you when you create a wallet. The recovery phrase is used to derive, or generate, all the private keys, which are encrypted directly on your device.",
     "files": [
       "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx",
       "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
@@ -5506,43 +5521,36 @@
   },
   {
     "id": "ImportKeys_RestoreMnemonic_Tooltip_withBalance",
-    "message": "Alstubliefd, wees voorzichtig! Als je eenmaal een nieuwe seed geïmporteerd hebt zal je balans gereset worden. Bewaar uw huidige valuta in een andere wallet.",
+    "message": "Please, be causious! Importując z nowej frazy Twoje obecne saldo zostanie wyzerowane. Zapisz fundusze do swojego portfela.",
     "files": [
       "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx",
       "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
     ]
   },
   {
-    "id": "ImportKeys_ConnectWallet",
-    "message": "Sluit Portemonnee aan",
-    "files": [
-      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
-    ]
-  },
-  {
     "id": "registerSMSModalInstCopied",
-    "message": "Gekopieerd",
+    "message": "Skopiowane",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
     "id": "registerSMSModalInstCopy",
-    "message": "Copy",
+    "message": "Kopiuj",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
     "id": "registerSMSModalInstDownload",
-    "message": "Download",
+    "message": "Pobierz",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
     "id": "registerSMSModalInstDownloaded",
-    "message": "Downloading",
+    "message": "Pobieranie",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
@@ -5556,7 +5564,7 @@
   },
   {
     "id": "registerSMSModalMnemonicCopy",
-    "message": "Copy",
+    "message": "Kopiuj",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
@@ -5584,21 +5592,21 @@
   },
   {
     "id": "SweepToMnemonicKeys_ButtonRestoreOld",
-    "message": "Herstellen",
+    "message": "Restore",
     "files": [
       "src/front/shared/components/modals/SweepToMnemonicKeys/SweepToMnemonicKeys.tsx"
     ]
   },
   {
     "id": "SweepToMnemonicKeys_Cancel",
-    "message": "Annuleer",
+    "message": "Cancel",
     "files": [
       "src/front/shared/components/modals/SweepToMnemonicKeys/SweepToMnemonicKeys.tsx"
     ]
   },
   {
     "id": "SweepToMnemonicKeys_Continue",
-    "message": "Volgende",
+    "message": "Continue",
     "files": [
       "src/front/shared/components/modals/SweepToMnemonicKeys/SweepToMnemonicKeys.tsx"
     ]
@@ -5619,7 +5627,7 @@
   },
   {
     "id": "SweepToMnemonicKeys_Ready",
-    "message": "Gereed",
+    "message": "Ready",
     "files": [
       "src/front/shared/components/modals/SweepToMnemonicKeys/SweepToMnemonicKeys.tsx"
     ]
@@ -5647,42 +5655,42 @@
   },
   {
     "id": "MainFAQ1_header",
-    "message": "How worden mijn private sleutels opgeslagen?",
+    "message": "How are my private keys stored?",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
   {
     "id": "MainFAQ1_content",
-    "message": "Uw private sleutels worden alleen opgeslagen op uw apparaat , in de locale opslag van uw browser. Backup alstublieft uw sleutels, voor als uw apparaat of browser crashed.",
+    "message": "Your private keys are stored ONLY on your device, in the localStorage of your browser. Please backup your keys, because your browser or device may crash.",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
   {
     "id": "MainFAQ2_header",
-    "message": "Wat zijn de transactiekosten?",
+    "message": "What are the fees involved?",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
   {
     "id": "MainFAQ2_content",
-    "message": "U betaalt de standaard TX (miners fees) voor alle transacties die u op het platform uitvoert.",
+    "message": "You pay the standard TX (miners fees) for all transactions you conduct on the platform.",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
   {
     "id": "MainFAQ2_content1",
-    "message": "Voor ERC20 tokens is het nodig dat u tenminste 0.001 ETH in uw wallet heeft. Onthoud! Bij het zenden van ERC20 tokens, is het nodig om ETH the hebben voor de miner fee^ Dit is geldt ook voor alle atomic swaps voor ETH & ERC20. Opmerkiing: U kunt de benodigde 'miner fee' voor elke valuto vinden via google.",
+    "message": "For ERC20 tokens, it is required that you have at least 0.001 ETH on your wallets. Remember! when sending ERC20 tokens, you are required to hold some ETH as miners fees for transactions. This is also the case for all atomic swaps for ETH & ERC20 tokens.",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
   {
     "id": "MainFAQ2_content2",
-    "message": "OPMERKING: u kunt eenvoudig de ‘miners fees’ die voor elke respectievelijke munt zijn vereist, controleren door ze eenvoudigweg te googlen.",
+    "message": "NOTE: You can easily check the ‘miners fees’ required for each respective coin by simply googling them.",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
@@ -5693,7 +5701,7 @@
   },
   {
     "id": "MainFAQ3_content",
-    "message": "For save you \"12-words seed\" click on \"Please backup your wallet\" banner. If you don't see this banner, don't despair just click on \"dots\" near your balance and select \"Copy private key\" option"
+    "message": "For save you \"12-words seed\" click on \"Please backup your wallet\" banner. If you don't see this banner, don't despair just click on \"dots\" near your balance and select \"Kopiuj private key\" option"
   },
   {
     "id": "SweepBannerDescription",
@@ -5722,14 +5730,14 @@
   },
   {
     "id": "Exchange_FromAddress",
-    "message": "Van adres",
+    "message": "From address",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "Exchange_ToAddress",
-    "message": "Naar address",
+    "message": "To address",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
@@ -5744,28 +5752,28 @@
   },
   {
     "id": "Exchange_CustomAddressOption",
-    "message": "Externe portemonnee of uitwisseling",
+    "message": "External wallet or exchange",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
   },
   {
     "id": "Exchange_InternalAddressOption",
-    "message": "Mijn wallet",
+    "message": "My wallet",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
   },
   {
     "id": "Exchange_InternalAddressOptionDisabled",
-    "message": "Mijn wallet (onvoldoende balans)",
+    "message": "My wallet (insufficient balance)",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
   },
   {
     "id": "Exchange_InternalCreate",
-    "message": "Maak een wallet",
+    "message": "Create wallet",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
@@ -5776,7 +5784,7 @@
   },
   {
     "id": "Exchange_MetamaskNotInstalledOption",
-    "message": "Metamask (niet geïnstalleerd)"
+    "message": "Metamask (not installed)"
   },
   {
     "id": "Exchange_PlaceholderEnterAddress",
@@ -5787,28 +5795,28 @@
   },
   {
     "id": "Exchange_SpecifyAddress",
-    "message": "Selecteer...",
+    "message": "Select...",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
   },
   {
     "id": "Exchange_BestPrice",
-    "message": "Beste prijs:",
+    "message": "Best price:",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "registerSMS_ButtonCancel",
-    "message": "Annuleer",
+    "message": "Cancel",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
     "id": "registerSMS_ButtonSaveMnemonic",
-    "message": "Opslaan",
+    "message": "Save",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
@@ -5822,39 +5830,39 @@
   },
   {
     "id": "registerSMS_YouNeedSaveMnemonic",
-    "message": "To activate SMS-protected wallet you must save your secret phrase.",
+    "message": "To activate SMS-protected wallet Musisz zapisać sekretną frazę.",
     "files": [
       "src/front/shared/components/modals/RegisterSMSProtected/RegisterSMSProtected.tsx"
     ]
   },
   {
     "id": "ShareModal_LinkCopied",
-    "message": "Link gekopieerd",
+    "message": "Link copied",
     "files": [
       "src/front/shared/components/modals/Share/Share.tsx"
     ]
   },
   {
     "id": "Row313",
-    "message": "Storten",
+    "message": "Deposit",
     "files": [
       "src/front/shared/pages/Currency/Currency.tsx"
     ]
   },
   {
     "id": "History_Activity_Title",
-    "message": "Transacties",
+    "message": "Transactions",
     "files": [
       "src/front/shared/pages/History/History.tsx"
     ]
   },
   {
     "id": "History_Nav_ActivityTab",
-    "message": "Geschiedenis"
+    "message": "History"
   },
   {
     "id": "History_Nav_InvoicesTab",
-    "message": "Verzoeken"
+    "message": "Requests"
   },
   {
     "id": "InvoicesView_MetaDescription",
@@ -5891,11 +5899,11 @@
   },
   {
     "id": "InvoicesList_NavTitle_All",
-    "message": "Verzoeken"
+    "message": "Requests"
   },
   {
     "id": "InvoicesList_Title",
-    "message": "Verzoeken",
+    "message": "Invoices",
     "files": [
       "src/front/shared/pages/Invoices/InvoicesList/index.tsx"
     ]
@@ -5906,7 +5914,7 @@
   },
   {
     "id": "InvoiceInfoModal_ButtonShareReady",
-    "message": "Gereed",
+    "message": "Ready",
     "files": [
       "src/front/shared/components/modals/InfoInvoice/InfoInvoice.tsx"
     ]
@@ -6018,7 +6026,7 @@
   },
   {
     "id": "InvoicesNav",
-    "message": "Verzoeken"
+    "message": "Requests"
   },
   {
     "id": "WalletPage_Widget_RestoreMnemonic",
@@ -6154,7 +6162,7 @@
   },
   {
     "id": "InfoPay_StatusReadyHeader",
-    "message": "Toestand",
+    "message": "Status",
     "files": [
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]
@@ -6189,14 +6197,14 @@
   },
   {
     "id": "widgetApproveApprove",
-    "message": "Ja:",
+    "message": "Yes",
     "files": [
       "src/front/shared/helpers/wpLogoutModal.ts"
     ]
   },
   {
     "id": "widgetApproveCancel",
-    "message": "Annuleer",
+    "message": "Cancel",
     "files": [
       "src/front/shared/helpers/wpLogoutModal.ts"
     ]
@@ -6210,7 +6218,7 @@
   },
   {
     "id": "buyByCreditCard",
-    "message": "Kopen met credit card",
+    "message": "buy using credit card",
     "files": [
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
     ]
@@ -6224,7 +6232,7 @@
   },
   {
     "id": "WithdrawPINProtected_Cancel",
-    "message": "Annuleer",
+    "message": "Cancel",
     "files": [
       "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
     ]
@@ -6259,14 +6267,14 @@
   },
   {
     "id": "WithdrawPINProtected_LabelYourMnemonic",
-    "message": "Uw geheime zin",
+    "message": "Your secret phrase",
     "files": [
       "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
     ]
   },
   {
     "id": "WithdrawPINProtected_LabelYourPin",
-    "message": "Uw PIN-code",
+    "message": "Your PIN-Code",
     "files": [
       "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
     ]
@@ -6294,7 +6302,7 @@
   },
   {
     "id": "WithdrawPINProtected_PinCodePlaceholder",
-    "message": "Voer Uw PIN-code",
+    "message": "Enter your PIN-Code",
     "files": [
       "src/front/shared/components/modals/WithdrawBtcPin/WithdrawBtcPin.tsx"
     ]
@@ -6357,21 +6365,21 @@
   },
   {
     "id": "ConfirmActivatePIN_No",
-    "message": "Nee",
+    "message": "No",
     "files": [
       "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
     ]
   },
   {
     "id": "ConfirmActivatePIN_Title",
-    "message": "Activeer met PIN-Beveiligde BTC wallet",
+    "message": "Activate PIN-Protected BTC wallet",
     "files": [
       "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
     ]
   },
   {
     "id": "ConfirmActivatePIN_Yes",
-    "message": "Ja:",
+    "message": "Yes",
     "files": [
       "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
     ]
@@ -6392,7 +6400,7 @@
   },
   {
     "id": "WalletRow_Menu_ActivatePinProtected",
-    "message": "Activeer",
+    "message": "Activate",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
@@ -6406,21 +6414,21 @@
   },
   {
     "id": "RegisterPINProtectedBTC_ButtonCancel",
-    "message": "Annuleer",
+    "message": "Cancel",
     "files": [
       "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
     ]
   },
   {
     "id": "RegisterPINProtectedBTC_ButtonFinish",
-    "message": "Gereed",
+    "message": "Ready",
     "files": [
       "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
     ]
   },
   {
     "id": "RegisterPINProtectedBTC_ButtonSaveMnemonic",
-    "message": "Opslaan",
+    "message": "Save",
     "files": [
       "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
     ]
@@ -6434,14 +6442,14 @@
   },
   {
     "id": "RegisterPINProtectedBTC_EnterPinCodeBottomMessage",
-    "message": "Kies een PIN-code",
+    "message": "Pick a PIN-Code",
     "files": [
       "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
     ]
   },
   {
     "id": "RegisterPINProtectedBTC_EnterPinCodeUpMessage",
-    "message": "Activeer met PIN-Beveiligde BTC wallet",
+    "message": "Activate PIN-Protected BTC wallet",
     "files": [
       "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
     ]
@@ -6483,7 +6491,7 @@
   },
   {
     "id": "RegisterPINProtectedBTC_FinishMessage",
-    "message": "Uw beveiligde wallet is geactiveerd",
+    "message": "Your protected wallet activated",
     "files": [
       "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
     ]
@@ -6497,14 +6505,14 @@
   },
   {
     "id": "RegisterPINProtectedBTC_Instruction_Copied",
-    "message": "Copy",
+    "message": "Kopiuj",
     "files": [
       "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
     ]
   },
   {
     "id": "RegisterPINProtectedBTC_Instruction_Copy",
-    "message": "Gekopieerd",
+    "message": "Copied",
     "files": [
       "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
     ]
@@ -6532,7 +6540,7 @@
   },
   {
     "id": "RegisterPINProtectedBTC_LabelConfirmYourPin",
-    "message": "Bevestig Uw PIN-code",
+    "message": "Confirm your PIN-code",
     "files": [
       "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
     ]
@@ -6546,7 +6554,7 @@
   },
   {
     "id": "RegisterPINProtectedBTC_LabelYourPinCode",
-    "message": "Uw PIN-code",
+    "message": "Your PIN-code",
     "files": [
       "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
     ]
@@ -6560,14 +6568,14 @@
   },
   {
     "id": "RegisterPINProtectedBTC_PinCodeConfirmPlaceholder",
-    "message": "Bevestig Uw PIN-code",
+    "message": "Confirm your PIN-code",
     "files": [
       "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
     ]
   },
   {
     "id": "RegisterPINProtectedBTC_PinCodePlaceholder",
-    "message": "Voer Uw PIN-code",
+    "message": "Enter your PIN-code",
     "files": [
       "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
     ]
@@ -6602,7 +6610,7 @@
   },
   {
     "id": "RegisterPINProtectedBTC_Share",
-    "message": "Delen",
+    "message": "Share",
     "files": [
       "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
     ]
@@ -6616,7 +6624,7 @@
   },
   {
     "id": "RegisterPINProtectedBTC_Title",
-    "message": "Activeer met PIN Beveiligde Wallet",
+    "message": "Activate PIN Protected Wallet",
     "files": [
       "src/front/shared/components/modals/RegisterPINProtected/RegisterPINProtected.tsx"
     ]
@@ -6651,21 +6659,21 @@
   },
   {
     "id": "privateKeyCurrency",
-    "message": "Uw {cur} privésleutel",
+    "message": "Your {cur} private key",
     "files": [
       "src/front/shared/components/modals/PrivateKeysModal/PrivateKeysModal.tsx"
     ]
   },
   {
     "id": "ReceiveModal_ButtonCancel",
-    "message": "Annuleer",
+    "message": "Cancel",
     "files": [
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
     ]
   },
   {
     "id": "ReceiveModal_ButtonSaveMnemonic",
-    "message": "Opslaan",
+    "message": "Save",
     "files": [
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
     ]
@@ -6679,7 +6687,7 @@
   },
   {
     "id": "ReceiveModal_YouNeedSaveMnemonic",
-    "message": "You must save your secret phrase.",
+    "message": "Musisz zapisać sekretną frazę.",
     "files": [
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
     ]
@@ -6693,18 +6701,18 @@
   },
   {
     "id": "WalletAddressModal_Title",
-    "message": "Copy wallet address",
+    "message": "Kopiuj adres portfela",
     "files": [
       "src/front/shared/components/modals/WalletAddressModal/WalletAddressModal.tsx"
     ]
   },
   {
     "id": "WalletRow_Menu_HowExportPin",
-    "message": "How to export wallet"
+    "message": "Jak exportować portfel"
   },
   {
     "id": "WalletRow_Menu_HowExportSms",
-    "message": "How to export wallet"
+    "message": "Jak exportować portfel"
   },
   {
     "id": "Withdraw_BalanceDesktop",
@@ -6736,7 +6744,7 @@
   },
   {
     "id": "WalletRow_Menu_HowExportWallet",
-    "message": "How to export wallet"
+    "message": "Jak exportować portfel"
   },
   {
     "id": "WalletRow_ShowAddress",
@@ -6747,7 +6755,7 @@
   },
   {
     "id": "WalletRow_MetamaskNotConnected",
-    "message": "Niet verbonden",
+    "message": "Not connected",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
@@ -6831,14 +6839,14 @@
   },
   {
     "id": "AlertModalcreateWallet",
-    "message": "Creëer wallet",
+    "message": "Create Wallet",
     "files": [
       "src/front/shared/components/modals/AlertWindow/index.tsx"
     ]
   },
   {
     "id": "AlertModaldeposit",
-    "message": "Storten",
+    "message": "Deposit",
     "files": [
       "src/front/shared/components/modals/AlertWindow/index.tsx"
     ]
@@ -6866,21 +6874,21 @@
   },
   {
     "id": "Balance_YouAreHaveNotSignegTx",
-    "message": "{count} transaction needs your confirmation",
+    "message": "{count} transaction needs your Potwierdzenie",
     "files": [
       "src/front/shared/components/BalanceForm/BalanceForm.tsx"
     ]
   },
   {
     "id": "multiSignJoinLink_ButtonCancel",
-    "message": "Annuleer",
+    "message": "Anuluj",
     "files": [
       "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx"
     ]
   },
   {
     "id": "multiSignJoinLink_ButtonSaveMnemonic",
-    "message": "Opslaan",
+    "message": "Save",
     "files": [
       "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx"
     ]
@@ -6894,7 +6902,7 @@
   },
   {
     "id": "multiSignJoinLink_YouNeedSaveMnemonic",
-    "message": "To activate BTC-Multisig wallet you must save your secret phrase.",
+    "message": "To activate BTC-Multisig wallet Musisz zapisać sekretną frazę.",
     "files": [
       "src/front/shared/components/modals/MultisignJoinLink/MultisignJoinLink.tsx"
     ]
@@ -6915,7 +6923,7 @@
   },
   {
     "id": "BTCMS_YouNeedSaveMnemonic",
-    "message": "To activate BTC-Multisig wallet you must save your secret phrase.",
+    "message": "To activate BTC-Multisig wallet Musisz zapisać sekretną frazę.",
     "files": [
       "src/front/shared/pages/Multisign/Btc/Btc.tsx"
     ]
@@ -6957,7 +6965,7 @@
   },
   {
     "id": "MnemonicInputComponent_Placeholder",
-    "message": "Start met typen van een woord...",
+    "message": "Start typing a word...",
     "files": [
       "src/front/shared/components/forms/MnemonicInput/MnemonicInput.tsx"
     ]
@@ -6971,7 +6979,7 @@
   },
   {
     "id": "Exchange_BalanceTooltipInfo",
-    "message": "Uw balans {balance} {currency} minus miner commisie {minerFee} {currency}"
+    "message": "Your balance {balance} {currency} minus miner commission {minerFee} {currency}"
   },
   {
     "id": "walletDidntCreateMessage",
@@ -7004,7 +7012,7 @@
   },
   {
     "id": "PointOfSell_walletDidntCreateMessage",
-    "message": "Creëer wallet",
+    "message": "Create wallet",
     "files": [
       "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
     ]
@@ -7025,7 +7033,7 @@
   },
   {
     "id": "ExchangeTitleTag1_point_of_sell",
-    "message": "De snelste cross-chain exchange aangedreven door Atomic Swap.",
+    "message": "Fastest cross-chain exchange powered by Atomic Swap",
     "files": [
       "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
     ]
@@ -7047,11 +7055,11 @@
   },
   {
     "id": "ethToBtcText26_eth_to_ghost",
-    "message": "Confirmation processing"
+    "message": "Przetwarzanie potwierdzenia"
   },
   {
     "id": "ethToBtcText28_eth_to_ghost",
-    "message": "Checking balance.."
+    "message": "Sprawdzam saldo.."
   },
   {
     "id": "ethToBtcText32_eth_to_ghost",
@@ -7071,11 +7079,11 @@
   },
   {
     "id": "ethToBtcText48_eth_to_ghost",
-    "message": "Thank you for using Swap.Online!"
+    "message": "Dziękujemy za użycie swapu"
   },
   {
     "id": "EthTokensToBtc16_ethtoken_to_Ghost",
-    "message": "Confirmation processing"
+    "message": "Przetwarzanie potwierdzenia"
   },
   {
     "id": "EthTokensToBtc20_ethtoken_to_Ghost",
@@ -7087,7 +7095,7 @@
   },
   {
     "id": "EthTokensToBtc28_ethtoken_to_Ghost",
-    "message": "Checking balance.."
+    "message": "Sprawdzam saldo.."
   },
   {
     "id": "EthTokensToBtc32_ethtoken_to_Ghost",
@@ -7107,11 +7115,11 @@
   },
   {
     "id": "EthTokensToBtc48_ethtoken_to_Ghost",
-    "message": "Thank you for using Swap.Online!"
+    "message": "Dziękujemy za użycie swapu"
   },
   {
     "id": "SwapProgress105_ghost_to_eth",
-    "message": "Checking balance.."
+    "message": "Sprawdzam saldo.."
   },
   {
     "id": "SwapProgress111_ghost_to_eth",
@@ -7119,7 +7127,7 @@
   },
   {
     "id": "SwapProgress117_ghost_to_eth",
-    "message": "Your GHOST are now depositing. It may require one confirmation from GHOST Network. Waiting for other participant to deposit ETH."
+    "message": "Your GHOST are now depositing. It may require one Potwierdzenie from GHOST Network. Waiting for other participant to deposit ETH."
   },
   {
     "id": "SwapProgress123_ghost_to_eth",
@@ -7131,7 +7139,7 @@
   },
   {
     "id": "SwapProgress135_ghost_to_eth",
-    "message": "Thank you for using Swap.Online!"
+    "message": "Dziękujemy za użycie swapu"
   },
   {
     "id": "SwapProgress93_ghost_to_eth",
@@ -7139,15 +7147,15 @@
   },
   {
     "id": "SwapProgress99_ghost_to_eth",
-    "message": "Create a secret key"
+    "message": "Utwórz sekretny klucz"
   },
   {
     "id": "BitcoinBuyText17_ghost_to_tokens",
-    "message": "Confirmation processing"
+    "message": "Przetwarzanie potwierdzenia"
   },
   {
     "id": "BitcoinBuyText29_ghost_to_tokens",
-    "message": "Checking balance.."
+    "message": "Sprawdzam saldo.."
   },
   {
     "id": "BitcoinBuyText33_ghost_to_tokens",
@@ -7167,15 +7175,15 @@
   },
   {
     "id": "BitcoinBuyText49_ghost_to_tokens",
-    "message": "Thank you for using Swap.Online"
+    "message": "Dziękujemy za użycie Swapu"
   },
   {
     "id": "BitcoinBuyText53_ghost_to_tokens",
-    "message": "Thank you for using Swap.Online!"
+    "message": "Dziękujemy za użycie Swapu!"
   },
   {
     "id": "BtcToEthToken20_ghost_to_tokens",
-    "message": "Create a secret key"
+    "message": "Utwórz sekretny klucz"
   },
   {
     "id": "BtcToEthToken123_copy",
@@ -7187,7 +7195,7 @@
   },
   {
     "id": "SwapProgress117_BTC_ETH",
-    "message": "Your BTC are now depositing. It may require one confirmation from Bitcoin Network. Waiting for other participant to deposit ETH."
+    "message": "Your BTC are now depositing. It may require one Potwierdzenie from Bitcoin Network. Waiting for other participant to deposit ETH."
   },
   {
     "id": "SwapProgress123_BTC_ETH",
@@ -7203,11 +7211,11 @@
   },
   {
     "id": "BitcoinBuyText17_btc_to_ethtoken",
-    "message": "Confirmation processing"
+    "message": "Przetwarzanie potwierdzenia"
   },
   {
     "id": "BitcoinBuyText29_btc_to_ethtoken",
-    "message": "Checking balance.."
+    "message": "Sprawdzam saldo.."
   },
   {
     "id": "BitcoinBuyText33_btc_to_ethtoken",
@@ -7231,11 +7239,11 @@
   },
   {
     "id": "BitcoinBuyText53_btc_to_ethtoken",
-    "message": "Thank you for using Swap.Online!"
+    "message": "Dziękujemy za użycie swapu"
   },
   {
     "id": "BtcToEthToken20_btc_to_ethtoken",
-    "message": "Create a secret key"
+    "message": "Utwórz sekretny klucz"
   },
   {
     "id": "SwapProgress111_BTC_GHOST",
@@ -7243,7 +7251,7 @@
   },
   {
     "id": "SwapProgress117_BTC_GHOST",
-    "message": "Your BTC are now depositing. It may require one confirmation from Bitcoin Network. Waiting for other participant to deposit GHOST."
+    "message": "Your BTC are now depositing. It may require one Potwierdzenie from Bitcoin Network. Waiting for other participant to deposit GHOST."
   },
   {
     "id": "SwapProgress123_BTC_GHOST",
@@ -7267,11 +7275,11 @@
   },
   {
     "id": "ethToBtcText26_eth_to_btc",
-    "message": "Confirmation processing"
+    "message": "Przetwarzanie potwierdzenia"
   },
   {
     "id": "ethToBtcText28_eth_to_btc",
-    "message": "Checking balance.."
+    "message": "Sprawdzam saldo.."
   },
   {
     "id": "ethToBtcText32_eth_to_btc",
@@ -7291,7 +7299,7 @@
   },
   {
     "id": "ethToBtcText48_eth_to_btc",
-    "message": "Thank you for using Swap.Online!"
+    "message": "Dziękujemy za użycie swapu"
   },
   {
     "id": "ethToBtcText20_ghost_to_btc",
@@ -7303,11 +7311,11 @@
   },
   {
     "id": "ethToBtcText26_ghost_to_btc",
-    "message": "Confirmation processing"
+    "message": "Przetwarzanie potwierdzenia"
   },
   {
     "id": "ethToBtcText28_ghost_to_btc",
-    "message": "Checking balance.."
+    "message": "Sprawdzam saldo.."
   },
   {
     "id": "ethToBtcText32_ghost_to_btc",
@@ -7327,11 +7335,11 @@
   },
   {
     "id": "ethToBtcText48_ghost_to_btc",
-    "message": "Thank you for using Swap.Online!"
+    "message": "Dziękujemy za użycie swapu"
   },
   {
     "id": "EthTokensToBtc16_ethToken_to_btc",
-    "message": "Confirmation processing"
+    "message": "Przetwarzanie potwierdzenia"
   },
   {
     "id": "EthTokensToBtc20_ethToken_to_btc",
@@ -7343,7 +7351,7 @@
   },
   {
     "id": "EthTokensToBtc28_ethToken_to_btc",
-    "message": "Checking balance.."
+    "message": "Sprawdzam saldo.."
   },
   {
     "id": "EthTokensToBtc32_ethToken_to_btc",
@@ -7363,11 +7371,11 @@
   },
   {
     "id": "EthTokensToBtc48_ethToken_to_btc",
-    "message": "Thank you for using Swap.Online!"
+    "message": "Dziękujemy za użycie swapu"
   },
   {
     "id": "Banner_YouAreHaveNotSignegTx",
-    "message": "{count} multisig transaction is waiting for your confirmation",
+    "message": "{count} multisig transaction is waiting for your Potwierdzenie",
     "files": [
       "src/front/shared/pages/Wallet/components/WallerSlider/index.tsx"
     ]
@@ -7380,34 +7388,6 @@
     ]
   },
   {
-    "id": "amount",
-    "message": "Exchange",
-    "files": [
-      "src/front/shared/components/modals/OfferModal/ConfirmOffer/Amounts/Amounts.tsx"
-    ]
-  },
-  {
-    "id": "Receive",
-    "message": "Receive",
-    "files": [
-      "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
-    ]
-  },
-  {
-    "id": "back",
-    "message": "Back",
-    "files": [
-      "src/front/shared/components/TourWindow/index.tsx"
-    ]
-  },
-  {
-    "id": "Share",
-    "message": "Share Twitter",
-    "files": [
-      "src/front/shared/pages/Swap/Share/Share.tsx"
-    ]
-  },
-  {
     "id": "SwitchLangNL",
     "message": "NL",
     "files": [
@@ -7416,50 +7396,50 @@
   },
   {
     "id": "Swap_NeedEthFee",
-    "message": "U moet ten minste {sellFee} {sellCoin} en {buyFee} {buyCoin} op uw saldo hebben om de mijnwerkerscommissie te betalen",
+    "message": "You must have at least {sellFee} {sellCoin} and {buyFee} {buyCoin} on your balance to pay the miner commission",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "Swap_NeedMoreAmount",
-    "message": "Je saldo moet minimaal {amount} {currency} hebben. {br} Mijnwerkerscommissie {sellFee} {sellCoin} en {buyFee} {buyCoin}",
+    "message": "You must have at least {amount} {currency} on your balance. {br} Miner commission {sellFee} {sellCoin} and {buyFee} {buyCoin}",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "Exchange_MinerFees",
-    "message": "Mijnvergoeding",
+    "message": "Miner fee",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "Exchange_ServiceFee",
-    "message": "Servicekosten",
+    "message": "Service fee",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "Banner_ConnectMetamask",
-    "message": "Sluit portemonnee aan"
+    "message": "Connect wallet"
   },
   {
     "id": "Banner_ConnectMetamaskDesc",
-    "message": "Klik om een ​​externe portemonnee aan te sluiten"
+    "message": "Click to connect an external wallet"
   },
   {
     "id": "WalletRow_MetamaskConnect",
-    "message": "Aansluiten",
+    "message": "Connect",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
     "id": "WalletRow_MetamaskDisconnect",
-    "message": "Koppel de portemonnee los",
+    "message": "Disconnect wallet",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
@@ -7487,21 +7467,21 @@
   },
   {
     "id": "offerMessageToUser",
-    "message": "U moet de hele tijd online zijn, anders zal uw order niet zichtbaar zijn voor andere gebruikers",
+    "message": "You must be online all the time, otherwise your order will not be visible to other users",
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
   },
   {
     "id": "createOrderMessageForUser",
-    "message": "U moet de hele tijd online zijn, anders zal uw order niet zichtbaar zijn voor andere gebruikers",
+    "message": "You must be online all the time, otherwise your order will not be visible to other users",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "createOrderNoManyMessageForUser",
-    "message": "Uw balans bijvullen",
+    "message": "Top up your balance",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
@@ -7512,49 +7492,56 @@
   },
   {
     "id": "MainFAQ2_content3",
-    "message": "Huidige mijnvergoedingen:",
+    "message": "Current mining fees:",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
   {
+    "id": "Withdrow171",
+    "message": "Maximum amount you can send is {allowedUsdBalance} USD",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
     "id": "MetamaskNetworkAlert_Message",
-    "message": "Om door te gaan, selecteer Metamask \"{netwerk}\" in de portefeuille of schakel de portefeuille uit",
+    "message": "Wrong network, please select \"{network}\" in Metamask (or wallet connect)",
     "files": [
       "src/front/shared/containers/App/App.tsx"
     ]
   },
   {
     "id": "MetamaskNetworkAlert_NetworkMainnet",
-    "message": "Hoofdnetwerk (Mainnet)",
+    "message": "Main network (Mainnet)",
     "files": [
       "src/front/shared/containers/App/App.tsx"
     ]
   },
   {
     "id": "MetamaskNetworkAlert_NetworkTestnet",
-    "message": "Test netwerk (Rinkeby)",
+    "message": "Test network (Rinkeby)",
     "files": [
       "src/front/shared/containers/App/App.tsx"
     ]
   },
   {
     "id": "MetamaskNetworkAlert_OkDisconnectWallet",
-    "message": "Schakel externe portemonnee uit",
+    "message": "Disconnect external wallet",
     "files": [
       "src/front/shared/containers/App/App.tsx"
     ]
   },
   {
     "id": "MetamaskNetworkAlert_Title",
-    "message": "Aandacht",
+    "message": "Warning",
     "files": [
       "src/front/shared/containers/App/App.tsx"
     ]
   },
   {
     "id": "ConnectWalletModal_Cancel",
-    "message": "Annulering",
+    "message": "Anuluj",
     "files": [
       "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
     ]
@@ -7568,11 +7555,11 @@
   },
   {
     "id": "ConnectWalletModal_InjectedMobile",
-    "message": "Inpluggen"
+    "message": "Connect"
   },
   {
     "id": "ConnectWalletModal_Title",
-    "message": "Een externe portemonnee aansluiten",
+    "message": "Connecting an external wallet",
     "files": [
       "src/front/shared/components/modals/ConnectWalletModal/ConnectWalletModal.tsx"
     ]
@@ -7586,7 +7573,7 @@
   },
   {
     "id": "MainFAQ2_content4",
-    "message": "Indlæser"
+    "message": "Loading"
   },
   {
     "id": "FilterTextAll",
@@ -7666,22 +7653,15 @@
     ]
   },
   {
-    "id": "Withdrow171",
-    "message": "Det maksimale beløb, du kan sende, er {allowedUsdBalance} USD",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
-    ]
-  },
-  {
     "id": "WTH276",
-    "message": "Beløbet må ikke overstige din{br} nuværende saldo minus minegebyr",
+    "message": "The amount should not exceed your{br} current balance minus mining fee",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
   },
   {
     "id": "Comment",
-    "message": "Сommentaar",
+    "message": "Comment",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
@@ -7695,74 +7675,81 @@
   },
   {
     "id": "Exchange_ConnectAddressOption",
-    "message": "Sluit Wallet aan",
+    "message": "Connect Wallet",
     "files": [
       "src/front/shared/pages/Exchange/AddressSelect/AddressSelect.tsx"
     ]
   },
   {
     "id": "add_notice",
-    "message": "Voeg bericht toe",
+    "message": "Add notice",
     "files": [
       "src/front/shared/components/Comment/Comment.tsx"
     ]
   },
   {
     "id": "CreateWallet_ConnectWalletButton",
-    "message": "Gebruik dit als je al een ethereum-portemonnee hebt",
+    "message": "Use this if you already have ethereum wallet",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
+    "id": "ImportKeys_ConnectWallet",
+    "message": "Connect Wallet",
     "files": [
       "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
     ]
   },
   {
     "id": "InfoPay_Comment",
-    "message": "Commentaar",
+    "message": "Comment",
     "files": [
       "src/front/shared/pages/Transaction/TxInfo/index.tsx"
     ]
   },
   {
     "id": "Withdrow214",
-    "message": "Administratiekosten {currency}: {adminFee}"
+    "message": "Admin Fee {currency}: {adminFee}"
   },
   {
     "id": "FeeInfoBlockTotalFee",
-    "message": "Totale vergoeding die u betaalt:",
+    "message": "Total fees you pay:",
     "files": [
       "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockMinerFee",
-    "message": "Mijnwerkersvergoeding:",
+    "message": "Miner fee:",
     "files": [
       "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockMinerFeeTooltip",
-    "message": "Bedrag aan cryptocurrency dat is betaald om mijnwerkers te stimuleren om uw transactie te bevestigen",
+    "message": "Amount of cryptocurrency paid to incentivize miners to confirm your transaction",
     "files": [
       "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockServiceFee",
-    "message": "Servicekosten:",
+    "message": "Service fee:",
     "files": [
       "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockServiceFeeConditions",
-    "message": "van het overgemaakte bedrag, maar niet minder dan",
+    "message": "of the transfer amount, but not less than",
     "files": [
       "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
     ]
   },
   {
     "id": "localStorageBtnCopy",
-    "message": "Kopiëren",
+    "message": "Kopiuj",
     "files": [
       "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
     ]
@@ -7773,11 +7760,11 @@
   },
   {
     "id": "localStorageBtnSend",
-    "message": "Verzenden naar ontwikkelaars"
+    "message": "Send to developers"
   },
   {
     "id": "localStorageUserNotification",
-    "message": "✔️ Deze gegevens bevatten niet uw privésleutels",
+    "message": "✔️ This data doesn't contain your private keys",
     "files": [
       "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
     ]
@@ -7802,7 +7789,7 @@
   },
   {
     "id": "SwapProgress105_btclike_to_eth",
-    "message": "Checking balance..",
+    "message": "Sprawdzam saldo..",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEth.tsx"
     ]
@@ -7816,7 +7803,7 @@
   },
   {
     "id": "SwapProgress117_btclike_to_eth",
-    "message": "Your {coinName} are now depositing. It may require one confirmation from {coinName} Network. Waiting for other participant to deposit ETH.",
+    "message": "Your {coinName} are now depositing. It may require one Potwierdzenie from {coinName} Network. Waiting for other participant to deposit ETH.",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEth.tsx"
     ]
@@ -7837,7 +7824,7 @@
   },
   {
     "id": "SwapProgress135_btclike_to_eth",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Dziękujemy za użycie swapu",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEth.tsx"
     ]
@@ -7851,7 +7838,7 @@
   },
   {
     "id": "SwapProgress99_btclike_to_eth",
-    "message": "Create a secret key",
+    "message": "Utwórz sekretny klucz",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEth.tsx"
     ]
@@ -7872,14 +7859,14 @@
   },
   {
     "id": "ethToBtcText26_eth_to_btclike",
-    "message": "Confirmation processing",
+    "message": "Przetwarzanie potwierdzenia",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "ethToBtcText28_eth_to_btclike",
-    "message": "Checking balance..",
+    "message": "Sprawdzam saldo..",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
     ]
@@ -7914,21 +7901,21 @@
   },
   {
     "id": "ethToBtcText48_eth_to_btclike",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Dziękujemy za użycie swapu",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthToBtcLike.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText17_BtcLike_to_tokens",
-    "message": "Confirmation processing",
+    "message": "Przetwarzanie potwierdzenia",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText29_BtcLike_to_tokens",
-    "message": "Checking balance..",
+    "message": "Sprawdzam saldo..",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
     ]
@@ -7949,42 +7936,42 @@
   },
   {
     "id": "BitcoinBuyText41_BtcLike_to_tokens",
-    "message": "{buyCurrency} Contract created and charged. Requesting withdrawal from {buyCurrency} Contract.",
+    "message": "{buyCurrency} Contract created and charged. Zlecam wypłatę z {buyCurrency} Contract.",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText45_BtcLike_to_tokens",
-    "message": "{buyCurrency} tokens was transferred to your wallet. Check the balance.",
+    "message": "{buyCurrency} tokeny zostały dodane do Twojego portfela. Sprawdź saldo",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText49_BtcLike_to_tokens",
-    "message": "Thank you for using Swap.Online",
+    "message": "Dziękujemy za użycie Swapu",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "BitcoinBuyText53_BtcLike_to_tokens",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Dziękujemy za użycie Swapu",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "BtcToEthToken20_BtcLike_to_tokens",
-    "message": "Create a secret key",
+    "message": "Utwórz sekretny klucz",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/BtcLikeToEthToken.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc16_ethtoken_to_BtcLike",
-    "message": "Confirmation processing",
+    "message": "Przetwarzanie potwierdzenia",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
     ]
@@ -8005,7 +7992,7 @@
   },
   {
     "id": "EthTokensToBtc28_ethtoken_to_BtcLike",
-    "message": "Checking balance..",
+    "message": "Sprawdzam saldo..",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
     ]
@@ -8026,136 +8013,122 @@
   },
   {
     "id": "EthTokensToBtc40_ethtoken_to_BtcLike",
-    "message": "The funds from ETH contract was successfully transferred to {coinName} owner",
+    "message": "Środki z kontraktu ETH zostały pomyślnie przekazane właścicielowi {coinName}",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc44_ethtoken_to_BtcLike",
-    "message": "Thank you for using Swap.Online",
+    "message": "Dziękujemy za użycie Swapu",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "EthTokensToBtc48_ethtoken_to_BtcLike",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Dziękujemy za użycie Swapu!",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
     ]
   },
   {
     "id": "localStorageBtnBack",
-    "message": "Terug",
+    "message": "Wróć",
     "files": [
       "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
     ]
   },
   {
     "id": "FAQServiceFee",
-    "message": "Service fee (only withdraw):",
+    "message": "Prowizja (tylko wypłaty):",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
   {
     "id": "FAQServiceFeeDescription",
-    "message": "no less than",
+    "message": "nie mniej niż",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
   {
     "id": "NetworkStatusPeersOnlineMessage",
-    "message": "Het zoeken naar peers en aanbiedingen kan enkele minuten duren. We slaan de aanbiedingen niet op een gecentraliseerde server op. In plaats daarvan gebruiken we het libp2p-netwerk van Protocol Labs dat werkt als een Torrent-netwerk, wat betekent dat elke gebruiker, zoals jij, een peer in dit netwerk is. Als er binnen een paar minuten geen aanbiedingen worden gevonden, betekent dit dat er geen overeenkomende aanbiedingen zijn of dat een gebruiker die de aanbieding heeft geplaatst offline is.",
+    "message": "Sprawdzenie userów online i ofert potrwa chwilę. We do not store the offers on a centralized server. Instead, we use libp2p network by Protocol Labs that works like a Torrent network, which means that each user such as yourself is a peer in this network. If no offers are found within a couple of minutes, it means that there are no matching offers or a user who placed the offer is offline.",
     "files": [
       "src/front/shared/components/NetworkStatus/NetworkStatus.tsx"
     ]
   },
   {
     "id": "OrderBookOffersNote",
-    "message": "Het zoeken naar peers en aanbiedingen kan enkele minuten duren. Als er binnen een paar minuten geen aanbiedingen worden gevonden, betekent dit dat er geen overeenkomende aanbiedingen zijn of dat een gebruiker die de aanbieding heeft geplaatst offline is."
+    "message": "Sprawdzenie userów online i ofert potrwa chwilę. Jeśli żadna oferta nie zostanie znaleziona w maksymalnie 3 min, oznacza to że nie ma aktywnego użytkownika z ofertą wymiany."
   },
   {
     "id": "DebugStoredDataLink",
-    "message": "Show stored data",
+    "message": "Pokaż zapisane dane",
     "files": [
       "src/front/shared/pages/Swap/Debug/Debug.tsx"
     ]
   },
   {
     "id": "DebugSwapDataTitle",
-    "message": "Swap data:",
+    "message": "Dane wymiany:",
     "files": [
       "src/front/shared/pages/Swap/Debug/Debug.tsx"
     ]
   },
   {
     "id": "OrderBookOffersNoteOverLoader",
-    "message": "Be om tilbud fra jevnaldrende online",
+    "message": "Szukam ofert od użytkowników którzy są ONLINE",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
   },
   {
     "id": "OrderBookOffersNoteUnderLoader",
-    "message": "det kan ta et øyeblikk",
+    "message": "To zajmie minutę...",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockTxSize",
-    "message": "Transaksjonsstørrelse:"
+    "message": "Rozmiar transkacji:"
   },
   {
     "id": "Swap_MetamaskAttention",
-    "message": "Bevestig de transactie in uw \"{walletName}\" portemonnee",
+    "message": "Proszę potwierdź transakcje w Twoim \"{walletName}\" portfelu",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
   },
   {
     "id": "FAQFeeApiLink",
-    "message": "(kilde)",
+    "message": "(source)",
     "files": [
       "src/front/shared/components/FAQ/FAQ.tsx"
     ]
   },
   {
     "id": "Swap_OwnerHasLockedUTX",
-    "message": "Wisselen onderbroken omdat u een onbevestigde transactie in mempool heeft. Wachten bevestigen",
+    "message": "Wymiana zatrzymana, masz niepotwierdzoną transkacje w mempoolu. Czekam za potwierdzeniem transakcji",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
   },
   {
     "id": "Swap_SellerHasLockedUTX",
-    "message": "Wisselen onderbroken omdat de eigenaar een niet-bevestigde transactie in de mempool heeft. Wachten bevestigen",
+    "message": "Wymiana zatrzymana ponieważ właściciel ma niepotwierdzoną transakcje w mempoolu. Czekam za potwierdzeniem transakcji",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
   },
   {
     "id": "OrderBookOffersOfflineNote",
-    "message": "If no offers are found, this means that there are no users who posted the offer, not online.",
+    "message": "Jeśli nie zostaną znalezione żadne oferty, oznacza to, że nie ma użytkowników, którzy opublikowali ofertę, a nie online.",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
-    ]
-  },
-  {
-    "id": "Swap_UtxoBroadcastError",
-    "message": "Swap paused because broadcast tx ended with error \"{error}\"",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
-    ]
-  },
-  {
-    "id": "WalletRowNodeIsDownTooltipMessage",
-    "message": "Du kan ikke udføre transaktioner",
-    "files": [
-      "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   }
 ]

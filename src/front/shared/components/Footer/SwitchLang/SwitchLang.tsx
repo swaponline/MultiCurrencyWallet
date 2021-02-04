@@ -90,6 +90,17 @@ export default class SwitchLang extends Component<{intl: IntlShape}, PropsType> 
         >
           <FormattedMessage id="SwitchLangES" defaultMessage="ES" />
         </a>
+        |
+        <a
+          href={locale.toUpperCase() !== 'PL' ? `#${relocalisedUrl(locale)}` : undefined}
+          styleName={`language ${isDark ? '--dark' : ''}`}
+          onClick={(e) => {
+            this.switchLang(e, 'PL')
+            return false
+          }}
+        >
+          <FormattedMessage id="SwitchLangPL" defaultMessage="PL" />
+        </a>
       </div>
     )
   }
