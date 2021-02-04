@@ -7,10 +7,9 @@
   text-align: center;
   line-height: 1.2em;
   border-radius: 50%;
-  border: 0,5px;
-  border-color: lightgrey;
   vertical-align: middle;
-  background: rgba(128,128,128,0.2);
+  background-color: $pale-color;
+  color: $indicating-color;
   transform: scale(0.8);
   margin-top: -2px;
 }

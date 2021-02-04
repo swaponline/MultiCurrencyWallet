@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
 import CSSModules from 'react-css-modules'
 import { FormattedMessage } from 'react-intl'
-
 import ThemeTooltip from './ThemeTooltip'
 import styles from './Tooltip.scss'
 

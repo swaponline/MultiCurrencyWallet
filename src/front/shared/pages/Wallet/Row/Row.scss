@@ -94,8 +94,10 @@ tr button[disabled]:hover {
 
 .dark {
   .errorMessage,
-  .assetsTableCurrencyWrapper {
-    background: #222528;
+  .assetsTableCurrencyWrapper,
+  .unconfirmedBalance,
+  .assetsTableValue {
+    background: $d-background-elements;
   }
 
   .no-select-inline {
@@ -104,15 +106,9 @@ tr button[disabled]:hover {
 
   .assetsTableIcon {
     img {
-      border-color: black;
+      border-color: $l-color;
     }
   }
-
-  .unconfirmedBalance,
-  .assetsTableValue {
-    background: #222528;
-  }
-
 }
 
 .assetsTableCurrency {
@@ -211,7 +207,7 @@ tr button[disabled]:hover {
 
   a {
     font-size: 13px;
-    color: #007bff;
+    color: $color-link;
   }
 }
 
