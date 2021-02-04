@@ -1,9 +1,9 @@
 import debug from 'debug'
 import SwapApp, { constants, util } from 'swap.app'
-import { Flow } from 'swap.swap'
+import { AtomicAB2UTXO } from 'swap.swap'
 
 
-class ETH2GHOST extends Flow {
+class ETH2GHOST extends AtomicAB2UTXO {
 
   _flowName: string
   ethSwap: any

@@ -1,12 +1,12 @@
 import debug from 'debug'
 import SwapApp, { constants, util } from 'swap.app'
-import { Flow } from 'swap.swap'
+import { AtomicAB2UTXO } from 'swap.swap'
 import BigNumber from 'bignumber.js'
 
 
 export default (tokenName) => {
 
-  class ETHTOKEN2BTC extends Flow {
+  class ETHTOKEN2BTC extends AtomicAB2UTXO {
 
     _flowName: string
     ethTokenSwap: any

@@ -1,10 +1,10 @@
 import debug from 'debug'
 import SwapApp, { constants, util } from 'swap.app'
-import { Flow } from 'swap.swap'
+import { AtomicAB2UTXO } from 'swap.swap'
 import { BigNumber } from 'bignumber.js'
 
 
-class GHOST2ETH extends Flow {
+class GHOST2ETH extends AtomicAB2UTXO {
 
   _flowName: string
   ghostSwap: any
