@@ -18,6 +18,7 @@ import { BigNumber } from 'bignumber.js'
 import { Button } from 'components/controls'
 import web3Icons from '../../../images'
 import PartOfAddress from '../components/PartOfAddress'
+import { ApiEndpoint } from '../components/Endpoints'
 import Copy from '../../../components/ui/Copy/Copy'
 
 type RowProps = {
@@ -39,13 +40,9 @@ type RowProps = {
 
 type RowState = {
   isBalanceFetching: boolean
-  viewText: boolean
   isAddressCopied: boolean
   isBalanceEmpty: boolean
-  showButtons: boolean
-  existUnfinished: boolean
   isDropdownOpen: boolean
-  exCurrencyRate: number
 }
 
 const langLabels = defineMessages({
@@ -90,7 +87,6 @@ export default class Row extends Component {
   /**
    * @method handleReloadBalance
    * @method handleSliceAddress
-   * @method handleCopyAddress
    * @method handleDisconnectWallet
    * @method handleConnectMetamask
    * @method handleWithdrawPopup
@@ -122,12 +118,8 @@ export default class Row extends Component {
 
     this.state = {
       isBalanceFetching: false,
-      viewText: false,
       isAddressCopied: false,
       isBalanceEmpty: true,
-      showButtons: false,
-      exCurrencyRate: 0,
-      existUnfinished: false,
       isDropdownOpen: false,
     }
   }
@@ -262,21 +254,6 @@ export default class Row extends Component {
     return window.innerWidth < 700 || isMobile || address.length > 42
       ? `${firstPart}...${secondPart}`
       : address
-  }
-
-  handleCopyAddress = () => {
-    this.setState(
-      {
-        isAddressCopied: true,
-      },
-      () => {
-        setTimeout(() => {
-          this.setState({
-            isAddressCopied: false,
-          })
-        }, 500)
-      }
-    )
   }
 
   handleDisconnectWallet() {
@@ -876,13 +853,15 @@ export default class Row extends Component {
                   id="RowWallet276"
                   defaultMessage=" node is down (You can not perform transactions). "
                 />
-                {/* https://wiki.swaponline.io/faq/bitcoin-node-is-down-you-cannot-make-transactions/ */}
-                <a href="#">
-                  <FormattedMessage
-                    id="RowWallet282"
-                    defaultMessage="No connection..."
-                  />
-                </a>
+                <ApiEndpoint
+                  contractAddress={itemData.contractAddress}
+                  address={itemData.address}
+                  symbol={itemData.currency}
+                  isERC20={itemData.isERC20}
+                  isBTC={itemData.isBTC}
+                >
+                  <FormattedMessage id="RowWallet282" defaultMessage="No connection..."/>
+                </ApiEndpoint>
               </div>
             )}
             <span styleName="assetsTableCurrencyWrapper">
@@ -968,14 +947,20 @@ export default class Row extends Component {
                     : // Address shows 
                     <div styleName="addressStyle">
                       <Copy text={itemData.address}>
-                        {
-                          isMobile ?
-                          <PartOfAddress {...itemData} style={{
-                            position: 'relative',
-                            bottom: '13px',
-                          }} />
-                          :
-                          <p>{itemData.address}</p>
+                        {isMobile ? (
+                            <PartOfAddress
+                              withoutLink
+                              currency={itemData.currency}
+                              contractAddress={itemData.contractAddress}
+                              address={itemData.address}
+                              isERC20={itemData.isERC20}
+                              isBTC={itemData.isBTC}
+                              style={{
+                                position: 'relative',
+                                bottom: '13px',
+                              }} 
+                            />
+                          ) : <p>{itemData.address}</p>
                         }
                       </Copy>
                     </div>

@@ -81,8 +81,6 @@ export default class CurrencyList extends Component<any, any> {
             <a>{currentActiveAsset.currency}</a>
             <span styleName="address">{currentAddress}</span>
             <span styleName="mobileAddress">
-              {/*
-              //@ts-ignore */}
               {isMobile ? <PartOfAddress address={currentAddress} withoutLink /> : ''}
             </span>
           </div>
@@ -115,8 +113,6 @@ export default class CurrencyList extends Component<any, any> {
                   <a>{item.fullName}</a>
                   <span styleName="address">{item.address}</span>
                   <span styleName="mobileAddress">
-                    {/*
-                    //@ts-ignore */}
                     {isMobile ? <PartOfAddress address={item.address} withoutLink /> : ''}
                   </span>
                 </div>

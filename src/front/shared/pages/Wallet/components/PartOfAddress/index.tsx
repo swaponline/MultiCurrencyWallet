@@ -2,7 +2,7 @@ import React from 'react'
 
 import Address from 'components/ui/Address/Address'
 import { AddressFormat } from 'domain/address'
-import LinkAccount from '../LinkAccount'
+import { LinkEndpoint } from '../Endpoints'
 
 export default function PartOfAddress(props) {
   const { 
@@ -10,8 +10,7 @@ export default function PartOfAddress(props) {
     currency, 
     contractAddress, 
     address, 
-    onClick, 
-    withoutLink
+    withoutLink,
   } = props
 
   const styleOverwrited = {
@@ -20,23 +19,21 @@ export default function PartOfAddress(props) {
     color: 'rgb(142, 154, 163)',
   }
 
+  const AddressElement = (
+    <Address
+      address={address}
+      format={AddressFormat.Short}
+      style={{ ...style, ...styleOverwrited }}
+    />
+  )
+
   return (
     <div>
       {!withoutLink ? (
-        <LinkAccount type={currency} contractAddress={contractAddress} address={address} onClick={onClick}>
-          <Address
-            address={address}
-            format={AddressFormat.Short}
-            style={{ ...style, ...styleOverwrited }}
-          />
-        </LinkAccount>
-      ) : (
-        <Address
-          address={address}
-          format={AddressFormat.Short}
-          style={{ ...style, ...styleOverwrited }}
-        />
-      )}
+        <LinkEndpoint symbol={currency} contractAddress={contractAddress} address={address}>
+          {AddressElement}
+        </LinkEndpoint>
+      ) : AddressElement}
     </div>
   )
 }
