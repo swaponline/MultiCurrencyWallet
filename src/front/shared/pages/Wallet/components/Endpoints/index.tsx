@@ -8,7 +8,7 @@ const ApiEndpoint = (props) => {
   let api = '.'
 
   if (isERC20 || lowerSymbol === 'eth') {
-    api = config.api.etherscan
+    api = config.api.etherscan[0]
   } else if (isBTC) { // btc [pin, sms, multisig]
     api = config.api.bitpay
   } else if (lowerSymbol === 'ghost') {

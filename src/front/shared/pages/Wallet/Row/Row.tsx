@@ -18,6 +18,7 @@ import { BigNumber } from 'bignumber.js'
 import { Button } from 'components/controls'
 import web3Icons from '../../../images'
 import PartOfAddress from '../components/PartOfAddress'
+import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { ApiEndpoint } from '../components/Endpoints'
 import Copy from '../../../components/ui/Copy/Copy'
 
@@ -849,10 +850,6 @@ export default class Row extends Component {
             </div>
             {balanceError && nodeDownErrorShow && (
               <div className={styles.errorMessage}>
-                <FormattedMessage
-                  id="RowWallet276"
-                  defaultMessage=" node is down (You can not perform transactions). "
-                />
                 <ApiEndpoint
                   contractAddress={itemData.contractAddress}
                   address={itemData.address}
@@ -860,8 +857,20 @@ export default class Row extends Component {
                   isERC20={itemData.isERC20}
                   isBTC={itemData.isBTC}
                 >
-                  <FormattedMessage id="RowWallet282" defaultMessage="No connection..."/>
+                  <FormattedMessage
+                    id="RowWallet276"
+                    defaultMessage="Node is down"
+                  />
                 </ApiEndpoint>
+                {' '}
+                <Tooltip id="WalletRowNodeIsDownTooltip">
+                  <div style={{ textAlign: 'center' }}>
+                    <FormattedMessage
+                      id="WalletRowNodeIsDownTooltipMessage"
+                      defaultMessage="You can not perform transactions"
+                    />
+                  </div>
+                </Tooltip>
               </div>
             )}
             <span styleName="assetsTableCurrencyWrapper">

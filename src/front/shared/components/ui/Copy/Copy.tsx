@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import { FormattedMessage, injectIntl } from 'react-intl'
 
@@ -13,14 +12,16 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })
 export default class Copy extends Component<any, any> {
+  constructor(props) {
+    super(props)
 
-  state = {
-    showTip: false,
+    this.state = {
+      showTip: false,
+    }
   }
 
   handleCopyLink = () => {
-    //@ts-ignore
-    if (this.setState.showTip) {
+    if (this.state.showTip) {
       return
     }
     this.setState({
