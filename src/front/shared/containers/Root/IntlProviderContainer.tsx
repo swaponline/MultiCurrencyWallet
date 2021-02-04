@@ -8,6 +8,7 @@ import myNl from 'localisation/nl.json'
 import myEn from 'localisation/en.json'
 import myRu from 'localisation/ru.json'
 import myEs from 'localisation/es.json'
+import myPl from 'localisation/pl.json'
 
 
 import { reduceMessages, defaultLocale, localisePrefix } from 'helpers/locale'
@@ -18,6 +19,7 @@ const translations = {
   en: reduceMessages(myEn),
   ru: reduceMessages(myRu),
   es: reduceMessages(myEs),
+  pl: reduceMessages(myPl),
 }
 
 export default class IntlProviderContainer extends React.Component<any, any> {

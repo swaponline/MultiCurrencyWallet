@@ -7452,6 +7452,13 @@
     ]
   },
   {
+    "id": "SwitchLangPL",
+    "message": "PL",
+    "files": [
+      "src/front/shared/components/Footer/SwitchLang/SwitchLang.tsx"
+    ]
+  },
+  {
     "id": "ConfirmBeginSwapOnlyInternal",
     "message": "Acceptance of an offer from the offerbook is temporarily possible only for internal addresses",
     "files": [
