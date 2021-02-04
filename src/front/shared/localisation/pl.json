@@ -380,7 +380,7 @@
   },
   {
     "id": "SwapProgress56",
-    "message": "Tworzenie kontraktu Ethereum. \ n Proszę czekać, może to potrwać kilka minut"
+    "message": "Tworzenie kontraktu Ethereum. \n Proszę czekać, może to potrwać kilka minut"
   },
   {
     "id": "SwapProgress62",
@@ -641,7 +641,7 @@
   },
   {
     "id": "BtcToEthToken167",
-    "message": "3. Wpłata BTC do kontraktu. \ n Proszę czekać, może to potrwać kilka minut"
+    "message": "3. Wpłata BTC do kontraktu. \n Proszę czekać, może to potrwać kilka minut"
   },
   {
     "id": "BtcToEthToken172",
@@ -747,7 +747,7 @@
   },
   {
     "id": "EthTokenBtc276",
-    "message": "4. Tworzenie kontraktu Ethereum. \ n Proszę czekać, może to potrwać kilka minut"
+    "message": "4. Tworzenie kontraktu Ethereum. \n Proszę czekać, może to potrwać kilka minut"
   },
   {
     "id": "EthTokenBtc283",
@@ -1949,6 +1949,7 @@
   {
     "id": "partialVideoAndFeaturesTitle",
     "message": " Najszybsza {purplefastest} zdecentralizowana giełda wymiany"
+  },
   {
     "id": "partialVideoAndFeaturesTitlePur",
     "message": "najszybszy"
@@ -7451,6 +7452,13 @@
     ]
   },
   {
+    "id": "SwitchLangPL",
+    "message": "PL",
+    "files": [
+      "src/front/shared/components/Footer/SwitchLang/SwitchLang.tsx"
+    ]
+  },
+  {
     "id": "ConfirmBeginSwapOnlyInternal",
     "message": "Acceptance of an offer from the offerbook is temporarily possible only for internal addresses",
     "files": [
@@ -8019,7 +8027,7 @@
   },
   {
     "id": "EthTokensToBtc48_ethtoken_to_BtcLike",
-    "message": "Dziękujemy za użycie Swapu	",
+    "message": "Dziękujemy za użycie Swapu!",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgressText/EthTokenToBtcLike.tsx"
     ]
