@@ -10,11 +10,6 @@ class AtomicAB2UTXO extends Flow {
 
   constructor(swap) {
     super(swap)
-    this.swap     = swap
-    this.steps    = []
-    this.app      = null
-
-    this.stepNumbers = {}
 
     this.state = {
       ...this.state,
