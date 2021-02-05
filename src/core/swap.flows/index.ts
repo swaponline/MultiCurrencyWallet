@@ -1,5 +1,5 @@
-import TurboMaker from './turbo/maker'
-import TurboTaker from './turbo/taker'
+import TurboMaker from './turbo/Maker'
+import TurboTaker from './turbo/Taker'
 
 
 import ETH2BTC from './ETH2BTC'
