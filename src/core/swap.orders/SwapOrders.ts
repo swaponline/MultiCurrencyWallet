@@ -229,6 +229,7 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
 
     const buy = buyCurrency.toUpperCase()
     const sell = sellCurrency.toUpperCase()
+    // Error in the bottom line: Cannot read property 'precision' of undefined
     const roundedBuyAmount = new BigNumber(buyAmount).dp(constants.COIN_DATA[buy].precision)
     const roundedSellAmount = new BigNumber(sellAmount).dp(constants.COIN_DATA[sell].precision)
 
