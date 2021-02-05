@@ -794,7 +794,7 @@ class UTXOBlockchain extends SwapInterface {
    * @param {string} hashName
    * @returns {Promise}
    */
-  withdraw(data, isRefund?: boolean = false, hashName?: string = null): Promise<string> {
+  withdraw(data, isRefund?: boolean = false, hashName?: string): Promise<string> {
     return new Promise(async (resolve, reject) => {
       try {
         console.log('withdraw')
@@ -873,7 +873,7 @@ class UTXOBlockchain extends SwapInterface {
    * @param {string} hashName
    * @returns {Promise}
    */
-  refund(data: any, hashName?: string = null) {
+  refund(data: any, hashName?: string) {
     return this.withdraw(data, true, hashName)
   }
 
