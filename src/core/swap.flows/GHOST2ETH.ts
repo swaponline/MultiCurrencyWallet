@@ -254,36 +254,6 @@ class GHOST2ETH extends AtomicAB2UTXO {
     this.finishStep({}, { step: 'sync-balance' })
   }
 
-  async syncBalance() {
-    const { sellAmount } = this.swap
-
-    this.setState({
-      isBalanceFetching: true,
-    })
-
-    const ghostAddress = this.app.services.auth.accounts.ghost.getAddress()
-
-    const txFee = await this.ghostSwap.estimateFeeValue({ method: 'swap', fixed: true, address: ghostAddress })
-    const unspents = await this.ghostSwap.fetchUnspents(ghostAddress)
-    const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-    const balance = new BigNumber(totalUnspent).dividedBy(1e8)
-
-    const needAmount = sellAmount.plus(txFee)
-    const isEnoughMoney = needAmount.isLessThanOrEqualTo(balance)
-
-    const stateData = {
-      balance,
-      isBalanceFetching: false,
-      isBalanceEnough: isEnoughMoney,
-    }
-
-    if (isEnoughMoney) {
-      this.finishStep(stateData, { step: 'sync-balance' })
-    } else {
-      this.setState(stateData, true)
-    }
-  }
-
   getRefundTxHex = () => {
     this.ghostSwap.getRefundHexTransaction({
       scriptValues: this.state.utxoScriptValues,

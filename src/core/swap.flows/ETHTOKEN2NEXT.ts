@@ -225,30 +225,6 @@ export default (tokenName) => {
       return this.ethTokenSwap.checkSwapExists(swapData)
     }
 
-    async syncBalance() {
-      const { sellAmount } = this.swap
-
-      this.setState({
-        isBalanceFetching: true,
-      })
-
-      const balance = await this.ethTokenSwap.fetchBalance(this.app.getMyEthAddress())
-      const isEnoughMoney = sellAmount.isLessThanOrEqualTo(balance)
-
-      const stateData = {
-        balance,
-        isBalanceFetching: false,
-        isBalanceEnough: isEnoughMoney,
-      }
-
-      if (isEnoughMoney) {
-        this.finishStep(stateData, { step: 'sync-balance' })
-      }
-      else {
-        this.setState(stateData, true)
-      }
-    }
-
     async tryRefund() {
       const { participant } = this.swap
       const { secretHash } = this.state

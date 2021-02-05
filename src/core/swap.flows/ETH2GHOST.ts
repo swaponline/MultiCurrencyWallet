@@ -237,30 +237,6 @@ class ETH2GHOST extends AtomicAB2UTXO {
     return this.ethSwap.checkSwapExists(swapData)
   }
 
-  async syncBalance() {
-    const { sellAmount } = this.swap
-
-    this.setState({
-      isBalanceFetching: true,
-    })
-
-    const balance = await this.ethSwap.fetchBalance(this.app.getMyEthAddress())
-    const isEnoughMoney = sellAmount.isLessThanOrEqualTo(balance)
-
-    const stateData = {
-      balance,
-      isBalanceFetching: false,
-      isBalanceEnough: isEnoughMoney,
-    }
-
-    if (isEnoughMoney) {
-      this.finishStep(stateData, { step: 'sync-balance' })
-    }
-    else {
-      this.setState(stateData, true)
-    }
-  }
-
   async tryRefund() {
     const { participant } = this.swap
     const { secretHash } = this.state

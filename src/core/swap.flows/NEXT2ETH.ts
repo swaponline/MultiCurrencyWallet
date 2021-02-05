@@ -254,39 +254,6 @@ class NEXT2ETH extends AtomicAB2UTXO {
     this.finishStep({}, { step: 'sync-balance' })
   }
 
-  async syncBalance() {
-    const { sellAmount } = this.swap
-
-    this.setState({
-      isBalanceFetching: true,
-    })
-
-    const nextAddress = this.app.services.auth.accounts.next.getAddress()
-
-    const txFee = await this.nextSwap.estimateFeeValue({ method: 'swap', fixed: true, address: nextAddress })
-
-    const unspents = await this.nextSwap.fetchUnspents(nextAddress)
-
-    const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-    const balance = new BigNumber(totalUnspent).dividedBy(1e8)
-
-
-    const needAmount = sellAmount.plus(txFee)
-    const isEnoughMoney = needAmount.isLessThanOrEqualTo(balance)
-
-    const stateData = {
-      balance,
-      isBalanceFetching: false,
-      isBalanceEnough: isEnoughMoney,
-    }
-
-    if (isEnoughMoney) {
-      this.finishStep(stateData, { step: 'sync-balance' })
-    } else {
-      this.setState(stateData, true)
-    }
-  }
-
   getRefundTxHex = () => {
     this.nextSwap.getRefundHexTransaction({
       scriptValues: this.state.utxoScriptValues,

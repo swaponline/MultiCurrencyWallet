@@ -179,36 +179,6 @@ class BTC2ETH extends AtomicAB2UTXO {
     this.finishStep({}, { step: 'sync-balance' })
   }
 
-  async syncBalance() {
-    const { sellAmount } = this.swap
-
-    this.setState({
-      isBalanceFetching: true,
-    })
-
-    const btcAddress = this.app.services.auth.accounts.btc.getAddress()
-
-    const txFee = await this.btcSwap.estimateFeeValue({ method: 'swap', fixed: true, address: btcAddress })
-    const unspents = await this.btcSwap.fetchUnspents(btcAddress)
-    const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-    const balance = new BigNumber(totalUnspent).dividedBy(1e8)
-
-    const needAmount = sellAmount.plus(txFee)
-    const isEnoughMoney = needAmount.isLessThanOrEqualTo(balance)
-
-    const stateData = {
-      balance,
-      isBalanceFetching: false,
-      isBalanceEnough: isEnoughMoney,
-    }
-
-    if (isEnoughMoney) {
-      this.finishStep(stateData, { step: 'sync-balance' })
-    } else {
-      this.setState(stateData, true)
-    }
-  }
-
   getRefundTxHex = () => {
     this.btcSwap.getRefundHexTransaction({
       scriptValues: this.state.btcScriptValues,

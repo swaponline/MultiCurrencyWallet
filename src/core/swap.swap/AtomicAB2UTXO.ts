@@ -1,6 +1,7 @@
 import debug from 'debug'
 import SwapApp, { util } from 'swap.app'
 import Flow from './Flow'
+import { BigNumber } from 'bignumber.js'
 
 
 class AtomicAB2UTXO extends Flow {
@@ -381,6 +382,68 @@ class AtomicAB2UTXO extends Flow {
       scriptBalance: 0,
       scriptUnspendBalance: 0
     })
+  }
+
+  async syncBalance(): Promise<void> {
+    return (this.isUTXOSide)
+      ? this.syncBalanceUTXO()
+      : this.syncBalanceAB()
+  }
+
+  async syncBalanceAB(): Promise<void> {
+    const { sellAmount } = this.swap
+
+    this.setState({
+      isBalanceFetching: true,
+    })
+
+    const balance = await this.abBlockchain.fetchBalance(
+      this.app.getMyEthAddress()
+    )
+    const isEnoughMoney = sellAmount.isLessThanOrEqualTo(balance)
+
+    const stateData = {
+      balance,
+      isBalanceFetching: false,
+      isBalanceEnough: isEnoughMoney,
+    }
+
+    if (isEnoughMoney) {
+      this.finishStep(stateData, { step: 'sync-balance' })
+    }
+    else {
+      this.setState(stateData, true)
+    }
+  }
+
+  async syncBalanceUTXO(): Promise<void> {
+    const { sellAmount } = this.swap
+
+    this.setState({
+      isBalanceFetching: true,
+    })
+
+    const utxoAddress = this.app.services.auth.accounts[this.utxoCoin].getAddress()
+
+    const txFee = await this.utxoBlockchain.estimateFeeValue({ method: 'swap', fixed: true, address: utxoAddress })
+    const unspents = await this.utxoBlockchain.fetchUnspents(utxoAddress)
+    const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+    const balance = new BigNumber(totalUnspent).dividedBy(1e8)
+
+    const needAmount = sellAmount.plus(txFee)
+    const isEnoughMoney = needAmount.isLessThanOrEqualTo(balance)
+
+    const stateData = {
+      balance,
+      isBalanceFetching: false,
+      isBalanceEnough: isEnoughMoney,
+    }
+
+    if (isEnoughMoney) {
+      this.finishStep(stateData, { step: 'sync-balance' })
+    } else {
+      this.setState(stateData, true)
+    }
   }
 }
 
