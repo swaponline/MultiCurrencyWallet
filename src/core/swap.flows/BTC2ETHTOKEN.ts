@@ -168,53 +168,9 @@ export default (tokenName) => {
       ]
     }
 
-    submitSecret(secret) {
-      if (this.state.secretHash) { return }
-
-      if (!this.state.isParticipantSigned) {
-        throw new Error(`Cannot proceed: participant not signed. step=${this.state.step}`)
-      }
-
-      const secretHash = this.app.env.bitcoin.crypto.ripemd160(Buffer.from(secret, 'hex')).toString('hex')
-
-      /* Secret hash generated - create BTC script - and only after this notify other part */
-      this.createWorkBTCScript(secretHash);
-
-      const _secret = `0x${secret.replace(/^0x/, '')}`
-
-      this.finishStep({
-        secret: _secret,
-        secretHash,
-      }, { step: 'submit-secret' })
-    }
-
     getBTCScriptAddress() {
       const { scriptAddress } = this.state
       return scriptAddress;
-    }
-
-    createWorkBTCScript(secretHash) {
-      if (this.state.utxoScriptValues) {
-        debug('swap.core:flow')('BTC Script already generated', this.state.utxoScriptValues);
-        return;
-      }
-      const { participant } = this.swap
-
-      const utcNow = () => Math.floor(Date.now() / 1000)
-      const getLockTime = () => utcNow() + 60 * 60 * 3 // 3 hours from now
-
-      const scriptValues = {
-        secretHash: secretHash,
-        ownerPublicKey: this.app.services.auth.accounts.btc.getPublicKey(),
-        recipientPublicKey: participant.btc.publicKey,
-        lockTime: getLockTime(),
-      }
-      const { scriptAddress } = this.btcSwap.createScript(scriptValues)
-
-      this.setState({
-        scriptAddress: scriptAddress,
-        utxoScriptValues: scriptValues,
-      });
     }
 
     async skipSyncBalance() {

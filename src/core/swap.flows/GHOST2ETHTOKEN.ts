@@ -246,53 +246,9 @@ export default (tokenName) => {
       ]
     }
 
-    submitSecret(secret) {
-      if (this.state.secretHash) { return }
-
-      if (!this.state.isParticipantSigned) {
-        throw new Error(`Cannot proceed: participant not signed. step=${this.state.step}`)
-      }
-
-      const secretHash = this.app.env.bitcoin.crypto.ripemd160(Buffer.from(secret, 'hex')).toString('hex')
-
-      /* Secret hash generated - create GHOST script - and only after this notify other part */
-      this.createWorkGHOSTScript(secretHash);
-
-      const _secret = `0x${secret.replace(/^0x/, '')}`
-
-      this.finishStep({
-        secret: _secret,
-        secretHash,
-      }, { step: 'submit-secret' })
-    }
-
     getGHOSTScriptAddress() {
       const { scriptAddress } = this.state
       return scriptAddress;
-    }
-
-    createWorkGHOSTScript(secretHash) {
-      if (this.state.utxoScriptValues) {
-        debug('swap.core:flow')('GHOST Script already generated', this.state.utxoScriptValues);
-        return;
-      }
-      const { participant } = this.swap
-
-      const utcNow = () => Math.floor(Date.now() / 1000)
-      const getLockTime = () => utcNow() + 60 * 60 * 3 // 3 hours from now
-
-      const scriptValues = {
-        secretHash: secretHash,
-        ownerPublicKey: this.app.services.auth.accounts.ghost.getPublicKey(),
-        recipientPublicKey: participant.ghost.publicKey,
-        lockTime: getLockTime(),
-      }
-      const { scriptAddress } = this.ghostSwap.createScript(scriptValues)
-
-      this.setState({
-        scriptAddress: scriptAddress,
-        utxoScriptValues: scriptValues,
-      });
     }
 
     async skipSyncBalance() {

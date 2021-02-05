@@ -37,11 +37,13 @@ class Flow {
 
     utxoFundError?: string
 
+    // --- UTXO-AB/AB-UTXO equals states
     utxoScriptValues: any
     utxoScriptVerified: boolean
     utxoScriptCreatingTransactionHash: string
 
     secret?: string
+    isParticipantSigned?: boolean
   }
 
   constructor(swap) {
