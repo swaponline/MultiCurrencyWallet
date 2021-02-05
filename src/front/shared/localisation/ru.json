@@ -2446,14 +2446,7 @@
   },
   {
     "id": "RowWallet276",
-    "message": " нода не доступна (Вы не можете совершать транзакции). ",
-    "files": [
-      "src/front/shared/pages/Wallet/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "RowWallet282",
-    "message": "Нет соединения...",
+    "message": "Нода не доступна",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
@@ -8209,6 +8202,13 @@
     "message": "Swap paused because broadcast tx ended with error \"{error}\"",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "WalletRowNodeIsDownTooltipMessage",
+    "message": "Вы не можете совершать транзакции",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {

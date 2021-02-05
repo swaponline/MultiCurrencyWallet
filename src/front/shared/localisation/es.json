@@ -2374,14 +2374,7 @@
   },
   {
     "id": "RowWallet276",
-    "message": " nodo sin servicio(No puedes hacer intercambios). ",
-    "files": [
-      "src/front/shared/pages/Wallet/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "RowWallet282",
-    "message": "Sin conexión...",
+    "message": "Nodo sin servicio",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
@@ -8161,6 +8154,13 @@
     "message": "Swap paused because broadcast tx ended with error \"{error}\"",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "WalletRowNodeIsDownTooltipMessage",
+    "message": "No puedes realizar transacciones",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {

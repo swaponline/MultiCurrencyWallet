@@ -2372,14 +2372,7 @@
   },
   {
     "id": "RowWallet276",
-    "message": " node is down (You can not perform transactions). ",
-    "files": [
-      "src/front/shared/pages/Wallet/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "RowWallet282",
-    "message": "Geen verbinding...",
+    "message": "Noden er nede",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
@@ -8153,6 +8146,13 @@
     "message": "Swap paused because broadcast tx ended with error \"{error}\"",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "WalletRowNodeIsDownTooltipMessage",
+    "message": "Du kan ikke udføre transaktioner",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
