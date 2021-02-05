@@ -45,6 +45,7 @@ class BTC2ETH extends AtomicAB2UTXO {
 
     this.abBlockchain = this.ethSwap
     this.utxoBlockchain = this.btcSwap
+    this.isUTXOSide = true
 
     if (!this.ethSwap) {
       throw new Error('BTC2ETH: "ethSwap" of type object required')

@@ -43,6 +43,7 @@ class NEXT2ETH extends AtomicAB2UTXO {
 
     this.abBlockchain = this.ethSwap
     this.utxoBlockchain = this.nextSwap
+    this.isUTXOSide = true
 
     if (!this.ethSwap) {
       throw new Error('NEXT2ETH: "ethSwap" of type object required')

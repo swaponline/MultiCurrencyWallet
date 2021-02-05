@@ -43,6 +43,7 @@ class GHOST2ETH extends AtomicAB2UTXO {
 
     this.abBlockchain = this.ethSwap
     this.utxoBlockchain = this.ghostSwap
+    this.isUTXOSide = true
 
     if (!this.ethSwap) {
       throw new Error('GHOST2ETH: "ethSwap" of type object required')

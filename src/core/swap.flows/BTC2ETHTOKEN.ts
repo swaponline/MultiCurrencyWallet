@@ -44,6 +44,7 @@ export default (tokenName) => {
 
       this.abBlockchain = this.ethTokenSwap
       this.utxoBlockchain = this.btcSwap
+      this.isUTXOSide = true
 
       if (!this.ethTokenSwap) {
         throw new Error('BTC2ETH: "ethTokenSwap" of type object required')

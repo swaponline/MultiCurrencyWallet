@@ -44,6 +44,7 @@ export default (tokenName) => {
 
       this.abBlockchain = this.ethTokenSwap
       this.utxoBlockchain = this.ghostSwap
+      this.isUTXOSide = true
 
       if (!this.ethTokenSwap) {
         throw new Error('GHOST2ETH: "ethTokenSwap" of type object required')
