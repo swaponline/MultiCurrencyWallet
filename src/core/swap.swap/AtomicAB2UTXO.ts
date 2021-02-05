@@ -6,6 +6,7 @@ import Flow from './Flow'
 class AtomicAB2UTXO extends Flow {
 
   utxoCoin: string = null
+  isUTXOSide: boolean = false
 
   constructor(swap) {
     super(swap)
@@ -189,6 +190,54 @@ class AtomicAB2UTXO extends Flow {
   }
 
   tryRefund() {}
+
+  _checkSwapAlreadyExists() {}
+
+  async sign() {
+    const swapExists = await this._checkSwapAlreadyExists()
+
+    if (swapExists) {
+      this.swap.room.sendMessage({
+        event: 'swap exists',
+      })
+
+      this.setState({
+        isSwapExist: true,
+      })
+
+      this.stopSwapProcess()
+    } else {
+      const { isSignFetching, isMeSigned } = this.state
+
+      if (isSignFetching || isMeSigned) {
+        return true
+      }
+
+      this.setState({
+        isSignFetching: true,
+      })
+
+      this.swap.room.once('utxo refund completed', () => {
+        this.tryRefund()
+      })
+
+      this.swap.room.on('request sign', () => {
+        this.swap.room.sendMessage({
+          event: 'swap sign',
+        })
+      })
+
+      this.swap.room.sendMessage({
+        event: 'swap sign',
+      })
+
+      this.finishStep({
+        isMeSigned: true,
+      }, { step: 'sign', silentError: true })
+
+      return true
+    }
+  }
 }
 
 

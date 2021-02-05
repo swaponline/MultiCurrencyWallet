@@ -259,53 +259,6 @@ export default (tokenName) => {
       return this.ethTokenSwap.checkSwapExists(swapData)
     }
 
-    async sign() {
-      const flow = this
-      const swapExists = await flow._checkSwapAlreadyExists()
-
-      if (swapExists) {
-        flow.swap.room.sendMessage({
-          event: 'swap exists',
-        })
-
-        flow.setState({
-          isSwapExist: true,
-        })
-
-        flow.stopSwapProcess()
-      } else {
-        const { isSignFetching, isMeSigned } = flow.state
-
-        if (isSignFetching || isMeSigned) {
-          return true
-        }
-
-        flow.setState({
-          isSignFetching: true,
-        })
-
-        flow.swap.room.once('next refund completed', () => {
-          flow.tryRefund()
-        })
-
-        flow.swap.room.on('request sign', () => {
-          flow.swap.room.sendMessage({
-            event: 'swap sign',
-          })
-        })
-
-        flow.swap.room.sendMessage({
-          event: 'swap sign',
-        })
-
-        flow.finishStep({
-          isMeSigned: true,
-        }, { step: 'sign', silentError: true })
-
-        return true
-      }
-    }
-
     async syncBalance() {
       const { sellAmount } = this.swap
 

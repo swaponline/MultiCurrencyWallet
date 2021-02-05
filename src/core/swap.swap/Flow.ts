@@ -19,6 +19,8 @@ class Flow {
     isFinished?: boolean
     isSwapTimeout?: boolean
 
+    isSignFetching: boolean
+    isMeSigned: boolean
     // Torbo swaps state
     // ...
 
@@ -51,6 +53,9 @@ class Flow {
       isSwapTimeout: false,
       isRefunded: false,
       isFinished: false,
+
+      isSignFetching: false,
+      isMeSigned: false,
       /** -------------- Turbo Swaps States ----------------- **/
       // ....
 

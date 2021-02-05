@@ -315,7 +315,7 @@ class BTC2ETH extends AtomicAB2UTXO {
         }
 
         this.swap.room.sendMessage({
-          event: 'btc refund completed',
+          event: 'utxo refund completed',
         })
 
         flow.setState({

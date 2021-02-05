@@ -389,7 +389,7 @@ export default (tokenName) => {
           }
 
           this.swap.room.sendMessage({
-            event: 'next refund completed',
+            event: 'utxo refund completed',
           })
 
           flow.setState({

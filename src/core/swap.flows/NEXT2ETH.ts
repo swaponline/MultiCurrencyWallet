@@ -393,7 +393,7 @@ class NEXT2ETH extends AtomicAB2UTXO {
         }
 
         this.swap.room.sendMessage({
-          event: 'next refund completed',
+          event: 'utxo refund completed',
         })
 
         flow.setState({
