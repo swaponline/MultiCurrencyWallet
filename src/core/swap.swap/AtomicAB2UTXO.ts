@@ -314,6 +314,27 @@ class AtomicAB2UTXO extends Flow {
       event: 'request withdraw',
     })
   }
+
+  // This function call AB side in classic AB2UTXO without taker-maker model
+  async checkOtherSideRefund() {
+    if (typeof this.utxoBlockchain.checkWithdraw === 'function') {
+      const { utxoScriptValues } = this.state
+      if (utxoScriptValues) {
+        const { scriptAddress } = this.utxoBlockchain.createScript(utxoScriptValues)
+
+        const destinationAddress = this.swap.destinationBuyAddress
+        const destAddress = (destinationAddress) ? destinationAddress : this.app.services.auth.accounts.btc.getAddress()
+
+        const hasWithdraw = await this.utxoBlockchain.checkWithdraw(scriptAddress)
+        if (hasWithdraw
+          && hasWithdraw.address.toLowerCase() !== destAddress.toLowerCase()
+        ) {
+          return true
+        }
+      }
+    }
+    return false
+  }
 }
 
 

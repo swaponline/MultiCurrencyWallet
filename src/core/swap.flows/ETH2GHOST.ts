@@ -361,26 +361,6 @@ class ETH2GHOST extends AtomicAB2UTXO {
       isGhostWithdrawn: true,
     }, { step: 'withdraw-ghost' })
   }
-
-  async checkOtherSideRefund() {
-    if (typeof this.ghostSwap.checkWithdraw === 'function') {
-      const { utxoScriptValues } = this.state
-      if (utxoScriptValues) {
-        const { scriptAddress } = this.ghostSwap.createScript(utxoScriptValues)
-
-        const destinationAddress = this.swap.destinationBuyAddress
-        const destAddress = (destinationAddress) ? destinationAddress : this.app.getMyEthAddress()
-
-        const hasWithdraw = await this.ghostSwap.checkWithdraw(scriptAddress)
-        if (hasWithdraw
-          && hasWithdraw.address.toLowerCase() != destAddress.toLowerCase()
-        ) {
-          return true
-        }
-      }
-    }
-    return false
-  }
 }
 
 

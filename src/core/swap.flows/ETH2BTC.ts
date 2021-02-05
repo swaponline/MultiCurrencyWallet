@@ -346,26 +346,6 @@ class ETH2BTC extends AtomicAB2UTXO {
       }, { step: 'withdraw-btc' })
     })
   }
-
-  async checkOtherSideRefund() {
-    if (typeof this.btcSwap.checkWithdraw === 'function') {
-      const { utxoScriptValues } = this.state
-      if (utxoScriptValues) {
-        const { scriptAddress } = this.btcSwap.createScript(utxoScriptValues)
-
-        const destinationAddress = this.swap.destinationBuyAddress
-        const destAddress = (destinationAddress) ? destinationAddress : this.app.services.auth.accounts.btc.getAddress()
-
-        const hasWithdraw = await this.btcSwap.checkWithdraw(scriptAddress)
-        if (hasWithdraw
-          && hasWithdraw.address.toLowerCase() !== destAddress.toLowerCase()
-        ) {
-          return true
-        }
-      }
-    }
-    return false
-  }
 }
 
 

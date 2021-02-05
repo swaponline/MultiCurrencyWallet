@@ -363,26 +363,6 @@ class ETH2NEXT extends AtomicAB2UTXO {
       isNextWithdrawn: true,
     }, { step: 'withdraw-next' })
   }
-
-  async checkOtherSideRefund() {
-    if (typeof this.nextSwap.checkWithdraw === 'function') {
-      const { utxoScriptValues } = this.state
-      if (utxoScriptValues) {
-        const { scriptAddress } = this.nextSwap.createScript(utxoScriptValues)
-
-        const destinationAddress = this.swap.destinationBuyAddress
-        const destAddress = (destinationAddress) ? destinationAddress : this.app.services.auth.accounts.next.getAddress()
-
-        const hasWithdraw = await this.nextSwap.checkWithdraw(scriptAddress)
-        if (hasWithdraw
-          && hasWithdraw.address.toLowerCase() != destAddress.toLowerCase()
-        ) {
-          return true
-        }
-      }
-    }
-    return false
-  }
 }
 
 
