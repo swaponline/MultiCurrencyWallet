@@ -2,6 +2,7 @@ import debug from 'debug'
 import SwapApp, { constants, util } from 'swap.app'
 import { AtomicAB2UTXO } from 'swap.swap'
 import { BigNumber } from 'bignumber.js'
+import { EthTokenSwap, BtcSwap } from 'swap.swaps'
 
 
 export default (tokenName) => {
@@ -9,8 +10,8 @@ export default (tokenName) => {
   class BTC2ETHTOKEN extends AtomicAB2UTXO {
 
     _flowName: string
-    ethTokenSwap: any
-    btcSwap: any
+    ethTokenSwap: EthTokenSwap
+    btcSwap: BtcSwap
     state: any
 
     static getName() {

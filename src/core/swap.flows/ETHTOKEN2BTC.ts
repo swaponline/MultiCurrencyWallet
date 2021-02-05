@@ -2,6 +2,7 @@ import debug from 'debug'
 import SwapApp, { constants, util } from 'swap.app'
 import { AtomicAB2UTXO } from 'swap.swap'
 import BigNumber from 'bignumber.js'
+import { EthTokenSwap, BtcSwap } from 'swap.swaps'
 
 
 export default (tokenName) => {
@@ -9,8 +10,8 @@ export default (tokenName) => {
   class ETHTOKEN2BTC extends AtomicAB2UTXO {
 
     _flowName: string
-    ethTokenSwap: any
-    btcSwap: any
+    ethTokenSwap: EthTokenSwap
+    btcSwap: BtcSwap
     state: any
 
     static getName() {
@@ -393,20 +394,21 @@ export default (tokenName) => {
         throw new Error(`Already withdrawn: address=${scriptAddress},balance=${balance}`)
       }
 
-      await this.btcSwap.withdraw({
+      this.btcSwap.withdraw({
         scriptValues: utxoScriptValues,
         secret: _secret,
-      }, (hash) => {
+      }).then((hash) => {
         debug('swap.core:flow')(`TX hash=${hash}`)
         this.setState({
           btcSwapWithdrawTransactionHash: hash,
         })
-      })
-      debug('swap.core:flow')(`TX withdraw sent: ${this.state.btcSwapWithdrawTransactionHash}`)
 
-      this.finishStep({
-        isbtcWithdrawn: true,
-      }, { step: 'withdraw-btc' })
+        debug('swap.core:flow')(`TX withdraw sent: ${this.state.btcSwapWithdrawTransactionHash}`)
+
+        this.finishStep({
+          isbtcWithdrawn: true,
+        }, { step: 'withdraw-btc' })
+      })
     }
 
     async checkOtherSideRefund() {

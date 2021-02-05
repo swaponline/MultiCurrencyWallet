@@ -648,7 +648,7 @@ class EthTokenSwap extends SwapInterface {
    * @param {function} handleTransactionHash
    * @returns {Promise}
    */
-  async refund(data, handleTransactionHash) {
+  async refund(data, handleTransactionHash?: Function) {
     const { participantAddress } = data
 
     await this.updateGasPrice()
