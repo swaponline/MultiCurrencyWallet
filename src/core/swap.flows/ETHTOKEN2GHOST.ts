@@ -42,6 +42,9 @@ export default (tokenName) => {
       this.ethTokenSwap = swap.participantSwap
       this.ghostSwap = swap.ownerSwap
 
+      this.abBlockchain = this.ethTokenSwap
+      this.utxoBlockchain = this.ghostSwap
+
       if (!this.ethTokenSwap) {
         throw new Error('ETHTOKEN2GHOST: "ethTokenSwap" of type object required')
       }
@@ -209,43 +212,6 @@ export default (tokenName) => {
 
         () => {},
       ]
-    }
-
-    acceptWithdrawRequest() {
-      const flow = this
-      const { withdrawRequestAccepted } = flow.state
-
-      if (withdrawRequestAccepted) {
-        return
-      }
-
-      this.setState({
-        withdrawRequestAccepted: true,
-      })
-
-      this.swap.room.once('do withdraw', async ({secret}) => {
-        try {
-          const data = {
-            participantAddress: this.app.getParticipantEthAddress(flow.swap),
-            secret,
-          }
-
-          await flow.ethTokenSwap.withdrawNoMoney(data, (hash) => {
-            flow.swap.room.sendMessage({
-              event: 'withdraw ready',
-              data: {
-                ethSwapWithdrawTransactionHash: hash,
-              }
-            })
-          })
-        } catch (error) {
-          debug('swap.core:flow')(error.message)
-        }
-      })
-
-      this.swap.room.sendMessage({
-        event: 'accept withdraw request'
-      })
     }
 
     _checkSwapAlreadyExists() {

@@ -8,6 +8,10 @@ class AtomicAB2UTXO extends Flow {
   utxoCoin: string = null
   isUTXOSide: boolean = false
 
+  abBlockchain: any // @to-do - make inmlementation for ABswap
+  utxoBlockchain: any // @to-do - make implementation for UTXOSwap
+
+
   constructor(swap) {
     super(swap)
 
@@ -17,6 +21,8 @@ class AtomicAB2UTXO extends Flow {
         /** AB-UTXO **/
         // Partical (btc-seller) has unconfirmed txs in mempool
         participantHasLockedUTXO: false,
+        requireWithdrawFee: false,
+        requireWithdrawFeeSended: false,
         // Script charged, confirmed and checked - next step - charge AB contract
         isUTXOScriptOk: false,
         utxoScriptValues: null,
@@ -26,6 +32,7 @@ class AtomicAB2UTXO extends Flow {
         // We are have locked txs in mem-pool
         waitUnlockUTXO: false,
         utxoFundError: null,
+        withdrawRequestAccepted: false,
       },
     }
   }
@@ -232,6 +239,80 @@ class AtomicAB2UTXO extends Flow {
 
       return true
     }
+  }
+
+  acceptWithdrawRequest() {
+    const flow = this
+    const { withdrawRequestAccepted } = flow.state
+
+    if (withdrawRequestAccepted) {
+      return
+    }
+
+    this.setState({
+      withdrawRequestAccepted: true,
+    })
+
+    this.swap.room.once('do withdraw', async ({secret}) => {
+      try {
+        const data = {
+          participantAddress: this.app.getParticipantEthAddress(flow.swap),
+          secret,
+        }
+
+        await this.abBlockchain.withdrawNoMoney(data, (hash) => {
+          flow.swap.room.sendMessage({
+            event: 'withdraw ready',
+            data: {
+              ethSwapWithdrawTransactionHash: hash,
+            }
+          })
+        })
+      } catch (err) {
+        debug('swap.core:flow')(err.message)
+      }
+    })
+
+    this.swap.room.sendMessage({
+      event: 'accept withdraw request'
+    })
+  }
+
+  /**
+   * TODO - backport version compatibility
+   *  mapped to sendWithdrawRequestToAnotherParticipant
+   *  remove at next iteration after client software update
+   *  Used in swap.react
+   */
+  sendWithdrawRequest() {
+    return this.sendWithdrawRequestToAnotherParticipant()
+  }
+
+  sendWithdrawRequestToAnotherParticipant() {
+    const flow = this
+
+    const { requireWithdrawFee, requireWithdrawFeeSended } = flow.state
+
+    if (!requireWithdrawFee || requireWithdrawFeeSended) {
+      return
+    }
+
+    flow.setState({
+      requireWithdrawFeeSended: true,
+    })
+
+    flow.swap.room.on('accept withdraw request', () => {
+      flow.swap.room.sendMessage({
+        event: 'do withdraw',
+        data: {
+          secret: flow.state.secret,
+        }
+      })
+    })
+
+    flow.swap.room.sendMessage({
+      event: 'request withdraw',
+    })
   }
 }
 

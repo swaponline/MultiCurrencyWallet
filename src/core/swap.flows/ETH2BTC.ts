@@ -40,6 +40,9 @@ class ETH2BTC extends AtomicAB2UTXO {
     this.ethSwap = swap.participantSwap
     this.btcSwap = swap.ownerSwap
 
+    this.abBlockchain = this.ethSwap
+    this.utxoBlockchain = this.btcSwap
+
     if (!this.ethSwap) {
       throw new Error('BTC2ETH: "ethSwap" of type object required')
     }
@@ -203,43 +206,6 @@ class ETH2BTC extends AtomicAB2UTXO {
 
       () => {}
     ]
-  }
-
-  acceptWithdrawRequest() {
-    const flow = this
-    const { withdrawRequestAccepted } = flow.state
-
-    if (withdrawRequestAccepted) {
-      return
-    }
-
-    this.setState({
-      withdrawRequestAccepted: true,
-    })
-
-    this.swap.room.once('do withdraw', async ({secret}) => {
-      try {
-        const data = {
-          participantAddress: this.app.getParticipantEthAddress(flow.swap),
-          secret,
-        }
-
-        await flow.ethSwap.withdrawNoMoney(data, (hash) => {
-          flow.swap.room.sendMessage({
-            event: 'withdraw ready',
-            data: {
-              ethSwapWithdrawTransactionHash: hash,
-            }
-          })
-        })
-      } catch (err) {
-        debug('swap.core:flow')(err.message)
-      }
-    })
-
-    this.swap.room.sendMessage({
-      event: 'accept withdraw request'
-    })
   }
 
   _checkSwapAlreadyExists() {

@@ -42,6 +42,9 @@ export default (tokenName) => {
       this.ethTokenSwap = swap.ownerSwap
       this.btcSwap      = swap.participantSwap
 
+      this.abBlockchain = this.ethTokenSwap
+      this.utxoBlockchain = this.btcSwap
+
       if (!this.ethTokenSwap) {
         throw new Error('BTC2ETH: "ethTokenSwap" of type object required')
       }
@@ -162,43 +165,6 @@ export default (tokenName) => {
 
         () => {}
       ]
-    }
-
-    /**
-     * TODO - backport version compatibility
-     *  mapped to sendWithdrawRequestToAnotherParticipant
-     *  remove at next iteration after client software update
-     *  Used in swap.react
-     */
-    sendWithdrawRequest() {
-      return this.sendWithdrawRequestToAnotherParticipant()
-    }
-
-    sendWithdrawRequestToAnotherParticipant() {
-      const flow = this
-
-      const { requireWithdrawFee, requireWithdrawFeeSended } = flow.state
-
-      if (!requireWithdrawFee || requireWithdrawFeeSended) {
-        return
-      }
-
-      flow.setState({
-        requireWithdrawFeeSended: true,
-      })
-
-      flow.swap.room.on('accept withdraw request', () => {
-        flow.swap.room.sendMessage({
-          event: 'do withdraw',
-          data: {
-            secret: flow.state.secret,
-          }
-        })
-      })
-
-      flow.swap.room.sendMessage({
-        event: 'request withdraw',
-      })
     }
 
     submitSecret(secret) {

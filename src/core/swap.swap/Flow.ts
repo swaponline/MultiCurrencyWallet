@@ -28,15 +28,20 @@ class Flow {
     // -- AB-UTXO
     participantHasLockedUTXO?: boolean
     secretHash?: string
+    requireWithdrawFee?: boolean
+    requireWithdrawFeeSended?: boolean
     // -- UTXO-AB
     isUTXOScriptOk?: boolean
     waitUnlockUTXO?: boolean
+    withdrawRequestAccepted?: boolean
 
     utxoFundError?: string
 
     utxoScriptValues: any
     utxoScriptVerified: boolean
     utxoScriptCreatingTransactionHash: string
+
+    secret?: string
   }
 
   constructor(swap) {
