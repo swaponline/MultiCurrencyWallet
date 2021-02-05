@@ -821,7 +821,7 @@ export default class WithdrawModal extends React.Component<any, any> {
       !this.addressIsCorrect() ||
       isEthToken && ethBalanceLessThanMiner ||
       new BigNumber(amount).isGreaterThan(balances.balance) ||
-      new BigNumber(amount).dp() > currentDecimals ||
+      new BigNumber(amount).dp() > currentDecimals
 
 
     const labels = defineMessages({
