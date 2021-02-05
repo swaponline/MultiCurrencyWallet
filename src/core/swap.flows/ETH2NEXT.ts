@@ -310,16 +310,6 @@ class ETH2NEXT extends AtomicAB2UTXO {
       .catch((error) => false)
   }
 
-  stopSwapProcess() {
-    const flow = this
-
-    console.warn('Swap was stopped')
-
-    flow.setState({
-      isStoppedSwap: true,
-    }, true)
-  }
-
   async isRefundSuccess() {
     return true
   }

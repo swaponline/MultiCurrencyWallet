@@ -386,16 +386,6 @@ class NEXT2ETH extends AtomicAB2UTXO {
       })
   }
 
-  stopSwapProcess() {
-    const flow = this
-
-    console.warn('Swap was stoped')
-
-    flow.setState({
-      isStoppedSwap: true,
-    }, true)
-  }
-
   async isRefundSuccess() {
     const { refundTransactionHash, isRefunded } = this.state
     if (refundTransactionHash && isRefunded) {

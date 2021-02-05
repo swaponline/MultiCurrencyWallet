@@ -382,16 +382,6 @@ export default (tokenName) => {
         })
     }
 
-    stopSwapProcess() {
-      const flow = this
-
-      console.warn('Swap was stoped')
-
-      flow.setState({
-        isStoppedSwap: true,
-      }, true)
-    }
-
     async isRefundSuccess() {
       const { refundTransactionHash, isRefunded } = this.state
       if (refundTransactionHash && isRefunded) {
