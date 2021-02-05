@@ -2238,7 +2238,7 @@
   },
   {
     "id": "Withdrow170",
-    "message": "La cantidad máxima que puede enviar es {allowedCriptoBalance} {currency}",
+    "message": "La cantidad máxima que puede enviar es {allowedBalance} {currency}",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
@@ -7675,10 +7675,7 @@
   },
   {
     "id": "Withdrow171",
-    "message": "La cantidad máxima que puede enviar es {allowedUsdBalance} USD",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
-    ]
+    "message": "La cantidad máxima que puede enviar es {allowedUsdBalance} USD"
   },
   {
     "id": "WTH276",
@@ -7737,35 +7734,35 @@
     "id": "FeeInfoBlockTotalFee",
     "message": "Tarifa total que paga:",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockMinerFee",
     "message": "Tarifa de minero:",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockMinerFeeTooltip",
     "message": "Cantidad de criptomoneda pagada para incentivar a los mineros a confirmar su transacción",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockServiceFee",
     "message": "Tarifa de servicio:",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockServiceFeeConditions",
     "message": "del monto de la transferencia, pero no menos de",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
@@ -8164,6 +8161,20 @@
     "message": "No puedes realizar transacciones",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "WithdrowBalanceNotEnoughtPrompt",
+    "message": "No hay suficiente saldo para enviar",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "WithdrowBalanceNotEnoughtEthereumBalancePrompt",
+    "message": "No hay suficiente saldo de ethereum para la tarifa del minero",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
   }
 ]

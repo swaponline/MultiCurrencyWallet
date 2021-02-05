@@ -2165,7 +2165,7 @@
   },
   {
     "id": "Withdrow170",
-    "message": "Maximum amount you can send is {allowedCriptoBalance} {currency}",
+    "message": "Maximum amount you can send is {allowedBalance} {currency}",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
@@ -7633,10 +7633,7 @@
   },
   {
     "id": "Withdrow171",
-    "message": "Maximum amount you can send is {allowedUsdBalance} USD",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
-    ]
+    "message": "Maximum amount you can send is {allowedUsdBalance} USD"
   },
   {
     "id": "SwapController54",
@@ -7709,35 +7706,35 @@
     "id": "FeeInfoBlockTotalFee",
     "message": "Total fees you pay:",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockMinerFee",
     "message": "Miner fee:",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockMinerFeeTooltip",
     "message": "Amount of cryptocurrency paid to incentivize miners to confirm your transaction",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockServiceFee",
     "message": "Service fee:",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockServiceFeeConditions",
     "message": "of the transfer amount, but not less than",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
@@ -8136,6 +8133,20 @@
     "message": "You can not perform transactions",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "WithdrowBalanceNotEnoughtPrompt",
+    "message": "Not enough balance to send",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "WithdrowBalanceNotEnoughtEthereumBalancePrompt",
+    "message": "Not enough ethereum balance for miner fee",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
   }
 ]

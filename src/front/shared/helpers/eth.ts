@@ -9,10 +9,6 @@ type EstimateFeeOptions = {
 }
 
 const estimateFeeValue = async (options: EstimateFeeOptions) => {
-  /* 
-  * method -> send, swap
-  * speed -> slow, fast, fastest
-  */
   const { method, speed } = options
   const gasPrice = await estimateGasPrice({ speed })
   const feeValue = new BigNumber(constants.defaultFeeRates.eth.limit[method])
@@ -20,7 +16,7 @@ const estimateFeeValue = async (options: EstimateFeeOptions) => {
     .multipliedBy(1e-18)
     .toNumber()
 
-  return +feeValue
+  return feeValue
 }
 
 const estimateGasPrice = async ({ speed = 'fast' } = {}) => {

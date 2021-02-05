@@ -1,13 +1,11 @@
-import React, { Component, Fragment } from 'react'
-
+import React, { Component } from 'react'
 import cssModules from 'react-css-modules'
-import styles from './CurrencyList.scss'
+import styles from './index.scss'
 import cx from 'classnames'
 import Coin from 'components/Coin/Coin'
 import PartOfAddress from 'pages/Wallet/components/PartOfAddress'
 import { isMobile } from 'react-device-detect'
-import helpers, { constants, links } from 'helpers'
-import request from 'common/utils/request'
+import helpers, { constants } from 'helpers'
 import actions from 'redux/actions'
 import { localisedUrl } from 'helpers/locale'
 import getCurrencyKey from 'helpers/getCurrencyKey'
@@ -58,7 +56,6 @@ export default class CurrencyList extends Component<any, any> {
       currentActiveAsset,
       currentBalance,
       currency,
-      exCurrencyRate,
       activeFiat,
       tableRows,
       currentAddress,

@@ -2236,7 +2236,7 @@
   },
   {
     "id": "Withdrow170",
-    "message": "Det maksimale beløb, du kan sende, er {allowedCriptoBalance} {currency}",
+    "message": "Det maksimale beløb, du kan sende, er {allowedBalance} {currency}",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
@@ -7667,10 +7667,7 @@
   },
   {
     "id": "Withdrow171",
-    "message": "Det maksimale beløb, du kan sende, er {allowedUsdBalance} USD",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
-    ]
+    "message": "Det maksimale beløb, du kan sende, er {allowedUsdBalance} USD"
   },
   {
     "id": "WTH276",
@@ -7729,35 +7726,35 @@
     "id": "FeeInfoBlockTotalFee",
     "message": "Totale vergoeding die u betaalt:",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockMinerFee",
     "message": "Mijnwerkersvergoeding:",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockMinerFeeTooltip",
     "message": "Bedrag aan cryptocurrency dat is betaald om mijnwerkers te stimuleren om uw transactie te bevestigen",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockServiceFee",
     "message": "Servicekosten:",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockServiceFeeConditions",
     "message": "van het overgemaakte bedrag, maar niet minder dan",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
@@ -8156,6 +8153,20 @@
     "message": "Du kan ikke udføre transaktioner",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "WithdrowBalanceNotEnoughtPrompt",
+    "message": "Niet genoeg saldo om te verzenden",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "WithdrowBalanceNotEnoughtEthereumBalancePrompt",
+    "message": "Niet genoeg ethereum-saldo voor mijnwerkersvergoeding",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
   }
 ]
