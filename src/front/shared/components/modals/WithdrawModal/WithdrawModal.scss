@@ -13,8 +13,11 @@
   margin-top: 1em;
   font-size: 13px;
   font-family: 'Roboto Mono', monospace;
-  //background-color: $l-background-elements;
   color: $notice-color;
+
+  &.hide {
+    opacity: 0;
+  }
 }
 
 .r-tooltip {
@@ -64,11 +67,11 @@
   text-align: left;
   font-family: 'Roboto Mono', monospace;
   font-size: 13px;
-  z-index: 1;
+  z-index: 2;
   color: $notice-color;
+
   @include media-mobile {
     right: 69px;
-    z-index: 112;
   }
 }
 
@@ -91,16 +94,6 @@
 .buttonFull {
   margin-top: 10px;
   display: block;
-}
-
-.cell {
-  color: #3b95ff;
-  cursor: pointer;
-  display: block;
-
-  &:hover {
-    color: darken(#3b95ff, 1);
-  }
 }
 
 .group {
@@ -267,6 +260,7 @@
 
 .additionalСurrencies {
   position: absolute;
+  padding-left: 0.4em;
   right: 100px;
   background: $l-background-elements;
   z-index: 1;
@@ -274,7 +268,6 @@
   top: 22px;
   align-items: center;
 }
-
 
 .additionalСurrenciesItem {
   font-size: 14px;
@@ -360,7 +353,7 @@
 @media all and (max-width: 480px) {
   .additionalСurrencies {
     right: 80px;
-    top: 24px;
+    top: 25px;
   }
 
   .additionalСurrenciesItem {
@@ -380,6 +373,10 @@
         font-size: 8px;
       }
     }
+  }
+
+  .prompt {
+    font-size: 10px;
   }
 }
 

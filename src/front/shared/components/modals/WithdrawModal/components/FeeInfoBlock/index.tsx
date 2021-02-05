@@ -1,6 +1,6 @@
 import React from 'react'
 import cssModules from 'react-css-modules'
-import styles from './FeeInfoBlock.scss'
+import styles from './index.scss'
 import { BigNumber } from 'bignumber.js'
 import { FormattedMessage } from 'react-intl'
 
@@ -10,44 +10,94 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 type FeeInfoBlockProps = {
   isLoading: boolean
   isEthToken: boolean
-  hasServiceFee: boolean
   hasTxSize: boolean
-
+  
   currency: string
+  activeFiat: string
   dataCurrency: string
-
-  exCurrencyRate: number
-  minerFee: number
-  serviceFee: number
-  serviceFeePercent: number
-  serviceFeeMin: number
-  totalFee: number
-
+  
+  currentDecimals: number
   txSize?: number
   feeCurrentCurrency?: number
+  exEthereumRate?: BigNumber
+  exCurrencyRate?: BigNumber
+  minerFee: BigNumber
+  serviceFee: BigNumber
+  totalFee: BigNumber
+  usedAdminFee: undefined | {
+    address: string
+    fee: number // percent (%)
+    min: number
+  }
 }
 
 function FeeInfoBlock(props: FeeInfoBlockProps) {
   const {
     isEthToken,
     currency,
+    currentDecimals,
+    activeFiat,
     dataCurrency,
-    exCurrencyRate,
+    exEthereumRate = 0,
+    exCurrencyRate = 0,
     isLoading,
     minerFee,
-    hasServiceFee,
     serviceFee,
-    serviceFeePercent,
-    serviceFeeMin,
+    usedAdminFee,
     totalFee,
     hasTxSize,
     txSize,
     feeCurrentCurrency,
   } = props
 
-
   const minerFeeTicker = dataCurrency
   const serviceFeeTicker = currency
+  let activeFiatSymbol = activeFiat
+
+  switch (activeFiatSymbol.toLowerCase()) {
+    case 'usd':
+      activeFiatSymbol = '$'
+      break
+    case 'eur':
+      activeFiatSymbol = '€'
+      break
+  }
+
+  const convertToFiat = (currency, exchangeRate) => {
+    // check after converting
+    // if  0.<two-digit number more 0> then cut result to two numbers
+    // else cut result to currency decimals
+    let bigNumResult = currency.multipliedBy(exchangeRate)
+    const strResult = bigNumResult.toString()
+    const haveTwoZeroAfterDot = 
+      strResult.match(/\./) 
+      && strResult.split('.')[1][0] === '0' // 12.34 -> ['12', '34'] -> ['3'] === '0'
+      && strResult.split('.')[1][1] === '0' // 12.34 -> ['12', '34'] -> ['4'] === '0'
+      
+    bigNumResult = haveTwoZeroAfterDot 
+      ? bigNumResult.dp(currentDecimals, BigNumber.ROUND_CEIL)
+      : bigNumResult.dp(2, BigNumber.ROUND_CEIL)
+    
+    return bigNumResult.toNumber()
+  }
+
+  const fiatMinerFee = isEthToken
+    ? exEthereumRate > 0 // eth rate for tokens
+      ? convertToFiat(minerFee, exEthereumRate)
+      : 0
+    : exCurrencyRate > 0 // own currency rate for another
+      ? convertToFiat(minerFee, exCurrencyRate)
+      : 0
+
+  const fiatServiceFee = usedAdminFee
+    ? exCurrencyRate > 0
+      ? convertToFiat(serviceFee, exCurrencyRate)
+      : 0
+    : 0
+
+  const fiatTotalFee = exCurrencyRate > 0 && !isEthToken
+    ? convertToFiat(totalFee, exCurrencyRate)
+    : 0
 
   const linkToTxSizeInfo = (
     <a
@@ -75,12 +125,12 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
             ? <div styleName='paleLoader'><InlineLoader /></div>
             : <span styleName='fee'>
                 {hasTxSize && feeCurrentCurrency > 0 ? transactionSize : null}
-                {minerFee}&nbsp;{minerFeeTicker}
+                {+minerFee}&nbsp;{minerFeeTicker}
                 {' '}
-                (~${new BigNumber(minerFee * exCurrencyRate).toFixed(2)})
+                {fiatMinerFee > 0 && `(${activeFiatSymbol}${fiatMinerFee})`}
               </span>
           }
-          {' '}{/* indent */}
+          {' '}
           <Tooltip id="FeeInfoBlockMinerFeeTooltip">
             <div style={{ maxWidth: '24em', textAlign: 'center' }}>
               <FormattedMessage
@@ -92,27 +142,27 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
         </div>
       </div>
       
-      {hasServiceFee && (
+      {usedAdminFee && (
           <div styleName='feeRow'>
             <span styleName='feeRowTitle'>
               <FormattedMessage id="FeeInfoBlockServiceFee" defaultMessage="Service fee:" />
             </span>
             <div className="feeRowInfo">
               <div styleName="serviceFeeConditions">
-                <span>{serviceFeePercent}%</span>
+                <span>{usedAdminFee.fee}%</span>
                 {' '}
                 <span>
                   <FormattedMessage id="FeeInfoBlockServiceFeeConditions" defaultMessage="of the transfer amount, but not less than" />
                 </span>
                 {' '}
-                <span>{serviceFeeMin}&nbsp;{serviceFeeTicker}</span>
+                <span>{usedAdminFee.min}&nbsp;{serviceFeeTicker}</span>
               </div>
               {isLoading
                 ? <div styleName='paleLoader'><InlineLoader /></div>
                 : <span styleName='fee'>
-                    {serviceFee}&nbsp;{serviceFeeTicker}
+                    {+serviceFee}&nbsp;{serviceFeeTicker}
                     {' '}
-                    (~${new BigNumber(serviceFee * exCurrencyRate).toFixed(2)})
+                    {fiatServiceFee > 0 && `(${activeFiatSymbol}${fiatServiceFee})`}
                   </span>
               }
             </div>
@@ -129,9 +179,9 @@ function FeeInfoBlock(props: FeeInfoBlockProps) {
             {isLoading
               ? <div styleName='paleLoader'><InlineLoader /></div>
               : <span styleName='fee'>
-                  {totalFee}&nbsp;{minerFeeTicker}
+                  {+totalFee}&nbsp;{minerFeeTicker}
                   {' '}
-                  (~${new BigNumber(totalFee * exCurrencyRate).toFixed(2)})
+                  {fiatTotalFee > 0 && `(${activeFiatSymbol}${fiatTotalFee})`}
                 </span>
             }
           </div>

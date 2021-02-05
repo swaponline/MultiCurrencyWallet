@@ -2310,7 +2310,7 @@
   },
   {
     "id": "Withdrow170",
-    "message": "Максимальная сумма, которую вы можете отправить, составляет {allowedCriptoBalance} {currency}",
+    "message": "Максимальная сумма, которую вы можете отправить, составляет {allowedBalance} {currency}",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
@@ -4787,7 +4787,7 @@
     "id": "createWallet_customERC20",
     "message": "Подключить токен",
     "files": [
-      "src/front/shared/pages/CreateWallet/Steps/LogicForSteps.tsx"
+      "src/front/shared/pages/CreateWallet/Steps/StepsWrapper.tsx"
     ]
   },
   {
@@ -7730,10 +7730,7 @@
   },
   {
     "id": "Withdrow171",
-    "message": "Максимальная сумма, которую вы можете отправить, составляет {allowedUsdBalance} USD",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
-    ]
+    "message": "Максимальная сумма, которую вы можете отправить, составляет {allowedUsdBalance} USD"
   },
   {
     "id": "WTH276",
@@ -7792,35 +7789,35 @@
     "id": "FeeInfoBlockTotalFee",
     "message": "Общая сумма, которую вы платите:",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockMinerFee",
     "message": "Комиссия майнера: ",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockMinerFeeTooltip",
     "message": "Сумма криптовалюты, уплаченная, чтобы побудить майнеров подтвердить вашу транзакцию",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockServiceFee",
     "message": "Комиссия сервиса:",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockServiceFeeConditions",
     "message": "от отправляемого количества, но не менее",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
@@ -8205,6 +8202,27 @@
     "message": "If no offers are found, this means that there are no users who posted the offer, not online.",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+    ]
+  },
+  {
+    "id": "Swap_UtxoBroadcastError",
+    "message": "Swap paused because broadcast tx ended with error \"{error}\"",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "WithdrowBalanceNotEnoughtPrompt",
+    "message": "Недостаточно баланса для отправки",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "WithdrowBalanceNotEnoughtEthereumBalancePrompt",
+    "message": "Недостаточно эфира для комиссии за майнинг",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
   }
 ]
