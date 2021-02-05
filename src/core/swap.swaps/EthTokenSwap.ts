@@ -700,12 +700,10 @@ class EthTokenSwap extends SwapInterface {
       })
 
 
-  async fundAB2UTXOContract({
+  async fundERC20Contract({
     flow,
-    utxoCoin,
   }: {
     flow: any,
-    utxoCoin: string,
   }) {
     const abClass = this
     const {
@@ -716,57 +714,6 @@ class EthTokenSwap extends SwapInterface {
     } = flow.swap
 
     const { secretHash } = flow.state
-
-    const utcNow = () => Math.floor(Date.now() / 1000)
-
-    const isUTXOScriptOk = await util.helpers.repeatAsyncUntilResult(async (stopRepeat) => {
-      const {
-        utxoScriptValues: scriptValues
-      } = flow.state
-
-      const scriptCheckError = await flow[`${utxoCoin}Swap`].checkScript(scriptValues, {
-        value: buyAmount,
-        recipientPublicKey: abClass.app.services.auth.accounts[utxoCoin].getPublicKey(),
-        lockTime: utcNow(),
-        confidence: 0.8,
-        isWhiteList: abClass.app.isWhitelistBtc(participant.btc.address),
-        waitConfirm,
-      })
-
-      if (scriptCheckError) {
-        if (/Expected script lockTime/.test(scriptCheckError)) {
-          console.error('Btc script check error: btc was refunded', scriptCheckError)
-          flow.stopSwapProcess()
-          stopRepeat()
-        } else if (/Expected script value/.test(scriptCheckError)) {
-          console.warn(scriptCheckError)
-          console.warn('Btc script check: waiting balance')
-        } else if (
-          /Can be replace by fee. Wait confirm/.test(scriptCheckError)
-          ||
-          /Wait confirm tx/.test(scriptCheckError)
-        ) {
-          flow.swap.room.sendMessage({
-            event: `wait ${utxoCoin} confirm`,
-            data: {},
-          })
-        } else {
-          flow.swap.events.dispatch(`${utxoCoin} script check error`, scriptCheckError)
-        }
-
-        return false
-      } else {
-        return true
-      }
-    })
-
-    if (!isUTXOScriptOk) {
-      return
-    } else {
-      flow.setState({
-        isUTXOScriptOk,
-      }, true)
-    }
 
     const swapData = {
       participantAddress: abClass.app.getParticipantEthAddress(flow.swap),

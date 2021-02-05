@@ -141,10 +141,12 @@ export default (tokenName) => {
         // 5. Create ETH Contract
 
         async () => {
-          await flow.ethTokenSwap.fundAB2UTXOContract({
-            flow,
-            utxoCoin: `btc`,
-          })
+          const scriptFunded = await this.waitUTXOScriptFunded()
+          if (scriptFunded) {
+            await flow.ethTokenSwap.fundERC20Contract({
+              flow,
+            })
+          }
         },
 
         // 6. Wait participant withdraw
