@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js'
 import { Flow } from 'swap.swap'
 
 
-class BtcLikeSwap extends SwapInterface {
+class UTXOBlockchain extends SwapInterface {
 
   _swapName: string = null
   fetchBalance: Function = undefined
@@ -794,7 +794,7 @@ class BtcLikeSwap extends SwapInterface {
    * @param {string} hashName
    * @returns {Promise}
    */
-  withdraw(data, isRefund, hashName) {
+  withdraw(data, isRefund?: boolean = false, hashName?: string = null): Promise<string> {
     return new Promise(async (resolve, reject) => {
       try {
         console.log('withdraw')
@@ -873,7 +873,7 @@ class BtcLikeSwap extends SwapInterface {
    * @param {string} hashName
    * @returns {Promise}
    */
-  refund(data, hashName) {
+  refund(data: any, hashName?: string = null) {
     return this.withdraw(data, true, hashName)
   }
 
@@ -924,4 +924,4 @@ class BtcLikeSwap extends SwapInterface {
 }
 
 
-export default BtcLikeSwap
+export default UTXOBlockchain

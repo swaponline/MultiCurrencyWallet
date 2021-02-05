@@ -21,7 +21,7 @@ class ETH2NEXT extends AtomicAB2UTXO {
   }
   constructor(swap) {
     super(swap)
-
+    this.utxoCoin = `next`
     this._flowName = ETH2NEXT.getName()
 
     this.stepNumbers = {

@@ -23,6 +23,7 @@ class NEXT2ETH extends AtomicAB2UTXO {
 
   constructor(swap) {
     super(swap)
+    this.utxoCoin = `next`
 
     this._flowName = NEXT2ETH.getName()
 

@@ -23,6 +23,7 @@ class GHOST2ETH extends AtomicAB2UTXO {
 
   constructor(swap) {
     super(swap)
+    this.utxoCoin = `ghost`
 
     this._flowName = GHOST2ETH.getName()
 

@@ -531,7 +531,7 @@ class EthSwap extends SwapInterface {
    * @param {function} handleTransactionHash
    * @returns {Promise}
    */
-  async refund(data, handleTransactionHash) {
+  async refund(data, handleTransactionHash: Function = null) {
     const { participantAddress } = data
 
     await this.updateGasPrice()
@@ -587,12 +587,10 @@ class EthSwap extends SwapInterface {
         }
       })
 
-  async fundAB2UTXOContract({
+  async fundContract({
     flow,
-    utxoCoin,
   }: {
     flow: any,
-    utxoCoin: string,
   }) {
     const abClass = this
     const {
@@ -603,56 +601,6 @@ class EthSwap extends SwapInterface {
     } = flow.swap
 
     const { secretHash } = flow.state
-
-    const utcNow = () => Math.floor(Date.now() / 1000)
-
-    const isUTXOScriptOk = await util.helpers.repeatAsyncUntilResult(async (stopRepeat) => {
-      const {
-        utxoScriptValues,
-      } = flow.state
-
-      const scriptCheckError = await flow[`${utxoCoin}Swap`].checkScript(utxoScriptValues, {
-        value: buyAmount,
-        recipientPublicKey: abClass.app.services.auth.accounts[utxoCoin].getPublicKey(),
-        lockTime: utcNow(),
-        confidence: 0.8,
-        isWhiteList: abClass.app.isWhitelistBtc(participant.btc.address), // @todo - may be need more white list coins
-        waitConfirm,
-      })
-
-      if (scriptCheckError) {
-        if (/Expected script lockTime/.test(scriptCheckError)) {
-          console.error('Btc script check error: btc was refunded', scriptCheckError)
-          flow.stopSwapProcess()
-          stopRepeat()
-        } else if (/Expected script value/.test(scriptCheckError)) {
-          console.warn('Btc script check: waiting balance')
-        } else if (
-          /Can be replace by fee. Wait confirm/.test(scriptCheckError)
-          ||
-          /Wait confirm tx/.test(scriptCheckError)
-        ) {
-          flow.swap.room.sendMessage({
-            event: `wait ${utxoCoin} confirm`,
-            data: {},
-          })
-        } else {
-          flow.swap.events.dispatch(`${utxoCoin} script check error`, scriptCheckError)
-        }
-
-        return false
-      } else {
-        return true
-      }
-    })
-
-    if (!isUTXOScriptOk) {
-      return
-    } else {
-      flow.setState({
-        isUTXOScriptOk,
-      }, true)
-    }
 
     const swapData = {
       participantAddress: abClass.app.getParticipantEthAddress(flow.swap),
@@ -806,7 +754,7 @@ class EthSwap extends SwapInterface {
     }
   }
 
-  async waitAB2UTXOContract({
+  async waitABContract({
     flow,
     utxoCoin,
   }: {
@@ -871,7 +819,7 @@ class EthSwap extends SwapInterface {
     }
   }
 
-  async withdrawFromAB2UTXO({
+  async withdrawFromABContract({
     flow,
   }: {
     flow: any,

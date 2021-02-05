@@ -25,6 +25,7 @@ export default (tokenName) => {
 
     constructor(swap) {
       super(swap)
+      this.utxoCoin = `next`
 
       this._flowName = NEXT2ETHTOKEN.getName()
 

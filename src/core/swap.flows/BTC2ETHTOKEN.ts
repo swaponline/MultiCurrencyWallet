@@ -24,7 +24,7 @@ export default (tokenName) => {
     }
     constructor(swap) {
       super(swap)
-
+      this.utxoCoin = `btc`
       this._flowName = BTC2ETHTOKEN.getName()
 
       this.stepNumbers = {

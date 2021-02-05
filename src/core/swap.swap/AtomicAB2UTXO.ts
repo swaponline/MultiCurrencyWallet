@@ -4,6 +4,9 @@ import Flow from './Flow'
 
 
 class AtomicAB2UTXO extends Flow {
+
+  utxoCoin: string = null
+
   constructor(swap) {
     super(swap)
     this.swap     = swap
@@ -87,11 +90,12 @@ class AtomicAB2UTXO extends Flow {
     })
   }
 
-  async waitUTXOScriptFunded({
-    utxoCoin,
-  }: {
-    utxoCoin: string,
-  }) {
+  async waitUTXOScriptFunded(): Promise<boolean> {
+    const {
+      isUTXOScriptOk: isFunded,
+    } = this.state
+    if (isFunded) return true
+
     const flow = this
     const {
       participant,
@@ -110,9 +114,9 @@ class AtomicAB2UTXO extends Flow {
       } = flow.state
 
 
-      const scriptCheckError = await this[`${utxoCoin}Swap`].checkScript(utxoScriptValues, {
+      const scriptCheckError = await this[`${this.utxoCoin}Swap`].checkScript(utxoScriptValues, {
         value: buyAmount,
-        recipientPublicKey: this.app.services.auth.accounts[utxoCoin].getPublicKey(),
+        recipientPublicKey: this.app.services.auth.accounts[this.utxoCoin].getPublicKey(),
         lockTime: utcNow(),
         confidence: 0.8,
         isWhiteList: this.app.isWhitelistBtc(participant.btc.address), // @todo - may be need more white list coins
@@ -121,22 +125,22 @@ class AtomicAB2UTXO extends Flow {
 
       if (scriptCheckError) {
         if (/Expected script lockTime/.test(scriptCheckError)) {
-          console.error(`${utxoCoin} script check error: ${utxoCoin} was refunded`, scriptCheckError)
+          console.error(`${this.utxoCoin} script check error: ${this.utxoCoin} was refunded`, scriptCheckError)
           flow.stopSwapProcess()
           stopRepeat()
         } else if (/Expected script value/.test(scriptCheckError)) {
-          console.warn(`${utxoCoin} script check: waiting balance`)
+          console.warn(`${this.utxoCoin} script check: waiting balance`)
         } else if (
           /Can be replace by fee. Wait confirm/.test(scriptCheckError)
           ||
           /Wait confirm tx/.test(scriptCheckError)
         ) {
           flow.swap.room.sendMessage({
-            event: `wait ${utxoCoin} confirm`,
+            event: `wait ${this.utxoCoin} confirm`,
             data: {},
           })
         } else {
-          this.swap.events.dispatch(`${utxoCoin} script check error`, scriptCheckError)
+          this.swap.events.dispatch(`${this.utxoCoin} script check error`, scriptCheckError)
         }
 
         return false

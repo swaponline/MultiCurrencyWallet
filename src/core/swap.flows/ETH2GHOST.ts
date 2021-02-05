@@ -21,7 +21,7 @@ class ETH2GHOST extends AtomicAB2UTXO {
   }
   constructor(swap) {
     super(swap)
-
+    this.utxoCoin = `ghost`
     this._flowName = ETH2GHOST.getName()
 
     this.stepNumbers = {

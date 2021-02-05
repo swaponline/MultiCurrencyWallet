@@ -1,13 +1,14 @@
 import debug from 'debug'
 import SwapApp, { constants, util } from 'swap.app'
 import { AtomicAB2UTXO } from 'swap.swap'
+import { EthSwap, BtcSwap } from 'swap.swaps'
 
 
 class ETH2BTC extends AtomicAB2UTXO {
 
   _flowName: string
-  ethSwap: any
-  btcSwap: any
+  ethSwap: EthSwap
+  btcSwap: BtcSwap
   state: any
 
   static getName() {
@@ -21,7 +22,7 @@ class ETH2BTC extends AtomicAB2UTXO {
   }
   constructor(swap) {
     super(swap)
-
+    this.utxoCoin = `btc`
     this._flowName = ETH2BTC.getName()
 
     this.stepNumbers = {
@@ -157,10 +158,12 @@ class ETH2BTC extends AtomicAB2UTXO {
       // 5. Create ETH Contract
 
       async () => {
-        await flow.ethSwap.fundAB2UTXOContract({
-          flow,
-          utxoCoin: `btc`,
-        })
+        const scriptFunded = await this.waitUTXOScriptFunded()
+        if (scriptFunded) {
+          await flow.ethSwap.fundContract({
+            flow,
+          })
+        }
       },
 
       // 6. Wait participant withdraw
@@ -418,20 +421,21 @@ class ETH2BTC extends AtomicAB2UTXO {
       throw new Error(`Already withdrawn: address=${scriptAddress},balance=${balance}`)
     }
 
-    await this.btcSwap.withdraw({
+    this.btcSwap.withdraw({
       scriptValues: utxoScriptValues,
       secret: _secret,
-    }, (hash) => {
+    }).then((hash) => {
       debug('swap.core:flow')(`TX hash=${hash}`)
       this.setState({
         btcSwapWithdrawTransactionHash: hash,
       })
-    })
-    debug('swap.core:flow')(`TX withdraw sent: ${this.state.btcSwapWithdrawTransactionHash}`)
+    
+      debug('swap.core:flow')(`TX withdraw sent: ${this.state.btcSwapWithdrawTransactionHash}`)
 
-    this.finishStep({
-      isbtcWithdrawn: true,
-    }, { step: 'withdraw-btc' })
+      this.finishStep({
+        isbtcWithdrawn: true,
+      }, { step: 'withdraw-btc' })
+    })
   }
 
   async checkOtherSideRefund() {

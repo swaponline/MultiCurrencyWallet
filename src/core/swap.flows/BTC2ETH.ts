@@ -2,13 +2,14 @@ import debug from 'debug'
 import SwapApp, { constants, util } from 'swap.app'
 import { AtomicAB2UTXO } from 'swap.swap'
 import { BigNumber } from 'bignumber.js'
+import { EthSwap, BtcSwap } from 'swap.swaps'
 
 
 class BTC2ETH extends AtomicAB2UTXO {
 
   _flowName: string
-  ethSwap: any
-  btcSwap: any
+  ethSwap: EthSwap
+  btcSwap: BtcSwap
   state: any
 
   static getName() {
@@ -25,7 +26,7 @@ class BTC2ETH extends AtomicAB2UTXO {
 
   constructor(swap) {
     super(swap)
-
+    this.utxoCoin = `btc`
     this._flowName = BTC2ETH.getName()
 
     this.stepNumbers = {
@@ -129,7 +130,7 @@ class BTC2ETH extends AtomicAB2UTXO {
       // 5. Wait participant creates ETH Contract
 
       async () => {
-        await flow.ethSwap.waitAB2UTXOContract({
+        await flow.ethSwap.waitABContract({
           flow,
           utxoCoin: `btc`,
         })
@@ -138,7 +139,7 @@ class BTC2ETH extends AtomicAB2UTXO {
       // 6. Withdraw
 
       async () => {
-        await flow.ethSwap.withdrawFromAB2UTXO({ flow })
+        await flow.ethSwap.withdrawFromABContract({ flow })
       },
 
       // 7. Finish
