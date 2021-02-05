@@ -822,11 +822,7 @@ export default class WithdrawModal extends React.Component<any, any> {
       isEthToken && ethBalanceLessThanMiner ||
       new BigNumber(amount).isGreaterThan(balances.balance) ||
       new BigNumber(amount).dp() > currentDecimals ||
-      new BigNumber(amount).isGreaterThan(
-        selectedValue === currentActiveAsset.currency
-          ? balances.allowedCurrency
-          : balances.allowedFiat
-      )
+
 
     const labels = defineMessages({
       withdrowModal: {
