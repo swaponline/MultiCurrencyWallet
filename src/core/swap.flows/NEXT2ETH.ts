@@ -245,11 +245,6 @@ class NEXT2ETH extends AtomicAB2UTXO {
     ]
   }
 
-  getNEXTScriptAddress() {
-    const { scriptAddress } = this.state
-    return scriptAddress;
-  }
-
   async skipSyncBalance() {
     this.finishStep({}, { step: 'sync-balance' })
   }

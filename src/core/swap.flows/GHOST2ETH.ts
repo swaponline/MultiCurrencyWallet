@@ -245,11 +245,6 @@ class GHOST2ETH extends AtomicAB2UTXO {
     ]
   }
 
-  getGHOSTScriptAddress() {
-    const { scriptAddress } = this.state
-    return scriptAddress;
-  }
-
   async skipSyncBalance() {
     this.finishStep({}, { step: 'sync-balance' })
   }

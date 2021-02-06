@@ -246,11 +246,6 @@ export default (tokenName) => {
       ]
     }
 
-    getGHOSTScriptAddress() {
-      const { scriptAddress } = this.state
-      return scriptAddress;
-    }
-
     async skipSyncBalance() {
       this.finishStep({}, { step: 'sync-balance' })
     }

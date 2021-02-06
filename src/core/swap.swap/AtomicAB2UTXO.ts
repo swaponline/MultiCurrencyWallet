@@ -445,6 +445,13 @@ class AtomicAB2UTXO extends Flow {
       this.setState(stateData, true)
     }
   }
+
+  // @to-do - not used in code - front/bot - (btc/ghost/next) - may be need deleted
+  // dot with comma in original - say - its artefact....
+  getUtxoScriptAddress() {
+    const { scriptAddress } = this.state
+    return scriptAddress
+  }
 }
 
 

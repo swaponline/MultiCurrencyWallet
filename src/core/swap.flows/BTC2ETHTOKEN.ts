@@ -168,11 +168,6 @@ export default (tokenName) => {
       ]
     }
 
-    getBTCScriptAddress() {
-      const { scriptAddress } = this.state
-      return scriptAddress;
-    }
-
     async skipSyncBalance() {
       this.finishStep({}, { step: 'sync-balance' })
     }
