@@ -14,7 +14,7 @@ npm run marketmaker:testnet SECRET_PHRASE="asd asd asd" SPREAD="5"
 
 ![](https://screenshots.wpmix.net/chrome_VfMLfx2KBVUIxaGsQ6ECBEKUq2VMF7Ag.png)
 
-## Launch using docker (RECCOMENDED)
+## Launch using docker (RECOMMENDED)
 insstall docker and docker-compose https://docs.docker.com/engine/install/ https://docs.docker.com/compose/install/ 
 
 ```
