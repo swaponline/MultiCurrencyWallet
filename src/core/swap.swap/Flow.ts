@@ -44,6 +44,7 @@ class Flow {
 
     secret?: string
     isParticipantSigned?: boolean
+    scriptAddress?: string
   }
 
   constructor(swap) {
