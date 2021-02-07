@@ -1119,8 +1119,7 @@
     "id": "HowItWorks10",
     "message": "How it works",
     "files": [
-      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx",
-      "src/front/shared/pages/PointOfSell/HowItWorks/HowItWorks.tsx"
+      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
     ]
   },
   {
@@ -1564,8 +1563,7 @@
     "id": "partial291",
     "message": "Waiting for another participant (30 sec)",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
@@ -1594,32 +1592,28 @@
     "id": "partial223",
     "message": "To change default wallet for buy currency. ",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "partial224",
     "message": "Leave empty for use Swap.Online wallet",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "partial243",
     "message": "You send",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "partial255",
     "message": "You get",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
@@ -1794,13 +1788,6 @@
     "message": "Back"
   },
   {
-    "id": "PartialPriceCalc",
-    "message": "Calc price",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
-  },
-  {
     "id": "PartialPriceNoOrdersReduce",
     "message": "No orders found, try later or change the currency pair",
     "files": [
@@ -1811,8 +1798,7 @@
     "id": "PartialPriceNoOrdersReduceAllInfo",
     "message": "This trade amount is too high for present market liquidity. Please reduce amount to {maxForSell}. ",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
@@ -1823,36 +1809,26 @@
     "id": "PartialOfferCantProceed1",
     "message": "Request is declined. {link}",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "PartialOfferCantProceed1_1",
     "message": "Why?",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "ErrorBtcLowAmount",
     "message": "{btcAmount} BTC - This amount is too low",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "LessThanIHavePartial",
     "message": "You have not so much money on your balance"
-  },
-  {
-    "id": "PartialPriceSearch",
-    "message": "Searching orders...",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
   },
   {
     "id": "PartialUseSwapOnlineWallet",
@@ -1893,16 +1869,14 @@
     "id": "partial462",
     "message": "The amount you have in your swap.online wallet or external wallet that you want to exchange",
     "files": [
-      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
   },
   {
     "id": "partial478",
     "message": "The amount you will receive after the exchange",
     "files": [
-      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
   },
   {
@@ -1913,37 +1887,21 @@
     ]
   },
   {
-    "id": "partial5323",
-    "message": "Buy token",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
-  },
-  {
     "id": "partial544",
     "message": "Order book"
-  },
-  {
-    "id": "partial766",
-    "message": "From any wallet or exchange",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
   },
   {
     "id": "partial767",
     "message": "Your balance: ",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "partialAtomicSwapWhatIsIt",
     "message": "Atomic swap is a smart contract technology that enables exchange of one cryptocurrency for another without using centralized intermediaries, such as exchanges.",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
@@ -1958,53 +1916,28 @@
     "id": "partialVideoAndFeatures0",
     "message": "Based on Atomic Swap technology",
     "files": [
-      "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx",
-      "src/front/shared/pages/PointOfSell/VideoAndFeatures/VideoAndFeatures.tsx"
+      "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx"
     ]
   },
   {
     "id": "partialVideoAndFeatures1",
     "message": "Exchange only takes 2 minutes",
     "files": [
-      "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx",
-      "src/front/shared/pages/PointOfSell/VideoAndFeatures/VideoAndFeatures.tsx"
+      "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx"
     ]
   },
   {
     "id": "partialVideoAndFeatures2",
     "message": "Supports BTC, ETH, USDT, ERC-20 tokens",
     "files": [
-      "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx",
-      "src/front/shared/pages/PointOfSell/VideoAndFeatures/VideoAndFeatures.tsx"
+      "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx"
     ]
   },
   {
     "id": "partialVideoAndFeatures3",
     "message": "Can be deployed on any website as an exchange service",
     "files": [
-      "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx",
-      "src/front/shared/pages/PointOfSell/VideoAndFeatures/VideoAndFeatures.tsx"
-    ]
-  },
-  {
-    "id": "PartialFeeValueWarn",
-    "message": "The maximum amount you can sell is {maximumAmount} {haveCurrency}. Miner fee up to {estimatedFeeValue} {haveCurrency}",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
-  },
-  {
-    "id": "PartialFeeValueWarn1",
-    "message": "+ {estimatedFeeValue} {getCurrency}",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
-  },
-  {
-    "id": "PartialFeeValueWarn2",
-    "message": "~ {estimatedFeeValue}$",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx"
     ]
   },
   {
@@ -2243,13 +2176,6 @@
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
-    ]
-  },
-  {
-    "id": "PartialPriceSearch502",
-    "message": "1 {getCurrency} = {haveCurrency}",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
     ]
   },
   {
@@ -2505,20 +2431,6 @@
   {
     "id": "advantagesTxt4",
     "message": "You can exchange right now. The transaction is direct and within 2 minutes."
-  },
-  {
-    "id": "advantagesButtonTitle",
-    "message": "How it works?",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PureComponents/Advantages.tsx"
-    ]
-  },
-  {
-    "id": "advantagesButtonTxt",
-    "message": "(Watch the video)",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PureComponents/Advantages.tsx"
-    ]
   },
   {
     "id": "advVidLink",
@@ -3196,8 +3108,7 @@
     "message": "Available for exchange: {availableBalance} {tooltip}",
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/SelectGroup/SelectGroup.tsx",
-      "src/front/shared/pages/Exchange/SelectGroup/SelectGroup.tsx",
-      "src/front/shared/pages/PointOfSell/SelectGroup/SelectGroup.tsx"
+      "src/front/shared/pages/Exchange/SelectGroup/SelectGroup.tsx"
     ]
   },
   {
@@ -3205,8 +3116,7 @@
     "message": "You can use an external wallet to perform a swap",
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/SelectGroup/SelectGroup.tsx",
-      "src/front/shared/pages/Exchange/SelectGroup/SelectGroup.tsx",
-      "src/front/shared/pages/PointOfSell/SelectGroup/SelectGroup.tsx"
+      "src/front/shared/pages/Exchange/SelectGroup/SelectGroup.tsx"
     ]
   },
   {
@@ -3635,72 +3545,63 @@
     "id": "HowItWorks18",
     "message": "1. Select your cryptocurrency and the amount.",
     "files": [
-      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx",
-      "src/front/shared/pages/PointOfSell/HowItWorks/HowItWorks.tsx"
+      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
     ]
   },
   {
     "id": "HowItWorks21",
     "message": "Choose a cryptocurrency that you have at your disposal on any external wallet, exchange, or Swap Online wallet",
     "files": [
-      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx",
-      "src/front/shared/pages/PointOfSell/HowItWorks/HowItWorks.tsx"
+      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
     ]
   },
   {
     "id": "HowItWorks26",
     "message": "2. Click “Exchange”",
     "files": [
-      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx",
-      "src/front/shared/pages/PointOfSell/HowItWorks/HowItWorks.tsx"
+      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
     ]
   },
   {
     "id": "HowItWorks29",
     "message": "If a suitable order is found and the seller confirms the exchange, you will be redirected to the exchange page",
     "files": [
-      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx",
-      "src/front/shared/pages/PointOfSell/HowItWorks/HowItWorks.tsx"
+      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
     ]
   },
   {
     "id": "HowItWorks34",
     "message": "3. Make a cryptocurrency deposit.",
     "files": [
-      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx",
-      "src/front/shared/pages/PointOfSell/HowItWorks/HowItWorks.tsx"
+      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
     ]
   },
   {
     "id": "HowItWorks37",
     "message": "In the event that the required amount is available on your internal wallet, the deposit will be executed automatically.",
     "files": [
-      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx",
-      "src/front/shared/pages/PointOfSell/HowItWorks/HowItWorks.tsx"
+      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
     ]
   },
   {
     "id": "HowItWorks42",
     "message": "4. Confirm completion of the swap.",
     "files": [
-      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx",
-      "src/front/shared/pages/PointOfSell/HowItWorks/HowItWorks.tsx"
+      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
     ]
   },
   {
     "id": "HowItWorks45",
     "message": "The exchange usually takes about a minute.  At the end of the swap, you will see the txid and will be able to confirm completion of the transfer on your end.",
     "files": [
-      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx",
-      "src/front/shared/pages/PointOfSell/HowItWorks/HowItWorks.tsx"
+      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
     ]
   },
   {
     "id": "Quote",
     "message": "The swap.online project realizes swaps among Bitcoin-like, Ethereum-like, and made a product for users to execute swaps",
     "files": [
-      "src/front/shared/pages/Exchange/Quote/index.tsx",
-      "src/front/shared/pages/PointOfSell/Quote/index.tsx"
+      "src/front/shared/pages/Exchange/Quote/index.tsx"
     ]
   },
   {
@@ -4535,25 +4436,10 @@
     ]
   },
   {
-    "id": "CurrencySlider19",
-    "message": "Already available for exchange",
-    "files": [
-      "src/front/shared/pages/PointOfSell/CurrencySlider/CurrencySlider.tsx"
-    ]
-  },
-  {
-    "id": "PartialFeeValueWarn3",
-    "message": "= {estimatedFeeValue}$",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
-  },
-  {
     "id": "PartialHowItWorks10",
     "message": "How it works?",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
@@ -4565,13 +4451,6 @@
     "message": "Continue your swaps",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
-    ]
-  },
-  {
-    "id": "partial2378",
-    "message": "Wallet",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
     ]
   },
   {
@@ -6983,59 +6862,10 @@
     "message": "Wallet does not exist."
   },
   {
-    "id": "PartialPriceNoOrdersReduce_PointOfSell",
-    "message": "No orders found, try later",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
-  },
-  {
-    "id": "PointOfSell_AlertOrderNonEnoughtBalance",
-    "message": "Please top up your balance before you start the swap.",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
-  },
-  {
-    "id": "PointOfSell_AlertOrderNonEnoughtBalanceTitle",
-    "message": "Not enough balance.",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
-  },
-  {
-    "id": "PointOfSell_walletDidntCreateMessage",
-    "message": "Create wallet",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
-  },
-  {
-    "id": "PointOfSell_walletDidntCreateTitle",
-    "message": "Wallet does not exist",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
-  },
-  {
     "id": "InfoPay_2_copy",
     "message": "были успешно переданы",
     "files": [
       "src/front/shared/components/modals/InfoPay/InfoPay.tsx"
-    ]
-  },
-  {
-    "id": "ExchangeTitleTag1_point_of_sell",
-    "message": "Fastest cross-chain exchange powered by Atomic Swap",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
-  },
-  {
-    "id": "continueDeclined977_point_of_sell",
-    "message": "Click here to continue your swaps",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
     ]
   },
   {
