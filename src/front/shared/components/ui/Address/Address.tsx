@@ -1,19 +1,13 @@
 import React, { Component, Fragment } from 'react'
-import { constants } from 'helpers'
-
 import cssModules from 'react-css-modules'
-
 import { AddressType, AddressFormat } from 'domain/address'
 import styles from './Address.scss'
-
-
 
 @cssModules(styles, { allowMultiple: true })
 export default class Address extends Component<any, any> {
 
-  constructor({ initialValue, selectedValue }) {
-    //@ts-ignore
-    super()
+  constructor(props) {
+    super(props)
   }
 
   render() {

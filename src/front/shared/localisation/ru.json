@@ -1134,79 +1134,63 @@
     "id": "HowItWorks10",
     "message": "Как это работает ",
     "files": [
-      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx",
-      "src/front/shared/pages/PointOfSell/HowItWorks/HowItWorks.tsx"
+      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
     ]
   },
   {
     "id": "HowItWorks18",
     "message": "1. Выберите криптовалюту и сумму",
     "files": [
-      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx",
-      "src/front/shared/pages/PointOfSell/HowItWorks/HowItWorks.tsx"
+      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
     ]
   },
   {
     "id": "HowItWorks21",
     "message": "Выберите крипту которая есть в вашем распоряжении, на любом внешнем кошельке или бирже или на кошельке свап онлайн",
     "files": [
-      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx",
-      "src/front/shared/pages/PointOfSell/HowItWorks/HowItWorks.tsx"
+      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
     ]
   },
   {
     "id": "HowItWorks26",
     "message": "2. Нажмите на Exchange",
     "files": [
-      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx",
-      "src/front/shared/pages/PointOfSell/HowItWorks/HowItWorks.tsx"
+      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
     ]
   },
   {
     "id": "HowItWorks29",
     "message": "Если будет найден подходящй ордер и продавец подтвердит обмен, вы перейдете на страницу обмена ",
     "files": [
-      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx",
-      "src/front/shared/pages/PointOfSell/HowItWorks/HowItWorks.tsx"
+      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
     ]
   },
   {
     "id": "HowItWorks34",
     "message": "3. Выполните депозит криптовалюты",
     "files": [
-      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx",
-      "src/front/shared/pages/PointOfSell/HowItWorks/HowItWorks.tsx"
+      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
     ]
   },
   {
     "id": "HowItWorks37",
     "message": "В случае, если нужная сумма есть на внутреннем кошельке, пополнение выполнится автоматически",
     "files": [
-      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx",
-      "src/front/shared/pages/PointOfSell/HowItWorks/HowItWorks.tsx"
+      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
     ]
   },
   {
     "id": "HowItWorks42",
     "message": "4. Дождитесь завершения свопа",
     "files": [
-      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx",
-      "src/front/shared/pages/PointOfSell/HowItWorks/HowItWorks.tsx"
+      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
     ]
   },
   {
     "id": "HowItWorks45",
     "message": "Обычно обмен выполняется в течении минуты. В конце вы увидете txid и сможете проверить поступление",
     "files": [
-      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx",
-      "src/front/shared/pages/PointOfSell/HowItWorks/HowItWorks.tsx"
-    ]
-  },
-  {
-    "id": "CurrencySlider19",
-    "message": "Уже доступны для обмена",
-    "files": [
-      "src/front/shared/pages/PointOfSell/CurrencySlider/CurrencySlider.tsx"
+      "src/front/shared/pages/Exchange/HowItWorks/HowItWorks.tsx"
     ]
   },
   {
@@ -1644,8 +1628,7 @@
     "id": "partial291",
     "message": "Ожидание второго участника (30 сек)",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
@@ -1674,32 +1657,28 @@
     "id": "partial223",
     "message": "Для изменения кошелька по умолчанию для валюты покупки. ",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "partial224",
     "message": "Оставьте пустым для использования Swap.Online кошелька",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "partial243",
     "message": "Отдаете",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "partial255",
     "message": "Получаете",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
@@ -1874,13 +1853,6 @@
     "message": "Назад"
   },
   {
-    "id": "PartialPriceCalc",
-    "message": "Расчет цены",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
-  },
-  {
     "id": "PartialPriceNoOrdersReduce",
     "message": "Предложения не найдены, попробуйте позже или измените валютную пару",
     "files": [
@@ -1891,8 +1863,7 @@
     "id": "PartialPriceNoOrdersReduceAllInfo",
     "message": "Предложения не найдены, введите сумму меньше {maxForBuy}, {maxForSell}",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
@@ -1903,36 +1874,26 @@
     "id": "PartialOfferCantProceed1",
     "message": "Запрос отклонен. {link}",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "PartialOfferCantProceed1_1",
     "message": "Почему?",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "ErrorBtcLowAmount",
     "message": "{btcAmount} BTC - Слишком маленькая сумма",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "LessThanIHavePartial",
     "message": "У вас недостаточно средств"
-  },
-  {
-    "id": "PartialPriceSearch",
-    "message": "поиск предложений...",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
   },
   {
     "id": "PartialUseSwapOnlineWallet",
@@ -1969,16 +1930,14 @@
     "id": "partial462",
     "message": "Сумма, которую вы хотите обменять используя кошелек swap.online или внешний кошелек",
     "files": [
-      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
   },
   {
     "id": "partial478",
     "message": "Сумма, которую вы получите после обмена",
     "files": [
-      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
   },
   {
@@ -1989,37 +1948,21 @@
     ]
   },
   {
-    "id": "partial5323",
-    "message": "Приобрести токен",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
-  },
-  {
     "id": "partial544",
     "message": "Предложения"
-  },
-  {
-    "id": "partial766",
-    "message": "С любого кошелька или биржи",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
   },
   {
     "id": "partial767",
     "message": "Ваш баланс: ",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
     "id": "partialAtomicSwapWhatIsIt",
     "message": "Атомарный своп - это технология, которая позволяет обменять одну криптовалюту на другую без использования централизованных посредников.",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
@@ -2034,45 +1977,21 @@
     "id": "partialVideoAndFeatures0",
     "message": "На основе технологии Atomic Swap",
     "files": [
-      "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx",
-      "src/front/shared/pages/PointOfSell/VideoAndFeatures/VideoAndFeatures.tsx"
+      "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx"
     ]
   },
   {
     "id": "partialVideoAndFeatures1",
     "message": "Обмен занимает всего 2 минуты",
     "files": [
-      "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx",
-      "src/front/shared/pages/PointOfSell/VideoAndFeatures/VideoAndFeatures.tsx"
+      "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx"
     ]
   },
   {
     "id": "partialVideoAndFeatures3",
     "message": "Может быть расположен на любом сайте в качестве обменного сервиса",
     "files": [
-      "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx",
-      "src/front/shared/pages/PointOfSell/VideoAndFeatures/VideoAndFeatures.tsx"
-    ]
-  },
-  {
-    "id": "PartialFeeValueWarn",
-    "message": "Максимальная сумма доступная для продажи {maximumAmount} {haveCurrency}. Комиссия майнеров до {estimatedFeeValue} {haveCurrency}",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
-  },
-  {
-    "id": "PartialFeeValueWarn1",
-    "message": "+ {estimatedFeeValue} {getCurrency}",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
-  },
-  {
-    "id": "PartialFeeValueWarn2",
-    "message": "~ {estimatedFeeValue}$",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx"
     ]
   },
   {
@@ -2318,13 +2237,6 @@
     ]
   },
   {
-    "id": "PartialPriceSearch502",
-    "message": "Цена: 1 {getCurrency} = {haveCurrency}",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
-  },
-  {
     "id": "ExchangeTitleTag",
     "message": "Обмен {full_name1} ({ticker_name1}) на {full_name2} ({ticker_name2}) Атомарный Обмен за 60 секунд"
   },
@@ -2446,14 +2358,7 @@
   },
   {
     "id": "RowWallet276",
-    "message": " нода не доступна (Вы не можете совершать транзакции). ",
-    "files": [
-      "src/front/shared/pages/Wallet/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "RowWallet282",
-    "message": "Нет соединения...",
+    "message": "Нода не доступна",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
@@ -2587,20 +2492,6 @@
   {
     "id": "advantagesTxt6",
     "message": "Никаких данных заполнять не нужно, никакого трейсинга. Всё работает на предельной анонимности."
-  },
-  {
-    "id": "advantagesButtonTitle",
-    "message": "Как это работает?",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PureComponents/Advantages.tsx"
-    ]
-  },
-  {
-    "id": "advantagesButtonTxt",
-    "message": "(Смотреть видео)",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PureComponents/Advantages.tsx"
-    ]
   },
   {
     "id": "advVidLink",
@@ -3310,8 +3201,7 @@
     "message": "Доступный баланс: {availableBalance} {tooltip}",
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/SelectGroup/SelectGroup.tsx",
-      "src/front/shared/pages/Exchange/SelectGroup/SelectGroup.tsx",
-      "src/front/shared/pages/PointOfSell/SelectGroup/SelectGroup.tsx"
+      "src/front/shared/pages/Exchange/SelectGroup/SelectGroup.tsx"
     ]
   },
   {
@@ -3319,8 +3209,7 @@
     "message": "Вы можете использовать внешний кошелек для проведения обмена",
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/SelectGroup/SelectGroup.tsx",
-      "src/front/shared/pages/Exchange/SelectGroup/SelectGroup.tsx",
-      "src/front/shared/pages/PointOfSell/SelectGroup/SelectGroup.tsx"
+      "src/front/shared/pages/Exchange/SelectGroup/SelectGroup.tsx"
     ]
   },
   {
@@ -3790,8 +3679,7 @@
     "id": "Quote",
     "message": "The swap.online project realizes swaps among Bitcoin-like, Ethereum-like, and made a product for users to execute swaps",
     "files": [
-      "src/front/shared/pages/Exchange/Quote/index.tsx",
-      "src/front/shared/pages/PointOfSell/Quote/index.tsx"
+      "src/front/shared/pages/Exchange/Quote/index.tsx"
     ]
   },
   {
@@ -4566,18 +4454,10 @@
     ]
   },
   {
-    "id": "PartialFeeValueWarn3",
-    "message": "= {estimatedFeeValue}$",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
-  },
-  {
     "id": "PartialHowItWorks10",
     "message": "Как это работает?",
     "files": [
-      "src/front/shared/pages/Exchange/Exchange.tsx",
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
+      "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
   },
   {
@@ -4594,13 +4474,6 @@
   {
     "id": "partial1021",
     "message": "Вставить на сайт"
-  },
-  {
-    "id": "partial2378",
-    "message": "кошелёк",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
   },
   {
     "id": "ImportKeysBtn",
@@ -5984,8 +5857,7 @@
     "id": "partialVideoAndFeatures2",
     "message": "Supports BTC, ETH, USDT, ERC-20 tokens",
     "files": [
-      "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx",
-      "src/front/shared/pages/PointOfSell/VideoAndFeatures/VideoAndFeatures.tsx"
+      "src/front/shared/pages/Exchange/VideoAndFeatures/VideoAndFeatures.tsx"
     ]
   },
   {
@@ -7073,59 +6945,10 @@
     "message": "Wallet does not exist."
   },
   {
-    "id": "PartialPriceNoOrdersReduce_PointOfSell",
-    "message": "No orders found, try later",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
-  },
-  {
-    "id": "PointOfSell_AlertOrderNonEnoughtBalance",
-    "message": "Please top up your balance before you start the swap.",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
-  },
-  {
-    "id": "PointOfSell_AlertOrderNonEnoughtBalanceTitle",
-    "message": "Not enough balance.",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
-  },
-  {
-    "id": "PointOfSell_walletDidntCreateMessage",
-    "message": "Create wallet",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
-  },
-  {
-    "id": "PointOfSell_walletDidntCreateTitle",
-    "message": "Wallet does not exist",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
-  },
-  {
     "id": "InfoPay_2_copy",
     "message": "были успешно переданы",
     "files": [
       "src/front/shared/components/modals/InfoPay/InfoPay.tsx"
-    ]
-  },
-  {
-    "id": "ExchangeTitleTag1_point_of_sell",
-    "message": "Fastest cross-chain exchange powered by Atomic Swap",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
-    ]
-  },
-  {
-    "id": "continueDeclined977_point_of_sell",
-    "message": "Click here to continue your swaps",
-    "files": [
-      "src/front/shared/pages/PointOfSell/PointOfSell.tsx"
     ]
   },
   {
@@ -8209,6 +8032,13 @@
     "message": "Swap paused because broadcast tx ended with error \"{error}\"",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "WalletRowNodeIsDownTooltipMessage",
+    "message": "Вы не можете совершать транзакции",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {

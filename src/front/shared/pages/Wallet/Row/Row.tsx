@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
-import helpers, { constants, links } from 'helpers'
+import helpers, { constants } from 'helpers'
 import config from 'helpers/externalConfig'
 import { isMobile } from 'react-device-detect'
 
@@ -18,6 +18,8 @@ import { BigNumber } from 'bignumber.js'
 import { Button } from 'components/controls'
 import web3Icons from '../../../images'
 import PartOfAddress from '../components/PartOfAddress'
+import Tooltip from 'components/ui/Tooltip/Tooltip'
+import { ApiEndpoint } from '../components/Endpoints'
 import Copy from '../../../components/ui/Copy/Copy'
 
 type RowProps = {
@@ -26,7 +28,7 @@ type RowProps = {
   currency: IUniversalObj
   itemData: IUniversalObj
   // from store
-  activeFiat?: string // USD, ...?
+  activeFiat?: string
   decline?: any[]
   ethDataHelper?: {
     address: string
@@ -39,13 +41,9 @@ type RowProps = {
 
 type RowState = {
   isBalanceFetching: boolean
-  viewText: boolean
   isAddressCopied: boolean
   isBalanceEmpty: boolean
-  showButtons: boolean
-  existUnfinished: boolean
   isDropdownOpen: boolean
-  exCurrencyRate: number
 }
 
 const langLabels = defineMessages({
@@ -87,6 +85,32 @@ const langLabels = defineMessages({
 )
 @cssModules(styles, { allowMultiple: true })
 export default class Row extends Component {
+  /**
+   * @method handleReloadBalance
+   * @method handleSliceAddress
+   * @method handleDisconnectWallet
+   * @method handleConnectMetamask
+   * @method handleWithdrawPopup
+   * @method handleWithdraw
+   * @method handleReceive
+   * @method handleActivateProtected
+   * @method handleActivatePinProtected
+   * @method handleGenerateMultisignLink
+   * @method handleHowToWithdraw
+   * @method handleOpenDropdown
+   * @method handleCreateInvoiceLink
+   * @method handleSwitchMultisign
+   * @method handleCreateInvoice
+   *
+   * @method goToExchange
+   * @method goToCurrencyHistory
+   * @method hideCurrency
+   *
+   * @method copy
+   * @method copyPrivateKey
+   * @method handleShowMnemonic
+   */
+
   props: RowProps
   state: RowState
 
@@ -95,12 +119,8 @@ export default class Row extends Component {
 
     this.state = {
       isBalanceFetching: false,
-      viewText: false,
       isAddressCopied: false,
       isBalanceEmpty: true,
-      showButtons: false,
-      exCurrencyRate: 0,
-      existUnfinished: false,
       isDropdownOpen: false,
     }
   }
@@ -235,21 +255,6 @@ export default class Row extends Component {
     return window.innerWidth < 700 || isMobile || address.length > 42
       ? `${firstPart}...${secondPart}`
       : address
-  }
-
-  handleCopyAddress = () => {
-    this.setState(
-      {
-        isAddressCopied: true,
-      },
-      () => {
-        setTimeout(() => {
-          this.setState({
-            isAddressCopied: false,
-          })
-        }, 500)
-      }
-    )
   }
 
   handleDisconnectWallet() {
@@ -490,7 +495,6 @@ export default class Row extends Component {
 
     const {
       itemData,
-      intl: { locale },
       intl,
       activeFiat,
       isDark,
@@ -507,12 +511,17 @@ export default class Row extends Component {
       balanceError,
     } = itemData
 
-    let currencyView = currency
-
     let nodeDownErrorShow = true
     let currencyFiatBalance = 0
+    let currencyView = currency
 
-    const isWidgetBuild = config && config.isWidget
+    switch (currencyView) {
+      case 'BTC (Multisig)':
+      case 'BTC (SMS-Protected)':
+      case 'BTC (PIN-Protected)':
+        currencyView = 'BTC'
+        break
+    }
 
     if (itemData.infoAboutCurrency && itemData.infoAboutCurrency.price_fiat) {
       currencyFiatBalance = new BigNumber(balance).multipliedBy(itemData.infoAboutCurrency.price_fiat).dp(2, BigNumber.ROUND_FLOOR).toNumber()
@@ -533,7 +542,14 @@ export default class Row extends Component {
     const mnemonic = localStorage.getItem(constants.privateKeyNames.twentywords)
     const mnemonicSaved = (mnemonic === `-`)
 
-    let dropDownMenuItems = [
+    type DropDownItem = {
+      action: () => void
+      disabled?: boolean
+      title: JSX.Element
+      id: number
+    }
+
+    let dropDownMenuItems: DropDownItem[] = [
       {
         id: 1001,
         title: (
@@ -621,13 +637,6 @@ export default class Row extends Component {
       },
     ].filter((el) => el)
 
-
-    if (currencyView == 'BTC (Multisig)') currencyView = 'BTC'
-    if (currencyView == 'BTC (SMS-Protected)') currencyView = 'BTC'
-    if (currencyView == 'BTC (PIN-Protected)') currencyView = 'BTC'
-
-
-
     if (
       config.opts.invoiceEnabled
     ) {
@@ -640,8 +649,7 @@ export default class Row extends Component {
           />
         ),
         action: this.handleCreateInvoice,
-        //@ts-ignore
-        disable: false,
+        disabled: false,
       })
       dropDownMenuItems.push({
         id: 1005,
@@ -652,8 +660,7 @@ export default class Row extends Component {
           />
         ),
         action: this.handleCreateInvoiceLink,
-        //@ts-ignore
-        disable: false,
+        disabled: false,
       })
     }
 
@@ -669,8 +676,7 @@ export default class Row extends Component {
           />
         ),
         action: this.handleConnectMetamask,
-        //@ts-ignore
-        disable: false,
+        disabled: false,
       }]
     }
 
@@ -687,8 +693,7 @@ export default class Row extends Component {
             />
           ),
           action: this.handleDisconnectWallet,
-          //@ts-ignore
-          disable: false
+          disabled: false
         },
         ...dropDownMenuItems
       ]
@@ -696,7 +701,6 @@ export default class Row extends Component {
 
     let showBalance = true
     let statusInfo = ''
-
 
     if (
       itemData.isPinProtected &&
@@ -844,27 +848,36 @@ export default class Row extends Component {
               </div>
               {title ? <strong>{title}</strong> : ''}
             </div>
-            {balanceError && nodeDownErrorShow ? (
+            {balanceError && nodeDownErrorShow && (
               <div className={styles.errorMessage}>
-                <FormattedMessage
-                  id="RowWallet276"
-                  defaultMessage=" node is down (You can not perform transactions). "
-                />
-                <a href="https://wiki.swaponline.io/faq/bitcoin-node-is-down-you-cannot-make-transactions/">
+                <ApiEndpoint
+                  contractAddress={itemData.contractAddress}
+                  address={itemData.address}
+                  symbol={itemData.currency}
+                  isERC20={itemData.isERC20}
+                  isBTC={itemData.isBTC}
+                >
                   <FormattedMessage
-                    id="RowWallet282"
-                    defaultMessage="No connection..."
+                    id="RowWallet276"
+                    defaultMessage="Node is down"
                   />
-                </a>
+                </ApiEndpoint>
+                {' '}
+                <Tooltip id="WalletRowNodeIsDownTooltip">
+                  <div style={{ textAlign: 'center' }}>
+                    <FormattedMessage
+                      id="WalletRowNodeIsDownTooltipMessage"
+                      defaultMessage="You can not perform transactions"
+                    />
+                  </div>
+                </Tooltip>
               </div>
-            ) : (
-                ''
-              )}
+            )}
             <span styleName="assetsTableCurrencyWrapper">
               {showBalance && (
                 <Fragment>
                   {/*
-                  If it's metamask and it's disconnected then showing connect button
+                  If it's a metamask and it disconnected then showing connect button
                   else if balance fetched or fetching then showing loader
                   else showing fetch-button and currency balance
                   */}
@@ -943,14 +956,20 @@ export default class Row extends Component {
                     : // Address shows 
                     <div styleName="addressStyle">
                       <Copy text={itemData.address}>
-                        {
-                          isMobile ?
-                          <PartOfAddress {...itemData} style={{
-                            position: 'relative',
-                            bottom: '13px',
-                          }} />
-                          :
-                          <p>{itemData.address}</p>
+                        {isMobile ? (
+                            <PartOfAddress
+                              withoutLink
+                              currency={itemData.currency}
+                              contractAddress={itemData.contractAddress}
+                              address={itemData.address}
+                              isERC20={itemData.isERC20}
+                              isBTC={itemData.isBTC}
+                              style={{
+                                position: 'relative',
+                                bottom: '13px',
+                              }} 
+                            />
+                          ) : <p>{itemData.address}</p>
                         }
                       </Copy>
                     </div>
@@ -983,8 +1002,6 @@ export default class Row extends Component {
 
           { !metamaskDisconnected &&
             <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">
-              {/*
-              //@ts-ignore */}
               <DropdownMenu
                 size="regular"
                 className="walletControls"
