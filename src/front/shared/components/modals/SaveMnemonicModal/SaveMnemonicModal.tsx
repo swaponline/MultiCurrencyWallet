@@ -359,8 +359,8 @@ export default class SaveMnemonicModal extends React.Component<any, any> {
                   {
                     words.map((word, index) => {
                       return (
-                        <>
-                          <div key={index}>
+                        <div key={index} styleName='mnemonicViewWordWrapper'>
+                          <div>
                             <span styleName="wordIndex">{(index + 1)}</span>
                             <span>{word}</span>
                           </div>
@@ -368,7 +368,7 @@ export default class SaveMnemonicModal extends React.Component<any, any> {
                             /* space for correct copy-paste */
                             index + 1 !== words.length && ' '
                           }
-                        </>
+                        </div>
                       )
                     })
                   }

@@ -16,7 +16,6 @@ import About from 'pages/About/About'
 import Wallet from 'pages/Wallet/Wallet'
 import Currency from 'pages/Currency/Currency'
 import Exchange from 'pages/Exchange/Exchange'
-import PointOfSell from 'pages/PointOfSell/PointOfSell'
 import CurrencyWallet from 'pages/CurrencyWallet/CurrencyWallet'
 import Transaction from 'pages/Transaction/Transaction'
 import BtcMultisignProcessor from 'pages/Multisign/Btc/Btc'
@@ -55,9 +54,6 @@ const routes = (
 
       <Route path={`${localisePrefix}${links.localStorage}`} component={LocalStorage} />
 
-      <Route path={`${localisePrefix}${links.pointOfSell}/:sell-to-:buy`} component={PointOfSell} />
-      <Route path={`${localisePrefix}${links.pointOfSell}`} component={PointOfSell} />
-
       <Route path={`${localisePrefix}${links.aboutUs}`} component={About} />
 
       <Route path={`${localisePrefix}${links.send}/:currency/:address/:amount`} component={Wallet} />
@@ -80,7 +76,7 @@ const routes = (
       <Route exact path={`${localisePrefix}${links.notFound}`} component={NotFound} />
       <Route exact path={`${localisePrefix}/`} component={Wallet} />
       <Route exact path={`${localisePrefix}${links.connectWallet}`} component={Wallet} />
-      {/* В десктоп режиме - история показывается в дизайне кошелька */}
+      {/* In desktop mode - the history is shown in the wallet design */}
       {!isMobile && (
         <>
           <Route exact path={`${localisePrefix}/:page(invoices)/:type?/:address?`} component={Wallet} />

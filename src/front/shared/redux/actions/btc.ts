@@ -428,10 +428,6 @@ const getTransaction = (ownAddress: string = ``, ownType: string = ``) => {
   })
 }
 
-const send = (data) => {
-  return sendV5(data)
-}
-
 const addressIsCorrect = (address) => {
   try {
     let outputScript = bitcoin.address.toOutputScript(address, btc.network)
@@ -440,53 +436,8 @@ const addressIsCorrect = (address) => {
   return false
 }
 
-// Deprecated
 //@ts-ignore
-const sendWithAdminFee = async ({ from, to, amount, feeValue, speed } = {}) => {
-  const {
-    fee: adminFee,
-    address: adminFeeAddress,
-    min: adminFeeMinValue,
-  } = config.opts.fee.btc
-
-  const adminFeeMin = new BigNumber(adminFeeMinValue)
-
-  // fee - from amount - percent
-  let feeFromAmount: number | BigNumber = new BigNumber(adminFee).dividedBy(100).multipliedBy(amount)
-  if (adminFeeMin.isGreaterThan(feeFromAmount)) feeFromAmount = adminFeeMin
-
-  feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
-  feeFromAmount = feeFromAmount.toNumber()
-  feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
-
-  const tx = new bitcoin.TransactionBuilder(btc.network)
-  const unspents = await fetchUnspents(from)
-
-  let fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
-
-  const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-
-  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
-
-  unspents.forEach(({ txid, vout }) => tx.addInput(txid, vout, 0xfffffffe))
-  tx.addOutput(to, fundValue)
-
-  if (skipValue > 546) {
-    tx.addOutput(from, skipValue)
-  }
-
-  // admin fee output
-  tx.addOutput(adminFeeAddress, feeFromAmount)
-
-  const txRaw = signAndBuild(tx, from)
-
-  await broadcastTx(txRaw.toHex())
-
-  return txRaw
-}
-
-//@ts-ignore
-const sendV5 = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
+const send = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
   return new Promise(async (ready, reject) => {
     try {
       let privateKey = null
@@ -516,37 +467,38 @@ const sendV5 = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
         feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
       }
       feeFromAmount = feeFromAmount.toNumber()
+
       try {
         feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed, amount})
       } catch (eFee) {
         reject({ message: `Fail estimate fee ` + eFee.message })
         return
       }
+
       let unspents = []
-      
       try {
         unspents = await fetchUnspents(from)
       } catch (eUnspents) {
-        reject({ message: `Fail get unspents `+eUnspents.message})
+        reject({ message: `Fail get unspents `+ eUnspents.message})
         return
       }
       unspents = await prepareUnspents({ unspents, amount })
       const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
       const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+      const residue = totalUnspent - fundValue - feeValue - feeFromAmount
+      const psbt = new bitcoin.Psbt({ network: btc.network })
 
-      const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
-
-      const psbt = new bitcoin.Psbt({network: btc.network})
-
+      // add main output for recipient
       psbt.addOutput({
         address: to,
         value: fundValue,
       })
-
-      if (skipValue > 546) {
+      // if we have residue wich more then DUST value
+      // then return this value to the sender wallet
+      if (residue > 546) {
         psbt.addOutput({
           address: from,
-          value: skipValue
+          value: residue
         })
       }
 
@@ -565,7 +517,7 @@ const sendV5 = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
       for (let i = 0; i < unspents.length; i++) {
         const { txid, vout } = unspents[i]
         let rawTx = false
-        //@ts-ignore
+
         try {
           rawTx = await fetchTxRaw(txid, false)
         } catch (eFetchTxRaw) {
@@ -595,54 +547,10 @@ const sendV5 = ({ from, to, amount, feeValue, speed, stateCallback } = {}) => {
         reject({ message: `Fail broadcast TX: `+eBroadcast })
       }
     } catch (error) {
+      console.log('Actions - btc - send: ', error)
       reject(error)
     }
   })
-}
-
-// Deprecated
-//@ts-ignore
-const sendDefault = async ({ from, to, amount, feeValue, speed } = {}) => {
-  feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
-
-  const tx = new bitcoin.TransactionBuilder(btc.network)
-  const unspents = await fetchUnspents(from)
-
-  const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
-  const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  const skipValue = totalUnspent - fundValue - feeValue
-
-  unspents.forEach(({ txid, vout }) => tx.addInput(txid, vout, 0xfffffffe))
-  tx.addOutput(to, fundValue)
-
-  if (skipValue > 546) {
-    tx.addOutput(from, skipValue)
-  }
-
-
-  const txRaw = signAndBuild(tx, from)
-
-  await broadcastTx(txRaw.toHex())
-
-  return txRaw
-}
-
-const signAndBuild = (transactionBuilder, address) => {
-  let { user: { btcData: { privateKey } } } = getState()
-
-  if (address) {
-    // multi wallet - sweep upgrade
-    privateKey = getPrivateKeyByAddress(address)
-  } else {
-    // single wallet - use btcData
-  }
-
-  const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
-
-  transactionBuilder.__INPUTS.forEach((input, index) => {
-    transactionBuilder.sign(index, keyPair)
-  })
-  return transactionBuilder.buildIncomplete()
 }
 
 const prepareUnspents = ({ amount, unspents }) => bitcoinUtils.prepareUnspents({

@@ -48,8 +48,7 @@ export default class WithdrawModalMultisig extends React.Component<any, any> {
   }
 
   constructor(props) {
-    //@ts-ignore
-    super()
+    super(props)
 
     const { wallet, invoice, sendOptions, beforeBalances } = props.data
 

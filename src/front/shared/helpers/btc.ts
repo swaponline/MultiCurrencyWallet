@@ -188,7 +188,7 @@ type EstimateFeeValueOptions = {
   moreInfo?: boolean
 }
 
-const estimateFeeValue = async (options: EstimateFeeValueOptions): any => {
+const estimateFeeValue = async (options: EstimateFeeValueOptions): Promise<any> => {
   const { moreInfo } = options
   let { feeRate, inSatoshis, speed, address, txSize, fixed, method, amount } = options
   const {

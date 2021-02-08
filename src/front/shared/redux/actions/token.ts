@@ -305,7 +305,6 @@ const sendWithAdminFee = async ({ name, from, to, amount, ...feeConfig } = {}) =
       .on('transactionHash', (hash) => {
         const txId = `${config.link.etherscan}/tx/${hash}`
         actions.loader.show(true, { txId })
-
       })
       .on('error', (err) => {
         reject(err)
@@ -322,7 +321,6 @@ const sendWithAdminFee = async ({ name, from, to, amount, ...feeConfig } = {}) =
           })
       })
     })
-
   })
 }
 //@ts-ignore

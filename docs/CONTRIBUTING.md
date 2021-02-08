@@ -7,15 +7,15 @@ SWAP token is NOT a money, no guarantee you will exchange this to visa, paypal, 
 | Time working on our codebase (Level)                         | SWAP per hour |
 |--------------------------------------------------------------|-----------------------------|
 | Volontueer (less than 3 pullrequests)                        | 1 SWAP per hour             |
-| Junior(can change interface, wallet)                         | 5 SWAP per hour             |
+| Junior (can change interface, wallet)                        | 5 SWAP per hour             |
 | Middle (can add new blockchain to wallet)                    | 10 SWAP per hour            |
 | Senior (can add new blockchain to atomic swap)               | 15 SWAP per hour            |
 | Lead (can reduce codebase, make app more developer friendly) | 20 SWAP per hour            |
 
 Q: why you don't pay in USD or btc? <br>
-A: we don't have a revenue in USD to pay new developers 
+A: we don't have a revenue in USD to pay new developers
 
-Ho to contibute:
+How to contibute:
 1. find or create issue
 2. make pullrequest with following instructions:
 
@@ -64,14 +64,14 @@ I'm not even talking about autotests: run it manually at least once and check th
 
 ### Record video
 
-If you run it anyway, record a video. For example, via [Screencastify] (https://chrome.google.com/webstore/detail/screencastify-screen-vide/mmeijimgabbpbgpdklnllpncmdofkcpn?hl=en).
+If you run it anyway, record a video. For example, via [Screencastify](https://chrome.google.com/webstore/detail/screencastify-screen-vide/mmeijimgabbpbgpdklnllpncmdofkcpn?hl=en).
 
 
 ### How to check?
 
 Write a test guide for the reviewer.
 
-I open a pull request, what should I look at and where to check ?.
+I open a pull request, what should I look at and where to check ?
 
 For example, `Check the creation and deletion of an order.`
 

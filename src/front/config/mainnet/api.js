@@ -1,6 +1,7 @@
 export default {
   horizon: 'https://horizon.stellar.org',
   blocktrail: 'https://api.blocktrail.com/v1/BTC',
+  defipulse: 'https://data-api.defipulse.com/api/v1/egs/api/ethgasAPI.json?api-key=53be2a60f8bc0bb818ad161f034286d709a9c4ccb1362054b0543df78e27',
   bitpay: [
   'https://api.bitcore.io/api/BTC/mainnet',
     //'https://insight.bitpay.com/api',

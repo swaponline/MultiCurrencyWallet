@@ -68,6 +68,7 @@ Supported languages:
 - 🇷🇺 RU
 - 🇳🇱 NL
 - 🇪🇸 ES
+- 🇵🇱 PL
 
 Work in progress to add more languages.
 

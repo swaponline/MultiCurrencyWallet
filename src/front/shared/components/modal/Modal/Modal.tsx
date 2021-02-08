@@ -57,7 +57,10 @@ export default class Modal extends Component<any, any> {
     const {
       closeOnLocationChange,
       onLocationChange,
+      name,
     } = this.props
+
+    window.addEventListener('popstate', () => actions.modals.close(name))
 
     if (closeOnLocationChange) {
       let currentLocation = window.location.hash
@@ -78,10 +81,12 @@ export default class Modal extends Component<any, any> {
         }
       }, 500)
     }
-
   }
 
   componentWillUnmount() {
+    const { name } = this.props
+
+    window.removeEventListener('popstate', () => actions.modals.close(name))
     clearInterval(this.catchLocationChange)
   }
 
@@ -106,10 +111,19 @@ export default class Modal extends Component<any, any> {
   }
 
   render() {
-    const { className, whiteLogo, showLogo, title, showCloseButton, disableClose, children,
-      titleUppercase, name, shouldCenterHorizontally, shouldCenterVertically, styleName, delayClose, data, dashboardView } = this.props
-
-    window.addEventListener('popstate', function (e) { actions.modals.close(name) }) // eslint-disable-line
+    const { 
+      className, 
+      title, 
+      showCloseButton, 
+      disableClose, 
+      children,
+      titleUppercase, 
+      shouldCenterHorizontally, 
+      shouldCenterVertically, 
+      styleName, 
+      delayClose, 
+      dashboardView 
+    } = this.props
 
     const titleStyleName = cx('title', {
       'uppercase': titleUppercase,

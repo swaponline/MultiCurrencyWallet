@@ -311,12 +311,7 @@ export default class Wallet extends Component<any, any> {
       intl: { locale },
     } = this.props
 
-    if (isWidgetBuild && !config.isFullBuild) {
-      // was pointOfSell
-      history.push(localisedUrl(locale, links.exchange))
-    } else {
-      history.push(localisedUrl(locale, links.exchange))
-    }
+    history.push(localisedUrl(locale, links.exchange))
   }
 
   handleModalOpen = (context) => {
@@ -371,8 +366,6 @@ export default class Wallet extends Component<any, any> {
       intl: { locale },
     } = this.props
 
-    const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals
-
     const allData = actions.core.getWallets({})
 
     let tableRows = allData.filter(({ currency, address, balance }) => {
@@ -392,10 +385,6 @@ export default class Wallet extends Component<any, any> {
     }
 
     const { currency, address } = tableRows[0]
-
-    let withdrawModalType = Withdraw
-    if (currency === 'BTC (SMS-Protected)') withdrawModalType = WithdrawMultisigSMS
-    if (currency === 'BTC (Multisig)') withdrawModalType = WithdrawMultisigUser
 
     let targetCurrency = currency
     switch (currency.toLowerCase()) {
