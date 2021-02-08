@@ -30,12 +30,12 @@ export default (tokenName) => {
 
       this.stepNumbers = {
         'sign': 1,
-        'wait-lock-btc': 2,
+        'wait-lock-utxo': 2,
         'verify-script': 3,
         'sync-balance': 4,
         'lock-eth': 5,
         'wait-withdraw-eth': 6, // aka getSecret
-        'withdraw-btc': 7,
+        'withdraw-utxo': 7,
         'finish': 8,
         'end': 9
       }
@@ -285,7 +285,7 @@ export default (tokenName) => {
       if (balance === 0) {
         this.finishStep({
           isbtcWithdrawn: true,
-        }, {step: 'withdraw-btc'})
+        }, {step: 'withdraw-utxo'})
         throw new Error(`Already withdrawn: address=${scriptAddress},balance=${balance}`)
       }
 
@@ -302,7 +302,7 @@ export default (tokenName) => {
 
         this.finishStep({
           isbtcWithdrawn: true,
-        }, { step: 'withdraw-btc' })
+        }, { step: 'withdraw-utxo' })
       })
     }
   }

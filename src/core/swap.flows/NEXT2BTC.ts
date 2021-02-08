@@ -35,7 +35,7 @@ class NEXT2BTC extends Flow {
       'wait-lock-btc': 2,
       'verify-script': 3,
       'sync-balance': 4,
-      'lock-next': 5,
+      'lock-utxo': 5,
       'wait-withdraw-next': 6, // aka getSecret
       'withdraw-btc': 7,
       'finish': 8,
@@ -207,7 +207,7 @@ class NEXT2BTC extends Flow {
         flow.finishStep({
           isNextScriptFunded: true,
           nextScriptValues: scriptValues,
-        }, { step: 'lock-next' })
+        }, { step: 'lock-utxo' })
       },
 
       // 6. Wait participant withdraw

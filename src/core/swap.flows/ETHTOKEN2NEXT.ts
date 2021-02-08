@@ -29,12 +29,12 @@ export default (tokenName) => {
 
       this.stepNumbers = {
         'sign': 1,
-        'wait-lock-next': 2,
+        'wait-lock-utxo': 2,
         'verify-script': 3,
         'sync-balance': 4,
         'lock-eth': 5,
         'wait-withdraw-eth': 6, // aka getSecret
-        'withdraw-next': 7,
+        'withdraw-utxo': 7,
         'finish': 8,
         'end': 9
       }
@@ -186,7 +186,7 @@ export default (tokenName) => {
 
           flow.finishStep({
             isNextWithdrawn: true,
-          }, { step: 'withdraw-next' })
+          }, { step: 'withdraw-utxo' })
         },
 
         // 8. Finish
@@ -306,7 +306,7 @@ export default (tokenName) => {
       if (balance === 0) {
         this.finishStep({
           isNextWithdrawn: true,
-        }, {step: 'withdraw-next'})
+        }, {step: 'withdraw-utxo'})
         throw new Error(`Already withdrawn: address=${scriptAddress},balance=${balance}`)
       }
 
@@ -323,7 +323,7 @@ export default (tokenName) => {
 
       this.finishStep({
         isNextWithdrawn: true,
-      }, { step: 'withdraw-next' })
+      }, { step: 'withdraw-utxo' })
     }
   }
 

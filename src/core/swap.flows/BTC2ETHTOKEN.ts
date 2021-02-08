@@ -32,7 +32,7 @@ export default (tokenName) => {
         'sign': 1,
         'submit-secret': 2,
         'sync-balance': 3,
-        'lock-btc': 4,
+        'lock-utxo': 4,
         'wait-lock-eth': 5,
         'withdraw-eth': 6,
         'finish': 7,

@@ -245,7 +245,7 @@ class Swap {
       // sell UTXO buy AB 
       if (sellModel === COIN_MODEL.UTXO && buyModel === COIN_MODEL.AB) {
         // @ToDo after refactoring use 'request script'
-        this.room.on(`request ${_Sell} script`, () => {
+        this.room.on(`request utxo script`, () => {
           if (this.flow) {
             const {
               utxoScriptValues: scriptValues,
@@ -254,7 +254,7 @@ class Swap {
             
             if (scriptValues && scriptCreatingTransactionHash) {
               this.room.sendMessage({
-                event:  `create ${_Sell} script`,
+                event:  `create utxo script`,
                 data: {
                   scriptValues,
                   utxoScriptCreatingTransactionHash: scriptCreatingTransactionHash,
@@ -266,7 +266,7 @@ class Swap {
       }
       // sell AB buy UTXO
       if (sellModel === COIN_MODEL.AB && buyModel === COIN_MODEL.UTXO) {
-        this.room.on(`create ${_Buy} script`, (eventData) => {
+        this.room.on(`create utxo script`, (eventData) => {
           if (this.flow) {
             const {
               scriptValues,
@@ -283,7 +283,7 @@ class Swap {
               secretHash: scriptValues.secretHash,
               utxoScriptValues: scriptValues,
               utxoScriptCreatingTransactionHash: scriptCreatingTransactionHash,
-            }, { step: `wait-lock-${_Buy}`, silentError: true })
+            }, { step: `wait-lock-utxo`, silentError: true })
           }
         })
         // Seller has unconfirmed tx in mem pool

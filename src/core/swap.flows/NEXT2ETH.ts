@@ -31,7 +31,7 @@ class NEXT2ETH extends AtomicAB2UTXO {
       'sign': 1,
       'submit-secret': 2,
       'sync-balance': 3,
-      'lock-next': 4,
+      'lock-utxo': 4,
       'wait-lock-eth': 5,
       'withdraw-eth': 6,
       'finish': 7,
@@ -202,7 +202,7 @@ class NEXT2ETH extends AtomicAB2UTXO {
         if (!isStoppedSwap) {
           flow.finishStep({
             isNextScriptFunded: true,
-          }, { step: 'lock-next' })
+          }, { step: 'lock-utxo' })
         }
       },
 

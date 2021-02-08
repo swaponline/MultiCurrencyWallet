@@ -33,7 +33,7 @@ export default (tokenName) => {
         'sign': 1,
         'submit-secret': 2,
         'sync-balance': 3,
-        'lock-next': 4,
+        'lock-utxo': 4,
         'wait-lock-eth': 5,
         'withdraw-eth': 6,
         'finish': 7,
@@ -204,7 +204,7 @@ export default (tokenName) => {
           if (!isStoppedSwap) {
             flow.finishStep({
               isNextScriptFunded: true,
-            }, { step: 'lock-next' })
+            }, { step: 'lock-utxo' })
           }
         },
 

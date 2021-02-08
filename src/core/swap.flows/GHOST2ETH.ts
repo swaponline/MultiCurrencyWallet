@@ -31,7 +31,7 @@ class GHOST2ETH extends AtomicAB2UTXO {
       'sign': 1,
       'submit-secret': 2,
       'sync-balance': 3,
-      'lock-ghost': 4,
+      'lock-utxo': 4,
       'wait-lock-eth': 5,
       'withdraw-eth': 6,
       'finish': 7,
@@ -202,7 +202,7 @@ class GHOST2ETH extends AtomicAB2UTXO {
         if (!isStoppedSwap) {
           flow.finishStep({
             isGhostScriptFunded: true,
-          }, { step: 'lock-ghost' })
+          }, { step: 'lock-utxo' })
         }
       },
 
