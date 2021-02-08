@@ -192,7 +192,7 @@ class AtomicAB2UTXO extends Flow {
     return utxoScriptCreatingTransactionHash
   }
 
-  tryRefund() {}
+  //tryRefund(): Promise<any> {}
 
   _checkSwapAlreadyExists() {}
 

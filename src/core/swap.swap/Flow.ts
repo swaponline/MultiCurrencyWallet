@@ -1,13 +1,14 @@
 import debug from 'debug'
 import SwapApp, { util } from 'swap.app'
 import Room from './Room'
+import Swap from './Swap'
 
 
 class Flow {
-
-  swap: any
-  steps: any
-  app: any
+  _flowName: string
+  swap: Swap
+  steps: Function[]
+  app: SwapApp
   stepNumbers: any
   state: {
     // Common swaps state
@@ -45,6 +46,8 @@ class Flow {
     secret?: string
     isParticipantSigned?: boolean
     scriptAddress?: string
+    scriptBalance?: number
+    isEthContractFunded?: boolean
   }
 
   constructor(swap) {
@@ -106,13 +109,13 @@ class Flow {
     return this.swap.isMy
   }
 
-  _attachSwapApp(app) {
+  _attachSwapApp(app: SwapApp) {
     SwapApp.required(app)
 
     this.app = app
   }
 
-  static read(app, { id }) {
+  static read(app: SwapApp, { id }) {
     SwapApp.required(app)
 
     if (!id) {
@@ -123,7 +126,7 @@ class Flow {
     return app.env.storage.getItem(`flow.${id}`)
   }
 
-  _isFinished() {
+  _isFinished(): boolean {
     const {
       isStoppedSwap,
       isRefunded,
@@ -310,7 +313,9 @@ class Flow {
     }, true)
   }
 
-
+  tryRefund(): Promise<any> {
+    return new Promise((resolve) => { resolve(true) })
+  }
 
 }
 

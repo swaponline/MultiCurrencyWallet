@@ -27,7 +27,7 @@ class Swap {
   waitConfirm: boolean
   events: Events
   room: Room
-  flow: any // @ToDo - FlowType (need add functions to root class)
+  flow: FlowType
 
   constructor(id, app, order?) {
     this.id                     = null
