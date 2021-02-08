@@ -1,6 +1,6 @@
 ## Checklist
 
-- [x] I have read the [CONTRIBUTING](https://github.com/swaponline/swap.react/wiki/CONTRIBUTING) guide
+- [x] I have read the [CONTRIBUTING](https://github.com/swaponline/MultiCurrencyWallet/blob/master/docs/CONTRIBUTING.md) guide
 - [x] Good naming, keep simple
 - [x] Tested desktop/mobile
 - [x] Tested bright/dark

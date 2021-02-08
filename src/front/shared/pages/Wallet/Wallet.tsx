@@ -311,12 +311,7 @@ export default class Wallet extends Component<any, any> {
       intl: { locale },
     } = this.props
 
-    if (isWidgetBuild && !config.isFullBuild) {
-      // was pointOfSell
-      history.push(localisedUrl(locale, links.exchange))
-    } else {
-      history.push(localisedUrl(locale, links.exchange))
-    }
+    history.push(localisedUrl(locale, links.exchange))
   }
 
   handleModalOpen = (context) => {

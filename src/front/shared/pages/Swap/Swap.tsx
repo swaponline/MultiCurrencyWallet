@@ -14,7 +14,6 @@ import actions from 'redux/actions'
 import { Link } from 'react-router-dom'
 
 import { swapComponents } from './swaps'
-import Share from './Share/Share'
 import Debug from './Debug/Debug'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
@@ -564,7 +563,6 @@ export default class SwapComponent extends PureComponent<any, any> {
               locale={locale}
               wallets={this.wallets}
             />
-            {/*<Share flow={swap.flow} />*/}
             <div>
               <p styleName="reloadText" role="presentation">
                 <FormattedMessage

@@ -593,7 +593,7 @@ export default class CurrencyWallet extends Component<any, any> {
       history,
       intl: { locale },
     } = this.props
-    // was pointOfSell
+
     history.push(localisedUrl(locale, `${links.exchange}/btc-to-${currency.toLowerCase()}`))
   }
 

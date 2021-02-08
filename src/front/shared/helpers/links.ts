@@ -5,7 +5,6 @@ const linksManager = {
   home: '/',
   hashHome: '#/',
   exchange: '/exchange',
-  pointOfSell: '/buy',
   history: '/history',
   createWallet: '/createWallet',
   restoreWallet: '/restoreWallet',
