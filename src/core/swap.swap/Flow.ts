@@ -98,6 +98,14 @@ class Flow {
     this._attachSwapApp(swap.app)
   }
 
+  isTaker(): boolean {
+    return !this.isMaker()
+  }
+
+  isMaker(): boolean {
+    return this.swap.isMy
+  }
+
   _attachSwapApp(app) {
     SwapApp.required(app)
 
