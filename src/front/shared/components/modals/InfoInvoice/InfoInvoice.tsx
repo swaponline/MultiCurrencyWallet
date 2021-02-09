@@ -322,7 +322,13 @@ export default class InfoInvoice extends React.Component<any, any> {
     }
 
     return (
-      <Modal name={name} title={modalTitle} onClose={this.handleClose} showCloseButton={true} closeOnLocationChange={true} onLocationChange={this.handleChangeLocation}>
+      <Modal 
+        name={name} title={modalTitle} 
+        onClose={this.handleClose} 
+        showCloseButton={true} 
+        closeOnLocationChange={true} 
+        onLocationChange={this.handleChangeLocation}
+      >
         {doshare && !isShareReady && (
           <Fragment>
             <div styleName="convent-overlay">
@@ -382,11 +388,9 @@ export default class InfoInvoice extends React.Component<any, any> {
               <table styleName="blockCenter__table" className="table table-borderless">
                 <tbody>
                   {isFetching ? (
-                    <>
-                      <tr>
-                        <td styleName="animate-fetching" colSpan={2}></td>
-                      </tr>
-                    </>
+                    <tr>
+                      <td styleName="animate-fetching" colSpan={2}></td>
+                    </tr>
                   ) : (
                     <>
                       <tr>
@@ -407,11 +411,12 @@ export default class InfoInvoice extends React.Component<any, any> {
                           <span>{invoiceData.fromAddress} ({invoiceData.invoiceNumber})</span>
                         </td>
                       </tr>
+                      {/* whitespace react problem */}
                       {invoiceData.toAddress && (
                         <>
                           <tr>
                             <td styleName="header" colSpan={2}>
-                              <FormattedMessage { ...langLabels.toAddress } />
+                              <span><FormattedMessage { ...langLabels.toAddress } /></span>
                             </td>
                           </tr>
                           <tr>
@@ -425,7 +430,7 @@ export default class InfoInvoice extends React.Component<any, any> {
                         <>
                           <tr>
                             <td styleName="header" colSpan={2}>
-                              <FormattedMessage { ...langLabels.invoiceComment} />
+                              <span><FormattedMessage { ...langLabels.invoiceComment} /></span>
                             </td>
                           </tr>
                           <tr>

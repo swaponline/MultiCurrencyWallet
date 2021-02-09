@@ -1,41 +1,26 @@
-import React, { PureComponent, Fragment } from 'react'
-
+import { PureComponent } from 'react'
 import { connect } from 'redaction'
 import actions from 'redux/actions'
-import { Link, withRouter } from 'react-router-dom'
-
+import { withRouter } from 'react-router-dom'
 import { links, constants } from 'helpers'
-
-
-import CSSModules from 'react-css-modules'
-import styles from './styles.scss'
-
-
-import PageSeo from 'components/Seo/PageSeo'
-import { getSeoPage } from 'helpers/seo'
-import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
+import { injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
-import config from 'helpers/externalConfig'
 
+type InvoceProps = {
+  data: IUniversalObj
+  history: IUniversalObj
+  intl: IUniversalObj
+  match: IUniversalObj
+  isSigned: boolean
+}
 
-
-const isWidgetBuild = config && config.isWidget
-
-const langPrefix = `InvoicesView`
-const langLabels = defineMessages({
-  title: {
-    id: `${langPrefix}_MetaTitle`,
-    defaultMessage: `Swap.Online - Invoice #{number} - Web Wallet with Atomic Swap.`,
-  },
-  titleWidgetBuild: {
-    id: `${langPrefix}_WidgetMetaTitle`,
-    defaultMessage: `Invoice #{number} - Web Wallet with Atomic Swap.`,
-  },
-  metaDescription: {
-    id: `${langPrefix}_MetaDescription`,
-    defaultMessage: `Atomic Swap Wallet allows you to manage and securely exchange. Based on Multi-Sig and Atomic Swap technologies.`,
-  },
-})
+type InvoceState = {
+  doshare: boolean
+  isFetching: boolean
+  uniqhash: string
+  invoice: IUniversalObj | null
+  infoModal?: React.ClassicComponent
+}
 
 @connect(({ signUp: { isSigned } }) => ({
   isSigned,
@@ -60,9 +45,7 @@ const langLabels = defineMessages({
 })
 @injectIntl
 @withRouter
-@CSSModules(styles, { allowMultiple: true })
-export default class Invoice extends PureComponent<any, any> {
-  
+export default class Invoice extends PureComponent<InvoceProps, InvoceState> {
   constructor(props) {
     super(props)
 
@@ -73,15 +56,11 @@ export default class Invoice extends PureComponent<any, any> {
           doshare = false,
         },
       },
-      intl: {
-        locale,
-      },
-      history,
     } = props
 
     this.state = {
       uniqhash,
-      invoice: false,
+      invoice: null,
       isFetching: true,
       doshare,
     }
@@ -94,18 +73,8 @@ export default class Invoice extends PureComponent<any, any> {
   }
 
   fetchInvoice = () => {
-    const {
-      state: {
-        uniqhash,
-        infoModal,
-      },
-      props: {
-        history,
-        intl: {
-          locale,
-        },
-      },
-    } = this
+    const { uniqhash, infoModal } = this.state
+    const { history, intl: { locale } } = this.props
 
     if(uniqhash) {
       infoModal.setState({
@@ -129,7 +98,6 @@ export default class Invoice extends PureComponent<any, any> {
   }
 
   async componentDidMount() {
-    console.log('Invoice mounted')
     const {
       uniqhash,
       doshare,
@@ -200,18 +168,7 @@ export default class Invoice extends PureComponent<any, any> {
     }
   }
 
-  async componentWillUnmount() {
-    console.log('Invoice unmounted')
-  }
-
   render() {
-    const {
-      uniqhash,
-      isFetching,
-      invoice,
-      doshare,
-    } = this.state
-
     return null
   }
 }

@@ -1,22 +1,16 @@
-import React, { Fragment, PureComponent } from 'react'
-import PropTypes from 'prop-types'
-
-import { isMobile } from 'react-device-detect'
+import { PureComponent } from 'react'
 import { connect } from 'redaction'
 import { constants } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
-import { FormattedMessage, injectIntl } from 'react-intl'
-import { withRouter } from 'react-router-dom'
+import { injectIntl } from 'react-intl'
 import actions from 'redux/actions'
 import { links }    from 'helpers'
-import Button from 'components/controls/Button/Button'
 
-import moment from 'moment'
-
-import CSSModules from 'react-css-modules'
-import styles from './styles.scss'
-import config from 'app-config'
-
+type CreateInvoiceProps = {
+  history: IUniversalObj
+  match: IUniversalObj
+  data: IUniversalObj
+}
 
 @connect(({
   user: {
@@ -36,38 +30,14 @@ import config from 'app-config'
   }
 })
 @injectIntl
-@CSSModules(styles, { allowMultiple: true })
-export default class CreateInvoice extends PureComponent<any, any> {
-
-  static propTypes = {
-    history: PropTypes.object,
-    location: PropTypes.object,
-    intl: PropTypes.object.isRequired,
-  };
-
-  timerWaitOnlineJoin: any
-
-  constructor() {
-    //@ts-ignore
-    super()
-
-    this.timerWaitOnlineJoin = false
-    this.state = {
-    }
-  }
-
+export default class CreateInvoice extends PureComponent<CreateInvoiceProps> {
   async componentDidMount() {
-    console.log('CreateInvoice mounted')
     let {
       match: {
         params: {
           type,
           wallet,
         },
-      },
-      history,
-      location: {
-        pathname,
       },
       data,
     } = this.props
@@ -94,10 +64,6 @@ export default class CreateInvoice extends PureComponent<any, any> {
     } else {
       this.props.history.push(localisedUrl(links.notFound))
     }
-  }
-
-  async componentWillUnmount() {
-    console.log('CreateInvoice unmounted')
   }
 
   render() {

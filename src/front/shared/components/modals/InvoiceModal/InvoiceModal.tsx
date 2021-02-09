@@ -1,38 +1,30 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import helpers, { constants } from 'helpers'
-import request from 'common/utils/request'
+import { constants, feedback } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
-import { connect } from 'redaction'
-import config from 'app-config'
 
 import cssModules from 'react-css-modules'
 import styles from '../Styles/default.scss'
 import dropDownStyles from 'components/ui/DropDown/DropDown.scss'
 import ownStyle from './InvoiceModal.scss'
 
-import { BigNumber } from 'bignumber.js'
 import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
-import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
-import ReactTooltip from 'react-tooltip'
 import { isMobile } from 'react-device-detect'
 import QrReader from 'components/QrReader'
 
-// import isCoinAddress from 'swap.app/util/typeforce'
 import typeforce from 'swap.app/util/typeforce'
-import minAmount from 'helpers/constants/minAmount'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import getCurrencyKey from 'helpers/getCurrencyKey'
-
 import { links } from 'helpers'
-import { localisedUrl } from 'helpers/locale'
 import redirectTo from 'helpers/redirectTo'
+
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 const localeLabel = defineMessages({
   title: {
@@ -80,7 +72,6 @@ export default class InvoiceModal extends React.Component<any, any> {
         currency,
         toAddress,
       },
-      tokenItems,
       payerAddress = false,
     } = props
 
@@ -152,8 +143,8 @@ export default class InvoiceModal extends React.Component<any, any> {
         if (data.onReady instanceof Function) {
           data.onReady()
         }
-      } catch (e) {
-        console.log('error', e)
+      } catch (error) {
+        this.reportError(error)
       }
 
       this.setState({
@@ -162,11 +153,16 @@ export default class InvoiceModal extends React.Component<any, any> {
     })
   }
 
+  reportError = (error) => {
+    feedback.createInvoice.failed(error)
+    console.error(error)
+  }
+
   handleGoToInvoice = (invoiceId) => {
     redirectTo(`${links.invoice}/${invoiceId}/share`)
   }
 
-  addressIsCorrect(otherAddress) {
+  addressIsCorrect(otherAddress = null) {
     const {
       address,
       walletData: {
@@ -210,10 +206,6 @@ export default class InvoiceModal extends React.Component<any, any> {
     })
   }
 
-  handleError = (err) => {
-    console.error(err)
-  }
-
   handleScan = (data) => {
     if (data) {
       this.setState({
@@ -237,12 +229,9 @@ export default class InvoiceModal extends React.Component<any, any> {
       amount,
       amountUSD,
       contact,
-      label,
       isShipped,
-      minus,
       openScanCam,
       error,
-      infoAboutCurrency,
       selectedValue,
       toAddressEnabled,
       walletData: {
@@ -284,7 +273,6 @@ export default class InvoiceModal extends React.Component<any, any> {
     ]
 
     const isDisabled =
-      //@ts-ignore
       !amount || isShipped || !destination || !contact || (address && !this.addressIsCorrect())
 
     return (
@@ -296,11 +284,11 @@ export default class InvoiceModal extends React.Component<any, any> {
         {openScanCam && (
           <QrReader
             openScan={this.openScan}
-            handleError={this.handleError}
+            handleError={this.reportError}
             handleScan={this.handleScan}
           />
         )}
-        <div styleName="invoiceModalHolder">
+        <div styleName={`invoiceModalHolder ${isDark ? 'dark' : ''}`}>
           {toAddressEnabled && (
             <div styleName="highLevel">
               <FieldLabel>
@@ -321,8 +309,6 @@ export default class InvoiceModal extends React.Component<any, any> {
                 qr={isMobile}
                 openScan={this.openScan}
               />
-              {/*
-              //@ts-ignore */}
               {address && !this.addressIsCorrect() && (
                 <div styleName="rednote">
                   <FormattedMessage
@@ -402,9 +388,9 @@ export default class InvoiceModal extends React.Component<any, any> {
             {/*
             //@ts-ignore */}
             <CurrencySelect
-              label="fdsfssf"
-              tooltip="dsfss"
-              id="fdsfs"
+              label="Cyrrency"
+              tooltip="Cyrrency"
+              id="InvoiceModalCurrencySelect"
               className={dropDownStyles.simpleDropdown}
               selectedValue={selectedValue}
               onSelect={this.handleBuyCurrencySelect}
@@ -439,7 +425,7 @@ export default class InvoiceModal extends React.Component<any, any> {
               <Input
                 srollingForm={true}
                 valueLink={linked.label}
-                multiline="true"
+                multiline={true}
                 placeholder={intl.formatMessage(localeLabel.labelPlaceholder)}
               />
             </div>

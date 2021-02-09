@@ -194,31 +194,15 @@ export default class InvoicesList extends PureComponent<any, any> {
 
   render() {
     let {
-      location,
-      intl,
-      isSigned,
       onlyTable,
-      multisigStatus,
     } = this.props
 
     const {
       isRedirecting,
       items,
-      type,
-      address,
     } = this.state
 
     if (isRedirecting) return null
-
-    let settings = {
-      infinite: true,
-      speed: 500,
-      autoplay: true,
-      autoplaySpeed: 6000,
-      fade: true,
-      slidesToShow: 1,
-      slidesToScroll: 1
-    };
 
     const invoicesTable = (
       <div styleName={`currencyWalletActivity ${isDark ? 'darkActivity' : ''}`}>

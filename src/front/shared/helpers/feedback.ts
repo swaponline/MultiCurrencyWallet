@@ -49,6 +49,9 @@ const events = {
     clickedBanner: 'clickedBanner',
     pressedAddCurrency: 'pressedAddCurrency',
   },
+  createInvoice: {
+    failed: 'failed',
+  },
   faq: {
     opened: 'opened',
     failed: 'failed',
