@@ -7329,7 +7329,7 @@
   },
   {
     "id": "MetamaskNetworkAlert_NetworkTestnet",
-    "message": "Test network (Rinkeby)",
+    "message": "Test network (Ropsten)",
     "files": [
       "src/front/shared/containers/App/App.tsx"
     ]
