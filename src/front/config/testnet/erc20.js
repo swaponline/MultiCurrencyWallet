@@ -1,20 +1,12 @@
 export default {
   swap: {
-    address: '0xbaa3fa2ed111f3e8488c21861ea7b7dbb5a7b121',
+    address: '0x348236484ce96a293e210260b90bbfb228d6d1fc',
     decimals: 18,
     fullName: 'SWAP',
   },
-  /*
-  pay: {} // Has no contract on the testnet
-  */
   usdt: {
-    address: '0xaf3C38A810670786D2FBD1A40Adea7f9dC6e8746',
+    address: '0x7c8f2b4d30a98a9abcdeac3cf49d51f92a6dd81d',
     decimals: 6,
     fullName: 'Tether',
-  },
-  eurs: {
-    address: '0xdb25f211ab05b1c97d595516f45794528a807ad8',
-    decimals: 2,
-    fullName: 'EURS',
-  },
+  }
 }
