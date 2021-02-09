@@ -1246,9 +1246,14 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
   } = feeData
   feeValue = satoshis
 
-  const fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
+  let fundValue = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  const skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
+  let skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
+
+  if (new BigNumber(skipValue).isLessThan(0)) {
+    fundValue = new BigNumber(fundValue).plus(skipValue).integerValue().toNumber()
+    skipValue = 0
+  }
 
   const p2ms = bitcoin.payments.p2ms({
     m: 2,
