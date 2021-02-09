@@ -1,4 +1,7 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
+echo '[post-commit] Run tests...'
+echo '(broken now but hopefully will be fixed)'
+
 npm run common:test && npm run core:test

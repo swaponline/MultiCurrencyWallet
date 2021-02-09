@@ -1,4 +1,6 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
+echo '[pre-commit] Run linter for staged sources...'
+
 npx lint-staged
