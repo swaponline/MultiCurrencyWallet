@@ -4603,14 +4603,14 @@
   },
   {
     "id": "InvoiceInfoBlockOpenDesktopApp",
-    "message": "Оплатить с внешнего кошелька",
+    "message": "Pay from an external wallet",
     "files": [
       "src/front/shared/components/InvoiceInfoBlock/InvoiceInfoBlock.tsx"
     ]
   },
   {
     "id": "InvoiceInfoBlockTitle",
-    "message": "Оплата инвойса #{id}-{invoiceNumber}",
+    "message": "Payment of invoice #{id}-{invoiceNumber}",
     "files": [
       "src/front/shared/components/InvoiceInfoBlock/InvoiceInfoBlock.tsx"
     ]

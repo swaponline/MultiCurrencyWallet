@@ -4,7 +4,6 @@ import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 
 import actions from 'redux/actions'
 
-import helpers from 'helpers'
 import { links, constants } from 'helpers'
 import { getFullOrigin } from 'helpers/links'
 
@@ -178,7 +177,6 @@ export default class InfoInvoice extends React.Component<any, any> {
         amount,
         toAddress,
       } = invoice
-
 
       const payWallet = actions.user.getWithdrawWallet(type, toAddress)
       if (payWallet) {
@@ -411,7 +409,6 @@ export default class InfoInvoice extends React.Component<any, any> {
                           <span>{invoiceData.fromAddress} ({invoiceData.invoiceNumber})</span>
                         </td>
                       </tr>
-                      {/* whitespace react problem */}
                       {invoiceData.toAddress && (
                         <>
                           <tr>

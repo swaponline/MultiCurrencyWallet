@@ -869,7 +869,7 @@ export default class WithdrawModal extends React.Component<any, any> {
               id="Withdrow213"
               defaultMessage="Please note: Fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction"
               values={{
-                minAmount: <span>{isEthToken ? minAmount.eth : fees.total}</span>,
+                minAmount: <span>{isEthToken ? minAmount.eth : fees.total.toNumber()}</span>,
                 br: <br />,
                 data: `${dataCurrency}`,
               }}
