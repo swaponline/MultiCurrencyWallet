@@ -3,15 +3,16 @@ $expected_opacity: 0.3;
 
 .tx {
   width: 100%;
-  padding: 0 1em;
+  padding: 0 0.7em;
   position: relative;
 }
 
 .amount {
-  margin-bottom: 4px;
+  margin-bottom: 8px;
   text-align: center;
   font-family: 'Roboto Mono', monospace;
   font-size: 13px;
+  font-weight: bold;
 
   .Expected & {
     opacity: $expected_opacity;
@@ -25,6 +26,10 @@ $expected_opacity: 0.3;
 
   .tx-link {
     display: block;
+
+    code {
+      font-weight: normal;
+    }
   }
 }
 
@@ -32,7 +37,8 @@ $expected_opacity: 0.3;
 
 .tx-status-icon {
   position: absolute;
-  top: 100%;
+  //top: 100%;
+  top: 35%;
   left: 50%;
   transform: translateX(-50%);
   bottom: 16px;
