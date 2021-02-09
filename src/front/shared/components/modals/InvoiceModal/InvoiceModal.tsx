@@ -67,7 +67,7 @@ type InvoiceModalState = {
   destination: string
   address: string
   contact: string
-  amountUSD: string
+  fiatAmount: string
   amount: string
   minus: string
   label: string
@@ -111,7 +111,7 @@ export default class InvoiceModal extends React.Component<InvoiceModalProps, Inv
       contact: '',
       label: '',
       selectedValue: currency,
-      amountUSD: '',
+      fiatAmount: '',
       amount: '',
       multiplier: new BigNumber(multiplier),
       currentDecimals,
@@ -210,34 +210,30 @@ export default class InvoiceModal extends React.Component<InvoiceModalProps, Inv
     }))
   }
 
-  handleDollarValue = (value) => {
-    const { multiplier, currentDecimals } = this.state
+  handleAmount = (value): any => {
+    const {
+      multiplier,
+      currentDecimals,
+      selectedValue,
+      walletData: {
+        currency,
+      },
+    } = this.state
 
     if (!value) {
       this.setState({
-        amountUSD: '',
+        fiatAmount: '',
         amount: '',
       })
-    } else {
+    } else if (selectedValue === currency) {
       this.setState({
-        amountUSD: new BigNumber(value).dp(2, BigNumber.ROUND_CEIL).toString(),
-        amount: new BigNumber(value).div(multiplier).dp(currentDecimals, BigNumber.ROUND_CEIL).toString(),
-      })
-    }
-  }
-
-  handleAmount = (value) => {
-    const { multiplier, currentDecimals } = this.state
-
-    if (!value) {
-      this.setState({
-        amountUSD: '',
-        amount: '',
-      })
-    } else {
-      this.setState({
-        amountUSD: new BigNumber(value).multipliedBy(multiplier).dp(2, BigNumber.ROUND_CEIL).toString(),
+        fiatAmount: new BigNumber(value).multipliedBy(multiplier).dp(2, BigNumber.ROUND_CEIL).toString(),
         amount: new BigNumber(value).dp(currentDecimals, BigNumber.ROUND_CEIL).toString(),
+      })
+    } else {
+      this.setState({
+        fiatAmount: new BigNumber(value).dp(2, BigNumber.ROUND_CEIL).toString(),
+        amount: new BigNumber(value).div(multiplier).dp(currentDecimals, BigNumber.ROUND_CEIL).toString(),
       })
     }
   }
@@ -263,7 +259,7 @@ export default class InvoiceModal extends React.Component<InvoiceModalProps, Inv
       address,
       destination,
       amount,
-      amountUSD,
+      fiatAmount,
       contact,
       isShipped,
       openScanCam,
@@ -285,7 +281,7 @@ export default class InvoiceModal extends React.Component<InvoiceModalProps, Inv
       this,
       'address',
       'destination',
-      'amountUSD',
+      'fiatAmount',
       'amount',
       'contact',
       'label'
@@ -392,7 +388,7 @@ export default class InvoiceModal extends React.Component<InvoiceModalProps, Inv
               <span styleName="amountTooltip">{
                 new BigNumber(amount).isGreaterThan(0) 
                   ? selectedValue === currency
-                    ? `~ ${amountUSD} USD`
+                    ? `~ ${fiatAmount} USD`
                     : `~ ${amount} ${currency}`
                   : ''
                 }
@@ -403,13 +399,9 @@ export default class InvoiceModal extends React.Component<InvoiceModalProps, Inv
                 onKeyDown={inputReplaceCommaWithDot}
                 pattern="0-9\."
                 withMargin
-                valueLink={
-                  selectedValue === currency
-                    //!!!!!!!!!!!!!!!!! fix
-                    //@ts-ignore
-                    ? linked.amount.pipe(this.handleAmount)
-                    //@ts-ignore
-                    : linked.amountUSD.pipe(this.handleDollarValue)
+                valueLink={selectedValue === currency
+                  ? linked.amount.pipe(this.handleAmount)
+                  : linked.fiatAmount.pipe(this.handleAmount)
                 }
               />
             <CurrencySelect
@@ -420,8 +412,6 @@ export default class InvoiceModal extends React.Component<InvoiceModalProps, Inv
               selectedValue={selectedValue}
               onSelect={this.handleBuyCurrencySelect}
               selectedItemRender={(item) => item.fullTitle}
-              //@ts-ignore
-              isToggleActive
               currencies={curList}
             />
           </div>
