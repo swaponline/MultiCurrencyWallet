@@ -4199,7 +4199,7 @@
   },
   {
     "id": "RowHistoryInvoiceAddress",
-    "message": "Direccion de pago: {address} ({number})",
+    "message": "Direccion de pago:",
     "files": [
       "src/front/shared/pages/History/Row/Row.tsx"
     ]

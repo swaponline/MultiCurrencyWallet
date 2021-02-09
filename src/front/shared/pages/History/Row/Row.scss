@@ -111,7 +111,7 @@
   font-size: 12px;
   font-weight: bold;
   @include ff;
-  color: #8E9AA3;
+  color: $notice-color;
   white-space: pre-wrap;
   cursor: pointer;
   width: 75%;
@@ -159,21 +159,17 @@
   }
 }
 
-.info {
-  span {
-    position: absolute;
-    font-size: 12px;
-    @include ff-regular;
-    bottom: 20px;
-    left: 24px;
-    color: #8E9AA3;
-  }
-}
+.addressWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
 
-.info.noButtons {
-  span {
-    position: static;
-  }
+  .requests {
+    margin-left: 0.4em;
+    font-size: 0.9em;
+    color: $notice-color;
+  }  
 }
 
 .comment {
@@ -229,10 +225,6 @@
   margin-left: 10px;
 }
 
-.wrapButtonShare {
-  display: inline-block;
-}
-
 tr.historyRow {
   display: block;
   margin-bottom: 10px;
@@ -272,15 +264,6 @@ tr.dark {
   }
 }
 
-.historyInvoiceInfo {
-  outline: 1px solid red;
-
-  div {
-    display: block;
-    font-size: 10pt;
-  }
-}
-
 @media all and (max-width: 570px) {
   tr.historyRow {
     height: max-content;
@@ -290,8 +273,10 @@ tr.dark {
 
 
 @media all and (max-width: 767px) {
-  .info {
-    span {
+  .addressWrapper {
+    font-size: 0.9em;
+
+    .requests {
       display: none;
     }
   }

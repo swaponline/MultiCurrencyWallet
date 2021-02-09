@@ -1,22 +1,19 @@
 import React, { Fragment } from 'react'
 import cx from 'classnames'
-import moment from 'moment-with-locales-es6'
 import { connect } from 'redaction'
-
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
-
 import { FormattedMessage } from 'react-intl'
 import actions from 'redux/actions'
 import { constants, links } from 'helpers'
-import CommentRow from 'components/Comment/Comment'
-import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { Link } from 'react-router-dom'
-import getCurrencyKey from 'helpers/getCurrencyKey'
-
 import ethToken from 'helpers/ethToken'
 import { getFullOrigin } from 'helpers/links'
 
+import CommentRow from 'components/Comment/Comment'
+import Tooltip from 'components/ui/Tooltip/Tooltip'
+import getCurrencyKey from 'helpers/getCurrencyKey'
+import Address from 'components/ui/Address/Address'
 
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -28,19 +25,14 @@ const isDark = localStorage.getItem(constants.localStorage.isDark)
 @cssModules(styles, { allowMultiple: true })
 
 export default class Row extends React.PureComponent<any, any> {
-
-  props: any
-
   constructor(props) {
-    //@ts-ignore
-    super()
+    super(props)
+
     const { hash, type, hiddenList, invoiceData, viewType } = props
     const dataInd = invoiceData && invoiceData.id
     const ind = `${dataInd || hash}-${type}`
 
-
     this.state = {
-      ind,
       viewType: (viewType || 'transaction'),
       exCurrencyRate: 0,
       comment: actions.comments.returnDefaultComment(hiddenList, ind),
@@ -199,7 +191,6 @@ export default class Row extends React.PureComponent<any, any> {
       invoiceData,
       date,
       confirmTx,
-      tokensData,
     } = this.props
 
     const {
@@ -207,14 +198,16 @@ export default class Row extends React.PureComponent<any, any> {
     } = this.state
 
     const substrAddress = address ? `${address.slice(0, 2)}...${address.slice(-2)}` : ''
-
     const hash = (invoiceData && invoiceData.txInfo) ? invoiceData.txInfo : propsHash
 
-    const { ind } = this.state
-
-    const { exCurrencyRate, isOpen, comment, cancelled, payed } = this.state
-
+    const { exCurrencyRate, cancelled, payed } = this.state
     const getFiat = value * exCurrencyRate
+    
+    const paymentAddress = invoiceData
+      ? invoiceData.destAddress
+        ? invoiceData.destAddress
+        : invoiceData.fromAddress
+      : ''
 
     const statusStyleName = cx('status', {
       'in': direction === 'in',
@@ -277,7 +270,7 @@ export default class Row extends React.PureComponent<any, any> {
                     <Link to={txLink}>
                       <FormattedMessage
                         id="RowHistoryInvoce"
-                        defaultMessage="Инвойс #{number} ({contact})"
+                        defaultMessage="Invoice #{number} ({contact})"
                         values={{
                           number: `${invoiceData.id}-${invoiceData.invoiceNumber}`,
                           contact: (invoiceData.contact) ? `(${invoiceData.contact})` : ''
@@ -291,7 +284,7 @@ export default class Row extends React.PureComponent<any, any> {
                   <>
                     <Link to={txLink}>
                       {(txType === 'CONFIRM') ? (
-                        <FormattedMessage id="RowHistory_Confirm_Sending" defaultMessage="Отправление" />
+                        <FormattedMessage id="RowHistory_Confirm_Sending" defaultMessage="Sent" />
                       ) : (
                           <>
                             {
@@ -314,17 +307,17 @@ export default class Row extends React.PureComponent<any, any> {
                       <>
                         {confirmTx.status === 'pending' && (
                           <div styleName="unconfirmed cell">
-                            <FormattedMessage id="RowHistory_Confirm_InProgress" defaultMessage="В процессе" />
+                            <FormattedMessage id="RowHistory_Confirm_InProgress" defaultMessage="Pending" />
                           </div>
                         )}
                         {confirmTx.status === 'reject' && (
                           <div styleName="confirm red">
-                            <FormattedMessage id="RowHistory_Confirm_Rejected" defaultMessage="Отклонён" />
+                            <FormattedMessage id="RowHistory_Confirm_Rejected" defaultMessage="Rejected" />
                           </div>
                         )}
                         {confirmTx.status === 'cancel' && (
                           <div styleName="confirm red">
-                            <FormattedMessage id="RowHistory_Confirm_Cancelled" defaultMessage="Отменено" />
+                            <FormattedMessage id="RowHistory_Confirm_Cancelled" defaultMessage="Canceled" />
                           </div>
                         )}
                       </>
@@ -347,29 +340,25 @@ export default class Row extends React.PureComponent<any, any> {
                 commentKey={hash}
               />
               {txType === 'INVOICE' && direction === 'in' &&
-                <div styleName={(hasInvoiceButtons) ? 'info' : 'info noButtons'}>
-                  {/* {
-                    invoiceData && invoiceData.label && <div styleName='comment'>{invoiceData.label}</div>
-                  } */}
+                <div styleName={(hasInvoiceButtons) ? 'addressWrapper' : 'addressWrapper noButtons'}>
                   <FormattedMessage
-                    styleName="address"
                     id="RowHistoryInvoiceAddress"
-                    defaultMessage='Адрес для оплаты: {address} ({number})'
-                    values={{
-                      address: `${(invoiceData.destAddress) ? invoiceData.destAddress : invoiceData.fromAddress}`,
-                      number: invoiceData.totalCount,
-                    }}
-                  />
+                    defaultMessage='Payment address:'
+                  />{' '}
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <Address address={paymentAddress} format='Short' />
+                    <span styleName='requests'>({invoiceData.totalCount})</span>
+                  </div>
                 </div>
               }
             </div>
             {hasInvoiceButtons &&
               <div styleName="btnWrapper">
                 <button onClick={this.handlePayInvoice}>
-                  <FormattedMessage id='RowHistoryPayInvoice' defaultMessage='Оплатить' />
+                  <FormattedMessage id='RowHistoryPayInvoice' defaultMessage='Pay' />
                 </button>
                 <button onClick={this.handleCancelInvoice}>
-                  <FormattedMessage id='RowHistoryCancelInvoice' defaultMessage='Отклонить' />
+                  <FormattedMessage id='RowHistoryCancelInvoice' defaultMessage='Reject' />
                 </button>
               </div>
             }
@@ -380,12 +369,12 @@ export default class Row extends React.PureComponent<any, any> {
                     <span>
                       <FormattedMessage
                         id="RowHistory_ConfirmTX_NeedConfirm"
-                        defaultMessage="Требуется подтверждение другого участника" />
+                        defaultMessage="Confirmation of another participant is required" />
                     </span>
                     <button onClick={this.handleSendConfirmLink}>
                       <FormattedMessage
                         id="RowHistory_ConfirmTX_SendLink"
-                        defaultMessage="Отправить ссылку"
+                        defaultMessage="Send link"
                       />
                     </button>
                   </>
@@ -394,13 +383,13 @@ export default class Row extends React.PureComponent<any, any> {
                       <span>
                         <FormattedMessage
                           id="RowHistory_ConfirmTX_NeedYourSign"
-                          defaultMessage="Требуется ваша подпись"
+                          defaultMessage="Your signature is required"
                         />
                       </span>
                       <button onClick={this.handleConfirmTx}>
                         <FormattedMessage
                           id="RowHistory_ConfirmTX_Sign"
-                          defaultMessage="Подтвердить"
+                          defaultMessage="Confirm"
                         />
                       </button>
                     </>

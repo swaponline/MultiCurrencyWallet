@@ -4081,7 +4081,7 @@
   },
   {
     "id": "RowHistoryInvoiceAddress",
-    "message": "Адрес для оплаты: {address} ({number})",
+    "message": "Payment address:",
     "files": [
       "src/front/shared/pages/History/Row/Row.tsx"
     ]
