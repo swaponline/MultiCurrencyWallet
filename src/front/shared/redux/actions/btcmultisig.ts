@@ -1214,6 +1214,7 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
   } = getState()
 
   let feeFromAmount: any = new BigNumber(0)
+  let totalAmount = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
 
   if (hasAdminFee) {
     const {
@@ -1228,6 +1229,8 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
 
 
     feeFromAmount = feeFromAmount.multipliedBy(1e8).integerValue() // Admin fee in satoshi
+    totalAmount = new BigNumber(totalAmount).plus(feeFromAmount).integerValue().toNumber()
+
   }
   feeFromAmount = feeFromAmount.toNumber()
   const feeData = await btc.estimateFeeValue({
@@ -1236,7 +1239,7 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
     method: 'send_2fa',
     address: pinAddress,
     moreInfo: true,
-    amount,
+    amount: new BigNumber(totalAmount).dividedBy(1e8).toNumber(),
   })
 
   const {
@@ -1251,6 +1254,7 @@ const sendPinProtected = async ({ from, to, amount, feeValue, speed, password, m
   let skipValue = totalUnspent - fundValue - feeValue - feeFromAmount
 
   if (new BigNumber(skipValue).isLessThan(0)) {
+    console.log('>>>>> skip is less than zero', skipValue, fundValue, totalUnspent)
     fundValue = new BigNumber(fundValue).plus(skipValue).integerValue().toNumber()
     skipValue = 0
   }
