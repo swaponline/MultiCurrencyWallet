@@ -29,23 +29,15 @@ class BTC2ETH extends AtomicAB2UTXO {
     this.utxoCoin = `btc`
     this._flowName = BTC2ETH.getName()
 
-    this.stepNumbers = {
-      'sign': 1,
-      'submit-secret': 2,
-      'sync-balance': 3,
-      'lock-utxo': 4,
-      'wait-lock-eth': 5,
-      'withdraw-eth': 6,
-      'finish': 7,
-      'end': 8,
-    }
+    this.isUTXOSide = true
+    this.isTakerMakerModel = true
+    this.stepNumbers = this.getStepNumbers()
 
     this.ethSwap = swap.ownerSwap
     this.btcSwap = swap.participantSwap
 
     this.abBlockchain = this.ethSwap
     this.utxoBlockchain = this.btcSwap
-    this.isUTXOSide = true
 
     if (!this.ethSwap) {
       throw new Error('BTC2ETH: "ethSwap" of type object required')
@@ -103,71 +95,68 @@ class BTC2ETH extends AtomicAB2UTXO {
   _getSteps() {
     const flow = this
 
-    return [
+    if (this.isTaker()) {
+      return [
 
-      // 1. Signs
+        // 1. Signs
+        async () => {
+          this.signUTXOSide()
+        },
 
-      async () => {
-        this.signUTXOSide()
-      },
+        // 2. Create secret, secret hash and BTC script
+        () => {
+          // this.submitSecret()
+        },
 
-      // 2. Create secret, secret hash and BTC script
+        // 3. Check balance
+        () => {
+          this.syncBalance()
+        },
 
-      () => {
-        // this.submitSecret()
-      },
-
-      // 3. Check balance
-
-      () => {
-        this.syncBalance()
-      },
-
-      // 4. Create BTC Script, fund, notify participant
-
-      async () => {
-        this.btcSwap.fundSwapScript({
-          flow,
-        })
-      },
-
-      // 5. Wait participant creates ETH Contract
-
-      async () => {
-        await flow.ethSwap.waitABContract({
-          flow,
-          utxoCoin: `btc`,
-        })
-      },
-
-      // 6. Withdraw
-
-      async () => {
-        await flow.ethSwap.withdrawFromABContract({ flow })
-      },
-
-      // 7. Finish
-
-      () => {
-        flow.swap.room.once('swap finished', ({btcSwapWithdrawTransactionHash}) => {
-          flow.setState({
-            btcSwapWithdrawTransactionHash,
+        // 4. Create BTC Script, fund, notify participant
+        async () => {
+          this.btcSwap.fundSwapScript({
+            flow,
           })
-        })
+        },
 
-        flow.swap.room.sendMessage({
-          event: 'request swap finished',
-        })
+        // 5. Wait participant creates ETH Contract
+        async () => {
+          await flow.ethSwap.waitABContract({
+            flow,
+            utxoCoin: `btc`,
+          })
+        },
 
-        flow.finishStep({
-          isFinished: true,
-        }, 'finish')
-      },
+        // 6. Withdraw
+        async () => {
+          await flow.ethSwap.withdrawFromABContract({ flow })
+        },
 
-      // 8. Finished!
+        // 7. Finish
+        () => {
+          flow.swap.room.once('swap finished', ({btcSwapWithdrawTransactionHash}) => {
+            flow.setState({
+              btcSwapWithdrawTransactionHash,
+            })
+          })
 
-      () => {}
-    ]
+          flow.swap.room.sendMessage({
+            event: 'request swap finished',
+          })
+
+          flow.finishStep({
+            isFinished: true,
+          }, 'finish')
+        },
+
+        // 8. Finished!
+        () => {}
+      ]
+    } else {
+      return [
+      ]
+    }
   }
 
   getBTCScriptAddress() {

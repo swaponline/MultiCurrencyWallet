@@ -38,6 +38,54 @@ class AtomicAB2UTXO extends Flow {
     }
   }
 
+  getStepNumbers() {
+    switch (true) {
+      case ( // Это не модель taker-maker - сторона utxo, или это taker-maker, сторона utxo, и это taker (создает первый utxo скрипт)
+        (!this.isTakerMakerModel && this.isUTXOSide)
+        ||
+        (this.isTakerMakerModel && this.isUTXOSide && this.isTaker())
+      ): return {
+          'sign': 1,
+          'submit-secret': 2,
+          'sync-balance': 3,
+          'lock-utxo': 4,
+          'wait-lock-eth': 5,
+          'withdraw-eth': 6,
+          'finish': 7,
+          'end': 8,
+        }
+      case ( // Это не модель taker-maker - сторона ab, или это taker-maker, сторона ab, и это maker (ждет создание utxo скрипта)
+        (!this.isTakerMakerModel && !this.isUTXOSide)
+        ||
+        (this.isTakerMakerModel && !this.isUTXOSide && this.isMaker())
+      ): return {
+          'sign': 1,
+          'wait-lock-utxo': 2,
+          'verify-script': 3,
+          'sync-balance': 4,
+          'lock-eth': 5,
+          'wait-withdraw-eth': 6, // aka getSecret
+          'withdraw-utxo': 7,
+          'finish': 8,
+          'end': 9,
+        }
+      case ( // Это модель taker-maker, сторона ab, мы taker - создаем контракт ab
+        this.isTakerMakerModel && !this.isUTXOSide && this.isTaker()
+      ): return {
+          'sign': 1,
+          'finish': 8,
+          'end': 9,
+        }
+      case ( // Это модель taker-maker, сторона utxo, мы maker - ждем создание контракта ab
+        this.isTakerMakerModel && this.isUTXOSide && this.isMaker()
+      ): return {
+          'sign': 1,
+          'finish': 8,
+          'end': 9,
+        }
+    }
+  }
+
   signABSide() {
     this.swap.processMetamask()
   }

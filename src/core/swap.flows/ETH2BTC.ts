@@ -25,17 +25,8 @@ class ETH2BTC extends AtomicAB2UTXO {
     this.utxoCoin = `btc`
     this._flowName = ETH2BTC.getName()
 
-    this.stepNumbers = {
-      'sign': 1,
-      'wait-lock-utxo': 2,
-      'verify-script': 3,
-      'sync-balance': 4,
-      'lock-eth': 5,
-      'wait-withdraw-eth': 6, // aka getSecret
-      'withdraw-utxo': 7,
-      'finish': 8,
-      'end': 9
-    }
+    this.isTakerMakerModel = true
+    this.stepNumbers = this.getStepNumbers()
 
     this.ethSwap = swap.participantSwap
     this.btcSwap = swap.ownerSwap
