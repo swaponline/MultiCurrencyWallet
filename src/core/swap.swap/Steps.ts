@@ -2,7 +2,7 @@ const UTXO_2_AB = (from, to) => ({
   [`sign`]: 1,
   [`submit-secret`]: 2,
   [`sync-balance`]: 3,
-  [`lock-${from}`]: 4,
+  [`lock-utxo`]: 4,
   [`wait-lock-${to}`]: 5,
   [`withdraw-${to}`]: 6,
   [`finish`]: 7,

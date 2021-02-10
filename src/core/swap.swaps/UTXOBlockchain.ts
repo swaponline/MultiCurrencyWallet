@@ -767,7 +767,7 @@ class UTXOBlockchain extends SwapInterface {
     if (!isStoppedSwap) {
       flow.finishStep({
         [`$is{coin}ScriptFunded}`]: true,
-      }, { step: `lock-${coin}` })
+      }, { step: `lock-utxo` })
     }
   }
 
