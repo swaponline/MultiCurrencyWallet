@@ -14,7 +14,7 @@
     ]
   },
   "scripts": {
-    "common:test": "node ./src/common/tests/tests.js",
+    "common:test": "tsc ./src/common/tests/tests.ts",
     "common:example:send": "node ./src/common/examples/send.js",
     "common:example:unspents": "node ./src/common/examples/unspents.js",
     "core:test": "DEBUG=swap.core* jest src/core/tests/*.test.js",
@@ -186,8 +186,8 @@
     "style-loader": "^2.0.0",
     "superagent": "^6.1.0",
     "terser-webpack-plugin-legacy": "^1.2.5",
-    "ts-loader": "8.0.15",
-    "typescript": "4.1.3",
+    "ts-loader": "8.0.16",
+    "typescript": "4.1.4",
     "url-loader": "^4.1.1",
     "webpack": "^4.44.2",
     "webpack-bundle-analyzer": "^4.1.0",

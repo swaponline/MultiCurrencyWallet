@@ -158,7 +158,6 @@ const getConfig = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, .
       nextSwap: () => ({
         
       })*/
-      new EthTokenSwap(config.noxonTokenSwap(TOKEN)),
       new EthTokenSwap(config.swapTokenSwap(TOKEN)),
       ...(
         (config.swaps || [])
@@ -176,8 +175,6 @@ const getConfig = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, .
 
       ETH2NEXT, NEXT2ETH,
 
-      ETHTOKEN2BTC(constants.COINS.noxon),
-      BTC2ETHTOKEN(constants.COINS.noxon),
       ETHTOKEN2BTC(constants.COINS.swap),
       BTC2ETHTOKEN(constants.COINS.swap),
       ...(config.flows || []),
