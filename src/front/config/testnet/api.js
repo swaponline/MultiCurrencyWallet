@@ -15,7 +15,7 @@ export default {
   blockcypher: 'https://api.blockcypher.com/v1/btc/test3',
   // bitpay: 'https://test-insight.bitpay.com/api',
   etherscan: [
-    'https://rinkeby.etherscan.io/api',
+    'https://ropsten.etherscan.io/api',
     'https://invoices.swaponline.site/proxyetherscan-testnet',
   ],
   etherscan_ApiKey: 'RHHFPNMAZMD6I4ZWBZBF6FA11CMW9AXZNM',
