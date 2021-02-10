@@ -340,7 +340,11 @@ export default class Row extends React.PureComponent<any, any> {
               />
               {invoiceData && invoiceData.contact &&
                 <div styleName='invoiceContactWrapper'>
-                  Contact: <span styleName='contact'>{invoiceData.contact}</span>
+                  <FormattedMessage
+                    id="RowHistoryInvoiceContact"
+                    defaultMessage='Contact:'
+                  />{' '}
+                  <span styleName='contact'>{invoiceData.contact}</span>
                 </div>
               }
 
@@ -363,7 +367,7 @@ export default class Row extends React.PureComponent<any, any> {
                   <FormattedMessage id='RowHistoryPayInvoice' defaultMessage='Pay' />
                 </button>
                 <button onClick={this.handleCancelInvoice}>
-                  <FormattedMessage id='RowHistoryCancelInvoice' defaultMessage='Reject' />
+                  <FormattedMessage id='RowHistoryCancelInvoice' defaultMessage='Decline' />
                 </button>
               </div>
             }

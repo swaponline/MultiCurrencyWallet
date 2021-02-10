@@ -2244,7 +2244,6 @@
     "id": "WithdrawModalErrorSend",
     "message": "{errorName} {currency}:{br}{errorMessage}",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
@@ -5737,24 +5736,15 @@
   },
   {
     "id": "InvoicesView_MetaDescription",
-    "message": "Atomic Swap Wallet allows you to manage and securely exchange. Based on Multi-Sig and Atomic Swap technologies.",
-    "files": [
-      "src/front/shared/pages/Invoices/Invoice/index.tsx"
-    ]
+    "message": "Atomic Swap Wallet allows you to manage and securely exchange. Based on Multi-Sig and Atomic Swap technologies."
   },
   {
     "id": "InvoicesView_MetaTitle",
-    "message": "Invoice #{number} - Web Wallet with Atomic Swap.",
-    "files": [
-      "src/front/shared/pages/Invoices/Invoice/index.tsx"
-    ]
+    "message": "Invoice #{number} - Web Wallet with Atomic Swap."
   },
   {
     "id": "InvoicesView_WidgetMetaTitle",
-    "message": "Invoice #{number} - Web Wallet with Atomic Swap.",
-    "files": [
-      "src/front/shared/pages/Invoices/Invoice/index.tsx"
-    ]
+    "message": "Invoice #{number} - Web Wallet with Atomic Swap."
   },
   {
     "id": "InvoicesList_MetaDescription",
@@ -7232,10 +7222,7 @@
   },
   {
     "id": "Share",
-    "message": "Share Twitter",
-    "files": [
-      "src/front/shared/pages/Swap/Share/Share.tsx"
-    ]
+    "message": "Share Twitter"
   },
   {
     "id": "SwitchLangNL",
@@ -7997,6 +7984,13 @@
     "message": "Niet genoeg ethereum-saldo voor mijnwerkersvergoeding",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "RowHistoryInvoiceContact",
+    "message": "Kontakt:",
+    "files": [
+      "src/front/shared/pages/History/Row/Row.tsx"
     ]
   }
 ]
