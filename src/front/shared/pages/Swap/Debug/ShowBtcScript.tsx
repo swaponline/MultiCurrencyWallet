@@ -11,14 +11,14 @@ import BtcScript from './BtcScript'
 @CSSModules(styles)
 export default class ShowBtcScript extends Component<any, any> {
   render() {
-    const { btcScriptValues } = this.props
-    if (!btcScriptValues) return null
+    const { utxoScriptValues } = this.props
+    if (!utxoScriptValues) return null
     return (
       <BtcScript
-        secretHash={btcScriptValues.secretHash}
-        recipientPublicKey={btcScriptValues.recipientPublicKey}
-        lockTime={btcScriptValues.lockTime}
-        ownerPublicKey={btcScriptValues.ownerPublicKey}
+        secretHash={utxoScriptValues.secretHash}
+        recipientPublicKey={utxoScriptValues.recipientPublicKey}
+        lockTime={utxoScriptValues.lockTime}
+        ownerPublicKey={utxoScriptValues.ownerPublicKey}
       />
     )
   }

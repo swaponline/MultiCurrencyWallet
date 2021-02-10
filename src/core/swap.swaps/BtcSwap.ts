@@ -1,8 +1,8 @@
-import BtcLikeSwap from './integration/BtcLikeSwap'
+import UTXOBlockchain from './UTXOBlockchain'
 
 
 
-class BtcSwap extends BtcLikeSwap {
+class BtcSwap extends UTXOBlockchain {
   constructor(options) {
     super({
       ...options,

@@ -37,11 +37,11 @@ export default class SwapList extends Component<any, any> {
     const { currencyName } = fields
 
     const first = stepNumbers.sign
-    const second = sellCurrency === currencyName ? stepNumbers[`submit-secret`] : stepNumbers[`wait-lock-${currencyName.toLowerCase()}`]
-    const fourth = sellCurrency === currencyName ? stepNumbers[`lock-${currencyName.toLowerCase()}`] : stepNumbers[`sync-balance`]
+    const second = sellCurrency === currencyName ? stepNumbers[`submit-secret`] : stepNumbers[`wait-lock-utxo`]
+    const fourth = sellCurrency === currencyName ? stepNumbers[`lock-utxo`] : stepNumbers[`sync-balance`]
     const fifth = sellCurrency === currencyName ? stepNumbers[`wait-lock-eth`] : stepNumbers[`lock-eth`]
     const sixth = sellCurrency === currencyName ? stepNumbers[`withdraw-eth`] : stepNumbers[`wait-withdraw-eth`]
-    const seventh = sellCurrency === currencyName ? stepNumbers.finish : stepNumbers[`withdraw-${currencyName.toLowerCase()}`]
+    const seventh = sellCurrency === currencyName ? stepNumbers.finish : stepNumbers[`withdraw-utxo`]
     const eighth = sellCurrency === currencyName ? stepNumbers.end : stepNumbers.finish
 
     this.state = {

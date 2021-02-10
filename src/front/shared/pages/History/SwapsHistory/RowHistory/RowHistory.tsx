@@ -74,21 +74,8 @@ export default class RowHistory extends Component<any, any> {
   }
   componentDidMount() {
     const {
-      btcScriptValues,
-      ltcScriptValues,
-      usdtScriptValues,
-      scriptValues,
-      ghostScriptValues,
-      nextScriptValues,
+      utxoScriptValues: values,
     } = this.props.row
-
-    const values =
-      btcScriptValues ||
-      ltcScriptValues ||
-      usdtScriptValues ||
-      ghostScriptValues ||
-      nextScriptValues ||
-      scriptValues
 
     if (!values) return
 
@@ -113,10 +100,8 @@ export default class RowHistory extends Component<any, any> {
       buyAmount,
       buyCurrency,
       sellAmount,
-      btcScriptValues,
+      utxoScriptValues: values,
       scriptBalance,
-      ghostScriptValues,
-      nextScriptValues,
       isRefunded,
       isMy,
       sellCurrency,
@@ -125,8 +110,6 @@ export default class RowHistory extends Component<any, any> {
       scriptValues,
       isStoppedSwap,
     } = row
-
-    const values = btcScriptValues || scriptValues || ghostScriptValues || nextScriptValues
 
     const canBeRefunded = values && scriptBalance > 0
     const isDeletedSwap = isFinished || isRefunded || isStoppedSwap
