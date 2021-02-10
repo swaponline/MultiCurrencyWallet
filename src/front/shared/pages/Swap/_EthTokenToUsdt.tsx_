@@ -347,7 +347,7 @@ export default class EthTokenToUsdt extends Component<any, any> {
               </Fragment>
             )}
 
-            {(flow.step === 7 || flow.isBtcWithdrawn) && (
+            {(flow.step === 7 || flow.isbtcWithdrawn) && (
               <h3>
                 <FormattedMessage
                   id="EthTokenToUsdt345"
@@ -378,7 +378,7 @@ export default class EthTokenToUsdt extends Component<any, any> {
             )}
             {flow.step === 7 && <InlineLoader />}
 
-            {flow.isBtcWithdrawn && (
+            {flow.isbtcWithdrawn && (
               <Fragment>
                 <h3>
                   <FormattedMessage
@@ -396,7 +396,7 @@ export default class EthTokenToUsdt extends Component<any, any> {
             )}
             {flow.step >= 6 && !flow.isFinished && (
               <div style={{ display: 'flex', alignItems: 'center' }}>
-                {enabledButton && !flow.isBtcWithdrawn && (
+                {enabledButton && !flow.isbtcWithdrawn && (
                   <Button brand onClick={this.tryRefund}>
                     <FormattedMessage id="EthTokenToUsdt390" defaultMessage="TRY REFUND" />
                   </Button>

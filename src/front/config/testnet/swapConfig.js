@@ -4,23 +4,23 @@ import api from './api'
 export default {
   BTC: {
     withdrawTransactionHash: `btcSwapWithdrawTransactionHash`,
-    scriptCreatingTransactionHash: `btcScriptCreatingTransactionHash`,
+    scriptCreatingTransactionHash: `utxoScriptCreatingTransactionHash`,
     explorerLink: api.blockcypher,
-    verifyScriptFunc: `verifyBtcScript`,
-    scriptValues: `btcScriptValues`,
+    verifyScriptFunc: `verifyScript`,
+    scriptValues: `utxoScriptValues`, // @to-do - remove this - use in code utxoScriptValues
   },
   NEXT: {
     withdrawTransactionHash: `nextSwapWithdrawTransactionHash`,
-    scriptCreatingTransactionHash: `nextScriptCreatingTransactionHash`,
+    scriptCreatingTransactionHash: `utxoScriptCreatingTransactionHash`,
     explorerLink: api.nextscan,
-    verifyScriptFunc: `verifyNextScript`,
-    scriptValues: `nextScriptValues`,
+    verifyScriptFunc: `verifyScript`,
+    scriptValues: `utxoScriptValues`,
   },
   GHOST: {
     withdrawTransactionHash: `ghostSwapWithdrawTransactionHash`,
-    scriptCreatingTransactionHash: `ghostScriptCreatingTransactionHash`,
+    scriptCreatingTransactionHash: `utxoScriptCreatingTransactionHash`,
     explorerLink: api.ghostscan,
-    verifyScriptFunc: `verifyGhostScript`,
-    scriptValues: `ghostScriptValues`,
+    verifyScriptFunc: `verifyScript`,
+    scriptValues: `utxoScriptValues`,
   },
 }

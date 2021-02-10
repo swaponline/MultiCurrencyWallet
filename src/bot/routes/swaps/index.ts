@@ -11,7 +11,7 @@ import {
   nextStep,
   withSwap,
   sign,
-  verifyBtcScript,
+  verifyScript,
   submitSecret,
   syncBalance,
   tryWithdraw,
@@ -32,7 +32,7 @@ router.get('/:id/refund', refund)
 router.get('/:id/sign', withSwap(sign))
 router.get('/:id/next-step', withSwap(nextStep))
 router.get('/:id/submit-secret', withSwap(submitSecret))
-router.get('/:id/verify-btc-script', withSwap(verifyBtcScript))
+router.get('/:id/verify-script', withSwap(verifyScript))
 router.get('/:id/sync-balance', withSwap(syncBalance))
 router.get('/:id/try-withdraw', withSwap(tryWithdraw))
 

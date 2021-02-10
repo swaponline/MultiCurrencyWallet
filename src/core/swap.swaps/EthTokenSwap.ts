@@ -129,12 +129,17 @@ class EthTokenSwap extends SwapInterface {
       //@ts-ignore
       debug(`EthTokenSwap -> ${methodName} -> params`, params)
 
-      const gasAmount = await this.contract.methods[methodName](...args).estimateGas(params)
+      let gasAmount = 0
+      try {
+        gasAmount = await this.contract.methods[methodName](...args).estimateGas(params)
+      } catch (estimateGasError) {
+        reject({ message: estimateGasError.message, gasAmount: new BigNumber(gasAmount).dividedBy(1e8).toString() })
+        return
+      }
 
       params.gas = gasAmount
       //@ts-ignore
       debug(`EthTokenSwap -> ${methodName} -> gas`, gasAmount)
-
       const receipt = await this.contract.methods[methodName](...args).send(params)
         .on('transactionHash', (hash) => {
           if (typeof handleTransactionHash === 'function') {
@@ -156,7 +161,7 @@ class EthTokenSwap extends SwapInterface {
    * @param {function} handleTransactionHash
    * @returns {Promise}
    */
-  async approve(data, handleTransactionHash) {
+  async approve(data, handleTransactionHash: Function = null) {
     const { amount } = data
 
     const exp = new BigNumber(10).pow(this.decimals)
@@ -204,7 +209,7 @@ class EthTokenSwap extends SwapInterface {
    * @param {string} data.spender
    * @returns {Promise}
    */
-  checkAllowance(data) {
+  checkAllowance(data): Promise<number> {
     const { spender } = data
 
     return new Promise(async (resolve, reject) => {
@@ -502,8 +507,8 @@ class EthTokenSwap extends SwapInterface {
    * @param {string} ownerAddress
    * @returns {Promise.<string>}
    */
-  async getTargetWallet(ownerAddress) {
-    let address = await util.helpers.repeatAsyncUntilResult(() =>
+  async getTargetWallet(ownerAddress: string): Promise<string> {
+    let address: string = await util.helpers.repeatAsyncUntilResult(() =>
       this.getTargetWalletPromise(ownerAddress)
     )
     return address
@@ -643,7 +648,7 @@ class EthTokenSwap extends SwapInterface {
    * @param {function} handleTransactionHash
    * @returns {Promise}
    */
-  async refund(data, handleTransactionHash) {
+  async refund(data, handleTransactionHash?: Function) {
     const { participantAddress } = data
 
     await this.updateGasPrice()
@@ -693,6 +698,465 @@ class EthTokenSwap extends SwapInterface {
           return
         }
       })
+
+
+  async fundERC20Contract({
+    flow,
+  }: {
+    flow: any,
+  }) {
+    const abClass = this
+    const {
+      participant,
+      buyAmount,
+      sellAmount,
+      waitConfirm,
+    } = flow.swap
+
+    const { secretHash } = flow.state
+
+    const swapData = {
+      participantAddress: abClass.app.getParticipantEthAddress(flow.swap),
+      secretHash,
+      amount: sellAmount,
+      targetWallet: flow.swap.destinationSellAddress,
+      calcFee: true,
+    }
+
+    // TODO fee after allowance
+    // EthTokenSwap -> approve need gas too
+    /* calc create contract fee and save this */
+    /*
+    flow.setState({
+      createSwapFee: await flow.ethTokenSwap.create(swapData),
+    })
+    */
+    swapData.calcFee = false
+    //debug('swap.core:flow')('create swap fee', flow.state.createSwapFee)
+
+    const tryCreateSwap = async () => {
+      const { isEthContractFunded } = flow.state
+
+      if (!isEthContractFunded) {
+        try {
+          debug('swap.core:flow')('fetching allowance')
+
+          const allowance = await abClass.checkAllowance({
+            spender: abClass.app.getMyEthAddress(),
+          })
+
+          debug('swap.core:flow')('allowance', allowance)
+
+          if (new BigNumber(allowance).isLessThan(sellAmount)) {
+            debug('swap.core:flow')('allowance < sellAmount', allowance, sellAmount)
+            await abClass.approve({
+              amount: sellAmount,
+            })
+          }
+
+          debug('swap.core:flow')('check swap exists')
+          const swapExists = await flow._checkSwapAlreadyExists()
+          if (swapExists) {
+            console.warn('Swap exists!! May be stucked. Try refund')
+            await abClass.refund({
+              participantAddress: abClass.app.getParticipantEthAddress(flow.swap),
+            }, (refundTx) => {
+              debug('swap.core:flow')('Stucked swap refunded', refundTx)
+            })
+          }
+          await abClass.create(swapData, async (hash) => {
+            debug('swap.core:flow')('create swap tx hash', hash)
+            flow.swap.room.sendMessage({
+              event: 'create eth contract',
+              data: {
+                ethSwapCreationTransactionHash: hash,
+              },
+            })
+
+            flow.swap.room.on('request eth contract', () => {
+              flow.swap.room.sendMessage({
+                event: 'create eth contract',
+                data: {
+                  ethSwapCreationTransactionHash: hash,
+                },
+              })
+            })
+
+            flow.setState({
+              ethSwapCreationTransactionHash: hash,
+              canCreateEthTransaction: true,
+              isFailedTransaction: false,
+            }, true)
+
+            debug('swap.core:flow')('created swap!', hash)
+          })
+
+        } catch (error) {
+          if (flow.state.ethSwapCreationTransactionHash) {
+            console.error('fail create swap, but tx already exists')
+            flow.setState({
+              canCreateEthTransaction: true,
+              isFailedTransaction: false,
+            }, true)
+            return true
+          }
+          const { message, gasAmount } = error
+
+          if ( /insufficient funds/.test(message) ) {
+            console.error(`Insufficient ETH for gas: ${gasAmount} ETH needed`)
+
+            flow.setState({
+              canCreateEthTransaction: false,
+              gasAmountNeeded: gasAmount,
+            })
+
+            return null
+          } else if ( /known transaction/.test(message) ) {
+            console.error(`known tx: ${message}`)
+          } else if ( /out of gas/.test(message) ) {
+            console.error(`tx failed (wrong secret?): ${message}`)
+          } else if ( /always failing transaction/.test(message) ) {
+            console.error(`Insufficient Token for transaction: ${message}`)
+          } else if ( /Failed to check for transaction receipt/.test(message) ) {
+            console.error(error)
+          } else if ( /replacement transaction underpriced/.test(message) ) {
+            console.error(error)
+          } else {
+            console.error(error)
+          }
+
+          flow.setState({
+            isFailedTransaction: true,
+            isFailedTransactionError: error.message,
+          })
+
+          return null
+        }
+      }
+
+      return true
+    }
+
+    const isEthContractFunded = await util.helpers.repeatAsyncUntilResult(() =>
+      tryCreateSwap(),
+    )
+
+    const { isStoppedSwap } = flow.state
+
+    if (isEthContractFunded && !isStoppedSwap) {
+      debug('swap.core:flow')(`finish step`)
+      flow.finishStep({
+        isEthContractFunded,
+      }, {step: 'lock-eth'})
+    }
+  }
+
+
+  async getSecretFromAB2UTXO({
+    flow,
+  }: {
+    flow: any,
+  }) {
+    const abClass = this
+
+    flow.swap.room.once('ethWithdrawTxHash', async ({ethSwapWithdrawTransactionHash}) => {
+      flow.setState({
+        ethSwapWithdrawTransactionHash,
+      }, true)
+
+      const secretFromTxhash = await util.helpers.extractSecretFromTx({
+        flow,
+        swapFlow: flow.ethTokenSwap,
+        app: flow.app,
+        ethSwapWithdrawTransactionHash,
+      })
+
+      const { isEthWithdrawn } = flow.state
+
+      if (!isEthWithdrawn && secretFromTxhash) {
+        debug('swap.core:flow')('got secret from tx', ethSwapWithdrawTransactionHash, secretFromTxhash)
+        flow.finishStep({
+          isEthWithdrawn: true,
+          secret: secretFromTxhash,
+        }, {step: 'wait-withdraw-eth'})
+      }
+    })
+
+    flow.swap.room.sendMessage({
+      event: 'request ethWithdrawTxHash',
+    })
+
+    const { participant } = flow.swap
+
+    const checkSecretExist = async () => {
+      return await util.helpers.extractSecretFromContract({
+        flow,
+        swapFlow: abClass,
+        participantAddress: flow.app.getParticipantEthAddress(flow.swap),
+        ownerAddress: flow.app.getMyEthAddress(),
+        app: flow.app,
+      })
+    }
+
+    const secretFromContract = await util.helpers.repeatAsyncUntilResult((stopRepeat) => {
+      const { isEthWithdrawn, isRefunded } = flow.state
+
+      if (isEthWithdrawn || isRefunded) {
+        stopRepeat()
+
+        return false
+      }
+
+      return checkSecretExist()
+    })
+
+    const { isEthWithdrawn } = flow.state
+
+    if (secretFromContract && !isEthWithdrawn) {
+      debug('swap.core:flow')('got secret from smart contract', secretFromContract)
+
+      flow.finishStep({
+        isEthWithdrawn: true,
+        secret: secretFromContract,
+      }, { step: 'wait-withdraw-eth' })
+    }
+  }
+
+
+  async waitAB2UTXOContract({
+    flow,
+    utxoCoin,
+  }: {
+    flow: any,
+    utxoCoin: string,
+  }) {
+    const abClass = this
+
+    flow.swap.room.sendMessage({
+      event: 'request eth contract',
+    })
+
+    flow.swap.room.once(`request ${utxoCoin} script`, () => {
+      const {
+        utxoScriptValues: scriptValues,
+        utxoScriptCreatingTransactionHash: txHash,
+      } = flow.state
+
+      flow.swap.room.sendMessage({
+        event:  `create ${utxoCoin} script`,
+        data: {
+          scriptValues,
+          utxoScriptCreatingTransactionHash: txHash,
+        }
+      })
+    })
+
+    const { participant } = flow.swap
+
+    flow.swap.room.on('create eth contract', ({ ethSwapCreationTransactionHash }) => {
+      flow.setState({
+        ethSwapCreationTransactionHash,
+      }, true)
+    })
+
+    const isContractBalanceOk = await util.helpers.repeatAsyncUntilResult(async () => {
+      const balance = await abClass.getBalance({
+        ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
+      })
+
+      debug('swap.core:flow')('Checking contract balance:', balance)
+
+      if (balance > 0) {
+        return true
+      }
+
+      return false
+    })
+
+    if (isContractBalanceOk) {
+      const { isEthContractFunded } = flow.state
+
+      if (!isEthContractFunded) {
+        flow.finishStep({
+          isEthContractFunded: true,
+        }, { step: 'wait-lock-eth' })
+      }
+    }
+  }
+
+
+  async withdrawFromAB2UTXO({
+    flow,
+  }: {
+    flow: any,
+  }) {
+    const abClass = this
+    const { buyAmount, participant } = flow.swap
+    const { secretHash, secret } = flow.state
+
+    const data = {
+      ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
+      secret,
+    }
+
+    const balanceCheckError = await abClass.checkBalance({
+      ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
+      participantAddress: flow.app.getMyEthAddress(),
+      expectedValue: buyAmount,
+      expectedHash: secretHash,
+    })
+
+    if (balanceCheckError) {
+      console.error('Waiting until deposit: ETH balance check error:', balanceCheckError)
+      flow.swap.events.dispatch('eth balance check error', balanceCheckError)
+
+      return
+    }
+
+    if (abClass.hasTargetWallet()) {
+      const targetWallet = await abClass.getTargetWallet(
+        flow.app.getParticipantEthAddress(flow.swap)
+      )
+      const needTargetWallet = (flow.swap.destinationBuyAddress)
+        ? flow.swap.destinationBuyAddress
+        : flow.app.getMyEthAddress()
+
+      if (targetWallet.toLowerCase() != needTargetWallet.toLowerCase()) {
+        console.error(
+          "Destination address for tokens dismatch with needed (Needed, Getted). Stop swap now!",
+          needTargetWallet,
+          targetWallet,
+        )
+
+        flow.swap.events.dispatch('address for tokens invalid', {
+          needed: needTargetWallet,
+          getted: targetWallet,
+        })
+
+        return
+      }
+    }
+
+    const tokenAddressIsValid = await abClass.checkTokenIsValid({
+      ownerAddress: flow.app.getParticipantEthAddress(flow.swap),
+      participantAddress: flow.app.getMyEthAddress(),
+    })
+
+    if (!tokenAddressIsValid) {
+      console.error("Tokens, blocked at contract dismatch with needed. Stop swap now!")
+      return
+    }
+
+    const onWithdrawReady = () => {
+      flow.swap.room.once('request ethWithdrawTxHash', () => {
+        const { ethSwapWithdrawTransactionHash } = flow.state
+
+        flow.swap.room.sendMessage({
+          event: 'ethWithdrawTxHash',
+          data: {
+            ethSwapWithdrawTransactionHash,
+          },
+        })
+      })
+
+      const { step } = flow.state
+
+      if (step >= 7) {
+        return
+      }
+
+      flow.finishStep({
+        isEthWithdrawn: true,
+      }, 'withdraw-eth')
+    }
+
+    const tryWithdraw = async (stopRepeater) => {
+      const { isEthWithdrawn } = flow.state
+
+      if (!isEthWithdrawn) {
+        try {
+          const { withdrawFee } = flow.state
+
+          if (!withdrawFee) {
+            const withdrawNeededGas = await abClass.calcWithdrawGas({
+              ownerAddress: data.ownerAddress,
+              secret,
+            })
+            flow.setState({
+              withdrawFee: withdrawNeededGas,
+            })
+            debug('swap.core:flow')('withdraw gas fee', withdrawNeededGas)
+          }
+
+          await abClass.withdraw(data, (hash) => {
+            flow.setState({
+              isEthWithdrawn: true,
+              ethSwapWithdrawTransactionHash: hash,
+              canCreateEthTransaction: true,
+              requireWithdrawFee: false,
+            }, true)
+
+            flow.swap.room.sendMessage({
+              event: 'ethWithdrawTxHash',
+              data: {
+                ethSwapWithdrawTransactionHash: hash,
+              }
+            })
+          })
+
+          stopRepeater()
+          return true
+        } catch (err) {
+          if ( /known transaction/.test(err.message) ) {
+            console.error(`known tx: ${err.message}`)
+            stopRepeater()
+            return true
+          } else if ( /out of gas/.test(err.message) ) {
+            console.error(`tx failed (wrong secret?): ${err.message}`)
+          } else if ( /insufficient funds for gas/.test(err.message) ) {
+            console.error(`insufficient fund for gas: ${err.message}`)
+
+            debug('swap.core:flow')('insufficient fund for gas... wait fund or request other side to withdraw')
+
+            const { requireWithdrawFee } = flow.state
+
+            if (!requireWithdrawFee) {
+              flow.swap.room.once('withdraw ready', ({ethSwapWithdrawTransactionHash}) => {
+                flow.setState({
+                  ethSwapWithdrawTransactionHash,
+                })
+
+                onWithdrawReady()
+              })
+
+              flow.setState({
+                requireWithdrawFee: true,
+              })
+            }
+
+          } else {
+            console.error(err)
+          }
+
+          flow.setState({
+            canCreateEthTransaction: false,
+          })
+
+          return null
+        }
+      }
+
+      return true
+    }
+
+    const isEthWithdrawn = await util.helpers.repeatAsyncUntilResult((stopRepeater) =>
+      tryWithdraw(stopRepeater),
+    )
+
+    if (isEthWithdrawn) {
+      onWithdrawReady()
+    }
+  }
 }
 
 

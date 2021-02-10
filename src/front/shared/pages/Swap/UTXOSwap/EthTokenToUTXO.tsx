@@ -91,12 +91,12 @@ export default class EthTokenToUTXO extends Component<any, any> {
 
     const stepNumbers = {
       'sign': 1,
-      'wait-lock-ghost': 2,
+      'wait-lock-utxo': 2,
       'verify-script': 3,
       'sync-balance': 4,
       'lock-eth': 5,
       'wait-withdraw-eth': 6, // aka getSecret
-      'withdraw-ghost': 7,
+      'withdraw-utxo': 7,
       'finish': 8,
       'end': 9,
     }
