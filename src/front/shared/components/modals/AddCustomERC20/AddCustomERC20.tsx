@@ -37,7 +37,7 @@ type AddCustomERC20State = {
 const serviceURLMainnet =
   'https://api.etherscan.io/api?apikey=87F9B9IH33JPVRM5ZVFEK1DQTM64FUZFMV&module=proxy&action=eth_call'
 const serviceURLTestnet =
-  'https://api-rinkeby.etherscan.io/api?apikey=87F9B9IH33JPVRM5ZVFEK1DQTM64FUZFMV&module=proxy&action=eth_call'
+  'https://api-ropsten.etherscan.io/api?apikey=87F9B9IH33JPVRM5ZVFEK1DQTM64FUZFMV&module=proxy&action=eth_call'
 const serviceURL = process.env.MAINNET ? serviceURLMainnet : serviceURLTestnet
 
 const nameSignature = '0x06fdde03'
