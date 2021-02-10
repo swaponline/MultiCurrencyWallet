@@ -7372,7 +7372,7 @@
   },
   {
     "id": "MetamaskNetworkAlert_NetworkTestnet",
-    "message": "Red de prueba (Rinkeby)",
+    "message": "Red de prueba (Ropsten)",
     "files": [
       "src/front/shared/containers/App/App.tsx"
     ]

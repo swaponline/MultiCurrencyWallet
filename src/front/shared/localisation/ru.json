@@ -7419,7 +7419,7 @@
   },
   {
     "id": "MetamaskNetworkAlert_NetworkTestnet",
-    "message": "Тестовая сеть (Rinkeby)",
+    "message": "Тестовая сеть (Ropsten)",
     "files": [
       "src/front/shared/containers/App/App.tsx"
     ]
