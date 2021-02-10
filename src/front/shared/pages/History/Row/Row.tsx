@@ -340,7 +340,7 @@ export default class Row extends React.PureComponent<any, any> {
                 commentKey={hash}
               />
               {txType === 'INVOICE' && direction === 'in' &&
-                <div styleName={(hasInvoiceButtons) ? 'addressWrapper' : 'addressWrapper noButtons'}>
+                <div styleName='addressWrapper'>
                   <FormattedMessage
                     id="RowHistoryInvoiceAddress"
                     defaultMessage='Payment address:'

@@ -123,14 +123,8 @@ export default class InvoiceModal extends React.Component<InvoiceModalProps, Inv
     localStorage.setItem(constants.localStorage.invoicesEnabled, '1')
   }
 
-  componentDidMount() {
-    console.log('Invoice modal mounted')
-    console.log('props: ', this.props )
-    console.log('state: ', this.state )
-  }
-
   handleSubmit = () => {
-    const { name, data } = this.props
+    const { data } = this.props
     const {
       address,
       amount,
@@ -227,13 +221,19 @@ export default class InvoiceModal extends React.Component<InvoiceModalProps, Inv
       })
     } else if (selectedValue === currency) {
       this.setState({
-        fiatAmount: new BigNumber(value).multipliedBy(multiplier).dp(2, BigNumber.ROUND_CEIL).toString(),
-        amount: new BigNumber(value).dp(currentDecimals, BigNumber.ROUND_CEIL).toString(),
+        fiatAmount: new BigNumber(value)
+          .times(multiplier)
+          .dp(2, BigNumber.ROUND_CEIL)
+          .toString(),
+        amount: value,
       })
     } else {
       this.setState({
-        fiatAmount: new BigNumber(value).dp(2, BigNumber.ROUND_CEIL).toString(),
-        amount: new BigNumber(value).div(multiplier).dp(currentDecimals, BigNumber.ROUND_CEIL).toString(),
+        fiatAmount: value,
+        amount: new BigNumber(value)
+          .div(multiplier)
+          .dp(currentDecimals, BigNumber.ROUND_CEIL)
+          .toString(),
       })
     }
   }
@@ -385,25 +385,25 @@ export default class InvoiceModal extends React.Component<InvoiceModalProps, Inv
                 <FormattedMessage id="invoiceModal_Amount" defaultMessage="Сумма" />
               </span>
             </FieldLabel>
-              <span styleName="amountTooltip">{
-                new BigNumber(amount).isGreaterThan(0) 
-                  ? selectedValue === currency
-                    ? `~ ${fiatAmount} USD`
-                    : `~ ${amount} ${currency}`
-                  : ''
-                }
-              </span>
-              <Input
-                className={ownStyle.input}
-                placeholder={intl.formatMessage(localeLabel.amountPlaceholder)}
-                onKeyDown={inputReplaceCommaWithDot}
-                pattern="0-9\."
-                withMargin
-                valueLink={selectedValue === currency
-                  ? linked.amount.pipe(this.handleAmount)
-                  : linked.fiatAmount.pipe(this.handleAmount)
-                }
-              />
+            <span styleName="amountTooltip">{
+              new BigNumber(amount).isGreaterThan(0) 
+                ? selectedValue === currency
+                  ? `~ ${fiatAmount} USD`
+                  : `~ ${amount} ${currency}`
+                : ''
+              }
+            </span>
+            <Input
+              className={ownStyle.input}
+              placeholder={intl.formatMessage(localeLabel.amountPlaceholder)}
+              onKeyDown={inputReplaceCommaWithDot}
+              pattern="0-9\."
+              withMargin
+              valueLink={selectedValue === currency
+                ? linked.amount.pipe(this.handleAmount)
+                : linked.fiatAmount.pipe(this.handleAmount)
+              }
+            />
             <CurrencySelect
               label="Cyrrency"
               tooltip="Cyrrency"

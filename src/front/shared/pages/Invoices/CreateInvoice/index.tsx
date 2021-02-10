@@ -31,6 +31,10 @@ type CreateInvoiceProps = {
 })
 @injectIntl
 export default class CreateInvoice extends PureComponent<CreateInvoiceProps> {
+  constructor(props) {
+    super(props)
+  }
+
   async componentDidMount() {
     let {
       match: {
