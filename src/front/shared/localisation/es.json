@@ -4192,7 +4192,7 @@
   },
   {
     "id": "RowHistoryInvoce",
-    "message": "Factura #{number} {contact}",
+    "message": "Factura #{number}",
     "files": [
       "src/front/shared/pages/History/Row/Row.tsx"
     ]

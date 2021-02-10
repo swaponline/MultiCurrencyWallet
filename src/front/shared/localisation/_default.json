@@ -4074,7 +4074,7 @@
   },
   {
     "id": "RowHistoryInvoce",
-    "message": "Инвойс #{number} {contact}",
+    "message": "Инвойс #{number}",
     "files": [
       "src/front/shared/pages/History/Row/Row.tsx"
     ]

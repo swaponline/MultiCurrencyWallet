@@ -159,6 +159,17 @@
   }
 }
 
+.invoiceContactWrapper {
+  font-size: 0.9em;
+  margin-top: 0.2em;
+
+  .contact {
+    color: $notice-color;
+    word-break:break-all;
+    white-space: pre-wrap;
+  }
+}
+
 .addressWrapper {
   display: flex;
   align-items: center;

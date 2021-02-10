@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Fragment } from 'react'
 import { Modal } from 'components/modal'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 
@@ -100,9 +100,6 @@ const langLabels = defineMessages({
 }, { allowMultiple: true })
 
 export default class InfoInvoice extends React.Component<any, any> {
-
-  props: any
-
   constructor(props) {
     super(props)
 
@@ -248,28 +245,13 @@ export default class InfoInvoice extends React.Component<any, any> {
       invoice,
       isCancelled,
       isReady,
-      isPending,
       doshare,
       isShareReady,
-      isReadyShow,
     } = this.state
 
     const {
       invoiceData = false,
     } = (invoice || {})
-
-    const modalProps = (!isFetching && invoiceData) ? {
-      //@ts-ignore
-      name: constants.modals.WithdrawModal,
-      address: '',
-      data: {
-        currency: 'BTC',
-        amount: invoiceData.amount,
-        toAddress: invoiceData.destAddress,
-        invoice: invoiceData,
-      },
-      portalUI: true,
-    } : false
 
     let status = 'pending'
     if (!isFetching && invoiceData) status = invoiceData.status
@@ -395,31 +377,30 @@ export default class InfoInvoice extends React.Component<any, any> {
                         <td styleName="header">
                           <FormattedMessage { ...langLabels.invoiceSender} />
                         </td>
-                        <td styleName="align-right">
-                          {invoiceData.contact}
-                        </td>
                       </tr>
+                      <tr>
+                        <td styleName="responsiveBlock">{invoiceData.contact}</td>
+                      </tr>
+
                       <tr>
                         <td styleName="header" colSpan={2}>
                           <FormattedMessage { ...langLabels.fromAddress } />
                         </td>
                       </tr>
                       <tr>
-                        <td styleName="align-right" colSpan={2}>
-                          <span>{invoiceData.fromAddress} ({invoiceData.invoiceNumber})</span>
+                        <td styleName="responsiveBlock" colSpan={2}>
+                          <span>{invoiceData.fromAddress}({invoiceData.invoiceNumber})</span>
                         </td>
                       </tr>
                       {invoiceData.toAddress && (
                         <>
                           <tr>
                             <td styleName="header" colSpan={2}>
-                              <span><FormattedMessage { ...langLabels.toAddress } /></span>
+                              <FormattedMessage { ...langLabels.toAddress } />
                             </td>
                           </tr>
-                          <tr>
-                            <td styleName="align-right" colSpan={2}>
-                              <span>{invoiceData.toAddress}</span>
-                            </td>
+                          <tr styleName="responsiveBlock">
+                            <td colSpan={2}>{invoiceData.toAddress}</td>
                           </tr>
                         </>
                       )}
@@ -427,12 +408,12 @@ export default class InfoInvoice extends React.Component<any, any> {
                         <>
                           <tr>
                             <td styleName="header" colSpan={2}>
-                              <span><FormattedMessage { ...langLabels.invoiceComment} /></span>
+                              <FormattedMessage { ...langLabels.invoiceComment} />
                             </td>
                           </tr>
                           <tr>
-                            <td styleName="invoiceComment" colSpan={2}>
-                              <span>{invoiceData.label}</span>
+                            <td styleName="responsiveBlock" colSpan={2}>
+                              {invoiceData.label}
                             </td>
                           </tr>
                         </>

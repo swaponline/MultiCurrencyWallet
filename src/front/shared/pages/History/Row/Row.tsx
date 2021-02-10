@@ -270,10 +270,9 @@ export default class Row extends React.PureComponent<any, any> {
                     <Link to={txLink}>
                       <FormattedMessage
                         id="RowHistoryInvoce"
-                        defaultMessage="Invoice #{number} ({contact})"
+                        defaultMessage="Invoice #{number}"
                         values={{
                           number: `${invoiceData.id}-${invoiceData.invoiceNumber}`,
-                          contact: (invoiceData.contact) ? `(${invoiceData.contact})` : ''
                         }}
                       />
                     </Link>
@@ -339,6 +338,12 @@ export default class Row extends React.PureComponent<any, any> {
                 showComment={true}
                 commentKey={hash}
               />
+              {invoiceData && invoiceData.contact &&
+                <div styleName='invoiceContactWrapper'>
+                  Contact: <span styleName='contact'>{invoiceData.contact}</span>
+                </div>
+              }
+
               {txType === 'INVOICE' && direction === 'in' &&
                 <div styleName='addressWrapper'>
                   <FormattedMessage

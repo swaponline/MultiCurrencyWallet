@@ -4190,7 +4190,7 @@
   },
   {
     "id": "RowHistoryInvoce",
-    "message": "Invoice #{number} {contact}",
+    "message": "Invoice #{number}",
     "files": [
       "src/front/shared/pages/History/Row/Row.tsx"
     ]

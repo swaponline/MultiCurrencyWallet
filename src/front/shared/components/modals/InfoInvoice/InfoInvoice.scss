@@ -17,11 +17,12 @@
   padding: 1rem;
 }
 
-.invoiceComment {
+
+.responsiveBlock {
   white-space: pre-line;
-  text-align: justify;
+  text-align: left;
   padding-top: 0px !important;
-  max-width: 300px;
+  // max-width: 300px;
   word-break: break-all;
 }
 
@@ -132,6 +133,8 @@
 }
 
 .blockCenter__table {
+  max-width: 32em;
+  margin: 0 auto;
   border: 1px solid rgba(142, 154, 163, 0.16);
   box-sizing: border-box;
   box-shadow: 0px 2px 12px rgba(142, 154, 163, 0.08);
@@ -141,12 +144,12 @@
   td.header {
     text-align: left;
     font-weight: bold;
+    font-size: 1.1em;
   }
 
   td.data {
     text-align: justify;
   }
-
 }
 
 .invoiceNumber {
