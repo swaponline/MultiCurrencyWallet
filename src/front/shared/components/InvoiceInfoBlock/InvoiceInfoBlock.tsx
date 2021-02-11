@@ -17,14 +17,14 @@ const InvoiceInfoBlock = (props) => {
   return (
     <div styleName="invoiceInfoBlock">
       <h4>
-        <FormattedMessage id="InvoiceInfoBlockTitle" defaultMessage="Оплата инвойса #{id}-{invoiceNumber}" values={invoiceData} />
+        <FormattedMessage id="InvoiceInfoBlockTitle" defaultMessage="Payment of invoice #{id}-{invoiceNumber}" values={invoiceData} />
       </h4>
       {invoiceData.label &&
         <span>{invoiceData.label}</span>
       }
       {invoiceData.type === 'BTC' &&
         <a href={bip0020link}>
-          <FormattedMessage id="InvoiceInfoBlockOpenDesktopApp" defaultMessage="Оплатить с внешнего кошелька" />
+          <FormattedMessage id="InvoiceInfoBlockOpenDesktopApp" defaultMessage="Pay from an external wallet" />
         </a>
       }
       <hr />

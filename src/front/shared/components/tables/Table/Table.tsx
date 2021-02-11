@@ -24,11 +24,7 @@ type TableState = {
 }
 
 @CSSModules(styles, { allowMultiple: true })
-export default class Table extends React.Component {
-
-  props: TableProps
-  state: TableState
-
+export default class Table extends React.Component<TableProps, TableState> {
   linkOnTableHead: any
   linkOnTableBody: any
   linkOnTable: any

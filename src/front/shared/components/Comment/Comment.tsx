@@ -3,11 +3,9 @@ import CSSModules from 'react-css-modules'
 import moment from 'moment-with-locales-es6'
 import styles from './Comment.scss'
 import { FormattedMessage } from 'react-intl'
-
 import actions from 'redux/actions'
 
-
-interface IWithdrawModalProps {
+type WithdrawModalProps = {
   commentKey?: any,
   isOpen?: boolean,
   label?: string,
@@ -18,18 +16,14 @@ interface IWithdrawModalProps {
   onSubmit?: (text: string) => void
 }
 
-interface IWithdrawModalState {
+type WithdrawModalState = {
   comment?: null | string,
   isOpen?: boolean
 }
 
 
 @CSSModules(styles, { allowMultiple: true })
-export default class CommentRow extends React.PureComponent<any, any> {
-
-  props: IWithdrawModalProps
-  state: IWithdrawModalState
-
+export default class CommentRow extends React.PureComponent<WithdrawModalProps, WithdrawModalState> {
   commentTextarea: any
 
   constructor(props) {
@@ -41,15 +35,15 @@ export default class CommentRow extends React.PureComponent<any, any> {
     }
   }
 
-  submitComment = (e, props) => {
-    if (e) {
-      e.preventDefault()
+  submitComment = (event, props) => {
+    if (event) {
+      event.preventDefault()
     }
 
     const {
       commentKey,
       updateComment = false,
-    } = this.props
+    } = props
 
     const {
       comment
@@ -63,13 +57,6 @@ export default class CommentRow extends React.PureComponent<any, any> {
     if (updateComment) {
       updateComment(comment)
     }
-
-    const {
-      label,
-      date,
-      canEdit = false,
-      showComment = false,
-    } = this.props
 
     this.toggleComment()
   }
@@ -137,11 +124,13 @@ export default class CommentRow extends React.PureComponent<any, any> {
       <div styleName="wrap-block">
         {canEdit && (isOpen ?
           <form styleName="input" onSubmit={(e) => this.submitComment(e, this.props)}>
-            <textarea ref={this.commentTextarea}
-                      styleName="commentTextarea" id="commentTextarea"
-                      onKeyUp={this.handleKeyUp}
-                      onChange={this.changeComment}
-                      value={comment} ></textarea>
+            <textarea 
+              ref={this.commentTextarea}
+              styleName="commentTextarea" id="commentTextarea"
+              onKeyUp={this.handleKeyUp}
+              onChange={this.changeComment}
+              value={comment} 
+            ></textarea>
             <span styleName="submit" onClick={(e) => this.submitComment(e, this.props)}>&#10004;</span>
             <span styleName="close" onClick={() => this.toggleComment()}>&times;</span>
           </form>
