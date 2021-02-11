@@ -4223,14 +4223,14 @@
   },
   {
     "id": "RowHistoryInvoce",
-    "message": "Инвойс #{number} {contact}",
+    "message": "Инвойс #{number}",
     "files": [
       "src/front/shared/pages/History/Row/Row.tsx"
     ]
   },
   {
     "id": "RowHistoryInvoiceAddress",
-    "message": "Адрес для оплаты: {address} ({number})",
+    "message": "Адрес для оплаты:",
     "files": [
       "src/front/shared/pages/History/Row/Row.tsx"
     ]
@@ -5806,24 +5806,15 @@
   },
   {
     "id": "InvoicesView_MetaDescription",
-    "message": "Atomic Swap Wallet allows you to manage and securely exchange. Based on Multi-Sig and Atomic Swap technologies.",
-    "files": [
-      "src/front/shared/pages/Invoices/Invoice/index.tsx"
-    ]
+    "message": "Atomic Swap Wallet allows you to manage and securely exchange. Based on Multi-Sig and Atomic Swap technologies."
   },
   {
     "id": "InvoicesView_MetaTitle",
-    "message": "Swap.Online - Invoice #{number} - Web Wallet with Atomic Swap.",
-    "files": [
-      "src/front/shared/pages/Invoices/Invoice/index.tsx"
-    ]
+    "message": "Swap.Online - Invoice #{number} - Web Wallet with Atomic Swap."
   },
   {
     "id": "InvoicesView_WidgetMetaTitle",
-    "message": "Invoice #{number} - Web Wallet with Atomic Swap.",
-    "files": [
-      "src/front/shared/pages/Invoices/Invoice/index.tsx"
-    ]
+    "message": "Invoice #{number} - Web Wallet with Atomic Swap."
   },
   {
     "id": "InvoicesList_MetaDescription",
@@ -8063,6 +8054,13 @@
     "message": "Для продажи {sellCurrency} вам нужно иметь {ethAmount} ETH для оплаты коммисии",
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+    ]
+  },
+  {
+    "id": "RowHistoryInvoiceContact",
+    "message": "Контакт:",
+    "files": [
+      "src/front/shared/pages/History/Row/Row.tsx"
     ]
   }
 ]

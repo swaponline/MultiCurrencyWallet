@@ -31,9 +31,11 @@ export default class DropDown extends Component<any, any> {
     notIteractable: PropTypes.bool,
   }
 
-  constructor({ initialValue, selectedValue }) {
-    //@ts-ignore
-    super()
+  constructor(props) {
+    super(props)
+
+    const { initialValue, selectedValue } = props
+
     this.state = {
       isToggleActive: false,
       selectedValue: initialValue || selectedValue || 0,
@@ -59,10 +61,6 @@ export default class DropDown extends Component<any, any> {
     this.setState({
       isToggleActive: true,
     })
-  }
-
-  componentDidUpdate(prevProps) {
-    const { isToggleActive } = this.props
   }
 
   toggle = () => {

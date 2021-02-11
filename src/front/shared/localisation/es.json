@@ -4188,14 +4188,14 @@
   },
   {
     "id": "RowHistoryInvoce",
-    "message": "Factura #{number} {contact}",
+    "message": "Factura #{number}",
     "files": [
       "src/front/shared/pages/History/Row/Row.tsx"
     ]
   },
   {
     "id": "RowHistoryInvoiceAddress",
-    "message": "Direccion de pago: {address} ({number})",
+    "message": "Direccion de pago:",
     "files": [
       "src/front/shared/pages/History/Row/Row.tsx"
     ]
@@ -5690,24 +5690,15 @@
   },
   {
     "id": "InvoicesView_MetaDescription",
-    "message": "Billetera de Atomic Swap le permite administrar e intercambiar de forma segura. Basado en tecnología Multifirma y Atomic Swap.",
-    "files": [
-      "src/front/shared/pages/Invoices/Invoice/index.tsx"
-    ]
+    "message": "Billetera de Atomic Swap le permite administrar e intercambiar de forma segura. Basado en tecnología Multifirma y Atomic Swap."
   },
   {
     "id": "InvoicesView_MetaTitle",
-    "message": "Factura #{number} - Billetera Web con Atomic Swap.",
-    "files": [
-      "src/front/shared/pages/Invoices/Invoice/index.tsx"
-    ]
+    "message": "Factura #{number} - Billetera Web con Atomic Swap."
   },
   {
     "id": "InvoicesView_WidgetMetaTitle",
-    "message": "Factura #{number} - Billetera Web con Atomic Swap.",
-    "files": [
-      "src/front/shared/pages/Invoices/Invoice/index.tsx"
-    ]
+    "message": "Factura #{number} - Billetera Web con Atomic Swap."
   },
   {
     "id": "InvoicesList_MetaDescription",
@@ -8015,6 +8006,13 @@
     "message": "Para vender {sellCurrency}, debe tener {ethAmount} ETH para pagar la comisión",
     "files": [
       "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+    ]
+  },
+  {
+    "id": "RowHistoryInvoiceContact",
+    "message": "Contacto:",
+    "files": [
+      "src/front/shared/pages/History/Row/Row.tsx"
     ]
   }
 ]

@@ -95,7 +95,7 @@ export default class ShareLink extends React.Component<any, any> {
               />
             </div>
             {(fullSize) ? (
-              <textarea styleName="shareLinkTextarea" value={link}>{link}</textarea>
+              <textarea styleName="shareLinkTextarea" value={link} readOnly>{link}</textarea>
             ) : (
               <div styleName="HolderLinkShorter">
                 <span>{link}</span>
