@@ -74,20 +74,16 @@ class Swap {
     this.ownerSwap        = this.app.swaps[data.buyCurrency.toUpperCase()]
     this.participantSwap  = this.app.swaps[data.sellCurrency.toUpperCase()]
 
-    let flowKey
+    const flowKey = this.isTurbo ?
+      (this.isMy ? 'TurboMaker' : 'TurboTaker')
+      :
+      `${data.sellCurrency.toUpperCase()}2${data.buyCurrency.toUpperCase()}`
 
-    if (this.isTurbo) {
-      flowKey = this.isMy ? 'TurboMaker' : 'TurboTaker'
-    } else {
-      flowKey = `${data.sellCurrency.toUpperCase()}2${data.buyCurrency.toUpperCase()}`
-    }
-
-    const Flow = this.app.flows[flowKey]
-
-    if (!Flow) {
+    if (!this.app.flows[flowKey]) {
       throw new Error(`Flow with name "${flowKey}" not found in SwapApp.flows`)
     }
 
+    const Flow = this.app.flows[flowKey]
     this.flow = new Flow(this)
 
     this.setupEvents()
@@ -114,7 +110,7 @@ class Swap {
     })
   }
 
-  static read(app, { id }) {
+/* static read(app, { id }) {
     SwapApp.required(app)
 
     if (!id) {
@@ -129,17 +125,20 @@ class Swap {
       return {}
     }
 
-    const Flow = app.flows[`${data.sellCurrency.toUpperCase()}2${data.buyCurrency.toUpperCase()}`]
+    const flowKey = this.isTurbo ?
+      (this.isMy ? 'TurboMaker' : 'TurboTaker')
+      :
+      `${data.sellCurrency.toUpperCase()}2${data.buyCurrency.toUpperCase()}`
 
-    if (!Flow) {
-      throw new Error(`Flow with name "${data.sellCurrency.toUpperCase()}2${data.buyCurrency.toUpperCase()}" not found in SwapApp.flows`)
+    if (!app.flows[flowKey]) {
+      throw new Error(`Flow with name "${flowKey}" not found in SwapApp.flows`)
     }
 
+    const Flow = app.flows[flowKey]
     data.flow = Flow.read(app, data)
 
-    
     return data
-  }
+  }*/
 
   isFinished(): boolean {
     return this.flow.isFinished()
