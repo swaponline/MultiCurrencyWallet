@@ -30,7 +30,6 @@ const SelectGroup = (props) => {
     label,
     disabled,
     className,
-    switchBalanceFunc,
     inputValueLink,
     tooltip,
     balance,
@@ -91,7 +90,6 @@ const SelectGroup = (props) => {
           //name="All"
           label={label}
           tooltip={tooltip}
-          switchBalanceFunc={switchBalanceFunc}
           id={id}
           selectedItemRender={(item) => item.fullTitle}
           styleName="currencySelect"

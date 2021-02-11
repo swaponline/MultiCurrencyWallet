@@ -1,38 +1,29 @@
 import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
-import helpers, { constants } from 'helpers'
-import request from 'common/utils/request'
+import { constants, feedback } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
-import { connect } from 'redaction'
-import config from 'app-config'
-
+import BigNumber from 'bignumber.js'
 import cssModules from 'react-css-modules'
 import styles from '../Styles/default.scss'
 import dropDownStyles from 'components/ui/DropDown/DropDown.scss'
 import ownStyle from './InvoiceModal.scss'
 
-import { BigNumber } from 'bignumber.js'
 import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
-import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
-import ReactTooltip from 'react-tooltip'
 import { isMobile } from 'react-device-detect'
 import QrReader from 'components/QrReader'
 
-// import isCoinAddress from 'swap.app/util/typeforce'
 import typeforce from 'swap.app/util/typeforce'
-import minAmount from 'helpers/constants/minAmount'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import getCurrencyKey from 'helpers/getCurrencyKey'
-
 import { links } from 'helpers'
-import { localisedUrl } from 'helpers/locale'
 import redirectTo from 'helpers/redirectTo'
+
+const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 const localeLabel = defineMessages({
   title: {
@@ -61,16 +52,35 @@ const localeLabel = defineMessages({
   },
 })
 
+type InvoiceModalProps = {
+  name: string
+  intl: IUniversalObj
+  data: IUniversalObj
+}
+
+type InvoiceModalState = {
+  toAddressEnabled: boolean
+  openScanCam: boolean
+  isShipped: boolean
+  selectedValue: string
+  payerAddress: string
+  destination: string
+  address: string
+  contact: string
+  fiatAmount: string
+  amount: string
+  minus: string
+  label: string
+  currentDecimals: number
+  multiplier: BigNumber
+  error: IError | null
+  infoAboutCurrency: IUniversalObj
+  walletData: IUniversalObj
+}
+
 @injectIntl
 @cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
-export default class InvoiceModal extends React.Component<any, any> {
-  props: any
-
-  static propTypes = {
-    name: PropTypes.string,
-    data: PropTypes.object,
-  }
-
+export default class InvoiceModal extends React.Component<InvoiceModalProps, InvoiceModalState> {
   constructor(props) {
     super(props)
 
@@ -80,36 +90,33 @@ export default class InvoiceModal extends React.Component<any, any> {
         currency,
         toAddress,
       },
-      tokenItems,
       payerAddress = false,
     } = props
 
+    const currentDecimals = constants.tokenDecimals[getCurrencyKey(currency, true).toLowerCase()]
     const walletData = actions.core.getWallet({ currency })
-
-    const {
-      infoAboutCurrency,
-      decimals: currentDecimals,
-    } = walletData
-
-    const multiplier =
-      infoAboutCurrency && infoAboutCurrency.price_fiat ? infoAboutCurrency.price_fiat : 1
+    const { infoAboutCurrency } = walletData
+    const multiplier = infoAboutCurrency && infoAboutCurrency.price_fiat 
+      ? infoAboutCurrency.price_fiat
+      : 1
 
     this.state = {
       isShipped: false,
-      payerAddress,
-      openScanCam: '',
-      address: toAddress || '',
+      openScanCam: false,
       toAddressEnabled: !!toAddress,
+      address: toAddress || '',
       destination: address,
-      amount: '',
+      payerAddress,
       minus: '',
       contact: '',
       label: '',
       selectedValue: currency,
+      fiatAmount: '',
+      amount: '',
+      multiplier: new BigNumber(multiplier),
       currentDecimals,
-      error: false,
+      error: null,
       infoAboutCurrency,
-      multiplier,
       walletData,
     }
 
@@ -117,7 +124,7 @@ export default class InvoiceModal extends React.Component<any, any> {
   }
 
   handleSubmit = () => {
-    const { name, data } = this.props
+    const { data } = this.props
     const {
       address,
       amount,
@@ -152,8 +159,8 @@ export default class InvoiceModal extends React.Component<any, any> {
         if (data.onReady instanceof Function) {
           data.onReady()
         }
-      } catch (e) {
-        console.log('error', e)
+      } catch (error) {
+        this.reportError(error)
       }
 
       this.setState({
@@ -162,11 +169,16 @@ export default class InvoiceModal extends React.Component<any, any> {
     })
   }
 
+  reportError = (error) => {
+    feedback.createInvoice.failed(error)
+    console.error(error)
+  }
+
   handleGoToInvoice = (invoiceId) => {
     redirectTo(`${links.invoice}/${invoiceId}/share`)
   }
 
-  addressIsCorrect(otherAddress) {
+  addressIsCorrect(otherAddress = null) {
     const {
       address,
       walletData: {
@@ -192,26 +204,38 @@ export default class InvoiceModal extends React.Component<any, any> {
     }))
   }
 
-  handleDollarValue = (value) => {
-    const { currentDecimals, multiplier } = this.state
+  handleAmount = (value): any => {
+    const {
+      multiplier,
+      currentDecimals,
+      selectedValue,
+      walletData: {
+        currency,
+      },
+    } = this.state
 
-    this.setState({
-      amountUSD: value,
-      amount: value ? (value / multiplier).toFixed(currentDecimals) : '',
-    })
-  }
-
-  handleAmount = (value) => {
-    const { multiplier } = this.state
-
-    this.setState({
-      amountUSD: value ? (value * multiplier).toFixed(2) : '',
-      amount: value,
-    })
-  }
-
-  handleError = (err) => {
-    console.error(err)
+    if (!value) {
+      this.setState({
+        fiatAmount: '',
+        amount: '',
+      })
+    } else if (selectedValue === currency) {
+      this.setState({
+        fiatAmount: new BigNumber(value)
+          .times(multiplier)
+          .dp(2, BigNumber.ROUND_CEIL)
+          .toString(),
+        amount: value,
+      })
+    } else {
+      this.setState({
+        fiatAmount: value,
+        amount: new BigNumber(value)
+          .div(multiplier)
+          .dp(currentDecimals, BigNumber.ROUND_CEIL)
+          .toString(),
+      })
+    }
   }
 
   handleScan = (data) => {
@@ -235,14 +259,11 @@ export default class InvoiceModal extends React.Component<any, any> {
       address,
       destination,
       amount,
-      amountUSD,
+      fiatAmount,
       contact,
-      label,
       isShipped,
-      minus,
       openScanCam,
       error,
-      infoAboutCurrency,
       selectedValue,
       toAddressEnabled,
       walletData: {
@@ -260,7 +281,7 @@ export default class InvoiceModal extends React.Component<any, any> {
       this,
       'address',
       'destination',
-      'amountUSD',
+      'fiatAmount',
       'amount',
       'contact',
       'label'
@@ -284,7 +305,6 @@ export default class InvoiceModal extends React.Component<any, any> {
     ]
 
     const isDisabled =
-      //@ts-ignore
       !amount || isShipped || !destination || !contact || (address && !this.addressIsCorrect())
 
     return (
@@ -296,11 +316,11 @@ export default class InvoiceModal extends React.Component<any, any> {
         {openScanCam && (
           <QrReader
             openScan={this.openScan}
-            handleError={this.handleError}
+            handleError={this.reportError}
             handleScan={this.handleScan}
           />
         )}
-        <div styleName="invoiceModalHolder">
+        <div styleName={`invoiceModalHolder ${isDark ? 'dark' : ''}`}>
           {toAddressEnabled && (
             <div styleName="highLevel">
               <FieldLabel>
@@ -321,8 +341,6 @@ export default class InvoiceModal extends React.Component<any, any> {
                 qr={isMobile}
                 openScan={this.openScan}
               />
-              {/*
-              //@ts-ignore */}
               {address && !this.addressIsCorrect() && (
                 <div styleName="rednote">
                   <FormattedMessage
@@ -367,50 +385,33 @@ export default class InvoiceModal extends React.Component<any, any> {
                 <FormattedMessage id="invoiceModal_Amount" defaultMessage="Сумма" />
               </span>
             </FieldLabel>
-            {selectedValue === currency ? (
-              <>
-                <span styleName="amountTooltip">{amount > 0 ? `~ ${amountUSD} USD` : ''}</span>
-                <Input
-                  withMargin
-                  className={ownStyle.input}
-                  valueLink={linked.amount.pipe(this.handleAmount)}
-                  pattern="0-9\."
-                  placeholder={intl.formatMessage(localeLabel.amountPlaceholder)}
-                  onKeyDown={inputReplaceCommaWithDot}
-                />
-              </>
-            ) : (
-              ''
-            )}
-
-            {selectedValue === 'USD' ? (
-              <>
-                <span styleName="amountTooltip">{amount > 0 ? `~ ${amount} ${currency}` : ''}</span>
-                <Input
-                  withMargin
-                  className={ownStyle.input}
-                  valueLink={linked.amountUSD.pipe(this.handleDollarValue)}
-                  pattern="0-9\."
-                  placeholder={intl.formatMessage(localeLabel.amountPlaceholder)}
-                  onKeyDown={inputReplaceCommaWithDot}
-                />
-              </>
-            ) : (
-              ''
-            )}
-
-            {/*
-            //@ts-ignore */}
+            <span styleName="amountTooltip">{
+              new BigNumber(amount).isGreaterThan(0) 
+                ? selectedValue === currency
+                  ? `~ ${fiatAmount} USD`
+                  : `~ ${amount} ${currency}`
+                : ''
+              }
+            </span>
+            <Input
+              className={ownStyle.input}
+              placeholder={intl.formatMessage(localeLabel.amountPlaceholder)}
+              onKeyDown={inputReplaceCommaWithDot}
+              pattern="0-9\."
+              withMargin
+              valueLink={selectedValue === currency
+                ? linked.amount.pipe(this.handleAmount)
+                : linked.fiatAmount.pipe(this.handleAmount)
+              }
+            />
             <CurrencySelect
-              label="fdsfssf"
-              tooltip="dsfss"
-              id="fdsfs"
+              label="Cyrrency"
+              tooltip="Cyrrency"
+              id="InvoiceModalCurrencySelect"
               className={dropDownStyles.simpleDropdown}
               selectedValue={selectedValue}
               onSelect={this.handleBuyCurrencySelect}
               selectedItemRender={(item) => item.fullTitle}
-              //@ts-ignore
-              isToggleActive
               currencies={curList}
             />
           </div>
@@ -439,7 +440,7 @@ export default class InvoiceModal extends React.Component<any, any> {
               <Input
                 srollingForm={true}
                 valueLink={linked.label}
-                multiline="true"
+                multiline={true}
                 placeholder={intl.formatMessage(localeLabel.labelPlaceholder)}
               />
             </div>

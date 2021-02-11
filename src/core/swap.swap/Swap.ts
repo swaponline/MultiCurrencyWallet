@@ -28,7 +28,7 @@ class Swap {
   waitConfirm: boolean
   events: Events
   room: Room
-  flow: any // @ToDo - FlowType (need add functions to root class)
+  flow: FlowType
 
   constructor(id, app, order?) {
     this.id                     = null
@@ -260,19 +260,19 @@ class Swap {
       // sell UTXO buy AB 
       if (sellModel === COIN_MODEL.UTXO && buyModel === COIN_MODEL.AB) {
         // @ToDo after refactoring use 'request script'
-        this.room.on(`request ${_Sell} script`, () => {
+        this.room.on(`request utxo script`, () => {
           if (this.flow) {
             const {
-              [`${_Sell}ScriptValues`]: scriptValues,
-              [`${_Sell}ScriptCreatingTransactionHash`]: scriptCreatingTransactionHash,
+              utxoScriptValues: scriptValues,
+              utxoScriptCreatingTransactionHash: scriptCreatingTransactionHash,
             } = this.flow.state
             
             if (scriptValues && scriptCreatingTransactionHash) {
               this.room.sendMessage({
-                event:  `create ${_Sell} script`,
+                event:  `create utxo script`,
                 data: {
                   scriptValues,
-                  [`${_Sell}ScriptCreatingTransactionHash`] : scriptCreatingTransactionHash,
+                  utxoScriptCreatingTransactionHash: scriptCreatingTransactionHash,
                 }
               })
             }
@@ -281,11 +281,11 @@ class Swap {
       }
       // sell AB buy UTXO
       if (sellModel === COIN_MODEL.AB && buyModel === COIN_MODEL.UTXO) {
-        this.room.on(`create ${_Buy} script`, (eventData) => {
+        this.room.on(`create utxo script`, (eventData) => {
           if (this.flow) {
             const {
               scriptValues,
-              [`${_Buy}ScriptCreatingTransactionHash`]: scriptCreatingTransactionHash, 
+              utxoScriptCreatingTransactionHash: scriptCreatingTransactionHash, 
             } = eventData
 
             const { step } = this.flow.state
@@ -296,9 +296,9 @@ class Swap {
 
             this.flow.finishStep({
               secretHash: scriptValues.secretHash,
-              [`${_Buy}ScriptValues`]: scriptValues,
-              [`${_Buy}ScriptCreatingTransactionHash`]: scriptCreatingTransactionHash,
-            }, { step: `wait-lock-${_Buy}`, silentError: true })
+              utxoScriptValues: scriptValues,
+              utxoScriptCreatingTransactionHash: scriptCreatingTransactionHash,
+            }, { step: `wait-lock-utxo`, silentError: true })
           }
         })
         // Seller has unconfirmed tx in mem pool

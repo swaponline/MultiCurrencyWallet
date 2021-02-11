@@ -540,12 +540,6 @@ export default class Exchange extends Component<any, any> {
     }
   }
 
-  switchBalance = () => {
-    this.setState({
-      isShowBalance: !this.state.isShowBalance,
-    })
-  }
-
   changeUrl = (sell, buy) => {
     const {
       intl: { locale },
@@ -1455,7 +1449,6 @@ export default class Exchange extends Component<any, any> {
               <div className="data-tut-have_tourDisabled">
                 <SelectGroup
                   activeFiat={activeFiat}
-                  switchBalanceFunc={this.switchBalance}
                   inputValueLink={linked.haveAmount.pipe(this.setAmount)}
                   selectedValue={haveCurrency}
                   onSelect={this.handleSetHaveValue}
@@ -1490,7 +1483,6 @@ export default class Exchange extends Component<any, any> {
                 <SelectGroup
                   activeFiat={activeFiat}
                   dataTut="get"
-                  switchBalanceFunc={this.switchBalance}
                   inputValueLink={linked.getAmount}
                   selectedValue={getCurrency}
                   onSelect={this.handleSetGetValue}

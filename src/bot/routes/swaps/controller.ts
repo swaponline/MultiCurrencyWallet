@@ -60,7 +60,7 @@ const runSwap = (swap) => {
       case "SWAP2USDT":
 
         if ( step == 1 ) swap.flow.sign()
-        if ( step == 3 ) swap.flow.verifyBtcScript()
+        if ( step == 3 ) swap.flow.verifyScript()
 
         if ( step + 1 === swap.flow.steps.length ) {
           console.log(new Date().toISOString(), '[FINISHED] tx', swap.flow.state.btcSwapWithdrawTransactionHash)
@@ -129,11 +129,11 @@ const sign = async (swap) => {
   await until(2, swap)
 }
 
-const verifyBtcScript = async (swap) => {
-  if (swap.flow.state.btcScriptVerified) throw new Error(`Already verified`)
+const verifyScript = async (swap) => {
+  if (swap.flow.state.utxoScriptVerified) throw new Error(`Already verified`)
 
   await until(3, swap)
-  await swap.flow.verifyBtcScript()
+  await swap.flow.verifyScript()
   await until(4, swap)
 }
 
@@ -161,7 +161,7 @@ const tryRefund = async (swap) => {
   } catch (err) {
     if (err.error == '64: non-final. Code:-26')
       err.message =
-        `Can't be mined until lockTime = ${swap.flow.state.btcScriptValues.lockTime}, now = ${Date.now()/1000}, secondsLeft = ${Math.ceil(swap.flow.state.btcScriptValues.lockTime - Date.now()/1000)}`
+        `Can't be mined until lockTime = ${swap.flow.state.utxoScriptValues.lockTime}, now = ${Date.now()/1000}, secondsLeft = ${Math.ceil(swap.flow.state.utxoScriptValues.lockTime - Date.now()/1000)}`
 
     throw err
   }
@@ -178,8 +178,8 @@ const refund = (req, res) => {
       res.json({ status: 'refund', result })
     } catch (err) {
       if (err.error == '64: non-final. Code:-26') {
-        const { usdtScriptValues, btcScriptValues } = swap.flow.state
-        const scriptValues = usdtScriptValues || btcScriptValues
+        const { usdtScriptValues, utxoScriptValues } = swap.flow.state
+        const scriptValues = usdtScriptValues || utxoScriptValues
 
         err.description =
           `Can't be mined until lockTime = ${scriptValues.lockTime}, now = ${Date.now()/1000}, secondsLeft = ${Math.ceil(scriptValues.lockTime - Date.now()/1000)}`
@@ -262,7 +262,7 @@ export {
   withSwap,
   sign,
   submitSecret,
-  verifyBtcScript,
+  verifyScript,
   syncBalance,
   tryWithdraw,
 
