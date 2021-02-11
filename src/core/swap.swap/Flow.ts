@@ -21,11 +21,14 @@ class Flow {
     isFinished?: boolean
     isSwapTimeout?: boolean
 
-    isSignFetching: boolean
-    isMeSigned: boolean
+    isSignFetching?: boolean
+    isMeSigned?: boolean
 
     // Turbo swaps state
-    // ...
+
+    isBalanceFetching: boolean,
+    isBalanceEnough: boolean,
+
 
     // Atomic swaps state
     // -- AB-UTXO
@@ -41,9 +44,9 @@ class Flow {
     utxoFundError?: string
 
     // --- UTXO-AB/AB-UTXO equals states
-    utxoScriptValues: any
-    utxoScriptVerified: boolean
-    utxoScriptCreatingTransactionHash: string
+    utxoScriptValues?: any
+    utxoScriptVerified?: boolean
+    utxoScriptCreatingTransactionHash?: string
 
     secret?: string
     isParticipantSigned?: boolean
@@ -70,7 +73,14 @@ class Flow {
       isSignFetching: false,
       isMeSigned: false,
       /** -------------- Turbo Swaps States ----------------- **/
-      // ....
+
+      //isParticipantSigned: false,
+
+      isBalanceFetching: false,
+      isBalanceEnough: true,
+
+      //isStoppedSwap: false,
+      //isFinished: false,
 
       /** -------------- Atomic Swaps States ---------------- **/
       ...{
