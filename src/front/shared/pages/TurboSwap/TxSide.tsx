@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from 'react'
 
 import cssModules from 'react-css-modules'
-import styles from './Side.scss'
+import styles from './TxSide.scss'
 
 
 import { injectIntl, FormattedMessage } from 'react-intl'
@@ -10,7 +10,8 @@ import { ITurboSwapConditions, TurboSwapStep } from 'common/domain/swap'
 import Address from 'components/ui/Address/Address'
 import { AddressFormat } from 'domain/address'
 
-interface ISide {
+
+interface ITxSide {
   //peerId: string,
   title: string,
   isTitleHighlighted?: boolean
@@ -21,7 +22,7 @@ interface ISide {
 
 //@injectIntl
 @cssModules(styles, { allowMultiple: true })
-export default class Side extends PureComponent<ISide, {}> {
+export default class TxSide extends PureComponent<ITxSide, {}> {
 
   constructor() {
     //@ts-ignore
@@ -32,7 +33,7 @@ export default class Side extends PureComponent<ISide, {}> {
     const { /*peerId,*/ title, isTitleHighlighted, address } = this.props
 
     return (
-      <div styleName="side">
+      <div styleName="txSide">
         <div styleName={`title ${isTitleHighlighted ? 'highlighted' : ''}`}>
           {title}{isTitleHighlighted}
         </div>

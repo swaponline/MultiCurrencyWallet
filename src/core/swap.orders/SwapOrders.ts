@@ -60,7 +60,13 @@ const checkIncomeOrderFormat = (order) => {
 const checkIncomeOrderOwner = ({ owner: { peer } }, fromPeer) =>
   peer === fromPeer
 
-const visibleMakersWhitelist: string[] = [] // any maker if empty
+
+const visibleMakersWhitelist: string[] = [
+  // any maker will be allowed if the list is empty
+  // add peer ids:
+  // 'Q...',
+  'QmQNFe3C3jsP8vC6DjBRCMdtxpkJzXXTzUBggm4EwECMpC',
+]
 
 const checkIncomeOrderWhitelisted = ({ owner: { peer } }) => {
   return !visibleMakersWhitelist.length || visibleMakersWhitelist.includes(peer)

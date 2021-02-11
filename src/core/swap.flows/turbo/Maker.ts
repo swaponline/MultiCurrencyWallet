@@ -7,19 +7,26 @@ import { BigNumber } from 'bignumber.js'
 export default class TurboMaker extends Flow {
   /* former BTC2ETH */
 
-  _flowName: string
-  ethSwap: any
-  btcSwap: any
-  state: any
+  _flowName = 'TurboMaker'
+  static getName = () => 'TurboMaker'
 
-  static getName() {
-    return 'TurboMaker'
+  //ethSwap: any
+  //btcSwap: any
+
+  state: {
+    step: 0 | 1 | 2 | 3 | 4 | 5 | 6,
+
+    isParticipantSigned: boolean,
+
+    isBalanceFetching: boolean,
+    isBalanceEnough: boolean,
+
+    isStoppedSwap: boolean,
+    isFinished: boolean,
   }
 
   constructor(swap) {
     super(swap)
-
-    this._flowName = 'TurboMaker'
 
     this.stepNumbers = {
       'sign': 1,
@@ -30,28 +37,26 @@ export default class TurboMaker extends Flow {
       'end': 6,
     }
 
-    this.ethSwap = swap.ownerSwap
-    this.btcSwap = swap.participantSwap
+    //this.ethSwap = swap.ownerSwap
+    //this.btcSwap = swap.participantSwap
 
-    if (!this.ethSwap) {
+    /*if (!this.ethSwap) {
       throw new Error('BTC2ETH: "ethSwap" of type object required')
     }
     if (!this.btcSwap) {
       throw new Error('BTC2ETH: "btcSwap" of type object required')
-    }
+    }*/
 
     this.state = {
       step: 0,
-
-      isStoppedSwap: false,
 
       isParticipantSigned: false,
 
       isBalanceFetching: false,
       isBalanceEnough: true,
 
+      isStoppedSwap: false,
       isFinished: false,
-      isSwapExist: false,
     }
 
     super._persistState()
@@ -60,14 +65,23 @@ export default class TurboMaker extends Flow {
 
   _getSteps() {
     const flow = this
+    const room = flow.swap.room
 
     return [
 
       // 1. 'sign'
 
       async () => {
+        console.log('ENTER Maker flow')
+        console.log('this.swap =', this.swap)
+
         //flow.swap.processMetamask()
-        flow.swap.room.once('swap sign', () => {
+
+        room.sendMessage({
+          event: 'request sign',
+        })
+
+        room.once('swap sign', () => {
           const { step } = flow.state
 
           if (step >= 2) {
@@ -76,29 +90,14 @@ export default class TurboMaker extends Flow {
 
           flow.finishStep({
             isParticipantSigned: true,
-          }, { step: 'sign', silentError: true })
-        })
-
-        flow.swap.room.once('swap exists', () => {
-          flow.setState({
-            isSwapExist: true,
-          })
-
-          flow.stopSwapProcess()
-        })
-
-        flow.swap.room.sendMessage({
-          event: 'request sign',
+          }, { step: 'sign' })
         })
       },
 
       // 2. 'check-balance'
 
       async () => {
-
-        // raised
-
-        const { sellAmount } = this.swap
+        /*const { sellAmount } = this.swap
 
         this.setState({
           isBalanceFetching: true,
@@ -125,10 +124,10 @@ export default class TurboMaker extends Flow {
         }
 
         if (isEnoughMoney) {
-          this.finishStep(stateData, { step: 'sync-balance' })
+          this.finishStep(stateData, { step: 'check-balance' })
         } else {
           this.setState(stateData, true)
-        }
+        }*/
       },
 
 
@@ -147,19 +146,19 @@ export default class TurboMaker extends Flow {
       // 5. 'finish'
 
       () => {
-        flow.swap.room.once('swap finished', ({btcSwapWithdrawTransactionHash}) => {
+        /*room.once('swap finished', ({btcSwapWithdrawTransactionHash}) => {
           flow.setState({
             btcSwapWithdrawTransactionHash,
           })
         })
 
-        flow.swap.room.sendMessage({
+        room.sendMessage({
           event: 'request swap finished',
         })
 
         flow.finishStep({
           isFinished: true,
-        }, 'finish')
+        }, 'finish')*/
       },
 
       // 6. 'end': Finished!

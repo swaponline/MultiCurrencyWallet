@@ -12,7 +12,7 @@ class Flow {
   state: {
     // Common swaps state
     step: number
-    isWaitingForOwner: boolean
+    isWaitingForOwner?: boolean
 
     isStoppedSwap?: boolean
     isRefunded?: boolean
@@ -148,37 +148,36 @@ class Flow {
         // TODO how can we don't know who is participant???
         // TODO if there is no participant in `order` then no need to create Flow...
         // if there is no order it orderCollection that means owner is offline, so `swap.owner` will be undefined
-        if (!owner) {
-          flow.setState({
-            isWaitingForOwner: true,
-          })
-
-          this.app.services.room.on('new orders', function ({ orders }) {
-            const order = orders.find(({ id }) => id === orderId)
-
-            if (order) {
-              this.unsubscribe()
-
-              const order = orders.getByKey(orderId)
-
-              // TODO move this to Swap.js
-              //@ts-ignore
-              flow.swap.room = new Room({
-                participantPeer: order.owner.peer,
-              })
-              flow.swap.update({
-                ...order,
-                participant: order.owner,
-              })
-              flow.finishStep({
-                isWaitingForOwner: false,
-              })
-            }
-          })
-        }
-        else {
+        if (owner) {
           flow.finishStep()
         }
+
+        flow.setState({
+          isWaitingForOwner: true,
+        })
+
+        this.app.services.room.on('new orders', function ({ orders }) {
+          const order = orders.find(({ id }) => id === orderId)
+
+          if (order) {
+            this.unsubscribe()
+
+            const order = orders.getByKey(orderId)
+
+            // TODO move this to Swap.js
+            //@ts-ignore
+            flow.swap.room = new Room({
+              participantPeer: order.owner.peer,
+            })
+            flow.swap.update({
+              ...order,
+              participant: order.owner,
+            })
+            flow.finishStep({
+              isWaitingForOwner: false,
+            })
+          }
+        })
       },
     ]
   }

@@ -20,21 +20,20 @@ import { localisedUrl } from 'helpers/locale'
 import feedback from 'shared/helpers/feedback'
 
 import config from 'app-config'
-import Side from './Side'
+import TxSide from './TxSide'
 import Tx from './Tx'
 
 
 import { ITurboSwap, TurboSwapStep, SwapSide, SwapStatus, SwapTxStatus } from 'common/domain/swap'
 
 
-const isDark = localStorage.getItem(constants.localStorage.isDark)
-
 const takerTxHash = '61c975570a624818615adc8c77a756cc003df7e4a66a91fb8a9bff8f926e15b2'
 const makerTxHash = '0xaf8b87662e5fc6824768de522421563799473009c4b34f033831aaeef2e5c7c1'
 
 
 interface ITurboSwapState {
-  swap: ITurboSwap
+  swap: Swap
+  swapDemo: ITurboSwap
 }
 
 @injectIntl
@@ -48,16 +47,16 @@ interface ITurboSwapState {
     activeFiat
   },*/
   pubsubRoom: { peer },
-  //rememberedOrders,
+  rememberedOrders,
 }) => ({
-/*  activeFiat,
-  items: [ethData, btcData, ghostData, nextData],
-  tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
-  currenciesData: [ethData, btcData, ghostData, nextData],
-  tokensData: [...Object.keys(tokensData).map(k => (tokensData[k]))],
-  savedOrders: rememberedOrders.savedOrders,
-  deletedOrders: rememberedOrders.deletedOrders,*/
-  peer,
+  //activeFiat,
+  //items: [ethData, btcData, ghostData, nextData],
+  //tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
+  //currenciesData: [ethData, btcData, ghostData, nextData],
+  //tokensData: [...Object.keys(tokensData).map(k => (tokensData[k]))],
+  //savedOrders: rememberedOrders.savedOrders,
+  //deletedOrders: rememberedOrders.deletedOrders,
+  //peer,
 }))
 @cssModules(styles, { allowMultiple: true })
 export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
@@ -70,8 +69,8 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
     //@ts-ignore
     super()
 
-    const swap: ITurboSwap = {
-      id: '123',
+    const swapDemo: ITurboSwap = {
+      id: '...',
       conditions: {
         mySide: SwapSide.Taker,
         coinA: {
@@ -100,83 +99,51 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
     }
 
     this.state = {
-      swap
+      swap: null,
+      swapDemo,
     }
   }
 
   componentWillMount() {
-/*    const { items, tokenItems, currenciesData, tokensData, intl: { locale }, deletedOrders } = this.props
-    let { match: { params: { orderId } }, history, activeFiat } = this.props
+    const {
+      items,
+      //tokenItems,
+      currenciesData,
+      tokensData,
+      intl: {
+        locale
+      },
+      //deletedOrders
+    } = this.props
 
-    if (!!window.performance && window.performance.navigation.type === 2) {
-      window.location.reload()
-    }
+    let { match: { params: { orderId } }, history, activeFiat } = this.props
 
     if (!orderId) {
       history.push(localisedUrl(links.exchange))
       return
     }
 
-    this.wallets = {}
-    currenciesData.forEach(item => {
-      this.wallets[item.currency] = item.address
-    })
-    tokensData.forEach(item => {
-      this.wallets[item.currency] = item.address
-    })
-
     try {
       const swap = new Swap(orderId, SwapApp.shared())
       console.log('Swap flow:', swap.flow._flowName);
 
-      const ethData = items.filter(item => item.currency === 'ETH')
-      const currencyData = items.concat(tokenItems)
-        .filter(item => item.currency === swap.sellCurrency.toUpperCase())[0]
-      const currencies = [
-        {
-          currency: swap.sellCurrency,
-          amount: swap.sellAmount,
-        },
-        {
-          currency: swap.buyCurrency,
-          amount: swap.buyAmount,
-        },
-      ]
-
-      currencies.forEach(item => {
-        actions.user.getExchangeRate(item.currency, activeFiat.toLowerCase())
-          .then(exRate => {
-            //@ts-ignore
-            const amount = exRate * Number(item.amount)
-
-            if (Number(amount) >= 50) {
-              this.setState(() => ({ isAmountMore: 'enable' }))
-            } else {
-              this.setState(() => ({ isAmountMore: 'disable' }))
-            }
-          })
-      })
+      //const ethData = items.filter(item => item.currency === 'ETH')
 
       this.setState(() => ({
         swap,
-        ethData,
-        currencyData,
-        ethAddress: ethData[0].address,
+        //ethData,
+        //ethAddress: ethData[0].address,
       }))
-
-      // hide my orders
-      // disable for now TODO
-      // actions.core.hideMyOrders()
 
     } catch (error) {
       console.error(error)
-      actions.notifications.show(constants.notifications.ErrorNotification, {
+      /*actions.notifications.show(constants.notifications.ErrorNotification, {
         error: 'Sorry, but this order do not exsit already'
       })
-      this.props.history.push(localisedUrl(links.exchange))
+      this.props.history.push(localisedUrl(links.exchange))*/
     }
-*/
-/*    if (!this.props.savedOrders.includes(orderId)) {
+
+    /*if (!this.props.savedOrders.includes(orderId)) {
       this.setSaveSwapId(orderId)
     }*/
   }
@@ -212,47 +179,47 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
     }))
 
     setTimeout(() => {
-      const swap = {...this.state.swap}
-      swap.takerTx = {
+      const swapDemo = {...this.state.swapDemo}
+      swapDemo.takerTx = {
         status: SwapTxStatus.Pending,
         hash: takerTxHash
       }
       this.setState({
-        swap
+        swapDemo
       })
     }, 3000)
 
     setTimeout(() => {
-      const swap = {...this.state.swap}
-      swap.takerTx = {
+      const swapDemo = {...this.state.swapDemo}
+      swapDemo.takerTx = {
         status: SwapTxStatus.Done,
         hash: takerTxHash
       }
       this.setState({
-        swap
+        swapDemo
       })
     }, 6000)
 
     setTimeout(() => {
-      const swap = {...this.state.swap}
-      swap.makerTx = {
+      const swapDemo = {...this.state.swapDemo}
+      swapDemo.makerTx = {
         status: SwapTxStatus.Pending,
         hash: makerTxHash
       }
       this.setState({
-        swap
+        swapDemo
       })
     }, 9000)
 
     setTimeout(() => {
-      const swap = {...this.state.swap}
-      swap.makerTx = {
+      const swapDemo = {...this.state.swapDemo}
+      swapDemo.makerTx = {
         status: SwapTxStatus.Done,
         hash: makerTxHash
       },
-      swap.status = SwapStatus.Finished
+      swapDemo.status = SwapStatus.Finished
       this.setState({
-        swap
+        swapDemo
       })
     }, 12000)
 
@@ -293,10 +260,12 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
 
 
   render() {
-    const { peer, tokenItems, history, intl: { locale } } = this.props
+    const { peer, /*tokenItems,*/ history, intl: { locale } } = this.props
     const {
-      swap,
+      swapDemo,
     } = this.state
+
+    const swap = swapDemo
 
     return (
       <div styleName="turboSwap">
@@ -310,7 +279,7 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
           }
         </div>
         <div styleName="blockchain">
-          <Side
+          <TxSide
             //peerId={'123'}
             title={'You'}
             isTitleHighlighted={true}
@@ -324,14 +293,14 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
             direction={'right'}
             status={swap.takerTx.status}
           />
-          <Side
+          <TxSide
             //peerId={'1234'}
             title={'Maker'}
             address={swap.conditions.coinA.makerAddress}
           />
         </div>
         <div styleName="blockchain">
-          <Side
+          <TxSide
             //peerId={'123'}
             title={'You'}
             isTitleHighlighted={true}
@@ -345,7 +314,7 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
             direction={'left'}
             status={swap.makerTx.status}
           />
-          <Side
+          <TxSide
             //peerId={'1234'}
             title={'Maker'}
             address={swap.conditions.coinB.makerAddress}

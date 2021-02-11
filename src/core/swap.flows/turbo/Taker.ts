@@ -4,21 +4,29 @@ import { Flow } from 'swap.swap'
 
 
 export default class TurboTaker extends Flow {
-  /* former ETH2BT */
+  /* former ETH2BTC */
 
-  _flowName: string
-  ethSwap: any
-  btcSwap: any
-  state: any
+  _flowName = 'TurboTaker'
+  static getName = () => 'TurboTaker'
 
-  static getName() {
-    return 'TurboTaker'
+  //ethSwap: any
+  //btcSwap: any
+
+  state: {
+    step: 0 | 1 | 2 | 3 | 4 | 5 | 6,
+
+    isSignFetching: boolean,
+    isMeSigned: boolean,
+
+    isBalanceFetching: boolean,
+    isBalanceEnough: boolean,
+
+    isStoppedSwap: boolean,
+    isFinished: boolean,
   }
 
   constructor(swap) {
     super(swap)
-
-    this._flowName = 'TurboTaker'
 
     this.stepNumbers = {
       'sign': 1,
@@ -29,128 +37,88 @@ export default class TurboTaker extends Flow {
       'end': 6
     }
 
-    this.ethSwap = swap.participantSwap
-    this.btcSwap = swap.ownerSwap
+    //this.ethSwap = swap.participantSwap
+    //this.btcSwap = swap.ownerSwap
 
-    if (!this.ethSwap) {
+    /*if (!this.ethSwap) {
       throw new Error('BTC2ETH: "ethSwap" of type object required')
     }
     if (!this.btcSwap) {
       throw new Error('BTC2ETH: "btcSwap" of type object required')
-    }
+    }*/
 
     this.state = {
       step: 0,
 
-      isStoppedSwap: false,
-
-      signTransactionHash: null,
       isSignFetching: false,
       isMeSigned: false,
-
-      targetWallet : null,
 
       isBalanceFetching: false,
       isBalanceEnough: true,
 
+      isStoppedSwap: false,
       isFinished: false,
-      isSwapExist: false,
-
     }
 
-    super._persistState()
-
     const flow = this
+    const room = flow.swap.room
 
-    flow.swap.room.once('request withdraw', () => {
+    room.once('request withdraw', () => {
       flow.setState({
         withdrawRequestIncoming: true,
       })
     })
 
-    flow.swap.room.on('wait btc confirm', () => {
-      flow.setState({
-        waitBtcConfirm: true,
-      })
-    })
-
-    flow.swap.room.on('request eth contract', () => {
-      console.log('Requesting eth contract')
-      const { ethSwapCreationTransactionHash } = flow.state
-
-      if (ethSwapCreationTransactionHash) {
-        console.log('Exists - send hash')
-        flow.swap.room.sendMessage({
-          event: 'create eth contract',
-          data: {
-            ethSwapCreationTransactionHash,
-          },
-        })
-      }
-    })
-
+    super._persistState()
     super._persistSteps()
   }
 
   _getSteps() {
     const flow = this
+    const room = flow.swap.room
 
     return [
 
       // 1. 'sign'
 
       async () => {
+        console.log('ENTER Taker flow')
+        console.log('this.swap =', this.swap)
+
         //flow.swap.processMetamask()
 
-        // raised
+        const { isSignFetching, isMeSigned } = flow.state
 
-        const flow = this
-        const swapExists = await flow._checkSwapAlreadyExists()
-
-        if (swapExists) {
-          flow.swap.room.sendMessage({
-            event: 'swap exists',
-          })
-
-          flow.setState({
-            isSwapExist: true,
-          })
-
-          flow.stopSwapProcess()
-        } else {
-          const { isSignFetching, isMeSigned } = flow.state
-
-          if (isSignFetching || isMeSigned) {
-            return true
-          }
-
-          flow.setState({
-            isSignFetching: true,
-          })
-
-          flow.swap.room.on('request sign', () => {
-            flow.swap.room.sendMessage({
-              event: 'swap sign',
-            })
-          })
-
-          flow.swap.room.sendMessage({
-            event: 'swap sign',
-          })
-
-          flow.finishStep({
-            isMeSigned: true,
-          }, { step: 'sign', silentError: true })
-
+        if (isSignFetching || isMeSigned) {
           return true
         }
+
+        flow.setState({
+          isSignFetching: true,
+        })
+
+        room.on('request sign', () => {
+          room.sendMessage({
+            event: 'swap sign',
+          })
+        })
+
+        room.sendMessage({
+          event: 'swap sign',
+        })
+
+        flow.finishStep({
+          isMeSigned: true,
+        }, { step: 'sign' })
+
+        return true
 
       },
 
       // 2. 'check-balance'
 
       async () => {
-        const { sellAmount } = this.swap
+        /*const { sellAmount } = this.swap
 
         this.setState({
           isBalanceFetching: true,
@@ -167,10 +135,10 @@ export default class TurboTaker extends Flow {
         }
 
         if (isEnoughMoney) {
-          this.finishStep(stateData, { step: 'sync-balance' })
+          this.finishStep(stateData, { step: 'check-balance' })
         } else {
           this.setState(stateData, true)
-        }
+        }*/
       },
 
       // 3. 'send-to-maker'
@@ -182,16 +150,17 @@ export default class TurboTaker extends Flow {
       // 4. 'wait-maker-tx'
 
       () => {
-
+        // draft
+        //room.on(Message.Maker, () => {})
       },
 
       // 5. 'finish'
 
       () => {
-        flow.swap.room.once('request swap finished', () => {
+        /*room.once('request swap finished', () => {
           const { btcSwapWithdrawTransactionHash } = flow.state
 
-          flow.swap.room.sendMessage({
+          room.sendMessage({
             event: 'swap finished',
             data: {
               btcSwapWithdrawTransactionHash,
@@ -201,25 +170,13 @@ export default class TurboTaker extends Flow {
 
         flow.finishStep({
           isFinished: true,
-        }, { step: 'finish' })
+        }, { step: 'finish' })*/
       },
 
       // 6. 'end': Finished!
 
       () => {}
     ]
-  }
-
-
-  _checkSwapAlreadyExists() {
-    const { participant } = this.swap
-
-    const swapData = {
-      ownerAddress: this.app.getMyEthAddress(),
-      participantAddress: this.app.getParticipantEthAddress(this.swap)
-    }
-
-    return this.ethSwap.checkSwapExists(swapData)
   }
 
   stopSwapProcess() {

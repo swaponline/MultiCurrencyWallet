@@ -74,17 +74,18 @@ class Swap {
     this.ownerSwap        = this.app.swaps[data.buyCurrency.toUpperCase()]
     this.participantSwap  = this.app.swaps[data.sellCurrency.toUpperCase()]
 
-    let Flow
+    let flowKey
 
     if (this.isTurbo) {
-      const flowKey = this.isMy ? 'TurboMaker' : 'TurboTaker'
-      Flow = this.app.flows[flowKey]
+      flowKey = this.isMy ? 'TurboMaker' : 'TurboTaker'
     } else {
-      Flow = this.app.flows[`${data.sellCurrency.toUpperCase()}2${data.buyCurrency.toUpperCase()}`]
+      flowKey = `${data.sellCurrency.toUpperCase()}2${data.buyCurrency.toUpperCase()}`
     }
 
+    const Flow = this.app.flows[flowKey]
+
     if (!Flow) {
-      throw new Error(`Flow with name "${data.sellCurrency.toUpperCase()}2${data.buyCurrency.toUpperCase()}" not found in SwapApp.flows`)
+      throw new Error(`Flow with name "${flowKey}" not found in SwapApp.flows`)
     }
 
     this.flow = new Flow(this)
