@@ -899,10 +899,7 @@
   },
   {
     "id": "Share",
-    "message": "Compartir Twitter",
-    "files": [
-      "src/front/shared/pages/Swap/Share/Share.tsx"
-    ]
+    "message": "Compartir Twitter"
   },
   {
     "id": "UsdrToEthToken106",
@@ -2246,7 +2243,6 @@
     "id": "WithdrawModalErrorSend",
     "message": "{errorName} {currency}:{br}{errorMessage}",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
@@ -6817,7 +6813,6 @@
     "id": "walletDidntCreateTitle",
     "message": "Billetera no existe"
   },
-
   {
     "id": "InfoPay_2_copy",
     "message": "han sido transferidos con éxito",
@@ -8006,6 +8001,20 @@
     "message": "No hay suficiente saldo de ethereum para la tarifa del minero",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "CreateOffer_BuyToken_NeedEth",
+    "message": "Para comprar {buyCurrency}, debe tener {ethAmount} ETH para pagar la comisión",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+    ]
+  },
+  {
+    "id": "CreateOffer_SellToken_NeedEth",
+    "message": "Para vender {sellCurrency}, debe tener {ethAmount} ETH para pagar la comisión",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
   }
 ]

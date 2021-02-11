@@ -899,10 +899,7 @@
   },
   {
     "id": "Share",
-    "message": "Udostępnij : Twitter",
-    "files": [
-      "src/front/shared/pages/Swap/Share/Share.tsx"
-    ]
+    "message": "Udostępnij : Twitter"
   },
   {
     "id": "UsdrToEthToken106",
@@ -2246,7 +2243,6 @@
     "id": "WithdrawModalErrorSend",
     "message": "{errorName} {currency}:{br}{errorMessage}",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
@@ -2307,10 +2303,7 @@
   },
   {
     "id": "RowWallet282",
-    "message": "Brak połączenia...",
-    "files": [
-      "src/front/shared/pages/Wallet/Row/Row.tsx"
-    ]
+    "message": "Brak połączenia..."
   },
   {
     "id": "ErrorNotification151",
@@ -3071,10 +3064,7 @@
   },
   {
     "id": "Potwierdzenie14",
-    "message": "Potwierdzenie",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/FirstStep.tsx"
-    ]
+    "message": "Potwierdzenie"
   },
   {
     "id": "completed21",
@@ -4648,7 +4638,7 @@
     "id": "createWallet_customERC20",
     "message": "Własny token",
     "files": [
-      "src/front/shared/pages/CreateWallet/Steps/LogicForSteps.tsx"
+      "src/front/shared/pages/CreateWallet/Steps/StepsWrapper.tsx"
     ]
   },
   {
@@ -7329,10 +7319,7 @@
   },
   {
     "id": "Withdrow171",
-    "message": "Maximum amount you can send is {allowedUsdBalance} USD",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
-    ]
+    "message": "Maximum amount you can send is {allowedUsdBalance} USD"
   },
   {
     "id": "MetamaskNetworkAlert_Message",
@@ -7546,35 +7533,35 @@
     "id": "FeeInfoBlockTotalFee",
     "message": "Total fees you pay:",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockMinerFee",
     "message": "Miner fee:",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockMinerFeeTooltip",
     "message": "Amount of cryptocurrency paid to incentivize miners to confirm your transaction",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockServiceFee",
     "message": "Service fee:",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockServiceFeeConditions",
     "message": "of the transfer amount, but not less than",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
@@ -7959,6 +7946,55 @@
     "message": "Jeśli nie zostaną znalezione żadne oferty, oznacza to, że nie ma użytkowników, którzy opublikowali ofertę, a nie online.",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+    ]
+  },
+  {
+    "id": "CreateOffer_BuyToken_NeedEth",
+    "message": "Aby kupić {buyCurrency}, musisz mieć {ethAmount} ETH, aby zapłacić prowizję",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+    ]
+  },
+  {
+    "id": "CreateOffer_SellToken_NeedEth",
+    "message": "Aby sprzedać {sellCurrency}, musisz mieć {ethAmount} ETH, aby zapłacić prowizję",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+    ]
+  },
+  {
+    "id": "WithdrowBalanceNotEnoughtEthereumBalancePrompt",
+    "message": "Za mało salda ethereum dla opłaty górnika",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "WithdrowBalanceNotEnoughtPrompt",
+    "message": "Niewystarczające saldo do wysłania",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "Confirmation14",
+    "message": "Potwierdzenie",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/FirstStep.tsx"
+    ]
+  },
+  {
+    "id": "Swap_UtxoBroadcastError",
+    "message": "Zamiana wstrzymana, ponieważ transmisja tx zakończyła się błędem \"{error}\"",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "WalletRowNodeIsDownTooltipMessage",
+    "message": "Nie możesz dokonywać transakcji",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   }
 ]

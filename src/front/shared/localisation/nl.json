@@ -2244,7 +2244,6 @@
     "id": "WithdrawModalErrorSend",
     "message": "{errorName} {currency}:{br}{errorMessage}",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
@@ -7232,10 +7231,7 @@
   },
   {
     "id": "Share",
-    "message": "Share Twitter",
-    "files": [
-      "src/front/shared/pages/Swap/Share/Share.tsx"
-    ]
+    "message": "Share Twitter"
   },
   {
     "id": "SwitchLangNL",
@@ -7997,6 +7993,20 @@
     "message": "Niet genoeg ethereum-saldo voor mijnwerkersvergoeding",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "CreateOffer_BuyToken_NeedEth",
+    "message": "Om {buyCurrency} te kopen, moet u {ethAmount} ETH hebben om de commissie te betalen",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+    ]
+  },
+  {
+    "id": "CreateOffer_SellToken_NeedEth",
+    "message": "Om {sellCurrency} te verkopen, moet u {ethAmount} ETH hebben om de commissie te betalen",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
   }
 ]

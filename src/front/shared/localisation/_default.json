@@ -2179,7 +2179,6 @@
     "id": "WithdrawModalErrorSend",
     "message": "{errorName} {currency}:{br}{errorMessage}",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
@@ -5729,10 +5728,7 @@
   },
   {
     "id": "Share",
-    "message": "Share Twitter",
-    "files": [
-      "src/front/shared/pages/Swap/Share/Share.tsx"
-    ]
+    "message": "Share Twitter"
   },
   {
     "id": "InvoiceInfoModal_ButtonShareReady",
@@ -7977,6 +7973,20 @@
     "message": "Not enough ethereum balance for miner fee",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "CreateOffer_BuyToken_NeedEth",
+    "message": "To buy {buyCurrency} you need to have {ethAmount} ETH to pay the commission",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+    ]
+  },
+  {
+    "id": "CreateOffer_SellToken_NeedEth",
+    "message": "To sell {sellCurrency} you need to have {ethAmount} ETH to pay the commission",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
   }
 ]
