@@ -919,7 +919,7 @@ class UTXOBlockchain extends SwapInterface {
 
     flow.finishStep({
       [`is${coin}Withdrawn`]: true,
-    }, { step: `withdraw-${coin}` })
+    }, { step: `withdraw-utxo` })
   }
 }
 
