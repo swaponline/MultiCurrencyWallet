@@ -125,7 +125,7 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
 
     try {
       const swap = new Swap(orderId, SwapApp.shared())
-      console.log('Swap flow:', swap.flow._flowName);
+      console.log(`Front uses flow ${swap.flow._flowName}`);
 
       //const ethData = items.filter(item => item.currency === 'ETH')
 
@@ -320,7 +320,9 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
             address={swap.conditions.coinB.makerAddress}
           />
         </div>
-        {/*JSON.stringify(swap)*/}
+        <code>
+          {JSON.stringify(this.state.swap.flow.state, null, 2)}
+        </code>
       </div>
     )
   }

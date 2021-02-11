@@ -17,6 +17,9 @@ import SwapAuth from 'swap.auth'
 import SwapRoom from 'swap.room'
 import SwapOrders from 'swap.orders'
 import {
+  TurboMaker,
+  TurboTaker,
+
   ETH2BTC,
   BTC2ETH,
   ETHTOKEN2BTC,
@@ -207,6 +210,9 @@ const createSwapApp = async () => {
           )),
       ],
       flows: [
+        TurboMaker,
+        TurboTaker,
+
         ETH2BTC,
         BTC2ETH,
 

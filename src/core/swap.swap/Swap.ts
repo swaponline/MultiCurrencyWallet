@@ -85,6 +85,7 @@ class Swap {
 
     const Flow = this.app.flows[flowKey]
     this.flow = new Flow(this)
+    console.log(`Flow "${flowKey}" created!`)
 
     this.setupEvents()
     // Change destination address on run time
