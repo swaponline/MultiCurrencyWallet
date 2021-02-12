@@ -1,13 +1,19 @@
+label.Switch {
+  margin: 0.5rem 0.5rem;
+
+  &.disabled {
+    opacity: 0.3;
+    filter: grayscale(1);
+    cursor: not-allowed;
+  }
+}
+
 label.Switch > span {
   position: relative;
   padding-left: 3.3em;
   user-select: none;
   height: 20px;
   display: block;
-}
-
-label.Switch {
-  margin: 0.5rem 0.5rem;
 }
 
 label.Switch > input[type='checkbox'] {

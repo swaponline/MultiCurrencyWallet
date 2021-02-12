@@ -24,6 +24,7 @@ import { FormattedMessage } from 'react-intl'
 import minAmountOffer from 'helpers/constants/minAmountOffer'
 import coinsWithDynamicFee from 'helpers/constants/coinsWithDynamicFee'
 import TurboIcon from 'shared/components/ui/TurboIcon/TurboIcon'
+import turboSwap from 'common/helpers/turboSwap'
 
 
 const mathConstants = {
@@ -185,6 +186,10 @@ export default class AddOffer extends Component<any, any> {
   handleBuyCurrencySelect = async ({ value }) => {
     const { buyCurrency, sellCurrency, buyAmount, sellAmount } = this.state
 
+    this.setState({
+      isTurbo: false,
+    })
+
     if (sellCurrency === value) {
       this.switching()
     } else {
@@ -208,6 +213,11 @@ export default class AddOffer extends Component<any, any> {
 
   handleSellCurrencySelect = async ({ value }) => {
     const { buyCurrency, sellCurrency, sellAmount, buyAmount } = this.state
+
+    this.setState({
+      isTurbo: false,
+    })
+
     if (buyCurrency === value) {
       this.switching()
     } else {
@@ -450,6 +460,8 @@ export default class AddOffer extends Component<any, any> {
       ? coinsWithDynamicFee.includes(buyCurrency) ? minimalestAmountForBuy : minAmountOffer[buyCurrency]
       : 0.001
 
+    const isTurboAllowed = turboSwap.isAssetSupported(buyCurrency) && turboSwap.isAssetSupported(sellCurrency)
+
     const isDisabled = !exchangeRate
       || !buyAmount && !sellAmount
       || new BigNumber(sellAmount).isGreaterThan(balance)
@@ -562,7 +574,7 @@ export default class AddOffer extends Component<any, any> {
             <div styleName="toggleText">Atomic swap</div>
             {/*
             //@ts-ignore */}
-            <Toggle checked={isTurbo} onChange={() => this.setState((state) => ({ isTurbo: !state.isTurbo }))} />
+            <Toggle checked={isTurbo} isDisabled={!isTurboAllowed} onChange={() => this.setState((state) => ({ isTurbo: !state.isTurbo }))} />
             <div styleName="toggleText">
               <TurboIcon />
               <span>Turbo swap <sub>α</sub></span>
