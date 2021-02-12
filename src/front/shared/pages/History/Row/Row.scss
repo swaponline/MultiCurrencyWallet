@@ -111,7 +111,7 @@
   font-size: 12px;
   font-weight: bold;
   @include ff;
-  color: #8E9AA3;
+  color: $notice-color;
   white-space: pre-wrap;
   cursor: pointer;
   width: 75%;
@@ -159,21 +159,29 @@
   }
 }
 
-.info {
-  span {
-    position: absolute;
-    font-size: 12px;
-    @include ff-regular;
-    bottom: 20px;
-    left: 24px;
-    color: #8E9AA3;
+.invoiceContactWrapper {
+  font-size: 0.9em;
+  margin-top: 0.2em;
+
+
+  .contact {
+    color: $notice-color;
+    word-break:break-all;
+    white-space: pre-wrap;
   }
 }
 
-.info.noButtons {
-  span {
-    position: static;
-  }
+.addressWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+
+  .requests {
+    margin-left: 0.4em;
+    font-size: 0.9em;
+    color: $notice-color;
+  }  
 }
 
 .comment {
@@ -181,7 +189,7 @@
 }
 
 .btnWrapper {
-  border-top: 1px solid #eee;
+  border-top: 1px solid $pale-color;
   text-align: right;
   height: 40px;
   line-height: 48px;
@@ -193,7 +201,7 @@
   }
 
   button:last-child {
-    color: #1F2D48;
+    color: $indicating-color;
     margin-left: 10px;
   }
 }
@@ -229,17 +237,13 @@
   margin-left: 10px;
 }
 
-.wrapButtonShare {
-  display: inline-block;
-}
-
 tr.historyRow {
   display: block;
   margin-bottom: 10px;
   width: 100%;
   min-height: 64px;
   position: relative;
-  background: #FFFFFF;
+  background: $l-background-elements;
   border: 1px solid rgba(142, 154, 163, 0.16) !important;
   box-shadow: 0px 2px 12px rgba(142, 154, 163, 0.08);
   border-radius: 4px;
@@ -259,8 +263,12 @@ tr.dark {
 
   .historyInfo {
     a {
-      color: white;
+      color: $d-color;
     }
+  }
+
+  .invoiceContactWrapper {
+    color: $d-color;
   }
 }
 
@@ -269,15 +277,6 @@ tr.dark {
 
   span {
     font-size: 10px;
-  }
-}
-
-.historyInvoiceInfo {
-  outline: 1px solid red;
-
-  div {
-    display: block;
-    font-size: 10pt;
   }
 }
 
@@ -290,8 +289,10 @@ tr.dark {
 
 
 @media all and (max-width: 767px) {
-  .info {
-    span {
+  .addressWrapper {
+    font-size: 0.9em;
+
+    .requests {
       display: none;
     }
   }

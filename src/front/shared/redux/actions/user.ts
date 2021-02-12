@@ -319,7 +319,7 @@ const getExchangeRate = (sellCurrency, buyCurrency): Promise<number> => {
 }
 
 const getDemoMoney = process.env.MAINNET ? () => { } : () => {
-  // googe bitcoin (or rinkeby) faucet
+  // googe bitcoin (or ropsten) faucet
   request.get('https://swap.wpmix.net/demokeys.php', {})
     .then((r) => {
       window.localStorage.clear()

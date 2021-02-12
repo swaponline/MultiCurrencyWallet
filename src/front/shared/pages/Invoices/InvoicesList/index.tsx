@@ -2,7 +2,6 @@ import React, { PureComponent, Fragment } from 'react'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
-import Slider from 'pages/Wallet/components/WallerSlider';
 import { withRouter } from 'react-router-dom'
 
 import { links, constants } from 'helpers'
@@ -13,7 +12,7 @@ import styles from 'pages/CurrencyWallet/CurrencyWallet.scss'
 import Row from 'pages/History/Row/Row'
 
 import Table from 'components/tables/Table/Table'
-import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import config from 'helpers/externalConfig'
 import ContentLoader from 'components/loaders/ContentLoader/ContentLoader'
@@ -194,31 +193,15 @@ export default class InvoicesList extends PureComponent<any, any> {
 
   render() {
     let {
-      location,
-      intl,
-      isSigned,
       onlyTable,
-      multisigStatus,
     } = this.props
 
     const {
       isRedirecting,
       items,
-      type,
-      address,
     } = this.state
 
     if (isRedirecting) return null
-
-    let settings = {
-      infinite: true,
-      speed: 500,
-      autoplay: true,
-      autoplaySpeed: 6000,
-      fade: true,
-      slidesToShow: 1,
-      slidesToScroll: 1
-    };
 
     const invoicesTable = (
       <div styleName={`currencyWalletActivity ${isDark ? 'darkActivity' : ''}`}>

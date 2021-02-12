@@ -93,7 +93,7 @@ const _loadDefaultEnv = () => {
     PORT: '3000',
     IP: '0.0.0.0',
     MAX_PARALLEL_SWAPS: '3',
-    WEB3_TESTNET_PROVIDER: 'https://rinkeby.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c',
+    WEB3_TESTNET_PROVIDER: 'https://ropsten.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c',
     WEB3_MAINNET_PROVIDER: 'https://mainnet.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c',
   }
   Object.keys(defaultConfig).forEach((key) => {

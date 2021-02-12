@@ -481,7 +481,6 @@ export default class AddOffer extends Component<any, any> {
 
         <SelectGroup
           isDark={isDark}
-          switchBalanceFunc={this.switching}
           label={<FormattedMessage id="addoffer381" defaultMessage="Sell" />}
           tooltip={<FormattedMessage id="partial462" defaultMessage="The amount you have on swap.online or an external wallet that you want to exchange" />}
           inputValueLink={linked.sellAmount.pipe(this.handleSellAmountChange)}
@@ -502,7 +501,6 @@ export default class AddOffer extends Component<any, any> {
 
         <SelectGroup
           isDark={isDark}
-          switchBalanceFunc={this.switching}
           label={<FormattedMessage id="addoffer396" defaultMessage="Buy" />}
           tooltip={<FormattedMessage id="partial478" defaultMessage="The amount you will receive after the exchange" />}
           inputValueLink={linked.buyAmount.pipe(this.handleBuyAmountChange)}

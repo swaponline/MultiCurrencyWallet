@@ -4,11 +4,12 @@
   position: relative;
   border-radius: 6px;
   box-shadow: rgba(#000, 0.08) 0 3px 9px 0;
+  border: 1px solid transparent;
 
   &.active {
     width: 100%;
-    border: 1px solid #000;
-    z-index: 11111111;
+    border-color: $indicating-color;
+    z-index: 4;
     background: #fff;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
     height: max-content;
@@ -42,7 +43,6 @@
       height: 335px;
     }
   }
-
 }
 
 .dark {
@@ -79,23 +79,22 @@
   border-radius: 0 6px 6px 0 !important;
   position: absolute;
   top: 5px;
-  right: 0px;
+  right: 1px; // for border
   box-shadow: none;
   background: transparent;
 
   &.active {
-    top: 80px;
+    top: 70px;
     border: none;
-    height: 165px;
-    width: 170px;
+    width: auto;
+
+    .selectedItem {
+      height: auto;
+    }
   }
 
   .selectedItem {
     @include ff-bold;
-  }
-
-  .fullTitle {
-    display: none;
   }
 
   .select {
@@ -163,14 +162,6 @@
 
 .rangeDown {
   color: $color-f-error;
-}
-
-.currencyLogo {
-  width: 20px;
-  position: absolute;
-  left: 22px;
-  top: 50%;
-  transform: translateY(-50%);
 }
 
 .shortTitle {
@@ -299,12 +290,6 @@
 
   &:hover {
     background-color: #f7f7f7;
-  }
-}
-
-.invoiceCurrencySelect {
-  .dropDown {
-    display: none;
   }
 }
 

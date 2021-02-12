@@ -74,11 +74,11 @@ type WithdrawModalState = {
   comment?: string
   ownTx: string
   selectedValue: string
+  fiatAmount: string
+  amount: string
   
   currentDecimals: number
-  fiatAmount?: number
   btcFeeRate: number
-  amount: number
   txSize: null | number
   
   devError: IError | null
@@ -196,7 +196,8 @@ export default class WithdrawModal extends React.Component<any, any> {
       usedAdminFee,
       openScanCam: '',
       address: toAddress ? toAddress : '',
-      amount: amount ? amount : '',
+      fiatAmount: '',
+      amount: '',
       selectedItem,
       isEthToken,
       currentDecimals,
@@ -299,13 +300,14 @@ export default class WithdrawModal extends React.Component<any, any> {
     if (isSmsProtected || isPinProtected) method = `send_2fa`
 
     const BYTE_IN_KB = 1024
+    const numAmount = Number(amount) || 0
 
     try {
       const { feeRate, txSize, fee } = await helpers.btc.estimateFeeValue({
         method,
         speed: 'fast',
         address,
-        amount,
+        amount: numAmount,
         moreInfo: true,
       })
       const feeSatByte = new BigNumber(feeRate).dividedBy(BYTE_IN_KB).dp(0, BigNumber.ROUND_CEIL).toNumber()
@@ -698,9 +700,10 @@ export default class WithdrawModal extends React.Component<any, any> {
       ? new BigNumber(usedAdminFee.fee).dividedBy(ONE_HUNDRED_PERCENT).multipliedBy(amount)
       : new BigNumber(0)
 
-    newServiceFeeSize = amount > 0 && newServiceFeeSize.isGreaterThan(fees.adminFeeSize)
-      ? newServiceFeeSize
-      : fees.adminFeeSize
+    newServiceFeeSize = new BigNumber(amount).isGreaterThan(0) 
+      && newServiceFeeSize.isGreaterThan(fees.adminFeeSize)
+        ? newServiceFeeSize
+        : fees.adminFeeSize
     
     this.setState((state) => ({
       fees: {
@@ -843,11 +846,11 @@ export default class WithdrawModal extends React.Component<any, any> {
       },
       balanceDesktop: {
         id: 'Withdraw_BalanceDesktop',
-        defaultMessage: '{amount} {currency} будет отправленно',
+        defaultMessage: '{amount} {currency} will be send',
       },
       ownTxPlaceholder: {
         id: 'withdrawOwnTxPlaceholder',
-        defaultMessage: 'Если оплатили с другого источника',
+        defaultMessage: 'If paid from another source',
       },
     })
 
@@ -869,7 +872,7 @@ export default class WithdrawModal extends React.Component<any, any> {
               id="Withdrow213"
               defaultMessage="Please note: Fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction"
               values={{
-                minAmount: <span>{isEthToken ? minAmount.eth : fees.total}</span>,
+                minAmount: <span>{isEthToken ? minAmount.eth : fees.total.toNumber()}</span>,
                 br: <br />,
                 data: `${dataCurrency}`,
               }}
@@ -880,7 +883,7 @@ export default class WithdrawModal extends React.Component<any, any> {
         <div style={{ marginBottom: '40px' }}>
           <div styleName="customSelectContainer">
             <FieldLabel>
-              <FormattedMessage id="Withdrow559" defaultMessage="Отправить с кошелька " />
+              <FormattedMessage id="Withdrow559" defaultMessage="Send from wallet " />
             </FieldLabel>
             <CurrencyList
               {...this.props}
@@ -956,7 +959,7 @@ export default class WithdrawModal extends React.Component<any, any> {
           </div>
           {/* why style ? see tip for max button */}
           <p style={usedAdminFee ? { right: '10px' } : null} styleName='balance'>
-            {amount > 0 && criptoCurrencyHaveInfoPrice && (
+            {new BigNumber(amount).isGreaterThan(0) && criptoCurrencyHaveInfoPrice && (
               <FormattedMessage
                 {...labels[
                   selectedValue !== activeFiat
@@ -968,10 +971,9 @@ export default class WithdrawModal extends React.Component<any, any> {
                     : `balanceDesktop`
                 ]}
                 values={{
-                  amount:
-                    selectedValue !== activeFiat
-                      ? new BigNumber(fiatAmount).dp(2, BigNumber.ROUND_CEIL).toNumber()
-                      : new BigNumber(amount).dp(6, BigNumber.ROUND_CEIL).toNumber(),
+                  amount: selectedValue !== activeFiat
+                    ? new BigNumber(fiatAmount).dp(2, BigNumber.ROUND_CEIL).toNumber()
+                    : new BigNumber(amount).dp(6, BigNumber.ROUND_CEIL).toNumber(),
                   currency: selectedValue !== activeFiat ? activeFiat : activeCriptoCurrency.toUpperCase(),
                 }}
               />
