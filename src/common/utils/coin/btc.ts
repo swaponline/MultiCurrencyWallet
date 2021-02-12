@@ -459,7 +459,8 @@ const checkWithdraw = (options) => {
       name: `bitpay`,
     },
   }).then(async (txs: any) => {
-    if ((txs.length > 0)
+    // has two or more txs on script
+    if ((txs.length > 1)
       && txs[0].mintTxid
       && txs[0].spentTxid
     ) {

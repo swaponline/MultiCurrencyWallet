@@ -442,7 +442,7 @@ export default class SwapComponent extends PureComponent<any, any> {
       const isOtherSideRefunded = await swap.flow.checkOtherSideRefund()
       if (isOtherSideRefunded) {
         this.setState(() => ({
-          continueSwap: false,
+          otherSideRefunded: true,
         }))
       }
     }
