@@ -73,6 +73,7 @@ export default class TurboMaker extends Flow {
 
       async () => {
         console.log('ENTER Maker flow')
+        console.log('step 1')
         console.log('this.swap =', this.swap)
 
         //flow.swap.processMetamask()
@@ -97,6 +98,8 @@ export default class TurboMaker extends Flow {
       // 2. 'check-balance'
 
       async () => {
+        console.log('step 2')
+        console.log('this.swap =', this.swap)
         /*const { sellAmount } = this.swap
 
         this.setState({
@@ -128,6 +131,7 @@ export default class TurboMaker extends Flow {
         } else {
           this.setState(stateData, true)
         }*/
+        return true
       },
 
 

@@ -83,6 +83,7 @@ export default class TurboTaker extends Flow {
 
       async () => {
         console.log('ENTER Taker flow')
+        console.log('step 1')
         console.log('this.swap =', this.swap)
 
         //flow.swap.processMetamask()
@@ -112,12 +113,13 @@ export default class TurboTaker extends Flow {
         }, { step: 'sign' })
 
         return true
-
       },
 
       // 2. 'check-balance'
 
       async () => {
+        console.log('step 2')
+        console.log('this.swap =', this.swap)
         /*const { sellAmount } = this.swap
 
         this.setState({
@@ -139,6 +141,7 @@ export default class TurboTaker extends Flow {
         } else {
           this.setState(stateData, true)
         }*/
+        return true
       },
 
       // 3. 'send-to-maker'

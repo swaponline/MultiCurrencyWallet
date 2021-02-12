@@ -262,66 +262,71 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
   render() {
     const { peer, /*tokenItems,*/ history, intl: { locale } } = this.props
     const {
-      swapDemo,
+      swapDemo, // todo: remove
+      swap,
     } = this.state
 
-    const swap = swapDemo
+    const myAddressSend = 'mySend'
+    const myAddressReceive = 'myReceive'
+    const participantAddressSend = 'prSend'
+    const participantAddressReceive = 'prReveive'
+
+    //const isToken = helpers.ethToken.isEthToken({ name: currency })
+    //swap.participant[currency].address
 
     return (
       <div styleName="turboSwap">
-        <h1 styleName="pageTitle">Turbo swap #{swap.id}</h1>
-        <div styleName={`swapStatus ${swap.status}`}>
-          {swap.status == SwapStatus.Pending &&
+        <h1 styleName="pageTitle">Turbo swap #{swapDemo.id}</h1>
+        <div styleName={`swapStatus ${swapDemo.status}`}>
+          {swapDemo.status == SwapStatus.Pending &&
             <span>Pending...</span>
           }
-          {swap.status == SwapStatus.Finished &&
+          {swapDemo.status == SwapStatus.Finished &&
             <span>Finished!</span>
           }
         </div>
         <div styleName="blockchain">
           <TxSide
-            //peerId={'123'}
-            title={'You'}
-            isTitleHighlighted={true}
-            address={swap.conditions.coinA.takerAddress}
+            title={swap.isMy ? 'Taker' : 'You'}
+            isTitleHighlighted={!swap.isMy}
+            address={swap.isMy ? participantAddressSend : myAddressSend}
           />
           <Tx
-            amount={swap.conditions.coinA.amount}
-            ticker={swap.conditions.coinA.ticker}
-            id={swap.takerTx.hash}
+            amount={swap.isMy ? swap.sellAmount : swap.buyAmount}
+            ticker={swap.isMy ? swap.sellCurrency : swap.buyCurrency}
+            id={swapDemo.takerTx.hash}
             url={'https://google.com'}
             direction={'right'}
-            status={swap.takerTx.status}
+            status={swapDemo.takerTx.status}
           />
           <TxSide
-            //peerId={'1234'}
-            title={'Maker'}
-            address={swap.conditions.coinA.makerAddress}
+            title={swap.isMy ? 'You' : 'Maker'}
+            isTitleHighlighted={swap.isMy}
+            address={swap.isMy ? myAddressReceive : participantAddressReceive}
           />
         </div>
         <div styleName="blockchain">
           <TxSide
-            //peerId={'123'}
-            title={'You'}
-            isTitleHighlighted={true}
-            address={swap.conditions.coinB.takerAddress}
+            title={swap.isMy ? 'Taker' : 'You'}
+            isTitleHighlighted={!swap.isMy}
+            address={swap.isMy ? participantAddressReceive : myAddressReceive}
           />
           <Tx
-            amount={swap.conditions.coinB.amount}
-            ticker={swap.conditions.coinB.ticker}
-            id={swap.makerTx.hash}
+            amount={swap.isMy ? swap.buyAmount : swap.sellAmount}
+            ticker={swap.isMy ? swap.buyCurrency : swap.sellCurrency}
+            id={swapDemo.makerTx.hash}
             url={'https://google.com'}
             direction={'left'}
-            status={swap.makerTx.status}
+            status={swapDemo.makerTx.status}
           />
           <TxSide
-            //peerId={'1234'}
-            title={'Maker'}
-            address={swap.conditions.coinB.makerAddress}
+            title={swap.isMy ? 'You' : 'Maker'}
+            isTitleHighlighted={swap.isMy}
+            address={swap.isMy ? myAddressSend : participantAddressSend}
           />
         </div>
         <code>
-          {JSON.stringify(this.state.swap.flow.state, null, 2)}
+          {JSON.stringify(swap.flow.state, null, 2)}
         </code>
       </div>
     )

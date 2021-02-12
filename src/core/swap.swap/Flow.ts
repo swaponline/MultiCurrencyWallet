@@ -29,7 +29,6 @@ class Flow {
     isBalanceFetching: boolean,
     isBalanceEnough: boolean,
 
-
     // Atomic swaps state
     // -- AB-UTXO
     participantHasLockedUTXO?: boolean
@@ -72,15 +71,11 @@ class Flow {
 
       isSignFetching: false,
       isMeSigned: false,
-      /** -------------- Turbo Swaps States ----------------- **/
 
-      //isParticipantSigned: false,
+      /** -------------- Turbo Swaps States ----------------- **/
 
       isBalanceFetching: false,
       isBalanceEnough: true,
-
-      //isStoppedSwap: false,
-      //isFinished: false,
 
       /** -------------- Atomic Swaps States ---------------- **/
       ...{
