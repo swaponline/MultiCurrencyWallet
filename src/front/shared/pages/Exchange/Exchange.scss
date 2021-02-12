@@ -232,6 +232,22 @@
   margin-bottom: -10px;
 }
 
+.swapTypeSelector {
+  margin-top: 1em;
+  margin-bottom: 1em;
+
+  .toggle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.5em;
+  }
+
+  .toggleText {
+    display: flex;
+    align-items: center;
+  }
+}
 
 .errors {
   margin: 2em 0;

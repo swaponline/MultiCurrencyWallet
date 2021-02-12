@@ -38,6 +38,10 @@ import NetworkStatus from 'components/NetworkStatus/NetworkStatus'
 import Orders from './Orders/Orders'
 import metamask from 'helpers/metamask'
 
+import turboSwap from 'common/helpers/turboSwap'
+import Toggle from 'components/controls/Toggle/Toggle'
+import TurboIcon from 'shared/components/ui/TurboIcon/TurboIcon'
+
 import { getPairFees } from 'helpers/getPairFees'
 import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
 
@@ -112,6 +116,8 @@ type ExchangeState = {
 
   fromAddress: Address
   toAddress: Address
+
+  isTurbo: boolean
 }
 
 const allowedCoins = [
@@ -206,7 +212,7 @@ export default class Exchange extends Component<any, any> {
   scrollTrigger: any // undefined | ?
   wallets: any // undefined | ?
 
-  static getDerivedStateFromProps({ orders, match: { params } }, { haveCurrency, getCurrency }) {
+  static getDerivedStateFromProps({ orders, match: { params } }, { haveCurrency, getCurrency, isTurbo }) {
     if (!Array.isArray(orders)) {
       return
     }
@@ -215,7 +221,8 @@ export default class Exchange extends Component<any, any> {
       (order) =>
         !order.isMy &&
         order.sellCurrency === getCurrency.toUpperCase() &&
-        order.buyCurrency === haveCurrency.toUpperCase()
+        order.buyCurrency === haveCurrency.toUpperCase() &&
+        Boolean(order.isTurbo) === Boolean(isTurbo)
     )
 
     return {
@@ -268,6 +275,7 @@ export default class Exchange extends Component<any, any> {
 
     const haveType = this.getDefaultWalletForCurrency(haveCurrency.toUpperCase())
     const getType = this.getDefaultWalletForCurrency(getCurrency.toUpperCase())
+
     this.state = {
       isToken: false,
       dynamicFee: 0,
@@ -296,6 +304,7 @@ export default class Exchange extends Component<any, any> {
       haveBalance: false,
       fromAddress: this.makeAddressObject(haveType, haveCurrency.toUpperCase()),
       toAddress: this.makeAddressObject(getType, getCurrency.toUpperCase()),
+      isTurbo: false,
       redirectToSwap: null,
     }
 
@@ -1318,6 +1327,7 @@ export default class Exchange extends Component<any, any> {
       pairFees,
       balances,
       haveBalance,
+      isTurbo,
     } = this.state
 
     const sellCoin = haveCurrency.toUpperCase()
@@ -1403,6 +1413,16 @@ export default class Exchange extends Component<any, any> {
 
     const sellTokenFullName = this.getCoinFullName(sellCoin)
     const buyTokenFullName = this.getCoinFullName(buyCoin)
+
+    const isTurboAllowed = (
+      turboSwap.isAssetSupported(buyCoin) &&
+      turboSwap.isAssetSupported(sellCoin) &&
+      // temporarily: no external addresses support at the turboswaps-alpha stage
+      // see https://github.com/swaponline/MultiCurrencyWallet/issues/3875
+      fromAddress.type === AddressType.Internal &&
+      toAddress.type === AddressType.Internal
+    )
+
 
     const isPrice = oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && !isNonOffers
 
@@ -1504,6 +1524,19 @@ export default class Exchange extends Component<any, any> {
                 hasError={false}
                 onChange={(addrData) => this.applyAddress(AddressRole.Receive, addrData)}
               />
+            </div>
+          </div>
+
+          <div styleName="swapTypeSelector">
+            <div styleName="toggle"> 
+              <div styleName="toggleText">Atomic swap</div>
+              {/*
+              //@ts-ignore */}
+              <Toggle checked={isTurbo} isDisabled={!isTurboAllowed} onChange={() => this.setState((state) => ({ isTurbo: !state.isTurbo }))} />
+              <div styleName="toggleText">
+                <TurboIcon />
+                <span>Turbo swap <sub>α</sub></span>
+              </div>
             </div>
           </div>
 

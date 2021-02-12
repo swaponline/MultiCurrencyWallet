@@ -14,7 +14,7 @@
     ]
   },
   "scripts": {
-    "common:test": "tsc ./src/common/tests/tests.ts",
+    "common:test": "tsc ./src/common/tests/tests.ts --noEmit",
     "common:example:send": "node ./src/common/examples/send.js",
     "common:example:unspents": "node ./src/common/examples/unspents.js",
     "core:test": "DEBUG=swap.core* jest src/core/tests/*.test.js",
