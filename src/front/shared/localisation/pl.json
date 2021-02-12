@@ -7207,7 +7207,7 @@
   },
   {
     "id": "Swap_NeedEthFee",
-    "message": "You must have at least {sellFee} {sellCoin} and {buyFee} {buyCoin} on your balance to pay the miner commission",
+    "message": "You must have at least {buyFee} {buyCoin} on your balance to pay the miner commission",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
@@ -7941,14 +7941,14 @@
   },
   {
     "id": "WithdrowBalanceNotEnoughtEthereumBalancePrompt",
-    "message": "Not enough ethereum balance for miner fee",
+    "message": "Za mało salda ethereum dla opłaty górnika",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
   },
   {
     "id": "WithdrowBalanceNotEnoughtPrompt",
-    "message": "Not enough balance to send",
+    "message": "Niewystarczające saldo do wysłania",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
     ]
@@ -7962,23 +7962,37 @@
   },
   {
     "id": "Confirmation14",
-    "message": "Confirmation",
+    "message": "Potwierdzenie",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/FirstStep.tsx"
     ]
   },
   {
     "id": "Swap_UtxoBroadcastError",
-    "message": "Swap paused because broadcast tx ended with error \"{error}\"",
+    "message": "Zamiana wstrzymana, ponieważ transmisja tx zakończyła się błędem \"{error}\"",
     "files": [
       "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
     ]
   },
   {
     "id": "WalletRowNodeIsDownTooltipMessage",
-    "message": "You can not perform transactions",
+    "message": "Nie możesz dokonywać transakcji",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "CreateOffer_BuyToken_NeedEth",
+    "message": "Aby kupić {buyCurrency}, musisz mieć {ethAmount} ETH, aby zapłacić prowizję",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+    ]
+  },
+  {
+    "id": "CreateOffer_SellToken_NeedEth",
+    "message": "Aby sprzedać {sellCurrency}, musisz mieć {ethAmount} ETH, aby zapłacić prowizję",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
   }
 ]

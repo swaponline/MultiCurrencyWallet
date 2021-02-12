@@ -611,14 +611,24 @@ export default class Exchange extends Component<any, any> {
     const { pairFees, balances } = this.state
 
     const isSellToken = helpers.ethToken.isEthToken({ name: sellCurrency })
+    const isBuyToken = helpers.ethToken.isEthToken({ name: buyCurrency })
 
     let balanceIsOk = true
+    let needEthFee = false
     if (
       isSellToken &&
       (new BigNumber(balance).isLessThan(amount) ||
         new BigNumber(balances.ETH).isLessThan(pairFees.byCoins.ETH.fee))
-    )
+    ) {
       balanceIsOk = false
+    }
+    if (
+      isBuyToken &&
+      (new BigNumber(balances.ETH).isLessThan(pairFees.byCoins.ETH.fee))
+    ) {
+      balanceIsOk = false
+      needEthFee = true
+    }
     // UTXO
     if (
       pairFees.byCoins[sellCurrency.toUpperCase()] &&
@@ -650,24 +660,22 @@ export default class Exchange extends Component<any, any> {
             defaultMessage="Please top up your balance before you start the swap."
           />
           <br />
-          {isSellToken && (
+          {(isSellToken || (isBuyToken && needEthFee)) && (
             <FormattedMessage
               id="Swap_NeedEthFee"
-              defaultMessage="На вашем балансе должно быть не менее {sellFee} {sellCoin} и {buyFee} {buyCoin} для оплаты коммисии майнера"
+              defaultMessage="На вашем балансе должно быть не менее {buyFee} {buyCoin} для оплаты коммисии майнера"
               values={{
-                sellFee,
-                sellCoin,
                 buyFee,
                 buyCoin,
               }}
             />
           )}
-          {!isSellToken && (
+          {!isSellToken && !needEthFee && (
             <FormattedMessage
               id="Swap_NeedMoreAmount"
               defaultMessage="На вашем балансе должно быть не менее {amount} {currency}. {br}Коммисия майнера {sellFee} {sellCoin} и {buyFee} {buyCoin}"
               values={{
-                amount,
+                amount: amount.toNumber(),
                 currency: sellCurrency.toUpperCase(),
                 sellFee,
                 sellCoin,

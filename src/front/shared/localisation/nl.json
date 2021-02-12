@@ -7233,7 +7233,7 @@
   },
   {
     "id": "Swap_NeedEthFee",
-    "message": "U moet ten minste {sellFee} {sellCoin} en {buyFee} {buyCoin} op uw saldo hebben om de mijnwerkerscommissie te betalen",
+    "message": "U moet ten minste {buyFee} {buyCoin} op uw saldo hebben om de mijnwerkerscommissie te betalen",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
@@ -7984,6 +7984,20 @@
     "message": "Niet genoeg ethereum-saldo voor mijnwerkersvergoeding",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "CreateOffer_BuyToken_NeedEth",
+    "message": "Om {buyCurrency} te kopen, moet u {ethAmount} ETH hebben om de commissie te betalen",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+    ]
+  },
+  {
+    "id": "CreateOffer_SellToken_NeedEth",
+    "message": "Om {sellCurrency} te verkopen, moet u {ethAmount} ETH hebben om de commissie te betalen",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
   },
   {

@@ -200,7 +200,7 @@ export default class EthTokenToUTXO extends Component<any, any> {
                     : (
                       <SwapProgress
                         flow={flow}
-                        name="EthTokensToGhost"
+                        name="EthTokenToBtcLike"
                         swap={swap}
                         tokenItems={tokenItems}
                         history={history}
