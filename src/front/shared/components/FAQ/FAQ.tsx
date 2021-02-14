@@ -48,7 +48,9 @@ const FAQ = (props) => {
     }
 
     fetchFees()
-    return () => _mounted = false
+    return () => {
+      _mounted = false
+    }
   });
 
 
