@@ -148,9 +148,6 @@ const getConfig = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, .
           NETWORK,
         }),
       }),
-      /*config.network === 'mainnet'
-        ? new UsdtSwap(config.usdtSwap())
-        : null,*/
       
       // flows for swap
       /*
