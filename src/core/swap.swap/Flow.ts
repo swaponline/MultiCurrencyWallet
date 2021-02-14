@@ -114,10 +114,6 @@ class Flow {
         ...state,
       }
     }
-
-    this.swap.room.on('persist state', (values) => {
-      this.setState(values, true)
-    })
   }
 
   _persistSteps() {
@@ -247,17 +243,6 @@ class Flow {
     }
 
     this.swap.events.dispatch('state update', this.state, values)
-  }
-
-  sendMessageAboutClose() {
-    this.swap.room.sendMessage({
-      event: 'swap was canceled',// for front
-    })
-
-    this.swap.room.sendMessage({
-      event: 'swap was canceled for core',
-    })
-    console.warn(`swap ${this.swap.id} was stoped`)
   }
 }
 

@@ -73,7 +73,6 @@ const getConfig = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, .
       web3,
       bitcoin,
       next,
-      // bcash,
       storage,
       sessionStorage,
       coininfo: {
