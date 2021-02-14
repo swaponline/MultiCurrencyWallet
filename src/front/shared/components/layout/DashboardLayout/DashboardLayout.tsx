@@ -1,5 +1,4 @@
-//@ts-nocheck
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, ReactNode } from 'react'
 import { withRouter } from 'react-router-dom'
 import cssModules from 'react-css-modules'
 import { connect } from 'redaction'
@@ -7,7 +6,7 @@ import { constants } from 'helpers'
 import { getActivatedCurrencies } from 'helpers/user'
 import config from 'app-config'
 import actions from 'redux/actions'
-import { FormattedMessage, injectIntl } from 'react-intl'
+import { FormattedMessage } from 'react-intl'
 import { isMobile } from 'react-device-detect'
 
 import cx from 'classnames'
@@ -18,10 +17,19 @@ import { ModalConductorProvider } from 'components/modal'
 
 import styles from './styles.scss'
 
+
 const isWidgetBuild = config && config.isWidget
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
-const NewDesignLayout = (props) => {
+type NewDesignLayoutProps = {
+  hiddenCoinsList: string[]
+  activeFiat: string
+  page: 'history' | 'invoices'
+  children?: ReactNode,
+  BalanceForm: ReactNode
+}
+
+const NewDesignLayout = (props: NewDesignLayoutProps) => {
   const { hiddenCoinsList, activeFiat, children, page } = props
 
   const balanceRef = React.useRef(null) // Create a ref object
@@ -55,7 +63,7 @@ const NewDesignLayout = (props) => {
     isMnemonicSaved: mnemonic === `-`,
   })
 
-  const { enabledCurrencies, infoAboutCurrency } = commonState
+  const { enabledCurrencies } = commonState
 
   let btcBalance = 0
   let fiatBalance = 0
@@ -152,7 +160,7 @@ const NewDesignLayout = (props) => {
           >
             {showSweepBanner && (
               <p styleName="sweepInfo">
-                <Button blue onClick={this.handleMakeSweep}>
+                <Button blue /*onClick={this.handleMakeSweep}*/>
                   <FormattedMessage id="SweepBannerButton" defaultMessage="Done" />
                 </Button>
                 <FormattedMessage
@@ -260,4 +268,4 @@ export default connect(
       modals,
     }
   }
-)(injectIntl(withRouter(cssModules(NewDesignLayout, styles, { allowMultiple: true }))))
+)(cssModules(NewDesignLayout, styles, { allowMultiple: true }))
