@@ -134,14 +134,14 @@ class SocketBot {
           return
 
         default:
-          const { isEthWithdrawn, isBtcWithdrawn, isFinished } = swap.flow
+          const { isEthWithdrawn, isbtcWithdrawn, isFinished } = swap.flow
 
-          if (isFinished || isEthWithdrawn && isBtcWithdrawn) {
+          if (isFinished || isEthWithdrawn && isbtcWithdrawn) {
             clearInterval(update)
             console.log(`[SWAP] finished ${id}`)
           }
 
-          if (isEthWithdrawn || isBtcWithdrawn) {
+          if (isEthWithdrawn || isbtcWithdrawn) {
             const { btcSwapWithdrawTransactionHash, ethSwapWithdrawTransactionHash } = swap.flow
 
             setTimeout(() => {

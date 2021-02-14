@@ -899,10 +899,7 @@
   },
   {
     "id": "Share",
-    "message": "Udostępnij : Twitter",
-    "files": [
-      "src/front/shared/pages/Swap/Share/Share.tsx"
-    ]
+    "message": "Udostępnij : Twitter"
   },
   {
     "id": "UsdrToEthToken106",
@@ -2246,7 +2243,6 @@
     "id": "WithdrawModalErrorSend",
     "message": "{errorName} {currency}:{br}{errorMessage}",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
@@ -2307,10 +2303,7 @@
   },
   {
     "id": "RowWallet282",
-    "message": "Brak połączenia...",
-    "files": [
-      "src/front/shared/pages/Wallet/Row/Row.tsx"
-    ]
+    "message": "Brak połączenia..."
   },
   {
     "id": "ErrorNotification151",
@@ -3071,10 +3064,7 @@
   },
   {
     "id": "Potwierdzenie14",
-    "message": "Potwierdzenie",
-    "files": [
-      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/FirstStep.tsx"
-    ]
+    "message": "Potwierdzenie"
   },
   {
     "id": "completed21",
@@ -4199,14 +4189,14 @@
   },
   {
     "id": "RowHistoryInvoce",
-    "message": "Invoice #{number} {contact}",
+    "message": "Invoice #{number}",
     "files": [
       "src/front/shared/pages/History/Row/Row.tsx"
     ]
   },
   {
     "id": "RowHistoryInvoiceAddress",
-    "message": "Payment address: {address} ({number})",
+    "message": "Payment address:",
     "files": [
       "src/front/shared/pages/History/Row/Row.tsx"
     ]
@@ -4610,14 +4600,14 @@
   },
   {
     "id": "InvoiceInfoBlockOpenDesktopApp",
-    "message": "Оплатить с внешнего кошелька",
+    "message": "Zapłać z zewnętrznego portfela",
     "files": [
       "src/front/shared/components/InvoiceInfoBlock/InvoiceInfoBlock.tsx"
     ]
   },
   {
     "id": "InvoiceInfoBlockTitle",
-    "message": "Оплата инвойса #{id}-{invoiceNumber}",
+    "message": "Płatność faktury #{id}-{invoiceNumber}",
     "files": [
       "src/front/shared/components/InvoiceInfoBlock/InvoiceInfoBlock.tsx"
     ]
@@ -4648,7 +4638,7 @@
     "id": "createWallet_customERC20",
     "message": "Własny token",
     "files": [
-      "src/front/shared/pages/CreateWallet/Steps/LogicForSteps.tsx"
+      "src/front/shared/pages/CreateWallet/Steps/StepsWrapper.tsx"
     ]
   },
   {
@@ -5745,24 +5735,15 @@
   },
   {
     "id": "InvoicesView_MetaDescription",
-    "message": "Atomic Swap Wallet allows you to manage and securely exchange. Based on Multi-Sig and Atomic Swap technologies.",
-    "files": [
-      "src/front/shared/pages/Invoices/Invoice/index.tsx"
-    ]
+    "message": "Atomic Swap Wallet allows you to manage and securely exchange. Based on Multi-Sig and Atomic Swap technologies."
   },
   {
     "id": "InvoicesView_MetaTitle",
-    "message": "Invoice #{number} - Web Wallet with Atomic Swap.",
-    "files": [
-      "src/front/shared/pages/Invoices/Invoice/index.tsx"
-    ]
+    "message": "Invoice #{number} - Web Wallet with Atomic Swap."
   },
   {
     "id": "InvoicesView_WidgetMetaTitle",
-    "message": "Invoice #{number} - Web Wallet with Atomic Swap.",
-    "files": [
-      "src/front/shared/pages/Invoices/Invoice/index.tsx"
-    ]
+    "message": "Invoice #{number} - Web Wallet with Atomic Swap."
   },
   {
     "id": "InvoicesList_MetaDescription",
@@ -7226,7 +7207,7 @@
   },
   {
     "id": "Swap_NeedEthFee",
-    "message": "You must have at least {sellFee} {sellCoin} and {buyFee} {buyCoin} on your balance to pay the miner commission",
+    "message": "You must have at least {buyFee} {buyCoin} on your balance to pay the miner commission",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
@@ -7329,10 +7310,7 @@
   },
   {
     "id": "Withdrow171",
-    "message": "Maximum amount you can send is {allowedUsdBalance} USD",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
-    ]
+    "message": "Maximum amount you can send is {allowedUsdBalance} USD"
   },
   {
     "id": "MetamaskNetworkAlert_Message",
@@ -7350,7 +7328,7 @@
   },
   {
     "id": "MetamaskNetworkAlert_NetworkTestnet",
-    "message": "Test network (Rinkeby)",
+    "message": "Test network (Ropsten)",
     "files": [
       "src/front/shared/containers/App/App.tsx"
     ]
@@ -7546,35 +7524,35 @@
     "id": "FeeInfoBlockTotalFee",
     "message": "Total fees you pay:",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockMinerFee",
     "message": "Miner fee:",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockMinerFeeTooltip",
     "message": "Amount of cryptocurrency paid to incentivize miners to confirm your transaction",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockServiceFee",
     "message": "Service fee:",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
     "id": "FeeInfoBlockServiceFeeConditions",
     "message": "of the transfer amount, but not less than",
     "files": [
-      "src/front/shared/components/FeeInfoBlock/FeeInfoBlock.tsx"
+      "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
     ]
   },
   {
@@ -7959,6 +7937,62 @@
     "message": "Jeśli nie zostaną znalezione żadne oferty, oznacza to, że nie ma użytkowników, którzy opublikowali ofertę, a nie online.",
     "files": [
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
+    ]
+  },
+  {
+    "id": "WithdrowBalanceNotEnoughtEthereumBalancePrompt",
+    "message": "Za mało salda ethereum dla opłaty górnika",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "WithdrowBalanceNotEnoughtPrompt",
+    "message": "Niewystarczające saldo do wysłania",
+    "files": [
+      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "RowHistoryInvoiceContact",
+    "message": "Kontakt:",
+    "files": [
+      "src/front/shared/pages/History/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "Confirmation14",
+    "message": "Potwierdzenie",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapList/steps/FirstStep.tsx"
+    ]
+  },
+  {
+    "id": "Swap_UtxoBroadcastError",
+    "message": "Zamiana wstrzymana, ponieważ transmisja tx zakończyła się błędem \"{error}\"",
+    "files": [
+      "src/front/shared/pages/Swap/UTXOSwap/SwapProgress/SwapProgress.tsx"
+    ]
+  },
+  {
+    "id": "WalletRowNodeIsDownTooltipMessage",
+    "message": "Nie możesz dokonywać transakcji",
+    "files": [
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
+    ]
+  },
+  {
+    "id": "CreateOffer_BuyToken_NeedEth",
+    "message": "Aby kupić {buyCurrency}, musisz mieć {ethAmount} ETH, aby zapłacić prowizję",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+    ]
+  },
+  {
+    "id": "CreateOffer_SellToken_NeedEth",
+    "message": "Aby sprzedać {sellCurrency}, musisz mieć {ethAmount} ETH, aby zapłacić prowizję",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
     ]
   }
 ]

@@ -18,15 +18,10 @@ export default class Debug extends Component<any, any> {
       flow: {
         state: flowState,
         state: {
-          // @ToDo - will be universaly after NextCoin integration
-          btcScriptValues,
-          ghostScriptValues,
-          nextScriptValues,
+          utxoScriptValues: scriptValues,
         },
       },
     } = this.props
-
-    const scriptValues = btcScriptValues || ghostScriptValues || nextScriptValues
 
     return (
       <div styleName="debug">

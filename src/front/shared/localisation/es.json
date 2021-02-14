@@ -899,10 +899,7 @@
   },
   {
     "id": "Share",
-    "message": "Compartir Twitter",
-    "files": [
-      "src/front/shared/pages/Swap/Share/Share.tsx"
-    ]
+    "message": "Compartir Twitter"
   },
   {
     "id": "UsdrToEthToken106",
@@ -2246,7 +2243,6 @@
     "id": "WithdrawModalErrorSend",
     "message": "{errorName} {currency}:{br}{errorMessage}",
     "files": [
-      "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
@@ -4192,14 +4188,14 @@
   },
   {
     "id": "RowHistoryInvoce",
-    "message": "Factura #{number} {contact}",
+    "message": "Factura #{number}",
     "files": [
       "src/front/shared/pages/History/Row/Row.tsx"
     ]
   },
   {
     "id": "RowHistoryInvoiceAddress",
-    "message": "Direccion de pago: {address} ({number})",
+    "message": "Direccion de pago:",
     "files": [
       "src/front/shared/pages/History/Row/Row.tsx"
     ]
@@ -5694,24 +5690,15 @@
   },
   {
     "id": "InvoicesView_MetaDescription",
-    "message": "Billetera de Atomic Swap le permite administrar e intercambiar de forma segura. Basado en tecnología Multifirma y Atomic Swap.",
-    "files": [
-      "src/front/shared/pages/Invoices/Invoice/index.tsx"
-    ]
+    "message": "Billetera de Atomic Swap le permite administrar e intercambiar de forma segura. Basado en tecnología Multifirma y Atomic Swap."
   },
   {
     "id": "InvoicesView_MetaTitle",
-    "message": "Factura #{number} - Billetera Web con Atomic Swap.",
-    "files": [
-      "src/front/shared/pages/Invoices/Invoice/index.tsx"
-    ]
+    "message": "Factura #{number} - Billetera Web con Atomic Swap."
   },
   {
     "id": "InvoicesView_WidgetMetaTitle",
-    "message": "Factura #{number} - Billetera Web con Atomic Swap.",
-    "files": [
-      "src/front/shared/pages/Invoices/Invoice/index.tsx"
-    ]
+    "message": "Factura #{number} - Billetera Web con Atomic Swap."
   },
   {
     "id": "InvoicesList_MetaDescription",
@@ -6817,7 +6804,6 @@
     "id": "walletDidntCreateTitle",
     "message": "Billetera no existe"
   },
-
   {
     "id": "InfoPay_2_copy",
     "message": "han sido transferidos con éxito",
@@ -7176,7 +7162,7 @@
   },
   {
     "id": "Swap_NeedEthFee",
-    "message": "Debes tener al menos {sellFee} {sellCoin} y {buyFee} {buyCoin} BTC en tu saldo para pagar la comisión de minero ",
+    "message": "Debes tener al menos {buyFee} {buyCoin} en tu saldo para pagar la comisión de minero ",
     "files": [
       "src/front/shared/pages/Exchange/Exchange.tsx"
     ]
@@ -7372,7 +7358,7 @@
   },
   {
     "id": "MetamaskNetworkAlert_NetworkTestnet",
-    "message": "Red de prueba (Rinkeby)",
+    "message": "Red de prueba (Ropsten)",
     "files": [
       "src/front/shared/containers/App/App.tsx"
     ]
@@ -8006,6 +7992,27 @@
     "message": "No hay suficiente saldo de ethereum para la tarifa del minero",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx"
+    ]
+  },
+  {
+    "id": "CreateOffer_BuyToken_NeedEth",
+    "message": "Para comprar {buyCurrency}, debe tener {ethAmount} ETH para pagar la comisión",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+    ]
+  },
+  {
+    "id": "CreateOffer_SellToken_NeedEth",
+    "message": "Para vender {sellCurrency}, debe tener {ethAmount} ETH para pagar la comisión",
+    "files": [
+      "src/front/shared/components/modals/OfferModal/AddOffer/AddOffer.tsx"
+    ]
+  },
+  {
+    "id": "RowHistoryInvoiceContact",
+    "message": "Contacto:",
+    "files": [
+      "src/front/shared/pages/History/Row/Row.tsx"
     ]
   }
 ]

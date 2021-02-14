@@ -12,18 +12,14 @@ const CurrencySelect = ({
   selectedValue,
   onSelect,
   currencies,
-  name,
-  placeholder,
+  name = '',
+  placeholder = '',
   label,
-  tooltip,
-  styleName,
+  tooltip = '',
   id,
-  switchBalanceFunc,
-  notIteractable,
+  notIteractable = false,
   selectedItemRender,
 }) => {
-  // remove null values in object map
-  const nonNullCurrencies = currencies.filter(currency => !!currency !== false)
   // TODO: Add debug logger message to see if some currency have been dropped
   const defaultRenderSelected = (item) => <Option {...item} />
   const usedSelectedItemRender = (selectedItemRender || defaultRenderSelected)
@@ -32,7 +28,6 @@ const CurrencySelect = ({
       className={className}
       placeholder={placeholder}
       items={currencies}
-      switchBalanceFunc={switchBalanceFunc}
       selectedValue={selectedValue}
       selectedItemRender={usedSelectedItemRender}
       itemRender={item => <Option {...item} />}

@@ -78,7 +78,7 @@ export default class UTXOToEth extends Component<any, any> {
       1: 'sign',
       2: 'submit-secret',
       3: 'sync-balance',
-      4: 'lock-ghost',
+      4: 'lock-utxo',
       5: 'wait-lock-eth',
       6: 'withdraw-eth',
       7: 'finish',

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
-import shortid from 'shortid';
 import { constants } from 'helpers'
 import cssModules from 'react-css-modules'
 import dots from './images/dots.svg'
@@ -82,7 +81,7 @@ export default class DropdownMenu extends Component<Props, any> {
 							<div key={index} styleName="dropdownMenuItem">
 								<button 
 									disabled={item.disabled}
-									key={shortid.generate()}
+									key={index}
 									type="button"
 									onClick={() => this.handleItemClick(item.action)}
 								>

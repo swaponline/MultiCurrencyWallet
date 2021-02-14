@@ -1,14 +1,16 @@
 import debug from 'debug'
-import SwapApp from 'swap.app'
+import SwapApp, { util } from 'swap.app'
 import Room from './Room'
+import Swap from './Swap'
 
 
 class Flow {
-
-  swap: any
-  steps: any
-  app: any
+  _flowName: string
+  swap: Swap
+  steps: Function[]
+  app: SwapApp
   stepNumbers: any
+  isTakerMakerModel: boolean = false
   state: {
     // Common swaps state
     step: number
@@ -17,18 +19,36 @@ class Flow {
     isStoppedSwap?: boolean
     isRefunded?: boolean
     isFinished?: boolean
+    isSwapTimeout?: boolean
 
+    isSignFetching: boolean
+    isMeSigned: boolean
     // Torbo swaps state
     // ...
 
     // Atomic swaps state
     // -- AB-UTXO
     participantHasLockedUTXO?: boolean
+    secretHash?: string
+    requireWithdrawFee?: boolean
+    requireWithdrawFeeSended?: boolean
     // -- UTXO-AB
     isUTXOScriptOk?: boolean
     waitUnlockUTXO?: boolean
+    withdrawRequestAccepted?: boolean
 
     utxoFundError?: string
+
+    // --- UTXO-AB/AB-UTXO equals states
+    utxoScriptValues: any
+    utxoScriptVerified: boolean
+    utxoScriptCreatingTransactionHash: string
+
+    secret?: string
+    isParticipantSigned?: boolean
+    scriptAddress?: string
+    scriptBalance?: number
+    isEthContractFunded?: boolean
   }
 
   constructor(swap) {
@@ -42,7 +62,12 @@ class Flow {
       step: 0,
       isWaitingForOwner: false,
       isStoppedSwap: false,
+      isSwapTimeout: false,
+      isRefunded: false,
+      isFinished: false,
 
+      isSignFetching: false,
+      isMeSigned: false,
       /** -------------- Turbo Swaps States ----------------- **/
       // ....
 
@@ -53,12 +78,18 @@ class Flow {
         participantHasLockedUTXO: false,
         // Script charged, confirmed and checked - next step - charge AB contract
         isUTXOScriptOk: false,
+        utxoScriptValues: null,
+        utxoScriptVerified: false,
+        utxoScriptCreatingTransactionHash: null,
       },
       ...{
         /** UTXO-AB **/
         // We are have locked txs in mem-pool
         waitUnlockUTXO: false,
         utxoFundError: null,
+        utxoScriptValues: null,
+        utxoScriptVerified: false,
+        utxoScriptCreatingTransactionHash: null,
       },
       ...{
         /** UTXO-UTXO **/
@@ -71,13 +102,21 @@ class Flow {
     this._attachSwapApp(swap.app)
   }
 
-  _attachSwapApp(app) {
+  isTaker(): boolean {
+    return !this.isMaker()
+  }
+
+  isMaker(): boolean {
+    return this.swap.isMy
+  }
+
+  _attachSwapApp(app: SwapApp) {
     SwapApp.required(app)
 
     this.app = app
   }
 
-  static read(app, { id }) {
+  static read(app: SwapApp, { id }) {
     SwapApp.required(app)
 
     if (!id) {
@@ -88,12 +127,19 @@ class Flow {
     return app.env.storage.getItem(`flow.${id}`)
   }
 
-  _isFinished() {
+  _isFinished(): boolean {
     const {
       isStoppedSwap,
       isRefunded,
       isFinished,
     } = this.state
+
+    if (this.swap.checkTimeout(3600)) {
+      this.setState({
+        isStoppedSwap: true,
+        isSwapTimeout: true,
+      }, true)
+    }
 
     return (isStoppedSwap || isRefunded || isFinished || this.swap.checkTimeout(3600))
   }
@@ -244,6 +290,30 @@ class Flow {
 
     this.swap.events.dispatch('state update', this.state, values)
   }
+
+  sendMessageAboutClose() {
+    this.swap.room.sendMessage({
+      event: 'swap was canceled',// for front
+    })
+
+    this.swap.room.sendMessage({
+      event: 'swap was canceled for core',
+    })
+    console.warn(`swap ${this.swap.id} was stoped`)
+  }
+
+  stopSwapProcess() {
+    console.warn('Swap was stopped')
+
+    this.setState({
+      isStoppedSwap: true,
+    }, true)
+  }
+
+  tryRefund(): Promise<any> {
+    return new Promise((resolve) => { resolve(true) })
+  }
+
 }
 
 

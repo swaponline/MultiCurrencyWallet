@@ -68,7 +68,7 @@ export default class SwapComponent extends PureComponent<any, any> {
         flow: {
           state: {
             step,
-            btcScriptValues,
+            utxoScriptValues,
           },
           state: flowState,
         },
@@ -109,7 +109,7 @@ export default class SwapComponent extends PureComponent<any, any> {
           destinationSellAddress,
           owner,
           participant,
-          btcScriptValues
+          utxoScriptValues
         }
         const sendedJSON = JSON.stringify(sendedData)
 
@@ -438,7 +438,7 @@ export default class SwapComponent extends PureComponent<any, any> {
       const isOtherSideRefunded = await swap.flow.checkOtherSideRefund()
       if (isOtherSideRefunded) {
         this.setState(() => ({
-          continueSwap: false,
+          otherSideRefunded: true,
         }))
       }
     }

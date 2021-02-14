@@ -2,7 +2,7 @@ const UTXO_2_AB = (from, to) => ({
   [`sign`]: 1,
   [`submit-secret`]: 2,
   [`sync-balance`]: 3,
-  [`lock-${from}`]: 4,
+  [`lock-utxo`]: 4,
   [`wait-lock-${to}`]: 5,
   [`withdraw-${to}`]: 6,
   [`finish`]: 7,
@@ -13,12 +13,12 @@ const AB_2_AB = UTXO_2_AB
 
 const UTXO_2_UTXO = (from, to) => ({
   [`sign`]: 1,
-  [`wait-lock-${to}`]: 2,
+  [`wait-lock-utxo`]: 2,
   [`verify-script`]: 3,
   [`sync-balance`]: 4,
   [`lock-${from}`]: 5,
   [`wait-withdraw-${from}`]: 6, // aka getSecret
-  [`withdraw-${to}`]: 7,
+  [`withdraw-utxo`]: 7,
   [`finish`]: 8,
   [`end`]: 9
 })
