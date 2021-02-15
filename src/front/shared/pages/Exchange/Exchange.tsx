@@ -12,7 +12,6 @@ import { BigNumber } from 'bignumber.js'
 import { Redirect } from 'react-router-dom'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
-import { isMobile } from 'react-device-detect'
 
 import SelectGroup from './SelectGroup/SelectGroup'
 import { Button } from 'components/controls'
@@ -25,19 +24,15 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import config from 'helpers/externalConfig'
-import SwapApp, { util } from 'swap.app'
+import SwapApp from 'swap.app'
 
-import helpers, { constants, links } from 'helpers'
-import feedback from 'shared/helpers/feedback'
+import helpers, { localStorage, getPairFees, constants, metamask, feedback, links } from 'helpers'
 import { animate } from 'helpers/domUtils'
 import Switching from 'components/controls/Switching/Switching'
 import AddressSelect from './AddressSelect/AddressSelect'
 import { AddressType, AddressRole } from 'domain/address'
 import NetworkStatus from 'components/NetworkStatus/NetworkStatus'
 import Orders from './Orders/Orders'
-import metamask from 'helpers/metamask'
-
-import { getPairFees } from 'helpers/getPairFees'
 import { COIN_DATA, COIN_MODEL, COIN_TYPE } from 'swap.app/constants/COINS'
 
 type ExchangeProps = {
@@ -78,14 +73,14 @@ type ExchangeState = {
   haveFiat: number
   getFiat: number
   maxBuyAmount: BigNumber
-  
+
   getAmount: string
   haveCurrency: string
   haveType: string
   getCurrency: string
   getType: string
   peer: string
-  
+
   extendedControls: boolean
   isLowAmount: boolean
   isToken: boolean
@@ -94,16 +89,14 @@ type ExchangeState = {
   isWaitForPeerAnswer: boolean
   isDeclinedOffer: boolean
   haveBalance: boolean
-  
-  
-  isSearching?: boolean
+
   isNoAnyOrders?: boolean
   isFullLoadingComplite?: boolean
   redirectToSwap?: string
   exHaveRate?: string
   exGetRate?: string
   orderId?: string
-  
+
   balances: any
   pairFees: any
   filteredOrders: IUniversalObj[]
@@ -165,9 +158,7 @@ const bannedPeers = {} // rejected swap peers
 @connect(
   ({
     currencies,
-    addSelectedItems,
     rememberedOrders,
-    addPartialItems,
     history: { swapHistory },
     core: { orders, hiddenCoinsList },
     user: { ethData, btcData, ghostData, nextData, tokensData, activeFiat, ...rest },
@@ -198,20 +189,68 @@ const bannedPeers = {} // rejected swap peers
 )
 @CSSModules(styles, { allowMultiple: true })
 export default class Exchange extends Component<any, any> {
-  
+  /**
+   * @method getDefaultWalletForCurrency
+   * @method getUserDefaultWallets
+   * @method getLinkToDeclineSwap
+   * @method getUserDefaultWallet
+   * @method getCorrectDecline
+   * @method getCoinFullName
+   * @method getFiatBalance
+   * @method getCoinData
+   * @method getBalance
+   *
+   * @method setUserDefaultWallet
+   * @method setAmountOnState
+   * @method setDeclinedOffer
+   * @method setOrderOnState
+   * @method setNoOfferState
+   * @method setAmount
+   * @method setOrders
+   *
+   * @method makeAddressObject
+   * @method fetchPairFeesAndBalances
+   * @method checkBalanceOnAllCurrency
+   * @method rmScrollAdvice
+   * @method checkUrl
+   * @method checkValidUrl
+   * @method changeUrl
+   * @method fetchFiatExRate
+   * @method createOffer
+   * @method checkSwapAllow
+   * @method initSwap
+   * @method openModalDeclineOrders
+   * @method sendRequestForPartial
+   * @method returnNeedCurrency
+   * @method findGoodOrder
+   * @method isPeerBanned
+   * @method banPeer
+   * @method handleSetGetValue
+   * @method handleSetHaveValue
+   * @method applyAddress
+   * @method flipCurrency
+   * @method resetState
+   * @method checkPair
+   * @method chooseCurrencyToRender
+   * @method checkoutLowAmount
+   * @method extendedControlsSet
+   * @method doesComissionPreventThisOrder
+   * @method goDeclimeFaq
+   * @method showIncompleteSwap
+   */
+
   props: ExchangeProps
   state: ExchangeState
-  
-  private _mounted = false
 
+  private _mounted = false
   static defaultProps = {
     orders: [],
   }
-  
+
   timer: boolean
   promoContainer: Element
   fiatRates: { [key: string]: number }
-  onRequestAnswer: (newOrder: { [key: string]: any }, isAccepted: boolean) => void
+  onRequestAnswer: (newOrder: IUniversalObj, isAccepted: boolean) => void
   cacheDynamicFee: any
   scrollTrigger: any // undefined | ?
   wallets: any // undefined | ?
@@ -237,9 +276,7 @@ export default class Exchange extends Component<any, any> {
     super(props)
 
     const {
-      tokensData,
       allCurrencyies,
-      currenciesData,
       match,
       intl: { locale },
       history,
@@ -438,49 +475,48 @@ export default class Exchange extends Component<any, any> {
       () => {
         if (!this._mounted) return
 
-        getPairFees(sellCurrency, buyCurrency)
-          .then(async (pairFees: { [key: string]: any }) => {
-            const buyExRate = await this.fetchFiatExRate(pairFees.buy.coin)
-            const sellExRate = await this.fetchFiatExRate(pairFees.sell.coin)
+        getPairFees(sellCurrency, buyCurrency).then(async (pairFees: { [key: string]: any }) => {
+          const buyExRate = await this.fetchFiatExRate(pairFees.buy.coin)
+          const sellExRate = await this.fetchFiatExRate(pairFees.sell.coin)
 
-            if (!this._mounted) return
-            this.setState(
-              {
-                pairFees: {
-                  ...pairFees,
-                  buyExRate,
-                  sellExRate,
-                },
+          if (!this._mounted) return
+          this.setState(
+            {
+              pairFees: {
+                ...pairFees,
+                buyExRate,
+                sellExRate,
               },
-              async () => {
-                if (!this._mounted) return
-                // After fetching fee - actualize balances
-                const buyWallet = actions.core.getWallet({ currency: buyCurrency })
-                const sellWallet = actions.core.getWallet({ currency: sellCurrency })
-                const feeBuyWallet = actions.core.getWallet({ currency: pairFees.buy.coin })
-                const feeSellWallet = actions.core.getWallet({ currency: pairFees.sell.coin })
+            },
+            async () => {
+              if (!this._mounted) return
+              // After fetching fee - actualize balances
+              const buyWallet = actions.core.getWallet({ currency: buyCurrency })
+              const sellWallet = actions.core.getWallet({ currency: sellCurrency })
+              const feeBuyWallet = actions.core.getWallet({ currency: pairFees.buy.coin })
+              const feeSellWallet = actions.core.getWallet({ currency: pairFees.sell.coin })
 
-                const balances = {}
-                balances[`${buyWallet.currency}`] = await actions.core.fetchWalletBalance(buyWallet)
-                balances[`${sellWallet.currency}`] = await actions.core.fetchWalletBalance(sellWallet)
-                if (balances[`${feeBuyWallet.currency}`] === undefined) {
-                  balances[`${feeBuyWallet.currency}`] = await actions.core.fetchWalletBalance(
-                    feeBuyWallet
-                  )
-                }
-                if (balances[`${feeSellWallet.currency}`] === undefined) {
-                  balances[`${feeSellWallet.currency}`] = await actions.core.fetchWalletBalance(
-                    feeSellWallet
-                  )
-                }
-
-                this.setState({
-                  balances,
-                })
-
-                this.checkBalanceOnAllCurrency()
+              const balances = {}
+              balances[`${buyWallet.currency}`] = await actions.core.fetchWalletBalance(buyWallet)
+              balances[`${sellWallet.currency}`] = await actions.core.fetchWalletBalance(sellWallet)
+              if (balances[`${feeBuyWallet.currency}`] === undefined) {
+                balances[`${feeBuyWallet.currency}`] = await actions.core.fetchWalletBalance(
+                  feeBuyWallet
+                )
               }
-            )
+              if (balances[`${feeSellWallet.currency}`] === undefined) {
+                balances[`${feeSellWallet.currency}`] = await actions.core.fetchWalletBalance(
+                  feeSellWallet
+                )
+              }
+
+              this.setState({
+                balances,
+              })
+
+              this.checkBalanceOnAllCurrency()
+            }
+          )
         })
       }
     )
@@ -619,10 +655,7 @@ export default class Exchange extends Component<any, any> {
     ) {
       balanceIsOk = false
     }
-    if (
-      isBuyToken &&
-      (new BigNumber(balances.ETH).isLessThan(pairFees.byCoins.ETH.fee))
-    ) {
+    if (isBuyToken && new BigNumber(balances.ETH).isLessThan(pairFees.byCoins.ETH.fee)) {
       balanceIsOk = false
       needEthFee = true
     }
@@ -902,10 +935,6 @@ export default class Exchange extends Component<any, any> {
       return
     }
 
-    this.setState(() => ({
-      isSearching: true,
-    }))
-
     const sortedOrders = filteredOrders
       .sort(
         (a, b) =>
@@ -929,7 +958,6 @@ export default class Exchange extends Component<any, any> {
 
     if (didFound) {
       this.setState(() => ({
-        isSearching: false,
         isNoAnyOrders: false,
       }))
     }
@@ -1296,10 +1324,7 @@ export default class Exchange extends Component<any, any> {
       activeFiat,
       currencies,
       addSelectedItems,
-      currenciesData,
-      tokensData,
-      intl: { locale, formatMessage },
-      isOnlyForm,
+      intl: { locale },
       match: {
         params: { linkedOrderId },
       },
@@ -1314,7 +1339,6 @@ export default class Exchange extends Component<any, any> {
       toAddress,
       orderId,
       isNonOffers,
-      isSearching,
       maxAmount,
       exHaveRate,
       exGetRate,
