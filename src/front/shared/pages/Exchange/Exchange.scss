@@ -236,6 +236,12 @@
   margin-top: 1em;
   margin-bottom: 1em;
 
+  &.disabled {
+    opacity: 0.3;
+    filter: grayscale(1);
+    cursor: not-allowed;
+  }
+
   .toggle {
     display: flex;
     justify-content: center;

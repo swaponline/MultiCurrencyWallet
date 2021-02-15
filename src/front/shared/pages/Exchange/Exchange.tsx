@@ -1527,8 +1527,8 @@ export default class Exchange extends Component<any, any> {
             </div>
           </div>
 
-          <div styleName="swapTypeSelector">
-            <div styleName="toggle"> 
+          <div styleName={`swapTypeSelector ${isTurboAllowed ? '' : 'disabled'}`}>
+            <div styleName="toggle">
               <div styleName="toggleText">Atomic swap</div>
               {/*
               //@ts-ignore */}
