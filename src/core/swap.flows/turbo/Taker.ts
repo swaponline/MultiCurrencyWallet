@@ -75,7 +75,8 @@ export default class TurboTaker extends Flow {
 
   _getSteps() {
     const flow = this
-    const room = flow.swap.room
+    const swap = this.swap
+    const room = this.swap.room
 
     return [
 
@@ -84,7 +85,7 @@ export default class TurboTaker extends Flow {
       async () => {
         console.log('ENTER Taker flow')
         console.log('step 1')
-        console.log('this.swap =', this.swap)
+        console.log('this.swap =', swap)
 
         //flow.swap.processMetamask()
 
@@ -119,7 +120,7 @@ export default class TurboTaker extends Flow {
 
       async () => {
         console.log('step 2')
-        console.log('this.swap =', this.swap)
+        console.log('this.swap =', swap)
         /*const { sellAmount } = this.swap
 
         this.setState({
@@ -147,7 +148,9 @@ export default class TurboTaker extends Flow {
       // 3. 'send-to-maker'
 
       () => {
-
+        
+        const to = swap.participant[swap.sellCurrency].address
+        
       },
 
       // 4. 'wait-maker-tx'

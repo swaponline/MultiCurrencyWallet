@@ -65,7 +65,8 @@ export default class TurboMaker extends Flow {
 
   _getSteps() {
     const flow = this
-    const room = flow.swap.room
+    const swap = this.swap
+    const room = this.swap.room
 
     return [
 
@@ -74,7 +75,7 @@ export default class TurboMaker extends Flow {
       async () => {
         console.log('ENTER Maker flow')
         console.log('step 1')
-        console.log('this.swap =', this.swap)
+        console.log('this.swap =', swap)
 
         //flow.swap.processMetamask()
 
@@ -99,7 +100,7 @@ export default class TurboMaker extends Flow {
 
       async () => {
         console.log('step 2')
-        console.log('this.swap =', this.swap)
+        console.log('this.swap =', swap)
         /*const { sellAmount } = this.swap
 
         this.setState({

@@ -260,19 +260,33 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
 
 
   render() {
-    const { peer, /*tokenItems,*/ history, intl: { locale } } = this.props
+    const {
+      peer,
+      /*tokenItems,*/
+      history,
+      intl: { locale }
+    } = this.props
+
     const {
       swapDemo, // todo: remove
       swap,
     } = this.state
 
-    const myAddressSend = 'mySend'
-    const myAddressReceive = 'myReceive'
-    const participantAddressSend = 'prSend'
-    const participantAddressReceive = 'prReveive'
+    const sellCurrencyKey = swap.sellCurrency.toLowerCase()
+    const buyCurrencyKey = swap.buyCurrency.toLowerCase()
+
+    const myAddressSend =
+      swap.app.services.auth.accounts[sellCurrencyKey].address ||
+      swap.app.services.auth.accounts[sellCurrencyKey].getAddress()
+
+    const myAddressReceive =
+      swap.app.services.auth.accounts[buyCurrencyKey].address ||
+      swap.app.services.auth.accounts[buyCurrencyKey].getAddress()
+
+    const participantAddressSend = swap.participant[buyCurrencyKey].address
+    const participantAddressReceive = swap.participant[sellCurrencyKey].address
 
     //const isToken = helpers.ethToken.isEthToken({ name: currency })
-    //swap.participant[currency].address
 
     return (
       <div styleName="turboSwap">
@@ -292,8 +306,8 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
             address={swap.isMy ? participantAddressSend : myAddressSend}
           />
           <Tx
-            amount={swap.isMy ? swap.sellAmount : swap.buyAmount}
-            ticker={swap.isMy ? swap.sellCurrency : swap.buyCurrency}
+            amount={swap.isMy ? swap.buyAmount : swap.sellAmount}
+            ticker={swap.isMy ? swap.buyCurrency : swap.sellCurrency}
             id={swapDemo.takerTx.hash}
             url={'https://google.com'}
             direction={'right'}
@@ -312,8 +326,8 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
             address={swap.isMy ? participantAddressReceive : myAddressReceive}
           />
           <Tx
-            amount={swap.isMy ? swap.buyAmount : swap.sellAmount}
-            ticker={swap.isMy ? swap.buyCurrency : swap.sellCurrency}
+            amount={swap.isMy ? swap.sellAmount : swap.buyAmount}
+            ticker={swap.isMy ? swap.sellCurrency : swap.buyCurrency}
             id={swapDemo.makerTx.hash}
             url={'https://google.com'}
             direction={'left'}

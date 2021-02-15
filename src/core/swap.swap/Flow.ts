@@ -10,7 +10,7 @@ class Flow {
   steps: Function[]
   app: SwapApp
   stepNumbers: any
-  isTakerMakerModel: boolean = false
+
   state: {
     // Common swaps state
     step: number
