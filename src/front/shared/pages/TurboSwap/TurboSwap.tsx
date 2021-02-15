@@ -288,9 +288,27 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
 
     //const isToken = helpers.ethToken.isEthToken({ name: currency })
 
+    const swapIdShortened = swap.id
+      .split('-').map(part =>
+        parseInt(part) || part
+          .split('')
+          .reduce((acc, letter, index) => {
+            if ([
+              0, 1, 2, 3,
+              part.length-4, part.length-3, part.length-2, part.length-1
+            ].includes(index))
+              return acc + letter
+            if (index === 4)
+              return acc + '…'
+            return acc
+          }, '')
+      ).join('-')
+
+
     return (
       <div styleName="turboSwap">
-        <h1 styleName="pageTitle">Turbo swap #{swapDemo.id}</h1>
+        <h1 styleName="pageTitle">Turbo swap </h1>
+        <div styleName="swapId">#{swapIdShortened}</div>
         <div styleName={`swapStatus ${swapDemo.status}`}>
           {swapDemo.status == SwapStatus.Pending &&
             <span>Pending...</span>
