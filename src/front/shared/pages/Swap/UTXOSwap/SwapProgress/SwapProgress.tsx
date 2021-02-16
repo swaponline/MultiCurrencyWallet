@@ -398,7 +398,7 @@ export default class SwapProgress extends Component<any, any> {
                 </div>
               )}
 
-              {(flow[scriptValues] && !flow.isFinished && !flow.isEthWithdrawn) && flow.refundTxHex && (
+              {(flow.utxoScriptValues && !flow.isFinished && !flow.isEthWithdrawn) && flow.refundTxHex && (
                 <div>
                   <a
                     href="https://wiki.swaponline.io/faq/my-swap-got-stuck-and-my-bitcoin-has-been-withdrawn-what-to-do/"

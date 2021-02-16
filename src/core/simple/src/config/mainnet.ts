@@ -27,12 +27,6 @@ const config = {
     fetchBalance: (address) => ethereum.fetchBalance(address),
     estimateGasPrice: ({ speed }) => ethereum.estimateGasPrice({ speed }),
   }),
-  // usdtSwap: () => ({
-  //   fetchBalance: (address) => bitcoin.fetchOmniBalance(address, 31),
-  //   fetchUnspents: (scriptAddress) => bitcoin.fetchUnspents(scriptAddress),
-  //   broadcastTx: (txRaw) => bitcoin.broadcastTx(txRaw),
-  //   fetchTx: hash => bitcoin.fetchTx(hash),
-  // }),
   noxonTokenSwap: () => tokenSwap({
     network: 'mainnet',
     name: 'NOXON',

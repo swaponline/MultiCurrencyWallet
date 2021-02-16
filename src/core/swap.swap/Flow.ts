@@ -166,10 +166,6 @@ class Flow {
         ...state,
       }
     }
-
-    this.swap.room.on('persist state', (values) => {
-      this.setState(values, true)
-    })
   }
 
   _persistSteps() {

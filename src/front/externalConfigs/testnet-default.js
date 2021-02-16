@@ -1,5 +1,5 @@
 // mainnet-localhost
-/*
+
 window.widgetERC20Comisions = {
   btc: {
     fee: '5',
@@ -25,7 +25,7 @@ window.widgetERC20Comisions = {
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
   },
 }
-*/
+
 /*
 window.widgetERC20Tokens = {
   usdt: {

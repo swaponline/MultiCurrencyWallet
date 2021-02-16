@@ -61,9 +61,9 @@ export default class AddOffer extends Component<any, any> {
 
   isSending: any
 
-  constructor({ items, tokenItems, initialData }) {
-    //@ts-ignore
-    super()
+  constructor(props) {
+    super(props)
+    const { items, tokenItems, initialData } = props
 
     if (config && config.isWidget) {
       if (window.widgetERC20Tokens && Object.keys(window.widgetERC20Tokens).length) {
@@ -93,6 +93,7 @@ export default class AddOffer extends Component<any, any> {
       sellCurrency: sellCurrency || 'eth',
       minimalestAmountForBuy: minAmountOffer[buyCurrency] || minAmountOffer.btc,
       minimalestAmountForSell: minAmountOffer[sellCurrency] || minAmountOffer.eth,
+      ethBalance: 0,
     }
   }
 
@@ -100,11 +101,11 @@ export default class AddOffer extends Component<any, any> {
     const { sellCurrency, buyCurrency, value } = this.state
 
     actions.pairs.selectPair(sellCurrency)
-    //@ts-ignore
     this.checkBalance(sellCurrency)
     this.updateExchangeRate(sellCurrency, buyCurrency)
     this.isEthToken(sellCurrency, buyCurrency)
     this.getFee()
+    this.checkEthBalance()
   }
 
   getFee = () => {
@@ -114,7 +115,14 @@ export default class AddOffer extends Component<any, any> {
     this.correctMinAmountBuy(buyCurrency)
   }
 
-  checkBalance = async (sellCurrency, buyCurrency) => {
+  checkEthBalance = async () => {
+    const ethBalance = await actions.eth.getBalance()
+    this.setState({
+      ethBalance,
+    })
+  }
+
+  checkBalance = async (sellCurrency) => {
     await actions[sellCurrency].getBalance(sellCurrency)
 
     const { items, tokenItems } = this.props
@@ -194,7 +202,6 @@ export default class AddOffer extends Component<any, any> {
       this.switching()
     } else {
       this.checkPair(sellCurrency)
-      //@ts-ignore
       await this.checkBalance(sellCurrency)
       await this.updateExchangeRate(sellCurrency, value)
 
@@ -222,7 +229,6 @@ export default class AddOffer extends Component<any, any> {
       this.switching()
     } else {
       this.checkPair(value)
-      //@ts-ignore
       await this.checkBalance(value)
       await this.updateExchangeRate(value, buyCurrency)
 
@@ -450,6 +456,9 @@ export default class AddOffer extends Component<any, any> {
       isTokenBuy, sellInputValueIsOk
     } = this.state
 
+    // @to-do - fetch eth miner fee for swap
+    const minNeedEthBalance = 0.004
+    const needEthBalance = (new BigNumber(ethBalance).isLessThan(minNeedEthBalance) && (isTokenBuy || isTokenSell))
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
 
     const minimalAmountSell = !isTokenSell
@@ -467,6 +476,7 @@ export default class AddOffer extends Component<any, any> {
       || new BigNumber(sellAmount).isGreaterThan(balance)
       || new BigNumber(sellAmount).isLessThan(minimalAmountSell)
       || new BigNumber(buyAmount).isLessThan(minimalAmountBuy)
+      || needEthBalance
 
     if (linked.sellAmount.value !== '' && linked.sellAmount.value > 0) {
       linked.sellAmount.check((value) => (new BigNumber(value).isGreaterThan(minimalAmountSell)),
@@ -581,7 +591,30 @@ export default class AddOffer extends Component<any, any> {
             </div>
           </div>
         </div>
-
+        {needEthBalance && (
+          <div styleName="Error">
+            {isTokenBuy && (
+              <FormattedMessage
+                id="CreateOffer_BuyToken_NeedEth"
+                defaultMessage="Для покупки {buyCurrency} вам нужно иметь {ethAmount} ETH для оплаты коммисии"
+                values={{
+                  buyCurrency: buyCurrency.toUpperCase(),
+                  ethAmount: minNeedEthBalance,
+                }}
+              />
+            )}
+            {isTokenSell && (
+              <FormattedMessage
+                id="CreateOffer_SellToken_NeedEth"
+                defaultMessage="Для продажи {sellCurrency} вам нужно иметь {ethAmount} ETH для оплаты коммисии"
+                values={{
+                  sellCurrency: sellCurrency.toUpperCase(),
+                  ethAmount: minNeedEthBalance,
+                }}
+              />
+            )}
+          </div>
+        )}
         {
           Object.values(linked).map((item, index) => Boolean(item.error)
             ? <div key={index} styleName="Error">{item.error}</div>

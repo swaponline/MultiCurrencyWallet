@@ -246,24 +246,9 @@ const createSwapApp = async () => {
         ...(Object.keys(config.erc20))
           .map(key => NEXT2ETHTOKEN(key)),
 
-        // ...(Object.keys(config.erc20))
-        //   .map(key => ETHTOKEN2USDT(key)),
-        //
-        // ...(Object.keys(config.erc20))
-        //   .map(key => USDT2ETHTOKEN(key)),
       ],
     }, true)
 
-    // eslint-disable-next-line
-    // process.env.MAINNET ? SwapApp.shared()._addSwap(
-    //   new UsdtSwap({
-    //     assetId: 31, // USDT
-    //     fetchBalance: (address) => actions.usdt.fetchBalance(address, 31).then(res => res.balance),
-    //     fetchUnspents: (scriptAddress) => actions.btc.fetchUnspents(scriptAddress),
-    //     broadcastTx: (txRaw) => actions.btc.broadcastTx(txRaw),
-    //     fetchTx: (hash) => actions.btc.fetchTx(hash),
-    //   }),
-    // ) : null
 
     window.SwapApp = SwapApp.shared()
     _inited = true

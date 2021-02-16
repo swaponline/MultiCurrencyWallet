@@ -168,9 +168,6 @@ export default class SwapComponent extends PureComponent<any, any> {
       const swap = new Swap(orderId, SwapApp.shared())
       console.log('Swap flow:', swap.flow._flowName);
 
-      window.swap = swap
-      window.flow = swap.flow
-
       const SwapComponent = swapComponents[swap.flow._flowName]
       const ethData = items.filter(item => item.currency === 'ETH')
       const currencyData = items.concat(tokenItems)
@@ -321,7 +318,6 @@ export default class SwapComponent extends PureComponent<any, any> {
   deleteThisSwap = (orderId) => {
     actions.core.saveDeletedOrder(orderId)
     actions.core.forgetOrders(orderId)
-    window.swap = null
   }
 
   setSaveSwapId = (orderId) => {
@@ -442,7 +438,7 @@ export default class SwapComponent extends PureComponent<any, any> {
       const isOtherSideRefunded = await swap.flow.checkOtherSideRefund()
       if (isOtherSideRefunded) {
         this.setState(() => ({
-          continueSwap: false,
+          otherSideRefunded: true,
         }))
       }
     }
