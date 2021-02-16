@@ -20,7 +20,6 @@ const FAQ = (props) => {
   const [ethFee, setEthFee] = useState(null)
 
   useEffect(() => {
-    // remove memory leak
     let _mounted = true
     /*
      * waiting for a response with fees and set them

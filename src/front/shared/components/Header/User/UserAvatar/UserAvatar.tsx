@@ -1,4 +1,3 @@
-//@ts-nocheck
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
@@ -7,11 +6,9 @@ import bell from './images/avatar.jpg'
 import styles from './UserAvatar.scss'
 import CSSModules from 'react-css-modules'
 
-
 @withRouter
 @CSSModules(styles, { allowMultiple: true })
 export default class UserAvatar extends Component<any, any> {
-
   static propTypes = {
     feeds: PropTypes.array.isRequired,
     soundClick: PropTypes.func.isRequired,
@@ -46,7 +43,7 @@ export default class UserAvatar extends Component<any, any> {
 
       if (!swapInfo.isFinished) {
         soundClick = () => {}
-        feeds.forEach(offer => {
+        feeds.forEach((offer) => {
           const { id, peer } = offer
 
           if (id === swapId) {
@@ -55,7 +52,7 @@ export default class UserAvatar extends Component<any, any> {
             return
           }
 
-          offer.request.forEach(request => {
+          offer.request.forEach((request) => {
             this.props.declineRequest(id, request.participant.peer)
           })
         })
@@ -80,12 +77,11 @@ export default class UserAvatar extends Component<any, any> {
     }
   }
 
-
   render() {
     const { animation } = this.state
 
     return (
-      <div styleName={animation} onClick={this.handleClick} >
+      <div styleName={animation} onClick={this.handleClick}>
         <img styleName="bell" src={bell} alt="Bell" />
       </div>
     )

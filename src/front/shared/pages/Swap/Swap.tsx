@@ -25,36 +25,34 @@ import feedback from 'shared/helpers/feedback'
 
 import config from 'app-config'
 
-
 const isWidgetBuild = config && config.isWidget
 const isDark = localStorage.getItem(constants.localStorage.isDark)
 
 @injectIntl
-@connect(({
-  user: { ethData, btcData, ghostData, nextData, tokensData, activeFiat },
-  pubsubRoom: { peer },
-  rememberedOrders,
-}) => ({
-  activeFiat,
-  items: [ethData, btcData, ghostData, nextData],
-  tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
-  currenciesData: [ethData, btcData, ghostData, nextData],
-  tokensData: [...Object.keys(tokensData).map(k => (tokensData[k]))],
-  errors: 'api.errors',
-  checked: 'api.checked',
-  savedOrders: rememberedOrders.savedOrders,
-  deletedOrders: rememberedOrders.deletedOrders,
-  peer,
-}))
-
+@connect(
+  ({
+    user: { ethData, btcData, ghostData, nextData, tokensData, activeFiat },
+    pubsubRoom: { peer },
+    rememberedOrders,
+  }) => ({
+    activeFiat,
+    items: [ethData, btcData, ghostData, nextData],
+    tokenItems: [...Object.keys(tokensData).map((k) => tokensData[k])],
+    currenciesData: [ethData, btcData, ghostData, nextData],
+    tokensData: [...Object.keys(tokensData).map((k) => tokensData[k])],
+    errors: 'api.errors',
+    checked: 'api.checked',
+    savedOrders: rememberedOrders.savedOrders,
+    deletedOrders: rememberedOrders.deletedOrders,
+    peer,
+  })
+)
 @cssModules(styles, { allowMultiple: true })
 export default class SwapComponent extends PureComponent<any, any> {
-
   wallets: any
   checkingConfirmSuccessTimer: any
   checkingCycleTimer: any
   sendDebugInfoTimer: any
-
 
   /*
     ================================================================
@@ -66,10 +64,7 @@ export default class SwapComponent extends PureComponent<any, any> {
     const {
       swap: {
         flow: {
-          state: {
-            step,
-            utxoScriptValues,
-          },
+          state: { step, utxoScriptValues },
           state: flowState,
         },
         flow,
@@ -78,7 +73,6 @@ export default class SwapComponent extends PureComponent<any, any> {
     } = this.state
 
     if (step >= 3) {
-
       let swapsId = JSON.parse(localStorage.getItem('axiosSwaps'))
 
       if (swapsId === null || swapsId.length === 0) {
@@ -109,7 +103,7 @@ export default class SwapComponent extends PureComponent<any, any> {
           destinationSellAddress,
           owner,
           participant,
-          utxoScriptValues
+          utxoScriptValues,
         }
         const sendedJSON = JSON.stringify(sendedData)
 
@@ -146,8 +140,21 @@ export default class SwapComponent extends PureComponent<any, any> {
   }
 
   componentWillMount() {
-    const { items, tokenItems, currenciesData, tokensData, intl: { locale }, deletedOrders } = this.props
-    let { match: { params: { orderId } }, history, activeFiat } = this.props
+    const {
+      items,
+      tokenItems,
+      currenciesData,
+      tokensData,
+      intl: { locale },
+      deletedOrders,
+    } = this.props
+    let {
+      match: {
+        params: { orderId },
+      },
+      history,
+      activeFiat,
+    } = this.props
 
     if (!!window.performance && window.performance.navigation.type === 2) {
       window.location.reload()
@@ -159,24 +166,22 @@ export default class SwapComponent extends PureComponent<any, any> {
     }
 
     this.wallets = {}
-    currenciesData.forEach(item => {
+    currenciesData.forEach((item) => {
       this.wallets[item.currency] = item.address
     })
-    tokensData.forEach(item => {
+    tokensData.forEach((item) => {
       this.wallets[item.currency] = item.address
     })
 
     try {
       const swap = new Swap(orderId, SwapApp.shared())
-      console.log('Swap flow:', swap.flow._flowName);
-
-      window.swap = swap
-      window.flow = swap.flow
+      console.log('Swap flow:', swap.flow._flowName)
 
       const SwapComponent = swapComponents[swap.flow._flowName]
-      const ethData = items.filter(item => item.currency === 'ETH')
-      const currencyData = items.concat(tokenItems)
-        .filter(item => item.currency === swap.sellCurrency.toUpperCase())[0]
+      const ethData = items.filter((item) => item.currency === 'ETH')
+      const currencyData = items
+        .concat(tokenItems)
+        .filter((item) => item.currency === swap.sellCurrency.toUpperCase())[0]
       const currencies = [
         {
           currency: swap.sellCurrency,
@@ -188,18 +193,17 @@ export default class SwapComponent extends PureComponent<any, any> {
         },
       ]
 
-      currencies.forEach(item => {
-        actions.user.getExchangeRate(item.currency, activeFiat.toLowerCase())
-          .then(exRate => {
-            //@ts-ignore
-            const amount = exRate * Number(item.amount)
+      currencies.forEach((item) => {
+        actions.user.getExchangeRate(item.currency, activeFiat.toLowerCase()).then((exRate) => {
+          //@ts-ignore
+          const amount = exRate * Number(item.amount)
 
-            if (Number(amount) >= 50) {
-              this.setState(() => ({ isAmountMore: 'enable' }))
-            } else {
-              this.setState(() => ({ isAmountMore: 'disable' }))
-            }
-          })
+          if (Number(amount) >= 50) {
+            this.setState(() => ({ isAmountMore: 'enable' }))
+          } else {
+            this.setState(() => ({ isAmountMore: 'disable' }))
+          }
+        })
       })
 
       this.setState(() => ({
@@ -213,11 +217,10 @@ export default class SwapComponent extends PureComponent<any, any> {
       /* hide my orders */
       // disable for now TODO
       // actions.core.hideMyOrders()
-
     } catch (error) {
       console.error(error)
       actions.notifications.show(constants.notifications.ErrorNotification, {
-        error: 'Sorry, but this order do not exsit already'
+        error: 'Sorry, but this order do not exsit already',
       })
       this.props.history.push(localisedUrl(links.exchange))
     }
@@ -232,7 +235,12 @@ export default class SwapComponent extends PureComponent<any, any> {
     const { flow } = swap
     const { step } = flow.state
 
-    const { match: { params: { orderId } }, savedOrders } = this.props
+    const {
+      match: {
+        params: { orderId },
+      },
+      savedOrders,
+    } = this.props
 
     if (step >= 4 && !savedOrders.includes(orderId)) {
       this.saveThisSwap(orderId)
@@ -283,7 +291,14 @@ export default class SwapComponent extends PureComponent<any, any> {
   }
 
   checkStoppedSwap = () => {
-    const { swap: { id, flow: { state: { isStoppedSwap } } } } = this.state
+    const {
+      swap: {
+        id,
+        flow: {
+          state: { isStoppedSwap },
+        },
+      },
+    } = this.state
 
     if (!isStoppedSwap) {
       return false
@@ -299,12 +314,25 @@ export default class SwapComponent extends PureComponent<any, any> {
   }
 
   checkIsConfirmed = () => {
-    const { swap: { flow: { state: { step } } } } = this.state
+    const {
+      swap: {
+        flow: {
+          state: { step },
+        },
+      },
+    } = this.state
     return !(step === 1)
   }
 
   checkIsFinished = () => {
-    const { swap: { id, flow: { state: { isFinished, step, isRefunded } } } } = this.state
+    const {
+      swap: {
+        id,
+        flow: {
+          state: { isFinished, step, isRefunded },
+        },
+      },
+    } = this.state
 
     if (isFinished || step > 7 || isRefunded) {
       this.deleteThisSwap(id)
@@ -321,7 +349,6 @@ export default class SwapComponent extends PureComponent<any, any> {
   deleteThisSwap = (orderId) => {
     actions.core.saveDeletedOrder(orderId)
     actions.core.forgetOrders(orderId)
-    window.swap = null
   }
 
   setSaveSwapId = (orderId) => {
@@ -342,9 +369,7 @@ export default class SwapComponent extends PureComponent<any, any> {
     const { step, balance, isBalanceEnough } = flow.state
 
     const isSellCurrencyEthOrEthToken = helpers.ethToken.isEthOrEthToken({ name: sellCurrency })
-    const stepForCheckBalance = isSellCurrencyEthOrEthToken
-      ? 4
-      : 3
+    const stepForCheckBalance = isSellCurrencyEthOrEthToken ? 4 : 3
 
     if (!isBalanceEnough && step === stepForCheckBalance) {
       this.setState(() => ({ enoughBalance: false }))
@@ -390,13 +415,7 @@ export default class SwapComponent extends PureComponent<any, any> {
 
   sendRequestToFaucet = () => {
     const {
-      swap: {
-        owner,
-        buyCurrency,
-        buyAmount,
-        sellCurrency,
-        sellAmount,
-      },
+      swap: { owner, buyCurrency, buyAmount, sellCurrency, sellAmount },
       isFaucetRequested,
       continueSwap,
     } = this.state
@@ -409,32 +428,33 @@ export default class SwapComponent extends PureComponent<any, any> {
       isFaucetRequested: true,
     }))
 
-    apiLooper.post('faucet', '', {
-      body: {
-        eth: this.state.ethAddress,
-        buyCurrency,
-        buyAmount: buyAmount.toString(),
-        sellCurrency,
-        sellAmount: sellAmount.toString(),
-      },
-    }).then((rv: any) => {
-      console.info('faucet answered', rv.txid)
-      this.setState(() => ({
-        continueSwap: true,
-      }))
-    }).catch((error) => {
-      console.warn('faucet error:', error)
-      this.setState(() => ({
-        continueSwap: false,
-      }))
-    })
+    apiLooper
+      .post('faucet', '', {
+        body: {
+          eth: this.state.ethAddress,
+          buyCurrency,
+          buyAmount: buyAmount.toString(),
+          sellCurrency,
+          sellAmount: sellAmount.toString(),
+        },
+      })
+      .then((rv: any) => {
+        console.info('faucet answered', rv.txid)
+        this.setState(() => ({
+          continueSwap: true,
+        }))
+      })
+      .catch((error) => {
+        console.warn('faucet error:', error)
+        this.setState(() => ({
+          continueSwap: false,
+        }))
+      })
   }
 
   checkOtherSideRefund = async () => {
     const {
-      swap: {
-        flow,
-      },
+      swap: { flow },
     } = this.state
     //@ts-ignore
     if (typeof swap.flow.checkOtherSideRefund === 'function') {
@@ -452,9 +472,7 @@ export default class SwapComponent extends PureComponent<any, any> {
     const {
       swap: {
         flow: {
-          state: {
-            isFailedTransaction,
-          },
+          state: { isFailedTransaction },
         },
       },
       continueSwap,
@@ -474,19 +492,13 @@ export default class SwapComponent extends PureComponent<any, any> {
       swap: {
         participantSwap,
         flow: {
-          state: {
-            canCreateEthTransaction,
-          },
+          state: { canCreateEthTransaction },
         },
       },
-      currencyData: {
-        currency,
-      },
+      currencyData: { currency },
     } = this.state
 
-    if (canCreateEthTransaction === false &&
-      helpers.ethToken.isEthOrEthToken({ name: currency })
-    ) {
+    if (canCreateEthTransaction === false && helpers.ethToken.isEthOrEthToken({ name: currency })) {
       this.sendRequestToFaucet()
     } else {
       this.setState(() => ({
@@ -496,31 +508,41 @@ export default class SwapComponent extends PureComponent<any, any> {
   }
 
   toggleDebug = () => {
-    const isShowDebug = this.state.isShowDebug;
+    const isShowDebug = this.state.isShowDebug
     this.setState({
       isShowDebug: !isShowDebug,
     })
   }
 
   goWallet = () => {
-    const { intl: { locale } } = this.props
+    const {
+      intl: { locale },
+    } = this.props
     this.props.history.push(localisedUrl(locale, '/'))
   }
 
   handleCopyAddress = (e) => {
-    this.setState({
-      isAddressCopied: true,
-    }, () => {
-      setTimeout(() => {
-        this.setState({
-          isAddressCopied: false,
-        })
-      }, 500)
-    })
+    this.setState(
+      {
+        isAddressCopied: true,
+      },
+      () => {
+        setTimeout(() => {
+          this.setState({
+            isAddressCopied: false,
+          })
+        }, 500)
+      }
+    )
   }
 
   render() {
-    const { peer, tokenItems, history, intl: { locale } } = this.props
+    const {
+      peer,
+      tokenItems,
+      history,
+      intl: { locale },
+    } = this.props
     const {
       swap,
       SwapComponent,
@@ -544,7 +566,7 @@ export default class SwapComponent extends PureComponent<any, any> {
 
     return (
       <Fragment>
-        {!isSwapCancelled ?
+        {!isSwapCancelled ? (
           <div styleName={`${isMobile ? 'swap swapMobile' : 'swap'} ${isDark ? 'dark' : ''}`}>
             <SwapComponent
               tokenItems={tokenItems}
@@ -565,39 +587,22 @@ export default class SwapComponent extends PureComponent<any, any> {
             />
             <div>
               <p styleName="reloadText" role="presentation">
-                <FormattedMessage
-                  id="SwapStuck"
-                  defaultMessage="The swap was stuck? Try to "
-                />
+                <FormattedMessage id="SwapStuck" defaultMessage="The swap was stuck? Try to " />
                 <span styleName="pseudolink" onClick={() => this.toggleDebug()}>
-                  <FormattedMessage
-                    id="SwapDebug"
-                    defaultMessage="debug"
-                  />
+                  <FormattedMessage id="SwapDebug" defaultMessage="debug" />
                 </span>
-                <FormattedMessage
-                  id="SwapOr"
-                  defaultMessage=" or "
-                />
+                <FormattedMessage id="SwapOr" defaultMessage=" or " />
                 <span styleName="pseudolink" onClick={() => window.location.reload()}>
-                  <FormattedMessage
-                    id="SwapReload"
-                    defaultMessage="reload the page"
-                  />
+                  <FormattedMessage id="SwapReload" defaultMessage="reload the page" />
                 </span>
-
               </p>
 
-              {isShowDebug &&
-                <Debug flow={swap.flow} />
-              }
+              {isShowDebug && <Debug flow={swap.flow} />}
 
-              {peer === swap.owner.peer &&
-                <DeleteSwapAfterEnd swap={swap} />
-              }
+              {peer === swap.owner.peer && <DeleteSwapAfterEnd swap={swap} />}
             </div>
           </div>
-          :
+        ) : (
           <div>
             <h3 styleName="canceled" onClick={this.goWallet}>
               <FormattedMessage id="swappropgress327" defaultMessage="This swap is canceled" />
@@ -611,7 +616,7 @@ export default class SwapComponent extends PureComponent<any, any> {
               </h3>
             </div>
           </div>
-        }
+        )}
       </Fragment>
     )
   }

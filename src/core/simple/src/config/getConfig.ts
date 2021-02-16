@@ -7,18 +7,17 @@ import SwapOrders from 'swap.orders'
 import { default as nextUtils } from '../../../../common/utils/coin/next'
 import { default as btcUtils } from '../../../../common/utils/coin/btc'
 
-import {
-  EthSwap,
-  EthTokenSwap,
-  BtcSwap,
-  NextSwap
-} from 'swap.swaps'
+import { EthSwap, EthTokenSwap, BtcSwap, NextSwap } from 'swap.swaps'
 
 import {
-  ETH2BTC, BTC2ETH,
-  ETHTOKEN2BTC, BTC2ETHTOKEN,
-  ETH2NEXT, NEXT2ETH,
-  ETHTOKEN2NEXT, NEXT2ETHTOKEN
+  ETH2BTC,
+  BTC2ETH,
+  ETHTOKEN2BTC,
+  BTC2ETHTOKEN,
+  ETH2NEXT,
+  NEXT2ETH,
+  ETHTOKEN2NEXT,
+  NEXT2ETHTOKEN,
 } from 'swap.flows'
 
 import * as eth from '../instances/ethereum'
@@ -29,7 +28,6 @@ import { default as tokenSwap } from './tokenSwap'
 import setupLocalStorage from './setupLocalStorage'
 import { LocalStorage } from 'node-localstorage'
 import sessionStorage from 'node-sessionstorage'
-
 
 const ROOT_DIR = process.env.ROOT_DIR || '.'
 
@@ -54,7 +52,7 @@ const getConfig = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, .
 
   setupLocalStorage(`${ROOT_DIR}/.storage/`)
   setupLocalStorage(config.storageDir)
-  
+
   const storage = new LocalStorage(config.storageDir)
   const NETWORK = config.network.toUpperCase()
 
@@ -63,8 +61,8 @@ const getConfig = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, .
   const next = nextUtils.getCore()
 
   const tokens = (config.ERC20TOKENS || [])
-    .map(_token => ({ network: config.network, ..._token }))
-    .filter(_token => _token.network === config.network)
+    .map((_token) => ({ network: config.network, ..._token }))
+    .filter((_token) => _token.network === config.network)
 
   return {
     network: config.network,
@@ -73,7 +71,6 @@ const getConfig = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, .
       web3,
       bitcoin,
       next,
-      // bcash,
       storage,
       sessionStorage,
       coininfo: {
@@ -85,12 +82,15 @@ const getConfig = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, .
       ...config.env,
     },
     services: [
-      new SwapAuth({
-        eth: account,
-        btc: null,
-        next: null,
-        ...config.swapAuth
-      }, mnemonic),
+      new SwapAuth(
+        {
+          eth: account,
+          btc: null,
+          next: null,
+          ...config.swapAuth,
+        },
+        mnemonic
+      ),
       new SwapRoom(config.swapRoom),
       new SwapOrders(),
     ],
@@ -98,100 +98,102 @@ const getConfig = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, .
     swaps: [
       new EthSwap(config.ethSwap(ETH)),
       new BtcSwap({
-        fetchBalance: (address) => btcUtils.fetchBalance({
-          address,
-          NETWORK,
-        }),
-        fetchUnspents: (address) => btcUtils.fetchUnspents({
-          address,
-          NETWORK,
-        }),
-        broadcastTx: (txRaw) => btcUtils.broadcastTx({
-          txRaw,
-          NETWORK,
-        }),
-        fetchTxInfo: (txid) => btcUtils.fetchTxInfo({
-          txid,
-          NETWORK,
-        }),
-        estimateFeeValue: (options) => btcUtils.estimateFeeValue({
-          ...options,
-          NETWORK,
-        }),
-        checkWithdraw: (scriptAddress) => btcUtils.checkWithdraw({
-          scriptAddress,
-          NETWORK,
-        }),
+        fetchBalance: (address) =>
+          btcUtils.fetchBalance({
+            address,
+            NETWORK,
+          }),
+        fetchUnspents: (address) =>
+          btcUtils.fetchUnspents({
+            address,
+            NETWORK,
+          }),
+        broadcastTx: (txRaw) =>
+          btcUtils.broadcastTx({
+            txRaw,
+            NETWORK,
+          }),
+        fetchTxInfo: (txid) =>
+          btcUtils.fetchTxInfo({
+            txid,
+            NETWORK,
+          }),
+        estimateFeeValue: (options) =>
+          btcUtils.estimateFeeValue({
+            ...options,
+            NETWORK,
+          }),
+        checkWithdraw: (scriptAddress) =>
+          btcUtils.checkWithdraw({
+            scriptAddress,
+            NETWORK,
+          }),
       }),
       new NextSwap({
-        fetchBalance: (address) => nextUtils.fetchBalance({
-          address,
-          NETWORK,
-        }),
-        fetchUnspents: (address) => nextUtils.fetchUnspents({
-          address,
-          NETWORK,
-        }),
-        broadcastTx: (txRaw) => nextUtils.broadcastTx({
-          txRaw,
-          NETWORK,
-        }),
-        fetchTxInfo: (txid) => nextUtils.fetchTxInfo({
-          txid,
-          NETWORK,
-        }),
-        estimateFeeValue: (options) => nextUtils.estimateFeeValue({
-          ...options,
-          NETWORK,
-        }),
-        checkWithdraw: (scriptAddress) => nextUtils.checkWithdraw({
-          scriptAddress,
-          NETWORK,
-        }),
+        fetchBalance: (address) =>
+          nextUtils.fetchBalance({
+            address,
+            NETWORK,
+          }),
+        fetchUnspents: (address) =>
+          nextUtils.fetchUnspents({
+            address,
+            NETWORK,
+          }),
+        broadcastTx: (txRaw) =>
+          nextUtils.broadcastTx({
+            txRaw,
+            NETWORK,
+          }),
+        fetchTxInfo: (txid) =>
+          nextUtils.fetchTxInfo({
+            txid,
+            NETWORK,
+          }),
+        estimateFeeValue: (options) =>
+          nextUtils.estimateFeeValue({
+            ...options,
+            NETWORK,
+          }),
+        checkWithdraw: (scriptAddress) =>
+          nextUtils.checkWithdraw({
+            scriptAddress,
+            NETWORK,
+          }),
       }),
-      /*config.network === 'mainnet'
-        ? new UsdtSwap(config.usdtSwap())
-        : null,*/
-      
+
       // flows for swap
       /*
       nextSwap: () => ({
         
       })*/
       new EthTokenSwap(config.swapTokenSwap(TOKEN)),
-      ...(
-        (config.swaps || [])
-      ),
-      ...(
-        //@ts-ignore
-        tokens.map(_token => new EthTokenSwap(tokenSwap(_token)))
-      )
-    ]
-      .filter(a => !!a),
+      ...(config.swaps || []),
+      ...//@ts-ignore
+      tokens.map((_token) => new EthTokenSwap(tokenSwap(_token))),
+    ].filter((a) => !!a),
 
     flows: [
       ETH2BTC,
       BTC2ETH,
 
-      ETH2NEXT, NEXT2ETH,
+      ETH2NEXT,
+      NEXT2ETH,
 
       ETHTOKEN2BTC(constants.COINS.swap),
       BTC2ETHTOKEN(constants.COINS.swap),
       ...(config.flows || []),
-      ...((
-        [].concat.apply([],
-          tokens.map(({ name }) => ([
-            ETHTOKEN2BTC(name),
-            BTC2ETHTOKEN(name),
-            ETHTOKEN2NEXT(name),
-            NEXT2ETHTOKEN(name)
-          ]))
-        )
-      ) || []
-      )
+      ...([].concat.apply(
+        [],
+        tokens.map(({ name }) => [
+          ETHTOKEN2BTC(name),
+          BTC2ETHTOKEN(name),
+          ETHTOKEN2NEXT(name),
+          NEXT2ETHTOKEN(name),
+        ])
+      ) || []),
     ],
   }
 }
-
 
 export { getConfig }
