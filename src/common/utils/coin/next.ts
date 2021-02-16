@@ -12,18 +12,14 @@ const DUST = 546
 const getApiNext = (network) => {
   return {
     name: `apiNextMain`,
-    servers: (network === `MAINNET`)
-      ? MAINNET.nextExplorer
-      : TESTNET.nextExplorer
+    servers: network === `MAINNET` ? MAINNET.nextExplorer : TESTNET.nextExplorer,
   }
 }
 
 const getApiCustom = (network) => {
   return {
     name: `apiNextCustom`,
-    servers: (network === `MAINNET`)
-      ? MAINNET.nextExplorerCustom
-      : TESTNET.nextExplorerCustom
+    servers: network === `MAINNET` ? MAINNET.nextExplorerCustom : TESTNET.nextExplorerCustom,
   }
 }
 
@@ -38,22 +34,25 @@ const fetchBalance = (options) => {
     NETWORK,
   } = options
 
-
-  return apiLooper.get(API_ENDPOINT || getApiNext(NETWORK), `/address/${address}`, {
-    checkStatus: (answer) => {
-      try {
-        if (answer && answer.balance !== undefined) return true
-      } catch (e) { /* */ }
-      return false
-    },
-    ignoreErrors: true,
-    reportErrors: (answer, onSuccess, onFail) => {
-      console.log('>>>> fetchBalance reportErrors')
-      console.log(answer)
-      onSuccess({ balance: 0 })
-      return true
-    },
-  }).then(({ balance }) => balance)
+  return apiLooper
+    .get(API_ENDPOINT || getApiNext(NETWORK), `/address/${address}`, {
+      checkStatus: (answer) => {
+        try {
+          if (answer && answer.balance !== undefined) return true
+        } catch (e) {
+          /* */
+        }
+        return false
+      },
+      ignoreErrors: true,
+      reportErrors: (answer, onSuccess, onFail) => {
+        console.error('NEXT fetch balance')
+        console.error(answer)
+        onSuccess({ balance: 0 })
+        return true
+      },
+    })
+    .then(({ balance }) => balance)
 }
 
 const fetchUnspents = (options) => {
@@ -63,7 +62,9 @@ const fetchUnspents = (options) => {
     NETWORK,
   } = options
 
-  return apiLooper.get(API_ENDPOINT || getApiCustom(NETWORK), `/addr/${address}/utxo`, { cacheResponse: 5000 })
+  return apiLooper.get(API_ENDPOINT || getApiCustom(NETWORK), `/addr/${address}/utxo`, {
+    cacheResponse: 5000,
+  })
 }
 
 const broadcastTx = (options) => {
@@ -88,18 +89,22 @@ const fetchTx = (options) => {
     NETWORK,
   } = options
 
-  return apiLooper.get(API_ENDPOINT || getApiNext(NETWORK), `/tx/${hash}`, {
-    cacheResponse,
-    checkStatus: (answer) => {
-      try {
-        if (answer && answer.txId !== undefined) return true
-      } catch (e) { /* */ }
-      return false
-    },
-  }).then(({ fees, ...rest }) => ({
-    fees: new BigNumber(fees).multipliedBy(1e8),
-    ...rest,
-  }))
+  return apiLooper
+    .get(API_ENDPOINT || getApiNext(NETWORK), `/tx/${hash}`, {
+      cacheResponse,
+      checkStatus: (answer) => {
+        try {
+          if (answer && answer.txId !== undefined) return true
+        } catch (e) {
+          /* */
+        }
+        return false
+      },
+    })
+    .then(({ fees, ...rest }) => ({
+      fees: new BigNumber(fees).multipliedBy(1e8),
+      ...rest,
+    }))
 }
 
 /** to-to - in front has mark (not-working) - need recheck, may be will be fixed **/
@@ -117,7 +122,7 @@ const fetchTxInfo = (options) => {
     cacheResponse,
     API_ENDPOINT,
     NETWORK,
-  }).then((txInfo_ : any) => {
+  }).then((txInfo_: any) => {
     return { ...txInfo_ } /** yes - ^^^^ not working - заглужка **/
     const { vin, vout, ...rest } = txInfo_
     const senderAddress = vin ? vin[0].addr : null
@@ -127,17 +132,19 @@ const fetchTxInfo = (options) => {
     let adminFee: any = false
 
     if (hasAdminFee) {
-      const adminOutput = vout.filter((out) => (
-        out.scriptPubKey.addresses
-        && out.scriptPubKey.addresses[0] === hasAdminFee.address
-        && !(new BigNumber(out.value).eq(amount))
-      ))
+      const adminOutput = vout.filter(
+        (out) =>
+          out.scriptPubKey.addresses &&
+          out.scriptPubKey.addresses[0] === hasAdminFee.address &&
+          !new BigNumber(out.value).eq(amount)
+      )
 
-      const afterOutput = vout.filter((out) => (
-        out.addresses
-        && out.addresses[0] !== hasAdminFee.address
-        && out.addresses[0] !== senderAddress
-      ))
+      const afterOutput = vout.filter(
+        (out) =>
+          out.addresses &&
+          out.addresses[0] !== hasAdminFee.address &&
+          out.addresses[0] !== senderAddress
+      )
 
       if (afterOutput.length) {
         afterBalance = new BigNumber(afterOutput[0].value).toNumber()
@@ -153,7 +160,7 @@ const fetchTxInfo = (options) => {
       afterBalance,
       senderAddress,
       receiverAddress: vout ? vout[0].scriptPubKey.addresses : null,
-      confirmed: !!(rest.confirmations),
+      confirmed: !!rest.confirmations,
       minerFee: rest.fees.dividedBy(1e8).toNumber(),
       adminFee,
       minerFeeCurrency: 'NEXT',
@@ -175,43 +182,36 @@ const checkWithdraw = (options) => {
     NETWORK,
   } = options
 
-  return apiLooper.get(API_ENDPOINT || getApiCustom(NETWORK), `/txs/${scriptAddress}`, {
-    checkStatus: (answer) => {
-      try {
-        if (answer && answer.txs !== undefined) return true
-      } catch (e) { /* */ }
-      return false
-    },
-    query: 'next_balance',
-  }).then((res : any) => {
-    if (res.txs.length > 1
-      && res.txs[0].vout.length
-    ) {
-      const address = res.txs[0].vout[0].scriptPubKey.addresses[0]
-      const amount = res.txs[0].vout[0].valueSat
+  return apiLooper
+    .get(API_ENDPOINT || getApiCustom(NETWORK), `/txs/${scriptAddress}`, {
+      checkStatus: (answer) => {
+        try {
+          if (answer && answer.txs !== undefined) return true
+        } catch (e) {
+          /* */
+        }
+        return false
+      },
+      query: 'next_balance',
+    })
+    .then((res: any) => {
+      if (res.txs.length > 1 && res.txs[0].vout.length) {
+        const address = res.txs[0].vout[0].scriptPubKey.addresses[0]
+        const amount = res.txs[0].vout[0].valueSat
 
-      const {
-        txid,
-      } = res.txs[0]
-      return {
-        address,
-        txid,
-        amount,
+        const { txid } = res.txs[0]
+        return {
+          address,
+          txid,
+          amount,
+        }
       }
-    }
-    return false
-  })
+      return false
+    })
 }
 
 const calculateTxSize = async (options) => {
-  const {
-    speed,
-    unspents: _unspents,
-    address,
-    txOut = 2,
-    fixed,
-    NETWORK,
-  } = options
+  const { speed, unspents: _unspents, address, txOut = 2, fixed, NETWORK } = options
 
   const defaultTxSize = 400
 
@@ -219,16 +219,15 @@ const calculateTxSize = async (options) => {
     return defaultTxSize
   }
 
-  const unspents = _unspents || await fetchUnspents({
-    address,
-    NETWORK,
-  })
-
+  const unspents =
+    _unspents ||
+    (await fetchUnspents({
+      address,
+      NETWORK,
+    }))
 
   const txIn = unspents.length
-  const txSize = txIn > 0
-    ? txIn * 146 + txOut * 33 + (15 + txIn - txOut)
-    : defaultTxSize
+  const txSize = txIn > 0 ? txIn * 146 + txOut * 33 + (15 + txIn - txOut) : defaultTxSize
 
   return txSize
 }
@@ -247,24 +246,22 @@ const estimateFeeValue = async (options) => {
 
   const txOut = 2
 
+  const txSize =
+    _txSize ||
+    (await calculateTxSize({
+      address,
+      speed,
+      fixed,
+      method,
+      txOut,
+      NETWORK,
+    }))
 
-  const txSize = _txSize || await calculateTxSize({
-    address,
-    speed,
-    fixed,
-    method,
-    txOut,
-    NETWORK,
-  })
-
-  const feeRate = _feeRate  || 30 * 1e3 // fast
+  const feeRate = _feeRate || 30 * 1e3 // fast
 
   const calculatedFeeValue = BigNumber.maximum(
     DUST,
-    new BigNumber(feeRate)
-      .multipliedBy(txSize)
-      .div(1024)
-      .dp(0, BigNumber.ROUND_HALF_EVEN),
+    new BigNumber(feeRate).multipliedBy(txSize).div(1024).dp(0, BigNumber.ROUND_HALF_EVEN)
   )
 
   // Используем комиссию больше рекомендованной на 5 сатоши
@@ -282,8 +279,8 @@ const networks = {
   mainnet: {
     messagePrefix: 'Nextcoin Signed Message:\n',
     bip32: {
-      public:  0x0488B21E,
-      private: 0x0488ADE4,
+      public: 0x0488b21e,
+      private: 0x0488ade4,
     },
     pubKeyHash: 75,
     scriptHash: 5,
@@ -292,8 +289,8 @@ const networks = {
   testnet: {
     messagePrefix: 'Nextcoin Signed Message:\n',
     bip32: {
-      public:  0x0488B21E,
-      private: 0x0488ADE4,
+      public: 0x0488b21e,
+      private: 0x0488ade4,
     },
     pubKeyHash: 75,
     scriptHash: 5,
