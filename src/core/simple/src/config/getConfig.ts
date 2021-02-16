@@ -73,7 +73,6 @@ const getConfig = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, .
       web3,
       bitcoin,
       next,
-      // bcash,
       storage,
       sessionStorage,
       coininfo: {
@@ -149,9 +148,6 @@ const getConfig = (config) => ({ account, mnemonic, contracts: { ETH, TOKEN }, .
           NETWORK,
         }),
       }),
-      /*config.network === 'mainnet'
-        ? new UsdtSwap(config.usdtSwap())
-        : null,*/
       
       // flows for swap
       /*
