@@ -191,7 +191,7 @@ const bannedPeers = {} // rejected swap peers
 export default class Exchange extends Component<any, any> {
   /**
    * @method getDefaultWalletForCurrency
-   * @method getUserDefaultWallets
+   * @method getExchangeDataFromLocalStorage
    * @method getLinkToDeclineSwap
    * @method getUserDefaultWallet
    * @method getCorrectDecline
@@ -303,13 +303,14 @@ export default class Exchange extends Component<any, any> {
 
     let haveCurrency = sell || 'btc'
     let getCurrency = buy || (!isWidgetBuild ? 'eth' : config.erc20token)
-    // to get data from last session
-    const strExchangeFormData = localStorage.getItem('exchangeForm')
-    const exchangeFormData = strExchangeFormData ? JSON.parse(strExchangeFormData) : null
 
-    if (exchangeFormData && exchangeFormData.sell && exchangeFormData.buy) {
-      haveCurrency = exchangeFormData.sell
-      getCurrency = exchangeFormData.buy
+    const exchangeDataStr = localStorage.getItem(constants.localStorage.exchangeData)
+    console.log('EXCHANGE DATA STR FROM CONSTRUCTOR: ', exchangeDataStr)
+    const exchangeData = exchangeDataStr && JSON.parse(exchangeDataStr)
+    // to get data from last session
+    if (exchangeData && exchangeData.currency) {
+      haveCurrency = exchangeData.currency.sell || haveCurrency
+      getCurrency = exchangeData.currency.buy || getCurrency
     }
 
     this.returnNeedCurrency(haveCurrency, getCurrency)
@@ -389,29 +390,37 @@ export default class Exchange extends Component<any, any> {
     return null
   }
 
-  getUserDefaultWallets() {
-    const defJson = localStorage.getItem(constants.localStorage.exchangeUserWallets)
-    if (defJson) {
-      try {
-        const json = JSON.parse(defJson)
-        return json
-      } catch (e) {}
+  getExchangeDataFromLocalStorage() {
+    const exchangeDataStr = localStorage.getItem(constants.localStorage.exchangeData)
+
+    if (exchangeDataStr) {
+      return JSON.parse(exchangeDataStr)
     }
     return {}
   }
 
   getUserDefaultWallet(currency) {
-    const defWalletsJson = this.getUserDefaultWallets()
-    if (defWalletsJson) {
-      if (defWalletsJson && defWalletsJson[currency]) return defWalletsJson[currency]
+    const exchangeData = this.getExchangeDataFromLocalStorage()
+    const userWallets = exchangeData.userWallets
+
+    if (userWallets && userWallets[currency]) {
+      return userWallets[currency]
     }
     return false
   }
 
   setUserDefaultWallet(currency, type) {
-    const defWalletsJson = this.getUserDefaultWallets()
-    defWalletsJson[currency] = type
-    localStorage.setItem(constants.localStorage.exchangeUserWallets, JSON.stringify(defWalletsJson))
+    const exchangeData = this.getExchangeDataFromLocalStorage()
+    const userWallets = exchangeData.userWallets || {}
+
+    userWallets[currency] = type
+
+    const newExchangeData = {
+      currency: exchangeData.currency,
+      userWallets,
+    }
+
+    localStorage.setItem(constants.localStorage.exchangeData, JSON.stringify(newExchangeData))
   }
 
   getDefaultWalletForCurrency(currency) {
@@ -554,15 +563,17 @@ export default class Exchange extends Component<any, any> {
   }
 
   componentWillUnmount() {
+    const exchangeData = this.getExchangeDataFromLocalStorage()
     const { haveCurrency, getCurrency } = this.state
-
-    localStorage.setItem(
-      'exchangeForm',
-      JSON.stringify({
+    const newExchangeData = {
+      ...exchangeData,
+      currency: {
         sell: haveCurrency,
         buy: getCurrency,
-      })
-    )
+      },
+    }
+
+    localStorage.setItem(constants.localStorage.exchangeData, JSON.stringify(newExchangeData))
 
     this._mounted = false
     this.timer = false
@@ -1295,9 +1306,8 @@ export default class Exchange extends Component<any, any> {
   }
 
   getCorrectDecline = () => {
-    const { decline, swapHistory } = this.props
-
-    const localSavedOrdersString = localStorage.getItem('savedOrders')
+    const { decline } = this.props
+    const localSavedOrdersString = localStorage.getItem(constants.localStorage.savedOrders)
 
     if (!localSavedOrdersString) return
     const localSavedOrders = JSON.parse(localSavedOrdersString)
@@ -1398,7 +1408,7 @@ export default class Exchange extends Component<any, any> {
             new BigNumber(balance).minus(sellCoinFee.fee).isLessThanOrEqualTo(0)) ? null : (
             <>
               {sellCoinFee ? (
-                <FormattedMessage id="Exchange_AvialableBalance" defaultMessage="Доступно: " />
+                <FormattedMessage id="Exchange_AvialableBalance" defaultMessage="Available: " />
               ) : (
                 <FormattedMessage id="partial767" defaultMessage="Your balance: " />
               )}
