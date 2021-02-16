@@ -118,7 +118,6 @@
     display: block;
     width: 100%;
     height: 100%;
-    vertical-align: middle;
     padding: 0.7em;
     border: none;
     font-size: 1em;
@@ -158,28 +157,6 @@
         margin: 0;
         padding: 0;
         border: none;
-      }
-    }
-  }
-
-  .qrCode {
-    position: absolute;
-    right: -13px;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: #fff;
-    border: 6px solid #fff;
-    display: block;
-    cursor: pointer;
-  }
-}
-
-.addressSelect {
-  &.--dark {
-    .customWallet {
-      .qrCode {
-        background-color: #222427;
-        border-color: #222427;
       }
     }
   }
