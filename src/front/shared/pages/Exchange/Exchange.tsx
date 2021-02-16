@@ -208,16 +208,19 @@ export default class Exchange extends Component<any, any> {
    * @method setAmount
    * @method setOrders
    *
-   * @method makeAddressObject
-   * @method fetchPairFeesAndBalances
    * @method checkBalanceOnAllCurrency
-   * @method rmScrollAdvice
-   * @method checkUrl
+   * @method checkoutLowAmount
+   * @method checkSwapAllow
    * @method checkValidUrl
+   * @method checkUrl
+   * @method checkPair
+   *
+   * @method makeAddressObject
+   * @method rmScrollAdvice
    * @method changeUrl
+   * @method fetchPairFeesAndBalances
    * @method fetchFiatExRate
    * @method createOffer
-   * @method checkSwapAllow
    * @method initSwap
    * @method openModalDeclineOrders
    * @method sendRequestForPartial
@@ -230,9 +233,7 @@ export default class Exchange extends Component<any, any> {
    * @method applyAddress
    * @method flipCurrency
    * @method resetState
-   * @method checkPair
    * @method chooseCurrencyToRender
-   * @method checkoutLowAmount
    * @method extendedControlsSet
    * @method doesComissionPreventThisOrder
    * @method goDeclimeFaq
@@ -255,7 +256,7 @@ export default class Exchange extends Component<any, any> {
   scrollTrigger: any // undefined | ?
   wallets: any // undefined | ?
 
-  static getDerivedStateFromProps({ orders, match: { params } }, { haveCurrency, getCurrency }) {
+  static getDerivedStateFromProps({ orders }, { haveCurrency, getCurrency }) {
     if (!Array.isArray(orders)) {
       return
     }
@@ -300,8 +301,16 @@ export default class Exchange extends Component<any, any> {
       }
     }
 
-    const haveCurrency = sell || 'btc'
-    const getCurrency = buy || (!isWidgetBuild ? 'eth' : config.erc20token)
+    let haveCurrency = sell || 'btc'
+    let getCurrency = buy || (!isWidgetBuild ? 'eth' : config.erc20token)
+    // to get data from last session
+    const strExchangeFormData = localStorage.getItem('exchangeForm')
+    const exchangeFormData = strExchangeFormData ? JSON.parse(strExchangeFormData) : null
+
+    if (exchangeFormData && exchangeFormData.sell && exchangeFormData.buy) {
+      haveCurrency = exchangeFormData.sell
+      getCurrency = exchangeFormData.buy
+    }
 
     this.returnNeedCurrency(haveCurrency, getCurrency)
 
@@ -545,6 +554,16 @@ export default class Exchange extends Component<any, any> {
   }
 
   componentWillUnmount() {
+    const { haveCurrency, getCurrency } = this.state
+
+    localStorage.setItem(
+      'exchangeForm',
+      JSON.stringify({
+        sell: haveCurrency,
+        buy: getCurrency,
+      })
+    )
+
     this._mounted = false
     this.timer = false
     metamask.web3connect.off('updated', this.fetchPairFeesAndBalances)
@@ -753,8 +772,9 @@ export default class Exchange extends Component<any, any> {
         balance: this.getBalance(haveCurrency),
         fromType: haveType,
       })
-    )
+    ) {
       return false
+    }
 
     if (decline.length === 0) {
       this.sendRequestForPartial()
