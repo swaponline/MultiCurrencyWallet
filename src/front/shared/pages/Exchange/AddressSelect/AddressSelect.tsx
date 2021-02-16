@@ -476,7 +476,7 @@ export default class AddressSelect extends Component<any, any> {
                   placeholder="Enter address"
                   valueLink={Link.all(this, '_')._} // required
                   openScan={this.toggleScan}
-                  qr={true} // isMobile
+                  qr={isMobile}
                 />
               </div>
             </div>
