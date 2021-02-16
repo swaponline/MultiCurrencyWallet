@@ -5,7 +5,6 @@ import Link from 'local_modules/sw-valuelink'
 
 import styles from './AddressSelect.scss'
 import cssModules from 'react-css-modules'
-import config from 'helpers/externalConfig'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import Input from 'components/forms/Input/Input'
 import DropDown from 'components/ui/DropDown/DropDown'
@@ -20,7 +19,7 @@ import { localisedUrl } from 'helpers/locale'
 import actions from 'redux/actions'
 import feedback from 'shared/helpers/feedback'
 import web3Icons from 'shared/images'
-
+import { isMobile } from 'react-device-detect'
 import QrReader from 'components/QrReader'
 import iconInternal from '../../../images/logo/logo-black.svg'
 import iconCustom from '../../../images/custom.svg'
@@ -476,9 +475,10 @@ export default class AddressSelect extends Component<any, any> {
                   onBlur={(e) => this.handleBlurAddress(e.target.value)}
                   placeholder="Enter address"
                   valueLink={Link.all(this, '_')._} // required
+                  openScan={this.toggleScan}
+                  qr={true} // isMobile
                 />
               </div>
-              <i styleName="qrCode" className="fas fa-qrcode" onClick={this.toggleScan} />
             </div>
           </div>
         )}
