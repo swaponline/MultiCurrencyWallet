@@ -53,9 +53,8 @@ const FAQ = (props) => {
     }
   })
 
-  const {
-    intl: { formatMessage },
-  } = props
+
+  const { intl: { formatMessage } } = props
   const [openedTabs, setOpenedTabs] = useState({
     FIRST_TAB: false,
     SECOND_TAB: false,
@@ -66,6 +65,7 @@ const FAQ = (props) => {
     SECOND_TAB: 0,
     THIRD_TAB: 0,
   })
+
 
   const isDark = localStorage.getItem(constants.localStorage.isDark)
 
@@ -88,121 +88,96 @@ const FAQ = (props) => {
       <div className={styles.faQuestions__tabsContainer}>
         <article className={styles.tab}>
           <h6 className={styles.tab__header} onClick={() => handleTabClick('FIRST_TAB')}>
-            <div
-              className={cx({
-                [styles.chrest]: true,
-                [styles.chrest_active]: openedTabs.FIRST_TAB,
-              })}
-            />
-            <FormattedMessage
-              id="MainFAQ1_header"
-              defaultMessage="How are my private keys stored?"
-            />
+            <div className={cx({
+              [styles.chrest]: true,
+              [styles.chrest_active]: openedTabs.FIRST_TAB,
+            })} />
+            <FormattedMessage id="MainFAQ1_header" defaultMessage="How are my private keys stored?" />
           </h6>
-          <div
-            className={cx({
-              [styles.tab__content]: true,
-              [styles.tab__content_active]: openedTabs.FIRST_TAB,
-            })}
-          >
-            <FormattedMessage
-              id="MainFAQ1_content"
-              defaultMessage="Your private keys are stored ONLY on your device, in the localStorage of your browser. Please backup your keys, because your browser or device may be crashed."
-            />
+          <div className={cx({
+            [styles.tab__content]: true,
+            [styles.tab__content_active]: openedTabs.FIRST_TAB,
+          })}>
+            <FormattedMessage id="MainFAQ1_content" defaultMessage="Your private keys are stored ONLY on your device, in the localStorage of your browser. Please backup your keys, because your browser or device may be crashed." />
           </div>
         </article>
         <article className={styles.tab}>
           <h6 className={styles.tab__header} onClick={() => handleTabClick('SECOND_TAB')}>
-            <div
-              className={cx({
-                [styles.chrest]: true,
-                [styles.chrest_active]: openedTabs.SECOND_TAB,
-              })}
-            />
+            <div className={cx({
+              [styles.chrest]: true,
+              [styles.chrest_active]: openedTabs.SECOND_TAB,
+            })} />
             <FormattedMessage id="MainFAQ2_header" defaultMessage="What are the fees involved?" />
           </h6>
-          <div
-            className={cx({
-              [styles.tab__content]: true,
-              [styles.tab__content_active]: openedTabs.SECOND_TAB,
-            })}
-          >
+          <div className={cx({
+            [styles.tab__content]: true,
+            [styles.tab__content_active]: openedTabs.SECOND_TAB,
+          })}>
             <p>
-              <FormattedMessage
-                id="MainFAQ2_content"
-                defaultMessage="You pay the standard TX (miners fees) for all transactions you conduct on the platform."
-              />
+              <FormattedMessage id="MainFAQ2_content" defaultMessage="You pay the standard TX (miners fees) for all transactions you conduct on the platform." />
             </p>
             <p>
-              <FormattedMessage
-                id="MainFAQ2_content1"
-                defaultMessage="For ERC20 tokens, it is required that you have at least 0.001 ETH on your wallets. Remember! when sending ERC20 tokens, you are required to hold some ETH as miners fees for transactions. This is also the case for all atomic swaps for ETH & ERC20 tokens."
-              />
+              <FormattedMessage id="MainFAQ2_content1" defaultMessage="For ERC20 tokens, it is required that you have at least 0.001 ETH on your wallets. Remember! when sending ERC20 tokens, you are required to hold some ETH as miners fees for transactions. This is also the case for all atomic swaps for ETH & ERC20 tokens." />
             </p>
             <p>
-              <FormattedMessage
-                id="MainFAQ2_content2"
-                defaultMessage="NOTE: You can easily check the ‘miners fees’ required for each respective coin by simply googling them."
-              />
+              <FormattedMessage id="MainFAQ2_content2" defaultMessage="NOTE: You can easily check the ‘miners fees’ required for each respective coin by simply googling them." />
             </p>
             <FormattedMessage id="MainFAQ2_content3" defaultMessage="Current mining fees:" />
             <div className={styles.descriptionFee}>
               <span>BTC:</span>{' '}
-              {btcFee ? (
-                <span>
-                  <b>{btcFee}</b> sat/byte{' '}
-                  <a className={styles.link} href={externalConfig.api.blockcypher} target="_blank">
-                    <FormattedMessage id="FAQFeeApiLink" defaultMessage="(source)" />
-                  </a>
-                </span>
-              ) : (
-                <InlineLoader />
-              )}
+              {btcFee
+                ? (
+                  <span>
+                    <b>{btcFee}</b> sat/byte
+                    {' '}
+                    <a className={styles.link} href={externalConfig.api.blockcypher} target="_blank">
+                      <FormattedMessage id="FAQFeeApiLink" defaultMessage="(source)" />
+                    </a>
+                  </span>
+                ) : <InlineLoader />
+              }
             </div>
             <div className={styles.descriptionFee}>
               <span>ETH:</span>{' '}
-              {ethFee ? (
-                <span>
-                  <b>{ethFee}</b> gwei{' '}
-                  <a className={styles.link} href={externalConfig.api.defipulse} target="_blank">
-                    <FormattedMessage id="FAQFeeApiLink" defaultMessage="(source)" />
-                  </a>
-                </span>
-              ) : (
-                <InlineLoader />
-              )}
+              {ethFee
+                ? (
+                  <span>
+                    <b>{ethFee}</b> gwei
+                    {' '}
+                    <a className={styles.link} href={externalConfig.api.defipulse} target="_blank">
+                      <FormattedMessage id="FAQFeeApiLink" defaultMessage="(source)" />
+                    </a>
+                  </span>
+                ) : <InlineLoader />
+              }
             </div>
             <br />
             <FormattedMessage id="FAQServiceFee" defaultMessage="Service fee (only withdraw):" />
             <p className={styles.descriptionFee}>
               <span>BTC:</span>{' '}
-              {BtcPrecentFee ? (
-                <span>
-                  {BtcPrecentFee.fee + '%, '}
-                  <FormattedMessage
-                    id="FAQServiceFeeDescription"
-                    defaultMessage="no less than"
-                  />{' '}
-                  <b>{adminFee.calc('BTC', null)}</b> BTC
-                </span>
-              ) : (
-                <span>0%</span>
-              )}
+              {BtcPrecentFee
+                  ? (
+                    <span>
+                      {BtcPrecentFee.fee + '%, '}
+                      <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
+                      {' '}<b>{adminFee.calc('BTC', null)}</b> BTC
+                    </span>
+                  )
+                  : <span>0%</span>
+              }
             </p>
             <p className={styles.descriptionFee}>
               <span>ETH:</span>{' '}
-              {EthPrecentFee ? (
-                <span>
-                  {EthPrecentFee.fee + '%, '}
-                  <FormattedMessage
-                    id="FAQServiceFeeDescription"
-                    defaultMessage="no less than"
-                  />{' '}
-                  <b>{adminFee.calc('ETH', null)}</b> ETH
-                </span>
-              ) : (
-                <span>0%</span>
-              )}
+              {EthPrecentFee
+                  ? (
+                    <span>
+                      {EthPrecentFee.fee + '%, '}
+                      <FormattedMessage id="FAQServiceFeeDescription" defaultMessage="no less than" />
+                      {' '}<b>{adminFee.calc('ETH', null)}</b> ETH
+                    </span>
+                  )
+                  : <span>0%</span>
+              }
             </p>
           </div>
         </article>
