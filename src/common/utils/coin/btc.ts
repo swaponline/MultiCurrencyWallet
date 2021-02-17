@@ -482,6 +482,31 @@ const checkWithdraw = (options) => {
   })
 }
 
+const fetchTxInputScript = (options) => {
+  const {
+    txId,
+    cacheResponse,
+    apiBlocyper,
+    NETWORK,
+  } = options
+
+  return apiLooper.get(apiBlocyper || getBlockcypher(NETWORK), `/txs/${txId}?includeHex=true`, {
+    cacheResponse,
+    checkStatus: (answer) => {
+      try {
+        if (answer && answer.hex !== undefined) return true
+      } catch (e) {}
+      return false
+    },
+    inQuery: {
+      delay: 500,
+      name: `blocyper`,
+    },
+  }).then((inInfo) => {
+    console.log('>>>>>>', inInfo)
+  })
+}
+
 const fetchTxRaw = (options) => {
   const {
     txId,
@@ -816,4 +841,6 @@ export default {
   getCore,
 
   prepareUnspents,
+
+  fetchTxInputScript,
 }

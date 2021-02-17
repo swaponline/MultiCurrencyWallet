@@ -15,6 +15,11 @@ class UTXOBlockchain extends SwapInterface {
   fetchTxInfo: Function = undefined
   estimateFeeValue: Function = undefined
 
+  // Парсит транзакцию, извлекает скрипт для получения секрета
+  // Нужна, если taker создает AB контракт первый, чтобы maker мог получить
+  // секрет из транзакции к UTXO скрипту
+  fetchTxInputScript: Function = undefined
+
   account: string = undefined
   networks: any = undefined
   network: any = undefined
@@ -921,6 +926,18 @@ class UTXOBlockchain extends SwapInterface {
     flow.finishStep({
       [`is${coin}Withdrawn`]: true,
     }, { step: `withdraw-utxo` })
+  }
+
+
+
+  async getSecretFromTxhash(transactionHash) {
+    return util.helpers.repeatAsyncUntilResult(() => {
+      return this.fetchTxInfo(transactionHash).then((txResult) => {
+        console.log(txResult)
+        //txResult.vin[0].scriptSig.asm.split(' ')[2])
+        return true
+      })
+    })
   }
 }
 

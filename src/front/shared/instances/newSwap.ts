@@ -153,6 +153,10 @@ const createSwapApp = async () => {
             ...options,
             NETWORK,
           }),
+          fetchTxInputScript: (options) => bitcoinUtils.fetchTxInputScript({
+            ...options,
+            NETWORK,
+          }),
         }),
         new GhostSwap({
           fetchBalance: (address) => actions.ghost.fetchBalance(address),
