@@ -9,8 +9,8 @@ export default class TurboTaker extends Flow {
   _flowName = 'TurboTaker'
   static getName = () => 'TurboTaker'
 
-  //ethSwap: any
-  //btcSwap: any
+  mySwap: any
+  participantSwap: any
 
   state: {
     step: 0 | 1 | 2 | 3 | 4 | 5 | 6,
@@ -20,6 +20,9 @@ export default class TurboTaker extends Flow {
 
     isBalanceFetching: boolean,
     isBalanceEnough: boolean,
+
+    takerTxHash: null | string
+    makerTxHash: null | string
 
     isStoppedSwap: boolean,
     isFinished: boolean,
@@ -32,14 +35,14 @@ console.log('CONSTRUCTOR swap =', swap)
     this.stepNumbers = {
       'sign': 1,
       'check-balance': 2,
-      'send-to-maker': 3,
+      'send-taker-tx': 3,
       'wait-maker-tx': 4,
       'finish': 5,
       'end': 6
     }
 
-    //this.ethSwap = swap.participantSwap
-    //this.btcSwap = swap.ownerSwap
+    this.mySwap = swap.ownerSwap
+    this.participantSwap = swap.participantSwap
 
     this.state = {
       step: 0,
@@ -49,6 +52,9 @@ console.log('CONSTRUCTOR swap =', swap)
 
       isBalanceFetching: false,
       isBalanceEnough: true,
+
+      takerTxHash: null,
+      makerTxHash: null,
 
       isStoppedSwap: false,
       isFinished: false,
@@ -72,13 +78,13 @@ console.log('CONSTRUCTOR swap =', swap)
     const swap = this.swap
     const room = this.swap.room
 
+    const mySwap = this.mySwap
+    const participantSwap = this.participantSwap
+
     return [
 
-      // 1. 'sign'
-
       async () => {
-        console.log('ENTER Taker flow')
-        console.log('step 1')
+        console.log(`Taker Step 1: 'sign'`)
         console.log('this.swap =', swap)
 
         //flow.swap.processMetamask()
@@ -110,11 +116,21 @@ console.log('CONSTRUCTOR swap =', swap)
         return true
       },
 
-      // 2. 'check-balance'
 
       async () => {
-        console.log('step 2')
+        console.log(`Taker Step 2: 'check-balance'`)
         console.log('this.swap =', swap)
+
+        // just test
+
+        /*const b1 = await mySwap.fetchBalance(swap.participant[swap.buyCurrency.toLowerCase()].address)
+        console.log('b1=', b1)
+
+        const b2 = await participantSwap.fetchBalance(swap.participant[swap.sellCurrency.toLowerCase()].address)
+        console.log('b2=', b2)*/
+
+
+
         /*const { sellAmount } = this.swap
 
         this.setState({
@@ -136,27 +152,69 @@ console.log('CONSTRUCTOR swap =', swap)
         } else {
           this.setState(stateData, true)
         }*/
-        return true
+
+        //return true
+
+        //temp
+        this.finishStep({
+          isBalanceEnough: true,
+        }, { step: 'check-balance' })
       },
 
-      // 3. 'send-to-maker'
 
       () => {
-        
-        const to = swap.participant[swap.sellCurrency].address
-        
+        console.log(`Taker Step 3: 'send-taker-tx'`)
+        console.log('this.swap =', swap)
+
+        // send tx
+
+        const amount = swap.sellAmount
+        const to = swap.participant[swap.sellCurrency.toLowerCase()].address
+
+        console.log(`Send ${amount} ${swap.sellCurrency} to maker address "${to}"...`)
+
+        /*if (mySwap._swapName === 'BTC') {
+        }
+        if (mySwap._swapName === 'ETH') {
+
+        }*/
+
+        // ...
+
+        const txHash = '1324154f6086b6b137be8763f43096cacd5450f9561da061161638ed68ce39c3'
+
+        room.sendMessage({
+          event: 'taker tx sended',
+          data: {
+            txHash,
+          }
+        })
+
+        flow.finishStep({
+          takerTxHash: txHash,
+        }, 'send-taker-tx')
       },
 
-      // 4. 'wait-maker-tx'
 
       () => {
-        // draft
-        //room.on(Message.Maker, () => {})
+        console.log(`Taker Step 4: 'wait-maker-tx'`)
+        console.log('this.swap =', swap)
+
+        room.once('maker tx sended', ({ txHash }) => {
+          console.log(`RECEIVED from maker: tx hash =`, txHash)
+          console.log('check maker tx...')
+          //...
+          console.log('maker tx OK')
+          
+          flow.finishStep({
+            makerTxHash: txHash,
+          }, { step: 'wait-maker-tx' })
+        })
       },
 
-      // 5. 'finish'
 
       () => {
+        console.log(`Taker Step 5: 'finish'`)
         /*room.once('request swap finished', () => {
           const { btcSwapWithdrawTransactionHash } = flow.state
 
@@ -173,9 +231,11 @@ console.log('CONSTRUCTOR swap =', swap)
         }, { step: 'finish' })*/
       },
 
-      // 6. 'end': Finished!
 
-      () => {}
+      () => {
+        console.log(`Taker Step 6: 'end'`)
+        // Finished!
+      }
     ]
   }
 

@@ -10,8 +10,8 @@ export default class TurboMaker extends Flow {
   _flowName = 'TurboMaker'
   static getName = () => 'TurboMaker'
 
-  //ethSwap: any
-  //btcSwap: any
+  mySwap: any
+  participantSwap: any
 
   state: {
     step: 0 | 1 | 2 | 3 | 4 | 5 | 6,
@@ -20,6 +20,9 @@ export default class TurboMaker extends Flow {
 
     isBalanceFetching: boolean,
     isBalanceEnough: boolean,
+
+    takerTxHash: null | string
+    makerTxHash: null | string
 
     isStoppedSwap: boolean,
     isFinished: boolean,
@@ -33,13 +36,13 @@ console.log('CONSTRUCTOR swap =', swap)
       'sign': 1,
       'check-balance': 2,
       'wait-taker-tx': 3,
-      'send-to-taker': 4,
+      'send-maker-tx': 4,
       'finish': 5,
       'end': 6,
     }
 
-    //this.ethSwap = swap.ownerSwap
-    //this.btcSwap = swap.participantSwap
+    this.mySwap = swap.ownerSwap
+    this.participantSwap = swap.participantSwap
 
     this.state = {
       step: 0,
@@ -48,6 +51,9 @@ console.log('CONSTRUCTOR swap =', swap)
 
       isBalanceFetching: false,
       isBalanceEnough: true,
+
+      takerTxHash: null,
+      makerTxHash: null,
 
       isStoppedSwap: false,
       isFinished: false,
@@ -62,13 +68,13 @@ console.log('CONSTRUCTOR swap =', swap)
     const swap = this.swap
     const room = this.swap.room
 
+    const mySwap = this.mySwap
+    const participantSwap = this.participantSwap
+
     return [
 
-      // 1. 'sign'
-
       async () => {
-        console.log('ENTER Maker flow')
-        console.log('step 1')
+        console.log(`Maker Step 1: 'sign'`)
         console.log('this.swap =', swap)
 
         //flow.swap.processMetamask()
@@ -90,11 +96,11 @@ console.log('CONSTRUCTOR swap =', swap)
         })
       },
 
-      // 2. 'check-balance'
 
       async () => {
-        console.log('step 2')
+        console.log(`Maker Step 2: 'check-balance'`)
         console.log('this.swap =', swap)
+
         /*const { sellAmount } = this.swap
 
         this.setState({
@@ -126,25 +132,57 @@ console.log('CONSTRUCTOR swap =', swap)
         } else {
           this.setState(stateData, true)
         }*/
-        return true
+
+        //return true
+
+        //temp
+        this.finishStep({
+          isBalanceEnough: true,
+        }, { step: 'check-balance' })
       },
 
 
-      // 3. 'wait-taker-tx'
-
       () => {
+        console.log(`Maker Step 3: 'wait-taker-tx'`)
+        console.log('this.swap =', swap)
 
+        room.once('taker tx sended', ({ txHash }) => {
+          console.log(`RECEIVED from taker: tx hash =`, txHash)
+          console.log('check taker tx...')
+          //...
+          console.log('taker tx OK')
+          
+          flow.finishStep({
+            takerTxHash: txHash,
+          }, { step: 'wait-taker-tx' })
+        })
       },
 
-      // 4. 'send-to-taker'
 
       () => {
+        console.log(`Maker Step 4: 'send-maker-tx'`)
+        console.log('this.swap =', swap)
 
+        // generate and broadcast tx
+        //...
+
+        const txHash = '162b115f974aa8134f1b5327e120e3c4b2bae72c85372a4432fe79119cd828a1'
+
+        room.sendMessage({
+          event: 'maker tx sended',
+          data: {
+            txHash,
+          }
+        })
+
+        flow.finishStep({
+          makerTxHash: txHash,
+        }, 'send-maker-tx')
       },
 
-      // 5. 'finish'
 
       () => {
+        console.log(`Maker Step 5: 'finish'`)
         /*room.once('swap finished', ({btcSwapWithdrawTransactionHash}) => {
           flow.setState({
             btcSwapWithdrawTransactionHash,
@@ -160,9 +198,11 @@ console.log('CONSTRUCTOR swap =', swap)
         }, 'finish')*/
       },
 
-      // 6. 'end': Finished!
 
-      () => {}
+      () => {
+        console.log(`Maker Step 6: 'end'`)
+        // Finished!
+      }
     ]
   }
 
