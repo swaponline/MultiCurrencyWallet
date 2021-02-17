@@ -4,4 +4,10 @@ import EthTokenSwap from './EthTokenSwap'
 import GhostSwap from './GhostSwap'
 import NextSwap from './NextSwap'
 
-export { BtcSwap, EthSwap, EthTokenSwap, GhostSwap, NextSwap }
+export {
+  BtcSwap,
+  EthSwap,
+  EthTokenSwap,
+  GhostSwap,
+  NextSwap,
+}
