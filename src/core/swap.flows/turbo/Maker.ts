@@ -5,7 +5,6 @@ import { BigNumber } from 'bignumber.js'
 
 
 export default class TurboMaker extends Flow {
-  /* former BTC2ETH */
 
   _flowName = 'TurboMaker'
   static getName = () => 'TurboMaker'
@@ -30,7 +29,7 @@ export default class TurboMaker extends Flow {
 
   constructor(swap) {
     super(swap)
-console.log('CONSTRUCTOR swap =', swap)
+    console.log('Create Maker flow(swap), swap =', swap)
 
     this.stepNumbers = {
       'sign': 1,
@@ -148,9 +147,9 @@ console.log('CONSTRUCTOR swap =', swap)
 
         room.once('taker tx sended', ({ txHash }) => {
           console.log(`RECEIVED from taker: tx hash =`, txHash)
-          console.log('check taker tx...')
-          //...
-          console.log('taker tx OK')
+          console.log('Check taker tx...')
+          //... || this.stopSwapProcess()
+          console.log('Taker tx is OK!')
           
           flow.finishStep({
             takerTxHash: txHash,

@@ -18,16 +18,19 @@ class Flow {
 
     isStoppedSwap?: boolean
     isRefunded?: boolean
-    isFinished?: boolean
+    isFinished: boolean
     isSwapTimeout?: boolean
 
     isSignFetching?: boolean
     isMeSigned?: boolean
 
-    // Turbo swaps state
-
     isBalanceFetching: boolean,
     isBalanceEnough: boolean,
+
+    // Turbo swaps state
+
+    takerTxHash?: null | string
+    makerTxHash?: null | string
 
     // Atomic swaps state
     // -- AB-UTXO

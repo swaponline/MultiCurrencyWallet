@@ -270,6 +270,11 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
     const {
       swapDemo, // todo: remove
       swap,
+      swap: {
+        flow: {
+          state: flowState,
+        },
+      },
     } = this.state
 
     const sellCurrencyKey = swap.sellCurrency.toLowerCase()
@@ -307,7 +312,7 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
 
     return (
       <div styleName="turboSwap">
-        <h1 styleName="pageTitle">Turbo swap </h1>
+        <h1 styleName="pageTitle">Turbo swap</h1>
         <div styleName="swapId">#{swapIdShortened}</div>
         <div styleName={`swapStatus ${swapDemo.status}`}>
           {swapDemo.status == SwapStatus.Pending &&
@@ -326,7 +331,7 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
           <Tx
             amount={swap.isMy ? swap.buyAmount : swap.sellAmount}
             ticker={swap.isMy ? swap.buyCurrency : swap.sellCurrency}
-            id={swapDemo.takerTx.hash}
+            id={flowState.takerTxHash}
             url={'https://google.com'}
             direction={'right'}
             status={swapDemo.takerTx.status}
@@ -346,7 +351,7 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
           <Tx
             amount={swap.isMy ? swap.sellAmount : swap.buyAmount}
             ticker={swap.isMy ? swap.sellCurrency : swap.buyCurrency}
-            id={swapDemo.makerTx.hash}
+            id={flowState.makerTxHash}
             url={'https://google.com'}
             direction={'left'}
             status={swapDemo.makerTx.status}

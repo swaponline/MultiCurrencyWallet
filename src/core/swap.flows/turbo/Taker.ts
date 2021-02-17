@@ -4,7 +4,6 @@ import { Flow } from 'swap.swap'
 
 
 export default class TurboTaker extends Flow {
-  /* former ETH2BTC */
 
   _flowName = 'TurboTaker'
   static getName = () => 'TurboTaker'
@@ -30,7 +29,7 @@ export default class TurboTaker extends Flow {
 
   constructor(swap) {
     super(swap)
-console.log('CONSTRUCTOR swap =', swap)
+    console.log('Create Taker flow (swap), =', swap)
 
     this.stepNumbers = {
       'sign': 1,
@@ -178,10 +177,11 @@ console.log('CONSTRUCTOR swap =', swap)
         if (mySwap._swapName === 'ETH') {
 
         }*/
-
         // ...
 
         const txHash = '1324154f6086b6b137be8763f43096cacd5450f9561da061161638ed68ce39c3'
+        
+        console.log('Sended! txHash = ')
 
         room.sendMessage({
           event: 'taker tx sended',
@@ -202,9 +202,9 @@ console.log('CONSTRUCTOR swap =', swap)
 
         room.once('maker tx sended', ({ txHash }) => {
           console.log(`RECEIVED from maker: tx hash =`, txHash)
-          console.log('check maker tx...')
-          //...
-          console.log('maker tx OK')
+          console.log('Check maker tx...')
+          //... || this.stopSwapProcess()
+          console.log('Maker tx is OK!')
           
           flow.finishStep({
             makerTxHash: txHash,
