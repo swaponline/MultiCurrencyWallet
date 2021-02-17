@@ -5,6 +5,7 @@ import SwapRoom from 'swap.room'
 import aggregation from './aggregation'
 import events from './events'
 import Order from './Order'
+import visibleMakers from 'common/whitelists/visibleMakers'
 
 
 const checkIncomeOrderFormat = (order) => {
@@ -61,15 +62,8 @@ const checkIncomeOrderOwner = ({ owner: { peer } }, fromPeer) =>
   peer === fromPeer
 
 
-const visibleMakersWhitelist: string[] = [
-  // any maker will be allowed if the list is empty
-  // add peer ids:
-  // 'Q...',
-  'QmQNFe3C3jsP8vC6DjBRCMdtxpkJzXXTzUBggm4EwECMpC',
-]
-
 const checkIncomeOrderWhitelisted = ({ owner: { peer } }) => {
-  return !visibleMakersWhitelist.length || visibleMakersWhitelist.includes(peer)
+  return !visibleMakers.length || visibleMakers.includes(peer)
 }
 
 const checkIncomeOrder = (order, fromPeer) => {
