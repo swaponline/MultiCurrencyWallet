@@ -9,8 +9,7 @@
   "main": "./src/front/bin/server",
   "lint-staged": {
     "**/*.+(js|json|ts|tsx)": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   },
   "scripts": {
