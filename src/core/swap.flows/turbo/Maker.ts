@@ -27,6 +27,7 @@ export default class TurboMaker extends Flow {
 
   constructor(swap) {
     super(swap)
+console.log('CONSTRUCTOR swap =', swap)
 
     this.stepNumbers = {
       'sign': 1,
@@ -39,13 +40,6 @@ export default class TurboMaker extends Flow {
 
     //this.ethSwap = swap.ownerSwap
     //this.btcSwap = swap.participantSwap
-
-    /*if (!this.ethSwap) {
-      throw new Error('BTC2ETH: "ethSwap" of type object required')
-    }
-    if (!this.btcSwap) {
-      throw new Error('BTC2ETH: "btcSwap" of type object required')
-    }*/
 
     this.state = {
       step: 0,

@@ -8,11 +8,12 @@ class EthSwap extends SwapInterface {
 
   address: string
   abi: any[]
-  _swapName: any
+  _swapName: string
   gasLimit: number
   gasPrice: number
-  fetchBalance: any
-  estimateGasPrice: any
+  fetchBalance: Function
+  broadcastTx: Function
+  estimateGasPrice: Function
 
   app: any
   decoder: any
