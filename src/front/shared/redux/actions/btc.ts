@@ -559,15 +559,16 @@ const sendTransaction = async ({ to, amount }) => {
 
   const { user: { btcData: { address } } } = getState()
 
-  /*const txHash = await send({
+  if (true) { // fake tx - turboswaps debug
+    const txHash = '1324154f6086b6b137be8763f43096cacd5450f9561da061161638ed68ce39c3'
+  }
+
+  const txHash = await send({
     from: address,
     to,
     amount,
     speed: 'fast',
-  })*/
-
-  // fake tx for TurboSwaps debug
-  const txHash = '1324154f6086b6b137be8763f43096cacd5450f9561da061161638ed68ce39c3'
+  })
 
   return txHash
 }

@@ -352,8 +352,8 @@ const send = (data) => {
     ? sendWithAdminFee(data)
     : sendDefault(data)
 }
-//@ts-ignore
-const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed } = {}) => {
+
+const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed }) => {
   const web3js = await getWeb3()
 
   const {
@@ -441,8 +441,8 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed } 
     })
   })
 }
-//@ts-ignore
-const sendDefault = ({ from, to, amount, gasPrice, gasLimit, speed } = {}) => {
+
+const sendDefault = ({ from, to, amount, gasPrice, gasLimit, speed }) => {
   return new Promise(async (resolve, reject) => {
     const web3js = getWeb3()
 
@@ -489,14 +489,22 @@ const sendDefault = ({ from, to, amount, gasPrice, gasLimit, speed } = {}) => {
   })
 }
 
-const sendTransaction = ({ to, amount }) => {
+const sendTransaction = async ({ to, amount }) => {
   // from main eth wallet
-  console.log('actions/eth.ts sendTransaction TODO')
 
-  // todo: real send
+  const { user: { ethData: { address } } } = getState()
 
-  // fake tx for TurboSwaps debug
-  const txHash = '0x58facdbf5023a401f39998179995f0af1e54a64455145df6ed507abdecc1b0a4'
+  if (true) { // fake tx - turboswaps debug
+    const txHash = '0x58facdbf5023a401f39998179995f0af1e54a64455145df6ed507abdecc1b0a4'
+  }
+
+  const receipt = await sendDefault({
+    from: address,
+    to,
+    amount,
+  })
+
+  const txHash = receipt.transactionHash
 
   return txHash
 }
