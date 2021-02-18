@@ -88,11 +88,6 @@ class UTXOBlockchain extends SwapInterface {
         return { txid, vout }
       }
     )
-
-    if (this._swapName === constants.COINS.btc) {
-      console.log('>>>>>>>>>>>>>>>', this.fetchTxInputScript, options)
-      window.getSecretFromTxhash = (txHash) => this.getSecretFromTxhash(txHash)
-    }
   }
 
   _initSwap(app) {

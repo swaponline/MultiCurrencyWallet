@@ -7,10 +7,9 @@ import typeforce from 'swap.app/util/typeforce'
 import { default as TESTNET } from '../../../front/config/testnet/api'
 import { default as MAINNET } from '../../../front/config/mainnet/api'
 
+
 const DUST = 546
 
-window.bitcoinjs = bitcoin
-window.Buffer = Buffer
 const getBitpay = (network) => {
   return {
     name: `apiBitpay`,

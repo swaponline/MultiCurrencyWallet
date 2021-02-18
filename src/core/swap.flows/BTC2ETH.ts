@@ -155,6 +155,16 @@ class BTC2ETH extends AtomicAB2UTXO {
       ]
     } else {
       return [
+        /*
+        
+        Signs - обмен хешем
+        syncBalance
+        wait taker create AB
+        create UTXO
+        wait withdraw UTXO - fetch secret from TX
+        withdraw from AB
+        finish
+        */
       ]
     }
   }
