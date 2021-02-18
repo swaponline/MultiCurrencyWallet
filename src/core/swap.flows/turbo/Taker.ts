@@ -21,7 +21,10 @@ export default class TurboTaker extends Flow {
     isBalanceEnough: boolean,
 
     takerTxHash: null | string
+    isTakerTxPended: boolean
+
     makerTxHash: null | string
+    isMakerTxPended: boolean
 
     isStoppedSwap: boolean,
     isFinished: boolean,
@@ -53,7 +56,10 @@ export default class TurboTaker extends Flow {
       isBalanceEnough: true,
 
       takerTxHash: null,
+      isTakerTxPended: false,
+
       makerTxHash: null,
+      isMakerTxPended: false,
 
       isStoppedSwap: false,
       isFinished: false,
@@ -198,6 +204,7 @@ export default class TurboTaker extends Flow {
 
         flow.finishStep({
           takerTxHash: txHash,
+          isTakerTxPended: true, // todo later
         }, 'send-taker-tx')
       },
 
@@ -214,6 +221,7 @@ export default class TurboTaker extends Flow {
           
           flow.finishStep({
             makerTxHash: txHash,
+            isMakerTxPended: true, // todo later
           }, { step: 'wait-maker-tx' })
         })
       },

@@ -21,7 +21,10 @@ export default class TurboMaker extends Flow {
     isBalanceEnough: boolean,
 
     takerTxHash: null | string
+    isTakerTxPended: boolean
+
     makerTxHash: null | string
+    isMakerTxPended: boolean
 
     isStoppedSwap: boolean,
     isFinished: boolean,
@@ -52,7 +55,10 @@ export default class TurboMaker extends Flow {
       isBalanceEnough: true,
 
       takerTxHash: null,
+      isTakerTxPended: false,
+
       makerTxHash: null,
+      isMakerTxPended: false,
 
       isStoppedSwap: false,
       isFinished: false,
@@ -150,9 +156,10 @@ export default class TurboMaker extends Flow {
           console.log('Check taker tx...')
           //... || this.stopSwapProcess()
           console.log('Taker tx is OK!')
-          
+
           flow.finishStep({
             takerTxHash: txHash,
+            isTakerTxPended: true, // todo later
           }, { step: 'wait-taker-tx' })
         })
       },
@@ -176,6 +183,7 @@ export default class TurboMaker extends Flow {
 
         flow.finishStep({
           makerTxHash: txHash,
+          isMakerTxPended: true, // todo later
         }, 'send-maker-tx')
       },
 

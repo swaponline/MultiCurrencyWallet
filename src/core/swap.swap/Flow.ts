@@ -30,7 +30,10 @@ class Flow {
     // Turbo swaps state
 
     takerTxHash?: null | string
+    isTakerTxPended?: boolean
+
     makerTxHash?: null | string
+    isMakerTxPended?: boolean
 
     // Atomic swaps state
     // -- AB-UTXO

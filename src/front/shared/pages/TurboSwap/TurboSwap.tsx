@@ -24,13 +24,12 @@ import TxSide from './TxSide'
 import Tx from './Tx'
 
 
-import { ITurboSwap, TurboSwapStep, SwapSide, SwapStatus, SwapTxStatus } from 'common/domain/swap'
+import { SwapSide, SwapStatus, SwapTxStatus } from 'common/domain/swap'
 
 
 
 interface ITurboSwapState {
   swap: Swap
-  swapDemo: ITurboSwap
 }
 
 @injectIntl
@@ -66,38 +65,8 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
     //@ts-ignore
     super()
 
-    const swapDemo: ITurboSwap = {
-      id: '...',
-      conditions: {
-        mySide: SwapSide.Taker,
-        coinA: {
-          ticker: 'BTC',
-          amount: new BigNumber(0.123),
-          takerAddress: '13sC2KJNjDs7CwAifzgWa5XqWaKfShpL2z',
-          makerAddress: '18v1YXxJgQ6RA4m4Kmz61RLhRM16RsAb1D',
-        },
-        coinB: {
-          ticker: 'ETH',
-          amount: new BigNumber(0.0456),
-          takerAddress: '0x1ca43b645886c98d7eb7d27ec16ea59f509cbe1a',
-          makerAddress: '0x26352d20e6a05e04a1ecc75d4a43ae9989272621',
-        },
-      },
-      mySide: SwapSide.Taker,
-      status: SwapStatus.Pending,
-      takerTx: {
-        status: SwapTxStatus.Expected,
-        hash: null,
-      },
-      makerTx: {
-        status: SwapTxStatus.Expected,
-        hash: null,
-      }
-    }
-
     this.state = {
       swap: null,
-      swapDemo,
     }
   }
 
@@ -172,57 +141,8 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
     }*/
 
     feedback.swap.started(JSON.stringify({
-      //... 
+      // todo
     }))
-
-    // demo
-    const takerTxHash = '61c975570a624818615adc8c77a756cc003df7e4a66a91fb8a9bff8f926e15b2'
-    const makerTxHash = '0xaf8b87662e5fc6824768de522421563799473009c4b34f033831aaeef2e5c7c1'
-
-    setTimeout(() => {
-      const swapDemo = {...this.state.swapDemo}
-      swapDemo.takerTx = {
-        status: SwapTxStatus.Pending,
-        hash: takerTxHash
-      }
-      this.setState({
-        swapDemo
-      })
-    }, 3000)
-
-    setTimeout(() => {
-      const swapDemo = {...this.state.swapDemo}
-      swapDemo.takerTx = {
-        status: SwapTxStatus.Done,
-        hash: takerTxHash
-      }
-      this.setState({
-        swapDemo
-      })
-    }, 6000)
-
-    setTimeout(() => {
-      const swapDemo = {...this.state.swapDemo}
-      swapDemo.makerTx = {
-        status: SwapTxStatus.Pending,
-        hash: makerTxHash
-      }
-      this.setState({
-        swapDemo
-      })
-    }, 9000)
-
-    setTimeout(() => {
-      const swapDemo = {...this.state.swapDemo}
-      swapDemo.makerTx = {
-        status: SwapTxStatus.Done,
-        hash: makerTxHash
-      },
-      swapDemo.status = SwapStatus.Finished
-      this.setState({
-        swapDemo
-      })
-    }, 12000)
 
   }
 
@@ -269,7 +189,6 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
     } = this.props
 
     const {
-      swapDemo, // todo: remove
       swap,
       swap: {
         flow: {
@@ -315,6 +234,13 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
       amount: swap.isMy ? swap.buyAmount : swap.sellAmount,
       currency: swap.isMy ? swap.buyCurrency : swap.sellCurrency,
       hash: flowState.takerTxHash,
+      status: flowState.takerTxHash ?
+        SwapTxStatus.Expected
+        :
+        !flowState.isTakerTxPended ?
+          SwapTxStatus.Pending
+          :
+          SwapTxStatus.Done,
       url: null,
     }
     takerTx.url = takerTx.hash ? helpers.transactions.getLink(takerTx.currency.toLowerCase(), takerTx.hash) : null
@@ -323,19 +249,28 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
       amount: swap.isMy ? swap.sellAmount : swap.buyAmount,
       currency: swap.isMy ? swap.sellCurrency : swap.buyCurrency,
       hash: flowState.makerTxHash,
+      status: flowState.makerTxHash ?
+        SwapTxStatus.Expected
+        :
+        !flowState.isMakerTxPended ?
+          SwapTxStatus.Pending
+          :
+          SwapTxStatus.Done,
       url: null,
     }
     makerTx.url = makerTx.hash ? helpers.transactions.getLink(makerTx.currency.toLowerCase(), makerTx.hash) : null
+
+    const swapStatus: SwapStatus = flowState.isFinished ? SwapStatus.Pending : SwapStatus.Finished
 
     return (
       <div styleName="turboSwap">
         <h1 styleName="pageTitle">Turbo swap</h1>
         <div styleName="swapId">#{swapIdShortened}</div>
-        <div styleName={`swapStatus ${swapDemo.status}`}>
-          {swapDemo.status == SwapStatus.Pending &&
+        <div styleName={`swapStatus ${swapStatus}`}>
+          {swapStatus === SwapStatus.Pending &&
             <span>Pending...</span>
           }
-          {swapDemo.status == SwapStatus.Finished &&
+          {swapStatus === SwapStatus.Finished &&
             <span>Finished!</span>
           }
         </div>
@@ -351,7 +286,7 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
             id={takerTx.hash}
             url={takerTx.url}
             direction={'right'}
-            status={swapDemo.takerTx.status}
+            status={takerTx.status}
           />
           <TxSide
             title={swap.isMy ? 'You' : 'Maker'}
@@ -371,7 +306,7 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
             id={makerTx.hash}
             url={makerTx.url}
             direction={'left'}
-            status={swapDemo.makerTx.status}
+            status={makerTx.status}
           />
           <TxSide
             title={swap.isMy ? 'You' : 'Maker'}

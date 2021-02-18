@@ -557,23 +557,18 @@ const send = ({ from, to, amount, feeValue = null, speed }) => {
 const sendTransaction = async ({ to, amount }) => {
   // from main btc wallet
 
-  console.log('>>> sendTransaction', to, amount)
-
   const { user: { btcData: { address } } } = getState()
 
-  console.log('getState:', getState())
-  console.log('address', address)
-
-  const txHash = await send({
+  /*const txHash = await send({
     from: address,
     to,
     amount,
     speed: 'fast',
-  })
+  })*/
 
-  console.log('TX Sended!', txHash)
+  // fake tx for TurboSwaps debug
+  const txHash = '1324154f6086b6b137be8763f43096cacd5450f9561da061161638ed68ce39c3'
 
-  //const txHash = '1324154f6086b6b137be8763f43096cacd5450f9561da061161638ed68ce39c3'
   return txHash
 }
 
