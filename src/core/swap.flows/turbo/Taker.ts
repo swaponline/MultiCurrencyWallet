@@ -161,7 +161,7 @@ export default class TurboTaker extends Flow {
       },
 
 
-      () => {
+      async () => {
         console.log(`Taker Step 3: 'send-taker-tx'`)
         console.log('this.swap =', swap)
 
@@ -172,16 +172,22 @@ export default class TurboTaker extends Flow {
 
         console.log(`Send ${amount} ${swap.sellCurrency} to maker address "${to}"...`)
 
-        /*if (mySwap._swapName === 'BTC') {
+        let usedSwap
+        if (mySwap._swapName === swap.sellCurrency.toUpperCase()) {
+          usedSwap = mySwap
         }
-        if (mySwap._swapName === 'ETH') {
+        if (participantSwap._swapName === swap.sellCurrency.toUpperCase()) {
+          usedSwap = participantSwap
+        }
+        if (!usedSwap) {
+          throw new Error(`No swap for ${swap.sellCurrency}`)
+        }
 
-        }*/
-        // ...
+        console.log('Swap found!', usedSwap)
 
-        const txHash = '1324154f6086b6b137be8763f43096cacd5450f9561da061161638ed68ce39c3'
-        
-        console.log('Sended! txHash = ')
+        const txHash = await usedSwap.sendTransaction({ to, amount })
+
+        console.log(`Sended! txHash = ${txHash}`)
 
         room.sendMessage({
           event: 'taker tx sended',

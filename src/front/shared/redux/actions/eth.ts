@@ -489,6 +489,10 @@ const sendDefault = ({ from, to, amount, gasPrice, gasLimit, speed } = {}) => {
   })
 }
 
+const sendTransaction = ({ to, amount }) => {
+  console.log('actions/eth.ts sendTransaction TODO')
+}
+
 const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
   const url = `?module=proxy&action=eth_getTransactionByHash&txhash=${hash}&apikey=${config.api.etherscan_ApiKey}`
 
@@ -562,5 +566,6 @@ export default {
   getSweepAddress,
   getAllMyAddresses,
   fetchTxInfo,
+  sendTransaction,
   getTxRouter,
 }

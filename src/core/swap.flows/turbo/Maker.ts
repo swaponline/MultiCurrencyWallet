@@ -165,7 +165,7 @@ export default class TurboMaker extends Flow {
         // generate and broadcast tx
         //...
 
-        const txHash = '162b115f974aa8134f1b5327e120e3c4b2bae72c85372a4432fe79119cd828a1'
+        const txHash = '0x58facdbf5023a401f39998179995f0af1e54a64455145df6ed507abdecc1b0a4'
 
         room.sendMessage({
           event: 'maker tx sended',

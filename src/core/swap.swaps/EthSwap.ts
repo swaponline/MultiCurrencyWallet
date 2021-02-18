@@ -12,8 +12,8 @@ class EthSwap extends SwapInterface {
   gasLimit: number
   gasPrice: number
   fetchBalance: Function
-  broadcastTx: Function
   estimateGasPrice: Function
+  sendTransaction: Function
 
   app: any
   decoder: any
@@ -53,6 +53,7 @@ class EthSwap extends SwapInterface {
     this.gasPrice       = options.gasPrice || 2e9
     this.fetchBalance   = options.fetchBalance
     this.estimateGasPrice = options.estimateGasPrice || (() => {})
+    this.sendTransaction = options.sendTransaction
   }
 
   _initSwap(app) {
