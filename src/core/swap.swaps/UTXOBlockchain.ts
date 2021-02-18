@@ -71,6 +71,9 @@ class UTXOBlockchain extends SwapInterface {
     this.fetchTxInfo    = options.fetchTxInfo || (() => {})
     this.estimateFeeValue = options.estimateFeeValue || (() => 0)
 
+    // UTXO side is taker
+    this.fetchTxInputScript = options.fetchTxInputScript || undefined
+
     this.account        = options.account || `btc`
     this.networks       = options.networks
 
