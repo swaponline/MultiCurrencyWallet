@@ -187,9 +187,9 @@ export default class TurboTaker extends Flow {
         }
         if (!usedSwap) {
           throw new Error(`No swap for ${swap.sellCurrency}`)
+        } else {
+          console.log('Swap found!', usedSwap)
         }
-
-        console.log('Swap found!', usedSwap)
 
         const txHash = await usedSwap.sendTransaction({ to, amount })
 
@@ -216,6 +216,7 @@ export default class TurboTaker extends Flow {
         room.once('maker tx sended', ({ txHash }) => {
           console.log(`RECEIVED from maker: tx hash =`, txHash)
           console.log('Check maker tx...')
+          // todo: tx check
           //... || this.stopSwapProcess()
           console.log('Maker tx is OK!')
           

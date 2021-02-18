@@ -154,6 +154,7 @@ export default class TurboMaker extends Flow {
         room.once('taker tx sended', ({ txHash }) => {
           console.log(`RECEIVED from taker: tx hash =`, txHash)
           console.log('Check taker tx...')
+          // todo: tx check
           //... || this.stopSwapProcess()
           console.log('Taker tx is OK!')
 
@@ -165,14 +166,33 @@ export default class TurboMaker extends Flow {
       },
 
 
-      () => {
+      async () => {
         console.log(`Maker Step 4: 'send-maker-tx'`)
         console.log('this.swap =', swap)
 
-        // generate and broadcast tx
-        //...
+        // send tx
+        
+        const amount = swap.sellAmount
+        const to = swap.participant[swap.sellCurrency.toLowerCase()].address
 
-        const txHash = '0x58facdbf5023a401f39998179995f0af1e54a64455145df6ed507abdecc1b0a4'
+        console.log(`Send ${amount} ${swap.sellCurrency} to taker address "${to}"...`)
+
+        let usedSwap
+        if (mySwap._swapName === swap.sellCurrency.toUpperCase()) {
+          usedSwap = mySwap
+        }
+        if (participantSwap._swapName === swap.sellCurrency.toUpperCase()) {
+          usedSwap = participantSwap
+        }
+        if (!usedSwap) {
+          throw new Error(`No swap for ${swap.sellCurrency}`)
+        } else {
+          console.log('Swap found!', usedSwap)
+        }
+
+        const txHash = await usedSwap.sendTransaction({ to, amount })
+
+        console.log(`Sended! txHash = ${txHash}`)
 
         room.sendMessage({
           event: 'maker tx sended',

@@ -490,7 +490,15 @@ const sendDefault = ({ from, to, amount, gasPrice, gasLimit, speed } = {}) => {
 }
 
 const sendTransaction = ({ to, amount }) => {
+  // from main eth wallet
   console.log('actions/eth.ts sendTransaction TODO')
+
+  // todo: real send
+
+  // fake tx for TurboSwaps debug
+  const txHash = '0x58facdbf5023a401f39998179995f0af1e54a64455145df6ed507abdecc1b0a4'
+
+  return txHash
 }
 
 const fetchTxInfo = (hash, cacheResponse) => new Promise((resolve) => {
