@@ -442,7 +442,7 @@ const sendWithAdminFee = async ({ from, to, amount, gasPrice, gasLimit, speed })
   })
 }
 
-const sendDefault = ({ from, to, amount, gasPrice, gasLimit, speed }) => {
+const sendDefault = ({ from, to, amount, gasPrice = null, gasLimit = null, speed = null }) => {
   return new Promise(async (resolve, reject) => {
     const web3js = getWeb3()
 
@@ -496,6 +496,7 @@ const sendTransaction = async ({ to, amount }) => {
 
   if (true) { // fake tx - turboswaps debug
     const txHash = '0x58facdbf5023a401f39998179995f0af1e54a64455145df6ed507abdecc1b0a4'
+    return txHash
   }
 
   const receipt = await sendDefault({
@@ -504,6 +505,8 @@ const sendTransaction = async ({ to, amount }) => {
     amount,
   })
 
+  // @ts-ignore
+  // todo: IReceipt (?)
   const txHash = receipt.transactionHash
 
   return txHash
