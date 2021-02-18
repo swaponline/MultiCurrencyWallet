@@ -1307,12 +1307,9 @@ export default class Exchange extends Component<any, any> {
 
   getCorrectDecline = () => {
     const { decline } = this.props
-    const localSavedOrdersString = localStorage.getItem(constants.localStorage.savedOrders)
+    const localSavedOrders = localStorage.getItem(constants.localStorage.savedOrders)
 
-    if (!localSavedOrdersString) return
-    const localSavedOrders = JSON.parse(localSavedOrdersString)
-
-    if (localSavedOrders.length !== decline.length) {
+    if (!localSavedOrders || localSavedOrders.length !== decline.length) {
       return
     }
 
@@ -1321,7 +1318,7 @@ export default class Exchange extends Component<any, any> {
       .filter((swap) => {
         const { isFinished, isRefunded, isStoppedSwap } = swap.flow.state
         // if timeout - skip this swap. for refund, if need - use history page
-        const lifeTimeout = swap.checkTimeout(60 * 60 * 3)
+        const lifeTimeout = swap.checkTimeout(60 * 60 * 3) // 3 hours
         return isFinished || isRefunded || isStoppedSwap || lifeTimeout
       })
 
