@@ -7,11 +7,6 @@
   "homepage": "https://swaponline.io",
   "license": "MIT",
   "main": "./src/front/bin/server",
-  "lint-staged": {
-    "**/*.+(js|json|ts|tsx)": [
-      "prettier --write"
-    ]
-  },
   "scripts": {
     "common:test": "tsc ./src/common/tests/tests.ts",
     "common:example:send": "node ./src/common/examples/send.js",
@@ -75,7 +70,6 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
       "post-commit": "npm run common:test && npm run core:test"
     }
   },
