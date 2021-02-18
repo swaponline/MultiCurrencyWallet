@@ -33,5 +33,5 @@ export default {
   isDark: 'isDark',
 
   prevWPUser: 'wp_widget_prev_userid',
-  exchangeData: 'exchangeData',
+  exchangeSettings: 'exchangeSettings',
 }
