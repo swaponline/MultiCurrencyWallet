@@ -9,6 +9,8 @@ import { default as MAINNET } from '../../../front/config/mainnet/api'
 
 const DUST = 546
 
+window.bitcoinjs = bitcoin
+window.Buffer = Buffer
 const getBitpay = (network) => {
   return {
     name: `apiBitpay`,
@@ -502,8 +504,18 @@ const fetchTxInputScript = (options) => {
       delay: 500,
       name: `blocyper`,
     },
-  }).then((inInfo) => {
-    console.log('>>>>>>', inInfo)
+  }).then((inInfo: any) => {
+    if (inInfo
+      && inInfo.inputs
+      && inInfo.inputs.length === 1
+    ) {
+      return bitcoin.script.toASM(
+        bitcoin.script.decompile(
+          Buffer.from(inInfo.inputs[0].script, 'hex')
+        )
+      )
+    }
+    return false
   })
 }
 

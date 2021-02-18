@@ -88,6 +88,11 @@ class UTXOBlockchain extends SwapInterface {
         return { txid, vout }
       }
     )
+
+    if (this._swapName === constants.COINS.btc) {
+      console.log('>>>>>>>>>>>>>>>', this.fetchTxInputScript, options)
+      window.getSecretFromTxhash = (txHash) => this.getSecretFromTxhash(txHash)
+    }
   }
 
   _initSwap(app) {
@@ -931,15 +936,24 @@ class UTXOBlockchain extends SwapInterface {
     }, { step: `withdraw-utxo` })
   }
 
-
-
-  async getSecretFromTxhash(transactionHash) {
-    return util.helpers.repeatAsyncUntilResult(() => {
-      return this.fetchTxInfo(transactionHash).then((txResult) => {
-        console.log(txResult)
-        //txResult.vin[0].scriptSig.asm.split(' ')[2])
-        return true
-      })
+  getSecretFromTxhash(transactionHash) {
+    return new Promise((resolve) => {
+      if (this.fetchTxInputScript !== undefined) {
+        this.fetchTxInputScript({
+          txId: transactionHash,
+        }).then((txResult) => {
+          if (txResult) {
+            const scriptOpts = txResult.split(' ')
+            if (scriptOpts.length>3) {
+              resolve(scriptOpts[2])
+              return
+            }
+          }
+          resolve(false)
+        })
+      } else {
+        resolve(false)
+      }
     })
   }
 }
