@@ -27,9 +27,6 @@ import Tx from './Tx'
 import { ITurboSwap, TurboSwapStep, SwapSide, SwapStatus, SwapTxStatus } from 'common/domain/swap'
 
 
-const takerTxHash = '61c975570a624818615adc8c77a756cc003df7e4a66a91fb8a9bff8f926e15b2'
-const makerTxHash = '0xaf8b87662e5fc6824768de522421563799473009c4b34f033831aaeef2e5c7c1'
-
 
 interface ITurboSwapState {
   swap: Swap
@@ -178,6 +175,10 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
       //... 
     }))
 
+    // demo
+    const takerTxHash = '61c975570a624818615adc8c77a756cc003df7e4a66a91fb8a9bff8f926e15b2'
+    const makerTxHash = '0xaf8b87662e5fc6824768de522421563799473009c4b34f033831aaeef2e5c7c1'
+
     setTimeout(() => {
       const swapDemo = {...this.state.swapDemo}
       swapDemo.takerTx = {
@@ -310,6 +311,22 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
       ).join('-')
 
 
+    const takerTx = {
+      amount: swap.isMy ? swap.buyAmount : swap.sellAmount,
+      currency: swap.isMy ? swap.buyCurrency : swap.sellCurrency,
+      hash: flowState.takerTxHash,
+      url: null,
+    }
+    takerTx.url = takerTx.hash ? helpers.transactions.getLink(takerTx.currency.toLowerCase(), takerTx.hash) : null
+
+    const makerTx = {
+      amount: swap.isMy ? swap.sellAmount : swap.buyAmount,
+      currency: swap.isMy ? swap.sellCurrency : swap.buyCurrency,
+      hash: flowState.makerTxHash,
+      url: null,
+    }
+    makerTx.url = makerTx.hash ? helpers.transactions.getLink(makerTx.currency.toLowerCase(), makerTx.hash) : null
+
     return (
       <div styleName="turboSwap">
         <h1 styleName="pageTitle">Turbo swap</h1>
@@ -329,10 +346,10 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
             address={swap.isMy ? participantAddressSend : myAddressSend}
           />
           <Tx
-            amount={swap.isMy ? swap.buyAmount : swap.sellAmount}
-            ticker={swap.isMy ? swap.buyCurrency : swap.sellCurrency}
-            id={flowState.takerTxHash}
-            url={'https://google.com'}
+            amount={takerTx.amount}
+            ticker={takerTx.currency}
+            id={takerTx.hash}
+            url={takerTx.url}
             direction={'right'}
             status={swapDemo.takerTx.status}
           />
@@ -349,10 +366,10 @@ export default class TurboSwap extends PureComponent<any, ITurboSwapState> {
             address={swap.isMy ? participantAddressReceive : myAddressReceive}
           />
           <Tx
-            amount={swap.isMy ? swap.sellAmount : swap.buyAmount}
-            ticker={swap.isMy ? swap.sellCurrency : swap.buyCurrency}
-            id={flowState.makerTxHash}
-            url={'https://google.com'}
+            amount={makerTx.amount}
+            ticker={makerTx.currency}
+            id={makerTx.hash}
+            url={makerTx.url}
             direction={'left'}
             status={swapDemo.makerTx.status}
           />
