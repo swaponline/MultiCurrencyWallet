@@ -189,57 +189,6 @@ const bannedPeers = {} // rejected swap peers
 )
 @CSSModules(styles, { allowMultiple: true })
 export default class Exchange extends Component<any, any> {
-  /**
-   * @method getDefaultWalletForCurrency
-   * @method getExchangeDataFromLocalStorage
-   * @method getLinkToDeclineSwap
-   * @method getUserDefaultWallet
-   * @method getCorrectDecline
-   * @method getCoinFullName
-   * @method getFiatBalance
-   * @method getCoinData
-   * @method getBalance
-   *
-   * @method setUserDefaultWallet
-   * @method setAmountOnState
-   * @method setDeclinedOffer
-   * @method setOrderOnState
-   * @method setNoOfferState
-   * @method setAmount
-   * @method setOrders
-   *
-   * @method checkBalanceOnAllCurrency
-   * @method checkoutLowAmount
-   * @method checkSwapAllow
-   * @method checkValidUrl
-   * @method checkUrl
-   * @method checkPair
-   *
-   * @method makeAddressObject
-   * @method rmScrollAdvice
-   * @method changeUrl
-   * @method fetchPairFeesAndBalances
-   * @method fetchFiatExRate
-   * @method createOffer
-   * @method initSwap
-   * @method openModalDeclineOrders
-   * @method sendRequestForPartial
-   * @method returnNeedCurrency
-   * @method findGoodOrder
-   * @method isPeerBanned
-   * @method banPeer
-   * @method handleSetGetValue
-   * @method handleSetHaveValue
-   * @method applyAddress
-   * @method flipCurrency
-   * @method resetState
-   * @method chooseCurrencyToRender
-   * @method extendedControlsSet
-   * @method doesComissionPreventThisOrder
-   * @method goDeclimeFaq
-   * @method showIncompleteSwap
-   */
-
   props: ExchangeProps
   state: ExchangeState
 
@@ -304,13 +253,13 @@ export default class Exchange extends Component<any, any> {
     let haveCurrency = sell || 'btc'
     let getCurrency = buy || (!isWidgetBuild ? 'eth' : config.erc20token)
 
-    const exchangeDataStr = localStorage.getItem(constants.localStorage.exchangeData)
+    const exchangeDataStr = localStorage.getItem(constants.localStorage.exchangeSettings)
     console.log('EXCHANGE DATA STR FROM CONSTRUCTOR: ', exchangeDataStr)
-    const exchangeData = exchangeDataStr && JSON.parse(exchangeDataStr)
+    const exchangeSettings = exchangeDataStr && JSON.parse(exchangeDataStr)
     // to get data from last session
-    if (exchangeData && exchangeData.currency) {
-      haveCurrency = exchangeData.currency.sell || haveCurrency
-      getCurrency = exchangeData.currency.buy || getCurrency
+    if (exchangeSettings && exchangeSettings.currency) {
+      haveCurrency = exchangeSettings.currency.sell || haveCurrency
+      getCurrency = exchangeSettings.currency.buy || getCurrency
     }
 
     this.returnNeedCurrency(haveCurrency, getCurrency)
@@ -391,7 +340,7 @@ export default class Exchange extends Component<any, any> {
   }
 
   getExchangeDataFromLocalStorage() {
-    const exchangeDataStr = localStorage.getItem(constants.localStorage.exchangeData)
+    const exchangeDataStr = localStorage.getItem(constants.localStorage.exchangeSettings)
 
     if (exchangeDataStr) {
       return JSON.parse(exchangeDataStr)
@@ -400,8 +349,8 @@ export default class Exchange extends Component<any, any> {
   }
 
   getUserDefaultWallet(currency) {
-    const exchangeData = this.getExchangeDataFromLocalStorage()
-    const userWallets = exchangeData.userWallets
+    const exchangeSettings = this.getExchangeDataFromLocalStorage()
+    const userWallets = exchangeSettings.userWallets
 
     if (userWallets && userWallets[currency]) {
       return userWallets[currency]
@@ -410,17 +359,17 @@ export default class Exchange extends Component<any, any> {
   }
 
   setUserDefaultWallet(currency, type) {
-    const exchangeData = this.getExchangeDataFromLocalStorage()
-    const userWallets = exchangeData.userWallets || {}
+    const exchangeSettings = this.getExchangeDataFromLocalStorage()
+    const userWallets = exchangeSettings.userWallets || {}
 
     userWallets[currency] = type
 
     const newExchangeData = {
-      currency: exchangeData.currency,
+      currency: exchangeSettings.currency,
       userWallets,
     }
 
-    localStorage.setItem(constants.localStorage.exchangeData, JSON.stringify(newExchangeData))
+    localStorage.setItem(constants.localStorage.exchangeSettings, JSON.stringify(newExchangeData))
   }
 
   getDefaultWalletForCurrency(currency) {
@@ -563,17 +512,17 @@ export default class Exchange extends Component<any, any> {
   }
 
   componentWillUnmount() {
-    const exchangeData = this.getExchangeDataFromLocalStorage()
+    const exchangeSettings = this.getExchangeDataFromLocalStorage()
     const { haveCurrency, getCurrency } = this.state
     const newExchangeData = {
-      ...exchangeData,
+      ...exchangeSettings,
       currency: {
         sell: haveCurrency,
         buy: getCurrency,
       },
     }
 
-    localStorage.setItem(constants.localStorage.exchangeData, JSON.stringify(newExchangeData))
+    localStorage.setItem(constants.localStorage.exchangeSettings, JSON.stringify(newExchangeData))
 
     this._mounted = false
     this.timer = false

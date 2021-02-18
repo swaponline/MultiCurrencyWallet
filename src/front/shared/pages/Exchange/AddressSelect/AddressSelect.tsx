@@ -472,7 +472,11 @@ export default class AddressSelect extends Component<any, any> {
                   required
                   pattern="0-9a-zA-Z"
                   onFocus={() => this.handleFocusAddress()}
-                  onBlur={(e) => this.handleBlurAddress(e.target.value)}
+                  onBlur={(e) => {
+                    console.log('Address select event: ', e)
+                    console.log('Address select event target: ', e.target)
+                    this.handleBlurAddress(e.target.value)
+                  }}
                   placeholder="Enter address"
                   valueLink={Link.all(this, '_')._} // required
                   openScan={this.toggleScan}
